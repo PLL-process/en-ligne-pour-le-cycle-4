@@ -417,7 +417,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       <option>normale la nuit</option></select></div>
   <div class="assoc"><label for="a2_2">Le vendredi, six heures d'affilée donnent <b>exactement 23,7</b>. Cela signale&nbsp;:</label>
     <select id="a2_2"><option value="">— choisir —</option>
-      <option>un capteur bloqué : une vraie mesure varie toujours un peu</option>
+      <option>très probablement un capteur figé : une vraie mesure varie presque toujours un peu — on le signale, et on vérifie l'appareil</option>
       <option>un air parfaitement stable</option>
       <option>une erreur de recopie</option>
       <option>rien d'anormal</option></select></div>
@@ -521,8 +521,9 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     <p>Les deux autres ne se voient pas au tri&nbsp;: l'une est une <b>répétition</b> (la même valeur
     plusieurs heures de suite), l'autre est une <b>absence</b> (compte les lignes d'une journée&nbsp;:
     il devrait y en avoir 13).</p>
-    <p>Un capteur qui répète exactement la même valeur pendant six heures ne mesure plus&nbsp;: il
-    est bloqué. Une vraie mesure varie toujours un peu.</p></details>
+    <p>Un capteur qui répète exactement la même valeur pendant six heures a très probablement
+    cessé de mesurer&nbsp;: il est figé. Une vraie mesure varie presque toujours un peu. Ce n'est
+    pas une preuve, c'est un fort soupçon&nbsp;: on le signale, et on va vérifier l'appareil.</p></details>
 
   <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
   <p class="feedback" id="fb2" role="status"></p>
@@ -533,9 +534,11 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       <li><b>Mercredi 11 h&nbsp;: −4,2 µg/m³.</b> Impossible&nbsp;: une concentration est une
       quantité de matière, elle ne peut pas être négative. Sans doute une erreur du capteur au
       moment d'un redémarrage.</li>
-      <li><b>Vendredi, de 9 h à 14 h&nbsp;: 23,7 six fois de suite.</b> Un <b>capteur bloqué</b>. Une
-      vraie mesure varie toujours un peu&nbsp;: six valeurs strictement identiques ne se produisent
-      pas naturellement.</li>
+      <li><b>Vendredi, de 9 h à 14 h&nbsp;: 23,7 six fois de suite.</b> Très probablement un <b>capteur
+      figé</b>. Une vraie mesure varie presque toujours un peu&nbsp;: à 0,1 près, six valeurs
+      strictement identiques d'affilée sont très improbables. Ce n'est pas une preuve — on le
+      signale comme suspect, on vérifie le capteur, et on ne conclut rien sur l'air de ce
+      vendredi.</li>
       <li><b>Lundi 14 h&nbsp;: relevé manquant.</b> La journée ne compte que 12 lignes au lieu de 13.
       On le <b>signale</b>, et on calcule sans lui — <b>on n'invente jamais une mesure</b>.</li>
       <li><b>Dimanche 16 h&nbsp;: 251,0</b> alors que les heures voisines sont vers 25. Une
@@ -1179,7 +1182,7 @@ const CHECKS = {
   /* Activité 2 — collecter, trier, analyser */
   2: function(){
     const att={a2_1:"impossible : une concentration ne peut pas être négative",
-               a2_2:"un capteur bloqué : une vraie mesure varie toujours un peu",
+               a2_2:"très probablement un capteur figé : une vraie mesure varie presque toujours un peu — on le signale, et on vérifie l'appareil",
                a2_3:"très probablement une virgule décalée : 25,1 devenu 251",
                a2_4:"le signaler et calculer sans lui : on n'invente pas une mesure",
                a2_5:"les écarter du calcul, mais les garder dans le fichier avec une note"};

@@ -14,8 +14,12 @@ FAST — relève du Thème 2.
 
 `5e_C1.2` — *Comparer des principes techniques pour une même fonction technique.*
 **Socle** : D1.3 (lire et exploiter un tableau de mesures) · D4 · D5.
-**CRCN 1.3** — traiter des données. **La trace est le relevé écrit de l'activité 2**, pas le fait
-d'avoir ouvert un tableur (règle n°60).
+**CRCN 1.3** — traiter des données. **La trace est le classeur `comparatif_freinage_groupeXX`
+produit dans l'activité CRCN du lot** (`activite_crcn_donnees_freinage_5e_C1.2.html`, atteinte depuis
+l'index) : une colonne insérée, des priorités saisies, un tri, un filtre — des transformations
+visibles dans un fichier conservé (règle n°60). Le relevé écrit de l'activité 2 atteste la
+lecture du tableau, pas le traitement numérique : seul, il ne suffit pas à cocher CRCN 1.3
+(audit externe du 08/09, point A17).
 
 Le mot difficile du référentiel n'est pas « principe » : c'est **« comparer »**. Comparer n'est ni
 préférer, ni classer, ni compter les colonnes gagnées — c'est **hiérarchiser des critères selon un

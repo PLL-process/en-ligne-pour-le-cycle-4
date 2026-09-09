@@ -1,6 +1,6 @@
 # Fiche pédagogique — 4e_C2.1 · C2.2 « Hangzhou : ce que vit l'usager devant la borne »
 
-**Niveau** 4e · **Thème 1** · **Durée** 3 séances de 55 min (150 min annoncés pour 165)
+**Niveau** 4e · **Thème 1** · **Durée** 3 séances de 55 min — séance 1 : 40 min ; séance 2 : 30 + 25 = 55 min (l'activité 2 était annoncée à 35 min, ce qui faisait 60 dans un créneau de 55 — audit du 08/09) ; séance 3 : 35 + 10 = 45 min
 **Matériel** aucun — page autonome hors ligne, plus un tableur pour la séance 2
 
 ## Ce que le référentiel impose, et qu'on ne peut pas contourner

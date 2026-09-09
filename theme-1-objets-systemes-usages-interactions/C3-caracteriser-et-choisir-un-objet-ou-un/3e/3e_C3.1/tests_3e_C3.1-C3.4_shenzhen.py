@@ -91,6 +91,25 @@ with sync_playwright() as p:
       pg.evaluate("document.documentElement.scrollWidth<=window.innerWidth+2"))
     pg.set_viewport_size({"width":1280,"height":900})
 
+    # ── le vérificateur de l'activité 3 juge un PROTOCOLE, pas quatre chiffres (audit du 08/09, A02) ──
+    ATT3 = {"a3_1":"la grandeur mesurée, son unité et l'appareil",
+            "a3_2":"ne suffit pas : l'air est plus chaud près des machines et sous le plafond",
+            "a3_3":"à plusieurs moments de la journée, dont le plus défavorable en fin d'après-midi",
+            "a3_4":"la position du capteur, la porte fermée, et le nombre de machines allumées",
+            "a3_5":"que la solution doit faire gagner au moins 9 °C au moment le plus défavorable",
+            "a3_6":"ne dit rien du pic d'été : il faut préciser les conditions extérieures dans le protocole"}
+    def verif3(prot):
+        return pg.evaluate("""([att, prot])=>{ for (const [id,v] of Object.entries(att)) { document.getElementById(id).value=v; }
+            document.getElementById('a3_prot').value=prot; return CHECKS[3](); }""", [ATT3, prot])
+    pg.goto(SEQ); pg.wait_for_timeout(300)
+    bon = ("1. Grandeur : la température de l'air en °C.\n2. Appareil : un thermomètre numérique, le même pour toutes les mesures.\n"
+           "3. Points de mesure : au centre de la salle à 1,5 m du sol et près des machines.\n4. Moments : 9 h, 12 h et 17 h, trois relevés à chaque fois.\n"
+           "5. Conditions constantes : même position du capteur, porte fermée, toutes les machines allumées.")
+    faible = ("1. On mesure la température. 2. On note. 3. On recommence. 4. On compare avec avant. "
+              "Il faut faire attention à bien mesurer au bon endroit et au bon moment pour que ce soit juste et fiable.")
+    t("activité 3 : un protocole à cinq étapes, avec unité, appareil et conditions constantes, est validé", verif3(bon)["valide"])
+    t("activité 3 : quatre numéros et 120 caractères sans unité ni appareil ne sont PAS validés", not verif3(faible)["valide"])
+
     errs.clear(); pg.goto(QCM); pg.wait_for_timeout(600)
     t("QCM : aucune erreur JS", not errs, str(errs))
     t("QCM : hors ligne (n°40)", "fonts.googleapis" not in pg.content())

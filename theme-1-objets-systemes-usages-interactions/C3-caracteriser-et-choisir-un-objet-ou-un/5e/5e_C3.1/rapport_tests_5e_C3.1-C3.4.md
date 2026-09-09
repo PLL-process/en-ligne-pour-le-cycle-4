@@ -14,7 +14,7 @@
 > injecte une vraie ressource distante dans la page.
 >
 > ```
-> 27 / 27 tests passés
+> 29 / 29 tests passés
 > ```
 Ce rapport ne déclare **que des tests réellement exécutés** :
 
@@ -22,7 +22,7 @@ Ce rapport ne déclare **que des tests réellement exécutés** :
 python3 tests_5e_C3.1-C3.4_shanghai.py     # depuis ce dossier, Playwright + Chromium
 ```
 
-## Résultat : 27 / 27 tests passés
+## Résultat : 29 / 29 tests passés
 
 **Séquence** — aucune erreur JavaScript · aucune ressource distante appelée (règle n°40) · bandeau
 de tâches affiché (n°30) · 8 zones de rédaction pour 8 versions étayées (n°31) · chaque champ
@@ -69,3 +69,11 @@ d'écran et le zoom navigateur à 200 % **n'ont pas été vérifiés automatique
 Le travail au tableur de l'activité 4 n'est pas testable automatiquement : il se fait hors de la
 page, dans le logiciel de l'élève. La séquence en décrit précisément la trace attendue (colonne
 calculée par formule, tri, filtre), et c'est cette trace qui fait la preuve du CRCN 1.3.
+
+## Ajout du 09/09/2026 — le vérificateur de l'activité 3 est désormais testé
+
+L'audit externe du 08/09 (points A01/A02) a relevé que le vérificateur de l'activité 3 acceptait
+une production sur sa seule longueur. Deux cas sont ajoutés au banc : une production conforme
+(mesures chiffrées avec unité, ou protocole à cinq étapes avec unité, appareil et conditions
+constantes) est validée ; une production longue mais creuse ne l'est pas. Ce qui n'est toujours
+pas testé : que la mesure ait vraiment été faite en classe — cela se relève en salle.

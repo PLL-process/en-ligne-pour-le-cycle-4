@@ -1048,44 +1048,45 @@ print(<span class="string">"Fin du programme."</span>)</code></pre>
 print(<span class="string">"Fin du programme."</span>)</code></pre>
 </div>
 
-    <h3>🔧<strong>✋ 2.a - Exemple complet : Vérification d'URL sécurisée</strong></h3>
+    <h3>🔧<strong>✋ 2.a - Exemple complet : La liaison est-elle chiffrée (HTTPS) ?</strong></h3>
 <div class="python-code">
-<pre><code><span class="comment"># Programme complet : Vérifier la sécurité d'une URL</span>
+<pre><code><span class="comment"># Programme complet : dire si la LIAISON est chiffrée — pas si le SITE est honnête</span>
 url = <span class="function">input</span>(<span class="string">"Entre une URL : "</span>)  <span class="comment"># Demande à l'utilisateur</span>
 
 <span class="keyword">if</span> url.<span class="function">startswith</span>(<span class="string">"https://"</span>):
-    print(<span class="string">"✅ Connexion sécurisée (HTTPS)"</span>)
-    print(<span class="string">"    Les données sont chiffrées"</span>)
+    print(<span class="string">"🔒 Liaison chiffrée (HTTPS)"</span>)
+    print(<span class="string">"    Personne ne peut lire les données en chemin — mais le site, lui, peut être un piège"</span>)
 <span class="keyword">else</span>:
-    print(<span class="string">"⚠️  Connexion non sécurisée (HTTP)"</span>)
+    print(<span class="string">"⚠️  Liaison NON chiffrée (HTTP)"</span>)
     print(<span class="string">"    Les données peuvent être interceptées"</span>)
 
 print(<span class="string">"Fin du programme."</span>)</code></pre>
 </div>
 
-    <h3>🔄 <strong> 2.b&nbsp;—&nbsp;Exemple boucle FOR : Vérifier plusieurs URLs</strong></h3>
+    <h3>🔄 <strong> 2.b&nbsp;—&nbsp;Exemple boucle FOR : plusieurs URLs — et un piège en HTTPS</strong></h3>
 <div class="python-code">
 <pre><code><span class="comment"># Vérifier une liste d'URLs avec une boucle FOR</span>
-urls = [<span class="string">"http://site1.com"</span>, <span class="string">"https://site2.fr"</span>, <span class="string">"http://phishing.com"</span>]
+urls = [<span class="string">"http://site1.com"</span>, <span class="string">"https://site2.fr"</span>, <span class="string">"https://phishing-exemple.com"</span>]
 
 <span class="keyword">for</span> url <span class="keyword">in</span> urls:  <span class="comment"># Parcourir chaque URL</span>
     <span class="keyword">if</span> url.<span class="function">startswith</span>(<span class="string">"https://"</span>):
-        print(<span class="function">f</span><span class="string">"✅ {url} = SÉCURISÉE"</span>)
+        print(<span class="function">f</span><span class="string">"🔒 {url} = liaison chiffrée"</span>)
     <span class="keyword">else</span>:
-        print(<span class="function">f</span><span class="string">"⚠️  {url} = NON SÉCURISÉE"</span>)
+        print(<span class="function">f</span><span class="string">"⚠️  {url} = liaison non chiffrée"</span>)
 
 print(<span class="string">"Vérification terminée."</span>)</code></pre>
 </div>
     <p><strong>Sortie attendue :</strong></p>
-<pre style="background:#000;color:#fff;padding:12px;border-radius:8px;"><code>⚠️  http://site1.com = NON SÉCURISÉE
-✅ https://site2.fr = SÉCURISÉE
-⚠️  http://phishing.com = NON SÉCURISÉE
+<pre style="background:#000;color:#fff;padding:12px;border-radius:8px;"><code>⚠️  http://site1.com = liaison non chiffrée
+🔒 https://site2.fr = liaison chiffrée
+🔒 https://phishing-exemple.com = liaison chiffrée   ← piège malgré le cadenas !
 Vérification terminée.</code></pre>
+<div style="margin:10px 0;padding:10px 14px;border-left:4px solid #b8860b;background:rgba(255,179,0,.12);border-radius:0 8px 8px 0"><p><b>🔒 n'est pas ✅.</b> Le programme ne lit que les huit premiers caractères de l'adresse. <b>HTTPS</b> veut dire que la liaison est <b>chiffrée</b>&nbsp;: personne ne peut lire en chemin ce que tu envoies. Il ne dit <b>rien</b> de qui est au bout&nbsp;: un site d'hameçonnage obtient son cadenas en quelques minutes. Pour juger un site, il faut d'autres indices — l'adresse exacte, qui l'a envoyée, ce qu'il demande.</p></div>
 
-    <h3>🔁 <strong> 2.c&nbsp;—&nbsp;Exemple boucle WHILE : Test continu d'URL</strong></h3>
+    <h3>🔁 <strong> 2.c&nbsp;—&nbsp;Exemple boucle WHILE : tester des URLs jusqu'à « quit »</strong></h3>
 <div class="python-code">
-<pre><code><span class="comment"># Tester URLs jusqu'à trouver une sécurisée</span>
-print(<span class="string">"🔍 Testeur de sécurité URL - Tape 'quit' pour arrêter"</span>)
+<pre><code><span class="comment"># Tester des URLs jusqu'à « quit »</span>
+print(<span class="string">"🔍 HTTPS ou HTTP ? - Tape 'quit' pour arrêter"</span>)
 
 <span class="keyword">while</span> <span class="keyword">True</span>:  <span class="comment"># Boucle infinie</span>
     url = <span class="function">input</span>(<span class="string">"Entre une URL : "</span>).<span class="function">strip</span>()
@@ -1095,19 +1096,19 @@ print(<span class="string">"🔍 Testeur de sécurité URL - Tape 'quit' pour ar
         <span class="keyword">break</span>  <span class="comment"># Sortir de la boucle</span>
     
     <span class="keyword">if</span> url.<span class="function">startswith</span>(<span class="string">"https://"</span>):
-        print(<span class="function">f</span><span class="string">"✅ {url} = SÉCURISÉE !"</span>)
+        print(<span class="function">f</span><span class="string">"🔒 {url} = liaison chiffrée"</span>)
     <span class="keyword">else</span>:
-        print(<span class="function">f</span><span class="string">"⚠️  {url} = NON SÉCURISÉE"</span>)
+        print(<span class="function">f</span><span class="string">"⚠️  {url} = liaison non chiffrée"</span>)
 
 print(<span class="string">"Fin du programme."</span>)</code></pre>
 
 
 <p><strong>Exemple d'exécution :</strong></p>
-<pre style="background:#000;color:#fff;padding:12px;border-radius:8px;"><code>🔍 Testeur de sécurité URL - Tape 'quit' pour arrêter
+<pre style="background:#000;color:#fff;padding:12px;border-radius:8px;"><code>🔍 HTTPS ou HTTP ? - Tape 'quit' pour arrêter
 Entre une URL : http://test.com
-⚠️  http://test.com = NON SÉCURISÉE
+⚠️  http://test.com = liaison non chiffrée
 Entre une URL : https://banque.fr
-✅ https://banque.fr = SÉCURISÉE !
+🔒 https://banque.fr = liaison chiffrée
 Entre une URL : quit
 ⏹️  Arrêt du testeur.
 Fin du programme.</code></pre>
@@ -2997,7 +2998,7 @@ function score6(){
 <section class="r4" id="pret-a-s-entrainer">
   <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
   <p>Le QCM de cette séquence comporte <strong>30 questions</strong> réparties sur
-  <strong>4e_C1.4</strong>, <strong>4e_C1.5</strong> et <strong>4e_C1.6</strong>. Aucune
+  <strong>4e_C1.4</strong>, avec <strong>5e_C1.5</strong> et <strong>5e_C1.6</strong> revisitées. Aucune
   n'est illustrée&nbsp;: tout se lit dans l'énoncé.</p>
   <p><a class="btn" href="qcm_cybersecurite_usage_raisonne.html">🚀 Ouvrir le QCM d'entraînement</a></p>
   <p class="note">Tu peux le rejouer autant de fois que tu veux&nbsp;: il n'est pas noté.</p>

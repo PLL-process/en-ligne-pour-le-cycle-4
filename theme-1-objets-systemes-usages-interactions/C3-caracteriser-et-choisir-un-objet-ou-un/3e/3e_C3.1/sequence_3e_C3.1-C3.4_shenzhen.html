@@ -626,7 +626,7 @@
       <option>revient à ne rien choisir</option></select></div>
   <div class="assoc"><label for="a4_3">S1 + S2 + S6 donnent 2,5 + 4 + 5 = 11,5 °C, pour 1230 € d'installation et une consommation nette négative. Face à S3 seul&nbsp;:</label>
     <select id="a4_3"><option value="">— choisir —</option>
-      <option>la combinaison est meilleure sur les trois piliers : moins chère, moins émettrice, et elle ne dépend pas d'un seul appareil</option>
+      <option>sur le papier, la combinaison est meilleure sur les trois piliers — moins chère, moins émettrice, sans dépendre d'un seul appareil — à condition de vérifier par un essai que les gains s'ajoutent bien</option>
       <option>S3 reste meilleur car plus simple</option>
       <option>les deux sont équivalents</option>
       <option>on ne peut pas comparer une combinaison à une solution seule</option></select></div>
@@ -909,15 +909,29 @@ const CHECKS = {
                a3_5:"que la solution doit faire gagner au moins 9 °C au moment le plus défavorable",
                a3_6:"ne dit rien du pic d'été : il faut préciser les conditions extérieures dans le protocole"};
     let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    /* un protocole se juge à ce qu'il contient, pas à sa longueur : cinq étapes DISTINCTES
+       (1 à 5, chacune une fois), une grandeur avec son unité, l'appareil, et les conditions à
+       maintenir constantes (audit du 08/09, point A02 — avant, quatre chiffres suffisaient) */
     const t = val("a3_prot").trim();
-    const etapes = (t.match(/[1-5][.)]/g)||[]).length >= 4;
-    return {score:ok,total:6,valide: ok>=5 && t.length>=120 && etapes,
-      extra: (t.length>=120 && etapes) ? "" : " Ton protocole doit compter cinq étapes numérotées, dont les conditions à maintenir constantes."};
+    const b = t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const numeros = new Set((b.match(/(?:^|\s)([1-5])\s?[.)\-:]/gm)||[]).map(x=>x.trim()[0]));
+    const etapes = numeros.size >= 5;
+    const unite = /°c|degre/.test(b);
+    const appareil = /thermometre|capteur|sonde|enregistreur|station/.test(b);
+    const constantes = /constant|meme (heure|position|endroit|place)|porte (fermee|close)|sans changer|identique/.test(b);
+    const complet = t.length >= 120 && etapes && unite && appareil && constantes;
+    let manque = "";
+    if(!etapes) manque = " Ton protocole doit compter CINQ étapes numérotées de 1 à 5, chacune sur sa ligne.";
+    else if(!unite) manque = " Écris la grandeur mesurée AVEC son unité (°C).";
+    else if(!appareil) manque = " Nomme l'appareil de mesure (thermomètre, capteur, sonde…).";
+    else if(!constantes) manque = " Il manque les conditions à maintenir CONSTANTES d'une mesure à l'autre (position du capteur, porte, machines allumées).";
+    else if(t.length < 120) manque = " Développe un peu chaque étape : un protocole doit pouvoir être suivi par quelqu'un d'autre.";
+    return {score:ok,total:6,valide: ok>=5 && complet, extra: manque};
   },
   4: function(){
     const att={a4_1:"une seule, S3 le climatiseur",
                a4_2:"est la bonne piste : rien n'oblige à choisir une seule solution, on peut les combiner",
-               a4_3:"la combinaison est meilleure sur les trois piliers : moins chère, moins émettrice, et elle ne dépend pas d'un seul appareil",
+               a4_3:"sur le papier, la combinaison est meilleure sur les trois piliers — moins chère, moins émettrice, sans dépendre d'un seul appareil — à condition de vérifier par un essai que les gains s'ajoutent bien",
                a4_4:"du service rendu et de ce qu'on demande aux personnes : renoncer à deux serveurs a des conséquences pour les usagers",
                a4_5:"donne un ordre de grandeur, pas un résultat exact : les effets ne s'ajoutent pas parfaitement"};
     let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });

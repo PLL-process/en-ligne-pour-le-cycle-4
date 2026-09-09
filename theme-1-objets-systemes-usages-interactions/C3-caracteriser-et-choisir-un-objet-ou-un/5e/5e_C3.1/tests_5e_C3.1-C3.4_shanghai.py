@@ -81,6 +81,24 @@ with sync_playwright() as p:
       pg.evaluate("document.documentElement.scrollWidth<=window.innerWidth+2"))
     pg.set_viewport_size({"width":1280,"height":900})
 
+    # ── le vérificateur de l'activité 3 juge une MESURE, pas une longueur (audit du 08/09, A01) ──
+    # Avant le 09/09, cinq choix justes et 60 caractères validaient l'activité, sans un chiffre.
+    ATT3 = {"a3_1":"parce qu'on ne compare que ce qui est égal par ailleurs : changer la charge, c'est changer deux choses à la fois",
+            "a3_2":"parce qu'une mesure isolée peut être ratée : la moyenne de trois essais est plus fiable",
+            "a3_3":"rien : il compare deux conditions différentes, pas deux véhicules", "a3_4":"S3, le robot",
+            "a3_5":"que les distances varient dans le même sens que les masses — sans pouvoir dire pourquoi : freins, pneus et empattement changent aussi",
+            "a3_6":"le rayon de braquage : c'est lui qui dit si le véhicule peut tourner"}
+    def verif3(conclusion):
+        return pg.evaluate("""([att, conc])=>{ for (const [id,v] of Object.entries(att)) { const s=document.getElementById(id); s.value=v; }
+            const ta=document.getElementById('a3_conc'); ta.value=conc; return CHECKS[3](); }""", [ATT3, conclusion])
+    pg.goto(SEQ); pg.wait_for_timeout(300)
+    bon = ("Le robot S3 s'arrête en 1,6 m et la fourgonnette S2 en 5,8 m, à 15 km/h. Le robot est aussi le moins bruyant, "
+           "49 dB contre 62 dB. Ces mesures ne disent pas pourquoi S2 freine plus loin : la masse, les freins et les pneus changent en même temps.")
+    faible = ("Le robot freine le mieux et la fourgonnette le moins bien. Le vélo est entre les deux. "
+              "Donc le robot est la meilleure solution pour la livraison dans les ruelles de Shanghai.")
+    t("activité 3 : une conclusion mesurée (deux valeurs avec unité + ce que le tableau ne prouve pas) est validée", verif3(bon)["valide"])
+    t("activité 3 : une conclusion longue mais sans mesure ni limite n'est PAS validée", not verif3(faible)["valide"])
+
     errs.clear(); pg.goto(QCM); pg.wait_for_timeout(600)
     t("QCM : aucune erreur JS", not errs, str(errs))
     t("QCM : hors ligne (n°40)", "fonts.googleapis" not in pg.content())
