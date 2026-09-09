@@ -14,13 +14,13 @@
 > injecte une vraie ressource distante dans la page.
 >
 > ```
-> 28 / 28 tests passés
+> 30 / 30 tests passés
 > ```
 ```
 python3 tests_3e_C3.1-C3.4_shenzhen.py     # depuis ce dossier, Playwright + Chromium
 ```
 
-## Résultat : 28 / 28 tests passés
+## Résultat : 30 / 30 tests passés
 
 **Séquence** — aucune erreur JavaScript · aucune ressource distante (n°40) · bandeau de tâches
 (n°30) · 9 zones de rédaction pour 9 versions étayées (n°31) · chaque champ étiqueté (n°34) ·
@@ -55,3 +55,11 @@ Impression A4, contraste mesuré, lecteur d'écran réel, zoom 200 % : **non vé
 déclarés conformes**. Le travail au tableur de la séance 2 et la mise en œuvre réelle du protocole
 de la séance 3 se font hors de la page et ne sont pas testables automatiquement ; les traces
 attendues sont décrites dans la séquence et dans la synthèse professeur.
+
+## Ajout du 09/09/2026 — le vérificateur de l'activité 3 est désormais testé
+
+L'audit externe du 08/09 (points A01/A02) a relevé que le vérificateur de l'activité 3 acceptait
+une production sur sa seule longueur. Deux cas sont ajoutés au banc : une production conforme
+(mesures chiffrées avec unité, ou protocole à cinq étapes avec unité, appareil et conditions
+constantes) est validée ; une production longue mais creuse ne l'est pas. Ce qui n'est toujours
+pas testé : que la mesure ait vraiment été faite en classe — cela se relève en salle.

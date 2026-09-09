@@ -44,7 +44,7 @@ BON = {
  "a1_5":"elle emploie une source radioactive : contrôle réglementaire hors de portée d'un collège",
  "a1_6":"la mesure dérive lentement sans que rien ne le signale",
  "a2_1":"impossible : une concentration ne peut pas être négative",
- "a2_2":"un capteur bloqué : une vraie mesure varie toujours un peu",
+ "a2_2":"très probablement un capteur figé : une vraie mesure varie presque toujours un peu — on le signale, et on vérifie l'appareil",
  "a2_3":"très probablement une virgule décalée : 25,1 devenu 251",
  "a2_4":"le signaler et calculer sans lui : on n'invente pas une mesure",
  "a2_5":"les écarter du calcul, mais les garder dans le fichier avec une note",

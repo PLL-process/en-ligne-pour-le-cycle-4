@@ -12660,3 +12660,55 @@ posé à leur place les « à retenir » du QCM (règle n°279 : une refonte per
 pas). Ils gardent leur bloc d'impression écrit à la main, qui est correct. C'est une exception
 nommée, pas oubliée : si un jour on veut les faire rentrer dans le rang, ce sera en faisant
 entrer leurs définitions dans le générateur, pas en les effaçant.
+
+## 2026-09-09 — L'audit externe du thème 1, point par point : dix confirmés et corrigés, dix transmis à Pascal
+
+Règle de lecture : chaque point de l'audit est une **mesure à refaire**, à la ligne citée, sur la
+révision `0784cba3` puis sur le main du jour. Trois verdicts : **confirmé** (corrigé, ou en PR),
+**confirmé, pas de ma main** (choix pédagogique qui revient à Pascal), **non retenu** (avec la raison).
+
+| ID | Verdict | Ce que j'ai mesuré | Ce qui est fait |
+|---|---|---|---|
+| A01 | **confirmé** | 5e_C3.1, act. 3 : `valide` = 5 choix + 60 caractères. Aucun chiffre exigé. | Le vérificateur exige deux mesures avec unité et une phrase sur ce que le tableau ne prouve pas ; deux cas au banc (29/29). |
+| A02 | **confirmé** | 3e_C3.1, act. 3 : quatre chiffres suivis d'un point suffisaient (« 1. 2. 3. 4. »). | Cinq numéros distincts, une unité (°C), un appareil, des conditions constantes ; deux cas au banc (30/30). Le statut « protocole préparé / exécuté » proposé par l'audit est un choix de conception : à Pascal. |
+| A03 | **confirmé** | 5e_C3.1, act. 4 b : « autonomie ÷ énergie par km + réparabilité + adaptation ruelles » — des km²/Wh plus des points. | L'indicateur additionne trois notes sur 5 (réparabilité ÷ 2 + ruelles + pluie) ; la question et la correction disent que c'est un choix, et lequel. |
+| A04 | **confirmé, nuancé** | 3e_C3.1, act. 4 : la somme des gains sert à trancher ; la question a4_5 disait déjà « ordre de grandeur, pas un résultat exact ». | La réponse a4_3 dit désormais « sur le papier … à condition de vérifier par un essai que les gains s'ajoutent ». Un « essai conjoint » réel est un ajout de séquence : à Pascal. |
+| A05 | **confirmé, nuancé** | 5e_C1.1 : « la répétition parfaite est impossible », « une vraie mesure varie toujours ». Le QCM disait déjà « presque toujours ». | Partout : « très probablement figé », « très improbable », « soupçon, pas preuve — on vérifie l'appareil ». Séquence, correction, QCM, matrice, synthèse, banc (43/43). |
+| A06 | **confirmé** | 5e_C3.1, act. 3 : la question a3_5 donnait la masse comme « explication principale » de la distance de freinage — alors que la correction, la synthèse, la fiche et le QCM du même lot enseignent l'inverse (corrélation ≠ cause). | La question demande ce qu'on peut conclure : « les distances varient dans le même sens que les masses — sans pouvoir dire pourquoi ». a3_1 ne dit plus que la masse change la distance. |
+| A07 | **confirmé** | 4e_C3.1 : « En dessous de la précision, l'écart n'existe pas » (lexique, engendré depuis le QCM). | « n'est pas mesurable — ni prouvé, ni exclu » ; explication du QCM réécrite ; lexique régénéré. |
+| A08 | **confirmé** | 4e_C1.4 : `startswith("https://")` → « ✅ SÉCURISÉE », et `http://phishing.com` n'était « dangereuse » que par son préfixe. | Sorties renommées (« 🔒 liaison chiffrée » / « ⚠️ liaison non chiffrée »), un `https://phishing-exemple.com` dans la liste, et un encadré : HTTPS chiffre la liaison, il ne dit rien du site. |
+| A09 | **confirmé** | 4e_C3.1, act. 1 c : « chaque ligne doit contenir un nombre et une unité » — alors que l'étayage lui-même propose « les pièces détachées doivent être ____ ». | Consigne : « vérifiable : le plus souvent un seuil chiffré, parfois un oui/non contrôlable » ; le vérificateur demande trois seuils chiffrés au lieu de quatre. |
+| A10 | **confirmé** | 4e_C2.1, séance 2 : 35 + 25 = 60 min dans 55. La fiche l'admettait (« 150 min annoncés pour 165 »). | Activité 2 à ~30 min ; la fiche détaille séance par séance. |
+| A11 | **pas de ma main** | 3e_C2.1 : six modes de représentation imposés d'emblée. C'est un choix de progression. | Proposition de l'audit (deux modes contrastés puis élargissement) transmise telle quelle. |
+| A12 | **pas de ma main** | 3e_C2.1, lexique : l'algorigramme présenté comme seul mode pertinent. | À relire par Pascal ; une ligne du QCM à nuancer si l'on suit l'audit. |
+| A13 | **pas de ma main** | 4e_C1.1 / 3e_C1.1 : place des calculs vs objectifs C1. Jugement pédagogique. | Transmis. |
+| A14 | **pas de ma main** | 3e_C1.5, partie 2 : stratégie numérique moins développée que la prévention individuelle. | Transmis ; l'exercice E12 de l'audit est une piste. |
+| A15 | **confirmé, plus large** | Trois QCM de C1 : sous-titre, menu « Compétence à réviser » et pied du lot de freinage. Mesuré sur 70 QCM : **31 menus copiés d'un autre lot, mode « cible » vide**. | PR #361 (thème 1), #362 (thème 3), PR thème 2 à venir avec `controle_entete_qcm.py` (règle n°292). |
+| A16 | **confirmé** | 5e_C1.5 : pied « 4e_C8.1 · C8.2 · C8.3 · Thème 3 · New York ». Vingt QCM du thème 3 pareil. | Mêmes PR. |
+| A17 | **confirmé** | 5e_C1.2, fiche : « la trace CRCN 1.3 est le relevé écrit » — alors que le lot a une activité CRCN qui produit un classeur. | La fiche nomme le classeur comme trace ; le relevé écrit atteste la lecture, pas le traitement. |
+| A18 | **pas de ma main** | 5e_C2.1, fiche : « ne pas convertir le repère de 4e en interdiction du vécu en 5e ». | Transmis. |
+| A19 | **confirmé** | 5e_C3.1, lexique : « Sur un objet qui dure, l'utilisation domine » — faux pour un banc. | « Sur un objet qui consomme en marchant et dure des années… pas sur un banc » (QCM, synthèse, lexique). |
+| A20 | **pas de ma main** | Recouvrement S01/S03/S04 si tous les lots C1 de 5e sont cumulés. | C'est un choix de parcours annuel : la proposition « intégré / spécialisé » de l'audit est transmise ; `_progressions/` est l'endroit où le trancher. |
+| A21 | **pas de ma main** | 5e_C2.1, act. 1 : frontière du système à rendre manipulable. | Transmis (E01/E02). |
+| A22 | **pas de ma main** | 4e_C2.1 : recopie exacte vs reformulation. | Transmis. |
+| A23 | **non retenu tel quel** | « accessibilité humaine non démontrée » — vrai, et déjà écrit dans le rapport de tests du lot lui-même, ligne citée. | Rien à corriger dans le dépôt : c'est une observation de classe à faire. |
+| A24 | **pas de ma main** | Un FAST court en 5e_C1.2, facultatif. | Transmis (E04). |
+
+## Ce que l'audit n'avait pas vu, et que sa vérification a fait trouver
+
+- **31 menus « Compétence à réviser » vides** (A15 étendu à tout le dépôt) ;
+- **le vérificateur d'activité n'était testé nulle part** : les bancs de lot ne remplissaient
+  jamais une activité. Deux lots ont maintenant des cas « production juste / production creuse ».
+  Les autres suivront lot par lot.
+
+## Ce que je n'ai pas fait
+
+Je n'ai pas intégré les exercices E01–E16 ni les visuels V01–V12 proposés par l'audit : il le
+dit lui-même, « ne pas ajouter tous les exercices, choisir ceux qui remplacent une faiblesse ».
+Ce choix est à Pascal ; les fichiers 02 et 04 de l'audit sont la matière.
+
+> **Règle d'or n°293 — un audit se vérifie à la ligne, puis se mesure sur tout le dépôt.** Un
+> constat localisé est un échantillon : trois QCM cités, trente et un touchés. Et l'on n'accepte ni
+> ne rejette un point sur sa formulation — on rouvre la page, on relit le vérificateur, on rejoue
+> la mesure. Dix points sur vingt-quatre étaient des défauts réels du dépôt ; les autres sont des
+> choix pédagogiques, qui appartiennent au professeur.

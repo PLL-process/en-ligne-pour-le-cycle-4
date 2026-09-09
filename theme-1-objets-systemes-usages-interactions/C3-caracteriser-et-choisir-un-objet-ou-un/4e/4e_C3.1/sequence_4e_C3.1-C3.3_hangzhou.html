@@ -306,12 +306,12 @@ n'est envoyé. Le <b>mode essentiel</b> masque le référentiel, les corrections
 
   <h4>c) Ton cahier des charges</h4>
   <div class="assoc">
-    <label for="a1_cdc">Écris <b>quatre exigences</b> pour la ville. Chacune doit porter une grandeur, une unité et un seuil chiffré.</label>
+    <label for="a1_cdc">Écris <b>quatre exigences</b> pour la ville. Chacune doit être <b>vérifiable</b>&nbsp;: le plus souvent une grandeur, une unité et un seuil chiffré&nbsp;; parfois un critère oui/non que l'on peut contrôler (par exemple&nbsp;: pièces détachées disponibles chez un fournisseur local).</label>
     <textarea id="a1_cdc" style="min-height:110px" aria-label="Ton cahier des charges : quatre exigences avec grandeur, unité et seuil"></textarea>
   </div>
   <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
     <p>Le niveau attendu est <b>exactement le même</b>&nbsp;: on retire l'obstacle de la rédaction,
-    pas l'exigence. Chaque ligne doit contenir un nombre et une unité.</p>
+    pas l'exigence. Chaque ligne doit être vérifiable&nbsp;: un nombre et une unité, ou un oui/non que l'on peut contrôler.</p>
     <ul>
       <li>«&nbsp;Exigence 1&nbsp;: la durée de vie doit être d'au moins ____ ans.&nbsp;»</li>
       <li>«&nbsp;Exigence 2&nbsp;: le coût total doit rester sous ____ € par vélo et par an.&nbsp;»</li>
@@ -351,7 +351,7 @@ n'est envoyé. Le <b>mode essentiel</b> masque le référentiel, les corrections
   unité et un seuil. Sans les trois, elle ne se vérifie pas — elle se discute.</p>
   <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: traduire «&nbsp;pas cher&nbsp;» par le prix
   d'achat. Le prix d'achat ne dit rien de ce que l'objet coûtera.</p>
-  <p><b>Critère de réussite</b>&nbsp;: tes quatre exigences portent chacune un nombre et une unité,
+  <p><b>Critère de réussite</b>&nbsp;: tes quatre exigences sont chacune vérifiables (un nombre et une unité, ou un oui/non contrôlable),
   et tu sais dire d'où vient chacune dans la phrase du maire.</p>
 </section>
 </div>
@@ -814,10 +814,11 @@ const CHECKS = {
                a1_6:"risque de n'être satisfait par aucune solution : il faut distinguer l'indispensable du souhaitable"};
     let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
     const t = val("a1_cdc");
-    const chiffre = (t.match(/\d/g)||[]).length >= 4;
+    /* au moins trois seuils chiffrés : la quatrième exigence peut être un oui/non contrôlable (audit du 08/09, A09) */
+    const chiffre = (t.match(/\d/g)||[]).length >= 3;
     return {score:ok,total:6,valide: ok>=5 && t.trim().length>=80 && chiffre,
       extra: (t.trim().length>=80 && chiffre) ? "" :
-        " Il manque ton cahier des charges : quatre exigences, chacune avec un nombre et une unité."};
+        " Il manque ton cahier des charges : quatre exigences vérifiables — des seuils chiffrés avec leur unité, ou un oui/non que l'on peut contrôler."};
   },
   2: function(){
     const att={a2_1:"F4, acier recyclé (58 kg éq.)",
