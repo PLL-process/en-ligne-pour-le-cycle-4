@@ -12732,3 +12732,55 @@ niveau est souvent un distracteur légitime. Banc **12 / 12** une fois les PR s�
 > correspondance, jamais d'un gabarit. Trente et un menus sur soixante-dix venaient d'un autre
 > lot, et le mode « cible » y rendait une liste vide sans un mot — personne ne l'avait vu, parce
 > qu'un menu vide ne fait pas de bruit (règle n°277).
+
+## 2026-09-09 — 5e_C1.1 : la planche des trois principes, refaite pour des élèves de 5e
+
+Pascal, devant l'image « Une seule fonction, trois principes » de la séquence Chengdu : trop
+dense pour des 5e — des pavés de texte, des lignes « + / − » chiffrées, et un dessin de la
+diffusion optique où le capteur, posé dans l'axe du faisceau, faisait penser à une mesure de
+lumière transmise. Il proposait une planche en trois cartes (« observer la lumière », « peser un
+filtre », « mesurer une vibration »), commençant par ce qu'on mesure (20 µg dans 2 m³ →
+10 µg/m³), la microbalance à vibration (TEOM) remplaçant l'atténuation bêta, et les prix,
+délais et incertitudes renvoyés à une fiche à part — « si tu penses que cette variante est
+bonne, remplace-la ».
+
+**Ce qui est repris de la proposition** — tout ce qui tient à la forme, parce qu'elle est
+meilleure : la planche part de **ce qu'on mesure** (une concentration, et pourquoi le volume
+d'air compte) avant le comment ; chaque principe est une **carte** avec un dessin en trois étapes
+numérotées, une ligne « à repérer sur le dessin », une comparaison familière (la poussière dans
+un rayon de soleil, le sac de l'aspirateur, la lampe torche derrière un rideau), trois phrases,
+une « idée à retenir » et un « à savoir » ; les chiffres vont dans un **tableau à part**, parce
+qu'ils décrivent des appareils, pas des principes ; un mini-lexique ferme la planche. Le capteur
+de la diffusion optique est **sur le côté** du faisceau, et la ligne « à repérer » le dit.
+
+**Ce qui n'est pas repris, et pourquoi** — le remplacement de l'atténuation bêta par la
+vibration. Mesuré avant de décider : l'activité 1 (a1_5), la correction, trois questions du QCM,
+la synthèse élève, la matrice (« un critère qui élimine au lieu de peser ») et le CSV des
+principes reposent sur la **source radioactive scellée** — c'est elle qui porte l'idée centrale
+de la séance, qu'un critère peut éliminer sans se peser, pour une raison qui n'a rien de
+technique. La vibration n'a pas d'équivalent ; la retirer aurait défait la séance pour gagner un
+principe plus « propre ». La microbalance est donc présentée là où elle est juste : en « à savoir »
+sous la pesée, dont elle est la variante continue (le filtre s'alourdit, le support vibre moins
+vite), avec l'idée à retenir formulée par Pascal. Le bêta reste, expliqué avec une lampe et un
+rideau, sans un mot de plus sur la radioactivité que « scellée » et « réglementée ».
+
+**Ce qui bouge dans le lot** — `Images/trois_principes_de_mesure.svg` est redessiné dans le même
+esprit (les trois mêmes schémas, l'analogie, deux lignes de chiffres, la bande de conclusion),
+parce que le QCM l'affiche trois fois et la synthèse élève une : la refonte ne devait pas laisser
+l'ancienne image ailleurs (règle n°279). Les `alt` du QCM et de son générateur, l'`aria-label`
+de la synthèse et `SOURCES_MEDIAS.md` disent la nouvelle image. Une septième question rejoint
+l'activité 1 — pourquoi connaître le volume d'air aspiré — avec sa ligne de correction, sa ligne
+de matrice et sa réponse dans le banc ; le verrou passe de 5/6 à 6/7. Synthèse professeur et fiche
+disent la planche, le geste de classe (une règle plate qu'on alourdit d'une gomme) et les sources
+de la vulgarisation (Sensirion, Met One, LCSQA) — côté professeur seulement, la page élève ne charge
+rien de distant (règle n°40).
+
+**Mesuré** — banc du lot 43 / 43 ; pas de défilement horizontal à 390 px (le tableau défile dans
+son cadre) ; impression : titres, schémas et chiffres lisibles sur fond blanc ; contrôles liens,
+médias, impression, règle 4, fichiers téléchargeables : verts.
+
+> **Règle d'or n°294 — une planche pour des 5e commence par ce qu'on mesure, et chaque principe
+> tient en un dessin, une comparaison et une phrase.** Les chiffres qui servent à choisir vont
+> dans un tableau à part : ils décrivent des appareils, pas des principes. Et avant de remplacer un
+> principe par un autre plus simple, on mesure ce qui, dans le lot, repose sur lui — ici, le
+> critère qui élimine tenait tout entier dans la source radioactive.
