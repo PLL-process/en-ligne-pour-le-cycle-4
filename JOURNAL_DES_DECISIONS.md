@@ -13042,3 +13042,115 @@ celui du lot Tsinghua : le tien est dans la consigne ». Pour le tableur, 3e_C1.
 > et la n°121 (une capture montre un geste nécessaire) : la n°93 disait que le geste doit être
 > *écrit* ; celle-ci dit qu'il doit pouvoir être *refait sans le professeur*. **Proposée — à retenir
 > par Pascal.**
+
+
+## 2026-09-10 — 4e_C1.1 : le geste « Nommer » va dans Documents, dans le dossier de la classe (prompt v2, §2 bis)
+
+**Branche** `fable/theme-1/gestes-en-captures-4e-C1.1-dossier-classe`, depuis `main` après la fusion
+de la PR #369 (lot pilote). Le prompt maître est passé en **version 2** le 10/09/2026 : tout vit sur la
+page web, rien à imprimer ; **chaque geste a sa capture, sans exception** ; et une seule consigne
+change, voulue par Pascal — le lieu d'enregistrement. Cette entrée ne porte que ce delta sur le
+pilote ; rien n'est étendu aux autres lots (§6), la question du réemploi (a)/(b) reste posée.
+
+### La seule consigne qui change (§2 bis) — mesurée
+
+Le geste « Nommer » disait « dans ton dossier personnel » ; les élèves ne savent pas où c'est. Il dit
+maintenant, mot pour mot le texte de Pascal, les mots propres au lot conservés (`4E-FEUX-TON NOM`,
+Classeur ODF) :
+
+> **Nommer.** Fichier → Enregistrer sous… tout de suite, au format Classeur ODF (.ods), sous
+> `4E-FEUX-TON NOM`, dans **Documents**, dans le **dossier qui porte le nom de ta classe** (par
+> exemple `4E3`). Si ce dossier n'existe pas encore, crée-le d'abord : dans la fenêtre
+> d'enregistrement, ouvre Documents, clique sur **Nouveau dossier**, tape le nom de ta classe,
+> valide, puis entre dedans.
+
+Texte visible de l'encart (balises retirées, figures exclues, comparé mot à mot par `difflib`) :
+- **contre `main` (pilote fusionné)** : 961 → 1202 caractères, **deux opérations**, toutes deux dans
+  le geste « Nommer » : « ton » → « Documents, dans le » et « personnel. » → « qui porte le nom de ta
+  classe (…) puis entre dedans. » ;
+- **contre la version d'avant le pilote** : trois opérations — l'insertion de ` (échauffement)` et les
+  deux ci-dessus. Rien d'autre n'a bougé : ni le paragraphe, ni Ouvrir, Retrouver, Sortir.
+`controle_gestes_outil.py` lit toujours le titre : 22 encarts, 0 écart.
+
+### Les captures du geste « Nommer », une par étape (n°121 : on ne résume pas un chemin en une image)
+
+Même poste, même logiciel que le pilote : Windows 11 Pro fr-FR, LibreOffice Calc 26.2.5.2 en
+français, LibreOffice en *mode clair* et *boîtes de dialogue LibreOffice* le temps des captures
+(profil sauvegardé puis restauré, comme ce matin). Le CSV du lot a été déposé dans Téléchargements,
+comme sur le poste d'un élève qui vient de le télécharger ; `Documents\4E3` n'existait pas avant et a
+été supprimé après. Aucune retouche ; réduction à 1400 px, 256 couleurs.
+
+| Capture | Ce qu'elle montre | Poids |
+|---|---|---|
+| `geste_tableur_2_nommer_documents.png` | « Enregistrer sous » ouverte sur **Documents** ; dans la liste, des dossiers de classes (3ème G2, 5eA, 5ème B…) — ceux du poste, déclarés exemples | 154 Ko |
+| `geste_tableur_2b_nommer_bouton_nouveau_dossier.png` | le bouton **Nouveau dossier** surligné, tout à droite de la ligne du chemin (LibreOffice l'appelle « Créer un nouveau dossier ») | 154 Ko |
+| `geste_tableur_2c_nommer_nom_du_dossier.png` | la petite fenêtre « Créer un nouveau dossier », **Nom : 4E3** (exemple) | 160 Ko |
+| `geste_tableur_2d_nommer_dossier_cree.png` | le dossier `4E3` apparu en bas de la liste — LibreOffice n'y entre pas tout seul, la légende dit de double-cliquer | 146 Ko |
+| `geste_tableur_2e_nommer_enregistrer_sous.png` | dans `Documents\4E3` : Nom `4E-FEUX-DUPONT`, **Classeur ODF (.ods)** — remplace l'ancienne capture 2 | 47 Ko |
+| `geste_tableur_2f_nommer_resultat.png` | la barre de titre en `.ods` — c'est l'ancienne capture 2b, inchangée (même fichier, même nom), renommée | 122 Ko |
+| `geste_tableur_2g_nommer_explorateur.png` | l'**Explorateur Windows** : `… › Documents › 4E3 › 4E-FEUX-DUPONT.ods`, 1 élément | 60 Ko |
+
+Deux captures du pilote ont été **refaites** pour rester vraies après ce changement de lieu :
+`geste_tableur_3c_retrouver_rouvrir.png` (« Ouvrir » dans `Documents\4E3`, le `.ods` sélectionné ;
+46 Ko) et `geste_tableur_4b_sortir_enregistrer_image.png` (« Enregistrer en tant qu'image » dans
+`Documents\4E3`, PNG ; 43 Ko) — l'ancienne 4b montrait encore `Documents\Techno-4e`. Les captures
+1, 1b, 1c, 3, 3b et 4 sont celles du pilote. **Quinze captures**, quatre gestes, aucun sans image.
+
+### Vu en prenant les captures — à trancher par Pascal
+
+- **« Nouveau dossier » (n°128).** La consigne dit « clique sur Nouveau dossier ». C'est le mot exact
+  du bouton de la boîte **Windows** ; dans la boîte **LibreOffice** (celle des captures), le bouton
+  est une icône sans texte dont l'infobulle dit « Créer un nouveau dossier ». Le mot de Pascal
+  couvre les deux : il est gardé tel quel, et la légende de la capture 2b nomme les deux formes.
+  L'infobulle n'a pas pu être capturée (elle ne s'affiche pas sous un survol simulé) : c'est le
+  bouton surligné qui est montré, et la petite fenêtre suivante porte le mot exact.
+- **L'Explorateur est en mode sombre** sur le poste (Windows suit le thème de Pascal) ; on ne peut pas
+  le mettre en clair sans changer le thème de tout le poste, ce qui n'a pas été fait. La capture 2g
+  est donc sombre, lisible, et la légende dit que l'Explorateur peut être clair ou sombre selon le
+  poste. Le volet de navigation (qui listait les dossiers du poste) a été masqué le temps de la
+  capture, puis réaffiché.
+- **Le nom du compte** (`PhaseLockedLoop`) apparaît dans le chemin de quatre captures, comme dans le
+  pilote ; les légendes le déclarent exemple.
+- **La liste de Documents** montre les dossiers du poste : aucun nom privé n'est lisible (colonne
+  « Nom » étroite, noms tronqués), vérifié image par image ; la légende dit que « les tiens seront
+  différents ».
+
+### L'agrandissement au clic — le dépôt avait déjà le mécanisme
+
+L'entrée du pilote disait « la page n'a pas ce mécanisme, on n'en invente pas » : c'était faux.
+91 pages du dépôt (stations 3e_C9.2, jardin 4e_C9, boîte étiquetée 5e_C9.1…) portent le bloc
+`loupe-images-v1` (règle n°92 : clic ou Entrée pour agrandir, Échap pour refermer, l'`alt` sert de
+légende, aucun réseau). Il est **recopié tel quel** dans la page 4e_C1.1, avant `</body>` ; les
+quinze captures s'ouvrent en grand avec leur `alt` en légende, vérifié au navigateur.
+
+### Les contrôles (§5), tous exécutés ce jour
+
+- `controle_gestes_outil.py` : 22 encarts · 0 écart ✅ — `controle_medias.py` ✅ (quinze lignes de
+  provenance, deux retirées) — `controle_liens.py` ✅ — `verif_regles_audit.py …/4e_C1.1/` : 1 séquence ·
+  0 manquement (le ⚑ n°27 préexistant, inchangé).
+- `tests_4e_C1.1-C1.3_tsinghua.py` : **42 / 42**.
+- `controle_impression.mjs` (importé par `node -e`, voir le pilote) : ✅ aucune page refusée.
+- Navigateur, serveur local : **1280 px** et **390 px**, `scrollWidth == clientWidth` aux deux
+  largeurs, aucun élément de l'encart ne dépasse, figures à 559 px puis 296 px, **15 / 15 images
+  chargées, 0 cassée, 0 `alt` court**, console vide ; loupe ouverte et refermée par script.
+- `build_audit.py` et `make_index.py` régénérés avant le commit.
+
+### Le poste, remis en état
+
+Profil LibreOffice restauré depuis sa sauvegarde (mode d'apparence, boîtes de dialogue, et la taille
+mémorisée de la boîte « Ouvrir », qu'il a fallu réduire dans le profil pour qu'elle tienne à l'écran) ;
+`Documents\4E3` et la copie du CSV dans Téléchargements supprimés ; volet de navigation de
+l'Explorateur réaffiché.
+
+### La règle d'or n°297, dans sa formulation du prompt v2 (proposée, à retenir par Pascal)
+
+> **Règle d'or n°297 (clé de voûte) — un geste d'outil s'enseigne pour être refait seul, plus tard,
+> depuis la page.** L'encart « Avant de commencer » est un échauffement, et se nomme ainsi. Chaque
+> geste qu'il liste — jusqu'au dossier de la classe dans Documents — est montré par une capture du
+> vrai logiciel, prise sur le poste, dans la langue du poste, au moment du geste et au résultat
+> attendu, sans retouche, le geste désigné dans la légende. Un élève qui a oublié ce que le
+> professeur a dit, chez lui ou des mois après, rouvre la page, retrouve le geste, et le refait sans
+> personne. Ce qui se dit de vive voix à chaque séance n'est pas enseigné : c'est répété.
+> — Elle prolonge la n°93 et la n°121 : la n°93 disait que le geste doit être *écrit* ; celle-ci dit
+> qu'il doit pouvoir être *refait sans le professeur* — et que le support de ce rappel est la page,
+> pas une feuille : elle est là quand la mémoire ne l'est plus, et elle ne coûte aucune photocopie.
