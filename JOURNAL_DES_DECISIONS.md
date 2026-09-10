@@ -12893,3 +12893,152 @@ ce que l'autre n'avait pas mesuré. Même règle de lecture (n°293).
 > professeur — et ce qui passait comme chute devient une loi une fois seul. Quatre corrections de la
 > première passe (A04, A05, A06, A09) avaient été faites sur la page et laissées dans le QCM ou la
 > synthèse. On corrige une formulation partout où elle est reprise, et l'on grep avant de conclure.
+
+
+## 2026-09-10 — 4e_C1.1 : les quatre gestes du tableur, montrés par le vrai logiciel (lot pilote)
+
+**Le constat.** L'encart « 🧰 Avant de commencer — les quatre gestes du tableur » *écrit* les
+gestes ; il ne les *montre* pas. Un élève qui a oublié ce que le professeur a dit — chez lui, ou
+des mois après — n'a rien dans la page pour refaire le geste seul. Mission (prompt maître du
+09/09/2026) : une capture du **vrai logiciel, sur ce poste**, au moment du geste et au résultat
+attendu, sous chaque geste ; et l'encart se nomme ce qu'il est, un **échauffement**.
+
+### Le périmètre, mesuré avant d'agir (§1)
+
+`grep -rl 'class="card gestes-outil"' theme-*` : 15 pages de 4e et de 3e (les 5e sont hors
+mission). Relevé *page · outil · gestes* (un `<li>` = un geste) :
+
+| Page | Outil nommé dans le titre | Gestes |
+|---|---|---|
+| 4e_C1.1 `sequence_4e_C1.1-C1.3_tsinghua_feux.html` | tableur (LibreOffice Calc) | Ouvrir · Nommer · Retrouver · Sortir |
+| 3e_C1.1 `sequence_3e_C1.1-C1.4_tsinghua_feux.html` | Tableur | Ouvrir · Nommer · Retrouver · Sortir |
+| 4e_C4.7 `sequence_4e_C4.7-C4.9_sos_serre_packet_tracer.html` | Packet Tracer | Ouvrir · Nommer · Retrouver · Sortir |
+| 3e_C4.7 `sequence_3e_C4.7-C4.8_internet_sainte_luce.html` | Packet Tracer | Ouvrir · Nommer · Retrouver · Sortir |
+| 3e_C4.8 `sequence_3e_C4.7-C4.8_pont_numerique_packet_tracer.html` | Packet Tracer | Ouvrir · Nommer · Retrouver · Sortir |
+| 3e_C4.3 `sequence_3e_C4.3-C4.6_station_alerte_cyclonique.html` | Vittascience | Ouvrir · Nommer · Retrouver · Sortir |
+| 4e_C6.1 `sequence_4e_C6.1-C6.3_ajuster_programme_jardin.html` | Vittascience | Ouvrir · Nommer · Retrouver · Sortir |
+| 4e_C6.2 `sequence-jardin-connecte-arrosage-automatique.html` | Vittascience | Ouvrir · Nommer · Retrouver · Sortir |
+| 3e_C6.1 `sequence_3e_C6.1-C6.3_programmer_alerte.html` | Vittascience | Ouvrir · Nommer · Retrouver · Sortir |
+| 3e_C9.1 `sequence_3e_C9.1_variables_types_systemes.html` | Vittascience | Ouvrir · Nommer · Retrouver · Sortir |
+| 3e_C9.2 `sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html` | Vittascience | Ouvrir la bonne interface · Repérer les cinq catégories · Nommer et enregistrer · Simuler, puis téléverser |
+| 3e_C9.2 `sequence_3e_C9.2-C8.3_station_2_programmer.html` | Vittascience | idem (page engendrée par `generer_les_quatre_pages.py`) |
+| 4e_C7.1 `sequence_4e_C7_jardin-conception.html` | Onshape | Ouvrir · Nommer · Retrouver · Sortir |
+| 3e_C7.1 `sequence_3e_C7_capteur-confort-ny.html` | Onshape | Ouvrir · Nommer · Retrouver · Sortir |
+
+Quatre outils : tableur (2 pages), Packet Tracer (3), Vittascience (7, dont deux pages engendrées),
+Onshape (2). Seul le **lot pilote 4e_C1.1** est livré ici (§1.3 du prompt) ; les autres attendent
+que Pascal ait vu, et tranché la question du réemploi (ci-dessous).
+
+### Le titre (§2) — mesuré
+
+Texte visible de l'encart avant / après, balises retirées, figures exclues, comparé par
+`difflib` : **une seule opération, `insert ' (échauffement)'`** ; 946 → 961 caractères. Pas un mot
+des `<li>`, du paragraphe ni du lien de téléchargement n'a bougé.
+`controle_gestes_outil.py` lit toujours le titre (motif « quatre gestes du X ») : 22 encarts, 0 écart.
+
+### Les captures — sur ce poste, avec le fichier du lot
+
+**Poste** : Windows 11 Pro (fr-FR), **LibreOffice Calc 26.2.5.2**, interface en français, écran
+3840 × 2160 à 200 %. Le fichier ouvert est **`donnees_feux_impacts_4e.csv` du lot**, copié dans
+un dossier de travail `Documents\Techno-4e` (le « dossier personnel » de l'élève), en suivant
+l'encart geste par geste — c'est le test grandeur nature de l'encart, et il passe : les quatre
+gestes se font tels qu'ils sont écrits. Capture de la fenêtre ou de la boîte seule
+(`GetForegroundWindow` + `CopyFromScreen`), jamais du bureau. Aucune retouche (n°127) ; réduction
+à 1400 px de large et quantification à 256 couleurs, sans perte visible ; 43 à 148 Ko chacune
+(n°40). Dix captures, nommées dans l'ordre de l'encart, dans `Images/` du lot :
+
+| Geste | Capture | Ce qu'elle montre |
+|---|---|---|
+| 1 Ouvrir | `geste_tableur_1_ouvrir_import_csv.png` | la boîte « Import de texte », **Point-virgule** coché, l'aperçu en colonnes |
+| 1 Ouvrir | `geste_tableur_1b_ouvrir_resultat.png` | le résultat : huit colonnes A → H |
+| 1 Ouvrir | `geste_tableur_1c_ouvrir_erreur_separateur.png` | l'erreur typique (n°121) : tout dans la colonne A, points-virgules compris |
+| 2 Nommer | `geste_tableur_2_nommer_enregistrer_sous.png` | « Enregistrer sous », **Classeur ODF (.ods)**, nom d'exemple `4E-FEUX-DUPONT` |
+| 2 Nommer | `geste_tableur_2b_nommer_resultat.png` | la barre de titre en `.ods` |
+| 3 Retrouver | `geste_tableur_3_retrouver_avant_ctrl_s.png` | avant Ctrl+S : l'icône rouge de la barre d'état (le raccourci n'a pas d'interface — §3.4) |
+| 3 Retrouver | `geste_tableur_3b_retrouver_apres_ctrl_s.png` | après Ctrl+S : l'icône grise |
+| 3 Retrouver | `geste_tableur_3c_retrouver_rouvrir.png` | « Ouvrir » : le `.ods` à côté du `.csv` |
+| 4 Sortir | `geste_tableur_4_sortir_clic_droit_graphique.png` | clic droit sur le graphique : Copier, **Exporter comme image** |
+| 4 Sortir | `geste_tableur_4b_sortir_enregistrer_image.png` | « Enregistrer en tant qu'image », type PNG |
+
+Le geste 3 porte deux gestes dans un même `<li>` (Ctrl+S, puis rouvrir) : 2 + 1 captures, pas
+« deux au plus » — dit ici, pour ne pas le cacher. En niveaux de gris, la case cochée reste un carré
+sombre à côté de cases claires (vérifié sur la capture 1) ; la légende la nomme de toute façon.
+
+**Deux choix faits sur le poste, à valider par Pascal :**
+
+1. **Mode clair.** Le poste est en mode sombre (Windows et LibreOffice suivent). Une capture sombre
+   se lit mal et vide la cartouche à l'impression ; les postes du collège sont en clair. LibreOffice
+   a été mis en *Apparence : Clair* le temps des captures (`ApplicationAppearance=1` dans le profil
+   utilisateur), puis le profil a été **restauré** depuis sa sauvegarde. Aucune retouche d'image.
+2. **Boîtes de dialogue de LibreOffice, pas celles de Windows.** « Ouvrir », « Enregistrer sous »
+   et « Enregistrer en tant qu'image » sont, par défaut sur Windows, les boîtes de l'Explorateur —
+   ici sombres, et ouvertes sur les dossiers privés du poste. L'option *Utiliser les boîtes de
+   dialogue LibreOffice* a été activée le temps des captures (`UseSystemFileDialog=false`), puis
+   restaurée. Les mêmes champs s'y trouvent (Nom de fichier, Type de fichier) ; la légende dit à
+   l'élève que la boîte peut avoir une autre allure. Si Pascal préfère les boîtes Windows en mode
+   clair, il faut les reprendre sur un poste en clair — dix minutes.
+
+**Vu en suivant l'encart, à trancher par Pascal (n°128, sans changer un mot ici) :**
+
+- LibreOffice 26.2 ouvre le CSV avec un nouveau bouton **« Détecté (;) »** sélectionné par défaut
+  et *Point-virgule* coché mais grisé. L'encart dit « garde Point-virgule coché » : c'est juste,
+  et la légende ajoute que « Détecté (;) » convient aussi. Mais si un élève précédent a laissé
+  *Séparé par* + *Tabulation* (le réglage est mémorisé par poste), la fenêtre s'ouvre **fausse** :
+  c'est le cas capturé en 1c, et c'est pour cela que la consigne « coche Point-virgule » reste la
+  bonne.
+- Le CSV a le **point comme séparateur décimal** (`0.142`) ; ouvert avec la locale « Français
+  (France) », ces valeurs deviennent du **texte**, pas des nombres — un graphique fait dessus est
+  vide, ce qui est arrivé ici. Pour la capture 4, les quatre valeurs ont été retapées avec une
+  virgule (déclaré « exemple » dans la légende). Deux remèdes possibles, l'un ou l'autre : écrire le
+  CSV du lot avec des virgules, ou ajouter un mot dans l'encart (Locale : Anglais). Pas fait :
+  hors périmètre « pas un mot ».
+- `Exporter comme image` s'écrit sans points de suspension dans LibreOffice 26.2 ; l'encart dit
+  « s'exporte en image par un clic droit » — pas de contradiction, rien à aligner.
+
+### L'insertion
+
+Sous chaque `<li>`, une `<figure class="geste-capture">` (patron de l'atelier planification) :
+`<img>` avec `alt` complet (barre de menus, entrée, case cochée, ce qui s'affiche — n°34),
+`width`/`height` réels, `loading="lazy"` ; `<figcaption>` en trois temps : *Ce que tu dois voir*,
+*Comment savoir que c'est fait*, et en italique la déclaration d'exemple (n°75). Visibles d'emblée,
+`max-width: 560px`, pas d'agrandissement au clic (la page n'a pas ce mécanisme, on n'en invente
+pas). CSS ajouté dans le bloc `.gestes-outil`, avec `break-inside: avoid` à l'impression.
+`SOURCES_MEDIAS.md` : une ligne par capture (capture d'écran réelle, LibreOffice Calc 26.2.5.2
+(fr), poste de Pascal, 10/09/2026, CC0, poids) ; `manifest_lot_tsinghua_4e_C1.json` les inventorie.
+
+### Les contrôles (§5), tous exécutés ce jour
+
+- `controle_gestes_outil.py` : 22 encarts lus · 0 écart · ✅.
+- `controle_medias.py` : ✅ chaque image a une provenance écrite, aucune promise en vain.
+- `controle_liens.py` : ✅ aucun lien mort, aucune ancre introuvable.
+- `verif_regles_audit.py …/4e_C1.1/` : 1 séquence · 0 manquement mécanique (un ⚑ n°27 préexistant, à
+  relire — la page parle de mesures réelles).
+- `tests_4e_C1.1-C1.3_tsinghua.py` : **42 / 42** (dont zéro erreur JS, images chargées).
+- `controle_impression.mjs` : 338 pages en `media: print` · 54 713 textes lus · **0 refusée** ✅.
+  **Trouvé en l'exécutant** : sur Windows, `node _outils/controle_impression.mjs --muet` sort en
+  0 **sans rien faire** — la garde `import.meta.url === 'file://' + process.argv[1]` compare
+  `file:///C:/…` à `file://C:\…`. Il a fallu importer `main()` depuis un `node -e`. À corriger dans
+  `_outils/` (périmètre du thème 2), pas ici. Il fallait aussi le paquet Node `playwright`, absent du
+  poste (le dépôt n'utilise que le paquet Python) : installé hors dépôt, dans le dossier utilisateur.
+- Navigateur (serveur statique local) : **1280 px** et **390 px**, `scrollWidth == clientWidth`
+  aux deux largeurs (aucun défilement horizontal), figure à 560 px puis 296 px, **10 / 10 images
+  chargées, 0 cassée**, aucun message en console, aucun `alt` court.
+- `build_audit.py` et `make_index.py` régénérés avant le commit.
+
+### Réemploi entre lots (§4) — question posée à Pascal dans la PR
+
+(a) un jeu de captures par lot, avec le fichier du lot — plus juste, plus long (le pilote est en a) ;
+(b) un jeu par outil pris sur le pilote et réemployé, la légende disant « le nom du fichier est
+celui du lot Tsinghua : le tien est dans la consigne ». Pour le tableur, 3e_C1.1 n'ouvre pas de CSV
+(« crée un classeur ») : même en (b), sa capture 1 ne serait pas celle-ci.
+
+> **Règle d'or n°297 (clé de voûte) — un geste d'outil s'enseigne pour être refait seul, plus
+> tard.** L'encart « Avant de commencer » est un échauffement, et se nomme ainsi. Chaque geste
+> qu'il liste est montré par une capture du vrai logiciel, prise sur le poste, dans la langue du
+> poste, au moment du geste et au résultat attendu — sans retouche, le geste désigné dans la
+> légende. Un élève qui a oublié ce que le professeur a dit, chez lui ou des mois après, retrouve
+> le geste dans la page, et le refait sans personne. Ce qui se dit de vive voix à chaque séance
+> n'est pas enseigné : c'est répété. — Elle prolonge la n°93 (aucun geste d'outil supposé acquis)
+> et la n°121 (une capture montre un geste nécessaire) : la n°93 disait que le geste doit être
+> *écrit* ; celle-ci dit qu'il doit pouvoir être *refait sans le professeur*. **Proposée — à retenir
+> par Pascal.**
