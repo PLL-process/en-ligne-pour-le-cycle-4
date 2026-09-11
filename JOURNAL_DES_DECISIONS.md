@@ -13204,7 +13204,7 @@ inutilisables devant une classe :
 
 Elles seront reprises depuis un compte Windows **local et standard** nommé `Eleve`, en **thème
 clair**, dont `Documents` ne contient que le dossier `4E3` du lot. Le protocole est dans
-`PROTOCOLE_CAPTURES_GESTES.md`.
+`theme-1-objets-systemes-usages-interactions/PROTOCOLE_CAPTURES_GESTES.md`.
 
 ### Les boîtes de dialogue : la question de la PR #369 est tranchée
 
@@ -13266,7 +13266,7 @@ que la virgule sert deux fois, comme séparateur et comme virgule décimale.
 
 ### Les outils, qui ont beaucoup appris
 
-`_outils/captures-gestes/` s'étoffe de huit scripts et de trois corrections dont chacune répare
+`theme-1-objets-systemes-usages-interactions/_outils-captures-gestes/` s'étoffe de huit scripts et de trois corrections dont chacune répare
 une panne rencontrée ce jour :
 
 - **conscience DPI par moniteur (v2)** dans tous les outils : sans elle, Windows virtualise les
