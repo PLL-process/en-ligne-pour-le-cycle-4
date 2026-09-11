@@ -53,7 +53,7 @@ distinction est celle de la règle des médias du dépôt, et elle doit rester l
 
 ## 4. Les outils
 
-Tout est dans `_outils/captures-gestes/`.
+Tout est dans `theme-1-objets-systemes-usages-interactions/_outils-captures-gestes/`.
 
 | script | à quoi il sert |
 | --- | --- |
