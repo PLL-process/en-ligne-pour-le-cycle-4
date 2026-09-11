@@ -13216,3 +13216,101 @@ en thème clair, au `Documents` vide, elles montrent exactement ce que l'élève
 Conséquence pratique : **le profil LibreOffice du compte `Eleve` ne doit être retouché en rien.**
 Ni `ApplicationAppearance`, ni `UseSystemFileDialog`. Les deux réglages du pilote existaient pour
 compenser le poste ; le compte propre les rend inutiles.
+
+## 11/09/2026 — 4e_C1.1 : les quinze captures refaites en mode sombre, sans nom de compte ni dossiers privés
+
+### Le cadre, tranché par Pascal
+
+Les élèves ont **exactement l'affichage de ce poste** : thème sombre, boîtes de dialogue
+Windows par défaut. Le compte `Eleve` du protocole de la veille n'a donc pas lieu d'être, et
+les captures sont reprises dans la session de travail, sans toucher au profil LibreOffice ni
+au thème. Les trois images de la PR #369 prises en mode clair sont refaites en sombre : l'élève
+doit voir **une seule interface** d'un bout à l'autre de l'encart, pas deux.
+
+Deux interdits, tenus image par image avant intégration :
+
+1. **aucune capture ne montre la chaîne `PhaseLockedLoop`** ;
+2. **aucune ne montre le contenu du dossier `Documents`** du poste.
+
+### Ce que les boîtes Windows ont donné, et qui n'était pas prévu
+
+Le fil d'Ariane de Windows **ne nomme pas le compte** : il écrit « › Documents › » et, une fois
+dans le dossier de classe, « › Documents › 4E3 ». Le premier interdit est tenu sans rien
+rétrécir, pour les sept captures de boîtes de dialogue. Seul l'Explorateur, lui, déroule
+« Utilisateurs › PhaseLockedLoop › Documents › 4E3 » : la fenêtre a été rétrécie jusqu'à ce que
+le chemin se replie en **« … › Documents › 4E3 »**, exactement comme demandé.
+
+Le second interdit a coûté davantage. Trois mesures, toutes de cadrage, aucune de retouche :
+
+- les deux vues qui ouvrent sur `Documents` — « Documents ouvert » et « Nouveau dossier » —
+  sont **recadrées au bandeau du haut** : fil d'Ariane et barre d'outils, rien en dessous ;
+- les deux qui suivent la création du dossier ont été prises **avec la boîte rétrécie à une
+  seule ligne de liste**, celle du dossier `4E3` que Windows garde à l'écran pendant la saisie ;
+- le **volet de navigation est masqué** dans les trois boîtes et dans l'Explorateur : il
+  listait Dropbox, OneDrive et des dossiers de travail, et il dépliait `Documents`.
+
+### Les quinze captures
+
+| geste | images | ce qui a changé |
+| --- | --- | --- |
+| Ouvrir | 1, 1b, 1c | refaites sur le CSV à virgule : l'aperçu d'import montre `0,142`, et la feuille aligne les valeurs à droite — la preuve visible qu'elles sont des nombres |
+| Nommer | 2, 2b, 2c, 2d, 2e, 2f, 2g | boîtes Windows : le bouton « Nouveau dossier » est écrit en toutes lettres au-dessus de la liste, et le nom du dossier se tape **dans la liste**, pas dans une fenêtre à part |
+| Retrouver | 3, 3b, 3c | inchangées dans leur propos ; la boîte « Ouvrir » est celle de Windows |
+| Sortir | 4, 4b | le graphique est construit sur `D7:E10`, les quatre facteurs : quatre barres, celle du repas avec bœuf écrasant les trois autres |
+
+Le contre-exemple du geste « Ouvrir » a changé de nature, et sa légende avec lui. Avec le point
+décimal, tout tombait dans la colonne A. Avec la virgule décimale, les six premières lignes y
+tombent encore, mais **les quatre dernières se coupent en deux au milieu d'un nombre** — `…diesel;0`
+d'un côté, `142;kgCO2e_par_km` de l'autre. C'est une meilleure leçon : l'élève voit de ses yeux
+que la virgule sert deux fois, comme séparateur et comme virgule décimale.
+
+### Les outils, qui ont beaucoup appris
+
+`_outils/captures-gestes/` s'étoffe de huit scripts et de trois corrections dont chacune répare
+une panne rencontrée ce jour :
+
+- **conscience DPI par moniteur (v2)** dans tous les outils : sans elle, Windows virtualise les
+  coordonnées dès qu'une fenêtre change d'écran, et une largeur demandée revient divisée par 1,75 ;
+- **`uia.ps1 -Action poser`** : LibreOffice réimpose sa taille dès qu'on passe par `SetWindowPos`.
+  Seul `TransformPattern` d'UI Automation obtient une fenêtre à la taille voulue ;
+- **filtre par classe de fenêtre** (`-Classe CabinetWClass`, `SALFRAME`, `#32770`) : le titre seul
+  ne suffit pas à désigner une fenêtre, **la fenêtre de Claude portant dans son titre le texte de
+  la conversation** — elle a été capturée à la place de l'Explorateur ;
+- **`frappe.ps1` et `serie_frappes.ps1`** : on ne tape que si la fenêtre attendue a le focus, et
+  on le revérifie entre chaque touche ;
+- **`menu_choisir.ps1`** : un clic simulé n'active pas les entrées des menus de l'Explorateur. On
+  descend au clavier en relisant, à chaque flèche, **quelle entrée porte le focus** ;
+- **`clic.ps1`** relit la position du curseur après l'avoir posée et refuse d'agir si elle a été
+  mise à l'échelle.
+
+### L'incident, et ce qu'il coûte de retenir
+
+Une frappe partie dans une fenêtre qui n'était pas la bonne a ouvert, dans un dossier temporaire
+de téléchargement, la boîte « Voulez-vous exécuter ce fichier ? » pour `Grok_Bot_0.47.0_Setup.exe`.
+**Rien n'a été exécuté**, et la boîte a été laissée à Pascal : un agent ne tranche pas une
+question de sécurité à la place de l'utilisateur. Le travail a été suspendu là, puis repris une
+fois le bureau vide.
+
+La leçon est dans les outils, pas dans la prudence : **le pilotage au clavier d'un poste où
+PRONOTE est ouvert en mode modification n'est pas acceptable**. Les frappes sont désormais
+conditionnées au focus ET à la classe de fenêtre, et la reprise a eu lieu sur un bureau où plus
+rien d'autre ne tournait.
+
+### Les contrôles, tous exécutés ce jour
+
+- `controle_gestes_outil.py` : 22 encarts · 0 écart ✅ — `controle_medias.py` ✅ (quinze provenances
+  réécrites : boîtes Windows, mode sombre, date du jour, poids réels) — `controle_liens.py` ✅ —
+  `verif_regles_audit.py …/4e_C1.1/` : 1 séquence · 0 manquement (le ⚑ n°27 préexistant, inchangé).
+- `tests_4e_C1.1-C1.3_tsinghua.py` : **42 / 42**.
+- `controle_impression.mjs` : ✅ aucune page refusée (les dettes de contraste comptées sont
+  antérieures et inchangées).
+- Navigateur, serveur local : **1280 px** puis **390 px**, `scrollWidth == clientWidth` aux deux
+  largeurs, aucun élément hors cadre, **15 / 15 captures chargées**, les quinze `width`/`height`
+  déclarés **égaux aux dimensions réelles**, figures à 560 px puis 296 px, console vide, loupe
+  ouverte puis refermée par script.
+
+### Le poste, remis en état
+
+`Documents\4E3` et la copie du CSV dans Téléchargements supprimés ; volet de navigation et volet
+des détails de l'Explorateur réaffichés ; LibreOffice fermé. Le profil LibreOffice n'a **pas** été
+touché de la séance — c'était la consigne, et les boîtes Windows par défaut l'ont rendue tenable.
