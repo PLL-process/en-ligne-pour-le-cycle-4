@@ -13204,7 +13204,7 @@ inutilisables devant une classe :
 
 Elles seront reprises depuis un compte Windows **local et standard** nommé `Eleve`, en **thème
 clair**, dont `Documents` ne contient que le dossier `4E3` du lot. Le protocole est dans
-`PROTOCOLE_CAPTURES_COMPTE_ELEVE.md`.
+`PROTOCOLE_CAPTURES_GESTES.md`.
 
 ### Les boîtes de dialogue : la question de la PR #369 est tranchée
 
