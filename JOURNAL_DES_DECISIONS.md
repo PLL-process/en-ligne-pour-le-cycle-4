@@ -13617,3 +13617,108 @@ touché.**
 La réserve écrite le 11/09 tient toujours : le **volet de navigation des boîtes de dialogue**
 reste masqué, et le sera jusqu'à la fin du dernier lot de la vague. Il se remet en deux clics par
 **Organiser → Disposition → Volet de navigation**.
+
+## 12/09/2026 — 5e_C3.1 (Shanghai) : l'encart nomme son CSV, et un nom de fichier de 57 caractères pousse la page hors de l'écran
+
+Troisième des quatre lots de la vague « tableur ». Le protocole est celui des lots précédents ;
+ce qui suit ne dit que ce que ce lot-ci a de propre.
+
+### Étape A — l'encart était encore le gabarit
+
+Même écart que sur les deux lots précédents, même correction :
+
+| | avant | après |
+|---|---|---|
+| titre | `🧰 Avant de commencer — les quatre gestes de Tableur` | `🧰 Avant de commencer (échauffement) — les quatre gestes du tableur` |
+| Ouvrir | « Ouvre le tableur (**LibreOffice Calc**) et crée un classeur. » | « Ouvre le tableur (**LibreOffice Calc**), puis ouvre le fichier 📥 `donnees_vehicules_dernier_kilometre_shanghai_simulees.csv` (clique ici pour le télécharger) (**Fichier → Ouvrir…**). Dans la fenêtre d'import, garde **Point-virgule** coché comme séparateur et valide. » |
+| Nommer | « **Fichier → Enregistrer sous…** tout de suite, sous `NIVEAU-SUJET-TON NOM`, dans ton dossier personnel. » | le §2 bis du prompt maître, mot pour mot, avec `5E-VEHICULES-TON NOM`, **Documents**, le **dossier qui porte le nom de ta classe** (exemple `5E1`) |
+| Retrouver, Sortir | inchangées | inchangées |
+
+**L'activité 4, « L'indicateur multicritère, au tableur », fait déjà ouvrir ce CSV** — et l'encart
+n'en disait rien. Le lien qu'elle porte n'était d'ailleurs pas un lien de téléchargement : pas
+d'attribut `download`, pas de 📥. L'encart en pose un, sans toucher à celui de l'activité.
+
+Le lot n'ouvre qu'**un** CSV : pas de phrase sur « les autres fichiers », contrairement à `5e_C1.2`.
+
+Le nom `5E-VEHICULES-TON NOM` est une **proposition**, à valider dans la PR : contrairement à
+`5e_C1.2`, ce lot ne nommait aucun classeur ailleurs — vérifié, zéro occurrence de `.ods` ou
+`.xlsx` nommé dans la séquence, la fiche, le plan ou le QCM. La règle d'or n°128 ne tranchait donc
+pas à ma place, et `DUPONT` reste le nom d'élève d'exemple, comme sur le pilote.
+
+### Étape B — le CSV était déjà à la virgule décimale
+
+`donnees_vehicules_dernier_kilometre_shanghai_simulees.csv`, 3 solutions × 20 colonnes :
+**0 point décimal, 6 virgules décimales**, séparateur `;` et fins de ligne CRLF inchangés. Aucun
+octet modifié. La preuve que le tableur lit bien ces nombres est dans la capture `1b`, où les
+masses 48, 1350 et 95 sont **collées à droite** de leur cellule.
+
+### Étape C — quinze captures, et un contre-exemple différent des autres lots
+
+Treize des quinze portent le nom du fichier du lot ou celui de la classe. Mêmes règles de cadrage
+que les lots précédents, tenues image par image ; aucune capture ne porte la chaîne
+`PhaseLockedLoop`.
+
+| geste | captures | ce que le lot change |
+|---|---|---|
+| Ouvrir | 1, 1b, 1c | vingt colonnes ; l'aperçu d'import n'en montre que cinq, et la feuille huit |
+| Nommer | 2 → 2g | `5E-VEHICULES-DUPONT.ods` dans `Documents › 5E1` |
+| Retrouver | 3, 3b, 3c | `indicateur` tapé en **U1** — la colonne que l'activité 4 fait précisément ajouter après la dernière |
+| Sortir | 4, 4b | graphique sur `R1:S4`, les deux notes d'adaptation du cahier des charges |
+
+**Le contre-exemple du geste « Ouvrir » ne ressemble pas à ceux des lots précédents.** Ailleurs,
+la virgule coupait les nombres en deux et l'on voyait le dégât se répandre sur plusieurs colonnes.
+Ici, la colonne A s'élargit à la taille de la ligne de titres — vingt intitulés — et **chaque
+ligne s'arrête net à un endroit différent**, là où se trouvait sa première virgule : `;120;55;3`
+pour S1, `Calculateur embarque` pour S2, `;Aluminium` pour S3. La virgule sert deux fois dans ce
+fichier : à l'intérieur des textes (« Aluminium, acier et polymeres ») et comme virgule décimale.
+Le désordre est moins spectaculaire, mais il est plus traître — et la légende le dit.
+
+Le graphique porte les mêmes abscisses numérotées que sur `5e_C1.2`, et pour la même raison
+mécanique, déjà écrite : l'assistant de diagramme aplatit une sélection multiple. Les trois
+solutions du lot s'appelant **S1, S2 et S3**, la correspondance 1 → S1 est ici immédiate.
+
+### Un défaut qu'aucun lot précédent n'avait pu montrer : le nom de fichier trop long
+
+`donnees_vehicules_dernier_kilometre_shanghai_simulees.csv` fait **57 caractères**. Dans le
+`<code>` de la consigne « Ouvrir », il ne se coupe nulle part : à **390 px** de large — un
+téléphone — il pousse la page entière à **493 px** et lui donne une barre de défilement
+horizontale. Mesuré avant/après : la page d'origine ne défilait pas ; la page avec l'encart
+complété défilait.
+
+Les trois lots précédents ne pouvaient pas révéler ce défaut : leurs noms de fichier font 41 et
+34 caractères, et tiennent. Une règle d'une ligne le corrige, **dans l'encart seulement** :
+
+```css
+.gestes-outil code{overflow-wrap:anywhere}
+```
+
+`anywhere` et non `break-word` : la coupure n'intervient **que si c'est nécessaire**, et la mesure
+de largeur minimale du bloc en tient compte — un nom court n'est jamais coupé.
+
+À retenir pour le dernier lot de la vague : `donnees_impacts_feux_activites_conflit_3e.csv` fait
+45 caractères, à vérifier au même endroit.
+
+### Étape D — les contrôles, tous exécutés ce jour, avec leurs chiffres
+
+- `controle_gestes_outil.py` : **22 encarts lus · 0 écart** ✅
+- `controle_medias.py` : **41 lots · 327 médias · 327 nommés par leur `SOURCES_MEDIAS.md` ·
+  171 promesses de manifeste vérifiées** ✅
+- `controle_liens.py` : **2 879 adresses locales · 0 cassée** ✅
+- `verif_regles_audit.py` sur la séquence du lot : **11 ✔ et 1 ·** (n°26 sans objet) ; aucun
+  manquement
+- `tests_5e_C3.1-C3.4_shanghai.py` : **29 / 29** ✅
+- `controle_impression.mjs`, importé par `main()` : **5 pages · 916 textes · 0 page refusée** ✅
+- navigateur, aux deux largeurs : **1280 px** et **390 px** — **15 / 15 captures chargées**,
+  les quinze `width`/`height` déclarés **égaux aux dimensions réelles**, `alt` le plus court à
+  **185 caractères**, `scrollWidth == clientWidth` aux deux largeurs **après la règle de coupure**,
+  **console vide**, **18 `loupe-cliquable` et 18 `tabindex`** — les quinze captures et les trois
+  figures du lot, que la loupe prenait déjà.
+
+Poids des images : de **13 Ko** à **104 Ko**, toutes sous le plafond de 300 Ko.
+
+### Le poste, remis en état
+
+`Documents\5E1` et la copie du CSV dans Téléchargements supprimés — vérifié, Documents retrouve
+ses 81 sous-dossiers ; LibreOffice fermé sans rien enregistrer ; volet de navigation et volet des
+détails de l'Explorateur réaffichés. **Le profil LibreOffice n'a pas été touché.** Le volet de
+navigation des boîtes de dialogue reste masqué, comme annoncé le 11/09, jusqu'à la fin de la vague.
