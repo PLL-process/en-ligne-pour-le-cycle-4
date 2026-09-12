@@ -13722,3 +13722,135 @@ Poids des images : de **13 Ko** à **104 Ko**, toutes sous le plafond de 300 Ko.
 ses 81 sous-dossiers ; LibreOffice fermé sans rien enregistrer ; volet de navigation et volet des
 détails de l'Explorateur réaffichés. **Le profil LibreOffice n'a pas été touché.** Le volet de
 navigation des boîtes de dialogue reste masqué, comme annoncé le 11/09, jusqu'à la fin de la vague.
+
+## 12/09/2026 — 3e_C1.1 (Tsinghua) : quatre nombres qui n'en étaient pas, et la vague « tableur » est close
+
+Dernier des quatre lots de la vague. C'est le seul, avec `5e_C1.1`, dont le CSV demandait une
+conversion — et c'est le lot où le défaut se voyait le mieux.
+
+### Étape A — l'encart était encore le gabarit
+
+| | avant | après |
+|---|---|---|
+| titre | `🧰 Avant de commencer — les quatre gestes de Tableur` | `🧰 Avant de commencer (échauffement) — les quatre gestes du tableur` |
+| Ouvrir | « Ouvre le tableur (**LibreOffice Calc**) et crée un classeur. » | « Ouvre le tableur (**LibreOffice Calc**), puis ouvre le fichier 📥 `donnees_impacts_feux_activites_conflit_3e.csv` (clique ici pour le télécharger) (**Fichier → Ouvrir…**). Dans la fenêtre d'import, garde **Point-virgule** coché comme séparateur et valide. » |
+| Nommer | « **Fichier → Enregistrer sous…** tout de suite, sous `NIVEAU-SUJET-TON NOM`, dans ton dossier personnel. » | le §2 bis du prompt maître, mot pour mot, avec `3E-FEUX-TON NOM`, **Documents**, le **dossier qui porte le nom de ta classe** (exemple `3E1`) |
+| Retrouver, Sortir | inchangées | inchangées |
+
+L'activité 2 fait déjà ouvrir ce CSV, et porte même un **mode opératoire** LibreOffice et Excel —
+mais l'encart, lui, parlait d'un classeur vide. Les deux se complètent désormais&nbsp;: l'encart
+montre les gestes en images, le mode opératoire donne les menus des deux tableurs.
+
+`3E-FEUX-TON NOM` est une **proposition**&nbsp;: ce lot ne nommait aucun classeur ailleurs, la
+règle d'or n°128 ne tranchait donc pas à ma place.
+
+### Étape B — quatre nombres qui n'en étaient pas
+
+`donnees_impacts_feux_activites_conflit_3e.csv` écrivait ses décimales **au point** : `0.142`,
+`0.00293`, `0.167`, `4.97`. Quatre valeurs sur treize, toutes dans la colonne `valeur`, toutes des
+**facteurs d'émission** — précisément les nombres avec lesquels l'élève doit calculer.
+
+**Avant de toucher :** aucun script de page, aucun banc, aucun outil ne lit ce fichier. Remesuré
+le 12/09 — cinq occurrences dans le dépôt, toutes des mentions : un lien de téléchargement, une
+entrée de manifeste, une ligne d'audit, l'index, et le journal d'hier. Aucun `fetch`, aucun
+`parseFloat`, aucun `open()`.
+
+**La mesure qui décide.** Le fichier a été importé sous locale `Français (France)` **avant**
+conversion, et le résultat relu dans le `content.xml` du classeur produit :
+
+| | types rencontrés dans la colonne `valeur` |
+|---|---|
+| avant | `float` **et `string`** — `0.142`, `0.00293`, `0.167`, `4.97` lus comme du **texte** |
+| après | **`float` seulement**, 13 valeurs, min `0,00293`, max `61 000 000` |
+
+Ce n'est donc pas une question de goût typographique : sur le poste de la salle, ces quatre
+facteurs d'émission n'étaient **pas des nombres**. Ni tri, ni moyenne, ni graphique ne pouvaient
+les atteindre — et ce sont eux que l'activité 2 fait manipuler.
+
+**La conversion :** 4 champs, la colonne `valeur` et elle seule — **zéro point ailleurs dans le
+fichier**, vérifié champ par champ avant d'écrire. Séparateur `;` et fins de ligne inchangés,
+**126 point-virgules avant comme après**, et le fichier fait exactement le même poids qu'avant.
+
+**Un gain de cohérence, en prime.** La séquence écrivait déjà `0,142 kgCO₂e/km` et
+`0,00293 kgCO₂e/passager-km` **avec une virgule** dans son texte, ligne 546. Le fichier disait le
+contraire de la page qui le distribue. Les deux disent enfin la même chose.
+
+Le manifeste du lot porte l'empreinte du fichier : son `sha256` est refait. Son `octets` ne
+bouge pas — 1 724 — ce qui confirme au passage que la conversion n'a pas déplacé un seul octet.
+
+### Étape C — quinze captures, et le contre-exemple le plus net de la vague
+
+Treize des quinze portent le nom du fichier du lot ou celui de la classe. Mêmes règles de cadrage
+que les trois lots précédents ; aucune capture ne porte la chaîne `PhaseLockedLoop`.
+
+| geste | captures | ce que le lot change |
+|---|---|---|
+| Ouvrir | 1, 1b, 1c | treize lignes sur neuf colonnes, toutes visibles d'un coup ; `0,142` et `0,00293` collés à droite |
+| Nommer | 2 → 2g | `3E-FEUX-DUPONT.ods` dans `Documents › 3E1` |
+| Retrouver | 3, 3b, 3c | `accord_manquant` tapé en **K1** — la colonne où l'activité 2 fait écrire lequel des trois accords manque |
+| Sortir | 4, 4b | graphique sur `D11:E14`, **les quatre seules lignes du fichier qui partagent unité, date et territoire** |
+
+**Le contre-exemple du geste « Ouvrir » est le plus parlant des quatre lots.** Avec la virgule
+comme séparateur, **neuf lignes sur treize restent intactes** dans la colonne A — et **quatre
+seulement se coupent en deux**, exactement à leur virgule décimale : la colonne A finit par
+`voiture_thermique_moyenne_diesel;0`, la colonne B commence par `142;kgCO2e_par_km`. L'élève voit
+que le dégât ne frappe pas au hasard : il frappe là où il y avait une virgule, et nulle part
+ailleurs. C'est la démonstration, en une image, de ce que la conversion de l'étape B a réparé.
+
+**Le graphique n'est pas choisi au hasard non plus**, et c'est la seule fois de la vague où il a
+pu l'être. Les treize lignes mêlent des hectares, des mégatonnes, des kilogrammes par kilomètre,
+des tonnes et des pourcentages : additionner ou tracer tout cela n'aurait aucun sens — c'est même
+la leçon de la séquence. Les **quatre lignes de pertes en pourcentage** (bâtiments, cultures
+arborescentes, cultures annuelles, formations arbustives) partagent l'unité, la date et le
+territoire : elles sont comparables, et elles seules. Le graphique de la capture 4 est donc un
+graphique **juste**, avec ses quatre catégories nommées sous l'axe, et la légende le dit.
+
+### Étape D — les contrôles, tous exécutés ce jour, avec leurs chiffres
+
+- `controle_gestes_outil.py` : **22 encarts lus · 0 écart** ✅
+- `controle_medias.py` : **41 lots · 342 médias · 342 nommés par leur `SOURCES_MEDIAS.md` ·
+  171 promesses de manifeste vérifiées** ✅
+- `controle_liens.py` : **2 895 adresses locales · 0 cassée** ✅
+- `verif_regles_audit.py` sur la séquence du lot : **12 ✔ · 0 manquement** — le seul des quatre
+  lots à cocher aussi le n°26, diagnostic d'entrée
+- `tests_3e_C1.1-C1.4_tsinghua.py` : **41 / 41** ✅
+- `controle_impression.mjs`, importé par `main()` : **5 pages · 1 017 textes · 0 page refusée** ✅
+- navigateur, aux deux largeurs : **1280 px** et **390 px** — **15 / 15 captures chargées**,
+  les quinze `width`/`height` déclarés **égaux aux dimensions réelles**, `alt` le plus court à
+  **190 caractères**, `scrollWidth == clientWidth` aux deux largeurs, **console vide**,
+  **18 `loupe-cliquable` et 18 `tabindex`**.
+
+Poids des images : de **13 Ko** à **159 Ko**, toutes sous le plafond de 300 Ko.
+
+La règle de coupure trouvée sur `5e_C3.1` est appliquée ici par précaution, le nom de fichier
+faisant 45 caractères : `.gestes-outil code{overflow-wrap:anywhere}`. Vérifié, la page ne défile
+pas à 390 px.
+
+### Le poste, remis en état — et la réserve du 11/09 levée
+
+`Documents\3E1` et la copie du CSV dans Téléchargements supprimés — Documents retrouve ses
+81 sous-dossiers ; LibreOffice fermé **sans rien enregistrer**, et sans être tué, pour ne pas
+laisser de données de récupération ; volets de navigation et des détails de l'Explorateur
+réaffichés. **Le profil LibreOffice n'a pas été touché de la vague.**
+
+Et la réserve écrite le 11/09 est **levée** : le **volet de navigation des boîtes de dialogue**,
+masqué depuis le lot pilote pour que le fil d'Ariane se replie, est rétabli — par
+**Organiser → Disposition → Volet de navigation**, et vérifié à l'écran. Les quatre lots de la
+vague sont livrés ; plus rien n'a besoin de ce réglage.
+
+### Ce que la vague laisse derrière elle
+
+Quatre encarts qui disent enfin la vérité de leur page, soixante captures prises sur le poste tel
+qu'il est, deux CSV passés à la virgule décimale — et trois défauts trouvés en chemin, qui ne
+tenaient à aucun des quatre lots :
+
+1. **`posewin.ps1` et `movewin.ps1` posaient la largeur et jamais la hauteur** — la poignée de
+   fenêtre s'appelait `$h`, qui *est* le paramètre `$H`. Réparé au lot 2 ; les lots 1 et pilote
+   avaient recadré à la main sans le savoir.
+2. **`sequence_5e_C1.2` n'avait aucune loupe**, quand 100 pages du dépôt en portent une. Recopiée.
+3. **Un nom de fichier de 57 caractères poussait une page hors de l'écran d'un téléphone.**
+   Une règle d'une ligne, au lot 3, appliquée au lot 4 par précaution.
+
+Aucun des trois n'était visible depuis le texte des pages. Tous les trois se sont montrés parce
+qu'on a suivi l'encart geste par geste, devant le logiciel — ce que la règle d'or n°94 demande, et
+que rien d'autre ne remplace.
