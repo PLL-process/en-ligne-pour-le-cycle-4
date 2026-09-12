@@ -13446,3 +13446,174 @@ sous, Ouvrir, Enregistrer en tant qu'image) reste masqué. Ce réglage est celui
 par les trois boîtes, et les trois lots suivants de la vague en ont besoin dans le même état ; il
 sera rétabli à la fin du dernier lot. Il n'affecte que l'affichage de ces boîtes, et se remet en
 deux clics par **Organiser → Disposition → Volet de navigation**.
+
+## 12/09/2026 — 5e_C1.2 (Sainte-Luce) : l'encart nomme son CSV, et le lot lui impose son nom de classeur
+
+Deuxième des quatre lots de la vague « tableur ». Le pilote `4e_C1.1` (#369, #370, #371) et le
+lot `5e_C1.1` (#372) servent de modèle ; rien n'est réinventé ici — sauf ce que le lot impose.
+
+### Étape A — l'encart était encore le gabarit, mot pour mot
+
+Mesuré avant de toucher à quoi que ce soit. Le titre disait « les quatre gestes de **Tableur** »,
+avec une majuscule et une préposition qui sonnent comme un nom de produit. Les deux premières
+consignes ne parlaient d'aucun fichier :
+
+| | avant | après |
+|---|---|---|
+| titre | `🧰 Avant de commencer — les quatre gestes de Tableur` | `🧰 Avant de commencer (échauffement) — les quatre gestes du tableur` |
+| Ouvrir | « Ouvre le tableur (**LibreOffice Calc**) et crée un classeur. » | « Ouvre le tableur (**LibreOffice Calc**), puis ouvre le fichier 📥 `donnees_freinage_sainte_luce_simulees.csv` (clique ici pour le télécharger) (**Fichier → Ouvrir…**). Dans la fenêtre d'import, garde **Point-virgule** coché comme séparateur et valide. Les deux autres fichiers de données de la séquence — `releves_essai_college_sainte_luce_simules.csv` et `donnees_simulees_freinage_5e_C1.2.csv` — s'ouvrent exactement de la même façon. » |
+| Nommer | « **Fichier → Enregistrer sous…** tout de suite, sous `NIVEAU-SUJET-TON NOM`, dans ton dossier personnel. » | le §2 bis du prompt maître, mot pour mot, avec `comparatif_freinage_groupeXX`, **Documents**, le **dossier qui porte le nom de ta classe** (exemple `5E1`), et la création du dossier décrite geste par geste |
+| Retrouver, Sortir | inchangées | inchangées |
+
+**La page faisait déjà télécharger et ouvrir ce CSV** — activité 2, ligne 541 — et son encart n'en
+disait rien. C'est ce décalage qui autorise la réécriture (règles n°93 et n°128), pas un goût pour
+la reformulation. Rien d'autre dans la page n'a bougé, hormis la loupe (plus bas).
+
+Le lot ouvre **trois** CSV. L'encart nomme celui de la première activité qui en emploie un, et
+dit en une phrase que les autres s'ouvrent de la même façon — plutôt que de recopier trois fois
+la même consigne.
+
+### Le nom du classeur n'était pas à choisir : le lot l'avait déjà écrit
+
+La proposition de la vague était `5E-FREINAGE-TON NOM`. Elle ne tient pas ici, et c'est la règle
+d'or n°128 qui tranche : **la page nomme déjà un fichier**, à deux endroits mesurés le 12/09 —
+
+- `activite_crcn_donnees_freinage_5e_C1.2.html`, carte « CRCN observable » : « **Trace produite :**
+  fichier `comparatif_freinage_groupeXX.ods` ou `.xlsx` » ;
+- `fiche_pedagogique_5e_C1.2.md`, ligne 17 : « **La trace est le classeur `comparatif_freinage_groupeXX`
+  produit dans l'activité CRCN du lot** ».
+
+Deux occurrences, aucune autre dans le lot. Prendre `5E-FREINAGE-TON NOM` aurait mis **deux noms
+différents pour le même classeur** sous les yeux du même élève, ou obligé à réécrire l'activité
+CRCN et la fiche — une modification hors encart, que la vague excluait explicitement. C'est donc
+`comparatif_freinage_groupeXX` qui gagne, et les treize captures qui portent un nom de fichier
+portent celui-là. **Décision prise par Pascal en séance**, après mesure.
+
+Conséquence sur les exemples : le nom d'élève `DUPONT` du pilote n'a pas d'emploi dans ce lot,
+puisque la trace est celle d'un **groupe**. Les captures montrent `comparatif_freinage_groupe03.ods`,
+et trois légendes déclarent `groupe03` comme un exemple, au même titre que `5E1`.
+
+Une seule addition au §2 bis, et elle est nécessaire : `XX` ne se comprend pas tout seul comme
+`TON NOM` se comprend. L'encart écrit donc « — `XX` est le numéro de ton groupe — ». Six mots.
+
+### Étape B — les trois CSV étaient déjà à la virgule décimale
+
+Rien à convertir, contrairement à `5e_C1.1` et à `3e_C1.1`. Vérifié fichier par fichier, le 12/09 :
+
+| fichier | points décimaux | virgules décimales | `;` | fins de ligne |
+|---|---|---|---|---|
+| `donnees_freinage_sainte_luce_simulees.csv` | **0** | 6 | 32 | 4 CRLF |
+| `releves_essai_college_sainte_luce_simules.csv` | **0** | 15 | 96 | 16 CRLF |
+| `donnees_simulees_freinage_5e_C1.2.csv` | **0** | 6 | 28 | 4 CRLF |
+
+Zéro point décimal, vingt-sept virgules décimales en tout. Aucun octet n'a été modifié. La
+vérification d'import n'a pas été rejouée : elle n'a de sens qu'après une conversion, et il n'y
+en a pas eu — la preuve que le tableur lit bien ces nombres est dans la capture `1b`, où les
+distances sont **collées à droite** de leur cellule.
+
+### Étape C — un jeu complet de quinze captures, pas un réemploi
+
+Décision de la vague appliquée telle quelle : **treize des quinze captures montrent le fichier du
+lot ou le nom de la classe**. Seules « Documents » et « Nouveau dossier » sont neutres.
+
+Mêmes règles que le pilote, tenues image par image avant intégration : mode sombre du poste,
+boîtes Windows par défaut, **profil LibreOffice intact**, fil d'Ariane replié en
+« … › Documents › 5E1 », volet de navigation masqué dans les trois boîtes **et** dans
+l'Explorateur, les deux vues sur Documents recadrées au bandeau du haut, les deux vues qui
+suivent la création du dossier réduites à cette seule ligne. **Aucune capture ne porte la chaîne
+`PhaseLockedLoop`** — vérifié image par image.
+
+Ce que le lot a de propre :
+
+| geste | captures | ce que le lot change |
+|---|---|---|
+| Ouvrir | 1, 1b, 1c | neuf colonnes, dont trois de texte long ; `distance_arret_sec_m` à 5,8 et `distance_arret_pluie_m` à 8,9, collés à droite |
+| Nommer | 2 → 2g | `comparatif_freinage_groupe03.ods` dans `Documents › 5E1` |
+| Retrouver | 3, 3b, 3c | `priorite_usage` tapé en **J1** — la colonne que l'activité CRCN fait précisément ajouter après la dernière |
+| Sortir | 4, 4b | graphique sur `D1:E4`, les deux distances d'arrêt des trois solutions |
+
+Le contre-exemple du geste « Ouvrir » est net : avec la virgule comme séparateur, **la ligne de
+titres tient tout entière dans la colonne A**, points-virgules compris, tandis que chaque solution
+se coupe en trois — colonne A « … le bord de la roue;5 », colonne B « 8;8 », colonne C
+« 9;320;18;5;2 ». L'élève voit de ses yeux que la virgule sert deux fois.
+
+**Une limite, écrite plutôt que tue.** Le graphique de la capture 4 porte en abscisse `1`, `2`,
+`3` et non les noms des trois freins. La raison est mécanique : les noms sont en colonne A, les
+distances en D et E, et l'assistant de diagramme **aplatit une sélection multiple** — essayé, la
+colonne A est alors prise pour des étiquettes de série, pas de catégorie, et le graphique sort
+faux. Plutôt qu'un graphique faux avec de beaux libellés, la capture en montre un juste avec des
+numéros, et la légende dit que 1, 2 et 3 sont les trois solutions dans l'ordre du tableau.
+
+### La loupe manquait à cette page
+
+`sequence_5e_C1.2_sainte_luce_freinage.html` ne portait **aucune** loupe : zéro occurrence du mot,
+alors que 100 pages du dépôt embarquent le bloc `loupe-images-v1` (règle d'or n°92). Sans elle,
+une capture de 1400 px affichée à 560 px n'est pas lisible — l'élève ne peut pas l'agrandir.
+
+Le bloc a été **recopié tel quel** depuis `5e_C1.1`, 5 714 caractères, sans une ligne de
+différence, et `.loupe-cliquable` ajouté à la liste des sélecteurs du bloc d'impression — comme
+sur les 24 pages à loupe vérifiées. Il prend les quinze captures sans autre intervention :
+15 `loupe-cliquable`, 15 `tabindex`.
+
+### Deux outils de capture réparés — la même faute, dans deux fichiers
+
+`posewin.ps1` posait la **largeur** demandée et jamais la **hauteur** : 660 px demandés,
+2 178 obtenus, mesuré sur trois classes de fenêtres (`SALSUBFRAME`, `SALFRAME`, `CabinetWClass`).
+`movewin.ps1` avait le même défaut.
+
+La cause : **en PowerShell, les noms de variables ne distinguent pas la casse.** Les deux scripts
+rangeaient la poignée de fenêtre dans `$h` — qui *est* le paramètre `$H`, la hauteur. La hauteur
+demandée devenait donc le numéro de la poignée, que Windows rabotait à la hauteur de l'écran.
+La poignée s'appelle `$hFen` depuis, dans les deux fichiers ; onze occurrences renommées dans
+l'un, sept dans l'autre.
+
+Deux corrections sont venues avec :
+
+- `posewin.ps1` défait désormais l'état maximisé (`SW_RESTORE`) puis pose la fenêtre par
+  `SetWindowPos`. C'est l'état maximisé, et lui seul, qui faisait ignorer `SetWindowPos` — la
+  raison pour laquelle le script était passé par `SetWindowPlacement` ;
+- il **relit** le cadre après l'avoir posé et **avertit** si la taille a été refusée, au lieu de
+  laisser la capture suivante sortir à une taille qu'on n'a pas voulue.
+
+L'effet est immédiat : la boîte « Import de texte » tient maintenant **entière** dans sa capture,
+boutons OK et Annuler compris, et la fenêtre Calc montre sa **barre d'état** — celle qui porte
+l'icône rouge du geste 3. Les lots précédents avaient recadré à la main autour de ce défaut.
+
+Une troisième limite, contournée et non corrigée : `boite.ps1`, l'assistant écrit pour cette
+séance, **tape** le nom de fichier au clavier au lieu de le poser par `ValuePattern.SetValue`.
+Mesuré ce jour : `SetValue` affiche bien le texte, mais la boîte garde son ancien nom en mémoire
+et **enregistre sous celui-là** — un classeur est sorti sous le nom du CSV. Le nom est désormais
+tapé, puis **relu** avant de valider.
+
+### Étape D — les contrôles, tous exécutés ce jour, avec leurs chiffres
+
+- `controle_gestes_outil.py` : **22 encarts lus · 0 écart** ✅
+- `controle_medias.py` : **41 lots · 312 médias · 312 nommés par leur `SOURCES_MEDIAS.md` ·
+  156 promesses de manifeste vérifiées** ✅
+- `controle_liens.py` : **2 863 adresses locales · 0 cassée** ✅
+- `verif_regles_audit.py` sur la séquence du lot : **11 ✔ et 1 ·** (n°26 sans objet — la page ne
+  s'appuie pas sur une année antérieure) ; aucun manquement
+- `tests_5e_C1.2_sainte_luce.py` : **36 / 36** ✅
+- `controle_impression.mjs`, importé par `main()` — la garde `import.meta.url` ne passe pas sous
+  Windows : **6 pages · 1 038 textes · 0 page refusée** ✅
+- navigateur, aux deux largeurs : **1280 px** et **390 px** — **15 / 15 captures chargées**,
+  les quinze `width`/`height` déclarés **égaux aux dimensions réelles**, `alt` le plus court à
+  **189 caractères**, `scrollWidth == clientWidth` aux deux largeurs, **console vide**,
+  **15 `loupe-cliquable` et 15 `tabindex`**.
+
+Poids des images : de **13 Ko** à **108 Ko**, toutes sous le plafond de 300 Ko.
+
+Un détail de méthode qui vaut d'être écrit : les captures portent `loading="lazy"`, et un
+contrôle qui ne les fait pas défiler dans la fenêtre lit `naturalWidth == 0` sur les cinq
+dernières et les déclare **manquantes** alors qu'elles sont saines. Le script de contrôle les
+fait défiler, attend `decode()`, puis mesure. Cinq fausses alertes évitées.
+
+### Le poste, remis en état
+
+`Documents\5E1` et la copie du CSV dans Téléchargements supprimés ; LibreOffice fermé sans rien
+enregistrer ; volet des détails de l'Explorateur réaffiché. **Le profil LibreOffice n'a pas été
+touché.**
+
+La réserve écrite le 11/09 tient toujours : le **volet de navigation des boîtes de dialogue**
+reste masqué, et le sera jusqu'à la fin du dernier lot de la vague. Il se remet en deux clics par
+**Organiser → Disposition → Volet de navigation**.
