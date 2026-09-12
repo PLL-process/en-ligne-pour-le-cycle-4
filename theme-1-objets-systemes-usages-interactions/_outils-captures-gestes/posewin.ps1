@@ -1,7 +1,9 @@
 # Pose une fenetre a une taille exacte, en pixels physiques, meme si elle est maximisee ou ancree.
 # Passe par SetWindowPlacement : SetWindowPos seul est ignore sur une fenetre maximisee.
 param(
-  [string]$Classe = "",   # classe de fenetre exigee (CabinetWClass, SALFRAME, #32770...)[string]$Title="", [int]$X=200, [int]$Y=120, [int]$W=2400, [int]$H=1500)
+  [string]$Classe = "",   # classe de fenetre exigee (CabinetWClass, SALFRAME, #32770...)
+  [string]$Title = "",    # sous-chaine du titre ; vide = fenetre au premier plan
+  [int]$X = 200, [int]$Y = 120, [int]$W = 2400, [int]$H = 1500)
 Add-Type @"
 using System; using System.Runtime.InteropServices; using System.Text;
 public class W6 {
