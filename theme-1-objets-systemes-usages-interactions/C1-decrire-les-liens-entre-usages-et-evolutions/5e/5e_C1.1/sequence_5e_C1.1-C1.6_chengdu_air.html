@@ -185,19 +185,105 @@
   .gestes-outil ol{margin:0;padding-left:1.3rem}
   .gestes-outil li{margin:.45rem 0}
   .gestes-outil li b:first-child{color:#ffb300}
+  .gestes-outil figure.geste-capture{margin:.6rem 0 .9rem;max-width:560px}
+  .gestes-outil figure.geste-capture img{width:100%;height:auto;display:block;border:1px solid var(--border,#2a3550);
+    border-radius:8px;background:#fff}
+  .gestes-outil figure.geste-capture figcaption{margin:.35rem 0 0;font-size:.88em;line-height:1.45;opacity:.92}
+  .gestes-outil figure.geste-capture figcaption b{color:inherit}
+  @media print{.gestes-outil figure.geste-capture{break-inside:avoid;page-break-inside:avoid}
+    .gestes-outil figure.geste-capture img{border-color:#999}}
 </style>
 <!-- gestes-outil-v1 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau. -->
 <section class="card gestes-outil" aria-labelledby="gestes-tableur">
-  <h2 id="gestes-tableur">🧰 Avant de commencer — les quatre gestes de Tableur</h2>
+  <h2 id="gestes-tableur">🧰 Avant de commencer (échauffement) — les quatre gestes du tableur</h2>
   <p class="pourquoi">Quatre gestes à faire une fois, au début, et ta séance ne
   se perdra pas. Tu les as peut-être déjà faits une autre année&nbsp;: refais-les,
   c'est court. Et si tu ne les as jamais faits, tout est écrit ici — tu n'as
   besoin de rien d'autre.</p>
   <ol>
-    <li><b>Ouvrir.</b> Ouvre le tableur (<b>LibreOffice Calc</b>) et crée un classeur.</li>
-    <li><b>Nommer.</b> <b>Fichier → Enregistrer sous…</b> tout de suite, sous <code>NIVEAU-SUJET-TON&nbsp;NOM</code>, dans ton dossier personnel.</li>
-    <li><b>Retrouver.</b> Le tableur n'enregistre pas tout seul&nbsp;: <kbd>Ctrl</kbd>+<kbd>S</kbd> après chaque série de saisies. Rouvre ton fichier au début de la séance suivante pour vérifier qu'il est complet.</li>
-    <li><b>Sortir.</b> Le classeur est le rendu. Un graphique se copie dans le compte rendu, ou s'exporte en image par un clic droit.</li>
+    <li><b>Ouvrir.</b> Ouvre le tableur (<b>LibreOffice Calc</b>), puis ouvre le fichier <a href="releves_air_chengdu_simules.csv" download title="Télécharger releves_air_chengdu_simules.csv">📥&nbsp;<code>releves_air_chengdu_simules.csv</code></a> (clique ici pour le télécharger) (<b>Fichier → Ouvrir…</b>). Dans la fenêtre d'import, garde <b>Point-virgule</b> coché comme séparateur et valide.
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_1_ouvrir_import_csv.png" width="1400" height="1013" loading="lazy"
+             alt="Boîte de dialogue « Import de texte » de LibreOffice Calc, en français et en mode sombre, pour le fichier releves_air_chengdu_simules.csv. En haut : Jeu de caractères « - Automatique - », Locale « Par défaut - Français (France) », À partir de la ligne 1. Dans « Options de séparateur », le bouton « Séparé par » est sélectionné ; parmi les cases Tabulation, Virgule, Point-virgule, Espace et Autre, seule Point-virgule est cochée. En bas, l'aperçu montre les données réparties en cinq colonnes : jour, heure, pm25_ug_m3, temperature_c, humidite_pct ; la colonne pm25_ug_m3 affiche 24,3 puis 28,0 puis 25,9, écrits avec une virgule. Les boutons OK et Annuler sont en bas à droite.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> dans «&nbsp;Options de séparateur&nbsp;», la case <b>Point-virgule</b> cochée, et l'aperçu du bas déjà découpé en cinq colonnes. Si c'est «&nbsp;Détecté (;)&nbsp;» qui est sélectionné, c'est bon aussi&nbsp;: le (;) dit que le point-virgule a été reconnu. <b>Puis&nbsp;:</b> clique <b>OK</b>.</figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_1b_ouvrir_resultat.png" width="1400" height="849" loading="lazy"
+             alt="Fenêtre de LibreOffice Calc, en français et en mode sombre, dont la barre de titre indique releves_air_chengdu_simules.csv. La feuille montre cinq colonnes, de A à E : jour, heure, pm25_ug_m3, temperature_c, humidite_pct, et une trentaine de lignes de relevés, de lundi 06:00 à mercredi 10:00, chaque donnée dans sa propre cellule. Dans les colonnes C, D et E, les nombres sont alignés à droite, y compris 24,3 et 73,4.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> chaque donnée est dans sa propre colonne, de A à E, avec les titres sur la ligne 1. Regarde la colonne <b>pm25_ug_m3</b>&nbsp;: les nombres sont <b>collés à droite</b> de leur cellule. C'est la preuve que le tableur les a compris comme des nombres, et non comme du texte.</figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_1c_ouvrir_erreur_separateur.png" width="1400" height="849" loading="lazy"
+             alt="La même fenêtre de LibreOffice Calc, mais après un import avec la Virgule comme séparateur. La ligne 1 tient tout entière dans la colonne A : jour;heure;pm25_ug_m3;temperature_c;humidite_pct. Chaque relevé, lui, est coupé en quatre morceaux : la colonne A contient « lundi;06:00;24 », la colonne B « 3;21 », la colonne C « 2;73 » et la colonne D « 4 ».">
+        <figcaption><b>Si tu vois ceci&nbsp;:</b> ta ligne de titres est collée dans la colonne A avec ses points-virgules, et chaque relevé est coupé en plein milieu de ses nombres — 24 d'un côté, 3 de l'autre. Le séparateur choisi n'était pas le bon&nbsp;: c'était la virgule, qui sert ici de <b>virgule décimale</b>. Ferme le fichier sans l'enregistrer (<b>Fichier → Fermer</b>), recommence <b>Fichier → Ouvrir…</b> et coche <b>Point-virgule</b>.</figcaption>
+      </figure>
+    </li>
+    <li><b>Nommer.</b> <b>Fichier → Enregistrer sous…</b> tout de suite, au format <b>Classeur ODF (.ods)</b>, sous <code>5E-AIR-TON&nbsp;NOM</code>, dans <b>Documents</b>, dans le <b>dossier qui porte le nom de ta classe</b> (par exemple <code>5E1</code>). Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans la fenêtre d'enregistrement, ouvre Documents, clique sur <b>Nouveau dossier</b>, tape le nom de ta classe, valide, puis entre dedans.
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_2_nommer_documents.png" width="1400" height="136" loading="lazy"
+             alt="Le haut de la boîte de dialogue « Enregistrer sous » de Windows, en mode sombre. Sur la ligne du chemin, une icône de dossier Documents puis, entre chevrons, le seul mot Documents. En dessous, la barre d'outils de la boîte avec les boutons Organiser et Nouveau dossier.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le chemin, tout en haut, finit par <b>Documents</b>. Si la fenêtre s'ouvre ailleurs — Téléchargements, par exemple — clique sur <b>Documents</b> dans la colonne de gauche. <i>Seul le haut de la fenêtre est montré ici&nbsp;: en dessous, tu verras la liste de tes propres dossiers.</i> Cherche dedans celui qui porte le nom de ta classe&nbsp;: s'il y est, entre dedans (double-clic) et passe aux trois dernières images ; s'il n'y est pas, continue ci-dessous.</figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_2b_nommer_bouton_nouveau_dossier.png" width="1400" height="136" loading="lazy"
+             alt="Le même haut de fenêtre « Enregistrer sous », toujours sur Documents. Dans la barre d'outils, à droite du bouton Organiser, le bouton « Nouveau dossier » est surligné d'un cadre plus clair, parce que la souris est posée dessus.">
+        <figcaption><b>Le bouton Nouveau dossier&nbsp;:</b> il est écrit en toutes lettres, dans la barre au-dessus de la liste des fichiers, juste à droite d'<b>Organiser</b>. Clique dessus.</figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_2c_nommer_nom_du_dossier.png" width="1400" height="263" loading="lazy"
+             alt="La boîte « Enregistrer sous », sur Documents. Dans la liste, une ligne nouvelle porte une icône de dossier et un petit cadre de saisie dans lequel est tapé 5E1 ; la ligne est surlignée et la date du jour apparaît dans la colonne Modifié le.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> une ligne apparaît dans la liste, avec une <b>case où écrire</b> à la place du nom. Tape le nom de ta classe, puis <b>Entrée</b>. <i>5E1 est un exemple&nbsp;: mets le nom de ta classe. Ici, la liste a été raccourcie à cette seule ligne ; chez toi, tes autres dossiers restent visibles autour.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_2d_nommer_dossier_cree.png" width="1400" height="263" loading="lazy"
+             alt="La même boîte « Enregistrer sous » après validation : la ligne porte maintenant le nom 5E1 écrit normalement, avec l'icône de dossier, la date du jour et la mention Dossier dans la colonne Type.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> la case où tu écrivais a disparu, et ton dossier porte son nom, avec la mention <b>Dossier</b> dans la colonne Type. Windows n'entre pas dedans tout seul&nbsp;: <b>double-clique</b> sur son nom pour y entrer. <i>5E1 est un exemple.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_2e_nommer_enregistrer_sous.png" width="1400" height="1303" loading="lazy"
+             alt="La boîte « Enregistrer sous » entière, maintenant dans le dossier de la classe : le chemin, en haut, indique Documents puis 5E1, et la liste des fichiers affiche « Aucun élément ne correspond à votre recherche ». En bas, le champ « Nom du fichier » contient 5E-AIR-DUPONT et le champ « Type » affiche « Classeur ODF (*.ods) ». La case « Extensi… », qui ajoute l'extension automatiquement, est cochée. En bas à droite, les boutons Enregistrer et Annuler.">
+        <figcaption><b>Ce que tu dois voir avant d'enregistrer&nbsp;:</b> trois choses. Le chemin, en haut, finit par <b>Documents</b> puis <b>le nom de ta classe</b> ; le <b>Nom du fichier</b> suit la consigne ; <b>Type&nbsp;: Classeur ODF (*.ods)</b> — si tu lis encore «&nbsp;Texte CSV&nbsp;», ouvre la liste et choisis Classeur ODF. <b>Puis&nbsp;:</b> <b>Enregistrer</b>. <i>DUPONT et 5E1 sont des exemples&nbsp;: mets ton nom et ta classe.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_2f_nommer_resultat.png" width="1400" height="849" loading="lazy"
+             alt="Fenêtre de LibreOffice Calc dont la barre de titre indique désormais 5E-AIR-DUPONT.ods — LibreOffice Calc. La feuille de relevés est inchangée, de lundi 06:00 à mercredi 10:00.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> la barre de titre, tout en haut, affiche ton nom de fichier suivi de <b>.ods</b>, et non plus .csv. <i>DUPONT est un exemple.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_2g_nommer_explorateur.png" width="1400" height="577" loading="lazy"
+             alt="Fenêtre de l'Explorateur de fichiers de Windows, en français et en mode sombre. La barre d'adresse, repliée, indique des points de suspension puis Documents puis 5E1. La liste contient un seul fichier, 5E-AIR-DUPONT.ods, avec sa date de modification et le type Feuille de calcul. En bas à gauche, « 1 élément ».">
+        <figcaption><b>Pour vérifier, ou pour le retrouver plus tard&nbsp;:</b> ouvre l'<b>Explorateur de fichiers</b> de Windows, va dans <b>Documents</b>, puis dans le dossier de ta classe&nbsp;: ton fichier <b>.ods</b> est là. Ce chemin — Documents, puis ta classe — est celui à refaire à la séance suivante. <i>5E1 et DUPONT sont des exemples.</i></figcaption>
+      </figure>
+    </li>
+    <li><b>Retrouver.</b> Le tableur n'enregistre pas tout seul&nbsp;: <kbd>Ctrl</kbd>+<kbd>S</kbd> après chaque série de saisies. Rouvre ton fichier au début de la séance suivante pour vérifier qu'il est complet.
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_3_retrouver_avant_ctrl_s.png" width="1400" height="849" loading="lazy"
+             alt="Fenêtre de LibreOffice Calc, fichier 5E-AIR-DUPONT.ods, en mode sombre. La feuille est descendue jusqu'au bas des relevés : on lit les dernières lignes de dimanche, dont 251 à 16 h, puis la ligne 92 où le mot « moyenne » vient d'être tapé en A92. En bas à gauche, dans la barre d'état, l'icône en forme de disquette est rouge, ce qui signale des modifications non enregistrées.">
+        <figcaption><b>Ce que tu dois voir avant Ctrl+S&nbsp;:</b> tu as tapé quelque chose (ici «&nbsp;moyenne&nbsp;» en A92, sous la dernière ligne de relevés, un exemple), et en bas à gauche de la fenêtre, la petite icône de la barre d'état est <b>rouge</b>&nbsp;: ce qui est à l'écran n'est pas encore sur le disque. Le raccourci n'ouvre aucune fenêtre&nbsp;: c'est cette icône qui te répond.</figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_3b_retrouver_apres_ctrl_s.png" width="1400" height="849" loading="lazy"
+             alt="La même fenêtre après Ctrl+S : l'icône en forme de disquette, en bas à gauche de la barre d'état, est redevenue grise. Le reste de l'écran est identique.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> après <kbd>Ctrl</kbd>+<kbd>S</kbd>, l'icône en bas à gauche redevient <b>grise</b>. Rien d'autre ne change à l'écran&nbsp;: c'est normal.</figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_3c_retrouver_rouvrir.png" width="1400" height="812" loading="lazy"
+             alt="Boîte de dialogue « Ouvrir » de Windows, en mode sombre. Le chemin, en haut, indique Documents puis 5E1. La liste montre un seul fichier, 5E-AIR-DUPONT.ods, sélectionné et coché, de type Feuille de calcul. En bas, le champ « Nom du fichier » contient 5E-AIR-DUPONT.ods et le bouton Ouvrir est à droite.">
+        <figcaption><b>Pour rouvrir à la séance suivante&nbsp;:</b> <b>Fichier → Ouvrir…</b>, va dans <b>Documents</b>, puis dans le dossier de ta classe, et choisis le fichier qui finit par <b>.ods</b> — pas le .csv, qui est le fichier de départ, sans ton travail. Le nom complet s'écrit en bas, dans <b>Nom du fichier</b>&nbsp;: c'est là qu'on vérifie. <i>Le nom et le dossier sont des exemples.</i></figcaption>
+      </figure>
+    </li>
+    <li><b>Sortir.</b> Le classeur est le rendu. Un graphique se copie dans le compte rendu, ou s'exporte en image par un clic droit.
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_4_sortir_clic_droit_graphique.png" width="1400" height="849" loading="lazy"
+             alt="Fenêtre de LibreOffice Calc en mode sombre avec un diagramme en colonnes posé sur la feuille et sélectionné : de petites poignées carrées l'entourent. Un menu contextuel est ouvert par-dessus : Couper, Copier, Coller, Position et taille, Ancre, Positionner, Nom, Texte alternatif, Assigner la macro, Exporter comme image, Éditer. Le diagramme porte la légende pm25_ug_m3 et ses douze colonnes se lisent heure par heure, de 06:00 à 18:00. Derrière, on lit les relevés de lundi, mardi et mercredi, dont la valeur négative −4,2 à la ligne 32.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> un <b>clic</b> sur le graphique (des petites poignées carrées apparaissent autour), puis un <b>clic droit</b>&nbsp;: le menu propose <b>Copier</b> (pour le coller dans le compte rendu) et <b>Exporter comme image</b>. <i>Le graphique montré est un exemple, construit sur les douze relevés du lundi.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_4b_sortir_enregistrer_image.png" width="1400" height="812" loading="lazy"
+             alt="Boîte de dialogue « Enregistrer en tant qu'image » de Windows, en mode sombre, ouverte sur le dossier de la classe : le chemin indique Documents puis 5E1, et la liste affiche « Aucun élément ne correspond à votre recherche » parce que seules les images y sont affichées. Le champ « Nom du fichier » contient graphique-5E-AIR-DUPONT ; le champ « Type » affiche PNG - Portable Network Graphics. Le bouton Enregistrer est en bas à droite.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> après <b>Exporter comme image</b>, cette boîte s'ouvre ; garde le type <b>PNG</b>, donne un nom, vérifie que le chemin finit par le nom de ta classe, <b>Enregistrer</b>. Le fichier image apparaît dans ton dossier, à côté du classeur. <i>Le nom et le dossier sont des exemples.</i></figcaption>
+      </figure>
+    </li>
   </ol>
 </section>
 

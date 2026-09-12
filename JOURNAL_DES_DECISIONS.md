@@ -13314,3 +13314,135 @@ rien d'autre ne tournait.
 `Documents\4E3` et la copie du CSV dans Téléchargements supprimés ; volet de navigation et volet
 des détails de l'Explorateur réaffichés ; LibreOffice fermé. Le profil LibreOffice n'a **pas** été
 touché de la séance — c'était la consigne, et les boîtes Windows par défaut l'ont rendue tenable.
+
+## 12/09/2026 — 5e_C1.1 (Chengdu) : l'encart dit enfin la vérité de son lot, et il la montre
+
+Premier des quatre lots de la vague « tableur ». Le pilote `4e_C1.1` est fusionné (#369, #370,
+#371) ; il sert de modèle, et rien n'est réinventé ici — sauf ce que le lot impose.
+
+### Étape A — l'encart était encore le gabarit, mot pour mot
+
+Mesuré avant de toucher à quoi que ce soit. Le titre disait « les quatre gestes de **Tableur** »,
+avec une majuscule et une préposition qui sonnent comme un nom de produit. Les deux premières
+consignes ne parlaient d'aucun fichier :
+
+| | avant | après |
+|---|---|---|
+| titre | `🧰 Avant de commencer — les quatre gestes de Tableur` | `🧰 Avant de commencer (échauffement) — les quatre gestes du tableur` |
+| Ouvrir | « Ouvre le tableur (**LibreOffice Calc**) et crée un classeur. » | « Ouvre le tableur (**LibreOffice Calc**), puis ouvre le fichier 📥 `releves_air_chengdu_simules.csv` (clique ici pour le télécharger) (**Fichier → Ouvrir…**). Dans la fenêtre d'import, garde **Point-virgule** coché comme séparateur et valide. » |
+| Nommer | « **Fichier → Enregistrer sous…** tout de suite, sous `NIVEAU-SUJET-TON NOM`, dans ton dossier personnel. » | le §2 bis du prompt maître, mot pour mot, avec `5E-AIR-TON NOM`, **Documents**, le **dossier qui porte le nom de ta classe** (exemple `5E1`), et la création du dossier décrite geste par geste |
+| Retrouver, Sortir | inchangées | inchangées |
+
+**La page faisait déjà télécharger et ouvrir ce CSV** — deux fois, aux lignes 577 et 622 — et son
+encart n'en disait rien. C'est ce décalage qui autorise la réécriture (règles n°93 et n°128), pas
+un goût pour la reformulation. Rien d'autre dans la page n'a bougé.
+
+Le nom `5E-AIR-TON NOM` est une **proposition**, à valider ou à corriger dans la PR : la page
+n'imposait aucun nom de fichier ailleurs — vérifié, zéro occurrence — donc la règle n°128 ne
+tranchait pas à ma place. Même chose pour `5E1`, nom de classe d'exemple, déclaré comme tel dans
+trois légendes.
+
+### Étape B — le CSV passe à la virgule décimale
+
+`releves_air_chengdu_simules.csv`, 90 relevés, écrivait ses nombres au point. Sur un poste en
+locale française, le tableur les lit alors comme du texte : ni tri, ni moyenne, ni graphique.
+
+**Avant de toucher :** aucun script de page, aucun banc, aucun outil ne lit ce fichier. Remesuré
+le 12/09 — cinq occurrences en tout dans le dépôt, toutes des mentions : deux liens de
+téléchargement dans la séquence, une ligne de `SOURCES_MEDIAS.md`, une entrée de manifeste et une
+ligne de plan. Aucun `fetch`, aucun `parseFloat`, aucun `open()` dans `tests_5e_C1.1_chengdu.py`.
+
+**La conversion :** 270 champs, les trois colonnes numériques (`pm25_ug_m3`, `temperature_c`,
+`humidite_pct`) et elles seules — vérifié colonne par colonne avant d'écrire : 90 points dans
+chacune, zéro ailleurs. Séparateur `;` et fins de ligne CRLF inchangés, et le fichier fait
+**exactement le même poids qu'avant, 2 701 octets** : 364 points-virgules avant comme après,
+91 CRLF avant comme après, 270 points devenus 270 virgules.
+
+**La vérification, rejouée comme sur le pilote** — import UNO sous locale `Français (France)`,
+filtre `59,34,76,1,,1036,false,true` :
+
+- import : **91 lignes × 5 colonnes**, en-tête `jour | heure | pm25_ug_m3 | temperature_c | humidite_pct` ;
+- colonne C : **types de cellules rencontrés = `['VALUE']`** — 90 valeurs, min **−4,2**, max **251,0** ;
+  les chaînes relues sont bien `24,3`, `28`, `25,9` ;
+- tri croissant sur la colonne : première ligne **mercredi 11:00 / −4,2**, dernière **dimanche 16:00 / 251** ;
+- graphique sur la colonne : **série Y de 90 points, 90 traçables**, min −4,2, max 251,0 → série non vide.
+
+**Les trois valeurs que la séquence cite sont intactes** : `−4,2` (mercredi 11 h, une seule
+occurrence), `251,0` (dimanche 16 h, une seule) et `23,7` (sept occurrences, dont les **six heures
+d'affilée** du vendredi 09 h→14 h que l'activité 2 fait repérer). Le fichier ne contient aucun
+octet non-ASCII : la détection de jeu de caractères par LibreOffice, qui annonce « Turc
+(ISO-8859-9) », est sans effet sur la lecture — vérifié, 0 octet au-dessus de 127.
+
+### Étape C — un jeu complet de quinze captures, pas un réemploi
+
+Décision appliquée telle quelle : **treize des quinze captures montrent le fichier du lot ou le
+nom de la classe**. Seules « Documents » et « Nouveau dossier » sont neutres, et on ne fabrique
+pas un encart aux trois quarts étranger à sa page pour économiser deux images.
+
+Mêmes règles que le pilote, tenues image par image avant intégration : mode sombre du poste,
+boîtes Windows par défaut, **profil LibreOffice intact**, fil d'Ariane replié en
+« … › Documents › 5E1 », volet de navigation masqué dans les trois boîtes **et** dans
+l'Explorateur, les deux vues sur Documents recadrées au bandeau du haut, les deux vues qui
+suivent la création du dossier réduites à cette seule ligne. **Aucune capture ne porte la chaîne
+`PhaseLockedLoop`** — c'est ce que le cadrage protège, et c'est vérifié image par image.
+
+Ce que le lot a de propre :
+
+| geste | captures | ce que le lot change |
+|---|---|---|
+| Ouvrir | 1, 1b, 1c | cinq colonnes A→E, `pm25_ug_m3` à 24,3 et 73,4 collés à droite |
+| Nommer | 2 → 2g | `5E-AIR-DUPONT.ods` dans `Documents › 5E1` |
+| Retrouver | 3, 3b, 3c | « moyenne » tapé en **A92**, sous la 90ᵉ ligne de relevés — et la vue descend jusqu'à `251` du dimanche 16 h |
+| Sortir | 4, 4b | graphique sur `B1:C13`, les **douze relevés du lundi**, heure par heure de 06:00 à 18:00 |
+
+Le contre-exemple du geste « Ouvrir » est ici plus net que sur le pilote. Avec la virgule
+décimale, **chaque ligne se coupe en quatre** : colonne A `lundi;06:00;24`, colonne B `3;21`,
+colonne C `2;73`, colonne D `4`. La ligne de titres, elle, tient tout entière dans la colonne A.
+L'élève voit de ses yeux que la virgule sert deux fois.
+
+### Un outil cassé, réparé au passage
+
+`_outils-captures-gestes/posewin.ps1` ne s'exécutait pas : son bloc `param(` avait été replié sur
+une ligne, et le commentaire de `-Classe` avalait `-Title`, `-X`, `-Y`, `-W`, `-H` et la
+parenthèse fermante. PowerShell refusait le fichier — « Expression manquante après « , » ».
+Le défaut est arrivé dans `main` avec c134d787, le commit qui a fait entrer les outils de capture
+dans le périmètre du thème. Trois paramètres remis chacun sur sa ligne ; aucune autre ligne
+touchée.
+
+Deux limites de `menu_choisir.ps1` sont contournées, pas corrigées, et méritent d'être écrites :
+`FindFirst` sur `HasKeyboardFocus` renvoie l'entrée **parente** autant que celle du sous-menu, si
+bien que le nom relu n'est jamais celui attendu et que l'activation échoue ; et rouvrir un menu
+immédiatement après en avoir fermé un le referme au lieu de l'ouvrir. Les deux se traitent en
+lisant **toutes** les entrées focalisées et en laissant une seconde entre deux menus.
+
+### Étape D — les contrôles, tous exécutés ce jour, avec leurs chiffres
+
+- `controle_gestes_outil.py` : **22 encarts lus · 0 écart** ✅
+- `controle_medias.py` : **41 lots · 297 médias · 297 nommés par leur `SOURCES_MEDIAS.md` ·
+  141 promesses de manifeste vérifiées** ✅ (les quatre SVG inemployés du lot sont une dette
+  antérieure, inchangée)
+- `controle_liens.py` : **2 847 adresses · 0 cassée · 52 ancres · 0 introuvable** ✅
+- `verif_regles_audit.py` sur la séquence du lot : **11 ✔ et 1 ·** (n°26 sans objet — la page ne
+  s'appuie pas sur une année antérieure) ; aucun manquement
+- `tests_5e_C1.1_chengdu.py` : **43 / 43** ✅
+- `controle_impression.mjs`, importé par `main()` — la garde `import.meta.url` ne passe pas sous
+  Windows : **5 pages · 1 417 textes · 0 page refusée** ✅
+- navigateur, aux deux largeurs : **1280 px** et **390 px** — **15 / 15 captures chargées**,
+  les quinze `width`/`height` déclarés **égaux aux dimensions réelles**, chaque `alt` d'au moins
+  80 caractères, `scrollWidth == clientWidth` aux deux largeurs, **console vide** ; la loupe
+  existante, qui cible `document.querySelectorAll("img")`, prend les quinze captures sans une
+  ligne de plus — vérifié : 15 `loupe-cliquable`, 15 `tabindex`.
+
+Poids des images : de **13 Ko** à **144 Ko**, toutes sous le plafond de 300 Ko.
+
+### Le poste, remis en état
+
+`Documents\5E1` et la copie du CSV dans Téléchargements supprimés — vérifié, les deux chemins
+n'existent plus ; LibreOffice fermé ; volet de navigation et volet des détails de l'Explorateur
+réaffichés. **Le profil LibreOffice n'a pas été touché.**
+
+Une réserve, écrite plutôt que tue : le **volet de navigation des boîtes de dialogue** (Enregistrer
+sous, Ouvrir, Enregistrer en tant qu'image) reste masqué. Ce réglage est celui du shell, partagé
+par les trois boîtes, et les trois lots suivants de la vague en ont besoin dans le même état ; il
+sera rétabli à la fin du dernier lot. Il n'affecte que l'affichage de ces boîtes, et se remet en
+deux clics par **Organiser → Disposition → Volet de navigation**.
