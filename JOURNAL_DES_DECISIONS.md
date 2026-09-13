@@ -14529,3 +14529,38 @@ liens) ✅ · `controle_medias.py`, `controle_gestes_outil.py`, `controle_impres
 `verif_regles_audit.py` **0 manquement** ✅ · `tests_5e_C1.2_sainte_luce.py` **36 / 36** ✅ ·
 `mesurer_temps_seances.py` **165 / 150**, inchangé ✅ · navigateur 1280 et 390 px, onglet par onglet,
 console vide ✅.
+
+## 13/09/2026 — 5e_C1.1 : « 89 valeurs » et « trois valeurs fausses » ne sortaient pas du fichier
+
+Mesuré dans `releves_air_chengdu_simules.csv` avant la vague 1 bis : **90 relevés, aucune cellule vide**
+dans `pm25_ug_m3` (le relevé manquant du lundi 14 h est une ligne absente, pas une case vide) ;
+plage `C2:C91`, celle que la page écrit ; moyenne brute **27,363 → 27,4** ; sans −4,2 et 251,
+**25,18 → 25,2** — exactement ce que fait `=MOYENNE.SI.ENS(C2:C91;C2:C91;">0";C2:C91;"<200")`, qui
+n'écarte que ces **deux** valeurs. La série figée de 23,7 est **signalée, pas écartée**, comme le
+corrigé le dit déjà (« Ce n'est pas une anomalie — c'est un fait »). Trois phrases de l'activité 2
+disaient autre chose ; tranché par Pascal le 13/09, correction à part, les nombres 25,2 et 27,4
+inchangés :
+
+| où | avant | après |
+|---|---|---|
+| question d) de l'activité 2 (`a2_5`) | « Que faire des trois valeurs manifestement fausses ? » | « Que faire des deux valeurs manifestement fausses (−4,2 et 251) ? » |
+| extrait du chemin guidé 🟢 | « Moyenne calculée sur les 89 valeurs présentes : 27,4 µg/m³. Moyenne après avoir écarté les trois valeurs fausses : 25,2 µg/m³. » | « Moyenne calculée sur les 90 valeurs : 27,4 µg/m³. Moyenne après avoir écarté les deux valeurs fausses (−4,2 et 251) : 25,2 µg/m³. » |
+| correction complète | « il vient de **trois valeurs sur quatre-vingt-dix** » | « il vient de **deux valeurs sur quatre-vingt-dix** (−4,2 et 251) » |
+
+Les options de `a2_5` et la réponse attendue du vérificateur (« les écarter du calcul, mais les
+garder dans le fichier avec une note ») ne changent pas. Vérifié fichier par fichier, comme demandé :
+**ni « 89 valeurs », ni « trois valeurs » dans le QCM, les synthèses, le lexique, `q.py` ni le banc**.
+
+**Ce que la vérification a trouvé, et qui n'est pas corrigé ici :** le QCM (`q.py` l. 145, question
+« Ce que coûte une donnée sale ») dit « Moyenne après écart des **quatre anomalies** : 25,2 » et
+explique « **Quatre valeurs** sur quatre-vingt-dix … déplacent la moyenne de près de 9 % ». C'est la
+même confusion, dans le QCM : 25,2 est la moyenne sans **deux** valeurs ; les quatre anomalies ne
+sont pas quatre valeurs écartées (le plateau en compte six, signalées ; la ligne manquante n'est pas
+une valeur). La vague 1 bis interdit de toucher aux QCM ; à trancher à part (`q.py` puis
+régénération).
+
+Contrôles, tous exécutés ce jour : `tests_5e_C1.1_chengdu.py` **43 / 43** ✅ · `verif_regles_audit.py`
+**0 manquement** ✅ · `controle_liens.py` **2 897 · 0 cassée** ✅ · `controle_gestes_outil.py`,
+`controle_fichiers_telechargeables.py`, `controle_impression.mjs` ✅ · `mesurer_temps_seances.py`
+**275 / 215**, inchangé ✅ · navigateur 1280 et 390 px, onglet Séance 2, console vide, pas de
+défilement ✅.
