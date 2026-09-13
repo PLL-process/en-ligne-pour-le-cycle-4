@@ -17,32 +17,35 @@ ENCART = ('<section class="card gestes-outil"><h2>🧰 Avant de commencer — le
 def page(outil, corps):
     return "<html><body>%s%s</body></html>\n" % (ENCART % outil, corps)
 
-def jouer(racine):
+def jouer(racine, toleres=None):
     ancien = C.DEPOT; C.DEPOT = str(racine); s = io.StringIO()
     try:
         with contextlib.redirect_stdout(s):
-            code = C.main()
+            code = C.main(toleres=toleres)
     finally:
         C.DEPOT = ancien
     return code, s.getvalue()
 
 def main():
     echecs, n = [], 0
-    def cas(titre, contenu, doit_refuser, attendu=""):
+    def cas(titre, contenu, doit_refuser, attendu="", toleres=None):
         nonlocal n; n += 1
         with tempfile.TemporaryDirectory() as tmp:
             pathlib.Path(tmp, "sequence_x.html").write_text(contenu, encoding="utf-8")
-            code, texte = jouer(tmp)
+            code, texte = jouer(tmp, toleres if toleres is not None else {})
         if doit_refuser and code == 0: echecs.append(titre + " : accepté, alors qu'il fallait refuser")
         elif not doit_refuser and code != 0: echecs.append(titre + " : refusé\n     " + texte.strip())
         elif attendu and attendu not in texte: echecs.append(titre + " : message sans « %s »" % attendu)
 
-    cas("Tableur, et la page ouvre un tableur", page("Tableur", "<p>Ouvre le tableur.</p>"), False)
+    # Depuis le 13/09 (vague 2 étape 1), une page sans activité qui ouvre l'outil est refusée :
+    # les cas qui doivent passer portent donc une activité qui ouvre l'outil, collée à l'encart.
+    cas("Tableur, et la page ouvre un tableur",
+        page("Tableur", "<h2>Activité 1 — Relever</h2><p>Ouvre le tableur.</p>"), False)
     cas("le cas du 08/09 : Arduino, le mot seulement dans un <script>",
         page("Arduino", "<p>Ouvre le tableur.</p><script>const c=/arduino/;</script>"),
         True, "ne l'emploie nulle part")
     cas("Arduino, mais la page téléverse un programme",
-        page("Arduino", "<p>Téléverse ton programme dans la carte.</p>"), False)
+        page("Arduino", "<h2>Activité 1 — Programmer</h2><p>Téléverse ton programme dans la carte.</p>"), False)
     cas("le mot dans un alt seulement ne compte pas",
         page("Onshape", '<img alt="capture Onshape"><p>Rien d\'autre.</p>'), True)
     cas("un outil inconnu est refusé, pas deviné", page("Tinkercad", "<p>Ouvre Tinkercad.</p>"),
@@ -71,15 +74,23 @@ def main():
     cas("un <h3> ne clôt pas le bloc d'une séance <h2>",
         page2("Vittascience", SIT, '<h2>Séance 2 — Les types</h2><p>Prédis, puis teste dans Vittascience.</p><h3>Teste</h3>'
               '<a href="https://fr.vittascience.com/python/">▶ Ouvrir l’éditeur</a>'), False)
-    cas("Vittascience : une mention n'ouvre pas — position non jugée, pas refusée",
-        page2("Vittascience", "", SIT + "<h2>Séance 1 — Lire</h2><p>Blocs Vittascience ou Python, même raisonnement.</p>"),
-        False, "position(s) non jugée(s)")
+    # ── l'ouverture (durci le 13/09/2026, vague 2 étape 1) : pas de porte, pas d'encart ──
+    MENTION = page2("Vittascience", "", SIT + "<h2>Séance 1 — Lire</h2><p>Blocs Vittascience ou Python, même raisonnement.</p>")
+    cas("Vittascience : une mention n'ouvre pas — l'encart est refusé (avant le 13/09 : seulement signalé)",
+        MENTION, True, "pas de porte, pas d'encart")
+    cas("Packet Tracer cité dans « Choix de l'outil » seulement — refusé, le cas des six pages du thème 2",
+        page2("Packet Tracer", SIT, "<h2>🧰 Choix de l'outil</h2><p>Cisco Packet Tracer (approfondissement).</p>"
+              "<h2>Activité 1 — Jouer au routeur</h2><p>Sans poste.</p>"), True, "aucune activité de la page n'ouvre")
+    cas("la même page, tolérée nommément, passe et le dit",
+        MENTION, False, "TOLÉRÉS nommément", toleres={"sequence_x.html": "raison écrite"})
+    cas("une tolérance dont la page n'a plus d'encart est annoncée périmée, sans refus",
+        "<html><body><p>rien</p></body></html>", False, "périmée", toleres={"sequence_x.html": "raison écrite"})
     cas("Vittascience : un lien vers fr.vittascience.com ouvre — et la position est jugée",
         page2("Vittascience", "", SIT + '<h2>Séance 1 — Coder</h2><p>Ouvre Vittascience :</p><a href="https://fr.vittascience.com/python/">▶</a>'),
         True, "précède la situation")
 
     n += 1
-    code, texte = jouer(C.DEPOT)
+    code, texte = jouer(C.DEPOT, C.TOLERES)
     if code != 0: echecs.append("le dépôt réel ne passe pas :\n     " + texte.strip())
 
     if echecs:

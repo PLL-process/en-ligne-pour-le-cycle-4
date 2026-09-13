@@ -14988,3 +14988,97 @@ l'`alt` suit le dessin.
 - navigateur (Chromium Playwright), 1280 et 390 px : les deux `alt` lus dans le DOM — quatre familles
   nommées, « données » présent, « trois groupes » absent ; « Cinq exemples » présent, « Quatre
   exemples » absent ; 6 figures, débordement 0 px, **console vide** ✅
+
+## 13/09/2026 — Vague 2, étape 1 (thème 2) : six encarts d'échauffement retirés, parce que leur page n'ouvre jamais l'outil
+
+**Règle d'or n°297**, complétée le 13/09 : « un geste d'outil s'enseigne pour être refait seul, plus
+tard, depuis la page, et il s'enseigne à la porte de l'outil » — l'encart « se place immédiatement
+avant la première activité qui ouvre l'outil ». Une page dont **aucune** activité n'ouvre l'outil n'a
+pas de porte : l'encart y enseigne un geste que l'élève ne fera jamais depuis cette page. Les six
+pages ci-dessous étaient signalées depuis le 13/09 par `controle_gestes_outil.py` (« position non jugée, sort à décider ») ; Pascal a
+tranché : retirer. Le thème 1 n'est pas concerné ; les trois pages Onshape du thème 3 suivent, dans
+une PR à part (garde de périmètre).
+
+**Retiré, et rien d'autre** : sur chaque page, le commentaire marqueur `<!-- gestes-outil-v1 … -->`
+et la `<section class="card gestes-outil">` qu'il annonce — 15 lignes par page, 90 en tout, fins de
+ligne CRLF conservées. Aucune activité réécrite, aucune mention professeur supprimée, aucun QCM
+touché. Les règles CSS `.gestes-outil` de l'en-tête restent en place, désormais sans objet : les
+retirer n'était pas demandé.
+
+### La preuve, page par page
+
+Mesurée par un script de relevé (hors dépôt) qui cherche, **hors de l'encart**, tout lien ou cadre
+vers l'outil (`vittascience`, `packettracer`, `netacad`, `cisco`) et chaque mention du nom, avec la
+section qui la contient. Pour les six pages : **0 lien, 0 cadre**, **0 référence** à l'identifiant de
+l'encart (`#gestes-vittascience`, `#gestes-packettracer`) ailleurs dans la page. Les mentions qui
+restent :
+
+| page | outil | mentions hors encart | où | verdict |
+|---|---|---|---|---|
+| `3e_C4.3` station d'alerte cyclonique | Vittascience | 4 | « 🧰 Choix de l'outil » (alternative au matériel) ; « 🔀 Trois façons » version 🅱 (« Sur VittaScience (mode Arduino), le même montage se simule en ligne ») ; activité 3, ligne *Ressources* (« simulateur ci-dessous (version 🅲) — ou montage Arduino/Grove (🅰), VittaScience (🅱) ») ; note professeur `critere prof` (« prévoir l'alternative VittaScience ») | aucune consigne d'ouverture : la consigne de l'activité 3 est « déplace le curseur du simulateur » (intégré) |
+| `5e_C4.1` lampadaire intelligent | Vittascience | 2 | « 🧰 Choix de l'outil » ; « 🔀 Trois façons » version 🅱 | aucune consigne |
+| `3e_C6.1` programmer l'alerte | Vittascience | 2 | « 🧰 Choix de l'outil » (mBlock 5 / VittaScience, versions A-B) ; « 🔀 Trois façons » version 🅱 | aucune consigne : l'éditeur est CodeLab Techno, intégré |
+| `4e_C6.1` ajuster le programme du jardin | Vittascience | 1 | « 🔀 Trois façons » version 🅰 (« son programme à modifier sous Vittascience/mBlock ») | aucune consigne : la simulation est le banc de test intégré |
+| `5e_C6.1` programmer le lampadaire | Vittascience | 1 | « 🔀 Trois façons » version 🅰 | aucune consigne : simulateur intégré |
+| `3e_C4.7` internet à Sainte-Luce | Packet Tracer | 2 | « 🧰 Choix de l'outil » (« approfondissement … LOGICIEL À CONFIRMER : ne pas en dépendre ») ; « 🔀 Trois façons » version 🅱 (« Packet Tracer si les comptes sont disponibles (À CONFIRMER) — sinon rester sur Filius ») | aucune consigne ; l'outil de la séquence est Filius |
+
+**Un seul cas à regarder de plus près, signalé et non tranché ici** : dans `3e_C4.3`, l'activité 3
+nomme VittaScience dans sa ligne *Ressources*, comme troisième voie possible. Ce n'est pas une
+consigne (pas de verbe adressé à l'élève, pas de lien), et la consigne de l'activité fait manipuler
+le simulateur de la page. Si Pascal veut un jour faire de la version 🅱 un vrai chemin élève, c'est
+un lien-bouton et un encart qu'il faudra — à la porte, dans l'activité 3.
+
+### Ce que le retrait change ailleurs
+
+- **Liens et ancres** : aucun lien interne ni ancre ne pointait vers l'encart. Les identifiants
+  `gestes-vittascience` et `gestes-packettracer` existent encore dans six AUTRES pages, chacune pour
+  son propre encart (`3e_C4.8`, `4e_C4.7`, `5e_C4.7`, `4e_C6.2`, `3e_C9.1`, `5e_C9.1`) ;
+  `controle_liens.py` : 0 ancre introuvable.
+- **`mesurer_temps_seances.py` ne bouge pas** : relevé avant et après sur les six pages, chiffres
+  identiques (215/220, 235/275, 160/165, 110/110, 130/165, 160/165). L'encart ne portait aucune durée
+  annoncée : il n'était pas compté.
+- **Premier titre de chaque page** : l'élève ouvre désormais sa séquence sur « 📖 Situation
+  déclenchante » (`5e_C4.1`, `5e_C6.1`) ou sur « 🔄 Ce que tu as déjà fait » (les quatre autres).
+
+### `controle_gestes_outil.py` durci : pas de porte, pas d'encart
+
+Jusqu'ici, un encart dont aucune activité n'ouvre l'outil était **signalé** et laissé passer. Il est
+désormais **refusé**, avec le message « aucune activité de la page n'ouvre cet outil : pas de porte,
+pas d'encart (règle d'or n°297) ». Les trois encarts Onshape du thème 3 sont **tolérés nommément**
+(`TOLERES`, une raison écrite par page) : leur PR ne peut pas toucher `_outils/`. Une tolérance
+devenue sans objet — la page n'a plus d'encart — s'affiche « périmée, à retirer », sans refuser :
+la PR du thème 3 fera apparaître ses trois lignes, qu'une PR du thème 2 retirera ensuite.
+
+| mesure | avant | après |
+|---|---|---|
+| encarts lus | 22 | 16 |
+| écarts (refus) | 0 | 0 |
+| encarts d'un outil non ouvert | 9 signalés, acceptés | 0 accepté hors liste · 3 tolérés nommément |
+| le script durci sur l'état de `main` (six encarts remis) | — | **6 refus** : les six pages de cette PR |
+| banc `tests_controle_gestes_outil.py` | 15 / 15 | **19 / 19** |
+
+Le banc gagne quatre cas : la mention Vittascience sans lien, désormais refusée (elle était
+« non jugée ») ; Packet Tracer cité seulement dans « Choix de l'outil », refusé — le cas des six
+pages ; la même page tolérée nommément, qui passe et le dit ; une tolérance périmée, annoncée sans
+refus. Deux cas « qui doivent passer » portaient un encart sans aucune activité : ils ont reçu la
+leur, collée à l'encart.
+
+### Les contrôles, tous exécutés ce jour, avec leurs chiffres
+
+- `controle_gestes_outil.py` : **16 encarts · 0 écart · 3 tolérés** ✅ · banc **19 / 19** ✅
+- `controle_medias.py` : **41 lots · 361 médias · 361 nommés** ✅ · `controle_liens.py` :
+  **2 916 adresses · 0 cassée** ✅ · `controle_cadres.py` ✅ · `controle_fichiers_telechargeables.py` :
+  **79 pages · 0 écart** ✅ · `controle_impression.mjs` ✅
+- `verif_regles_audit.py` sur les six lots : **7 manquements avant, les mêmes 7 après** (n°26 ×4,
+  n°42 ×3, sur `3e_C4.3`, `5e_C4.1`, `3e_C6.1`, `4e_C6.1`, `3e_C4.7`) — antérieurs, aucun créé
+- `mesurer_temps_seances.py` : inchangé sur les six pages ✅
+- **bancs des six lots** — *mêmes résultats sur `main` et sur la branche*, rejoués dans un arbre de
+  travail propre de `main` : `3e_C4.3` 22 / 23 · `5e_C4.1` séquence 29 / 30, QCM arrêté · `3e_C6.1`
+  31 / 35 · `4e_C6.1` 25 / 29 · `5e_C6.1` 28 / 32 · `3e_C4.7` 32 / 35. **Tous les échecs sont des
+  tests d'existence de fichiers**, et leur cause est unique : `path.dirname(new URL(import.meta.url).pathname)`
+  donne `/C:/…` sous Windows, d'où `C:\C:\…` (le QCM de `5e_C4.1` s'arrête sur `ENOENT` en lisant son
+  manifeste). C'est le défaut déjà relevé pour `controle_impression.mjs` ; `controle_liens.py` confirme
+  que les fichiers existent. **Vu, pas corrigé** : hors mandat, à grouper avec la correction
+  `fileURLToPath`.
+- navigateur (Chromium Playwright), 1280 et 390 px, les six pages : **0 encart**, **débordement 0 px**,
+  **console vide** ✅

@@ -36,9 +36,17 @@ CE QU'IL MESURE
        cartouche « Activité n » (les balises d'onglet et de carte ne comptent pas).
    Pour Vittascience (OUVRE), nommer ne suffit pas : l'activité doit porter un lien ou un
    cadre vers fr.vittascience.com — cinq pages citent le mot et n'ouvrent que leur
-   simulateur intégré. Si AUCUNE activité de la page n'ouvre l'outil, la position n'est pas jugée :
-   la page est seulement signalée — son sort se décide à l'étape 1 de la vague 2
-   (neuf encarts au 13/09 : trois Onshape, cinq Vittascience, 3e_C4.7).
+   simulateur intégré.
+
+3. L'OUVERTURE (durci le 13/09/2026, vague 2 étape 1). Si AUCUNE activité de la page
+   n'ouvre l'outil, l'encart est REFUSÉ : il enseigne les gestes d'un outil que l'élève
+   n'ouvre jamais depuis cette page (règle d'or n°297 : un geste d'outil s'enseigne
+   pour être refait seul depuis la page, à la porte de l'outil — pas de porte, pas
+   d'encart). Jusqu'à cette date, ces pages étaient seulement signalées : neuf encarts,
+   dont les six du thème 2 retirés ce jour. Les trois encarts Onshape du thème 3 sont
+   TOLÉRÉS nommément (TOLERES) le temps de leur PR : la garde de périmètre interdit à
+   une branche du thème 3 de toucher `_outils/`. Une tolérance devenue sans objet —
+   la page n'a plus d'encart — est affichée comme périmée, à retirer.
 
    NON LU : que l'activité collée soit bien la PREMIÈRE qui OUVRE l'outil. Le script
    distingue une mention d'une ouverture aussi mal qu'un moteur de recherche : dans
@@ -85,6 +93,18 @@ OUTILS = {
 #: ou un cadre vers le site. Mesuré le 12/09 : cinq encarts Vittascience sur des pages dont le
 #: simulateur est dans la page, et qui ne citent le mot que dans « Choix de l'outil ».
 OUVRE = {"vittascience": r'(?:href|src)="https?://fr\.vittascience\.com'}
+
+#: encarts d'un outil que la page n'ouvre pas, tolérés NOMMÉMENT et pour une raison écrite.
+#: Au 13/09/2026 : les trois encarts Onshape du thème 3, dont le retrait est la PR
+#: « fable/theme-3/retirer-encarts-outil-non-ouvert » — qui ne peut pas modifier ce fichier.
+TOLERES = {
+    "theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/3e/3e_C7.1/sequence_3e_C7_capteur-confort-ny.html":
+        "vague 2 étape 1, PR thème 3 — la page renvoie à atelier-cao/tp_3e_boitier_etanche.html",
+    "theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/4e/4e_C7.1/sequence_4e_C7_jardin-conception.html":
+        "vague 2 étape 1, PR thème 3 — la page renvoie à atelier-cao/tp_4e_socle_assemblage.html",
+    "theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/5e/5e_C7.1/sequence_5e_C7_mini-projet-objet.html":
+        "vague 2 étape 1, PR thème 3 — la page renvoie à atelier-cao/tp_5e_de_onshape.html",
+}
 
 
 def pages(racine):
@@ -157,8 +177,9 @@ def juger(chemin):
     return outil, len(re.findall(motif, reste, re.I)), motif, position(texte, m, outil, motif)
 
 
-def main(muet=False):
-    vus, ecarts, signales = 0, [], []
+def main(muet=False, toleres=None):
+    toleres = TOLERES if toleres is None else toleres
+    vus, ecarts, signales, avec_encart = 0, [], [], set()
     for f in pages(DEPOT):
         r = juger(f)
         if r is None:
@@ -166,26 +187,37 @@ def main(muet=False):
         vus += 1
         outil, n, motif, pos = r
         rel = os.path.relpath(f, DEPOT).replace(os.sep, "/")
+        avec_encart.add(rel)
         if n < 0:
             ecarts.append((rel, "outil « %s » inconnu de OUTILS : ajoute-le avec ses mots" % outil))
         elif n == 0:
             ecarts.append((rel, "l'encart enseigne « %s », et la page ne l'emploie nulle part "
                                 "(aucun mot du motif /%s/ hors de l'encart)" % (outil, motif)))
         elif pos is None:
-            signales.append((rel, outil))
+            if rel in toleres:
+                signales.append((rel, outil, toleres[rel]))
+            else:
+                ecarts.append((rel, "l'encart enseigne « %s », et aucune activité de la page n'ouvre "
+                                    "cet outil : pas de porte, pas d'encart (règle d'or n°297)" % outil))
         elif pos[0] is False:
             ecarts.append((rel, "l'encart « %s » n'est pas à la porte de l'outil : %s" % (outil, pos[1])))
+    perimes = sorted(rel for rel in toleres if rel not in avec_encart)
     if not muet:
-        print("%d encart(s) « les quatre gestes » lus · %d écart(s) · %d position(s) non jugée(s)"
+        print("%d encart(s) « les quatre gestes » lus · %d écart(s) · %d toléré(s) nommément"
               % (vus, len(ecarts), len(signales)))
         print("     NON LU : que les quatre gestes soient JUSTES pour cet outil et cette version —\n"
               "     cela se vérifie devant le logiciel, pas dans un script. Ni que l'activité collée\n"
               "     soit la première qui OUVRE l'outil : le script lit une mention, pas une ouverture.")
         if signales:
-            print("\n⚠ %d encart(s) dont aucune activité ne nomme l'outil — position non jugée,"
-                  " sort à décider (vague 2, étape 1) :" % len(signales))
-            for rel, outil in signales:
-                print("  %s  (%s)" % (rel, outil))
+            print("\n⚠ %d encart(s) d'un outil que la page n'ouvre pas, TOLÉRÉS nommément (TOLERES) :"
+                  % len(signales))
+            for rel, outil, raison in signales:
+                print("  %s  (%s)\n     %s" % (rel, outil, raison))
+        if perimes:
+            print("\nℹ %d tolérance(s) périmée(s) — la page n'a plus d'encart, retirer l'entrée de TOLERES :"
+                  % len(perimes))
+            for rel in perimes:
+                print("  %s" % rel)
     if ecarts:
         print("\n⛔ %d encart(s) refusé(s) :" % len(ecarts))
         for rel, d in ecarts:
