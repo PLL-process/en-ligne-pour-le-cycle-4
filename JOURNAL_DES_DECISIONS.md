@@ -14504,3 +14504,28 @@ thème ; à reprendre avec la vague 1 bis, qui passe dans le thème 1.
 Seize cadres et un gabarit remplacés (#379, #380), soixante-dix-sept phrases de la famille
 réécrites dans les huit lots (#380, #381, cette PR), un contrôle qui interdit le retour du cadre, et
 les traces datées laissées telles quelles. Suite : vague 1 bis, PR 1 (`5e_C1.1`).
+
+## 13/09/2026 — 5e_C1.2 : deux noms de fichier cités sans lien (règle n°289), et la règle des noms longs qui manquait au lot 2
+
+Vu en passant lors de #382 : `controle_fichiers_telechargeables.py` refusait `5e_C1.2` sur `main`.
+Mesuré : **deux mentions**, toutes deux dans l'encart, ligne 533, la phrase ajoutée par #373 pour que
+l'encart nomme son CSV — « Les deux autres fichiers de données de la séquence —
+`releves_essai_college_sainte_luce_simules.csv` et `donnees_simulees_freinage_5e_C1.2.csv` — s'ouvrent
+exactement de la même façon. » Les deux fichiers existent dans le lot ; la règle n°289 s'applique sans
+exception : un fichier nommé est un fichier qu'on peut prendre. Chaque nom reçoit le même lien que le
+premier CSV de l'encart — `<a href download title="Télécharger …">📥 <code>…</code></a>` — et rien
+d'autre de la phrase ne change.
+
+**Ce que le lien a révélé.** Lié, le nom de 44 caractères poussait la page à défiler horizontalement
+à 390 px (**407 px**, mesuré) : la règle `.gestes-outil code{overflow-wrap:anywhere}` écrite au lot 3
+(`5e_C3.1`, 57 caractères) et posée au lot 4 « par précaution » **n'avait jamais été posée au lot 2**,
+livré avant elle. Elle l'est maintenant, au même endroit, avec le même commentaire. Les trois liens
+de l'encart tiennent dans l'écran aux deux largeurs ; l'onglet « Séance 2 » garde ses 396 px de
+tableau, antérieurs (#376).
+
+Contrôles, tous exécutés ce jour : `controle_fichiers_telechargeables.py` **79 pages · 33 noms · 0 écart**
+✅ (vert sur tout le dépôt) · `controle_liens.py` **2 897 adresses · 0 cassée** (deux de plus, les deux
+liens) ✅ · `controle_medias.py`, `controle_gestes_outil.py`, `controle_impression.mjs` ✅ ·
+`verif_regles_audit.py` **0 manquement** ✅ · `tests_5e_C1.2_sainte_luce.py` **36 / 36** ✅ ·
+`mesurer_temps_seances.py` **165 / 150**, inchangé ✅ · navigateur 1280 et 390 px, onglet par onglet,
+console vide ✅.
