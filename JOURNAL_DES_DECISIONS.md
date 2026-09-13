@@ -14392,3 +14392,61 @@ commentaire CSS.
 Seize cadres, huit pages, un gabarit : plus un seul `<iframe>` vers Vittascience dans le dépôt, un
 contrôle qui l'interdit, et chaque lien mesuré au clic. Suite : la PR `4e_C6.2` (trois textes), puis
 l'étape 1 (neuf encarts retirés), puis les captures.
+
+## 13/09/2026 — Vague 2, étape 0, suite (thème 2) : la famille des phrases fausses dans tout le lot 4e_C6.2
+
+Complément à #379 et #380. Pascal a relu `main` après #380 : contrôle des cadres vert, zéro
+`<iframe>` — mais la famille survivait dans les **synthèses professeur**, que la chasse de #380 ne
+couvrait pas, et trois textes de `4e_C6.2` étaient restés faux (la garde-périmètre les avait tenus
+hors de #380). Chasse refaite avec les mêmes mots (« embarqué », « dans la page », « cadre »,
+« ci-dessous », « ici » appliqués à l'éditeur) sur **tous les fichiers des huit lots** : séquences,
+synthèses élève et professeur, QCM, lexiques, fiches, README, manifestes, rapports.
+
+**Ce que la chasse a trouvé, et où.** Aucune occurrence dans les **QCM**, les **lexiques** ni les
+**synthèses élève** des huit lots — vérifié fichier par fichier. La famille survit dans les synthèses
+professeur (`4e_C6.2`, `3e_C9.1`, `5e_C9.1`, et `3e_C9.2` : « l'éditeur s'ouvre dans la page
+elle-même, avec un repli déplié si le cadre ne s'affiche pas »), les fiches pédagogiques, deux
+README, deux `SOURCES_MEDIAS.md`, deux manifestes, et les rapports de tests. **Les rapports de
+tests ne sont pas touchés** : ce sont des traces datées de ce qui a été mesuré ce jour-là, et un
+rapport qui dit « iframe » en août dit vrai pour août. Cette PR porte le lot `4e_C6.2` ; la suivante
+(thème 3) portera les synthèses professeur, fiches, README, sources et manifestes des six lots.
+
+### `4e_C6.2`, une par une
+
+| fichier | avant | après |
+|---|---|---|
+| séquence, commentaire CSS | « éditeur Vittascience embarqué — barre voyante » | « éditeur Vittascience ouvert dans un nouvel onglet — barre voyante » |
+| séquence, référentiel (l. 224) | « le **tester dans l'éditeur embarqué** » | « le **tester dans l'éditeur Vittascience** » |
+| séquence, référentiel CRCN (l. 240) | « condition complétée et exécutée dans l'éditeur embarqué » | « … exécutée dans l'éditeur Vittascience » |
+| séquence, version 🅱 (l. 248) | « les barres 🧪 bleues des séances 1, 2 et du Bonus embarquent l'éditeur Vittascience (blocs à gauche, Python à droite) — un clic les déplie. » | « … ouvrent l'éditeur Vittascience dans un nouvel onglet (blocs à gauche, Python à droite) — un clic sur leur lien-bouton. » |
+| séquence, dépliant vs1 | « 🧪 Reconstruis le programme de mesure ici — blocs OU Python, comme tu préfères » | « 🧪 Reconstruis le programme de mesure dans l'onglet Vittascience — blocs OU Python, comme tu préfères » |
+| séquence, dépliant vs2 | « 🧪 Recopie ton programme complété ici et exécute-le — la preuve par la console » | « 🧪 Recopie ton programme complété dans l'onglet Vittascience et exécute-le — la preuve par la console » |
+| séquence, pied de page (l. 572) | « (éditeurs embarqués : connexion requise) » | « (éditeur Vittascience dans un onglet : connexion requise) » |
+| synthèse professeur (l. 50) | « **L'exécution est simulée dans l'éditeur embarqué.** » | « **L'exécution est simulée dans l'éditeur Vittascience, ouvert dans un onglet à part.** » |
+| fiche pédagogique, tableau | « 🅱 éditeur embarqué / 🅲 sans machine » | « 🅱 éditeur Vittascience dans un onglet / 🅲 sans machine » |
+| fiche pédagogique, tableau | « Vittascience Python, **3 iframes** — voir « Dépendances » ci-dessous » | « Vittascience Python, **3 liens-boutons** vers l'éditeur, ouvert dans un nouvel onglet — voir « Dépendances » ci-dessous » |
+| fiche pédagogique, référentiel | « le tester dans l'éditeur embarqué, et valider son » | « le tester dans l'éditeur Vittascience, et valider son » |
+| fiche pédagogique, « Dépendances » | « **Trois iframes `fr.vittascience.com/python/`.** La voie principale des activités 3 et 5 passe par cet éditeur distant. » | « **Trois liens vers `fr.vittascience.com/python/`, ouverts dans un nouvel onglet** — le site refuse d'être encadré (`X-Frame-Options: SAMEORIGIN`, mesuré le 13/09/2026). La voie principale des activités 3 et 5 passe par cet éditeur distant. » |
+| fiche pédagogique, « Dépendances » | « ce que l'élève tape dans l'iframe part chez un tiers. » | « ce que l'élève tape dans l'éditeur Vittascience part chez un tiers. » |
+| banc `tests_4e_C6.2.mjs`, en-tête | « trois éditeurs Vittascience en `<iframe>` » ; « s'ouvrent sur le geste d'ouvrir le dépliant, pas sur le chargement de l'iframe » | « trois éditeurs Vittascience, chacun derrière un lien-bouton ouvert dans un nouvel onglet (plus de `<iframe>` depuis l'étape 0…) » ; « sur le geste de cliquer le lien-bouton, pas sur le chargement de l'onglet Vittascience » |
+
+Quatorze réécritures, exactes au caractère, comptées une par une (le script s'arrête si un compte
+diffère ; la fiche mêle ses fins de ligne, `\r\n` sur le paragraphe « Dépendances » — le script
+l'a vu, pas deviné). La fiche garde sa citation du rapport de tests (« Non testé … le contenu de
+l'iframe Vittascience ») : c'est une citation, datée, du rapport tel qu'il est.
+
+**Vérifié après passage :** plus une occurrence de la famille appliquée à l'éditeur dans le lot,
+hors les deux rapports de tests. Le titre de vs3 (« code tes défis ici, dans l'onglet
+Vittascience », #379) reste tel quel : vrai, et Pascal a demandé d'aligner vs1 et vs2 sur lui.
+
+### Les contrôles, tous exécutés ce jour
+
+- `controle_cadres.py` : **0 cadre** ✅ · `controle_gestes_outil.py` : **22 · 0 · 9** ✅ ·
+  `controle_liens.py` : **2 895 · 0 cassée · 52 ancres** ✅ · `controle_medias.py` : **342 · 342** ✅ ·
+  `controle_impression.mjs` : **0 refus** ✅
+- `verif_regles_audit.py` `4e_C6.2` : **5 manquements, les mêmes qu'avant** (dette du lot)
+- `mesurer_temps_seances.py` : **165 / 145**, inchangé ✅
+- `tests_4e_C6.2.mjs` : **35 / 35** ✅
+- navigateur, 1280 et 390 px : **3 liens, 6 clics, 6 onglets « Vittascience — Python » ouverts**,
+  console vide ; synthèse professeur à 390 px : console vide, pas de défilement, le nouveau texte
+  visible ✅. Le débordement des onglets 2 et 3 de la séquence à 390 px est celui de #379, antérieur.
