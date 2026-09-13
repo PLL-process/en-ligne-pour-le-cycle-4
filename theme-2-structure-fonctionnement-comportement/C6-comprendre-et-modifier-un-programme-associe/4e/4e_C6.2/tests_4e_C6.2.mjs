@@ -45,8 +45,10 @@
 import { chromium } from 'playwright';
 import path from 'node:path';
 import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
-const ICI = path.dirname(new URL(import.meta.url).pathname);
+// fileURLToPath, pas .pathname : sous Windows, .pathname donne « /C:/… » et path.join en fait « C:\C:\… »
+const ICI = path.dirname(fileURLToPath(import.meta.url));
 const SEQ = path.join(ICI, 'sequence-jardin-connecte-arrosage-automatique.html');
 const QCM = path.join(ICI, 'qcm_4e_C6.2_arrosage_automatique.html');
 
@@ -156,9 +158,9 @@ ok('7 · activité 3 REFUSÉE malgré les 5 étapes remises dans l\'ordre — l\
 
 const editeurs = await p.$$eval('details.vs', l => l.map(e => e.id));
 await ouvrirPour('vs1');
-await p.click('#vs1 > summary'); await p.waitForTimeout(200);
-ok(`8 · ouvrir le dépliant de l'éditeur pose le verrou vs1 — le GESTE suffit, `
-   + `le chargement de l'iframe n'est pas exigé`,
+await p.click('#vs1 .vs-lien'); await p.waitForTimeout(200);
+ok(`8 · cliquer le lien-bouton de l'éditeur pose le verrou vs1 — le GESTE suffit, `
+   + `l'onglet Vittascience n'a pas besoin de se charger (étape 0 de la vague 2 : plus de cadre)`,
    await p.evaluate(() => !!window.__exp.vs1),
    JSON.stringify(await p.evaluate(() => window.__exp.vs1)));
 
@@ -179,7 +181,7 @@ ok('11 · activité 5 REFUSÉE à son tour : le second éditeur n\'a pas été o
    /🔒/.test(await retour(5)) && !(await estValidee(5)),
    (await retour(5)).slice(0, 70));
 await ouvrirPour('vs2');
-await p.click('#vs2 > summary'); await p.waitForTimeout(200);
+await p.click('#vs2 .vs-lien'); await p.waitForTimeout(200);
 await valider(5);
 ok('12 · activité 5 validée 4 / 4 (le trou de la condition et les deux appels)',
    /4\/4/.test(await retour(5)) && await estValidee(5),
@@ -245,12 +247,13 @@ const hotes = [...new Set(bloquees.map(u => new URL(u).host))];
 ok(`21 · ${bloquees.length} requête(s) distante(s) refusées pendant toute la séance, `
    + `vers ${hotes.length} hôte(s) : ${hotes.join(', ')}`,
    hotes.length > 0 && hotes.every(h => /vittascience|fonts\.g/.test(h)), hotes.join(', '));
-ok(`22 · les ${editeurs.length} éditeurs distants sont TOUS dans un dépliant refermé par défaut : `
-   + 'rien ne part avant un geste',
+ok(`22 · les ${editeurs.length} éditeurs distants sont TOUS un lien-bouton vers fr.vittascience.com `
+   + 'ouvert dans un nouvel onglet, et plus aucun cadre : rien ne part avant un geste',
    editeurs.length === 3
    && (await p.$$eval('details.vs',
-        l => l.every(e => e.querySelector('iframe') && e.querySelector('iframe')
-             .getAttribute('loading') === 'lazy'))),
+        l => l.every(e => !e.querySelector('iframe') && e.querySelector('a.vs-lien')
+             && /^https:\/\/fr\.vittascience\.com\//.test(e.querySelector('a.vs-lien').href)
+             && e.querySelector('a.vs-lien').target === '_blank'))),
    editeurs.join(','));
 
 /* ── persistance ─────────────────────────────────────────────────────────── */

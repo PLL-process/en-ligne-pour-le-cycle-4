@@ -97,11 +97,11 @@
   details.vs>summary{cursor:pointer;padding:14px 18px;font-weight:700;font-size:1.03em;color:#61dafb;list-style:none;display:block;border-radius:12px}
   details.vs>summary::-webkit-details-marker{display:none}
   details.vs>summary:hover{background:rgba(97,218,251,.1)}
-  details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+  details.vs>summary::after{content:"▼ l'éditeur s'ouvre dans un nouvel onglet — rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
   details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
   @keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
   @media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
-  details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+  details.vs .vs-ouvrir{margin:0;padding:4px 16px 10px}details.vs .vs-lien{display:inline-block;text-decoration:none}
   details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
   .simu{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center;margin:12px 0}
   @media(max-width:640px){.simu{grid-template-columns:1fr}}
@@ -331,11 +331,12 @@
       <tr><td><select id="a3o5"><option value="">pos. ?</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><span class="py-var">valeur_brute</span> <span class="py-op">=</span> <span class="py-kw">lire_capteur</span>(<span class="py-var">A0</span>)</td></tr>
     </table>
     <p class="py-legende">🎨 Lis le code en couleurs : <span class="py-var">variables</span> · <span class="py-str">"textes"</span> · <span class="py-num">nombres</span> · <span class="py-kw">mots-clés</span> · <span class="py-op">=</span> et opérateurs</p>
-    <details class="vs" id="vs1">
+    <details class="vs" id="vs1" open>
       <summary>🧪 Reconstruis le programme de mesure ici — blocs OU Python, comme tu préfères</summary>
-      <p class="vs-note">L'éditeur s'ouvre DANS la page : blocs à gauche, Python à droite, console en bas. Assemble les blocs « capteurs » dans l'ordre que tu as choisi, exécute, et observe la console. (Connexion Internet nécessaire pour l'éditeur ; le reste de la page fonctionne hors ligne.)</p>
-      <p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur ci-dessous est hébergé par Vittascience&nbsp;: si le cadre reste blanc, c'est la connexion, pas ton ordinateur. Dans ce cas, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
-<iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (séance 1)"></iframe>
+      <p class="vs-note">L'éditeur s'ouvre dans un nouvel onglet : blocs à gauche, Python à droite, console en bas. Assemble les blocs « capteurs » dans l'ordre que tu as choisi, exécute, et observe la console. (Connexion Internet nécessaire pour l'éditeur ; le reste de la page fonctionne hors ligne.)</p>
+      <p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur est hébergé par Vittascience. Sans connexion, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
+<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
+<p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
     </details>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><div><p>On ne peut pas convertir une valeur qu'on n'a pas encore lue. Et « répéter sans fin » englobe tout ce qui doit se refaire chaque seconde.</p></div></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><div><p>Ordre logique du technicien : ① ouvrir la répétition (<code>while True:</code>) → ② LIRE le capteur → ③ CONVERTIR la valeur → ④ AFFICHER le résultat → ⑤ ATTENDRE avant la mesure suivante. Vérifie ta prédiction dans l'éditeur avant de valider.</p></div></details>
@@ -389,11 +390,12 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="py-kw">attendre</span>(<span class="py-num">1</span>)
     </div>
     <label>PRÉDIS, puis vérifie dans l'éditeur : avec <code>humidite = 12</code> et <code>seuil = 30</code>, il se passe… <select id="a5q1"><option value="">— je choisis —</option><option>la pompe démarre (12 &lt; 30 est VRAI)</option><option>la pompe s'arrête</option><option>rien, le programme attend</option></select></label>
-    <details class="vs" id="vs2">
+    <details class="vs" id="vs2" open>
       <summary>🧪 Recopie ton programme complété ici et exécute-le — la preuve par la console</summary>
       <p class="vs-note">Blocs à gauche, Python à droite. Sans carte réelle, remplace <code>lire_capteur_pourcent(A0)</code> par une valeur de ton choix (par ex. <code>humidite = 12</code>) et <code>demarrer_pompe()</code> par <code>print("POMPE EN MARCHE")</code> : la console te montre la décision.</p>
-      <p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur ci-dessous est hébergé par Vittascience&nbsp;: si le cadre reste blanc, c'est la connexion, pas ton ordinateur. Dans ce cas, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
-<iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (séance 2)"></iframe>
+      <p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur est hébergé par Vittascience. Sans connexion, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
+<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
+<p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
     </details>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><div><p>Reprends ta règle de l'activité 4 : elle se traduit mot à mot. « inférieure » → quel symbole ?</p></div></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><div><p>Trou par trou : ① la condition du SI est la traduction directe de « humidité inférieure au seuil » ; ② DANS le SI (sol sec), on démarre ; ③ dans le SINON (sol assez humide), on arrête. Puis exécute avec humidite = 12 : quelle branche s'affiche ?</p></div></details>
@@ -540,11 +542,12 @@ n'est écrit qu'à UN endroit (la variable <code>seuil</code>) — pour changer 
   modifiée en tête de programme en 🅱) — combien de lignes as-tu dû changer ? Pourquoi si peu ?</p>
   <p><b>🏡 Défi maison :</b> explique à quelqu'un de ta famille pourquoi le test « 30 pile » est le plus important
   du banc. S'il trouve la réponse tout seul à « et avec ≤ ? », vous avez gagné tous les deux.</p>
-  <details class="vs" id="vs3">
-    <summary>🧪 L'éditeur du Bonus — code tes défis ici, sans quitter la page</summary>
+  <details class="vs" id="vs3" open>
+    <summary>🧪 L'éditeur du Bonus — code tes défis ici, dans l'onglet Vittascience</summary>
     <p class="vs-note">Blocs à gauche, Python à droite, console en bas. (Connexion Internet nécessaire pour l'éditeur ; le reste de la page fonctionne hors ligne.)</p>
-    <p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur ci-dessous est hébergé par Vittascience&nbsp;: si le cadre reste blanc, c'est la connexion, pas ton ordinateur. Dans ce cas, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
-<iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (Bonus)"></iframe>
+    <p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur est hébergé par Vittascience. Sans connexion, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
+<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
+<p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
   </details>
 </section>
 
@@ -639,7 +642,7 @@ document.querySelectorAll(".bench-run").forEach(b => b.addEventListener("click",
 }));
 
 /* ── suivi ouverture éditeurs ── */
-["vs1","vs2","vs3"].forEach(id => { const d = $(id); if(d) d.addEventListener("toggle", () => { if(d.open){ window.__exp[id] = true; save(); } }); });
+["vs1","vs2","vs3"].forEach(id => { const d = $(id); const a = d && d.querySelector(".vs-lien"); if(a) a.addEventListener("click", () => { window.__exp[id] = true; save(); }); });
 
 /* ── vérificateurs (encoches question par question) ── */
 function qmark(e, state){ let m = e.previousElementSibling; if(!(m && m.classList && m.classList.contains("qmark"))){ m = document.createElement("span"); m.className = "qmark"; e.insertAdjacentElement("beforebegin", m); } if(state === null){ m.textContent = ""; m.className = "qmark"; } else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); } }

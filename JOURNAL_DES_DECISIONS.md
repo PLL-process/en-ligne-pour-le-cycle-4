@@ -14149,3 +14149,130 @@ un retour à la ligne, réel dans un banc.
 
 Treize encarts déplacés en trois PR (5 + 4 + 4), neuf signalés et promis au retrait, un contrôle
 qui tient la règle. Vient ensuite l'étape 0 de la vague 2 : les seize cadres deviennent des liens.
+
+## 13/09/2026 — Vague 2, étape 0 (thème 2) : les cadres Vittascience deviennent des liens, et le gabarit avec eux
+
+Première des deux PR de l'étape 0 (`PROMPT_SUITE_vague2_v2_cadres_puis_captures.md`). Elle porte
+`4e_C6.2` (trois cadres), le gabarit et le contrôle, tous deux dans `_outils/` (périmètre du thème 2).
+La seconde PR portera les sept pages du thème 3 (treize cadres).
+
+### La mesure qui décide, refaite ce jour
+
+`curl -I` sur les trois adresses, le 13/09 :
+
+| adresse | réponse |
+|---|---|
+| `https://fr.vittascience.com/python/?mode=mixed&console=bottom` | `200` · **`X-Frame-Options: SAMEORIGIN`** |
+| `https://fr.vittascience.com/arduino/?link=6a8e2a2348ed2&embed=1` (code d'intégration officiel, Partager → Intégrer) | `200` · **`X-Frame-Options: SAMEORIGIN`** |
+| `https://fr.vittascience.com/arduino/?link=6a8e2a2348ed2` | `200` · **`X-Frame-Options: SAMEORIGIN`** |
+
+Le code d'intégration officiel refuse d'être encadré comme le reste : **le cadre de `3e_C9.2` ne
+s'affiche pas non plus**, il sera remplacé dans la PR thème 3 (avec la réécriture prévue : « ici
+même » → « dans l'onglet Vittascience », le repli perd son Plan A). Seize cadres sur huit pages,
+plus le gabarit — le compte du 12/09 est confirmé : `4e_C6.2` 3, `3e_C7.1` 2, `5e_C7.1` 1,
+`3e_C9.1` 4, `3e_C9.2` 2, `4e_C9.1` 1, `5e_C9.1` 3.
+
+### Le remplacement, le même pour chaque cadre
+
+Le `<iframe>` disparaît ; à sa place, à la même ligne :
+
+```html
+<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
+<p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
+```
+
+L'adresse est **celle que portait le cadre**, relevée par le script, pas recopiée. La note hors ligne,
+identique sur les treize cadres à dépliant, une fois :
+
+| | texte |
+|---|---|
+| avant | « 🌐 **Cette activité a besoin d'Internet.** L'éditeur ci-dessous est hébergé par Vittascience : si le cadre reste blanc, c'est la connexion, pas ton ordinateur. Dans ce cas, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante. » |
+| après | « 🌐 **Cette activité a besoin d'Internet.** L'éditeur est hébergé par Vittascience. Sans connexion, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante. » |
+
+Ce qui est parti : « ci-dessous » (l'éditeur n'est plus dessous), « si le cadre reste blanc, c'est la
+connexion, pas ton ordinateur » (faux : le cadre restait blanc *avec* la connexion), et « Dans ce
+cas », qui n'avait plus d'antécédent — remplacé par « Sans connexion ». Le reste est mot pour mot.
+
+**Trois autres phrases que le cadre rendait fausses, corrigées — à valider par Pascal, parce que le
+prompt ne les nommait pas :** le prompt dit « rien d'autre ne change », mais il dit aussi que le
+défaut « rend faux le texte qui l'accompagne ». Trois textes disaient encore que l'éditeur est dans
+la page ; les laisser à côté de la ligne « s'ouvre dans un onglet à part » aurait fait mentir la
+page deux fois.
+
+| où | avant | après | occurrences dans `4e_C6.2` |
+|---|---|---|---|
+| `.vs-note` | « L'éditeur s'ouvre DANS la page : blocs à gauche… » | « L'éditeur s'ouvre dans un nouvel onglet : blocs à gauche… » | 1 |
+| `<summary>` du Bonus | « code tes défis ici, sans quitter la page » | « code tes défis ici, dans l'onglet Vittascience » | 1 |
+| CSS `details.vs>summary::after` | « ▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer » | « ▼ l'éditeur s'ouvre dans un nouvel onglet — rien à installer » | 1 |
+
+**Le dépliant s'ouvre d'emblée.** Le prompt demande « un bloc visible, pas replié » ; le dépliant
+`<details class="vs">` reçoit l'attribut `open` (trois fois). Il reste repliable : un élève qui
+veut ranger le bloc le peut.
+
+**Le geste suivi change de nature.** La page posait le verrou `__exp.vsN` quand l'élève *dépliait*
+le cadre (`toggle`) ; un dépliant ouvert d'emblée ne se déplie plus. Le verrou se pose désormais au
+**clic sur le lien-bouton** — c'est le geste qui ouvre l'éditeur, donc celui qui vaut « j'ai ouvert
+l'éditeur ». Une ligne de JavaScript, la même sur chaque page :
+
+```js
+["vs1","vs2","vs3"].forEach(id => { const d = $(id); const a = d && d.querySelector(".vs-lien"); if(a) a.addEventListener("click", () => { window.__exp[id] = true; save(); }); });
+```
+
+Les messages de verrou (« Ouvre l'éditeur 🧪 et reconstruis ton programme avant de valider »)
+restent vrais tels quels. La règle CSS `details.vs iframe{…}` devient le style du lien.
+
+### Le gabarit et le contrôle, dans `_outils/`
+
+- **Gabarit :** `_outils/gabarits/vittascience_embed.html`, **au même chemin** (quatre documents le
+  citent par ce nom : le journal, `METHODE.md`, `AUDIT_GLOBAL.md`, l'audit navigateur du thème 3), réécrit
+  sur ce modèle : lien-bouton, note corrigée, `open`, CSS et suivi au clic. Son en-tête dit pourquoi
+  (les trois `SAMEORIGIN` mesurés) et nomme le contrôle.
+- **Contrôle :** `_outils/controle_cadres.py`, vingt-cinq lignes utiles, plutôt qu'une ligne dans
+  `controle_liens.py` — celui-ci ne teste aucune adresse distante par principe, et le cadre n'est
+  pas une question de lien mort mais d'en-tête HTTP ; mélanger les deux aurait brouillé son en-tête.
+  Il refuse tout `<iframe>` dont le `src` est sur `fr.vittascience.com`, hors archive. Banc
+  `tests_controle_cadres.py` : six cas (lien accepté ; cadre Python refusé ; **`embed=1` refusé**
+  ; deux cadres comptés ; un cadre vers un autre site ignoré ; l'archive ignorée) plus le dépôt réel.
+
+**Sur `main` entre cette PR et la suivante, le contrôle est rouge, et c'est voulu :** il compte
+**13 cadres dans 7 pages**, toutes du thème 3 — la liste exacte de ce que la PR thème 3 remplace.
+Son banc dit **6 / 7** pour la même raison. Pascal a demandé cet ordre (thème 2 d'abord, le
+contrôle avec lui) ; l'alternative — un contrôle qui tolère le thème 3 pour une PR — aurait été un
+mensonge de plus.
+
+### Le banc du lot, réparé et rejoué
+
+`tests_4e_C6.2.mjs` ne s'exécutait pas sous Windows : `new URL(import.meta.url).pathname` donne
+`/C:/…`, et `path.join` en fait `C:\C:\…`. Remplacé par `fileURLToPath` — une ligne, la même faute
+que `controle_impression.mjs` corrigée le 12/09. Trois de ses contrôles parlaient du cadre : le 8 et
+le 12 cliquent le lien-bouton au lieu du `<summary>` ; le 22 exige qu'il n'y ait **plus aucun
+`<iframe>`** et que chaque dépliant porte un lien `fr.vittascience.com` en `_blank`. Rejoué, réseau
+coupé de bout en bout : **35 / 35** — dont « 2 requêtes distantes refusées vers 1 hôte,
+fr.vittascience.com » : ce sont les deux clics des contrôles 8 et 12, plus rien ne part au chargement.
+
+### Les contrôles, tous exécutés ce jour, avec leurs chiffres
+
+- `controle_cadres.py` : sur cette branche, **13 cadres · 7 pages, toutes du thème 3** (attendu) ;
+  `4e_C6.2` et le gabarit : 0 · banc **6 / 7**, le septième étant le dépôt réel
+- `controle_gestes_outil.py` : **22 · 0 écart · 9 non jugées** ✅ (l'encart de `4e_C6.2` est
+  toujours collé à l'activité 3, qui porte maintenant un `href` vers `fr.vittascience.com`)
+- `controle_liens.py` : **2 895 adresses · 0 cassée · 52 ancres** ✅ · `controle_medias.py` :
+  **342 médias · 342 nommés** ✅ · `controle_impression.mjs` : **0 page refusée** ✅
+- `verif_regles_audit.py` `4e_C6.2` : **5 manquements (n°26, 29, 30, 31, 34), identiques à `main`**
+- `mesurer_temps_seances.py` : `4e_C6.2` **165 / 145 avant et après** ✅
+- `tests_4e_C6.2.mjs` : **35 / 35** ✅ (inexécutable avant cette PR)
+- navigateur (Chromium Playwright), **1280 px et 390 px** : **0 `<iframe>`**, **3 liens-boutons
+  visibles, chacun cliqué une fois, six clics, six onglets réellement ouverts**, adresse mesurée
+  `https://fr.vittascience.com/python/?mode=mixed&console=bottom`, titre de l'onglet
+  **« Vittascience — Python »** ; **console vide** aux deux largeurs — l'erreur `X-Frame-Options`
+  a disparu avec le cadre ✅
+
+**Vu, pas causé, pas corrigé :** à 390 px, les onglets « Séance 2 » et « Séance 3 » de `4e_C6.2`
+défilent horizontalement (478 et 699 px) — des blocs de code Python aux lignes longues. Mesuré
+sur `main` : identique. À trier à part, comme le tableau de `5e_C1.2`.
+
+### Ce qui reste
+
+La PR thème 3 : `3e_C7.1`, `5e_C7.1`, `3e_C9.1`, `5e_C9.1` (dix dépliants, même script) ;
+`3e_C9.2` (deux pages, cadre `embed=1`, « ici même » réécrit, repli sans Plan A) ; `4e_C9.1`
+(un cadre dans `div.vitta-cadre`, même repli). Puis l'étape 1 : les neuf encarts retirés.
