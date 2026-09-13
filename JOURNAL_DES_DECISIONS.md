@@ -14057,3 +14057,95 @@ premier clic).
 Thème 2 : `3e_C4.8`, `4e_C4.7`, `5e_C4.7`, `4e_C6.2` à déplacer ; `3e_C4.3`, `5e_C4.1`, `3e_C6.1`,
 `4e_C6.1`, `5e_C6.1`, `3e_C4.7` signalés ; `controle_gestes_outil.py` apprend la position, avec deux
 cas au banc. Puis l'étape 0 de la vague 2 : les seize cadres.
+
+## 13/09/2026 — L'échauffement à la porte de l'outil (thème 2) : quatre encarts déplacés, et le contrôle apprend la position
+
+Troisième et dernière PR du chantier, après le thème 1 (#376) et le thème 3 (#377). Même règle
+(n°297 complétée), même script, même preuve à l'octet. Elle porte en plus `controle_gestes_outil.py`,
+qui vit dans `_outils/` (périmètre du thème 2) et qui devait arriver en dernier.
+
+### Ce que Pascal a tranché le 13/09 pour les neuf encarts sans porte
+
+Ni descendre l'encart Onshape avant le lien du TP, ni le déplacer dans le TP : **les TP de
+`atelier-cao/` enseignent déjà les quatre gestes là où Onshape s'ouvre** (« 1 · Ranger avant de
+commencer », « 8 · Emporter son travail : nommer, exporter, retrouver », captures relevées). Les trois
+encarts Onshape de `3e_C7.1`, `4e_C7.1`, `5e_C7.1` sont donc **retirés**, avec les cinq Vittascience
+(`3e_C4.3`, `5e_C4.1`, `3e_C6.1`, `4e_C6.1`, `5e_C6.1`) et `3e_C4.7` : **neuf encarts**, à l'étape 1
+de la vague 2, une PR par thème. Le contrôle de position les ignore d'ici là. La vague 3 Onshape
+portera sur les sections 1 et 8 des TP, pas sur ces encarts.
+
+### La mesure, lue avant de trancher
+
+| page | encart avant | ce que dit la première mention | activité d'accueil | décision |
+|---|---|---|---|---|
+| `3e_C4.8` | après « Ce que tu as déjà fait » | activité 1 : « Voici l'architecture que nous avons RÉELLEMENT construite dans Packet Tracer — c'est elle que tu monteras en séance 2 » — un schéma de référence, l'outil n'est pas ouvert ; activité 2 : « tables DONNÉES — recopiées de nos vrais routeurs (fenêtre Static Routes de Packet Tracer) » — une lecture, pas une ouverture | **Activité 3** « Construire le pont dans Packet Tracer » | **déplacé** — panneau `seance2` |
+| `4e_C4.7` | après « Ce que tu as déjà fait » | activité 1 : 0 mention | **Activité 2** « Construire le réseau d'entraînement de la serre » : « monter dans Packet Tracer le réseau… A. Ouvrir Packet Tracer 8.2 » | **déplacé** — `seance2` |
+| `5e_C4.7` | avant la situation | activités en `<h3>`, cartouche « Activité n » ; activité 2 « Les appareils de la salle » : « le schéma du technicien, reconstitué d'après l'écran réel de Packet Tracer 8.2 » — une correction montrée, pas une ouverture | **Activité 3** (`<h3>`) « Construire le réseau dans Packet Tracer — le guide qui ne saute aucune étape » : fichier `.pkt`, guide A→H | **déplacé** — `seance2`, avant `<div class="activite">` |
+| `4e_C6.2` | après « Ce que tu as déjà fait » | activités en `<h3>` ; activités 1 et 2 : 0 | **Activité 3** (`<h3>`) « Les blocs en désordre » : premier éditeur Vittascience (cadre, qui devient lien à l'étape 0) | **déplacé** — `s1`, avant `<div class="act">` |
+
+| page | octets | encart avant → après | empreinte du bloc |
+|---|---|---|---|
+| `3e_C4.8` | 117 324 = 117 324 | 18 007 → 53 849 | `7529477a2388` |
+| `4e_C4.7` | 133 949 = 133 949 | 18 134 → 50 935 | `7529477a2388` |
+| `5e_C4.7` | 113 074 = 113 074 | 17 439 → 50 988 | `7529477a2388` |
+| `4e_C6.2` | 75 767 = 75 767 | 14 989 → 27 070 | `c08488acab1e` |
+
+Les trois encarts Packet Tracer sont le même gabarit au caractère près ; celui de `4e_C6.2` est
+celui de `3e_C9.1` et `5e_C9.1`. Le script de déplacement a appris les conteneurs
+`<div class="activite">` et `<div class="act">` : entre l'ouverture du conteneur et le titre, il
+n'admet que le cartouche « Activité n » — vérifié sur les quatre pages.
+
+### Le contrôle de position, et son banc
+
+`controle_gestes_outil.py` juge désormais la position. Une activité est un `<h2>` ou `<h3>` qui
+porte « Activité n » ou « Séance n » (dans le titre ou dans le cartouche `<span class="num">` qui le
+précède) ; son bloc va jusqu'au prochain titre de même niveau ou plus haut — un `<h3>` ne clôt pas
+une séance `<h2>`. L'encart est refusé s'il précède le `<h2>` de la situation ou de la
+problématique, ou s'il n'est pas **collé** à une activité dont le bloc nomme l'outil : entre sa fin
+et le titre suivant, rien de visible sauf le cartouche « Activité n ».
+
+Deux choix, dits ici parce qu'ils ne se voient pas dans le code :
+
+- **Pour Vittascience, nommer n'est pas ouvrir.** Le bloc doit porter un `href` ou un `src` vers
+  `fr.vittascience.com` (`OUVRE`). C'est la distinction que l'étape 1 de la vague 2 demandait ; elle
+  est prise ici parce que sans elle, `3e_C4.3` — dont la séance 2 cite le mot et n'ouvre que son
+  simulateur — était refusé « avant la situation » alors que Pascal l'a rangé parmi les neuf à
+  retirer. Le premier contrôle (« l'outil est employé quelque part ») reste sur la mention visible :
+  c'est lui qui laisse passer les neuf en attente, et c'est l'étape 1 qui décidera de son sort.
+- **Le script ne sait pas si l'activité collée est la PREMIÈRE qui ouvre l'outil.** Dans `3e_C4.8`,
+  l'activité 1 nomme Packet Tracer (une capture) et l'activité 3 l'ouvre ; le script accepterait
+  l'encart devant l'une ou l'autre. Exiger « la première qui nomme » aurait refusé la bonne place.
+  C'est la mesure à la main qui tranche ; le script le dit dans son en-tête (NON LU).
+
+Sur le dépôt : **22 encarts lus · 0 écart · 9 positions non jugées** — les neuf de Pascal, ni un de
+plus ni un de moins. Le banc `tests_controle_gestes_outil.py` passe de 7 à **16 contrôles** : les
+deux cas du prompt (avant la situation ; après la première activité, plus aucune ne le suit), plus
+un bloc qui s'intercale, une activité collée qui n'ouvre pas l'outil, le cartouche `<h3>` toléré,
+le `<h3>` qui ne clôt pas un `<h2>`, la mention Vittascience non jugée, le lien Vittascience jugé.
+Un défaut du contrôle trouvé par le banc : un titre qui suit l'encart **sans un seul caractère
+d'espace** n'était pas vu (`>` au lieu de `>=`) — invisible sur les pages réelles, qui ont toutes
+un retour à la ligne, réel dans un banc.
+
+### Les contrôles, tous exécutés ce jour, avec leurs chiffres
+
+- `controle_gestes_outil.py` : **22 · 0 écart · 9 non jugées** ✅ · `tests_controle_gestes_outil.py` : **16 / 16** ✅
+- `controle_liens.py` : **2 895 adresses · 0 cassée · 52 ancres · 0 introuvable** ✅
+- `controle_medias.py` : **41 lots · 342 médias · 342 nommés · 171 promesses** ✅
+- `verif_regles_audit.py` : `3e_C4.8`, `4e_C4.7`, `5e_C4.7` **0 manquement** ✅ ; `4e_C6.2`
+  **5 manquements (n°26, 29, 30, 31, 34)** — mesurés **identiques sur la version de `main`** avant le
+  déplacement : une dette du lot, pas de cette PR
+- banc du lot : seul `4e_C6.2` en a un (`tests_4e_C6.2.mjs`), et il **ne s'exécute pas sous
+  Windows** — il ouvre `C:\C:\Users\…` (chemin doublé, la garde `import.meta.url`), sur `main`
+  comme ici. Les trois autres lots n'ont qu'un rapport de tests, pas de banc. Dit, pas contourné.
+- `mesurer_temps_seances.py` sur le thème 2, avant et après : six lignes C4/C6 **identiques**
+  (`3e_C4.8` 165/139, `4e_C4.7` 220/205, `5e_C4.7` 165/144) ✅
+- `controle_impression.mjs` : **0 page refusée** ✅
+- navigateur, **huit rendus** (quatre pages × 1280 / 390 px), onglet d'accueil activé : encart
+  après la situation, titre (`<h2>` ou `<h3>`) immédiatement suivi de celui de l'activité, élément
+  suivant = le conteneur de l'activité, `scrollWidth == clientWidth`, **console vide** aux huit ✅.
+  Les encarts n'ont pas encore de captures (vague 2).
+
+### Le chantier « position » est clos
+
+Treize encarts déplacés en trois PR (5 + 4 + 4), neuf signalés et promis au retrait, un contrôle
+qui tient la règle. Vient ensuite l'étape 0 de la vague 2 : les seize cadres deviennent des liens.
