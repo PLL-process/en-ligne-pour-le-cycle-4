@@ -14596,3 +14596,107 @@ commiter.
 Contrôles, tous exécutés ce jour : `controle_banque_qcm.py` ✅ · `controle_entete_qcm.py` ✅ ·
 `controle_effectifs_qcm.py` ✅ · `verif_qcm_coherence.mjs` ✅ · `tests_5e_C1.1_chengdu.py`
 **43 / 43** ✅ (dont les contrôles du QCM : 30 questions, 90 réfutations, une par distracteur).
+
+## 13/09/2026 — Vague 1 bis, PR 1 — 5e_C1.1 : les gestes de l'activité 2 en captures, trier et écrire la formule
+
+Première PR de `PROMPT_SUITE_vague1bis_gestes_activites_et_schemas_C2.md`. L'échauffement montrait les
+gestes d'entrée et de sortie de l'outil ; ici, ce sont les gestes que l'activité 2 demande **au milieu
+du travail**, montrés **à l'endroit exact de la consigne** — dans le mode opératoire LibreOffice Calc
+du chemin autonome (c) « Au tableur », sous le `<li>` « Trier » et sous le `<li>` « Moyenne ». Pas dans
+l'encart, pas en fin d'activité. Aucun mot des consignes ne change.
+
+### Mesuré avant de capturer
+
+- **Le CSV** : 90 relevés, aucune cellule vide dans `pm25_ug_m3` (le lundi 14 h est une ligne absente) ;
+  colonne C, plage **`C2:C91`** — celle que la page écrit ; moyenne brute **27,3633 → 27,4** ; trié
+  croissant, **−4,2 (mercredi 11 h)** en première ligne, 251 (dimanche 16 h) en dernière.
+- **Le graphique** : l'activité 2 ne demande **aucun graphique** — ni « graphique », ni « diagramme »,
+  ni « courbe » dans son texte, du chemin autonome à la correction. Le prompt le prévoyait : on ne
+  montre pas un geste que la consigne ne demande pas. **Pas de capture de courbe**, tranché par Pascal.
+- **Deux gestes, sept captures**, chacun avec son moment, son résultat, son erreur typique (n°121).
+
+### Les sept captures, prises sur le poste tel qu'il est (n°94, n°70, n°127, n°75)
+
+Classeur `5E-AIR-DUPONT.ods` dans `Documents › 5E1`, feuille `releves_air_chengdu_simules`, heures en
+texte `06:00` — l'état exact où l'encart laisse l'élève. Mode sombre du poste, LibreOffice Calc
+26.2.5.2 (fr), fenêtre posée à 2400 × 1456, réduites à 1400 px et 256 couleurs. **Aucune ne porte le
+nom du compte ni le contenu de Documents** (relues une par une). Le classeur a été produit par
+conversion headless du CSV du lot, avec un profil LibreOffice temporaire (supprimé ensuite), en
+mode « pas de détection des nombres spéciaux » pour que les heures restent du texte comme à l'import
+réel — la première conversion les avait passées en `06:00:00`, ce que l'élève ne verra pas.
+
+| geste | capture | ce qu'elle montre |
+|---|---|---|
+| Trier — moment | `geste_activite2_trier_1_menu.png` | A1:E91 sélectionné (zone de nom, barre d'état « 91 lignes, 5 colonnes »), menu Données déroulé, « Trier… » surligné |
+| Trier — moment | `geste_activite2_trier_1b_boite.png` | la boîte « Trier » : Clé de tri 1 → `pm25_ug_m3`, Croissant, « La plage contient des étiquettes de colonne » cochée |
+| Trier — résultat | `geste_activite2_trier_2_resultat.png` | titres en ligne 1, **−4,2 en ligne 2**, mercredi 11:00 déplacé avec sa valeur |
+| Trier — erreur typique | `geste_activite2_trier_3_erreur_etendre.png` | C1:C91 seule sélectionnée : la boîte **« Trier la plage »** — « Étendre la sélection / Sélection active / Annuler » |
+| Formule — moment | `geste_activite2_formule_1_saisie.png` | `=MOYENNE(C2:C91)` tapée en C92, **pas encore validée** : dans la cellule et dans la barre, icônes ✗ ✓ visibles |
+| Formule — résultat | `geste_activite2_formule_2_resultat.png` | C92 affiche **27,363333333**, la barre montre encore la formule |
+| Formule — erreur typique | `geste_activite2_formule_3_erreur_sans_egal.png` | `MOYENNE(C2:C91)` sans `=` en C93 : texte collé à gauche, aucun nombre |
+
+**Ce que la mesure a tranché dans les légendes (n°128) :** la boîte s'appelle « Trier la plage » et
+ses boutons « Étendre la sélection », « Sélection active », « Annuler » — les légendes reprennent ces
+mots. La cellule affiche **27,363333333**, pas 27,4 : la légende dit « la moyenne brute, que la page
+arrondit à 27,4 » plutôt que de forcer un format à une décimale, geste que la consigne ne demande
+pas. « moyenne » en A92 est l'étiquette que l'encart tapait déjà (geste Retrouver), déclarée
+exemple.
+
+### L'insertion
+
+Sept `<figure class="geste-capture">` avec `alt` complet (196 caractères au moins) et légende en deux
+temps, visibles, pas repliées, dans le `<li>` de la consigne. Le style des figures était limité à
+l'encart (`.gestes-outil figure.geste-capture`) : les six sélecteurs deviennent
+`figure.geste-capture`, sans changer une valeur — l'encart garde exactement son rendu. La loupe
+existante prend les sept images (7 `loupe-cliquable`). `SOURCES_MEDIAS.md` : sept lignes, poids et
+date réels, cadrage dit (« fenêtre entière » six fois, « boîte seule » une fois). Manifeste : les sept
+images dans `fichiers.images`, et un bloc `captures_de_gestes_activite_2` avec les valeurs vérifiées
+dans le CSV et la raison de l'absence de graphique.
+
+**Une réserve à trancher par Pascal :** les figures vivent dans le dépliant « Mode opératoire —
+LibreOffice Calc » (`<details class="aide">`, fermé au chargement, à côté de celui d'Excel). C'est la
+consigne elle-même qui est dans ce dépliant, donc « l'endroit exact » ; les figures ne sont pas
+repliées à part. Si Pascal préfère le dépliant LibreOffice ouvert d'emblée (`open`), c'est un mot.
+
+### Ce qui s'est passé sur le poste, et ce qu'on en retient
+
+1. **PRONOTE était ouvert en mode modification.** `frappe.ps1` a refusé la première frappe ; rien
+   n'a été envoyé ; Pascal l'a fermé. Le protocole le dit et le script l'a tenu.
+2. **LibreOffice s'est figé** — toutes ses fenêtres, dont le classeur de Pascal
+   `domaines_elements_signifiants_cycle4.xlsx`, ouvert depuis la veille 19:05. Cause : une
+   énumération UI Automation de **tous les descendants** de la fenêtre Calc (à la recherche de la
+   zone de nom et du menu), passée en arrière-plan à 120 s puis arrêtée ; le pont d'accessibilité de
+   LibreOffice n'en est pas revenu (50 % d'un cœur en boucle, fenêtres blanches, 7 min). Pascal a
+   tranché : tuer LibreOffice. Avant, la sauvegarde automatique du classeur (12/09 21:31, 27 Ko)
+   a été copiée dans `Downloads\recuperation_libreoffice_2026-09-13\` ; le fichier sur disque (12/09
+   18:06) n'a jamais été touché. Au redémarrage, « Récupérer la sélection » a rouvert les deux
+   documents ; la fenêtre de Pascal a ensuite disparu de LibreOffice sans qu'aucune frappe ni aucun
+   clic ne l'ait visée (chaque frappe vérifie le titre, chaque clic est aux coordonnées de ma
+   fenêtre, sur l'écran principal ; la sienne était sur l'écran 5). La copie de la sauvegarde
+   reste à sa disposition.
+   **Règle retenue pour la chaîne : on ne parcourt jamais l'arbre UI Automation d'une feuille de
+   calcul** — `uia.ps1 -Action lister` sur une fenêtre Calc traverse les cellules ; on vise aux
+   coordonnées relevées sur une capture, et `uia.ps1 -Action poser` (qui ne cherche qu'à la racine)
+   reste sûr.
+3. Deux pièges de moins pour la suite : `SendKeys` avale les parenthèses — `{(}` et `{)}` ; et
+   `Start-Sleep 1500` attend 1500 secondes, pas millisecondes.
+
+Poste remis en état : `Documents\5E1` supprimé (Documents retrouve ses 81 sous-dossiers), copies
+temporaires du CSV et profil LibreOffice temporaire supprimés, ma fenêtre fermée **sans
+enregistrer**, LibreOffice laissé ouvert sur son centre de démarrage. Le dossier de récupération
+dans Downloads est laissé à Pascal.
+
+### Les contrôles, tous exécutés ce jour, avec leurs chiffres
+
+- `controle_medias.py` : **41 lots · 349 médias · 349 nommés · 178 promesses** ✅ ·
+  `controle_liens.py` : **2 904 adresses · 0 cassée** ✅ · `controle_gestes_outil.py`,
+  `controle_fichiers_telechargeables.py`, `controle_impression.mjs` ✅
+- `verif_regles_audit.py` : **0 manquement** ✅ · `tests_5e_C1.1_chengdu.py` : **43 / 43** ✅ ·
+  `mesurer_temps_seances.py` : **275 / 215**, inchangé ✅
+- navigateur (Chromium Playwright), 1280 et 390 px, onglet Séance 2, dépliant LibreOffice ouvert :
+  **7 / 7 images chargées**, `width`/`height` déclarés = réels, `alt` ≥ 196 caractères, chaque figure
+  dans le `<li>` de sa consigne, 7 loupes, **console vide** ✅. Poids : 44 à 183 Ko.
+
+**Vu, pas causé :** à 390 px, le dépliant LibreOffice ouvert déborde de 5 px — le `<code>` de la
+formule `=MOYENNE.SI.ENS(…)`, une ligne de 47 caractères — identique sur `main`. Les figures, elles,
+tiennent dans l'écran.

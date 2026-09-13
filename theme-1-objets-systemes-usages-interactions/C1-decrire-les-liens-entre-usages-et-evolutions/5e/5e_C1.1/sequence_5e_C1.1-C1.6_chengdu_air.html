@@ -185,13 +185,13 @@
   .gestes-outil ol{margin:0;padding-left:1.3rem}
   .gestes-outil li{margin:.45rem 0}
   .gestes-outil li b:first-child{color:#ffb300}
-  .gestes-outil figure.geste-capture{margin:.6rem 0 .9rem;max-width:560px}
-  .gestes-outil figure.geste-capture img{width:100%;height:auto;display:block;border:1px solid var(--border,#2a3550);
+  figure.geste-capture{margin:.6rem 0 .9rem;max-width:560px}
+  figure.geste-capture img{width:100%;height:auto;display:block;border:1px solid var(--border,#2a3550);
     border-radius:8px;background:#fff}
-  .gestes-outil figure.geste-capture figcaption{margin:.35rem 0 0;font-size:.88em;line-height:1.45;opacity:.92}
-  .gestes-outil figure.geste-capture figcaption b{color:inherit}
-  @media print{.gestes-outil figure.geste-capture{break-inside:avoid;page-break-inside:avoid}
-    .gestes-outil figure.geste-capture img{border-color:#999}}
+  figure.geste-capture figcaption{margin:.35rem 0 0;font-size:.88em;line-height:1.45;opacity:.92}
+  figure.geste-capture figcaption b{color:inherit}
+  @media print{figure.geste-capture{break-inside:avoid;page-break-inside:avoid}
+    figure.geste-capture img{border-color:#999}}
 </style>
 
 <p class="legende-badges">🔎 <b>Ce que disent ces étiquettes.</b> <b>5e</b>&nbsp;: le niveau.
@@ -737,8 +737,50 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       <li><b>Ouvrir</b>&nbsp;: Fichier → Ouvrir → choisir le <code>.csv</code>. Dans la fenêtre
       d'import, cocher <b>Point-virgule</b> comme séparateur.</li>
       <li><b>Trier</b>&nbsp;: sélectionner les données → Données → Trier… → colonne
-      <code>pm25_ug_m3</code>, ordre croissant. Les valeurs impossibles apparaissent en tête.</li>
-      <li><b>Moyenne</b>&nbsp;: <code>=MOYENNE(C2:C91)</code></li>
+      <code>pm25_ug_m3</code>, ordre croissant. Les valeurs impossibles apparaissent en tête.
+      <figure class="geste-capture">
+        <img src="Images/geste_activite2_trier_1_menu.png" width="1400" height="849" loading="lazy"
+             alt="Fenêtre de LibreOffice Calc, fichier 5E-AIR-DUPONT.ods, en mode sombre. Les cellules A1 à E91 sont sélectionnées, titres de colonnes compris : la zone de nom affiche A1:E91 et la barre d'état « Sélectionné : 91 lignes, 5 colonnes ». Le menu Données est déroulé et sa première entrée, « Trier… », est surlignée.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> <b>toutes les colonnes</b> sélectionnées, titres compris — la zone de nom, en haut à gauche, dit <b>A1:E91</b> — puis le menu <b>Données</b> ouvert et <b>Trier…</b> surligné. <i>Le nom du fichier est un exemple&nbsp;: le tien est celui que tu as enregistré à l'échauffement.</i></figcaption>
+      </figure>
+      
+      <figure class="geste-capture">
+        <img src="Images/geste_activite2_trier_1b_boite.png" width="1353" height="1038" loading="lazy"
+             alt="Boîte de dialogue « Trier » de LibreOffice Calc, en français, mode sombre. Clé de tri 1 : Colonne pm25_ug_m3, bouton Croissant sélectionné. Clés de tri 2 et 3 : « - indéfini - ». Options de tri : la case « La plage contient des étiquettes de colonne » est cochée, direction « De haut en bas (tri de lignes) ». En bas : Aide, Réinitialiser, OK, Annuler.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> <b>Clé de tri 1 → pm25_ug_m3</b>, <b>Croissant</b>, et la case <b>La plage contient des étiquettes de colonne</b> cochée — c'est elle qui garde la ligne de titres en haut. <b>Puis&nbsp;:</b> <b>OK</b>.</figcaption>
+      </figure>
+      
+      <figure class="geste-capture">
+        <img src="Images/geste_activite2_trier_2_resultat.png" width="1400" height="849" loading="lazy"
+             alt="La même feuille après le tri. La ligne 1 garde les titres ; la ligne 2 est mercredi 11:00 avec −4,2 dans la colonne pm25_ug_m3, puis 10,1 ; 13 ; 16 ; 16,4… en ordre croissant. Chaque ligne a gardé son jour, son heure, sa température et son humidité.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> les titres sont restés en ligne 1, et la première valeur de <code>pm25_ug_m3</code> est <b>−4,2</b> — la valeur impossible arrive en tête, comme le mode opératoire l'annonce. Regarde aussi la colonne A&nbsp;: <b>mercredi 11:00</b> a suivi sa valeur. Un relevé est une ligne entière&nbsp;: elle se déplace d'un bloc.</figcaption>
+      </figure>
+      
+      <figure class="geste-capture">
+        <img src="Images/geste_activite2_trier_3_erreur_etendre.png" width="1400" height="849" loading="lazy"
+             alt="La même fenêtre, avec seulement la colonne C (C1:C91) sélectionnée, et une boîte « Trier la plage » ouverte par-dessus. Elle dit : « Les cellules proches de la sélection active contiennent également des données. Voulez-vous étendre la plage de tri de A1:E91, ou trier la plage actuellement sélectionnée, C1:C91 ? » Trois boutons : Étendre la sélection, Sélection active, Annuler.">
+        <figcaption><b>Si tu vois ceci&nbsp;:</b> tu n'as sélectionné qu'<b>une</b> colonne avant de trier. Calc te le dit, et te propose d'étendre&nbsp;: <b>choisis Étendre la sélection</b>. Pourquoi&nbsp;: une ligne est un relevé, ses cinq cellules restent ensemble. «&nbsp;Sélection active&nbsp;» trierait la colonne toute seule, et chaque valeur perdrait son jour et son heure.</figcaption>
+      </figure>
+      </li>
+      <li><b>Moyenne</b>&nbsp;: <code>=MOYENNE(C2:C91)</code>
+      <figure class="geste-capture">
+        <img src="Images/geste_activite2_formule_1_saisie.png" width="1400" height="849" loading="lazy"
+             alt="Fenêtre de LibreOffice Calc descendue au bas des relevés, lignes 76 à 108. En A92, le mot « moyenne » ; en C92, juste sous la dernière valeur (251 en C91), la formule =MOYENNE(C2:C91) est en cours de saisie : elle s'affiche à la fois dans la cellule et dans la barre de formule, à côté des icônes de saisie ✗ et ✓.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> la cellule sous la colonne <code>pm25_ug_m3</code> (ici <b>C92</b>) active, et <code>=MOYENNE(C2:C91)</code> écrit à la fois dans la cellule et dans la barre de formule, <b>avant</b> d'appuyer sur Entrée. Le <b>=</b> est le premier caractère&nbsp;: c'est lui qui dit à Calc de calculer. <i>«&nbsp;moyenne&nbsp;» en A92 est une étiquette, un exemple.</i></figcaption>
+      </figure>
+      
+      <figure class="geste-capture">
+        <img src="Images/geste_activite2_formule_2_resultat.png" width="1400" height="849" loading="lazy"
+             alt="La même fenêtre après Entrée, la cellule C92 de nouveau sélectionnée : elle affiche 27,363333333, aligné à droite comme un nombre, et la barre de formule, en haut, affiche encore =MOYENNE(C2:C91).">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> la cellule affiche <b>27,363…</b> — la moyenne brute, que la page arrondit à <b>27,4&nbsp;µg/m³</b> — et la barre de formule, elle, montre encore <code>=MOYENNE(C2:C91)</code>. Deux vues d'une même cellule&nbsp;: la <b>formule</b> dans la barre, le <b>résultat</b> dans la grille. <i>La valeur est celle du fichier de la séquence.</i></figcaption>
+      </figure>
+      
+      <figure class="geste-capture">
+        <img src="Images/geste_activite2_formule_3_erreur_sans_egal.png" width="1400" height="849" loading="lazy"
+             alt="La même fenêtre, cellule C93 sélectionnée : elle affiche le texte MOYENNE(C2:C91) aligné à gauche, sans résultat, et la barre de formule montre le même texte, sans le signe =. Au-dessus, C92 affiche bien 27,363333333.">
+        <figcaption><b>Si tu vois ceci&nbsp;:</b> la cellule répète ta formule en toutes lettres, collée à gauche, sans nombre — tu as oublié le <b>=</b>. Sans lui, Calc range ce que tu tapes comme du <b>texte</b>. Reviens dans la cellule, ajoute <b>=</b> devant, valide.</figcaption>
+      </figure>
+      </li>
       <li><b>Moyenne sans les valeurs fausses</b>&nbsp;:
       <code>=MOYENNE.SI.ENS(C2:C91;C2:C91;"&gt;0";C2:C91;"&lt;200")</code></li>
       <li><b>Maximum</b>&nbsp;: <code>=MAX(C2:C91)</code> · <b>Nombre de valeurs</b>&nbsp;:
