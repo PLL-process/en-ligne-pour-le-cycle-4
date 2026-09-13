@@ -142,13 +142,13 @@ q("C1.1", "La donnée manquante",
   "Une case vide se signale et se compte comme manquante. Elle ne se remplit pas."),
 
 q("C1.1", "Ce que coûte une donnée sale",
-  "Moyenne calculée sur les 90 relevés : 27,4 µg/m³. Moyenne après écart des quatre "
-  "anomalies : 25,2. Que montre cet écart de 2,2 ?",
+  "Moyenne calculée sur les 90 relevés : 27,4 µg/m³. Moyenne après écart des deux "
+  "valeurs fausses (−4,2 et 251) : 25,2. Que montre cet écart de 2,2 ?",
   ["que quelques valeurs fausses suffisent à déplacer un résultat, et donc qu'il faut nettoyer avant de calculer",
    "que la différence est faible, donc qu'on pouvait se dispenser du nettoyage",
    "que la moyenne est un mauvais indicateur",
    "que le capteur doit être remplacé"],
-  "Quatre valeurs sur quatre-vingt-dix — moins de 5 % des lignes — déplacent la moyenne "
+  "Deux valeurs sur quatre-vingt-dix — à peine 2 % des lignes — déplacent la moyenne "
   "de près de 9 %. C'est l'effet d'une valeur aberrante : 251 au lieu de 25,1 pèse à elle "
   "seule autant que dix relevés normaux.",
   "Une seule note de 200 sur 20 saisie par erreur suffit à faire croire qu'une classe "
@@ -160,8 +160,8 @@ q("C1.1", "Ce que coûte une donnée sale",
    "cet écart n'est dû à aucun phénomène réel, seulement à des défauts.",
    "La moyenne n'est pas en cause : elle a fait exactement ce qu'on lui demandait, sur "
    "des données qu'on ne lui avait pas nettoyées.",
-   "Un capteur qui a produit 86 mesures correctes sur 90 fonctionne ; ce sont les quatre "
-   "restantes qu'il faut traiter, pas l'appareil qu'il faut jeter."],
+   "Un capteur qui a produit des mesures correctes presque partout fonctionne ; ce sont "
+   "les valeurs fausses qu'il faut traiter, pas l'appareil qu'il faut jeter."],
   "On nettoie AVANT de calculer. Sinon on calcule juste sur des données fausses."),
 
 q("C1.1", "Écarter n'est pas effacer",

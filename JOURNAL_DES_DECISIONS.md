@@ -14564,3 +14564,35 @@ Contrôles, tous exécutés ce jour : `tests_5e_C1.1_chengdu.py` **43 / 43** ✅
 `controle_fichiers_telechargeables.py`, `controle_impression.mjs` ✅ · `mesurer_temps_seances.py`
 **275 / 215**, inchangé ✅ · navigateur 1280 et 390 px, onglet Séance 2, console vide, pas de
 défilement ✅.
+
+## 13/09/2026 — 5e_C1.1, QCM « Ce que coûte une donnée sale » : deux valeurs fausses, pas quatre — et `q.py` n'est plus la source du QCM
+
+Suite de #384 (la séquence), tranchée par Pascal : la même confusion dans le QCM. Trois réécritures,
+citées ; « Une fois les quatre anomalies repérées » (question suivante) reste, parce qu'il y a bien
+quatre anomalies.
+
+| champ | avant | après |
+|---|---|---|
+| question | « Moyenne après écart des quatre anomalies : 25,2. » | « Moyenne après écart des deux valeurs fausses (−4,2 et 251) : 25,2. » |
+| explication | « Quatre valeurs sur quatre-vingt-dix — moins de 5 % des lignes — déplacent la moyenne de près de 9 %. » | « Deux valeurs sur quatre-vingt-dix — à peine 2 % des lignes — déplacent la moyenne de près de 9 %. » |
+| réfutation du distracteur « le capteur doit être remplacé » | « Un capteur qui a produit 86 mesures correctes sur 90 fonctionne ; ce sont les quatre restantes qu'il faut traiter, pas l'appareil qu'il faut jeter. » | « Un capteur qui a produit des mesures correctes presque partout fonctionne ; ce sont les valeurs fausses qu'il faut traiter, pas l'appareil qu'il faut jeter. » |
+
+**L'écart entre `q.py` et le QCM, mesuré avant de toucher à quoi que ce soit** : les trente questions
+de `q.py` comparées champ par champ au bloc `QUESTIONS` du HTML (options et réfutations comparées
+en ensembles, puisque `fix_r.js` remélange A/B/C/D) — **29 champs diffèrent, sur 28 questions** :
+les options (`o`) de 28 questions ont été **raccourcies dans le HTML** après génération (« que le
+capteur doit être remplacé » → « … sans tarder », « et donc qu'il faut nettoyer avant de calculer »
+supprimé…), plus une erreur typique (`err`, Q3). Régénérer aurait donc **écrasé 28 questions
+relues**. Décision appliquée : `q.py` **et** le HTML corrigés à la main, les mêmes trois champs,
+sans régénération. Mesuré après : **le même écart, 29 champs, les mêmes** — rien d'autre n'a bougé.
+`q.py` reste ce qu'il est : la banque d'origine, plus la source exacte du QCM. Une décision reste à
+prendre un jour — reporter les 28 raccourcis dans `q.py`, ou déclarer le HTML comme source — elle
+n'est pas prise ici.
+
+**Lexique :** le champ `ret` de la question est identique avant et après ; `generer_lexique.py`
+rejoué sur le lot produit un lexique **identique à l'octet** (diff vide) — pas de régénération à
+commiter.
+
+Contrôles, tous exécutés ce jour : `controle_banque_qcm.py` ✅ · `controle_entete_qcm.py` ✅ ·
+`controle_effectifs_qcm.py` ✅ · `verif_qcm_coherence.mjs` ✅ · `tests_5e_C1.1_chengdu.py`
+**43 / 43** ✅ (dont les contrôles du QCM : 30 questions, 90 réfutations, une par distracteur).
