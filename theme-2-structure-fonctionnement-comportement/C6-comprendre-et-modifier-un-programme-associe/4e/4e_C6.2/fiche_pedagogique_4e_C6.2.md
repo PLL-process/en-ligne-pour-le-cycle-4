@@ -19,8 +19,8 @@
 | Socle | D1.3 · D2 · D4 |
 | Objet-fil | Le jardin connecté du collège — même objet que `4e_C4.1-C4.9`, vu ici par son **programme** |
 | Durée | **3 séances de 55 min** (bandeau posé le 28/08/2026) · **145 min d'activités**, soit 20 min de marge |
-| Version | 🅰 prototype réel / 🅱 éditeur embarqué / 🅲 sans machine — déclarées en tête |
-| Éditeur | Vittascience Python, **3 iframes** — voir « Dépendances » ci-dessous |
+| Version | 🅰 prototype réel / 🅱 éditeur Vittascience dans un onglet / 🅲 sans machine — déclarées en tête |
+| Éditeur | Vittascience Python, **3 liens-boutons** vers l'éditeur, ouvert dans un nouvel onglet — voir « Dépendances » ci-dessous |
 
 ## Découpage en séances
 
@@ -40,7 +40,7 @@ texte, pas dans la navigation. L'élève déroule les huit activités d'un seul 
 
 - **Situation** : le prototype d'arrosage automatique du jardin connecté du collège.
 - **Mission** (texte de la page) : compléter le programme du prototype — les blocs à remettre en
-  ordre, puis les trous du Python —, le tester dans l'éditeur embarqué, et valider son
+  ordre, puis les trous du Python —, le tester dans l'éditeur Vittascience, et valider son
   comportement sur un banc de tests, **cas frontière compris**.
 - **Production attendue** : un programme complété et testé, le banc de tests au vert, et un court
   argumentaire justifiant le seuil choisi.
@@ -99,15 +99,16 @@ la page (`value="v0"`). Correspondance notion → numéro de question dans
 
 ## Dépendances — à lire avant de réserver la salle
 
-**Trois iframes `fr.vittascience.com/python/`.** La voie principale des activités 3 et 5 passe par
-cet éditeur distant. Conséquences, dites franchement :
+**Trois liens vers `fr.vittascience.com/python/`, ouverts dans un nouvel onglet** — le site refuse
+d'être encadré (`X-Frame-Options: SAMEORIGIN`, mesuré le 13/09/2026). La voie principale des activités 3 et 5
+passe par cet éditeur distant. Conséquences, dites franchement :
 
 - il faut du réseau, et selon la configuration de l'ENT, un compte ;
 - le rapport de tests du lot **le dit lui-même** : « Non testé (hors périmètre local) : le contenu
   de l'iframe Vittascience (cross-origin, connexion requise) — seul le suivi d'ouverture est
   vérifié ». 27 tests sur 27 passent ; aucun ne prouve que l'éditeur fonctionne ;
 - la mention « données conservées localement » vaut pour la page, **pas** pour l'éditeur : ce que
-  l'élève tape dans l'iframe part chez un tiers.
+  l'élève tape dans l'éditeur Vittascience part chez un tiers.
 
 **Repli si le réseau tombe** : les activités 1, 2, 4, 6, 7, 8 (soit 90 des 145 minutes) ne
 demandent aucun éditeur. Les activités 3 et 5 peuvent se faire sur papier — l'élève ordonne les

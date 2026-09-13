@@ -10,7 +10,8 @@
  * CE QUE CETTE SUITE ÉPROUVE EN PROPRE : LA COUPURE RÉSEAU
  * --------------------------------------------------------
  * Cette séquence est la seule du thème 2 qui charge des ressources distantes :
- * **trois éditeurs Vittascience en `<iframe>`**. Et deux de ses huit activités
+ * **trois éditeurs Vittascience, chacun derrière un lien-bouton ouvert dans un nouvel
+ * onglet** (plus de `<iframe>` depuis l'étape 0 de la vague 2, 13/09/2026). Et deux de ses huit activités
  * ont un verrou qui exige d'ouvrir un de ces éditeurs.
  *
  * La question n'est donc pas « la page cite-t-elle un domaine distant » — elle
@@ -20,8 +21,8 @@
  * activités sont ensuite jouées dans cet état.
  *
  * Résultat mesuré, et c'est le cœur de ce fichier : les verrous `vs1` et `vs2`
- * s'ouvrent sur le **geste** d'ouvrir le dépliant, pas sur le chargement de
- * l'iframe. Hors réseau, l'élève perd l'éditeur — il ne perd ni la séquence, ni
+ * s'ouvrent sur le **geste** de cliquer le lien-bouton, pas sur le chargement de
+ * l'onglet Vittascience. Hors réseau, l'élève perd l'éditeur — il ne perd ni la séquence, ni
  * la possibilité de valider. La version 🅲 « sans matériel » que la page annonce
  * est donc tenue, et on le sait maintenant par mesure.
  *
