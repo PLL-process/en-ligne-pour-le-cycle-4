@@ -85,10 +85,11 @@ or les tests aux **six valeurs frontières** (62/63, 117/118, 177/178), cœur de
 C8.3, exigent de pouvoir rejouer une valeur exacte à volonté, sans carte et sans
 attendre son tour. Conséquence à anticiper : Vittascience demande une
 **connexion Internet** ; c'est le seul point de la séquence dans ce cas, et un
-**repli hors-ligne** complet est prévu (lien direct + planches de blocs + banc
-d'essai intégré), suffisant pour répondre à toutes les questions et valider
-l'activité. Prévoir aussi l'**emplacement de l'iframe** Vittascience, à remplir
-avec le code d'intégration officiel dès qu'il est disponible.
+**repli hors-ligne** complet est prévu (planches de blocs + banc d'essai intégré),
+suffisant pour répondre à toutes les questions et valider l'activité. L'éditeur
+s'ouvre par un **lien-bouton vers le programme partagé, dans un nouvel onglet** :
+le code d'intégration officiel (embed=1) répond X-Frame-Options: SAMEORIGIN
+(mesuré le 13/09/2026), aucun cadre ne s'affiche.
 
 **ArduBlock Éducation 1.7** n'est pas abandonné : il devient un **bonus
 facultatif — hors parcours obligatoire** de la séance 2, illustré par **deux
