@@ -14276,3 +14276,119 @@ sur `main` : identique. À trier à part, comme le tableau de `5e_C1.2`.
 La PR thème 3 : `3e_C7.1`, `5e_C7.1`, `3e_C9.1`, `5e_C9.1` (dix dépliants, même script) ;
 `3e_C9.2` (deux pages, cadre `embed=1`, « ici même » réécrit, repli sans Plan A) ; `4e_C9.1`
 (un cadre dans `div.vitta-cadre`, même repli). Puis l'étape 1 : les neuf encarts retirés.
+
+## 13/09/2026 — Vague 2, étape 0 (thème 3) : treize cadres deviennent des liens, et la famille des phrases fausses est chassée
+
+Seconde PR de l'étape 0, après `4e_C6.2` (#379). Sept pages, treize cadres : `3e_C7.1` 2, `5e_C7.1` 1,
+`3e_C9.1` 4, `5e_C9.1` 3, `3e_C9.2` 2 (une par page), `4e_C9.1` 1. Même script que #379 pour les dix
+dépliants `details.vs` ; les trois cadres `div.vitta-cadre` (`3e_C9.2` ×2, `4e_C9.1`) reçoivent le
+même lien-bouton et la même ligne, sans dépliant. **`controle_cadres.py` repasse au vert sur tout le
+dépôt** : 0 cadre, banc 7 / 7.
+
+### `3e_C9.2` : le code d'intégration officiel refusait aussi
+
+Mesuré le 13/09 (entrée précédente) : `?link=6a8e2a2348ed2&embed=1` répond `X-Frame-Options:
+SAMEORIGIN` comme le reste. Le cadre est donc remplacé, et le lien-bouton pointe sur
+`https://fr.vittascience.com/arduino/?link=6a8e2a2348ed2` — **sans `&embed=1`**, comme le prompt le
+prescrit : l'adresse du programme partagé, pas celle du code d'intégration. Réécritures prévues,
+faites sur les deux pages : « L'interface Vittascience — ici même » → « — dans l'onglet
+Vittascience » ; « programme directement dans le cadre ci-dessous » → « dans l'onglet
+Vittascience » ; le repli « 🔌 Le cadre ne s'affiche pas ? » devient « 🔌 Pas de connexion ? »,
+**perd son Plan A** (« ouvre fr.vittascience.com/arduino dans un onglet » — c'est désormais la voie
+normale) et **garde son Plan B** mot pour mot. Le paragraphe « Le cadre ci-dessus est l'éditeur
+Vittascience lui-même… Pour travailler au calme dans un onglet à part : ouvrir le programme dans un
+nouvel onglet » devient « L'onglet qui s'ouvre est l'éditeur Vittascience lui-même : tu y programmes
+et tu y simules, sans rien installer. » — son ancien lien « onglet à part » est absorbé par le
+lien-bouton. `4e_C9.1` reçoit le même traitement (titre, repli sans Plan A, Plan B intact).
+
+### La famille des phrases que le cadre rendait fausses — une par une
+
+Chassée dans les sept pages avec les mots de Pascal : « dans la page », « ci-dessous », « embarqué »,
+« sans quitter la page », plus « ici même », « ici » et « le cadre » appliqués à l'éditeur. Chaque
+remplacement est exact au caractère, compté, et le script s'arrête si le compte n'est pas celui
+attendu. Les treize notes hors ligne et les dépliants suivent le modèle de #379 (note « cadre
+blanc » → « Sans connexion », `open`, verrou au clic, CSS `::after`), non répétés ici.
+
+| page | avant | après |
+|---|---|---|
+| `3e_C7.1` | « 🧪 Code ton alerte ici — en blocs » | « 🧪 Code ton alerte dans l'onglet Vittascience — en blocs » |
+| `3e_C7.1` | « code-le dans l'éditeur ci-dessous. » | « code-le dans l'éditeur Vittascience, par le lien ci-dessous. » |
+| `3e_C7.1` | « code ta pré-alerte ici, sans quitter la page » | « code ta pré-alerte dans l'onglet Vittascience » |
+| `5e_C7.1` | « et l'éditeur embarqué prend le relais pour le programme » | « et l'éditeur Vittascience, dans son onglet, prend le relais pour le programme » |
+| `5e_C7.1` | « 🧪 Code ta règle ici — en blocs » | « 🧪 Code ta règle dans l'onglet Vittascience — en blocs » |
+| `3e_C9.1`, `5e_C9.1` | commentaire CSS « éditeur Vittascience embarqué — barre volontairement voyante » | « éditeur Vittascience ouvert dans un nouvel onglet — barre… » |
+| `3e_C9.1`, `5e_C9.1` | CSS « ▼ CLIQUE ICI — l'éditeur Python s'ouvre dans la page, rien à installer » | « ▼ l'éditeur Python s'ouvre dans un nouvel onglet — rien à installer » |
+| `3e_C9.1` | « l'éditeur Python Vittascience est **embarqué dans cette page** — blocs et Python côte à côte, console intégrée. » | « l'éditeur Python Vittascience **s'ouvre dans un nouvel onglet** — blocs et Python côte à côte, console intégrée. » |
+| `3e_C9.1` | « tu TESTES ensuite dans l'éditeur embarqué, » | « tu TESTES ensuite dans l'éditeur Vittascience, » |
+| `3e_C9.1` | « le document 2 + l'éditeur Python EMBARQUÉ ci-dessous. » | « le document 2 + l'éditeur Python Vittascience, par le lien ci-dessous. » |
+| `3e_C9.1` | « teste tes trois expériences ici » | « teste tes trois expériences dans l'onglet Vittascience » |
+| `3e_C9.1` | « le programme du panneau + l'éditeur embarqué. » | « le programme du panneau + l'éditeur Vittascience. » |
+| `3e_C9.1` | « Assemble et exécute le programme CORRIGÉ ici — » | « Assemble et exécute le programme CORRIGÉ dans l'onglet Vittascience — » |
+| `3e_C9.1` | « dans l'éditeur embarqué, écris » | « dans l'éditeur Vittascience, écris » |
+| `3e_C9.1`, `5e_C9.1` | « code tes défis ici, sans quitter la page » | « code tes défis dans l'onglet Vittascience » |
+| `3e_C9.1` | verrou : « Ouvre l'éditeur embarqué (🧪) et exécute tes 3 expériences » | « Ouvre l'éditeur Vittascience (🧪) et exécute tes 3 expériences » |
+| `5e_C9.1` | « l'éditeur Python Vittascience **embarqué** : cherche » | « l'éditeur Python Vittascience, **dans un nouvel onglet** : cherche » |
+| `5e_C9.1` | titre d'activité 3 « Prédire → tester → reporter, dans l'éditeur embarqué » | « …, dans l'éditeur Vittascience » |
+| `5e_C9.1` | « l'éditeur Python Vittascience ci-dessous. » | « l'éditeur Python Vittascience, par le lien ci-dessous. » |
+| `5e_C9.1` | « teste tes deux expériences ici » | « teste tes deux expériences dans l'onglet Vittascience » |
+| `5e_C9.1` | pied de page « (éditeur embarqué : connexion requise) » | « (éditeur Vittascience dans un onglet : connexion requise) » |
+| `5e_C9.1` | verrou : « Ouvre l'éditeur embarqué (🧪) et exécute tes 2 expériences » | « Ouvre l'éditeur Vittascience (🧪) et exécute tes 2 expériences » |
+| `3e_C9.2` ×2 | « l'interface Vittascience intégrée ci-dessous, » | « l'interface Vittascience, par le lien ci-dessous, » |
+| `3e_C9.2` ×2 | « 🖥 L'interface Vittascience — ici même » | « 🖥 L'interface Vittascience — dans l'onglet Vittascience » |
+| `3e_C9.2` ×2 | « 👉 FAIS : programme directement dans le cadre ci-dessous. » | « 👉 FAIS : programme directement dans l'onglet Vittascience. » |
+| `3e_C9.2` ×2 | « Le cadre ci-dessus est l'éditeur Vittascience lui-même : … Pour travailler au calme dans un onglet à part : ouvrir le programme dans un nouvel onglet. » | « L'onglet qui s'ouvre est l'éditeur Vittascience lui-même : tu y programmes et tu y simules, sans rien installer. » |
+| `3e_C9.2` ×2, `4e_C9.1` | « 🔌 Le cadre ne s'affiche pas ? Voici comment travailler quand même » | « 🔌 Pas de connexion ? Voici comment travailler quand même » |
+| `3e_C9.2` ×2, `4e_C9.1` | `<li>` « Plan A — dans un onglet : ouvre fr.vittascience.com/… » | supprimé ; « Plan B — sans connexion du tout : … » inchangé |
+| `3e_C9.2` ×2 | commentaire « Interface Vittascience intégrée — code d'intégration officiel (Partager → Intégrer) » | « Éditeur Vittascience ouvert dans un nouvel onglet — programme partagé… le code d'intégration (embed=1) répond X-Frame-Options: SAMEORIGIN, mesuré le 13/09/2026 » |
+| `4e_C9.1` | « l'éditeur Vittascience ci-dessous, ou le banc d'essai » | « l'éditeur Vittascience, par le lien ci-dessous, ou le banc d'essai » |
+| `4e_C9.1` | « 🖥 L'éditeur Vittascience — ici même » | « 🖥 L'éditeur Vittascience — dans l'onglet Vittascience » |
+
+**Ce qui reste de la famille après passage, relu : neuf occurrences, toutes vraies.** Six
+« par le lien ci-dessous » (le lien est bien dessous) ; « le journal de tes paliers ci-dessous »
+(`3e_C9.2` ×2, ce n'est pas l'éditeur) ; « le simulateur de place de l'activité 0 fonctionne dans la
+page » (`5e_C7.1`, c'est le simulateur, et il est dans la page). Deux titres de dépliants gardent
+« dans l'éditeur » sans localisation (`3e_C9.1` vs3, `5e_C9.1` vs2) : vrais tels quels.
+
+**`4e_C6.2` : les trois textes restés faux (« éditeur embarqué » du référentiel, lignes 224 et 240 ;
+titres des dépliants vs1 et vs2 « … ici ») ne peuvent pas voyager dans cette PR** — `4e_C6.2` est
+dans le thème 2, et la garde-périmètre refuse un fichier du thème 2 sur une branche `theme-3`.
+Ils partent dans une petite PR thème 2 juste après, avec le même tableau ; la chasse y a déjà relevé,
+en plus, « embarquent l'éditeur » (ligne 248), « éditeurs embarqués » (pied de page, ligne 572) et le
+commentaire CSS.
+
+### Les bancs, adaptés là où ils testaient le cadre
+
+- `tests_3e_C9.2-C8.3.mjs` : le contrôle « repli hors-ligne présent (lien direct + planches + banc) »
+  cherchait « fr.vittascience.com/arduino » dans le texte visible — c'était le Plan A. Il vérifie
+  maintenant le lien-bouton (`href` exact du programme partagé, `_blank`), **zéro `<iframe>`**,
+  « Plan B » présent, « Plan A » absent : **135 / 135**.
+- Les autres bancs ne parlaient du cadre que dans leurs commentaires ou leur garde réseau (« aucune
+  sortie hors iframe Vittascience » — vraie a fortiori, plus rien ne part) : inchangés.
+
+### Les contrôles, tous exécutés ce jour, avec leurs chiffres
+
+- `controle_cadres.py` : **0 cadre sur tout le dépôt** ✅ · banc **7 / 7** ✅ (le dépôt réel compris)
+- `controle_gestes_outil.py` : **22 · 0 écart · 9 non jugées** ✅ · `controle_liens.py` : **2 895 · 0
+  cassée · 52 ancres** ✅ · `controle_medias.py` : **342 · 342** ✅ · `controle_impression.mjs` :
+  **0 refus** ✅
+- `verif_regles_audit.py` sur les six lots : **0 manquement** partout (dont les cinq séquences de
+  `3e_C9.2`) ✅
+- `mesurer_temps_seances.py` sur le thème 3 : **24 lignes C7/C9 identiques** avant et après ✅
+- bancs : `3e_C9.1` **35 / 35**, `3e_C9.2` **135 / 135**, `4e_C9.1` **61 / 61**, `5e_C9.1` **44 / 44**
+  ✅ ; `3e_C7.1` et `5e_C7.1` **34 / 37**, les **mêmes trois** échecs QCM qu'avant la PR (mesurés
+  sur `main` : « 4 propositions », « explication », « génération ancienne ») — dette des lots, pas de
+  cette PR
+- navigateur (Chromium Playwright), **1280 px et 390 px**, sept pages : **0 `<iframe>`**, **13
+  liens-boutons visibles, chacun cliqué une fois par largeur — 26 clics, 26 onglets réellement
+  ouverts** : « Vittascience — Python » (`?mode=mixed&console=bottom`) pour onze, « Vittascience —
+  Arduino » (`?link=6a8e2a2348ed2`) pour les deux de `3e_C9.2` ; **console vide** aux quatorze rendus
+  — les deux erreurs `X-Frame-Options` de `3e_C9.2` ont disparu avec le cadre ✅
+
+**Vu, pas causé :** `3e_C9.1` déborde à 390 px sur les onglets 3 et 4 (461 et 392 px, un tableau
+« Obtenu ») — identique sur `main`. Même famille que `5e_C1.2`, `4e_C6.2`.
+
+### L'étape 0 est close
+
+Seize cadres, huit pages, un gabarit : plus un seul `<iframe>` vers Vittascience dans le dépôt, un
+contrôle qui l'interdit, et chaque lien mesuré au clic. Suite : la PR `4e_C6.2` (trois textes), puis
+l'étape 1 (neuf encarts retirés), puis les captures.

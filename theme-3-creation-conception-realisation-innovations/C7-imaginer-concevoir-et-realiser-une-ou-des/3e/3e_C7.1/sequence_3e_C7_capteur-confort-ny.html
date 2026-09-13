@@ -45,11 +45,11 @@ details.vs{border:2px solid #61dafb;border-radius:14px;margin:16px 0;background:
 details.vs>summary{cursor:pointer;padding:13px 17px;font-weight:700;font-size:1.02em;color:#61dafb;list-style:none;display:block;border-radius:12px}
 details.vs>summary::-webkit-details-marker{display:none}
 details.vs>summary:hover{background:rgba(97,218,251,.1)}
-details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs>summary::after{content:"▼ l'éditeur s'ouvre dans un nouvel onglet — rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
 details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
 @keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
 @media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
-details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-ouvrir{margin:0;padding:4px 16px 10px}details.vs .vs-lien{display:inline-block;text-decoration:none}
 details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
 .saved-note{color:#5b7bb8;font-size:.8em;min-height:1.2em;display:inline-block}
 .contrat18{background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;margin:10px 0;font-size:.92em}
@@ -470,11 +470,12 @@ qu'une température mesurée.</p>
 <p><b>1 — DÉBUT</b> (ellipse&nbsp;: un algorigramme commence toujours par un terminal). <b>2 — Mesurer T</b> (rectangle&nbsp;: un traitement — c'est l'ENTRÉE de la donnée). <b>3 — T &gt; 28&nbsp;?</b> (losange&nbsp;: une DÉCISION a toujours deux sorties, OUI et NON — jamais une seule). <b>4 — OUI → LED allumée</b> (rectangle&nbsp;: la SORTIE côté alerte). <b>5 — NON → LED éteinte puis retour à la mesure</b> (la flèche qui REMONTE fait la boucle&nbsp;: le capteur surveille en continu). Entrée → décision → sorties → boucle&nbsp;: les quatre familles de blocs y sont.</p></div></details>
 <h4 style="margin-top:16px">3b — Écris le pseudo-code, puis fais-le vivre en blocs ↔ Python</h4>
 <textarea rows="5" id="algo" placeholder="SEUIL = 28&#10;mesurer T&#10;SI T &gt; SEUIL ALORS&#10;  allumer LED alerte&#10;SINON&#10;  éteindre LED&#10;FIN SI" aria-label="Mon algorigramme, en pseudo-code"></textarea>
-<details class="vs" id="vs1">
-<summary>🧪 Code ton alerte ici — en blocs, puis lis le Python (et inversement)</summary>
+<details class="vs" id="vs1" open>
+<summary>🧪 Code ton alerte dans l'onglet Vittascience — en blocs, puis lis le Python (et inversement)</summary>
 <p class="vs-note">Construis d'abord la décision en BLOCS (logique → si/sinon) et observe le Python s'écrire&nbsp;; puis modifie directement le Python (change le seuil à 26) et regarde les blocs suivre. Sans capteur réel&nbsp;: <code>T = 32</code> et <code>print("ALERTE")</code> à la place de la LED. Les DEUX SENS comptent&nbsp;: blocs → texte, texte → blocs.</p>
-<p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur ci-dessous est hébergé par Vittascience&nbsp;: si le cadre reste blanc, c'est la connexion, pas ton ordinateur. Dans ce cas, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
-<iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (activité 3)"></iframe>
+<p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur est hébergé par Vittascience. Sans connexion, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
+<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
+<p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
 </details>
 <p><strong>Bug possible&nbsp;:</strong> près de 28&nbsp;°C, la LED clignote. Propose une correction (hystérésis ou seuil OFF différent)&nbsp;:</p>
 <textarea rows="3" id="a3hys" placeholder="Correction…" aria-label="Ma correction du clignotement"></textarea>
@@ -576,12 +577,13 @@ FIN SI</pre>
 <div class="bonus">
 <p><strong>Citoyen&nbsp;:</strong> Quelles mesures urbaines (arbres, toits clairs) réduisent l'îlot de chaleur autour d'une école new-yorkaise&nbsp;?</p>
 <textarea rows="2" id="defi1" placeholder="Tes idées — sauvegardées dans la page" aria-label="Défi 1"></textarea>
-<p style="margin-top:12px"><strong>Technique&nbsp;:</strong> Ajoute un 2ᵉ seuil (pré-alerte à 26&nbsp;°C, alerte à 28&nbsp;°C) — code-le dans l'éditeur ci-dessous.</p>
-<details class="vs" id="vs2">
-<summary>🧪 L'éditeur du Bonus — code ta pré-alerte ici, sans quitter la page</summary>
+<p style="margin-top:12px"><strong>Technique&nbsp;:</strong> Ajoute un 2ᵉ seuil (pré-alerte à 26&nbsp;°C, alerte à 28&nbsp;°C) — code-le dans l'éditeur Vittascience, par le lien ci-dessous.</p>
+<details class="vs" id="vs2" open>
+<summary>🧪 L'éditeur du Bonus — code ta pré-alerte dans l'onglet Vittascience</summary>
 <p class="vs-note">Départ&nbsp;: <code>T = 27</code> — écris les DEUX conditions (elif&nbsp;!)&nbsp;: <code>PRÉ-ALERTE</code> entre 26 et 28, <code>ALERTE</code> au-delà de 28. Blocs ou Python, comme tu préfères&nbsp;: les deux se répondent.</p>
-<p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur ci-dessous est hébergé par Vittascience&nbsp;: si le cadre reste blanc, c'est la connexion, pas ton ordinateur. Dans ce cas, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
-<iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (Bonus)"></iframe>
+<p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur est hébergé par Vittascience. Sans connexion, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
+<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
+<p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
 </details>
 <p style="margin-top:8px"><strong>CRCN 3.4 N3&nbsp;:</strong> Propose une hystérésis 27 / 29 et justifie pourquoi cela stabilise l'alerte&nbsp;:</p>
 <textarea rows="2" id="defi3" placeholder="Ta justification — sauvegardée dans la page" aria-label="Défi 3"></textarea>
@@ -638,7 +640,7 @@ $("simT").addEventListener("input", majSim);
 majSim();
 
 /* suivi des éditeurs (règle n°16) */
-["vs1","vs2"].forEach(id => { const d = $(id); if(d) d.addEventListener("toggle", () => { if(d.open){ window.__exp[id] = true; save(); } }); });
+["vs1","vs2"].forEach(id => { const d = $(id); const a = d && d.querySelector(".vs-lien"); if(a) a.addEventListener("click", () => { window.__exp[id] = true; save(); }); });
 
 /* vérificateurs (règle n°14) */
 function qmark(e, state){ let m = e.previousElementSibling; if(!(m && m.classList && m.classList.contains("qmark"))){ m = document.createElement("span"); m.className = "qmark"; e.insertAdjacentElement("beforebegin", m); } if(state === null){ m.textContent = ""; m.className = "qmark"; } else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); } }

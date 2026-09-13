@@ -42,11 +42,11 @@ details.vs{border:2px solid #61dafb;border-radius:14px;margin:16px 0;background:
 details.vs>summary{cursor:pointer;padding:13px 17px;font-weight:700;font-size:1.02em;color:#61dafb;list-style:none;display:block;border-radius:12px}
 details.vs>summary::-webkit-details-marker{display:none}
 details.vs>summary:hover{background:rgba(97,218,251,.1)}
-details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs>summary::after{content:"▼ l'éditeur s'ouvre dans un nouvel onglet — rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
 details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
 @keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
 @media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
-details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-ouvrir{margin:0;padding:4px 16px 10px}details.vs .vs-lien{display:inline-block;text-decoration:none}
 details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
 .saved-note{color:#5b7bb8;font-size:.8em;min-height:1.2em;display:inline-block}
 .contrat18{background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;margin:10px 0;font-size:.92em}
@@ -198,7 +198,7 @@ fourni relèvent d'autres codes, qui restent à créer.</p>
 <h2>🔀 Trois façons de vivre la séquence</h2>
 <div class="exo">
 <p data-parcours="a">🅰 <b>Avec le matériel</b> : la maquette du hall est câblée en très basse tension : capteur, voyant, carte. Tu vérifies le comportement <b>en vrai</b>, avec le protocole fourni.</p>
-<p data-parcours="b">🅱 <b>En simulation</b> : le simulateur de place de l'activité 0 fonctionne dans la page, sans rien installer, et l'éditeur embarqué prend le relais pour le programme. C'est le parcours principal.</p>
+<p data-parcours="b">🅱 <b>En simulation</b> : le simulateur de place de l'activité 0 fonctionne dans la page, sans rien installer, et l'éditeur Vittascience, dans son onglet, prend le relais pour le programme. C'est le parcours principal.</p>
 <p data-parcours="c">🅲 <b>Sur papier</b> : croquis et tableau de tests à compléter au cahier — <b>mêmes questions, mêmes validations</b>. Le simulateur reste utilisable pour observer.</p>
 </div>
 <div class="retenir"><b>Aucun parcours ne retire de question.</b> Le sélecteur en haut de page masque seulement
@@ -355,11 +355,12 @@ modification.</p>
 <p><b>1 — DÉBUT</b> (un algorigramme commence par un terminal). <b>2 — Lire le capteur</b> (rectangle&nbsp;: l'ENTRÉE de l'information). <b>3 — Place occupée&nbsp;?</b> (losange&nbsp;: la DÉCISION, toujours deux sorties). <b>4 — OUI → rouge</b> et <b>5 — NON → verte, puis retour</b>&nbsp;: la flèche qui remonte fait la BOUCLE — l'indicateur surveille en continu, comme le simulateur que tu as manipulé.</p></div></details>
 <h4 style="margin-top:14px">3b — Écris la règle, puis fais-la vivre en blocs ↔ Python</h4>
 <textarea rows="5" id="prog" placeholder="SI place occupée ALORS&#10;  LED rouge&#10;SINON&#10;  LED verte&#10;FIN SI" aria-label="Mon programme, en pseudo-code"></textarea>
-<details class="vs" id="vs1">
-<summary>🧪 Code ta règle ici — en blocs, puis lis le Python (et inversement)</summary>
+<details class="vs" id="vs1" open>
+<summary>🧪 Code ta règle dans l'onglet Vittascience — en blocs, puis lis le Python (et inversement)</summary>
 <p class="vs-note">Construis la décision en BLOCS (logique → si/sinon) et observe le Python s'écrire&nbsp;; puis change le Python (<code>occupee = True</code> puis <code>False</code>) et regarde les blocs suivre. Sans LED réelle&nbsp;: <code>print("ROUGE")</code> et <code>print("VERT")</code>. Les DEUX SENS comptent&nbsp;: blocs → texte, texte → blocs.</p>
-<p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur ci-dessous est hébergé par Vittascience&nbsp;: si le cadre reste blanc, c'est la connexion, pas ton ordinateur. Dans ce cas, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
-<iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (activité 3)"></iframe>
+<p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur est hébergé par Vittascience. Sans connexion, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
+<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
+<p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
 </details>
 <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 3b</button>
 <p class="feedback" id="fb4" role="status"></p>
@@ -497,7 +498,7 @@ $("simBtn").addEventListener("click", () => {
 });
 
 /* suivi des éditeurs (règle n°16) */
-["vs1"].forEach(id => { const d = $(id); if(d) d.addEventListener("toggle", () => { if(d.open){ window.__exp[id] = true; save(); } }); });
+["vs1"].forEach(id => { const d = $(id); const a = d && d.querySelector(".vs-lien"); if(a) a.addEventListener("click", () => { window.__exp[id] = true; save(); }); });
 
 /* vérificateurs (règle n°14) */
 function qmark(e, state){ let m = e.previousElementSibling; if(!(m && m.classList && m.classList.contains("qmark"))){ m = document.createElement("span"); m.className = "qmark"; e.insertAdjacentElement("beforebegin", m); } if(state === null){ m.textContent = ""; m.className = "qmark"; } else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); } }
