@@ -13975,3 +13975,85 @@ débordement, dès que l'onglet s'ouvre**. Il ne vient pas de l'encart et n'entr
 Thème 3 (`3e_C9.1`, `3e_C9.2` deux pages, `5e_C9.1` ; trois encarts Onshape signalés), puis
 thème 2 (`3e_C4.8`, `4e_C4.7`, `5e_C4.7`, `4e_C6.2` ; six encarts signalés, dont `3e_C4.7`) avec le
 contrôle de position et son banc.
+
+## 13/09/2026 — L'échauffement à la porte de l'outil (thème 3) : quatre encarts déplacés, trois encarts Onshape signalés
+
+Deuxième PR du chantier, après le thème 1 (#376). Même règle (n°297 complétée), même script, même
+preuve : bloc identique à l'octet, fichier au même nombre d'octets, CRLF conservés. Le thème 3
+passe **avant** le thème 2 pour que le contrôle de position, qui vit dans `_outils/`, arrive en
+dernier et ne refuse jamais une page en attente de sa PR.
+
+### La mesure, reprise à l'`<h2>` réel
+
+Le tableau du 13/09 (entrée du thème 1) donnait les activités d'accueil ; ici, chacune est
+vérifiée sur le `<h2>` lui-même, premier enfant d'une `<section class="card">`, et sur ce que dit la
+séance qui précède :
+
+| page | encart avant | activité d'accueil | ce que dit la séance 1 | décision |
+|---|---|---|---|---|
+| `3e_C9.1` | après « Ce que tu as déjà fait » | **Séance 2** « Les types : nombre ou texte ? » | 0 mention | **déplacé** — panneau `s2` |
+| `3e_C9.2` station_2_programmer | en tête, avant la barre des quatre pages | **Séance 2** « Programmer la station en blocs sur Vittascience » | le banc d'essai (version 🅱) qui précède : 0 mention | **déplacé** — après le banc d'essai, juste avant la séance 2 |
+| `3e_C9.2` station_alerte_cyclonique | après le billet d'entrée, avant la situation | **Séance 2**, la même | 1 mention : « Blocs Vittascience, C++ ou Python, le raisonnement dessiné reste identique » — une comparaison de langages, pas une ouverture | **déplacé** — `s2` |
+| `5e_C9.1` | avant le billet d'entrée | **Séance 2** « Lire et TESTER le programme fourni » | 0 mention | **déplacé** — `s2` |
+| `3e_C7.1` `4e_C7.1` `5e_C7.1` | en tête | **aucune** | — | **signalé**, voir ci-dessous |
+
+| page | octets | encart avant → après | empreinte du bloc |
+|---|---|---|---|
+| `3e_C9.1` | 103 686 = 103 686 | 23 637 → 50 625 | `c08488acab1e` |
+| `3e_C9.2` station_2_programmer | 102 270 = 102 270 | 25 982 → 30 393 | `faa09753a47d` |
+| `3e_C9.2` station_alerte_cyclonique | 214 397 = 214 397 | 27 464 → 86 558 | `faa09753a47d` |
+| `5e_C9.1` | 85 759 = 85 759 | 20 770 → 39 843 | `c08488acab1e` |
+
+Deux empreintes pour quatre pages : `3e_C9.1` et `5e_C9.1` portent **le même encart gabarit, au
+caractère près** ; les deux pages de `3e_C9.2` portent le même encart Arduino. La vague 2 (étape 2)
+les fera dire chacun la vérité de son lot.
+
+Dans `3e_C9.2` station_2_programmer, la page n'a pas d'onglets : l'encart quitte l'en-tête (il était
+avant la barre des quatre pages) et se pose entre le banc d'essai et la séance 2. La page se lit
+désormais : banc d'essai → échauffement → séance 2. Dans les trois autres, il vit dans le panneau
+`s2`, comme au thème 1.
+
+### Les trois encarts Onshape : signalés, pas déplacés — question à Pascal
+
+Dans `3e_C7.1`, `4e_C7.1` et `5e_C7.1`, aucune activité de la page n'ouvre Onshape. Le mot
+n'apparaît que dans le lien de bas de page — « 🌧️ Ouvrir le TP « Le boîtier étanche » (Onshape) »,
+« 🏛️ Ouvrir le TP « Le dé sur son socle » (Onshape) », « 🎲 Ouvrir le TP « Le dé » (Onshape) » — et,
+dans `4e_C7.1`, dans la version 🅱 (« la modélisation du boîtier se fait dans Onshape (TP « Le dé
+sur son socle », lié en bas de page) »). L'outil s'ouvre **dans une autre page**, celle du TP. La
+règle n°297 complétée ne dit pas où va un encart dont la porte est ailleurs. Deux issues honnêtes,
+à trancher par Pascal, pas ici : (a) l'encart descend juste avant ce lien de bas de page, qui est
+la porte ; (b) l'encart part vivre dans la page du TP, qui ouvre réellement Onshape, et la
+séquence n'en garde rien. Leurs `#gestes-onshape` sont référencés ailleurs dans leurs pages : à
+suivre le jour du déplacement. Tant que ce n'est pas tranché, `controle_gestes_outil.py` ne jugera
+pas la position d'un encart dont aucune activité n'ouvre l'outil (thème 2).
+
+### Les contrôles, tous exécutés ce jour, avec leurs chiffres
+
+- `controle_gestes_outil.py` : **22 encarts lus · 0 écart** ✅
+- `controle_liens.py` : **2 895 adresses · 0 cassée · 52 ancres · 0 introuvable** ✅
+- `controle_medias.py` : **41 lots · 342 médias · 342 nommés · 171 promesses** ✅
+- `verif_regles_audit.py` sur les trois lots : **12 ✔ · 0 manquement** (le lot `3e_C9.2` : ses
+  cinq séquences analysées, 0 manquement) ✅
+- bancs : `tests_3e_C9.1.mjs` **35 / 35**, `tests_3e_C9.2-C8.3.mjs` **135 / 135**,
+  `tests_5e_C9.1-C9.3.mjs` **44 / 44** ✅
+- `mesurer_temps_seances.py` sur le thème 3, avant et après : sept lignes C9 **identiques**
+  (`3e_C9.1` 220/185, `3e_C9.2` alerte 360/285, station_2 360/70, `5e_C9.1` 165/130) ✅
+- `controle_impression.mjs` : **0 page refusée** ✅
+- navigateur, **huit rendus** (quatre pages × 1280 / 390 px), onglet `s2` activé quand il existe :
+  encart après la situation, `<h2>` immédiatement suivi de celui de la séance 2, élément suivant =
+  la section de la séance 2, `scrollWidth == clientWidth` aux huit rendus ✅. Les encarts n'ont
+  pas encore de captures (0 image, attendu : vague 2).
+
+**Console : deux pages sur quatre portent une erreur, et elle n'est pas de cette PR.** Les deux
+pages de `3e_C9.2` écrivent `Refused to display 'https://fr.vittascience.com/' in a frame because
+it set 'X-Frame-Options' to 'sameorigin'` — c'est le cadre `?link=6a8e2a2348ed2&embed=1`, mesuré le
+12/09, le défaut P0 que l'étape 0 de la vague 2 corrige juste après. Sur `main` avant cette PR, la
+même ligne, au même endroit. `3e_C9.1` et `5e_C9.1` : console vide (leurs cadres sont repliés dans
+un `<details>` fermé, donc pas chargés au démarrage — ils ont le même défaut, il se montre au
+premier clic).
+
+### Ce qui reste
+
+Thème 2 : `3e_C4.8`, `4e_C4.7`, `5e_C4.7`, `4e_C6.2` à déplacer ; `3e_C4.3`, `5e_C4.1`, `3e_C6.1`,
+`4e_C6.1`, `5e_C6.1`, `3e_C4.7` signalés ; `controle_gestes_outil.py` apprend la position, avec deux
+cas au banc. Puis l'étape 0 de la vague 2 : les seize cadres.
