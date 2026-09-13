@@ -13854,3 +13854,124 @@ tenaient à aucun des quatre lots :
 Aucun des trois n'était visible depuis le texte des pages. Tous les trois se sont montrés parce
 qu'on a suivi l'encart geste par geste, devant le logiciel — ce que la règle d'or n°94 demande, et
 que rien d'autre ne remplace.
+
+## 13/09/2026 — L'échauffement se place à la porte de l'outil (thème 1) : cinq encarts déplacés, pas un caractère changé
+
+Suite de la vague « tableur » (#371 à #375). La mesure du 13/09 sur `main` à 46659539 : les
+vingt-deux pages qui portent `<section class="card gestes-outil">` le placent **en tête de page** —
+avant la situation en 5e, juste après « 🔄 Ce que tu as déjà fait » en 4e et 3e. Le premier contact
+de l'élève avec sa séquence était un tutoriel de logiciel, avant même de savoir quel problème il
+allait traiter ; dans `5e_C1.1`, il ouvrait le CSV, l'enregistrait, puis quittait Calc pendant
+quarante minutes pour l'activité 1.
+
+### La règle, tranchée par Pascal le 13/09 : la n°297 est complétée, pas doublée
+
+> **Règle d'or n°297 (clé de voûte) — un geste d'outil s'enseigne pour être refait seul, plus tard,
+> depuis la page, et il s'enseigne à la porte de l'outil.** *[texte du 10/09 inchangé, puis :]*
+> L'encart « Avant de commencer (échauffement) » se place **immédiatement avant la première activité
+> qui ouvre l'outil**, après le billet d'entrée, jamais avant la situation ni la problématique : on ne
+> s'échauffe pas une heure avant l'effort. Une séquence commence par son problème ; l'outil arrive
+> quand le problème en a besoin. Si la première activité est aussi la première à ouvrir l'outil,
+> l'encart la précède directement.
+> — Elle prolonge la n°121 (une capture montre le geste *au moment* du geste) : le moment vaut aussi
+> pour la page entière.
+
+### Étape 1 — la mesure, page par page, avant de déplacer quoi que ce soit
+
+Méthode : pour chaque page, le texte visible de chaque bloc `<h2>` (hors encart, hors `<script>` et
+`<style>`) est cherché avec les mots de `OUTILS` dans `controle_gestes_outil.py` ; pour le tableur,
+le nom du CSV du lot s'y ajoute ; pour Vittascience, un `href` vers `fr.vittascience.com`. La
+première **activité** (« Activité n » ou « Séance n ») qui nomme l'outil est l'activité d'accueil.
+Une mention dans « Choix de l'outil », « Trois façons de vivre la séquence » ou le billet d'entrée
+n'est pas une ouverture.
+
+| page | outil | encart mesuré le 13/09 | première activité qui nomme l'outil | décision |
+|---|---|---|---|---|
+| `5e_C1.1` | tableur | avant la situation | **Activité 2** « Collecter, trier, analyser » (8 mentions ; activité 1 : 0) | **déplacé** — panneau `s2` |
+| `5e_C1.2` | tableur | avant la situation | **Activité 2** « Comparer avec des chiffres » (5 ; activité 1 : 0) | **déplacé** — `s2` |
+| `5e_C3.1` | tableur | avant la situation | **Activité 4** « L'indicateur multicritère, au tableur » (5). L'activité 3 dit « le pilote tient l'outil — le clavier, le capteur, le tableur » : un rôle, pas une ouverture | **déplacé** — `s4` |
+| `3e_C1.1` | tableur | après « Ce que tu as déjà fait » | **Activité 2** « Ce que les données permettent d'affirmer » (6 ; activité 1 : 0) | **déplacé** — `s2` |
+| `4e_C1.1` | tableur | après « Ce que tu as déjà fait » | **Activité 1** « Lire avant de calculer » (4) | **déplacé** — `s1` |
+| `3e_C4.3` `5e_C4.1` `3e_C6.1` `4e_C6.1` `5e_C6.1` | Vittascience | en tête | **aucune** — le mot n'apparaît que dans « Choix de l'outil » et « Trois façons » ; le simulateur est dans la page | signalé, sort tranché à l'étape 1 de la vague 2 |
+| `3e_C4.7` | Packet Tracer | après « Ce que tu as déjà fait » | **aucune** — les trois séances ne nomment ni Packet Tracer, ni `.pkt`, ni Cisco (mesuré : 0, 0, 0) ; seuls « Choix de l'outil » et « Trois façons » le citent. **Non listé par le prompt** : trouvé par la mesure | signalé, à trancher avec les cinq encarts Vittascience |
+| `3e_C4.8` | Packet Tracer | après « Ce que tu as déjà fait » | Activité 1 « Concevoir TON schéma » (1 mention) ; activité 3 « Construire le pont dans Packet Tracer » — la mention de l'activité 1 est à lire avant de trancher | PR thème 2 |
+| `4e_C4.7` | Packet Tracer | après « Ce que tu as déjà fait » | **Activité 2** « Construire le réseau d'entraînement de la serre » (3 ; activité 1 : 0) | PR thème 2 |
+| `5e_C4.7` | Packet Tracer | avant la situation | les activités sont des `<h3>` sous un seul `<h2>` ; premier `<h3>` qui nomme l'outil : « Les appareils de la salle — concevoir son schéma » (1), puis « Construire le réseau dans Packet Tracer » (5) | PR thème 2, mesure à l'`<h3>` |
+| `4e_C6.2` | Vittascience | après « Ce que tu as déjà fait » | activités en `<h3>` ; premier : « Les blocs en désordre » (1, porte un cadre) | PR thème 2, après l'étape 0 de la vague 2 |
+| `3e_C7.1` `4e_C7.1` `5e_C7.1` | Onshape | en tête | **aucune** — « Onshape » n'apparaît que dans le lien de bas de page « Ouvrir le TP « … » (Onshape) » ; l'outil s'ouvre dans une autre page | signalé, question posée à Pascal dans la PR thème 3 |
+| `3e_C9.1` | Vittascience | après « Ce que tu as déjà fait » | **Séance 2** « Les types : nombre ou texte ? » (2 ; séance 1 : 0) | PR thème 3 |
+| `3e_C9.2` (station_2_programmer) | Vittascience | en tête, avant le banc d'essai | **Séance 2** « Programmer la station en blocs sur Vittascience » (20, deux `href`) | PR thème 3 |
+| `3e_C9.2` (station_alerte_cyclonique) | Vittascience | après le billet d'entrée, avant la situation | **Séance 2** (20) ; la séance 1 porte 1 mention, à lire | PR thème 3 |
+| `5e_C9.1` | Vittascience | avant le billet d'entrée | **Séance 2** « Lire et TESTER le programme fourni » (3 ; séance 1 : 0) | PR thème 3 |
+| `4e_C9.1` | Vittascience | hors `<section class="card gestes-outil">` | invisible au contrôle | vague 2, étape 2 |
+
+Un écart avec le prompt, tranché par la mesure : il annonçait l'ouverture « à l'activité 3 dans
+`5e_C3.1` et dans les trois lots Onshape ». Dans `5e_C3.1` c'est l'activité 4 (l'activité 3 nomme
+le tableur dans la répartition des rôles, sans l'ouvrir) ; dans les trois lots Onshape, aucune
+activité de la page n'ouvre Onshape.
+
+### Étape 2 — le déplacement, tel quel
+
+Le bloc déplacé est `<!-- gestes-outil-v1 … -->` suivi de la `<section class="card gestes-outil">`
+entière. Il est inséré juste avant la `<section class="card">` dont le `<h2>` est l'activité
+d'accueil — le `<h2>` en est le premier enfant, vérifié. Preuve d'identité, par script : le texte de
+la section est comparé **à l'octet** avant et après (empreinte identique), le fichier garde
+**exactement le même nombre d'octets**, ses fins de ligne CRLF, ses `id` (`gestes-tableur`, référencé
+nulle part ailleurs), et `controle_liens.py` trouve toujours ses 52 ancres.
+
+| page | octets | encart avant → après (position dans le fichier) | empreinte du bloc |
+|---|---|---|---|
+| `5e_C1.1` | 136 468 = 136 468 | 15 132 → 44 884 | `b7296faedf18` |
+| `5e_C1.2` | 103 824 = 103 824 | 13 315 → 44 159 | `7ed151beb1ab` |
+| `5e_C3.1` | 97 499 = 97 499 | 11 667 → 45 295 | `97c5a940ed2f` |
+| `3e_C1.1` | 110 513 = 110 513 | 11 462 → 31 004 | `f4eba7a5653c` |
+| `4e_C1.1` | 103 537 = 103 537 | 12 472 → 24 335 | `1bb1bd695809` |
+
+**Ce que la page fait de nouveau, et qu'il faut savoir :** ces cinq pages rangent leurs séances dans
+des panneaux d'onglets (`.seance-panel`, un seul affiché à la fois). L'encart vit désormais **dans le
+panneau de la séance qui ouvre l'outil** (`s2`, `s2`, `s4`, `s2`, `s1`) : il apparaît quand l'élève
+ouvre cette séance, et pas avant. C'est exactement « à la porte » — et l'impression, qui affiche tous
+les panneaux (`display:block!important`), le garde à la même place.
+
+### Étape 3 — le contrôle de position
+
+`controle_gestes_outil.py` doit apprendre la position (refuser un encart qui précède la situation,
+ou qui n'est pas le dernier bloc avant l'activité d'accueil). Il vit dans `_outils/`, périmètre du
+**thème 2** : il ne peut pas voyager dans cette PR, et il ne doit pas non plus être livré avant que
+les pages des trois thèmes soient déplacées — sinon il refuserait sur `main` des pages qui
+attendent encore leur PR. Ordre retenu : **thème 1, puis thème 3, puis thème 2** avec le contrôle et
+ses deux cas de banc (avant la situation ; après la première activité). Dit ici pour que l'ordre ne
+surprenne pas.
+
+`mesurer_temps_seances.py`, avant et après, sur le thème 1 : `3e_C1.1` 275/250, `4e_C1.1` 220/200,
+`5e_C1.1` 275/215, `5e_C1.2` 165/150, `5e_C3.1` 220/145 — **identiques**. L'encart n'a pas de durée
+propre ; le déplacement ne change aucun total.
+
+### Étape 4 — les contrôles, tous exécutés ce jour, avec leurs chiffres
+
+- `controle_gestes_outil.py` : **22 encarts lus · 0 écart** ✅
+- `controle_liens.py` : **2 895 adresses · 0 cassée · 52 ancres · 0 introuvable** ✅
+- `controle_medias.py` : **41 lots · 342 médias · 342 nommés · 171 promesses vérifiées** ✅
+- `verif_regles_audit.py` sur chacun des cinq lots : **12 ✔ · 0 manquement**, cinq fois ✅
+- bancs des lots : `5e_C1.1` **43 / 43**, `5e_C1.2` **36 / 36**, `5e_C3.1` **29 / 29**, `3e_C1.1`
+  **41 / 41**, `4e_C1.1` **42 / 42** ✅ — les mêmes chiffres qu'avant le déplacement
+- `controle_impression.mjs`, importé par `main()` : **0 page refusée** ✅
+- `build_audit.py` et `make_index.py` régénérés ; `audit_couverture.*` rattrape au passage le compte
+  de fichiers des lots de la vague (#372 à #375 ne l'avaient pas régénéré)
+- navigateur (Chromium Playwright), **dix rendus** = cinq pages × (1280 px, 390 px), l'onglet de la
+  séance d'accueil activé : l'encart est **après** la situation, son `<h2>` est **immédiatement
+  suivi** de celui de l'activité d'accueil, son élément suivant **est** la section de cette activité,
+  **15 / 15 captures chargées** sur chaque rendu (images « lazy », défilées une à une), `alt` d'au
+  moins 144 caractères, **console vide** aux dix rendus ✅
+
+**Un défaut vu, pas causé, pas corrigé ici :** `5e_C1.2` à 390 px, onglet « Séance 2 » ouvert,
+déborde de **6 px** (`scrollWidth` 396) — c'est le tableau de comparaison des solutions de
+l'activité 2 (581 px de large). Mesuré sur la version de `main` sans le déplacement : **le même
+débordement, dès que l'onglet s'ouvre**. Il ne vient pas de l'encart et n'entre pas dans cette PR ;
+à trier à part.
+
+### Ce qui reste, dans l'ordre
+
+Thème 3 (`3e_C9.1`, `3e_C9.2` deux pages, `5e_C9.1` ; trois encarts Onshape signalés), puis
+thème 2 (`3e_C4.8`, `4e_C4.7`, `5e_C4.7`, `4e_C6.2` ; six encarts signalés, dont `3e_C4.7`) avec le
+contrôle de position et son banc.
