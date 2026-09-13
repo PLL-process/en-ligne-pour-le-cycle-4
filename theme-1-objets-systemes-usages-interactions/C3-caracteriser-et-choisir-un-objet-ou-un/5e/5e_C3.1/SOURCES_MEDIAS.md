@@ -54,6 +54,32 @@ dossier n'affichent que la ligne de ce dossier. Le volet de navigation est masqu
 | `Images/geste_tableur_4_sortir_clic_droit_graphique.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 12/09/2026 | Fable, sur le poste de Pascal | CC0 1.0 | geste 4 Sortir — le graphique des deux notes d'adaptation sélectionné, clic droit ouvert sur Copier et Exporter comme image (encart d'échauffement de la séquence) — 104 Ko |
 | `Images/geste_tableur_4b_sortir_enregistrer_image.png` | capture d'écran réelle, boîte de dialogue Windows 11 (fr), mode sombre, 12/09/2026 | Fable, sur le poste de Pascal | CC0 1.0 | geste 4 Sortir — « Enregistrer en tant qu'image » dans Documents › 5E1, type PNG (encart d'échauffement de la séquence) — 48 Ko |
 
+## Les huit captures des gestes de l'activité 4
+
+Prises le 13/09/2026 sur le même poste, dans le même classeur `5E-VEHICULES-DUPONT.ods`, à l'endroit
+exact où l'activité 4 demande le geste : quatre sous « a) Filtrer selon le cahier des charges »,
+quatre sous le paragraphe de « b) Construire l'indicateur ». Même traitement que les quinze
+précédentes : aucune retouche, réduction à 1400 px au plus, 256 couleurs. Aucune ne montre le nom du
+compte ni un dossier du poste — aucune boîte de fichiers n'y apparaît.
+
+Deux précisions de cadrage. Les quatre captures de la formule sont prises dans une fenêtre élargie
+à 2660 px (au lieu de 2400) pour que la colonne **O** (`reparabilite_sur_10`) reste à l'écran à côté
+de U : sans elle, l'élève ne verrait pas la lettre qu'il tape. Et `geste_activite4_formule_2_poignee.png`
+montre **le pointeur de la souris** : `CopyFromScreen` ne le capture pas, il a été dessiné par Windows
+lui-même (`GetCursorInfo` + `DrawIcon`, curseur réel de LibreOffice au-dessus de la poignée) au moment
+de la capture — c'est ce que l'écran affichait, pas un ajout.
+
+| Fichier | Nature | Auteur | Licence | Rôle pédagogique |
+|---|---|---|---|---|
+| `Images/geste_activite4_filtrer_1_boite.png` | capture d'écran réelle, boîte de dialogue LibreOffice Calc 26.2.5.2 (fr), mode sombre, 13/09/2026 (boîte seule) | Fable, sur le poste de Pascal | CC0 1.0 | activité 4 a), geste Filtrer — moment : « Filtre standard » réglé sur charge_utile_kg >= 80, avant OK — 24 Ko |
+| `Images/geste_activite4_filtrer_2_resultat.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 13/09/2026 (fenêtre entière) | Fable, sur le poste de Pascal | CC0 1.0 | activité 4 a), geste Filtrer — résultat : les trois solutions restent, S3 à 80 pile gardé par >= — 103 Ko |
+| `Images/geste_activite4_filtrer_3_erreur_strict.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 13/09/2026 (fenêtre entière) | Fable, sur le poste de Pascal | CC0 1.0 | activité 4 a), geste Filtrer — erreur typique : > au lieu de >=, la ligne 4 (S3) cachée, numéros 3 → 5 — 97 Ko |
+| `Images/geste_activite4_filtrer_4_erreur_sans_entetes.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 13/09/2026 (fenêtre entière, boîte par-dessus) | Fable, sur le poste de Pascal | CC0 1.0 | activité 4 a), geste Filtrer — erreur typique : lignes 2 à 4 sélectionnées sans les titres, le champ proposé est « Colonne A » — 134 Ko |
+| `Images/geste_activite4_formule_1_saisie.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 13/09/2026 (fenêtre entière, élargie) | Fable, sur le poste de Pascal | CC0 1.0 | activité 4 b), geste Formule — moment : =O2/2+R2+S2 en cours de saisie en U2, colonnes O, R, S visibles — 90 Ko |
+| `Images/geste_activite4_formule_2_poignee.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 13/09/2026 (fenêtre entière, élargie, pointeur réel) | Fable, sur le poste de Pascal | CC0 1.0 | activité 4 b), geste Recopier — moment : U2 = 12, pointeur en croix sur la poignée — 88 Ko |
+| `Images/geste_activite4_formule_3_resultat.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 13/09/2026 (fenêtre entière, élargie) | Fable, sur le poste de Pascal | CC0 1.0 | activité 4 b), geste Recopier — résultat : 12 / 10,5 / 9,5, la barre montre =O4/2+R4+S4 — 89 Ko |
+| `Images/geste_activite4_formule_4_erreur_tape.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 13/09/2026 (fenêtre entière, élargie) | Fable, sur le poste de Pascal | CC0 1.0 | activité 4 b), geste Recopier — erreur typique : résultats tapés à la main, la barre de U4 ne montre que 9,5 — 88 Ko |
+
 ## Accessibilité
 
 Chaque figure porte un `<title>` court et un `<desc>` long qui **décrit le contenu, pas

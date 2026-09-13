@@ -167,13 +167,13 @@
      la page à défiler horizontalement sur un écran de téléphone (mesuré à 390 px,
      493 px de large). On ne coupe QUE dans l'encart, et QUE si c'est nécessaire. */
   .gestes-outil code{overflow-wrap:anywhere}
-  .gestes-outil figure.geste-capture{margin:.6rem 0 .9rem;max-width:560px}
-  .gestes-outil figure.geste-capture img{width:100%;height:auto;display:block;border:1px solid var(--border,#2a3550);
+  figure.geste-capture{margin:.6rem 0 .9rem;max-width:560px}
+  figure.geste-capture img{width:100%;height:auto;display:block;border:1px solid var(--border,#2a3550);
     border-radius:8px;background:#fff}
-  .gestes-outil figure.geste-capture figcaption{margin:.35rem 0 0;font-size:.88em;line-height:1.45;opacity:.92}
-  .gestes-outil figure.geste-capture figcaption b{color:inherit}
-  @media print{.gestes-outil figure.geste-capture{break-inside:avoid;page-break-inside:avoid}
-    .gestes-outil figure.geste-capture img{border-color:#999}}
+  figure.geste-capture figcaption{margin:.35rem 0 0;font-size:.88em;line-height:1.45;opacity:.92}
+  figure.geste-capture figcaption b{color:inherit}
+  @media print{figure.geste-capture{break-inside:avoid;page-break-inside:avoid}
+    figure.geste-capture img{border-color:#999}}
 </style>
 
 <div class="toolbar">
@@ -762,6 +762,29 @@ corrections et les compléments si la page te paraît chargée.</p>
   </ul>
 
   <h4>a) Filtrer selon le cahier des charges</h4>
+  <figure class="geste-capture">
+    <img src="Images/geste_activite4_filtrer_1_boite.png" width="1258" height="634" loading="lazy"
+         alt="Boîte de dialogue « Filtre standard » de LibreOffice Calc, en français et en mode sombre. Sous « Critères de filtre », la première ligne est remplie : Nom de champ charge_utile_k… (le nom est coupé par la largeur de la case), Condition &gt;=, Valeur 80. Les trois lignes suivantes sont grisées, sur « - aucun(e) - ». En dessous, « Options » est replié ; en bas, les boutons Aide, Effacer, OK et Annuler.">
+    <figcaption><b>Ce que tu dois voir&nbsp;:</b> toutes tes données sélectionnées, <b>titres compris</b> (clique en A1, puis <kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Fin</kbd>), puis <b>Données → Plus de filtres → Filtre standard…</b> — pas «&nbsp;AutoFiltre&nbsp;», juste au-dessus dans le menu, qui pose des flèches sur les titres au lieu d'ouvrir cette boîte. Règle la première ligne&nbsp;: <b>Nom de champ</b> <code>charge_utile_kg</code>, <b>Condition</b> <code>&gt;=</code>, <b>Valeur</b> <code>80</code>. <b>Puis&nbsp;:</b> <b>OK</b>. <i>La case coupe le nom du champ&nbsp;: c'est la boîte qui est étroite, le nom complet est bien choisi.</i></figcaption>
+  </figure>
+
+  <figure class="geste-capture">
+    <img src="Images/geste_activite4_filtrer_2_resultat.png" width="1400" height="849" loading="lazy"
+         alt="Fenêtre de LibreOffice Calc, fichier 5E-VEHICULES-DUPONT.ods, en mode sombre, après le filtre. La cellule H1 est sélectionnée : la zone de nom affiche H1 et la barre de formule charge_utile_kg. La feuille montre les colonnes B à H ; les lignes 1, 2, 3 et 4 se suivent sans trou : Velo-cargo, Fourgonnette et Robot, avec 120, 650 et 80 dans la colonne charge_utile_kg.">
+    <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> les lignes qui ne respectent pas l'exigence disparaissent, et les numéros de ligne, à gauche, <b>sautent</b> là où elles étaient. Ici, rien ne saute&nbsp;: les trois solutions portent au moins 80&nbsp;kg. Regarde S3, le robot&nbsp;: <b>80 pile</b>, et il reste — <code>&gt;=</code> veut dire «&nbsp;supérieur <b>ou égal</b>&nbsp;», la borne est gardée, exactement comme «&nbsp;au moins 80&nbsp;kg&nbsp;». Note qui tombe, puis <b>reproduis la même méthode pour les trois autres exigences</b>&nbsp;: rouvre <b>Filtre standard…</b> (la boîte garde le critère précédent), change le champ, la condition et la valeur, <b>OK</b>. <i>Les valeurs sont celles du fichier de la séquence.</i></figcaption>
+  </figure>
+
+  <figure class="geste-capture">
+    <img src="Images/geste_activite4_filtrer_3_erreur_strict.png" width="1400" height="849" loading="lazy"
+         alt="La même fenêtre après un filtre posé avec la condition &gt; au lieu de &gt;=. Les numéros de ligne, à gauche, vont de 1 à 3 puis sautent directement à 5 : la ligne 4, celle du robot, est cachée. Il ne reste que Velo-cargo avec 120 et Fourgonnette avec 650 dans la colonne charge_utile_kg.">
+    <figcaption><b>Si tu vois ceci&nbsp;:</b> le robot a disparu et les numéros de ligne sautent de <b>3</b> à <b>5</b>. Tu as choisi <code>&gt;</code> («&nbsp;strictement supérieur&nbsp;») au lieu de <code>&gt;=</code>&nbsp;: 80 n'est pas <i>strictement</i> plus grand que 80, alors S3 tombe — à tort, puisqu'il porte bien «&nbsp;au moins 80&nbsp;kg&nbsp;». Rouvre <b>Filtre standard…</b> et remets <code>&gt;=</code>. Aucun message ne te prévient&nbsp;: c'est toi qui dois relire la condition.</figcaption>
+  </figure>
+
+  <figure class="geste-capture">
+    <img src="Images/geste_activite4_filtrer_4_erreur_sans_entetes.png" width="1400" height="849" loading="lazy"
+         alt="Fenêtre de LibreOffice Calc où seules les lignes 2 à 4 sont sélectionnées, sans la ligne 1 des titres : la barre d'état indique « Sélectionné : 3 lignes, 20 colonnes ». La boîte « Filtre standard » est ouverte par-dessus, et sa case Nom de champ propose « Colonne A » au lieu d'un nom de titre.">
+    <figcaption><b>Si tu vois ceci&nbsp;:</b> la case Nom de champ propose <b>«&nbsp;Colonne A&nbsp;»</b> au lieu de <code>id_solution</code>, et tu ne trouves pas <code>charge_utile_kg</code> dans la liste. Tu as sélectionné les données <b>sans la ligne des titres</b>&nbsp;: la ligne 1 n'est pas surlignée. <b>Annuler</b>, sélectionne à partir de <b>A1</b>, recommence.</figcaption>
+  </figure>
   <div class="assoc"><label for="a4_1">Combien de solutions respectent les <b>quatre</b> exigences&nbsp;?</label>
     <select id="a4_1"><option value="">— choisir —</option>
       <option>une seule</option><option>deux</option><option>les trois</option><option>aucune</option></select></div>
@@ -788,6 +811,29 @@ corrections et les compléments si la page te paraît chargée.</p>
   pluie</code> (la réparabilité est notée sur 10, d'où le ÷ 2). On n'additionne que des notes de
   même nature — jamais des kilomètres avec des points. Une formule, recopiée vers le bas — jamais
   trois calculs à la main.</p>
+  <figure class="geste-capture">
+    <img src="Images/geste_activite4_formule_1_saisie.png" width="1400" height="766" loading="lazy"
+         alt="Fenêtre de LibreOffice Calc, fichier 5E-VEHICULES-DUPONT.ods, mode sombre, décalée vers la droite : on lit les colonnes O à W, dont reparabilite_sur_10 en O, adaptation_ruelles_sur_5 en R, adaptation_pluie_sur_5 en S, et indicateur tapé en U1. En U2, la formule =O2/2+R2+S2 est en cours de saisie : elle s'affiche dans la cellule et dans la barre de formule, à côté des icônes ✗ et ✓ ; la zone de nom affiche MOYENNE pendant la saisie.">
+    <figcaption><b>Ce que tu dois voir&nbsp;:</b> le titre <code>indicateur</code> en <b>U1</b>, la première colonne libre, puis, en <b>U2</b>, la formule <code>=O2/2+R2+S2</code> écrite dans la cellule et dans la barre, <b>avant</b> Entrée. Les lettres sont celles de ton fichier&nbsp;: <b>O</b> = <code>reparabilite_sur_10</code>, <b>R</b> = <code>adaptation_ruelles_sur_5</code>, <b>S</b> = <code>adaptation_pluie_sur_5</code> — lis-les dans la bande des lettres, juste au-dessus des titres. Le <b>2</b> est le numéro de la ligne de S1. <i>Pendant la saisie, la zone de nom, en haut à gauche, affiche «&nbsp;MOYENNE&nbsp;»&nbsp;: ce n'est pas ta formule, c'est la liste des fonctions, ignore-la.</i></figcaption>
+  </figure>
+
+  <figure class="geste-capture">
+    <img src="Images/geste_activite4_formule_2_poignee.png" width="1400" height="766" loading="lazy"
+         alt="La même fenêtre après Entrée, la cellule U2 de nouveau sélectionnée : elle affiche 12, et la barre de formule montre =O2/2+R2+S2. Le pointeur de la souris est posé sur le petit carré en bas à droite du cadre de U2, et il a pris la forme d'une croix fine. U3 et U4 sont encore vides.">
+    <figcaption><b>Ce que tu dois voir pour recopier&nbsp;:</b> <b>U2</b> sélectionnée, qui affiche <b>12</b>, et le pointeur posé sur la <b>poignée</b> — le petit carré en bas à droite du cadre. Quand le pointeur est au bon endroit, il devient une <b>croix fine</b>. <b>Puis&nbsp;:</b> garde le bouton enfoncé et descends jusqu'à <b>U4</b>, lâche. <i>Le pointeur est petit sur l'image&nbsp;: clique dessus pour l'agrandir.</i></figcaption>
+  </figure>
+
+  <figure class="geste-capture">
+    <img src="Images/geste_activite4_formule_3_resultat.png" width="1400" height="766" loading="lazy"
+         alt="La même fenêtre après la recopie, la cellule U4 sélectionnée : la colonne indicateur affiche 12 en U2, 10,5 en U3 et 9,5 en U4, alignés à droite. La zone de nom affiche U4 et la barre de formule =O4/2+R4+S4.">
+    <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> les trois cellules sont remplies — <b>12</b> pour S1, <b>10,5</b> pour S2, <b>9,5</b> pour S3 — et, en cliquant sur <b>U4</b>, la barre montre <code>=O4/2+R4+S4</code>. Tu n'as rien retapé&nbsp;: en descendant, le tableur a changé tout seul les numéros de ligne, 2 est devenu 4. C'est ce qu'on appelle <b>recopier</b> une formule. <i>Les valeurs sont celles du fichier de la séquence.</i></figcaption>
+  </figure>
+
+  <figure class="geste-capture">
+    <img src="Images/geste_activite4_formule_4_erreur_tape.png" width="1400" height="766" loading="lazy"
+         alt="La même fenêtre, avec les mêmes nombres 12, 10,5 et 9,5 dans la colonne indicateur, la cellule U4 sélectionnée. Mais cette fois la barre de formule n'affiche que 9,5, un nombre, sans signe = ni lettres de colonnes.">
+    <figcaption><b>Si tu vois ceci&nbsp;:</b> la grille affiche les mêmes nombres, mais la barre ne montre que <b>9,5</b> — pas de <code>=</code>, pas de lettres. Ces résultats ont été <b>tapés à la main</b>. Ils sont justes aujourd'hui, mais si une note change dans le tableau, rien ne se recalcule, et personne ne peut vérifier d'où ils viennent. Clique sur chaque cellule de la colonne&nbsp;: la barre doit toujours montrer une formule. Sinon, efface, réécris la formule en U2 et recopie-la.</figcaption>
+  </figure>
   <div class="assoc"><label for="a4_5">Pourquoi écrire une formule plutôt que taper les trois résultats&nbsp;?</label>
     <select id="a4_5"><option value="">— choisir —</option>
       <option>parce qu'en changeant une donnée, tous les résultats se recalculent seuls — et parce que la formule montre le raisonnement</option>
