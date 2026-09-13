@@ -14,6 +14,28 @@ de l'activité 1 ; la seconde donne la colonne qui fait tout le travail — l'al
 Aucune photographie de station réelle : elle donnerait les réponses de l'activité 1 en montrant
 directement ce qu'il faut trouver.
 
+## Les quatre schémas de la vague 1 bis (13/09/2026)
+
+| Fichier | Nature | Auteur | Licence | Rôle pédagogique |
+|---|---|---|---|---|
+| `Images/la_station_et_sa_limite.svg` | SVG original écrit à la main, station simulée | Claude (Opus 5), pour ce dépôt | CC0 1.0 | Activité 1, avant la figure des interacteurs : la station vue de côté — borne, écran-lecteur, boîtier, point d'ancrage, vélo accroché, trottoir, câble d'alimentation, sol — chaque élément nommé de la même façon ; consigne « Entoure uniquement ce qui appartient à la station. » |
+| `Images/cinq_choix_sur_la_station.svg` | SVG original écrit à la main, station simulée | Claude (Opus 5), pour ce dépôt | CC0 1.0 | Activité 2, après le tableau `lire_un_choix_de_conception.svg` : la position des cinq détails sur l'objet, numérotés, avec la formulation exacte de la page ; ni interacteur ni domaine |
+| `Images/station_A_station_B.svg` | SVG original écrit à la main, stations simulées | Claude (Opus 5), pour ce dépôt | CC0 1.0 | Activité 3, avant ses questions : les deux stations côte à côte avec les termes de la page, sans dire laquelle est la meilleure ni à quel interacteur chaque choix répond |
+| `Images/shenzhen_sainte_luce.svg` | SVG original écrit à la main | Claude (Opus 5), pour ce dépôt | CC0 1.0 | Correction complète de l'activité 3 : les trois interacteurs qui changent en Martinique, et le choix à revoir en face, dans les termes de la correction |
+
+Même facture que les deux figures précédentes : `viewBox`, `role="img"` et `aria-labelledby`,
+`<title>` et `<desc>` complets, `<style>` à sélecteurs simples (règle n°287), fond du dépôt, texte
+de 13 à 18 unités, pile de polices système, aucune ressource distante (règle n°40). Aucune marque,
+aucune station réelle.
+
+**Le schéma 1 ne contredit pas la ligne ci-dessus** : une photographie montrerait la station dans
+son décor, pluie, usagers et réseau compris, donc les réponses ; le schéma montre l'objet et sa
+limite — ce qui est dessiné porte un nom, jamais le mot « interacteur », et il n'y a ni pluie ni
+personne. **Le schéma 5 est rangé dans la correction** de l'activité 3, et non sous le transfert :
+la question demande à l'élève de citer lui-même trois interacteurs qui changent, et le schéma les
+donne. Pour la même raison, les schémas 3 et 4 ne portent aucune flèche vers un interacteur : ce
+sont les questions des activités 2 a) et 3 qui les demandent.
+
 ## Les données
 
 La station, ses cotes (ancrage à 90 cm, arêtes arrondies, boîtier à vis unique) et le relevé du

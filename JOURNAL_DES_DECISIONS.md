@@ -14804,3 +14804,96 @@ et profil temporaire laissés au seul scratchpad.
 - navigateur (Chromium Playwright), 1280 et 390 px, onglet Séance 4 : **8 / 8 images chargées**,
   `width`/`height` déclarés = réels, chaque figure sous son `<h4>` de consigne, 8 loupes,
   **débordement 0 px** aux deux largeurs, **console vide** ✅
+
+## 13/09/2026 — Vague 1 bis, PR 3 — 5e_C2.1 : quatre schémas de la station, et un cinquième écarté
+
+Troisième PR de `PROMPT_SUITE_vague1bis_gestes_activites_et_schemas_C2.md`, **avec le plan corrigé par
+la relecture du 13/09** sur trois points, pour la raison même que donne `SOURCES_MEDIAS.md` du lot :
+une image ne doit pas donner les réponses de l'activité qu'elle précède. Quatre SVG écrits à la
+main, sur le modèle exact de `interacteurs_de_la_station.svg` ; le texte des activités ne change pas,
+sauf les deux consignes sous les figures 1 et 3, citées plus bas.
+
+### Lu avant d'écrire
+
+Les deux SVG existants et leurs `alt`. Deux écarts vus, **non corrigés** (hors du mandat) : l'`alt` de
+`interacteurs_de_la_station.svg` décrit encore « trois groupes » (personnes, objets, conditions) quand
+le SVG montre les quatre familles — le QCM porte déjà la bonne version ; l'`alt` de
+`lire_un_choix_de_conception.svg` annonce « quatre exemples » et en énumère cinq.
+
+### Les quatre schémas, leur place, et pourquoi là
+
+1. **`la_station_et_sa_limite.svg` — activité 1.** Appelé par la phrase de la page : « Pour les
+   recenser, on tourne autour de l'objet et on se demande, à chaque fois : qui ou quoi est en relation
+   avec lui ? » — la page demande de tourner autour d'un objet qu'elle ne montre jamais. Placé
+   juste après ce paragraphe, **avant** `interacteurs_de_la_station.svg`, qui ne bouge pas. Vue de
+   côté : borne, écran-lecteur, boîtier, point d'ancrage, vélo accroché, trottoir, câble
+   d'alimentation qui entre dans le sol, sol. Chaque élément porte son nom, tous du même style ;
+   **ni le mot « interacteur », ni pluie, ni personne, ni flèche**. Consigne ajoutée sous la figure,
+   mot pour mot : **« Entoure uniquement ce qui appartient à la station. »** C'est la frontière objet /
+   extérieur, préalable à « interacteur extérieur » — pas la liste.
+2. **`la_station_et_ses_interacteurs.svg` — non fait.** Il ferait double emploi avec
+   `interacteurs_de_la_station.svg`, déjà en place et qui dit la même chose. **En attente d'une
+   décision de Pascal.**
+3. **`cinq_choix_sur_la_station.svg` — activité 2**, après `lire_un_choix_de_conception.svg` et avant
+   « a) Retrouver l'interacteur derrière le choix ». Appelé par : « Chaque détail de la station est une
+   décision prise par quelqu'un, pour répondre à un interacteur. Lire l'objet, c'est retrouver la
+   décision derrière la forme. » Il n'apporte que **la position des cinq formes sur l'objet**,
+   numérotées, avec la formulation exacte de la page : ① la borne est inclinée vers le bas plutôt que
+   plate ; ② le point d'ancrage du vélo est à 90 cm du sol (avec la cote) ; ③ les arêtes de la station
+   sont arrondies ; ④ le boîtier se démonte avec une vis unique ; ⑤ les pièces de la borne se
+   remplacent une par une, au lieu de former un bloc unique — ce cinquième vient de 2 b) (`a2_7`), les
+   quatre premiers de 2 a). **Sans flèche vers l'interacteur ni le domaine** : le tableau les donne
+   déjà, et les questions de 2 a) demandent précisément de les retrouver. Consigne ajoutée, mot pour
+   mot : **« Retrouve sur la station les cinq détails numérotés. »**
+4. **`station_A_station_B.svg` — activité 3**, juste après « Une deuxième station, dans le même
+   quartier, a fait d'autres choix : bornes abritées sous un auvent, ancrage au sol plutôt qu'en
+   hauteur, et boîtier soudé. » et avant la question « L'auvent répond au même interacteur que la
+   borne inclinée. Lequel ? ». Les deux stations côte à côte, à la même échelle et dans les mêmes
+   couleurs, avec les termes de la page : à gauche borne inclinée, ancrage à 90 cm, boîtier à vis
+   unique ; à droite bornes abritées sous un auvent, ancrage au sol, boîtier soudé. Rien n'indique
+   laquelle est la bonne, **aucune étiquette d'interacteur** — c'est la réponse de `a3_1`. La tête de
+   borne de la deuxième station est dessinée plate : la page ne dit rien de son inclinaison, et
+   l'auvent est le choix qu'elle oppose.
+5. **`shenzhen_sainte_luce.svg` — dans la « 📖 Correction complète » de l'activité 3**, après le
+   paragraphe « En Martinique, trois interacteurs changent… ». **Pas sous le bloc « 🌍 Transfert »** :
+   la question « Quels interacteurs changent si cette station est installée en Martinique ? Cite-en
+   trois » demande à l'élève de les trouver, et le schéma les donne. Trois lignes dans les termes de
+   la correction : l'air salin attaque les métaux → « il faudrait revoir les matériaux et les
+   traitements de surface » ; des pluies bien plus intenses → « l'inclinaison ne suffirait plus, il
+   faudrait un abri » ; le cyclone apparaît, « qui n'existait pas à Shenzhen » → « il faut pouvoir
+   démonter, arrimer ou protéger ». La colonne Shenzhen de l'air dit seulement « l'air autour de la
+   station » : la page n'en dit rien de plus, et `interacteurs_de_la_station.svg` cite déjà « le sel
+   marin » à Shenzhen — le schéma ne tranche pas cette tension, il la laisse visible (voir plus bas).
+
+### Facture
+
+`viewBox` de 720 unités de large (hauteurs 460 à 600), `role="img"`, `aria-labelledby`, `<title>` et
+`<desc>` complets (desc de 831 à 1 121 caractères, seul `xmlns` porte une adresse), `<style>` à sélecteurs simples (n°287), fond
+`#050f24` du dépôt, texte de **13 à 18 unités**, pile de polices système, aucune ressource distante
+(n°40), CC0, stations simulées, aucune marque. Insérés en `<figure class="fig">`, `alt` de **616 à
+796 caractères** ; les figures 4 et 5 n'ont pas de légende, pour ne pas ajouter de texte. La largeur
+de 720 (au lieu de 900 pour les deux existantes) garde le texte un peu plus grand à 390 px ; la
+loupe de la page les agrandit comme les autres.
+
+`tests_5e_C2.1-C2.2_shenzhen.py` comptait **exactement deux** figures : le test devient « les six
+figures sont présentes », commentaire daté à l'appui.
+
+### Vu, pas tranché — pour Pascal
+
+La correction de l'activité 3 écrit que le cyclone « n'existait pas à Shenzhen », et la figure des
+interacteurs cite le sel marin à Shenzhen, alors que la correction fait de l'air salin ce qui change
+en Martinique. Shenzhen est une ville côtière exposée aux typhons : les deux phrases tiennent comme
+**situation simulée**, pas comme géographie. Le schéma 5 reprend la correction sans l'aggraver.
+
+### Les contrôles, tous exécutés ce jour, avec leurs chiffres
+
+- `controle_medias.py` : **41 lots · 361 médias · 361 nommés · 190 promesses** ✅ ·
+  `controle_liens.py` : **2 916 adresses · 0 cassée** ✅ · `controle_gestes_outil.py` ✅ ·
+  `controle_cadres.py` ✅ · `controle_fichiers_telechargeables.py` : **79 pages · 0 écart** ✅ ·
+  `controle_impression.mjs` ✅
+- `verif_regles_audit.py` sur le lot : **0 manquement** ✅ · `tests_5e_C2.1-C2.2_shenzhen.py` :
+  **47 / 47** ✅ · `mesurer_temps_seances.py` : **149 / 165, +16 min**, identique à `main` ✅
+- navigateur (Chromium Playwright), 1280 et 390 px, trois onglets, correction de l'activité 3
+  dépliée : **4 / 4 schémas chargés**, chacun entre la phrase qui l'appelle et ce qui suit
+  (vérifié par le texte voisin), **débordement 0 px**, **console vide** ✅
+- rendu de chaque SVG seul à 820 et 340 px, relu à l'œil : aucun texte chevauché.

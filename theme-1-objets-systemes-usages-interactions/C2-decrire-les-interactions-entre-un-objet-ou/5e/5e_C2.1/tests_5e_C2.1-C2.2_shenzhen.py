@@ -90,8 +90,11 @@ with sync_playwright() as p:
                   "document.querySelector(`label[for=\"${e.id}\"]`)||e.getAttribute('aria-label'))"))
     t("chaque figure a une alternative longue (n°1)",
       pg.evaluate("[...document.querySelectorAll('.fig img')].every(i=>i.alt.length>120)"))
-    t("les deux figures sont chargées",
-      pg.evaluate("[...document.querySelectorAll('.fig img')].length===2"))
+    # Six figures depuis la vague 1 bis (13/09/2026) : les deux documents à lire, plus quatre
+    # schémas — la station et sa limite, les cinq détails, les deux stations, et Shenzhen /
+    # Sainte-Luce, rangé dans la correction de l'activité 3.
+    t("les six figures sont présentes",
+      pg.evaluate("[...document.querySelectorAll('.fig img')].length===6"))
 
     t("le compteur annonce 3 activités (n°39)", "/ 3 activités" in pg.inner_text("#progTxt"))
 
