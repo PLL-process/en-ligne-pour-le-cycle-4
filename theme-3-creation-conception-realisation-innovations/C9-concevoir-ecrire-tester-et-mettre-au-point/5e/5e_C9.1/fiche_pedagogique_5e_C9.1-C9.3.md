@@ -7,7 +7,7 @@
 - **5e_C9.2** — Modifier un programme fourni pour répondre au besoin ou à un problème posé.
 - **5e_C9.3** — Réaliser et mettre au point un programme simple commandant un OST.
 **Socle : D1.3, D2, D4 · CRCN 3.4 Programmer, Niv. 1-2 (règle n°7 : action = expériences exécutées
-dans l'éditeur embarqué + tests du banc ; trace = réponses/badges sauvegardés dans la page).**
+dans l'éditeur Vittascience + tests du banc ; trace = réponses/badges sauvegardés dans la page).**
 
 ## Le vrai besoin (constat Pascal, tous niveaux)
 Les élèves manipulent des blocs depuis la 6e sans avoir conceptualisé la VARIABLE. La marche 5e

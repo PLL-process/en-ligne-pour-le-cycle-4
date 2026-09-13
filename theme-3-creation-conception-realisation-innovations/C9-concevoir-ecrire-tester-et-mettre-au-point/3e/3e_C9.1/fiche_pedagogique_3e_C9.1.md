@@ -7,7 +7,7 @@ variables » (enquête Vittascience adaptée P. Gouacide), archivée selon la r�
 **3e_C9.1** — Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le
 traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le
 mettre au point. **Socle : D1.3, D2, D4 · CRCN 3.4 Programmer (Niv. 3, règle n°7 : action = expériences
-exécutées dans l'éditeur embarqué + programme corrigé ; trace = réponses/badges sauvegardés).**
+exécutées dans l'éditeur Vittascience + programme corrigé ; trace = réponses/badges sauvegardés).**
 
 ## Pourquoi cet atelier (le vrai besoin)
 Constat de terrain (Pascal, tous niveaux) : les élèves programment par blocs depuis la 6e **sans avoir
@@ -24,7 +24,7 @@ lecture de programme → mise au point, sur un fil narratif New York (le panneau
 
 ## Versions (règle n°3)
 🅰 éditeur → carte réelle (mBot2/Arduino, TBT uniquement ; TP mBot2 en prolongement) ·
-🅱 éditeur Vittascience embarqué (parcours principal) · 🅲 simulateur + tables au cahier (hors ligne).
+🅱 éditeur Vittascience dans un nouvel onglet (parcours principal) · 🅲 simulateur + tables au cahier (hors ligne).
 
 ## Évaluation
 Formative : vérificateurs + QCM 30 q (VAR/TYP/PRG/MAP → positionnement par famille).

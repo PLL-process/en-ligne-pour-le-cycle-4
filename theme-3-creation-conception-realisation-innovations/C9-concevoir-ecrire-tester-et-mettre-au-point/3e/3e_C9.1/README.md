@@ -7,7 +7,7 @@
 
 * **`sequence_3e_C9.1_variables_types_systemes.html`** — l'atelier complet (4 séances, 5 activités) :
   simulateur de mémoire pas-à-pas, motif **prédire → tester → reporter** sur l'**éditeur Python
-  Vittascience embarqué**, chasse aux bugs du panneau du métro new-yorkais, banc de mise au point
+  Vittascience, ouvert dans un nouvel onglet**, chasse aux bugs du panneau du métro new-yorkais, banc de mise au point
   (cas limite compris). Sauvegarde locale, DYS, verrous expérientiels.
 * **`qcm_3e_C9.1_variables_types_systemes.html`** — QCM 30 q (variables / types / lecture de
   programme / mise au point), corrections détaillées, 3 illustrées.

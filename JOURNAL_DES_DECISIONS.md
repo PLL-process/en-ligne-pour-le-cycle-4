@@ -14450,3 +14450,57 @@ Vittascience », #379) reste tel quel : vrai, et Pascal a demandé d'aligner vs1
 - navigateur, 1280 et 390 px : **3 liens, 6 clics, 6 onglets « Vittascience — Python » ouverts**,
   console vide ; synthèse professeur à 390 px : console vide, pas de défilement, le nouveau texte
   visible ✅. Le débordement des onglets 2 et 3 de la séquence à 390 px est celui de #379, antérieur.
+
+## 13/09/2026 — Vague 2, étape 0, suite (thème 3) : la famille des phrases fausses dans les synthèses professeur, fiches, README, sources et manifestes
+
+Complément à #380, symétrique de #381 pour le thème 3. Les rapports de tests restent intacts
+(traces datées, tranché par Pascal). Les QCM, lexiques et synthèses élève des six lots n'avaient
+aucune occurrence (mesuré au tour précédent). Vingt réécritures, exactes au caractère, comptées
+une par une (les fichiers mêlent LF et CRLF ; le script s'adapte ligne par ligne, et s'arrête si
+un compte diffère). Ce qui parle du **simulateur intégré de Vittascience** ou du **banc d'essai
+intégré à la page** reste : c'est vrai.
+
+| fichier | avant | après |
+|---|---|---|
+| `3e_C9.1` synthèse professeur | « L'**éditeur Python Vittascience est embarqué dans la page** (mode mixte… » | « L'**éditeur Python Vittascience s'ouvre dans un nouvel onglet** (mode mixte… » |
+| `3e_C9.1` synthèse professeur | « 🅱 éditeur embarqué dans la page (parcours principal, connexion requise pour l'iframe seule) » | « 🅱 éditeur Vittascience dans un nouvel onglet (parcours principal, connexion requise pour l'éditeur seul) » |
+| `3e_C9.1` synthèse professeur | « l'élève exécute ses expériences dans l'éditeur embarqué et corrige » | « … dans l'éditeur Vittascience et corrige » |
+| `5e_C9.1` synthèse professeur | « Standard Vittascience embarqué + motif » | « Standard Vittascience (éditeur dans un nouvel onglet) + motif » |
+| `5e_C9.1` synthèse professeur | « 🅱 simulateur + éditeur embarqué ; » | « 🅱 simulateur + éditeur Vittascience dans un onglet ; » |
+| `3e_C9.2` synthèse professeur | « prévoir le repli hors-ligne (lien direct + planches de blocs + banc intégré), déjà écrit dans la séance. Le **code d'intégration officiel** de Vittascience est en place : l'éditeur s'ouvre dans la page elle-même, avec un repli déplié si le cadre ne s'affiche pas. » | « prévoir le repli hors-ligne (planches de blocs + banc intégré), déjà écrit dans la séance. Le **code d'intégration officiel** de Vittascience (embed=1) répond `X-Frame-Options: SAMEORIGIN` (mesuré le 13/09/2026) : aucun cadre ne s'affiche, l'éditeur s'ouvre dans un nouvel onglet par un lien-bouton vers le programme partagé, le repli hors-ligne replié sous le lien. » |
+| `3e_C9.1` README | « sur l'**éditeur Python Vittascience embarqué**, » | « sur l'**éditeur Python Vittascience, ouvert dans un nouvel onglet**, » |
+| `5e_C9.1` README | « dans l'éditeur Python Vittascience embarqué, » | « dans l'éditeur Python Vittascience (nouvel onglet), » |
+| `3e_C9.1`, `5e_C9.1` `SOURCES_MEDIAS.md` | « Éditeur embarqué · iframe https://fr.vittascience.com/python/ (service externe, non redistribué) » | « Éditeur Vittascience (nouvel onglet) · lien https://fr.vittascience.com/python/ (service externe, non redistribué — le site refuse d'être encadré, X-Frame-Options: SAMEORIGIN) » |
+| `4e_C9.1` `SOURCES_MEDIAS.md` | « **l'éditeur Vittascience** est appelé par `iframe` depuis `fr.vittascience.com` : » | « **l'éditeur Vittascience** s'ouvre par un lien, dans un nouvel onglet, sur `fr.vittascience.com` (le site refuse d'être encadré) : » |
+| `3e_C9.1` manifeste | « éditeur embarqué (3 iframes mode mixte), verrous prédire→tester→reporter » | « éditeur Vittascience ouvert dans un nouvel onglet (3 liens-boutons, mode mixte), verrous prédire→tester→reporter » |
+| `3e_C9.1` fiche pédagogique | « exécutées dans l'éditeur embarqué + programme corrigé » ; « 🅱 éditeur Vittascience embarqué (parcours principal) » | « … dans l'éditeur Vittascience + programme corrigé » ; « 🅱 éditeur Vittascience dans un nouvel onglet (parcours principal) » |
+| `5e_C9.1` fiche pédagogique | « dans l'éditeur embarqué + tests du banc » | « dans l'éditeur Vittascience + tests du banc » |
+| `3e_C9.2` fiche pédagogique | « **repli hors-ligne** complet est prévu (lien direct + planches de blocs + banc d'essai intégré), suffisant pour… valider l'activité. Prévoir aussi l'**emplacement de l'iframe** Vittascience, à remplir avec le code d'intégration officiel dès qu'il est disponible. » | « **repli hors-ligne** complet est prévu (planches de blocs + banc d'essai intégré), suffisant pour… valider l'activité. L'éditeur s'ouvre par un **lien-bouton vers le programme partagé, dans un nouvel onglet** : le code d'intégration officiel (embed=1) répond X-Frame-Options: SAMEORIGIN (mesuré le 13/09/2026), aucun cadre ne s'affiche. » |
+| `3e_C9.1` `vittascience_variables.html` (page de redirection de l'ancienne ressource) | « (version 2026, éditeur Vittascience embarqué) » | « (version 2026, éditeur Vittascience dans un nouvel onglet) » |
+
+Non touchés parce que vrais : `3e_C9.2` README et manifeste (« simulateur intégré » — celui de
+Vittascience, dans son onglet ; « banc d'essai de la station intégré à la page »), `4e_C9.1`
+manifeste (« banc d'essai intégré »). **Résidus après passage, relus : dix, tous vrais** — six « par
+le lien ci-dessous », trois « badges sauvegardés dans la page » (les badges, pas l'éditeur), et le
+simulateur de place de `5e_C7.1` qui est bien dans la page.
+
+### Les contrôles, tous exécutés ce jour
+
+- `controle_cadres.py` : **0 cadre** ✅ · `controle_medias.py` (qui lit les `SOURCES_MEDIAS.md`
+  réécrits) : **342 · 342 · 171 promesses** ✅ · `controle_gestes_outil.py` : **22 · 0 · 9** ✅ ·
+  `controle_liens.py` : **2 895 · 0 · 52** ✅ · `controle_impression.mjs` : **0 refus** ✅
+- bancs : `3e_C9.1` **35 / 35**, `3e_C9.2` **135 / 135**, `5e_C9.1` **44 / 44** ✅
+- navigateur, 1280 et 390 px : les quatre synthèses professeur et la page de redirection, **console
+  vide**, nouveau texte visible ✅
+
+**Vu, pas causé, deux fois :** la synthèse professeur de `3e_C9.2` déborde à 390 px (452 px, un
+`<code>` de chemin de fichier), celle de `4e_C9.1` de 3 px — identiques sur `main`. Et
+`controle_fichiers_telechargeables.py` refuse **`5e_C1.2`** (règle n°289 : le nom
+`donnees_simulees_freinage_5e_C1.2.csv` est cité une fois sans lien) — sur `main` aussi, hors de ce
+thème ; à reprendre avec la vague 1 bis, qui passe dans le thème 1.
+
+### Ce que l'étape 0 laisse derrière elle
+
+Seize cadres et un gabarit remplacés (#379, #380), soixante-dix-sept phrases de la famille
+réécrites dans les huit lots (#380, #381, cette PR), un contrôle qui interdit le retour du cadre, et
+les traces datées laissées telles quelles. Suite : vague 1 bis, PR 1 (`5e_C1.1`).

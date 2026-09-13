@@ -33,7 +33,7 @@ Autres fichiers non graphiques du lot :
   une **description dépliable** sous chaque figure (règle n°117). Toutes les images
   s'agrandissent à la loupe (règle n°92) ;
 - **aucune donnée personnelle**, aucun identifiant, aucun nom de compte ;
-- **l'éditeur Vittascience** est appelé par `iframe` depuis `fr.vittascience.com` :
+- **l'éditeur Vittascience** s'ouvre par un lien, dans un nouvel onglet, sur `fr.vittascience.com` (le site refuse d'être encadré) :
   c'est le seul élément du lot qui demande une connexion, et un repli hors-ligne
   complet est prévu (le banc d'essai fonctionne sans réseau) ;
 - **valeurs pédagogiques** : le seuil de 40 % d'humidité, la plage 6 h - 10 h et les

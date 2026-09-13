@@ -10,7 +10,7 @@
 | Images/train_q_86st_mta_ccby.jpg | Photo MTA « 86th Street Second Av. Subway Station Unveiled » (30/12/2016), Flickr officiel MTA : https://www.flickr.com/photos/mtaphotos/31863535272/ — REDIMENSIONNÉE 1400 px (modification permise et signalée) | CC BY 2.0 |
 | Images/coney_island_stillwell_entree_ccby.jpg | Photo Kidfly182, Wikimedia Commons : https://commons.wikimedia.org/wiki/File:Coney_Island_Stillwell_Avenue_Entrance_001.jpg — REDIMENSIONNÉE 1400 px (modification permise et signalée) | CC BY 4.0 |
 | Images/ligne_q_plan_simplifie.svg | Création originale Fable (2026) — schéma inspiré des CONVENTIONS des plans de transport (aucun élément copié du plan MTA, qui est une œuvre protégée) | CC0 |
-| Éditeur embarqué | iframe https://fr.vittascience.com/python/ (service externe, non redistribué) | CGU Vittascience |
+| Éditeur Vittascience (nouvel onglet) | lien https://fr.vittascience.com/python/ (service externe, non redistribué — le site refuse d'être encadré, X-Frame-Options: SAMEORIGIN) | CGU Vittascience |
 | Images/capture-*.png, install-manager-*.png | Captures d'écran de la ressource héritée — déplacées aux archives avec elle | à l'appréciation de l'enseignant |
 
 La séquence refondue n'utilise AUCUNE capture d'écran : uniquement des SVG originaux CC0.
