@@ -14897,3 +14897,94 @@ en Martinique. Shenzhen est une ville côtière exposée aux typhons : les deux 
   dépliée : **4 / 4 schémas chargés**, chacun entre la phrase qui l'appelle et ce qui suit
   (vérifié par le texte voisin), **débordement 0 px**, **console vide** ✅
 - rendu de chaque SVG seul à 820 et 340 px, relu à l'œil : aucun texte chevauché.
+
+## 13/09/2026 — 5e_C2.1 : deux textes alternatifs qui ne décrivaient pas leur image
+
+Correction d'accessibilité, vue en préparant la PR #388 et tranchée par la relecture : les `alt` des
+deux figures « Document à lire » de la séquence Shenzhen ne décrivaient pas le dessin. Seuls ces deux
+attributs changent — pas de texte d'activité, pas de QCM, pas de figure déplacée, aucun média.
+
+### 1. `interacteurs_de_la_station.svg` (activité 1)
+
+**Ancien `alt`, mot pour mot :** « Autour de la station de vélos, trois groupes d'interacteurs : des
+personnes (usager, agent de maintenance, riverain), des objets (vélo, borne, trottoir, réseau,
+alimentation électrique) et des conditions (pluie, sel marin, température, vandalisme, règles de la
+ville). Deux encadrés rappellent qu'un interacteur est toujours extérieur à l'objet, et qu'une liste
+qui ne contient que des personnes est une liste à moitié faite. »
+
+**Pourquoi il défaisait le QCM des quatre familles.** La question `a1_5` attend « les usagers, les
+données, les autres objets, les éléments de l'environnement » — les quatre familles du programme,
+reprises telles quelles dans le tableau de 1 b). L'ancien `alt` en annonçait **trois**, sous d'autres
+noms, et **le mot « données » n'y figurait pas** : c'est pourtant la famille que la figure existe
+pour enseigner (« La famille qu'on oublie, c'est celle des données »). Un élève au lecteur d'écran
+n'entendait jamais le mot qu'il doit restituer, et entendait à la place une réponse que le QCM
+compte fausse. Pire, il rangeait « les règles de la ville » parmi les interacteurs, quand
+l'encadré du dessin et le piège de 1 b) disent exactement l'inverse (une règle est une exigence), et
+il citait « borne », « riverain », « vandalisme », « réseau », que le dessin n'affiche pas, ainsi
+qu'un encadré (« une liste à moitié faite ») qui n'existe pas.
+
+**Nouvel `alt`**, écrit contre le SVG, exemple par exemple, dans l'ordre du dessin (1 225
+caractères) : « Ce qui entre en relation avec la station : quatre familles d'interacteurs, dont aucune
+n'est plus technique que les autres. Au centre, la station, l'objet que l'on étudie ; tout autour,
+reliées à elle par une flèche, les quatre familles. En haut à gauche, les usagers : le cycliste
+abonné, le touriste de passage, l'agent de maintenance — ceux qu'on cite en premier. En haut à droite,
+les données : l'identifiant de l'abonné, l'état « disponible » du vélo, le paiement, le numéro de
+borne — celles qu'on oublie toujours. En bas à gauche, les autres objets : le vélo, le smartphone, le
+serveur de la ville — avec qui la station échange. En bas à droite, les éléments de l'environnement :
+la pluie, le soleil, le sel marin, la température, le trottoir, la circulation — ce qui agit sans
+qu'on l'appelle. Deux encadrés au centre. Premier : un interacteur est toujours extérieur à l'objet ;
+la couleur du cadre d'un vélo n'en est pas un, c'est l'objet. Second : interacteur n'est pas
+exigence ; une règle de la ville n'échange rien avec la station, elle impose une condition. Une bande
+de conclusion : la famille qu'on oublie, c'est celle des données, parce qu'elle ne se voit pas ; sans
+l'identifiant, la borne ne débloque rien. »
+
+**`<title>` et `<desc>`** : le titre (« Les quatre familles d'interacteurs extérieurs autour de la
+station de vélos ») est cohérent. Le `<desc>` est juste et le nouvel `alt` le suit, à un écart près,
+**non corrigé ici** (aucun média ne change) : il cite aussi « la carte bancaire » parmi les autres
+objets, que le dessin n'affiche pas — le tableau de 1 b), lui, la nomme. L'`alt` s'en tient au dessin.
+
+### 2. `lire_un_choix_de_conception.svg` (activité 2)
+
+**Ancien `alt`, mot pour mot :** « Tableau à quatre colonnes : ce que j'observe, pourquoi pas
+autrement, l'interacteur concerné, le domaine de conception. Quatre exemples : la borne inclinée
+répond à la pluie (sécurité de fonctionnement) ; l'ancrage à 90 cm répond à l'usager (ergonomie) ;
+les arêtes arrondies répondent à l'usager et au riverain (sécurité) ; la vis unique répond à l'agent
+de maintenance (ergonomie du travail de maintenance) ; les pièces remplaçables une par une répondent
+au budget de la ville et à la matière à produire (développement durable). Un encadré rappelle qu'un
+choix technique déplace toujours le problème ailleurs. »
+
+« Quatre exemples », puis cinq : le compte faux venait de la v1.0 du lot, avant que la v1.1 ajoute la
+ligne du développement durable — **celle que 2 b) évalue** (`a2_7`). Les cinq domaines de l'ancien
+`alt` étaient bien ceux du dessin ; il omettait en revanche toute la deuxième colonne, « pourquoi pas
+autrement ? », dont la légende de la figure dit qu'elle « fait tout le travail ».
+
+**Nouvel `alt`** (1 033 caractères), les cinq lignes du dessin avec leurs quatre colonnes, vérifiées
+cellule par cellule : « Derrière chaque forme, une décision. Tableau à quatre colonnes : ce que
+j'observe, pourquoi pas autrement, l'interacteur, le domaine. Cinq exemples, un par ligne. Un : la
+borne est inclinée vers le bas ; plate, l'eau stagnerait sur le lecteur ; la pluie ; sécurité de
+fonctionnement. Deux : l'ancrage du vélo est à 90 cm du sol ; au sol, il faudrait se baisser pour
+pousser ; l'usager ; ergonomie. Trois : les arêtes sont arrondies ; vives, on se blesserait en les
+heurtant ; l'usager et le riverain ; sécurité. Quatre : le boîtier s'ouvre avec une vis unique ; soudé,
+il faudrait découper pour réparer ; l'agent de maintenance ; ergonomie du travail de maintenance.
+Cinq : les pièces se remplacent une par une ; en bloc unique, une panne condamnerait la borne ; le
+budget de la ville et la matière ; développement durable. Un encadré, ce qu'un choix coûte ailleurs :
+un choix technique n'est jamais gratuit, il déplace le problème ailleurs ; un boîtier soudé résiste
+mieux au vandalisme, et rend la maintenance beaucoup plus lourde. »
+
+**`<title>` et `<desc>`** : cohérents — le `<desc>` compte bien cinq exemples, mêmes interacteurs,
+mêmes domaines. Seule nuance de mots : il écrit « le boîtier se démonte », le dessin « s'ouvre » ;
+l'`alt` suit le dessin.
+
+### Contrôles, tous exécutés ce jour
+
+- `tests_5e_C2.1-C2.2_shenzhen.py` : **47 / 47** ✅ (dont « les six figures sont présentes » et
+  « chaque figure a une alternative longue »)
+- `controle_medias.py` : **41 lots · 361 médias · 361 nommés · 190 promesses** ✅ ·
+  `controle_liens.py` : **2 916 adresses · 0 cassée** ✅ · `controle_gestes_outil.py` ✅ ·
+  `controle_cadres.py` ✅ · `controle_fichiers_telechargeables.py` : **79 pages · 0 écart** ✅ ·
+  `controle_impression.mjs` ✅
+- `verif_regles_audit.py` sur le lot : **0 manquement**, n°34 au vert ✅ ·
+  `mesurer_temps_seances.py` : **149 / 165, +16 min**, inchangé ✅
+- navigateur (Chromium Playwright), 1280 et 390 px : les deux `alt` lus dans le DOM — quatre familles
+  nommées, « données » présent, « trois groupes » absent ; « Cinq exemples » présent, « Quatre
+  exemples » absent ; 6 figures, débordement 0 px, **console vide** ✅
