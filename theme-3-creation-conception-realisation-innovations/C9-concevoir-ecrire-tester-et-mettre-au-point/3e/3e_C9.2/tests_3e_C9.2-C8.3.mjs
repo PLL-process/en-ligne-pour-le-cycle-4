@@ -199,9 +199,14 @@ const run = async () => {
   /* refonte v2 : la séance 2 est bien passée sur Vittascience, avec repli hors-ligne */
   ok("séance 2 : l'emplacement de l'interface Vittascience existe",
      (await page.locator("#vitta-embed").count()) === 1);
-  ok("séance 2 : repli hors-ligne présent (lien direct + planches + banc)",
-     (await page.textContent("#vitta-embed")).includes("fr.vittascience.com/arduino") &&
-     (await page.textContent("#vitta-embed")).includes("Plan B"));
+  // Étape 0 de la vague 2 (13/09/2026) : plus de cadre <iframe> (X-Frame-Options: SAMEORIGIN), un
+  // lien-bouton vers le programme partagé ouvert dans un nouvel onglet ; le repli garde son Plan B,
+  // le Plan A (« ouvre fr.vittascience.com/arduino dans un onglet ») est devenu la voie normale.
+  ok("séance 2 : lien-bouton vers le programme partagé (nouvel onglet), aucun cadre, repli Plan B seul",
+     (await page.locator("#vitta-embed a.vs-lien[target=_blank]").getAttribute("href")) === "https://fr.vittascience.com/arduino/?link=6a8e2a2348ed2" &&
+     (await page.locator("#vitta-embed iframe").count()) === 0 &&
+     (await page.textContent("#vitta-embed")).includes("Plan B") &&
+     !(await page.textContent("#vitta-embed")).includes("Plan A"));
   ok("séance 2 : une SEULE échelle, affirmée et sans reste (aucune trace de la maquette 0-100)",
      (await page.textContent("#act3")).includes("Une seule échelle, une seule station") &&
      (await page.textContent("#act3")).includes("250 km/h") &&

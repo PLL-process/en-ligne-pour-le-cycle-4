@@ -149,16 +149,16 @@
 
 figure{width:100%;margin:14px 0}
 figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
-/* éditeur Vittascience embarqué — barre volontairement voyante (retour Pascal 30/07 : introuvable repliée) */
+/* éditeur Vittascience ouvert dans un nouvel onglet — barre volontairement voyante (retour Pascal 30/07 : introuvable repliée) */
 details.vs{border:2px solid #61dafb;border-radius:14px;margin:18px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
 details.vs>summary{cursor:pointer;padding:14px 18px;font-weight:700;font-size:1.03em;color:#61dafb;list-style:none;display:block;border-radius:12px}
 details.vs>summary::-webkit-details-marker{display:none}
 details.vs>summary:hover{background:rgba(97,218,251,.1)}
-details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur Python s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs>summary::after{content:"▼ l'éditeur Python s'ouvre dans un nouvel onglet — rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
 details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
 @keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
 @media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
-details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-ouvrir{margin:0;padding:4px 16px 10px}details.vs .vs-lien{display:inline-block;text-decoration:none}
 details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
 .mem-wrap{display:grid;grid-template-columns:minmax(220px,1fr) minmax(220px,1.2fr);gap:14px;margin:12px 0}
 @media(max-width:680px){.mem-wrap{grid-template-columns:1fr}}
@@ -392,7 +392,7 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
   <h2>🔀 Trois façons de vivre l'atelier</h2>
   <div class="donnees">
     <p data-parcours="a">🅰 <b>Avec matériel</b> : l'éditeur Vittascience relié à une carte réelle (<b>très basse tension uniquement</b>) — une LED joue la barrière.</p>
-    <p data-parcours="b">🅱 <b>En simulation</b> : le simulateur de mémoire (séance 1 — le bouton « ▶ Étape suivante ») + l'éditeur Python Vittascience <b>embarqué</b> : cherche les <b>barres 🧪 bleues</b> des séances 2 et 3, un clic les déplie. C'est le parcours principal.</p>
+    <p data-parcours="b">🅱 <b>En simulation</b> : le simulateur de mémoire (séance 1 — le bouton « ▶ Étape suivante ») + l'éditeur Python Vittascience, <b>dans un nouvel onglet</b> : cherche les <b>barres 🧪 bleues</b> des séances 2 et 3, un clic les déplie. C'est le parcours principal.</p>
     <p data-parcours="c">🅲 <b>Sans matériel</b> : les schémas + les tables de suivi à compléter au cahier.</p>
   </div>
   <div class="retenir"><b>📡 La méthode de l'atelier — prédire → tester → reporter :</b> tu PRÉDIS d'abord
@@ -537,12 +537,12 @@ places = places + descendus</pre>
   <p style="color:var(--hl);font-weight:600">Question directrice : le programme du responsable répond-il au besoin ? Comment le PROUVER ?</p>
 
   <div class="activite" id="act3">
-    <header><span class="num">Activité 3</span><h3>Prédire → tester → reporter, dans l'éditeur embarqué</h3><span class="duree">⏱ ~20 min</span></header>
+    <header><span class="num">Activité 3</span><h3>Prédire → tester → reporter, dans l'éditeur Vittascience</h3><span class="duree">⏱ ~20 min</span></header>
     <div class="meta-grid">
       <div><b>Objectif :</b> exécuter tes premiers programmes dans le VRAI éditeur — et découvrir le piège des guillemets.</div>
       <div><b>Compétence :</b> 5e_C9.1 · CRCN 3.4 (Niv. 1-2) — trace : tes reports enregistrés dans la page.</div>
       <div><b>Production attendue :</b> 2 prédictions + 2 tests réels + 2 reports.</div>
-      <div><b>Ressources :</b> l'éditeur Python Vittascience ci-dessous.</div>
+      <div><b>Ressources :</b> l'éditeur Python Vittascience, par le lien ci-dessous.</div>
     </div>
     <div class="consigne"><b>Consigne :</b> ① PRÉDIS chaque résultat. ② OUVRE l'éditeur, recopie, exécute.
     ③ REPORTE ce que la console affiche vraiment.</div>
@@ -554,11 +554,12 @@ places = places + descendus</pre>
       <label for="a3p2">① Je prédis :
       <select id="a3p2"><option value="">—</option><option>24</option><option>204</option><option>une erreur</option></select></label>
     </div>
-    <details class="vs" id="vs1">
-      <summary>🧪 ② Ouvrir l'éditeur Python Vittascience — teste tes deux expériences ici</summary>
-      <p class="vs-note">L'éditeur s'ouvre DANS la page : blocs à gauche, Python à droite, console en bas. Recopie, puis ▶. (L'éditeur a besoin d'Internet ; tout le reste de la page marche hors ligne.)</p>
-      <p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur ci-dessous est hébergé par Vittascience&nbsp;: si le cadre reste blanc, c'est la connexion, pas ton ordinateur. Dans ce cas, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
-<iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué"></iframe>
+    <details class="vs" id="vs1" open>
+      <summary>🧪 ② Ouvrir l'éditeur Python Vittascience — teste tes deux expériences dans l'onglet Vittascience</summary>
+      <p class="vs-note">L'éditeur s'ouvre dans un nouvel onglet : blocs à gauche, Python à droite, console en bas. Recopie, puis ▶. (L'éditeur a besoin d'Internet ; tout le reste de la page marche hors ligne.)</p>
+      <p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur est hébergé par Vittascience. Sans connexion, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
+<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
+<p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
     </details>
     <div class="exo">
       <p><b>③ Je reporte :</b></p>
@@ -684,11 +685,12 @@ print("Places libres :", places)</pre>
       <label for="a5q5">5. Pourquoi le test B3 est-il LE plus important ?
       <select id="a5q5"><option value="">—</option><option>c'est le cas FRONTIÈRE : c'est là que les visiteurs de trop passeraient si la règle était mal écrite</option><option>parce que 0 est un joli nombre</option><option>il ne l'est pas, B1 suffit</option><option>parce qu'il est le dernier de la liste</option></select></label>
     </div>
-    <details class="vs" id="vs2">
+    <details class="vs" id="vs2" open>
       <summary>🧪 Pour aller au bout : recopie le compteur corrigé dans l'éditeur et vérifie tes 3 tests</summary>
       <p class="vs-note">Écris le programme avec tes deux modifications, exécute avec les valeurs des tests — la console doit dire comme toi. Version 🅰 : branche une LED qui joue la barrière (très basse tension).</p>
-      <p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur ci-dessous est hébergé par Vittascience&nbsp;: si le cadre reste blanc, c'est la connexion, pas ton ordinateur. Dans ce cas, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
-<iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué — programme corrigé"></iframe>
+      <p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur est hébergé par Vittascience. Sans connexion, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
+<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
+<p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
     </details>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Partie ① : qui LIBÈRE des places, le + ou le − ? Partie ② : 0 &gt; 0… vrai ou faux ? Compte sur tes doigts.</p></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Un réglage se prouve par des tests choisis À L'AVANCE : un cas normal, un cas facile, et le cas FRONTIÈRE (ici : zéro pile). Si les trois passent, la barrière est réglée. C'est la même idée que le grand banc de tests que tu retrouveras en 3e.</p></details>
@@ -759,17 +761,18 @@ print("Places libres :", places)</pre>
   <p><b>🎢 Défi curieux :</b> le vrai Cyclone a ouvert en 1927 et il est toujours en bois. Dans l'éditeur,
   calcule son âge avec une variable <code>annee = 2026</code> — puis écris le programme pour que le calcul
   reste juste TOUTES les années suivantes.</p>
-    <details class="vs" id="vs3">
-      <summary>🧪 L'éditeur du Bonus — code tes défis ici, sans quitter la page</summary>
-      <p class="vs-note">L'éditeur s'ouvre DANS la page : blocs à gauche, Python à droite, console en bas. (Connexion Internet nécessaire pour l'éditeur ; le reste de la page fonctionne hors ligne.)</p>
-      <p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur ci-dessous est hébergé par Vittascience&nbsp;: si le cadre reste blanc, c'est la connexion, pas ton ordinateur. Dans ce cas, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
-<iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (Bonus)"></iframe>
+    <details class="vs" id="vs3" open>
+      <summary>🧪 L'éditeur du Bonus — code tes défis dans l'onglet Vittascience</summary>
+      <p class="vs-note">L'éditeur s'ouvre dans un nouvel onglet : blocs à gauche, Python à droite, console en bas. (Connexion Internet nécessaire pour l'éditeur ; le reste de la page fonctionne hors ligne.)</p>
+      <p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur est hébergé par Vittascience. Sans connexion, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
+<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
+<p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
     </details>
 </section>
 
 <footer class="footer">
   <p>Atelier 5e_C9.1 → C9.3 · Thème 3 · New York — Arc variables, marche 5e (la marche 3e est en ligne).
-  Page unique hors-ligne (éditeur embarqué : connexion requise), sauvegarde locale uniquement — aucune donnée
+  Page unique hors-ligne (éditeur Vittascience dans un onglet : connexion requise), sauvegarde locale uniquement — aucune donnée
   envoyée. Images : SVG originaux CC0 ; photo Coney Island : Kidfly182, CC BY 4.0 (Wikimedia Commons).</p>
 </footer>
 <script>
@@ -811,7 +814,7 @@ function renderMem(){
 }
 $("memNext").addEventListener("click", () => { if(step < PROG.length - 1){ step++; renderMem(); } });
 $("memRestart").addEventListener("click", () => { step = -1; renderMem(); });
-["vs1","vs2","vs3"].forEach(id => { const d = $(id); if(d) d.addEventListener("toggle", () => { if(d.open){ window.__exp[id] = true; save(); } }); });
+["vs1","vs2","vs3"].forEach(id => { const d = $(id); const a = d && d.querySelector(".vs-lien"); if(a) a.addEventListener("click", () => { window.__exp[id] = true; save(); }); });
 /* banc compteur (act4) : programme FOURNI avec le bug (soustrait les descendus) */
 function fnCompteur(montes, descendus){ let places = 24; places = places - montes; places = places - descendus; return places; }
 const B4 = {1:[0,0,24], 2:[3,0,21], 3:[3,2,23]};
@@ -880,7 +883,7 @@ const CHECKS = {
     s += sv("a3r1","24"); s += sv("a3r2","204");
     s += sv("a3r3","du TEXTE que le + COLLE bout à bout");
     s += sv("a3r4","des guillemets autour des nombres");
-    return {score: s, total: 6, exp: !!window.__exp.vs1, expMsg: "Ouvre l'éditeur embarqué (🧪) et exécute tes 2 expériences avant de reporter."};
+    return {score: s, total: 6, exp: !!window.__exp.vs1, expMsg: "Ouvre l'éditeur Vittascience (🧪) et exécute tes 2 expériences avant de reporter."};
   },
   4(){ let s = 0;
     s += sv("a4q1","SOUSTRAIT les descendus au lieu de les AJOUTER (19 au lieu de 23)");
