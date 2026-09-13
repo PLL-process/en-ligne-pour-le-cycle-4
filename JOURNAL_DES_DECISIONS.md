@@ -14700,3 +14700,107 @@ dans Downloads est laissé à Pascal.
 **Vu, pas causé :** à 390 px, le dépliant LibreOffice ouvert déborde de 5 px — le `<code>` de la
 formule `=MOYENNE.SI.ENS(…)`, une ligne de 47 caractères — identique sur `main`. Les figures, elles,
 tiennent dans l'écran.
+
+## 13/09/2026 — Vague 1 bis, PR 2 — 5e_C3.1 : les gestes de l'activité 4 en captures, filtrer puis écrire et recopier la formule
+
+Deuxième PR de `PROMPT_SUITE_vague1bis_gestes_activites_et_schemas_C2.md`. Les gestes que l'activité 4
+« L'indicateur multicritère, au tableur » demande **au milieu du travail**, montrés **à l'endroit
+exact de la consigne** : quatre figures sous « a) Filtrer selon le cahier des charges », quatre
+sous le paragraphe de « b) Construire l'indicateur ». Pas dans l'encart, pas en fin d'activité.
+Aucun mot des consignes, des questions, de la correction ni du QCM ne change.
+
+### Mesuré avant de capturer
+
+- **Le CSV** (`donnees_vehicules_dernier_kilometre_shanghai_simulees.csv`) : `charge_utile_kg` en
+  **H** (120 / 650 / 80), `reparabilite_sur_10` en **O** (8 / 7 / 5), `adaptation_ruelles_sur_5` en
+  **R** (5 / 2 / 5), `adaptation_pluie_sur_5` en **S** (3 / 5 / 2) ; première colonne libre **U** —
+  celle que l'encart fait déjà taper (geste Retrouver). La formule est donc **`=O2/2+R2+S2`**, et non
+  le `N2/2+P2+Q2` de l'audit, qui n'était pas vérifié. Résultats : **12 / 10,5 / 9,5**. Relevé
+  confirmé indépendamment par la session de relecture.
+- **Le filtre `charge_utile_kg >= 80` garde les trois solutions** : S3 est à **80 pile**. La légende
+  du résultat le dit — `>=` garde la borne, comme « au moins 80 kg ».
+- **L'erreur typique, mesurée sur le poste** (le prompt demandait de trancher entre deux) :
+  - *en-têtes non sélectionnés* — **se produit** : lignes 2 à 4 seules, la boîte « Filtre
+    standard » propose « Colonne A » au lieu des titres. **Capturée.**
+  - *AutoFiltre confondu* — mesuré : `Ctrl+Maj+L` pose des flèches sur les titres sans ouvrir de
+    boîte, et ne donne pas de résultat faux. **Non capturé** ; la légende du moment le distingue
+    en une phrase (« pas AutoFiltre, juste au-dessus dans le menu »).
+  - *`>` au lieu de `>=`* — **se produit, et c'est la plus grave** : S3 disparaît sans aucun message,
+    les numéros de ligne sautent de 3 à 5. C'est exactement l'erreur que la borne à 80 tend à
+    l'élève. **Capturée** en plus.
+- **Refaire le filtre pour les trois autres exigences** : mesuré — rouvrir « Filtre standard… » sur
+  la plage filtrée présente le critère précédent ; on le remplace. La légende du résultat dit
+  « reproduis la même méthode pour les trois autres exigences » avec ce geste.
+
+### Les huit captures, prises sur le poste tel qu'il est (n°94, n°70, n°121, n°127, n°75)
+
+Classeur `5E-VEHICULES-DUPONT.ods` dans `Documents › 5E1`, feuille
+`donnees_vehicules_dernier_kilometre_shanghai_simulees` (onglet non tronqué à l'écran, vérifié),
+produit par conversion headless du CSV du lot (profil LibreOffice temporaire, 38 cellules
+numériques de type `float`, aucune en texte). Mode sombre du poste, LibreOffice Calc 26.2.5.2 (fr),
+réduites à 1400 px et 256 couleurs, **24 à 134 Ko**. Aucune boîte de fichiers, aucun nom de compte,
+aucun dossier du poste — relues une par une.
+
+| geste | capture | ce qu'elle montre |
+|---|---|---|
+| Filtrer — moment | `geste_activite4_filtrer_1_boite.png` | « Filtre standard » : charge_utile_k… · `>=` · `80`, avant OK (boîte seule ; la case coupe le nom, dit dans la légende) |
+| Filtrer — résultat | `geste_activite4_filtrer_2_resultat.png` | lignes 1 à 4 sans trou, 120 / 650 / 80 en H |
+| Filtrer — erreur | `geste_activite4_filtrer_3_erreur_strict.png` | `>` au lieu de `>=` : lignes 1, 2, 3, **5** — S3 caché |
+| Filtrer — erreur | `geste_activite4_filtrer_4_erreur_sans_entetes.png` | lignes 2 à 4 sélectionnées sans les titres, champ « Colonne A » |
+| Formule — moment | `geste_activite4_formule_1_saisie.png` | `indicateur` en U1, `=O2/2+R2+S2` en cours de saisie en U2, colonnes O, R, S à l'écran |
+| Recopie — moment | `geste_activite4_formule_2_poignee.png` | U2 = 12, **pointeur en croix sur la poignée** |
+| Recopie — résultat | `geste_activite4_formule_3_resultat.png` | 12 / 10,5 / 9,5 ; U4 sélectionnée, barre `=O4/2+R4+S4` |
+| Recopie — erreur | `geste_activite4_formule_4_erreur_tape.png` | mêmes nombres tapés à la main ; barre de U4 : `9,5` |
+
+**Deux choix de cadrage, déclarés dans `SOURCES_MEDIAS.md` :**
+
+1. Les quatre captures de la formule sont prises dans une fenêtre de **2660 px** au lieu de 2400 :
+   à 2400, Calc cadre la vue de P à V et la colonne **O** — la lettre que l'élève tape en premier —
+   sort de l'écran. Élargir la fenêtre est un cadrage ; changer une largeur de colonne ou le zoom
+   aurait montré un écran que l'élève n'a pas.
+2. **Le pointeur de la souris** : `CopyFromScreen` ne le capture jamais, et le moment de la recopie
+   *est* le pointeur en croix sur la poignée. Il est rendu par Windows lui-même au moment de la
+   capture (`GetCursorInfo` puis `DrawIcon` avec le point chaud du curseur) — le curseur réel que
+   LibreOffice affichait, pas un dessin ajouté. Le script est resté dans le scratchpad de la
+   séance ; s'il doit servir à d'autres lots, il rejoindra `_outils-captures-gestes/`.
+
+**Ce que la mesure a tranché dans les légendes (n°128) :** pendant la saisie, la zone de nom
+affiche « MOYENNE » (liste des fonctions) — la légende le dit pour que l'élève ne s'y arrête pas ;
+la boîte coupe `charge_utile_kg` en « charge_utile_k… » — la légende le dit plutôt que de cacher.
+
+### L'insertion
+
+Huit `<figure class="geste-capture">` visibles, pas repliées, légende en deux temps (« Ce que tu dois
+voir » / « Comment savoir que c'est fait » / « Si tu vois ceci »), `alt` de **207 à 435 caractères**.
+Comme en PR 1, les six sélecteurs `.gestes-outil figure.geste-capture` deviennent
+`figure.geste-capture`, sans changer une valeur. La loupe existante prend les huit images.
+Manifeste : les huit images dans `fichiers.images` et un bloc `captures_de_gestes_activite_4`
+(valeurs vérifiées, AutoFiltre mesuré non capturé). `audit_couverture` régénéré (ligne 5e_C3.1 seule).
+
+**Piège payé, retenu :** un `>` écrit tel quel dans un `alt` (« Condition >= ») fait lire à
+`verif_regles_audit.py` la balise comme close — deux « image sans alternative » (n°34). Écrit
+`&gt;`, le contrôle repasse au vert. À savoir pour toute légende qui cite un opérateur.
+
+### Ce qui s'est passé sur le poste
+
+PRONOTE était ouvert en modification au début : aucune frappe avant que Pascal le ferme (vérifié
+par la liste des processus, deux fois). Excel restait ouvert en mode protégé (lecture seule) ;
+chaque frappe a vérifié le titre de la fenêtre visée. Menus parcourus au clavier, **jamais** par
+énumération UI Automation d'une fenêtre Calc (règle retenue en PR 1).
+
+Poste remis en état : classeur fermé **sans enregistrer** (date du fichier inchangée, 16:00:36),
+`Documents\5E1` supprimé (Documents retrouve ses 81 sous-dossiers), LibreOffice fermé, copie du CSV
+et profil temporaire laissés au seul scratchpad.
+
+### Les contrôles, tous exécutés ce jour, avec leurs chiffres
+
+- `controle_gestes_outil.py` ✅ (outil et position de l'échauffement ; les 9 encarts « sans activité
+  qui nomme l'outil » sont ceux, connus, de la vague 2 étape 1) · `controle_cadres.py` ✅ ·
+  `controle_medias.py` : **41 lots · 357 médias · 357 nommés · 186 promesses** ✅ ·
+  `controle_liens.py` : **2 912 adresses · 0 cassée** ✅ · `controle_fichiers_telechargeables.py` :
+  **79 pages · 0 écart** ✅ · `controle_impression.mjs` ✅
+- `verif_regles_audit.py` sur le lot : **0 manquement** ✅ · `tests_5e_C3.1-C3.4_shanghai.py` :
+  **29 / 29** ✅ · `mesurer_temps_seances.py` : **145 / 220, +75 min**, identique à `main` ✅
+- navigateur (Chromium Playwright), 1280 et 390 px, onglet Séance 4 : **8 / 8 images chargées**,
+  `width`/`height` déclarés = réels, chaque figure sous son `<h4>` de consigne, 8 loupes,
+  **débordement 0 px** aux deux largeurs, **console vide** ✅
