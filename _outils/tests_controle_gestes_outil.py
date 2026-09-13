@@ -49,6 +49,35 @@ def main():
         True, "inconnu de OUTILS")
     cas("une page sans encart n'est pas jugée", "<html><body><p>rien</p></body></html>", False)
 
+    # ── la position (règle n°297 complétée le 13/09/2026) ──
+    def page2(outil, avant, apres):
+        return "<html><body>%s%s%s</body></html>\n" % (avant, ENCART % outil, apres)
+    SIT = "<h2>📖 La situation : un réseau qui ne répond pas</h2><p>Le capteur se tait.</p>"
+    ACT = "<h2>🧱 Activité 1 — Construire</h2><p>Ouvre Packet Tracer et monte le réseau.</p>"
+    cas("à sa porte : après la situation, collé à l'activité qui ouvre l'outil",
+        page2("Packet Tracer", SIT, ACT), False)
+    cas("le cas du 13/09 : l'encart précède la situation",
+        page2("Packet Tracer", "", SIT + ACT), True, "précède la situation")
+    cas("l'encart après la première activité : plus aucune activité ne le suit",
+        page2("Packet Tracer", SIT + ACT, "<h2>🏁 Bilan</h2><p>Fini.</p>"), True, "aucune activité ne le suit")
+    cas("un bloc visible s'intercale entre l'encart et l'activité",
+        page2("Packet Tracer", SIT, "<h2>🔀 Trois façons</h2><p>Au choix.</p>" + ACT), True, "s'intercale")
+    cas("collé à une activité qui ne parle pas de l'outil",
+        page2("Packet Tracer", SIT, "<h2>Activité 1 — Lire</h2><p>Lis le plan.</p>" + ACT.replace("Activité 1", "Activité 2")),
+        True, "n'ouvre pas l'outil")
+    cas("le cartouche « Activité n » d'un <h3> ne compte pas comme un bloc intercalé",
+        page2("Packet Tracer", SIT, '<div class="seance-panel"><div class="activite"><header><span class="num">Activité 3</span>'
+              '<h3>Construire le réseau</h3></header><p>Ouvre Packet Tracer.</p></div></div>'), False)
+    cas("un <h3> ne clôt pas le bloc d'une séance <h2>",
+        page2("Vittascience", SIT, '<h2>Séance 2 — Les types</h2><p>Prédis, puis teste dans Vittascience.</p><h3>Teste</h3>'
+              '<a href="https://fr.vittascience.com/python/">▶ Ouvrir l’éditeur</a>'), False)
+    cas("Vittascience : une mention n'ouvre pas — position non jugée, pas refusée",
+        page2("Vittascience", "", SIT + "<h2>Séance 1 — Lire</h2><p>Blocs Vittascience ou Python, même raisonnement.</p>"),
+        False, "position(s) non jugée(s)")
+    cas("Vittascience : un lien vers fr.vittascience.com ouvre — et la position est jugée",
+        page2("Vittascience", "", SIT + '<h2>Séance 1 — Coder</h2><p>Ouvre Vittascience :</p><a href="https://fr.vittascience.com/python/">▶</a>'),
+        True, "précède la situation")
+
     n += 1
     code, texte = jouer(C.DEPOT)
     if code != 0: echecs.append("le dépôt réel ne passe pas :\n     " + texte.strip())
@@ -56,7 +85,7 @@ def main():
     if echecs:
         for e in echecs: print("❌ " + e)
         print("\n%d / %d" % (n - len(echecs), n)); return 1
-    print("✅ %d contrôles — l'encart qui parle d'un autre outil que sa page est refusé" % n)
+    print("✅ %d contrôles — l'encart qui parle d'un autre outil que sa page, ou qui n'est pas à sa porte, est refusé" % n)
     print("\n%d / %d" % (n, n)); return 0
 
 if __name__ == "__main__":
