@@ -187,110 +187,6 @@
   @media print{.gestes-outil figure.geste-capture{break-inside:avoid;page-break-inside:avoid}
     .gestes-outil figure.geste-capture img{border-color:#999}}
 </style>
-<!-- gestes-outil-v1 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau. -->
-<section class="card gestes-outil" aria-labelledby="gestes-tableur">
-  <h2 id="gestes-tableur">🧰 Avant de commencer (échauffement) — les quatre gestes du tableur</h2>
-  <p class="pourquoi">Quatre gestes à faire une fois, au début, et ta séance ne
-  se perdra pas. Tu les as peut-être déjà faits une autre année&nbsp;: refais-les,
-  c'est court. Et si tu ne les as jamais faits, tout est écrit ici — tu n'as
-  besoin de rien d'autre.</p>
-  <ol>
-    <li><b>Ouvrir.</b> Ouvre le tableur (<b>LibreOffice Calc</b>), puis ouvre le fichier <a href="donnees_freinage_sainte_luce_simulees.csv" download title="Télécharger donnees_freinage_sainte_luce_simulees.csv">📥&nbsp;<code>donnees_freinage_sainte_luce_simulees.csv</code></a> (clique ici pour le télécharger) (<b>Fichier → Ouvrir…</b>). Dans la fenêtre d'import, garde <b>Point-virgule</b> coché comme séparateur et valide. Les deux autres fichiers de données de la séquence — <code>releves_essai_college_sainte_luce_simules.csv</code> et <code>donnees_simulees_freinage_5e_C1.2.csv</code> — s'ouvrent exactement de la même façon.
-      <figure class="geste-capture">
-        <img src="Images/geste_tableur_1_ouvrir_import_csv.png" width="1400" height="971" loading="lazy"
-             alt="Boîte de dialogue « Import de texte » de LibreOffice Calc, en français et en mode sombre, pour le fichier donnees_freinage_sainte_luce_simulees.csv. En haut : Jeu de caractères « - Automatique - » avec la mention Unicode (UTF-8) en dessous, Locale « Par défaut - Français (France) », À partir de la ligne 1. Dans « Options de séparateur », le bouton « Séparé par » est sélectionné ; parmi les cases Tabulation, Virgule, Point-virgule, Espace et Autre, seule Point-virgule est cochée. En bas, l'aperçu montre les données réparties en colonnes : solution, principe_technique, ce_qui_serre_quoi, puis les trois lignes Frein à patins, Frein à disque mécanique et Frein à tambour. Les boutons OK et Annuler sont en bas à droite.">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> dans «&nbsp;Options de séparateur&nbsp;», la case <b>Point-virgule</b> cochée, et l'aperçu du bas déjà découpé en colonnes. Si c'est «&nbsp;Détecté (;)&nbsp;» qui est sélectionné, c'est bon aussi&nbsp;: le (;) dit que le point-virgule a été reconnu. <b>Puis&nbsp;:</b> clique <b>OK</b>. <i>L'aperçu ne montre que les premières colonnes&nbsp;; les autres sont à droite, et arrivent avec elles.</i></figcaption>
-      </figure>
-    
-      <figure class="geste-capture">
-        <img src="Images/geste_tableur_1b_ouvrir_resultat.png" width="1400" height="849" loading="lazy"
-             alt="Fenêtre de LibreOffice Calc, en français et en mode sombre, dont la barre de titre indique donnees_freinage_sainte_luce_simulees.csv. La feuille montre les colonnes A à F et le début de la colonne G : solution, principe_technique, ce_qui_serre_quoi, distance_arret_sec_m, distance_arret_pluie_m, masse_g, cout_entretien_eur_an, et les trois lignes de solutions de freinage, chaque donnée dans sa propre cellule. Dans les colonnes D, E et F, les nombres sont alignés à droite, y compris 5,8 et 8,9.">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> chaque donnée est dans sa propre colonne, avec les titres sur la ligne 1. Regarde la colonne <b>distance_arret_sec_m</b>&nbsp;: les nombres sont <b>collés à droite</b> de leur cellule. C'est la preuve que le tableur les a compris comme des nombres, et non comme du texte.</figcaption>
-      </figure>
-    
-      <figure class="geste-capture">
-        <img src="Images/geste_tableur_1c_ouvrir_erreur_separateur.png" width="1400" height="849" loading="lazy"
-             alt="La même fenêtre de LibreOffice Calc, mais après un import avec la Virgule comme séparateur. La ligne 1 tient tout entière dans la colonne A : solution;principe_technique;ce_qui_serre_quoi;distance_arret_sec_m;distance_arret_pluie_m;masse_g;cout_entretien_eur_an;reparabilite_sur_5;resistance_corrosion_sur_5. Chaque solution, elle, est coupée en trois morceaux : la colonne A finit par « le bord de la roue;5 », la colonne B contient « 8;8 » et la colonne C « 9;320;18;5;2 ». La colonne D est vide.">
-        <figcaption><b>Si tu vois ceci&nbsp;:</b> ta ligne de titres est collée dans la colonne A avec ses points-virgules, et chaque solution est coupée en plein milieu de ses nombres — 5 d'un côté, 8 de l'autre. Le séparateur choisi n'était pas le bon&nbsp;: c'était la virgule, qui sert ici de <b>virgule décimale</b>. Ferme le fichier sans l'enregistrer (<b>Fichier → Fermer</b>), recommence <b>Fichier → Ouvrir…</b> et coche <b>Point-virgule</b>.</figcaption>
-      </figure>
-    </li>
-    <li><b>Nommer.</b> <b>Fichier → Enregistrer sous…</b> tout de suite, au format <b>Classeur ODF (.ods)</b>, sous <code>comparatif_freinage_groupeXX</code> — <code>XX</code> est le numéro de ton groupe —, dans <b>Documents</b>, dans le <b>dossier qui porte le nom de ta classe</b> (par exemple <code>5E1</code>). Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans la fenêtre d'enregistrement, ouvre Documents, clique sur <b>Nouveau dossier</b>, tape le nom de ta classe, valide, puis entre dedans.
-      <figure class="geste-capture">
-        <img src="Images/geste_tableur_2_nommer_documents.png" width="1400" height="153" loading="lazy"
-             alt="Le haut de la boîte de dialogue « Enregistrer sous » de Windows, en mode sombre. Sur la ligne du chemin, une icône de dossier Documents puis, entre chevrons, le seul mot Documents. En dessous, la barre d'outils de la boîte avec les boutons Organiser et Nouveau dossier.">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le chemin, tout en haut, finit par <b>Documents</b>. Si la fenêtre s'ouvre ailleurs — Téléchargements, par exemple — clique sur <b>Documents</b> dans la colonne de gauche. <i>Seul le haut de la fenêtre est montré ici&nbsp;: en dessous, tu verras la liste de tes propres dossiers.</i> Cherche dedans celui qui porte le nom de ta classe&nbsp;: s'il y est, entre dedans (double-clic) et passe aux trois dernières images&nbsp;; s'il n'y est pas, continue ci-dessous.</figcaption>
-      </figure>
-    
-      <figure class="geste-capture">
-        <img src="Images/geste_tableur_2b_nommer_bouton_nouveau_dossier.png" width="1400" height="153" loading="lazy"
-             alt="Le même haut de fenêtre « Enregistrer sous », toujours sur Documents. Dans la barre d'outils, à droite du bouton Organiser, le bouton « Nouveau dossier » est surligné d'un cadre plus clair, parce que la souris est posée dessus.">
-        <figcaption><b>Le bouton Nouveau dossier&nbsp;:</b> il est écrit en toutes lettres, dans la barre au-dessus de la liste des fichiers, juste à droite d'<b>Organiser</b>. Clique dessus.</figcaption>
-      </figure>
-    
-      <figure class="geste-capture">
-        <img src="Images/geste_tableur_2c_nommer_nom_du_dossier.png" width="1400" height="237" loading="lazy"
-             alt="La boîte « Enregistrer sous », sur Documents. Dans la liste, une ligne nouvelle porte une icône de dossier et un petit cadre de saisie dans lequel est tapé 5E1 ; la ligne est surlignée et la date du jour apparaît dans la colonne Modifié le, avec la mention Dossier dans la colonne Type.">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> une ligne apparaît dans la liste, avec une <b>case où écrire</b> à la place du nom. Tape le nom de ta classe, puis <b>Entrée</b>. <i>5E1 est un exemple&nbsp;: mets le nom de ta classe. Ici, la liste a été raccourcie à cette seule ligne&nbsp;; chez toi, tes autres dossiers restent visibles autour.</i></figcaption>
-      </figure>
-    
-      <figure class="geste-capture">
-        <img src="Images/geste_tableur_2d_nommer_dossier_cree.png" width="1400" height="237" loading="lazy"
-             alt="La même boîte « Enregistrer sous » après validation : la ligne porte maintenant le nom 5E1 écrit normalement, avec l'icône de dossier, la date du jour et la mention Dossier dans la colonne Type. La case de saisie a disparu.">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> la case où tu écrivais a disparu, et ton dossier porte son nom, avec la mention <b>Dossier</b> dans la colonne Type. Windows n'entre pas dedans tout seul&nbsp;: <b>double-clique</b> sur son nom pour y entrer. <i>5E1 est un exemple.</i></figcaption>
-      </figure>
-    
-      <figure class="geste-capture">
-        <img src="Images/geste_tableur_2e_nommer_enregistrer_sous.png" width="1400" height="1205" loading="lazy"
-             alt="La boîte « Enregistrer sous » entière, maintenant dans le dossier de la classe : le chemin, en haut, indique Documents puis 5E1, et la liste des fichiers affiche « Aucun élément ne correspond à votre recherche ». En bas, le champ « Nom du fichier » contient comparatif_freinage_groupe03 et le champ « Type » affiche « Classeur ODF (*.ods) ». La case « Extensi… », qui ajoute l'extension automatiquement, est cochée. En bas à droite, les boutons Enregistrer et Annuler.">
-        <figcaption><b>Ce que tu dois voir avant d'enregistrer&nbsp;:</b> trois choses. Le chemin, en haut, finit par <b>Documents</b> puis <b>le nom de ta classe</b>&nbsp;; le <b>Nom du fichier</b> suit la consigne&nbsp;; <b>Type&nbsp;: Classeur ODF (*.ods)</b> — si tu lis encore «&nbsp;Texte CSV&nbsp;», ouvre la liste et choisis Classeur ODF. <b>Puis&nbsp;:</b> <b>Enregistrer</b>. <i>groupe03 et 5E1 sont des exemples&nbsp;: mets le numéro de ton groupe et le nom de ta classe.</i></figcaption>
-      </figure>
-    
-      <figure class="geste-capture">
-        <img src="Images/geste_tableur_2f_nommer_resultat.png" width="1400" height="849" loading="lazy"
-             alt="Fenêtre de LibreOffice Calc dont la barre de titre indique désormais comparatif_freinage_groupe03.ods — LibreOffice Calc. La feuille des trois solutions de freinage est inchangée, et l'onglet du bas porte encore le nom donnees_freinage_sainte_luce_simulees.">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> la barre de titre, tout en haut, affiche ton nom de fichier suivi de <b>.ods</b>, et non plus .csv. L'onglet du bas, lui, garde le nom de la feuille&nbsp;: c'est normal. <i>groupe03 est un exemple.</i></figcaption>
-      </figure>
-    
-      <figure class="geste-capture">
-        <img src="Images/geste_tableur_2g_nommer_explorateur.png" width="1400" height="578" loading="lazy"
-             alt="Fenêtre de l'Explorateur de fichiers de Windows, en français et en mode sombre. La barre d'adresse, repliée, indique des points de suspension puis Documents puis 5E1. La liste contient un seul fichier, comparatif_freinage_groupe03.ods, avec sa date de modification et le type Feuille de calcul. En bas à gauche, « 1 élément ».">
-        <figcaption><b>Pour vérifier, ou pour le retrouver plus tard&nbsp;:</b> ouvre l'<b>Explorateur de fichiers</b> de Windows, va dans <b>Documents</b>, puis dans le dossier de ta classe&nbsp;: ton fichier <b>.ods</b> est là. Ce chemin — Documents, puis ta classe — est celui à refaire à la séance suivante. <i>5E1 et groupe03 sont des exemples.</i></figcaption>
-      </figure>
-    </li>
-    <li><b>Retrouver.</b> Le tableur n'enregistre pas tout seul&nbsp;: <kbd>Ctrl</kbd>+<kbd>S</kbd> après chaque série de saisies. Rouvre ton fichier au début de la séance suivante pour vérifier qu'il est complet.
-      <figure class="geste-capture">
-        <img src="Images/geste_tableur_3_retrouver_avant_ctrl_s.png" width="1400" height="849" loading="lazy"
-             alt="Fenêtre de LibreOffice Calc, fichier comparatif_freinage_groupe03.ods, en mode sombre. La feuille est décalée vers la droite : on lit les colonnes C à J, et la colonne J porte en J1 le mot priorite_usage qui vient d'être tapé. La zone de nom affiche J1 et la barre de formule affiche priorite_usage. En bas à gauche, dans la barre d'état, l'icône en forme de disquette est rouge, ce qui signale des modifications non enregistrées.">
-        <figcaption><b>Ce que tu dois voir avant Ctrl+S&nbsp;:</b> tu as tapé quelque chose (ici «&nbsp;priorite_usage&nbsp;» en J1, la colonne que l'activité te fait ajouter après la dernière), et en bas à gauche de la fenêtre, la petite icône de la barre d'état est <b>rouge</b>&nbsp;: ce qui est à l'écran n'est pas encore sur le disque. Le raccourci n'ouvre aucune fenêtre&nbsp;: c'est cette icône qui te répond.</figcaption>
-      </figure>
-    
-      <figure class="geste-capture">
-        <img src="Images/geste_tableur_3b_retrouver_apres_ctrl_s.png" width="1400" height="849" loading="lazy"
-             alt="La même fenêtre après Ctrl+S : l'icône en forme de disquette, en bas à gauche de la barre d'état, est redevenue grise. Le reste de l'écran est identique, avec priorite_usage toujours en J1.">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> après <kbd>Ctrl</kbd>+<kbd>S</kbd>, l'icône en bas à gauche redevient <b>grise</b>. Rien d'autre ne change à l'écran&nbsp;: c'est normal.</figcaption>
-      </figure>
-    
-      <figure class="geste-capture">
-        <img src="Images/geste_tableur_3c_retrouver_rouvrir.png" width="1400" height="812" loading="lazy"
-             alt="Boîte de dialogue « Ouvrir » de Windows, en mode sombre. Le chemin, en haut, indique Documents puis 5E1. La liste montre un seul fichier, comparatif_freinage_groupe03.ods, sélectionné et coché, de type Feuille de calcul. En bas, le champ « Nom du fichier » contient comparatif_freinage_groupe03.ods et le bouton Ouvrir est à droite.">
-        <figcaption><b>Pour rouvrir à la séance suivante&nbsp;:</b> <b>Fichier → Ouvrir…</b>, va dans <b>Documents</b>, puis dans le dossier de ta classe, et choisis le fichier qui finit par <b>.ods</b> — pas le .csv, qui est le fichier de départ, sans ton travail. Le nom complet s'écrit en bas, dans <b>Nom du fichier</b>&nbsp;: c'est là qu'on vérifie. <i>Le nom et le dossier sont des exemples.</i></figcaption>
-      </figure>
-    </li>
-    <li><b>Sortir.</b> Le classeur est le rendu. Un graphique se copie dans le compte rendu, ou s'exporte en image par un clic droit.
-      <figure class="geste-capture">
-        <img src="Images/geste_tableur_4_sortir_clic_droit_graphique.png" width="1400" height="849" loading="lazy"
-             alt="Fenêtre de LibreOffice Calc en mode sombre avec un diagramme en colonnes posé sur la feuille et sélectionné : de petites poignées carrées l'entourent. Un menu contextuel est ouvert par-dessus : Couper, Copier, Coller, Position et taille, Ancre, Positionner, Nom, Texte alternatif, Assigner la macro, Exporter comme image, Éditer. Le diagramme oppose deux séries, distance_arret_sec_m en bleu et distance_arret_pluie_m en orange, pour les trois solutions numérotées 1, 2 et 3. À droite, on lit encore les colonnes de données, dont 5,8 et 8,9.">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> un <b>clic</b> sur le graphique (des petites poignées carrées apparaissent autour), puis un <b>clic droit</b>&nbsp;: le menu propose <b>Copier</b> (pour le coller dans le compte rendu) et <b>Exporter comme image</b>. <i>Le graphique montré est un exemple, construit sur les deux colonnes de distances d'arrêt&nbsp;; les numéros 1, 2 et 3 de l'axe sont les trois solutions, dans l'ordre du tableau.</i></figcaption>
-      </figure>
-    
-      <figure class="geste-capture">
-        <img src="Images/geste_tableur_4b_sortir_enregistrer_image.png" width="1400" height="812" loading="lazy"
-             alt="Boîte de dialogue « Enregistrer en tant qu'image » de Windows, en mode sombre, ouverte sur le dossier de la classe : le chemin indique Documents puis 5E1, et la liste affiche « Aucun élément ne correspond à votre recherche » parce que seules les images y sont affichées. Le champ « Nom du fichier » contient graphique-comparatif_freinage_groupe03 ; le champ « Type » affiche PNG - Portable Network Graphics. Le bouton Enregistrer est en bas à droite.">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> après <b>Exporter comme image</b>, cette boîte s'ouvre&nbsp;; garde le type <b>PNG</b>, donne un nom, vérifie que le chemin finit par le nom de ta classe, <b>Enregistrer</b>. Le fichier image apparaît dans ton dossier, à côté du classeur. <i>Le nom et le dossier sont des exemples.</i></figcaption>
-      </figure>
-    </li>
-  </ol>
-</section>
 
 <p class="legende-badges">🔎 <b>Ce que disent ces étiquettes.</b> <b>5e</b>&nbsp;: le niveau.
 <b>C1.2</b>&nbsp;: la compétence travaillée — un code de classement <b>propre à ce site</b>,
@@ -626,6 +522,110 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 </div>
 
 <div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<!-- gestes-outil-v1 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau. -->
+<section class="card gestes-outil" aria-labelledby="gestes-tableur">
+  <h2 id="gestes-tableur">🧰 Avant de commencer (échauffement) — les quatre gestes du tableur</h2>
+  <p class="pourquoi">Quatre gestes à faire une fois, au début, et ta séance ne
+  se perdra pas. Tu les as peut-être déjà faits une autre année&nbsp;: refais-les,
+  c'est court. Et si tu ne les as jamais faits, tout est écrit ici — tu n'as
+  besoin de rien d'autre.</p>
+  <ol>
+    <li><b>Ouvrir.</b> Ouvre le tableur (<b>LibreOffice Calc</b>), puis ouvre le fichier <a href="donnees_freinage_sainte_luce_simulees.csv" download title="Télécharger donnees_freinage_sainte_luce_simulees.csv">📥&nbsp;<code>donnees_freinage_sainte_luce_simulees.csv</code></a> (clique ici pour le télécharger) (<b>Fichier → Ouvrir…</b>). Dans la fenêtre d'import, garde <b>Point-virgule</b> coché comme séparateur et valide. Les deux autres fichiers de données de la séquence — <code>releves_essai_college_sainte_luce_simules.csv</code> et <code>donnees_simulees_freinage_5e_C1.2.csv</code> — s'ouvrent exactement de la même façon.
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_1_ouvrir_import_csv.png" width="1400" height="971" loading="lazy"
+             alt="Boîte de dialogue « Import de texte » de LibreOffice Calc, en français et en mode sombre, pour le fichier donnees_freinage_sainte_luce_simulees.csv. En haut : Jeu de caractères « - Automatique - » avec la mention Unicode (UTF-8) en dessous, Locale « Par défaut - Français (France) », À partir de la ligne 1. Dans « Options de séparateur », le bouton « Séparé par » est sélectionné ; parmi les cases Tabulation, Virgule, Point-virgule, Espace et Autre, seule Point-virgule est cochée. En bas, l'aperçu montre les données réparties en colonnes : solution, principe_technique, ce_qui_serre_quoi, puis les trois lignes Frein à patins, Frein à disque mécanique et Frein à tambour. Les boutons OK et Annuler sont en bas à droite.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> dans «&nbsp;Options de séparateur&nbsp;», la case <b>Point-virgule</b> cochée, et l'aperçu du bas déjà découpé en colonnes. Si c'est «&nbsp;Détecté (;)&nbsp;» qui est sélectionné, c'est bon aussi&nbsp;: le (;) dit que le point-virgule a été reconnu. <b>Puis&nbsp;:</b> clique <b>OK</b>. <i>L'aperçu ne montre que les premières colonnes&nbsp;; les autres sont à droite, et arrivent avec elles.</i></figcaption>
+      </figure>
+    
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_1b_ouvrir_resultat.png" width="1400" height="849" loading="lazy"
+             alt="Fenêtre de LibreOffice Calc, en français et en mode sombre, dont la barre de titre indique donnees_freinage_sainte_luce_simulees.csv. La feuille montre les colonnes A à F et le début de la colonne G : solution, principe_technique, ce_qui_serre_quoi, distance_arret_sec_m, distance_arret_pluie_m, masse_g, cout_entretien_eur_an, et les trois lignes de solutions de freinage, chaque donnée dans sa propre cellule. Dans les colonnes D, E et F, les nombres sont alignés à droite, y compris 5,8 et 8,9.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> chaque donnée est dans sa propre colonne, avec les titres sur la ligne 1. Regarde la colonne <b>distance_arret_sec_m</b>&nbsp;: les nombres sont <b>collés à droite</b> de leur cellule. C'est la preuve que le tableur les a compris comme des nombres, et non comme du texte.</figcaption>
+      </figure>
+    
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_1c_ouvrir_erreur_separateur.png" width="1400" height="849" loading="lazy"
+             alt="La même fenêtre de LibreOffice Calc, mais après un import avec la Virgule comme séparateur. La ligne 1 tient tout entière dans la colonne A : solution;principe_technique;ce_qui_serre_quoi;distance_arret_sec_m;distance_arret_pluie_m;masse_g;cout_entretien_eur_an;reparabilite_sur_5;resistance_corrosion_sur_5. Chaque solution, elle, est coupée en trois morceaux : la colonne A finit par « le bord de la roue;5 », la colonne B contient « 8;8 » et la colonne C « 9;320;18;5;2 ». La colonne D est vide.">
+        <figcaption><b>Si tu vois ceci&nbsp;:</b> ta ligne de titres est collée dans la colonne A avec ses points-virgules, et chaque solution est coupée en plein milieu de ses nombres — 5 d'un côté, 8 de l'autre. Le séparateur choisi n'était pas le bon&nbsp;: c'était la virgule, qui sert ici de <b>virgule décimale</b>. Ferme le fichier sans l'enregistrer (<b>Fichier → Fermer</b>), recommence <b>Fichier → Ouvrir…</b> et coche <b>Point-virgule</b>.</figcaption>
+      </figure>
+    </li>
+    <li><b>Nommer.</b> <b>Fichier → Enregistrer sous…</b> tout de suite, au format <b>Classeur ODF (.ods)</b>, sous <code>comparatif_freinage_groupeXX</code> — <code>XX</code> est le numéro de ton groupe —, dans <b>Documents</b>, dans le <b>dossier qui porte le nom de ta classe</b> (par exemple <code>5E1</code>). Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans la fenêtre d'enregistrement, ouvre Documents, clique sur <b>Nouveau dossier</b>, tape le nom de ta classe, valide, puis entre dedans.
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_2_nommer_documents.png" width="1400" height="153" loading="lazy"
+             alt="Le haut de la boîte de dialogue « Enregistrer sous » de Windows, en mode sombre. Sur la ligne du chemin, une icône de dossier Documents puis, entre chevrons, le seul mot Documents. En dessous, la barre d'outils de la boîte avec les boutons Organiser et Nouveau dossier.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le chemin, tout en haut, finit par <b>Documents</b>. Si la fenêtre s'ouvre ailleurs — Téléchargements, par exemple — clique sur <b>Documents</b> dans la colonne de gauche. <i>Seul le haut de la fenêtre est montré ici&nbsp;: en dessous, tu verras la liste de tes propres dossiers.</i> Cherche dedans celui qui porte le nom de ta classe&nbsp;: s'il y est, entre dedans (double-clic) et passe aux trois dernières images&nbsp;; s'il n'y est pas, continue ci-dessous.</figcaption>
+      </figure>
+    
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_2b_nommer_bouton_nouveau_dossier.png" width="1400" height="153" loading="lazy"
+             alt="Le même haut de fenêtre « Enregistrer sous », toujours sur Documents. Dans la barre d'outils, à droite du bouton Organiser, le bouton « Nouveau dossier » est surligné d'un cadre plus clair, parce que la souris est posée dessus.">
+        <figcaption><b>Le bouton Nouveau dossier&nbsp;:</b> il est écrit en toutes lettres, dans la barre au-dessus de la liste des fichiers, juste à droite d'<b>Organiser</b>. Clique dessus.</figcaption>
+      </figure>
+    
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_2c_nommer_nom_du_dossier.png" width="1400" height="237" loading="lazy"
+             alt="La boîte « Enregistrer sous », sur Documents. Dans la liste, une ligne nouvelle porte une icône de dossier et un petit cadre de saisie dans lequel est tapé 5E1 ; la ligne est surlignée et la date du jour apparaît dans la colonne Modifié le, avec la mention Dossier dans la colonne Type.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> une ligne apparaît dans la liste, avec une <b>case où écrire</b> à la place du nom. Tape le nom de ta classe, puis <b>Entrée</b>. <i>5E1 est un exemple&nbsp;: mets le nom de ta classe. Ici, la liste a été raccourcie à cette seule ligne&nbsp;; chez toi, tes autres dossiers restent visibles autour.</i></figcaption>
+      </figure>
+    
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_2d_nommer_dossier_cree.png" width="1400" height="237" loading="lazy"
+             alt="La même boîte « Enregistrer sous » après validation : la ligne porte maintenant le nom 5E1 écrit normalement, avec l'icône de dossier, la date du jour et la mention Dossier dans la colonne Type. La case de saisie a disparu.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> la case où tu écrivais a disparu, et ton dossier porte son nom, avec la mention <b>Dossier</b> dans la colonne Type. Windows n'entre pas dedans tout seul&nbsp;: <b>double-clique</b> sur son nom pour y entrer. <i>5E1 est un exemple.</i></figcaption>
+      </figure>
+    
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_2e_nommer_enregistrer_sous.png" width="1400" height="1205" loading="lazy"
+             alt="La boîte « Enregistrer sous » entière, maintenant dans le dossier de la classe : le chemin, en haut, indique Documents puis 5E1, et la liste des fichiers affiche « Aucun élément ne correspond à votre recherche ». En bas, le champ « Nom du fichier » contient comparatif_freinage_groupe03 et le champ « Type » affiche « Classeur ODF (*.ods) ». La case « Extensi… », qui ajoute l'extension automatiquement, est cochée. En bas à droite, les boutons Enregistrer et Annuler.">
+        <figcaption><b>Ce que tu dois voir avant d'enregistrer&nbsp;:</b> trois choses. Le chemin, en haut, finit par <b>Documents</b> puis <b>le nom de ta classe</b>&nbsp;; le <b>Nom du fichier</b> suit la consigne&nbsp;; <b>Type&nbsp;: Classeur ODF (*.ods)</b> — si tu lis encore «&nbsp;Texte CSV&nbsp;», ouvre la liste et choisis Classeur ODF. <b>Puis&nbsp;:</b> <b>Enregistrer</b>. <i>groupe03 et 5E1 sont des exemples&nbsp;: mets le numéro de ton groupe et le nom de ta classe.</i></figcaption>
+      </figure>
+    
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_2f_nommer_resultat.png" width="1400" height="849" loading="lazy"
+             alt="Fenêtre de LibreOffice Calc dont la barre de titre indique désormais comparatif_freinage_groupe03.ods — LibreOffice Calc. La feuille des trois solutions de freinage est inchangée, et l'onglet du bas porte encore le nom donnees_freinage_sainte_luce_simulees.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> la barre de titre, tout en haut, affiche ton nom de fichier suivi de <b>.ods</b>, et non plus .csv. L'onglet du bas, lui, garde le nom de la feuille&nbsp;: c'est normal. <i>groupe03 est un exemple.</i></figcaption>
+      </figure>
+    
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_2g_nommer_explorateur.png" width="1400" height="578" loading="lazy"
+             alt="Fenêtre de l'Explorateur de fichiers de Windows, en français et en mode sombre. La barre d'adresse, repliée, indique des points de suspension puis Documents puis 5E1. La liste contient un seul fichier, comparatif_freinage_groupe03.ods, avec sa date de modification et le type Feuille de calcul. En bas à gauche, « 1 élément ».">
+        <figcaption><b>Pour vérifier, ou pour le retrouver plus tard&nbsp;:</b> ouvre l'<b>Explorateur de fichiers</b> de Windows, va dans <b>Documents</b>, puis dans le dossier de ta classe&nbsp;: ton fichier <b>.ods</b> est là. Ce chemin — Documents, puis ta classe — est celui à refaire à la séance suivante. <i>5E1 et groupe03 sont des exemples.</i></figcaption>
+      </figure>
+    </li>
+    <li><b>Retrouver.</b> Le tableur n'enregistre pas tout seul&nbsp;: <kbd>Ctrl</kbd>+<kbd>S</kbd> après chaque série de saisies. Rouvre ton fichier au début de la séance suivante pour vérifier qu'il est complet.
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_3_retrouver_avant_ctrl_s.png" width="1400" height="849" loading="lazy"
+             alt="Fenêtre de LibreOffice Calc, fichier comparatif_freinage_groupe03.ods, en mode sombre. La feuille est décalée vers la droite : on lit les colonnes C à J, et la colonne J porte en J1 le mot priorite_usage qui vient d'être tapé. La zone de nom affiche J1 et la barre de formule affiche priorite_usage. En bas à gauche, dans la barre d'état, l'icône en forme de disquette est rouge, ce qui signale des modifications non enregistrées.">
+        <figcaption><b>Ce que tu dois voir avant Ctrl+S&nbsp;:</b> tu as tapé quelque chose (ici «&nbsp;priorite_usage&nbsp;» en J1, la colonne que l'activité te fait ajouter après la dernière), et en bas à gauche de la fenêtre, la petite icône de la barre d'état est <b>rouge</b>&nbsp;: ce qui est à l'écran n'est pas encore sur le disque. Le raccourci n'ouvre aucune fenêtre&nbsp;: c'est cette icône qui te répond.</figcaption>
+      </figure>
+    
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_3b_retrouver_apres_ctrl_s.png" width="1400" height="849" loading="lazy"
+             alt="La même fenêtre après Ctrl+S : l'icône en forme de disquette, en bas à gauche de la barre d'état, est redevenue grise. Le reste de l'écran est identique, avec priorite_usage toujours en J1.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> après <kbd>Ctrl</kbd>+<kbd>S</kbd>, l'icône en bas à gauche redevient <b>grise</b>. Rien d'autre ne change à l'écran&nbsp;: c'est normal.</figcaption>
+      </figure>
+    
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_3c_retrouver_rouvrir.png" width="1400" height="812" loading="lazy"
+             alt="Boîte de dialogue « Ouvrir » de Windows, en mode sombre. Le chemin, en haut, indique Documents puis 5E1. La liste montre un seul fichier, comparatif_freinage_groupe03.ods, sélectionné et coché, de type Feuille de calcul. En bas, le champ « Nom du fichier » contient comparatif_freinage_groupe03.ods et le bouton Ouvrir est à droite.">
+        <figcaption><b>Pour rouvrir à la séance suivante&nbsp;:</b> <b>Fichier → Ouvrir…</b>, va dans <b>Documents</b>, puis dans le dossier de ta classe, et choisis le fichier qui finit par <b>.ods</b> — pas le .csv, qui est le fichier de départ, sans ton travail. Le nom complet s'écrit en bas, dans <b>Nom du fichier</b>&nbsp;: c'est là qu'on vérifie. <i>Le nom et le dossier sont des exemples.</i></figcaption>
+      </figure>
+    </li>
+    <li><b>Sortir.</b> Le classeur est le rendu. Un graphique se copie dans le compte rendu, ou s'exporte en image par un clic droit.
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_4_sortir_clic_droit_graphique.png" width="1400" height="849" loading="lazy"
+             alt="Fenêtre de LibreOffice Calc en mode sombre avec un diagramme en colonnes posé sur la feuille et sélectionné : de petites poignées carrées l'entourent. Un menu contextuel est ouvert par-dessus : Couper, Copier, Coller, Position et taille, Ancre, Positionner, Nom, Texte alternatif, Assigner la macro, Exporter comme image, Éditer. Le diagramme oppose deux séries, distance_arret_sec_m en bleu et distance_arret_pluie_m en orange, pour les trois solutions numérotées 1, 2 et 3. À droite, on lit encore les colonnes de données, dont 5,8 et 8,9.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> un <b>clic</b> sur le graphique (des petites poignées carrées apparaissent autour), puis un <b>clic droit</b>&nbsp;: le menu propose <b>Copier</b> (pour le coller dans le compte rendu) et <b>Exporter comme image</b>. <i>Le graphique montré est un exemple, construit sur les deux colonnes de distances d'arrêt&nbsp;; les numéros 1, 2 et 3 de l'axe sont les trois solutions, dans l'ordre du tableau.</i></figcaption>
+      </figure>
+    
+      <figure class="geste-capture">
+        <img src="Images/geste_tableur_4b_sortir_enregistrer_image.png" width="1400" height="812" loading="lazy"
+             alt="Boîte de dialogue « Enregistrer en tant qu'image » de Windows, en mode sombre, ouverte sur le dossier de la classe : le chemin indique Documents puis 5E1, et la liste affiche « Aucun élément ne correspond à votre recherche » parce que seules les images y sont affichées. Le champ « Nom du fichier » contient graphique-comparatif_freinage_groupe03 ; le champ « Type » affiche PNG - Portable Network Graphics. Le bouton Enregistrer est en bas à droite.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> après <b>Exporter comme image</b>, cette boîte s'ouvre&nbsp;; garde le type <b>PNG</b>, donne un nom, vérifie que le chemin finit par le nom de ta classe, <b>Enregistrer</b>. Le fichier image apparaît dans ton dossier, à côté du classeur. <i>Le nom et le dossier sont des exemples.</i></figcaption>
+      </figure>
+    </li>
+  </ol>
+</section>
 <section class="card">
   <h2>⚖️ Activité 2 — Comparer avec des chiffres <span style="color:var(--sub);font-size:.8em">(~50 min)</span></h2>
   <div class="meta"><b>Objectif</b> exploiter deux tableaux de mesures et découvrir qu'aucune solution
