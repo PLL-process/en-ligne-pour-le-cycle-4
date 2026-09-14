@@ -15167,3 +15167,86 @@ Vittascience à la porte, c'est-à-dire juste avant l'activité 3, dans les deux
   écrivent aussi leurs captures dans `C:\tmp\captures_*`, hors du dépôt.
 - navigateur (Chromium Playwright), 1280 et 390 px, les trois pages : **0 encart, débordement 0 px,
   console vide** ✅
+
+## 14/09/2026 — Thème 2 : nettoyage après le retrait des encarts — trois tolérances et la CSS devenue morte
+
+Suite de #390 (six encarts du thème 2) et de #391 (trois encarts Onshape du thème 3). Cette PR ne retire
+**que du code devenu mort** : aucune page ne change à l'écran ni à l'impression — mesuré, pas supposé
+(voir plus bas). Pas de texte, pas de QCM, pas de figure, aucun média.
+
+### 1. `controle_gestes_outil.py` : les trois tolérances nominatives retirées
+
+`TOLERES` nommait les encarts Onshape de `3e_C7.1`, `4e_C7.1` et `5e_C7.1`, tolérés le temps de #391 ;
+depuis sa fusion, les trois entrées s'affichaient « tolérance périmée ». `TOLERES` est désormais
+**vide**, avec un commentaire daté ; la docstring dit l'histoire (#390, #391) et que le dictionnaire
+est vide depuis. **Le mécanisme reste** : une prochaine tolérance s'y écrit avec sa raison, et
+s'annonce périmée dès qu'elle ne sert plus.
+
+- avant : **13 encarts · 0 écart · 0 toléré · 3 tolérances périmées** ; après : **13 encarts · 0 écart
+  · 0 toléré**, plus aucune ligne « périmée ».
+- banc `tests_controle_gestes_outil.py` : **19 / 19**, inchangé. **Aucun cas retiré** : les deux cas
+  de tolérance (« la même page, tolérée nommément, passe et le dit » ; « une tolérance dont la page
+  n'a plus d'encart est annoncée périmée ») jouent une tolérance **fictive** (`sequence_x.html`) sur
+  un dépôt temporaire — ils éprouvent le mécanisme, qui reste, et non les trois entrées retirées.
+  Aucun cas du banc ne nommait `3e_C7.1`, `4e_C7.1` ni `5e_C7.1`.
+
+### 2. Les six pages de #390 : la CSS de l'encart retirée, classe par classe
+
+Sur `3e_C4.3`, `5e_C4.1`, `3e_C6.1`, `4e_C6.1`, `5e_C6.1` et `3e_C4.7`, l'encart retiré le 13/09 avait
+laissé derrière lui la CSS qui le mettait en forme. Le commentaire marqueur `gestes-outil-v1`, lui,
+était déjà parti avec l'encart : 0 occurrence sur les six pages, vérifié.
+
+L'encart portait deux classes : `gestes-outil` (la section) et `pourquoi` (son premier paragraphe) ;
+ses autres éléments (`h2`, `ol`, `li`, `b`, `code`, `kbd`) n'ont pas de classe. Vérification
+d'orphelinat **page par page**, par le script qui écrit — il refuse d'écrire si une classe est encore
+portée :
+
+| page | `gestes-outil` : éléments qui la portent | règles retirées | `pourquoi` : éléments · usages JS | sélecteur d'impression retiré |
+|---|---|---|---|---|
+| `3e_C4.3` | 0 | bloc `<style>`, 6 règles scopées | 0 · 0 → **orpheline** | `.filet,.pourquoi{opacity:1!important}` → `.filet{…}` |
+| `5e_C4.1` | 0 | bloc `<style>`, 6 règles scopées | 0 · 0 → **orpheline** | `.pourquoi{opacity:1!important}`, règle seule, retirée |
+| `3e_C6.1` | 0 | bloc `<style>`, 6 règles scopées | 0 · 0 → **orpheline** | `.filet,.pourquoi{…}` → `.filet{…}` |
+| `4e_C6.1` | 0 | bloc `<style>`, 6 règles scopées | 0 · 0 → **orpheline** | `.filet,.pourquoi{…}` → `.filet{…}` |
+| `5e_C6.1` | 0 | bloc `<style>`, 6 règles scopées | 0 · 0 → **orpheline** | `.pourquoi{opacity:1!important}`, règle seule, retirée |
+| `3e_C4.7` | 0 | bloc `<style>`, 6 règles scopées | 0 · 0 → **orpheline** | `.filet,.pourquoi{…}` → `.filet{…}` |
+
+« Éléments » : un attribut `class` qui contient le mot, seul ou parmi d'autres ; « usages JS » :
+`classList.add/toggle/contains` ou `className =`. Le mot « pourquoi » reste partout ailleurs, dans le
+texte des consignes (« Justifie : pourquoi… ») — ce n'est pas une classe. **Aucune classe n'a dû être
+gardée.** Les autres classes des listes d'impression ne venaient pas de l'encart et ne sont pas
+touchées. Par page : 10 lignes retirées et 1 raccourcie (0 pour les deux pages où `.pourquoi` était
+seule), fins de ligne CRLF conservées.
+
+### La preuve que rien ne se voit
+
+- **Impression**, `controle_impression.mjs` rejoué page par page par sa fonction exportée `relever`
+  (`media: print`), `main` contre la branche, dans un arbre de travail propre de `main` : **relevé
+  identique à l'octet sur les six pages** (textes lus / sous 4,5 : 1 / sombres sur sombre : 1 029 /
+  75 / 0, 733 / 25 / 0, 566 / 23 / 0, 358 / 14 / 0, 335 / 16 / 0, 556 / 17 / 0), et **capture pleine
+  page en impression identique à l'octet** sur les six pages, aux deux passages `main` contre branche.
+- **Écran**, 1280 et 390 px, page neuve à chaque prise, différence calculée au pixel : **identique au
+  pixel sur les 12 rendus**, débordement 0 px, console vide.
+  *Mesure écartée, et pourquoi* : un premier script qui enchaînait impression puis écran sur la même
+  page, après un rechargement de 300 ms à 1,5 s, donnait des captures d'écran instables — **y compris
+  `main` contre `main`**, sur des pages différentes à chaque passage. Ce n'était pas le nettoyage mais
+  la mesure ; elle a été remplacée par la prise « page neuve », qui ne varie pas.
+- `controle_impression.mjs` complet : **338 pages · 0 refusée** ✅
+
+### Les contrôles, tous exécutés ce jour
+
+- `controle_gestes_outil.py` : **13 encarts · 0 écart · 0 toléré** ✅ · banc **19 / 19** ✅
+- `controle_medias.py` : **41 lots · 361 médias · 361 nommés** ✅ · `controle_liens.py` : **2 916
+  adresses · 0 cassée** ✅ · `controle_cadres.py` ✅ · `controle_fichiers_telechargeables.py` :
+  **79 pages · 0 écart** ✅
+- `verif_regles_audit.py` sur les six lots : les **mêmes 7 manquements** qu'au 13/09 (n°26, n°42),
+  antérieurs · `mesurer_temps_seances.py` : **inchangé** sur les six pages ✅
+
+### Défaut noté — chantier à part, prioritaire sur la correction `fileURLToPath`
+
+Les bancs de `3e_C7.1` (34 / 37), `4e_C7.1` (38 / 41) et `5e_C7.1` (34 / 37) échouent chacun sur trois
+contrôles du QCM : « chaque question a 4 propositions — 30 anomalies », « chaque question porte une
+explication — 30 sans explication », « état déclaré — génération ancienne, sans réfutation par
+distracteur — 30 question(s) avec réfutations (0 attendu ici) ». **Ce n'est pas le QCM qui est en
+retard, c'est le banc** : les QCM ont été régénérés avec réfutations, les bancs attendent encore
+l'ancienne génération. Un banc rouge en permanence n'alerte plus de rien — c'est pourquoi ce chantier
+passe **avant** la correction `fileURLToPath` des bancs Windows. Non traité ici.
