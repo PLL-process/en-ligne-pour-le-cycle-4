@@ -15082,3 +15082,88 @@ leur, collée à l'encart.
   `fileURLToPath`.
 - navigateur (Chromium Playwright), 1280 et 390 px, les six pages : **0 encart**, **débordement 0 px**,
   **console vide** ✅
+
+## 14/09/2026 — Vague 2, étape 1 (thème 3) : trois encarts Onshape retirés, parce que la porte d'Onshape est le TP d'atelier-cao/
+
+Suite de l'entrée du 13/09 (thème 2, #390). **Règle d'or n°297** : « un geste d'outil s'enseigne pour
+être refait seul, plus tard, depuis la page, et il s'enseigne à la porte de l'outil » — l'encart « se
+place immédiatement avant la première activité qui ouvre l'outil ». Les trois pages C7 ci-dessous
+n'ouvrent pas Onshape : elles renvoient, par un lien-bouton, au TP d'`atelier-cao/` qui l'ouvre. La
+justification n'est donc pas celle du thème 2 (« personne n'ouvre l'outil ») mais : **les gestes sont
+enseignés à la vraie porte, dans le TP** — à condition que le TP les enseigne vraiment. Pascal a posé
+cette condition, geste par geste ; elle a été vérifiée avant toute coupe.
+
+### La condition : les quatre gestes de l'encart sont-ils dans le TP ?
+
+Les quatre gestes de l'encart sont **Ouvrir, Nommer, Retrouver, Sortir** (pas « enregistrer » : l'encart
+dit justement qu'il n'y a pas de bouton Enregistrer). Lu dans les trois TP, texte visible extrait
+section par section :
+
+| geste | `tp_3e_boitier_etanche.html` (← `3e_C7.1`) | `tp_4e_socle_assemblage.html` (← `4e_C7.1`) | `tp_5e_de_onshape.html` (← `5e_C7.1`) |
+|---|---|---|---|
+| **Ouvrir** | introduction : « Onshape fonctionne dans le navigateur » · « La connexion se fait avec le compte de la classe » ; section 1 : « Clique sur Créer, puis Document » | idem, mots identiques ; section 1 : « Dans Onshape, clique sur Créer en haut à gauche, puis sur Document » | section 1 : « Ouvre Onshape dans le navigateur et connecte-toi avec le compte de la classe » — plus complet que l'encart (français / anglais, captures) |
+| **Nommer** | section 1 : « Nomme-le Boitier capteur — TON NOM », sans accent ; section 8 : vérifier le nom | section 1 : « Écris Socle romain — TON NOM » ; section 8 | section 1 : « saisis de-5e-PRENOM-NOM (sans accent) », le gris pâle « Document sans titre » expliqué |
+| **Retrouver** | section 1 : « Ne cherche pas de bouton Enregistrer : il n'y en a pas » · « **Vérifie-le tout de suite : clique sur le logo Onshape, en haut à gauche, puis rouvre ton document. La page Documents s'affiche […] Tu le rouvres, tout est là.** » | section 1 : mêmes phrases, mot pour mot | section 1 : mêmes phrases, plus « ton fichier y figure deux fois » et une capture de la page Documents |
+| **Sortir** | section 8 : Exportateur…, STL, Millimètre, « stocker le fichier dans un nouvel onglet » | section 8 : idem (STEP d'abord, STL aussi) | section 8 : idem, avec captures |
+
+**Retrouver, le geste à vérifier vraiment, est couvert dans les trois TP — et par la même phrase que
+l'encart.** Une recherche du texte « logo Onshape » ne le trouve pas, parce que le HTML écrit
+`le logo <b>Onshape</b>` : une balise sépare les deux mots. Lu en texte visible, le geste y est en
+entier (logo, page Documents, rouvrir, « tout est là »). **La condition est remplie pour les trois
+pages** : aucune n'est épargnée, aucun ajout de TP n'est à prévoir pour ce geste.
+
+Les trois pages portent bien leur lien vers le TP, qui reste en place : « 🌧️ Ouvrir le TP « Le boîtier
+étanche » (Onshape) » (`../../atelier-cao/tp_3e_boitier_etanche.html`), « 🏛️ Ouvrir le TP « Le dé sur
+son socle » (Onshape) » (`tp_4e_socle_assemblage.html`), « 🎲 Ouvrir le TP « Le dé » (Onshape) »
+(`tp_5e_de_onshape.html`).
+
+### Ce qui est retiré, sur chaque page
+
+1. le commentaire marqueur `<!-- gestes-outil-v1 … -->` et la `<section class="card gestes-outil">` ;
+2. le sélecteur `#gestes-onshape` de la liste de couleurs du bloc d'impression — c'était la seule autre
+   occurrence de l'identifiant, un sélecteur CSS et non un lien : aucun renvoi de navigation ne visait
+   l'encart ;
+3. **la CSS devenue morte**, comme demandé pour ce thème : le bloc `<style>` des six règles
+   `.gestes-outil` (placé après la carte « Ce que tu as déjà fait »), et le sélecteur `.pourquoi` des
+   deux listes d'impression (`opacity` et `color`) — la classe `pourquoi` n'était portée que par le
+   paragraphe de l'encart ; le script refuse d'écrire si un élément la porte encore.
+
+Rien d'autre : pas d'activité, pas de QCM, pas de lien. Par page : 15 lignes d'encart, 9 lignes du
+bloc `<style>`, 2 lignes d'impression raccourcies — 78 lignes retirées et 6 modifiées en tout, fins de
+ligne CRLF conservées.
+
+### Noté, pas touché — pour la vague 2 étape 2
+
+**`3e_C7.1` et `5e_C7.1` portent un bouton « ▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet »
+et n'ont aucun encart Vittascience.** Dans `3e_C7.1`, le bouton est dans « 📐 Activité 3 —
+L'algorigramme, puis le code » et dans le Bonus ; dans `5e_C7.1`, dans « 💻 Activité 3 — La règle SI
+en schéma, puis en programme ». **Après cette PR, ces deux pages ouvrent un outil sans enseigner un
+seul de ses gestes.** Le manquement préexiste — l'encart retiré était Onshape, pas Vittascience — il
+n'est pas créé ici. Il relève de la **vague 2 étape 2** (captures Vittascience) : un encart
+Vittascience à la porte, c'est-à-dire juste avant l'activité 3, dans les deux pages.
+`controle_gestes_outil.py` ne le voit pas : il juge les encarts présents, pas les portes sans encart.
+
+### Les chiffres
+
+- **`controle_gestes_outil.py`** : avant **16 encarts · 0 écart · 3 tolérés nommément** ; après
+  **13 encarts · 0 écart · 0 toléré**, et les trois entrées de `TOLERES` s'affichent **« tolérance
+  périmée — la page n'a plus d'encart »**. Elles seront retirées par une petite PR du thème 2 (la garde
+  de périmètre interdit à cette branche de toucher `_outils/`), avec les règles `.gestes-outil`
+  restées sur les six pages du 13/09.
+- **`mesurer_temps_seances.py` ne bouge pas** : `3e_C7.1` 100 / 110, `4e_C7.1` 85 / 110, `5e_C7.1`
+  110 / 165, avant comme après — l'encart ne portait aucune durée.
+- `tests_controle_gestes_outil.py` : **19 / 19** ✅ · `controle_medias.py` : **41 lots · 361 médias ·
+  361 nommés** ✅ · `controle_liens.py` : **2 916 adresses · 0 cassée** ✅ · `controle_cadres.py` ✅ ·
+  `controle_fichiers_telechargeables.py` : **79 pages · 0 écart** ✅ · `controle_impression.mjs` :
+  **338 pages · 0 refusée** ✅
+- `verif_regles_audit.py` sur les trois lots : **0 manquement, avant comme après** ✅
+- **bancs des trois lots, identiques à `main`** — sorties comparées ligne à ligne dans un arbre de
+  travail propre de `main`, **0 ligne différente** : `3e_C7.1` **34 / 37**, `4e_C7.1` **38 / 41**,
+  `5e_C7.1` **34 / 37**. Les trois échecs sont les mêmes partout et **ne relèvent pas du défaut
+  Windows de chemin** : ce sont les contrôles du QCM (« chaque question a 4 propositions — 30
+  anomalies », « chaque question porte une explication — 30 sans explication », « état déclaré —
+  génération ancienne, sans réfutation par distracteur — 30 question(s) avec réfutations (0 attendu
+  ici) ») — le banc attend encore l'ancien format du QCM. **Vu, pas corrigé** (hors mandat). Ces bancs
+  écrivent aussi leurs captures dans `C:\tmp\captures_*`, hors du dépôt.
+- navigateur (Chromium Playwright), 1280 et 390 px, les trois pages : **0 encart, débordement 0 px,
+  console vide** ✅
