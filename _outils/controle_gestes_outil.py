@@ -43,10 +43,11 @@ CE QU'IL MESURE
    n'ouvre jamais depuis cette page (règle d'or n°297 : un geste d'outil s'enseigne
    pour être refait seul depuis la page, à la porte de l'outil — pas de porte, pas
    d'encart). Jusqu'à cette date, ces pages étaient seulement signalées : neuf encarts,
-   dont les six du thème 2 retirés ce jour. Les trois encarts Onshape du thème 3 sont
-   TOLÉRÉS nommément (TOLERES) le temps de leur PR : la garde de périmètre interdit à
-   une branche du thème 3 de toucher `_outils/`. Une tolérance devenue sans objet —
-   la page n'a plus d'encart — est affichée comme périmée, à retirer.
+   les six du thème 2 retirés le 13/09 (#390), les trois Onshape du thème 3 le 14/09
+   (#391) — ces trois-là TOLÉRÉS nommément (TOLERES) le temps de leur PR, puisque la
+   garde de périmètre interdit à une branche du thème 3 de toucher `_outils/`. TOLERES
+   est vide depuis. Une tolérance devenue sans objet — la page n'a plus d'encart — est
+   affichée comme périmée, à retirer.
 
    NON LU : que l'activité collée soit bien la PREMIÈRE qui OUVRE l'outil. Le script
    distingue une mention d'une ouverture aussi mal qu'un moteur de recherche : dans
@@ -95,16 +96,10 @@ OUTILS = {
 OUVRE = {"vittascience": r'(?:href|src)="https?://fr\.vittascience\.com'}
 
 #: encarts d'un outil que la page n'ouvre pas, tolérés NOMMÉMENT et pour une raison écrite.
-#: Au 13/09/2026 : les trois encarts Onshape du thème 3, dont le retrait est la PR
-#: « fable/theme-3/retirer-encarts-outil-non-ouvert » — qui ne peut pas modifier ce fichier.
-TOLERES = {
-    "theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/3e/3e_C7.1/sequence_3e_C7_capteur-confort-ny.html":
-        "vague 2 étape 1, PR thème 3 — la page renvoie à atelier-cao/tp_3e_boitier_etanche.html",
-    "theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/4e/4e_C7.1/sequence_4e_C7_jardin-conception.html":
-        "vague 2 étape 1, PR thème 3 — la page renvoie à atelier-cao/tp_4e_socle_assemblage.html",
-    "theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/5e/5e_C7.1/sequence_5e_C7_mini-projet-objet.html":
-        "vague 2 étape 1, PR thème 3 — la page renvoie à atelier-cao/tp_5e_de_onshape.html",
-}
+#: Vide depuis le 14/09/2026 : les trois encarts Onshape du thème 3, tolérés le temps de leur
+#: retrait (#391), ont disparu, et leurs entrées s'affichaient « périmées ». Le mécanisme reste :
+#: une prochaine tolérance s'écrit ici, avec sa raison, et s'annonce périmée dès qu'elle ne sert plus.
+TOLERES = {}
 
 
 def pages(racine):
