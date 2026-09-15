@@ -4,7 +4,7 @@
 PÉRIMÈTRE DE CE CONTRÔLE (règle n°47 — un contrôle déclare ce qu'il regarde).
 
 Mécanisé, donc établi : n°23, n°26, n°29, n°30, n°31, n°33, n°34, n°42, n°47,
-n°51, n°53, n°54 et n°67 — la liste exacte est imprimée en fin d'exécution.
+n°51, n°53, n°54, n°67 et n°298 — la liste exacte est imprimée en fin d'exécution.
 
 NON mécanisable, donc NON couvert, et à faire à l'œil : la justesse pédagogique
 des contenus et des corrigés, la progressivité réelle, l'ergonomie en classe, et
@@ -21,11 +21,14 @@ sur toute séquence HTML du dépôt, les règles mécanisables :
   n°33  aération : pas de pavé de texte trop long dans un même bloc
   n°34  accessibilité statique : étiquettes de select, alternatives d'images,
         pas de signalement par la seule couleur, champs de rédaction suffisants
-  n°42  formulations du référentiel recopiées, dans la carte ET dans le QCM
+  n°42  formulations du référentiel recopiées — lues dans la synthèse professeur du
+        lot depuis la n°298 (15/09/2026), et encore sur la page tant qu'elle n'est pas migrée
   n°51  le titre AFFICHÉ ne porte aucune trace du lot d'origine du gabarit
   n°53  une notion à voisine proche n'est pas définie par sa voisine
   n°54  un nombre annoncé sur un autre fichier correspond au fait
   n°67  une consigne de production s'accompagne d'un champ de saisie
+  n°298 la page élève ne porte ni le référentiel « en toutes lettres » ni la légende
+        des étiquettes : ils vont dans la synthèse professeur
 
 Les règles n°24, n°25, n°27, n°28 et n°32 relèvent du jugement pédagogique :
 le script les SIGNALE pour relecture humaine, il ne les tranche pas. Il ne dit
@@ -239,10 +242,27 @@ def _pivot(t: str) -> set[str]:
     return set(re.findall(r"[a-z]{5,}", t))
 
 
-def regle_42(src: str) -> tuple[str, str]:
+def _synthese_professeur(chemin: pathlib.Path | None) -> pathlib.Path | None:
+    if chemin is None:
+        return None
+    d = chemin.parent
+    c = sorted(d.glob("Synth*/synthese_professeur*.html")) + sorted(d.glob("synthese_professeur*.html"))
+    return c[0] if len(c) == 1 else None
+
+
+def regle_42(src: str, chemin: pathlib.Path | None = None) -> tuple[str, str]:
+    # Depuis la règle d'or n°298 (15/09/2026), le référentiel vit dans la synthèse
+    # professeur, dans un bloc `referentiel-eleve`. Une page pas encore migrée est
+    # encore lue sur place — et la n°298 la signale.
     m = re.search(r"referentiel-card.*?</table>", src, re.S)
+    ou = "carte"
     if not m:
-        return "SANS OBJET", "la page ne porte pas de carte de référentiel"
+        synth = _synthese_professeur(chemin)
+        if synth is not None:
+            m = re.search(r"referentiel-eleve.*?</table>", synth.read_text(encoding="utf-8"), re.S)
+            ou = "synthèse professeur"
+    if not m:
+        return "SANS OBJET", "ni la page ni sa synthèse professeur ne portent de tableau de référentiel"
     ecarts, lus = [], 0
     for tr in re.findall(r"<tr>(?!\s*<th).*?</tr>", m.group(0), re.S):
         cm = re.search(r"\b(\de)_(C\d+\.\d+)\b", tr)
@@ -259,10 +279,40 @@ def regle_42(src: str) -> tuple[str, str]:
         if manque:
             ecarts.append(f"{cm.group(0)} (absents : {', '.join(sorted(manque))})")
     if not lus:
-        return "SANS OBJET", "aucun code reconnu dans la carte de référentiel"
+        return "SANS OBJET", f"aucun code reconnu dans le référentiel ({ou})"
     if ecarts:
-        return "ECHEC", "formulation réécrite ou tronquée — " + " ; ".join(ecarts)
-    return "OK", f"les {lus} formulation(s) de la carte sont celles du référentiel"
+        return "ECHEC", f"formulation réécrite ou tronquée ({ou}) — " + " ; ".join(ecarts)
+    return "OK", f"les {lus} formulation(s) du référentiel ({ou}) sont celles du programme"
+
+
+# ── Règle n°298 : la page élève ne se lit pas comme un référentiel ──
+#
+# Constat de Pascal, le 15/09/2026, après expérimentation en classe : les élèves se
+# perdent. La légende « Ce que disent ces étiquettes » et le référentiel « en toutes
+# lettres » ajoutaient une lecture de codes et d'étiquettes à des lecteurs fragiles, sans
+# rien leur apprendre. La page élève garde la ligne d'étiquettes sous le titre (avec leurs
+# infobulles) ; le référentiel part, tel quel, dans la synthèse professeur. La n°298
+# remplace sur la page élève les n°35, n°36, n°42 et le troisième élément de la n°44.
+
+# Le référentiel a trois habits dans le dépôt : un titre « Référentiel… », un titre « Ce que dit le
+# programme… » ou « … compétences travaillées — en toutes lettres », et la classe `referentiel-card`
+# que le gabarit pose sur l'un ou l'autre. Mesuré le 15/09/2026 : 22 pages par le seul premier habit,
+# 9 de plus par les deux autres. Un contrôle qui n'en regarde qu'un laisse passer le tiers du problème.
+REFERENTIEL_ELEVE = re.compile(
+    r'class="[^"]*(?<![\w-])referentiel-card(?![\w-])'
+    r'|<(?:section|div)\b[^>]*class="[^"]*\b(?:card|carte|panel)\b[^"]*"[^>]*>\s*<h2[^>]*>[^<]*'
+    r'(?:[Rr]éférentiel|Ce que dit le programme|Compétences\s*(?:&amp;|&)\s*connaissances|compétences travaillées\s*—\s*en toutes lettres)', re.S)
+
+
+def regle_298(src: str) -> tuple[str, str]:
+    trouve = []
+    if REFERENTIEL_ELEVE.search(src):
+        trouve.append("le référentiel « en toutes lettres »")
+    if 'class="legende-badges"' in src:
+        trouve.append("la légende des étiquettes")
+    if trouve:
+        return "ECHEC", "la page élève porte " + " et ".join(trouve) + " : à déplacer dans la synthèse professeur"
+    return "OK", "ni référentiel ni légende des étiquettes sur la page élève"
 
 
 
@@ -388,6 +438,7 @@ REGLES = [
     ("n°53 notion et sa voisine", regle_53),
     ("n°54 nombre annoncé ailleurs", regle_54),
     ("n°67 consigne sans champ", regle_67),
+    ("n°298 page élève allégée", regle_298),
 ]
 
 SYMBOLE = {"OK": "✔", "ECHEC": "✘", "ALERTE": "▲", "SANS OBJET": "·", "INCONNU": "?"}
@@ -403,8 +454,8 @@ def analyser(chemin: pathlib.Path) -> dict:
             sortie = fn(src, niveau)
         elif fn is regle_54:
             sortie = fn(src, chemin.parent)   # la n°54 compare deux fichiers
-        elif fn is regle_51:
-            sortie = fn(src, chemin)          # la n°51 compare le titre au chemin
+        elif fn is regle_51 or fn is regle_42:
+            sortie = fn(src, chemin)          # la n°51 compare le titre au chemin ; la n°42 lit la synthèse
         else:
             sortie = fn(src)
         res[nom] = dict(zip(("etat", "detail"), sortie))

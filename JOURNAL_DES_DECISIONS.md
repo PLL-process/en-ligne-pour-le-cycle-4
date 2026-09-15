@@ -15250,3 +15250,119 @@ distracteur — 30 question(s) avec réfutations (0 attendu ici) ». **Ce n'est 
 retard, c'est le banc** : les QCM ont été régénérés avec réfutations, les bancs attendent encore
 l'ancienne génération. Un banc rouge en permanence n'alerte plus de rien — c'est pourquoi ce chantier
 passe **avant** la correction `fileURLToPath` des bancs Windows. Non traité ici.
+
+## 15/09/2026 — Règle d'or n°298 : la page élève ne se lit pas comme un référentiel (3e, thème 2)
+
+### Le constat de Pascal, après expérimentation en classe
+
+Les élèves se perdent. En tête de séquence, ils lisaient une légende « 🔎 Ce que disent ces
+étiquettes » puis une carte « Le référentiel de la séquence — en toutes lettres » : un surplus de
+lecture de codes et d'étiquettes, pour des élèves qui ne sont pas de très bons lecteurs, et qui n'en
+ont rien à faire. Qui veut le référentiel le trouve à la racine du site, par son professeur, ou sur le
+net. On garde les compétences **en haut, dans la ligne d'étiquettes sous le titre** — par exemple
+sous « Chengdu — le collège qui mesure son air ».
+
+Tranché par Pascal le 15/09 : le référentiel part **dans la synthèse professeur** du lot ; la nouvelle
+règle **remplace** les anciennes sur la page élève ; la ligne d'étiquettes reste **telle quelle**, avec
+ses infobulles ; ordre des vagues : **3e, puis 5e, puis 4e**, une PR par thème (garde de périmètre).
+
+> **Règle d'or n°298 — la page élève ne se lit pas comme un référentiel.** Une séquence s'adresse à
+> des élèves qui lisent difficilement : elle ne leur fait lire ni la légende de ses étiquettes, ni le
+> référentiel « en toutes lettres » (codes, formulations du programme, domaines du socle, CRCN, sous
+> quelque titre que ce soit — « Référentiel… », « Ce que dit le programme… », « Compétences &
+> connaissances… »). Sous le titre, la **ligne d'étiquettes** reste, avec ses infobulles : c'est tout
+> ce que la page dit du référentiel. Le référentiel lui-même vit, **recopié sans réécriture**, dans la
+> **synthèse professeur** du lot, avec la distinction écrite entre la référence normative (BO n°9 du
+> 29 février 2024) et la codification interne du dépôt.
+> — **Elle remplace, pour la page élève**, la n°35 (un code n'apparaît jamais seul), la n°36 (la
+> codification interne distinguée par écrit du BO), la n°42 (la formulation se recopie, dans la carte)
+> et le troisième élément de la n°44 (la « mention en clair » des étiquettes, dont est née la légende).
+> Ces règles **continuent de s'appliquer au document professeur**, où le référentiel est désormais
+> lu. Le `title` et l'`aria-label` des étiquettes (n°44, deux premiers éléments) restent exigés.
+
+### Ce que fait cette PR — 3e, thème 2
+
+**Six pages** portaient le référentiel ; aucune la légende (la légende n'existe qu'au thème 1).
+`3e_C4.1` (« L'énergie de la station ») n'en portait pas : **laissée intacte**.
+
+| séquence | bloc retiré | synthèse professeur qui le reçoit | CSS orpheline retirée | CSS gardée |
+|---|---|---|---|---|
+| `3e_C4.3` station d'alerte cyclonique | « 📋 Référentiel officiel (programme 2024) », tableau 4 codes | `synthese_professeur_3e_C4.3-C4.6.html` | `.referentiel-card` (1, mode essentiel) | `.refs` : 1 tableau « Choix de l'outil » |
+| `3e_C4.7` internet à Sainte-Luce | idem, 3 codes | `synthese_professeur_3e_C4.7-C4.8.html` | `.referentiel-card` (1) | `.refs` : 1 tableau |
+| `3e_C4.8` pont numérique Packet Tracer | « 📚 Le référentiel de l'atelier — en toutes lettres » | `synthese_professeur_3e_C4.7-C4.8_atelier.html` | `.referentiel-card` (1), `table.refs` (4 sélecteurs) | — |
+| `3e_C5.1` SOS station | « 📋 Référentiel officiel », 4 codes | `synthese_professeur_3e_C5.1-C5.4.html` | `.referentiel-card` (1) | `.refs` : 1 tableau |
+| `3e_C6.1` programmer l'alerte | « 📋 Référentiel officiel », 3 codes | `synthese_professeur_3e_C6.1-C6.3.html` | `.referentiel-card` (1) | `.refs` : 1 tableau |
+| `3e_C6.2` auto-test de la station | « 📚 Le référentiel de l'atelier — en toutes lettres » (compétence, socle, CRCN) | `synthese_professeur_3e_C6.2.html` | `.referentiel-card` (2), `table.refs` (4) | — |
+
+- **Orphelinat vérifié classe par classe, page par page** : une classe n'est retirée de la CSS que si
+  aucun élément ne la porte plus et qu'aucun script ne la manipule ; sinon elle est gardée et comptée
+  (`.refs` sert encore au tableau « Choix de l'outil » dans quatre pages). Les commentaires CSS
+  (« Règle d'or n°29 — mode essentiel ») sont conservés.
+- **Dans la synthèse professeur** : un bloc `<div class="bloc referentiel-eleve">` en tête, avant le
+  premier bloc, avec un commentaire qui nomme la page d'origine et la date. Le contenu est **recopié
+  tel quel** — y compris, dans `3e_C6.2`, les phrases écrites à l'élève (« tu conçois puis tu écris… ») :
+  aucune réécriture. Aucune des six pages n'écrivait la distinction BO / codification interne (elle
+  citait seulement le BO) : la phrase est **ajoutée** au bloc, dans les termes du gabarit du thème 1
+  (« Référence normative : programme de technologie du cycle 4, BO n°9 du 29 février 2024.
+  Codification opérationnelle : les codes … sont des codes de classement internes à ce dépôt ; ils ne
+  figurent pas comme tels au BO. »).
+- **Deux liens déplacés** (`3e_C6.1`) : écrits depuis le dossier de la séquence, ils cassaient dans
+  `Synthèses/` — `controle_liens.py` les a vus, ils sont réécrits (`../../3e_C6.2/…`).
+
+### Un point pour Pascal, non tranché
+
+Le référentiel de `3e_C6.1` portait **deux liens utiles à l'élève** : « Le code 3e_C6.2 … est couvert
+par « L'auto-test de la station » », et surtout **« Pour réviser la lecture d'algorigrammes avant la
+séance 2 : »** → `../3e_C6.2/entrainement_dnb_algorigrammes.html`. Déplacés avec le bloc, **l'élève
+les perd**. S'il faut garder le second, c'est une phrase à poser à l'ouverture de la séance 2 — hors
+du mandat de cette PR.
+
+### `verif_regles_audit.py`
+
+- **n°298, mécanisée** : la page élève échoue si elle porte le référentiel (la classe
+  `referentiel-card`, ou une carte titrée « Référentiel… », « Ce que dit le programme… »,
+  « Compétences & connaissances… », « … compétences travaillées — en toutes lettres ») ou la légende
+  des étiquettes. **Mesuré avant d'écrire la règle** : le seul titre « Référentiel » en trouve 22
+  pages ; les deux autres habits en ajoutent **22 de plus** — dont 17 cartes « 🎯 Ce que dit le
+  programme — recopié, pas reformulé » des séquences d'atelier C7/C8. Le contrôle regarde les trois
+  habits : un contrôle qui n'en voit qu'un laisse passer la moitié du problème.
+- **n°42** lit désormais le tableau du référentiel **dans la synthèse professeur** (bloc
+  `referentiel-eleve`), et encore sur la page tant qu'elle n'est pas migrée. Mêmes écarts qu'avant, au
+  même texte : `3e_C4.6` dans le lot `3e_C4.3`, `3e_C4.8` dans le lot `3e_C4.7` (formulations tronquées,
+  antérieures — déjà comptées le 13/09), désormais signalées « (synthèse professeur) ».
+- Total du dépôt : **92 manquements sur `main`, 136 sur la branche** = 92 + **44 pages qui portent
+  encore un référentiel** (n°298). Ce chiffre descendra à chaque PR de la vague.
+
+### Ce qui reste — la vague, dans l'ordre tranché
+
+| niveau | thème 1 | thème 2 | thème 3 |
+|---|---|---|---|
+| **3e** | 4 | **0 — cette PR** | 11 |
+| **5e** | 5 (dont 2 avec la légende) | 2 | 7 |
+| **4e** | 4 (dont 2 avec la légende) | 3 | 8 |
+
+Détail des 44 pages : voir la sortie de `verif_regles_audit.py` (règle n°298). À regarder de près le
+moment venu : `5e_C9.1` titre sa carte « Ce que dit le programme — **et où tu en es dans le cycle** » —
+elle peut porter une information de progression destinée à l'élève.
+
+### Les contrôles, tous exécutés ce jour
+
+- `verif_regles_audit.py` sur les six lots : **n°298 ✔ partout**, n°42 lue dans la synthèse ✔
+  (`3e_C5.1` 4 formulations justes, `3e_C6.1` 2 ; écarts antérieurs cf. ci-dessus) ; dépôt : 92 → 136, soit exactement les 44 pages
+  restantes
+- `controle_formulations.py` : **80 citations · 80 justes · 0 écart**, sur `main` comme sur la
+  branche — il lit les synthèses : les formulations déplacées restent contrôlées
+- `controle_liens.py` : **2 916 adresses · 0 cassée** (après réécriture des deux liens) ✅ ·
+  `controle_medias.py` : **361 médias nommés** ✅ · `controle_gestes_outil.py` : **13 · 0 · 0** ✅ ·
+  `controle_cadres.py` ✅ · `controle_fichiers_telechargeables.py` : **79 pages · 0 écart** ✅ ·
+  `controle_impression.mjs` : **338 pages · 0 refusée** ✅
+- `mesurer_temps_seances.py` : **identique à `main`** sur les six pages — le référentiel ne portait
+  aucune durée
+- bancs des lots, **comparés à `main`** : `3e_C6.2` **22 / 22** et entraînement DNB **21 / 21**,
+  identiques ; `3e_C4.3` **22 / 23**, `3e_C4.7` **32 / 35**, `3e_C5.1` **30 / 34**, `3e_C6.1` **31 / 35**,
+  mêmes scores qu'à `main` (défaut Windows de chemin connu). Deux lignes changent, et c'est attendu :
+  `3e_C4.3` compte 52 lignes de tableau au lieu de 57 (les cinq du référentiel retiré), `3e_C6.1`
+  4 liens internes au lieu de 6 (les deux liens partis avec le bloc). `3e_C4.8` n'a pas de banc.
+- navigateur (Chromium Playwright), 1280 et 390 px, les six séquences et les six synthèses : **0 titre
+  « référentiel » et 0 légende sur les séquences**, ligne d'étiquettes présente (6 à 9 étiquettes),
+  **1 bloc référentiel dans chaque synthèse**, débordement 0 px, **console vide**
