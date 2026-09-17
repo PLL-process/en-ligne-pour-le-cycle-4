@@ -15423,3 +15423,101 @@ et médias : rien n'a été touché. Le diff tient en **une ligne ajoutée** à 
 - navigateur (Chromium Playwright), **1280 et 390 px**, séance 2 ouverte : la phrase se place entre la
   question directrice et l'`<object>` de l'algorigramme, hors de tout encart ou activité. Le lien
   s'ouvre, **débordement 0 px**, 0 titre « référentiel » et 0 `.referentiel-card`, **console vide**.
+
+## 17/09/2026 — 3e_C1.1 : la problématique recentrée sur les métiers, trois cas et un transfert vers la Martinique
+
+### La problématique, mot pour mot
+
+- **Avant** : « Comment s'appuyer sur des données fiables pour définir le besoin et les contraintes
+  d'un système robotique de lutte contre les feux — sans comparaisons trompeuses, et sans décision
+  automatique injustifiée ? »
+- **Après** : « Quand une machine se met à décider à notre place, qu'est-ce qui disparaît, qu'est-ce
+  qui subsiste — et qui en décide ? »
+
+**Pourquoi.** L'ancienne question était une bonne question de méthode, mais ce n'était pas celle du
+code C1, qui porte sur les liens entre usages et évolutions et sur l'incidence d'un objet technique
+sur la société. En classe, les élèves de Pascal posent d'eux-mêmes la vraie question : « est-ce que
+mon métier va disparaître ? ». La nouvelle problématique est une **question de jugement, pas de
+pronostic**. La page pose la question, donne de quoi l'instruire, et ne dit à aucun élève ce que
+deviendra son métier. Le sous-titre, l'encart « Ce que tu as déjà fait », les activités 2, 3 et 4,
+les QCM, le lexique, les synthèses, la ligne d'étiquettes et le bloc référentiel sont inchangés : la
+n°298 viendra dans sa propre PR. La fiche pédagogique cite désormais les deux formulations.
+
+### Activité 1, partie d) — trois métiers, trois réponses
+
+Ajoutée après la production c), avec une zone de rédaction (`a1_cas`), une version étayée, deux
+aides et un paragraphe dans la correction. Le verrou de l'activité 1 exige désormais trois lignes,
+les trois métiers nommés, et au moins une fois **qui décide**. Durée de l'activité : ~45 → ~55 min.
+
+| Cas | Ce que la page écrit | Source |
+|---|---|---|
+| 🚚 Le camion | la machine remplace réellement le conducteur ; les mises en service avancent plus lentement que les annonces | fait autorisé tel quel par Pascal ; **aucun chiffre, aucun nom d'entreprise, aucun itinéraire** |
+| ✈️ L'avion | eMCO (*extended Minimum Crew Operations*) : deux pilotes au décollage et à l'atterrissage, un seul en croisière ; l'EASA freine, car avec les cockpits actuels l'équivalence de sécurité n'a pas pu être démontrée ; 2030 n'est probablement pas réaliste | easa.europa.eu, page du projet eMCO-SiPO (NLR, 09/2022 → 04/2025), consultée le 17/09/2026 : « an equivalent level of safety between eMCO and the current two-crew operations cannot be sufficiently demonstrated ». L'échéance 2030 est autorisée telle quel par Pascal ; la seule trace trouvée en ligne est **secondaire** (AeroTime, 07/02/2023, citant un expert de l'EASA interrogé par Reuters) |
+| 🌾 La canne, en Martinique | coupée à la main pendant longtemps ; aujourd'hui environ trois quarts de la canne martiniquaise récoltés par des machines ; quelques champs encore coupés à la main, surtout chez les petits planteurs | Martinique la 1ère, 02/04/2026 : « Aujourd'hui, 75 % de la canne est récoltée par des machines. Seuls quelques champs sont encore coupés manuellement. » ; ODEADOM, synthèse « Coûts de production de la canne à sucre » (2022) : grands planteurs « quasiment mécanisés à 100 % », petits planteurs « récoltent pour la plupart à la main » |
+
+**La formulation du cas de la canne est une proposition soumise à Pascal** (histoire des
+plantations). Elle reste volontairement factuelle et sans date.
+
+### Le bloc de transfert
+
+« 🌍 Transfert — les métiers d'ici (~10 min) », dans le panneau de la séance 5, **après l'activité 5
+et avant le bilan**. Même structure que le bloc « Transfert — la même station à Sainte-Luce » de
+`5e_C2.1` : consigne, version étayée, aide de niveau 1, aide de niveau 2, correction complète, puis
+un « À retenir ». La consigne demande trois métiers d'ici, s'ils ont déjà changé ou pourraient
+changer, et qui en décide. La correction se limite aux trois cas vérifiés et dit explicitement ce
+qu'elle ne dit pas : si ces métiers disparaîtront. **Le bloc n'est pas verrouillé** : ajouter un
+sixième verrou changerait la barre « 5 / 5 » ; c'est à Pascal de choisir.
+
+### Le schéma de Herschel
+
+`Images/herschel_au_dela_du_rouge.svg`, en CC0, écrit à la main sur le modèle des quatre schémas de
+`5e_C2.1`. Il est inséré dans l'activité 1 b), juste après le paragraphe de 1800 et **avant** la
+question « Ce que Herschel cherchait ». Il montre le dispositif : le Soleil, la fente, le prisme, six
+bandes de couleur, sept thermomètres, et le plus haut dans la zone sombre. Il ne montre ni le but ni
+la conclusion : ni le mot « infrarouge », ni « pour savoir laquelle chauffe le plus ». Entrée ajoutée
+dans `SOURCES_MEDIAS.md` et dans le manifeste.
+
+### Ce que j'ai refusé d'écrire, faute de vérification
+
+- **Une disposition américaine de 2026 imposant deux pilotes.** Seuls des articles secondaires en
+  parlent (Simple Flying, SkyFlashes, VisaVerge), et ils ne s'accordent pas entre eux ; aucun texte
+  primaire trouvé sur congress.gov. Omise.
+- **Tout ratio d'opérateurs par camion autonome**, et tout chiffre ou nom propre sur les déploiements
+  de camions. Omis.
+- **« Il y a des décennies » pour la canne.** Aucune source consultée ne date la mécanisation. La page
+  écrit « longtemps » et « aujourd'hui », sans date.
+- **La pénurie de coupeurs de canne** (Martinique la 1ère, 30/06/2026 : « une crise sans
+  précédent ») : sourcée, mais elle change le cadrage (la machine arrive parce que les bras
+  manquent). Proposée à Pascal, pas écrite.
+- **« Les robots se construisent tout seuls »**, ou toute variante : interdit.
+- **Aucun exemple chinois nouveau** (feux d'artifice et drones, Gaokao, taxis autonomes).
+- **Aucune prédiction** sur un métier, ni dans les cas ni dans la correction du transfert.
+
+### Le temps — à annoncer, décision de Pascal
+
+`mesurer_temps_seances.py` **bouge** : `3e_C1.1` passe de 250 à **270 min** d'activités, pour
+5 × 55 = 275 min annoncées (marge de +25 à +5 min). Séance 1 : 5 + 55 = 60 min. Séance 5 :
+45 + 10 + 10 = 65 min. Avec les 10 min de service, **la n°23 passe au rouge** dans
+`verif_regles_audit.py` (dépassement de 5 min) ; c'est le seul écart avec `main` sur ce lot (136 → 137
+manquements). Pour la corriger, il faut changer le bandeau « 5 séances de 55 min », qui est dans la
+ligne d'étiquettes, hors mandat. Trois options : annoncer 6 séances, faire le transfert à la maison,
+ou déplacer le bilan.
+
+### Les contrôles, tous exécutés ce jour
+
+- banc du lot `tests_3e_C1.1-C1.4_tsinghua.py` : **46 / 46** (41 sur `main`, + 5 : verrou d)
+  fermé puis rouvert, problématique, schéma de Herschel sans la réponse du QCM, structure et place du
+  transfert)
+- `controle_liens.py` : **2 918 adresses · 0 cassée** ✅ (+ 1 : le schéma)
+- `controle_medias.py` ✅ · `controle_cadres.py` ✅ · `controle_formulations.py` ✅ ·
+  `controle_gestes_outil.py` ✅ · `controle_fichiers_telechargeables.py` ✅
+- `verif_regles_audit.py` : identique à `main` sauf la **n°23 ✘** (ci-dessus) ; n°31 : 9 versions
+  étayées pour 15 zones de rédaction (7/13 avant) ; n°67 : 46 champs (44 avant) ; la n°298 reste ✘
+  comme sur `main`, attendue dans une autre PR
+- `controle_impression.mjs` (lancé en important `main()`) : **338 pages · 0 refusée** ✅ ;
+  55 181 textes lus ; 4 002 sous 4,5, **inchangé**
+- navigateur (Chromium Playwright), **1280 et 390 px**, parties d) et transfert dépliées : **console
+  vide** ; débordement 0 px à 1280 px ; à 390 px, **49 px en séance 5, identiques sur `main`** : le
+  tableau des quatre solutions de l'activité 5, hors mandat et non touché
+- le manifeste du lot : empreintes recalculées pour les fichiers modifiés et pour le schéma ; les
+  autres empreintes étaient **déjà périmées sur `main`** (15 fichiers) et n'ont pas été touchées

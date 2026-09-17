@@ -1,7 +1,7 @@
 # Fiche pédagogique — 3e_C1.1 à C1.4 · « Tsinghua : robots, drones et IA face aux feux »
 
 **Niveau** 3e · **Thème 1** Objets, systèmes techniques, usages et interactions
-**Durée** 5 séances de 55 min — 250 min annoncés pour 275 disponibles — séance 5 : 45 + 10 = 55 min (l'activité 5 était annoncée à 50 min, soit 60 avec le bilan dans un créneau de 55 ; audit du 08/09)
+**Durée** 5 séances de 55 min — **270 min** d'activités pour 275 disponibles depuis le 17/09/2026 (250 auparavant) — séance 1 : 5 + 55 = 60 min ; séance 5 : 45 + 10 (transfert) + 10 (bilan) = 65 min. **Les deux séances débordent du créneau : décision de Pascal attendue** (annoncer 6 séances, ou sortir le transfert ou le bilan du temps de classe). Historique : l'activité 5 était annoncée à 50 min, soit 60 avec le bilan dans un créneau de 55 ; audit du 08/09.
 **Objet-fil** un système robotique d'aide à la lutte contre les feux de végétation
 
 ## Compétences visées (formulations du référentiel, BO n°9 du 29 février 2024)
@@ -18,20 +18,29 @@ produire, il défend une lecture et en assume les limites.
 
 ## Problématique
 
-Comment s'appuyer sur des données fiables pour définir le besoin et les contraintes d'un système
-robotique de lutte contre les feux — sans comparaisons trompeuses, et sans décision automatique
-injustifiée ?
+Quand une machine se met à décider à notre place, qu'est-ce qui disparaît, qu'est-ce qui
+subsiste — et qui en décide ?
+
+*Recentrée le 17/09/2026.* L'ancienne problématique — « Comment s'appuyer sur des données fiables
+pour définir le besoin et les contraintes d'un système robotique de lutte contre les feux — sans
+comparaisons trompeuses, et sans décision automatique injustifiée ? » — était une question de
+méthode. Celle-ci est celle du code C1 (usages, évolutions, incidence sur la société), et celle que
+les élèves posent d'eux-mêmes : « est-ce que mon métier va disparaître ? ». C'est une question de
+**jugement, pas de pronostic** : la page ne dit à aucun élève ce que deviendra son métier. Les
+activités 2 à 4 (données, proxy, ce qui ne se convertit pas) restent inchangées : elles donnent de
+quoi instruire la question sans se laisser abuser par un chiffre.
 
 ## Déroulé
 
 | Séance | Titre | Production attendue |
 |---|---|---|
 | Billet | Trois réflexes de lecture — sans note | 3 réponses, et un aiguillage |
-| 1 | Ce qui a changé, et ce qui a rompu | les trois régimes, leur métier, et où est la rupture |
+| 1 | Ce qui a changé, et ce qui a rompu | les trois régimes, leur métier, et où est la rupture — puis trois métiers (camion, avion, canne en Martinique) et qui décide |
 | 2 | Ce que les données permettent d'affirmer | 4 lignes de matrice, chacune justifiée par l'accord manquant |
 | 3 | Un proxy, et sa critique | ratio, estimation, équivalence, **avertissement méthodologique** |
 | 4 | Ce qui ne se convertit pas | 3 raisons de fragilité + la phrase d'incommensurabilité |
 | 5 | Deux argumentaires courts | l'objet sur la société, puis la société sur l'objet |
+| 5 | 🌍 Transfert — les métiers d'ici | trois métiers de Martinique : déjà changé ou pourrait changer, et qui décide (non verrouillé) |
 | Bilan | Hypothèse, métacognition, auto-positionnement | 3 auto-positionnements |
 
 ## Le geste propre à ce lot
@@ -79,5 +88,5 @@ traces.*
 
 ## Ressources du lot
 
-Séquence · QCM de 30 questions (11 illustrées) · deux synthèses · trois corrigés graphiques CC0 ·
+Séquence · QCM de 30 questions (11 illustrées) · deux synthèses · trois corrigés graphiques CC0 · le schéma de l'expérience de Herschel (CC0) ·
 le jeu de données public et sourcé · la suite de tests.

@@ -10,6 +10,10 @@ PÉRIMÈTRE (règle n°47) — ce que cette suite vérifie :
   · la présence des deux blocs de la règle n°4, corrigé du Bonus compris ;
   · que la phrase éthique de l'activité 4 est VISIBLE et non repliée (règle n°68) ;
   · que la carte de référentiel porte les quatre formulations ;
+  · la partie d) de l'activité 1 : sans les trois métiers, le verrou 1 reste fermé ;
+  · la problématique recentrée (17/09/2026), le schéma de Herschel placé dans
+    l'activité 1 et dont l'alternative ne donne pas la réponse du QCM, et le bloc de
+    transfert Martinique après l'activité 5 dans l'ordre du modèle 5e_C2.1 ;
   · pour le QCM : titre affiché et sous-titre (n°51), nombre de questions,
     répartition des bonnes réponses, réfutation de chaque distracteur, filtre par
     compétence, ouverture ciblée, chargement effectif des images, zéro erreur JS.
@@ -58,6 +62,7 @@ BON = {
  "a5_4":"poserait un problème de responsabilité : engager des moyens et des vies reste une décision humaine",
 }
 TXT = {
+ "a1_cas":"Le camion : la machine remplace vraiment le conducteur, mais les mises en service sont plus lentes que les annonces. Qui décide : les entreprises et les règles de circulation.\nL'avion : la technique permet d'étudier un seul pilote en croisière, mais l'EASA freine. Qui décide : une autorité de sécurité.\nLa canne : le remplacement a déjà eu lieu en grande partie. Qui a décidé : les exploitants, les planteurs.",
  "a1_rupture":"1. La vigie humaine permet de voir une fumée à l'horizon, environ 20 km par temps clair. Le métier est celui de guetteur : on sait regarder longtemps.\n2. Le satellite permet d'observer un continent entier et de voir la nuit, ce qui était impossible avant. Le métier devient celui d'analyste d'images.\n3. La détection multi-indices permet une surveillance continue et locale, avec des capteurs qui se confirment. Le métier devient celui de concepteur et exploitant de système.\n4. La rupture est le passage à l'observation satellitaire : ce n'est pas une simple amélioration du regard humain, car observer la nuit sur un continent ne pouvait pas se faire du tout avant, et le savoir-faire du guetteur ne suffit plus.",
  "a2_matrice":"surface_brulee (ha) : non, l'unité est l'hectare et non des kgCO₂e.\nemissions_estimees (MtCO2) : oui, l'unité est convertible en kgCO₂e, mais la période est 2023 et non 2026.\nvoiture_thermique (kgCO2e/km) : à vérifier, c'est un facteur et non une quantité ; le périmètre est le véhicule, pas le passager.\ndebris_generes (tonnes) : non, ni la même unité ni la même nature, et le périmètre n'a rien de commun.",
  "a3_proxy":"Ratio : 20 000 000 ÷ 504 002 ≈ 39,68 tCO₂/ha.\nEstimation : 50 000 × 39,68 ≈ 1,98 million de tonnes de CO₂.\nÉquivalence : environ 14,0 milliards de km en voiture thermique.\nAvertissement : estimation par proxy européen 2023, non officielle pour la France 2026 ; le ratio moyen masque la végétation, l'humidité et la biomasse consumée.",
@@ -81,6 +86,14 @@ async def tester_sequence(p):
         cls=await pg.evaluate(f"document.getElementById('fb{n}').className")
         ok="ok" in cls.split(); r.append((f"verrou ouvert check {n}", ok))
         if not ok: print("  ↳",n,(await pg.evaluate(f"document.getElementById('fb{n}').textContent"))[:280])
+    # d) de l'activité 1 : sans les trois métiers, le verrou 1 se referme
+    await pg.evaluate("(()=>{const e=document.getElementById('a1_cas');e.dataset.garde=e.value;e.value='';})()")
+    await pg.click("#tab-s1"); await pg.click("[data-check='1']")
+    cls=await pg.evaluate("document.getElementById('fb1').className")
+    r.append(("verrou 1 fermé sans les trois métiers", "ok" not in cls.split()))
+    await pg.evaluate("(()=>{const e=document.getElementById('a1_cas');e.value=e.dataset.garde;})()")
+    await pg.click("[data-check='1']")
+    r.append(("verrou 1 rouvert avec les trois métiers", "ok" in (await pg.evaluate("document.getElementById('fb1').className")).split()))
     r.append(("progression 5/5", (await pg.evaluate("document.getElementById('progTxt').textContent")).strip().startswith("5 / 5")))
     h=await pg.evaluate("document.getElementById('lienQcm').getAttribute('href')")
     r.append(("QCM complet en fin", "#" not in h))
@@ -95,11 +108,23 @@ async def tester_sequence(p):
     r.append(("bloc Bonus présent", "Bonus" in body))
     r.append(("corrigé du Bonus présent", "Correction du Bonus" in body))
     r.append(("phrase éthique visible et non repliée", "ne comparons ni la valeur des vies" in await pg.evaluate("document.querySelector('#s4').innerText")))
+    r.append(("problématique recentrée sur ce qui disparaît et qui décide",
+              "qu'est-ce qui disparaît, qu'est-ce qui subsiste — et qui en décide" in body.replace("\u00a0"," ")))
+    hers=await pg.evaluate("(()=>{const i=document.querySelector('#s1 img[src$=\"herschel_au_dela_du_rouge.svg\"]');return i?i.alt:''})()")
+    r.append(("schéma de Herschel dans l'activité 1, sans la réponse du QCM",
+              len(hers)>200 and "infrarouge" not in hers.lower() and "cherchait" not in hers.lower().replace("ne dit ni ce que herschel cherchait","")))
+    tr=await pg.evaluate("""(()=>{const t=document.getElementById('a5_transf'); if(!t) return null;
+        const c=t.closest('section.card'); const s=[...c.querySelectorAll('details')].map(d=>d.className);
+        return {s5:!!t.closest('#s5'), ordre:s.join(' '), titre:c.querySelector('h2').textContent,
+                apresA5: !!c.previousElementSibling && c.previousElementSibling.querySelector('#a5_arg_ost')!==null};})()""")
+    r.append(("transfert Martinique : après l'activité 5, étayée, aides 1 et 2, correction",
+              bool(tr) and tr["s5"] and tr["apresA5"] and "Transfert" in tr["titre"]
+              and tr["ordre"]=="etayage aide aide1 aide aide2 correction"))
     r.append(("les quatre codes en carte de référentiel", 4==await pg.evaluate("document.querySelectorAll('.referentiel-card tbody tr, .referentiel-card tr').length-1")))
     imgs=await pg.evaluate("""(async()=>{const m=[];for(const i of document.querySelectorAll('img')){
         const ok=await new Promise(res=>{const x=new Image();x.onload=()=>res(1);x.onerror=()=>res(0);x.src=i.getAttribute('src');});
         if(!ok)m.push(i.getAttribute('src'));}return m;})()""")
-    r.append(("les 3 corrigés graphiques se chargent", not imgs)); print("  images manquantes:", imgs) if imgs else None
+    r.append(("les images de la séquence se chargent (3 corrigés, Herschel, captures)", not imgs)); print("  images manquantes:", imgs) if imgs else None
     r.append(("zéro erreur JS", not errs))
     for n,o in r: print(("✅" if o else "❌"), n)
     print("erreurs:", errs); print("Séquence :", sum(1 for _,o in r if o), "/", len(r))
