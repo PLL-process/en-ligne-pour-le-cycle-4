@@ -1,7 +1,7 @@
 # Fiche pédagogique — 3e_C1.1 à C1.4 · « Tsinghua : robots, drones et IA face aux feux »
 
 **Niveau** 3e · **Thème 1** Objets, systèmes techniques, usages et interactions
-**Durée** 5 séances de 55 min — **270 min** d'activités pour 275 disponibles depuis le 17/09/2026 (250 auparavant) — séance 1 : 5 + 55 = 60 min ; séance 5 : 45 + 10 (transfert) + 10 (bilan) = 65 min. **Les deux séances débordent du créneau : décision de Pascal attendue** (annoncer 6 séances, ou sortir le transfert ou le bilan du temps de classe). Historique : l'activité 5 était annoncée à 50 min, soit 60 avec le bilan dans un créneau de 55 ; audit du 08/09.
+**Durée** 5 séances de 55 min — **265 min** d'activités pour 275 disponibles depuis le 17/09/2026 (250 auparavant), marge de service de 10 min comprise. Séance par séance : **S1** billet 5 + activité 1 50 = 55 · **S2** 50 · **S3** 50 · **S4** activité 4 45 + transfert 10 = 55 · **S5** activité 5 45 + bilan 10 = 55. La séance 5, déjà rabotée en septembre, ne reçoit rien de plus. Historique : l'activité 5 était annoncée à 50 min, soit 60 avec le bilan dans un créneau de 55 ; audit du 08/09.
 **Objet-fil** un système robotique d'aide à la lutte contre les feux de végétation
 
 ## Compétences visées (formulations du référentiel, BO n°9 du 29 février 2024)
@@ -35,13 +35,21 @@ quoi instruire la question sans se laisser abuser par un chiffre.
 | Séance | Titre | Production attendue |
 |---|---|---|
 | Billet | Trois réflexes de lecture — sans note | 3 réponses, et un aiguillage |
-| 1 | Ce qui a changé, et ce qui a rompu | les trois régimes, leur métier, et où est la rupture — puis trois métiers (camion, avion, canne en Martinique) et qui décide |
+| 1 | Ce qui a changé, et ce qui a rompu | les trois régimes, leur métier, et où est la rupture — puis trois métiers (camion, avion, canne en Martinique) lus et discutés, avec une réponse de quelques mots par ligne : déjà fait, en cours ou freiné, et qui décide (+5 min) |
 | 2 | Ce que les données permettent d'affirmer | 4 lignes de matrice, chacune justifiée par l'accord manquant |
 | 3 | Un proxy, et sa critique | ratio, estimation, équivalence, **avertissement méthodologique** |
 | 4 | Ce qui ne se convertit pas | 3 raisons de fragilité + la phrase d'incommensurabilité |
+| 4 | 🌍 Transfert — les métiers d'ici (~10 min) | trois métiers de Martinique : déjà changé ou pourrait changer, et qui décide (non verrouillé) — la vraie production écrite sur les métiers |
 | 5 | Deux argumentaires courts | l'objet sur la société, puis la société sur l'objet |
-| 5 | 🌍 Transfert — les métiers d'ici | trois métiers de Martinique : déjà changé ou pourrait changer, et qui décide (non verrouillé) |
 | Bilan | Hypothèse, métacognition, auto-positionnement | 3 auto-positionnements |
+
+**Pourquoi le transfert est en séance 4.** Ce qui ne se convertit pas, ce qu'une machine ne
+remplace pas, et qui en décide : c'est le même geste, et les dix minutes y sont.
+
+**Quatre mécanismes, pas un** (correction de l'activité 1 d). Une machine remplace un travail parce
+qu'elle sait le faire (le camion), est arrêtée par une autorité (l'avion), est choisie par ceux qui
+l'achètent (la canne), ou arrive parce que les bras manquent (la canne, où la filière manque de
+coupeurs — Martinique la 1ère, 30/06/2026). « Qui décide » n'a donc pas toujours une seule réponse.
 
 ## Le geste propre à ce lot
 

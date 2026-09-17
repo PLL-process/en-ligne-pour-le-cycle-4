@@ -15447,21 +15447,23 @@ n°298 viendra dans sa propre PR. La fiche pédagogique cite désormais les deux
 
 Ajoutée après la production c), avec une zone de rédaction (`a1_cas`), une version étayée, deux
 aides et un paragraphe dans la correction. Le verrou de l'activité 1 exige désormais trois lignes,
-les trois métiers nommés, et au moins une fois **qui décide**. Durée de l'activité : ~45 → ~55 min.
+les trois métiers nommés, et au moins une fois **qui décide**. Durée de l'activité : ~45 → ~50 min
+(~55 dans la première version ; voir « Reprise avant fusion »).
 
 | Cas | Ce que la page écrit | Source |
 |---|---|---|
 | 🚚 Le camion | la machine remplace réellement le conducteur ; les mises en service avancent plus lentement que les annonces | fait autorisé tel quel par Pascal ; **aucun chiffre, aucun nom d'entreprise, aucun itinéraire** |
-| ✈️ L'avion | eMCO (*extended Minimum Crew Operations*) : deux pilotes au décollage et à l'atterrissage, un seul en croisière ; l'EASA freine, car avec les cockpits actuels l'équivalence de sécurité n'a pas pu être démontrée ; 2030 n'est probablement pas réaliste | easa.europa.eu, page du projet eMCO-SiPO (NLR, 09/2022 → 04/2025), consultée le 17/09/2026 : « an equivalent level of safety between eMCO and the current two-crew operations cannot be sufficiently demonstrated ». L'échéance 2030 est autorisée telle quel par Pascal ; la seule trace trouvée en ligne est **secondaire** (AeroTime, 07/02/2023, citant un expert de l'EASA interrogé par Reuters) |
-| 🌾 La canne, en Martinique | coupée à la main pendant longtemps ; aujourd'hui environ trois quarts de la canne martiniquaise récoltés par des machines ; quelques champs encore coupés à la main, surtout chez les petits planteurs | Martinique la 1ère, 02/04/2026 : « Aujourd'hui, 75 % de la canne est récoltée par des machines. Seuls quelques champs sont encore coupés manuellement. » ; ODEADOM, synthèse « Coûts de production de la canne à sucre » (2022) : grands planteurs « quasiment mécanisés à 100 % », petits planteurs « récoltent pour la plupart à la main » |
+| ✈️ L'avion | eMCO (*extended Minimum Crew Operations*) : deux pilotes au décollage et à l'atterrissage, un seul en croisière ; l'EASA freine, car avec les cockpits actuels l'équivalence de sécurité n'a pas pu être démontrée | easa.europa.eu, page du projet eMCO-SiPO (NLR, 09/2022 → 04/2025), consultée le 17/09/2026 : « an equivalent level of safety between eMCO and the current two-crew operations cannot be sufficiently demonstrated ». **L'échéance 2030 a été retirée** : sa seule trace en ligne est secondaire (AeroTime, 07/02/2023, citant un expert de l'EASA interrogé par Reuters), pas l'EASA |
+| 🌾 La canne, en Martinique | coupée à la main pendant longtemps ; aujourd'hui environ trois quarts de la canne martiniquaise récoltés par des machines ; quelques champs encore coupés à la main, surtout chez les petits planteurs | formulation d'origine **validée par Pascal telle quelle**, suivie d'une phrase sur la pénurie de coupeurs. Martinique la 1ère, 02/04/2026 : « Aujourd'hui, 75 % de la canne est récoltée par des machines. Seuls quelques champs sont encore coupés manuellement. » ; ODEADOM, synthèse « Coûts de production de la canne à sucre » (2022) : grands planteurs « quasiment mécanisés à 100 % », petits planteurs « récoltent pour la plupart à la main » |
 
-**La formulation du cas de la canne est une proposition soumise à Pascal** (histoire des
-plantations). Elle reste volontairement factuelle et sans date.
+**La formulation du cas de la canne a été validée par Pascal telle quelle.** Elle reste
+volontairement factuelle et sans date, et aucune phrase sur l'histoire des plantations n'y est
+ajoutée : ce n'est pas le sujet de la page.
 
 ### Le bloc de transfert
 
-« 🌍 Transfert — les métiers d'ici (~10 min) », dans le panneau de la séance 5, **après l'activité 5
-et avant le bilan**. Même structure que le bloc « Transfert — la même station à Sainte-Luce » de
+« 🌍 Transfert — les métiers d'ici (~10 min) », dans le panneau de la **séance 4, après l'activité 4**
+(d'abord placé en séance 5 ; voir « Reprise avant fusion »). Même structure que le bloc « Transfert — la même station à Sainte-Luce » de
 `5e_C2.1` : consigne, version étayée, aide de niveau 1, aide de niveau 2, correction complète, puis
 un « À retenir ». La consigne demande trois métiers d'ici, s'ils ont déjà changé ou pourraient
 changer, et qui en décide. La correction se limite aux trois cas vérifiés et dit explicitement ce
@@ -15486,16 +15488,15 @@ dans `SOURCES_MEDIAS.md` et dans le manifeste.
   de camions. Omis.
 - **« Il y a des décennies » pour la canne.** Aucune source consultée ne date la mécanisation. La page
   écrit « longtemps » et « aujourd'hui », sans date.
-- **La pénurie de coupeurs de canne** (Martinique la 1ère, 30/06/2026 : « une crise sans
-  précédent ») : sourcée, mais elle change le cadrage (la machine arrive parce que les bras
-  manquent). Proposée à Pascal, pas écrite.
+- ~~**La pénurie de coupeurs de canne**~~ : proposée ici, puis **écrite** à la demande de Pascal
+  (voir « Reprise avant fusion »).
 - **« Les robots se construisent tout seuls »**, ou toute variante : interdit.
 - **Aucun exemple chinois nouveau** (feux d'artifice et drones, Gaokao, taxis autonomes).
 - **Aucune prédiction** sur un métier, ni dans les cas ni dans la correction du transfert.
 
-### Le temps — à annoncer, décision de Pascal
+### Le temps — première version, remplacée (voir « Reprise avant fusion »)
 
-`mesurer_temps_seances.py` **bouge** : `3e_C1.1` passe de 250 à **270 min** d'activités, pour
+`mesurer_temps_seances.py` **bougeait** : `3e_C1.1` passe de 250 à **270 min** d'activités, pour
 5 × 55 = 275 min annoncées (marge de +25 à +5 min). Séance 1 : 5 + 55 = 60 min. Séance 5 :
 45 + 10 + 10 = 65 min. Avec les 10 min de service, **la n°23 passe au rouge** dans
 `verif_regles_audit.py` (dépassement de 5 min) ; c'est le seul écart avec `main` sur ce lot (136 → 137
@@ -15521,3 +15522,64 @@ ou déplacer le bilan.
   tableau des quatre solutions de l'activité 5, hors mandat et non touché
 - le manifeste du lot : empreintes recalculées pour les fichiers modifiés et pour le schéma ; les
   autres empreintes étaient **déjà périmées sur `main`** (15 fichiers) et n'ont pas été touchées
+
+### Reprise avant fusion — cinq corrections demandées
+
+1. **Le temps.** Aucune des trois options proposées. Répartition mesurée sur `main` : billet 5,
+   A1 45, A2 50, A3 50, A4 45, A5 45, bilan 10, pour 55 min par séance ; 5 min libres en séances 1,
+   2 et 3, **10 en séance 4**, **0 en séance 5** (rabotée en septembre).
+   - Le bloc « 🌍 Transfert — les métiers d'ici » passe de la séance 5 à la **séance 4**, après
+     l'activité 4 « Ce qui ne se convertit pas » : ce qui ne se convertit pas, ce qu'une machine ne
+     remplace pas, qui décide. La zone `a5_transf` devient `a4_transf` (feuille d'impression
+     comprise) ; le bandeau des tâches de la séance 4 l'annonce.
+   - La partie d) de l'activité 1 passe de +10 à **+5 min** (~50 au lieu de ~55) : lecture et
+     discussion, puis une réponse de **quelques mots par ligne** (déjà fait / en cours / freiné, et
+     qui décide). La version étayée est raccourcie d'autant. Le verrou garde trois lignes, les trois
+     métiers et un décideur ; le seuil de longueur passe de 120 à **45** caractères. La vraie
+     production écrite sur les métiers reste le transfert.
+   - **Séance par séance** : S1 5 + 50 = **55** · S2 **50** · S3 **50** · S4 45 + 10 = **55** ·
+     S5 45 + 10 (bilan) = **55**, inchangée. `mesurer_temps_seances.py` : **265 / 275, +10 min**.
+     `verif_regles_audit.py` : **n°23 ✔** (265 + 10 de service = 275) ; **136 manquements**, le
+     chiffre de `main`.
+2. **L'échéance 2030 est retirée** de la page : elle venait d'un article de 2023, pas de l'EASA.
+   Reste la seule partie confirmée à la source : avec les cockpits actuels, on n'a pas pu démontrer
+   qu'un vol à un seul pilote en croisière serait aussi sûr qu'avec deux. Un test vérifie
+   qu'aucun « 2030 » n'est écrit dans la page.
+3. **La pénurie de coupeurs est écrite**, dans le cas de la canne, après la formulation validée :
+   « La filière manque aujourd'hui de coupeurs de canne : pour continuer à récolter, des petits
+   planteurs se tournent vers des machines plus petites. La machine n'arrive pas seulement parce
+   qu'elle sait faire : elle arrive aussi parce que les bras manquent. » Source : Martinique la
+   1ère, « Face à la pénurie de main-d'œuvre, la filière canne à sucre de Martinique mise sur la
+   petite mécanisation », 30/06/2026, relue le 17/09/2026 : « une crise de main-d'œuvre sans
+   précédent », « le manque criant de coupeurs de canne », « une nettoyeuse-tronçonneuse
+   compacte ». **L'article ne donne pas les causes de la pénurie ; la page n'en donne aucune.**
+   Usage dans la correction de d) : un **quatrième mécanisme** (sait faire / arrêté par une
+   autorité / choisi par qui achète / arrive parce que les bras manquent), et « qui décide » n'a plus
+   une seule réponse pour la canne : les exploitants choisissent, et le manque de bras pèse sur leur
+   choix. L'aide de niveau 2 et la correction du transfert le reprennent en une proposition.
+4. **La formulation de la canne** est validée par Pascal : non modifiée, aucune phrase ajoutée sur
+   l'histoire des plantations.
+5. **La meta description** annonçait « 5e — Shenzhen » (copier-coller d'un autre lot) : elle décrit
+   désormais ce lot de 3e (codes 3e_C1.1 à 3e_C1.4). Un test le vérifie.
+
+**Défaut connu, laissé en l'état à dessein.** Dans l'activité 1 b), le paragraphe de 1800 dit que
+Herschel place un thermomètre sous chaque couleur « pour savoir laquelle chauffe le plus » : il
+donne la réponse de la question suivante (« Ce que Herschel cherchait, c'était… »). C'est la même
+famille de défaut que le référentiel qui soufflait les QCM ; il sera traité à part, avec les autres,
+et n'est pas touché ici.
+
+**Contrôles, relancés après la reprise.**
+- banc du lot : **49 / 49** (46 avant ; + 3 : pas de « 2030 », la pénurie dans le cas de la canne,
+  meta description du lot ; le test du transfert vérifie désormais la séance 4, après l'activité 4,
+  et son absence en séance 5 ; la réponse d) d'essai est une réponse de quelques mots)
+- `controle_liens.py` : **2 918 adresses · 0 cassée** ✅ · `controle_medias.py` ✅ ·
+  `controle_cadres.py` ✅ · `controle_formulations.py` 80 / 80 ✅ · `controle_gestes_outil.py` ✅ ·
+  `controle_fichiers_telechargeables.py` ✅
+- `verif_regles_audit.py` : lot tout vert sauf la **n°298**, attendue ailleurs ; n°31 : 9 versions
+  étayées pour 15 zones ; n°67 : 46 champs ; **136 manquements**, comme `main`
+- `controle_impression.mjs` (via `main()`) : **338 pages · 0 refusée** ✅ ; 55 188 textes lus ;
+  4 002 sous 4,5, inchangé
+- Chromium, **1280 et 390 px**, séances 1, 4 et 5 dépliées : console vide ; débordement 0 px,
+  sauf 49 px à 390 px en séance 5, identiques sur `main` (tableau des quatre solutions, hors mandat)
+- manifeste : 49 tests, durée 265, empreintes recalculées pour la page, la fiche et le banc
+- livraison : **branche poussée et PR ouverte avec `gh`**, pas de colis
