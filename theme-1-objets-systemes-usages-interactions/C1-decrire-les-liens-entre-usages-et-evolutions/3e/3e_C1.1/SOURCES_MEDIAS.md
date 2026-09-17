@@ -2,13 +2,14 @@
 
 Tous les médias sont des **créations originales** (règle images v2 : image-objet).
 Aucune image de manuel, de Google Images ou de site tiers ; aucun hotlinking ;
-aucun raster embarqué — les trois fichiers sont du SVG écrit à la main.
+aucun raster embarqué — les quatre fichiers sont du SVG écrit à la main.
 
 | Fichier | Type | Usage pédagogique (règle v2) | Licence | Poids |
 |---|---|---|---|---|
 | `Images/corrige_trois_regimes_de_surveillance.svg` | SVG original (Fable) | corrigé-objet : les trois régimes de surveillance des feux, et ce qui distingue une rupture d'une amélioration (séquence + QCM) | CC0 | ~7 Ko |
 | `Images/corrige_de_la_decouverte_a_l_usage.svg` | SVG original (Fable) | corrigé-objet : la frise de l'infrarouge, de Herschel en 1800 à la détection des feux (séquence + QCM) | CC0 | ~6 Ko |
 | `Images/corrige_ce_qui_ne_se_convertit_pas.svg` | SVG original (Fable) | corrigé-objet : ce qui se convertit, ce qui ne se convertit pas, ce qui ne se compare jamais (séquence + QCM) | CC0 | ~5 Ko |
+| `Images/herschel_au_dela_du_rouge.svg` | SVG original écrit à la main (Claude Opus 5, 17/09/2026) | image-objet : le dispositif de 1800 — Soleil, fente, prisme, six bandes de couleur sur une table, sept thermomètres (un par couleur, un de plus au-delà du rouge), colonnes à hauteurs schématiques sans chiffres, la plus haute dans la zone sombre. Placé dans l'activité 1 b), après le paragraphe qui décrit l'expérience et **avant** la question « Ce que Herschel cherchait » : il montre le montage, jamais le but ni la conclusion — ni le mot « infrarouge », ni « pour savoir laquelle chauffe le plus » (séquence seule) | CC0 | ~7 Ko |
 
 ## Les quinze captures de gestes
 
@@ -54,6 +55,11 @@ Palette conforme à la charte du dépôt.
 
 Les **données chiffrées** que ces corrigés mettent en scène ne sont pas des médias :
 leurs sources sont documentées à part, dans `SOURCES_DONNEES_IMPACTS_3e.md`.
+
+Le schéma de Herschel (17/09/2026) suit la facture des quatre schémas de `5e_C2.1/Images/` : `viewBox`, `role="img"` et
+`aria-labelledby`, `<title>` et `<desc>` complets, `<style>` à sélecteurs simples, fond `#050f24` du dépôt, pile de
+polices système, aucune ressource distante. Les noms des six couleurs et de la zone « au-delà du rouge » sont écrits en
+toutes lettres : le schéma se lit imprimé en gris.
 
 > Fichier créé le 31/08/2026 : ce lot portait trois médias que rien ne documentait.
 > Le contrôle `_outils/controle_medias.py` refuse désormais ce cas.
