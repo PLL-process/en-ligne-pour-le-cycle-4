@@ -15366,3 +15366,60 @@ elle peut porter une information de progression destinée à l'élève.
 - navigateur (Chromium Playwright), 1280 et 390 px, les six séquences et les six synthèses : **0 titre
   « référentiel » et 0 légende sur les séquences**, ligne d'étiquettes présente (6 à 9 étiquettes),
   **1 bloc référentiel dans chaque synthèse**, débordement 0 px, **console vide**
+
+## 17/09/2026 — 3e_C6.1 : le pointeur de révision rendu à l'élève, en ouverture de la séance 2
+
+### Ce qui a été remis, et pourquoi
+
+Le 15/09, la PR #393 (règle d'or n°298) a déplacé le référentiel « en toutes lettres » de
+`3e_C6.1` dans la synthèse professeur. Ce bloc portait aussi **une consigne pour l'élève** : « Pour
+réviser la lecture d'algorigrammes avant la séance 2 : l'entraînement DNB, 30 exercices corrigés ».
+Elle est partie avec le reste du bloc, et l'élève l'a perdue. #393 l'avait signalé dans « Un point
+pour Pascal, non tranché ». Pascal a tranché : on la remet.
+
+**Où.** Dans `sequence_3e_C6.1-C6.3_programmer_alerte.html`, panneau `id="s2"` (« ✏ Séance 2 —
+Modifier le programme »), **juste après** la question directrice et **avant** l'algorigramme SVG et
+l'Activité 3. La phrase est dans le corps de la séance : ni dans un encart, ni dans une carte.
+
+**La phrase exacte ajoutée** (un seul `<p>`, sans style propre, le lien porte sur « l'entraînement
+DNB ») :
+
+> Avant de commencer&nbsp;: si lire un algorigramme n'est pas encore automatique pour toi, va
+> t'entraîner — **l'entraînement DNB** (lien vers `../3e_C6.2/entrainement_dnb_algorigrammes.html`), 30 exercices
+> corrigés.
+
+**Le chemin** `../3e_C6.2/entrainement_dnb_algorigrammes.html` est écrit **depuis le dossier
+`3e_C6.1/`**, où vit la séquence. C'est le piège de #393 à l'envers : là-bas, deux liens écrits pour ce
+dossier ont cassé une fois déplacés dans `Synthèses/`. Ici, `controle_liens.py` le confirme, et le
+navigateur ouvre la cible (« Entraînement DNB : lire et interpréter un algorigramme »).
+
+**Ce qui n'a PAS été remis.** Le second pointeur (« le code 3e_C6.2 … est couvert par « L'auto-test
+de la station » ») reste dans la synthèse professeur : c'est une information de couverture, pas une
+consigne pour l'élève. Aucune carte référentiel n'est réintroduite (n°298). Activités, QCM, figures
+et médias : rien n'a été touché. Le diff tient en **une ligne ajoutée** à la séquence.
+
+### Les contrôles, tous exécutés ce jour
+
+- `controle_liens.py` : **2 917 adresses · 0 cassée** ✅ (2 916 sur `main`, + 1 : le lien remis)
+- `verif_regles_audit.py` sur le lot `3e_C6.1` : **n°298 ✔** (« ni référentiel ni légende des
+  étiquettes sur la page élève ») ; sortie **identique à `main`** ligne pour ligne, y compris le
+  manquement n°26 déjà présent (diagnostic d'entrée), hors du mandat de cette PR
+- `controle_medias.py` : **361 médias, 361 nommés** ✅ · `controle_cadres.py` ✅ ·
+  `controle_fichiers_telechargeables.py` : **79 pages · 0 écart** ✅ · `controle_formulations.py` :
+  **80 / 80** ✅ · `controle_gestes_outil.py` ✅
+- `controle_impression.mjs` : **338 pages · 0 refusée** ✅ ; 55 101 textes lus contre 55 099 sur
+  `main` (+ 2 : la phrase et son lien) ; textes sous 4,5 : 1 **inchangés à 4 002**, la phrase n'en
+  ajoute aucun. Le script lancé directement **ne fait rien sous Windows et sort quand même à 0** : sa
+  garde `` import.meta.url === `file://${process.argv[1]}` `` n'est jamais vraie. Il a été lancé en
+  important `main()`. C'est le même défaut de chemin Windows que les bancs, et il n'est pas corrigé
+  ici (thème transversal).
+- `mesurer_temps_seances.py` : **ne bouge pas**. `3e_C6.1` reste à 3 × 55 min = 165 annoncées,
+  160 d'activités, marge + 5 min. La phrase ne porte aucune durée écrite, et l'outil ne compte que
+  les durées écrites. Le temps de lecture réel (une vingtaine de secondes) n'est donc pas mesuré.
+- banc du lot `tests_3e_C6.1-C6.3.mjs` : **31 / 35, même score qu'à `main`** (défaut Windows de
+  chemin connu, `new URL(import.meta.url).pathname`). Une seule ligne change, et c'est attendu : le
+  test 21 compte **5 liens internes au lieu de 4**. Vérifiés un à un avec le bon chemin, les liens
+  statiques de la page existent tous, y compris le nouveau.
+- navigateur (Chromium Playwright), **1280 et 390 px**, séance 2 ouverte : la phrase se place entre la
+  question directrice et l'`<object>` de l'algorigramme, hors de tout encart ou activité. Le lien
+  s'ouvre, **débordement 0 px**, 0 titre « référentiel » et 0 `.referentiel-card`, **console vide**.
