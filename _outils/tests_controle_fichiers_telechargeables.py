@@ -21,6 +21,7 @@ import contextlib
 import io
 import os
 import pathlib
+import subprocess
 import sys
 import tempfile
 
@@ -46,13 +47,44 @@ def jouer(racine, tolerees=None):
     anciens = (C.DEPOT, C.TOLEREES)
     C.DEPOT = str(racine)
     C.TOLEREES = tolerees if tolerees is not None else {}
-    sortie = io.StringIO()
+    sortie, erreur = io.StringIO(), io.StringIO()
     try:
-        with contextlib.redirect_stdout(sortie):
+        with contextlib.redirect_stdout(sortie), contextlib.redirect_stderr(erreur):
             code = C.main()
     finally:
         C.DEPOT, C.TOLEREES = anciens
-    return code, sortie.getvalue()
+    return code, sortie.getvalue() + erreur.getvalue()
+
+
+def par_la_ligne_de_commande(script, args=()):
+    """Le contrôle lancé comme on le lance vraiment : `python _outils/<script>`.
+
+    Deuxième corollaire de la règle d'or n°299. Un banc qui se contente
+    d'appeler `main()` ne passe jamais par le point d'entrée — c'est ainsi que
+    `controle_impression.mjs` est resté muet dix-sept jours sous un banc vert.
+    Rend (code de sortie, stdout + stderr).
+    """
+    ici = os.path.dirname(os.path.abspath(__file__))
+    r = subprocess.run([sys.executable, os.path.join(ici, script)] + list(args),
+                       capture_output=True, text=True, encoding="utf-8",
+                       errors="replace", timeout=900)
+    return r.returncode, (r.stdout or "") + (r.stderr or "")
+
+
+def reproches_de_la_ligne_de_commande(script):
+    """Les deux reproches que la règle n°299 fait à un point d'entrée : sortir
+    en erreur, et surtout ne rien écrire du tout. Un script muet n'imprime aucun
+    chiffre ; toute mention chiffrée prouve au contraire qu'il a travaillé."""
+    ennuis = []
+    code, texte = par_la_ligne_de_commande(script)
+    if code != 0:
+        ennuis.append("lancé en ligne de commande, %s sort à %d :\n     %s"
+                      % (script, code, texte.strip()[:400]))
+    if not any(c.isdigit() for c in texte):
+        ennuis.append("lancé en ligne de commande, %s n'écrit AUCUN chiffre — un script "
+                      "muet ne prouve rien (règle d'or n°299) :\n     %s"
+                      % (script, texte.strip()[:400] or "(rien du tout)"))
+    return ennuis
 
 
 def main():
@@ -125,12 +157,17 @@ def main():
     cas("une image nommée s'affiche, elle ne se télécharge pas",
         {"lot/sequence_x.html": page("<p>Production : <code>book-train.svg</code>.</p>"),
          "lot/book-train.svg": ""}, False)
+    # Chacun de ces deux cas ajoute une séquence ordinaire : sans elle, la
+    # racine ne faisait RIEN ouvrir au contrôle et le vert ne prouvait rien
+    # (règle d'or n°299).
     cas("un QCM ou une synthèse ne sont pas jugés (seuls sequence/tp/atelier)",
-        {"lot/qcm_x.html": page("<p>Ouvre <code>releves.csv</code>.</p>"), "lot/releves.csv": ""},
+        {"lot/qcm_x.html": page("<p>Ouvre <code>releves.csv</code>.</p>"), "lot/releves.csv": "",
+         "lot/sequence_ok.html": page("<p>une séquence sans fichier nommé</p>")},
         False)
-    cas("l'archive est écartée",
+    cas("l'archive est écartée, et le reste est bien lu",
         {"_archive-anciennes-versions/sequence_x.html": page("<p>Ouvre <code>releves.csv</code>.</p>"),
-         "_archive-anciennes-versions/releves.csv": ""}, False)
+         "_archive-anciennes-versions/releves.csv": "",
+         "lot/sequence_ok.html": page("<p>une séquence sans fichier nommé</p>")}, False)
 
     # ══ une tolérée redevenue propre est signalée ════════════════════════════
     controles += 1
@@ -146,6 +183,20 @@ def main():
     code, texte = jouer(C.DEPOT, C.TOLEREES)
     if code != 0:
         echecs.append("le dépôt réel ne passe pas :\n     " + texte.strip().replace("\n", "\n     "))
+
+    # Règle d'or n°299 — une racine sans page à juger est une panne.
+    controles += 1
+    with tempfile.TemporaryDirectory() as tmp:
+        ecrire(tmp, "notes.md", "# rien à juger")
+        code, texte = jouer(tmp)
+    if code != 2:
+        echecs.append("une racine sans séquence : sortie %d au lieu de 2 — le contrôle annonce que chaque fichier se prend d'un clic sans avoir ouvert une page" % code)
+    elif "EN PANNE" not in texte:
+        echecs.append("une racine sans séquence : la panne n'est pas annoncée")
+
+    # Le VRAI point d'entrée, en sous-processus (règle d'or n°299).
+    controles += 1
+    echecs.extend(reproches_de_la_ligne_de_commande('controle_fichiers_telechargeables.py'))
 
     if echecs:
         for e in echecs:

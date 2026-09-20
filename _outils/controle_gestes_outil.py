@@ -68,6 +68,8 @@ import os
 import re
 import sys
 
+import panne
+
 DEPOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ECARTES = ("_archive-anciennes-versions",)
 
@@ -174,8 +176,15 @@ def juger(chemin):
 
 def main(muet=False, toleres=None):
     toleres = TOLERES if toleres is None else toleres
+    # Règle d'or n°299 : ce qui doit être non nul, c'est le nombre de pages
+    # OUVERTES. Zéro encart « les quatre gestes » est un résultat possible et
+    # légitime ; zéro page lue est une panne.
+    lues = pages(DEPOT)
+    if not lues:
+        return panne.rien_vu("aucune page .html sous %s" % DEPOT)
+
     vus, ecarts, signales, avec_encart = 0, [], [], set()
-    for f in pages(DEPOT):
+    for f in lues:
         r = juger(f)
         if r is None:
             continue
@@ -198,8 +207,8 @@ def main(muet=False, toleres=None):
             ecarts.append((rel, "l'encart « %s » n'est pas à la porte de l'outil : %s" % (outil, pos[1])))
     perimes = sorted(rel for rel in toleres if rel not in avec_encart)
     if not muet:
-        print("%d encart(s) « les quatre gestes » lus · %d écart(s) · %d toléré(s) nommément"
-              % (vus, len(ecarts), len(signales)))
+        print("%d page(s) lues · %d encart(s) « les quatre gestes » · %d écart(s) · "
+              "%d toléré(s) nommément" % (len(lues), vus, len(ecarts), len(signales)))
         print("     NON LU : que les quatre gestes soient JUSTES pour cet outil et cette version —\n"
               "     cela se vérifie devant le logiciel, pas dans un script. Ni que l'activité collée\n"
               "     soit la première qui OUVRE l'outil : le script lit une mention, pas une ouverture.")

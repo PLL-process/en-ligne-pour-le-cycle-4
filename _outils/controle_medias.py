@@ -89,6 +89,8 @@ import os
 import re
 import sys
 
+import panne
+
 DEPOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ECARTES = ("_archive-anciennes-versions",)
 
@@ -236,6 +238,11 @@ def main(muet=False):
             orphelines.append((len(muettes_du_lot), nom_lot, muettes_du_lot))
         if declarees_du_lot:
             gardees.append((len(declarees_du_lot), nom_lot, declarees_du_lot))
+
+    # Règle d'or n°299 : aucun lot à médias sous la racine, c'est une panne —
+    # pas « tous les médias sont en règle ».
+    if not releve["lots"]:
+        return panne.rien_vu("aucun lot portant un dossier Images/ sous %s" % DEPOT)
 
     if not muet:
         print("%d lot(s) portent des images · %d fichier(s) média · %d nommés par leur "

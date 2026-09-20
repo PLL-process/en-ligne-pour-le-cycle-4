@@ -26,14 +26,18 @@ qui dépend de l'état du dépôt cesse de tester le jour où le dépôt change.
 Usage : python3 _outils/tests_controle_liens.py
 Sortie : 0 si tout passe, 1 sinon.
 """
+import contextlib
+import io
 import os
 import pathlib
 import shutil
+import subprocess
 import sys
 import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+import controle_liens  # noqa: E402
 from controle_liens import adresses, locale, parcourir, taire  # noqa: E402
 
 #: la barre de navigation telle qu'elle a été livrée dans `Synthèses/` — fausse
@@ -252,6 +256,47 @@ def cas_taire_ne_recolle_pas():
     return (n == 1 and adresses(t, ".html") == ["a.html"]), "adresses = %s" % adresses(t, ".html")
 
 
+def panne_sur_racine_vide(module, attribut, prepare, appel):
+    """Règle d'or n°299 : sur une racine où il n'y a RIEN à ouvrir, un contrôle
+    doit sortir à 2 en le disant sur stderr — et surtout pas à 0 en se déclarant
+    content d'un dépôt qu'il n'a pas lu.
+
+    Rend (ça_va, détail), la forme attendue par la liste CAS.
+    """
+    racine = pathlib.Path(tempfile.mkdtemp())
+    ancien = getattr(module, attribut)
+    try:
+        prepare(racine)
+        setattr(module, attribut, str(racine) if isinstance(ancien, str) else racine)
+        sortie, erreur = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(sortie), contextlib.redirect_stderr(erreur):
+            code = appel()
+        texte = sortie.getvalue() + erreur.getvalue()
+    finally:
+        setattr(module, attribut, ancien)
+        shutil.rmtree(racine, ignore_errors=True)
+    if code != 2:
+        return False, ("sortie %d au lieu de 2 — le contrôle se déclare content "
+                       "sans avoir rien ouvert" % code)
+    if "EN PANNE" not in texte:
+        return False, "la panne n'est pas annoncée : %s" % texte.strip()[:200]
+    return True, ""
+
+
+def cas_racine_sans_page():
+    """Une racine sans page .html ni .md : « aucun lien mort » serait un mensonge."""
+    return panne_sur_racine_vide(
+        controle_liens, "DEPOT",
+        lambda r: (r / "notes.txt").write_text("rien à suivre ici", encoding="utf-8"),
+        lambda: controle_liens.main(tout=True))
+
+
+def cas_ligne_de_commande():
+    """Le VRAI point d'entrée, en sous-processus (règle d'or n°299)."""
+    ennuis = reproches_de_la_ligne_de_commande("controle_liens.py")
+    return (not ennuis), (" ; ".join(ennuis) if ennuis else "")
+
+
 CAS = [
     ("la barre recopiée d'un dossier plus haut : trois liens morts", cas_nav_fausse),
     ("la même barre corrigée : plus rien", cas_nav_juste),
@@ -269,7 +314,40 @@ CAS = [
     ("un espace encodé %20 se résout comme un espace", cas_espace_encode),
     ("les adresses distantes ne sont pas comptées", cas_distant),
     ("taire une zone ne recolle pas ses bords", cas_taire_ne_recolle_pas),
+    ("une racine sans page est une panne, pas un succès", cas_racine_sans_page),
+    ("le contrôle travaille quand on le lance en ligne de commande", cas_ligne_de_commande),
 ]
+
+
+def par_la_ligne_de_commande(script, args=()):
+    """Le contrôle lancé comme on le lance vraiment : `python _outils/<script>`.
+
+    Deuxième corollaire de la règle d'or n°299. Un banc qui se contente
+    d'appeler `main()` ne passe jamais par le point d'entrée — c'est ainsi que
+    `controle_impression.mjs` est resté muet dix-sept jours sous un banc vert.
+    Rend (code de sortie, stdout + stderr).
+    """
+    ici = os.path.dirname(os.path.abspath(__file__))
+    r = subprocess.run([sys.executable, os.path.join(ici, script)] + list(args),
+                       capture_output=True, text=True, encoding="utf-8",
+                       errors="replace", timeout=900)
+    return r.returncode, (r.stdout or "") + (r.stderr or "")
+
+
+def reproches_de_la_ligne_de_commande(script):
+    """Les deux reproches que la règle n°299 fait à un point d'entrée : sortir
+    en erreur, et surtout ne rien écrire du tout. Un script muet n'imprime aucun
+    chiffre ; toute mention chiffrée prouve au contraire qu'il a travaillé."""
+    ennuis = []
+    code, texte = par_la_ligne_de_commande(script)
+    if code != 0:
+        ennuis.append("lancé en ligne de commande, %s sort à %d :\n     %s"
+                      % (script, code, texte.strip()[:400]))
+    if not any(c.isdigit() for c in texte):
+        ennuis.append("lancé en ligne de commande, %s n'écrit AUCUN chiffre — un script "
+                      "muet ne prouve rien (règle d'or n°299) :\n     %s"
+                      % (script, texte.strip()[:400] or "(rien du tout)"))
+    return ennuis
 
 
 def main():

@@ -40,13 +40,21 @@
  * Usage :
  *   node _outils/controle_verrous.mjs           # rapport complet
  *   node _outils/controle_verrous.mjs --muet    # seulement les écarts
- * Sortie : 0 si aucun verrou ne s'ouvre au chargement, 1 sinon.
+ * Sortie : 0 aucun verrou ne s'ouvre au chargement · 1 il y a des écarts ·
+ *          2 le contrôle n'a RIEN PU VÉRIFIER (règle d'or n°299).
  */
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const ICI = path.dirname(new URL(import.meta.url).pathname);
+/* `fileURLToPath`, et surtout pas `new URL(...).pathname` : sous Windows ce
+   dernier rend « /C:/Users/… », dont la barre de tête fabrique un chemin à deux
+   lettres de lecteur — « C:\C:\Users\… » — et le contrôle tombait sur
+   `ENOENT: scandir` dès son premier `readdirSync`. Un outil décide où il
+   travaille en comparant et en construisant des CHEMINS RÉELS, jamais des
+   chaînes d'URL (règle d'or n°299, premier corollaire). */
+const ICI = path.dirname(fileURLToPath(import.meta.url));
 const DEPOT = path.dirname(ICI);
 const ECARTES = /_archive-anciennes-versions|[/\\]\.git/;
 const A_VERROUS = /^(sequence|tp|atelier)_.*\.html$/i;
@@ -84,8 +92,37 @@ function estUneObservation(v) {
 }
 
 const muet = process.argv.includes('--muet');
-const liste = pages(DEPOT);
-const navigateur = await chromium.launch();
+
+/** Un contrôle qui n'a rien vérifié n'est pas vert, il est en panne : il le dit
+ *  sur la sortie d'erreur — donc visible sous `--muet` — et il sort à 2
+ *  (règle d'or n°299). Les trois pannes possibles ici : la racine est
+ *  introuvable, elle ne porte aucune page à verrous, ou le navigateur ne
+ *  démarre pas. Dans les trois cas l'ancienne version sortait à 0. */
+const premiereLigne = (e) => String(e && e.message).split(/\r?\n/)[0].slice(0, 90);
+
+function enPanne(raison) {
+  console.error(`⛔ EN PANNE — ${raison}`);
+  console.error("     Ce contrôle n'a RIEN vérifié ; ne le lisez pas comme un succès (règle d'or n°299).");
+  process.exit(2);
+}
+
+let liste;
+try {
+  liste = pages(DEPOT);
+} catch (e) {
+  enPanne(`racine impossible à parcourir (${DEPOT}) : ${premiereLigne(e)}`);
+}
+if (!liste.length) {
+  enPanne(`aucune page à verrous sous ${DEPOT} `
+    + `(attendu : sequence_*.html, tp_*.html, atelier_*.html)`);
+}
+
+let navigateur;
+try {
+  navigateur = await chromium.launch();
+} catch (e) {
+  enPanne(`le navigateur ne démarre pas : ${premiereLigne(e)}`);
+}
 const ecarts = [];
 let casiers = 0, sansVerrou = 0, illisibles = 0;
 
@@ -93,7 +130,7 @@ for (const f of liste) {
   const ctx = await navigateur.newContext();      // contexte NEUF : aucun stockage hérité
   const p = await ctx.newPage();
   try {
-    await p.goto('file://' + f, { waitUntil: 'load' });
+    await p.goto(pathToFileURL(f).href, { waitUntil: 'load' });
     await p.waitForTimeout(160);
     /* Toutes les variables que la page s'est données, aplaties en couples
        « nom (ou nom.clé) → valeur » : `__exp` est un sac de clés, les autres
@@ -119,11 +156,17 @@ for (const f of liste) {
     }
   } catch (e) {
     illisibles++;
-    ecarts.push({ f: path.relative(DEPOT, f), erreur: e.message.split('\n')[0].slice(0, 90) });
+    ecarts.push({ f: path.relative(DEPOT, f), erreur: premiereLigne(e) });
   }
   await ctx.close();
 }
 await navigateur.close();
+
+/* Des pages listees mais AUCUNE ouverte : le contrôle n'a rien vu. Les pages
+   illisibles, elles, sont deja des ecarts — c'est un refus, pas une panne. */
+if (illisibles === liste.length && liste.length) {
+  enPanne(`${liste.length} page(s) listée(s), aucune n'a pu être ouverte`);
+}
 
 if (!muet) {
   console.log(`${liste.length} page(s) à verrous ouvertes dans un contexte neuf · `
