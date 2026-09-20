@@ -505,6 +505,72 @@ def regle_301(src: str) -> tuple[str, str]:
                   + (", et le Bonus le précède" if m_bonus else ", pas de Bonus"))
 
 
+#: Les éléments où la troisième personne n'a jamais sa place dans une page
+#: élève : un titre, un en-tête de colonne, un repli, une légende de groupe, une
+#: légende de tableau ou de figure. Le CORPS de la page n'y est pas : la prose
+#: demande un jugement, et ce contrôle ne juge que le cas non ambigu.
+INTITULE = re.compile(
+    r"<(h[1-6]|th|summary|legend|caption|figcaption)\b[^>]*>(.*?)</\1>", re.I | re.S)
+
+#: « l'élève » sous ses deux apostrophes — le dépôt porte la droite (U+0027) ET
+#: la typographique (U+2019). N'en chercher qu'une en manquait vingt-cinq.
+PARLE_DE_LUI = re.compile(r"[Ll][’']\s?élèves?\b|\b[Ll]es\s+élèves\b", re.I)
+#: Le vouvoiement, exclu par mesure : le dépôt tutoie à 23 contre 1.
+VOUVOIEMENT = re.compile(r"\b(vous|votre|vos)\b", re.I)
+
+
+def regle_302(src: str) -> tuple[str, str]:
+    """n°302 — dans une page que l'élève lit, on ne parle jamais de lui.
+
+    On lui parle à la deuxième personne, ou on le fait parler à la première.
+    Jamais de troisième personne dans un intitulé : parler DE l'élève, c'est
+    écrire pour ses parents ou pour l'inspection, et l'élève le sent.
+
+    CE QUE CE CONTRÔLE VOIT — et rien de plus : les INTITULÉS, c'est-à-dire
+    `h1`–`h6`, `th`, `summary`, `legend`, `caption`, `figcaption`. C'est le cas
+    non ambigu, celui où la troisième personne n'a aucune excuse.
+
+    CE QU'IL NE VOIT PAS, et qu'il faut dire (règle d'or n°242) :
+      · la PROSE du corps de la page — elle demande un jugement au cas par cas ;
+        `audit_personne_eleve.mjs` l'inventorie et propose un verdict, sans
+        trancher ;
+      · les PROPOSITIONS et ÉNONCÉS de QCM — « l'élève » peut y être un
+        personnage du scénario, et c'est légitime. La `<legend>` d'un groupe de
+        questions est donc exemptée ici ;
+      · les TEXTES ALTERNATIFS des images, le contenu des SVG, et tout ce qu'un
+        script écrit à l'exécution.
+
+    Les pages PROFESSEUR sont hors sujet par convention de nom : ce contrôle ne
+    lit que des `sequence*.html`, qui sont des pages élèves par définition.
+    """
+    # Le style, les scripts et les commentaires sont retirés AVANT de chercher :
+    # un commentaire CSS qui cite « <legend> » — il y en a un depuis la n°300 —
+    # ouvrait sinon une balise que le moteur refermait sur la première vraie,
+    # et l'intitulé rapporté n'était alors la légende de personne.
+    lisible = re.sub(r"<!--.*?-->", " ", src, flags=re.S)
+    lisible = re.sub(r"<script\b.*?</script>", " ", lisible, flags=re.S | re.I)
+    lisible = re.sub(r"<style\b.*?</style>", " ", lisible, flags=re.S | re.I)
+
+    fautifs = []
+    for m in INTITULE.finditer(lisible):
+        balise, contenu = m.group(1).lower(), m.group(2)
+        texte = re.sub(r"<[^>]+>", " ", contenu)
+        # la <legend> d'un groupe de questions est un ÉNONCÉ, pas un titre
+        if balise == "legend" and "qcm-groupe" in lisible[max(0, m.start() - 300):m.start()]:
+            continue
+        propre = " ".join(texte.split())
+        if PARLE_DE_LUI.search(texte):
+            fautifs.append("<%s> « %s »" % (balise, propre[:70]))
+        elif VOUVOIEMENT.search(texte):
+            fautifs.append("<%s> vouvoiement « %s »" % (balise, propre[:70]))
+
+    if fautifs:
+        return "ECHEC", ("%d intitulé(s) parlent de l'élève au lieu de lui parler : "
+                         % len(fautifs)) + " · ".join(fautifs[:4]) + (
+                             " …" if len(fautifs) > 4 else "")
+    return "OK", "aucun intitulé ne parle de l'élève à la troisième personne"
+
+
 REGLES = [
     ("n°23 durée", regle_23),
     ("n°26 diagnostic d'entrée", regle_26),
@@ -521,6 +587,7 @@ REGLES = [
     ("n°298 page élève allégée", regle_298),
     ("n°300 question dans le flux", regle_300),
     ("n°301 le bilan clôt", regle_301),
+    ("n°302 on parle À l'élève", regle_302),
 ]
 
 SYMBOLE = {"OK": "✔", "ECHEC": "✘", "ALERTE": "▲", "SANS OBJET": "·", "INCONNU": "?"}
@@ -586,6 +653,10 @@ def main(argv: list[str]) -> int:
     print("\nPÉRIMÈTRE DE CE CONTRÔLE")
     print("  Vérifié mécaniquement : " + " · ".join(nom.split()[0] for nom, _ in REGLES))
     print("  Jugement humain requis : n°24, n°25, n°27, n°28, n°32 — voir les ⚑ ci-dessus.")
+    print("  n°302 : seuls les INTITULÉS sont lus — h1-h6, th, summary, legend, caption.")
+    print("  NON VU : la prose du corps, les propositions et énoncés de QCM (où « l'élève »")
+    print("  peut être un personnage), les textes alternatifs, les SVG, et ce qu'un script")
+    print("  écrit à l'exécution. `audit_personne_eleve.mjs` inventorie la prose sans trancher.")
     print("  n°301 : seuls l'EXISTENCE du bilan et l'ORDRE des blocs sont jugés ici. Qu'un")
     print("  Bonus porte des champs demande de délimiter son bloc, donc d'analyser l'arbre :")
     print("  `audit_cloture_sequence.mjs` le mesure. La QUALITÉ d'un corrigé ne se mesure pas.")
