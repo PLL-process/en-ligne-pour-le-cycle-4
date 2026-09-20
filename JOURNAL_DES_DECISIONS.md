@@ -16945,3 +16945,250 @@ Les temps 1 et 3 peuvent commencer sans rédiger une ligne de contenu. Le temps 
   0 écart** ✅ · `controle_fichiers_telechargeables.py` **79 pages · 0 écart** ✅
 - `controle_impression.mjs` : **338 pages · 0 refusée** ✅
 - périmètre : `_outils/` et ce journal, **aucune page de séquence touchée**
+
+## 20/09/2026 — Règle d'or n°302 : on parle À l'élève, jamais DE lui (thèmes 1-3, _outils)
+
+### Le numéro pris, et pourquoi
+
+**302**, et non 301. Le journal de `main` portait, au moment de commencer, les règles jusqu'à
+**n°301** — prise le jour même par « le bilan clôt la séquence » (PR #403, fusionnée). Aucune
+règle « bloc d'ouverture » n'existait, ni au journal ni dans une branche ouverte : vérifié sur les
+six branches distantes et sur les PR en cours, pas présumé. **302 était le premier réellement
+libre.**
+
+> **Règle d'or n°302 — on parle À l'élève, jamais DE lui.** Dans toute page dont le lecteur est un
+> élève — séquence, TP, atelier, QCM, lexique, synthèse élève — on s'adresse à lui à la **deuxième
+> personne du singulier**, ou on le fait parler à la **première**. Jamais de troisième personne dans
+> un **titre**, un **en-tête de tableau**, une **légende** ou un **intitulé** : parler DE l'élève,
+> c'est écrire pour ses parents ou pour l'inspection, et l'élève le sent.
+>
+> — **Le vouvoiement est exclu.** Le dépôt tutoie ; le « vous » réinstallerait la distance qu'on
+> cherche à supprimer.
+>
+> — **La répartition des deux personnes.** La page dit **« tu »** quand elle guide le travail.
+> L'élève dit **« je »** quand il énonce ce qu'il saura, ce qu'il a compris, où il se situe. **Les
+> compétences relèvent du « je ».**
+>
+> — **La troisième personne est réservée aux pages dont le lecteur est un collègue** :
+> `synthese_professeur_*`, `fiche_pedagogique_*`, `_progressions/`, README, journal.
+>
+> — **Exception.** Dans un énoncé ou une proposition de QCM, « l'élève » peut être un **personnage
+> du scénario** : c'est un tiers, pas une infraction.
+>
+> — **Formulation unique pour les compétences, dans tout le dépôt :**
+> ligne de cadre « **À la fin de cette séquence, je serai capable de…** » ·
+> en-tête de colonne « **Je serai capable de…** ».
+
+### Une règle d'or transversale se livre par une branche sans motif de thème
+
+Le garde-périmètre a refusé la première livraison de cette règle, et il a eu raison : la branche
+portait un motif de thème (`fable/theme-2/…`) alors que le lot touche les trois thèmes à la fois.
+Le refus n'est pas un accident de nommage, il dit quelque chose de juste — **une règle d'or
+transversale n'appartient à aucun thème.**
+
+> **Règle d'usage, à partir d'aujourd'hui.** Le dépôt connaît **trois** catégories de branche, et
+> non deux : les branches de **thème** (`<agent>/theme-N/<slug>`), les branches de **progressions**,
+> et les branches de **règle d'or transversale** (`<agent>/<slug>`, **sans motif de thème**). Une
+> règle qui traverse les trois thèmes par nature — parce qu'elle porte sur la langue, sur la forme
+> d'un champ, sur la clôture d'une page — passe par la troisième. Le garde l'accepte, **avec un
+> avertissement**, et cet avertissement est le bon comportement : il signale qu'on sort d'un thème,
+> ce qui doit rester rare et visible.
+
+Une conséquence pratique : une telle branche se relit autrement. Le garde ne peut plus vérifier que
+les fichiers restent dans un dossier ; c'est donc à la PR de dire, thème par thème, ce qu'elle a
+touché — et cette entrée le fait.
+
+**Et ce qui ne change pas :** `.github/` reste hors d'atteinte. Le garde refuse par construction
+qu'on modifie ses propres règles dans la PR qu'il contrôle, et c'est voulu. Aucun fichier de
+`.github/` n'est touché ici.
+
+### Le vouvoiement écarté sur mesure, pas sur goût
+
+Relevé sur les **271 pages élèves**, texte visible seulement — ni script, ni style, ni commentaire :
+
+| | occurrences |
+|---|---:|
+| « tu / ton / ta / tes / toi » | **3 679** |
+| « vous / votre / vos » | **162** |
+
+**Vingt-trois contre un.** Le dépôt a déjà choisi ; la règle enregistre ce choix au lieu de
+l'inventer. **Une seule page où le « vous » domine** : `3e_C1.5`
+(`sequence-numerique-societe-economie-environnement-sante.html`), 27 « tu » contre 35 « vous ».
+**Comptée, décrite, laissée** — sa reprise est un chantier à part.
+
+### Les 11 en-têtes de troisième personne, corrigés
+
+| en-tête | pages | devenu |
+|---|---:|---|
+| `<th>Ce que l'élève doit savoir faire</th>` | 10 | `<th>Je serai capable de…</th>` |
+| `<th>Ce qu'on fournit à l'élève</th>` (`3e_C9.1`) | 1 | `<th>Ce qu'on me fournit</th>` |
+
+Les dix : `3e_C1.1`, `4e_C1.1`, `5e_C1.1`, `5e_C1.2`, `3e_C2.1`, `4e_C2.1`, `5e_C2.1`, `3e_C3.1`,
+`4e_C3.1`, `5e_C3.1`.
+
+### Quatre façons de dire la même chose — unifiées
+
+Le relevé des blocs `referentiel-card` des séquences a montré **quatre écritures** pour la même
+colonne, et non une :
+
+| en-tête relevé | occurrences | devenu |
+|---|---:|---|
+| Ce que l'élève doit savoir faire | 10 | **Je serai capable de…** |
+| Formulation officielle (programme 2024) | 4 | **Je serai capable de…** |
+| Formulation du référentiel (recopiée, au mot près) | 2 | **Je serai capable de…** |
+| Sous-compétence travaillée | 2 | **Je serai capable de…** |
+
+**18 en-têtes de colonne unifiés**, plus le « Ce qu'on fournit à l'élève ». Les trois écritures
+neutres n'étaient pas fautives au regard de la personne — elles disaient simplement la même chose
+autrement, et ce qu'elles portaient d'utile (« la formulation vient du BO ») passe désormais dans la
+ligne de cadre, où c'est sa place.
+
+**Un résidu, trouvé à la relecture et corrigé.** Sur `5e_C9.1`
+(`sequence_5e_C9.1-C9.3_boite_etiquetee.html`), l'en-tête retiré était « Formulation officielle
+(**programme 2024**) », et cette page n'a pas de ligne de cadre : la référence à l'année y
+disparaissait donc avec l'en-tête. Elle est rendue au plus court, dans le titre de section —
+« 🎯 Ce que dit le programme **2024** — et où tu en es dans le cycle ». Partout ailleurs la garantie
+survit dans le titre de section ou dans la ligne de cadre : vérifié page par page, aucune autre
+retouche.
+
+### La ligne de cadre, et l'ambiguïté que la première personne introduit
+
+L'en-tête est **de nous** ; les formulations citées sont **celles du BO**, qui ne dit pas « je ». La
+ligne de cadre le dit maintenant, en une phrase :
+
+> **À la fin de cette séquence, je serai capable de…** — l'intitulé de la colonne est de nous ; les
+> formulations citées, elles, sont celles du BO, qui ne dit pas « je ».
+
+**10 lignes de cadre** portent cette phrase : 4 où elle remplace « Les formulations ci-dessous,
+elles, sont celles du référentiel », 6 où elle est ajoutée. **Onze blocs n'ont pas de ligne de cadre
+du tout** : ils sont d'un autre format — pas de tableau, un paragraphe par code — et n'ont donc pas
+d'en-tête de colonne à corriger. Ils sont laissés, et leur prose entre dans l'inventaire ci-dessous.
+
+**Le découpage en deux (phrase longue au cadre, phrase courte en colonne) est vérifié à la capture,
+et Pascal avait raison** : à 390 px, « Ce que l'élève doit savoir faire » se replie sur **deux
+lignes** dans le `<th>` ; « Je serai capable de… » tient sur **une**. Le gain est visible à l'œil,
+et il l'est aussi à 1280 px, où la colonne cesse d'être la plus large des trois.
+
+### Les synthèses élèves : 8 unifiées, 13 signalées et laissées
+
+« Je dois » énonce une **dette** ; « je serai capable » énonce une **promesse**. C'est la forme
+prudente déjà retenue ailleurs, et les deux ne se valent pas devant un élève qui doute.
+
+- **8 pages** portaient `<h2>Je dois être capable de…</h2>` au-dessus d'une **liste de capacités** :
+  même structure, même contenu, la conversion est exacte. → **« Je serai capable de… »**
+- **13 pages** portent « **Je dois savoir** » et « **Je dois savoir faire** ». **Elles ne sont pas
+  converties**, et c'est délibéré, pour deux raisons mesurées :
+  1. elles ne coiffent **pas des codes du référentiel** mais de la **prose** — « Je dois savoir ce
+     que signifie ÉLABORER (≠ identifier, ≠ compléter) ; l'ordre et le rôle des blocs… » ;
+  2. **le titre amorce la phrase qui suit**. « Je serai capable de… ce que signifie ÉLABORER » ne
+     veut rien dire. Et le couple **savoir / savoir-faire** porte une distinction que la formulation
+     unique effacerait.
+
+  Onze les écrivent en `<h2>`, deux en `<strong>` dans une `div.box`. **Signalées, laissées** — leur
+  reprise demande de réécrire la prose, pas seulement l'intitulé.
+
+### Les 11 en-têtes des pages professeur : inchangés
+
+`<h2>Ce que l'élève sait faire à la fin</h2>` × 10 (dans `synthese_professeur_*`) et
+`<th>Ce que l'élève reçoit</th>` × 1. **Ils restent tels quels** : leur lecteur est un collègue, et
+la troisième personne y est exacte. C'est la règle elle-même qui le prévoit.
+
+### Les cellules n'ont pas bougé d'un caractère
+
+Ce sont les formulations du référentiel, gardées par `controle_formulations.py` — qui reste à
+**682 fichiers lus · 80 citations · 80 justes · 0 écart**. C'est la preuve, et non une intention.
+
+### Le modèle recopié par la vague n°298 — où il est exactement
+
+**Il n'existe aucun fichier gabarit.** Le « modèle » que la vague n°298 recopie, c'est le bloc
+lui-même : la `<section class="card referentiel-card">` de chaque page élève non encore traitée, que
+la vague déplace **telle quelle** dans la synthèse professeur du lot. Recherché : aucun générateur,
+aucun script, aucun document de `_outils/` ne le produit ; seul le journal en cite le libellé, au
+15/09.
+
+**Il reste 21 pages élèves qui portent ce bloc.** C'est ce qui rendait cette PR urgente : chacune de
+ces 21 pages est un modèle en attente, et la vague y aurait recopié la troisième personne dans les
+synthèses professeur — où elle serait devenue correcte par accident, et donc invisible. **Les 18
+blocs à tableau sont corrigés ici** ; les 3 autres n'ont pas d'en-tête de colonne.
+
+### L'inventaire des « l'élève » — 55 occurrences, aucune réécrite
+
+| | |
+|---|---:|
+| occurrences brutes dans les pages élèves (grep) | **140** |
+| **réellement lues par un élève** (hors script, style, commentaire, attribut) | **55** |
+| pages concernées | 36 |
+| — dont **légitimes** | **5** |
+| — dont **à reprendre** | **50** |
+
+Les 5 légitimes : 3 **citations du programme** (la formulation du BO dit « l'élève ») et
+2 **personnages du scénario**. Les 50 autres sont de la **prose du corps**, et l'outil ne tranche
+pas : il propose. Le détail — page, ligne, phrase, verdict — est dans
+`_outils/audit_personne_eleve.mjs --csv`. **Aucune n'est réécrite ici** : c'est une PR à part.
+
+L'écart entre 140 et 55 tient à ce que l'outil ne compte que ce qu'un élève lit : le reste vit dans
+des commentaires, des scripts, ou des attributs.
+
+**Correction à un point du constat de départ** : il n'y a pas **une** forme d'apostrophe mais
+**deux**. Relevé : **253** occurrences de `l'élève` à l'apostrophe droite (U+0027) et **25** à la
+typographique (U+2019). Chercher la seule apostrophe droite en manquait vingt-cinq — l'outil et le
+contrôle lisent les deux. (`&#39;` et `&rsquo;` : aucune occurrence, vérifié.)
+
+### Ce que la mécanisation voit, et ce qu'elle ne voit pas
+
+`verif_regles_audit.py` gagne la n°302. Elle ne lit que le **cas non ambigu** : les **intitulés** —
+`h1`–`h6`, `th`, `summary`, `legend`, `caption`, `figcaption` — d'une page élève, et y refuse
+« l'élève », « les élèves » et le vouvoiement.
+
+**Ce qu'elle ne voit pas, et le déclare** (règle d'or n°242) :
+- **la prose du corps** — elle demande un jugement au cas par cas ; c'est l'affaire de l'inventaire ;
+- **les propositions et énoncés de QCM** — la `<legend>` d'un groupe de questions est **exemptée** :
+  « l'élève » y est souvent un personnage ;
+- **les textes alternatifs, les SVG**, et tout ce qu'un script écrit à l'exécution.
+
+Les pages professeur sont hors sujet par convention de nom : le contrôle ne lit que des
+`sequence*.html`, qui sont des pages élèves par définition.
+
+**Deux faux positifs ont été trouvés et corrigés avant de conclure** :
+1. un **commentaire CSS** laissé par la n°300 cite le mot `<legend>` ; sans retrait du style, le
+   moteur ouvrait une balise qu'il refermait sur la première vraie légende venue, et rapportait un
+   intitulé qui n'était la légende de personne ;
+2. la **légende d'un groupe de questions** de `5e_C1.1` — « Un mot de passe partagé entre tous les
+   élèves de la classe » — était signalée comme un intitulé fautif alors que c'est un **énoncé de
+   question**, que la règle exempte explicitement.
+
+Sans ces deux corrections, le contrôle aurait accusé 18 séquences au lieu de 16, dont deux à tort.
+
+### Les chiffres de `verif_regles_audit`
+
+| | manquements mécaniquement établis |
+|---|---:|
+| avant la n°302 | 243 |
+| après la n°302 | **259** |
+
+**+16.** Les seize sont des **vouvoiements dans des intitulés**, et aucun n'est un « l'élève » — les
+onze fautifs ayant été corrigés dans cette même PR :
+
+- **14 × `<summary>` « Si vous êtes trois ou quatre »** — une consigne de travail en groupe ;
+- **2 × `<h2>` « 📞 Séance 1 — « La mairie vous appelle » »** — un titre de scénario, où le « vous »
+  est celui de la mairie s'adressant à l'équipe. **À trancher par Pascal** : c'est de la narration,
+  pas une adresse à l'élève, et la règle pourrait l'exempter comme elle exempte le personnage de QCM.
+  Non corrigé ici.
+
+### Contrôles
+
+- `controle_formulations.py` : **682 fichiers · 80 citations · 80 justes · 0 écart** ✅ — *la preuve
+  que les cellules n'ont pas bougé*
+- `verif_regles_audit.py` : **60 séquences · 259 manquements** (243 avant, **+16**) ✅
+- `tests_verif_regles_audit.py` : **25 / 25** (19 avant ; **+6** pour la n°302) ✅, mordant aux trois
+  mutations — la n°302 qui ne refuse plus rien → 24/25 · le style non retiré → 24/25 · l'exemption
+  de la légende de question retirée → 24/25
+- batterie : `controle_liens.py` **718 pages · 2 918 adresses · 0 cassée** ✅ · `controle_medias.py`
+  **41 lots · 362 médias** ✅ · `controle_cadres.py` **340 pages · 0 cadre** ✅ ·
+  `controle_gestes_outil.py` **340 pages · 0 écart** ✅ ·
+  `controle_fichiers_telechargeables.py` **79 pages · 0 écart** ✅
+- `controle_impression.mjs` : **338 pages · 0 refusée** ✅ · `controle_verrous.mjs` : **0 verrou
+  ouvert** ✅
+- rendus **1280 × 720** et **390 × 844** : **0 erreur JS · 0 requête échouée** ✅
+- captures avant/après aux deux largeurs : bloc référentiel de `3e_C1.1` et synthèse `3e_C7.4`
+- outil neuf : `_outils/audit_personne_eleve.mjs`, qui inventorie sans corriger ni trancher
