@@ -102,6 +102,29 @@
   .card b,.correction summary{color:#946b00!important}
   .piege,.piege b{color:#ed0018!important}
 }
+  /* Question à choix unique — groupe de boutons radio natifs (règle d'or n°300).
+     L'énoncé vit dans la <legend> : rien ne peut le recouvrir. Pas d'encadrement
+     complet — une <legend> chevauche le bord SUPÉRIEUR d'un fieldset et le coupe
+     dès qu'elle passe à la ligne ; un filet à GAUCHE groupe aussi bien. */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--input-bd);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--input-bg)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;
+    flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer}
+  @media print{
+    /* Sur le papier, body{color:#111} noircit le texte : un fond resté sombre le
+       ferait disparaître (refus mesuré par controle_impression.mjs le 20/09).
+       Le groupe s'imprime donc en blanc — et TOUTES les propositions restent
+       lisibles, là où une liste déroulante n'imprimait que le choix retenu. */
+    .qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;
+      border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}
+    .qcm-groupe .qcm-option input[type=radio]{-webkit-appearance:auto;appearance:auto}
+  }
 </style>
 </head>
 <body>
@@ -211,30 +234,33 @@
 <section class="card">
   <h2>🎫 Billet d'entrée — je vérifie mes outils (4 min, <b>sans note</b>)</h2>
   <p>Trois questions. <b>Aucune note</b>&nbsp;: c'est un aiguillage.</p>
-  <div class="assoc"><label for="be_1">Un <b>objet technique</b>, c'est&nbsp;:</label>
-    <select id="be_1"><option value="">— choisir —</option>
-      <option>un objet fabriqué par l'homme pour répondre à un besoin</option>
-      <option>tout objet que l'on peut toucher</option>
-      <option>un objet qui contient de l'électronique</option>
-      <option>un objet vendu dans un magasin</option></select></div>
-  <div class="assoc"><label for="be_2">Une <b>fonction technique</b> se reconnaît à&nbsp;:</label>
-    <select id="be_2"><option value="">— choisir —</option>
-      <option>un verbe à l'infinitif : elle dit ce que l'objet doit FAIRE, sans dire par quel moyen</option>
-      <option>un verbe à l'infinitif : elle dit à quoi l'objet SERT pour son usager</option>
-      <option>le nom du composant qui la réalise</option>
-      <option>le nom de la marque de l'objet</option></select></div>
+  <fieldset class="qcm-groupe" id="be_1">
+  <legend>Un <b>objet technique</b>, c'est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="un objet fabriqué par l'homme pour répondre à un besoin"><label for="be_1__1">un objet fabriqué par l'homme pour répondre à un besoin</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="tout objet que l'on peut toucher"><label for="be_1__2">tout objet que l'on peut toucher</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="un objet qui contient de l'électronique"><label for="be_1__3">un objet qui contient de l'électronique</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="un objet vendu dans un magasin"><label for="be_1__4">un objet vendu dans un magasin</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="be_2">
+  <legend>Une <b>fonction technique</b> se reconnaît à&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="un verbe à l'infinitif : elle dit ce que l'objet doit FAIRE, sans dire par quel moyen"><label for="be_2__1">un verbe à l'infinitif : elle dit ce que l'objet doit FAIRE, sans dire par quel moyen</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="un verbe à l'infinitif : elle dit à quoi l'objet SERT pour son usager"><label for="be_2__2">un verbe à l'infinitif : elle dit à quoi l'objet SERT pour son usager</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="le nom du composant qui la réalise"><label for="be_2__3">le nom du composant qui la réalise</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="le nom de la marque de l'objet"><label for="be_2__4">le nom de la marque de l'objet</label></div>
+</fieldset>
   <p class="meta">⚠️ Les deux premières réponses se ressemblent&nbsp;: c'est exprès. «&nbsp;À quoi
   l'objet sert&nbsp;» décrit le <b>service rendu à l'usager</b>&nbsp;; ce n'est pas la fonction
   technique. La fonction technique dit ce que l'objet doit <b>faire</b> pour rendre ce service —
   «&nbsp;maintenir le vélo verrouillé&nbsp;», «&nbsp;reconnaître un abonné&nbsp;» — et elle laisse
   entièrement ouvert le <b>moyen</b> employé. C'est ce moyen qu'on appelle le <b>principe
   technique</b>.</p>
-  <div class="assoc"><label for="be_3">L'<b>environnement</b> d'un objet technique, c'est&nbsp;:</label>
-    <select id="be_3"><option value="">— choisir —</option>
-      <option>tout ce qui l'entoure et agit sur lui ou subit son action</option>
-      <option>la nature, les arbres et les animaux uniquement</option>
-      <option>la pièce dans laquelle il est rangé</option>
-      <option>son emballage d'origine</option></select></div>
+  <fieldset class="qcm-groupe" id="be_3">
+  <legend>L'<b>environnement</b> d'un objet technique, c'est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="tout ce qui l'entoure et agit sur lui ou subit son action"><label for="be_3__1">tout ce qui l'entoure et agit sur lui ou subit son action</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="la nature, les arbres et les animaux uniquement"><label for="be_3__2">la nature, les arbres et les animaux uniquement</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="la pièce dans laquelle il est rangé"><label for="be_3__3">la pièce dans laquelle il est rangé</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="son emballage d'origine"><label for="be_3__4">son emballage d'origine</label></div>
+</fieldset>
   <button class="btn small" data-check="0" type="button">🎫 Vérifier mon billet d'entrée</button>
   <p class="feedback" id="fb0" role="status"></p>
   <details class="aide" id="capsule"><summary>🎒 Je révise en 3 minutes</summary>
@@ -277,28 +303,34 @@
   </figure>
 
   <h4>a) Trier ce qui est proposé</h4>
-  <div class="assoc"><label for="a1_1">Parmi ces propositions, laquelle n'est <b>pas</b> un interacteur de la station&nbsp;?</label>
-    <select id="a1_1"><option value="">— choisir —</option>
-      <option>la couleur du cadre des vélos</option><option>l'usager</option>
-      <option>la pluie</option><option>l'agent de maintenance</option></select></div>
-  <div class="assoc"><label for="a1_2">La <b>pluie</b> est un interacteur parce que&nbsp;:</label>
-    <select id="a1_2"><option value="">— choisir —</option>
-      <option>elle agit sur la station : elle mouille les bornes et peut les bloquer</option>
-      <option>elle est mentionnée dans le relevé</option>
-      <option>tout ce qui vient du ciel compte</option>
-      <option>elle empêche les usagers de venir</option></select></div>
-  <div class="assoc"><label for="a1_3">Le <b>trottoir</b> est-il un interacteur&nbsp;?</label>
-    <select id="a1_3"><option value="">— choisir —</option>
-      <option>oui : la station y est fixée, et sa largeur limite l'espace disponible</option>
-      <option>non : ce n'est pas un objet technique</option>
-      <option>non : il ne bouge pas</option>
-      <option>oui, mais seulement s'il est en mauvais état</option></select></div>
-  <div class="assoc"><label for="a1_4">Le <b>réseau informatique</b> auquel la borne est reliée&nbsp;:</label>
-    <select id="a1_4"><option value="">— choisir —</option>
-      <option>est un interacteur : sans lui, la borne ne peut ni identifier l'usager ni débloquer un vélo</option>
-      <option>n'est pas un interacteur, car on ne le voit pas</option>
-      <option>fait partie de la station elle-même</option>
-      <option>ne compte que si la connexion est coupée</option></select></div>
+  <fieldset class="qcm-groupe" id="a1_1">
+  <legend>Parmi ces propositions, laquelle n'est <b>pas</b> un interacteur de la station&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__1" value="la couleur du cadre des vélos"><label for="a1_1__1">la couleur du cadre des vélos</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__2" value="l'usager"><label for="a1_1__2">l'usager</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__3" value="la pluie"><label for="a1_1__3">la pluie</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__4" value="l'agent de maintenance"><label for="a1_1__4">l'agent de maintenance</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_2">
+  <legend>La <b>pluie</b> est un interacteur parce que&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__1" value="elle agit sur la station : elle mouille les bornes et peut les bloquer"><label for="a1_2__1">elle agit sur la station : elle mouille les bornes et peut les bloquer</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__2" value="elle est mentionnée dans le relevé"><label for="a1_2__2">elle est mentionnée dans le relevé</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__3" value="tout ce qui vient du ciel compte"><label for="a1_2__3">tout ce qui vient du ciel compte</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__4" value="elle empêche les usagers de venir"><label for="a1_2__4">elle empêche les usagers de venir</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_3">
+  <legend>Le <b>trottoir</b> est-il un interacteur&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__1" value="oui : la station y est fixée, et sa largeur limite l'espace disponible"><label for="a1_3__1">oui : la station y est fixée, et sa largeur limite l'espace disponible</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__2" value="non : ce n'est pas un objet technique"><label for="a1_3__2">non : ce n'est pas un objet technique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__3" value="non : il ne bouge pas"><label for="a1_3__3">non : il ne bouge pas</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__4" value="oui, mais seulement s'il est en mauvais état"><label for="a1_3__4">oui, mais seulement s'il est en mauvais état</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_4">
+  <legend>Le <b>réseau informatique</b> auquel la borne est reliée&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__1" value="est un interacteur : sans lui, la borne ne peut ni identifier l'usager ni débloquer un vélo"><label for="a1_4__1">est un interacteur : sans lui, la borne ne peut ni identifier l'usager ni débloquer un vélo</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__2" value="n'est pas un interacteur, car on ne le voit pas"><label for="a1_4__2">n'est pas un interacteur, car on ne le voit pas</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__3" value="fait partie de la station elle-même"><label for="a1_4__3">fait partie de la station elle-même</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__4" value="ne compte que si la connexion est coupée"><label for="a1_4__4">ne compte que si la connexion est coupée</label></div>
+</fieldset>
 
   <h4>b) Les quatre familles d'interacteurs</h4>
   <p>Le programme de technologie ne laisse pas cette liste au hasard&nbsp;: il nomme
@@ -321,24 +353,27 @@
     <b>imposent</b> quelque chose à celui qui la conçoit. Ce sont des <b>exigences</b> — on les
     travaillera à l'activité 2, et bien davantage en 4e.</p>
   </div>
-  <div class="assoc"><label for="a1_5">Une liste complète comporte des interacteurs de quatre familles&nbsp;:</label>
-    <select id="a1_5"><option value="">— choisir —</option>
-      <option>les usagers, les données, les autres objets, les éléments de l'environnement</option>
-      <option>les personnes, les animaux et les végétaux</option>
-      <option>les objets neufs, usagés et cassés</option>
-      <option>les interacteurs proches, moyens et lointains</option></select></div>
-  <div class="assoc"><label for="a1_6">Le réflexe qui fait manquer la moitié de la liste, c'est&nbsp;:</label>
-    <select id="a1_6"><option value="">— choisir —</option>
-      <option>ne citer que ce qu'on voit : des personnes et des objets</option>
-      <option>citer trop d'objets</option>
-      <option>commencer par la pluie</option>
-      <option>faire une liste trop longue</option></select></div>
-  <div class="assoc"><label for="a1_7">L'obligation d'accessibilité imposée par la ville est&nbsp;:</label>
-    <select id="a1_7"><option value="">— choisir —</option>
-      <option>une exigence : elle n'échange rien avec la station, elle s'impose au concepteur</option>
-      <option>un interacteur de la famille « autres objets »</option>
-      <option>un interacteur de la famille « usagers »</option>
-      <option>sans rapport avec la station</option></select></div>
+  <fieldset class="qcm-groupe" id="a1_5">
+  <legend>Une liste complète comporte des interacteurs de quatre familles&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__1" value="les usagers, les données, les autres objets, les éléments de l'environnement"><label for="a1_5__1">les usagers, les données, les autres objets, les éléments de l'environnement</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__2" value="les personnes, les animaux et les végétaux"><label for="a1_5__2">les personnes, les animaux et les végétaux</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__3" value="les objets neufs, usagés et cassés"><label for="a1_5__3">les objets neufs, usagés et cassés</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__4" value="les interacteurs proches, moyens et lointains"><label for="a1_5__4">les interacteurs proches, moyens et lointains</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_6">
+  <legend>Le réflexe qui fait manquer la moitié de la liste, c'est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__1" value="ne citer que ce qu'on voit : des personnes et des objets"><label for="a1_6__1">ne citer que ce qu'on voit : des personnes et des objets</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__2" value="citer trop d'objets"><label for="a1_6__2">citer trop d'objets</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__3" value="commencer par la pluie"><label for="a1_6__3">commencer par la pluie</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__4" value="faire une liste trop longue"><label for="a1_6__4">faire une liste trop longue</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_7">
+  <legend>L'obligation d'accessibilité imposée par la ville est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_7" id="a1_7__1" value="une exigence : elle n'échange rien avec la station, elle s'impose au concepteur"><label for="a1_7__1">une exigence : elle n'échange rien avec la station, elle s'impose au concepteur</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_7" id="a1_7__2" value="un interacteur de la famille « autres objets »"><label for="a1_7__2">un interacteur de la famille « autres objets »</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_7" id="a1_7__3" value="un interacteur de la famille « usagers »"><label for="a1_7__3">un interacteur de la famille « usagers »</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_7" id="a1_7__4" value="sans rapport avec la station"><label for="a1_7__4">sans rapport avec la station</label></div>
+</fieldset>
 
   <h4>c) Ta liste</h4>
   <div class="assoc">
@@ -415,56 +450,65 @@
   </figure>
 
   <h4>a) Retrouver l'interacteur derrière le choix</h4>
-  <div class="assoc"><label for="a2_1">La borne est inclinée vers le bas plutôt que plate. Ce choix répond à&nbsp;:</label>
-    <select id="a2_1"><option value="">— choisir —</option>
-      <option>la pluie : l'eau s'écoule au lieu de stagner sur le lecteur</option>
-      <option>l'usager : il voit mieux l'écran</option>
-      <option>l'agent de maintenance : il ouvre plus facilement</option>
-      <option>l'esthétique : c'est plus joli</option></select></div>
-  <div class="assoc"><label for="a2_2">Le point d'ancrage du vélo est à 90 cm du sol. Ce choix relève de&nbsp;:</label>
-    <select id="a2_2"><option value="">— choisir —</option>
-      <option>l'ergonomie : c'est la hauteur où l'on pousse sans se baisser</option>
-      <option>la sécurité uniquement</option>
-      <option>l'esthétique uniquement</option>
-      <option>du hasard de fabrication</option></select></div>
-  <div class="assoc"><label for="a2_3">Les arêtes de la station sont arrondies. Ce choix relève surtout de&nbsp;:</label>
-    <select id="a2_3"><option value="">— choisir —</option>
-      <option>la sécurité : on se blesse moins en heurtant un angle arrondi</option>
-      <option>l'ergonomie uniquement</option>
-      <option>l'économie de matière</option>
-      <option>la résistance au vent</option></select></div>
-  <div class="assoc"><label for="a2_4">Le boîtier se démonte avec une vis unique. Ce choix répond à&nbsp;:</label>
-    <select id="a2_4"><option value="">— choisir —</option>
-      <option>l'agent de maintenance : il intervient vite, sans outillage spécial</option>
-      <option>l'usager, qui peut réparer lui-même</option>
-      <option>la pluie</option><option>la couleur du boîtier</option></select></div>
+  <fieldset class="qcm-groupe" id="a2_1">
+  <legend>La borne est inclinée vers le bas plutôt que plate. Ce choix répond à&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__1" value="la pluie : l'eau s'écoule au lieu de stagner sur le lecteur"><label for="a2_1__1">la pluie : l'eau s'écoule au lieu de stagner sur le lecteur</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__2" value="l'usager : il voit mieux l'écran"><label for="a2_1__2">l'usager : il voit mieux l'écran</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__3" value="l'agent de maintenance : il ouvre plus facilement"><label for="a2_1__3">l'agent de maintenance : il ouvre plus facilement</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__4" value="l'esthétique : c'est plus joli"><label for="a2_1__4">l'esthétique : c'est plus joli</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_2">
+  <legend>Le point d'ancrage du vélo est à 90 cm du sol. Ce choix relève de&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__1" value="l'ergonomie : c'est la hauteur où l'on pousse sans se baisser"><label for="a2_2__1">l'ergonomie : c'est la hauteur où l'on pousse sans se baisser</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__2" value="la sécurité uniquement"><label for="a2_2__2">la sécurité uniquement</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__3" value="l'esthétique uniquement"><label for="a2_2__3">l'esthétique uniquement</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__4" value="du hasard de fabrication"><label for="a2_2__4">du hasard de fabrication</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_3">
+  <legend>Les arêtes de la station sont arrondies. Ce choix relève surtout de&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__1" value="la sécurité : on se blesse moins en heurtant un angle arrondi"><label for="a2_3__1">la sécurité : on se blesse moins en heurtant un angle arrondi</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__2" value="l'ergonomie uniquement"><label for="a2_3__2">l'ergonomie uniquement</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__3" value="l'économie de matière"><label for="a2_3__3">l'économie de matière</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__4" value="la résistance au vent"><label for="a2_3__4">la résistance au vent</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_4">
+  <legend>Le boîtier se démonte avec une vis unique. Ce choix répond à&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__1" value="l'agent de maintenance : il intervient vite, sans outillage spécial"><label for="a2_4__1">l'agent de maintenance : il intervient vite, sans outillage spécial</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__2" value="l'usager, qui peut réparer lui-même"><label for="a2_4__2">l'usager, qui peut réparer lui-même</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__3" value="la pluie"><label for="a2_4__3">la pluie</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__4" value="la couleur du boîtier"><label for="a2_4__4">la couleur du boîtier</label></div>
+</fieldset>
 
   <h4>b) Les trois domaines du programme, et ce qui les distingue</h4>
-  <div class="assoc"><label for="a2_5">L'<b>ergonomie</b> concerne&nbsp;:</label>
-    <select id="a2_5"><option value="">— choisir —</option>
-      <option>l'adaptation de l'objet au corps et aux gestes de celui qui l'utilise</option>
-      <option>la protection contre les accidents</option>
-      <option>l'apparence de l'objet</option>
-      <option>le coût de fabrication</option></select></div>
-  <div class="assoc"><label for="a2_6">Un même choix peut-il servir deux domaines à la fois&nbsp;?</label>
-    <select id="a2_6"><option value="">— choisir —</option>
-      <option>oui : un angle arrondi est plus sûr et souvent plus agréable à regarder</option>
-      <option>non : chaque choix répond à un seul domaine</option>
-      <option>oui, mais seulement ergonomie et sécurité</option>
-      <option>non, sauf en cas d'erreur de conception</option></select></div>
+  <fieldset class="qcm-groupe" id="a2_5">
+  <legend>L'<b>ergonomie</b> concerne&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__1" value="l'adaptation de l'objet au corps et aux gestes de celui qui l'utilise"><label for="a2_5__1">l'adaptation de l'objet au corps et aux gestes de celui qui l'utilise</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__2" value="la protection contre les accidents"><label for="a2_5__2">la protection contre les accidents</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__3" value="l'apparence de l'objet"><label for="a2_5__3">l'apparence de l'objet</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__4" value="le coût de fabrication"><label for="a2_5__4">le coût de fabrication</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_6">
+  <legend>Un même choix peut-il servir deux domaines à la fois&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_6" id="a2_6__1" value="oui : un angle arrondi est plus sûr et souvent plus agréable à regarder"><label for="a2_6__1">oui : un angle arrondi est plus sûr et souvent plus agréable à regarder</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_6" id="a2_6__2" value="non : chaque choix répond à un seul domaine"><label for="a2_6__2">non : chaque choix répond à un seul domaine</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_6" id="a2_6__3" value="oui, mais seulement ergonomie et sécurité"><label for="a2_6__3">oui, mais seulement ergonomie et sécurité</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_6" id="a2_6__4" value="non, sauf en cas d'erreur de conception"><label for="a2_6__4">non, sauf en cas d'erreur de conception</label></div>
+</fieldset>
 
-  <div class="assoc"><label for="a2_7">Les pièces de la borne se remplacent <b>une par une</b>, au lieu de former un bloc unique. Ce choix relève du <b>développement durable</b> parce que&nbsp;:</label>
-    <select id="a2_7"><option value="">— choisir —</option>
-      <option>un objet réparable dure plus longtemps : moins de matière à produire, moins de déchets</option>
-      <option>les pièces détachées coûtent plus cher à l'unité</option>
-      <option>cela rend la borne plus jolie</option>
-      <option>cela n'a aucun effet : la borne finira remplacée de toute façon</option></select></div>
-  <div class="assoc"><label for="a2_8">Un choix «&nbsp;en lien avec le développement durable&nbsp;», pour un objet technique, c'est&nbsp;:</label>
-    <select id="a2_8"><option value="">— choisir —</option>
-      <option>un choix qui pèse sur la matière, l'énergie ou la durée de vie de l'objet</option>
-      <option>un choix qui concerne uniquement les objets fabriqués en matériaux naturels</option>
-      <option>un choix qui coûte plus cher, mais fait plaisir</option>
-      <option>un choix qui ne concerne que le recyclage, à la toute fin</option></select></div>
+  <fieldset class="qcm-groupe" id="a2_7">
+  <legend>Les pièces de la borne se remplacent <b>une par une</b>, au lieu de former un bloc unique. Ce choix relève du <b>développement durable</b> parce que&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_7" id="a2_7__1" value="un objet réparable dure plus longtemps : moins de matière à produire, moins de déchets"><label for="a2_7__1">un objet réparable dure plus longtemps : moins de matière à produire, moins de déchets</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_7" id="a2_7__2" value="les pièces détachées coûtent plus cher à l'unité"><label for="a2_7__2">les pièces détachées coûtent plus cher à l'unité</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_7" id="a2_7__3" value="cela rend la borne plus jolie"><label for="a2_7__3">cela rend la borne plus jolie</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_7" id="a2_7__4" value="cela n'a aucun effet : la borne finira remplacée de toute façon"><label for="a2_7__4">cela n'a aucun effet : la borne finira remplacée de toute façon</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_8">
+  <legend>Un choix «&nbsp;en lien avec le développement durable&nbsp;», pour un objet technique, c'est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_8" id="a2_8__1" value="un choix qui pèse sur la matière, l'énergie ou la durée de vie de l'objet"><label for="a2_8__1">un choix qui pèse sur la matière, l'énergie ou la durée de vie de l'objet</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_8" id="a2_8__2" value="un choix qui concerne uniquement les objets fabriqués en matériaux naturels"><label for="a2_8__2">un choix qui concerne uniquement les objets fabriqués en matériaux naturels</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_8" id="a2_8__3" value="un choix qui coûte plus cher, mais fait plaisir"><label for="a2_8__3">un choix qui coûte plus cher, mais fait plaisir</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_8" id="a2_8__4" value="un choix qui ne concerne que le recyclage, à la toute fin"><label for="a2_8__4">un choix qui ne concerne que le recyclage, à la toute fin</label></div>
+</fieldset>
 
   <h4>c) Ton relevé de choix</h4>
   <div class="assoc">
@@ -533,26 +577,34 @@
          alt="Deux stations de vélos simulées côte à côte, vues de côté, à la même échelle et dans les mêmes couleurs. À gauche, la première station : une borne à tête inclinée, un point d'ancrage au bout d'un bras à 90 cm du trottoir, un boîtier fermé par une seule vis ; en dessous, borne inclinée, ancrage à 90 cm, boîtier à vis unique. À droite, la deuxième station : une borne sous un auvent, un toit plat porté par un montant ; un anneau d'ancrage au ras du trottoir ; un boîtier sans vis, entouré d'un cordon de soudure ; en dessous, bornes abritées sous un auvent, ancrage au sol, boîtier soudé. Rien n'indique laquelle est la meilleure, ni à quoi sert chaque choix.">
   </figure>
 
-  <div class="assoc"><label for="a3_1">L'auvent répond au même interacteur que la borne inclinée. Lequel&nbsp;?</label>
-    <select id="a3_1"><option value="">— choisir —</option>
-      <option>la pluie</option><option>l'usager</option>
-      <option>le trottoir</option><option>le réseau</option></select></div>
-  <div class="assoc"><label for="a3_2">Deux solutions différentes pour le même interacteur, cela montre que&nbsp;:</label>
-    <select id="a3_2"><option value="">— choisir —</option>
-      <option>un même problème admet plusieurs réponses techniques, chacune avec ses conséquences</option>
-      <option>l'une des deux est forcément une erreur</option>
-      <option>les concepteurs ne se sont pas concertés</option>
-      <option>le problème n'était pas important</option></select></div>
-  <div class="assoc"><label for="a3_3">L'ancrage au sol plutôt qu'à 90 cm&nbsp;:</label>
-    <select id="a3_3"><option value="">— choisir —</option>
-      <option>occupe moins de place mais oblige l'usager à se baisser : un gain d'encombrement payé en ergonomie</option>
-      <option>est meilleur sur tous les points</option>
-      <option>est moins sûr</option><option>ne change rien pour l'usager</option></select></div>
-  <div class="assoc"><label for="a3_4">Le boîtier <b>soudé</b> plutôt que vissé&nbsp;:</label>
-    <select id="a3_4"><option value="">— choisir —</option>
-      <option>résiste mieux au vandalisme mais rend la maintenance beaucoup plus lourde</option>
-      <option>est un meilleur choix dans tous les cas</option>
-      <option>ne change rien</option><option>coûte forcément plus cher</option></select></div>
+  <fieldset class="qcm-groupe" id="a3_1">
+  <legend>L'auvent répond au même interacteur que la borne inclinée. Lequel&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__1" value="la pluie"><label for="a3_1__1">la pluie</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__2" value="l'usager"><label for="a3_1__2">l'usager</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__3" value="le trottoir"><label for="a3_1__3">le trottoir</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__4" value="le réseau"><label for="a3_1__4">le réseau</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_2">
+  <legend>Deux solutions différentes pour le même interacteur, cela montre que&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__1" value="un même problème admet plusieurs réponses techniques, chacune avec ses conséquences"><label for="a3_2__1">un même problème admet plusieurs réponses techniques, chacune avec ses conséquences</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__2" value="l'une des deux est forcément une erreur"><label for="a3_2__2">l'une des deux est forcément une erreur</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__3" value="les concepteurs ne se sont pas concertés"><label for="a3_2__3">les concepteurs ne se sont pas concertés</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__4" value="le problème n'était pas important"><label for="a3_2__4">le problème n'était pas important</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_3">
+  <legend>L'ancrage au sol plutôt qu'à 90 cm&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__1" value="occupe moins de place mais oblige l'usager à se baisser : un gain d'encombrement payé en ergonomie"><label for="a3_3__1">occupe moins de place mais oblige l'usager à se baisser : un gain d'encombrement payé en ergonomie</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__2" value="est meilleur sur tous les points"><label for="a3_3__2">est meilleur sur tous les points</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__3" value="est moins sûr"><label for="a3_3__3">est moins sûr</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__4" value="ne change rien pour l'usager"><label for="a3_3__4">ne change rien pour l'usager</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_4">
+  <legend>Le boîtier <b>soudé</b> plutôt que vissé&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__1" value="résiste mieux au vandalisme mais rend la maintenance beaucoup plus lourde"><label for="a3_4__1">résiste mieux au vandalisme mais rend la maintenance beaucoup plus lourde</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__2" value="est un meilleur choix dans tous les cas"><label for="a3_4__2">est un meilleur choix dans tous les cas</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__3" value="ne change rien"><label for="a3_4__3">ne change rien</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__4" value="coûte forcément plus cher"><label for="a3_4__4">coûte forcément plus cher</label></div>
+</fieldset>
 
   <h4>🌍 Transfert — la même station à Sainte-Luce</h4>
   <div class="assoc">
@@ -619,18 +671,20 @@
     <ul><li>«&nbsp;Je dois encore revoir ____, parce que ____.&nbsp;»</li>
     <li>«&nbsp;Ce que je n'arrive pas encore à faire seul·e&nbsp;: ____.&nbsp;»</li></ul></details>
   <h3>Je me positionne</h3>
-  <div class="assoc"><label for="pos1">5e_C2.1 — faire la liste des interacteurs&nbsp;:</label>
-    <select id="pos1"><option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — je ne cite que des personnes</option>
-      <option>🟠 Maîtrise fragile — je cite des personnes et des objets</option>
-      <option>🟢 Maîtrise satisfaisante — je couvre les quatre familles</option>
-      <option>⭐ Très bonne maîtrise — je pense aussi aux conditions et aux règles</option></select></div>
-  <div class="assoc"><label for="pos2">5e_C2.2 — expliquer les choix de conception&nbsp;:</label>
-    <select id="pos2"><option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — je décris la forme sans l'expliquer</option>
-      <option>🟠 Maîtrise fragile — j'explique avec de l'aide</option>
-      <option>🟢 Maîtrise satisfaisante — je relie chaque choix à un interacteur et à l'un des trois domaines</option>
-      <option>⭐ Très bonne maîtrise — je dis aussi ce que le choix coûte ailleurs</option></select></div>
+  <fieldset class="qcm-groupe" id="pos1">
+  <legend>5e_C2.1 — faire la liste des interacteurs&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__1" value="🔴 Maîtrise insuffisante — je ne cite que des personnes"><label for="pos1__1">🔴 Maîtrise insuffisante — je ne cite que des personnes</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__2" value="🟠 Maîtrise fragile — je cite des personnes et des objets"><label for="pos1__2">🟠 Maîtrise fragile — je cite des personnes et des objets</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__3" value="🟢 Maîtrise satisfaisante — je couvre les quatre familles"><label for="pos1__3">🟢 Maîtrise satisfaisante — je couvre les quatre familles</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__4" value="⭐ Très bonne maîtrise — je pense aussi aux conditions et aux règles"><label for="pos1__4">⭐ Très bonne maîtrise — je pense aussi aux conditions et aux règles</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="pos2">
+  <legend>5e_C2.2 — expliquer les choix de conception&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__1" value="🔴 Maîtrise insuffisante — je décris la forme sans l'expliquer"><label for="pos2__1">🔴 Maîtrise insuffisante — je décris la forme sans l'expliquer</label></div>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__2" value="🟠 Maîtrise fragile — j'explique avec de l'aide"><label for="pos2__2">🟠 Maîtrise fragile — j'explique avec de l'aide</label></div>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__3" value="🟢 Maîtrise satisfaisante — je relie chaque choix à un interacteur et à l'un des trois domaines"><label for="pos2__3">🟢 Maîtrise satisfaisante — je relie chaque choix à un interacteur et à l'un des trois domaines</label></div>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__4" value="⭐ Très bonne maîtrise — je dis aussi ce que le choix coûte ailleurs"><label for="pos2__4">⭐ Très bonne maîtrise — je dis aussi ce que le choix coûte ailleurs</label></div>
+</fieldset>
 </section>
 
 <section class="card">
@@ -654,6 +708,36 @@
   <p>Séquence 5e_C2.1 · C2.2 — Thème 1 · Technologie cycle 4 (2024).
   Page autonome, hors ligne, aucune donnée envoyée. Toutes les données sont simulées.</p>
 </footer>
+<script>
+/* ══════ Règle d'or n°300 — le groupe de boutons radio expose sa valeur ══════
+   Un <fieldset class="qcm-groupe"> remplace une liste déroulante. Pour que tout
+   ce qui lisait `champ.value` continue de fonctionner — sauvegarde, restauration,
+   correction, bancs de lot —, le groupe porte lui-même la valeur de la
+   proposition cochée, sous le même nom et avec le même contenu : son TEXTE.
+   Lire rend "" quand rien n'est coché, comme le faisait l'option vide.
+
+   La propriété est posée sur le PROTOTYPE, et non sur chaque élément : un
+   <fieldset> n'a pas de `value` native, et le faire ainsi affranchit du moment
+   où ce script s'exécute. Une première version le posait élément par élément,
+   et manquait les groupes que le navigateur n'avait pas encore lus. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){
+        r.checked = (r.value === v);
+      });
+    }
+  });
+})();
+</script>
 <script>
 "use strict";
 const KEY="seq_5e_C2_shenzhen";
@@ -695,24 +779,36 @@ function demande(cle,msg){
   signale(msg + " — clique une seconde fois pour confirmer.");
   return false;
 }
-const val=id=>{const e=$(id);return e?e.value:"";};
+/* Règle d'or n°300 : un groupe de boutons radio rend le TEXTE de la
+   proposition cochée — exactement ce que rendait `select.value` —, de sorte
+   que les tables de réponses attendues n'ont pas une ligne à changer. */
+const val=id=>{
+  const e=$(id); if(!e) return "";
+  if(e.tagName==="FIELDSET"){ const c=e.querySelector("input[type=radio]:checked"); return c?c.value:""; }
+  return e.value;
+};
 window.__valid = window.__valid || {};
 window.__exp = window.__exp || {};
 
 /* ══════ Sauvegarde locale ══════ */
 function collect(){
   const o={inputs:{}, valid:window.__valid, exp:window.__exp};
-  document.querySelectorAll("select,textarea").forEach(e=>{ if(e.id) o.inputs[e.id]=e.value; });
+  document.querySelectorAll("textarea,fieldset.qcm-groupe").forEach(e=>{ if(e.id) o.inputs[e.id]=val(e.id); });
   return o;
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){} }
 function restore(){
   let o=null; try{ o=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(err){}
   if(!o) return;
-  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.value=v; });
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{
+    const e=$(id); if(!e) return;
+    if(e.tagName==="FIELDSET"){
+      e.querySelectorAll("input[type=radio]").forEach(r=>{ r.checked = (r.value===v); });
+    } else e.value=v;
+  });
   window.__valid=o.valid||{}; window.__exp=o.exp||{};
 }
-document.addEventListener("change", ev=>{ if(/SELECT|TEXTAREA/.test(ev.target.tagName)) save(); });
+document.addEventListener("change", ev=>{ if(/INPUT|TEXTAREA/.test(ev.target.tagName)) save(); });
 document.addEventListener("input", ev=>{ if(ev.target.tagName==="TEXTAREA") save(); });
 
 $("btnPrint").addEventListener("click", ()=>window.print());
