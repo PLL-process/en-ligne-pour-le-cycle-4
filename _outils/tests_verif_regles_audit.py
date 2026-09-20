@@ -19,8 +19,9 @@ Deux choses, et la seconde est le second corollaire de la règle d'or n°299 :
 que le contrôle voie ce qu'il doit voir, et qu'il le voie **par son point
 d'entrée**, lancé en sous-processus comme on le lance vraiment.
 
-Il éprouve la règle d'or n°300 — la seule qu'il juge au fond, parce qu'elle
-est née de ce chantier — et ne juge PAS la justesse des autres règles mécaniques : elles ont
+Il éprouve les règles d'or n°300 et n°301 — les seules qu'il juge au fond,
+parce qu'elles sont nées de ce chantier — et ne juge PAS la justesse des
+autres règles mécaniques : elles ont
 leur propre histoire dans le journal, et les éprouver une à une demanderait un
 lot d'essai complet. Ce banc tient la porte d'entrée et la panne — c'est son
 périmètre, et il le déclare (règle d'or n°47).
@@ -219,6 +220,69 @@ def main():
             par_la_ligne_de_commande([
                 "theme-1-objets-systemes-usages-interactions/"
                 "C1-decrire-les-liens-entre-usages-et-evolutions/3e/3e_C1.1"])[1]))
+
+
+    # ── 5. La règle d'or n°301 — le bilan clôt la séquence ─────────────────
+    def page(corps):
+        return ('<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8">'
+                '<title>Essai</title></head><body><main>' + corps + '</main></body></html>')
+
+    BILAN = '<section><h3>📍 Je me positionne</h3><textarea id="pos1"></textarea></section>'
+    BONUS = '<section><h2>🎁 Bonus (facultatif)</h2><p>Un défi à lire.</p></section>'
+
+    def etat_301(corps):
+        """L'état rendu par la n°301 sur une séquence d'essai."""
+        bac = pathlib.Path(tempfile.mkdtemp())
+        ancien = V.RACINE
+        try:
+            (bac / "lot").mkdir()
+            (bac / "lot" / "sequence_a.html").write_text(page(corps), encoding="utf-8")
+            V.RACINE = bac
+            _code, texte = jouer(["verif_regles_audit.py"])
+        finally:
+            V.RACINE = ancien
+            shutil.rmtree(bac, ignore_errors=True)
+        for ligne in texte.splitlines():
+            if "n°301" in ligne and ("✔" in ligne or "✘" in ligne):
+                return ("ECHEC" if "✘" in ligne else "OK"), ligne.strip()
+        return "ABSENT", texte.strip()[-300:]
+
+    cas("une séquence sans aucun bilan est refusée (n°301)", lambda: (
+        lambda e: None if e[0] == "ECHEC" and "aucun bilan" in e[1]
+        else "état %s — %s" % e)(etat_301('<section><h2>Activité</h2></section>')))
+
+    cas("un Bonus placé APRÈS le bilan est refusé", lambda: (
+        lambda e: None if e[0] == "ECHEC" and "APRÈS le bilan" in e[1]
+        else "état %s — %s" % e)(etat_301(BILAN + BONUS)))
+
+    cas("le même Bonus placé AVANT le bilan passe", lambda: (
+        lambda e: None if e[0] == "OK" else "état %s — %s" % e)(etat_301(BONUS + BILAN)))
+
+    cas("une séquence à bilan et sans Bonus passe", lambda: (
+        lambda e: None if e[0] == "OK" else "état %s — %s" % e)(etat_301(BILAN)))
+
+    cas("le bilan est reconnu sous ses autres écritures — « Mon auto-positionnement »", lambda: (
+        lambda e: None if e[0] == "OK" else "état %s — %s" % e)(
+            etat_301('<section><h3>Mon auto-positionnement</h3><textarea id="ap1"></textarea></section>')))
+
+    cas("le bilan est reconnu au seul titre « Bilan personnel »", lambda: (
+        # Cas réel : 4e_C8. Le titre est la SEULE marque ici — le champ porte une
+        # étiquette neutre — sans quoi ce cas passerait encore en retirant
+        # « bilan personnel » du motif, et ne prouverait donc rien.
+        lambda e: None if e[0] == "OK" else "état %s — %s" % e)(
+            etat_301('<section><h2>🙋 Bilan personnel</h2>'
+                     '<input id="b1" aria-label="Ce que tu as appris"></section>')))
+
+    cas("le bilan est reconnu quand la phrase ne vit que dans un aria-label", lambda: (
+        lambda e: None if e[0] == "OK" else "état %s — %s" % e)(
+            etat_301('<section><h2>🙋 Pour finir</h2>'
+                     '<input id="b1" aria-label="Auto-positionnement 1"></section>')))
+
+    cas("la n°301 ne juge PAS les champs du Bonus — c'est déclaré, pas oublié", lambda: (
+        # un Bonus sans champ, placé AVANT le bilan, doit passer ici : délimiter
+        # son bloc demande d'analyser l'arbre, et c'est audit_cloture_sequence.mjs
+        # qui le mesure. Ce cas tient la frontière entre les deux outils.
+        lambda e: None if e[0] == "OK" else "état %s — %s" % e)(etat_301(BONUS + BILAN)))
 
     # ── 3. Le VRAI point d'entrée, en sous-processus ───────────────────────
     def ligne_de_commande():
