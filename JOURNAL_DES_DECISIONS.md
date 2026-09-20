@@ -16798,3 +16798,150 @@ au-dessus. C'est exactement le cas que la règle vise.
   `controle_gestes_outil.py` **340 pages · 13 encarts · 0 écart** ✅ ·
   `controle_fichiers_telechargeables.py` **79 pages · 0 écart** ✅
 - aucun champ en ligne à `aria-label` dans les neuf ; aucun n'a été converti nulle part
+
+## 20/09/2026 — Règle d'or n°301 : le bilan clôt la séquence (_outils, thème 2)
+
+Deux constats de classe de Pascal, mesurés ici avant d'écrire quoi que ce soit : un « 🎁 Bonus » se
+place **après** le bilan « 📍 Je me positionne », et ce Bonus ne porte **aucun champ de réponse**.
+L'élève fait donc son auto-positionnement — le geste qui clôt une séquence — et on lui redemande du
+travail ensuite ; travail qu'il ne peut de toute façon que lire.
+
+Ce lot **ne corrige aucune page**. Il mesure, il écrit la règle, il la mécanise.
+
+> **Règle d'or n°301 — le bilan clôt la séquence.** Une séquence se termine par son **bilan** :
+> rappel de l'hypothèse de départ, métacognition, auto-positionnement sur les codes réellement
+> travaillés. **Rien qui demande un travail à l'élève ne vient après.**
+>
+> — Un **Bonus, même facultatif, est un travail**. Il porte donc des **champs de réponse** ET un
+> **corrigé**, et il se place **AVANT le bilan**. *Un Bonus qu'on ne peut que lire n'est pas un
+> bonus, c'est un paragraphe.*
+>
+> — Le **renvoi vers le QCM n'est pas un travail, c'est un envoi** : il vient en dernier, **après**
+> le bilan. C'est la porte de sortie, pas une activité de plus.
+>
+> — **Toute séquence porte un bilan.** Celles qui n'en ont pas sont un **manquement**, pas une
+> variante : elles ne se terminent par rien.
+
+### Ce qui a été mesuré — et un compte qu'il faut corriger
+
+Le relevé préalable donnait **31 séquences** portant un bloc « Je me positionne », et 29 sans. La
+mesure par le DOM en donne **53 avec** et **7 sans**, et la différence n'est pas une erreur de
+comptage : c'est que **le bilan s'écrit de quatre façons** dans le dépôt.
+
+| ce qui porte le bilan | séquences |
+|---|---:|
+| un titre — « Je me positionne », « Mon auto-positionnement », « 🎯 Auto-positionnement » | 44 |
+| la phrase dans un `<legend>`, un `<label>` ou un `aria-label` de champ | 9 |
+| **total** | **53** |
+| aucune marque — la séquence ne se termine par rien | **7** |
+
+Chercher la seule phrase « Je me positionne » en manquait vingt-deux. Un lot titre « 🙋 Bilan
+personnel » et ne dit « auto-positionnement » que dans les `aria-label` de ses champs ; un autre
+l'écrit en minuscules. **Le bilan se reconnaît à sa fonction, pas à son libellé** — et c'est ce que
+le contrôle fait désormais.
+
+### Le relevé complet
+
+| ce qui a été compté | sur 60 séquences |
+|---|---:|
+| portent un bilan | **53** |
+| n'en portent **aucun** | **7** |
+| portent un Bonus | 57 |
+| ont leur Bonus **APRÈS** le bilan | **53** |
+| Bonus sans **aucun champ de réponse** | **52 / 57** |
+| Bonus sans **aucun corrigé** | **48 / 57** |
+| renvoient vers le QCM **avant** le bilan | 7 |
+
+**Les 53 séquences qui ont un bilan ont TOUTES leur Bonus après lui.** Il n'y a pas d'exception : ce
+n'est pas une dérive de quelques lots, c'est le gabarit courant du dépôt.
+
+**Les 7 sans bilan** — `3e_C1.5`, `4e_C1.1`, `4e_C1.4`, `4e_C6.2`, et les trois stations
+`3e_C9.2` (`station_1_besoin-et-algorithme`, `station_2_programmer`, `station_3_interaction`). Les
+trois stations n'ont pas non plus de Bonus : elles s'arrêtent, simplement.
+
+**Un seul Bonus du dépôt tient déjà la règle** : `4e_C9.1` (`sequence_4e_C9_jardin-programme.html`),
+avec **3 champs et un corrigé**. C'est le modèle à montrer aux autres.
+
+### Ce qui est mécanisé, et ce qui est seulement mesuré
+
+La n°301 entre dans `verif_regles_audit.py`, mais **elle n'y juge que deux choses**, parce que deux
+seulement se lisent sûrement dans la source : **qu'un bilan existe**, et **qu'aucun Bonus ne vienne
+après lui**.
+
+Le troisième grief — « le Bonus porte-t-il un champ ? » — **a été retiré du contrôle**, et il faut
+dire pourquoi. Le mesurer demande de délimiter le bloc du Bonus, donc d'analyser l'arbre. Une
+première version s'en approchait par expression régulière, en lisant du titre jusqu'au prochain
+`</section>` : confrontée à la mesure par le DOM, **elle attribuait au Bonus les quinze champs de la
+section qui l'accueille** dans `4e_C4.1_book-train`, dont le renvoi au QCM. Ce grief reste donc
+mesuré par `audit_cloture_sequence.mjs`, qui lit le DOM, et il est **déclaré absent** du périmètre du
+contrôle.
+
+La **qualité d'un corrigé** — qu'il traite la question posée, qu'il soit juste, qu'il soit utile —
+n'est mesurée par rien, et ne le sera pas : cela se lit. L'audit en relève la **présence**, rien de
+plus, et le dit.
+
+### La confrontation des deux outils, et ce qu'elle a corrigé
+
+Les deux mesures — par la source et par le DOM — ont été confrontées séquence par séquence. **Trois
+écarts**, et chacun a corrigé un des deux outils :
+
+| écart | qui avait raison | ce qui a été corrigé |
+|---|---|---|
+| `4e_C8` : bilan vu par la source, pas par le DOM | **la source** | le DOM ne lisait que `textContent` ; il lit maintenant aussi les `aria-label` |
+| `4e_C4.1_book-train` : 15 champs au Bonus selon le DOM, 0 selon la source | **la source** | le DOM remontait au `<section>` englobant ; il prend maintenant le **parent direct** du titre |
+| `3e_C1.5` : 13 champs selon le DOM, 0 selon la source | **la source** | même cause, même correction |
+
+Sans cette confrontation, l'audit aurait annoncé sept Bonus pourvus de champs là où il n'y en a que
+cinq, et aurait manqué treize bilans. **Deux outils qui mesurent la même chose de deux façons valent
+mieux qu'un outil qu'on croit sur parole.**
+
+### Les chiffres de `verif_regles_audit`
+
+| | manquements mécaniquement établis |
+|---|---:|
+| avant la n°301 | 183 |
+| après la n°301 | **243** |
+
+**+60 : les soixante séquences échouent.** C'est normal et c'est attendu — 53 pour un Bonus placé
+après le bilan, 7 pour l'absence de bilan. Le nombre descendra par vagues, comme celui de la n°300.
+
+### Ce que ce lot ne fait pas
+
+**Aucune page n'est modifiée**, et **aucun contenu de Bonus n'est rédigé**. Écrire les corrigés
+manquants est un travail pédagogique : il revient à Pascal, lot par lot. Un corrigé écrit vite pour
+faire passer un contrôle au vert serait pire que pas de corrigé du tout.
+
+### Ordre de traitement proposé
+
+Il tient en quatre temps, du plus grave au plus mécanique. **Le premier temps demande une chose que
+je ne peux pas mesurer : quels lots les classes utilisent en ce moment.** Pascal les nomme, ils
+passent devant.
+
+1. **Les 7 séquences sans bilan** — elles ne se terminent par rien, et c'est le manquement le plus
+   lourd. Trois d'entre elles (`3e_C9.2`, stations 1 à 3) n'ont pas non plus de Bonus : il n'y a
+   qu'un bilan à écrire. Les quatre autres (`3e_C1.5`, `4e_C1.1`, `4e_C1.4`, `4e_C6.2`) demandent un
+   bilan **et** le déplacement de leur Bonus.
+2. **`4e_C9.1` comme modèle** — c'est le seul Bonus du dépôt qui porte déjà champs et corrigé. À
+   regarder avant d'écrire les autres, pour que le gabarit soit tenu par l'exemple et non par la
+   règle seule.
+3. **Les 53 Bonus placés après le bilan** — un déplacement de bloc, mécanique, sans rédaction. Il
+   peut se faire par thème, en une vague par thème, et ne demande aucune décision pédagogique.
+4. **Les 52 Bonus sans champ et les 48 sans corrigé** — c'est là qu'est le travail de fond, et il
+   est de rédaction. Lot par lot, au rythme de Pascal. Un Bonus qui ne peut pas recevoir de corrigé
+   utile devrait devenir autre chose qu'un Bonus : ce sera à trancher au cas par cas.
+
+Les temps 1 et 3 peuvent commencer sans rédiger une ligne de contenu. Le temps 4 ne le peut pas.
+
+### Contrôles
+
+- `audit_cloture_sequence.mjs`, outil neuf : **60 séquences · 0 illisible** ✅, avec `--csv`
+- `verif_regles_audit.py` : **60 séquences · 243 manquements** (183 avant, **+60**) ✅
+- `tests_verif_regles_audit.py` : **19 / 19** (11 avant ; **+8** pour la n°301) ✅, mordant aux trois
+  mutations — l'absence de bilan non refusée → 18/19 · l'ordre non jugé → 18/19 · le titre
+  « Bilan personnel » non reconnu → 18/19
+- batterie : `controle_liens.py` **718 pages · 2 918 adresses · 0 cassée** ✅ · `controle_medias.py`
+  **41 lots · 362 médias** ✅ · `controle_cadres.py` **340 pages · 0 cadre** ✅ ·
+  `controle_formulations.py` **682 fichiers · 0 écart** ✅ · `controle_gestes_outil.py` **340 pages ·
+  0 écart** ✅ · `controle_fichiers_telechargeables.py` **79 pages · 0 écart** ✅
+- `controle_impression.mjs` : **338 pages · 0 refusée** ✅
+- périmètre : `_outils/` et ce journal, **aucune page de séquence touchée**

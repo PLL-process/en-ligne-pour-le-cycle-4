@@ -465,6 +465,46 @@ def regle_67(src: str) -> tuple[str, str]:
     return "OK", "%d champ(s) de saisie pour les productions annoncées" % champs
 
 
+#: Le bilan qui clôt une séquence. Trois écritures coexistent dans le dépôt : un
+#: titre « Je me positionne », un titre « Mon auto-positionnement », et des lots
+#: où la phrase ne vit que dans l'invite des champs de positionnement. Les trois
+#: valent bilan — c'est la fonction qui compte, pas le libellé. Ne chercher que
+#: la première en manquait NEUF sur quarante.
+BILAN = re.compile(r"je me positionne|auto[-\s]?positionnement|je me situe|bilan personnel", re.I)
+
+#: Le titre d'un bloc Bonus, quelle que soit sa décoration.
+TITRE_BONUS = re.compile(r"<h[1-4][^>]*>(?:(?!</h[1-4]>).)*?\bbonus\b", re.I | re.S)
+
+def regle_301(src: str) -> tuple[str, str]:
+    """n°301 — le bilan clôt la séquence ; un Bonus est un travail, il le précède.
+
+    DEUX choses se jugent ici, parce que deux seulement se lisent sûrement dans
+    la source : qu'un bilan EXISTE, et qu'aucun Bonus ne vienne APRÈS lui.
+
+    Ce qui n'est PAS jugé ici, et pourquoi :
+      · « le Bonus porte-t-il un champ de réponse ? » — il faudrait délimiter le
+        bloc du Bonus, donc analyser l'arbre. Une expression régulière qui s'en
+        approche fait des faux : essayée, elle attribuait au Bonus les quinze
+        champs de la section qui l'accueille dans `4e_C4.1_book-train`. Ce grief
+        est mesuré par `audit_cloture_sequence.mjs`, qui lit le DOM.
+      · la QUALITÉ d'un corrigé — qu'il traite la question posée, qu'il soit
+        juste, qu'il soit utile. Cela se lit.
+    """
+    m_bilan = BILAN.search(src)
+    m_bonus = TITRE_BONUS.search(src)
+
+    griefs = []
+    if not m_bilan:
+        griefs.append("aucun bilan : la séquence ne se termine par rien")
+    if m_bonus and m_bilan and m_bonus.start() > m_bilan.start():
+        griefs.append("le Bonus vient APRÈS le bilan — du travail demandé après la clôture")
+
+    if griefs:
+        return "ECHEC", " · ".join(griefs)
+    return "OK", ("bilan présent"
+                  + (", et le Bonus le précède" if m_bonus else ", pas de Bonus"))
+
+
 REGLES = [
     ("n°23 durée", regle_23),
     ("n°26 diagnostic d'entrée", regle_26),
@@ -480,6 +520,7 @@ REGLES = [
     ("n°67 consigne sans champ", regle_67),
     ("n°298 page élève allégée", regle_298),
     ("n°300 question dans le flux", regle_300),
+    ("n°301 le bilan clôt", regle_301),
 ]
 
 SYMBOLE = {"OK": "✔", "ECHEC": "✘", "ALERTE": "▲", "SANS OBJET": "·", "INCONNU": "?"}
@@ -545,6 +586,9 @@ def main(argv: list[str]) -> int:
     print("\nPÉRIMÈTRE DE CE CONTRÔLE")
     print("  Vérifié mécaniquement : " + " · ".join(nom.split()[0] for nom, _ in REGLES))
     print("  Jugement humain requis : n°24, n°25, n°27, n°28, n°32 — voir les ⚑ ci-dessus.")
+    print("  n°301 : seuls l'EXISTENCE du bilan et l'ORDRE des blocs sont jugés ici. Qu'un")
+    print("  Bonus porte des champs demande de délimiter son bloc, donc d'analyser l'arbre :")
+    print("  `audit_cloture_sequence.mjs` le mesure. La QUALITÉ d'un corrigé ne se mesure pas.")
     print("  n°300 : seule la FORME du champ est lue. Que l'énoncé soit dans une <legend>")
     print("  et que la valeur transmise soit le texte de la proposition se vérifient au banc")
     print("  du lot et à l'œil — pas par expression régulière.")
