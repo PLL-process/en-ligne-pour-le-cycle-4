@@ -334,6 +334,49 @@ def main():
                      '<fieldset class=\"qcm-groupe\" id=\"q9\"><legend>Une question ordinaire ?</legend>'
                      '<input type=\"radio\" name=\"q9\" id=\"q9a\" value=\"oui\"><label for=\"q9a\">oui</label></fieldset>' + BILAN)))
 
+    # ── 7. La liste d'exceptions de la n°302 — et ses bornes ───────────────
+    # Tranché par Pascal : « La mairie vous appelle » est une parole RAPPORTÉE,
+    # attribuée à un tiers nommé. Ce qui suit vérifie que la tolérance est bien
+    # BORNÉE : par fichier ET par phrase, jamais l'une sans l'autre.
+    TOLERE = "sequence_3e_C9.2-C8.3_station_1_besoin-et-algorithme.html"
+    PHRASE = "<h2>📞 Séance 1 — « La mairie vous appelle » : du besoin à l'algorithme</h2>"
+
+    def etat_302_nomme(corps, nom):
+        bac = pathlib.Path(tempfile.mkdtemp())
+        ancien = V.RACINE
+        try:
+            (bac / "lot").mkdir()
+            (bac / "lot" / nom).write_text(page(corps), encoding="utf-8")
+            V.RACINE = bac
+            _code, texte = jouer(["verif_regles_audit.py"])
+        finally:
+            V.RACINE = ancien
+            shutil.rmtree(bac, ignore_errors=True)
+        for ligne in texte.splitlines():
+            if "n°302" in ligne and ("\u2714" in ligne or "\u2718" in ligne):
+                return ("ECHEC" if "\u2718" in ligne else "OK"), ligne.strip()
+        return "ABSENT", texte.strip()[-300:]
+
+    cas("la phrase tolérée passe, dans le fichier où elle est tolérée", lambda: (
+        lambda e: None if e[0] == "OK" else "état %s — %s" % e)(
+            etat_302_nomme(PHRASE + BILAN, TOLERE)))
+
+    cas("la MÊME phrase est refusée dans un AUTRE fichier", lambda: (
+        # la tolérance est attachée au fichier : sans cela, elle deviendrait une
+        # exemption générale pour « la narration », que personne ne saurait appliquer
+        lambda e: None if e[0] == "ECHEC" else "état %s — %s" % e)(
+            etat_302_nomme(PHRASE + BILAN, "sequence_autre_lot.html")))
+
+    cas("un AUTRE vouvoiement reste refusé dans le fichier toléré", lambda: (
+        # la tolérance est attachée à la phrase : le fichier n'est pas blanchi
+        lambda e: None if e[0] == "ECHEC" else "état %s — %s" % e)(
+            etat_302_nomme("<h2>Si vous êtes trois ou quatre</h2>" + BILAN, TOLERE)))
+
+    cas("la liste d'exceptions ne dépasse pas cinq entrées", lambda: (
+        lambda n: None if n <= 5 else
+        "%d entrées : c'est la règle qu'il faut revoir, pas la liste qu'il faut rallonger" % n)(
+            sum(len(v) for v in V.EXCEPTIONS_302.values())))
+
     # ── 3. Le VRAI point d'entrée, en sous-processus ───────────────────────
     def ligne_de_commande():
         code, texte = par_la_ligne_de_commande()
