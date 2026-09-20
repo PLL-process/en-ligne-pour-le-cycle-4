@@ -15955,4 +15955,287 @@ toute modification. Sans rapport avec ce lot, et listé pour qu'on ne l'attribue
   index 20/20 · generer_lexique 4/4
 - **Durcissement, mesuré** : les sept outils corrigés, recopiés dans une racine vide, sortent tous à
   **2** avec `⛔ EN PANNE` sur `stderr`, sous `--muet` comme sans
-- livraison : **branche poussée et PR ouverte avec `gh`**, pas de colis
+## 19/09/2026 — Audit : où les propositions d'une question masquent l'énoncé (_outils, thème 2)
+
+### Le mandat
+
+Constat de classe, élèves de 3e : en répondant, on perd la question. Le cas s'est produit dans une
+**séquence** — `3e_C1.1`, séance 1 — et non dans un QCM autonome. Pascal avait déjà sondé les QCM
+autonomes à 390 × 844 (seize questions, `3e_C1.1` et `5e_C2.1`) : l'énoncé y reste visible, même sur
+les questions illustrées. L'hypothèse à éprouver était donc celle de la **liste déroulante native**.
+
+Ce lot **ne corrige rien** et **n'écrit aucune règle d'or** : il mesure, et la règle s'écrira sur ces
+chiffres. Aucun fichier de séquence, de QCM, de synthèse ni de média n'est touché.
+
+### Le mécanisme, et ce qu'on peut en établir
+
+Une séquence pose ses questions en `<select>`. Une liste déroulante native **n'est pas dessinée dans
+la page** : le système la dessine par-dessus, ancrée au champ, et elle recouvre ce qui l'entoure —
+donc l'énoncé, qui le précède immédiatement. Un QCM autonome pose ses propositions en `<button>` :
+elles occupent le flux, s'enroulent sur plusieurs lignes et **poussent** le contenu au lieu de le
+couvrir. Deux formes, deux comportements — et c'est là toute l'affaire.
+
+**Ce que l'outil ne fait pas, et le dit :** il ne simule pas la liste ouverte et ne prétend pas
+l'avoir vue. Elle vit hors du DOM ; ni Playwright ni aucun script de page ne la mesure. Dessiner un
+faux menu en HTML pour le mesurer donnerait un chiffre qui ne serait le chiffre de rien. On rapporte
+la **longueur des propositions** et la **géométrie** qui rendent la chose dangereuse — c'est tout ce
+qui est honnêtement établissable.
+
+### Les deux tailles d'écran, et pourquoi celles-là
+
+Elles font varier la **hauteur**, qui est ce qui compte ici, et non la largeur :
+
+| taille | ce qu'elle représente | hauteur utile mesurée |
+|---|---|---|
+| 390 × 844 | téléphone — la taille du constat de départ | 797 px (barre collante de 47 px déduite) |
+| 1280 × 720 | portable de salle de classe, écran **court** | 673 px |
+
+Le portable de classe offre **moins de hauteur que le téléphone** : c'est le cas défavorable, et le
+plus fréquent en classe. La barre collante de navigation est déduite à chaque fois — l'ignorer
+aurait faussé toutes les positions de 47 px.
+
+### Le comptage de référence : 1 480 questions
+
+Un premier relevé, fait à la main la veille, donnait 746 questions à liste déroulante. La mesure par
+le DOM en donne **1 480**. Pascal a tranché le 19/09 après vérification : **1 480 fait foi**, et son
+746 venait d'une expression régulière qui consommait le texte au fil des correspondances et sautait
+ainsi une question sur deux — 746 est presque exactement la moitié de 1 492.
+
+- **1 492** `<select>` dans 59 des 60 séquences (comptage littéral et comptage DOM concordent) ;
+- **1 480** portent un énoncé rattachable — **ce sont les questions, et c'est le chiffre du dépôt** ;
+- **12** n'en portent aucun et ne sont pas comptés.
+
+Tous les chiffres de ce rapport sont alignés sur cette mesure : **637** questions dont la plus longue
+proposition dépasse 60 caractères, 164 au-delà de 90, 31 au-delà de 120. Le sens du constat de classe
+ne change pas ; son ampleur double.
+
+### 1. Les questions à liste déroulante — par thème et par niveau
+
+« > N » = questions dont la **plus longue proposition** dépasse N caractères.
+
+| périmètre | fichiers | questions | > 60 | > 90 | > 120 |
+|---|---:|---:|---:|---:|---:|
+| **Thème 1** | 14 | 316 | 228 | 40 | 7 |
+| — 3e | 4 | 92 | 64 | 13 | 1 |
+| — 4e | 4 | 84 | 53 | 12 | 1 |
+| — 5e | 6 | 140 | 111 | 15 | 5 |
+| **Thème 2** | 17 | 549 | 166 | 67 | 12 |
+| — 3e | 7 | 208 | 46 | 24 | 8 |
+| — 4e | 6 | 195 | 95 | 37 | 4 |
+| — 5e | 4 | 146 | 25 | 6 | 0 |
+| **Thème 3** | 29 | 615 | 243 | 57 | 12 |
+| — 3e | 14 | 312 | 125 | 39 | 10 |
+| — 4e | 8 | 175 | 72 | 12 | 2 |
+| — 5e | 7 | 128 | 46 | 6 | 0 |
+| **TOTAL** | **60** | **1 480** | **637** | **164** | **31** |
+
+Les fichiers les plus chargés en propositions longues :
+
+| questions | > 60 | > 90 | > 120 | fichier |
+|---:|---:|---:|---:|---|
+| 40 | 30 | 12 | 2 | `4e_C4.7` — SOS serre, Packet Tracer |
+| 37 | 28 | 2 | 1 | `5e_C1.1` — Chengdu, l'air |
+| 34 | 26 | 8 | 4 | `5e_C3.1` — Shanghai |
+| 31 | 26 | 7 | 0 | `3e_C1.1` — Tsinghua, les feux **(le lot du constat)** |
+| 30 | 25 | 20 | 8 | `3e_C4.8` — pont numérique, Packet Tracer |
+
+### 2. Les cinq pires questions du dépôt (les vingt sont dans la sortie de l'outil)
+
+| rang | caractères | fichier · séance · champ | la plus longue proposition |
+|---:|---:|---|---|
+| 1 | **199** | `3e_C3.1` Shenzhen · Séance 4 Choisir · `a4_3` | « sur le papier, la combinaison est meilleure sur les trois piliers — moins chère, moins émettrice, sans dépendre d'un seul appareil — à condition de vérifier par un essai que les gains s'ajoutent bien » |
+| 2 | **194** | `3e_C4.8` pont numérique · seance3 · `e4_1` | « au premier voyage, chaque étape cherchait encore ses voisins (résolutions d'adresses) : le temps que tout se mette en place, les premiers messages ont expiré — comportement NORMAL, pas une panne » |
+| 3 | **183** | `3e_C4.8` pont numérique · seance3 · `e5_3` | « qu'à chaque saut le traitement se compte en millisecondes : lire une table est quasi instantané — c'est pour cela qu'Internet « semble » direct alors qu'il saute de routeur en routeur » |
+| 4 | **149** | `3e_C7.3` boîtier de la station · `a3p0` | « plus rien ne s'use, mais la pose d'une main en haut d'une échelle n'est plus possible : c'est l'argument qui avait écarté la barre d'acier en 3e_C8.2 » |
+| 5 | **149** | `3e_C7.3` boîtier de la station · `a3p1` | (la même, sur la sortie B) |
+
+Ces propositions ne sont pas des étourderies : ce sont des **réponses argumentées**, écrites comme
+telles. C'est précisément ce qui rend le sujet difficile — raccourcir le texte appauvrirait la
+réponse, et la vraie sortie est de changer de forme, pas d'écrire moins.
+
+### 3. Le gabarit n'est PAS uniforme — et 75 questions sortent du sujet
+
+C'est le résultat qui corrige le plus nettement l'hypothèse de départ (« le `<label>` est partout
+immédiatement suivi du `<select>` »). La première séparation à faire n'est pas entre gabarits, mais
+entre **les questions que cette affaire concerne et celles qu'elle ne concerne pas** :
+
+| | questions | l'énoncé est-il AU-DESSUS du champ ? | concerné ? |
+|---|---:|---|---|
+| **A — énoncé au-dessus du champ** | **1 405** | oui : `<label>`, `<p>` ou titre, juste avant le champ | **OUI** — la liste peut le recouvrir |
+| **B — champ EN LIGNE** | **75** | non : l'énoncé est porté par l'attribut `aria-label` du champ | **NON** — voir ci-dessous |
+| total mesuré | 1 480 | | |
+
+**Les 75 champs de la famille B ne relèvent pas de cette règle, et ne doivent pas entrer dans une
+conversion.** Ils vivent dans des cellules de tableau et des étapes d'algorithme, en ligne dans le
+texte ; leur énoncé n'est pas au-dessus d'eux mais dans leur attribut. Une liste native ne peut donc
+pas « recouvrir l'énoncé » : elle recouvre les lignes voisines du tableau, ce qui est un autre
+problème, avec une autre solution. Les convertir en boutons ou en groupes radio **casserait la mise
+en page en ligne** — un bouton pleine largeur n'a pas de sens au milieu d'une phrase ou dans une
+cellule. Il faudra les traiter à part, ou les laisser tels quels.
+
+Le détail des quatre gabarits de rattachement, pour mémoire :
+
+| gabarit | famille | questions | ce que c'est |
+|---|---|---:|---|
+| `label-for` | A | 1 018 | `<label for="id">` puis `<select id="id">` — le gabarit de référence |
+| `enonce-p` | A | 300 | l'énoncé est un `<p>` ou un titre, pas un `<label>` — blocs d'exercice `div.exo` |
+| `label-bloc` | A | 87 | un `<label>` sans `for=`, dans le même bloc que le champ |
+| `aria-en-ligne` | **B** | **75** | champ **en ligne** (tableau, étape d'algorithme), énoncé en `aria-label` |
+
+Sur les **1 405** questions de la famille A — et sur elles seules, la question n'ayant pas de sens
+pour la famille B : **1 329 ont l'énoncé immédiatement suivi du champ**, et **76 ont quelque chose
+qui s'intercale** — surtout `textarea,details,summary,p` (40 questions, `4e_C8.1`) et
+`select,div,label,select` (12 questions, `4e_C9.1`, deux champs pour une même question).
+
+### Deux précédents existent DÉJÀ dans le dépôt
+
+Ils n'ont pas été cherchés au hasard : Pascal demandait s'il y en avait. Il y en a deux.
+
+**a) Les boutons des QCM autonomes** — 71 fichiers, 1 960 questions.
+
+```
+div.options          role="group"  aria-label="Choix de réponse"   display:grid · gap 9px
+  button.option      display:flex · align-items:flex-start · text-align:left
+    <span class="lettre">A</span><span>texte de la proposition</span>
+  états par classes : .choisie · .bonne · .mauvaise · [disabled] après validation
+```
+
+Le texte **s'enroule sur plusieurs lignes** : c'est pourquoi 432 propositions de plus de
+60 caractères n'y gênent personne. **Au clavier** : chaque proposition est un `<button>` natif, donc
+un arrêt de tabulation chacune, choisie par Entrée ou Espace. Il n'y a **ni `role="radiogroup"`, ni
+navigation aux flèches** : les propositions ne sont pas annoncées comme un ensemble de choix
+exclusifs, et il faut autant de Tab que de propositions. **C'est le point faible de ce gabarit**, et
+il faudrait le reprendre en l'adoptant.
+
+**b) Des boutons radio, déjà dans une séquence** — `4e_C1.4` (cybersécurité), **82 radios**.
+Au total le dépôt porte **140 radios et 90 cases à cocher répartis sur 24 séquences**.
+
+```
+div.qcm-option       display:flex · align-items:flex-start · gap 8px
+  input[type=radio] name="q1p"        (groupe natif)
+  label                               le texte s'enroule sur plusieurs lignes
+  états : :focus-within · input:checked + label
+```
+
+Un groupe de boutons radio natifs **se parcourt aux flèches, compte pour un seul arrêt de
+tabulation, et s'annonce « choix 2 sur 4 »** — exactement ce que le `<select>` offre et ce que les
+`<button>` des QCM autonomes n'offrent pas. Ce gabarit-là **garde la sémantique du `<select>` tout en
+occupant le flux au lieu de le recouvrir.** À mes yeux c'est le meilleur candidat, et il a
+l'avantage de vivre déjà dans une séquence, avec sa sauvegarde et son banc. Le choix reste à Pascal.
+
+### 4. Le coût de conversion d'une séquence type — mesuré sur `3e_C1.1`
+
+| poste | mesure | ce qu'elle veut dire |
+|---|---|---|
+| questions | **31** dans le fichier (119 ko) | l'unité de travail |
+| sauvegarde | **générique**, 1 ligne `querySelectorAll("select,textarea")` | une ligne à apprendre à lire un état de bouton |
+| vérification | **1** accesseur `val(id)`, appelé 13 fois · 4 `.value` en tout | convertir cette fonction convertit la vérification entière |
+| **table des réponses** | **40 entrées** `identifiant: "texte"`, comparées **par le TEXTE** | **le chiffre décisif — voir ci-dessous** |
+| impression | **31 identifiants énumérés À LA MAIN**, ligne 100 | le poste le plus coûteux, à réécrire fichier par fichier |
+| CSS | 3 règles visant `select` ou `.assoc option` | négligeable |
+| banc | `tests_3e_C1.1-C1.4_tsinghua.py`, 200 lignes : **3** `.value =`, **0** `select_option` | le banc pose les réponses par `.value`, de façon générique |
+
+**Le point décisif.** Les bonnes réponses sont comparées au **texte de l'option** (`val(id) === v`),
+jamais à un indice de position. Si le nouveau champ sait rendre ce même texte — par exemple un
+`data-valeur` sur le bouton choisi, lu par `val()` — alors **aucune des 40 entrées de la table n'est
+à réécrire**, ni les contrôles par expression régulière qui les accompagnent. La conversion se
+concentre sur quatre points par fichier : le balisage des questions, `val()`, la ligne de sauvegarde,
+et l'énumération d'impression.
+
+**Ce qui décide du découpage** est donc l'énumération d'impression : elle est écrite à la main,
+propre à chaque fichier, et ne se factorise pas. Elle plaide pour une conversion **par lot**, en
+commençant par `3e_C1.1` — le lot du constat — plutôt que d'un coup sur 60 fichiers.
+
+### 5. RÉSULTAT NÉGATIF — la position du champ ne prédit rien, et le critère est abandonné
+
+L'hypothèse de travail initiale était géométrique : un `<select>` situé dans le **tiers bas** de la
+fenêtre y ouvrirait sa liste vers le haut, donc par-dessus l'énoncé. Le critère a été mesuré aux deux
+tailles, et **la mesure le tue** :
+
+| taille | séquences dont le champ tombe dans le tiers bas | QCM autonomes |
+|---|---:|---:|
+| 390 × 844 (téléphone) | **1 / 1 480** — 0,1 % | 10 / 1 960 (0,5 %) |
+| 1280 × 720 (portable de classe) | **0 / 1 480** — 0,0 % | 33 / 1 960 (1,7 %) |
+
+**Une question sur 1 480 sur téléphone, aucune sur le portable de classe.** Si la position dans la
+fenêtre expliquait quoi que ce soit, le constat de classe serait introuvable — or il a bien eu lieu,
+en `3e_C1.1`, séance 1. Le critère est donc **faux**, et il est abandonné.
+
+Ce qu'il faut retenir à sa place : la liste native se dessine **par-dessus la page quelle que soit la
+position du champ**, dès qu'elle est trop haute pour tenir sous lui. Ce qui commande sa hauteur, ce
+n'est ni la mise en page ni l'écran, c'est le **nombre de propositions et la longueur de leur
+texte**. Le risque tient à la **forme du champ**, et à rien d'autre.
+
+**Conséquence directe pour la règle à venir : elle ne pourra pas être fondée sur la géométrie.**
+Une règle du type « un champ de réponse ne doit pas se trouver dans le tiers bas de l'écran » serait
+vérifiable, mécanique, et **sans rapport avec le défaut réel** — elle passerait au vert sur les
+1 479 questions qui ne sont pas en cause et resterait muette sur les 637 qui le sont. C'est ce
+résultat négatif qui l'interdit, et c'est pour cela qu'il est écrit ici plutôt que tu. La grandeur à
+régler est la longueur des propositions, ou bien la forme du champ elle-même.
+
+### L'outil
+
+`_outils/audit_lisibilite_qcm.mjs` — 131 fichiers en 60 secondes. Il **ne refuse rien** : il mesure,
+et n'a donc pas de code 1. Il applique la règle d'or n°299 (PR #397, non encore fusionnée) : sans
+fichier à lire, ou avec des fichiers mais aucune question mesurée, il écrit `⛔ EN PANNE` sur la
+sortie d'erreur et **sort à 2**. Comme c'est un `.mjs`, il ne peut pas se servir de `panne.py` : il
+porte le même idiome en JavaScript, comme `controle_verrous.mjs`.
+
+`--csv` écrit `_outils/audit_lisibilite_qcm.csv` (une ligne par fichier). Ce fichier est **engendré à
+la demande et n'est pas versé au dépôt** — aucun CSV de `_outils/` ne l'est.
+
+`_outils/tests_audit_lisibilite_qcm.mjs` — **10 contrôles**, chacun lançant l'audit **en
+sous-processus** (règle n°299, second corollaire). Preuve par mutation :
+
+| mutation appliquée | résultat |
+|---|---|
+| la panne rend 0 au lieu de 2 | **7 / 10** ❌ |
+| les gabarits autres que `label-for` de nouveau jetés | **8 / 10** ❌ |
+| l'invite « — choisir — » recomptée comme une proposition | **9 / 10** ❌ |
+| aucune mutation (état livré) | **10 / 10** ✅ |
+
+### Ce que ce lot ne touche pas
+
+Aucun fichier de séquence, de QCM, de synthèse ni de média — `_outils/` et ce journal, **vérifié**
+par `git status`. Aucune règle d'or n'est rédigée : elle s'écrira sur ces chiffres.
+
+### Contrôles
+
+Rejoués après rebasage sur `main`, qui porte désormais la règle n°299 : les contrôles de la batterie
+annoncent donc leur compte d'entrées, comme la règle l'exige.
+
+- `audit_lisibilite_qcm.mjs` : **131 fichiers · 1 480 questions à liste déroulante · 1 960 à
+  boutons · 0 illisible**, 60 s ✅
+- `tests_audit_lisibilite_qcm.mjs` : **10 / 10** ✅, mordant aux trois mutations ci-dessus
+- Batterie habituelle, chiffrée : `controle_liens.py` **715 pages lues · 2 918 adresses · 0
+  cassée** ✅ · `controle_medias.py` **41 lots · 362 médias · 362 documentés** ✅ ·
+  `controle_cadres.py` **340 pages lues · 0 cadre** ✅ · `controle_formulations.py` **680 fichiers
+  lus · 80 citations · 80 justes · 0 écart** ✅ · `controle_gestes_outil.py` **340 pages lues ·
+  13 encarts · 0 écart** ✅ · `controle_fichiers_telechargeables.py` **79 pages lues · 33 noms ·
+  0 écart** ✅
+- Bancs de la batterie : **18/18 · 19/19 · 9/9 · 22/22 · 21/21 · 20/20 · 6/6** ✅
+- `verif_regles_audit.py` : **60 séquences · 136 manquements**, identiques à `main`
+- livraison : **branche rebasée sur `main`, poussée, PR #398 mise à jour avec `gh`**, pas de colis
+
+### Reprise après relecture — trois corrections
+
+Pascal a relu le 19/09 au soir et tranché trois points, appliqués ici :
+
+1. **Le comptage.** Son relevé de 746 venait bien d'une expression régulière qui consommait le texte
+   et sautait une question sur deux. **1 480 fait foi**, et tout le rapport y est aligné — y compris
+   les 637 questions au-delà de 60 caractères. Ses chiffres de la veille ne figurent nulle part
+   ailleurs dans ce journal : vérifié.
+2. **Le critère de position est requalifié en résultat négatif explicite** (section 5 ci-dessus, et
+   section 6 de la sortie de l'outil). Il ne prédit rien — 1 question sur 1 480 —, et c'est
+   précisément ce qui interdira de fonder la future règle sur la géométrie.
+3. **Les 75 champs en ligne sont séparés des 1 405 en toutes lettres**, dans le journal comme dans la
+   sortie de l'outil : ils n'ont rien à recouvrir, ne relèvent pas de la règle à venir, et **ne
+   doivent pas entrer dans une conversion**.
+
+Le conflit de la PR #398 ne portait que sur ce journal — les deux entrées du jour ajoutées en fin de
+fichier. Elles sont conservées toutes les deux, dans l'ordre des numéros de règle : la n°299, puis
+cet audit. Aucun conflit dans le code.
+
+**La suite, non engagée ici :** Pascal tranchera entre le groupe radio natif et le bouton, puis une
+conversion **pilote sur un seul lot — `3e_C1.1`**, là où ses élèves ont buté, avant toute
+généralisation.
