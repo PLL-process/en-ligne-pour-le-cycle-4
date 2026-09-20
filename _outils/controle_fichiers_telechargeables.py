@@ -56,6 +56,8 @@ import html
 import os
 import re
 import sys
+
+import panne
 from urllib.parse import unquote
 
 DEPOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -163,9 +165,15 @@ def juger(chemin):
 
 
 def main(muet=False):
+    # Règle d'or n°299 : avant de dire « chaque fichier nommé se prend d'un
+    # clic », compter les pages où on l'a vérifié.
+    lues = pages(DEPOT)
+    if not lues:
+        return panne.rien_vu("aucune page .html sous %s" % DEPOT)
+
     conformes, ecarts, tolerees_vues = 0, [], []
     mentions = recit = 0
-    for f in pages(DEPOT):
+    for f in lues:
         refus, comptes = juger(f)
         rel = os.path.relpath(f, DEPOT).replace(os.sep, "/")
         mentions += comptes["mentions"]

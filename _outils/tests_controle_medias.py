@@ -19,6 +19,7 @@ import io
 import json
 import os
 import pathlib
+import subprocess
 import sys
 import tempfile
 
@@ -58,15 +59,48 @@ def tableau(*noms):
 
 
 def jouer(racine):
+    """Le contrôle joué sur une racine d'essai — stdout ET stderr, car la
+    panne de la règle d'or n°299 part volontairement sur la sortie d'erreur."""
     ancien = CM.DEPOT
     CM.DEPOT = str(racine)
-    sortie = io.StringIO()
+    sortie, erreur = io.StringIO(), io.StringIO()
     try:
-        with contextlib.redirect_stdout(sortie):
+        with contextlib.redirect_stdout(sortie), contextlib.redirect_stderr(erreur):
             code = CM.main()
     finally:
         CM.DEPOT = ancien
-    return code, sortie.getvalue()
+    return code, sortie.getvalue() + erreur.getvalue()
+
+
+def par_la_ligne_de_commande(script, args=()):
+    """Le contrôle lancé comme on le lance vraiment : `python _outils/<script>`.
+
+    Deuxième corollaire de la règle d'or n°299. Un banc qui se contente
+    d'appeler `main()` ne passe jamais par le point d'entrée — c'est ainsi que
+    `controle_impression.mjs` est resté muet dix-sept jours sous un banc vert.
+    Rend (code de sortie, stdout + stderr).
+    """
+    ici = os.path.dirname(os.path.abspath(__file__))
+    r = subprocess.run([sys.executable, os.path.join(ici, script)] + list(args),
+                       capture_output=True, text=True, encoding="utf-8",
+                       errors="replace", timeout=900)
+    return r.returncode, (r.stdout or "") + (r.stderr or "")
+
+
+def reproches_de_la_ligne_de_commande(script):
+    """Les deux reproches que la règle n°299 fait à un point d'entrée : sortir
+    en erreur, et surtout ne rien écrire du tout. Un script muet n'imprime aucun
+    chiffre ; toute mention chiffrée prouve au contraire qu'il a travaillé."""
+    ennuis = []
+    code, texte = par_la_ligne_de_commande(script)
+    if code != 0:
+        ennuis.append("lancé en ligne de commande, %s sort à %d :\n     %s"
+                      % (script, code, texte.strip()[:400]))
+    if not any(c.isdigit() for c in texte):
+        ennuis.append("lancé en ligne de commande, %s n'écrit AUCUN chiffre — un script "
+                      "muet ne prouve rien (règle d'or n°299) :\n     %s"
+                      % (script, texte.strip()[:400] or "(rien du tout)"))
+    return ennuis
 
 
 def main():
@@ -95,6 +129,13 @@ def main():
 
     with tempfile.TemporaryDirectory() as tmp:
         b = pathlib.Path(tmp)
+
+        # ── 0. une racine sans le moindre lot à médias est une PANNE ────────
+        r0 = b / "c0"
+        (r0 / "lot").mkdir(parents=True)
+        (r0 / "lot" / "sequence_essai.html").write_text("<html></html>", encoding="utf-8")
+        cas("une racine sans le moindre lot à médias est une panne, pas un succès",
+            r0, True, "EN PANNE")
 
         # ── 1. un lot documenté et employé passe ────────────────────────────
         cas("un lot dont chaque image est documentée et affichée",
@@ -151,10 +192,15 @@ def main():
         dit("et non parmi les oubliées", r8, "qu'aucune page n'affiche", present=False)
 
         # ── 9. un dossier Images vide n'est pas un lot à médias ─────────────
+        # Le lot c9b, lui, en est un : sans lui, cette racine ne donnait AUCUN
+        # lot à inspecter et le contrôle sortait à 0 sans rien avoir regardé —
+        # le cas passait au vert en ne prouvant rien (règle d'or n°299).
         r9 = b / "c9"
-        (r9 / "Images").mkdir(parents=True)
-        (r9 / "sequence_essai.html").write_text("<html></html>", encoding="utf-8")
+        (r9 / "vide" / "Images").mkdir(parents=True)
+        (r9 / "vide" / "sequence_essai.html").write_text("<html></html>", encoding="utf-8")
+        lot(r9 / "c9b", images=["a.svg"], sources=tableau("a.svg"), page_cite=["a.svg"])
         cas("un dossier Images vide, sans SOURCES_MEDIAS.md, ne déclenche rien", r9, False)
+        dit("et le lot voisin, lui, est bien compté", r9, "1 lot(s) portent des images")
 
         # ── 10. toutes les extensions du dépôt sont reconnues (n°269) ───────
         r10 = b / "c10"
@@ -171,6 +217,10 @@ def main():
     if code != 0:
         echecs.append("le dépôt réel ne passe pas :\n     "
                       + texte.strip().replace("\n", "\n     "))
+
+    # Le VRAI point d'entrée, en sous-processus (règle d'or n°299).
+    controles += 1
+    echecs.extend(reproches_de_la_ligne_de_commande('controle_medias.py'))
 
     if echecs:
         for e in echecs:

@@ -7,7 +7,7 @@ passer, et le dépôt réel.
 
 Usage : python3 _outils/tests_controle_gestes_outil.py
 """
-import contextlib, io, os, pathlib, sys, tempfile
+import contextlib, io, os, pathlib, subprocess, sys, tempfile
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import controle_gestes_outil as C  # noqa: E402
 
@@ -18,13 +18,45 @@ def page(outil, corps):
     return "<html><body>%s%s</body></html>\n" % (ENCART % outil, corps)
 
 def jouer(racine, toleres=None):
-    ancien = C.DEPOT; C.DEPOT = str(racine); s = io.StringIO()
+    """stdout ET stderr : la panne de la règle n°299 part sur stderr."""
+    ancien = C.DEPOT; C.DEPOT = str(racine); s = io.StringIO(); e = io.StringIO()
     try:
-        with contextlib.redirect_stdout(s):
+        with contextlib.redirect_stdout(s), contextlib.redirect_stderr(e):
             code = C.main(toleres=toleres)
     finally:
         C.DEPOT = ancien
-    return code, s.getvalue()
+    return code, s.getvalue() + e.getvalue()
+
+def par_la_ligne_de_commande(script, args=()):
+    """Le contrôle lancé comme on le lance vraiment : `python _outils/<script>`.
+
+    Deuxième corollaire de la règle d'or n°299. Un banc qui se contente
+    d'appeler `main()` ne passe jamais par le point d'entrée — c'est ainsi que
+    `controle_impression.mjs` est resté muet dix-sept jours sous un banc vert.
+    Rend (code de sortie, stdout + stderr).
+    """
+    ici = os.path.dirname(os.path.abspath(__file__))
+    r = subprocess.run([sys.executable, os.path.join(ici, script)] + list(args),
+                       capture_output=True, text=True, encoding="utf-8",
+                       errors="replace", timeout=900)
+    return r.returncode, (r.stdout or "") + (r.stderr or "")
+
+
+def reproches_de_la_ligne_de_commande(script):
+    """Les deux reproches que la règle n°299 fait à un point d'entrée : sortir
+    en erreur, et surtout ne rien écrire du tout. Un script muet n'imprime aucun
+    chiffre ; toute mention chiffrée prouve au contraire qu'il a travaillé."""
+    ennuis = []
+    code, texte = par_la_ligne_de_commande(script)
+    if code != 0:
+        ennuis.append("lancé en ligne de commande, %s sort à %d :\n     %s"
+                      % (script, code, texte.strip()[:400]))
+    if not any(c.isdigit() for c in texte):
+        ennuis.append("lancé en ligne de commande, %s n'écrit AUCUN chiffre — un script "
+                      "muet ne prouve rien (règle d'or n°299) :\n     %s"
+                      % (script, texte.strip()[:400] or "(rien du tout)"))
+    return ennuis
+
 
 def main():
     echecs, n = [], 0
@@ -36,6 +68,16 @@ def main():
         if doit_refuser and code == 0: echecs.append(titre + " : accepté, alors qu'il fallait refuser")
         elif not doit_refuser and code != 0: echecs.append(titre + " : refusé\n     " + texte.strip())
         elif attendu and attendu not in texte: echecs.append(titre + " : message sans « %s »" % attendu)
+
+    # Règle d'or n°299 — une racine sans page n'est pas « aucun écart », c'est une panne.
+    n += 1
+    with tempfile.TemporaryDirectory() as tmp:
+        pathlib.Path(tmp, "notes.md").write_text("# rien à lire", encoding="utf-8")
+        code, texte = jouer(tmp, {})
+    if code != 2:
+        echecs.append("une racine sans page .html : sortie %d au lieu de 2 — le contrôle se déclare content sans avoir rien ouvert" % code)
+    elif "EN PANNE" not in texte:
+        echecs.append("une racine sans page .html : la panne n'est pas annoncée")
 
     # Depuis le 13/09 (vague 2 étape 1), une page sans activité qui ouvre l'outil est refusée :
     # les cas qui doivent passer portent donc une activité qui ouvre l'outil, collée à l'encart.
@@ -92,6 +134,10 @@ def main():
     n += 1
     code, texte = jouer(C.DEPOT, C.TOLERES)
     if code != 0: echecs.append("le dépôt réel ne passe pas :\n     " + texte.strip())
+
+    # Le VRAI point d'entrée, en sous-processus (règle d'or n°299).
+    n += 1
+    echecs.extend(reproches_de_la_ligne_de_commande('controle_gestes_outil.py'))
 
     if echecs:
         for e in echecs: print("❌ " + e)

@@ -15728,3 +15728,231 @@ Aucun fichier de séquence, de QCM, de synthèse ni de média. `_outils/controle
 > Tout outil du dépôt qui peut se retrouver sans entrée devrait refuser de sortir à 0 sans avoir
 > compté ce qu'il a regardé. Si Pascal la retient, elle vaut d'être passée sur les 45 outils Python
 > et les 76 `.mjs`.
+
+## 19/09/2026 — Règle d'or n°299 : un contrôle qui n'a rien vérifié est en panne, pas vert (_outils, thème 2)
+
+La veille, `controle_impression.mjs` s'est révélé muet depuis le 02/09 : garde de lancement fausse
+sous Windows, `main()` qui ne partait pas, **sortie 0 sans une page lue**. La leçon retenue n'était
+pas la garde — elle se répare en trois lignes — mais qu'un outil puisse transformer sa propre panne
+en bonne nouvelle. Pascal a retenu la candidate et lui a donné le n°299. La voici, avec le balayage
+qu'elle commande.
+
+> **Règle d'or n°299 — un contrôle qui n'a rien vérifié n'est pas vert, il est en panne.** Un outil
+> qui n'a trouvé aucun fichier à inspecter, dont la racine est absente ou illisible, dont une
+> dépendance manque, ou dont la boucle de travail ne s'est jamais exécutée, **ne sort pas à 0**. Il
+> écrit sa panne sur la **sortie d'erreur** — donc visible même sous `--muet`, qui n'éteint que
+> `stdout` — il nomme ce qui manquait **et où il a cherché**, et il sort avec un **code non nul**.
+> Le dépôt lit désormais : `0` le contrôle a tourné et n'a rien à refuser · `1` il a tourné et
+> refuse · `2` il n'a **rien pu vérifier**. Par conséquent un contrôle **compte ce qu'il a ouvert**
+> et l'imprime : un compte de résultats nul (« 0 écart ») ne dit rien tant qu'un compte d'entrées ne
+> l'accompagne pas (« 340 page(s) lues »).
+> — **Premier corollaire.** Un outil décide où il travaille, et s'il doit se lancer, en comparant et
+> en construisant des **CHEMINS RÉELS**, jamais des chaînes d'URL : `fileURLToPath` +
+> `path.resolve`, ou `pathToFileURL(...).href` comme `linter_absolus.mjs` — les deux sont justes.
+> `new URL(import.meta.url).pathname` et `"file://" + chemin` sont **interdits** : le premier rend
+> `/C:/Users/…` sous Windows et fabrique un chemin à deux lettres de lecteur, le second casse sur
+> `#` et `%` partout, Linux compris.
+> — **Second corollaire.** Un banc qui vérifie un outil le **lance comme on le lance vraiment, en
+> sous-processus**, et pas seulement en important sa fonction. Un banc qui appelle `main()` ne passe
+> jamais par le point d'entrée : c'est très exactement pourquoi le banc de `controle_impression.mjs`
+> était vert pendant que le contrôle était mort. Il s'ensuit qu'un outil doit pouvoir être **pointé
+> ailleurs** : une racine figée en valeur par défaut (`def parcourir(racine=DEPOT)`) se fixe à
+> l'import et rend l'outil inéprouvable.
+
+### `controle_verrous.mjs` — cassé depuis le premier jour, jamais dans une batterie
+
+Entré le **31/08/2026** (687e1ddd), il portait le défaut dès ce commit : ligne 49,
+`path.dirname(new URL(import.meta.url).pathname)` rend `/C:/Users/…`, dont la barre de tête fabrique
+`C:\C:\Users\…`, et le script s'arrête sur `ENOENT: scandir` à son premier `readdirSync`. **Dix-neuf
+jours**, mais la comparaison avec le défaut de la veille s'arrête là : celui-ci **tombe bruyamment**
+et n'a jamais pu passer pour vert. Il ne figurait dans **aucune batterie de lot** — ses cinq mentions
+au journal (10574, 10607, 10612, 10662, 11283) sont toutes des campagnes dédiées, chiffrées, menées
+ailleurs que sur le poste de Pascal : « zéro verrou ouvert au chargement sur 76 pages » (31/08).
+
+Trois corrections, et une seule était un défaut vivant :
+
+1. **La racine** — `fileURLToPath(import.meta.url)`. C'est celle qui le remettait debout.
+2. **L'adresse des pages** — `pathToFileURL(f).href` au lieu de `'file://' + f`. **Mesuré** : la
+   concaténation marche pour un nom ordinaire et même accentué, mais Chromium rend
+   `ERR_FILE_NOT_FOUND` dès qu'un nom porte `#` ou `%`. Le contrôle rangeait alors la page en
+   « illisible » et la **refusait** — une panne en sommeil, tombant du bon côté, et aucune des 76
+   pages à verrous du dépôt ne porte ces caractères aujourd'hui. Corrigée quand même : elle se
+   serait réveillée au premier nom de fichier un peu bavard.
+3. **La panne** — trois sorties `2` : racine impossible à parcourir, aucune page à verrous sous la
+   racine, aucune des pages listées ouverte. Avant, les trois sortaient à 0.
+
+**Première exécution réelle sous Windows**, `node _outils/controle_verrous.mjs`, 39 secondes :
+
+```
+76 page(s) à verrous ouvertes dans un contexte neuf · 21 sans aucun état window.__… · 64 casier(s) vide(s) déclaré(s) d'avance
+✅ aucun verrou expérientiel ouvert au chargement
+```
+
+**76 pages, zéro verrou ouvert** — le même chiffre qu'au 31/08. Rien à ouvrir comme chantier.
+
+Il n'avait **aucun banc**. `tests_controle_verrous.mjs` en est un, **12 contrôles**, chacun lançant
+le script en sous-processus dans une fausse racine.
+
+### LE BALAYAGE — 76 `.mjs`, 59 outils Python
+
+**Les Python sont hors de cause sur la garde de lancement, et on ne les liste pas un par un.**
+45 des 59 portent `if __name__ == "__main__"`, les 14 autres s'exécutent au chargement sans avoir à
+décider : les deux formes sont neutres à la plateforme. Leurs racines se calculent toutes par
+`os.path.abspath(__file__)` ou `pathlib.Path(__file__).resolve()`, qui sont des chemins réels. Le
+premier corollaire ne trouve **aucun manquement** côté Python. Deux exceptions, non sur la garde
+mais sur la racine : `audit_conformite.py` et `mesures_*.mjs` la prennent du **répertoire courant**
+(`sys.argv[1] if … else "."`), donc mesurent ce qu'on veut bien leur donner — voir le tableau.
+
+**Côté `.mjs`, la garde de lancement n'existe presque pas :** sur 76 fichiers, **deux seulement**
+décident s'ils doivent travailler — `controle_impression.mjs` (réparé le 19/09) et
+`linter_absolus.mjs` (juste depuis toujours, `pathToFileURL(process.argv[1]).href`). Les 74 autres
+sont des scripts qui s'exécutent de bout en bout : il n'y a rien à y garder. **Ce qui se compte, en
+revanche, c'est l'idiome de racine** — même maladie, autre symptôme :
+
+| idiome | nombre | verdict |
+|---|---|---|
+| `fileURLToPath(import.meta.url)` | 8 | **juste** |
+| `new URL(import.meta.url).pathname` | 12 | **faux sous Windows** — tous hors `_outils` |
+| aucune racine dérivée du fichier | 56 | sans objet (chemins passés en argument, ou aucun accès disque) |
+
+#### Le tableau du balayage
+
+*Colonne « vert sans rien faire » : mesuré, en recopiant l'outil dans une racine vide.*
+
+| outil | garde / racine | vert sans rien faire ? | ici |
+|---|---|---|---|
+| **La batterie habituelle — corrigée dans cette PR** ||||
+| `controle_liens.py` | juste | **oui** → 2 + stderr | ✅ corrigé (+ racine résolue à l'appel) |
+| `controle_medias.py` | juste | **oui** → 2 + stderr | ✅ corrigé |
+| `controle_cadres.py` | juste | **oui, et le pire** : « ✅ aucun cadre » sur un dépôt vide | ✅ corrigé |
+| `controle_formulations.py` | juste | **oui** → 2 + stderr | ✅ corrigé |
+| `controle_gestes_outil.py` | juste | **oui** → 2 + stderr | ✅ corrigé |
+| `controle_fichiers_telechargeables.py` | juste | **oui** → 2 + stderr | ✅ corrigé |
+| `verif_regles_audit.py` | juste | **oui**, y compris sur une cible mal écrite | ✅ corrigé (+ banc créé) |
+| `controle_verrous.mjs` | **fausse** (racine + `file://`) | **oui** (3 chemins) | ✅ corrigé (+ banc créé) |
+| `controle_impression.mjs` | juste | non (depuis le 19/09) | déjà fait, PR #396 |
+| **`_outils/` — hors batterie, RENVOYÉ** ||||
+| `mesures_qcm.mjs` | racine = **`.`**, cwd | **oui — et totalement muet**, mesuré | renvoyé, **1er** |
+| `verif_qcm_coherence.mjs` | pas de racine | **oui — totalement muet**, mesuré | renvoyé, **1er** |
+| `repartir_qcm.mjs` | argument | **oui** — `process.exit(0)` écrit en clair sur « aucun tableau de questions » | renvoyé, **1er** |
+| `mesures_rendu.mjs` | racine = **`.`**, cwd | **oui** — « 0 séquences mesurées » | renvoyé, **1er** |
+| `audit_conformite.py` | racine = **`.`**, cwd | **oui** — écrit un rapport d'audit vide | renvoyé, **1er** |
+| `controle_atteignabilite.py` | juste | **oui** — « 0 page(s) HTML dans le dépôt » | renvoyé, 2e |
+| `controle_banque_qcm.py` | juste | **oui** | renvoyé, 2e |
+| `controle_boutons_vivants.py` | juste | **oui** | renvoyé, 2e |
+| `controle_effectifs_qcm.py` | juste | **oui** | renvoyé, 2e |
+| `controle_entete_qcm.py` | juste | **oui** | renvoyé, 2e |
+| `controle_regle4.py` | juste | **oui** | renvoyé, 2e |
+| `controle_rapports_tests.py` | juste | **oui** | renvoyé, 2e |
+| `controle_couverture.py` | juste | **oui** — « 114 codes : VIDE 114 » et sortie 0 | renvoyé, 2e |
+| `controle_echantillonnage.py` | juste | **oui** — « Aucune banque trouvée », sortie 0 | renvoyé, 3e |
+| `controle_longueurs.py` | juste | **oui** — idem | renvoyé, 3e |
+| **Hors `_outils/` — hors périmètre de cette PR** ||||
+| 12 bancs de séquence (thème 2, C4 à C6) | **fausse** : `new URL(...).pathname` | **non — ils refusent à faux** | renvoyé, 4e |
+| `linter_absolus.mjs` | **juste** (`pathToFileURL`) | à vérifier | renvoyé, 4e |
+| 5 autres outils C7 (`verificateur_*`, `audit_qcm_*`, `tests_qcm_c7_c8`) | juste | à vérifier | renvoyé, 4e |
+
+**Ordre proposé pour la suite**, du plus nuisible au moins :
+
+1. **Les quatre muets de `_outils/` + `audit_conformite.py`.** C'est exactement le défaut du 02/09,
+   vivant aujourd'hui : `node _outils/mesures_qcm.mjs` lancé depuis `_outils/` **n'écrit pas une
+   ligne et sort à 0**, `verif_qcm_coherence.mjs` aussi. Aucun n'a de banc : c'est le vrai travail.
+2. **Les huit contrôles Python hors batterie.** Mécanique identique à celle d'ici, bancs déjà
+   existants pour sept d'entre eux : une PR, peu de risque.
+3. **`controle_echantillonnage.py` et `controle_longueurs.py`**, qui *disent* l'absence
+   (« Aucune banque de questions trouvée ») et sortent quand même à 0 — à trancher avec Pascal :
+   l'absence de banque est peut-être, pour eux, un état légitime.
+4. **Les 12 bancs de séquence du thème 2.** Chantier à part, et le plus gros : ils sont **déjà
+   rouges** sur `main` sous Windows, avec des **refus faux** (`fs.existsSync` sur `\C:\…` rend
+   toujours `false`, donc « SVG absents du disque » sur des fichiers présents). Mesuré, un par un :
+   `3e_C4.1` 21/23 · `3e_C4.3` 22/23 · `3e_C4.7` 32/35 · `4e_C4.1` 31/35 · `5e_C4.1_qcm` **crash
+   `ENOENT` C:\C:\** · `5e_C4.1_seq` 29/30 · `3e_C5.1` 30/34 · `4e_C5.1` 22/26 · `5e_C5.1` 22/26 ·
+   `3e_C6.1` 31/35 · `4e_C6.1` 25/29 · `5e_C6.1` 28/32. Un seul banc de séquence tient déjà l'idiome
+   juste, `tests_4e_C6.2.mjs`, avec le commentaire qui explique pourquoi — il sert de modèle.
+
+### Ce que cette PR fait, précisément
+
+- **`_outils/panne.py`** — un seul endroit pour la formule et le code de sortie. `rien_vu(motif)`
+  écrit sur `stderr` et **rend** 2 (il ne sort pas lui-même : les bancs appellent `main()` et doivent
+  lire ce 2 comme une valeur).
+- **Sept contrôles** durcis, chacun comptant désormais ses entrées à voix haute. Trois relevés ont
+  gagné un chiffre qu'ils n'avaient pas : `controle_cadres` « 340 page(s) lues », `controle_liens`
+  « 715 page(s) lues », `controle_gestes_outil` « 340 page(s) lues ».
+- **`controle_verrous.mjs`** réparé, et son premier banc.
+- **`tests_verif_regles_audit.py`** créé : l'outil le plus lu du dépôt n'en avait aucun.
+- **Six bancs** reçoivent l'épreuve du vrai point d'entrée (sous-processus) et, pour quatre d'entre
+  eux, un cas de panne.
+
+### Quatre cas de banc qui ne prouvaient rien, et qu'il a fallu réparer
+
+C'est le résultat le plus instructif du lot. Quatre fixtures posaient une racine dont **tout** était
+écarté — une archive seule, un QCM seul, un dossier `Images/` vide — de sorte que le contrôle sortait
+à 0 **sans avoir ouvert un fichier**. Le cas passait au vert en ne prouvant rien : il ne distinguait
+pas « l'archive est bien écartée » de « je n'ai rien regardé du tout ». Chacun reçoit maintenant une
+**seconde pièce, hors exclusion**, et vérifie les deux moitiés de ce qu'il annonce.
+
+C'est un travail de banc, non de contenu : **aucune page du dépôt n'a été touchée**, et aucun outil
+corrigé ne s'est mis à refuser quoi que ce soit de réel. La discipline des pages d'impression tient :
+si un refus était apparu, il aurait été listé, pas corrigé.
+
+### La preuve par mutation — on remet le défaut, le banc doit tomber
+
+`panne.CODE` ramené de 2 à 0, c'est-à-dire l'état d'avant :
+
+| banc | mutation | livré |
+|---|---|---|
+| `tests_controle_cadres.py` | ❌ 8 / 9 | ✅ 9 / 9 |
+| `tests_controle_liens.py` | ❌ 17 / 18 | ✅ 18 / 18 |
+| `tests_controle_medias.py` | ❌ 18 / 19 | ✅ 19 / 19 |
+| `tests_controle_gestes_outil.py` | ❌ 20 / 21 | ✅ 21 / 21 |
+| `tests_controle_fichiers_telechargeables.py` | ❌ 19 / 20 | ✅ 20 / 20 |
+| `tests_controle_formulations.py` | ❌ 21 / 22 | ✅ 22 / 22 |
+| `tests_verif_regles_audit.py` | ❌ 4 / 6 | ✅ 6 / 6 |
+
+Et sur `controle_verrous.mjs`, trois mutations distinctes :
+
+| mutation appliquée | résultat |
+|---|---|
+| `new URL(import.meta.url).pathname` remis (le défaut du 31/08) | **3 / 12** ❌ |
+| les sorties `2` ramenées à `0` | **8 / 12** ❌ |
+| `'file://' + f` remis | **11 / 12** ❌ « une page au nom pourtant valide est déclarée illisible » |
+| aucune mutation (état livré) | **12 / 12** ✅ |
+
+La troisième mérite sa ligne : au premier essai elle **ne mordait pas**, faute d'un cas portant `#`
+ou `%` dans un nom de fichier. Le cas a été ajouté — sans quoi la correction n°2 aurait été annoncée
+sans preuve.
+
+### Une garde écrite et non éprouvée, et c'est dit
+
+`controle_verrous.mjs` prévoit une panne « racine impossible à parcourir » que le banc **ne couvre
+pas** : sous Windows, on ne peut pas rendre un dossier illisible sans rendre aussi le script
+illisible. Un cas qui prétendrait la couvrir sans la produire serait précisément ce que la n°299
+interdit. Elle reste défensive, et le banc porte le commentaire qui l'explique.
+
+### Ce que ce lot ne touche pas
+
+Aucun fichier de séquence, de QCM, de synthèse, de média. `_outils/` et ce journal, rien d'autre —
+**vérifié** : `git status` ne montre aucune modification hors `_outils/`.
+
+`tests_pointeurs_codes.py` est rouge (**29 / 45**) : il l'était **déjà sur `main`**, vérifié avant
+toute modification. Sans rapport avec ce lot, et listé pour qu'on ne l'attribue pas à cette PR.
+
+### Contrôles
+
+- **Batterie, tous chiffrés** : `controle_liens.py` **715 pages · 2 918 adresses · 0 cassée** ✅ ·
+  `controle_medias.py` **41 lots · 362 médias · 362 documentés** ✅ · `controle_cadres.py`
+  **340 pages · 0 cadre** ✅ · `controle_formulations.py` **680 fichiers · 80 citations · 80 justes ·
+  0 écart** ✅ · `controle_gestes_outil.py` **340 pages · 13 encarts · 0 écart** ✅ ·
+  `controle_fichiers_telechargeables.py` **79 pages · 33 noms · 0 écart** ✅
+- `verif_regles_audit.py` : **60 séquences · 136 manquements**, identiques à `main`
+- `controle_impression.mjs` : **338 pages · 0 refusée** ✅ · banc **14 / 14**
+- `controle_verrous.mjs` : **76 pages · 0 verrou ouvert** ✅ (première exécution Windows) ·
+  banc **12 / 12**
+- **Bancs de la batterie** : 18/18 · 19/19 · 9/9 · 22/22 · 21/21 · 20/20 · 6/6 — **115 contrôles**,
+  contre 94 avant ce lot
+- **Bancs non touchés, tous verts** : atteignabilite 9/9 · banque_qcm 13/13 · boutons_vivants 8/8 ·
+  couverture 27/27 · effectifs_qcm 18/18 · entete_qcm 12/12 · rapports_tests 12/12 · regle4 18/18 ·
+  index 20/20 · generer_lexique 4/4
+- **Durcissement, mesuré** : les sept outils corrigés, recopiés dans une racine vide, sortent tous à
+  **2** avec `⛔ EN PANNE` sur `stderr`, sous `--muet` comme sans
+- livraison : **branche poussée et PR ouverte avec `gh`**, pas de colis

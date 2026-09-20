@@ -81,6 +81,8 @@ import pathlib
 import re
 import sys
 
+import panne
+
 DEPOT = pathlib.Path(os.path.dirname(os.path.abspath(__file__))).parent
 
 #: ce qu'on ne regarde pas, et pourquoi — affiché à chaque exécution
@@ -172,9 +174,17 @@ def identifiant_present(chemin, ancre, _cache={}):
     return re.search(IDENTIFIANT % re.escape(ancre), _cache[cle]) is not None
 
 
-def parcourir(racine=DEPOT, tout=False):
-    """Relevé complet : liens, ancres, ce qui a été tu et ce qui a été écarté."""
-    releve = dict(verifies=0, casses=[], pages_ecartees=0, tues=0,
+def parcourir(racine=None, tout=False):
+    """Relevé complet : liens, ancres, ce qui a été tu et ce qui a été écarté.
+
+    La racine se résout à l'APPEL, jamais à la définition : `racine=DEPOT` en
+    valeur par défaut fige le dépôt au moment de l'import, et un banc qui
+    redirige ensuite `DEPOT` mesure le vrai dépôt en croyant mesurer sa racine
+    d'essai. Un contrôle qu'on ne peut pas pointer ailleurs ne peut pas être
+    éprouvé (règle d'or n°299, second corollaire).
+    """
+    racine = DEPOT if racine is None else pathlib.Path(racine)
+    releve = dict(verifies=0, casses=[], pages_ecartees=0, tues=0, pages_lues=0,
                   ancres_verifiees=0, ancres_mortes=[], ancres_non_verifiables=0)
     for page in sorted(racine.rglob("*")):
         if page.is_dir() or page.suffix.lower() not in (".html", ".md"):
@@ -189,6 +199,7 @@ def parcourir(racine=DEPOT, tout=False):
             texte = page.read_text(encoding="utf-8", errors="ignore")
         except OSError:
             continue
+        releve["pages_lues"] += 1
         suffixe = page.suffix.lower()
         texte, n = taire(texte, suffixe)
         releve["tues"] += n
@@ -229,7 +240,13 @@ def _lister(titre, defauts):
 
 def main(tout=False):
     r = parcourir(tout=tout)
-    print("%d adresses locales vérifiées · %d cassée(s)" % (r["verifies"], len(r["casses"])))
+    # Règle d'or n°299 — zéro page LUE est une panne ; zéro lien cassé n'en est
+    # pas une. Un dépôt peut légitimement n'avoir aucune adresse locale ; il ne
+    # peut pas légitimement n'avoir aucune page.
+    if not r["pages_lues"]:
+        return panne.rien_vu("aucune page .html ou .md lue sous %s" % DEPOT)
+    print("%d page(s) lues · %d adresses locales vérifiées · %d cassée(s)"
+          % (r["pages_lues"], r["verifies"], len(r["casses"])))
     print("%d ancre(s) vérifiée(s) · %d introuvable(s) · %d non vérifiable(s) (cible non HTML)"
           % (r["ancres_verifiees"], len(r["ancres_mortes"]), r["ancres_non_verifiables"]))
     print("%d zone(s) tue(s) avant lecture : %s — un navigateur ne les suit pas."

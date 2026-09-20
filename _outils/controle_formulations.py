@@ -60,6 +60,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from data_competences import COMP_BY_LEVEL  # noqa: E402
+import panne  # noqa: E402
 
 RACINE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 
@@ -303,6 +304,14 @@ def benin(v):
 
 def main():
     muet = "--muet" in sys.argv
+    # Règle d'or n°299 : ce qui distingue « aucune citation fausse » de « je
+    # n'ai rien ouvert », c'est le nombre de FICHIERS lus — pas celui des
+    # citations reconnues, qui peut légitimement être nul.
+    lus = list(fichiers())
+    if not lus:
+        return panne.rien_vu("aucun fichier lisible (%s) sous %s"
+                             % (", ".join(LISIBLES), os.path.abspath(RACINE)))
+
     trouvailles = parcourir()
     ecarts = [t for t in trouvailles if t["verdict"] != "JUSTE"]
 
@@ -319,8 +328,8 @@ def main():
         print("     programme: %s" % t["officielle"][:150])
 
     justes = len(trouvailles) - len(ecarts)
-    print("\n%d citation(s) reconnue(s) · %d juste(s) · %d écart(s)"
-          % (len(trouvailles), justes, len(ecarts)))
+    print("\n%d fichier(s) lus · %d citation(s) reconnue(s) · %d juste(s) · %d écart(s)"
+          % (len(lus), len(trouvailles), justes, len(ecarts)))
     print("Formes lues : %s." % ", ".join(nom for nom, _m in FORMES))
     print("Toute autre façon d'écrire une formulation échappe à ce contrôle.")
 

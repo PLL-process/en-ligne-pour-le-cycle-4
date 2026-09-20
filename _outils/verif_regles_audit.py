@@ -50,6 +50,7 @@ import unicodedata
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import data_competences as dc  # noqa: E402  (le chemin doit être posé avant)
+import panne  # noqa: E402
 
 RACINE = pathlib.Path(__file__).resolve().parent.parent
 
@@ -477,6 +478,14 @@ def main(argv: list[str]) -> int:
                        for motif in ("**/sequence_*.html", "**/sequence-*.html", "**/sequence.html")
                        for f in r.glob(motif)
                        if "_archive-anciennes-versions" not in f.parts})
+
+    # Règle d'or n°299 : une cible mal écrite en argument, ou un dépôt à moitié
+    # cloné, donnait « 0 séquence(s) analysée(s) » suivi d'une sortie 0 — la
+    # forme exacte d'un contrôle qui n'a rien vu et se déclare content.
+    if not fichiers:
+        return panne.rien_vu("aucune séquence sous %s (motifs : sequence_*.html, "
+                             "sequence-*.html, sequence.html)"
+                             % " · ".join(str(r) for r in racines))
 
     rapports = [analyser(f) for f in fichiers]
     if sortie_json:
