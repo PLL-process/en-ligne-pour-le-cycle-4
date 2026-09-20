@@ -519,7 +519,30 @@ PARLE_DE_LUI = re.compile(r"[Ll][’']\s?élèves?\b|\b[Ll]es\s+élèves\b", re.
 VOUVOIEMENT = re.compile(r"\b(vous|votre|vos)\b", re.I)
 
 
-def regle_302(src: str) -> tuple[str, str]:
+#: Les exceptions à la n°302, NOMMÉES une par une — jamais une catégorie.
+#:
+#: Tranché par Pascal le 20/09/2026 : le « vous » de « La mairie vous appelle »
+#: est entre guillemets et attribué à un tiers nommé. C'est une PAROLE
+#: RAPPORTÉE, pas la voix de la page. La n°302 vise le « vous » institutionnel,
+#: celui qui met l'élève à distance ; ici l'élève est DANS la scène.
+#:
+#: Exprimées par FICHIER + PHRASE, jamais par numéro de ligne : la phrase
+#: apparaît aussi dans un <button> d'onglet et dans une chaîne JavaScript de ces
+#: mêmes fichiers, et la prochaine édition décalerait les lignes.
+#:
+#: UNE EXCEPTION QUI GROSSIT EST UN SIGNAL. Si cette liste dépasse CINQ entrées,
+#: c'est la règle qu'il faudra revoir — pas la liste qu'il faudra rallonger.
+EXCEPTIONS_302 = {
+    "sequence_3e_C9.2-C8.3_station_1_besoin-et-algorithme.html": ["La mairie vous appelle"],
+    "sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html": ["La mairie vous appelle"],
+}
+
+assert sum(len(v) for v in EXCEPTIONS_302.values()) <= 5, (
+    "la liste d'exceptions de la n°302 dépasse cinq entrées : c'est la règle "
+    "qu'il faut revoir, pas la liste qu'il faut rallonger")
+
+
+def regle_302(src: str, chemin: pathlib.Path | None = None) -> tuple[str, str]:
     """n°302 — dans une page que l'élève lit, on ne parle jamais de lui.
 
     On lui parle à la deuxième personne, ou on le fait parler à la première.
@@ -551,6 +574,8 @@ def regle_302(src: str) -> tuple[str, str]:
     lisible = re.sub(r"<script\b.*?</script>", " ", lisible, flags=re.S | re.I)
     lisible = re.sub(r"<style\b.*?</style>", " ", lisible, flags=re.S | re.I)
 
+    tolerees = EXCEPTIONS_302.get(chemin.name, []) if chemin is not None else []
+
     fautifs = []
     for m in INTITULE.finditer(lisible):
         balise, contenu = m.group(1).lower(), m.group(2)
@@ -559,6 +584,9 @@ def regle_302(src: str) -> tuple[str, str]:
         if balise == "legend" and "qcm-groupe" in lisible[max(0, m.start() - 300):m.start()]:
             continue
         propre = " ".join(texte.split())
+        # une phrase nommément tolérée pour CE fichier : parole rapportée
+        if any(t in propre for t in tolerees):
+            continue
         if PARLE_DE_LUI.search(texte):
             fautifs.append("<%s> « %s »" % (balise, propre[:70]))
         elif VOUVOIEMENT.search(texte):
@@ -587,7 +615,7 @@ REGLES = [
     ("n°298 page élève allégée", regle_298),
     ("n°300 question dans le flux", regle_300),
     ("n°301 le bilan clôt", regle_301),
-    ("n°302 on parle À l'élève", regle_302),
+    ("n°302 on parle À l'élève", regle_302),  # reçoit le chemin : voir EXCEPTIONS_302
 ]
 
 SYMBOLE = {"OK": "✔", "ECHEC": "✘", "ALERTE": "▲", "SANS OBJET": "·", "INCONNU": "?"}
@@ -603,6 +631,8 @@ def analyser(chemin: pathlib.Path) -> dict:
             sortie = fn(src, niveau)
         elif fn is regle_54:
             sortie = fn(src, chemin.parent)   # la n°54 compare deux fichiers
+        elif fn is regle_302:
+            sortie = fn(src, chemin)          # la n°302 consulte EXCEPTIONS_302 par nom de fichier
         elif fn is regle_51 or fn is regle_42:
             sortie = fn(src, chemin)          # la n°51 compare le titre au chemin ; la n°42 lit la synthèse
         else:

@@ -17192,3 +17192,85 @@ onze fautifs ayant été corrigés dans cette même PR :
 - rendus **1280 × 720** et **390 × 844** : **0 erreur JS · 0 requête échouée** ✅
 - captures avant/après aux deux largeurs : bloc référentiel de `3e_C1.1` et synthèse `3e_C7.4`
 - outil neuf : `_outils/audit_personne_eleve.mjs`, qui inventorie sans corriger ni trancher
+
+## 20/09/2026 — n°302 : « La mairie vous appelle » est une parole rapportée (_outils, thème 2)
+
+Les deux titres signalés par la n°302 lors de sa mise en service sont **gardés**. Tranché par Pascal.
+
+### La raison, et sa limite
+
+Le « vous » de « **La mairie vous appelle** » est **entre guillemets** et **attribué à un tiers
+nommé** — la mairie qui appelle l'équipe. C'est une **parole rapportée**, pas la voix de la page.
+
+La n°302 vise le « vous » **institutionnel**, celui qui met l'élève à distance : la page qui
+s'adresse à lui comme une administration. Ici, c'est l'inverse — **l'élève est dans la scène**, et le
+vouvoiement est le fait d'un personnage qui lui parle, pas de la page qui parle de lui.
+
+### Une liste nommée, et surtout pas une catégorie
+
+**On n'écrit PAS d'exemption générale pour « la narration ».** C'est une catégorie que personne ne
+saura appliquer : chacun y rangera ce qui l'arrange, et elle laissera passer de vrais vouvoiements
+institutionnels sous couvert de raconter une histoire.
+
+À sa place, une **liste d'exceptions explicite, nommée, de deux entrées** — dans
+`_outils/verif_regles_audit.py`, sous le nom `EXCEPTIONS_302` :
+
+| fichier | phrase tolérée |
+|---|---|
+| `3e_C9.2 / sequence_3e_C9.2-C8.3_station_1_besoin-et-algorithme.html` | « La mairie vous appelle » |
+| `3e_C9.2 / sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html` | « La mairie vous appelle » |
+
+**Exprimée par FICHIER + PHRASE, jamais par numéro de ligne.** La raison est concrète : la même
+phrase apparaît aussi dans un `<button>` d'onglet et dans une chaîne JavaScript de ces mêmes
+fichiers, et la prochaine édition décalerait les lignes. Un numéro de ligne serait une exception qui
+se périme en silence.
+
+La tolérance est **bornée des deux côtés**, et le banc le prouve par mutation :
+
+| mutation appliquée | résultat |
+|---|---|
+| la tolérance devient globale — on ignore le fichier | **28 / 29** ❌ « la MÊME phrase est refusée dans un AUTRE fichier » |
+| le fichier toléré est blanchi en entier | **28 / 29** ❌ « un AUTRE vouvoiement reste refusé dans le fichier toléré » |
+| aucune mutation | **29 / 29** ✅ |
+
+Autrement dit : la phrase n'est tolérée **que dans ces deux fichiers**, et ces deux fichiers ne sont
+tolérés **que pour cette phrase**. Tout le reste continue d'être signalé — les **14 `<summary>`
+« Si vous êtes trois ou quatre »** le sont toujours.
+
+### Une exception qui grossit est un signal
+
+> **Si cette liste dépasse cinq entrées un jour, c'est la RÈGLE qu'il faudra revoir — pas la liste
+> qu'il faudra rallonger.** Une liste d'exceptions qui s'allonge ne dit pas que les cas sont
+> particuliers ; elle dit que la règle a mal découpé le monde.
+
+Ce n'est pas un vœu : le fichier porte une **assertion** qui refuse de se charger au-delà de cinq
+entrées, et le banc a un cas qui la vérifie. Quiconque voudra ajouter une sixième exception se
+heurtera au contrôle avant de se heurter à la relecture.
+
+### Les chiffres
+
+| | manquements |
+|---|---:|
+| avant | 259 |
+| après | **257** |
+
+**−2**, exactement les deux titres. Les séquences en échec sur la n°302 passent de **16 à 14**, et
+les quatorze restantes sont toutes le même `<summary>` de travail en groupe.
+
+### Contrôles
+
+- `verif_regles_audit.py` : **60 séquences · 257 manquements** (259 avant, **−2**) ✅
+- `tests_verif_regles_audit.py` : **29 / 29** (25 avant ; **+4** pour la liste d'exceptions) ✅,
+  mordant aux deux mutations ci-dessus
+- batterie : `controle_liens.py` ✅ · `controle_medias.py` ✅ · `controle_cadres.py` ✅ ·
+  `controle_formulations.py` **0 écart** ✅ · `controle_gestes_outil.py` ✅ ·
+  `controle_fichiers_telechargeables.py` ✅
+- `controle_impression.mjs` : **338 pages · 0 refusée** ✅
+- périmètre : `_outils/` et ce journal. **Aucune page de séquence n'est modifiée** — les deux titres
+  sont gardés tels quels, c'est tout l'objet du lot.
+
+### Pourquoi ce correctif voyage seul
+
+Il ne pouvait pas entrer dans la vague de remédiation n°301 des trois `C1.1` : celle-ci est une
+**branche de thème 1**, et `_outils/` relève du **thème 2**. Le garde-périmètre l'aurait refusée, à
+juste titre. Deux lots, deux branches.
