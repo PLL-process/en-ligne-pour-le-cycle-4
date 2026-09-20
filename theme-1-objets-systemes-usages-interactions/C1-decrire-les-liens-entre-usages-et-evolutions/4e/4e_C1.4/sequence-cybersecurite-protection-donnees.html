@@ -450,6 +450,29 @@
   .number{color:#a16730!important}
   .keyword{color:#b043d0!important}
 }
+  /* Question à choix unique — groupe de boutons radio natifs (règle d'or n°300).
+     L'énoncé vit dans la <legend> : rien ne peut le recouvrir. Pas d'encadrement
+     complet — une <legend> chevauche le bord SUPÉRIEUR d'un fieldset et le coupe
+     dès qu'elle passe à la ligne ; un filet à GAUCHE groupe aussi bien. */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--bg2)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--accent)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;
+    flex-shrink:0;accent-color:var(--accent)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer}
+  @media print{
+    /* Sur le papier, body{color:#111} noircit le texte : un fond resté sombre le
+       ferait disparaître (refus mesuré par controle_impression.mjs le 20/09).
+       Le groupe s'imprime donc en blanc — et TOUTES les propositions restent
+       lisibles, là où une liste déroulante n'imprimait que le choix retenu. */
+    .qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;
+      border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}
+    .qcm-groupe .qcm-option input[type=radio]{-webkit-appearance:auto;appearance:auto}
+  }
 </style>
 <style id="ressource-css">
 /* Bloc « ressource externe » — posé par _outils poser_ressource.py. Ne pas éditer à la main. */
@@ -550,12 +573,27 @@
   <p>Cette séquence s'appuie sur ce que tu as fait en 5e. Trois questions pour savoir, toi comme le
   professeur, sur quoi on peut s'appuyer. <b>Elles ne comptent pas dans ta progression et ne sont pas
   notées</b> — « je ne sais pas encore » est une réponse utile.</p>
-  <p><label for="be_1">1. En 5e, tu as suivi le chemin d'une donnée. Elle passe par…
-  <select id="be_1"><option value="">— choisir —</option><option>des machines qui ne t'appartiennent pas</option><option>uniquement ton téléphone</option><option>le nuage, qui est un endroit sans machines</option><option>je ne sais pas encore</option></select></label></p>
-  <p><label for="be_2">2. Une donnée personnelle, c'est…
-  <select id="be_2"><option value="">— choisir —</option><option>toute information qui permet de reconnaître quelqu'un</option><option>seulement le nom et le prénom</option><option>seulement ce qu'on publie soi-même</option><option>je ne sais pas encore</option></select></label></p>
-  <p><label for="be_3">3. Un mot de passe solide, c'est d'abord un mot de passe…
-  <select id="be_3"><option value="">— choisir —</option><option>long, et différent d'un service à l'autre</option><option>compliqué mais réutilisé partout</option><option>court, pour ne pas l'oublier</option><option>je ne sais pas encore</option></select></label></p>
+  <fieldset class="qcm-groupe" id="be_1">
+  <legend>1. En 5e, tu as suivi le chemin d'une donnée. Elle passe par…</legend>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="des machines qui ne t'appartiennent pas"><label for="be_1__1">des machines qui ne t'appartiennent pas</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="uniquement ton téléphone"><label for="be_1__2">uniquement ton téléphone</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="le nuage, qui est un endroit sans machines"><label for="be_1__3">le nuage, qui est un endroit sans machines</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="be_2">
+  <legend>2. Une donnée personnelle, c'est…</legend>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="toute information qui permet de reconnaître quelqu'un"><label for="be_2__1">toute information qui permet de reconnaître quelqu'un</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="seulement le nom et le prénom"><label for="be_2__2">seulement le nom et le prénom</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="seulement ce qu'on publie soi-même"><label for="be_2__3">seulement ce qu'on publie soi-même</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="be_3">
+  <legend>3. Un mot de passe solide, c'est d'abord un mot de passe…</legend>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="long, et différent d'un service à l'autre"><label for="be_3__1">long, et différent d'un service à l'autre</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="compliqué mais réutilisé partout"><label for="be_3__2">compliqué mais réutilisé partout</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="court, pour ne pas l'oublier"><label for="be_3__3">court, pour ne pas l'oublier</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="je ne sais pas encore"><label for="be_3__4">je ne sais pas encore</label></div>
+</fieldset>
   <button class="btn btn-secondary" id="btnBillet" type="button">Voir où j'en suis</button>
   <p id="fbBillet" role="status" style="min-height:1.4em;font-weight:600"></p>
 </section>
@@ -2957,7 +2995,16 @@ recalc();
   }
   var bb = document.getElementById("btnBillet");
   if(bb) bb.addEventListener("click", function(){
-    var v = function(id){ var e = document.getElementById(id); return e ? e.value : ""; };
+    var v = function(id){
+      /* Règle d'or n°300 : un groupe de boutons radio rend le TEXTE de la
+         proposition cochée — exactement ce que rendait select.value —, de
+         sorte que les comparaisons de texte ci-dessous restent valables. */
+      var e = document.getElementById(id); if (!e) return "";
+      if (e.tagName === "FIELDSET") {
+        var c = e.querySelector("input[type=radio]:checked"); return c ? c.value : "";
+      }
+      return e.value;
+    };
     var bon = [ v("be_1").indexOf("des machines qui ne t'appartiennent pas") === 0,
                 v("be_2").indexOf("toute information") === 0,
                 v("be_3").indexOf("long, et différent") === 0 ];
