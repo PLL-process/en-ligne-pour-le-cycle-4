@@ -19,7 +19,7 @@ Deux choses, et la seconde est le second corollaire de la règle d'or n°299 :
 que le contrôle voie ce qu'il doit voir, et qu'il le voie **par son point
 d'entrée**, lancé en sous-processus comme on le lance vraiment.
 
-Il éprouve les règles d'or n°300 et n°301 — les seules qu'il juge au fond,
+Il éprouve les règles d'or n°300, n°301 et n°302 — les seules qu'il juge au fond,
 parce qu'elles sont nées de ce chantier — et ne juge PAS la justesse des
 autres règles mécaniques : elles ont
 leur propre histoire dans le journal, et les éprouver une à une demanderait un
@@ -283,6 +283,56 @@ def main():
         # son bloc demande d'analyser l'arbre, et c'est audit_cloture_sequence.mjs
         # qui le mesure. Ce cas tient la frontière entre les deux outils.
         lambda e: None if e[0] == "OK" else "état %s — %s" % e)(etat_301(BONUS + BILAN)))
+
+    # ── 6. La règle d'or n°302 — on parle À l'élève ────────────────────────
+    def etat_302(corps):
+        bac = pathlib.Path(tempfile.mkdtemp())
+        ancien = V.RACINE
+        try:
+            (bac / "lot").mkdir()
+            (bac / "lot" / "sequence_a.html").write_text(page(corps), encoding="utf-8")
+            V.RACINE = bac
+            _code, texte = jouer(["verif_regles_audit.py"])
+        finally:
+            V.RACINE = ancien
+            shutil.rmtree(bac, ignore_errors=True)
+        for ligne in texte.splitlines():
+            if "n°302" in ligne and ("V" in ligne or "X" in ligne or "✔" in ligne or "✘" in ligne):
+                return ("ECHEC" if "✘" in ligne else "OK"), ligne.strip()
+        return "ABSENT", texte.strip()[-300:]
+
+    cas("un en-tete de colonne qui parle de l'eleve est refuse (n°302)", lambda: (
+        lambda e: None if e[0] == "ECHEC" else "etat %s - %s" % e)(
+            etat_302('<table><tr><th>Ce que l\'élève doit savoir faire</th></tr></table>' + BILAN)))
+
+    cas("le meme en-tete a la premiere personne passe", lambda: (
+        lambda e: None if e[0] == "OK" else "etat %s - %s" % e)(
+            etat_302('<table><tr><th>Je serai capable de…</th></tr></table>' + BILAN)))
+
+    cas("un vouvoiement dans un intitule est refuse", lambda: (
+        lambda e: None if e[0] == "ECHEC" else "etat %s - %s" % e)(
+            etat_302('<h2>Si vous êtes trois ou quatre</h2>' + BILAN)))
+
+    cas("la prose du corps n'est PAS jugee - c'est declare, pas oublie", lambda: (
+        lambda e: None if e[0] == "OK" else "etat %s - %s" % e)(
+            etat_302('<p>Ici, l\'élève observe le système.</p>' + BILAN)))
+
+    cas("la legende d\'un groupe de questions est un enonce, pas un intitule", lambda: (
+        lambda e: None if e[0] == "OK" else "etat %s - %s" % e)(
+            etat_302('<fieldset class="qcm-groupe" id="q1">'
+                     '<legend>Un mot de passe partagé entre tous les élèves :</legend>'
+                     '<input type="radio" name="q1" id="q1a" value="oui">'
+                     '<label for="q1a">oui</label></fieldset>' + BILAN)))
+
+    cas("un commentaire CSS citant une balise ne doit pas etre lu comme un intitule", lambda: (
+        # Cas reel : la n°300 a laisse dans la feuille de style un commentaire
+        # ou figure le mot <legend>. Sans retrait du style, le moteur ouvrait
+        # une balise qu'il refermait sur la premiere vraie legende venue.
+        lambda e: None if e[0] == "OK" else "etat %s - %s" % e)(
+            etat_302('<style>/* L\'enonce vit dans la <legend> : vous ne pouvez pas '
+                     'le recouvrir */</style>'
+                     '<fieldset class=\"qcm-groupe\" id=\"q9\"><legend>Une question ordinaire ?</legend>'
+                     '<input type=\"radio\" name=\"q9\" id=\"q9a\" value=\"oui\"><label for=\"q9a\">oui</label></fieldset>' + BILAN)))
 
     # ── 3. Le VRAI point d'entrée, en sous-processus ───────────────────────
     def ligne_de_commande():
