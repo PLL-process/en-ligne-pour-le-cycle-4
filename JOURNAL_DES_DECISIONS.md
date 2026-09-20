@@ -16401,3 +16401,140 @@ mesure ce genre de laideur.
 - captures : trois images à 390 px dans `_generation/captures-pilote-radio/`, hors `Images/` — ce ne
   sont pas des médias pédagogiques, aucune page ne les affiche
 - livraison : **branche poussée et PR ouverte avec `gh`**, pas de colis
+
+## 20/09/2026 — Règle d'or n°300 : une question se lit pendant qu'on y répond (_outils, thème 2)
+
+Trois lots ont conduit ici : l'audit du 19/09 (#398) qui a mesuré, le pilote du 20/09 (#399) qui a
+éprouvé un gabarit sur `3e_C1.1`, et le constat de classe qui a tout déclenché — des élèves de 3e
+perdaient la question en y répondant. Pascal a tranché pour le **groupe de boutons radio**, le pilote
+est concluant, et la règle s'écrit maintenant : **après** la mesure et **après** l'épreuve, jamais
+avant.
+
+> **Règle d'or n°300 — une question se lit pendant qu'on y répond.** Une question à choix n'est
+> jamais posée par un contrôle dont les propositions **se dessinent par-dessus la page**. L'énoncé et
+> ses propositions **occupent le flux** : ils poussent le contenu vers le bas, ils ne le couvrent
+> jamais. Le gabarit est celui-ci —
+>
+> ```html
+> <fieldset class="qcm-groupe" id="ID">
+>   <legend>l'énoncé, en toutes lettres</legend>
+>   <div class="qcm-option"><input type="radio" name="ID" id="ID__1" value="le TEXTE de la proposition">
+>     <label for="ID__1">le TEXTE de la proposition</label></div>
+>   … une ligne par proposition, même name= pour tout le groupe …
+> </fieldset>
+> ```
+>
+> — l'**énoncé dans la `<legend>`** d'un `<fieldset>`, donc DANS le groupe et hors d'atteinte ; une
+> proposition par `input[type=radio]`, chacune avec son `<label for>` ; le **même `name`** pour tout
+> le groupe, d'où les flèches, l'arrêt de tabulation unique et l'annonce « 2 sur 4 ». La **valeur
+> transmise est le TEXTE de la proposition, jamais un indice** : c'est ce qui permet aux tables de
+> réponses attendues de survivre intactes à un changement de forme, et le pilote l'a vérifié sur
+> 124 propositions.
+>
+> — **Ce que cette règle ne se fonde PAS sur, et ne devra jamais se fonder sur : la géométrie.**
+> L'hypothèse de départ était qu'un champ situé dans le *tiers bas* de la fenêtre y ouvrirait sa
+> liste vers le haut. Mesuré sur les 1 480 questions du dépôt (#398) : **1 seule sur 390 × 844, et
+> zéro sur 1280 × 720**. Si la position expliquait le défaut, le constat de classe serait
+> introuvable — or il a bien eu lieu. Un seuil de position serait vérifiable, mécanique, et **sans
+> rapport avec le défaut** : vert sur les 1 479 questions hors de cause, muet sur les 637 qui le
+> sont. **Le risque tient à la FORME du contrôle, pas à la place qu'il occupe.** Ce résultat négatif
+> fait partie de la règle : qui voudra la re-fonder sur un seuil devra d'abord expliquer ces deux
+> chiffres.
+>
+> — **Deux exclusions explicites.** (1) Les **champs en ligne** qui portent leur énoncé en
+> `aria-label` — dans une cellule de tableau, dans une étape d'algorigramme : **75 dans le dépôt**.
+> Ils n'ont rien au-dessus d'eux à recouvrir, la règle ne les vise pas, et un bouton pleine largeur y
+> casserait la mise en page. (2) Les **cases à cocher** restent légitimes quand la question admet
+> **plusieurs** réponses, comme dans `4e_C1.4` : c'est le `type` de l'`input` qui change, la
+> structure reste la même — `fieldset`, `legend`, une étiquette par proposition.
+
+### Les trois mesures qui la portent
+
+| ce qui a été mesuré | le chiffre | ce qu'il établit |
+|---|---|---|
+| questions à liste déroulante, 60 séquences | **1 480** | l'ampleur : ce n'est pas un cas isolé |
+| dont la plus longue proposition dépasse 60 caractères | **637** (43 %) | ce qui fait la hauteur du menu, donc le recouvrement |
+| champ dans le tiers bas à 390 × 844 | **1 / 1 480** | la position **ne prédit rien** |
+| champ dans le tiers bas à 1280 × 720 | **0 / 1 480** | idem, sur l'écran le plus défavorable |
+
+### Mécanisée dans `verif_regles_audit.py`
+
+Une page élève **échoue** si elle porte une liste déroulante de question. Le contrôle nomme les
+champs en cause, et renvoie au gabarit du pilote.
+
+```
+✘ n°300 question dans le flux   51 question(s) posée(s) par une liste déroulante
+                                (e1_1, e1_2, e1_3, e1_4, e1_5, e1_m1 …) — le menu natif se
+                                dessine par-dessus l'énoncé ; à convertir en groupe de
+                                boutons radio (gabarit du pilote 3e_C1.1)
+```
+
+**Avant / après sur le dépôt entier :**
+
+| | manquements mécaniquement établis | séquences en écart sur la n°300 |
+|---|---:|---:|
+| avant la n°300 | 136 | — |
+| après la n°300 | **194** | **58 / 60** |
+
+Les **58** se décomposent ainsi, et il faut le dire parce que le chiffre attendu était 59 :
+
+- `3e_C1.1` — **au vert**, converti par le pilote #399 ✔
+- `5e_C1.3` (`sequence_C1.3-C1.4_SI_gestion_donnees.html`) — **au vert, et depuis toujours** : cette
+  séquence ne pose aucune question à choix, elle ne travaille qu'avec six zones de texte. Elle n'a
+  jamais porté de liste déroulante, il n'y a donc rien à y convertir.
+
+58 = 60 − 1 converti − 1 qui n'a jamais été concerné. Le chiffre de 59 supposait que les 60 séquences
+portaient toutes des listes ; elles n'étaient que 59 à en porter.
+
+**Ce que la n°300 mécanisée ne lit pas**, et qui est écrit dans son périmètre (règle n°47) : que
+l'énoncé soit bien dans une `<legend>`, et que la valeur transmise soit bien le texte de la
+proposition. Ces deux points se vérifient au **banc du lot** et à **l'œil** ; un contrôle qui
+prétendrait les établir par expression régulière mentirait. Le contrôle ne juge que la **forme du
+champ**, et il le déclare.
+
+Un choix assumé : le contrôle signale **toute** liste déroulante, sans chercher à distinguer « liste
+de question » et « liste d'interface ». Mesuré le 20/09 sur les 60 séquences : **il n'existe aucune
+liste d'interface** — les 1 492 `<select>` relevés portaient tous une question, y compris les douze
+sans étiquette rattachable, qui vivaient dans des cellules de tableau avec des propositions pour
+options. Si une liste d'interface légitime apparaît un jour, ce contrôle la signalera, et c'est bien
+ainsi : elle méritera d'être discutée, pas exemptée d'avance par une échappatoire que personne
+n'aurait relue.
+
+### Une exigence de plus au gabarit de livraison — que ce pilote a arrachée
+
+`_outils/METHODE.md`, Pilier 2, point 6 : **toute PR qui change la forme d'un champ de réponse porte
+une capture avant/après à 390 px**, deux images de la même question, à la même position de
+défilement.
+
+Le motif est un fait, pas une préférence. Lors du pilote, la première version encadrait chaque
+question d'un `<fieldset>` bordé : une `<legend>` **chevauche le bord supérieur** et le coupe en deux
+dès qu'elle passe à la ligne — ce qui arrive à la moitié de nos énoncés. **Aucun contrôle ne l'a
+vu** : ni le banc du lot, vert à 50/50 ; ni `controle_impression.mjs` ; ni les rendus aux deux
+tailles, sans une erreur. Seul l'œil l'a vu, sur la capture, et la correction a été le filet à
+gauche. Un contrôle mesure ce qu'on lui a appris à mesurer ; une capture montre ce à quoi personne
+n'avait pensé.
+
+### Ce que ce lot ne fait pas
+
+**Aucune conversion.** La règle est écrite et mécanisée, le gabarit est éprouvé sur un lot, et la
+généralisation se fera **par vagues, thème par thème, en commençant par le thème 1** — dans des PR à
+part. Aucune page de séquence, de QCM, de synthèse ni de média n'est touchée ici : `_outils/` et ce
+journal, et rien d'autre.
+
+### Contrôles
+
+- `verif_regles_audit.py` : **60 séquences · 194 manquements** (136 avant la n°300, soit **+58**,
+  exactement le nombre de séquences en écart) ✅
+- la n°300 sur `3e_C1.1` : **✔ au vert** · sur une séquence non convertie : **✘ 51 questions
+  nommées** ✅
+- `tests_verif_regles_audit.py` : **11 / 11** (6 avant ; + 5 pour la n°300) ✅, mordant aux deux
+  mutations : la n°300 qui ne refuse plus rien → **9 / 11**, le message qui ne nomme plus les champs
+  → **10 / 11**
+- le cas de la **case à cocher** est au banc : elle n'est **pas** refusée, conformément à l'exclusion
+- batterie : `controle_liens.py` **716 pages · 2 918 adresses · 0 cassée** ✅ · `controle_medias.py`
+  **41 lots · 362 médias · 362 documentés** ✅ · `controle_cadres.py` **340 pages · 0 cadre** ✅ ·
+  `controle_formulations.py` **680 fichiers · 80 citations · 0 écart** ✅ · `controle_gestes_outil.py`
+  **340 pages · 13 encarts · 0 écart** ✅ · `controle_fichiers_telechargeables.py` **79 pages ·
+  0 écart** ✅
+- `controle_impression.mjs` : **338 pages · 0 refusée** ✅
+- livraison : **branche poussée et PR ouverte avec `gh`**, pas de colis

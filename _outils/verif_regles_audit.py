@@ -316,6 +316,45 @@ def regle_298(src: str) -> tuple[str, str]:
     return "OK", "ni référentiel ni légende des étiquettes sur la page élève"
 
 
+#: Un champ de question posé par une liste déroulante. On ne cherche pas à
+#: distinguer « liste de question » et « liste d'interface » : mesuré le
+#: 20/09/2026 sur les 60 séquences du dépôt, il n'existe AUCUNE liste
+#: d'interface — les 1 492 `<select>` relevés portaient tous une question, y
+#: compris les douze qui n'avaient pas d'étiquette rattachable (ils vivaient
+#: dans des cellules de tableau, avec des propositions pour options). Si une
+#: liste d'interface légitime apparaissait un jour, elle serait signalée par ce
+#: contrôle, et c'est très bien ainsi : elle mérite d'être discutée, pas
+#: exemptée d'avance par une échappatoire que personne n'aurait relue.
+LISTE_DEROULANTE = re.compile(r"<select\b[^>]*>", re.I)
+IDENTIFIANT_SELECT = re.compile(r'<select\b[^>]*\bid="([^"]+)"', re.I)
+
+
+def regle_300(src: str) -> tuple[str, str]:
+    """n°300 — une question ne se pose pas par un contrôle qui se dessine par-dessus la page.
+
+    Une liste déroulante native n'est pas dessinée dans la page : le système la
+    dessine PAR-DESSUS, ancrée au champ, et elle recouvre ce qui l'entoure —
+    donc l'énoncé, qui la précède. Un groupe de boutons radio occupe le flux :
+    il pousse le contenu au lieu de le couvrir.
+
+    Ce contrôle ne juge QUE la forme du champ. Il ne vérifie ni que l'énoncé est
+    dans une <legend>, ni que la valeur transmise est le texte de la
+    proposition : ces deux points se lisent à l'œil et au banc du lot, et un
+    contrôle qui prétendrait les établir par expression régulière mentirait.
+    """
+    listes = LISTE_DEROULANTE.findall(src)
+    if not listes:
+        return "OK", "aucune liste déroulante : les questions occupent le flux de la page"
+    ids = IDENTIFIANT_SELECT.findall(src)
+    apercu = ", ".join(ids[:6]) + (" …" if len(ids) > 6 else "")
+    return "ECHEC", (
+        f"{len(listes)} question(s) posée(s) par une liste déroulante"
+        + (f" ({apercu})" if ids else "")
+        + " — le menu natif se dessine par-dessus l'énoncé ; à convertir en"
+        " groupe de boutons radio (gabarit du pilote 3e_C1.1)")
+
+
+
 
 # ═══════════════════ Règles mécanisées le 09/08/2026 ═══════════════════
 # Écrites au journal les 8 et 9 août, vérifiées à la main jusqu'ici. Une règle
@@ -440,6 +479,7 @@ REGLES = [
     ("n°54 nombre annoncé ailleurs", regle_54),
     ("n°67 consigne sans champ", regle_67),
     ("n°298 page élève allégée", regle_298),
+    ("n°300 question dans le flux", regle_300),
 ]
 
 SYMBOLE = {"OK": "✔", "ECHEC": "✘", "ALERTE": "▲", "SANS OBJET": "·", "INCONNU": "?"}
@@ -505,6 +545,9 @@ def main(argv: list[str]) -> int:
     print("\nPÉRIMÈTRE DE CE CONTRÔLE")
     print("  Vérifié mécaniquement : " + " · ".join(nom.split()[0] for nom, _ in REGLES))
     print("  Jugement humain requis : n°24, n°25, n°27, n°28, n°32 — voir les ⚑ ci-dessus.")
+    print("  n°300 : seule la FORME du champ est lue. Que l'énoncé soit dans une <legend>")
+    print("  et que la valeur transmise soit le texte de la proposition se vérifient au banc")
+    print("  du lot et à l'œil — pas par expression régulière.")
     print("  NON couvert : justesse pédagogique des contenus et des corrigés, qualité des")
     print("  explications, progressivité réelle, ergonomie en classe, rendu à l'impression.")
     print("  Fichiers regardés : sequence_*.html, sequence-*.html, sequence.html — un QCM,")

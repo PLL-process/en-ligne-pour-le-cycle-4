@@ -163,7 +163,16 @@ Clé localStorage `qcm_<codes>_<slug>`.
 5. **Circuits de livraison** : Fable → bundle git déposé chez Pascal, qui
    pousse (`git fetch <bundle> branche:branche` puis push). ChatGPT →
    push direct + PR. Grok (sans réseau) → script autonome + JSON via Pascal.
-6. **Banc d'essai obligatoire** pour tout script qui touche aux classeurs
+6. **Capture avant/après à 390 px** pour toute PR qui change la FORME d'un
+   champ de réponse ou d'un bloc lu par l'élève (conversion n°300, refonte de
+   gabarit, changement de composant). Deux images de la MÊME question, à la
+   même position de défilement, dans la description de la PR. Motif : lors du
+   pilote `3e_C1.1` (20/09/2026), un bord de `<fieldset>` coupé en deux par une
+   `<legend>` passée à la ligne n'a été vu par AUCUN contrôle — ni le banc du
+   lot à 50/50, ni `controle_impression`, ni les rendus sans erreur. Seul l'œil
+   l'a vu, sur la capture. Un contrôle mesure ce qu'on lui a appris à mesurer ;
+   une capture montre ce à quoi personne n'avait pensé.
+7. **Banc d'essai obligatoire** pour tout script qui touche aux classeurs
    `_progressions/` : exécution sur COPIE, vérification que seuls les
    onglets cibles changent et que les formules (Calendrier, Moteur, Frise)
    sortent intactes, AVANT toute exécution réelle. openpyxl sans

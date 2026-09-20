@@ -19,7 +19,8 @@ Deux choses, et la seconde est le second corollaire de la règle d'or n°299 :
 que le contrôle voie ce qu'il doit voir, et qu'il le voie **par son point
 d'entrée**, lancé en sous-processus comme on le lance vraiment.
 
-Il ne juge PAS la justesse de chacune des treize règles mécaniques : elles ont
+Il éprouve la règle d'or n°300 — la seule qu'il juge au fond, parce qu'elle
+est née de ce chantier — et ne juge PAS la justesse des autres règles mécaniques : elles ont
 leur propre histoire dans le journal, et les éprouver une à une demanderait un
 lot d'essai complet. Ce banc tient la porte d'entrée et la panne — c'est son
 périmètre, et il le déclare (règle d'or n°47).
@@ -159,6 +160,65 @@ def main():
     # RIEN analyser et le cas passerait au vert en ne prouvant rien.
     cas("l'archive est une trace, pas une ressource — et le reste est bien analysé",
         archive_ecartee)
+
+
+    # ── 4. La règle d'or n°300 — la question occupe le flux ────────────────
+    LISTE = """<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8">
+<title>Essai</title></head><body><main>
+<div class="assoc"><label for="q1">Une question ?</label>
+  <select id="q1"><option value="">— choisir —</option>
+    <option>oui</option><option>non</option></select></div>
+</main></body></html>
+"""
+    RADIOS = """<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8">
+<title>Essai</title></head><body><main>
+<fieldset class="qcm-groupe" id="q1"><legend>Une question ?</legend>
+  <div class="qcm-option"><input type="radio" name="q1" id="q1__1" value="oui">
+    <label for="q1__1">oui</label></div>
+  <div class="qcm-option"><input type="radio" name="q1" id="q1__2" value="non">
+    <label for="q1__2">non</label></div>
+</fieldset>
+</main></body></html>
+"""
+
+    def etat_300(source):
+        """L'état rendu par la n°300 sur une séquence d'essai."""
+        bac = pathlib.Path(tempfile.mkdtemp())
+        ancien = V.RACINE
+        try:
+            (bac / "lot").mkdir()
+            (bac / "lot" / "sequence_a.html").write_text(source, encoding="utf-8")
+            V.RACINE = bac
+            _code, texte = jouer(["verif_regles_audit.py"])
+        finally:
+            V.RACINE = ancien
+            shutil.rmtree(bac, ignore_errors=True)
+        for ligne in texte.splitlines():
+            if "n°300" in ligne and ("✔" in ligne or "✘" in ligne):
+                return ("ECHEC" if "✘" in ligne else "OK"), ligne.strip()
+        return "ABSENT", texte.strip()[-300:]
+
+    cas("une liste déroulante de question est refusée (n°300)", lambda: (
+        lambda e: None if e[0] == "ECHEC"
+        else "état %s au lieu de ECHEC — %s" % e)(etat_300(LISTE)))
+
+    cas("le gabarit du pilote — fieldset, legend, boutons radio — passe (n°300)", lambda: (
+        lambda e: None if e[0] == "OK"
+        else "état %s au lieu de OK — %s" % e)(etat_300(RADIOS)))
+
+    cas("le refus NOMME les champs en cause, il ne dit pas seulement « non »", lambda: (
+        lambda e: None if "q1" in e[1] else "le message ne nomme pas q1 : %s" % e[1])(etat_300(LISTE)))
+
+    cas("une case à cocher n'est PAS refusée — elle reste légitime à plusieurs réponses", lambda: (
+        lambda e: None if e[0] == "OK" else "état %s au lieu de OK — %s" % e)(
+            etat_300(RADIOS.replace('type="radio"', 'type="checkbox"'))))
+
+    cas("le dépôt réel : 3e_C1.1 est au vert sur la n°300", lambda: (
+        lambda t: None if "✔ n°300" in t
+        else "3e_C1.1 n'est pas au vert : %s" % ([l for l in t.splitlines() if "n°300" in l] or "(rien)"))(
+            par_la_ligne_de_commande([
+                "theme-1-objets-systemes-usages-interactions/"
+                "C1-decrire-les-liens-entre-usages-et-evolutions/3e/3e_C1.1"])[1]))
 
     # ── 3. Le VRAI point d'entrée, en sous-processus ───────────────────────
     def ligne_de_commande():
