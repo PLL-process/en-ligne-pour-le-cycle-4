@@ -73,8 +73,14 @@ async def tester_sequence(p):
         r.append(("verrou fermé check %d"%n, "ok" not in cls.split()))
     h=await pg.evaluate("document.getElementById('lienQcm').getAttribute('href')")
     r.append(("QCM à zéro = parcours court", h.endswith("#depart=court")))
-    await pg.evaluate("""(d)=>{Object.entries(d).forEach(([id,v])=>{const e=document.getElementById(id);e.value=v;
-        e.dispatchEvent(new Event(e.tagName==='SELECT'?'change':'input',{bubbles:true}));});}""", {**BON,**TXT})
+    await pg.evaluate("""(d)=>{const manquants=[];Object.entries(d).forEach(([id,v])=>{
+        const e=document.getElementById(id); if(!e){manquants.push(id);return;}
+        if(e.tagName==='FIELDSET'){
+          const r=[...e.querySelectorAll('input[type=radio]')].find(x=>x.value===v);
+          if(!r){manquants.push(id);return;}
+          r.checked=true; r.dispatchEvent(new Event('change',{bubbles:true})); return;}
+        e.value=v; e.dispatchEvent(new Event('input',{bubbles:true}));});
+        return manquants;}""", {**BON,**TXT})
     for n in range(5):
         await pg.click("#tab-s%d"%max(1,n)); await pg.click(f"[data-check='{n}']")
         cls=await pg.evaluate(f"document.getElementById('fb{n}').className")

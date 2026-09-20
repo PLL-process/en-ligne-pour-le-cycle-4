@@ -103,6 +103,29 @@
   .card b,.correction summary{color:#946b00!important}
   .piege,.piege b{color:#ed0018!important}
 }
+  /* Question à choix unique — groupe de boutons radio natifs (règle d'or n°300).
+     L'énoncé vit dans la <legend> : rien ne peut le recouvrir. Pas d'encadrement
+     complet — une <legend> chevauche le bord SUPÉRIEUR d'un fieldset et le coupe
+     dès qu'elle passe à la ligne ; un filet à GAUCHE groupe aussi bien. */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--input-bd);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--input-bg)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;
+    flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer}
+  @media print{
+    /* Sur le papier, body{color:#111} noircit le texte : un fond resté sombre le
+       ferait disparaître (refus mesuré par controle_impression.mjs le 20/09).
+       Le groupe s'imprime donc en blanc — et TOUTES les propositions restent
+       lisibles, là où une liste déroulante n'imprimait que le choix retenu. */
+    .qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;
+      border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}
+    .qcm-groupe .qcm-option input[type=radio]{-webkit-appearance:auto;appearance:auto}
+  }
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -250,21 +273,27 @@
 <section class="card">
   <h2>🎫 Billet d'entrée — je vérifie mes outils (5 min, <b>sans note</b>)</h2>
   <p>Trois questions sur ce que tu as travaillé les années précédentes. <b>Aucune note</b>.</p>
-  <div class="assoc"><label for="be_1">Une exigence utilisable porte&nbsp;:</label>
-    <select id="be_1"><option value="">— choisir —</option>
-      <option>une grandeur, une unité et un seuil</option>
-      <option>un adjectif précis</option><option>le nom du fournisseur</option>
-      <option>un budget maximal, et rien d'autre</option></select></div>
-  <div class="assoc"><label for="be_2">Sur un objet qui dure des années, l'étape du cycle de vie qui pèse le plus est&nbsp;:</label>
-    <select id="be_2"><option value="">— choisir —</option>
-      <option>l'utilisation</option><option>la fabrication</option>
-      <option>la distribution</option><option>la fin de vie</option></select></div>
-  <div class="assoc"><label for="be_3">Avant de choisir un appareil de mesure, il faut d'abord&nbsp;:</label>
-    <select id="be_3"><option value="">— choisir —</option>
-      <option>décider quelle grandeur on veut mesurer</option>
-      <option>prendre l'appareil le plus précis</option>
-      <option>regarder ce qui est disponible</option>
-      <option>fixer le budget</option></select></div>
+  <fieldset class="qcm-groupe" id="be_1">
+  <legend>Une exigence utilisable porte&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="une grandeur, une unité et un seuil"><label for="be_1__1">une grandeur, une unité et un seuil</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="un adjectif précis"><label for="be_1__2">un adjectif précis</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="le nom du fournisseur"><label for="be_1__3">le nom du fournisseur</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="un budget maximal, et rien d'autre"><label for="be_1__4">un budget maximal, et rien d'autre</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="be_2">
+  <legend>Sur un objet qui dure des années, l'étape du cycle de vie qui pèse le plus est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="l'utilisation"><label for="be_2__1">l'utilisation</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="la fabrication"><label for="be_2__2">la fabrication</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="la distribution"><label for="be_2__3">la distribution</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="la fin de vie"><label for="be_2__4">la fin de vie</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="be_3">
+  <legend>Avant de choisir un appareil de mesure, il faut d'abord&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="décider quelle grandeur on veut mesurer"><label for="be_3__1">décider quelle grandeur on veut mesurer</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="prendre l'appareil le plus précis"><label for="be_3__2">prendre l'appareil le plus précis</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="regarder ce qui est disponible"><label for="be_3__3">regarder ce qui est disponible</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="fixer le budget"><label for="be_3__4">fixer le budget</label></div>
+</fieldset>
   <button class="btn small" data-check="0" type="button">🎫 Vérifier mon billet d'entrée</button>
   <p class="feedback" id="fb0" role="status"></p>
   <details class="aide" id="capsule"><summary>🎒 Je révise en 3 minutes</summary>
@@ -292,44 +321,50 @@
   </figure>
 
   <h4>a) La méthode de recensement</h4>
-  <div class="assoc"><label for="a1_1">Pour établir une liste, la première question à se poser est&nbsp;:</label>
-    <select id="a1_1"><option value="">— choisir —</option>
-      <option>d'où vient la chaleur, et par où peut-elle partir ?</option>
-      <option>quel est le budget disponible ?</option>
-      <option>quelle marque est la plus fiable ?</option>
-      <option>que font les autres collèges ?</option></select></div>
-  <div class="assoc"><label for="a1_2">Une liste de qualité se juge d'abord à&nbsp;:</label>
-    <select id="a1_2"><option value="">— choisir —</option>
-      <option>sa diversité : plusieurs familles représentées</option>
-      <option>sa longueur : le plus de propositions possible</option>
-      <option>la nouveauté des technologies citées</option>
-      <option>le prix moyen des solutions listées</option></select></div>
-  <div class="assoc"><label for="a1_3">Un groupe propose trois climatiseurs de marques différentes. Sa liste&nbsp;:</label>
-    <select id="a1_3"><option value="">— choisir —</option>
-      <option>ne contient en réalité qu'une seule solution, déclinée trois fois</option>
-      <option>est excellente : trois propositions valent mieux qu'une</option>
-      <option>est incomplète mais correcte</option>
-      <option>est hors sujet</option></select></div>
+  <fieldset class="qcm-groupe" id="a1_1">
+  <legend>Pour établir une liste, la première question à se poser est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__1" value="d'où vient la chaleur, et par où peut-elle partir ?"><label for="a1_1__1">d'où vient la chaleur, et par où peut-elle partir ?</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__2" value="quel est le budget disponible ?"><label for="a1_1__2">quel est le budget disponible ?</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__3" value="quelle marque est la plus fiable ?"><label for="a1_1__3">quelle marque est la plus fiable ?</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__4" value="que font les autres collèges ?"><label for="a1_1__4">que font les autres collèges ?</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_2">
+  <legend>Une liste de qualité se juge d'abord à&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__1" value="sa diversité : plusieurs familles représentées"><label for="a1_2__1">sa diversité : plusieurs familles représentées</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__2" value="sa longueur : le plus de propositions possible"><label for="a1_2__2">sa longueur : le plus de propositions possible</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__3" value="la nouveauté des technologies citées"><label for="a1_2__3">la nouveauté des technologies citées</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__4" value="le prix moyen des solutions listées"><label for="a1_2__4">le prix moyen des solutions listées</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_3">
+  <legend>Un groupe propose trois climatiseurs de marques différentes. Sa liste&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__1" value="ne contient en réalité qu'une seule solution, déclinée trois fois"><label for="a1_3__1">ne contient en réalité qu'une seule solution, déclinée trois fois</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__2" value="est excellente : trois propositions valent mieux qu'une"><label for="a1_3__2">est excellente : trois propositions valent mieux qu'une</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__3" value="est incomplète mais correcte"><label for="a1_3__3">est incomplète mais correcte</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__4" value="est hors sujet"><label for="a1_3__4">est hors sujet</label></div>
+</fieldset>
 
   <h4>b) Ce qu'on oublie presque toujours</h4>
-  <div class="assoc"><label for="a1_4">«&nbsp;Réduire le nombre de machines&nbsp;» est&nbsp;:</label>
-    <select id="a1_4"><option value="">— choisir —</option>
-      <option>une solution technique à part entière : elle agit sur la cause plutôt que sur l'effet</option>
-      <option>un renoncement, pas une solution</option>
-      <option>une solution seulement si rien d'autre ne marche</option>
-      <option>hors du champ de la technologie</option></select></div>
-  <div class="assoc"><label for="a1_5">Pourquoi les solutions passives sont-elles rarement citées spontanément&nbsp;?</label>
-    <select id="a1_5"><option value="">— choisir —</option>
-      <option>parce qu'on cherche d'abord un appareil à installer, pas un obstacle à retirer</option>
-      <option>parce qu'elles ne fonctionnent pas</option>
-      <option>parce qu'elles coûtent plus cher</option>
-      <option>parce qu'elles sont interdites dans les établissements scolaires</option></select></div>
-  <div class="assoc"><label for="a1_6">Écarter une solution dès le recensement parce qu'elle «&nbsp;a l'air trop chère&nbsp;»&nbsp;:</label>
-    <select id="a1_6"><option value="">— choisir —</option>
-      <option>est une erreur : on recense d'abord, on évalue ensuite</option>
-      <option>fait gagner du temps</option>
-      <option>est nécessaire pour rester dans le budget</option>
-      <option>est obligatoire dans un cahier des charges</option></select></div>
+  <fieldset class="qcm-groupe" id="a1_4">
+  <legend>«&nbsp;Réduire le nombre de machines&nbsp;» est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__1" value="une solution technique à part entière : elle agit sur la cause plutôt que sur l'effet"><label for="a1_4__1">une solution technique à part entière : elle agit sur la cause plutôt que sur l'effet</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__2" value="un renoncement, pas une solution"><label for="a1_4__2">un renoncement, pas une solution</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__3" value="une solution seulement si rien d'autre ne marche"><label for="a1_4__3">une solution seulement si rien d'autre ne marche</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__4" value="hors du champ de la technologie"><label for="a1_4__4">hors du champ de la technologie</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_5">
+  <legend>Pourquoi les solutions passives sont-elles rarement citées spontanément&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__1" value="parce qu'on cherche d'abord un appareil à installer, pas un obstacle à retirer"><label for="a1_5__1">parce qu'on cherche d'abord un appareil à installer, pas un obstacle à retirer</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__2" value="parce qu'elles ne fonctionnent pas"><label for="a1_5__2">parce qu'elles ne fonctionnent pas</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__3" value="parce qu'elles coûtent plus cher"><label for="a1_5__3">parce qu'elles coûtent plus cher</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__4" value="parce qu'elles sont interdites dans les établissements scolaires"><label for="a1_5__4">parce qu'elles sont interdites dans les établissements scolaires</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_6">
+  <legend>Écarter une solution dès le recensement parce qu'elle «&nbsp;a l'air trop chère&nbsp;»&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__1" value="est une erreur : on recense d'abord, on évalue ensuite"><label for="a1_6__1">est une erreur : on recense d'abord, on évalue ensuite</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__2" value="fait gagner du temps"><label for="a1_6__2">fait gagner du temps</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__3" value="est nécessaire pour rester dans le budget"><label for="a1_6__3">est nécessaire pour rester dans le budget</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__4" value="est obligatoire dans un cahier des charges"><label for="a1_6__4">est obligatoire dans un cahier des charges</label></div>
+</fieldset>
 
   <h4>c) Ta liste</h4>
   <div class="assoc">
@@ -393,46 +428,52 @@
   dans un tableur — six solutions, quinze colonnes.</p>
 
   <h4>a) Lire les colonnes qui surprennent</h4>
-  <div class="assoc"><label for="a2_1">La solution S6 affiche un coût annuel de <b>−450 €</b> et une consommation de <b>−900 kWh</b>. Cela signifie&nbsp;:</label>
-    <select id="a2_1"><option value="">— choisir —</option>
-      <option>qu'elle fait économiser : réduire le nombre de machines diminue la facture et la chaleur produite</option>
-      <option>qu'il y a une erreur dans le tableau</option>
-      <option>que la solution rapporte de l'argent au collège</option>
-      <option>que la consommation est trop faible pour être mesurée</option></select></div>
-  <div class="assoc"><label for="a2_2">Pourquoi S5 et S6 n'ont-elles ni durée de vie ni indice de réparabilité&nbsp;?</label>
-    <select id="a2_2"><option value="">— choisir —</option>
-      <option>parce qu'elles n'installent aucun matériel : ces colonnes n'ont pas d'objet pour elles</option>
-      <option>parce que les données manquaient</option>
-      <option>parce qu'elles durent indéfiniment</option>
-      <option>parce qu'elles sont trop récentes</option></select></div>
-  <div class="assoc"><label for="a2_3">S3, le climatiseur, obtient la meilleure baisse de température (9 °C). Faut-il le choisir&nbsp;?</label>
-    <select id="a2_3"><option value="">— choisir —</option>
-      <option>pas encore : il faut d'abord regarder ce que cette performance coûte sur les autres colonnes</option>
-      <option>oui : c'est le plus performant</option>
-      <option>non : un climatiseur est toujours à éviter</option>
-      <option>oui, si le budget le permet</option></select></div>
+  <fieldset class="qcm-groupe" id="a2_1">
+  <legend>La solution S6 affiche un coût annuel de <b>−450 €</b> et une consommation de <b>−900 kWh</b>. Cela signifie&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__1" value="qu'elle fait économiser : réduire le nombre de machines diminue la facture et la chaleur produite"><label for="a2_1__1">qu'elle fait économiser : réduire le nombre de machines diminue la facture et la chaleur produite</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__2" value="qu'il y a une erreur dans le tableau"><label for="a2_1__2">qu'il y a une erreur dans le tableau</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__3" value="que la solution rapporte de l'argent au collège"><label for="a2_1__3">que la solution rapporte de l'argent au collège</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__4" value="que la consommation est trop faible pour être mesurée"><label for="a2_1__4">que la consommation est trop faible pour être mesurée</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_2">
+  <legend>Pourquoi S5 et S6 n'ont-elles ni durée de vie ni indice de réparabilité&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__1" value="parce qu'elles n'installent aucun matériel : ces colonnes n'ont pas d'objet pour elles"><label for="a2_2__1">parce qu'elles n'installent aucun matériel : ces colonnes n'ont pas d'objet pour elles</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__2" value="parce que les données manquaient"><label for="a2_2__2">parce que les données manquaient</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__3" value="parce qu'elles durent indéfiniment"><label for="a2_2__3">parce qu'elles durent indéfiniment</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__4" value="parce qu'elles sont trop récentes"><label for="a2_2__4">parce qu'elles sont trop récentes</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_3">
+  <legend>S3, le climatiseur, obtient la meilleure baisse de température (9 °C). Faut-il le choisir&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__1" value="pas encore : il faut d'abord regarder ce que cette performance coûte sur les autres colonnes"><label for="a2_3__1">pas encore : il faut d'abord regarder ce que cette performance coûte sur les autres colonnes</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__2" value="oui : c'est le plus performant"><label for="a2_3__2">oui : c'est le plus performant</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__3" value="non : un climatiseur est toujours à éviter"><label for="a2_3__3">non : un climatiseur est toujours à éviter</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__4" value="oui, si le budget le permet"><label for="a2_3__4">oui, si le budget le permet</label></div>
+</fieldset>
 
   <h4>b) Construire la grille</h4>
   <p>Ajoute une colonne <code>score</code>. À toi de décider ce qu'elle contient et <b>combien pèse
   chaque critère</b>. Rien n'est imposé — mais tu devras défendre tes choix.</p>
-  <div class="assoc"><label for="a2_4">L'indice de réparabilité de S3 est de 5 sur 10, celui de S2 de 8. Cet écart pèse surtout sur&nbsp;:</label>
-    <select id="a2_4"><option value="">— choisir —</option>
-      <option>la durée pendant laquelle la solution restera en service, donc son coût réel</option>
-      <option>le confort des utilisateurs</option>
-      <option>la performance de refroidissement</option>
-      <option>rien : c'est un indice commercial</option></select></div>
-  <div class="assoc"><label for="a2_5">Deux groupes obtiennent deux classements différents avec le même tableau. C'est&nbsp;:</label>
-    <select id="a2_5"><option value="">— choisir —</option>
-      <option>normal : ils n'ont pas pondéré les critères de la même façon, et chacun doit pouvoir le justifier</option>
-      <option>impossible : les données sont les mêmes</option>
-      <option>la preuve qu'un des deux a fait une erreur de calcul</option>
-      <option>sans importance</option></select></div>
-  <div class="assoc"><label for="a2_6">Une pondération honnête&nbsp;:</label>
-    <select id="a2_6"><option value="">— choisir —</option>
-      <option>est annoncée avant le calcul, et justifiée par le besoin</option>
-      <option>est choisie après coup pour obtenir le classement souhaité</option>
-      <option>donne le même poids à tous les critères, toujours</option>
-      <option>n'a pas besoin d'être expliquée</option></select></div>
+  <fieldset class="qcm-groupe" id="a2_4">
+  <legend>L'indice de réparabilité de S3 est de 5 sur 10, celui de S2 de 8. Cet écart pèse surtout sur&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__1" value="la durée pendant laquelle la solution restera en service, donc son coût réel"><label for="a2_4__1">la durée pendant laquelle la solution restera en service, donc son coût réel</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__2" value="le confort des utilisateurs"><label for="a2_4__2">le confort des utilisateurs</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__3" value="la performance de refroidissement"><label for="a2_4__3">la performance de refroidissement</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__4" value="rien : c'est un indice commercial"><label for="a2_4__4">rien : c'est un indice commercial</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_5">
+  <legend>Deux groupes obtiennent deux classements différents avec le même tableau. C'est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__1" value="normal : ils n'ont pas pondéré les critères de la même façon, et chacun doit pouvoir le justifier"><label for="a2_5__1">normal : ils n'ont pas pondéré les critères de la même façon, et chacun doit pouvoir le justifier</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__2" value="impossible : les données sont les mêmes"><label for="a2_5__2">impossible : les données sont les mêmes</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__3" value="la preuve qu'un des deux a fait une erreur de calcul"><label for="a2_5__3">la preuve qu'un des deux a fait une erreur de calcul</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__4" value="sans importance"><label for="a2_5__4">sans importance</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_6">
+  <legend>Une pondération honnête&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_6" id="a2_6__1" value="est annoncée avant le calcul, et justifiée par le besoin"><label for="a2_6__1">est annoncée avant le calcul, et justifiée par le besoin</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_6" id="a2_6__2" value="est choisie après coup pour obtenir le classement souhaité"><label for="a2_6__2">est choisie après coup pour obtenir le classement souhaité</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_6" id="a2_6__3" value="donne le même poids à tous les critères, toujours"><label for="a2_6__3">donne le même poids à tous les critères, toujours</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_6" id="a2_6__4" value="n'a pas besoin d'être expliquée"><label for="a2_6__4">n'a pas besoin d'être expliquée</label></div>
+</fieldset>
 
   <h4>c) Défends ta grille</h4>
   <div class="assoc">
@@ -489,44 +530,50 @@
   local. Aucun protocole n'existe. <b>Écrivez-le.</b></p>
 
   <h4>a) Ce qu'un protocole doit contenir</h4>
-  <div class="assoc"><label for="a3_1">Un protocole utilisable doit d'abord préciser&nbsp;:</label>
-    <select id="a3_1"><option value="">— choisir —</option>
-      <option>la grandeur mesurée, son unité et l'appareil</option>
-      <option>le nom de l'élève qui mesure</option>
-      <option>la conclusion attendue</option>
-      <option>le budget de l'opération</option></select></div>
-  <div class="assoc"><label for="a3_2">Pour la température d'un local, un seul point de mesure&nbsp;:</label>
-    <select id="a3_2"><option value="">— choisir —</option>
-      <option>ne suffit pas : l'air est plus chaud près des machines et sous le plafond</option>
-      <option>suffit, la température est la même partout</option>
-      <option>suffit s'il est au centre de la pièce</option>
-      <option>suffit si on mesure trois fois</option></select></div>
-  <div class="assoc"><label for="a3_3">À quel moment faut-il relever&nbsp;?</label>
-    <select id="a3_3"><option value="">— choisir —</option>
-      <option>à plusieurs moments de la journée, dont le plus défavorable — ici, la fin d'après-midi</option>
-      <option>le matin, quand le local est frais</option>
-      <option>une seule fois, n'importe quand</option>
-      <option>pendant les vacances, quand personne ne dérange</option></select></div>
-  <div class="assoc"><label for="a3_4">Que faut-il maintenir <b>constant</b> pour que les relevés soient comparables&nbsp;?</label>
-    <select id="a3_4"><option value="">— choisir —</option>
-      <option>la position du capteur, la porte fermée, et le nombre de machines allumées</option>
-      <option>uniquement l'heure</option>
-      <option>uniquement l'appareil utilisé</option>
-      <option>rien : une température est une température</option></select></div>
+  <fieldset class="qcm-groupe" id="a3_1">
+  <legend>Un protocole utilisable doit d'abord préciser&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__1" value="la grandeur mesurée, son unité et l'appareil"><label for="a3_1__1">la grandeur mesurée, son unité et l'appareil</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__2" value="le nom de l'élève qui mesure"><label for="a3_1__2">le nom de l'élève qui mesure</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__3" value="la conclusion attendue"><label for="a3_1__3">la conclusion attendue</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__4" value="le budget de l'opération"><label for="a3_1__4">le budget de l'opération</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_2">
+  <legend>Pour la température d'un local, un seul point de mesure&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__1" value="ne suffit pas : l'air est plus chaud près des machines et sous le plafond"><label for="a3_2__1">ne suffit pas : l'air est plus chaud près des machines et sous le plafond</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__2" value="suffit, la température est la même partout"><label for="a3_2__2">suffit, la température est la même partout</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__3" value="suffit s'il est au centre de la pièce"><label for="a3_2__3">suffit s'il est au centre de la pièce</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__4" value="suffit si on mesure trois fois"><label for="a3_2__4">suffit si on mesure trois fois</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_3">
+  <legend>À quel moment faut-il relever&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__1" value="à plusieurs moments de la journée, dont le plus défavorable — ici, la fin d'après-midi"><label for="a3_3__1">à plusieurs moments de la journée, dont le plus défavorable — ici, la fin d'après-midi</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__2" value="le matin, quand le local est frais"><label for="a3_3__2">le matin, quand le local est frais</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__3" value="une seule fois, n'importe quand"><label for="a3_3__3">une seule fois, n'importe quand</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__4" value="pendant les vacances, quand personne ne dérange"><label for="a3_3__4">pendant les vacances, quand personne ne dérange</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_4">
+  <legend>Que faut-il maintenir <b>constant</b> pour que les relevés soient comparables&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__1" value="la position du capteur, la porte fermée, et le nombre de machines allumées"><label for="a3_4__1">la position du capteur, la porte fermée, et le nombre de machines allumées</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__2" value="uniquement l'heure"><label for="a3_4__2">uniquement l'heure</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__3" value="uniquement l'appareil utilisé"><label for="a3_4__3">uniquement l'appareil utilisé</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__4" value="rien : une température est une température"><label for="a3_4__4">rien : une température est une température</label></div>
+</fieldset>
 
   <h4>b) Ce que le protocole permet — et ne permet pas</h4>
-  <div class="assoc"><label for="a3_5">Les relevés donnent 41 °C au pic. L'exigence du constructeur des serveurs est «&nbsp;au plus 32 °C&nbsp;». On en déduit&nbsp;:</label>
-    <select id="a3_5"><option value="">— choisir —</option>
-      <option>que la solution doit faire gagner au moins 9 °C au moment le plus défavorable</option>
-      <option>que le local est inutilisable</option>
-      <option>qu'il faut acheter d'autres serveurs</option>
-      <option>que la mesure est fausse</option></select></div>
-  <div class="assoc"><label for="a3_6">Un relevé fait un jour de pluie à 24 °C extérieurs&nbsp;:</label>
-    <select id="a3_6"><option value="">— choisir —</option>
-      <option>ne dit rien du pic d'été : il faut préciser les conditions extérieures dans le protocole</option>
-      <option>est parfaitement représentatif</option>
-      <option>est meilleur, car plus stable</option>
-      <option>peut remplacer trois relevés d'été</option></select></div>
+  <fieldset class="qcm-groupe" id="a3_5">
+  <legend>Les relevés donnent 41 °C au pic. L'exigence du constructeur des serveurs est «&nbsp;au plus 32 °C&nbsp;». On en déduit&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__1" value="que la solution doit faire gagner au moins 9 °C au moment le plus défavorable"><label for="a3_5__1">que la solution doit faire gagner au moins 9 °C au moment le plus défavorable</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__2" value="que le local est inutilisable"><label for="a3_5__2">que le local est inutilisable</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__3" value="qu'il faut acheter d'autres serveurs"><label for="a3_5__3">qu'il faut acheter d'autres serveurs</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__4" value="que la mesure est fausse"><label for="a3_5__4">que la mesure est fausse</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_6">
+  <legend>Un relevé fait un jour de pluie à 24 °C extérieurs&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_6" id="a3_6__1" value="ne dit rien du pic d'été : il faut préciser les conditions extérieures dans le protocole"><label for="a3_6__1">ne dit rien du pic d'été : il faut préciser les conditions extérieures dans le protocole</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_6" id="a3_6__2" value="est parfaitement représentatif"><label for="a3_6__2">est parfaitement représentatif</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_6" id="a3_6__3" value="est meilleur, car plus stable"><label for="a3_6__3">est meilleur, car plus stable</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_6" id="a3_6__4" value="peut remplacer trois relevés d'été"><label for="a3_6__4">peut remplacer trois relevés d'été</label></div>
+</fieldset>
 
   <h4>c) Ton protocole</h4>
   <div class="assoc">
@@ -615,34 +662,41 @@
   <b>Compétence</b> 3e_C3.2 · <b>Production</b> un choix argumenté à trois entrées</div>
 
   <p>L'exigence née de vos mesures&nbsp;: <b>gagner au moins 9 °C</b> au pic.</p>
-  <div class="assoc"><label for="a4_1">Combien de solutions seules atteignent ce seuil&nbsp;?</label>
-    <select id="a4_1"><option value="">— choisir —</option>
-      <option>une seule, S3 le climatiseur</option><option>deux</option>
-      <option>trois</option><option>aucune</option></select></div>
-  <div class="assoc"><label for="a4_2">S1 (2,5 °C) et S6 (5 °C) mises ensemble donnent 7,5 °C. Cette idée&nbsp;:</label>
-    <select id="a4_2"><option value="">— choisir —</option>
-      <option>est la bonne piste : rien n'oblige à choisir une seule solution, on peut les combiner</option>
-      <option>est interdite : on choisit une solution et une seule</option>
-      <option>ne sert à rien, le total reste sous 9 °C</option>
-      <option>revient à ne rien choisir</option></select></div>
-  <div class="assoc"><label for="a4_3">S1 + S2 + S6 donnent 2,5 + 4 + 5 = 11,5 °C, pour 1230 € d'installation et une consommation nette négative. Face à S3 seul&nbsp;:</label>
-    <select id="a4_3"><option value="">— choisir —</option>
-      <option>sur le papier, la combinaison est meilleure sur les trois piliers — moins chère, moins émettrice, sans dépendre d'un seul appareil — à condition de vérifier par un essai que les gains s'ajoutent bien</option>
-      <option>S3 reste meilleur car plus simple</option>
-      <option>les deux sont équivalents</option>
-      <option>on ne peut pas comparer une combinaison à une solution seule</option></select></div>
-  <div class="assoc"><label for="a4_4">Le <b>pilier social</b> intervient ici sous la forme&nbsp;:</label>
-    <select id="a4_4"><option value="">— choisir —</option>
-      <option>du service rendu et de ce qu'on demande aux personnes : renoncer à deux serveurs a des conséquences pour les usagers</option>
-      <option>du prix payé par le collège</option>
-      <option>des émissions de CO₂</option>
-      <option>de la durée de vie du matériel</option></select></div>
-  <div class="assoc"><label for="a4_5">Additionner les baisses de température de trois solutions&nbsp;:</label>
-    <select id="a4_5"><option value="">— choisir —</option>
-      <option>donne un ordre de grandeur, pas un résultat exact : les effets ne s'ajoutent pas parfaitement</option>
-      <option>donne le résultat exact</option>
-      <option>est mathématiquement interdit</option>
-      <option>sous-estime toujours le résultat</option></select></div>
+  <fieldset class="qcm-groupe" id="a4_1">
+  <legend>Combien de solutions seules atteignent ce seuil&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__1" value="une seule, S3 le climatiseur"><label for="a4_1__1">une seule, S3 le climatiseur</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__2" value="deux"><label for="a4_1__2">deux</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__3" value="trois"><label for="a4_1__3">trois</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__4" value="aucune"><label for="a4_1__4">aucune</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_2">
+  <legend>S1 (2,5 °C) et S6 (5 °C) mises ensemble donnent 7,5 °C. Cette idée&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__1" value="est la bonne piste : rien n'oblige à choisir une seule solution, on peut les combiner"><label for="a4_2__1">est la bonne piste : rien n'oblige à choisir une seule solution, on peut les combiner</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__2" value="est interdite : on choisit une solution et une seule"><label for="a4_2__2">est interdite : on choisit une solution et une seule</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__3" value="ne sert à rien, le total reste sous 9 °C"><label for="a4_2__3">ne sert à rien, le total reste sous 9 °C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__4" value="revient à ne rien choisir"><label for="a4_2__4">revient à ne rien choisir</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_3">
+  <legend>S1 + S2 + S6 donnent 2,5 + 4 + 5 = 11,5 °C, pour 1230 € d'installation et une consommation nette négative. Face à S3 seul&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__1" value="sur le papier, la combinaison est meilleure sur les trois piliers — moins chère, moins émettrice, sans dépendre d'un seul appareil — à condition de vérifier par un essai que les gains s'ajoutent bien"><label for="a4_3__1">sur le papier, la combinaison est meilleure sur les trois piliers — moins chère, moins émettrice, sans dépendre d'un seul appareil — à condition de vérifier par un essai que les gains s'ajoutent bien</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__2" value="S3 reste meilleur car plus simple"><label for="a4_3__2">S3 reste meilleur car plus simple</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__3" value="les deux sont équivalents"><label for="a4_3__3">les deux sont équivalents</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__4" value="on ne peut pas comparer une combinaison à une solution seule"><label for="a4_3__4">on ne peut pas comparer une combinaison à une solution seule</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_4">
+  <legend>Le <b>pilier social</b> intervient ici sous la forme&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__1" value="du service rendu et de ce qu'on demande aux personnes : renoncer à deux serveurs a des conséquences pour les usagers"><label for="a4_4__1">du service rendu et de ce qu'on demande aux personnes : renoncer à deux serveurs a des conséquences pour les usagers</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__2" value="du prix payé par le collège"><label for="a4_4__2">du prix payé par le collège</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__3" value="des émissions de CO₂"><label for="a4_4__3">des émissions de CO₂</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__4" value="de la durée de vie du matériel"><label for="a4_4__4">de la durée de vie du matériel</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_5">
+  <legend>Additionner les baisses de température de trois solutions&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__1" value="donne un ordre de grandeur, pas un résultat exact : les effets ne s'ajoutent pas parfaitement"><label for="a4_5__1">donne un ordre de grandeur, pas un résultat exact : les effets ne s'ajoutent pas parfaitement</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__2" value="donne le résultat exact"><label for="a4_5__2">donne le résultat exact</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__3" value="est mathématiquement interdit"><label for="a4_5__3">est mathématiquement interdit</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__4" value="sous-estime toujours le résultat"><label for="a4_5__4">sous-estime toujours le résultat</label></div>
+</fieldset>
 
   <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
     <p>Rien dans l'énoncé n'impose de choisir une <b>seule</b> solution. Relisez la demande du
@@ -737,30 +791,34 @@
     <li>«&nbsp;Ce que je n'arrive pas encore à faire seul·e&nbsp;: ____.&nbsp;»</li>
     <li>«&nbsp;Pour progresser, la prochaine fois je ____.&nbsp;»</li></ul></details>
   <h3>Je me positionne</h3>
-  <div class="assoc"><label for="pos1">3e_C3.1 — établir une liste de solutions possibles&nbsp;:</label>
-    <select id="pos1"><option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — je ne cite qu'une solution</option>
-      <option>🟠 Maîtrise fragile — je cite plusieurs solutions d'une même famille</option>
-      <option>🟢 Maîtrise satisfaisante — je couvre trois familles</option>
-      <option>⭐ Très bonne maîtrise — je pense aussi à réduire le besoin</option></select></div>
-  <div class="assoc"><label for="pos2">3e_C3.3 — évaluer selon des critères identifiés&nbsp;:</label>
-    <select id="pos2"><option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — je compare sur un seul chiffre</option>
-      <option>🟠 Maîtrise fragile — je remplis une grille si on me la donne</option>
-      <option>🟢 Maîtrise satisfaisante — je construis ma grille</option>
-      <option>⭐ Très bonne maîtrise — je pondère et je défends ma pondération</option></select></div>
-  <div class="assoc"><label for="pos3">3e_C3.4 — définir et mettre en œuvre un protocole&nbsp;:</label>
-    <select id="pos3"><option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — je mesure sans écrire de protocole</option>
-      <option>🟠 Maîtrise fragile — j'applique un protocole donné</option>
-      <option>🟢 Maîtrise satisfaisante — j'écris un protocole exécutable par un autre</option>
-      <option>⭐ Très bonne maîtrise — j'y précise les conditions à maintenir constantes</option></select></div>
-  <div class="assoc"><label for="pos4">3e_C3.2 — choisir et argumenter sur les trois piliers&nbsp;:</label>
-    <select id="pos4"><option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — je choisis sans argument</option>
-      <option>🟠 Maîtrise fragile — j'argumente sur un seul pilier</option>
-      <option>🟢 Maîtrise satisfaisante — j'argumente sur les trois piliers avec des chiffres</option>
-      <option>⭐ Très bonne maîtrise — j'assume une limite et je sais transposer ailleurs</option></select></div>
+  <fieldset class="qcm-groupe" id="pos1">
+  <legend>3e_C3.1 — établir une liste de solutions possibles&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__1" value="🔴 Maîtrise insuffisante — je ne cite qu'une solution"><label for="pos1__1">🔴 Maîtrise insuffisante — je ne cite qu'une solution</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__2" value="🟠 Maîtrise fragile — je cite plusieurs solutions d'une même famille"><label for="pos1__2">🟠 Maîtrise fragile — je cite plusieurs solutions d'une même famille</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__3" value="🟢 Maîtrise satisfaisante — je couvre trois familles"><label for="pos1__3">🟢 Maîtrise satisfaisante — je couvre trois familles</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__4" value="⭐ Très bonne maîtrise — je pense aussi à réduire le besoin"><label for="pos1__4">⭐ Très bonne maîtrise — je pense aussi à réduire le besoin</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="pos2">
+  <legend>3e_C3.3 — évaluer selon des critères identifiés&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__1" value="🔴 Maîtrise insuffisante — je compare sur un seul chiffre"><label for="pos2__1">🔴 Maîtrise insuffisante — je compare sur un seul chiffre</label></div>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__2" value="🟠 Maîtrise fragile — je remplis une grille si on me la donne"><label for="pos2__2">🟠 Maîtrise fragile — je remplis une grille si on me la donne</label></div>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__3" value="🟢 Maîtrise satisfaisante — je construis ma grille"><label for="pos2__3">🟢 Maîtrise satisfaisante — je construis ma grille</label></div>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__4" value="⭐ Très bonne maîtrise — je pondère et je défends ma pondération"><label for="pos2__4">⭐ Très bonne maîtrise — je pondère et je défends ma pondération</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="pos3">
+  <legend>3e_C3.4 — définir et mettre en œuvre un protocole&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__1" value="🔴 Maîtrise insuffisante — je mesure sans écrire de protocole"><label for="pos3__1">🔴 Maîtrise insuffisante — je mesure sans écrire de protocole</label></div>
+  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__2" value="🟠 Maîtrise fragile — j'applique un protocole donné"><label for="pos3__2">🟠 Maîtrise fragile — j'applique un protocole donné</label></div>
+  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__3" value="🟢 Maîtrise satisfaisante — j'écris un protocole exécutable par un autre"><label for="pos3__3">🟢 Maîtrise satisfaisante — j'écris un protocole exécutable par un autre</label></div>
+  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__4" value="⭐ Très bonne maîtrise — j'y précise les conditions à maintenir constantes"><label for="pos3__4">⭐ Très bonne maîtrise — j'y précise les conditions à maintenir constantes</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="pos4">
+  <legend>3e_C3.2 — choisir et argumenter sur les trois piliers&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos4" id="pos4__1" value="🔴 Maîtrise insuffisante — je choisis sans argument"><label for="pos4__1">🔴 Maîtrise insuffisante — je choisis sans argument</label></div>
+  <div class="qcm-option"><input type="radio" name="pos4" id="pos4__2" value="🟠 Maîtrise fragile — j'argumente sur un seul pilier"><label for="pos4__2">🟠 Maîtrise fragile — j'argumente sur un seul pilier</label></div>
+  <div class="qcm-option"><input type="radio" name="pos4" id="pos4__3" value="🟢 Maîtrise satisfaisante — j'argumente sur les trois piliers avec des chiffres"><label for="pos4__3">🟢 Maîtrise satisfaisante — j'argumente sur les trois piliers avec des chiffres</label></div>
+  <div class="qcm-option"><input type="radio" name="pos4" id="pos4__4" value="⭐ Très bonne maîtrise — j'assume une limite et je sais transposer ailleurs"><label for="pos4__4">⭐ Très bonne maîtrise — j'assume une limite et je sais transposer ailleurs</label></div>
+</fieldset>
 </section>
 
 <section class="card">
@@ -785,6 +843,36 @@
   <p>Séquence 3e_C3.1 · C3.2 · C3.3 · C3.4 — Thème 1 · Technologie cycle 4 (2024).
   Page autonome, hors ligne, aucune donnée envoyée. Toutes les données sont simulées.</p>
 </footer>
+<script>
+/* ══════ Règle d'or n°300 — le groupe de boutons radio expose sa valeur ══════
+   Un <fieldset class="qcm-groupe"> remplace une liste déroulante. Pour que tout
+   ce qui lisait `champ.value` continue de fonctionner — sauvegarde, restauration,
+   correction, bancs de lot —, le groupe porte lui-même la valeur de la
+   proposition cochée, sous le même nom et avec le même contenu : son TEXTE.
+   Lire rend "" quand rien n'est coché, comme le faisait l'option vide.
+
+   La propriété est posée sur le PROTOTYPE, et non sur chaque élément : un
+   <fieldset> n'a pas de `value` native, et le faire ainsi affranchit du moment
+   où ce script s'exécute. Une première version le posait élément par élément,
+   et manquait les groupes que le navigateur n'avait pas encore lus. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){
+        r.checked = (r.value === v);
+      });
+    }
+  });
+})();
+</script>
 <script>
 "use strict";
 const KEY="seq_3e_C3.1-C3.4_shenzhen";
@@ -826,24 +914,36 @@ function demande(cle,msg){
   signale(msg + " — clique une seconde fois pour confirmer.");
   return false;
 }
-const val=id=>{const e=$(id);return e?e.value:"";};
+/* Règle d'or n°300 : un groupe de boutons radio rend le TEXTE de la
+   proposition cochée — exactement ce que rendait `select.value` —, de sorte
+   que les tables de réponses attendues n'ont pas une ligne à changer. */
+const val=id=>{
+  const e=$(id); if(!e) return "";
+  if(e.tagName==="FIELDSET"){ const c=e.querySelector("input[type=radio]:checked"); return c?c.value:""; }
+  return e.value;
+};
 window.__valid = window.__valid || {};
 window.__exp = window.__exp || {};
 
 /* ══════ Sauvegarde locale ══════ */
 function collect(){
   const o={inputs:{}, valid:window.__valid, exp:window.__exp};
-  document.querySelectorAll("select,textarea").forEach(e=>{ if(e.id) o.inputs[e.id]=e.value; });
+  document.querySelectorAll("textarea,fieldset.qcm-groupe").forEach(e=>{ if(e.id) o.inputs[e.id]=val(e.id); });
   return o;
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){} }
 function restore(){
   let o=null; try{ o=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(err){}
   if(!o) return;
-  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.value=v; });
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{
+    const e=$(id); if(!e) return;
+    if(e.tagName==="FIELDSET"){
+      e.querySelectorAll("input[type=radio]").forEach(r=>{ r.checked = (r.value===v); });
+    } else e.value=v;
+  });
   window.__valid=o.valid||{}; window.__exp=o.exp||{};
 }
-document.addEventListener("change", ev=>{ if(/SELECT|TEXTAREA/.test(ev.target.tagName)) save(); });
+document.addEventListener("change", ev=>{ if(/INPUT|TEXTAREA/.test(ev.target.tagName)) save(); });
 document.addEventListener("input", ev=>{ if(ev.target.tagName==="TEXTAREA") save(); });
 
 $("btnPrint").addEventListener("click", ()=>window.print());

@@ -154,6 +154,29 @@
   .correction summary{color:#946b00!important}
   .piege,.piege b{color:#ed0018!important}
 }
+  /* Question à choix unique — groupe de boutons radio natifs (règle d'or n°300).
+     L'énoncé vit dans la <legend> : rien ne peut le recouvrir. Pas d'encadrement
+     complet — une <legend> chevauche le bord SUPÉRIEUR d'un fieldset et le coupe
+     dès qu'elle passe à la ligne ; un filet à GAUCHE groupe aussi bien. */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--input-bd);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--input-bg)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;
+    flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer}
+  @media print{
+    /* Sur le papier, body{color:#111} noircit le texte : un fond resté sombre le
+       ferait disparaître (refus mesuré par controle_impression.mjs le 20/09).
+       Le groupe s'imprime donc en blanc — et TOUTES les propositions restent
+       lisibles, là où une liste déroulante n'imprimait que le choix retenu. */
+    .qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;
+      border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}
+    .qcm-groupe .qcm-option input[type=radio]{-webkit-appearance:auto;appearance:auto}
+  }
 </style>
 </head>
 <body>
@@ -297,24 +320,27 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 <section class="card">
   <h2>🎫 Billet d'entrée — je vérifie mes outils (5 min, <b>sans note</b>)</h2>
   <p>Trois questions sur ce que tu sais déjà. <b>Aucune note</b>&nbsp;: c'est un aiguillage.</p>
-  <div class="assoc"><label for="be_1">Une <b>fonction technique</b>, c'est&nbsp;:</label>
-    <select id="be_1"><option value="">— choisir —</option>
-      <option>ce que l'objet doit faire, dit par un verbe à l'infinitif</option>
-      <option>le nom du composant employé</option>
-      <option>la marque de l'appareil</option>
-      <option>le prix de l'objet</option></select></div>
-  <div class="assoc"><label for="be_2">Une <b>moyenne</b> se calcule au tableur avec&nbsp;:</label>
-    <select id="be_2"><option value="">— choisir —</option>
-      <option>=MOYENNE(A2:A8)</option>
-      <option>=SOMME(A2:A8)</option>
-      <option>=MAX(A2:A8)</option>
-      <option>=NB(A2:A8)</option></select></div>
-  <div class="assoc"><label for="be_3">Une <b>donnée personnelle</b>, c'est&nbsp;:</label>
-    <select id="be_3"><option value="">— choisir —</option>
-      <option>toute information qui permet de reconnaître une personne, même indirectement</option>
-      <option>uniquement le nom et le prénom</option>
-      <option>ce qu'on écrit sur les réseaux sociaux</option>
-      <option>un mot de passe</option></select></div>
+  <fieldset class="qcm-groupe" id="be_1">
+  <legend>Une <b>fonction technique</b>, c'est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="ce que l'objet doit faire, dit par un verbe à l'infinitif"><label for="be_1__1">ce que l'objet doit faire, dit par un verbe à l'infinitif</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="le nom du composant employé"><label for="be_1__2">le nom du composant employé</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="la marque de l'appareil"><label for="be_1__3">la marque de l'appareil</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="le prix de l'objet"><label for="be_1__4">le prix de l'objet</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="be_2">
+  <legend>Une <b>moyenne</b> se calcule au tableur avec&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="=MOYENNE(A2:A8)"><label for="be_2__1">=MOYENNE(A2:A8)</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="=SOMME(A2:A8)"><label for="be_2__2">=SOMME(A2:A8)</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="=MAX(A2:A8)"><label for="be_2__3">=MAX(A2:A8)</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="=NB(A2:A8)"><label for="be_2__4">=NB(A2:A8)</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="be_3">
+  <legend>Une <b>donnée personnelle</b>, c'est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="toute information qui permet de reconnaître une personne, même indirectement"><label for="be_3__1">toute information qui permet de reconnaître une personne, même indirectement</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="uniquement le nom et le prénom"><label for="be_3__2">uniquement le nom et le prénom</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="ce qu'on écrit sur les réseaux sociaux"><label for="be_3__3">ce qu'on écrit sur les réseaux sociaux</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="un mot de passe"><label for="be_3__4">un mot de passe</label></div>
+</fieldset>
   <button class="btn small" data-check="0" type="button">🎫 Vérifier mon billet d'entrée</button>
   <p class="feedback" id="fb0" role="status"></p>
   <details class="aide" id="capsule"><summary>🎒 Je révise en 3 minutes</summary>
@@ -463,50 +489,57 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 </div>
 
   <h4>a) Fonction, principe, solution</h4>
-  <div class="assoc"><label for="a1_1">«&nbsp;Mesurer la concentration de poussières&nbsp;» est&nbsp;:</label>
-    <select id="a1_1"><option value="">— choisir —</option>
-      <option>une fonction technique : elle dit ce qu'il faut faire, pas comment</option>
-      <option>un principe technique</option>
-      <option>une solution technique</option>
-      <option>une marque d'appareil</option></select></div>
-  <div class="assoc"><label for="a1_2">«&nbsp;Éclairer l'air et mesurer la lumière diffusée&nbsp;» est&nbsp;:</label>
-    <select id="a1_2"><option value="">— choisir —</option>
-      <option>un principe : le phénomène physique employé pour remplir la fonction</option>
-      <option>une fonction technique</option>
-      <option>un critère de choix</option>
-      <option>un défaut de l'appareil</option></select></div>
-  <div class="assoc"><label for="a1_3">Que trois principes différents remplissent la même fonction montre que&nbsp;:</label>
-    <select id="a1_3"><option value="">— choisir —</option>
-      <option>une fonction n'impose pas sa solution : il y a toujours plusieurs chemins</option>
-      <option>deux des trois sont inutiles</option>
-      <option>les concepteurs se sont mal concertés</option>
-      <option>la fonction est mal définie</option></select></div>
-  <div class="assoc"><label for="a1_7">Les trois appareils doivent connaître le <b>volume d'air</b> qu'ils ont aspiré. Pourquoi&nbsp;?</label>
-    <select id="a1_7"><option value="">— choisir —</option>
-      <option>pour rapporter la masse de poussières à une même quantité d'air, et pouvoir comparer</option>
-      <option>pour savoir quand il faut changer le filtre</option>
-      <option>parce qu'un air plus lourd contient plus de poussières</option>
-      <option>ce n'est pas nécessaire : la masse de poussières suffit</option></select></div>
+  <fieldset class="qcm-groupe" id="a1_1">
+  <legend>«&nbsp;Mesurer la concentration de poussières&nbsp;» est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__1" value="une fonction technique : elle dit ce qu'il faut faire, pas comment"><label for="a1_1__1">une fonction technique : elle dit ce qu'il faut faire, pas comment</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__2" value="un principe technique"><label for="a1_1__2">un principe technique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__3" value="une solution technique"><label for="a1_1__3">une solution technique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__4" value="une marque d'appareil"><label for="a1_1__4">une marque d'appareil</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_2">
+  <legend>«&nbsp;Éclairer l'air et mesurer la lumière diffusée&nbsp;» est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__1" value="un principe : le phénomène physique employé pour remplir la fonction"><label for="a1_2__1">un principe : le phénomène physique employé pour remplir la fonction</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__2" value="une fonction technique"><label for="a1_2__2">une fonction technique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__3" value="un critère de choix"><label for="a1_2__3">un critère de choix</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__4" value="un défaut de l'appareil"><label for="a1_2__4">un défaut de l'appareil</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_3">
+  <legend>Que trois principes différents remplissent la même fonction montre que&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__1" value="une fonction n'impose pas sa solution : il y a toujours plusieurs chemins"><label for="a1_3__1">une fonction n'impose pas sa solution : il y a toujours plusieurs chemins</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__2" value="deux des trois sont inutiles"><label for="a1_3__2">deux des trois sont inutiles</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__3" value="les concepteurs se sont mal concertés"><label for="a1_3__3">les concepteurs se sont mal concertés</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__4" value="la fonction est mal définie"><label for="a1_3__4">la fonction est mal définie</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_7">
+  <legend>Les trois appareils doivent connaître le <b>volume d'air</b> qu'ils ont aspiré. Pourquoi&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1_7" id="a1_7__1" value="pour rapporter la masse de poussières à une même quantité d'air, et pouvoir comparer"><label for="a1_7__1">pour rapporter la masse de poussières à une même quantité d'air, et pouvoir comparer</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_7" id="a1_7__2" value="pour savoir quand il faut changer le filtre"><label for="a1_7__2">pour savoir quand il faut changer le filtre</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_7" id="a1_7__3" value="parce qu'un air plus lourd contient plus de poussières"><label for="a1_7__3">parce qu'un air plus lourd contient plus de poussières</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_7" id="a1_7__4" value="ce n'est pas nécessaire : la masse de poussières suffit"><label for="a1_7__4">ce n'est pas nécessaire : la masse de poussières suffit</label></div>
+</fieldset>
 
   <h4>b) Lire les limites</h4>
-  <div class="assoc"><label for="a1_4">La gravimétrie donne un résultat toutes les 24 h. Pour le collège, cela veut dire&nbsp;:</label>
-    <select id="a1_4"><option value="">— choisir —</option>
-      <option>aucune alerte possible le matin : on saurait toujours la veille</option>
-      <option>que l'appareil est en panne une journée sur deux</option>
-      <option>que la mesure est moins précise</option>
-      <option>que c'est le meilleur choix pour la vie scolaire</option></select></div>
-  <div class="assoc"><label for="a1_5">L'atténuation bêta est très précise, mais&nbsp;:</label>
-    <select id="a1_5"><option value="">— choisir —</option>
-      <option>elle emploie une source radioactive : contrôle réglementaire hors de portée d'un collège</option>
-      <option>elle ne mesure pas les particules fines</option>
-      <option>elle demande un branchement au gaz</option>
-      <option>elle ne fonctionne pas en Chine</option></select></div>
-  <div class="assoc"><label for="a1_6">La diffusion optique s'encrasse. La conséquence la plus gênante est&nbsp;:</label>
-    <select id="a1_6"><option value="">— choisir —</option>
-      <option>la mesure dérive lentement sans que rien ne le signale</option>
-      <option>l'appareil s'arrête brutalement</option>
-      <option>la consommation augmente</option>
-      <option>le prix augmente</option></select></div>
+  <fieldset class="qcm-groupe" id="a1_4">
+  <legend>La gravimétrie donne un résultat toutes les 24 h. Pour le collège, cela veut dire&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__1" value="aucune alerte possible le matin : on saurait toujours la veille"><label for="a1_4__1">aucune alerte possible le matin : on saurait toujours la veille</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__2" value="que l'appareil est en panne une journée sur deux"><label for="a1_4__2">que l'appareil est en panne une journée sur deux</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__3" value="que la mesure est moins précise"><label for="a1_4__3">que la mesure est moins précise</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__4" value="que c'est le meilleur choix pour la vie scolaire"><label for="a1_4__4">que c'est le meilleur choix pour la vie scolaire</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_5">
+  <legend>L'atténuation bêta est très précise, mais&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__1" value="elle emploie une source radioactive : contrôle réglementaire hors de portée d'un collège"><label for="a1_5__1">elle emploie une source radioactive : contrôle réglementaire hors de portée d'un collège</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__2" value="elle ne mesure pas les particules fines"><label for="a1_5__2">elle ne mesure pas les particules fines</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__3" value="elle demande un branchement au gaz"><label for="a1_5__3">elle demande un branchement au gaz</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__4" value="elle ne fonctionne pas en Chine"><label for="a1_5__4">elle ne fonctionne pas en Chine</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_6">
+  <legend>La diffusion optique s'encrasse. La conséquence la plus gênante est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__1" value="la mesure dérive lentement sans que rien ne le signale"><label for="a1_6__1">la mesure dérive lentement sans que rien ne le signale</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__2" value="l'appareil s'arrête brutalement"><label for="a1_6__2">l'appareil s'arrête brutalement</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__3" value="la consommation augmente"><label for="a1_6__3">la consommation augmente</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__4" value="le prix augmente"><label for="a1_6__4">le prix augmente</label></div>
+</fieldset>
 
   <h4>c) Ton choix, et sa défense</h4>
   <div class="assoc">
@@ -667,36 +700,41 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   sales est fausse, et elle a l'air juste.</b></p>
 
   <h4>a) Reconnaître une anomalie</h4>
-  <div class="assoc"><label for="a2_1">Une valeur de <b>−4,2 µg/m³</b> est&nbsp;:</label>
-    <select id="a2_1"><option value="">— choisir —</option>
-      <option>impossible : une concentration ne peut pas être négative</option>
-      <option>possible quand l'air est très pur</option>
-      <option>une erreur d'unité</option>
-      <option>normale la nuit</option></select></div>
-  <div class="assoc"><label for="a2_2">Le vendredi, six heures d'affilée donnent <b>exactement 23,7</b>. Cela signale&nbsp;:</label>
-    <select id="a2_2"><option value="">— choisir —</option>
-      <option>très probablement un capteur figé : une vraie mesure varie presque toujours un peu — on le signale, et on vérifie l'appareil</option>
-      <option>un air parfaitement stable</option>
-      <option>une erreur de recopie</option>
-      <option>rien d'anormal</option></select></div>
-  <div class="assoc"><label for="a2_3">Le dimanche à 16 h, la valeur est <b>251,0</b> alors que les heures voisines sont vers 25. C'est&nbsp;:</label>
-    <select id="a2_3"><option value="">— choisir —</option>
-      <option>très probablement une virgule décalée : 25,1 devenu 251</option>
-      <option>un vrai pic de pollution</option>
-      <option>une valeur à conserver telle quelle</option>
-      <option>impossible à interpréter</option></select></div>
-  <div class="assoc"><label for="a2_4">Le lundi, le relevé de <b>14 h manque</b>. Que faire&nbsp;?</label>
-    <select id="a2_4"><option value="">— choisir —</option>
-      <option>le signaler et calculer sans lui : on n'invente pas une mesure</option>
-      <option>recopier la valeur de 13 h</option>
-      <option>mettre 0</option>
-      <option>abandonner toute la journée du lundi</option></select></div>
-  <div class="assoc"><label for="a2_5">Que faire des deux valeurs manifestement fausses (−4,2 et 251)&nbsp;?</label>
-    <select id="a2_5"><option value="">— choisir —</option>
-      <option>les écarter du calcul, mais les garder dans le fichier avec une note</option>
-      <option>les effacer définitivement du fichier</option>
-      <option>les corriger en devinant la bonne valeur</option>
-      <option>les laisser et calculer quand même</option></select></div>
+  <fieldset class="qcm-groupe" id="a2_1">
+  <legend>Une valeur de <b>−4,2 µg/m³</b> est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__1" value="impossible : une concentration ne peut pas être négative"><label for="a2_1__1">impossible : une concentration ne peut pas être négative</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__2" value="possible quand l'air est très pur"><label for="a2_1__2">possible quand l'air est très pur</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__3" value="une erreur d'unité"><label for="a2_1__3">une erreur d'unité</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__4" value="normale la nuit"><label for="a2_1__4">normale la nuit</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_2">
+  <legend>Le vendredi, six heures d'affilée donnent <b>exactement 23,7</b>. Cela signale&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__1" value="très probablement un capteur figé : une vraie mesure varie presque toujours un peu — on le signale, et on vérifie l'appareil"><label for="a2_2__1">très probablement un capteur figé : une vraie mesure varie presque toujours un peu — on le signale, et on vérifie l'appareil</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__2" value="un air parfaitement stable"><label for="a2_2__2">un air parfaitement stable</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__3" value="une erreur de recopie"><label for="a2_2__3">une erreur de recopie</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__4" value="rien d'anormal"><label for="a2_2__4">rien d'anormal</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_3">
+  <legend>Le dimanche à 16 h, la valeur est <b>251,0</b> alors que les heures voisines sont vers 25. C'est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__1" value="très probablement une virgule décalée : 25,1 devenu 251"><label for="a2_3__1">très probablement une virgule décalée : 25,1 devenu 251</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__2" value="un vrai pic de pollution"><label for="a2_3__2">un vrai pic de pollution</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__3" value="une valeur à conserver telle quelle"><label for="a2_3__3">une valeur à conserver telle quelle</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__4" value="impossible à interpréter"><label for="a2_3__4">impossible à interpréter</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_4">
+  <legend>Le lundi, le relevé de <b>14 h manque</b>. Que faire&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__1" value="le signaler et calculer sans lui : on n'invente pas une mesure"><label for="a2_4__1">le signaler et calculer sans lui : on n'invente pas une mesure</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__2" value="recopier la valeur de 13 h"><label for="a2_4__2">recopier la valeur de 13 h</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__3" value="mettre 0"><label for="a2_4__3">mettre 0</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__4" value="abandonner toute la journée du lundi"><label for="a2_4__4">abandonner toute la journée du lundi</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_5">
+  <legend>Que faire des deux valeurs manifestement fausses (−4,2 et 251)&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__1" value="les écarter du calcul, mais les garder dans le fichier avec une note"><label for="a2_5__1">les écarter du calcul, mais les garder dans le fichier avec une note</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__2" value="les effacer définitivement du fichier"><label for="a2_5__2">les effacer définitivement du fichier</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__3" value="les corriger en devinant la bonne valeur"><label for="a2_5__3">les corriger en devinant la bonne valeur</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__4" value="les laisser et calculer quand même"><label for="a2_5__4">les laisser et calculer quand même</label></div>
+</fieldset>
 
   <h4>b) Deux chemins vers le même travail</h4>
   <p>Ce qui est évalué ici, c'est ta capacité à <b>reconnaître ce qui n'est pas une mesure</b> et à
@@ -876,36 +914,41 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   trois mois, ce sera pire.</p>
 
   <h4>a) Ce qui rend un nom utilisable</h4>
-  <div class="assoc"><label for="a3_1">Pourquoi <code>capteur mardi PIC ATTENTION.csv</code> est-il un mauvais nom&nbsp;?</label>
-    <select id="a3_1"><option value="">— choisir —</option>
-      <option>il dit ce qu'on en pense, pas ce que le fichier contient</option>
-      <option>il est trop court</option>
-      <option>il ne contient pas de chiffre</option>
-      <option>il est en français</option></select></div>
-  <div class="assoc"><label for="a3_2">Pourquoi dater en <code>2026-04-02</code> plutôt qu'en <code>02-04-2026</code>&nbsp;?</label>
-    <select id="a3_2"><option value="">— choisir —</option>
-      <option>parce qu'ainsi le tri alphabétique donne l'ordre chronologique</option>
-      <option>parce que c'est la façon anglaise</option>
-      <option>parce que c'est plus court</option>
-      <option>parce que les ordinateurs refusent l'autre format</option></select></div>
-  <div class="assoc"><label for="a3_3">Pourquoi éviter les espaces, les accents et les majuscules&nbsp;?</label>
-    <select id="a3_3"><option value="">— choisir —</option>
-      <option>pour qu'un nom survive au passage d'un ordinateur ou d'un site à un autre</option>
-      <option>pour taper plus vite</option>
-      <option>parce que c'est interdit</option>
-      <option>pour économiser de la place</option></select></div>
-  <div class="assoc"><label for="a3_4">Que faire de <code>finalV2 (copie).csv</code>, identique à <code>finalV2.csv</code>&nbsp;?</label>
-    <select id="a3_4"><option value="">— choisir —</option>
-      <option>le supprimer : deux fichiers identiques créent un doute, pas une sécurité</option>
-      <option>le garder, on ne sait jamais</option>
-      <option>le renommer finalV3</option>
-      <option>le déplacer dans « à ranger »</option></select></div>
-  <div class="assoc"><label for="a3_5">Un dossier nommé <code>Nouveau dossier/</code> pose problème parce qu'il&nbsp;:</label>
-    <select id="a3_5"><option value="">— choisir —</option>
-      <option>ne dit rien de ce qu'il contient : son nom n'aide personne à chercher</option>
-      <option>est vide</option>
-      <option>a été créé par erreur</option>
-      <option>ne peut pas être renommé</option></select></div>
+  <fieldset class="qcm-groupe" id="a3_1">
+  <legend>Pourquoi <code>capteur mardi PIC ATTENTION.csv</code> est-il un mauvais nom&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__1" value="il dit ce qu'on en pense, pas ce que le fichier contient"><label for="a3_1__1">il dit ce qu'on en pense, pas ce que le fichier contient</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__2" value="il est trop court"><label for="a3_1__2">il est trop court</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__3" value="il ne contient pas de chiffre"><label for="a3_1__3">il ne contient pas de chiffre</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__4" value="il est en français"><label for="a3_1__4">il est en français</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_2">
+  <legend>Pourquoi dater en <code>2026-04-02</code> plutôt qu'en <code>02-04-2026</code>&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__1" value="parce qu'ainsi le tri alphabétique donne l'ordre chronologique"><label for="a3_2__1">parce qu'ainsi le tri alphabétique donne l'ordre chronologique</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__2" value="parce que c'est la façon anglaise"><label for="a3_2__2">parce que c'est la façon anglaise</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__3" value="parce que c'est plus court"><label for="a3_2__3">parce que c'est plus court</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__4" value="parce que les ordinateurs refusent l'autre format"><label for="a3_2__4">parce que les ordinateurs refusent l'autre format</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_3">
+  <legend>Pourquoi éviter les espaces, les accents et les majuscules&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__1" value="pour qu'un nom survive au passage d'un ordinateur ou d'un site à un autre"><label for="a3_3__1">pour qu'un nom survive au passage d'un ordinateur ou d'un site à un autre</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__2" value="pour taper plus vite"><label for="a3_3__2">pour taper plus vite</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__3" value="parce que c'est interdit"><label for="a3_3__3">parce que c'est interdit</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__4" value="pour économiser de la place"><label for="a3_3__4">pour économiser de la place</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_4">
+  <legend>Que faire de <code>finalV2 (copie).csv</code>, identique à <code>finalV2.csv</code>&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__1" value="le supprimer : deux fichiers identiques créent un doute, pas une sécurité"><label for="a3_4__1">le supprimer : deux fichiers identiques créent un doute, pas une sécurité</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__2" value="le garder, on ne sait jamais"><label for="a3_4__2">le garder, on ne sait jamais</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__3" value="le renommer finalV3"><label for="a3_4__3">le renommer finalV3</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__4" value="le déplacer dans « à ranger »"><label for="a3_4__4">le déplacer dans « à ranger »</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_5">
+  <legend>Un dossier nommé <code>Nouveau dossier/</code> pose problème parce qu'il&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__1" value="ne dit rien de ce qu'il contient : son nom n'aide personne à chercher"><label for="a3_5__1">ne dit rien de ce qu'il contient : son nom n'aide personne à chercher</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__2" value="est vide"><label for="a3_5__2">est vide</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__3" value="a été créé par erreur"><label for="a3_5__3">a été créé par erreur</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__4" value="ne peut pas être renommé"><label for="a3_5__4">ne peut pas être renommé</label></div>
+</fieldset>
 
   <h4>b) Ton arborescence</h4>
   <div class="assoc">
@@ -974,36 +1017,41 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   des fichiers, un serveur, des personnes et des droits&nbsp;: <b>c'est cela, un système
   d'information.</b> Ce n'est pas une machine — c'est une <b>chaîne</b>.</p>
 
-  <div class="assoc"><label for="a4_1">Un système d'information, c'est&nbsp;:</label>
-    <select id="a4_1"><option value="">— choisir —</option>
-      <option>l'ensemble des personnes, des outils et des règles qui font circuler l'information</option>
-      <option>un ordinateur puissant</option>
-      <option>un logiciel</option>
-      <option>le réseau internet</option></select></div>
-  <div class="assoc"><label for="a4_2">À quel étage la <b>donnée</b> devient-elle une <b>information</b>&nbsp;?</label>
-    <select id="a4_2"><option value="">— choisir —</option>
-      <option>au traitement : c'est là qu'on trie, qu'on écarte et qu'on calcule</option>
-      <option>à la source, dès la mesure</option>
-      <option>au stockage</option>
-      <option>à la diffusion</option></select></div>
-  <div class="assoc"><label for="a4_3">Pourquoi la classe doit-elle travailler sur une <b>copie</b> du fichier&nbsp;?</label>
-    <select id="a4_3"><option value="">— choisir —</option>
-      <option>pour que l'original reste intact et qu'on puisse toujours revenir en arrière</option>
-      <option>pour aller plus vite</option>
-      <option>pour économiser de la place</option>
-      <option>parce que le fichier original est protégé par un mot de passe</option></select></div>
-  <div class="assoc"><label for="a4_4">Une valeur fausse enregistrée à la source&nbsp;:</label>
-    <select id="a4_4"><option value="">— choisir —</option>
-      <option>se propage à tous les étages tant que personne ne l'écarte</option>
-      <option>est corrigée automatiquement par le tableur</option>
-      <option>disparaît au stockage</option>
-      <option>n'a d'effet qu'à la diffusion</option></select></div>
-  <div class="assoc"><label for="a4_5">Écrire «&nbsp;qui a le droit de faire quoi&nbsp;» à chaque étage sert à&nbsp;:</label>
-    <select id="a4_5"><option value="">— choisir —</option>
-      <option>savoir qui peut modifier quoi, et donc où chercher quand quelque chose a changé</option>
-      <option>empêcher les élèves de travailler</option>
-      <option>respecter une obligation administrative</option>
-      <option>accélérer le système</option></select></div>
+  <fieldset class="qcm-groupe" id="a4_1">
+  <legend>Un système d'information, c'est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__1" value="l'ensemble des personnes, des outils et des règles qui font circuler l'information"><label for="a4_1__1">l'ensemble des personnes, des outils et des règles qui font circuler l'information</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__2" value="un ordinateur puissant"><label for="a4_1__2">un ordinateur puissant</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__3" value="un logiciel"><label for="a4_1__3">un logiciel</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__4" value="le réseau internet"><label for="a4_1__4">le réseau internet</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_2">
+  <legend>À quel étage la <b>donnée</b> devient-elle une <b>information</b>&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__1" value="au traitement : c'est là qu'on trie, qu'on écarte et qu'on calcule"><label for="a4_2__1">au traitement : c'est là qu'on trie, qu'on écarte et qu'on calcule</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__2" value="à la source, dès la mesure"><label for="a4_2__2">à la source, dès la mesure</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__3" value="au stockage"><label for="a4_2__3">au stockage</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__4" value="à la diffusion"><label for="a4_2__4">à la diffusion</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_3">
+  <legend>Pourquoi la classe doit-elle travailler sur une <b>copie</b> du fichier&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__1" value="pour que l'original reste intact et qu'on puisse toujours revenir en arrière"><label for="a4_3__1">pour que l'original reste intact et qu'on puisse toujours revenir en arrière</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__2" value="pour aller plus vite"><label for="a4_3__2">pour aller plus vite</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__3" value="pour économiser de la place"><label for="a4_3__3">pour économiser de la place</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__4" value="parce que le fichier original est protégé par un mot de passe"><label for="a4_3__4">parce que le fichier original est protégé par un mot de passe</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_4">
+  <legend>Une valeur fausse enregistrée à la source&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__1" value="se propage à tous les étages tant que personne ne l'écarte"><label for="a4_4__1">se propage à tous les étages tant que personne ne l'écarte</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__2" value="est corrigée automatiquement par le tableur"><label for="a4_4__2">est corrigée automatiquement par le tableur</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__3" value="disparaît au stockage"><label for="a4_4__3">disparaît au stockage</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__4" value="n'a d'effet qu'à la diffusion"><label for="a4_4__4">n'a d'effet qu'à la diffusion</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_5">
+  <legend>Écrire «&nbsp;qui a le droit de faire quoi&nbsp;» à chaque étage sert à&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__1" value="savoir qui peut modifier quoi, et donc où chercher quand quelque chose a changé"><label for="a4_5__1">savoir qui peut modifier quoi, et donc où chercher quand quelque chose a changé</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__2" value="empêcher les élèves de travailler"><label for="a4_5__2">empêcher les élèves de travailler</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__3" value="respecter une obligation administrative"><label for="a4_5__3">respecter une obligation administrative</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__4" value="accélérer le système"><label for="a4_5__4">accélérer le système</label></div>
+</fieldset>
 
   <h4>Ton schéma du système d'information</h4>
   <div class="assoc">
@@ -1073,36 +1121,41 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   valeurs ont changé</b>, et la moyenne n'est plus la même. Personne n'a rien dit.</p>
 
   <h4>a) Sécuriser (5e_C1.5)</h4>
-  <div class="assoc"><label for="a5_1">Le premier réflexe n'est pas d'accuser quelqu'un, mais de&nbsp;:</label>
-    <select id="a5_1"><option value="">— choisir —</option>
-      <option>regarder qui avait le droit d'écrire dans ce fichier</option>
-      <option>interroger toute la classe</option>
-      <option>supprimer le fichier</option>
-      <option>changer le mot de passe de l'ENT</option></select></div>
-  <div class="assoc"><label for="a5_2">Le fichier était déposé <b>en écriture pour tout le monde</b>. La règle qui manquait est&nbsp;:</label>
-    <select id="a5_2"><option value="">— choisir —</option>
-      <option>donner à chacun le droit minimal dont il a besoin : lire ne demande pas d'écrire</option>
-      <option>mettre un mot de passe plus long</option>
-      <option>interdire l'ENT aux élèves</option>
-      <option>sauvegarder plus souvent</option></select></div>
-  <div class="assoc"><label for="a5_3">Une <b>sauvegarde</b> de l'original aurait permis&nbsp;:</label>
-    <select id="a5_3"><option value="">— choisir —</option>
-      <option>de comparer, donc de savoir ce qui a changé et de revenir en arrière</option>
-      <option>d'empêcher la modification</option>
-      <option>d'identifier le coupable</option>
-      <option>de rendre le fichier illisible</option></select></div>
-  <div class="assoc"><label for="a5_4">La notice du capteur, en anglais, a été trouvée sur le site du fabricant. La republier sur l'ENT&nbsp;:</label>
-    <select id="a5_4"><option value="">— choisir —</option>
-      <option>demande de vérifier la licence, et de citer la source dans tous les cas</option>
-      <option>est libre : elle est sur internet</option>
-      <option>est interdite en toutes circonstances</option>
-      <option>ne pose de question que si elle est payante</option></select></div>
-  <div class="assoc"><label for="a5_5">Un mot de passe partagé entre tous les élèves de la classe&nbsp;:</label>
-    <select id="a5_5"><option value="">— choisir —</option>
-      <option>ne protège plus rien et empêche de savoir qui a fait quoi</option>
-      <option>est acceptable s'il est long</option>
-      <option>est plus sûr qu'un mot de passe par élève</option>
-      <option>est obligatoire en classe</option></select></div>
+  <fieldset class="qcm-groupe" id="a5_1">
+  <legend>Le premier réflexe n'est pas d'accuser quelqu'un, mais de&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a5_1" id="a5_1__1" value="regarder qui avait le droit d'écrire dans ce fichier"><label for="a5_1__1">regarder qui avait le droit d'écrire dans ce fichier</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_1" id="a5_1__2" value="interroger toute la classe"><label for="a5_1__2">interroger toute la classe</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_1" id="a5_1__3" value="supprimer le fichier"><label for="a5_1__3">supprimer le fichier</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_1" id="a5_1__4" value="changer le mot de passe de l'ENT"><label for="a5_1__4">changer le mot de passe de l'ENT</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a5_2">
+  <legend>Le fichier était déposé <b>en écriture pour tout le monde</b>. La règle qui manquait est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a5_2" id="a5_2__1" value="donner à chacun le droit minimal dont il a besoin : lire ne demande pas d'écrire"><label for="a5_2__1">donner à chacun le droit minimal dont il a besoin : lire ne demande pas d'écrire</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_2" id="a5_2__2" value="mettre un mot de passe plus long"><label for="a5_2__2">mettre un mot de passe plus long</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_2" id="a5_2__3" value="interdire l'ENT aux élèves"><label for="a5_2__3">interdire l'ENT aux élèves</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_2" id="a5_2__4" value="sauvegarder plus souvent"><label for="a5_2__4">sauvegarder plus souvent</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a5_3">
+  <legend>Une <b>sauvegarde</b> de l'original aurait permis&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a5_3" id="a5_3__1" value="de comparer, donc de savoir ce qui a changé et de revenir en arrière"><label for="a5_3__1">de comparer, donc de savoir ce qui a changé et de revenir en arrière</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_3" id="a5_3__2" value="d'empêcher la modification"><label for="a5_3__2">d'empêcher la modification</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_3" id="a5_3__3" value="d'identifier le coupable"><label for="a5_3__3">d'identifier le coupable</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_3" id="a5_3__4" value="de rendre le fichier illisible"><label for="a5_3__4">de rendre le fichier illisible</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a5_4">
+  <legend>La notice du capteur, en anglais, a été trouvée sur le site du fabricant. La republier sur l'ENT&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a5_4" id="a5_4__1" value="demande de vérifier la licence, et de citer la source dans tous les cas"><label for="a5_4__1">demande de vérifier la licence, et de citer la source dans tous les cas</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_4" id="a5_4__2" value="est libre : elle est sur internet"><label for="a5_4__2">est libre : elle est sur internet</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_4" id="a5_4__3" value="est interdite en toutes circonstances"><label for="a5_4__3">est interdite en toutes circonstances</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_4" id="a5_4__4" value="ne pose de question que si elle est payante"><label for="a5_4__4">ne pose de question que si elle est payante</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a5_5">
+  <legend>Un mot de passe partagé entre tous les élèves de la classe&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a5_5" id="a5_5__1" value="ne protège plus rien et empêche de savoir qui a fait quoi"><label for="a5_5__1">ne protège plus rien et empêche de savoir qui a fait quoi</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_5" id="a5_5__2" value="est acceptable s'il est long"><label for="a5_5__2">est acceptable s'il est long</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_5" id="a5_5__3" value="est plus sûr qu'un mot de passe par élève"><label for="a5_5__3">est plus sûr qu'un mot de passe par élève</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_5" id="a5_5__4" value="est obligatoire en classe"><label for="a5_5__4">est obligatoire en classe</label></div>
+</fieldset>
 
   <div class="assoc">
     <label for="a5_secu">Écris <b>trois mesures</b> qui auraient évité l'incident. Pour chacune&nbsp;: ce qu'on met en place, et <b>ce que ça empêche exactement</b>.</label>
@@ -1128,30 +1181,34 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     rend le choix difficile — et c'est pour cela qu'il t'appartient.</figcaption>
   </figure>
 
-  <div class="assoc"><label for="a5_6">La publication <b>A</b> nomme l'agent. Elle est&nbsp;:</label>
-    <select id="a5_6"><option value="">— choisir —</option>
-      <option>exacte et inacceptable : une mesure d'air devient une accusation contre une personne</option>
-      <option>fausse</option>
-      <option>acceptable, puisque c'est vrai</option>
-      <option>acceptable si l'agent est prévenu</option></select></div>
-  <div class="assoc"><label for="a5_7">La publication <b>B</b> tait la cause. Elle est&nbsp;:</label>
-    <select id="a5_7"><option value="">— choisir —</option>
-      <option>acceptable et inutile : personne ne peut agir sans savoir d'où vient le pic</option>
-      <option>la meilleure des trois</option>
-      <option>malhonnête</option>
-      <option>identique à la publication C</option></select></div>
-  <div class="assoc"><label for="a5_8">Même sans nommer l'agent, écrire «&nbsp;la personne qui passe la balayeuse le mardi&nbsp;»&nbsp;:</label>
-    <select id="a5_8"><option value="">— choisir —</option>
-      <option>le désigne quand même : dans un collège, une seule personne correspond</option>
-      <option>protège suffisamment son identité</option>
-      <option>est anonyme</option>
-      <option>ne concerne pas les données personnelles</option></select></div>
-  <div class="assoc"><label for="a5_9">Ce qui distingue la publication <b>C</b> des deux autres&nbsp;:</label>
-    <select id="a5_9"><option value="">— choisir —</option>
-      <option>elle désigne une organisation — l'horaire du nettoyage — et non une personne</option>
-      <option>elle est plus courte</option>
-      <option>elle ne donne pas de chiffre</option>
-      <option>elle évite de dire la vérité</option></select></div>
+  <fieldset class="qcm-groupe" id="a5_6">
+  <legend>La publication <b>A</b> nomme l'agent. Elle est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a5_6" id="a5_6__1" value="exacte et inacceptable : une mesure d'air devient une accusation contre une personne"><label for="a5_6__1">exacte et inacceptable : une mesure d'air devient une accusation contre une personne</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_6" id="a5_6__2" value="fausse"><label for="a5_6__2">fausse</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_6" id="a5_6__3" value="acceptable, puisque c'est vrai"><label for="a5_6__3">acceptable, puisque c'est vrai</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_6" id="a5_6__4" value="acceptable si l'agent est prévenu"><label for="a5_6__4">acceptable si l'agent est prévenu</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a5_7">
+  <legend>La publication <b>B</b> tait la cause. Elle est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a5_7" id="a5_7__1" value="acceptable et inutile : personne ne peut agir sans savoir d'où vient le pic"><label for="a5_7__1">acceptable et inutile : personne ne peut agir sans savoir d'où vient le pic</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_7" id="a5_7__2" value="la meilleure des trois"><label for="a5_7__2">la meilleure des trois</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_7" id="a5_7__3" value="malhonnête"><label for="a5_7__3">malhonnête</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_7" id="a5_7__4" value="identique à la publication C"><label for="a5_7__4">identique à la publication C</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a5_8">
+  <legend>Même sans nommer l'agent, écrire «&nbsp;la personne qui passe la balayeuse le mardi&nbsp;»&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a5_8" id="a5_8__1" value="le désigne quand même : dans un collège, une seule personne correspond"><label for="a5_8__1">le désigne quand même : dans un collège, une seule personne correspond</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_8" id="a5_8__2" value="protège suffisamment son identité"><label for="a5_8__2">protège suffisamment son identité</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_8" id="a5_8__3" value="est anonyme"><label for="a5_8__3">est anonyme</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_8" id="a5_8__4" value="ne concerne pas les données personnelles"><label for="a5_8__4">ne concerne pas les données personnelles</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a5_9">
+  <legend>Ce qui distingue la publication <b>C</b> des deux autres&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a5_9" id="a5_9__1" value="elle désigne une organisation — l'horaire du nettoyage — et non une personne"><label for="a5_9__1">elle désigne une organisation — l'horaire du nettoyage — et non une personne</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_9" id="a5_9__2" value="elle est plus courte"><label for="a5_9__2">elle est plus courte</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_9" id="a5_9__3" value="elle ne donne pas de chiffre"><label for="a5_9__3">elle ne donne pas de chiffre</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_9" id="a5_9__4" value="elle évite de dire la vérité"><label for="a5_9__4">elle évite de dire la vérité</label></div>
+</fieldset>
 
   <div class="assoc">
     <label for="a5_publication">Rédige la publication que <b>tu</b> mettrais sur l'ENT — trois ou quatre phrases. Puis explique <b>ce que tu as volontairement écarté</b>, et <b>pour protéger qui</b>.</label>
@@ -1260,24 +1317,27 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     <textarea id="meta3" aria-label="Ce que je ferais différemment la prochaine fois"></textarea></div>
 
   <h3>Je me positionne</h3>
-  <div class="assoc"><label for="pos1">5e_C1.1 · C1.2 — collecter, trier, analyser · comparer des principes&nbsp;:</label>
-    <select id="pos1"><option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — je calcule sans regarder si les données sont propres</option>
-      <option>🟠 Maîtrise fragile — je repère les anomalies avec de l'aide</option>
-      <option>🟢 Maîtrise satisfaisante — je nettoie avant de calculer, et je compare des principes</option>
-      <option>⭐ Très bonne maîtrise — je dis aussi ce que je perds en choisissant</option></select></div>
-  <div class="assoc"><label for="pos2">5e_C1.3 · C1.4 — systèmes d'information · ranger et retrouver&nbsp;:</label>
-    <select id="pos2"><option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — je range au hasard et je ne retrouve rien</option>
-      <option>🟠 Maîtrise fragile — je range, mais mes noms ne parlent qu'à moi</option>
-      <option>🟢 Maîtrise satisfaisante — mes noms se retrouvent, et je sais décrire le chemin d'une donnée</option>
-      <option>⭐ Très bonne maîtrise — je sais dire qui a le droit de faire quoi à chaque étape</option></select></div>
-  <div class="assoc"><label for="pos3">5e_C1.5 · C1.6 — sécuriser · assumer une publication&nbsp;:</label>
-    <select id="pos3"><option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — je publie ce que je trouve, sans y penser</option>
-      <option>🟠 Maîtrise fragile — je sais qu'il faut faire attention, sans savoir à quoi</option>
-      <option>🟢 Maîtrise satisfaisante — je protège les données et je réfléchis avant de publier</option>
-      <option>⭐ Très bonne maîtrise — je sais dire qui une information désigne, même sans nom</option></select></div>
+  <fieldset class="qcm-groupe" id="pos1">
+  <legend>5e_C1.1 · C1.2 — collecter, trier, analyser · comparer des principes&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__1" value="🔴 Maîtrise insuffisante — je calcule sans regarder si les données sont propres"><label for="pos1__1">🔴 Maîtrise insuffisante — je calcule sans regarder si les données sont propres</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__2" value="🟠 Maîtrise fragile — je repère les anomalies avec de l'aide"><label for="pos1__2">🟠 Maîtrise fragile — je repère les anomalies avec de l'aide</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__3" value="🟢 Maîtrise satisfaisante — je nettoie avant de calculer, et je compare des principes"><label for="pos1__3">🟢 Maîtrise satisfaisante — je nettoie avant de calculer, et je compare des principes</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__4" value="⭐ Très bonne maîtrise — je dis aussi ce que je perds en choisissant"><label for="pos1__4">⭐ Très bonne maîtrise — je dis aussi ce que je perds en choisissant</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="pos2">
+  <legend>5e_C1.3 · C1.4 — systèmes d'information · ranger et retrouver&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__1" value="🔴 Maîtrise insuffisante — je range au hasard et je ne retrouve rien"><label for="pos2__1">🔴 Maîtrise insuffisante — je range au hasard et je ne retrouve rien</label></div>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__2" value="🟠 Maîtrise fragile — je range, mais mes noms ne parlent qu'à moi"><label for="pos2__2">🟠 Maîtrise fragile — je range, mais mes noms ne parlent qu'à moi</label></div>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__3" value="🟢 Maîtrise satisfaisante — mes noms se retrouvent, et je sais décrire le chemin d'une donnée"><label for="pos2__3">🟢 Maîtrise satisfaisante — mes noms se retrouvent, et je sais décrire le chemin d'une donnée</label></div>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__4" value="⭐ Très bonne maîtrise — je sais dire qui a le droit de faire quoi à chaque étape"><label for="pos2__4">⭐ Très bonne maîtrise — je sais dire qui a le droit de faire quoi à chaque étape</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="pos3">
+  <legend>5e_C1.5 · C1.6 — sécuriser · assumer une publication&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__1" value="🔴 Maîtrise insuffisante — je publie ce que je trouve, sans y penser"><label for="pos3__1">🔴 Maîtrise insuffisante — je publie ce que je trouve, sans y penser</label></div>
+  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__2" value="🟠 Maîtrise fragile — je sais qu'il faut faire attention, sans savoir à quoi"><label for="pos3__2">🟠 Maîtrise fragile — je sais qu'il faut faire attention, sans savoir à quoi</label></div>
+  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__3" value="🟢 Maîtrise satisfaisante — je protège les données et je réfléchis avant de publier"><label for="pos3__3">🟢 Maîtrise satisfaisante — je protège les données et je réfléchis avant de publier</label></div>
+  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__4" value="⭐ Très bonne maîtrise — je sais dire qui une information désigne, même sans nom"><label for="pos3__4">⭐ Très bonne maîtrise — je sais dire qui une information désigne, même sans nom</label></div>
+</fieldset>
 </section>
 
 <section class="card">
@@ -1345,6 +1405,36 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   Page autonome, hors ligne, aucune donnée envoyée. Toutes les données sont simulées.</p>
 </footer>
 <script>
+/* ══════ Règle d'or n°300 — le groupe de boutons radio expose sa valeur ══════
+   Un <fieldset class="qcm-groupe"> remplace une liste déroulante. Pour que tout
+   ce qui lisait `champ.value` continue de fonctionner — sauvegarde, restauration,
+   correction, bancs de lot —, le groupe porte lui-même la valeur de la
+   proposition cochée, sous le même nom et avec le même contenu : son TEXTE.
+   Lire rend "" quand rien n'est coché, comme le faisait l'option vide.
+
+   La propriété est posée sur le PROTOTYPE, et non sur chaque élément : un
+   <fieldset> n'a pas de `value` native, et le faire ainsi affranchit du moment
+   où ce script s'exécute. Une première version le posait élément par élément,
+   et manquait les groupes que le navigateur n'avait pas encore lus. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){
+        r.checked = (r.value === v);
+      });
+    }
+  });
+})();
+</script>
+<script>
 "use strict";
 const KEY="seq_5e_C1_chengdu";
 const $=id=>document.getElementById(id);
@@ -1385,24 +1475,36 @@ function demande(cle,msg){
   signale(msg + " — clique une seconde fois pour confirmer.");
   return false;
 }
-const val=id=>{const e=$(id);return e?e.value:"";};
+/* Règle d'or n°300 : un groupe de boutons radio rend le TEXTE de la
+   proposition cochée — exactement ce que rendait `select.value` —, de sorte
+   que les tables de réponses attendues n'ont pas une ligne à changer. */
+const val=id=>{
+  const e=$(id); if(!e) return "";
+  if(e.tagName==="FIELDSET"){ const c=e.querySelector("input[type=radio]:checked"); return c?c.value:""; }
+  return e.value;
+};
 window.__valid = window.__valid || {};
 window.__exp = window.__exp || {};
 
 /* ══════ Sauvegarde locale ══════ */
 function collect(){
   const o={inputs:{}, valid:window.__valid, exp:window.__exp};
-  document.querySelectorAll("select,textarea").forEach(e=>{ if(e.id) o.inputs[e.id]=e.value; });
+  document.querySelectorAll("textarea,fieldset.qcm-groupe").forEach(e=>{ if(e.id) o.inputs[e.id]=val(e.id); });
   return o;
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){} }
 function restore(){
   let o=null; try{ o=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(err){}
   if(!o) return;
-  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.value=v; });
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{
+    const e=$(id); if(!e) return;
+    if(e.tagName==="FIELDSET"){
+      e.querySelectorAll("input[type=radio]").forEach(r=>{ r.checked = (r.value===v); });
+    } else e.value=v;
+  });
   window.__valid=o.valid||{}; window.__exp=o.exp||{};
 }
-document.addEventListener("change", ev=>{ if(/SELECT|TEXTAREA/.test(ev.target.tagName)) save(); });
+document.addEventListener("change", ev=>{ if(/INPUT|TEXTAREA/.test(ev.target.tagName)) save(); });
 document.addEventListener("input", ev=>{ if(ev.target.tagName==="TEXTAREA") save(); });
 
 $("btnPrint").addEventListener("click", ()=>window.print());

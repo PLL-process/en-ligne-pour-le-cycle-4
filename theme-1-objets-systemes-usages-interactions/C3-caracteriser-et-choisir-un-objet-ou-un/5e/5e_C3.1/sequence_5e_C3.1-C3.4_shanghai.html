@@ -104,6 +104,29 @@
   .card b{color:#996b00!important}
   .piege,.piege b{color:#ed0018!important}
 }
+  /* Question à choix unique — groupe de boutons radio natifs (règle d'or n°300).
+     L'énoncé vit dans la <legend> : rien ne peut le recouvrir. Pas d'encadrement
+     complet — une <legend> chevauche le bord SUPÉRIEUR d'un fieldset et le coupe
+     dès qu'elle passe à la ligne ; un filet à GAUCHE groupe aussi bien. */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--input-bd);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--input-bg)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;
+    flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer}
+  @media print{
+    /* Sur le papier, body{color:#111} noircit le texte : un fond resté sombre le
+       ferait disparaître (refus mesuré par controle_impression.mjs le 20/09).
+       Le groupe s'imprime donc en blanc — et TOUTES les propositions restent
+       lisibles, là où une liste déroulante n'imprimait que le choix retenu. */
+    .qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;
+      border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}
+    .qcm-groupe .qcm-option input[type=radio]{-webkit-appearance:auto;appearance:auto}
+  }
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -275,24 +298,27 @@ corrections et les compléments si la page te paraît chargée.</p>
   <h2>🎫 Billet d'entrée — je vérifie mes outils (5 min, <b>sans note</b>)</h2>
   <p>Trois questions sur ce que tu sais déjà. <b>Aucune note</b>&nbsp;: c'est un aiguillage, pas une
   épreuve. Si l'une résiste, la capsule juste en dessous te remet en selle en trois minutes.</p>
-  <div class="assoc"><label for="be_1">Un <b>matériau</b>, c'est&nbsp;:</label>
-    <select id="be_1"><option value="">— choisir —</option>
-      <option>la matière dont un objet est fait, choisie pour ses propriétés</option>
-      <option>la forme donnée à l'objet par la machine</option>
-      <option>l'énergie qui fait fonctionner l'objet</option>
-      <option>le prix de vente de l'objet</option></select></div>
-  <div class="assoc"><label for="be_2">Une <b>source d'énergie</b> d'un objet technique, c'est&nbsp;:</label>
-    <select id="be_2"><option value="">— choisir —</option>
-      <option>ce qui lui fournit l'énergie dont il a besoin pour fonctionner</option>
-      <option>ce qu'il produit à la fin de son fonctionnement</option>
-      <option>la couleur de sa carrosserie</option>
-      <option>le nombre de personnes qu'il transporte</option></select></div>
-  <div class="assoc"><label for="be_3">Un <b>capteur</b> sert à&nbsp;:</label>
-    <select id="be_3"><option value="">— choisir —</option>
-      <option>renseigner le système sur son environnement : il informe, il n'agit pas</option>
-      <option>agir sur le monde extérieur : pousser, chauffer, éclairer</option>
-      <option>stocker l'énergie pour plus tard</option>
-      <option>fabriquer les pièces de l'objet</option></select></div>
+  <fieldset class="qcm-groupe" id="be_1">
+  <legend>Un <b>matériau</b>, c'est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="la matière dont un objet est fait, choisie pour ses propriétés"><label for="be_1__1">la matière dont un objet est fait, choisie pour ses propriétés</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="la forme donnée à l'objet par la machine"><label for="be_1__2">la forme donnée à l'objet par la machine</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="l'énergie qui fait fonctionner l'objet"><label for="be_1__3">l'énergie qui fait fonctionner l'objet</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="le prix de vente de l'objet"><label for="be_1__4">le prix de vente de l'objet</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="be_2">
+  <legend>Une <b>source d'énergie</b> d'un objet technique, c'est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="ce qui lui fournit l'énergie dont il a besoin pour fonctionner"><label for="be_2__1">ce qui lui fournit l'énergie dont il a besoin pour fonctionner</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="ce qu'il produit à la fin de son fonctionnement"><label for="be_2__2">ce qu'il produit à la fin de son fonctionnement</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="la couleur de sa carrosserie"><label for="be_2__3">la couleur de sa carrosserie</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="le nombre de personnes qu'il transporte"><label for="be_2__4">le nombre de personnes qu'il transporte</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="be_3">
+  <legend>Un <b>capteur</b> sert à&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="renseigner le système sur son environnement : il informe, il n'agit pas"><label for="be_3__1">renseigner le système sur son environnement : il informe, il n'agit pas</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="agir sur le monde extérieur : pousser, chauffer, éclairer"><label for="be_3__2">agir sur le monde extérieur : pousser, chauffer, éclairer</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="stocker l'énergie pour plus tard"><label for="be_3__3">stocker l'énergie pour plus tard</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="fabriquer les pièces de l'objet"><label for="be_3__4">fabriquer les pièces de l'objet</label></div>
+</fieldset>
   <button class="btn small" data-check="0" type="button">🎫 Vérifier mon billet d'entrée</button>
   <p class="feedback" id="fb0" role="status"></p>
   <details class="aide" id="capsule"><summary>🎒 Je révise en 3 minutes</summary>
@@ -318,52 +344,59 @@ corrections et les compléments si la page te paraît chargée.</p>
   </figure>
 
   <h4>a) Les matériaux et ce qu'ils apportent</h4>
-  <div class="assoc"><label for="a1_1">Les trois structures utilisent toutes de l'aluminium. Pourquoi ce choix, pour un véhicule&nbsp;?</label>
-    <select id="a1_1"><option value="">— choisir —</option>
-      <option>il est léger tout en restant résistant : moins de masse à déplacer, donc moins d'énergie</option>
-      <option>il est le moins cher de tous les métaux</option>
-      <option>il conduit bien l'électricité, ce qui alimente le moteur</option>
-      <option>il est transparent, ce qui allège visuellement le véhicule</option></select></div>
-  <div class="assoc"><label for="a1_2">Le robot S3 ajoute des <b>polymères</b> que les deux autres n'ont pas. L'explication la plus probable&nbsp;:</label>
-    <select id="a1_2"><option value="">— choisir —</option>
-      <option>des carrosseries de formes complexes, légères et non conductrices, autour de ses capteurs</option>
-      <option>les polymères sont plus résistants que l'acier</option>
-      <option>c'est le seul matériau qui conduit l'électricité</option>
-      <option>ils permettent de transporter des charges plus lourdes</option></select></div>
+  <fieldset class="qcm-groupe" id="a1_1">
+  <legend>Les trois structures utilisent toutes de l'aluminium. Pourquoi ce choix, pour un véhicule&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__1" value="il est léger tout en restant résistant : moins de masse à déplacer, donc moins d'énergie"><label for="a1_1__1">il est léger tout en restant résistant : moins de masse à déplacer, donc moins d'énergie</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__2" value="il est le moins cher de tous les métaux"><label for="a1_1__2">il est le moins cher de tous les métaux</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__3" value="il conduit bien l'électricité, ce qui alimente le moteur"><label for="a1_1__3">il conduit bien l'électricité, ce qui alimente le moteur</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__4" value="il est transparent, ce qui allège visuellement le véhicule"><label for="a1_1__4">il est transparent, ce qui allège visuellement le véhicule</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_2">
+  <legend>Le robot S3 ajoute des <b>polymères</b> que les deux autres n'ont pas. L'explication la plus probable&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__1" value="des carrosseries de formes complexes, légères et non conductrices, autour de ses capteurs"><label for="a1_2__1">des carrosseries de formes complexes, légères et non conductrices, autour de ses capteurs</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__2" value="les polymères sont plus résistants que l'acier"><label for="a1_2__2">les polymères sont plus résistants que l'acier</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__3" value="c'est le seul matériau qui conduit l'électricité"><label for="a1_2__3">c'est le seul matériau qui conduit l'électricité</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__4" value="ils permettent de transporter des charges plus lourdes"><label for="a1_2__4">ils permettent de transporter des charges plus lourdes</label></div>
+</fieldset>
 
   <h4>b) L'énergie&nbsp;: source et forme</h4>
-  <div class="assoc"><label for="a1_3">Pour les trois solutions, la <b>source</b> d'énergie est&nbsp;:</label>
-    <select id="a1_3"><option value="">— choisir —</option>
-      <option>une batterie rechargeable</option>
-      <option>le vent</option>
-      <option>le carburant</option>
-      <option>elle est différente pour chacune</option></select></div>
-  <div class="assoc"><label for="a1_4">La <b>forme</b> sous laquelle l'énergie entre dans la chaîne est&nbsp;:</label>
-    <select id="a1_4"><option value="">— choisir —</option>
-      <option>électrique</option>
-      <option>thermique</option>
-      <option>lumineuse</option>
-      <option>chimique</option></select></div>
-  <div class="assoc"><label for="a1_5">S2 consomme 165 Wh/km contre 18 pour S1. La raison principale&nbsp;:</label>
-    <select id="a1_5"><option value="">— choisir —</option>
-      <option>sa masse est près de 28 fois supérieure : déplacer 1350 kg coûte plus que 48 kg</option>
-      <option>sa batterie est de mauvaise qualité</option>
-      <option>elle roule beaucoup plus vite</option>
-      <option>elle transporte de l'information en plus</option></select></div>
+  <fieldset class="qcm-groupe" id="a1_3">
+  <legend>Pour les trois solutions, la <b>source</b> d'énergie est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__1" value="une batterie rechargeable"><label for="a1_3__1">une batterie rechargeable</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__2" value="le vent"><label for="a1_3__2">le vent</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__3" value="le carburant"><label for="a1_3__3">le carburant</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__4" value="elle est différente pour chacune"><label for="a1_3__4">elle est différente pour chacune</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_4">
+  <legend>La <b>forme</b> sous laquelle l'énergie entre dans la chaîne est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__1" value="électrique"><label for="a1_4__1">électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__2" value="thermique"><label for="a1_4__2">thermique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__3" value="lumineuse"><label for="a1_4__3">lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__4" value="chimique"><label for="a1_4__4">chimique</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_5">
+  <legend>S2 consomme 165 Wh/km contre 18 pour S1. La raison principale&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__1" value="sa masse est près de 28 fois supérieure : déplacer 1350 kg coûte plus que 48 kg"><label for="a1_5__1">sa masse est près de 28 fois supérieure : déplacer 1350 kg coûte plus que 48 kg</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__2" value="sa batterie est de mauvaise qualité"><label for="a1_5__2">sa batterie est de mauvaise qualité</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__3" value="elle roule beaucoup plus vite"><label for="a1_5__3">elle roule beaucoup plus vite</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__4" value="elle transporte de l'information en plus"><label for="a1_5__4">elle transporte de l'information en plus</label></div>
+</fieldset>
 
   <h4>c) Le traitement de l'information</h4>
-  <div class="assoc"><label for="a1_6">Classe les trois solutions de la <b>moins</b> à la <b>plus</b> traitante en information&nbsp;:</label>
-    <select id="a1_6"><option value="">— choisir —</option>
-      <option>S1 (contrôleur et afficheur) → S2 (calculateur, capteurs, navigation) → S3 (capteurs, cartographie, calculateur, supervision)</option>
-      <option>S3 → S2 → S1</option>
-      <option>S2 → S1 → S3</option>
-      <option>elles traitent toutes exactement la même chose</option></select></div>
-  <div class="assoc"><label for="a1_7">Le robot S3 exige une <b>supervision humaine</b>. Cela signifie que&nbsp;:</label>
-    <select id="a1_7"><option value="">— choisir —</option>
-      <option>une personne suit son trajet à distance et peut reprendre la main : il est automatisé, pas autonome</option>
-      <option>il fonctionne totalement seul, sans personne</option>
-      <option>il faut le pousser à la main</option>
-      <option>il ne peut rouler que la nuit</option></select></div>
+  <fieldset class="qcm-groupe" id="a1_6">
+  <legend>Classe les trois solutions de la <b>moins</b> à la <b>plus</b> traitante en information&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__1" value="S1 (contrôleur et afficheur) → S2 (calculateur, capteurs, navigation) → S3 (capteurs, cartographie, calculateur, supervision)"><label for="a1_6__1">S1 (contrôleur et afficheur) → S2 (calculateur, capteurs, navigation) → S3 (capteurs, cartographie, calculateur, supervision)</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__2" value="S3 → S2 → S1"><label for="a1_6__2">S3 → S2 → S1</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__3" value="S2 → S1 → S3"><label for="a1_6__3">S2 → S1 → S3</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__4" value="elles traitent toutes exactement la même chose"><label for="a1_6__4">elles traitent toutes exactement la même chose</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_7">
+  <legend>Le robot S3 exige une <b>supervision humaine</b>. Cela signifie que&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_7" id="a1_7__1" value="une personne suit son trajet à distance et peut reprendre la main : il est automatisé, pas autonome"><label for="a1_7__1">une personne suit son trajet à distance et peut reprendre la main : il est automatisé, pas autonome</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_7" id="a1_7__2" value="il fonctionne totalement seul, sans personne"><label for="a1_7__2">il fonctionne totalement seul, sans personne</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_7" id="a1_7__3" value="il faut le pousser à la main"><label for="a1_7__3">il faut le pousser à la main</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_7" id="a1_7__4" value="il ne peut rouler que la nuit"><label for="a1_7__4">il ne peut rouler que la nuit</label></div>
+</fieldset>
 
   <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
     <p>Pour l'énergie, distingue bien deux questions&nbsp;: <b>d'où elle vient</b> (la source) et
@@ -419,41 +452,52 @@ corrections et les compléments si la page te paraît chargée.</p>
   </figure>
 
   <h4>a) Relier une donnée à l'étape qu'elle concerne</h4>
-  <div class="assoc"><label for="a2_1">«&nbsp;35&nbsp;% de matière recyclée&nbsp;» (S1) concerne surtout l'étape&nbsp;:</label>
-    <select id="a2_1"><option value="">— choisir —</option>
-      <option>l'extraction des matières premières</option><option>la distribution</option>
-      <option>l'utilisation</option><option>aucune : c'est un argument commercial</option></select></div>
-  <div class="assoc"><label for="a2_2">«&nbsp;18 Wh par km&nbsp;» concerne surtout l'étape&nbsp;:</label>
-    <select id="a2_2"><option value="">— choisir —</option>
-      <option>l'utilisation</option><option>la fabrication</option>
-      <option>l'extraction</option><option>la fin de vie</option></select></div>
-  <div class="assoc"><label for="a2_3">«&nbsp;réparabilité 8 sur 10&nbsp;» concerne surtout l'étape&nbsp;:</label>
-    <select id="a2_3"><option value="">— choisir —</option>
-      <option>la fin de vie, et la durée pendant laquelle on repousse cette fin de vie</option>
-      <option>l'extraction</option><option>la distribution</option>
-      <option>la fabrication uniquement</option></select></div>
+  <fieldset class="qcm-groupe" id="a2_1">
+  <legend>«&nbsp;35&nbsp;% de matière recyclée&nbsp;» (S1) concerne surtout l'étape&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__1" value="l'extraction des matières premières"><label for="a2_1__1">l'extraction des matières premières</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__2" value="la distribution"><label for="a2_1__2">la distribution</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__3" value="l'utilisation"><label for="a2_1__3">l'utilisation</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__4" value="aucune : c'est un argument commercial"><label for="a2_1__4">aucune : c'est un argument commercial</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_2">
+  <legend>«&nbsp;18 Wh par km&nbsp;» concerne surtout l'étape&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__1" value="l'utilisation"><label for="a2_2__1">l'utilisation</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__2" value="la fabrication"><label for="a2_2__2">la fabrication</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__3" value="l'extraction"><label for="a2_2__3">l'extraction</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__4" value="la fin de vie"><label for="a2_2__4">la fin de vie</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_3">
+  <legend>«&nbsp;réparabilité 8 sur 10&nbsp;» concerne surtout l'étape&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__1" value="la fin de vie, et la durée pendant laquelle on repousse cette fin de vie"><label for="a2_3__1">la fin de vie, et la durée pendant laquelle on repousse cette fin de vie</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__2" value="l'extraction"><label for="a2_3__2">l'extraction</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__3" value="la distribution"><label for="a2_3__3">la distribution</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__4" value="la fabrication uniquement"><label for="a2_3__4">la fabrication uniquement</label></div>
+</fieldset>
 
   <h4>b) L'étape la plus lourde n'est pas celle qu'on croit</h4>
-  <div class="assoc"><label for="a2_4">Un véhicule roule 8 à 12 ans. Sur l'ensemble de sa vie, quelle étape consomme le plus d'énergie&nbsp;?</label>
-    <select id="a2_4"><option value="">— choisir —</option>
-      <option>l'utilisation, parce qu'elle dure des années et se répète chaque jour</option>
-      <option>la fabrication, parce qu'elle demande des machines</option>
-      <option>la distribution, parce que le véhicule voyage jusqu'au client</option>
-      <option>la fin de vie, parce qu'il faut tout démonter</option></select></div>
-  <div class="assoc"><label for="a2_5">Conséquence directe pour notre choix&nbsp;:</label>
-    <select id="a2_5"><option value="">— choisir —</option>
-      <option>un écart de consommation par km, même petit, devient énorme multiplié par des années d'usage</option>
-      <option>le prix d'achat est le seul critère qui compte</option>
-      <option>la masse n'a aucune importance</option>
-      <option>il faut choisir le véhicule le plus récent</option></select></div>
+  <fieldset class="qcm-groupe" id="a2_4">
+  <legend>Un véhicule roule 8 à 12 ans. Sur l'ensemble de sa vie, quelle étape consomme le plus d'énergie&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__1" value="l'utilisation, parce qu'elle dure des années et se répète chaque jour"><label for="a2_4__1">l'utilisation, parce qu'elle dure des années et se répète chaque jour</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__2" value="la fabrication, parce qu'elle demande des machines"><label for="a2_4__2">la fabrication, parce qu'elle demande des machines</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__3" value="la distribution, parce que le véhicule voyage jusqu'au client"><label for="a2_4__3">la distribution, parce que le véhicule voyage jusqu'au client</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__4" value="la fin de vie, parce qu'il faut tout démonter"><label for="a2_4__4">la fin de vie, parce qu'il faut tout démonter</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_5">
+  <legend>Conséquence directe pour notre choix&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__1" value="un écart de consommation par km, même petit, devient énorme multiplié par des années d'usage"><label for="a2_5__1">un écart de consommation par km, même petit, devient énorme multiplié par des années d'usage</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__2" value="le prix d'achat est le seul critère qui compte"><label for="a2_5__2">le prix d'achat est le seul critère qui compte</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__3" value="la masse n'a aucune importance"><label for="a2_5__3">la masse n'a aucune importance</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__4" value="il faut choisir le véhicule le plus récent"><label for="a2_5__4">il faut choisir le véhicule le plus récent</label></div>
+</fieldset>
 
   <h4>c) Le piège du «&nbsp;zéro émission&nbsp;»</h4>
-  <div class="assoc"><label for="a2_6">On lit parfois qu'un véhicule électrique est «&nbsp;zéro émission&nbsp;». Cette affirmation&nbsp;:</label>
-    <select id="a2_6"><option value="">— choisir —</option>
-      <option>ne vaut que pour l'étape d'utilisation : l'extraction et la fabrication, elles, ont un coût</option>
-      <option>est vraie sur tout le cycle de vie</option>
-      <option>est fausse partout : ces véhicules polluent autant en roulant</option>
-      <option>dépend de la couleur du véhicule</option></select></div>
+  <fieldset class="qcm-groupe" id="a2_6">
+  <legend>On lit parfois qu'un véhicule électrique est «&nbsp;zéro émission&nbsp;». Cette affirmation&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_6" id="a2_6__1" value="ne vaut que pour l'étape d'utilisation : l'extraction et la fabrication, elles, ont un coût"><label for="a2_6__1">ne vaut que pour l'étape d'utilisation : l'extraction et la fabrication, elles, ont un coût</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_6" id="a2_6__2" value="est vraie sur tout le cycle de vie"><label for="a2_6__2">est vraie sur tout le cycle de vie</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_6" id="a2_6__3" value="est fausse partout : ces véhicules polluent autant en roulant"><label for="a2_6__3">est fausse partout : ces véhicules polluent autant en roulant</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_6" id="a2_6__4" value="dépend de la couleur du véhicule"><label for="a2_6__4">dépend de la couleur du véhicule</label></div>
+</fieldset>
 
   <h4>d) Ta justification écrite</h4>
   <div class="assoc">
@@ -546,24 +590,27 @@ corrections et les compléments si la page te paraît chargée.</p>
   </figure>
 
   <h4>a) Lire le protocole avant de mesurer</h4>
-  <div class="assoc"><label for="a3_1">Pourquoi le protocole impose-t-il la <b>même charge</b> pour les trois véhicules&nbsp;?</label>
-    <select id="a3_1"><option value="">— choisir —</option>
-      <option>parce qu'on ne compare que ce qui est égal par ailleurs : changer la charge, c'est changer deux choses à la fois</option>
-      <option>parce que c'est plus rapide à organiser</option>
-      <option>parce que la charge n'a aucun effet sur le freinage</option>
-      <option>pour que les colis n'abîment pas la piste</option></select></div>
-  <div class="assoc"><label for="a3_2">Pourquoi fait-on <b>trois essais</b> et non un seul&nbsp;?</label>
-    <select id="a3_2"><option value="">— choisir —</option>
-      <option>parce qu'une mesure isolée peut être ratée : la moyenne de trois essais est plus fiable</option>
-      <option>pour user les freins et voir s'ils tiennent</option>
-      <option>parce que le premier essai ne compte jamais</option>
-      <option>pour que chaque élève du groupe en fasse un</option></select></div>
-  <div class="assoc"><label for="a3_3">Un groupe mesure S1 sur piste sèche et S3 sur piste mouillée. Que vaut sa comparaison&nbsp;?</label>
-    <select id="a3_3"><option value="">— choisir —</option>
-      <option>rien : il compare deux conditions différentes, pas deux véhicules</option>
-      <option>elle est valable, la pluie touche les deux de la même façon</option>
-      <option>elle est meilleure, car plus proche du réel</option>
-      <option>elle est valable si on la refait un jour de beau temps</option></select></div>
+  <fieldset class="qcm-groupe" id="a3_1">
+  <legend>Pourquoi le protocole impose-t-il la <b>même charge</b> pour les trois véhicules&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__1" value="parce qu'on ne compare que ce qui est égal par ailleurs : changer la charge, c'est changer deux choses à la fois"><label for="a3_1__1">parce qu'on ne compare que ce qui est égal par ailleurs : changer la charge, c'est changer deux choses à la fois</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__2" value="parce que c'est plus rapide à organiser"><label for="a3_1__2">parce que c'est plus rapide à organiser</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__3" value="parce que la charge n'a aucun effet sur le freinage"><label for="a3_1__3">parce que la charge n'a aucun effet sur le freinage</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__4" value="pour que les colis n'abîment pas la piste"><label for="a3_1__4">pour que les colis n'abîment pas la piste</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_2">
+  <legend>Pourquoi fait-on <b>trois essais</b> et non un seul&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__1" value="parce qu'une mesure isolée peut être ratée : la moyenne de trois essais est plus fiable"><label for="a3_2__1">parce qu'une mesure isolée peut être ratée : la moyenne de trois essais est plus fiable</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__2" value="pour user les freins et voir s'ils tiennent"><label for="a3_2__2">pour user les freins et voir s'ils tiennent</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__3" value="parce que le premier essai ne compte jamais"><label for="a3_2__3">parce que le premier essai ne compte jamais</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__4" value="pour que chaque élève du groupe en fasse un"><label for="a3_2__4">pour que chaque élève du groupe en fasse un</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_3">
+  <legend>Un groupe mesure S1 sur piste sèche et S3 sur piste mouillée. Que vaut sa comparaison&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__1" value="rien : il compare deux conditions différentes, pas deux véhicules"><label for="a3_3__1">rien : il compare deux conditions différentes, pas deux véhicules</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__2" value="elle est valable, la pluie touche les deux de la même façon"><label for="a3_3__2">elle est valable, la pluie touche les deux de la même façon</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__3" value="elle est meilleure, car plus proche du réel"><label for="a3_3__3">elle est meilleure, car plus proche du réel</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__4" value="elle est valable si on la refait un jour de beau temps"><label for="a3_3__4">elle est valable si on la refait un jour de beau temps</label></div>
+</fieldset>
 
   <h4>b) Exploiter les résultats</h4>
   <table>
@@ -572,21 +619,27 @@ corrections et les compléments si la page te paraît chargée.</p>
     <tr><td>S2 — fourgonnette</td><td>5,8 m</td><td>5,4 m</td><td>62 dB(A)</td></tr>
     <tr><td>S3 — robot</td><td>1,6 m</td><td>1,2 m</td><td>49 dB(A)</td></tr>
   </table>
-  <div class="assoc"><label for="a3_4">Quelle solution s'arrête sur la plus courte distance&nbsp;?</label>
-    <select id="a3_4"><option value="">— choisir —</option>
-      <option>S3, le robot</option><option>S1, le vélo-cargo</option>
-      <option>S2, la fourgonnette</option><option>les trois à égalité</option></select></div>
-  <div class="assoc"><label for="a3_5">S2 (1350 kg) freine sur 5,8 m contre 1,6 m pour S3 (95 kg), à la même vitesse. Que peut-on conclure&nbsp;?</label>
-    <select id="a3_5"><option value="">— choisir —</option>
-      <option>que les distances varient dans le même sens que les masses — sans pouvoir dire pourquoi : freins, pneus et empattement changent aussi</option>
-      <option>que la masse explique à elle seule l'écart</option>
-      <option>que ses freins sont en mauvais état</option>
-      <option>qu'elle roulait plus vite lors de l'essai</option></select></div>
-  <div class="assoc"><label for="a3_6">Dans une ruelle étroite, quelle mesure du tableau devient la plus décisive&nbsp;?</label>
-    <select id="a3_6"><option value="">— choisir —</option>
-      <option>le rayon de braquage : c'est lui qui dit si le véhicule peut tourner</option>
-      <option>le bruit</option><option>l'autonomie</option>
-      <option>la part de matière recyclée</option></select></div>
+  <fieldset class="qcm-groupe" id="a3_4">
+  <legend>Quelle solution s'arrête sur la plus courte distance&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__1" value="S3, le robot"><label for="a3_4__1">S3, le robot</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__2" value="S1, le vélo-cargo"><label for="a3_4__2">S1, le vélo-cargo</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__3" value="S2, la fourgonnette"><label for="a3_4__3">S2, la fourgonnette</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__4" value="les trois à égalité"><label for="a3_4__4">les trois à égalité</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_5">
+  <legend>S2 (1350 kg) freine sur 5,8 m contre 1,6 m pour S3 (95 kg), à la même vitesse. Que peut-on conclure&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__1" value="que les distances varient dans le même sens que les masses — sans pouvoir dire pourquoi : freins, pneus et empattement changent aussi"><label for="a3_5__1">que les distances varient dans le même sens que les masses — sans pouvoir dire pourquoi : freins, pneus et empattement changent aussi</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__2" value="que la masse explique à elle seule l'écart"><label for="a3_5__2">que la masse explique à elle seule l'écart</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__3" value="que ses freins sont en mauvais état"><label for="a3_5__3">que ses freins sont en mauvais état</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__4" value="qu'elle roulait plus vite lors de l'essai"><label for="a3_5__4">qu'elle roulait plus vite lors de l'essai</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_6">
+  <legend>Dans une ruelle étroite, quelle mesure du tableau devient la plus décisive&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3_6" id="a3_6__1" value="le rayon de braquage : c'est lui qui dit si le véhicule peut tourner"><label for="a3_6__1">le rayon de braquage : c'est lui qui dit si le véhicule peut tourner</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_6" id="a3_6__2" value="le bruit"><label for="a3_6__2">le bruit</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_6" id="a3_6__3" value="l'autonomie"><label for="a3_6__3">l'autonomie</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_6" id="a3_6__4" value="la part de matière recyclée"><label for="a3_6__4">la part de matière recyclée</label></div>
+</fieldset>
 
   <h4>c) Ce que la mesure prouve — et ce qu'elle ne prouve pas</h4>
   <div class="assoc">
@@ -785,25 +838,34 @@ corrections et les compléments si la page te paraît chargée.</p>
          alt="Fenêtre de LibreOffice Calc où seules les lignes 2 à 4 sont sélectionnées, sans la ligne 1 des titres : la barre d'état indique « Sélectionné : 3 lignes, 20 colonnes ». La boîte « Filtre standard » est ouverte par-dessus, et sa case Nom de champ propose « Colonne A » au lieu d'un nom de titre.">
     <figcaption><b>Si tu vois ceci&nbsp;:</b> la case Nom de champ propose <b>«&nbsp;Colonne A&nbsp;»</b> au lieu de <code>id_solution</code>, et tu ne trouves pas <code>charge_utile_kg</code> dans la liste. Tu as sélectionné les données <b>sans la ligne des titres</b>&nbsp;: la ligne 1 n'est pas surlignée. <b>Annuler</b>, sélectionne à partir de <b>A1</b>, recommence.</figcaption>
   </figure>
-  <div class="assoc"><label for="a4_1">Combien de solutions respectent les <b>quatre</b> exigences&nbsp;?</label>
-    <select id="a4_1"><option value="">— choisir —</option>
-      <option>une seule</option><option>deux</option><option>les trois</option><option>aucune</option></select></div>
-  <div class="assoc"><label for="a4_2">Laquelle&nbsp;?</label>
-    <select id="a4_2"><option value="">— choisir —</option>
-      <option>S1, le vélo-cargo</option><option>S2, la fourgonnette</option>
-      <option>S3, le robot</option><option>aucune ne convient</option></select></div>
-  <div class="assoc"><label for="a4_3">Sur quel critère S3 est-il écarté&nbsp;?</label>
-    <select id="a4_3"><option value="">— choisir —</option>
-      <option>l'adaptation à la pluie, à 2 sur 5, en dessous du seuil de 3</option>
-      <option>sa charge utile, insuffisante</option>
-      <option>son rayon de braquage, trop grand</option>
-      <option>son bruit, trop élevé</option></select></div>
-  <div class="assoc"><label for="a4_4">Et S2&nbsp;?</label>
-    <select id="a4_4"><option value="">— choisir —</option>
-      <option>l'adaptation aux ruelles, à 2 sur 5, en dessous du seuil de 4</option>
-      <option>son autonomie, insuffisante</option>
-      <option>sa charge utile, insuffisante</option>
-      <option>sa réparabilité, trop faible</option></select></div>
+  <fieldset class="qcm-groupe" id="a4_1">
+  <legend>Combien de solutions respectent les <b>quatre</b> exigences&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__1" value="une seule"><label for="a4_1__1">une seule</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__2" value="deux"><label for="a4_1__2">deux</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__3" value="les trois"><label for="a4_1__3">les trois</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__4" value="aucune"><label for="a4_1__4">aucune</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_2">
+  <legend>Laquelle&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__1" value="S1, le vélo-cargo"><label for="a4_2__1">S1, le vélo-cargo</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__2" value="S2, la fourgonnette"><label for="a4_2__2">S2, la fourgonnette</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__3" value="S3, le robot"><label for="a4_2__3">S3, le robot</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__4" value="aucune ne convient"><label for="a4_2__4">aucune ne convient</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_3">
+  <legend>Sur quel critère S3 est-il écarté&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__1" value="l'adaptation à la pluie, à 2 sur 5, en dessous du seuil de 3"><label for="a4_3__1">l'adaptation à la pluie, à 2 sur 5, en dessous du seuil de 3</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__2" value="sa charge utile, insuffisante"><label for="a4_3__2">sa charge utile, insuffisante</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__3" value="son rayon de braquage, trop grand"><label for="a4_3__3">son rayon de braquage, trop grand</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__4" value="son bruit, trop élevé"><label for="a4_3__4">son bruit, trop élevé</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_4">
+  <legend>Et S2&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__1" value="l'adaptation aux ruelles, à 2 sur 5, en dessous du seuil de 4"><label for="a4_4__1">l'adaptation aux ruelles, à 2 sur 5, en dessous du seuil de 4</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__2" value="son autonomie, insuffisante"><label for="a4_4__2">son autonomie, insuffisante</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__3" value="sa charge utile, insuffisante"><label for="a4_4__3">sa charge utile, insuffisante</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__4" value="sa réparabilité, trop faible"><label for="a4_4__4">sa réparabilité, trop faible</label></div>
+</fieldset>
 
   <h4>b) Construire l'indicateur</h4>
   <p>Ajoute une colonne <code>indicateur</code> et fais calculer, pour chaque solution&nbsp;:
@@ -834,18 +896,20 @@ corrections et les compléments si la page te paraît chargée.</p>
          alt="La même fenêtre, avec les mêmes nombres 12, 10,5 et 9,5 dans la colonne indicateur, la cellule U4 sélectionnée. Mais cette fois la barre de formule n'affiche que 9,5, un nombre, sans signe = ni lettres de colonnes.">
     <figcaption><b>Si tu vois ceci&nbsp;:</b> la grille affiche les mêmes nombres, mais la barre ne montre que <b>9,5</b> — pas de <code>=</code>, pas de lettres. Ces résultats ont été <b>tapés à la main</b>. Ils sont justes aujourd'hui, mais si une note change dans le tableau, rien ne se recalcule, et personne ne peut vérifier d'où ils viennent. Clique sur chaque cellule de la colonne&nbsp;: la barre doit toujours montrer une formule. Sinon, efface, réécris la formule en U2 et recopie-la.</figcaption>
   </figure>
-  <div class="assoc"><label for="a4_5">Pourquoi écrire une formule plutôt que taper les trois résultats&nbsp;?</label>
-    <select id="a4_5"><option value="">— choisir —</option>
-      <option>parce qu'en changeant une donnée, tous les résultats se recalculent seuls — et parce que la formule montre le raisonnement</option>
-      <option>parce que c'est plus rapide à taper</option>
-      <option>parce que le tableur refuse les nombres saisis</option>
-      <option>parce que le professeur l'a demandé</option></select></div>
-  <div class="assoc"><label for="a4_6">Cet indicateur additionne trois notes sur 5 choisies par nous. Que faut-il en penser&nbsp;?</label>
-    <select id="a4_6"><option value="">— choisir —</option>
-      <option>c'est un outil d'aide à la décision, utile mais discutable : c'est nous qui avons choisi ces trois critères, et de les compter à égalité</option>
-      <option>c'est une mesure scientifique exacte</option>
-      <option>il ne sert à rien, seul le prix compte</option>
-      <option>il donne la bonne réponse à coup sûr</option></select></div>
+  <fieldset class="qcm-groupe" id="a4_5">
+  <legend>Pourquoi écrire une formule plutôt que taper les trois résultats&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__1" value="parce qu'en changeant une donnée, tous les résultats se recalculent seuls — et parce que la formule montre le raisonnement"><label for="a4_5__1">parce qu'en changeant une donnée, tous les résultats se recalculent seuls — et parce que la formule montre le raisonnement</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__2" value="parce que c'est plus rapide à taper"><label for="a4_5__2">parce que c'est plus rapide à taper</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__3" value="parce que le tableur refuse les nombres saisis"><label for="a4_5__3">parce que le tableur refuse les nombres saisis</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__4" value="parce que le professeur l'a demandé"><label for="a4_5__4">parce que le professeur l'a demandé</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_6">
+  <legend>Cet indicateur additionne trois notes sur 5 choisies par nous. Que faut-il en penser&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_6" id="a4_6__1" value="c'est un outil d'aide à la décision, utile mais discutable : c'est nous qui avons choisi ces trois critères, et de les compter à égalité"><label for="a4_6__1">c'est un outil d'aide à la décision, utile mais discutable : c'est nous qui avons choisi ces trois critères, et de les compter à égalité</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_6" id="a4_6__2" value="c'est une mesure scientifique exacte"><label for="a4_6__2">c'est une mesure scientifique exacte</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_6" id="a4_6__3" value="il ne sert à rien, seul le prix compte"><label for="a4_6__3">il ne sert à rien, seul le prix compte</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_6" id="a4_6__4" value="il donne la bonne réponse à coup sûr"><label for="a4_6__4">il donne la bonne réponse à coup sûr</label></div>
+</fieldset>
 
   <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
     <p>Pour le filtre, traite les exigences <b>une par une</b>, et note à chaque fois qui tombe. Une
@@ -885,18 +949,20 @@ corrections et les compléments si la page te paraît chargée.</p>
   <div class="meta"><b>Objectif</b> choisir et argumenter · <b>Compétence</b> 5e_C3.3 ·
   <b>Production</b> un choix écrit avec sa limite et une adaptation</div>
 
-  <div class="assoc"><label for="a5_1">Le centre change d'avis&nbsp;: il veut désormais livrer 400 kg par tournée sur 150 km, hors du centre-ville. Quelle solution devient la bonne&nbsp;?</label>
-    <select id="a5_1"><option value="">— choisir —</option>
-      <option>S2, la fourgonnette : le besoin a changé, donc la réponse aussi</option>
-      <option>S1, puisqu'elle gagnait déjà</option>
-      <option>S3, parce qu'il freine le plus court</option>
-      <option>aucune : il faut racheter une camionnette thermique</option></select></div>
-  <div class="assoc"><label for="a5_2">Que montre ce changement&nbsp;?</label>
-    <select id="a5_2"><option value="">— choisir —</option>
-      <option>qu'une solution n'est jamais bonne dans l'absolu : elle est bonne pour un besoin donné</option>
-      <option>que notre première réponse était fausse</option>
-      <option>que le tableur s'était trompé</option>
-      <option>que les données étaient mal choisies</option></select></div>
+  <fieldset class="qcm-groupe" id="a5_1">
+  <legend>Le centre change d'avis&nbsp;: il veut désormais livrer 400 kg par tournée sur 150 km, hors du centre-ville. Quelle solution devient la bonne&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a5_1" id="a5_1__1" value="S2, la fourgonnette : le besoin a changé, donc la réponse aussi"><label for="a5_1__1">S2, la fourgonnette : le besoin a changé, donc la réponse aussi</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_1" id="a5_1__2" value="S1, puisqu'elle gagnait déjà"><label for="a5_1__2">S1, puisqu'elle gagnait déjà</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_1" id="a5_1__3" value="S3, parce qu'il freine le plus court"><label for="a5_1__3">S3, parce qu'il freine le plus court</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_1" id="a5_1__4" value="aucune : il faut racheter une camionnette thermique"><label for="a5_1__4">aucune : il faut racheter une camionnette thermique</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a5_2">
+  <legend>Que montre ce changement&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a5_2" id="a5_2__1" value="qu'une solution n'est jamais bonne dans l'absolu : elle est bonne pour un besoin donné"><label for="a5_2__1">qu'une solution n'est jamais bonne dans l'absolu : elle est bonne pour un besoin donné</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_2" id="a5_2__2" value="que notre première réponse était fausse"><label for="a5_2__2">que notre première réponse était fausse</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_2" id="a5_2__3" value="que le tableur s'était trompé"><label for="a5_2__3">que le tableur s'était trompé</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_2" id="a5_2__4" value="que les données étaient mal choisies"><label for="a5_2__4">que les données étaient mal choisies</label></div>
+</fieldset>
 
   <div class="assoc">
     <label for="a5_choix">Rédige ta réponse au responsable du centre&nbsp;: la solution retenue, deux raisons appuyées sur des données, <b>une limite</b> que tu assumes, et une adaptation nécessaire si le même service était monté en Martinique.</label>
@@ -962,30 +1028,34 @@ corrections et les compléments si la page te paraît chargée.</p>
     <li>«&nbsp;Ce que je n'arrive pas encore à faire seul·e&nbsp;: ____.&nbsp;»</li>
     <li>«&nbsp;Pour progresser, la prochaine fois je ____.&nbsp;»</li></ul></details>
   <h3>Je me positionne</h3>
-  <div class="assoc"><label for="pos1">5e_C3.1 — repérer matériaux, énergie et information&nbsp;:</label>
-    <select id="pos1"><option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — je confonds encore source et forme d'énergie</option>
-      <option>🟠 Maîtrise fragile — j'y arrive avec le tableau sous les yeux</option>
-      <option>🟢 Maîtrise satisfaisante — je repère les trois entrées sur un objet nouveau</option>
-      <option>⭐ Très bonne maîtrise — j'explique aussi pourquoi tel matériau a été retenu</option></select></div>
-  <div class="assoc"><label for="pos2">5e_C3.2 — les étapes du cycle de vie influencées&nbsp;:</label>
-    <select id="pos2"><option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — je ne retiens pas les étapes</option>
-      <option>🟠 Maîtrise fragile — je cite les étapes mais pas leur lien avec les choix</option>
-      <option>🟢 Maîtrise satisfaisante — je relie une donnée à l'étape qu'elle concerne</option>
-      <option>⭐ Très bonne maîtrise — j'argumente que l'utilisation domine, avec une durée</option></select></div>
-  <div class="assoc"><label for="pos3">5e_C3.4 — mesurer et comparer avec un protocole&nbsp;:</label>
-    <select id="pos3"><option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — je mesure sans fixer les conditions</option>
-      <option>🟠 Maîtrise fragile — j'applique le protocole si on me le rappelle</option>
-      <option>🟢 Maîtrise satisfaisante — j'applique le protocole et j'explique ses conditions</option>
-      <option>⭐ Très bonne maîtrise — je dis aussi ce que la mesure ne prouve pas</option></select></div>
-  <div class="assoc"><label for="pos4">5e_C3.3 — choisir et argumenter&nbsp;:</label>
-    <select id="pos4"><option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — je choisis sans critère</option>
-      <option>🟠 Maîtrise fragile — je choisis avec un seul critère</option>
-      <option>🟢 Maîtrise satisfaisante — je choisis avec le cahier des charges et je justifie</option>
-      <option>⭐ Très bonne maîtrise — j'assume une limite et je sais quand la réponse changerait</option></select></div>
+  <fieldset class="qcm-groupe" id="pos1">
+  <legend>5e_C3.1 — repérer matériaux, énergie et information&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__1" value="🔴 Maîtrise insuffisante — je confonds encore source et forme d'énergie"><label for="pos1__1">🔴 Maîtrise insuffisante — je confonds encore source et forme d'énergie</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__2" value="🟠 Maîtrise fragile — j'y arrive avec le tableau sous les yeux"><label for="pos1__2">🟠 Maîtrise fragile — j'y arrive avec le tableau sous les yeux</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__3" value="🟢 Maîtrise satisfaisante — je repère les trois entrées sur un objet nouveau"><label for="pos1__3">🟢 Maîtrise satisfaisante — je repère les trois entrées sur un objet nouveau</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__4" value="⭐ Très bonne maîtrise — j'explique aussi pourquoi tel matériau a été retenu"><label for="pos1__4">⭐ Très bonne maîtrise — j'explique aussi pourquoi tel matériau a été retenu</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="pos2">
+  <legend>5e_C3.2 — les étapes du cycle de vie influencées&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__1" value="🔴 Maîtrise insuffisante — je ne retiens pas les étapes"><label for="pos2__1">🔴 Maîtrise insuffisante — je ne retiens pas les étapes</label></div>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__2" value="🟠 Maîtrise fragile — je cite les étapes mais pas leur lien avec les choix"><label for="pos2__2">🟠 Maîtrise fragile — je cite les étapes mais pas leur lien avec les choix</label></div>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__3" value="🟢 Maîtrise satisfaisante — je relie une donnée à l'étape qu'elle concerne"><label for="pos2__3">🟢 Maîtrise satisfaisante — je relie une donnée à l'étape qu'elle concerne</label></div>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__4" value="⭐ Très bonne maîtrise — j'argumente que l'utilisation domine, avec une durée"><label for="pos2__4">⭐ Très bonne maîtrise — j'argumente que l'utilisation domine, avec une durée</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="pos3">
+  <legend>5e_C3.4 — mesurer et comparer avec un protocole&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__1" value="🔴 Maîtrise insuffisante — je mesure sans fixer les conditions"><label for="pos3__1">🔴 Maîtrise insuffisante — je mesure sans fixer les conditions</label></div>
+  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__2" value="🟠 Maîtrise fragile — j'applique le protocole si on me le rappelle"><label for="pos3__2">🟠 Maîtrise fragile — j'applique le protocole si on me le rappelle</label></div>
+  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__3" value="🟢 Maîtrise satisfaisante — j'applique le protocole et j'explique ses conditions"><label for="pos3__3">🟢 Maîtrise satisfaisante — j'applique le protocole et j'explique ses conditions</label></div>
+  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__4" value="⭐ Très bonne maîtrise — je dis aussi ce que la mesure ne prouve pas"><label for="pos3__4">⭐ Très bonne maîtrise — je dis aussi ce que la mesure ne prouve pas</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="pos4">
+  <legend>5e_C3.3 — choisir et argumenter&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos4" id="pos4__1" value="🔴 Maîtrise insuffisante — je choisis sans critère"><label for="pos4__1">🔴 Maîtrise insuffisante — je choisis sans critère</label></div>
+  <div class="qcm-option"><input type="radio" name="pos4" id="pos4__2" value="🟠 Maîtrise fragile — je choisis avec un seul critère"><label for="pos4__2">🟠 Maîtrise fragile — je choisis avec un seul critère</label></div>
+  <div class="qcm-option"><input type="radio" name="pos4" id="pos4__3" value="🟢 Maîtrise satisfaisante — je choisis avec le cahier des charges et je justifie"><label for="pos4__3">🟢 Maîtrise satisfaisante — je choisis avec le cahier des charges et je justifie</label></div>
+  <div class="qcm-option"><input type="radio" name="pos4" id="pos4__4" value="⭐ Très bonne maîtrise — j'assume une limite et je sais quand la réponse changerait"><label for="pos4__4">⭐ Très bonne maîtrise — j'assume une limite et je sais quand la réponse changerait</label></div>
+</fieldset>
 </section>
 
 <section class="card">
@@ -1012,6 +1082,36 @@ corrections et les compléments si la page te paraît chargée.</p>
   <p>Séquence 5e_C3.1 · C3.2 · C3.3 · C3.4 — Thème 1 · Technologie cycle 4 (2024).
   Page autonome, hors ligne, aucune donnée envoyée. Toutes les données sont simulées.</p>
 </footer>
+<script>
+/* ══════ Règle d'or n°300 — le groupe de boutons radio expose sa valeur ══════
+   Un <fieldset class="qcm-groupe"> remplace une liste déroulante. Pour que tout
+   ce qui lisait `champ.value` continue de fonctionner — sauvegarde, restauration,
+   correction, bancs de lot —, le groupe porte lui-même la valeur de la
+   proposition cochée, sous le même nom et avec le même contenu : son TEXTE.
+   Lire rend "" quand rien n'est coché, comme le faisait l'option vide.
+
+   La propriété est posée sur le PROTOTYPE, et non sur chaque élément : un
+   <fieldset> n'a pas de `value` native, et le faire ainsi affranchit du moment
+   où ce script s'exécute. Une première version le posait élément par élément,
+   et manquait les groupes que le navigateur n'avait pas encore lus. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){
+        r.checked = (r.value === v);
+      });
+    }
+  });
+})();
+</script>
 <script>
 "use strict";
 const KEY="seq_5e_C3.1-C3.4_shanghai";
@@ -1053,24 +1153,36 @@ function demande(cle,msg){
   signale(msg + " — clique une seconde fois pour confirmer.");
   return false;
 }
-const val=id=>{const e=$(id);return e?e.value:"";};
+/* Règle d'or n°300 : un groupe de boutons radio rend le TEXTE de la
+   proposition cochée — exactement ce que rendait `select.value` —, de sorte
+   que les tables de réponses attendues n'ont pas une ligne à changer. */
+const val=id=>{
+  const e=$(id); if(!e) return "";
+  if(e.tagName==="FIELDSET"){ const c=e.querySelector("input[type=radio]:checked"); return c?c.value:""; }
+  return e.value;
+};
 window.__valid = window.__valid || {};
 window.__exp = window.__exp || {};
 
 /* ══════ Sauvegarde locale ══════ */
 function collect(){
   const o={inputs:{}, valid:window.__valid, exp:window.__exp};
-  document.querySelectorAll("select,textarea").forEach(e=>{ if(e.id) o.inputs[e.id]=e.value; });
+  document.querySelectorAll("textarea,fieldset.qcm-groupe").forEach(e=>{ if(e.id) o.inputs[e.id]=val(e.id); });
   return o;
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){} }
 function restore(){
   let o=null; try{ o=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(err){}
   if(!o) return;
-  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.value=v; });
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{
+    const e=$(id); if(!e) return;
+    if(e.tagName==="FIELDSET"){
+      e.querySelectorAll("input[type=radio]").forEach(r=>{ r.checked = (r.value===v); });
+    } else e.value=v;
+  });
   window.__valid=o.valid||{}; window.__exp=o.exp||{};
 }
-document.addEventListener("change", ev=>{ if(/SELECT|TEXTAREA/.test(ev.target.tagName)) save(); });
+document.addEventListener("change", ev=>{ if(/INPUT|TEXTAREA/.test(ev.target.tagName)) save(); });
 document.addEventListener("input", ev=>{ if(ev.target.tagName==="TEXTAREA") save(); });
 
 $("btnPrint").addEventListener("click", ()=>window.print());

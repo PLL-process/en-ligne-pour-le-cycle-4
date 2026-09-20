@@ -16538,3 +16538,263 @@ journal, et rien d'autre.
   0 écart** ✅
 - `controle_impression.mjs` : **338 pages · 0 refusée** ✅
 - livraison : **branche poussée et PR ouverte avec `gh`**, pas de colis
+
+## 20/09/2026 — Vague n°300 sur le thème 1, étape 1 : deux fichiers, trois leçons (thème 1)
+
+Première étape de la conversion du thème 1 : `4e_C1.4` et `3e_C1.5`, trois questions chacun, les deux
+plus petits des douze. `4e_C1.4` a été pris en premier exprès — c'est la séquence qui porte déjà des
+cases à cocher et des boutons radio, donc celle où le gabarit de la n°300 rencontre un cas mixte.
+
+Le gabarit tient. La sauvegarde de ces deux fichiers sélectionnait déjà `input[id], select[id],
+textarea[id]` et stockait `.checked` pour les cases et les radios : **les nouveaux boutons y entrent
+sans qu'une ligne change**. Seul l'accesseur `v(id)` a été adapté, un par fichier — il est local à un
+gestionnaire ici, et non global comme dans le pilote. L'énumération d'impression `#be_1,#be_2,#be_3`
+est restée intacte, les identifiants étant portés par le `<fieldset>` comme ils l'étaient par le
+`<select>`.
+
+### Leçon 1 — `controle_impression.mjs` a refusé, et il avait raison
+
+**C'est son premier refus réel depuis sa réparation du 19/09.** Après conversion, il a refusé
+**deux pages, douze étiquettes chacune** :
+
+```
+1.35 : 1  LABEL.  « de sa fabrication »  · texte sombre sur fond sombre — il disparaît
+```
+
+Sur le papier, `body{color:#111}` noircit le texte ; le fond du groupe, resté marine, le faisait
+disparaître. Le pilote portait une règle `@media print` pour cela ; le convertisseur, lui, ne posait
+que le style d'écran.
+
+> **La leçon, qui vaut pour toute la suite : le bloc `@media print` doit voyager AVEC le style du
+> groupe**, et non être posé à la main dans la feuille d'impression de chaque fichier — qui n'a pas
+> deux fois la même forme dans le dépôt. Un style qu'on ajoute quelque part doit emporter sa
+> version imprimée, sans quoi le papier reçoit un bloc que personne n'a regardé.
+
+Sans ce contrôle, six pages seraient parties à l'imprimante avec leurs propositions invisibles.
+
+### Leçon 2 — l'invite se reconnaît à sa VALEUR VIDE, jamais à son libellé
+
+Ces deux billets d'entrée proposent **« je ne sais pas encore »** en dernière position. Ce n'est pas
+une invite : c'est une réponse, et la consigne la revendique en toutes lettres — « *« je ne sais pas
+encore » est une réponse utile* ».
+
+> **La leçon : l'invite d'une liste se reconnaît à sa VALEUR VIDE (`<option value="">`), jamais à son
+> texte.** Une heuristique sur le libellé — « commence par un tiret », « contient *choisir* » —
+> aurait pris « je ne sais pas encore » pour une invite et **supprimé une proposition légitime** de
+> trois questions. Le convertisseur ne lit que la valeur.
+
+### Une quatrième forme d'énoncé, que l'audit n'avait pas isolée
+
+L'audit #398 en comptait trois : `label-for` (1 018), énoncé dans un `<p>` (300), `label` sans `for`
+(87). Ces deux fichiers en emploient une quatrième — **le `<select>` vit DANS son `<label>`** :
+
+```html
+<p><label for="be_1">1. En 5e, tu as suivi le chemin d'une donnée. Elle passe par…
+  <select id="be_1">…</select></label></p>
+```
+
+L'énoncé y est ce que le label dit **hors** du champ. Elle n'avait pas été vue parce que l'audit
+classait par « qui porte l'énoncé », et qu'ici c'est bien un `label[for]` — la forme était donc
+comptée en `label-for` sans qu'on voie qu'elle enveloppait le champ.
+
+### Requalification — ce que j'avais mal nommé dans `4e_C1.4`
+
+J'avais écrit que les cases et boutons préexistants de `4e_C1.4` étaient groupés par
+`div.qcm-block[role="group"]`, et parlé d'une simple « divergence de convention ». **C'est faux sur
+les deux points**, et Pascal l'a mesuré de son côté. Le relevé, fait dans la page vivante :
+
+| dans `4e_C1.4` | nombre |
+|---|---:|
+| cases et boutons | **108** |
+| groupes (champs partageant un même `name`) | **46** |
+| `<fieldset>` | **3** — les miens, posés ce jour |
+| `role="group"` | **2** |
+| `role="radiogroup"` | **40** |
+| groupes portant un **nom accessible** | **3** — les miens |
+| groupes **anonymes** | **43** |
+
+Le diagnostic exact est plus précis que « ni fieldset ni rôle » : **les conteneurs existent et
+portent bien un rôle de groupe — mais aucun ne porte de NOM.** Ni `<legend>`, ni `aria-label`, ni
+`aria-labelledby` : l'énoncé vit dans un `div.qcm-question` voisin, que rien ne relie au groupe. À un
+lecteur d'écran, les propositions s'annoncent donc **détachées de leur question** — « case à cocher,
+azerty123 », sans jamais dire de quelle question il s'agit.
+
+**Ce n'est pas une divergence de convention : c'est le défaut de la n°300 sous une autre forme.**
+La n°300 traite du cas où la question est *recouverte* ; ici elle n'est pas recouverte, elle est
+*détachée*. Dans les deux cas l'élève répond à une question qu'il n'a plus sous les yeux — ou sous
+l'oreille.
+
+**Rien n'a été corrigé**, et c'est délibéré : hors mandat de cette vague.
+
+### La mesure demandée, pour plus tard — groupes anonymes dans tout le dépôt
+
+Relevé sur les 60 séquences, tous panneaux ouverts (un groupe dans un onglet fermé compte autant) :
+
+| thème | fichiers à champs | champs | groupes | nommés | **anonymes** |
+|---|---:|---:|---:|---:|---:|
+| Thème 1 | 4 | 257 | 80 | 37 | **43** |
+| Thème 2 | 10 | 51 | 8 | 8 | **0** |
+| Thème 3 | 11 | 70 | 7 | 7 | **0** |
+| **TOTAL** | **25** | **378** | **95** | **52** | **43** |
+
+**Les 43 groupes anonymes du dépôt sont tous dans `4e_C1.4`.** Les thèmes 2 et 3 n'en portent aucun.
+S'y ajoutent **76 champs sans `name=`**, qui ne forment aucun groupe du tout — une autre question,
+non traitée ici.
+
+C'est donc un chantier d'**un seul fichier**, et non une vague. À trancher par Pascal, à part.
+
+### Ces deux conversions ne sont garanties par aucun banc de lot
+
+**Ni `4e_C1.4` ni `3e_C1.5` ne possèdent de suite de tests.** Leurs conversions sont donc garanties
+par les contrôles du dépôt — relevé des valeurs avant/après, `controle_impression`, rendus aux deux
+tailles, `verif_regles_audit` — et par la capture, c'est-à-dire par l'œil. Pas par un banc.
+
+C'est une information, pas un reproche : le pilote `3e_C1.1`, lui, avait un banc à 50 / 50 qui a
+prouvé que les tables de réponses survivaient. Ici, cette preuve-là repose sur le seul relevé
+avant/après des valeurs — qui est solide, mais qui ne rejoue pas les verrous de la séquence.
+
+### Chiffres de l'étape
+
+| fichier | questions | zone de réponse 390 px | zone de réponse 1280 × 720 | `<select>` restants |
+|---|---:|---|---|---:|
+| `4e_C1.4` | 3 | 19 px → **234–257 px** | 19 px → **216 px** | **0** |
+| `3e_C1.5` | 3 | 19 px → **171–192 px** | 19 px → **171 px** | **0** |
+
+Hauteur du document : `4e_C1.4` 13 892 → 14 621 px (+5 %) · `3e_C1.5` 9 283 → 9 835 px (+6 %) —
+bien moins que les +27 % du pilote, ces fichiers ne portant que trois questions chacun.
+
+Relevé des valeurs dans la page vivante, avant et après : **6 champs · 24 propositions · valeurs,
+propositions et énoncés identiques**. Les trois invites « — choisir — » disparaissent, comme au
+pilote.
+
+`verif_regles_audit` : **194 → 192**, soit **−2**, une par séquence convertie.
+
+### Ce que cette étape ne touche pas
+
+Un **débordement horizontal à 390 px dans `4e_C1.4`** (663 px pour 390) vient d'un bloc `<code>` ;
+il est **identique avant et après**, mesuré sur les deux versions. Listé, pas corrigé. Aucun champ en
+ligne à `aria-label` dans ces deux fichiers.
+
+## 20/09/2026 — Vague n°300 sur le thème 1, étape 2 : neuf fichiers, 252 questions (thème 1)
+
+Suite de l'étape 1. Neuf des dix fichiers restants sont convertis — **252 questions, 1 008
+propositions**. Le dixième, `5e_C1.5`, résiste ; il est laissé, et le pourquoi est écrit plus bas.
+
+Total de la vague à ce jour : **11 fichiers sur 12, 258 questions** sur les 285 du thème.
+
+### La leçon de l'étape : le groupe porte sa valeur, et rien d'autre ne change
+
+Les neuf fichiers lisaient leurs réponses de neuf façons différentes — `val(id)`, `$(id).value`, un
+`evaluate` générique dans le banc, `pg.select_option(…)`, `selectedIndex = 1`… Réécrire chacun de ces
+lecteurs aurait été long et fragile.
+
+> **La règle n°300 dit que « la valeur transmise est le TEXTE de la proposition ». Le plus court
+> chemin pour la tenir n'est pas de réécrire chaque lecteur : c'est de faire porter cette valeur par
+> le groupe lui-même.** Une propriété `value` posée sur `HTMLFieldSetElement.prototype` rend le texte
+> de la proposition cochée, et l'affectation coche celle qui porte ce texte. Tout ce qui lisait ou
+> écrivait `champ.value` continue de fonctionner sans être touché : sauvegarde, restauration,
+> correction de la page, bancs des lots.
+
+Une première version posait la propriété **élément par élément**, au chargement — et manquait les
+groupes que le navigateur n'avait pas encore lus, le script vivant au milieu du corps de page. Les
+bancs sont tombés, et c'est ce qui l'a révélé. Sur le **prototype**, la question du moment ne se pose
+plus.
+
+### Ce que les bancs ont attrapé, et qui n'aurait pas été vu autrement
+
+Les neuf bancs étaient **verts sur `main`** — vérifié avant de conclure quoi que ce soit, en
+remisant la conversion. Après conversion, six tombaient. Deux causes, toutes deux invisibles à la
+lecture du HTML :
+
+1. **`pg.select_option("#" + i, label=v)`** — un banc. Playwright refuse net : « *Element is not a
+   `<select>` element* ». Échec franc, et c'est très bien. Remplacé par une aide `cocher()` qui vise
+   la **valeur**, jamais la position.
+2. **`document.getElementById(i).selectedIndex = 1`** — six bancs, **dix-sept occurrences**. Celle-ci
+   est plus sournoise : affecter `selectedIndex` sur un `<fieldset>` ne lève rien, cela crée
+   simplement une propriété que personne ne lit. Le banc continuait, et échouait plus loin sur un
+   verrou qui ne s'ouvrait pas — à trois écrans du vrai problème.
+
+`selectedIndex = 1` désignait la première proposition, l'invite occupant l'indice 0. La traduction
+fidèle est donc « coche le premier bouton », et elle **lève une erreur** si le groupe n'a aucune
+proposition, au lieu de continuer en silence.
+
+Après correction, les neuf bancs retrouvent **exactement** leur score de `main` :
+
+| lot | sur `main` | après conversion |
+|---|---|---|
+| `4e_C1.1` | 42 / 42 | **42 / 42** |
+| `5e_C1.1` | 43 / 43 | **43 / 43** |
+| `5e_C1.2` | 36 / 36 | **36 / 36** |
+| `3e_C2.1` | 54 / 54 | **54 / 54** |
+| `4e_C2.1` | 60 / 60 | **60 / 60** |
+| `5e_C2.1` | 47 / 47 | **47 / 47** |
+| `3e_C3.1` | 30 / 30 | **30 / 30** |
+| `4e_C3.1` | 28 / 28 | **28 / 28** |
+| `5e_C3.1` | 29 / 29 | **29 / 29** |
+
+### Le fichier qui résiste : `5e_C1.5` — et pourquoi il est laissé
+
+`5e_C1.5` (« le compte du club ») porte **27 questions**, et il est le seul des douze à résister.
+Trois raisons, mesurées :
+
+1. **Vingt-quatre de ses vingt-sept questions posent leur énoncé dans un `<p>`**, à l'intérieur d'un
+   `div.exo` — la forme que l'audit appelait `enonce-p`. Le convertisseur ne la traite pas encore, et
+   **refuse de deviner** : rattacher un énoncé au mauvais champ produirait une `<legend>` fausse, que
+   rien ne signalerait.
+2. **Deux de ses invites n'ont pas de valeur vide** : `<option>— je choisis —</option>`, sans
+   `value=""`. Leur valeur est donc le libellé lui-même, et le code de la page teste `!!e.value` pour
+   savoir si l'élève a répondu — ces deux champs comptent aujourd'hui comme « répondus » dès
+   l'ouverture. C'est un défaut préexistant, que la conversion effacerait **sans qu'on l'ait
+   décidé** : après conversion, « rien de coché » rendrait `""`. Un changement de comportement n'a
+   pas à se glisser dans une conversion de forme.
+3. **L'état visuel est porté par le champ lui-même** : `sv()` pose les classes `ok` / `ko` sur le
+   `<select>` (CSS `select.ok`, `select.ko`), et `qmark()` insère une marque ✔ / ✘ **juste avant**
+   lui. Sur un groupe, la marque passerait avant l'énoncé et le liseré encadrerait les quatre
+   propositions : ce n'est pas la même chose, et cela demande une décision de rendu, pas une
+   substitution.
+
+Aucune de ces trois raisons n'est un obstacle technique — ce sont trois décisions à prendre. Elles
+méritent leur propre lot, avec sa capture.
+
+### Chiffres par fichier
+
+| fichier | questions | zone de réponse 390 px | zone 1280 × 720 | document 390 px |
+|---|--:|---|---|---|
+| `4e_C1.1-C1.3_tsinghua_feux` | 26 | 40 → 189–394 px | 40 → 189–215 px | 10 397 → 12 708 (+22 %) |
+| `5e_C1.1-C1.6_chengdu_air` | 37 | 40 → 189–369 px | 40 → 189–215 px | 10 646 → 13 487 (+27 %) |
+| `5e_C1.2_sainte_luce_freinage` | 18 | 40 → 215–394 px | 40 → 189 px | 7 815 → 9 113 (+17 %) |
+| `3e_C2_pekin_borne` | 28 | 40 → 189–394 px | 40 → 189 px | 8 865 → 10 239 (+15 %) |
+| `4e_C2_hangzhou_borne` | 25 | 40 → 189–394 px | 40 → 189 px | 9 155 → 11 119 (+21 %) |
+| `5e_C2_shenzhen_station_velos` | 24 | 40 → 189–343 px | 40 → 189 px | 6 993 → 8 297 (+19 %) |
+| `3e_C3.1-C3.4_shenzhen` | 30 | 40 → 189–343 px | 40 → 189–215 px | 8 884 → 11 365 (+28 %) |
+| `4e_C3.1-C3.3_hangzhou` | 30 | 40 → 189–343 px | 40 → 189–215 px | 8 225 → 10 424 (+27 %) |
+| `5e_C3.1-C3.4_shanghai` | 34 | 40 → 189–369 px | 40 → 189–215 px | 17 785 → 20 894 (+17 %) |
+
+**Aucun `<select>` ne subsiste dans les neuf.** La zone de réponse passe de 40 px — une ligne, mais
+qui déployait par-dessus la page une liste que rien ne mesure — à 189 px au minimum. Les pages
+s'allongent de 15 à 28 %.
+
+### La capture : la plus longue proposition du dépôt
+
+`3e_C3.1`, question `a4_3`, séance 4 — **199 caractères**, la proposition la plus longue des 1 480
+questions mesurées par l'audit #398. Elle s'enroule sur six lignes, et son énoncé reste visible
+au-dessus. C'est exactement le cas que la règle vise.
+
+### Contrôles
+
+- relevé des valeurs dans la page vivante, avant et après, pour **chacun** des neuf fichiers :
+  **252 champs · 1 008 propositions · 0 écart** ✅
+- **bancs des neuf lots** : tous au score de `main`, vérifié dans les deux états ✅
+- `verif_regles_audit` : **192 → 183**, soit **−9**, une par séquence convertie. Le dixième manquement
+  attendu est celui de `5e_C1.5`, non converti — l'écart est donc **exact**.
+- `controle_impression.mjs` : **338 pages · 0 refusée** ✅ (54 899 textes ; l'écart avec la veille est
+  celui des invites disparues)
+- rendus **1280 × 720** et **390 × 844**, toutes séances ouvertes : **252 groupes · 1 008 boutons ·
+  0 select · 0 erreur JS · 0 requête échouée**, aucun débordement horizontal ✅
+- `mesurer_temps_seances.py` : sortie **identique au caractère près** (`diff`) ✅
+- batterie : `controle_liens.py` **717 pages · 2 918 adresses · 0 cassée** ✅ · `controle_medias.py`
+  **41 lots · 362 médias · 362 documentés** ✅ · `controle_cadres.py` **340 pages · 0 cadre** ✅ ·
+  `controle_formulations.py` **681 fichiers · 80 citations · 0 écart** ✅ ·
+  `controle_gestes_outil.py` **340 pages · 13 encarts · 0 écart** ✅ ·
+  `controle_fichiers_telechargeables.py` **79 pages · 0 écart** ✅
+- aucun champ en ligne à `aria-label` dans les neuf ; aucun n'a été converti nulle part
