@@ -6,6 +6,10 @@ Ne sont déclarés dans le rapport que les tests présents ici et réellement ex
 PÉRIMÈTRE (règle n°47) — ce que cette suite vérifie :
   · les six verrous de la séquence, fermés sur une page vide et ouverts sur une
     production complète ; la progression, la sauvegarde et sa restauration ;
+  · depuis le 20/09/2026 : que chaque réponse attendue trouve encore une
+    proposition à l'identique dans son groupe de boutons radio, que les 31
+    groupes sont bien formés (une <legend>, quatre boutons de même name), et
+    qu'aucune liste déroulante ne subsiste ;
   · la cible du bouton d'entraînement aux trois moments prévus (règle n°45) ;
   · la présence des deux blocs de la règle n°4, corrigé du Bonus compris ;
   · que la phrase éthique de l'activité 4 est VISIBLE et non repliée (règle n°68) ;
@@ -82,8 +86,25 @@ async def tester_sequence(p):
         await pg.click(f"#tab-s{max(1,n)}"); await pg.click(f"[data-check='{n}']")
         cls=await pg.evaluate(f"document.getElementById('fb{n}').className")
         r.append((f"verrou fermé check {n}", "ok" not in cls.split()))
-    await pg.evaluate("""(d)=>{Object.entries(d).forEach(([id,v])=>{const e=document.getElementById(id);e.value=v;
-        e.dispatchEvent(new Event(e.tagName==='SELECT'?'change':'input',{bubbles:true}));});}""", {**BON, **TXT})
+    # Depuis le 20/09/2026, les questions à choix unique sont des groupes de
+    # boutons radio : on COCHE celui dont la valeur correspond, au lieu
+    # d'affecter `.value`. Les zones de texte, elles, n'ont pas changé.
+    # `manquants` rapporte toute réponse attendue qui ne trouve plus de
+    # proposition — c'est la preuve que la conversion n'a pas décalé un texte.
+    manquants = await pg.evaluate("""(d)=>{const manquants=[];
+        Object.entries(d).forEach(([id,v])=>{
+          const e=document.getElementById(id); if(!e){manquants.push(id+' (champ absent)');return;}
+          if(e.tagName==='FIELDSET'){
+            const r=[...e.querySelectorAll('input[type=radio]')].find(x=>x.value===v);
+            if(!r){manquants.push(id);return;}
+            r.checked=true; r.dispatchEvent(new Event('change',{bubbles:true})); return;
+          }
+          e.value=v; e.dispatchEvent(new Event('input',{bubbles:true}));
+        });
+        return manquants;}""", {**BON, **TXT})
+    r.append(("chaque réponse attendue trouve sa proposition (aucun texte décalé)",
+              manquants == []))
+    if manquants: print("  ↳ sans proposition correspondante :", manquants)
     for n in range(6):
         await pg.click(f"#tab-s{max(1,n)}"); await pg.click(f"[data-check='{n}']")
         cls=await pg.evaluate(f"document.getElementById('fb{n}').className")

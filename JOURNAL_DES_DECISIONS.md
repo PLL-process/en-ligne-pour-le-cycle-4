@@ -16239,3 +16239,165 @@ cet audit. Aucun conflit dans le code.
 **La suite, non engagée ici :** Pascal tranchera entre le groupe radio natif et le bouton, puis une
 conversion **pilote sur un seul lot — `3e_C1.1`**, là où ses élèves ont buté, avant toute
 généralisation.
+
+## 20/09/2026 — Pilote : la liste déroulante devient un groupe radio (3e_C1.1, thème 1)
+
+Pascal a tranché après l'audit du 19/09 : **groupe radio, pas bouton** — réversible au vu du pilote.
+Un seul lot converti, `3e_C1.1`, celui où ses élèves ont buté. Aucune règle d'or n'est rédigée : on
+l'écrira quand il aura vu le résultat en classe.
+
+### Le gabarit retenu, et pourquoi la légende
+
+```html
+<fieldset class="qcm-groupe" id="a1_1">
+  <legend>Une tour de guet plus haute, avec de meilleures jumelles, est :</legend>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__1"
+       value="une amélioration : on fait mieux la même chose, avec le même savoir-faire">
+    <label for="a1_1__1">une amélioration : on fait mieux la même chose, avec le même savoir-faire</label></div>
+  … trois autres …
+</fieldset>
+```
+
+L'énoncé est **dans la légende**, donc dans le groupe lui-même : c'est tout l'objet de la manœuvre.
+Il n'y a plus de menu à déployer, donc plus rien à recouvrir. Le modèle est celui de `4e_C1.4`
+(`div.qcm-option` + `input` + `label`) — à une différence près, qui compte : `4e_C1.4` emploie des
+**cases à cocher**, parce que sa question admet plusieurs réponses. Ici les questions n'en admettent
+qu'une : ce sont des **boutons radio**, et c'est ce qui donne les flèches et le « n sur 4 ».
+
+### Les trois exigences, tenues et vérifiées
+
+**1. La valeur transmise reste le TEXTE de l'option.** Vérifié, non supposé : on a relevé dans la
+page **vivante**, avant conversion, la valeur que rendait chacun des 155 `<option>` ; on a relevé
+après conversion celle que rend chacun des 124 boutons ; on les a comparées terme à terme.
+
+```
+✅ 31 champs · 124 propositions
+   VALEURS identiques avant et après, y compris la chaîne vide de « rien de choisi »
+   propositions affichées et énoncés identiques
+   chaque groupe porte un name= unique, égal à son identifiant
+```
+
+Conséquence directe, et c'est le résultat qui décide du coût : **les 28 entrées de la table `BON` du
+banc et les tables de réponses attendues de la page n'ont pas eu une ligne à changer.** Le banc le
+prouve mécaniquement par un contrôle ajouté pour l'occasion — « chaque réponse attendue trouve sa
+proposition » —, qui échouerait si la conversion avait décalé un seul caractère insécable.
+
+**2. Le clavier.** Éprouvé par de **vraies frappes**, pas par lecture du balisage : on place le focus
+sur le premier bouton d'un groupe, on appuie, et on regarde où va le focus.
+
+| ce qui a été fait | ce qu'on a observé |
+|---|---|
+| `Tab` depuis `a1_1__1` | sort du groupe et atteint `a1_2__1` — **un seul arrêt par question** |
+| comptage des arrêts, séance 1 | 6 groupes = 6 arrêts |
+| `Flèche bas` × 3 | `a1_1__1 → a1_1__2 → a1_1__3 → a1_1__4`, et **chaque flèche coche** |
+| `Flèche haut` | revient sur `a1_1__3` |
+| valeur après parcours au clavier | un texte : « un changement sans effet… » |
+
+Pour l'annonce « 2 sur 4 », il faut être précis sur ce qui est établi et ce qui ne l'est pas. Lu dans
+l'arbre d'accessibilité du navigateur (protocole CDP) : les 12 groupes visibles au chargement sont
+exposés sous le rôle **`group`**, nommés par leur légende (« Une innovation de rupture, c'est un
+changement qui : ») ; leurs **48 boutons** sont exposés en rôle `radio`, **48 / 48** portant leur
+proposition comme nom accessible et **48 / 48** exposant leur état coché. Les autres panneaux sont en
+`display:none` et ne figurent pas dans l'arbre — d'où 48 et non 124.
+
+**Ce que ce contrôle n'établit PAS** : la phrase exactement prononcée. Aucune API de page ne la rend,
+et Chromium n'expose pas `posinset` / `setsize` pour un groupe radio **natif** — il laisse la couche
+plate-forme les calculer. Ce qui est établi, c'est que le groupe **est** un groupe radio natif (les
+flèches y circulent et y cochent, mesuré), qu'il porte un nom accessible tiré de sa `<legend>`, et
+que chaque bouton est nommé. C'est de ces données que le lecteur d'écran tire son annonce. **Une
+écoute au lecteur d'écran reste à faire par Pascal**, et elle n'est pas remplaçable par un script.
+
+**3. Rien ne change pour l'élève, sauf la forme.** Mêmes énoncés, mêmes propositions, même ordre,
+mêmes corrections, même sauvegarde, même barre de progression — le banc du lot le vérifie et passe à
+**50 / 50**. Une seule chose disparaît, et il faut la dire : les trois champs de positionnement
+perdaient leur invite « **— je me positionne —** ». Un groupe radio n'a pas d'invite : « aucun bouton
+coché » **est** l'état vide, et il se voit. Aucune valeur n'en dépend.
+
+### Avant / après, mesuré aux deux tailles
+
+| taille | zone de réponse AVANT | zone de réponse APRÈS | hauteur du document |
+|---|---|---|---|
+| 390 × 844 | **40 px**, les 31 identiques | méd. **266 px** — de 189 à 394 | 9 973 → 12 698 px (**+27 %**) |
+| 1280 × 720 | **40 px**, les 31 identiques | méd. **189 px**, toutes égales | 6 434 → 8 109 px (**+26 %**) |
+
+Ces 40 px d'avant sont trompeurs, et c'est le fond de l'affaire : le champ fermé tenait sur une
+ligne, mais **déployait par-dessus la page** une liste de cinq lignes que rien ne mesure. La page
+s'allonge donc d'un quart — c'est le prix payé, et il est visible, prévisible, et il pousse au lieu
+de recouvrir.
+
+**Plus rien ne peut recouvrir l'énoncé**, et c'est vérifié : il reste **0 `<select>`** dans la page,
+donc plus aucun menu natif ; et le seul élément **hors du flux** est la barre de navigation collante
+de 47 px, déjà là avant, qui vit en haut de la fenêtre et n'est pas un champ de réponse.
+
+### Ce que ça a coûté, poste par poste — et la correction d'une prévision
+
+L'audit du 19/09 annonçait que la feuille d'impression serait **le poste coûteux** : elle énumère
+31 identifiants à la main, « propres à chaque fichier et non factorisables ». **C'était faux, et il
+faut le corriger ici** : les identifiants sont portés par le `<fieldset>` exactement comme ils
+l'étaient par le `<select>`, donc `#a1_1, #a1_2, …` continue de désigner le bon élément.
+**L'énumération n'a pas eu une ligne à changer.**
+
+| poste | prévu le 19/09 | réellement fait |
+|---|---|---|
+| balisage des 31 questions | 31 conversions | script de substitution, **1 seconde**, 31/31 vérifiées |
+| sauvegarde | 1 ligne | 1 ligne (`textarea,fieldset.qcm-groupe`) |
+| restauration | — | 4 lignes (cocher au lieu d'affecter) |
+| accesseur `val(id)` | 1 fonction | 1 fonction, 4 lignes |
+| écouteur `change` | — | 1 mot (`SELECT` → `INPUT`) |
+| **feuille d'impression** | **31 identifiants à réécrire à la main** | **0** — 2 règles CSS ajoutées, ~2 minutes |
+| CSS du nouveau champ | — | 7 règles |
+| banc du lot | 3 écritures `.value =` | 1 bloc réécrit, + 1 contrôle ajouté |
+
+**Le chiffre qui décide de la suite : la conversion d'un lot ne coûte pas un travail par question,
+elle coûte un travail par FICHIER** — six points à toucher, tous uniques dans le fichier, plus une
+substitution mécanique pour le balisage. Sur `3e_C1.1`, l'édition proprement dite tient en une
+dizaine de minutes ; ce qui a pris du temps, c'est la vérification (relevé avant/après, clavier,
+captures), et elle ne sera pas à refaire en entier à chaque lot une fois le gabarit stabilisé.
+
+Cela plaide pour une conversion **par thème**, et non lot par lot — sous réserve de deux choses :
+l'avis de Pascal après usage en classe, et le fait que les autres lots ne sont **pas** aussi uniformes
+que celui-ci (voir ci-dessous).
+
+### Ce qui a failli passer inaperçu, et qui a été corrigé
+
+La première version encadrait chaque question d'un `<fieldset>` bordé. Une `<legend>` **chevauche le
+bord supérieur** et le coupe en deux dès qu'elle passe à la ligne — ce qui arrive à la moitié de nos
+énoncés, et se voyait à la capture. Remplacé par un **filet à gauche**, qui groupe aussi bien et ne
+croise jamais l'énoncé. C'est la capture qui l'a montré, pas un contrôle : aucun de nos outils ne
+mesure ce genre de laideur.
+
+### Ce que ce lot ne touche pas
+
+- **Aucun champ en ligne à `aria-label`** : l'audit en compte **0 dans ce lot** — vérifié avant de
+  commencer, les 31 questions relèvent toutes du gabarit `label-for`. Les 75 champs en ligne du dépôt
+  vivent ailleurs, et restent hors de toute conversion.
+- **Aucun autre lot**, aucun autre thème.
+- **Aucune règle d'or.**
+- **Un débordement horizontal à 390 px** (439 px pour 390) : il vient d'un `<table>`, il est
+  **identique avant et après** — mesuré sur les deux versions —, et n'a donc rien à voir avec cette
+  conversion. Listé, pas corrigé : c'est un chantier à part.
+
+### Contrôles
+
+- banc du lot `tests_3e_C1.1-C1.4_tsinghua.py` : **50 / 50** (33 séquence + 17 QCM), dont le contrôle
+  neuf « chaque réponse attendue trouve sa proposition »
+- relevé avant/après des valeurs : **31 champs · 124 propositions identiques** ✅
+- clavier, par de vraies frappes : **un arrêt de tabulation par question · flèches qui parcourent et
+  cochent · 48 / 48 boutons nommés et à l'état exposé** ✅
+- `audit_lisibilite_qcm.mjs` sur le lot : **0 question à liste déroulante** (31 avant) ✅
+- `controle_impression.mjs` : **338 pages · 0 refusée** ✅ — 55 157 textes contre 55 188 la veille,
+  l'écart étant exactement les **31 invites « — choisir — »** qui n'existent plus
+- rendus **1280 × 720** et **390 × 844**, les cinq séances ouvertes : **31 groupes · 124 boutons ·
+  0 select · 0 erreur JS · 0 requête échouée** ✅
+- `mesurer_temps_seances.py` : sortie **identique au caractère près** avant et après (comparée par
+  `diff`) ✅
+- batterie : `controle_liens.py` **716 pages · 2 918 adresses · 0 cassée** ✅ · `controle_medias.py`
+  **41 lots · 362 médias · 362 documentés** ✅ · `controle_cadres.py` **340 pages · 0 cadre** ✅ ·
+  `controle_formulations.py` **680 fichiers · 80 citations · 0 écart** ✅ · `controle_gestes_outil.py`
+  **340 pages · 13 encarts · 0 écart** ✅ · `controle_fichiers_telechargeables.py` **79 pages ·
+  0 écart** ✅ · `controle_verrous.mjs` **76 pages · 0 verrou ouvert** ✅ ·
+  `controle_atteignabilite.py` ✅ · `controle_regle4.py` ✅
+- `verif_regles_audit.py` : **60 séquences · 136 manquements**, identiques à `main`
+- captures : trois images à 390 px dans `_generation/captures-pilote-radio/`, hors `Images/` — ce ne
+  sont pas des médias pédagogiques, aucune page ne les affiche
+- livraison : **branche poussée et PR ouverte avec `gh`**, pas de colis
