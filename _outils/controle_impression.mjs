@@ -58,10 +58,30 @@
  * l'état de la page AU CHARGEMENT — ce qu'un élève déplie avant d'imprimer lui
  * échappe.
  *
+ * CE QU'IL REFUSE DE FAIRE : SORTIR VERT SANS AVOIR RIEN VU
+ * ---------------------------------------------------------
+ * Du 02/09 au 19/09/2026, ce contrôle n'a rien contrôlé sous Windows : sa garde
+ * de lancement comparait deux chaînes qui ne s'y écrivent jamais pareil (le
+ * commentaire en pied de fichier le détaille). Il sortait à 0, sans une ligne,
+ * et 34 mentions du journal l'ont pris pour un contrôle vert.
+ *
+ * Mais la garde n'est que la cause immédiate. Le vrai défaut est que RIEN, dans
+ * ce script, ne distinguait « j'ai tout vérifié, tout va bien » de « je n'ai
+ * rien vérifié du tout » : les deux sortaient à 0. C'est ce silence qui a laissé
+ * la garde cassée passer trois semaines. Désormais, un contrôle qui ne trouve
+ * aucun fichier à analyser, ou qui n'ouvre aucune page, ÉCRIT qu'il est en panne
+ * et sort à 2. Un contrôle qui n'a rien vérifié n'est pas vert ; il est en panne.
+ *
+ * Un compte de textes NUL, lui, ne déclenche rien : une page dont tout le corps
+ * est masqué à l'impression n'a légitimement aucun texte à lire. Ce qu'on exige,
+ * c'est que des pages aient été OUVERTES, pas qu'elles aient parlé.
+ *
  * Usage :
  *     node _outils/controle_impression.mjs           # rapport complet
  *     node _outils/controle_impression.mjs --muet    # seulement les refus
- * Sortie : 0 si aucune page n'imprime un texte illisible, 1 sinon.
+ * Sortie : 0  aucune page n'imprime un texte que le papier ne rendra pas
+ *          1  au moins une page en imprime un — le contrôle a tourné et refuse
+ *          2  le contrôle n'a rien pu vérifier : en panne, et surtout pas vert
  */
 
 import { chromium } from 'playwright';
@@ -141,24 +161,52 @@ export async function relever(page, url) {
 }
 
 export async function main(muet = false, racine = DEPOT, tolerees = TOLEREES) {
-  const liste = pages(racine);
+  //: Les deux façons de n'avoir rien à contrôler. Elles sortaient à 0 comme un
+  //: succès ; c'est ce silence qui a laissé la garde de lancement cassée passer
+  //: trois semaines inaperçue. Elles sortent désormais à 2, et elles le disent.
+  let liste;
+  try { liste = pages(racine); }
+  catch (e) {
+    console.error(`⛔ EN PANNE : impossible de parcourir ${racine}`
+      + `\n     ${String(e).slice(0, 100)}`
+      + `\n     Le contrôle n'a rien vérifié. Ce n'est pas un succès.`);
+    return 2;
+  }
+  if (!liste.length) {
+    console.error(`⛔ EN PANNE : aucun fichier .html trouvé sous ${racine}`
+      + `\n     Le contrôle n'a rien vérifié. Ce n'est pas un succès : racine`
+      + `\n     introuvable, arborescence déplacée, ou dossier écarté à tort.`);
+    return 2;
+  }
   const nav = await chromium.launch();
   const ctx = await nav.newContext({ viewport: { width: 794, height: 1123 } });  // A4 à 96 ppp
   const p = await ctx.newPage();
   await p.emulateMedia({ media: 'print' });
 
-  let lus = 0, nSignales = 0, nEncre = 0;
+  let lus = 0, nSignales = 0, nEncre = 0, inspectees = 0;
   const fautives = [], tolereesVues = [];
   for (const abs of liste) {
     const rel = path.relative(racine, abs).split(path.sep).join('/');
     let r;
     try { r = await relever(p, 'file://' + abs); }
     catch (e) { fautives.push({ rel, refus: [{ txt: String(e).slice(0, 70), pourquoi: 'page illisible' }] }); continue; }
+    inspectees++;
     lus += r.lus; nSignales += r.signales.length; nEncre += r.encre.length;
     if (!r.refus.length) continue;
     if (rel in tolerees) tolereesVues.push(rel); else fautives.push({ rel, refus: r.refus });
   }
   await nav.close();
+
+  //: Des fichiers existent, et pas une page n'a pu être ouverte : navigateur
+  //: absent, pages illisibles, lecture refusée. Rien n'a été mesuré — on le dit,
+  //: plutôt que de laisser croire à un dépôt sans défaut.
+  if (!inspectees) {
+    console.error(`⛔ EN PANNE : ${liste.length} fichier(s) trouvé(s), aucune page ouverte.`);
+    for (const f of fautives.slice(0, 3)) console.error(`     ${f.rel} — ${f.refus[0].txt}`);
+    console.error(`     Le contrôle n'a rien vérifié. Ce n'est pas un succès :`
+      + `\n     navigateur absent, pages illisibles, ou lecture refusée.`);
+    return 2;
+  }
 
   const fantomes = Object.keys(tolerees).filter(t => !tolereesVues.includes(t));
   if (!muet) {
@@ -200,6 +248,34 @@ export async function main(muet = false, racine = DEPOT, tolerees = TOLEREES) {
   return 0;
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+/* LA GARDE DE LANCEMENT — et pourquoi elle compare des CHEMINS, pas des chaînes.
+ *
+ * Elle s'écrivait `import.meta.url === \`file://${process.argv[1]}\`` : vrai sous
+ * Linux, JAMAIS sous Windows, où les deux valeurs diffèrent de trois façons à la
+ * fois — trois barres contre deux, « / » contre « \ », et « %7E » contre « ~ » :
+ *
+ *   import.meta.url   file:///C:/Users/PHASEL%7E1/…/controle_impression.mjs
+ *   la chaîne bâtie   file://C:\Users\PHASEL~1\…\controle_impression.mjs
+ *
+ * main() ne partait donc pas : le script n'écrivait rien et sortait à 0. Du
+ * 02/09 au 19/09/2026, les 34 mentions du journal attestent d'un contrôle réputé
+ * vert qui n'avait pas tourné une seule fois sur le poste de Pascal.
+ *
+ * On compare désormais deux CHEMINS RÉELS : l'un décodé depuis l'URL du module,
+ * l'autre résolu depuis l'argument de la ligne de commande, tous deux passés par
+ * path.resolve. L'encodage pour-cent, le sens des barres et le nombre de barres
+ * initiales cessent d'exister avant la comparaison. Le voisin
+ * `linter_absolus.mjs` tient le même contrat par l'autre bout, avec
+ * `pathToFileURL(process.argv[1]).href` ; les deux sont justes.
+ *
+ * Exportée pour que le banc puisse l'interroger dans les deux sens sans lancer
+ * le contrôle : lancé directement, il part ; importé, il ne fait rien tout seul.
+ */
+export function lanceDirectement(url, argv1) {
+  if (!argv1) return false;
+  return path.resolve(fileURLToPath(url)) === path.resolve(argv1);
+}
+
+if (lanceDirectement(import.meta.url, process.argv[1])) {
   process.exit(await main(process.argv.includes('--muet')));
 }

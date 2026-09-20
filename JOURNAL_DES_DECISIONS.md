@@ -15583,3 +15583,148 @@ et n'est pas touché ici.
   sauf 49 px à 390 px en séance 5, identiques sur `main` (tableau des quatre solutions, hors mandat)
 - manifeste : 49 tests, durée 265, empreintes recalculées pour la page, la fiche et le banc
 - livraison : **branche poussée et PR ouverte avec `gh`**, pas de colis
+
+## 19/09/2026 — Le contrôle d'impression ne se lançait pas sous Windows, et surtout il se taisait
+
+`_outils/controle_impression.mjs` est entré le 02/09 (be082789). Sa dernière ligne décidait s'il
+devait travailler : une comparaison entre `import.meta.url` et la chaîne `"file://"` suivie de
+`process.argv[1]`. Elle est vraie sous Linux et **jamais** sous Windows, où les deux valeurs
+diffèrent de trois façons à la fois — relevé sur le poste de Pascal :
+
+```
+import.meta.url        file:///C:/Users/PHASEL%7E1/…/controle_impression.mjs
+"file://" + argv[1]    file://C:\Users\PHASEL~1\…\controle_impression.mjs
+```
+
+Trois barres contre deux, `/` contre `\`, `%7E` contre `~`. `main()` ne partait donc pas :
+`node _outils/controle_impression.mjs` **sortait à 0, en une fraction de seconde, sans écrire une
+ligne**. Dix-sept jours, cinquante et une PR fusionnées.
+
+### Ce que le journal dit vraiment — la version non maquillée
+
+J'ai d'abord retenu que les **34 mentions** de `controle_impression` dans ce journal attestaient
+toutes d'un contrôle qui n'avait pas tourné. **C'est faux, et c'est ici qu'il faut le corriger** :
+un script muet n'imprime rien du tout, donc aucun chiffre ne peut en sortir. Dépouillées une à une :
+
+| ce que la mention porte | nombre | ce qu'on peut en conclure |
+|---|---|---|
+| un chiffre (pages, textes, refus) ou « aucune page refusée » | 24 | le contrôle **a tourné** — un script muet n'aurait rien imprimé |
+| une coche `✅` nue, sans le moindre chiffre | 7 | **invérifiable aujourd'hui** : peut venir d'un code de sortie 0 pris pour un succès |
+| de la prose, pas un compte rendu d'exécution | 3 | sans objet |
+
+Et le défaut n'était pas ignoré : il a été **trouvé le 10/09**, en livrant `4e_C1.1`, et décrit dans
+ce journal avec son mécanisme exact — « sur Windows, `node _outils/controle_impression.mjs --muet`
+sort en 0 **sans rien faire** […] Il a fallu importer `main()` depuis un `node -e`. À corriger dans
+`_outils/` (périmètre du thème 2), pas ici. » Le renvoi était juste ; il a simplement attendu neuf
+jours. Entre-temps chaque lot a contourné la garde à la main, et le journal l'écrit noir sur blanc
+**à dix reprises** (« importé par `main()` », « la garde `import.meta.url` ne passe pas sous
+Windows », « rejoué par sa fonction exportée `relever` »).
+
+Le coût réel n'est donc pas un arriéré de pages non vues : c'est que la justesse du contrôle
+reposait, à chaque lot, sur quelqu'un se souvenant de ne pas le lancer normalement — et que les
+sept coches nues sont, elles, définitivement invérifiables.
+
+### Le vrai défaut, et pourquoi il vient en second dans le titre
+
+La garde cassée est la cause immédiate. Le défaut qui l'a laissée vivre dix-sept jours est ailleurs :
+**rien, dans ce script, ne distinguait « j'ai tout vérifié, tout va bien » de « je n'ai rien vérifié
+du tout ».** Les deux sortaient à 0. Un outil qui se tait quand il est en panne transforme sa propre
+panne en bonne nouvelle.
+
+Deux corrections, donc, et la seconde compte plus que la première.
+
+1. **La garde compare des chemins, plus des chaînes.** `path.resolve(fileURLToPath(import.meta.url))`
+   contre `path.resolve(process.argv[1])` : l'encodage pour-cent, le sens et le nombre des barres
+   cessent d'exister avant la comparaison. La fonction est exportée (`lanceDirectement`) pour que le
+   banc l'interroge dans les deux sens. Le voisin `linter_absolus.mjs` tenait déjà le contrat par
+   l'autre bout, avec `pathToFileURL(process.argv[1]).href` ; les deux sont justes, et c'est le seul
+   autre `.mjs` du dépôt à porter une garde de ce genre.
+2. **Le script refuse de sortir vert sans avoir rien vu.** Aucun fichier `.html` sous la racine,
+   racine impossible à parcourir, ou aucune page effectivement ouverte : il écrit `⛔ EN PANNE`,
+   dit laquelle des trois, et **sort à 2**. Le code 2 est nouveau et se lit ainsi — `0` rien à
+   refuser, `1` le contrôle a tourné et refuse, `2` le contrôle n'a rien pu vérifier. Le message
+   part sur `stderr` : il reste visible sous `--muet`.
+
+Un compte de textes **nul** ne déclenche rien, volontairement : une page dont tout le corps est
+masqué à l'impression n'a légitimement aucun texte à lire, et deux cas du banc le prouvent. Ce qu'on
+exige, c'est que des pages aient été **ouvertes**, pas qu'elles aient parlé.
+
+### La première exécution réelle, en ligne de commande
+
+`node _outils/controle_impression.mjs`, sur tout le dépôt, code de sortie **0**, 65 secondes :
+
+```
+338 page(s) ouvertes en « media: print » · 55188 texte(s) lus · 0 page(s) refusée(s)
+✅ aucune page n'imprime un texte que le papier ne rendra pas
+```
+
+- **338 pages analysées · 0 page refusée.** **L'arriéré est vide** — aucune page à lister, aucun
+  chantier à ouvrir. C'est le résultat espéré, et il est désormais établi par la vraie porte
+  d'entrée et non par un contournement.
+- **4 002 textes sous 4,5 : 1 sur fond clair** — comptés, jamais refusés : la seconde dette de
+  palette, inchangée et hors mandat.
+- **6 textes blancs sur fond resté sombre** — intendance d'encre, comptée, tranchée par Pascal.
+
+Ces chiffres sont **identiques** à ceux du dernier contournement (17/09, `3e_C1.1` : 338 pages,
+0 refusée, 55 188 textes, 4 002 sous 4,5). La garde réparée ne change donc aucun résultat : elle
+change seulement le fait qu'on puisse encore les obtenir sans le savoir.
+
+### Le banc ferme la porte — et on l'a vérifié en la rouvrant
+
+`tests_controle_impression.mjs` passe de **10 à 14 contrôles**. Le banc ne voyait pas le défaut
+parce qu'il appelait `main()` en direct : il ne passait jamais par la garde. Désormais il lance le
+script **en sous-processus**, donc par la ligne de commande.
+
+Les quatre ajouts ont été validés par mutation — on remet le défaut, le banc doit tomber :
+
+| mutation appliquée | résultat |
+|---|---|
+| l'ancienne garde, comparaison de chaînes, remise en place | **13 / 14** ❌ « lancé en ligne de commande, le script n'écrit RIEN (sortie 0) — c'est exactement le défaut du 02/09 » |
+| les trois sorties `return 2` ramenées à `return 0` | **12 / 14** ❌ « aucune page à lire, et le contrôle sort à 0 » + « racine inexistante, et le contrôle sort à 0 » |
+| aucune mutation (état livré) | **14 / 14** ✅ |
+
+Le cas du nom de fichier accentué mérite une ligne : `contrôle été.mjs` donne une URL encodée en
+pour-cent, que l'ancienne comparaison de chaînes ratait **sur toutes les plateformes, Linux compris**.
+Le banc vérifie aussi que ce cas reste probant, pour qu'il ne devienne pas un test qui ne prouve rien.
+
+### Trouvé en chemin, NON corrigé ici : `controle_verrous.mjs` tombe sous Windows
+
+En passant la batterie, `_outils/controle_verrous.mjs` (entré le 31/08, 5 mentions au journal)
+s'arrête sur une pile :
+
+```
+Error: ENOENT: no such file or directory, scandir 'C:\C:\Users\PhaseLockedLoop\…'
+```
+
+Même maladie, autre symptôme : ligne 49, `path.dirname(new URL(import.meta.url).pathname)` rend
+`/C:/Users/…` sous Windows, dont la barre de tête fabrique un chemin à **deux lettres de lecteur**.
+`fileURLToPath` le corrigerait d'une ligne. **Je ne le corrige pas ici** : ce n'est pas le mandat, et
+la règle retenue pour les pages refusées vaut aussi pour les outils — on liste, on ouvre un chantier
+à part. Une différence importante avec le défaut du jour, cependant : celui-ci **tombe bruyamment**
+et n'a jamais pu passer pour vert. Il ne figure pas dans la batterie habituelle des lots.
+
+### Ce que ce lot ne touche pas
+
+Aucun fichier de séquence, de QCM, de synthèse ni de média. `_outils/controle_impression.mjs`,
+`_outils/tests_controle_impression.mjs` et ce journal, et rien d'autre.
+
+### Contrôles
+
+- `tests_controle_impression.mjs` : **14 / 14** ✅ (10 avant ; + 4 : la garde dans les deux sens,
+  l'import sans effet de bord, la racine sans page, la racine inexistante)
+- `controle_impression.mjs`, **lancé en ligne de commande** pour la première fois depuis le 02/09 :
+  **338 pages · 55 188 textes · 0 refusée** ✅ · 4 002 sous 4,5 · 6 blancs sur fond sombre
+- durcissement, depuis la ligne de commande : racine privée de pages → `⛔ EN PANNE` et **sortie 2**,
+  sous `--muet` comme sans
+- `controle_liens.py` ✅ · `controle_medias.py` ✅ · `controle_cadres.py` ✅ ·
+  `controle_formulations.py` ✅ · `controle_gestes_outil.py` ✅ ·
+  `controle_fichiers_telechargeables.py` ✅
+- `verif_regles_audit.py` : 60 séquences · **136 manquements**, identiques à `main`
+- `controle_verrous.mjs` : ❌ **tombe sous Windows** — diagnostiqué ci-dessus, hors mandat, à part
+- livraison : **branche poussée et PR ouverte avec `gh`**, pas de colis
+
+> **Candidate à une règle d'or, non numérotée ici** (le numéro se prend dans le registre, règle
+> n°10) : *un contrôle qui n'a rien vérifié n'est pas vert, il est en panne — et il doit le dire.*
+> Tout outil du dépôt qui peut se retrouver sans entrée devrait refuser de sortir à 0 sans avoir
+> compté ce qu'il a regardé. Si Pascal la retient, elle vaut d'être passée sur les 45 outils Python
+> et les 76 `.mjs`.
