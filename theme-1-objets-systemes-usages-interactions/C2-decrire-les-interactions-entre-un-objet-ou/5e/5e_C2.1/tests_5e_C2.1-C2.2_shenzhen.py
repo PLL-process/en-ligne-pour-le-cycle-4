@@ -108,7 +108,7 @@ with sync_playwright() as p:
 
     # activité 1 : le verrou de production
     pg.evaluate("['a1_1','a1_2','a1_3','a1_4','a1_5','a1_6','a1_7']"
-                ".forEach(i=>document.getElementById(i).selectedIndex=1)")
+                ".forEach(i=>{const g=document.getElementById(i);const r=g.querySelector('input[type=radio]');if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
     pg.click('[data-check="1"]')
     pg.wait_for_timeout(120)
     t("activité 1 : la liste des quatre familles est exigée",
@@ -131,7 +131,7 @@ with sync_playwright() as p:
     pg.click("#tab-s2")
     pg.wait_for_timeout(120)
     pg.evaluate("['a2_1','a2_2','a2_3','a2_4','a2_5','a2_6','a2_7','a2_8']"
-                ".forEach(i=>document.getElementById(i).selectedIndex=1)")
+                ".forEach(i=>{const g=document.getElementById(i);const r=g.querySelector('input[type=radio]');if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
     pg.click('[data-check="2"]')
     pg.wait_for_timeout(120)
     t("activité 2 : le relevé écrit est exigé",
@@ -151,7 +151,7 @@ with sync_playwright() as p:
     pg.click("#tab-s3")
     pg.wait_for_timeout(120)
     pg.evaluate("['a3_1','a3_2','a3_3','a3_4']"
-                ".forEach(i=>document.getElementById(i).selectedIndex=1)")
+                ".forEach(i=>{const g=document.getElementById(i);const r=g.querySelector('input[type=radio]');if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
     pg.click('[data-check="3"]')
     pg.wait_for_timeout(120)
     t("activité 3 : le transfert martiniquais est exigé",

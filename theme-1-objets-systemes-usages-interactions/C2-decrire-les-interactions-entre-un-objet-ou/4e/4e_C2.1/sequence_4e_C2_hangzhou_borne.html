@@ -108,6 +108,29 @@
   .card b,.card blockquote,.correction summary{color:#946b00!important}
   .piege,.piege b{color:#ed0018!important}
 }
+  /* Question à choix unique — groupe de boutons radio natifs (règle d'or n°300).
+     L'énoncé vit dans la <legend> : rien ne peut le recouvrir. Pas d'encadrement
+     complet — une <legend> chevauche le bord SUPÉRIEUR d'un fieldset et le coupe
+     dès qu'elle passe à la ligne ; un filet à GAUCHE groupe aussi bien. */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--input-bd);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--input-bg)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;
+    flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer}
+  @media print{
+    /* Sur le papier, body{color:#111} noircit le texte : un fond resté sombre le
+       ferait disparaître (refus mesuré par controle_impression.mjs le 20/09).
+       Le groupe s'imprime donc en blanc — et TOUTES les propositions restent
+       lisibles, là où une liste déroulante n'imprimait que le choix retenu. */
+    .qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;
+      border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}
+    .qcm-groupe .qcm-option input[type=radio]{-webkit-appearance:auto;appearance:auto}
+  }
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -259,24 +282,27 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 <section class="card">
   <h2>🎫 Billet d'entrée — je vérifie mes outils de 5e (5 min, <b>sans note</b>)</h2>
   <p>Trois questions sur ce que tu as travaillé l'an dernier. <b>Aucune note</b>&nbsp;: c'est un aiguillage.</p>
-  <div class="assoc"><label for="be_1">Un <b>interacteur</b> d'un objet technique, c'est&nbsp;:</label>
-    <select id="be_1"><option value="">— choisir —</option>
-      <option>tout ce qui, à l'extérieur de l'objet, entre en relation avec lui</option>
-      <option>chacune des pièces qui composent l'objet</option>
-      <option>la personne qui a conçu l'objet</option>
-      <option>le lieu où l'objet est installé</option></select></div>
-  <div class="assoc"><label for="be_2">Repérer un <b>choix de conception</b>, c'est&nbsp;:</label>
-    <select id="be_2"><option value="">— choisir —</option>
-      <option>comprendre quelle décision explique une forme observée</option>
-      <option>juger si l'objet est beau ou laid</option>
-      <option>mesurer les dimensions de l'objet</option>
-      <option>démonter l'objet pour voir l'intérieur</option></select></div>
-  <div class="assoc"><label for="be_3">Une <b>moyenne</b> calculée sur trente relevés&nbsp;:</label>
-    <select id="be_3"><option value="">— choisir —</option>
-      <option>décrit le milieu, et ne dit rien des cas extrêmes</option>
-      <option>décrit ce que subit chaque personne</option>
-      <option>est toujours égale à la valeur la plus fréquente</option>
-      <option>ne sert qu'en mathématiques</option></select></div>
+  <fieldset class="qcm-groupe" id="be_1">
+  <legend>Un <b>interacteur</b> d'un objet technique, c'est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="tout ce qui, à l'extérieur de l'objet, entre en relation avec lui"><label for="be_1__1">tout ce qui, à l'extérieur de l'objet, entre en relation avec lui</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="chacune des pièces qui composent l'objet"><label for="be_1__2">chacune des pièces qui composent l'objet</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="la personne qui a conçu l'objet"><label for="be_1__3">la personne qui a conçu l'objet</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="le lieu où l'objet est installé"><label for="be_1__4">le lieu où l'objet est installé</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="be_2">
+  <legend>Repérer un <b>choix de conception</b>, c'est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="comprendre quelle décision explique une forme observée"><label for="be_2__1">comprendre quelle décision explique une forme observée</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="juger si l'objet est beau ou laid"><label for="be_2__2">juger si l'objet est beau ou laid</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="mesurer les dimensions de l'objet"><label for="be_2__3">mesurer les dimensions de l'objet</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="démonter l'objet pour voir l'intérieur"><label for="be_2__4">démonter l'objet pour voir l'intérieur</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="be_3">
+  <legend>Une <b>moyenne</b> calculée sur trente relevés&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="décrit le milieu, et ne dit rien des cas extrêmes"><label for="be_3__1">décrit le milieu, et ne dit rien des cas extrêmes</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="décrit ce que subit chaque personne"><label for="be_3__2">décrit ce que subit chaque personne</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="est toujours égale à la valeur la plus fréquente"><label for="be_3__3">est toujours égale à la valeur la plus fréquente</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="ne sert qu'en mathématiques"><label for="be_3__4">ne sert qu'en mathématiques</label></div>
+</fieldset>
   <button class="btn small" data-check="0" type="button">🎫 Vérifier mon billet d'entrée</button>
   <p class="feedback" id="fb0" role="status"></p>
   <details class="aide" id="capsule"><summary>🎒 Je révise en 3 minutes</summary>
@@ -307,47 +333,53 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   </figure>
 
   <h4>a) Lire des verbatims sans les trahir</h4>
-  <div class="assoc"><label for="a1_1">Chen dit&nbsp;: «&nbsp;Tu tires, ça résiste, et tu ne sais pas si c'est toi ou la borne.&nbsp;» Ce qui gêne Chen, c'est&nbsp;:</label>
-    <select id="a1_1"><option value="">— choisir —</option>
-      <option>de ne pas savoir d'où vient le problème : la machine ne lui dit rien</option>
-      <option>l'effort physique nécessaire pour tirer</option>
-      <option>le prix de la location</option>
-      <option>la couleur du vélo</option></select></div>
-  <div class="assoc"><label for="a1_2">Wang trouve la liste des vélos «&nbsp;trop longue&nbsp;», Ma la trouve pratique. Cela veut dire que&nbsp;:</label>
-    <select id="a1_2"><option value="">— choisir —</option>
-      <option>un même objet ne produit pas la même expérience selon qui l'utilise</option>
-      <option>l'un des deux se trompe, et il faut trancher</option>
-      <option>les verbatims ne servent à rien</option>
-      <option>il faut interroger davantage de personnes jusqu'à ce qu'elles soient d'accord</option></select></div>
-  <div class="assoc"><label for="a1_3">Feng dit&nbsp;: «&nbsp;Ce qui m'énerve, ce n'est pas que ce soit long, c'est de ne pas savoir combien de temps ça va durer.&nbsp;» Ce verbatim porte sur&nbsp;:</label>
-    <select id="a1_3"><option value="">— choisir —</option>
-      <option>le ressenti, qui dépend de l'information reçue autant que de la durée réelle</option>
-      <option>la durée réelle, et rien d'autre</option>
-      <option>un défaut de fabrication de la borne</option>
-      <option>une erreur de l'usager</option></select></div>
-  <div class="assoc"><label for="a1_4">Xu dit&nbsp;: «&nbsp;Je fais ça en trente secondes, mais ma mère n'y arrive pas seule.&nbsp;» Ce que ce verbatim apporte&nbsp;:</label>
-    <select id="a1_4"><option value="">— choisir —</option>
-      <option>la facilité d'usage dépend de l'expérience de la personne, pas seulement de l'objet</option>
-      <option>que la borne est trop compliquée pour tout le monde</option>
-      <option>que Xu est plus intelligente que sa mère</option>
-      <option>rien d'utile : c'est une opinion</option></select></div>
+  <fieldset class="qcm-groupe" id="a1_1">
+  <legend>Chen dit&nbsp;: «&nbsp;Tu tires, ça résiste, et tu ne sais pas si c'est toi ou la borne.&nbsp;» Ce qui gêne Chen, c'est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__1" value="de ne pas savoir d'où vient le problème : la machine ne lui dit rien"><label for="a1_1__1">de ne pas savoir d'où vient le problème : la machine ne lui dit rien</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__2" value="l'effort physique nécessaire pour tirer"><label for="a1_1__2">l'effort physique nécessaire pour tirer</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__3" value="le prix de la location"><label for="a1_1__3">le prix de la location</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__4" value="la couleur du vélo"><label for="a1_1__4">la couleur du vélo</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_2">
+  <legend>Wang trouve la liste des vélos «&nbsp;trop longue&nbsp;», Ma la trouve pratique. Cela veut dire que&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__1" value="un même objet ne produit pas la même expérience selon qui l'utilise"><label for="a1_2__1">un même objet ne produit pas la même expérience selon qui l'utilise</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__2" value="l'un des deux se trompe, et il faut trancher"><label for="a1_2__2">l'un des deux se trompe, et il faut trancher</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__3" value="les verbatims ne servent à rien"><label for="a1_2__3">les verbatims ne servent à rien</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__4" value="il faut interroger davantage de personnes jusqu'à ce qu'elles soient d'accord"><label for="a1_2__4">il faut interroger davantage de personnes jusqu'à ce qu'elles soient d'accord</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_3">
+  <legend>Feng dit&nbsp;: «&nbsp;Ce qui m'énerve, ce n'est pas que ce soit long, c'est de ne pas savoir combien de temps ça va durer.&nbsp;» Ce verbatim porte sur&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__1" value="le ressenti, qui dépend de l'information reçue autant que de la durée réelle"><label for="a1_3__1">le ressenti, qui dépend de l'information reçue autant que de la durée réelle</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__2" value="la durée réelle, et rien d'autre"><label for="a1_3__2">la durée réelle, et rien d'autre</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__3" value="un défaut de fabrication de la borne"><label for="a1_3__3">un défaut de fabrication de la borne</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__4" value="une erreur de l'usager"><label for="a1_3__4">une erreur de l'usager</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_4">
+  <legend>Xu dit&nbsp;: «&nbsp;Je fais ça en trente secondes, mais ma mère n'y arrive pas seule.&nbsp;» Ce que ce verbatim apporte&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__1" value="la facilité d'usage dépend de l'expérience de la personne, pas seulement de l'objet"><label for="a1_4__1">la facilité d'usage dépend de l'expérience de la personne, pas seulement de l'objet</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__2" value="que la borne est trop compliquée pour tout le monde"><label for="a1_4__2">que la borne est trop compliquée pour tout le monde</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__3" value="que Xu est plus intelligente que sa mère"><label for="a1_4__3">que Xu est plus intelligente que sa mère</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__4" value="rien d'utile : c'est une opinion"><label for="a1_4__4">rien d'utile : c'est une opinion</label></div>
+</fieldset>
 
   <h4>b) Découper le parcours</h4>
   <p>Pour comparer ce que douze personnes racontent, il faut un <b>découpage commun</b>&nbsp;: c'est
   ce qu'apporte le schéma. Le service technique en propose cinq étapes&nbsp;: <b>arriver</b>,
   <b>identifier</b>, <b>choisir</b>, <b>déverrouiller</b>, <b>partir</b>.</p>
-  <div class="assoc"><label for="a1_5">À quoi sert de découper le parcours en étapes nommées&nbsp;?</label>
-    <select id="a1_5"><option value="">— choisir —</option>
-      <option>à ce que tout le monde parle du même endroit du parcours</option>
-      <option>à rendre le parcours plus rapide</option>
-      <option>à faire joli sur le rapport</option>
-      <option>à supprimer les étapes inutiles</option></select></div>
-  <div class="assoc"><label for="a1_6">Le verbatim de Guo — «&nbsp;les pictogrammes ne se ressemblent pas d'une borne à l'autre&nbsp;» — se range à l'étape&nbsp;:</label>
-    <select id="a1_6"><option value="">— choisir —</option>
-      <option>arriver : c'est en approchant qu'on lit l'écran et les pictogrammes</option>
-      <option>partir</option>
-      <option>déverrouiller</option>
-      <option>nulle part : ce n'est pas une étape du parcours</option></select></div>
+  <fieldset class="qcm-groupe" id="a1_5">
+  <legend>À quoi sert de découper le parcours en étapes nommées&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__1" value="à ce que tout le monde parle du même endroit du parcours"><label for="a1_5__1">à ce que tout le monde parle du même endroit du parcours</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__2" value="à rendre le parcours plus rapide"><label for="a1_5__2">à rendre le parcours plus rapide</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__3" value="à faire joli sur le rapport"><label for="a1_5__3">à faire joli sur le rapport</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__4" value="à supprimer les étapes inutiles"><label for="a1_5__4">à supprimer les étapes inutiles</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_6">
+  <legend>Le verbatim de Guo — «&nbsp;les pictogrammes ne se ressemblent pas d'une borne à l'autre&nbsp;» — se range à l'étape&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__1" value="arriver : c'est en approchant qu'on lit l'écran et les pictogrammes"><label for="a1_6__1">arriver : c'est en approchant qu'on lit l'écran et les pictogrammes</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__2" value="partir"><label for="a1_6__2">partir</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__3" value="déverrouiller"><label for="a1_6__3">déverrouiller</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__4" value="nulle part : ce n'est pas une étape du parcours"><label for="a1_6__4">nulle part : ce n'est pas une étape du parcours</label></div>
+</fieldset>
 
   <h4>c) Ton relevé</h4>
   <div class="assoc">
@@ -424,30 +456,34 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   Trace <b>deux</b> barres par étape&nbsp;: la <b>durée moyenne</b> et la <b>durée la plus
   longue</b> observée. C'est cette seconde barre qui fait tout l'intérêt du graphique.</p>
 
-  <div class="assoc"><label for="a2_1">Pourquoi tracer aussi la durée la plus longue, et pas seulement la moyenne&nbsp;?</label>
-    <select id="a2_1"><option value="">— choisir —</option>
-      <option>parce qu'une moyenne décrit le milieu, et que personne ne vit le milieu</option>
-      <option>pour que le graphique soit plus joli</option>
-      <option>parce que la moyenne est toujours fausse</option>
-      <option>pour remplir la feuille</option></select></div>
-  <div class="assoc"><label for="a2_2">La colonne <code>reprise_necessaire</code> vaut «&nbsp;oui&nbsp;» 9 fois sur 30 à l'étape déverrouiller. Cela signifie&nbsp;:</label>
-    <select id="a2_2"><option value="">— choisir —</option>
-      <option>que près d'un usager sur trois a dû recommencer cette étape</option>
-      <option>que la borne est en panne 9 jours sur 30</option>
-      <option>que 9 vélos sur 30 sont cassés</option>
-      <option>qu'il y a une erreur dans le fichier</option></select></div>
-  <div class="assoc"><label for="a2_3">Un graphique de durées, comparé aux verbatims&nbsp;:</label>
-    <select id="a2_3"><option value="">— choisir —</option>
-      <option>dit ce qui se passe, mais pas ce que les gens ressentent</option>
-      <option>remplace les verbatims, qui deviennent inutiles</option>
-      <option>dit la même chose, en plus précis</option>
-      <option>ne sert que si les usagers sont d'accord entre eux</option></select></div>
-  <div class="assoc"><label for="a2_4">Si l'on ne regardait que les moyennes, on conclurait qu'il faut d'abord corriger&nbsp;:</label>
-    <select id="a2_4"><option value="">— choisir —</option>
-      <option>l'étape « choisir », qui est la plus longue en moyenne</option>
-      <option>l'étape « déverrouiller »</option>
-      <option>l'étape « arriver »</option>
-      <option>aucune : les moyennes se valent</option></select></div>
+  <fieldset class="qcm-groupe" id="a2_1">
+  <legend>Pourquoi tracer aussi la durée la plus longue, et pas seulement la moyenne&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__1" value="parce qu'une moyenne décrit le milieu, et que personne ne vit le milieu"><label for="a2_1__1">parce qu'une moyenne décrit le milieu, et que personne ne vit le milieu</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__2" value="pour que le graphique soit plus joli"><label for="a2_1__2">pour que le graphique soit plus joli</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__3" value="parce que la moyenne est toujours fausse"><label for="a2_1__3">parce que la moyenne est toujours fausse</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__4" value="pour remplir la feuille"><label for="a2_1__4">pour remplir la feuille</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_2">
+  <legend>La colonne <code>reprise_necessaire</code> vaut «&nbsp;oui&nbsp;» 9 fois sur 30 à l'étape déverrouiller. Cela signifie&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__1" value="que près d'un usager sur trois a dû recommencer cette étape"><label for="a2_2__1">que près d'un usager sur trois a dû recommencer cette étape</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__2" value="que la borne est en panne 9 jours sur 30"><label for="a2_2__2">que la borne est en panne 9 jours sur 30</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__3" value="que 9 vélos sur 30 sont cassés"><label for="a2_2__3">que 9 vélos sur 30 sont cassés</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__4" value="qu'il y a une erreur dans le fichier"><label for="a2_2__4">qu'il y a une erreur dans le fichier</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_3">
+  <legend>Un graphique de durées, comparé aux verbatims&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__1" value="dit ce qui se passe, mais pas ce que les gens ressentent"><label for="a2_3__1">dit ce qui se passe, mais pas ce que les gens ressentent</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__2" value="remplace les verbatims, qui deviennent inutiles"><label for="a2_3__2">remplace les verbatims, qui deviennent inutiles</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__3" value="dit la même chose, en plus précis"><label for="a2_3__3">dit la même chose, en plus précis</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__4" value="ne sert que si les usagers sont d'accord entre eux"><label for="a2_3__4">ne sert que si les usagers sont d'accord entre eux</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_4">
+  <legend>Si l'on ne regardait que les moyennes, on conclurait qu'il faut d'abord corriger&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__1" value="l'étape « choisir », qui est la plus longue en moyenne"><label for="a2_4__1">l'étape « choisir », qui est la plus longue en moyenne</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__2" value="l'étape « déverrouiller »"><label for="a2_4__2">l'étape « déverrouiller »</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__3" value="l'étape « arriver »"><label for="a2_4__3">l'étape « arriver »</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__4" value="aucune : les moyennes se valent"><label for="a2_4__4">aucune : les moyennes se valent</label></div>
+</fieldset>
 
   <h4>Ton graphique, et ce qu'on y lit</h4>
   <div class="assoc">
@@ -549,30 +585,34 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <b>losange</b> pour un test (une question à deux sorties, oui et non), un <b>ovale</b> pour le
   début et la fin. Une flèche qui remonte, c'est une <b>reprise</b>.</p>
 
-  <div class="assoc"><label for="a3_1">Dans un algorigramme, «&nbsp;la carte est-elle reconnue&nbsp;?&nbsp;» se dessine avec&nbsp;:</label>
-    <select id="a3_1"><option value="">— choisir —</option>
-      <option>un losange, parce que c'est un test à deux sorties</option>
-      <option>un rectangle, parce que c'est une action</option>
-      <option>un ovale, parce que c'est un début</option>
-      <option>une flèche seule</option></select></div>
-  <div class="assoc"><label for="a3_2">Les 9 reprises sur 30 relevées à l'étape déverrouiller correspondent, dans l'algorigramme, à&nbsp;:</label>
-    <select id="a3_2"><option value="">— choisir —</option>
-      <option>une flèche qui remonte vers une étape déjà faite</option>
-      <option>une case supplémentaire tout à la fin</option>
-      <option>un test sans sortie « non »</option>
-      <option>rien : une reprise ne se dessine pas</option></select></div>
-  <div class="assoc"><label for="a3_3">Un algorigramme dont un test n'a qu'une seule sortie&nbsp;:</label>
-    <select id="a3_3"><option value="">— choisir —</option>
-      <option>est faux : un test a toujours deux sorties, et le cas « non » doit être traité</option>
-      <option>est correct si le cas « non » est rare</option>
-      <option>est correct : on simplifie</option>
-      <option>dépend du logiciel utilisé</option></select></div>
-  <div class="assoc"><label for="a3_4">Ce que l'algorigramme apporte, et que le graphique ne donnait pas&nbsp;:</label>
-    <select id="a3_4"><option value="">— choisir —</option>
-      <option>les cas d'échec deviennent visibles, donc traitables</option>
-      <option>les durées exactes de chaque étape</option>
-      <option>le ressenti des usagers</option>
-      <option>le nombre d'usagers interrogés</option></select></div>
+  <fieldset class="qcm-groupe" id="a3_1">
+  <legend>Dans un algorigramme, «&nbsp;la carte est-elle reconnue&nbsp;?&nbsp;» se dessine avec&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__1" value="un losange, parce que c'est un test à deux sorties"><label for="a3_1__1">un losange, parce que c'est un test à deux sorties</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__2" value="un rectangle, parce que c'est une action"><label for="a3_1__2">un rectangle, parce que c'est une action</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__3" value="un ovale, parce que c'est un début"><label for="a3_1__3">un ovale, parce que c'est un début</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__4" value="une flèche seule"><label for="a3_1__4">une flèche seule</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_2">
+  <legend>Les 9 reprises sur 30 relevées à l'étape déverrouiller correspondent, dans l'algorigramme, à&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__1" value="une flèche qui remonte vers une étape déjà faite"><label for="a3_2__1">une flèche qui remonte vers une étape déjà faite</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__2" value="une case supplémentaire tout à la fin"><label for="a3_2__2">une case supplémentaire tout à la fin</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__3" value="un test sans sortie « non »"><label for="a3_2__3">un test sans sortie « non »</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__4" value="rien : une reprise ne se dessine pas"><label for="a3_2__4">rien : une reprise ne se dessine pas</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_3">
+  <legend>Un algorigramme dont un test n'a qu'une seule sortie&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__1" value="est faux : un test a toujours deux sorties, et le cas « non » doit être traité"><label for="a3_3__1">est faux : un test a toujours deux sorties, et le cas « non » doit être traité</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__2" value="est correct si le cas « non » est rare"><label for="a3_3__2">est correct si le cas « non » est rare</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__3" value="est correct : on simplifie"><label for="a3_3__3">est correct : on simplifie</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__4" value="dépend du logiciel utilisé"><label for="a3_3__4">dépend du logiciel utilisé</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_4">
+  <legend>Ce que l'algorigramme apporte, et que le graphique ne donnait pas&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__1" value="les cas d'échec deviennent visibles, donc traitables"><label for="a3_4__1">les cas d'échec deviennent visibles, donc traitables</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__2" value="les durées exactes de chaque étape"><label for="a3_4__2">les durées exactes de chaque étape</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__3" value="le ressenti des usagers"><label for="a3_4__3">le ressenti des usagers</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__4" value="le nombre d'usagers interrogés"><label for="a3_4__4">le nombre d'usagers interrogés</label></div>
+</fieldset>
 
   <h4>Ton algorigramme</h4>
   <div class="assoc">
@@ -655,42 +695,48 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     question qui te dit dans quelle famille ranger une exigence.</figcaption>
   </figure>
 
-  <div class="assoc"><label for="a4_1">«&nbsp;Le message d'attente doit indiquer le temps restant&nbsp;» relève surtout de&nbsp;:</label>
-    <select id="a4_1"><option value="">— choisir —</option>
-      <option>la qualité : l'objet doit faire ce qu'il annonce, et informer sur ce qu'il fait</option>
-      <option>la sécurité</option>
-      <option>les incidences environnementales</option>
-      <option>rien : c'est un détail d'affichage</option></select></div>
-  <div class="assoc"><label for="a4_2">«&nbsp;Le déverrouillage doit réussir au moins 98 fois sur 100&nbsp;» relève de&nbsp;:</label>
-    <select id="a4_2"><option value="">— choisir —</option>
-      <option>la fiabilité, et elle se chiffre</option>
-      <option>l'ergonomie</option>
-      <option>les formes et fonctions</option>
-      <option>la sécurité uniquement</option></select></div>
-  <div class="assoc"><label for="a4_3">«&nbsp;Le retrait doit pouvoir se faire d'une seule main&nbsp;» répond à l'attente de&nbsp;:</label>
-    <select id="a4_3"><option value="">— choisir —</option>
-      <option>Deng, qui a une main prise par son enfant — c'est de l'ergonomie</option>
-      <option>Ma, le livreur</option>
-      <option>Guo, le touriste</option>
-      <option>personne : c'est une idée de concepteur</option></select></div>
-  <div class="assoc"><label for="a4_4">«&nbsp;L'écran s'éteint quand personne n'approche&nbsp;» relève de&nbsp;:</label>
-    <select id="a4_4"><option value="">— choisir —</option>
-      <option>les incidences environnementales : moins d'énergie consommée sur la durée de vie</option>
-      <option>la sécurité</option>
-      <option>la qualité</option>
-      <option>les formes et fonctions uniquement</option></select></div>
-  <div class="assoc"><label for="a4_5">Une exigence bien écrite&nbsp;:</label>
-    <select id="a4_5"><option value="">— choisir —</option>
-      <option>dit ce qui est attendu, se vérifie, et nomme l'attente d'utilisateur à laquelle elle répond</option>
-      <option>décrit la solution technique à installer</option>
-      <option>reste large, pour ne pas contraindre le concepteur</option>
-      <option>se contente de citer une famille du programme</option></select></div>
-  <div class="assoc"><label for="a4_6">«&nbsp;Installer un lecteur de carte plus rapide&nbsp;» n'est pas une exigence, parce que&nbsp;:</label>
-    <select id="a4_6"><option value="">— choisir —</option>
-      <option>c'est déjà une solution : une exigence dit le besoin, pas le moyen</option>
-      <option>c'est trop cher</option>
-      <option>le lecteur n'est pas en cause</option>
-      <option>cela relève de la sécurité</option></select></div>
+  <fieldset class="qcm-groupe" id="a4_1">
+  <legend>«&nbsp;Le message d'attente doit indiquer le temps restant&nbsp;» relève surtout de&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__1" value="la qualité : l'objet doit faire ce qu'il annonce, et informer sur ce qu'il fait"><label for="a4_1__1">la qualité : l'objet doit faire ce qu'il annonce, et informer sur ce qu'il fait</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__2" value="la sécurité"><label for="a4_1__2">la sécurité</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__3" value="les incidences environnementales"><label for="a4_1__3">les incidences environnementales</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__4" value="rien : c'est un détail d'affichage"><label for="a4_1__4">rien : c'est un détail d'affichage</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_2">
+  <legend>«&nbsp;Le déverrouillage doit réussir au moins 98 fois sur 100&nbsp;» relève de&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__1" value="la fiabilité, et elle se chiffre"><label for="a4_2__1">la fiabilité, et elle se chiffre</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__2" value="l'ergonomie"><label for="a4_2__2">l'ergonomie</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__3" value="les formes et fonctions"><label for="a4_2__3">les formes et fonctions</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__4" value="la sécurité uniquement"><label for="a4_2__4">la sécurité uniquement</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_3">
+  <legend>«&nbsp;Le retrait doit pouvoir se faire d'une seule main&nbsp;» répond à l'attente de&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__1" value="Deng, qui a une main prise par son enfant — c'est de l'ergonomie"><label for="a4_3__1">Deng, qui a une main prise par son enfant — c'est de l'ergonomie</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__2" value="Ma, le livreur"><label for="a4_3__2">Ma, le livreur</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__3" value="Guo, le touriste"><label for="a4_3__3">Guo, le touriste</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__4" value="personne : c'est une idée de concepteur"><label for="a4_3__4">personne : c'est une idée de concepteur</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_4">
+  <legend>«&nbsp;L'écran s'éteint quand personne n'approche&nbsp;» relève de&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__1" value="les incidences environnementales : moins d'énergie consommée sur la durée de vie"><label for="a4_4__1">les incidences environnementales : moins d'énergie consommée sur la durée de vie</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__2" value="la sécurité"><label for="a4_4__2">la sécurité</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__3" value="la qualité"><label for="a4_4__3">la qualité</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__4" value="les formes et fonctions uniquement"><label for="a4_4__4">les formes et fonctions uniquement</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_5">
+  <legend>Une exigence bien écrite&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__1" value="dit ce qui est attendu, se vérifie, et nomme l'attente d'utilisateur à laquelle elle répond"><label for="a4_5__1">dit ce qui est attendu, se vérifie, et nomme l'attente d'utilisateur à laquelle elle répond</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__2" value="décrit la solution technique à installer"><label for="a4_5__2">décrit la solution technique à installer</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__3" value="reste large, pour ne pas contraindre le concepteur"><label for="a4_5__3">reste large, pour ne pas contraindre le concepteur</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__4" value="se contente de citer une famille du programme"><label for="a4_5__4">se contente de citer une famille du programme</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_6">
+  <legend>«&nbsp;Installer un lecteur de carte plus rapide&nbsp;» n'est pas une exigence, parce que&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a4_6" id="a4_6__1" value="c'est déjà une solution : une exigence dit le besoin, pas le moyen"><label for="a4_6__1">c'est déjà une solution : une exigence dit le besoin, pas le moyen</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_6" id="a4_6__2" value="c'est trop cher"><label for="a4_6__2">c'est trop cher</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_6" id="a4_6__3" value="le lecteur n'est pas en cause"><label for="a4_6__3">le lecteur n'est pas en cause</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_6" id="a4_6__4" value="cela relève de la sécurité"><label for="a4_6__4">cela relève de la sécurité</label></div>
+</fieldset>
 
   <h4>Ton cahier des charges</h4>
   <div class="assoc">
@@ -778,18 +824,20 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     <ul><li>«&nbsp;Je dois encore revoir ____, parce que ____.&nbsp;»</li>
     <li>«&nbsp;Ce que je n'arrive pas encore à faire seul·e&nbsp;: ____.&nbsp;»</li></ul></details>
   <h3>Je me positionne</h3>
-  <div class="assoc"><label for="pos1">4e_C2.1 — décrire l'expérience de l'utilisateur, du langage naturel aux schémas, graphiques et algorithmes&nbsp;:</label>
-    <select id="pos1"><option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — je répète ce que disent les usagers sans le traduire</option>
-      <option>🟠 Maîtrise fragile — je fais le schéma, mais je bloque au graphique ou à l'algorigramme</option>
-      <option>🟢 Maîtrise satisfaisante — je parcours les quatre représentations</option>
-      <option>⭐ Très bonne maîtrise — je dis aussi ce que chaque représentation ne montre pas</option></select></div>
-  <div class="assoc"><label for="pos2">4e_C2.2 — repérer et expliquer les contraintes et exigences&nbsp;:</label>
-    <select id="pos2"><option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — j'écris des solutions à la place des exigences</option>
-      <option>🟠 Maîtrise fragile — j'écris des exigences, sans les rattacher à une attente</option>
-      <option>🟢 Maîtrise satisfaisante — chaque exigence a sa famille et son attente d'usager</option>
-      <option>⭐ Très bonne maîtrise — j'en trouve qui ne viennent d'aucune plainte</option></select></div>
+  <fieldset class="qcm-groupe" id="pos1">
+  <legend>4e_C2.1 — décrire l'expérience de l'utilisateur, du langage naturel aux schémas, graphiques et algorithmes&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__1" value="🔴 Maîtrise insuffisante — je répète ce que disent les usagers sans le traduire"><label for="pos1__1">🔴 Maîtrise insuffisante — je répète ce que disent les usagers sans le traduire</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__2" value="🟠 Maîtrise fragile — je fais le schéma, mais je bloque au graphique ou à l'algorigramme"><label for="pos1__2">🟠 Maîtrise fragile — je fais le schéma, mais je bloque au graphique ou à l'algorigramme</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__3" value="🟢 Maîtrise satisfaisante — je parcours les quatre représentations"><label for="pos1__3">🟢 Maîtrise satisfaisante — je parcours les quatre représentations</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__4" value="⭐ Très bonne maîtrise — je dis aussi ce que chaque représentation ne montre pas"><label for="pos1__4">⭐ Très bonne maîtrise — je dis aussi ce que chaque représentation ne montre pas</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="pos2">
+  <legend>4e_C2.2 — repérer et expliquer les contraintes et exigences&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__1" value="🔴 Maîtrise insuffisante — j'écris des solutions à la place des exigences"><label for="pos2__1">🔴 Maîtrise insuffisante — j'écris des solutions à la place des exigences</label></div>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__2" value="🟠 Maîtrise fragile — j'écris des exigences, sans les rattacher à une attente"><label for="pos2__2">🟠 Maîtrise fragile — j'écris des exigences, sans les rattacher à une attente</label></div>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__3" value="🟢 Maîtrise satisfaisante — chaque exigence a sa famille et son attente d'usager"><label for="pos2__3">🟢 Maîtrise satisfaisante — chaque exigence a sa famille et son attente d'usager</label></div>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__4" value="⭐ Très bonne maîtrise — j'en trouve qui ne viennent d'aucune plainte"><label for="pos2__4">⭐ Très bonne maîtrise — j'en trouve qui ne viennent d'aucune plainte</label></div>
+</fieldset>
 </section>
 
 <section class="card">
@@ -868,6 +916,36 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   Page autonome, hors ligne, aucune donnée envoyée. Toutes les données sont simulées.</p>
 </footer>
 <script>
+/* ══════ Règle d'or n°300 — le groupe de boutons radio expose sa valeur ══════
+   Un <fieldset class="qcm-groupe"> remplace une liste déroulante. Pour que tout
+   ce qui lisait `champ.value` continue de fonctionner — sauvegarde, restauration,
+   correction, bancs de lot —, le groupe porte lui-même la valeur de la
+   proposition cochée, sous le même nom et avec le même contenu : son TEXTE.
+   Lire rend "" quand rien n'est coché, comme le faisait l'option vide.
+
+   La propriété est posée sur le PROTOTYPE, et non sur chaque élément : un
+   <fieldset> n'a pas de `value` native, et le faire ainsi affranchit du moment
+   où ce script s'exécute. Une première version le posait élément par élément,
+   et manquait les groupes que le navigateur n'avait pas encore lus. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){
+        r.checked = (r.value === v);
+      });
+    }
+  });
+})();
+</script>
+<script>
 "use strict";
 const KEY="seq_4e_C2_hangzhou";
 const $=id=>document.getElementById(id);
@@ -908,24 +986,36 @@ function demande(cle,msg){
   signale(msg + " — clique une seconde fois pour confirmer.");
   return false;
 }
-const val=id=>{const e=$(id);return e?e.value:"";};
+/* Règle d'or n°300 : un groupe de boutons radio rend le TEXTE de la
+   proposition cochée — exactement ce que rendait `select.value` —, de sorte
+   que les tables de réponses attendues n'ont pas une ligne à changer. */
+const val=id=>{
+  const e=$(id); if(!e) return "";
+  if(e.tagName==="FIELDSET"){ const c=e.querySelector("input[type=radio]:checked"); return c?c.value:""; }
+  return e.value;
+};
 window.__valid = window.__valid || {};
 window.__exp = window.__exp || {};
 
 /* ══════ Sauvegarde locale ══════ */
 function collect(){
   const o={inputs:{}, valid:window.__valid, exp:window.__exp};
-  document.querySelectorAll("select,textarea").forEach(e=>{ if(e.id) o.inputs[e.id]=e.value; });
+  document.querySelectorAll("textarea,fieldset.qcm-groupe").forEach(e=>{ if(e.id) o.inputs[e.id]=val(e.id); });
   return o;
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){} }
 function restore(){
   let o=null; try{ o=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(err){}
   if(!o) return;
-  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.value=v; });
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{
+    const e=$(id); if(!e) return;
+    if(e.tagName==="FIELDSET"){
+      e.querySelectorAll("input[type=radio]").forEach(r=>{ r.checked = (r.value===v); });
+    } else e.value=v;
+  });
   window.__valid=o.valid||{}; window.__exp=o.exp||{};
 }
-document.addEventListener("change", ev=>{ if(/SELECT|TEXTAREA/.test(ev.target.tagName)) save(); });
+document.addEventListener("change", ev=>{ if(/INPUT|TEXTAREA/.test(ev.target.tagName)) save(); });
 document.addEventListener("input", ev=>{ if(ev.target.tagName==="TEXTAREA") save(); });
 
 $("btnPrint").addEventListener("click", ()=>window.print());

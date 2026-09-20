@@ -103,6 +103,29 @@
   .correction summary{color:#946b00!important}
   .piege,.piege b{color:#ed0018!important}
 }
+  /* Question à choix unique — groupe de boutons radio natifs (règle d'or n°300).
+     L'énoncé vit dans la <legend> : rien ne peut le recouvrir. Pas d'encadrement
+     complet — une <legend> chevauche le bord SUPÉRIEUR d'un fieldset et le coupe
+     dès qu'elle passe à la ligne ; un filet à GAUCHE groupe aussi bien. */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--input-bd);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--input-bg)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;
+    flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer}
+  @media print{
+    /* Sur le papier, body{color:#111} noircit le texte : un fond resté sombre le
+       ferait disparaître (refus mesuré par controle_impression.mjs le 20/09).
+       Le groupe s'imprime donc en blanc — et TOUTES les propositions restent
+       lisibles, là où une liste déroulante n'imprimait que le choix retenu. */
+    .qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;
+      border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}
+    .qcm-groupe .qcm-option input[type=radio]{-webkit-appearance:auto;appearance:auto}
+  }
 </style>
 </head>
 <body>
@@ -224,23 +247,27 @@ n'est envoyé. Le <b>mode essentiel</b> masque le référentiel, les corrections
   <h2>🎫 Billet d'entrée — je vérifie mes outils de 5e (5 min, <b>sans note</b>)</h2>
   <p>Trois questions sur ce que tu as travaillé l'an dernier. <b>Aucune note</b>&nbsp;: c'est un
   aiguillage. La capsule en dessous te remet en selle en trois minutes si besoin.</p>
-  <div class="assoc"><label for="be_1">Un <b>cahier des charges</b>, c'est&nbsp;:</label>
-    <select id="be_1"><option value="">— choisir —</option>
-      <option>le besoin transformé en exigences vérifiables</option>
-      <option>la liste des pièces d'un objet technique</option>
-      <option>le prix de vente du produit</option>
-      <option>le mode d'emploi remis à l'utilisateur</option></select></div>
-  <div class="assoc"><label for="be_2">Sur un objet qui dure des années, l'étape du cycle de vie qui pèse le plus est&nbsp;:</label>
-    <select id="be_2"><option value="">— choisir —</option>
-      <option>l'utilisation, parce qu'elle dure et se répète</option>
-      <option>la fabrication, parce qu'elle demande des machines</option>
-      <option>la distribution</option><option>la fin de vie</option></select></div>
-  <div class="assoc"><label for="be_3">Une exigence du cahier des charges qui n'est pas satisfaite&nbsp;:</label>
-    <select id="be_3"><option value="">— choisir —</option>
-      <option>écarte la solution : les exigences ne se compensent pas</option>
-      <option>se rattrape si la solution est excellente ailleurs</option>
-      <option>se rattrape si la solution est moins chère</option>
-      <option>n'a pas d'importance si les autres passent</option></select></div>
+  <fieldset class="qcm-groupe" id="be_1">
+  <legend>Un <b>cahier des charges</b>, c'est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="le besoin transformé en exigences vérifiables"><label for="be_1__1">le besoin transformé en exigences vérifiables</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="la liste des pièces d'un objet technique"><label for="be_1__2">la liste des pièces d'un objet technique</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="le prix de vente du produit"><label for="be_1__3">le prix de vente du produit</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="le mode d'emploi remis à l'utilisateur"><label for="be_1__4">le mode d'emploi remis à l'utilisateur</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="be_2">
+  <legend>Sur un objet qui dure des années, l'étape du cycle de vie qui pèse le plus est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="l'utilisation, parce qu'elle dure et se répète"><label for="be_2__1">l'utilisation, parce qu'elle dure et se répète</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="la fabrication, parce qu'elle demande des machines"><label for="be_2__2">la fabrication, parce qu'elle demande des machines</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="la distribution"><label for="be_2__3">la distribution</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="la fin de vie"><label for="be_2__4">la fin de vie</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="be_3">
+  <legend>Une exigence du cahier des charges qui n'est pas satisfaite&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="écarte la solution : les exigences ne se compensent pas"><label for="be_3__1">écarte la solution : les exigences ne se compensent pas</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="se rattrape si la solution est excellente ailleurs"><label for="be_3__2">se rattrape si la solution est excellente ailleurs</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="se rattrape si la solution est moins chère"><label for="be_3__3">se rattrape si la solution est moins chère</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="n'a pas d'importance si les autres passent"><label for="be_3__4">n'a pas d'importance si les autres passent</label></div>
+</fieldset>
   <button class="btn small" data-check="0" type="button">🎫 Vérifier mon billet d'entrée</button>
   <p class="feedback" id="fb0" role="status"></p>
   <details class="aide" id="capsule"><summary>🎒 Je révise en 3 minutes</summary>
@@ -265,44 +292,50 @@ n'est envoyé. Le <b>mode essentiel</b> masque le référentiel, les corrections
   </figure>
 
   <h4>a) Traduire chaque mot du maire</h4>
-  <div class="assoc"><label for="a1_1">«&nbsp;Qu'ils durent&nbsp;» devient la caractéristique&nbsp;:</label>
-    <select id="a1_1"><option value="">— choisir —</option>
-      <option>la durée de vie estimée, en années, avec un seuil minimal</option>
-      <option>la solidité, sans autre précision</option>
-      <option>la qualité générale du vélo</option>
-      <option>la satisfaction des usagers</option></select></div>
-  <div class="assoc"><label for="a1_2">«&nbsp;Qu'ils ne coûtent pas un bras&nbsp;» se mesure le mieux par&nbsp;:</label>
-    <select id="a1_2"><option value="">— choisir —</option>
-      <option>le coût total ramené à la durée de vie, en euros par vélo et par an</option>
-      <option>le prix d'achat seul</option>
-      <option>le coût d'entretien seul</option>
-      <option>le prix du vélo le moins cher du marché</option></select></div>
-  <div class="assoc"><label for="a1_3">«&nbsp;Qu'on puisse les réparer&nbsp;» demande <b>deux</b> caractéristiques&nbsp;:</label>
-    <select id="a1_3"><option value="">— choisir —</option>
-      <option>la disponibilité des pièces détachées, et le temps de réparation</option>
-      <option>le prix des pièces, et la couleur du cadre</option>
-      <option>la masse, et le confort</option>
-      <option>le nombre de vélos de la flotte, et leur âge</option></select></div>
-  <div class="assoc"><label for="a1_4">Qu'est-ce qui manque à «&nbsp;le vélo doit être solide&nbsp;» pour être vérifiable&nbsp;?</label>
-    <select id="a1_4"><option value="">— choisir —</option>
-      <option>une grandeur, une unité et un seuil</option>
-      <option>un adjectif plus précis</option>
-      <option>l'avis des usagers</option>
-      <option>rien : la phrase suffit</option></select></div>
+  <fieldset class="qcm-groupe" id="a1_1">
+  <legend>«&nbsp;Qu'ils durent&nbsp;» devient la caractéristique&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__1" value="la durée de vie estimée, en années, avec un seuil minimal"><label for="a1_1__1">la durée de vie estimée, en années, avec un seuil minimal</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__2" value="la solidité, sans autre précision"><label for="a1_1__2">la solidité, sans autre précision</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__3" value="la qualité générale du vélo"><label for="a1_1__3">la qualité générale du vélo</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__4" value="la satisfaction des usagers"><label for="a1_1__4">la satisfaction des usagers</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_2">
+  <legend>«&nbsp;Qu'ils ne coûtent pas un bras&nbsp;» se mesure le mieux par&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__1" value="le coût total ramené à la durée de vie, en euros par vélo et par an"><label for="a1_2__1">le coût total ramené à la durée de vie, en euros par vélo et par an</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__2" value="le prix d'achat seul"><label for="a1_2__2">le prix d'achat seul</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__3" value="le coût d'entretien seul"><label for="a1_2__3">le coût d'entretien seul</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__4" value="le prix du vélo le moins cher du marché"><label for="a1_2__4">le prix du vélo le moins cher du marché</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_3">
+  <legend>«&nbsp;Qu'on puisse les réparer&nbsp;» demande <b>deux</b> caractéristiques&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__1" value="la disponibilité des pièces détachées, et le temps de réparation"><label for="a1_3__1">la disponibilité des pièces détachées, et le temps de réparation</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__2" value="le prix des pièces, et la couleur du cadre"><label for="a1_3__2">le prix des pièces, et la couleur du cadre</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__3" value="la masse, et le confort"><label for="a1_3__3">la masse, et le confort</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__4" value="le nombre de vélos de la flotte, et leur âge"><label for="a1_3__4">le nombre de vélos de la flotte, et leur âge</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_4">
+  <legend>Qu'est-ce qui manque à «&nbsp;le vélo doit être solide&nbsp;» pour être vérifiable&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__1" value="une grandeur, une unité et un seuil"><label for="a1_4__1">une grandeur, une unité et un seuil</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__2" value="un adjectif plus précis"><label for="a1_4__2">un adjectif plus précis</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__3" value="l'avis des usagers"><label for="a1_4__3">l'avis des usagers</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__4" value="rien : la phrase suffit"><label for="a1_4__4">rien : la phrase suffit</label></div>
+</fieldset>
 
   <h4>b) Un critère peut en cacher un autre</h4>
-  <div class="assoc"><label for="a1_5">Le maire n'a rien dit du confort. Faut-il l'ajouter au cahier des charges&nbsp;?</label>
-    <select id="a1_5"><option value="">— choisir —</option>
-      <option>oui, si l'on justifie : un vélo inconfortable est moins utilisé, donc moins rentable par kilomètre</option>
-      <option>non : on ne met que ce que le commanditaire a demandé</option>
-      <option>oui, sans avoir à le justifier</option>
-      <option>non : le confort ne se mesure pas</option></select></div>
-  <div class="assoc"><label for="a1_6">Un cahier des charges qui contient quinze exigences&nbsp;:</label>
-    <select id="a1_6"><option value="">— choisir —</option>
-      <option>risque de n'être satisfait par aucune solution : il faut distinguer l'indispensable du souhaitable</option>
-      <option>est forcément meilleur qu'un cahier de quatre exigences</option>
-      <option>est invalide : le maximum est de dix</option>
-      <option>ne change rien au résultat</option></select></div>
+  <fieldset class="qcm-groupe" id="a1_5">
+  <legend>Le maire n'a rien dit du confort. Faut-il l'ajouter au cahier des charges&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__1" value="oui, si l'on justifie : un vélo inconfortable est moins utilisé, donc moins rentable par kilomètre"><label for="a1_5__1">oui, si l'on justifie : un vélo inconfortable est moins utilisé, donc moins rentable par kilomètre</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__2" value="non : on ne met que ce que le commanditaire a demandé"><label for="a1_5__2">non : on ne met que ce que le commanditaire a demandé</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__3" value="oui, sans avoir à le justifier"><label for="a1_5__3">oui, sans avoir à le justifier</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__4" value="non : le confort ne se mesure pas"><label for="a1_5__4">non : le confort ne se mesure pas</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_6">
+  <legend>Un cahier des charges qui contient quinze exigences&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__1" value="risque de n'être satisfait par aucune solution : il faut distinguer l'indispensable du souhaitable"><label for="a1_6__1">risque de n'être satisfait par aucune solution : il faut distinguer l'indispensable du souhaitable</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__2" value="est forcément meilleur qu'un cahier de quatre exigences"><label for="a1_6__2">est forcément meilleur qu'un cahier de quatre exigences</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__3" value="est invalide : le maximum est de dix"><label for="a1_6__3">est invalide : le maximum est de dix</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__4" value="ne change rien au résultat"><label for="a1_6__4">ne change rien au résultat</label></div>
+</fieldset>
 
   <h4>c) Ton cahier des charges</h4>
   <div class="assoc">
@@ -367,42 +400,54 @@ n'est envoyé. Le <b>mode essentiel</b> masque le référentiel, les corrections
   <p>Ouvre le fichier dans un tableur. Quatre flottes, dix-sept colonnes.</p>
 
   <h4>a) Le classement naïf</h4>
-  <div class="assoc"><label for="a2_1">Classée sur le seul <b>CO₂ de fabrication</b>, la meilleure flotte est&nbsp;:</label>
-    <select id="a2_1"><option value="">— choisir —</option>
-      <option>F4, acier recyclé (58 kg éq.)</option><option>F1, acier robuste (96 kg éq.)</option>
-      <option>F2, aluminium (134 kg éq.)</option><option>F3, composite (210 kg éq.)</option></select></div>
-  <div class="assoc"><label for="a2_2">Pourquoi ce classement seul ne suffit-il pas&nbsp;?</label>
-    <select id="a2_2"><option value="">— choisir —</option>
-      <option>parce qu'il ignore la durée de vie et les kilomètres parcourus : un vélo qui émet peu mais sert peu n'est pas forcément meilleur</option>
-      <option>parce que le CO₂ ne se mesure pas</option>
-      <option>parce que les données sont simulées</option>
-      <option>parce qu'il faut toujours quatre critères</option></select></div>
+  <fieldset class="qcm-groupe" id="a2_1">
+  <legend>Classée sur le seul <b>CO₂ de fabrication</b>, la meilleure flotte est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__1" value="F4, acier recyclé (58 kg éq.)"><label for="a2_1__1">F4, acier recyclé (58 kg éq.)</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__2" value="F1, acier robuste (96 kg éq.)"><label for="a2_1__2">F1, acier robuste (96 kg éq.)</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__3" value="F2, aluminium (134 kg éq.)"><label for="a2_1__3">F2, aluminium (134 kg éq.)</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__4" value="F3, composite (210 kg éq.)"><label for="a2_1__4">F3, composite (210 kg éq.)</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_2">
+  <legend>Pourquoi ce classement seul ne suffit-il pas&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__1" value="parce qu'il ignore la durée de vie et les kilomètres parcourus : un vélo qui émet peu mais sert peu n'est pas forcément meilleur"><label for="a2_2__1">parce qu'il ignore la durée de vie et les kilomètres parcourus : un vélo qui émet peu mais sert peu n'est pas forcément meilleur</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__2" value="parce que le CO₂ ne se mesure pas"><label for="a2_2__2">parce que le CO₂ ne se mesure pas</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__3" value="parce que les données sont simulées"><label for="a2_2__3">parce que les données sont simulées</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__4" value="parce qu'il faut toujours quatre critères"><label for="a2_2__4">parce qu'il faut toujours quatre critères</label></div>
+</fieldset>
 
   <h4>b) Rapporter au service rendu</h4>
   <p>Calcule au tableur, pour chaque flotte&nbsp;: <code>(CO₂ fabrication + CO₂ entretien × durée
   de vie) ÷ (durée de vie × km par an)</code>, en grammes par kilomètre.</p>
-  <div class="assoc"><label for="a2_3">Quelle flotte obtient le meilleur résultat (le plus faible)&nbsp;?</label>
-    <select id="a2_3"><option value="">— choisir —</option>
-      <option>F4, à environ 5,6 g/km</option><option>F1, à environ 6,3 g/km</option>
-      <option>F2, à environ 8,3 g/km</option><option>F3, à environ 13,1 g/km</option></select></div>
-  <div class="assoc"><label for="a2_4">Et la moins bonne&nbsp;?</label>
-    <select id="a2_4"><option value="">— choisir —</option>
-      <option>F3, le composite premium</option><option>F1</option>
-      <option>F2</option><option>F4</option></select></div>
-  <div class="assoc"><label for="a2_5">F3 parcourt pourtant le plus de kilomètres par an (3600). Pourquoi termine-t-elle dernière&nbsp;?</label>
-    <select id="a2_5"><option value="">— choisir —</option>
-      <option>parce qu'elle émet beaucoup à la fabrication ET dure le moins longtemps : son coût est amorti sur trop peu de kilomètres</option>
-      <option>parce qu'elle est trop confortable</option>
-      <option>parce que le carbone n'est pas recyclable</option>
-      <option>parce qu'elle est la plus légère</option></select></div>
+  <fieldset class="qcm-groupe" id="a2_3">
+  <legend>Quelle flotte obtient le meilleur résultat (le plus faible)&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__1" value="F4, à environ 5,6 g/km"><label for="a2_3__1">F4, à environ 5,6 g/km</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__2" value="F1, à environ 6,3 g/km"><label for="a2_3__2">F1, à environ 6,3 g/km</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__3" value="F2, à environ 8,3 g/km"><label for="a2_3__3">F2, à environ 8,3 g/km</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__4" value="F3, à environ 13,1 g/km"><label for="a2_3__4">F3, à environ 13,1 g/km</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_4">
+  <legend>Et la moins bonne&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__1" value="F3, le composite premium"><label for="a2_4__1">F3, le composite premium</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__2" value="F1"><label for="a2_4__2">F1</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__3" value="F2"><label for="a2_4__3">F2</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__4" value="F4"><label for="a2_4__4">F4</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_5">
+  <legend>F3 parcourt pourtant le plus de kilomètres par an (3600). Pourquoi termine-t-elle dernière&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__1" value="parce qu'elle émet beaucoup à la fabrication ET dure le moins longtemps : son coût est amorti sur trop peu de kilomètres"><label for="a2_5__1">parce qu'elle émet beaucoup à la fabrication ET dure le moins longtemps : son coût est amorti sur trop peu de kilomètres</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__2" value="parce qu'elle est trop confortable"><label for="a2_5__2">parce qu'elle est trop confortable</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__3" value="parce que le carbone n'est pas recyclable"><label for="a2_5__3">parce que le carbone n'est pas recyclable</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__4" value="parce qu'elle est la plus légère"><label for="a2_5__4">parce qu'elle est la plus légère</label></div>
+</fieldset>
 
   <h4>c) Qualitatif et quantitatif</h4>
-  <div class="assoc"><label for="a2_6">«&nbsp;Cadre non réparable après un choc&nbsp;» est une donnée&nbsp;:</label>
-    <select id="a2_6"><option value="">— choisir —</option>
-      <option>qualitative, mais décisive : elle ne se chiffre pas et pourtant elle écarte une solution</option>
-      <option>quantitative, puisqu'elle concerne le cadre</option>
-      <option>sans importance face aux chiffres</option>
-      <option>impossible à prendre en compte</option></select></div>
+  <fieldset class="qcm-groupe" id="a2_6">
+  <legend>«&nbsp;Cadre non réparable après un choc&nbsp;» est une donnée&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_6" id="a2_6__1" value="qualitative, mais décisive : elle ne se chiffre pas et pourtant elle écarte une solution"><label for="a2_6__1">qualitative, mais décisive : elle ne se chiffre pas et pourtant elle écarte une solution</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_6" id="a2_6__2" value="quantitative, puisqu'elle concerne le cadre"><label for="a2_6__2">quantitative, puisqu'elle concerne le cadre</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_6" id="a2_6__3" value="sans importance face aux chiffres"><label for="a2_6__3">sans importance face aux chiffres</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_6" id="a2_6__4" value="impossible à prendre en compte"><label for="a2_6__4">impossible à prendre en compte</label></div>
+</fieldset>
   <div class="assoc">
     <label for="a2_ana">Explique en trois phrases pourquoi un classement sur un seul critère est trompeur, en t'appuyant sur deux chiffres du tableau.</label>
     <textarea id="a2_ana" aria-label="Analyse : pourquoi un classement sur un seul critère est trompeur"></textarea>
@@ -460,38 +505,50 @@ n'est envoyé. Le <b>mode essentiel</b> masque le référentiel, les corrections
   </figure>
 
   <h4>a) Associer la grandeur et l'appareil</h4>
-  <div class="assoc"><label for="a3_1">Pour vérifier l'exigence «&nbsp;temps de réparation inférieur à 40 min&nbsp;», l'appareil est&nbsp;:</label>
-    <select id="a3_1"><option value="">— choisir —</option>
-      <option>un chronomètre</option><option>une balance</option>
-      <option>un dynamomètre</option><option>un multimètre</option></select></div>
-  <div class="assoc"><label for="a3_2">Pour mesurer l'effort qui fait céder un antivol&nbsp;:</label>
-    <select id="a3_2"><option value="">— choisir —</option>
-      <option>un dynamomètre, en newtons</option><option>une balance, en kilogrammes</option>
-      <option>un mètre ruban, en mètres</option><option>un chronomètre, en secondes</option></select></div>
-  <div class="assoc"><label for="a3_3">Pour comparer la masse des quatre flottes&nbsp;:</label>
-    <select id="a3_3"><option value="">— choisir —</option>
-      <option>une balance, en kilogrammes</option><option>un dynamomètre, en newtons</option>
-      <option>un multimètre, en volts</option><option>un compteur, en kilomètres</option></select></div>
-  <div class="assoc"><label for="a3_4">Un élève propose de mesurer la solidité du cadre «&nbsp;avec un mètre ruban&nbsp;». Que lui répondre&nbsp;?</label>
-    <select id="a3_4"><option value="">— choisir —</option>
-      <option>qu'un mètre ruban mesure une longueur, pas une résistance : il faut d'abord dire quelle grandeur représente la solidité</option>
-      <option>qu'il a raison, un cadre plus long est plus solide</option>
-      <option>que la solidité ne se mesure jamais</option>
-      <option>qu'il faut un multimètre</option></select></div>
+  <fieldset class="qcm-groupe" id="a3_1">
+  <legend>Pour vérifier l'exigence «&nbsp;temps de réparation inférieur à 40 min&nbsp;», l'appareil est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__1" value="un chronomètre"><label for="a3_1__1">un chronomètre</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__2" value="une balance"><label for="a3_1__2">une balance</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__3" value="un dynamomètre"><label for="a3_1__3">un dynamomètre</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__4" value="un multimètre"><label for="a3_1__4">un multimètre</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_2">
+  <legend>Pour mesurer l'effort qui fait céder un antivol&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__1" value="un dynamomètre, en newtons"><label for="a3_2__1">un dynamomètre, en newtons</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__2" value="une balance, en kilogrammes"><label for="a3_2__2">une balance, en kilogrammes</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__3" value="un mètre ruban, en mètres"><label for="a3_2__3">un mètre ruban, en mètres</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__4" value="un chronomètre, en secondes"><label for="a3_2__4">un chronomètre, en secondes</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_3">
+  <legend>Pour comparer la masse des quatre flottes&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__1" value="une balance, en kilogrammes"><label for="a3_3__1">une balance, en kilogrammes</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__2" value="un dynamomètre, en newtons"><label for="a3_3__2">un dynamomètre, en newtons</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__3" value="un multimètre, en volts"><label for="a3_3__3">un multimètre, en volts</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__4" value="un compteur, en kilomètres"><label for="a3_3__4">un compteur, en kilomètres</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_4">
+  <legend>Un élève propose de mesurer la solidité du cadre «&nbsp;avec un mètre ruban&nbsp;». Que lui répondre&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__1" value="qu'un mètre ruban mesure une longueur, pas une résistance : il faut d'abord dire quelle grandeur représente la solidité"><label for="a3_4__1">qu'un mètre ruban mesure une longueur, pas une résistance : il faut d'abord dire quelle grandeur représente la solidité</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__2" value="qu'il a raison, un cadre plus long est plus solide"><label for="a3_4__2">qu'il a raison, un cadre plus long est plus solide</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__3" value="que la solidité ne se mesure jamais"><label for="a3_4__3">que la solidité ne se mesure jamais</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__4" value="qu'il faut un multimètre"><label for="a3_4__4">qu'il faut un multimètre</label></div>
+</fieldset>
 
   <h4>b) La précision, et ce qu'elle change</h4>
-  <div class="assoc"><label for="a3_5">Une balance au dixième de kilogramme suffit-elle pour départager 17,4 kg et 18,9 kg&nbsp;?</label>
-    <select id="a3_5"><option value="">— choisir —</option>
-      <option>oui : l'écart de 1,5 kg est bien supérieur à la précision de l'appareil</option>
-      <option>non : il faudrait le gramme</option>
-      <option>non : une balance ne mesure pas les vélos</option>
-      <option>on ne peut pas savoir</option></select></div>
-  <div class="assoc"><label for="a3_6">Deux flottes annoncent 13,1 et 13,15 kg. Avec la même balance&nbsp;:</label>
-    <select id="a3_6"><option value="">— choisir —</option>
-      <option>on ne peut pas les départager : l'écart est plus petit que la précision de l'appareil</option>
-      <option>la première gagne</option>
-      <option>la seconde gagne</option>
-      <option>il faut refaire trois essais et la moyenne tranchera</option></select></div>
+  <fieldset class="qcm-groupe" id="a3_5">
+  <legend>Une balance au dixième de kilogramme suffit-elle pour départager 17,4 kg et 18,9 kg&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__1" value="oui : l'écart de 1,5 kg est bien supérieur à la précision de l'appareil"><label for="a3_5__1">oui : l'écart de 1,5 kg est bien supérieur à la précision de l'appareil</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__2" value="non : il faudrait le gramme"><label for="a3_5__2">non : il faudrait le gramme</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__3" value="non : une balance ne mesure pas les vélos"><label for="a3_5__3">non : une balance ne mesure pas les vélos</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__4" value="on ne peut pas savoir"><label for="a3_5__4">on ne peut pas savoir</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_6">
+  <legend>Deux flottes annoncent 13,1 et 13,15 kg. Avec la même balance&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_6" id="a3_6__1" value="on ne peut pas les départager : l'écart est plus petit que la précision de l'appareil"><label for="a3_6__1">on ne peut pas les départager : l'écart est plus petit que la précision de l'appareil</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_6" id="a3_6__2" value="la première gagne"><label for="a3_6__2">la première gagne</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_6" id="a3_6__3" value="la seconde gagne"><label for="a3_6__3">la seconde gagne</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_6" id="a3_6__4" value="il faut refaire trois essais et la moyenne tranchera"><label for="a3_6__4">il faut refaire trois essais et la moyenne tranchera</label></div>
+</fieldset>
 
   <h4>c) Ton protocole</h4>
   <div class="assoc">
@@ -550,36 +607,48 @@ n'est envoyé. Le <b>mode essentiel</b> masque le référentiel, les corrections
   durée de vie ≥ <b>8 ans</b> · pièces détachées <b>disponibles</b> · temps de réparation
   ≤ <b>40 min</b> · note d'antivol ≥ <b>4 sur 5</b>.</p>
 
-  <div class="assoc"><label for="a4_1">Combien de flottes passent les quatre exigences&nbsp;?</label>
-    <select id="a4_1"><option value="">— choisir —</option>
-      <option>deux</option><option>une seule</option><option>trois</option><option>aucune</option></select></div>
-  <div class="assoc"><label for="a4_2">Lesquelles&nbsp;?</label>
-    <select id="a4_2"><option value="">— choisir —</option>
-      <option>F1 et F4</option><option>F1 et F2</option>
-      <option>F2 et F3</option><option>F3 et F4</option></select></div>
-  <div class="assoc"><label for="a4_3">Sur quelle exigence F3 tombe-t-elle&nbsp;?</label>
-    <select id="a4_3"><option value="">— choisir —</option>
-      <option>trois à la fois : durée de vie, pièces détachées et temps de réparation</option>
-      <option>seulement la durée de vie</option>
-      <option>seulement l'antivol</option>
-      <option>aucune : elle passe</option></select></div>
-  <div class="assoc"><label for="a4_4">Et F2&nbsp;?</label>
-    <select id="a4_4"><option value="">— choisir —</option>
-      <option>l'antivol, à 3 sur 5 pour un seuil de 4</option>
-      <option>la durée de vie</option><option>le temps de réparation</option>
-      <option>les pièces détachées</option></select></div>
-  <div class="assoc"><label for="a4_5">Il reste deux flottes. Comment les départager&nbsp;?</label>
-    <select id="a4_5"><option value="">— choisir —</option>
-      <option>avec les critères souhaitables, en disant lesquels on privilégie et pourquoi</option>
-      <option>en tirant au sort</option>
-      <option>en prenant la moins chère à l'achat, sans discussion</option>
-      <option>on ne peut pas : il faut recommencer</option></select></div>
-  <div class="assoc"><label for="a4_6">Entre F1 (confort 3, CO₂ 6,3 g/km) et F4 (confort 2, CO₂ 5,6 g/km), le choix dépend&nbsp;:</label>
-    <select id="a4_6"><option value="">— choisir —</option>
-      <option>de ce que la ville privilégie : l'usage réel ou l'empreinte — et il faut le dire</option>
-      <option>uniquement du CO₂</option>
-      <option>uniquement du confort</option>
-      <option>du hasard</option></select></div>
+  <fieldset class="qcm-groupe" id="a4_1">
+  <legend>Combien de flottes passent les quatre exigences&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__1" value="deux"><label for="a4_1__1">deux</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__2" value="une seule"><label for="a4_1__2">une seule</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__3" value="trois"><label for="a4_1__3">trois</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__4" value="aucune"><label for="a4_1__4">aucune</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_2">
+  <legend>Lesquelles&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__1" value="F1 et F4"><label for="a4_2__1">F1 et F4</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__2" value="F1 et F2"><label for="a4_2__2">F1 et F2</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__3" value="F2 et F3"><label for="a4_2__3">F2 et F3</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__4" value="F3 et F4"><label for="a4_2__4">F3 et F4</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_3">
+  <legend>Sur quelle exigence F3 tombe-t-elle&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__1" value="trois à la fois : durée de vie, pièces détachées et temps de réparation"><label for="a4_3__1">trois à la fois : durée de vie, pièces détachées et temps de réparation</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__2" value="seulement la durée de vie"><label for="a4_3__2">seulement la durée de vie</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__3" value="seulement l'antivol"><label for="a4_3__3">seulement l'antivol</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__4" value="aucune : elle passe"><label for="a4_3__4">aucune : elle passe</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_4">
+  <legend>Et F2&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__1" value="l'antivol, à 3 sur 5 pour un seuil de 4"><label for="a4_4__1">l'antivol, à 3 sur 5 pour un seuil de 4</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__2" value="la durée de vie"><label for="a4_4__2">la durée de vie</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__3" value="le temps de réparation"><label for="a4_4__3">le temps de réparation</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__4" value="les pièces détachées"><label for="a4_4__4">les pièces détachées</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_5">
+  <legend>Il reste deux flottes. Comment les départager&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__1" value="avec les critères souhaitables, en disant lesquels on privilégie et pourquoi"><label for="a4_5__1">avec les critères souhaitables, en disant lesquels on privilégie et pourquoi</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__2" value="en tirant au sort"><label for="a4_5__2">en tirant au sort</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__3" value="en prenant la moins chère à l'achat, sans discussion"><label for="a4_5__3">en prenant la moins chère à l'achat, sans discussion</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__4" value="on ne peut pas : il faut recommencer"><label for="a4_5__4">on ne peut pas : il faut recommencer</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a4_6">
+  <legend>Entre F1 (confort 3, CO₂ 6,3 g/km) et F4 (confort 2, CO₂ 5,6 g/km), le choix dépend&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a4_6" id="a4_6__1" value="de ce que la ville privilégie : l'usage réel ou l'empreinte — et il faut le dire"><label for="a4_6__1">de ce que la ville privilégie : l'usage réel ou l'empreinte — et il faut le dire</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_6" id="a4_6__2" value="uniquement du CO₂"><label for="a4_6__2">uniquement du CO₂</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_6" id="a4_6__3" value="uniquement du confort"><label for="a4_6__3">uniquement du confort</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_6" id="a4_6__4" value="du hasard"><label for="a4_6__4">du hasard</label></div>
+</fieldset>
 
   <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
     <p>Traite les exigences <b>une par une</b> et note qui tombe à chaque fois. Une flotte est
@@ -665,24 +734,27 @@ n'est envoyé. Le <b>mode essentiel</b> masque le référentiel, les corrections
     <li>«&nbsp;Ce que je n'arrive pas encore à faire seul·e&nbsp;: ____.&nbsp;»</li>
     <li>«&nbsp;Pour progresser, la prochaine fois je ____.&nbsp;»</li></ul></details>
   <h3>Je me positionne</h3>
-  <div class="assoc"><label for="pos1">4e_C3.1 — identifier les caractéristiques d'un besoin&nbsp;:</label>
-    <select id="pos1"><option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — je reste sur des mots comme « solide »</option>
-      <option>🟠 Maîtrise fragile — je trouve la grandeur, pas le seuil</option>
-      <option>🟢 Maîtrise satisfaisante — j'écris grandeur, unité et seuil</option>
-      <option>⭐ Très bonne maîtrise — je propose un critère que personne n'a demandé et je le justifie</option></select></div>
-  <div class="assoc"><label for="pos2">4e_C3.2 — comparer, incidences comprises&nbsp;:</label>
-    <select id="pos2"><option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — je compare sur un seul chiffre</option>
-      <option>🟠 Maîtrise fragile — je calcule avec de l'aide</option>
-      <option>🟢 Maîtrise satisfaisante — je rapporte l'incidence au service rendu</option>
-      <option>⭐ Très bonne maîtrise — j'intègre aussi une donnée qualitative décisive</option></select></div>
-  <div class="assoc"><label for="pos3">4e_C3.3 — choisir les appareils de mesure&nbsp;:</label>
-    <select id="pos3"><option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — je confonds les grandeurs</option>
-      <option>🟠 Maîtrise fragile — je choisis l'appareil si on me donne la grandeur</option>
-      <option>🟢 Maîtrise satisfaisante — je pars de la grandeur, puis je choisis l'appareil</option>
-      <option>⭐ Très bonne maîtrise — je tiens compte de la précision de l'appareil</option></select></div>
+  <fieldset class="qcm-groupe" id="pos1">
+  <legend>4e_C3.1 — identifier les caractéristiques d'un besoin&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__1" value="🔴 Maîtrise insuffisante — je reste sur des mots comme « solide »"><label for="pos1__1">🔴 Maîtrise insuffisante — je reste sur des mots comme « solide »</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__2" value="🟠 Maîtrise fragile — je trouve la grandeur, pas le seuil"><label for="pos1__2">🟠 Maîtrise fragile — je trouve la grandeur, pas le seuil</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__3" value="🟢 Maîtrise satisfaisante — j'écris grandeur, unité et seuil"><label for="pos1__3">🟢 Maîtrise satisfaisante — j'écris grandeur, unité et seuil</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__4" value="⭐ Très bonne maîtrise — je propose un critère que personne n'a demandé et je le justifie"><label for="pos1__4">⭐ Très bonne maîtrise — je propose un critère que personne n'a demandé et je le justifie</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="pos2">
+  <legend>4e_C3.2 — comparer, incidences comprises&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__1" value="🔴 Maîtrise insuffisante — je compare sur un seul chiffre"><label for="pos2__1">🔴 Maîtrise insuffisante — je compare sur un seul chiffre</label></div>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__2" value="🟠 Maîtrise fragile — je calcule avec de l'aide"><label for="pos2__2">🟠 Maîtrise fragile — je calcule avec de l'aide</label></div>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__3" value="🟢 Maîtrise satisfaisante — je rapporte l'incidence au service rendu"><label for="pos2__3">🟢 Maîtrise satisfaisante — je rapporte l'incidence au service rendu</label></div>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__4" value="⭐ Très bonne maîtrise — j'intègre aussi une donnée qualitative décisive"><label for="pos2__4">⭐ Très bonne maîtrise — j'intègre aussi une donnée qualitative décisive</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="pos3">
+  <legend>4e_C3.3 — choisir les appareils de mesure&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__1" value="🔴 Maîtrise insuffisante — je confonds les grandeurs"><label for="pos3__1">🔴 Maîtrise insuffisante — je confonds les grandeurs</label></div>
+  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__2" value="🟠 Maîtrise fragile — je choisis l'appareil si on me donne la grandeur"><label for="pos3__2">🟠 Maîtrise fragile — je choisis l'appareil si on me donne la grandeur</label></div>
+  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__3" value="🟢 Maîtrise satisfaisante — je pars de la grandeur, puis je choisis l'appareil"><label for="pos3__3">🟢 Maîtrise satisfaisante — je pars de la grandeur, puis je choisis l'appareil</label></div>
+  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__4" value="⭐ Très bonne maîtrise — je tiens compte de la précision de l'appareil"><label for="pos3__4">⭐ Très bonne maîtrise — je tiens compte de la précision de l'appareil</label></div>
+</fieldset>
 </section>
 
 <section class="card">
@@ -712,6 +784,36 @@ n'est envoyé. Le <b>mode essentiel</b> masque le référentiel, les corrections
   <p>Séquence 4e_C3.1 · C3.2 · C3.3 — Thème 1 · Technologie cycle 4 (2024).
   Page autonome, hors ligne, aucune donnée envoyée. Toutes les données sont simulées.</p>
 </footer>
+<script>
+/* ══════ Règle d'or n°300 — le groupe de boutons radio expose sa valeur ══════
+   Un <fieldset class="qcm-groupe"> remplace une liste déroulante. Pour que tout
+   ce qui lisait `champ.value` continue de fonctionner — sauvegarde, restauration,
+   correction, bancs de lot —, le groupe porte lui-même la valeur de la
+   proposition cochée, sous le même nom et avec le même contenu : son TEXTE.
+   Lire rend "" quand rien n'est coché, comme le faisait l'option vide.
+
+   La propriété est posée sur le PROTOTYPE, et non sur chaque élément : un
+   <fieldset> n'a pas de `value` native, et le faire ainsi affranchit du moment
+   où ce script s'exécute. Une première version le posait élément par élément,
+   et manquait les groupes que le navigateur n'avait pas encore lus. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){
+        r.checked = (r.value === v);
+      });
+    }
+  });
+})();
+</script>
 <script>
 "use strict";
 const KEY="seq_4e_C3.1-C3.3_hangzhou";
@@ -753,24 +855,36 @@ function demande(cle,msg){
   signale(msg + " — clique une seconde fois pour confirmer.");
   return false;
 }
-const val=id=>{const e=$(id);return e?e.value:"";};
+/* Règle d'or n°300 : un groupe de boutons radio rend le TEXTE de la
+   proposition cochée — exactement ce que rendait `select.value` —, de sorte
+   que les tables de réponses attendues n'ont pas une ligne à changer. */
+const val=id=>{
+  const e=$(id); if(!e) return "";
+  if(e.tagName==="FIELDSET"){ const c=e.querySelector("input[type=radio]:checked"); return c?c.value:""; }
+  return e.value;
+};
 window.__valid = window.__valid || {};
 window.__exp = window.__exp || {};
 
 /* ══════ Sauvegarde locale ══════ */
 function collect(){
   const o={inputs:{}, valid:window.__valid, exp:window.__exp};
-  document.querySelectorAll("select,textarea").forEach(e=>{ if(e.id) o.inputs[e.id]=e.value; });
+  document.querySelectorAll("textarea,fieldset.qcm-groupe").forEach(e=>{ if(e.id) o.inputs[e.id]=val(e.id); });
   return o;
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){} }
 function restore(){
   let o=null; try{ o=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(err){}
   if(!o) return;
-  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.value=v; });
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{
+    const e=$(id); if(!e) return;
+    if(e.tagName==="FIELDSET"){
+      e.querySelectorAll("input[type=radio]").forEach(r=>{ r.checked = (r.value===v); });
+    } else e.value=v;
+  });
   window.__valid=o.valid||{}; window.__exp=o.exp||{};
 }
-document.addEventListener("change", ev=>{ if(/SELECT|TEXTAREA/.test(ev.target.tagName)) save(); });
+document.addEventListener("change", ev=>{ if(/INPUT|TEXTAREA/.test(ev.target.tagName)) save(); });
 document.addEventListener("input", ev=>{ if(ev.target.tagName==="TEXTAREA") save(); });
 
 $("btnPrint").addEventListener("click", ()=>window.print());

@@ -42,14 +42,14 @@ with sync_playwright() as p:
       "aucune note" in pg.inner_text("#fb0"), pg.inner_text("#fb0")[:60])
     # activité 1 complète
     pg.evaluate("['a1_1','a1_2','a1_3','a1_4','a1_5','a1_6','a1_7']"
-                ".forEach(i=>document.getElementById(i).selectedIndex=1)")
+                ".forEach(i=>{const g=document.getElementById(i);const r=g.querySelector('input[type=radio]');if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
     pg.click('[data-check="1"]'); pg.wait_for_timeout(150)
     t("activité 1 : score parfait reconnu", "7 / 7" in pg.inner_text("#fb1"))
     t("progression mise à jour", "1 / 5" in pg.inner_text("#progTxt"))
     # verrou de rédaction : l'activité 2 refuse sans texte
     pg.click("#tab-s2"); pg.wait_for_timeout(150)
     pg.evaluate("['a2_1','a2_2','a2_3','a2_4','a2_5','a2_6']"
-                ".forEach(i=>document.getElementById(i).selectedIndex=1)")
+                ".forEach(i=>{const g=document.getElementById(i);const r=g.querySelector('input[type=radio]');if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
     pg.click('[data-check="2"]'); pg.wait_for_timeout(150)
     t("activité 2 : la justification écrite est exigée",
       "justification" in pg.inner_text("#fb2"), pg.inner_text("#fb2")[-60:])

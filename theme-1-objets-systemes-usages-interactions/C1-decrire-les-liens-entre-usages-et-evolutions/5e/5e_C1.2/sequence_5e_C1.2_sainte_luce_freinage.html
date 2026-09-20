@@ -107,6 +107,29 @@
   .card h4,.card span,.sous{color:#1a6af8!important}
   .correction summary{color:#946b00!important}
 }
+  /* Question à choix unique — groupe de boutons radio natifs (règle d'or n°300).
+     L'énoncé vit dans la <legend> : rien ne peut le recouvrir. Pas d'encadrement
+     complet — une <legend> chevauche le bord SUPÉRIEUR d'un fieldset et le coupe
+     dès qu'elle passe à la ligne ; un filet à GAUCHE groupe aussi bien. */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--input-bd);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--input-bg)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;
+    flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer}
+  @media print{
+    /* Sur le papier, body{color:#111} noircit le texte : un fond resté sombre le
+       ferait disparaître (refus mesuré par controle_impression.mjs le 20/09).
+       Le groupe s'imprime donc en blanc — et TOUTES les propositions restent
+       lisibles, là où une liste déroulante n'imprimait que le choix retenu. */
+    .qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;
+      border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}
+    .qcm-groupe .qcm-option input[type=radio]{-webkit-appearance:auto;appearance:auto}
+  }
 </style>
 <style id="ressource-css">
 /* Bloc « ressource externe » — posé par _outils poser_ressource.py. Ne pas éditer à la main. */
@@ -308,24 +331,27 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 <section class="card">
   <h2>🎫 Billet d'entrée — je vérifie mes outils (5 min, <b>sans note</b>)</h2>
   <p>Trois questions sur ce que tu sais déjà. <b>Aucune note</b>&nbsp;: c'est un aiguillage.</p>
-  <div class="assoc"><label for="be_1">Une <b>fonction technique</b>, c'est&nbsp;:</label>
-    <select id="be_1"><option value="">— choisir —</option>
-      <option>ce que l'objet doit faire, dit par un verbe à l'infinitif, sans dire par quel moyen</option>
-      <option>ce à quoi l'objet sert pour celui qui l'utilise</option>
-      <option>le nom du composant qui la réalise</option>
-      <option>la marque de l'objet</option></select></div>
-  <div class="assoc"><label for="be_2">Le <b>frottement</b> entre deux surfaces qui glissent l'une sur l'autre&nbsp;:</label>
-    <select id="be_2"><option value="">— choisir —</option>
-      <option>freine le mouvement et produit de la chaleur</option>
-      <option>accélère le mouvement</option>
-      <option>ne produit rien tant qu'il n'y a pas d'électricité</option>
-      <option>n'existe que sur les surfaces rugueuses</option></select></div>
-  <div class="assoc"><label for="be_3">Comparer deux solutions, c'est d'abord&nbsp;:</label>
-    <select id="be_3"><option value="">— choisir —</option>
-      <option>les juger sur les mêmes critères, mesurés de la même façon</option>
-      <option>choisir la moins chère</option>
-      <option>demander laquelle on préfère</option>
-      <option>compter le nombre de pièces de chacune</option></select></div>
+  <fieldset class="qcm-groupe" id="be_1">
+  <legend>Une <b>fonction technique</b>, c'est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="ce que l'objet doit faire, dit par un verbe à l'infinitif, sans dire par quel moyen"><label for="be_1__1">ce que l'objet doit faire, dit par un verbe à l'infinitif, sans dire par quel moyen</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="ce à quoi l'objet sert pour celui qui l'utilise"><label for="be_1__2">ce à quoi l'objet sert pour celui qui l'utilise</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="le nom du composant qui la réalise"><label for="be_1__3">le nom du composant qui la réalise</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="la marque de l'objet"><label for="be_1__4">la marque de l'objet</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="be_2">
+  <legend>Le <b>frottement</b> entre deux surfaces qui glissent l'une sur l'autre&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="freine le mouvement et produit de la chaleur"><label for="be_2__1">freine le mouvement et produit de la chaleur</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="accélère le mouvement"><label for="be_2__2">accélère le mouvement</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="ne produit rien tant qu'il n'y a pas d'électricité"><label for="be_2__3">ne produit rien tant qu'il n'y a pas d'électricité</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="n'existe que sur les surfaces rugueuses"><label for="be_2__4">n'existe que sur les surfaces rugueuses</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="be_3">
+  <legend>Comparer deux solutions, c'est d'abord&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="les juger sur les mêmes critères, mesurés de la même façon"><label for="be_3__1">les juger sur les mêmes critères, mesurés de la même façon</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="choisir la moins chère"><label for="be_3__2">choisir la moins chère</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="demander laquelle on préfère"><label for="be_3__3">demander laquelle on préfère</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="compter le nombre de pièces de chacune"><label for="be_3__4">compter le nombre de pièces de chacune</label></div>
+</fieldset>
   <button class="btn small" data-check="0" type="button">🎫 Vérifier mon billet d'entrée</button>
   <p class="feedback" id="fb0" role="status"></p>
   <details class="aide" id="capsule"><summary>🎒 Je révise en 3 minutes</summary>
@@ -463,36 +489,41 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     </ul></details>
 
   <h4>b) Trois mots qu'on confond</h4>
-  <div class="assoc"><label for="a1_1">«&nbsp;<b>Arrêter un vélo en mouvement</b>&nbsp;» est&nbsp;:</label>
-    <select id="a1_1"><option value="">— choisir —</option>
-      <option>une fonction technique : elle dit ce qu'il faut obtenir, sans dire par quel moyen</option>
-      <option>un principe technique : elle nomme un phénomène physique</option>
-      <option>une solution technique : elle désigne un frein précis</option>
-      <option>une marque de frein</option></select></div>
-  <div class="assoc"><label for="a1_2">«&nbsp;<b>Serrer la jante entre deux patins par frottement</b>&nbsp;» est&nbsp;:</label>
-    <select id="a1_2"><option value="">— choisir —</option>
-      <option>un principe : c'est le phénomène employé pour remplir la fonction</option>
-      <option>une fonction technique</option>
-      <option>une solution technique</option>
-      <option>un critère de choix</option></select></div>
-  <div class="assoc"><label for="a1_3">«&nbsp;<b>Le frein à patins du fournisseur B, référence 2140</b>&nbsp;» est&nbsp;:</label>
-    <select id="a1_3"><option value="">— choisir —</option>
-      <option>une solution technique : c'est l'objet concret qu'on achète</option>
-      <option>un principe technique</option>
-      <option>une fonction technique</option>
-      <option>un phénomène physique</option></select></div>
-  <div class="assoc"><label for="a1_4">Les trois freins de la séquence emploient&nbsp;:</label>
-    <select id="a1_4"><option value="">— choisir —</option>
-      <option>le même phénomène — le frottement — mais à des endroits différents</option>
-      <option>trois phénomènes physiques totalement différents</option>
-      <option>de l'électronique pour deux d'entre eux</option>
-      <option>le même principe et la même solution</option></select></div>
-  <div class="assoc"><label for="a1_5">Pourquoi une fonction bien écrite ne nomme-t-elle aucun moyen&nbsp;?</label>
-    <select id="a1_5"><option value="">— choisir —</option>
-      <option>pour laisser ouverts tous les principes qui pourraient la remplir</option>
-      <option>pour rester plus courte</option>
-      <option>parce que le moyen n'a pas d'importance</option>
-      <option>parce qu'on ne le connaît jamais à l'avance</option></select></div>
+  <fieldset class="qcm-groupe" id="a1_1">
+  <legend>«&nbsp;<b>Arrêter un vélo en mouvement</b>&nbsp;» est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__1" value="une fonction technique : elle dit ce qu'il faut obtenir, sans dire par quel moyen"><label for="a1_1__1">une fonction technique : elle dit ce qu'il faut obtenir, sans dire par quel moyen</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__2" value="un principe technique : elle nomme un phénomène physique"><label for="a1_1__2">un principe technique : elle nomme un phénomène physique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__3" value="une solution technique : elle désigne un frein précis"><label for="a1_1__3">une solution technique : elle désigne un frein précis</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__4" value="une marque de frein"><label for="a1_1__4">une marque de frein</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_2">
+  <legend>«&nbsp;<b>Serrer la jante entre deux patins par frottement</b>&nbsp;» est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__1" value="un principe : c'est le phénomène employé pour remplir la fonction"><label for="a1_2__1">un principe : c'est le phénomène employé pour remplir la fonction</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__2" value="une fonction technique"><label for="a1_2__2">une fonction technique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__3" value="une solution technique"><label for="a1_2__3">une solution technique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__4" value="un critère de choix"><label for="a1_2__4">un critère de choix</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_3">
+  <legend>«&nbsp;<b>Le frein à patins du fournisseur B, référence 2140</b>&nbsp;» est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__1" value="une solution technique : c'est l'objet concret qu'on achète"><label for="a1_3__1">une solution technique : c'est l'objet concret qu'on achète</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__2" value="un principe technique"><label for="a1_3__2">un principe technique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__3" value="une fonction technique"><label for="a1_3__3">une fonction technique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__4" value="un phénomène physique"><label for="a1_3__4">un phénomène physique</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_4">
+  <legend>Les trois freins de la séquence emploient&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__1" value="le même phénomène — le frottement — mais à des endroits différents"><label for="a1_4__1">le même phénomène — le frottement — mais à des endroits différents</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__2" value="trois phénomènes physiques totalement différents"><label for="a1_4__2">trois phénomènes physiques totalement différents</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__3" value="de l'électronique pour deux d'entre eux"><label for="a1_4__3">de l'électronique pour deux d'entre eux</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__4" value="le même principe et la même solution"><label for="a1_4__4">le même principe et la même solution</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a1_5">
+  <legend>Pourquoi une fonction bien écrite ne nomme-t-elle aucun moyen&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__1" value="pour laisser ouverts tous les principes qui pourraient la remplir"><label for="a1_5__1">pour laisser ouverts tous les principes qui pourraient la remplir</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__2" value="pour rester plus courte"><label for="a1_5__2">pour rester plus courte</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__3" value="parce que le moyen n'a pas d'importance"><label for="a1_5__3">parce que le moyen n'a pas d'importance</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__4" value="parce qu'on ne le connaît jamais à l'avance"><label for="a1_5__4">parce qu'on ne le connaît jamais à l'avance</label></div>
+</fieldset>
   <button class="btn small" data-check="1" type="button">✅ Vérifier l'activité 1</button>
   <p class="feedback" id="fb1" role="status"></p>
   <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
@@ -642,36 +673,41 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <p>Le gestionnaire a deux fichiers&nbsp;: la <b>fiche</b> de chaque fournisseur
   (<a href="donnees_freinage_sainte_luce_simulees.csv" download title="Télécharger donnees_freinage_sainte_luce_simulees.csv">📥&nbsp;<code>donnees_freinage_sainte_luce_simulees.csv</code></a>) et les <b>quinze essais</b> qu'il a faits
   lui-même sur le parking (<a href="releves_essai_college_sainte_luce_simules.csv" download title="Télécharger releves_essai_college_sainte_luce_simules.csv">📥&nbsp;<code>releves_essai_college_sainte_luce_simules.csv</code></a>).</p>
-  <div class="assoc"><label for="a2_1">Sur le parking, le frein à patins a donné 5,7 puis 5,9 m sur sol sec. La fiche annonce 5,8 m. C'est&nbsp;:</label>
-    <select id="a2_1"><option value="">— choisir —</option>
-      <option>la moyenne des essais : une fiche technique est un résumé de mesures</option>
-      <option>une erreur du fournisseur</option>
-      <option>une valeur inventée</option>
-      <option>la plus petite des deux mesures</option></select></div>
-  <div class="assoc"><label for="a2_2">Sous la pluie, l'écart avec le sol sec vaut <b>+3,1 m</b> pour les patins et <b>+1,0 m</b> pour le disque. Cet écart dit&nbsp;:</label>
-    <select id="a2_2"><option value="">— choisir —</option>
-      <option>combien chaque principe perd quand la surface qui frotte est mouillée</option>
-      <option>que le disque est plus lourd</option>
-      <option>que les essais ont été mal faits</option>
-      <option>que la pluie n'a pas d'effet sur le tambour</option></select></div>
-  <div class="assoc"><label for="a2_3">Pourquoi le tambour perd-il le moins sous la pluie&nbsp;?</label>
-    <select id="a2_3"><option value="">— choisir —</option>
-      <option>parce que la surface qui frotte est enfermée : l'eau n'y entre pas</option>
-      <option>parce qu'il est le plus lourd</option>
-      <option>parce qu'il freine moins fort</option>
-      <option>parce qu'il coûte moins cher</option></select></div>
-  <div class="assoc"><label for="a2_4">Les essais 5, 10 et 15 sont faits <b>dans la descente à 8 %</b>. Toutes les distances y augmentent. Cela signifie&nbsp;:</label>
-    <select id="a2_4"><option value="">— choisir —</option>
-      <option>que la pente ajoute de l'énergie à dissiper : le contexte change le résultat</option>
-      <option>que les freins étaient usés à la fin</option>
-      <option>que l'élève a mal chronométré</option>
-      <option>qu'il ne faut pas tenir compte de ces trois essais</option></select></div>
-  <div class="assoc"><label for="a2_5">Un critère noté «&nbsp;réparabilité 5/5&nbsp;» est&nbsp;:</label>
-    <select id="a2_5"><option value="">— choisir —</option>
-      <option>une appréciation chiffrée : utile pour comparer, mais elle résume un jugement</option>
-      <option>une mesure physique, aussi sûre qu'une distance en mètres</option>
-      <option>sans valeur, parce que ce n'est pas une mesure</option>
-      <option>le nombre de pièces détachées disponibles</option></select></div>
+  <fieldset class="qcm-groupe" id="a2_1">
+  <legend>Sur le parking, le frein à patins a donné 5,7 puis 5,9 m sur sol sec. La fiche annonce 5,8 m. C'est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__1" value="la moyenne des essais : une fiche technique est un résumé de mesures"><label for="a2_1__1">la moyenne des essais : une fiche technique est un résumé de mesures</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__2" value="une erreur du fournisseur"><label for="a2_1__2">une erreur du fournisseur</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__3" value="une valeur inventée"><label for="a2_1__3">une valeur inventée</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__4" value="la plus petite des deux mesures"><label for="a2_1__4">la plus petite des deux mesures</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_2">
+  <legend>Sous la pluie, l'écart avec le sol sec vaut <b>+3,1 m</b> pour les patins et <b>+1,0 m</b> pour le disque. Cet écart dit&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__1" value="combien chaque principe perd quand la surface qui frotte est mouillée"><label for="a2_2__1">combien chaque principe perd quand la surface qui frotte est mouillée</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__2" value="que le disque est plus lourd"><label for="a2_2__2">que le disque est plus lourd</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__3" value="que les essais ont été mal faits"><label for="a2_2__3">que les essais ont été mal faits</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__4" value="que la pluie n'a pas d'effet sur le tambour"><label for="a2_2__4">que la pluie n'a pas d'effet sur le tambour</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_3">
+  <legend>Pourquoi le tambour perd-il le moins sous la pluie&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__1" value="parce que la surface qui frotte est enfermée : l'eau n'y entre pas"><label for="a2_3__1">parce que la surface qui frotte est enfermée : l'eau n'y entre pas</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__2" value="parce qu'il est le plus lourd"><label for="a2_3__2">parce qu'il est le plus lourd</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__3" value="parce qu'il freine moins fort"><label for="a2_3__3">parce qu'il freine moins fort</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__4" value="parce qu'il coûte moins cher"><label for="a2_3__4">parce qu'il coûte moins cher</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_4">
+  <legend>Les essais 5, 10 et 15 sont faits <b>dans la descente à 8 %</b>. Toutes les distances y augmentent. Cela signifie&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__1" value="que la pente ajoute de l'énergie à dissiper : le contexte change le résultat"><label for="a2_4__1">que la pente ajoute de l'énergie à dissiper : le contexte change le résultat</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__2" value="que les freins étaient usés à la fin"><label for="a2_4__2">que les freins étaient usés à la fin</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__3" value="que l'élève a mal chronométré"><label for="a2_4__3">que l'élève a mal chronométré</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__4" value="qu'il ne faut pas tenir compte de ces trois essais"><label for="a2_4__4">qu'il ne faut pas tenir compte de ces trois essais</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a2_5">
+  <legend>Un critère noté «&nbsp;réparabilité 5/5&nbsp;» est&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__1" value="une appréciation chiffrée : utile pour comparer, mais elle résume un jugement"><label for="a2_5__1">une appréciation chiffrée : utile pour comparer, mais elle résume un jugement</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__2" value="une mesure physique, aussi sûre qu'une distance en mètres"><label for="a2_5__2">une mesure physique, aussi sûre qu'une distance en mètres</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__3" value="sans valeur, parce que ce n'est pas une mesure"><label for="a2_5__3">sans valeur, parce que ce n'est pas une mesure</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__4" value="le nombre de pièces détachées disponibles"><label for="a2_5__4">le nombre de pièces détachées disponibles</label></div>
+</fieldset>
 
   <h4>b) Deux chemins vers le même travail</h4>
   <p>Ce qui est évalué ici, c'est ta capacité à <b>lire un tableau et à voir ce qu'il ne dit
@@ -757,30 +793,34 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   et ce qu'on accepte de perdre. · <b>Ressources</b> le tableau de l'activité 2.</div>
 
   <h4>a) Ce que le lieu impose</h4>
-  <div class="assoc"><label for="a3_1">Le collège est à quelques centaines de mètres de la mer. Cela rend décisif le critère&nbsp;:</label>
-    <select id="a3_1"><option value="">— choisir —</option>
-      <option>la résistance à la corrosion : le sel de l'air attaque les métaux toute l'année</option>
-      <option>la masse</option>
-      <option>le coût d'entretien</option>
-      <option>la réparabilité</option></select></div>
-  <div class="assoc"><label for="a3_2">Le trajet comporte une descente et il pleut souvent. Cela rend décisif&nbsp;:</label>
-    <select id="a3_2"><option value="">— choisir —</option>
-      <option>la distance d'arrêt sous la pluie, et l'écart entre sec et mouillé</option>
-      <option>la distance d'arrêt sur sol sec uniquement</option>
-      <option>le prix d'achat</option>
-      <option>la couleur des poignées</option></select></div>
-  <div class="assoc"><label for="a3_3">Le frein à patins gagne sur <b>trois</b> critères : masse, entretien, réparabilité. Le choisir pour cette raison serait&nbsp;:</label>
-    <select id="a3_3"><option value="">— choisir —</option>
-      <option>une erreur : compter les colonnes gagnées revient à donner à tous les critères la même importance</option>
-      <option>juste : trois sur six, c'est la majorité</option>
-      <option>impossible à trancher</option>
-      <option>correct, car ce sont les critères les moins chers</option></select></div>
-  <div class="assoc"><label for="a3_4">Dans un collège de montagne <b>sèche</b>, où l'on répare soi-même&nbsp;:</label>
-    <select id="a3_4"><option value="">— choisir —</option>
-      <option>le frein à patins deviendrait le meilleur choix : le même tableau, un autre contexte</option>
-      <option>le classement resterait identique</option>
-      <option>il faudrait refaire tous les essais</option>
-      <option>aucun frein ne conviendrait</option></select></div>
+  <fieldset class="qcm-groupe" id="a3_1">
+  <legend>Le collège est à quelques centaines de mètres de la mer. Cela rend décisif le critère&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__1" value="la résistance à la corrosion : le sel de l'air attaque les métaux toute l'année"><label for="a3_1__1">la résistance à la corrosion : le sel de l'air attaque les métaux toute l'année</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__2" value="la masse"><label for="a3_1__2">la masse</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__3" value="le coût d'entretien"><label for="a3_1__3">le coût d'entretien</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__4" value="la réparabilité"><label for="a3_1__4">la réparabilité</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_2">
+  <legend>Le trajet comporte une descente et il pleut souvent. Cela rend décisif&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__1" value="la distance d'arrêt sous la pluie, et l'écart entre sec et mouillé"><label for="a3_2__1">la distance d'arrêt sous la pluie, et l'écart entre sec et mouillé</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__2" value="la distance d'arrêt sur sol sec uniquement"><label for="a3_2__2">la distance d'arrêt sur sol sec uniquement</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__3" value="le prix d'achat"><label for="a3_2__3">le prix d'achat</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__4" value="la couleur des poignées"><label for="a3_2__4">la couleur des poignées</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_3">
+  <legend>Le frein à patins gagne sur <b>trois</b> critères : masse, entretien, réparabilité. Le choisir pour cette raison serait&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__1" value="une erreur : compter les colonnes gagnées revient à donner à tous les critères la même importance"><label for="a3_3__1">une erreur : compter les colonnes gagnées revient à donner à tous les critères la même importance</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__2" value="juste : trois sur six, c'est la majorité"><label for="a3_3__2">juste : trois sur six, c'est la majorité</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__3" value="impossible à trancher"><label for="a3_3__3">impossible à trancher</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__4" value="correct, car ce sont les critères les moins chers"><label for="a3_3__4">correct, car ce sont les critères les moins chers</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="a3_4">
+  <legend>Dans un collège de montagne <b>sèche</b>, où l'on répare soi-même&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__1" value="le frein à patins deviendrait le meilleur choix : le même tableau, un autre contexte"><label for="a3_4__1">le frein à patins deviendrait le meilleur choix : le même tableau, un autre contexte</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__2" value="le classement resterait identique"><label for="a3_4__2">le classement resterait identique</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__3" value="il faudrait refaire tous les essais"><label for="a3_4__3">il faudrait refaire tous les essais</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__4" value="aucun frein ne conviendrait"><label for="a3_4__4">aucun frein ne conviendrait</label></div>
+</fieldset>
 
   <h4>b) Ton choix, et sa défense</h4>
   <div class="assoc">
@@ -858,16 +898,14 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     pas changé d'avis, dis pourquoi.</label>
     <textarea id="meta2" aria-label="Le moment où tu as changé d'avis"></textarea>
   </div>
-  <div class="assoc">
-    <label for="pos1">📍 Je me positionne sur <b>5e_C1.2</b>&nbsp;— <i>comparer des principes
-    techniques pour une même fonction technique</i>&nbsp;:</label>
-    <select id="pos1"><option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — je confonds encore fonction, principe et solution</option>
-      <option>🟠 Maîtrise fragile — je distingue les trois avec de l'aide, et je lis le tableau</option>
-      <option>🟢 Maîtrise satisfaisante — je compare sur des critères et je justifie mon choix</option>
-      <option>⭐ Très bonne maîtrise — je hiérarchise les critères selon le contexte et je dis ce que je perds</option>
-    </select>
-  </div>
+  <fieldset class="qcm-groupe" id="pos1">
+  <legend>📍 Je me positionne sur <b>5e_C1.2</b>&nbsp;— <i>comparer des principes
+    techniques pour une même fonction technique</i>&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__1" value="🔴 Maîtrise insuffisante — je confonds encore fonction, principe et solution"><label for="pos1__1">🔴 Maîtrise insuffisante — je confonds encore fonction, principe et solution</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__2" value="🟠 Maîtrise fragile — je distingue les trois avec de l'aide, et je lis le tableau"><label for="pos1__2">🟠 Maîtrise fragile — je distingue les trois avec de l'aide, et je lis le tableau</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__3" value="🟢 Maîtrise satisfaisante — je compare sur des critères et je justifie mon choix"><label for="pos1__3">🟢 Maîtrise satisfaisante — je compare sur des critères et je justifie mon choix</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__4" value="⭐ Très bonne maîtrise — je hiérarchise les critères selon le contexte et je dis ce que je perds"><label for="pos1__4">⭐ Très bonne maîtrise — je hiérarchise les critères selon le contexte et je dis ce que je perds</label></div>
+</fieldset>
 </section>
 
 <section class="card">
@@ -914,6 +952,36 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 </main>
 </div>
 <script>
+/* ══════ Règle d'or n°300 — le groupe de boutons radio expose sa valeur ══════
+   Un <fieldset class="qcm-groupe"> remplace une liste déroulante. Pour que tout
+   ce qui lisait `champ.value` continue de fonctionner — sauvegarde, restauration,
+   correction, bancs de lot —, le groupe porte lui-même la valeur de la
+   proposition cochée, sous le même nom et avec le même contenu : son TEXTE.
+   Lire rend "" quand rien n'est coché, comme le faisait l'option vide.
+
+   La propriété est posée sur le PROTOTYPE, et non sur chaque élément : un
+   <fieldset> n'a pas de `value` native, et le faire ainsi affranchit du moment
+   où ce script s'exécute. Une première version le posait élément par élément,
+   et manquait les groupes que le navigateur n'avait pas encore lus. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){
+        r.checked = (r.value === v);
+      });
+    }
+  });
+})();
+</script>
+<script>
 "use strict";
 const KEY="seq_5e_C1.2_sainte_luce";
 const $=id=>document.getElementById(id);
@@ -954,24 +1022,36 @@ function demande(cle,msg){
   signale(msg + " — clique une seconde fois pour confirmer.");
   return false;
 }
-const val=id=>{const e=$(id);return e?e.value:"";};
+/* Règle d'or n°300 : un groupe de boutons radio rend le TEXTE de la
+   proposition cochée — exactement ce que rendait `select.value` —, de sorte
+   que les tables de réponses attendues n'ont pas une ligne à changer. */
+const val=id=>{
+  const e=$(id); if(!e) return "";
+  if(e.tagName==="FIELDSET"){ const c=e.querySelector("input[type=radio]:checked"); return c?c.value:""; }
+  return e.value;
+};
 window.__valid = window.__valid || {};
 window.__exp = window.__exp || {};
 
 /* ══════ Sauvegarde locale ══════ */
 function collect(){
   const o={inputs:{}, valid:window.__valid, exp:window.__exp};
-  document.querySelectorAll("select,textarea").forEach(e=>{ if(e.id) o.inputs[e.id]=e.value; });
+  document.querySelectorAll("textarea,fieldset.qcm-groupe").forEach(e=>{ if(e.id) o.inputs[e.id]=val(e.id); });
   return o;
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){} }
 function restore(){
   let o=null; try{ o=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(err){}
   if(!o) return;
-  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.value=v; });
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{
+    const e=$(id); if(!e) return;
+    if(e.tagName==="FIELDSET"){
+      e.querySelectorAll("input[type=radio]").forEach(r=>{ r.checked = (r.value===v); });
+    } else e.value=v;
+  });
   window.__valid=o.valid||{}; window.__exp=o.exp||{};
 }
-document.addEventListener("change", ev=>{ if(/SELECT|TEXTAREA/.test(ev.target.tagName)) save(); });
+document.addEventListener("change", ev=>{ if(/INPUT|TEXTAREA/.test(ev.target.tagName)) save(); });
 document.addEventListener("input", ev=>{ if(ev.target.tagName==="TEXTAREA") save(); });
 
 $("btnPrint").addEventListener("click", ()=>window.print());
