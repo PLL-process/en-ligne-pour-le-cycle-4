@@ -257,7 +257,7 @@
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
   .pourquoi{opacity:1!important}
   #a3_journal,#a3_p1,#a3_p1b,#a3_p2,#a3_p2b,#a3_p3,#a3_p3b,#id_classe,#id_date,#id_nom,#id_prenom,#simVentNum,.badge,.buzzer-sim,.correction,.del-sim,.etayage,.figure,.lcd-sim,.meta-grid div,.num,.prof,.repli-vitta,.retenir th,.skip-link{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
-  #simBrut,.consigne b,.etayage summary,.faire,.faire b,.faire code,.faire i,.meta-grid b,.repli-tout-en-un a,.repli-vitta-details summary{color:#047fa0!important}
+  #simBrut,.consigne b,.etayage summary,.faire,.faire b,.faire code,.faire i,.meta-grid b,.repli-tout-en-un a,.repli-vitta-details summary{color:#04708c!important}
   .correction summary,.retenir b{color:#048827!important}
   .badge{color:#0d2347!important}
   .activite h3,.card b{color:#111111!important}
@@ -1068,6 +1068,18 @@ majTaches();
   @media (prefers-reduced-motion:no-preference){
     .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
     @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:visited{color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
   }
 </style>
 <script>

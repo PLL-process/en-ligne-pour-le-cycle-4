@@ -2868,6 +2868,18 @@ recalc();
   .r4 ol{margin:8px 0 0;padding-left:22px}
   .r4 li{margin:7px 0}
   .r4 .note{color:var(--subtitle);font-size:.88em}
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:visited{color:#c3e2ff}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
 </style>
 <script>
 (function(){
@@ -3121,7 +3133,7 @@ recalc();
     modifications de données)</i>&nbsp;». Douze mois, c'est une durée <b>fixe</b>&nbsp;:
     elle ne se règle pas sur ton départ.</p>
     <p class="note"><b>Lis la source toi-même, et regarde son périmètre&nbsp;:</b>
-    <a href="https://gar.education.fr/mentions-informatives-rgpd/" style="color:#9ecbff">les mentions informatives RGPD du GAR</a>. Elle parle du <b>GAR</b>, pas
+    <a href="https://gar.education.fr/mentions-informatives-rgpd/">les mentions informatives RGPD du GAR</a>. Elle parle du <b>GAR</b>, pas
     de tout ce que fait un collège&nbsp;; et la phrase sur les douze mois est rangée dans
     le paragraphe qui concerne «&nbsp;<i>les fournisseurs de ressources, les exploitants
     ENT et les porteurs de projets</i>&nbsp;». Une durée se cite avec ce qu'elle couvre,

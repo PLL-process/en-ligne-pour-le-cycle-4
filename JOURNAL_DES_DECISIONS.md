@@ -18046,3 +18046,153 @@ non citée ; la durée du GAR citée **avec** le paragraphe où elle se trouve.
 - `controle_impression.mjs` : **0 page refusée** ✅
 - rendu 1280 px et 390 px : **0 console, 0 erreur JS**, **128 et 79 champs** — identiques à avant,
   la modification est bien du texte seul
+
+## 21/09/2026 — Règle d'or n°303 : un lien se lit (thèmes 1-3, _outils)
+
+> **Règle d'or n°303 — un lien se lit.** Dans toute page que lit un élève, un lien doit atteindre un
+> contraste d'au moins **4,5 : 1** contre **son fond réel** — celui que composent les couches
+> d'ancêtres, pas celui qu'on suppose. **À l'écran et sur le papier**, et **qu'il ait été cliqué ou
+> non**. Une page qui donne une couleur à `a` en donne une à `a:visited`, et une à l'impression.
+
+### Le constat qui l'a rendue nécessaire
+
+Dans le Bonus de `4e_C1.4`, la **première activité** proposée à l'élève est un lien : « l'atelier
+double authentification ». Il s'affichait en `rgb(0,0,238)` — le bleu que le navigateur met par
+défaut quand la page ne dit rien — sur un fond bleu nuit `rgb(16,41,79)`. **1,54 : 1.** L'activité
+était là, la page était verte, et personne ne pouvait la voir.
+
+**Aucun contrôle ne le mesurait.** `controle_impression.mjs` ne juge que le papier, et n'y refuse
+qu'une chose : du texte **sombre** sur un fond **sombre**. Un lien pâle sur du blanc lui échappe, un
+lien sombre sur du marine aussi. Une page pouvait donc être parfaitement imprimable et illisible à
+l'écran.
+
+### Une cause unique, et trois fois la même
+
+Sur 338 pages et 1 286 liens hors navigation, mesurés dans un navigateur réel à 1 280 px :
+
+| | liens sous 4,5:1 | pages |
+|---|---:|---:|
+| à l'**écran** | **474** | 18 |
+| sur le **papier** | **172** | 82 |
+| colorent `a` **sans** `a:visited` | — | **141** |
+
+**471 des 474 défauts d'écran ont la même cause** : `rgb(0,0,238)`, le bleu par défaut du
+navigateur, sur un fond sombre. Ces pages **ne déclarent aucune couleur de lien**. Les 3 autres sont
+un `#1E90FF` posé en style en ligne dans `3e_C1.5`, à 3,51.
+
+Par thème, à l'écran :
+
+| | liens | pages |
+|---|---:|---:|
+| `index.html` (l'accueil du dépôt) | **436** | 1 |
+| thème 1 | 10 | 5 |
+| thème 2 | 8 | 4 |
+| thème 3 | 20 | 8 |
+
+**Les séquences seules donnent 32 liens sur 13 séquences** — exactement le relevé de Pascal, retrouvé
+par un outil écrit indépendamment. Ce qu'il manquait, c'est tout le reste : **l'accueil du dépôt à
+lui seul en portait 436**, et c'est la première page qu'un élève ouvre.
+
+### Les trois pièges, dans l'ordre où ils se présentent
+
+**1. Une couleur par page, vérifiée contre le fond de CETTE page.** `#9ecbff` donne **10,06** sur
+`rgb(10,27,61)` et **4,97** sur `rgb(13,58,110)` ; sur `rgb(32,94,168)` il ne passe plus. Deux pages
+ont donc reçu `#c3e2ff`, les seize autres `#9ecbff` — et le choix a été calculé contre **tous** les
+fonds portant un lien dans la page, pas seulement contre celui du lien fautif.
+
+**2. `a` ET `a:visited`.** Sans la seconde ligne, le navigateur remet son violet par défaut au
+premier clic — tout aussi illisible sur fond sombre. **Cet état ne se MESURE pas** : les navigateurs
+refusent délibérément de le révéler à `getComputedStyle`, et c'est une protection de la vie privée
+qui est juste. Il s'impose donc **par la source** : toute page qui colore `a` doit colorer
+`a:visited`, et le contrôle refuse celles qui ne le font pas. 141 pages étaient dans ce cas.
+
+**3. L'impression.** Un bleu clair lisible à l'écran tombe vers **1,6 : 1** sur papier blanc. Chaque
+page corrigée donne donc à ses liens une couleur d'impression — `#00309e`, **10,96** sur blanc — dans
+son bloc `@media print`.
+
+Deux surprises y attendaient, toutes deux mesurées :
+
+- **le bloc d'impression de la page vient parfois APRÈS le nôtre** (`index.html`), et surtout un
+  sélecteur de classe l'emporte sur `a` quelle que soit sa place — `.repli-tout-en-un a` dans les
+  cinq pages `station_*`. En impression, la couleur passe donc en `!important` ; à l'écran, non, pour
+  que les boutons gardent leur habillage.
+- **les boutons-liens** (`a.btn`) portent leur couleur par leur classe : sur le papier, du bleu moyen
+  sur un fond pâle donnait **1,33 : 1**. Ils reçoivent une couleur d'impression **et** un fond blanc,
+  sans quoi on échangerait un défaut contre un autre.
+
+Enfin, **les cinq pages `station_*` portaient déjà une couleur d'impression délibérée**, `#047fa0` —
+à **4,46 : 1**, soit 0,04 sous le seuil. Elle a été foncée juste ce qu'il fallait, `#04708c`, **5,48**,
+sans changer la teinte.
+
+### Ce que la mesure a dû apprendre — deux faux coupables
+
+Un contrôle neuf accuse volontiers à tort ; les deux erreurs ont été trouvées en relançant la mesure
+autrement, pas en la relisant.
+
+- **Un voile translucide n'est pas un fond.** S'arrêter au premier `background-color` non nul donnait
+  **1,16 : 1** pour un `rgba(155,190,252,0.06)` posé sur du marine, là où le vrai rapport dépasse 7 :
+  **cinq séquences accusées à tort**. Le fond réel se **compose**, couche par couche, jusqu'à
+  l'opacité — et sur blanc si rien ne l'atteint.
+- **Une transition en cours ment.** Changer de média déclenche les `transition` des boutons, et
+  `getComputedStyle` rend alors une couleur **intermédiaire** : un `.btn` mesuré à `rgb(108,136,199)`
+  valait en réalité `rgb(0,48,158)` une fois la transition finie. Le contrôle coupe désormais
+  transitions et animations avant de mesurer.
+
+### Les chiffres
+
+| | avant | après |
+|---|---:|---:|
+| liens sous 4,5:1 **à l'écran** | **474** sur 18 pages | **0** |
+| liens sous 4,5:1 **sur le papier** | **172** sur 82 pages | **0** |
+| pages colorant `a` sans `a:visited` | **141** | **0** |
+| dont **séquences** seulement, à l'écran | **32** sur 13 séquences | **0** |
+
+**157 pages corrigées** : 51 au thème 1, 40 au thème 2, 65 au thème 3, plus `index.html`. Toutes
+familles confondues — séquences, QCM, lexiques, TP, ateliers, synthèses, entraînement DNB.
+
+### La mécanisation
+
+`_outils/controle_contraste_liens.mjs` ouvre chaque page dans un vrai navigateur, à 1 280 px, en
+`media: screen` **puis** en `media: print`, et refuse sous 4,5 : 1. Il refuse aussi une page qui
+colore `a` sans `a:visited`.
+
+**Ce qu'il déclare ne pas voir** : l'état visité (le navigateur ne le révèle pas — il est exigé par
+la source), la navigation, et les **20 liens posés sur un fond en image ou en dégradé**, où le
+rapport n'a pas de valeur unique : comptés à part, jamais tus.
+
+**Les thèmes de couleur ont été cherchés avant d'être écartés** : **aucune page du dépôt** ne déclare
+`prefers-color-scheme` ni ne propose de bascule. Une seule apparence à mesurer, donc — et le jour où
+une page en proposera une seconde, il faudra étendre l'outil ; il ne le fera pas tout seul, et son
+en-tête le dit.
+
+`_outils/tests_controle_contraste_liens.mjs` : **13 / 13**, dont **quatre mutations** :
+
+| mutation | résultat |
+|---|---|
+| le bleu par défaut sur fond sombre | **refusé** ✅ |
+| un lien corrigé, mais **sans `a:visited`** | **refusé** ✅ |
+| un lien lisible à l'écran, **pas sur le papier** | **refusé** ✅ |
+| une couleur d'écran **recopiée d'une autre page** | **refusé** ✅ |
+
+et quatre cas qu'il ne doit **pas** refuser : le lien corrigé, le voile translucide, la navigation,
+le bouton dont la transition n'est pas finie. Plus la panne (dépôt vide → code 2) et la garde de
+lancement, interrogée dans les deux sens sous Windows.
+
+### Une précision d'ordonnancement
+
+Le brief demandait de lancer ce lot **après la PR de la règle sur le bloc d'ouverture**. Cette PR
+**n'existe pas dans le dépôt** — aucune PR ouverte ni fusionnée ne porte sur les blocs « 🔄 Ce que tu
+as déjà fait », qui restent signalés « en attente ». Le lot est donc parti sans elle, et le numéro
+**303** est le premier libre au registre au moment d'écrire.
+
+### Contrôles
+
+- `controle_contraste_liens.mjs` : **338 pages · 1 286 liens · 0 sous le seuil**, écran et papier ✅
+- `tests_controle_contraste_liens.mjs` : **13 / 13** ✅
+- `controle_impression.mjs` : **0 page refusée** ✅ — c'est le garde-fou de ce lot, et il tient
+- `verif_regles_audit.py` : **249 manquements**, inchangé ✅
+- batterie : `controle_liens.py` ✅ · `controle_medias.py` ✅ · `controle_cadres.py` (340 pages) ✅ ·
+  `controle_formulations.py` **0 écart** ✅ · `controle_gestes_outil.py` ✅ ·
+  `controle_fichiers_telechargeables.py` ✅ · `tests_verif_regles_audit.py` **35 / 35** ✅
+- rendu **1280 px** et **390 px** sur un échantillon des pages touchées : **0 message de console,
+  0 erreur JS**

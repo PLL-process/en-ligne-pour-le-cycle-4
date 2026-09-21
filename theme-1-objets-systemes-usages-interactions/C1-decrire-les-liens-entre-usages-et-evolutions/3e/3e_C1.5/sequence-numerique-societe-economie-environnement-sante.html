@@ -226,6 +226,18 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   .r4 ol{margin:8px 0 0;padding-left:22px}
   .r4 li{margin:7px 0}
   .r4 .note{color:var(--subtitle);font-size:.88em}
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:visited{color:#9ecbff}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
 </style>
 </head>
 <body>
@@ -784,9 +796,9 @@ parce que des classes l'utilisent déjà.</p>
 <div class="callout" id="compilateurs-python">
 <strong>🧰 Ressource — Compilateurs Python en ligne (préférés)</strong>
 <ol>
-  <li>💻 <a href="https://programiz.com" style="color:#1E90FF;">Programiz</a></li>
-  <li>🌐 <a href="https://online-python.com" style="color:#1E90FF;">Online Python</a></li>
-  <li>⚡ <a href="https://online-python-compiler.com" style="color:#1E90FF;">Online Python Compiler</a></li>
+  <li>💻 <a href="https://programiz.com">Programiz</a></li>
+  <li>🌐 <a href="https://online-python.com">Online Python</a></li>
+  <li>⚡ <a href="https://online-python-compiler.com">Online Python Compiler</a></li>
 </ol>
 <p style="font-size:0.95em;opacity:0.95;margin:6px 0 0">⚠️ Évitez de partager des données sensibles dans un éditeur en ligne.</p>
 </div>
