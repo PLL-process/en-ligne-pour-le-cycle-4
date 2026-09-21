@@ -84,19 +84,6 @@
     details{border-color:#999}details[open] summary{color:#111}
   }
   @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
-
-
-
-@media print{
-/* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  #q1,#q10,#q11,#q12,#q13,#q14,#q15,#q16,#q17,#q18,#q19,#q2,#q20,#q21,#q22,#q23,#q24,#q25,#q26,#q27,#q28,#q29,#q3,#q30,#q4,#q5,#q6,#q7,#q8,#q9,.aide,.algo,.badge,.correction,.loupe-cliquable,.tag-dnb{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
-  .retenir{color:#048827!important}
-  .aide summary,.assoc option{color:#0b1b39!important}
-  .badge{color:#0d2347!important}
-  .ex-figure figcaption,.sous{color:#1a6af8!important}
-  .tag-dnb{color:#2b1a3f!important}
-  .correction summary{color:#946b00!important}
-}
 </style>
 </head>
 <body>
@@ -109,6 +96,27 @@
  font-size:.92em;text-decoration:none;line-height:1.2}
 #navharm a:hover{border-color:#61dafb;color:#61dafb}
 #navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+
+@media print{
+/* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
+  #q1,#q10,#q11,#q12,#q13,#q14,#q15,#q16,#q17,#q18,#q19,#q2,#q20,#q21,#q22,#q23,#q24,#q25,#q26,#q27,#q28,#q29,#q3,#q30,#q4,#q5,#q6,#q7,#q8,#q9,.aide,.algo,.badge,.correction,.loupe-cliquable,.tag-dnb{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .retenir{color:#048827!important}
+  .aide summary,.assoc option{color:#0b1b39!important}
+  .badge{color:#0d2347!important}
+  .ex-figure figcaption,.sous{color:#1a6af8!important}
+  .tag-dnb{color:#2b1a3f!important}
+  .correction summary{color:#946b00!important}
+}
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. `:where(:visited)` remet la
+     spécificité à zéro : la couleur des liens visités ne l'emporte jamais sur
+     celle qu'une classe donne à un bouton. */
+  a,a:where(:visited){color:#9ecbff}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
 </style>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a>  <a href="../3e_C6.1/sequence_3e_C6.1-C6.3_programmer_alerte.html">&#8592; La séquence de 3e</a>
   <a href="../3e_C6.1/qcm_3e_C6.1-C6.3_programmer_alerte.html">&#129504; Le QCM</a>
@@ -910,7 +918,6 @@ restore();
 if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
 majEssentiel(); majProgress();
 </script>
-
 <!-- loupe-images-v1 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
      réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
      refermer. Le focus revient sur l'image quittée. -->

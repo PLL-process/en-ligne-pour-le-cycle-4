@@ -19,19 +19,27 @@
  * calculée du texte et LE FOND RÉEL — celui que les couches d'ancêtres
  * composent, pas celui qu'on croit. Il refuse sous 4,5:1 (WCAG 2.1, AA).
  *
- * Il le fait DEUX FOIS : en `media: screen`, puis en `media: print`. Un bleu
- * clair parfaitement lisible sur fond marine tombe vers 1,6:1 sur papier blanc,
- * et l'inverse est vrai aussi. La règle vaut des deux côtés, la mesure aussi.
+ * Il le fait TROIS FOIS : à l'écran, **une fois les liens cliqués**, et sur le
+ * papier. Un bleu clair parfaitement lisible sur fond marine tombe vers 1,6:1
+ * sur papier blanc, et l'inverse est vrai aussi.
+ *
+ * L'ÉTAT VISITÉ SE MESURE — ce que la première version de cet outil déclarait
+ * impossible, et qui lui a coûté deux boutons. `getComputedStyle` rend bien
+ * toujours la couleur de l'état NON visité : les navigateurs refusent de
+ * révéler l'historique, et ils ont raison. Mais ce qui fait disparaître un
+ * texte, ce n'est pas la couleur en soi, c'est la CASCADE — et la cascade, elle,
+ * se simule exactement : une pseudo-classe et une classe pèsent toutes deux
+ * (0,1,0). On recopie donc chaque règle `:visited` en y substituant une classe,
+ * on pose la classe sur tous les liens, et on mesure. Voir `SIMULER_VISITE`.
+ *
+ * C'est ce passage qui a rattrapé le défaut de la première version : une règle
+ * `a,a:visited{color:…}` (0,1,1) l'emportait, UNE FOIS LE LIEN CLIQUÉ, sur le
+ * `.button{color:#fff}` (0,1,0) qui habillait un bouton — et le texte du bouton
+ * prenait la couleur des liens sur le fond du bouton. 7,27:1 avant le clic,
+ * 1,15:1 après.
  *
  * CE QU'IL NE MESURE PAS, ET LE DIT
  * ---------------------------------
- *   · L'ÉTAT VISITÉ. Les navigateurs mentent délibérément sur `:visited` :
- *     `getComputedStyle` rend la couleur de l'état non visité, quoi qu'il
- *     arrive. C'est une protection de la vie privée, et elle est juste. L'état
- *     visité ne peut donc PAS être mesuré ici. Il est exigé par la SOURCE :
- *     toute page qui donne une couleur à `a` doit en donner une à `a:visited`,
- *     sinon le lien redevient violet après le premier clic — tout aussi
- *     illisible sur fond sombre. C'est le second grief de cet outil.
  *   · Le reste du PAPIER : cet outil ne juge que les LIENS. Le texte courant,
  *     les encadrés, les tableaux restent l'affaire de `controle_impression.mjs`,
  *     qui refuse une chose et une seule — du texte sombre sur un fond sombre.
@@ -66,21 +74,87 @@ export const SEUIL = 4.5;
 
 const IGNORES = new Set(['.git', 'node_modules', '_archive-anciennes-versions', '_outils']);
 
+/* Les GABARITS de `_outils/` sont lus eux aussi, bien qu'un élève n'en ouvre
+   aucun : ils FABRIQUENT des pages élèves. `entrainement_dnb_algorigrammes.html`
+   a été corrigé en #412 et son gabarit, non — la construction suivante effaçait
+   la correction. Un outil qui ne regarde que le produit et jamais le moule
+   laisse le défaut revenir à la prochaine génération.
+
+   `index.html` a le même problème d'une autre façon : son gabarit vit DANS
+   `make_index.py`, en Python, et aucune lecture de fichier HTML ne l'atteindra.
+   Là, le seul contrôle possible est de régénérer puis de mesurer le produit —
+   ce que fait la PR, et ce que ce commentaire signale à qui viendra après. */
+const MOULES = ['dnb_gabarit.html', path.join('gabarits')];
+
 function pages(depart) {
   const out = [];
   (function marcher(d) {
     for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      const complet = path.join(d, e.name);
       if (e.isDirectory()) {
-        if (IGNORES.has(e.name) || e.name.startsWith('.')) continue;
-        marcher(path.join(d, e.name));
+        if (e.name.startsWith('.')) continue;
+        if (IGNORES.has(e.name) && !MOULES.some((m) => complet.endsWith(m))) {
+          /* on descend quand même dans `_outils/` pour y prendre les moules */
+          if (e.name === '_outils') { marcher(complet); }
+          continue;
+        }
+        marcher(complet);
       } else if (e.name.toLowerCase().endsWith('.html')) {
-        out.push(path.join(d, e.name));
+        const dans = path.relative(RACINE, complet);
+        if (dans.startsWith('_outils') && !MOULES.some((m) => dans.includes(m))) continue;
+        out.push(complet);
       }
     }
   })(fs.statSync(depart).isDirectory() ? depart : path.dirname(depart));
   if (!fs.statSync(depart).isDirectory()) return [path.resolve(depart)];
   return out.sort();
 }
+
+/* ── l'ÉTAT VISITÉ, simulé fidèlement ──────────────────────────────────────
+   `getComputedStyle` rend toujours la couleur de l'état NON visité : les
+   navigateurs refusent de révéler l'historique, et ils ont raison. Mais la
+   spécificité, elle, se recopie : une pseudo-classe et une classe pèsent
+   toutes deux (0,1,0). On duplique donc chaque règle contenant `:visited` en
+   y substituant une classe, on pose cette classe sur tous les liens, et la
+   mesure ordinaire devient une mesure de l'état visité.
+
+   Hors `@media print` : sur le papier, la couleur d'impression l'emporte en
+   `!important`, et dupliquer des règles dans ce contexte ne simulerait rien.
+
+   Ce que cette simulation reproduit exactement, c'est la CASCADE — donc les
+   conflits de spécificité, qui sont la seule chose qui fait disparaître un
+   texte. Ce qu'elle ne reproduit pas, ce sont les restrictions que le
+   navigateur applique en plus aux liens vraiment visités (il n'y honore qu'un
+   petit jeu de propriétés) ; pour la couleur, qui est de ce jeu, la
+   simulation et la réalité coïncident. */
+const SIMULER_VISITE = () => {
+  const CLASSE = 'controle303-visite';
+  const copies = [];
+  for (const f of document.styleSheets) {
+    let regles;
+    try { regles = f.cssRules; } catch (e) { continue; }
+    const parcourir = (liste, dansImpression) => {
+      for (const r of liste) {
+        if (r.media || r.conditionText) {
+          const media = String(r.conditionText || r.media || '');
+          parcourir(r.cssRules || [], dansImpression || /print/i.test(media));
+          continue;
+        }
+        if (dansImpression) continue;
+        if (!r.selectorText || !/:visited/.test(r.selectorText) || !r.style) continue;
+        copies.push(r.selectorText.replace(/:visited/g, '.' + CLASSE)
+          + '{' + r.style.cssText + '}');
+      }
+    };
+    parcourir(regles || [], false);
+  }
+  const balise = document.createElement('style');
+  balise.id = 'controle303';
+  balise.textContent = copies.join('\n');
+  document.head.appendChild(balise);
+  for (const a of document.querySelectorAll('a')) a.classList.add(CLASSE);
+  return { regles: copies.length };
+};
 
 /* ── la mesure, faite DANS la page ─────────────────────────────────────────
    On n'interprète pas la feuille de style : on demande au navigateur ce qu'il
@@ -165,8 +239,12 @@ const MESURE = () => {
     for (const r of regles || []) {
       const s = r.selectorText;
       if (!s || !r.style || !r.style.color) continue;
-      if (/(^|,)\s*a(?![\w-])(?!.*:visited)/.test(s)) colore = true;
-      if (/a:visited/.test(s)) visite = true;
+      /* `:visited` s'écrit de plusieurs façons — `a:visited`, et depuis le
+         correctif des boutons `a:where(:visited)`, qui remet la spécificité à
+         zéro pour ne jamais l'emporter sur la classe d'un bouton. On cherche
+         donc la pseudo-classe, pas une graphie. */
+      if (/(^|,)\s*a(?![\w-])/.test(s)) colore = true;
+      if (/:visited/.test(s)) visite = true;
     }
   }
   /* un style en ligne compte aussi comme « la page colore ses liens » */
@@ -183,19 +261,32 @@ const nav = await chromium.launch();
 const ctx = await nav.newContext({ viewport: { width: 1280, height: 900 } });
 const page = await ctx.newPage();
 
-let luesOk = 0, totalLiens = 0, surImage = 0;
+let luesOk = 0, totalLiens = 0, surImage = 0, reglesVisite = 0;
 const fautifs = [];      // { page, liens sous le seuil, à l'écran }
+const fautifsVisite = []; // { page, liens sous le seuil, une fois CLIQUÉS }
 const fautifsPapier = []; // { page, liens sous le seuil, sur le papier }
 const sansVisite = [];   // pages qui colorent `a` et pas `a:visited`
 const erreurs = [];
 
 for (const f of liste) {
-  let r, rp;
+  let r, rp, rv;
   try {
     await page.emulateMedia({ media: 'screen' });
     await page.goto(pathToFileURL(f).href, { waitUntil: 'load', timeout: 45000 });
     await page.waitForTimeout(120);
     r = await page.evaluate(MESURE);
+
+    /* L'ÉTAT VISITÉ, simulé : c'est le passage qui a manqué à #412, et deux
+       boutons y ont perdu leur couleur sans que rien ne le dise. */
+    const simu = await page.evaluate(SIMULER_VISITE);
+    await page.waitForTimeout(80);
+    rv = await page.evaluate(MESURE);
+    reglesVisite += simu.regles;
+    await page.evaluate(() => {
+      document.getElementById('controle303')?.remove();
+      for (const a of document.querySelectorAll('a')) a.classList.remove('controle303-visite');
+    });
+
     /* Le PAPIER, dans la même page : un bleu clair parfaitement lisible à
        l'écran tombe vers 1,6:1 sur blanc. Les deux se mesurent, parce que la
        règle vaut des deux côtés.
@@ -219,6 +310,8 @@ for (const f of liste) {
   surImage += r.liens.filter((l) => l.image).length;
   const sous = r.liens.filter((l) => !l.image && l.ratio < SEUIL);
   if (sous.length) fautifs.push({ page: path.relative(RACINE, f), liens: sous });
+  const sousV = rv.liens.filter((l) => !l.image && l.ratio < SEUIL);
+  if (sousV.length) fautifsVisite.push({ page: path.relative(RACINE, f), liens: sousV });
   const sousP = rp.liens.filter((l) => !l.image && l.ratio < SEUIL);
   if (sousP.length) fautifsPapier.push({ page: path.relative(RACINE, f), liens: sousP });
   if (r.colore && !r.visite) sansVisite.push(path.relative(RACINE, f));
@@ -235,6 +328,7 @@ if (!luesOk || !totalLiens) {
 
 const nFautifs = fautifs.reduce((n, p) => n + p.liens.length, 0);
 const nPapier = fautifsPapier.reduce((n, p) => n + p.liens.length, 0);
+const nVisite = fautifsVisite.reduce((n, p) => n + p.liens.length, 0);
 
 const detailler = (titre, liste) => {
   if (muet || !liste.length) return;
@@ -250,6 +344,7 @@ const detailler = (titre, liste) => {
   }
 };
 detailler('LES LIENS QUI NE SE LISENT PAS — À L\'ÉCRAN', fautifs);
+detailler('LES LIENS QUI NE SE LISENT PLUS UNE FOIS CLIQUÉS', fautifsVisite);
 detailler('LES LIENS QUI NE SE LISENT PAS — SUR LE PAPIER', fautifsPapier);
 
 if (!muet && sansVisite.length) {
@@ -261,8 +356,10 @@ if (!muet && sansVisite.length) {
 }
 
 console.log(`${luesOk} page(s) lue(s) · ${totalLiens} lien(s) hors navigation · seuil ${SEUIL}:1`);
-console.log(`  sous le seuil À L'ÉCRAN   : ${nFautifs} lien(s) sur ${fautifs.length} page(s)`);
-console.log(`  sous le seuil SUR PAPIER  : ${nPapier} lien(s) sur ${fautifsPapier.length} page(s)`);
+console.log(`  sous le seuil À L'ÉCRAN        : ${nFautifs} lien(s) sur ${fautifs.length} page(s)`);
+console.log(`  sous le seuil UNE FOIS CLIQUÉS : ${nVisite} lien(s) sur ${fautifsVisite.length} page(s)`
+  + `   (${reglesVisite} règle(s) \`:visited\` recopiée(s))`);
+console.log(`  sous le seuil SUR PAPIER       : ${nPapier} lien(s) sur ${fautifsPapier.length} page(s)`);
 console.log(`  colorent \`a\` sans \`a:visited\` : ${sansVisite.length} page(s)`);
 console.log(`  sur un fond en image ou en dégradé, non jugés : ${surImage}`);
 if (erreurs.length) {
@@ -270,10 +367,11 @@ if (erreurs.length) {
   for (const [p, e] of erreurs.slice(0, 5)) console.log(`     ${p} — ${e}`);
 }
 console.log('');
-console.log('  NON LU : l\'état visité (le navigateur ne le révèle pas — il est exigé par');
-console.log('  la source), la navigation, et les fonds en image ou en dégradé.');
+console.log('  NON LU : la navigation, et les fonds en image ou en dégradé. L\'état visité,');
+console.log('  lui, est MESURÉ — par simulation de sa cascade, et non par le navigateur,');
+console.log('  qui refuse de révéler l\'historique.');
 
-if (nFautifs || nPapier || sansVisite.length) {
+if (nFautifs || nVisite || nPapier || sansVisite.length) {
   console.log('');
   console.log('⛔ Un lien qu\'on ne peut pas lire n\'est pas un lien. Règle d\'or n°303.');
   return 1;

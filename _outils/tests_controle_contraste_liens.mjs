@@ -8,9 +8,12 @@
  *     1,54:1 : c'est le lien de l'atelier « double authentification » du Bonus
  *     de `4e_C1.4`, resté invisible sans qu'un seul contrôle le dise ;
  *   · une page qui colore `a` SANS colorer `a:visited` — 141 pages du dépôt le
- *     faisaient. L'état visité ne se mesure pas : les navigateurs refusent de
- *     le révéler. Il s'impose donc par la source, et ce banc tient cette
- *     exigence ;
+ *     faisaient, et le lien y redevenait violet au premier clic ;
+ *   · un BOUTON dont la couleur est écrasée UNE FOIS CLIQUÉ — le défaut de la
+ *     première version de la règle : `a,a:visited{…}` pèse (0,1,1) et
+ *     `.button{color:#fff}` (0,1,0), donc la règle de lien l'emportait après le
+ *     clic et le texte du bouton prenait la couleur des liens sur le fond du
+ *     bouton. 7,27:1 devenait 1,15:1, sans qu'un contrôle n'en dise rien ;
  *   · le PAPIER — un bleu clair lisible à l'écran tombe à 1,6:1 sur blanc.
  *
  * ET CE QU'IL NE DOIT PAS REFUSER, chacun appris d'un faux coupable :
@@ -21,7 +24,9 @@
  *   · un lien de NAVIGATION, qui a son propre gabarit ;
  *   · un bouton-lien dont la TRANSITION n'est pas finie : mesuré pendant le
  *     changement de média, un `.btn` rendait une couleur intermédiaire et
- *     paraissait fautif alors qu'il ne l'était pas.
+ *     paraissait fautif alors qu'il ne l'était pas ;
+ *   · un lien ORDINAIRE, qui doit garder sa couleur après le clic : sans ce
+ *     cas, on pourrait « réparer » le bouton en cassant tous les autres liens.
  *
  * Usage : node _outils/tests_controle_contraste_liens.mjs
  * Sortie : 0 si tout passe, 1 sinon.
@@ -129,6 +134,37 @@ await cas('un bouton-lien dont la transition n\'est pas finie n\'est pas fautif'
        `.btn{background:#205ea8;color:#fff;transition:color 4s,background 4s}\n${CORRIGE}`),
   false);
 
+// ══ L'ÉTAT VISITÉ — ce que #412 croyait immesurable ═════════════════════════
+await cas('MUTATION — un bouton coloré par sa classe, écrasé une fois CLIQUÉ',
+  // Le défaut de #412, mesuré par Pascal : `a,a:visited{color:…}` pèse (0,1,1),
+  // `.button{color:#fff}` pèse (0,1,0). Avant le clic, la classe gagne ; après,
+  // la règle de lien gagne, et le texte du bouton prend la couleur des liens
+  // SUR LE FOND DU BOUTON. 7,27:1 devient 1,15:1, sans qu'un seul contrôle
+  // n'en dise rien.
+  page('<p><a class="button" href="d.csv">Télécharger le CSV original</a></p>',
+       ['.button{background:#155e75;color:#fff;padding:6px 10px;border-radius:8px}',
+        'a,a:visited{color:#1d4e89}',
+        '@media print{a,a:visited{color:#00309e!important}}'].join('\n')),
+  true, 'UNE FOIS CLIQUÉS');
+
+await cas('le même bouton, protégé par `:where(:visited)`',
+  // `:where()` remet la spécificité à zéro : `a:where(:visited)` pèse (0,0,1),
+  // donc `.button` (0,1,0) l'emporte, cliqué ou non.
+  page('<p><a class="button" href="d.csv">Télécharger le CSV original</a></p>',
+       ['.button{background:#155e75;color:#fff;padding:6px 10px;border-radius:8px}',
+        'a,a:where(:visited){color:#9ecbff}',
+        '@media print{a,a:visited{color:#00309e!important}',
+        'a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;'
+        + 'border:1px solid #00309e!important}}'].join('\n')),
+  false);
+
+await cas('un lien ordinaire garde bien sa couleur une fois cliqué',
+  // `:where()` ne doit pas faire DISPARAÎTRE la règle : le lien sans classe
+  // reste lisible après le clic. Sans ce cas, on pourrait « corriger » le
+  // bouton en cassant tous les autres liens sans le voir.
+  page('<p>Ouvre <a href="x.html">l\'atelier</a>.</p>', CORRIGE),
+  false);
+
 // ══ LA PANNE, ET LA GARDE DE LANCEMENT ══════════════════════════════════════
 controles++;
 {
@@ -167,8 +203,9 @@ if (echecs.length) {
   console.log(`\n${controles - echecs.length} / ${controles}`);
   process.exit(1);
 }
-console.log(`✅ ${controles} contrôles — le bleu par défaut est refusé, l'absence de `
-  + '`a:visited` aussi, le papier aussi ; et ni un voile translucide, ni la');
-console.log('   navigation, ni une transition en cours ne font de faux coupables');
+console.log(`✅ ${controles} contrôles — refusés : le bleu par défaut, l'absence de `
+  + '`a:visited`, le papier, et le bouton dont la couleur est écrasée UNE FOIS');
+console.log('   CLIQUÉ ; acceptés : le voile translucide, la navigation, la transition');
+console.log('   en cours, et le lien ordinaire qui garde sa couleur après le clic');
 console.log(`\n${controles} / ${controles}`);
 process.exit(0);
