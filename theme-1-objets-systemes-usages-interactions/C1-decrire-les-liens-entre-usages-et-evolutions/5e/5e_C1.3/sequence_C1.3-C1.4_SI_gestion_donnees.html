@@ -54,6 +54,33 @@
 <section class="card"><h2>🗃️ Séance 2 — Classer, nommer et retrouver des fichiers</h2><figure><img src="Images/arborescence_donnees_velos.svg" alt="Arborescence de dossiers avec données brutes, analyses et exports"><figcaption>Une arborescence explicite facilite la recherche, la sauvegarde et le partage.</figcaption></figure><h3>Activité 2 — Reconstruire une arborescence réutilisable <span class="chrono">⏱ ~40 min</span></h3><p><strong>Consigne :</strong> crée le dossier <code>Hangzhou_velos_groupeXX</code>, puis les sous-dossiers <code>01_donnees_brutes</code>, <code>02_analyses</code>, <code>03_exports</code> et <code>99_archive</code>. Renomme et range les <b>six fichiers du paquet de départ</b> (<a href="paquet_depart/">dossier <code>paquet_depart/</code></a>, et <a href="paquet_depart/LISEZ-MOI_professeur.md">la fiche du professeur</a>). Ils arrivent volontairement mal nommés&nbsp;: espaces, accents, majuscules, aucune date. C'est ce désordre qui donne son sens à la règle de nommage.</p><p><strong>Règle de nommage :</strong> <code>AAAA-MM-JJ_type_contenu_version.ext</code>.</p><p><strong>Production attendue :</strong> capture de l’arborescence ouverte et archive ZIP du dossier complet.</p><details><summary>🆘 Aide graduée</summary><p>Les fichiers reçus restent dans « données brutes ». Les fichiers modifiés vont dans « analyses ». Les documents destinés à être diffusés vont dans « exports ». Les anciennes versions vont dans « archive ».</p></details><details class="correction"><summary>✅ Correction exhaustive</summary><ul><li>CSV original → `01_donnees_brutes` ;</li><li>tableur transformé → `02_analyses` ;</li><li>PDF de synthèse → `03_exports` ;</li><li>ancienne version → `99_archive`.</li></ul><p>La copie locale et la copie partagée doivent porter le même nom de version.</p></details><p><strong>Erreur fréquente :</strong> créer des dossiers « divers », « nouveau » ou « à voir », qui ne permettent pas de retrouver durablement les ressources.</p></section>
 <section class="card"><h2>📊 Séance 3 — Trier et filtrer pour décider</h2><h3>Activité 3 — Exploiter un jeu de données simulées <span class="chrono">⏱ ~40 min</span></h3><p><a class="button" href="donnees_velos_hangzhou_simulees.csv" download>⬇ Télécharger le CSV simulé</a></p><ol><li>Ouvre le CSV dans un tableur avec le séparateur point-virgule.</li><li>Enregistre une copie dans <code>02_analyses</code>.</li><li>Ajoute la colonne <code>statut_maintenance</code>.</li><li>Saisis <code>prioritaire</code> lorsque le nombre d’incidents est supérieur ou égal à 3 ou lorsque l’autonomie est inférieure à 35 %.</li><li>Trie les vélos par nombre d’incidents décroissant.</li><li>Filtre pour afficher uniquement les lignes prioritaires.</li><li>Exporte le résultat au format PDF dans <code>03_exports</code>.</li></ol><p><strong>Production attendue :</strong> tableur transformé, PDF filtré et conclusion de cinq lignes.</p><details><summary>🆘 Aide graduée</summary><p>Un tri change l’ordre des lignes. Un filtre masque temporairement les lignes qui ne répondent pas à un critère. Il ne faut pas supprimer les données originales.</p></details><details class="correction"><summary>✅ Correction exhaustive</summary><p>Les vélos V-104, V-105, V-108 et V-112 doivent être marqués prioritaires dans le jeu fourni. Le tri place d’abord le vélo ayant le plus d’incidents. Le PDF final ne doit conserver que les lignes prioritaires.</p></details><p><strong>Erreur fréquente :</strong> modifier le CSV original au lieu de travailler sur une copie, ou supprimer les lignes non prioritaires au lieu de les filtrer.</p><label>Conclusion fondée sur les données :<textarea data-save="conclusion"></textarea><details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p><ul><li>Sur les ____ vélos du jeu de données, ____ sont prioritaires.</li><li>Je le sais parce que le critère était ____ .</li><li>La décision que je propose est ____ , parce que ____ .</li></ul></details></label></section>
 <section class="card warn"><h2>🌍 Transfert territorial — de Hangzhou à la Martinique</h2><p>La même organisation fonctionnerait-elle pour un service scolaire à Fort-de-France ou Sainte-Luce ? Identifie au moins trois adaptations : qualité du réseau, humidité et corrosion, relief, fréquence de maintenance, distance entre les sites ou disponibilité des pièces.</p><label>Adaptations proposées :<textarea data-save="transfert"></textarea><details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p><ul><li>Première adaptation : ____ , parce qu'ici ____ .</li><li>Deuxième adaptation : ____ , parce que ____ .</li><li>Troisième adaptation : ____ , parce que ____ .</li></ul></details></label></section>
+<section class="card bonus"><p class="saved-note">Ces défis ne sont pas notés. Chacun a sa correction, repliée&nbsp;: cherche d'abord, ouvre ensuite — mais ouvre.</p>
+<h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2><ol><li>Imagine une règle permettant de supprimer automatiquement les doublons sans perdre de données importantes.<label class="reponse-bonus" style="display:block;margin-top:.7em">Ma règle, et ce qu'elle garantit de ne pas perdre :<textarea data-save="bonus_doublons" rows="3"></textarea></label><details class="corrige-bonus"><summary>Voir la correction</summary>
+<p>Une règle qui marche : <b>deux fiches sont un doublon si elles partagent la même valeur sur un
+champ qui ne peut pas se répéter</b> — un numéro d'élève, une adresse de courriel. On garde alors
+la fiche <b>la plus récemment modifiée</b>, et on <b>recopie dedans</b> les champs remplis dans
+l'autre et vides dans celle-là. Rien n'est perdu.</p>
+<p class="pourquoi">Ce qu'il fallait repérer : « même nom, même prénom » n'est <b>pas</b> une règle
+sûre — deux élèves peuvent s'appeler pareil. Une règle de doublon a besoin d'un champ
+<b>unique par nature</b>. Et supprimer sans fusionner d'abord, c'est perdre l'information que
+seule la fiche supprimée contenait : l'erreur classique.</p></details></li><li>Propose une arborescence pour un autre service : bibliothèque, cantine, jardin connecté ou club d’échecs.<label class="reponse-bonus" style="display:block;margin-top:.7em">Le service que je choisis, et son arborescence niveau par niveau :<textarea data-save="bonus_arborescence" rows="3"></textarea></label><details class="corrige-bonus"><summary>Voir la correction</summary>
+<p>Il n'y a pas une seule bonne réponse, mais une bonne <b>forme</b>. Exemple pour la cantine :
+<code>Cantine / 2026-2027 / Menus / Semaine-38</code> et <code>Cantine / 2026-2027 / Inscriptions /
+6e</code>. Trois qualités : on range du <b>plus général au plus particulier</b>, chaque niveau
+répond à <b>une seule question</b> (quand ? quoi ? qui ?), et un fichier n'a
+qu'<b>un seul</b> chemin possible.</p>
+<p class="pourquoi">Le test qui départage : demande à quelqu'un d'autre où il rangerait un
+fichier donné. S'il hésite entre deux dossiers, ton arborescence pose deux questions à la fois —
+c'est le défaut le plus fréquent, et il se voit tout de suite quand on cherche.</p></details></li><li>Compare les risques d’une base centralisée et d’une organisation distribuée entre plusieurs établissements.<label class="reponse-bonus" style="display:block;margin-top:.7em">Les risques de chacune, et ce que j'accepte de risquer :<textarea data-save="bonus_risques" rows="3"></textarea></label><details class="corrige-bonus"><summary>Voir la correction</summary>
+<p><b>Centralisé</b> : tout au même endroit. C'est simple à tenir à jour et à sauvegarder, mais
+une panne arrête tout le monde, et une fuite expose <b>toutes</b> les données d'un coup.</p>
+<p><b>Distribué</b> : chaque établissement garde les siennes. Une panne ne touche qu'un
+établissement et une fuite est limitée — mais les données divergent, et personne ne peut plus dire
+laquelle est la bonne version.</p>
+<p class="pourquoi">Ce qu'il fallait repérer : ce n'est pas « lequel est le mieux », c'est
+<b>ce qu'on accepte de risquer</b>. On échange de la simplicité contre de la robustesse. La
+question à se poser devant n'importe quel système : <b>que se passe-t-il si ça tombe en
+panne&nbsp;?</b></p></details></li></ol></section>
 <section class="card"><h2>✅ Bilan</h2><p>Un système d’information associe des acteurs, des règles, des données, des matériels, des logiciels et des réseaux. Il permet de collecter, traiter, stocker, partager et retrouver l’information. Une arborescence, des noms de fichiers stables, des sauvegardes et des traitements de données rendent le service plus fiable.</p><p><a href="synthese_eleve_5e_C1.3-C1.4.html">Ouvrir la synthèse élève</a> · <a href="synthese_professeur_5e_C1.3-C1.4.html">Ouvrir la synthèse professeur</a></p></section>
 <section class="card"><h2>🪞 Mon bilan personnel</h2>
 <p>Personne ne lit ces trois réponses à part toi. Elles ne sont pas notées&nbsp;: elles servent
@@ -79,33 +106,7 @@ compris pourquoi ____&nbsp;» est une réponse complète&nbsp;: nommer ce qu'on 
 déjà un savoir-faire, et c'est celui qui sert le plus longtemps.</p></details></label>
 </section>
 <section class="card qcm-box"><h2>🧠 Prêt·e à t’entraîner ?</h2><p>Le QCM comporte <strong>30 questions</strong>, dont des questions illustrées sur le système d’information, l’arborescence et le traitement des données.</p><p><a class="button" href="qcm_systemes_information_donnees.html">🚀 Ouvrir le QCM d’entraînement</a></p></section>
-<section class="card bonus"><p class="saved-note">Ces défis ne sont pas notés. Chacun a sa correction, repliée&nbsp;: cherche d'abord, ouvre ensuite — mais ouvre.</p>
-<h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2><ol><li>Imagine une règle permettant de supprimer automatiquement les doublons sans perdre de données importantes.<details class="corrige-bonus"><summary>Voir la correction</summary>
-<p>Une règle qui marche : <b>deux fiches sont un doublon si elles partagent la même valeur sur un
-champ qui ne peut pas se répéter</b> — un numéro d'élève, une adresse de courriel. On garde alors
-la fiche <b>la plus récemment modifiée</b>, et on <b>recopie dedans</b> les champs remplis dans
-l'autre et vides dans celle-là. Rien n'est perdu.</p>
-<p class="pourquoi">Ce qu'il fallait repérer : « même nom, même prénom » n'est <b>pas</b> une règle
-sûre — deux élèves peuvent s'appeler pareil. Une règle de doublon a besoin d'un champ
-<b>unique par nature</b>. Et supprimer sans fusionner d'abord, c'est perdre l'information que
-seule la fiche supprimée contenait : l'erreur classique.</p></details></li><li>Propose une arborescence pour un autre service : bibliothèque, cantine, jardin connecté ou club d’échecs.<details class="corrige-bonus"><summary>Voir la correction</summary>
-<p>Il n'y a pas une seule bonne réponse, mais une bonne <b>forme</b>. Exemple pour la cantine :
-<code>Cantine / 2026-2027 / Menus / Semaine-38</code> et <code>Cantine / 2026-2027 / Inscriptions /
-6e</code>. Trois qualités : on range du <b>plus général au plus particulier</b>, chaque niveau
-répond à <b>une seule question</b> (quand ? quoi ? qui ?), et un fichier n'a
-qu'<b>un seul</b> chemin possible.</p>
-<p class="pourquoi">Le test qui départage : demande à quelqu'un d'autre où il rangerait un
-fichier donné. S'il hésite entre deux dossiers, ton arborescence pose deux questions à la fois —
-c'est le défaut le plus fréquent, et il se voit tout de suite quand on cherche.</p></details></li><li>Compare les risques d’une base centralisée et d’une organisation distribuée entre plusieurs établissements.<details class="corrige-bonus"><summary>Voir la correction</summary>
-<p><b>Centralisé</b> : tout au même endroit. C'est simple à tenir à jour et à sauvegarder, mais
-une panne arrête tout le monde, et une fuite expose <b>toutes</b> les données d'un coup.</p>
-<p><b>Distribué</b> : chaque établissement garde les siennes. Une panne ne touche qu'un
-établissement et une fuite est limitée — mais les données divergent, et personne ne peut plus dire
-laquelle est la bonne version.</p>
-<p class="pourquoi">Ce qu'il fallait repérer : ce n'est pas « lequel est le mieux », c'est
-<b>ce qu'on accepte de risquer</b>. On échange de la simplicité contre de la robustesse. La
-question à se poser devant n'importe quel système : <b>que se passe-t-il si ça tombe en
-panne&nbsp;?</b></p></details></li></ol></section>
+
 <div class="card no-print"><h2>💾 Sauvegarde locale des réponses textuelles</h2><p><span id="nbZones">Les</span> zones de réponse sont enregistrées uniquement dans ce navigateur.</p><button id="clear">Effacer mes réponses locales</button><p id="status" role="status" aria-live="polite"></p></div>
 <footer>Thème 1 · 5e_C1.3–C1.4 · Ressources originales · Données simulées</footer>
 </main>

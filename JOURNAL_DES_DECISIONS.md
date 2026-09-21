@@ -17611,3 +17611,140 @@ recopier.
 - `controle_impression.mjs` : **0 page refusée** ✅
 - périmètre : `_outils/` et ce journal. **Aucune page de séquence n'est modifiée** — c'est l'outil
   qui avait tort, pas les pages.
+
+## 21/09/2026 — Vague n°301, suite : `5e_C1.2` et `5e_C1.3` (thème 1)
+
+Deuxième lot de la remédiation n°301, dans l'ordre d'enseignement : après les trois `C1.1`, les deux
+séquences suivantes. Le lot ne touche à **aucune autre page**.
+
+### Ce que chaque page avait, ce qu'elle a
+
+| | `5e_C1.2` | `5e_C1.3` |
+|---|---|---|
+| ordre AVANT | bilan → QCM → Bonus | bilan → QCM → Bonus → sauvegarde |
+| ordre APRÈS | **Bonus → bilan → QCM** | **Bonus → bilan → QCM → sauvegarde** |
+| champs du Bonus | 0 → **3** | 0 → **3** |
+| forme | 3 `<textarea>`, étiquette `for` visible | 3 `<textarea>`, étiquette **enveloppante** |
+| corrigé du Bonus | un bloc global, 3 réponses numérotées | **un corrigé par `<li>`** |
+| banc de lot | 36 / 36 ✅ | **aucun banc** |
+
+Les six questions appellent toutes une réponse **rédigée** — « quel critère devient décisif »,
+« propose une arborescence », « compare les risques ». Six `<textarea>`, aucun choix déguisé.
+
+### Chaque champ rejoint l'idiome de SA page — c'était le piège du lot
+
+Les deux pages n'enregistrent pas les réponses de la même façon, et **rien dans la batterie ne
+verrait** un champ posé selon l'idiome de l'autre :
+
+| | ce qui est enregistré | conséquence pour un champ neuf |
+|---|---|---|
+| `5e_C1.2` | les `textarea` et `fieldset.qcm-groupe **ayant un id**` | il lui faut un `id` |
+| `5e_C1.3` | les champs portant **`[data-save]`**, clé `seq_5e_c1_3_c1_4_v2` | il lui faut un `data-save` |
+
+Un champ oublié **s'affiche, se remplit, et se perd au rechargement**. Aucun contrôle ne sort rouge :
+ni le banc du lot, ni l'audit de clôture, ni l'impression.
+
+**La vérification s'est donc faite en ouvrant les pages, pas en lisant le code.** `piege_memoire.mjs`
+ouvre la page, **déplie les panneaux de séance** (un champ replié n'est pas remplissable), **tape**
+dans chacun des trois champs — une vraie frappe, pour déclencher l'événement `input` dont dépend la
+sauvegarde —, **recharge**, puis **relit la valeur dans le DOM**. Il clique ensuite sur le bouton
+d'effacement de la page et revérifie que les nouveaux champs sont vidés **eux aussi**.
+
+| | champs relus après rechargement | `#nbZones` | effacement |
+|---|---|---|---|
+| `5e_C1.2` | **3 / 3** ✔ | (pas de `#nbZones`) | `#btnReset` → 3 / 3 vidés ✔ |
+| `5e_C1.3` | **3 / 3** ✔ | annonce « **Les 9** » (6 avant) ✔ | `#clear` → 3 / 3 vidés ✔ |
+
+**Et la preuve que ce contrôle mord.** On a donné aux trois champs de `5e_C1.3` l'idiome de l'autre
+page — un `id` à la place du `data-save` — et relancé :
+
+| | résultat |
+|---|---|
+| les champs sont **présents** | 3 / 3 |
+| relus après rechargement | **0 / 3** ⛔ — « essai-1-bonus_doublons » → « » |
+| `#nbZones` | retombe à « **Les 6** » — il sous-compte **en silence** |
+
+C'est exactement la panne décrite dans le brief, reproduite puis refermée.
+
+### La carte « 💾 Sauvegarde locale » : elle ne bouge pas, c'est le Bonus qui s'en va
+
+Cette carte `no-print` est un **outil**, pas une activité : la n°301 ne la gouverne pas. Elle était
+**déjà la dernière** du document, et semblait « suivre le Bonus » seulement parce que le Bonus était
+avant elle. Le Bonus remonté, elle suit désormais le **renvoi au QCM** — sa place naturelle : un
+outil de fin de page, après le parcours, qui n'interrompt plus la suite **Bonus → bilan → QCM**.
+Rien n'a été déplacé pour cela.
+
+### Deux corrigés de formes différentes, confrontés l'un et l'autre
+
+| | question 1 | question 2 | question 3 |
+|---|---|---|---|
+| `5e_C1.2` | Le même choix, ailleurs → **1 · Fort-de-France** ✔ | Une autre fonction, plusieurs principes → **2 · Éclairer une salle** ✔ | Le critère manquant → **3 · Le critère manquant** ✔ |
+| `5e_C1.3` | supprimer les doublons → corrigé **dans le `<li>`** : la règle du champ unique par nature ✔ | une arborescence pour un autre service → corrigé **dans le `<li>`** : du plus général au plus particulier ✔ | centralisé contre distribué → corrigé **dans le `<li>`** : ce qu'on accepte de risquer ✔ |
+
+**Aucun corrigé ne répond à côté.** Rien n'a été réécrit.
+
+Dans `5e_C1.3`, le corrigé étant **dans** le `<li>`, le champ se pose **avant** le `<details>` :
+on cherche, puis on ouvre. C'est aussi pourquoi aucune invite n'y a été ajoutée — la page en porte
+déjà une, meilleure : « *Ces défis ne sont pas notés. Chacun a sa correction, repliée : cherche
+d'abord, ouvre ensuite — mais ouvre.* »
+
+### Ce que l'audit dit de faux, et qu'on laisse dire
+
+`audit_cloture_sequence.mjs` affiche **« corrigé : NON »** pour `5e_C1.3`. **C'est faux** : la page
+porte **trois** `<details class="corrige-bonus">` intitulés « Voir la correction », un dans chaque
+`<li>`. Le détecteur cherche `.correction` — un **libellé**, pas une **fonction**. C'est la même
+maladie que celle du bilan de `4e_C1.1`, corrigée en #408.
+
+**Non corrigé ici** : `_outils/` relève du **thème 2**, et ce lot est une branche de **thème 1**. Le
+garde-périmètre le refuserait, à juste titre. PR suivante.
+
+### Ce que la capture a vu, encore une fois
+
+Dans `5e_C1.3`, l'étiquette du champ était **collée à la fin de la question** — « *…sans perdre de
+données importantes.Ma règle, et ce qu'elle garantit de ne pas perdre :* ». Tous les contrôles
+étaient verts : 3 champs, 0 sans nom accessible, 0 débordement. **Seule la capture à 390 px l'a
+vu.** Les trois étiquettes ont pris leur propre ligne.
+
+### Le temps : mesuré, et il ne bouge pas
+
+| | annoncé | lu avant | lu après | marge |
+|---|---:|---:|---:|---:|
+| `5e_C1.2` | 3 × 55 = 165 | 150 | **150** | +15 min |
+| `5e_C1.3` | 3 × 55 = 165 | 115 | **115** | +50 min |
+
+Aucune minute ajoutée au parcours obligatoire : les six champs sont dans le Bonus, que les deux
+pages annoncent « **facultatif — hors parcours obligatoire** » dans leur titre.
+
+### Le compte
+
+| | manquements |
+|---|---:|
+| base recalculée sur `main` après #408 | **254** |
+| prédiction | 252 |
+| **obtenu** | **252** ✅ |
+
+**−2, exactement les deux Bonus mal placés.**
+
+### Contrôles
+
+- `verif_regles_audit.py` : **60 séquences · 252 manquements** (254 avant, **−2**) ✅
+- `audit_cloture_sequence.mjs` : les deux passent de `APRÈS bilan` à **`avant bilan`**, **0 → 3
+  champs** chacune (colonne « corrigé » de `5e_C1.3` fausse, ci-dessus)
+- n°23 durée : les deux ✔ — rien n'a été ajouté au temps obligatoire
+- banc `tests_5e_C1.2_sainte_luce.py` : **36 / 36** ✅. **`5e_C1.3` n'a pas de banc de lot** — un
+  `RAPPORT_TESTS` mais aucun `.py` : rien n'a donc été vérifié par un banc de son côté, et c'est dit.
+- persistance des six champs neufs : **6 / 6** relus après rechargement, effacement complet,
+  mutation vérifiée ⛔ → ✔
+- `tests_verif_regles_audit.py` : **35 / 35** ✅
+- batterie : `controle_liens.py` ✅ · `controle_medias.py` ✅ · `controle_cadres.py` (340 pages) ✅ ·
+  `controle_formulations.py` ✅ · `controle_gestes_outil.py` ✅ ·
+  `controle_fichiers_telechargeables.py` ✅
+- `controle_impression.mjs` : **0 page refusée** ✅
+- rendu **1280 px** et **390 px** : **0 message de console, 0 erreur JS**, 93 champs au total,
+  **0 sans nom accessible**, **0 débordement horizontal** dans les Bonus
+- captures avant/après de la fin des deux séquences, **aux deux largeurs**
+
+### Reste ouvert
+
+- **Le détecteur de corrigé** de `audit_cloture_sequence.mjs` (`.correction` seulement) — thème 2.
+- **`5e_C1.3` n'a aucun banc de lot** — à signaler, pas à improviser dans une vague de remédiation.
