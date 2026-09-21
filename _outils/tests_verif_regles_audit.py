@@ -436,6 +436,119 @@ def main():
         "%d entrées : c'est la règle qu'il faut revoir, pas la liste qu'il faut rallonger" % n)(
             sum(len(v) for v in V.EXCEPTIONS_302.values())))
 
+    # ── 8. La règle d'or n°304 — l'ouverture ne dit pas le passé ───────────
+    # Le bloc s'écrit sous CINQ titres au moins dans le dépôt, et compter le
+    # seul paragraphe `.deja` en manquait dix-neuf sur cinquante-trois. Le banc
+    # tient donc un cas par titre : si l'un cesse d'être reconnu, il le dit.
+    def ouverture(titre, corps, classe=""):
+        return ('<section class="card%s"><h2>%s</h2><p>%s</p></section>'
+                % (classe, titre, corps)) + BILAN
+
+    def etat_304(corps):
+        bac = pathlib.Path(tempfile.mkdtemp())
+        ancien = V.RACINE
+        try:
+            (bac / "lot").mkdir()
+            (bac / "lot" / "sequence_a.html").write_text(page(corps), encoding="utf-8")
+            V.RACINE = bac
+            _code, texte = jouer(["verif_regles_audit.py"])
+        finally:
+            V.RACINE = ancien
+            shutil.rmtree(bac, ignore_errors=True)
+        for ligne in texte.splitlines():
+            if "n\u00b0304" in ligne and ("\u2714" in ligne or "\u2718" in ligne):
+                return ("ECHEC" if "\u2718" in ligne else "OK"), ligne.strip()
+        return "ABSENT", texte.strip()[-300:]
+
+    AFFIRME = "En 4e, \u00e0 Tsinghua, tu as estim\u00e9 puis compar\u00e9."
+
+    for titre in ["\U0001f504 Ce que tu as d\u00e9j\u00e0 fait",
+                  "\U0001f504 Ce que tu sais d\u00e9j\u00e0 faire \u2014 et ce qu'on ne refera pas",
+                  "\U0001f504 D'o\u00f9 tu viens \u2014 la spirale C8",
+                  "\U0001f504 Avant de commencer : \u00e0 quoi \u00e7a sert ?",
+                  "\U0001f501 Ce que tu as d\u00e9j\u00e0 fait"]:
+        cas("le bloc est reconnu sous le titre \u00ab %s \u00bb" % titre[:38], lambda t=titre: (
+            lambda e: None if e[0] == "ECHEC" else "\u00e9tat %s \u2014 %s" % e)(
+                etat_304(ouverture(t, AFFIRME))))
+
+    cas("le bloc est reconnu par la classe `rappel-spiralaire`, sans titre parlant",
+        # la marque STRUCTURELLE doit porter seule : un lot peut intituler son
+        # bloc autrement, il reste un bloc d'ouverture
+        lambda: (lambda e: None if e[0] == "ECHEC" else "\u00e9tat %s \u2014 %s" % e)(
+            etat_304(ouverture("Pour d\u00e9marrer", AFFIRME, classe=" rappel-spiralaire"))))
+
+    cas("MUTATION \u2014 la branche ANN\u00c9E ANT\u00c9RIEURE mord seule", lambda: (
+        # aucune affirmation « tu as » ici : c'est le marqueur d'ann\u00e9e qui doit refuser
+        lambda e: None if e[0] == "ECHEC" and "ann\u00e9e ant\u00e9rieure" in e[1]
+        else "\u00e9tat %s \u2014 %s" % e)(
+            etat_304(ouverture("\U0001f504 Ce que tu as d\u00e9j\u00e0 fait",
+                               "En 5e, la cha\u00eene d'information se d\u00e9crivait d\u00e9j\u00e0."))))
+
+    cas("MUTATION \u2014 la branche CE QUE TU AS FAIT mord seule", lambda: (
+        # aucun marqueur d'ann\u00e9e : c'est l'affirmation qui doit refuser
+        lambda e: None if e[0] == "ECHEC" and "a fait" in e[1]
+        else "\u00e9tat %s \u2014 %s" % e)(
+            etat_304(ouverture("\U0001f504 Ce que tu as d\u00e9j\u00e0 fait",
+                               "Tu as d\u00e9crit la cha\u00eene d'information de cette station."))))
+
+    cas("MUTATION \u2014 une ann\u00e9e \u00e9crite \u00ab 5 e \u00bb, comme le rend un exposant",
+        # les pages \u00e9crivent « 5<sup>e</sup> » : le texte nu rend « 5 e ». Le motif
+        # strict laissait passer deux blocs r\u00e9els.
+        lambda: (lambda e: None if e[0] == "ECHEC" and "ann\u00e9e ant\u00e9rieure" in e[1]
+                 else "\u00e9tat %s \u2014 %s" % e)(
+            etat_304(ouverture("\U0001f504 Ce que tu sais d\u00e9j\u00e0 faire",
+                               "En 5<sup>e</sup>, le banc de la cour a servi \u00e0 \u00e9liminer."))))
+
+    cas("MUTATION \u2014 \u00ab le banc t'a appris \u00bb affirme aussi, sans dire \u00ab tu as \u00bb",
+        lambda: (lambda e: None if e[0] == "ECHEC" and "a fait" in e[1]
+                 else "\u00e9tat %s \u2014 %s" % e)(
+            etat_304(ouverture("\U0001f504 D'o\u00f9 tu viens",
+                               "Le banc de la cour t'a appris qu'un cahier des charges \u00e9limine."))))
+
+    cas("MUTATION \u2014 \u00ab tu as SUIVI \u00bb, un participe qui ne finit pas par \u00e9", lambda: (
+        # Le motif g\u00e9n\u00e9rique ne prend que les participes en `-\u00e9`. Sans \u00ab suivi \u00bb
+        # dans la liste nomm\u00e9e, la phrase n'\u00e9tait pas vue du tout \u2014 et le cas du
+        # conditionnel, juste en dessous, passait pour cette raison-l\u00e0 et non
+        # parce que l'exemption fonctionnait. Trouv\u00e9 par mutation.
+        lambda e: None if e[0] == "ECHEC" and "a fait" in e[1]
+        else "\u00e9tat %s \u2014 %s" % e)(
+            etat_304(ouverture("\U0001f504 Ce qui devrait \u00eatre en place",
+                               "Tu as suivi la s\u00e9quence 3e_C4.3 avant celle-ci.",
+                               classe=" rappel-spiralaire"))))
+
+    cas("MUTATION \u2014 \u00ab l'an dernier \u00bb, au masculin comme l'\u00e9crit le d\u00e9p\u00f4t", lambda: (
+        # Le motif demandait \u00ab derni\u00e8re \u00bb : la formule la plus courante du d\u00e9p\u00f4t
+        # n'\u00e9tait pas reconnue, et le grief retombait sur l'autre branche \u2014 le
+        # verdict restait juste, la RAISON \u00e9tait fausse.
+        lambda e: None if e[0] == "ECHEC" and "ann\u00e9e ant\u00e9rieure" in e[1]
+        else "\u00e9tat %s \u2014 %s" % e)(
+            etat_304(ouverture("\U0001f504 Ce que tu as d\u00e9j\u00e0 fait",
+                               "L'an dernier, \u00e0 Chengdu, les donn\u00e9es se triaient d\u00e9j\u00e0."))))
+
+    cas("la M\u00caME ann\u00e9e, au CONDITIONNEL, passe", lambda: (
+        # C'est la forme autoris\u00e9e par la r\u00e8gle : elle laisse la question ouverte.
+        # La CLASSE porte ici la reconnaissance du bloc. Sans elle, ce cas
+        # passait parce qu'AUCUN bloc n'\u00e9tait trouv\u00e9 : il ne prouvait rien, et
+        # la mutation l'a dit \u2014 retirer l'exemption du conditionnel laissait le
+        # banc vert. On exige donc aussi qu'un bloc ait bien \u00e9t\u00e9 vu.
+        lambda e: None if e[0] == "OK" and "pas de bloc" not in e[1]
+        else "\u00e9tat %s \u2014 %s" % e)(
+            etat_304(ouverture("\U0001f504 Ce qui devrait \u00eatre en place",
+                               "Si tu as suivi la s\u00e9quence 3e_C4.3, la cha\u00eene d'information "
+                               "t'y attend.", classe=" rappel-spiralaire"))))
+
+    cas("la M\u00caME ann\u00e9e, AFFIRM\u00c9E, est refus\u00e9e", lambda: (
+        lambda e: None if e[0] == "ECHEC" else "\u00e9tat %s \u2014 %s" % e)(
+            etat_304(ouverture("\U0001f504 Ce que tu as d\u00e9j\u00e0 fait",
+                               "Au th\u00e8me 2, tu as d\u00e9crit la cha\u00eene d'information de cette "
+                               "station."))))
+
+    cas("une page SANS bloc d'ouverture n'est pas accus\u00e9e", lambda: (
+        # la n\u00b0304 ne r\u00e9clame pas un bloc : elle juge celui qui existe
+        lambda e: None if e[0] == "OK" and "pas de bloc" in e[1]
+        else "\u00e9tat %s \u2014 %s" % e)(
+            etat_304("<section><h2>Activit\u00e9 1</h2><p>On commence.</p></section>" + BILAN)))
+
     # ── 3. Le VRAI point d'entrée, en sous-processus ───────────────────────
     def ligne_de_commande():
         code, texte = par_la_ligne_de_commande()

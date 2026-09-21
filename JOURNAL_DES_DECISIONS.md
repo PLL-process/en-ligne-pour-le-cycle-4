@@ -18327,3 +18327,171 @@ par déclaration** n'est pas complet — et la déclaration elle-même est ce qu
   contient plus que la règle n°303 et le déplacement du bloc d'impression
 - `make_index.py` relancé : `index.html` régénéré **conserve** la règle et passe le contrôle
 - rendu 1280 px et 390 px sur les pages touchées : **0 console, 0 erreur JS**
+
+## 21/09/2026 — Règle d'or n°304 : le bloc d'ouverture dit ce qui devrait être en place (thèmes 1-3, _outils)
+
+> **Règle d'or n°304 — l'ouverture ne dit pas le passé.** Le bloc qui ouvre une séquence n'affirme
+> **jamais** ce que l'élève a fait — ni une année précédente, ni plus tôt dans l'année. Il nomme les
+> **compétences qui devraient être en place**, avec leurs codes, et **donne à chacune un moyen de la
+> rattraper**.
+
+### Pourquoi — et ce n'est pas une question de style
+
+**Pascal change d'établissement chaque année.** Il n'hérite jamais d'une classe qui a suivi ses
+séquences de l'année précédente. « En 4e, à Tsinghua, tu as estimé puis comparé » est donc **faux
+pour pratiquement tous ses élèves**.
+
+Et quand c'est vrai, l'affirmation met en défaut celui qui ne l'a pas fait. Les mots sont de Pascal :
+
+> l'élève « peut se sentir **dévalorisé ou stressé** par rapport à ce qui devait être fait et qui n'a
+> pas été fait, et c'est une **surcharge mentale** encore ».
+
+Un élève arrivé en cours d'année n'a pas fait non plus ce que la page affirme qu'il a fait — c'est
+pourquoi la règle vaut aussi pour l'année en cours.
+
+### La règle, en six points
+
+1. **Aucune affirmation de ce que l'élève a fait** — ni une année précédente, ni plus tôt dans
+   l'année. Jamais le sujet, le lieu ni le titre d'une séquence d'une année précédente.
+2. **Des compétences, avec leurs codes**, choisies pour leur utilité **au début de cette
+   séquence-là** — pas tout le programme antérieur. Pour une 5e, l'antérieur est le **cycle 3**.
+3. **Forme prudente** : « ce qui devrait être en place », « avant de commencer, vérifie que tu
+   sais… ». Une séquence de la **même année** peut être citée comme l'endroit où la compétence se
+   travaille, **au conditionnel** (« si tu l'as suivie… »), jamais comme un fait.
+4. **Chaque compétence nommée offre un moyen de la rattraper** : lien vers le lexique, capsule
+   « Je révise », fiche. *Nommer un manque sans remède stresse au lieu d'aider* — c'est la raison
+   même de la règle, et son point le plus important.
+5. **Elle fait la paire avec la n°301 et la n°302** : l'ouverture dit ce qui **devrait être en
+   place**, le référentiel ce que **je saurai faire**, le bilan **où j'en suis**. Mêmes codes aux
+   deux bouts.
+6. **Un seul titre dans tout le dépôt**, choisi par Pascal parmi les propositions ci-dessous.
+
+### Ce qui se mesure — le bloc reconnu à sa FONCTION
+
+Quatre comptes par libellé se sont déjà trompés dans ce dépôt : les 746 questions qui étaient 1 480,
+le bilan de `4e_C1.1`, le corrigé de `5e_C1.3`, l'état visité déclaré immesurable. Le compte par le
+seul paragraphe `.deja` en donnait **34**.
+
+Le bloc est donc reconnu par **deux marques**, et la première est structurelle :
+
+- un conteneur de classe `rappel-spiralaire` ;
+- à défaut, un titre de la famille **🔄 / 🔁** qui annonce un retour en arrière, posé dans la
+  première moitié de la page.
+
+**Résultat : 46 blocs**, soit **douze de plus** que le marqueur unique. Et ils s'écrivent sous **six
+titres différents** :
+
+| titre, tel qu'il s'écrit aujourd'hui | séquences |
+|---|---:|
+| 🔄 Ce que tu as déjà fait | 30 |
+| 🔄 Ce que tu sais déjà faire — et ce qu'on ne refera pas | 10 |
+| 🔄 D'où tu viens — la spirale C8 | 3 |
+| 🔄 D'où tu viens — la spirale C7.4 | 1 |
+| 🔄 D'où tu viens — la spirale C7.8 | 1 |
+| 🔁 Ce que tu as déjà fait | 1 |
+
+**Confronté à une seconde méthode**, indépendante : une lecture du **DOM** dans un navigateur réel,
+qui cherche le même bloc par sa classe ou par son titre, plus un troisième signal — un bloc de tête
+qui nomme un code du référentiel étranger à la séquence. **Zéro écart** sur la présence du bloc,
+sur les 60 séquences.
+
+### Les chiffres
+
+| | séquences |
+|---|---:|
+| portent un bloc d'ouverture | **46** |
+| **refusées** par la n°304 | **45** |
+| bloc accepté | **1** |
+| sans bloc d'ouverture | 14 |
+
+| où se trouve l'affirmation | séquences |
+|---|---:|
+| dans le **titre seul** | **0** |
+| dans le **texte seul** | 14 |
+| dans les **deux** | 31 |
+
+**Aucune séquence n'est refusée pour son seul titre** — la mesure n'est donc pas tautologique, et
+c'est une vérification qu'il fallait faire : le titre « 🔄 Ce que tu as déjà fait » est à lui seul une
+affirmation, et le confondre avec le corps aurait refusé pour l'en-tête des pages au texte
+irréprochable, sans qu'on puisse le savoir. Le grief dit désormais **lequel des deux parle**.
+
+**L'écart avec les 31 du relevé de départ tient à deux choses**, toutes deux mesurées :
+
+- le marqueur unique `.deja` **manquait douze blocs** (46 contre 34) ;
+- la règle refuse aussi les affirmations portant sur **l'année en cours** — les trois blocs comptés
+  « n'affirment rien d'antérieur » disent bel et bien ce que l'élève a fait : *« Tu connais déjà
+  cette station : au Thème 2, tu as décrit sa chaîne d'information »*, *« Tu as déjà fabriqué des
+  choses en technologie »*.
+
+`verif_regles_audit.py` passe de **249 à 294 manquements** : **+45**, exactement les 45 séquences
+refusées.
+
+### Trois titres proposés à Pascal — il choisit, la règle ne tranche pas
+
+La contrainte de la n°302 s'applique : les compétences relèvent du **« je »**. L'émoji **🔄** est
+conservé dans les trois : il signale déjà la spirale dans tout le dépôt, et le changer coûterait un
+repère sans rien gagner.
+
+| proposition | ce qu'elle dit bien | sa faiblesse |
+|---|---|---|
+| **🔄 Ce que je devrais savoir faire avant de commencer** | dit le « devrait », dit le « je », dit le moment | long ; « devrais » peut s'entendre comme un reproche |
+| **🔄 Avant de commencer : ce que je vérifie** | met l'élève en action — il *vérifie*, il ne subit pas un constat | ne dit pas *quoi* vérifier ; demande un sous-titre |
+| **🔄 Ce dont je vais avoir besoin ici** | tourne la chose vers l'utilité immédiate, pas vers le passé ; le plus court | ne dit pas que c'est une compétence antérieure |
+
+Mon avis, s'il est utile : la **deuxième**. « Je vérifie » fait de l'élève le sujet d'une action
+qu'il peut mener tout de suite, et elle appelle naturellement le moyen de rattrapage du point 4 —
+on vérifie, et s'il manque quelque chose, le lien est là. La première reste la plus explicite si le
+sous-titre doit être évité.
+
+### Ce que le contrôle ne voit pas, et le dit
+
+- **la PERTINENCE des compétences choisies** : qu'elles servent vraiment au début de cette
+  séquence-là se juge, cela ne se compte pas ;
+- **l'EXISTENCE RÉELLE du moyen de rattrapage** : un lien vers un lexique peut exister et ne rien
+  contenir d'utile. Le point 4 de la règle est donc **non mécanisé**, et c'est le plus important ;
+- **la JUSTESSE des codes cités** ;
+- **le NIVEAU visé** : qu'une 5e renvoie au cycle 3 et non à la 6e du collège relève de la relecture ;
+- **une affirmation dont le sujet n'est ni « tu » ni « t' »** : `3e_C7.7` écrit « Tout est décidé.
+  3e_C7.3 a choisi la matière » — la séquence est le sujet, pas l'élève. C'est le seul bloc que la
+  règle accepte, et il présuppose pourtant le parcours. Il est signalé ici plutôt que forcé dans un
+  motif qui ferait des faux.
+
+### Ce que les mutations ont appris
+
+Neuf mutations, **neuf mordent**. Trois ont révélé un défaut réel du détecteur, et non du banc :
+
+| ce que la mutation a montré | le défaut |
+|---|---|
+| « le participe *suivi* sort de la liste » restait **vert** | le motif ne prenait que les participes en `-é` : « tu as **suivi** » n'était pas vu, et le cas du conditionnel passait **pour cette raison-là**, pas parce que l'exemption marchait |
+| « l'an dernier » au masculin restait **vert** | le motif demandait « derniè**re** » : la formule la plus courante du dépôt n'était pas reconnue, et le grief retombait sur l'autre branche — verdict juste, **raison fausse** |
+| l'année écrite « 5 e » | les pages écrivent « 5<sup>e</sup> » ; le texte nu rend « 5 e », et le motif strict laissait passer deux blocs |
+
+> Une mutation qui laisse le banc vert ne dit pas « le banc est mauvais » : elle dit **« ce cas-là
+> passe pour une autre raison que celle qu'on croit »**. C'est le seul moyen de voir un cas qui a
+> l'air de prouver quelque chose et ne prouve rien.
+
+### Et une leçon d'outillage, payée sur le vif
+
+Le script de mutation **n'a pas rendu l'outil intact** : une mutation dont le motif ne se trouvait
+plus a levé une exception, et `verif_regles_audit.py` est resté **muté sur le disque**, sa branche
+« année antérieure » débranchée. Rien ne l'a dit ; c'est en relisant le fichier qu'on l'a vu.
+
+> **Un script qui modifie un outil pour l'éprouver doit le restaurer dans un `finally`.** Sans quoi
+> la première mutation qui échoue laisse derrière elle un contrôle silencieusement faux — et c'est
+> exactement le genre de panne que la règle n°299 décrit.
+
+### Contrôles
+
+- `verif_regles_audit.py` : **60 séquences · 294 manquements** (249 avant, **+45**) ✅
+- `tests_verif_regles_audit.py` : **50 / 50** (35 avant, **+15**) ✅
+- **neuf mutations, neuf mordent** — la marque par classe, la marque par titre, les deux branches de
+  grief, « t'a appris », le participe « suivi », « l'an dernier », l'année en exposant, l'exemption
+  du conditionnel
+- confrontation avec une lecture du DOM dans un navigateur réel : **0 écart** sur la présence du bloc
+- batterie : `controle_liens.py` ✅ · `controle_medias.py` ✅ · `controle_cadres.py` ✅ ·
+  `controle_formulations.py` **0 écart** ✅ · `controle_gestes_outil.py` ✅ ·
+  `controle_fichiers_telechargeables.py` ✅
+- `controle_contraste_liens.mjs` : **0 sous le seuil** ✅ · `controle_impression.mjs` : **0 page
+  refusée** ✅
+- périmètre : `_outils/` et ce journal. **AUCUNE page n'est modifiée** — ce lot écrit la règle,
+  la mécanise et mesure ; la remédiation viendra, et commencera par le thème 1.
