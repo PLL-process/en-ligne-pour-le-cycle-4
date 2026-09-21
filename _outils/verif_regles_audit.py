@@ -627,6 +627,166 @@ PARLE_DE_LUI = re.compile(r"[Ll][’']\s?élèves?\b|\b[Ll]es\s+élèves\b", re.
 VOUVOIEMENT = re.compile(r"\b(vous|votre|vos)\b", re.I)
 
 
+#: ── n°304 : le bloc d'ouverture ────────────────────────────────────────────
+#:
+#: LE BLOC SE RECONNAÎT À SA FONCTION, pas à un titre — quatre comptes par
+#: libellé se sont déjà trompés dans ce dépôt. Mesuré : il s'écrit sous CINQ
+#: titres au moins (« Ce que tu as déjà fait », « Ce que tu sais déjà faire —
+#: et ce qu'on ne refera pas », « D'où tu viens — la spirale … », « Avant de
+#: commencer : à quoi ça sert ? », et une variante en 🔁), et compter le seul
+#: paragraphe `.deja` en manquait DIX-NEUF sur cinquante-trois.
+#:
+#: Deux marques, donc, et la première est structurelle :
+#:   · un conteneur de classe `rappel-spiralaire` ;
+#:   · à défaut, un titre de la famille 🔄/🔁 qui annonce un retour en arrière,
+#:     posé dans la première moitié de la page.
+OUVERTURE_CLASSE = re.compile(r'<(section|div|aside)\b[^>]*class="[^"]*rappel-spiralaire', re.I)
+OUVERTURE_TITRE = re.compile(
+    r"<h[1-4][^>]*>[^<]*[\U0001f504\U0001f501][^<]*"
+    r"(?:d\u00e9j\u00e0|d'o\u00f9 tu viens|d\u2019o\u00f9 tu viens|spirale|avant de commencer)",
+    re.I)
+
+#: Ce que le bloc ne doit JAMAIS affirmer : une année antérieure…
+#: `(?:6|5|4|3)\s*e` et non `6e` : les pages \u00e9crivent souvent \u00ab 5<sup>e</sup> \u00bb,
+#: et le texte nu rend alors \u00ab 5 e \u00bb. Le motif strict laissait passer deux blocs
+#: qui annon\u00e7aient bel et bien une ann\u00e9e ant\u00e9rieure \u2014 trouv\u00e9 en LISANT les trois
+#: blocs que la r\u00e8gle acceptait, pas en relisant le motif.
+ANNEE_ANTERIEURE = re.compile(
+    # \u00ab l'an dernier \u00bb s'\u00e9crit au MASCULIN : le motif demandait \u00ab derni\u00e8re \u00bb,
+    # et ne reconnaissait donc pas la formule la plus courante du d\u00e9p\u00f4t.
+    r"\b[Ee]n\s+(?:6|5|4|3)\s*e\b|l['\u2019]an\s+derni(?:er|\u00e8re)|"
+    r"depuis la\s+(?:6|5|4)\s*e|ann\u00e9e derni\u00e8re|au cycle\s+3|en cycle\s+3|"
+    r"^(?:6|5|4|3)\s*e\s+[\u2014-]", re.I | re.M)
+
+#: … ni ce que l'élève A FAIT, même dans l'année en cours : un élève arrivé en
+#: cours d'année ne l'a pas fait non plus.
+#: Les participes en `-\u00e9` ne suffisent pas : \u00ab tu as SUIVI la s\u00e9quence \u00bb n'y
+#: entre pas, et le cas du banc qui devait \u00e9prouver l'exemption du conditionnel
+#: passait pour cette raison-l\u00e0 \u2014 pas pour la bonne. Trouv\u00e9 par MUTATION : en
+#: retirant l'exemption, le banc restait vert. Les participes irr\u00e9guliers du
+#: domaine sont donc nomm\u00e9s un par un, plut\u00f4t qu'un motif large qui prendrait
+#: \u00ab tu as envie \u00bb pour un participe.
+DEJA_FAIT = re.compile(
+    r"\btu\s+(?:as|avais)\s+(?:d\u00e9j\u00e0\s+)?"
+    r"(?:[a-z\u00e0-\u00ff]+\u00e9e?s?|fait|vu|pris|mis|compris|su|appris|construit|"
+    r"\u00e9crit|d\u00e9couvert|suivi|choisi|d\u00e9crit|rendu|lu|v\u00e9cu|produit|"
+    r"obtenu|retenu|conduit|d\u00e9fini|r\u00e9ussi)\b", re.I)
+
+#: L'affirmation ne prend pas toujours « tu » pour sujet : « le banc de la cour
+#: t'a appris que… » dit tout autant ce que l'élève a vécu.
+APPRIS_A_TOI = re.compile(
+    r"t['’]a\s+(?:appris|montré|entraîné|permis|fait)\b", re.I)
+
+#: Le conditionnel est la forme AUTORISÉE : « si tu l'as suivie… » ne dit pas
+#: que l'élève l'a suivie, il lui laisse la question.
+CONDITIONNEL = re.compile(r"\b(?:si|au cas o\u00f9|s'il|s\u2019il)\b", re.I)
+
+
+def bloc_ouverture(corps: str) -> tuple[int, int, str] | None:
+    """(début, fin, par quoi on l'a reconnu, position de la marque), ou None."""
+    m = OUVERTURE_CLASSE.search(corps)
+    marque = "la classe rappel-spiralaire"
+    if not m:
+        m = OUVERTURE_TITRE.search(corps)
+        marque = "un titre de la famille \u2b6f"
+        if not m or m.start() > len(corps) * 0.55:
+            return None
+    # Les BORNES comptent autant que la reconnaissance. Remonter jusqu'au
+    # `<section` le plus proche marche sur les pages structurées et avale, sur
+    # les pages plates, l'en-tête entier de la page : on citait alors la barre
+    # de navigation comme si elle était le bloc, et on aurait pu refuser une
+    # page pour une phrase écrite ailleurs. Le conteneur n'est donc retenu que
+    # s'il commence PRÈS de la marque ; sinon on part de la marque elle-même.
+    debut = corps.rfind("<section", 0, m.start())
+    if debut < 0 or m.start() - debut > 1200:
+        alt = corps.rfind("<div", 0, m.start())
+        debut = alt if alt >= 0 and m.start() - alt <= 1200 else m.start()
+    fin = corps.find("</section>", m.start())
+    if fin < 0:
+        fin = corps.find("</div>", m.start())
+    if fin < 0:
+        fin = len(corps)
+    return debut, min(fin, m.start() + 2500), marque, m.start()
+
+
+def regle_304(src: str) -> tuple[str, str]:
+    """n°304 — le bloc d'ouverture dit ce qui DEVRAIT être en place.
+
+    Pascal change d'établissement chaque année : il n'hérite jamais d'une
+    classe qui a suivi ses séquences. « En 4e, à Tsinghua, tu as estimé puis
+    comparé » est donc faux pour presque tous ses élèves. Et quand c'est vrai,
+    l'affirmation met en défaut celui qui ne l'a pas fait.
+
+    DEUX griefs, et deux seulement, parce que deux seulement se lisent
+    sûrement :
+      · un marqueur d'ANNÉE ANTÉRIEURE (« En 4e », « L'an dernier »…) ;
+      · une affirmation de ce que l'élève A FAIT (« tu as estimé »), sauf au
+        conditionnel (« si tu l'as suivie »), qui est la forme autorisée.
+
+    CE QUE CE CONTRÔLE NE VOIT PAS, et ne prétend pas voir :
+      · la PERTINENCE des compétences choisies — qu'elles servent vraiment au
+        début de cette séquence-là se juge, cela ne se compte pas ;
+      · l'EXISTENCE RÉELLE du moyen de rattrapage : un lien vers un lexique
+        peut exister et ne rien contenir d'utile ;
+      · la JUSTESSE des codes cités : `controle_formulations.py` lit les
+        formulations, personne ne lit encore la pertinence d'un code ici ;
+      · le NIVEAU visé : qu'une 5e renvoie au cycle 3 et non à la 6e du
+        collège relève de la relecture.
+    """
+    corps = _corps_lisible(src)
+    trouve = bloc_ouverture(corps)
+    if trouve is None:
+        return "OK", "pas de bloc d'ouverture \u2014 rien \u00e0 v\u00e9rifier ici"
+    debut, fin, marque, _marque_pos = trouve
+    brut = corps[debut:fin]
+
+    # Le TITRE et le TEXTE se jugent s\u00e9par\u00e9ment, et le grief dit lequel parle.
+    # \u00ab \ud83d\udd04 Ce que tu as d\u00e9j\u00e0 fait \u00bb est \u00e0 lui seul une affirmation : le confondre
+    # avec le corps rendait la mesure tautologique \u2014 une page au corps
+    # irr\u00e9prochable aurait \u00e9t\u00e9 refus\u00e9e pour son en-t\u00eate, sans qu'on puisse le
+    # savoir. Mesur\u00e9 une fois s\u00e9par\u00e9s : AUCUNE s\u00e9quence n'est refus\u00e9e pour son
+    # seul titre, 22 pour leur seul texte, 23 pour les deux.
+    #
+    # Le titre du bloc est le DERNIER titre qui pr\u00e9c\u00e8de la marque, pas le
+    # premier du conteneur : sur les pages structur\u00e9es, la section qui accueille
+    # le bloc porte souvent d\u00e9j\u00e0 un `<h2>` de s\u00e9quence, et c'est lui qu'on
+    # citait \u00e0 tort.
+    titres = [x for x in re.finditer(r"<h[1-4][^>]*>(.*?)</h[1-4]>", brut, re.S)]
+    mt = None
+    for x in titres:
+        if x.start() <= (trouve[3] - debut) + 220:
+            mt = x
+    if mt is None and titres:
+        mt = titres[0]
+    titre = _texte_nu(mt.group(1)) if mt else ""
+    texte = _texte_nu(brut[mt.end():] if mt else brut)
+
+    def griefs_de(ou: str, t: str) -> list[str]:
+        out = []
+        m = ANNEE_ANTERIEURE.search(t)
+        if m:
+            out.append("%s : affirme une ann\u00e9e ant\u00e9rieure \u2014 \u00ab %s \u00bb" % (ou, _extrait(t, m)))
+        m = DEJA_FAIT.search(t) or APPRIS_A_TOI.search(t)
+        if m and not CONDITIONNEL.search(t[max(0, m.start() - 60):m.start()]):
+            out.append("%s : affirme ce que l'\u00e9l\u00e8ve a fait \u2014 \u00ab %s \u00bb" % (ou, _extrait(t, m)))
+        return out
+
+    griefs = griefs_de("le titre", titre) + griefs_de("le texte", texte)
+
+    if griefs:
+        return "ECHEC", " \u00b7 ".join(griefs)
+    return "OK", ("bloc d'ouverture reconnu par %s, sans affirmation sur ce que "
+                  "l'\u00e9l\u00e8ve a fait" % marque)
+
+
+def _extrait(texte: str, m) -> str:
+    """La phrase autour d'une trouvaille, bornée pour rester lisible."""
+    d = texte.rfind(".", 0, m.start()) + 1
+    f = texte.find(".", m.end())
+    bout = texte[d:f + 1 if f > 0 else len(texte)].strip()
+    return (bout[:120] + "\u2026") if len(bout) > 120 else bout
+
+
 #: Les exceptions à la n°302, NOMMÉES une par une — jamais une catégorie.
 #:
 #: Tranché par Pascal le 20/09/2026 : le « vous » de « La mairie vous appelle »
@@ -724,6 +884,7 @@ REGLES = [
     ("n°300 question dans le flux", regle_300),
     ("n°301 le bilan clôt", regle_301),
     ("n°302 on parle À l'élève", regle_302),  # reçoit le chemin : voir EXCEPTIONS_302
+    ("n°304 l'ouverture ne dit pas le passé", regle_304),
 ]
 
 SYMBOLE = {"OK": "✔", "ECHEC": "✘", "ALERTE": "▲", "SANS OBJET": "·", "INCONNU": "?"}
