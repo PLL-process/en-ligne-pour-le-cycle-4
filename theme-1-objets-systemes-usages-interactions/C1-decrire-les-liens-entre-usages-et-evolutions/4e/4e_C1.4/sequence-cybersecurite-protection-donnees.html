@@ -2783,6 +2783,10 @@ recalc();
     document.addEventListener('input', () => enregistrer(true));
 
     // ═══ Reprendre ═══
+    // les sections de fin — Bonus, bilan — sont écrites APRÈS ce script : au
+    // moment où il s'exécute, leurs champs n'existent pas encore. Reprendre
+    // tout de suite les oubliait en silence (vague n°301, 21/09/2026).
+    function reprendre() {
     try {
       const brut = localStorage.getItem('cyber4e');
       if (brut) {
@@ -2801,6 +2805,10 @@ recalc();
         recalc();
       }
     } catch (e) { /* rien de sauvegardé, ou stockage refusé : on démarre à vide */ }
+    }
+    if (document.readyState === 'loading')
+      document.addEventListener('DOMContentLoaded', reprendre);
+    else reprendre();
 
     // PDF
     document.getElementById('btnPDF').onclick = () => window.print();
@@ -3019,6 +3027,125 @@ recalc();
 </script>
 
 
+<section class="r4" id="bonus">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p class="note">Ces défis ne sont pas notés et ne comptent pas dans ta progression.
+  Personne n'est pénalisé de ne pas les faire.</p>
+  <ol>
+    <li><b>L'activité immersive.</b> Ouvre
+    <a href="activite-bonus-cyber-immersive-2fa.html">l'atelier « double authentification »</a>
+    de ce lot&nbsp;: tu y actives une seconde clé sur un compte fictif, et tu vois ce qui
+    change pour quelqu'un qui aurait volé le mot de passe.
+    <label class="response-label" for="bonus1" style="display:block">Ce que j'ai vu changer pour quelqu'un qui aurait volé le mot de passe :</label>
+    <textarea id="bonus1" style="width:100%;box-sizing:border-box;min-height:72px"></textarea>
+  </li>
+    <li><b>Le mot de passe qu'on retient.</b> Fabrique une phrase de passe d'au moins quatre
+    mots que tu retiendras sans la noter, et explique pourquoi elle résiste mieux qu'un mot
+    court avec des symboles — sans jamais écrire ta vraie phrase de passe ici.
+    <label class="response-label" for="bonus2" style="display:block">Pourquoi ma phrase de passe résiste mieux — sans jamais l'écrire ici :</label>
+    <textarea id="bonus2" style="width:100%;box-sizing:border-box;min-height:72px"></textarea>
+  </li>
+    <li><b>Ce que le collège sait de toi.</b> Liste les données que l'établissement détient
+    forcément (nom, classe…) et celles qu'il ne devrait pas conserver après ton départ.
+    Sur quoi t'appuies-tu pour trancher&nbsp;?
+    <label class="response-label" for="bonus3" style="display:block">Ce qu'il détient forcément, ce qu'il ne devrait pas garder, et sur quoi je m'appuie :</label>
+    <textarea id="bonus3" style="width:100%;box-sizing:border-box;min-height:72px"></textarea>
+  </li>
+  </ol>
+  <details class="correction">
+    <summary>✅ Corrigé du Bonus — à ouvrir après avoir cherché</summary>
+
+    <p><b>1 · L'activité immersive.</b> Ce qu'il fallait voir&nbsp;: avec le seul mot de
+    passe, l'intrus entre. La seconde clé activée, il a toujours le bon mot de passe — et
+    il n'entre plus, parce qu'il lui manque quelque chose qu'il n'a pas volé&nbsp;: le
+    téléphone qui reçoit le code.</p>
+    <p>Le raisonnement&nbsp;: un mot de passe est une chose que tu <b>sais</b>. La seconde
+    clé est une chose que tu <b>as</b>. Voler les deux d'un coup est bien plus difficile
+    que voler l'une.</p>
+    <p class="note"><b>Erreurs fréquentes.</b> Croire que la double authentification
+    <i>remplace</i> un bon mot de passe&nbsp;: elle s'y ajoute, elle ne le remplace pas.
+    Et croire qu'elle protège de tout&nbsp;: elle ne protège pas d'un message qui te
+    demande de recopier le code toi-même. Le code ne se donne à personne.</p>
+
+    <p><b>2 · Le mot de passe qu'on retient.</b> Cette question est ouverte&nbsp;: il n'y a
+    pas <i>une</i> phrase juste. Une bonne réponse se reconnaît à quatre critères, pas à
+    son contenu&nbsp;:</p>
+    <ul>
+      <li>la phrase est <b>longue</b> — plusieurs mots, pas un mot déguisé&nbsp;;</li>
+      <li>les mots ne se déduisent <b>ni les uns des autres, ni de toi</b> (ni ton prénom,
+      ni ton club, ni ta date de naissance)&nbsp;;</li>
+      <li>tu la retiens <b>sans la noter</b> — c'est ce qui la rend utilisable tous les
+      jours&nbsp;;</li>
+      <li>elle ne sert qu'à <b>un</b> compte&nbsp;: une phrase réutilisée tombe partout à la
+      fois.</li>
+    </ul>
+    <p>L'explication attendue&nbsp;: un logiciel qui devine essaie des milliards de
+    combinaisons. Ce qui le ralentit, c'est le <b>nombre de possibilités</b>, et ce nombre
+    dépend surtout de la <b>longueur</b>. Remplacer un «&nbsp;a&nbsp;» par un
+    «&nbsp;@&nbsp;» dans un mot court multiplie les possibilités par très peu&nbsp;;
+    ajouter un mot entier les multiplie par le nombre de mots de la langue.</p>
+    <p><b>Un exemple, parmi des milliers&nbsp;:</b> <code>bocal-tambour-mangue-escalier</code>.
+    Quatre mots sans rapport, faciles à revoir en image, dont aucun ne vient de la vie de
+    celui qui les choisit. Ce qui la rend bonne n'est pas son charme&nbsp;: c'est sa
+    longueur et l'indépendance de ses mots.</p>
+    <p class="note"><b>Erreur fréquente.</b> <code>P@ssw0rd2026!</code> paraît compliqué
+    parce qu'il est pénible à taper. Il est court, et ses substitutions sont les premières
+    que tout logiciel essaie. Le sentiment de complexité n'est pas une mesure de
+    sécurité.</p>
+    <p class="note"><b>Et la règle qui ne se discute pas&nbsp;:</b> ta vraie phrase de passe
+    ne s'écrit pas dans un cahier, pas dans cette page, pas dans un devoir. Ce que tu
+    écris ici, ce sont tes <b>critères</b> — jamais ta phrase.</p>
+
+    <p><b>3 · Ce que le collège sait de toi.</b> Une bonne réponse contient deux listes,
+    et surtout le <b>critère qui les sépare</b>.</p>
+    <p><b>Détenu forcément</b>, parce que le service ne peut pas être rendu sans&nbsp;: ton
+    nom et ton prénom, ta date de naissance, ta classe, tes notes et tes absences, le
+    contact de tes responsables légaux.</p>
+    <p><b>Qui ne devrait plus être conservé</b> une fois que tu as quitté
+    l'établissement&nbsp;: les photos de sorties où tu figures, ton adresse de courriel
+    personnelle, tes travaux d'élève, les traces de connexion à l'ENT.</p>
+    <p><b>Le critère&nbsp;:</b> une donnée se garde pour un <b>usage précis</b>, et
+    seulement aussi longtemps que cet usage dure. La question qui tranche n'est pas
+    «&nbsp;est-ce gênant&nbsp;?&nbsp;» mais «&nbsp;à quoi cette donnée sert-elle
+    <i>encore</i>&nbsp;?&nbsp;». C'est le principe de <b>limitation de la conservation</b>,
+    l'un de ceux que pose le RGPD cité dans cette séquence.</p>
+    <p class="note"><b>Erreurs fréquentes.</b> Trier selon ce qui paraît intime&nbsp;: ton
+    nom n'a rien d'intime et se garde, une photo de sortie n'a rien de secret et ne se
+    garde pas. Ce n'est pas la sensibilité de la donnée qui décide, c'est l'usage qui la
+    justifie encore. Et croire que «&nbsp;le collège a le droit&nbsp;» suffit&nbsp;: avoir
+    le droit de <i>collecter</i> n'est pas avoir le droit de <i>garder</i>
+    indéfiniment — ce sont deux questions.</p>
+  </details>
+</section>
+
+<section class="r4" id="bilan">
+  <h2>🧩 Bilan <span style="font-size:.8em;opacity:.8">(~10 min)</span></h2>
+  <p class="note">Reviens à la <b>problématique</b> posée au début&nbsp;:
+  «&nbsp;<i>Comment protéger mes données, mes comptes et ma e-réputation tout en
+  utilisant des services numériques&nbsp;?</i>&nbsp;» Tu y avais répondu avant de
+  commencer. Réponds-y de nouveau ci-dessous, puis remonte lire ta première réponse et
+  compare.</p>
+
+  <label class="response-label" for="bilan1" style="display:block">En deux
+  phrases&nbsp;: qu'est-ce qui protège vraiment un compte, et pourquoi&nbsp;?</label>
+  <textarea id="bilan1" style="width:100%;box-sizing:border-box;min-height:72px"></textarea>
+
+  <label class="response-label" for="bilan2" style="display:block">Une donnée publiée ne
+  s'efface pas d'un clic. Qu'est-ce que cela change à ta façon de publier&nbsp;?</label>
+  <textarea id="bilan2" style="width:100%;box-sizing:border-box;min-height:72px"></textarea>
+
+  <p class="note">À présent, situe-toi sur la compétence travaillée dans cette
+  séquence. Aucun niveau n'est une note&nbsp;: coche celui qui décrit ce que tu fais
+  aujourd'hui.</p>
+  <fieldset class="qcm-groupe" id="pos1">
+    <legend>📍 <b>4e_C1.4</b> — <i>Identifier et appliquer les règles pour un usage raisonné des objets communicants et des environnements numériques (propriété intellectuelle, identité numérique, témoins de connexion, géolocalisation).</i></legend>
+    <div class="qcm-option"><input type="radio" name="pos1" id="pos1__1" value="🔴 Je découvre qu'il existe des règles, mais je ne sais pas encore laquelle s'applique à ce que je fais."><label for="pos1__1">🔴 Je découvre qu'il existe des règles, mais je ne sais pas encore laquelle s'applique à ce que je fais.</label></div>
+    <div class="qcm-option"><input type="radio" name="pos1" id="pos1__2" value="🟠 Je cite une règle, et je l'applique quand on me dit laquelle."><label for="pos1__2">🟠 Je cite une règle, et je l'applique quand on me dit laquelle.</label></div>
+    <div class="qcm-option"><input type="radio" name="pos1" id="pos1__3" value="🟢 Devant une situation courante — un mot de passe, une image, un réglage — je choisis la bonne règle et je fais le geste."><label for="pos1__3">🟢 Devant une situation courante — un mot de passe, une image, un réglage — je choisis la bonne règle et je fais le geste.</label></div>
+    <div class="qcm-option"><input type="radio" name="pos1" id="pos1__4" value="⭐ Devant une situation nouvelle, je dis quelle règle s'applique, ce qu'elle protège, et ce qu'elle me coûte."><label for="pos1__4">⭐ Devant une situation nouvelle, je dis quelle règle s'applique, ce qu'elle protège, et ce qu'elle me coûte.</label></div>
+  </fieldset>
+</section>
+
 <section class="r4" id="pret-a-s-entrainer">
   <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
   <p>Le QCM de cette séquence comporte <strong>30 questions</strong> réparties sur
@@ -3028,23 +3155,7 @@ recalc();
   <p class="note">Tu peux le rejouer autant de fois que tu veux&nbsp;: il n'est pas noté.</p>
 </section>
 
-<section class="r4" id="bonus">
-  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-  <p class="note">Ces défis ne sont pas notés et ne comptent pas dans ta progression.
-  Personne n'est pénalisé de ne pas les faire.</p>
-  <ol>
-    <li><b>L'activité immersive.</b> Ouvre
-    <a href="activite-bonus-cyber-immersive-2fa.html">l'atelier « double authentification »</a>
-    de ce lot&nbsp;: tu y actives une seconde clé sur un compte fictif, et tu vois ce qui
-    change pour quelqu'un qui aurait volé le mot de passe.</li>
-    <li><b>Le mot de passe qu'on retient.</b> Fabrique une phrase de passe d'au moins quatre
-    mots que tu retiendras sans la noter, et explique pourquoi elle résiste mieux qu'un mot
-    court avec des symboles — sans jamais écrire ta vraie phrase de passe ici.</li>
-    <li><b>Ce que le collège sait de toi.</b> Liste les données que l'établissement détient
-    forcément (nom, classe…) et celles qu'il ne devrait pas conserver après ton départ.
-    Sur quoi t'appuies-tu pour trancher&nbsp;?</li>
-  </ol>
-</section>
+
 
 <script>
 /* ── Séances — posé par decouper.py. Onglets, sans dépendance. ─────────── */

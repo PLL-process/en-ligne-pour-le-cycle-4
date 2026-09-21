@@ -17748,3 +17748,201 @@ pages annoncent « **facultatif — hors parcours obligatoire** » dans leur tit
 
 - **Le détecteur de corrigé** de `audit_cloture_sequence.mjs` (`.correction` seulement) — thème 2.
 - **`5e_C1.3` n'a aucun banc de lot** — à signaler, pas à improviser dans une vague de remédiation.
+
+## 21/09/2026 — Fin de la vague n°301 sur la famille C1 : deux bilans et trois corrigés écrits (thème 1)
+
+Dernier lot de la remédiation n°301 sur la famille C1 — une séquence par niveau, les prochaines que
+Pascal enseignera. **C'est le premier lot où il faut rédiger** : deux bilans qui n'existaient pas,
+trois corrigés de Bonus qui n'existaient pas non plus.
+
+| | `4e_C1.4` | `3e_C1.5` | `5e_C1.5` |
+|---|---|---|---|
+| avant | **aucun bilan** | **aucun bilan** | Bonus APRÈS le bilan |
+| ordre après | **Bonus → bilan → QCM** | **Bonus → bilan → QCM** | **Bonus → bilan → QCM** |
+| champs du Bonus | 0 → **3** | 0 → **3** | 0 → **2** |
+| corrigé du Bonus | 0 → **1**, écrit | 0 → **1**, écrit | 0 → **1**, écrit |
+| bilan | **écrit** — 2 zones + 1 code | **écrit** — 2 zones + 3 codes | existait déjà |
+| banc de lot | **aucun** | **aucun** | **aucun** |
+
+### Les bilans : transposés, pas inventés
+
+Le modèle est celui des `C1.1` : un titre « 🧩 Bilan », un rappel de ce qu'on cherchait, des zones de
+rédaction, un auto-positionnement. Deux écarts au modèle, et ils sont mesurés :
+
+- **Ni l'une ni l'autre de ces deux pages ne porte d'hypothèse de départ** (mesuré : zéro occurrence
+  du mot dans les deux). Le rappel porte donc sur la **problématique**, que les deux pages posent, et
+  à laquelle l'élève a déjà répondu en haut de page. Le bilan la recite et demande d'y répondre de
+  nouveau, puis de remonter comparer.
+- **Les deux pages ont déjà un bloc de métacognition.** Le bilan n'en écrit pas un second : c'est
+  exactement la duplication refusée en #407 pour `4e_C1.1`.
+
+**Les codes du positionnement sont ceux que la page déclare travailler**, et pas un de plus :
+
+| page | codes | d'où ils viennent |
+|---|---|---|
+| `4e_C1.4` | **4e_C1.4** seul | sa propre table « Compétences & connaissances » n'en déclare qu'un. `5e_C1.5` et `5e_C1.6` ne sont cités que par le QCM, comme codes **revisités** — les positionner ici serait dire qu'on les a travaillés. |
+| `3e_C1.5` | **3e_C1.3, 3e_C1.4, 3e_C1.5** | la page écrit elle-même « les trois codes travaillés ici ». |
+
+Les formulations sont **recopiées de `data_competences.py`, mot pour mot** ; `controle_formulations.py`
+reste à **0 écart**.
+
+### L'échelle : quatre niveaux qui décrivent un GESTE, pas une valeur
+
+Les descripteurs sont à la première personne et disent ce que l'élève **fait**. Aucun ne porte de
+mention de mérite — ni « maîtrise insuffisante », ni « fragile ». Le premier niveau doit pouvoir se
+cocher sans se sentir diminué, et il commence donc par « **je ne sais pas encore** » ou « **je
+découvre** » : une étape, pas un verdict. C'est la n°302 appliquée à l'échelle elle-même.
+
+L'invite qui les précède le dit en clair : « *Aucun niveau n'est une note : coche celui qui décrit ce
+que tu fais aujourd'hui.* »
+
+### Les corrigés : des critères, jamais une réponse unique
+
+Les trois Bonus posent des questions **ouvertes**. Aucun corrigé ne donne « la » réponse :
+
+- **la phrase de passe** (`4e_C1.4`) : quatre critères — longueur, indépendance des mots,
+  mémorisation sans note, un seul compte — puis un exemple **commenté comme un exemple parmi des
+  milliers**, et la règle qui ne se discute pas : *ta vraie phrase de passe ne s'écrit nulle part,
+  pas même ici ; ce que tu écris, ce sont tes critères*.
+- **l'estimation d'empreinte** (`3e_C1.5`) : le corrigé demande le calcul en clair, ce que
+  l'estimation **oublie**, et surtout **ce que la comparaison ne prouve pas** — une comparaison donne
+  un ordre de grandeur, elle ne conclut pas.
+- **le choix final du banc** (`5e_C1.5`) : « laquelle accepterais-tu de voir te concerner ? » n'attend
+  pas un camp. Le corrigé donne ce qu'une réponse solide contient **dans les deux cas**, et ce qu'une
+  réponse ne fait pas : trancher sans dire au nom de quoi.
+
+Chacun contient aussi les **erreurs fréquentes** et **pourquoi elles en sont** — pas seulement la
+liste des fautes.
+
+### Aucun chiffre de mémoire — un seul chiffre, et il vient de la page elle-même
+
+Règle de Pascal : aucun fait dans une page élève sans source primaire. Le corrigé de `3e_C1.5`
+enseigne donc la **méthode** (qui a mesuré, quel périmètre, où, quelle année ; et : une part ou une
+quantité&nbsp;?) et ne cite **qu'un seul chiffre** — celui que la page porte déjà à son activité
+3 bis : la page de l'**Arcep**, pour la **France**, en **2022**, environ **4,4 %** de l'empreinte
+carbone **totale du pays**. Auteur, périmètre, année et « de quoi » : les quatre sont écrits, et le
+corrigé dit explicitement que c'est le seul chiffre qu'il cite, parce que c'est le seul dont la
+source est ouverte dans la page.
+
+### Le corrigé du banc de `5e_C1.5` est construit à partir du banc, pas de ma lecture du code
+
+`banc_publication.mjs` ouvre la page, compose cinq publications et **relit les compteurs que le banc
+affiche** :
+
+| publication composée | indices | règles enfreintes |
+|---|---:|---:|
+| telle qu'elle est préparée | 7 | 2 |
+| jardin + rue + heure + collège + classe, image de la classe | **4** | **0** |
+| tout gardé, **avec accord écrit** | **7** | **0** |
+| le jardin seul, image trouvée sans licence | **0** | **1** |
+| le jardin seul, image de la classe | 0 | 0 |
+
+Les deux publications que le Bonus demande existent donc, et le corrigé les nomme élément par
+élément. La seconde ligne est la plus instructive&nbsp;: **l'autorisation rend licite et ne retire
+aucun indice** — le compteur ne bouge pas d'un seul.
+
+### Le piège du lot : trois mémoires différentes, et un ordre invisible
+
+| page | ce qui est enregistré | enregistrement |
+|---|---|---|
+| `4e_C1.4` | `input[id], select[id], textarea[id]`, clé `cyber4e` | écouteur global + bouton |
+| `3e_C1.5` | **tous** les champs ; ceux sans `id` reçoivent un **`auto_N` positionnel** | bouton |
+| `5e_C1.5` | `input, select, textarea` ayant un `id`, clé `seq_5e_C1_5_C1_6` | écouteur global |
+
+**Deux pannes silencieuses ont été trouvées en ouvrant les pages, aucune n'était visible en lisant.**
+
+**1. La reprise passait à côté des champs neufs.** Sur `4e_C1.4` et `3e_C1.5`, l'enregistrement
+marchait — le texte était bien dans `localStorage` — mais rien ne revenait au rechargement. La raison
+tient à l'**ordre d'écriture** : dans ces deux pages, le script de reprise est placé **avant** les
+sections de fin. Quand il s'exécute, les champs du Bonus et du bilan n'existent pas encore, et il les
+ignore sans un mot. Correctif minimal : la reprise est nommée, et appelée quand le document est
+analysé (`DOMContentLoaded`). Rien ne change pour les champs déjà là.
+
+**2. La mémoire de `3e_C1.5` est positionnelle.** Ses champs sans `id` reçoivent `auto_0`, `auto_1`…
+**dans l'ordre de la page**. Insérer un champ avant l'un d'eux décalerait toutes les clés suivantes :
+un élève rouvrirait la page et retrouverait ses réponses **dans les mauvaises cases**. Mesuré : le
+dernier champ anonyme est ligne 1291, et tout ce que ce lot ajoute vient après.
+
+Vérifié de bout en bout, et pas par raisonnement : on écrit trois témoins dans la version **d'avant**,
+on enregistre, puis on ouvre la version **d'après** — même fichier, donc même `localStorage` — et on
+vérifie que chaque clé désigne **toujours la même question** :
+
+| clé | question voisine | après le lot |
+|---|---|---|
+| `auto_15` | « Comment protéger efficacement sa vie numérique… » | ✔ même question |
+| `auto_36` | « 3) Quand est-il préférable d'exporter en PDF… » | ✔ même question |
+| `auto_56` | « 3) Comment prolonger la durée de vie d'un appareil… » | ✔ même question |
+
+**Et la preuve que ce contrôle mord** : un seul `<textarea>` inséré juste après la problématique, et
+les trois témoins atterrissent sur **trois questions différentes** — 0 / 3.
+
+Après correctif, les **onze champs neufs et les quatre groupes de positionnement** sont retrouvés
+après rechargement : 5/5 et 1/1 pour `4e_C1.4`, 5/5 et 3/3 pour `3e_C1.5`, 2/2 pour `5e_C1.5`.
+
+### Le temps : +10 min par bilan, et aucune marge ne passe au rouge
+
+| | bandeau | activités lues avant | après |
+|---|---|---:|---:|
+| `4e_C1.4` | **aucun** | **0** | **10** |
+| `3e_C1.5` | **aucun** | **0** | **10** |
+| `5e_C1.5` | 3 × 55 = 165 | 140 | **140** (+25 min de marge, inchangée) |
+
+Chaque bilan déclare « ~10 min » : c'est **+10 min de parcours obligatoire** par page. **Aucune marge
+ne passe au rouge**, mais pas parce que la marge est large : parce que **ces deux pages n'annoncent
+aucune durée**, ni en bandeau, ni par activité. Les dix minutes du bilan sont, depuis ce lot, **la
+seule durée écrite** dans chacune. C'est un constat, pas un résultat — et il est laissé tel quel,
+parce que doter ces pages d'un bandeau de durée est un autre sujet.
+
+`5e_C1.5` ne bouge pas : son bilan existait, et ses deux champs neufs sont dans le Bonus, annoncé
+« facultatif — hors parcours obligatoire ».
+
+### Ce que ce lot signale et ne corrige pas
+
+- **`audit_cloture_sequence.mjs` lit le mauvais Bonus dans `3e_C1.5`.** La page porte **deux** titres
+  contenant « Bonus » : un `<h4>💡 Bonus — Validation "tous cas"` au milieu d'un exercice Python, et
+  le vrai `<h2>🎁 Bonus` de fin. L'outil prend le premier, et annonce donc « 0 champ, corrigé NON »
+  pour un Bonus qui en porte trois et un. Troisième cas de la même maladie — un **libellé** pris pour
+  une **fonction** — après le bilan de `4e_C1.1` (#408) et le corrigé de `5e_C1.3` (#409).
+  `_outils/` relève du thème 2 : à corriger ailleurs.
+- **Aucun des trois lots n'a de banc.** Ni `4e_C1.4`, ni `3e_C1.5`, ni `5e_C1.5` ne porte de
+  `tests_*.py`. Rien n'a donc été vérifié par un banc de lot de leur côté.
+- **Le lien du Bonus de `4e_C1.4` est illisible** : `rgb(0,0,238)` sur `rgb(16,41,79)`, soit un
+  contraste **1,54** pour **4,5** exigé. C'est le bleu de lien par défaut du navigateur, sur fond
+  sombre — la page ne définit aucune couleur de lien pour ses sections `.r4`. Mesuré identique sur
+  `main` : **antérieur à ce lot**.
+- **`4e_C1.4` ne style aucun `textarea`** : ses zones de réponse font **168 px de large** sur un
+  téléphone. Les zones écrites ici prennent la largeur disponible ; **les anciennes n'ont pas été
+  touchées**, ce serait un autre sujet.
+- **`4e_C1.4` porte des statistiques sans source** dans sa mise en situation et sa synthèse
+  («&nbsp;70&nbsp;% des élèves…&nbsp;», «&nbsp;42&nbsp;% des écoles…&nbsp;»). Antérieures à ce lot, et
+  contraires à la règle qui a présidé à l'écriture des corrigés ci-dessus.
+- **`5e_C1.5` échoue la n°34** (31 champs sans étiquette, dont ses 27 `<select>`) — identique sur
+  `main`, et hors périmètre : leur conversion n°300 attend trois décisions.
+
+### Le compte
+
+| | manquements |
+|---|---:|
+| base recalculée sur `main` après #408 | **252** |
+| prédiction | 249 |
+| **obtenu** | **249** ✅ |
+
+**−3, exactement : deux bilans absents et un Bonus mal placé.**
+
+### Contrôles
+
+- `verif_regles_audit.py` : **60 séquences · 249 manquements** (252 avant, **−3**) ✅
+- n°301 : les trois ✔. Deux sont reconnues **à leur fonction** — l'auto-positionnement sur les codes,
+  branche ajoutée en #408 : sans elle, les deux bilans écrits ici seraient restés invisibles.
+- `controle_formulations.py` : **80 citations, 0 écart** ✅
+- `audit_cloture_sequence.mjs` : les trois passent de `(pas de bilan)` ou `APRÈS bilan` à
+  **`avant bilan`** (colonnes « champs » et « corrigé » de `3e_C1.5` fausses, ci-dessus)
+- mémoire : **11 champs et 4 groupes** retrouvés après rechargement ; clés `auto_N` de `3e_C1.5`
+  inchangées, vérifié par témoins et prouvé par mutation
+- `tests_verif_regles_audit.py` : **35 / 35** ✅
+- batterie : `controle_liens.py` ✅ · `controle_medias.py` ✅ · `controle_cadres.py` (340 pages) ✅ ·
+  `controle_gestes_outil.py` ✅ · `controle_fichiers_telechargeables.py` ✅
+- `controle_impression.mjs` : **0 page refusée** ✅
+- rendu **1280 px** et **390 px** : **0 message de console, 0 erreur JS**, **0 débordement
+  horizontal**. Champs sans nom accessible : **1 / 45 / 31** — identiques à `main`, aucun n'est neuf.
+- captures avant/après de la fin des trois séquences, aux deux largeurs

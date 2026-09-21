@@ -1384,7 +1384,10 @@ for u in urls:
     m.textContent = ok ? "✅ Travail enregistré dans ce navigateur (" + Object.keys(d).length + " champs). Il sera repris à la prochaine ouverture."
                        : "⚠️ Impossible d'enregistrer ici : copie tes réponses avant de fermer la page.";
   }
-  (function reprendre(){
+  // les sections de fin — Bonus, bilan — sont écrites APRÈS ce script : au
+  // moment où il s'exécute, leurs champs n'existent pas encore. Reprendre
+  // tout de suite les oubliait en silence (vague n°301, 21/09/2026).
+  function reprendre(){
     var brut = null;
     try { brut = localStorage.getItem(CLE_REPONSES); } catch(err) {}
     if (!brut) return;
@@ -1393,7 +1396,10 @@ for u in urls:
       if (!(e.id in d)) return;
       if (e.type === "checkbox" || e.type === "radio") e.checked = !!d[e.id]; else e.value = d[e.id];
     });
-  })();
+  }
+  if (document.readyState === "loading")
+    document.addEventListener("DOMContentLoaded", reprendre);
+  else reprendre();
 
   // Bouton "Copier le code" (copie texte brut sans balises)
   (function(){
@@ -1484,6 +1490,169 @@ for u in urls:
 </script>
 
 
+<section class="r4" id="bonus">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p class="note">Ces défis ne sont pas notés et ne comptent pas dans ta progression.
+  Personne n'est pénalisé de ne pas les faire.</p>
+  <ol>
+    <li><b>Le chiffre qu'on te montre.</b> Trouve, dans un journal ou une publicité, une
+    affirmation chiffrée sur le numérique («&nbsp;X&nbsp;% de l'électricité mondiale&nbsp;»,
+    «&nbsp;Y tonnes de CO₂&nbsp;»). Remonte à sa source&nbsp;: qui l'a mesurée, sur quel
+    périmètre, en quelle année&nbsp;? Écris en trois lignes ce que le chiffre dit
+    <i>vraiment</i>.
+    <label for="bonus1" style="display:block;font-weight:600;margin:10px 0 4px">Le chiffre trouvé, qui l'a mesuré, sur quel périmètre, en quelle année — et ce qu'il dit vraiment :</label>
+    <textarea id="bonus1" rows="3"></textarea>
+  </li>
+    <li><b>Ton empreinte, ici.</b> Estime la consommation d'un usage que tu fais chaque jour
+    — vidéo, jeu en ligne, messagerie — et compare-la à un geste du quotidien en Martinique
+    (un trajet en bus, une douche chaude). Dis ce que ta comparaison ne prouve pas.
+    <label for="bonus2" style="display:block;font-weight:600;margin:10px 0 4px">Mon estimation, ma comparaison, et ce qu'elle ne prouve pas :</label>
+    <textarea id="bonus2" rows="3"></textarea>
+  </li>
+    <li><b>Le métier qui n'existait pas.</b> Cherche un métier lié au numérique qui n'existait
+    pas quand tes parents avaient ton âge. Qu'est-ce qui l'a rendu possible&nbsp;: une
+    technique, un usage, une loi&nbsp;?
+    <label for="bonus3" style="display:block;font-weight:600;margin:10px 0 4px">Le métier trouvé, et ce qui l'a rendu possible : une technique, un usage ou une loi :</label>
+    <textarea id="bonus3" rows="3"></textarea>
+  </li>
+  </ol>
+  <details class="correction">
+    <summary>✅ Corrigé du Bonus — à ouvrir après avoir cherché</summary>
+
+    <p><b>1 · Le chiffre qu'on te montre.</b> Il n'y a pas <i>un</i> chiffre juste à
+    trouver&nbsp;: il y a une <b>méthode</b> à appliquer. Une réponse complète répond à
+    quatre questions, dans cet ordre&nbsp;:</p>
+    <ul>
+      <li><b>Qui</b> a mesuré&nbsp;? Un organisme public, un laboratoire, une entreprise
+      qui vend le produit dont on parle&nbsp;? Ce n'est pas la même chose — et cela ne
+      disqualifie personne d'avance, cela se <i>dit</i>.</li>
+      <li><b>Quoi</b>, exactement&nbsp;? «&nbsp;Le numérique&nbsp;» n'est pas un
+      périmètre. Les terminaux seuls&nbsp;? Les réseaux&nbsp;? Les centres de
+      données&nbsp;? La fabrication, ou seulement l'usage&nbsp;? Deux chiffres qui se
+      contredisent mesurent souvent deux choses différentes.</li>
+      <li><b>Où</b>&nbsp;? La France, l'Europe, le monde. Une part mondiale et une part
+      française ne se comparent pas.</li>
+      <li><b>Quand</b>&nbsp;? Un chiffre de 2015 n'est pas faux, il est vieux — et dans
+      ce domaine, dix ans changent tout.</li>
+    </ul>
+    <p>Puis une cinquième question, la plus utile&nbsp;: le chiffre est-il une <b>part</b>
+    (un pourcentage de quelque chose) ou une <b>quantité</b> (des tonnes, des
+    kWh)&nbsp;? Une part peut monter pendant que la quantité baisse, si le total baisse
+    plus vite. Lire «&nbsp;X&nbsp;%&nbsp;» sans savoir «&nbsp;de quoi&nbsp;» ne dit
+    rien.</p>
+    <p><b>L'exemple est dans cette séquence</b>, à l'activité 3 bis&nbsp;: la page de
+    l'<b>Arcep</b> — l'autorité française de régulation des communications
+    électroniques — donne, <b>pour la France</b> et <b>en 2022</b>, une part d'environ
+    <b>4,4&nbsp;%</b> de l'empreinte carbone <i>totale du pays</i>. Auteur, périmètre,
+    année, et «&nbsp;de quoi&nbsp;»&nbsp;: les quatre sont écrits, et c'est cela qui en
+    fait un chiffre défendable. C'est aussi le <b>seul</b> chiffre que ce corrigé cite,
+    parce que c'est le seul dont la source est ouverte dans la page.</p>
+    <p class="note"><b>Erreurs fréquentes.</b> Recopier le chiffre sans son
+    périmètre&nbsp;: on ne peut plus rien en faire. Prendre la source citée <i>par</i>
+    l'article pour la source du chiffre&nbsp;: un article cite souvent un autre article,
+    qui cite un rapport — il faut remonter jusqu'au rapport. Et croire qu'un chiffre rond
+    est plus sûr&nbsp;: un chiffre arrondi est un chiffre dont on a perdu la précision,
+    pas un chiffre plus vrai.</p>
+
+    <p><b>2 · Ton empreinte, ici.</b> La question ne demande pas une valeur exacte&nbsp;:
+    elle demande une estimation que tu peux <b>défendre</b>, et surtout la lucidité sur ce
+    qu'elle ne prouve pas. Une bonne réponse dit trois choses&nbsp;:</p>
+    <ul>
+      <li><b>le calcul, en clair</b>&nbsp;: combien de temps, multiplié par quelle
+      consommation, prise où&nbsp;? Si tu n'as pas la consommation, dis-le et cherche-la
+      avec la méthode de la question 1 — un chiffre sans source n'entre pas dans ton
+      estimation&nbsp;;</li>
+      <li><b>ce que l'estimation oublie</b>&nbsp;: la fabrication de l'appareil, les
+      centres de données, le réseau. Compter la seule électricité de l'écran, c'est
+      compter la pointe de l'iceberg&nbsp;;</li>
+      <li><b>ce que la comparaison ne prouve pas</b> — et c'est le cœur de la
+      question.</li>
+    </ul>
+    <p>Une comparaison ne prouve pas qu'un usage est «&nbsp;acceptable&nbsp;» parce qu'il
+    pèse moins qu'un autre. Mettre une heure de vidéo à côté d'une douche chaude, c'est
+    rapprocher deux choses qu'on ne choisit pas de la même façon, à des fréquences
+    différentes, avec des sources d'énergie différentes. La comparaison donne un
+    <b>ordre de grandeur</b> — utile pour ne pas se tromper de combat — et rien de plus.
+    Elle ne dit pas ce qu'il faut faire&nbsp;; c'est à toi de le dire, et de dire
+    pourquoi. Une comparaison honnête <b>nomme ce qu'elle laisse de côté</b>&nbsp;; une
+    comparaison qui conclut toute seule («&nbsp;donc ce n'est pas grave&nbsp;») a cessé
+    d'être un calcul.</p>
+    <p class="note"><b>Erreurs fréquentes.</b> Additionner des chiffres pris à des
+    périmètres différents&nbsp;: une consommation d'écran et une empreinte de fabrication
+    ne s'additionnent pas telles quelles. Et oublier que la Martinique n'a pas le même
+    mélange de sources électriques que l'Hexagone&nbsp;: une même consommation n'y a pas
+    le même effet — c'est précisément le genre de précision qui rend une estimation
+    défendable.</p>
+
+    <p><b>3 · Le métier qui n'existait pas.</b> Une bonne réponse nomme un métier, puis
+    répond vraiment à la question posée&nbsp;: qu'est-ce qui l'a rendu possible&nbsp;? Les
+    trois réponses ne s'excluent pas, et le plus souvent les trois jouent
+    ensemble&nbsp;:</p>
+    <ul>
+      <li>une <b>technique</b>&nbsp;: quelque chose est devenu faisable — stocker,
+      transmettre, calculer à un coût qui n'existait pas&nbsp;;</li>
+      <li>un <b>usage</b>&nbsp;: assez de gens se sont mis à faire quelque chose pour
+      qu'un métier vive de le servir&nbsp;;</li>
+      <li>une <b>loi</b>&nbsp;: une obligation a créé un besoin qui n'existait pas.</li>
+    </ul>
+    <p>Le raisonnement attendu&nbsp;: un métier ne naît pas d'une invention seule. La
+    technique rend <i>possible</i>, l'usage rend <i>nécessaire</i>, la loi rend
+    <i>obligatoire</i>. Dire lequel des trois domine dans <i>ton</i> cas, c'est répondre à
+    la question.</p>
+    <p><b>Le test qui départage&nbsp;:</b> demande-toi ce qui devrait disparaître pour que
+    le métier disparaisse. Si c'est un appareil, c'est la technique. Si c'est une
+    habitude, c'est l'usage. Si c'est un texte, c'est la loi.</p>
+    <p class="note"><b>Erreurs fréquentes.</b> Choisir un métier <i>ancien</i> qui a
+    seulement changé d'outil&nbsp;: passer de la machine à écrire au traitement de texte
+    ne crée pas un métier, c'est le même métier avec un autre outil — or la question
+    demande un métier qui n'existait <b>pas</b>. Et confondre le métier et
+    l'entreprise&nbsp;: «&nbsp;travailler chez un fournisseur d'accès&nbsp;» n'est pas un
+    métier, «&nbsp;installer et dépanner des raccordements en fibre&nbsp;» en est un.</p>
+  </details>
+</section>
+
+<section class="r4" id="bilan">
+  <h2>🧩 Bilan <span style="font-size:.8em;opacity:.8">(~10 min)</span></h2>
+  <p class="note">Reviens à la <b>problématique</b> posée au début&nbsp;:
+  «&nbsp;<i>Comment protéger efficacement sa vie numérique tout en respectant les droits
+  des autres et en comprenant l'impact de ses actions en ligne&nbsp;?</i>&nbsp;»
+  Réponds-y de nouveau ci-dessous, puis remonte lire ta première réponse et compare.</p>
+
+  <label for="bilan1" style="display:block;font-weight:600;margin:10px 0 4px">En trois
+  lignes&nbsp;: ce que le numérique change pour la société — un effet précis, et qui il
+  touche.</label>
+  <textarea id="bilan1" rows="3"></textarea>
+
+  <label for="bilan2" style="display:block;font-weight:600;margin:10px 0 4px">Un chiffre
+  sur le numérique ne vaut rien sans quatre choses. Lesquelles, et
+  pourquoi&nbsp;?</label>
+  <textarea id="bilan2" rows="3"></textarea>
+
+  <p class="note">À présent, situe-toi sur les trois compétences travaillées ici. Aucun
+  niveau n'est une note&nbsp;: coche celui qui décrit ce que tu fais aujourd'hui.</p>
+  <fieldset class="qcm-groupe" id="pos1">
+    <legend>📍 <b>3e_C1.3</b> — <i>Exprimer dans un argumentaire court l’incidence d’un OST sur la société.</i></legend>
+    <div class="qcm-option"><input type="radio" name="pos1" id="pos1__1" value="🔴 Je décris l'objet, mais je ne dis pas encore ce qu'il change pour les gens."><label for="pos1__1">🔴 Je décris l'objet, mais je ne dis pas encore ce qu'il change pour les gens.</label></div>
+    <div class="qcm-option"><input type="radio" name="pos1" id="pos1__2" value="🟠 Je cite une conséquence sur la société quand on m'en donne la piste."><label for="pos1__2">🟠 Je cite une conséquence sur la société quand on m'en donne la piste.</label></div>
+    <div class="qcm-option"><input type="radio" name="pos1" id="pos1__3" value="🟢 J'écris quelques lignes qui relient l'objet à un effet précis sur la société, avec un exemple."><label for="pos1__3">🟢 J'écris quelques lignes qui relient l'objet à un effet précis sur la société, avec un exemple.</label></div>
+    <div class="qcm-option"><input type="radio" name="pos1" id="pos1__4" value="⭐ J'écris un argumentaire court qui nomme l'effet, dit qui il touche, et ce qui pourrait le contredire."><label for="pos1__4">⭐ J'écris un argumentaire court qui nomme l'effet, dit qui il touche, et ce qui pourrait le contredire.</label></div>
+  </fieldset>
+  <fieldset class="qcm-groupe" id="pos2">
+    <legend>📍 <b>3e_C1.4</b> — <i>Exprimer dans un argumentaire court l’incidence des contraintes sociétales sur les OST.</i></legend>
+    <div class="qcm-option"><input type="radio" name="pos2" id="pos2__1" value="🔴 Je ne vois pas encore ce qui, dans la société, oblige un objet à changer."><label for="pos2__1">🔴 Je ne vois pas encore ce qui, dans la société, oblige un objet à changer.</label></div>
+    <div class="qcm-option"><input type="radio" name="pos2" id="pos2__2" value="🟠 Je cite une contrainte — une loi, un coût, une attente — quand on me la montre."><label for="pos2__2">🟠 Je cite une contrainte — une loi, un coût, une attente — quand on me la montre.</label></div>
+    <div class="qcm-option"><input type="radio" name="pos2" id="pos2__3" value="🟢 Je montre en quelques lignes comment une contrainte a fait changer un objet."><label for="pos2__3">🟢 Je montre en quelques lignes comment une contrainte a fait changer un objet.</label></div>
+    <div class="qcm-option"><input type="radio" name="pos2" id="pos2__4" value="⭐ J'écris un argumentaire court qui part de la contrainte, suit le changement, et dit qui l'a demandé."><label for="pos2__4">⭐ J'écris un argumentaire court qui part de la contrainte, suit le changement, et dit qui l'a demandé.</label></div>
+  </fieldset>
+  <fieldset class="qcm-groupe" id="pos3">
+    <legend>📍 <b>3e_C1.5</b> — <i>Exprimer dans un argumentaire court le rôle du développement stratégique du numérique au sein de la société et des environnements professionnels (ou des métiers).</i></legend>
+    <div class="qcm-option"><input type="radio" name="pos3" id="pos3__1" value="🔴 Je ne sais pas encore quels métiers le numérique a changés."><label for="pos3__1">🔴 Je ne sais pas encore quels métiers le numérique a changés.</label></div>
+    <div class="qcm-option"><input type="radio" name="pos3" id="pos3__2" value="🟠 Je nomme un métier transformé par le numérique quand on m'en cite un."><label for="pos3__2">🟠 Je nomme un métier transformé par le numérique quand on m'en cite un.</label></div>
+    <div class="qcm-option"><input type="radio" name="pos3" id="pos3__3" value="🟢 J'explique en quelques lignes ce que le numérique a changé dans un métier précis."><label for="pos3__3">🟢 J'explique en quelques lignes ce que le numérique a changé dans un métier précis.</label></div>
+    <div class="qcm-option"><input type="radio" name="pos3" id="pos3__4" value="⭐ J'écris un argumentaire court sur un métier, en disant ce qui l'a rendu possible : une technique, un usage ou une loi."><label for="pos3__4">⭐ J'écris un argumentaire court sur un métier, en disant ce qui l'a rendu possible : une technique, un usage ou une loi.</label></div>
+  </fieldset>
+</section>
+
 <section class="r4" id="pret-a-s-entrainer">
   <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
   <p>Le QCM de cette séquence comporte <strong>30 questions</strong> réparties sur les
@@ -1494,24 +1663,7 @@ for u in urls:
   <p class="note">Tu peux le rejouer autant de fois que tu veux&nbsp;: il n'est pas noté.</p>
 </section>
 
-<section class="r4" id="bonus">
-  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-  <p class="note">Ces défis ne sont pas notés et ne comptent pas dans ta progression.
-  Personne n'est pénalisé de ne pas les faire.</p>
-  <ol>
-    <li><b>Le chiffre qu'on te montre.</b> Trouve, dans un journal ou une publicité, une
-    affirmation chiffrée sur le numérique («&nbsp;X&nbsp;% de l'électricité mondiale&nbsp;»,
-    «&nbsp;Y tonnes de CO₂&nbsp;»). Remonte à sa source&nbsp;: qui l'a mesurée, sur quel
-    périmètre, en quelle année&nbsp;? Écris en trois lignes ce que le chiffre dit
-    <i>vraiment</i>.</li>
-    <li><b>Ton empreinte, ici.</b> Estime la consommation d'un usage que tu fais chaque jour
-    — vidéo, jeu en ligne, messagerie — et compare-la à un geste du quotidien en Martinique
-    (un trajet en bus, une douche chaude). Dis ce que ta comparaison ne prouve pas.</li>
-    <li><b>Le métier qui n'existait pas.</b> Cherche un métier lié au numérique qui n'existait
-    pas quand tes parents avaient ton âge. Qu'est-ce qui l'a rendu possible&nbsp;: une
-    technique, un usage, une loi&nbsp;?</li>
-  </ol>
-</section>
+
 
 <script>
 /* ── Séances — posé par decouper.py. Onglets, sans dépendance. ─────────── */
