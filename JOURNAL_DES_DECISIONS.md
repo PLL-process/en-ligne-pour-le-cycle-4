@@ -17274,3 +17274,170 @@ les quatorze restantes sont toutes le même `<summary>` de travail en groupe.
 Il ne pouvait pas entrer dans la vague de remédiation n°301 des trois `C1.1` : celle-ci est une
 **branche de thème 1**, et `_outils/` relève du **thème 2**. Le garde-périmètre l'aurait refusée, à
 juste titre. Deux lots, deux branches.
+
+## 20/09/2026 — Vague de remédiation n°301 : les trois `C1.1` (thème 1)
+
+Première application de la **règle d'or n°301** — *le bilan clôt la séquence* — aux trois séquences
+d'entrée de cycle, celles que les classes ouvrent en premier : `3e_C1.1`, `4e_C1.1`, `5e_C1.1`.
+Le lot ne touche à **aucune autre page**.
+
+### Pourquoi ces trois-là, et pas d'autres
+
+Ce sont les trois séquences que Pascal utilise **maintenant**, et les trois premières que voit un
+élève qui découvre le cycle. Une séquence qui se termine sur du facultatif enseigne, dès la première
+page ouverte, que la fin n'est pas la fin. Les autres lots attendront leur vague.
+
+### Ce que chaque page avait, ce qu'elle a
+
+| | `3e_C1.1` | `4e_C1.1` | `5e_C1.1` |
+|---|---|---|---|
+| ordre AVANT | bilan → QCM → Bonus | bilan → QCM → Bonus | bilan → QCM → Bonus |
+| ordre APRÈS | **Bonus → bilan → QCM** | **Bonus → bilan → QCM** | **Bonus → bilan → QCM** |
+| champs du Bonus avant | 0 | 0 | 0 |
+| champs du Bonus après | **3** | **3** | **3** |
+| forme des champs | 3 `<textarea>` | 3 `<textarea>` | 3 `<textarea>` |
+| corrigé du Bonus | présent | présent | présent |
+
+**Deux blocs bougent, pas un.** Le Bonus remonte au-dessus du bilan, et le renvoi au QCM redescend
+sous lui. Un seul déplacement aurait laissé le QCM entre le bilan et sa clôture.
+
+### La forme suit la question, jamais un gabarit
+
+Les **neuf** questions de ces trois Bonus appellent toutes une **réponse rédigée** — « qu'est-ce
+qu'il faudrait changer », « décris ta stratégie », « qu'en conclus-tu ». Ce sont donc neuf
+`<textarea>`, et aucun `<select>` : la n°300 l'interdit, et surtout **aucune de ces questions n'est
+un choix**. Poser un menu déroulant ici aurait transformé une question ouverte en QCM déguisé.
+
+### Ce que la capture a vu et qu'aucun contrôle n'avait vu
+
+La **première** écriture posait les trois champs **en bloc**, sous la liste des trois questions, avec
+l'énoncé raccourci dans l'étiquette. Tous les contrôles la donnaient verte : trois champs, trois
+étiquettes liées, zéro débordement. La **capture à 390 px** a montré ce qu'un élève lit — **chaque
+question deux fois**, une fois dans la liste et une fois dans l'étiquette juste en dessous.
+
+Le lot a donc été **réécrit** : chaque champ est maintenant posé **juste sous sa question**, dans le
+`<li>` pour les deux Bonus en liste numérotée, après le `<p>` pour celui qui est en paragraphes.
+L'étiquette visible ne répète plus la question — elle dit ce qu'il faut **écrire** (« Ma comparaison,
+du point de vue des fausses alertes ET des feux manqués »), comme le fait déjà le Bonus de
+`sequence_4e_C9_jardin-programme.html`. C'est la n°300 dans sa forme la plus forte : la question
+n'est pas rappelée près du champ, **elle est le texte au-dessus du champ**.
+
+C'est exactement ce que le **point 6 de METHODE.md** attend d'une capture : la regarder, pas la
+produire. Sans elle, la première version partait en PR au vert.
+
+**Pas d'`aria-label` sur ces neuf champs** : un `aria-label` **remplace** l'étiquette visible pour un
+lecteur d'écran. Avec un `<label for>` en place, il ferait diverger ce qui se lit de ce qui s'entend.
+Le contrôle d'accessibilité accepte les deux ; l'élève, non.
+
+### Le piège, et comment il a été vérifié
+
+Le script de ces pages **réécrit le libellé du bouton du QCM** selon les activités validées. Déplacer
+deux blocs pouvait lui faire perdre sa cible, et **rien dans la batterie ne l'aurait vu** : le bouton
+serait resté muet, tous les contrôles au vert.
+
+On n'a donc pas lu le code. On a **ouvert chaque page**, posé `window.__valid` à trois états, appelé
+`majProgress()` **comme la page l'appelle elle-même**, et **relu le libellé rendu** :
+
+| état posé | `3e_C1.1` | `4e_C1.1` | `5e_C1.1` |
+|---|---|---|---|
+| aucune activité | « Commencer par 10 questions » | idem | idem |
+| deux activités | « Réviser ce que j'ai déjà travaillé (2 compétence(s)) » | (1 compétence) | (2 compétences) |
+| toutes | « Lancer le QCM complet (30 questions) » | idem | idem |
+
+**Trois libellés distincts par page**, plus `#qcmPortee` qui se réécrit aussi, **0 erreur JS**. La
+cible est intacte. L'outil de vérification est `piege_qcm.mjs` ; il sort en erreur si un seul libellé
+sort du lot, donc il mordrait.
+
+### La question du bilan de `4e_C1.1` — le brief avait une prémisse fausse
+
+Le brief demandait d'**écrire un bilan** à `4e_C1.1`, que la n°301 déclare sans bilan. **Rien n'a été
+écrit** : `4e_C1.1` **a déjà un bilan complet**.
+
+Il porte `<h2>🧩 Bilan <span>(~10 min)</span></h2>`, le rappel d'hypothèse (`rappelHyp`,
+`hyp_retour`), deux champs de synthèse (`bilan1`, `bilan2`), deux champs métacognitifs (`meta1`,
+`meta2`) et **trois `<fieldset>` d'auto-positionnement** sur les codes `4e_C1.1`, `C1.2` et `C1.3`.
+Écrire un bilan aurait **dupliqué** celui qui existe.
+
+La n°301 l'accuse à tort parce que son détecteur cherche « je me positionne », « auto-positionnement »
+ou « bilan personnel » — et **pas un simple titre « Bilan »**. Le défaut a été **mesuré**, pas
+supposé : des **7** séquences que la règle déclare sans bilan, **une seule** — celle-ci — en a un
+(15 champs de positionnement + rappel d'hypothèse) ; les **6 autres** en sont réellement dépourvues
+(0 champ de positionnement). Le détecteur rate donc **un cas sur sept**, pas un cas sur deux.
+
+**Ce correctif ne peut pas voyager ici.** `_outils/verif_regles_audit.py` relève du **thème 2**, et
+ce lot est une branche de **thème 1** : le garde-périmètre le refuserait, à juste titre. Une PR
+séparée suivra.
+
+### Les corrigés répondent-ils aux questions posées ?
+
+Vérifié un à un, en confrontant les **deux textes**, pas en faisant confiance aux titres :
+
+| | question 1 | question 2 | question 3 |
+|---|---|---|---|
+| `3e_C1.1` | Adapter à la Martinique → **1. La Martinique** ✔ | Le scénario sans robot → **2. Sans robot** ✔ | Seuil unique contre indices croisés → **3. Seuil contre indices** ✔ |
+| `4e_C1.1` | Adapter à la Martinique → **1 · La Martinique** ✔ | Sans caméra → **2 · Sans caméra** ✔ | L'équivalence retournée → **3 · L'équivalence retournée** ✔ |
+| `5e_C1.1` | Une donnée publique → **1. Une donnée publique sur la commune** ✔ | Ranger ton dossier → **2. Le rangement de mon dossier** ✔ | Une donnée exacte qui désigne quelqu'un → **3. Une donnée exacte qui désigne quelqu'un** ✔ |
+
+**Aucun corrigé ne répond à côté.** Rien n'a donc été réécrit — et s'il y en avait eu un, il aurait
+été signalé, pas corrigé.
+
+### Le temps : mesuré, et il ne bouge pas
+
+`mesurer_temps_seances.py`, lancé sur le lot `C1` **avant** et **après** :
+
+| | annoncé | activités lues avant | activités lues après | marge |
+|---|---:|---:|---:|---:|
+| `3e_C1.1` | 5 × 55 = 275 | 265 | **265** | +10 min |
+| `4e_C1.1` | 4 × 55 = 220 | 200 | **200** | +20 min |
+| `5e_C1.1` | 5 × 55 = 275 | 215 | **215** | +60 min |
+
+**Aucune minute ajoutée au parcours obligatoire**, et c'est voulu : les neuf champs sont **dans le
+Bonus**, que les trois pages annoncent « **facultatif — hors parcours obligatoire** » dans leur titre.
+La règle n°23 le confirme indépendamment : les trois passent toujours.
+
+**Ce que cette mesure ne dit pas, et il faut le dire** : l'outil lit le temps **écrit**, pas le temps
+**passé**. Le Bonus lui-même s'allonge de trois réponses rédigées — de l'ordre de **10 minutes** si
+un élève le fait en entier — et ce chiffre est une **estimation, pas une mesure** : **1 seul Bonus
+sur 94** dans tout le dépôt annonce une durée. Il n'y a donc pas de convention sur laquelle s'appuyer.
+
+### Le compte : 257 → 255, et pourquoi pas 254
+
+| | manquements |
+|---|---:|
+| base recalculée sur `main` au moment de brancher | **257** (le chiffre de Pascal, confirmé) |
+| prédiction du brief | 254 |
+| **obtenu** | **255** |
+
+**L'écart d'un manquement est entièrement `4e_C1.1`**, et il est **explicable, pas résiduel** : la
+prédiction supposait que les trois séquences passeraient au vert sur la n°301. Deux le font
+(`3e_C1.1` ✔, `5e_C1.1` ✔). La troisième reste accusée **à tort** — par le détecteur, pas par la
+page — et **seule une PR de thème 2 peut la libérer**. Le chiffre qui ne tombe pas juste dit donc
+quelque chose de vrai : la règle a un angle mort, et on sait lequel.
+
+### Contrôles
+
+- `verif_regles_audit.py` : **60 séquences · 255 manquements** (257 avant, **−2**) ✅
+- n°301 par lot : `3e_C1.1` ✔ « bilan présent, et le Bonus le précède » · `5e_C1.1` ✔ (idem) ·
+  `4e_C1.1` ✘ « aucun bilan » — **fausse accusation documentée ci-dessus**
+- n°23 durée : les trois ✔ (265/275, 200/220, 215/275) — **rien n'a été ajouté au temps obligatoire**
+- bancs des trois lots : **50/50**, **42/42**, **43/43** ✅ (inchangés par rapport à `main`)
+- `tests_verif_regles_audit.py` : **29 / 29** ✅
+- batterie : `controle_liens.py` ✅ · `controle_medias.py` ✅ · `controle_cadres.py` **340 pages** ✅ ·
+  `controle_formulations.py` ✅ · `controle_gestes_outil.py` ✅ ·
+  `controle_fichiers_telechargeables.py` ✅
+- `controle_impression.mjs` : **0 page refusée** ✅
+- rendu **1280 px** et **390 px** sur les trois : **0 message de console, 0 erreur JS**,
+  **424 champs au total, 0 sans nom accessible**, **0 débordement horizontal** dans les Bonus
+- captures avant/après de la fin des trois séquences, **aux deux largeurs** — l'ordre y est lu
+  **dans le document**, pas dans l'ordre où le script a écrit son tableau : la première version du
+  script affichait le même ordre avant et après, et rendait la capture muette sur la seule chose
+  qu'elle devait prouver.
+
+### Reste ouvert
+
+- **Le détecteur de la n°301** (`BILAN` ne reconnaît pas un titre « Bilan » nu) — PR de thème 2.
+- **`4e_C1.1` sur la n°302** : le `<summary>` « Si vous êtes trois ou quatre », l'un des **14**
+  laissés en attente par le lot de la n°302. Hors périmètre de cette vague, qui ne traite que la
+  n°301.
+- **`n°298`** sur les trois : le référentiel « en toutes lettres » sur la page élève. Antérieur à ce
+  lot, non touché.
