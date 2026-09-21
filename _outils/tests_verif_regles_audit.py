@@ -284,6 +284,65 @@ def main():
         # qui le mesure. Ce cas tient la frontière entre les deux outils.
         lambda e: None if e[0] == "OK" else "état %s — %s" % e)(etat_301(BONUS + BILAN)))
 
+    # ── 5 bis. Le bilan reconnu à sa FONCTION, pas à son libellé ───────────
+    # Cas réel : 4e_C1.1-C1.3_tsinghua_feux titre simplement « Bilan » et fait
+    # faire un vrai auto-positionnement. Le libellé seul l'accusait à tort.
+    # Ce qui suit vérifie que chacune des deux branches du « ou » PORTE SEULE,
+    # et qu'aucune ne va trop loin.
+    def positionnement(code="4e_C1.1", niveaux=4, sujet=True):
+        """Un groupe d'auto-positionnement, sans aucun mot d'échelle connu."""
+        intitule = ("\U0001f4cd <b>%s</b> — mettre en relation" % code if sujet
+                    else "3. Le banc de %s retenait déjà celui-là ?" % code)
+        options = "".join(
+            '<div><input type="radio" name="p" id="p%d" value="n%d">'
+            '<label for="p%d">niveau %d</label></div>' % (i, i, i, i)
+            for i in range(1, niveaux + 1))
+        return ('<fieldset class="qcm-groupe" id="p"><legend>%s</legend>%s</fieldset>'
+                % (intitule, options))
+
+    POSITIONNEMENT = ('<section><h2>\U0001f9e9 Bilan</h2>' + positionnement() + '</section>')
+
+    cas("un bilan titré « Bilan », sans aucun des libellés, est reconnu", lambda: (
+        # la branche FONCTION porte seule : aucun mot du motif de libellé n'est
+        # dans cette page, et aucun mot d'échelle connu non plus
+        lambda e: None if e[0] == "OK" and "fonction" in e[1]
+        else "état %s — %s" % e)(etat_301(POSITIONNEMENT)))
+
+    cas("le libellé SEUL, sans aucun groupe de positionnement, est reconnu", lambda: (
+        # la branche LIBELLÉ porte seule : c'est le cas des 34 séquences que
+        # remplacer le libellé par la fonction ferait perdre
+        lambda e: None if e[0] == "OK" and "libell" in e[1]
+        else "état %s — %s" % e)(etat_301(
+            '<section><h3>\U0001f4cd Je me positionne</h3>'
+            '<textarea id="x"></textarea></section>')))
+
+    cas("ni libellé ni fonction : la séquence est refusée", lambda: (
+        lambda e: None if e[0] == "ECHEC" and "aucun bilan" in e[1]
+        else "état %s — %s" % e)(etat_301(
+            '<section><h2>\U0001f9e9 Bilan</h2><textarea id="x"></textarea></section>')))
+
+    cas("une échelle HORS bilan ne crée pas de bilan fantôme", lambda: (
+        # Cas réel : « 3. Le banc de 3e_C8.2 retenait déjà celui-là ? » est une
+        # question de CONTENU qui cite un code. Le code y est suivi d'un verbe,
+        # pas d'un tiret : ce n'est pas le sujet du groupe.
+        lambda e: None if e[0] == "ECHEC" and "aucun bilan" in e[1]
+        else "état %s — %s" % e)(etat_301(
+            '<section><h2>Activité 3</h2>'
+            + positionnement(code="3e_C8.2", sujet=False) + '</section>')))
+
+    cas("un groupe de moins de trois options n'est pas une échelle", lambda: (
+        # deux options, c'est une question fermée, pas un positionnement
+        lambda e: None if e[0] == "ECHEC" and "aucun bilan" in e[1]
+        else "état %s — %s" % e)(etat_301(
+            '<section><h2>\U0001f9e9 Bilan</h2>'
+            + positionnement(niveaux=2) + '</section>')))
+
+    cas("le Bonus placé après un bilan reconnu À SA FONCTION est refusé", lambda: (
+        # la position du bilan doit suivre la marque qui l'a établi, sans quoi
+        # le grief d'ordre deviendrait muet sur ces séquences-là
+        lambda e: None if e[0] == "ECHEC" and "APRÈS le bilan" in e[1]
+        else "état %s — %s" % e)(etat_301(POSITIONNEMENT + BONUS)))
+
     # ── 6. La règle d'or n°302 — on parle À l'élève ────────────────────────
     def etat_302(corps):
         bac = pathlib.Path(tempfile.mkdtemp())

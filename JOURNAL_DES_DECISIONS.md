@@ -16837,8 +16837,15 @@ comptage : c'est que **le bilan s'écrit de quatre façons** dans le dépôt.
 
 Chercher la seule phrase « Je me positionne » en manquait vingt-deux. Un lot titre « 🙋 Bilan
 personnel » et ne dit « auto-positionnement » que dans les `aria-label` de ses champs ; un autre
-l'écrit en minuscules. **Le bilan se reconnaît à sa fonction, pas à son libellé** — et c'est ce que
-le contrôle fait désormais.
+l'écrit en minuscules.
+
+> **Correction du 20/09/2026.** Cette entrée écrivait ici « le bilan se reconnaît à sa fonction,
+> pas à son libellé — et c'est ce que le contrôle fait désormais ». C'était une **intention**, pas
+> l'état de l'outil : les trois marques ci-dessus cherchent toutes un **libellé**. La différence
+> n'est pas théorique — elle a fait accuser `4e_C1.1-C1.3_tsinghua_feux`, qui porte un bilan
+> complet sous un simple titre « Bilan ». Depuis la PR de correction, l'outil reconnaît le bilan
+> **au libellé OU à la fonction** — voir l'entrée du jour, « la n°301 apprend à reconnaître un
+> bilan à ce qu'il fait ». Le relevé ci-dessous reste celui d'alors, et vaut donc **53**, pas 54.
 
 ### Le relevé complet
 
@@ -17441,3 +17448,166 @@ quelque chose de vrai : la règle a un angle mort, et on sait lequel.
   n°301.
 - **`n°298`** sur les trois : le référentiel « en toutes lettres » sur la page élève. Antérieur à ce
   lot, non touché.
+
+## 20/09/2026 — la n°301 apprend à reconnaître un bilan à ce qu'il fait (_outils, thème 2)
+
+Correction du faux positif trouvé pendant la vague de remédiation #407 : `4e_C1.1-C1.3_tsinghua_feux`
+porte un bilan complet — titre « 🧩 Bilan (~10 min) », **trois groupes de positionnement**, un par
+code, **douze niveaux** à choisir, **trois légendes 📍** — et **les deux outils** la déclaraient sans
+bilan, parce qu'ils cherchaient un **libellé** et non une **fonction**.
+
+### Définir la fonction, puis la mesurer — et surtout pas recopier des mots
+
+Un bilan fait une chose : **l'élève s'y situe sur les compétences de la séquence**. Mécaniquement,
+cela s'écrit toujours de la même façon, quels que soient les mots de l'échelle :
+
+> **un groupe de choix mutuellement exclusifs · dont l'intitulé a pour SUJET un code du
+> référentiel · offrant au moins trois options.**
+
+**Aucune liste de mots n'entre dans le détecteur** : ni « maîtrise », ni « je sais », ni un émoji.
+Une échelle écrite autrement reste vue — c'était la condition posée. Chercher « Maîtrise
+insuffisante » aurait marché aujourd'hui et cassé au premier lot qui écrit son échelle autrement.
+
+### « Pour sujet » : le point délicat, mesuré et non supposé
+
+Deux questions de **contenu** du dépôt citent un code au passage :
+
+| séquence | intitulé |
+|---|---|
+| `3e_C8.1_mat-de-la-station` | « 3. Le banc de **3e_C8.2** retenait déjà celui-là. La simulation n'a donc servi à rien ? » |
+| `4e_C8_jardin-validation` | « 2. En **4e_C7**, tu as choisi un matériau. Sur quoi t'es-tu appuyé ? » |
+
+Elles nomment un code **sans porter sur lui**, et feraient un **bilan fantôme**. Le discriminant
+n'est donc pas la présence du code mais sa **position syntaxique** : dans un auto-positionnement, le
+code est suivi d'un tiret, d'un deux-points, d'une parenthèse ou de la fin de l'intitulé ; dans une
+question de contenu, d'une virgule ou d'un verbe. D'où le `(?!\s*[,\w])`.
+
+Un second garde-fou, trouvé en mesurant et non en réfléchissant : `(?![\d.])` **ferme le code**.
+Sans lui, « 3e_C8.2 retenait » se lit « 3e_C8 » suivi d'un point — et la question de contenu repasse
+pour un positionnement. Le banc a mordu sur ce point précis.
+
+### Le croisement des deux signaux, sur les 60 séquences
+
+| | séquences |
+|---|---:|
+| libellé **et** fonction | 19 |
+| **fonction sans libellé** | **1** ← `4e_C1.1`, le faux positif |
+| libellé sans fonction | 34 |
+| ni l'un ni l'autre | **6** |
+| **reconnues par « libellé OU fonction »** | **54 / 60** |
+
+**Le « ou » est une nécessité mesurée, pas une prudence.** Remplacer le libellé par la fonction
+perdrait **34** bilans ; garder le libellé seul en perd **un** — celui qui a rouvert le sujet.
+
+### Deux définitions de la fonction, confrontées
+
+Pascal avait mesuré de son côté par un signal **différent** : l'échelle à quatre niveaux
+(*Maîtrise insuffisante / fragile / satisfaisante / Très bonne maîtrise*, au moins trois des quatre).
+Les deux mesures ont été confrontées séquence par séquence :
+
+| | son signal | le mien |
+|---|---:|---:|
+| séquences porteuses du libellé | 53 | 53 |
+| séquences porteuses de « la fonction » | 21 | 20 |
+| **désaccords entre les deux signaux, séquence par séquence** | — | **17** |
+
+**Dix-sept désaccords** — et pourtant **aucune conséquence** : les dix-sept portent toutes le
+libellé, donc le « ou » tranche pareil. Les deux signaux ne se recouvrent que par accident sur les
+totaux ; ils s'accordent exactement là où cela compte, sur la **seule** séquence où la branche
+fonction décide seule.
+
+Le signal retenu est le mien, pour deux raisons vérifiables :
+
+1. il est **insensible aux mots de l'échelle** — émojis, « je sais / pas encore », tout reste vu ;
+2. il **ne peut pas** fabriquer un bilan fantôme à partir d'une échelle posée dans une activité,
+   puisque ce qu'il cherche n'est pas une échelle mais un **positionnement sur un code**.
+
+**Ce que le signal retenu ne voit pas, et il faut le dire** : un groupe de positionnement qui ne
+nomme **aucun code**. **Neuf** séquences en portent un — ce sont les neuf désaccords où son signal voit ce que le
+mien ne voit pas — par exemple `3e_C7.4_energie-de-la-station`,
+dont le `<select id="pos">` n'a ni `<label>` ni `aria-label` et dont l'énoncé vit dans sa première
+option. Elles sont toutes reconnues **par leur libellé** aujourd'hui. Si l'une d'elles perdait sa
+phrase, l'outil la manquerait.
+
+### Les deux outils corrigés, puis confrontés
+
+Le principe posé par #403 : deux outils, deux chemins de lecture.
+
+| | `verif_regles_audit.py` | `audit_cloture_sequence.mjs` |
+|---|---|---|
+| lit | la **source**, par expression régulière | le **DOM**, après rendu |
+| reconnaît le bilan | libellé **ou** fonction | trois marques de libellé **ou** fonction |
+
+Confrontation séquence par séquence, sur les 60 : **0 écart** sur la présence d'un bilan, et la
+**même** séquence reconnue par la seule fonction, avec le **même** compte de codes (3). Cette fois,
+aucun désaccord à arbitrer — et c'est la confrontation qui l'établit, pas la confiance.
+
+Répartition des marques, côté DOM : **44** par un titre · **9** par la phrase dans un champ ·
+**1** par la fonction · **6** aucune.
+
+### La prédiction, et ce qu'elle a donné
+
+| | manquements |
+|---|---:|
+| avant | 255 |
+| prédiction | 254 |
+| **obtenu** | **254** ✅ |
+
+**−1, exactement `4e_C1.1`.** Les **6** autres séquences sans bilan restent accusées, les **53**
+reconnues restent reconnues. Le chiffre tombe juste cette fois-ci.
+
+### Le banc
+
+**35 / 35** (29 avant, **+6**). Les six cas neufs tiennent les deux branches et leurs bornes :
+
+| cas | ce qu'il tient |
+|---|---|
+| un bilan titré « Bilan », sans aucun libellé | la branche **fonction** porte seule |
+| le libellé seul, sans aucun groupe | la branche **libellé** porte seule (les 34) |
+| ni libellé ni fonction | le refus (les 6) |
+| une échelle **hors** bilan, dans une activité | **pas de bilan fantôme** |
+| un groupe de moins de trois options | deux choix ne font pas une échelle |
+| un Bonus après un bilan reconnu **à sa fonction** | le grief d'ordre suit la marque qui l'a établi |
+
+Et la preuve par mutation, pour chaque branche et chaque garde-fou :
+
+| mutation appliquée | résultat |
+|---|---|
+| la branche **fonction** est retirée | **33 / 35** ❌ (« titré Bilan » et « Bonus après un bilan à sa fonction ») |
+| la branche **libellé** est retirée | **27 / 35** ❌ (huit cas — tous ceux qui posent leur bilan par son libellé) |
+| le garde « le code est le **sujet** » est retiré | **34 / 35** ❌ (« une échelle hors bilan ») |
+| le garde « au moins **trois options** » est retiré | **34 / 35** ❌ |
+| le garde « le code est **fermé** » (`(?![\d.])`) est retiré | **34 / 35** ❌ (« une échelle hors bilan ») |
+| aucune mutation | **35 / 35** ✅ |
+
+Côté DOM, la quatrième marque a été éprouvée sur le corpus réel : retirée, l'outil retombe de
+**54 / 60** à **53 / 60**. Elle mord.
+
+### La leçon du lot : une vérification est indépendante quand elle change de MÉTHODE
+
+Le brief de #407 demandait d'**écrire le bilan manquant de `4e_C1.1`**. La prémisse était fausse, et
+elle venait d'une vérification présentée comme indépendante alors qu'elle **cherchait les mêmes mots
+que l'outil** — elle ne pouvait donc que confirmer l'outil. Ce qui l'a arrêtée n'est pas une
+relecture : c'est la **mesure faite avant d'écrire**, qui a ouvert la page et compté ce qu'elle
+portait vraiment.
+
+> Une vérification qui refait le geste du contrôle ne vérifie rien : elle le répète. Elle n'est
+> indépendante que si elle **change de méthode** — lire le DOM quand l'outil lit la source, compter
+> des structures quand l'outil cherche des mots, ouvrir la page quand l'outil lit le fichier.
+
+C'est aussi pourquoi les deux définitions de la fonction ont été confrontées ici au lieu que l'une
+adopte les mots de l'autre : **dix-sept désaccords** ont été rendus visibles par ce seul refus de
+recopier.
+
+### Contrôles
+
+- `verif_regles_audit.py` : **60 séquences · 254 manquements** (255 avant, **−1**) ✅
+- `tests_verif_regles_audit.py` : **35 / 35** (29 avant, **+6**) ✅, mordant aux cinq mutations
+- `audit_cloture_sequence.mjs` : **54 / 60 portent un bilan** (53 avant), **rc=0** ✅
+- confrontation des deux outils sur les 60 séquences : **0 écart**
+- batterie : `controle_liens.py` ✅ · `controle_medias.py` ✅ · `controle_cadres.py` ✅ ·
+  `controle_formulations.py` ✅ · `controle_gestes_outil.py` ✅ ·
+  `controle_fichiers_telechargeables.py` ✅
+- `controle_impression.mjs` : **0 page refusée** ✅
+- périmètre : `_outils/` et ce journal. **Aucune page de séquence n'est modifiée** — c'est l'outil
+  qui avait tort, pas les pages.
