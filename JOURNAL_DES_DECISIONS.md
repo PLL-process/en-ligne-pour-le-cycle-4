@@ -17946,3 +17946,103 @@ parce que doter ces pages d'un bandeau de durée est un autre sujet.
 - rendu **1280 px** et **390 px** : **0 message de console, 0 erreur JS**, **0 débordement
   horizontal**. Champs sans nom accessible : **1 / 45 / 31** — identiques à `main`, aucun n'est neuf.
 - captures avant/après de la fin des trois séquences, aux deux largeurs
+
+## 21/09/2026 — Deux corrections de source dans les corrigés de #410 (thème 1)
+
+Les corrigés écrits en #410 portaient deux défauts de **source** — le genre qu'aucun contrôle du
+dépôt ne voit, parce qu'une source fausse ressemble beaucoup à une source juste. Texte seul :
+aucune structure touchée, **249 manquements inchangés**.
+
+### 1. `3e_C1.5` — le chiffre était juste, l'auteur ne l'était pas
+
+Le corrigé écrivait que « **la page de l'Arcep donne** » les 4,4 %. C'est faux, et c'est exactement
+l'erreur que ce même corrigé dénonce trois lignes plus bas : **confondre où l'on a lu et qui a
+mesuré**.
+
+Le chiffre vient d'une **étude commune de l'ADEME et de l'Arcep**, *Évaluation de l'impact
+environnemental du numérique en France — mise à jour de l'étude ADEME-Arcep*, **rapport final de
+janvier 2025**, portant sur des **données de 2022**. La page de l'Arcep ouverte à l'activité 3 bis la
+**relaie**.
+
+Le rapport a été **ouvert et lu** avant d'écrire (35 pages) ; il dit, mot pour mot :
+
+> « L'empreinte carbone générée pour un an de consommation de biens et services numériques en France
+> en 2022 représente l'équivalent de **4,4 % de l'empreinte carbone nationale soit 29,5 Mt CO₂éq** »
+
+La paternité et les dates sont confirmées par une seconde source, l'observatoire Arcep–ADEME :
+« **13 janvier 2025** : mise à jour de l'étude **ADEME – Arcep** sur l'impact environnemental du
+numérique en France **avec des données de 2022** ».
+
+Le corrigé enseigne désormais **les deux dates** — données de 2022, publication de 2025 — et dit
+pourquoi l'écart compte : mesurer, vérifier et publier prend du temps, et c'est la **première** date
+qui dit de quoi on parle.
+
+**La page se serait contredite elle-même.** La consigne de l'activité 3 bis demande « pour chaque
+chiffre, note aussi **QUI** le publie et de **QUELLE ANNÉE** il date » — et sa propre correction
+répondait « Environ 4,4 % de l'empreinte carbone », sans l'auteur ni l'année. Elle dit maintenant la
+même chose que le corrigé du Bonus.
+
+**La page de l'ADEME qui relaie l'étude n'a pas pu être ouverte** : `infos.ademe.fr` est derrière un
+filtre anti-robots et rend **403**, y compris dans un vrai navigateur. Elle n'est donc **pas citée**.
+C'est le rapport lui-même qui l'est, parce que c'est lui qui a été lu.
+
+### 2. `4e_C1.4` — un classement sans source, contredit par une source
+
+Le corrigé rangeait « les traces de connexion à l'ENT » parmi ce qui « ne devrait plus être
+conservé une fois que tu as quitté l'établissement ». Aucune source, et **contredit** par la notice
+RGPD du **GAR**, ouverte et lue :
+
+> « Les données de connexion (logs et adresse IP, traces des accès, consultations, créations et
+> modifications de données) sont conservées pour **une durée de douze mois**. »
+
+Douze mois est une durée **fixe** : elle ne se règle pas sur le départ de l'élève.
+
+Le défaut était plus profond que la ligne fautive : **le critère enseigné était incomplet**. « Une
+donnée se garde tant que son usage dure » oublie qu'une **obligation** de conserver est elle-même une
+raison de garder. Le corrigé n'enseigne donc plus un classement mais **une question** :
+
+> « À quoi cette donnée sert-elle **encore** — et une règle oblige-t-elle à la garder, pour combien de
+> temps ? »
+
+Les listes d'exemples restent, réduites à ce qui se défend sans source. La notice du GAR sert
+d'illustration parce qu'elle montre **plusieurs durées différentes selon la donnée** : année
+scolaire, durée de présence dans l'établissement, scolarité, douze mois.
+
+**Le périmètre est dit, et il est étroit.** La notice parle du **GAR**, pas de tout ce que fait un
+collège — le corrigé le précise. Et la phrase sur les douze mois est rangée, dans la notice, sous le
+paragraphe « *S'agissant des fournisseurs de ressources, des exploitants ENT et des porteurs de
+projets* » : le corrigé le dit aussi, plutôt que d'étendre la durée. Une durée se cite avec ce
+qu'elle couvre — c'est la même faute qu'un chiffre sans son « de quoi ».
+
+### Un lien qu'on ne peut pas lire n'est pas une source
+
+Le lien ajouté vers la notice du GAR tombait à **1,54** de contraste (4,5 exigé) : `4e_C1.4` ne
+définit aucune couleur de lien pour ses sections `.r4`, et le bleu par défaut du navigateur y est
+illisible sur fond sombre. **Le lien ajouté a été habillé** — `#9ecbff`, contraste **8,57**.
+
+**Le lien voisin, antérieur, reste à 1,54** et n'a pas été touché : c'est le défaut signalé en #410,
+et il appelle une décision, pas un correctif glissé dans une PR de texte. Les deux mesures sont
+désormais côte à côte dans la même section, ce qui rend l'arbitrage facile.
+
+### La règle qui a présidé aux deux
+
+> **Aucun fait dans une page élève sans source primaire ouverte.** Si la source ne dit pas exactement
+> ce qu'on veut écrire, on écrit ce qu'elle dit, ou rien.
+
+Appliquée trois fois ici : le rapport ADEME-Arcep cité *verbatim* ; la page ADEME non ouverte donc
+non citée ; la durée du GAR citée **avec** le paragraphe où elle se trouve.
+
+### Contrôles
+
+- `verif_regles_audit.py` : **60 séquences · 249 manquements** — **inchangé**, comme prévu ✅
+- `controle_formulations.py` : **80 citations, 0 écart** ✅
+- **les deux URL ajoutées répondent** : `200 application/pdf` pour le rapport ADEME-Arcep,
+  `200 text/html` pour la notice du GAR. À noter : `controle_liens.py` **ne teste aucune adresse
+  distante** — il le dit lui-même — donc cette vérification a été faite à la main, au navigateur et
+  en `curl`.
+- `controle_liens.py` ✅ · `controle_medias.py` ✅ · `controle_cadres.py` ✅ ·
+  `controle_gestes_outil.py` ✅ · `controle_fichiers_telechargeables.py` ✅ ·
+  `tests_verif_regles_audit.py` **35 / 35** ✅
+- `controle_impression.mjs` : **0 page refusée** ✅
+- rendu 1280 px et 390 px : **0 console, 0 erreur JS**, **128 et 79 champs** — identiques à avant,
+  la modification est bien du texte seul
