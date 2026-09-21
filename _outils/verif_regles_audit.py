@@ -475,11 +475,119 @@ BILAN = re.compile(r"je me positionne|auto[-\s]?positionnement|je me situe|bilan
 #: Le titre d'un bloc Bonus, quelle que soit sa décoration.
 TITRE_BONUS = re.compile(r"<h[1-4][^>]*>(?:(?!</h[1-4]>).)*?\bbonus\b", re.I | re.S)
 
+#: ── Le bilan reconnu à sa FONCTION, et non à ses mots ────────────────────────
+#:
+#: Un bilan fait une chose : il demande à l'élève de SE SITUER sur les
+#: compétences de la séquence. Cela s'écrit toujours de la même façon, quels que
+#: soient les mots de l'échelle — émojis, « je sais / pas encore », « maîtrise
+#: fragile » :
+#:
+#:     un groupe de choix mutuellement exclusifs
+#:     dont l'intitulé a pour SUJET un code du référentiel
+#:     et qui offre au moins trois options.
+#:
+#: Aucune liste de mots n'entre ici. Chercher « Maîtrise insuffisante » aurait
+#: marché aujourd'hui et cassé au premier lot qui écrit son échelle autrement.
+#:
+#: « Pour sujet » est le point délicat, et il est MESURÉ : deux questions de
+#: CONTENU du dépôt citent un code au passage — « Le banc de 3e_C8.2 retenait
+#: déjà celui-là », « En 4e_C7, tu as choisi un matériau ». Elles nomment un
+#: code sans porter sur lui, et feraient un bilan fantôme. Le discriminant n'est
+#: donc pas la présence du code mais sa POSITION SYNTAXIQUE : dans un
+#: auto-positionnement le code est suivi d'un tiret, d'un deux-points, d'une
+#: parenthèse ou de la fin de l'intitulé ; dans une question de contenu, d'une
+#: virgule ou d'un verbe.
+_CODE_REF = r"[345]e_C\d+(?:\.\d+)?(?![\d.])"
+
+#: `(?![\d.])` ferme le code. Sans lui, « 3e_C8.2 retenait » se lirait « 3e_C8 »
+#: suivi d'un point — et la question de contenu passerait pour un positionnement.
+SUJET_CODE = re.compile(
+    r"\b" + _CODE_REF
+    + r"(?:\s*[·,]\s*C\d+(?:\.\d+)?(?![\d.]))*"
+    + r"(?!\s*[,\w])")
+
+GROUPE_CHOIX = re.compile(
+    r"<fieldset\b[^>]*>(.*?)</fieldset>|<select\b[^>]*>(.*?)</select>", re.I | re.S)
+LEGENDE = re.compile(r"<legend\b[^>]*>(.*?)</legend>", re.I | re.S)
+UN_RADIO = re.compile(r'<input[^>]*type="radio"', re.I)
+UNE_OPTION = re.compile(r"<option\b", re.I)
+
+
+def _texte_nu(fragment: str) -> str:
+    """Le texte d'un fragment, balises ôtées et entités rendues.
+
+    Les entités comptent : tant que « 5e_C1.2&nbsp;— comparer » n'est pas
+    déséchappé, ce qui suit le code est un « & », et la lecture tient du hasard.
+    """
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", fragment))).strip()
+
+
+def _corps_lisible(src: str) -> str:
+    """La page sans ses scripts, ses styles ni ses commentaires."""
+    for motif in (r"<script.*?</script>", r"<style.*?</style>", r"<!--.*?-->"):
+        src = re.sub(motif, " ", src, flags=re.S)
+    return src
+
+
+def positionnements(corps: str) -> list[int]:
+    """Les positions des groupes d'auto-positionnement de la page.
+
+    `corps` est attendu DÉJÀ nettoyé par `_corps_lisible`.
+    """
+    trouves = []
+    for m in GROUPE_CHOIX.finditer(corps):
+        dedans = m.group(1) if m.group(1) is not None else m.group(2)
+        if m.group(1) is not None:
+            leg = LEGENDE.search(dedans)
+            titre = _texte_nu(leg.group(1)) if leg else ""
+            options = len(UN_RADIO.findall(dedans))
+        else:
+            aria = re.search(r'aria-label="([^"]*)"', m.group(0))
+            ident = re.search(r'id="([^"]+)"', m.group(0))
+            titre = _texte_nu(aria.group(1)) if aria else ""
+            if ident and not titre:
+                lab = re.search(
+                    r'<label[^>]*for="%s"[^>]*>(.*?)</label>' % re.escape(ident.group(1)),
+                    corps, re.S)
+                titre = _texte_nu(lab.group(1)) if lab else ""
+            options = len(UNE_OPTION.findall(dedans))
+        if options >= 3 and SUJET_CODE.search(titre):
+            trouves.append(m.start())
+    return trouves
+
+
+def marque_du_bilan(src: str) -> tuple[int | None, str]:
+    """Où la séquence établit son bilan, et par quoi on l'a reconnu.
+
+    Le « ou » est une nécessité mesurée, pas une prudence : sur les 60
+    séquences, 53 portent le libellé, 20 portent la fonction, et les deux
+    ensemble en reconnaissent 54. Remplacer le libellé par la fonction en
+    perdrait 34 ; garder le libellé seul en perd une — celle qui a rouvert le
+    sujet.
+    """
+    corps = _corps_lisible(src)
+    m = BILAN.search(corps)
+    groupes = positionnements(corps)
+    if m and groupes:
+        return min(m.start(), groupes[0]), "au libellé et à sa fonction"
+    if m:
+        return m.start(), "au libellé"
+    if groupes:
+        return groupes[0], "à sa fonction (auto-positionnement sur %d code(s))" % len(groupes)
+    return None, ""
+
+
 def regle_301(src: str) -> tuple[str, str]:
     """n°301 — le bilan clôt la séquence ; un Bonus est un travail, il le précède.
 
     DEUX choses se jugent ici, parce que deux seulement se lisent sûrement dans
     la source : qu'un bilan EXISTE, et qu'aucun Bonus ne vienne APRÈS lui.
+
+    Le bilan se reconnaît à son LIBELLÉ **ou** à sa FONCTION — voir
+    `marque_du_bilan`. Chercher le seul libellé accusait à tort
+    `4e_C1.1-C1.3_tsinghua_feux`, qui porte un bilan complet sous un simple
+    titre « Bilan » : trois groupes de positionnement, un par code, douze
+    niveaux à choisir et trois légendes « 📍 ».
 
     Ce qui n'est PAS jugé ici, et pourquoi :
       · « le Bonus porte-t-il un champ de réponse ? » — il faudrait délimiter le
@@ -490,18 +598,18 @@ def regle_301(src: str) -> tuple[str, str]:
       · la QUALITÉ d'un corrigé — qu'il traite la question posée, qu'il soit
         juste, qu'il soit utile. Cela se lit.
     """
-    m_bilan = BILAN.search(src)
-    m_bonus = TITRE_BONUS.search(src)
+    ou_bilan, comment = marque_du_bilan(src)
+    m_bonus = TITRE_BONUS.search(_corps_lisible(src))
 
     griefs = []
-    if not m_bilan:
+    if ou_bilan is None:
         griefs.append("aucun bilan : la séquence ne se termine par rien")
-    if m_bonus and m_bilan and m_bonus.start() > m_bilan.start():
+    if m_bonus and ou_bilan is not None and m_bonus.start() > ou_bilan:
         griefs.append("le Bonus vient APRÈS le bilan — du travail demandé après la clôture")
 
     if griefs:
         return "ECHEC", " · ".join(griefs)
-    return "OK", ("bilan présent"
+    return "OK", ("bilan reconnu %s" % comment
                   + (", et le Bonus le précède" if m_bonus else ", pas de Bonus"))
 
 

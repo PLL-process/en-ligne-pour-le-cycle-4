@@ -23,8 +23,14 @@
  * Il ne mesure PAS, et ne le prétend pas : la QUALITÉ d'un corrigé — qu'il
  * traite vraiment la question posée, qu'il soit juste, qu'il soit utile. Cela se
  * lit, et un contrôle qui prétendrait l'établir mentirait. De même, il ne juge
- * pas si le contenu d'un bilan est un vrai bilan : il constate qu'un bloc
- * « Je me positionne » est là, et rien de plus.
+ * pas si le contenu d'un bilan est un vrai bilan.
+ *
+ * COMMENT LE BILAN EST RECONNU
+ * ----------------------------
+ * À son LIBELLÉ (trois marques : un titre, un conteneur `autopos`, la phrase
+ * portée par un champ) OU à sa FONCTION (un groupe de choix dont le sujet est un
+ * code du référentiel). Le libellé seul en manquait une sur soixante — une
+ * séquence qui titre « Bilan » et fait faire un vrai auto-positionnement.
  *
  * Usage :
  *   node _outils/audit_cloture_sequence.mjs            # rapport complet
@@ -112,6 +118,45 @@ const MESURER = () => {
     const porteurs = tous.filter((e) => PHRASE.test(texteEtAttributs(e)));
     titreBilan = porteurs.find((e) => ![...e.children].some((c) => PHRASE.test(texteEtAttributs(c))));
     if (titreBilan) marqueBilan = 'phrase dans un champ';
+  }
+
+  /* ── quatrième marque : le bilan reconnu à sa FONCTION ────────────────────
+     Les trois marques ci-dessus cherchent toutes un LIBELLÉ. Une séquence qui
+     titre simplement « Bilan » et fait faire un vrai auto-positionnement leur
+     échappe : `4e_C1.1-C1.3_tsinghua_feux` porte trois groupes de
+     positionnement, un par code, douze niveaux à choisir, et les trois marques
+     la déclaraient sans bilan.
+
+     La fonction d'un bilan : l'élève s'y situe sur les compétences de la
+     séquence. Mécaniquement — un groupe de choix mutuellement exclusifs dont
+     l'intitulé a pour SUJET un code du référentiel, offrant au moins trois
+     options. Aucun mot d'échelle n'entre ici : ni « maîtrise », ni
+     « je sais », ni un émoji. Une échelle écrite autrement resterait vue.
+
+     Le code doit être le SUJET, pas une mention au passage : deux questions de
+     contenu du dépôt citent un code dans leur énoncé — « Le banc de 3e_C8.2
+     retenait déjà celui-là », « En 4e_C7, tu as choisi un matériau ». Elles
+     créeraient un bilan fantôme. D'où le `(?!\s*[,\w])` : dans un
+     auto-positionnement, le code est suivi d'un tiret, d'un deux-points, d'une
+     parenthèse ou de la fin ; dans une question, d'une virgule ou d'un verbe.
+     Et le `(?![\d.])` ferme le code : sans lui « 3e_C8.2 retenait » se lirait
+     « 3e_C8 » suivi d'un point. */
+  const SUJET_CODE = /\b[345]e_C\d+(?:\.\d+)?(?![\d.])(?:\s*[·,]\s*C\d+(?:\.\d+)?(?![\d.]))*(?!\s*[,\w])/;
+  const intituleDuGroupe = (g) => {
+    if (g.tagName === 'FIELDSET') return (g.querySelector('legend')?.textContent || '');
+    const aria = g.getAttribute('aria-label');
+    if (aria) return aria;
+    return (g.labels && g.labels.length) ? (g.labels[0].textContent || '') : '';
+  };
+  const positionnements = [...document.querySelectorAll('fieldset, select')].filter((g) => {
+    const options = g.tagName === 'FIELDSET'
+      ? g.querySelectorAll('input[type=radio]').length
+      : g.querySelectorAll('option').length;
+    return options >= 3 && SUJET_CODE.test(intituleDuGroupe(g).replace(/\s+/g, ' ').trim());
+  });
+  if (!titreBilan && positionnements.length) {
+    titreBilan = positionnements[0];
+    marqueBilan = `fonction (${positionnements.length} code(s))`;
   }
 
   /* ── le Bonus : la section dont le titre porte « Bonus » ────────────────── */
@@ -222,7 +267,7 @@ console.log('     soit juste, qu\'il soit utile. Cela se lit. Cet audit constate
 console.log('     bloc de corrigé, et rien de plus ; de même il ne juge pas le contenu d\'un bilan.');
 
 console.log('\n═══ 1. CE QUI TERMINE UNE SÉQUENCE ═══');
-console.log(`  ${avecBilan.length} / ${lignes.length} portent un bilan « Je me positionne »`);
+console.log(`  ${avecBilan.length} / ${lignes.length} portent un bilan (libellé ou fonction)`);
 console.log(`  ${sansBilan.length} / ${lignes.length} n'en portent AUCUN — elles ne se terminent par rien`);
 console.log(`  ${avecBonus.length} / ${lignes.length} portent un Bonus`);
 console.log(`  ${bonusApres.length} ont leur Bonus APRÈS le bilan — du travail demandé après la clôture`);
