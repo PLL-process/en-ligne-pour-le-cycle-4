@@ -192,6 +192,18 @@
   #tachesBandeau li{margin:2px 0}
   #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
   @media print{#tachesBandeau{display:none}}
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:visited{color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
 </style>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_5e_C5.1.html">📖 Lexique</a></nav>
 <a class="skip-link" href="#seances">Aller directement aux activités</a>
