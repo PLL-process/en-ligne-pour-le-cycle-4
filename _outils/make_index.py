@@ -327,6 +327,17 @@ h1{text-align:center;color:var(--title);font-size:1.9em;margin:30px 0 4px}
 .pill{font-size:.85em}
 footer{max-width:1080px;margin:34px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
 footer a{color:var(--hl)}
+
+/* ── Règle d'or n°303 — un lien se lit ─────────────────────────────
+   À l'écran ET sur le papier, cliqué ou non. Sans cette règle, l'accueil laissait
+   ses 436 liens au bleu par défaut du navigateur, à 2,03:1 sur son fond marine.
+   `:where(:visited)` remet la spécificité à zéro : la couleur des liens visités
+   ne l'emporte jamais sur celle qu'une classe donne à un bouton. */
+a,a:where(:visited){color:#9ecbff}
+@media print{
+  a,a:visited{color:#00309e!important}
+  a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+}
 /* ── badge héritée 🛠 (règle d'or n°12 — _outils/heritees.json) ── */
 .badge-herit{margin-left:4px;cursor:help;font-size:.8em;filter:grayscale(.2)}
 /* ── badge NEW (règle obligatoire — nouveautes.json) ── */

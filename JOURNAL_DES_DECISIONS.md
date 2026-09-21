@@ -18196,3 +18196,134 @@ as déjà fait », qui restent signalés « en attente ». Le lot est donc parti
   `controle_fichiers_telechargeables.py` ✅ · `tests_verif_regles_audit.py` **35 / 35** ✅
 - rendu **1280 px** et **390 px** sur un échantillon des pages touchées : **0 message de console,
   0 erreur JS**
+
+## 21/09/2026 — n°303 : l'état visité se mesure, et trois défauts de #412 (thèmes 1-2, _outils)
+
+#412 a rendu 474 liens lisibles et en a cassé deux, sans qu'aucun contrôle ne le dise — parce qu'il
+déclarait immesurable la chose même qu'il venait de casser. Pascal l'a mesurée. Ce lot répare les
+trois défauts, et donne à l'outil les yeux qui lui manquaient.
+
+### 1. La règle de lien visité écrasait la couleur des boutons
+
+`a,a:visited{color:…}` pèse **(0,1,1)**. `.button{color:#fff}` pèse **(0,1,0)**. Tant que le lien
+n'est pas visité, la classe gagne ; **dès qu'il l'est**, la règle de lien gagne — et le texte du
+bouton prend **la couleur des liens sur le fond du bouton** :
+
+| | avant le clic | après |
+|---|---:|---:|
+| `5e_C1.2` — « Télécharger le CSV original » (`a.button`) | 7,27 : 1 | **1,15 : 1** |
+| `4e_C4.1_book-train` — « ↑ » (`a.btn-haut`) | 9,59 : 1 | **1,04 : 1** |
+
+**Aucun des deux n'était illisible avant #412.** C'est une régression, et elle a duré une PR.
+
+**Le correctif : `a,a:where(:visited)`.** `:where()` remet la spécificité à **zéro** :
+`a:where(:visited)` pèse (0,0,1), comme `a`. La classe d'un bouton (0,1,0) l'emporte donc
+**toujours**, cliqué ou non — et le lien ordinaire, lui, garde bien sa couleur, puisque `a` et
+`a:where(:visited)` sont déclarés ensemble.
+
+**Vérifié dans le navigateur, pas présumé** — c'était la consigne : les deux boutons remontent à
+**7,27** et **9,59** en état visité simulé, et un cas du banc tient l'autre bout, qu'un lien sans
+classe reste lisible après le clic. Sans ce second cas, on pourrait « réparer » le bouton en cassant
+tous les autres liens.
+
+**Cherché dans tout le dépôt**, pas seulement sur ces deux : la correction porte sur les **157**
+pages que #412 avait touchées, plus les deux gabarits. Après, **0** lien sous le seuil en état
+visité sur les 340 pages lues.
+
+En impression, `a:visited` reste écrit tel quel : la couleur y est `!important`, elle **doit**
+l'emporter, et les boutons-liens ont leur propre règle dans le même bloc.
+
+### 2. L'état visité SE MESURE — par simulation de sa cascade
+
+#412 écrivait que cet état « ne peut pas être mesuré ». C'était vrai de `getComputedStyle`, et faux
+de la mesure. Les navigateurs refusent de révéler l'historique — et ils ont raison. Mais **ce qui
+fait disparaître un texte, ce n'est pas la couleur, c'est la cascade** ; et la cascade se simule
+exactement :
+
+> une **pseudo-classe** et une **classe** pèsent toutes deux **(0,1,0)**. Recopier chaque règle
+> `:visited` en y substituant une classe **conserve donc la spécificité**. On pose la classe sur tous
+> les liens, et la mesure ordinaire devient une mesure de l'état visité.
+
+Hors `@media print` : sur le papier la couleur d'impression l'emporte en `!important`, et dupliquer
+des règles dans ce contexte ne simulerait rien.
+
+Le contrôle mesure désormais **trois états** : écran, **une fois cliqué**, papier. Il refuse sous
+4,5 : 1 dans **l'un ou l'autre**. Sur le dépôt, **161 règles `:visited`** sont recopiées à chaque
+passage.
+
+**Ce que la simulation ne reproduit pas, et il faut le dire** : les restrictions supplémentaires que
+le navigateur applique aux liens vraiment visités — il n'y honore qu'un petit jeu de propriétés. La
+couleur est de ce jeu ; pour elle, simulation et réalité coïncident. La docstring de l'outil le dit,
+et n'affirme plus l'inverse.
+
+### 3. Deux gabarits, pas un — et le second était le pire
+
+Le brief en signalait un : `_outils/dnb_gabarit.html`, qui portait encore le bleu par défaut à
+**1,66 : 1** et aucune règle n°303. La construction suivante effaçait la correction de #412. C'est
+exact, et c'est réparé.
+
+**Mais il y en avait un second**, trouvé en cherchant les autres : **`_outils/make_index.py`** génère
+`index.html` — **la page qui portait 436 des 474 liens illisibles**. Vérifié en le lançant : il
+**retirait** le bloc n°303, en 12 lignes de diff. La première page qu'un élève ouvre serait redevenue
+illisible à la première régénération.
+
+**Et le gabarit DNB avait dérivé de bien plus que la couleur.** Poser la règle et reconstruire
+retirait **170 lignes** de la page : trois corrections fusionnées n'avaient jamais été reportées dans
+le gabarit.
+
+| ce que la reconstruction aurait détruit | origine |
+|---|---|
+| le bloc `@media print` (fond blanc, couleurs conservées) | décision du 02/09/2026 |
+| la loupe des images (style + script, sans bibliothèque) | règle d'or n°92 |
+| deux liens de la barre de navigation | — |
+| **les polices Google** réintroduites à la place des polices système | une page élève ne dépend d'aucun réseau |
+
+La dernière est la plus grave : le gabarit rappelait encore `fonts.googleapis.com`. Les quatre ont
+été **reportées depuis la page**, qui fait foi puisque c'est elle qui a été relue et fusionnée. La
+reconstruction ne change plus que ce qu'on lui demande de changer.
+
+**Le contrôle lit désormais les moules, pas seulement les produits.** `_outils/dnb_gabarit.html` et
+`_outils/gabarits/` entrent dans son périmètre : un outil qui ne regarde que la page et jamais le
+gabarit laisse le défaut revenir à la génération suivante. Le gabarit de `index.html`, lui, vit
+**dans du Python** et aucune lecture de HTML ne l'atteindra ; là, le seul contrôle possible est de
+régénérer puis de mesurer — ce que fait cette PR, et ce que l'en-tête de l'outil signale à qui
+viendra après.
+
+### Les chiffres
+
+| | avant | après |
+|---|---:|---:|
+| liens sous 4,5:1, **état normal** | **2** (les deux du gabarit DNB) | **0** |
+| liens sous 4,5:1, **état visité** | **4** (les 2 du gabarit + les 2 boutons) | **0** |
+| liens sous 4,5:1, **sur le papier** | 0 | **0** |
+| pages colorant `a` sans `:visited` | 0 | **0** |
+
+**La mesure de départ de Pascal est retrouvée exactement** — 2 et 4, mêmes liens, mêmes rapports
+(1,66 ; 1,15 ; 1,04). **161 pages** modifiées : 51 au thème 1, 40 au thème 2, 65 au thème 3,
+`index.html`, et 4 fichiers de `_outils/`.
+
+### La leçon
+
+> **Un contrôle qui déclare une chose immesurable doit être relu comme une hypothèse, pas comme un
+> fait.** #412 a écrit « l'état visité ne peut pas être mesuré » en toute bonne foi — et a cassé deux
+> boutons dans l'angle mort que cette phrase venait de créer. Ce qui était vrai de l'outil
+> (`getComputedStyle`) a été pris pour vrai du monde.
+
+C'est le pendant de la règle n°299 : un contrôle en panne n'est pas vert. Ici, un contrôle **aveugle
+par déclaration** n'est pas complet — et la déclaration elle-même est ce qu'il faut attaquer.
+
+### Contrôles
+
+- `controle_contraste_liens.mjs` : **340 pages · 1 289 liens · 0 sous le seuil** dans les **trois**
+  états ✅ (338 pages élèves + les 2 gabarits)
+- `tests_controle_contraste_liens.mjs` : **16 / 16** (13 avant, **+3**) ✅, dont la mutation du
+  bouton écrasé une fois cliqué
+- `controle_impression.mjs` : **0 page refusée** ✅
+- `verif_regles_audit.py` : **249 manquements**, inchangé ✅
+- batterie : `controle_liens.py` ✅ · `controle_medias.py` ✅ · `controle_cadres.py` (340 pages) ✅ ·
+  `controle_formulations.py` **0 écart** ✅ · `controle_gestes_outil.py` ✅ ·
+  `controle_fichiers_telechargeables.py` ✅ · `tests_verif_regles_audit.py` **35 / 35** ✅
+- `dnb_build.py` relancé : la page régénérée passe le contrôle dans les trois états, et son diff ne
+  contient plus que la règle n°303 et le déplacement du bloc d'impression
+- `make_index.py` relancé : `index.html` régénéré **conserve** la règle et passe le contrôle
+- rendu 1280 px et 390 px sur les pages touchées : **0 console, 0 erreur JS**
