@@ -21,17 +21,23 @@
    3. le verrou éventuel dans le vérificateur : exp: !!window.__exp.vs1.
    4. le dépliant est OUVERT d'emblée (attribut open) : un lien qu'on ne voit pas
       n'est pas cliqué.
+   5. règle d'or n°305 : la mention « activite-en-ligne » ci-dessous se place AU DÉBUT
+      de l'activité, juste après son titre — pas ici, au milieu, près du lien. Son
+      CSS (.activite-en-ligne) est à embarquer avec celui du dépliant.
+      _outils/controle_hors_ligne.mjs refuse un lien vers l'éditeur sans elle.
 ═══════════════════════════════════════════════════════════════════ -->
+<p class="activite-en-ligne">🌐 <b>Cette activité demande une connexion Internet</b> — l'éditeur Vittascience est en ligne. <b>Sans connexion&nbsp;:</b> écris ton programme sur le cahier : la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
 <details class="vs" id="{ID}" open>
   <summary>🧪 {TITRE — ex. : Recopie ton programme complété ici et exécute-le}</summary>
   <p class="vs-note">L'éditeur s'ouvre dans un nouvel onglet : blocs à gauche, Python à droite, console en bas. {NOTE
   SPÉCIFIQUE — consigne blocs↔Python de l'activité}. (Connexion Internet nécessaire pour l'éditeur ;
   le reste de la page fonctionne hors ligne.)</p>
-  <p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur est hébergé par Vittascience. Sans connexion, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
 <p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
 <p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
 </details>
 <!-- CSS à embarquer avec le gabarit (copier dans le <style> de la page) :
+.activite-en-ligne{border-left:4px solid #ffd66b;background:rgba(255,214,107,.12);padding:.55em .85em;border-radius:0 8px 8px 0;margin:.6em 0 .8em;font-size:.95em;line-height:1.45}
+@media print{.activite-en-ligne,.activite-en-ligne b{color:#1a1a1a!important}.activite-en-ligne{background:#fff8e1!important;border-left-color:#8a6400!important}}
 details.vs{border:2px solid #61dafb;border-radius:14px;margin:18px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
 details.vs>summary{cursor:pointer;padding:14px 18px;font-weight:700;font-size:1.03em;color:#61dafb;list-style:none;display:block;border-radius:12px}
 details.vs>summary::-webkit-details-marker{display:none}
