@@ -27,6 +27,13 @@
  *     (« Quel chiffre t'a le plus surpris, et pourquoi ? » — la forme de 4e_C1.1)
  *   · voie 3, « Je dois encore revoir ____ » (1re personne) · « J'ai appris que ____ » → signalée
  *   · exclusion : une question sur l'HYPOTHÈSE, même avec « surpris » → pas une métacognition
+ *
+ * D5, jugé par le CONTENEUR (22/09/2026) — ce qui suit la barre d'onglets hors de tout panneau :
+ *   · panneau de séance 1 fermé trop tôt (4e_C1.4)             → refusé
+ *   · bloc « Autoévaluation » après les panneaux (3e_C1.5)     → refusé
+ *   · champs et boutons sans aucun titre (book-train)          → refusé
+ *   · seulement tableau de bord (n°30), avis hors parcours, pied de page → passe
+ *   · un bloc hors panneau mais caché                          → passe
  * Usage : node _outils/tests_controle_squelette.mjs   Sortie : 0 si tout passe.
  */
 import fs from 'fs';
@@ -90,9 +97,47 @@ for (const [nom, attendu, html] of CAS) {
   dire(rc === attendu, `${nom} → ${attendu ? 'refusée' : 'acceptée'} (sortie ${rc})`);
 }
 {
+  // Jugée sur D1-D4 seulement : sa clôture est juste depuis #418. D5 (le billet d'entrée posé
+  // entre la barre et la séance 1) se juge à part, dans le bloc D5 ci-dessous.
   const vraie = path.join(ICI, '..', 'theme-1-objets-systemes-usages-interactions', 'C1-decrire-les-liens-entre-usages-et-evolutions',
     '3e', '3e_C1.1', 'sequence_3e_C1.1-C1.4_tsinghua_feux.html');
-  dire(await silence(() => main([vraie])) === 0, '3e_C1.1, la vraie page corrigée en #418 → acceptée');
+  const nav = await chromium.launch();
+  const r = await juger(await nav.newContext(), vraie);
+  await nav.close();
+  const d14 = r.defauts.filter((d) => d.code !== 'D5');
+  dire(d14.length === 0, `3e_C1.1, la vraie page corrigée en #418 → clôture acceptée (D1-D4 : ${d14.length})`);
+}
+
+// ── D5 : jugé par le CONTENEUR — ce qui suit la barre d'onglets hors de tout panneau ──
+{
+  const TB = '<div id="tachesBandeau"><p>Séance 1 — étape 1/3 · ☐ activité 1</p></div>';
+  const PIED = '<footer><p>Licence CC BY-SA — collège, 2026</p></footer>';
+  const AVIS = '<p class="seance-avis">⚠️ Ce bloc ne fait pas partie des séances.</p>';
+  const base = (entre, apres = '') => page(OUV + BILLET + onglets(2, true) + entre + '<div>' + panneau(1, ACT(1), true) + panneau(2, ACT(2) + CLOT)
+    + '<section class="seance-panel" id="shors"><h2>Python</h2></section></div>' + apres);
+  const D5 = [
+    ['panneau de séance 1 fermé trop tôt (4e_C1.4) : 1.a–1.f hors panneau', true,
+      page(OUV + BILLET + onglets(2) + '<div>' + panneau(1, ACT(1), true) + '<div class="section"><h3>✋ 1.a — Associer</h3><textarea id="r1a"></textarea><button>Vérifier</button></div>'
+        + panneau(2, ACT(2) + CLOT) + '</div>')],
+    ['bloc « ✅ Autoévaluation » après les panneaux (3e_C1.5)', true,
+      base('', '<div class="section"><h2>✅ Autoévaluation (coche)</h2><label>Je sais… <input type="checkbox"></label></div>')],
+    ['champs et boutons SANS titre hors panneau (book-train)', true,
+      base('<div><input id="nom" placeholder="Nom"><button>💾 Sauvegarder</button></div>')],
+    ['seulement tableau de bord, avis hors parcours et pied de page', false, base(TB + AVIS, PIED)],
+    ['élément hors panneau mais caché (display:none)', false, base('<div style="display:none"><h2>Brouillon</h2></div>')],
+  ];
+  const nav = await chromium.launch();
+  const ctx = await nav.newContext();
+  for (const [nom, attendu, html] of D5) {
+    const d = fs.mkdtempSync(path.join(tmp, 'd5-'));
+    const f = path.join(d, 'sequence_banc.html');
+    fs.writeFileSync(f, html);
+    const r = await juger(ctx, f);
+    const d5 = r.defauts.find((x) => x.code === 'D5');
+    const autres = r.defauts.filter((x) => x.code !== 'D5');
+    dire(!!d5 === attendu && autres.length === 0, `D5 — ${nom} → ${attendu ? 'refusé' : 'passe'}${d5 ? ' : ' + d5.dit.slice(0, 70) : ''}${autres.length ? ' (AUTRES : ' + autres.map((a) => a.code).join(',') + ')' : ''}`);
+  }
+  await nav.close();
 }
 {
   const vide = fs.mkdtempSync(path.join(tmp, 'vide-'));

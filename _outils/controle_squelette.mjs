@@ -45,7 +45,19 @@
  *   D1  un bloc de clôture est visible à une séance qui n'est pas la dernière ;
  *   D2  un bloc de clôture n'est pas visible à la dernière séance ;
  *   D3  à l'écran de clôture, l'ordre n'est pas Bonus → Bilan → QCM ;
- *   D4  un bloc d'ouverture présent n'est pas visible au premier écran.
+ *   D4  un bloc d'ouverture présent n'est pas visible au premier écran ;
+ *   D5  page à onglets : un élément visible — titre, paragraphe, champ, bouton — est placé
+ *       APRÈS la barre d'onglets et n'est contenu dans AUCUN panneau (22/09/2026). Il se
+ *       montre donc à toutes les séances. Jugé par le CONTENEUR, jamais par le titre : D1-D3
+ *       reconnaissent la clôture à ses titres, et une « Autoévaluation », une « Synthèse »
+ *       ou une séance 1 dont le panneau se ferme trop tôt (4e_C1.4, balises déséquilibrées)
+ *       leur échappaient — sixième confusion étiquette / fonction dans ce dépôt.
+ *       Exceptions, par conteneur, et rien d'autre :
+ *         · #tachesBandeau, section#taches — le tableau de bord des tâches (n°30) : il
+ *           SITUE l'élève dans la séquence, il est fait pour être vu à chaque séance ;
+ *         · .seance-avis — l'avis « ce bloc est hors parcours », qui accompagne l'onglet ;
+ *         · footer — le pied de page (crédits, licence), qui n'est pas du contenu de séance.
+ *       Rapport : par page, les titres de ce qui fuit (à défaut, le premier texte).
  * SIGNALÉ, non refusé (« à rédiger », pour la révision) : Bonus sans champ ou sans
  * corrigé, bilan sans retour à l'hypothèse, sans métacognition, sans
  * positionnement ; ordre des blocs d'ouverture différent du squelette.
@@ -169,7 +181,23 @@ function releverBlocs() {
     qcm: blocs.some((b) => b.type === 'QCM'),
   };
   const pv = [...document.querySelectorAll('.seance-panel, [role="tabpanel"]')].find((x) => vis(x));
+  // ── D5 : ce qui, après la barre d'onglets, n'est dans aucun panneau ──
+  // Jugé par le conteneur. Les exceptions sont listées dans l'en-tête, et nulle part ailleurs.
+  const EXCEPTIONS = '#tachesBandeau, section#taches, .seance-avis, footer';
+  const onglet1 = document.querySelector('button.seance-tab, [role="tab"]:not(a), button[data-panel]');
+  const barre = onglet1 && (onglet1.closest('.seance-tabs, [role="tablist"], #seances') || onglet1.parentElement);
+  const fuites = [];
+  if (barre) {
+    for (const e of document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, input, textarea, select, button')) {
+      if (!(barre.compareDocumentPosition(e) & Node.DOCUMENT_POSITION_FOLLOWING) || barre.contains(e)) continue;
+      if (e.closest('.seance-panel, [role="tabpanel"]') || e.closest(EXCEPTIONS)) continue;
+      if (e.matches('input[type=hidden]') || !vis(e)) continue;
+      if (!/^(INPUT|TEXTAREA|SELECT)$/.test(e.tagName) && !texte(e)) continue;
+      fuites.push({ titre: /^H\d$/.test(e.tagName), txt: texte(e).slice(0, 60) || `${e.tagName.toLowerCase()}${e.id ? '#' + e.id : ''}` });
+    }
+  }
   return {
+    fuites: { n: fuites.length, titres: [...new Set(fuites.filter((f) => f.titre).map((f) => f.txt))], premier: fuites.length ? fuites[0].txt : null },
     panneauVisible: pv ? (pv.id || '(sans id)') : null,
     blocs: blocs.map((b) => ({ famille: b.famille, type: b.type, visible: vis(b.el), y: vis(b.el) ? y(b.el) : null, panneau: panneau(b.el) })),
     contenu,
@@ -231,6 +259,13 @@ export async function juger(ctx, fichier) {
     // l'ouverture, au premier écran
     const ouvCachee = initial.blocs.filter((b) => b.famille === 'ouverture' && !b.visible);
     if (ouvCachee.length) defauts.push({ code: 'D4', dit: `ouverture absente du premier écran : ${types(ouvCachee).join(', ')}` });
+    // D5 : visible hors de tout panneau, dans l'un au moins des états (page ouverte, chaque onglet)
+    const tous = [initial, ...etats.map((e) => e.releve)].map((r) => r.fuites).filter((f) => f.n);
+    if (tous.length) {
+      const pire = tous.reduce((a, b) => (b.n > a.n ? b : a));
+      const titres = [...new Set(tous.flatMap((f) => f.titres))];
+      defauts.push({ code: 'D5', dit: `${pire.n} élément(s) visibles hors de tout panneau — ${titres.length ? titres.slice(0, 8).map((t) => `« ${t} »`).join(', ') + (titres.length > 8 ? ` (+${titres.length - 8})` : '') : `sans titre : « ${pire.premier} »`}` });
+    }
   } else {
     const ordre = cl(initial).filter((b) => b.visible).sort((a, b) => a.y - b.y);
     const faute = ordre.find((b, i) => i && RANG[b.type] < RANG[ordre[i - 1].type]);
@@ -275,9 +310,9 @@ export async function main(argv = []) {
   if (json) { console.log(JSON.stringify(rapports, null, 1)); return refusees.length ? 1 : 0; }
   const aOnglets = rapports.filter((r) => r.onglets).length;
   console.log(`${rapports.length} séquence(s) ouvertes onglet par onglet · ${aOnglets} à onglets · ${rapports.length - aOnglets} sans · ${refusees.length} refusée(s)`);
-  for (const code of ['D1', 'D2', 'D3', 'D4']) {
+  for (const code of ['D1', 'D2', 'D3', 'D4', 'D5']) {
     const n = rapports.filter((r) => r.defauts.some((d) => d.code === code)).length;
-    console.log(`     ${code} ${{ D1: 'clôture visible avant la dernière séance', D2: 'clôture invisible à la dernière séance', D3: 'ordre de clôture à l\'écran', D4: 'ouverture absente du premier écran' }[code]} : ${n}`);
+    console.log(`     ${code} ${{ D1: 'clôture visible avant la dernière séance', D2: 'clôture invisible à la dernière séance', D3: 'ordre de clôture à l\'écran', D4: 'ouverture absente du premier écran', D5: 'visible hors de tout panneau de séance' }[code]} : ${n}`);
   }
   for (const r of refusees) {
     console.log(`\n  ✘ ${r.rel}`);

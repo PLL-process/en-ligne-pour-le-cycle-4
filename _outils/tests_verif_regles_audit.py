@@ -570,6 +570,19 @@ def main():
 
     cas("--json rend un tableau, par la ligne de commande aussi", sortie_json)
 
+    # n°34 (22/09/2026) : TOUT select / textarea est jugé, id ou pas — la règle sautait les
+    # champs sans id. Quatre façons d'être étiqueté ; un champ écrit dans un script n'en est pas un.
+    for titre, html, attendu in [
+        ("sans id, sans étiquette → refusé", '<p>Q</p><textarea></textarea>', "ECHEC"),
+        ("sans id, label englobant → accepté", '<label>Q <textarea></textarea></label>', "OK"),
+        ("sans id, aria-labelledby → accepté", '<p id="q">Q</p><textarea aria-labelledby="q"></textarea>', "OK"),
+        ("avec id, label for entre apostrophes → accepté", "<label for='t'>Q</label><textarea id='t'></textarea>", "OK"),
+        ("« <textarea> » dans une chaîne de script → pas un champ", '<script>x="<textarea></textarea>"</script>', "OK"),
+        ("label fermé AVANT le champ → pas englobant, refusé", '<label>Q</label><select></select>', "ECHEC"),
+    ]:
+        cas("n°34 — " + titre, lambda h=html, a=attendu: None if (V.regle_34(h)[0] == "OK") == (a == "OK")
+            else "rendu %s : %s" % V.regle_34(h))
+
     if echecs:
         for e in echecs:
             print("❌ " + e)
