@@ -18702,3 +18702,157 @@ mauvaise raison : leur billet d'entrée et leurs encadrés disent encore « en 4
   **28 / 28** — identiques sur `main` ; et ceux de #415 inchangés : `3e_C1.1` 50 / 50, `4e_C1.1`
   42 / 42, `5e_C1.5` 38 / 38
 - console **vide**, **0 px** de débordement à 390 px sur les quatre pages
+
+## 21/09/2026 — Règle d'or n°305 : une page se lit sans Internet (_outils, journal, pages des trois thèmes)
+
+> **Règle d'or n°305 — une page se lit sans Internet.** Aucune page vivante ne **charge** quoi que ce
+> soit depuis le réseau pour s'afficher ou fonctionner. Un **lien** sortant reste permis : une source
+> à consulter n'est pas une dépendance. Mais une **activité** qui ne se fait pas sans un outil en
+> ligne le dit **à son début** — `<p class="activite-en-ligne">🌐 Cette activité demande une connexion
+> Internet…</p>` — avec son repli hors ligne **s'il existe déjà**. L'archive est exclue.
+
+Première des deux étapes du **kit hors ligne** que Pascal emportera là où la connexion manque (clé
+USB, réseau du collège). La seconde — fabriquer et publier le kit — fera une PR à part. La classe
+commune `activite-en-ligne` est ce qui permettra au kit de lister ces activités automatiquement.
+
+### La mesure — deux méthodes, confrontées
+
+Nouveau contrôle : `_outils/controle_hors_ligne.mjs`, sur **toutes** les pages vivantes (338 pages et
+les 2 moules de `_outils/`, comme `controle_contraste_liens`), pas seulement les séquences.
+
+- **a. La source.** Chaque mécanisme de chargement est cherché **là où il agit** : attributs des
+  balises (`src`, `srcset`, `poster`, `data`, `<link rel=stylesheet|icon|preload|manifest…>`,
+  `<base>`), CSS des `<style>` et des attributs `style` (`url()`, `@import`), code des `<script>`
+  (`fetch`, `XMLHttpRequest`, `import()`, `new Image().src`, `WebSocket`, `EventSource`, `Worker`,
+  `sendBeacon`, et le HTML écrit en chaîne). Pas **partout** : `3e_C1.5` enseigne HTTPS et affiche
+  du Python qui contient `https://` — un exemple n'est pas un chargement.
+- **b. Le navigateur, réseau coupé.** Chromium ouvre la page ; toute requête autre que `file:`,
+  `data:`, `blob:` est **bloquée et notée**. On défile jusqu'en bas, on ouvre chaque repli
+  `<details>` et chaque onglet de séance. C'est la méthode qui voit une adresse **construite** en
+  JavaScript — le banc le prouve.
+
+| | pages | méthode a (source) | méthode b (navigateur) | communes |
+|---|---:|---:|---:|---:|
+| pages vivantes | **340** | **0** | **0** | — |
+| archive (témoin) | 67 | **21** | **21** | **21** |
+
+**Aucune page vivante ne charge quoi que ce soit** — la mesure par la source est confirmée par le
+navigateur. Et sur l'archive, qui en charge vraiment (Google Fonts, cdnjs, images, iframes), les deux
+méthodes trouvent **les mêmes 21 pages**, aucune par une seule : elles se valident l'une l'autre sur de
+vrais positifs. Les 340 pages sont en outre **monofichier** : aucune ne charge de `.js` ou de `.css`
+annexe, qu'une lecture du seul HTML ne verrait pas.
+
+### Les liens vers des outils — classés un par un
+
+| page | lien | classement | mention 🌐 | repli hors ligne |
+|---|---|---|---|---|
+| `3e_C1.5` (hors parcours Python) | Programiz, Online Python, Online Python Compiler | **outil** | posée (4.a et 4.b) | **aucun dans le dépôt** |
+| `4e_C1.4`, bonus 2FA | Online Python | **outil** | posée | **aucun dans le dépôt** |
+| `4e_C6.2` jardin connecté | Vittascience ×3 | **outil** | déplacée au début ×3 | le cahier |
+| `3e_C7.1` capteur confort | Vittascience ×2 | **outil** | déplacée ×2 | le cahier |
+| `5e_C7.1` mini-projet | Vittascience | **outil** | déplacée | le cahier |
+| `3e_C9.1` variables et types | Vittascience ×4 | **outil** | déplacée ×4 | le cahier |
+| `5e_C9.1` boîte étiquetée | Vittascience ×3 | **outil** | déplacée ×3 | le cahier |
+| `3e_C9.2` station, page 2 | Vittascience Arduino ×2 | **outil** | posée ×2 | **Plan B** : planches de paliers, captures réelles, banc d'essai de la page |
+| `3e_C9.2` station (page unique) | Vittascience Arduino ×2 | **outil** | posée ×2 | Plan B, idem |
+| `4e_C9.1` jardin programmé | Vittascience | **outil** | posée | **Plan B** : le cahier et le banc d'essai de la page |
+| atelier CAO, 4 TP Onshape | (aucun lien : texte seul) | **outil** | classe posée sur l'avertissement existant | **aucun** — « la séance se reporte » |
+| `5e_C1.2` freinage | YouTube ×3 | **source** | — | « Si la vidéo ne s'ouvre pas » : un vrai vélo, une règle |
+| `4e_C1.4` séquence | YouTube (Cybermalveillance) | **source** | — | « Si la vidéo ne s'ouvre pas » : messages imprimés |
+| `3e_C9.2` station ×2 | store.arduino.cc | **source** | — | — |
+
+**Une mention existait déjà** — `.vitta-hors-ligne`, « 🌐 Cette activité a besoin d'Internet », posée
+par le moule `vittascience_embed.html` sur 13 activités. Mais **au milieu** de l'activité (bloc 7 sur
+16 dans `3e_C9.1`), là où se trouve le lien de l'éditeur. Elle est **déplacée au début**, juste après
+le titre, reformulée au standard, et le moule dit désormais où la placer. La note « Connexion Internet
+nécessaire pour l'éditeur » reste, elle, près du lien.
+
+Les **vidéos** sont des sources et non des outils : chacune vit dans un composant `.ressource` qui
+porte son `.ressource-repli`, écrit pour que l'activité se fasse **entière** sans elle. Le contrôle le
+reconnaît mécaniquement. Un éditeur, lui, est l'activité même ; son repli est un plan B.
+
+### Le compte
+
+| | pages refusées |
+|---|---:|
+| avant (mentions absentes ou mal placées) | **11** — 10 pages et le moule Vittascience |
+| prédiction | 0 |
+| **après** | **0** ✅ |
+
+**25 mentions sur 15 pages** : 20 dans les dix pages d'outils, 4 TP Onshape, 1 dans le moule.
+
+### Ce que les captures ont vu, et pas les contrôles
+
+- dans `3e_C1.5`, la mention était tombée **au-dessus** de la carte « 4. Données, sécurité et Python »
+  et non sous son titre : le bloc englobant n'avait pas de titre parmi ses premiers enfants. Déplacée ;
+- la mention de la station citait « 🔌 Pas de connexion ? » : le 🔌 s'affichait en **carré vide**.
+  Retiré du texte de la mention ;
+- à l'impression, le `<b>` de la mention prenait la couleur imprimée **de la page** : **4,43 : 1** dans
+  `4e_C9.1`. La règle d'impression couvre désormais le `<b>` : **16,38 : 1** au pire. À l'écran,
+  **7,28 : 1** au pire, sur 154 textes mesurés (la mention n'a pas de lien : `controle_contraste_liens`
+  ne la lit pas, elle a été mesurée à part).
+
+### L'enregistrement des réponses hors ligne — ce que la notice du kit dira
+
+Ouvert depuis un **fichier** (`file://`), comme le kit. Trois idiomes de mémoire : **autosauvegarde** à
+chaque saisie (`3e_C1.1`), **bouton** « Sauvegarder mon travail » (`3e_C1.5`), **`data-save`**
+(`5e_C1.3`). Pour chacun : remplir, recharger, relire ; **fermer le navigateur et le rouvrir** (même
+profil) ; ouvrir une **copie du fichier ailleurs sur le disque** (le kit recopié).
+
+| navigateur | recharger | fermer, rouvrir | copie ailleurs |
+|---|:---:|:---:|:---:|
+| Chromium (Playwright) | ✅ 3/3 | ✅ 3/3 | ✅ 3/3 |
+| Microsoft Edge (installé sur le poste) | ✅ 3/3 | ✅ 3/3 | ✅ 3/3 |
+| Firefox **réglé d'usine** (Gecko 150) | ✅ 3/3 | ✅ 3/3 | ❌ **0/3** |
+
+**Un piège évité de justesse.** Le premier passage de Firefox donnait 9/9 — parce que le Firefox de
+Playwright **force** `security.fileuri.strict_origin_policy` à `false`. Un Firefox d'élève l'a à
+`true`. Rejoué avec la valeur d'usine, la dernière colonne tombe à 0/3.
+
+**Ce que la notice doit dire :**
+1. Les réponses restent **dans ce navigateur, sur cet ordinateur**, même après l'avoir fermé.
+2. **Firefox** range la mémoire **par emplacement du fichier** : si le kit change de place (autre
+   dossier, clé USB qui change de lettre, E: puis F:), l'élève ne retrouve plus ses réponses — elles
+   ne sont pas perdues, elles attendent à l'ancien emplacement. **Chrome et Edge** partagent une seule
+   mémoire pour tous les fichiers locaux : les réponses suivent la copie.
+3. Corollaire pour Chrome et Edge : deux copies du kit sur **le même poste et la même session**
+   partagent les mêmes réponses. Sur un poste partagé, une session par élève.
+4. Chaque page garde sa propre clé : deux séquences ne s'écrasent pas.
+
+Firefox pour Playwright a été installé pour ce test (cache utilisateur, hors dépôt). Safari n'est
+**pas testé** (pas de Mac).
+
+### Mécanisation
+
+- `_outils/controle_hors_ligne.mjs` — sortie 0 / 1 / 2 (2 : rien vérifié, en panne) ; `--source`
+  pour la méthode a seule, qui dit alors ce qu'elle n'a pas vérifié. **~4 min 30** pour les 340 pages.
+- `_outils/tests_controle_hors_ligne.mjs` — **14 / 14** : Google Fonts → refusée ; `url(https://…)`
+  dans un `style` → refusé ; `fetch('https://…')` → refusé ; `<a href>` de source → accepté ; activité
+  Vittascience sans 🌐 → refusée ; la même **avec** la mention au début → acceptée ; la mention **après**
+  le lien → refusée ; du Python **affiché** avec `https://` → accepté ; vidéo avec repli → acceptée,
+  sans repli → refusée ; adresse **construite** en JavaScript → invisible à la source, **refusée par le
+  navigateur** ; dossier vide → sortie 2 ; lancé en sous-processus → il parle.
+- **Le banc a trouvé un défaut du contrôle** : la mention posée après le lien passait, parce qu'en
+  remontant jusqu'à `body` la section entière était prise pour « l'encadré » de la mention. Corrigé :
+  un encadré n'est jamais un bloc d'activité, et la mention doit précéder le lien.
+
+**CE QU'IL NE VOIT PAS** : une activité qui exige un outil en ligne **sans le lier** (les TP Onshape
+portent la mention à la main ; `3e_C4.3`, `5e_C4.1`, `3e_C6.1`, `4e_C6.1`, `5e_C6.1` nomment
+« Vittascience/mBlock » comme **variante** matérielle, `tp_mbot2_python` dit « teste dans mBlock » —
+jugés en lisant : pas un outil dont l'activité dépend, mBlock existant aussi en logiciel installé) ;
+un domaine d'outil absent de sa liste ; une requête déclenchée par un geste autre qu'un onglet ou un
+repli ; la pertinence du repli ; les fichiers non HTML.
+
+### Contrôles
+
+- `controle_hors_ligne.mjs` : **340 pages · a 0 · b 0 · 0 refusée** (11 avant) ✅ · banc **14 / 14** ✅
+- `controle_contraste_liens.mjs` : **0** à l'écran, **0** une fois cliqués, **0** sur papier ✅ ; mention
+  mesurée à part : **7,28 : 1** écran, **16,38 : 1** impression au pire ✅
+- `controle_impression.mjs` : **338 pages, 0 refusée** ✅ · `controle_verrous.mjs` ✅
+- batterie : les 17 `controle_*.py` à 0 (dont `controle_gestes_outil` : les encarts touchés restent à
+  leur porte) ; `verif_regles_audit.py` **285** inchangé ; bancs de `_outils/` inchangés
+  (`tests_pointeurs_codes` 29 / 45 **identique sur main**)
+- bancs des lots touchés, **identiques sur main** : `4e_C6.2` 35/35 · `3e_C9.1` 35/35 · `3e_C9.2`
+  135/135 · `4e_C9.1` 61/61 · `5e_C9.1` 44/44 · atelier CAO 21/21 · `3e_C7.1` et `5e_C7.1` 34/37 — les
+  trois mêmes échecs sur main, dans leurs QCM (4 propositions, explications, réfutations)
+- console **vide** ; **0 px** de débordement à 390 px
