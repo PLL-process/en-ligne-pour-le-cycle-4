@@ -18495,3 +18495,115 @@ plus a levé une exception, et `verif_regles_audit.py` est resté **muté sur le
   refusée** ✅
 - périmètre : `_outils/` et ce journal. **AUCUNE page n'est modifiée** — ce lot écrit la règle,
   la mécanise et mesure ; la remédiation viendra, et commencera par le thème 1.
+
+## 21/09/2026 — Règle d'or n°304, première vague : la famille C1 (thème 1)
+
+> Cinq séquences : `3e_C1.1`, `3e_C1.5`, `4e_C1.1`, `4e_C1.4`, `5e_C1.5`. Le bloc d'ouverture
+> s'appelle désormais, dans les cinq, **« 🔄 Avant de commencer : ce que je vérifie »** — titre
+> choisi par Pascal. Les quatre autres séquences refusées du thème 1 (`3e_C2.1`, `4e_C2.1`,
+> `3e_C3.1`, `4e_C3.1`) font la vague suivante et ne sont pas touchées.
+
+### Ce que devient le bloc
+
+Le paragraphe qui affirmait le passé disparaît (« En 4e, à Tsinghua… », « L'an dernier, à
+Chengdu… », « Depuis la 5e… », « Avec Chengdu… tu as appris »). À sa place, **trois lignes** par page,
+chacune :
+
+- une vraie case `<input type="checkbox">` reliée à son `<label>` — on coche en cliquant sur la phrase ;
+- une phrase « Je sais… » en mots d'élève, suivie du code **du niveau précédent** (`4e_` pour une 3e,
+  `5e_` pour une 4e, « cycle 3 » pour la 5e) ;
+- dessous, **toujours visible**, « → pas encore sûr·e ? » et un lien vers une synthèse élève ou un
+  lexique **ouvert et lu avant d'être cité**, avec la partie à relire nommée dans le lien.
+
+Aucun score, aucun compteur, aucun message : vérifié en comparant le texte du bloc avant et après
+avoir coché — **identique** sur les cinq pages. Les paragraphes « Cette année, ce qui change » et
+« Tu arrives maintenant ? » sont réécrits au présent quand ils disaient le passé (« ne… plus »,
+« Tu n'étais pas là ? », « Tu n'as pas fait la 5e ici ? »).
+
+### La mémoire : quatre idiomes, et un piège
+
+| page | idiome de la mémoire | ce qu'il a fallu faire |
+|---|---|---|
+| `3e_C1.1`, `4e_C1.1` | `collect()` ne lit que `textarea` et `fieldset.qcm-groupe` | les cases du bloc y entrent par leur id ; `restore()` sait rendre un booléen. `val()` **n'est pas touché** : les tables de réponses attendues s'en servent |
+| `3e_C1.5` | **positionnelle** : `auto_N` dans l'ordre de la page, au bouton | les cases ont un id **et n'avancent pas le compteur** |
+| `4e_C1.4` | `input[id]`, clé `cyber4e`, écouteur global | rien : une case munie d'un id y entre |
+| `5e_C1.5` | `input` ayant un id, rangé dans `checks` | rien : même raison |
+
+**Le piège de `3e_C1.5`** est celui de #409 : les cases sont posées **en tête de page**. Comme le
+compteur avançait aussi pour les champs qui ont déjà un id, trois cases de plus auraient décalé
+**toutes** les clés `auto_N` de trois, et un élève aurait retrouvé ses réponses sous d'autres
+questions. Mesuré par témoins — trois réponses écrites dans la version d'avant, relues dans celle
+d'après, même mémoire — puis prouvé par mutation :
+
+| | `auto_15` (problématique) | `auto_36` (document de référence) | `auto_56` (synthèse) |
+|---|---|---|---|
+| avec l'exclusion | ✔ même question | ✔ même question | ✔ même question |
+| exclusion retirée | ✘ ailleurs | ✘ ailleurs | ✘ ailleurs |
+
+**3 / 3, puis 0 / 3 : le contrôle mord.** Une première version du critère « même question » (le
+texte du conteneur) ne donnait que 2 / 3 sous mutation : deux champs d'une même section partagent
+ce texte. Le critère retenu est le **rang du champ** parmi ceux de la page hors bloc.
+
+**Vérifié comme un élève**, dans Chromium à 390 px, page par page : cocher la 1re et la 3e ligne
+**au clic sur la phrase**, recharger, relire (1re et 3e cochées, 2e non), effacer, relire (tout
+décoché). **35 / 35** vérifications, console vide, aucune boîte modale.
+
+- « Effacer » n'existe que sur les deux pages Tsinghua (`🗑 Effacer ma sauvegarde`, deux clics) ;
+  sur `3e_C1.5`, `4e_C1.4` et `5e_C1.5`, **il n'y a pas de bouton**, et l'effacement a été fait en
+  vidant la mémoire du navigateur. `5e_C1.5` promet pourtant « Tu peux tout effacer quand tu veux » :
+  promesse antérieure à ce lot, sans moyen. Signalé, pas corrigé.
+- `3e_C1.5` n'enregistre qu'au bouton « Sauvegarder mon travail », comme tous ses autres champs :
+  une case cochée sans ce clic se perd au rechargement. C'est l'idiome de la page ; il n'a pas été
+  changé pour trois cases.
+
+### L'impression, rattrapée
+
+Premier passage : `controle_impression` à **0 page refusée**, mais le relevé des seuls cinq blocs
+montrait **17 textes nouveaux sous 4,5 : 1** (1,13 à 1,21) sur `3e_C1.5`, `4e_C1.4` et `5e_C1.5`.
+Ces pages foncent à l'impression une **liste de sélecteurs** (`.deja`, `.change`, `.filet`…) ; les
+classes neuves n'y étaient pas et s'imprimaient en couleur d'écran sur papier blanc. Une règle
+`@media print` du bloc leur donne l'encre de `.deja`. Après : **7 / 54 / 18 / 89 / 125** textes
+faibles comptés, contre **7 / 54 / 18 / 89 / 126** sur `main` — l'ancien bloc de `5e_C1.5` en
+imprimait un lui-même.
+
+### Le compte
+
+| | manquements |
+|---|---:|
+| base sur `main` à #414 | **294** |
+| prédiction | 289 |
+| **obtenu** | **289** ✅ |
+
+**−5, exactement : les cinq n°304.** Aucun autre manquement ne bouge. Mais **trois états changent
+sans changer le compte**, et chacun dit quelque chose d'un outil :
+
+- **n°26 sur `3e_C1.1` et `4e_C1.1` : ✔ → « sans objet ».** La n°26 exige un billet d'entrée sans
+  note quand la page « s'appuie sur une année antérieure », et elle le reconnaît… à « en 4e » ou
+  « l'an dernier » — **exactement les phrases que la n°304 interdit**. Les deux billets sont
+  toujours là. À mesure que la n°304 avancera, la n°26 cessera de s'appliquer partout : son
+  déclencheur est à revoir (le bloc d'ouverture lui-même, ou ses codes d'un niveau antérieur).
+  `_outils/` relève du thème 2.
+- **n°67 sur `5e_C1.5` : ✔ → « aucune production annoncée ».** Le seul verbe de production que la
+  règle trouvait dans cette page était « **recense** »… dans la phrase supprimée (« comment on la
+  recense »). Le vert tenait à une coïncidence ; la page porte 46 champs et des consignes de
+  production que la liste de verbes ne connaît pas.
+
+### Contrôles
+
+- `verif_regles_audit.py` : **60 séquences · 289 manquements** (294 avant, **−5**) ✅ —
+  diff règle par règle : les cinq n°304 passent au ✔, plus les trois changements d'état ci-dessus
+- `tests_verif_regles_audit.py` : **50 / 50** ✅
+- `controle_formulations.py` : **80 citations, 0 écart** ✅
+- `controle_contraste_liens.mjs` : **0** à l'écran, **0** une fois cliqués, **0** sur papier (340 pages,
+  1 304 liens) ✅
+- `controle_impression.mjs` : **338 pages, 0 refusée** ✅
+- batterie : les dix-sept `controle_*.py` à 0 ; `controle_couverture.py` et `pointeurs_codes.py`
+  **identiques à `main`** — les codes d'un niveau antérieur cités dans le bloc ne comptent pour
+  aucune couverture
+- bancs : `3e_C1.1` **50 / 50** · `4e_C1.1` **42 / 42** · `5e_C1.5` séquence **38 / 38**, QCM
+  **34 / 34** — identiques avant et après. `3e_C1.5` et `4e_C1.4` **n'ont pas de banc** (déjà
+  signalé en #411) : la vérification « comme un élève » ci-dessus en tient lieu pour ce lot
+- console : **vide** sur les cinq pages, à 1280 et 390 px ; **0 px** de débordement horizontal
+- captures du bloc avant/après, 1280 et 390 px, dans la PR
+- `build_audit.py` régénère `audit_couverture.*` avec des écarts sur `3e_C3.1` et `3e_C7.4`,
+  **identiques sans ce lot** : dérive antérieure, non embarquée. `make_index.py` : aucun changement.

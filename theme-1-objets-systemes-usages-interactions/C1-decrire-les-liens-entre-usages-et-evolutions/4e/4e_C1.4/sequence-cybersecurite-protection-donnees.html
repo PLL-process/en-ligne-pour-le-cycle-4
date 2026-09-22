@@ -406,7 +406,7 @@
   .etayage>summary{cursor:pointer;padding:9px 13px;font-weight:600}
   .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
   #billet-entree ol{margin:.4em 0 .4em 1.2em}
-  @media print{.toolbar{display:none}}.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.ico{font-style:normal;margin-right:.35em}.encadre-ia{border-left:5px solid #c2410c}
+  @media print{.toolbar{display:none}}.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.rappel-spiralaire .verif{list-style:none;margin:.4em 0 .6em;padding:0}.rappel-spiralaire .verif li{margin:.55em 0}.rappel-spiralaire .verif .ligne{display:flex;align-items:flex-start;gap:.6em}.rappel-spiralaire .verif input[type=checkbox]{flex:none;width:18px;height:18px;margin:.2em 0 0;accent-color:#61dafb;cursor:pointer}.rappel-spiralaire .verif label{cursor:pointer}.rappel-spiralaire .verif .code-verif{display:inline-block;font-size:.82em;opacity:.85;white-space:nowrap;margin-left:.3em}.rappel-spiralaire .verif .rattrapage{margin:.2em 0 0 calc(18px + .6em);font-size:.93em}.rappel-spiralaire .verif-consigne{margin:.2em 0 .3em;font-size:.95em}@media print{.rappel-spiralaire .verif-consigne,.rappel-spiralaire .verif label,.rappel-spiralaire .verif .code-verif,.rappel-spiralaire .verif .rattrapage{color:#041a40!important;opacity:1!important}}.ico{font-style:normal;margin-right:.35em}.encadre-ia{border-left:5px solid #c2410c}
 /* ── Séances — posé par decouper.py ─────────────────────────────────────── */
 .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px auto 14px;max-width:1000px;padding:0 16px}
 .seance-tab{flex:1;min-width:160px;padding:10px 8px;border-radius:10px;background:#0b1b39;
@@ -557,10 +557,24 @@
   <div class="section panel">
     <h1>💻 Bienvenue dans la cybersécurité — Séquence 4e 🔐</h1>
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
-  <h2 id="rap-spi">&#128260; Ce que tu as déjà fait</h2>
-  <p class="deja">En 5e, à Chengdu, tu as <b>manipulé de vraies données</b> : collectées, triées, rangées, et tu as tracé leur chemin du capteur jusqu'à l'écran. Tu as même dit qui avait le droit de les lire.</p>
-  <p class="change"><b>Cette année, ce qui change&nbsp;:</b> on prend le problème par l'autre bout : <b>qui pourrait les lire sans en avoir le droit</b>, et comment on l'en empêche. Tu ne vas plus seulement ranger l'information, tu vas la <b>protéger</b>.</p>
-  <p class="filet">Tu n'as pas fait la 5e ici ? Ce qu'il faut savoir tient en une phrase : tes données passent par des machines qui ne t'appartiennent pas.</p>
+  <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
+  <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
+  <ul class="verif">
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais pourquoi un mot de passe ne se prête pas, même à un ami. <span class="code-verif">5e_C1.5</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../5e/5e_C1.5/synthese_eleve_5e_C1.5-C1.6.html">la synthèse 5e_C1.5 et C1.6, « Un mot de passe qui a été dit n'est plus un mot de passe »</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais qu'une donnée peut désigner quelqu'un, même sans son nom. <span class="code-verif">5e_C1.6</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../5e/5e_C1.5/synthese_eleve_5e_C1.5-C1.6.html">la synthèse 5e_C1.5 et C1.6, « Ce n'est pas un élément qui identifie, c'est leur combinaison »</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_3"><label for="ouv_3">Je sais qu'une donnée passe par plusieurs machines et plusieurs personnes avant d'arriver à l'écran. <span class="code-verif">5e_C1.3</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../5e/5e_C1.1/Synthèses/synthese_eleve_5e_C1.1-C1.6.html">relis la partie 5 de la synthèse 5e_C1.1 à C1.6, « Le chemin de la donnée, et les droits »</a></p>
+    </li>
+  </ul>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> on se demande <b>qui pourrait lire tes données sans en avoir le droit</b>, et comment on l'en empêche. Il ne s'agit pas seulement de ranger l'information : il faut la <b>protéger</b>.</p>
+  <p class="filet">Ce qu'il faut garder en tête tient en une phrase : tes données passent par des machines qui ne t'appartiennent pas.</p>
 </section>
 
 <div class="toolbar">
