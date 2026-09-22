@@ -18856,3 +18856,36 @@ repli ; la pertinence du repli ; les fichiers non HTML.
   135/135 · `4e_C9.1` 61/61 · `5e_C9.1` 44/44 · atelier CAO 21/21 · `3e_C7.1` et `5e_C7.1` 34/37 — les
   trois mêmes échecs sur main, dans leurs QCM (4 propositions, explications, réfutations)
 - console **vide** ; **0 px** de débordement à 390 px
+
+## 22/09/2026 — 3e_C1.1 : la clôture rentre dans la séance 5 (correctif urgent, thème 1)
+
+**Le défaut, vu par Pascal la veille d'une séance.** Dans `sequence_3e_C1.1-C1.4_tsinghua_feux.html`,
+les blocs de clôture — 🎁 Bonus, 🏁 Bilan, 🧠 Comment j'ai travaillé, 📍 Je me positionne, 🧠 Prêt·e à
+t'entraîner — étaient écrits **après** la fermeture du panneau `#s5` et du conteneur des panneaux.
+Toujours visibles, donc : séance 1 ouverte, ils suivaient l'activité 1, et l'élève croyait la
+séquence finie et se positionnait sur C1.3-C1.4 avant de les avoir travaillés.
+
+**La correction, la plus petite possible.** Les deux balises fermantes (`</section>` du panneau,
+`</div>` du conteneur) passent après le QCM : les blocs sont désormais **dans** `#s5`, dans le même
+ordre. Le diff tient en **5 lignes ajoutées, 3 retirées**, dont un commentaire qui dit pourquoi.
+Pas de nouvel onglet.
+
+**Vérifié dans Chromium, à 390 px — 11 / 11 :**
+- **mémoire** : la page enregistre chaque champ par son **id explicite** (`bilan2`, `meta1`, `pos1`…),
+  jamais par position. Témoins : **49 champs** remplis dans l'**ancienne** version (dont 5 du bilan),
+  **49 retrouvés** au même id dans la nouvelle, avec la même mémoire ;
+- séances 1 à 4 ouvertes : **aucun** des cinq blocs visible ; séance 5 : **les cinq**, après
+  l'activité 5, dans l'ordre ; le bilan et le bouton du QCM sont **dans** `#s5` ;
+- le bouton du QCM réécrit toujours son libellé (piège de #407) : 0 activité validée → « Commencer
+  par 10 questions », 2 → « Réviser ce que j'ai déjà travaillé (3 compétence(s)) », 5 → « Lancer le
+  QCM complet (30 questions) » ;
+- **le test mord** : rejoué sur l'ancienne version, il refuse les séances 1 à 4 (6 / 11) ;
+- console vide, aucune boîte modale.
+
+**Contrôles** : `verif_regles_audit.py` **285**, inchangé comme prédit (l'ordre dans le fichier ne
+bouge pas) · banc du lot **50 / 50** · les 17 `controle_*.py` à 0 · `controle_formulations` 0 écart ·
+`controle_impression` **338 pages, 0 refusée** (l'impression affichait déjà tous les panneaux) ·
+`controle_contraste_liens` 0 · `controle_hors_ligne` et `controle_verrous` verts.
+
+**Même défaut ailleurs ?** Non mesuré ce soir — à vérifier sur les autres pages à onglets de séance
+avant la prochaine vague.
