@@ -19274,3 +19274,56 @@ inchangé** ; 0 champ sans id concerné aujourd'hui. Une seule ligne de détail 
 23 à 9 selects « sans étiquette ». Les 14 autres étaient **dans** un `<label>` et comptés à tort ;
 la règle reste en échec pour les 9 vrais. Banc **56 / 56** (+6 cas) ; mutation « remettre le
 `continue` » → 2 cas tombent.
+
+## 22/09/2026 — n°306 D5, les pages : 4e_C1.4, 3e_C1.5, 3e_C1.1 ne montrent plus rien hors de leurs séances
+
+Ce lot suit la PR A (défaut D5). Chaque page est corrigée par son conteneur, puis vérifiée onglet par
+onglet : tout ce qui est visible hors panneau est listé.
+
+**4e_C1.4.**
+a) Un `</section>` placé après la mise en situation du bloc 1 fermait `#s1` (et `#sec1`) ; le `</div>`
+« orphelin » plus bas était celui qui devait fermer `#sec1`. Le `</section>` fautif est retiré et
+`#s1` se ferme juste avant `#shors`. **Preuve, JavaScript coupé** (le DOM tel que parsé : l'en-tête
+animé et le mélange des étiquettes changent à chaque chargement, même sur main) : enfants de `<body>`
+45 → 14 ; **31 / 31** éléments sortis de `<body>` retrouvés à l'identique dans `#s1` ; le seul élément
+nouveau dans `<body>` est `#s1` ; `s2`, `s3` et `shors` sont identiques au caractère près.
+b) La zone 3.c n'avait pas d'id et sa réponse était perdue. Mesuré : avant, `""` au rechargement ;
+après (`id="q3c"`), la réponse revient.
+c) « 🧠 Métacognition (non notée) » (`meta1`-`meta3`, ids inchangés) passe dans la clôture de `s3`, juste
+après le bilan. « Ma stratégie pour la prochaine séance » devient « …prochaine séquence », dans le
+libellé comme dans l'`aria-label`.
+d) « 📄 Synthèse & Export » est retirée : elle n'exportait rien et s'adressait à un adulte. Son `<div>`
+jamais fermé englobait la modale de fin et les scripts, qui reviennent directement dans `<body>`.
+e) Faits non sourcés retirés (règle de Pascal : aucun fait dans une page élève sans source primaire),
+liste complète dans la PR. Scénarios « Imagine… » gardés ; « inspiré de faits réels » ôté du titre.
+Le corrigé du Bonus qui cite la notice RGPD du GAR, avec son lien, est gardé.
+
+**3e_C1.5.**
+f) Synthèse et métacognition → Autoévaluation → Conclusion et travail à faire : dans la clôture de `s3`,
+entre le bilan et le QCM. 3 / 3 retrouvés à l'identique dans `#s3` (JavaScript coupé). Une ligne
+« # Ce code gère tous les boutons… », texte nu visible sous chaque séance, redevient un commentaire.
+g) Les 42 zones de la n°34 sont reliées par `aria-labelledby` à l'élément qui porte leur question
+(problématique et situation : titre + énoncé ; défis D4, D8-D11 : le paragraphe « Dn – »). **Texte
+visible identique au caractère** ; n°34 repasse pour la page.
+h) Travail à faire (TMS), confronté mot pour mot à l'INRS, « Travail sur écran. Prévention des
+risques » : 50 à 70 cm ✓ (« généralement de 50 cm à 70 cm ») ; genoux > 90° ✓ (« supérieur à
+90° ») ; ≈110° pour le dos : absent, chiffre retiré ; pause toutes les 45–60 min : absent (l'INRS dit
+« idéalement toutes les 30 minutes »), ligne retirée. La source est citée sous le bloc. Vouvoiement
+non touché.
+
+**3e_C1.1.**
+i) Le billet d'entrée passe en tête de `#s1`, comme le prévoit déjà sa liste TACHES (tâche 0). Test
+mémoire : **3 / 3** `be_*` cochés dans l'ancienne version retrouvés dans la nouvelle ; coché dans la
+nouvelle, conservé au rechargement.
+
+### Vérifié
+- Tout ce qui est visible hors panneau, onglet par onglet (390 px) : 3e_C1.1 → le tableau de bord
+  n°30 seul ; 3e_C1.5 et 4e_C1.4 → rien, hors l'avis de l'onglet Hors parcours. 0 erreur JS.
+  Débordements préexistants et identiques sur main : 3e_C1.1 s5 49 px, 4e_C1.4 shors 328 px.
+- Mémoire ancien → nouveau : 3e_C1.5 **85 / 85** (`saveProgress4`) ; 4e_C1.4 **131 / 131**, plus `q3c`.
+- `controle_squelette` : refus **52 → 49**, D5 **23 → 20** (prédit 22 → 19 ; même écart d'un,
+  book-train, cf. PR A), métacognition **31** et hypothèse **5** inchangées. Les trois pages : 0 défaut.
+- `verif_regles_audit` **286 → 285** (n°34 de 3e_C1.5).
+- Bancs : 3e_C1.1 50 / 50 · squelette 25 / 25 · verif 56 / 56. Les 17 `controle_*.py` à 0 ;
+  impression 338 pages, 0 refusée ; relevé des trois pages : aucun texte nouvellement signalé
+  (4e_C1.4 : 90 → 84). Contraste des liens, verrous, hors ligne : verts.
