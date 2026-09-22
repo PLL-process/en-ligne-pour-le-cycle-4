@@ -88,7 +88,7 @@
     .seance-panel{display:block!important}.card{background:#fff;border-color:#999}
     h1,h2,h3{color:#111}}
   @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
-.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}
+.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.rappel-spiralaire .verif{list-style:none;margin:.4em 0 .6em;padding:0}.rappel-spiralaire .verif li{margin:.55em 0}.rappel-spiralaire .verif .ligne{display:flex;align-items:flex-start;gap:.6em}.rappel-spiralaire .verif input[type=checkbox]{flex:none;width:18px;height:18px;margin:.2em 0 0;accent-color:#61dafb;cursor:pointer}.rappel-spiralaire .verif label{cursor:pointer}.rappel-spiralaire .verif .code-verif{display:inline-block;font-size:.82em;opacity:.85;white-space:nowrap;margin-left:.3em}.rappel-spiralaire .verif .rattrapage{margin:.2em 0 0 calc(18px + .6em);font-size:.93em}.rappel-spiralaire .verif-consigne{margin:.2em 0 .3em;font-size:.95em}@media print{.rappel-spiralaire .verif-consigne,.rappel-spiralaire .verif label,.rappel-spiralaire .verif .code-verif,.rappel-spiralaire .verif .rattrapage{color:#041a40!important;opacity:1!important}}
 
 
 @media print{
@@ -143,10 +143,24 @@
 <h1>🚲 Hangzhou — quelle flotte de vélos pour la ville&nbsp;?</h1>
 <p class="sous">Écrire les critères, comparer les incidences, choisir les instruments.</p>
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
-  <h2 id="rap-spi">&#128260; Ce que tu as déjà fait</h2>
-  <p class="deja">L'an dernier, à Shanghai, tu as <b>démonté par la pensée</b> trois véhicules pour dire de quoi ils sont faits, tu as <b>mesuré pour de vrai</b> en suivant un protocole, tu as construit un <b>indicateur multicritère au tableur</b>, et tu as tranché en assumant ta décision.</p>
-  <p class="change"><b>Cette année, ce qui change&nbsp;:</b> le besoin ne t'est plus donné tout fait : il arrive <b>flou</b>, en mots. Ton travail est de le transformer en <b>caractéristiques mesurables</b> — sans quoi aucune comparaison n'est possible.</p>
-  <p class="filet">Tu n'étais pas là ? L'essentiel : on ne compare que ce qui se mesure, et mesurer suppose d'avoir choisi quoi mesurer.</p>
+  <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
+  <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
+  <ul class="verif">
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais dire de quoi un objet est fait, d'où vient son énergie, et comment il traite l'information. <span class="code-verif">5e_C3.1</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../5e/5e_C3.1/Synthèses/synthese_eleve_5e_C3.1-C3.4.html#partie-1">relis la partie 1 de la synthèse 5e_C3.1 à C3.4, « Caractériser un objet technique »</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais pourquoi un protocole garde les mêmes conditions d'un essai à l'autre. <span class="code-verif">5e_C3.4</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../5e/5e_C3.1/Synthèses/synthese_eleve_5e_C3.1-C3.4.html#partie-3">relis la partie 3 de la synthèse 5e_C3.1 à C3.4, « Mesurer avec un protocole »</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_3"><label for="ouv_3">Je sais qu'une solution qui rate une seule exigence est écartée, même si elle est excellente ailleurs. <span class="code-verif">5e_C3.3</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../5e/5e_C3.1/Synthèses/synthese_eleve_5e_C3.1-C3.4.html#partie-4">relis la partie 4 de la synthèse 5e_C3.1 à C3.4, « Choisir »</a></p>
+    </li>
+  </ul>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> le besoin n'est pas donné tout fait : il arrive <b>flou</b>, en mots. Ton travail est de le transformer en <b>caractéristiques mesurables</b> — sans quoi aucune comparaison n'est possible.</p>
+  <p class="filet">L'essentiel, pour toute la séquence : on ne compare que ce qui se mesure, et mesurer suppose d'avoir choisi quoi mesurer.</p>
 </section>
 
 <div class="badges">
@@ -870,6 +884,8 @@ window.__exp = window.__exp || {};
 function collect(){
   const o={inputs:{}, valid:window.__valid, exp:window.__exp};
   document.querySelectorAll("textarea,fieldset.qcm-groupe").forEach(e=>{ if(e.id) o.inputs[e.id]=val(e.id); });
+  // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
+  document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(e=>{ if(e.id) o.inputs[e.id]=e.checked; });
   return o;
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){} }
@@ -880,7 +896,8 @@ function restore(){
     const e=$(id); if(!e) return;
     if(e.tagName==="FIELDSET"){
       e.querySelectorAll("input[type=radio]").forEach(r=>{ r.checked = (r.value===v); });
-    } else e.value=v;
+    } else if(e.type==="checkbox") e.checked = (v===true);
+    else e.value=v;
   });
   window.__valid=o.valid||{}; window.__exp=o.exp||{};
 }
