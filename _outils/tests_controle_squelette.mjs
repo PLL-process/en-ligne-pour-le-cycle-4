@@ -18,6 +18,15 @@
  *   · le billet d'entrée caché dans le panneau 2                    → refusé (D4)
  *   · la vraie page 3e_C1.1, corrigée en #418                        → acceptée
  *   · un dossier sans séquence → sortie 2 ; lancé en sous-processus → il parle
+ *
+ * LA MÉTACOGNITION, reconnue à sa fonction (correction du 22/09/2026) — jugée sur les
+ * manques « à rédiger » que rend juger(). Chaque voie de reconnaissance a sa paire : avec
+ * son marqueur → reconnue ; marqueur neutralisé → signalée « pas de métacognition ».
+ *   · voie 1, le titre « Comment j'ai travaillé »       · sans titre ni question → signalée
+ *   · voie 2, une question de démarche, SANS le titre   · question de contenu → signalée
+ *     (« Quel chiffre t'a le plus surpris, et pourquoi ? » — la forme de 4e_C1.1)
+ *   · voie 3, « Je dois encore revoir ____ » (1re personne) · « J'ai appris que ____ » → signalée
+ *   · exclusion : une question sur l'HYPOTHÈSE, même avec « surpris » → pas une métacognition
  * Usage : node _outils/tests_controle_squelette.mjs   Sortie : 0 si tout passe.
  */
 import fs from 'fs';
@@ -25,7 +34,8 @@ import os from 'os';
 import path from 'path';
 import { spawnSync } from 'child_process';
 import { fileURLToPath } from 'url';
-import { main } from './controle_squelette.mjs';
+import { chromium } from 'playwright';
+import { main, juger } from './controle_squelette.mjs';
 
 const ICI = path.dirname(fileURLToPath(import.meta.url));
 const OUV = `<section class="rappel-spiralaire"><h2>🔄 Avant de commencer : ce que je vérifie</h2></section>
@@ -93,6 +103,31 @@ for (const [nom, attendu, html] of CAS) {
   fs.writeFileSync(path.join(d, 'sequence_banc.html'), CAS[1][2]);
   const r = spawnSync(process.execPath, [path.join(ICI, 'controle_squelette.mjs'), d], { encoding: 'utf8', env: process.env });
   dire(r.status === 0 && /séquence\(s\) ouvertes/.test(r.stdout), `lancé en sous-processus : sortie ${r.status}, ${r.stdout.length} caractères écrits`);
+}
+
+// ── la métacognition : chaque voie mord ──
+{
+  const B = (x) => `<section class="card"><h2>🏁 Bilan</h2><p>Relis ton hypothèse de départ.</p>${x}<h3>📍 Je me positionne</h3>${POS}</section>`;
+  const META = [
+    ['voie 1 : le titre « Comment j\'ai travaillé »', true, B('<h3>🧠 Comment j\'ai travaillé</h3><textarea></textarea>')],
+    ['voie 1 neutralisée : ni titre ni question', false, B('<textarea></textarea>')],
+    ['voie 2 : question de démarche SANS le titre (forme de 4e_C1.1)', true, B('<label for="q">🧠 Quel chiffre de cette séquence t\'a le plus surpris, et pourquoi ?</label><textarea id="q"></textarea>')],
+    ['voie 2 neutralisée : question de contenu', false, B('<label for="q">Quelle est la différence entre une fonction et une solution ?</label><textarea id="q"></textarea>')],
+    ['voie 3 : « Je dois encore revoir ____ »', true, B('<p>Ce que je dois encore revoir :</p><p>« Je dois encore revoir ____, parce que ____. »</p>')],
+    ['voie 3 neutralisée : « J\'ai appris que ____ »', false, B('<p>Ce que j\'ai appris :</p><p>« J\'ai appris qu\'une donnée ____. »</p>')],
+    ['exclusion : question sur l\'hypothèse, même « surprise »', false, B('<label for="q">Ton hypothèse de départ t\'a-t-elle surpris ?</label><textarea id="q"></textarea>')],
+  ];
+  const nav = await chromium.launch();
+  const ctx = await nav.newContext();
+  for (const [nom, attendu, bilan] of META) {
+    const d = fs.mkdtempSync(path.join(tmp, 'meta-'));
+    const f = path.join(d, 'sequence_banc.html');
+    fs.writeFileSync(f, page(OUV + BILLET + ACT(1) + BONUS + bilan + QCM, false));
+    const r = await juger(ctx, f);
+    const reconnue = !r.aRediger.includes('pas de métacognition');
+    dire(reconnue === attendu, `${nom} → ${attendu ? 'reconnue' : 'signalée « pas de métacognition »'}${r.meta.questions.length ? ' — « ' + r.meta.questions[0].slice(0, 50) + ' »' : ''}`);
+  }
+  await nav.close();
 }
 fs.rmSync(tmp, { recursive: true, force: true });
 console.log(`\n${ok} / ${ok + ko}`);

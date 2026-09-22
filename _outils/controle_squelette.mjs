@@ -16,7 +16,8 @@
  *     billet d'entrée.
  *   SÉANCES : chacune porte ses activités.
  *   CLÔTURE, visible SEULEMENT à la dernière séance : Bonus → Bilan (retour à
- *     l'hypothèse, « Comment j'ai travaillé », « Je me positionne ») → renvoi au QCM.
+ *     l'hypothèse, métacognition, « Je me positionne ») → renvoi au QCM. La
+ *     métacognition PEUT s'intituler « Comment j'ai travaillé » ; elle n'y est pas obligée.
  *   Page à onglets : la clôture est dans le dernier panneau de séance (ou un onglet final
  *   dédié), jamais hors des panneaux. On ne se positionne pas avant d'avoir travaillé.
  *
@@ -28,7 +29,14 @@
  *     milieu d'un exercice de 3e_C1.5 n'en est pas un — il a trompé audit_cloture) ;
  *   · positionnement : un groupe de choix (≥ 3 options) dont l'intitulé porte un code du
  *     référentiel, ou un titre « Je me positionne / auto-positionnement / je me situe » ;
- *   · Bilan : un titre « bilan » ; « Comment j'ai travaillé » : son titre ;
+ *   · Bilan : un titre « bilan » ;
+ *   · métacognition : une FONCTION, pas un titre (correction du 22/09/2026) — dans le
+ *     bilan, une question sur la démarche de l'élève : ce qui l'a surpris, où il a hésité
+ *     ou failli se tromper, ce qui lui a coûté un effort, l'aide qu'il a prise, ce qu'il
+ *     referait autrement, ce qu'il doit encore revoir. Adressée à lui (« as-tu hésité ? »)
+ *     ou dite par lui (« je dois encore revoir ____ »). Le titre « Comment j'ai travaillé »
+ *     est un signe parmi d'autres. Exclus : le retour à l'hypothèse, les questions de
+ *     contenu, les options d'une échelle de positionnement ;
  *   · renvoi au QCM : un lien vers une page qcm du dossier, ou « Prêt·e à t'entraîner ».
  * Pour chaque état (page ouverte, puis chaque onglet cliqué) : quels blocs sont VISIBLES,
  * et à quelle hauteur. Méthode b, confrontée : le panneau DOM qui contient chaque bloc.
@@ -39,7 +47,7 @@
  *   D3  à l'écran de clôture, l'ordre n'est pas Bonus → Bilan → QCM ;
  *   D4  un bloc d'ouverture présent n'est pas visible au premier écran.
  * SIGNALÉ, non refusé (« à rédiger », pour la révision) : Bonus sans champ ou sans
- * corrigé, bilan sans retour à l'hypothèse, sans « Comment j'ai travaillé », sans
+ * corrigé, bilan sans retour à l'hypothèse, sans métacognition, sans
  * positionnement ; ordre des blocs d'ouverture différent du squelette.
  *
  * CE QUE CE CONTRÔLE NE VOIT PAS
@@ -125,15 +133,38 @@ function releverBlocs() {
   // ── « à rédiger » : ce que contient la clôture ──
   const bonusH = blocs.find((b) => b.type === 'Bonus');
   const bonusC = bonusH && conteneur(bonusH.el);
-  const bilanH = blocs.find((b) => b.type === 'Bilan');
+  const bilanH = blocs.find((b) => b.type === 'Bilan') || blocs.find((b) => b.type === 'Je me positionne');
   const bilanC = bilanH && (bilanH.el.closest('section, article, .card') || conteneur(bilanH.el));
+  // ── La MÉTACOGNITION, reconnue à sa fonction ──
+  // Une question du bilan, adressée à l'élève, qui porte sur SA DÉMARCHE : ce qui l'a
+  // surpris, où il a hésité ou failli se tromper, ce qui lui a coûté un effort, l'aide qu'il a
+  // prise, ce qu'il referait autrement. Le titre « Comment j'ai travaillé » en est un signe
+  // parmi d'autres, pas la condition : l'exiger comptait 54 bilans « sans métacognition »,
+  // dont 4e_C1.1, qui demande « Quel chiffre t'a le plus surpris, et pourquoi ? ».
+  // Exclus : le retour à l'hypothèse (compté à part), les questions de contenu, et les
+  // options d'une échelle de positionnement (elles décrivent un niveau, elles ne questionnent pas).
+  const DEMARCHE = /surpris|étonn|hésit|failli|difficile|difficulté|effort|bloqu|coincé|t.en es-tu sorti|t.y es-tu pris|aide as-tu|quelle aide|t.a aidé|t.a servi|autrement|recommen[cç]|referais|changerais|commencerais|trompé|ton erreur|tes erreurs|piège|chang\S* (?:mon |ton |d.)avis|ta méthode|ta démarche|ta façon de (?:travailler|chercher|réfléchir|raisonner|procéder|t.y prendre|faire)|stratégie|prochaine fois|retiens pour|encore revoir|n.arrive pas encore|t.a appris que/i;
+  // l'élève parle de lui (« je dois encore revoir », « m'a surpris ») ou on lui parle (« as-tu hésité ? »)
+  const A_TOI = /\b(?:tu|te|toi|ton|ta|tes|je|me|moi|mon|mes)\b|\b[tjm]['’]|-tu\b/i;
+  const metacognition = [];
+  if (bilanC) {
+    for (const e of bilanC.querySelectorAll('label, legend, h3, h4, p, li, summary')) {
+      if (e.closest('fieldset.qcm-groupe, select, .qcm-option, option')) continue;
+      const t = texte(e);
+      if (t.length < 12 || t.length > 320 || /hypothèse/i.test(t)) continue;
+      if (DEMARCHE.test(t) && A_TOI.test(t) && (/\?/.test(t) || e.tagName === 'LABEL' || /_{3,}|:\s*$/.test(t))) metacognition.push(t.slice(0, 110));
+    }
+  }
+  const metaTitre = blocs.some((b) => b.type === 'Comment j\'ai travaillé');
   const contenu = {
     bonus: !!bonusH,
     bonusChamps: !!bonusC && bonusC.querySelectorAll('textarea, input:not([type=button]):not([type=submit]), select').length > 0,
     bonusCorrige: !!bonusC && [...bonusC.querySelectorAll('details, summary, .corrige-bonus, .correction')].some((d) => /corrig|correction/i.test(texte(d).slice(0, 80)) || d.matches('.corrige-bonus, .correction')),
     bilan: !!bilanH,
     retourHypothese: !!bilanC && (/hypothèse/i.test(texte(bilanC)) || !!bilanC.querySelector('#rappelHyp, [id*="Hyp"], [id*="hyp"]')),
-    commentTravaille: blocs.some((b) => b.type === 'Comment j\'ai travaillé'),
+    metacognition: metaTitre || metacognition.length > 0,
+    metaTitre,
+    metaQuestions: [...new Set(metacognition)].slice(0, 4),
     positionnement: blocs.some((b) => b.type === 'Je me positionne'),
     qcm: blocs.some((b) => b.type === 'QCM'),
   };
@@ -216,10 +247,11 @@ export async function juger(ctx, fichier) {
   if (!c.bonus) aRediger.push('Bonus absent');
   else { if (!c.bonusChamps) aRediger.push('Bonus sans champ'); if (!c.bonusCorrige) aRediger.push('Bonus sans corrigé'); }
   if (!c.bilan && !c.positionnement) aRediger.push('bilan absent');
-  else { if (!c.retourHypothese) aRediger.push('bilan sans retour à l\'hypothèse'); if (!c.commentTravaille) aRediger.push('pas de « Comment j\'ai travaillé »'); if (!c.positionnement) aRediger.push('pas de positionnement'); }
+  else { if (!c.retourHypothese) aRediger.push('bilan sans retour à l\'hypothèse'); if (!c.metacognition) aRediger.push('pas de métacognition'); if (!c.positionnement) aRediger.push('pas de positionnement'); }
   if (!c.qcm) aRediger.push('pas de renvoi au QCM');
   const derniereS = etats.filter((e) => !e.onglet.hors).pop();
-  return { onglets: onglets.length, panneauDernier: derniereS ? derniereS.releve.panneauVisible : null, derniere: etats.length ? (etats.filter((e) => !e.onglet.hors).pop()?.onglet.libelle || '') : '', defauts, signales, aRediger, methodeB: methodeB.join(' ; '), erreurs };
+  const meta = { titre: c.metaTitre, questions: c.metaQuestions };
+  return { meta, onglets: onglets.length, panneauDernier: derniereS ? derniereS.releve.panneauVisible : null, derniere: etats.length ? (etats.filter((e) => !e.onglet.hors).pop()?.onglet.libelle || '') : '', defauts, signales, aRediger, methodeB: methodeB.join(' ; '), erreurs };
 }
 
 export async function main(argv = []) {

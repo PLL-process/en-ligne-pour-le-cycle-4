@@ -18896,8 +18896,9 @@ avant la prochaine vague.
 > **Ouverture**, visible dès le premier écran : 🔄 Avant de commencer : ce que je vérifie → situation →
 > problématique → hypothèse de départ → référentiel « Je serai capable de… » → billet d'entrée.
 > **Séances** : chacune porte ses activités. **Clôture**, visible **seulement à la dernière séance** :
-> Bonus (champs et corrigé) → Bilan (retour à l'hypothèse, « Comment j'ai travaillé », « Je me
-> positionne ») → renvoi au QCM. Dans une page à onglets, la clôture est dans le dernier panneau de
+> Bonus (champs et corrigé) → Bilan (retour à l'hypothèse, **métacognition**, « Je me
+> positionne ») → renvoi au QCM. *(Texte corrigé le 22/09/2026 : la métacognition PEUT
+> s'intituler « Comment j'ai travaillé », elle n'y est pas obligée — voir l'entrée suivante.)* Dans une page à onglets, la clôture est dans le dernier panneau de
 > séance (ou un onglet final dédié), jamais hors des panneaux. **On ne se positionne pas sur une
 > compétence avant de l'avoir travaillée.** Et tout cela se vérifie **à l'écran**, pas dans la source.
 
@@ -18963,7 +18964,7 @@ et le compte tombe à 21.
 | **à déplacer** : clôture → fin du dernier panneau de séance | 21 |
 | **à déplacer** : Bonus avant le Bilan (et le QCM en dernier) | 49 |
 | **à déplacer** : billet d'entrée → premier écran | 1 |
-| **à rédiger** : pas de « Comment j'ai travaillé » | 54 |
+| **à rédiger** : pas de métacognition | ~~54~~ **33** ⚠ |
 | **à rédiger** : Bonus sans champ de réponse | 43 |
 | **à rédiger** : Bonus sans corrigé | 43 |
 | **à rédiger** : pas de positionnement | 13 |
@@ -18971,86 +18972,94 @@ et le compte tombe à 21.
 | **à rédiger** : bilan absent | 1 (`4e_C6.2`) |
 | signalé : ouverture dans un autre ordre que le squelette | 29 (dont 18 : référentiel **avant** la situation) |
 
+> ⚠ **Annotation du 22/09/2026 — le chiffre 54 était gonflé.** L'outil cherchait le **titre**
+> « Comment j'ai travaillé » ; la règle demande une **métacognition**, que le titre n'est qu'une façon
+> d'annoncer. `4e_C1.1` était comptée « sans » alors que son bilan demande « Quel chiffre de cette
+> séquence t'a le plus surpris, et pourquoi ? ». Reconnue désormais à sa fonction : **33**, et non 54.
+> C'est la **cinquième** confusion entre un libellé et une fonction dans ce dépôt — et la première qui
+> venait de la **consigne** elle-même, que l'outil a suivie à la lettre. Les tableaux ci-dessous sont
+> corrigés ; les refus (51) ne changent pas.
+
 Vérifié à la main avant d'écrire ces chiffres : dans `3e_C4.1`, le Bonus n'est que trois défis en
 texte, sans champ ni corrigé ; dans `3e_C9.1`, le bilan n'a qu'une zone de texte, aucun
 positionnement. Au passage, `3e_C4.1` porte une balise mal formée (`<<footer>`) — antérieure.
 
-### La révision générale, séquence par séquence
+### La révision générale, séquence par séquence *(corrigée le 22/09/2026 : colonne « à rédiger »)*
 
 #### Thème 1 — 14 séquences, 8 refusées
 
 | séquence | onglets | défaut(s) à l'écran | à déplacer (mécanique) | à rédiger (corrigés, contenus) | ouverture à l'écran (signalé) |
 |---|---|---|---|---|---|
 | `3e_C1.1` | 5 | ✔ | — | — | ✔ |
-| `3e_C1.5` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4) | clôture → fin de `#s3` | bilan sans retour à l'hypothèse · pas de « Comment j'ai travaillé » | 🔄 → billet → problématique → situation |
-| `3e_C2.1` | 3 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · pas de « Comment j'ai travaillé » | ✔ |
-| `3e_C3.1` | 4 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
-| `4e_C1.1` | 4 | ✔ | — | pas de « Comment j'ai travaillé » | ✔ |
-| `4e_C1.4` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4) | clôture → fin de `#s3` | bilan sans retour à l'hypothèse · pas de « Comment j'ai travaillé » | 🔄 → billet → situation → problématique |
-| `4e_C2.1` | 3 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · pas de « Comment j'ai travaillé » | ✔ |
-| `4e_C3.1` | 4 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
+| `3e_C1.5` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4) | clôture → fin de `#s3` | bilan sans retour à l'hypothèse · pas de métacognition | 🔄 → billet → problématique → situation |
+| `3e_C2.1` | 3 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ | ✔ |
+| `3e_C3.1` | 4 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé | ✔ |
+| `4e_C1.1` | 4 | ✔ | — | — | ✔ |
+| `4e_C1.4` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4) | clôture → fin de `#s3` | bilan sans retour à l'hypothèse · pas de métacognition | 🔄 → billet → situation → problématique |
+| `4e_C2.1` | 3 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ | ✔ |
+| `4e_C3.1` | 4 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé | ✔ |
 | `5e_C1.1` | 5 | ✔ | — | — | ✔ |
-| `5e_C1.2` | 3 | ✔ | — | pas de « Comment j'ai travaillé » | ✔ |
-| `5e_C1.3` | — | ✔ | — | bilan sans retour à l'hypothèse · pas de « Comment j'ai travaillé » · pas de positionnement | ✔ |
-| `5e_C1.5` | — | ✔ | — | pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
-| `5e_C2.1` | 3 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
-| `5e_C3.1` | 4 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
+| `5e_C1.2` | 3 | ✔ | — | — | ✔ |
+| `5e_C1.3` | — | ✔ | — | bilan sans retour à l'hypothèse · pas de métacognition · pas de positionnement | ✔ |
+| `5e_C1.5` | — | ✔ | — | pas de métacognition | 🔄 → référentiel → situation → problématique |
+| `5e_C2.1` | 3 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé | ✔ |
+| `5e_C3.1` | 4 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé | ✔ |
 
 #### Thème 2 — 17 séquences, 17 refusées
 
 | séquence | onglets | défaut(s) à l'écran | à déplacer (mécanique) | à rédiger (corrigés, contenus) | ouverture à l'écran (signalé) |
 |---|---|---|---|---|---|
-| `3e_C4.1` | 2 | **clôture visible dès la séance 1** (1 onglet(s) sur 2)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s2` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
-| `3e_C4.3` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s4` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » · pas de positionnement | ✔ |
-| `3e_C4.7` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » · pas de positionnement | ✔ |
-| `3e_C4.8` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#seance3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
-| `3e_C5.1` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s4` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » · pas de positionnement | ✔ |
-| `3e_C6.1` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » · pas de positionnement | ✔ |
-| `3e_C6.2` | 3 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
-| `4e_C4.1` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s4` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
-| `4e_C4.1_book-train` | 4 | ordre : Bilan → Je me positionne → QCM → Bonus<br>ouverture absente du premier écran : billet d'entrée | Bonus avant le Bilan · billet d'entrée → premier écran | pas de « Comment j'ai travaillé » | ✔ |
-| `4e_C4.7` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#seance4` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
-| `4e_C5.1` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
-| `4e_C6.1` | 2 | **clôture visible dès la séance 1** (1 onglet(s) sur 2)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s2` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
+| `3e_C4.1` | 2 | **clôture visible dès la séance 1** (1 onglet(s) sur 2)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s2` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | ✔ |
+| `3e_C4.3` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s4` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de positionnement | ✔ |
+| `3e_C4.7` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de positionnement | ✔ |
+| `3e_C4.8` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#seance3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé | ✔ |
+| `3e_C5.1` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s4` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de positionnement | ✔ |
+| `3e_C6.1` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de positionnement | ✔ |
+| `3e_C6.2` | 3 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | ✔ |
+| `4e_C4.1` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s4` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | ✔ |
+| `4e_C4.1_book-train` | 4 | ordre : Bilan → Je me positionne → QCM → Bonus<br>ouverture absente du premier écran : billet d'entrée | Bonus avant le Bilan · billet d'entrée → premier écran | pas de métacognition | ✔ |
+| `4e_C4.7` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#seance4` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé | ✔ |
+| `4e_C5.1` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | ✔ |
+| `4e_C6.1` | 2 | **clôture visible dès la séance 1** (1 onglet(s) sur 2)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s2` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | ✔ |
 | `4e_C6.2` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : QCM → Bonus | clôture → fin de `#s3` · Bonus avant le QCM | Bonus sans champ · Bonus sans corrigé · bilan absent | ✔ |
-| `5e_C4.1` | 5 | **clôture visible dès la séance 1** (4 onglet(s) sur 5)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s5` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » · pas de positionnement | ✔ |
-| `5e_C4.7` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#seance3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
-| `5e_C5.1` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
-| `5e_C6.1` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
+| `5e_C4.1` | 5 | **clôture visible dès la séance 1** (4 onglet(s) sur 5)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s5` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de positionnement | ✔ |
+| `5e_C4.7` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#seance3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé | ✔ |
+| `5e_C5.1` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | ✔ |
+| `5e_C6.1` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | ✔ |
 
 #### Thème 3 — 29 séquences, 26 refusées
 
 | séquence | onglets | défaut(s) à l'écran | à déplacer (mécanique) | à rédiger (corrigés, contenus) | ouverture à l'écran (signalé) |
 |---|---|---|---|---|---|
-| `3e_C7.1` | — | ordre : Bilan → QCM → Bonus | Bonus avant le Bilan | Bonus sans corrigé · bilan sans retour à l'hypothèse · pas de « Comment j'ai travaillé » · pas de positionnement | 🔄 → référentiel → billet → situation → problématique → hypothèse |
-| `3e_C7.3` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
-| `3e_C7.4` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
-| `3e_C7.5` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
-| `3e_C7.7` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
-| `3e_C7.8` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
-| `3e_C8.1` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
-| `3e_C8.2` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
-| `3e_C9.1` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s4` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » · pas de positionnement | 🔄 → billet → situation → référentiel → problématique |
+| `3e_C7.1` | — | ordre : Bilan → QCM → Bonus | Bonus avant le Bilan | Bonus sans corrigé · bilan sans retour à l'hypothèse · pas de métacognition · pas de positionnement | 🔄 → référentiel → billet → situation → problématique → hypothèse |
+| `3e_C7.3` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | 🔄 → référentiel → situation → problématique |
+| `3e_C7.4` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | 🔄 → référentiel → situation → problématique |
+| `3e_C7.5` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | 🔄 → référentiel → situation → problématique |
+| `3e_C7.7` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | 🔄 → référentiel → situation → problématique |
+| `3e_C7.8` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | 🔄 → référentiel → situation → problématique |
+| `3e_C8.1` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | 🔄 → référentiel → situation → problématique |
+| `3e_C8.2` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | 🔄 → référentiel → situation → problématique |
+| `3e_C9.1` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s4` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition · pas de positionnement | 🔄 → billet → situation → référentiel → problématique |
 | `3e_C9.2 · page 1` | — | ✔ | — | — (séquence éclatée : sa clôture est en page 4) | 🔄 → billet → situation → problématique → hypothèse → référentiel |
 | `3e_C9.2 · page 2` | — | ✔ | — | — (séquence éclatée : sa clôture est en page 4) | ✔ |
 | `3e_C9.2 · page 3` | — | ✔ | — | — (séquence éclatée : sa clôture est en page 4) | ✔ |
-| `3e_C9.2 · page 4` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · pas de « Comment j'ai travaillé » | ✔ |
-| `3e_C9.2 · page unique` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s4` · Bonus avant le Bilan | Bonus sans champ · pas de « Comment j'ai travaillé » | 🔄 → billet → situation → problématique → hypothèse → référentiel |
-| `4e_C7.1` | — | ordre : Bilan → QCM → Bonus | Bonus avant le Bilan | Bonus sans corrigé · bilan sans retour à l'hypothèse · pas de « Comment j'ai travaillé » · pas de positionnement | 🔄 → référentiel → billet → situation → problématique → hypothèse |
-| `4e_C7.3` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
-| `4e_C7.4` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
-| `4e_C7.5` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
-| `4e_C7.7` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
-| `4e_C7.8` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
-| `4e_C8.1` | — | ordre : Bilan → QCM → Bonus | Bonus avant le Bilan | Bonus sans corrigé · bilan sans retour à l'hypothèse · pas de « Comment j'ai travaillé » · pas de positionnement | 🔄 → référentiel → billet → situation → problématique → hypothèse |
-| `4e_C9.1` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | pas de « Comment j'ai travaillé » · pas de positionnement | 🔄 → billet → référentiel → situation → problématique → hypothèse |
-| `5e_C7.1` | — | ordre : Bilan → QCM → Bonus | Bonus avant le Bilan | Bonus sans corrigé · bilan sans retour à l'hypothèse · pas de « Comment j'ai travaillé » · pas de positionnement | billet → situation → problématique |
-| `5e_C7.3` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
-| `5e_C7.4` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
-| `5e_C7.5` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
-| `5e_C8.1` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
-| `5e_C8.2` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
-| `5e_C9.1` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » · pas de positionnement | billet → situation → problématique → référentiel |
+| `3e_C9.2 · page 4` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ | ✔ |
+| `3e_C9.2 · page unique` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s4` · Bonus avant le Bilan | Bonus sans champ | 🔄 → billet → situation → problématique → hypothèse → référentiel |
+| `4e_C7.1` | — | ordre : Bilan → QCM → Bonus | Bonus avant le Bilan | Bonus sans corrigé · bilan sans retour à l'hypothèse · pas de métacognition · pas de positionnement | 🔄 → référentiel → billet → situation → problématique → hypothèse |
+| `4e_C7.3` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | 🔄 → référentiel → situation → problématique |
+| `4e_C7.4` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | 🔄 → référentiel → situation → problématique |
+| `4e_C7.5` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé | 🔄 → référentiel → situation → problématique |
+| `4e_C7.7` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | 🔄 → référentiel → situation → problématique |
+| `4e_C7.8` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | 🔄 → référentiel → situation → problématique |
+| `4e_C8.1` | — | ordre : Bilan → QCM → Bonus | Bonus avant le Bilan | Bonus sans corrigé · bilan sans retour à l'hypothèse · pas de métacognition · pas de positionnement | 🔄 → référentiel → billet → situation → problématique → hypothèse |
+| `4e_C9.1` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | pas de positionnement | 🔄 → billet → référentiel → situation → problématique → hypothèse |
+| `5e_C7.1` | — | ordre : Bilan → QCM → Bonus | Bonus avant le Bilan | Bonus sans corrigé · bilan sans retour à l'hypothèse · pas de métacognition · pas de positionnement | billet → situation → problématique |
+| `5e_C7.3` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | 🔄 → référentiel → situation → problématique |
+| `5e_C7.4` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé | 🔄 → référentiel → situation → problématique |
+| `5e_C7.5` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | 🔄 → référentiel → situation → problématique |
+| `5e_C8.1` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | 🔄 → référentiel → situation → problématique |
+| `5e_C8.2` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition | 🔄 → référentiel → situation → problématique |
+| `5e_C9.1` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de métacognition · pas de positionnement | billet → situation → problématique → référentiel |
 
 ### Mécanisation
 
@@ -19066,3 +19075,91 @@ positionnement. Au passage, `3e_C4.1` porte une balise mal formée (`<<footer>`)
   titre ne dit pas la fonction et qui n'a pas de groupe de choix ; la qualité d'un corrigé ; ce qu'un
   geste affiche (une activité validée).
 - Aucune page n'est modifiée par ce lot : il écrit la règle, la mécanise et mesure.
+
+## 22/09/2026 — n°306 corrigée : « Comment j'ai travaillé » est une fonction, pas un titre (_outils)
+
+> La n°306 demandait, dans le bilan, « Comment j'ai travaillé ». La règle veut une **métacognition** :
+> l'élève revient sur sa façon de travailler. Le titre n'en est qu'une forme. Le texte devient :
+> **Bilan (retour à l'hypothèse, métacognition, « Je me positionne »)** — la métacognition PEUT
+> s'intituler « Comment j'ai travaillé », elle n'y est pas obligée.
+
+### L'erreur, et d'où elle venait
+
+`controle_squelette.mjs` cherchait le **titre** « Comment j'ai travaillé ». Il comptait donc `4e_C1.1`
+« sans » alors que son bilan pose « 🧠 Quel chiffre de cette séquence t'a le plus surpris, et
+pourquoi ? » et « 🧠 À quel moment as-tu failli faire une opération qui n'avait pas de sens ? ».
+C'est la **cinquième** confusion entre un libellé et une fonction dans ce dépôt, après les 746
+questions qui étaient 1 480, le bilan de `4e_C1.1` (#408), le corrigé de `5e_C1.3` (#409) et l'état
+visité déclaré immesurable (#413). Celle-ci ne venait pas de l'outil : elle venait **de la consigne**,
+que l'outil a suivie à la lettre. L'entrée de #419 est annotée en conséquence.
+
+### La fonction, définie
+
+**Dans le bilan, une question sur la démarche de l'élève** : ce qui l'a surpris, où il a hésité ou
+failli se tromper, ce qui lui a coûté un effort, l'aide qu'il a prise, ce qu'il referait autrement,
+ce qui l'a fait changer d'avis, ce qu'il doit encore revoir. Elle est **adressée à lui** (« as-tu
+hésité ? ») ou **dite par lui** (« Je dois encore revoir ____ ») ; c'est une question, une étiquette de
+champ, ou une phrase à compléter. Le titre « Comment j'ai travaillé » en est un signe parmi d'autres.
+**Exclus** : le retour à l'hypothèse (compté à part), les questions de contenu, les options d'une
+échelle de positionnement.
+
+### Mesurée, puis confrontée à une lecture à la main
+
+| passage | bilans où une métacognition est reconnue | « pas de métacognition » |
+|---|---:|---:|
+| #419 — le titre seul | 4 | **54** |
+| 1ʳᵉ définition (deuxième personne, questions) | 6 | 50 |
+| **définition retenue** | **27** | **33** |
+
+**Quinze bilans lus à la main**, et ce qu'ils ont changé :
+
+| bilan | lecture | verdict de l'outil, première définition → retenue |
+|---|---|---|
+| `4e_C1.4` | « Qu'est-ce que cela change à *ta façon de publier* ? » — un usage futur, pas la démarche | **faux positif** → écarté (« ta façon de » réservé aux verbes de démarche) |
+| `5e_C1.1` | « Celle qui **m'a le plus surpris·e** : ____ », « Ce que je **dois encore revoir** » | **manqué** (1ʳᵉ personne) → reconnu |
+| `5e_C1.2` | « À quel moment as-tu **changé d'avis** ? » | **manqué** (`\w` ne passe pas le « é ») → reconnu |
+| `3e_C2.1` | « Que **changerais**-tu à ta réponse ? », « Maintenant, je **commencerais** par ____ » | **manqué** → reconnu |
+| `4e_C7.5` | « Ta **méthode** de départ partait-elle du montage, ou du cahier des charges ? » | reconnu, juste |
+| `5e_C7.4` | « Ce qui **t'a fait changer d'avis**, un chiffre ou une contrainte du lieu ? » | reconnu, juste |
+| `3e_C4.3` | « Je dois encore revoir ____ » ; « Ce qui a changé *mon* avis » ajouté aux tournures | reconnu, juste |
+| `3e_C1.1`, `4e_C1.1` | le titre ; « t'a le plus surpris », « as-tu failli » | reconnus, justes |
+| `3e_C4.1` | « avais-tu pensé au stockage ? » — un retour à la prédiction | aucune, juste |
+| `4e_C4.1`, `5e_C6.1` | « Avais-tu prévu… ? », « Avais-tu deviné… ? » — retours à la prédiction | aucune, juste |
+| `3e_C8.1`, `4e_C8.1` | « L'avais-tu vue ? » ; « J'ai appris / Je sais faire / Confiance » | aucune, juste |
+| `5e_C9.1`, `3e_C1.5` | « j'ai comparé ____ » (contenu) ; questions de contenu seulement | aucune, justes |
+
+**15 / 15 d'accord** avec la définition retenue. **Un cas limite, dit ici** : `3e_C7.3` (« ta réponse de
+départ proposait-elle… ») n'est pas reconnue, `4e_C7.5` (« ta *méthode* de départ… ») l'est. La
+première porte sur le contenu de l'idée de départ, la seconde sur la manière de s'y prendre ; la
+frontière est fine, et c'est à la lecture qu'elle se tranche.
+
+**Par voie de reconnaissance**, les 27 bilans : **2** par le titre (`3e_C1.1`, `5e_C1.1`), **17** par une
+question de démarche, **4** seulement par « Je dois encore revoir ____ » (`4e_C2.1`, `5e_C2.1`,
+`4e_C4.7`, `4e_C9.1`). Cette dernière forme est la plus faible — l'élève dit ce qui lui reste à revoir,
+pas comment il a travaillé. Elle est comptée comme métacognition, parce qu'elle en est une (il juge
+son propre état) ; si tu la veux hors du compte, les 4 pages repassent « à rédiger ».
+
+### Les refus ne changent pas
+
+`controle_squelette.mjs` : **60 séquences · 51 refusées** — D1 **21** · D3 **49** · D4 **1**, comme
+prévu. Seule la colonne « à rédiger » de la révision bouge ; elle est corrigée séquence par séquence
+dans l'entrée de #419.
+
+### Banc
+
+`tests_controle_squelette.mjs` : **20 / 20** (13 avant). Chaque voie de reconnaissance a sa paire :
+titre → reconnue, ni titre ni question → signalée ; question de démarche **sans le titre** (la forme
+de `4e_C1.1`) → reconnue, question de contenu → signalée ; « Je dois encore revoir ____ » → reconnue,
+« J'ai appris que ____ » → signalée ; et une question sur l'**hypothèse**, même « surprise » → pas une
+métacognition.
+
+**Mutations, et chacune mord** — on débranche une voie dans le contrôle, le banc tombe, et c'est
+exactement le cas visé qui tombe : voie du titre → 1 cas ; voie des questions de démarche → 1 cas ;
+voie de la première personne → 1 cas ; exclusion de l'hypothèse → 1 cas. Le contrôle est restauré dans
+un `finally` et vérifié identique à l'octet (la leçon du 21/09 : une mutation qui échoue ne doit
+jamais laisser un outil muté sur le disque).
+
+**Une leçon d'outillage, encore** : écrire des expressions régulières à travers le shell a changé
+deux `\b` en caractères de contrôle et doublé deux autres barres — le contrôle ne reconnaissait plus
+rien, sans une erreur. Vu parce que le compte est tombé à 4 ; réparé par un script écrit dans un
+fichier, qui refuse de s'achever s'il reste un caractère de contrôle.
