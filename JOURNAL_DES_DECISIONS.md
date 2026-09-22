@@ -18607,3 +18607,98 @@ sans changer le compte**, et chacun dit quelque chose d'un outil :
 - captures du bloc avant/après, 1280 et 390 px, dans la PR
 - `build_audit.py` régénère `audit_couverture.*` avec des écarts sur `3e_C3.1` et `3e_C7.4`,
   **identiques sans ce lot** : dérive antérieure, non embarquée. `make_index.py` : aucun changement.
+
+## 21/09/2026 — Règle d'or n°304, seconde vague du thème 1 : C2 et C3, des liens qui mènent à la bonne partie
+
+> Quatre séquences : `3e_C2.1`, `4e_C2.1`, `3e_C3.1`, `4e_C3.1` — les dernières que la n°304
+> refusait dans le thème 1. Et deux reprises de #415 : les liens de rattrapage ouvraient la cible
+> **en haut de page**, et la troisième ligne de `5e_C1.5` était circulaire.
+
+### Les quatre blocs
+
+Même traitement que #415 : titre « 🔄 Avant de commencer : ce que je vérifie », même phrase
+d'accueil, trois lignes « Je sais… » par page, codes du niveau précédent, lien de rattrapage
+toujours visible, « Dans cette séquence » au présent. Les quatre pages ont **l'idiome des pages
+Tsinghua** (`collect()` limité aux `textarea` et groupes radio, bouton « 🗑 Effacer ma sauvegarde ») :
+le correctif de mémoire de #415 s'y applique mot pour mot. Vérifié comme un élève à 390 px, sur les
+quatre et sur `5e_C1.5` : cocher la 1re et la dernière ligne au clic sur la phrase, recharger,
+relire, effacer, relire — **35 / 35**, texte du bloc inchangé après avoir coché, console vide.
+
+| page | lignes et codes | cible |
+|---|---|---|
+| `3e_C2.1` | recueillir sans reformuler · découper un parcours en étapes · lire un algorigramme — `4e_C2.1` ×3 | synthèse 4e_C2.1-C2.2, parties 2, 3, 4 |
+| `4e_C2.1` | interacteur `5e_C2.1` · expliquer un choix de conception `5e_C2.2` · ergonomie, sécurité, développement durable `5e_C2.2` | synthèse 5e_C2.1-C2.2, parties 1, 3, 4 |
+| `3e_C3.1` | caractéristique = grandeur, unité, seuil `4e_C3.1` · comparer autrement que par le prix `4e_C3.2` · choisir l'appareil `4e_C3.3` | synthèse 4e_C3.1-C3.3, parties 1, 2, 3 |
+| `4e_C3.1` | matériaux, énergie, information `5e_C3.1` · pourquoi un protocole `5e_C3.4` · une exigence ratée écarte `5e_C3.3` | synthèse 5e_C3.1-C3.4, parties 1, 3, 4 |
+
+### Les liens arrivent au titre cité
+
+**26 liens** reçoivent une ancre : les 12 neufs et les 14 de #415 qui restent (15, moins la ligne
+retirée). L'id est posé sur le titre cité dans la page cible — `partie-N` pour un titre numéroté,
+un nom court sinon — dans **onze** pages cibles : neuf synthèses et deux lexiques.
+
+**Vérifié en cliquant**, et pas seulement en lisant : pour chaque lien, aux deux largeurs, on ouvre la
+séquence, on clique, et on regarde où la cible s'arrête. Premier passage : **10 / 52**.
+
+- **36 titres étaient bien amenés en haut de la fenêtre… et recouverts.** Six synthèses portent une
+  barre de navigation collante (`#navharm`, `position:sticky`, 47 px) : le navigateur plaçait le titre
+  **dessous**. Un contrôle qui ne regarde que « l'ancre existe » était vert. Remède :
+  `h2[id]{scroll-margin-top:60px}` dans ces six pages.
+- **6 titres restaient plus bas dans la fenêtre** (130 à 548 px) : ils sont en bas de page, et la page
+  ne peut pas défiler davantage. Ce n'est pas un défaut ; c'est le critère du test qui était trop
+  strict. Critère retenu : le titre visé est **visible, non recouvert**, et en haut de la fenêtre —
+  ou la page est défilée jusqu'au bout.
+
+Après : **52 / 52**.
+
+**`controle_liens.py` vérifie les ancres**, y compris vers une autre page : **78 ancres vérifiées,
+0 introuvable**. Et il mord : un id altéré (`partie-3` → `partie-3x`) le fait sortir à 1 en nommant
+le lien. Il ne voit pas, en revanche, qu'un titre est **recouvert** par une barre collante — seule
+la mesure dans le navigateur l'a vu.
+
+**Une ancre fragile, dite ici.** Les deux lexiques (`lexique_4e_C1.1`, `lexique_4e_C1.4`) sont
+**engendrés** par `_outils/generer_lexique.py`, qui n'émet aucun id. Les deux ids ont été posés à la
+main sur leur `<dt>` ; la prochaine régénération les effacera. Ce ne sera pas silencieux :
+`controle_liens.py` refusera les deux liens. Le remède durable — que le générateur émette un id stable
+par notion — relève de `_outils/`, donc du thème 2.
+
+### `5e_C1.5` : la troisième ligne retirée
+
+« Je sais qu'une photo publiée sur Internet peut être vue par des gens que je ne connais pas »
+renvoyait à la synthèse de `5e_C1.5` elle-même. **Retirée, et non remplacée.** Chaque candidate à
+une troisième ligne — l'auteur d'une image trouvée en ligne, ce qu'est une donnée personnelle, ce
+que devient une publication — est **exactement** ce que `5e_C1.5-C1.6` enseigne. La renvoyer vers la
+synthèse de `5e_C1.1` (qui couvre aussi C1.5 et C1.6) aurait déplacé la circularité sans la
+supprimer : le remède existerait ailleurs, mais la compétence serait toujours celle de la séquence.
+Les deux lignes qui restent — ce qu'est une donnée, qu'un mot de passe ne se prête pas — sont de
+vrais préalables.
+
+### Le compte
+
+| | manquements |
+|---|---:|
+| base sur `main` à #415 | **289** |
+| prédiction | 285 |
+| **obtenu** | **285** ✅ |
+
+**−4, exactement.** Aucun autre état ne bouge. La n°26 reste ✔ sur ces quatre pages — pour une
+mauvaise raison : leur billet d'entrée et leurs encadrés disent encore « en 4e », « l'an dernier »,
+« ce que tu as travaillé l'an dernier ». Le bloc est propre ; le reste de la page ne l'est pas
+(voir la PR).
+
+### Contrôles
+
+- `verif_regles_audit.py` : **60 séquences · 285 manquements** (289, **−4**) ✅ · banc **50 / 50** ✅
+- `controle_formulations.py` : **80 citations, 0 écart** ✅
+- `controle_liens.py` : **0 lien mort, 78 ancres vérifiées, 0 introuvable** ✅ — et mutation qui mord
+- ancres dans le navigateur : **52 / 52** (26 liens × 2 largeurs) ✅
+- `controle_contraste_liens.mjs` : **0** à l'écran, **0** une fois cliqués, **0** sur papier (340 pages,
+  1 315 liens) ✅
+- `controle_impression.mjs` : **338 pages, 0 refusée** ✅ ; relevé des quatre pages identique à `main`
+  (8 / 5 / 5 / 5 textes faibles comptés)
+- batterie : les 17 `controle_*.py` à 0 ; `controle_couverture.py` et `pointeurs_codes.py`
+  **identiques à `main`** ✅ ; `make_index.py` : aucun changement
+- bancs : `3e_C2.1` **54 / 54** · `4e_C2.1` **60 / 60** · `3e_C3.1` **30 / 30** · `4e_C3.1`
+  **28 / 28** — identiques sur `main` ; et ceux de #415 inchangés : `3e_C1.1` 50 / 50, `4e_C1.1`
+  42 / 42, `5e_C1.5` 38 / 38
+- console **vide**, **0 px** de débordement à 390 px sur les quatre pages

@@ -27,6 +27,8 @@
   .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
   a:focus-visible,.btn:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
   #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  /* règle n°304 : un lien de rattrapage arrive sur ce titre ; la barre collante (47 px) ne doit pas le recouvrir */
+  h2[id]{scroll-margin-top:60px}
   #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
   @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}
     h1,h2,dt,.pb{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}}
@@ -58,7 +60,7 @@
 <div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
 
 <div class="bloc savoir">
-  <h2 style="margin-top:0">1. Une donnée n'est pas encore une information</h2>
+  <h2 id="partie-1" style="margin-top:0">1. Une donnée n'est pas encore une information</h2>
   <p>Le capteur de la cour écrit <code>26,4</code>. Tout seul, ce nombre ne dit rien&nbsp;: on ne sait
   ni son unité, ni à quoi le comparer. Il devient une <b>information</b> quand on le met en rapport
   avec autre chose&nbsp;: «&nbsp;26,4 aujourd'hui, contre 67 les mardis matin&nbsp;».</p>
@@ -88,7 +90,7 @@
 </div>
 
 <div class="bloc faire">
-  <h2 style="margin-top:0">3. Nettoyer avant de calculer</h2>
+  <h2 id="partie-3" style="margin-top:0">3. Nettoyer avant de calculer</h2>
   <p>Sur les 90 relevés de la semaine, <b>quatre</b> ne sont pas des mesures&nbsp;:</p>
   <ul>
     <li><b>−4,2</b> mercredi 11&nbsp;h&nbsp;: <i>impossible</i> — une concentration ne peut pas être
@@ -123,7 +125,7 @@
 </div>
 
 <div class="bloc savoir">
-  <h2 style="margin-top:0">5. Le chemin de la donnée, et les droits</h2>
+  <h2 id="partie-5" style="margin-top:0">5. Le chemin de la donnée, et les droits</h2>
   <object class="schema" data="../Images/corrige_systeme_information.svg" type="image/svg+xml" aria-label="Le système d'information en quatre étages — source, stockage, traitement, diffusion — avec pour chacun qui a le droit de faire quoi">Le système d'information</object>
   <p>Un <b>système d'information</b>, ce sont des <b>personnes</b>, des <b>outils</b> et des
   <b>règles</b> — les trois, ou ce n'en est pas un.</p>
@@ -144,7 +146,7 @@
 </div>
 
 <div class="bloc faire">
-  <h2 style="margin-top:0">6. Protéger — et la propriété</h2>
+  <h2 id="partie-6" style="margin-top:0">6. Protéger — et la propriété</h2>
   <ul>
     <li><b>Le droit minimal</b>&nbsp;: chacun reçoit exactement ce que sa tâche exige. Lire ne demande
     pas d'écrire. Chaque droit inutile est une occasion d'accident.</li>
