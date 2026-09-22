@@ -19163,3 +19163,75 @@ jamais laisser un outil muté sur le disque).
 deux `\b` en caractères de contrôle et doublé deux autres barres — le contrôle ne reconnaissait plus
 rien, sans une erreur. Vu parce que le compte est tombé à 4 ; réparé par un script écrit dans un
 fichier, qui refuse de s'achever s'il reste un caractère de contrôle.
+
+## 22/09/2026 — n°306, premier lot du thème 1 : 3e_C1.5 et 4e_C1.4, la clôture rentre dans la séance 3
+
+**Le défaut, le même que 3e_C1.1 (#418).** Dans `sequence-numerique-societe-economie-environnement-sante.html`
+(3e_C1.5) et `sequence-cybersecurite-protection-donnees.html` (4e_C1.4), la clôture — 🎁 Bonus, 🧩 Bilan
+avec « Je me positionne », 🧠 Prêt·e à t'entraîner — était écrite après tous les panneaux : visible
+aux séances 1 et 2 et sous l'onglet « Hors parcours Python », qui n'est pas une séance. Déplacée,
+d'un bloc et dans le même ordre, à la fin de `#s3`, dernier panneau de séance.
+
+**Le piège de 3e_C1.5, désamorcé AVANT le déplacement.** La page numérote ses champs sans id dans
+l'ordre du DOM (`champs()`, clés `auto_N`), et le compteur avance aussi sur les champs qui ont un id.
+Remonter la clôture (17 champs) avant `#shors` décalait les 21 champs sans id qui suivent. On a donc
+exécuté `champs()` de la page actuelle dans Chromium, confronté les 82 champs du DOM aux 82 balises de
+la source (même rang, même balise, même type, même id : 82/82), et écrit en dur les **47** ids
+attribués, `auto_15` à `auto_61`. Après écriture, `champs()` n'attribue plus aucun id. Puis déplacé.
+Un commentaire dans `champs()` le dit ; tout champ nouveau reçoit un id explicite.
+
+**4e_C1.4 : un `</div>` qui manquait.** Le bloc 6 (dernière activité de la séance 3) ne fermait pas son
+`div.section` ; le navigateur le fermait à `</section>`. Posée juste avant, la clôture se rangeait DANS
+la carte de l'activité 6. Le `</div>` est écrit là où le navigateur le mettait : le bloc 6 est
+**identique au caractère près** dans le DOM avant/après (14 430 caractères comparés), et la clôture
+est enfant direct de `#s3`.
+
+**Rédigé dans les deux bilans** (modèles 3e_C1.1 et 4e_C1.1) : un retour à l'hypothèse (« Relis ce que
+tu avais écrit au début… »), avec un rappel qui affiche ce que l'élève avait écrit (3e_C1.5 :
+problématique et situation de départ, `auto_15` et `auto_16` ; 4e_C1.4 : `#pbm`), et deux questions de
+métacognition propres à la séquence. Nouveaux champs : `hyp_retour`, `meta1`, `meta2` (3e_C1.5) ;
+`hyp_retour`, `bilan_meta1`, `bilan_meta2` (4e_C1.4, où `meta1`-`meta3` existaient déjà).
+
+**Un piège du contrôle, évité par la rédaction.** Première écriture : « c'était ton hypothèse de
+départ ». `controle_squelette` prend tout `label` qui contient « hypothèse de départ » pour le bloc
+d'ouverture, et refusait les deux pages en D4 (« hypothèse absente du premier écran »). Reformulé en
+« ta première hypothèse ». L'outil n'a pas été modifié ; la faiblesse est notée ici pour la suite du
+thème 1.
+
+### Vérifié
+
+- **Mémoire, ancienne version → nouvelle**, identité des champs indépendante des ids (titre qui
+  précède, intitulé, placeholder, name, rang parmi les homonymes) ; TOUS les champs remplis, séances,
+  hors parcours, Bonus, bilan, puis enregistrés selon l'idiome de chaque page (« Sauvegarder mon
+  travail » pour 3e_C1.5, `#btnSave` pour 4e_C1.4) :
+  - 3e_C1.5 : **82 remplis, 82 enregistrés, 82 / 82 revenus dans leur case**, 0 faux ;
+  - 4e_C1.4 : **131 remplis, 128 enregistrés** (les 3 autres — la zone 3.c et les deux boutons radio
+    `img1` — n'ont pas d'id et n'étaient déjà pas enregistrés), **128 / 128**, 0 faux ;
+  - nouveaux champs : 3 / 3 dans chaque page, reviennent après enregistrement et rechargement, les
+    anciens toujours en place ; le rappel affiche bien le texte de départ.
+- **Le test mord** : clôture déplacée SANS figer les ids → **19 des 21** réponses concernées arrivent
+  dans une autre case (les 2 dernières sont des cases à cocher décalées sur une case de même valeur).
+- **À l'écran, 390 px, onglet par onglet** : séances 1, 2 et Hors parcours → aucun des trois blocs ;
+  séance 3 → Bonus → Bilan → QCM, sous la dernière activité, tous dans `#s3`. Libellé du bouton
+  inchangé (« 🚀 Ouvrir le QCM d'entraînement », lien identique). Console vide, aucune boîte modale.
+- `controle_squelette` : **51 → 49** refusées ; « pas de métacognition » **33 → 31** ; « bilan sans
+  retour à l'hypothèse » **7 → 5** — comme prédit. Les deux pages : 0 défaut, rien « à rédiger ».
+- `verif_regles_audit.py` : **286** au lieu des 285 prédits. Écart expliqué : la règle n°34
+  (« champ sans étiquette ») saute tout champ **sans id** ; en figeant les ids, les 42 zones de
+  rédaction sans étiquette de 3e_C1.5 lui sont devenues visibles. Elles n'avaient déjà pas
+  d'étiquette sur main : défaut ancien révélé, pas régression. À traiter à part (42 intitulés à écrire).
+- `controle_impression` : 338 pages, **0 refusée**. Relevé avant/après des deux pages : 3e_C1.5 +3
+  textes « sous 4,5 sur clair » (les trois nouveaux libellés, même style que `bilan1`/`bilan2`, déjà
+  signalés sur main) ; 4e_C1.4 +1 (l'exemple de phrase de passe du corrigé, qui a changé de conteneur).
+- Les 17 `controle_*.py` à 0 · `controle_contraste_liens` ✅ · `controle_verrous` ✅ ·
+  `controle_hors_ligne` ✅ · bancs `tests_controle_squelette` 20 / 20, `tests_verif_regles_audit`
+  50 / 50.
+
+**Signalé, non touché (hors mission) :**
+- 3e_C1.5 garde hors panneaux, donc visibles à chaque séance, « 🧠 Synthèse et métacognition »,
+  « ✅ Autoévaluation » et « Conclusion et travail à faire » ; 4e_C1.4, « 🧠 Métacognition (non
+  notée) » et « 📄 Synthèse & Export ». Même famille que la clôture.
+- La problématique de 3e_C1.5 (« protéger sa vie numérique… ») est celle de 4e_C1.4 ; elle parle peu
+  de ce que la séquence travaille (environnement, métiers).
+- 4e_C1.4, onglet Hors parcours : 328 px de débordement à 390 px (blocs de code Python), identique
+  sur main.
