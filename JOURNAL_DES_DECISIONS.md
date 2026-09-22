@@ -19235,3 +19235,42 @@ thème 1.
   de ce que la séquence travaille (environnement, métiers).
 - 4e_C1.4, onglet Hors parcours : 328 px de débordement à 390 px (blocs de code Python), identique
   sur main.
+
+## 22/09/2026 — n°306, défaut D5 : ce qui fuit hors des panneaux se juge au conteneur (outil seul)
+
+**La sixième confusion étiquette / fonction.** Relisant #421, Pascal a listé TOUT ce qui est visible
+dans chaque onglet, et non plus la seule clôture. En 3e_C1.5, « Synthèse et métacognition »,
+« Autoévaluation » et « Conclusion » sont hors panneau. En 4e_C1.4, le panneau de la séance 1 se ferme
+trop tôt : 1.a → 1.f, le glossaire et les modales s'affichent aux quatre onglets. En 3e_C1.1, le billet
+d'entrée est au-dessus de chaque séance. `controle_squelette` ne voyait rien de tout cela : D1-D3
+reconnaissent la clôture à ses **titres**.
+
+**D5.** Dans une page à onglets, tout élément visible (titre, paragraphe, champ, bouton) placé après
+la barre d'onglets et contenu dans aucun panneau → refus. Jugé par le **conteneur**, dans chaque état
+(page ouverte, puis chaque onglet cliqué). Exceptions, nommées dans l'en-tête et nulle part ailleurs :
+`#tachesBandeau` et `section#taches` (tableau de bord n°30), `.seance-avis` (avis hors parcours),
+`footer`. Le rapport donne, par page, les titres de ce qui fuit, ou à défaut le premier texte.
+
+**Mesuré : D5 = 23, refus 49 → 52.** Prédit : 22 et 52. **L'écart, c'est book-train**
+(`4e_C4.1-C4.2-C4.4`) : après la barre d'onglets et hors panneau, une carte d'identité et une barre
+d'outils (nom, prénom, classe, date, Sauvegarder, Imprimer, Effacer, Mode essentiel), **sans aucun
+titre**. La règle vise aussi champs et boutons, et aucune exception ne couvre une barre d'outils : la
+page est refusée. Elle l'était déjà, par D3 et D4 et non par D1 : c'est pourquoi le compte « 19 déjà
+refusées par D1 » est juste, et le refus total aussi (52). Aucune exception ajoutée : c'est à Pascal
+de dire si une barre d'outils en tête de séance en mérite une. Répartition : thème 1 = 3 (3e_C1.1,
+3e_C1.5, 4e_C1.4, les trois seules refusées par D5 seul), thème 2 = 16, thème 3 = 4.
+
+**Banc** `tests_controle_squelette` : **25 / 25** (20 avant). Nouveaux cas : panneau fermé trop tôt
+(4e_C1.4) → refusé ; « Autoévaluation » hors panneau → refusé ; champs et boutons sans titre →
+refusé ; seulement tableau de bord, avis et pied de page → passe ; bloc hors panneau mais caché →
+passe. Le cas « la vraie page 3e_C1.1 » se juge désormais sur D1-D4 (sa clôture) : son D5, le billet,
+relève de la PR B. **Mutations, chacune mord** : exceptions retirées → 1 cas tombe ; titres seulement
+→ 1 (book-train) ; D5 débranché → 3 ; visibilité ignorée → 1. Outil restauré, identique à l'octet.
+
+**`verif_regles_audit`, n°34.** Le `continue` sur les champs sans id rendait la règle aveugle à ces
+champs. Désormais tout `select` / `textarea` est jugé, avec quatre façons d'être étiqueté : `label for`,
+label englobant, `aria-label`, `aria-labelledby`. Scripts et commentaires sont masqués. **Total : 286,
+inchangé** ; 0 champ sans id concerné aujourd'hui. Une seule ligne de détail bouge : 4e_C6.2 passe de
+23 à 9 selects « sans étiquette ». Les 14 autres étaient **dans** un `<label>` et comptés à tort ;
+la règle reste en échec pour les 9 vrais. Banc **56 / 56** (+6 cas) ; mutation « remettre le
+`continue` » → 2 cas tombent.

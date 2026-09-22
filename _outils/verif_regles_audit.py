@@ -175,17 +175,29 @@ def regle_33(src: str) -> tuple[str, str]:
 
 def regle_34(src: str) -> tuple[str, str]:
     manques = []
-    ids_labels = set(re.findall(r'<label[^>]*\bfor="([^"]+)"', src))
+    ids_labels = set(re.findall(r'<label[^>]*\bfor=["\']([^"\']+)["\']', src))
+    # TOUT select / textarea est jugé, qu'il ait un id ou non (22/09/2026, n°306) : la règle
+    # sautait les champs sans id — elle était aveugle à ceux-là, et 42 zones de 3e_C1.5 sans
+    # étiquette ne lui sont apparues qu'une fois leurs ids figés (#421). Quatre façons d'être
+    # étiqueté : label for (si id), label englobant, aria-label, aria-labelledby.
+    # Les scripts et commentaires sont masqués : un « <textarea> » écrit dans une chaîne JS
+    # n'est pas un champ de la page.
+    visible = re.sub(r"<script\b.*?</script>|<!--.*?-->", lambda m: " " * len(m.group(0)), src, flags=re.S | re.I)
     # La balise ENTIÈRE est nécessaire : aria-label peut suivre l'attribut id.
     # (Corrigé le 08/08/2026 : l'expression s'arrêtait à id= et signalait comme
     #  « sans étiquette » des champs qui portaient bien un aria-label.)
-    for m in re.finditer(r"<(select|textarea)\b[^>]*>", src):
+    for m in re.finditer(r"<(select|textarea)\b[^>]*>", visible, re.I):
         balise = m.group(0)
-        ident = re.search(r'\bid="([^"]+)"', balise)
-        if not ident:
+        ident = re.search(r'\bid=["\']([^"\']+)["\']', balise)
+        if ident and ident.group(1) in ids_labels:
             continue
-        if ident.group(1) not in ids_labels and "aria-label" not in balise:
-            manques.append(f"{m.group(1)}#{ident.group(1)} sans étiquette")
+        if re.search(r'\baria-label(?:ledby)?\s*=\s*["\'][^"\']', balise):
+            continue
+        avant = visible[:m.start()].lower()
+        if avant.rfind("<label") > avant.rfind("</label>"):
+            continue                                   # label englobant
+        nom = f"{m.group(1)}#{ident.group(1)}" if ident else f"{m.group(1)} sans id (ligne {src.count(chr(10), 0, m.start()) + 1})"
+        manques.append(f"{nom} sans étiquette")
     for m in re.finditer(r"<img\b[^>]*>", src):
         if not re.search(r'\balt="[^"]+"', m.group(0)):
             manques.append("image sans alternative textuelle")
