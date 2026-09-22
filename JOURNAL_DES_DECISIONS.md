@@ -18889,3 +18889,180 @@ bouge pas) · banc du lot **50 / 50** · les 17 `controle_*.py` à 0 · `control
 
 **Même défaut ailleurs ?** Non mesuré ce soir — à vérifier sur les autres pages à onglets de séance
 avant la prochaine vague.
+
+## 22/09/2026 — Règle d'or n°306, « la clé de voûte » : l'architecture d'une séquence se vérifie dans ce que voit l'élève (_outils)
+
+> **Règle d'or n°306.** Une séquence suit un squelette unique, qui réunit les n°301, 302 et 304.
+> **Ouverture**, visible dès le premier écran : 🔄 Avant de commencer : ce que je vérifie → situation →
+> problématique → hypothèse de départ → référentiel « Je serai capable de… » → billet d'entrée.
+> **Séances** : chacune porte ses activités. **Clôture**, visible **seulement à la dernière séance** :
+> Bonus (champs et corrigé) → Bilan (retour à l'hypothèse, « Comment j'ai travaillé », « Je me
+> positionne ») → renvoi au QCM. Dans une page à onglets, la clôture est dans le dernier panneau de
+> séance (ou un onglet final dédié), jamais hors des panneaux. **On ne se positionne pas sur une
+> compétence avant de l'avoir travaillée.** Et tout cela se vérifie **à l'écran**, pas dans la source.
+
+### Pourquoi — un essai en classe
+
+Dans `3e_C1.1`, la clôture s'affichait dès la séance 1, sous l'activité 1, alors que l'ordre **dans le
+fichier** était juste et que tous nos contrôles étaient verts. Ils lisaient la source ; l'élève lit
+l'écran. Les blocs étaient écrits après la fermeture des panneaux de séance : visibles à tous les
+onglets. Corrigé pour `3e_C1.1` en #418 ; cette règle cherche le même défaut partout.
+
+### La mesure — dans Chromium, onglet par onglet
+
+Nouveau contrôle : `_outils/controle_squelette.mjs`. Chaque séquence est ouverte, mémoire vidée ; on
+relève les blocs visibles, puis on clique chaque onglet et on relève à nouveau. Les blocs sont reconnus
+à leur **fonction** (leçon des n°301 et 304) : le positionnement par ses groupes de choix — un code en
+sujet, ou une échelle « Je sais… / pas encore / 🔴🟠🟢⭐ » —, le Bonus par un titre qui ouvre son bloc,
+le renvoi au QCM par un lien vers la page QCM du dossier.
+
+Quatre défauts refusent : **D1** clôture visible avant la dernière séance · **D2** clôture invisible à
+la dernière séance · **D3** ordre de clôture à l'écran autre que Bonus → Bilan → QCM · **D4** un bloc
+d'ouverture absent du premier écran. Signalés sans refus : les manques « à rédiger », et l'ordre de
+l'ouverture.
+
+**Trois écarts de reconnaissance, trouvés en lisant le détail et corrigés avant de compter :**
+- le Bonus de `book-train`, un `h2` posé à même le panneau : ma règle « le titre ouvre son bloc »
+  prenait le panneau entier pour bloc. Un `h2` « Bonus » compte désormais toujours ; un `h3` seulement
+  s'il ouvre son bloc ; le « 💡 Bonus » en `h4` au milieu d'un exercice de `3e_C1.5` reste écarté ;
+- les bilans personnels des C7/C8 : un menu « — je me positionne — » suivi de quatre « Je sais… », **sans
+  code**. Exiger un code les manquait : « pas de positionnement » passait de 29 pages à 13, réelles ;
+- les pages 1 à 3 de la station `3e_C9.2`, séquence **éclatée** en quatre fichiers, apparaissaient
+  « sans Bonus ni bilan » : leur clôture est en page 4. La révision le dit, sans les accuser.
+
+### Les chiffres
+
+| | séquences |
+|---|---:|
+| ouvertes | **60** |
+| à onglets | **33** (et non 32 : `4e_C4.1_book-train` a des onglets sans la classe `seance-tab`) |
+| sans onglets | **27** (23 pages simples, et les 4 pages de la station `3e_C9.2`) |
+| **D1 — clôture visible dès la séance 1** | **21** — ta liste, page pour page |
+| D2 — clôture invisible à la dernière séance | 0 |
+| **D3 — ordre de clôture à l'écran** | **49** |
+| D4 — billet d'entrée absent du premier écran | 1 (`4e_C4.1_book-train`) |
+| **refusées** | **51** |
+
+**Confrontation des deux méthodes.** Sur les 33 pages à onglets, les 21 pages D1 (vu à l'écran) sont
+**exactement** les 21 dont le DOM place la clôture **hors de tout panneau** : 21 / 21, aucun écart. Les
+12 autres ont la clôture dans leur dernier panneau de séance.
+
+**Prédiction : 21 — obtenu : 51. Pourquoi.** Les 21 prédites sont là, les mêmes. Les **30** de plus ne
+sont refusées que pour **D3** : leur clôture est à l'écran dans l'ordre **Bilan → QCM → Bonus**. Ce
+n'est pas une dette nouvelle : ce sont **exactement** les 48 séquences que la n°301 refuse déjà pour
+« Bonus après le bilan » (48 / 48, aucun écart), plus `4e_C6.2`, où la n°301 ne trouve pas de bilan et
+où l'écran montre QCM → Bonus. 19 des 21 pages D1 ont aussi D3 : à corriger d'un même geste.
+J'ai gardé D3 comme motif de refus, parce que le squelette **est** un ordre ; si tu préfères que la
+n°306 ne juge que la visibilité (D1, D2, D4) et laisse l'ordre à la n°301, c'est une ligne à changer,
+et le compte tombe à 21.
+
+### Ce que la révision demande — en bref
+
+| | séquences |
+|---|---:|
+| **à déplacer** : clôture → fin du dernier panneau de séance | 21 |
+| **à déplacer** : Bonus avant le Bilan (et le QCM en dernier) | 49 |
+| **à déplacer** : billet d'entrée → premier écran | 1 |
+| **à rédiger** : pas de « Comment j'ai travaillé » | 54 |
+| **à rédiger** : Bonus sans champ de réponse | 43 |
+| **à rédiger** : Bonus sans corrigé | 43 |
+| **à rédiger** : pas de positionnement | 13 |
+| **à rédiger** : bilan sans retour à l'hypothèse | 7 |
+| **à rédiger** : bilan absent | 1 (`4e_C6.2`) |
+| signalé : ouverture dans un autre ordre que le squelette | 29 (dont 18 : référentiel **avant** la situation) |
+
+Vérifié à la main avant d'écrire ces chiffres : dans `3e_C4.1`, le Bonus n'est que trois défis en
+texte, sans champ ni corrigé ; dans `3e_C9.1`, le bilan n'a qu'une zone de texte, aucun
+positionnement. Au passage, `3e_C4.1` porte une balise mal formée (`<<footer>`) — antérieure.
+
+### La révision générale, séquence par séquence
+
+#### Thème 1 — 14 séquences, 8 refusées
+
+| séquence | onglets | défaut(s) à l'écran | à déplacer (mécanique) | à rédiger (corrigés, contenus) | ouverture à l'écran (signalé) |
+|---|---|---|---|---|---|
+| `3e_C1.1` | 5 | ✔ | — | — | ✔ |
+| `3e_C1.5` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4) | clôture → fin de `#s3` | bilan sans retour à l'hypothèse · pas de « Comment j'ai travaillé » | 🔄 → billet → problématique → situation |
+| `3e_C2.1` | 3 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · pas de « Comment j'ai travaillé » | ✔ |
+| `3e_C3.1` | 4 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
+| `4e_C1.1` | 4 | ✔ | — | pas de « Comment j'ai travaillé » | ✔ |
+| `4e_C1.4` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4) | clôture → fin de `#s3` | bilan sans retour à l'hypothèse · pas de « Comment j'ai travaillé » | 🔄 → billet → situation → problématique |
+| `4e_C2.1` | 3 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · pas de « Comment j'ai travaillé » | ✔ |
+| `4e_C3.1` | 4 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
+| `5e_C1.1` | 5 | ✔ | — | — | ✔ |
+| `5e_C1.2` | 3 | ✔ | — | pas de « Comment j'ai travaillé » | ✔ |
+| `5e_C1.3` | — | ✔ | — | bilan sans retour à l'hypothèse · pas de « Comment j'ai travaillé » · pas de positionnement | ✔ |
+| `5e_C1.5` | — | ✔ | — | pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
+| `5e_C2.1` | 3 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
+| `5e_C3.1` | 4 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
+
+#### Thème 2 — 17 séquences, 17 refusées
+
+| séquence | onglets | défaut(s) à l'écran | à déplacer (mécanique) | à rédiger (corrigés, contenus) | ouverture à l'écran (signalé) |
+|---|---|---|---|---|---|
+| `3e_C4.1` | 2 | **clôture visible dès la séance 1** (1 onglet(s) sur 2)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s2` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
+| `3e_C4.3` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s4` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » · pas de positionnement | ✔ |
+| `3e_C4.7` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » · pas de positionnement | ✔ |
+| `3e_C4.8` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#seance3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
+| `3e_C5.1` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s4` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » · pas de positionnement | ✔ |
+| `3e_C6.1` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » · pas de positionnement | ✔ |
+| `3e_C6.2` | 3 | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
+| `4e_C4.1` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s4` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
+| `4e_C4.1_book-train` | 4 | ordre : Bilan → Je me positionne → QCM → Bonus<br>ouverture absente du premier écran : billet d'entrée | Bonus avant le Bilan · billet d'entrée → premier écran | pas de « Comment j'ai travaillé » | ✔ |
+| `4e_C4.7` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#seance4` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
+| `4e_C5.1` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
+| `4e_C6.1` | 2 | **clôture visible dès la séance 1** (1 onglet(s) sur 2)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s2` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
+| `4e_C6.2` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : QCM → Bonus | clôture → fin de `#s3` · Bonus avant le QCM | Bonus sans champ · Bonus sans corrigé · bilan absent | ✔ |
+| `5e_C4.1` | 5 | **clôture visible dès la séance 1** (4 onglet(s) sur 5)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s5` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » · pas de positionnement | ✔ |
+| `5e_C4.7` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#seance3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
+| `5e_C5.1` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
+| `5e_C6.1` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | ✔ |
+
+#### Thème 3 — 29 séquences, 26 refusées
+
+| séquence | onglets | défaut(s) à l'écran | à déplacer (mécanique) | à rédiger (corrigés, contenus) | ouverture à l'écran (signalé) |
+|---|---|---|---|---|---|
+| `3e_C7.1` | — | ordre : Bilan → QCM → Bonus | Bonus avant le Bilan | Bonus sans corrigé · bilan sans retour à l'hypothèse · pas de « Comment j'ai travaillé » · pas de positionnement | 🔄 → référentiel → billet → situation → problématique → hypothèse |
+| `3e_C7.3` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
+| `3e_C7.4` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
+| `3e_C7.5` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
+| `3e_C7.7` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
+| `3e_C7.8` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
+| `3e_C8.1` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
+| `3e_C8.2` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
+| `3e_C9.1` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s4` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » · pas de positionnement | 🔄 → billet → situation → référentiel → problématique |
+| `3e_C9.2 · page 1` | — | ✔ | — | — (séquence éclatée : sa clôture est en page 4) | 🔄 → billet → situation → problématique → hypothèse → référentiel |
+| `3e_C9.2 · page 2` | — | ✔ | — | — (séquence éclatée : sa clôture est en page 4) | ✔ |
+| `3e_C9.2 · page 3` | — | ✔ | — | — (séquence éclatée : sa clôture est en page 4) | ✔ |
+| `3e_C9.2 · page 4` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · pas de « Comment j'ai travaillé » | ✔ |
+| `3e_C9.2 · page unique` | 4 | **clôture visible dès la séance 1** (3 onglet(s) sur 4)<br>ordre : Bilan → Je me positionne → QCM → Bonus | clôture → fin de `#s4` · Bonus avant le Bilan | Bonus sans champ · pas de « Comment j'ai travaillé » | 🔄 → billet → situation → problématique → hypothèse → référentiel |
+| `4e_C7.1` | — | ordre : Bilan → QCM → Bonus | Bonus avant le Bilan | Bonus sans corrigé · bilan sans retour à l'hypothèse · pas de « Comment j'ai travaillé » · pas de positionnement | 🔄 → référentiel → billet → situation → problématique → hypothèse |
+| `4e_C7.3` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
+| `4e_C7.4` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
+| `4e_C7.5` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
+| `4e_C7.7` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
+| `4e_C7.8` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
+| `4e_C8.1` | — | ordre : Bilan → QCM → Bonus | Bonus avant le Bilan | Bonus sans corrigé · bilan sans retour à l'hypothèse · pas de « Comment j'ai travaillé » · pas de positionnement | 🔄 → référentiel → billet → situation → problématique → hypothèse |
+| `4e_C9.1` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | pas de « Comment j'ai travaillé » · pas de positionnement | 🔄 → billet → référentiel → situation → problématique → hypothèse |
+| `5e_C7.1` | — | ordre : Bilan → QCM → Bonus | Bonus avant le Bilan | Bonus sans corrigé · bilan sans retour à l'hypothèse · pas de « Comment j'ai travaillé » · pas de positionnement | billet → situation → problématique |
+| `5e_C7.3` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
+| `5e_C7.4` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
+| `5e_C7.5` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
+| `5e_C8.1` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
+| `5e_C8.2` | — | ordre : Bilan → Je me positionne → QCM → Bonus | Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » | 🔄 → référentiel → situation → problématique |
+| `5e_C9.1` | 3 | **clôture visible dès la séance 1** (2 onglet(s) sur 3)<br>ordre : Bilan → QCM → Bonus | clôture → fin de `#s3` · Bonus avant le Bilan | Bonus sans champ · Bonus sans corrigé · pas de « Comment j'ai travaillé » · pas de positionnement | billet → situation → problématique → référentiel |
+
+### Mécanisation
+
+- `_outils/controle_squelette.mjs` — sorties 0 / 1 / 2 (n°299) ; `--json` pour la révision. Environ
+  1 min 40 pour les 60 séquences.
+- `_outils/tests_controle_squelette.mjs` — **13 / 13** : clôture hors panneau → refusée ; clôture dans
+  le dernier panneau → acceptée ; positionnement visible à la séance 1 → refusé ; sans onglets
+  Bonus → Bilan → QCM → acceptée, Bilan → QCM → Bonus → refusée ; « 💡 Bonus » en `h4` → pas une clôture ;
+  onglet « Hors parcours » : clôture dans la dernière séance → acceptée, dans l'onglet hors parcours →
+  refusée ; Bonus `h2` à même le panneau → reconnu ; billet caché au panneau 2 → refusé ; **la vraie
+  page `3e_C1.1`** → acceptée ; dossier vide → sortie 2 ; sous-processus → il parle.
+- **Ne voit pas** : une séquence éclatée en plusieurs pages (chacune est jugée seule) ; un bloc dont le
+  titre ne dit pas la fonction et qui n'a pas de groupe de choix ; la qualité d'un corrigé ; ce qu'un
+  geste affiche (une activité validée).
+- Aucune page n'est modifiée par ce lot : il écrit la règle, la mécanise et mesure.
