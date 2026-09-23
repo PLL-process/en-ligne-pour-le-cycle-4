@@ -19387,3 +19387,53 @@ mot**. Les ids `mp4`, `mp7` et leurs `value` sont inchangés.
 - `tests_generer_lexique` 4 / 4.
 - À faire hors de cette PR : à 390 px, les infobulles des Notions clés sortent de l'écran (déjà sur
   main), et elles ne s'ouvrent pas au doigt.
+
+## 23/09/2026 — Phrases de passe : sept mots, le chiffre de la CNIL (4e_C1.4) ; la posture qu'on change, dite avec les mots de l'INRS (3e_C1.5)
+
+Constat après #424 : 4e_C1.4 enseignait comme sûres des phrases de passe de **quatre** mots, et la
+consigne du Bonus 2 demandait « au moins quatre mots ». Aucune source ne donne 4.
+
+**La source du chiffre.** CNIL, « Mots de passe : recommandations pour maîtriser sa sécurité »
+(14/10/2022), qui présente la délibération n° 2022-100 du 21/07/2022. Trois politiques y sont
+« équivalents en termes d'entropie » ; la troisième : « une phrase de passe doit être utilisée et elle
+doit être composée d'au minimum 7 mots ». La première demande 12 caractères de quatre types. L'ANSSI
+(2021), elle, ne fixe pas de nombre de mots : elle exige le tirage au hasard, et la force dépend du
+nombre de mots. On garde donc le chiffre de la CNIL, citation et lien à l'appui.
+
+**4e_C1.4.**
+a) Les quatre exemples passent à **7 mots tirés au hasard**, même méthode que #424 (`secrets.choice`,
+mot par mot, liste de 115 noms communs concrets, sans accent ; aucun tirage rejeté) :
+- 1.e : `etoile-ficelle-brioche-carotte-tambour-jardin-ouragan` (`mp4`) et
+  `bougie-sabot-jongleur-chaton-melon-marmite-mouton` (`mp7`), aussi dans la correction ;
+- corrigé du Bonus et activité 2FA : `bouton-marmite-carotte-volcan-pinceau-valise-crocodile`.
+  « Quatre mots sans rapport » devient « Sept mots sans rapport ».
+Les ids `mp4`, `mp7` et leurs `value` sont inchangés.
+b) Consigne du Bonus 2 : « au moins sept mots ».
+c) Critère « la phrase est longue » : « au moins sept mots, pas un mot déguisé. C'est le chiffre de la
+CNIL : une phrase de passe « doit être composée d'au minimum 7 mots » (recommandation de 2022) ».
+Le texte est **identique** dans la correction de 1.e et dans le corrigé du Bonus. La recommandation
+est ajoutée aux deux listes de sources.
+
+**3e_C1.5.** « La meilleure posture est celle qu'on change » n'est pas dans l'INRS. La page dit :
+« S'il n'existe pas de posture idéale, il existe une posture assise de moindre inconfort », et « Le
+mobilier et le matériel doivent encourager l'utilisateur à changer régulièrement de posture ». Dans la
+question « La posture devant un écran » du QCM, `err` cite ces deux passages ; `ret` devient « Pas de
+posture idéale : on en change régulièrement ». Le lexique est **régénéré** par `generer_lexique.py`
+(une ligne change). `r`, `n` et les options sont inchangés.
+
+**Balayage du dépôt** (mots de passe / phrases de passe, et à moins de 300 signes un nombre suivi de
+« mots », « caractères », « signes », « lettres », « chiffres » ou « symboles ») : aucune autre page en
+ligne ne donne un tel nombre sans source. Restent dans 4e_C1.4 « 20 caractères » (cité de l'ANSSI) et
+« 13 caractères » (le décompte de `P@ssw0rd2026!`). Hors pages en ligne : l'archive
+`_archive-anciennes-versions/…/SEQUENCE_C13_C14_5e_SI_Gestion_donnees.txt` (« au moins 12 caractères »,
+table de temps de cassage sans source) ; `_outils/banks_a.py` (« une douzaine de caractères variés »),
+qui ne produit plus le QCM en ligne. Les deux sont laissés en l'état.
+
+### Vérifié
+- Mémoire ancien (main) → nouveau, même adresse, même navigateur : séquence 4e_C1.4 **134 / 134**
+  champs identiques ; QCM 3e_C1.5 **6 / 6** ; activité 2FA 3 / 3 (elle ne stocke rien). localStorage
+  inchangé octet pour octet. **0 erreur JS**, sur les trois pages et sur le lexique.
+- 390 px : les phrases de sept mots passent à la ligne aux traits d'union ; 0 px de débordement.
+- `controle_squelette` : sortie identique octet pour octet avant et après (60 séquences, **49 refusées**).
+- `verif_regles_audit` : sortie identique, **285** manquements.
+- `tests_generer_lexique` 4 / 4.
