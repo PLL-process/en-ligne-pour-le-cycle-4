@@ -19327,3 +19327,63 @@ nouvelle, conservé au rechargement.
 - Bancs : 3e_C1.1 50 / 50 · squelette 25 / 25 · verif 56 / 56. Les 17 `controle_*.py` à 0 ;
   impression 338 pages, 0 refusée ; relevé des trois pages : aucun texte nouvellement signalé
   (4e_C1.4 : 90 → 84). Contraste des liens, verrous, hors ligne : verts.
+
+## 23/09/2026 — Sources des conseils : 3e_C1.5 (posture) face à l'INRS, 4e_C1.4 (sécurité) face à la CNIL, l'ANSSI, cybermalveillance.gouv.fr et FranceTerme
+
+Règle de Pascal : **aucun fait dans une page élève sans source primaire ouverte**, et pas seulement les
+chiffres. Chaque source a été ouverte le 23/09/2026, et chaque citation copiée depuis son texte. Le détail
+affirmation par affirmation est dans la PR.
+
+**3e_C1.5.**
+a) Travail à faire (TMS) : chaque conseil est retrouvé dans l'INRS, « Travail sur écran. Prévention des
+risques » (mis à jour le 11/06/2025), ou réécrit selon son texte. Deux conseils absents de la source sont
+retirés : « dos incliné vers l'arrière » et « inclinaison de l'écran contre les reflets ». La liste est
+réparée (des `<li>` étaient posés hors de toute `<ul>`).
+b) **Hauteur de l'écran : on nomme toujours son cas.** L'INRS distingue deux cas. Pour un écran de
+bureau : « Le haut de l'écran doit se situer sous l'axe horizontal des yeux ». Pour un portable :
+« rehausser l'ordinateur (sur une pile de livres, un support incliné…) afin de placer le haut de l'écran
+à hauteur des yeux ». « À hauteur des yeux » sans cas est donc faux pour l'écran fixe. Sont corrigés :
+la page (deux lignes, une par cas), la question « La posture devant un écran » du QCM (énoncé, réponses,
+`expl`, `ex`, `d`, `ret`) et le lexique, **régénéré** par `generer_lexique.py` (une ligne change, sans
+retouche à la main). L'ancien distracteur « l'écran posé le plus bas possible » est remplacé : il est
+lui aussi « sous l'axe », donc ambigu. `r` et `n` sont inchangés, et la mémoire du QCM tombe sur la même
+bonne réponse. Reste dans `_outils/banks_b.py` une ancienne formulation (« écran à hauteur des yeux »).
+Elle ne produit plus ce QCM et n'a pas été touchée.
+
+**4e_C1.4.**
+c) Réponses de sécurité confrontées aux sources : MonChien… n'est plus un modèle (CNIL). Q6 DDoS : c'est
+le service qui peut agir, avec son hébergeur. Wi-Fi public : la 4G d'abord. Sauvegarde « régulière » et
+non hebdomadaire. `P@ssw0rd2026!` est trahi par le mot déguisé, pas par sa longueur. Le logiciel qui
+devine teste « des dizaines de milliers » de combinaisons par seconde, pas des milliards. Les notions
+DDoS, HTTPS, cookie et VPN sont alignées sur leurs sources.
+d) **Cheval de Troie : FranceTerme remplace l'OQLF** (*Journal officiel* du 20/05/2005) : « Logiciel
+apparemment inoffensif, installé ou téléchargé et au sein duquel a été dissimulé un programme malveillant
+[…] ». La définition de 1.a et de sa correction suit : « logiciel d'apparence inoffensive qui cache un
+programme malveillant » (avant : « se fait passer pour logiciel utile »). Le lien est ajouté aux sources
+de la correction.
+e) **Mots de passe : « ni les uns des autres » est sourcé**, par l'ANSSI, *Recommandations relatives
+à l'authentification multifacteur et aux mots de passe* (2021) :
+- p. 27 : l'entropie « ne vaut que si chaque […] mot […] de la phrase de passe est choisi de manière
+  uniformément aléatoire » ;
+- p. 28-29 : les phrases de passe « consistent à choisir aléatoirement un certain nombre de mots parmi un
+  corpus déterminé » ;
+- p. 10 : les dictionnaires contiennent des « combinaison[s] (concaténation, etc.) de mots connus ».
+
+`SoleilBrille@Paris2024#France!` et `MontagneVerte*Ete2025$Voyage!` ne sont donc plus des modèles : leurs
+mots s'appellent entre eux, et chacun porte une année. Ils sont remplacés par `fourmi-raquette-brioche-crayon`
+et `ficelle-oignon-horloge-cigale`, tirés au hasard (`secrets.choice`, liste de 119 noms communs). Chacun
+fait 29 ou 30 caractères, sans date ni rien de personnel. Pour les caractères : l'ANSSI envisage de ne
+pas « imposer de contraintes sur les caractères à utiliser » à une phrase de passe « de 20 caractères et
+plus ». La correction de 1.e enseigne désormais **les quatre critères du corrigé du Bonus, mot pour
+mot**. Les ids `mp4`, `mp7` et leurs `value` sont inchangés.
+
+### Vérifié
+- Mémoire ancien (main) → nouveau, même adresse, même navigateur : 3e_C1.5 **85 / 85** ; 4e_C1.4
+  **132 / 132** ; QCM 3e_C1.5 : état identique. **0 erreur JS** (les deux séquences, le QCM, l'activité
+  bonus). 0 px de débordement à 390 px.
+- `controle_squelette` : sortie identique octet pour octet avant et après (60 séquences, **49 refusées**).
+- `verif_regles_audit` : sortie identique, **285** manquements. La n°33 avait d'abord relevé deux pavés
+  nouveaux (le texte de 1.e et les sources de la correction), scindés depuis.
+- `tests_generer_lexique` 4 / 4.
+- À faire hors de cette PR : à 390 px, les infobulles des Notions clés sortent de l'écran (déjà sur
+  main), et elles ne s'ouvrent pas au doigt.
