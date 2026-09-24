@@ -20,7 +20,7 @@ le cas nominal pose les sections et leurs ancres `#seance-sN`.
 
 L'OUVERTURE ET LA GARDE (24/09/2026). Un mot `"seance": "ouverture"` doit
 figurer avant la barre d'onglets — pas seulement dans une séance, pas dans la
-<nav> ; il ouvre le lexique (`#ouverture`). Et le script n'écrase ni un lexique
+<nav> ; il ouvre le lexique (`#ouverture`), dans l'ordre du fichier. Et le script n'écrase ni un lexique
 sans sa signature, ni un lexique dont il effacerait un id ; il repose les ids
 de IDS_POSES et saute les lots de EXCLUS en le disant.
 
@@ -56,7 +56,7 @@ CAS = [
 ]
 
 SEQUENCE = ('<html><body><nav>Accueil · un objet naturel</nav>'
-            '<section class="card"><h2>Avant de commencer</h2><p>Un <b>objet technique</b>.</p></section>'
+            '<section class="card"><h2>Avant de commencer</h2><p>Un <b>objet technique</b>, et l ADEME.</p></section>'
             '<div class="seance-tabs" role="tablist"><button>Séance 1</button></div>'
             '<a class="btn" href="qcm_x.html">QCM</a>'
             '<section class="seance-panel" id="s1"><p>Une r&egrave;gle <b>CADUQUE</b>, une <i>Innovation</i>.</p>'
@@ -147,7 +147,20 @@ def cas_vocabulaire():
             echecs.append("cas nominal : ouverture puis séances ne viennent pas en tête, dans l'ordre")
     finally:
         shutil.rmtree(d.parent)
-    return echecs, 1 + len(refus) + 1
+    # 6. l'ordre : l'ouverture garde celui du fichier (mots de base en tête), les séances l'alphabet
+    ordre = [dict(NOMINAL[2]), dict(NOMINAL[0]), dict(NOMINAL[3]),
+             {"mot": "ADEME", "definition": "Une agence.", "seance": "ouverture", "source": "Légifrance"}]
+    d = lot(ordre)
+    try:
+        page = pathlib.Path(ecrire_lexique(str(d), "x", "sequence_x.html")[0]).read_text(encoding="utf-8")
+        r = [page.find(t) for t in ("<dt>objet technique</dt>", "<dt>ADEME</dt>", "<dt>caduc</dt>", "<dt>Innovation</dt>")]
+        if not -1 < r[0] < r[1]:
+            echecs.append("ordre : l'ouverture ne garde pas l'ordre du fichier (objet technique, puis ADEME)")
+        if not -1 < r[2] < r[3]:
+            echecs.append("ordre : la séance 1 n'est plus rangée par ordre alphabétique (caduc, puis Innovation)")
+    finally:
+        shutil.rmtree(d.parent)
+    return echecs, 1 + len(refus) + 2
 
 
 def cas_garde():

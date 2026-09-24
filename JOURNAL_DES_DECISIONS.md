@@ -19514,3 +19514,13 @@ ignorée, ids perdus ignorés, `EXCLUS` débranché, `IDS_POSES` débranché, `<
 toute la page, barre d'onglets qui ne clôt pas la zone.
 
 `controle_squelette` 49 et `verif_regles_audit` 285, inchangés (aucune page touchée).
+
+## 24/09/2026 — Lexique : l'ouverture garde l'ordre du fichier (outil seul)
+
+**Relu par Pascal avant l'envoi.** La section « 🔄 Avant de commencer — les mots de base » était rangée
+par ordre alphabétique, comme les séances : l'élève lisait « ADEME » avant « objet technique ». Elle garde
+désormais **l'ordre de `vocabulaire_<lot>.json`**, pour que les mots de base viennent en tête ; les
+sections de séance restent alphabétiques. **Banc 21 / 21** (20 avant) : un vocabulaire écrit dans le
+désordre — ouverture « objet technique » puis « ADEME », séance « Innovation » puis « caduc » — ressort
+ouverture dans l'ordre du fichier, séance dans l'ordre alphabétique. **Deux mutations mordent** : ouverture
+triée, séances non triées. Régénérer tout le dépôt ne modifie toujours aucun lexique.

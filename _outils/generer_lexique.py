@@ -45,7 +45,9 @@ Les mots de base de la séquence — « objet technique », « système techniqu
 se rangent sous `"seance": "ouverture"` : ils doivent figurer dans la zone
 d'ouverture de la séquence (tout ce qui précède la barre d'onglets : « Avant de
 commencer », situation, problématique…), et le lexique commence alors par
-« 🔄 Avant de commencer — les mots de base » (ancre `#ouverture`).
+« 🔄 Avant de commencer — les mots de base » (ancre `#ouverture`), dans
+l'ordre du fichier — les mots de base en tête —, quand les séances sont rangées
+par ordre alphabétique.
 
 Le script REFUSE alors le lot (sortie ≠ 0, le mot nommé, lexique non écrit) :
   · un mot dont aucune forme n'apparaît dans le texte de sa zone — le panneau
@@ -411,12 +413,17 @@ def lire_vocabulaire(dossier, code, retour, par_comp):
 
 def sections_vocabulaire(par_seance):
     """L'ouverture (<section id="ouverture">), puis une <section id="seance-sN"> par séance ;
-    dans chacune, les mots dans l'ordre alphabétique."""
+    dans chaque séance, les mots dans l'ordre alphabétique.
+
+    L'ouverture, elle, garde l'ORDRE DU FICHIER (Pascal, 24/09/2026) : ses mots de base —
+    objet technique, objet naturel, système technique, OST — doivent venir en tête, et
+    l'alphabet mettait « ADEME » devant eux."""
     corps = []
     for num in sorted(par_seance):
+        mots = par_seance[num] if num == 0 else sorted(par_seance[num], key=lambda x: cle_tri(x[0]))
         lignes = ["  <dt>%s</dt>\n  <dd>%s <small class=\"source\">Source : %s</small></dd>"
                   % (html.escape(mot), html.escape(d), html.escape(s))
-                  for mot, d, s in sorted(par_seance[num], key=lambda x: cle_tri(x[0]))]
+                  for mot, d, s in mots]
         ancre, titre = (("ouverture", "🔄 Avant de commencer — les mots de base") if num == 0 else
                         ("seance-s%d" % num, "📚 Séance %d — les mots de la séance" % num))
         corps.append("<section id=\"%s\">\n <h2>%s "
