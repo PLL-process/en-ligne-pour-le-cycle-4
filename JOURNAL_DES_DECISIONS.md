@@ -19480,6 +19480,105 @@ adresse web d'un seul tenant, et 37 d'entre elles élargissaient le lexique à 5
 
 `controle_squelette` 49 refusées et `verif_regles_audit` 285, inchangés (aucune page touchée).
 
+## 23/09/2026 — 3e_C1.1 : quatre mots enseignés avant d'être interrogés, et les mots de chaque séance au lexique
+
+**Premier lot servi par `vocabulaire_<lot>.json`** (outil livré par la PR précédente, thème 2).
+
+**L'encadré « 📌 Quatre mots pour cette séquence »**, activité 1, séance 1 (règle d'or n°45 :
+enseigner avant d'interroger) : invention → innovation → évolution technologique (amélioration), et
+parfois rupture. Illustré par la séquence seule : Herschel et l'infrarouge (découverte, puis invention
+des capteurs, puis innovation), la tour de guet (amélioration), le satellite (rupture), la détection
+multi-indices (innovation, et la question amélioration / rupture laissée à la production c), dont elle
+est la réponse). Aucun exemple extérieur. Définitions confrontées au paragraphe près dans
+`SOURCES_DONNEES_IMPACTS_3e.md` : Manuel d'Oslo 2018 §2.2, §2.19, §2.99, §3.24, §3.62 ; glossaire
+Eurostat « Innovation » ; TLFi « inventer » A.1 ; INPI, critères de brevetabilité.
+**Une définition corrigée par sa source** : la commande disait « qui arrive jusqu'à ceux qui s'en
+servent » ; Oslo §2.99 exige la **mise à disposition** (*made available to potential users*), pas
+l'usage effectif — l'encadré dit donc « mise à la disposition de ceux qui peuvent s'en servir ».
+
+**QCM : 30 → 34 questions** (C1.1 : 8 → 12), format complet (c, n, q, o, r, expl, ex, err, d, ret),
+ajoutées **en fin de banque** : l'état est enregistré par rang, une insertion au milieu aurait fait
+glisser les réponses sauvegardées. `restore()` complète une sauvegarde plus courte (sans quoi les
+nouvelles questions restaient à `undefined`, que la grille prenait pour des réponses). Distracteurs
+demandés : « une idée = une innovation » (Innovation, A et C), « plus récent = rupture » (Rupture, A),
+« gros gain = rupture » (Rupture, B ; Évolution, A). Tout ce qui compte les questions : badges, tableau
+de bord, parcours complet, séquence (bloc QCM et bouton), manifeste, fiche, matrice (4 lignes), banc.
+
+**`vocabulaire_3e_C1.1.json` : 44 mots** — s1 16 (dont les 4 de l'encadré, définition = leur « ret »
+mot pour mot, sinon l'outil refuse), s2 8, s3 6, s4 7, s5 7. Candidats tirés du texte de chaque panneau
+(lu par l'outil lui-même) et de **Lexique 3.83** (lexique.org, fréquence des lemmes films/livres,
+seuil 3 par million), puis tri à la main : gardés les mots rares et les termes techniques non expliqués
+sur place ; écartés les noms propres, les sigles expliqués sur place (EASA, PNUE, eMCO), les mots du
+tableur expliqués par les gestes. Chaque définition a été écrite après lecture de l'entrée : Larousse
+en ligne (38, dont « ratio », confronté aussi au TLFi), TLFi par l'API du CNRTL (« incommensurable » : le Larousse n'en donne que le sens
+« immense », la séance l'emploie au sens mathématique), la séquence elle-même (« proxy », absent du
+Larousse dans ce sens ; les 4 mots de l'encadré). « Caduc » : 3 occurrences dans le source de la
+séance 1 (2 lues, 1 dans un `value`), pas 4 comme annoncé.
+
+**Un lien « 📖 Les mots de cette séance » en tête de chaque panneau** → `lexique_3e_C1.1.html#seance-sN`,
+**dans** le panneau (D5 inchangé). Lexique régénéré par l'outil, sans retouche : **44 mots des séances,
+puis 34 notions**.
+
+**Vérifié.** Banc du lot 50 / 50 ; `tests_generer_lexique` 11 / 11 ; `controle_squelette` 49 et
+`verif_regles_audit` 285, sorties **identiques à l'octet** à celles de main (le ▲ n°33 apparu sur
+l'encadré — un pavé de 126 mots — a été levé en coupant le paragraphe). Au navigateur (Chromium,
+Playwright) : mémoire **ancienne → nouvelle** — séquence de main remplie (18 textes, 31 choix) et QCM de
+main répondu (30, dont 6 faux), puis pages remplacées à la même adresse : tout revient, les 30 réponses
+sont intactes, les 4 nouvelles vierges, la grille ne les marque pas, « Restantes » = 4 ; les 4 questions
+tirées, d'abord fausses (réfutation affichée), puis justes (« à retenir » affiché) ; chaque lien de
+séance ouvre `#seance-sN`, titre « 📚 Séance N » en haut d'écran ; pas de défilement horizontal à
+390 px (le lexique en avait un, 543 px, dû aux adresses web des sources : corrigé dans l'outil) ;
+**zéro erreur JS**. Captures 390 px : l'encadré, le lien de la séance 2, le lexique ouvert sur la
+séance 1, une correction de QCM.
+
+**Non fait.** `MANIFESTE_LOT_3e_C1.1.json` : les compteurs sont à jour, pas les empreintes — 8 sur 33
+sont déjà périmées sur main ; le fichier de vocabulaire n'y est pas ajouté. Le même travail en 4e_C1.1
+(préparé le 22/09, non livré) attend sa propre PR ; la pose d'ancres par notion dans le lexique aussi
+(outil, thème 2).
+
+### À RELIRE PAR PASCAL — avant la fusion
+
+**Les 4 définitions (encadré)**
+- **Invention** : une solution technique nouvelle — un objet, un procédé — mise au point pour la première
+  fois. Une invention n'est pas forcément utilisée.
+- **Innovation** : une nouveauté — objet, procédé ou service, nouveau ou nettement amélioré — **mise à la
+  disposition de ceux qui peuvent s'en servir** (au lieu de « qui arrive jusqu'à ceux qui s'en
+  servent » : Oslo §2.99). Une idée, même excellente, n'est pas encore une innovation.
+- **Évolution technologique** (amélioration) : mettre au point ou améliorer un objet à partir d'une
+  invention qui existe déjà, pour le rendre plus pratique ou plus performant. Elle fait mieux la même
+  chose : l'usage et le métier ne changent pas. — *aucune source primaire ne définit ce terme ; la
+  définition est celle de la séquence.*
+- **Innovation de rupture** : une innovation qui change profondément les usages, les marchés et les
+  métiers ; elle rend possible ce qui ne l'était pas, et le savoir-faire d'avant ne suffit plus. —
+  *Oslo §3.62 fonde « les marchés » ; usages, métiers et savoir-faire sont le critère de la séquence.*
+
+**Les 4 questions** (bonne réponse en gras)
+1. *Invention* — « Une invention, c'est… » : **une solution technique nouvelle, mise au point pour la
+   première fois — même si personne ne s'en sert encore** / une nouveauté que beaucoup utilisent déjà /
+   la découverte d'un phénomène de la nature, comme l'infrarouge / n'importe quelle idée nouvelle, même
+   jamais réalisée.
+2. *Innovation* — une élève décrit un excellent système d'alerte dans son cahier : oui, l'idée est
+   excellente / **non : tant qu'il n'est pas mis à la disposition de ceux qui pourraient s'en servir** /
+   oui, dès qu'elle en parle / non, une innovation est toujours une rupture.
+3. *Évolution technologique* — capteurs de fumée plus sensibles, moins gourmands : rupture, le gain est
+   important / invention, le capteur est nouveau / **évolution technologique : l'usage et le métier ne
+   changent pas** / découverte scientifique.
+4. *Innovation de rupture* — quelle raison suffit ? la plus récente / un gain énorme / **elle rend
+   possible ce qui ne l'était pas, au point que le savoir-faire d'avant ne suffit plus** / elle coûte
+   plus cher.
+
+**Les mots candidats, par séance** — retire ceux que tes élèves connaissent (supprimer l'entrée dans
+`vocabulaire_3e_C1.1.json`, puis `python _outils/generer_lexique.py <dossier>`) :
+- **Séance 1** (16) : *Invention, Innovation, Évolution technologique, Innovation de rupture* (à garder,
+  ce sont ceux de l'encadré) · argumentaire · astronome · caduc · cockpit · exploitant · infrarouge ·
+  performant · prisme · satellitaire · savoir-faire · vérifiable · vigie
+- **Séance 2** (8) : arbitrairement · comparabilité · décimale · équivalence · injustifié · matrice ·
+  séparateur · tableur
+- **Séance 3** (6) : biomasse · cartographier · écosystème · méthodologique · proxy · ratio
+- **Séance 4** (7) : amiante · contamination · incommensurable · légitimité · récolteuse · télédétection ·
+  toxicité
+- **Séance 5** (7) : contrepartie · cyclonique · débroussaillement · floutage · incidence · réglementation ·
+  sociétal
 ## 24/09/2026 — Lexique : les mots de base de l'ouverture, et ce que le générateur n'écrase plus (outil seul)
 
 **Consigne de Pascal.** Ses 3e, deux jours de suite, ne savaient pas ce qu'est un objet technique, un
@@ -19524,3 +19623,118 @@ sections de séance restent alphabétiques. **Banc 21 / 21** (20 avant) : un voc
 désordre — ouverture « objet technique » puis « ADEME », séance « Innovation » puis « caduc » — ressort
 ouverture dans l'ordre du fichier, séance dans l'ordre alphabétique. **Deux mutations mordent** : ouverture
 triée, séances non triées. Régénérer tout le dépôt ne modifie toujours aucun lexique.
+## 24/09/2026 — 3e_C1.1 : les mots de base avant tout, et toute la page repassée à la règle de Pascal
+
+**La règle (Pascal, 24/09).** Ses 3e, deux jours de suite, ne savaient pas ce qu'est un objet technique,
+un objet naturel, un système technique : **tout terme technique ou relativement compliqué va au
+lexique.** Aucun des 44 mots du 23/09 n'est retiré ; on ajoute les mots de base, et tout ce qui
+manquait. **Le lexique passe de 44 à 107 mots** (+ 34 notions inchangées) : ouverture 18, séance 1 29,
+séance 2 19, séance 3 11, séance 4 12, séance 5 18.
+
+**Mots de base, section ouverture** (outil de la PR du 24/09, thème 2). « Objet technique », « système
+technique » et « OST » figuraient déjà dans la zone d'ouverture ; « objet naturel » non. Ajoutée dans
+« 🔄 Avant de commencer : ce que je vérifie », une quatrième case (`ouv_4`, enregistrée comme les
+autres par `collect()`) : « Je sais distinguer un objet technique d'un objet naturel, et dire ce qu'est
+un système technique », avec son lien vers `lexique_3e_C1.1.html#ouverture`.
+
+**Sources des mots de base, dans l'ordre demandé.** Eduscol d'abord : le *Guide d'accompagnement du
+programme de technologie* (Eduscol STI, mai 2024, §3.3, p. 10) définit « un objet ou un système
+technique » — « un ensemble structuré d'éléments (composants ou sous-ensembles) qui interagissent entre
+eux et avec leur environnement pour rendre un service (répondre à un ou à plusieurs besoins) ». Le
+programme (BO n°9 du 29/02/2024, préambule) pose le sigle « OST » et dit que « la distinction entre objet
+et système techniques dépend du niveau d'observation et d'analyse de l'observateur ». Ni l'un ni l'autre
+ne définit « objet naturel » : TLFi, « naturel » I.A, cité mot pour mot ; le TLFi « objet » complète
+« objet technique » (« généralement fabriquée »).
+
+**La page repassée.** Texte de chaque zone lu par l'outil, Lexique 3.83 au seuil de 10 par million
+(3 le 23/09), relecture à la main des sigles et des expressions. **63 ajouts :**
+- **ouverture (18)** : objet technique · objet naturel · système technique · OST · référentiel ·
+  socle commun · CRCN · robotique · automatisation · intelligence artificielle · drone · capteur ·
+  prototype · aéronef · hectare · problématique · ADEME · JRC/EFFIS
+- **séance 1 (13)** : multi-indices · guet · thermique · rayonnement · spectre · périmètre ·
+  régression · analyste · concepteur · filière · croisière · EASA · eMCO
+- **séance 2 (11)** : CSV · format · en-tête · mode opératoire · indicateur · coefficient · conversion ·
+  facteur d'émission · kgCO₂e · passager-kilomètre · PNUE
+- **séance 3 (5)** : estimation · CO₂ · Mt · sévérité · consumer
+- **séance 4 (5)** : infrastructure · résidentiel · munition · variable · abusif
+- **séance 5 (11)** : incommensurabilité · autonomie · maintenance · mode dégradé · norme · particule ·
+  bitume · fortuit · conservation · entretenable · curseur
+Un mot est rangé là où il apparaît **pour la première fois** (« drone », « capteur » : ouverture).
+Écartés : noms propres, mots courants de 3e, le vocabulaire des menus du tableur que les gestes
+montrent (AutoFiltre, Insérer), et « référence normative » / « codification opérationnelle » de la
+carte du référentiel — jargon de professeur, carte déjà signalée par la n°298.
+Sources des 63 : Larousse en ligne 43, TLFi 4, Eduscol 2, BO 2024 1, la séquence elle-même 9 (les sigles
+qu'elle explique — EASA, eMCO, PNUE, CRCN, socle commun, JRC/EFFIS avec le site d'EFFIS —, multi-indices,
+CSV avec la RFC 4180, passager-kilomètre), OQLF 1 (« mode dégradé »), Légifrance 1 (ADEME), ADEME 2 (à
+confirmer, voir plus bas).
+
+**Une coquille corrigée au passage** : « inréparables » → « irréparables » (séance 5).
+
+**Vérifié.** Banc du lot 50 / 50 ; `tests_generer_lexique` 20 / 20 ; `controle_squelette` 49, sortie
+identique à main ; `verif_regles_audit` 285, seule différence : 145 → 146 champs (la case `ouv_4`).
+Régénérer tout le dépôt ne modifie aucun autre lexique. Au navigateur : mémoire ancienne → nouvelle
+(les trois cases d'avant reviennent cochées, `ouv_4` vierge, puis cochée et retrouvée au
+rechargement) ; lien de la case → `#ouverture` en haut d'écran ; cinq liens de séance ; 4 questions
+tirées et corrigées ; 390 px sans défilement ; **zéro erreur JS** — 23 / 23.
+
+**Constaté, non corrigé.** La section d'ouverture range ses 18 mots par ordre alphabétique : l'élève
+qui suit « les mots de base » lit « ADEME » avant « objet technique ». Mettre les mots de base en tête
+demanderait un ordre choisi dans `vocabulaire_<lot>.json` (outil, thème 2). La légende des étiquettes
+de cette page de 3e dit « 5e » et « C1.1 à C1.6 ».
+
+### À RELIRE PAR PASCAL — les mots de base
+- **Objet technique** : Un objet fabriqué par l'être humain pour répondre à un besoin. Les jumelles de la
+  vigie, un drone, un capteur de fumée sont des objets techniques : demande-toi à quel besoin chacun
+  répond. — *Eduscol, guide de mai 2024, §3.3 (« pour rendre un service (répondre à un ou à plusieurs
+  besoins) ») ; TLFi « objet » : « Chose solide, maniable, généralement fabriquée, […] et répond à une
+  certaine destination ».*
+- **Objet naturel** : Ce qui existe dans la nature sans avoir été fabriqué par l'être humain. La
+  végétation qui brûle est naturelle ; la tour de guet qui la surveille est un objet technique. — *TLFi
+  « naturel » I.A : « Qui est dans, appartient à la nature; qui n'est pas le produit d'une pratique
+  humaine. »*
+- **Système technique** : Un ensemble d'éléments reliés entre eux, qui agissent ensemble et avec ce qui
+  les entoure pour rendre un service. Un capteur seul est un objet ; des capteurs qui se confirment
+  entre eux avant de donner l'alerte forment un système. C'est ton regard qui choisit le niveau : objet
+  ou système. — *Eduscol, guide de mai 2024, §3.3 : « un ensemble structuré d'éléments […] qui
+  interagissent entre eux et avec leur environnement pour rendre un service » ; BO 2024 : « La
+  distinction entre objet et système techniques dépend du niveau d'observation et d'analyse de
+  l'observateur ».* **À trancher** : le guide donne la même définition pour l'objet et pour le
+  système ; la nôtre les sépare par le niveau d'observation, comme le BO.
+- **OST** : Abréviation de « objet ou système technique » : le mot du programme pour parler des deux à
+  la fois. Le drone de cette séquence est un OST. — *BO 2024, préambule : « les objets ou systèmes
+  techniques (OST) ».*
+
+**Deux sources à confirmer** : « facteur d'émission » et « kgCO₂e » renvoient à l'ADEME (Base
+Empreinte, Impact CO₂), déjà citée par le lot, mais aucune phrase de définition de l'ADEME n'a pu être
+lue (pages en JavaScript, ou 403) : les définitions sont écrites d'après l'usage de la séquence.
+
+## 24/09/2026 — 3e_C1.1, relu par Pascal avant l'envoi : légende, sources ADEME, système technique
+
+**Les mots de base en tête.** Avec l'outil du même jour (l'ouverture garde l'ordre du fichier), la section
+« Avant de commencer » s'ouvre sur objet technique, objet naturel, système technique, OST, puis le reste.
+
+**Légende des étiquettes corrigée.** Elle annonçait « 5e : le niveau » et « C1.1 à C1.6 : les six
+compétences » — reprise de 5e_C1.1. Elle dit désormais « 3e » et « 3e_C1.1 à 3e_C1.4 : les quatre
+compétences », comme les badges. **Même recherche dans le thème 1** (les six pages qui portent cette
+légende, confrontées à leurs badges et à leur dossier) : **4e_C1.1** dit aussi « 5e : le niveau » sur une
+page de 4e (ses codes, C1.1 à C1.3, sont justes) — **signalé, non corrigé**, hors de 3e_C1.1. 5e_C1.1,
+5e_C1.2, 3e_C2.1 et 4e_C2.1 sont conformes.
+
+**Sources ADEME, citées mot pour mot** (ADEME, Datagir, « Lexique environnemental et changement
+climatique ») : « Un facteur d'émission est un ratio permettant de convertir une donnée d'entrée
+(quantité d'énergie, achat de produit et service, transport …) en quantité d'émissions de GES » ;
+« Afin d'être comparés, les émissions des différents GES peuvent être exprimés en CO2e (équivalent
+CO2) ». Les définitions de « facteur d'émission » et de « kgCO₂e » sont alignées sur ce texte ; la
+réserve « à confirmer » du matin est levée.
+
+**Système technique.** La séparation objet / système du BO est gardée ; « C'est ton regard qui choisit
+le niveau » est remplacé par un exemple fait des seuls éléments de la séquence : « Le drone thermique seul
+est un objet technique ; le réseau de capteurs au sol, les drones qui le complètent et les personnes qui
+valident l'alerte forment ensemble un système technique » (séance 5 : « un réseau de capteurs au sol […]
+complété par des drones ponctuels » ; tableau, contrôle humain du drone : « validation de l'alerte et du
+vol »). Ni pilote ni liaison du drone : la séquence n'en parle pas. **À RELIRE PAR PASCAL.**
+
+**Vérifié.** Banc du lot 50 / 50 ; générateur 21 / 21 ; `controle_squelette` 49, identique à main ;
+`verif_regles_audit` 285 (146 champs, la case `ouv_4`) ; régénérer tout le dépôt ne change aucun autre
+lexique ; navigateur 23 / 23 (mémoire ancienne → nouvelle, `ouv_4`, lien `#ouverture`, cinq liens de
+séance, QCM, 390 px, zéro erreur JS).

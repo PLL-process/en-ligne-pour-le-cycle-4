@@ -96,5 +96,5 @@ traces.*
 
 ## Ressources du lot
 
-Séquence · QCM de 30 questions (11 illustrées) · deux synthèses · trois corrigés graphiques CC0 · le schéma de l'expérience de Herschel (CC0) ·
+Séquence · QCM de 34 questions (11 illustrées) · deux synthèses · trois corrigés graphiques CC0 · le schéma de l'expérience de Herschel (CC0) ·
 le jeu de données public et sourcé · la suite de tests.
