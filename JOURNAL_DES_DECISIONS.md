@@ -19437,3 +19437,41 @@ qui ne produit plus le QCM en ligne. Les deux sont laissés en l'état.
 - `controle_squelette` : sortie identique octet pour octet avant et après (60 séquences, **49 refusées**).
 - `verif_regles_audit` : sortie identique, **285** manquements.
 - `tests_generer_lexique` 4 / 4.
+
+## 23/09/2026 — Lexique : les mots de chaque séance, sourcés et vérifiés (outil seul)
+
+**Le manque.** Le lexique d'un lot rassemble les notions de ses QCM, mot pour mot. Mais les mots qui
+arrêtent un élève de 3e ne sont pas tous des notions : « caduc » revient quatre fois dans la séance 1
+de 3e_C1.1, et aucun QCM ne le définit. Il faut un endroit où les définir, sans que le lexique se
+mette à inventer (règle n°146).
+
+**`generer_lexique.py` lit désormais, s'il existe, `vocabulaire_<lot>.json`** à côté de la séquence :
+`[{mot, formes[], definition, seance: "s1", source}]`. Le lexique s'ouvre alors sur une section par
+séance, « 📚 Séance N — les mots de la séance », ancre `id="seance-sN"` (où la séquence renverra),
+chaque définition suivie de sa source en petit ; les notions des QCM suivent comme avant. Le pied de
+page dit d'où vient chaque partie : les mots de `vocabulaire_<lot>.json`, chacun sourcé ; les notions,
+mot pour mot des QCM.
+
+**Trois refus à la génération** (sortie ≠ 0, le mot nommé, lexique du lot non écrit) :
+- un mot dont aucune forme n'apparaît dans le texte du panneau `#sN` de la séquence, accents et casse
+  ignorés (le texte des `<script>` et `<style>` ne compte pas) : on ne définit pas un mot absent ;
+- une entrée sans source ;
+- un mot qui est aussi une notion de QCM, avec une définition différente de son « à retenir » :
+  l'élève lirait deux vérités pour un même mot.
+S'y ajoutent les défauts de forme : pas de définition, séance qui n'est pas `sN`, panneau introuvable.
+
+**Sans fichier, rien ne bouge — mesuré.** Les 60 lexiques du dépôt, régénérés par l'ancien script puis
+par le nouveau : empreintes SHA-256 identiques, sortie console identique. Prédiction tenue : aucun
+fichier `vocabulaire_*.json` n'existe encore, aucun lexique ne change. **Constat à part, déjà vrai sur
+main :** régénérer tout le dépôt modifie 4 lexiques, identiquement avec l'ancien et le nouveau script —
+4e_C1.1 et 4e_C1.4 perdent un `id` posé à la main (`#justifier-une-evolution`…), et les deux lexiques
+C8.1 du thème 3, écrits à la main, seraient écrasés par la version engendrée. Ni corrigé ni régénéré ici.
+
+**Banc** `tests_generer_lexique` : **11 / 11** (4 avant). Nouveaux cas : sans fichier → la page d'avant ;
+mot absent de sa séance → refus ; mot présent seulement dans un `<script>` du panneau → refus ; entrée
+à source vide, puis sans clé source → refus ; définition divergente du « à retenir » → refus ; cas
+nominal → deux sections, leurs ancres, en tête et dans l'ordre, sources affichées. **Mutations, chacune
+mord** : refus de source débranché, recherche des formes débranchée, comparaison au « à retenir »
+débranchée, un octet ajouté à la page sans vocabulaire, `<script>` compté comme texte, sections vidées.
+
+`controle_squelette` 49 refusées et `verif_regles_audit` 285, inchangés (aucune page touchée).
