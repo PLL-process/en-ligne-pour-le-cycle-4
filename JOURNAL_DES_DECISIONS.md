@@ -19480,6 +19480,105 @@ adresse web d'un seul tenant, et 37 d'entre elles élargissaient le lexique à 5
 
 `controle_squelette` 49 refusées et `verif_regles_audit` 285, inchangés (aucune page touchée).
 
+## 23/09/2026 — 3e_C1.1 : quatre mots enseignés avant d'être interrogés, et les mots de chaque séance au lexique
+
+**Premier lot servi par `vocabulaire_<lot>.json`** (outil livré par la PR précédente, thème 2).
+
+**L'encadré « 📌 Quatre mots pour cette séquence »**, activité 1, séance 1 (règle d'or n°45 :
+enseigner avant d'interroger) : invention → innovation → évolution technologique (amélioration), et
+parfois rupture. Illustré par la séquence seule : Herschel et l'infrarouge (découverte, puis invention
+des capteurs, puis innovation), la tour de guet (amélioration), le satellite (rupture), la détection
+multi-indices (innovation, et la question amélioration / rupture laissée à la production c), dont elle
+est la réponse). Aucun exemple extérieur. Définitions confrontées au paragraphe près dans
+`SOURCES_DONNEES_IMPACTS_3e.md` : Manuel d'Oslo 2018 §2.2, §2.19, §2.99, §3.24, §3.62 ; glossaire
+Eurostat « Innovation » ; TLFi « inventer » A.1 ; INPI, critères de brevetabilité.
+**Une définition corrigée par sa source** : la commande disait « qui arrive jusqu'à ceux qui s'en
+servent » ; Oslo §2.99 exige la **mise à disposition** (*made available to potential users*), pas
+l'usage effectif — l'encadré dit donc « mise à la disposition de ceux qui peuvent s'en servir ».
+
+**QCM : 30 → 34 questions** (C1.1 : 8 → 12), format complet (c, n, q, o, r, expl, ex, err, d, ret),
+ajoutées **en fin de banque** : l'état est enregistré par rang, une insertion au milieu aurait fait
+glisser les réponses sauvegardées. `restore()` complète une sauvegarde plus courte (sans quoi les
+nouvelles questions restaient à `undefined`, que la grille prenait pour des réponses). Distracteurs
+demandés : « une idée = une innovation » (Innovation, A et C), « plus récent = rupture » (Rupture, A),
+« gros gain = rupture » (Rupture, B ; Évolution, A). Tout ce qui compte les questions : badges, tableau
+de bord, parcours complet, séquence (bloc QCM et bouton), manifeste, fiche, matrice (4 lignes), banc.
+
+**`vocabulaire_3e_C1.1.json` : 44 mots** — s1 16 (dont les 4 de l'encadré, définition = leur « ret »
+mot pour mot, sinon l'outil refuse), s2 8, s3 6, s4 7, s5 7. Candidats tirés du texte de chaque panneau
+(lu par l'outil lui-même) et de **Lexique 3.83** (lexique.org, fréquence des lemmes films/livres,
+seuil 3 par million), puis tri à la main : gardés les mots rares et les termes techniques non expliqués
+sur place ; écartés les noms propres, les sigles expliqués sur place (EASA, PNUE, eMCO), les mots du
+tableur expliqués par les gestes. Chaque définition a été écrite après lecture de l'entrée : Larousse
+en ligne (38, dont « ratio », confronté aussi au TLFi), TLFi par l'API du CNRTL (« incommensurable » : le Larousse n'en donne que le sens
+« immense », la séance l'emploie au sens mathématique), la séquence elle-même (« proxy », absent du
+Larousse dans ce sens ; les 4 mots de l'encadré). « Caduc » : 3 occurrences dans le source de la
+séance 1 (2 lues, 1 dans un `value`), pas 4 comme annoncé.
+
+**Un lien « 📖 Les mots de cette séance » en tête de chaque panneau** → `lexique_3e_C1.1.html#seance-sN`,
+**dans** le panneau (D5 inchangé). Lexique régénéré par l'outil, sans retouche : **44 mots des séances,
+puis 34 notions**.
+
+**Vérifié.** Banc du lot 50 / 50 ; `tests_generer_lexique` 11 / 11 ; `controle_squelette` 49 et
+`verif_regles_audit` 285, sorties **identiques à l'octet** à celles de main (le ▲ n°33 apparu sur
+l'encadré — un pavé de 126 mots — a été levé en coupant le paragraphe). Au navigateur (Chromium,
+Playwright) : mémoire **ancienne → nouvelle** — séquence de main remplie (18 textes, 31 choix) et QCM de
+main répondu (30, dont 6 faux), puis pages remplacées à la même adresse : tout revient, les 30 réponses
+sont intactes, les 4 nouvelles vierges, la grille ne les marque pas, « Restantes » = 4 ; les 4 questions
+tirées, d'abord fausses (réfutation affichée), puis justes (« à retenir » affiché) ; chaque lien de
+séance ouvre `#seance-sN`, titre « 📚 Séance N » en haut d'écran ; pas de défilement horizontal à
+390 px (le lexique en avait un, 543 px, dû aux adresses web des sources : corrigé dans l'outil) ;
+**zéro erreur JS**. Captures 390 px : l'encadré, le lien de la séance 2, le lexique ouvert sur la
+séance 1, une correction de QCM.
+
+**Non fait.** `MANIFESTE_LOT_3e_C1.1.json` : les compteurs sont à jour, pas les empreintes — 8 sur 33
+sont déjà périmées sur main ; le fichier de vocabulaire n'y est pas ajouté. Le même travail en 4e_C1.1
+(préparé le 22/09, non livré) attend sa propre PR ; la pose d'ancres par notion dans le lexique aussi
+(outil, thème 2).
+
+### À RELIRE PAR PASCAL — avant la fusion
+
+**Les 4 définitions (encadré)**
+- **Invention** : une solution technique nouvelle — un objet, un procédé — mise au point pour la première
+  fois. Une invention n'est pas forcément utilisée.
+- **Innovation** : une nouveauté — objet, procédé ou service, nouveau ou nettement amélioré — **mise à la
+  disposition de ceux qui peuvent s'en servir** (au lieu de « qui arrive jusqu'à ceux qui s'en
+  servent » : Oslo §2.99). Une idée, même excellente, n'est pas encore une innovation.
+- **Évolution technologique** (amélioration) : mettre au point ou améliorer un objet à partir d'une
+  invention qui existe déjà, pour le rendre plus pratique ou plus performant. Elle fait mieux la même
+  chose : l'usage et le métier ne changent pas. — *aucune source primaire ne définit ce terme ; la
+  définition est celle de la séquence.*
+- **Innovation de rupture** : une innovation qui change profondément les usages, les marchés et les
+  métiers ; elle rend possible ce qui ne l'était pas, et le savoir-faire d'avant ne suffit plus. —
+  *Oslo §3.62 fonde « les marchés » ; usages, métiers et savoir-faire sont le critère de la séquence.*
+
+**Les 4 questions** (bonne réponse en gras)
+1. *Invention* — « Une invention, c'est… » : **une solution technique nouvelle, mise au point pour la
+   première fois — même si personne ne s'en sert encore** / une nouveauté que beaucoup utilisent déjà /
+   la découverte d'un phénomène de la nature, comme l'infrarouge / n'importe quelle idée nouvelle, même
+   jamais réalisée.
+2. *Innovation* — une élève décrit un excellent système d'alerte dans son cahier : oui, l'idée est
+   excellente / **non : tant qu'il n'est pas mis à la disposition de ceux qui pourraient s'en servir** /
+   oui, dès qu'elle en parle / non, une innovation est toujours une rupture.
+3. *Évolution technologique* — capteurs de fumée plus sensibles, moins gourmands : rupture, le gain est
+   important / invention, le capteur est nouveau / **évolution technologique : l'usage et le métier ne
+   changent pas** / découverte scientifique.
+4. *Innovation de rupture* — quelle raison suffit ? la plus récente / un gain énorme / **elle rend
+   possible ce qui ne l'était pas, au point que le savoir-faire d'avant ne suffit plus** / elle coûte
+   plus cher.
+
+**Les mots candidats, par séance** — retire ceux que tes élèves connaissent (supprimer l'entrée dans
+`vocabulaire_3e_C1.1.json`, puis `python _outils/generer_lexique.py <dossier>`) :
+- **Séance 1** (16) : *Invention, Innovation, Évolution technologique, Innovation de rupture* (à garder,
+  ce sont ceux de l'encadré) · argumentaire · astronome · caduc · cockpit · exploitant · infrarouge ·
+  performant · prisme · satellitaire · savoir-faire · vérifiable · vigie
+- **Séance 2** (8) : arbitrairement · comparabilité · décimale · équivalence · injustifié · matrice ·
+  séparateur · tableur
+- **Séance 3** (6) : biomasse · cartographier · écosystème · méthodologique · proxy · ratio
+- **Séance 4** (7) : amiante · contamination · incommensurable · légitimité · récolteuse · télédétection ·
+  toxicité
+- **Séance 5** (7) : contrepartie · cyclonique · débroussaillement · floutage · incidence · réglementation ·
+  sociétal
 ## 24/09/2026 — Lexique : les mots de base de l'ouverture, et ce que le générateur n'écrase plus (outil seul)
 
 **Consigne de Pascal.** Ses 3e, deux jours de suite, ne savaient pas ce qu'est un objet technique, un
