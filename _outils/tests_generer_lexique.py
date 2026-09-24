@@ -120,7 +120,9 @@ def cas_vocabulaire():
         for attendu in ('<section id="seance-s1">', '<section id="seance-s2">',
                         "📚 Séance 1 — les mots de la séance", "📚 Séance 2 — les mots de la séance",
                         '<small class="source">Source : TLFi, « caduc »</small>',
-                        "3 mots des séances, puis 1 notions", "vocabulaire_x.json"):
+                        "3 mots des séances, puis 1 notions", "vocabulaire_x.json",
+                        # une adresse web dans une source ne doit pas élargir la page à 390 px
+                        "overflow-wrap:anywhere"):
             if attendu not in page:
                 echecs.append("cas nominal : %r absent de la page" % attendu)
         rangs = [page.find(t) for t in ('id="seance-s1"', 'id="seance-s2"', "<h2>C1.1")]

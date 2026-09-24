@@ -19474,4 +19474,8 @@ nominal → deux sections, leurs ancres, en tête et dans l'ordre, sources affic
 mord** : refus de source débranché, recherche des formes débranchée, comparaison au « à retenir »
 débranchée, un octet ajouté à la page sans vocabulaire, `<script>` compté comme texte, sections vidées.
 
+**Mesuré au navigateur sur le premier lot (3e_C1.1), puis corrigé ici :** une source porte souvent son
+adresse web d'un seul tenant, et 37 d'entre elles élargissaient le lexique à 543 px sur un écran de
+390. La ligne de source se coupe désormais n'importe où (`overflow-wrap:anywhere`) ; le banc le vérifie.
+
 `controle_squelette` 49 refusées et `verif_regles_audit` 285, inchangés (aucune page touchée).

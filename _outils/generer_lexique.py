@@ -206,7 +206,10 @@ GABARIT = """<!DOCTYPE html>
 </html>
 """
 
-STYLE_VOCAB = "  small.source{display:block;color:var(--sub);font-size:.8em;margin-top:.1em}\n"
+# overflow-wrap : une source porte souvent son adresse web, d'un seul tenant ; sans coupure,
+# elle élargissait la page à 543 px sur un téléphone de 390 (mesuré sur 3e_C1.1, 23/09/2026).
+STYLE_VOCAB = ("  small.source{display:block;color:var(--sub);font-size:.8em;margin-top:.1em;"
+               "overflow-wrap:anywhere}\n")
 STYLE_VOCAB_IMPR = "    small.source{color:#444}\n"
 SOUS_TITRE = "{compte} notions, tirées mot pour mot des QCM du lot"
 PIED = ("  Chaque ligne provient d'une question de {sources}. Rien n'a été réécrit ici :\n"
