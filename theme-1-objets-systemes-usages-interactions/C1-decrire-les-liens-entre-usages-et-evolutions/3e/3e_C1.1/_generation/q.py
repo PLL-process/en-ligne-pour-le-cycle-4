@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 """Les 30 questions du QCM 3e_C1.1 à C1.4 — Tsinghua, robots, drones et IA face aux feux.
 
+BANQUE FIGÉE (24/09/2026) : ces questions sont celles de la première version. Le QCM
+en ligne (qcm_3e_C1.1-C1.4_tsinghua.html) en porte 34 et a été retouché depuis ; c'est lui la
+source de vérité. build_qcm.py refuse de tourner.
+
 Répartition : C1.1 (8) · C1.2 (7) · C1.3 (8) · C1.4 (7). Sept illustrées.
 
 Toutes les bonnes réponses sont en position 0 ici ; fix_r.js les répartit ensuite

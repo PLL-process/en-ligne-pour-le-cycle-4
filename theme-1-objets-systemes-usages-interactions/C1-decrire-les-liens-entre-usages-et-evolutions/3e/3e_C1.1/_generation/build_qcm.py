@@ -233,7 +233,20 @@ def construire(gabarit: str, sortie: str) -> None:
     print("Étape suivante : node _outils/fix_r.js %s %d" % (sortie, GRAINE))
 
 
+FIGE = """build_qcm.py est FIGÉ depuis le 24/09/2026 : il ne doit plus tourner.
+
+Il reconstruirait le QCM à 30 questions à partir de q.py et d'un gabarit qui
+n'est pas dans le dépôt. Or le fichier qcm_3e_C1.1-C1.4_tsinghua.html (34 questions) a été
+modifié directement depuis — n°303 (21/09), et les quatre questions du 23/09. Relancer ce script
+effacerait ces modifications sans le dire.
+
+La source de vérité est désormais qcm_3e_C1.1-C1.4_tsinghua.html lui-même : modifie-le à
+la main, puis lance le banc du lot (tests_*.py) et _outils/generer_lexique.py.
+Ce script reste ici comme trace de la façon dont le QCM a été construit."""
+
+
 if __name__ == "__main__":
+    raise SystemExit(FIGE)
     if len(sys.argv) != 3:
         raise SystemExit(__doc__)
     construire(sys.argv[1], sys.argv[2])

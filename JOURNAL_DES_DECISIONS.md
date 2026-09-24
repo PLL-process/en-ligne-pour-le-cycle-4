@@ -19948,3 +19948,38 @@ un QCM à 30 questions ; `CADRAGE_…` et le rapport de tests d'origine gardent 
   observable · contrôlable · verbatim · arbitrage · garde-fou · prévention · vigilance · LoRa · horodaté ·
   opérateur · seuil · réglementaire · continuité · autonomie · particule · performant · injustifié ·
   scribe · vérificateur
+
+## 24/09/2026 — 4e_C1.1, relu par Pascal avant l'envoi : microcontrôleur, évolution, deux mots, scripts figés
+
+**« Microcontrôleur ».** L'image du « cerveau » est retirée — même confusion que celle corrigée pour l'IA.
+La définition est celle de FranceTerme (JO du 22/09/2000), citée exactement : « Circuit intégré comprenant
+essentiellement un microprocesseur, ses mémoires, et des éléments personnalisés selon l'application. »,
+suivie d'une phrase pour l'élève : « Autrement dit : une puce électronique qu'on programme pour commander
+un objet. » **À RELIRE PAR PASCAL.**
+
+**« Évolution technologique ».** « Elle se justifie par un besoin » devient « Elle répond à l'évolution d'un
+besoin », au plus près du programme (4e_C1.3 : « Justifier l'évolution d'un OST pour répondre à l'évolution
+des besoins »). Même texte dans l'encadré, le « à retenir » du QCM et le lexique — le générateur refuse
+sinon.
+
+**Deux mots ajoutés.** « effectif » (séance 1) : Larousse en ligne, nom masculin, sens 1, « Nombre réel
+d'individus constituant un groupe » (entrée 27902, distincte de l'adjectif). « chiffres significatifs »
+(séance 2) : ni le TLFi ni le Larousse ne définissent la locution (le Larousse ne la donne qu'en
+traduction), et la séquence ne l'expliquait pas. **Une phrase est ajoutée au mode opératoire de
+l'activité 2**, avec le calcul même de la séance : « Les chiffres significatifs sont ceux qu'on garde en
+partant du premier chiffre qui n'est pas zéro : 1 984 119 arrondi à trois chiffres significatifs donne
+1 980 000 » (50 000 × 20 000 000 ÷ 504 002 = 1 984 119,1, recalculé) ; le lexique la cite. 4e_C1.1 :
+**79 mots** (ouverture 20, séances 15 / 8 / 11 / 25) + 33 notions.
+
+**Les scripts `_generation` de 3e_C1.1 et 4e_C1.1 refusent désormais de tourner** (sortie 1, rien
+écrit), avec un message qui dit pourquoi. **Pourquoi refuser plutôt que les resynchroniser** : ils
+assemblent le QCM depuis `q.py` et un gabarit **qui n'est pas dans le dépôt** (passé en argument) ; et
+depuis leur dernière modification, le QCM a été retouché directement **3 fois en 3e, 8 en 4e** — dont des
+campagnes transversales (anti-longueur, boîtes modales, impression, n°303) qui modifient le HTML et
+jamais `q.py`. Les resynchroniser une fois ne tiendrait pas à la campagne suivante ; un refus qui
+l'explique reste vrai. `q.py` porte en tête « BANQUE FIGÉE », et la source de vérité est le QCM HTML.
+
+**Vérifié.** Bancs 4e 42 / 42 et 3e 50 / 50 ; générateur 28 / 28 ; régénérer tout le dépôt ne modifie que
+le lexique de 4e_C1.1 ; `controle_squelette` 49 ; `verif_regles_audit` 285, sortie identique à la
+précédente ; `build_qcm.py` : sortie 1 dans les deux lots ; navigateur 4e 21 / 21 et 3e 23 / 23, zéro
+erreur JS.
