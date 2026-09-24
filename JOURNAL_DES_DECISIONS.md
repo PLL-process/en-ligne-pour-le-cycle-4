@@ -19479,3 +19479,38 @@ adresse web d'un seul tenant, et 37 d'entre elles élargissaient le lexique à 5
 390. La ligne de source se coupe désormais n'importe où (`overflow-wrap:anywhere`) ; le banc le vérifie.
 
 `controle_squelette` 49 refusées et `verif_regles_audit` 285, inchangés (aucune page touchée).
+
+## 24/09/2026 — Lexique : les mots de base de l'ouverture, et ce que le générateur n'écrase plus (outil seul)
+
+**Consigne de Pascal.** Ses 3e, deux jours de suite, ne savaient pas ce qu'est un objet technique, un
+objet naturel, un système technique. Règle : tout terme technique ou relativement compliqué va au
+lexique. Ces mots-là ne sont pas ceux d'une séance : ils sont posés avant.
+
+**`"seance": "ouverture"`.** Un mot ainsi rangé doit figurer dans la **zone d'ouverture** — le texte du
+`<body>` jusqu'à la barre d'onglets (`role="tablist"`), `<nav>`, `<script>` et `<style>` exclus. Le
+lexique commence alors par « 🔄 Avant de commencer — les mots de base », ancre `id="ouverture"`, avant
+les sections de séance. Mêmes refus qu'ailleurs ; un mot d'ouverture qui ne figure que dans une séance,
+ou que dans la barre de navigation, est refusé. Une séquence sans barre d'onglets n'a pas d'ouverture :
+refus, dit comme tel.
+
+**Le garde-fou relevé le 23/09.** Régénérer tout le dépôt modifiait 4 lexiques. Désormais :
+- `IDS_POSES` : les deux ids posés à la main passent dans le générateur, avec la page qui les vise —
+  `4e_C1.1#justifier-une-evolution` (visé par 3e_C1.1) et `4e_C1.4#reconnaitre-une-donnee-personnelle`
+  (visé par 3e_C1.5) ;
+- `EXCLUS` : `3e_C8.1` et `5e_C8.1`, écrits à la main le 30/08, sont sautés en le disant (« EXCLU — »
+  et la raison du journal du 09/09, sortie 0) ;
+- pour tout autre lexique, le script **refuse d'écraser** un fichier sans sa signature (pied de page
+  engendré), ou dont la régénération effacerait un `<dt id>` ; il le nomme, sortie 1.
+
+**Prédiction tenue : régénérer tout le dépôt (`--tous theme-*`) ne modifie plus aucun lexique** —
+`git status` ne montre que l'outil.
+
+**Banc** `tests_generer_lexique` : **20 / 20** (11 avant). Nouveaux cas : mot d'ouverture présent →
+section `#ouverture` en tête, avant `#seance-s1` ; mot d'ouverture présent seulement dans une séance →
+refus ; présent seulement dans la `<nav>` → refus ; lexique écrit à la main → refus, fichier intact ;
+id posé à la main → refus qui nomme l'id ; lexique engendré intact → accepté ; `IDS_POSES` reposé ;
+`EXCLUS` sautés sans fichier écrit, avec leur raison. **Mutations, chacune mord (7)** : signature
+ignorée, ids perdus ignorés, `EXCLUS` débranché, `IDS_POSES` débranché, `<nav>` comptée, ouverture =
+toute la page, barre d'onglets qui ne clôt pas la zone.
+
+`controle_squelette` 49 et `verif_regles_audit` 285, inchangés (aucune page touchée).
