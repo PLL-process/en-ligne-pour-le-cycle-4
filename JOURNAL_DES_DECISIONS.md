@@ -19983,3 +19983,126 @@ l'explique reste vrai. `q.py` porte en tête « BANQUE FIGÉE », et la source d
 le lexique de 4e_C1.1 ; `controle_squelette` 49 ; `verif_regles_audit` 285, sortie identique à la
 précédente ; `build_qcm.py` : sortie 1 dans les deux lots ; navigateur 4e 21 / 21 et 3e 23 / 23, zéro
 erreur JS.
+
+## 24/09/2026 — 4e_C1.1 : première page en renvoi au vocabulaire commun — le lexique, avant / après
+
+Rebasé sur main après #430 (vocabulaire commun). Les deux commits de E2 sont repris tels quels ; le journal
+garde l'entrée de main d'abord, et les ajouts de E2 sont identiques à l'octet à ceux d'avant le rebase. Le
+vocabulaire de 3e_C1.1, fusionné automatiquement, porte à la fois « rayons calorifiques » (#429) et les quatre
+renvois au commun (E2). Régénérer tout le dépôt sur ce résultat ne modifie aucun lexique : ceux de la branche
+sont exactement ce que produit le générateur.
+
+**Comment le diff est mesuré** : chaque lexique, sur main puis sur cette branche, est lu entrée par entrée
+(section · mot : définition [source]), puis comparé ligne à ligne.
+
+### 3e_C1.1 — 142 entrées avant, 142 après : 1 retirée, 1 ajoutée
+Les quatre mots de base passent au commun **sans qu'un mot change à l'affichage** : définition commune +
+exemple du lot = l'ancienne définition, à l'octet. La seule ligne qui change est celle de l'IA (réécrite
+dans E2) :
+
+    -🔄 Avant de commencer — les mots de base | intelligence artificielle : L'ensemble des techniques qui font fonctionner une machine un peu comme un cerveau humain : reconnaître, trier, décider. [Source : Larousse en ligne, « intelligence », locution « Intelligence artificielle (I.A.) » — https://www.larousse.fr/dictionnaires/francais/intelligence/43555]
+    +🔄 Avant de commencer — les mots de base | intelligence artificielle : Des techniques pour construire des machines capables d'imiter certaines capacités de l'intelligence humaine : reconnaître, trier, décider. [Source : Larousse en ligne, encyclopédie, « intelligence artificielle » : « Ensemble de théories et de techniques mises en œuvre en vue de réaliser des machines capables de simuler l'intelligence humaine. » — https://www.larousse.fr/encyclopedie/divers/intelligence_artificielle/187257]
+
+### 4e_C1.1 — 30 entrées avant, 112 après : 0 retirée, 82 ajoutées
+Avant : les 30 notions du QCM, sans aucun mot de séance. Après : 79 mots (ouverture 20, séances 15 / 8 / 11
+/ 25) et 33 notions (les 30 d'avant, inchangées, et les 3 nouvelles questions). **Les quatre entrées qui
+passent par le commun**, mot pour mot (définition commune, puis exemple de la 4e, puis source commune) :
+
+    +🔄 Avant de commencer — les mots de base | objet technique : Un objet fabriqué par l'être humain pour répondre à un besoin. Le thermomètre de ta mesure dans la cour et le capteur d'une station météo sont des objets techniques : demande-toi à quel besoin chacun répond. [Source : Eduscol STI, Guide d'accompagnement du programme de technologie, cycle 4, mai 2024, §3.3, p. 10 : « Un objet ou un système technique est un ensemble structuré d'éléments (composants ou sous-ensembles) qui interagissent entre eux et avec leur environnement pour rendre un service (répondre à un ou à plusieurs besoins) » — https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/textes/college/cycle-4/17103-guide-daccompagnement-du-programme-de-technologie-c4-mai-2024.pdf ; TLFi (CNRTL), « objet » : « Chose solide, maniable, généralement fabriquée, […] et répond à une certaine destination »]
+    +🔄 Avant de commencer — les mots de base | objet naturel : Ce qui existe dans la nature sans avoir été fabriqué par l'être humain. La végétation qui brûle est naturelle ; le capteur de température qui la surveille est un objet technique. [Source : TLFi (CNRTL), « naturel », I.A : « Qui est dans, appartient à la nature; qui n'est pas le produit d'une pratique humaine. »]
+    +🔄 Avant de commencer — les mots de base | système technique : Un ensemble d'éléments reliés entre eux, qui agissent ensemble et avec ce qui les entoure pour rendre un service. Le capteur de température seul est un objet technique ; des capteurs qui confirment une alerte par deux indices indépendants, avec l'opérateur qui la vérifie avant d'engager des secours, forment un système technique. [Source : Eduscol STI, Guide d'accompagnement du programme de technologie, cycle 4, mai 2024, §3.3, p. 10 : « Un objet ou un système technique est un ensemble structuré d'éléments (composants ou sous-ensembles) qui interagissent entre eux et avec leur environnement pour rendre un service (répondre à un ou à plusieurs besoins) » — https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/textes/college/cycle-4/17103-guide-daccompagnement-du-programme-de-technologie-c4-mai-2024.pdf ; programme de technologie du cycle 4, BO n°9 du 29/02/2024, préambule : « La distinction entre objet et système techniques dépend du niveau d'observation et d'analyse de l'observateur »]
+    +🔄 Avant de commencer — les mots de base | OST : Abréviation de « objet ou système technique » : le mot du programme pour parler des deux à la fois. Le système que ton équipe décrit en séance 4 est un OST. [Source : programme de technologie du cycle 4, BO n°9 du 29/02/2024, préambule : « les objets ou systèmes techniques (OST) » ; Eduscol STI, Guide d'accompagnement du programme de technologie, cycle 4, mai 2024, §3.3, p. 10]
+
+**Les 78 autres ajouts** — 75 mots et les 3 nouvelles notions du QCM —, mot pour mot (définition seule ; la source de chacun est dans
+`vocabulaire_4e_C1.1.json` et s'affiche sous la définition) :
+
+- **🔄 Avant de commencer — les mots de base**
+  - référentiel : La liste officielle de ce qu'il faut savoir faire : ici, les compétences de la séquence, écrites en toutes lettres.
+  - socle commun : Ce que tout élève doit avoir appris à la fin du collège, rangé en grandes familles (D1 à D5).
+  - CRCN : Cadre de référence des compétences numériques : la liste des compétences numériques, celle qu'on retrouve dans Pix.
+  - microcontrôleur : Circuit intégré comprenant essentiellement un microprocesseur, ses mémoires, et des éléments personnalisés selon l'application. Autrement dit : une puce électronique qu'on programme pour commander un objet.
+  - ingénierie : L'étude complète d'un projet technique, qui coordonne le travail de plusieurs équipes.
+  - détection : Le fait de repérer ce qui ne se voit pas encore à l'œil nu, comme un départ de feu.
+  - précoce : Qui arrive tôt, plus tôt que d'habitude : une détection précoce repère le feu dès son départ.
+  - fictif : Qui n'existe pas en vrai, qui est inventé : l'équipe d'élèves-ingénieurs de la séquence est fictive.
+  - simulé : Fabriqué pour ressembler au vrai, sans être vrai : des données simulées ne sont pas des mesures.
+  - capteur : Élément qui mesure une grandeur (chaleur, fumée, lumière) et la transforme en un signal, souvent électrique, qu'une machine peut utiliser.
+  - problématique : La question à laquelle la séquence cherche à répondre.
+  - estimation : Une valeur calculée à peu près, faute de pouvoir la mesurer exactement.
+  - hectare : Une mesure de surface : 10 000 m², soit un carré de 100 m de côté.
+  - ADEME : Agence de l'environnement et de la maîtrise de l'énergie : l'organisme public français qui publie, entre autres, des facteurs d'émission.
+  - JRC/EFFIS : Le service de la Commission européenne qui suit les feux de forêt en Europe (EFFIS : système européen d'information sur les feux de forêt).
+  - CO₂ : Le dioxyde de carbone (gaz carbonique) : un gaz sans couleur ni odeur, produit quand quelque chose brûle.
+- **📚 Séance 1 — les mots de la séance**
+  - aiguillage : Au figuré, ce qui oriente vers la bonne direction : le billet d'entrée t'oriente, il ne te note pas.
+  - bitume : Le revêtement noir des routes et des trottoirs, qui chauffe fort au soleil.
+  - critère : Ce qui sert à juger : un critère de réussite dit à quoi on reconnaît un travail réussi.
+  - CSV : Un format de fichier texte qui range un tableau en lignes, les cases étant séparées par un signe (ici le point-virgule).
+  - cumulé : Qui s'additionne jour après jour : une surface cumulée compte tout ce qui a brûlé depuis le début.
+  - décimale : Chiffre écrit à droite de la virgule dans un nombre.
+  - effectif : Le nombre réel de choses ou de personnes d'un groupe, comptées une à une : le nombre de départs de feu est un effectif.
+  - format : En informatique, la façon dont les données d'un fichier sont rangées (.csv, .ods…).
+  - indicateur : Un chiffre qui renseigne sur une situation : surface brûlée, masse de débris, émissions.
+  - instantané : Qui vaut à un instant précis : un état instantané aura changé le lendemain.
+  - prévision : Ce qu'on annonce avant que ça arrive : une prévision n'est pas une mesure.
+  - séparateur : En informatique, le signe qui sépare deux données dans un fichier, comme le point-virgule.
+  - statut : Ici, la nature d'une donnée : mesurée, estimée, ou calculée par un modèle.
+  - tableur : Logiciel qui sert à ranger des nombres dans un tableau et à faire des calculs avec eux.
+  - variation : Un changement, l'écart entre deux états : une variation de température.
+- **📚 Séance 2 — les mots de la séance**
+  - biomasse : La masse de tout ce qui vit dans un lieu : arbres, herbes, animaux.
+  - cartographier : Dessiner la carte d'une région.
+  - chiffres significatifs : Les chiffres qu'on garde en partant du premier chiffre qui n'est pas zéro : 1 984 119 arrondi à trois chiffres significatifs donne 1 980 000.
+  - consumer : Détruire peu à peu par le feu.
+  - méthodologique : Qui concerne la méthode, la façon de faire un calcul ou une étude.
+  - proxy : Une valeur empruntée à un autre contexte, faute de mieux, quand on n'a pas la vraie.
+  - ratio : Le résultat de la division d'une grandeur par une autre, par exemple des tonnes par hectare.
+  - sévérité : Ici, la gravité d'un feu : à quel point il a tout détruit.
+- **📚 Séance 3 — les mots de la séance**
+  - automatisé : Qui se fait par une machine, sans qu'un humain intervienne.
+  - condensation : Le passage d'une vapeur à l'état liquide ou solide : derrière un avion, elle forme des traînées blanches.
+  - diesel : Un moteur qui brûle du gazole ; par extension, le véhicule qui en est équipé.
+  - équivalence : Le fait d'avoir la même valeur. Une équivalence dit « ceci vaut autant que cela ».
+  - facteur d'émission : Un nombre qui convertit une activité — un kilomètre en voiture, un repas — en quantité de gaz à effet de serre émis ; il s'exprime en g ou kgCO₂e par unité.
+  - kgCO₂e : Kilogramme d'équivalent CO₂. Les gaz à effet de serre ne réchauffent pas tous le climat autant : pour les comparer, on les compte tous en « équivalent CO₂ ». 1 kg de méthane réchauffe autant que 28 à 30 kg de CO₂.
+  - mégatonne : Un million de tonnes (symbole Mt).
+  - passager-kilomètre : Un kilomètre parcouru par un passager : on divise ce que rejette le train ou l'avion par le nombre de passagers.
+  - périmètre : Ici, ce que couvre une donnée : quel lieu, quelles choses ont été comptées. Deux chiffres de périmètres différents ne se comparent pas.
+  - réversibilité : Le fait de pouvoir revenir en arrière, à l'état d'avant.
+  - thermique : Qui concerne la chaleur. Une voiture thermique a un moteur qui brûle un carburant.
+- **📚 Séance 4 — les mots de la séance**
+  - arbitrage : Le fait de trancher entre deux choix quand on ne peut pas tout avoir.
+  - autonomie : Le temps pendant lequel un appareil fonctionne sans être rechargé : l'autonomie d'un drone se compte en minutes.
+  - continuité : Le fait de fonctionner sans interruption.
+  - contrôlable : Qu'on peut contrôler, vérifier.
+  - Évolution technologique : Une évolution technologique améliore ce qui existe déjà. Elle fait mieux la même chose : l'usage et le métier ne changent pas. Elle répond à l'évolution d'un besoin.
+  - exigence : Ce que le système devra faire, écrit de façon qu'on puisse vérifier s'il le fait.
+  - garde-fou : Ce qui empêche une erreur grave ; ici, les règles qui gardent un humain dans la décision.
+  - horodaté : Qui porte la date et l'heure exactes : une alerte horodatée dit quand elle a été émise.
+  - injustifié : Qui n'est pas justifié : rien ne permet de le faire.
+  - Innovation : Une innovation est une nouveauté mise à la disposition de ceux qui peuvent s'en servir. Une idée, même excellente, n'en est pas encore une.
+  - Invention : Une invention est une solution technique nouvelle, mise au point pour la première fois. Elle n'est pas forcément utilisée.
+  - LoRa : Une technologie radio qui envoie de petits messages très loin en consommant peu : utile pour des capteurs isolés sur batterie.
+  - mesurable : Qu'on peut mesurer, avec un nombre et une unité.
+  - observable : Qu'on peut observer, voir faire : une action observable se constate.
+  - opérateur : La personne qui fait fonctionner un appareil ; ici, celle qui vérifie une alerte avant d'engager les secours.
+  - particule : Un tout petit morceau de matière ; la fumée est faite de particules.
+  - performant : Qui obtient de très bons résultats pour les moyens qu'il utilise.
+  - prévention : Ce qu'on fait avant, pour éviter qu'un danger arrive.
+  - réglementaire : Qui est fixé par un règlement officiel.
+  - scribe : Dans une équipe, celui ou celle qui écrit la trace commune.
+  - seuil : La limite à partir de laquelle quelque chose se déclenche : au-dessus du seuil, l'alerte part.
+  - verbatim : Les mots exacts, recopiés tels quels.
+  - vérifiable : Qu'on peut vérifier.
+  - vérificateur : Personne chargée de vérifier, de contrôler.
+  - vigilance : Une surveillance attentive, qui ne se relâche pas.
+- **C1.3**
+  - Évolution technologique : Une évolution technologique améliore ce qui existe déjà. Elle fait mieux la même chose : l'usage et le métier ne changent pas. Elle répond à l'évolution d'un besoin.
+  - Innovation : Une innovation est une nouveauté mise à la disposition de ceux qui peuvent s'en servir. Une idée, même excellente, n'en est pas encore une.
+  - Invention : Une invention est une solution technique nouvelle, mise au point pour la première fois. Elle n'est pas forcément utilisée.
+
+**Contrôles, sur main après #430** : banc 4e_C1.1 **42 / 42** ; banc 3e_C1.1 **50 / 50** ; `tests_generer_lexique`
+**28 / 28** ; régénération de tout le dépôt : **aucun lexique modifié** ; `controle_squelette` **49** ;
+`verif_regles_audit` **285** ; `build_qcm.py` de 4e_C1.1 refuse de tourner (sortie 1) ; navigateur : 4e_C1.1
+**21 / 21** (mémoire de main → nouvelle version, liens de séance et d'ouverture, 3 questions, 390 px), 3e_C1.1
+**23 / 23**, expérience de Herschel **18 / 18** ; zéro erreur JS.
