@@ -19707,3 +19707,34 @@ de cette page de 3e dit « 5e » et « C1.1 à C1.6 ».
 **Deux sources à confirmer** : « facteur d'émission » et « kgCO₂e » renvoient à l'ADEME (Base
 Empreinte, Impact CO₂), déjà citée par le lot, mais aucune phrase de définition de l'ADEME n'a pu être
 lue (pages en JavaScript, ou 403) : les définitions sont écrites d'après l'usage de la séquence.
+
+## 24/09/2026 — 3e_C1.1, relu par Pascal avant l'envoi : légende, sources ADEME, système technique
+
+**Les mots de base en tête.** Avec l'outil du même jour (l'ouverture garde l'ordre du fichier), la section
+« Avant de commencer » s'ouvre sur objet technique, objet naturel, système technique, OST, puis le reste.
+
+**Légende des étiquettes corrigée.** Elle annonçait « 5e : le niveau » et « C1.1 à C1.6 : les six
+compétences » — reprise de 5e_C1.1. Elle dit désormais « 3e » et « 3e_C1.1 à 3e_C1.4 : les quatre
+compétences », comme les badges. **Même recherche dans le thème 1** (les six pages qui portent cette
+légende, confrontées à leurs badges et à leur dossier) : **4e_C1.1** dit aussi « 5e : le niveau » sur une
+page de 4e (ses codes, C1.1 à C1.3, sont justes) — **signalé, non corrigé**, hors de 3e_C1.1. 5e_C1.1,
+5e_C1.2, 3e_C2.1 et 4e_C2.1 sont conformes.
+
+**Sources ADEME, citées mot pour mot** (ADEME, Datagir, « Lexique environnemental et changement
+climatique ») : « Un facteur d'émission est un ratio permettant de convertir une donnée d'entrée
+(quantité d'énergie, achat de produit et service, transport …) en quantité d'émissions de GES » ;
+« Afin d'être comparés, les émissions des différents GES peuvent être exprimés en CO2e (équivalent
+CO2) ». Les définitions de « facteur d'émission » et de « kgCO₂e » sont alignées sur ce texte ; la
+réserve « à confirmer » du matin est levée.
+
+**Système technique.** La séparation objet / système du BO est gardée ; « C'est ton regard qui choisit
+le niveau » est remplacé par un exemple fait des seuls éléments de la séquence : « Le drone thermique seul
+est un objet technique ; le réseau de capteurs au sol, les drones qui le complètent et les personnes qui
+valident l'alerte forment ensemble un système technique » (séance 5 : « un réseau de capteurs au sol […]
+complété par des drones ponctuels » ; tableau, contrôle humain du drone : « validation de l'alerte et du
+vol »). Ni pilote ni liaison du drone : la séquence n'en parle pas. **À RELIRE PAR PASCAL.**
+
+**Vérifié.** Banc du lot 50 / 50 ; générateur 21 / 21 ; `controle_squelette` 49, identique à main ;
+`verif_regles_audit` 285 (146 champs, la case `ouv_4`) ; régénérer tout le dépôt ne change aucun autre
+lexique ; navigateur 23 / 23 (mémoire ancienne → nouvelle, `ouv_4`, lien `#ouverture`, cinq liens de
+séance, QCM, 390 px, zéro erreur JS).
