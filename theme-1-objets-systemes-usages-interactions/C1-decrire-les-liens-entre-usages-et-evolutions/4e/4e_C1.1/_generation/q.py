@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 """Les 30 questions du QCM 4e_C1.1 à C1.3 — Tsinghua, détecter les feux.
 
+BANQUE FIGÉE (24/09/2026) : ces questions sont celles de la première version. Le QCM
+en ligne (qcm_4e_C1.1-C1.3_tsinghua.html) en porte 33 et a été retouché depuis ; c'est lui la
+source de vérité. build_qcm.py refuse de tourner.
+
 Toutes les bonnes réponses sont en position 0 ici : la répartition sur A/B/C/D
 est faite ensuite par `_outils/fix_r.js`, de façon déterministe.
 

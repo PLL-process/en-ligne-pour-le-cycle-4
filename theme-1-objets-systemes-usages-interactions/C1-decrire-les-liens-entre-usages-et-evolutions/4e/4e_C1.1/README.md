@@ -1,6 +1,6 @@
 # 4e_C1.1 à C1.3 — « Tsinghua : concevoir avant de connecter »
 
-**Lot complet** — séquence + QCM 30 questions + 2 synthèses + fiche + matrice + 2 corrigés
+**Lot complet** — séquence + QCM 33 questions + 2 synthèses + fiche + matrice + 2 corrigés
 graphiques CC0 + suite de 42 tests. **Refonte (v2)** : l'état antérieur est archivé.
 
 ➡️ **[Ouvrir la séquence](sequence_4e_C1.1-C1.3_tsinghua_feux.html)** ·

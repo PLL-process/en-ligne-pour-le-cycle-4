@@ -151,7 +151,7 @@ async def tester_qcm(p):
     r.append(("sous-titre propre au lot", "4e_C1.1" in sub and "C3" not in sub))
     body=await pg.evaluate("document.body.textContent")
     r.append(("aucune trace d'un autre lot", "SOS serre" not in body and "Shenzhen" not in body))
-    r.append(("30 questions", await pg.evaluate("QUESTIONS.length")==30))
+    r.append(("33 questions", await pg.evaluate("QUESTIONS.length")==33))
     rep=await pg.evaluate("QUESTIONS.map(q=>q.r)")
     r.append(("bonnes réponses réparties A/B/C/D", len(set(rep))==4 and min(rep.count(i) for i in range(4))>=6))
     r.append(("6 illustrées", await pg.evaluate("QUESTIONS.filter(q=>q.img).length")==6))
@@ -167,7 +167,7 @@ async def tester_qcm(p):
     await pg.evaluate("localStorage.clear()"); await pg.goto(QCM_URL); await pg.reload()
     ok=await pg.evaluate("""(()=>{for(let i=0;i<QUESTIONS.length;i++){etat.reponses[i]=QUESTIONS[i].r;etat.validees[i]=true;}
         return etat.reponses.filter((x,i)=>x===QUESTIONS[i].r).length;})()""")
-    r.append(("30 bonnes réponses acceptées", ok==30))
+    r.append(("33 bonnes réponses acceptées", ok==33))
     r.append(("clé de sauvegarde propre au lot", await pg.evaluate("KEY")=="qcm_4e_C1_tsinghua"))
     miss=await pg.evaluate("""(async()=>{const m=[];for(const q of QUESTIONS.filter(q=>q.img)){
         const ok=await new Promise(res=>{const i=new Image();i.onload=()=>res(1);i.onerror=()=>res(0);i.src=q.img.src;});
