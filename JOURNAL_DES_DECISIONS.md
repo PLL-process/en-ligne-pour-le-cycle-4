@@ -19623,3 +19623,87 @@ sections de séance restent alphabétiques. **Banc 21 / 21** (20 avant) : un voc
 désordre — ouverture « objet technique » puis « ADEME », séance « Innovation » puis « caduc » — ressort
 ouverture dans l'ordre du fichier, séance dans l'ordre alphabétique. **Deux mutations mordent** : ouverture
 triée, séances non triées. Régénérer tout le dépôt ne modifie toujours aucun lexique.
+## 24/09/2026 — 3e_C1.1 : les mots de base avant tout, et toute la page repassée à la règle de Pascal
+
+**La règle (Pascal, 24/09).** Ses 3e, deux jours de suite, ne savaient pas ce qu'est un objet technique,
+un objet naturel, un système technique : **tout terme technique ou relativement compliqué va au
+lexique.** Aucun des 44 mots du 23/09 n'est retiré ; on ajoute les mots de base, et tout ce qui
+manquait. **Le lexique passe de 44 à 107 mots** (+ 34 notions inchangées) : ouverture 18, séance 1 29,
+séance 2 19, séance 3 11, séance 4 12, séance 5 18.
+
+**Mots de base, section ouverture** (outil de la PR du 24/09, thème 2). « Objet technique », « système
+technique » et « OST » figuraient déjà dans la zone d'ouverture ; « objet naturel » non. Ajoutée dans
+« 🔄 Avant de commencer : ce que je vérifie », une quatrième case (`ouv_4`, enregistrée comme les
+autres par `collect()`) : « Je sais distinguer un objet technique d'un objet naturel, et dire ce qu'est
+un système technique », avec son lien vers `lexique_3e_C1.1.html#ouverture`.
+
+**Sources des mots de base, dans l'ordre demandé.** Eduscol d'abord : le *Guide d'accompagnement du
+programme de technologie* (Eduscol STI, mai 2024, §3.3, p. 10) définit « un objet ou un système
+technique » — « un ensemble structuré d'éléments (composants ou sous-ensembles) qui interagissent entre
+eux et avec leur environnement pour rendre un service (répondre à un ou à plusieurs besoins) ». Le
+programme (BO n°9 du 29/02/2024, préambule) pose le sigle « OST » et dit que « la distinction entre objet
+et système techniques dépend du niveau d'observation et d'analyse de l'observateur ». Ni l'un ni l'autre
+ne définit « objet naturel » : TLFi, « naturel » I.A, cité mot pour mot ; le TLFi « objet » complète
+« objet technique » (« généralement fabriquée »).
+
+**La page repassée.** Texte de chaque zone lu par l'outil, Lexique 3.83 au seuil de 10 par million
+(3 le 23/09), relecture à la main des sigles et des expressions. **63 ajouts :**
+- **ouverture (18)** : objet technique · objet naturel · système technique · OST · référentiel ·
+  socle commun · CRCN · robotique · automatisation · intelligence artificielle · drone · capteur ·
+  prototype · aéronef · hectare · problématique · ADEME · JRC/EFFIS
+- **séance 1 (13)** : multi-indices · guet · thermique · rayonnement · spectre · périmètre ·
+  régression · analyste · concepteur · filière · croisière · EASA · eMCO
+- **séance 2 (11)** : CSV · format · en-tête · mode opératoire · indicateur · coefficient · conversion ·
+  facteur d'émission · kgCO₂e · passager-kilomètre · PNUE
+- **séance 3 (5)** : estimation · CO₂ · Mt · sévérité · consumer
+- **séance 4 (5)** : infrastructure · résidentiel · munition · variable · abusif
+- **séance 5 (11)** : incommensurabilité · autonomie · maintenance · mode dégradé · norme · particule ·
+  bitume · fortuit · conservation · entretenable · curseur
+Un mot est rangé là où il apparaît **pour la première fois** (« drone », « capteur » : ouverture).
+Écartés : noms propres, mots courants de 3e, le vocabulaire des menus du tableur que les gestes
+montrent (AutoFiltre, Insérer), et « référence normative » / « codification opérationnelle » de la
+carte du référentiel — jargon de professeur, carte déjà signalée par la n°298.
+Sources des 63 : Larousse en ligne 43, TLFi 4, Eduscol 2, BO 2024 1, la séquence elle-même 9 (les sigles
+qu'elle explique — EASA, eMCO, PNUE, CRCN, socle commun, JRC/EFFIS avec le site d'EFFIS —, multi-indices,
+CSV avec la RFC 4180, passager-kilomètre), OQLF 1 (« mode dégradé »), Légifrance 1 (ADEME), ADEME 2 (à
+confirmer, voir plus bas).
+
+**Une coquille corrigée au passage** : « inréparables » → « irréparables » (séance 5).
+
+**Vérifié.** Banc du lot 50 / 50 ; `tests_generer_lexique` 20 / 20 ; `controle_squelette` 49, sortie
+identique à main ; `verif_regles_audit` 285, seule différence : 145 → 146 champs (la case `ouv_4`).
+Régénérer tout le dépôt ne modifie aucun autre lexique. Au navigateur : mémoire ancienne → nouvelle
+(les trois cases d'avant reviennent cochées, `ouv_4` vierge, puis cochée et retrouvée au
+rechargement) ; lien de la case → `#ouverture` en haut d'écran ; cinq liens de séance ; 4 questions
+tirées et corrigées ; 390 px sans défilement ; **zéro erreur JS** — 23 / 23.
+
+**Constaté, non corrigé.** La section d'ouverture range ses 18 mots par ordre alphabétique : l'élève
+qui suit « les mots de base » lit « ADEME » avant « objet technique ». Mettre les mots de base en tête
+demanderait un ordre choisi dans `vocabulaire_<lot>.json` (outil, thème 2). La légende des étiquettes
+de cette page de 3e dit « 5e » et « C1.1 à C1.6 ».
+
+### À RELIRE PAR PASCAL — les mots de base
+- **Objet technique** : Un objet fabriqué par l'être humain pour répondre à un besoin. Les jumelles de la
+  vigie, un drone, un capteur de fumée sont des objets techniques : demande-toi à quel besoin chacun
+  répond. — *Eduscol, guide de mai 2024, §3.3 (« pour rendre un service (répondre à un ou à plusieurs
+  besoins) ») ; TLFi « objet » : « Chose solide, maniable, généralement fabriquée, […] et répond à une
+  certaine destination ».*
+- **Objet naturel** : Ce qui existe dans la nature sans avoir été fabriqué par l'être humain. La
+  végétation qui brûle est naturelle ; la tour de guet qui la surveille est un objet technique. — *TLFi
+  « naturel » I.A : « Qui est dans, appartient à la nature; qui n'est pas le produit d'une pratique
+  humaine. »*
+- **Système technique** : Un ensemble d'éléments reliés entre eux, qui agissent ensemble et avec ce qui
+  les entoure pour rendre un service. Un capteur seul est un objet ; des capteurs qui se confirment
+  entre eux avant de donner l'alerte forment un système. C'est ton regard qui choisit le niveau : objet
+  ou système. — *Eduscol, guide de mai 2024, §3.3 : « un ensemble structuré d'éléments […] qui
+  interagissent entre eux et avec leur environnement pour rendre un service » ; BO 2024 : « La
+  distinction entre objet et système techniques dépend du niveau d'observation et d'analyse de
+  l'observateur ».* **À trancher** : le guide donne la même définition pour l'objet et pour le
+  système ; la nôtre les sépare par le niveau d'observation, comme le BO.
+- **OST** : Abréviation de « objet ou système technique » : le mot du programme pour parler des deux à
+  la fois. Le drone de cette séquence est un OST. — *BO 2024, préambule : « les objets ou systèmes
+  techniques (OST) ».*
+
+**Deux sources à confirmer** : « facteur d'émission » et « kgCO₂e » renvoient à l'ADEME (Base
+Empreinte, Impact CO₂), déjà citée par le lot, mais aucune phrase de définition de l'ADEME n'a pu être
+lue (pages en JavaScript, ou 403) : les définitions sont écrites d'après l'usage de la séquence.
