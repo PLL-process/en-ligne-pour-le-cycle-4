@@ -1671,16 +1671,25 @@ majEssentiel(); majProgress(); majHyp();
      réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
      refermer. Le focus revient sur l'image quittée. -->
 <style>
+  /* 24/09/2026 — la légende était en position:fixed en bas de l'écran : pour un alt long
+     (Herschel, 726 caractères), elle recouvrait l'image (103 px à 390 px). L'agrandisseur est
+     désormais une COLONNE — bouton, image, légende — : la légende suit l'image dans le flux,
+     l'image reçoit une hauteur maximale calculée (ouvrir()), et le fond défile si besoin. */
   .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
-    z-index:9999;padding:2rem;box-sizing:border-box;overflow:auto;
-    align-items:center;justify-content:center}
+    z-index:9999;padding:1rem;box-sizing:border-box;overflow:auto;
+    flex-direction:column;align-items:center;gap:.75rem}
   .loupe-fond[data-ouvert="oui"]{display:flex}
-  .loupe-fond img{max-width:100%;max-height:88vh;height:auto;
+  /* centré quand tout tient, sans rien couper quand ça déborde : des marges automatiques,
+     pas justify-content:center (qui rendrait le haut inaccessible au défilement) */
+  .loupe-fond > .loupe-fermer{margin-top:auto}
+  .loupe-fond > .loupe-legende{margin-bottom:auto}
+  .loupe-fond img{display:block;flex:none;max-width:100%;max-height:80vh;width:auto;height:auto;
     box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
     background:#fff;border-radius:4px}
-  .loupe-legende{position:fixed;left:0;right:0;bottom:.9rem;text-align:center;
-    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif;padding:0 2rem}
-  .loupe-fermer{position:fixed;top:.8rem;right:1rem;background:#1b1f27;
+  .loupe-legende{position:static;flex:none;margin:0;max-width:min(70ch,100%);text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif}
+  .loupe-legende .loupe-aide{display:block;margin-top:.25rem;font-size:.85em;color:#b8bfcc}
+  .loupe-fermer{position:sticky;top:0;align-self:flex-end;flex:none;z-index:1;background:#1b1f27;
     color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
     font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
   .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
@@ -1727,6 +1736,44 @@ majEssentiel(); majProgress(); majHyp();
     document.body.appendChild(fond);
     bouton.addEventListener("click", fermer);
     fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+    grande.addEventListener("load", ajuster);
+    window.addEventListener("resize", ajuster);
+  }
+
+  // La légende affichée : la figcaption VISIBLE de la figure si elle existe ; sinon le
+  // texte alternatif, réduit à sa première phrase s'il dépasse deux lignes. L'alt complet
+  // reste sur l'image agrandie, pour les lecteurs d'écran.
+  function poserLegende(el, texteAlt){
+    var fig = el.closest("figure");
+    var cap = fig ? fig.querySelector("figcaption") : null;
+    var visible = cap && cap.getClientRects().length && cap.textContent.trim();
+    legende.textContent = "";
+    var texte = visible ? cap.textContent.replace(/\s+/g, " ").trim() : (texteAlt || "");
+    var corps = document.createElement("span");
+    corps.textContent = texte;
+    var aide = document.createElement("span");
+    aide.className = "loupe-aide";
+    aide.textContent = "\u00c9chap pour refermer";
+    if (texte) legende.appendChild(corps);
+    legende.appendChild(aide);
+    if (!visible && texte) {
+      var ligne = parseFloat(getComputedStyle(legende).lineHeight) || 20;
+      if (corps.getBoundingClientRect().height > 2 * ligne + 1) {
+        var m = texte.match(/^[\s\S]*?[.!?\u2026](?=\s|$)/);
+        if (m && m[0].length < texte.length) corps.textContent = m[0];
+      }
+    }
+  }
+
+  // L'image reçoit la place qui reste : hauteur du fond, moins le bouton, la légende,
+  // les marges et les espacements — jamais moins de 40 % de l'écran ; au-delà, le fond défile.
+  function ajuster(){
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    var st = getComputedStyle(fond);
+    var ecart = parseFloat(st.rowGap) || 0;
+    var reste = fond.clientHeight - parseFloat(st.paddingTop) - parseFloat(st.paddingBottom)
+              - fond.querySelector(".loupe-fermer").offsetHeight - legende.offsetHeight - 2 * ecart;
+    grande.style.maxHeight = Math.max(reste, 0.4 * window.innerHeight) + "px";
   }
 
   function ouvrir(img){
@@ -1734,10 +1781,10 @@ majEssentiel(); majProgress(); majHyp();
     dernier = img;
     grande.src = img.currentSrc || img.src;
     grande.alt = img.alt || "";
-    // L'alternative textuelle sert de légende : elle DIT ce que l'image montre.
-    legende.textContent = img.alt ? img.alt + "  \u2014  \u00c9chap pour refermer"
-                                  : "\u00c9chap pour refermer";
     fond.setAttribute("data-ouvert", "oui");
+    fond.scrollTop = 0;
+    poserLegende(img, img.alt);
+    ajuster();
     fond.querySelector(".loupe-fermer").focus();
   }
 
@@ -1745,6 +1792,7 @@ majEssentiel(); majProgress(); majHyp();
     if (!fond) return;
     fond.removeAttribute("data-ouvert");
     grande.removeAttribute("src");
+    grande.style.maxHeight = "";
     if (dernier) { dernier.focus(); dernier = null; }
   }
 
@@ -1767,9 +1815,10 @@ majEssentiel(); majProgress(); majHyp();
     var titre = svg.querySelector("title");
     var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
     grande.alt = mot;
-    legende.textContent = mot ? mot + "  \u2014  \u00c9chap pour refermer"
-                              : "\u00c9chap pour refermer";
     fond.setAttribute("data-ouvert", "oui");
+    fond.scrollTop = 0;
+    poserLegende(svg, mot);
+    ajuster();
     fond.querySelector(".loupe-fermer").focus();
   }
 
