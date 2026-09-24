@@ -134,6 +134,40 @@
   .card b{color:#996b00!important}
 }
 </style>
+<style>
+/* Expérience de Herschel pas à pas (24/09/2026) */
+.hpp{margin:10px 0;scroll-margin-top:72px}
+.hpp-panneau{margin-top:10px;border:1px solid var(--border);border-radius:10px;padding:10px;background:#050f24}
+.hpp-dessin{width:100%;height:auto;display:block;max-width:820px;margin:0 auto}
+.hpp-dessin text{fill:#e4eaf5;font-size:13px}
+.hpp-dessin .nom{fill:#9bbefc}
+.hpp-dessin .tube{fill:#0a1b3d;stroke:#c9d6ee;stroke-width:1.5}
+.hpp-dessin .liquide{fill:#ff7b88}
+.hpp-dessin .zone{stroke:#9bbefc;stroke-width:1.5;stroke-dasharray:6 4;fill:none}
+.hpp-dessin .fort{font-weight:600}
+.hpp-dessin .c-violet{fill:#c68ef2}.hpp-dessin .c-bleu{fill:#6ea8ff}.hpp-dessin .c-vert{fill:#81fba1}
+.hpp-dessin .c-jaune{fill:#ffd66b}.hpp-dessin .c-orange{fill:#ffb454}.hpp-dessin .c-rouge{fill:#ff7b88}
+.hpp-dessin [data-des]{transition:opacity .35s ease calc(var(--i,0) * .12s)}
+.hpp-dessin [data-des].hpp-cache{opacity:0}
+.hpp-dessin .hpp-col{transform-box:fill-box;transform-origin:50% 100%;
+  transition:transform .6s ease calc(var(--i,0) * .08s)}
+.hpp-dessin .hpp-col.hpp-vide{transform:scaleY(0)}
+.hpp-texte{min-height:3.2em;margin:10px 4px 6px;font-size:1.02em}
+.hpp-texte p{margin:.3em 0}
+.hpp-prediction{margin:6px 4px}
+.hpp-prediction textarea{width:100%;box-sizing:border-box}
+.hpp-nav{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin-top:8px}
+.hpp-compte{font-weight:600;min-width:7em;text-align:center}
+/* à 390 px, le dessin est réduit à 0,4 : les mots grossissent, la note redite par la phrase s'efface */
+@media (max-width:600px){
+  .hpp-dessin text{font-size:22px}
+  .hpp-dessin .hpp-note{display:none}
+  .hpp-dessin .lb-fenetre{transform:translate(8px,18px)}
+  .hpp-dessin .lb-bas2{transform:translateY(10px)}
+}
+@media (prefers-reduced-motion: reduce){.hpp-dessin *{transition:none!important}}
+@media print{.hpp{display:none!important}}
+</style>
 </head>
 <body>
 <style id="navharm-css">
@@ -381,8 +415,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
         marchés et les métiers&nbsp;; elle rend possible ce qui ne l'était pas, et le savoir-faire
         d'avant ne suffit plus.</li>
       </ul>
-      <p><b>Dans cette séquence</b>&nbsp;: en 1800, Herschel découvre l'infrarouge — c'est une
-      découverte, pas encore une invention. Il faudra inventer des capteurs capables de le mesurer,
+      <p><b>Dans cette séquence</b>&nbsp;: en 1800, Herschel fait une découverte — tu vas la revivre
+      en b). C'est une découverte, pas encore une invention. Il faudra inventer des capteurs capables de le mesurer,
       puis les mettre à la disposition de ceux qui surveillent les feux&nbsp;: alors seulement, il y a
       innovation.</p>
       <p>Une tour de guet plus haute, avec de meilleures jumelles, est une
@@ -424,16 +458,105 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     </fieldset>
 
     <h4>b) De la découverte à l'usage</h4>
-    <p>Le drone qui repère un point chaud sous la fumée doit tout à un rayonnement invisible.
-    En <b>1800</b>, l'astronome <b>William Herschel</b> décompose la lumière du Soleil avec un
-    prisme et place un thermomètre sous chaque couleur, pour savoir laquelle chauffe le plus. Le
-    thermomètre placé <b>juste au-delà du rouge</b>, là où l'œil ne voit plus rien, monte davantage
-    que tous les autres.</p>
-    <figure class="fig">
-      <img src="Images/herschel_au_dela_du_rouge.svg" alt="Schéma de l'expérience de Herschel en 1800, vu de côté. La lumière du Soleil passe par la fente d'un volet, traverse un prisme et s'étale en éventail sur une table, où elle dessine six bandes : violet, bleu, vert, jaune, orange, rouge. Juste à droite du rouge, une septième zone, encadrée en pointillés, reste sombre : l'œil n'y voit aucune couleur. Sept thermomètres sont debout sur la table, un dans chaque couleur et un de plus au-delà du rouge. Leurs colonnes, dessinées à des hauteurs schématiques sans chiffres, montent de plus en plus du violet au rouge, et la plus haute est celle du thermomètre placé dans la zone sombre. Le schéma ne dit ni ce que Herschel cherchait, ni ce qu'il en a conclu.">
-      <figcaption>Le montage de 1800&nbsp;: un thermomètre dans chaque couleur, et un de plus là où
-      l'œil ne voit plus rien.</figcaption>
-    </figure>
+    <p>En 1800, un astronome s'est posé une question sur la lumière du Soleil. Revis son expérience
+    étape par étape, et fais ta prédiction <b>avant</b> de voir le résultat.</p>
+    <!-- Expérience de Herschel pas à pas (24/09/2026). Sources : W. Herschel, Philosophical
+         Transactions, 1800 (deux articles) et Caltech/IPAC Cool Cosmos — voir
+         SOURCES_DONNEES_IMPACTS_3e.md. L'état final du dessin est le schéma fixe du volet
+         « Ce qu'Herschel a observé ». Aucune information portée par le seul mouvement (n°119) :
+         chaque étape est dite par sa phrase. -->
+    <div class="hpp" id="herschel-pas-a-pas">
+      <button type="button" class="btn hpp-ouvrir" id="hppOuvrir" aria-expanded="false" aria-controls="hppPanneau">▶ Voir l'expérience pas à pas</button>
+      <div class="hpp-panneau" id="hppPanneau" hidden>
+        <svg class="hpp-dessin" data-loupe="non" viewBox="0 0 820 400" aria-hidden="true" focusable="false"
+             font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif">
+        <rect width="820" height="400" fill="#050f24"/>
+        <g data-des="1"><circle cx="64" cy="104" r="28" fill="#ffd66b"/><text class="nom" x="40" y="156">Soleil</text></g>
+        <g data-des="2">
+          <rect x="128" y="68" width="10" height="28" fill="#274a8a"/><rect x="128" y="104" width="10" height="44" fill="#274a8a"/>
+          <text class="nom lb-fenetre" x="92" y="172">fenêtre masquée</text>
+          <path d="M 92 100 L 206 100" stroke="#fff3c4" stroke-width="4" fill="none"/>
+          <path d="M 190 128 L 244 128 L 217 76 Z" fill="#122a52" stroke="#61dafb" stroke-width="2"/>
+          <text class="nom" x="194" y="148">prisme</text>
+          <rect x="270" y="336" width="546" height="14" rx="2" fill="#34425e"/>
+        </g>
+        <g data-des="3">
+          <path d="M 228 104 L 300 324 L 370 324 Z" fill="#c68ef2" fill-opacity="0.22"/>
+          <path d="M 228 104 L 370 324 L 440 324 Z" fill="#6ea8ff" fill-opacity="0.22"/>
+          <path d="M 228 104 L 440 324 L 510 324 Z" fill="#81fba1" fill-opacity="0.22"/>
+          <path d="M 228 104 L 510 324 L 580 324 Z" fill="#ffd66b" fill-opacity="0.22"/>
+          <path d="M 228 104 L 580 324 L 650 324 Z" fill="#ffb454" fill-opacity="0.22"/>
+          <path d="M 228 104 L 650 324 L 720 324 Z" fill="#ff7b88" fill-opacity="0.22"/>
+          <rect x="300" y="324" width="70" height="12" fill="#c68ef2"/><rect x="370" y="324" width="70" height="12" fill="#6ea8ff"/>
+          <rect x="440" y="324" width="70" height="12" fill="#81fba1"/><rect x="510" y="324" width="70" height="12" fill="#ffd66b"/>
+          <rect x="580" y="324" width="70" height="12" fill="#ffb454"/><rect x="650" y="324" width="70" height="12" fill="#ff7b88"/>
+          <rect x="720" y="324" width="80" height="12" fill="#0a1b3d"/>
+          <text x="314" y="370" class="c-violet">violet</text><text x="392" y="370" class="c-bleu">bleu</text>
+          <text x="459" y="370" class="c-vert">vert</text><text x="525" y="370" class="c-jaune">jaune</text>
+          <text x="590" y="370" class="c-orange">orange</text><text x="664" y="370" class="c-rouge">rouge</text>
+        </g>
+        <g class="hpp-th" data-des="4" style="--i:0"><rect class="tube" x="330" y="196" width="10" height="126" rx="5"/><circle class="liquide" cx="335" cy="326" r="8"/></g>
+        <rect class="liquide hpp-col" data-monte="5" style="--i:0" x="332.5" y="302" width="5" height="20"/>
+        <g class="hpp-th" data-des="4" style="--i:1"><rect class="tube" x="400" y="196" width="10" height="126" rx="5"/><circle class="liquide" cx="405" cy="326" r="8"/></g>
+        <rect class="liquide hpp-col" data-monte="5" style="--i:1" x="402.5" y="294" width="5" height="28"/>
+        <g class="hpp-th" data-des="4" style="--i:2"><rect class="tube" x="470" y="196" width="10" height="126" rx="5"/><circle class="liquide" cx="475" cy="326" r="8"/></g>
+        <rect class="liquide hpp-col" data-monte="5" style="--i:2" x="472.5" y="286" width="5" height="36"/>
+        <g class="hpp-th" data-des="4" style="--i:3"><rect class="tube" x="540" y="196" width="10" height="126" rx="5"/><circle class="liquide" cx="545" cy="326" r="8"/></g>
+        <rect class="liquide hpp-col" data-monte="5" style="--i:3" x="542.5" y="274" width="5" height="48"/>
+        <g class="hpp-th" data-des="4" style="--i:4"><rect class="tube" x="610" y="196" width="10" height="126" rx="5"/><circle class="liquide" cx="615" cy="326" r="8"/></g>
+        <rect class="liquide hpp-col" data-monte="5" style="--i:4" x="612.5" y="262" width="5" height="60"/>
+        <g class="hpp-th" data-des="4" style="--i:5"><rect class="tube" x="680" y="196" width="10" height="126" rx="5"/><circle class="liquide" cx="685" cy="326" r="8"/></g>
+        <rect class="liquide hpp-col" data-monte="5" style="--i:5" x="682.5" y="250" width="5" height="72"/>
+        <g data-des="6">
+          <rect class="zone" x="722" y="178" width="78" height="164" rx="6"/>
+          <text class="hpp-note" x="614" y="146">Sur la table, ici,</text>
+          <text class="hpp-note" x="614" y="164">l'œil ne voit <tspan class="fort">aucune couleur</tspan>.</text>
+          <text x="730" y="370">au-delà</text><text class="lb-bas2" x="730" y="386">du rouge</text>
+          <rect class="tube" x="756" y="196" width="10" height="126" rx="5"/><circle class="liquide" cx="761" cy="326" r="8"/>
+        </g>
+        <rect class="liquide hpp-col" data-monte="7" x="758.5" y="222" width="5" height="100"/>
+        </svg>
+        <div class="hpp-texte" id="hppTexte" aria-live="polite"></div>
+        <div class="hpp-prediction" id="hppPrediction" hidden>
+          <label for="a1_prediction"><b>Ma prédiction</b> (facultatif)&nbsp;: que va indiquer le thermomètre posé au-delà du rouge&nbsp;?</label>
+          <textarea id="a1_prediction" style="min-height:60px"></textarea>
+          <button type="button" class="btn" id="hppResultat">Voir le résultat</button>
+        </div>
+        <div class="hpp-nav">
+          <button type="button" class="btn ghost" id="hppPrec">◀ Précédent</button>
+          <span class="hpp-compte" id="hppCompte">Étape 1 / 7</span>
+          <button type="button" class="btn" id="hppSuiv">Suivant ▶</button>
+          <button type="button" class="btn ghost" id="hppZero">↺ Recommencer</button>
+        </div>
+      </div>
+    </div>
+    <details class="hpp-observe" id="hppObserve">
+      <summary>🔎 Ce qu'Herschel a observé — à ouvrir après l'expérience pas à pas</summary>
+      <p>Le drone qui repère un point chaud sous la fumée doit tout à un rayonnement invisible.
+      En <b>1800</b>, l'astronome <b>William Herschel</b> décompose la lumière du Soleil avec un
+      prisme, puis mesure la température de chaque couleur, l'une après l'autre&nbsp;: il y avance un
+      thermomètre à boule noircie, pendant que deux autres, restés à l'ombre, servent à comparer.</p>
+      <p>Il cherche laquelle chauffe le plus. Le thermomètre placé <b>juste au-delà du rouge</b>, là où
+      l'œil ne voit plus rien, monte davantage que dans toutes les couleurs. Herschel en conclut qu'il
+      existe des rayons invisibles qui chauffent&nbsp;; il les appelle «&nbsp;rayons calorifiques&nbsp;». On les
+      appelle aujourd'hui l'<b>infrarouge</b>.</p>
+      <figure class="fig">
+        <img src="Images/herschel_au_dela_du_rouge.svg" alt="Schéma de l'expérience de Herschel en 1800 : le montage et la mesure de température faite dans chaque zone de la table.">
+        <figcaption>Le montage de 1800&nbsp;: une mesure dans chaque couleur, et une de plus là où
+        l'œil ne voit plus rien.</figcaption>
+      </figure>
+      <details class="hpp-desc"><summary>Description détaillée du schéma</summary>
+        <p>La lumière du Soleil entre par une fenêtre presque masquée, traverse un prisme et s'étale
+        en éventail sur une table, où elle dessine six bandes&nbsp;: violet, bleu, vert, jaune, orange,
+        rouge. Juste à droite du rouge, une septième zone, encadrée en pointillés, reste sombre&nbsp;:
+        l'œil n'y voit aucune couleur.</p>
+        <p>Un thermomètre est dessiné dans chacune des sept zones&nbsp;:
+        Herschel n'en posait pas sept à la fois, il déplaçait le même d'une zone à l'autre, et le
+        schéma montre toutes ses mesures ensemble. Les colonnes, à des hauteurs schématiques sans
+        chiffres, montent de plus en plus du violet au rouge, et la plus haute est celle de la zone
+        sombre, au-delà du rouge.</p>
+      </details>
+    </details>
     <fieldset class="qcm-groupe" id="a1_5">
       <legend>Ce que Herschel cherchait, c'était&nbsp;:</legend>
       <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__1" value="quelle couleur du spectre chauffe le plus — il ne cherchait pas l'infrarouge"><label for="a1_5__1">quelle couleur du spectre chauffe le plus — il ne cherchait pas l'infrarouge</label></div>
@@ -532,7 +655,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
         <figcaption>Trois régimes, deux ruptures — et un savoir-faire qui change à chaque fois.</figcaption>
       </figure>
       <figure class="fig">
-        <img src="Images/corrige_de_la_decouverte_a_l_usage.svg" alt="Frise en quatre temps de la découverte de l'infrarouge par Herschel en 1800 jusqu'au drone thermique d'aujourd'hui, en passant par la fabrication de détecteurs au XXe siècle et leur diffusion dans des objets ordinaires.">
+        <img src="Images/corrige_de_la_decouverte_a_l_usage.svg" alt="Frise à l'échelle du temps : l'observation de Herschel en 1800, plus d'un siècle sans usage, les caméras thermiques puis les satellites au XXe siècle, et le drone d'aujourd'hui.">
         <figcaption>Deux siècles entre l'observation de Herschel et le drone — en passant par les caméras thermiques et les satellites.</figcaption>
       </figure>
       <p class="retenir">Une <b>amélioration</b> fait mieux la même chose. Une <b>rupture</b> rend
@@ -1665,6 +1788,79 @@ $("btnEssentiel").addEventListener("click", ()=>{
 restore();
 if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
 majEssentiel(); majProgress(); majHyp();
+</script>
+
+<!-- Expérience de Herschel pas à pas (24/09/2026) -->
+<script>
+(function(){
+  "use strict";
+  var TEXTES = [
+    "En 1800, l'astronome William Herschel se demande : quelle couleur de la lumière du Soleil chauffe le plus ?",
+    "La lumière du Soleil entre par une fenêtre presque masquée, puis traverse un prisme.",
+    "Le prisme sépare les couleurs que contient la lumière blanche : elles s'étalent sur la table.",
+    "Herschel mesure la température dans chaque couleur, l'une après l'autre, en y avançant un thermomètre ; deux autres, restés à l'ombre, servent à comparer.",
+    "Du violet au rouge, la température monte de plus en plus.",
+    "Herschel mesure aussi ici, là où l'œil ne voit aucune couleur. À ton avis, que va indiquer le thermomètre ?",
+    ["C'est au-delà du rouge, là où l'on ne voit rien, que le thermomètre monte le plus.",
+     "Herschel en conclut qu'il existe, au-delà du rouge, des rayons invisibles qui chauffent. Il les appelle « rayons calorifiques » ; on les appelle aujourd'hui l'infrarouge."]
+  ];
+  var N = TEXTES.length, etape = 1;
+  var bloc = document.getElementById("herschel-pas-a-pas");
+  if (!bloc) return;
+  var ouvrir = document.getElementById("hppOuvrir"), panneau = document.getElementById("hppPanneau");
+  var texte = document.getElementById("hppTexte"), compte = document.getElementById("hppCompte");
+  var prec = document.getElementById("hppPrec"), suiv = document.getElementById("hppSuiv");
+  var pred = document.getElementById("hppPrediction");
+
+  function montrer(n){
+    etape = Math.max(1, Math.min(N, n));
+    bloc.querySelectorAll("[data-des]").forEach(function(el){
+      el.classList.toggle("hpp-cache", etape < +el.getAttribute("data-des"));
+    });
+    bloc.querySelectorAll("[data-monte]").forEach(function(el){
+      el.classList.toggle("hpp-vide", etape < +el.getAttribute("data-monte"));
+    });
+    var t = TEXTES[etape - 1]; texte.textContent = "";
+    (Array.isArray(t) ? t : [t]).forEach(function(ph){
+      var p = document.createElement("p"); p.textContent = ph; texte.appendChild(p);
+    });
+    compte.textContent = "Étape " + etape + " / " + N;
+    prec.disabled = etape === 1; suiv.disabled = etape === N;
+    pred.hidden = etape !== 6;
+  }
+  function deplier(){
+    panneau.hidden = false; ouvrir.setAttribute("aria-expanded", "true");
+    ouvrir.textContent = "▼ L'expérience pas à pas";
+  }
+  ouvrir.addEventListener("click", function(){
+    if (panneau.hidden) { deplier(); montrer(1); suiv.focus(); }
+    else { panneau.hidden = true; ouvrir.setAttribute("aria-expanded", "false");
+           ouvrir.textContent = "▶ Voir l'expérience pas à pas"; }
+  });
+  prec.addEventListener("click", function(){ montrer(etape - 1); });
+  suiv.addEventListener("click", function(){ montrer(etape + 1); });
+  document.getElementById("hppZero").addEventListener("click", function(){ montrer(1); suiv.focus(); });
+  document.getElementById("hppResultat").addEventListener("click", function(){ montrer(7); suiv.focus(); });
+  montrer(1);
+
+  // Lien direct (cahier de textes) : #herschel-pas-a-pas ouvre la séance 1 et l'expérience,
+  // quelle que soit la séance affichée ou mémorisée.
+  function allerAuLien(){
+    if (location.hash !== "#herschel-pas-a-pas") return;
+    var onglet = document.getElementById("tab-s1");
+    if (onglet && !onglet.classList.contains("active")) onglet.click();
+    if (panneau.hidden) { deplier(); montrer(1); }
+    setTimeout(function(){ bloc.scrollIntoView({block: "start"}); }, 450);
+  }
+  window.addEventListener("hashchange", allerAuLien);
+  if (document.readyState === "complete") allerAuLien();
+  else window.addEventListener("load", allerAuLien);
+
+  // À l'impression, seul le schéma fixe : son volet s'ouvre le temps d'imprimer.
+  var observe = document.getElementById("hppObserve"), etaitOuvert = false;
+  window.addEventListener("beforeprint", function(){ etaitOuvert = observe.open; observe.open = true; });
+  window.addEventListener("afterprint", function(){ observe.open = etaitOuvert; });
+})();
 </script>
 
 <!-- loupe-images-v1 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun

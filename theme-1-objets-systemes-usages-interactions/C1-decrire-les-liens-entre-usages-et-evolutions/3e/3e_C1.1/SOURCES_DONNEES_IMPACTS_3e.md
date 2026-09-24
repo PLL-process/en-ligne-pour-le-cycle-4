@@ -68,3 +68,36 @@ Liens :
 - https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Innovation
 - https://www.cnrtl.fr/definition/inventer · https://www.cnrtl.fr/definition/invention
 - https://www.inpi.fr/realiser-demarches/propriete-intellectuelle/criteres-de-brevetabilite
+
+## L'expérience de Herschel, 1800 — activité 1 b), « pas à pas » (24/09/2026)
+
+Sources ouvertes et lues le 24/09/2026. Chaque phrase de l'animation, du volet « Ce qu'Herschel a observé » et
+des deux schémas est confrontée ; ce qu'une source contredit a été corrigé.
+
+| Phrase de la page | Source | Passage (mot pour mot) |
+|---|---|---|
+| Étape 1 — « quelle couleur de la lumière du Soleil chauffe le plus ? » | W. Herschel, « Investigation of the Powers of the Prismatic Colours to Heat and Illuminate Objects », *Phil. Trans.* 90 (1800) — titre ; Cool Cosmos, « Herschel's Experiment » | titre : « the Powers of the Prismatic Colours to Heat » ; Cool Cosmos : « He wanted to know how much heat was passed through the different colored filters he used to observe sunlight. » |
+| Étape 2 — « La lumière du Soleil entre par une fenêtre presque masquée, puis traverse un prisme. » | W. Herschel, « Experiments on the Refrangibility of the Invisible Rays of the Sun », *Phil. Trans.* 90 (1800), p. 285 | « the precaution of darkening the window in which the prism was placed, by fixing up a thick dark green curtain » |
+| Étape 4 — « l'une après l'autre, en y avançant un thermomètre ; deux autres, restés à l'ombre, servent à comparer » | *Investigation*, 1ʳᵉ expérience | « I then placed three thermometers upon small inclined planes […] their balls were blacked with japan ink » ; « advancing No. 1 to the red rays, and leaving the other two close by, in the shade, I marked down what they shewed » |
+| Étape 5 — « Du violet au rouge, la température monte de plus en plus. » | Cool Cosmos | « He found that the temperatures of the colors increased from the violet to the red part of the spectrum. » |
+| Étape 7 — « C'est au-delà du rouge […] que le thermomètre monte le plus. » | *Investigation* ; *Refrangibility*, p. 285 ; Cool Cosmos | « the full red falls still short of the maximum of heat; which perhaps lies even a little beyond visible refraction » ; « the thermometer No. 1 rose 6½ degrees, in 10 minutes, when its centre was placed ½ inch beyond visible light » ; « this region had the highest temperature of all » |
+| Étape 7 — « des rayons invisibles qui chauffent […] “rayons calorifiques” » | *Investigation* ; Cool Cosmos | « radiant heat will at least partly, if not chiefly, consist […] of invisible light » ; « the refrangibility of calorific rays » ; « calorific rays (derived from the Latin word for heat) » |
+
+**Corrigé parce que la source le contredisait** :
+- « place un thermomètre sous chaque couleur » (texte de b)), « Sept thermomètres sont debout sur la table »
+  (description du schéma), « un thermomètre est posé dans chaque zone » (schéma) et « met un thermomètre sous
+  chaque couleur » (frise du corrigé) : Herschel utilisait **trois** thermomètres, en avançait **un** dans la
+  couleur étudiée et laissait les deux autres à l'ombre pour comparer. Le schéma garde un thermomètre par zone,
+  mais dit désormais qu'il montre **les mesures**, faites l'une après l'autre.
+- « volet et fente » (schéma) : aucune des deux sources ne parle d'une fente avant le prisme ; le prisme est
+  dans une fenêtre assombrie par un rideau. Le dessin dit « fenêtre masquée ». (L'ouverture découpée dans un
+  carton, dans *Investigation*, est placée **après** le prisme, pour ne laisser passer qu'une couleur.)
+
+**Frise du corrigé** : seule date sourcée, 1800. Le reste vient de la page elle-même (« plus d'un siècle avant
+les premières caméras thermiques, puis les satellites, puis le drone ») : les caméras thermiques et les
+satellites sont placés dans une bande « XXᵉ siècle », sans année, faute de source primaire lue.
+
+Liens :
+- https://archive.org/details/philtrans01364503 (*Investigation…*, 1800)
+- https://archive.org/details/philtrans08733349 (*Experiments on the Refrangibility…*, 1800)
+- https://coolcosmos.ipac.caltech.edu/page/herschel_experiment
