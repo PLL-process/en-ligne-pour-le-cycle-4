@@ -19738,3 +19738,98 @@ vol »). Ni pilote ni liaison du drone : la séquence n'en parle pas. **À RELIR
 `verif_regles_audit` 285 (146 champs, la case `ouv_4`) ; régénérer tout le dépôt ne change aucun autre
 lexique ; navigateur 23 / 23 (mémoire ancienne → nouvelle, `ouv_4`, lien `#ouverture`, cinq liens de
 séance, QCM, 390 px, zéro erreur JS).
+
+## 24/09/2026 — 3e_C1.1 : l'expérience de Herschel pas à pas, et la prédiction avant le résultat
+
+**Demande de Pascal (essai d'animation).** Activité 1 b). La séquence est commencée dans un collège,
+pas encore dans l'autre : la page doit servir en classe comme en révision à la maison.
+
+**La prédiction n'est plus éventée.** b) donnait le résultat avant toute prédiction (« Le thermomètre placé
+juste au-delà du rouge […] monte davantage que tous les autres »), l'alt du schéma aussi, et l'encadré
+« 📌 Quatre mots », plus haut, disait « Herschel découvre l'infrarouge ». Désormais :
+- b) s'ouvre sur une phrase d'amorce, puis le bouton « ▶ Voir l'expérience pas à pas » ;
+- le texte de résultat et le schéma fixe sont dans un volet « 🔎 Ce qu'Herschel a observé — à ouvrir après
+  l'expérience pas à pas », fermé au départ ;
+- l'alt du schéma dit sa fonction en une phrase, sans le résultat ; la description longue est dans un volet
+  (n°117) ;
+- l'encadré dit « en 1800, Herschel fait une découverte — tu vas la revivre en b) ».
+Vérifié au navigateur : un élève qui lit la page de haut en bas ne rencontre ni « infrarouge », ni « monte
+le plus / davantage », ni « rayons calorifiques » avant l'étape 6 (texte visible parcouru jusqu'à
+l'expérience, puis les phrases des étapes 1 à 5). La question « Ce que Herschel cherchait » et la suite de
+b) sont inchangées.
+
+**L'expérience pas à pas.** Sept étapes que l'élève fait avancer (◀ Précédent · Suivant ▶ · ↺ Recommencer
+· « Étape n / 7 »), boutons natifs. Même dessin que le schéma fixe, en SVG dans la page (mêmes couleurs,
+mêmes hauteurs relatives ; l'état final est le schéma fixe), `data-loupe="non"`. Une phrase par étape,
+sous le dessin, dans une zone `aria-live` : aucune information portée par le seul mouvement (n°119).
+Étape 6 : champ « Ma prédiction » (`a1_prediction`, facultatif, enregistré comme les autres) et bouton
+« Voir le résultat ». Transitions courtes ; sous `prefers-reduced-motion`, aucune. À l'impression,
+l'expérience disparaît et le volet du schéma fixe s'ouvre le temps d'imprimer. À 390 px, les mots du
+dessin grossissent et la note « Sur la table, ici… », redite par la phrase, s'efface. Ni son, ni lecture
+automatique, ni bibliothèque, ni réseau.
+
+**Lien direct pour le cahier de textes** : `#herschel-pas-a-pas` ouvre la séance 1 et l'expérience,
+depuis n'importe quelle séance affichée, et place le bloc sous la barre de navigation.
+
+**Les sources ont corrigé la page** (détail au paragraphe près dans `SOURCES_DONNEES_IMPACTS_3e.md` :
+W. Herschel, *Phil. Trans.* 1800, « Investigation of the Powers of the Prismatic Colours… » et
+« Experiments on the Refrangibility of the Invisible Rays of the Sun », lus sur archive.org ; Caltech/IPAC
+Cool Cosmos) :
+- **les thermomètres** : Herschel en utilisait **trois** à boule noircie, en avançait **un** dans la couleur
+  étudiée et laissait les deux autres à l'ombre pour comparer. La page disait « place un thermomètre sous
+  chaque couleur », le schéma « sept thermomètres » et « un thermomètre est posé dans chaque zone », la
+  frise « met un thermomètre sous chaque couleur ». Corrigé partout ; le dessin garde un thermomètre par
+  zone, et dit qu'il montre les **mesures**, faites l'une après l'autre ;
+- **« volet et fente »** : aucune des deux sources ne parle d'une fente avant le prisme ; le prisme est dans
+  une fenêtre assombrie par un rideau. Le dessin dit « fenêtre masquée ».
+
+**La frise du corrigé** (activité 1, correction seulement) est redessinée **à l'échelle du temps**, de 1800
+à 2026 : chaque année a la même longueur, et le siècle sans usage se voit. Jalons : 1800 (sourcé) ; une
+bande « XXᵉ siècle » pour les premières caméras thermiques puis les satellites — sans année, faute de source
+primaire lue, la page disant seulement « plus d'un siècle avant les premières caméras thermiques, puis les
+satellites » ; le drone, aujourd'hui. Aucun jalon nouveau.
+
+**Lexique, séance 1** : « rayons calorifiques » ajouté (Herschel 1800, « calorific rays » ; Larousse,
+« calorifique »). Prisme, infrarouge, rayonnement, spectre, thermique y étaient déjà.
+
+**Banc du lot** : un contrôle exigeait un alt de plus de 200 caractères pour le schéma ; il vérifie
+désormais la règle n°117 (alt court sans le résultat, description dépliable, ni l'un ni l'autre ne donne
+la réponse du QCM).
+
+**Vérifié.** Banc du lot 50 / 50 ; générateur 21 / 21 ; `controle_squelette` 49 ; `verif_regles_audit` 285
+(un champ de plus, la prédiction). Au navigateur, 18 / 18 : sept étapes à 390 et 1280 px (captures),
+compteur, état final = schéma fixe (sept colonnes, montantes, la dernière la plus haute), clavier, prédiction
+retrouvée après rechargement, lien direct depuis la séance 3 et à froid, résultat jamais rencontré avant
+l'étape 6, `prefers-reduced-motion`, impression ; mémoire ancienne → nouvelle 23 / 23 ; agrandisseur :
+recouvrement 0 px, 19 images × 4 configurations ; zéro erreur JS.
+
+### À RELIRE PAR PASCAL
+**Les sept phrases** (celles de la commande, sauf 2 et 4, corrigées d'après les sources) :
+1. En 1800, l'astronome William Herschel se demande : quelle couleur de la lumière du Soleil chauffe le plus ?
+2. La lumière du Soleil entre par une fenêtre presque masquée, puis traverse un prisme. *(commande : « passe
+   par une fente » — pas de fente dans les sources)*
+3. Le prisme sépare les couleurs que contient la lumière blanche : elles s'étalent sur la table.
+4. Herschel mesure la température dans chaque couleur, l'une après l'autre, en y avançant un thermomètre ;
+   deux autres, restés à l'ombre, servent à comparer. *(commande : « … l'une après l'autre. » — les deux
+   thermomètres témoins ajoutés, d'après Investigation, 1ʳᵉ expérience)*
+5. Du violet au rouge, la température monte de plus en plus.
+6. Herschel mesure aussi ici, là où l'œil ne voit aucune couleur. À ton avis, que va indiquer le thermomètre ?
+7. C'est au-delà du rouge, là où l'on ne voit rien, que le thermomètre monte le plus. / Herschel en conclut
+   qu'il existe, au-delà du rouge, des rayons invisibles qui chauffent. Il les appelle « rayons
+   calorifiques » ; on les appelle aujourd'hui l'infrarouge.
+
+**La frise du corrigé** : « 1800 — l'observation » (Herschel étale la lumière du Soleil au prisme et mesure la
+température de chaque couleur ; au-delà du rouge, où l'œil ne voit rien, il monte le plus : l'infrarouge) ·
+« plus d'un siècle » · « XXᵉ siècle — les capteurs » (les premières caméras thermiques, puis les satellites :
+on sait enfin fabriquer des détecteurs de ce rayonnement invisible) · « Aujourd'hui — l'usage » (un drone
+repère un point chaud sous la fumée, de nuit). Bande de conclusion inchangée. **Les années précises des
+premières caméras thermiques et des premiers satellites ne sont pas données** : il faudrait une source
+primaire pour chacune.
+
+**Aussi** : l'amorce de b) (« En 1800, un astronome s'est posé une question sur la lumière du Soleil. Revis
+son expérience étape par étape, et fais ta prédiction avant de voir le résultat. ») ; l'alt court du
+schéma (« Schéma de l'expérience de Herschel en 1800 : le montage et la mesure de température faite dans
+chaque zone de la table. ») ; la phrase de l'encadré.
+
+**Limite** : le lexique de la séance 1, à un clic en tête de séance, définit « infrarouge » ; un élève qui
+l'ouvre avant l'expérience peut y lire la réponse.

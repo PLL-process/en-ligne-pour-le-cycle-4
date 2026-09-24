@@ -134,9 +134,14 @@ async def tester_sequence(p):
     r.append(("phrase éthique visible et non repliée", "ne comparons ni la valeur des vies" in await pg.evaluate("document.querySelector('#s4').innerText")))
     r.append(("problématique recentrée sur ce qui disparaît et qui décide",
               "qu'est-ce qui disparaît, qu'est-ce qui subsiste — et qui en décide" in body.replace("\u00a0"," ")))
-    hers=await pg.evaluate("(()=>{const i=document.querySelector('#s1 img[src$=\"herschel_au_dela_du_rouge.svg\"]');return i?i.alt:''})()")
-    r.append(("schéma de Herschel dans l'activité 1, sans la réponse du QCM",
-              len(hers)>200 and "infrarouge" not in hers.lower() and "cherchait" not in hers.lower().replace("ne dit ni ce que herschel cherchait","")))
+    # 24/09/2026, n°117 : l'alt dit la fonction en une phrase, sans le résultat ; la description
+    # longue est dans un volet dépliable. Aucun des deux ne donne la réponse du QCM (« ce que Herschel cherchait »).
+    hers=await pg.evaluate("(()=>{const i=document.querySelector('#s1 img[src$=\"herschel_au_dela_du_rouge.svg\"]');"
+                           "const d=document.querySelector('#s1 details.hpp-desc');"
+                           "return i?{alt:i.alt,desc:d?d.textContent:''}:{alt:'',desc:''}})()")
+    r.append(("schéma de Herschel dans l'activité 1 : alt court sans le résultat, description dépliable, sans la réponse du QCM",
+              0<len(hers["alt"])<=200 and "infrarouge" not in hers["alt"].lower() and "au-delà" not in hers["alt"].lower()
+              and len(hers["desc"])>200 and "infrarouge" not in hers["desc"].lower() and "cherchait" not in hers["desc"].lower()))
     tr=await pg.evaluate("""(()=>{const t=document.getElementById('a4_transf'); if(!t) return null;
         const c=t.closest('section.card'); const s=[...c.querySelectorAll('details')].map(d=>d.className);
         return {s4:!!t.closest('#s4'), ordre:s.join(' '), titre:c.querySelector('h2').textContent,
