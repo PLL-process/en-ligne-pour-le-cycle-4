@@ -20106,3 +20106,35 @@ passent par le commun**, mot pour mot (définition commune, puis exemple de la 4
 `verif_regles_audit` **285** ; `build_qcm.py` de 4e_C1.1 refuse de tourner (sortie 1) ; navigateur : 4e_C1.1
 **21 / 21** (mémoire de main → nouvelle version, liens de séance et d'ouverture, 3 questions, 390 px), 3e_C1.1
 **23 / 23**, expérience de Herschel **18 / 18** ; zéro erreur JS.
+
+## 24/09/2026 — loupe-images-v1 : la légende recouvre l'image, sur 102 autres pages
+
+**Le défaut** (corrigé pour 3e_C1.1 seule, en urgence, #428) : dans l'agrandisseur d'images, la légende
+est l'alt complet, en `position:fixed` en bas de l'écran, et l'image garde `max-height:88vh` quelle que
+soit la longueur de la légende. Un alt long la fait recouvrir l'image — mesuré sur 3e_C1.1 : jusqu'à
+140 px à 1280 px zoomé 150 % (projection), 39 à 79 px à 390 px.
+
+**Où, compté sur main le 24/09.** Par le marqueur `loupe-images-v1` : **101 pages** hors 3e_C1.1 —
+thème 1 : 27 · thème 2 : 28 · thème 3 : 45 · `_outils/dnb_gabarit.html`. Par le code lui-même
+(`.loupe-legende{position:fixed`) : **102** — la 102ᵉ est
+`theme-3-…/C9-…/4e/4e_C9.1/sequence_4e_C9_jardin-programme.html`, qui porte le code de l'agrandisseur
+**sans le marqueur** : `loupe.py` y ajouterait un second agrandisseur. (L'estimation de 101 venait de la
+revue de #428, qui comptait le marqueur ; ma première rédaction de cette note l'attribuait à tort à
+Pascal.)
+
+**Ce que fait `theme-3-…/audit/loupe.py`, et ce qu'il ne fait pas.** Il ne réinjecte pas le défaut dans
+les pages déjà équipées : `injectable()` refuse toute page qui contient le marqueur. Mais il le **propage**
+aux pages qu'il équipe pour la première fois, et aux TP de l'atelier CAO régénérés par `build_tp.py`, qui
+charge `loupe.py` pour y poser l'agrandisseur.
+
+**Le marqueur ne distingue plus une page corrigée d'une page à corriger** : 3e_C1.1, corrigée, garde
+`loupe-images-v1` — c'était le bon choix pour l'urgence, puisque `loupe.py` saute les pages qui le
+portent. **Pour la campagne**, thème par thème :
+- marqueur `loupe-images-v2` pour le bloc corrigé (celui de 3e_C1.1 : agrandisseur en colonne, légende
+  dans le flux sous l'image, hauteur de l'image calculée, alt complet conservé sur l'image agrandie) ;
+- `loupe.py` porte le bloc v2, saute les pages v1 comme v2 à l'injection, et sait **remplacer** un bloc
+  v1 par le bloc v2 ;
+- 4e_C9.1 : retirer le bloc sans marqueur, poser le v2 ;
+- mettre à jour le texte de la règle n°92 : la légende est la figcaption visible de la figure, sinon la
+  première phrase de l'alt ;
+- vérifier chaque page à 390, 1280, 1920 px et 1280 px zoomé 150 %.
