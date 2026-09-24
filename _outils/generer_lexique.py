@@ -57,6 +57,20 @@ Le script REFUSE alors le lot (sortie ≠ 0, le mot nommé, lexique non écrit) 
   · un mot qui est aussi une notion de QCM, avec une autre définition que son
     « à retenir » : l'élève lirait deux vérités pour un même mot.
 
+LE VOCABULAIRE COMMUN (24/09/2026)
+----------------------------------
+Les mots de base — objet technique, objet naturel, système technique, OST —
+reviennent dans chaque lot. Ils sont définis UNE fois, dans
+`_outils/vocabulaire_commun.json` ({mot, formes[], definition, source}). Un lot
+y renvoie :
+
+    {"mot": "objet technique", "commun": true, "seance": "ouverture",
+     "exemple": "Les jumelles de la vigie…"}
+
+et le lexique écrit la définition commune, puis l'exemple du lot, avec la source
+commune. REFUS : une entrée « commun » qui redéfinit le mot (`definition` ou
+`source` à elle), un mot absent du fichier commun, un mot absent de sa zone.
+
 CE QUE LE SCRIPT N'ÉCRASE PAS (24/09/2026)
 ------------------------------------------
 Régénérer tout le dépôt modifiait 4 lexiques : deux perdaient un `id` posé à la
@@ -264,6 +278,9 @@ SIGNATURES = ("Chaque ligne provient d'une question de", "Les notions viennent m
 
 OUVERTURE = "ouverture"
 
+#: les mots de base, définis une fois pour tous les lots
+CHEMIN_COMMUN = os.path.join(os.path.dirname(os.path.abspath(__file__)), "vocabulaire_commun.json")
+
 
 class RefusVocabulaire(Exception):
     """Une entrée de vocabulaire_<lot>.json que le lexique ne peut pas publier."""
@@ -352,11 +369,32 @@ def texte_ouverture(src):
     return " ".join(p.morceaux) if p.barre else None
 
 
-def lire_vocabulaire(dossier, code, retour, par_comp):
+def lire_commun(chemin=None):
+    """{mot plié: entrée} du vocabulaire commun ; {} s'il n'existe pas. Chaque entrée y est
+    complète (mot, définition, source), sinon RefusVocabulaire."""
+    chemin = chemin or CHEMIN_COMMUN
+    if not os.path.isfile(chemin):
+        return {}
+    nom = os.path.basename(chemin)
+    try:
+        entrees = json.load(open(chemin, encoding="utf-8"))
+    except ValueError as e:
+        raise RefusVocabulaire("%s illisible : %s" % (nom, e))
+    commun = {}
+    for e in entrees if isinstance(entrees, list) else [None]:
+        if not isinstance(e, dict) or not all(sans_balises(str(e.get(k) or "")) for k in
+                                              ("mot", "definition", "source")):
+            raise RefusVocabulaire("%s : chaque entrée porte mot, définition et source (%r)" % (nom, e))
+        commun[pli(e["mot"])] = e
+    return commun
+
+
+def lire_vocabulaire(dossier, code, retour, par_comp, commun=None):
     """Lit vocabulaire_<code>.json s'il existe ; rend (nom du fichier, {n° de séance: [entrées]}).
 
-    La clé 0 porte les mots de l'ouverture. Lève RefusVocabulaire au premier défaut, en
-    nommant le mot."""
+    La clé 0 porte les mots de l'ouverture. Une entrée `"commun": true` prend sa définition
+    et sa source dans le vocabulaire commun, et y ajoute son `exemple`. Lève RefusVocabulaire
+    au premier défaut, en nommant le mot."""
     nom = "vocabulaire_%s.json" % code
     chemin = os.path.join(dossier, nom)
     if not os.path.isfile(chemin):
@@ -377,6 +415,20 @@ def lire_vocabulaire(dossier, code, retour, par_comp):
         mot = str(e.get("mot") or "").strip() if isinstance(e, dict) else ""
         if not mot:
             raise RefusVocabulaire("%s : une entrée sans « mot »" % nom)
+        if e.get("commun"):
+            if e.get("definition") or e.get("source"):
+                raise RefusVocabulaire("« %s » renvoie au vocabulaire commun et le redéfinit : une "
+                                       "entrée « commun » ne porte ni definition ni source, seulement "
+                                       "son exemple" % mot)
+            if commun is None:
+                commun = lire_commun()
+            c = commun.get(pli(mot))
+            if c is None:
+                raise RefusVocabulaire("« %s » renvoie au vocabulaire commun, qui ne le contient pas "
+                                       "(%s)" % (mot, os.path.basename(CHEMIN_COMMUN)))
+            exemple = sans_balises(str(e.get("exemple") or ""))
+            e = dict(e, definition=(sans_balises(c["definition"]) + " " + exemple).strip(),
+                     source=c["source"], formes=e.get("formes") or c.get("formes") or [mot])
         definition = sans_balises(str(e.get("definition") or ""))
         source = sans_balises(str(e.get("source") or ""))
         seance = str(e.get("seance") or "").strip()
@@ -448,7 +500,7 @@ def garde_ecrasement(sortie, page):
                              "l'inscrire dans IDS_POSES." % (nom, ", ".join(perdus)))
 
 
-def ecrire_lexique(dossier, titre, retour):
+def ecrire_lexique(dossier, titre, retour, commun=None):
     code = re.sub(r"[^A-Za-z0-9._-]", "_", titre)[:60]
     if code in EXCLUS:
         raise LexiqueProtege(EXCLUS[code], exclu=True)
@@ -475,7 +527,7 @@ def ecrire_lexique(dossier, titre, retour):
         corps.append("<section>\n <h2>%s <span class=\"compte\">· %d notions</span></h2>\n"
                      " <dl>\n%s\n </dl>\n</section>"
                      % (html.escape(comp), len(vus), "\n".join(lignes)))
-    fichier_vocab, par_seance = lire_vocabulaire(dossier, code, retour, par_comp)
+    fichier_vocab, par_seance = lire_vocabulaire(dossier, code, retour, par_comp, commun)
     sources = ", ".join(sorted(sources))
     if fichier_vocab:
         nb = sum(len(v) for v in par_seance.values())
