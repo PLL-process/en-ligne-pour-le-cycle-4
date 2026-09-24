@@ -24,3 +24,25 @@ Date de vérification : 25 juillet 2026
 ## Principe d’intégrité scientifique
 
 Le tableur peut produire un résultat numérique exact à partir des cellules, mais ce résultat ne devient pas automatiquement une vérité sur le monde. Toute conclusion doit indiquer : la source, la date, l’unité, le périmètre, le caractère observé ou modélisé et le niveau d’incertitude.
+
+## Définitions — invention, innovation, évolution technologique (22/09/2026)
+
+Sources ouvertes et lues le 22/09/2026. Chaque définition de l'encadré « 📌 » et des questions « Invention », « Innovation », « Évolution technologique » du QCM
+est confrontée phrase par phrase ; ce qu'une source ne dit pas est signalé, pas prêté.
+
+| Mot | Source primaire | Passage (mot pour mot) | Ce qu'il fonde dans notre définition |
+|---|---|---|---|
+| Innovation | OCDE/Eurostat, *Oslo Manual 2018*, 4ᵉ éd., §2.99 (définition générale, reprise au §1.25) | « An innovation is a new or improved product or process (or combination thereof) that differs significantly from the unit's previous products or processes and that has been made available to potential users (product) or brought into use by the unit (process). » | « nouveau ou nettement amélioré » (*differs significantly*) ; « mise à la disposition de ceux qui peuvent s'en servir » (*made available to potential users*). **Corrigé** : la première rédaction disait « qui arrive jusqu'à ceux qui s'en servent » — le manuel exige la mise à disposition, pas l'usage effectif. |
+| Innovation | *Oslo Manual 2018*, §2.2 | « Innovation is more than a new idea or an invention. An innovation requires implementation, either by being put into active use or by being made available for use by other parties […] » | « Une idée, même excellente, n'est pas encore une innovation. » |
+| Innovation | *Oslo Manual 2018*, §2.19 | « The requirement for implementation is a defining characteristic of innovation that distinguishes it from inventions, prototypes, new ideas, etc. » | « Une invention n'est pas forcément utilisée. » |
+| Innovation de produit (services inclus) | *Oslo Manual 2018*, §3.24 (et encadré du §1.31) | « A product innovation is a new or improved good or service that differs significantly from the firm's previous goods or services and that has been introduced on the market. » — §3.24 : « The term "product" […] encompasses both goods and services. » | « objet, procédé ou service » |
+| Innovation | Eurostat, *Statistics Explained*, Glossary: Innovation | « Innovation is the use of new ideas, products or methods where they have not been used before. For the Community Innovation Survey (CIS), an innovation is defined as a new or significantly improved product (good or service) introduced to the market, or the introduction within an enterprise of a new or significantly improved process. » | « nouveau ou nettement amélioré » ; « bien ou service » |
+| Invention | TLFi (CNRTL), « inventer », A.1 ; « invention », I.A.1-2 renvoie à « inventer A » | « Trouver par la force de l'imagination créatrice et réaliser le premier quelque chose de nouveau. Inventer un instrument, un jeu, une machine, un médicament, une mode, un procédé. » | « mise au point pour la première fois » (*réaliser le premier*) ; « un objet, un procédé » |
+| Invention | INPI, « Les critères de brevetabilité », rubrique « Qu'est-ce qu'une invention brevetable ? » (publié le 27/11/2024) | « L'invention doit apporter une solution technique originale qui n'est pas évidente pour un expert dans le domaine concerné. » | « une solution technique » — la page parle de l'invention **brevetable** : notre définition, plus large, s'appuie d'abord sur le TLFi. |
+| Évolution technologique | — | aucune des sources ci-dessus ne définit ce terme du programme | La définition vient de la séquence elle-même (« Une amélioration fait mieux la même chose. Le métier ne change pas. »). Elle est cohérente avec le manuel d'Oslo, pour qui un produit **amélioré** mis à disposition est aussi une innovation (§2.99). **À relire par Pascal.** |
+
+Liens :
+- https://www.oecd.org/content/dam/oecd/en/publications/reports/2018/10/oslo-manual-2018_g1g9373b/9789264304604-en.pdf
+- https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Innovation
+- https://www.cnrtl.fr/definition/inventer · https://www.cnrtl.fr/definition/invention
+- https://www.inpi.fr/realiser-demarches/propriete-intellectuelle/criteres-de-brevetabilite

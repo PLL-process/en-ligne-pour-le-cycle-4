@@ -148,7 +148,7 @@
 <div class="badges">
   <span class="badge niveau">4e</span>
   <span class="badge code">4e_C1.1</span><span class="badge code">4e_C1.2</span><span class="badge code">4e_C1.3</span>
-  <span class="badge theme">30 questions · 6 illustrées · chaque distracteur réfuté</span>
+  <span class="badge theme">33 questions · 6 illustrées · chaque distracteur réfuté</span>
 </div>
 <p class="portee-ciblee" id="porteeCiblee" hidden role="status"></p>
 <p style="text-align:center"><a href="sequence_4e_C1.1-C1.3_tsinghua_feux.html">⬅ Revenir à la séquence</a></p>
@@ -168,7 +168,7 @@
     <div>Répondu<b id="dRep" class="v-hl">0</b></div>
     <div>Correctes<b id="dOk" class="v-ok">0</b></div>
     <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
-    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">33</b></div>
     <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
     <div>Score<b id="dScore" class="v-hl">0 %</b></div>
     <div>Note<b id="dNote" class="v-warn">— /20</b></div>
@@ -185,7 +185,7 @@
 <section class="card">
   <h2>🎛 Mode de travail</h2>
   <div class="modes">
-    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (33)</button>
     <button class="btn" data-mode="dix">10 questions</button>
     <button class="btn" data-mode="cible">Révision ciblée</button>
     <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
@@ -217,7 +217,7 @@
 <section class="card ecran actif" id="ecranQuestion">
   <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
     <span class="q-comp" id="qComp">—</span>
-    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">33</b></span>
     <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
   </div>
   <p class="q-texte" id="qTexte">—</p>
@@ -237,7 +237,7 @@
   <h2>🏁 Résultat final</h2>
   <div class="note20" id="rNote">— /20</div>
   <div class="res-grid">
-    <div>Questions<b id="rTot">30</b></div>
+    <div>Questions<b id="rTot">33</b></div>
     <div>Répondues<b id="rRep" class="v-hl">0</b></div>
     <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
     <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
@@ -268,7 +268,7 @@
 
 <script>
 "use strict";
-/* Banque de questions — Tsinghua 4e : 30 questions sur les trois codes (C1.1 : 12 · C1.2 : 9 · C1.3 : 9), dont 6 illustrées. Chiffres publics et sourcés : ministère de l'Intérieur, JRC/EFFIS, ADEME. */
+/* Banque de questions — Tsinghua 4e : 33 questions sur les trois codes (C1.1 : 12 · C1.2 : 9 · C1.3 : 12), dont 6 illustrées. Chiffres publics et sourcés : ministère de l'Intérieur, JRC/EFFIS, ADEME. */
 const QUESTIONS = [
 /* ═══ C1.1 ═══ */
 {c:"C1.1",n:"Par où l'on commence",q:"Une équipe qui doit concevoir un système de détection de feux commence par…",
@@ -488,7 +488,31 @@ const QUESTIONS = [
  ex:"« Comment acquérir la température ? » est une question du Thème 2 ; « le système doit détecter en moins de 10 minutes » est l'exigence qui permettra de juger la réponse.",
  err:"Vouloir tout résoudre dans la première séquence, et n'avoir plus rien à étudier ensuite.",
  d:["Aucun composant n'est choisi : ce serait répondre aux questions avant de les avoir posées.","","Il n'y a pas encore de programme, puisqu'on ne sait ni quelles grandeurs seront acquises ni comment elles seront traitées.","Un schéma électrique suppose des composants choisis : c'est plusieurs étapes plus loin."],
- ret:"On transmet des questions bien posées et des exigences pour juger les réponses."}
+ ret:"On transmet des questions bien posées et des exigences pour juger les réponses."},
+/* ═══ C1.3 — les trois mots de l'évolution (22/09/2026, n°45 : enseigner avant d'interroger) ═══
+   Ajoutées EN FIN de banque : l'état du QCM est enregistré par rang, une insertion au milieu
+   aurait fait glisser les réponses déjà sauvegardées. Rattachées à la séance 4 par leur code. */
+{c:"C1.3",n:"Invention",q:"Une invention, c'est…",
+ o:["une nouveauté que beaucoup de gens utilisent déjà","une solution technique nouvelle, mise au point pour la première fois — même si personne ne s'en sert encore","un système qu'on achète tout fait dans un magasin","n'importe quelle idée nouvelle, même jamais réalisée"],r:1,
+ expl:"Inventer, c'est trouver et réaliser le premier quelque chose de nouveau : un objet, un procédé. L'invention existe dès qu'elle est mise au point ; qu'on s'en serve ou non est une autre question — celle de l'innovation.",
+ ex:"Le capteur de température que ta séquence emploie n'est pas une invention de ton équipe : il existait déjà. Ton équipe, elle, écrit ce que le système devra faire.",
+ err:"Appeler « invention » tout objet nouveau pour soi, même s'il existait déjà.",
+ d:["Être utilisée par beaucoup de monde, c'est ce qui fait une innovation, pas une invention.","","Un objet vendu tout fait existait déjà : l'acheter n'est pas l'inventer.","Une idée qu'on n'a pas réalisée n'est pas encore une invention : il faut l'avoir mise au point."],
+ ret:"Une invention est une solution technique nouvelle, mise au point pour la première fois. Elle n'est pas forcément utilisée."},
+{c:"C1.3",n:"Innovation",q:"Ton équipe a écrit cinq exigences pour un système de détection des feux. Ce système est-il déjà une innovation ?",
+ o:["oui, puisque les exigences sont bien écrites","oui, dès que le cahier est rendu au professeur","non : tant qu'il n'est pas réalisé et mis à la disposition de ceux qui surveillent les feux, c'est un projet","non, parce qu'une innovation doit venir d'une grande entreprise"],r:2,
+ expl:"Une innovation est une nouveauté — objet, procédé ou service, nouveau ou nettement amélioré — mise à la disposition de ceux qui peuvent s'en servir. Des exigences bien écrites préparent une innovation ; elles n'en sont pas une.",
+ ex:"Le manuel qui sert, dans le monde entier, à mesurer l'innovation (Manuel d'Oslo, OCDE et Eurostat, 2018) le dit : une innovation est plus qu'une idée ou une invention, elle doit être mise en œuvre.",
+ err:"Croire qu'une idée ou un projet, même excellent, est déjà une innovation.",
+ d:["La qualité du cahier des charges ne suffit pas : rien n'est encore mis à la disposition de ceux qui s'en serviraient.","Rendre un cahier ne met aucun système à la disposition de personne.","","La taille de celui qui innove ne compte pas : une association, une commune ou une petite entreprise innovent aussi."],
+ ret:"Une innovation est une nouveauté mise à la disposition de ceux qui peuvent s'en servir. Une idée, même excellente, n'en est pas encore une."},
+{c:"C1.3",n:"Évolution technologique",q:"Un système qui déclenchait l'alerte sur la seule température croise désormais plusieurs indices, pour limiter les fausses alertes. C'est…",
+ o:["une invention, puisque le système change","une rupture, puisque le gain est important","une découverte scientifique","une évolution technologique, qui se justifie par un besoin : moins de fausses alertes"],r:3,
+ expl:"Une évolution technologique part de ce qui existe déjà et l'améliore, pour le rendre plus pratique ou plus performant. Le système fait mieux la même chose — détecter — et on la justifie par le besoin qu'elle sert mieux.",
+ ex:"Ta mesure de la cour — plus de 10 °C d'écart entre l'ombre et le soleil — montre pourquoi un seuil de température seul déclencherait tous les jours d'été.",
+ err:"Justifier une évolution par sa nouveauté, au lieu de dire quel besoin elle sert mieux.",
+ d:["Le système existait déjà : on l'améliore, on ne l'invente pas.","Le gain peut être important sans rien rendre possible de nouveau : le système détecte toujours, mieux.","Rien n'est découvert dans la nature : on perfectionne un système technique qui existe.",""],
+ ret:"Une évolution technologique améliore ce qui existe déjà. Elle fait mieux la même chose : l'usage et le métier ne changent pas. Elle se justifie par un besoin."}
 ];
 
 </script>
@@ -563,6 +587,9 @@ function restore(){
   let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
   if(!o) return;
   ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  // la banque s'est allongée le 22/09/2026 : une sauvegarde plus courte laissait les nouvelles
+  // questions à « undefined », que la grille prenait pour des questions déjà répondues.
+  ["reponses","validees","marquees"].forEach(k=>{ if(!Array.isArray(etat[k])) etat[k]=[]; while(etat[k].length<N) etat[k].push(k==="reponses"?null:false); });
   const idt=etat.identite||{};
   $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
   $("tSans").checked=!!etat.sansMinuteur;
@@ -846,7 +873,7 @@ setMode(etat.mode||"complet");
         hote.innerHTML = "🎯 Tu arrives depuis la séquence&nbsp;: ce QCM s'ouvre sur les <b>" +
           etat.sousListe.length + " questions</b> qui portent sur <b>" +
           demandes.join(", ") + "</b> — les compétences que tu as déjà travaillées. " +
-          "Pour les 30, choisis <b>« Parcours complet »</b> ci-dessus.";
+          "Pour les 33, choisis <b>« Parcours complet »</b> ci-dessus.";
       }
       return;
     }
@@ -858,7 +885,7 @@ setMode(etat.mode||"complet");
       hote.hidden = false;
       hote.innerHTML = "🎯 Tu arrives depuis la séquence, qui n'est pas encore commencée&nbsp;: " +
         "ce QCM s'ouvre sur un <b>parcours court de 10 questions</b>, pour te tester sans être " +
-        "submergé·e. Pour les 30, choisis <b>« Parcours complet »</b> ci-dessus.";
+        "submergé·e. Pour les 33, choisis <b>« Parcours complet »</b> ci-dessus.";
     }
   }
 })();

@@ -19860,3 +19860,91 @@ commune perdue. `controle_squelette` 49, `verif_regles_audit` 285.
 mordent ; régénérer tout le dépôt : 54 lexiques engendrés, 2 exclus (C8.1), **aucun modifié** — 3e_C1.1, retouché
 par #429, n'utilise pas encore le commun ; `controle_squelette` 49 ; `verif_regles_audit` 285 ; banc de 3e_C1.1
 50 / 50.
+
+## 24/09/2026 — 4e_C1.1 aligné sur 3e_C1.1 : trois mots, mots de base au commun, lexique par séance
+
+**3e_C1.1 d'abord.** Les quatre mots de base passent au vocabulaire commun (`"commun": true`), chacun avec
+son exemple actuel : **le texte affiché ne change pas** — lexique régénéré comparé à l'ancien, une seule
+ligne diffère, celle de l'IA. **« Intelligence artificielle » réécrite.** La définition disait « un peu
+comme un cerveau humain ». Précision : elle suivait bien la source qu'elle citait — le Larousse
+*dictionnaire* (locution) dit « des machines dont le fonctionnement s'apparente à celui du cerveau
+humain » ; c'est l'*encyclopédie* Larousse qui dit « des machines capables de simuler l'intelligence
+humaine ». La confusion machine = cerveau étant fréquente chez les élèves, la définition suit désormais
+l'encyclopédie, citée mot pour mot : « Des techniques pour construire des machines capables d'imiter
+certaines capacités de l'intelligence humaine : reconnaître, trier, décider. »
+
+**4e_C1.1 — le travail mis de côté le 22/09 est repris** (branche locale `sauvegarde/pr-c-lexique-innovation`) :
+- l'encadré « 📌 Trois mots pour justifier une évolution » (séance 4) et trois questions de QCM
+  (Invention, Innovation, Évolution technologique ; 30 → 33, C1.3 : 9 → 12), ajoutées en fin de banque,
+  `restore()` qui complète les sauvegardes courtes. Définitions de 3e_C1.1, « innovation » : mise à la
+  disposition (Oslo §2.99). **Une retouche** : le « à retenir » d'« Évolution technologique » disait
+  « Elle fait mieux la même chose, et se justifie par un besoin » ; il reprend celui de 3e_C1.1 et garde
+  l'accent de la 4e (C1.3, justifier une évolution) : « … Elle fait mieux la même chose : l'usage et le
+  métier ne changent pas. Elle se justifie par un besoin. »
+- compteurs suivis : QCM, séquence, README, manifeste, matrice (3 lignes), banc, **synthèse professeur**
+  (« 30 questions » → 33, oubli de la branche de sauvegarde) ;
+- mots de base au commun, exemples tirés de la séquence de 4e ; la zone d'ouverture ne contenait que
+  « OST » : case `ouv_4` ajoutée (« Je sais distinguer un objet technique d'un objet naturel, et dire ce
+  qu'est un système technique »), lien vers `lexique_4e_C1.1.html#ouverture` ;
+- lien « 📖 Les mots de cette séance » en tête des quatre panneaux ;
+- légende des étiquettes : « 4e », plus « 5e » (signalée le 24/09).
+
+**Règle de Pascal, séance par séance : 77 mots** (+ 33 notions) — ouverture 20, séance 1 14, séance 2 7,
+séance 3 11, séance 4 25. 33 entrées reprises de 3e_C1.1 là où le sens est le même (sources relues
+pour « proxy » et « périmètre », qui renvoyaient à la séquence de 3e ; « thermique » récrit : en 4e, c'est
+une voiture thermique) ; les autres sourcées : Larousse en ligne, TLFi (« observable », « horodaté »),
+FranceTerme (« microcontrôleur », JO du 22/09/2000), LoRa Alliance (« LoRa »). **Non ajoutés faute de
+source lue** : « effectif » (nom) et « chiffres significatifs » — le Larousse les a, mais pas dans une
+forme que j'ai pu citer exactement.
+
+**Le reste de la branche de sauvegarde.** Les **ancres par notion** (`ancre()` : un id sur chaque `<dt>`
+de chaque lexique) sont **abandonnées** : le seul besoin réel — deux liens qui visent une notion précise,
+depuis 3e_C1.1 et 3e_C1.5 — est couvert depuis #426 par `IDS_POSES`, explicite et testé ; poser un id
+partout réécrirait les 60 lexiques des trois thèmes (trois PR) sans qu'aucune page ne le demande. Si un
+jour une séquence vise une autre notion, on l'ajoute à `IDS_POSES`. Tout le reste de la branche (3e_C1.1,
+fusionné par #427 ; 4e_C1.1, ici) est repris : elle peut être supprimée.
+
+**Vérifié.** Bancs 4e 42 / 42 et 3e 50 / 50 ; `tests_generer_lexique` 28 / 28 ; régénérer tout le dépôt ne
+modifie que les deux lexiques voulus ; `controle_squelette` 49 ; `verif_regles_audit` 285 (un champ de plus
+par lot : les cases `ouv_4`). Au navigateur, 4e 21 / 21 : mémoire de main → nouvelle version (14 textes,
+26 choix, 3 cases, 30 réponses de QCM intactes, 3 nouvelles vierges), `ouv_4` enregistrée, lien
+`#ouverture`, quatre liens de séance, les 3 questions réfutées puis corrigées, 390 px, zéro erreur JS ;
+3e 23 / 23. **Constaté, non corrigé** : `_generation/build_qcm.py` et `q.py` (3e et 4e) reconstruiraient
+un QCM à 30 questions ; `CADRAGE_…` et le rapport de tests d'origine gardent « 30 » (documents datés).
+
+### À RELIRE PAR PASCAL
+**Définitions nouvelles**
+- *Intelligence artificielle* (3e) : « Des techniques pour construire des machines capables d'imiter
+  certaines capacités de l'intelligence humaine : reconnaître, trier, décider. »
+- *Évolution technologique* (4e, « à retenir » et lexique) : « Une évolution technologique améliore ce qui
+  existe déjà. Elle fait mieux la même chose : l'usage et le métier ne changent pas. Elle se justifie par
+  un besoin. »
+- Exemples 4e des mots de base :
+  - *objet technique* : « Le thermomètre de ta mesure dans la cour et le capteur d'une station météo sont
+    des objets techniques : demande-toi à quel besoin chacun répond. »
+  - *objet naturel* : « La végétation qui brûle est naturelle ; le capteur de température qui la surveille
+    est un objet technique. »
+  - *système technique* : « Le capteur de température seul est un objet technique ; des capteurs qui
+    confirment une alerte par deux indices indépendants, avec l'opérateur qui la vérifie avant d'engager
+    des secours, forment un système technique. » (séance 4 : « confirmer par au moins deux indices
+    indépendants », « vérifiée par un opérateur avant d'engager des secours »)
+  - *OST* : « Le système que ton équipe décrit en séance 4 est un OST. »
+- *microcontrôleur* : « Une toute petite puce qui contient un processeur et sa mémoire : c'est le
+  « cerveau » programmable d'un objet électronique. » — les guillemets de « cerveau » sont une image ;
+  à retirer si elle entretient la confusion relevée pour l'IA.
+- *LoRa* : « Une technologie radio qui envoie de petits messages très loin en consommant peu : utile pour
+  des capteurs isolés sur batterie. »
+
+**Les mots de 4e_C1.1, par zone** (* = vocabulaire commun)
+- **ouverture (20)** : objet technique* · objet naturel* · système technique* · OST* · référentiel · socle
+  commun · CRCN · microcontrôleur · ingénierie · détection · précoce · fictif · simulé · capteur ·
+  problématique · estimation · hectare · ADEME · JRC/EFFIS · CO₂
+- **séance 1 (14)** : tableur · séparateur · CSV · format · décimale · indicateur · bitume · cumulé ·
+  instantané · variation · critère · statut · prévision · aiguillage
+- **séance 2 (7)** : proxy · ratio · biomasse · méthodologique · cartographier · sévérité · consumer
+- **séance 3 (11)** : kgCO₂e · passager-kilomètre · facteur d'émission · mégatonne · équivalence ·
+  périmètre · thermique · diesel · condensation · réversibilité · automatisé
+- **séance 4 (25)** : Invention · Innovation · Évolution technologique · exigence · mesurable · vérifiable ·
+  observable · contrôlable · verbatim · arbitrage · garde-fou · prévention · vigilance · LoRa · horodaté ·
+  opérateur · seuil · réglementaire · continuité · autonomie · particule · performant · injustifié ·
+  scribe · vérificateur
