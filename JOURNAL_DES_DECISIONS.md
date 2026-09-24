@@ -19833,3 +19833,30 @@ chaque zone de la table. ») ; la phrase de l'encadré.
 
 **Limite** : le lexique de la séance 1, à un clic en tête de séance, définit « infrarouge » ; un élève qui
 l'ouvre avant l'expérience peut y lire la réponse.
+
+## 24/09/2026 — Vocabulaire commun : les mots de base définis une fois (outil seul)
+
+**Le constat.** Objet technique, objet naturel, système technique, OST : ces mots reviendront dans chaque
+lot. Écrits dans chaque `vocabulaire_<lot>.json`, ils finiraient par se contredire d'un lot à l'autre.
+
+**`_outils/vocabulaire_commun.json`** porte les quatre, une fois : mot, formes, définition générale,
+source. Les textes sont ceux de 3e_C1.1, **sans l'exemple propre à la séquence** (chaque définition de
+3e_C1.1 est exactement « définition générale + espace + exemple » : vérifié mot à mot).
+
+**Un lot y renvoie** : `{"mot": "objet technique", "commun": true, "exemple": "…", "seance":
+"ouverture"}`. Le lexique écrit la définition commune, puis l'exemple du lot, avec la source commune.
+**Refus**, le mot nommé : une entrée « commun » qui redéfinit le mot (`definition` ou `source` à elle) ;
+un mot absent du fichier commun ; un mot absent de sa zone (mêmes règles qu'ailleurs). Un fichier commun
+dont une entrée n'a pas sa source est lui-même refusé.
+
+**Prédiction tenue : régénérer tout le dépôt ne modifie aucun lexique** (3e_C1.1 n'utilise pas encore le
+commun). **Banc** `tests_generer_lexique` : **28 / 28** (21 avant) — nominal (définition commune + exemple,
+source commune), redéfinition, source propre, mot absent du commun, mot absent de sa zone, commun
+incomplet, et le vrai fichier du dépôt lisible avec ses quatre mots. **Mutations, chacune mord (5)** :
+redéfinition acceptée, mot absent accepté, définition commune perdue, commun incomplet accepté, source
+commune perdue. `controle_squelette` 49, `verif_regles_audit` 285.
+
+**Rebasé sur main après #429 (24/09, 10 h 20)** et recontrôlé sur cette base : banc 28 / 28, cinq mutations
+mordent ; régénérer tout le dépôt : 54 lexiques engendrés, 2 exclus (C8.1), **aucun modifié** — 3e_C1.1, retouché
+par #429, n'utilise pas encore le commun ; `controle_squelette` 49 ; `verif_regles_audit` 285 ; banc de 3e_C1.1
+50 / 50.

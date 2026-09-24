@@ -24,6 +24,12 @@ figurer avant la barre d'onglets — pas seulement dans une séance, pas dans la
 sans sa signature, ni un lexique dont il effacerait un id ; il repose les ids
 de IDS_POSES et saute les lots de EXCLUS en le disant.
 
+LE VOCABULAIRE COMMUN (24/09/2026). Une entrée `"commun": true` prend la
+définition et la source de `_outils/vocabulaire_commun.json` et y ajoute son
+exemple. Refusées : l'entrée qui redéfinit le mot, le mot absent du commun, le
+mot absent de sa zone. Et le vrai fichier commun doit se lire, avec ses quatre
+mots de base.
+
 Usage : python3 _outils/tests_generer_lexique.py
 Sortie : 0 si tout passe, 1 sinon.
 """
@@ -38,7 +44,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import json  # noqa: E402
 
 from generer_lexique import (page_de_retour, ecrire_lexique, RefusVocabulaire,  # noqa: E402
-                             LexiqueProtege, IDS_POSES, EXCLUS)
+                             LexiqueProtege, IDS_POSES, EXCLUS, lire_commun)
 
 CAS = [
     (["sequence_5e_C8.1_patere.html", "qcm_5e_C8.1_patere.html"],
@@ -233,6 +239,70 @@ def cas_garde():
     return echecs, 7
 
 
+COMMUN = [{"mot": "objet technique", "formes": ["objet technique", "objets techniques"],
+           "definition": "Un objet fabriqué par l'être humain pour répondre à un besoin.",
+           "source": "Eduscol, guide de mai 2024, §3.3"}]
+
+
+def cas_commun():
+    """Les mots de base définis une fois, et les lots qui y renvoient."""
+    echecs = []
+    base = pathlib.Path(tempfile.mkdtemp())
+    try:
+        f = base / "vocabulaire_commun.json"
+        f.write_text(json.dumps(COMMUN, ensure_ascii=False), encoding="utf-8")
+        commun = lire_commun(str(f))
+        renvoi = {"mot": "objet technique", "commun": True, "seance": "ouverture",
+                  "exemple": "Le pluviomètre en est un."}
+        # a. nominal : définition commune, puis l'exemple du lot, source commune
+        d = lot([renvoi])
+        try:
+            page = pathlib.Path(ecrire_lexique(str(d), "x", "sequence_x.html", commun)[0]).read_text(encoding="utf-8")
+            attendu = ("<dd>Un objet fabriqué par l&#x27;être humain pour répondre à un besoin. Le pluviomètre "
+                       "en est un. <small class=\"source\">Source : Eduscol, guide de mai 2024, §3.3</small></dd>")
+            if attendu not in page:
+                echecs.append("commun : la définition commune suivie de l'exemple du lot n'est pas écrite")
+        finally:
+            shutil.rmtree(d.parent)
+        # b-e. les refus, le mot nommé
+        refus = [
+            ([dict(renvoi, definition="Autre chose.")], "objet technique", "une entrée « commun » qui redéfinit le mot"),
+            ([dict(renvoi, source="Mon dictionnaire")], "objet technique", "une entrée « commun » qui porte sa propre source"),
+            ([dict(renvoi, mot="objet naturel")], "objet naturel", "un mot absent du fichier commun"),
+            ([dict(renvoi, seance="s2")], "objet technique", "un mot commun absent de sa zone"),
+        ]
+        for vocab, mot, pourquoi in refus:
+            d = lot(vocab)
+            try:
+                ecrire_lexique(str(d), "x", "sequence_x.html", commun)
+                echecs.append("commun, non refusé : %s" % pourquoi)
+            except RefusVocabulaire as e:
+                if mot not in str(e):
+                    echecs.append("commun, refus qui ne nomme pas « %s » (%s) : %s" % (mot, pourquoi, e))
+                if (d / "lexique_x.html").exists():
+                    echecs.append("commun, refusé mais lexique écrit (%s)" % pourquoi)
+            finally:
+                shutil.rmtree(d.parent)
+        # f. un fichier commun incomplet est refusé
+        f.write_text(json.dumps([{"mot": "OST", "definition": "Objet ou système technique."}]), encoding="utf-8")
+        try:
+            lire_commun(str(f))
+            echecs.append("commun : une entrée commune sans source a été acceptée")
+        except RefusVocabulaire:
+            pass
+    finally:
+        shutil.rmtree(base)
+    # g. le vrai fichier commun du dépôt
+    try:
+        vrai = lire_commun()
+        manque = {"objet technique", "objet naturel", "systeme technique", "ost"} - set(vrai)
+        if manque:
+            echecs.append("_outils/vocabulaire_commun.json : il manque %s" % ", ".join(sorted(manque)))
+    except RefusVocabulaire as e:
+        echecs.append("_outils/vocabulaire_commun.json illisible : %s" % e)
+    return echecs, 7
+
+
 def main():
     echecs = []
     for fichiers, attendu, pourquoi in CAS:
@@ -249,8 +319,9 @@ def main():
 
     e_vocab, n_vocab = cas_vocabulaire()
     e_garde, n_garde = cas_garde()
-    echecs += e_vocab + e_garde
-    n = len(CAS) + n_vocab + n_garde
+    e_commun, n_commun = cas_commun()
+    echecs += e_vocab + e_garde + e_commun
+    n = len(CAS) + n_vocab + n_garde + n_commun
     if echecs:
         for e in echecs:
             print("❌ " + e)
@@ -258,7 +329,8 @@ def main():
         return 1
     print("✅ %d contrôles — un lot dont la séquence est mutualisée reçoit son lexique, "
           "un dossier sans page de retour le dit, les mots de l'ouverture et des séances sont "
-          "vérifiés avant d'entrer au lexique, et rien d'écrit à la main n'est écrasé" % n)
+          "vérifiés avant d'entrer au lexique, les mots de base sont définis une fois, et rien "
+          "d'écrit à la main n'est écrasé" % n)
     print("\n%d / %d" % (n, n))
     return 0
 
