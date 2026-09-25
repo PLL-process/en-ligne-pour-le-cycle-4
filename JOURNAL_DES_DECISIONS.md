@@ -20211,3 +20211,51 @@ débordement. Témoin : remplir 3e_C3.1 et relire 4e_C3.1 (autre clé) donne 0 /
 de réponse ni corrigé** (« Bonus sans champ », « Bonus sans corrigé » sur chacune). 4e_C3.1 et 5e_C3.1
 l'annoncent d'ailleurs (« Trois défis ouverts, sans vérificateur »). Avec la vague 1, six Bonus du
 thème 1 sont dans ce cas : à trancher à la révision (champ facultatif enregistré, ou mention assumée).
+
+## 25/09/2026 — `controle_longueurs` au vert : six questions de `qcm_3e_C1.1-C1.4_tsinghua` rééquilibrées (thème 1)
+
+**Le refus**, sur main à `5826b9dc` : `controle_longueurs.py` signalait une seule banque du dépôt,
+`qcm_3e_C1.1-C1.4_tsinghua.html` — **6 / 34 questions détachées** (18 %, seuil 15 %), écart moyen
+**+7,3** caractères. Il datait des quatre questions ajoutées le 23/09 (Q31 à Q34, les « quatre mots »),
+toutes détachées, plus Q12 et Q13 où la bonne réponse était la plus courte de 10 à 12 caractères.
+
+**Quelle règle.** Le défaut est celui de la n°198 (la bonne réponse ne se reconnaît pas sans lire
+la question), que `controle_longueurs` mécanise. La n°300 est déjà tenue par ce QCM : l'énoncé
+(`#qTexte`) et ses propositions (boutons `.option` dans `#qOptions`) occupent le flux, rien ne se
+dessine par-dessus la page ; la correction ne change pas cette forme. (La seule liste déroulante de
+la page, `#selComp`, choisit une compétence à réviser : ce n'est pas une question.)
+
+**La correction : le texte seul, jamais l'ordre.** `r` inchangé partout, donc les sauvegardes
+(enregistrées par indice) restent justes. Q31 à Q34 gardent le sens de l'encadré « 📌 Quatre mots »
+de la séquence (Oslo 2018, Eurostat, TLFi, INPI) ; les explications par proposition (`d`) restent
+vraies mot pour mot.
+
+| Q | avant (bonne / distracteurs) | après | écart |
+|---|---|---|---|
+| 12 | 35 / 45-50 | 51 / 45-55 | +1,7 |
+| 13 | 33 / 47-51 | 53 / 47-58 | +1,3 |
+| 31 | 107 / 49-61 | 68 / 61-69 | +2,0 |
+| 32 | 111 / 37-53 | 56 / 51-67 | −2,7 |
+| 33 | 93 / 27-56 | 66 / 59-68 | +2,0 |
+| 34 | 93 / 38-47 | 70 / 67-71 | +1,0 |
+
+Bonnes réponses retouchées : Q12 « de sortir la mesure du laboratoire, jusque chez soi » ; Q13 « non :
+il faut savoir la fabriquer, et en avoir besoin » (l'explication dit « faute de moyen de fabrication
+ou de raison de le faire ») ; Q31 « une solution technique nouvelle, mise au point pour la première
+fois » (le « même si personne ne s'en sert » reste dans l'explication de A) ; Q32 « non : rien n'est
+encore mis à la disposition des usagers » ; Q33 « une évolution technologique : l'usage et le métier
+ne changent pas » ; Q34 « elle rend possible l'impossible : l'ancien savoir-faire ne suffit plus ».
+Distracteurs allongés sans changer ce qu'ils affirment. La bonne réponse n'est plus la plus longue
+dans aucune des six.
+
+### Vérifié
+
+- `controle_longueurs.py`, **dépôt entier** : 1 banque refusée → **0** ; tsinghua 6 / 34 → **0 / 34**,
+  écart +7,3 → **+1,9** ; 65 banques mesurées.
+- Navigateur, à 390 et 1280 px : sauvegarde de l'ancienne version (34 réponses, 17 validées) relue
+  intacte par la nouvelle ; Q12, Q13, Q31-Q34 répondues à la souris et validées, bonne réponse
+  reconnue ; 0 erreur, 0 boîte modale, 0 px de débordement ; chaque proposition tient sur deux lignes à 390 px.
+- Banc du lot `tests_3e_C1.1-C1.4_tsinghua.py` **50 / 50** ; `generer_lexique.py` sans changement.
+- `controle_*.py` : **17 / 17 à 0** ; `verif_regles_audit.py` 279, sortie identique à main.
+- `controle_verrous`, `controle_hors_ligne`, `controle_contraste_liens`, `controle_impression` ✅ ;
+  `controle_squelette` : thème 1 à 0, dépôt 43 refusées (thèmes 2 à 4, inchangé — aucune séquence touchée ici).
