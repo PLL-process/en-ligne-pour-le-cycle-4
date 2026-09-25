@@ -20176,3 +20176,38 @@ modale, 0 px de débordement à 390 px.
 
 **Signalé, non touché (« à rédiger » selon `controle_squelette`)** : les trois Bonus C2 n'ont pas de
 champ de réponse ; celui de 5e_C2.1 n'a pas non plus de corrigé.
+
+## 25/09/2026 — n°306, thème 1, vague 2 : famille C3, le Bonus remonte avant le bilan
+
+**Le relevé, `controle_squelette` sur le thème 1, main à `6b2db8de`** (après #433) : 14 séquences,
+**3 refusées, toutes en D3, dans `#s4`** — 3e_C3.1 (Shenzhen), 4e_C3.1 (Hangzhou), 5e_C3.1 (Shanghai),
+ordre à l'écran Bilan → Je me positionne → QCM → Bonus.
+
+**La correction, même geste qu'en vague 1.** Dans chaque page, la carte `section.card.approfondissement`
+« 🎁 Bonus » est déplacée d'un bloc, avec sa ligne vide et sans retouche, juste avant la carte
+« 🪞 Mon bilan personnel », dans le même panneau `#s4`. Les lignes de chaque page, triées, sont
+identiques avant et après (1310, 1234 et 1518 lignes) : déplacement pur, aucune fin de ligne changée.
+
+**Aucune réponse décalée.** Ces trois pages enregistrent par `id` (`collect()` garde les `textarea` et
+`fieldset.qcm-groupe` qui en ont un, plus, en 3e et 4e, les cases `.rappel-spiralaire`) ; aucun champ
+réel sans id (le seul `fieldset` sans id est un exemple dans un commentaire de script). Aller-retour dans
+Chromium à 390 px : ancienne version remplie et enregistrée, nouvelle version rechargée — 3e_C3.1
+**42 / 42**, 4e_C3.1 **42 / 42**, 5e_C3.1 **42 / 42**, 0 faux, 0 erreur, 0 boîte modale, 0 px de
+débordement. Témoin : remplir 3e_C3.1 et relire 4e_C3.1 (autre clé) donne 0 / 42 — le banc sait échouer.
+
+### Vérifié
+
+- `controle_squelette`, thème 1 : **3 → 0** refusée. Le thème 1 n'a plus de page refusée.
+- `verif_regles_audit.py` : **282 → 279** ✘ ; les trois lignes disparues sont exactement
+  « n°301 le bilan clôt — le Bonus vient APRÈS le bilan » des trois pages C3, remplacées par
+  « … et le Bonus le précède ».
+- `controle_*.py` : 16 sur 17 à 0. `controle_longueurs.py` refuse `qcm_3e_C1.1-C1.4_tsinghua.html`
+  (6 / 34 questions détachées, écart moyen +7,3 caractères) — **déjà rouge sur main**, sortie identique
+  avant et après cette PR ; hors périmètre, à reprendre à part.
+- `controle_verrous` ✅ · `controle_hors_ligne` ✅ · `controle_contraste_liens` ✅ ·
+  `controle_impression` ✅ · bancs `tests_controle_squelette` 25 / 25, `tests_verif_regles_audit` 56 / 56.
+
+**Signalé, non touché (« à rédiger » selon `controle_squelette`)** : les trois Bonus C3 n'ont **ni champ
+de réponse ni corrigé** (« Bonus sans champ », « Bonus sans corrigé » sur chacune). 4e_C3.1 et 5e_C3.1
+l'annoncent d'ailleurs (« Trois défis ouverts, sans vérificateur »). Avec la vague 1, six Bonus du
+thème 1 sont dans ce cas : à trancher à la révision (champ facultatif enregistré, ou mention assumée).
