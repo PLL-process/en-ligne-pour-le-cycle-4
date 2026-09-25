@@ -20138,3 +20138,41 @@ portent. **Pour la campagne**, thème par thème :
 - mettre à jour le texte de la règle n°92 : la légende est la figcaption visible de la figure, sinon la
   première phrase de l'alt ;
 - vérifier chaque page à 390, 1280, 1920 px et 1280 px zoomé 150 %.
+
+## 25/09/2026 — n°306, thème 1, vague 1 : famille C2, le Bonus remonte avant le bilan
+
+**Le relevé, `controle_squelette` sur le thème 1, main à `9a649f52`.** 14 séquences ouvertes onglet par
+onglet (12 à onglets, 2 sans), **6 refusées, toutes en D3** — à l'écran de clôture, l'ordre est
+Bilan → Je me positionne → QCM → **Bonus**. D1, D2, D4, D5 : 0.
+
+| Famille | Pages refusées | Défaut |
+|---|---|---|
+| C2 | 3e_C2.1 (Pékin), 4e_C2.1 (Hangzhou), 5e_C2.1 (Shenzhen, station vélos) | D3, dans `#s3` |
+| C3 | 3e_C3.1 (Shenzhen), 4e_C3.1 (Hangzhou), 5e_C3.1 (Shanghai) | D3, dans `#s4` |
+| C1 et autres | aucune | — |
+
+Ordre retenu : C2 (cette PR), puis C3 (même défaut, même geste). Les autres familles n'ont rien à corriger.
+
+**La correction C2.** Dans chaque page, la carte `section.card.approfondissement` « 🎁 Bonus » est
+déplacée, d'un bloc et sans retouche, juste avant la carte du bilan, dans le même panneau `#s3`.
+Vérifié : les lignes de chaque page, triées, sont identiques avant et après (déplacement pur, aucune
+fin de ligne changée).
+
+**Pourquoi ce déplacement ne décale aucune réponse.** Contrairement à 3e_C1.5, ces pages enregistrent
+par `id` (`collect()` ne garde que `textarea` et `fieldset.qcm-groupe` qui en ont un) ; aucun champ sans
+id. Prouvé par un aller-retour dans Chromium : ancienne version remplie et enregistrée, nouvelle version
+rechargée — 3e_C2.1 **36 / 36**, 4e_C2.1 **33 / 33**, 5e_C2.1 **31 / 31**, 0 faux, 0 erreur, 0 boîte
+modale, 0 px de débordement à 390 px.
+
+### Vérifié
+
+- `controle_squelette`, thème 1 : **6 → 3** refusées (D3 6 → 3). Restent les trois C3.
+- `verif_regles_audit.py` : **285 → 282** ✘ ; les trois lignes disparues sont exactement
+  « n°301 le bilan clôt — le Bonus vient APRÈS le bilan » des trois pages C2, remplacées par
+  « … et le Bonus le précède ».
+- Les 17 `controle_*.py` à 0 · `controle_verrous` ✅ · `controle_hors_ligne` ✅ ·
+  `controle_contraste_liens` ✅ · `controle_impression` ✅ · bancs `tests_controle_squelette` 25 / 25,
+  `tests_verif_regles_audit` 56 / 56.
+
+**Signalé, non touché (« à rédiger » selon `controle_squelette`)** : les trois Bonus C2 n'ont pas de
+champ de réponse ; celui de 5e_C2.1 n'a pas non plus de corrigé.
