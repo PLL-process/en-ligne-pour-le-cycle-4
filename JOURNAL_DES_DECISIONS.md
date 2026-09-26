@@ -20386,3 +20386,34 @@ plus au total, autour des blocs déplacés).
 - **jardin connecté** reste en **D3** : dans le bilan, la ligne « Pour aller plus loin » porte un lien « QCM XXL
   réseaux » que le contrôle compte comme un bloc QCM, placé avant l'auto-positionnement. L'ordre des cartes est
   juste (Bonus → Bilan → QCM) ; déplacer ce lien est un choix de rédaction, non fait ici.
+
+## 26/09/2026 — n°306, vague 6 : book-train et jardin connecté, le dépôt n'a plus de séquence refusée
+
+Les deux pages laissées à part par la vague 5, tranchées par Pascal (« oui aux deux ») :
+
+**4e_C4.1-C4.2-C4.4 book-train** (architecture propre : `section.panneau`, onglet d'ouverture « Départ » `#s0`).
+- **D4** — le billet d'entrée (« 🎫 je vérifie mes acquis de 5e », `be1`-`be3`, `btn-billet`) était au fond de la
+  séance 1. Il passe dans l'onglet Départ, juste après « 💭 Ton hypothèse de départ », à sa place dans le squelette
+  (situation → problématique → hypothèse → billet). Sa consigne « tu enchaînes sur l'activité 1.1 » reste juste.
+- **D5** — les champs Nom / Prénom / Classe / Date, la barre d'outils (sauvegarder, imprimer, effacer, mode
+  essentiel), la note de sauvegarde et la barre de progression étaient posés sous la barre des gares, hors de tout
+  panneau. Ils entrent dans le bandeau, juste au-dessus des gares : toujours visibles, plus « hors panneau ».
+- **D3** — le Bonus (`div.bloc-bonus`) remonte avant la carte du bilan, dans `#s3`.
+
+**4e_C4.1-C4.9 jardin connecté** — **D3** : la ligne « Pour aller plus loin » du bilan (lien vers 4e_C6.2 et
+« QCM XXL réseaux ») passe, telle quelle, de la colonne gauche du bilan à la colonne droite, sous
+l'auto-positionnement et avant les liens de synthèse. Le lien QCM ne précède plus le positionnement.
+
+Les deux pages : lignes triées identiques avant et après (déplacement pur).
+
+### Vérifié
+
+- `controle_squelette`, dépôt : **2 → 0** refusée. **60 séquences, aucune refusée** — la n°306 est tenue partout.
+- Book-train à 390 et 1280 px : bandeau lisible (champs et boutons dans le style de la page), billet dans l'onglet
+  Départ et fonctionnel (3 / 3 → « bagages complets : file à l'activité 1.1 »), caché aux séances suivantes,
+  0 px de débordement, 0 erreur.
+- Aller-retour des sauvegardes : **100 / 100** (jardin 42, book-train 58), 0 faux ; témoin à 0.
+- `verif_regles_audit.py` : **239 → 238** ✘ ; la ligne disparue est exactement « n°301 le bilan clôt — le Bonus vient APRÈS
+  le bilan » (book-train). Aucune autre ligne ne change.
+- Bancs `tests_controle_squelette` 25 / 25, `tests_verif_regles_audit` 56 / 56. `controle_squelette` sort à 0
+  pour la première fois ; les 12 autres contrôles sont verts.
