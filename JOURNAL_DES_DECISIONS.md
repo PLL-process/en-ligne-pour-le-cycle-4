@@ -20300,3 +20300,43 @@ débordement. Témoin : remplir 3e_C7.1 et relire 3e_C7.3 donne 0 champ repris �
 **Signalé, non touché (« à rédiger » selon `controle_squelette`, sur ces 22 pages)** : Bonus sans corrigé 21,
 Bonus sans champ 18, pas de métacognition 19, bilan sans retour à l'hypothèse 4, pas de positionnement 4. Avec les
 six du thème 1, la question des Bonus sans champ ni corrigé devient transversale : à trancher une fois pour toutes.
+
+## 26/09/2026 — n°306, thème 3, vague 4 : les quatre pages à onglets (C9), la clôture entre dans la dernière séance
+
+**Le relevé, `controle_squelette` sur main à `4a94eacc`** (après #437) : 21 refusées, toutes à onglets — 17 au
+thème 2, **4 au thème 3** : 3e_C9.1 (variables, types, systèmes), 3e_C9.2-C8.3 (station d'alerte cyclonique),
+4e_C9 (jardin programmé), 5e_C9.1-C9.3 (boîte étiquetée). Ce petit lot essaie le geste avant le thème 2.
+
+**Le défaut, le même sur les quatre.** Toute la clôture (synthèse s'il y en a une, bilan, positionnement, QCM,
+Bonus) était posée **après** le dernier panneau, hors de tout panneau : visible sous chaque onglet (D1 à chaque
+séance, D5 30 à 45 éléments) et dans l'ordre Bilan → … → QCM → Bonus (D3). En 3e_C9.2, le banc d'essai
+« 🌀 version 🅱 — toujours disponible » était en plus posé entre la barre d'onglets et `#s1`.
+
+**La correction, un seul geste.** Les sections de clôture sont déplacées d'un bloc, sans retouche, **dans** le
+dernier panneau, juste avant sa balise fermante ; le Bonus y passe juste avant le bilan (même règle qu'aux vagues
+1 à 3), la synthèse « à retenir » gardant la tête là où elle existe. En 3e_C9.2, le banc remonte juste au-dessus
+de la barre d'onglets : toujours visible à chaque séance, comme son titre le promet, mais plus « hors panneau ».
+Lignes triées identiques avant et après, fins de ligne comprises : **4 / 4**, 113 lignes déplacées.
+
+**Ce qui aurait pu casser, et ne casse pas.**
+- Aucune ancre `href="#…"` ne visait la clôture ; les scripts ne ciblent `.seance-panel` que pour basculer
+  d'onglet ; les coches « ✔ séance faite » se calculent par activités, pas par contenu de panneau ; à
+  l'impression tous les panneaux s'affichent (`display:block!important`).
+- Aller-retour des sauvegardes dans Chromium à 390 px, servi en HTTP à la même adresse : **215 / 215** champs
+  repris (39, 81, 65, 30), 0 faux, 0 erreur, 0 boîte modale, 0 px de débordement ; témoin à 0.
+- Banc de 3e_C9.2 : vent à 150 km/h → l'afficheur passe de « VEILLE » à « OURAGAN » ; banc visible aux quatre
+  séances, bilan visible à la seule séance 4 ; 0 erreur.
+
+### Vérifié
+
+- `controle_squelette` : les quatre pages **0 défaut** (D1 à D5) ; dépôt **21 → 17** refusées, toutes au thème 2 désormais.
+- `verif_regles_audit.py` : **257 → 253** ✘ ; les 4 lignes disparues sont exactement « n°301 le bilan clôt — le Bonus vient
+  APRÈS le bilan ». Aucune autre ligne ne change.
+- Bancs `tests_controle_squelette` 25 / 25, `tests_verif_regles_audit` 56 / 56.
+- Verts : `controle_impression`, `controle_hors_ligne`, `controle_verrous`, `controle_contraste_liens`,
+  `controle_boutons_vivants`, `controle_medias`, `controle_liens`, `controle_cadres`, `controle_longueurs`,
+  `controle_regle4`, `controle_gestes_outil`, `controle_formulations`.
+
+**Signalé, non touché.** En 4e_C9 (et probablement ailleurs), le bouton « 🚀 Ouvrir le QCM d'entraînement » est
+un lien `inline` avec marge intérieure : à 390 px il se coupe sur deux lignes et son fond se dédouble. Déjà ainsi
+sur main ; hors n°306.
