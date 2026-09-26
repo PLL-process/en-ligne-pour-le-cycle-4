@@ -20417,3 +20417,34 @@ Les deux pages : lignes triées identiques avant et après (déplacement pur).
   le bilan » (book-train). Aucune autre ligne ne change.
 - Bancs `tests_controle_squelette` 25 / 25, `tests_verif_regles_audit` 56 / 56. `controle_squelette` sort à 0
   pour la première fois ; les 12 autres contrôles sont verts.
+
+## 26/09/2026 — Bonus : un champ de réponse facultatif, enregistré (thèmes 1, 2 et 3)
+
+**La décision de Pascal**, après la n°306 : un Bonus sans champ laisse l'élève chercher sans trace ; on lui donne
+**un champ facultatif, enregistré avec son travail**. Le corrigé n'est pas tranché ici.
+
+**Le relevé**, `controle_squelette` sur main à `7ba782d3` : **43 séquences** signalées « Bonus sans champ » — 6 au
+thème 1, 16 au thème 2, 21 au thème 3. Livré en trois PR, une par thème (garde de périmètre) ; cette entrée, écrite une fois, couvre les trois.
+
+**Le geste.** À la fin de chaque carte Bonus, juste avant sa balise fermante, deux lignes identiques partout :
+un libellé « ✍ Ma réponse au Bonus (facultatif — enregistrée avec ton travail) » relié par `for` à un
+`<textarea id="bonusRep" data-save rows="4">`. L'id est libre dans chaque page ; `data-save` sert les pages qui
+enregistrent par cet attribut (book-train), l'id sert toutes les autres. Rien d'autre ne change.
+
+**Vérifié que la réponse est vraiment enregistrée — et pas seulement restaurée par le navigateur.** Un simple
+rechargement ne prouve rien : Chromium restaure seul le contenu des formulaires. Le banc remplit donc le champ,
+ferme l'onglet, **rouvre la page dans un nouvel onglet** et relit : **43 / 43** réponses revenues, sans clic sur
+« Sauvegarder ». Témoin : stockage local effacé, nouvel onglet → champ vide **43 / 43**. (Chiffres mesurés sur les
+43 pages ensemble, avant la répartition en trois PR.)
+
+### Vérifié
+
+- `controle_squelette` : « Bonus sans champ » **43 → 0** ; toujours 0 séquence refusée.
+- `verif_regles_audit.py` : **238 → 238**. Seul change, sur les 7 pages déjà refusées en n°31 (version étayée),
+  le nombre de zones de rédaction affiché (+1). Aucune page nouvellement refusée.
+- Rendu à 390 px (5e_C7.3, 5e_C2.1) : le champ prend le style des zones de réponse de sa page.
+- Bancs `tests_controle_squelette` 25 / 25, `tests_verif_regles_audit` 56 / 56.
+- Les 13 contrôles verts (`controle_squelette` compris) ; `audit_cloture_sequence` : 55 → 51 séquences
+  concernées par au moins un défaut.
+
+**Reste ouvert** : « Bonus sans corrigé » (43 pages) et trois pages sans Bonus du tout (« Bonus absent »).
