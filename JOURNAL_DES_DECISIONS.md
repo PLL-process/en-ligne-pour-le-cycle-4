@@ -20259,3 +20259,44 @@ dans aucune des six.
 - `controle_*.py` : **17 / 17 à 0** ; `verif_regles_audit.py` 279, sortie identique à main.
 - `controle_verrous`, `controle_hors_ligne`, `controle_contraste_liens`, `controle_impression` ✅ ;
   `controle_squelette` : thème 1 à 0, dépôt 43 refusées (thèmes 2 à 4, inchangé — aucune séquence touchée ici).
+
+## 26/09/2026 — n°306, thème 3, vague 3 : C7, C8 et une page C9 sans onglets, le Bonus remonte avant le bilan
+
+**Le relevé, `controle_squelette` sur main à `bc547c10`** (après #436) : 60 séquences, **43 refusées**, aucune dans le
+thème 1 — 17 dans le thème 2, 26 dans le thème 3. Elles tombent en deux groupes :
+
+| Groupe | Pages | Défauts | Geste |
+|---|---|---|---|
+| Thème 3, pages **sans onglets** (C7, C8, 3e_C9.2 « station 4 recette ») | 22 | **D3 seul** | celui des vagues 1 et 2 |
+| Thèmes 2 et 3, pages **à onglets** (C4, C5, C6, C9) | 21 | D1 (clôture visible dès la séance 1), D5, D3, parfois D4 | refonte de structure, à part |
+
+Ordre retenu (choisi par Pascal) : le groupe D3 seul d'abord, parce que c'est le même geste, sans risque, et qu'il
+divise les refus par deux. À l'écran, 18 pages lisaient Bilan → Je me positionne → QCM → Bonus, 4 lisaient
+Bilan → QCM → Bonus.
+
+**La correction.** Dans chaque page, la carte dont le `h2` dit « Bonus » (`section.card.bonus` ici, et non
+`.approfondissement` comme au thème 1) est déplacée d'un bloc, avec sa ligne vide et sans retouche, juste avant la
+première carte de clôture (titre « bilan », « je me positionne » ou « prêt·e à t'entraîner »). Les lignes de chaque
+page, triées, sont identiques avant et après, fins de ligne comprises : **22 / 22**, 280 lignes déplacées, 280 ôtées.
+
+**Aucune réponse décalée.** Tous les champs réels ont un `id`. Cinq pages contiennent une boucle `forEach((x, i))`
+qui aurait pu enregistrer par position : plutôt que de lire le code page par page, aller-retour dans Chromium à
+390 px, servi en HTTP à la même adresse — ancienne version remplie et enregistrée, nouvelle version rechargée,
+comparée à la base « ancienne → ancienne » : **677 / 677** champs repris, 0 faux, 0 erreur, 0 boîte modale, 0 px de
+débordement. Témoin : remplir 3e_C7.1 et relire 3e_C7.3 donne 0 champ repris — le banc sait échouer.
+
+### Vérifié
+
+- `controle_squelette`, dépôt : **43 → 21** refusées. Restent les 21 pages à onglets des thèmes 2 et 3.
+- `verif_regles_audit.py` : **279 → 257** ✘ ; les 22 lignes disparues sont exactement « n°301 le bilan clôt — le
+  Bonus vient APRÈS le bilan », remplacées par « … et le Bonus le précède ». Aucune autre ligne ne change.
+- Bancs `tests_controle_squelette` 25 / 25, `tests_verif_regles_audit` 56 / 56.
+- Verts : `controle_impression`, `controle_hors_ligne`, `controle_verrous`, `controle_contraste_liens`,
+  `controle_boutons_vivants`, `controle_medias`, `controle_liens`, `controle_cadres`, `controle_longueurs`,
+  `controle_regle4`, `controle_gestes_outil`, `controle_formulations`.
+- À noter : `controle_regle4` passe, mais son message annonce encore « close par Prêt·e à t'entraîner puis Bonus »,
+  l'ancien ordre. C'est le libellé d'un outil du thème 2, non touché ici.
+
+**Signalé, non touché (« à rédiger » selon `controle_squelette`, sur ces 22 pages)** : Bonus sans corrigé 21,
+Bonus sans champ 18, pas de métacognition 19, bilan sans retour à l'hypothèse 4, pas de positionnement 4. Avec les
+six du thème 1, la question des Bonus sans champ ni corrigé devient transversale : à trancher une fois pour toutes.

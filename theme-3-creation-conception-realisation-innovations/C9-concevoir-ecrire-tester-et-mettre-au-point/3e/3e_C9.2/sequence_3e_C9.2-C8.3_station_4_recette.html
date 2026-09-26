@@ -541,6 +541,27 @@
 </section>
 
 <section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>Pour aller plus loin, au choix — chaque défi a son corrigé replié :</p>
+  <p>🟣 <b>Défi « niveau violet » :</b> aux Antilles, la vigilance ne s'arrête pas au rouge — après le rouge vient le
+  <b>violet</b> (confinement absolu), puis le <b>gris</b> (phase de sauvegarde, après le passage). La mairie voudrait
+  que le prototype se rapproche de ce vocabulaire réel : un 5<sup>e</sup> niveau « violet » à partir de <b>209 km/h</b> (l'entrée en catégorie 4 de
+  Saffir-Simpson : écran violet, buzzer qui sonne par intermittence). Où insérer le nouveau test dans l'algorigramme, et pourquoi
+  À CET ENDROIT ? Et pourquoi le niveau <b>gris</b>, lui, ne peut-il PAS se déduire de la seule vitesse du vent ?</p>
+  <details class="correction"><summary>✅ Corrigé du défi violet</summary><p>Le test « ≥ 209 » s'insère EN PREMIER, avant « ≥ 178 » : dans une cascade de SI/SINON, le seuil le plus haut se teste toujours d'abord — sinon 220 km/h s'arrêterait à « ouragan majeur » sans jamais atteindre « violet ». Il faut aussi ajouter le comportement (couleur violette, intermittence du buzzer : sonner/attendre dans la boucle) ET mettre à jour le protocole de recette : deux nouvelles frontières à tester, <b>208 et 209</b> — le protocole passerait ainsi de 13 à 16 essais (un nominal de plus, deux frontières de plus). Erreur classique : ajouter le test en dernier — il devient inatteignable.</p>
+  <p><b>Le cas du gris.</b> Le gris n'est pas « moins de vent » : c'est <b>l'après</b>, décidé par le préfet quand le
+  phénomène est passé. Un vent retombé à 30 km/h peut correspondre au gris… comme au jaune de la veille, ou à un
+  jour ordinaire. Une même entrée, plusieurs sorties possibles : la vitesse du vent <b>ne suffit pas</b>. Il faudrait
+  une <b>mémoire</b> (« sommes-nous DÉJÀ passés par le rouge ? ») et une <b>décision humaine</b> en entrée. C'est
+  exactement la limite d'une maquette scolaire — et la raison pour laquelle un vrai dispositif d'alerte n'est jamais
+  entièrement automatique.</p></details>
+  <p>🔔 <b>Défi « double appui » :</b> l'agent voudrait qu'un DEUXIÈME appui sur le bouton ré-active l'alarme (pour re-prévenir un collègue). Quelle variable faudrait-il faire évoluer, et quel piège guette ?</p>
+  <details class="correction"><summary>✅ Corrigé du défi double appui</summary><p>Il faudrait basculer <code>alarmeAcquittee</code> à chaque appui (vrai → faux → vrai…). Le piège : la boucle lit le bouton 5 fois par seconde — un appui d'une demi-seconde serait vu comme 2 ou 3 appuis et l'alarme clignoterait. Il faut détecter le FRONT (l'instant où le bouton PASSE de relâché à appuyé), avec une variable <code>boutonPrecedent</code> — exactement le motif « événement » de l'activité 4. Erreur classique : tester l'état au lieu du front.</p></details>
+  <p>🌬 <b>Défi « anémomètre réel » :</b> pour remplacer le potentiomètre par un vrai anémomètre à coupelles, quelles étapes de ton programme changeraient — et lesquelles ne changeraient PAS ?</p>
+  <details class="correction"><summary>✅ Corrigé du défi anémomètre</summary><p>Change : l'ACQUISITION (un anémomètre à coupelles produit des impulsions à compter, pas une tension à lire — il faudrait compter les tours par seconde) et l'ÉTALONNAGE (convertir des tours/s en km/h selon la doc du capteur). Ne change PAS : la décision (seuils 100/150), l'affichage, l'acquittement, ni le protocole de recette (les mêmes essais restent valables !). C'est l'intérêt de la structuration : chaque étage se remplace sans toucher aux autres. Erreur classique : croire qu'il faut tout réécrire.</p></details>
+</section>
+
+<section class="card">
   <h2>🪞 Mon bilan personnel</h2>
   <div class="exo" id="rappelHyp" style="display:none">
     <p><b>💭 Rappel de ton hypothèse de départ :</b></p>
@@ -614,27 +635,6 @@
   <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
   <p>30 questions pour vérifier toutes les notions de la séquence — dont 4 questions illustrées (algorigramme, montage, chronogramme, protocole) — avec corrections détaillées, minuteur facultatif et reprise possible.</p>
   <a class="btn qcm" href="qcm_3e_C9.2-C8.3_station_alerte_cyclonique.html" style="display:inline-block;text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
-</section>
-
-<section class="card">
-  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-  <p>Pour aller plus loin, au choix — chaque défi a son corrigé replié :</p>
-  <p>🟣 <b>Défi « niveau violet » :</b> aux Antilles, la vigilance ne s'arrête pas au rouge — après le rouge vient le
-  <b>violet</b> (confinement absolu), puis le <b>gris</b> (phase de sauvegarde, après le passage). La mairie voudrait
-  que le prototype se rapproche de ce vocabulaire réel : un 5<sup>e</sup> niveau « violet » à partir de <b>209 km/h</b> (l'entrée en catégorie 4 de
-  Saffir-Simpson : écran violet, buzzer qui sonne par intermittence). Où insérer le nouveau test dans l'algorigramme, et pourquoi
-  À CET ENDROIT ? Et pourquoi le niveau <b>gris</b>, lui, ne peut-il PAS se déduire de la seule vitesse du vent ?</p>
-  <details class="correction"><summary>✅ Corrigé du défi violet</summary><p>Le test « ≥ 209 » s'insère EN PREMIER, avant « ≥ 178 » : dans une cascade de SI/SINON, le seuil le plus haut se teste toujours d'abord — sinon 220 km/h s'arrêterait à « ouragan majeur » sans jamais atteindre « violet ». Il faut aussi ajouter le comportement (couleur violette, intermittence du buzzer : sonner/attendre dans la boucle) ET mettre à jour le protocole de recette : deux nouvelles frontières à tester, <b>208 et 209</b> — le protocole passerait ainsi de 13 à 16 essais (un nominal de plus, deux frontières de plus). Erreur classique : ajouter le test en dernier — il devient inatteignable.</p>
-  <p><b>Le cas du gris.</b> Le gris n'est pas « moins de vent » : c'est <b>l'après</b>, décidé par le préfet quand le
-  phénomène est passé. Un vent retombé à 30 km/h peut correspondre au gris… comme au jaune de la veille, ou à un
-  jour ordinaire. Une même entrée, plusieurs sorties possibles : la vitesse du vent <b>ne suffit pas</b>. Il faudrait
-  une <b>mémoire</b> (« sommes-nous DÉJÀ passés par le rouge ? ») et une <b>décision humaine</b> en entrée. C'est
-  exactement la limite d'une maquette scolaire — et la raison pour laquelle un vrai dispositif d'alerte n'est jamais
-  entièrement automatique.</p></details>
-  <p>🔔 <b>Défi « double appui » :</b> l'agent voudrait qu'un DEUXIÈME appui sur le bouton ré-active l'alarme (pour re-prévenir un collègue). Quelle variable faudrait-il faire évoluer, et quel piège guette ?</p>
-  <details class="correction"><summary>✅ Corrigé du défi double appui</summary><p>Il faudrait basculer <code>alarmeAcquittee</code> à chaque appui (vrai → faux → vrai…). Le piège : la boucle lit le bouton 5 fois par seconde — un appui d'une demi-seconde serait vu comme 2 ou 3 appuis et l'alarme clignoterait. Il faut détecter le FRONT (l'instant où le bouton PASSE de relâché à appuyé), avec une variable <code>boutonPrecedent</code> — exactement le motif « événement » de l'activité 4. Erreur classique : tester l'état au lieu du front.</p></details>
-  <p>🌬 <b>Défi « anémomètre réel » :</b> pour remplacer le potentiomètre par un vrai anémomètre à coupelles, quelles étapes de ton programme changeraient — et lesquelles ne changeraient PAS ?</p>
-  <details class="correction"><summary>✅ Corrigé du défi anémomètre</summary><p>Change : l'ACQUISITION (un anémomètre à coupelles produit des impulsions à compter, pas une tension à lire — il faudrait compter les tours par seconde) et l'ÉTALONNAGE (convertir des tours/s en km/h selon la doc du capteur). Ne change PAS : la décision (seuils 100/150), l'affichage, l'acquittement, ni le protocole de recette (les mêmes essais restent valables !). C'est l'intérêt de la structuration : chaque étage se remplace sans toucher aux autres. Erreur classique : croire qu'il faut tout réécrire.</p></details>
 </section>
 
 
