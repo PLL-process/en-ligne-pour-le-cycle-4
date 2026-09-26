@@ -356,13 +356,6 @@
   </div>
 </section>
 
-<div class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
-  <button class="seance-tab active" data-panel="s1" role="tab" aria-selected="true">Séance 1<br><small>Lire le programme</small><span class="done" id="done-s1"></span></button>
-  <button class="seance-tab" data-panel="s2" role="tab" aria-selected="false">Séance 2<br><small>Le modifier</small><span class="done" id="done-s2"></span></button>
-  <button class="seance-tab" data-panel="s3" role="tab" aria-selected="false">Séance 3<br><small>Le valider + défi</small><span class="done" id="done-s3"></span></button>
-</div>
-<div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
-
 <section class="card">
   <h2>⌨ Le programme de la station — CodeLab Techno</h2>
   <p style="font-size:.9em;color:var(--sub)">C'est LE document de travail des trois séances. Tu peux le modifier, il se sauvegarde tout seul sur cet appareil ; « Réinitialiser » restaure la version d'origine.</p>
@@ -398,6 +391,13 @@
     <pre style="background:#08132c;border-radius:10px;padding:12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.82em;overflow:auto;color:#7d9bd6" id="clOrig"></pre>
   </details>
 </section>
+
+<div class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" data-panel="s1" role="tab" aria-selected="true">Séance 1<br><small>Lire le programme</small><span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" data-panel="s2" role="tab" aria-selected="false">Séance 2<br><small>Le modifier</small><span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" data-panel="s3" role="tab" aria-selected="false">Séance 3<br><small>Le valider + défi</small><span class="done" id="done-s3"></span></button>
+</div>
+<div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
 
 <!-- ══════ SÉANCE 1 ══════ -->
 <div class="seance-panel active" id="s1" role="tabpanel">
@@ -652,7 +652,6 @@ envoyer("Baignade : " + drapeau)</pre>
     <div class="critere"><b>🎯 Critère de réussite :</b> 6/6 sans avoir rouvert les corrections.</div>
   </div>
 </section>
-</div>
 
 <section class="card">
   <h2>📝 Synthèse de la séquence — à retenir</h2>
@@ -665,6 +664,13 @@ envoyer("Baignade : " + drapeau)</pre>
   <p><b>Plan de tests</b> : jeux d'essai visant les <b>valeurs frontières</b>, sortie attendue calculée <b>à la main avant</b> l'exécution, verdict ✔/✘. Un seul ✘ refuse la version ; on reteste aussi l'ancien comportement (<b>non-régression</b>).</p>
   <h4>🇬🇧 Vocabulaire utile</h4>
   <p class="tag-zone"><span class="tag">donnée d'entrée = input</span><span class="tag">donnée de sortie = output</span><span class="tag">constante = constant</span><span class="tag">seuil = threshold</span><span class="tag">jeu d'essai = test case</span><span class="tag">bogue = bug</span><span class="tag">tracer = to trace</span><span class="tag">indentation = indentation</span></p>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>🐍 <b>Défi Python réel :</b> recopie ta v2 dans un vrai Python (PyCharm ou console) en remplaçant <code>lire_capteur(...)</code> par <code>float(input("vent ? "))</code> et les <code>activer_*()</code> par des <code>print(...)</code> : déroule ton plan de tests pour de vrai !</p>
+  <p>📊 <b>Défi pression :</b> le programme lit <code>pression_hpa</code> mais ne s'en sert pas. Propose (sur papier) une condition qui croise vent ET pression pour fiabiliser l'alerte — souviens-toi de la séquence C4.3.</p>
+  <p>🤖 <b>Défi mBot2 :</b> transpose l'alerte graduée sur le mBot2 : LED orange/rouge/violette selon la distance mesurée par l'ultrason.</p>
 </section>
 
 <section class="card">
@@ -733,13 +739,7 @@ envoyer("Baignade : " + drapeau)</pre>
   <a class="btn qcm" href="qcm_3e_C6.1-C6.3_programmer_alerte.html" style="display:inline-block;text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
 
-<section class="card">
-  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-  <p>🐍 <b>Défi Python réel :</b> recopie ta v2 dans un vrai Python (PyCharm ou console) en remplaçant <code>lire_capteur(...)</code> par <code>float(input("vent ? "))</code> et les <code>activer_*()</code> par des <code>print(...)</code> : déroule ton plan de tests pour de vrai !</p>
-  <p>📊 <b>Défi pression :</b> le programme lit <code>pression_hpa</code> mais ne s'en sert pas. Propose (sur papier) une condition qui croise vent ET pression pour fiabiliser l'alerte — souviens-toi de la séquence C4.3.</p>
-  <p>🤖 <b>Défi mBot2 :</b> transpose l'alerte graduée sur le mBot2 : LED orange/rouge/violette selon la distance mesurée par l'ultrason.</p>
-</section>
-
+</div>
 <footer>
   <p>Séquence 3e_C6.1 → 3e_C6.3 · Thème 2 — Structure, fonctionnement, comportement · Technologie cycle 4 (programme 2024)</p>
   <p>Fonctionne hors connexion après chargement · aucune donnée envoyée sur un serveur · sauvegarde locale sur cet appareil uniquement</p>
