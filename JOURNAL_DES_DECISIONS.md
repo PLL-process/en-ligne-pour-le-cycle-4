@@ -20658,3 +20658,70 @@ lançable sur un arbre sans historique.
   mêmes fichiers → **51**. Fichiers retirés, audit revenu à l'identique.
 - Bancs `tests_verif_regles_audit` 56 / 56, `tests_index` 20 / 20, `tests_controle_couverture`
   27 / 27 ; `controle_statut` vert.
+
+## 27/09/2026 — Règle d'or n°307, second passage : le duo de paragraphes aussi (thèmes 1-3, _outils)
+
+> **H2 mur sans repère, révisé.** Au moins **deux** paragraphes consécutifs d'un même bloc, **110** mots ou
+> plus au total — au lieu de trois paragraphes et 170 mots —, dont aucun ne s'ouvre sur un repère. Le 110
+> est celui de la n°33 (un seul paragraphe) ; ici, c'est la **somme** d'un duo ou plus qui compte. Un duo de
+> paragraphes sans repère est déjà un mur, pas seulement un trio.
+
+**Le signal** : Pascal, sur `3e_C1.1/sequence_3e_C1.1-C1.4_tsinghua_feux.html`, juste après le relevé de la
+n°307 — « la skill aurait dûe intervenir ici… et certainement ailleurs… un autre audit est nécessaire et une
+modification de la règle d'or aussi ». La page venait de passer l'audit sans un seul écart.
+
+### Le trou
+
+La page a un onglet de séances en JavaScript et des `<details>` repliés par défaut : ce que l'œil voit au
+premier coup d'écran (rendu Chromium, 390 px, onglets ouverts et accordéons forcés) cache un bloc de deux
+paragraphes, 111 mots, sans le moindre repère. Le seuil H2 (trois paragraphes, 170 mots) ne le voyait pas —
+trop court pour un « trio » — et le seuil solo de la n°33 (`verif_regles_audit.py`, 110 mots) ne le voyait
+pas non plus : elle juge un `<p>` à la fois, jamais la somme de deux. Un script rejouant les fonctions mêmes
+de `controle_hierarchie.py` (`ancre`, `mots`, `texte`) sur les 145 pages, à seuil variable, a chiffré ce que
+chaque candidat changerait : abaisser à **deux paragraphes / 110 mots** — le 110 déjà accepté par la n°33 —
+fait apparaître 43 blocs sur 31 pages, sans jamais recouper un pavé solo déjà compté ailleurs (un mur exige
+un run **d'au moins deux**, ce que la n°33 ne teste jamais).
+
+### L'outil
+
+`_outils/controle_hierarchie.py` : constante `MUR_MOTS, MUR_PARAS = 170, 3` → `110, 2` ; en-tête à jour.
+`tests_controle_hierarchie.py` : un cas existant recalé (son texte de remplissage franchissait par accident
+le nouveau seuil), deux cas ajoutés — le duo de 111 mots du trou (refusé) et le même duo sous 110 mots
+(accepté) — 26 → **28 cas**.
+
+### Le relevé : 43 blocs sur 31 pages
+
+| Thème | Blocs | Pages |
+|---|---|---|
+| 1 | 20 | 11 |
+| 2 | 4 | 4 |
+| 3 | 19 | 16 |
+
+### Les gestes — les mêmes quatre qu'au premier passage, sans un mot de texte perdu
+
+1. **Gras existant étendu vers l'arrière** quand un mot repère est déjà en gras un peu plus loin dans la
+   phrase (« Un collège de <b>Chengdu</b> » → « <b>Un collège de Chengdu</b> ») : la majorité des 43 blocs.
+2. **Premiers mots mis en gras tels quels**, quand ils forment déjà un repère lisible (« Étape 1 — »,
+   « Palier 2 : », « Ce que New York demande »).
+3. **Court repère ajouté** devant la phrase inchangée, dans le style déjà en usage ailleurs dans le dépôt
+   (« <b>Le choix retenu.</b> Le Tube aluminium… »), pour les paragraphes sans aucun mot à étendre.
+4. **Terme de tête mis en gras** dans les suites « terme : définition » (glossaires cybersécurité).
+
+**Trois duos partagés entre deux fichiers** (texte identique, même correction posée aux deux endroits) :
+le paragraphe « Ce que New York demande » (`station_1_besoin-et-algorithme.html` et
+`station_alerte_cyclonique.html`), le bonus ArduBlock « Avant Vittascience… / Les deux captures… » et l'aide
+de niveau 2 « Palier 1 / 2 / 3 » (`station_2_programmer.html` et `station_alerte_cyclonique.html`, qui
+recopie le contenu des deux stations).
+
+### Vérifié
+
+- `controle_hierarchie.py` sur le dépôt entier : **43 → 0**, 145 pages lues. Banc `tests_controle_hierarchie`
+  **28 / 28**, y compris le lancement en ligne de commande sur le dépôt réel (n°299) — rouge le temps des
+  corrections, vert une fois les 31 pages posées.
+- `controle_liens.py` sur le dépôt entier : ✅ aucun lien mort, aucune ancre introuvable.
+- `controle_statut.py` : vert (code 0).
+- `build_audit.py` et `make_index.py` rejoués : aucune différence — aucun fichier ajouté ni retiré, seul du
+  contenu existant a été modifié.
+- **Non revérifié à l'écran** : le rendu Chromium à 390 px n'a été repris que sur la page qui a signalé le
+  trou (`3e_C1.1_tsinghua_feux`), pas sur les 30 autres pages corrigées — leur conformité s'appuie sur
+  `controle_hierarchie.py`, pas sur une relecture visuelle page par page.

@@ -555,11 +555,11 @@
 
     <details class="prof approfondissement">
       <summary>🎁 Bonus (facultatif — hors parcours obligatoire) : le même programme dans <b>ArduBlock</b></summary>
-      <p>Avant Vittascience, ce programme avait été construit dans <b>ArduBlock Éducation 1.7</b>, un autre logiciel de
+      <p><b>Avant Vittascience, ce programme</b> avait été construit dans <b>ArduBlock Éducation 1.7</b>, un autre logiciel de
       programmation par blocs. Il fait le même travail, mais <b>ne simule pas</b> : il faut une carte branchée pour voir
       quoi que ce soit. C'est la raison pour laquelle la séquence se fait aujourd'hui sur Vittascience — et c'est déjà une
       leçon : <b>on choisit un outil pour ce qu'il permet de faire en classe</b>, pas par habitude.</p>
-      <p>Les deux captures ci-dessous sont de <b>vraies captures d'écran</b> du logiciel, prises pendant la construction du
+      <p><b>Les deux captures ci-dessous</b> sont de <b>vraies captures d'écran</b> du logiciel, prises pendant la construction du
       programme, aux paliers 1 et 2. Regarde-les comme un document : les <b>blocs changent de forme et de nom</b>, mais tu
       retrouves exactement la même chose — <b>la boucle</b>, <b>la lecture d'une entrée analogique</b>, <b>la cascade de
       tests avec le seuil le plus haut d'abord</b>. C'est le sens de la question <i>c)</i> de l'activité 2 : l'algorigramme
@@ -597,7 +597,7 @@
       <div class="feedback" id="fb3" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Palier 1 : 512 est à peu près la <b>moitié</b> de 1023, et l'échelle va de 0 à 250 km/h. Pour la deuxième question, situe le résultat parmi les trois seuils. Palier 2 : rejoue le scénario de l'activité 2 avec 200 km/h ; et relis ce que « ≥ » veut dire exactement. Palier 3 : 130 est entre 118 et 178 — et pense à l'état de <b>toutes</b> les sorties, pas d'une seule.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Palier 1 : 512 × 250 ÷ 1023 ≈ <b>125 km/h</b> (accepté : 123 à 127) — et 125 est au-dessus de 118 sans atteindre 178, donc <b>ouragan</b>.</p><p>Palier 2 : 200 ≥ 63 est vrai → son programme s'arrête à « tempête tropicale » sans jamais tester les deux seuils supérieurs : le bug coûte <b>deux</b> niveaux. Et « &gt; 178 » exclut 178 lui-même : à 178 pile, son programme dit « ouragan » alors que le cahier des charges dit « ouragan majeur ».</p><p>Palier 3 : entre 118 et 178 → orange SEUL, les trois autres voyants éteints, buzzer muet ; deux voyants allumés en même temps = un mode qui a oublié d'éteindre les autres.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p><b>Palier 1</b> : 512 × 250 ÷ 1023 ≈ <b>125 km/h</b> (accepté : 123 à 127) — et 125 est au-dessus de 118 sans atteindre 178, donc <b>ouragan</b>.</p><p><b>Palier 2</b> : 200 ≥ 63 est vrai → son programme s'arrête à « tempête tropicale » sans jamais tester les deux seuils supérieurs : le bug coûte <b>deux</b> niveaux. Et « &gt; 178 » exclut 178 lui-même : à 178 pile, son programme dit « ouragan » alors que le cahier des charges dit « ouragan majeur ».</p><p><b>Palier 3</b> : entre 118 et 178 → orange SEUL, les trois autres voyants éteints, buzzer muet ; deux voyants allumés en même temps = un mode qui a oublié d'éteindre les autres.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
       <p><b>P1 :</b> <code>vitesseVent</code> ≈ <b>125 km/h</b> (512 × 250 ÷ 1023). La conversion est une <b>proportionnalité</b> : on transporte une mesure d'une échelle (0-1023, ce que sait lire la carte) vers une autre (0-250 km/h, ce que comprend l'humain). Et 125 km/h, c'est déjà un <b>ouragan</b> : au-dessus de 118, en dessous de 178.</p>
       <p><b>P2 :</b> <b>tempête tropicale</b> — c'est le bug ! L'ordre des SI est un choix d'<b>algorithme</b>, pas de dessin : le seuil le plus haut se teste en premier. <b>Et le piège du « &gt; » :</b> il se trompe sur <b>178 pile, et sur 178 seulement</b>. Un programme faux sur UNE valeur sur deux cent cinquante reste faux : c'est précisément pour attraper ces erreurs-là qu'on teste les <b>six frontières</b> (62/63, 117/118, 177/178) et pas seulement « une petite valeur, une moyenne, une grande ».</p>
