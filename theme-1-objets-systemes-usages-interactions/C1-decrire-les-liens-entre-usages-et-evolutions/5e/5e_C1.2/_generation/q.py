@@ -552,7 +552,7 @@ q(C, "Deux réponses justes", "Pour Sainte-Luce, le disque et le tambour sont to
   ["",
    "L'énoncé est complet : il donne le lieu, l'usage, six critères et quinze essais. C'est la réalité qui admet deux solutions.",
    "Toutes les données nécessaires sont fournies ; en ajouter ne trancherait pas, car le désaccord porte sur l'importance des critères, pas sur les faits.",
-   "Ils sont très différents : 190 g d'écart de masse, un point de corrosion, une réparabilité qui va de 4/5 à 3/5."],
+   "Ils sont très différents : 250 g d'écart de masse, un point de corrosion, une réparabilité qui va de 4/5 à 3/5."],
   "Certaines questions n'ont pas une réponse, mais des réponses bien ou mal défendues."),
 
 q(C, "Ce qu'on ne mesure pas", "Aucun des six critères ne parle du bruit du frein. Cela signifie…",
