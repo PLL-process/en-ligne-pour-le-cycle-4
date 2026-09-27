@@ -20877,3 +20877,79 @@ déjà effacé par la régénération que le contrôle vient de lancer.
 - Diff final contre le HTML publié, par page : **7 lignes** (le filet n°135 déplacé de la fin vers le
   gabarit, sans plus de doublon, et une ligne blanche cosmétique avant `</body>`, héritée du même gabarit
   de pose de la loupe que `build_tp.py` et sans effet sur le rendu) — contre 202 lignes avant ce lot.
+
+## 27/09/2026 — Générateur du QCM de planification remis d'accord avec sa page, `verif_chaine_qcm.py` posé (thème 3)
+
+Pascal, après le lot ci-dessus sur `build_atelier.py` : « règle le stp » — le point resté ouvert sur
+`q.py` / `_generation/build_qcm.py`, jamais audité. Même méthode que pour le générateur des trois
+ateliers : rejouer, diffé au mot près contre `qcm_C7.1_planification_taches.html`, ne porter que du texte
+copié, jamais inventé.
+
+### Le trou : quatre campagnes posées sur le HTML publié, jamais reportées dans `q.py` ni `build_qcm.py`
+
+Piège identifié dès le départ : ce QCM mélange 30 questions dans un ordre tiré par graine
+(`_outils/fix_r.js`, graine 617, pour répartir A/B/C/D sans que la bonne réponse soit toujours en premier
+dans `q.py`). Diffé brut, mon HTML régénéré et la page publiée ne s'alignaient plus question à question.
+Un script de dépermutation (`reverse_qcm.js`, jetable, non commité) rejoue le même tirage que `fix_r.js`
+sur les deux fichiers et revient à l'ordre de `q.py` pour chaque question avant de comparer — la même
+prudence qui avait manqué de faire dérailler la n°307 du lot précédent : ne jamais conclure d'un diff
+qu'on n'a pas déconstruit dans le bon sens.
+
+1. **17 des 30 questions** avaient au moins une option reformulée à la main sur la page publiée, jamais
+   reportée dans `q.py` — l'énoncé, l'explication, l'exemple, l'erreur fréquente et le « à retenir »
+   étaient identiques partout ; seul le libellé d'une ou plusieurs options avait été affiné après coup.
+   Les 17 questions et leurs options ont été réécrites dans `q.py`, mot pour mot d'après la page publiée
+   dépermutée — aucun texte inventé.
+2. **Navigation à un seul niveau** : le bandeau `#navharm`, le paragraphe « Revenir à… » et le pied de
+   page ne menaient qu'à l'atelier de 5e, écrits en dur dans `build_qcm.py` par un simple remplacement de
+   chaîne — alors que ce QCM sert les trois niveaux. La page publiée, elle, reliait déjà aux trois
+   ateliers ET aux trois séquences. `build_qcm.py` remplace maintenant les trois blocs (nav, paragraphe,
+   pied de page) du gabarit par leurs équivalents à liens croisés, copiés tels quels de la page publiée.
+3. **Une fonctionnalité « nuance »**, et le champ `err` rendu optionnel, avaient été ajoutés directement
+   au `<script>` du HTML publié (CSS `.bloc-detail.nuance` + une ligne de gabarit JS conditionnelle) —
+   invisibles aujourd'hui, car aucune des 30 questions ne renseigne `nuance` et `err` est toujours
+   rempli, mais le moteur sait déjà les afficher si une question future le fait. Les faire disparaître
+   silencieusement aurait retiré une capacité que le générateur ne recréerait pas de lui-même (règle d'or
+   n°38) : reprises telles quelles dans `build_qcm.py`, à l'endroit exact où la page publiée les pose
+   (le bloc nuance après la liste des distracteurs réfutés, pas avant).
+4. **CSS d'impression** : le gabarit emprunté (Thème 1, Shenzhen) a gagné deux sélecteurs
+   (`.loupe-cliquable`, `#qImgCap`) dans ses règles « fond blanc » / « texte bleu conservé » depuis la
+   dernière fois que ce QCM a été engendré — un retard de cette page sur son propre gabarit, pas une
+   régression du générateur (même campagne du 02/09/2026 déjà rencontrée sur les trois ateliers). Les deux
+   sélecteurs concernent réellement cette page : `#qImgCap` légende les captures GanttProject des 5
+   questions illustrées, et `.loupe-cliquable` est bien posé en JS sur leurs images. Choix : laisser le
+   régénérateur reprendre le gabarit actuel — c'est la page qui était en retard, pas la chaîne de
+   production.
+
+### Vérifié
+
+- `controle_hierarchie.py` et `controle_debordement.py` sur le dépôt entier : 0 écart.
+- `controle_liens.py --tout` : aucun des nouveaux liens croisés (3 ateliers, 3 séquences) n'est cassé —
+  les 84 liens morts déjà signalés sont tous antérieurs, dans `_archive-anciennes-versions/` et
+  `_outils/dnb_gabarit.html`, jamais touchés par ce lot.
+- `controle_impression.mjs` sur le dépôt entier : aucune page n'imprime un texte que le papier ne rendra
+  pas — confirme que l'ajout de `.loupe-cliquable`/`#qImgCap` au CSS d'impression n'introduit aucun texte
+  sombre sur fond sombre.
+- `controle_contraste_liens.mjs` sur le dépôt entier (341 pages) : chaque lien, y compris les nouveaux
+  liens croisés, se lit sur son fond réel — à l'écran, une fois cliqué, et sur papier.
+- `build_audit.py` et `make_index.py` rejoués : aucune différence.
+- Rendu réel vérifié au navigateur (Chromium) : les 30 questions se chargent (badge « 30 questions · 5
+  illustrées »), les 7 liens croisés du bandeau et les 3 + 3 liens du paragraphe et du pied de page
+  pointent vers les bonnes pages, répondre à une question affiche bien le bloc « Erreur fréquente »
+  (`Q.err` non vide) et n'affiche PAS de bloc « nuance » (`Q.nuance` non renseigné, comme attendu pour les
+  30 questions actuelles), et la loupe s'ouvre et se ferme réellement au clic sur l'image d'une question
+  illustrée — pas seulement supposée d'après la présence de la classe.
+- `python3 verif_chaine_qcm.py` : positif après régénération, et testé négatif exprès (un commentaire de
+  test injecté dans la page publiée est détecté, écart signalé, code de sortie 1) avant d'être restauré.
+- Diff final contre le HTML publié : **2 lignes** (l'ajout de `.loupe-cliquable` et `#qImgCap` au CSS
+  d'impression, point 4 ci-dessus — tout le reste, options de questions comme liens croisés comme
+  scaffolding nuance/err, est désormais strictement ce que `q.py` et `build_qcm.py` produisent).
+
+### L'outil : `verif_chaine_qcm.py`, sur le principe de `atelier-cao/verif_chaine.py` plutôt que de
+`verif_chaine.py` (ce dossier)
+
+Différence utile : `_generation/build_qcm.py` accepte déjà un gabarit et une sortie en arguments — il n'a
+pas besoin d'écrire à l'emplacement réel pour être rejoué. `verif_chaine_qcm.py` régénère donc dans un
+dossier temporaire (comme `atelier-cao/verif_chaine.py`), jamais en place (contrairement à
+`verif_chaine.py`, qui n'a pas ce choix pour les trois ateliers). Un écart n'est donc PAS auto-réparé : le
+message d'erreur donne la commande exacte à rejouer depuis la racine du dépôt.
