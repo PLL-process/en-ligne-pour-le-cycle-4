@@ -20632,3 +20632,29 @@ même géométrie.
 **Vérifié** : un seul mot-groupe retiré (diff), aucune autre occurrence de « Parasolid » dans l'atelier ;
 `controle_hierarchie` vert sur la fiche ; `controle_liens` : 0 lien cassé. La fiche n'est pas engendrée par
 `build_tp.py` (le TP 4e s'y relie seulement) : `verif_chaine` n'est pas concerné.
+
+## 27/09/2026 — `build_audit.py` ne compte plus ce que git ignore (_outils, thème 2)
+
+**Le constat**, fait pendant la n°307 : régénéré dans une session propre sur main à `a8a2688`,
+`audit_couverture` ne différait **que** par le `nb_fichiers` de trois dossiers — 5e_C1.1 (49 → 48),
+4e_C1.1 (37 → 36), 3e_C1.1 (46 → 45). Le fichier en trop, lu dans `audit_couverture.json` commité :
+`_generation/__pycache__/q.cpython-314.pyc`. `fichiers_reels` comptait tout ce qui se trouve **sur
+le disque**, y compris le cache que Python laisse chez celui qui a lancé un générateur. L'audit
+changeait donc selon **qui** le régénérait — la définition même d'un fichier engendré qui ment.
+
+**La correction.** `fichiers_reels` lit les motifs du `.gitignore` racine (`__pycache__/`, `*.pyc`,
+`*.bak`, `*.bak_*`, `.DS_Store`, `Thumbs.db`, `node_modules/`, `coverage/`, `.idea/`) et ne compte
+plus ni ces dossiers ni ces fichiers : un fichier que git ignore n'est pas une ressource du dépôt.
+Motifs simples seulement — ce sont les seuls que le `.gitignore` contient ; une négation `!…` n'y
+existe pas et n'est pas gérée (dit dans la docstring). Aucune dépendance à `git` : l'outil reste
+lançable sur un arbre sans historique.
+
+### Vérifié
+
+- Audit régénéré : **seuls** les trois `nb_fichiers` changent (et la liste `fichiers` de ces trois
+  dossiers dans le JSON) ; index et README inchangés.
+- Témoin : un `__pycache__/q.cpython-314.pyc`, un `Thumbs.db` et un `brouillon.bak` posés dans
+  5e_C1.1 → nouveau code **48**, audit identique octet pour octet à l'audit propre ; ancien code,
+  mêmes fichiers → **51**. Fichiers retirés, audit revenu à l'identique.
+- Bancs `tests_verif_regles_audit` 56 / 56, `tests_index` 20 / 20, `tests_controle_couverture`
+  27 / 27 ; `controle_statut` vert.
