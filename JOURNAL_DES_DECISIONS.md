@@ -20619,3 +20619,16 @@ OpenCascade. À relire par l'auteur de la fiche.
 
 **Reste ouvert.** Le tableau « Choix de l'outil » de la station (3 colonnes) reste étroit à 390 px : ses
 cellules ont maintenant des lignes, mais la mise en page d'un tableau sur téléphone est une autre décision.
+
+## 27/09/2026 — Fiche maths du TP 4e : la parenthèse « Parasolid » retirée (thème 3)
+
+**Signalé à la n°307, tranché par Pascal** (« carte blanche ») : dans `atelier-cao/fiche_maths_tp_4e_socle.html`,
+la phrase sur la méthode de calcul disait « Onshape, lui, utilise un autre noyau, Parasolid (le même type de
+calcul que fait Onshape) ». La parenthèse était une tautologie — Parasolid **est** le noyau d'Onshape — et elle
+s'emboîtait dans une autre parenthèse. Elle est **retirée**, sans rien remplacer : la phrase dit déjà ce qu'il
+faut, que les deux noyaux (OpenCascade pour le recalcul, Parasolid dans Onshape) calculent le volume exact de la
+même géométrie.
+
+**Vérifié** : un seul mot-groupe retiré (diff), aucune autre occurrence de « Parasolid » dans l'atelier ;
+`controle_hierarchie` vert sur la fiche ; `controle_liens` : 0 lien cassé. La fiche n'est pas engendrée par
+`build_tp.py` (le TP 4e s'y relie seulement) : `verif_chaine` n'est pas concerné.
