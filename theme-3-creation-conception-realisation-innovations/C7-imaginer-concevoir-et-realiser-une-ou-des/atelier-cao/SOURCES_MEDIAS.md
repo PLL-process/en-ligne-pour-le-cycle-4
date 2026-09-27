@@ -248,3 +248,77 @@ contrôle. Toutes ont la même origine et la même réserve que ci-dessus.
 - `Images/tp5e_12_export_stl.png`
 - `Images/tp5e_13_retrouver.png`
 - `Images/tp5e_15_bibliotheque_materiaux.png`
+
+## Le TP 4e « Le dé sur son socle » déroulé dans Onshape — 26/09/2026
+
+**Origine** : captures d'écran d'**Onshape** (interface en français, thème sombre), prises en déroulant
+le TP geste par geste dans un document de travail « Socle romain — Camille » ; « Camille » est un prénom
+d'exemple, annoncé comme tel dans le TP (n°75). Capture de la seule zone de la page, en pixels
+physiques, sans barre d'adresse ni élément du poste. Aucune donnée personnelle n'y figure, hormis
+l'identifiant d'établissement « GJEP » affiché par Onshape dans le coin supérieur droit de certaines vues.
+
+**Licence** : l'interface appartient à PTC (Onshape) ; captures reproduites à des fins d'enseignement,
+pour montrer où cliquer — même régime que les captures du TP 5e. Les pièces modélisées sont celles du dépôt.
+
+**Remplacent** les sept rendus `tp4e_R1_profil.png` → `tp4e_R7_presse_papier.png` produits par l'API le
+11/08/2026 (section plus haut) : ce sont désormais de vraies vues du logiciel, et `tp4e_R1_profil.png`
+montre l'esquisse réelle au lieu d'un tracé. Deux images de résultat s'ajoutent : `tp4e_R0_…` et `tp4e_R8_…`.
+
+**Relevé en chemin, et reporté dans le TP** : l'outil s'appelle **Pivoter** ; les plans gardent leurs noms
+anglais (Front, Top, Right) ; un profil entièrement contraint devient **blanc** sur le thème sombre ;
+Onshape ne fixe pas la première pièce d'un assemblage ; l'export s'appelle **Exporter…** ; les unités
+de l'espace de travail sont en livres par défaut. Volumes lus : socle brut 538 783,14 mm³ (= π·70²·35),
+socle mouluré 534 608,921 mm³, dé importé 123 196,654 mm³ ; masses : socle en Bronze (8-14 % Sn)
+4 357,063 g, dé en ABS 129,603 g.
+
+Images de résultat :
+
+- `Images/tp4e_R0_document_range.png`
+- `Images/tp4e_R1_profil.png`
+- `Images/tp4e_R2_socle_brut.png`
+- `Images/tp4e_R3_socle_moulure.png`
+- `Images/tp4e_R4_deux_pieces.png`
+- `Images/tp4e_R5_assemblage_libre.png`
+- `Images/tp4e_R6_de_centre.png`
+- `Images/tp4e_R7_presse_papier.png`
+- `Images/tp4e_R8_export_stl.png`
+
+Captures de gestes :
+
+- `Images/tp4e_01_menu_creer.png`
+- `Images/tp4e_02_nouveau_document.png`
+- `Images/tp4e_04_onglet_menu.png`
+- `Images/tp4e_05_esquisse_plan.png`
+- `Images/tp4e_06_plan_front.png`
+- `Images/tp4e_07_axe_trace.png`
+- `Images/tp4e_08_bouton_construction.png`
+- `Images/tp4e_09_axe_construction.png`
+- `Images/tp4e_10_rectangle_par_sommet.png`
+- `Images/tp4e_11_profil_trace.png`
+- `Images/tp4e_12_cote_hauteur_saisie.png`
+- `Images/tp4e_13_profil_defini.png`
+- `Images/tp4e_14_bouton_pivoter.png`
+- `Images/tp4e_15_panneau_pivoter.png`
+- `Images/tp4e_16_pivoter_apercu.png`
+- `Images/tp4e_17_volume_socle_brut.png`
+- `Images/tp4e_18_bouton_conge.png`
+- `Images/tp4e_19_menu_conge_chanfrein.png`
+- `Images/tp4e_20_conge_haut_6.png`
+- `Images/tp4e_21_conge_bas_3.png`
+- `Images/tp4e_22_menu_plus.png`
+- `Images/tp4e_23_importer_dialogue.png`
+- `Images/tp4e_24_onglets_apres_import.png`
+- `Images/tp4e_25_panneau_inserer.png`
+- `Images/tp4e_26_menu_piece.png`
+- `Images/tp4e_27_fixer_socle.png`
+- `Images/tp4e_28_bouton_liaison_fixe.png`
+- `Images/tp4e_29_connecteurs_proposes.png`
+- `Images/tp4e_30_liaison_apercu.png`
+- `Images/tp4e_31_bouton_inverser.png`
+- `Images/tp4e_32_menu_exporter.png`
+- `Images/tp4e_34_liste_formats.png`
+- `Images/tp4e_35_options_export.png`
+- `Images/tp4e_36_materiau_bronze.png`
+- `Images/tp4e_38_unites_gramme.png`
+- `Images/tp4e_39_masse_socle_bronze.png`
+- `Images/tp4e_42_apparence_de.png`
