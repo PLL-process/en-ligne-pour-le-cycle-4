@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Synthèse eleve — 4e_C7.6 Le dé sur son socle</title>
+<title>Synthèse eleve — 4e_C7.6 Le dé sur sa pointe</title>
 <style>body{font-family:system-ui,sans-serif;max-width:720px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
 h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
 .box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
@@ -21,7 +21,7 @@ ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
 <body>
 <nav id="navharm"><a href="../../../../../index.html">⌂ Accueil</a><a href="../../../atelier-cao/tp_4e_socle_assemblage.html">🧪 Le TP</a><a href="../qcm_4e_C7.6_le-socle.html">🧠 Le QCM</a><a href="../lexique_4e_C7.6.html">📖 Lexique</a><a href="synthese_professeur_4e_C7.6.html">🧑‍🏫 Synthèse professeur</a></nav>
 
-<h1>🏛️ Synthèse élève — Le socle, et deux pièces qui se tiennent</h1>
+<h1>🏛️ Synthèse élève — Le socle en nombre d'or, et le dé sur sa pointe</h1>
 <p><em>4e_C7.6 — Modifier une forme à l’aide d’une modélisation.</em></p>
 
 <h2>Les deux gestes nouveaux</h2>
@@ -41,28 +41,32 @@ ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
   réglage par défaut.</li>
 </ul></div>
 
-<h2>L'assemblage et les contraintes</h2>
-<p>Un <b>assemblage</b> n'est pas un atelier de dessin : on n'y ajoute pas de matière. On y
-<em>place</em> des pièces qui existent déjà, et on les <em>contraint</em>. Ton dé de 5e y entre
-tel quel : on ne le redessine pas.</p>
+<h2>Des variables au lieu des nombres</h2>
+<p>Au lieu de taper 89, 13 ou 5 dans chaque cote, on range les nombres dans un <b>Variable
+Studio</b>, chacun avec un nom. Une cote qui tape <code>#M</code> va chercher la valeur de la
+variable <b>M</b>. Toutes les cotes du socle viennent de deux nombres : <b>M = 89 mm</b> et le
+<b>nombre d'or φ</b> ≈ 1,618.</p>
 <div class="box">
-  <p><b>La première pièce insérée est fixe.</b> Le logiciel la bloque d'office : il faut bien un
-  point de référence, sinon tout flotte. Insère donc le socle en premier.</p>
+  <p><b>Le # compte.</b> Sans lui, le logiciel ne reconnaît pas le nom et la cote passe en rouge.</p>
+  <p><b>Changer M, c'est tout changer.</b> La plinthe, son épaisseur, son congé, l'enfoncement du
+  dé suivent d'un coup, sans rouvrir une seule esquisse.</p>
 </div>
-<p>Une <b>contrainte</b> ne place pas la pièce : elle <em>interdit un mouvement</em>. C'est la
-différence entre poser le dé « à peu près au milieu » et le rendre incapable de se décentrer. Et
-c'est ainsi qu'on la vérifie : on essaie de faire ce qu'elle doit interdire. Si la pièce bouge,
-la contrainte n'y est pas.</p>
+
+<h2>Déplacer un solide</h2>
+<p>Le dé est <b>fourni</b>, tout fini. Pour le dresser sur un de ses coins, on le fait
+<b>tourner</b> deux fois — 45°, puis 35,26° — : sa grande diagonale devient verticale. Puis une
+<b>translation</b> le monte à la bonne hauteur, calculée par une formule plutôt que tapée en
+chiffres.</p>
 <div class="box attention">
-  <p><b>Le dé s'enfonce dans le socle ?</b> C'est normal, et c'est instructif : un repère a un
-  <em>sens</em>. Deux repères alignés dans le même sens se traversent. Le bouton d'inversion
-  retourne l'un des deux, et le dé se pose <em>dessus</em>.</p>
-  <p>Autre piège : viser un coin plutôt que le centre. Le point de la liaison devient le repère —
-  vise le <b>centre</b> de la face.</p>
+  <p><b>Le dé penche au lieu de se dresser ?</b> La seconde rotation tourne dans le mauvais sens :
+  la case <b>Direction opposée</b> la retourne.</p>
 </div>
-<p>La contrainte décrit une <em>relation</em>, pas une position : change la cote du socle, et le
-dé reste centré. C'est exactement ce que veut dire « modifier une forme à l'aide d'une
-modélisation ».</p>
+
+<h2>Creuser une forme dans une autre</h2>
+<p>Un <b>Booléen</b> en <b>Soustraire</b> retire au socle tout ce qu'il partage avec le dé : c'est
+l'<b>empreinte</b>. Le dé sert d'emporte-pièce ; on coche <b>Garder les outils</b> pour qu'il ne
+disparaisse pas. Un <b>décalage</b> de 0,25 mm laisse un <b>jeu</b> : une fois imprimé, le dé
+s'y posera sans forcer. Pour cela, les deux pièces doivent être dans le <b>même Part Studio</b>.</p>
 
 <h2>Modifier une forme</h2>
 <p>Modifier, ce n'est pas gommer et redessiner. C'est <b>changer un paramètre</b> et laisser le
@@ -72,8 +76,8 @@ pourquoi une pièce se pense en <em>relations</em>, pas en nombres isolés.</p>
 
 <h2>Emporter son travail</h2>
 <div class="box"><ul>
-  <li>Une imprimante 3D reçoit des <b>pièces</b>, jamais un assemblage contraint : on exporte le
-  socle et le dé <em>séparément</em>.</li>
+  <li>Une imprimante 3D reçoit des <b>pièces</b> : on exporte le socle et le dé
+  <em>séparément</em>, et le dé se pose sur une face, pas sur sa pointe.</li>
   <li>Une pièce se pose sur sa plus grande <b>face plate</b> : moins de supports, meilleur
   état de surface.</li>
   <li>On <b>nomme</b> avant d'avoir besoin du nom. « Pièce 1 » et « Pièce 2 » suffisent
@@ -83,9 +87,8 @@ pourquoi une pièce se pense en <em>relations</em>, pas en nombres isolés.</p>
 <h2>Ce que le TP ne garantit pas</h2>
 <p>La masse du presse-papier vient du <b>volume</b> et de la <b>matière</b>, de rien d'autre :
 un socle creux en PLA ne pèsera pas, quelle que soit son allure.</p>
-<p>Et une contrainte décrit une <em>intention</em>. Que le dé tienne réellement sur son socle —
-qu'il ne se décolle pas, ne bascule pas — cela se dessine en plus (une colle, un téton, une
-gorge) et se constate sur la pièce imprimée. Un modèle juste n'est pas encore un objet
+<p>Et l'empreinte guide le dé sans le coller. Qu'il tienne réellement sur sa pointe — qu'il ne
+bascule pas — cela se vérifie sur la pièce imprimée, et se règle souvent d'un point de colle. Un modèle juste n'est pas encore un objet
 fabricable.</p>
 
 <div class="box attention">
@@ -94,6 +97,6 @@ fabricable.</p>
   QCM et le lexique, eux, fonctionnent hors ligne et s'impriment.</p>
 </div>
 
-<footer>Lot « Le dé sur son socle » — atelier CAO du cycle 4. Cette page fonctionne hors ligne, sans compte, et s'imprime en noir et blanc.</footer>
+<footer>Lot « Le dé sur sa pointe » — atelier CAO du cycle 4. Cette page fonctionne hors ligne, sans compte, et s'imprime en noir et blanc.</footer>
 </body>
 </html>

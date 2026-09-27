@@ -322,3 +322,16 @@ Captures de gestes :
 - `Images/tp4e_38_unites_gramme.png`
 - `Images/tp4e_39_masse_socle_bronze.png`
 - `Images/tp4e_42_apparence_de.png`
+
+## Le dé fourni du TP 4e « Le dé sur sa pointe » — 27/09/2026
+
+`de_55_calottes.step` · **Origine** : engendré par `_generation/de_55_calottes.py` avec le noyau
+OpenCascade (OCP), à partir des seules formules du modèle de référence du professeur (Variable Studio
+« Variables phi » du document Onshape « de-4e-GJEP-dore ») : arête C = 89/φ ≈ 55,005 mm, arêtes
+arrondies Rde = C/φ⁴, 21 calottes sphériques (ouverture C/φ⁴, profondeur C/φ⁷, rayon
+R = (d²/4 + h²)/2h), faces opposées sommant à 7, dé centré sur l'origine.
+
+**Contrôle** : volume 156 909,20 mm³, contre 156 909,11 mm³ pour le dé du modèle de référence lu dans
+Onshape (écart relatif 6 × 10⁻⁷) ; solide valide ; 21 calottes.
+
+**Licence** : géométrie créée pour ce dépôt, réutilisable sous sa licence.

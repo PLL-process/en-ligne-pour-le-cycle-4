@@ -10,10 +10,10 @@
 | Code | Formulation du référentiel (2024) | TP qui la travaille | Où il est évalué |
 |---|---|---|---|
 | **5e_C7.2** | Fabriquer une solution pour améliorer un OST existant. | TP nº1 **bis** — Le dé, en mieux | QCM du lot `5e_C7.2` — 30 questions |
-| **4e_C7.2** | Proposer et fabriquer une solution pour ajouter une nouvelle fonction à un OST (croquis, schéma, graphique, algorithme, modélisation). | TP nº2 — Le dé sur son socle (contribution) | QCM `qcm_4e_C7_jardin-conception.html` du lot `4e_C7.1` — 10 questions |
+| **4e_C7.2** | Proposer et fabriquer une solution pour ajouter une nouvelle fonction à un OST (croquis, schéma, graphique, algorithme, modélisation). | TP nº2 — Le dé sur sa pointe (contribution) | QCM `qcm_4e_C7_jardin-conception.html` du lot `4e_C7.1` — 10 questions |
 | **3e_C7.2** | Proposer et fabriquer un ensemble de solutions pour produire un nouvel OST (croquis, schéma, graphique, algorithme, modélisation). | TP nº4 — Le boîtier étanche | QCM du lot `3e_C7.6` — 10 questions |
 | **5e_C7.6** | Mettre en œuvre les moyens pour réaliser une forme selon une procédure fournie. | TP nº1 — Le dé | QCM du lot `5e_C7.6` — 30 questions |
-| **4e_C7.6** | Modifier une forme à l’aide d’une modélisation. | TP nº2 — Le dé sur son socle | QCM du lot `4e_C7.6` — 30 questions |
+| **4e_C7.6** | Modifier une forme à l’aide d’une modélisation. | TP nº2 — Le dé sur sa pointe | QCM du lot `4e_C7.6` — 30 questions |
 | **3e_C7.6** | Modéliser une forme voulue. | TP nº4 — Le boîtier étanche | QCM du lot `3e_C7.6` — 20 questions |
 
 > **Correction du 31/08/2026.** Ce tableau donnait auparavant deux formulations, identiques aux
@@ -73,7 +73,7 @@ faire son travail toute seule.
 |---|---|---|---|
 | **5e** | Le dé | esquisser, coter, extruder, enlever, adoucir | On fabrique **une pièce**. |
 | **5e bis** | Le dé, en mieux | le plan décalé, la **primitive** en mode Retirer | On **améliore** une pièce qui existe — et on décide si ça vaut le coup. |
-| **4e** | Le dé sur son socle | la **révolution**, puis l'**assemblage** et les contraintes | On tient **deux pièces ensemble** — et l'une peut empêcher l'autre de bouger. |
+| **4e** | Le dé sur sa pointe | les **variables** et le nombre d'or, la **révolution**, puis **déplacer un solide** et creuser une forme dans une autre | On **modifie une pièce en changeant un nombre** — et une pièce peut creuser la place d'une autre. |
 | **3e** | Le boîtier étanche | la **coque**, la rainure, le passage de câble, la vue en coupe | L'objet doit **résister à quelque chose de réel**. |
 
 Le fil n'est pas la difficulté des outils, c'est **l'enjeu**. En 5e une pièce

@@ -4,7 +4,7 @@
 >
 > Programme 2024 · cycle 4 · thème 3 · socle D2, D3, D4
 
-## Le lot « Le dé sur son socle »
+## Le lot « Le dé sur sa pointe »
 
 Ce dossier ne porte pas de séquence propre : le geste s'apprend dans un **TP mutualisé** entre
 les trois niveaux, qui vit dans l'[atelier CAO](../../atelier-cao/tp_4e_socle_assemblage.html) et n'est pas dupliqué
