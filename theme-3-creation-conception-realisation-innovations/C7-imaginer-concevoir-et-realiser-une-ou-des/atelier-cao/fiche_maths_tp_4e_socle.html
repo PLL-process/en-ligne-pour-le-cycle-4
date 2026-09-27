@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="TP 4e « Le dé sur son socle » : les notions de mathématiques mobilisées, palier par palier, avec les repères Eduscol et les valeurs exactes.">
+<title>Le dé sur son socle — côté mathématiques (fiche pour les collègues)</title>
+<style>
+  /* Règle d'or n°40 — hors ligne d'abord : aucune police distante, pile système. */
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;
+        --sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;
+        --err:#ff7b88;--input-bg:#0b1b39;--input-bd:#2f5695;--btn:#1d4e89}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:0 0 46px;line-height:1.6;
+       font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
+  .page{max-width:940px;margin:0 auto;padding:0 16px}
+  h1{font-size:1.5em;color:var(--title);text-align:center;margin:16px 0 4px}
+  h2{font-size:1.14em;color:var(--head);margin:20px 0 8px}
+  h3{font-size:1em;color:var(--hl);margin:16px 0 6px}
+  h4{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .sous{text-align:center;color:var(--sub);margin:0 0 12px}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;
+       font-family:inherit;font-weight:600;font-size:.92em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd);color:var(--sub)}
+  .btn.small{font-size:.86em;padding:7px 13px}
+  .btn.qcm{background:#2b1a3f;border:1px solid var(--head);color:var(--head)}
+  .btn:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  a{color:var(--hl);text-decoration:underline;text-underline-offset:2px}
+  .saved-note{text-align:center;color:var(--sub);font-size:.84em;margin:4px 0}
+  .progress-wrap{max-width:940px;margin:8px auto;padding:0 16px}
+  .progress{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:999px;height:12px;overflow:hidden}
+  .progress>div{background:linear-gradient(90deg,#1d4e89,#61dafb);height:100%;width:0;transition:width .3s}
+  #progTxt{text-align:center;color:var(--sub);font-size:.85em;margin:4px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 14px;max-width:940px;padding:0 16px}
+  .seance-tab{flex:1;min-width:150px;padding:10px 8px;border-radius:10px;background:var(--input-bg);
+    border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.84em;font-weight:600;
+    color:var(--text);font-family:inherit;line-height:1.35}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}.seance-panel.active{display:block}
+  .meta{background:var(--panel2);border-left:3px solid var(--hl);border-radius:0 8px 8px 0;padding:8px 13px;margin:8px 0;font-size:.88em}
+  .assoc{margin:8px 0}
+  .assoc label{display:block;margin-bottom:4px}
+  select,textarea,input[type=text]{width:100%;background:var(--input-bg);color:var(--text);
+    border:1px solid var(--input-bd);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:.94em}
+  textarea{min-height:78px;resize:vertical}
+  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.86em}
+  th,td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--sub)}
+  .legende-badges{max-width:880px;margin:0 auto 12px;font-size:.82em;color:var(--sub);
+    background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 14px;line-height:1.5}
+  [title]{cursor:help}
+  .fig{margin:10px 0}
+  .fig img{width:100%;max-width:820px;display:block;border-radius:10px;border:1px solid var(--border);background:#050f24}
+  .fig figcaption{color:var(--sub);font-size:.82em;margin-top:4px}
+  details.aide,details.correction,details.etayage{margin:6px 0;border:1px solid var(--input-bd);
+    border-radius:8px;padding:6px 12px;background:rgba(11,27,57,.6)}
+  details summary{cursor:pointer;font-weight:600;color:var(--sub)}
+  details.correction summary{color:var(--warn)}
+  details.etayage{border-left:4px solid var(--hl)}
+  details.etayage summary{color:var(--hl)}
+  details.etayage ul{margin:6px 0;padding-left:22px}
+  details.etayage li{margin:5px 0}
+  .feedback{margin:8px 0;padding:9px 13px;border-radius:9px;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.mixte{background:rgba(255,214,107,.14);color:var(--warn)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .retenir{border-left:3px solid var(--ok);padding-left:11px;color:var(--ok)}
+  .piege{border-left:3px solid var(--err);padding-left:11px;color:#ffb0b8}
+  /* Règle d'or n°29 — mode essentiel */
+  body.essentiel .referentiel-card, body.essentiel details.correction,
+  body.essentiel .approfondissement{display:none}
+  /* Règle d'or n°30 — la barre COMPTE, ce bandeau SITUE */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:#0d2347;
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  footer{color:var(--sub);font-size:.84em;text-align:center;margin-top:22px}
+  @media(max-width:620px){.seance-tab{min-width:118px;font-size:.78em}}
+  @media print{body{background:#fff;color:#111}.toolbar,.btn,.seance-tabs,.progress-wrap,
+    .saved-note,#tachesBandeau,#navharm{display:none!important}
+    .seance-panel{display:block!important}.card{background:#fff;border-color:#999}
+    h1,h2,h3{color:#111}}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+  /* — impression : fond blanc, couleurs conservées (décision de Pascal, 02/09/2026).
+     Ce bloc vit ICI, dans le gabarit : la campagne du 02/09 l'avait écrit dans les cinq TP
+     engendrés, et la première régénération l'a effacé (règle d'or n°283). C'est l'union
+     des cinq blocs qu'elle avait posés, un sélecteur n'agissant que là où il existe. — */
+  @media print{
+    .card p,.filet{opacity:1!important}
+    .attendu,.avertir,.badge,.card,.critere,.etapes td,.etapes th,.legende-badges,.palier{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+    .card a,.note a{color:#047fa0!important}
+    .attendu b{color:#048827!important}
+    .legende-badges,.legende-badges b,.legende-badges span{color:#0a1b3d!important}
+    .badge,.capture b,.capture code,.capture figcaption,.capture i,.rituel,.rituel b,.voir,.voir b,.voir i{color:#0d2347!important}
+    .page code,.page footer,.sous,.sous b{color:#1a6af8!important}
+    .avertir,.avertir i,.avertir kbd{color:#3a2a0d!important}
+    .avertir code{color:#3a2a0d!important}
+    .avertir b,.card b,.exemple-note,.exemple-note b,.exemple-note i{color:#946b00!important}
+  }
+
+#navharm{display:flex;flex-wrap:wrap;gap:10px;max-width:900px;margin:14px auto 0;padding:0 18px}
+#navharm a{padding:6px 12px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;
+ color:#9bbefc;font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+@media print{#navharm{display:none}}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.93em;margin:8px 0}
+th,td{border:1px solid var(--border);padding:7px 9px;vertical-align:top;text-align:left}
+th{background:var(--panel2)}
+table.petit{width:auto}
+.note{color:var(--sub);font-size:.92em}
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
+@media print{th{background:#eef!important}}
+</style>
+</head>
+<body>
+<nav id="navharm" aria-label="Navigation du site">
+  <a href="../../../index.html">&#8962; Accueil</a>
+  <a href="tp_4e_socle_assemblage.html">&#8592; Le TP n°2 — Le dé sur son socle</a>
+  <a href="../4e/4e_C7.1/sequence_4e_C7_jardin-conception.html">&#128218; La séquence de 4e</a>
+</nav>
+<div class="page">
+<h1>📐 Le dé sur son socle — ce que le TP fait faire en mathématiques</h1>
+<p class="sous">Fiche pour les collègues de mathématiques · TP n°2 de l'atelier CAO, 4e (technologie, codes 4e_C7.2 et 4e_C7.6)</p>
+
+<div class="card">
+<h2>En deux phrases</h2>
+<p>En technologie, l'élève de 4e construit dans <b>Onshape</b> un socle en faisant <b>tourner un profil autour d'un axe</b>, l'arrondit par deux <b>congés</b>, puis pose dessus le <b>dé</b> de l'an dernier, <b>centré</b> par une liaison, et lui donne un matériau. Chaque palier du TP s'achève sur un encart « 📐 Côté maths » qui <b>constate</b> ce que le geste veut dire en mathématiques — sans poser de question&nbsp;: le TP apprend l'outil, il n'évalue pas (règle d'or n°81 du dépôt).</p>
+<p>Cette fiche relève les points de contact, pour que vous puissiez décider ce que vous en faites en cours de mathématiques&nbsp;: rien, un rappel, une activité, une co-intervention.</p>
+</div>
+
+<div class="card">
+<h2>Palier par palier</h2>
+<p class="note">Le niveau indiqué est celui des <a href="https://eduscol.education.fr/document/14080/download">repères annuels de progression de mathématiques pour le cycle 4</a> (Eduscol), colonnes 5e · 4e · 3e. « Réinvesti » = vu avant la 4e.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Palier du TP</th><th>Ce que l'élève fait dans Onshape</th><th>Notion mathématique</th><th>Repère</th><th>Valeurs du TP</th></tr></thead>
+<tbody>
+<tr><td>2 · Le profil</td><td>Dessine un rectangle de 70 × 35 collé à une ligne d'axe</td><td>Demi-coupe d'un solide&nbsp;; symétrie axiale de la coupe entière</td><td>5e (symétries), réinvesti</td><td>coupe entière 140 × 35 mm</td></tr>
+<tr><td>3 · La révolution</td><td>Fait tourner le profil de 360° autour de l'axe</td><td>Cylindre de révolution&nbsp;; volume V = π r² h&nbsp;; conversion mm³ → cm³</td><td>5e (volume du cylindre, unités), réinvesti</td><td>V = π × 70² × 35 ≈ <b>538 783 mm³</b> ≈ 538,8 cm³</td></tr>
+<tr><td>4 · La moulure</td><td>Arrondit l'arête du haut (rayon 6) et celle du bas (rayon 3)</td><td>Quart de cercle&nbsp;; aire r² − ¼πr²&nbsp;; effet d'un agrandissement sur les aires</td><td><b>4e</b> (agrandissement / réduction)</td><td>7,7 mm² et 1,9 mm² en coupe&nbsp;; rayon × 2 → aire × 4&nbsp;; volume retiré 4 174 mm³ (0,77 %)</td></tr>
+<tr><td>5 · Le dé</td><td>Reprend ou importe le dé de 50 mm</td><td>Cube, volume a³&nbsp;; volume d'un objet creusé = volume plein − volume retiré</td><td>Réinvesti</td><td>50³ = 125 000 mm³&nbsp;; dé fourni, lu dans Onshape&nbsp;: <b>123 197 mm³</b></td></tr>
+<tr><td>6 · L'assemblage</td><td>Réunit socle et dé&nbsp;; le socle est fixe, le dé libre</td><td>Repérage dans l'espace&nbsp;: abscisse, ordonnée, altitude</td><td><b>4e</b> (repérage dans un pavé droit)</td><td>—</td></tr>
+<tr><td>7 · Les contraintes</td><td>Centre le dé par une liaison au lieu de le placer à l'œil</td><td>Axes confondus&nbsp;; théorème de Pythagore (diagonale d'une face)</td><td><b>4e</b> (Pythagore)</td><td>débord (140 − 50) ÷ 2 = 45 mm&nbsp;; demi-diagonale 25√2 ≈ 35,4 mm &lt; 70 mm</td></tr>
+<tr><td>8 · Emporter</td><td>Exporte en STL (triangles) et en STEP (géométrie exacte)</td><td>Un cercle approché par un polygone&nbsp;; plus de côtés, meilleure approximation</td><td>Culture mathématique</td><td>—</td></tr>
+<tr><td>9 · 🎁 Le presse-papier</td><td>Donne au socle un matériau (bronze), au dé un autre (ABS), lit la masse</td><td>Grandeur quotient&nbsp;: masse = masse volumique × volume</td><td><b>4e</b> (grandeurs quotients, masse volumique)</td><td>socle en bronze (8-14&nbsp;% Sn, 0,294 lb/in³ ≈ 8,15 g/cm³)&nbsp;: <b>4 357 g</b>&nbsp;; dé en ABS (1,052 g/cm³)&nbsp;: <b>129,6 g</b>&nbsp;; total ≈ <b>4,49 kg</b> — lus dans Onshape, unités de l'espace de travail passées en grammes</td></tr>
+</tbody></table></div>
+</div>
+
+<div class="card">
+<h2>Comment les valeurs ont été obtenues</h2>
+<p>Les volumes du socle ont été calculés sur la géométrie exacte du TP avec le noyau de CAO <b>OpenCascade</b> (Onshape, lui, utilise un autre noyau, Parasolid(le même type de calcul que fait Onshape)nbsp;; les deux calculent le volume exact de la même géométrie), le 27/09/2026&nbsp;: un cylindre de rayon 70 mm et de hauteur 35 mm, les deux congés, et le fichier du dé <code>de_50.step</code> fourni avec le TP. Le volume du socle mouluré a été contrôlé une seconde fois par le théorème de Pappus-Guldin (hors programme, simple contrôle)&nbsp;: les deux calculs donnent 534 608,92 mm³. <b>Onshape affiche les mêmes nombres</b>, relevés en déroulant le TP le 26/09/2026&nbsp;: 538 783,14 mm³ puis 534 608,921 mm³. Pour le dé, c'est la valeur d'Onshape qui est donnée, puisque c'est elle que l'élève lit.</p>
+<table class="petit">
+<tr><th>Pièce</th><th>Volume</th></tr>
+<tr><td>Socle brut (cylindre R 70, h 35)</td><td>538 783,14 mm³</td></tr>
+<tr><td>Socle mouluré (congés de 6 et de 3)</td><td>534 608,92 mm³</td></tr>
+<tr><td>Dé fourni, 50 mm, 21 points creusés (lu dans Onshape)</td><td>123 196,65 mm³</td></tr>
+</table>
+<p class="note">Le dé que l'élève a construit lui-même en 5e peut s'écarter de ces valeurs, selon la profondeur de ses points et ses congés&nbsp;: c'est une donnée à lire dans Onshape, pas un résultat à retrouver.</p>
+</div>
+
+<div class="card">
+<h2>Ce que le TP ne fait pas</h2>
+<ul>
+<li>Il ne pose <b>aucune question de mathématiques</b> et n'évalue rien&nbsp;: les encarts « Côté maths » constatent.</li>
+<li>Il n'utilise ni patron, ni perspective cavalière, ni section plane&nbsp;: la représentation est celle d'un logiciel de CAO, en perspective, qu'on peut faire tourner.</li>
+<li>Le calcul du volume retiré par un congé (théorème de Pappus-Guldin) sert seulement de contrôle&nbsp;; il n'est pas au programme du collège et n'apparaît pas dans le TP.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Pour aller plus loin, si vous le souhaitez</h2>
+<ul>
+<li><b>Le volume, deux fois.</b> Calculer à la main π × 70² × 35, puis lire le volume dans Onshape&nbsp;: le logiciel et la formule disent la même chose.</li>
+<li><b>Agrandir le socle.</b> Multiplier toutes les cotes du profil par 2&nbsp;: les longueurs doublent, les aires sont multipliées par 4, le volume par 8. Onshape recalcule tout, les élèves vérifient.</li>
+<li><b>Un socle à deux étages.</b> Le profil en escalier du Bonus donne deux cylindres empilés&nbsp;: volume total = somme des deux.</li>
+<li><b>La masse volumique.</b> Même socle, deux matériaux&nbsp;: le volume ne change pas, la masse si, dans le rapport des masses volumiques.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Sources</h2>
+<ul>
+<li>Ministère de l'Éducation nationale, <a href="https://eduscol.education.fr/document/14080/download">Repères annuels de progression — Mathématiques, cycle 4</a>, Eduscol (colonnes 5e, 4e, 3e&nbsp;: « Grandeurs et mesures », « Espace et géométrie »).</li>
+<li>Ministère de l'Éducation nationale, <a href="https://www.education.gouv.fr/sites/default/files/document/Annexe%202%20%E2%80%93%20Programme%20de%20math%C3%A9matiques%20pour%20le%20cycle%204-480716.pdf">Programme de mathématiques pour le cycle 4</a>.</li>
+<li>Le TP lui-même&nbsp;: <a href="tp_4e_socle_assemblage.html">TP n°2 — Le dé sur son socle</a>, et le fichier du dé <a href="de_50.step" download>de_50.step</a>.</li>
+</ul>
+</div>
+<footer>Fiche pour les collègues de mathématiques · atelier CAO · Thème 3 · 4e · valeurs calculées le 27/09/2026.</footer>
+</div>
+</body>
+</html>

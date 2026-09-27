@@ -20448,3 +20448,58 @@ ferme l'onglet, **rouvre la page dans un nouvel onglet** et relit : **43 / 43** 
   concernées par au moins un défaut.
 
 **Reste ouvert** : « Bonus sans corrigé » (43 pages) et trois pages sans Bonus du tout (« Bonus absent »).
+## 27/09/2026 — Atelier CAO, TP 4e « Le dé sur son socle » : déroulé dans Onshape, 37 captures, un côté maths (thème 3)
+
+**La demande de Pascal** : le TP 4e avait sa base mais presque aucune capture, et il doit servir de support
+pour discuter avec les collègues de mathématiques. Tranché par Pascal : captures prises par l'agent dans
+Onshape ; un encart « Côté maths » par palier, **et** une fiche à part pour les collègues.
+
+**Le déroulé.** Le TP a été suivi geste par geste dans un document Onshape de travail (« Socle romain —
+Camille », prénom d'exemple), interface française, thème sombre. **37 captures de gestes** et **9 images de
+résultat** — les sept rendus API du 11/08 sont remplacés par de vraies vues, et deux s'ajoutent (paliers 1 et
+8) : la n°77 n'a plus de palier sans résultat. Outil : clics et frappes passés par Windows (`souris4e.py`),
+car Onshape sélectionne d'après le survol et n'obéit pas aux clics injectés par l'extension de navigateur.
+
+**Ce que le texte disait et que l'écran dément — corrigé dans le TP.**
+
+| Le TP disait | Onshape montre |
+|---|---|
+| outil **Révolution**, angle 360 | outil **Pivoter** (Maj+W), case **Pivot complet** |
+| plan **Avant** | plan **Front** (Top, Right) : noms anglais même en français |
+| le profil devient **noir** | il devient **blanc** sur le thème sombre ; le bleu reste « libre » |
+| double-clic pour renommer l'onglet | clic droit, **Renommer** (le double-clic n'ouvre qu'un aperçu) |
+| la 1re pièce insérée est fixée d'office | elle ne l'est pas : clic droit, **Fixer** |
+| **Créer un assemblage** | un onglet **Assembly 1** existe déjà dans tout document neuf |
+| **Exportateur…**, PARASOLID par défaut | **Exporter…** ; le format proposé varie : le vérifier à chaque fois |
+| Unités **Millimètre** | **Millimeter** (unités en anglais) |
+| — | masse en **livres** par défaut : Unités de l'espace de travail → Gram |
+| — | bibliothèque de matériaux par défaut sans bronze : choisir Onshape Material Library |
+
+Le profil se trace désormais avec **Rectangle par sommet** : tracé en quatre lignes, un coin restait libre.
+Le Bonus et la présentation du QCM, qui parlaient d'un « jeu de montage » d'une version antérieure, sont
+réaccordés. Le chemin « copier son dé de 5e » n'a pas été vérifié : il renvoie au professeur.
+
+**Côté maths.** Huit encarts « 📐 Côté maths » qui constatent (n°81) : symétrie de la coupe, cylindre de
+révolution, quart de cercle et agrandissement des aires, cube, repérage, axes confondus et Pythagore, cercle
+approché par un polygone, masse volumique. Niveaux d'après les repères annuels Eduscol de mathématiques.
+`fiche_maths_tp_4e_socle.html`, reliée depuis le pied du TP, les reprend palier par palier.
+Le générateur apprend le champ `cote_maths`, et reproduit enfin les retouches n°303 et n°305 posées à la
+main dans les pages : les quatre TP régénérés sont identiques à main, octet pour octet.
+
+### Vérifié
+
+- Volumes lus dans Onshape et recalculés hors ligne (noyau OpenCascade) : socle brut **538 783,14 mm³**
+  = π·70²·35 ; socle mouluré **534 608,921 mm³** des deux côtés (et par Pappus-Guldin).
+- Masses lues : socle en Bronze (8-14 % Sn) **4 357,063 g** ; dé en ABS **129,603 g**.
+- `verif_guidage.py` : **11 / 11** (n°72 et n°77 étaient rouges). Correctif de l'outil : la n°72 ne compte
+  plus que les étapes (`ol.etapes`) — les puces du Bonus refusaient à tort les quatre TP ; témoin : une
+  étape privée de son retour d'écran est bien refusée.
+- Page servie en HTTP, 375 px : **46 / 46** images chargées, 0 px de débordement, 8 encarts, lien vers la fiche.
+- Les 14 contrôles du dépôt verts, dont `controle_medias` (chaque capture a sa provenance dans
+  `SOURCES_MEDIAS.md`) et `controle_liens`.
+
+**Signalé, non résolu.** Le dé fourni `de_50.step` mesure **123 196,654 mm³** et 16 308,5 mm² dans
+Onshape, mais **121 538,56 mm³** et 14 914,3 mm² lu par OpenCascade (le même fichier, un solide valide de
+89 faces, recoupé par un maillage). L'écart, 1 658 mm³, vient de l'import ; non élucidé. Le TP et la fiche
+donnent la valeur d'Onshape, puisque c'est elle que l'élève lit. À examiner, avec `_generation/de_50.py`.
+Le TP de 5e dit sans doute « noir » lui aussi pour un profil contraint : à vérifier sur le même thème.

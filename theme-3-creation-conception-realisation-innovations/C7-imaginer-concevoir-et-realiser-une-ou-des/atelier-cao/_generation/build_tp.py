@@ -23,6 +23,13 @@ Il rend mécaniques les règles d'or n°72 à n°82 (journal, 9 août 2026) :
     consigne.
   · n°82 — le dernier palier doit être de type `recompense`.
 
+Champ facultatif hors règles n°72-82 :
+
+  · `cote_maths` (palier) — l'encart « 📐 Côté maths » : ce que le geste qu'on
+    vient de faire veut dire en mathématiques, en CONSTATANT, jamais en interrogeant
+    (n°81). Il se place après le critère du palier. Un TP sans ce champ est
+    engendré à l'identique.
+
 Usage :
     python3 build_tp.py ../scenarios/<scenario>.json
 """
@@ -74,6 +81,17 @@ STYLE_TP = """
     padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0;font-size:.94em}
 """
 
+# Encart « Côté maths » (champ `cote_maths`) — posé seulement si un palier en a un,
+# pour qu'un TP qui ne s'en sert pas soit engendré à l'identique.
+STYLE_COTE_MATHS = """
+  /* Côté maths : un encart de lecture, pas une question (n°81). */
+  .cote-maths{background:rgba(129,251,161,.06);border:1px solid #2e6b45;border-left:5px solid #81fba1;
+    border-radius:0 10px 10px 0;padding:10px 14px;margin:12px 0;font-size:.95em}
+  .cote-maths > b:first-child{color:#81fba1}
+  @media print{.cote-maths{background:#fff!important;border-color:#1f6b3a!important}
+    .cote-maths,.cote-maths *{color:#1a1a1a!important}.cote-maths > b:first-child{color:#1f6b3a!important}}
+"""
+
 
 import importlib.util as _iu
 import pathlib as _pl
@@ -104,6 +122,9 @@ def icone(src):
 
 
 MANQUANTES = []
+
+# Règle d'or n°303 (voir construire) — texte repris tel quel des pages publiées.
+N303 = "\n  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────\n     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée\n     contre le fond réel de CETTE page, celle du papier contre le blanc.\n     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs\n     refusent de révéler l'état visité. Sans cette ligne, le lien redevient\n     violet après le premier clic — illisible sur fond sombre. */\n  a,a:where(:visited){color:var(--hl)}\n  @media print{\n    a,a:visited{color:#00309e!important}\n    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}\n  }\n"
 
 
 def etape_html(e, i):
@@ -201,6 +222,9 @@ def palier_html(p, n):
     if p.get("critere"):
         out.append('<p class="critere">🎯 <b>Tu peux passer à la suite quand&nbsp;:</b> %s</p>'
                    % esc(p["critere"]))
+    if p.get("cote_maths"):
+        out.append('<aside class="cote-maths">📐 <b>Côté maths.</b> %s</aside>'
+                   % esc(p["cote_maths"]))
     if p.get("enregistrer"):
         # Règle d'or n°80 — le rituel d'enregistrement. Mais un rituel qui demande
         # un geste impossible fabrique du doute : dans un logiciel qui sauvegarde
@@ -288,7 +312,8 @@ def construire(scenario_path: pathlib.Path, sortie_ailleurs=None) -> pathlib.Pat
         avant = [avant]
     avant_bloc = ("" if not avant else
                   '<div class="card avertir">\n%s</div>\n'
-                  % "".join("  <p>%s</p>\n" % x for x in avant))
+                  % "".join(("  %s\n" if x.lstrip().startswith("<p") else "  <p>%s</p>\n") % x
+                            for x in avant))
 
     retour = str(s.get("retour_sequence", "")).strip()
     if not retour:
@@ -322,6 +347,10 @@ def construire(scenario_path: pathlib.Path, sortie_ailleurs=None) -> pathlib.Pat
  color:#9bbefc;font-size:.92em;text-decoration:none;line-height:1.2}
 #navharm a:hover{border-color:#61dafb;color:#61dafb}
 @media print{#navharm{display:none}}
+
+/* règle d'or n°305 — une activité qui demande Internet le dit à son début */
+.activite-en-ligne{border-left:4px solid #ffd66b;background:rgba(255,214,107,.12);padding:.55em .85em;border-radius:0 8px 8px 0;margin:.6em 0 .8em;font-size:.95em;line-height:1.45}
+@media print{.activite-en-ligne,.activite-en-ligne b{color:#1a1a1a!important}.activite-en-ligne{background:#fff8e1!important;border-left-color:#8a6400!important}}
 </style>
 </head>
 <body>
@@ -350,7 +379,7 @@ Les encadrés orange préviennent des pièges. À la fin de chaque partie, une i
 </body>
 </html>
 """ % {"desc": html.escape(s.get("description", "")), "titre_page": html.escape(s["titre_page"]),
-       "css": CSS, "css_tp": STYLE_TP, "titre": esc(s["titre"]), "sous": esc(s["sous_titre"]),
+       "css": CSS, "css_tp": STYLE_TP + (STYLE_COTE_MATHS if any(p.get("cote_maths") for p in paliers) else ""), "titre": esc(s["titre"]), "sous": esc(s["sous_titre"]),
        "niveau": esc(s["niveau"]), "logiciel": esc(s["logiciel"]), "badges": badges,
        "corps": corps, "pied": esc(s.get("pied", "Ressource originale du dépôt.")),
        # ce qui suit « Et ensuite » : traces à garder, « Prêt·e à t'entraîner », Bonus
@@ -364,7 +393,10 @@ Les encadrés orange préviennent des pièges. À la fin de chaque partie, une i
     # La loupe est posée ICI, après la mise en forme : le bloc contient des
     # « % » (max-width:100%) que l'opérateur de formatage prendrait pour des
     # jetons. Une seule source, importée, jamais recopiée.
-    page = page.replace("@@LOUPE@@", _loupe())
+    # Règle d'or n°303 — un lien se lit, à l'écran comme sur le papier. Le bloc se
+    # glisse dans le <style> de la loupe, là où la retouche du 21/09 l'avait posé à
+    # la main dans les pages : l'écrire ici évite qu'une régénération l'efface.
+    page = page.replace("@@LOUPE@@", _loupe().replace("</style>", N303 + "</style>", 1))
     if "@@LOUPE@@" in page or "loupe-images-v1" not in page:
         raise SystemExit("Règle n°92 : l'agrandisseur d'images n'a pas été posé "
                          "dans la page — arrêt avant écriture.")
