@@ -20725,3 +20725,88 @@ recopie le contenu des deux stations).
 - **Non revérifié à l'écran** : le rendu Chromium à 390 px n'a été repris que sur la page qui a signalé le
   trou (`3e_C1.1_tsinghua_feux`), pas sur les 30 autres pages corrigées — leur conformité s'appuie sur
   `controle_hierarchie.py`, pas sur une relecture visuelle page par page.
+
+## 27/09/2026 — Règle d'or n°135, second passage : le filet mobile mécanisé (thèmes 1-3, _outils)
+
+> **Filet mobile, révisé.** Toute page portant un `<table>` d'au moins 3 colonnes doit avoir, quelque part
+> dans son CSS, un bloc `@media(max-width:…px){…overflow-x:auto…}` — le sélecteur précis importe peu
+> (`table`, une classe, `section.card table`) : c'est la page qui doit être protégée, pas une classe
+> précise. `_outils/controle_debordement.py` le vérifie sur les 145 pages élève à chaque campagne.
+
+**Le signal** : après #449, pendant l'audit factuel des trois thèmes, Pascal a demandé « qu'est-ce qui est
+mieux ? » à propos d'un tableau du boîtier étanche resté exposé au débordement horizontal. La réponse — le
+filet suffit partout où les colonnes portent des valeurs parallèles, les cartes ne se justifient que
+« quand chaque colonne porte une idée » (le critère que la n°135 documentait déjà, aucun tableau du dépôt
+ne le remplit) — acceptée par Pascal, a aussi ouvert la question de savoir combien de tableaux restaient
+sans protection.
+
+### Le trou
+
+La n°135 (26/08/2026) avait posé le filet à la main, sur une quarantaine de séquences, avec trois
+sélecteurs précis (`section.card table`, `table.refs`, `table.recette`). Jamais mécanisée, elle ne
+pouvait pas suivre un corpus qui a grandi depuis : un tableau nouveau, d'une classe différente (`voc`,
+`competences`, `comparatif`…), ou sans classe du tout, ne recevait la même protection que si quelqu'un y
+pensait à la main. Un premier relevé par expression régulière sur les sélecteurs a donné des chiffres
+incohérents (des classes comme « refs » à moitié couvertes, sans qu'aucune ne le soit vraiment) : le
+sélecteur exact importe moins que la présence, quelque part sur la page, d'un filet qui la couvre entière.
+Un relevé refait sur ce principe plus simple, validé contre une page déjà correcte avant d'être exploité,
+a chiffré le trou et guidé la correction : **67 pages sur 145** ne portaient, avant ce lot, aucune
+protection mobile pour au moins un tableau de 3 colonnes ou plus.
+
+### L'outil
+
+`_outils/controle_debordement.py` (nouveau, même périmètre que `controle_hierarchie.py`, déclaré à
+nouveau — règle n°47) : toute page élève avec un `<table>` ≥ 3 colonnes doit porter, dans un ou plusieurs
+`<style>`, un bloc `@media(max-width:…)` contenant `overflow-x:auto`. Le sélecteur exact n'est pas vérifié
+— l'usage du dépôt est un filet unique par page, jamais un filet par classe — et le contrôle reconnaît
+également le filet d'origine du 26/08. Panne (règle n°299) si aucune page élève n'est lue.
+`tests_controle_debordement.py` : 13 cas, dont la reconnaissance d'un filet générique (`table`), du filet
+d'origine (`section.card table`) et d'un filet posé par classe (`.voc`) comme trois formes également
+valables de la même protection, et le rejet de ce qui n'en est pas un (`overflow-x:auto` hors de tout
+`@media`, ou un `@media` sans lui).
+
+### Le relevé : 67 pages, par thème
+
+| Thème | Pages couvertes |
+|---|---|
+| 1 | 23 |
+| 2 | 20 |
+| 3 | 24 |
+
+### Les gestes
+
+1. **Filet générique posé** (`@media(max-width:680px){table{display:block;overflow-x:auto}}`) en fin de
+   dernier `<style>`, sur 60 pages ordinaires (23 thème 1, 20 thème 2, 17 thème 3).
+2. **Pages engendrées, corrigées par leur gabarit, jamais à la main.** `atelier-cao/_generation/
+   gabarit_style.css` et `atelier-planification/_generation/gabarit_style.css` reçoivent le même bloc ;
+   les 4 TP CAO concernés (`tp_3e_boitier_etanche`, `tp_4e_socle_assemblage`, `tp_5e_de_calottes`,
+   `tp_5e_de_onshape`) sont régénérés par `build_tp.py` — diff propre (+3 lignes chacun, 0 suppression),
+   `verif_chaine.py` reste vert.
+3. **Écart évité de justesse** : ces 4 pages, comme les 3 de planification (point suivant), avaient
+   d'abord reçu le filet à la main par le même script que les 60 pages ordinaires — repéré avant commit en
+   recoupant les noms de fichiers touchés avec les pipelines de génération connus, annulé
+   (`git checkout --`), repris proprement.
+
+### Constaté, non corrigé : `atelier-planification` n'a pas d'équivalent à `verif_chaine.py`
+
+Régénérer les 3 pages `atelier_{3e,4e,5e}_C7.1_planification_taches.html` par leur générateur
+(`build_atelier.py`, pour leur poser le filet proprement comme les TP CAO) produit, sur chacune, un diff
+de 202 lignes (564 suppressions, 42 ajouts) : le générateur est nettement désaccordé avec le HTML publié —
+plus encore que ne l'était `q.py` pour le QCM freinage (thème 1, même audit post-#449). Aucun
+`verif_chaine.py` n'existe pour ce générateur : rien ne l'aurait signalé avant qu'une régénération
+l'écrase pour de bon. **Contournement retenu ici** : le filet posé directement dans les 3 pages, comme
+pour les 60 pages ordinaires, en évitant le générateur. Le désaccord lui-même reste entier et n'est pas
+traité dans ce lot.
+
+### Vérifié
+
+- `controle_debordement.py` sur le dépôt entier : **67 → 0**, 145 pages lues. Banc
+  `tests_controle_debordement` **13 / 13**, y compris le lancement en ligne de commande sur le dépôt réel
+  (n°299).
+- `controle_hierarchie.py` : 145 pages, aucune régression. `controle_liens.py` : 0 lien cassé.
+  `controle_statut.py` : vert.
+- `build_audit.py` et `make_index.py` rejoués : aucune différence.
+- Rendu réel vérifié au navigateur (Chromium, 375 px) sur 4 pages représentatives : la page elle-même ne
+  déborde plus (`scrollWidth == clientWidth` au niveau du document), le tableau seul défile
+  (`overflowX:auto` et `scrollWidth > clientWidth` sur l'élément `<table>`), captures à l'appui sur 2
+  d'entre elles.
