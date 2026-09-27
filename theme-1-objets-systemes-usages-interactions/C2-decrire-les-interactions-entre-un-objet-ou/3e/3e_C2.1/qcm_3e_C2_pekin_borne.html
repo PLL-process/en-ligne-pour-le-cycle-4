@@ -120,12 +120,13 @@
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  #id_classe,#id_date,#id_nom,#id_prenom,.badge,.bilan th,.dash div,.option,.progress-bar,.res-grid div{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  #id_classe,#id_date,#id_nom,#id_prenom,.badge,.bilan th,.dash div,.loupe-cliquable,.option,.progress-bar,.res-grid div{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
   .v-hl{color:#047fa0!important}
   .option span{color:#0a1b3d!important}
   .badge{color:#0d2347!important}
-  .card span,.identite label,.subtitle{color:#1a6af8!important}
+  #qImgCap,.card span,.identite label,.subtitle{color:#1a6af8!important}
   .note20,.v-warn{color:#946b00!important}
+  .portee-ciblee{max-width:880px;margin:0 auto 12px;padding:9px 14px;border:1px solid var(--head);border-radius:10px;background:#2b1a3f;font-size:.85em;color:var(--text)}
   .q-comp{color:#a145ea!important}
 }
 </style>
@@ -808,26 +809,6 @@ function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
 restore(); majTimer();
 if(etat.sansMinuteur) $("tStart").disabled=true;
 setMode(etat.mode||"complet");
-
-/* ══════ Règle d'or n°45 — ouvrir sur ce que l'élève a déjà travaillé ══════ */
-/* Cette séquence ne porte qu'UN code : on ne peut pas filtrer par compétence.
-   Ce qui varie ici est le MOMENT. Tant que la séquence n'est pas terminée, elle
-   appelle ce QCM avec #depart=court, et l'on ouvre sur le parcours de dix
-   questions — déjà présent dans le gabarit. Le parcours complet reste à un clic :
-   on choisit ce qu'on propose EN PREMIER, on n'interdit rien. */
-(function ouvrirSurLeParcoursCourt(){
-  if(!/depart=court/.test(location.hash||"")) return;
-  setMode("dix");
-  const hote = document.getElementById("porteeCiblee");
-  if(hote){
-    hote.hidden = false;
-    hote.innerHTML = "🎯 Tu arrives depuis la séquence, qui n'est pas encore terminée&nbsp;: " +
-      "ce QCM s'ouvre sur un <b>parcours court de 10 questions</b>, pour te tester sans être " +
-      "submergé·e. Pour les 30, choisis <b>« Parcours complet »</b> ci-dessus.";
-  }
-})();
-
-
 </script>
 
 <!-- loupe-images-v1 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
@@ -980,6 +961,26 @@ setMode(etat.mode||"complet");
     armer();
   }
 })();
+
+/* ══════ Règle d'or n°45 — ouvrir sur ce que l'élève a déjà travaillé ══════ */
+/* Cette séquence ne porte qu'UN code : on ne peut pas filtrer par compétence.
+   Ce qui varie ici est le MOMENT. Tant que la séquence n'est pas terminée, elle
+   appelle ce QCM avec #depart=court, et l'on ouvre sur le parcours de dix
+   questions — déjà présent dans le gabarit. Le parcours complet reste à un clic :
+   on choisit ce qu'on propose EN PREMIER, on n'interdit rien. */
+(function ouvrirSurLeParcoursCourt(){
+  if(!/depart=court/.test(location.hash||"")) return;
+  setMode("dix");
+  const hote = document.getElementById("porteeCiblee");
+  if(hote){
+    hote.hidden = false;
+    hote.innerHTML = "🎯 Tu arrives depuis la séquence, qui n'est pas encore terminée&nbsp;: " +
+      "ce QCM s'ouvre sur un <b>parcours court de 10 questions</b>, pour te tester sans être " +
+      "submergé·e. Pour les 30, choisis <b>« Parcours complet »</b> ci-dessus.";
+  }
+})();
+
+
 </script>
 </body>
 </html>

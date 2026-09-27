@@ -126,6 +126,7 @@
   .badge{color:#0d2347!important}
   #qImgCap,.card span,.identite label,.subtitle{color:#1a6af8!important}
   .note20,.v-warn{color:#946b00!important}
+  .portee-ciblee{max-width:880px;margin:0 auto 12px;padding:9px 14px;border:1px solid var(--head);border-radius:10px;background:#2b1a3f;font-size:.85em;color:var(--text)}
   .q-comp{color:#a145ea!important}
 }
 </style>
@@ -811,29 +812,6 @@ function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
 restore(); majTimer();
 if(etat.sansMinuteur) $("tStart").disabled=true;
 setMode(etat.mode||"complet");
-
-/* ══════ Règle d'or n°45 — ouvrir sur ce que l'élève a déjà travaillé ══════ */
-/* La séquence appelle ce QCM avec #codes=C2.1 quand une seule compétence a été
-   travaillée. On bascule alors en révision ciblée sur ces codes-là. L'élève
-   garde l'accès au parcours complet : on choisit ce qu'on lui propose EN
-   PREMIER, on ne lui interdit rien. */
-(function ouvrirSurLesCodesDemandes(){
-  const m = (location.hash||"").match(/codes=([A-Za-z0-9.,]+)/);
-  if(!m) return;
-  const voulus = m[1].split(",").filter(c => QUESTIONS.some(q => q.c === c));
-  if(!voulus.length || voulus.length === new Set(QUESTIONS.map(q=>q.c)).size) return;
-  const sel = document.getElementById("selComp");
-  if(sel){ sel.value = voulus[0]; }
-  setMode("cible");
-  const hote = document.getElementById("porteeCiblee");
-  if(hote){
-    hote.hidden = false;
-    hote.innerHTML = "🎯 Tu arrives depuis la séquence : ce QCM s'ouvre sur <b>" +
-      voulus.join(" et ") + "</b>, c'est-à-dire sur ce que tu as déjà travaillé. " +
-      "Pour t'entraîner sur les 30 questions, choisis <b>« Parcours complet »</b> ci-dessus.";
-  }
-})();
-
 </script>
 
 <!-- loupe-images-v1 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
@@ -986,6 +964,29 @@ setMode(etat.mode||"complet");
     armer();
   }
 })();
+
+/* ══════ Règle d'or n°45 — ouvrir sur ce que l'élève a déjà travaillé ══════ */
+/* La séquence appelle ce QCM avec #codes=C2.1 quand une seule compétence a été
+   travaillée. On bascule alors en révision ciblée sur ces codes-là. L'élève
+   garde l'accès au parcours complet : on choisit ce qu'on lui propose EN
+   PREMIER, on ne lui interdit rien. */
+(function ouvrirSurLesCodesDemandes(){
+  const m = (location.hash||"").match(/codes=([A-Za-z0-9.,]+)/);
+  if(!m) return;
+  const voulus = m[1].split(",").filter(c => QUESTIONS.some(q => q.c === c));
+  if(!voulus.length || voulus.length === new Set(QUESTIONS.map(q=>q.c)).size) return;
+  const sel = document.getElementById("selComp");
+  if(sel){ sel.value = voulus[0]; }
+  setMode("cible");
+  const hote = document.getElementById("porteeCiblee");
+  if(hote){
+    hote.hidden = false;
+    hote.innerHTML = "🎯 Tu arrives depuis la séquence : ce QCM s'ouvre sur <b>" +
+      voulus.join(" et ") + "</b>, c'est-à-dire sur ce que tu as déjà travaillé. " +
+      "Pour t'entraîner sur les 30 questions, choisis <b>« Parcours complet »</b> ci-dessus.";
+  }
+})();
+
 </script>
 </body>
 </html>

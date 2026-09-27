@@ -118,6 +118,10 @@ def construire(gabarit: str, sortie: str) -> None:
       <option value="C2.2">4e_C2.2 — Repérer et expliquer les exigences</option>"""),
         ("QCM d’entraînement 3e_C3.1 à C3.4 · Thème 1",
          "QCM d’entraînement 4e_C2.1 · C2.2 · Thème 1"),
+        ("""<p class="subtitle">Caractériser et choisir une solution (3e_C3.1 à C3.4) — protocole de mesure, évaluation des solutions et cycle de vie</p>""",
+         """<p class="subtitle">Décrire l'expérience de l'utilisateur (4e_C2.1) · repérer ce qui la gêne et proposer une amélioration (4e_C2.2)</p>"""),
+        ("""<h1>Thème 1 · 3e — QCM : Shenzhen, comment refroidir un local qui surchauffe ?</h1>""",
+         """<h1>Thème 1 · 4e — QCM : Hangzhou, ce que vit l'usager devant la borne</h1>"""),
     ]
     for avant, apres in remplacements:
         if s.count(avant) != 1:

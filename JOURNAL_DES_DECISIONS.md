@@ -20953,3 +20953,71 @@ pas besoin d'écrire à l'emplacement réel pour être rejoué. `verif_chaine_qc
 dossier temporaire (comme `atelier-cao/verif_chaine.py`), jamais en place (contrairement à
 `verif_chaine.py`, qui n'a pas ce choix pour les trois ateliers). Un écart n'est donc PAS auto-réparé : le
 message d'erreur donne la commande exacte à rejouer depuis la racine du dépôt.
+
+## 27/09/2026 — Deux générateurs QCM du Thème 1 réparés : 3e_C2.1 et 4e_C2.1 (theme-1, C2)
+
+Suite de l'état des lieux du dépôt entier (« ok Inventaire de tout le dépôt, bravo »), qui avait trouvé
+`3e_C2.1/_generation/build_qcm.py` et `4e_C2.1/_generation/build_qcm.py` **cassés** : les deux plantent
+sur leur propre garde-fou anti-résidu (`reste = re.findall(...)`) avant d'écrire la moindre ligne, parce
+qu'un remplacement manque. Pascal, informé que « un seul oubli, rapide » était une estimation faite avant
+test : « fais les deux à la suite, dans cet ordre ».
+
+### Le trou, une fois vraiment testé (pas seulement lu au point de plantage)
+
+Corriger l'oubli visible ne suffisait pas : au premier essai en mémoire, l'écart restant contre la page
+publiée était encore de 97 et 101 lignes, pas zéro. Deux oublis distincts bloquaient le script, et
+dessous, la dérive habituelle :
+
+1. **Sous-titre ET `<h1>` jamais remplacés.** Le garde-fou du bas de fichier ne connaît que les reliques
+   d'un lot de Thème 2 (« SOS serre », « Packet Tracer ») — pas celles du propre lot Thème 1 d'où vient ce
+   gabarit (Shenzhen). Le `<title>` de l'onglet était bien remplacé ; le `<h1>` affiché et le `<p
+   class="subtitle">`, non. Sans le second oubli, le premier ne se serait même pas vu : le script
+   plantait avant d'atteindre le `<h1>`.
+2. **25 questions/30 (3e_C2.1) et 26/30 (4e_C2.1)** avaient une ou plusieurs options reformulées à la main
+   sur la page publiée, jamais reportées dans `q.py` — le même défaut que la planification, ~3 fois le
+   volume. Repérage sans risque de mélanger le sens des flèches : `fix_r.js` ne fait qu'UN échange par
+   question (`o[0] <-> o[r]`, `d[0] <-> d[r]`) et non un mélange complet — un outil jetable
+   (`defixr.js`, non commité) rejoue cet échange à l'identique avec le `r` déjà écrit sur la page publiée,
+   ce qui suffit à revenir à l'ordre de `q.py` (l'opération est sa propre inverse). Validé avant tout
+   report : dépermuter la page régénérée par le `q.py` *actuel* retombe bien, mot pour mot, sur `q.py`
+   lui-même — la logique d'inversion ne pouvait plus se tromper de sens en repartant de la page publiée.
+   Les 51 options ont été réécrites, mot pour mot, aucun texte inventé ; aucune bonne réponse (`r`) n'a
+   changé, seul le libellé.
+3. **La bannière « règle d'or n°45 » n'avait jamais pu s'afficher, sur aucune des deux pages** — pas parce
+   qu'elle était à l'état de projet, mais parce que le script n'avait jamais pu aller au bout depuis
+   qu'elle a été codée : le CSS `.portee-ciblee` (posé par `build_qcm.py` lui-même) manquait sur les deux
+   pages réelles, alors que les deux séquences (`sequence_3e_C2_pekin_borne.html`,
+   `sequence_4e_C2_hangzhou_borne.html`) appellent déjà le QCM avec `#depart=court` / `#codes=...`. Ce
+   n'était donc pas une fonctionnalité à activer mais un lien déjà en service, silencieusement mort côté
+   page d'arrivée — corrigé du même geste que le reste, en laissant le générateur aller enfin au bout.
+4. **CSS d'impression** (3e_C2.1 seulement) : même retard déjà rencontré deux fois ce thème, `.loupe-
+   cliquable`/`#qImgCap` posés sur le gabarit depuis la campagne du 02/09/2026, pas encore sur cette page.
+   4e_C2.1 les avait déjà.
+
+### Vérifié
+
+- Essai à blanc systématique (copies dans le scratchpad) avant toute écriture réelle : chaque correctif
+  testé, diffé à zéro écart résiduel expliqué, avant d'être rejoué à l'identique sur les fichiers du
+  dépôt — confirmé octet à octet contre l'essai à blanc après coup.
+- `controle_entete_qcm.py`, `controle_banque_qcm.py`, `controle_effectifs_qcm.py`,
+  `controle_boutons_vivants.py` sur le dépôt entier (341 pages) : 0 écart partout.
+- `controle_impression.mjs` sur le dépôt entier : aucune page n'imprime un texte que le papier ne rendra
+  pas.
+- `verif_qcm_coherence.mjs` sur le dépôt entier : rien à signaler.
+- Les bancs de tests propres à chaque lot rejoués depuis leur dossier : 53/54 (3e_C2.1) et 59/60
+  (4e_C2.1), y compris tous les tests « n°45 » (parcours court, codes ciblés, retour au parcours complet
+  une fois les deux compétences faites). Le seul échec commun aux deux (« chaque zone de rédaction a sa
+  version étayée », n°31) porte sur la page de séquence, jamais touchée ici — confirmé préexistant en
+  rejouant le même banc avec ce lot mis de côté (`git stash`) : échec identique avant comme après.
+- Rendu réel vérifié au navigateur (Chromium), sur les DEUX pages : 30 questions, flux de correction
+  (choisir une option, Valider, bloc de correction affiché), image de la question illustrée réellement
+  chargée. Arrivée fraîche avec `#depart=court` / `#codes=C2.1` (navigation neuve, pas un simple ajout de
+  hash sur une page déjà chargée — sans quoi le script inline ne se rejoue pas et le test se trompe) :
+  bandeau visible, rempli, et désormais avec son fond violet — pas seulement présent dans le HTML.
+
+### Non fait, sciemment
+
+Les 3 générateurs qui tournent mais divergent autrement (5e_C1.1, 5e_C1.2, 5e_C2.1) et le système
+`_outils/build_qcms.py` restent tels que l'état des lieux les a trouvés — hors du périmètre que Pascal a
+validé ce soir (« les deux cassés »). Aucun `verif_chaine.py` n'a été posé sur ces deux dossiers : ajouter
+la protection à l'ensemble du Thème 1 a été explicitement repoussé à une session dédiée.
