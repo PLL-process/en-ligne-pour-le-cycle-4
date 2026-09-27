@@ -31,7 +31,10 @@ def controler(f: pathlib.Path):
         res.append((num, nom, ok, msg))
 
     # n°72 — chaque étape porte son retour d'écran
-    etapes = re.findall(r"<li>(.*?)</li>", src, re.S)
+    # Seules les ÉTAPES comptent : les puces du Bonus ou des traces à garder ne sont pas
+    # des gestes guidés, et les compter refusait un TP pour un défi facultatif.
+    etapes = [li for ol in re.findall(r'<ol class="etapes">(.*?)</ol>', src, re.S)
+              for li in re.findall(r"<li>(.*?)</li>", ol, re.S)]
     sans_voir = [e for e in etapes if 'class="voir"' not in e]
     r("n°72", "geste et retour d'écran séparés", not sans_voir,
       "toutes les étapes disent ce qu'on doit voir" if not sans_voir
