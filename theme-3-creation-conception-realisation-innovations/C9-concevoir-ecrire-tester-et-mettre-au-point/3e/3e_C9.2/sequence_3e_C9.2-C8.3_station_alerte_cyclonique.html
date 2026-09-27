@@ -1355,6 +1355,8 @@ vent(km/h)=186  niveau=3</pre>
   <details class="correction"><summary>✅ Corrigé du défi double appui</summary><p>Il faudrait basculer <code>alarmeAcquittee</code> à chaque appui (vrai → faux → vrai…). Le piège : la boucle lit le bouton 5 fois par seconde — un appui d'une demi-seconde serait vu comme 2 ou 3 appuis et l'alarme clignoterait. Il faut détecter le FRONT (l'instant où le bouton PASSE de relâché à appuyé), avec une variable <code>boutonPrecedent</code> — exactement le motif « événement » de l'activité 4. Erreur classique : tester l'état au lieu du front.</p></details>
   <p>🌬 <b>Défi « anémomètre réel » :</b> pour remplacer le potentiomètre par un vrai anémomètre à coupelles, quelles étapes de ton programme changeraient — et lesquelles ne changeraient PAS ?</p>
   <details class="correction"><summary>✅ Corrigé du défi anémomètre</summary><p>Change : l'ACQUISITION (un anémomètre à coupelles produit des impulsions à compter, pas une tension à lire — il faudrait compter les tours par seconde) et l'ÉTALONNAGE (convertir des tours/s en km/h selon la doc du capteur). Ne change PAS : la décision (seuils 100/150), l'affichage, l'acquittement, ni le protocole de recette (les mêmes essais restent valables !). C'est l'intérêt de la structuration : chaque étage se remplace sans toucher aux autres. Erreur classique : croire qu'il faut tout réécrire.</p></details>
+  <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
+  <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
 </section>
 
 <section class="card">
