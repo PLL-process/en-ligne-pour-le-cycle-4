@@ -20810,3 +20810,70 @@ traité dans ce lot.
   déborde plus (`scrollWidth == clientWidth` au niveau du document), le tableau seul défile
   (`overflowX:auto` et `scrollWidth > clientWidth` sur l'élément `<table>`), captures à l'appui sur 2
   d'entre elles.
+
+## 27/09/2026 — Générateur `atelier-planification` remis d'accord avec ses trois pages, `verif_chaine.py` posé (thème 3)
+
+**Le signal** : Pascal, « continue », après avoir approuvé sans urgence l'auscultation du générateur
+`atelier-planification/_generation/build_atelier.py` signalée dans l'entrée précédente (n°135, second
+passage) — le désaccord de 202 lignes par page qui avait fait préférer un contournement.
+
+### Le trou : cinq campagnes posées sur le HTML publié, jamais reportées dans le générateur
+
+En rejouant `build_atelier.py` et en lisant le diff ligne à ligne contre les trois pages publiées
+(`atelier_{5e,4e,3e}_C7.1_planification_taches.html`), le désaccord se décompose entièrement en cinq
+retouches faites après coup, directement sur le HTML, jamais portées dans le générateur — le même trou
+que `verif_chaine.py` avait fermé pour `atelier-cao` le 30 août, jamais posé ici :
+
+1. **CSS d'impression du 02/09/2026** (fond blanc, couleurs conservées) — un bloc par niveau, les listes
+   d'identifiants de champs imprimables différant d'un parcours à l'autre.
+2. **Règle d'or n°92**, l'agrandisseur d'images — posé par `audit/loupe.py` sur le HTML, jamais dans le
+   gabarit du générateur.
+3. **Règle d'or n°303**, un lien qui se lit — posé à la main dans le `<style>` de la loupe.
+4. **La section « Les traces à garder »** en fin de page (liens vers les deux synthèses) — un ajout
+   ponctuel, jamais reporté.
+5. **Règle d'or n°307, second passage** (entrée du 27/09/2026 ci-dessus) — le trio de repères en gras
+   (« Trois projets, une même question. », « Ce qui arrive à chaque fois. ») et la question d'hypothèse
+   reformatée en `<br>` plutôt qu'en gras intégral avaient été posés sur les trois pages publiées ; le
+   générateur portait toujours l'ancien texte. `controle_hierarchie.py`, muet sur les pages publiées,
+   relevait trois écarts par page sitôt le HTML régénéré (`H2 mur sans repère`, `H3 paragraphe tout en
+   gras`, `H1 énumération en ligne` + `H6 pavé hors séquence` pour le bloc « à retenir » fondu en un seul
+   `<p>`) — découvert en rejouant le contrôle par précaution avant de committer, pas en le supposant vert.
+
+### L'outil : le même geste que `atelier-cao/_generation/build_tp.py`, jamais recopié
+
+`_loupe()` importe `audit/loupe.py` par `importlib` (une seule source, jamais dupliquée) ; `N303` est le
+texte du 21/09 repris tel quel ; `IMPRESSION` porte le bloc d'impression des trois niveaux ; le jeton
+`@@LOUPE@@`, substitué après tout formatage `%` (le bloc contient des `%` littéraux comme
+`max-width:100%`), est suivi d'une assertion qui arrête l'écriture si la loupe n'a pas pris. Pour la
+n°307, les trois blocs de texte concernés sont réécrits mot pour mot comme sur les pages publiées — aucun
+texte inventé, une seule lecture (`git show HEAD:…`) servant de source pour les trois niveaux, identiques
+au mot près hors les repères propres à chaque projet (lettres du chemin critique, tâche à jeu).
+
+**`atelier-planification/verif_chaine.py` (nouveau)**, sur le principe de celui d'`atelier-cao` : mesure
+l'empreinte des trois pages, relance le générateur pour de vrai, mesure à nouveau — un écart dit qu'une
+page n'était pas ce que `_corrige_calcule.json` et le générateur produisent, et la régénération qui vient
+d'avoir lieu l'a déjà corrigée sur le disque (pas d'option `--sortie=` séparée ici : un seul jeu de
+données produit les trois parcours en une exécution, il n'y a pas d'autre mode). Testé positif : un
+commentaire de test injecté à la main dans la page 5e est détecté (1 écart signalé, code de sortie 1) et
+déjà effacé par la régénération que le contrôle vient de lancer.
+
+### Vérifié
+
+- `controle_hierarchie.py` sur le dépôt entier : **145 pages, 0 écart** (3 pages d'abord régressées par la
+  régénération, corrigées avant commit — voir ci-dessus).
+- `controle_debordement.py` : **145 pages, 0 écart** — le filet n°135 posé une seule fois par page (déduit
+  du doublon qu'aurait laissé la version à la main dans la même page).
+- `controle_liens.py` : 0 lien mort. `controle_impression.mjs` : aucune page n'imprime un texte que le
+  papier ne rendra pas. `controle_contraste_liens.mjs` : chaque lien des 341 pages lues se lit sur son
+  fond réel, à l'écran, une fois cliqué et sur papier.
+- `build_audit.py` et `make_index.py` rejoués : aucune différence.
+- Rendu réel vérifié au navigateur (Chromium, 375 px) sur les trois niveaux : console sans erreur,
+  6 images armées par la loupe sur chaque page, ouverture et fermeture réellement déclenchées par un clic
+  (onglet GanttProject activé au préalable, comme le ferait un·e élève) et non simplement supposées d'après
+  la présence du marqueur, couleur de lien conforme à `--hl`, fond des cartes passant au blanc sous
+  `media: print`.
+- `python3 build_atelier.py` rejoué deux fois de suite : tailles de fichiers identiques, aucun nouveau
+  diff — la régénération est stable.
+- Diff final contre le HTML publié, par page : **7 lignes** (le filet n°135 déplacé de la fin vers le
+  gabarit, sans plus de doublon, et une ligne blanche cosmétique avant `</body>`, héritée du même gabarit
+  de pose de la loupe que `build_tp.py` et sans effet sur le rendu) — contre 202 lignes avant ce lot.
