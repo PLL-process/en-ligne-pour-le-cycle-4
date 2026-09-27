@@ -17,6 +17,7 @@ Sources :
 Usage : python3 _outils/build_audit.py
 """
 import csv
+import fnmatch
 import json
 import os
 import sys
@@ -1945,15 +1946,43 @@ CROISEMENTS = {
 }
 
 
+def _motifs_ignores():
+    """Les motifs du .gitignore racine : (dossiers, fichiers).
+
+    27/09/2026 — `fichiers_reels` comptait TOUT ce qui se trouve sur le disque, y
+    compris les `__pycache__/*.pyc` que Python laisse chez celui qui lance un
+    générateur. Résultat : `nb_fichiers` de 5e_C1.1, 4e_C1.1 et 3e_C1.1 valait un de
+    plus sur la machine de Pascal que dans une session propre, et l'audit changeait
+    selon QUI le régénérait. Un fichier que git ignore n'est pas une ressource du
+    dépôt : il ne se compte pas. On lit les motifs simples du .gitignore (les seuls
+    qu'il contient : `dossier/`, `*.ext`, `nom`) ; une négation `!…` n'y existe pas
+    et n'est pas gérée."""
+    dossiers, fichiers = set(), set()
+    chemin = os.path.join(RACINE, ".gitignore")
+    if os.path.isfile(chemin):
+        for ligne in open(chemin, encoding="utf-8"):
+            m = ligne.strip()
+            if not m or m.startswith("#") or m.startswith("!"):
+                continue
+            (dossiers if m.endswith("/") else fichiers).add(m.rstrip("/"))
+    return dossiers, fichiers
+
+
+IGNORES_DOSSIERS, IGNORES_FICHIERS = _motifs_ignores()
+
+
 def fichiers_reels(rel_dir):
-    """Liste (relative) des fichiers réels du dossier code, .gitkeep exclu."""
+    """Liste (relative) des fichiers réels du dossier code : .gitkeep exclu, et tout ce
+    que le .gitignore écarte (__pycache__, *.pyc, *.bak, Thumbs.db…) aussi."""
     full = os.path.join(RACINE, rel_dir)
     out = []
     if not os.path.isdir(full):
         return out
-    for base, _dirs, files in os.walk(full):
+    for base, dirs, files in os.walk(full):
+        dirs[:] = [d for d in dirs
+                   if not any(fnmatch.fnmatch(d, m) for m in IGNORES_DOSSIERS)]
         for f in files:
-            if f == ".gitkeep":
+            if f == ".gitkeep" or any(fnmatch.fnmatch(f, m) for m in IGNORES_FICHIERS):
                 continue
             # normalisation "/" : sous Windows, relpath produit des "\" qui
             # pollueraient audit_couverture.json (chemins non portables)
