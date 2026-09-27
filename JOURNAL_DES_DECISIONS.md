@@ -20503,3 +20503,119 @@ Onshape, mais **121 538,56 mm³** et 14 914,3 mm² lu par OpenCascade (le même 
 89 faces, recoupé par un maillage). L'écart, 1 658 mm³, vient de l'import ; non élucidé. Le TP et la fiche
 donnent la valeur d'Onshape, puisque c'est elle que l'élève lit. À examiner, avec `_generation/de_50.py`.
 Le TP de 5e dit sans doute « noir » lui aussi pour un profil contraint : à vérifier sur le même thème.
+
+## 27/09/2026 — Règle d'or n°307 : la hiérarchie se voit avant de se lire (thèmes 1-3, _outils)
+
+> **Règle d'or n°307 — la hiérarchie se voit avant de se lire.** Dans toute page que lit un élève, un bloc
+> montre sa structure avant qu'on le lise : **une entrée par ligne**, un **repère de tête** dans toute suite
+> de paragraphes, le **gras réservé à ce qui compte**, et aucune cellule ni aucun item qui devienne un pavé
+> sur un téléphone. La n°33 disait « une idée, un bloc » ; la n°307 dit ce que l'œil doit attraper avant de
+> lire. **On ne retire rien** : on coupe, on met à la ligne, on appuie — le texte reste le texte.
+
+**La demande de Pascal** : « il y a dans mes séquences de gros blocs qui mériteraient d'être hiérarchisés »
+— audit des trois thèmes, puis corrections.
+
+### Le numéro pris, et pourquoi
+
+**n°307** : la dernière règle du journal est la n°306 (22/09) ; aucune des 289 branches distantes ne porte
+« 307 » ni « hiérarchie », vérifié par `git ls-remote`, pas présumé. Règle transversale : livrée par une
+branche **sans motif de thème** (`fable/regle-307-hierarchie-visible`), comme la n°302 l'a fixé. Le garde
+l'accepte avec un avertissement ; cette entrée dit donc, thème par thème, ce qui a été touché.
+
+### Ce que la n°33 ne voyait pas
+
+`verif_regles_audit.py` mécanise la n°33 depuis juillet, mais il juge **un `<p>` à la fois**, au-delà de
+110 mots. Ce qu'un élève appelle un « gros bloc » est presque toujours ailleurs : la liste écrite **en
+ligne** dans un paragraphe court (« ① … ; ② … ; ③ … »), trois paragraphes de 60 mots dont **aucun** ne porte
+de repère, une cellule de tableau de 80 mots qui devient une colonne de deux mots de large à 390 px. Et la
+n°33 ne lit que les séquences : les TP, ateliers, fiches et synthèses élève n'étaient pas regardés.
+
+**Ce que l'audit a d'abord mal compté, et corrigé avant de toucher une page.** Une première mesure donnait
+149 « murs » et 117 items trop longs. Relue à l'œil, elle se trompait : l'essentiel des blocs longs du dépôt
+**s'ouvre déjà sur un gras** (« <b>Le camion</b> : … », « <b>ALIMENTER :</b> … »), et les étapes des TP ont
+leurs sous-blocs typés (`span.voir`, `div.avertir`) — ce sont des repères. Le contrôle a été resserré sur
+ce qui manque vraiment : un gras **dans les trois premiers mots** compte (« La <b>borne inclinée</b> »),
+une ligne coupée par `<br>` se juge à sa longueur à elle, un saut de ligne du **source** n'est qu'un blanc à
+l'écran (quatre listes en ligne se cachaient derrière).
+
+### L'outil : `_outils/controle_hierarchie.py` (+ `tests_controle_hierarchie.py`, 26 cas)
+
+Six mesures, déclarées dans son en-tête (n°47) : **H1** énumération en ligne (≥ 3 entrées numérotées, ≥ 2
+en milieu de ligne ; la chaîne fléchée « capteur (1) → carte (2) » écartée) · **H2** mur sans repère (≥ 3
+paragraphes, ≥ 170 mots, aucun ne s'ouvrant sur un repère) · **H3** paragraphe tout en gras (> 40 mots,
+> 60 % en gras) · **H4** cellule-pavé (une ligne > 50 mots) · **H5** item-pavé (une ligne > 60 mots sans gras
+de tête, > 100 avec) · **H6** pavé hors séquence (> 110 mots, seuil de la n°33, sur les pages que
+`verif_regles_audit` ne lit pas). Sortie 0 / 1 / 2 (n°299). **Non mesuré** : la pertinence d'un intertitre,
+l'ordre des idées, le choix de ce qui mérite le gras.
+
+### Le relevé, sur main à `e5df6f0` : 55 écarts sur 29 pages
+
+| Thème | Écarts | Pages | Dont |
+|---|---|---|---|
+| 1 | 7 | 5 | 4 pavés n°33, 2 murs, 1 item |
+| 2 | 26 | 12 | 17 listes en ligne, 5 pavés n°33, 2 paroles tout en gras |
+| 3 | 22 | 12 | 9 listes en ligne, 6 pavés hors séquence, 4 gras, 2 cellules |
+
+### Les gestes — cinq, toujours les mêmes
+
+1. **Liste en ligne → une entrée par ligne** (26) : un `<br>` devant chaque entrée, le séparateur « · »
+   retiré, rien d'autre. Posé par script sur le source brut (aucun reformatage du reste de la page), puis
+   relu entrée par entrée : trois retouches à la main — « Pour a) » garde son mot de tête, « ② et ③ » reste
+   une seule entrée, le « Enfin » du portable WiFi (5e_C4.7) passe lui aussi à la ligne.
+2. **Mur → un repère par temps** (3) : la phrase d'ouverture de chaque paragraphe passe en gras, texte
+   inchangé (4e_C3.1, 5e_C3.1, situation du Book Train). À Shanghai, la nuance « <b>Mais attention</b> :
+   correspondance n'est pas explication » devient son propre paragraphe — c'est le cœur de la correction.
+3. **Tout en gras → la phrase-clé en gras** (6) : la parole du technicien (4e_C5.1, 4e_C6.1) redevient du
+   texte, seules ses consignes décisives restent appuyées ; les trois questions de 3e_C7.8 passent une par
+   ligne, le gras sur ce qui change ; dans les trois ateliers de planification, la situation se lit, **la
+   question se voit** (« <b>Le projet finira-t-il plus tôt ?</b> »), la consigne de réponse suit.
+4. **Cellule, item → deux lignes à la charnière** (5) : le pourquoi puis la preuve (outil de la station,
+   deux pages), la correction puis l'anecdote (courant continu, Book Train), la position puis « Ajoute
+   alors » (5e_C1.5), les quatre familles d'essais une par ligne (synthèse 3e_C9.2-C8.3).
+5. **Pavé → paragraphes à la charnière du sens** (15) : le contexte puis le défi de M. Firmin (3e_C4.8), la
+   règle puis « À savoir » (4e_C4.7), le constat puis ce qu'il prouve (5e_C4.7), le calcul, le contrôle et la
+   lecture d'Onshape (fiche maths), le piège puis les précautions, le palier puis l'entraînement Pix (TP 5e) ;
+   recettes Packet Tracer à une étape par paragraphe (3e_C4.8, 4e_C4.7) ; l'encadré « Trois choses à savoir
+   lire » des ateliers devient un `div.retenir` à quatre paragraphes (même classe, même style).
+
+**Deux défauts de forme trouvés en chemin, qui étaient aussi des défauts de hiérarchie.** Dans 3e_C1.5, les
+exercices D8 et D9 plaçaient un `<ul>` **dans** un `<p>` : HTML invalide, le navigateur fermait le paragraphe
+avant la liste et laissait la suite hors de tout bloc, et le « Rappel » s'affichait sur une seule ligne malgré
+ses tirets. Remis en paragraphes, le rappel une ligne par tiret ; le libellé du champ (`aria-labelledby`)
+garde exactement le texte qu'il avait à l'écran. Dans 4e_C1.4, les trois durées du GAR, écrites en ligne,
+passent en liste : **seul mot retiré de toute la vague**, le « et » qui liait la deuxième à la troisième.
+
+**Le TP 5e du dé est engendré** (`atelier-cao/_generation/build_tp.py`) : le corriger à la main aurait été
+effacé à la prochaine génération. Le générateur apprend qu'`intro` et `exemple` peuvent être une **liste**
+(un paragraphe par idée ; seule la première note porte ⚠️) ; le scénario `tp_5e_de_onshape.json` porte les
+deux coupes ; la page régénérée est identique, octet pour octet, à la correction faite à la main, et les
+trois autres TP régénérés ne changent pas d'un octet.
+
+**Au passage, hors n°307.** Book Train : le Défi 5 était placé avant le Défi 4 — remis dans l'ordre, après
+le 4 et son emplacement photos. Fiche maths du TP 4e : « nbsp; » sans son « & » s'affichait tel quel —
+corrigé. **Signalé, non tranché** : dans la même phrase, « Parasolid (le même type de calcul que fait
+Onshape) » est une tautologie (Parasolid *est* le noyau d'Onshape) ; la parenthèse visait sans doute
+OpenCascade. À relire par l'auteur de la fiche.
+
+### Vérifié
+
+- `controle_hierarchie.py` : **55 → 0** (46 H1-H6 + 9 pavés n°33), 145 pages lues. Banc 26 / 26, dont le
+  lancement en ligne de commande sur le vrai dépôt (n°299).
+- `verif_regles_audit.py`, sortie complète comparée avant / après : **seule** la n°33 change — 5 pages
+  passent d'ALERTE à « aucun pavé » (3e_C1.5, 4e_C1.4, 3e_C4.8, 4e_C4.7, 5e_C4.7). Aucune autre ligne.
+- Verts sur main, verts après : `controle_squelette`, `controle_hors_ligne`, `controle_verrous`,
+  `controle_liens`, `controle_formulations`, `controle_boutons_vivants`, `controle_regle4`,
+  `controle_atteignabilite`, `controle_gestes_outil`, `controle_medias`, `controle_statut` ;
+  `audit_personne_eleve` : inventaire terminé des deux côtés. `controle_impression` : vert après (non
+  rejoué sur main, trop long pour cette session).
+- Atelier CAO : `verif_chaine.py` était **rouge sur main** (4 empreintes périmées, pages pourtant conformes à
+  leurs scénarios) → empreintes recalculées, **vert**. `verif_guidage.py` : sortie identique à main (ses refus
+  n°75 / n°77 préexistent, sur d'autres TP) ; `tests_verif_effectifs` 21 / 21.
+- Rendu Chromium à 390 px sur 12 blocs retouchés (listes, repères, encadré des ateliers, parole du
+  technicien, cellules, recette Packet Tracer, défis du Book Train).
+- `build_audit.py` et `make_index.py` rejoués : index et README inchangés. `audit_couverture` ne différait que
+  par le `nb_fichiers` de 5e_C1.1 et 4e_C1.1 (48 / 36 au lieu de 49 / 37) — le même écart apparaît en
+  régénérant main tel quel dans cet environnement : sans rapport avec le lot, non livré.
+
+**Reste ouvert.** Le tableau « Choix de l'outil » de la station (3 colonnes) reste étroit à 390 px : ses
+cellules ont maintenant des lignes, mais la mise en page d'un tableau sur téléphone est une autre décision.

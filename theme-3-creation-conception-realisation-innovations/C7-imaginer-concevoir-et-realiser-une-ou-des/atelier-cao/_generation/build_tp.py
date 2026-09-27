@@ -176,10 +176,16 @@ def etape_html(e, i):
         # valeur lue sur une capture : la mention ne dépend donc pas de l'image.
         # `true` donne la phrase générique ; une chaîne donne l'explication
         # écrite pour cette valeur-là, ce qui vaut toujours mieux.
-        txt = (esc(ex) if isinstance(ex, str) else
-               "Cette valeur est <b>un exemple</b>&nbsp;: ne la recopie pas "
-               "sans réfléchir, choisis la tienne.")
-        out.append('<p class="exemple-note">⚠️ %s</p>' % txt)
+        # Une LISTE donne plusieurs notes, une idée par paragraphe (règle n°307 : un
+        # avertissement de plus de 110 mots était un pavé) ; seule la première porte ⚠️.
+        if isinstance(ex, list):
+            for i, morceau in enumerate(ex):
+                out.append('<p class="exemple-note">%s%s</p>' % ("⚠️ " if i == 0 else "", esc(morceau)))
+        else:
+            txt = (esc(ex) if isinstance(ex, str) else
+                   "Cette valeur est <b>un exemple</b>&nbsp;: ne la recopie pas "
+                   "sans réfléchir, choisis la tienne.")
+            out.append('<p class="exemple-note">⚠️ %s</p>' % txt)
     out.append("</li>")
     return "".join(out)
 
@@ -201,7 +207,9 @@ def palier_html(p, n):
     out.append('<span class="niveau %s">%s</span>' % (cls, lab))
     out.append("<h2>%s &middot; %s</h2>" % (n, esc(p["titre"])))
     if p.get("intro"):
-        out.append("<p>%s</p>" % esc(p["intro"]))
+        # Une liste donne un paragraphe par idée (règle n°307).
+        for morceau in (p["intro"] if isinstance(p["intro"], list) else [p["intro"]]):
+            out.append("<p>%s</p>" % esc(morceau))
     if p.get("etapes"):
         out.append('<ol class="etapes">')
         for i, e in enumerate(p["etapes"], 1):
