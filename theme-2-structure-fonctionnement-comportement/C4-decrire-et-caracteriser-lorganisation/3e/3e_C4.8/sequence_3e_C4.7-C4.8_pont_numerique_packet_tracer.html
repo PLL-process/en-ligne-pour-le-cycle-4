@@ -280,7 +280,8 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
   <div class="declencheur">
     <p>Le club techno du collège échange depuis la 4e avec la New York Public Library — souvenez-vous du
     Book Train. Cette année, le partenariat devient sérieux&nbsp;: la classe doit envoyer ses relevés de la
-    station d'alerte cyclonique au serveur du partenaire, à New York. M. Firmin arrive avec un défi&nbsp;:
+    station d'alerte cyclonique au serveur du partenaire, à New York.</p>
+    <p>M. Firmin arrive avec un défi&nbsp;:
     <em>«&nbsp;Vous savez faire vivre UN réseau — votre serre en est la preuve. Mais votre message, lui, doit
     QUITTER votre réseau, traverser l'océan et entrer dans un réseau qui n'est pas le vôtre. Montrez-moi,
     dans le simulateur, comment DEUX réseaux se parlent&nbsp;: construisez le nôtre, construisez le leur,
@@ -628,8 +629,8 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
   <div class="feedback" id="fb2" role="status"></div>
 
   <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS vérification)</summary>
-    <p><b>Les trois cas du poste-frontière&nbsp;:</b> ① rue dans la table → appliquer la ligne (n°1&nbsp;: via 10.0.0.2)&nbsp;;
-    ② rue directement connectée → rendre au quartier (n°2)&nbsp;; ③ rue inconnue → DÉTRUIRE (n°3) — le routeur n'envoie
+    <p><b>Les trois cas du poste-frontière&nbsp;:</b><br>① rue dans la table → appliquer la ligne (n°1&nbsp;: via 10.0.0.2)&nbsp;;
+    ② rue directement connectée → rendre au quartier (n°2)&nbsp;;<br>③ rue inconnue → DÉTRUIRE (n°3) — le routeur n'envoie
     jamais « au hasard ».</p>
     <p><b>La ligne effacée (n°4)&nbsp;:</b> l'enveloppe vers New York meurt à la frontière. La table n'est pas un
     confort&nbsp;: elle est LA condition du voyage.</p>
@@ -683,16 +684,16 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
     <b>B.</b> Câbles DROITS (Copper Straight-Through)&nbsp;: PC-MQ→Switch-MQ (Fa0/1), Switch-MQ→R-MQ (Fa0/2 → GigabitEthernet0/0),
     Serveur-NY→Switch-NY (Fa0/1), Switch-NY→R-NY (Fa0/2 → G0/0).<br>
     <b>C.</b> Câble <b>CROISÉ</b> (Copper Cross-Over, le trait pointillé) entre les deux routeurs&nbsp;: R-MQ <b>G0/1</b> ↔ R-NY <b>G0/1</b>.</p>
-  <p>Routeur à routeur = câble croisé&nbsp;: c'est la rue-pont.<br>
-    <b>D.</b> Renommer (Config → Display Name)&nbsp;: <b>PC-MQ, Switch-MQ, R-MQ, R-NY, Switch-NY, Serveur-NY</b>.<br>
-    <b>E.</b> 🔄 <em>(échange des rôles)</em> Configurer <b>R-MQ</b>&nbsp;: Config → <b>GigabitEthernet0/0</b>&nbsp;:
+  <p>Routeur à routeur = câble croisé&nbsp;: c'est la rue-pont.</p>
+    <p><b>D.</b> Renommer (Config → Display Name)&nbsp;: <b>PC-MQ, Switch-MQ, R-MQ, R-NY, Switch-NY, Serveur-NY</b>.</p>
+    <p><b>E.</b> 🔄 <em>(échange des rôles)</em> Configurer <b>R-MQ</b>&nbsp;: Config → <b>GigabitEthernet0/0</b>&nbsp;:
     IPv4 <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">192.168.10.1</span>, masque <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">255.255.255.0</span>,
     cocher <b>On</b> (Port Status)&nbsp;; puis <b>G0/1</b>&nbsp;: <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">10.0.0.1</span> /
     <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">255.255.255.252</span>, <b>On</b>. ⚠ Les prises d'un routeur naissent ÉTEINTES&nbsp;:
-    tant que « On » n'est pas coché, le triangle reste rouge — ce n'est pas une panne, c'est la règle.<br>
-    <b>F.</b> Configurer <b>R-NY</b> en miroir&nbsp;: G0/0 = <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">192.168.30.1</span> /24, On&nbsp;;
-    G0/1 = <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">10.0.0.2</span> / <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">255.255.255.252</span>, On.<br>
-    <b>G.</b> Les ROUTES STATIQUES (les lignes de table du jeu)&nbsp;: sur R-MQ, Config → ROUTING → <b>Static</b>&nbsp;:
+    tant que « On » n'est pas coché, le triangle reste rouge — ce n'est pas une panne, c'est la règle.</p>
+    <p><b>F.</b> Configurer <b>R-NY</b> en miroir&nbsp;: G0/0 = <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">192.168.30.1</span> /24, On&nbsp;;
+    G0/1 = <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">10.0.0.2</span> / <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">255.255.255.252</span>, On.</p>
+    <p><b>G.</b> Les ROUTES STATIQUES (les lignes de table du jeu)&nbsp;: sur R-MQ, Config → ROUTING → <b>Static</b>&nbsp;:
     Network <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">192.168.30.0</span>, Mask <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">255.255.255.0</span>,
     Next Hop <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">10.0.0.2</span> → <b>Add</b>.</p>
   <p>Sur R-NY, la ligne miroir&nbsp;:
