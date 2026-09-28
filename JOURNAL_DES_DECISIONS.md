@@ -21065,3 +21065,51 @@ séances. », « En technologie », « Chaque palier ») ; le filet mobile de la
 la fiche maths reconstruite sur le gabarit fusionné. `controle_hierarchie` a aussi relevé un item-pavé
 de 68 mots au palier du profil : le choix des outils devient une étape à part (40 étapes).
 `controle_hierarchie` et `controle_debordement` verts sur 145 pages, `verif_guidage` 11 / 11.
+
+## 28/09/2026 — Gestes du tableur : largeur de colonne et graphique jamais enseignés (thème 1)
+
+**Le signal** : Pascal, en testant lui-même l'ouverture de `donnees_feux_impacts_4e.csv`, retrouve
+exactement la figure « si tu vois ceci » déjà prévue (import en Virgule au lieu de Point-virgule) —
+ce qui l'amène à relire de près tout l'encart « les quatre gestes du tableur ». Deux manques,
+aucun des deux propre à cette seule page :
+
+1. **Élargir une colonne.** Aucune des 5 pages ne dit comment agrandir une colonne trop étroite.
+   Pascal demande le geste, et une méthode groupée plutôt qu'une par une.
+2. **Faire le graphique.** Le geste « Sortir » dit « un graphique se copie… ou s'exporte » sans
+   jamais avoir dit comment le CRÉER — l'élève ne peut pas cliquer un graphique qui n'existe pas.
+   Pascal, indépendamment : « on lui dit de cliquer le graphique, mais ce graphique-là n'a pas été
+   généré. »
+
+### Le périmètre
+
+5 pages portent l'encart « les quatre gestes du tableur » (règle n°93) : `5e_C3.1` Shanghai,
+`5e_C1.2` Sainte-Luce freinage, `5e_C1.1` Chengdu air, `3e_C1.1` et `4e_C1.1` Tsinghua feux. Une
+sixième page qui mentionne LibreOffice Calc (`3e_C4.3` station cyclonique) n'a pas cet encart —
+hors périmètre, pas touchée.
+
+### Les gestes
+
+1. **Largeur de colonne** — un `<details class="aide">` ajouté en fin du geste « Ouvrir »
+   (repliable, comme la capsule de révision) : double-clic entre deux lettres de colonnes pour une
+   seule, tout sélectionner puis un seul double-clic pour toutes à la fois. L'exemple de colonnes
+   cite deux lettres réellement adjacentes de chaque fichier (E/F, D/E, C/D selon la page).
+2. **Faire le graphique** — une phrase ajoutée en tête du geste « Sortir », avant le clic droit :
+   quelles colonnes sélectionner (reprises de la légende de la capture déjà en place — les mêmes
+   données que le graphique-exemple montré plus loin), Insertion → Diagramme, type Colonnes,
+   Terminer.
+
+### Trou évité en cours de route
+
+Le premier jet du geste 1, posé en `<p>` simple, a fait remonter 5 item-pavés à
+`controle_hierarchie.py` (le texte de tête d'un `<li>` sans balise typée compte tout, figures
+exclues) — passé en `<details class="aide">` (déjà exclu, déjà stylé ailleurs sur ces mêmes pages),
+l'écart disparaît sans rien retirer.
+
+### Vérifié
+
+- `controle_gestes_outil.py` : ✅ inchangé, chaque encart nomme toujours l'outil de sa page.
+- `controle_hierarchie.py` : 145 pages, **0 écart** (H1-H6).
+- `controle_liens.py` : 684 pages, 3008 adresses, 0 cassée.
+- `controle_statut.py` : vert.
+- **Non vérifié à l'écran** : aucune capture n'illustre encore les deux nouveaux gestes (largeur de
+  colonne, Insertion → Diagramme) — texte seul pour l'instant, à compléter par une capture réelle.
