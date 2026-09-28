@@ -601,6 +601,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   du chiffre</b> (cumul, instant, proportion), et ta phrase finale dit pourquoi l'addition n'a pas
   de sens.</p>
 </section>
+<p class="seance-suivante-nav"><button class="btn seance-suivante" type="button" data-panel="s2">Séance 2 → Estimer&nbsp;▶</button></p>
 </div>
 
 <div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
@@ -702,6 +703,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   chiffre voyagera seul — c'est toujours ce qui arrive — et deviendra «&nbsp;les feux français ont
   émis 2 millions de tonnes&nbsp;».</p>
 </section>
+<p class="seance-suivante-nav"><button class="btn seance-suivante" type="button" data-panel="s3">Séance 3 → Comparer&nbsp;▶</button></p>
 </div>
 
 <div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
@@ -800,6 +802,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   TGV&nbsp;». Le facteur est en <b>passager</b>-km. Oublier le mot, c'est multiplier l'erreur par le
   nombre de places du train.</p>
 </section>
+<p class="seance-suivante-nav"><button class="btn seance-suivante" type="button" data-panel="s4">Séance 4 → Exiger&nbsp;▶</button></p>
 </div>
 
 <div class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4">
@@ -1216,6 +1219,14 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
     majTaches();
     window.scrollTo({top:$("seances").offsetTop-8,
       behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Règle d'or n°101 — bouton de fin de séance ══════ */
+document.querySelectorAll(".seance-suivante").forEach(bouton=>{
+  bouton.addEventListener("click", ()=>{
+    const cible = $("tab-"+bouton.dataset.panel);
+    if (cible) cible.click();
   });
 });
 

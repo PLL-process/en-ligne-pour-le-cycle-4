@@ -21113,3 +21113,37 @@ l'écart disparaît sans rien retirer.
 - `controle_statut.py` : vert.
 - **Non vérifié à l'écran** : aucune capture n'illustre encore les deux nouveaux gestes (largeur de
   colonne, Insertion → Diagramme) — texte seul pour l'instant, à compléter par une capture réelle.
+
+## 28/09/2026 — Règle n°101 absente de `4e_C1.1` Tsinghua feux, posée sur cette page (thème 1)
+
+**Le signal** : Pascal, en fin de panneau Séance 2 : « en fin de page, on doit passer à la séquence
+3 » — aucun moyen, dans la page, d'aller de la Séance 2 à la Séance 3 sans remonter cliquer l'onglet
+en haut.
+
+### Le trou
+
+La règle n°101 (« chaque séance se termine par un bouton qui mène à la suivante », posée le
+26/08/2026) n'a été harmonisée à l'époque que sur les quatre séquences C9 du thème 3
+(`5e_C9.1`, `4e_C9`, `3e_C9.1`, `3e_C9.2`) — elle appelait elle-même une harmonisation aux trois
+thèmes (n°95), jamais faite depuis. Cette page en thème 1, comme les 76 pages du dépôt qui portent
+le même mécanisme d'onglets `seance-tab`/`seance-panel`, n'a jamais été auditée pour n°101 :
+aucune des quatre séances de `4e_C1.1` n'avait de bouton de sortie, confirmé par une recherche à
+vide de tout texte « Séance N → » dans le fichier.
+
+### Le geste
+
+Un bouton `<button class="btn seance-suivante" data-panel="sN">Séance N → <sous-titre>▶</button>`
+ajouté en fin de chacune des séances 1, 2 et 3 (la 4 ferme sur le bilan, pas sur un bouton — n°103).
+Le clic ne réimplémente rien : il simule un clic sur l'onglet réel (`$("tab-"+panel).click()`), qui
+déclenche déjà tout — bascule des classes actives, mise à jour du bandeau de tâches, défilement vers
+la barre d'onglets.
+
+### Vérifié
+
+- **Au navigateur réel** (Chromium, Playwright, les trois clics rejoués) : passage effectif
+  s1→s2→s3→s4, onglet actif et panneau actif corrects à chaque étape, bandeau de tâches mis à jour
+  jusqu'à « Séance 4 — Exiger ».
+- `controle_hierarchie.py`, `controle_gestes_outil.py`, `controle_liens.py`, `controle_statut.py` :
+  verts sur le dépôt entier.
+- **Non fait** : les 75 autres pages à `seance-tab` n'ont pas été vérifiées pour n°101. Portée
+  réelle inconnue — probablement plusieurs dizaines de pages concernées, à traiter en lot séparé.
