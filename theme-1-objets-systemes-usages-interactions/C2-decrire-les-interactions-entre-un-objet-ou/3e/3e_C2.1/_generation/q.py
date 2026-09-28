@@ -57,9 +57,9 @@ C = "C2.1"
 # ═══════════ Ce qu'un chiffre agrégé cache (8) ═══════════
 
 q(C, "Un chiffre exact et insuffisant", "« Un usager sur cinq abandonne devant la borne. » Ce chiffre est…",
-  ["exact, et pourtant insuffisant pour décider quoi que ce soit",
-   "faux : les observations disent autre chose",
-   "suffisant : on sait ce qu'il faut corriger",
+  ["exact, et pourtant insuffisant pour décider",
+   "faux : les observations disent tout autre chose",
+   "suffisant : on sait déjà ce qu'il faut corriger",
    "inutilisable : quarante usagers, c'est trop peu"],
   "Un chiffre agrégé additionne des situations très différentes. Il est vrai, et il ne désigne "
   "personne — donc il n'oriente aucune décision.",
@@ -72,9 +72,9 @@ q(C, "Un chiffre exact et insuffisant", "« Un usager sur cinq abandonne devant 
   "Un chiffre agrégé peut être exact et inutilisable.")
 
 q(C, "Qui abandonne vraiment", "En détaillant par profil, on trouve chez les habitués un taux d'abandon de…",
-  ["0 % : aucun des quatorze habitués n'a abandonné",
-   "20 %, comme la moyenne générale",
-   "11 %, comme les occasionnels",
+  ["0 % : aucun habitué n'a abandonné",
+   "20 %, comme la moyenne générale relevée",
+   "11 %, comme les usagers occasionnels",
    "50 %, comme les personnes âgées"],
   "C'est le résultat qui renverse la lecture : l'objet est parfaitement utilisable — quand on le "
   "connaît déjà.",
@@ -87,10 +87,10 @@ q(C, "Qui abandonne vraiment", "En détaillant par profil, on trouve chez les ha
   "Dans ces 30 retraits, aucun habitué n'abandonne : l'échec se concentre sur ceux qui découvrent la borne.")
 
 q(C, "La moyenne qui ne décrit personne", "La durée moyenne est de 77 s ; l'habitué met 41 s et la personne âgée 123 s. Cela montre que…",
-  ["une moyenne calculée sur un groupe varié peut ne décrire personne",
-   "l'un des deux relevés est erroné",
+  ["une moyenne peut ne décrire personne",
+   "l'un des deux relevés est manifestement erroné",
    "la moyenne a été mal calculée",
-   "il faudrait arrondir à 80 s"],
+   "il faudrait arrondir la valeur à 80 s"],
   "La moyenne est le milieu d'une série, pas le portrait d'une personne. Sur un groupe hétérogène, "
   "elle tombe souvent dans un creux où personne ne se trouve.",
   "Personne, dans les quarante observations, ne met exactement 77 secondes.",
@@ -162,10 +162,10 @@ q(C, "À quoi sert le détail", "Détailler un chiffre global par profil sert d'
   "On détaille pour savoir sur qui agir.")
 
 q(C, "L'angle mort des concepteurs", "Pourquoi un problème d'usage reste-t-il souvent invisible à ceux qui décident ?",
-  ["parce que ceux qui décident sont presque toujours des habitués, et que les habitués réussissent",
-   "parce qu'ils ne s'y intéressent pas",
+  ["parce que ceux qui décident sont des habitués",
+   "parce qu'ils ne s'y intéressent pas vraiment",
    "parce que les usagers ne se plaignent jamais",
-   "parce que les données sont trop difficiles à recueillir"],
+   "parce que les données sont difficiles à recueillir"],
   "L'expérience du concepteur est la moins représentative de toutes : il connaît l'objet par cœur. "
   "C'est structurel, pas une question de bonne volonté.",
   "Zéro abandon chez les quatorze habitués — dont font partie les techniciens de la régie.",
@@ -179,10 +179,10 @@ q(C, "L'angle mort des concepteurs", "Pourquoi un problème d'usage reste-t-il s
 # ═══════════ Les six modes et leur vocabulaire (10) ═══════════
 
 q(C, "Le storyboard", "Un storyboard, c'est…",
-  ["une suite de quelques images qui montrent ce qui se passe, étape par étape",
-   "un tableau croisant des critères et des solutions",
-   "un schéma fait d'ovales, de rectangles et de losanges",
-   "une liste de mesures chiffrées"],
+  ["quelques images montrant ce qui se passe",
+   "un tableau croisant critères et solutions",
+   "un schéma d'ovales, rectangles et losanges",
+   "une liste de mesures chiffrées et datées"],
   "Le mot vient du cinéma : le film est dessiné avant d'être tourné. En conception, il sert à "
   "montrer un usage à quelqu'un qui n'a ni le temps ni le vocabulaire de lire autre chose.",
   "Trois vignettes affichées près de la borne, presque sans texte.",
@@ -195,10 +195,10 @@ q(C, "Le storyboard", "Un storyboard, c'est…",
   img=IMG_MODES)
 
 q(C, "La carte d'empathie", "Une carte d'empathie se présente sous la forme…",
-  ["de quatre cases : ce que la personne dit, fait, voit, ressent",
+  ["de quatre cases : dit, fait, voit, ressent",
    "d'une courbe de satisfaction dans le temps",
-   "d'une suite d'étapes numérotées",
-   "d'un questionnaire à remplir par l'usager"],
+   "d'une suite d'étapes numérotées dans l'ordre",
+   "d'un questionnaire à faire remplir par l'usager"],
   "C'est un outil de concepteur : il oblige à séparer ce qu'on a entendu de ce qu'on a observé, et "
   "à écrire ce que la personne n'a pas dit.",
   "Mme Liu : elle DIT « trop de boutons » ; elle VOIT la file derrière elle — qu'elle n'a pas mentionnée.",
@@ -210,9 +210,9 @@ q(C, "La carte d'empathie", "Une carte d'empathie se présente sous la forme…"
   "Carte d'empathie : dit · fait · voit · ressent.")
 
 q(C, "Le parcours utilisateur", "Un parcours utilisateur montre…",
-  ["la suite des étapes traversées par la personne, nommées les unes après les autres",
-   "la logique interne de la machine, avec ses tests",
-   "les quantités comparées entre elles",
+  ["la suite des étapes traversées par la personne",
+   "la logique interne de la machine et ses tests",
+   "les quantités comparées les unes aux autres",
    "le ressenti de la personne, case par case"],
   "Son intérêt est de donner une adresse commune : « c'est trop long » devient « l'étape 3 est trop "
   "longue », et douze témoignages deviennent comparables.",
@@ -225,10 +225,10 @@ q(C, "Le parcours utilisateur", "Un parcours utilisateur montre…",
   "Parcours utilisateur : les étapes, dans l'ordre où on les vit.")
 
 q(C, "Le tableau comparatif", "Un tableau comparatif est le seul des six modes qui permette…",
-  ["d'arbitrer entre plusieurs pistes, en croisant chacune avec plusieurs critères",
-   "de montrer un ressenti",
-   "de représenter un ordre d'opérations",
-   "d'être compris en trois secondes"],
+  ["d'arbitrer entre plusieurs pistes, sur des critères",
+   "de montrer un ressenti, étape par étape",
+   "de représenter un ordre d'opérations précis",
+   "d'être compris en moins de trois secondes"],
   "Arbitrer suppose de tenir plusieurs options et plusieurs critères en même temps : seule une "
   "grille le permet.",
   "Quatre pistes × trois critères : coût, effet, délai.",
@@ -241,10 +241,10 @@ q(C, "Le tableau comparatif", "Un tableau comparatif est le seul des six modes q
   img=IMG_C3B)
 
 q(C, "L'angle mort du graphique", "Le graphique chiffre et hiérarchise. Ce qu'il ne montre pas, c'est…",
-  ["le vécu des personnes : pourquoi elles renoncent, ce qu'elles ressentent",
-   "les quantités",
-   "les comparaisons entre catégories",
-   "les écarts entre profils"],
+  ["le vécu des personnes qui renoncent",
+   "les quantités mesurées sur le terrain",
+   "les comparaisons entre catégories d'usagers",
+   "les écarts constatés entre profils"],
   "Chaque mode a un angle mort, et c'est cet angle mort — pas son point fort — qui décide s'il "
   "convient à un destinataire donné.",
   "50 % chez les personnes âgées : le graphique le dit. Pourquoi ? Il n'en sait rien.",
@@ -256,10 +256,10 @@ q(C, "L'angle mort du graphique", "Le graphique chiffre et hiérarchise. Ce qu'i
   "Le graphique dit combien, jamais pourquoi.")
 
 q(C, "L'angle mort de l'algorigramme", "L'algorigramme rend les cas d'échec traitables. Son angle mort est…",
-  ["d'être illisible pour qui n'a pas appris ses formes",
+  ["d'être illisible sans en avoir appris les formes",
    "de ne pas montrer l'ordre des opérations",
-   "d'être imprécis",
-   "de ne pas pouvoir représenter d'échec"],
+   "d'être trop imprécis pour un technicien",
+   "de ne pas pouvoir représenter un échec"],
   "Ce n'est pas un défaut du mode, c'est une condition d'emploi : il suppose un lecteur formé. "
   "D'où son destinataire naturel, le technicien.",
   "Un losange ne veut rien dire pour quelqu'un qui n'a jamais vu d'algorigramme.",
@@ -271,9 +271,9 @@ q(C, "L'angle mort de l'algorigramme", "L'algorigramme rend les cas d'échec tra
   "L'algorigramme suppose un lecteur formé.")
 
 q(C, "L'angle mort de la carte d'empathie", "La carte d'empathie restitue le vécu. Son angle mort est…",
-  ["qu'elle ne se mesure pas : deux observateurs la rempliront différemment",
-   "qu'elle ne dit rien du ressenti",
-   "qu'elle est trop longue à lire",
+  ["qu'elle ne se mesure pas de façon reproductible",
+   "qu'elle ne dit rien du ressenti de l'usager",
+   "qu'elle est beaucoup trop longue à lire",
    "qu'elle ne concerne que les personnes âgées"],
   "Ce qu'elle capte — la file d'attente derrière Mme Liu, la gêne d'être vue — n'apparaît dans "
   "aucun chiffre. C'est sa force et sa fragilité en même temps.",
@@ -287,9 +287,9 @@ q(C, "L'angle mort de la carte d'empathie", "La carte d'empathie restitue le vé
 
 q(C, "L'angle mort du storyboard", "Le storyboard se comprend sans mode d'emploi. En revanche…",
   ["il ne tient que très peu d'informations",
-   "il demande de savoir lire",
-   "il ne fonctionne qu'en couleur",
-   "il ne peut pas montrer d'action"],
+   "il demande de savoir lire couramment",
+   "il ne fonctionne correctement qu'en couleur",
+   "il ne peut pas montrer la moindre action"],
   "Peu d'informations n'est pas toujours un défaut : pour quelqu'un qui a trois secondes, c'est "
   "exactement ce qu'il faut.",
   "Trois vignettes affichées près de la borne : au-delà, personne ne les regarderait.",
@@ -301,10 +301,10 @@ q(C, "L'angle mort du storyboard", "Le storyboard se comprend sans mode d'emploi
   "Le storyboard dit peu — et c'est parfois ce qu'il faut.")
 
 q(C, "Deux mots venus du travail", "« Storyboard » et « carte d'empathie » sont des mots…",
-  ["venus du monde professionnel, et non du vocabulaire scolaire",
-   "inventés pour cette séquence",
-   "synonymes l'un de l'autre",
-   "réservés aux études d'art"],
+  ["venus du monde professionnel, pas de l'école",
+   "inventés pour les besoins de cette séquence",
+   "synonymes l'un de l'autre, en réalité",
+   "réservés aux études d'art appliqué"],
   "Les connaître n'est pas anecdotique : ce sont des outils employés dans la conception de "
   "produits et de services, au lycée comme après.",
   "Le storyboard vient du cinéma ; la carte d'empathie, du design de services.",
@@ -316,10 +316,10 @@ q(C, "Deux mots venus du travail", "« Storyboard » et « carte d'empathie » s
   "Deux outils de métier, pas deux mots d'école.")
 
 q(C, "Aucun n'est meilleur", "Parmi les six modes, lequel est le meilleur ?",
-  ["aucun : chacun a été inventé pour un usage, et son angle mort le disqualifie ailleurs",
-   "l'algorigramme, parce qu'il est le plus précis",
-   "le graphique, parce qu'il est le plus rapide à lire",
-   "le storyboard, parce qu'il est compris par tout le monde"],
+  ["aucun : chacun a son angle mort",
+   "l'algorigramme : c'est le plus précis des trois",
+   "le graphique : c'est le plus rapide à lire",
+   "le storyboard : tout le monde le comprend"],
   "C'est la thèse de la séquence : un mode n'est jamais bon en soi, il est bon pour quelqu'un.",
   "L'algorigramme sauve le technicien et perd l'élue ; le storyboard fait l'inverse.",
   "Classer les modes du meilleur au moins bon.",
@@ -333,10 +333,10 @@ q(C, "Aucun n'est meilleur", "Parmi les six modes, lequel est le meilleur ?",
 # ═══════════ Choisir, et justifier (7) ═══════════
 
 q(C, "Ce qui contraint le choix", "Ce qui décide du mode à employer, c'est…",
-  ["le destinataire et l'intention : à qui l'on parle, et ce qu'on veut qu'il fasse",
-   "le goût de celui qui représente",
+  ["le destinataire, et ce qu'on veut qu'il fasse",
+   "le goût personnel de celui qui représente",
    "le temps dont on dispose pour le fabriquer",
-   "la matière enseignée"],
+   "la matière enseignée cette année-là"],
   "Sans contrainte, tous les modes se valent et il n'y a rien à justifier. C'est le destinataire "
   "qui rend un choix meilleur qu'un autre.",
   "Trois secondes pour l'usager, quelques minutes pour l'élue, un temps long pour le technicien.",
@@ -349,9 +349,9 @@ q(C, "Ce qui contraint le choix", "Ce qui décide du mode à employer, c'est…"
   img=IMG_DEST)
 
 q(C, "Justifier par l'angle mort", "Une bonne justification du choix d'un mode consiste à montrer…",
-  ["que son angle mort ne gêne pas ce destinataire-là",
-   "qu'il est plus clair que les autres",
-   "qu'on sait bien le réaliser",
+  ["que son angle mort ne gêne pas ce destinataire",
+   "qu'il est nettement plus clair que les autres",
+   "qu'on sait bien le réaliser soi-même",
    "qu'il est utilisé par les professionnels"],
   "Tous les modes ont un point fort : l'invoquer ne désigne personne. Seul l'angle mort discrimine.",
   "« Le graphique ne dit rien du vécu — sans importance ici, elle vote un budget. »",
@@ -363,10 +363,10 @@ q(C, "Justifier par l'angle mort", "Une bonne justification du choix d'un mode c
   "On justifie un mode par son angle mort, pas par son point fort.")
 
 q(C, "Une justification faible", "« J'ai choisi le graphique parce que c'est plus visuel. » Cette justification est faible parce qu'elle…",
-  ["vaudrait pour n'importe quel destinataire, donc elle n'en désigne aucun",
+  ["vaudrait pour n'importe quel destinataire",
    "est fausse : un graphique n'est pas visuel",
-   "est trop courte",
-   "emploie un mot d'anglais"],
+   "est beaucoup trop courte pour convaincre",
+   "emploie un mot d'anglais mal traduit"],
   "Le test d'une justification : si elle marche pour les trois destinataires, elle n'en justifie "
   "aucun.",
   "Un storyboard aussi est visuel. Et une carte d'empathie. Et un parcours utilisateur.",
@@ -378,9 +378,9 @@ q(C, "Une justification faible", "« J'ai choisi le graphique parce que c'est pl
   "Une justification qui marche pour tout le monde ne justifie rien.")
 
 q(C, "Le même mode pour deux destinataires", "Peut-on employer le même mode pour deux destinataires différents ?",
-  ["oui, mais il faudra sans doute le simplifier ou le compléter pour l'un des deux",
-   "non, jamais",
-   "oui, sans rien y changer",
+  ["oui, mais il faudra sans doute l'adapter",
+   "non, jamais : chacun a besoin du sien",
+   "oui, tel quel, sans rien y changer",
    "seulement si les deux ont le même métier"],
   "Le mode et sa mise en œuvre sont deux choses : un même graphique peut servir deux publics s'il "
   "n'est pas légendé de la même façon.",
@@ -394,9 +394,9 @@ q(C, "Le même mode pour deux destinataires", "Peut-on employer le même mode po
 
 q(C, "Ce qu'on laisse de côté", "Dans la défense d'une représentation, le point le plus souvent oublié est…",
   ["ce qu'on a volontairement laissé de côté",
-   "le nom du destinataire",
-   "le mode retenu",
-   "la date de réalisation"],
+   "le nom du destinataire de la représentation",
+   "le mode de représentation qu'on a retenu",
+   "la date à laquelle elle a été réalisée"],
   "Représenter, c'est choisir ce qu'on montre — donc aussi ce qu'on cache. Savoir dire ce qu'on a "
   "écarté est la preuve qu'on a choisi.",
   "« Je n'ai pas montré la cause des abandons : elle ne la corrigera pas elle-même. »",
@@ -408,10 +408,10 @@ q(C, "Ce qu'on laisse de côté", "Dans la défense d'une représentation, le po
   "Ce qu'on écarte prouve qu'on a choisi.")
 
 q(C, "Un mauvais appariement", "Proposer un tableau comparatif à l'usager debout dans la station est un mauvais choix parce que…",
-  ["il se lit lentement, et l'usager dispose de trois secondes",
-   "un tableau n'est pas une représentation",
-   "l'usager ne sait pas lire un tableau",
-   "il n'y a rien à comparer"],
+  ["il se lit lentement, et l'usager a trois secondes",
+   "un tableau n'est pas vraiment une représentation",
+   "l'usager ne sait pas lire un tableau croisé",
+   "il n'y a rien à comparer dans cette situation"],
   "L'angle mort du mode rencontre exactement la contrainte du destinataire : c'est la définition "
   "d'un mauvais appariement.",
   "Un tableau à douze cases, lu en marchant, ne sera pas lu du tout.",
@@ -423,10 +423,10 @@ q(C, "Un mauvais appariement", "Proposer un tableau comparatif à l'usager debou
   "Un mauvais appariement, c'est un angle mort qui tombe sur une contrainte.")
 
 q(C, "Changer d'avis", "Un élève annonce le graphique, puis produit finalement un storyboard. Cela est…",
-  ["acceptable s'il dit qu'il a changé d'avis et pourquoi",
-   "une erreur qui doit être sanctionnée",
-   "sans importance : seul le résultat compte",
-   "impossible : le choix est définitif"],
+  ["acceptable, s'il dit pourquoi il a changé d'avis",
+   "une erreur, qui doit être sanctionnée comme telle",
+   "sans importance : seul le résultat final compte",
+   "impossible : le choix est définitif une fois fait"],
   "Changer d'avis avec une raison est un geste de concepteur. Ce qui serait fautif, c'est de "
   "changer sans le dire — ou sans savoir pourquoi.",
   "« En le dessinant, j'ai vu que les chiffres ne serviraient pas à un usager pressé. »",
@@ -440,10 +440,10 @@ q(C, "Changer d'avis", "Un élève annonce le graphique, puis produit finalement
 # ═══════════ L'algorigramme, et l'ordre des opérations (5) ═══════════
 
 q(C, "Le défaut d'ordre", "La borne encaisse le paiement, puis échoue à imprimer faute de papier. Le défaut se situe…",
-  ["dans l'ordre des opérations : le test du papier vient après l'encaissement",
+  ["dans l'ordre des opérations de la borne",
    "dans le rouleau de papier, de mauvaise qualité",
-   "dans le monnayeur",
-   "chez l'usager, qui aurait dû vérifier"],
+   "dans le monnayeur, qui accepte mal les pièces",
+   "chez l'usager, qui aurait dû vérifier avant"],
   "Le test existait déjà : il était simplement au mauvais endroit. Déplacer une case ne coûte rien "
   "en matériel et supprime la pire panne du relevé.",
   "Trois fois en trente jours, un usager a payé et n'a rien reçu.",
@@ -456,10 +456,10 @@ q(C, "Le défaut d'ordre", "La borne encaisse le paiement, puis échoue à impri
   img=IMG_C3)
 
 q(C, "Pourquoi l'algorigramme", "Parmi les trois modes, pourquoi seul l'algorigramme montre-t-il ce défaut ?",
-  ["parce qu'il porte sur l'ordre des opérations, que seul ce mode représente",
-   "parce que c'est le mode le plus précis",
+  ["parce qu'il porte sur l'ordre des opérations",
+   "parce que c'est le mode le plus précis des trois",
    "parce que le technicien préfère les schémas",
-   "parce que c'est un exercice du DNB"],
+   "parce que c'est un exercice classique du DNB"],
   "Un graphique montrerait la fréquence de la panne, un storyboard son effet sur l'usager. Aucun "
   "des deux ne montre à quel moment le test aurait dû se produire.",
   "Le même incident, sur un graphique : « 3 fois en 30 jours ». Rien sur la cause.",
@@ -471,10 +471,10 @@ q(C, "Pourquoi l'algorigramme", "Parmi les trois modes, pourquoi seul l'algorigr
   "Parmi les trois modes, seul l'algorigramme montre l'ordre des opérations — donc un défaut d'ordre.")
 
 q(C, "La correction", "Comment corriger l'incident du papier ?",
-  ["tester le papier AVANT d'encaisser, et refuser le paiement s'il en manque",
-   "changer le rouleau plus souvent",
+  ["tester le papier AVANT d'encaisser",
+   "changer le rouleau de papier plus souvent",
    "afficher un message d'excuse après l'échec",
-   "rembourser automatiquement l'usager"],
+   "rembourser automatiquement l'usager lésé"],
   "Déplacer le test en amont supprime la situation, au lieu d'en réparer les conséquences.",
   "La borne se déclare indisponible et alerte la maintenance — sans avoir pris un centime.",
   "Traiter la conséquence plutôt que la cause.",
@@ -500,9 +500,9 @@ q(C, "La fin en échec", "Quand le papier manque, la borne doit…",
   "Une borne qui se sait hors service doit le dire et prévenir.")
 
 q(C, "Une pièce refusée", "Le monnayeur refuse les pièces usées. Ce que vit l'usager, c'est…",
-  ["la croyance que sa pièce a été refusée par erreur, et il recommence",
-   "un abandon immédiat",
-   "une panne complète de la borne",
+  ["la croyance que sa pièce a été refusée",
+   "un abandon immédiat de l'usager",
+   "une panne complète et définitive de la borne",
    "rien de particulier : il change de pièce"],
   "Entre la cause technique et le vécu, il y a toujours une interprétation de l'usager — et c'est "
   "elle qui décide de ce qu'il fait ensuite.",

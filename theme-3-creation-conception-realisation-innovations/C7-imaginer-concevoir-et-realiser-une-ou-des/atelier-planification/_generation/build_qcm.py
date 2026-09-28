@@ -118,20 +118,43 @@ def construire(gabarit: str, sortie: str) -> None:
       <option value="4e">4e — Organiser un processus avec des tâches identifiées</option>
       <option value="3e">3e — Élaborer un processus avec des tâches identifiées</option>"""),
 
-        ("QCM d’entraînement 3e_C3.1 à C3.4 · Thème 1",
-         "QCM d’entraînement C7.1 · Thème 3"),
+        ("""  <p>QCM d’entraînement 3e_C3.1 à C3.4 · Thème 1 · Technologie cycle 4 (2024) · <a href="sequence_3e_C3.1-C3.4_shenzhen.html">séquence associée</a></p>""",
+         """  <p>QCM d’entraînement C7.1 · Thème 3 · Technologie cycle 4 (2024) · ateliers associés : <a href="atelier_5e_C7.1_planification_taches.html">Atelier 5e</a> · <a href="atelier_4e_C7.1_planification_taches.html">4e</a> · <a href="atelier_3e_C7.1_planification_taches.html">3e</a></p>"""),
+
+        # Navigation croisée : cet atelier a trois niveaux (5e, 4e, 3e), chacun avec
+        # sa propre séquence. Le gabarit ne connaît qu'un seul lien retour ; ce QCM
+        # doit pouvoir ramener vers les trois ateliers ET les trois séquences.
+        ("""<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C3.1-C3.4_shenzhen.html">← Séquence</a></nav>""",
+         """<nav id="navharm" aria-label="Navigation du site"><a href="../../../index.html">⌂ Accueil</a><a href="atelier_5e_C7.1_planification_taches.html">← Atelier 5e</a><a href="atelier_4e_C7.1_planification_taches.html">4e</a><a href="atelier_3e_C7.1_planification_taches.html">3e</a>  <a href="../5e/5e_C7.1/sequence_5e_C7_mini-projet-objet.html">&#8592; Séquence de 5e</a>
+  <a href="../4e/4e_C7.1/sequence_4e_C7_jardin-conception.html">&#8592; Séquence de 4e</a>
+  <a href="../3e/3e_C7.1/sequence_3e_C7_capteur-confort-ny.html">&#8592; Séquence de 3e</a>
+</nav>"""),
+
+        ("""<p style="text-align:center"><a href="sequence_3e_C3.1-C3.4_shenzhen.html">⬅ Revenir à la séquence</a></p>""",
+         """<p style="text-align:center">⬅ Revenir à l'atelier de ton niveau : <a href="atelier_5e_C7.1_planification_taches.html">Atelier 5e</a> · <a href="atelier_4e_C7.1_planification_taches.html">4e</a> · <a href="atelier_3e_C7.1_planification_taches.html">3e</a></p>"""),
+
+        # Fonctionnalité « nuance » : latente dans q.py (aucune des 30 questions ne la
+        # renseigne aujourd'hui), mais le moteur du QCM la sait afficher. On la reprend
+        # telle quelle du gabarit — la faire disparaître silencieusement retirerait une
+        # capacité que le générateur ne recréerait pas de lui-même (règle d'or n°38).
+        ("""  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.retenir{border:1px solid #2f6b40}""",
+         """  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.nuance{border:1px solid #3d5c8a;background:rgba(20,34,66,.72)}
+  .bloc-detail.nuance b{color:#8fb6ff}
+  .bloc-detail.retenir{border:1px solid #2f6b40}"""),
+
+        ("""    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>""",
+         """    ${Q.err ? `<div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>` : ""}"""),
+
+        ("""    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>""",
+         """    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    ${Q.nuance ? `<div class="bloc-detail nuance"><b>🤔 Et si tu te disais…</b> ${Q.nuance}</div>` : ""}"""),
     ]
     for avant, apres in remplacements:
         if s.count(avant) != 1:
             raise SystemExit("Motif absent ou ambigu dans le gabarit :\n%r" % avant[:90])
         s = s.replace(avant, apres)
-
-    s = s.replace("sequence_3e_C3.1-C3.4_shenzhen.html",
-                  "atelier_5e_C7.1_planification_taches.html")
-    s = s.replace("../../../../index.html", "../../../index.html")
-    s = s.replace("⬅ Revenir à la séquence", "⬅ Revenir à l'atelier")
-    s = s.replace("← Séquence", "← Atelier")
-    s = s.replace("séquence associée", "atelier associé")
 
     # ── Contrôles avant écriture ────────────────────────────────────────────
     for reste in ("Shenzhen", "SOS serre", "Packet Tracer", "surchauffe ?", "Martinique — 4e"):

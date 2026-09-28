@@ -48,10 +48,10 @@ def q(c, n, question, options, expl, ex, err, refs, ret, img=None):
 # ═══════════ 4e_C2.1 — décrire l'expérience de l'utilisateur (15) ═══════════
 
 q("C2.1", "Le trajet imposé", "Décrire l'expérience d'un utilisateur, au programme de 4e, c'est aller…",
-  ["du langage naturel vers les schémas, graphiques et algorithmes",
-   "des schémas vers le langage naturel",
-   "des mesures vers les opinions",
-   "du dessin vers la photographie"],
+  ["du langage naturel vers schémas et algorithmes",
+   "des schémas techniques vers le langage naturel",
+   "des mesures chiffrées vers les opinions",
+   "du dessin à main levée vers la photographie"],
   "Le programme fixe un sens de marche : on part de ce que les gens disent, et on aboutit à des "
   "représentations qui se comparent, se mesurent et s'exécutent.",
   "« Tu tires, ça résiste » (mots) → cinq étapes (schéma) → 83 s (graphique) → un test (algorithme).",
@@ -79,10 +79,10 @@ q("C2.1", "Le langage naturel", "Partir du « langage naturel », cela veut dire
   "Les mots exacts, avant toute reformulation.")
 
 q("C2.1", "Deux usagers en désaccord", "Wang trouve la liste des vélos décourageante, Ma la trouve pratique. Que fait-on ?",
-  ["on écrit les deux : un même objet ne produit pas la même expérience selon qui l'utilise",
+  ["on écrit les deux : l'expérience diffère",
    "on tranche en faveur du plus expérimenté",
-   "on interroge d'autres usagers jusqu'à obtenir un accord",
-   "on écarte les deux, faute d'accord"],
+   "on interroge d'autres usagers jusqu'à l'accord",
+   "on écarte les deux, faute d'accord entre eux"],
   "Un désaccord entre usagers n'est pas un problème de méthode : c'est un résultat. Il dit que "
   "l'objet convient à certains profils et pas à d'autres.",
   "Ma est livreur, il cherche la batterie ; Wang vient une fois par semaine et ne sait pas quoi regarder.",
@@ -94,9 +94,9 @@ q("C2.1", "Deux usagers en désaccord", "Wang trouve la liste des vélos décour
   "Deux expériences opposées sur le même objet : c'est un résultat.")
 
 q("C2.1", "Ressenti et durée", "Feng dit : « ce n'est pas que ce soit long, c'est de ne pas savoir combien de temps ça va durer ». Ce verbatim montre que…",
-  ["le ressenti dépend de l'information reçue autant que de la durée réelle",
+  ["le ressenti dépend aussi de l'information reçue",
    "Feng exagère : trente secondes, ce n'est rien",
-   "il faut avant tout raccourcir l'attente",
+   "il faut avant tout raccourcir l'attente réelle",
    "le ressenti n'est pas exploitable en technologie"],
   "Deux attentes de même durée ne se vivent pas pareil selon qu'on en connaît la fin ou non. "
   "C'est une donnée de conception, pas une susceptibilité.",
@@ -109,9 +109,9 @@ q("C2.1", "Ressenti et durée", "Feng dit : « ce n'est pas que ce soit long, c'
   "Attendre en le sachant, ce n'est pas attendre.")
 
 q("C2.1", "La facilité d'usage", "Xu dit : « je fais ça en trente secondes, mais ma mère n'y arrive pas seule ». Ce verbatim apporte que…",
-  ["la facilité d'usage dépend de l'expérience de la personne, pas seulement de l'objet",
+  ["la facilité d'usage dépend de l'expérience",
    "l'objet est trop compliqué pour tout le monde",
-   "la mère de Xu manque d'attention",
+   "la mère de Xu manque simplement d'attention",
    "rien d'utile : c'est une opinion personnelle"],
   "Le même objet est facile pour l'habitué et difficile pour le nouveau venu. Concevoir pour "
   "l'habitué, c'est exclure sans le vouloir.",
@@ -124,9 +124,9 @@ q("C2.1", "La facilité d'usage", "Xu dit : « je fais ça en trente secondes, m
   "Un objet facile pour l'habitué peut être infranchissable pour un autre.")
 
 q("C2.1", "Le schéma", "Découper le parcours en étapes nommées sert d'abord à…",
-  ["ce que tout le monde parle du même endroit du parcours",
-   "rendre le parcours plus rapide",
-   "supprimer les étapes inutiles",
+  ["que tout le monde parle du même endroit",
+   "rendre le parcours de l'usager plus rapide",
+   "supprimer les étapes devenues inutiles",
    "présenter un document propre au professeur"],
   "Sans découpage commun, douze témoignages restent douze histoires. Le schéma leur donne une "
   "adresse commune, et rend les comparaisons possibles.",
@@ -155,10 +155,10 @@ q("C2.1", "Ce que le schéma ne dit pas", "Une fois le parcours découpé en cin
   img=IMG_TRAJET)
 
 q("C2.1", "Pourquoi le pire cas", "Sur un graphique de durées, tracer le maximum à côté de la moyenne sert à…",
-  ["montrer ce que vivent les usagers les plus mal servis, que la moyenne efface",
-   "remplir le graphique",
+  ["montrer ce que vivent les plus mal servis",
+   "remplir correctement le graphique",
    "vérifier que la moyenne est juste",
-   "comparer deux objets différents"],
+   "comparer deux objets techniques différents"],
   "Une moyenne décrit le milieu d'une série, et personne ne vit le milieu. Le maximum dit ce que "
   "subissent ceux qui se plaignent.",
   "Déverrouiller : 29 s de moyenne, 83 s au pire — presque le triple.",
@@ -186,7 +186,7 @@ q("C2.1", "Lire le graphique", "Sur la borne de Hangzhou, l'étape la plus longu
   img=IMG_GRAPH)
 
 q("C2.1", "La queue de la moyenne", "L'étape « déverrouiller » monte à 83 s au maximum pour 29 s de moyenne. Pourquoi ?",
-  ["parce que 9 retraits sur 30 ont demandé une reprise, ce qui allonge fortement ces cas-là",
+  ["parce que 9 retraits sur 30 ont demandé une reprise",
    "parce que la moyenne a été mal calculée",
    "parce que les usagers sont lents à cette étape",
    "parce que le chronomètre a été mal utilisé"],
@@ -201,10 +201,10 @@ q("C2.1", "La queue de la moyenne", "L'étape « déverrouiller » monte à 83 s
   "Une moyenne cache sa queue.")
 
 q("C2.1", "Ressenti contre mesure", "Le graphique des durées, comparé aux verbatims…",
-  ["dit ce qui se passe, mais pas ce que les gens ressentent",
+  ["dit ce qui se passe, pas ce qu'on ressent",
    "remplace les verbatims, devenus inutiles",
-   "dit la même chose, en plus précis",
-   "les contredit, il faut donc choisir"],
+   "dit la même chose, mais en plus précis",
+   "les contredit : il faut donc choisir"],
   "Les deux se croisent sans se remplacer. C'est même l'intérêt de les avoir tous les deux : "
   "l'écart entre eux est une information.",
   "Le graphique ignore la colère de Chen ; Chen ignore les 41 s de « choisir ».",
@@ -216,10 +216,10 @@ q("C2.1", "Ressenti contre mesure", "Le graphique des durées, comparé aux verb
   "Un ressenti n'est pas une mesure — et l'écart entre les deux informe.")
 
 q("C2.1", "L'algorithme", "Écrire le parcours sous forme d'algorithme apporte ce que le graphique ne donnait pas :",
-  ["les cas d'échec deviennent visibles, donc traitables",
-   "les durées exactes de chaque étape",
-   "le ressenti des usagers",
-   "le nombre de personnes interrogées"],
+  ["les cas d'échec deviennent visibles",
+   "les durées exactes de chacune des étapes",
+   "le ressenti détaillé de chaque usager",
+   "le nombre de personnes qu'on a interrogées"],
   "Un algorithme force à dire ce qui se passe quand ça rate. Le graphique montrait un pic ; "
   "l'algorithme dit ce que la machine fait pendant ce pic.",
   "« Si l'ancrage ne s'ouvre pas → annoncer la cause, puis proposer de réessayer. »",
@@ -231,10 +231,10 @@ q("C2.1", "L'algorithme", "Écrire le parcours sous forme d'algorithme apporte c
   "L'algorithme rend les échecs visibles, donc traitables.")
 
 q("C2.1", "Les formes de l'algorigramme", "Dans un algorigramme, « la carte est-elle reconnue ? » se dessine avec…",
-  ["un losange, parce que c'est un test à deux sorties",
-   "un rectangle, parce que c'est une action",
-   "un ovale, parce que c'est un début",
-   "une flèche, parce que c'est un passage"],
+  ["un losange : c'est un test à deux sorties",
+   "un rectangle : c'est une action à exécuter",
+   "un ovale : c'est le début du parcours",
+   "une flèche : c'est un simple passage"],
   "Chaque forme dit sa nature : ovale pour le début et la fin, rectangle pour une action, losange "
   "pour un test. La forme EST une information.",
   "Toute phrase qui se termine par un point d'interrogation appelle un losange.",
@@ -246,10 +246,10 @@ q("C2.1", "Les formes de l'algorigramme", "Dans un algorigramme, « la carte est
   "Un test se dessine en losange.")
 
 q("C2.1", "Le test sans sortie", "Un algorigramme dont un test n'a qu'une seule sortie…",
-  ["est faux : un test a toujours deux sorties, et le cas « non » doit être traité",
-   "est correct si le cas « non » est rare",
+  ["est faux : un test a toujours deux sorties",
+   "est correct, si le cas « non » est rare",
    "est correct : on simplifie pour la lisibilité",
-   "dépend du logiciel utilisé"],
+   "dépend du logiciel de tracé utilisé"],
   "Un test dont une branche ne mène nulle part n'est pas un test : c'est un vœu. La branche "
   "oubliée est exactement celle où l'usager se retrouve bloqué.",
   "Sans sortie d'échec, la reprise boucle : c'est ce que Sun a vécu en recommençant trois fois.",
@@ -261,7 +261,7 @@ q("C2.1", "Le test sans sortie", "Un algorigramme dont un test n'a qu'une seule 
   "Un test a deux sorties, et la sortie « non » mène quelque part.")
 
 q("C2.1", "On n'efface pas les étapes", "Une fois l'algorithme écrit, les verbatims et le schéma…",
-  ["restent utiles : chaque représentation garde ce que les autres ne savent pas dire",
+  ["restent utiles : chacun dit ce que l'autre tait",
    "peuvent être jetés : l'algorithme les résume",
    "doivent être refaits à partir de l'algorithme",
    "ne servaient qu'à occuper la première séance"],
@@ -278,7 +278,7 @@ q("C2.1", "On n'efface pas les étapes", "Une fois l'algorithme écrit, les verb
 # ═══════════ 4e_C2.2 — repérer et expliquer les exigences (15) ═══════════
 
 q("C2.2", "Les six familles", "Les familles d'exigences nommées par le programme sont…",
-  ["sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité",
+  ["sécurité, environnement, formes, ergonomie, qualité",
    "prix, solidité, couleur, poids, taille, marque",
    "mécanique, électrique, informatique, chimique",
    "conception, fabrication, vente, recyclage"],
@@ -294,7 +294,7 @@ q("C2.2", "Les six familles", "Les familles d'exigences nommées par le programm
   img=IMG_EXIG)
 
 q("C2.2", "Ce qu'est une exigence", "Une exigence bien écrite…",
-  ["dit ce qui est attendu, se vérifie, et nomme l'attente d'utilisateur à laquelle elle répond",
+  ["dit ce qui est attendu, et se vérifie",
    "décrit la solution technique à installer",
    "reste large, pour ne pas contraindre le concepteur",
    "se contente de citer une famille du programme"],
@@ -309,8 +309,8 @@ q("C2.2", "Ce qu'est une exigence", "Une exigence bien écrite…",
   "Attendu, vérifiable, rattaché à une attente.")
 
 q("C2.2", "Exigence ou solution", "« Installer un lecteur de carte plus rapide » n'est pas une exigence parce que…",
-  ["c'est déjà une solution : une exigence dit le besoin, pas le moyen",
-   "c'est trop cher pour une collectivité",
+  ["c'est déjà une solution, pas une exigence",
+   "c'est bien trop cher pour une collectivité",
    "le lecteur n'est pas en cause dans le problème",
    "cela relève de la sécurité, pas de la qualité"],
   "Confondre exigence et solution, c'est décider avant d'avoir cherché — et se priver de toutes "
@@ -324,7 +324,7 @@ q("C2.2", "Exigence ou solution", "« Installer un lecteur de carte plus rapide 
   "Une exigence dit le besoin ; la solution dira comment.")
 
 q("C2.2", "La fiabilité se chiffre", "« Le déverrouillage doit réussir au moins 98 fois sur 100 » relève de…",
-  ["la fiabilité, et cette exigence se vérifie par un comptage",
+  ["la fiabilité, et cela se vérifie par comptage",
    "l'ergonomie, car c'est un geste de l'usager",
    "la sécurité, car un blocage est dangereux",
    "la qualité, car il s'agit de bien faire"],
@@ -339,9 +339,9 @@ q("C2.2", "La fiabilité se chiffre", "« Le déverrouillage doit réussir au mo
   "La fiabilité se compte, donc elle se chiffre.")
 
 q("C2.2", "La qualité informe", "« Pendant une attente, la borne doit afficher le temps restant » relève de…",
-  ["la qualité : l'objet doit faire ce qu'il annonce, et informer sur ce qu'il fait",
-   "la sécurité",
-   "les incidences environnementales",
+  ["la qualité : l'objet fait ce qu'il annonce",
+   "la sécurité des usagers pendant le retrait",
+   "les incidences environnementales de la borne",
    "rien du tout : c'est un détail d'affichage"],
   "Informer fait partie du service rendu. Une machine qui travaille sans le dire laisse l'usager "
   "dans l'incertitude, et c'est cette incertitude qui se raconte.",
@@ -369,10 +369,10 @@ q("C2.2", "L'ergonomie", "« Le retrait doit pouvoir se faire d'une seule main �
   "L'ergonomie part d'un corps réel, pas d'un usager idéal.")
 
 q("C2.2", "Les incidences environnementales", "« L'écran ne s'allume qu'à l'approche d'un usager » relève de…",
-  ["les incidences environnementales : moins d'énergie consommée sur la durée de vie",
-   "la fiabilité",
-   "la sécurité",
-   "l'ergonomie uniquement"],
+  ["les incidences environnementales",
+   "la fiabilité du système sur la durée",
+   "la sécurité des usagers de la borne",
+   "l'ergonomie du poste de retrait"],
   "Cette famille regarde ce que l'objet coûte en matière et en énergie, sur toute sa durée de vie "
   "— pas seulement au moment de sa fabrication.",
   "Un écran allumé nuit et jour pendant dix ans, contre un écran qui se réveille au besoin.",
@@ -385,10 +385,10 @@ q("C2.2", "Les incidences environnementales", "« L'écran ne s'allume qu'à l'a
   img=IMG_EXIG)
 
 q("C2.2", "Formes et fonctions", "« L'écran doit rester lisible sous la pluie et sans se pencher » relève surtout de…",
-  ["les formes et fonctions : la forme de l'objet doit servir ce qu'il doit faire",
+  ["les formes et fonctions de l'objet",
    "les incidences environnementales",
-   "la fiabilité",
-   "la sécurité"],
+   "la fiabilité du mécanisme d'ancrage",
+   "la sécurité de l'usager au retrait"],
   "Cette famille demande si la forme donnée à l'objet sert réellement sa fonction — ici, un écran "
   "sert à être lu, y compris quand il pleut.",
   "Un écran plat et bas remplit sa fonction par beau temps seulement.",
@@ -400,9 +400,9 @@ q("C2.2", "Formes et fonctions", "« L'écran doit rester lisible sous la pluie 
   "La forme doit servir la fonction, y compris quand il pleut.")
 
 q("C2.2", "La sécurité", "Sur la borne, une exigence de sécurité serait…",
-  ["« l'ancrage doit libérer le vélo sans qu'il bascule sur les pieds de l'usager »",
+  ["« l'ancrage doit libérer le vélo sans le faire basculer »",
    "« la borne doit être disponible sept jours sur sept »",
-   "« l'écran doit afficher le tarif »",
+   "« l'écran doit afficher le tarif en cours »",
    "« le vélo doit avoir une selle réglable »"],
   "La sécurité pose une question et une seule : quelqu'un peut-il se blesser ou être mis en "
   "danger ? Si la réponse est non, c'est une autre famille.",
@@ -415,10 +415,10 @@ q("C2.2", "La sécurité", "Sur la borne, une exigence de sécurité serait…",
   "Sécurité : quelqu'un peut-il se blesser ?")
 
 q("C2.2", "Deux familles à la fois", "Une exigence peut-elle relever de deux familles ?",
-  ["oui : un écran lisible sans se pencher sert les formes et fonctions et l'ergonomie",
-   "non : chaque exigence appartient à une seule famille",
+  ["oui : un écran lisible sert la forme et l'ergonomie",
+   "non : chaque exigence n'a qu'une seule famille",
    "oui, mais seulement sécurité et fiabilité",
-   "non, sauf erreur de rédaction"],
+   "non, sauf en cas d'erreur de rédaction"],
   "Les familles se recoupent souvent. L'exercice consiste alors à dire laquelle domine, et "
   "pourquoi — pas à choisir au hasard.",
   "« Lisible sans se pencher » : c'est la forme de l'objet, et c'est le dos de Wu (V07).",
@@ -430,10 +430,10 @@ q("C2.2", "Deux familles à la fois", "Une exigence peut-elle relever de deux fa
   "Quand deux familles se recoupent, dis laquelle domine.")
 
 q("C2.2", "Remonter à l'attente", "Ce qui rattache une exigence à un utilisateur, dans notre travail, c'est…",
-  ["le code du verbatim où cet utilisateur exprime son attente",
-   "l'avis du professeur",
-   "le nom de la famille d'exigences",
-   "le chiffre que contient l'exigence"],
+  ["le code du verbatim où l'attente est exprimée",
+   "l'avis du professeur qui encadre le projet",
+   "le nom de la famille d'exigences concernée",
+   "le chiffre que contient l'exigence rédigée"],
   "Une exigence sans attente nommée flotte : personne ne peut dire pourquoi elle existe, ni la "
   "défendre quand elle coûte cher.",
   "« ...répond à Deng (V11), qui tient son enfant. »",
@@ -445,10 +445,10 @@ q("C2.2", "Remonter à l'attente", "Ce qui rattache une exigence à un utilisate
   "Une exigence nomme l'attente à laquelle elle répond.")
 
 q("C2.2", "Une exigence sans plainte", "Peut-on écrire une exigence qu'aucun usager n'a réclamée ?",
-  ["oui : les usagers ne réclament pas ce qui ne les gêne pas, comme la consommation de l'écran",
+  ["oui : on ne réclame pas ce qui ne gêne pas",
    "non : toute exigence doit venir d'un verbatim",
    "oui, mais elle est forcément moins importante",
-   "non : ce serait inventer un besoin"],
+   "non : ce serait inventer un besoin de toutes pièces"],
   "Certaines exigences protègent des tiers, l'environnement ou l'avenir — c'est-à-dire des "
   "intérêts que l'usager du moment ne porte pas.",
   "Personne ne se plaint qu'un écran reste allumé la nuit : ce n'est pas lui qui paie la facture.",
@@ -460,8 +460,8 @@ q("C2.2", "Une exigence sans plainte", "Peut-on écrire une exigence qu'aucun us
   "Les usagers ne réclament pas ce qui ne les gêne pas.")
 
 q("C2.2", "La plus grosse donnée", "L'étape « choisir » est la plus longue de toutes, et pourtant elle n'appelle aucune exigence urgente. Pourquoi ?",
-  ["parce que personne ne s'en plaint, et qu'un usager la trouve même pratique",
-   "parce que 40 secondes, ce n'est pas beaucoup",
+  ["parce que personne ne s'en plaint, au contraire",
+   "parce que 40 secondes, ce n'est pas grand-chose",
    "parce qu'on ne peut rien y changer techniquement",
    "parce que le programme ne s'intéresse pas au temps"],
   "C'est le résultat le plus contre-intuitif de l'enquête, et le plus utile : la donnée la plus "
@@ -475,9 +475,9 @@ q("C2.2", "La plus grosse donnée", "L'étape « choisir » est la plus longue d
   "La donnée la plus grosse n'est pas toujours le problème.")
 
 q("C2.2", "Hiérarchiser", "Pour décider par quoi commencer, la meilleure façon de faire est de…",
-  ["croiser ce que disent les usagers avec ce que montrent les mesures",
+  ["croiser les paroles d'usagers et les mesures",
    "traiter les étapes dans l'ordre du parcours",
-   "commencer par l'étape la plus longue",
+   "commencer par l'étape la plus longue de toutes",
    "commencer par ce qui coûte le moins cher"],
   "Ni les mots seuls, ni les chiffres seuls ne suffisent : c'est leur croisement qui désigne ce "
   "qui compte vraiment.",
@@ -490,10 +490,10 @@ q("C2.2", "Hiérarchiser", "Pour décider par quoi commencer, la meilleure faço
   "On hiérarchise en croisant les mots et les mesures.")
 
 q("C2.2", "Ce que l'exigence engage", "Écrire « le déverrouillage doit réussir 98 fois sur 100 » engage à…",
-  ["pouvoir le vérifier plus tard, par un comptage sur des retraits réels",
-   "installer immédiatement un nouveau modèle d'ancrage",
+  ["pouvoir le vérifier plus tard, par un comptage",
+   "installer aussitôt un nouveau modèle d'ancrage",
    "garantir que plus aucun usager ne se plaindra",
-   "rien : une exigence est une intention"],
+   "rien du tout : une exigence est une intention"],
   "Une exigence chiffrée crée une obligation de vérification. C'est ce qui la distingue d'un "
   "souhait, et c'est aussi ce qui la rend exigeante pour celui qui l'écrit.",
   "Trente retraits observés après travaux, et l'on saura si le seuil est tenu.",

@@ -20659,6 +20659,369 @@ lançable sur un arbre sans historique.
 - Bancs `tests_verif_regles_audit` 56 / 56, `tests_index` 20 / 20, `tests_controle_couverture`
   27 / 27 ; `controle_statut` vert.
 
+## 27/09/2026 — Règle d'or n°307, second passage : le duo de paragraphes aussi (thèmes 1-3, _outils)
+
+> **H2 mur sans repère, révisé.** Au moins **deux** paragraphes consécutifs d'un même bloc, **110** mots ou
+> plus au total — au lieu de trois paragraphes et 170 mots —, dont aucun ne s'ouvre sur un repère. Le 110
+> est celui de la n°33 (un seul paragraphe) ; ici, c'est la **somme** d'un duo ou plus qui compte. Un duo de
+> paragraphes sans repère est déjà un mur, pas seulement un trio.
+
+**Le signal** : Pascal, sur `3e_C1.1/sequence_3e_C1.1-C1.4_tsinghua_feux.html`, juste après le relevé de la
+n°307 — « la skill aurait dûe intervenir ici… et certainement ailleurs… un autre audit est nécessaire et une
+modification de la règle d'or aussi ». La page venait de passer l'audit sans un seul écart.
+
+### Le trou
+
+La page a un onglet de séances en JavaScript et des `<details>` repliés par défaut : ce que l'œil voit au
+premier coup d'écran (rendu Chromium, 390 px, onglets ouverts et accordéons forcés) cache un bloc de deux
+paragraphes, 111 mots, sans le moindre repère. Le seuil H2 (trois paragraphes, 170 mots) ne le voyait pas —
+trop court pour un « trio » — et le seuil solo de la n°33 (`verif_regles_audit.py`, 110 mots) ne le voyait
+pas non plus : elle juge un `<p>` à la fois, jamais la somme de deux. Un script rejouant les fonctions mêmes
+de `controle_hierarchie.py` (`ancre`, `mots`, `texte`) sur les 145 pages, à seuil variable, a chiffré ce que
+chaque candidat changerait : abaisser à **deux paragraphes / 110 mots** — le 110 déjà accepté par la n°33 —
+fait apparaître 43 blocs sur 31 pages, sans jamais recouper un pavé solo déjà compté ailleurs (un mur exige
+un run **d'au moins deux**, ce que la n°33 ne teste jamais).
+
+### L'outil
+
+`_outils/controle_hierarchie.py` : constante `MUR_MOTS, MUR_PARAS = 170, 3` → `110, 2` ; en-tête à jour.
+`tests_controle_hierarchie.py` : un cas existant recalé (son texte de remplissage franchissait par accident
+le nouveau seuil), deux cas ajoutés — le duo de 111 mots du trou (refusé) et le même duo sous 110 mots
+(accepté) — 26 → **28 cas**.
+
+### Le relevé : 43 blocs sur 31 pages
+
+| Thème | Blocs | Pages |
+|---|---|---|
+| 1 | 20 | 11 |
+| 2 | 4 | 4 |
+| 3 | 19 | 16 |
+
+### Les gestes — les mêmes quatre qu'au premier passage, sans un mot de texte perdu
+
+1. **Gras existant étendu vers l'arrière** quand un mot repère est déjà en gras un peu plus loin dans la
+   phrase (« Un collège de <b>Chengdu</b> » → « <b>Un collège de Chengdu</b> ») : la majorité des 43 blocs.
+2. **Premiers mots mis en gras tels quels**, quand ils forment déjà un repère lisible (« Étape 1 — »,
+   « Palier 2 : », « Ce que New York demande »).
+3. **Court repère ajouté** devant la phrase inchangée, dans le style déjà en usage ailleurs dans le dépôt
+   (« <b>Le choix retenu.</b> Le Tube aluminium… »), pour les paragraphes sans aucun mot à étendre.
+4. **Terme de tête mis en gras** dans les suites « terme : définition » (glossaires cybersécurité).
+
+**Trois duos partagés entre deux fichiers** (texte identique, même correction posée aux deux endroits) :
+le paragraphe « Ce que New York demande » (`station_1_besoin-et-algorithme.html` et
+`station_alerte_cyclonique.html`), le bonus ArduBlock « Avant Vittascience… / Les deux captures… » et l'aide
+de niveau 2 « Palier 1 / 2 / 3 » (`station_2_programmer.html` et `station_alerte_cyclonique.html`, qui
+recopie le contenu des deux stations).
+
+### Vérifié
+
+- `controle_hierarchie.py` sur le dépôt entier : **43 → 0**, 145 pages lues. Banc `tests_controle_hierarchie`
+  **28 / 28**, y compris le lancement en ligne de commande sur le dépôt réel (n°299) — rouge le temps des
+  corrections, vert une fois les 31 pages posées.
+- `controle_liens.py` sur le dépôt entier : ✅ aucun lien mort, aucune ancre introuvable.
+- `controle_statut.py` : vert (code 0).
+- `build_audit.py` et `make_index.py` rejoués : aucune différence — aucun fichier ajouté ni retiré, seul du
+  contenu existant a été modifié.
+- **Non revérifié à l'écran** : le rendu Chromium à 390 px n'a été repris que sur la page qui a signalé le
+  trou (`3e_C1.1_tsinghua_feux`), pas sur les 30 autres pages corrigées — leur conformité s'appuie sur
+  `controle_hierarchie.py`, pas sur une relecture visuelle page par page.
+
+## 27/09/2026 — Règle d'or n°135, second passage : le filet mobile mécanisé (thèmes 1-3, _outils)
+
+> **Filet mobile, révisé.** Toute page portant un `<table>` d'au moins 3 colonnes doit avoir, quelque part
+> dans son CSS, un bloc `@media(max-width:…px){…overflow-x:auto…}` — le sélecteur précis importe peu
+> (`table`, une classe, `section.card table`) : c'est la page qui doit être protégée, pas une classe
+> précise. `_outils/controle_debordement.py` le vérifie sur les 145 pages élève à chaque campagne.
+
+**Le signal** : après #449, pendant l'audit factuel des trois thèmes, Pascal a demandé « qu'est-ce qui est
+mieux ? » à propos d'un tableau du boîtier étanche resté exposé au débordement horizontal. La réponse — le
+filet suffit partout où les colonnes portent des valeurs parallèles, les cartes ne se justifient que
+« quand chaque colonne porte une idée » (le critère que la n°135 documentait déjà, aucun tableau du dépôt
+ne le remplit) — acceptée par Pascal, a aussi ouvert la question de savoir combien de tableaux restaient
+sans protection.
+
+### Le trou
+
+La n°135 (26/08/2026) avait posé le filet à la main, sur une quarantaine de séquences, avec trois
+sélecteurs précis (`section.card table`, `table.refs`, `table.recette`). Jamais mécanisée, elle ne
+pouvait pas suivre un corpus qui a grandi depuis : un tableau nouveau, d'une classe différente (`voc`,
+`competences`, `comparatif`…), ou sans classe du tout, ne recevait la même protection que si quelqu'un y
+pensait à la main. Un premier relevé par expression régulière sur les sélecteurs a donné des chiffres
+incohérents (des classes comme « refs » à moitié couvertes, sans qu'aucune ne le soit vraiment) : le
+sélecteur exact importe moins que la présence, quelque part sur la page, d'un filet qui la couvre entière.
+Un relevé refait sur ce principe plus simple, validé contre une page déjà correcte avant d'être exploité,
+a chiffré le trou et guidé la correction : **67 pages sur 145** ne portaient, avant ce lot, aucune
+protection mobile pour au moins un tableau de 3 colonnes ou plus.
+
+### L'outil
+
+`_outils/controle_debordement.py` (nouveau, même périmètre que `controle_hierarchie.py`, déclaré à
+nouveau — règle n°47) : toute page élève avec un `<table>` ≥ 3 colonnes doit porter, dans un ou plusieurs
+`<style>`, un bloc `@media(max-width:…)` contenant `overflow-x:auto`. Le sélecteur exact n'est pas vérifié
+— l'usage du dépôt est un filet unique par page, jamais un filet par classe — et le contrôle reconnaît
+également le filet d'origine du 26/08. Panne (règle n°299) si aucune page élève n'est lue.
+`tests_controle_debordement.py` : 13 cas, dont la reconnaissance d'un filet générique (`table`), du filet
+d'origine (`section.card table`) et d'un filet posé par classe (`.voc`) comme trois formes également
+valables de la même protection, et le rejet de ce qui n'en est pas un (`overflow-x:auto` hors de tout
+`@media`, ou un `@media` sans lui).
+
+### Le relevé : 67 pages, par thème
+
+| Thème | Pages couvertes |
+|---|---|
+| 1 | 23 |
+| 2 | 20 |
+| 3 | 24 |
+
+### Les gestes
+
+1. **Filet générique posé** (`@media(max-width:680px){table{display:block;overflow-x:auto}}`) en fin de
+   dernier `<style>`, sur 60 pages ordinaires (23 thème 1, 20 thème 2, 17 thème 3).
+2. **Pages engendrées, corrigées par leur gabarit, jamais à la main.** `atelier-cao/_generation/
+   gabarit_style.css` et `atelier-planification/_generation/gabarit_style.css` reçoivent le même bloc ;
+   les 4 TP CAO concernés (`tp_3e_boitier_etanche`, `tp_4e_socle_assemblage`, `tp_5e_de_calottes`,
+   `tp_5e_de_onshape`) sont régénérés par `build_tp.py` — diff propre (+3 lignes chacun, 0 suppression),
+   `verif_chaine.py` reste vert.
+3. **Écart évité de justesse** : ces 4 pages, comme les 3 de planification (point suivant), avaient
+   d'abord reçu le filet à la main par le même script que les 60 pages ordinaires — repéré avant commit en
+   recoupant les noms de fichiers touchés avec les pipelines de génération connus, annulé
+   (`git checkout --`), repris proprement.
+
+### Constaté, non corrigé : `atelier-planification` n'a pas d'équivalent à `verif_chaine.py`
+
+Régénérer les 3 pages `atelier_{3e,4e,5e}_C7.1_planification_taches.html` par leur générateur
+(`build_atelier.py`, pour leur poser le filet proprement comme les TP CAO) produit, sur chacune, un diff
+de 202 lignes (564 suppressions, 42 ajouts) : le générateur est nettement désaccordé avec le HTML publié —
+plus encore que ne l'était `q.py` pour le QCM freinage (thème 1, même audit post-#449). Aucun
+`verif_chaine.py` n'existe pour ce générateur : rien ne l'aurait signalé avant qu'une régénération
+l'écrase pour de bon. **Contournement retenu ici** : le filet posé directement dans les 3 pages, comme
+pour les 60 pages ordinaires, en évitant le générateur. Le désaccord lui-même reste entier et n'est pas
+traité dans ce lot.
+
+### Vérifié
+
+- `controle_debordement.py` sur le dépôt entier : **67 → 0**, 145 pages lues. Banc
+  `tests_controle_debordement` **13 / 13**, y compris le lancement en ligne de commande sur le dépôt réel
+  (n°299).
+- `controle_hierarchie.py` : 145 pages, aucune régression. `controle_liens.py` : 0 lien cassé.
+  `controle_statut.py` : vert.
+- `build_audit.py` et `make_index.py` rejoués : aucune différence.
+- Rendu réel vérifié au navigateur (Chromium, 375 px) sur 4 pages représentatives : la page elle-même ne
+  déborde plus (`scrollWidth == clientWidth` au niveau du document), le tableau seul défile
+  (`overflowX:auto` et `scrollWidth > clientWidth` sur l'élément `<table>`), captures à l'appui sur 2
+  d'entre elles.
+
+## 27/09/2026 — Générateur `atelier-planification` remis d'accord avec ses trois pages, `verif_chaine.py` posé (thème 3)
+
+**Le signal** : Pascal, « continue », après avoir approuvé sans urgence l'auscultation du générateur
+`atelier-planification/_generation/build_atelier.py` signalée dans l'entrée précédente (n°135, second
+passage) — le désaccord de 202 lignes par page qui avait fait préférer un contournement.
+
+### Le trou : cinq campagnes posées sur le HTML publié, jamais reportées dans le générateur
+
+En rejouant `build_atelier.py` et en lisant le diff ligne à ligne contre les trois pages publiées
+(`atelier_{5e,4e,3e}_C7.1_planification_taches.html`), le désaccord se décompose entièrement en cinq
+retouches faites après coup, directement sur le HTML, jamais portées dans le générateur — le même trou
+que `verif_chaine.py` avait fermé pour `atelier-cao` le 30 août, jamais posé ici :
+
+1. **CSS d'impression du 02/09/2026** (fond blanc, couleurs conservées) — un bloc par niveau, les listes
+   d'identifiants de champs imprimables différant d'un parcours à l'autre.
+2. **Règle d'or n°92**, l'agrandisseur d'images — posé par `audit/loupe.py` sur le HTML, jamais dans le
+   gabarit du générateur.
+3. **Règle d'or n°303**, un lien qui se lit — posé à la main dans le `<style>` de la loupe.
+4. **La section « Les traces à garder »** en fin de page (liens vers les deux synthèses) — un ajout
+   ponctuel, jamais reporté.
+5. **Règle d'or n°307, second passage** (entrée du 27/09/2026 ci-dessus) — le trio de repères en gras
+   (« Trois projets, une même question. », « Ce qui arrive à chaque fois. ») et la question d'hypothèse
+   reformatée en `<br>` plutôt qu'en gras intégral avaient été posés sur les trois pages publiées ; le
+   générateur portait toujours l'ancien texte. `controle_hierarchie.py`, muet sur les pages publiées,
+   relevait trois écarts par page sitôt le HTML régénéré (`H2 mur sans repère`, `H3 paragraphe tout en
+   gras`, `H1 énumération en ligne` + `H6 pavé hors séquence` pour le bloc « à retenir » fondu en un seul
+   `<p>`) — découvert en rejouant le contrôle par précaution avant de committer, pas en le supposant vert.
+
+### L'outil : le même geste que `atelier-cao/_generation/build_tp.py`, jamais recopié
+
+`_loupe()` importe `audit/loupe.py` par `importlib` (une seule source, jamais dupliquée) ; `N303` est le
+texte du 21/09 repris tel quel ; `IMPRESSION` porte le bloc d'impression des trois niveaux ; le jeton
+`@@LOUPE@@`, substitué après tout formatage `%` (le bloc contient des `%` littéraux comme
+`max-width:100%`), est suivi d'une assertion qui arrête l'écriture si la loupe n'a pas pris. Pour la
+n°307, les trois blocs de texte concernés sont réécrits mot pour mot comme sur les pages publiées — aucun
+texte inventé, une seule lecture (`git show HEAD:…`) servant de source pour les trois niveaux, identiques
+au mot près hors les repères propres à chaque projet (lettres du chemin critique, tâche à jeu).
+
+**`atelier-planification/verif_chaine.py` (nouveau)**, sur le principe de celui d'`atelier-cao` : mesure
+l'empreinte des trois pages, relance le générateur pour de vrai, mesure à nouveau — un écart dit qu'une
+page n'était pas ce que `_corrige_calcule.json` et le générateur produisent, et la régénération qui vient
+d'avoir lieu l'a déjà corrigée sur le disque (pas d'option `--sortie=` séparée ici : un seul jeu de
+données produit les trois parcours en une exécution, il n'y a pas d'autre mode). Testé positif : un
+commentaire de test injecté à la main dans la page 5e est détecté (1 écart signalé, code de sortie 1) et
+déjà effacé par la régénération que le contrôle vient de lancer.
+
+### Vérifié
+
+- `controle_hierarchie.py` sur le dépôt entier : **145 pages, 0 écart** (3 pages d'abord régressées par la
+  régénération, corrigées avant commit — voir ci-dessus).
+- `controle_debordement.py` : **145 pages, 0 écart** — le filet n°135 posé une seule fois par page (déduit
+  du doublon qu'aurait laissé la version à la main dans la même page).
+- `controle_liens.py` : 0 lien mort. `controle_impression.mjs` : aucune page n'imprime un texte que le
+  papier ne rendra pas. `controle_contraste_liens.mjs` : chaque lien des 341 pages lues se lit sur son
+  fond réel, à l'écran, une fois cliqué et sur papier.
+- `build_audit.py` et `make_index.py` rejoués : aucune différence.
+- Rendu réel vérifié au navigateur (Chromium, 375 px) sur les trois niveaux : console sans erreur,
+  6 images armées par la loupe sur chaque page, ouverture et fermeture réellement déclenchées par un clic
+  (onglet GanttProject activé au préalable, comme le ferait un·e élève) et non simplement supposées d'après
+  la présence du marqueur, couleur de lien conforme à `--hl`, fond des cartes passant au blanc sous
+  `media: print`.
+- `python3 build_atelier.py` rejoué deux fois de suite : tailles de fichiers identiques, aucun nouveau
+  diff — la régénération est stable.
+- Diff final contre le HTML publié, par page : **7 lignes** (le filet n°135 déplacé de la fin vers le
+  gabarit, sans plus de doublon, et une ligne blanche cosmétique avant `</body>`, héritée du même gabarit
+  de pose de la loupe que `build_tp.py` et sans effet sur le rendu) — contre 202 lignes avant ce lot.
+
+## 27/09/2026 — Générateur du QCM de planification remis d'accord avec sa page, `verif_chaine_qcm.py` posé (thème 3)
+
+Pascal, après le lot ci-dessus sur `build_atelier.py` : « règle le stp » — le point resté ouvert sur
+`q.py` / `_generation/build_qcm.py`, jamais audité. Même méthode que pour le générateur des trois
+ateliers : rejouer, diffé au mot près contre `qcm_C7.1_planification_taches.html`, ne porter que du texte
+copié, jamais inventé.
+
+### Le trou : quatre campagnes posées sur le HTML publié, jamais reportées dans `q.py` ni `build_qcm.py`
+
+Piège identifié dès le départ : ce QCM mélange 30 questions dans un ordre tiré par graine
+(`_outils/fix_r.js`, graine 617, pour répartir A/B/C/D sans que la bonne réponse soit toujours en premier
+dans `q.py`). Diffé brut, mon HTML régénéré et la page publiée ne s'alignaient plus question à question.
+Un script de dépermutation (`reverse_qcm.js`, jetable, non commité) rejoue le même tirage que `fix_r.js`
+sur les deux fichiers et revient à l'ordre de `q.py` pour chaque question avant de comparer — la même
+prudence qui avait manqué de faire dérailler la n°307 du lot précédent : ne jamais conclure d'un diff
+qu'on n'a pas déconstruit dans le bon sens.
+
+1. **17 des 30 questions** avaient au moins une option reformulée à la main sur la page publiée, jamais
+   reportée dans `q.py` — l'énoncé, l'explication, l'exemple, l'erreur fréquente et le « à retenir »
+   étaient identiques partout ; seul le libellé d'une ou plusieurs options avait été affiné après coup.
+   Les 17 questions et leurs options ont été réécrites dans `q.py`, mot pour mot d'après la page publiée
+   dépermutée — aucun texte inventé.
+2. **Navigation à un seul niveau** : le bandeau `#navharm`, le paragraphe « Revenir à… » et le pied de
+   page ne menaient qu'à l'atelier de 5e, écrits en dur dans `build_qcm.py` par un simple remplacement de
+   chaîne — alors que ce QCM sert les trois niveaux. La page publiée, elle, reliait déjà aux trois
+   ateliers ET aux trois séquences. `build_qcm.py` remplace maintenant les trois blocs (nav, paragraphe,
+   pied de page) du gabarit par leurs équivalents à liens croisés, copiés tels quels de la page publiée.
+3. **Une fonctionnalité « nuance »**, et le champ `err` rendu optionnel, avaient été ajoutés directement
+   au `<script>` du HTML publié (CSS `.bloc-detail.nuance` + une ligne de gabarit JS conditionnelle) —
+   invisibles aujourd'hui, car aucune des 30 questions ne renseigne `nuance` et `err` est toujours
+   rempli, mais le moteur sait déjà les afficher si une question future le fait. Les faire disparaître
+   silencieusement aurait retiré une capacité que le générateur ne recréerait pas de lui-même (règle d'or
+   n°38) : reprises telles quelles dans `build_qcm.py`, à l'endroit exact où la page publiée les pose
+   (le bloc nuance après la liste des distracteurs réfutés, pas avant).
+4. **CSS d'impression** : le gabarit emprunté (Thème 1, Shenzhen) a gagné deux sélecteurs
+   (`.loupe-cliquable`, `#qImgCap`) dans ses règles « fond blanc » / « texte bleu conservé » depuis la
+   dernière fois que ce QCM a été engendré — un retard de cette page sur son propre gabarit, pas une
+   régression du générateur (même campagne du 02/09/2026 déjà rencontrée sur les trois ateliers). Les deux
+   sélecteurs concernent réellement cette page : `#qImgCap` légende les captures GanttProject des 5
+   questions illustrées, et `.loupe-cliquable` est bien posé en JS sur leurs images. Choix : laisser le
+   régénérateur reprendre le gabarit actuel — c'est la page qui était en retard, pas la chaîne de
+   production.
+
+### Vérifié
+
+- `controle_hierarchie.py` et `controle_debordement.py` sur le dépôt entier : 0 écart.
+- `controle_liens.py --tout` : aucun des nouveaux liens croisés (3 ateliers, 3 séquences) n'est cassé —
+  les 84 liens morts déjà signalés sont tous antérieurs, dans `_archive-anciennes-versions/` et
+  `_outils/dnb_gabarit.html`, jamais touchés par ce lot.
+- `controle_impression.mjs` sur le dépôt entier : aucune page n'imprime un texte que le papier ne rendra
+  pas — confirme que l'ajout de `.loupe-cliquable`/`#qImgCap` au CSS d'impression n'introduit aucun texte
+  sombre sur fond sombre.
+- `controle_contraste_liens.mjs` sur le dépôt entier (341 pages) : chaque lien, y compris les nouveaux
+  liens croisés, se lit sur son fond réel — à l'écran, une fois cliqué, et sur papier.
+- `build_audit.py` et `make_index.py` rejoués : aucune différence.
+- Rendu réel vérifié au navigateur (Chromium) : les 30 questions se chargent (badge « 30 questions · 5
+  illustrées »), les 7 liens croisés du bandeau et les 3 + 3 liens du paragraphe et du pied de page
+  pointent vers les bonnes pages, répondre à une question affiche bien le bloc « Erreur fréquente »
+  (`Q.err` non vide) et n'affiche PAS de bloc « nuance » (`Q.nuance` non renseigné, comme attendu pour les
+  30 questions actuelles), et la loupe s'ouvre et se ferme réellement au clic sur l'image d'une question
+  illustrée — pas seulement supposée d'après la présence de la classe.
+- `python3 verif_chaine_qcm.py` : positif après régénération, et testé négatif exprès (un commentaire de
+  test injecté dans la page publiée est détecté, écart signalé, code de sortie 1) avant d'être restauré.
+- Diff final contre le HTML publié : **2 lignes** (l'ajout de `.loupe-cliquable` et `#qImgCap` au CSS
+  d'impression, point 4 ci-dessus — tout le reste, options de questions comme liens croisés comme
+  scaffolding nuance/err, est désormais strictement ce que `q.py` et `build_qcm.py` produisent).
+
+### L'outil : `verif_chaine_qcm.py`, sur le principe de `atelier-cao/verif_chaine.py` plutôt que de
+`verif_chaine.py` (ce dossier)
+
+Différence utile : `_generation/build_qcm.py` accepte déjà un gabarit et une sortie en arguments — il n'a
+pas besoin d'écrire à l'emplacement réel pour être rejoué. `verif_chaine_qcm.py` régénère donc dans un
+dossier temporaire (comme `atelier-cao/verif_chaine.py`), jamais en place (contrairement à
+`verif_chaine.py`, qui n'a pas ce choix pour les trois ateliers). Un écart n'est donc PAS auto-réparé : le
+message d'erreur donne la commande exacte à rejouer depuis la racine du dépôt.
+
+## 27/09/2026 — Deux générateurs QCM du Thème 1 réparés : 3e_C2.1 et 4e_C2.1 (theme-1, C2)
+
+Suite de l'état des lieux du dépôt entier (« ok Inventaire de tout le dépôt, bravo »), qui avait trouvé
+`3e_C2.1/_generation/build_qcm.py` et `4e_C2.1/_generation/build_qcm.py` **cassés** : les deux plantent
+sur leur propre garde-fou anti-résidu (`reste = re.findall(...)`) avant d'écrire la moindre ligne, parce
+qu'un remplacement manque. Pascal, informé que « un seul oubli, rapide » était une estimation faite avant
+test : « fais les deux à la suite, dans cet ordre ».
+
+### Le trou, une fois vraiment testé (pas seulement lu au point de plantage)
+
+Corriger l'oubli visible ne suffisait pas : au premier essai en mémoire, l'écart restant contre la page
+publiée était encore de 97 et 101 lignes, pas zéro. Deux oublis distincts bloquaient le script, et
+dessous, la dérive habituelle :
+
+1. **Sous-titre ET `<h1>` jamais remplacés.** Le garde-fou du bas de fichier ne connaît que les reliques
+   d'un lot de Thème 2 (« SOS serre », « Packet Tracer ») — pas celles du propre lot Thème 1 d'où vient ce
+   gabarit (Shenzhen). Le `<title>` de l'onglet était bien remplacé ; le `<h1>` affiché et le `<p
+   class="subtitle">`, non. Sans le second oubli, le premier ne se serait même pas vu : le script
+   plantait avant d'atteindre le `<h1>`.
+2. **25 questions/30 (3e_C2.1) et 26/30 (4e_C2.1)** avaient une ou plusieurs options reformulées à la main
+   sur la page publiée, jamais reportées dans `q.py` — le même défaut que la planification, ~3 fois le
+   volume. Repérage sans risque de mélanger le sens des flèches : `fix_r.js` ne fait qu'UN échange par
+   question (`o[0] <-> o[r]`, `d[0] <-> d[r]`) et non un mélange complet — un outil jetable
+   (`defixr.js`, non commité) rejoue cet échange à l'identique avec le `r` déjà écrit sur la page publiée,
+   ce qui suffit à revenir à l'ordre de `q.py` (l'opération est sa propre inverse). Validé avant tout
+   report : dépermuter la page régénérée par le `q.py` *actuel* retombe bien, mot pour mot, sur `q.py`
+   lui-même — la logique d'inversion ne pouvait plus se tromper de sens en repartant de la page publiée.
+   Les 51 options ont été réécrites, mot pour mot, aucun texte inventé ; aucune bonne réponse (`r`) n'a
+   changé, seul le libellé.
+3. **La bannière « règle d'or n°45 » n'avait jamais pu s'afficher, sur aucune des deux pages** — pas parce
+   qu'elle était à l'état de projet, mais parce que le script n'avait jamais pu aller au bout depuis
+   qu'elle a été codée : le CSS `.portee-ciblee` (posé par `build_qcm.py` lui-même) manquait sur les deux
+   pages réelles, alors que les deux séquences (`sequence_3e_C2_pekin_borne.html`,
+   `sequence_4e_C2_hangzhou_borne.html`) appellent déjà le QCM avec `#depart=court` / `#codes=...`. Ce
+   n'était donc pas une fonctionnalité à activer mais un lien déjà en service, silencieusement mort côté
+   page d'arrivée — corrigé du même geste que le reste, en laissant le générateur aller enfin au bout.
+4. **CSS d'impression** (3e_C2.1 seulement) : même retard déjà rencontré deux fois ce thème, `.loupe-
+   cliquable`/`#qImgCap` posés sur le gabarit depuis la campagne du 02/09/2026, pas encore sur cette page.
+   4e_C2.1 les avait déjà.
+
+### Vérifié
+
+- Essai à blanc systématique (copies dans le scratchpad) avant toute écriture réelle : chaque correctif
+  testé, diffé à zéro écart résiduel expliqué, avant d'être rejoué à l'identique sur les fichiers du
+  dépôt — confirmé octet à octet contre l'essai à blanc après coup.
+- `controle_entete_qcm.py`, `controle_banque_qcm.py`, `controle_effectifs_qcm.py`,
+  `controle_boutons_vivants.py` sur le dépôt entier (341 pages) : 0 écart partout.
+- `controle_impression.mjs` sur le dépôt entier : aucune page n'imprime un texte que le papier ne rendra
+  pas.
+- `verif_qcm_coherence.mjs` sur le dépôt entier : rien à signaler.
+- Les bancs de tests propres à chaque lot rejoués depuis leur dossier : 53/54 (3e_C2.1) et 59/60
+  (4e_C2.1), y compris tous les tests « n°45 » (parcours court, codes ciblés, retour au parcours complet
+  une fois les deux compétences faites). Le seul échec commun aux deux (« chaque zone de rédaction a sa
+  version étayée », n°31) porte sur la page de séquence, jamais touchée ici — confirmé préexistant en
+  rejouant le même banc avec ce lot mis de côté (`git stash`) : échec identique avant comme après.
+- Rendu réel vérifié au navigateur (Chromium), sur les DEUX pages : 30 questions, flux de correction
+  (choisir une option, Valider, bloc de correction affiché), image de la question illustrée réellement
+  chargée. Arrivée fraîche avec `#depart=court` / `#codes=C2.1` (navigation neuve, pas un simple ajout de
+  hash sur une page déjà chargée — sans quoi le script inline ne se rejoue pas et le test se trompe) :
+  bandeau visible, rempli, et désormais avec son fond violet — pas seulement présent dans le HTML.
+
+### Non fait, sciemment
+
+Les 3 générateurs qui tournent mais divergent autrement (5e_C1.1, 5e_C1.2, 5e_C2.1) et le système
+`_outils/build_qcms.py` restent tels que l'état des lieux les a trouvés — hors du périmètre que Pascal a
+validé ce soir (« les deux cassés »). Aucun `verif_chaine.py` n'a été posé sur ces deux dossiers : ajouter
+la protection à l'ensemble du Thème 1 a été explicitement repoussé à une session dédiée.
+
 ## 28/09/2026 — TP 4e « Le dé sur sa pointe » : captures prises, gestes recalés sur l'écran
 
 **Ce qui a été fait.** Le TP réécrit la veille attendait 25 captures et portait cinq gestes marqués
@@ -20693,3 +21056,12 @@ du socle lus dans Onshape.
 - `verif_guidage` : 11 / 11 (la n°77 manquait au palier des variables : image de résultat
   `dsp_R0_nombre_or.png` ajoutée) ; 0 VERIF restant dans le scénario.
 - `controle_medias` et `controle_liens` verts.
+
+**Fusion avec main (#448 à #456).** Cinq conflits, tous entre l'ancien TP retouché sur main et le
+nouveau TP de la branche. Le contenu de la branche l'emporte, mais ce que main avait corrigé est
+reporté : la description des deux pages-pointeurs disait encore « un dé de 50 mm » (réécrite pour le
+nouveau TP) ; les repères de la n°307 (« Deux pièces à emboîter. », « Onze paliers, en trois
+séances. », « En technologie », « Chaque palier ») ; le filet mobile de la n°135, qu'apporte d'elle-même
+la fiche maths reconstruite sur le gabarit fusionné. `controle_hierarchie` a aussi relevé un item-pavé
+de 68 mots au palier du profil : le choix des outils devient une étape à part (40 étapes).
+`controle_hierarchie` et `controle_debordement` verts sur 145 pages, `verif_guidage` 11 / 11.

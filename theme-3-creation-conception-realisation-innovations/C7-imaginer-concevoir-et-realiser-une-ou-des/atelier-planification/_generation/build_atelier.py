@@ -10,6 +10,7 @@ Le style vient de `gabarit_style.css`, copie du gabarit harmonisé du dépôt : 
 page de l'atelier doit ressembler aux séquences, pas inventer sa propre langue
 visuelle.
 """
+import importlib.util as _iu
 import json
 import pathlib
 
@@ -19,6 +20,97 @@ C = json.loads((D / "_corrige_calcule.json").read_text(encoding="utf-8"))
 CSS = (G / "gabarit_style.css").read_text(encoding="utf-8")
 
 P5, P4, P3 = C["indicateur-rangement-hall"], C["jardin-connecte-brooklyn"], C["capteur-confort-ny"]
+
+
+# Règle d'or n°92 — l'agrandisseur d'images. On IMPORTE le bloc au lieu de le
+# recopier : régénérer la page effaçait la loupe injectée après coup, en silence.
+# Une page engendrée doit porter elle-même tout ce que les règles exigent.
+# (même geste que atelier-cao/_generation/build_tp.py — même trou, même remède.)
+def _loupe():
+    chemin = pathlib.Path(__file__).resolve().parents[3] / "audit" / "loupe.py"
+    if not chemin.exists():
+        raise SystemExit("Règle n°92 : audit/loupe.py est introuvable (%s). "
+                         "La page ne peut pas être engendrée sans l'agrandisseur "
+                         "d'images." % chemin)
+    spec = _iu.spec_from_file_location("loupe", chemin)
+    mod = _iu.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.BLOC
+
+
+# Règle d'or n°303 — un lien se lit, à l'écran comme sur le papier. Texte repris
+# tel quel des pages publiées (retouche du 21/09/2026). Le bloc se glisse dans le
+# <style> de la loupe, là où la retouche l'avait posé à la main : l'écrire ici
+# évite qu'une régénération l'efface.
+N303 = ("\n  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────\n"
+        "     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée\n"
+        "     contre le fond réel de CETTE page, celle du papier contre le blanc.\n"
+        "     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs\n"
+        "     refusent de révéler l'état visité. Sans cette ligne, le lien redevient\n"
+        "     violet après le premier clic — illisible sur fond sombre. */\n"
+        "  a,a:where(:visited){color:var(--hl)}\n"
+        "  @media print{\n"
+        "    a,a:visited{color:#00309e!important}\n"
+        "    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}\n"
+        "  }\n")
+
+# — impression : fond blanc, couleurs conservées (décision du 02/09/2026). Bloc
+# par niveau (les champs de réponse imprimables n'ont pas les mêmes id d'un
+# parcours à l'autre) — texte repris tel quel des pages publiées, jamais retapé :
+# une régénération l'effaçait silencieusement, comme la loupe et le n°303.
+IMPRESSION = {
+ "5e": """
+
+
+
+@media print{
+/* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
+  .filet{opacity:1!important}
+  #a1_taches,#be_1,#be_2,#be_3,#exp_bandes,#exp_gp,#gp_1,#gp_2,#gp_3,#gp_4,#gp_5,#hyp1,#hyp2,#p5_1,#p5_2,#p5_3,#p5_4,#p5_bilan,#pos_1,#pos_2,#pos_3,.aide,.badge,.card,.card figure,.change,.correction,.defi,.legende-badges,.pourquoi,.tablewrap th,.voie{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .card b,.gantt b{color:#047fa0!important}
+  .retenir,.retenir b{color:#048827!important}
+  .card figcaption,.legende-badges,.legende-badges b,.voie h4{color:#0a1b3d!important}
+  .aide summary,.q option{color:#0b1b39!important}
+  .badge{color:#0d2347!important}
+  .piege,.piege b{color:#111111!important}
+  .card span,.page code,.page footer,.q span,.sous{color:#1a6af8!important}
+  .correction summary,.jalon{color:#946b00!important}
+}""",
+ "4e": """
+
+
+
+@media print{
+/* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
+  .filet{opacity:1!important}
+  #a1_taches,#be_1,#be_2,#be_3,#exp_bandes,#exp_gp,#gp_1,#gp_2,#gp_3,#gp_4,#gp_5,#hyp1,#hyp2,#p4_1,#p4_2,#p4_3,#p4_fin,#p4_para,#p4d_B,#p4d_C,#p4d_D,#p4d_E,#p4d_F,#p4d_G,#p4d_H,#pos_1,#pos_2,#pos_3,.aide,.badge,.card,.card figure,.change,.correction,.defi,.legende-badges,.pourquoi,.tablewrap th,.voie{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .card b,.gantt b{color:#047fa0!important}
+  .retenir,.retenir b{color:#048827!important}
+  .card figcaption,.legende-badges,.legende-badges b,.voie h4{color:#0a1b3d!important}
+  .aide summary,.q option{color:#0b1b39!important}
+  .badge{color:#0d2347!important}
+  .piege,.piege b{color:#111111!important}
+  .card span,.page code,.page footer,.q span,.sous{color:#1a6af8!important}
+  .correction summary,.jalon{color:#946b00!important}
+}""",
+ "3e": """
+
+
+
+@media print{
+/* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
+  .filet{opacity:1!important}
+  #a1_taches,#be_1,#be_2,#be_3,#exp_bandes,#exp_gp,#gp_1,#gp_2,#gp_3,#gp_4,#gp_5,#hyp1,#hyp2,#p3_1,#p3_2,#p3_3,#p3_4,#p3_5,#p3_6,#p3_chemin,#pos_1,#pos_2,#pos_3,.aide,.badge,.card,.card figure,.change,.correction,.defi,.legende-badges,.pourquoi,.tablewrap th,.voie{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .card b,.gantt b{color:#047fa0!important}
+  .retenir,.retenir b{color:#048827!important}
+  .card figcaption,.legende-badges,.legende-badges b,.voie h4{color:#0a1b3d!important}
+  .aide summary,.q option{color:#0b1b39!important}
+  .badge{color:#0d2347!important}
+  .piege,.piege b{color:#111111!important}
+  .card span,.page code,.page footer,.q span,.sous{color:#1a6af8!important}
+  .correction summary,.jalon{color:#946b00!important}
+}""",
+}
 
 
 def opts(values, vide="— choisir —"):
@@ -164,11 +256,11 @@ perdu — un second clic ramène tout.</p>
 HAUT = """
 <section class="card">
   <h2>&#127968; La situation&nbsp;: trois projets, et une même question</h2>
-  <p>Dans les trois niveaux, un projet est lancé. En 5e, un <b>indicateur de rangement</b> pour le
+  <p><b>Trois projets, une même question.</b> Dans les trois niveaux, un projet est lancé. En 5e, un <b>indicateur de rangement</b> pour le
   hall du collège. En 4e, le <b>jardin connecté</b> qui s'arrose seul — celui du quartier de
   Brooklyn, à New York, dont s'inspire le thème. En 3e, un <b>capteur de confort</b> qui signale
   une salle devenue invivable.</p>
-  <p>Chaque fois, la même chose arrive. Le groupe se répartit le travail, tout le monde s'active,
+  <p><b>Ce qui arrive à chaque fois.</b> Chaque fois, la même chose arrive. Le groupe se répartit le travail, tout le monde s'active,
   et trois séances plus tard on découvre qu'on attend&nbsp;: le support n'est pas prêt, alors on ne
   peut rien assembler ; le programme est écrit depuis longtemps, mais il n'y a rien à téléverser.
   Des gens ont travaillé, et le projet n'a pas avancé d'un jour.</p>
@@ -183,8 +275,10 @@ HAUT = """
 <section class="card">
   <h2>&#128173; Ton hypothèse de départ</h2>
   <p>Réponds avant de lire la suite. Personne ne te note, et tu reliras ta réponse à la fin.</p>
-  <p><b>Un projet dure 9 séances. Ton groupe décide de travailler deux fois plus vite sur une
-  tâche&nbsp;: elle passe de 2 séances à 1. Le projet finira-t-il plus tôt&nbsp;?</b> Réponds par
+  <p>Un projet dure 9 séances. Ton groupe décide de travailler deux fois plus vite sur une
+  tâche&nbsp;: elle passe de 2 séances à 1.<br>
+  <b>Le projet finira-t-il plus tôt&nbsp;?</b><br>
+  Réponds par
   oui, non, ou « ça dépend » — et dis <b>de quoi</b> ça dépend.</p>
   <textarea id="hyp1" style="min-height:90px" aria-label="Ton hypothèse : accélérer une tâche fait-il finir le projet plus tôt, et de quoi cela dépend"></textarea>
 </section>
@@ -878,6 +972,13 @@ BAS_T = """
 %(bonus)s
 
 </div>
+<section class="card syntheses">
+  <h2>&#128220; Les traces &agrave; garder</h2>
+  <p>Ce que cet atelier t'apprend tient en deux pages, &agrave; relire avant l'&eacute;valuation
+  et &agrave; garder dans ton classeur&nbsp;:</p>
+  <p><a class="btn" href="Synthèses/synthese_eleve_C7.1_planification.html">&#128204; Synth&egrave;se &eacute;l&egrave;ve &mdash; planifier les t&acirc;ches</a>
+  &nbsp; <a class="btn" href="Synthèses/synthese_professeur_C7.1_planification.html">&#127891; Synth&egrave;se professeur</a></p>
+</section>
 <footer>Ressource originale du dépôt &middot; Thème 3 &middot; C7.1 &middot; images, licences et
 limites dans <code>SOURCES_MEDIAS.md</code> &middot; page utilisable hors ligne, aucune donnée
 envoyée.</footer>
@@ -1156,6 +1257,7 @@ document.querySelectorAll("[data-exp]").forEach(e=>{
 });
 majProgres(); majBandeau();
 </script>
+@@LOUPE@@
 </body>
 </html>
 """
@@ -1241,16 +1343,16 @@ def figure_gantt(niv, p):
     <figcaption><b>Voilà ton planning, une fois juste.</b> Compare-le au tien —
     ce ne sont pas les mêmes couleurs par hasard.</figcaption>
   </figure>
-  <p class="retenir"><b>Trois choses à savoir lire là-dessus.</b>
-  <b>1.</b> Les barres pleines colorées forment le chemin le plus long
+  <div class="retenir"><p><b>Trois choses à savoir lire là-dessus.</b></p>
+  <p><b>1.</b> Les barres pleines colorées forment le chemin le plus long
   (%(chemin_txt)s)&nbsp;: elles n'ont <b>aucun jeu</b>, une séance de retard sur l'une
-  d'elles est une séance de retard sur tout le projet.
-  <b>2.</b> Les autres ont du jeu, et le <b>rectangle en pointillés</b> le montre&nbsp;:
+  d'elles est une séance de retard sur tout le projet.</p>
+  <p><b>2.</b> Les autres ont du jeu, et le <b>rectangle en pointillés</b> le montre&nbsp;:
   la tâche <b>%(ex)s</b> aurait pu être placée <b>n'importe où dans son rectangle</b>
-  sans rien retarder — la barre pâle indique sa position la plus tardive possible.
-  <b>3.</b> Ce chemin <b>peut changer</b>. Allonge une tâche à marge jusqu'à remplir
+  sans rien retarder — la barre pâle indique sa position la plus tardive possible.</p>
+  <p><b>3.</b> Ce chemin <b>peut changer</b>. Allonge une tâche à marge jusqu'à remplir
   son rectangle&nbsp;: elle devient critique, et une autre cesse de l'être. Le chemin
-  le plus long n'est pas gravé dans le projet, il dépend des durées.</p>
+  le plus long n'est pas gravé dans le projet, il dépend des durées.</p></div>
 """ % {"f": PROJET_DE[niv], "chemin_txt": chemin, "total": p["duree_totale"],
        "ex": exemple}
 
@@ -1393,7 +1495,7 @@ def barre_onglets(niv):
 def page(niv):
     n = NIVEAUX[niv]
 
-    tete = (TETE % {"css": CSS, "sup": STYLE_SUP, "niv": niv,
+    tete = (TETE % {"css": CSS, "sup": STYLE_SUP + IMPRESSION[niv], "niv": niv,
                     "retour": RETOUR[niv]}).replace(ANCRE_BADGE,
                         '<span class="badge niveau" title="Cette page est le parcours de %s. '
                         'Les autres niveaux ont la leur.">%s</span>' % (niv, niv))
@@ -1419,7 +1521,16 @@ def page(niv):
     corps = n["corps"].replace("<!--GANTT-->", figure_gantt(niv, n["projet"]))
     if "<!--GANTT-->" in corps:
         raise SystemExit("Marqueur GANTT non remplacé dans le parcours %s." % niv)
-    return tete + haut + PM + corps + GP_HTML + bas + script
+
+    resultat = tete + haut + PM + corps + GP_HTML + bas + script
+    # La loupe est posée ICI, après toute mise en forme « % » : le bloc contient
+    # des « % » (max-width:100%) que l'opérateur de formatage prendrait pour des
+    # jetons. Une seule source, importée, jamais recopiée (règle n°92).
+    resultat = resultat.replace("@@LOUPE@@", _loupe().replace("</style>", N303 + "</style>", 1))
+    if "@@LOUPE@@" in resultat or "loupe-images-v1" not in resultat:
+        raise SystemExit("Règle n°92 : l'agrandisseur d'images n'a pas été posé "
+                         "dans le parcours %s — arrêt avant écriture." % niv)
+    return resultat
 
 
 for _niv in ("5e", "4e", "3e"):

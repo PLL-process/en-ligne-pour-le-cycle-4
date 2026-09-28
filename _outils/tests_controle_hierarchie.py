@@ -82,7 +82,13 @@ def main():
     cas("H2 · un encadré typé (classe) coupe le mur",
         {SEQ: page("<div><p>%s.</p><p class='retenir'>%s.</p><p>%s.</p></div>" % (mots(62), mots(62), mots(62)))}, 0)
     cas("H2 · une question qui porte son champ est un repère",
-        {SEQ: page("<div><p>%s <select><option>a</option></select></p><p>%s.</p><p>%s.</p></div>" % (mots(62), mots(62), mots(62)))}, 0)
+        {SEQ: page("<div><p>%s <select><option>a</option></select></p><p>%s.</p><p>%s.</p></div>" % (mots(62), mots(30), mots(30)))}, 0)
+    # — 27/09/2026, second passage : un DUO de paragraphes sans repère est déjà un mur —
+    # le seuil à trois paragraphes / 170 mots laissait passer exactement ce cas.
+    cas("H2 · un duo de paragraphes sans repère, 111 mots, est refusé (le trou du 27/09)",
+        {SEQ: page("<div><p>%s.</p><p>%s.</p></div>" % (mots(55), mots(56)))}, 1, "H2 mur sans repère")
+    cas("H2 · le même duo, sous 110 mots, passe encore",
+        {SEQ: page("<div><p>%s.</p><p>%s.</p></div>" % (mots(50), mots(50)))}, 0)
 
     # — H3 paragraphe tout en gras
     cas("H3 · 45 mots tout en gras sont refusés", {SEQ: page("<p><b>%s</b></p>" % mots(45))}, 1, "H3 paragraphe tout en gras")

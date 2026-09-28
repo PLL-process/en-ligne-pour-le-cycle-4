@@ -117,6 +117,10 @@ def construire(gabarit: str, sortie: str) -> None:
          """      <option value="C2.1">3e_C2.1 — Décrire l'expérience à l'aide de modes choisis</option>"""),
         ("QCM d’entraînement 3e_C3.1 à C3.4 · Thème 1",
          "QCM d’entraînement 3e_C2.1 · Thème 1"),
+        ("""<p class="subtitle">Caractériser et choisir une solution (3e_C3.1 à C3.4) — protocole de mesure, évaluation des solutions et cycle de vie</p>""",
+         """<p class="subtitle">Décrire l'expérience de l'utilisateur à l'aide de modes de représentation choisis (3e_C2.1) — six modes, et l'angle mort de chacun</p>"""),
+        ("""<h1>Thème 1 · 3e — QCM : Shenzhen, comment refroidir un local qui surchauffe ?</h1>""",
+         """<h1>Thème 1 · 3e — QCM : Pékin, trois destinataires, trois représentations</h1>"""),
     ]
     for avant, apres in remplacements:
         if s.count(avant) != 1:

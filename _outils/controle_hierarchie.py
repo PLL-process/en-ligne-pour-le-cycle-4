@@ -23,10 +23,14 @@ Mesuré, donc établi :
       d'une ligne. Une entrée par ligne (n°33, second volet ; n°97 pour les corrections).
       Écartée : la chaîne fléchée « capteur (1) → carte (2) → écran (3) », où le numéro suit
       son mot et précède une flèche — elle se lit comme un schéma, pas comme une liste.
-  H2  mur sans repère — au moins trois paragraphes consécutifs d'un même bloc, 170 mots ou
+  H2  mur sans repère — au moins deux paragraphes consécutifs d'un même bloc, 110 mots ou
       plus au total, dont AUCUN ne s'ouvre sur un repère : un gras dans les trois premiers mots,
       un encadré typé (paragraphe porteur d'une classe : retenir, piege, note…) ou un champ
-      de réponse (une question qui porte son choix se voit à son contrôle).
+      de réponse (une question qui porte son choix se voit à son contrôle). Le 110 est celui
+      de la n°33 (un seul paragraphe) ; ici, c'est la SOMME d'un duo ou plus qui compte — un
+      duo de paragraphes sans repère est déjà un mur, pas seulement un trio (27/09/2026, second
+      passage : « il y a dans mes séquences de gros blocs… » visait un duo de 111 mots que le
+      seuil à trois paragraphes laissait passer).
   H3  paragraphe tout en gras — plus de 40 mots dont plus de 60 % en gras : quand tout est
       appuyé, plus rien ne l'est. En deçà, c'est la phrase-clé qu'on veut voir : elle reste.
   H4  cellule-pavé — une ligne de cellule de tableau de plus de 50 mots : sur un téléphone, le
@@ -62,7 +66,7 @@ ECARTES = ("_archive-anciennes-versions",)
 MOTIFS = ("sequence_", "sequence-", "sequence.html", "tp_", "atelier", "activite",
           "entrainement", "fiche_maths", "vittascience", "synthese_eleve")
 
-MUR_MOTS, MUR_PARAS = 170, 3
+MUR_MOTS, MUR_PARAS = 110, 2
 GRAS_MOTS, GRAS_PART = 40, 0.60
 CELLULE_MOTS = 50
 ITEM_MOTS, ITEM_MOTS_ANCRE = 60, 100
