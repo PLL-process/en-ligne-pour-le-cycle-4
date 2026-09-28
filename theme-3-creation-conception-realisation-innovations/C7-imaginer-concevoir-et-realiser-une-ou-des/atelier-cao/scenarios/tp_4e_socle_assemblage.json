@@ -62,21 +62,23 @@
    "intro": "Au lieu de taper 55, 13 ou 5 un peu partout, tu vas ranger les nombres dans des <b>variables</b>, chacune avec un nom. Toutes viendront de deux nombres seulement : <b>M = 89 mm</b> et le <b>nombre d'or φ</b>.",
    "etapes": [
     {
-     "action": "En bas, clique sur le <b>+</b>, puis sur <b>Créer un Variable Studio</b>. Renomme l'onglet <b>Nombre d'or</b>.",
-     "voir": "Un nouvel onglet s'ouvre, avec un tableau vide : c'est ta boîte à variables.",
+     "action": "En bas, clique sur le <b>+</b>, puis sur <b>Créer un Variable Studio</b>. Renomme l'onglet <b>Nombre d'or</b> (clic droit sur l'onglet, <b>Renommer</b>).",
+     "voir": "Un nouvel onglet s'ouvre, avec un tableau vide : c'est ta boîte à variables. En bas, la case <b>Insérer dans tous les Part Studios et assemblages</b> est déjà cochée : laisse-la, c'est elle qui rend tes variables utilisables partout.",
      "capture": "Images/dsp_02_variable_studio_vide.png",
      "capture_alt": "Le Variable Studio vide, prêt à recevoir des variables."
     },
     {
-     "action": "Crée la variable <b>phi</b> et donne-lui pour valeur <code>(1 + sqrt(5)) / 2</code>.",
-     "voir": "La ligne <b>phi</b> apparaît, et Onshape affiche sa valeur calculée : environ 1,618.",
-     "avertissement": "Tape la formule, pas le nombre 1,618 : la formule est exacte, le nombre arrondi ne l'est pas. Le point sert de virgule.",
+     "action": "Clique dans la case <b>Nom</b> et tape <b>phi</b>. Dans <b>Type de variable</b>, choisis <b>Nombre</b>. Dans <b>Valeur</b>, tape <code>(1 + sqrt(5)) / 2</code> et valide avec Entrée.",
+     "voir": "La ligne <b>phi</b> affiche sa valeur calculée : 1.618. Quand tu cliques sur la valeur, la formule réapparaît au-dessus.",
+     "avertissement": "φ n'est pas une longueur : sans le type <b>Nombre</b>, Onshape refuserait une valeur sans unité. Tape la formule, pas 1,618 : la formule est exacte, le nombre arrondi ne l'est pas. Le point sert de virgule.",
      "capture": "Images/dsp_03_variable_phi.png",
-     "capture_alt": "La variable phi avec la formule (1 + sqrt(5)) / 2 et sa valeur 1,618."
+     "capture_alt": "La variable phi avec la formule (1 + sqrt(5)) / 2 et sa valeur 1,618.",
+     "ou_est_ce": "Images/dsp_03a_type_nombre.png",
+     "ou_est_ce_alt": "La liste Type de variable ouverte : Longueur (par défaut), Angle, Nombre, Tous, À partir de l'import."
     },
     {
      "action": "Crée de la même façon, <b>dans cet ordre</b>, les variables suivantes : <b>M</b> = <code>89 mm</code> · <b>C</b> = <code>#M / #phi</code> · <b>Hsocle</b> = <code>#M / #phi ^ 4</code> · <b>Rsocle</b> = <code>#Hsocle / #phi ^ 2</code> · <b>Rde</b> = <code>#C / #phi ^ 4</code> · <b>penetr</b> = <code>#M / #phi ^ 6</code>",
-     "voir": "Six lignes de plus. Onshape calcule chacune : C ≈ 55 mm, Hsocle ≈ 13 mm, Rsocle ≈ 5 mm, Rde ≈ 8 mm, penetr ≈ 5 mm.",
+     "voir": "Six lignes de plus, toutes de type <b>Longueur</b> (le type par défaut). Onshape calcule chacune : C ≈ 55 mm, Hsocle ≈ 13 mm, Rsocle ≈ 5 mm, Rde ≈ 8 mm, penetr ≈ 5 mm.",
      "avertissement": "Le <code>#</code> devant un nom veut dire « la variable de ce nom ». Si une ligne s'affiche en rouge, c'est souvent un <code>#</code> oublié ou une faute de frappe dans un nom.",
      "capture": "Images/dsp_04_variables_toutes.png",
      "capture_alt": "Le Variable Studio rempli : phi, M, C, Hsocle, Rsocle, Rde, penetr et leurs valeurs."
@@ -84,7 +86,9 @@
    ],
    "critere": "Ton Variable Studio contient les sept variables, aucune en rouge, et C vaut à peu près 55 mm.",
    "cote_maths": "Le <b>nombre d'or</b> φ = (1 + √5) ÷ 2 ≈ 1,618 a une propriété rare&nbsp;: φ² = φ + 1. Et 89 est un nombre de la <b>suite de Fibonacci</b> (1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89…), où chaque terme est la somme des deux précédents. Divise un terme par le précédent&nbsp;: 89 ÷ 55 ≈ 1,618. C'est pourquoi C = 89 ÷ φ tombe presque sur 55, et Hsocle = 89 ÷ φ⁴ presque sur 13 — deux autres nombres de la suite.",
-   "enregistrer": true
+   "enregistrer": true,
+   "image_resultat": "Images/dsp_R0_nombre_or.png",
+   "image_resultat_alt": "L'onglet Nombre d'or : les sept variables, phi en Nombre, les six autres en Longueur, et la case « Insérer dans tous les Part Studios » cochée."
   },
   {
    "type": "geste",
@@ -99,20 +103,25 @@
      "capture_alt": "Le panneau Esquisse 1 ouvert, en attente d'un plan."
     },
     {
-     "action": "Ouvre la flèche de l'outil polygone et choisis le <b>polygone circonscrit</b> (VERIF nom exact). Règle le nombre de côtés sur <b>8</b>, puis clique sur l'origine et tire vers l'extérieur.",
-     "voir": "Un octogone régulier apparaît autour de l'origine, avec un cercle de construction qui touche ses huit côtés par l'intérieur.",
+     "action": "Ouvre la petite flèche à côté de l'outil polygone et choisis <b>Polygone inscrit</b>. Clique sur l'origine, tire vers l'extérieur et clique. Double-clique ensuite sur l'étiquette du nombre de côtés affichée près du polygone, tape <b>8</b> et valide avec Entrée.",
+     "voir": "Un octogone régulier entoure l'origine, avec un cercle de construction en pointillés qui touche ses huit côtés par l'intérieur, et l'étiquette <b>8x</b>.",
      "capture": "Images/dsp_05_octogone_trace.png",
-     "capture_alt": "L'octogone régulier tracé autour de l'origine, son cercle de construction à l'intérieur."
+     "capture_alt": "L'octogone régulier tracé autour de l'origine, son cercle de construction à l'intérieur.",
+     "avertissement": "<b>Inscrit</b>, pas circonscrit : c'est le cercle qui est inscrit dans l'octogone. Sa cote sera donc la distance d'un côté plat à l'autre.",
+     "ou_est_ce": "Images/dsp_05a_polygone_inscrit.png",
+     "ou_est_ce_alt": "Le menu de l'outil polygone : Polygone inscrit, défini sur un cercle inscrit, et Polygone circonscrit."
     },
     {
-     "action": "Avec l'outil <b>Cote</b> (touche <b>d</b>), cote le diamètre du cercle de construction et tape <code>#M</code>.",
-     "voir": "L'octogone prend sa taille : 89 mm d'un côté plat à l'autre. Il devient blanc : tout est décidé.",
+     "action": "Avec l'outil <b>Cote</b> (touche <b>d</b>), clique sur le cercle de construction, pose la cote à côté, et tape <code>#M</code> à la place du nombre.",
+     "voir": "Dès le <code>#</code>, Onshape propose la variable <b>#M</b> et sa valeur, 89 mm. Valide : l'octogone prend sa taille, 89 mm d'un côté plat à l'autre, et la cote affiche <b>#M</b>.",
      "avertissement": "Tu tapes le nom de la variable, pas 89. Si un jour tu changes M dans le Variable Studio, l'octogone suivra.",
      "capture": "Images/dsp_06_octogone_cote.png",
-     "capture_alt": "L'octogone coté #M, entièrement blanc."
+     "capture_alt": "L'octogone coté #M, entièrement blanc.",
+     "ou_est_ce": "Images/dsp_06a_cote_variable.png",
+     "ou_est_ce_alt": "Pendant la frappe de #M, Onshape propose la variable #M et sa valeur, 89 mm."
     },
     {
-     "action": "Valide l'esquisse. Clique sur <b>Extruder</b>, choisis <b>Nouveau</b>, profondeur <code>#Hsocle</code>, et clique sur la petite flèche <b>Direction opposée</b> pour que la dalle descende sous le plan.",
+     "action": "Valide l'esquisse. Clique sur <b>Extruder</b>, choisis <b>Nouveau</b>, profondeur <code>#Hsocle</code>, puis clique sur l'icône <b>Direction opposée</b>, juste à droite de la liste <b>Borgne</b>, pour que la dalle descende sous le plan.",
      "voir": "Une dalle octogonale grise apparaît sous le plan Top. Le dessus de la plinthe est exactement sur le plan : c'est là que le socle viendra se poser.",
      "capture": "Images/dsp_07_extruder_plinthe.png",
      "capture_alt": "Le panneau Extruder : Nouveau, profondeur #Hsocle, direction vers le bas, et l'aperçu de la dalle."
@@ -143,11 +152,13 @@
      "ou_est_ce_alt": "L'infobulle du bouton Construction (q)."
     },
     {
-     "action": "À droite de l'axe, trace le contour avec l'outil <b>Ligne</b> et deux <b>Arcs</b> (VERIF outil arc centré) : de l'origine, 35 vers la droite ; monte de 5 ; un quart de cercle bombé de rayon 5 ; monte de 3 ; un quart de cercle creux de rayon 3 ; monte de 3 ; reviens jusqu'à l'axe à la hauteur 19.",
+     "action": "À droite de l'axe, trace le contour avec l'outil <b>Ligne</b> et deux <b>Arcs à partir du centre</b> (flèche à côté de l'outil arc) : de l'origine, 35 vers la droite ; monte de 5 ; un quart de cercle bombé de rayon 5 ; monte de 3 ; un quart de cercle creux de rayon 3 ; monte de 3 ; reviens jusqu'à l'axe à la hauteur 19.",
      "voir": "Le contour se ferme contre l'axe et l'intérieur se teinte. Le quart de cercle bombé fera un <b>tore</b>, le creux une <b>gorge</b>.",
      "avertissement": "Dessine à peu près, puis cote : 35 et 19 pour l'ensemble, 5 et 3 pour les deux arrondis. Le profil doit toucher l'axe sur toute sa hauteur, jamais le traverser.",
      "capture": "Images/dsp_08_profil_moulure.png",
-     "capture_alt": "Le profil de la moulure coté : 35, 19, et les deux arcs de rayon 5 et 3, contre l'axe de construction."
+     "capture_alt": "Le profil de la moulure coté : 35, 19, et les deux arcs de rayon 5 et 3, contre l'axe de construction.",
+     "ou_est_ce": "Images/dsp_08a_arc_centre.png",
+     "ou_est_ce_alt": "Le menu de l'outil arc : Arc 3 points, Arc tangent, Arc à partir du centre, Arc elliptique, Conique."
     }
    ],
    "image_resultat": "Images/dsp_R2_profil.png",
@@ -194,21 +205,32 @@
    "etapes": [
     {
      "action": "En bas, clique sur le <b>+</b>, puis sur <b>Importer…</b>, et choisis le fichier 📥&nbsp;<code>de_55_calottes.step</code> fourni avec le TP.",
-     "voir": "Une fenêtre <b>Importer dans Onshape</b> s'ouvre ; laisse les réglages et clique sur <b>Importer</b>. Un onglet <b>de_55_calottes</b> apparaît.",
-     "capture": "Images/tp4e_22_menu_plus.png",
-     "capture_alt": "Le menu du + en bas à gauche, avec la commande Importer…"
+     "voir": "Une fenêtre <b>Importer dans Onshape</b> s'ouvre. Laisse <b>Importer dans ce document</b> et clique sur <b>Importer</b>. Un onglet <b>de_55_calottes</b> apparaît en bas.",
+     "capture": "Images/dsp_11a_importer.png",
+     "capture_alt": "La fenêtre Importer dans Onshape : Importer dans ce document, Combiner dans un même Part Studio, et le bouton Importer.",
+     "ou_est_ce": "Images/tp4e_22_menu_plus.png",
+     "ou_est_ce_alt": "Le menu du + en bas à gauche, avec la commande Importer…"
     },
     {
-     "action": "Reviens dans l'onglet <b>Presse-papier</b>. Clique sur <b>Dériver</b> (VERIF nom et emplacement de l'outil), choisis l'onglet <b>de_55_calottes</b> et valide.",
+     "action": "Reviens dans l'onglet <b>Presse-papier</b>. Ouvre la flèche à côté de l'outil <b>Plan</b> et choisis <b>Dérivé</b> (ou tape « Dérivé » dans <b>Rechercher des outils…</b>). Dans la fenêtre <b>Sélectionner Part Studio</b>, clique sur la pièce <b>Part 1</b> sous <b>de_55_calottes</b>, ferme la fenêtre et valide.",
      "voir": "Le dé apparaît dans le Presse-papier, centré sur l'origine, à moitié enfoncé dans le socle. La liste Pièces compte maintenant deux pièces.",
      "avertissement": "Pas d'inquiétude s'il traverse le socle : on va le déplacer. Deux pièces qui se chevauchent ne se mélangent pas tant qu'on ne les réunit pas.",
+     "capture": "Images/dsp_11c_choisir_de.png",
+     "capture_alt": "La fenêtre Sélectionner Part Studio : sous de_55_calottes, la pièce Part 1.",
+     "ou_est_ce": "Images/dsp_11b_outil_derive.png",
+     "ou_est_ce_alt": "La liste déroulante de l'outil Plan, descendue jusqu'à Dérivé, et l'aide qui décrit l'outil."
+    },
+    {
+     "action": "Dans la liste <b>Pièces</b>, deux pièces s'appellent <b>Part 1</b>. Renomme-les : clic droit, <b>Renommer</b> — <b>Socle</b> pour la pièce moulurée, <b>Dé</b> pour l'autre.",
+     "voir": "La liste <b>Pièces (2)</b> affiche <b>Socle</b> et <b>Dé</b>. Le dé est centré sur l'origine, à moitié enfoncé dans le socle.",
+     "avertissement": "Sans ces noms, tu risques de choisir la mauvaise pièce aux étapes suivantes : dans les panneaux, Onshape les désigne par leur nom.",
      "capture": "Images/dsp_11_deriver_de.png",
      "capture_alt": "Le dé dérivé dans le Presse-papier, centré sur l'origine, traversant le socle."
     }
    ],
    "image_resultat": "Images/dsp_R4_de_centre.png",
    "image_resultat_alt": "Le dé à calottes, centré sur l'origine, qui traverse le socle.",
-   "critere": "Le dé et le socle sont deux pièces du même onglet Presse-papier.",
+   "critere": "Le Socle et le Dé sont deux pièces nommées du même onglet Presse-papier.",
    "cote_maths": "Chaque calotte est un morceau de <b>sphère</b>. Pour qu'elle s'ouvre sur un diamètre d et descende d'une profondeur h, la sphère doit avoir pour rayon R = (d²/4 + h²) ÷ 2h — c'est le théorème de Pythagore appliqué à la coupe. Ici d ≈ 8,0 mm, h ≈ 1,9 mm, donc R ≈ 5,2 mm.",
    "enregistrer": true
   },
@@ -225,17 +247,21 @@
      "capture_alt": "Deux lignes perpendiculaires se croisant à l'origine, sur le plan Top."
     },
     {
-     "action": "Clique sur <b>Transformer</b>, choisis le type <b>rotation</b> (VERIF libellé), sélectionne le dé, puis la ligne horizontale comme axe. Angle : <b>45</b>.",
+     "action": "Ouvre la flèche à côté de l'outil <b>Booléen</b> et choisis <b>Transformer</b>. Clique sur <b>Dé</b> dans la liste Pièces. Dans la liste des types, choisis <b>Pivoter</b>. Clique dans <b>Axe</b>, puis sur la ligne horizontale de ton esquisse. Angle : <b>45</b>, et valide.",
      "voir": "Le dé bascule d'un huitième de tour autour de la ligne horizontale : il se tient maintenant sur une arête.",
      "capture": "Images/dsp_13_rotation_45.png",
-     "capture_alt": "Le panneau Transformer en rotation, angle 45, et le dé posé sur une arête."
+     "capture_alt": "Le panneau Transformer : Dé, Pivoter, axe Arête de Esquisse 3, angle 45 deg, et l'aperçu du dé basculé.",
+     "ou_est_ce": "Images/dsp_13a_menu_booleen.png",
+     "ou_est_ce_alt": "Le menu de l'outil Booléen : Booléen, Scinder, Transformer, Emballage, Décalcomanie, Supprimer la pièce."
     },
     {
-     "action": "Ajoute un second <b>Transformer</b> en rotation, sur le dé, autour de la ligne verticale, angle <b>35.2644</b>.",
+     "action": "Ajoute un second <b>Transformer</b>, type <b>Pivoter</b>, sur le dé, autour de la ligne verticale de l'esquisse, angle <b>35.2644</b>.",
      "voir": "Le dé bascule encore : il repose maintenant sur un seul coin, la diagonale bien droite.",
-     "avertissement": "S'il penche trop au lieu de se redresser, clique sur <b>Direction opposée</b> : la rotation tourne dans l'autre sens.",
+     "avertissement": "Onshape masque l'esquisse une fois qu'elle a servi. Si tu ne vois plus la ligne verticale, survole <b>Esquisse 3</b> dans l'arbre et clique sur l'œil. S'il penche au lieu de se redresser, clique sur <b>Direction opposée</b>.",
      "capture": "Images/dsp_14_rotation_35.png",
-     "capture_alt": "Le second Transformer, angle 35.2644, et le dé dressé sur sa pointe."
+     "capture_alt": "Le second Transformer, angle 35.2644, et le dé dressé sur sa pointe.",
+     "ou_est_ce": "Images/dsp_13b_type_pivoter.png",
+     "ou_est_ce_alt": "La liste des types de Transformer : Translater suivant une ligne, suivant une distance, en XYZ, par connecteurs, Pivoter, Copier en place, Échelle."
     }
    ],
    "image_resultat": "Images/dsp_R5_de_pointe.png",
@@ -271,11 +297,11 @@
    "intro": "Pour que le dé tienne, le socle doit avoir un creux exactement à sa forme — avec un petit jeu.",
    "etapes": [
     {
-     "action": "Clique sur <b>Booléen</b> (VERIF), choisis <b>Soustraire</b>. Dans <b>Outils</b>, le dé ; dans <b>Cibles</b>, le socle. Coche <b>Garder les outils</b> et <b>Décalage</b>, puis tape <b>0.25</b>.",
+     "action": "Clique sur <b>Booléen</b> et choisis l'onglet <b>Soustraire</b>. Dans <b>Outils</b>, le Dé ; dans <b>Cibles</b>, le Socle. Coche <b>Décalage</b>, puis <b>Décaler tout</b>, et tape <b>0.25</b> dans <b>Distance de décalage</b>. Coche enfin <b>Conserver les outils</b> et valide.",
      "voir": "Le socle se creuse à la forme de la pointe, 0,25 mm plus large tout autour, et le dé reste en place.",
-     "avertissement": "Sans « Garder les outils », le dé disparaîtrait avec la soustraction : c'est lui qui sert d'emporte-pièce.",
+     "avertissement": "Sans « Conserver les outils », le dé disparaîtrait avec la soustraction : c'est lui qui sert d'emporte-pièce. Sans « Décaler tout », Onshape attend que tu choisisses des faces une par une.",
      "capture": "Images/dsp_16_booleen_empreinte.png",
-     "capture_alt": "Le panneau Booléen en Soustraire : outils le dé, cibles le socle, décalage 0.25, garder les outils."
+     "capture_alt": "Le panneau Booléen en Soustraire : outils Dé, cibles Socle, Décalage et Décaler tout cochés, 0.25 mm, Conserver les outils."
     },
     {
      "action": "Masque le dé (clic droit, <b>Masquer</b>) pour regarder le creux, puis réaffiche-le.",
@@ -287,7 +313,7 @@
    "image_resultat": "Images/dsp_R7_empreinte.png",
    "image_resultat_alt": "Le socle vu de dessus, dé masqué : l'empreinte de la pointe au centre.",
    "critere": "Le socle porte un creux à la forme de la pointe, et le dé est toujours là.",
-   "cote_maths": "La soustraction retire au socle le volume qu'il partage avec le dé — un peu plus de 550 mm³ avec le jeu. Le <b>décalage</b> de 0,25 mm agrandit le dé d'un quart de millimètre dans toutes les directions avant de creuser&nbsp;: c'est le <b>jeu</b> qui permettra, une fois imprimés, de poser le dé sans forcer.",
+   "cote_maths": "La soustraction retire au socle le volume qu'il partage avec le dé — environ 559 mm³, et 636 mm³ avec le jeu. Le <b>décalage</b> de 0,25 mm agrandit le dé d'un quart de millimètre dans toutes les directions avant de creuser&nbsp;: c'est le <b>jeu</b> qui permettra, une fois imprimés, de poser le dé sans forcer.",
    "enregistrer": true
   },
   {
@@ -356,7 +382,9 @@
    "etapes": [
     {
      "action": "Dans la liste <b>Pièces</b>, fais un clic droit sur le socle, puis <b>Modifier l'apparence…</b> Choisis dans la palette une teinte de pierre — un gris chaud, un beige.",
-     "voir": "Le socle change de couleur dans l'aperçu. Valide avec la coche verte."
+     "voir": "Le socle change de couleur dans l'aperçu. Valide avec la coche verte.",
+     "capture": "Images/dsp_18_apparence_socle.png",
+     "capture_alt": "Le panneau Apparence : la palette, un beige chaud choisi pour le socle."
     },
     {
      "action": "Fais de même pour le dé : une couleur franchement différente, un doré par exemple.",
@@ -379,7 +407,7 @@
     },
     {
      "action": "Ouvre les <b>Propriétés de masse</b> de chaque pièce, et additionne les deux masses : c'est la masse de ton presse-papier.",
-     "voir": "Le socle en bronze pèse plusieurs kilos ; le dé en ABS, à peine plus de cent grammes.",
+     "voir": "Le socle en bronze pèse un peu plus d'un kilo (≈ 1 177 g) ; le dé en ABS, environ 165 g.",
      "avertissement": "Un presse-papier doit être <b>lourd</b>, sinon il ne presse rien. Regarde ta masse totale et demande-toi si l'objet ferait le travail. C'est la première fois qu'un chiffre du logiciel te dit si ton objet est réussi.",
      "capture": "Images/tp4e_39_masse_socle_bronze.png",
      "capture_alt": "Les propriétés de masse du Socle en bronze : Masse 4357.063 g, Volume 534608.921 mm³.",

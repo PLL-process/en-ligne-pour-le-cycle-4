@@ -20658,3 +20658,38 @@ lançable sur un arbre sans historique.
   mêmes fichiers → **51**. Fichiers retirés, audit revenu à l'identique.
 - Bancs `tests_verif_regles_audit` 56 / 56, `tests_index` 20 / 20, `tests_controle_couverture`
   27 / 27 ; `controle_statut` vert.
+
+## 28/09/2026 — TP 4e « Le dé sur sa pointe » : captures prises, gestes recalés sur l'écran
+
+**Ce qui a été fait.** Le TP réécrit la veille attendait 25 captures et portait cinq gestes marqués
+VERIF. Il a été déroulé en entier dans un document neuf « Dé sur sa pointe — Camille » : 36 captures
+`dsp_…` (27 gestes, 9 résultats), et quatre captures `tp4e_36/38/39/42` reprises sur le nouveau modèle
+sous le même nom. Trois gestes au tracé fin (profil de la moulure, congé des huit arêtes, esquisse des
+deux axes) ont été posés par l'API REST dans le même document puis ouverts à l'écran : la connexion,
+lente ce soir-là, rendait la souris imprécise ; l'image montrée est celle que l'élève obtient.
+
+**Ce que l'écran a corrigé dans le TP** — c'est le scénario qui suit l'écran, pas l'inverse :
+
+- l'outil est **Polygone inscrit** (le cercle est inscrit dans l'octogone), pas « circonscrit » ; le
+  nombre de côtés se change en double-cliquant sur l'étiquette posée près du polygone ;
+- **Arc à partir du centre** ; **Dérivé** se trouve dans la liste de l'outil **Plan** ; **Transformer**
+  dans celle de **Booléen**, où la rotation s'appelle **Pivoter** ;
+- le Booléen dit **Conserver les outils**, et son décalage n'agit sur tout le dé qu'avec **Décaler tout** ;
+- φ exige le type **Nombre** dans le Variable Studio (étape ajoutée, avec la liste des types) ;
+- après le Dérivé, deux pièces s'appellent « Part 1 » : une étape les renomme **Socle** et **Dé**,
+  sans quoi l'élève choisit au hasard dans les panneaux suivants ;
+- Onshape masque l'esquisse des axes après la première rotation : l'avertissement dit où la réafficher ;
+- le socle en bronze pèse **1 177 g**, pas « plusieurs kilos » (l'ancien socle rond faisait 4,4 kg).
+
+**Retiré** : 30 captures de l'ancien TP « Le dé sur son socle » que plus aucune page ne cite (liste
+dans `SOURCES_MEDIAS.md`, section du 27-28/09/2026). La fiche maths reçoit les masses et les volumes
+du socle lus dans Onshape.
+
+### Vérifié
+
+- Géométrie lue par l'API dans le document de l'élève-témoin : dé 156 909,23 mm³ (référence
+  156 909,11) ; dé dressé ± 41,761 mm autour de son centre ; translation 55,801 mm ; empreinte
+  636 mm³ avec le jeu.
+- `verif_guidage` : 11 / 11 (la n°77 manquait au palier des variables : image de résultat
+  `dsp_R0_nombre_or.png` ajoutée) ; 0 VERIF restant dans le scénario.
+- `controle_medias` et `controle_liens` verts.

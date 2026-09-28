@@ -335,3 +335,77 @@ R = (d²/4 + h²)/2h), faces opposées sommant à 7, dé centré sur l'origine.
 Onshape (écart relatif 6 × 10⁻⁷) ; solide valide ; 21 calottes.
 
 **Licence** : géométrie créée pour ce dépôt, réutilisable sous sa licence.
+
+## Captures Onshape du TP 4e « Le dé sur sa pointe » — 27-28/09/2026
+
+**Origine** : captures d'écran d'Onshape (interface française, thème sombre), prises en déroulant le TP
+geste par geste dans un document neuf « Dé sur sa pointe — Camille » ; « Camille » est un prénom
+d'exemple, annoncé comme tel dans le TP (n°75). Capture de la seule zone de la page, sans barre
+d'adresse ni élément du poste. Aucune donnée personnelle, hormis l'identifiant d'établissement « GJEP »
+affiché par Onshape en haut à droite de certaines vues. Trois gestes au tracé trop fin pour la souris
+sur une connexion lente (profil de la moulure, congé des huit arêtes, esquisse des deux axes) ont été
+posés par l'API REST d'Onshape dans le même document, puis ouverts dans l'interface pour la capture :
+l'écran montré est celui que l'élève obtient.
+
+**Licence** : l'interface appartient à PTC (Onshape) ; captures reproduites à des fins d'enseignement,
+pour montrer où cliquer — même régime que les captures du TP 5e.
+
+**Relevé à l'écran, et reporté dans le TP** : l'outil est **Polygone inscrit** (« défini sur un cercle
+inscrit »), et non circonscrit ; le nombre de côtés se change en double-cliquant sur l'étiquette posée
+près du polygone ; l'arc est **Arc à partir du centre** ; l'outil **Dérivé** est dans la liste de l'outil
+**Plan** ; **Transformer** est dans la liste de l'outil **Booléen**, et la rotation y s'appelle **Pivoter** ;
+le Booléen dit **Conserver les outils**, et son décalage demande **Décaler tout** ; φ exige le type
+**Nombre** dans le Variable Studio ; renommer l'onglet du Variable Studio renomme aussi son tableau.
+Valeurs lues : dé dérivé 156 909,23 mm³ ; étendue verticale du dé dressé ± 41,761 mm ; translation
+55,801 mm ; socle 145 053,47 mm³ avant l'empreinte, 144 417,53 mm³ après ; masses : socle en
+Bronze (8-14 % Sn) 1 177,003 g, dé en ABS 165,069 g.
+
+**Reprises** sur le nouveau modèle, sous le même nom : `tp4e_36_materiau_bronze.png`,
+`tp4e_38_unites_gramme.png`, `tp4e_39_masse_socle_bronze.png`, `tp4e_42_apparence_de.png`.
+
+**Retirées du dépôt** le 28/09/2026, n'étant plus citées par aucune page : les 30 captures de l'ancien
+TP « Le dé sur son socle » qui n'ont pas d'équivalent dans le nouveau (`tp4e_02`, `07`, `09` à `13`,
+`15` à `17`, `19` à `21`, `23` à `31`, `tp4e_R0` à `tp4e_R7`). Les listes plus haut les gardent pour
+l'historique.
+
+Images de résultat :
+
+- `Images/dsp_R0_nombre_or.png`
+- `Images/dsp_R1_plinthe.png`
+- `Images/dsp_R2_profil.png`
+- `Images/dsp_R3_socle.png`
+- `Images/dsp_R4_de_centre.png`
+- `Images/dsp_R5_de_pointe.png`
+- `Images/dsp_R6_de_pose.png`
+- `Images/dsp_R7_empreinte.png`
+- `Images/dsp_R9_presse_papier.png`
+
+Captures de gestes :
+
+- `Images/dsp_01_document_neuf.png`
+- `Images/dsp_02_variable_studio_vide.png`
+- `Images/dsp_03_variable_phi.png`
+- `Images/dsp_03a_type_nombre.png`
+- `Images/dsp_04_variables_toutes.png`
+- `Images/dsp_05_octogone_trace.png`
+- `Images/dsp_05a_polygone_inscrit.png`
+- `Images/dsp_06_octogone_cote.png`
+- `Images/dsp_06a_cote_variable.png`
+- `Images/dsp_07_extruder_plinthe.png`
+- `Images/dsp_08_profil_moulure.png`
+- `Images/dsp_08a_arc_centre.png`
+- `Images/dsp_09_pivoter_moulure.png`
+- `Images/dsp_10_conge_plinthe.png`
+- `Images/dsp_11_deriver_de.png`
+- `Images/dsp_11a_importer.png`
+- `Images/dsp_11b_outil_derive.png`
+- `Images/dsp_11c_choisir_de.png`
+- `Images/dsp_12_esquisse_axes.png`
+- `Images/dsp_13_rotation_45.png`
+- `Images/dsp_13a_menu_booleen.png`
+- `Images/dsp_13b_type_pivoter.png`
+- `Images/dsp_14_rotation_35.png`
+- `Images/dsp_15_translation.png`
+- `Images/dsp_16_booleen_empreinte.png`
+- `Images/dsp_17_empreinte_vue.png`
+- `Images/dsp_18_apparence_socle.png`
