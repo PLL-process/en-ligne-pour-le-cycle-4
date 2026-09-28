@@ -601,7 +601,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   du chiffre</b> (cumul, instant, proportion), et ta phrase finale dit pourquoi l'addition n'a pas
   de sens.</p>
 </section>
-<p class="seance-suivante-nav"><button class="btn seance-suivante" type="button" data-panel="s2">Séance 2 → Estimer&nbsp;▶</button></p>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Estimer ›</button></p>
 </div>
 
 <div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
@@ -703,7 +703,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   chiffre voyagera seul — c'est toujours ce qui arrive — et deviendra «&nbsp;les feux français ont
   émis 2 millions de tonnes&nbsp;».</p>
 </section>
-<p class="seance-suivante-nav"><button class="btn seance-suivante" type="button" data-panel="s3">Séance 3 → Comparer&nbsp;▶</button></p>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Comparer ›</button></p>
 </div>
 
 <div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
@@ -802,7 +802,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   TGV&nbsp;». Le facteur est en <b>passager</b>-km. Oublier le mot, c'est multiplier l'erreur par le
   nombre de places du train.</p>
 </section>
-<p class="seance-suivante-nav"><button class="btn seance-suivante" type="button" data-panel="s4">Séance 4 → Exiger&nbsp;▶</button></p>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s4" type="button">Séance 4 — Exiger ›</button></p>
 </div>
 
 <div class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4">
@@ -1222,13 +1222,11 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
   });
 });
 
-/* ══════ Règle d'or n°101 — bouton de fin de séance ══════ */
-document.querySelectorAll(".seance-suivante").forEach(bouton=>{
-  bouton.addEventListener("click", ()=>{
-    const cible = $("tab-"+bouton.dataset.panel);
-    if (cible) cible.click();
-  });
-});
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 
 /* ══════ Lecture des productions écrites ══════ */
 /* Règle n°49 : on teste ce qui est RENDU. Les accents et les apostrophes sont

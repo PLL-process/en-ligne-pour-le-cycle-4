@@ -21147,3 +21147,80 @@ la barre d'onglets.
   verts sur le dépôt entier.
 - **Non fait** : les 75 autres pages à `seance-tab` n'ont pas été vérifiées pour n°101. Portée
   réelle inconnue — probablement plusieurs dizaines de pages concernées, à traiter en lot séparé.
+
+## 28/09/2026 — Règle n°101 harmonisée aux trois thèmes (31 pages) + contrôle permanent
+
+**Le signal** : Pascal, sur l'entrée précédente : « harmoniser aux trois thèmes » — feu vert pour
+étendre le bouton de fin de séance à tout le dépôt, pas seulement `4e_C1.1`.
+
+### Le périmètre réel
+
+Une marche systématique (et non l'estimation à vue de « 76 pages » de l'entrée précédente) trouve
+**40** pages à mécanisme `.seance-tab`/`.seance-panel` dans tout le dépôt. **9** l'avaient déjà
+(la famille C9, règle n°95, plus `4e_C1.1` posée la veille) ; **31** ne l'avaient pas — 11 en
+thème 1, 17 en thème 2, 3 en thème 3 (les ateliers « planification des tâches »).
+
+### Une convention déjà posée, pas la mienne
+
+Avant d'étendre quoi que ce soit, relecture de la famille C9 (la seule où n°101 existait déjà) :
+elle utilise `<button class="btn vers-seance" data-vers="sN">`, dans un `<p class="page-suivante">`
+— une convention différente de celle que j'avais posée la veille sur `4e_C1.1`
+(`class="btn seance-suivante" data-panel="sN"`). `4e_C1.1` a été repris pour rejoindre la convention
+C9 avant toute propagation : le dépôt n'aurait sinon fini avec deux façons de faire la même chose.
+Le clic ne réimplémente rien : il simule un clic sur l'onglet réel visé
+(`document.querySelector('.seance-tab[data-panel=...]')`), qui déclenche tout ce qui suit déjà
+(bandeau de tâches, classes actives, défilement) — un sélecteur sur `data-panel`, pas sur un `id`,
+pour fonctionner aussi sur les pages sans `id="tab-sN"` posé sur les onglets.
+
+### Diversité structurelle rencontrée
+
+Les 31 pages ne se ressemblent pas toutes : balise de panneau (`<div>` ou `<section>` selon la
+page), identifiants (`s1`/`s2`… le plus souvent, mais `seance1`/`seance2` sur la famille Packet
+Tracer, `pm`/`p3`/`gp` sur les ateliers « Étape », `m1`…`m4` sur l'entraînement DNB « Manche »),
+présentation de l'intitulé de l'onglet (avec ou sans `<br>`, avec ou sans tiret déjà posé), et un
+4ᵉ onglet « hors parcours » sur deux pages (`3e_C1.5`, `4e_C1.4` : un bloc Python hors compétence,
+volontairement écarté de la chaîne n°101). Traité par script pour 25 pages régulières, à la main
+pour les 6 pages structurellement particulières.
+
+### Deux bugs trouvés en vérifiant au navigateur — invisibles au premier contrôle statique
+
+Le contrôle ne suffit à rien s'il ne voit que ce qu'il cherche déjà. Le banc Playwright (rejouant de
+vrais clics dans un vrai Chromium) a trouvé deux défauts que la seule lecture du texte n'aurait pas
+vus :
+
+1. **Bouton orphelin** (`3e_C1.5`, `4e_C1.4`) : posé après la fermeture du panneau au lieu
+   d'avant — donc hors de lui, affiché en permanence quel que soit l'onglet actif. Corrigé (le
+   bouton rentre dans son panneau) ; le contrôle statique est renforcé pour borner sa lecture à la
+   fermeture réelle du panneau (`fin_reelle_du_panneau`), plutôt qu'à n'importe quelle fermeture
+   trouvée avant le panneau suivant.
+2. **Panneau « hors » intercalé** (`4e_C1.4` seulement) : le bloc Python est posé, dans le
+   fichier, physiquement ENTRE s1 et s2 — bien qu'exclu de la chaîne logique. Le bouton de s1 avait
+   atterri dans ce panneau « hors » au lieu d'être dans s1 ; le premier contrôle renforcé ne l'a pas
+   vu, parce qu'il cherchait jusqu'au panneau LOGIQUE suivant (s2) et balayait donc tout le panneau
+   « hors » au passage. Corrigé (le bouton rentre dans s1) ; le contrôle est encore resserré pour
+   arrêter sa lecture au tout premier panneau suivant DANS LE FICHIER, halte ou non.
+   Cette seconde correction a elle-même débusqué un troisième petit écart : la fermeture réelle de
+   s1 porte un commentaire sur sa ligne (`</section><!-- fin de #s1 -->`), que le contrôle ne
+   reconnaissait pas comme une fermeture — d'où une fausse alerte sur un fichier pourtant
+   corrigé. Le contrôle tolère maintenant ce commentaire.
+
+### Le nouveau contrôle
+
+`_outils/controle_navigation_seances.py` — chaque page à onglets, hors la dernière séance de
+chacune, doit avoir son bouton vers la suivante. `_outils/tests_controle_navigation_seances.py` —
+13 cas, dont les deux bugs ci-dessus rejoués pour qu'une régression se voie sans rouvrir un
+navigateur.
+
+### Vérifié
+
+- `controle_navigation_seances.py` : **40 pages, 125 onglets, 0 écart**.
+- `controle_hierarchie.py`, `controle_gestes_outil.py`, `controle_boutons_vivants.py`,
+  `controle_atteignabilite.py`, `controle_liens.py` : verts sur le dépôt entier.
+- `tests_controle_navigation_seances.py` : 13 / 13.
+- **Au navigateur réel** (Chromium, Playwright) : 13 transitions rejouées sur 6 pages choisies pour
+  couvrir chaque forme rencontrée (sans `id="tab-sN"`, identifiants `seanceN`, vocabulaire
+  « Étape », vocabulaire « Manche », onglet « hors » exclu, panneau « hors » intercalé) —
+  **13 / 13**.
+- **Non vérifié au navigateur** : les 34 autres pages (112 transitions restantes) n'ont été jugées
+  que par le contrôle statique, pas rejouées clic par clic — le contrôle couvre 100 % des pages,
+  le banc au navigateur seulement l'échantillon ci-dessus.

@@ -364,6 +364,7 @@
     <div class="critere"><b>🎯 Critère de réussite :</b> diagnostic mené au poste jusqu'à 6/6, 8/8 réponses, et TON protocole recopié au cahier en 6 lignes numérotées.</div>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Remplacer sans filet ›</button></p>
 </div>
 
 <!-- ══════ SÉANCE 2 ══════ -->
@@ -430,6 +431,7 @@
     <div class="critere"><b>🎯 Critère de réussite :</b> remplacement simulé mené jusqu'à 6/6 sans protocole affiché, 8/8 réponses, et ta méthode en 6 gestes recopiée au cahier.</div>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Refabriquer à l'atelier ›</button></p>
 </div>
 
 <!-- ══════ SÉANCE 3 ══════ -->
@@ -840,6 +842,13 @@ function signale(msg){
   _signalTimer=setTimeout(()=>{ z.textContent=""; z.classList.remove("show");
     if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
 }
+
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 </script>
 
 </body>

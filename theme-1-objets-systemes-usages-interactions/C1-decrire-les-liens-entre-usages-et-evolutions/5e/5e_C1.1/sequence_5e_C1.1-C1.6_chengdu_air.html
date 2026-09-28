@@ -591,6 +591,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: choisir l'appareil le plus performant du tableau
   sans regarder ce qu'il exige — argent, compétence, réglementation.</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Collecter et trier ›</button></p>
 </div>
 
 <div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
@@ -900,6 +901,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: effacer les valeurs fausses. On les écarte du
   calcul, on ne les supprime pas&nbsp;: ce sont des traces de panne.</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Ranger ›</button></p>
 </div>
 
 <div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
@@ -1007,6 +1009,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   nature. On cherche presque toujours «&nbsp;le graphique&nbsp;», rarement «&nbsp;ce que j'ai fait
   le 17 mars&nbsp;».</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s4" type="button">Séance 4 — Partager ›</button></p>
 </div>
 
 <div class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4">
@@ -1109,6 +1112,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   changer. Elle est nettoyée, calculée, mise en forme — et à la fin, ce qu'on lit n'est plus ce que
   le capteur a mesuré.</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s5" type="button">Séance 5 — Protéger, puis répondre ›</button></p>
 </div>
 
 <div class="seance-panel" id="s5" role="tabpanel" aria-labelledby="tab-s5">
@@ -1545,6 +1549,12 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
       behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
   });
 });
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 
 /* ══════ Outils de lecture des productions écrites ══════ */
 /* Règle n°49 : on teste ce qui est RENDU. Ces fonctions lisent la production de

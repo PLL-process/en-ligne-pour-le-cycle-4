@@ -360,6 +360,7 @@
   PROGRAMME qui le transforme en information utile, dans un ordre qui ne doit rien au hasard : lire → convertir →
   afficher → attendre, le tout répété sans fin.</div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Programmer ›</button></p>
 </div>
 
 <!-- ═══════════ SÉANCE 2 ═══════════ -->
@@ -455,6 +456,7 @@ n'est écrit qu'à UN endroit (la variable <code>seuil</code>) — pour changer 
   la frontière (égalité pile) se déroule à la main pour choisir entre <code>&lt;</code> et <code>&lt;=</code> ;
   et un comportement se PROUVE par un banc de tests — jamais par « ça a l'air de marcher ».</div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Valider &amp; discuter ›</button></p>
 </div>
 
 <!-- ═══════════ SÉANCE 3 ═══════════ -->
@@ -976,6 +978,13 @@ function signale(msg){
   _signalTimer=setTimeout(()=>{ z.textContent=""; z.classList.remove("show");
     if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
 }
+
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 </script>
 </body>
 </html>

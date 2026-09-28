@@ -391,6 +391,7 @@
     <div class="critere"><b>🎯 Critère de réussite :</b> 9 réponses justes + une justification qui parle du sel/des embruns.</div>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Le chemin de l'énergie ›</button></p>
 </div>
 
 <!-- ══════ SÉANCE 2 ══════ -->
@@ -450,6 +451,7 @@
     <div class="critere"><b>🎯 Critère de réussite :</b> l'ordre 4/4, les natures 5/5, et la chaîne recopiée au cahier.</div>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Le lampadaire décide ›</button></p>
 </div>
 
 <!-- ══════ SÉANCE 3 ══════ -->
@@ -509,6 +511,7 @@
     <div class="critere"><b>🎯 Critère de réussite :</b> 3 constituants + 4 expériences réellement faites + la règle complète.</div>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s4" type="button">Séance 4 — Ranger les infos du parc ›</button></p>
 </div>
 
 <!-- ══════ SÉANCE 4 ══════ -->
@@ -565,6 +568,7 @@
     <div class="critere"><b>🎯 Critère de réussite :</b> 7 réponses justes sur 7.</div>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s5" type="button">Séance 5 — Tous en réseau + défi ›</button></p>
 </div>
 
 <!-- ══════ SÉANCE 5 ══════ -->
@@ -1043,6 +1047,13 @@ function signale(msg){
   _signalTimer=setTimeout(()=>{ z.textContent=""; z.classList.remove("show");
     if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
 }
+
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 </script>
 </body>
 </html>

@@ -605,6 +605,7 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
   <div class="retenir"><b>📌 À retenir&nbsp;:</b> un réseau local = des <b>terminaux</b> + un <b>commutateur</b> + des <b>liaisons</b> (filaires ou sans fil via le <b>point d'accès</b>). Quand tout passe par le centre, la <b>topologie</b> est «&nbsp;en étoile&nbsp;».</div>
   <div class="critere"><b>🎯 Critère de réussite&nbsp;:</b> 11 bonnes réponses sur 11 + ton schéma dessiné au cahier et décrit dans la page.</div>
 </div>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="seance2" type="button">Séance 2 — Construire dans Packet Tracer ›</button></p>
 </div>
 
 <!-- ═══════════════════════ SÉANCE 2 ═══════════════════════ -->
@@ -723,6 +724,7 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
   <div class="retenir"><b>📌 À retenir&nbsp;:</b> construire un réseau local = poser le <b>commutateur</b>, poser les <b>terminaux</b>, tirer les <b>liaisons</b> (câble droit vers une prise LIBRE), ajouter le <b>point d'accès</b> et son nom de réseau (SSID) pour les terminaux sans fil.</div>
   <div class="critere"><b>🎯 Critère de réussite&nbsp;:</b> les 4 relevés 🔎 justes + les 2 questions de contrôle + ton fichier .pkt enregistré au bon nom.</div>
 </div>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="seance3" type="button">Séance 3 — Identifier et prouver ›</button></p>
 </div>
 
 <!-- ═══════════════════════ SÉANCE 3 ═══════════════════════ -->
@@ -1433,6 +1435,13 @@ function signale(msg){
   _signalTimer=setTimeout(()=>{ z.textContent=""; z.classList.remove("show");
     if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
 }
+
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 </script>
 </body>
 </html>

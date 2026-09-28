@@ -425,6 +425,7 @@
   <p><b>Critère de réussite</b>&nbsp;: ta liste compte au moins six interacteurs et couvre les trois
   natures.</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Lire les formes ›</button></p>
 </div>
 
 <div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
@@ -561,6 +562,7 @@
   <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: dire «&nbsp;c'est pour faire joli&nbsp;» devant
   un choix qui protège d'un accident ou facilite un geste.</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Comparer et transférer ›</button></p>
 </div>
 
 <div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
@@ -830,6 +832,12 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
       behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
   });
 });
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 
 /* ══════ Vérificateurs ══════ */
 const CHECKS = {
