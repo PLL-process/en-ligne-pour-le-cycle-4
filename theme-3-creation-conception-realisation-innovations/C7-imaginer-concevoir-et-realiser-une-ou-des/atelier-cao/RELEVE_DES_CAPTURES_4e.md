@@ -57,10 +57,10 @@ conséquence (détail dans `SOURCES_MEDIAS.md`, section du 27-28/09/2026).
 | `tp4e_35_options_export.png` | Séance 3 · Emporter son travail : exporter, retrouver | La liste Options ouverte : Télécharger, Télécharger et stocker le fichier dans un nouvel onglet, Stocker le fichier dans un nouvel onglet. |
 | `tp4e_R8_export_stl.png` | Séance 3 · Emporter son travail : exporter, retrouver | La fenêtre Exporter réglée pour l'imprimante : format STL, Binaire, Millimeter, résolution Fin. |
 | `dsp_18_apparence_socle.png` | 🎁 Séance 3 · Ton presse-papier, et pas celui du voisin | Le panneau Apparence : la palette, un beige chaud choisi pour le socle. |
-| `tp4e_42_apparence_de.png` | 🎁 Séance 3 · Ton presse-papier, et pas celui du voisin | Le panneau Apparence : la palette, une case brune cochée, et le dé devenu brun bronze dans l'aperçu. |
+| `tp4e_42_apparence_de.png` | 🎁 Séance 3 · Ton presse-papier, et pas celui du voisin | Le panneau Apparence : la palette, une case dorée cochée, et le dé devenu doré dans l'aperçu. |
 | `tp4e_38_unites_gramme.png` | 🎁 Séance 3 · Ton presse-papier, et pas celui du voisin | Le panneau Unités de l'espace de travail : longueur Millimeter, masse Gram, densité Gram per cubic centimeter. |
 | `tp4e_36_materiau_bronze.png` | 🎁 Séance 3 · Ton presse-papier, et pas celui du voisin | Le panneau Matériau : la recherche Bronze dans Onshape Material Library, et la liste des bronzes avec leur densité. |
-| `tp4e_39_masse_socle_bronze.png` | 🎁 Séance 3 · Ton presse-papier, et pas celui du voisin | Les propriétés de masse du Socle en bronze : Masse 4357.063 g, Volume 534608.921 mm³. |
+| `tp4e_39_masse_socle_bronze.png` | 🎁 Séance 3 · Ton presse-papier, et pas celui du voisin | Les propriétés de masse du Socle en bronze : Masse 1177.003 g, Volume 144417.526 mm³. |
 | `dsp_R9_presse_papier.png` | 🎁 Séance 3 · Ton presse-papier, et pas celui du voisin | Le presse-papier fini : le dé doré posé sur sa pointe, au sommet du socle octogonal couleur pierre. |
 
 ## Valeurs lues à l'écran
