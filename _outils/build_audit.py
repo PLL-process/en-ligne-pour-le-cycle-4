@@ -989,15 +989,15 @@ OVERLAY = {
         statut="COMPLET ET VALIDABLE",
         sequence=False, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
-        mutualise_avec="atelier CAO — TP nº2 « Le dé sur son socle », mutualisé entre les trois niveaux",
-        qualite="Lot « Le dé sur son socle » (Fable, 30/08/2026) — QCM 30 questions toutes "
-                "étiquetées 4e_C7.6, 2 synthèses, fiche, matrice de 13 groupes, lexique de 30 "
-                "notions, suite de 31 tests exécutés et verts. Le code n'était évalué nulle part. "
-                "Le partage des questions dit le point de bascule de la 4e : NEUF questions sur "
-                "la contrainte (ce qu'elle est, comment on la vérifie, ce qu'elle survit) contre "
-                "cinq sur la révolution, qui est pourtant le geste visible du TP.",
+        mutualise_avec="atelier CAO — TP nº2 « Le dé sur sa pointe », mutualisé entre les trois niveaux",
+        qualite="Lot « Le dé sur sa pointe » (Fable, 30/08/2026, recalé le 27/09/2026 sur le "
+                "nouveau TP en trois séances) — QCM 30 questions toutes étiquetées 4e_C7.6, 2 "
+                "synthèses, fiche, matrice de 13 groupes, lexique de 30 notions, suite de 31 tests "
+                "exécutés et verts. Le point de bascule de la 4e : les VARIABLES (Variable Studio, "
+                "signe #, changer M, cote qui pilote) portent la compétence ; la révolution et les "
+                "rotations en sont les gestes visibles.",
         anomalies="Aucun parcours hors connexion pour le geste de modélisation (voir 5e_C7.6). "
-                  "Le lot ne dit rien de la TENUE réelle de l'assemblage — que le dé ne bascule "
+                  "Le lot ne dit rien de la TENUE réelle du dé sur sa pointe — qu'il ne bascule "
                   "pas relève de C8 ; l'angle mort est nommé dans la synthèse.",
         accessibilite="Vérifiée : aucune boîte modale, corrections dépliables, deux synthèses "
                       "séparées, lexique imprimable, hors ligne intégral.",
