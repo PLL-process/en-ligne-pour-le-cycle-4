@@ -402,6 +402,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
              alt="La même fenêtre de LibreOffice Calc, mais après un import avec la Virgule comme séparateur. Les six premières lignes de données sont écrites en entier dans la seule colonne A, points-virgules compris. Les quatre dernières sont coupées en deux au milieu d'un nombre : la colonne A finit par « voiture_thermique_moyenne_diesel;0 » et la colonne B commence par « 142;kgCO2e_par_km ».">
         <figcaption><b>Si tu vois ceci&nbsp;:</b> tes lignes sont collées dans la colonne A avec leurs points-virgules, et les dernières sont coupées en plein milieu d'un nombre — 0 d'un côté, 142 de l'autre. Le séparateur choisi n'était pas le bon&nbsp;: c'était la virgule, qui sert ici de <b>virgule décimale</b>. Ferme le fichier sans l'enregistrer (<b>Fichier → Fermer</b>), recommence <b>Fichier → Ouvrir…</b> et coche <b>Point-virgule</b>.</figcaption>
       </figure>
+
+      <details class="aide"><summary>💡 Astuce — élargir une colonne</summary><p>Si une colonne semble trop étroite (un mot coupé, un nombre collé à la colonne suivante), élargis-la&nbsp;: place le curseur sur la ligne fine entre deux lettres de colonnes (par exemple entre <b>E</b> et <b>F</b>), puis <b>double-clique</b> dessus — la colonne prend la largeur de son contenu. Pour toutes les colonnes d'un coup&nbsp;: clique sur la case vide en haut à gauche (au-dessus de la ligne 1, à gauche de la colonne A) pour tout sélectionner, puis un seul double-clic sur n'importe quelle ligne entre deux lettres suffit.</p></details>
     </li>
     <li><b>Nommer.</b> <b>Fichier → Enregistrer sous…</b> tout de suite, au format <b>Classeur ODF (.ods)</b>, sous <code>4E-FEUX-TON&nbsp;NOM</code>, dans <b>Documents</b>, dans le <b>dossier qui porte le nom de ta classe</b> (par exemple <code>4E3</code>). Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans la fenêtre d'enregistrement, ouvre Documents, clique sur <b>Nouveau dossier</b>, tape le nom de ta classe, valide, puis entre dedans.
       <figure class="geste-capture">
@@ -465,7 +467,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
         <figcaption><b>Pour rouvrir à la séance suivante&nbsp;:</b> <b>Fichier → Ouvrir…</b>, va dans <b>Documents</b>, puis dans le dossier de ta classe, et choisis le fichier qui finit par <b>.ods</b> — pas le .csv, qui est le fichier de départ, sans ton travail. Le nom complet s'écrit en bas, dans <b>Nom du fichier</b>&nbsp;: c'est là qu'on vérifie. <i>Le nom et le dossier sont des exemples.</i></figcaption>
       </figure>
     </li>
-    <li><b>Sortir.</b> Le classeur est le rendu. Un graphique se copie dans le compte rendu, ou s'exporte en image par un clic droit.
+    <li><b>Sortir.</b> Le classeur est le rendu. D'abord, fais le graphique&nbsp;: sélectionne les colonnes <b>D</b> et <b>E</b> des quatre lignes <code>facteur</code> (de <i>voiture_thermique_moyenne_diesel</i> à <i>repas_avec_boeuf</i>), puis <b>Insertion → Diagramme…</b>, garde le type <b>Colonnes</b>, et <b>Terminer</b>. Un graphique se copie dans le compte rendu, ou s'exporte en image par un clic droit.
       <figure class="geste-capture">
         <img src="Images/geste_tableur_4_sortir_clic_droit_graphique.png" width="1400" height="847" loading="lazy"
              alt="Fenêtre de LibreOffice Calc en mode sombre avec un diagramme en colonnes posé sur la feuille et sélectionné : de petites poignées carrées l'entourent. Un menu contextuel est ouvert par-dessus : Couper, Copier, Coller, Position et taille, Ancre, Positionner, Nom, Texte alternatif, Assigner la macro, Exporter comme image, Éditer. Derrière, on lit les quatre lignes de facteurs et leurs valeurs 0,142, 0,00293, 0,167 et 4,97.">
@@ -599,6 +601,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   du chiffre</b> (cumul, instant, proportion), et ta phrase finale dit pourquoi l'addition n'a pas
   de sens.</p>
 </section>
+<p class="seance-suivante-nav"><button class="btn seance-suivante" type="button" data-panel="s2">Séance 2 → Estimer&nbsp;▶</button></p>
 </div>
 
 <div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
@@ -700,6 +703,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   chiffre voyagera seul — c'est toujours ce qui arrive — et deviendra «&nbsp;les feux français ont
   émis 2 millions de tonnes&nbsp;».</p>
 </section>
+<p class="seance-suivante-nav"><button class="btn seance-suivante" type="button" data-panel="s3">Séance 3 → Comparer&nbsp;▶</button></p>
 </div>
 
 <div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
@@ -798,6 +802,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   TGV&nbsp;». Le facteur est en <b>passager</b>-km. Oublier le mot, c'est multiplier l'erreur par le
   nombre de places du train.</p>
 </section>
+<p class="seance-suivante-nav"><button class="btn seance-suivante" type="button" data-panel="s4">Séance 4 → Exiger&nbsp;▶</button></p>
 </div>
 
 <div class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4">
@@ -1214,6 +1219,14 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
     majTaches();
     window.scrollTo({top:$("seances").offsetTop-8,
       behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Règle d'or n°101 — bouton de fin de séance ══════ */
+document.querySelectorAll(".seance-suivante").forEach(bouton=>{
+  bouton.addEventListener("click", ()=>{
+    const cible = $("tab-"+bouton.dataset.panel);
+    if (cible) cible.click();
   });
 });
 
