@@ -343,6 +343,20 @@ html, body{
 /* ── Highlight.js overrides for dark theme integration ── */
 .hljs{background:#0d1117 !important;border-radius:0;padding:0;}
 pre code.hljs{display:block;padding:0;}
+
+/* INTERFACE_VITTASCIENCE_PAR_EXERCICE (30/09/2026) */
+.vitta-choice, .vitta-choice *{pointer-events:auto !important;}
+.vitta-choice{margin:14px 0 18px 0;}
+.vitta-steps{margin:6px 0 10px 1.2em;padding:0;line-height:1.6;}
+.vitta-hint{margin:6px 0 10px 0;}
+.vitta-label{margin:12px 0 4px 0;font-weight:bold;}
+.vitta-choice pre{margin:6px 0;border-radius:10px;overflow:auto;}
+.vitta-choice pre code{display:block;padding:10px 12px;font-size:1rem;}
+.vitta-copy{cursor:pointer;}
+.vitta-choice kbd{border:1px solid var(--border);border-radius:4px;padding:0 4px;font-size:.9em;}
+.vitta-embed{margin-top:10px;}
+.vitta-embed summary{cursor:pointer;color:var(--muted);}
+.vitta-embed iframe{margin-top:10px;}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -500,7 +514,7 @@ Une <span class="mot-cle">variable</span> est comme une boîte avec un nom. Quan
 <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">Ouvrir l’interface Vittascience Python – mode mixte</a>
 </p>
 <p class="small">
-Les liens Vittascience ouvrent une interface Python en mode mixte, sans projet local préchargé. Pour chaque exercice, reproduis le programme à partir de la capture ou du code transcrit, puis teste-le. La partie « Installer Python et les outils nécessaires » sert surtout aux prolongements non notés.
+Dans chaque exercice, un encadré 🧪 donne le programme à copier : clique sur « 📋 Copier le programme », ouvre Vittascience, colle-le dans la partie Python puis exécute-le. La partie « Installer Python et les outils nécessaires » sert surtout aux prolongements non notés.
 </p>
 </section>
 <section class="card start-panel" id="startPanel">
@@ -556,6 +570,32 @@ Les liens Vittascience ouvrent une interface Python en mode mixte, sans projet l
 <div class="exerciseHead"><h2>Exercice 1 – Calcul avec variables</h2><div class="badge">6 points</div></div>
 <div class="media"><img src="Images/capture-01-variables.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 1.</div></div>
 <div class="note">À faire : reproduire le programme dans Vittascience puis répondre.</div>
+<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_1 -->
+<div class="vitta-choice" id="interface-vittascience-exo-1">
+  <h3>🧪 Programmer l’exercice 1 dans Vittascience</h3>
+  <ol class="vitta-steps">
+    <li><strong>📋 Copier</strong> le programme avec le bouton.</li>
+    <li><strong>🚀 Ouvrir Vittascience</strong> (nouvel onglet).</li>
+    <li><strong>Coller</strong> dans la partie Python, à droite (clic dedans, <kbd>Ctrl</kbd>+<kbd>A</kbd> puis <kbd>Ctrl</kbd>+<kbd>V</kbd>).</li>
+    <li>Cliquer sur <strong>▶ Exécuter</strong> et lire la console en bas.</li>
+  </ol>
+  <p class="vitta-hint">💡 C’est le programme de la capture 1 : exécute-le, puis réponds aux questions.</p>
+  <pre><code class="language-python" id="vitta-code-1-1">x = 7
+y = 8.4
+x = 2 * x
+y = 3 * x - 2 * y
+print(y)</code></pre>
+  <div class="vitta-actions">
+    <button type="button" class="vitta-copy" data-target="vitta-code-1-1">📋 Copier le programme</button>
+    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
+  </div>
+  <details class="vitta-embed">
+    <summary>Ou programmer ici, dans l’interface intégrée</summary>
+    <iframe data-src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Interface Vittascience intégrée pour l’exercice 1" allow="clipboard-read; clipboard-write; fullscreen"></iframe>
+    <p class="vitta-warning">Si l’interface intégrée ne répond pas aux clics, utilise le bouton « 🚀 Ouvrir Vittascience ».</p>
+  </details>
+</div>
+<!-- FIN_INTERFACE_VITTASCIENCE_EXO_1 -->
 <div class="question" data-qnum="1"><strong>1.1</strong> Quelle valeur est affichée dans la console ?<div class="options">
 <label class="option"><input type="radio" name="q11" value="25.2">25.2</label>
 <label class="option"><input type="radio" name="q11" value="8.4">8.4</label>
@@ -564,40 +604,37 @@ Les liens Vittascience ouvrent une interface Python en mode mixte, sans projet l
 <div class="question" data-qnum="2"><strong>1.2</strong> Quelle est la valeur finale de x ?<input type="number" id="q12" step="0.1"></div>
 <div class="question" data-qnum="3"><strong>1.3</strong> Explique pourquoi la valeur affichée pour y est différente de sa valeur initiale.<textarea id="q13"></textarea></div>
 </section>
-<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_1 -->
-<div class="vitta-choice" id="interface-vittascience-exo-1">
-  <h3>Interface Vittascience pour programmer l’exercice 1</h3>
-
-  <p>
-    <strong>Deux choix sont possibles :</strong> programmer directement dans l’interface intégrée ci-dessous,
-    ou ouvrir Vittascience dans un nouvel onglet avec le lien.
-  </p>
-
-  <div class="vitta-actions">
-    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">
-      Ouvrir directement Vittascience
-    </a>
-  </div>
-
-  <iframe
-    src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom"
-    title="Interface Vittascience intégrée pour l’exercice 1"
-    loading="lazy"
-    allow="clipboard-read; clipboard-write; fullscreen">
-  </iframe>
-
-  <p class="vitta-warning">
-    Si l’interface intégrée ne s’affiche pas correctement, ce n’est pas une erreur :
-    certains navigateurs, tablettes ou réseaux peuvent bloquer l’intégration.
-    Dans ce cas, utiliser le bouton « Ouvrir directement Vittascience ».
-  </p>
-</div>
-<!-- FIN_INTERFACE_VITTASCIENCE_EXO_1 -->
 
 
 <section class="card">
 <div class="exerciseHead"><h2>Exercice 2 – QCM sur le même programme</h2><div class="badge">6 points</div></div>
 <div class="media"><img src="Images/capture-02-qcm.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 2.</div></div>
+<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_2 -->
+<div class="vitta-choice" id="interface-vittascience-exo-2">
+  <h3>🧪 Programmer l’exercice 2 dans Vittascience</h3>
+  <ol class="vitta-steps">
+    <li><strong>📋 Copier</strong> le programme avec le bouton.</li>
+    <li><strong>🚀 Ouvrir Vittascience</strong> (nouvel onglet).</li>
+    <li><strong>Coller</strong> dans la partie Python, à droite (clic dedans, <kbd>Ctrl</kbd>+<kbd>A</kbd> puis <kbd>Ctrl</kbd>+<kbd>V</kbd>).</li>
+    <li>Cliquer sur <strong>▶ Exécuter</strong> et lire la console en bas.</li>
+  </ol>
+  <p class="vitta-hint">💡 Exécute le programme pour vérifier ta réponse au QCM.</p>
+  <pre><code class="language-python" id="vitta-code-2-1">x = 3
+y = 5
+x = 12 * x
+y = x - 2 * y
+print(y)</code></pre>
+  <div class="vitta-actions">
+    <button type="button" class="vitta-copy" data-target="vitta-code-2-1">📋 Copier le programme</button>
+    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
+  </div>
+  <details class="vitta-embed">
+    <summary>Ou programmer ici, dans l’interface intégrée</summary>
+    <iframe data-src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Interface Vittascience intégrée pour l’exercice 2" allow="clipboard-read; clipboard-write; fullscreen"></iframe>
+    <p class="vitta-warning">Si l’interface intégrée ne répond pas aux clics, utilise le bouton « 🚀 Ouvrir Vittascience ».</p>
+  </details>
+</div>
+<!-- FIN_INTERFACE_VITTASCIENCE_EXO_2 -->
 <div class="question" data-qnum="4"><strong>2.1</strong> Observe la capture ci-dessus : dans ce QCM affiché par Vittascience, quelle est la bonne réponse à sélectionner ?<div class="options">
 <label class="option"><input type="radio" name="q21" value="9">9</label>
 <label class="option"><input type="radio" name="q21" value="26">26</label>
@@ -609,77 +646,71 @@ Les liens Vittascience ouvrent une interface Python en mode mixte, sans projet l
 <label class="option"><input type="radio" name="q23" value="a">x + 2 × y</label>
 <label class="option"><input type="radio" name="q23" value="c">12 + x − y</label></div></div>
 </section>
-<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_2 -->
-<div class="vitta-choice" id="interface-vittascience-exo-2">
-  <h3>Interface Vittascience pour programmer l’exercice 2</h3>
-
-  <p>
-    <strong>Deux choix sont possibles :</strong> programmer directement dans l’interface intégrée ci-dessous,
-    ou ouvrir Vittascience dans un nouvel onglet avec le lien.
-  </p>
-
-  <div class="vitta-actions">
-    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">
-      Ouvrir directement Vittascience
-    </a>
-  </div>
-
-  <iframe
-    src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom"
-    title="Interface Vittascience intégrée pour l’exercice 2"
-    loading="lazy"
-    allow="clipboard-read; clipboard-write; fullscreen">
-  </iframe>
-
-  <p class="vitta-warning">
-    Si l’interface intégrée ne s’affiche pas correctement, ce n’est pas une erreur :
-    certains navigateurs, tablettes ou réseaux peuvent bloquer l’intégration.
-    Dans ce cas, utiliser le bouton « Ouvrir directement Vittascience ».
-  </p>
-</div>
-<!-- FIN_INTERFACE_VITTASCIENCE_EXO_2 -->
 
 
 <section class="card">
 <div class="exerciseHead"><h2>Exercice 3 – Lecture d’une correction validée</h2><div class="badge">4 points</div></div>
 <div class="media"><img src="Images/capture-03-correction.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 3.</div></div>
+<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_3 -->
+<div class="vitta-choice" id="interface-vittascience-exo-3">
+  <h3>🧪 Programmer l’exercice 3 dans Vittascience</h3>
+  <ol class="vitta-steps">
+    <li><strong>📋 Copier</strong> le programme avec le bouton.</li>
+    <li><strong>🚀 Ouvrir Vittascience</strong> (nouvel onglet).</li>
+    <li><strong>Coller</strong> dans la partie Python, à droite (clic dedans, <kbd>Ctrl</kbd>+<kbd>A</kbd> puis <kbd>Ctrl</kbd>+<kbd>V</kbd>).</li>
+    <li>Cliquer sur <strong>▶ Exécuter</strong> et lire la console en bas.</li>
+  </ol>
+  <p class="vitta-hint">💡 C’est le programme de l’exercice 2 : exécute-le pour retrouver la valeur validée.</p>
+  <pre><code class="language-python" id="vitta-code-3-1">x = 3
+y = 5
+x = 12 * x
+y = x - 2 * y
+print(y)</code></pre>
+  <div class="vitta-actions">
+    <button type="button" class="vitta-copy" data-target="vitta-code-3-1">📋 Copier le programme</button>
+    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
+  </div>
+  <details class="vitta-embed">
+    <summary>Ou programmer ici, dans l’interface intégrée</summary>
+    <iframe data-src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Interface Vittascience intégrée pour l’exercice 3" allow="clipboard-read; clipboard-write; fullscreen"></iframe>
+    <p class="vitta-warning">Si l’interface intégrée ne répond pas aux clics, utilise le bouton « 🚀 Ouvrir Vittascience ».</p>
+  </details>
+</div>
+<!-- FIN_INTERFACE_VITTASCIENCE_EXO_3 -->
 <div class="question" data-qnum="7"><strong>3.1</strong> Dans la capture ci-dessus, quelle valeur numérique est surlignée en vert ? (Écris le nombre exact.)<input type="number" id="q31"></div>
 <div class="question" data-qnum="8"><strong>3.2</strong> Que confirme cette capture au sujet du programme ?<textarea id="q32"></textarea></div>
 </section>
-<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_3 -->
-<div class="vitta-choice" id="interface-vittascience-exo-3">
-  <h3>Interface Vittascience pour programmer l’exercice 3</h3>
-
-  <p>
-    <strong>Deux choix sont possibles :</strong> programmer directement dans l’interface intégrée ci-dessous,
-    ou ouvrir Vittascience dans un nouvel onglet avec le lien.
-  </p>
-
-  <div class="vitta-actions">
-    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">
-      Ouvrir directement Vittascience
-    </a>
-  </div>
-
-  <iframe
-    src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom"
-    title="Interface Vittascience intégrée pour l’exercice 3"
-    loading="lazy"
-    allow="clipboard-read; clipboard-write; fullscreen">
-  </iframe>
-
-  <p class="vitta-warning">
-    Si l’interface intégrée ne s’affiche pas correctement, ce n’est pas une erreur :
-    certains navigateurs, tablettes ou réseaux peuvent bloquer l’intégration.
-    Dans ce cas, utiliser le bouton « Ouvrir directement Vittascience ».
-  </p>
-</div>
-<!-- FIN_INTERFACE_VITTASCIENCE_EXO_3 -->
 
 
 <section class="card">
 <div class="exerciseHead"><h2>Exercice 4 – Attention aux guillemets</h2><div class="badge">6 points</div></div>
 <div class="media"><img src="Images/capture-04-guillemets.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 4.</div></div>
+<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_4 -->
+<div class="vitta-choice" id="interface-vittascience-exo-4">
+  <h3>🧪 Programmer l’exercice 4 dans Vittascience</h3>
+  <ol class="vitta-steps">
+    <li><strong>📋 Copier</strong> le programme avec le bouton.</li>
+    <li><strong>🚀 Ouvrir Vittascience</strong> (nouvel onglet).</li>
+    <li><strong>Coller</strong> dans la partie Python, à droite (clic dedans, <kbd>Ctrl</kbd>+<kbd>A</kbd> puis <kbd>Ctrl</kbd>+<kbd>V</kbd>).</li>
+    <li>Cliquer sur <strong>▶ Exécuter</strong> et lire la console en bas.</li>
+  </ol>
+  <p class="vitta-hint">💡 Exécute le programme, puis enlève les guillemets autour de y et exécute à nouveau.</p>
+  <pre><code class="language-python" id="vitta-code-4-1">x = 1
+y = 2
+x = x + 1
+y = x * y
+print(&quot;y&quot;)</code></pre>
+  <div class="vitta-actions">
+    <button type="button" class="vitta-copy" data-target="vitta-code-4-1">📋 Copier le programme</button>
+    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
+  </div>
+  <details class="vitta-embed">
+    <summary>Ou programmer ici, dans l’interface intégrée</summary>
+    <iframe data-src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Interface Vittascience intégrée pour l’exercice 4" allow="clipboard-read; clipboard-write; fullscreen"></iframe>
+    <p class="vitta-warning">Si l’interface intégrée ne répond pas aux clics, utilise le bouton « 🚀 Ouvrir Vittascience ».</p>
+  </details>
+</div>
+<!-- FIN_INTERFACE_VITTASCIENCE_EXO_4 -->
 <div class="question" data-qnum="9"><strong>4.1</strong> Observe la capture ci-dessus : dans ce QCM, quelle est la bonne réponse à sélectionner ?<div class="options">
 <label class="option"><input type="radio" name="q41" value="10">10</label>
 <label class="option"><input type="radio" name="q41" value="5">5</label>
@@ -688,78 +719,72 @@ Les liens Vittascience ouvrent une interface Python en mode mixte, sans projet l
 <div class="question" data-qnum="10"><strong>4.2</strong> Pourquoi le programme affiche-t-il y et non sa valeur numérique ?<textarea id="q42"></textarea></div>
 <div class="question" data-qnum="11"><strong>4.3</strong> Si on enlève les guillemets, quelle valeur serait affichée ?<input type="number" id="q43"></div>
 </section>
-<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_4 -->
-<div class="vitta-choice" id="interface-vittascience-exo-4">
-  <h3>Interface Vittascience pour programmer l’exercice 4</h3>
-
-  <p>
-    <strong>Deux choix sont possibles :</strong> programmer directement dans l’interface intégrée ci-dessous,
-    ou ouvrir Vittascience dans un nouvel onglet avec le lien.
-  </p>
-
-  <div class="vitta-actions">
-    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">
-      Ouvrir directement Vittascience
-    </a>
-  </div>
-
-  <iframe
-    src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom"
-    title="Interface Vittascience intégrée pour l’exercice 4"
-    loading="lazy"
-    allow="clipboard-read; clipboard-write; fullscreen">
-  </iframe>
-
-  <p class="vitta-warning">
-    Si l’interface intégrée ne s’affiche pas correctement, ce n’est pas une erreur :
-    certains navigateurs, tablettes ou réseaux peuvent bloquer l’intégration.
-    Dans ce cas, utiliser le bouton « Ouvrir directement Vittascience ».
-  </p>
-</div>
-<!-- FIN_INTERFACE_VITTASCIENCE_EXO_4 -->
 
 
 <section class="card">
 <div class="exerciseHead"><h2>Exercice 5 – Correction sur les guillemets</h2><div class="badge">4 points</div></div>
 <div class="media"><img src="Images/capture-05-guillemets-correction.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 5.</div></div>
+<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_5 -->
+<div class="vitta-choice" id="interface-vittascience-exo-5">
+  <h3>🧪 Programmer l’exercice 5 dans Vittascience</h3>
+  <ol class="vitta-steps">
+    <li><strong>📋 Copier</strong> le programme avec le bouton.</li>
+    <li><strong>🚀 Ouvrir Vittascience</strong> (nouvel onglet).</li>
+    <li><strong>Coller</strong> dans la partie Python, à droite (clic dedans, <kbd>Ctrl</kbd>+<kbd>A</kbd> puis <kbd>Ctrl</kbd>+<kbd>V</kbd>).</li>
+    <li>Cliquer sur <strong>▶ Exécuter</strong> et lire la console en bas.</li>
+  </ol>
+  <p class="vitta-hint">💡 C’est le programme de l’exercice 4 : compare l’affichage avec et sans guillemets.</p>
+  <pre><code class="language-python" id="vitta-code-5-1">x = 1
+y = 2
+x = x + 1
+y = x * y
+print(&quot;y&quot;)</code></pre>
+  <div class="vitta-actions">
+    <button type="button" class="vitta-copy" data-target="vitta-code-5-1">📋 Copier le programme</button>
+    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
+  </div>
+  <details class="vitta-embed">
+    <summary>Ou programmer ici, dans l’interface intégrée</summary>
+    <iframe data-src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Interface Vittascience intégrée pour l’exercice 5" allow="clipboard-read; clipboard-write; fullscreen"></iframe>
+    <p class="vitta-warning">Si l’interface intégrée ne répond pas aux clics, utilise le bouton « 🚀 Ouvrir Vittascience ».</p>
+  </details>
+</div>
+<!-- FIN_INTERFACE_VITTASCIENCE_EXO_5 -->
 <div class="question" data-qnum="12"><strong>5.1</strong> Dans la capture ci-dessus, quelle valeur est indiquée comme validée (surlignée en vert) ? Écris la valeur exacte telle qu'elle apparaît.<input type="text" id="q51"></div>
 <div class="question" data-qnum="13"><strong>5.2</strong> Que rappelle le message vert ?<textarea id="q52"></textarea></div>
 </section>
-<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_5 -->
-<div class="vitta-choice" id="interface-vittascience-exo-5">
-  <h3>Interface Vittascience pour programmer l’exercice 5</h3>
-
-  <p>
-    <strong>Deux choix sont possibles :</strong> programmer directement dans l’interface intégrée ci-dessous,
-    ou ouvrir Vittascience dans un nouvel onglet avec le lien.
-  </p>
-
-  <div class="vitta-actions">
-    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">
-      Ouvrir directement Vittascience
-    </a>
-  </div>
-
-  <iframe
-    src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom"
-    title="Interface Vittascience intégrée pour l’exercice 5"
-    loading="lazy"
-    allow="clipboard-read; clipboard-write; fullscreen">
-  </iframe>
-
-  <p class="vitta-warning">
-    Si l’interface intégrée ne s’affiche pas correctement, ce n’est pas une erreur :
-    certains navigateurs, tablettes ou réseaux peuvent bloquer l’intégration.
-    Dans ce cas, utiliser le bouton « Ouvrir directement Vittascience ».
-  </p>
-</div>
-<!-- FIN_INTERFACE_VITTASCIENCE_EXO_5 -->
 
 
 <section class="card">
 <div class="exerciseHead"><h2>Exercice 6 – VMC intelligente</h2><div class="badge">8 points</div></div>
 <div class="media"><img src="Images/capture-08-vmc.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 6.</div></div><div class="code-transcrit"><strong>Texte transcrit pour améliorer la lisibilité :</strong><pre><code class="language-python">a = x * 2 + 1
 b = x * a - 3</code></pre></div>
+<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_6 -->
+<div class="vitta-choice" id="interface-vittascience-exo-6">
+  <h3>🧪 Programmer l’exercice 6 dans Vittascience</h3>
+  <ol class="vitta-steps">
+    <li><strong>📋 Copier</strong> le programme avec le bouton.</li>
+    <li><strong>🚀 Ouvrir Vittascience</strong> (nouvel onglet).</li>
+    <li><strong>Coller</strong> dans la partie Python, à droite (clic dedans, <kbd>Ctrl</kbd>+<kbd>A</kbd> puis <kbd>Ctrl</kbd>+<kbd>V</kbd>).</li>
+    <li>Cliquer sur <strong>▶ Exécuter</strong> et lire la console en bas.</li>
+  </ol>
+  <p class="vitta-hint">💡 Exécute avec x = 3, puis change la valeur de x (4, 7, 10) et exécute à chaque fois pour remplir le tableau.</p>
+  <pre><code class="language-python" id="vitta-code-6-1">x = 3
+a = x * 2 + 1
+b = x * a - 3
+print(a)
+print(b)</code></pre>
+  <div class="vitta-actions">
+    <button type="button" class="vitta-copy" data-target="vitta-code-6-1">📋 Copier le programme</button>
+    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
+  </div>
+  <details class="vitta-embed">
+    <summary>Ou programmer ici, dans l’interface intégrée</summary>
+    <iframe data-src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Interface Vittascience intégrée pour l’exercice 6" allow="clipboard-read; clipboard-write; fullscreen"></iframe>
+    <p class="vitta-warning">Si l’interface intégrée ne répond pas aux clics, utilise le bouton « 🚀 Ouvrir Vittascience ».</p>
+  </details>
+</div>
+<!-- FIN_INTERFACE_VITTASCIENCE_EXO_6 -->
 <div class="question" data-qnum="14"><strong>6.1</strong> Quelle lecture correcte du programme faut-il retenir ?<div class="options">
 <label class="option"><input type="radio" name="q71" value="A">a = x × 2 + 1 ; b = x × a − 3</label>
 <label class="option"><input type="radio" name="q71" value="B">a = x + 2 + 1 ; b = x + a − 3</label>
@@ -770,76 +795,40 @@ b = x * a - 3</code></pre></div>
 <tr><th>Sortie b</th><td><input type="number" id="q73a"></td><td><input type="number" id="q73b"></td><td><input type="number" id="q73c"></td><td><input type="number" id="q73d"></td></tr>
 </tbody></table></div>
 </section>
-<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_6 -->
-<div class="vitta-choice" id="interface-vittascience-exo-6">
-  <h3>Interface Vittascience pour programmer l’exercice 6</h3>
-
-  <p>
-    <strong>Deux choix sont possibles :</strong> programmer directement dans l’interface intégrée ci-dessous,
-    ou ouvrir Vittascience dans un nouvel onglet avec le lien.
-  </p>
-
-  <div class="vitta-actions">
-    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">
-      Ouvrir directement Vittascience
-    </a>
-  </div>
-
-  <iframe
-    src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom"
-    title="Interface Vittascience intégrée pour l’exercice 6"
-    loading="lazy"
-    allow="clipboard-read; clipboard-write; fullscreen">
-  </iframe>
-
-  <p class="vitta-warning">
-    Si l’interface intégrée ne s’affiche pas correctement, ce n’est pas une erreur :
-    certains navigateurs, tablettes ou réseaux peuvent bloquer l’intégration.
-    Dans ce cas, utiliser le bouton « Ouvrir directement Vittascience ».
-  </p>
-</div>
-<!-- FIN_INTERFACE_VITTASCIENCE_EXO_6 -->
 
 
 <section class="card">
 <div class="exerciseHead"><h2>Exercice 7 – Analyse d’une correction de la VMC</h2><div class="badge">4 points</div></div>
 <div class="media"><img src="Images/capture-09-vmc-correction.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 7.</div></div>
+<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_7 -->
+<div class="vitta-choice" id="interface-vittascience-exo-7">
+  <h3>🧪 Programmer l’exercice 7 dans Vittascience</h3>
+  <ol class="vitta-steps">
+    <li><strong>📋 Copier</strong> le programme avec le bouton.</li>
+    <li><strong>🚀 Ouvrir Vittascience</strong> (nouvel onglet).</li>
+    <li><strong>Coller</strong> dans la partie Python, à droite (clic dedans, <kbd>Ctrl</kbd>+<kbd>A</kbd> puis <kbd>Ctrl</kbd>+<kbd>V</kbd>).</li>
+    <li>Cliquer sur <strong>▶ Exécuter</strong> et lire la console en bas.</li>
+  </ol>
+  <p class="vitta-hint">💡 Le programme est déjà réglé sur x = 20 : exécute-le pour trouver b.</p>
+  <pre><code class="language-python" id="vitta-code-7-1">x = 20
+a = x * 2 + 1
+b = x * a - 3
+print(a)
+print(b)</code></pre>
+  <div class="vitta-actions">
+    <button type="button" class="vitta-copy" data-target="vitta-code-7-1">📋 Copier le programme</button>
+    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
+  </div>
+  <details class="vitta-embed">
+    <summary>Ou programmer ici, dans l’interface intégrée</summary>
+    <iframe data-src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Interface Vittascience intégrée pour l’exercice 7" allow="clipboard-read; clipboard-write; fullscreen"></iframe>
+    <p class="vitta-warning">Si l’interface intégrée ne répond pas aux clics, utilise le bouton « 🚀 Ouvrir Vittascience ».</p>
+  </details>
+</div>
+<!-- FIN_INTERFACE_VITTASCIENCE_EXO_7 -->
 <div class="question" data-qnum="16"><strong>7.1</strong> Quelle valeur de b correspond à x = 20 ?<input type="number" id="q81"></div>
 <div class="question" data-qnum="17"><strong>7.2</strong> Pourquoi faut-il calculer a avant b ?<textarea id="q82"></textarea></div>
 </section>
-<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_7 -->
-<div class="vitta-choice" id="interface-vittascience-exo-7">
-  <h3>Interface Vittascience pour programmer l’exercice 7</h3>
-
-  <p>
-    <strong>Deux choix sont possibles :</strong> programmer directement dans l’interface intégrée ci-dessous,
-    ou ouvrir Vittascience dans un nouvel onglet avec le lien.
-  </p>
-
-  <div class="vitta-actions">
-    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">
-      Ouvrir directement Vittascience
-    </a>
-    <!-- Lien pré-rempli optionnel : créer un lien de partage Vittascience, remplacer href, puis enlever hidden. Ne pas utiliser localId. -->
-    <a class="resource-link prefill-link" href="https://fr.vittascience.com/python/?link=IDENTIFIANT_DU_PROJET_PARTAGE_EXO_7" target="_blank" rel="noopener" hidden>
-      Ouvrir avec le code pré-rempli
-    </a>
-  </div>
-
-  <iframe
-    src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom"
-    title="Interface Vittascience intégrée pour l’exercice 7"
-    loading="lazy"
-    allow="clipboard-read; clipboard-write; fullscreen">
-  </iframe>
-
-  <p class="vitta-warning">
-    Si l’interface intégrée ne s’affiche pas correctement, ce n’est pas une erreur :
-    certains navigateurs, tablettes ou réseaux peuvent bloquer l’intégration.
-    Dans ce cas, utiliser le bouton « Ouvrir directement Vittascience ».
-  </p>
-</div>
-<!-- FIN_INTERFACE_VITTASCIENCE_EXO_7 -->
 
 
 <section class="card">
@@ -849,6 +838,32 @@ quantite = 78
 cout_emballage = 139
 cout_total = prix_matiere * quantite + cout_emballage
 print(cout_total)</code></pre></div>
+<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_8 -->
+<div class="vitta-choice" id="interface-vittascience-exo-8">
+  <h3>🧪 Programmer l’exercice 8 dans Vittascience</h3>
+  <ol class="vitta-steps">
+    <li><strong>📋 Copier</strong> le programme avec le bouton.</li>
+    <li><strong>🚀 Ouvrir Vittascience</strong> (nouvel onglet).</li>
+    <li><strong>Coller</strong> dans la partie Python, à droite (clic dedans, <kbd>Ctrl</kbd>+<kbd>A</kbd> puis <kbd>Ctrl</kbd>+<kbd>V</kbd>).</li>
+    <li>Cliquer sur <strong>▶ Exécuter</strong> et lire la console en bas.</li>
+  </ol>
+  <p class="vitta-hint">💡 Exécute le programme, puis change cout_emballage pour la question 8.3.</p>
+  <pre><code class="language-python" id="vitta-code-8-1">prix_matiere = 437
+quantite = 78
+cout_emballage = 139
+cout_total = prix_matiere * quantite + cout_emballage
+print(cout_total)</code></pre>
+  <div class="vitta-actions">
+    <button type="button" class="vitta-copy" data-target="vitta-code-8-1">📋 Copier le programme</button>
+    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
+  </div>
+  <details class="vitta-embed">
+    <summary>Ou programmer ici, dans l’interface intégrée</summary>
+    <iframe data-src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Interface Vittascience intégrée pour l’exercice 8" allow="clipboard-read; clipboard-write; fullscreen"></iframe>
+    <p class="vitta-warning">Si l’interface intégrée ne répond pas aux clics, utilise le bouton « 🚀 Ouvrir Vittascience ».</p>
+  </details>
+</div>
+<!-- FIN_INTERFACE_VITTASCIENCE_EXO_8 -->
 <div class="question" data-qnum="18"><strong>8.1</strong> Dans ce type d’exercice, nomme au moins deux variables utiles.<textarea id="q91"></textarea></div>
 <div class="question" data-qnum="19"><strong>8.2</strong> En utilisant la formule du programme (<span class="kbd">cout_total = prix_matiere × quantite + cout_emballage</span>), calcule le coût total affiché pour ces valeurs initiales :<pre><code class="language-python">prix_matiere = 437
 quantite = 78
@@ -856,39 +871,6 @@ cout_emballage = 139</code></pre><input type="number" id="q92"></div>
 <div class="question" data-qnum="20"><strong>8.3</strong> Si cout_emballage = 5, quel devient le coût total ?<input type="number" id="q93"></div>
 <div class="question" data-qnum="21"><strong>8.4</strong> Si une remise de 26 € est déduite du coût total obtenu en 8.3, quel est le coût total final ?<input type="number" id="q94"></div>
 </section>
-<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_8 -->
-<div class="vitta-choice" id="interface-vittascience-exo-8">
-  <h3>Interface Vittascience pour programmer l’exercice 8</h3>
-
-  <p>
-    <strong>Deux choix sont possibles :</strong> programmer directement dans l’interface intégrée ci-dessous,
-    ou ouvrir Vittascience dans un nouvel onglet avec le lien.
-  </p>
-
-  <div class="vitta-actions">
-    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">
-      Ouvrir directement Vittascience
-    </a>
-    <!-- Lien pré-rempli optionnel : créer un lien de partage Vittascience, remplacer href, puis enlever hidden. Ne pas utiliser localId. -->
-    <a class="resource-link prefill-link" href="https://fr.vittascience.com/python/?link=IDENTIFIANT_DU_PROJET_PARTAGE_EXO_8" target="_blank" rel="noopener" hidden>
-      Ouvrir avec le code pré-rempli
-    </a>
-  </div>
-
-  <iframe
-    src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom"
-    title="Interface Vittascience intégrée pour l’exercice 8"
-    loading="lazy"
-    allow="clipboard-read; clipboard-write; fullscreen">
-  </iframe>
-
-  <p class="vitta-warning">
-    Si l’interface intégrée ne s’affiche pas correctement, ce n’est pas une erreur :
-    certains navigateurs, tablettes ou réseaux peuvent bloquer l’intégration.
-    Dans ce cas, utiliser le bouton « Ouvrir directement Vittascience ».
-  </p>
-</div>
-<!-- FIN_INTERFACE_VITTASCIENCE_EXO_8 -->
 
 
 <section class="card">
@@ -898,6 +880,51 @@ cout_emballage = 139</code></pre><input type="number" id="q92"></div>
   <span class="kbd">cout_total = prix × quantite + cout_fixe</span> (avec les noms de variables du code), puis entre le résultat affiché dans la console.
   <br>La formule est la même que dans l'exercice 8 — seuls les noms des variables et les valeurs changent.
 </div>
+<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_9 -->
+<div class="vitta-choice" id="interface-vittascience-exo-9">
+  <h3>🧪 Programmer l’exercice 9 dans Vittascience</h3>
+  <ol class="vitta-steps">
+    <li><strong>📋 Copier</strong> le programme avec le bouton.</li>
+    <li><strong>🚀 Ouvrir Vittascience</strong> (nouvel onglet).</li>
+    <li><strong>Coller</strong> dans la partie Python, à droite (clic dedans, <kbd>Ctrl</kbd>+<kbd>A</kbd> puis <kbd>Ctrl</kbd>+<kbd>V</kbd>).</li>
+    <li>Cliquer sur <strong>▶ Exécuter</strong> et lire la console en bas.</li>
+  </ol>
+  <p class="vitta-hint">💡 Pour chaque situation : copie le programme, remplace la ligne # par le calcul de cout_total, puis exécute.</p>
+  <p class="vitta-label">9.1 Voiture solaire</p>
+  <pre><code class="language-python" id="vitta-code-9-1">prix_panneau = 145
+quantite = 6
+cout_assemblage = 58
+# ajoute ici la ligne de calcul de cout_total
+print(cout_total)</code></pre>
+  <div class="vitta-actions">
+    <button type="button" class="vitta-copy" data-target="vitta-code-9-1">📋 Copier le programme 9.1</button>
+  </div>
+  <p class="vitta-label">9.2 Boîtiers domotiques</p>
+  <pre><code class="language-python" id="vitta-code-9-2">prix_boitiers = 32
+quantite = 18
+cout_transport = 24
+# ajoute ici la ligne de calcul de cout_total
+print(cout_total)</code></pre>
+  <div class="vitta-actions">
+    <button type="button" class="vitta-copy" data-target="vitta-code-9-2">📋 Copier le programme 9.2</button>
+  </div>
+  <p class="vitta-label">9.3 Kits d’arrosage</p>
+  <pre><code class="language-python" id="vitta-code-9-3">prix_kit = 27
+quantite = 14
+cout_capteur = 33
+# ajoute ici la ligne de calcul de cout_total
+print(cout_total)</code></pre>
+  <div class="vitta-actions">
+    <button type="button" class="vitta-copy" data-target="vitta-code-9-3">📋 Copier le programme 9.3</button>
+    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
+  </div>
+  <details class="vitta-embed">
+    <summary>Ou programmer ici, dans l’interface intégrée</summary>
+    <iframe data-src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Interface Vittascience intégrée pour l’exercice 9" allow="clipboard-read; clipboard-write; fullscreen"></iframe>
+    <p class="vitta-warning">Si l’interface intégrée ne répond pas aux clics, utilise le bouton « 🚀 Ouvrir Vittascience ».</p>
+  </details>
+</div>
+<!-- FIN_INTERFACE_VITTASCIENCE_EXO_9 -->
 <div class="question" data-qnum="22"><strong>9.1</strong> Maquette de voiture solaire – Ajoute la ligne <span class="kbd">cout_total = prix_panneau * quantite + cout_assemblage</span>, exécute dans Vittascience et entre le coût total affiché :<pre><code class="language-python">prix_panneau = 145
 quantite = 6
 cout_assemblage = 58</code></pre><input type="number" id="q101"></div>
@@ -909,39 +936,6 @@ quantite = 14
 cout_capteur = 33</code></pre><input type="number" id="q103"></div>
 <div class="question" data-qnum="25"><strong>9.4</strong> Dans ces trois cas, qu’est-ce qui change : la logique du programme, ou seulement les noms des variables et les valeurs ?<textarea id="q104"></textarea></div>
 </section>
-<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_9 -->
-<div class="vitta-choice" id="interface-vittascience-exo-9">
-  <h3>Interface Vittascience pour programmer l’exercice 9</h3>
-
-  <p>
-    <strong>Deux choix sont possibles :</strong> programmer directement dans l’interface intégrée ci-dessous,
-    ou ouvrir Vittascience dans un nouvel onglet avec le lien.
-  </p>
-
-  <div class="vitta-actions">
-    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">
-      Ouvrir directement Vittascience
-    </a>
-    <!-- Lien pré-rempli optionnel : créer un lien de partage Vittascience, remplacer href, puis enlever hidden. Ne pas utiliser localId. -->
-    <a class="resource-link prefill-link" href="https://fr.vittascience.com/python/?link=IDENTIFIANT_DU_PROJET_PARTAGE_EXO_9" target="_blank" rel="noopener" hidden>
-      Ouvrir avec le code pré-rempli
-    </a>
-  </div>
-
-  <iframe
-    src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom"
-    title="Interface Vittascience intégrée pour l’exercice 9"
-    loading="lazy"
-    allow="clipboard-read; clipboard-write; fullscreen">
-  </iframe>
-
-  <p class="vitta-warning">
-    Si l’interface intégrée ne s’affiche pas correctement, ce n’est pas une erreur :
-    certains navigateurs, tablettes ou réseaux peuvent bloquer l’intégration.
-    Dans ce cas, utiliser le bouton « Ouvrir directement Vittascience ».
-  </p>
-</div>
-<!-- FIN_INTERFACE_VITTASCIENCE_EXO_9 -->
 
 
 <section class="card">
@@ -961,6 +955,27 @@ cout_capteur = 33</code></pre><input type="number" id="q103"></div>
 <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;"><div id="waterLed" style="width:34px;height:34px;border-radius:50%;background:#666;border:2px solid rgba(255,255,255,.25)"></div><div><strong>Décision :</strong> <span id="waterDecision">Arroser</span><div class="small" id="waterReason">Les conditions sont réunies.</div></div></div>
 <pre style="padding:0;border:none;background:transparent;"><code id="waterCode" class="language-python"></code></pre><button type="button" class="secondary" onclick="resetIrrigation()">Réinitialiser les valeurs par défaut</button>
 </div>
+<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_10 -->
+<div class="vitta-choice" id="interface-vittascience-exo-10">
+  <h3>🧪 Programmer l’exercice 10 dans Vittascience</h3>
+  <ol class="vitta-steps">
+    <li><strong>📋 Copier</strong> le programme avec le bouton.</li>
+    <li><strong>🚀 Ouvrir Vittascience</strong> (nouvel onglet).</li>
+    <li><strong>Coller</strong> dans la partie Python, à droite (clic dedans, <kbd>Ctrl</kbd>+<kbd>A</kbd> puis <kbd>Ctrl</kbd>+<kbd>V</kbd>).</li>
+    <li>Cliquer sur <strong>▶ Exécuter</strong> et lire la console en bas.</li>
+  </ol>
+  <p class="vitta-hint">💡 Le bouton copie le programme tel qu’il est affiché avec les valeurs actuelles des curseurs.</p>
+  <div class="vitta-actions">
+    <button type="button" class="vitta-copy" data-target="waterCode">📋 Copier le programme</button>
+    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
+  </div>
+  <details class="vitta-embed">
+    <summary>Ou programmer ici, dans l’interface intégrée</summary>
+    <iframe data-src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Interface Vittascience intégrée pour l’exercice 10" allow="clipboard-read; clipboard-write; fullscreen"></iframe>
+    <p class="vitta-warning">Si l’interface intégrée ne répond pas aux clics, utilise le bouton « 🚀 Ouvrir Vittascience ».</p>
+  </details>
+</div>
+<!-- FIN_INTERFACE_VITTASCIENCE_EXO_10 -->
 <div class="question" data-qnum="26"><strong>10.1</strong> Avec les valeurs au chargement, faut-il arroser ?<div class="options">
 <label class="option"><input type="radio" name="q111" value="oui">Oui</label>
 <label class="option"><input type="radio" name="q111" value="non">Non</label></div></div>
@@ -974,35 +989,6 @@ cout_capteur = 33</code></pre><input type="number" id="q103"></div>
 <label class="option"><input type="radio" name="q114" value="oui">Oui</label>
 <label class="option"><input type="radio" name="q114" value="non">Non</label></div></div>
 </section>
-<!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_10 -->
-<div class="vitta-choice" id="interface-vittascience-exo-10">
-  <h3>Interface Vittascience pour programmer l’exercice 10</h3>
-
-  <p>
-    <strong>Deux choix sont possibles :</strong> programmer directement dans l’interface intégrée ci-dessous,
-    ou ouvrir Vittascience dans un nouvel onglet avec le lien.
-  </p>
-
-  <div class="vitta-actions">
-    <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">
-      Ouvrir directement Vittascience
-    </a>
-  </div>
-
-  <iframe
-    src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom"
-    title="Interface Vittascience intégrée pour l’exercice 10"
-    loading="lazy"
-    allow="clipboard-read; clipboard-write; fullscreen">
-  </iframe>
-
-  <p class="vitta-warning">
-    Si l’interface intégrée ne s’affiche pas correctement, ce n’est pas une erreur :
-    certains navigateurs, tablettes ou réseaux peuvent bloquer l’intégration.
-    Dans ce cas, utiliser le bouton « Ouvrir directement Vittascience ».
-  </p>
-</div>
-<!-- FIN_INTERFACE_VITTASCIENCE_EXO_10 -->
 
 
 </form>
@@ -2034,6 +2020,35 @@ document.addEventListener('DOMContentLoaded', function(){
   const wc = document.getElementById('waterCode');
   if(wc && wc.textContent.trim()) hljs.highlightElement(wc);
 });
+</script>
+
+<script>
+/* INTERFACE_VITTASCIENCE_PAR_EXERCICE (30/09/2026) */
+(function(){
+  function copier(texte, bouton){
+    var fini = function(){ var t = bouton.textContent; bouton.textContent = "✅ Copié ! Colle-le dans Vittascience"; setTimeout(function(){ bouton.textContent = t; }, 2500); };
+    if(navigator.clipboard && window.isSecureContext){
+      navigator.clipboard.writeText(texte).then(fini, function(){ secours(texte); fini(); });
+    } else { secours(texte); fini(); }
+  }
+  function secours(texte){
+    var z = document.createElement("textarea"); z.value = texte; z.style.position = "fixed"; z.style.opacity = "0";
+    document.body.appendChild(z); z.select(); try{ document.execCommand("copy"); }catch(e){} document.body.removeChild(z);
+  }
+  document.addEventListener("click", function(ev){
+    var b = ev.target.closest && ev.target.closest(".vitta-copy");
+    if(!b) return;
+    ev.preventDefault();
+    var el = document.getElementById(b.getAttribute("data-target"));
+    if(el) copier(el.textContent, b);
+  });
+  document.querySelectorAll(".vitta-embed").forEach(function(d){
+    d.addEventListener("toggle", function(){
+      var f = d.querySelector("iframe");
+      if(d.open && f && !f.getAttribute("src")) f.setAttribute("src", f.getAttribute("data-src"));
+    });
+  });
+})();
 </script>
 </body>
 </html>
