@@ -341,6 +341,7 @@ select.ko,input.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(
     <div class="critere"><b>🎯 Critère de réussite :</b> 8 / 8 réponses et la carte d'identité recopiée au cahier (entrées / paramètres / sorties).</div>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Traduire en français ›</button></p>
 </div>
 
 <!-- ══════ SÉANCE 2 ══════ -->
@@ -399,6 +400,7 @@ select.ko,input.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(
     <div class="critere"><b>🎯 Critère de réussite :</b> 9 / 9 et l'algorithme recopié au cahier.</div>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Régler et vérifier ›</button></p>
 </div>
 <!-- ══════ SÉANCE 3 ══════ -->
 <div class="seance-panel" id="s3" role="tabpanel">
@@ -788,6 +790,13 @@ function signale(msg){
   _signalTimer=setTimeout(()=>{ z.textContent=""; z.classList.remove("show");
     if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
 }
+
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 </script>
 </body>
 </html>

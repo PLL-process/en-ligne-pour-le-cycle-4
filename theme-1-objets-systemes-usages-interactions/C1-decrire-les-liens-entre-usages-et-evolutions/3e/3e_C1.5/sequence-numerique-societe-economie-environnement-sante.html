@@ -423,6 +423,7 @@ parce que des classes l'utilisent déjà.</p>
        </ol>
   </div>
 </div>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Métiers et économie ›</button></p>
   </section>
 <section class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2" data-titre="Séance 2 — Métiers et économie">
 <!-- Section 2: Activité professionnelle -->
@@ -546,6 +547,7 @@ parce que des classes l'utilisent déjà.</p>
 
   
 
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Ce que ça coûte ›</button></p>
   </section>
 <section class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3" data-titre="Séance 3 — Ce que ça coûte">
 <!-- Section 3: Impact environnemental -->
@@ -1792,6 +1794,14 @@ for u in urls:
     if (garde && document.getElementById(garde)) montrer(garde);
   } catch(e){}
 })();
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(function(b){
+  b.addEventListener("click", function(){
+    var onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+    if (onglet) onglet.click();
+  });
+});
 </script>
 </body>
 </html>

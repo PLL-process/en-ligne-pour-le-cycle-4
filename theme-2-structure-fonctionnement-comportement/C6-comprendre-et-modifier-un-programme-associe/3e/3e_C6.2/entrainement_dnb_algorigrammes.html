@@ -326,6 +326,7 @@ et les compléments si la page te paraît chargée.</p>
   <button class="btn check" data-check="1" type="button">✅ Vérifier la manche 1</button>
   <p class="feedback" id="fb1" role="status"></p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="m2" type="button">Manche 2 — Lire et dérouler ›</button></p>
 </div>
 
 <div class="seance-panel" id="m2" role="tabpanel" aria-labelledby="tab-m2">
@@ -489,6 +490,7 @@ FIN TANT QUE</pre>
   <button class="btn check" data-check="2" type="button">✅ Vérifier la manche 2</button>
   <p class="feedback" id="fb2" role="status"></p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="m3" type="button">Manche 3 — Compteurs, tests et cas limites ›</button></p>
 </div>
 
 <div class="seance-panel" id="m3" role="tabpanel" aria-labelledby="tab-m3">
@@ -597,6 +599,7 @@ FIN TANT QUE</pre>
   <button class="btn check" data-check="3" type="button">✅ Vérifier la manche 3</button>
   <p class="feedback" id="fb3" role="status"></p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="m4" type="button">Manche 4 — Sujets type DNB ›</button></p>
 </div>
 
 <div class="seance-panel" id="m4" role="tabpanel" aria-labelledby="tab-m4">
@@ -1068,6 +1071,12 @@ majEssentiel(); majProgress();
     armer();
   }
 })();
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 </script>
 </body>
 </html>

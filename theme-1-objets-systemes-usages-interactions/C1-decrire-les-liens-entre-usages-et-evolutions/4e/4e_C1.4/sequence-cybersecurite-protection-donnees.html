@@ -1074,6 +1074,7 @@ lui-même.</p>
     </div>
   </div>
 
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Mes données ›</button></p>
   </section><!-- fin de #s1 -->
 
   <section class="seance-panel" id="shors" role="tabpanel" aria-labelledby="tab-shors" data-titre="Hors parcours — Python (relève de C9)">
@@ -1736,6 +1737,7 @@ Fin du programme.</code></pre>
     </div>
   </div>
 
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Mes traces ›</button></p>
   </section>
 <section class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3" data-titre="Séance 3 — Mes traces">
 <!-- 5. Limiter ses traces en ligne -->
@@ -3297,6 +3299,14 @@ recalc();
     var garde = localStorage.getItem("seance_4e_C1.4");
     if (garde && document.getElementById(garde)) montrer(garde);
   } catch(e){}
+
+  // Règle d'or n°101 — chaque séance mène explicitement à la suivante
+  document.querySelectorAll(".vers-seance").forEach(function(b){
+    b.addEventListener("click", function(){
+      var onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+      if (onglet) onglet.click();
+    });
+  });
 
   // Le dénominateur est écrit « 69 » en dur dans le HTML, et recalc() ne le
   // corrigeait qu'à la première action de l'élève : celui qui ouvrait la page

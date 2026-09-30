@@ -359,6 +359,7 @@ perdu — un second clic ramène tout.</p>
   <p class="saved-note"><b>Critère de réussite&nbsp;:</b> tes bandes sont collées, et tes trois
   tâches pourraient être déclarées terminées par quelqu'un qui passerait dans la salle.</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="p5" type="button">5e — Suivre ›</button></p>
 </div>
 
 <div class="seance-panel" id="p5" role="tabpanel" aria-labelledby="tab-p5">
@@ -442,6 +443,7 @@ perdu — un second clic ramène tout.</p>
   <p class="saved-note"><b>Critère de réussite&nbsp;:</b> ton point d'avancement dit ce qui est en
   retard <b>et</b> ce que ce retard décale — pas seulement « on a du retard ».</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="gp" type="button">Le logiciel — Pas à pas ›</button></p>
 </div>
 
 <div class="seance-panel" id="gp" role="tabpanel" aria-labelledby="tab-gp">
@@ -776,6 +778,12 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
       behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
   });
 });
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 
 /* ══════ Lecture des productions écrites (règles n°49 et n°50) ══════ */
 const bas = t => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[’']/g,"'");

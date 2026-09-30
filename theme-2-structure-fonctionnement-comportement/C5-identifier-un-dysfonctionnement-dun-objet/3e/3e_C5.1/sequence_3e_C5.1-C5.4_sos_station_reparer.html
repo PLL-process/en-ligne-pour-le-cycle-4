@@ -417,6 +417,7 @@
     <div class="critere"><b>🎯 Critère de réussite :</b> 3 parcours justes et une justification qui mentionne la rapidité du test LED ET la règle « une modification à la fois ».</div>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Le protocole de dépannage ›</button></p>
 </div>
 
 <!-- ══════ SÉANCE 2 ══════ -->
@@ -477,6 +478,7 @@
     <div class="critere"><b>🎯 Critère de réussite :</b> 9 réponses justes + un protocole rédigé comportant observation, test ordonné et vérification finale.</div>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Réparer ! ›</button></p>
 </div>
 
 <!-- ══════ SÉANCE 3 ══════ -->
@@ -530,6 +532,7 @@
     <div class="critere"><b>🎯 Critère de réussite :</b> les 2 pannes résolues au simulateur (bon diagnostic + retest réussi) et les 2 questions justes.</div>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s4" type="button">Séance 4 — La pièce sur mesure + défi ›</button></p>
 </div>
 
 <!-- ══════ SÉANCE 4 ══════ -->
@@ -1005,6 +1008,13 @@ function signale(msg){
   _signalTimer=setTimeout(()=>{ z.textContent=""; z.classList.remove("show");
     if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
 }
+
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 </script>
 </body>
 </html>

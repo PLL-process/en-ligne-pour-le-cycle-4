@@ -479,6 +479,7 @@
     <div class="critere"><b>🎯 Critère de réussite :</b> 3 réponses justes et une justification citant le &gt; strict.</div>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Le modifier ›</button></p>
 </div>
 
 <!-- ══════ SÉANCE 2 ══════ -->
@@ -572,6 +573,7 @@ if gyrophare_actif:               # ④ nouveau bloc de commande
     <div class="critere"><b>🎯 Critère de réussite :</b> les 4 ajouts présents et bien placés (le vérificateur analyse ton code), indentation correcte.</div>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Le valider + défi ›</button></p>
 </div>
 
 <!-- ══════ SÉANCE 3 ══════ -->
@@ -1107,6 +1109,13 @@ function signale(msg){
   _signalTimer=setTimeout(()=>{ z.textContent=""; z.classList.remove("show");
     if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
 }
+
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 </script>
 </body>
 </html>

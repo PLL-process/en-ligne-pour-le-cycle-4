@@ -429,6 +429,7 @@
   <p><b>Critère de réussite</b>&nbsp;: ta liste compte au moins cinq solutions et couvre les trois
   familles.</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Évaluer ›</button></p>
 </div>
 <div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
 <section class="card">
@@ -531,6 +532,7 @@
   <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: régler les poids jusqu'à ce que la solution qu'on
   préférait au départ arrive en tête.</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Définir le protocole ›</button></p>
 </div>
 <div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
 <section class="card">
@@ -636,6 +638,7 @@
   <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: oublier de noter les conditions extérieures, et
   comparer ensuite des relevés qui n'étaient pas comparables.</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s4" type="button">Séance 4 — Choisir ›</button></p>
 </div>
 
 <div class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4">
@@ -982,6 +985,12 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
       behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
   });
 });
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 
 /* ══════ Vérificateurs ══════ */
 const CHECKS = {

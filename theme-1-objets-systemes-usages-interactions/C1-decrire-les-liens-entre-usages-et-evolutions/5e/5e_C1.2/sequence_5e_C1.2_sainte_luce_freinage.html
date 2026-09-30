@@ -555,6 +555,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   touchent et l'endroit où la chaleur apparaît, et tu ranges les trois phrases dans les trois
   bonnes cases.</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Comparer ›</button></p>
 </div>
 
 <div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
@@ -785,6 +786,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <p class="meta"><b>Critère de réussite</b>&nbsp;: tes six lignes nomment chaque fois le meilleur
   ET le moins bon, et ta dernière phrase dit que le tableau ne donne pas l'importance des critères.</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Choisir ›</button></p>
 </div>
 
 <div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
@@ -1092,6 +1094,12 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
       behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
   });
 });
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 
 /* ══════ Lecture des productions écrites ══════ */
 /* Règle n°49 : on teste ce qui est RENDU. Les accents et les apostrophes sont

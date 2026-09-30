@@ -601,6 +601,7 @@ corrections et les compléments si la page te paraît chargée.</p>
   raison de son choix, la source et la forme d'énergie, et ce que le système traite comme
   information.</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Le cycle de vie ›</button></p>
 </div>
 <div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
 <section class="card">
@@ -708,6 +709,7 @@ corrections et les compléments si la page te paraît chargée.</p>
   <p><b>Critère de réussite</b>&nbsp;: tu relies chaque donnée du tableau à l'étape du cycle qu'elle
   concerne, et tu sais dire laquelle pèse le plus, avec un argument de durée.</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Mesurer ›</button></p>
 </div>
 <div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
 <section class="card">
@@ -856,6 +858,7 @@ corrections et les compléments si la page te paraît chargée.</p>
   <p><b>Critère de réussite</b>&nbsp;: tu sais dire pourquoi chaque condition du protocole est
   imposée, lire le tableau, et nommer une chose que ces mesures ne permettent pas de conclure.</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s4" type="button">Séance 4 — Choisir ›</button></p>
 </div>
 <div class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4">
 <!-- gestes-outil-v1 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau. -->
@@ -1370,6 +1373,12 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
       behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
   });
 });
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 
 /* ══════ Vérificateurs ══════ */
 const CHECKS = {

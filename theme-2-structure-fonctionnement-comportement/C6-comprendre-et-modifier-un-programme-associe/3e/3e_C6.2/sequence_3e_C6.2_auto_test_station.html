@@ -613,6 +613,7 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
     une boucle sur les organes, un test par organe et une décision finale — et aucune flèche ne mène nulle part.</p>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="seance2" type="button">Séance 2 — Écrire l'algorithme ›</button></p>
 </div>
 
 <!-- ═══════════ SÉANCE 2 ═══════════ -->
@@ -770,6 +771,7 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
     fois sans panne et une fois avec au moins deux pannes, et je sais lire le journal produit.</p>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="seance3" type="button">Séance 3 — Éprouver et valider ›</button></p>
 </div>
 
 <!-- ═══════════ SÉANCE 3 ═══════════ -->
@@ -1223,6 +1225,13 @@ function signale(msg){
   _signalTimer=setTimeout(()=>{ z.textContent=""; z.classList.remove("show");
     if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
 }
+
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 </script>
 </body>
 </html>

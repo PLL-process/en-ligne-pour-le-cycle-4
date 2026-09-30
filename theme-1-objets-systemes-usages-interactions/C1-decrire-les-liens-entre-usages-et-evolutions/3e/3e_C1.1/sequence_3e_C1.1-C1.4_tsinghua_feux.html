@@ -689,6 +689,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       camion, l'avion et la canne répondent chacun autrement à la même question.</p>
     </details>
   </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Comparabilité ›</button></p>
 </section>
 
 <!-- ══════════════════ SÉANCE 2 ══════════════════ -->
@@ -899,6 +900,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       ce que les nombres veulent dire&nbsp;; c'est à toi de le savoir avant de cliquer.</p>
     </details>
   </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Proxy ›</button></p>
 </section>
 
 <!-- ══════════════════ SÉANCE 3 ══════════════════ -->
@@ -987,6 +989,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       C'est exactement là qu'il devient indispensable.</p>
     </details>
   </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s4" type="button">Séance 4 — Incommensurable ›</button></p>
 </section>
 
 <!-- ══════════════════ SÉANCE 4 ══════════════════ -->
@@ -1140,6 +1143,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     machine sait le faire. Entre le possible et ce qui arrive, il y a des décisions — et des gens
     qui les prennent.</p>
   </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s5" type="button">Séance 5 — Argumenter ›</button></p>
 </section>
 
 <!-- ══════════════════ SÉANCE 5 ══════════════════ -->
@@ -1490,6 +1494,12 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
       behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
   });
 });
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 
 /* ══════ Outils de lecture des productions écrites ══════ */
 /* Règle n°49 : on teste ce qui est RENDU. Ces fonctions lisent la production de
