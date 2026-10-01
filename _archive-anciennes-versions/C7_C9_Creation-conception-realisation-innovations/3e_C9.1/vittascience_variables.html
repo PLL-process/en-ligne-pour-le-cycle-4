@@ -110,7 +110,6 @@ iframe{width:100%;aspect-ratio:16/9;border:none;border-radius:14px}.footer{text-
 }
 .locked-before-start{
   opacity:.42;
-  pointer-events:none;
   filter:grayscale(.2);
 }
 .save-status{
@@ -284,7 +283,6 @@ input[type="range"]{
 /* Correction visuelle : conserver un fond sombre uniforme même avant le démarrage */
 .locked-before-start{
   opacity:1 !important;
-  pointer-events:none;
   filter:none !important;
 }
 .locked-before-start .question,
@@ -519,6 +517,7 @@ Dans chaque exercice, un encadré 🧪 donne le programme à copier : clique sur
 </section>
 <section class="card start-panel" id="startPanel">
 <h2>Réglages avant de commencer</h2>
+<p class="small">👉 Choisis tes réglages puis clique sur « Démarrer le questionnaire ». Si tu commences directement à répondre, le questionnaire démarre tout seul avec les réglages par défaut.</p>
 <p>Choisis les paramètres de travail avant de lancer le questionnaire. Le chronomètre est <strong>indicatif</strong> : il ne bloque pas le travail.</p>
 
 <div class="meta">
@@ -1777,12 +1776,14 @@ function sauvegarderReponses(){
     }
   });
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+  catch(e){ majSaveStatus("Sauvegarde impossible sur ce poste (les réponses restent à l’écran)."); return; }
   majSaveStatus("Sauvegarde effectuée automatiquement.");
 }
 
 function restaurerSauvegarde(){
-  const raw = localStorage.getItem(STORAGE_KEY);
+  let raw = null;
+  try{ raw = localStorage.getItem(STORAGE_KEY); }catch(e){ return; }
   if(!raw) return;
 
   try{
@@ -1848,6 +1849,7 @@ function basculerVoletHaut(){
   const sticky = document.querySelector('.sticky');
   const btn = document.querySelector('.toggleTopBar');
   if(!sticky || !btn) return;
+  window.voletManuel = true;
   sticky.classList.toggle('compact');
   btn.textContent = sticky.classList.contains('compact') ? 'Afficher le volet' : 'Masquer le volet';
 }
@@ -1855,6 +1857,7 @@ window.addEventListener('scroll', function(){
   const sticky = document.querySelector('.sticky');
   const btn = document.querySelector('.toggleTopBar');
   if(!sticky || !btn) return;
+  if(window.voletManuel) return; /* l'élève a choisi : on ne replie plus tout seul */
   if(window.scrollY > 120 && !sticky.classList.contains('compact')){
     sticky.classList.add('compact');
     btn.textContent = 'Afficher le volet';
@@ -2048,6 +2051,21 @@ document.addEventListener('DOMContentLoaded', function(){
       if(d.open && f && !f.getAttribute("src")) f.setAttribute("src", f.getAttribute("data-src"));
     });
   });
+})();
+</script>
+
+<script>
+/* DEMARRAGE_AUTOMATIQUE (30/09/2026) : le questionnaire n'est plus jamais figé.
+   Il démarre tout seul à la première réponse si l'élève n'a pas cliqué sur « Démarrer ». */
+(function(){
+  var form = document.getElementById("eval");
+  if(!form) return;
+  function auto(){
+    if(typeof chronoDemarre !== "undefined" && chronoDemarre) return;
+    if(typeof demarrerEvaluation === "function") demarrerEvaluation();
+  }
+  form.addEventListener("focusin", auto, true);
+  form.addEventListener("pointerdown", auto, true);
 })();
 </script>
 </body>
