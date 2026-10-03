@@ -21224,3 +21224,55 @@ navigateur.
 - **Non vérifié au navigateur** : les 34 autres pages (112 transitions restantes) n'ont été jugées
   que par le contrôle statique, pas rejouées clic par clic — le contrôle couvre 100 % des pages,
   le banc au navigateur seulement l'échantillon ci-dessus.
+
+## 03/10/2026 — Thème 1 : les pointes de flèche cessent de suivre l'épaisseur du trait (`markerUnits="userSpaceOnUse"`)
+
+**Le défaut.** Un `<marker>` sans `markerUnits` est mis à l'échelle de l'épaisseur du trait qui le porte :
+`markerWidth="10"` sur un trait de 2,5 donne une pointe de **25 px**. Vu par Pascal dans
+`4e_C1.1/Images/corrige_du_nombre_a_l_exigence.svg` : pointe de 25 px dans un dernier segment de 16 px, la
+pointe déborde sur la boîte qu'elle devait désigner. Mesure du 03/10 sur `main` : 77 marqueurs dans 56 SVG
+(et 2 pages HTML à SVG inline, thème 2), 269 tracés, pointes de 9 à 96 px.
+
+**La correction (thème 1 : 17 SVG, 21 instances de marqueur, aucun SVG inline dans ce thème).**
+`markerUnits="userSpaceOnUse"` partout ; `viewBox` ajouté là où il manquait (18 marqueurs : `0 0 markerWidth
+markerHeight`, ce qui garde le dessin à l'identique) ; `markerWidth`/`markerHeight` convertis en pixels
+(ancienne valeur × épaisseur du trait). `refX`/`refY` sont exprimés dans le repère du `viewBox` : ils ne
+changent pas quand la boîte change de taille, la pointe reste posée sur l'extrémité du tracé (vérifié par le
+rendu, pas supposé). Un marqueur partagé par des traits d'épaisseurs différentes est dédoublé (`fc` →
+`fc` et `fc_2p5`, un par épaisseur) pour que chaque tracé garde sa taille d'avant.
+
+**La règle de taille, appliquée seulement là où il y avait chevauchement** (pointe plus large que le dernier
+segment du tracé qui la porte) : pointe = 4,4 × l'épaisseur du trait (11 px pour 2,5), jamais plus que
+l'ancienne, jamais plus que le dernier segment. On raccourcit le marqueur, jamais le tracé. Tous les tracés
+d'un même marqueur gardent la même pointe (pas de pointes de tailles différentes dans une figure).
+
+**Vérifié au rendu (Chromium, ×2, avant = `main`, après = branche).** Les 9 SVG sans chevauchement
+sont **identiques au pixel près** (0 px de différence : la conversion seule ne change rien). Les 8 autres ne diffèrent que dans la zone des
+pointes. Les 17 fichiers sont du XML valide.
+
+**Tracés qui changent d'aspect** (la pointe rétrécit) :
+
+| SVG | marqueur | pointe avant → après | dernier segment | lignes des tracés |
+|---|---|---|---|---|
+| `corrige_trois_regimes_de_surveillance.svg` | `fr2` | 30 → 13.2 px | 20 px | 74, 75 |
+| `corrige_du_nombre_a_l_exigence.svg` | `fn` | 25 → 11 px | 16 px | 39, 47, 56, 65 |
+| `corrige_systeme_information.svg` | `fs` | 25 → 11 px | 22 px | 69, 70, 71 |
+| `corrige_trois_principes_de_freinage.svg` | `fp` | 22.5 → 6 px | 6 px | 36 |
+| `corrige_trois_representations.svg` | `fc` | 14.4 → 7.04 px | 9 px | 43, 48, 54, 57, 63 |
+| `corrige_trois_representations.svg` | `fc_2p5` | 22.5 → 11 px | 18 px | 136 |
+| `du_verbatim_a_l_algorigramme.svg` | `fv` | 25 → 11 px | 20 px | 82, 83, 84 |
+| `cycle_de_vie_ost.svg` | `f` | 25 → 11 px | 22 px | 55, 56, 57, 58, 59 |
+| `chaine_analyse_technique.svg` | `fc` | 25 → 11 px | 12 px | 58, 59, 74 |
+| `chaine_analyse_technique.svg` | `fr` | 25 → 11 px | 12 px | 88 |
+
+**À regarder.** `corrige_trois_principes_de_freinage.svg` (5e_C1.2) : le dernier segment ne fait que 6 px, la
+pointe est donc de 6 px sur un trait de 2,5 — elle tient, mais elle est petite ; l'alternative est d'allonger
+ce segment dans le dessin (hors périmètre ici). Sans chevauchement, gardés tels quels, **y compris les
+grandes pointes** (`donnee_information_tableur.svg` : 60 px sur un trait de 6) : « même aspect qu'avant » a
+primé sur la règle des 10 à 12 px. **Herschel et le pilote vélo-cargo n'ont aucun `<marker>`** (leurs flèches
+sont des tracés ordinaires) : rien à y corriger.
+
+**Pas dans cette PR.** Le contrôle qui refuse tout marqueur sans `markerUnits` (`_outils/controle_marqueurs.py`
+et son banc) relève du périmètre du thème 2 : il arrive avec la PR du thème 2, après les thèmes 1 et 2 dans
+l'ordre de fusion. Thème 2 : 23 SVG + 2 pages à SVG inline ; thème 3 : 16 SVG + le générateur
+`_generation/gantt_premium.py`.
