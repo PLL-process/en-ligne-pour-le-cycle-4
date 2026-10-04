@@ -7,7 +7,7 @@ schématiques** du programme en blocs Vittascience, étiquetées comme telles da
 l'image ET dans son texte alternatif (règles n°70/73/75 : pas de faux noms de
 boutons, valeurs déclarées comme exemples).
 
-**Les exceptions assumées** sont **quinze captures d'écran réelles**, toutes produites
+**Les exceptions assumées** sont **quinze captures d'écran réelles** (puis, le 03/10/2026, dix-neuf de plus : voir la dernière section), toutes produites
 conformément à la **règle d'or n°94** — une capture d'écran vient du vrai logiciel
 exécuté sur un poste, jamais d'une reconstitution présentée comme une capture, jamais
 d'une image trouvée en ligne :
@@ -102,3 +102,46 @@ Notes de conformité :
   catégorie 3. La page dit explicitement que ces seuils décrivent l'**intensité du
   vent** et ne sont **pas** la règle de décision d'une vigilance Météo-France, qui
   croise plusieurs paramètres.
+
+## Les dix-neuf captures de l'encart « Avant de commencer (échauffement) » (3 octobre 2026)
+
+Une capture par geste et par étape, pour les deux pages qui portent l'encart
+(`sequence_3e_C9.2-C8.3_station_2_programmer.html` et `…_station_alerte_cyclonique.html`).
+Toutes sont des **captures d'écran réelles** (règle n°94), du vrai site et du vrai
+Explorateur Windows, sans aucune retouche (n°127) :
+
+* **les quatorze captures de Vittascience** montrent **la page seule**, rendue à
+  1280 × 800 pixels CSS puis réduite à 1400 px de large : le cadre du navigateur
+  n'y figure pas (il aurait montré l'adresse du compte et des onglets) ; le choix est un
+  **cadrage**, pas une retouche. Le thème sombre est celui que le compte de la classe
+  impose au site. Aucune ne montre le menu du compte (« Bonjour … ») ;
+* **les cinq captures de l'Explorateur** montrent **la fenêtre entière**, thème sombre
+  du poste, **rétrécie à une seule ligne de liste** et **volet de navigation masqué** : le
+  fil d'Ariane se replie en « Documents › 3E1 » et ne nomme pas le compte, aucun autre
+  dossier de `Documents` n'est visible (protocole `PROTOCOLE_CAPTURES_GESTES.md`) ;
+* le programme des captures 4 et 4b est un **programme d'essai** (afficher « Bonjour »),
+  pas la solution d'un palier ; la capture 4c montre un téléversement **sans carte** ;
+* les noms `3e-STATION-palier1-DUPONT` et `3E1` sont des **exemples** (n°75), dits comme
+  tels dans chaque légende.
+
+| Fichier | Nature | Origine | Licence | Usage | Poids |
+|---|---|---|---|---|---|
+| `Images/geste_vitta_1_ouvrir_choix_carte.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 1 — Ouvrir : la fenêtre « Choix de la carte » | 119 Ko |
+| `Images/geste_vitta_1b_ouvrir_interface.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 1 — l'interface arrivée, mode hybride | 83 Ko |
+| `Images/geste_vitta_1c_ouvrir_bascule_blocs.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 1 — après le clic sur « Mode blocs » | 86 Ko |
+| `Images/geste_vitta_1d_ouvrir_erreur_mode_code.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 1 — l'erreur typique : le mode code | 50 Ko |
+| `Images/geste_vitta_2a_categorie_entrees_sorties.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 2 — catégorie Entrées/Sorties ouverte | 89 Ko |
+| `Images/geste_vitta_2b_categorie_logique.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 2 — catégorie Logique ouverte | 91 Ko |
+| `Images/geste_vitta_2c_categorie_boucles.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 2 — catégorie Boucles ouverte | 88 Ko |
+| `Images/geste_vitta_2d_categorie_variables.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 2 — catégorie Variables ouverte | 80 Ko |
+| `Images/geste_vitta_2e_categorie_fonctions.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 2 — catégorie Fonctions ouverte | 89 Ko |
+| `Images/geste_vitta_3_nommer_fenetre.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 3 — la fenêtre « Modifier les informations du projet », nom saisi | 77 Ko |
+| `Images/geste_vitta_3b_nommer_resultat.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 3 — le nom du projet en haut à gauche | 86 Ko |
+| `Images/geste_vitta_4_simuler_programme.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 4 — un programme d'essai prêt à simuler | 92 Ko |
+| `Images/geste_vitta_4b_simuler_en_marche.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 4 — le simulateur en marche et la console | 99 Ko |
+| `Images/geste_vitta_4c_televerser_message.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 4 — Téléverser : la compilation puis le téléversement | 94 Ko |
+| `Images/geste_vitta_5_sortir_telecharger.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 5 — la fenêtre « Sauvegarder le projet » et son bouton Télécharger | 82 Ko |
+| `Images/geste_vitta_5b_sortir_telechargements.png` | **Capture d'écran réelle** (règle n°94) | Explorateur de fichiers Windows (fenêtre seule, rétrécie à une ligne), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 5 — le fichier .ino dans Téléchargements | 54 Ko |
+| `Images/geste_vitta_5c_sortir_nouveau_dossier.png` | **Capture d'écran réelle** (règle n°94) | Explorateur de fichiers Windows (fenêtre seule, rétrécie à une ligne), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 5 — Documents : nouveau dossier à renommer | 50 Ko |
+| `Images/geste_vitta_5d_sortir_nom_de_classe.png` | **Capture d'écran réelle** (règle n°94) | Explorateur de fichiers Windows (fenêtre seule, rétrécie à une ligne), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 5 — le nom 3E1 saisi | 48 Ko |
+| `Images/geste_vitta_5e_sortir_resultat.png` | **Capture d'écran réelle** (règle n°94) | Explorateur de fichiers Windows (fenêtre seule, rétrécie à une ligne), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 5 — Documents › 3E1 contient le fichier | 57 Ko |

@@ -21276,3 +21276,73 @@ sont des tracés ordinaires) : rien à y corriger.
 et son banc) relève du périmètre du thème 2 : il arrive avec la PR du thème 2, après les thèmes 1 et 2 dans
 l'ordre de fusion. Thème 2 : 23 SVG + 2 pages à SVG inline ; thème 3 : 16 SVG + le générateur
 `_generation/gantt_premium.py`.
+
+## 03/10/2026 — Thème 3 · 3e_C9.2 : l'encart des gestes de Vittascience reçoit ses captures (vague 2, étape 2, premier lot)
+
+**Ce qui a été fait.** `PROMPT_SUITE_vague2_v2_cadres_puis_captures.md`, étape 2, lot 1 : `3e_C9.2`. Les deux pages
+qui portent l'encart — `station_2_programmer` et `station_alerte_cyclonique` — reçoivent **dix-neuf captures
+réelles** (le même jeu dans les deux), un cinquième geste « Sortir » et le mot « (échauffement) » dans le titre.
+Chaque `<li>` de geste porte ses `<figure class="geste-capture">` (patron du lot pilote `4e_C1.1`, mêmes styles,
+loupe d'agrandissement déjà présente dans les deux pages), `alt` complet et légende en deux temps.
+
+**Page · outil · gestes (mesuré avant d'agir).** Les deux pages : outil « Vittascience (interface Arduino, mode
+blocs) ». Le prompt annonçait cinq gestes ; **l'encart en avait quatre** — Ouvrir · Repérer les cinq catégories ·
+Nommer et enregistrer · Simuler puis téléverser. Pascal a demandé d'ajouter le cinquième (Sortir).
+
+**Le diff du texte visible de l'encart (hors légendes), mesuré par script.** Quatre écarts, et rien d'autre :
+
+| Où | Avant | Après |
+|---|---|---|
+| Titre | « Avant de commencer — les quatre gestes de Vittascience » | « Avant de commencer (échauffement) — les cinq gestes de Vittascience » |
+| Introduction | « Quatre gestes à faire une fois… » | « Cinq gestes à faire une fois… » |
+| Geste 1 (fin) | — | « Si Vittascience te demande la carte, choisis Arduino UNO. » (décidé par Pascal) |
+| Geste 5, nouveau | — | « **Sortir.** Le compte de la classe est partagé : il ne garde pas ton travail. Dans Vittascience, clique la **disquette** (« Sauvegarder le projet »), puis **Télécharger** : un fichier `.ino` au nom de ton projet arrive dans **Téléchargements**. **Déplace-le** dans **Documents**, dans **le dossier de ta classe (exemple : 3E1)**. Si ce dossier n'existe pas encore, crée-le d'abord : dans Documents, **Nouveau → Dossier**, tape le nom de ta classe, puis valide. » |
+
+**Les dix-neuf captures** (`Images/geste_vitta_*.png`, 48 à 119 Ko, toutes ≤ 300 Ko) : geste 1 ×4 (le « Choix de la
+carte » ; l'interface en mode hybride ; après « Mode blocs » ; l'erreur typique, le mode code) · geste 2 ×5 (une par
+catégorie : Entrées/Sorties, Logique, Boucles, Variables, Fonctions) · geste 3 ×2 (la fenêtre « Modifier les
+informations du projet » ; le nom en haut à gauche) · geste 4 ×3 (un programme d'essai ; le simulateur en marche ;
+Téléverser sans carte) · geste 5 ×5 (la fenêtre « Sauvegarder le projet » et son bouton Télécharger ; le fichier dans
+Téléchargements ; le nouveau dossier ; le nom 3E1 ; Documents › 3E1). `SOURCES_MEDIAS.md` : une ligne par capture.
+
+**Comment elles ont été prises.** Chrome 154 lancé sur une **instance à profil vierge** (dossier temporaire, sans
+extension ni favori ni saisie automatique), page rendue à **1280 × 800 px** puis réduite à 1400 px de large : un
+cadrage de la page seule, pas une retouche ; le navigateur du poste est à 348 % et une fenêtre de 1280 px de large n'y
+tient pas (en dessous d'environ 1360 px le site passe en menu « hamburger »). Connexion faite par Pascal lui-même
+(compte de test de la classe) ; la chaîne n'a jamais tapé de mot de passe. Les cinq captures de l'Explorateur sont des
+**fenêtres entières**, thème sombre du poste, **rétrécies à une ligne de liste** et volet de navigation masqué : le fil
+d'Ariane se replie en « Documents › 3E1 » (pas de nom de compte) et aucun autre dossier de `Documents` n'est montré
+(`PROTOCOLE_CAPTURES_GESTES.md`). Le programme des captures 4 et 4b est un **programme d'essai** (« Bonjour »), pas la
+solution d'un palier : l'encart se lit avant la séance.
+
+**Ce que la mesure a appris — à lire par Pascal :**
+
+* **Chrome range le fichier dans Téléchargements sans rien demander** (demandé : le signaler) : `3e-STATION-palier1-DUPONT_202693_21632.ino`,
+  1,63 Ko — le nom du projet suivi de deux nombres que le téléchargement ajoute. Le déplacement vers `Documents › 3E1`
+  est montré (captures 5b à 5e) et décrit dans le geste.
+* **Le bouton « Télécharger » donne un `.ino`** (le code Arduino ; son infobulle dit « Télécharger le script et les
+  blocs »). Je n'ai pas vérifié qu'on peut le rouvrir en blocs dans Vittascience : à tester avant la rentrée.
+* **Le mode par défaut est « hybride »**, pas « blocs » : l'encart dit « la bascule sur BLOCS (et non CODE) » ; montré tel
+  quel (accord de Pascal), avec la capture de l'erreur « mode code ».
+* **« Choix de la carte » s'affiche à chaque ouverture** sur ce profil, avec un interrupteur « Mode shield Grove »
+  (éteint par défaut). Le lot parle de shield Grove (D3 à D7, A1) : à trancher par Pascal si l'élève doit l'activer.
+* **Le « moniteur » du geste 4** : dans le simulateur, ce que le programme écrit s'affiche dans la **console** ; le bouton
+  « Moniteur série » sert à la vraie carte (cliqué pendant la simulation, il l'arrête). L'encart dit « le moniteur affiche
+  ce que ton programme raconte » : non modifié ici, la légende dit « console ».
+* **Le geste 1 dit « connecte-toi avec le compte de la classe… c'est ce qui permet d'enregistrer »**, alors que le compte est
+  partagé et ne sert pas de sauvegarde : contradiction avec le geste 5, **non modifiée** (hors de la décision).
+* **Téléverser sans carte** : « Compilation réussie. » puis une fenêtre du navigateur « Aucun appareil compatible
+  détecté » (non capturée proprement : elle recouvrait d'autres fenêtres) ; la légende la décrit.
+* **Le contrôle `controle_gestes_outil.py` refuse « les cinq gestes »** (son motif attend « quatre gestes de/du X ») : les deux
+  encarts sortent « (sans titre) ». C'est `_outils/`, périmètre du thème 2 : la correction (accepter « quatre » **ou** « cinq »)
+  part avec la PR du thème 2, après la fusion de celle-ci.
+
+**Vérifié.** `controle_medias` ✅ · `controle_liens` ✅ · `controle_hierarchie` ✅ · `controle_debordement` ✅ · impression ✅ ·
+`verif_regles_audit` sur le lot : code de sortie 0, comme avant · `tests_3e_C9.2-C8.3.mjs` **135 / 135** (dont mobile 390 px : pas de
+défilement horizontal) · au navigateur, 1280 px et 390 px, sur les deux pages : 19 images chacune, 0 cassée, 0 erreur de console,
+`scrollWidth` = largeur de la fenêtre. **Non réussi : `controle_gestes_outil.py`** (voir ci-dessus).
+
+**Remis en état.** Profil Chrome temporaire supprimé, port de pilotage fermé, dossier `3E1` et le fichier d'essai envoyés à la
+corbeille de Windows, volet de navigation de l'Explorateur remis. **Restent côté Pascal :** un projet
+`3e-STATION-palier1-DUPONT` a pu être créé dans le compte de test de la classe (à supprimer) ; la vue de `Documents` a gardé un
+tri par date (l'ordre d'avant était par nom).
