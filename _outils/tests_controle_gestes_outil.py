@@ -131,6 +131,17 @@ def main():
         page2("Vittascience", "", SIT + '<h2>Séance 1 — Coder</h2><p>Ouvre Vittascience :</p><a href="https://fr.vittascience.com/python/">▶</a>'),
         True, "précède la situation")
 
+    # ── le nombre de gestes (04/10/2026) : n'importe lequel, en lettres ou en chiffres ──
+    ACT_A = "<h2>Activité 1 — Programmer</h2><p>Téléverse ton programme dans la carte.</p>"
+    for nombre in ("cinq", "deux", "Six", "12", "dix-sept"):
+        cas("« les %s gestes de Arduino » : l'outil est lu" % nombre,
+            page("Arduino", ACT_A).replace("quatre gestes", nombre + " gestes"), False)
+    cas("« (échauffement) — les cinq gestes de Vittascience » : lu, puis jugé sur sa porte",
+        MENTION.replace("Avant de commencer — les quatre", "Avant de commencer (échauffement) — les cinq"),
+        True, "pas de porte, pas d'encart")
+    cas("sans nombre devant « gestes », pas de titre lu : « (sans titre) »",
+        page("Arduino", ACT_A).replace("les quatre gestes de", "les gestes de"), True, "(sans titre)")
+
     n += 1
     code, texte = jouer(C.DEPOT, C.TOLERES)
     if code != 0: echecs.append("le dépôt réel ne passe pas :\n     " + texte.strip())
