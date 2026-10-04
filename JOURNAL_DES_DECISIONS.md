@@ -21416,7 +21416,7 @@ défilement horizontal.
 
 **Reste de la vague 2, étape 2** : 3e_C9.1, 5e_C9.1, 4e_C9.1 (thème 3), avec les mêmes formulations.
 
-## 04/10/2026 — Thème 3 · 3e_C9.1 : l'encart des gestes de Vittascience passe en mode code et reçoit ses captures (vague 2, étape 2, lot 3)
+## 04/10/2026 — Thème 3 · 3e_C9.1 : l'encart des gestes de Vittascience passe en mode code, sans compte, et reçoit ses captures (vague 2, étape 2, lot 3)
 
 **Premier commit : 3e_C9.2.** Le geste 5 (« Sortir ») des deux pages qui le portent — `station_2_programmer` et
 `station_alerte_cyclonique` — dit désormais que le compte ne garde pas le travail « **d'une séance à l'autre** », comme
@@ -21437,6 +21437,12 @@ défilement horizontal.
 « Retrouver » par le Bloc-notes et un copier-coller, **à partir de la première ligne de code**, sans l'en-tête, à la place de
 `print('Bonjour !')`.
 
+**Deuxième décision de Pascal, après la première version du lot : pas de connexion du tout.** Le Bloc-notes remplace le cloud, et
+sans compte le `.py` n'a pas de ligne `Auteur:`. Le geste « Ouvrir » ne parle plus du compte de la classe, la capture de la fenêtre
+« Connexion » est retirée, et la phrase « Le compte de la classe est partagé : il ne garde pas ton travail… » du geste « Sortir » devient
+« Vittascience ne garde pas ton travail d'une séance à l'autre ». La fenêtre « Sauvegarder le projet » est prise **sans compte** : elle
+propose « Je me connecte », « Je m'inscris ! », puis « Télécharger » ; la légende dit de ne pas se connecter et de cliquer Télécharger.
+
 **Ce qui a changé dans le lot (liste validée avant d'y toucher).**
 
 | Où | Avant | Après |
@@ -21445,16 +21451,16 @@ défilement horizontal.
 | Parcours 🅱 (en tête) | « blocs et Python côte à côte, console intégrée » | « en mode code — tu écris ton programme au clavier, la console est en dessous » |
 | Séance 2, barre 🧪 | « blocs à gauche, Python à droite, console en bas. Recopie chaque ligne… » | « en mode code : tu tapes ton programme dans la grande zone de texte… Efface la ligne `print('Bonjour !')`… » |
 | Bonus, barre 🧪 | « blocs à gauche, Python à droite, console en bas » | « en mode code : ton programme dans la grande zone de texte, la console en bas » |
-| Encart des gestes | quatre gestes sans image ; « Fichier → Exporter » (ce menu n'existe pas) ; « ton projet est enregistré dans ton compte… depuis n'importe quel poste » | titre « (échauffement) » ; **Ouvrir** en mode code ; **Nommer** par le crayon (`3e-VARIABLES-TON NOM`) ; **Retrouver** par le Bloc-notes ; **Sortir** par la disquette et Télécharger ; onze captures |
+| Encart des gestes | quatre gestes sans image ; « Fichier → Exporter » (ce menu n'existe pas) ; « ton projet est enregistré dans ton compte… depuis n'importe quel poste » | titre « (échauffement) » ; **Ouvrir** en mode code, sans connexion ; **Nommer** par le crayon (`3e-VARIABLES-TON NOM`) ; **Retrouver** par le clic droit, « Modifier dans Bloc-notes », la sélection du programme et le collage ; **Sortir** par la disquette et Télécharger ; douze captures |
 | `manifest_arc_variables_3e.json` | « 3 liens-boutons, mode mixte » | « 4 liens-boutons, mode code » (le compte était faux) |
 | Synthèse professeur | « mode mixte blocs+texte » | « mode code : le programme se tape au clavier » |
 | `SOURCES_MEDIAS.md` | « n'utilise AUCUNE capture d'écran » (devenu faux) | une ligne par capture, avec origine, recadrage et poids |
 
-**Onze captures** (`Images/geste_vitta_*.png`, 17 à 82 Ko) : Ouvrir ×3 (le bouton dans la page ; la fenêtre « Connexion » **vide** ;
-l'éditeur en mode code) · Nommer ×2 · Retrouver ×2 (le fichier dans le Bloc-notes, programme sélectionné ; le programme collé et
-exécuté) · Sortir ×4 (Téléchargements ; nouveau dossier ; 3E1 ; Documents › 3E1). `4c` et `4d` sont la **reprise octet pour octet**
-de `3e_C9.2/Images/geste_vitta_5c` et `5d` (même poste, même dossier, aucun nom de fichier visible). **Pas encore prise** : la fenêtre
-« Sauvegarder le projet » du geste Sortir, qui demande une session connectée — attendue après le renommage du compte de la classe.
+**Douze captures** (`Images/geste_vitta_*.png`, 13 à 92 Ko) : Ouvrir ×2 (le bouton dans la page ; l'éditeur en mode code) · Nommer ×2 · Retrouver ×3
+(le menu du clic droit ; le fichier dans le Bloc-notes, programme sélectionné ; le programme collé et exécuté) · Sortir ×5 (la fenêtre
+« Sauvegarder le projet » sans compte ; Téléchargements ; nouveau dossier ; 3E1 ; Documents › 3E1). `4c` et `4d` sont la **reprise octet pour
+octet** de `3e_C9.2/Images/geste_vitta_5c` et `5d` (même poste, même dossier, aucun nom de fichier visible). **Aucune capture ne montre une
+session connectée.**
 
 **Ce que la mesure a appris — à lire par Pascal :**
 
@@ -21462,10 +21468,15 @@ de `3e_C9.2/Images/geste_vitta_5c` et `5d` (même poste, même dossier, aucun no
   capture a été supprimée avant écriture et le mot de passe n'a pas été utilisé. Le zoom du site y changeait aussi tout seul
   (0,67 puis 1,25). Toutes les captures de Vittascience ont donc été refaites dans un **profil temporaire neuf**, jamais connecté,
   à 1400 × 875, échelle 1 ; la fenêtre « Connexion » n'a été prise qu'après avoir vérifié que ses deux champs étaient vides.
-* **Le Bloc-notes portait d'autres onglets** (la session de Pascal, restaurée à l'ouverture). L'image est recadrée sur la **zone de
-  texte** : l'onglet du nom de fichier n'y est pas (il était tronqué, au milieu des autres). La consigne demandait « la zone de texte
-  et l'onglet du nom de fichier » : écart assumé, le nom du fichier est dit dans la légende de la capture 4b.
-* **Non testé** : « clic droit → Ouvrir avec → Bloc-notes », donné tel quel dans le texte ; pas de capture de ce menu.
+* **Le Bloc-notes de Pascal porte d'autres onglets** (sa session, restaurée à l'ouverture normale). **« Modifier dans Bloc-notes » ouvre le
+  fichier dans une fenêtre séparée, à un seul onglet** : c'est cette fenêtre qui est capturée, avec l'onglet du nom de fichier (tronqué par le
+  Bloc-notes à « 3e-VARIABLES-DU… »). Le coin droit de la barre d'outils porte le profil Windows : l'image est **recadrée sur la partie
+  gauche**, la fenêtre élargie pour que le profil reste hors cadre ; la longue ligne `Blocks:` y est coupée à droite.
+* **« Modifier dans Bloc-notes » est la ligne vue sur ce poste** ; le texte donne en repli « Ouvrir avec → Bloc-notes → Une seule fois ».
+  Vu : « Ouvrir avec » (en gras, première ligne du menu) ouvre une liste « Sélectionner une application pour ouvrir ce fichier .py » avec
+  deux boutons, « Toujours » et « Une seule fois » ; **non vu : « Bloc-notes » dans cette liste** (longue et propre au poste, parcourue en
+  partie) ni « Choisir une autre application ». Pas de capture de cette liste. Les autres lignes du menu (Notepad++, WinRAR, OneDrive…) sont
+  celles des logiciels de ce poste, pas celles d'un poste d'élève.
 * **Le libellé « Je me connecte »** (4e_C6.2, légende de la capture 1b ; 3e_C9.2 si elle la reprend) vient de la fenêtre « Sauvegarder le
   projet ». Le menu du compte, lui, dit **« Se connecter »**. Non corrigé ici.
 * **4e_C6.2 (#468)** : l'encart est juste pour un programme assemblé en blocs, **faux pour un programme tapé** : en mode mixte,
@@ -21478,8 +21489,8 @@ de `3e_C9.2/Images/geste_vitta_5c` et `5d` (même poste, même dossier, aucun no
 ### Vérifié
 
 `controle_medias`, `controle_liens`, `controle_hierarchie`, `controle_debordement`, `controle_gestes_outil` verts · `tests_3e_C9.1.mjs`
-**35 / 35** · au navigateur, 1280 et 390 px : 11 images, 0 cassée, loupe active sur les 11, pas de défilement horizontal (le seul 404 vu
+**35 / 35** · au navigateur, 1280 et 390 px : 12 images, 0 cassée, loupe active sur les 12, pas de défilement horizontal (le seul 404 vu
 est le `favicon.ico` du serveur local).
 
 **Remis en état.** Dossier `3E1` envoyé à la corbeille de Windows, fichier d'essai retiré de Téléchargements, fenêtres de l'Explorateur
-fermées ; dans le Bloc-notes, les deux onglets ouverts pour l'occasion sont refermés, aucun autre n'a été touché.
+fermées ; la fenêtre du Bloc-notes ouverte pour la capture est refermée ; dans la session de Pascal, aucun onglet n'a été touché.
