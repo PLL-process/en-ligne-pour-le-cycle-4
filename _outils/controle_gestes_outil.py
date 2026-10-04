@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""controle_gestes_outil.py — l'encart « les quatre gestes » nomme l'outil de SA page,
+"""controle_gestes_outil.py — l'encart « les N gestes » (quatre, cinq…) nomme l'outil de SA page,
 et se place à la porte de l'outil.
 
 LE CONSTAT
@@ -20,7 +20,7 @@ qui ouvre l'outil — on ne s'échauffe pas une heure avant l'effort.
 CE QU'IL MESURE
 ---------------
 1. L'OUTIL. Pour chaque page qui porte `<section class="card gestes-outil">`, l'outil
-   nommé dans son titre (« les quatre gestes de/du X ») doit apparaître dans le TEXTE
+   nommé dans son titre (« les N gestes de/du X », N en lettres ou en chiffres) doit apparaître dans le TEXTE
    VISIBLE de la page HORS de l'encart — ni dans un <script>, ni dans un <style>, ni
    dans une balise. Sinon la page est refusée : elle enseigne les gestes d'un outil
    qu'elle n'emploie pas. Les outils connus et les mots qui les trahissent sont dans
@@ -74,7 +74,11 @@ DEPOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ECARTES = ("_archive-anciennes-versions",)
 
 ENCART = re.compile(r'<section class="card gestes-outil".*?</section>', re.S)
-TITRE = re.compile(r"quatre gestes (?:de |du |d')\s*([^<]+)<", re.I)
+#: Le nombre de gestes n'est pas fixé : en lettres (« un » à « vingt ») ou en chiffres. Jusqu'au
+#: 04/10/2026 le motif n'acceptait que « quatre » : les cinq gestes de 3e_C9.2 sortaient « (sans titre) ».
+NOMBRE = (r"(?:\d+|un|deux|trois|quatre|cinq|six|sept|huit|neuf|dix|onze|douze|treize|quatorze|"
+          r"quinze|seize|dix-sept|dix-huit|dix-neuf|vingt)")
+TITRE = re.compile(r"\b" + NOMBRE + r"\s+gestes? (?:de |du |d')\s*([^<]+)<", re.I)
 TITRES = re.compile(r"<h([23])[^>]*>(.*?)</h\1>", re.S)
 SITUATION = re.compile(r"situation|probl[ée]matique", re.I)
 NUMERO = re.compile(r"(?:Activit[ée]|S[ée]ance)\s*\d", re.I)
@@ -177,7 +181,7 @@ def juger(chemin):
 def main(muet=False, toleres=None):
     toleres = TOLERES if toleres is None else toleres
     # Règle d'or n°299 : ce qui doit être non nul, c'est le nombre de pages
-    # OUVERTES. Zéro encart « les quatre gestes » est un résultat possible et
+    # OUVERTES. Zéro encart « les N gestes » est un résultat possible et
     # légitime ; zéro page lue est une panne.
     lues = pages(DEPOT)
     if not lues:
@@ -207,9 +211,9 @@ def main(muet=False, toleres=None):
             ecarts.append((rel, "l'encart « %s » n'est pas à la porte de l'outil : %s" % (outil, pos[1])))
     perimes = sorted(rel for rel in toleres if rel not in avec_encart)
     if not muet:
-        print("%d page(s) lues · %d encart(s) « les quatre gestes » · %d écart(s) · "
+        print("%d page(s) lues · %d encart(s) « les N gestes » · %d écart(s) · "
               "%d toléré(s) nommément" % (len(lues), vus, len(ecarts), len(signales)))
-        print("     NON LU : que les quatre gestes soient JUSTES pour cet outil et cette version —\n"
+        print("     NON LU : que les gestes soient JUSTES pour cet outil et cette version —\n"
               "     cela se vérifie devant le logiciel, pas dans un script. Ni que l'activité collée\n"
               "     soit la première qui OUVRE l'outil : le script lit une mention, pas une ouverture.")
         if signales:
@@ -227,7 +231,7 @@ def main(muet=False, toleres=None):
         for rel, d in ecarts:
             print("  %s\n     %s" % (rel, d))
         return 1
-    print("\n✅ chaque encart « les quatre gestes » nomme l'outil de sa page et se tient à sa porte")
+    print("\n✅ chaque encart « les N gestes » nomme l'outil de sa page et se tient à sa porte")
     return 0
 
 
