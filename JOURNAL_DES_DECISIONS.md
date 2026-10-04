@@ -21376,3 +21376,42 @@ qui ne sert qu'avec la vraie carte ; les chiffres ajoutés à la fin du nom du f
 
 `controle_liens`, `controle_medias`, `controle_hierarchie`, `controle_debordement` verts ;
 `controle_gestes_outil` : les deux mêmes refus qu'avant le lot.
+
+## 04/10/2026 — Thème 2 · 4e_C6.2 : l'encart des gestes de Vittascience reçoit ses captures (vague 2, étape 2, lot 2)
+
+**Premier commit : `controle_gestes_outil.py`.** Son motif de titre n'acceptait que « quatre gestes de/du X » : les encarts à
+cinq gestes de 3e_C9.2 sortaient « (sans titre) ». Il lit désormais le nombre en lettres (un à vingt) ou en chiffres. Banc
+21 → 28 cas ; dépôt réel : 13 encarts, 0 écart.
+
+**Mesuré sur l'interface Python avant d'écrire** (Chrome 154 piloté par Playwright, données du site vidées) :
+
+- il n'y a **pas de menu « Fichier → Exporter »** (ce que disait le geste Sortir) : c'est la **disquette**, puis **Télécharger** ;
+- le `.py` téléchargé reçoit des chiffres à la fin de son nom (`4e-ARROSAGE-DUPONT_202694_75334.py`), embarque les blocs en
+  tête de commentaire, et **se rouvre en blocs** par *Ouvrir → Depuis votre appareil* (vérifié, espace de travail vidé avant) ;
+- connecté, la disquette ouvre « Sauvegarder le projet » (Sauvegarder, Sauvegarder sous…, Partager, Télécharger) ; le projet
+  sauvegardé apparaît dans *Ouvrir → Mes projets sur le cloud*.
+
+**Le texte visible de l'encart, avant → après** (décisions de Pascal : « Retrouver » réécrit, nom `4e-ARROSAGE-TON NOM`) :
+
+| Où | Avant | Après |
+|---|---|---|
+| Titre | « Avant de commencer — les quatre gestes de Vittascience » | « Avant de commencer (échauffement) — les quatre gestes de Vittascience » |
+| Ouvrir | « Ouvre **Vittascience** dans le navigateur et connecte-toi avec le compte de la classe. » | « Clique sur le bouton **▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet** de l'activité : l'éditeur Python s'ouvre dans un nouvel onglet. Connecte-toi avec le compte de la classe si le professeur te le demande — il garde ton projet en ligne pendant la séance ; ta copie à toi, c'est le geste 4. » |
+| Nommer | « Clique sur le titre du projet, en haut, et remplace-le par `NIVEAU-SUJET-TON NOM`. Un projet sans nom… » | « Clique le **crayon** à côté du nom du projet, en haut à gauche, et remplace « Nouveau projet » par `4e-ARROSAGE-TON NOM`. Un projet sans nom… » |
+| Retrouver | « Ton projet est enregistré dans ton compte : tu le retrouveras depuis n'importe quel poste en te reconnectant, dans la liste de tes projets. Vérifie-le tout de suite : reviens à la liste, puis rouvre ton projet. » | « Pendant la séance, ton projet reste dans le compte de la classe : clique la **disquette**, puis **Sauvegarder**, et vérifie qu'il y est par **Ouvrir → Mes projets sur le cloud**. La semaine suivante, tu repars de ta copie : **Ouvrir → Depuis votre appareil**, puis ton fichier `.py`. » |
+| Sortir | « Pour garder une trace hors ligne : **Fichier → Exporter**, ou une capture d'écran du programme collée dans ton compte rendu. » | « Le compte de la classe est partagé : il ne garde pas ton travail d'une séance à l'autre. Clique la **disquette**, puis **Télécharger** : un fichier `.py` au nom de ton projet arrive dans **Téléchargements**. Vittascience ajoute des chiffres à la fin du nom du fichier : c'est normal. **Déplace-le** dans **Documents**, dans **le dossier de ta classe (exemple : 4E3)**. Si ce dossier n'existe pas encore, crée-le d'abord : … » |
+
+**Douze captures** (`Images/geste_vitta_*.png`, 31 à 56 Ko) : Ouvrir ×3 (le bouton de la page ; la fenêtre Connexion **vide** ;
+l'éditeur connecté) · Nommer ×2 · Retrouver ×2 (le cloud ; « Depuis votre appareil ») · Sortir ×5 (Sauvegarder le projet /
+Télécharger ; Téléchargements ; nouveau dossier ; 4E3 ; Documents › 4E3). Styles `figure.geste-capture` repris à l'identique de
+3e_C9.2 ; la loupe était déjà dans la page. **Le mot de passe du compte de test a été tapé par Pascal.** Explorateur : fenêtres
+seules, rétrécies, volet de navigation masqué pendant la prise puis remis ; deux captures de travail qui montraient le nom du
+compte ou un fichier de `Documents` ont été écartées et effacées, jamais intégrées.
+
+### Vérifié
+
+`controle_gestes_outil` (dont le banc 28/28), `controle_medias`, `controle_liens`, `controle_hierarchie`, `controle_debordement`
+verts · `tests_4e_C6.2.mjs` 35 / 35 · au navigateur, 1280 et 390 px : 12 images, 0 cassée, 0 erreur de console, pas de
+défilement horizontal.
+
+**Reste de la vague 2, étape 2** : 3e_C9.1, 5e_C9.1, 4e_C9.1 (thème 3), avec les mêmes formulations.
