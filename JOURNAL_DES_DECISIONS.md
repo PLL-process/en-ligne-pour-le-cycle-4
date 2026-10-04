@@ -21346,3 +21346,33 @@ défilement horizontal) · au navigateur, 1280 px et 390 px, sur les deux pages 
 corbeille de Windows, volet de navigation de l'Explorateur remis. **Restent côté Pascal :** un projet
 `3e-STATION-palier1-DUPONT` a pu être créé dans le compte de test de la classe (à supprimer) ; la vue de `Documents` a gardé un
 tri par date (l'ordre d'avant était par nom).
+
+## 04/10/2026 — 3e_C9.2 : cinq retouches des gestes de Vittascience, après #466
+
+**Vérifié avant d'écrire** (Chrome 154 piloté par Playwright, données du site vidées, sans compte) :
+
+- **Le `.ino` téléchargé revient en blocs.** Le fichier d'essai du lot #466, repris dans la corbeille,
+  ouvert par *Ouvrir → Depuis votre appareil* : la page passe d'elle-même en mode blocs, avec le nom du
+  projet et les huit blocs d'origine. Le fichier embarque le XML Blockly (« Mode: blocks ») en tête de
+  commentaire. Le geste 5 reste donc tel quel.
+- **La fenêtre « Choix de la carte » s'affiche à chaque ouverture** de `fr.vittascience.com/arduino/`
+  (6 sur 6). Elle ne s'affiche pas si l'adresse porte déjà `?board=uno` : ce n'est pas le lien donné
+  aux élèves. Le « Si » est retiré.
+- **« Mode shield Grove » ne change rien aux blocs** : les listes de broches des 132 champs relevés sont
+  identiques interrupteur éteint et allumé. Il change le **simulateur**, qui montre alors le shield Grove
+  et ses prises étiquetées — A0 à A3, D2 à D8, I2C, UART —, donc les prises de la consigne (D3 à D7, A1).
+  Le geste 1 dit désormais de l'allumer, et sa capture est reprise, interrupteur allumé.
+
+**Retouches** (formulations de Pascal) : le compte de la classe « garde ton projet en ligne pendant la
+séance ; ta copie à toi, c'est le geste 5 » ; la console en simulation et le bouton « Moniteur série »,
+qui ne sert qu'avec la vraie carte ; les chiffres ajoutés à la fin du nom du fichier. Les deux pages
+(station 2 et page complète) portent le même texte.
+
+**À reprendre** quand leurs gestes passeront en captures : ces formulations valent aussi pour 4e_C6.2,
+3e_C9.1, 5e_C9.1 et 4e_C9.1. `controle_gestes_outil.py` reste rouge sur ces deux pages, comme sur main
+(il n'accepte que « quatre » ou « cinq » gestes) : il sera corrigé en premier commit du thème 2.
+
+### Vérifié
+
+`controle_liens`, `controle_medias`, `controle_hierarchie`, `controle_debordement` verts ;
+`controle_gestes_outil` : les deux mêmes refus qu'avant le lot.
