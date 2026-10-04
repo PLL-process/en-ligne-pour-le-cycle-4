@@ -126,7 +126,7 @@ Explorateur Windows, sans aucune retouche (n°127) :
 
 | Fichier | Nature | Origine | Licence | Usage | Poids |
 |---|---|---|---|---|---|
-| `Images/geste_vitta_1_ouvrir_choix_carte.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 1 — Ouvrir : la fenêtre « Choix de la carte » | 119 Ko |
+| `Images/geste_vitta_1_ouvrir_choix_carte.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 piloté par Playwright, données du site vidées, **sans compte**, thème sombre, échelle 1, poste de Pascal, 04/10/2026 — reprise : « Mode shield Grove » allumé | CC0 | Geste 1 — Ouvrir : la fenêtre « Choix de la carte », Arduino UNO et shield Grove | 63 Ko |
 | `Images/geste_vitta_1b_ouvrir_interface.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 1 — l'interface arrivée, mode hybride | 83 Ko |
 | `Images/geste_vitta_1c_ouvrir_bascule_blocs.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 1 — après le clic sur « Mode blocs » | 86 Ko |
 | `Images/geste_vitta_1d_ouvrir_erreur_mode_code.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 1 — l'erreur typique : le mode code | 50 Ko |
