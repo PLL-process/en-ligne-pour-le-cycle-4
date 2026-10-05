@@ -21830,3 +21830,68 @@ le commentaire `_RAISON_T3`, et en gardant le mécanisme (`TOLERES = {}`), comme
 assertion lit une page HTML, que ce lot ne touche pas ; **elle échoue à l'identique sur `main`** (vérifié sur une extraction de `origin/main`) : un banc déjà rouge, hors de ce lot.
 
 **À venir.** Le classement de `3e_C7.1` et `5e_C7.1` (sans compte, mode mixte ou code, version 🅰), activité par activité, montré avant d'écrire.
+
+## 05/10/2026 — Thème 3 · 3e_C7.1 et 5e_C7.1 : un encart des gestes de Vittascience sans compte, mode mixte conservé ; la version 🅰 (maquette TBT) est retirée (vague 2, étape 2, derniers lots)
+
+**En tête, en commit séparé : le banc de l'atelier C7.1.** `tests_atelier_C7.1.py` comptait `href="qcm_C7.1_planification_taches.html" == 1`, alors que les trois pages
+`atelier_*_C7.1` portent deux liens vers le QCM : celui de la barre de navigation harmonisée (« 🧠 Le QCM ») et le bouton « Ouvrir le QCM (30 questions) ». Les pages sont justes ;
+l'assertion était périmée. Elle compte maintenant le seul bouton (`class="btn qcm"`) et une assertion distincte vérifie que la barre pointe aussi vers le QCM. **Le banc reste rouge pour
+deux autres raisons**, trouvées en le faisant avancer et laissées à un lot « bancs » dédié (décision de Pascal) : `"http://" not in src` échoue sur l'espace de noms SVG `xmlns`
+(la clause n'écarte `http://www.w3.org` que dans sa seconde moitié), et le banc clique `#tab-p4` sur les trois pages alors que la page 3e n'a que les onglets `p3`, `gp` et `pm`.
+
+**Pourquoi ces deux lots.** Le journal du 14/09/2026 notait que `3e_C7.1` et `5e_C7.1` « ouvrent un outil sans enseigner un seul de ses gestes » : le bouton « ▶ Ouvrir l'éditeur
+Vittascience dans un nouvel onglet » est dans l'activité 3 (et dans le Bonus de 3e), et aucun encart ne le précédait. Ils reçoivent leur encart, comme `4e_C9.1`.
+
+**Mesuré** (Vittascience, mode mixte, sans compte, profil temporaire neuf), avec les programmes exacts des pages, tapés dans le volet Python :
+
+| Programme | Blocs | « Code non traduit » | Console | Fichier téléchargé | Après réouverture |
+|---|---|---|---|---|---|
+| 3e, 3b : `SEUIL = 28`, `T = 32`, `if T > SEUIL` … `ALERTE` / `OK` | 12 éléments | non | `ALERTE` | fidèle (retraits à 2 espaces, `'` pour `"`) | 12 éléments, `ALERTE` |
+| 3e, 3b, seuil changé à 26 | 12 éléments | non | `ALERTE` | fidèle | 12 éléments, `ALERTE` |
+| 3e, Bonus : `T = 27`, `if` / `elif T >= 26` / `else`, `PRÉ-ALERTE` accentué | 15 éléments | non | `PRÉ-ALERTE` | fidèle | 15 éléments, `PRÉ-ALERTE` |
+| 5e, 3b : `occupee = True`, `if occupee` … `ROUGE` / `VERT` | 8 éléments | non | `ROUGE` | fidèle | 8 éléments, `ROUGE` |
+| 5e, 3b, `occupee = False` | 8 éléments | non | `VERT` | fidèle | 8 éléments, `VERT` |
+
+Le mode mixte et « Ouvrir → Depuis votre appareil » marchent donc pour ces activités : le programme revient **en blocs et en Python**, avec son nom. Ni Bloc-notes ni copier-coller.
+
+**Classement activité par activité (validé par Pascal).**
+
+| Page | Activité | Ce que fait l'élève | Classement |
+|---|---|---|---|
+| 3e_C7.1 | 0, 1, 2, REFAIRE, Synthèse | simulateur, conception, tests, textes | rien |
+| 3e_C7.1 | **3b** | blocs, puis change le seuil à 26 dans le Python | **`?mode=mixed` conservé** |
+| 3e_C7.1 | **Bonus** (pré-alerte) | « Blocs ou Python, comme tu préfères », `elif` | **`?mode=mixed` conservé** |
+| 5e_C7.1 | 0, 1, 2, REFAIRE, Synthèse, Bonus | pas d'éditeur | rien |
+| 5e_C7.1 | **3b** | blocs, puis `occupee = True` → `False` | **`?mode=mixed` conservé** |
+
+**Décisions de Pascal.** (1) Sans compte. (2) Noms de projet **`3e-CAPTEUR-TON NOM`** et **`5e-HALL-TON NOM`**. (3) Activité 3 : « **Nomme ton projet …, puis télécharge-le (geste 4).** »
+(4) Activité 3 des deux pages : « **Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs.** » ; Bonus de 3e, qui laisse le choix
+blocs ou Python : « **En Python, un seul élément par print, et n'additionne pas de textes : le téléchargement les abîmerait.** » (5) Dossiers de classe des captures : **3E1** (3e),
+**5E2** (5e). (6) La version 🅰 est retirée, la question TBT du QCM 5e et la phrase « matériel TBT ou simulation » de 3e (activité 1) sont gardées.
+
+**L'encart.** `Avant de commencer (échauffement) — les quatre gestes de Vittascience`, posé **juste avant l'activité 3** de chaque page (la porte de l'outil) : Ouvrir en mode mixte,
+Nommer, Retrouver par « Ouvrir → Depuis votre appareil » (avec l'avertissement de confirmation), Sortir par Télécharger. **12 captures en 3e, 11 en 5e** (pas de capture du nom de classe saisi
+en 5e, comme `5e_C9.1`) ; `4c` (et `4d` en 3e) sont la **reprise octet pour octet** de `3e_C9.1` et `5e_C9.1`. Ces pages n'avaient ni style de figures ni **loupe d'agrandissement** : les deux sont
+ajoutés (repris de `4e_C9.1`). Dans les exemples de noms, **`3e-CAPTEUR-ROY`** (et non DUPONT : « 3e-CAPTEUR-DUPONT » est coupé dans l'en-tête de l'éditeur, « 3e-CAPTEUR-DUPO… », et la légende dit
+que le nom s'y lit en entier) et **`5e-HALL-DUPONT`**.
+
+**La version 🅰 retirée.** Elle décrivait, en 3e, « capteur de température, carte et voyant en très basse tension : tu mesures la salle en vrai » et, en 5e, « la maquette du hall est câblée en très
+basse tension » ; l'éditeur Python ne pilote aucune carte. Retirés dans les deux pages : le bouton « 🅰 Avec le matériel », son paragraphe, la règle CSS `parcours-a`, `NOMS` et `classList.remove`
+(« Trois façons » devient « Deux façons » ; un ancien choix « a » mémorisé retombe sur « tous ») ; dans la fiche pédagogique (3e : une section « Versions B/C » avec la note ; 5e : « Versions A/B/C »
+devient « Versions B/C ») ; dans la synthèse professeur. **Elle pourra revenir avec la future version carte réelle, en interface Arduino** (voir l'entrée de `5e_C9.1`). Le manifeste n'avait pas de clé
+de version : rien à y changer.
+
+**Ce que la mesure a appris — à lire par Pascal :**
+
+* **La barre de langue flottante de Windows** (« FR » et une petite icône) est apparue au-dessus de la barre de titre dans deux captures de l'Explorateur : ce n'est pas la fenêtre, c'est un objet du
+  poste. Les deux captures sont **refaites** avec la fenêtre posée sur la partie de l'écran qu'elle ne recouvre pas ; rien n'a été changé dans les réglages du poste.
+* **« Mes projets sur le cloud » reste proposé** dans « Ouvrir un projet » sans compte : la légende dit de ne pas l'utiliser (comme `4e_C9.1`).
+* **Les 3 échecs du QCM sont déjà là sur `main`** (34 / 37 dans chaque lot ; le banc attend l'ancien format du QCM) : ils ne viennent pas de ce lot ; **un lot « bancs » dédié suit**, avec le banc de l'atelier C7.1.
+
+### Vérifié
+
+`controle_gestes_outil` : **16 encarts · 0 écart** (14 avant) · `controle_hierarchie`, `controle_debordement`, `controle_medias`, `controle_liens`, `controle_rapports_tests` verts · `tests_3e_C7.mjs` **40 / 43**, `tests_5e_C7.mjs`
+**39 / 42** (34 / 37 avant ; **six** contrôles « gestes » ajoutés en 3e, **cinq** en 5e, tous verts ; les 3 échecs sont ceux du QCM, hors lot) · au navigateur, 1280 et 390 px : 12 images (3e) et 11 (5e), 0 cassée, loupe active, pas de
+défilement horizontal · les programmes des activités mesurés dans Vittascience avec le texte exact.
+
+**Remis en état.** Dossiers `3E1` et `5E2` envoyés à la corbeille, fichiers d'essai retirés de Téléchargements, fenêtres de l'Explorateur fermées ; le Bloc-notes n'a pas été ouvert.

@@ -13,6 +13,11 @@
 | 1.3 Traiter des données | 2 | Saisir et exploiter des données | 4 lignes de protocole | Tableau renseigné |
 | 5.1 Résoudre des problèmes techniques | 2 | Résoudre un dysfonctionnement simple | Cause + test discriminant | Fiche diagnostic |
 
+## Versions B/C
+B simulation · C papier.
+
+La version 🅰 (maquette TBT) a été **retirée le 05/10/2026** : l'éditeur Python ne pilote aucune carte. Elle pourra revenir avec la future version carte réelle, en interface Arduino (voir `JOURNAL_DES_DECISIONS.md`).
+
 ## Sécurité
 TBT uniquement.
 
@@ -20,7 +25,7 @@ TBT uniquement.
 
 Dispositifs communs du dépôt installés — billet d'entrée hors progression, mode essentiel,
 tableau de bord des six activités, versions étayées, durées à la convention, sélecteur de
-parcours 🅰/🅱/🅲 réellement agissant, barre de progression reliée aux validations.
+parcours 🅱/🅲 réellement agissant, barre de progression reliée aux validations.
 Contrôle mécanisé : **quatre manquements → zéro**. Suite committée : **37 tests, tous verts**
 (`node tests_3e_C7.mjs .`).
 
