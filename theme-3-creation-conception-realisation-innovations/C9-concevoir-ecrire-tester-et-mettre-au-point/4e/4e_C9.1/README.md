@@ -49,10 +49,12 @@ secondes, et l'idée est acquise.
 Le banc **fonctionne hors connexion**. Seul l'éditeur Vittascience demande une
 connexion, et un repli complet est prévu.
 
-## Matériel (version 🅰)
+## Le relais de l'activité 1
 
-Carte + capteur d'humidité (entrée analogique) + **module relais** + pompe 12 V
-avec son **alimentation séparée**.
+Le jardin étudié : carte + capteur d'humidité (entrée analogique) + **module relais** + pompe 12 V
+avec son **alimentation séparée**. Les élèves ne le montent pas : ils le lisent sur le schéma de l'activité 1.
+
+> La version 🅰 « Matériel réel » (montage et téléversement) a été **retirée le 05/10/2026** : l'éditeur Python ne pilote aucune carte. Elle pourra revenir avec la future version carte réelle, en interface Arduino (voir `JOURNAL_DES_DECISIONS.md`).
 
 > **Le relais n'est pas un détail de câblage : c'est le contenu de l'activité 1.**
 > Une broche de carte fournit quelques dizaines de milliampères ; un moteur de
@@ -60,10 +62,6 @@ avec son **alimentation séparée**.
 > alors que sur la station d'alerte de 3e, dont la sortie n'est qu'un voyant, elle
 > va droit sur CONVERTIR. **Les deux lots forment une paire** : c'est en les
 > comparant que la règle devient visible.
-
-**Sécurité** : la carte reste en très basse tension ; l'alimentation de la pompe
-est branchée **par le professeur**, après relecture du câblage. Aucun secteur
-230 V dans cette séquence.
 
 ## Une correction de fond, à signaler
 

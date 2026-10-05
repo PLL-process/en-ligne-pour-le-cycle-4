@@ -119,7 +119,6 @@
   .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center}
   .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
   .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
-  body.parcours-a [data-parcours]:not([data-parcours="a"]),
   body.parcours-b [data-parcours]:not([data-parcours="b"]),
   body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
   @media print{ .choix-parcours-boutons{display:none} }
@@ -132,11 +131,10 @@
   .description-image summary{cursor:pointer;color:var(--sub);padding:4px 0}
   .description-image ol{margin:6px 0 6px 1.3em}
   .description-image p{margin:6px 0}
-  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .versions{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
   @media(max-width:760px){.versions{grid-template-columns:1fr}}
   .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
   .version h4{margin-top:0}
-  .version.va h4{color:var(--ok)}
   .version.vb h4{color:var(--hl)}
   .version.vc h4{color:var(--warn)}
   .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -202,6 +200,12 @@
   .gestes-outil ol{margin:0;padding-left:1.3rem}
   .gestes-outil li{margin:.45rem 0}
   .gestes-outil li b:first-child{color:#ffb300}
+  .gestes-outil figure.geste-capture{margin:.6rem 0 .9rem;max-width:560px}
+  .gestes-outil figure.geste-capture img{width:100%;height:auto;display:block;border:1px solid var(--border);
+    border-radius:8px;background:#fff}
+  .gestes-outil figure.geste-capture figcaption{margin:.35rem 0 0;font-size:.88em;line-height:1.45;opacity:.92}
+  .gestes-outil figure.geste-capture figcaption b{color:inherit}
+  @media print{.gestes-outil figure.geste-capture{break-inside:avoid;page-break-inside:avoid}}
   /* Règle d'or n°29 — mode essentiel */
   body.essentiel .referentiel-card,
   body.essentiel details.correction,
@@ -265,7 +269,6 @@
   .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center}
   .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
   .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
-  body.parcours-a [data-parcours]:not([data-parcours="a"]),
   body.parcours-b [data-parcours]:not([data-parcours="b"]),
   body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
   .page-suivante{max-width:940px;margin:20px auto 4px;text-align:right}
@@ -369,7 +372,6 @@
 </div>
 <div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
   <span class="parcours-label">🔀 Mon parcours :</span>
-  <button class="btn ghost parcours-btn" data-choix="a" aria-pressed="false">🅰 J'ai le matériel</button>
   <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 Je simule</button>
   <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sans matériel</button>
   <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
@@ -415,23 +417,9 @@
 </section>
 
 <section class="card">
-  <h2>🧰 Avant de commencer — les quatre gestes de Vittascience</h2>
-  <p style="color:var(--sub);font-size:.95em">Quatre gestes à faire une fois, au début, et ta séance ne se perdra pas. Tu les as peut-être déjà faits une autre année : refais-les, c'est court. Et si tu ne les as jamais faits, tout est écrit ici.</p>
-  <ol>
-    <li><b>Ouvrir.</b> Ouvre <b>Vittascience</b> dans le navigateur et connecte-toi avec le compte de la classe.</li>
-    <li><b>Nommer.</b> Clique sur le titre du projet, en haut, et remplace-le par <code>4e-JARDIN-TON NOM</code>. Un projet sans nom est introuvable la semaine suivante.</li>
-    <li><b>Retrouver.</b> Ton projet est enregistré dans ton compte : reviens à la liste de tes projets, puis rouvre-le. Vérifie-le <b>tout de suite</b>, pas la semaine prochaine.</li>
-    <li><b>Sortir.</b> Pour garder une trace hors ligne : <b>Fichier → Exporter</b>, ou une capture d'écran collée dans ton compte rendu.</li>
-  </ol>
-</section>
-
-<section class="card">
-  <h2>🔀 Trois façons de vivre la séquence</h2>
-  <p>Les trois parcours visent les <b>mêmes</b> objectifs et donnent lieu aux <b>mêmes</b> validations : le 🅲 n'est pas un lot de consolation. Le sélecteur <b>🔀 Mon parcours</b>, en haut de page, range simplement au second plan ce qui ne te concerne pas — il ne retire aucune question.</p>
+  <h2>🔀 Deux façons de vivre la séquence</h2>
+  <p>Les deux parcours visent les <b>mêmes</b> objectifs et donnent lieu aux <b>mêmes</b> validations : le 🅲 n'est pas un lot de consolation. Le sélecteur <b>🔀 Mon parcours</b>, en haut de page, range simplement au second plan ce qui ne te concerne pas — il ne retire aucune question.</p>
   <div class="versions">
-    <div class="version va" data-parcours="a"><h4>🅰 Matériel réel</h4>
-      <p>Carte + capteur d'humidité + <b>relais</b> + pompe 12 V, avec son alimentation séparée. Le relais n'est pas un détail de câblage : c'est <b>lui</b> qui reçoit l'ordre du programme, et l'activité 1 explique pourquoi.</p>
-      <p style="color:var(--sub)">Sécurité : la carte reste en très basse tension. L'alimentation de la pompe est branchée et vérifiée <b>par le professeur</b>, jamais par vous, et jamais avant que le câblage ait été relu.</p></div>
     <div class="version vb" data-parcours="b"><h4>🅱 Simulation</h4>
       <p>Deux outils, deux rôles : l'éditeur <b>Vittascience</b> pour écrire et exécuter ton programme, et le <b>banc d'essai intégré</b> à cette page pour voir la pompe réagir, faire trembler la mesure et compter les basculements. Le banc fonctionne <b>hors connexion</b>.</p></div>
     <div class="version vc" data-parcours="c"><h4>🅲 Sans matériel</h4>
@@ -655,6 +643,81 @@ FIN SI</div>
 
 <!-- ══════════════════ SÉANCE 2 ══════════════════ -->
 <div class="seance-panel" id="s2" role="tabpanel">
+<!-- gestes-outil-v1 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau. -->
+<section class="card gestes-outil" aria-labelledby="gestes-vittascience">
+  <h2 id="gestes-vittascience">🧰 Avant de commencer (échauffement) — les quatre gestes de Vittascience</h2>
+  <p class="pourquoi">Quatre gestes à faire une fois, au début, et ta séance ne se perdra pas. Tu les as peut-être déjà faits une autre année&nbsp;: refais-les, c'est court. Et si tu ne les as jamais faits, tout est écrit ici.</p>
+  <ol>
+    <li><b>Ouvrir.</b> Clique sur le bouton <b>▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</b> de l'activité 3&nbsp;: l'éditeur Python s'ouvre dans un nouvel onglet, en <b>mode mixte</b>&nbsp;: des <b>blocs à gauche</b>, le <b>Python à droite</b>. Vittascience met déjà un exemple, le bloc «&nbsp;afficher Bonjour&nbsp;» et sa ligne Python&nbsp;: tu peux l'effacer avant de commencer.
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_1_ouvrir_bouton.png" width="1400" height="875" loading="lazy"
+             alt="La page de la séquence, en thème sombre, sur l'activité 3. Dans le cadre « L'éditeur Vittascience — dans l'onglet Vittascience », une consigne en grand (« construis la décision en BLOCS… »), puis un bouton bleu « ▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet », suivi de la phrase « Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne. »">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le bouton <b>▶ Ouvrir l'éditeur Vittascience…</b>, dans le cadre de l'activité 3. <b>Puis&nbsp;:</b> clique-le&nbsp;; garde cet onglet-ci ouvert pour lire la consigne.</figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_1c_ouvrir_editeur.png" width="1400" height="875" loading="lazy"
+             alt="L'éditeur Python de Vittascience, en thème sombre et en mode mixte. En haut à gauche, le nom « Nouveau projet ». La barre d'outils : Nouveau, Ouvrir, Sauvegarder, Annuler, Rétablir, puis Exécuter au centre, et à droite les trois boutons de mode, celui du milieu (orange) étant actif. À gauche, les catégories de blocs (Affichage, Turtle, Graphiques, Numpy, IA, Logique, Boucles, Math, Texte, Variables, Listes) et un bloc orange « afficher Bonjour ! ». À droite, le code Python print('Bonjour !'). En bas, la console avec son message de bienvenue.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> les <b>blocs à gauche</b>, le <b>Python à droite</b>, la console en bas, et le nom «&nbsp;Nouveau projet&nbsp;» en haut à gauche. <i>Le bloc «&nbsp;afficher Bonjour&nbsp;» est l'exemple que Vittascience pose dans tout projet neuf&nbsp;: tu peux l'effacer avant de commencer.</i></figcaption>
+      </figure>
+    </li>
+    <li><b>Nommer.</b> Clique le <b>crayon</b> à côté du nom du projet, en haut à gauche, et remplace «&nbsp;Nouveau projet&nbsp;» par <code>4e-JARDIN-TON&nbsp;NOM</code>. Un projet sans nom est introuvable la semaine suivante.
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_2_nommer_fenetre.png" width="1400" height="875" loading="lazy"
+             alt="Fenêtre « Modifier les informations du projet » de Vittascience, en thème sombre. Le champ « Nom du projet » contient 4e-JARDIN-DUPONT, avec une coche verte. Dessous, un champ « Description du projet (facultatif) » vide, puis deux boutons : « Annuler » en gris et « Modifier » en vert.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> la fenêtre «&nbsp;Modifier les informations du projet&nbsp;», avec ton nom dans «&nbsp;Nom du projet&nbsp;». <b>Puis&nbsp;:</b> clique <b>Modifier</b>. <i>DUPONT est un exemple&nbsp;: mets ton nom.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_2b_nommer_resultat.png" width="1400" height="875" loading="lazy"
+             alt="L'éditeur après la validation : en haut à gauche, le nom du projet est devenu « 4e-JARDIN-DUPONT ».">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> ton nom apparaît en haut à gauche. C'est lui qui nommera ton fichier au geste 4.</figcaption>
+      </figure>
+    </li>
+    <li><b>Retrouver.</b> La semaine suivante, ouvre ton fichier&nbsp;: clique le <b>dossier</b> (Ouvrir), l'onglet <b>Depuis votre appareil</b>, le bouton <b>Ouvrir…</b>, puis ton fichier <code>.py</code> dans Documents, dans le dossier de ta classe. Vittascience te demande de confirmer&nbsp;: clique <b>Oui</b>. Ton programme revient, <b>en blocs et en Python</b>, avec son nom.
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_3_retrouver_ouvrir.png" width="1400" height="875" loading="lazy"
+             alt="La fenêtre « Ouvrir un projet » de Vittascience, en thème sombre, avec cinq onglets : Mes projets sur le cloud, Projets de la communauté, Exemples, Mes projets locaux et Depuis votre appareil, ce dernier étant sélectionné. Une zone « Déposez vos fichiers ici… », un champ « Sélectionnez un fichier. » et un bouton vert « Ouvrir … ».">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> clique le <b>dossier</b> dans la barre d'outils, puis l'onglet <b>Depuis votre appareil</b>. <b>Puis&nbsp;:</b> clique <b>Ouvrir…</b> et choisis ton fichier <code>.py</code>, dans Documents, dans le dossier de ta classe. <i>N'utilise pas «&nbsp;Mes projets sur le cloud&nbsp;»&nbsp;: tu n'es pas connecté.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_3b_retrouver_confirmer.png" width="1400" height="875" loading="lazy"
+             alt="Une fenêtre « Avertissement ! » de Vittascience : « Est-ce que vous êtes sûr de vouloir importer ce fichier depuis votre ordinateur ? Vous allez perdre votre avancement fait manuellement. » Deux boutons : « Oui » en vert, « Non » en gris.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> Vittascience te demande de confirmer. <b>Clique «&nbsp;Oui&nbsp;»</b>&nbsp;: ce que tu avais déjà fait dans cet onglet est remplacé par ton fichier.</figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_3c_retrouver_resultat.png" width="1400" height="875" loading="lazy"
+             alt="L'éditeur de Vittascience en mode mixte, après la réouverture. En haut à gauche, le nom « 4e-JARDIN-DUPONT ». À gauche, les blocs : cinq blocs « affecter à… la valeur » (SEUIL 40, HEURE_DEBUT 6, HEURE_FIN 10, H 25, heure 8) puis un bloc « si… sinon » avec « afficher POMPE ON » et « afficher POMPE OFF ». À droite, le code Python correspondant. La console, en bas, affiche POMPE ON.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> ton programme est revenu, <b>en blocs et en Python</b>, avec ton nom. <b>Exécuter</b> affiche dans la console ce qu'il affichait avant. <i>Ce programme est un exemple&nbsp;: c'est le tien qui revient.</i></figcaption>
+      </figure>
+    </li>
+    <li><b>Sortir.</b> Vittascience ne garde pas ton travail d'une séance à l'autre. Clique la <b>disquette</b>, puis <b>Télécharger</b>&nbsp;: un fichier <code>.py</code> au nom de ton projet arrive dans <b>Téléchargements</b>. Vittascience ajoute des chiffres à la fin du nom du fichier&nbsp;: c'est normal. <b>Déplace-le</b> dans <b>Documents</b>, dans <b>le dossier de ta classe (exemple&nbsp;: 4E3)</b>. Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans Documents, <b>Nouveau → Dossier</b>, tape le nom de ta classe, puis valide.
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_4_sortir_telecharger.png" width="1400" height="875" loading="lazy"
+             alt="Fenêtre « Sauvegarder le projet » de Vittascience, en thème sombre, sans compte. Le texte « Pour enregistrer votre projet, veuillez vous connecter. », un bouton vert « Je me connecte », le mot « ou », un bouton orange « Je m'inscris ! », une ligne, le mot « ou », puis un bouton vert « Télécharger » avec un point d'interrogation.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> la fenêtre «&nbsp;Sauvegarder le projet&nbsp;», ouverte par la <b>disquette</b>. <b>Ne te connecte pas et ne t'inscris pas&nbsp;:</b> clique <b>Télécharger</b>, le bouton vert tout en bas.</figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_4b_sortir_telechargements.png" width="1400" height="523" loading="lazy"
+             alt="Fenêtre de l'Explorateur de fichiers de Windows, en thème sombre, ouverte sur « Téléchargements » et rétrécie : sous « Aujourd'hui », le fichier « 4e-JARDIN-DUPONT_202695_3431.py » est sélectionné ; en bas, la taille du fichier.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le fichier <code>.py</code> au nom de ton projet, dans <b>Téléchargements</b> — le navigateur l'y range sans rien demander. Clique-le une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b> pour le couper. <i>Les chiffres à la fin du nom sont ajoutés par Vittascience&nbsp;; DUPONT est un exemple. La fenêtre est rétrécie pour ne montrer que ce fichier.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_4c_sortir_nouveau_dossier.png" width="1400" height="457" loading="lazy"
+             alt="Fenêtre de l'Explorateur de fichiers, ouverte sur « Documents » (c'est le chemin affiché en haut) et rétrécie à une seule ligne. Un nouveau dossier jaune vient d'être créé : son nom, « Nouveau dossier », est surligné en bleu dans un cadre, prêt à être remplacé.">
+        <figcaption><b>Si le dossier de ta classe n'existe pas encore&nbsp;:</b> dans <b>Documents</b>, clique <b>Nouveau</b> puis <b>Dossier</b>. Un dossier apparaît, son nom surligné&nbsp;: tu peux taper le tien. <i>La fenêtre est rétrécie&nbsp;: tes autres dossiers ne sont pas montrés.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_4d_sortir_nom_de_classe.png" width="1400" height="457" loading="lazy"
+             alt="La même ligne de l'Explorateur : le nom du dossier en cours de saisie est maintenant « 4E3 ».">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le nom de ta classe à la place de «&nbsp;Nouveau dossier&nbsp;». <b>Puis&nbsp;:</b> Entrée, double-clic sur le dossier pour y entrer, et <b>Ctrl&nbsp;+&nbsp;V</b> pour y coller ton fichier. <i>4E3 est un exemple&nbsp;: c'est le nom de ta classe.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_4e_sortir_resultat.png" width="1400" height="538" loading="lazy"
+             alt="Fenêtre de l'Explorateur ouverte sur « Documents › 4E3 » : un seul fichier, « 4e-JARDIN-DUPONT_202695_3431.py », de type Python.File, sélectionné.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> en haut, <b>Documents › 4E3</b>&nbsp;; dans la liste, ton fichier <code>.py</code>. Il n'est plus dans Téléchargements&nbsp;: il est rangé.</figcaption>
+      </figure>
+    </li>
+  </ol>
+</section>
 <section class="card">
   <h2>⌨️ Séance 2 — Écrire le programme, puis le mettre à l'épreuve</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : mon programme fait-il ce que je crois qu'il fait — et comment le prouver ?</p>
@@ -665,10 +728,10 @@ FIN SI</div>
     <div class="meta-grid">
       <div><b>Objectif :</b> écrire le programme dans l'éditeur, l'exécuter, et retrouver dans le code chaque élément de l'algorigramme.</div>
       <div><b>Compétence :</b> <b>4e_C9.2</b> — <i>traduire</i> un algorithme en un programme.</div>
-      <div><b>Production attendue :</b> le programme enregistré sous ton nom + le journal de ce que tu as observé.</div>
+      <div><b>Production attendue :</b> le programme téléchargé sous ton nom + le journal de ce que tu as observé.</div>
       <div><b>Ressources :</b> l'éditeur Vittascience, par le lien ci-dessous, ou le banc d'essai de cette page si le réseau manque.</div>
     </div>
-    <div class="consigne"><b>Consigne :</b> écris le programme <b>en blocs</b> d'abord, regarde le Python s'écrire à côté, puis modifie le Python et regarde les blocs suivre. Enregistre sous <code>4e-JARDIN-TON NOM</code>. Enfin, remplis le journal : ce n'est pas un compte rendu, c'est ta trace de travail.</div>
+    <div class="consigne"><b>Consigne :</b> écris le programme <b>en blocs</b> d'abord, regarde le Python s'écrire à côté, puis modifie le Python et regarde les blocs suivre. Nomme ton projet <code>4e-JARDIN-TON NOM</code>, puis télécharge-le (geste 4). Enfin, remplis le journal : ce n'est pas un compte rendu, c'est ta trace de travail.</div>
 
     <div class="palier" data-parcours="b">
       <h4>🖥 L'éditeur Vittascience — dans l'onglet Vittascience</h4>
@@ -1486,17 +1549,18 @@ document.querySelectorAll(".vers-seance").forEach(b=>{
   });
 });
 
-/* ══════ Règle d'or n°122 — trois parcours ══════ */
+/* ══════ Règle d'or n°122 — deux parcours (l'ancienne version avec une vraie carte a été retirée le 05/10/2026) ══════ */
 function majParcours(){
-  const choix = (window.__exp && window.__exp.parcours) || "tous";
-  document.body.classList.remove("parcours-a","parcours-b","parcours-c");
+  const brut = (window.__exp && window.__exp.parcours) || "tous";
+  const choix = (brut === "b" || brut === "c") ? brut : "tous";   // l'ancien choix « a » (retiré) retombe sur « tous »
+  document.body.classList.remove("parcours-b","parcours-c");
   if(choix !== "tous") document.body.classList.add("parcours-" + choix);
   document.querySelectorAll(".parcours-btn").forEach(b=>{
     b.setAttribute("aria-pressed", b.dataset.choix === choix ? "true" : "false");
   });
   const n = $("parcoursNote");
   if(n){
-    const NOMS = {a:"🅰 matériel réel", b:"🅱 simulation", c:"🅲 sans matériel", tous:"tous"};
+    const NOMS = {b:"🅱 simulation", c:"🅲 sans matériel", tous:"tous"};
     n.innerHTML = "Parcours affiché : <b>" + (NOMS[choix]||"tous") + "</b>.";
   }
 }

@@ -76,20 +76,18 @@ frontières 39 et 40 · clignotement provoqué · clignotement supprimé. Les ac
 
 ---
 
-## 5. Les trois parcours
+## 5. Les deux parcours
 
 | Version | Ce qu'il faut | Ce qu'on y fait |
 |---|---|---|
-| **🅰 Matériel réel** | carte + capteur d'humidité + **module relais** + pompe 12 V à alimentation séparée | Tout, jusqu'au téléversement |
 | **🅱 Simulation** | une connexion (éditeur Vittascience) | Écriture réelle du programme + banc d'essai |
 | **🅲 Sans matériel** | rien | Banc d'essai + traces fournies — **mêmes validations** |
 
 Le sélecteur de parcours, en haut de page, masque ce qui ne concerne pas l'élève
 sans retirer aucune question (règle n°122).
 
-**Sécurité (🅰)** : la carte reste en très basse tension. L'alimentation de la
-pompe est branchée **par le professeur**, après relecture du câblage. Aucun
-secteur 230 V n'entre dans cette séquence.
+La version 🅰 « Matériel réel » (montage et téléversement) a été **retirée le 05/10/2026** : l'éditeur Python ne pilote aucune carte. Elle pourra revenir avec la future version carte réelle, en interface Arduino (voir `JOURNAL_DES_DECISIONS.md`).
+Aucun matériel n'est monté dans cette séquence : le relais s'étudie sur le schéma (activité 1).
 
 ---
 
