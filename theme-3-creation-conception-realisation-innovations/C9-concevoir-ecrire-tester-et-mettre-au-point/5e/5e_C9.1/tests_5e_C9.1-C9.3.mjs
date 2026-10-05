@@ -205,6 +205,42 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
      (await page.locator(".btn.check").count()) === 5);
 }
 
+/* — lot du 04/10/2026 : l'éditeur s'ouvre en mode code, la version 🅰 (carte réelle, LED) n'existe plus —
+   Le contenu de Vittascience (le collage, l'exécution) a été mesuré à la main et n'est pas rejoué ici :
+   service externe. On éprouve ce que NOTRE page promet. */
+{
+  const hrefs = await page.$$eval("a.vs-lien", a => a.map(x => x.getAttribute("href")));
+  ok("gestes · les 3 liens-boutons ouvrent l'éditeur en ?mode=code (plus de mode mixte)",
+     hrefs.length === 3 && hrefs.every(h => /^https:\/\/fr\.vittascience\.com\/python\/\?mode=code(&|&amp;|$)/.test(h)),
+     hrefs.join(" | "));
+
+  const choix = await page.$$eval(".parcours-btn", b => b.map(x => x.dataset.choix).join(","));
+  const texte = await page.evaluate(() => document.body.textContent);
+  ok("gestes · plus de version 🅰 : ni bouton, ni phrase (carte réelle, LED), ni « blocs à gauche »",
+     choix === "b,c,tous" && !/🅰/.test(texte) && !/\bLED\b/.test(texte) && !/carte réelle/i.test(texte) && !/blocs à gauche/i.test(texte),
+     "boutons : " + choix);
+
+  /* un élève qui avait choisi 🅰 avant le retrait : sa sauvegarde dit « a » — dans un contexte à part */
+  const ctxA = await nav.newContext({ viewport: { width: 390, height: 844 } });
+  await ctxA.addInitScript(() => localStorage.setItem("seq_5e_C9.1-C9.3_boite_etiquetee", JSON.stringify({ exp: { parcours: "a" } })));
+  const pA = await ctxA.newPage();
+  await pA.goto(url(SEQ), { waitUntil: "load" });
+  await pA.waitForTimeout(300);
+  const classeA = await pA.evaluate(() => document.body.className);
+  const noteA = await pA.locator("#parcoursNote").textContent();
+  const visibles = await pA.evaluate(() => [...document.querySelectorAll("[data-parcours]")].filter(e => e.offsetParent !== null).length);
+  ok("gestes · un ancien choix « a » mémorisé retombe sur « tous » (rien n'est masqué à tort)",
+     !/parcours-/.test(classeA) && /tous/.test(noteA) && visibles === 2, noteA.trim() + " · " + visibles + " parcours visibles");
+  await ctxA.close();
+
+  await page.evaluate(() => document.querySelectorAll(".gestes-outil img").forEach(i => { i.loading = "eager"; }));
+  await page.waitForTimeout(800);
+  const imgs = await page.$$eval(".gestes-outil img", l => l.map(i => ({ charge: i.complete && i.naturalWidth > 0, alt: (i.getAttribute("alt") || "").trim().length })));
+  ok("gestes · les " + imgs.length + " captures de l'encart se chargent, toutes avec un texte alternatif",
+     imgs.length === 11 && imgs.every(i => i.charge && i.alt > 20),
+     imgs.filter(i => !i.charge).length + " cassée(s), " + imgs.filter(i => i.alt <= 20).length + " sans texte alternatif");
+}
+
 /* — n°101 : chaque séance mène à la suivante — */
 {
   const n = await page.locator(".vers-seance").count();
