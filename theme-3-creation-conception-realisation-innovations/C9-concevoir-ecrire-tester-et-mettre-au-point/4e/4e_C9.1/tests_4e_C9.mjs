@@ -269,6 +269,8 @@ const run = async () => {
     ok("gestes · la consigne de l'activité 3 dit « Nomme ton projet 4e-JARDIN-TON NOM, puis télécharge-le (geste 4) » (plus « Enregistre sous »)",
        /Nomme ton projet 4e-JARDIN-TON NOM, puis télécharge-le \(geste 4\)/.test(consigne) && !/Enregistre sous/.test(consigne),
        consigne.trim().slice(0, 140));
+    ok("gestes · la consigne de l'activité 3 limite le volet Python à ce que la consigne demande (« Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs. »)",
+       consigne.includes("Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs."));
 
     await page.evaluate(() => document.querySelectorAll(".gestes-outil img").forEach(i => { i.loading = "eager"; }));
     await page.waitForTimeout(800);

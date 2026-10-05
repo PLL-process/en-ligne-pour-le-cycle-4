@@ -21782,3 +21782,51 @@ notes de `4e_C6.2` (activités 3, 5 et Bonus).
 **À venir.** Thème 3 : 16 SVG et `gantt_premium.py` (qui produit les trois `gantt_*.svg`), avec en tête l'ajout, dans l'activité 3
 de `4e_C9.1`, de « Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs. » ; puis le
 classement de `3e_C7.1` et `5e_C7.1` (**sans compte**, mode mixte ou code, version 🅰, à décider activité par activité).
+
+## 05/10/2026 — Thème 3 : marqueurs de flèche en userSpaceOnUse (16 SVG + `gantt_premium.py`) ; la phrase du volet Python dans 4e_C9.1
+
+**En tête, en commit séparé : `4e_C9.1`, activité 3.** La consigne reçoit, après « puis modifie le Python et regarde les blocs
+suivre », la phrase **« Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs. »** Elle
+répond au risque noté dans l'entrée du 05/10/2026 (4e_C9.1) : une écriture que les blocs ne savent pas traduire (un `print` à
+plusieurs arguments, une concaténation) fait réécrire le fichier au téléchargement. Un contrôle ajouté à la suite (**67 / 67**, 66 avant).
+
+**Les pointes de flèche.** Même correction et même règle que les thèmes 1 et 2 : `markerUnits="userSpaceOnUse"`, `viewBox` ajouté là où il
+manquait, tailles en pixels (ancienne taille × épaisseur du trait mesurée par le navigateur), marqueur dédoublé quand les traits n'ont pas la
+même épaisseur (`fa` et `fa_2`, `ft` et `ft_1p5`, `fa` et `fa_3`), pointe ramenée à 4,4 × le trait là où elle débordait.
+**16 SVG, 28 marqueurs** (31 après dédoublement, 3 de plus que le plan) **+ le générateur** `_generation/gantt_premium.py`, soit 29 marqueurs.
+
+**Tracés qui changent d'aspect** (la pointe rétrécit) :
+
+| Fichier | marqueur | pointe avant → après | dernier segment | lignes |
+|---|---|---|---|---|
+| `3e_C9.2/Images/ordre_preactionneur_trois_cas.svg` | `ae` | 24 → 12 px | 12 px | 37, 69, 71, 103 |
+| `atelier-planification/Images/gantt_capteur-confort-ny.svg` | `fl` | 11,7 → 5,72 px | 6 px | 77 à 88 |
+| `atelier-planification/Images/gantt_indicateur-rangement-hall.svg` | `fl` | 11,7 → 5,72 px | 6 px | 50 à 56 |
+| `atelier-planification/Images/gantt_jardin-connecte-brooklyn.svg` | `fl` | 11,7 → 5,72 px | 6 px | 64 à 73 |
+
+**Le générateur.** Les trois `gantt_*.svg` ne se modifient pas à la main : ils sortent de `gantt_premium.py`. Avant de toucher au code,
+le générateur a été relancé sur `taches_projets_c7_simulees.csv` : il **redonne les trois SVG actuels à l'octet près** (et les trois
+`corrige_*.json`). La balise `<marker>` du générateur a été corrigée (`viewBox="0 0 9 7"`, `markerWidth="5.72"`, `markerHeight="4.4489"`,
+`markerUnits="userSpaceOnUse"`), le générateur relancé, et chaque SVG régénéré ne diffère de l'ancien que par **cette seule ligne** ; les trois
+`corrige_*.json` sont inchangés. **Piège rencontré :** le générateur écrit en mode texte, donc en CRLF sous Windows ; réécrire ce résultat avec
+des retours CRLF ajoutés une seconde fois a produit des `\r\r\n` (238 lignes « modifiées » au lieu de 3) — repéré à la stat, corrigé avant le commit.
+
+**Vérifié au rendu (Chromium, ×2, avant = `main`, après = branche).** Sur les 16 SVG, **12 sont identiques au pixel près** ; les 4 qui
+diffèrent sont exactement ceux du tableau, et seulement dans la zone des pointes. Les 16 SVG sont du XML valide.
+
+**À regarder (décision de Pascal).** Les pointes des trois Gantt tombent à **5,72 px** sur un trait de 1,3 : elles tiennent, mais elles sont
+petites (le dernier segment des tracés en coude ne fait que 6 px : `H{x2-4}` après `mx = x2-10`). Avant, 11,7 px recouvraient le coude. L'alternative,
+hors de la règle « on raccourcit le marqueur, jamais le tracé », serait d'allonger ce segment dans le générateur (par exemple `mx = x2-16`, et un seuil
+de descente plus haut que 14 px) : la pointe garderait ses 11,7 px. Même remarque qu'au thème 1 pour `corrige_trois_principes_de_freinage.svg`.
+
+**Le contrôle, et sa liste TOLERES — à vider à la prochaine PR du thème 2.** Avec ce lot, `controle_marqueurs.py` ne trouve plus aucun fichier en écart :
+ses **17 entrées de `TOLERES` (les fichiers du thème 3) s'annoncent « périmées »** — le fichier est conforme — sans refus. Cette PR est du thème 3 et la garde de
+périmètre lui interdit de toucher `_outils/` : **la liste se vide dans la prochaine PR du thème 2** (qui peut toucher `_outils/`), en retirant les 17 lignes et
+le commentaire `_RAISON_T3`, et en gardant le mécanisme (`TOLERES = {}`), comme pour `controle_gestes_outil.py`.
+
+**Non lu par le script.** Que la pointe tienne dans le dernier segment et que le dessin soit identique : c'est le rendu qui le dit.
+
+**Pas de test rouge causé par ce lot.** `tests_atelier_C7.1.py` s'arrête sur `assert src.count('href="qcm_C7.1_planification_taches.html"') == 1` : cette
+assertion lit une page HTML, que ce lot ne touche pas ; **elle échoue à l'identique sur `main`** (vérifié sur une extraction de `origin/main`) : un banc déjà rouge, hors de ce lot.
+
+**À venir.** Le classement de `3e_C7.1` et `5e_C7.1` (sans compte, mode mixte ou code, version 🅰), activité par activité, montré avant d'écrire.

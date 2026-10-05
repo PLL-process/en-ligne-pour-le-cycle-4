@@ -163,3 +163,8 @@ lien-bouton garde l'éditeur en `?mode=mixed` ; plus de version 🅰 (ni bouton,
 dit « Nomme ton projet 4e-JARDIN-TON NOM, puis télécharge-le (geste 4) » ; les douze captures de l'encart se chargent avec un texte
 alternatif ; un ancien choix « a » mémorisé retombe sur « tous ». Le contenu de Vittascience (blocs, Python, réouverture du fichier)
 a été mesuré à la main avec le programme exact de l'activité 3 et n'est pas rejoué ici : service externe.
+
+## 7. Rejouée le 05/10/2026 (phrase ajoutée à l'activité 3)
+
+La consigne de l'activité 3 porte maintenant « Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs. » : elle limite ce qu'on tape dans le volet Python, pour que le programme reste traduisible en blocs. Un contrôle ajouté : **67 / 67** (66 avant).
+
