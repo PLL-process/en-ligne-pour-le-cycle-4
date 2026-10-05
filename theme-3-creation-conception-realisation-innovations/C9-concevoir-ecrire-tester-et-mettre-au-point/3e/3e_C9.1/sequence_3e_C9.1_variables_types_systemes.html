@@ -315,6 +315,12 @@ figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
   .gestes-outil ol{margin:0;padding-left:1.3rem}
   .gestes-outil li{margin:.45rem 0}
   .gestes-outil li b:first-child{color:#ffb300}
+  .gestes-outil figure.geste-capture{margin:.6rem 0 .9rem;max-width:560px}
+  .gestes-outil figure.geste-capture img{width:100%;height:auto;display:block;border:1px solid var(--border,#2a3550);
+    border-radius:8px;background:#fff}
+  .gestes-outil figure.geste-capture figcaption{margin:.35rem 0 0;font-size:.88em;line-height:1.45;opacity:.92}
+  .gestes-outil figure.geste-capture figcaption b{color:inherit}
+  @media print{.gestes-outil figure.geste-capture{break-inside:avoid;page-break-inside:avoid}}
 </style>
 
 
@@ -465,7 +471,7 @@ figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
   <h2>🔀 Trois façons de vivre l'atelier</h2>
   <div class="donnees">
     <p data-parcours="a">🅰 <b>Avec matériel</b> : l'éditeur Vittascience piloté vers une carte réelle (Arduino/mBot2 du collège, <b>très basse tension uniquement</b> — le TP mBot2 du dossier prolonge cet atelier).</p>
-    <p data-parcours="b">🅱 <b>En simulation</b> : l'éditeur Python Vittascience <b>s'ouvre dans un nouvel onglet</b> — blocs et Python côte à côte, console intégrée. C'est le parcours principal. Cherche les <b>barres 🧪 bleues</b> dans les séances 2, 3 et 4 : un clic les déplie.</p>
+    <p data-parcours="b">🅱 <b>En simulation</b> : l'éditeur Python Vittascience <b>s'ouvre dans un nouvel onglet</b>, en <b>mode code</b> — tu écris ton programme au clavier, la console est en dessous. C'est le parcours principal. Cherche les <b>barres 🧪 bleues</b> dans les séances 2, 3 et 4 : un clic les déplie.</p>
     <p data-parcours="c">🅲 <b>Sans matériel</b> : le simulateur de mémoire (séance 1, activité 1 — le bouton « ▶ Étape suivante ») + les tables de suivi (séance 1, activité 2) à refaire au cahier.</p>
   </div>
   <div class="retenir"><b>📡 Méthode de l'atelier — prédire → tester → reporter :</b> à chaque exercice,
@@ -626,16 +632,80 @@ passages = passages + groupe</pre>
 <div class="seance-panel" id="s2" role="tabpanel">
 <!-- gestes-outil-v1 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau. -->
 <section class="card gestes-outil" aria-labelledby="gestes-vittascience">
-  <h2 id="gestes-vittascience">🧰 Avant de commencer — les quatre gestes de Vittascience</h2>
+  <h2 id="gestes-vittascience">🧰 Avant de commencer (échauffement) — les quatre gestes de Vittascience</h2>
   <p class="pourquoi">Quatre gestes à faire une fois, au début, et ta séance ne
   se perdra pas. Tu les as peut-être déjà faits une autre année&nbsp;: refais-les,
   c'est court. Et si tu ne les as jamais faits, tout est écrit ici — tu n'as
   besoin de rien d'autre.</p>
   <ol>
-    <li><b>Ouvrir.</b> Ouvre <b>Vittascience</b> dans le navigateur et connecte-toi avec le compte de la classe.</li>
-    <li><b>Nommer.</b> Clique sur le titre du projet, en haut, et remplace-le par <code>NIVEAU-SUJET-TON&nbsp;NOM</code>. Un projet sans nom est introuvable la semaine suivante.</li>
-    <li><b>Retrouver.</b> Ton projet est enregistré dans ton compte&nbsp;: tu le retrouveras depuis n'importe quel poste en te reconnectant, dans la liste de tes projets. Vérifie-le tout de suite&nbsp;: reviens à la liste, puis rouvre ton projet.</li>
-    <li><b>Sortir.</b> Pour garder une trace hors ligne&nbsp;: <b>Fichier → Exporter</b>, ou une capture d'écran du programme collée dans ton compte rendu.</li>
+    <li><b>Ouvrir.</b> Clique sur le bouton <b>▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</b> de l'activité&nbsp;: l'éditeur Python s'ouvre dans un nouvel onglet, en <b>mode code</b>&nbsp;: tu écris ton programme au clavier. Une ligne <code>print('Bonjour&nbsp;!')</code> est déjà là&nbsp;: efface-la avant de commencer.
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_1_ouvrir_bouton.png" width="1400" height="875" loading="lazy"
+             alt="La page de la séquence, en thème sombre, sur l'activité 3. Dans le cadre « Ouvrir l'éditeur Python Vittascience — teste tes trois expériences dans l'onglet Vittascience », un bouton bleu « ▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet », suivi de la phrase « Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne. »">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le bouton <b>▶ Ouvrir l'éditeur Vittascience…</b>, dans le cadre de l'activité. <b>Puis&nbsp;:</b> clique-le&nbsp;; garde cet onglet-ci ouvert pour lire la consigne.</figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_1c_ouvrir_editeur.png" width="1400" height="875" loading="lazy"
+             alt="L'éditeur Python de Vittascience, en thème sombre et en mode code. En haut à gauche, le nom « Nouveau projet ». La barre d'outils : Nouveau, Ouvrir, Sauvegarder, Annuler, Rétablir, puis Exécuter au centre, et à droite les trois boutons de mode, celui du code (orange) étant actif. Une seule grande zone de texte contient la ligne 1, print('Bonjour !'). En bas, la console avec son message de bienvenue.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> une seule grande zone de texte, la console en bas, et le nom «&nbsp;Nouveau projet&nbsp;» en haut à gauche. <b>Puis&nbsp;:</b> efface la ligne <code>print('Bonjour&nbsp;!')</code>, que Vittascience met dans tout projet neuf, et tape ton programme à la place.</figcaption>
+      </figure>
+    </li>
+    <li><b>Nommer.</b> Clique le <b>crayon</b> à côté du nom du projet, en haut à gauche, et remplace «&nbsp;Nouveau projet&nbsp;» par <code>3e-VARIABLES-TON&nbsp;NOM</code>. Un projet sans nom est introuvable la semaine suivante.
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_2_nommer_fenetre.png" width="1400" height="875" loading="lazy"
+             alt="Fenêtre « Modifier les informations du projet » de Vittascience, en thème sombre. Le champ « Nom du projet » contient 3e-VARIABLES-DUPONT, avec une coche verte. Dessous, un champ « Description du projet (facultatif) » vide, puis deux boutons : « Annuler » en gris et « Modifier » en vert.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> la fenêtre «&nbsp;Modifier les informations du projet&nbsp;», avec ton nom dans «&nbsp;Nom du projet&nbsp;». <b>Puis&nbsp;:</b> clique <b>Modifier</b>. <i>DUPONT est un exemple&nbsp;: mets ton nom.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_2b_nommer_resultat.png" width="1400" height="875" loading="lazy"
+             alt="L'éditeur après la validation : en haut à gauche, le nom du projet est devenu « 3e-VARIABLES-DU… » (coupé à l'écran).">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> ton nom apparaît en haut à gauche. Il est coupé à l'écran mais il est entier&nbsp;: c'est lui qui nommera ton fichier au geste 4.</figcaption>
+      </figure>
+    </li>
+    <li><b>Retrouver.</b> La semaine suivante, ne rouvre pas ton fichier par <b>Ouvrir → Depuis votre appareil</b>&nbsp;: Vittascience remettrait <code>print('Bonjour&nbsp;!')</code> à la place de ton programme. Ouvre ton fichier <code>.py</code> (celui du geste 4) dans le <b>Bloc-notes</b>&nbsp;: dans <b>Documents</b>, dans le dossier de ta classe, <b>clic droit</b> sur le fichier, puis <b>Modifier dans Bloc-notes</b>. Sélectionne ton programme <b>à partir de sa première ligne de code</b>, sans l'en-tête, puis <b>Ctrl&nbsp;+&nbsp;C</b>. Dans Vittascience, clique dans la zone de texte, <b>Ctrl&nbsp;+&nbsp;A</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>&nbsp;: ton programme remplace <code>print('Bonjour&nbsp;!')</code>.
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_3_retrouver_menu.png" width="832" height="388" loading="lazy"
+             alt="Le haut du menu qui s'ouvre au clic droit sur le fichier .py, en thème sombre. De haut en bas : « Ouvrir avec » en gras, « Convertir avec Doxillion », « WinRAR », « Déplacer vers OneDrive », « Éditer avec Notepad++ », « Unlock with File Locksmith », puis « Modifier dans Bloc-notes ». L'image est recadrée sur le haut du menu.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le menu du clic droit, avec la ligne <b>Modifier dans Bloc-notes</b>. <b>Clique-la.</b> <b>Si cette ligne n'est pas dans le menu&nbsp;:</b> clique <b>Ouvrir avec</b>, cherche <b>Bloc-notes</b> dans la liste, puis <b>Une seule fois</b>. <i>Les autres lignes dépendent du poste&nbsp;: ce sont celles de ce poste-ci.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_3b_retrouver_bloc_notes.png" width="1400" height="743" loading="lazy"
+             alt="Le fichier .py ouvert dans le Bloc-notes de Windows, en thème sombre. Dans l'onglet, le début du nom du fichier : « 3e-VARIABLES-DU… ». Sous la barre de menus (Fichier, Modifier, Affichage), quatorze lignes d'en-tête de Vittascience entre deux lignes de trois guillemets : Interface, Nom du projet 3e-VARIABLES-DUPONT, Mode code, une longue ligne Blocks coupée à droite, puis « Projet généré par Vittascience ». En bas, sur fond bleu, les trois lignes du programme sont sélectionnées : print(3 + 4), print("3" + "4") et print("Train " + "Q", 2 + 1, "min"). L'image est recadrée sur la partie gauche de la fenêtre.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le Bloc-notes, le nom de ton fichier dans l'onglet, l'en-tête de Vittascience, puis ton programme. <b>Sélectionne seulement ton programme</b>&nbsp;: de sa première ligne de code jusqu'à la fin, <b>sans l'en-tête</b>. Puis <b>Ctrl&nbsp;+&nbsp;C</b>. <i>La fenêtre est recadrée sur sa partie gauche&nbsp;; les trois lignes sont un exemple.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_3c_retrouver_coller.png" width="1400" height="875" loading="lazy"
+             alt="L'éditeur Python de Vittascience, en thème sombre et en mode code. La zone de texte contient trois lignes : print(3 + 4), print("3" + "4") et print("Train " + "Q", 2 + 1, "min"). La console, en bas, affiche 7, puis 34, puis Train Q 3 min.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> ton programme a pris la place de <code>print('Bonjour&nbsp;!')</code>, et <b>Exécuter</b> affiche dans la console ce qu'il affichait avant. <i>Les trois lignes sont un exemple&nbsp;: c'est ton programme qui revient.</i></figcaption>
+      </figure>
+    </li>
+    <li><b>Sortir.</b> Vittascience ne garde pas ton travail d'une séance à l'autre. Clique la <b>disquette</b>, puis <b>Télécharger</b>&nbsp;: un fichier <code>.py</code> au nom de ton projet arrive dans <b>Téléchargements</b>. Vittascience ajoute des chiffres à la fin du nom du fichier&nbsp;: c'est normal. <b>Déplace-le</b> dans <b>Documents</b>, dans <b>le dossier de ta classe (exemple&nbsp;: 3E1)</b>. Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans Documents, <b>Nouveau → Dossier</b>, tape le nom de ta classe, puis valide.
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_4_sortir_telecharger.png" width="1400" height="875" loading="lazy"
+             alt="Fenêtre « Sauvegarder le projet » de Vittascience, en thème sombre, sans compte. Le texte « Pour enregistrer votre projet, veuillez vous connecter. », un bouton vert « Je me connecte », le mot « ou », un bouton orange « Je m'inscris ! », une ligne, le mot « ou », puis un bouton vert « Télécharger » avec un point d'interrogation.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> la fenêtre «&nbsp;Sauvegarder le projet&nbsp;», ouverte par la <b>disquette</b>. <b>Ne te connecte pas et ne t'inscris pas&nbsp;:</b> clique <b>Télécharger</b>, le bouton vert tout en bas.</figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_4b_sortir_telechargements.png" width="1400" height="589" loading="lazy"
+             alt="Fenêtre de l'Explorateur de fichiers de Windows, en thème sombre, ouverte sur « Téléchargements » et rétrécie : sous « Aujourd'hui », le fichier « 3e-VARIABLES-DUPONT_202694_171953.py » est sélectionné ; en bas, « 1 élément sélectionné 619 octet(s) ».">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le fichier <code>.py</code> au nom de ton projet, dans <b>Téléchargements</b> — le navigateur l'y range sans rien demander. Clique-le une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b> pour le couper. <i>Les chiffres à la fin du nom sont ajoutés par Vittascience&nbsp;; DUPONT est un exemple. La fenêtre est rétrécie pour ne montrer que ce fichier.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_4c_sortir_nouveau_dossier.png" width="1400" height="457" loading="lazy"
+             alt="Fenêtre de l'Explorateur de fichiers, ouverte sur « Documents » (c'est le chemin affiché en haut) et rétrécie à une seule ligne. Un nouveau dossier jaune vient d'être créé : son nom, « Nouveau dossier », est surligné en bleu dans un cadre, prêt à être remplacé.">
+        <figcaption><b>Si le dossier de ta classe n'existe pas encore&nbsp;:</b> dans <b>Documents</b>, clique <b>Nouveau</b> puis <b>Dossier</b>. Un dossier apparaît, son nom surligné&nbsp;: tu peux taper le tien. <i>La fenêtre est rétrécie&nbsp;: tes autres dossiers ne sont pas montrés.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_4d_sortir_nom_de_classe.png" width="1400" height="457" loading="lazy"
+             alt="La même ligne de l'Explorateur : le nom du dossier en cours de saisie est maintenant « 3E1 ».">
+        <figcaption><b>Tape le nom de ta classe</b> (exemple&nbsp;: <b>3E1</b>), puis appuie sur <b>Entrée</b>. <i>3E1 est un exemple&nbsp;: mets ta classe.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_4e_sortir_resultat.png" width="1400" height="538" loading="lazy"
+             alt="Fenêtre de l'Explorateur ouverte sur « Documents › 3E1 » : un seul fichier, « 3e-VARIABLES-DUPONT_202694_171953.py », de type Python.File, 619 octets, sélectionné.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> en haut, <b>Documents › 3E1</b>&nbsp;; dans la liste, ton fichier <code>.py</code>. Il n'est plus dans Téléchargements&nbsp;: il est rangé. Entre dans le dossier (double-clic), puis <b>Ctrl&nbsp;+&nbsp;V</b> pour y coller ton fichier.</figcaption>
+      </figure>
+    </li>
   </ol>
 </section>
 <section class="card">
@@ -671,9 +741,9 @@ passages = passages + groupe</pre>
     <p class="saved-note" data-parcours="c">🅲 <b>Sans matériel</b> : ouvre quand même la barre 🧪 (elle enregistre ton passage), écris les trois expériences au cahier et reporte les résultats donnés par la correction de l'activité.</p>
     <details class="vs" id="vs1" open>
       <summary>🧪 ② Ouvrir l'éditeur Python Vittascience — teste tes trois expériences dans l'onglet Vittascience</summary>
-      <p class="vs-note">L'éditeur s'ouvre dans un nouvel onglet : blocs à gauche, Python à droite, console en bas. Recopie chaque ligne puis clique ▶. (Connexion Internet nécessaire pour l'éditeur ; le reste de la page fonctionne hors ligne.)</p>
+      <p class="vs-note">L'éditeur s'ouvre dans un nouvel onglet, en mode code : tu tapes ton programme dans la grande zone de texte, la console est en bas. Efface la ligne <code>print('Bonjour&nbsp;!')</code> qui s'y trouve déjà, recopie chaque ligne puis clique ▶. (Connexion Internet nécessaire pour l'éditeur ; le reste de la page fonctionne hors ligne.)</p>
       
-<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
+<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
 <p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
     </details>
     <div class="exo">
@@ -758,7 +828,7 @@ passages = passages + groupe</pre>
       <summary>🧪 Assemble et exécute le programme CORRIGÉ dans l'onglet Vittascience — la preuve par la console 🔓</summary>
       <p class="vs-note">Recopie le programme avec tes 3 corrections, exécute, et compare avec ta réponse ci-dessus. C'est ton badge d'exécution : la vérification de l'activité l'exige.</p>
       
-<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
+<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
 <p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
     </details>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Bug 1 : séance 2, expérience B. Bug 2 : document 2, carte <b>float</b>. Bug 3 : quel est le TYPE de <code>minutes</code> après la ligne 3 d'origine ?</p></details>
@@ -845,7 +915,7 @@ passages = passages + groupe</pre>
       <summary>🧪 Pour aller au bout : recopie la fonction corrigée et ton banc de tests dans l'éditeur</summary>
       <p class="vs-note">Écris la fonction avec <code>&gt;=</code>, puis appelle-la : <code>print(vitesse_ventilation(150, False))</code>, etc. Quatre lignes d'appel = ton banc de tests personnel, réutilisable à chaque modification.</p>
       
-<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
+<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
 <p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
     </details>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>▢1 : « pollué » = l'indice DÉPASSE 100. ▢2 : « à fond », c'est la plus grande vitesse. Pour le T4 : 100 &gt; 100, c'est vrai ou faux ?</p></details>
@@ -887,9 +957,9 @@ passages = passages + groupe</pre>
   pourquoi l'ancien papier va à la poubelle, vous avez gagné tous les deux.</p>
     <details class="vs" id="vs4" open>
       <summary>🧪 L'éditeur du Bonus — code tes défis dans l'onglet Vittascience</summary>
-      <p class="vs-note">L'éditeur s'ouvre dans un nouvel onglet : blocs à gauche, Python à droite, console en bas. (Connexion Internet nécessaire pour l'éditeur ; le reste de la page fonctionne hors ligne.)</p>
+      <p class="vs-note">L'éditeur s'ouvre dans un nouvel onglet, en mode code : ton programme dans la grande zone de texte, la console en bas. (Connexion Internet nécessaire pour l'éditeur ; le reste de la page fonctionne hors ligne.)</p>
       
-<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
+<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
 <p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
     </details>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>

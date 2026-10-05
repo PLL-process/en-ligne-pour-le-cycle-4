@@ -21415,3 +21415,82 @@ verts · `tests_4e_C6.2.mjs` 35 / 35 · au navigateur, 1280 et 390 px : 12 image
 défilement horizontal.
 
 **Reste de la vague 2, étape 2** : 3e_C9.1, 5e_C9.1, 4e_C9.1 (thème 3), avec les mêmes formulations.
+
+## 04/10/2026 — Thème 3 · 3e_C9.1 : l'encart des gestes de Vittascience passe en mode code, sans compte, et reçoit ses captures (vague 2, étape 2, lot 3)
+
+**Premier commit : 3e_C9.2.** Le geste 5 (« Sortir ») des deux pages qui le portent — `station_2_programmer` et
+`station_alerte_cyclonique` — dit désormais que le compte ne garde pas le travail « **d'une séance à l'autre** », comme
+4e_C6.2. Les autres stations n'ont pas cette phrase.
+
+**Pourquoi le lot a changé de forme.** 3e_C9.1 n'est pas 4e_C6.2 : sa consigne fait **recopier du code Python** (`print(3 + 4)`,
+`print("3" + "4")`…), les élèves tapent, ils ne posent pas de blocs. Mesuré sur `fr.vittascience.com/python/`
+(Chrome 154 piloté par Playwright, profil temporaire neuf, sans compte), avec le programme des expériences A, B, C :
+
+| Étape | Mode mixte (`?mode=mixed`) | Mode code (`?mode=code`) |
+|---|---|---|
+| Taper dans le volet Python | possible ; les blocs suivent ; **Exécuter** exécute le texte tapé (`7`, `34`, `Train Q 3 min`) | possible, même éditeur en plein écran |
+| Disquette → **Télécharger** | le `.py` est **réécrit depuis les blocs** : `print("3" + "4")` devient `print((0 + 0))`, avec des lignes parasites `'3'`, `'4'` ; le bloc affiche deux emplacements vides | le `.py` contient **le code tapé, à l'identique** (en-tête de 14 lignes entre triples guillemets) |
+| **Ouvrir → Depuis votre appareil** | le fichier réécrit revient, abîmé | le code tapé **ne revient pas** : l'éditeur remet `print('Bonjour !')` (vérifié par Exécuter, depuis `?mode=mixed` et `?mode=code`, avec le fichier de Vittascience comme avec un `.py` brut) |
+| Copier-coller depuis le **Bloc-notes** | — | **marche** : Exécuter donne `7`, `34`, `Train Q 3 min`. L'en-tête se colle comme une docstring inoffensive ; enregistrée de nouveau, elle **s'empile** (17 puis 32 lignes) |
+
+**Décision de Pascal** : lien de l'activité en `?mode=code` ; « Sortir » identique aux autres lots (Télécharger → Documents › 3E1) ;
+« Retrouver » par le Bloc-notes et un copier-coller, **à partir de la première ligne de code**, sans l'en-tête, à la place de
+`print('Bonjour !')`.
+
+**Deuxième décision de Pascal, après la première version du lot : pas de connexion du tout.** Le Bloc-notes remplace le cloud, et
+sans compte le `.py` n'a pas de ligne `Auteur:`. Le geste « Ouvrir » ne parle plus du compte de la classe, la capture de la fenêtre
+« Connexion » est retirée, et la phrase « Le compte de la classe est partagé : il ne garde pas ton travail… » du geste « Sortir » devient
+« Vittascience ne garde pas ton travail d'une séance à l'autre ». La fenêtre « Sauvegarder le projet » est prise **sans compte** : elle
+propose « Je me connecte », « Je m'inscris ! », puis « Télécharger » ; la légende dit de ne pas se connecter et de cliquer Télécharger.
+
+**Ce qui a changé dans le lot (liste validée avant d'y toucher).**
+
+| Où | Avant | Après |
+|---|---|---|
+| Quatre liens de la séquence | `?mode=mixed` | `?mode=code` |
+| Parcours 🅱 (en tête) | « blocs et Python côte à côte, console intégrée » | « en mode code — tu écris ton programme au clavier, la console est en dessous » |
+| Séance 2, barre 🧪 | « blocs à gauche, Python à droite, console en bas. Recopie chaque ligne… » | « en mode code : tu tapes ton programme dans la grande zone de texte… Efface la ligne `print('Bonjour !')`… » |
+| Bonus, barre 🧪 | « blocs à gauche, Python à droite, console en bas » | « en mode code : ton programme dans la grande zone de texte, la console en bas » |
+| Encart des gestes | quatre gestes sans image ; « Fichier → Exporter » (ce menu n'existe pas) ; « ton projet est enregistré dans ton compte… depuis n'importe quel poste » | titre « (échauffement) » ; **Ouvrir** en mode code, sans connexion ; **Nommer** par le crayon (`3e-VARIABLES-TON NOM`) ; **Retrouver** par le clic droit, « Modifier dans Bloc-notes », la sélection du programme et le collage ; **Sortir** par la disquette et Télécharger ; douze captures |
+| `manifest_arc_variables_3e.json` | « 3 liens-boutons, mode mixte » | « 4 liens-boutons, mode code » (le compte était faux) |
+| Synthèse professeur | « mode mixte blocs+texte » | « mode code : le programme se tape au clavier » |
+| `SOURCES_MEDIAS.md` | « n'utilise AUCUNE capture d'écran » (devenu faux) | une ligne par capture, avec origine, recadrage et poids |
+
+**Douze captures** (`Images/geste_vitta_*.png`, 13 à 92 Ko) : Ouvrir ×2 (le bouton dans la page ; l'éditeur en mode code) · Nommer ×2 · Retrouver ×3
+(le menu du clic droit ; le fichier dans le Bloc-notes, programme sélectionné ; le programme collé et exécuté) · Sortir ×5 (la fenêtre
+« Sauvegarder le projet » sans compte ; Téléchargements ; nouveau dossier ; 3E1 ; Documents › 3E1). `4c` et `4d` sont la **reprise octet pour
+octet** de `3e_C9.2/Images/geste_vitta_5c` et `5d` (même poste, même dossier, aucun nom de fichier visible). **Aucune capture ne montre une
+session connectée.**
+
+**Ce que la mesure a appris — à lire par Pascal :**
+
+* **Le profil Playwright préremplissait la fenêtre de connexion** (adresse et mot de passe masqué, que je n'avais pas saisis) : la
+  capture a été supprimée avant écriture et le mot de passe n'a pas été utilisé. Le zoom du site y changeait aussi tout seul
+  (0,67 puis 1,25). Toutes les captures de Vittascience ont donc été refaites dans un **profil temporaire neuf**, jamais connecté,
+  à 1400 × 875, échelle 1 ; la fenêtre « Connexion » n'a été prise qu'après avoir vérifié que ses deux champs étaient vides.
+* **Le Bloc-notes de Pascal porte d'autres onglets** (sa session, restaurée à l'ouverture normale). **« Modifier dans Bloc-notes » ouvre le
+  fichier dans une fenêtre séparée, à un seul onglet** : c'est cette fenêtre qui est capturée, avec l'onglet du nom de fichier (tronqué par le
+  Bloc-notes à « 3e-VARIABLES-DU… »). Le coin droit de la barre d'outils porte le profil Windows : l'image est **recadrée sur la partie
+  gauche**, la fenêtre élargie pour que le profil reste hors cadre ; la longue ligne `Blocks:` y est coupée à droite.
+* **« Modifier dans Bloc-notes » est la ligne vue sur ce poste** ; le texte donne en repli « Ouvrir avec → Bloc-notes → Une seule fois ».
+  Vu : « Ouvrir avec » (en gras, première ligne du menu) ouvre une liste « Sélectionner une application pour ouvrir ce fichier .py » avec
+  deux boutons, « Toujours » et « Une seule fois » ; **non vu : « Bloc-notes » dans cette liste** (longue et propre au poste, parcourue en
+  partie) ni « Choisir une autre application ». Pas de capture de cette liste. Les autres lignes du menu (Notepad++, WinRAR, OneDrive…) sont
+  celles des logiciels de ce poste, pas celles d'un poste d'élève.
+* **Le libellé « Je me connecte »** (4e_C6.2, légende de la capture 1b ; 3e_C9.2 si elle la reprend) vient de la fenêtre « Sauvegarder le
+  projet ». Le menu du compte, lui, dit **« Se connecter »**. Non corrigé ici.
+* **4e_C6.2 (#468)** : l'encart est juste pour un programme assemblé en blocs, **faux pour un programme tapé** : en mode mixte,
+  `print("Humidité du sol :", humidite, "%")` est exporté `print('Humidité du sol :')`. À classer activité par activité dans un lot
+  correctif (activité où l'élève tape du code → `?mode=code`, Sortir par Télécharger, Retrouver par le Bloc-notes ; activité en blocs →
+  mode mixte).
+* **Même classement à faire pour `3e_C7.1`, `5e_C7.1`, `4e_C9.1` et `5e_C9.1`** quand leur tour viendra : chacune pointe vers
+  `python/?mode=mixed` et enseigne un encart de gestes écrit pour des blocs.
+
+### Vérifié
+
+`controle_medias`, `controle_liens`, `controle_hierarchie`, `controle_debordement`, `controle_gestes_outil` verts · `tests_3e_C9.1.mjs`
+**35 / 35** · au navigateur, 1280 et 390 px : 12 images, 0 cassée, loupe active sur les 12, pas de défilement horizontal (le seul 404 vu
+est le `favicon.ico` du serveur local).
+
+**Remis en état.** Dossier `3E1` envoyé à la corbeille de Windows, fichier d'essai retiré de Téléchargements, fenêtres de l'Explorateur
+fermées ; la fenêtre du Bloc-notes ouverte pour la capture est refermée ; dans la session de Pascal, aucun onglet n'a été touché.
