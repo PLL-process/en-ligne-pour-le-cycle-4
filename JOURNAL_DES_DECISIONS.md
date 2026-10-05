@@ -21494,3 +21494,75 @@ est le `favicon.ico` du serveur local).
 
 **Remis en état.** Dossier `3E1` envoyé à la corbeille de Windows, fichier d'essai retiré de Téléchargements, fenêtres de l'Explorateur
 fermées ; la fenêtre du Bloc-notes ouverte pour la capture est refermée ; dans la session de Pascal, aucun onglet n'a été touché.
+
+## 04/10/2026 — Thème 2 · 4e_C6.2 : lot correctif — le Python tapé se fait en mode code, avec un préambule de simulation (vague 2, étape 2)
+
+**Pourquoi.** Le lot précédent (#468) n'avait testé que des blocs. Mesuré ensuite sur `fr.vittascience.com/python/` (voir l'entrée de
+3e_C9.1) : en mode mixte, un programme **tapé** est réécrit depuis les blocs au téléchargement ; et la consigne de 4e_C6.2 fait taper du
+Python qui appelle `lire_capteur`, `lire_capteur_pourcent`, `demarrer_pompe`, `arreter_pompe` et `attendre`, **fonctions qui n'existent pas**
+dans l'éditeur web (`NameError`). La note de l'activité 3 parlait de « blocs capteurs » : l'interface Python n'en a aucun (quatorze
+catégories relevées, aucune « capteurs »).
+
+**Classement activité par activité (décision de Pascal).** Les trois barres 🧪 sont des activités où l'élève **tape** du code :
+
+| Activité | Avant | Après |
+|---|---|---|
+| 3 — Les blocs en désordre | « blocs OU Python, comme tu préfères » ; « assemble les blocs capteurs » ; `?mode=mixed` | **Python seul**, `?mode=code` ; plus de « blocs capteurs » ; préambule à coller ; « Arrêter » |
+| 5 — Le Python à trous | « Blocs à gauche, Python à droite » ; remplacer les appels de la carte à la main ; `?mode=mixed` | `?mode=code` ; préambule à coller (les quatre fonctions existent alors) ; « Arrêter » ; l'aide de niveau 2 dit « pour une mesure de 12 % » et non plus « avec humidite = 12 » |
+| Bonus — défis | « Blocs à gauche, Python à droite, console en bas » ; `?mode=mixed` | `?mode=code` ; préambule à coller ; « Arrêter » |
+| 1, 2, 4, 6, 7, 8 | aucune ouverture de l'éditeur | inchangées |
+
+**Le préambule (huit lignes, une fonction par ligne, texte de Pascal).** Il fabrique `A0`, `lire_capteur`, `lire_capteur_pourcent`,
+`demarrer_pompe`, `arreter_pompe` et `attendre`, qui **affichent ce que la carte ferait** : un capteur simulé qui lit 55, 40, 25, 12, 28
+puis 45 % en boucle. Mesuré dans Vittascience, `?mode=code`, sans compte, avec le `while True` de l'activité 5 puis le programme de
+l'activité 3 :
+
+- une décision par seconde (`55 → arrêt`, `40 → arrêt`, `25 → MARCHE`, `12 → MARCHE`, `28 → MARCHE`, `45 → arrêt`, puis on recommence) ;
+- **l'onglet ne fige pas** : la page répond en 1 à 4 ms pendant tout le programme ;
+- **« Arrêter »** : un bandeau vert « Exécution de votre code… Veuillez patienter. » porte le bouton (`stopRunButtonPython`), qui n'existe que
+  pendant l'exécution ; le cliquer arrête le programme (console figée, `KeyboardInterrupt`). **Recliquer « Exécuter » ne l'arrête pas** : cela
+  relance le programme en vidant la console ;
+- **les numéros de ligne** : la marge de l'éditeur numérote les lignes, préambule compris, et une erreur de la console pointe **cette**
+  numérotation (une erreur sur la ligne 3 du programme est signalée « line 11 » = 8 + 3, et c'est la ligne 11 à l'écran). La consigne dit
+  « le numéro de ligne donné par la console est celui de la marge de l'éditeur » et ne parle jamais de « ligne 3 du programme ».
+
+**Bouton « Copier ».** Trois exemplaires (activité 3, activité 5, Bonus), chacun avec son bloc de huit lignes : l'élève ne retape jamais le
+préambule. Le texte copié est celui du bloc, espaces insécables remplacés. Le bloc **passe à la ligne** à l'affichage (la première ligne,
+la plus longue, masquait « ne les change pas ») : la copie n'en est pas modifiée. Sous Windows, le presse-papiers réécrit les fins de ligne en CRLF : l'éditeur les normalise au collage.
+
+**Encart des gestes.** Même règle qu'en 3e_C9.1 : **Ouvrir** en mode code ; **Retrouver** par le clic droit, « Modifier dans Bloc-notes »,
+la sélection **à partir de la ligne `import time`** (le préambule fait partie du programme à garder), le collage à la place de
+`print('Bonjour !')` ; **Sortir** par la disquette et Télécharger. **Sans compte** : la connexion est retirée du geste « Ouvrir », les
+captures du cloud et de « Depuis votre appareil » disparaissent, « Sortir » dit que Vittascience ne garde pas le travail d'une séance à
+l'autre. *Cette dernière décision est reprise de 3e_C9.1 (le Bloc-notes remplace le cloud, et la ligne `Auteur:` du `.py` n'existe pas sans
+compte) : à confirmer par Pascal pour 4e_C6.2.*
+
+**Douze captures** (`Images/geste_vitta_*.png`) : refaites, dans un profil temporaire neuf jamais connecté, pour le bouton, le nom (×2),
+le collage exécuté et la fenêtre « Sauvegarder le projet » sans compte ; le Bloc-notes est nouveau (fenêtre à un seul onglet, recadrée) ;
+`1c` et `3` (le menu) sont la **reprise octet pour octet** des images de 3e_C9.1 ; les quatre captures de l'Explorateur du geste « Sortir »
+sont **conservées** du premier jeu (leur fichier d'exemple, `…_75334.py` de 609 octets, n'est pas celui du geste « Retrouver »).
+
+**Ce que la mesure a appris — à lire par Pascal :**
+
+* **`Documents\4E3` existe encore sur le poste**, avec `4e-ARROSAGE-DUPONT_202694_75334.py` (créé le 04/10 à 08:01, reste du premier jeu de
+  captures de ce lot). Je n'y ai pas touché ; les captures de ce lot sont passées par un dossier temporaire, supprimé. **À mettre à la
+  corbeille par Pascal.**
+* **`attendre(1)` pèse sur le temps de la séance** : le programme boucle sans fin, une mesure par seconde ; la consigne dit d'arrêter avec
+  « Arrêter » quand la décision a été observée.
+* **Les valeurs du capteur simulé sont fixes** (six mesures qui tournent) : les élèves voient les deux branches du `if`, mais pas un
+  vrai capteur. Dit dans la consigne (« le capteur simulé lit… »).
+* Non mesuré : un navigateur autre que Chrome ; un élève qui modifierait le préambule ; le comportement du bouton « Arrêter » sur un
+  poste lent.
+* **Même classement à faire pour `3e_C7.1`, `5e_C7.1`, `4e_C9.1` et `5e_C9.1`** quand leur tour viendra (activité où l'élève tape du code
+  → `?mode=code`, Sortir par Télécharger, Retrouver par le Bloc-notes ; activité en blocs → mode mixte).
+
+### Vérifié
+
+`controle_hierarchie`, `controle_debordement`, `controle_gestes_outil`, `controle_medias`, `controle_liens`, `controle_rapports_tests` verts ·
+`tests_4e_C6.2.mjs` **38 / 38** (trois contrôles ajoutés : n°36 les trois boutons « Copier » copient les huit lignes exactes, n°37 les trois
+liens en `?mode=code`, n°38 plus de « blocs capteurs » et « Arrêter » dans chaque barre) · au navigateur, 1280 et 390 px : 12 images, 0 cassée,
+loupe active sur les 12, pas de défilement horizontal (le seul 404 vu est le `favicon.ico` du serveur local) · préambule mesuré dans
+Vittascience avec le texte exact (voir plus haut).
+
+**Remis en état.** Dossier temporaire `essai-gestes-4e` envoyé à la corbeille, fenêtre du Bloc-notes ouverte pour la capture refermée,
+fenêtres de l'Explorateur fermées ; dans la session de Pascal, aucun onglet du Bloc-notes n'a été touché.
