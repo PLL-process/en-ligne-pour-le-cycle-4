@@ -123,5 +123,8 @@ pas rejoué ici.
 **L'échec est antérieur à ce lot.** Le contrôle n°31 (« une version étayée pour chaque zone de rédaction ») donne
 « 2 étayages pour 3 zones » ; **il donne le même résultat sur `main` avant ce lot** (43 / 44 : la suite comptait alors 44 contrôles).
 Les trois zones de rédaction sont l'hypothèse (`hyp1`), la réponse au Bonus (`bonusRep`) et le bilan (`bilanTxt`) ; les deux
-versions étayées couvrent l'hypothèse et le bilan, **pas** la réponse au Bonus. Le rapport ci-dessus, daté du 26/08/2026, parlait de
-deux zones. Non corrigé ici : ajouter une version étayée au Bonus est un choix de contenu, signalé à Pascal.
+versions étayées couvraient l'hypothèse et le bilan, **pas** la réponse au Bonus. Le rapport ci-dessus, daté du 26/08/2026, parlait de
+deux zones.
+
+**Corrigé le 05/10/2026** (sur décision de Pascal) : une version étayée courte (trois débuts de phrase) est ajoutée à la zone
+« Ma réponse au Bonus ». Le contrôle n°31 donne désormais « 3 étayages pour 3 zones » : **48 / 48** à la rejouée du 05/10/2026.

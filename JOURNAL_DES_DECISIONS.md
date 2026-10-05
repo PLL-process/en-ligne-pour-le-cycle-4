@@ -21646,3 +21646,17 @@ serveur local) · les programmes mesurés dans Vittascience avec le texte exact 
 
 **Remis en état.** Dossier temporaire `5E2` envoyé à la corbeille, fichier d'essai retiré de Téléchargements, fenêtres de l'Explorateur fermées, fenêtre du
 Bloc-notes ouverte pour la capture refermée ; dans la session de Pascal, aucun onglet du Bloc-notes n'a été touché.
+
+## 05/10/2026 — Thème 3 · 5e_C9.1 : une version étayée pour la zone « Ma réponse au Bonus » (le test n°31 repasse au vert)
+
+**Ce qui a été fait.** La suite de 5e_C9.1 donnait « 2 étayages pour 3 zones » (contrôle n°31), déjà rouge sur `main` avant le lot du 04/10 : les trois zones de
+rédaction sont l'hypothèse (`hyp1`), la réponse au Bonus (`bonusRep`) et le bilan (`bilanTxt`), et seules les deux autres avaient une version étayée.
+Sur décision de Pascal, `bonusRep` reçoit une **amorce courte**, dans le gabarit des deux autres (« 🪜 Version étayée — des phrases à compléter », une phrase de
+cadrage, trois débuts de phrase) : « J'ai choisi le défi ____ . » · « Mon programme ____ , et la console affiche ____ . » · « Ce que j'ai trouvé : ____ . » La
+phrase de cadrage dit que le Bonus est facultatif et que le niveau attendu ne change pas.
+
+**Vérifié.** `tests_5e_C9.1-C9.3.mjs` **48 / 48** (n°31 : « 3 étayages pour 3 zones ») · `controle_hierarchie`, `controle_debordement`, `controle_gestes_outil`,
+`controle_liens`, `controle_medias`, `controle_rapports_tests` verts. Le rapport de tests du lot dit, dans sa section « Rejouée », que l'échec est corrigé.
+
+**Pourquoi un commit à part.** Il est en tête du lot 4e_C9.1 mais ne touche que 5e_C9.1 : il se lit et se défait seul. La garde-périmètre le laisse passer (5e_C9.1
+et 4e_C9.1 sont tous deux du thème 3).
