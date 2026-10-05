@@ -21727,3 +21727,58 @@ défilement horizontal (le seul 404 vu est le `favicon.ico` du serveur local) ·
 
 **Remis en état.** Dossier `4E3` envoyé à la corbeille, fichier d'essai retiré de Téléchargements, fenêtres de l'Explorateur fermées ; le Bloc-notes n'a pas été
 ouvert pour ce lot.
+
+## 05/10/2026 — Thème 2 : marqueurs de flèche en userSpaceOnUse (23 SVG + 2 pages), et `controle_marqueurs.py` avec son banc
+
+**Ce qui a été fait.** Même correction que le thème 1 (entrée du 03/10/2026), même règle : `markerUnits="userSpaceOnUse"`,
+`viewBox` ajouté là où il manquait (`0 0 markerWidth markerHeight` d'avant, le dessin ne change pas), `markerWidth` et
+`markerHeight` convertis en pixels (ancienne valeur × épaisseur du trait **calculée par le navigateur**, pas lue dans le
+fichier : les traits dont l'épaisseur vient d'une classe CSS comptent aussi), marqueur dédoublé quand les traits qui le portent
+n'ont pas la même épaisseur (`ar` et `ar_2p5`, `fig4f` et `fig4f_3`…). Pointe ramenée à 4,4 × l'épaisseur du trait, jamais plus
+que l'ancienne, jamais plus que le dernier segment, **seulement là où elle débordait**.
+
+**Le périmètre, mesuré.** 53 marqueurs dans 29 fichiers du thème 2 ; 14 (les deux SVG `book-train` et leurs copies `fichiers_drawio/`)
+étaient déjà en pixels. Restent **39 marqueurs dans 25 fichiers** : 23 SVG, la page `sequence_4e_C4.1-C4.2-C4.4_book-train.html`
+(SVG en ligne) et `qcm_algorigrammes_domotique.html` (schémas fabriqués en JavaScript, trois marqueurs `as`, `av`, `ab`). Après
+dédoublement : 42 marqueurs dans les SVG et la page `book-train`, plus 4 dans le QCM.
+
+**Tracés qui changent d'aspect** (la pointe rétrécit) :
+
+| Fichier | marqueur | pointe avant → après | dernier segment | lignes |
+|---|---|---|---|---|
+| `4e_C4.1/Images/energie_stockage_transformation.svg` | `fj` | 96 → 52,8 px | 80 px | 10, 11, 19 |
+| `4e_C4.1/Images/energie_stockage_transformation.svg` | `fb` | 96 → 52,8 px | 80 px | 20 |
+| `sequence_4e_C4.1-C4.2-C4.4_book-train.html` | `fig5f` | 25 → 11 px | 18 px | 1095, 1122 |
+
+Les autres marqueurs gardent la taille d'avant, **y compris les grandes pointes** (le QCM : 40 px sur un trait de 4, dont le
+dernier segment mesure 40 px aussi : pas de chevauchement, donc pas de changement). « Même aspect qu'avant » prime sur la règle
+des 10 à 12 px, comme au thème 1.
+
+**Vérifié au rendu (Chromium, ×2, avant = `main`, après = branche).** Sur les 26 rendus (23 SVG, 3 SVG de la page `book-train`),
+**24 sont identiques au pixel près** ; les deux qui diffèrent sont exactement les deux fichiers du tableau, et seulement dans la
+zone des pointes. Les trois schémas du QCM, rendus avec les vraies fonctions de la page (`svgScratch`, `makeVerticalSvg`,
+`makeLoopSvg`), sont identiques au pixel près. Les 23 SVG sont du XML valide. **Un piège de mesure rencontré :** comparer deux
+images RGBA avec `getbbox()` ne regarde que le canal alpha — la première comparaison annonçait « 26 identiques » alors que
+`energie_stockage_transformation.svg` avait visiblement changé ; elle a été refaite en RVB, et c'est elle qui est citée ici.
+
+**Le contrôle.** `_outils/controle_marqueurs.py` refuse tout `<marker>` sans `markerUnits="userSpaceOnUse"` (ou avec
+`strokeWidth` écrit), et tout marqueur en pixels qui n'a pas `markerWidth`/`markerHeight` (la pointe vaudrait 3 px). Il lit les
+`.svg`, `.html`, `.py`, `.js`, `.mjs` hors archives et `_outils`, balises sur plusieurs lignes comprises, SVG fabriqués par un
+générateur ou une chaîne JavaScript compris. Il sort à 2 s'il ne lit rien (règle d'or n°299). **TOLERES nomme les 17 fichiers du
+thème 3** (16 SVG et `_generation/gantt_premium.py`, 29 marqueurs) : leur correction arrive avec la PR du thème 3, et la garde de
+périmètre interdit à cette PR de vider la liste elle-même ; les entrées s'afficheront « périmées » et se retireront dans la PR
+suivante qui touche `_outils/`. Son banc, `tests_controle_marqueurs.py`, joue **15 cas** : le cas réel (96 px sur 80), le marqueur
+en pixels, `strokeWidth` écrit, `userSpaceOnUse` sans taille, la balise sur plusieurs lignes, un SVG de page HTML, un générateur
+Python, les archives, la tolérance et sa péremption, la racine vide (code 2, par la fonction **et** par la ligne de commande), le
+dépôt réel par la ligne de commande avec des chiffres à l'écran. Contrôle de bonne foi : un marqueur remis à l'ancienne dans
+`energie_stockage_transformation.svg` fait sortir le contrôle à 1, avec le fichier et la ligne.
+
+**Non lu par le script.** Que la pointe tienne dans le dernier segment, et que le dessin soit identique : c'est le rendu, avant
+et après, qui le dit — voir ci-dessus.
+
+**Aussi dans ce lot, en tête et séparé :** « Arrêter, sous Exécuter » devient « Arrêter, dans le bandeau vert » dans les trois
+notes de `4e_C6.2` (activités 3, 5 et Bonus).
+
+**À venir.** Thème 3 : 16 SVG et `gantt_premium.py` (qui produit les trois `gantt_*.svg`), avec en tête l'ajout, dans l'activité 3
+de `4e_C9.1`, de « Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs. » ; puis le
+classement de `3e_C7.1` et `5e_C7.1` (**sans compte**, mode mixte ou code, version 🅰, à décider activité par activité).
