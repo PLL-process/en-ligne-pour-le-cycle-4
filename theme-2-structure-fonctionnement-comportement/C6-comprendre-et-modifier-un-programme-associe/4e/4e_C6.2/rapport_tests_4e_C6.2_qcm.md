@@ -1,8 +1,8 @@
 # Rapport de tests — Lot 4e_C6.2 « Le jardin connecté : arrosage automatique »
 
 **Suite** : `tests_4e_C6.2.mjs`, livrée dans ce dossier · **Outil** : Playwright
-(Chromium headless), viewport mobile 390 × 844 · **Rejouée le 31/08/2026** ·
-**Verdict : 35 / 35 ✅**
+(Chromium headless), viewport mobile 390 × 844 · **Rejouée le 31/08/2026, puis le 04/10/2026**
+(trois contrôles ajoutés, n°36 à 38, bureau 1280 × 900) · **Verdict : 38 / 38 ✅**
 
 ```
 cd theme-2-.../C6-.../4e/4e_C6.2 && node tests_4e_C6.2.mjs
@@ -92,6 +92,21 @@ la série** (voir plus bas), et regroupées ici :
 | 33 | Aucune réponse exposée dans le HTML rendu (plus de `value="v0"`) | ✅ |
 | 34 | Le lien de retour vers la séquence pointe sur un fichier réel | ✅ |
 | 35 | Aucune erreur JS sur le QCM | ✅ |
+
+## Éditeur en mode code : préambule et bouton « Copier » — 3 contrôles
+
+Ajoutés le 04/10/2026 avec le lot correctif de 4e_C6.2. Ils éprouvent ce que **la page** promet ; ce qui se passe dans
+Vittascience (le préambule collé, l'exécution, le bouton « Arrêter ») a été mesuré à la main, avec le texte exact, et n'est pas
+rejoué ici : c'est un service externe.
+
+| # | Contrôle | Verdict |
+|---|---|---|
+| 36 | Les trois boutons « Copier le préambule » (activité 3, activité 5, Bonus) copient chacun **les huit lignes exactes**, sans espace insécable | ✅ |
+| 37 | Les trois liens-boutons ouvrent l'éditeur en `?mode=code`, plus en mode mixte | ✅ |
+| 38 | Plus de « blocs capteurs » ni de « blocs à gauche, Python à droite » ; chaque barre 🧪 nomme « Arrêter » | ✅ |
+
+Le test 36 remplace `navigator.clipboard` par un espion : il vérifie le texte **envoyé** au presse-papiers, pas le presse-papiers
+du système (qui, sous Windows, réécrit les fins de ligne en CRLF).
 
 ## Le test n°32 (n°12 d'origine) a d'abord échoué, et c'est le plus utile de la série
 

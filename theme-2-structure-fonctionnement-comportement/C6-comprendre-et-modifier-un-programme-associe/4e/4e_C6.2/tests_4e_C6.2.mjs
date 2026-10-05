@@ -351,6 +351,52 @@ ok('35 · aucune erreur JS sur le QCM', err.length === 0, err.slice(0, 2).join('
 await ctx.close();
 }
 
+/* ════════════════ ÉDITEUR EN MODE CODE : PRÉAMBULE ET BOUTON « COPIER » (3 contrôles) ════════════════
+ * Ajouté le 04/10/2026 (lot correctif). Les captures et le déroulé dans Vittascience même ne se testent pas
+ * ici (service externe) : ce bloc éprouve seulement ce que NOTRE page promet — un préambule de huit lignes
+ * copié à l'identique, des liens en ?mode=code, et plus de blocs fantômes dans la consigne. */
+{
+const PREAMBULE = [
+  'import time; A0 = 0; mesures = [55, 40, 25, 12, 28, 45]; rang = [0]  # ===== Simulation de la carte (7 lignes) : ne les change pas =====',
+  'def suivante(): rang[0] = rang[0] + 1; return mesures[(rang[0] - 1) % len(mesures)]',
+  'def lire_capteur_pourcent(broche): v = suivante(); print("[capteur]", v, "%"); return v',
+  'def lire_capteur(broche): v = suivante() * 1023 // 100; print("[capteur] valeur brute", v); return v',
+  'def demarrer_pompe(): print("[pompe] MARCHE")',
+  'def arreter_pompe(): print("[pompe] arrêt")',
+  'def attendre(secondes): time.sleep(secondes)',
+  '# ===== Ton programme commence ici =====',
+].join('\n') + '\n';
+const ctx = await b.newContext({ viewport: { width: 1280, height: 900 } });
+await ctx.addInitScript(() => {
+  window.__copies = [];
+  Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async t => { window.__copies.push(t); } } });
+});
+await ctx.route('**/*', route => /^https?:/i.test(route.request().url()) ? route.abort() : route.continue());
+const p = await ctx.newPage();
+await p.goto('file://' + SEQ, { waitUntil: 'load' });
+const copies = [];
+for (const id of ['preambule-vs1', 'preambule-vs2', 'preambule-vs3']) {
+  const panneau = await p.evaluate(i => { const q = document.getElementById(i).closest('[role=tabpanel], .seance-panel'); return q ? q.id : null; }, id);
+  if (panneau) await p.click(`[data-panel="${panneau}"]`);
+  await p.evaluate(i => { const d = document.getElementById(i).closest('details'); if (d) d.open = true; }, id);
+  await p.click(`.copier-preambule[data-cible="${id}"]`);
+  copies.push(await p.evaluate(() => window.__copies[window.__copies.length - 1]));
+}
+ok('36 · les trois boutons « Copier » copient chacun les huit lignes du préambule, à l\'identique et sans espace insécable',
+   copies.length === 3 && copies.every(c => c === PREAMBULE) && !copies.some(c => / /.test(c)),
+   copies.map(c => (c || '').split('\n').length - 1).join(' · ') + ' lignes');
+const hrefs = await p.$$eval('a.vs-lien', a => a.map(x => x.getAttribute('href')));
+ok('37 · les trois liens-boutons ouvrent l\'éditeur en ?mode=code (et plus en mode mixte)',
+   hrefs.length === 3 && hrefs.every(h => /^https:\/\/fr\.vittascience\.com\/python\/\?mode=code(&|&amp;|$)/.test(h)),
+   hrefs.join(' | '));
+const tout = await p.evaluate(() => document.body.textContent);
+ok('38 · plus de « blocs capteurs » ni de « blocs à gauche, Python à droite » ; la consigne nomme « Arrêter » dans chaque barre',
+   !/blocs\s*«\s*capteurs/i.test(tout) && !/blocs à gauche/i.test(tout) && !/mode=mixed/.test(await p.content())
+   && (await p.$$eval('details.vs', l => l.every(d => /Arrêter/.test(d.textContent)))),
+   '');
+await ctx.close();
+}
+
 const n = T.filter(t => t.ok).length;
 console.log(T.map(t => `${t.ok ? '✅' : '❌'} ${t.n}${t.d ? ' — ' + t.d : ''}`).join('\n'));
 console.log(`\n${n} / ${T.length}`);
