@@ -21646,3 +21646,84 @@ serveur local) · les programmes mesurés dans Vittascience avec le texte exact 
 
 **Remis en état.** Dossier temporaire `5E2` envoyé à la corbeille, fichier d'essai retiré de Téléchargements, fenêtres de l'Explorateur fermées, fenêtre du
 Bloc-notes ouverte pour la capture refermée ; dans la session de Pascal, aucun onglet du Bloc-notes n'a été touché.
+
+## 05/10/2026 — Thème 3 · 5e_C9.1 : une version étayée pour la zone « Ma réponse au Bonus » (le test n°31 repasse au vert)
+
+**Ce qui a été fait.** La suite de 5e_C9.1 donnait « 2 étayages pour 3 zones » (contrôle n°31), déjà rouge sur `main` avant le lot du 04/10 : les trois zones de
+rédaction sont l'hypothèse (`hyp1`), la réponse au Bonus (`bonusRep`) et le bilan (`bilanTxt`), et seules les deux autres avaient une version étayée.
+Sur décision de Pascal, `bonusRep` reçoit une **amorce courte**, dans le gabarit des deux autres (« 🪜 Version étayée — des phrases à compléter », une phrase de
+cadrage, trois débuts de phrase) : « J'ai choisi le défi ____ . » · « Mon programme ____ , et la console affiche ____ . » · « Ce que j'ai trouvé : ____ . » La
+phrase de cadrage dit que le Bonus est facultatif et que le niveau attendu ne change pas.
+
+**Vérifié.** `tests_5e_C9.1-C9.3.mjs` **48 / 48** (n°31 : « 3 étayages pour 3 zones ») · `controle_hierarchie`, `controle_debordement`, `controle_gestes_outil`,
+`controle_liens`, `controle_medias`, `controle_rapports_tests` verts. Le rapport de tests du lot dit, dans sa section « Rejouée », que l'échec est corrigé.
+
+**Pourquoi un commit à part.** Il est en tête du lot 4e_C9.1 mais ne touche que 5e_C9.1 : il se lit et se défait seul. La garde-périmètre le laisse passer (5e_C9.1
+et 4e_C9.1 sont tous deux du thème 3).
+
+## 05/10/2026 — Thème 3 · 4e_C9.1 : l'encart des gestes se fait sans compte, le mode mixte est conservé ; la version 🅰 (matériel réel) est retirée (vague 2, étape 2, lot 5)
+
+**Pourquoi ce lot n'est pas comme les précédents.** Dans 3e_C9.1, 4e_C6.2 et 5e_C9.1, l'élève **tape** du Python : le lot passait en `?mode=code`. Ici,
+l'activité 3 (« Écrire et exécuter — des blocs au Python ») est faite pour le **mode mixte** : l'élève construit la décision **en blocs**, regarde le Python
+s'écrire à droite, puis **modifie le Python** (le seuil) et regarde les blocs suivre. Le mode mixte est donc conservé.
+
+**Mesuré** (Vittascience, mode mixte, sans compte, profil temporaire neuf) avec le programme de référence de l'activité 3, tapé dans le volet Python,
+en trois variantes :
+
+| Variante | Blocs | Console | Fichier téléchargé | Après réouverture |
+|---|---|---|---|---|
+| Sans commentaires | 26 éléments, aucun « Code non traduit » | `POMPE ON` | fidèle (retraits à 2 espaces, `'` à la place de `"`) | `POMPE ON`, 26 éléments |
+| Avec commentaires | 29 éléments | `POMPE ON` | fidèle ; `# --- …` devient `#--- …` | `POMPE ON`, 29 éléments |
+| Seuil changé à 20 dans le Python | 26 éléments | `POMPE OFF` | fidèle, `SEUIL = 20` | `POMPE OFF`, 26 éléments |
+
+Le mode mixte et « Ouvrir → Depuis votre appareil » marchent donc pour cette activité : le programme revient **en blocs et en Python**, avec son nom.
+Contrairement aux autres lots, ni Bloc-notes ni copier-coller. La réouverture passe par un avertissement (« Est-ce que vous êtes sûr de vouloir importer ce
+fichier depuis votre ordinateur ? Vous allez perdre votre avancement fait manuellement. », Oui / Non) : il est capturé et dit dans le texte.
+
+**Classement activité par activité (validé par Pascal).** Seule l'activité 3 ouvre l'éditeur (un seul lien, aucune barre 🧪) :
+
+| Activité | Ce que fait l'élève | Classement |
+|---|---|---|
+| 1 — Les deux chaînes, 2 — Règle → algorigramme | classe des organes, remet des blocs en ordre, écrit du pseudo-code | rien |
+| **3 — Écrire et exécuter, des blocs au Python** | construit en blocs, puis modifie le Python | **`?mode=mixed` conservé** ; Retrouver par « Ouvrir → Depuis votre appareil » |
+| 4 — Tester, 5 — Clignotement | banc d'essai de la page, traces fournies | rien |
+| 6 — Réinvestir (lampadaire) | écrit son programme dans une zone de texte de la page | rien (aucun éditeur) |
+
+**Décisions de Pascal.** (1) **Sans compte.** (2) La consigne de l'activité 3 dit « **Nomme ton projet 4e-JARDIN-TON NOM, puis télécharge-le (geste 4)** »
+(elle disait « Enregistre sous… », impossible sans compte : la disquette ne propose que « Télécharger »). (3) **La version 🅰 « Matériel réel » est retirée,
+comme en 5e_C9.1, et elle pourra revenir avec la future version carte réelle** en interface Arduino (voir l'entrée de 5e_C9.1). (4) L'encart : Ouvrir en mode
+mixte, Retrouver par « Ouvrir → Depuis votre appareil », Sortir par Télécharger.
+
+**La version 🅰 retirée.** Elle décrivait « carte + capteur d'humidité + relais + pompe 12 V, avec son alimentation séparée » et promettait « tout, jusqu'au
+téléversement » ; l'éditeur Python ne pilote aucune carte, et la page ne dit nulle part comment téléverser. Retirés : le bouton « 🅰 J'ai le matériel » du sélecteur
+« Mon parcours » et sa carte (le titre devient « Deux façons de vivre la séquence », la grille passe à deux colonnes), les deux règles CSS `parcours-a`, la fiche
+pédagogique, le rapport de tests, le manifeste (`A_materiel` devient `A_materiel_retiree`, avec la date), la synthèse professeur et le README ; un ancien choix « a »
+mémorisé retombe sur « tous ». **Ce qui reste** : l'explication du relais, qui est le contenu de l'activité 1 — elle porte sur le jardin étudié, que les élèves
+**lisent** sur le schéma et ne montent pas ; ses titres deviennent « Le relais de l'activité 1 » et « 4. Le relais de l'activité 1 ». Les paragraphes de
+sécurité du montage (alimentation branchée par le professeur) disparaissent avec le montage.
+
+**Douze captures** (`Images/geste_vitta_*.png`, 29 à 51 Ko), **sans compte** : Ouvrir ×2 (le bouton dans la page ; l'éditeur en mode mixte) · Nommer ×2 ·
+Retrouver ×3 (« Ouvrir un projet » sur l'onglet « Depuis votre appareil » ; la confirmation ; le programme revenu en blocs et en Python) · Sortir ×5
+(« Sauvegarder le projet » sans compte ; Téléchargements ; nouveau dossier ; 4E3 saisi ; Documents › 4E3). `4c` et `4d` sont la **reprise octet pour octet** de
+4e_C6.2. La page n'avait pas de style de figures de gestes (ajouté, repris de 4e_C6.2) ; sa **loupe** existait déjà.
+
+**Ce que la mesure a appris — à lire par Pascal :**
+
+* **« Mes projets sur le cloud » reste proposé** dans « Ouvrir un projet » sans compte : la légende de la capture dit de ne pas l'utiliser.
+* **Risque non mesuré** : un élève qui modifierait le Python avec une écriture que les blocs ne savent pas traduire (un `print` à plusieurs arguments, une
+  concaténation de chaînes) verrait son fichier réécrit au téléchargement, comme mesuré ailleurs. Les modifications attendues par l'activité (changer le
+  seuil, passer de `and` à `or`) se traduisent ; rien de plus n'a été mesuré.
+* **L'encart était en haut de page, avant les onglets**, loin de l'outil : `controle_gestes_outil` l'a refusé (« n'est pas à la porte de l'outil »)
+  dès que son titre a pris « (échauffement) ». Il est maintenant **en tête de la séance 2, avant l'activité 3**, comme dans 5e_C9.1.
+* **Un test de la suite changeait de sens** : « sélecteur de parcours (4 boutons) » devient « 3 boutons » (🅱, 🅲, tout afficher).
+* **Même classement à faire pour `3e_C7.1` et `5e_C7.1`** quand leur tour viendra. **À venir ensuite** : le lot des pointes de flèche du thème 2, dont le premier
+  commit sera le correctif de 4e_C6.2 (« sous Exécuter » → « dans le bandeau vert »).
+
+### Vérifié
+
+`controle_hierarchie`, `controle_debordement`, `controle_gestes_outil`, `controle_medias`, `controle_liens`, `controle_rapports_tests` verts ·
+`tests_4e_C9.mjs` **66 / 66** (61 avant le lot ; un test modifié, cinq ajoutés) · au navigateur, 1280 et 390 px : 12 images, 0 cassée, loupe active, pas de
+défilement horizontal (le seul 404 vu est le `favicon.ico` du serveur local) · le programme de l'activité 3 mesuré dans Vittascience avec le texte exact.
+
+**Remis en état.** Dossier `4E3` envoyé à la corbeille, fichier d'essai retiré de Téléchargements, fenêtres de l'Explorateur fermées ; le Bloc-notes n'a pas été
+ouvert pour ce lot.

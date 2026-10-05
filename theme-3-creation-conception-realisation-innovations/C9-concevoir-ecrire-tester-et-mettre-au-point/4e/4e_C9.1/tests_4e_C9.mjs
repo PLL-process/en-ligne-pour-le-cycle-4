@@ -238,8 +238,8 @@ const run = async () => {
   ok("règle n°101 : le bouton bascule réellement sur la séance suivante",
      await page.locator("#s2.active").count() === 1);
 
-  ok("règle n°122 : sélecteur de parcours dans la barre d'outils (4 boutons)",
-     await page.locator(".toolbar .parcours-btn").count() === 4);
+  ok("règle n°122 : sélecteur de parcours dans la barre d'outils (3 boutons : 🅱, 🅲, tout afficher — la version 🅰 est retirée)",
+     await page.locator(".toolbar .parcours-btn").count() === 3);
   await page.click('.parcours-btn[data-choix="c"]');
   await page.waitForTimeout(200);
   ok("règle n°122 : choisir 🅲 masque les blocs propres au parcours 🅱",
@@ -250,6 +250,45 @@ const run = async () => {
        .filter(e => e.closest("[data-parcours]")).length === 0));
   await page.click('.parcours-btn[data-choix="tous"]');
   await page.waitForTimeout(200);
+
+  /* — lot du 05/10/2026 : encart sans compte (mode mixte conservé), version 🅰 retirée —
+     Le contenu de Vittascience (blocs, Python, réouverture) a été mesuré à la main et n'est pas rejoué ici :
+     service externe. On éprouve ce que NOTRE page promet. */
+  {
+    const hrefs = await page.$$eval("a.vs-lien", a => a.map(x => x.getAttribute("href")));
+    ok("gestes · l'unique lien-bouton garde l'éditeur en ?mode=mixed (l'activité 3 va des blocs au Python)",
+       hrefs.length === 1 && /^https:\/\/fr\.vittascience\.com\/python\/\?mode=mixed(&|&amp;|$)/.test(hrefs[0]), hrefs.join(" | "));
+
+    const choix = await page.$$eval(".parcours-btn", b => b.map(x => x.dataset.choix).join(","));
+    const texte = await page.evaluate(() => document.body.textContent);
+    ok("gestes · plus de version 🅰 : ni bouton, ni carte, ni « matériel réel », ni « J'ai le matériel »",
+       choix === "b,c,tous" && !/🅰/.test(texte) && !/Matériel réel/i.test(texte) && !/J'ai le matériel/i.test(texte),
+       "boutons : " + choix);
+
+    const consigne = await page.locator("#s2 .consigne").first().textContent();
+    ok("gestes · la consigne de l'activité 3 dit « Nomme ton projet 4e-JARDIN-TON NOM, puis télécharge-le (geste 4) » (plus « Enregistre sous »)",
+       /Nomme ton projet 4e-JARDIN-TON NOM, puis télécharge-le \(geste 4\)/.test(consigne) && !/Enregistre sous/.test(consigne),
+       consigne.trim().slice(0, 140));
+
+    await page.evaluate(() => document.querySelectorAll(".gestes-outil img").forEach(i => { i.loading = "eager"; }));
+    await page.waitForTimeout(800);
+    const imgs = await page.$$eval(".gestes-outil img", l => l.map(i => ({ charge: i.complete && i.naturalWidth > 0, alt: (i.getAttribute("alt") || "").trim().length })));
+    ok("gestes · les " + imgs.length + " captures de l'encart se chargent, toutes avec un texte alternatif",
+       imgs.length === 12 && imgs.every(i => i.charge && i.alt > 20),
+       imgs.filter(i => !i.charge).length + " cassée(s), " + imgs.filter(i => i.alt <= 20).length + " sans texte alternatif");
+
+    /* un élève qui avait choisi 🅰 avant le retrait : sa sauvegarde dit « a » — dans un contexte à part */
+    const ctxA = await navigateur.newContext({ viewport: { width: 390, height: 844 } });
+    await ctxA.addInitScript(() => localStorage.setItem("seq_4e_C9_jardin-connecte", JSON.stringify({ exp: { parcours: "a" } })));
+    const pA = await ctxA.newPage();
+    await pA.goto(url(SEQ));
+    await pA.waitForTimeout(400);
+    const classeA = await pA.evaluate(() => document.body.className);
+    const noteA = await pA.locator("#parcoursNote").textContent();
+    ok("gestes · un ancien choix « a » mémorisé retombe sur « tous » (rien n'est masqué à tort)",
+       !/parcours-/.test(classeA) && /tous/.test(noteA), noteA.trim());
+    await ctxA.close();
+  }
 
   await page.click("#btnEssentiel");
   ok("règle n°29 : le mode essentiel masque le référentiel",

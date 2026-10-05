@@ -2,9 +2,9 @@
 
 Tous les médias de ce lot sont des **créations originales** réalisées pour le projet
 (SVG écrits à la main). Aucune image extraite d'un manuel, de Google Images ou d'un
-site tiers. Aucun hotlinking. **Aucune capture d'écran** dans ce lot : les planches
-sont des schémas, et elles ne se présentent jamais comme des captures (règle d'or
-n°94 — on ne fait pas passer une reconstitution pour une capture).
+site tiers. Aucun hotlinking. **Les planches sont des schémas**, et elles ne se présentent jamais
+comme des captures (règle d'or n°94 — on ne fait pas passer une reconstitution pour une capture) ;
+**les douze captures d'écran de l'encart des gestes** sont décrites à la fin de ce fichier.
 
 | Fichier | Type | Source / auteur | Licence | Rôle pédagogique (image à LIRE) | Poids |
 |---|---|---|---|---|---|
@@ -41,3 +41,27 @@ Autres fichiers non graphiques du lot :
   comme telles dans la situation déclenchante. Ce ne sont pas des données
   agronomiques : la séquence le précise, et l'activité 6 demande justement de
   justifier un choix de seuils plutôt que de le recopier (règle n°111).
+
+## Captures d'écran des gestes de Vittascience (05/10/2026)
+
+L'encart « Avant de commencer (échauffement) » porte douze captures. **Il se fait sans compte, et l'éditeur reste en mode mixte** : la
+séance 2 va des blocs au Python, et le programme de l'activité 3 revient en blocs à la réouverture (mesuré le 05/10/2026). Aucune capture
+ne montre une session connectée. Les captures de Vittascience ont été prises dans un **profil de navigateur temporaire, neuf et jamais
+connecté** : aucun identifiant, aucun mot de passe enregistré, aucune extension. Les captures de l'Explorateur sont des **fenêtres seules**,
+sans nom de compte Windows, sans autre fichier (`PROTOCOLE_CAPTURES_GESTES.md`). Les noms `4e-JARDIN-DUPONT` et `4E3` sont des **exemples**,
+dits comme tels dans les légendes. Il n'y a pas de capture du menu « Ouvrir avec » ni du Bloc-notes : ce lot ne les utilise pas.
+
+| Fichier | Nature | Origine | Licence | Usage | Poids |
+|---|---|---|---|---|---|
+| `Images/geste_vitta_1_ouvrir_bouton.png` | **Capture d'écran réelle** (règle n°94) | La séquence 4e_C9.1 elle-même (servie en local), Chrome 154 piloté par Playwright, profil temporaire neuf, échelle 1, 05/10/2026 — fenêtre de 1400 × 875, non recadrée | CC0 | Geste 1 — Ouvrir : le bouton de l'activité 3, avec la consigne « Nomme ton projet… » | 40 Ko |
+| `Images/geste_vitta_1c_ouvrir_editeur.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 piloté par Playwright, **profil temporaire neuf**, **sans compte**, mode mixte, thème sombre, échelle 1, poste de Pascal, 05/10/2026 | CC0 | Geste 1 — Ouvrir : l'éditeur en mode mixte, avec le bloc « afficher Bonjour » | 29 Ko |
+| `Images/geste_vitta_2_nommer_fenetre.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 piloté par Playwright, **profil temporaire neuf**, **sans compte**, mode mixte, thème sombre, échelle 1, poste de Pascal, 05/10/2026 | CC0 | Geste 2 — Nommer : la fenêtre « Modifier les informations du projet » | 34 Ko |
+| `Images/geste_vitta_2b_nommer_resultat.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 piloté par Playwright, **profil temporaire neuf**, **sans compte**, mode mixte, thème sombre, échelle 1, poste de Pascal, 05/10/2026 | CC0 | Geste 2 — Nommer : le nom du projet en haut à gauche | 29 Ko |
+| `Images/geste_vitta_3_retrouver_ouvrir.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 piloté par Playwright, **profil temporaire neuf**, **sans compte**, mode mixte, thème sombre, échelle 1, poste de Pascal, 05/10/2026 | CC0 | Geste 3 — Retrouver : « Ouvrir un projet », onglet « Depuis votre appareil » | 33 Ko |
+| `Images/geste_vitta_3b_retrouver_confirmer.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 piloté par Playwright, **profil temporaire neuf**, **sans compte**, mode mixte, thème sombre, échelle 1, poste de Pascal, 05/10/2026 — l'avertissement « Est-ce que vous êtes sûr de vouloir importer ce fichier… ? » vu après le choix du fichier | CC0 | Geste 3 — Retrouver : la confirmation, boutons Oui et Non | 33 Ko |
+| `Images/geste_vitta_3c_retrouver_resultat.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 piloté par Playwright, **profil temporaire neuf**, **sans compte**, mode mixte, thème sombre, échelle 1, poste de Pascal, 05/10/2026 — le fichier est celui téléchargé au geste 4 (4e-JARDIN-DUPONT_202695_3431.py), choisi par le pilote de test ; programme de l'activité 3, exécuté, console POMPE ON | CC0 | Geste 3 — Retrouver : le programme revenu en blocs et en Python, avec son nom | 44 Ko |
+| `Images/geste_vitta_4_sortir_telecharger.png` | **Capture d'écran réelle** (règle n°94) | Vittascience (page seule), Chrome 154 piloté par Playwright, **profil temporaire neuf**, **sans compte**, mode mixte, thème sombre, échelle 1, poste de Pascal, 05/10/2026 — fenêtre « Sauvegarder le projet » **sans compte** : « Je me connecte », « Je m'inscris ! », puis « Télécharger » | CC0 | Geste 4 — Sortir : la disquette, puis le bouton Télécharger | 32 Ko |
+| `Images/geste_vitta_4b_sortir_telechargements.png` | **Capture d'écran réelle** (règle n°94) | Explorateur de fichiers Windows (fenêtre seule, rétrécie à une ligne), poste de Pascal, 05/10/2026 — recadrée de 8 px sur chaque bord (bord transparent de la fenêtre) ; la fenêtre est rétrécie pour que le fil d'Ariane se replie et qu'aucun autre élément ne soit montré | CC0 | Geste 4 — Sortir : le fichier .py dans Téléchargements | 51 Ko |
+| `Images/geste_vitta_4c_sortir_nouveau_dossier.png` | **Capture d'écran réelle** (règle n°94) | **Reprise octet pour octet** de `4e_C6.2/Images/geste_vitta_4c_sortir_nouveau_dossier.png` (Explorateur de fichiers, fenêtre seule, rétrécie à une ligne, poste de Pascal, 04/10/2026) : aucun nom de fichier ni de classe visible | CC0 | Geste 4 — Sortir : Documents, nouveau dossier à renommer | 48 Ko |
+| `Images/geste_vitta_4d_sortir_nom_de_classe.png` | **Capture d'écran réelle** (règle n°94) | **Reprise octet pour octet** de `4e_C6.2/Images/geste_vitta_4d_sortir_nom_de_classe.png` (même fenêtre, 04/10/2026) : le nom de classe 4E3 saisi | CC0 | Geste 4 — Sortir : le nom 4E3 saisi | 46 Ko |
+| `Images/geste_vitta_4e_sortir_resultat.png` | **Capture d'écran réelle** (règle n°94) | Explorateur de fichiers Windows (fenêtre seule, rétrécie à une ligne), poste de Pascal, 05/10/2026 — recadrée de 8 px sur chaque bord (bord transparent de la fenêtre) ; le fil d'Ariane se replie en « Documents › 4E3 » | CC0 | Geste 4 — Sortir : Documents › 4E3 contient le fichier | 51 Ko |

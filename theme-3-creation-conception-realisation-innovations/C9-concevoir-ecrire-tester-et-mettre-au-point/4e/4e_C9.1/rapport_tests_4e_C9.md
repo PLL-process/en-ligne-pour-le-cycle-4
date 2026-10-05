@@ -117,9 +117,8 @@ un élève la fera**, avec le même tremblement de mesure dans les deux modes.
 
 ## 3. Contrôles restant manuels (non exécutés — à faire par un humain)
 
-- **version 🅰 au labo** : capteur d'humidité, **module relais**, pompe 12 V avec
-  son alimentation séparée, et le téléversement depuis Vittascience. Le câblage
-  doit être relu avant toute mise sous tension ;
+- la version 🅰 (matériel réel, téléversement) n'existe plus depuis le 05/10/2026 : plus
+  de test au labo à prévoir ;
 - **accès réseau** : vérifier que `fr.vittascience.com` n'est pas filtré par le
   réseau du collège avant la séance 2 (sinon, le banc d'essai prend le relais) ;
 - test sur appareils réels (tablette, téléphone) — seul le viewport a été émulé ;
@@ -155,3 +154,12 @@ qu'il apparaisse.
 
 Aucun test exécuté en échec au moment de la remise (60/60). La suite complète a été
 rejouée intégralement, pas seulement les tests ajoutés.
+
+## 6. Rejouée le 05/10/2026 (lot des gestes, mode mixte conservé)
+
+La suite a été **rejouée après le lot du 05/10/2026** : **66 / 66** (61 avant le lot). Le contrôle « sélecteur de parcours » compte
+désormais **trois** boutons (🅱, 🅲, tout afficher) au lieu de quatre, et **cinq contrôles** sont ajoutés, préfixés « gestes » : l'unique
+lien-bouton garde l'éditeur en `?mode=mixed` ; plus de version 🅰 (ni bouton, ni carte, ni « matériel réel ») ; la consigne de l'activité 3
+dit « Nomme ton projet 4e-JARDIN-TON NOM, puis télécharge-le (geste 4) » ; les douze captures de l'encart se chargent avec un texte
+alternatif ; un ancien choix « a » mémorisé retombe sur « tous ». Le contenu de Vittascience (blocs, Python, réouverture du fichier)
+a été mesuré à la main avec le programme exact de l'activité 3 et n'est pas rejoué ici : service externe.
