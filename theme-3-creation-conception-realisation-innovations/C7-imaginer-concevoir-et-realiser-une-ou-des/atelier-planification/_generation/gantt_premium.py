@@ -110,7 +110,11 @@ def svg(nom_projet, niveau, T, fin):
              f'avec un rectangle pointillé qui montre la fenêtre dans laquelle elles '
              f'auraient pu être placées.</desc>')
     o.append(f'<rect width="{W}" height="{H}" fill="{C_FOND}"/>')
-    o.append('<defs><marker id="fl" markerWidth="9" markerHeight="7" refX="8" refY="3.5" '
+    # Pointe en pixels (markerUnits="userSpaceOnUse") : 4,4 x le trait de 1,3 = 5,72 px, et pas plus que
+    # le dernier segment du tracé (6 px, de `H{mx}` à `H{x2-4}`). Avant, « 9 » se mesurait en traits :
+    # 11,7 px, plus large que ce segment — la pointe débordait sur le coude du tracé.
+    o.append('<defs><marker id="fl" viewBox="0 0 9 7" markerWidth="5.72" markerHeight="4.4489" '
+             'refX="8" refY="3.5" markerUnits="userSpaceOnUse" '
              f'orient="auto"><path d="M0,0 L9,3.5 L0,7 z" fill="{C_FEN}"/></marker></defs>')
 
     y0 = MARGE_H + 62
