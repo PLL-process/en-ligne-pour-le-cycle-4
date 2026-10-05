@@ -200,6 +200,43 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   await page.waitForTimeout(120);
   ok("n°122 : aucune question retirée (6 vérificateurs)",
      (await page.locator(".btn.check").count()) === 6);
+
+  /* — lot du 05/10/2026 : encart sans compte (mode mixte conservé), version 🅰 retirée —
+     Le contenu de Vittascience (blocs, Python, réouverture) a été mesuré à la main et n'est pas rejoué ici :
+     service externe. On éprouve ce que NOTRE page promet. */
+  {
+    const hrefs = await page.$$eval("a.vs-lien", a => a.map(x => x.getAttribute("href")));
+    ok("gestes · les liens-boutons gardent l'éditeur en ?mode=mixed (l'activité 3 va des blocs au Python)",
+       hrefs.length >= 1 && hrefs.every(h => /^https:\/\/fr\.vittascience\.com\/python\/\?mode=mixed(&|&amp;|$)/.test(h)), hrefs.join(" | "));
+    const choix = await page.$$eval(".parcours-btn", b => b.map(x => x.dataset.choix).join(","));
+    const texte = await page.evaluate(() => document.body.textContent);
+    ok("gestes · plus de version 🅰 : ni bouton, ni carte, ni « Avec le matériel »",
+       choix === "b,c,tous" && !/🅰/.test(texte) && !/Avec le matériel/i.test(texte), "boutons : " + choix);
+    const note = await page.locator("#vs1 .vs-note").first().textContent();
+    ok("gestes · l'activité 3 limite le volet Python et demande de nommer puis télécharger (geste 4)",
+       note.includes("Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs.")
+       && note.includes("Nomme ton projet 3e-CAPTEUR-TON NOM, puis télécharge-le (geste 4)."), note.trim().slice(0, 120));
+    const txt = await page.evaluate(() => document.body.textContent);
+    ok("gestes · le Bonus de 3e dit « En Python, un seul élément par print, et n'additionne pas de textes : le téléchargement les abîmerait. »",
+       txt.includes("En Python, un seul élément par print, et n'additionne pas de textes : le téléchargement les abîmerait."));
+    await page.evaluate(() => document.querySelectorAll(".gestes-outil img").forEach(i => { i.loading = "eager"; }));
+    await page.waitForTimeout(800);
+    const imgs = await page.$$eval(".gestes-outil img", l => l.map(i => ({ charge: i.complete && i.naturalWidth > 0, alt: (i.getAttribute("alt") || "").trim().length })));
+    ok("gestes · les " + imgs.length + " captures de l'encart se chargent, toutes avec un texte alternatif",
+       imgs.length === 12 && imgs.every(i => i.charge && i.alt > 20),
+       imgs.filter(i => !i.charge).length + " cassée(s), " + imgs.filter(i => i.alt <= 20).length + " sans texte alternatif");
+    /* un élève qui avait choisi 🅰 avant le retrait : sa sauvegarde dit « a » — dans un contexte à part */
+    const ctxA = await nav.newContext({ viewport: { width: 390, height: 844 } });
+    await ctxA.addInitScript(() => localStorage.setItem("seq_3e_C7_capteur_confort", JSON.stringify({ inputs: {}, exp: { parcours: "a" } })));
+    const pA = await ctxA.newPage();
+    await pA.goto(url(CFG.seq));
+    await pA.waitForTimeout(400);
+    const classeA = await pA.evaluate(() => document.body.className);
+    const noteA = await pA.locator("#parcoursNote").textContent();
+    ok("gestes · un ancien choix « a » mémorisé retombe sur « tous » (rien n'est masqué à tort)",
+       !/parcours-/.test(classeA) && /tous/.test(noteA), noteA.trim());
+    await ctxA.close();
+  }
 }
 
 /* — n°135 : les tableaux restent lisibles — */

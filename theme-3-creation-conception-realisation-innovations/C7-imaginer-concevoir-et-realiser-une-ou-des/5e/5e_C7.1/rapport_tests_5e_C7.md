@@ -84,3 +84,13 @@ que le contrôle n°42 puisse les lire, et en la remontant avant l'en-tête péd
 ## 5. Échecs
 
 Aucun test en échec à la remise (37/37).
+
+## 6. Rejouée le 05/10/2026 (encart des gestes sans compte, mode mixte conservé, version 🅰 retirée)
+
+La suite a été **rejouée après le lot du 05/10/2026** : **42 tests, 39 réussis** — les 5 contrôles ajoutés, préfixés « gestes », passent : les liens-boutons gardent l'éditeur
+en `?mode=mixed` ; plus de version 🅰 (ni bouton, ni carte, ni « Avec le matériel ») ; l'activité 3 limite le volet Python et demande de nommer puis télécharger le projet (geste 4) ; les
+11 captures de l'encart se chargent avec un texte alternatif ; un ancien choix « a » mémorisé retombe sur « tous ». **Les 3 échecs restants sont ceux du QCM**
+(« chaque question a 4 propositions », « chaque question porte une explication », « état déclaré ») : la suite attend encore l'ancien format du QCM ; ils étaient déjà là sur `main`
+(34 / 37), ne viennent pas de ce lot, et sont traités dans un lot « bancs » dédié. Ce que la fiche de remise annonçait (« 37 / 37 ») n'était donc plus exact avant ce lot.
+
+Le contenu de Vittascience (blocs, Python, réouverture du fichier) a été mesuré à la main avec les programmes exacts de l'activité 3b et n'est pas rejoué ici : service externe.

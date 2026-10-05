@@ -8,8 +8,10 @@
 ## Intention
 Chaîne C7→C8→C9 accessible en 5e.
 
-## Versions A/B/C
-A maquette TBT · B simulation · C papier
+## Versions B/C
+B simulation · C papier.
+
+La version 🅰 (maquette TBT) a été **retirée le 05/10/2026** : l'éditeur Python ne pilote aucune carte. Elle pourra revenir avec la future version carte réelle, en interface Arduino (voir `JOURNAL_DES_DECISIONS.md`).
 
 ## Sécurité
 Très basse tension uniquement.
@@ -18,7 +20,7 @@ Très basse tension uniquement.
 
 Dispositifs communs du dépôt installés — billet d'entrée hors progression, mode essentiel,
 tableau de bord des six activités, versions étayées, durées à la convention, sélecteur de
-parcours 🅰/🅱/🅲 réellement agissant, barre de progression reliée aux validations.
+parcours 🅱/🅲 réellement agissant, barre de progression reliée aux validations.
 Contrôle mécanisé : **quatre manquements → zéro**. Suite committée : **37 tests, tous verts**
 (`node tests_5e_C7.mjs .`).
 

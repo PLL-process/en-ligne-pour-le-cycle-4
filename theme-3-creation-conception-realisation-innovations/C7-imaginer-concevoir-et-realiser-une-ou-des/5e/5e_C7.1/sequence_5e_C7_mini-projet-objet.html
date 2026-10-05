@@ -62,7 +62,6 @@ details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
   .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
   .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
   .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
-  body.parcours-a [data-parcours]:not([data-parcours="a"]),
   body.parcours-b [data-parcours]:not([data-parcours="b"]),
   body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
   .taches-bandeau{display:grid;gap:6px}
@@ -147,7 +146,6 @@ fourni relèvent d'autres codes, qui restent à créer.</p>
 </div>
 <div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
   <span class="parcours-label">🔀 Mon parcours :</span>
-  <button class="btn ghost parcours-btn" data-choix="a" aria-pressed="false">🅰 Avec le matériel</button>
   <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 En simulation</button>
   <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sur papier</button>
   <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
@@ -175,9 +173,8 @@ fourni relèvent d'autres codes, qui restent à créer.</p>
 </section>
 
 <section class="card">
-<h2>🔀 Trois façons de vivre la séquence</h2>
+<h2>🔀 Deux façons de vivre la séquence</h2>
 <div class="exo">
-<p data-parcours="a">🅰 <b>Avec le matériel</b> : la maquette du hall est câblée en très basse tension : capteur, voyant, carte. Tu vérifies le comportement <b>en vrai</b>, avec le protocole fourni.</p>
 <p data-parcours="b">🅱 <b>En simulation</b> : le simulateur de place de l'activité 0 fonctionne dans la page, sans rien installer, et l'éditeur Vittascience, dans son onglet, prend le relais pour le programme. C'est le parcours principal.</p>
 <p data-parcours="c">🅲 <b>Sur papier</b> : croquis et tableau de tests à compléter au cahier — <b>mêmes questions, mêmes validations</b>. Le simulateur reste utilisable pour observer.</p>
 </div>
@@ -319,6 +316,77 @@ modification.</p>
 </div>
 </section>
 
+<!-- gestes-outil-v1 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau. -->
+<section class="card gestes-outil" aria-labelledby="gestes-vittascience">
+  <h2 id="gestes-vittascience">🧰 Avant de commencer (échauffement) — les quatre gestes de Vittascience</h2>
+  <p class="pourquoi">Quatre gestes à faire une fois, au début, et ta séance ne se perdra pas. Tu les as peut-être déjà faits une autre année&nbsp;: refais-les, c'est court. Et si tu ne les as jamais faits, tout est écrit ici.</p>
+  <ol>
+    <li><b>Ouvrir.</b> Clique sur le bouton <b>▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</b> de l'activité 3&nbsp;: l'éditeur Python s'ouvre dans un nouvel onglet, en <b>mode mixte</b>&nbsp;: des <b>blocs à gauche</b>, le <b>Python à droite</b>. Vittascience met déjà un exemple, le bloc «&nbsp;afficher Bonjour&nbsp;» et sa ligne Python&nbsp;: tu peux l'effacer avant de commencer.
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_1_ouvrir_bouton.png" width="1400" height="875" loading="lazy"
+             alt="La page de la séquence, en thème sombre, sur l'activité 3b. Un cadre « Code ta règle dans l'onglet Vittascience — en blocs, puis lis le Python (et inversement) » donne la consigne : construire la décision en blocs, changer le Python (occupee = True puis False) en ne modifiant que ce que la consigne demande, puis nommer le projet 5e-HALL-TON NOM et le télécharger (geste 4). Dessous, un bouton bleu « ▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet », puis la phrase « Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne. »">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le bouton <b>▶ Ouvrir l'éditeur Vittascience…</b>, dans le cadre de l'activité 3. <b>Puis&nbsp;:</b> clique-le&nbsp;; garde cet onglet-ci ouvert pour lire la consigne.</figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_1c_ouvrir_editeur.png" width="1400" height="875" loading="lazy"
+             alt="L'éditeur Python de Vittascience, en thème sombre et en mode mixte. En haut à gauche, le nom « Nouveau projet ». La barre d'outils : Nouveau, Ouvrir, Sauvegarder, Annuler, Rétablir, puis Exécuter au centre, et à droite les trois boutons de mode, celui du milieu (orange) étant actif. À gauche, les catégories de blocs (Affichage, Turtle, Graphiques, Numpy, IA, Logique, Boucles, Math, Texte, Variables, Listes) et un bloc orange « afficher Bonjour ! ». À droite, le code Python print('Bonjour !'). En bas, la console avec son message de bienvenue.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> les <b>blocs à gauche</b>, le <b>Python à droite</b>, la console en bas, et le nom «&nbsp;Nouveau projet&nbsp;» en haut à gauche. <i>Le bloc «&nbsp;afficher Bonjour&nbsp;» est l'exemple que Vittascience pose dans tout projet neuf&nbsp;: tu peux l'effacer avant de commencer.</i></figcaption>
+      </figure>
+    </li>
+    <li><b>Nommer.</b> Clique le <b>crayon</b> à côté du nom du projet, en haut à gauche, et remplace «&nbsp;Nouveau projet&nbsp;» par <code>5e-HALL-TON&nbsp;NOM</code>. Un projet sans nom est introuvable la semaine suivante.
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_2_nommer_fenetre.png" width="1400" height="875" loading="lazy"
+             alt="Fenêtre « Modifier les informations du projet » de Vittascience, en thème sombre. Le champ « Nom du projet » contient 5e-HALL-DUPONT, avec une coche verte. Dessous, un champ « Description du projet (facultatif) » vide, puis deux boutons : « Annuler » en gris et « Modifier » en vert.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> la fenêtre «&nbsp;Modifier les informations du projet&nbsp;», avec ton nom dans «&nbsp;Nom du projet&nbsp;». <b>Puis&nbsp;:</b> clique <b>Modifier</b>. <i>DUPONT est un exemple&nbsp;: mets ton nom.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_2b_nommer_resultat.png" width="1400" height="875" loading="lazy"
+             alt="L'éditeur après la validation : en haut à gauche, le nom du projet est devenu « 5e-HALL-DUPONT ».">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> ton nom apparaît en haut à gauche. C'est lui qui nommera ton fichier au geste 4.</figcaption>
+      </figure>
+    </li>
+    <li><b>Retrouver.</b> La semaine suivante, ouvre ton fichier&nbsp;: clique le <b>dossier</b> (Ouvrir), l'onglet <b>Depuis votre appareil</b>, le bouton <b>Ouvrir…</b>, puis ton fichier <code>.py</code> dans Documents, dans le dossier de ta classe. Vittascience te demande de confirmer&nbsp;: clique <b>Oui</b>. Ton programme revient, <b>en blocs et en Python</b>, avec son nom.
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_3_retrouver_ouvrir.png" width="1400" height="875" loading="lazy"
+             alt="La fenêtre « Ouvrir un projet » de Vittascience, en thème sombre, avec cinq onglets : Mes projets sur le cloud, Projets de la communauté, Exemples, Mes projets locaux et Depuis votre appareil, ce dernier étant sélectionné. Une zone « Déposez vos fichiers ici… », un champ « Sélectionnez un fichier. » et un bouton vert « Ouvrir … ».">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> clique le <b>dossier</b> dans la barre d'outils, puis l'onglet <b>Depuis votre appareil</b>. <b>Puis&nbsp;:</b> clique <b>Ouvrir…</b> et choisis ton fichier <code>.py</code>, dans Documents, dans le dossier de ta classe. <i>N'utilise pas «&nbsp;Mes projets sur le cloud&nbsp;»&nbsp;: tu n'es pas connecté.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_3b_retrouver_confirmer.png" width="1400" height="875" loading="lazy"
+             alt="Une fenêtre « Avertissement ! » de Vittascience : « Est-ce que vous êtes sûr de vouloir importer ce fichier depuis votre ordinateur ? Vous allez perdre votre avancement fait manuellement. » Deux boutons : « Oui » en vert, « Non » en gris.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> Vittascience te demande de confirmer. <b>Clique «&nbsp;Oui&nbsp;»</b>&nbsp;: ce que tu avais déjà fait dans cet onglet est remplacé par ton fichier.</figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_3c_retrouver_resultat.png" width="1400" height="875" loading="lazy"
+             alt="L'éditeur de Vittascience en mode mixte, après la réouverture. En haut à gauche, le nom « 5e-HALL-DUPONT ». À gauche, les blocs : « affecter à occupee la valeur vrai », puis « si occupee alors » avec « afficher ROUGE », et « sinon » avec « afficher VERT ». À droite, le code Python correspondant. La console, en bas, affiche ROUGE.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> ton programme est revenu, <b>en blocs et en Python</b>, avec ton nom. <b>Exécuter</b> affiche dans la console ce qu'il affichait avant. <i>Ce programme est un exemple&nbsp;: c'est le tien qui revient.</i></figcaption>
+      </figure>
+    </li>
+    <li><b>Sortir.</b> Vittascience ne garde pas ton travail d'une séance à l'autre. Clique la <b>disquette</b>, puis <b>Télécharger</b>&nbsp;: un fichier <code>.py</code> au nom de ton projet arrive dans <b>Téléchargements</b>. Vittascience ajoute des chiffres à la fin du nom du fichier&nbsp;: c'est normal. <b>Déplace-le</b> dans <b>Documents</b>, dans <b>le dossier de ta classe (exemple&nbsp;: 5E2)</b>. Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans Documents, <b>Nouveau → Dossier</b>, tape le nom de ta classe, puis valide.
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_4_sortir_telecharger.png" width="1400" height="875" loading="lazy"
+             alt="Fenêtre « Sauvegarder le projet » de Vittascience, en thème sombre, sans compte. Le texte « Pour enregistrer votre projet, veuillez vous connecter. », un bouton vert « Je me connecte », le mot « ou », un bouton orange « Je m'inscris ! », une ligne, le mot « ou », puis un bouton vert « Télécharger » avec un point d'interrogation.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> la fenêtre «&nbsp;Sauvegarder le projet&nbsp;», ouverte par la <b>disquette</b>. <b>Ne te connecte pas et ne t'inscris pas&nbsp;:</b> clique <b>Télécharger</b>, le bouton vert tout en bas.</figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_4b_sortir_telechargements.png" width="1400" height="523" loading="lazy"
+             alt="Fenêtre de l'Explorateur de fichiers de Windows, en thème sombre, ouverte sur « Téléchargements » et rétrécie : sous « Aujourd'hui », le fichier « 5e-HALL-DUPONT_202695_52028.py » est sélectionné ; en bas, la taille du fichier.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le fichier <code>.py</code> au nom de ton projet, dans <b>Téléchargements</b> — le navigateur l'y range sans rien demander. Clique-le une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b> pour le couper. <i>Les chiffres à la fin du nom sont ajoutés par Vittascience&nbsp;; DUPONT est un exemple. La fenêtre est rétrécie pour ne montrer que ce fichier.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_4c_sortir_nouveau_dossier.png" width="1400" height="457" loading="lazy"
+             alt="Fenêtre de l'Explorateur de fichiers, ouverte sur « Documents » (c'est le chemin affiché en haut) et rétrécie à une seule ligne. Un nouveau dossier jaune vient d'être créé : son nom, « Nouveau dossier », est surligné en bleu dans un cadre, prêt à être remplacé.">
+        <figcaption><b>Si le dossier de ta classe n'existe pas encore&nbsp;:</b> dans <b>Documents</b>, clique <b>Nouveau</b> puis <b>Dossier</b>. Un dossier apparaît, son nom surligné&nbsp;: tu peux taper le tien. <i>La fenêtre est rétrécie&nbsp;: tes autres dossiers ne sont pas montrés.</i></figcaption>
+      </figure>
+      <figure class="geste-capture">
+        <img src="Images/geste_vitta_4e_sortir_resultat.png" width="1400" height="538" loading="lazy"
+             alt="Fenêtre de l'Explorateur ouverte sur « Documents › 5E2 » : un seul fichier, « 5e-HALL-DUPONT_202695_52028.py », de type Python.File, sélectionné.">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> en haut, <b>Documents › 5E2</b>&nbsp;; dans la liste, ton fichier <code>.py</code>. Il n'est plus dans Téléchargements&nbsp;: il est rangé.</figcaption>
+      </figure>
+    </li>
+  </ol>
+</section>
+
 <section class="card">
 <h2>💻 Activité 3 — La règle SI en schéma, puis en programme <span style="font-size:.72em;opacity:.85">(5e_C9.3)</span> <span class="chrono">⏱ ~30 min</span></h2>
 <p class="activite-en-ligne">🌐 <b>Cette activité demande une connexion Internet</b> — l'éditeur Vittascience est en ligne. <b>Sans connexion&nbsp;:</b> écris ton programme sur le cahier : la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
@@ -338,7 +406,7 @@ modification.</p>
 <textarea rows="5" id="prog" placeholder="SI place occupée ALORS&#10;  LED rouge&#10;SINON&#10;  LED verte&#10;FIN SI" aria-label="Mon programme, en pseudo-code"></textarea>
 <details class="vs" id="vs1" open>
 <summary>🧪 Code ta règle dans l'onglet Vittascience — en blocs, puis lis le Python (et inversement)</summary>
-<p class="vs-note">Construis la décision en BLOCS (logique → si/sinon) et observe le Python s'écrire&nbsp;; puis change le Python (<code>occupee = True</code> puis <code>False</code>) et regarde les blocs suivre. Sans LED réelle&nbsp;: <code>print("ROUGE")</code> et <code>print("VERT")</code>. Les DEUX SENS comptent&nbsp;: blocs → texte, texte → blocs.</p>
+<p class="vs-note">Construis la décision en BLOCS (logique → si/sinon) et observe le Python s'écrire&nbsp;; puis change le Python (<code>occupee = True</code> puis <code>False</code>) et regarde les blocs suivre. Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs. Sans LED réelle&nbsp;: <code>print("ROUGE")</code> et <code>print("VERT")</code>. Les DEUX SENS comptent&nbsp;: blocs → texte, texte → blocs. Nomme ton projet <code>5e-HALL-TON NOM</code>, puis télécharge-le (geste 4).</p>
 
 <p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
 <p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
@@ -586,15 +654,16 @@ if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
 
 /* ══ Règles d'or n°122 et n°136 — le sélecteur ne vaut que par ce qu'il sélectionne ══ */
 function majParcours(){
-  const choix = window.__exp.parcours || "tous";
-  document.body.classList.remove("parcours-a","parcours-b","parcours-c");
+  const brut = window.__exp.parcours || "tous";
+  const choix = (brut === "b" || brut === "c") ? brut : "tous";   // l'ancien choix « a » (retiré) retombe sur « tous »
+  document.body.classList.remove("parcours-b","parcours-c");
   if(choix !== "tous") document.body.classList.add("parcours-" + choix);
   document.querySelectorAll(".parcours-btn").forEach(b => {
     b.setAttribute("aria-pressed", b.dataset.choix === choix ? "true" : "false");
   });
   const n = $("parcoursNote");
   if(n){
-    const NOMS = {a:"🅰 avec le matériel", b:"🅱 en simulation", c:"🅲 sur papier", tous:"tous"};
+    const NOMS = {b:"🅱 en simulation", c:"🅲 sur papier", tous:"tous"};
     n.innerHTML = "Parcours affiché : <b>" + (NOMS[choix] || "tous") + "</b>.";
   }
 }
@@ -606,6 +675,143 @@ document.querySelectorAll(".parcours-btn").forEach(b => b.addEventListener("clic
 restore();
 if(window.__exp && window.__exp.essentiel) document.body.classList.add("essentiel");
 majEssentiel(); majParcours(); updateProg();
+})();
+</script>
+
+<style>
+  .gestes-outil{border:1px solid var(--border);border-left:4px solid #ffb300;border-radius:10px;padding:1rem 1.15rem;margin:1.1rem 0;background:var(--panel)}
+  .gestes-outil h2{margin:0 0 .35rem;font-size:1.05em}
+  .gestes-outil .pourquoi{margin:.2rem 0 .8rem;opacity:.85;font-size:.95em}
+  .gestes-outil ol{margin:0;padding-left:1.3rem}
+  .gestes-outil li{margin:.45rem 0}
+  .gestes-outil li b:first-child{color:#ffb300}
+  .gestes-outil figure.geste-capture{margin:.6rem 0 .9rem;max-width:560px}
+  .gestes-outil figure.geste-capture img{width:100%;height:auto;display:block;border:1px solid var(--border);
+    border-radius:8px;background:#fff}
+  .gestes-outil figure.geste-capture figcaption{margin:.35rem 0 0;font-size:.88em;line-height:1.45;opacity:.92}
+  .gestes-outil figure.geste-capture figcaption b{color:inherit}
+  @media print{.gestes-outil figure.geste-capture{break-inside:avoid;page-break-inside:avoid}}
+
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:2rem 2rem 9rem;box-sizing:border-box;overflow:auto;
+    align-items:center;justify-content:center}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  .loupe-fond img{max-width:100%;max-height:68vh;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  /* Refonte v2 : la legende ne doit JAMAIS chevaucher l'image agrandie.
+     Barre opaque collee en bas + image reduite (68vh) + reserve de place
+     sous l'image via le padding-bottom du fond. */
+  .loupe-legende{position:fixed;left:0;right:0;bottom:0;text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif;
+    background:#12151b;border-top:1px solid #3a4150;
+    padding:.75rem 2rem;max-height:22vh;overflow:auto;
+    box-shadow:0 -8px 24px rgba(0,0,0,.5)}
+  .loupe-fermer{position:fixed;top:.8rem;right:1rem;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  /* L'indice « cliquer pour agrandir » ne doit JAMAIS couvrir l'image : l'infobulle
+     native (attribut title) se place au milieu du dessin et masque le contenu.
+     On l'affiche donc nous-mêmes, dans un coin, au survol ou au focus. */
+  .loupe-enveloppe{position:relative;display:block}
+  .loupe-badge{position:absolute;top:8px;right:8px;z-index:2;pointer-events:none;
+    background:rgba(12,14,18,.88);color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 .78rem/1 system-ui,sans-serif;padding:5px 8px;opacity:0;transition:opacity .12s}
+  .loupe-enveloppe:hover .loupe-badge,
+  .loupe-enveloppe:focus-within .loupe-badge{opacity:1}
+  @media print{.loupe-badge{display:none}}
+  @media (prefers-reduced-motion:reduce){.loupe-badge{transition:none}}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    // L'alternative textuelle sert de légende : elle DIT ce que l'image montre.
+    legende.textContent = img.alt ? img.alt + "  —  Échap pour refermer"
+                                  : "Échap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  function armer(){
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      /* Badge dans le coin plutôt qu'infobulle native : celle-ci se pose au
+         milieu de l'image et masque ce qu'on demande justement de lire. */
+      if (!img.parentNode.classList.contains("loupe-enveloppe")) {
+        var env = document.createElement("span");
+        env.className = "loupe-enveloppe";
+        img.parentNode.insertBefore(env, img);
+        env.appendChild(img);
+        var badge = document.createElement("span");
+        badge.className = "loupe-badge";
+        badge.setAttribute("aria-hidden", "true");
+        badge.textContent = "🔍 Cliquer pour agrandir";
+        env.appendChild(badge);
+      }
+      img.removeAttribute("title");
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
 })();
 </script>
 </body>

@@ -41,8 +41,12 @@ def main():
     ok("chaque image porte une alternative textuelle qui la DÉCRIT (règle n°1)")
 
     assert "Prêt" in src and "qcm_C7.1_planification_taches.html" in src
-    assert src.count('href="qcm_C7.1_planification_taches.html"') == 1
+    # Le bouton « Ouvrir le QCM » : un seul (règle n°4). Le lien de la barre de navigation harmonisée
+    # (« 🧠 Le QCM ») est un autre lien, voulu : il se vérifie à part (05/10/2026, le « == 1 » comptait les deux).
+    assert len(re.findall(r'<a class="btn qcm" href="qcm_C7.1_planification_taches.html"', src)) == 1
     ok("un seul bouton QCM dans toute la page (règle n°4)")
+    assert len(re.findall(r'<a href="qcm_C7.1_planification_taches.html">[^<]*Le QCM', src)) == 1
+    ok("la barre de navigation pointe aussi vers le QCM (un lien, hors bouton)")
     assert "Bonus (facultatif" in src
     ok("le bloc Bonus est présent, annoncé hors parcours obligatoire")
     i_bilan, i_qcm, i_bonus = src.index("Bilan —"), src.index("Prêt"), src.index("Bonus (facultatif")
