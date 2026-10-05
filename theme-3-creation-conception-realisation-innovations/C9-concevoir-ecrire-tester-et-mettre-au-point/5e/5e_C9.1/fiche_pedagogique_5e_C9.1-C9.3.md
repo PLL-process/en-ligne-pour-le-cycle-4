@@ -23,8 +23,9 @@ tout vocabulaire savant. Progressivité de l'arc (règle n°8) : 5e LIT et teste
 | 3 Modifier et régler (C9.2-C9.3) | 5. Corriger + adapter (32 places) puis régler la barrière (banc, cas limite 0) | 3 tests barrière |
 
 ## Versions (règle n°3)
-🅰 éditeur Vittascience → carte réelle, LED = barrière (TBT uniquement) · 🅱 simulateur + éditeur
-embarqué (principal) · 🅲 tables de suivi au cahier (hors ligne).
+🅱 simulateur + éditeur Vittascience dans un onglet, en mode code (principal) · 🅲 tables de suivi au cahier
+(hors ligne). La version 🅰 « carte réelle, LED = barrière » a été **retirée le 04/10/2026** : l'éditeur Python
+ne pilote aucune carte (voir `JOURNAL_DES_DECISIONS.md`).
 
 ## Évaluation
 Formative : vérificateurs + QCM 30 q (BOI/LIR/MOD 10-10-10 → positionnement par famille).
@@ -35,7 +36,7 @@ Sommative : à construire, corrigé jamais publié.
 **mode essentiel** (masque référentiel, corrections et compléments) · **tableau de bord** des
 5 activités · **deux versions étayées** pour les zones de rédaction · **durées annoncées**
 (130 min d'activités pour 165 disponibles) · **carte de référentiel** avec les trois formulations
-officielles et le tableau de progression du cycle · **sélecteur de parcours** 🅰/🅱/🅲 qui masque
+officielles et le tableau de progression du cycle · **sélecteur de parcours** 🅱/🅲 qui masque
 réellement ce qui ne concerne pas l'élève, **sans retirer aucune question**.
 
 > Le tableau de progression du cycle, dépliable dans la carte de référentiel, dit à l'élève de 5e

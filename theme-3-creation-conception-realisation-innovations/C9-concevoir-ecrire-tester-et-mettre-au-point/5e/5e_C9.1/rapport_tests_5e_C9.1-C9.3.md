@@ -101,7 +101,7 @@ alors que celle qu'il cherchait était sous ses yeux, complète. Réécrit.
 - le contenu **interne** des iframes Vittascience (service externe) : seuls l'embarquement
   et le suivi d'ouverture sont testés, pas l'exécution Python côté Vittascience ;
 - **accès réseau du collège** : vérifier que `fr.vittascience.com` n'est pas filtré ;
-- la version 🅰 sur carte réelle (LED en barrière, très basse tension) ;
+- la version 🅰 (carte réelle, LED) n'existe plus depuis le 04/10/2026 : rien à contrôler de ce côté ;
 - test sur appareils réels — seul le viewport a été émulé ;
 - relecture orthotypographique humaine ; rendu à l'impression.
 
@@ -111,3 +111,17 @@ Aucun test en échec à la remise (44/44). Les trois échecs rencontrés en cour
 la feuille de style hors balise, les étiquettes mal réécrites, et un critère de test qui
 comptait à tort la mention d'en-tête « 3 séances de 55 min » comme une durée d'activité —
 ont été corrigés : les deux premiers dans la séquence, le troisième dans la suite elle-même.
+
+## 6. Rejouée le 04/10/2026 (lot des gestes en mode code)
+
+La suite a été **rejouée après le lot du 04/10/2026** et complétée de quatre contrôles, préfixés « gestes » : les trois
+liens-boutons en `?mode=code` ; plus de version 🅰 (ni bouton, ni phrase sur la carte réelle ou la LED, ni « blocs à gauche ») ;
+un ancien choix « a » mémorisé retombe sur « tous » ; les onze captures de l'encart se chargent, avec un texte alternatif.
+**Résultat : 47 / 48.** Le contenu de Vittascience (le collage, l'exécution) a été mesuré à la main avec le texte exact et n'est
+pas rejoué ici.
+
+**L'échec est antérieur à ce lot.** Le contrôle n°31 (« une version étayée pour chaque zone de rédaction ») donne
+« 2 étayages pour 3 zones » ; **il donne le même résultat sur `main` avant ce lot** (43 / 44 : la suite comptait alors 44 contrôles).
+Les trois zones de rédaction sont l'hypothèse (`hyp1`), la réponse au Bonus (`bonusRep`) et le bilan (`bilanTxt`) ; les deux
+versions étayées couvrent l'hypothèse et le bilan, **pas** la réponse au Bonus. Le rapport ci-dessus, daté du 26/08/2026, parlait de
+deux zones. Non corrigé ici : ajouter une version étayée au Bonus est un choix de contenu, signalé à Pascal.

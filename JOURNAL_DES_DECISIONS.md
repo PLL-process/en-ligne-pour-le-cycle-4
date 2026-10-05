@@ -21566,3 +21566,83 @@ Vittascience avec le texte exact (voir plus haut).
 
 **Remis en état.** Dossier temporaire `essai-gestes-4e` envoyé à la corbeille, fenêtre du Bloc-notes ouverte pour la capture refermée,
 fenêtres de l'Explorateur fermées ; dans la session de Pascal, aucun onglet du Bloc-notes n'a été touché.
+
+## 04/10/2026 — Thème 3 · 5e_C9.1 : l'encart des gestes passe en mode code, sans compte ; la version 🅰 (LED) est retirée (vague 2, étape 2, lot 4)
+
+**Pourquoi.** Même constat qu'en 3e_C9.1 : en mode mixte, un programme **tapé** est réécrit depuis les blocs au téléchargement. Mesuré
+sur `fr.vittascience.com/python/` (Chrome 154 piloté par Playwright, profil temporaire neuf, sans compte) avec les trois programmes que
+5e_C9.1 fait taper :
+
+| Programme | Mode mixte : fichier téléchargé | Mode mixte : après réouverture | Mode code : après réouverture |
+|---|---|---|---|
+| Expériences A et B (`print(20 + 4)`, `print("20" + "4")`) | `print((0 + 0))` et lignes parasites `'20'`, `'4'` | affiche `24` puis **`0`** au lieu de `204` | `print('Bonjour !')` |
+| Compteur corrigé (`places`, `montes`, `descendus`) | identique, indentation normalisée | `34`, intact | `print('Bonjour !')` |
+| Règle de la barrière (`if places > 0`) | identique, guillemets normalisés | `FERMÉE`, intact | `print('Bonjour !')` |
+
+L'expérience B est le piège des guillemets, le cœur de l'activité 3 : rouvrir le fichier du mode mixte donnerait `0` au lieu de `204` et
+contredirait la leçon. En mode code, le fichier téléchargé est intact ; il ne se rouvre pas (l'éditeur remet `print('Bonjour !')`) : le Bloc-notes
+est nécessaire.
+
+**Classement activité par activité (validé par Pascal).** Aucune activité n'assemble de blocs ; aucune ne reste en mode mixte :
+
+| Activité | Barre 🧪 | Ce que fait l'élève | Classement |
+|---|---|---|---|
+| 1 — Compteur à la main, 2 — Table de suivi, 4 — Banc de tests | aucune | simulateur, papier, tests de la page | rien |
+| 3 — Prédire, tester, reporter | `vs1` | **tape** les expériences A et B | `?mode=code` + Bloc-notes |
+| 5 — Modifier, puis régler la barrière | `vs2` | **tape** le compteur corrigé et la règle `places > 0` | `?mode=code` + Bloc-notes |
+| Bonus — défis | `vs3` | **tape** ses défis (compteur de classe, âge avec `annee = 2026`) | `?mode=code` + Bloc-notes |
+
+Pas de préambule de simulation : ces programmes n'utilisent que `print`, des variables et `if`, pas de fonction de la carte.
+
+**La version 🅰 (carte réelle, LED) est retirée.** Elle promettait « l'éditeur Vittascience relié à une carte réelle… une LED joue la barrière » ;
+l'éditeur Python en `?mode=code` ne pilote aucune carte, donc rien ne la rendait faisable. Retirée **partout** : le bouton « 🅰 Avec matériel » du
+sélecteur « Mon parcours » et son paragraphe (le titre devient « Deux façons de vivre l'atelier »), la fin de la note de `vs2`, l'explication d'une
+question du QCM (« Version 🅰 de l'atelier : ta LED… », remplacée par un exemple de parc d'attractions), la fiche pédagogique, la synthèse
+professeur, le rapport de tests. Un ancien choix « a » mémorisé dans une sauvegarde retombe sur « tous ». La règle n°3 protège du courant (très
+basse tension) ; son extension admet qu'une version 🅰 soit « écartée sciemment » : c'est dit ici.
+
+**Idée à concevoir plus tard : une version « carte réelle » en interface Arduino (blocs).** L'interface Arduino de Vittascience (celle de
+`3e_C9.2`, en blocs) pilote une carte ; une version 🅰 de 5e_C9.1 y ferait jouer à une LED le rôle de la barrière (`places > 0` → allumée),
+en très basse tension. Rien n'est conçu : ce serait une activité à part, avec ses gestes (la carte, le shield, le téléversement) et son
+propre encart, à discuter avec Pascal.
+
+**Ce qui a changé dans le lot.**
+
+| Où | Avant | Après |
+|---|---|---|
+| Trois liens de la séquence | `?mode=mixed` | `?mode=code` |
+| Notes de `vs1` et `vs3` | « blocs à gauche, Python à droite, console en bas » | « en mode code : tu tapes ton programme dans la grande zone de texte, la console est en bas » ; `vs1` dit d'effacer `print('Bonjour !')` |
+| Note de `vs2` | « … Version 🅰 : branche une LED… » | « Le lien ouvre l'éditeur en mode code, comme à l'activité 3. » |
+| Parcours 🅱 | « l'éditeur Python Vittascience, dans un nouvel onglet » | « …, en mode code (tu tapes ton programme) » |
+| Encart des gestes | quatre gestes sans image ; « connecte-toi avec le compte de la classe » ; « ton projet est enregistré dans ton compte… depuis n'importe quel poste » ; « Fichier → Exporter » (ce menu n'existe pas) | titre « (échauffement) » ; **Ouvrir** en mode code, sans connexion ; **Nommer** par le crayon (`5e-BOITE-TON NOM`) ; **Retrouver** par le clic droit, « Modifier dans Bloc-notes », la sélection, le collage ; **Sortir** par la disquette et Télécharger ; onze captures |
+
+**Onze captures** (`Images/geste_vitta_*.png`, 13 à 70 Ko), **sans compte** : Ouvrir ×2 (le bouton dans la page ; l'éditeur en mode code) · Nommer ×2 ·
+Retrouver ×3 (le menu du clic droit ; le fichier dans le Bloc-notes, deux lignes sélectionnées ; le programme collé et exécuté, console 24 · 204) ·
+Sortir ×4 (« Sauvegarder le projet » sans compte ; Téléchargements ; nouveau dossier ; Documents › 5E2). `1c`, le menu et « nouveau dossier » sont la **reprise
+octet pour octet** des images de 3e_C9.1. **Il n'y a pas de capture du nom de classe saisi** (les trois lots précédents en avaient une) : la capture
+« nouveau dossier » est générique, et sa légende donne l'exemple `5E2` en texte.
+
+**Ce que la mesure a appris — à lire par Pascal :**
+
+* **Le thème sombre de Vittascience n'a pas pris à la première tentative** (fond clair) : les captures sont désormais prises seulement après avoir
+  vérifié le fond (`rgb(39, 39, 39)`), avec reprise.
+* **Téléchargements montrait un deuxième élément** (le dossier du dépôt, modifié aujourd'hui) sous le fichier d'exemple : la fenêtre a été
+  rétrécie à **une seule ligne** pour ne montrer que le fichier.
+* **Le contrôle n°31 de la suite du lot est rouge, et il l'était déjà sur `main`** (43 / 44 avant ce lot). Il compte une version étayée par zone de
+  rédaction : « 2 étayages pour 3 zones ». Les trois zones sont l'hypothèse (`hyp1`), la réponse au Bonus (`bonusRep`) et le bilan (`bilanTxt`) ; les deux
+  étayages couvrent l'hypothèse et le bilan, **pas** la réponse au Bonus. **Non corrigé ici** : ajouter une version étayée au Bonus est un choix de
+  contenu. À décider par Pascal.
+* **« Ouvrir avec → Bloc-notes »** reste non vu : le texte le donne en repli de « Modifier dans Bloc-notes » (voir l'entrée de 3e_C9.1).
+* **Même classement à faire pour `3e_C7.1`, `5e_C7.1` et `4e_C9.1`** quand leur tour viendra ; `4e_C9.1` est le prochain, son classement sera montré à
+  Pascal avant d'écrire.
+
+### Vérifié
+
+`controle_hierarchie`, `controle_debordement`, `controle_gestes_outil`, `controle_medias`, `controle_liens`, `controle_rapports_tests` verts ·
+`tests_5e_C9.1-C9.3.mjs` **47 / 48** (quatre contrôles ajoutés, préfixés « gestes » : les trois liens en `?mode=code` ; plus de version 🅰 ; un ancien
+choix « a » retombe sur « tous » ; les onze captures se chargent avec un texte alternatif) — le seul échec est le n°31, **déjà rouge sur `main`** ·
+au navigateur, 1280 et 390 px : 11 images, 0 cassée, loupe active sur les 11, pas de défilement horizontal (le seul 404 vu est le `favicon.ico` du
+serveur local) · les programmes mesurés dans Vittascience avec le texte exact (voir le tableau).
+
+**Remis en état.** Dossier temporaire `5E2` envoyé à la corbeille, fichier d'essai retiré de Téléchargements, fenêtres de l'Explorateur fermées, fenêtre du
+Bloc-notes ouverte pour la capture refermée ; dans la session de Pascal, aucun onglet du Bloc-notes n'a été touché.
