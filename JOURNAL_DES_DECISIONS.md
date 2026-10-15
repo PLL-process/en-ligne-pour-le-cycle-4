@@ -21895,3 +21895,32 @@ de version : rien à y changer.
 défilement horizontal · les programmes des activités mesurés dans Vittascience avec le texte exact.
 
 **Remis en état.** Dossiers `3E1` et `5E2` envoyés à la corbeille, fichiers d'essai retirés de Téléchargements, fenêtres de l'Explorateur fermées ; le Bloc-notes n'a pas été ouvert.
+
+
+## 09/10/2026 — Thème 3 · archive 3e_C9.1 : une évaluation notée pour la séance « Vittascience en blocs – Créer des variables (5e – 4e) »
+
+**Demande de Pascal.** Parmi les « 10 exercices supplémentaires non notés » et les exercices 7 à 10 de `vittascience_variables_blocs.html`, prendre les **trois plus difficiles** et en faire une évaluation **notée sur 20**, avec des boutons de correction (correction vue **avant** d'avoir fait l'exercice = pas de points) et des boutons d'indices (carte blanche). Pas de rappel de cours, **sauf dans les aides** : les élèves ont déjà fait tous les exercices.
+
+**Les trois exercices retenus** (critère : nombre de notions combinées dans un même programme) : **Ex. 10 Arrosage automatique** (quatre conditions reliées par « et », si/sinon, comparaisons strictes), **Bonus 9 Triangle coloré** (boucle + angle de virage de la tortue), **Bonus 10 Spirale** (une variable mise à jour à chaque tour de boucle). Écarté de justesse : Ex. 7 (VMC). Les programmes sont ceux de la séance ; les **relevés de l'arrosage sont nouveaux**, parce que les réponses de la séance étaient affichées par ses boutons « Correction ».
+
+**Le fichier.** `_archive-anciennes-versions/C7_C9_Creation-conception-realisation-innovations/3e_C9.1/evaluation_vittascience_blocs.html`, à côté de la séance (lien « ← Retour à la séance d'entraînement »). 16 questions, **30 points ramenés sur 20** (10 par exercice). Compétences arbitrées par `_outils/data_competences.py` (règle n°21) : 5e_C9.1 (analyser, tester), 5e_C9.2 et 4e_C9.1 (modifier), 5e_C9.3 (mettre au point : le bug du « tourner » placé hors de la boucle).
+
+**Décisions prises sur la carte blanche** (à valider par Pascal) :
+
+| Élément | Choix |
+|---|---|
+| 💡 Indice | gratuit, oriente sans donner la réponse |
+| 🧭 Coup de pouce | rappel de cours ciblé, retire **¼ des points de la question** (constante `COUT_COUP_DE_POUCE`, 0 = gratuit) |
+| ✅ Correction | **par exercice** : elle verrouille les réponses de l'exercice ; une question sans réponse à ce moment vaut 0. Par exercice et non par question, sinon la correction d'une question donnerait celle de la suivante (3.2 → 3.3, 2.3 → 2.4). |
+| Remise | « Rendre ma copie » verrouille tout, affiche la note, le bilan par compétence (4 niveaux LSU) et toutes les corrections |
+| Démarrage | Nom, prénom, classe obligatoires ; chrono indicatif 50 min, tiers temps 1 h 07, ou sans chrono |
+| Poste partagé | « Nouvelle copie (élève suivant) » après la remise ; un compteur de tentatives par poste s'affiche dans le bilan |
+| Traces | bilan texte à coller dans Pronote, export JSON, impression compacte (verdicts seuls, 12 pages A4 pour une copie complète) |
+
+**Réponses dans le code source.** Les réponses et les corrections sont encodées (XOR + base64, `decoderCle()`), pour ne pas être lisibles d'un coup d'œil avec F12. Ce n'est pas un coffre-fort : une page publique ne protège jamais une évaluation à 100 %. Le code de l'espace enseignant est celui de la séance, vérifié par empreinte.
+
+### Vérifié
+
+Banc Playwright (Chromium, servi en HTTP) : **34 / 34**. Trois scénarios de notes : tout juste → **20 / 20** ; tout faux → **0 / 20** ; mixte connu (R3 faux, coup de pouce en 1.4, correction de l'exercice 2 ouverte sans réponse, 3.3 faux, 3.5 vide) → **14,5 / 30 = 9,7 / 20**, calculé à la main avant le passage. Démarrage refusé sans identité, verrous, persistance après rechargement (réponses, verrous, coups de pouce), nouvelle copie vierge, alertes des fenêtres de confirmation, clé enseignant (16 lignes), aucune correction en clair dans le source, console sans erreur, **390 px sans défilement horizontal** (le tableau des relevés passe en cartes). Chaque réponse attendue recalculée par un script indépendant (relevés, triangle, hexagone, spirale). Un bug trouvé par le banc et corrigé : « Nouvelle copie » était réécrite par la sauvegarde de fermeture de page.
+
+**Restant à faire (Pascal).** Construire les trois programmes dans Vittascience en classe pour confirmer les noms exacts des blocs Turtle (la séance prévient déjà qu'ils peuvent varier). La page n'est pas listée dans l'index, comme la séance d'origine : l'URL se donne aux élèves directement.

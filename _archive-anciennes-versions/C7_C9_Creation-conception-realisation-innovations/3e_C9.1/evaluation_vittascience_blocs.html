@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Évaluation notée — Vittascience en blocs : conditions, boucles, variables (5e – 4e)</title>
+<meta name="description" content="Évaluation notée sur 20 : arrosage automatique, triangle et spirale en blocs Vittascience. Indices, coups de pouce et corrections exhaustives.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Lexend:wght@500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<!--
+  ÉVALUATION NOTÉE — Vittascience en blocs (5e – 4e)
+  Source : vittascience_variables_blocs.html (même dossier) — Ex. 10, Bonus 9, Bonus 10.
+  Barème : 16 questions, 30 points, note ramenée sur 20.
+  Les réponses attendues et les corrections sont encodées (const CLE_CODEE) pour ne pas
+  être lisibles d'un coup d'œil dans le code source : voir decoderCle(). Une page publique
+  ne protège jamais à 100 % — c'est un frein, pas un coffre-fort.
+  Réglage : COUT_COUP_DE_POUCE (part des points de la question retirée par un coup de pouce).
+-->
+<style>
+:root{
+  /* Charte commune du dépôt */
+  --nuit:#050f24; --ardoise:#0d2347; --ardoise2:#0a1b3d; --ardoise3:#112c58; --trait:#274a8a;
+  --texte:#e8eef9; --doux:#a9c2f5; --discret:#7f9bd0;
+  --cyan:#61dafb; --mauve:#c68ef2; --or:#ffd66b; --ok:#81fba1; --err:#ff7b88;
+  /* Couleurs des catégories de blocs (celles de la séance d'entraînement) */
+  --b-var:#e0533d; --b-math:#3d8fe0; --b-aff:#f39c12; --b-si:#d9822b; --b-logique:#b8651f;
+  --b-boucle:#27ae60; --b-tortue:#8e44ad; --b-txt:#2d6cdf; --b-proc:#6c5ce7;
+  --f-titre:'Lexend',system-ui,'Segoe UI',Roboto,Arial,sans-serif;
+  --f-texte:'Atkinson Hyperlegible',system-ui,'Segoe UI',Roboto,Arial,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,'Courier New',monospace;
+  --rayon:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--nuit);color:var(--texte);font-family:var(--f-texte);font-size:1.06rem;line-height:1.6;
+  background-image:radial-gradient(1200px 500px at 85% -10%,rgba(97,218,251,.10),transparent 60%),radial-gradient(900px 500px at -10% 20%,rgba(198,142,242,.08),transparent 60%);
+  background-attachment:fixed}
+a{color:var(--cyan)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;border-radius:8px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ── Barre du haut ─────────────────────────────── */
+.barre{position:sticky;top:0;z-index:50;background:rgba(5,15,36,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--trait)}
+.barre-in{max-width:980px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:14px}
+.barre-titre{font-family:var(--f-titre);font-weight:700;font-size:.95rem;color:var(--doux);white-space:nowrap}
+.barre-prog{flex:1;min-width:120px}
+.barre-prog small{display:block;font-size:.8rem;color:var(--doux)}
+.jauge{height:8px;border-radius:99px;background:var(--ardoise2);border:1px solid var(--trait);overflow:hidden}
+.jauge>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--b-si),var(--b-tortue),var(--b-boucle));transition:width .35s ease}
+.chrono{font-family:var(--f-mono);font-weight:700;font-size:.95rem;padding:6px 10px;border-radius:10px;border:1px solid var(--trait);background:var(--ardoise2);white-space:nowrap}
+.chrono.moyen{color:var(--or);border-color:rgba(255,214,107,.45)}
+.chrono.tard{color:var(--err);border-color:rgba(255,123,136,.5)}
+.chrono[hidden]{display:none}
+@media(max-width:640px){.barre-titre{display:none}.barre-in{gap:8px;padding:8px 12px}#btnRendreHaut{padding:7px 10px;font-size:.82rem}.chrono{font-size:.85rem;padding:5px 8px}}
+
+/* ── Boutons ─────────────────────────────── */
+.btn{border:0;border-radius:12px;padding:11px 16px;font-weight:700;cursor:pointer;line-height:1.2;display:inline-flex;align-items:center;gap:8px;text-decoration:none;transition:transform .12s ease,filter .12s ease}
+.btn:hover:not(:disabled){filter:brightness(1.1)}
+.btn:active:not(:disabled){transform:translateY(1px)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-or{background:linear-gradient(180deg,#ffe08f,#f4bf3a);color:#1d1503;box-shadow:0 3px 0 #a87a10}
+.btn-cyan{background:linear-gradient(180deg,#8fe7ff,#3cc4ea);color:#04202b;box-shadow:0 3px 0 #1b7c98}
+.btn-ghost{background:var(--ardoise2);border:1px solid var(--trait);color:var(--texte)}
+.btn-petit{padding:8px 12px;font-size:.92rem;border-radius:10px}
+
+/* ── Mise en page ─────────────────────────────── */
+main{max-width:980px;margin:0 auto;padding:22px 16px 90px}
+.carte{background:linear-gradient(180deg,var(--ardoise),#0b1f40);border:1px solid var(--trait);border-radius:var(--rayon);padding:22px;margin:0 0 22px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+h1,h2,h3{font-family:var(--f-titre);line-height:1.15;margin:0}
+
+/* ── Héros : l'évaluation écrite comme un programme ── */
+.heros{display:grid;grid-template-columns:1.1fr .9fr;gap:26px;align-items:center;padding:30px 28px}
+@media(max-width:820px){.heros{grid-template-columns:1fr;padding:22px 18px}}
+.sourcil{font-family:var(--f-titre);font-weight:600;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px}
+.heros h1{font-size:clamp(1.85rem,4.4vw,2.7rem);font-weight:800;letter-spacing:-.01em}
+.heros h1 em{font-style:normal;background:linear-gradient(90deg,var(--or),#ffb46b);-webkit-background-clip:text;background-clip:text;color:transparent}
+.heros .chapo{color:var(--doux);margin:12px 0 16px;max-width:52ch}
+.badges{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.badge{font-size:.8rem;font-weight:700;padding:4px 11px;border-radius:99px;border:1px solid var(--trait);background:var(--ardoise2);color:var(--doux)}
+.badge.code{color:#fff;background:#173666}
+.badge.bareme{color:#1d1503;background:var(--or);border-color:transparent}
+.retour{display:inline-flex;align-items:center;gap:6px;font-weight:700;text-decoration:none;color:var(--cyan)}
+.retour:hover{text-decoration:underline}
+.programme-heros{background:#16191f;border:1px solid #2a2f3a;border-radius:16px;padding:18px 16px 16px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.03),0 16px 34px rgba(0,0,0,.4);position:relative;overflow-x:auto}
+.programme-heros::before{content:"vittascience · blocs";position:absolute;top:8px;right:12px;font-family:var(--f-mono);font-size:.7rem;color:#5d6676}
+.console-heros{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:16px -16px -16px;padding:11px 16px;background:#0d1117;border-top:1px solid #2a2f3a;border-radius:0 0 16px 16px;font-family:var(--f-mono);font-size:.85rem;color:#6b7487}
+.console-heros .invite{color:#4fb37a;font-weight:700}
+.console-note{font-size:.78rem}
+.resultat-bloc{display:inline-flex;align-items:center;padding:3px 12px;border-radius:9px;background:#0d1117;border:1px dashed #58637a;font-family:var(--f-mono);font-weight:700;color:#8892a6;white-space:nowrap;transition:all .5s ease}
+.resultat-bloc.rempli{border-style:solid;border-color:var(--or);color:var(--or);background:rgba(255,214,107,.08);box-shadow:0 0 22px rgba(255,214,107,.25)}
+
+/* ── Blocs (rendu façon Blockly) ── */
+.prog{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:6px 2px 2px}
+.bk{position:relative;display:inline-flex;align-items:center;flex-wrap:wrap;gap:6px;padding:7px 11px;border-radius:7px;color:#fff;font-weight:700;font-size:.95rem;line-height:1.25;white-space:nowrap;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.15)}
+.bk::after{content:"";position:absolute;left:14px;bottom:-5px;width:16px;height:5px;background:inherit;border-radius:0 0 4px 4px;z-index:1}
+.bk-set{background:var(--b-var)} .bk-aff{background:var(--b-aff)} .bk-tortue{background:var(--b-tortue)} .bk-proc{background:var(--b-proc)}
+.bk-si,.bk-boucle{flex-direction:column;align-items:flex-start;gap:0;padding:0;background:transparent;box-shadow:none}
+.bk-si::after,.bk-boucle::after{display:none}
+.bk-ligne{display:inline-flex;align-items:center;flex-wrap:wrap;gap:6px;padding:7px 11px;border-radius:7px 7px 7px 0;color:#fff}
+.bk-si .bk-ligne{background:var(--b-si)} .bk-boucle .bk-ligne{background:var(--b-boucle)}
+.bk-si .bk-ligne.bas,.bk-boucle .bk-ligne.bas{border-radius:0 7px 7px 7px;min-width:70px;min-height:14px;padding:4px 11px}
+.bk-si .bk-ligne.mid{border-radius:0 7px 7px 0}
+.bk-corps{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:5px 0 7px 12px;border-left:14px solid;margin-left:0}
+.bk-si .bk-corps{border-color:var(--b-si)} .bk-boucle .bk-corps{border-color:var(--b-boucle)}
+.bk-dd{background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.35);border-radius:6px;padding:0 8px}
+.bk-dd::after{content:" ▾";font-size:.75em;opacity:.8}
+.bk-n{background:#fff;color:#1d2330;border-radius:14px;padding:1px 10px;font-family:var(--f-mono);font-weight:700}
+.bk-v{background:var(--b-var);border:1px solid rgba(0,0,0,.25);border-radius:14px;padding:1px 9px}
+.bk-t{background:var(--b-txt);border-radius:14px;padding:1px 9px}
+.bk-t b{background:#fff;color:#1d2330;border-radius:4px;padding:0 5px;margin:0 2px}
+.bk-op{display:inline-flex;align-items:center;gap:5px;background:var(--b-math);border-radius:14px;padding:3px 8px;box-shadow:inset 0 -2px 0 rgba(0,0,0,.18)}
+.bk-cmp{display:inline-flex;align-items:center;gap:5px;background:#4a6fb3;border-radius:14px;padding:3px 8px;box-shadow:inset 0 -2px 0 rgba(0,0,0,.18)}
+.bk-et{display:inline-flex;align-items:center;flex-wrap:wrap;gap:5px;background:var(--b-logique);border-radius:14px;padding:4px 8px;white-space:normal}
+.bk-ou{display:inline-flex;align-items:center;flex-wrap:wrap;gap:5px;background:#7a3d10;border-radius:14px;padding:4px 8px;white-space:normal}
+.bk-sym{background:rgba(0,0,0,.22);border-radius:6px;padding:0 7px;font-family:var(--f-mono)}
+.bk-mot{font-weight:800;letter-spacing:.02em}
+.bk-surligne{outline:3px dashed var(--or);outline-offset:3px}
+.prog-cadre{background:#16191f;border:1px solid #2a2f3a;border-radius:14px;padding:12px 14px;margin:12px 0;overflow-x:auto}
+.prog-cadre.bug{border-color:rgba(255,123,136,.55);background:#1c1416}
+.prog-legende{font-size:.85rem;color:#8a93a6;margin:0 0 6px;font-family:var(--f-mono)}
+
+/* ── Démarrage et règles ── */
+.identite{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+.champ label{display:block;font-size:.82rem;font-weight:700;color:var(--doux);margin-bottom:4px}
+.champ input,.champ select{width:100%;background:#0f2a55;border:1px solid #2e5d9f;border-radius:10px;padding:10px 12px;color:var(--texte)}
+.regles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+@media(max-width:760px){.regles{grid-template-columns:1fr}}
+.regle{background:var(--ardoise2);border:1px solid var(--trait);border-radius:14px;padding:14px}
+.regle strong{display:block;font-family:var(--f-titre);font-size:1rem;margin-bottom:4px}
+.regle p{margin:0;font-size:.93rem;color:var(--doux)}
+.regle.r1 strong{color:var(--cyan)} .regle.r2 strong{color:var(--mauve)} .regle.r3 strong{color:var(--ok)}
+.consigne-generale{display:flex;gap:10px;align-items:flex-start;background:rgba(97,218,251,.07);border:1px solid rgba(97,218,251,.3);border-radius:12px;padding:12px 14px;margin-bottom:16px}
+.temps{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 16px}
+.puce{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:99px;border:1px solid var(--trait);background:var(--ardoise2);cursor:pointer;font-size:.93rem}
+.puce:has(input:checked){border-color:var(--cyan);background:rgba(97,218,251,.12)}
+.puce input{accent-color:var(--cyan)}
+.demarrage-pied{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.message-erreur{color:var(--err);font-weight:700;min-height:1.4em}
+.etat-demarre{display:none;color:var(--ok);font-weight:700}
+body.demarre .etat-demarre{display:inline}
+body.demarre #btnCommencer,body.demarre .temps{display:none}
+body.rendu #btnRendreHaut{display:none}
+
+/* ── Exercices ── */
+.exo{--accent:var(--b-si);position:relative;padding:0;overflow:hidden}
+.exo[data-ex="ex2"]{--accent:var(--b-tortue)} .exo[data-ex="ex3"]{--accent:var(--b-boucle)}
+.exo-tete{display:flex;gap:16px;align-items:center;padding:20px 22px;background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 30%,transparent),transparent 70%);border-bottom:1px solid var(--trait)}
+.exo-num{flex:none;width:58px;height:58px;border-radius:14px;background:var(--accent);display:grid;place-items:center;font-family:var(--f-titre);font-weight:800;font-size:1.7rem;color:#fff;box-shadow:inset 0 -4px 0 rgba(0,0,0,.2)}
+.exo-tete h2{font-size:clamp(1.25rem,2.6vw,1.6rem)}
+.exo-tete .origine{font-size:.85rem;color:var(--doux);margin-top:3px}
+.exo-pts{margin-left:auto;flex:none;text-align:right;font-family:var(--f-titre);font-weight:700}
+.exo-pts b{display:block;font-size:1.3rem;color:var(--or)}
+.exo-pts small{color:var(--doux);font-weight:500;font-size:.8rem}
+.exo-corps{padding:6px 22px 22px}
+.exo-contexte{color:var(--texte);margin:14px 0 4px}
+.vars{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.9rem;color:var(--doux);margin:8px 0}
+.vars code{font-family:var(--f-mono);font-size:.85rem;background:var(--b-var);color:#fff;border-radius:12px;padding:1px 9px}
+.vitta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:6px 0 4px}
+.vitta details{width:100%}
+.vitta summary{cursor:pointer;color:var(--doux);font-size:.92rem}
+.vitta iframe{width:100%;min-height:600px;border:1px solid var(--trait);border-radius:12px;background:#fff;margin-top:10px}
+.verrou-info{display:none;align-items:center;gap:8px;margin:10px 0 0;padding:10px 12px;border-radius:12px;background:rgba(129,251,161,.08);border:1px solid rgba(129,251,161,.35);color:var(--ok);font-weight:700}
+.exo.verrouille .verrou-info{display:flex}
+.exo.attente .exo-corps{opacity:.55}
+.attente-info{display:none;margin:14px 22px 0;padding:10px 12px;border-radius:12px;background:rgba(255,214,107,.08);border:1px solid rgba(255,214,107,.4);color:var(--or);font-weight:700}
+.exo.attente .attente-info{display:block}
+
+/* ── Questions ── */
+.q{position:relative;margin:18px 0 0;padding:16px 16px 14px;border-radius:14px;background:var(--ardoise2);border:1px solid var(--trait);border-left:6px solid var(--accent)}
+.q-tete{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:6px}
+.q-num{font-family:var(--f-titre);font-weight:800;font-size:1.05rem;color:#fff;background:var(--accent);border-radius:8px;padding:1px 9px}
+.q-comp{font-size:.78rem;font-weight:700;color:var(--mauve);text-transform:uppercase;letter-spacing:.04em}
+.q-pts{margin-left:auto;font-family:var(--f-titre);font-weight:700;font-size:.88rem;color:var(--or)}
+.q-enonce{margin:4px 0 10px;font-size:1.04rem}
+.q-enonce strong{color:#fff}
+.releve{display:inline-flex;flex-wrap:wrap;gap:6px;margin:2px 0}
+.releve span{font-family:var(--f-mono);font-size:.86rem;background:#0f2a55;border:1px solid #2e5d9f;border-radius:8px;padding:1px 8px}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+.options{display:grid;gap:9px}
+.opt{display:flex;gap:12px;align-items:flex-start;padding:11px 13px;border-radius:12px;border:2px solid #2e5d9f;background:#0f2a55;cursor:pointer;transition:border-color .15s ease,background .15s ease}
+.opt:hover{border-color:var(--cyan)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt .lettre{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-family:var(--f-titre);font-weight:800;background:#173666;color:var(--cyan);border:1px solid #2e5d9f}
+.opt:has(input:checked){border-color:var(--cyan);background:#123566}
+.opt:has(input:checked) .lettre{background:var(--cyan);color:#04202b}
+.opt:has(input:focus-visible){outline:3px solid var(--cyan);outline-offset:2px}
+.opt .opt-texte{min-width:0}
+.opt .prog{padding-top:8px}
+.opt.bonne{border-color:var(--ok)!important;background:rgba(129,251,161,.1)!important}
+.opt.mauvaise{border-color:var(--err)!important;background:rgba(255,123,136,.1)!important}
+.saisie{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+.saisie .champ{min-width:170px}
+.saisie input,.saisie select{width:100%;background:#0f2a55;border:2px solid #2e5d9f;border-radius:10px;padding:10px 12px;font-family:var(--f-mono);font-weight:700;font-size:1.05rem}
+.saisie input{max-width:160px}
+.unite{color:var(--doux);font-weight:700;padding-bottom:10px}
+input.bonne,select.bonne{border-color:var(--ok)!important;background:rgba(129,251,161,.1)!important}
+input.mauvaise,select.mauvaise{border-color:var(--err)!important;background:rgba(255,123,136,.1)!important}
+:disabled{cursor:not-allowed}
+.opt:has(input:disabled){cursor:default}
+/* tableaux de relevés */
+.tab-wrap{overflow-x:auto;margin:6px 0}
+table.releves{border-collapse:separate;border-spacing:0;width:100%;min-width:560px;font-size:.95rem}
+table.releves th,table.releves td{padding:8px 10px;text-align:center;border-bottom:1px solid var(--trait)}
+table.releves th{font-size:.8rem;color:var(--doux);font-weight:700;background:#0f2a55}
+table.releves th:first-child{border-radius:10px 0 0 0} table.releves th:last-child{border-radius:0 10px 0 0}
+table.releves td{font-family:var(--f-mono)}
+.seg{display:inline-flex;border:2px solid #2e5d9f;border-radius:10px;overflow:hidden}
+.seg label{position:relative;cursor:pointer}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg span{display:block;padding:6px 16px;font-family:var(--f-mono);font-weight:700;background:#0f2a55}
+.seg label+label span{border-left:2px solid #2e5d9f}
+.seg input:checked+span{background:var(--cyan);color:#04202b}
+.seg input:focus-visible+span{outline:3px solid var(--or);outline-offset:-3px}
+.seg.bonne{border-color:var(--ok)} .seg.mauvaise{border-color:var(--err)}
+@media(max-width:640px){
+  table.releves,table.releves tbody{display:block;min-width:0}
+  table.releves thead{display:none}
+  table.releves tr{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;padding:12px;margin-bottom:10px;border:1px solid var(--trait);border-radius:12px;background:#0b2147}
+  table.releves th[scope=row]{grid-column:1 / -1;text-align:left;background:none;padding:0;border:0;color:var(--cyan);font-size:1rem}
+  table.releves td{border:0;padding:0;text-align:left}
+  table.releves td::before{content:attr(data-l);display:block;font-family:var(--f-texte);font-size:.78rem;color:var(--doux)}
+  table.releves td:last-child{grid-column:1 / -1;margin-top:4px}
+}
+/* outils d'aide */
+.q-outils{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.b-aide{border:1px solid;border-radius:10px;padding:7px 12px;font-weight:700;font-size:.9rem;cursor:pointer;background:transparent;display:inline-flex;gap:6px;align-items:center}
+.b-indice{color:var(--cyan);border-color:rgba(97,218,251,.45)}
+.b-pouce{color:var(--mauve);border-color:rgba(198,142,242,.5)}
+.b-pouce small{font-weight:700;color:var(--err)}
+.b-aide[aria-pressed="true"]{background:rgba(255,255,255,.06)}
+.b-pouce.paye small{color:var(--discret)}
+.aide-texte{margin-top:10px;padding:11px 13px;border-radius:12px;font-size:.98rem;animation:apparait .25s ease}
+.aide-texte.n1{background:rgba(97,218,251,.08);border:1px solid rgba(97,218,251,.3)}
+.aide-texte.n2{background:rgba(198,142,242,.09);border:1px solid rgba(198,142,242,.35)}
+.aide-texte b{color:#fff}
+.verrouille .q-outils{display:none}
+@keyframes apparait{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+/* correction */
+.q-corr{display:none;margin-top:14px;border-radius:12px;padding:14px 16px;background:#081733;border:1px solid var(--trait)}
+.q-corr.visible{display:block;animation:apparait .3s ease}
+.verdict{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:8px;font-family:var(--f-titre);font-weight:700}
+.verdict .v-pts{padding:2px 10px;border-radius:8px;background:#173666}
+.verdict.v-ok{color:var(--ok)} .verdict.v-part{color:var(--or)} .verdict.v-ko{color:var(--err)} .verdict.v-nr{color:var(--or)}
+.verdict .v-note{font-family:var(--f-texte);font-weight:400;font-size:.9rem;color:var(--doux)}
+.q-corr h4{font-family:var(--f-titre);font-size:.92rem;color:var(--cyan);margin:12px 0 6px;text-transform:uppercase;letter-spacing:.04em}
+.q-corr p,.q-corr li{font-size:.98rem}
+.c-rep{margin:0;font-weight:700}
+.c-etapes{margin:0;padding-left:22px}
+.c-etapes li{margin:5px 0}
+.c-pieges{margin:0;padding-left:20px}
+.c-pieges li{margin:6px 0;color:#d6def0}
+.c-retenir{margin:12px 0 0;padding:10px 12px;border-radius:10px;background:rgba(129,251,161,.07);border:1px solid rgba(129,251,161,.35);color:var(--ok);font-weight:700}
+.c-tab{border-collapse:collapse;margin:8px 0;font-size:.92rem}
+.c-tab th,.c-tab td{border:1px solid var(--trait);padding:5px 9px;text-align:center}
+.c-tab th{background:#0f2a55;color:var(--doux);font-size:.82rem}
+.c-code{font-family:var(--f-mono);font-size:.88rem;background:#16191f;border-radius:6px;padding:2px 6px}
+.cv{font-family:var(--f-mono);font-weight:700;color:var(--or)}
+.ck.ok{color:var(--ok);font-weight:700} .ck.ko{color:var(--err);font-weight:700}
+/* pied d'exercice */
+.exo-pied{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:20px;padding-top:16px;border-top:1px dashed var(--trait)}
+.exo-pied .note-exo{font-family:var(--f-titre);font-weight:700;font-size:1.1rem;color:var(--or)}
+.b-corr{background:transparent;border:2px solid var(--ok);color:var(--ok);border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer}
+.b-corr:hover{background:rgba(129,251,161,.08)}
+.verrouille .b-corr{display:none}
+
+/* ── Résultat ── */
+#resultat{display:none}
+body.rendu #resultat{display:block}
+.res-tete{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center}
+@media(max-width:640px){.res-tete{grid-template-columns:1fr}}
+.note-geante{font-family:var(--f-titre);font-weight:800;font-size:clamp(3rem,10vw,4.6rem);line-height:1;color:var(--or)}
+.note-geante small{font-size:.38em;color:var(--doux);font-weight:600}
+.appreciation{font-family:var(--f-titre);font-size:1.25rem;font-weight:700}
+.res-sous{color:var(--doux)}
+.barres{display:grid;gap:12px;margin:20px 0}
+.barre-ex{display:grid;grid-template-columns:250px 1fr 90px;gap:12px;align-items:center}
+@media(max-width:640px){.barre-ex{grid-template-columns:1fr 60px}.barre-ex .be-jauge{grid-column:1 / -1;order:3}}
+.be-jauge{height:14px;border-radius:99px;background:var(--ardoise2);border:1px solid var(--trait);overflow:hidden}
+.be-jauge i{display:block;height:100%;border-radius:99px;transition:width .8s ease}
+.be-val{font-family:var(--f-mono);font-weight:700;text-align:right;white-space:nowrap}
+table.bilan{width:100%;border-collapse:collapse;margin-top:8px;font-size:.95rem}
+table.bilan th,table.bilan td{padding:9px 10px;border-bottom:1px solid var(--trait);text-align:left}
+table.bilan th{color:var(--doux);font-size:.82rem;text-transform:uppercase;letter-spacing:.04em}
+.m4{color:var(--ok);font-weight:700} .m3{color:var(--cyan);font-weight:700} .m2{color:var(--or);font-weight:700} .m1{color:var(--err);font-weight:700}
+.res-aides{margin:16px 0;padding:12px 14px;border-radius:12px;background:var(--ardoise2);border:1px solid var(--trait)}
+.res-aides ul{margin:6px 0 0;padding-left:20px}
+.res-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);opacity:0;z-index:80;background:var(--ok);color:#06240f;font-weight:700;padding:10px 16px;border-radius:12px;transition:all .25s ease;pointer-events:none}
+.toast.vu{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── Fenêtre de confirmation ── */
+dialog{border:1px solid var(--trait);border-radius:18px;padding:0;background:var(--ardoise);color:var(--texte);max-width:min(520px,calc(100% - 32px));box-shadow:0 30px 80px rgba(0,0,0,.6)}
+dialog::backdrop{background:rgba(2,6,16,.72);backdrop-filter:blur(3px)}
+.dlg-in{padding:22px}
+.dlg-in h3{font-size:1.25rem;margin-bottom:10px}
+.dlg-corps{color:var(--doux)}
+.dlg-corps b{color:#fff}
+.dlg-corps .alerte{color:var(--or);font-weight:700}
+.dlg-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px;flex-wrap:wrap}
+.dlg-champ{margin-top:10px}
+.dlg-champ input{width:100%;background:#0f2a55;border:1px solid #2e5d9f;border-radius:10px;padding:10px 12px;font-family:var(--f-mono)}
+
+/* ── Enseignant & pied ── */
+footer{max-width:980px;margin:0 auto;padding:0 16px 40px;color:var(--discret);font-size:.85rem;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+#panneauProf{display:none}
+body.prof #panneauProf{display:block}
+#panneauProf table{width:100%;border-collapse:collapse;font-size:.92rem;margin-top:10px}
+#panneauProf td,#panneauProf th{border-bottom:1px solid var(--trait);padding:7px 8px;text-align:left}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media print{
+  body{background:#fff!important;color:#111!important;font-size:11pt}
+  .barre,.q-outils,.exo-pied .b-corr,.vitta,.res-actions,footer,.regles,.temps,#btnCommencer,dialog,.programme-heros,.consigne-generale{display:none!important}
+  .carte,.q,.q-corr,.opt,.prog-cadre,.res-aides{background:#fff!important;color:#111!important;border-color:#999!important;box-shadow:none!important;break-inside:avoid}
+  .exo-tete{background:#f2f2f2!important} .exo-num,.q-num{color:#000!important;background:#ddd!important}
+  h1,h2,h3,.q-enonce strong,.dlg-corps b{color:#000!important}
+  .heros h1 em{color:#000!important;-webkit-text-fill-color:#000}
+  .q-corr{display:none!important} body.rendu .q-corr.visible{display:block!important}
+  .c-pieges li,.res-sous,.q-comp,.badge{color:#333!important}
+  /* copie compacte : verdict seul (les corrections complètes restent à l'écran) */
+  .q-corr>*:not(.verdict){display:none!important}
+  .q-corr{padding:6px 10px!important;margin-top:8px!important}
+  .prog-cadre:not(.bug),.vars,.verrou-info,.attente-info,.q-aides,#panneauProf,.console-heros{display:none!important}
+  .heros{display:block!important;padding:12px 16px!important}
+  .q{margin-top:10px!important;padding:10px 12px!important}
+  .note-geante,.exo-pts b,.q-pts,.note-exo,.appreciation{color:#000!important}
+  .note-geante small,.exo-pts small,.exo-tete .origine{color:#444!important}
+  .verdict.v-ok{color:#0a7a2f!important} .verdict.v-ko{color:#b00020!important} .verdict.v-part,.verdict.v-nr{color:#7a5a00!important}
+  .verdict .v-pts{background:#eee!important;color:#000!important}
+  .be-jauge{background:#eee!important;border-color:#999!important}
+  table.bilan th{color:#333!important}
+  .m4{color:#0a7a2f!important} .m3{color:#0b5f7a!important} .m2{color:#7a5a00!important} .m1{color:#b00020!important}
+  .seg span{background:#fff!important;color:#000!important} .seg input:checked+span{background:#ccc!important}
+  .opt .lettre{background:#eee!important;color:#000!important}
+  .opt:has(input:checked){border-color:#000!important}
+  .releve span,table.releves th,table.releves tr{background:#fff!important;color:#000!important;border-color:#999!important}
+  table.releves th{background:#eee!important}
+  .exo-contexte,.champ label,.q-enonce,.opt-texte,table.releves td{color:#111!important}
+  #resultat{break-before:page}
+  .saisie input,.saisie select,.champ input{background:#fff!important;color:#000!important;border-color:#777!important}
+}
+</style>
+</head>
+<body>
+
+<div class="barre" role="region" aria-label="Avancement">
+  <div class="barre-in">
+    <span class="barre-titre">🧪 Évaluation · Vittascience blocs</span>
+    <div class="barre-prog">
+      <small id="progTexte">Réponses : 0 / 16</small>
+      <div class="jauge" aria-hidden="true"><i id="progJauge"></i></div>
+    </div>
+    <span class="chrono" id="chrono" hidden>⏱ 50:00</span>
+    <button class="btn btn-or btn-petit" id="btnRendreHaut" type="button" disabled>Rendre ma copie</button>
+  </div>
+</div>
+
+<main id="haut">
+
+<!-- ═════════ HÉROS ═════════ -->
+<section class="carte heros" aria-labelledby="titre">
+  <div>
+    <div class="sourcil">Évaluation notée · Vittascience en blocs · 5e – 4e</div>
+    <h1 id="titre">Conditions, boucles et <em>variables qui changent</em></h1>
+    <p class="chapo">Trois exercices de la séance « Créer des variables », choisis parce que ce sont les plus exigeants. Tu les as déjà travaillés : aujourd'hui, ils comptent.</p>
+    <div class="badges">
+      <span class="badge code" title="Analyser un programme simple fourni et tester s'il répond au besoin ou au problème posé.">5e_C9.1</span>
+      <span class="badge code" title="Modifier un programme fourni pour répondre au besoin ou à un problème posé.">5e_C9.2</span>
+      <span class="badge code" title="Réaliser et mettre au point un programme simple commandant un OST.">5e_C9.3</span>
+      <span class="badge code" title="Modifier un algorithme permettant de répondre au besoin ou au problème posé.">4e_C9.1</span>
+      <span class="badge bareme">16 questions · 30 points → note /20</span>
+    </div>
+    <a class="retour" href="vittascience_variables_blocs.html">← Retour à la séance d'entraînement</a>
+  </div>
+  <div class="programme-heros" aria-label="Le déroulé de l'évaluation, écrit comme un programme en blocs">
+    <div class="prog">
+      <div class="bk bk-set">affecter à <span class="bk-dd">note</span> la valeur <span class="bk-n">0</span></div>
+      <div class="bk bk-boucle">
+        <div class="bk-ligne">répéter <span class="bk-n">3</span> fois</div>
+        <div class="bk-corps">
+          <div class="bk bk-proc">construire ▸ exécuter ▸ répondre</div>
+          <div class="bk bk-set">affecter à <span class="bk-dd">note</span> la valeur <span class="bk-op"><span class="bk-v">note</span><span class="bk-sym">+</span><span class="bk-v">points</span></span></div>
+        </div>
+        <div class="bk-ligne bas"></div>
+      </div>
+      <div class="bk bk-aff">afficher <span class="bk-op"><span class="bk-v">note</span><span class="bk-sym">÷</span><span class="bk-n">30</span><span class="bk-sym">×</span><span class="bk-n">20</span></span></div>
+    </div>
+    <div class="console-heros" aria-live="polite"><span class="invite">console ▸</span><span class="resultat-bloc" id="resultatHeros">? / 20</span><span class="console-note" id="consoleNote">s'affichera quand tu rendras ta copie</span></div>
+  </div>
+</section>
+
+<!-- ═════════ IDENTITÉ, RÈGLES, DÉMARRAGE ═════════ -->
+<section class="carte" id="demarrage" aria-labelledby="titreDemarrage">
+  <h2 id="titreDemarrage" style="font-size:1.3rem;margin-bottom:14px">Avant de commencer</h2>
+  <div class="identite">
+    <div class="champ"><label for="idNom">Nom</label><input id="idNom" autocomplete="family-name"></div>
+    <div class="champ"><label for="idPrenom">Prénom</label><input id="idPrenom" autocomplete="given-name"></div>
+    <div class="champ"><label for="idClasse">Classe</label><input id="idClasse" placeholder="ex. 4E2"></div>
+    <div class="champ"><label for="idDate">Date</label><input id="idDate" type="date"></div>
+  </div>
+
+  <div class="regles">
+    <div class="regle r1"><strong>💡 Indice — gratuit</strong><p>Il t'oriente sans donner la réponse. Utilise-le sans hésiter.</p></div>
+    <div class="regle r2"><strong>🧭 Coup de pouce — ¼ des points</strong><p>Un rappel de cours ciblé. Il retire le quart des points de la question.</p></div>
+    <div class="regle r3"><strong>✅ Correction — verrouille</strong><p>Elle bloque tes réponses de l'exercice. Une question <b>sans réponse</b> à ce moment-là vaut <b>0 point</b>.</p></div>
+  </div>
+
+  <div class="consigne-generale"><span aria-hidden="true">🔧</span><span>Pour chaque exercice : <b>construis le programme en blocs dans Vittascience, exécute-le</b>, puis réponds. Tes réponses sont enregistrées au fur et à mesure sur cet ordinateur.</span></div>
+
+  <div role="radiogroup" aria-label="Temps de travail" class="temps">
+    <label class="puce"><input type="radio" name="tempsChoix" value="normal" checked> ⏱ Temps conseillé : 50 min</label>
+    <label class="puce"><input type="radio" name="tempsChoix" value="tiers"> ⏱ Tiers temps : 1 h 07</label>
+    <label class="puce"><input type="radio" name="tempsChoix" value="libre"> Sans chrono affiché</label>
+  </div>
+  <div class="demarrage-pied">
+    <button class="btn btn-cyan" id="btnCommencer" type="button">Commencer l'évaluation</button>
+    <span class="etat-demarre">✔ Évaluation commencée — bon travail !</span>
+    <span class="message-erreur" id="msgDemarrage" role="alert"></span>
+  </div>
+</section>
+
+<form id="copie" autocomplete="off" onsubmit="return false">
+
+<!-- ═════════ EXERCICE 1 — ARROSAGE ═════════ -->
+<section class="carte exo attente" data-ex="ex1" id="ex1" aria-labelledby="titreEx1">
+  <header class="exo-tete">
+    <div class="exo-num" aria-hidden="true">1</div>
+    <div><h2 id="titreEx1">🌱 Arrosage automatique</h2><div class="origine">Exercice 10 de la séance · conditions reliées par « et »</div></div>
+    <div class="exo-pts"><b>10 pts</b><small>5 questions</small></div>
+  </header>
+  <p class="attente-info">⬆ Remplis « Avant de commencer », puis clique sur « Commencer l'évaluation ».</p>
+  <div class="exo-corps">
+    <p class="exo-contexte">Un jardin connecté décide seul d'arroser. Le programme range quatre mesures dans quatre variables, puis teste quatre conditions.</p>
+    <div class="prog-cadre"><p class="prog-legende">programme fourni</p><div class="prog" data-programme="arrosage"></div></div>
+    <div class="vars">Variables à créer : <code>temperature</code><code>luminosite</code><code>humidite_sol</code><code>temps</code><code>arroser</code></div>
+    <div class="vitta">
+      <a class="btn btn-ghost btn-petit" href="https://fr.vittascience.com/python/?console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
+      <details><summary>ou programmer ici, dans l'interface intégrée</summary><iframe data-src="https://fr.vittascience.com/python/?console=bottom" title="Vittascience intégré — exercice 1" allow="clipboard-read; clipboard-write; fullscreen" loading="lazy"></iframe></details>
+    </div>
+    <div class="verrou-info" role="status">🔒 Réponses verrouillées — la correction est affichée sous chaque question.</div>
+
+    <article class="q" data-q="q11">
+      <header class="q-tete"><span class="q-num">1.1</span><span class="q-comp">Analyser · tester</span><span class="q-pts">1 pt</span></header>
+      <fieldset>
+        <legend class="q-enonce">Le capteur envoie ce relevé : <span class="releve"><span>temperature 29</span><span>luminosite 77</span><span>humidite_sol 18</span><span>temps 9</span></span>. Mets ces valeurs dans les quatre premiers blocs et exécute. <strong>Que va afficher la console ?</strong></legend>
+        <div class="options">
+          <label class="opt"><input type="radio" name="q11" value="A"><span class="lettre">A</span><span class="opt-texte">1</span></label>
+          <label class="opt"><input type="radio" name="q11" value="B"><span class="lettre">B</span><span class="opt-texte">0</span></label>
+          <label class="opt"><input type="radio" name="q11" value="C"><span class="lettre">C</span><span class="opt-texte">Le mot « arroser »</span></label>
+          <label class="opt"><input type="radio" name="q11" value="D"><span class="lettre">D</span><span class="opt-texte">Rien : le programme s'arrête</span></label>
+        </div>
+      </fieldset>
+    </article>
+
+    <article class="q" data-q="q12">
+      <header class="q-tete"><span class="q-num">1.2</span><span class="q-comp">Analyser · tester</span><span class="q-pts">4 pts</span></header>
+      <p class="q-enonce" id="enonceQ12">Le système reçoit quatre relevés. <strong>Pour chacun, que va afficher la console : 0 ou 1 ?</strong> Teste-les dans Vittascience.</p>
+      <div class="tab-wrap">
+        <table class="releves" aria-describedby="enonceQ12">
+          <thead><tr><th scope="col">Relevé</th><th scope="col">temperature</th><th scope="col">luminosite</th><th scope="col">humidite_sol</th><th scope="col">temps</th><th scope="col">La console affiche</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">R1</th><td data-l="temperature">31</td><td data-l="luminosite">70</td><td data-l="humidite_sol">45</td><td data-l="temps">20</td><td data-l="La console affiche"><div class="seg" role="radiogroup" aria-label="Relevé R1" data-f="q12_r1"><label><input type="radio" name="q12_r1" value="0"><span>0</span></label><label><input type="radio" name="q12_r1" value="1"><span>1</span></label></div></td></tr>
+            <tr><th scope="row">R2</th><td data-l="temperature">26</td><td data-l="luminosite">61</td><td data-l="humidite_sol">39</td><td data-l="temps">13</td><td data-l="La console affiche"><div class="seg" role="radiogroup" aria-label="Relevé R2" data-f="q12_r2"><label><input type="radio" name="q12_r2" value="0"><span>0</span></label><label><input type="radio" name="q12_r2" value="1"><span>1</span></label></div></td></tr>
+            <tr><th scope="row">R3</th><td data-l="temperature">25</td><td data-l="luminosite">90</td><td data-l="humidite_sol">10</td><td data-l="temps">30</td><td data-l="La console affiche"><div class="seg" role="radiogroup" aria-label="Relevé R3" data-f="q12_r3"><label><input type="radio" name="q12_r3" value="0"><span>0</span></label><label><input type="radio" name="q12_r3" value="1"><span>1</span></label></div></td></tr>
+            <tr><th scope="row">R4</th><td data-l="temperature">35</td><td data-l="luminosite">65</td><td data-l="humidite_sol">30</td><td data-l="temps">48</td><td data-l="La console affiche"><div class="seg" role="radiogroup" aria-label="Relevé R4" data-f="q12_r4"><label><input type="radio" name="q12_r4" value="0"><span>0</span></label><label><input type="radio" name="q12_r4" value="1"><span>1</span></label></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="q" data-q="q13">
+      <header class="q-tete"><span class="q-num">1.3</span><span class="q-comp">Modifier</span><span class="q-pts">2 pts</span></header>
+      <p class="q-enonce">Le jardinier trouve que le système arrose trop souvent. Il veut qu'il n'arrose que si <strong>le dernier arrosage date de plus de 24 heures</strong>. Les autres conditions ne changent pas. <strong>Quelle comparaison faut-il modifier, et avec quel nombre ?</strong></p>
+      <div class="saisie">
+        <div class="champ"><label for="q13_var">Variable de la comparaison</label>
+          <select id="q13_var"><option value="">— choisir —</option><option value="temperature">temperature</option><option value="luminosite">luminosite</option><option value="humidite_sol">humidite_sol</option><option value="temps">temps</option></select></div>
+        <div class="champ"><label for="q13_val">Nouveau nombre</label><input id="q13_val" inputmode="decimal" placeholder="?"></div>
+      </div>
+    </article>
+
+    <article class="q" data-q="q14">
+      <header class="q-tete"><span class="q-num">1.4</span><span class="q-comp">Modifier</span><span class="q-pts">2 pts</span></header>
+      <fieldset>
+        <legend class="q-enonce">Nouveau besoin : en cas de <strong>sécheresse extrême</strong> (humidite_sol &lt; 10), le système doit arroser tout de suite, <strong>même si les autres conditions ne sont pas remplies</strong>. Quelle modification répond à ce besoin ?</legend>
+        <div class="options">
+          <label class="opt"><input type="radio" name="q14" value="A"><span class="lettre">A</span><span class="opt-texte">Remplacer la condition « humidite_sol &lt; 40 » par « humidite_sol &lt; 10 ».</span></label>
+          <label class="opt"><input type="radio" name="q14" value="B"><span class="lettre">B</span><span class="opt-texte">Ajouter « <b>et</b> humidite_sol &lt; 10 » à la suite des quatre conditions.</span></label>
+          <label class="opt"><input type="radio" name="q14" value="C"><span class="lettre">C</span><span class="opt-texte">Relier le groupe des quatre conditions et la condition « humidite_sol &lt; 10 » avec un bloc « <b>ou</b> ».</span></label>
+          <label class="opt"><input type="radio" name="q14" value="D"><span class="lettre">D</span><span class="opt-texte">Dans la partie « sinon », mettre « affecter à arroser la valeur 1 » à la place de 0.</span></label>
+        </div>
+      </fieldset>
+    </article>
+
+    <article class="q" data-q="q15">
+      <header class="q-tete"><span class="q-num">1.5</span><span class="q-comp">Analyser · tester</span><span class="q-pts">1 pt</span></header>
+      <fieldset>
+        <legend class="q-enonce">Avec le relevé <span class="releve"><span>temperature 30</span><span>luminosite 80</span><span>humidite_sol 40</span><span>temps 20</span></span>, la console affiche 0. <strong>Pourquoi ?</strong></legend>
+        <div class="options">
+          <label class="opt"><input type="radio" name="q15" value="A"><span class="lettre">A</span><span class="opt-texte">Parce que la température est trop basse.</span></label>
+          <label class="opt"><input type="radio" name="q15" value="B"><span class="lettre">B</span><span class="opt-texte">Parce que le dernier arrosage est trop récent.</span></label>
+          <label class="opt"><input type="radio" name="q15" value="C"><span class="lettre">C</span><span class="opt-texte">Parce qu'avec « et », il suffit que trois conditions sur quatre soient vraies, et ici il n'y en a que deux.</span></label>
+          <label class="opt"><input type="radio" name="q15" value="D"><span class="lettre">D</span><span class="opt-texte">Parce que 40 &lt; 40 est faux : 40 n'est pas strictement plus petit que 40.</span></label>
+        </div>
+      </fieldset>
+    </article>
+
+    <div class="exo-pied"><button type="button" class="b-corr" data-ex="ex1">✅ Voir la correction de l'exercice 1</button><span class="note-exo" data-note-ex="ex1"></span></div>
+  </div>
+</section>
+
+<!-- ═════════ EXERCICE 2 — TRIANGLE ═════════ -->
+<section class="carte exo attente" data-ex="ex2" id="ex2" aria-labelledby="titreEx2">
+  <header class="exo-tete">
+    <div class="exo-num" aria-hidden="true">2</div>
+    <div><h2 id="titreEx2">🔺 Triangle coloré</h2><div class="origine">Bonus 9 de la séance · tortue et boucle</div></div>
+    <div class="exo-pts"><b>10 pts</b><small>6 questions</small></div>
+  </header>
+  <p class="attente-info">⬆ Remplis « Avant de commencer », puis clique sur « Commencer l'évaluation ».</p>
+  <div class="exo-corps">
+    <p class="exo-contexte">La tortue de Vittascience tient un stylo. Ce programme lui fait dessiner un triangle rouge.</p>
+    <div class="prog-cadre"><p class="prog-legende">programme fourni</p><div class="prog" data-programme="triangle"></div></div>
+    <div class="vars">Variable à créer : <code>cote</code> · blocs de la catégorie Turtle</div>
+    <div class="vitta">
+      <a class="btn btn-ghost btn-petit" href="https://fr.vittascience.com/python/?console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
+      <details><summary>ou programmer ici, dans l'interface intégrée</summary><iframe data-src="https://fr.vittascience.com/python/?console=bottom" title="Vittascience intégré — exercice 2" allow="clipboard-read; clipboard-write; fullscreen" loading="lazy"></iframe></details>
+    </div>
+    <div class="verrou-info" role="status">🔒 Réponses verrouillées — la correction est affichée sous chaque question.</div>
+
+    <article class="q" data-q="q21">
+      <header class="q-tete"><span class="q-num">2.1</span><span class="q-comp">Analyser · tester</span><span class="q-pts">1 pt</span></header>
+      <p class="q-enonce"><strong>Combien de fois le bloc « avancer de cote » est-il exécuté ?</strong></p>
+      <div class="saisie"><div class="champ"><label for="q21">Nombre de fois</label><input id="q21" inputmode="decimal" placeholder="?"></div></div>
+    </article>
+
+    <article class="q" data-q="q22">
+      <header class="q-tete"><span class="q-num">2.2</span><span class="q-comp">Analyser · tester</span><span class="q-pts">1 pt</span></header>
+      <p class="q-enonce"><strong>Quelle est la longueur totale tracée par le stylo ?</strong></p>
+      <div class="saisie"><div class="champ"><label for="q22">Longueur totale</label><input id="q22" inputmode="decimal" placeholder="?"></div><span class="unite">pas</span></div>
+    </article>
+
+    <article class="q" data-q="q23">
+      <header class="q-tete"><span class="q-num">2.3</span><span class="q-comp">Analyser · tester</span><span class="q-pts">2 pts</span></header>
+      <fieldset>
+        <legend class="q-enonce">Les angles d'un triangle équilatéral mesurent 60°. <strong>Pourquoi la tortue tourne-t-elle de 120° et pas de 60° ?</strong></legend>
+        <div class="options">
+          <label class="opt"><input type="radio" name="q23" value="A"><span class="lettre">A</span><span class="opt-texte">Parce que, dans un triangle, chaque angle mesure en réalité 120°.</span></label>
+          <label class="opt"><input type="radio" name="q23" value="B"><span class="lettre">B</span><span class="opt-texte">Parce qu'à chaque coin la tortue change de direction de 120° : après 3 virages, 3 × 120° = 360°, elle a fait un tour complet et le triangle se ferme.</span></label>
+          <label class="opt"><input type="radio" name="q23" value="C"><span class="lettre">C</span><span class="opt-texte">Parce que 120 est aussi la valeur de la variable cote : les deux nombres doivent être égaux.</span></label>
+          <label class="opt"><input type="radio" name="q23" value="D"><span class="lettre">D</span><span class="opt-texte">Parce qu'en tournant de 60°, la tortue dessinerait un carré.</span></label>
+        </div>
+      </fieldset>
+    </article>
+
+    <article class="q" data-q="q24">
+      <header class="q-tete"><span class="q-num">2.4</span><span class="q-comp">Modifier</span><span class="q-pts">2 pts</span></header>
+      <p class="q-enonce">On modifie ce programme pour dessiner un <strong>hexagone régulier</strong> (6 côtés égaux). <strong>Complète les deux nombres à changer.</strong></p>
+      <div class="saisie">
+        <div class="champ"><label for="q24_rep">répéter … fois</label><input id="q24_rep" inputmode="decimal" placeholder="?"></div>
+        <div class="champ"><label for="q24_ang">tourner à droite de … degrés</label><input id="q24_ang" inputmode="decimal" placeholder="?"></div>
+      </div>
+    </article>
+
+    <article class="q" data-q="q25">
+      <header class="q-tete"><span class="q-num">2.5</span><span class="q-comp">Modifier</span><span class="q-pts">2 pts</span></header>
+      <p class="q-enonce">On garde le <strong>triangle</strong>. On veut que le tracé total mesure <strong>450 pas</strong>. <strong>Quelle valeur faut-il ranger dans la variable cote ?</strong></p>
+      <div class="saisie"><div class="champ"><label for="q25">cote =</label><input id="q25" inputmode="decimal" placeholder="?"></div><span class="unite">pas</span></div>
+    </article>
+
+    <article class="q" data-q="q26">
+      <header class="q-tete"><span class="q-num">2.6</span><span class="q-comp">Mettre au point</span><span class="q-pts">2 pts</span></header>
+      <p class="q-enonce" id="enonceQ26">Un élève a construit ce programme. Sa tortue trace <strong>un seul long trait</strong> au lieu d'un triangle.</p>
+      <div class="prog-cadre bug"><p class="prog-legende">programme de l'élève</p><div class="prog" data-programme="triangleBug"></div></div>
+      <fieldset aria-describedby="enonceQ26">
+        <legend class="q-enonce"><strong>D'où vient le problème ?</strong></legend>
+        <div class="options">
+          <label class="opt"><input type="radio" name="q26" value="A"><span class="lettre">A</span><span class="opt-texte">Le bloc « tourner à droite de 120 » est placé après la boucle : il n'est exécuté qu'une fois, à la fin.</span></label>
+          <label class="opt"><input type="radio" name="q26" value="B"><span class="lettre">B</span><span class="opt-texte">La variable cote est trop grande : il faut lui donner la valeur 40.</span></label>
+          <label class="opt"><input type="radio" name="q26" value="C"><span class="lettre">C</span><span class="opt-texte">La couleur doit être écrite en français : « rouge ».</span></label>
+          <label class="opt"><input type="radio" name="q26" value="D"><span class="lettre">D</span><span class="opt-texte">Il faut répéter 120 fois au lieu de 3 fois.</span></label>
+        </div>
+      </fieldset>
+    </article>
+
+    <div class="exo-pied"><button type="button" class="b-corr" data-ex="ex2">✅ Voir la correction de l'exercice 2</button><span class="note-exo" data-note-ex="ex2"></span></div>
+  </div>
+</section>
+
+<!-- ═════════ EXERCICE 3 — SPIRALE ═════════ -->
+<section class="carte exo attente" data-ex="ex3" id="ex3" aria-labelledby="titreEx3">
+  <header class="exo-tete">
+    <div class="exo-num" aria-hidden="true">3</div>
+    <div><h2 id="titreEx3">🌀 Spirale</h2><div class="origine">Bonus 10 de la séance · une variable qui change à chaque tour</div></div>
+    <div class="exo-pts"><b>10 pts</b><small>5 questions</small></div>
+  </header>
+  <p class="attente-info">⬆ Remplis « Avant de commencer », puis clique sur « Commencer l'évaluation ».</p>
+  <div class="exo-corps">
+    <p class="exo-contexte">Cette fois, la longueur du trait n'est pas fixe : elle est modifiée à l'intérieur de la boucle.</p>
+    <div class="prog-cadre"><p class="prog-legende">programme fourni</p><div class="prog" data-programme="spirale"></div></div>
+    <div class="vars">Variable à créer : <code>longueur</code> · blocs de la catégorie Turtle</div>
+    <div class="vitta">
+      <a class="btn btn-ghost btn-petit" href="https://fr.vittascience.com/python/?console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
+      <details><summary>ou programmer ici, dans l'interface intégrée</summary><iframe data-src="https://fr.vittascience.com/python/?console=bottom" title="Vittascience intégré — exercice 3" allow="clipboard-read; clipboard-write; fullscreen" loading="lazy"></iframe></details>
+    </div>
+    <div class="verrou-info" role="status">🔒 Réponses verrouillées — la correction est affichée sous chaque question.</div>
+
+    <article class="q" data-q="q31">
+      <header class="q-tete"><span class="q-num">3.1</span><span class="q-comp">Analyser · tester</span><span class="q-pts">3 pts</span></header>
+      <p class="q-enonce" id="enonceQ31"><strong>Quelle est la longueur du trait tracé à chacun de ces tours de boucle ?</strong></p>
+      <div class="saisie" role="group" aria-labelledby="enonceQ31">
+        <div class="champ"><label for="q31_t1">Tour n°1</label><input id="q31_t1" inputmode="decimal" placeholder="?"></div>
+        <div class="champ"><label for="q31_t2">Tour n°2</label><input id="q31_t2" inputmode="decimal" placeholder="?"></div>
+        <div class="champ"><label for="q31_t5">Tour n°5</label><input id="q31_t5" inputmode="decimal" placeholder="?"></div>
+        <span class="unite">pas</span>
+      </div>
+    </article>
+
+    <article class="q" data-q="q32">
+      <header class="q-tete"><span class="q-num">3.2</span><span class="q-comp">Analyser · tester</span><span class="q-pts">2 pts</span></header>
+      <p class="q-enonce"><strong>Quelle est la longueur du dernier trait tracé (tour n°20) ?</strong></p>
+      <div class="saisie"><div class="champ"><label for="q32">Dernier trait</label><input id="q32" inputmode="decimal" placeholder="?"></div><span class="unite">pas</span></div>
+    </article>
+
+    <article class="q" data-q="q33">
+      <header class="q-tete"><span class="q-num">3.3</span><span class="q-comp">Analyser · tester</span><span class="q-pts">2 pts</span></header>
+      <p class="q-enonce"><strong>Quand le programme est terminé, quelle valeur contient la variable longueur ?</strong></p>
+      <div class="saisie"><div class="champ"><label for="q33">longueur =</label><input id="q33" inputmode="decimal" placeholder="?"></div></div>
+    </article>
+
+    <article class="q" data-q="q34">
+      <header class="q-tete"><span class="q-num">3.4</span><span class="q-comp">Analyser · tester</span><span class="q-pts">1 pt</span></header>
+      <fieldset>
+        <legend class="q-enonce">On retire le bloc « affecter à longueur la valeur longueur + 10 ». <strong>Que dessine maintenant la tortue ?</strong></legend>
+        <div class="options">
+          <label class="opt"><input type="radio" name="q34" value="A"><span class="lettre">A</span><span class="opt-texte">Une spirale plus petite.</span></label>
+          <label class="opt"><input type="radio" name="q34" value="B"><span class="lettre">B</span><span class="opt-texte">Un seul trait droit de 200 pas.</span></label>
+          <label class="opt"><input type="radio" name="q34" value="C"><span class="lettre">C</span><span class="opt-texte">Un carré de côté 10, parcouru 5 fois.</span></label>
+          <label class="opt"><input type="radio" name="q34" value="D"><span class="lettre">D</span><span class="opt-texte">Rien : le programme affiche une erreur.</span></label>
+        </div>
+      </fieldset>
+    </article>
+
+    <article class="q" data-q="q35">
+      <header class="q-tete"><span class="q-num">3.5</span><span class="q-comp">Modifier</span><span class="q-pts">2 pts</span></header>
+      <fieldset>
+        <legend class="q-enonce">On veut une spirale qui <strong>se resserre</strong> : des traits de plus en plus courts, tous de longueur positive. <strong>Quel programme convient ?</strong></legend>
+        <div class="options">
+          <label class="opt"><input type="radio" name="q35" value="A"><span class="lettre">A</span><span class="opt-texte"><div class="prog" data-programme="spiraleA"></div></span></label>
+          <label class="opt"><input type="radio" name="q35" value="B"><span class="lettre">B</span><span class="opt-texte"><div class="prog" data-programme="spiraleB"></div></span></label>
+          <label class="opt"><input type="radio" name="q35" value="C"><span class="lettre">C</span><span class="opt-texte"><div class="prog" data-programme="spiraleC"></div></span></label>
+          <label class="opt"><input type="radio" name="q35" value="D"><span class="lettre">D</span><span class="opt-texte"><div class="prog" data-programme="spiraleD"></div></span></label>
+        </div>
+      </fieldset>
+    </article>
+
+    <div class="exo-pied"><button type="button" class="b-corr" data-ex="ex3">✅ Voir la correction de l'exercice 3</button><span class="note-exo" data-note-ex="ex3"></span></div>
+  </div>
+</section>
+
+</form>
+
+<!-- ═════════ REMISE ═════════ -->
+<section class="carte" id="remise" style="text-align:center">
+  <h2 style="font-size:1.3rem;margin-bottom:8px">Tu as terminé ?</h2>
+  <p style="color:var(--doux);margin:0 0 14px">Relis tes réponses, puis rends ta copie : la note et toutes les corrections s'affichent.</p>
+  <button class="btn btn-or" id="btnRendre" type="button" disabled>Rendre ma copie</button>
+</section>
+
+<!-- ═════════ RÉSULTAT ═════════ -->
+<section class="carte" id="resultat" aria-labelledby="titreResultat" tabindex="-1">
+  <h2 id="titreResultat" style="font-size:1.35rem;margin-bottom:16px">Ma note</h2>
+  <div class="res-tete">
+    <div class="note-geante" id="resNote">–<small> / 20</small></div>
+    <div>
+      <div class="appreciation" id="resAppreciation"></div>
+      <div class="res-sous" id="resSous"></div>
+    </div>
+  </div>
+  <div class="barres" id="resBarres"></div>
+  <h3 style="font-size:1.05rem;margin-top:8px">Par compétence</h3>
+  <table class="bilan"><thead><tr><th>Compétence</th><th>Points</th><th>Maîtrise</th></tr></thead><tbody id="resComp"></tbody></table>
+  <div class="res-aides" id="resAides"></div>
+  <div class="res-actions">
+    <button class="btn btn-cyan btn-petit" type="button" id="btnCopierBilan">📋 Copier le bilan (Pronote)</button>
+    <button class="btn btn-ghost btn-petit" type="button" id="btnImprimer">🖨 Imprimer ma copie</button>
+    <button class="btn btn-ghost btn-petit" type="button" id="btnExporter">⬇ Exporter mes réponses</button>
+    <button class="btn btn-ghost btn-petit" type="button" id="btnNouvelle">🔁 Nouvelle copie (élève suivant)</button>
+  </div>
+</section>
+
+<!-- ═════════ ENSEIGNANT ═════════ -->
+<section class="carte" id="panneauProf" aria-labelledby="titreProf">
+  <h2 id="titreProf" style="font-size:1.2rem">Espace enseignant</h2>
+  <p style="color:var(--doux)">Clé de correction et barème. Rien de ce qui se fait ici ne change la note de la copie en cours.</p>
+  <div class="res-actions">
+    <button class="btn btn-ghost btn-petit" type="button" id="btnProfReset">🧹 Effacer la copie de ce poste</button>
+    <button class="btn btn-ghost btn-petit" type="button" id="btnProfFermer">Fermer l'espace enseignant</button>
+  </div>
+  <table><thead><tr><th>Question</th><th>Réponse attendue</th><th>Points</th></tr></thead><tbody id="profCle"></tbody></table>
+</section>
+
+</main>
+
+<footer>
+  <span>Évaluation construite sur la séance « Vittascience en blocs – Créer des variables » · Technologie cycle 4</span>
+  <button class="btn btn-ghost btn-petit" type="button" id="btnProf">Espace enseignant</button>
+</footer>
+
+<dialog id="dlg" aria-labelledby="dlgTitre">
+  <form method="dialog" class="dlg-in">
+    <h3 id="dlgTitre"></h3>
+    <div class="dlg-corps" id="dlgCorps"></div>
+    <div class="dlg-champ" id="dlgChamp" hidden><label for="dlgSaisie" class="sr">Code</label><input id="dlgSaisie" autocomplete="off"></div>
+    <div class="dlg-actions">
+      <button class="btn btn-ghost btn-petit" value="non" id="dlgNon">Annuler</button>
+      <button class="btn btn-or btn-petit" value="oui" id="dlgOui">Confirmer</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+/* ════════════════════════════════════════════════════════════
+   RÉGLAGES
+   ════════════════════════════════════════════════════════════ */
+const COUT_COUP_DE_POUCE = 0.25;           // part des points de la question retirée par un coup de pouce (0 = gratuit)
+const TOTAL_POINTS = 30;                    // barème total, ramené sur 20
+const DUREES = { normal: 50 * 60, tiers: 67 * 60 };
+const STOCK = "eval-vittascience-blocs-v1";
+const STOCK_TENTATIVES = "eval-vittascience-blocs-tentatives";
+const EMPREINTE_CODE_PROF = 1101866809;  // empreinte du code enseignant (même code que la séance)
+
+/* Questions : exercice, numéro affiché, compétence, points (le barème est public) */
+const QUESTIONS = {
+  q11:{ex:"ex1",num:"1.1",comp:"analyser",pts:1}, q12:{ex:"ex1",num:"1.2",comp:"analyser",pts:4},
+  q13:{ex:"ex1",num:"1.3",comp:"modifier",pts:2}, q14:{ex:"ex1",num:"1.4",comp:"modifier",pts:2},
+  q15:{ex:"ex1",num:"1.5",comp:"analyser",pts:1},
+  q21:{ex:"ex2",num:"2.1",comp:"analyser",pts:1}, q22:{ex:"ex2",num:"2.2",comp:"analyser",pts:1},
+  q23:{ex:"ex2",num:"2.3",comp:"analyser",pts:2}, q24:{ex:"ex2",num:"2.4",comp:"modifier",pts:2},
+  q25:{ex:"ex2",num:"2.5",comp:"modifier",pts:2}, q26:{ex:"ex2",num:"2.6",comp:"mettre",pts:2},
+  q31:{ex:"ex3",num:"3.1",comp:"analyser",pts:3}, q32:{ex:"ex3",num:"3.2",comp:"analyser",pts:2},
+  q33:{ex:"ex3",num:"3.3",comp:"analyser",pts:2}, q34:{ex:"ex3",num:"3.4",comp:"analyser",pts:1},
+  q35:{ex:"ex3",num:"3.5",comp:"modifier",pts:2}
+};
+const EXERCICES = {
+  ex1:{titre:"Arrosage automatique", emoji:"🌱", couleur:"var(--b-si)"},
+  ex2:{titre:"Triangle coloré", emoji:"🔺", couleur:"var(--b-tortue)"},
+  ex3:{titre:"Spirale", emoji:"🌀", couleur:"var(--b-boucle)"}
+};
+const COMPETENCES = {
+  analyser:{nom:"Analyser un programme et tester s'il répond au besoin", code:"5e_C9.1"},
+  modifier:{nom:"Modifier un programme pour répondre à un besoin", code:"5e_C9.2 · 4e_C9.1"},
+  mettre:{nom:"Mettre au point un programme (trouver un bug)", code:"5e_C9.3"}
+};
+
+/* Aides : [indice gratuit, coup de pouce = rappel de cours]. Aucune ne donne la réponse. */
+const AIDES = {
+  q11:["Teste les quatre conditions une par une, comme un contrôleur : écris ✔ ou ✘ à côté de chacune.",
+       "Avec le bloc <b>« et »</b>, le « si » n'est vrai que si <b>toutes</b> les conditions sont vraies. Une seule ✘ suffit pour que le programme passe dans la partie « sinon »."],
+  q12:["Une ligne à la fois. Pour chaque relevé, cherche s'il existe <b>une</b> condition fausse : dès que tu en trouves une, la réponse de la ligne est faite.",
+       "Le signe <b>« &gt; »</b> veut dire « strictement plus grand que », et <b>« &lt; »</b> « strictement plus petit que ». Une valeur <b>égale</b> au seuil ne les vérifie pas."],
+  q13:["Parmi les quatre variables, cherche celle qui compte des <b>heures</b>.",
+       "Modifier un programme fourni, c'est changer le moins de blocs possible : ici, <b>un seul nombre</b> dans <b>une seule</b> comparaison. Le signe « &gt; » reste le même."],
+  q14:["Relis le besoin : « <b>même si</b> les autres conditions ne sont pas remplies ». Avec le bloc « et », est-ce possible ?",
+       "Le bloc <b>« et »</b> est vrai seulement si ses deux côtés sont vrais. Le bloc <b>« ou »</b> (même catégorie Logique) est vrai dès qu'<b>au moins un</b> de ses deux côtés est vrai."],
+  q15:["Une seule des quatre conditions est fausse. Regarde de très près la valeur qui tombe <b>pile</b> sur un seuil.",
+       "Compare chaque valeur à son seuil. Une valeur égale au seuil est-elle « plus petite » que lui ?"],
+  q21:["Repère le bloc qui contient « avancer de cote ». Quel nombre est écrit sur ce bloc ?",
+       "<b>« répéter N fois »</b> exécute les blocs placés <b>à l'intérieur</b>, N fois de suite, dans l'ordre."],
+  q22:["Combien mesure un trait ? Combien de traits la tortue dessine-t-elle ?",
+       "« avancer de cote » fait avancer la tortue de la <b>valeur rangée dans la variable cote</b>. Attention : le nombre du bloc « tourner » est un <b>angle</b>, pas une longueur."],
+  q23:["Fais-le avec ton crayon sur la table : avance, tourne de 120°, trois fois. Dans quelle direction regarde ton crayon à la fin ?",
+       "Un tour complet sur soi-même = <b>360°</b>. Pour fermer une figure, la tortue doit avoir fait exactement un tour complet quand elle revient à son point de départ."],
+  q24:["Un côté = un passage dans la boucle.",
+       "Pour fermer une figure régulière, la tortue fait toujours un tour complet (360°) : ce tour est <b>partagé entre tous les virages</b>."],
+  q25:["Le tracé total est fait de 3 côtés égaux. Si tu connais le total, comment retrouver un côté ?",
+       "On ne change qu'<b>un seul bloc</b> : la valeur de départ de la variable. Tous les blocs « avancer de cote » utilisent ensuite cette nouvelle valeur."],
+  q26:["Lis le programme en suivant les décalages : quels blocs sont <b>à l'intérieur</b> du « répéter » ?",
+       "Seuls les blocs emboîtés <b>dans</b> le bloc « répéter » sont répétés. Un bloc placé <b>en dessous</b> n'est exécuté qu'une fois, après la boucle."],
+  q31:["Fais un tableau de suivi : à chaque tour, note la valeur de longueur <b>au moment où la tortue avance</b>, puis ce qu'elle devient à la fin du tour.",
+       "« affecter à longueur la valeur longueur + 10 » prend l'ancienne valeur, lui ajoute 10, et range le résultat dans la même variable : l'ancienne valeur est <b>remplacée</b>. Regarde aussi <b>où</b> ce bloc est placé dans la boucle."],
+  q32:["Cherche la règle dans ton tableau : quel lien entre le numéro du tour et la longueur du trait ?",
+       "À chaque tour, longueur augmente toujours de la même quantité. Au tour 1, elle vaut 10 : combien de fois a-t-elle augmenté quand on arrive au tour 20 ?"],
+  q33:["Le dernier bloc de la boucle s'exécute aussi au tour n°20, <b>après</b> le dernier trait.",
+       "Compte combien de fois le bloc « longueur + 10 » est exécuté en tout, et pars de la valeur de départ."],
+  q34:["Si longueur ne change plus, tous les traits ont la même longueur. Et la tortue tourne toujours de 90°.",
+       "4 virages de 90° = un tour complet. Combien de fois 4 tours dans 20 tours de boucle ?"],
+  q35:["Une spirale qui se resserre : des traits de plus en plus… ? Le premier trait doit donc être…",
+       "Deux réglages comptent : la <b>valeur de départ</b> de longueur (premier bloc) et ce que l'on fait à longueur <b>à chaque tour</b> (dernier bloc de la boucle)."]
+};
+
+/* Programmes en blocs (rendus par rendreBlocs) */
+const PROGRAMMES = {
+  arrosage:[["set","temperature",30],["set","luminosite",75],["set","humidite_sol",20],["set","temps",18],
+    ["if",["et",["cmp",{v:"temperature"},">",25],["cmp",{v:"luminosite"},">",60],["cmp",{v:"humidite_sol"},"<",40],["cmp",{v:"temps"},">",12]],
+      [["set","arroser",1]],[["set","arroser",0]]],
+    ["print",{v:"arroser"}]],
+  triangle:[["call","couleur du stylo",{t:"red"}],["set","cote",120],
+    ["repeat",3,[["call","avancer de",{v:"cote"}],["call","tourner à droite de",120]]]],
+  triangleBug:[["call","couleur du stylo",{t:"red"}],["set","cote",120],
+    ["repeat",3,[["call","avancer de",{v:"cote"}]]],["call","tourner à droite de",120]],
+  spirale:[["set","longueur",10],
+    ["repeat",20,[["call","avancer de",{v:"longueur"}],["call","tourner à droite de",90],["set","longueur",["op",{v:"longueur"},"+",10]]]]],
+  spiraleA:[["set","longueur",10],["repeat",20,[["call","avancer de",{v:"longueur"}],["call","tourner à droite de",90],["set","longueur",["op",{v:"longueur"},"−",10]]]]],
+  spiraleB:[["set","longueur",200],["repeat",20,[["call","avancer de",{v:"longueur"}],["call","tourner à droite de",90],["set","longueur",["op",{v:"longueur"},"+",10]]]]],
+  spiraleC:[["set","longueur",200],["repeat",10,[["call","avancer de",{v:"longueur"}],["call","tourner à droite de",90],["set","longueur",["op",{v:"longueur"},"+",10]]]]],
+  spiraleD:[["set","longueur",200],["repeat",20,[["call","avancer de",{v:"longueur"}],["call","tourner à droite de",90],["set","longueur",["op",{v:"longueur"},"−",10]]]]]
+};
+
+/* Clé (réponses + corrections), encodée */
+const CLE_CODEE = "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";
+const SEL = "tortue-spirale-arrosage-C9";
+
+/* ════════════════════════════════════════════════════════════
+   OUTILS
+   ════════════════════════════════════════════════════════════ */
+const $ = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+const echap = t => String(t).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function frPts(n){ const s = (Math.round(n * 100) / 100).toString().replace(".", ","); return s; }
+
+/* Décode la clé : base64 → octets → XOR avec SEL → texte UTF-8 → objet */
+function decoderCle(){
+  const bin = atob(CLE_CODEE);
+  const octets = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) octets[i] = bin.charCodeAt(i) ^ SEL.charCodeAt(i % SEL.length);
+  return JSON.parse(new TextDecoder("utf-8").decode(octets));
+}
+const CLE = decoderCle();
+
+/* Empreinte FNV-1a (pour le code enseignant) */
+function empreinte(t){ let h = 0x811c9dc5; for (const c of String(t).trim().toUpperCase()){ h ^= c.charCodeAt(0); h = Math.imul(h, 0x01000193) >>> 0; } return h; }
+
+/* ════════════════════════════════════════════════════════════
+   RENDU DES BLOCS
+   ════════════════════════════════════════════════════════════ */
+function expr(e){
+  if (typeof e === "number") return '<span class="bk-n">' + e + '</span>';
+  if (Array.isArray(e)){
+    if (e[0] === "op") return '<span class="bk-op">' + expr(e[1]) + '<span class="bk-sym">' + echap(e[2]) + '</span>' + expr(e[3]) + '</span>';
+    if (e[0] === "cmp") return '<span class="bk-cmp">' + expr(e[1]) + '<span class="bk-sym">' + echap(e[2]) + '</span>' + expr(e[3]) + '</span>';
+    if (e[0] === "et" || e[0] === "ou") return '<span class="bk-' + e[0] + '">' + e.slice(1).map(expr).join('<span class="bk-mot">' + e[0] + '</span>') + '</span>';
+  }
+  if (e && e.v !== undefined) return '<span class="bk-v">' + echap(e.v) + '</span>';
+  if (e && e.t !== undefined) return '<span class="bk-t">“<b>' + echap(e.t) + '</b>”</span>';
+  return echap(e);
+}
+function bloc(s){
+  switch (s[0]){
+    case "set":   return '<div class="bk bk-set">affecter à <span class="bk-dd">' + echap(s[1]) + '</span> la valeur ' + expr(s[2]) + '</div>';
+    case "print": return '<div class="bk bk-aff">afficher ' + expr(s[1]) + '</div>';
+    case "call":  return '<div class="bk bk-tortue">' + echap(s[1]) + ' ' + expr(s[2]) + '</div>';
+    case "repeat":return '<div class="bk bk-boucle"><div class="bk-ligne">répéter ' + expr(s[1]) + ' fois</div><div class="bk-corps">' + s[2].map(bloc).join("") + '</div><div class="bk-ligne bas"></div></div>';
+    case "if":    return '<div class="bk bk-si"><div class="bk-ligne">si ' + expr(s[1]) + ' alors</div><div class="bk-corps">' + s[2].map(bloc).join("") + '</div>' +
+                         (s[3] && s[3].length ? '<div class="bk-ligne mid">sinon</div><div class="bk-corps">' + s[3].map(bloc).join("") + '</div>' : '') + '<div class="bk-ligne bas"></div></div>';
+  }
+  return "";
+}
+function rendreBlocs(){
+  $$("[data-programme]").forEach(el => { const p = PROGRAMMES[el.dataset.programme]; if (p) el.innerHTML = p.map(bloc).join(""); });
+}
+
+/* ════════════════════════════════════════════════════════════
+   ÉTAT ET SAUVEGARDE
+   ════════════════════════════════════════════════════════════ */
+function etatNeuf(){
+  return { version:1, identite:{nom:"",prenom:"",classe:"",date:""}, demarre:false, tempsMode:"normal",
+           restant:null, rep:{}, aides:{}, corr:{}, rendu:false, renduLe:null, tentative:null };
+}
+let E = etatNeuf();
+function lireStock(cle){ try { return localStorage.getItem(cle); } catch(e){ return null; } }
+function ecrireStock(cle, val){ try { localStorage.setItem(cle, val); return true; } catch(e){ return false; } }
+function effacerStock(cle){ try { localStorage.removeItem(cle); } catch(e){} }
+function charger(){
+  const brut = lireStock(STOCK);
+  if (!brut) return;
+  try { const d = JSON.parse(brut); if (d && d.version === 1) E = Object.assign(etatNeuf(), d); } catch(e){}
+}
+let minuterieSauvegarde = null, effacement = false;
+function sauver(){ if (effacement) return; clearTimeout(minuterieSauvegarde); minuterieSauvegarde = setTimeout(() => ecrireStock(STOCK, JSON.stringify(E)), 120); }
+
+/* ════════════════════════════════════════════════════════════
+   CHAMPS DE RÉPONSE
+   ════════════════════════════════════════════════════════════ */
+function partsDe(q){ return CLE[q].parts; }
+function tousLesChamps(){ const l = []; Object.keys(QUESTIONS).forEach(q => partsDe(q).forEach(p => l.push(p))); return l; }
+function lireChamp(f){
+  const r = $('input[type="radio"][name="' + f + '"]:checked'); if (r) return r.value;
+  const el = document.getElementById(f); if (el && el.type !== "radio") return (el.value || "").trim();
+  return "";
+}
+function ecrireChamp(f, v){
+  const radios = $$('input[type="radio"][name="' + f + '"]');
+  if (radios.length){ radios.forEach(r => r.checked = (r.value === v)); return; }
+  const el = document.getElementById(f); if (el) el.value = v || "";
+}
+function nombre(t){ const s = String(t).replace(",", ".").replace(/\s+/g, ""); return s === "" ? NaN : Number(s); }
+function partJuste(p, v){
+  if (v === "" || v === undefined || v === null) return false;
+  if (p.t === "number") return nombre(v) === Number(p.a);
+  return String(v) === String(p.a);
+}
+function questionRemplie(q){ return partsDe(q).every(p => (E.rep[p.f] || "") !== ""); }
+function questionEntamee(q){ return partsDe(q).some(p => (E.rep[p.f] || "") !== ""); }
+
+/* ════════════════════════════════════════════════════════════
+   CALCUL DES POINTS
+   ════════════════════════════════════════════════════════════ */
+function noterQuestion(q){
+  const parts = partsDe(q).map(p => ({ f:p.f, p:p.p, juste:partJuste(p, E.rep[p.f]), vide:(E.rep[p.f] || "") === "" }));
+  const brut = parts.reduce((s, x) => s + (x.juste ? x.p : 0), 0);
+  const max = QUESTIONS[q].pts;
+  const penalite = (E.aides[q] || 0) >= 2 ? max * COUT_COUP_DE_POUCE : 0;
+  return { parts, brut, max, penalite, obtenu:Math.max(0, brut - penalite) };
+}
+function noterExercice(ex){
+  let obtenu = 0, max = 0;
+  Object.keys(QUESTIONS).filter(q => QUESTIONS[q].ex === ex).forEach(q => { const n = noterQuestion(q); obtenu += n.obtenu; max += n.max; });
+  return { obtenu, max };
+}
+function noterTout(){
+  let total = 0; const parComp = {analyser:{o:0,m:0}, modifier:{o:0,m:0}, mettre:{o:0,m:0}};
+  let penalites = 0, nbPouces = 0, nbIndices = 0;
+  Object.keys(QUESTIONS).forEach(q => {
+    const n = noterQuestion(q); total += n.obtenu;
+    parComp[QUESTIONS[q].comp].o += n.obtenu; parComp[QUESTIONS[q].comp].m += n.max;
+    if ((E.aides[q] || 0) >= 1) nbIndices++;
+    if ((E.aides[q] || 0) >= 2){ nbPouces++; penalites += n.penalite; }
+  });
+  return { total, sur20: total / TOTAL_POINTS * 20, parComp, penalites, nbPouces, nbIndices };
+}
+
+/* ════════════════════════════════════════════════════════════
+   AFFICHAGE : VERROUS, AIDES, CORRECTIONS, PROGRESSION
+   ════════════════════════════════════════════════════════════ */
+function exoVerrouille(ex){ return E.rendu || !!E.corr[ex]; }
+function majVerrous(){
+  Object.keys(EXERCICES).forEach(ex => {
+    const sec = document.getElementById(ex);
+    const verrou = exoVerrouille(ex);
+    sec.classList.toggle("verrouille", verrou);
+    sec.classList.toggle("attente", !E.demarre && !verrou);
+    $$("input, select", sec).forEach(el => el.disabled = verrou || !E.demarre);
+    $$(".b-aide, .b-corr", sec).forEach(b => b.disabled = !E.demarre);
+  });
+  document.body.classList.toggle("demarre", E.demarre);
+  document.body.classList.toggle("rendu", E.rendu);
+  ["idNom","idPrenom","idClasse","idDate"].forEach(id => $("#" + id).disabled = E.rendu);
+  $("#btnRendre").disabled = !E.demarre || E.rendu;
+  $("#btnRendreHaut").disabled = !E.demarre || E.rendu;
+  $("#remise").style.display = E.rendu ? "none" : "";
+}
+
+function outilsAide(){
+  $$(".q").forEach(art => {
+    const q = art.dataset.q, max = QUESTIONS[q].pts, cout = max * COUT_COUP_DE_POUCE;
+    const outils = document.createElement("div"); outils.className = "q-outils";
+    outils.innerHTML =
+      '<button type="button" class="b-aide b-indice" data-niv="1" aria-pressed="false">💡 Indice</button>' +
+      '<button type="button" class="b-aide b-pouce" data-niv="2" aria-pressed="false">🧭 Coup de pouce' + (cout > 0 ? ' <small>−' + frPts(cout) + ' pt</small>' : '') + '</button>';
+    const zone = document.createElement("div"); zone.className = "q-aides"; zone.setAttribute("aria-live", "polite");
+    const corr = document.createElement("div"); corr.className = "q-corr";
+    art.appendChild(outils); art.appendChild(zone); art.appendChild(corr);
+  });
+}
+function afficherAides(q){
+  const art = $('.q[data-q="' + q + '"]'), niv = E.aides[q] || 0, zone = $(".q-aides", art);
+  let h = "";
+  if (niv >= 1) h += '<div class="aide-texte n1"><b>💡 Indice :</b> ' + AIDES[q][0] + '</div>';
+  if (niv >= 2) h += '<div class="aide-texte n2"><b>🧭 Coup de pouce :</b> ' + AIDES[q][1] + '</div>';
+  zone.innerHTML = h;
+  $(".b-indice", art).setAttribute("aria-pressed", niv >= 1 ? "true" : "false");
+  const bp = $(".b-pouce", art); bp.setAttribute("aria-pressed", niv >= 2 ? "true" : "false"); bp.classList.toggle("paye", niv >= 2);
+}
+async function demanderAide(q, niv){
+  if (!E.demarre || exoVerrouille(QUESTIONS[q].ex)) return;
+  const deja = E.aides[q] || 0;
+  if (niv <= deja){ return; }
+  if (niv === 2 && COUT_COUP_DE_POUCE > 0){
+    const cout = QUESTIONS[q].pts * COUT_COUP_DE_POUCE;
+    const ok = await confirmer("🧭 Coup de pouce — question " + QUESTIONS[q].num,
+      "Le coup de pouce est un rappel de cours. Il retire <b>" + frPts(cout) + " point" + (cout > 1 ? "s" : "") + "</b> sur les " + QUESTIONS[q].pts + " de cette question, même si ta réponse est juste.",
+      "Afficher le coup de pouce");
+    if (!ok) return;
+    if ((E.aides[q] || 0) < 1) E.aides[q] = 1;
+  }
+  E.aides[q] = Math.max(deja, niv);
+  afficherAides(q); majCompteurs(); sauver();
+}
+
+function afficherCorrection(q){
+  const art = $('.q[data-q="' + q + '"]'), n = noterQuestion(q), zone = $(".q-corr", art);
+  // marquer les champs
+  n.parts.forEach(x => {
+    const radios = $$('input[type="radio"][name="' + x.f + '"]');
+    if (radios.length){
+      const seg = radios[0].closest(".seg");
+      if (seg){ seg.classList.toggle("bonne", x.juste); seg.classList.toggle("mauvaise", !x.juste && !x.vide); }
+      else radios.forEach(r => { const o = r.closest(".opt"); o.classList.remove("bonne","mauvaise");
+        const p = partsDe(q).find(pp => pp.f === x.f);
+        if (r.value === p.a) o.classList.add("bonne"); else if (r.checked) o.classList.add("mauvaise"); });
+    } else { const el = document.getElementById(x.f); el.classList.toggle("bonne", x.juste); el.classList.toggle("mauvaise", !x.juste && !x.vide); }
+  });
+  const toutVide = n.parts.every(x => x.vide);
+  const vuAvant = E.corr[QUESTIONS[q].ex] && (E.corr[QUESTIONS[q].ex].vides || []).includes(q);
+  let cls = "v-ko", txt = "✘ Réponse fausse";
+  if (toutVide){ cls = "v-nr"; txt = "○ Pas de réponse"; }
+  else if (n.brut === n.max){ cls = "v-ok"; txt = "✔ Réponse juste"; }
+  else if (n.brut > 0){ cls = "v-part"; txt = "≈ Réponse en partie juste"; }
+  let note = "";
+  if (n.penalite > 0) note += "coup de pouce : −" + frPts(n.penalite) + " pt. ";
+  if (vuAvant && toutVide) note += "correction ouverte avant d'avoir répondu : 0 point.";
+  zone.innerHTML = '<div class="verdict ' + cls + '"><span>' + txt + '</span><span class="v-pts">' + frPts(n.obtenu) + ' / ' + n.max + ' pt' + (n.max > 1 ? 's' : '') + '</span>' +
+                   (note ? '<span class="v-note">' + note + '</span>' : '') + '</div>' + CLE[q].corr;
+  zone.classList.add("visible");
+}
+function afficherCorrectionsEx(ex){
+  Object.keys(QUESTIONS).filter(q => QUESTIONS[q].ex === ex).forEach(afficherCorrection);
+  const s = noterExercice(ex);
+  $('[data-note-ex="' + ex + '"]').textContent = "Exercice " + ex.slice(2) + " : " + frPts(s.obtenu) + " / " + s.max;
+}
+
+async function ouvrirCorrectionEx(ex){
+  if (!E.demarre || exoVerrouille(ex)) return;
+  const qs = Object.keys(QUESTIONS).filter(q => QUESTIONS[q].ex === ex);
+  const sansReponse = qs.filter(q => !questionEntamee(q));
+  const partielles = qs.filter(q => questionEntamee(q) && !questionRemplie(q));
+  let corps = "Tes réponses à l'exercice " + ex.slice(2) + " vont être <b>verrouillées</b> : tu ne pourras plus les changer.";
+  if (sansReponse.length === qs.length) corps = '<span class="alerte">Tu n\'as encore répondu à aucune question de cet exercice.</span> Si tu ouvres la correction maintenant, l\'exercice ' + ex.slice(2) + " vaudra <b>0 point</b>.";
+  else {
+    if (sansReponse.length) corps += '<br><br><span class="alerte">Sans réponse : question' + (sansReponse.length > 1 ? "s " : " ") + sansReponse.map(q => QUESTIONS[q].num).join(", ") + ".</span> Elle" + (sansReponse.length > 1 ? "s vaudront" : " vaudra") + " <b>0 point</b>.";
+    if (partielles.length) corps += '<br><span class="alerte">Incomplète' + (partielles.length > 1 ? "s" : "") + " : " + partielles.map(q => QUESTIONS[q].num).join(", ") + ".</span> Les cases vides ne rapportent rien.";
+  }
+  const ok = await confirmer("✅ Correction de l'exercice " + ex.slice(2), corps, "Verrouiller et voir la correction");
+  if (!ok) return;
+  E.corr[ex] = { le:new Date().toISOString(), vides:sansReponse, partielles };
+  sauver(); majVerrous(); afficherCorrectionsEx(ex); majCompteurs();
+  const premier = $('#' + ex + ' .q-corr'); if (premier) premier.scrollIntoView({behavior:"smooth", block:"center"});
+}
+
+function majCompteurs(){
+  const qs = Object.keys(QUESTIONS);
+  const remplies = qs.filter(questionRemplie).length;
+  $("#progTexte").textContent = "Réponses : " + remplies + " / " + qs.length;
+  $("#progJauge").style.width = (remplies / qs.length * 100) + "%";
+}
+
+/* ════════════════════════════════════════════════════════════
+   CHRONO (indicatif, jamais bloquant)
+   ════════════════════════════════════════════════════════════ */
+let tic = null;
+function afficherChrono(){
+  const el = $("#chrono");
+  if (!E.demarre || E.tempsMode === "libre" || E.rendu){ el.hidden = true; return; }
+  el.hidden = false;
+  const r = Math.max(0, E.restant || 0), tot = DUREES[E.tempsMode] || DUREES.normal;
+  el.classList.toggle("moyen", r <= tot * 0.3 && r > tot * 0.1);
+  el.classList.toggle("tard", r <= tot * 0.1);
+  el.textContent = r > 0 ? "⏱ " + String(Math.floor(r / 60)).padStart(2, "0") + ":" + String(r % 60).padStart(2, "0") : "⏱ Temps conseillé écoulé";
+}
+function lancerChrono(){
+  clearInterval(tic);
+  if (!E.demarre || E.rendu || E.tempsMode === "libre") { afficherChrono(); return; }
+  tic = setInterval(() => { if (E.restant > 0){ E.restant--; if (E.restant % 10 === 0) sauver(); } afficherChrono(); }, 1000);
+  afficherChrono();
+}
+
+/* ════════════════════════════════════════════════════════════
+   DÉMARRAGE, REMISE, RÉSULTAT
+   ════════════════════════════════════════════════════════════ */
+function dateDuJour(){ const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+function lireIdentite(){
+  E.identite = { nom:$("#idNom").value.trim(), prenom:$("#idPrenom").value.trim(), classe:$("#idClasse").value.trim(), date:$("#idDate").value };
+}
+function commencer(){
+  lireIdentite();
+  const manque = [];
+  if (!E.identite.nom) manque.push("ton nom"); if (!E.identite.prenom) manque.push("ton prénom"); if (!E.identite.classe) manque.push("ta classe");
+  if (manque.length){ $("#msgDemarrage").textContent = "Écris " + manque.join(", ").replace(/, ([^,]*)$/, " et $1") + " pour commencer."; return; }
+  $("#msgDemarrage").textContent = "";
+  E.tempsMode = ($('input[name="tempsChoix"]:checked') || {}).value || "normal";
+  E.restant = DUREES[E.tempsMode] || DUREES.normal;
+  E.demarre = true;
+  if (!E.tentative){
+    const n = (parseInt(lireStock(STOCK_TENTATIVES) || "0", 10) || 0) + 1;
+    ecrireStock(STOCK_TENTATIVES, String(n)); E.tentative = n;
+  }
+  sauver(); majVerrous(); lancerChrono();
+  document.getElementById("ex1").scrollIntoView({behavior:"smooth"});
+}
+
+async function rendreCopie(){
+  if (!E.demarre || E.rendu) return;
+  const qs = Object.keys(QUESTIONS), restantes = qs.filter(q => !questionRemplie(q) && !exoVerrouille(QUESTIONS[q].ex));
+  let corps = "Après la remise, tu ne pourras plus modifier tes réponses. Ta note et <b>toutes les corrections</b> vont s'afficher.";
+  if (restantes.length) corps += '<br><br><span class="alerte">Il reste ' + restantes.length + " question" + (restantes.length > 1 ? "s" : "") + " sans réponse complète : " + restantes.map(q => QUESTIONS[q].num).join(", ") + ".</span>";
+  const ok = await confirmer("Rendre ma copie ?", corps, "Rendre ma copie");
+  if (!ok) return;
+  lireIdentite();
+  E.rendu = true; E.renduLe = new Date().toISOString();
+  sauver(); clearInterval(tic); majVerrous(); afficherChrono();
+  Object.keys(EXERCICES).forEach(afficherCorrectionsEx);
+  afficherResultat(true);
+}
+
+function maitrise(taux){
+  if (taux >= 0.8) return ["Très bonne maîtrise","m4"];
+  if (taux >= 0.6) return ["Maîtrise satisfaisante","m3"];
+  if (taux >= 0.4) return ["Maîtrise fragile","m2"];
+  return ["Maîtrise insuffisante","m1"];
+}
+function afficherResultat(animer){
+  const r = noterTout(), note = Math.round(r.sur20 * 10) / 10;
+  $("#resNote").innerHTML = frPts(note) + "<small> / 20</small>";
+  $("#resultatHeros").textContent = frPts(note) + " / 20";
+  $("#resultatHeros").classList.add("rempli");
+  $("#consoleNote").textContent = frPts(r.total) + " / " + TOTAL_POINTS + " points";
+  const app = note >= 16 ? "Très bon travail : tu maîtrises ces programmes." : note >= 12 ? "Travail satisfaisant : les bases sont solides." : note >= 8 ? "Bases présentes, à consolider avec les corrections." : "À reprendre : relis les corrections, puis refais les exercices d'entraînement.";
+  $("#resAppreciation").textContent = app;
+  const nom = [E.identite.prenom, E.identite.nom].filter(Boolean).join(" ");
+  $("#resSous").textContent = (nom ? nom + " · " : "") + (E.identite.classe ? E.identite.classe + " · " : "") + frPts(r.total) + " / " + TOTAL_POINTS + " points" + (E.tentative ? " · tentative n°" + E.tentative + " sur ce poste" : "");
+  $("#resBarres").innerHTML = Object.keys(EXERCICES).map(ex => {
+    const s = noterExercice(ex);
+    return '<div class="barre-ex"><span>' + EXERCICES[ex].emoji + " Ex. " + ex.slice(2) + " · " + EXERCICES[ex].titre + '</span><div class="be-jauge"><i data-l="' + (s.obtenu / s.max * 100) + '" style="width:' + (animer ? 0 : s.obtenu / s.max * 100) + '%;background:' + EXERCICES[ex].couleur + '"></i></div><span class="be-val">' + frPts(s.obtenu) + " / " + s.max + "</span></div>";
+  }).join("");
+  if (animer) requestAnimationFrame(() => setTimeout(() => $$("#resBarres i").forEach(i => i.style.width = i.dataset.l + "%"), 60));
+  $("#resComp").innerHTML = Object.keys(COMPETENCES).map(c => {
+    const x = r.parComp[c], m = maitrise(x.o / x.m);
+    return "<tr><td>" + COMPETENCES[c].nom + ' <small style="color:var(--discret)">(' + COMPETENCES[c].code + ")</small></td><td>" + frPts(x.o) + " / " + x.m + '</td><td class="' + m[1] + '">' + m[0] + "</td></tr>";
+  }).join("");
+  const exVus = Object.keys(E.corr);
+  let aides = "<b>Aides utilisées</b><ul>";
+  aides += "<li>💡 Indices : " + r.nbIndices + " (gratuits)</li>";
+  aides += "<li>🧭 Coups de pouce : " + r.nbPouces + (r.penalites > 0 ? " (−" + frPts(r.penalites) + " pt)" : "") + "</li>";
+  aides += "<li>✅ Corrections ouvertes avant la remise : " + (exVus.length ? exVus.map(ex => "ex. " + ex.slice(2) + ((E.corr[ex].vides || []).length ? " (" + E.corr[ex].vides.length + " question" + (E.corr[ex].vides.length > 1 ? "s" : "") + " sans réponse → 0)" : "")).join(" ; ") : "aucune") + "</li></ul>";
+  $("#resAides").innerHTML = aides;
+  if (animer){ const res = $("#resultat"); res.scrollIntoView({behavior:"smooth"}); setTimeout(() => res.focus({preventScroll:true}), 500); }
+}
+
+/* Bilan en texte simple (se colle proprement dans Pronote) */
+function texteBilan(){
+  const r = noterTout(), note = Math.round(r.sur20 * 10) / 10;
+  const l = [];
+  l.push("🧪 Évaluation Vittascience en blocs — conditions, boucles, variables");
+  l.push("👤 " + [E.identite.prenom, (E.identite.nom || "").toUpperCase()].filter(Boolean).join(" ") + (E.identite.classe ? " · " + E.identite.classe : "") + (E.identite.date ? " · " + E.identite.date.split("-").reverse().join("/") : ""));
+  l.push("🎯 Note : " + frPts(note) + " / 20 (" + frPts(r.total) + " / " + TOTAL_POINTS + " points)");
+  Object.keys(EXERCICES).forEach(ex => { const s = noterExercice(ex); l.push(EXERCICES[ex].emoji + " Ex. " + ex.slice(2) + " " + EXERCICES[ex].titre + " : " + frPts(s.obtenu) + " / " + s.max); });
+  l.push("📊 " + Object.keys(COMPETENCES).map(c => COMPETENCES[c].code + " " + frPts(r.parComp[c].o) + "/" + r.parComp[c].m + " (" + maitrise(r.parComp[c].o / r.parComp[c].m)[0] + ")").join(" · "));
+  l.push("💡 Indices : " + r.nbIndices + " · 🧭 Coups de pouce : " + r.nbPouces + (r.penalites ? " (−" + frPts(r.penalites) + " pt)" : "") + " · ✅ Corrections ouvertes avant la remise : " + (Object.keys(E.corr).length ? Object.keys(E.corr).map(ex => "ex. " + ex.slice(2)).join(", ") : "aucune"));
+  if (E.tentative) l.push("🔁 Tentative n°" + E.tentative + " sur ce poste");
+  return l.join("\n");
+}
+function copierTexte(t){
+  if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(t).then(() => true, () => secours(t));
+  return Promise.resolve(secours(t));
+  function secours(x){ const z = document.createElement("textarea"); z.value = x; z.style.position = "fixed"; z.style.opacity = "0"; document.body.appendChild(z); z.select(); let ok = false; try { ok = document.execCommand("copy"); } catch(e){} z.remove(); return ok; }
+}
+function toast(t){ const el = $("#toast"); el.textContent = t; el.classList.add("vu"); clearTimeout(toast.m); toast.m = setTimeout(() => el.classList.remove("vu"), 2200); }
+function exporter(){
+  const r = noterTout();
+  const data = { titre:document.title, exporteLe:new Date().toISOString(), identite:E.identite, tentative:E.tentative, rendu:E.rendu, renduLe:E.renduLe,
+    note20:Math.round(r.sur20 * 10) / 10, points:r.total, sur:TOTAL_POINTS, reponses:E.rep, aides:E.aides, correctionsOuvertes:E.corr,
+    detail:Object.keys(QUESTIONS).map(q => { const n = noterQuestion(q); return { question:QUESTIONS[q].num, obtenu:n.obtenu, max:n.max, penalite:n.penalite }; }) };
+  const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], {type:"application/json"}));
+  const a = document.createElement("a"); a.href = url;
+  a.download = "evaluation_vittascience_" + ((E.identite.nom || "eleve") + "_" + (E.identite.prenom || "")).replace(/[^a-zA-Z0-9_-]/g, "_") + ".json";
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/* ════════════════════════════════════════════════════════════
+   FENÊTRE DE CONFIRMATION
+   ════════════════════════════════════════════════════════════ */
+function confirmer(titre, html, libelleOui, avecChamp){
+  const dlg = $("#dlg");
+  $("#dlgTitre").textContent = titre; $("#dlgCorps").innerHTML = html; $("#dlgOui").textContent = libelleOui || "Confirmer";
+  $("#dlgChamp").hidden = !avecChamp; $("#dlgSaisie").value = "";
+  return new Promise(res => {
+    if (typeof dlg.showModal !== "function"){ res(avecChamp ? (prompt(titre) || false) : window.confirm(titre)); return; }
+    dlg.returnValue = "";
+    const fin = () => { dlg.removeEventListener("close", fin); res(dlg.returnValue === "oui" ? (avecChamp ? $("#dlgSaisie").value : true) : false); };
+    dlg.addEventListener("close", fin);
+    dlg.showModal();
+    (avecChamp ? $("#dlgSaisie") : $("#dlgNon")).focus();
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   ESPACE ENSEIGNANT
+   ════════════════════════════════════════════════════════════ */
+async function espaceProf(){
+  const code = await confirmer("Espace enseignant", "Saisis le code enseignant (le même que celui de la séance d'entraînement).", "Ouvrir", true);
+  if (!code) return;
+  if (empreinte(code) !== EMPREINTE_CODE_PROF){ toast("Code incorrect."); return; }
+  $("#profCle").innerHTML = Object.keys(QUESTIONS).map(q => {
+    const rep = partsDe(q).map(p => {
+      const radio = $('input[type="radio"][name="' + p.f + '"][value="' + p.a + '"]');
+      if (radio && radio.closest(".opt")) return p.a + " — " + (radio.closest(".opt").querySelector(".opt-texte").textContent.trim() || "(programme en blocs)");
+      if (radio) return radio.closest("tr").querySelector("th").textContent + " → " + p.a;
+      return p.a;
+    }).join(" · ");
+    return "<tr><td>" + QUESTIONS[q].num + "</td><td>" + echap(rep) + "</td><td>" + QUESTIONS[q].pts + "</td></tr>";
+  }).join("");
+  document.body.classList.add("prof");
+  $("#panneauProf").scrollIntoView({behavior:"smooth"});
+}
+async function nouvelleCopie(depuisProf){
+  const ok = await confirmer(depuisProf ? "Effacer la copie de ce poste ?" : "Nouvelle copie ?",
+    depuisProf ? "Toutes les réponses enregistrées sur cet ordinateur seront effacées." : "Ta copie est rendue. Une nouvelle copie vierge va s'ouvrir pour l'élève suivant (pense à copier ou exporter ton bilan avant).",
+    "Effacer et recommencer");
+  if (!ok) return;
+  effacement = true; clearTimeout(minuterieSauvegarde); clearInterval(tic);
+  effacerStock(STOCK); location.reload();
+}
+
+/* ════════════════════════════════════════════════════════════
+   BRANCHEMENTS
+   ════════════════════════════════════════════════════════════ */
+function restaurer(){
+  $("#idNom").value = E.identite.nom || ""; $("#idPrenom").value = E.identite.prenom || ""; $("#idClasse").value = E.identite.classe || "";
+  $("#idDate").value = E.identite.date || dateDuJour();
+  const t = $('input[name="tempsChoix"][value="' + (E.tempsMode || "normal") + '"]'); if (t) t.checked = true;
+  tousLesChamps().forEach(p => ecrireChamp(p.f, E.rep[p.f] || ""));
+  Object.keys(QUESTIONS).forEach(afficherAides);
+  majVerrous(); majCompteurs();
+  if (E.rendu){ Object.keys(EXERCICES).forEach(afficherCorrectionsEx); afficherResultat(false); }
+  else Object.keys(E.corr).forEach(afficherCorrectionsEx);
+  lancerChrono();
+}
+document.addEventListener("DOMContentLoaded", () => {
+  rendreBlocs(); outilsAide(); charger(); restaurer();
+  const copie = $("#copie");
+  const surSaisie = ev => {
+    const el = ev.target; const f = el.type === "radio" ? el.name : el.id;
+    if (!f || !E.demarre || E.rendu) return;
+    E.rep[f] = lireChamp(f); sauver(); majCompteurs();
+  };
+  copie.addEventListener("input", surSaisie); copie.addEventListener("change", surSaisie);
+  copie.addEventListener("click", ev => {
+    const b = ev.target.closest(".b-aide"); if (b){ demanderAide(b.closest(".q").dataset.q, Number(b.dataset.niv)); return; }
+    const c = ev.target.closest(".b-corr"); if (c){ ouvrirCorrectionEx(c.dataset.ex); }
+  });
+  ["idNom","idPrenom","idClasse","idDate"].forEach(id => $("#" + id).addEventListener("input", () => { lireIdentite(); sauver(); }));
+  $("#btnCommencer").addEventListener("click", commencer);
+  $("#btnRendre").addEventListener("click", rendreCopie); $("#btnRendreHaut").addEventListener("click", rendreCopie);
+  $("#btnCopierBilan").addEventListener("click", () => copierTexte(texteBilan()).then(ok => toast(ok ? "✓ Bilan copié : colle-le dans Pronote" : "Copie impossible sur ce poste")));
+  $("#btnImprimer").addEventListener("click", () => window.print());
+  $("#btnExporter").addEventListener("click", exporter);
+  $("#btnNouvelle").addEventListener("click", () => nouvelleCopie(false));
+  $("#btnProf").addEventListener("click", espaceProf);
+  $("#btnProfReset").addEventListener("click", () => nouvelleCopie(true));
+  $("#btnProfFermer").addEventListener("click", () => document.body.classList.remove("prof"));
+  $$(".vitta details").forEach(d => d.addEventListener("toggle", () => { const f = $("iframe", d); if (d.open && f && !f.getAttribute("src")) f.setAttribute("src", f.dataset.src); }));
+  window.addEventListener("beforeunload", () => { if (!effacement) ecrireStock(STOCK, JSON.stringify(E)); });
+});
+</script>
+</body>
+</html>
