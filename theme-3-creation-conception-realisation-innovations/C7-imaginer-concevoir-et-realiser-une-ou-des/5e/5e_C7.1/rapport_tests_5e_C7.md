@@ -40,9 +40,9 @@ rejouable : `node tests_5e_C7.mjs .`).
 
 | Test | Résultat |
 |---|---|
-| 24 questions, 4 propositions chacune, une explication sur chacune | ✅ |
-| Bonnes réponses réparties **6/6/6/6** sur les quatre positions | ✅ |
-| État déclaré : génération ancienne, sans réfutation par distracteur | ✅ |
+| 30 questions, 4 propositions `o` chacune (bonne réponse `r` de 0 à 3), une explication `expl` sur chacune | ✅ |
+| Bonnes réponses réparties **8/7/7/8** sur les quatre positions | ✅ |
+| État déclaré : chaque mauvaise réponse a sa réfutation (`d` : 4 entrées, vide sur la bonne) — 30 sur 30 | ✅ |
 
 ## 2. Contrôles statiques
 
@@ -73,9 +73,9 @@ que le contrôle n°42 puisse les lire, et en la remontant avant l'en-tête péd
 
 ## 4. Ce qui reste à faire (déclaré, pas caché)
 
-- **Le QCM est de la génération ancienne** : 24 questions, format `{q, opts, ok, exp}`,
-  **aucune réfutation par distracteur**. Le standard actuel du dépôt (lots C9) explique
-  pourquoi chaque mauvaise réponse est fausse. La mise à niveau n'est pas faite ici.
+- **Le QCM est au standard actuel** : 30 questions, format `{q, o, r, expl, d}`, une
+  réfutation par mauvaise réponse. Le banc le lit dans ce format, sans repli sur l'ancien
+  (`opts`, `ok`, `exp`) : la mise à niveau n'est plus à faire (5 octobre 2026).
 - **Le verrou expérientiel de l'activité 0 n'existe pas dans ce lot** : la suite le dit
   explicitement (« contrôle NON applicable, donc NON exécuté ») plutôt que de compter
   un succès qu'elle n'a pas obtenu.

@@ -355,10 +355,10 @@ await ctx.close();
   const ctxq = await nav.newContext({ viewport: { width: 1280, height: 900 } });
   const { page: pq, erreurs: eq } = await ouvrir(ctxq, CFG.qcm);
   ok("QCM : chargement sans erreur JS", eq.length === 0, eq.slice(0, 2).join(" | "));
-  /* Ces deux QCM sont de la GÉNÉRATION ANCIENNE du dépôt : format
-     {q, opts, ok, exp}, sans réfutation par distracteur, et 28 questions au lieu
-     de 30. On mesure ce qu'ils sont — on ne prétend pas qu'ils sont au standard.
-     La mise à niveau est déclarée « restant à faire » dans le rapport. */
+  /* Format actuel du dépôt : {q, o, r, expl, d, …} — 30 questions, 4 propositions `o`,
+     bonne réponse `r` (0 à 3), explication `expl`, et `d` : une réfutation par
+     proposition, VIDE à l'index de la bonne réponse. On lit ces champs-là et eux seuls,
+     sans repli sur les anciens noms (opts, ok, exp) : un champ renommé doit faire échouer. */
   const meta = await pq.evaluate(src => {
     const m = src.match(/const (?:QUESTIONS|questions)\s*=\s*(\[[\s\S]*?\n\];)/);
     if (!m) return null;
@@ -366,11 +366,15 @@ await ctx.close();
     try { q = eval(m[1].replace(/;\s*$/, "")); } catch { return null; }
     if (!Array.isArray(q)) return null;
     const rep = {};
-    q.forEach(x => { const i = (x.ok !== undefined ? x.ok : x.r); rep[i] = (rep[i] || 0) + 1; });
-    const sansExp = q.filter(x => !(x.exp && String(x.exp).trim())).length;
-    const sansQuatre = q.filter(x => !(x.opts && x.opts.length === 4)).length;
-    const refutations = q.filter(x => Array.isArray(x.d)).length;
-    return { n: q.length, rep, sansExp, sansQuatre, refutations };
+    q.forEach(x => { rep[x.r] = (rep[x.r] || 0) + 1; });
+    const plein = t => typeof t === "string" && t.trim() !== "";
+    const sansExp = q.filter(x => !plein(x.expl)).length;
+    const sansQuatre = q.filter(x => !(Array.isArray(x.o) && x.o.length === 4 && x.o.every(plein)
+      && Number.isInteger(x.r) && x.r >= 0 && x.r <= 3)).length;
+    /* réfutation attendue : 4 entrées, vide à l'index r, non vide sur les 3 autres */
+    const sansRefutation = q.filter(x => !(Array.isArray(x.d) && x.d.length === 4
+      && x.d.every((t, i) => i === x.r ? (typeof t === "string" && t.trim() === "") : plein(t)))).length;
+    return { n: q.length, rep, sansExp, sansQuatre, sansRefutation };
   }, fs.readFileSync(path.join(LOT, CFG.qcm), "utf8"));
   if (meta) {
     ok("QCM : le tableau des questions est lisible et chargé", meta.n > 0, meta.n + " questions");
@@ -378,8 +382,8 @@ await ctx.close();
     ok("QCM : chaque question porte une explication", meta.sansExp === 0, meta.sansExp + " sans explication");
     ok("QCM : les 4 positions servent de bonne réponse",
        Object.keys(meta.rep).length === 4, JSON.stringify(meta.rep));
-    ok("QCM : état déclaré — génération ancienne, sans réfutation par distracteur",
-       meta.refutations === 0, meta.refutations + " question(s) avec réfutations (0 attendu ici)");
+    ok("QCM : état déclaré — chaque mauvaise réponse a sa réfutation (vide sur la bonne)",
+       meta.sansRefutation === 0, meta.sansRefutation + " question(s) sans réfutation complète (0 attendu)");
   } else {
     ok("QCM : le tableau des questions est lisible depuis la source", false,
        "const questions = [...] introuvable ou non évaluable — contrôle NON exécuté");

@@ -13,7 +13,8 @@ from playwright.sync_api import sync_playwright
 
 D = pathlib.Path(__file__).resolve().parent
 PAGES = [D / ("atelier_%s_C7.1_planification_taches.html" % n) for n in ("5e","4e","3e")]
-PAGE = PAGES[0]
+# Onglets attendus, page par page : un onglet disparu (ou en trop) doit faire échouer le banc.
+ONGLETS = {"5e": ["p5", "gp", "pm"], "4e": ["p4", "gp", "pm"], "3e": ["p3", "gp", "pm"]}
 COR = json.loads((D / "_corrige_calcule.json").read_text(encoding="utf-8"))
 P4, P3 = COR["jardin-connecte-brooklyn"], COR["capteur-confort-ny"]
 JALON4 = sorted(P4["libelle"])[-1]
@@ -26,6 +27,14 @@ def ok(msg):
 
 
 def main():
+    for niveau, page in zip(("5e", "4e", "3e"), PAGES):
+        print("── page %s" % niveau)
+        verifier(niveau, page)
+    print("\n%d contrôles exécutés, %d réussis." % (len(faits), len(faits)))
+    return 0
+
+
+def verifier(niveau, PAGE):
     src = PAGE.read_text(encoding="utf-8")
 
     # ── statique
@@ -56,7 +65,9 @@ def main():
     assert "230" not in src and "secteur" not in src.lower()
     ok("aucune mention du secteur : l'activité est en papier et en logiciel")
 
-    assert "http://" not in src and "https://" not in src.replace("http://www.w3.org", "")
+    # le seul « http:// » toléré est l'espace de noms des SVG construits en JavaScript (pas un appel réseau)
+    reseau = src.replace("http://www.w3.org/2000/svg", "")
+    assert "http://" not in reseau and "https://" not in reseau
     ok("aucun appel réseau : la page fonctionne hors ligne (règle n°40)")
 
     # ── dynamique
@@ -71,11 +82,13 @@ def main():
         assert not erreurs, "erreurs JS : %s" % erreurs
         ok("aucune erreur JavaScript au chargement")
 
-        # onglets
-        for t, p in [("tab-p5", "p5"), ("tab-p4", "p4"), ("tab-p3", "p3"), ("tab-gp", "gp"), ("tab-pm", "pm")]:
-            pg.click("#" + t)
-            assert pg.eval_on_selector("#" + p, "e=>e.classList.contains('active')")
-        ok("les cinq onglets s'ouvrent et affichent leur panneau")
+        # onglets : exactement ceux attendus pour ce niveau, chacun ouvre son panneau
+        presents = pg.eval_on_selector_all("[id^='tab-']", "l=>l.map(e=>e.id.slice(4))")
+        assert sorted(presents) == sorted(ONGLETS[niveau]),             "onglets de la page %s : %s au lieu de %s" % (niveau, sorted(presents), sorted(ONGLETS[niveau]))
+        for p in ONGLETS[niveau]:
+            pg.click("#tab-" + p)
+            assert pg.eval_on_selector("#" + p, "e=>e.classList.contains('active')"), "panneau %s fermé" % p
+        ok("%s : les onglets %s sont les seuls présents et s'ouvrent" % (niveau, ", ".join(ONGLETS[niveau])))
 
         # verrou expérientiel : la bonne réponse écrite ne suffit pas sans les bandes
         pg.click("#tab-pm")
@@ -94,37 +107,39 @@ def main():
         assert pg.evaluate("window.__valid['1']"), "toujours pas validé alors que tout est fait"
         ok("une fois les bandes déclarées faites, l'activité 1 se valide")
 
-        # les dates au plus tôt : les réponses justes viennent du corrigé calculé
-        pg.click("#tab-p4")
-        pg.select_option("#p4_1", label="une seule : A")
-        pg.select_option("#p4_2", label="C et E")
-        pg.select_option("#p4_3", label="qu'elle peut être écrite très tôt, pendant que d'autres câblent ou fabriquent")
-        for i in sorted(P4["libelle"]):
-            if i in ("A", JALON4):
-                continue
-            pg.select_option("#p4d_" + i, label=str(P4["debut_au_plus_tot"][i] + 1))
-        pg.select_option("#p4_fin", label=str(P4["duree_totale"]))
-        pg.fill("#p4_para",
-                "C et E peuvent avancer en même temps parce qu'elles n'attendent que B "
-                "et qu'aucune contrainte ne les relie entre elles.\n"
-                "Dans mon groupe, deux élèves câblent le capteur pendant que les deux autres "
-                "fabriquent le support étanche.")
-        pg.click('[data-check="3"]')
-        assert pg.evaluate("window.__valid['3']"), pg.inner_text("#fb3")
-        ok("les dates au plus tôt du corrigé calculé sont bien celles que la page accepte")
+        if niveau == "4e":
+            # les dates au plus tôt : les réponses justes viennent du corrigé calculé
+            pg.click("#tab-p4")
+            pg.select_option("#p4_1", label="une seule : A")
+            pg.select_option("#p4_2", label="C et E")
+            pg.select_option("#p4_3", label="qu'elle peut être écrite très tôt, pendant que d'autres câblent ou fabriquent")
+            for i in sorted(P4["libelle"]):
+                if i in ("A", JALON4):
+                    continue
+                pg.select_option("#p4d_" + i, label=str(P4["debut_au_plus_tot"][i] + 1))
+            pg.select_option("#p4_fin", label=str(P4["duree_totale"]))
+            pg.fill("#p4_para",
+                    "C et E peuvent avancer en même temps parce qu'elles n'attendent que B "
+                    "et qu'aucune contrainte ne les relie entre elles.\n"
+                    "Dans mon groupe, deux élèves câblent le capteur pendant que les deux autres "
+                    "fabriquent le support étanche.")
+            pg.click('[data-check="3"]')
+            assert pg.evaluate("window.__valid['3']"), pg.inner_text("#fb3")
+            ok("les dates au plus tôt du corrigé calculé sont bien celles que la page accepte")
 
-        # une seule date fausse doit faire échouer
-        faux = str(P4["debut_au_plus_tot"]["E"] + 3)
-        pg.select_option("#p4d_E", label=faux)
-        pg.click('[data-check="3"]')
-        assert not pg.evaluate("window.__valid['3']"), "une date fausse passe quand même"
-        ok("une date fausse est refusée — le vérificateur vérifie vraiment")
+            # une seule date fausse doit faire échouer
+            faux = str(P4["debut_au_plus_tot"]["E"] + 3)
+            pg.select_option("#p4d_E", label=faux)
+            pg.click('[data-check="3"]')
+            assert not pg.evaluate("window.__valid['3']"), "une date fausse passe quand même"
+            ok("une date fausse est refusée — le vérificateur vérifie vraiment")
 
-        # 3e : le chemin le plus long proposé est celui que calcule le script
-        pg.click("#tab-p3")
-        pg.select_option("#p3_3", label=" → ".join(P3["chemin"]))
-        assert pg.input_value("#p3_3") == " → ".join(P3["chemin"])
-        ok("le chemin le plus long offert en réponse est exactement celui du calcul")
+        if niveau == "3e":
+            # 3e : le chemin le plus long proposé est celui que calcule le script
+            pg.click("#tab-p3")
+            pg.select_option("#p3_3", label=" → ".join(P3["chemin"]))
+            assert pg.input_value("#p3_3") == " → ".join(P3["chemin"])
+            ok("le chemin le plus long offert en réponse est exactement celui du calcul")
 
         # sauvegarde / restauration
         avant = pg.input_value("#a1_taches")
@@ -146,12 +161,9 @@ def main():
         caches = pg.eval_on_selector_all(
             ".seance-panel", "l=>l.filter(e=>getComputedStyle(e).display==='none').length")
         assert caches == 0, "%d panneaux resteraient invisibles à l'impression" % caches
-        ok("à l'impression, les cinq panneaux sont visibles")
+        ok("à l'impression, aucun panneau n'est caché")
 
         nav.close()
-
-    print("\n%d contrôles exécutés, %d réussis." % (len(faits), len(faits)))
-    return 0
 
 
 if __name__ == "__main__":

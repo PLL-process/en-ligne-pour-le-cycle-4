@@ -9,28 +9,64 @@ python3 _verifier_planning.py
 node _outils/fix_r.js qcm_C7.1_planification_taches.html 617
 ```
 
-## 1. La page de l'atelier — 17 contrôles Playwright
+## 1. Les trois pages de l'atelier (5e, 4e, 3e) — 48 contrôles Playwright
+
+Le banc boucle sur les trois pages. Les onglets attendus sont déclarés page par page (5e : p5, gp, pm ; 4e : p4, gp, pm ; 3e : p3, gp, pm) : un onglet disparu ou en trop fait échouer le banc. Les contrôles propres à un niveau (dates au plus tôt en 4e, chemin le plus long en 3e) ne tournent que sur sa page.
 
 ```
-✔ les cinq captures sont référencées ET présentes sur le disque
+── page 5e
+  ✔ les cinq captures sont référencées ET présentes sur le disque
   ✔ chaque image porte une alternative textuelle qui la DÉCRIT (règle n°1)
   ✔ un seul bouton QCM dans toute la page (règle n°4)
+  ✔ la barre de navigation pointe aussi vers le QCM (un lien, hors bouton)
   ✔ le bloc Bonus est présent, annoncé hors parcours obligatoire
   ✔ l'ordre bilan → entraînement → bonus ferme la page (règle n°4)
   ✔ aucune mention du secteur : l'activité est en papier et en logiciel
   ✔ aucun appel réseau : la page fonctionne hors ligne (règle n°40)
   ✔ aucune erreur JavaScript au chargement
-  ✔ les cinq onglets s'ouvrent et affichent leur panneau
+  ✔ 5e : les onglets p5, gp, pm sont les seuls présents et s'ouvrent
+  ✔ le verrou expérientiel tient : sans les bandes découpées, rien n'est validé
+  ✔ une fois les bandes déclarées faites, l'activité 1 se valide
+  ✔ les réponses et les validations reviennent après rechargement
+  ✔ le mode essentiel masque bien le référentiel et les corrections
+  ✔ à l'impression, aucun panneau n'est caché
+── page 4e
+  ✔ les cinq captures sont référencées ET présentes sur le disque
+  ✔ chaque image porte une alternative textuelle qui la DÉCRIT (règle n°1)
+  ✔ un seul bouton QCM dans toute la page (règle n°4)
+  ✔ la barre de navigation pointe aussi vers le QCM (un lien, hors bouton)
+  ✔ le bloc Bonus est présent, annoncé hors parcours obligatoire
+  ✔ l'ordre bilan → entraînement → bonus ferme la page (règle n°4)
+  ✔ aucune mention du secteur : l'activité est en papier et en logiciel
+  ✔ aucun appel réseau : la page fonctionne hors ligne (règle n°40)
+  ✔ aucune erreur JavaScript au chargement
+  ✔ 4e : les onglets p4, gp, pm sont les seuls présents et s'ouvrent
   ✔ le verrou expérientiel tient : sans les bandes découpées, rien n'est validé
   ✔ une fois les bandes déclarées faites, l'activité 1 se valide
   ✔ les dates au plus tôt du corrigé calculé sont bien celles que la page accepte
   ✔ une date fausse est refusée — le vérificateur vérifie vraiment
+  ✔ les réponses et les validations reviennent après rechargement
+  ✔ le mode essentiel masque bien le référentiel et les corrections
+  ✔ à l'impression, aucun panneau n'est caché
+── page 3e
+  ✔ les cinq captures sont référencées ET présentes sur le disque
+  ✔ chaque image porte une alternative textuelle qui la DÉCRIT (règle n°1)
+  ✔ un seul bouton QCM dans toute la page (règle n°4)
+  ✔ la barre de navigation pointe aussi vers le QCM (un lien, hors bouton)
+  ✔ le bloc Bonus est présent, annoncé hors parcours obligatoire
+  ✔ l'ordre bilan → entraînement → bonus ferme la page (règle n°4)
+  ✔ aucune mention du secteur : l'activité est en papier et en logiciel
+  ✔ aucun appel réseau : la page fonctionne hors ligne (règle n°40)
+  ✔ aucune erreur JavaScript au chargement
+  ✔ 3e : les onglets p3, gp, pm sont les seuls présents et s'ouvrent
+  ✔ le verrou expérientiel tient : sans les bandes découpées, rien n'est validé
+  ✔ une fois les bandes déclarées faites, l'activité 1 se valide
   ✔ le chemin le plus long offert en réponse est exactement celui du calcul
   ✔ les réponses et les validations reviennent après rechargement
   ✔ le mode essentiel masque bien le référentiel et les corrections
-  ✔ à l'impression, les cinq panneaux sont visibles
+  ✔ à l'impression, aucun panneau n'est caché
 
-17 contrôles exécutés, 17 réussis.
+48 contrôles exécutés, 48 réussis.
 ```
 
 ## 2. Le calcul des plannings
