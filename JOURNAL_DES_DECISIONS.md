@@ -21924,3 +21924,84 @@ défilement horizontal · les programmes des activités mesurés dans Vittascien
 Banc Playwright (Chromium, servi en HTTP) : **34 / 34**. Trois scénarios de notes : tout juste → **20 / 20** ; tout faux → **0 / 20** ; mixte connu (R3 faux, coup de pouce en 1.4, correction de l'exercice 2 ouverte sans réponse, 3.3 faux, 3.5 vide) → **14,5 / 30 = 9,7 / 20**, calculé à la main avant le passage. Démarrage refusé sans identité, verrous, persistance après rechargement (réponses, verrous, coups de pouce), nouvelle copie vierge, alertes des fenêtres de confirmation, clé enseignant (16 lignes), aucune correction en clair dans le source, console sans erreur, **390 px sans défilement horizontal** (le tableau des relevés passe en cartes). Chaque réponse attendue recalculée par un script indépendant (relevés, triangle, hexagone, spirale). Un bug trouvé par le banc et corrigé : « Nouvelle copie » était réécrite par la sauvegarde de fermeture de page.
 
 **Restant à faire (Pascal).** Construire les trois programmes dans Vittascience en classe pour confirmer les noms exacts des blocs Turtle (la séance prévient déjà qu'ils peuvent varier). La page n'est pas listée dans l'index, comme la séance d'origine : l'URL se donne aux élèves directement.
+
+## 18/10/2026 — Règle d'or n°308 : un bloc ne se dessine pas, il se capture (thèmes 2-3, archive, _outils)
+
+> **Règle d'or n°308 — un bloc ne se dessine pas, il se capture.** Un programme en blocs
+> montré à l'élève est une **capture d'écran réelle** du logiciel qu'il va ouvrir, avec le
+> programme **réellement construit et exécuté** (règle n°94). Ni imitation en CSS, ni SVG
+> « reconstitution schématique », ni blocs inventés. Ce qui ne peut pas être capturé ne prend
+> **pas la forme de blocs** : il devient un algorigramme, du pseudo-code ou un tableau.
+
+### Pourquoi
+
+La règle n°94 laissait une porte ouverte : la **reconstitution déclarée**, utile quand l'outil n'est
+pas choisi ou pour épurer un écran chargé. Pour les blocs, cette porte ne sert qu'à tromper. Un bloc
+n'est pas un détail d'interface : c'est **ce que l'élève cherche dans la boîte à outils, à sa couleur
+et sous son nom**. Une imitation qui se trompe d'une couleur envoie l'élève dans la mauvaise
+catégorie ; qui se trompe d'un libellé, il ne trouve pas le bloc ; qui découpe une opération en
+trois blocs quand le logiciel n'en a qu'un, à liste déroulante, il construit un autre programme.
+La mention « les libellés peuvent varier légèrement » ne répare rien : l'élève de 5e ne sait pas
+quelle partie varie.
+
+### Mesuré (16/10/2026 sur `main` à `add91c2`, recompté le 18/10 sur `add91c25`)
+
+**56 dessins de blocs dans 8 pages.** Thème 1 : aucun.
+
+| Lot | Pages | Dessins | Ce qui est dessiné |
+|---|---|---|---|
+| 1 · archive 3e_C9.1 | séance `vittascience_variables_blocs.html` · évaluation `evaluation_vittascience_blocs.html` | 36 · 9 | 35 programmes `data-blocs` + le schéma qui suit les curseurs (`#waterBlocks`) · 8 programmes `data-programme` + le schéma décoratif du haut (`.programme-heros`, qui se déclare « vittascience · blocs ») |
+| 2 · thème 3 · 3e_C9.2 | stations 2, 3 et page complète | 3 · 1 · 4 | 4 SVG `blocs_palier1…4_*.svg`, reconstitutions déclarées, 8 emplacements |
+| 3 · thème 2 · 5e_C6.1 | séquence · QCM · synthèse élève | 1 · 1 · 1 | `programme_blocs_lampadaire.svg`, aux blocs inventés (« quand le lampadaire démarre ») |
+
+À côté, la séance porte **53 puces de catégorie** (`.vb-cat`) : ce ne sont pas des blocs, elles
+restent, mais à la couleur mesurée dans Vittascience. Elle porte aussi **10 interfaces intégrées**
+(`<iframe data-src>` vers fr.vittascience.com ; un 11e cadre est une vidéo YouTube) et l'évaluation
+**3** : aucune ne peut s'afficher (`X-Frame-Options: SAMEORIGIN`, mesuré le 13/09/2026), et
+`controle_cadres.py` ne les voit pas, parce qu'il écarte l'archive et ne lit que `src`.
+
+### Le contrôle : `_outils/controle_blocs_dessines.py`
+
+- **D1, dessin HTML** : une balise portant `data-blocs`, `data-programme`, ou la classe `vb-prog`
+  ou `programme-heros`. Une règle CSS seule ne compte pas, un commentaire non plus, une classe
+  `prog` seule non plus : dans les trois `C7.5` du thème 3, elle porte du **code Arduino écrit
+  en texte**, que la règle laisse en paix.
+- **D2, dessin SVG** : chaque référence, dans une page, à un `.svg` dont le nom contient « bloc »,
+  en balise, en `<object>` ou dans la chaîne d'un script de QCM. Le nom, pas le contenu : un
+  balayage du texte des SVG ramenait des algorigrammes et la fenêtre de Packet Tracer « au démarrage ».
+- **D3, capture mal déclarée** : une image `class="bloc-capture"` ou nommée `bloc_vitta_…` doit
+  s'appeler `bloc_vitta_*.png`, exister, peser 300 Ko au plus, porter un `alt` qui dit le programme
+  en mots, et figurer sur une ligne « Capture d'écran réelle » d'un `SOURCES_MEDIAS.md` de son
+  dossier ou d'un dossier parent.
+- **Le registre `EN_ATTENTE`** donne, page par page, le nombre exact de dessins encore présents.
+  Un dessin hors registre est refusé ; un compte qui bouge sans mise à jour du registre aussi
+  (registre périmé), dans les deux sens. Chaque lot retire ses lignes **dans le même commit** que
+  ses captures. **Le travail est fini quand le contrôle affiche 0 dessin en attente et que
+  `EN_ATTENTE = {}`.**
+- L'archive est **lue** : ses deux pages servent en classe. `--json` donne le détail par page et
+  par ligne ; sortie 2 si rien n'a pu être lu (règle n°299).
+
+**Hors règle** : les algorigrammes, le pseudo-code, le code écrit en texte, et les vraies
+captures déjà présentes (`3e_C9.2/Images/vittascience/`, les captures ArduBlock du Bonus, les
+captures des gestes).
+
+### Ce qui suit : trois lots, une branche et une PR chacun, dans l'ordre
+
+1. `fable/regle-308-lot-1-archive-3e-C9.1` : 37 programmes distincts, construits et exécutés dans
+   Vittascience Python (mode mixte), un pilote de 3 captures soumis à Pascal d'abord ;
+2. `fable/regle-308-lot-2-3e-C9.2` : les quatre paliers construits dans Vittascience Arduino ;
+3. `fable/regle-308-lot-3-5e-C6.1` : le lampadaire, après décision de Pascal (vrai programme
+   Vittascience Arduino, ou algorigramme).
+
+Ces noms ne portent pas de motif de thème parce que chaque lot retire ses lignes du registre dans
+`_outils/` : la garde de périmètre les laisse passer avec un avertissement.
+
+### Vérifié
+
+- `python _outils/controle_blocs_dessines.py` sur le dépôt : **410 pages lues, 56 dessins en attente
+  dans 8 pages, 0 refus**, sortie 0 — le compte du 16/10, page par page.
+- `python _outils/tests_controle_blocs_dessines.py` : **24 / 24** (panne sur racine vide ; D1, D2,
+  D3 ; registre à jour, périmé dans les deux sens, page disparue ; `--json` ; le vrai dépôt ;
+  le vrai point d'entrée en sous-processus).
+- Le banc mord : quatre contrôles volontairement cassés (D1 éteint, D2 éteint, poids ignoré,
+  déclaration toujours trouvée) le font tomber à 21, 21, 23 et 23 / 24.
