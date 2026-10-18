@@ -53,8 +53,8 @@ ARCH = "_archive-anciennes-versions/C7_C9_Creation-conception-realisation-innova
 # Page → nombre de dessins qu'elle porte encore. Relevé du 16/10/2026 (56 dans 8 pages).
 EN_ATTENTE = {
     # Lot 1 — archive 3e_C9.1 (Vittascience Python, blocs)
-    ARCH + "vittascience_variables_blocs.html": 36,
-    ARCH + "evaluation_vittascience_blocs.html": 9,
+    ARCH + "vittascience_variables_blocs.html": 33,  # pilote du 18/10 : B01, B18, B31 capturés
+    ARCH + "evaluation_vittascience_blocs.html": 7,  # pilote du 18/10 : arrosage, triangle capturés
     # Lot 2 — thème 3 · 3e_C9.2 (Vittascience Arduino, blocs)
     T3 + "sequence_3e_C9.2-C8.3_station_2_programmer.html": 3,
     T3 + "sequence_3e_C9.2-C8.3_station_3_interaction.html": 1,

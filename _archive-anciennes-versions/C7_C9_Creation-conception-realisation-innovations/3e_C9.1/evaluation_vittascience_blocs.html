@@ -342,6 +342,35 @@ body.prof #panneauProf{display:block}
   #resultat{break-before:page}
   .saisie input,.saisie select,.champ input{background:#fff!important;color:#000!important;border-color:#777!important}
 }
+/* Règle d'or n°308 (18/10/2026) : un bloc ne se dessine pas, il se capture.
+   Les programmes sont des captures réelles de Vittascience, affichées à leur taille
+   (le texte des blocs y fait environ 14 px) : sur un écran étroit, l'image défile dans
+   son cadre, jamais la page. */
+.bloc-cadre{display:block;margin:10px 0;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.bloc-cadre-ligne{display:inline-block;vertical-align:middle;margin:4px}
+.bloc-capture{display:block;max-width:none;height:auto;border:1px solid #3a4150;border-radius:8px;background:#fff}
+@media (max-width:600px){.bloc-cadre-ligne{display:block;margin:6px 0}}
+@media print{.bloc-cadre{overflow:visible}.bloc-capture{max-width:100%}}
+/* La loupe (patron de 4e_C9.1), réservée aux captures de blocs */
+.loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;z-index:9999;
+  padding:2rem 2rem 9rem;box-sizing:border-box;overflow:auto;align-items:center;justify-content:center}
+.loupe-fond[data-ouvert="oui"]{display:flex}
+.loupe-fond img{max-width:100%;max-height:68vh;height:auto;background:#fff;border-radius:4px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6)}
+.loupe-legende{position:fixed;left:0;right:0;bottom:0;text-align:center;color:#e7e9ee;
+  font:400 .95rem/1.4 system-ui,sans-serif;background:#12151b;border-top:1px solid #3a4150;
+  padding:.75rem 2rem;max-height:22vh;overflow:auto;box-shadow:0 -8px 24px rgba(0,0,0,.5)}
+.loupe-fermer{position:fixed;top:.8rem;right:1rem;background:#1b1f27;color:#e7e9ee;border:1px solid #3a4150;
+  border-radius:6px;font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+.loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;outline-offset:3px}
+.loupe-cliquable{cursor:zoom-in}
+.loupe-enveloppe{position:relative;display:block;width:max-content}
+.loupe-badge{position:absolute;top:6px;right:6px;z-index:2;pointer-events:none;background:rgba(12,14,18,.88);
+  color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;font:600 .78rem/1 system-ui,sans-serif;
+  padding:5px 8px;opacity:0;transition:opacity .12s}
+.loupe-enveloppe:hover .loupe-badge,.loupe-enveloppe:focus-within .loupe-badge{opacity:1}
+@media (prefers-reduced-motion:reduce){.loupe-badge{transition:none}}
+@media print{.loupe-badge,.loupe-fond{display:none !important}}
 </style>
 </head>
 <body>
@@ -434,7 +463,7 @@ body.prof #panneauProf{display:block}
   <p class="attente-info">⬆ Remplis « Avant de commencer », puis clique sur « Commencer l'évaluation ».</p>
   <div class="exo-corps">
     <p class="exo-contexte">Un jardin connecté décide seul d'arroser. Le programme range quatre mesures dans quatre variables, puis teste quatre conditions.</p>
-    <div class="prog-cadre"><p class="prog-legende">programme fourni</p><div class="prog" data-programme="arrosage"></div></div>
+    <div class="prog-cadre"><p class="prog-legende">programme fourni</p><div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B18.png" width="684" height="630" loading="lazy" alt="Programme en blocs : affecter à temperature la valeur 30 ; affecter à luminosite la valeur 75 ; affecter à humidite_sol la valeur 20 ; affecter à temps la valeur 18 ; si temperature &gt; 25 et luminosite &gt; 60 et humidite_sol &lt; 40 et temps &gt; 12 alors : affecter à arroser la valeur 1 ; sinon : affecter à arroser la valeur 0 ; afficher arroser."></div></div>
     <div class="vars">Variables à créer : <code>temperature</code><code>luminosite</code><code>humidite_sol</code><code>temps</code><code>arroser</code></div>
     <div class="vitta">
       <a class="btn btn-ghost btn-petit" href="https://fr.vittascience.com/python/?console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
@@ -521,7 +550,7 @@ body.prof #panneauProf{display:block}
   <p class="attente-info">⬆ Remplis « Avant de commencer », puis clique sur « Commencer l'évaluation ».</p>
   <div class="exo-corps">
     <p class="exo-contexte">La tortue de Vittascience tient un stylo. Ce programme lui fait dessiner un triangle rouge.</p>
-    <div class="prog-cadre"><p class="prog-legende">programme fourni</p><div class="prog" data-programme="triangle"></div></div>
+    <div class="prog-cadre"><p class="prog-legende">programme fourni</p><div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B31.png" width="366" height="277" loading="lazy" alt="Programme en blocs : définir le tracé de couleur rouge, largeur 5 ; affecter à cote la valeur 120 ; répéter 3 fois : avancer de cote, tourner à droite de 120 degrés."></div></div>
     <div class="vars">Variable à créer : <code>cote</code> · blocs de la catégorie Turtle</div>
     <div class="vitta">
       <a class="btn btn-ghost btn-petit" href="https://fr.vittascience.com/python/?console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
@@ -1256,6 +1285,59 @@ document.addEventListener("DOMContentLoaded", () => {
   $$(".vitta details").forEach(d => d.addEventListener("toggle", () => { const f = $("iframe", d); if (d.open && f && !f.getAttribute("src")) f.setAttribute("src", f.dataset.src); }));
   window.addEventListener("beforeunload", () => { if (!effacement) ecrireStock(STOCK, JSON.stringify(E)); });
 });
+</script>
+<script>
+/* Règle d'or n°308 (18/10/2026) : la loupe des captures de blocs (patron de 4e_C9.1).
+   Seules les images .bloc-capture s'agrandissent ; data-loupe="non" les en exclut. */
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+  function construire(){
+    fond = document.createElement("div"); fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog"); fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button"); bouton.type = "button";
+    bouton.className = "loupe-fermer"; bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img"); grande.alt = "";
+    legende = document.createElement("p"); legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+  }
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img; grande.src = img.currentSrc || img.src; grande.alt = img.alt || "";
+    legende.textContent = img.alt ? img.alt + "  —  Échap pour refermer" : "Échap pour refermer";
+    fond.setAttribute("data-ouvert", "oui"); fond.querySelector(".loupe-fermer").focus();
+  }
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert"); grande.removeAttribute("src");
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+  function armer(){
+    document.querySelectorAll("img.bloc-capture").forEach(function(img){
+      if (img.dataset.loupe === "non") return;
+      img.classList.add("loupe-cliquable"); img.tabIndex = 0;
+      if (!img.parentNode.classList.contains("loupe-enveloppe")) {
+        var env = document.createElement("span"); env.className = "loupe-enveloppe";
+        img.parentNode.insertBefore(env, img); env.appendChild(img);
+        var badge = document.createElement("span"); badge.className = "loupe-badge";
+        badge.setAttribute("aria-hidden", "true"); badge.textContent = "🔍 Agrandir";
+        env.appendChild(badge);
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", armer); else armer();
+})();
 </script>
 </body>
 </html>

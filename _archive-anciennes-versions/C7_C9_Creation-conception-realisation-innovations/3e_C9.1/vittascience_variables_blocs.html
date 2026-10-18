@@ -378,6 +378,35 @@ pre code.hljs{display:block;padding:0;}
 .vb-c-var{background:#e0533d;} .vb-c-math{background:#3d8fe0;} .vb-c-aff{background:#f39c12;} .vb-c-txt{background:#2d6cdf;}
 .vb-c-loop{background:#27ae60;} .vb-c-turtle{background:#8e44ad;}
 .vb-list li{margin:6px 0;} .vb-tuto li{margin:8px 0;line-height:1.7;}
+/* Règle d'or n°308 (18/10/2026) : un bloc ne se dessine pas, il se capture.
+   Les programmes sont des captures réelles de Vittascience, affichées à leur taille
+   (le texte des blocs y fait environ 14 px) : sur un écran étroit, l'image défile dans
+   son cadre, jamais la page. */
+.bloc-cadre{display:block;margin:10px 0;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.bloc-cadre-ligne{display:inline-block;vertical-align:middle;margin:4px}
+.bloc-capture{display:block;max-width:none;height:auto;border:1px solid #3a4150;border-radius:8px;background:#fff}
+@media (max-width:600px){.bloc-cadre-ligne{display:block;margin:6px 0}}
+@media print{.bloc-cadre{overflow:visible}.bloc-capture{max-width:100%}}
+/* La loupe (patron de 4e_C9.1), réservée aux captures de blocs */
+.loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;z-index:9999;
+  padding:2rem 2rem 9rem;box-sizing:border-box;overflow:auto;align-items:center;justify-content:center}
+.loupe-fond[data-ouvert="oui"]{display:flex}
+.loupe-fond img{max-width:100%;max-height:68vh;height:auto;background:#fff;border-radius:4px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6)}
+.loupe-legende{position:fixed;left:0;right:0;bottom:0;text-align:center;color:#e7e9ee;
+  font:400 .95rem/1.4 system-ui,sans-serif;background:#12151b;border-top:1px solid #3a4150;
+  padding:.75rem 2rem;max-height:22vh;overflow:auto;box-shadow:0 -8px 24px rgba(0,0,0,.5)}
+.loupe-fermer{position:fixed;top:.8rem;right:1rem;background:#1b1f27;color:#e7e9ee;border:1px solid #3a4150;
+  border-radius:6px;font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+.loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;outline-offset:3px}
+.loupe-cliquable{cursor:zoom-in}
+.loupe-enveloppe{position:relative;display:block;width:max-content}
+.loupe-badge{position:absolute;top:6px;right:6px;z-index:2;pointer-events:none;background:rgba(12,14,18,.88);
+  color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;font:600 .78rem/1 system-ui,sans-serif;
+  padding:5px 8px;opacity:0;transition:opacity .12s}
+.loupe-enveloppe:hover .loupe-badge,.loupe-enveloppe:focus-within .loupe-badge{opacity:1}
+@media (prefers-reduced-motion:reduce){.loupe-badge{transition:none}}
+@media print{.loupe-badge,.loupe-fond{display:none !important}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -517,7 +546,7 @@ la réponse est affichée, mais <strong>la question ne rapporte plus de points</
 Une <span class="mot-cle">variable</span> est comme une boîte avec un nom. Quand le programme donne une <span class="mot-cle">nouvelle valeur</span> à cette variable, l’ancienne valeur est remplacée.
 </div>
 <ul class="vb-list">
-<li>Ce bloc range 14 dans la boîte x : <div class="vb-prog vb-inline" data-blocs="[[&quot;set&quot;, &quot;x&quot;, 14]]"></div></li>
+<li>Ce bloc range 14 dans la boîte x : <span class="bloc-cadre bloc-cadre-ligne"><img class="bloc-capture" src="Images/bloc_vitta_B01.png" width="270" height="76" loading="lazy" alt="Programme en blocs : affecter à x la valeur 14."></span></li>
 <li>Ce bloc affiche la <strong>valeur</strong> de x (14) : <div class="vb-prog vb-inline" data-blocs="[[&quot;print&quot;, {&quot;v&quot;: &quot;x&quot;}]]"></div></li>
 <li>Ce bloc affiche le <strong>texte</strong> x, parce que le bloc texte (avec les <span class="mot-cle">guillemets</span> « ») contient du texte : <div class="vb-prog vb-inline" data-blocs="[[&quot;print&quot;, {&quot;t&quot;: &quot;x&quot;}]]"></div></li>
 </ul>
@@ -916,7 +945,7 @@ Dans chaque exercice, un encadré 🧩 montre les blocs à assembler et les vari
     <li>Empile-les <strong>dans le même ordre</strong> que ci-dessous, puis clique sur <strong>▶ Exécuter</strong>.</li>
   </ol>
   <p class="vitta-hint">💡 Bloc « si … alors … sinon » : catégorie <strong>Logique</strong>. Le bloc « et » est aussi dans Logique, les comparaisons (&gt;, &lt;) aussi.</p>
-  <div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;temperature&quot;, 30], [&quot;set&quot;, &quot;luminosite&quot;, 75], [&quot;set&quot;, &quot;humidite_sol&quot;, 20], [&quot;set&quot;, &quot;temps&quot;, 18], [&quot;if&quot;, [&quot;op&quot;, [&quot;op&quot;, [&quot;op&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;temperature&quot;}, &quot;&gt;&quot;, 25], &quot;et&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;luminosite&quot;}, &quot;&gt;&quot;, 60]], &quot;et&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;humidite_sol&quot;}, &quot;&lt;&quot;, 40]], &quot;et&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;temps&quot;}, &quot;&gt;&quot;, 12]], [[&quot;set&quot;, &quot;arroser&quot;, 1]], [[&quot;set&quot;, &quot;arroser&quot;, 0]]], [&quot;print&quot;, {&quot;v&quot;: &quot;arroser&quot;}]]"></div>
+  <div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B18.png" width="684" height="630" loading="lazy" alt="Programme en blocs : affecter à temperature la valeur 30 ; affecter à luminosite la valeur 75 ; affecter à humidite_sol la valeur 20 ; affecter à temps la valeur 18 ; si temperature &gt; 25 et luminosite &gt; 60 et humidite_sol &lt; 40 et temps &gt; 12 alors : affecter à arroser la valeur 1 ; sinon : affecter à arroser la valeur 0 ; afficher arroser."></div>
   <div class="vitta-actions">
     <a class="resource-link" href="https://fr.vittascience.com/python/?console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
   </div>
@@ -1006,7 +1035,7 @@ Dans chaque exercice, un encadré 🧩 montre les blocs à assembler et les vari
 <div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;cote&quot;, 100], [&quot;repeat&quot;, 4, [[&quot;call&quot;, &quot;avancer de&quot;, {&quot;v&quot;: &quot;cote&quot;}], [&quot;call&quot;, &quot;tourner à droite de&quot;, 90]]]]"></div>
 <p class="small">💡 Catégorie <span class="vb-cat vb-c-turtle">Turtle</span>. Les noms exacts des blocs peuvent varier légèrement.</p>
 <h3>Bonus 9 – Turtle : un triangle coloré</h3>
-<div class="vb-prog " data-blocs="[[&quot;call&quot;, &quot;couleur du stylo&quot;, {&quot;t&quot;: &quot;red&quot;}], [&quot;set&quot;, &quot;cote&quot;, 120], [&quot;repeat&quot;, 3, [[&quot;call&quot;, &quot;avancer de&quot;, {&quot;v&quot;: &quot;cote&quot;}], [&quot;call&quot;, &quot;tourner à droite de&quot;, 120]]]]"></div>
+<div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B31.png" width="366" height="277" loading="lazy" alt="Programme en blocs : définir le tracé de couleur rouge, largeur 5 ; affecter à cote la valeur 120 ; répéter 3 fois : avancer de cote, tourner à droite de 120 degrés."></div>
 <p class="small">💡 Pourquoi tourne-t-on de 120° et pas de 60° ?</p>
 <h3>Bonus 10 – Turtle : une spirale</h3>
 <div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;longueur&quot;, 10], [&quot;repeat&quot;, 20, [[&quot;call&quot;, &quot;avancer de&quot;, {&quot;v&quot;: &quot;longueur&quot;}], [&quot;call&quot;, &quot;tourner à droite de&quot;, 90], [&quot;set&quot;, &quot;longueur&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;longueur&quot;}, &quot;+&quot;, 10]]]]]"></div>
@@ -1735,6 +1764,59 @@ document.addEventListener('DOMContentLoaded', function(){
   };
   function tout(){ document.querySelectorAll("[data-blocs]").forEach(window.vbRender); if(typeof updateIrrigation === "function") updateIrrigation(); }
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", tout); else tout();
+})();
+</script>
+<script>
+/* Règle d'or n°308 (18/10/2026) : la loupe des captures de blocs (patron de 4e_C9.1).
+   Seules les images .bloc-capture s'agrandissent ; data-loupe="non" les en exclut. */
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+  function construire(){
+    fond = document.createElement("div"); fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog"); fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button"); bouton.type = "button";
+    bouton.className = "loupe-fermer"; bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img"); grande.alt = "";
+    legende = document.createElement("p"); legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+  }
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img; grande.src = img.currentSrc || img.src; grande.alt = img.alt || "";
+    legende.textContent = img.alt ? img.alt + "  —  Échap pour refermer" : "Échap pour refermer";
+    fond.setAttribute("data-ouvert", "oui"); fond.querySelector(".loupe-fermer").focus();
+  }
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert"); grande.removeAttribute("src");
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+  function armer(){
+    document.querySelectorAll("img.bloc-capture").forEach(function(img){
+      if (img.dataset.loupe === "non") return;
+      img.classList.add("loupe-cliquable"); img.tabIndex = 0;
+      if (!img.parentNode.classList.contains("loupe-enveloppe")) {
+        var env = document.createElement("span"); env.className = "loupe-enveloppe";
+        img.parentNode.insertBefore(env, img); env.appendChild(img);
+        var badge = document.createElement("span"); badge.className = "loupe-badge";
+        badge.setAttribute("aria-hidden", "true"); badge.textContent = "🔍 Agrandir";
+        env.appendChild(badge);
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", armer); else armer();
 })();
 </script>
 </body>
