@@ -357,23 +357,8 @@ pre code.hljs{display:block;padding:0;}
 .vitta-embed iframe{margin-top:10px;}
 
 /* BLOCS_VITTASCIENCE (01/10/2026) : rendu des blocs dans la page */
-.vb-prog{display:flex;flex-direction:column;align-items:flex-start;gap:3px;margin:10px 0;padding:12px;background:#1e1e1e;border-radius:12px;overflow-x:auto;}
-.vb-prog.vb-inline{display:inline-flex;margin:6px 4px;padding:8px;vertical-align:middle;}
-.vb-stmt{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:6px;color:#fff;font-weight:600;font-size:.95rem;white-space:nowrap;box-shadow:inset 0 -2px 0 rgba(0,0,0,.18);}
-.vb-set{background:#e0533d;} .vb-print{background:#f39c12;} .vb-ctrl{background:#d9822b;flex-direction:column;align-items:flex-start;}
-.vb-loop{background:#27ae60;flex-direction:column;align-items:flex-start;} .vb-turtle{background:#8e44ad;}
-.vb-todo{background:transparent;border:2px dashed #f2c94c;color:#f2c94c;}
-.vb-body{display:flex;flex-direction:column;gap:3px;margin:4px 0 2px 16px;padding-left:6px;border-left:4px solid rgba(0,0,0,.25);}
-.vb-row{display:inline-flex;align-items:center;gap:6px;}
-.vb-dd{background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.35);border-radius:5px;padding:1px 7px;}
-.vb-dd::after{content:" ▾";font-size:.75em;}
-.vb-num{background:#fff;color:#222;border-radius:12px;padding:1px 10px;font-weight:700;}
-.vb-var{background:#e0533d;color:#fff;border-radius:12px;padding:1px 8px;border:1px solid rgba(0,0,0,.2);}
-.vb-var::after{content:" ▾";font-size:.75em;}
-.vb-txt{background:#2d6cdf;color:#fff;border-radius:12px;padding:1px 8px;}
-.vb-txt b{background:#fff;color:#222;border-radius:4px;padding:0 5px;margin:0 3px;font-weight:700;}
-.vb-op{display:inline-flex;align-items:center;gap:5px;background:#3d8fe0;border-radius:14px;padding:3px 7px;}
-.vb-sym{background:rgba(0,0,0,.18);border-radius:5px;padding:0 6px;}
+.tab-defile{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab-cond{max-width:560px;margin:10px 0}.tab-cond caption{caption-side:top;text-align:left;font-weight:700;padding:0 0 6px;color:#d8e0ed}.tab-cond th[scope=row]{text-align:left;font-family:ui-monospace,Consolas,monospace;font-weight:700}.tab-cond tr.vrai td:last-child{color:#7ee2b8;font-weight:700}.tab-cond tr.faux td:last-child{color:#ff9aa5;font-weight:700}.tab-cond tfoot th,.tab-cond tfoot td{background:rgba(255,255,255,.06);font-weight:700}
 .vb-cat{display:inline-block;padding:0 7px;border-radius:5px;color:#fff;font-weight:600;font-size:.92em;}
 .vb-c-var{background:#e0533d;} .vb-c-math{background:#3d8fe0;} .vb-c-aff{background:#f39c12;} .vb-c-txt{background:#2d6cdf;}
 .vb-c-loop{background:#27ae60;} .vb-c-turtle{background:#8e44ad;}
@@ -547,8 +532,8 @@ Une <span class="mot-cle">variable</span> est comme une boîte avec un nom. Quan
 </div>
 <ul class="vb-list">
 <li>Ce bloc range 14 dans la boîte x : <span class="bloc-cadre bloc-cadre-ligne"><img class="bloc-capture" src="Images/bloc_vitta_B01.png" width="270" height="76" loading="lazy" alt="Programme en blocs : affecter à x la valeur 14."></span></li>
-<li>Ce bloc affiche la <strong>valeur</strong> de x (14) : <div class="vb-prog vb-inline" data-blocs="[[&quot;print&quot;, {&quot;v&quot;: &quot;x&quot;}]]"></div></li>
-<li>Ce bloc affiche le <strong>texte</strong> x, parce que le bloc texte (avec les <span class="mot-cle">guillemets</span> « ») contient du texte : <div class="vb-prog vb-inline" data-blocs="[[&quot;print&quot;, {&quot;t&quot;: &quot;x&quot;}]]"></div></li>
+<li>Ce bloc affiche la <strong>valeur</strong> de x (14) : <span class="bloc-cadre bloc-cadre-ligne"><img class="bloc-capture" src="Images/bloc_vitta_B02.png" width="146" height="76" loading="lazy" alt="Programme en blocs : afficher x."></span></li>
+<li>Ce bloc affiche le <strong>texte</strong> x, parce que le bloc texte (avec les <span class="mot-cle">guillemets</span> « ») contient du texte : <span class="bloc-cadre bloc-cadre-ligne"><img class="bloc-capture" src="Images/bloc_vitta_B03.png" width="179" height="76" loading="lazy" alt="Programme en blocs : afficher « x »."></span></li>
 </ul>
 <p><a class="resource-link" href="#mini-cours">Aller au mini-cours complet</a></p>
 </section>
@@ -632,7 +617,7 @@ Dans chaque exercice, un encadré 🧩 montre les blocs à assembler et les vari
     <li>Empile-les <strong>dans le même ordre</strong> que ci-dessous, puis clique sur <strong>▶ Exécuter</strong>.</li>
   </ol>
   <p class="vitta-hint">💡 Construis exactement le programme de la capture 1, exécute-le, puis réponds aux questions.</p>
-  <div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;x&quot;, 7], [&quot;set&quot;, &quot;y&quot;, 8.4], [&quot;set&quot;, &quot;x&quot;, [&quot;op&quot;, 2, &quot;×&quot;, {&quot;v&quot;: &quot;x&quot;}]], [&quot;set&quot;, &quot;y&quot;, [&quot;op&quot;, [&quot;op&quot;, 3, &quot;×&quot;, {&quot;v&quot;: &quot;x&quot;}], &quot;−&quot;, [&quot;op&quot;, 2, &quot;×&quot;, {&quot;v&quot;: &quot;y&quot;}]]], [&quot;print&quot;, {&quot;v&quot;: &quot;y&quot;}]]"></div>
+  <div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B04.png" width="592" height="270" loading="lazy" alt="Programme en blocs : affecter à x la valeur 7 ; affecter à y la valeur 8.4 ; affecter à x la valeur 2 × x ; affecter à y la valeur 3 × x − 2 × y ; afficher y."></div>
   <div class="vitta-actions">
     <a class="resource-link" href="https://fr.vittascience.com/python/?console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
   </div>
@@ -666,7 +651,7 @@ Dans chaque exercice, un encadré 🧩 montre les blocs à assembler et les vari
     <li>Empile-les <strong>dans le même ordre</strong> que ci-dessous, puis clique sur <strong>▶ Exécuter</strong>.</li>
   </ol>
   <p class="vitta-hint">💡 Construis le programme, puis exécute-le pour vérifier ta réponse au QCM.</p>
-  <div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;x&quot;, 3], [&quot;set&quot;, &quot;y&quot;, 5], [&quot;set&quot;, &quot;x&quot;, [&quot;op&quot;, 12, &quot;×&quot;, {&quot;v&quot;: &quot;x&quot;}]], [&quot;set&quot;, &quot;y&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;x&quot;}, &quot;−&quot;, [&quot;op&quot;, 2, &quot;×&quot;, {&quot;v&quot;: &quot;y&quot;}]]], [&quot;print&quot;, {&quot;v&quot;: &quot;y&quot;}]]"></div>
+  <div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B05.png" width="487" height="270" loading="lazy" alt="Programme en blocs : affecter à x la valeur 3 ; affecter à y la valeur 5 ; affecter à x la valeur 12 × x ; affecter à y la valeur x − 2 × y ; afficher y."></div>
   <div class="vitta-actions">
     <a class="resource-link" href="https://fr.vittascience.com/python/?console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
   </div>
@@ -703,7 +688,7 @@ Dans chaque exercice, un encadré 🧩 montre les blocs à assembler et les vari
     <li>Empile-les <strong>dans le même ordre</strong> que ci-dessous, puis clique sur <strong>▶ Exécuter</strong>.</li>
   </ol>
   <p class="vitta-hint">💡 C’est le programme de l’exercice 2 : si tu l’as gardé, exécute-le à nouveau.</p>
-  <div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;x&quot;, 3], [&quot;set&quot;, &quot;y&quot;, 5], [&quot;set&quot;, &quot;x&quot;, [&quot;op&quot;, 12, &quot;×&quot;, {&quot;v&quot;: &quot;x&quot;}]], [&quot;set&quot;, &quot;y&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;x&quot;}, &quot;−&quot;, [&quot;op&quot;, 2, &quot;×&quot;, {&quot;v&quot;: &quot;y&quot;}]]], [&quot;print&quot;, {&quot;v&quot;: &quot;y&quot;}]]"></div>
+  <div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B05.png" width="487" height="270" loading="lazy" alt="Programme en blocs : affecter à x la valeur 3 ; affecter à y la valeur 5 ; affecter à x la valeur 12 × x ; affecter à y la valeur x − 2 × y ; afficher y."></div>
   <div class="vitta-actions">
     <a class="resource-link" href="https://fr.vittascience.com/python/?console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
   </div>
@@ -732,7 +717,7 @@ Dans chaque exercice, un encadré 🧩 montre les blocs à assembler et les vari
     <li>Empile-les <strong>dans le même ordre</strong> que ci-dessous, puis clique sur <strong>▶ Exécuter</strong>.</li>
   </ol>
   <p class="vitta-hint">💡 Attention : le dernier bloc affiche un <strong>bloc texte</strong> « y » (dans Texte), pas la variable y. Exécute, puis remplace-le par le bloc variable y et exécute à nouveau.</p>
-  <div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;x&quot;, 1], [&quot;set&quot;, &quot;y&quot;, 2], [&quot;set&quot;, &quot;x&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;x&quot;}, &quot;+&quot;, 1]], [&quot;set&quot;, &quot;y&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;x&quot;}, &quot;×&quot;, {&quot;v&quot;: &quot;y&quot;}]], [&quot;print&quot;, {&quot;t&quot;: &quot;y&quot;}]]"></div>
+  <div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B06.png" width="384" height="263" loading="lazy" alt="Programme en blocs : affecter à x la valeur 1 ; affecter à y la valeur 2 ; affecter à x la valeur x + 1 ; affecter à y la valeur x × y ; afficher « y »."></div>
   <div class="vitta-actions">
     <a class="resource-link" href="https://fr.vittascience.com/python/?console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
   </div>
@@ -766,7 +751,7 @@ Dans chaque exercice, un encadré 🧩 montre les blocs à assembler et les vari
     <li>Empile-les <strong>dans le même ordre</strong> que ci-dessous, puis clique sur <strong>▶ Exécuter</strong>.</li>
   </ol>
   <p class="vitta-hint">💡 C’est le programme de l’exercice 4 : compare l’affichage avec le bloc texte « y » et avec le bloc variable y.</p>
-  <div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;x&quot;, 1], [&quot;set&quot;, &quot;y&quot;, 2], [&quot;set&quot;, &quot;x&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;x&quot;}, &quot;+&quot;, 1]], [&quot;set&quot;, &quot;y&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;x&quot;}, &quot;×&quot;, {&quot;v&quot;: &quot;y&quot;}]], [&quot;print&quot;, {&quot;t&quot;: &quot;y&quot;}]]"></div>
+  <div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B06.png" width="384" height="263" loading="lazy" alt="Programme en blocs : affecter à x la valeur 1 ; affecter à y la valeur 2 ; affecter à x la valeur x + 1 ; affecter à y la valeur x × y ; afficher « y »."></div>
   <div class="vitta-actions">
     <a class="resource-link" href="https://fr.vittascience.com/python/?console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
   </div>
@@ -784,7 +769,7 @@ Dans chaque exercice, un encadré 🧩 montre les blocs à assembler et les vari
 
 <section class="card">
 <div class="exerciseHead"><h2>Exercice 6 – VMC intelligente</h2><div class="badge">8 points</div></div>
-<div class="media"><img src="Images/capture-08-vmc.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 6.</div></div><div class="code-transcrit"><strong>Le programme en blocs, pour mieux lire la capture :</strong><div class="vb-prog vb-inline" data-blocs="[[&quot;set&quot;, &quot;a&quot;, [&quot;op&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;x&quot;}, &quot;×&quot;, 2], &quot;+&quot;, 1]], [&quot;set&quot;, &quot;b&quot;, [&quot;op&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;x&quot;}, &quot;×&quot;, {&quot;v&quot;: &quot;a&quot;}], &quot;−&quot;, 3]]]"></div></div>
+<div class="media"><img src="Images/capture-08-vmc.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 6.</div></div><div class="code-transcrit"><strong>Le programme en blocs, pour mieux lire la capture :</strong><span class="bloc-cadre bloc-cadre-ligne"><img class="bloc-capture" src="Images/bloc_vitta_B07.png" width="487" height="148" loading="lazy" alt="Programme en blocs : affecter à a la valeur x × 2 + 1 ; affecter à b la valeur x × a − 3."></span></div>
 <!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_6 -->
 <div class="vitta-choice" id="interface-vittascience-exo-6">
   <h3>🧩 Construire l’exercice 6 avec les blocs</h3>
@@ -795,7 +780,7 @@ Dans chaque exercice, un encadré 🧩 montre les blocs à assembler et les vari
     <li>Empile-les <strong>dans le même ordre</strong> que ci-dessous, puis clique sur <strong>▶ Exécuter</strong>.</li>
   </ol>
   <p class="vitta-hint">💡 Construis le programme avec x = 3, puis change seulement le nombre dans le premier bloc (4, 7, 10) et exécute à chaque fois.</p>
-  <div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;x&quot;, 3], [&quot;set&quot;, &quot;a&quot;, [&quot;op&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;x&quot;}, &quot;×&quot;, 2], &quot;+&quot;, 1]], [&quot;set&quot;, &quot;b&quot;, [&quot;op&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;x&quot;}, &quot;×&quot;, {&quot;v&quot;: &quot;a&quot;}], &quot;−&quot;, 3]], [&quot;print&quot;, {&quot;v&quot;: &quot;a&quot;}], [&quot;print&quot;, {&quot;v&quot;: &quot;b&quot;}]]"></div>
+  <div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B08.png" width="487" height="277" loading="lazy" alt="Programme en blocs : affecter à x la valeur 3 ; affecter à a la valeur x × 2 + 1 ; affecter à b la valeur x × a − 3 ; afficher a ; afficher b."></div>
   <div class="vitta-actions">
     <a class="resource-link" href="https://fr.vittascience.com/python/?console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
   </div>
@@ -831,7 +816,7 @@ Dans chaque exercice, un encadré 🧩 montre les blocs à assembler et les vari
     <li>Empile-les <strong>dans le même ordre</strong> que ci-dessous, puis clique sur <strong>▶ Exécuter</strong>.</li>
   </ol>
   <p class="vitta-hint">💡 Reprends le programme de l’exercice 6 et mets 20 dans le premier bloc.</p>
-  <div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;x&quot;, 20], [&quot;set&quot;, &quot;a&quot;, [&quot;op&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;x&quot;}, &quot;×&quot;, 2], &quot;+&quot;, 1]], [&quot;set&quot;, &quot;b&quot;, [&quot;op&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;x&quot;}, &quot;×&quot;, {&quot;v&quot;: &quot;a&quot;}], &quot;−&quot;, 3]], [&quot;print&quot;, {&quot;v&quot;: &quot;a&quot;}], [&quot;print&quot;, {&quot;v&quot;: &quot;b&quot;}]]"></div>
+  <div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B09.png" width="487" height="277" loading="lazy" alt="Programme en blocs : affecter à x la valeur 20 ; affecter à a la valeur x × 2 + 1 ; affecter à b la valeur x × a − 3 ; afficher a ; afficher b."></div>
   <div class="vitta-actions">
     <a class="resource-link" href="https://fr.vittascience.com/python/?console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
   </div>
@@ -849,7 +834,7 @@ Dans chaque exercice, un encadré 🧩 montre les blocs à assembler et les vari
 
 <section class="card">
 <div class="exerciseHead"><h2>Exercice 8 – Devis automatisé</h2><div class="badge">8 points</div></div>
-<div class="media"><img src="Images/capture-10-devis.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 8.</div></div><div class="code-transcrit"><strong>Le programme en blocs, pour mieux lire la capture :</strong><div class="vb-prog vb-inline" data-blocs="[[&quot;set&quot;, &quot;prix_matiere&quot;, 437], [&quot;set&quot;, &quot;quantite&quot;, 78], [&quot;set&quot;, &quot;cout_emballage&quot;, 139], [&quot;set&quot;, &quot;cout_total&quot;, [&quot;op&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;prix_matiere&quot;}, &quot;×&quot;, {&quot;v&quot;: &quot;quantite&quot;}], &quot;+&quot;, {&quot;v&quot;: &quot;cout_emballage&quot;}]], [&quot;print&quot;, {&quot;v&quot;: &quot;cout_total&quot;}]]"></div></div>
+<div class="media"><img src="Images/capture-10-devis.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 8.</div></div><div class="code-transcrit"><strong>Le programme en blocs, pour mieux lire la capture :</strong><span class="bloc-cadre bloc-cadre-ligne"><img class="bloc-capture" src="Images/bloc_vitta_B10.png" width="780" height="263" loading="lazy" alt="Programme en blocs : affecter à prix_matiere la valeur 437 ; affecter à quantite la valeur 78 ; affecter à cout_emballage la valeur 139 ; affecter à cout_total la valeur prix_matiere × quantite + cout_emballage ; afficher cout_total."></span></div>
 <!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_8 -->
 <div class="vitta-choice" id="interface-vittascience-exo-8">
   <h3>🧩 Construire l’exercice 8 avec les blocs</h3>
@@ -860,7 +845,7 @@ Dans chaque exercice, un encadré 🧩 montre les blocs à assembler et les vari
     <li>Empile-les <strong>dans le même ordre</strong> que ci-dessous, puis clique sur <strong>▶ Exécuter</strong>.</li>
   </ol>
   <p class="vitta-hint">💡 Construis le programme, exécute-le, puis change la valeur de cout_emballage pour la question 8.3.</p>
-  <div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;prix_matiere&quot;, 437], [&quot;set&quot;, &quot;quantite&quot;, 78], [&quot;set&quot;, &quot;cout_emballage&quot;, 139], [&quot;set&quot;, &quot;cout_total&quot;, [&quot;op&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;prix_matiere&quot;}, &quot;×&quot;, {&quot;v&quot;: &quot;quantite&quot;}], &quot;+&quot;, {&quot;v&quot;: &quot;cout_emballage&quot;}]], [&quot;print&quot;, {&quot;v&quot;: &quot;cout_total&quot;}]]"></div>
+  <div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B10.png" width="780" height="263" loading="lazy" alt="Programme en blocs : affecter à prix_matiere la valeur 437 ; affecter à quantite la valeur 78 ; affecter à cout_emballage la valeur 139 ; affecter à cout_total la valeur prix_matiere × quantite + cout_emballage ; afficher cout_total."></div>
   <div class="vitta-actions">
     <a class="resource-link" href="https://fr.vittascience.com/python/?console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
   </div>
@@ -872,7 +857,7 @@ Dans chaque exercice, un encadré 🧩 montre les blocs à assembler et les vari
 </div>
 <!-- FIN_INTERFACE_VITTASCIENCE_EXO_8 -->
 <div class="question" data-qnum="18"><strong>8.1</strong> Dans ce type d’exercice, nomme au moins deux variables utiles.<textarea id="q91"></textarea></div>
-<div class="question" data-qnum="19"><strong>8.2</strong> En utilisant la formule du programme (<span class="kbd">cout_total = prix_matiere × quantite + cout_emballage</span>), calcule le coût total affiché pour ces valeurs initiales :<div class="vb-prog vb-inline" data-blocs="[[&quot;set&quot;, &quot;prix_matiere&quot;, 437], [&quot;set&quot;, &quot;quantite&quot;, 78], [&quot;set&quot;, &quot;cout_emballage&quot;, 139]]"></div><input type="number" id="q92"></div>
+<div class="question" data-qnum="19"><strong>8.2</strong> En utilisant la formule du programme (<span class="kbd">cout_total = prix_matiere × quantite + cout_emballage</span>), calcule le coût total affiché pour ces valeurs initiales :<span class="bloc-cadre bloc-cadre-ligne"><img class="bloc-capture" src="Images/bloc_vitta_B11.png" width="370" height="162" loading="lazy" alt="Programme en blocs : affecter à prix_matiere la valeur 437 ; affecter à quantite la valeur 78 ; affecter à cout_emballage la valeur 139."></span><input type="number" id="q92"></div>
 <div class="question" data-qnum="20"><strong>8.3</strong> Si cout_emballage = 5, quel devient le coût total ?<input type="number" id="q93"></div>
 <div class="question" data-qnum="21"><strong>8.4</strong> Si une remise de 26 € est déduite du coût total obtenu en 8.3, quel est le coût total final ?<input type="number" id="q94"></div>
 </section>
@@ -894,13 +879,13 @@ Dans chaque exercice, un encadré 🧩 montre les blocs à assembler et les vari
     <li>Glisse les blocs <span class="vb-cat vb-c-var">affecter à … la valeur</span>, les nombres et les opérations de <span class="vb-cat vb-c-math">Math</span>, puis <span class="vb-cat vb-c-aff">afficher</span> (catégorie Affichage).</li>
     <li>Empile-les <strong>dans le même ordre</strong> que ci-dessous, puis clique sur <strong>▶ Exécuter</strong>.</li>
   </ol>
-  <p class="vitta-hint">💡 Pour chaque situation : construis les blocs, puis <strong>ajoute toi-même</strong> le bloc en pointillés et exécute.</p>
+  <p class="vitta-hint">💡 Pour chaque situation : construis les blocs, puis <strong>complète toi-même</strong> le bloc « affecter à cout_total la valeur » : sa case est vide. Mets-y le calcul, puis exécute.</p>
   <p class="vitta-label">9.1 Voiture solaire</p>
-  <div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;prix_panneau&quot;, 145], [&quot;set&quot;, &quot;quantite&quot;, 6], [&quot;set&quot;, &quot;cout_assemblage&quot;, 58], [&quot;todo&quot;, &quot;affecter à cout_total la valeur prix_panneau × quantite + cout_assemblage&quot;], [&quot;print&quot;, {&quot;v&quot;: &quot;cout_total&quot;}]]"></div>
+  <div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B12.png" width="379" height="248" loading="lazy" alt="Programme en blocs : affecter à prix_panneau la valeur 145 ; affecter à quantite la valeur 6 ; affecter à cout_assemblage la valeur 58 ; affecter à cout_total la valeur, case vide à compléter ; afficher cout_total."></div>
   <p class="vitta-label">9.2 Boîtiers domotiques</p>
-  <div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;prix_boitiers&quot;, 32], [&quot;set&quot;, &quot;quantite&quot;, 18], [&quot;set&quot;, &quot;cout_transport&quot;, 24], [&quot;todo&quot;, &quot;affecter à cout_total la valeur prix_boitiers × quantite + cout_transport&quot;], [&quot;print&quot;, {&quot;v&quot;: &quot;cout_total&quot;}]]"></div>
+  <div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B13.png" width="360" height="248" loading="lazy" alt="Programme en blocs : affecter à prix_boitiers la valeur 32 ; affecter à quantite la valeur 18 ; affecter à cout_transport la valeur 24 ; affecter à cout_total la valeur, case vide à compléter ; afficher cout_total."></div>
   <p class="vitta-label">9.3 Kits d’arrosage</p>
-  <div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;prix_kit&quot;, 27], [&quot;set&quot;, &quot;quantite&quot;, 14], [&quot;set&quot;, &quot;cout_capteur&quot;, 33], [&quot;todo&quot;, &quot;affecter à cout_total la valeur prix_kit × quantite + cout_capteur&quot;], [&quot;print&quot;, {&quot;v&quot;: &quot;cout_total&quot;}]]"></div>
+  <div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B14.png" width="349" height="248" loading="lazy" alt="Programme en blocs : affecter à prix_kit la valeur 27 ; affecter à quantite la valeur 14 ; affecter à cout_capteur la valeur 33 ; affecter à cout_total la valeur, case vide à compléter ; afficher cout_total."></div>
   <div class="vitta-actions">
     <a class="resource-link" href="https://fr.vittascience.com/python/?console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
   </div>
@@ -911,9 +896,9 @@ Dans chaque exercice, un encadré 🧩 montre les blocs à assembler et les vari
   </details>
 </div>
 <!-- FIN_INTERFACE_VITTASCIENCE_EXO_9 -->
-<div class="question" data-qnum="22"><strong>9.1</strong> Maquette de voiture solaire – Ajoute le bloc <span class="kbd">cout_total = prix_panneau × quantite + cout_assemblage</span>, exécute dans Vittascience et entre le coût total affiché :<div class="vb-prog vb-inline" data-blocs="[[&quot;set&quot;, &quot;prix_panneau&quot;, 145], [&quot;set&quot;, &quot;quantite&quot;, 6], [&quot;set&quot;, &quot;cout_assemblage&quot;, 58]]"></div><input type="number" id="q101"></div>
-<div class="question" data-qnum="23"><strong>9.2</strong> Boîtiers domotiques – Ajoute le bloc <span class="kbd">cout_total = prix_boitiers × quantite + cout_transport</span>, exécute dans Vittascience et entre le coût total affiché :<div class="vb-prog vb-inline" data-blocs="[[&quot;set&quot;, &quot;prix_boitiers&quot;, 32], [&quot;set&quot;, &quot;quantite&quot;, 18], [&quot;set&quot;, &quot;cout_transport&quot;, 24]]"></div><input type="number" id="q102"></div>
-<div class="question" data-qnum="24"><strong>9.3</strong> Kits d’arrosage connectés – Ajoute le bloc <span class="kbd">cout_total = prix_kit × quantite + cout_capteur</span>, exécute dans Vittascience et entre le coût total affiché :<div class="vb-prog vb-inline" data-blocs="[[&quot;set&quot;, &quot;prix_kit&quot;, 27], [&quot;set&quot;, &quot;quantite&quot;, 14], [&quot;set&quot;, &quot;cout_capteur&quot;, 33]]"></div><input type="number" id="q103"></div>
+<div class="question" data-qnum="22"><strong>9.1</strong> Maquette de voiture solaire – Ajoute le bloc <span class="kbd">cout_total = prix_panneau × quantite + cout_assemblage</span>, exécute dans Vittascience et entre le coût total affiché :<span class="bloc-cadre bloc-cadre-ligne"><img class="bloc-capture" src="Images/bloc_vitta_B15.png" width="379" height="162" loading="lazy" alt="Programme en blocs : affecter à prix_panneau la valeur 145 ; affecter à quantite la valeur 6 ; affecter à cout_assemblage la valeur 58."></span><input type="number" id="q101"></div>
+<div class="question" data-qnum="23"><strong>9.2</strong> Boîtiers domotiques – Ajoute le bloc <span class="kbd">cout_total = prix_boitiers × quantite + cout_transport</span>, exécute dans Vittascience et entre le coût total affiché :<span class="bloc-cadre bloc-cadre-ligne"><img class="bloc-capture" src="Images/bloc_vitta_B16.png" width="360" height="162" loading="lazy" alt="Programme en blocs : affecter à prix_boitiers la valeur 32 ; affecter à quantite la valeur 18 ; affecter à cout_transport la valeur 24."></span><input type="number" id="q102"></div>
+<div class="question" data-qnum="24"><strong>9.3</strong> Kits d’arrosage connectés – Ajoute le bloc <span class="kbd">cout_total = prix_kit × quantite + cout_capteur</span>, exécute dans Vittascience et entre le coût total affiché :<span class="bloc-cadre bloc-cadre-ligne"><img class="bloc-capture" src="Images/bloc_vitta_B17.png" width="349" height="162" loading="lazy" alt="Programme en blocs : affecter à prix_kit la valeur 27 ; affecter à quantite la valeur 14 ; affecter à cout_capteur la valeur 33."></span><input type="number" id="q103"></div>
 <div class="question" data-qnum="25"><strong>9.4</strong> Dans ces trois cas, qu’est-ce qui change : la logique du programme, ou seulement les noms des variables et les valeurs ?<textarea id="q104"></textarea></div>
 </section>
 
@@ -933,7 +918,16 @@ Dans chaque exercice, un encadré 🧩 montre les blocs à assembler et les vari
 </div>
 <div class="media">
 <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;"><div id="waterLed" style="width:34px;height:34px;border-radius:50%;background:#666;border:2px solid rgba(255,255,255,.25)"></div><div><strong>Décision :</strong> <span id="waterDecision">Arroser</span><div class="small" id="waterReason">Les conditions sont réunies.</div></div></div>
-<div id="waterBlocks" class="vb-prog vb-inline"></div><button type="button" class="secondary" onclick="resetIrrigation()">Réinitialiser les valeurs par défaut</button>
+<table class="tab-cond" id="waterTable"><caption>Les quatre conditions, testées avec les valeurs des curseurs</caption>
+<thead><tr><th scope="col">Condition</th><th scope="col">Avec les curseurs</th><th scope="col">Résultat</th></tr></thead>
+<tbody>
+<tr id="cond1"><th scope="row">temperature &gt; 25</th><td></td><td></td></tr>
+<tr id="cond2"><th scope="row">luminosite &gt; 60</th><td></td><td></td></tr>
+<tr id="cond3"><th scope="row">humidite_sol &lt; 40</th><td></td><td></td></tr>
+<tr id="cond4"><th scope="row">temps &gt; 12</th><td></td><td></td></tr>
+</tbody>
+<tfoot><tr><th scope="row" colspan="2">Les quatre sont vraies (« et ») ?</th><td id="condBilan"></td></tr></tfoot></table>
+<button type="button" class="secondary" onclick="resetIrrigation()">Réinitialiser les valeurs par défaut</button>
 </div>
 <!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_10 -->
 <div class="vitta-choice" id="interface-vittascience-exo-10">
@@ -945,7 +939,7 @@ Dans chaque exercice, un encadré 🧩 montre les blocs à assembler et les vari
     <li>Empile-les <strong>dans le même ordre</strong> que ci-dessous, puis clique sur <strong>▶ Exécuter</strong>.</li>
   </ol>
   <p class="vitta-hint">💡 Bloc « si … alors … sinon » : catégorie <strong>Logique</strong>. Le bloc « et » est aussi dans Logique, les comparaisons (&gt;, &lt;) aussi.</p>
-  <div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B18.png" width="684" height="630" loading="lazy" alt="Programme en blocs : affecter à temperature la valeur 30 ; affecter à luminosite la valeur 75 ; affecter à humidite_sol la valeur 20 ; affecter à temps la valeur 18 ; si temperature &gt; 25 et luminosite &gt; 60 et humidite_sol &lt; 40 et temps &gt; 12 alors : affecter à arroser la valeur 1 ; sinon : affecter à arroser la valeur 0 ; afficher arroser."></div>
+  <div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B18.png" width="684" height="630" loading="lazy" alt="Programme en blocs : affecter à temperature la valeur 30 ; affecter à luminosite la valeur 75 ; affecter à humidite_sol la valeur 20 ; affecter à temps la valeur 18 ; si temperature &gt; 25 et luminosite &gt; 60 et humidite_sol &lt; 40 et temps &gt; 12 alors : affecter à arroser la valeur 1 ; sinon : affecter à arroser la valeur 0 ; afficher arroser."></div><p class="small bloc-legende">Dans Vittascience : clic droit sur le bloc → Entrées externes pour obtenir le même affichage.</p>
   <div class="vitta-actions">
     <a class="resource-link" href="https://fr.vittascience.com/python/?console=bottom" target="_blank" rel="noopener">🚀 Ouvrir Vittascience</a>
   </div>
@@ -977,20 +971,20 @@ Dans chaque exercice, un encadré 🧩 montre les blocs à assembler et les vari
 <section class="card" id="mini-cours">
 <h2>Mini-cours : variables, nombres entiers, nombres décimaux et textes</h2>
 <p>Une <strong>variable</strong> mémorise une information. Avec les blocs, on lui donne une valeur grâce au bloc rouge <span class="vb-cat vb-c-var">affecter à … la valeur</span>.</p>
-<table>
+<div class="tab-defile"><table>
 <thead><tr><th>Ce qu’on range</th><th>Exemple en blocs</th><th>Où trouver le bloc</th></tr></thead>
 <tbody>
-<tr><td><strong>Nombre entier</strong> : quantité, compteur, nombre d’objets</td><td><div class="vb-prog vb-inline" data-blocs="[[&quot;set&quot;, &quot;age&quot;, 14]]"></div></td><td><span class="vb-cat vb-c-math">Math</span> : bloc nombre</td></tr>
-<tr><td><strong>Nombre décimal</strong> : température, longueur, prix, vitesse</td><td><div class="vb-prog vb-inline" data-blocs="[[&quot;set&quot;, &quot;distance&quot;, 12.5]]"></div></td><td><span class="vb-cat vb-c-math">Math</span> : bloc nombre, avec un <strong>point</strong></td></tr>
-<tr><td><strong>Texte</strong> : nom, message, étiquette</td><td><div class="vb-prog vb-inline" data-blocs="[[&quot;set&quot;, &quot;nom&quot;, {&quot;t&quot;: &quot;Luna&quot;}]]"></div></td><td><span class="vb-cat vb-c-txt">Texte</span> : bloc avec guillemets « »</td></tr>
+<tr><td><strong>Nombre entier</strong> : quantité, compteur, nombre d’objets</td><td><span class="bloc-cadre bloc-cadre-ligne"><img class="bloc-capture" src="Images/bloc_vitta_B19.png" width="287" height="76" loading="lazy" alt="Programme en blocs : affecter à age la valeur 14."></span></td><td><span class="vb-cat vb-c-math">Math</span> : bloc nombre</td></tr>
+<tr><td><strong>Nombre décimal</strong> : température, longueur, prix, vitesse</td><td><span class="bloc-cadre bloc-cadre-ligne"><img class="bloc-capture" src="Images/bloc_vitta_B20.png" width="325" height="76" loading="lazy" alt="Programme en blocs : affecter à distance la valeur 12.5."></span></td><td><span class="vb-cat vb-c-math">Math</span> : bloc nombre, avec un <strong>point</strong></td></tr>
+<tr><td><strong>Texte</strong> : nom, message, étiquette</td><td><span class="bloc-cadre bloc-cadre-ligne"><img class="bloc-capture" src="Images/bloc_vitta_B21.png" width="352" height="76" loading="lazy" alt="Programme en blocs : affecter à nom la valeur « Luna »."></span></td><td><span class="vb-cat vb-c-txt">Texte</span> : bloc avec guillemets « »</td></tr>
 </tbody>
-</table>
+</table></div>
 <div class="note">Les nombres décimaux s’écrivent avec un point : <span class="kbd">4.5</span>, et pas 4,5.</div>
 </section>
 
 <section class="card" id="tuto-variable-blocs">
 <h2>Créer et utiliser une variable avec les blocs, pas à pas</h2>
-<div class="note"><strong>Objectif :</strong> construire ce petit programme, puis l’exécuter.<div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;score&quot;, 10], [&quot;set&quot;, &quot;score&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;score&quot;}, &quot;+&quot;, 5]], [&quot;print&quot;, {&quot;v&quot;: &quot;score&quot;}]]"></div></div>
+<div class="note"><strong>Objectif :</strong> construire ce petit programme, puis l’exécuter.<div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B22.png" width="440" height="169" loading="lazy" alt="Programme en blocs : affecter à score la valeur 10 ; affecter à score la valeur score + 5 ; afficher score."></div></div>
 <ol class="vb-tuto">
 <li><strong>Ouvrir Vittascience</strong> et choisir l’affichage <strong>Blocs</strong>. <a class="resource-link" href="https://fr.vittascience.com/python/?console=bottom" target="_blank" rel="noopener">Ouvrir Vittascience</a></li>
 <li>Cliquer sur la catégorie <span class="vb-cat vb-c-var">Variables</span>, puis sur <strong>« Créer une variable… »</strong>. Taper le nom <strong>score</strong> (sans espace ni accent) et valider.</li>
@@ -1011,34 +1005,34 @@ Dans chaque exercice, un encadré 🧩 montre les blocs à assembler et les vari
 <h2>10 exercices supplémentaires non notés – Pour aller plus loin</h2>
 <p>Ces exercices sont progressifs. Construis chaque programme en blocs dans Vittascience, exécute-le, puis change les valeurs des variables.</p>
 <h3>Bonus 1 – Présentation avec un texte</h3>
-<div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;prenom&quot;, {&quot;t&quot;: &quot;Luna&quot;}], [&quot;print&quot;, [&quot;join&quot;, {&quot;t&quot;: &quot;Bonjour &quot;}, {&quot;v&quot;: &quot;prenom&quot;}]]]"></div>
+<div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B23.png" width="496" height="126" loading="lazy" alt="Programme en blocs : affecter à prenom la valeur « Luna » ; afficher créer le texte « Bonjour » puis prenom."></div>
 <p class="small">💡 Remplace Luna par ton prénom. Le bloc « créer un texte avec » est dans <span class="vb-cat vb-c-txt">Texte</span>.</p>
 <h3>Bonus 2 – Addition de deux entiers</h3>
-<div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;a&quot;, 12], [&quot;set&quot;, &quot;b&quot;, 30], [&quot;set&quot;, &quot;somme&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;a&quot;}, &quot;+&quot;, {&quot;v&quot;: &quot;b&quot;}]], [&quot;print&quot;, {&quot;v&quot;: &quot;somme&quot;}]]"></div>
+<div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B24.png" width="427" height="212" loading="lazy" alt="Programme en blocs : affecter à a la valeur 12 ; affecter à b la valeur 30 ; affecter à somme la valeur a + b ; afficher somme."></div>
 <p class="small">💡 Change les valeurs de a et b, et prévois le résultat avant d’exécuter.</p>
 <h3>Bonus 3 – Prix total avec un nombre décimal</h3>
-<div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;prix&quot;, 2.5], [&quot;set&quot;, &quot;quantite&quot;, 4], [&quot;set&quot;, &quot;total&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;prix&quot;}, &quot;×&quot;, {&quot;v&quot;: &quot;quantite&quot;}]], [&quot;print&quot;, {&quot;v&quot;: &quot;total&quot;}]]"></div>
+<div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B25.png" width="476" height="212" loading="lazy" alt="Programme en blocs : affecter à prix la valeur 2.5 ; affecter à quantite la valeur 4 ; affecter à total la valeur prix × quantite ; afficher total."></div>
 <p class="small">💡 Attention : 2.5 s’écrit avec un point.</p>
 <h3>Bonus 4 – Kilomètres vers miles</h3>
-<div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;km&quot;, 10], [&quot;set&quot;, &quot;miles&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;km&quot;}, &quot;×&quot;, 0.621]], [&quot;print&quot;, {&quot;v&quot;: &quot;miles&quot;}]]"></div>
+<div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B26.png" width="436" height="169" loading="lazy" alt="Programme en blocs : affecter à km la valeur 10 ; affecter à miles la valeur km × 0.621 ; afficher miles."></div>
 <p class="small">💡 Combien de miles pour 42 km (un marathon) ?</p>
 <h3>Bonus 5 – Celsius vers Fahrenheit</h3>
-<div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;celsius&quot;, 30], [&quot;set&quot;, &quot;fahrenheit&quot;, [&quot;op&quot;, [&quot;op&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;celsius&quot;}, &quot;×&quot;, 9], &quot;÷&quot;, 5], &quot;+&quot;, 32]], [&quot;print&quot;, {&quot;v&quot;: &quot;fahrenheit&quot;}]]"></div>
+<div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B27.png" width="694" height="184" loading="lazy" alt="Programme en blocs : affecter à celsius la valeur 30 ; affecter à fahrenheit la valeur celsius × 9 ÷ 5 + 32 ; afficher fahrenheit."></div>
 <p class="small">💡 Essaie 0 °C, puis 100 °C.</p>
 <h3>Bonus 6 – Aire d’un triangle</h3>
-<div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;base&quot;, 8], [&quot;set&quot;, &quot;hauteur&quot;, 5], [&quot;set&quot;, &quot;aire&quot;, [&quot;op&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;base&quot;}, &quot;×&quot;, {&quot;v&quot;: &quot;hauteur&quot;}], &quot;÷&quot;, 2]], [&quot;print&quot;, {&quot;v&quot;: &quot;aire&quot;}]]"></div>
+<div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B28.png" width="577" height="220" loading="lazy" alt="Programme en blocs : affecter à base la valeur 8 ; affecter à hauteur la valeur 5 ; affecter à aire la valeur base × hauteur ÷ 2 ; afficher aire."></div>
 <p class="small">💡 Change la base et la hauteur.</p>
 <h3>Bonus 7 – Répéter un message</h3>
-<div class="vb-prog " data-blocs="[[&quot;repeat&quot;, 3, [[&quot;print&quot;, {&quot;t&quot;: &quot;Bravo !&quot;}]]]]"></div>
+<div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B29.png" width="232" height="148" loading="lazy" alt="Programme en blocs : répéter 3 fois : afficher « Bravo ! »."></div>
 <p class="small">💡 Le bloc « répéter … fois » est dans <span class="vb-cat vb-c-loop">Boucles</span>.</p>
 <h3>Bonus 8 – Turtle : un carré</h3>
-<div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;cote&quot;, 100], [&quot;repeat&quot;, 4, [[&quot;call&quot;, &quot;avancer de&quot;, {&quot;v&quot;: &quot;cote&quot;}], [&quot;call&quot;, &quot;tourner à droite de&quot;, 90]]]]"></div>
-<p class="small">💡 Catégorie <span class="vb-cat vb-c-turtle">Turtle</span>. Les noms exacts des blocs peuvent varier légèrement.</p>
+<div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B30.png" width="301" height="234" loading="lazy" alt="Programme en blocs : affecter à cote la valeur 100 ; répéter 4 fois : avancer de cote, tourner à droite de 90 degrés."></div>
+<p class="small">💡 Catégorie <span class="vb-cat vb-c-turtle">Turtle</span>.</p>
 <h3>Bonus 9 – Turtle : un triangle coloré</h3>
 <div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B31.png" width="366" height="277" loading="lazy" alt="Programme en blocs : définir le tracé de couleur rouge, largeur 5 ; affecter à cote la valeur 120 ; répéter 3 fois : avancer de cote, tourner à droite de 120 degrés."></div>
 <p class="small">💡 Pourquoi tourne-t-on de 120° et pas de 60° ?</p>
 <h3>Bonus 10 – Turtle : une spirale</h3>
-<div class="vb-prog " data-blocs="[[&quot;set&quot;, &quot;longueur&quot;, 10], [&quot;repeat&quot;, 20, [[&quot;call&quot;, &quot;avancer de&quot;, {&quot;v&quot;: &quot;longueur&quot;}], [&quot;call&quot;, &quot;tourner à droite de&quot;, 90], [&quot;set&quot;, &quot;longueur&quot;, [&quot;op&quot;, {&quot;v&quot;: &quot;longueur&quot;}, &quot;+&quot;, 10]]]]]"></div>
+<div class="bloc-cadre"><img class="bloc-capture" src="Images/bloc_vitta_B32.png" width="499" height="284" loading="lazy" alt="Programme en blocs : affecter à longueur la valeur 10 ; répéter 20 fois : avancer de longueur, tourner à droite de 90 degrés, affecter à longueur la valeur longueur + 10."></div>
 <p class="small">💡 La variable longueur grandit à chaque tour de boucle : c’est elle qui fait la spirale.</p>
 </section>
 
@@ -1064,9 +1058,9 @@ function updateIrrigation(){
   const on=(t>25 && l>60 && h<40 && tm>12), led=document.getElementById('waterLed');
   document.getElementById('waterDecision').textContent=on?'Arroser':'Ne pas arroser'; document.getElementById('waterReason').textContent=on?'Les conditions sont réunies.':'Au moins une condition n’est pas remplie.';
   led.style.background=on?'#39d6a1':'#666'; led.style.boxShadow=on?'0 0 18px rgba(57,214,161,.8)':'none';
-  const wb=document.getElementById('waterBlocks');
-  if(wb && window.vbRender){ const sp=[["set", "temperature", 30], ["set", "luminosite", 75], ["set", "humidite_sol", 20], ["set", "temps", 18], ["if", ["op", ["op", ["op", ["op", {"v": "temperature"}, ">", 25], "et", ["op", {"v": "luminosite"}, ">", 60]], "et", ["op", {"v": "humidite_sol"}, "<", 40]], "et", ["op", {"v": "temps"}, ">", 12]], [["set", "arroser", 1]], [["set", "arroser", 0]]], ["print", {"v": "arroser"}]];
-    sp[0][2]=t; sp[1][2]=l; sp[2][2]=h; sp[3][2]=tm; wb.setAttribute('data-blocs', JSON.stringify(sp)); window.vbRender(wb); }
+  [[t>25,t+' > 25'],[l>60,l+' > 60'],[h<40,h+' < 40'],[tm>12,tm+' > 12']].forEach(function(c,i){
+    const tr=document.getElementById('cond'+(i+1)); tr.cells[1].textContent=c[1]; tr.cells[2].textContent=c[0]?'✔ vrai':'✘ faux'; tr.className=c[0]?'vrai':'faux'; });
+  document.getElementById('condBilan').textContent=on?'✔ oui : arroser reçoit 1':'✘ non : arroser reçoit 0';
 }
 window.addEventListener('load', function(){ startTimer(); updateIrrigation(); });
 
@@ -1735,36 +1729,8 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 
 <script>
-/* BLOCS_VITTASCIENCE (01/10/2026) : dessine les programmes en blocs (data-blocs) */
-(function(){
-  function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
-  function ex(e){
-    if(typeof e === "number") return '<span class="vb-num">'+String(e)+'</span>';
-    if(Array.isArray(e)){
-      if(e[0] === "op") return '<span class="vb-op">'+ex(e[1])+'<span class="vb-sym">'+esc(e[2])+'</span>'+ex(e[3])+'</span>';
-      if(e[0] === "join") return '<span class="vb-txt">créer un texte avec '+e.slice(1).map(ex).join(" ")+'</span>';
-    }
-    if(e && e.v !== undefined) return '<span class="vb-var">'+esc(e.v)+'</span>';
-    if(e && e.t !== undefined) return '<span class="vb-txt">“<b>'+esc(e.t)+'</b>”</span>';
-    return esc(e);
-  }
-  function st(s){
-    var k = s[0];
-    if(k === "set") return '<div class="vb-stmt vb-set">affecter à <span class="vb-dd">'+esc(s[1])+'</span> la valeur '+ex(s[2])+'</div>';
-    if(k === "print") return '<div class="vb-stmt vb-print">afficher '+ex(s[1])+'</div>';
-    if(k === "call") return '<div class="vb-stmt vb-turtle">'+esc(s[1])+' '+ex(s[2])+'</div>';
-    if(k === "todo") return '<div class="vb-stmt vb-todo">➕ à ajouter : '+esc(s[1])+'</div>';
-    if(k === "repeat") return '<div class="vb-stmt vb-loop"><span class="vb-row">répéter '+ex(s[1])+' fois</span><div class="vb-body">'+s[2].map(st).join("")+'</div></div>';
-    if(k === "if") return '<div class="vb-stmt vb-ctrl"><span class="vb-row">si '+ex(s[1])+' alors</span><div class="vb-body">'+s[2].map(st).join("")+'</div>'+
-                         (s[3] && s[3].length ? '<span class="vb-row">sinon</span><div class="vb-body">'+s[3].map(st).join("")+'</div>' : '')+'</div>';
-    return "";
-  }
-  window.vbRender = function(el){
-    try{ var sp = JSON.parse(el.getAttribute("data-blocs") || "[]"); el.innerHTML = sp.map(st).join(""); }catch(e){ el.textContent = "(blocs illisibles)"; }
-  };
-  function tout(){ document.querySelectorAll("[data-blocs]").forEach(window.vbRender); if(typeof updateIrrigation === "function") updateIrrigation(); }
-  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", tout); else tout();
-})();
+/* Règle d'or n°308 (18/10/2026) : plus de dessin de blocs ; il ne reste que le tableau de l'exercice 10. */
+if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", updateIrrigation); else updateIrrigation();
 </script>
 <script>
 /* Règle d'or n°308 (18/10/2026) : la loupe des captures de blocs (patron de 4e_C9.1).
