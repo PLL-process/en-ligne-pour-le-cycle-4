@@ -168,3 +168,20 @@ a été mesuré à la main avec le programme exact de l'activité 3 et n'est pas
 
 La consigne de l'activité 3 porte maintenant « Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs. » : elle limite ce qu'on tape dans le volet Python, pour que le programme reste traduisible en blocs. Un contrôle ajouté : **67 / 67** (66 avant).
 
+
+## 8. Rejouée le 19/10/2026 (relecture pour le distanciel)
+
+**Ce que la relecture a trouvé, et que la suite ne voyait pas.** La suite choisissait les bonnes réponses par leur **rang**
+(`{ index: 1 }`) : elle passait parce que la bonne réponse était **toujours la première** — 23 menus vérifiés sur 23, et 22 fois la
+plus longue. Elle validait aussi l'activité 6 avec « le sens », la réponse attendue par la page, alors que l'aide de niveau 2 et la
+correction disaient que le sens ne s'inverse pas.
+
+**Ce qui change dans la suite.** Les réponses sont choisies par leur **texte** (table `BONNE`), et trois contrôles sont ajoutés :
+chaque bonne réponse existe dans son menu ; elle n'est en tête que dans moins d'un tiers des menus (5 / 22) ; aucune n'est détachée
+par sa longueur de plus de 8 caractères (même seuil que `controle_longueurs.py`, règle n°198). **Résultat : 70 / 70** (67 avant).
+
+**Mutation, elle mord** : la bonne réponse de `a5_q4` remise à sa formulation d'avant (« RIEN : la pompe garde son état précédent, et
+c'est exactement ce qui supprime le clignotement ») → le contrôle de longueur échoue et nomme `a5_q4` (exécuté sur une copie du lot).
+
+Non rejoué ici : le lexique régénéré (48 mots par séance) est vérifié par `generer_lexique.py` lui-même (formes présentes dans leur
+panneau, sources présentes, aucun conflit avec un « à retenir ») et par le banc de l'outil, dans le dossier des outils du dépôt (28 / 28).

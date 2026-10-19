@@ -283,12 +283,31 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   ok("act. 1 : les 4 étapes du simulateur délivrent le badge", /🔓|badge/i.test(badge), badge.trim().slice(0, 50));
   await shot(page, "simulateur_memoire", "#memEcran");
   await page.selectOption("#a1q1", "21");
-  await page.selectOption("#a1q2", "il a été REMPLACÉ par 21 — une boîte ne garde qu'UNE valeur");
+  await page.selectOption("#a1q2", "il a été remplacé par 21 : il n'existe plus");
   await page.selectOption("#a1q3", "« RANGE cette valeur dans la boîte »");
   await page.click('.btn.check[data-check="1"]');
   await page.waitForTimeout(150);
   ok("act. 1 : validée 3/3 avec le vérificateur exact",
      /activité validée/.test(await page.locator("#fb1").textContent()));
+}
+
+/* — règles n°144 et n°198 dans les activités : ni le rang ni la longueur ne désignent la bonne réponse —
+     (lu dans les vérificateurs sv("id","réponse") de la page : c'est leur réponse qui est mesurée) */
+{
+  const src = fs.readFileSync(path.join(LOT, SEQ), "utf8");
+  const paires = [...src.matchAll(/sv\("([^"]+)","([^"]+)"\)/g)].map(m => [m[1], m[2]]);
+  const forme = await page.evaluate((P) => P.map(([id, rep]) => {
+    const o = [...document.querySelectorAll("#" + id + " option")].map(x => x.textContent).filter(x => x && !x.startsWith("—"));
+    const autres = o.filter(x => x !== rep).map(x => x.length);
+    return { id, rang: o.indexOf(rep), detachee: rep.length > Math.max(...autres) + 8 || rep.length < Math.min(...autres) - 8 };
+  }), paires);
+  const premieres = forme.filter(x => x.rang === 0).length;
+  ok("activités : chaque réponse attendue existe dans son menu (" + forme.length + " menus)",
+     forme.length >= 15 && forme.every(x => x.rang >= 0), forme.filter(x => x.rang < 0).map(x => x.id).join(", "));
+  ok("activités : la bonne réponse n'est en tête que dans moins d'un tiers des menus (" + premieres + "/" + forme.length + ")",
+     premieres * 3 < forme.length);
+  ok("activités : aucune bonne réponse détachée par sa longueur (> 8 caractères)", forme.every(x => !x.detachee),
+     forme.filter(x => x.detachee).map(x => x.id).join(", "));
 }
 
 /* — le banc de l'activité 4 : le bug FOURNI doit se voir — */
@@ -343,6 +362,32 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
      /^1 \/ 5/.test((await page.locator("#progTxt").textContent()).trim()));
   ok("restauration : les réponses saisies sont restituées",
      (await page.locator("#a1q1").inputValue()) === "21");
+}
+
+/* — 5e_C9.3 : l'activité 5 exige le programme de la barrière écrit par l'élève — */
+{
+  await page.click("#tab-s3");
+  await page.waitForTimeout(150);
+  for (const t of ["1", "2", "3"]) { await page.click(`.bench-barr[data-t="${t}"]`); await page.waitForTimeout(90); }
+  for (const [id, v] of [["a5q1", "places = places + descendus"], ["a5q2", "la ligne 1 : places = 32"],
+                         ["a5q3", "parce que le nombre de sièges n'est écrit qu'une fois"],
+                         ["a5q4", "fausse : la barrière se ferme"], ["a5q5", "c'est le cas frontière, pile à la limite"]])
+    await page.selectOption("#" + id, v);
+  await page.click('.btn.check[data-check="5"]');
+  await page.waitForTimeout(150);
+  ok("act. 5 : sans programme de barrière, 5/6 et pas de validation",
+     /5\/6/.test(await page.locator("#fb5").textContent()) && !/activité validée/.test(await page.locator("#fb5").textContent()));
+  await page.fill("#progBarr", "places = 0\nif places > 0 :\n    print(\"OUVERTE\")\nelse:\n    print(\"FERMÉE\")");
+  await page.click('.btn.check[data-check="5"]');
+  await page.waitForTimeout(150);
+  ok("act. 5 : validée 6/6 avec le programme if / else de la barrière",
+     /activité validée/.test(await page.locator("#fb5").textContent()) && /6\/6/.test(await page.locator("#fb5").textContent()));
+  await page.fill("#progBarr", "places = 0\nif places >= 0:\n    print(\"OUVERTE\")\nelse:\n    print(\"FERMÉE\")");
+  await page.click('.btn.check[data-check="5"]');
+  await page.waitForTimeout(150);
+  ok("act. 5 : « places >= 0 » (frontière fausse) n'est pas accepté",
+     !/6\/6/.test(await page.locator("#fb5").textContent()));
+  await shot(page, "act5_programme_barriere", "#fb5");
 }
 
 /* — réseau — */

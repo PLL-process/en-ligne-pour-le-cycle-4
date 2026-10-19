@@ -249,6 +249,7 @@
 /* règle d'or n°305 — une activité qui demande Internet le dit à son début */
 .activite-en-ligne{border-left:4px solid #ffd66b;background:rgba(255,214,107,.12);padding:.55em .85em;border-radius:0 8px 8px 0;margin:.6em 0 .8em;font-size:.95em;line-height:1.45}
 @media print{.activite-en-ligne,.activite-en-ligne b{color:#1a1a1a!important}.activite-en-ligne{background:#fff8e1!important;border-left-color:#8a6400!important}}
+.mots-seance{margin:0 0 10px;font-size:.92em}
 </style>
 <style id="jardin-css">
   /* Banc d'essai du jardin — mêmes conventions de couleur que le lot 3e (règle n°120) */
@@ -338,9 +339,9 @@
 <section class="card" id="billet">
   <h2>🎫 Billet d'entrée — trois questions, sans note</h2>
   <p>Trois questions sur ce que tu es censé savoir en arrivant. <b>Elles ne comptent pas dans ta progression et ne sont pas notées</b> : elles servent à savoir, toi comme le professeur, sur quoi s'appuyer. Réponds franchement — « je ne sais pas » est une réponse utile.</p>
-  <div class="assoc"><label for="be_1">Une <b>variable</b>, en informatique, c'est…</label><select id="be_1"><option value="">— choisir —</option><option>une boîte qui porte un nom et contient une valeur qu'on peut changer</option><option>un nombre qui change tout seul</option><option>une erreur du programme</option><option>je ne sais pas encore</option></select></div>
-  <div class="assoc"><label for="be_2">Dans « SI la température &lt; 5 ALORS allumer le chauffage », le mot SI introduit…</label><select id="be_2"><option value="">— choisir —</option><option>une condition : une question à laquelle on répond OUI ou NON</option><option>une boucle qui répète</option><option>le nom d'une variable</option><option>je ne sais pas encore</option></select></div>
-  <div class="assoc"><label for="be_3">Un capteur d'humidité, dans la chaîne d'information, occupe la fonction…</label><select id="be_3"><option value="">— choisir —</option><option>ACQUÉRIR</option><option>TRAITER</option><option>COMMUNIQUER</option><option>je ne sais pas encore</option></select></div>
+  <div class="assoc"><label for="be_1">Une <b>variable</b>, en informatique, c'est…</label><select id="be_1"><option value="">— choisir —</option><option>un nombre qui change tout seul, au hasard</option><option>une boîte qui porte un nom et contient une valeur</option><option>une erreur que le programme doit corriger</option><option>je ne sais pas encore</option></select></div>
+  <div class="assoc"><label for="be_2">Dans « SI la température &lt; 5 ALORS allumer le chauffage », le mot SI introduit…</label><select id="be_2"><option value="">— choisir —</option><option>une boucle qui répète des instructions</option><option>le nom d'une variable du programme</option><option>une condition : une question vraie ou fausse</option><option>je ne sais pas encore</option></select></div>
+  <div class="assoc"><label for="be_3">Un capteur d'humidité, dans la chaîne d'information, occupe la fonction…</label><select id="be_3"><option value="">— choisir —</option><option>TRAITER</option><option>ACQUÉRIR</option><option>COMMUNIQUER</option><option>je ne sais pas encore</option></select></div>
   <button class="btn small" id="btnBillet">Voir où j'en suis</button>
   <div class="feedback" id="fbBillet" role="status"></div>
 </section>
@@ -355,7 +356,7 @@
     <tr><td><b>4e_C9.3</b></td><td>Réaliser et mettre au point un programme commandant un système réel incluant éventuellement une interaction entre un humain et une machine.</td><td>Activités 4, 5 et 6 — le programme commande une vraie pompe ; on le <b>met au point</b> par le jeu d'essais, le diagnostic du clignotement et sa correction, puis on réinvestit la structure sur le lampadaire.</td></tr>
   </table>
   <p style="font-size:.9em;color:var(--sub)"><b>Lis les verbes.</b> En 4e, on <b>modifie</b> un algorithme — on ne part pas de la page blanche, on complète quelque chose qui existe : c'est exactement ce que demande l'activité 2. En 3e, la même famille de compétences dira « écrire » et « concevoir ». La progression du cycle est dans ces verbes-là, pas dans la difficulté des programmes.</p>
-  <p style="font-size:.88em;color:var(--sub);margin-bottom:0"><b>Domaines du socle réellement évalués ici :</b> <b>D1.3</b> (langages mathématiques, scientifiques et informatiques — le programme écrit) · <b>D2</b> (méthodes et outils pour apprendre — la démarche d'essai) · <b>D4</b> (systèmes naturels et systèmes techniques — concevoir, tester, mettre au point). <b>D5</b> est <i>contexte</i> — le jardin, l'eau, la ville — et n'est pas évalué (règle n°126).</p>
+  <p style="font-size:.88em;color:var(--sub);margin-bottom:0"><b>Domaines du socle réellement évalués ici :</b> <b>D1.3</b> (langages mathématiques, scientifiques et informatiques — le programme écrit) · <b>D2</b> (méthodes et outils pour apprendre — la démarche d'essai) · <b>D4</b> (systèmes naturels et systèmes techniques — concevoir, tester, mettre au point). <b>D5</b> est <i>contexte</i> — le jardin, l'eau, la ville — et n'est pas évalué.</p>
 </section>
 
 <div class="identite">
@@ -388,10 +389,10 @@
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
   <div class="declencheur">
-    <p><b>Le jardin du collège a soif — ou pas.</b> Le support de capteur, vous l'avez conçu (C7) et validé (C8). Le capteur est en terre, la pompe est branchée. Il ne manque plus qu'une chose, et c'est la plus difficile : <b>quelqu'un doit décider</b> quand arroser.</p>
+    <p><b>Le jardin du collège a soif — ou pas.</b> Imagine-le : le capteur d'humidité est planté dans la terre, sur son support, et la pompe est branchée. Il ne manque plus qu'une chose, et c'est la plus difficile : <b>quelqu'un doit décider</b> quand arroser.</p>
     <p>Ce quelqu'un, cette année, ce sera un <b>programme</b>. Et il devra tenir compte de deux choses au moins : la terre est-elle sèche, et est-ce le bon moment ? Arroser à midi en plein soleil, c'est perdre la moitié de l'eau en vapeur ; arroser la nuit en hiver, c'est risquer le gel sur les racines.</p>
   </div>
-  <p style="font-size:.9em;color:var(--sub)"><b>Ce jardin est le vôtre</b> — pas une invention pour l'exercice. Les seuils et la plage horaire, en revanche, sont des <b>valeurs de départ</b> proposées par le professeur : une partie du travail consistera justement à se demander si elles sont bonnes.</p>
+  <p style="font-size:.9em;color:var(--sub)"><b>Ce jardin pourrait être celui de ton collège</b> : un capteur, une pompe, une carte. Les seuils et la plage horaire, eux, sont des <b>valeurs de départ</b> proposées par le professeur : une partie du travail consistera justement à se demander si elles sont bonnes.</p>
 </section>
 
 <section class="card">
@@ -430,7 +431,7 @@
 <!-- ════════ TABLEAU DE BORD — règle d'or n°30 ════════ -->
 <section class="card" id="taches">
   <h2>🗺 Où en suis-je ?</h2>
-  <p style="font-size:.92em;color:var(--sub)">Cinq activités, réparties sur trois séances. Une case se coche quand l'activité est validée — pas quand elle est commencée.</p>
+  <p style="font-size:.92em;color:var(--sub)">Six activités, réparties sur trois séances. Une case se coche quand l'activité est validée — pas quand elle est commencée.</p>
   <div id="tachesBandeau" class="taches-bandeau"></div>
 </section>
 
@@ -492,6 +493,7 @@
 
 <!-- ══════════════════ SÉANCE 1 ══════════════════ -->
 <div class="seance-panel active" id="s1" role="tabpanel">
+<p class="mots-seance"><a href="lexique_4e_C9.1.html#seance-s1">📖 Les mots de cette séance</a></p>
 <section class="card">
   <h2>🌱 Séance 1 — Comprendre le système, puis dessiner la décision</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : qui décide, qui obéit — et à quoi ressemble une décision quand on la dessine ?</p>
@@ -515,15 +517,15 @@
     <div class="consigne"><b>Consigne :</b> a) place chaque organe dans sa fonction ; b) réponds aux deux questions sur le relais ; c) explique par écrit pourquoi l'heure est une entrée alors qu'aucun capteur ne la mesure.</div>
     <div class="exo">
       <h4>a) Chaque organe à sa place</h4>
-      <div class="assoc"><label for="a1_1">Le capteur d'humidité planté dans la terre</label><select id="a1_1"><option value="">— choisir —</option><option>ACQUÉRIR</option><option>TRAITER</option><option>COMMUNIQUER</option><option>ALIMENTER</option><option>CONVERTIR</option></select></div>
-      <div class="assoc"><label for="a1_2">La carte et son programme</label><select id="a1_2"><option value="">— choisir —</option><option>TRAITER</option><option>ACQUÉRIR</option><option>COMMUNIQUER</option><option>DISTRIBUER</option><option>CONVERTIR</option></select></div>
-      <div class="assoc"><label for="a1_3">L'affichage « POMPE ON » et le voyant</label><select id="a1_3"><option value="">— choisir —</option><option>COMMUNIQUER</option><option>ACQUÉRIR</option><option>TRAITER</option><option>CONVERTIR</option><option>TRANSMETTRE</option></select></div>
-      <div class="assoc"><label for="a1_4">Le moteur de la pompe</label><select id="a1_4"><option value="">— choisir —</option><option>CONVERTIR</option><option>TRANSMETTRE</option><option>DISTRIBUER</option><option>ALIMENTER</option><option>COMMUNIQUER</option></select></div>
-      <div class="assoc"><label for="a1_5">Le relais</label><select id="a1_5"><option value="">— choisir —</option><option>DISTRIBUER — c'est le préactionneur</option><option>CONVERTIR</option><option>ACQUÉRIR</option><option>TRAITER</option><option>TRANSMETTRE</option></select></div>
+      <div class="assoc"><label for="a1_1">Le capteur d'humidité planté dans la terre</label><select id="a1_1"><option value="">— choisir —</option><option>ACQUÉRIR</option><option>TRAITER</option><option>COMMUNIQUER</option><option>ALIMENTER</option><option>DISTRIBUER</option><option>CONVERTIR</option><option>TRANSMETTRE</option></select></div>
+      <div class="assoc"><label for="a1_2">La carte et son programme</label><select id="a1_2"><option value="">— choisir —</option><option>ACQUÉRIR</option><option>TRAITER</option><option>COMMUNIQUER</option><option>ALIMENTER</option><option>DISTRIBUER</option><option>CONVERTIR</option><option>TRANSMETTRE</option></select></div>
+      <div class="assoc"><label for="a1_3">L'affichage « POMPE ON » et le voyant</label><select id="a1_3"><option value="">— choisir —</option><option>ACQUÉRIR</option><option>TRAITER</option><option>COMMUNIQUER</option><option>ALIMENTER</option><option>DISTRIBUER</option><option>CONVERTIR</option><option>TRANSMETTRE</option></select></div>
+      <div class="assoc"><label for="a1_4">Le moteur de la pompe</label><select id="a1_4"><option value="">— choisir —</option><option>ACQUÉRIR</option><option>TRAITER</option><option>COMMUNIQUER</option><option>ALIMENTER</option><option>DISTRIBUER</option><option>CONVERTIR</option><option>TRANSMETTRE</option></select></div>
+      <div class="assoc"><label for="a1_5">Le relais</label><select id="a1_5"><option value="">— choisir —</option><option>ACQUÉRIR</option><option>TRAITER</option><option>COMMUNIQUER</option><option>ALIMENTER</option><option>DISTRIBUER</option><option>CONVERTIR</option><option>TRANSMETTRE</option></select></div>
 
       <h4>b) Le relais, et la flèche d'ordre</h4>
-      <div class="assoc"><label for="a1_r1">Pourquoi la pompe ne se branche-t-elle pas directement sur une broche de la carte ?</label><select id="a1_r1"><option value="">— choisir —</option><option>elle demande beaucoup plus de courant qu'une broche ne peut en fournir : la carte serait détruite</option><option>parce que les broches sont déjà toutes utilisées</option><option>parce que la pompe n'a pas de fil</option><option>c'est possible, mais c'est mal rangé</option></select></div>
-      <div class="assoc"><label for="a1_r2">Le relais <b>fabrique-t-il</b> l'énergie qui fait tourner la pompe ?</label><select id="a1_r2"><option value="">— choisir —</option><option>non : il laisse passer, ou non, celle qui vient de l'alimentation 12 V</option><option>oui, il la produit à partir du signal de la carte</option><option>oui, il l'amplifie cent fois</option><option>non, il ne sert qu'à protéger les fils</option></select></div>
+      <div class="assoc"><label for="a1_r1">Pourquoi la pompe ne se branche-t-elle pas directement sur une broche de la carte ?</label><select id="a1_r1"><option value="">— choisir —</option><option>parce que les broches sont déjà toutes utilisées</option><option>parce que la pompe n'a pas de fil adapté à la carte</option><option>parce qu'elle demande trop de courant pour une broche</option><option>c'est possible, mais le montage serait mal rangé</option></select></div>
+      <div class="assoc"><label for="a1_r2">Le relais <b>fabrique-t-il</b> l'énergie qui fait tourner la pompe ?</label><select id="a1_r2"><option value="">— choisir —</option><option>non : il laisse passer celle de l'alimentation 12 V</option><option>oui, il la produit à partir du signal de la carte</option><option>non, il ne sert qu'à protéger les fils du montage</option><option>oui, il amplifie cent fois le signal de la carte</option></select></div>
 
       <h4>c) Une entrée sans capteur</h4>
       <label for="a1_just" style="display:block">Le programme a <b>deux</b> entrées : l'humidité et l'heure. La première vient d'un capteur, la seconde non. Explique en quelques lignes pourquoi l'heure est quand même une <b>entrée</b> du système — et ce qui se passerait si on la retirait.</label>
@@ -583,22 +585,22 @@
       <div class="assoc"><label for="ag5">▭ action sur NON — éteindre la pompe</label><select id="ag5"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
 
       <h4>b) Lire l'algorigramme de près</h4>
-      <div class="assoc"><label for="a2_q1">Le losange contient un <b>ET</b>. Pourquoi n'a-t-on pas dessiné <b>deux</b> losanges à la suite ?</label><select id="a2_q1"><option value="">— choisir —</option><option>parce que c'est UNE seule décision portant sur deux conditions — deux losanges donneraient le même résultat, mais diraient une autre chose</option><option>parce qu'on n'a pas la place sur la feuille</option><option>parce que le ET n'est pas autorisé dans un algorigramme</option><option>parce que le deuxième losange serait inutile : l'heure ne change rien</option></select></div>
-      <div class="assoc"><label for="a2_q2">Il n'y a <b>aucun bloc FIN</b>. Est-ce un oubli ?</label><select id="a2_q2"><option value="">— choisir —</option><option>non : la flèche qui remonte est la boucle de surveillance, le programme ne doit jamais s'arrêter</option><option>oui, il manque un bloc FIN après l'action</option><option>non, mais seulement parce que l'algorigramme est incomplet</option><option>oui, tout algorigramme doit finir par FIN</option></select></div>
-      <div class="assoc"><label for="a2_q3">Combien de <b>rectangles</b> (traitements) compte cet algorigramme ?</label><select id="a2_q3"><option value="">— choisir —</option><option>3 : la mesure, allumer, éteindre — le losange n'est pas un traitement</option><option>4 : les trois rectangles plus le losange</option><option>5 : tous les blocs</option><option>2 : allumer et éteindre seulement</option></select></div>
-      <div class="assoc"><label for="a2_q4">À H = 25 % et heure = 23 h, quel chemin la mesure suit-elle ?</label><select id="a2_q4"><option value="">— choisir —</option><option>la sortie NON — la terre est sèche, mais l'heure est hors plage, et le ET exige les DEUX</option><option>la sortie OUI — la terre est sèche, cela suffit</option><option>aucun des deux : le programme s'arrête</option><option>les deux à la fois</option></select></div>
+      <div class="assoc"><label for="a2_q1">Le losange contient un <b>ET</b>. Pourquoi n'a-t-on pas dessiné <b>deux</b> losanges à la suite ?</label><select id="a2_q1"><option value="">— choisir —</option><option>parce qu'on n'a pas la place sur la feuille</option><option>parce que c'est UNE seule décision sur deux conditions</option><option>parce que le ET est interdit dans un algorigramme</option><option>parce que l'heure ne change rien à la décision</option></select></div>
+      <div class="assoc"><label for="a2_q2">Il n'y a <b>aucun bloc FIN</b>. Est-ce un oubli ?</label><select id="a2_q2"><option value="">— choisir —</option><option>oui, il manque un bloc FIN après l'action</option><option>non, mais seulement parce que le dessin est incomplet</option><option>oui, tout algorigramme doit finir par un bloc FIN</option><option>non : le programme boucle et ne doit pas s'arrêter</option></select></div>
+      <div class="assoc"><label for="a2_q3">Combien de <b>rectangles</b> (traitements) compte cet algorigramme ?</label><select id="a2_q3"><option value="">— choisir —</option><option>3 : mesurer, allumer et éteindre</option><option>2 : allumer et éteindre seulement</option><option>4 : les trois rectangles et le losange</option><option>5 : tous les blocs de l'algorigramme</option></select></div>
+      <div class="assoc"><label for="a2_q4">À H = 25 % et heure = 23 h, quel chemin la mesure suit-elle ?</label><select id="a2_q4"><option value="">— choisir —</option><option>la sortie OUI : la terre est sèche, cela suffit</option><option>la sortie NON : l'heure est hors de la plage</option><option>aucune des deux : le programme s'arrête</option><option>les deux sorties à la fois, l'une après l'autre</option></select></div>
 
       <h4>c) Ton pseudo-code</h4>
       <p>Voici le programme <b>sans</b> la plage horaire. Complète-le pour n'arroser qu'entre 6 h et 10 h.</p>
       <div class="py">SEUIL = <span class="num">40</span>
-mesurer humidité → H
+lire humidité → H
 SI H &lt; SEUIL ALORS
     allumer pompe
 SINON
     éteindre pompe
 FIN SI</div>
       <label for="prog1" style="display:block;margin-top:10px">Recopie et complète — écris <b>ta</b> version, avec la plage horaire :</label>
-      <textarea id="prog1" style="min-height:130px" placeholder="SEUIL = 40&#10;mesurer humidité → H&#10;lire heure → heure&#10;SI …"></textarea>
+      <textarea id="prog1" style="min-height:130px" placeholder="SEUIL = 40&#10;lire humidité → H&#10;lire heure → heure&#10;SI …"></textarea>
       <details class="etayage">
         <summary>🪜 Version étayée — un squelette à compléter</summary>
         <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ce squelette retire l'obstacle de la saisie, pas l'exigence.</p>
@@ -643,6 +645,7 @@ FIN SI</div>
 
 <!-- ══════════════════ SÉANCE 2 ══════════════════ -->
 <div class="seance-panel" id="s2" role="tabpanel">
+<p class="mots-seance"><a href="lexique_4e_C9.1.html#seance-s2">📖 Les mots de cette séance</a></p>
 <!-- gestes-outil-v1 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau. -->
 <section class="card gestes-outil" aria-labelledby="gestes-vittascience">
   <h2 id="gestes-vittascience">🧰 Avant de commencer (échauffement) — les quatre gestes de Vittascience</h2>
@@ -769,10 +772,10 @@ heure = <span class="num">8</span>
     <span class="fn">print</span>(<span class="str">"POMPE ON"</span>)
 <span class="kw">else</span>:
     <span class="fn">print</span>(<span class="str">"POMPE OFF"</span>)</div>
-      <div class="assoc"><label for="a3_q1">Pourquoi écrire <code>SEUIL = 40</code> en haut, au lieu de mettre 40 directement dans le <code>if</code> ?</label><select id="a3_q1"><option value="">— choisir —</option><option>pour changer le réglage à UN seul endroit, sans relire tout le programme</option><option>parce que Python interdit les nombres dans un if</option><option>pour que le programme s'exécute plus vite</option><option>c'est une décoration, cela ne change rien</option></select></div>
-      <div class="assoc"><label for="a3_q2">La ligne <code>if …</code> correspond à quelle forme de l'algorigramme ?</label><select id="a3_q2"><option value="">— choisir —</option><option>au losange — c'est la décision</option><option>au terminal DÉBUT</option><option>au rectangle « mesurer »</option><option>à la flèche de retour</option></select></div>
-      <div class="assoc"><label for="a3_q3">Que se passe-t-il si on remplace <code>and</code> par <code>or</code> ?</label><select id="a3_q3"><option value="">— choisir —</option><option>la pompe s'allume dès qu'UNE seule condition est vraie : elle arroserait un sol trempé, simplement parce qu'il est 8 h</option><option>rien : and et or font la même chose</option><option>le programme refuse de démarrer</option><option>la pompe ne s'allume plus jamais</option></select></div>
-      <div class="assoc"><label for="a3_q4">Dans le vrai jardin, quelles lignes seront remplacées par du matériel ?</label><select id="a3_q4"><option value="">— choisir —</option><option><code>H = 25</code> et <code>heure = 8</code> deviennent une lecture de capteur et d'horloge ; les <code>print</code> deviennent la commande du relais</option><option>uniquement la ligne du if</option><option>aucune : le programme est déjà complet</option><option>les trois lignes de réglage, qui n'ont pas de sens sur du matériel</option></select></div>
+      <div class="assoc"><label for="a3_q1">Pourquoi écrire <code>SEUIL = 40</code> en haut, au lieu de mettre 40 directement dans le <code>if</code> ?</label><select id="a3_q1"><option value="">— choisir —</option><option>parce que Python interdit les nombres dans un if</option><option>pour que le programme s'exécute plus vite</option><option>pour changer le réglage à un seul endroit</option><option>c'est une décoration, cela ne change rien</option></select></div>
+      <div class="assoc"><label for="a3_q2">La ligne <code>if …</code> correspond à quelle forme de l'algorigramme ?</label><select id="a3_q2"><option value="">— choisir —</option><option>au losange de décision</option><option>au terminal DÉBUT</option><option>au rectangle « mesurer »</option><option>à la flèche de retour</option></select></div>
+      <div class="assoc"><label for="a3_q3">Que se passe-t-il si on remplace <code>and</code> par <code>or</code> ?</label><select id="a3_q3"><option value="">— choisir —</option><option>la pompe s'allume dès qu'UNE condition est vraie</option><option>rien : and et or font exactement la même chose</option><option>le programme refuse de démarrer : erreur de syntaxe</option><option>la pompe ne s'allume plus jamais, même sol sec</option></select></div>
+      <div class="assoc"><label for="a3_q4">Dans le vrai jardin, quelles lignes seront remplacées par du matériel ?</label><select id="a3_q4"><option value="">— choisir —</option><option>uniquement la ligne du if, qui décide</option><option>aucune : le programme est déjà complet</option><option>les trois lignes de réglage, inutiles sur du matériel</option><option>les lignes H = 25, heure = 8 et les print</option></select></div>
 
       <h4>b) Mon journal d'exécution</h4>
       <label for="a3_journal" style="display:block">Note ce que tu as <b>fait</b> et ce que tu as <b>vu</b> : les valeurs que tu as essayées, ce que la console a affiché, et ce qui t'a surpris. Pas « ça marche » — des valeurs et des résultats.</label>
@@ -843,14 +846,14 @@ heure = <span class="num">8</span>
           <td><select id="a4_a5" aria-label="résultat attendu essai 5"><option value="">— attendu ? —</option><option>pompe ON</option><option>pompe OFF</option></select></td>
           <td><select id="a4_o5" aria-label="résultat observé essai 5"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
         <tr><td>6</td><td><b>absurde</b> — capteur débranché</td><td>H = 250 · 8 h</td>
-          <td><select id="a4_a6" aria-label="résultat attendu essai 6"><option value="">— attendu ? —</option><option>pompe OFF — mais le programme ne signale RIEN d'anormal</option><option>pompe ON</option><option>le programme s'arrête avec une erreur</option></select></td>
+          <td><select id="a4_a6" aria-label="résultat attendu essai 6"><option value="">— attendu ? —</option><option>pompe ON, car 250 est une valeur extrême</option><option>le programme s'arrête avec une erreur</option><option>pompe OFF, sans aucun message d'alerte</option></select></td>
           <td><select id="a4_o6" aria-label="résultat observé essai 6"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
       </table>
       <p style="font-size:.9em;color:var(--sub)">Le banc d'essai de cette page accepte la <b>valeur exacte</b> : c'est ce qui permet de viser 39 puis 40 sans trembler. Les deux frontières sont tracées ✔ automatiquement.</p>
 
       <h4>c) Deux questions de méthode</h4>
-      <div class="assoc"><label for="a4_m1">Pourquoi l'essai n° 5 (40 pile) est-il indispensable, alors qu'on a déjà l'essai n° 4 (39) ?</label><select id="a4_m1"><option value="">— choisir —</option><option>parce que lui seul distingue « H &lt; 40 » de « H ≤ 40 » : c'est la seule valeur où les deux écritures ne donnent pas le même résultat</option><option>parce qu'il faut toujours un nombre rond dans un jeu de tests</option><option>parce que 39 est trop proche de 40 pour être fiable</option><option>il n'est pas indispensable, c'est un essai de confort</option></select></div>
-      <div class="assoc"><label for="a4_m2">À l'essai n° 6, la pompe reste éteinte : le programme se comporte-t-il bien ?</label><select id="a4_m2"><option value="">— choisir —</option><option>non : il n'arrose pas, mais il ne DIT pas que la mesure est impossible — il se tait alors qu'il devrait alerter</option><option>oui, parfaitement : il n'arrose pas, c'est ce qu'on veut</option><option>oui, car 250 est supérieur au seuil</option><option>non : il devrait arroser, 250 est une valeur extrême</option></select></div>
+      <div class="assoc"><label for="a4_m1">Pourquoi l'essai n° 5 (40 pile) est-il indispensable, alors qu'on a déjà l'essai n° 4 (39) ?</label><select id="a4_m1"><option value="">— choisir —</option><option>parce qu'il faut un nombre rond dans un jeu de tests</option><option>parce que lui seul distingue « H &lt; 40 » de « H ≤ 40 »</option><option>parce que 39 est trop proche de 40 pour être fiable</option><option>il n'est pas indispensable : c'est un essai de confort</option></select></div>
+      <div class="assoc"><label for="a4_m2">À l'essai n° 6, la pompe reste éteinte : le programme se comporte-t-il bien ?</label><select id="a4_m2"><option value="">— choisir —</option><option>oui : il n'arrose pas, et c'est ce qu'on veut</option><option>oui, car 250 est supérieur au seuil de 40</option><option>non : il devrait arroser, 250 est une valeur extrême</option><option>non : il n'arrose pas, mais il ne signale rien</option></select></div>
       <button class="btn small" data-check="4" style="margin-top:8px">✔ Vérifier mon jeu d'essais</button>
       <div class="feedback" id="fb4" role="status"></div>
     </div>
@@ -873,6 +876,7 @@ heure = <span class="num">8</span>
 
 <!-- ══════════════════ SÉANCE 3 ══════════════════ -->
 <div class="seance-panel" id="s3" role="tabpanel">
+<p class="mots-seance"><a href="lexique_4e_C9.1.html#seance-s3">📖 Les mots de cette séance</a></p>
 <section class="card">
   <h2>🔧 Séance 3 — Mettre au point : quand le programme a raison mais se comporte mal</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : que faire d'un programme qui respecte la règle… et qui est pourtant inutilisable ?</p>
@@ -929,9 +933,9 @@ heure = <span class="num">8</span>
 10:31:52  H=40  POMPE OFF
 10:32:02  H=39  POMPE ON
 10:32:12  H=41  POMPE OFF</div>
-      <div class="assoc"><label for="a5_q1">En 70 secondes, combien de fois la pompe a-t-elle changé d'état ?</label><select id="a5_q1"><option value="">— choisir —</option><option>6 fois — et l'humidité n'a bougé que de 2 points</option><option>2 fois</option><option>8 fois, une par ligne</option><option>aucune : elle est restée éteinte</option></select></div>
-      <div class="assoc"><label for="a5_q2">Le programme respecte-t-il la règle qu'on lui a donnée ?</label><select id="a5_q2"><option value="">— choisir —</option><option>oui, parfaitement — chaque ligne est juste ; c'est la RÈGLE qui est mal choisie, pas son application</option><option>non, il y a une erreur de code à la ligne du if</option><option>non, il inverse ON et OFF</option><option>impossible à dire sans voir le programme</option></select></div>
-      <div class="assoc"><label for="a5_q3">D'où vient le tremblement de la mesure entre 39 et 41 ?</label><select id="a5_q3"><option value="">— choisir —</option><option>d'un capteur réel : aucune mesure physique n'est parfaitement stable</option><option>d'un bug du programme qui modifie H</option><option>de l'heure qui change</option><option>de la pompe qui arrose et fait monter l'humidité</option></select></div>
+      <div class="assoc"><label for="a5_q1">En 70 secondes, combien de fois la pompe a-t-elle changé d'état ?</label><select id="a5_q1"><option value="">— choisir —</option><option>2 fois, au début et à la fin</option><option>8 fois, une par ligne de la trace</option><option>6 fois, pour 2 points d'humidité</option><option>aucune : elle est restée éteinte</option></select></div>
+      <div class="assoc"><label for="a5_q2">Le programme respecte-t-il la règle qu'on lui a donnée ?</label><select id="a5_q2"><option value="">— choisir —</option><option>non : il y a une erreur de code à la ligne du if</option><option>non : il inverse ON et OFF une fois sur deux</option><option>impossible à dire sans voir le programme</option><option>oui : c'est la règle elle-même qui est mal choisie</option></select></div>
+      <div class="assoc"><label for="a5_q3">D'où vient le tremblement de la mesure entre 39 et 41 ?</label><select id="a5_q3"><option value="">— choisir —</option><option>d'un capteur réel : aucune mesure n'est stable</option><option>d'un bug du programme qui modifie H</option><option>de l'heure qui change pendant la mesure</option><option>de la pompe qui arrose et fait monter l'humidité</option></select></div>
       <label for="a5_diag" style="display:block;margin-top:10px"><b>Ton diagnostic :</b> explique en quelques lignes pourquoi ce comportement est un problème <b>concret</b> — pour la pompe, pour le relais, pour la plante.</label>
       <textarea id="a5_diag" placeholder="Ce comportement pose problème parce que…"></textarea>
       <details class="etayage">
@@ -971,8 +975,8 @@ SINON SI H &gt; SEUIL_HAUT ALORS
 <span class="cmt"># et entre les deux ? ____________________</span>
 FIN SI</div>
       </details>
-      <div class="assoc"><label for="a5_q4">Entre 35 et 45, que doit faire le programme ?</label><select id="a5_q4"><option value="">— choisir —</option><option>RIEN — il garde l'état précédent, et c'est exactement ce qui supprime le clignotement</option><option>éteindre la pompe par sécurité</option><option>allumer la pompe, car on est sous 45</option><option>alterner une fois sur deux</option></select></div>
-      <div class="assoc"><label for="a5_q5">Que faut-il au programme pour « garder l'état précédent » ?</label><select id="a5_q5"><option value="">— choisir —</option><option>une MÉMOIRE : une variable qui retient si la pompe est allumée ou éteinte</option><option>rien de plus, cela se fait tout seul</option><option>un troisième seuil</option><option>un capteur supplémentaire</option></select></div>
+      <div class="assoc"><label for="a5_q4">Entre 35 et 45, que doit faire le programme ?</label><select id="a5_q4"><option value="">— choisir —</option><option>éteindre la pompe, par sécurité</option><option>allumer la pompe, car on est sous 45</option><option>RIEN : la pompe garde son état</option><option>alterner : allumer une fois sur deux</option></select></div>
+      <div class="assoc"><label for="a5_q5">Que faut-il au programme pour « garder l'état précédent » ?</label><select id="a5_q5"><option value="">— choisir —</option><option>un troisième seuil, au milieu de la bande</option><option>une mémoire : une variable qui retient l'état</option><option>un capteur supplémentaire, dans la terre</option><option>rien de plus : cela se fait tout seul</option></select></div>
 
       <h4>d) Prouver au banc</h4>
       <p>Le banc d'essai, en haut de page, applique la règle que tu choisis. Fais la démonstration en deux temps, et note ce que tu obtiens.</p>
@@ -1019,14 +1023,14 @@ FIN SI</div>
     <div class="meta-grid">
       <div><b>Objectif :</b> transférer la structure « deux seuils + bande morte » sur un système différent, sans modèle fourni.</div>
       <div><b>Compétence :</b> <b>4e_C9.3</b> — <i>réaliser</i> un programme commandant un autre système réel.</div>
-      <div><b>Production attendue :</b> le programme du lampadaire, écrit <b>sans squelette</b> (règle n°114).</div>
+      <div><b>Production attendue :</b> le programme du lampadaire, écrit <b>sans squelette</b>.</div>
       <div><b>Ressources :</b> ce que tu viens d'écrire — et rien d'autre.</div>
     </div>
     <div class="consigne"><b>Consigne :</b> un <b>lampadaire</b> de la cour doit s'allumer quand la nuit tombe et s'éteindre au petit jour. Il est équipé d'un capteur de luminosité qui renvoie L, de 0 (nuit noire) à 100 (plein soleil). Le même problème de clignotement se poserait au crépuscule. <b>Écris son programme.</b> Aucun squelette cette fois : c'est à toi de choisir la structure — et les valeurs.</div>
     <div class="exo">
       <label for="reinv" style="display:block">Ton programme du lampadaire :</label>
       <textarea id="reinv" style="min-height:130px" placeholder="Écris ton programme complet : les réglages, la mesure, la décision…"></textarea>
-      <div class="assoc"><label for="a6_q1">Par rapport à la pompe, qu'est-ce qui s'inverse ?</label><select id="a6_q1"><option value="">— choisir —</option><option>le sens : on ALLUME quand la mesure est BASSE (il fait sombre), on éteint quand elle est haute</option><option>rien du tout, c'est exactement le même programme</option><option>les deux seuils doivent être égaux</option><option>il faut supprimer la bande morte</option></select></div>
+      <div class="assoc"><label for="a6_q1">Par rapport au programme de la pompe, qu'est-ce qui change ?</label><select id="a6_q1"><option value="">— choisir —</option><option>le sens : on allume quand la mesure est haute</option><option>rien : on recopie le programme de la pompe</option><option>la structure : la bande morte devient inutile</option><option>la grandeur mesurée, les seuils et l'action</option></select></div>
       <label for="a6_just" style="display:block;margin-top:10px"><b>Justifie tes deux seuils :</b> quelles valeurs as-tu choisies, et pourquoi cet écart-là plutôt qu'un autre ?</label>
       <textarea id="a6_just" placeholder="J'ai choisi … et … parce que…"></textarea>
       <details class="etayage">
@@ -1041,7 +1045,7 @@ FIN SI</div>
       <button class="btn small" data-check="6" style="margin-top:8px">✔ Vérifier mon réinvestissement</button>
       <div class="feedback" id="fb6" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Reprends ton programme de la pompe et demande-toi, ligne par ligne : qu'est-ce qui change ? La grandeur mesurée, les valeurs des seuils, le nom de l'action — et le <b>sens</b> de la comparaison.</p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Reprends ton programme de la pompe et demande-toi, ligne par ligne : qu'est-ce qui change ? Regarde la grandeur mesurée, les valeurs des seuils, le nom de l'action. Et le <b>sens</b> de la comparaison : change-t-il vraiment ?</p></details>
     <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Pour la pompe, « sec » = valeur <b>basse</b> = on allume. Pour le lampadaire, « sombre » = valeur <b>basse</b> = on allume aussi. Le sens ne s'inverse donc pas tant qu'on y réfléchit bien : dans les deux cas, on agit quand la mesure est basse. Ce qui change, ce sont les <b>valeurs</b> : la nuit tombe vers L = 20, le jour se lève vers L = 60 — et ce large écart n'est pas un hasard, le crépuscule est long.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
       <p><b>Programme attendu (une version parmi d'autres) :</b></p>
@@ -1054,7 +1058,7 @@ SINON SI L &gt; SEUIL_HAUT ALORS
     éteindre lampadaire
 <span class="cmt"># entre 20 et 60 : on ne change rien</span>
 FIN SI</div>
-      <p><b>Ce qui ne change pas :</b> la structure entière — deux réglages, une mesure, trois cas dont un vide. <b>Ce qui change :</b> la grandeur, les valeurs, le nom de l'actionneur. Une structure bien choisie se réemploie ; c'est à cela qu'on la reconnaît.</p>
+      <p><b>Ce qui ne change pas :</b> la structure entière — deux réglages, une mesure, trois cas dont un vide — et le <b>sens</b> de la comparaison : pour la pompe comme pour le lampadaire, on allume quand la mesure est <b>basse</b> (sol sec, rue sombre). <b>Ce qui change :</b> la grandeur, les valeurs, le nom de l'actionneur. Une structure bien choisie se réemploie ; c'est à cela qu'on la reconnaît.</p>
       <p><b>Sur les valeurs :</b> l'écart 20-60 est <b>beaucoup plus large</b> que le 35-45 de la pompe, et c'est justifié : le crépuscule dure longtemps et la lumière y varie beaucoup — nuages, phares, reflets. Une bande étroite ferait clignoter le lampadaire pendant une demi-heure chaque soir. Toute valeur cohérente avec un tel raisonnement est acceptée : <b>c'est la justification qui est évaluée, pas le nombre</b>.</p>
       <p><b>Limite :</b> un vrai lampadaire n'utilise pas que la luminosité — il a souvent une horloge, comme notre pompe, pour ne pas s'allumer sous un orage de midi. Tu retrouveras ce dispositif complet en Thème 2.</p>
     </details>
@@ -1127,14 +1131,14 @@ FIN SI</div>
   <label for="bilan3" style="display:block;margin-top:8px">Ce que je dois encore revoir :</label>
   <textarea id="bilan3" style="min-height:70px"></textarea>
   <fieldset style="margin-top:12px;border:1px solid var(--border);border-radius:10px;padding:10px 12px">
-    <legend style="font-size:.9em;color:var(--sub);padding:0 6px">Ma confiance — 4e_C9.1 (écrire et exécuter)</legend>
+    <legend style="font-size:.9em;color:var(--sub);padding:0 6px">Ma confiance — 4e_C9.1 et 4e_C9.2 (modifier l'algorithme, le traduire en programme)</legend>
     <label style="display:inline-block;margin-right:14px"><input type="radio" name="conf_c91" value="1" style="width:auto"> 1</label>
     <label style="display:inline-block;margin-right:14px"><input type="radio" name="conf_c91" value="2" style="width:auto"> 2</label>
     <label style="display:inline-block;margin-right:14px"><input type="radio" name="conf_c91" value="3" style="width:auto"> 3</label>
     <label style="display:inline-block"><input type="radio" name="conf_c91" value="4" style="width:auto"> 4</label>
   </fieldset>
   <fieldset style="margin-top:8px;border:1px solid var(--border);border-radius:10px;padding:10px 12px">
-    <legend style="font-size:.9em;color:var(--sub);padding:0 6px">Ma confiance — 4e_C9.2 et 4e_C9.3 (tester et mettre au point)</legend>
+    <legend style="font-size:.9em;color:var(--sub);padding:0 6px">Ma confiance — 4e_C9.3 (tester et mettre au point le programme)</legend>
     <label style="display:inline-block;margin-right:14px"><input type="radio" name="conf_c93" value="1" style="width:auto"> 1</label>
     <label style="display:inline-block;margin-right:14px"><input type="radio" name="conf_c93" value="2" style="width:auto"> 2</label>
     <label style="display:inline-block;margin-right:14px"><input type="radio" name="conf_c93" value="3" style="width:auto"> 3</label>
@@ -1359,7 +1363,7 @@ const CHECKS = {
     const att = {a1_1:"ACQUÉRIR", a1_2:"TRAITER", a1_3:"COMMUNIQUER", a1_4:"CONVERTIR"};
     Object.entries(att).forEach(([id,v])=>{ if($(id) && $(id).value === v) ok++; });
     if($("a1_5").value.startsWith("DISTRIBUER")) ok++;
-    if($("a1_r1").value.startsWith("elle demande beaucoup plus")) ok++;
+    if($("a1_r1").value.startsWith("parce qu'elle demande trop")) ok++;
     if($("a1_r2").value.startsWith("non : il laisse passer")) ok++;
     const j = txt("a1_just");
     const justOk = j.length >= 60 && (j.includes("heure") || j.includes("horloge"));
@@ -1374,7 +1378,7 @@ const CHECKS = {
     Object.entries(ordre).forEach(([id,v])=>{ if($(id).value !== v) ordreJuste = false; });
     if(ordreJuste) ok++;
     if($("a2_q1").value.startsWith("parce que c'est UNE seule")) ok++;
-    if($("a2_q2").value.startsWith("non : la flèche")) ok++;
+    if($("a2_q2").value.startsWith("non : le programme boucle")) ok++;
     if($("a2_q3").value.startsWith("3 :")) ok++;
     if($("a2_q4").value.startsWith("la sortie NON")) ok++;
     const p = txt("prog1").toLowerCase();
@@ -1390,7 +1394,7 @@ const CHECKS = {
     if($("a3_q1").value.startsWith("pour changer le réglage")) ok++;
     if($("a3_q2").value.startsWith("au losange")) ok++;
     if($("a3_q3").value.startsWith("la pompe s'allume dès qu'UNE")) ok++;
-    if($("a3_q4").value.startsWith("H = 25")) ok++;
+    if($("a3_q4").value.startsWith("les lignes H = 25")) ok++;
     const j = txt("a3_journal");
     const chiffres = (j.match(/\d+/g) || []).length;
     const journalOk = j.length >= 80 && chiffres >= 3;
@@ -1405,7 +1409,7 @@ const CHECKS = {
     let ok = 0;
     const ATT = {a4_a1:"pompe ON", a4_a2:"pompe OFF", a4_a3:"pompe OFF", a4_a4:"pompe ON", a4_a5:"pompe OFF"};
     Object.entries(ATT).forEach(([id,v])=>{ if($(id) && $(id).value === v) ok++; });
-    if($("a4_a6").value.startsWith("pompe OFF — mais")) ok++;
+    if($("a4_a6").value.startsWith("pompe OFF, sans")) ok++;
     if($("a4_m1").value.startsWith("parce que lui seul distingue")) ok++;
     if($("a4_m2").value.startsWith("non : il n'arrose pas")) ok++;
     const obs = ["a4_o1","a4_o2","a4_o3","a4_o4","a4_o5","a4_o6"].filter(id=>$(id).value !== "").length;
@@ -1419,10 +1423,10 @@ const CHECKS = {
   5: function(){
     let ok = 0;
     if($("a5_q1").value.startsWith("6 fois")) ok++;
-    if($("a5_q2").value.startsWith("oui, parfaitement")) ok++;
+    if($("a5_q2").value.startsWith("oui : c'est la règle")) ok++;
     if($("a5_q3").value.startsWith("d'un capteur réel")) ok++;
     if($("a5_q4").value.startsWith("RIEN")) ok++;
-    if($("a5_q5").value.startsWith("une MÉMOIRE")) ok++;
+    if($("a5_q5").value.startsWith("une mémoire")) ok++;
     const d = txt("a5_diag");
     const diagOk = d.length >= 70;
     const p = txt("prog3").toLowerCase();
@@ -1441,7 +1445,7 @@ const CHECKS = {
   },
   6: function(){
     let ok = 0;
-    if($("a6_q1").value.startsWith("le sens")) ok++;
+    if($("a6_q1").value.startsWith("la grandeur")) ok++;
     const p = txt("reinv").toLowerCase();
     const nombres = (p.match(/\d+/g) || []).map(Number);
     const deuxSeuils = nombres.length >= 2 && (Math.max.apply(null, nombres) - Math.min.apply(null, nombres)) >= 5;

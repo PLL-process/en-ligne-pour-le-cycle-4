@@ -14,18 +14,20 @@ Première marche de l'**arc variables** du cycle (5e → 4e → 3e).
 * **`sequence_5e_C9.1-C9.3_boite_etiquetee.html`** — l'atelier complet (3 séances, 5 activités) :
   simulateur de mémoire pas à pas, motif **prédire → tester → reporter** dans l'éditeur Python
   Vittascience (nouvel onglet), banc de tests du programme **fourni** (le bug des descendus), modification
-  ciblée puis barrière commandée avec son **cas frontière** (zéro place pile).
+  ciblée puis barrière commandée avec son **cas frontière** (zéro place pile), et depuis le 19/10/2026
+  le **programme de la barrière écrit par l'élève** (`if` / `else`, partie ③ de l'activité 5).
   Sauvegarde locale, DYS, verrous expérientiels.
 * **`qcm_5e_C9.1-C9.3_boite_etiquetee.html`** — QCM 30 questions (boîte / lire / modifier),
   réfutation de chaque distracteur, 3 illustrées.
 * **`Synthèses/`** — synthèse élève (imprimable A4) et synthèse professeur.
 * **`tests_5e_C9.1-C9.3.mjs`** — la suite Playwright du lot, **rejouable** :
-  `node tests_5e_C9.1-C9.3.mjs .` (44 tests ; ce qui n'est PAS testé est écrit dans le rapport).
+  `node tests_5e_C9.1-C9.3.mjs .` (54 tests ; ce qui n'est PAS testé est écrit dans le rapport).
 * **`fiche_pedagogique_5e_C9.1-C9.3.md`**, **`matrice_couverture_5e_C9.1-C9.3.csv`**,
   **`SOURCES_MEDIAS.md`**, **`rapport_tests_5e_C9.1-C9.3.md`**.
 
 `5e_C9.2/` et `5e_C9.3/` ne portent qu'un README pointeur : les deux codes sont travaillés
-dans l'activité 5 de cet atelier — ① modifier le programme fourni, ② commander la barrière.
+dans l'activité 5 de cet atelier — ① modifier le programme fourni, ② régler la barrière au banc,
+③ écrire soi-même le programme de la barrière (5e_C9.3 : *réaliser*, pas seulement tester).
 
 ## Harmonisation du 26 août 2026
 
