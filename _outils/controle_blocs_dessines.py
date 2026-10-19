@@ -50,11 +50,9 @@ T2 = ("theme-2-structure-fonctionnement-comportement/"
       "C6-comprendre-et-modifier-un-programme-associe/5e/5e_C6.1/")
 ARCH = "_archive-anciennes-versions/C7_C9_Creation-conception-realisation-innovations/3e_C9.1/"
 
-# Page → nombre de dessins qu'elle porte encore. Relevé du 16/10/2026 (56 dans 8 pages).
+# Page → nombre de dessins qu'elle porte encore. Relevé du 16/10/2026 (56 dans 8 pages) ; le lot 1
+# (archive 3e_C9.1, 45 dessins dans 2 pages) est terminé le 18/10/2026 : ses deux lignes sont retirées.
 EN_ATTENTE = {
-    # Lot 1 — archive 3e_C9.1 (Vittascience Python, blocs)
-    ARCH + "vittascience_variables_blocs.html": 36,
-    ARCH + "evaluation_vittascience_blocs.html": 9,
     # Lot 2 — thème 3 · 3e_C9.2 (Vittascience Arduino, blocs)
     T3 + "sequence_3e_C9.2-C8.3_station_2_programmer.html": 3,
     T3 + "sequence_3e_C9.2-C8.3_station_3_interaction.html": 1,
