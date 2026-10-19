@@ -16,3 +16,7 @@ L'URL historique porte un stub de redirection. Les captures PNG dédiées sont a
   16 questions, 30 points ramenés sur 20 ; indice gratuit, coup de pouce à −¼ des points de la question
   (`COUT_COUP_DE_POUCE`), correction par exercice qui verrouille les réponses (question sans réponse = 0).
   Les réponses et corrections sont encodées dans la page (`decoderCle()`) ; code enseignant : celui de la séance.
+- `evaluation_vittascience_blocs_B.html` — **sujet B** (18/10/2026) de la même évaluation : même barème, mêmes
+  compétences, même difficulté, construit question par question sur le sujet A avec d'autres situations et d'autres
+  valeurs (« Store automatique », « Hexagone bleu », « Spirale en triangle »). Sauvegarde séparée du sujet A
+  (`eval-vittascience-blocs-B-v1`) : les deux sujets se passent sur le même poste sans s'effacer. Même code enseignant.

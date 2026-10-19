@@ -22005,3 +22005,47 @@ Ces noms ne portent pas de motif de thème parce que chaque lot retire ses ligne
   le vrai point d'entrée en sous-processus).
 - Le banc mord : quatre contrôles volontairement cassés (D1 éteint, D2 éteint, poids ignoré,
   déclaration toujours trouvée) le font tomber à 21, 21, 23 et 23 / 24.
+
+## 18/10/2026 — Thème 3 · archive 3e_C9.1 : un sujet B de même difficulté pour l'évaluation « Vittascience en blocs »
+
+**Demande de Pascal.** Une deuxième évaluation « de difficulté égale, avec les mêmes critères » que
+`evaluation_vittascience_blocs.html`.
+
+**Le principe : un sujet B isomorphe.** Même page, même barème (16 questions, 30 points ramenés sur 20,
+10 par exercice), mêmes points par question, mêmes compétences, mêmes aides et mêmes pénalités. Chaque
+question du sujet B est construite **sur la question de même numéro du sujet A** : même raisonnement, même
+nombre d'étapes, même niveau de calcul. Seules changent la situation et les valeurs. Les lettres des bonnes
+réponses sont **redistribuées**, pour qu'un voisin du sujet A ne serve à rien.
+
+| Ex. | Sujet A | Sujet B | Ce qui reste identique |
+|---|---|---|---|
+| 1 | 🌱 Arrosage automatique | 🌞 Store automatique | 4 variables, 4 conditions reliées par « et » (trois « > », un « < »), si / sinon ; un relevé pile sur un seuil en 1.2 et en 1.5, l'un sur « > », l'autre sur « < » (permutés par rapport au sujet A) ; 1.3 change un seul nombre de la condition de durée ; 1.4 demande le bloc « ou » |
+| 2 | 🔺 Triangle coloré | 🔷 Hexagone bleu | boucle « répéter » + virage de la tortue ; 2.3 oppose angle intérieur et angle de virage ; 2.4 un autre polygone régulier (360 ÷ n) ; 2.5 un côté à partir du tracé total ; 2.6 un bloc juste placé hors de la boucle (ici « avancer », au lieu de « tourner ») |
+| 3 | 🌀 Spirale | 🌀 Spirale en triangle | une variable mise à jour en fin de boucle ; tableau de suivi (3 tours demandés), dernier trait, valeur finale, figure obtenue sans la mise à jour, programme d'une spirale qui se resserre parmi quatre captures |
+
+Le sujet B étant une situation **nouvelle** (le sujet A reprenait la séance), son exercice 1 donne une ligne
+de légende des quatre variables (unité, sens de `duree`).
+
+**Fichier.** `_archive-anciennes-versions/C7_C9_Creation-conception-realisation-innovations/3e_C9.1/evaluation_vittascience_blocs_B.html`,
+à côté du sujet A, lien « ← Retour à la séance d'entraînement ». Clé réencodée avec **son propre sel** ;
+**sauvegarde séparée** (`eval-vittascience-blocs-B-v1`, `eval-vittascience-blocs-B-tentatives`) : un élève
+peut passer A puis B sur le même poste sans effacer l'autre. Même code enseignant. Le bilan Pronote et le nom
+du fichier exporté portent « sujet B ». Le sujet A n'est pas modifié.
+
+**Règle d'or n°308.** Les 8 programmes en blocs du sujet B (`Images/bloc_vitta_B38.png` à `B45.png`) ne sont
+**pas dessinés** : ils sont construits, exécutés et capturés dans Vittascience (thème sombre, blocs de la boîte à
+outils) sur le poste de Pascal, puis déclarés dans `SOURCES_MEDIAS.md`, dans le même lot. Tant qu'ils manquent,
+`controle_blocs_dessines.py` refuse la page (D3), comme prévu.
+
+### Vérifié
+
+Réponses recalculées par simulation, sans lire la clé (conditions, tracés de la tortue, fermeture des figures,
+spirales) : **0 écart, 30 points**. Banc Playwright du sujet A adapté au sujet B (Chromium, servi en HTTP, images
+d'essai locales jamais versées) : **40 / 40** : tout juste → **20 / 20**, tout faux → **0 / 20**, mixte construit
+comme celui du sujet A → **14,5 / 30 = 9,7 / 20**, rechargement, verrous, coups de pouce, nouvelle copie, clé
+enseignant, aucune correction en clair dans le source, **sujet A et sujet B entamés sur le même poste sans se
+mélanger**, 390 px sans défilement horizontal, console sans erreur. Contrôles du dépôt : tous à 0 sauf
+`controle_blocs_dessines.py` (les 8 captures à faire, 16 refus D3 attendus). Le banc reste hors dépôt : il contient
+les réponses en clair.
+
+**19/10/2026 — les 8 captures du sujet B sont faites (règle n°308).** `B38` à `B45` sont construites, exécutées et capturées dans Vittascience (thème sombre, contexte neuf sans compte, blocs de la boîte à outils, recadrées, 256 couleurs, 23 Ko au plus), comme celles du lot 1 ; chaque structure est identique à celle de la capture jumelle du sujet A (B18, B31, B33, B34 à B37). Le « bleu pur » du sélecteur n'existe pas : `#0000ff` n'y figure pas, on a pris `#3333ff` (teinte 240°, le plus franc). Un message transitoire de Vittascience (« Exécution de votre programme… ») restait dans le cadre des captures larges : retiré avant le cadrage pour B41 à B44. **Le même bandeau figure dans `bloc_vitta_B35.png` du lot 1 (déjà fusionné) : à refaire dans un lot à part.** Dimensions réelles dans les `<img>`, textes alt comparés à la capture (aucun changé), 8 lignes dans `SOURCES_MEDIAS.md`. `controle_blocs_dessines.py` sort à 0 (registre EN_ATTENTE inchangé : 11), les 21 autres contrôles aussi ; banc du sujet B 22 / 22 (tout juste 20 / 20, tout faux 0 / 20, réponses lues dans la clé de la page au moment du test, sujets A et B entamés sur le même poste sans mélange, 1280 et 390 px sans défilement horizontal, loupe).
