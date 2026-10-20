@@ -7,7 +7,7 @@
 | Niveau | 5e (programme 2024, applicable rentrée 2026-2027) |
 | Code principal | **5e_C8.2** — *Mettre en œuvre un protocole de test fourni pour valider la tenue mécanique d'un matériau.* |
 | Code d'appui | 5e_C3.1 — *Identifier les caractéristiques à prendre en compte dans le choix d'un OST.* |
-| Thème | Thème 3 — Création, conception, réalisation, innovations |
+| Thème | Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser |
 | Socle | D1.3 · D4 · D5 |
 | Objet-fil | Le hall du collège — suite directe du **mini-projet d'indicateur de rangement** (5e_C7.1) |
 | Durée | **2 séances de 55 min** (110 min) · **100 min d'activités**, soit 10 min de marge |

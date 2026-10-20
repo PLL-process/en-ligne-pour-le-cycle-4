@@ -1,7 +1,7 @@
 # Fiche pédagogique — 5e_C8.1 « La patère du hall »
 
 > **Utiliser une simulation fournie pour valider la tenue mécanique d’un matériau.**
-> Programme 2024, cycle 4, thème 3 — Création, conception, réalisation.
+> Programme 2024, cycle 4, thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser.
 
 | | |
 |---|---|
