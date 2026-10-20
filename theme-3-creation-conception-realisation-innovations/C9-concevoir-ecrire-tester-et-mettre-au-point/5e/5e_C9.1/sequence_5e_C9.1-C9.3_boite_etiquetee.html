@@ -245,6 +245,7 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
 /* règle d'or n°305 — une activité qui demande Internet le dit à son début */
 .activite-en-ligne{border-left:4px solid #ffd66b;background:rgba(255,214,107,.12);padding:.55em .85em;border-radius:0 8px 8px 0;margin:.6em 0 .8em;font-size:.95em;line-height:1.45}
 @media print{.activite-en-ligne,.activite-en-ligne b{color:#1a1a1a!important}.activite-en-ligne{background:#fff8e1!important;border-left-color:#8a6400!important}}
+.mots-seance{margin:0 0 10px;font-size:.92em}
 </style>
 </head>
 <body>
@@ -321,11 +322,11 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
   est une réponse utile.</p>
   <div class="exo">
     <label for="be_1" style="display:block;margin:8px 0">1. Dans un programme, quand on écrit <code>score = 10</code>, cela veut dire…
-      <select id="be_1"><option value="">— choisir —</option><option>range le nombre 10 dans quelque chose qui s'appelle score</option><option>score est égal à 10, comme en mathématiques</option><option>affiche 10 à l'écran</option><option>je ne sais pas encore</option></select></label>
+      <select id="be_1"><option value="">— choisir —</option><option>score est égal à 10, comme en mathématiques</option><option>range le nombre 10 dans une boîte nommée score</option><option>affiche le nombre 10 à l'écran de la console</option><option>je ne sais pas encore</option></select></label>
     <label for="be_2" style="display:block;margin:8px 0">2. Un programme qui affiche un résultat FAUX…
-      <select id="be_2"><option value="">— choisir —</option><option>peut très bien tourner sans planter — il se trompe, c'est tout</option><option>s'arrête forcément avec un message rouge</option><option>ne démarre jamais</option><option>je ne sais pas encore</option></select></label>
+      <select id="be_2"><option value="">— choisir —</option><option>s'arrête forcément avec un message d'erreur rouge</option><option>ne démarre jamais, l'ordinateur le refuse</option><option>peut très bien tourner sans aucun message</option><option>je ne sais pas encore</option></select></label>
     <label for="be_3" style="display:block;margin:8px 0">3. Pour savoir si un programme fait ce qu'on lui demande, le mieux est de…
-      <select id="be_3"><option value="">— choisir —</option><option>écrire ce qu'on ATTEND, puis l'exécuter et comparer</option><option>le lancer une fois et regarder si ça a l'air bon</option><option>relire le programme sans l'exécuter</option><option>je ne sais pas encore</option></select></label>
+      <select id="be_3"><option value="">— choisir —</option><option>le lancer une fois et regarder si ça a l'air bon</option><option>relire le programme attentivement, sans l'exécuter</option><option>écrire ce qu'on ATTEND, puis exécuter et comparer</option><option>je ne sais pas encore</option></select></label>
     <button class="btn small" id="btnBillet" type="button">Voir où j'en suis</button>
     <p class="feedback" id="fbBillet" role="status"></p>
   </div>
@@ -421,6 +422,7 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
 
 <!-- ══════ SÉANCE 1 ══════ -->
 <div class="seance-panel active" id="s1" role="tabpanel">
+<p class="mots-seance"><a href="lexique_5e_C9.1.html#seance-s1">📖 Les mots de cette séance</a></p>
 <section class="card">
   <h2>📦 Séance 1 — La variable : une boîte étiquetée (5e_C9.1)</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : où le programme range-t-il le nombre de places — et que devient l'ancien nombre ?</p>
@@ -462,9 +464,9 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
       <label for="a1q1">1. Après la ligne 3, la boîte <code>places</code> contient :
       <select id="a1q1"><option value="">— je choisis —</option><option>24</option><option>21</option><option>24 et 21</option><option>3</option></select></label>
       <label for="a1q2">2. Où est passé le 24 qui était dans la boîte ?
-      <select id="a1q2"><option value="">— je choisis —</option><option>il a été REMPLACÉ par 21 — une boîte ne garde qu'UNE valeur</option><option>il est caché derrière le 21</option><option>il est parti dans la boîte montes</option><option>il s'affiche à l'écran</option></select></label>
+      <select id="a1q2"><option value="">— je choisis —</option><option>il est caché derrière le 21, dans la boîte</option><option>il est parti dans l'autre boîte, montes</option><option>il a été remplacé par 21 : il n'existe plus</option><option>il s'affiche à l'écran, à la place de 21</option></select></label>
       <label for="a1q3">3. En Python, le signe <code>=</code> veut dire :
-      <select id="a1q3"><option value="">— je choisis —</option><option>« est égal à », comme en maths</option><option>« RANGE cette valeur dans la boîte »</option><option>« compare les deux nombres »</option><option>« affiche le résultat »</option></select></label>
+      <select id="a1q3"><option value="">— je choisis —</option><option>« compare les deux nombres »</option><option>« est égal à », comme en maths</option><option>« affiche le résultat à l'écran »</option><option>« RANGE cette valeur dans la boîte »</option></select></label>
     </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Rejoue le simulateur et regarde UNIQUEMENT la boîte <code>places</code> à la ligne 3 : combien de nombres vois-tu dedans en même temps ?</p></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Ligne 3 : Python calcule d'abord la partie DROITE (places − montes = 24 − 3 = 21), puis il RANGE 21 dans la boîte de gauche. Le 24 est remplacé : perdu, comme quand tu réécris par-dessus un mot effacé.</p></details>
@@ -500,9 +502,9 @@ places = places + descendus</pre>
       <label for="a2q1">1. Après la ligne 3, <code>places</code> vaut :
       <select id="a2q1"><option value="">—</option><option>24</option><option>19</option><option>29</option><option>5</option></select></label>
       <label for="a2q2">2. Que fait la ligne 5 ?
-      <select id="a2q2"><option value="">—</option><option>elle AJOUTE les 2 places libérées par ceux qui descendent</option><option>elle enlève encore 2 places</option><option>elle efface la boîte places</option><option>elle affiche le résultat</option></select></label>
+      <select id="a2q2"><option value="">—</option><option>elle AJOUTE les 2 places libérées au total</option><option>elle enlève encore 2 places à la boîte places</option><option>elle efface la boîte places et recommence</option><option>elle affiche le résultat dans la console</option></select></label>
       <label for="a2q3">3. À la fin, <code>places</code> vaut :
-      <select id="a2q3"><option value="">—</option><option>17</option><option>19</option><option>21</option><option>large : 24</option></select></label>
+      <select id="a2q3"><option value="">—</option><option>17</option><option>19</option><option>21</option><option>24</option></select></label>
       <label for="a2q4">4. Combien de fois le contenu de la boîte <code>places</code> a-t-il changé (ligne 1 comprise) ?
       <select id="a2q4"><option value="">—</option><option>1 fois</option><option>2 fois</option><option>3 fois</option><option>5 fois</option></select></label>
     </div>
@@ -525,6 +527,7 @@ places = places + descendus</pre>
 
 <!-- ══════ SÉANCE 2 ══════ -->
 <div class="seance-panel" id="s2" role="tabpanel">
+<p class="mots-seance"><a href="lexique_5e_C9.1.html#seance-s2">📖 Les mots de cette séance</a></p>
 <!-- gestes-outil-v1 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau. -->
 <section class="card gestes-outil" aria-labelledby="gestes-vittascience">
   <h2 id="gestes-vittascience">🧰 Avant de commencer (échauffement) — les quatre gestes de Vittascience</h2>
@@ -593,7 +596,7 @@ places = places + descendus</pre>
       <figure class="geste-capture">
         <img src="Images/geste_vitta_4e_sortir_resultat.png" width="1400" height="538" loading="lazy"
              alt="Fenêtre de l'Explorateur ouverte sur « Documents › 5E2 » : un seul fichier, « 5e-BOITE-DUPONT_202694_221325.py », de type Python.File, 581 octets, sélectionné.">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> en haut, <b>Documents › 5E2</b>&nbsp;; dans la liste, ton fichier <code>.py</code>. Il n'est plus dans Téléchargements&nbsp;: il est rangé. Entre dans le dossier (double-clic), puis <b>Ctrl&nbsp;+&nbsp;V</b> pour y coller ton fichier.</figcaption>
+        <figcaption><b>Puis&nbsp;:</b> entre dans le dossier de ta classe (double-clic), puis <b>Ctrl&nbsp;+&nbsp;V</b> pour y coller ton fichier. <b>Comment savoir que c'est fait&nbsp;:</b> en haut, <b>Documents › 5E2</b>&nbsp;; dans la liste, ton fichier <code>.py</code>. Il n'est plus dans Téléchargements&nbsp;: il est rangé.</figcaption>
       </figure>
     </li>
   </ol>
@@ -635,9 +638,9 @@ places = places + descendus</pre>
       <label for="a3r2">Expérience B a affiché :
       <select id="a3r2"><option value="">—</option><option>24</option><option>204</option><option>une erreur</option></select></label>
       <label for="a3r3">Conclusion — entre guillemets, « 20 » et « 4 » sont :
-      <select id="a3r3"><option value="">—</option><option>des nombres qu'on additionne</option><option>du TEXTE que le + COLLE bout à bout</option><option>des erreurs</option><option>des noms de boîtes</option></select></label>
+      <select id="a3r3"><option value="">—</option><option>des nombres qu'on additionne</option><option>des noms de boîtes (de variables)</option><option>du TEXTE que le + COLLE bout à bout</option><option>des erreurs que Python refuse</option></select></label>
       <label for="a3r4">Et voilà le premier indice du compteur fou : s'il affiche « 87 » en collant « 8 » et « 7 », c'est que quelqu'un a mis…
-      <select id="a3r4"><option value="">—</option><option>des guillemets autour des nombres</option><option>trop de visiteurs</option><option>la mauvaise étiquette de boîte</option><option>un écran trop petit</option></select></label>
+      <select id="a3r4"><option value="">—</option><option>la mauvaise étiquette de boîte</option><option>trop de visiteurs dans le train</option><option>un écran trop petit pour le nombre</option><option>des guillemets autour des nombres</option></select></label>
     </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Regarde bien les guillemets. En Python, TOUT ce qui est entre guillemets est du TEXTE — même des chiffres.</p></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Sans éditeur (version 🅲) : applique la règle. 20 + 4 = deux nombres → addition → 24. « 20 » + « 4 » = deux textes → collage → « 204 ». Reporte ces valeurs.</p></details>
@@ -682,11 +685,11 @@ print("Places libres :", places)</pre>
     <p id="benchBadge" style="color:var(--ok);font-weight:700"></p>
     <div class="exo">
       <label for="a4q1">1. Le test T3 montre que le programme :
-      <select id="a4q1"><option value="">—</option><option>SOUSTRAIT les descendus au lieu de les AJOUTER (19 au lieu de 23)</option><option>fonctionne parfaitement</option><option>affiche du texte collé</option><option>ne démarre pas</option></select></label>
+      <select id="a4q1"><option value="">—</option><option>fonctionne parfaitement dans tous les cas</option><option>enlève les descendus au lieu de les ajouter</option><option>affiche du texte collé au lieu d'un nombre</option><option>ne démarre pas : il y a une erreur</option></select></label>
       <label for="a4q2">2. Quelqu'un qui DESCEND du manège, ça devrait :
-      <select id="a4q2"><option value="">—</option><option>LIBÉRER une place (donc places + descendus)</option><option>occuper une place de plus</option><option>ne rien changer</option><option>fermer la barrière</option></select></label>
+      <select id="a4q2"><option value="">—</option><option>occuper une place de plus dans le train</option><option>ne rien changer au nombre de places</option><option>libérer une place : places + descendus</option><option>fermer la barrière du manège</option></select></label>
       <label for="a4q3">3. Ton verdict de technicien :
-      <select id="a4q3"><option value="">—</option><option>le programme NE répond PAS au besoin : la ligne 5 doit devenir places = places + descendus</option><option>le programme répond au besoin</option><option>impossible de conclure</option><option>il faut changer d'ordinateur</option></select></label>
+      <select id="a4q3"><option value="">—</option><option>il répond au besoin, car T1 et T2 passent</option><option>impossible de conclure avec seulement 3 tests</option><option>il faut changer d'ordinateur et recommencer</option><option>il ne répond pas au besoin : la ligne 5 est fausse</option></select></label>
     </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Regarde T3 : « attendu 23 » mais qu'as-tu OBTENU ? Puis relis la ligne 5 : un moins… pour des gens qui LIBÈRENT des places ?</p></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Le technicien compare toujours ATTENDU (ce que le besoin demande) et OBTENU (ce que le programme fait). S'ils diffèrent sur UN SEUL test, le programme ne répond pas au besoin — même s'il « marche » sur les autres.</p></details>
@@ -708,6 +711,7 @@ print("Places libres :", places)</pre>
 
 <!-- ══════ SÉANCE 3 ══════ -->
 <div class="seance-panel" id="s3" role="tabpanel">
+<p class="mots-seance"><a href="lexique_5e_C9.1.html#seance-s3">📖 Les mots de cette séance</a></p>
 <section class="card">
   <h2>🔧 Séance 3 — Modifier le programme, régler la barrière (5e_C9.2 · C9.3)</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : sauras-tu corriger le compteur — puis faire OBÉIR la barrière à ta variable ?</p>
@@ -718,18 +722,18 @@ print("Places libres :", places)</pre>
     <div class="meta-grid">
       <div><b>Objectif :</b> modifier le programme fourni (C9.2) puis réaliser et mettre au point le programme de la barrière (C9.3).</div>
       <div><b>Compétences :</b> 5e_C9.2 et 5e_C9.3.</div>
-      <div><b>Production attendue :</b> 2 modifications + le réglage de la barrière (3 tests).</div>
+      <div><b>Production attendue :</b> 2 modifications + le réglage de la barrière (3 tests) + le programme de la barrière.</div>
       <div><b>Ressources :</b> le document 2 + le banc de la barrière + l'éditeur.</div>
     </div>
     <div class="consigne"><b>Consigne — partie ① MODIFIER :</b> le responsable valide ton diagnostic et
     annonce du neuf : le Cyclone reçoit un nouveau train de <b>32 places</b>. Deux modifications à faire.</div>
     <div class="exo">
       <label for="a5q1">1. Pour corriger le bug des descendus, la ligne 5 devient :
-      <select id="a5q1"><option value="">—</option><option>places = places + descendus</option><option>places = places - descendus</option><option>places = descendus - places</option><option>descendus = places</option></select></label>
+      <select id="a5q1"><option value="">—</option><option>places = places - descendus</option><option>descendus = places</option><option>places = places + descendus</option><option>places = descendus - places</option></select></label>
       <label for="a5q2">2. Pour le nouveau train de 32 places, il faut modifier :
-      <select id="a5q2"><option value="">—</option><option>la ligne 1 : places = 32</option><option>la ligne 2 : montes = 32</option><option>la ligne 6 : print(32)</option><option>toutes les lignes</option></select></label>
+      <select id="a5q2"><option value="">—</option><option>la ligne 2 : montes = 32</option><option>la ligne 1 : places = 32</option><option>la ligne 6 : print(32)</option><option>toutes les lignes du programme</option></select></label>
       <label for="a5q3">3. Pourquoi ne change-t-on QUE cette ligne-là ?
-      <select id="a5q3"><option value="">—</option><option>parce que le nombre de sièges n'est écrit qu'à UN endroit : au remplissage initial de la boîte</option><option>parce que c'est la ligne la plus courte</option><option>parce que Python interdit de changer les autres</option><option>par superstition de technicien</option></select></label>
+      <select id="a5q3"><option value="">—</option><option>parce que c'est la ligne la plus courte à changer</option><option>parce que Python interdit de changer les autres</option><option>parce que le nombre de sièges n'est écrit qu'une fois</option><option>par habitude : les techniciens font toujours ainsi</option></select></label>
     </div>
     <figure>
       <object class="figure" data="Images/barriere_cyclone_condition.svg" type="image/svg+xml" aria-label="La barrière du Cyclone commandée par la variable places, avec le banc de trois tests" style="width:100%"></object>
@@ -749,18 +753,33 @@ print("Places libres :", places)</pre>
     <p id="barrBadge" style="color:var(--ok);font-weight:700"></p>
     <div class="exo">
       <label for="a5q4">4. À <code>places = 0</code>, la condition <code>places &gt; 0</code> est :
-      <select id="a5q4"><option value="">—</option><option>FAUSSE — donc la barrière se ferme : exactement ce qu'on veut</option><option>vraie — la barrière s'ouvre</option><option>impossible à calculer</option><option>une erreur</option></select></label>
+      <select id="a5q4"><option value="">—</option><option>vraie : la barrière s'ouvre</option><option>fausse : la barrière se ferme</option><option>impossible à calculer pour Python</option><option>une erreur, car 0 n'est pas un nombre</option></select></label>
       <label for="a5q5">5. Pourquoi le test B3 est-il LE plus important ?
-      <select id="a5q5"><option value="">—</option><option>c'est le cas FRONTIÈRE : c'est là que les visiteurs de trop passeraient si la règle était mal écrite</option><option>parce que 0 est un joli nombre</option><option>il ne l'est pas, B1 suffit</option><option>parce qu'il est le dernier de la liste</option></select></label>
+      <select id="a5q5"><option value="">—</option><option>parce que 0 est un nombre plus simple à tester</option><option>il ne l'est pas : B1 suffit à conclure</option><option>parce qu'il est le dernier de la liste</option><option>c'est le cas frontière, pile à la limite</option></select></label>
+    </div>
+    <div class="consigne"><b>Consigne — partie ③ ÉCRIRE LE PROGRAMME DE LA BARRIÈRE :</b> la règle est donnée en français ; à toi de l'écrire en Python. La barrière n'est pas encore branchée : <code>print("OUVERTE")</code> et <code>print("FERMÉE")</code> jouent son rôle.</div>
+    <p><b>La règle :</b> SI il reste au moins une place, ALORS ouvrir la barrière, SINON la fermer.</p>
+    <div class="exo">
+      <label for="progBarr" style="display:block">✍ Mon programme de la barrière (une ligne <code>places = …</code>, puis la condition) :</label>
+      <textarea id="progBarr" rows="6" placeholder="places = 0&#10;if …"></textarea>
+      <details class="etayage">
+        <summary>🪜 Version étayée — un squelette à compléter</summary>
+        <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : le squelette retire l'obstacle de la saisie, pas l'exigence.</p>
+<pre class="code">places = ____
+if places ____ 0:
+    print("____")
+else:
+    print("____")</pre>
+      </details>
     </div>
     <details class="vs" id="vs2" open>
-      <summary>🧪 Pour aller au bout : recopie le compteur corrigé dans l'éditeur et vérifie tes 3 tests</summary>
-      <p class="vs-note">Écris le programme avec tes deux modifications, exécute avec les valeurs des tests — la console doit dire comme toi. Le lien ouvre l'éditeur en mode code, comme à l'activité 3.</p>
+      <summary>🧪 Pour aller au bout : exécute ton programme de barrière dans l'éditeur avec places = 10, 32 puis 0</summary>
+      <p class="vs-note">Recopie ton programme de barrière, puis change la première ligne pour chaque test (10, 32, 0) et exécute — la console doit dire OUVERTE, OUVERTE, FERMÉE. Tu peux aussi recopier le compteur corrigé. Le lien ouvre l'éditeur en mode code, comme à l'activité 3.</p>
       
 <p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
 <p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
     </details>
-    <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Partie ① : qui LIBÈRE des places, le + ou le − ? Partie ② : 0 &gt; 0… vrai ou faux ? Compte sur tes doigts.</p></details>
+    <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><ul><li>Partie ① : qui LIBÈRE des places, le + ou le − ?</li><li>Partie ② : 0 &gt; 0… vrai ou faux ? Compte sur tes doigts.</li><li>Partie ③ : en Python, SI s'écrit <code>if</code> et SINON s'écrit <code>else</code> ; n'oublie pas les deux-points et le décalage des lignes <code>print</code>.</li></ul></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Un réglage se prouve par des tests choisis À L'AVANCE : un cas normal, un cas facile, et le cas FRONTIÈRE (ici : zéro pile). Si les trois passent, la barrière est réglée. C'est la même idée que le grand banc de tests que tu retrouveras en 3e.</p></details>
     <button class="btn check" data-check="5" type="button">✅ Vérifier l'activité 5</button>
     <p class="feedback" id="fb5" role="status"></p>
@@ -769,11 +788,18 @@ print("Places libres :", places)</pre>
       <code>places = 32</code> — et seulement elle, car le nombre de sièges n'est écrit qu'à UN endroit
       (c'est la force des variables !). ② B1 OUVERTE ✔, B2 OUVERTE ✔, B3 : 0 &gt; 0 est FAUX →
       <b>FERMÉE</b> ✔ — le cas frontière protège le manège du visiteur de trop.</p>
+      <p>③ Un programme de barrière qui marche (il y en a d'autres) :</p>
+<pre class="code">places = 0
+if places &gt; 0:
+    print("OUVERTE")
+else:
+    print("FERMÉE")</pre>
+      <p>Avec <code>places = 10</code> et <code>places = 32</code>, la console affiche OUVERTE ; avec <code>places = 0</code>, FERMÉE. <code>places &gt;= 1</code> marche aussi : pour un nombre entier de places, c'est la même frontière.</p>
       <p><b>Erreur classique :</b> écrire <code>places &gt;= 0</code> « pour être sûr » : à zéro place, la
       barrière resterait OUVERTE. Aux frontières, chaque signe compte.</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> modifier un programme = changer LA bonne ligne, puis RE-TESTER tous les cas — surtout la frontière. Et une variable peut commander un objet réel : l'information commande l'énergie.</div>
-    <p class="critere"><b>🎯 Critère de réussite :</b> mes 3 tests de barrière passent, cas limite compris, et je sais expliquer pourquoi on ne change que la ligne 1 pour le nouveau train.</p>
+    <p class="critere"><b>🎯 Critère de réussite :</b> mes 3 tests de barrière passent, cas limite compris, mon programme de barrière (if / else) donne les mêmes résultats, et je sais expliquer pourquoi on ne change que la ligne 1 pour le nouveau train.</p>
   </div>
 </section>
 
@@ -947,14 +973,20 @@ document.querySelectorAll("pre.code, #memCode > div").forEach(e => { e.innerHTML
 
 function qmark(e, state){ let m = e.previousElementSibling; if(!(m && m.classList && m.classList.contains("qmark"))){ m = document.createElement("span"); m.className = "qmark"; e.insertAdjacentElement("beforebegin", m); } if(state === null){ m.textContent = ""; m.className = "qmark"; } else { m.textContent = state ? "\u2714" : "\u2718"; m.className = "qmark " + (state ? "ok" : "ko"); } }
 function sv(id, ok){ const e = $(id); if(!e) return false; const good = e.value === ok; e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value); qmark(e, e.value ? good : null); return good; }
+/* 5e_C9.3 — le programme de la barrière : une condition sur places, un SINON, les deux messages. */
+function progBarrOk(){
+  const p = (($("progBarr") || {}).value || "").replace(/\s+/g, " ");
+  const cond = /if\s*\(?\s*places\s*(>\s*0|>=\s*1|!=\s*0)\s*\)?\s*:/.test(p);
+  return cond && /else\s*:/.test(p) && /OUVERT/i.test(p) && /FERM/i.test(p);
+}
 const CHECKS = {
   1(){ let s = 0;
-    s += sv("a1q1","21"); s += sv("a1q2","il a été REMPLACÉ par 21 — une boîte ne garde qu'UNE valeur");
+    s += sv("a1q1","21"); s += sv("a1q2","il a été remplacé par 21 : il n'existe plus");
     s += sv("a1q3","« RANGE cette valeur dans la boîte »");
     return {score: s, total: 3, exp: !!window.__exp.memoire, expMsg: "Déroule les 4 étapes du simulateur (▶) pour obtenir ton badge 🔓."};
   },
   2(){ let s = 0;
-    s += sv("a2q1","19"); s += sv("a2q2","elle AJOUTE les 2 places libérées par ceux qui descendent");
+    s += sv("a2q1","19"); s += sv("a2q2","elle AJOUTE les 2 places libérées au total");
     s += sv("a2q3","21"); s += sv("a2q4","3 fois");
     return {score: s, total: 4, exp: true};
   },
@@ -966,17 +998,18 @@ const CHECKS = {
     return {score: s, total: 6, exp: !!window.__exp.vs1, expMsg: "Ouvre l'éditeur Vittascience (🧪) et exécute tes 2 expériences avant de reporter."};
   },
   4(){ let s = 0;
-    s += sv("a4q1","SOUSTRAIT les descendus au lieu de les AJOUTER (19 au lieu de 23)");
-    s += sv("a4q2","LIBÉRER une place (donc places + descendus)");
-    s += sv("a4q3","le programme NE répond PAS au besoin : la ligne 5 doit devenir places = places + descendus");
+    s += sv("a4q1","enlève les descendus au lieu de les ajouter");
+    s += sv("a4q2","libérer une place : places + descendus");
+    s += sv("a4q3","il ne répond pas au besoin : la ligne 5 est fausse");
     return {score: s, total: 3, exp: !!window.__exp.testsLire, expMsg: "Exécute les 3 tests du banc (▶) avant de rendre ton verdict."};
   },
   5(){ let s = 0;
     s += sv("a5q1","places = places + descendus"); s += sv("a5q2","la ligne 1 : places = 32");
-    s += sv("a5q3","parce que le nombre de sièges n'est écrit qu'à UN endroit : au remplissage initial de la boîte");
-    s += sv("a5q4","FAUSSE — donc la barrière se ferme : exactement ce qu'on veut");
-    s += sv("a5q5","c'est le cas FRONTIÈRE : c'est là que les visiteurs de trop passeraient si la règle était mal écrite");
-    return {score: s, total: 5, exp: !!window.__exp.testsBarriere, expMsg: "Exécute les 3 tests de la barrière (▶) — le cas limite B3 compris."};
+    s += sv("a5q3","parce que le nombre de sièges n'est écrit qu'une fois");
+    s += sv("a5q4","fausse : la barrière se ferme");
+    s += sv("a5q5","c'est le cas frontière, pile à la limite");
+    s += progBarrOk() ? 1 : 0;
+    return {score: s, total: 6, exp: !!window.__exp.testsBarriere, expMsg: "Exécute les 3 tests de la barrière (▶) — le cas limite B3 compris."};
   }
 };
 const par = {s: []};

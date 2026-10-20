@@ -22049,3 +22049,102 @@ mélanger**, 390 px sans défilement horizontal, console sans erreur. Contrôles
 les réponses en clair.
 
 **19/10/2026 — les 8 captures du sujet B sont faites (règle n°308).** `B38` à `B45` sont construites, exécutées et capturées dans Vittascience (thème sombre, contexte neuf sans compte, blocs de la boîte à outils, recadrées, 256 couleurs, 23 Ko au plus), comme celles du lot 1 ; chaque structure est identique à celle de la capture jumelle du sujet A (B18, B31, B33, B34 à B37). Le « bleu pur » du sélecteur n'existe pas : `#0000ff` n'y figure pas, on a pris `#3333ff` (teinte 240°, le plus franc). Un message transitoire de Vittascience (« Exécution de votre programme… ») restait dans le cadre des captures larges : retiré avant le cadrage pour B41 à B44. **Le même bandeau figure dans `bloc_vitta_B35.png` du lot 1 (déjà fusionné) : à refaire dans un lot à part.** Dimensions réelles dans les `<img>`, textes alt comparés à la capture (aucun changé), 8 lignes dans `SOURCES_MEDIAS.md`. `controle_blocs_dessines.py` sort à 0 (registre EN_ATTENTE inchangé : 11), les 21 autres contrôles aussi ; banc du sujet B 22 / 22 (tout juste 20 / 20, tout faux 0 / 20, réponses lues dans la clé de la page au moment du test, sujets A et B entamés sur le même poste sans mélange, 1280 et 390 px sans défilement horizontal, loupe).
+
+## 19/10/2026 — Thème 3 · 4e_C9.1 et 5e_C9.1 : relecture pour le distanciel — une question fausse, des réponses qui se devinaient, le programme de la barrière, les mots de chaque séance
+
+**Demande de Pascal.** Les cours ont lieu à distance (mouvements sociaux en Martinique) : les élèves de 4e et de 5e
+suivent seuls « Le jardin connecté se programme » et « La boîte étiquetée », guidés par le cahier de textes. Pascal a
+demandé une vérification des deux séquences, puis : « Je te laisse carte blanche afin de corriger les défauts des séquences. »
+
+### Ce que la relecture a trouvé (mesuré sur `main` à `4f86b2e`)
+
+1. **Bloquant — 4e, activité 6.** La question « Par rapport à la pompe, qu'est-ce qui s'inverse ? » attendait
+   « le sens », alors que l'aide de niveau 2 dit « Le sens ne s'inverse donc pas » et que la correction le confirme : pour
+   la pompe comme pour le lampadaire, on allume quand la mesure est basse. Un élève qui suivait l'aide ne pouvait pas
+   valider l'activité. La suite du lot validait l'erreur.
+2. **Les bonnes réponses se devinaient dans les menus des activités.** 4e : en tête dans **23 menus sur 23**, la plus
+   longue 22 fois ; 5e : en tête **12 fois sur 19**, la plus longue 15 fois. Les règles n°144 et n°198 ne visent que les
+   banques de QCM (`controle_longueurs.py` ne lit que `const QUESTIONS`) ; les deux QCM du lot, eux, sont sains (bonnes
+   réponses réparties 8 / 7 / 7 / 8). La suite de 4e choisissait les réponses par leur **rang** : elle ne pouvait pas le voir.
+3. **4e, bilan.** « Ma confiance — 4e_C9.1 (écrire et exécuter) » et « 4e_C9.2 et 4e_C9.3 (tester et mettre au point) » :
+   C9.1, c'est *modifier* un algorithme, C9.2 le *traduire*.
+4. **4e, situation.** « Le support de capteur, vous l'avez conçu (C7) et validé (C8) » et « Ce jardin est le vôtre — pas
+   une invention » : faux pour des élèves qui n'ont fait ni C7 ni C8 (Pascal change d'établissement chaque année, et ce
+   trimestre il a commencé par le thème 1).
+5. **5e, geste 4 de l'échauffement.** « Entre dans le dossier, puis Ctrl + V » venait **après** « Comment savoir que c'est
+   fait » : l'ordre lu n'était pas l'ordre fait.
+6. **5e_C9.3 sans production.** Depuis le retrait de la version 🅰 (04/10/2026), l'élève ne *réalisait* plus aucun
+   programme commandant un OST : il cliquait trois tests sur un banc.
+7. **Lexiques.** Les deux lexiques ne portaient que les 30 notions des QCM, rangées par compétence : aucun mot de séance
+   (algorithme, capteur, relais, préactionneur, constante, OST…), contre la règle de Pascal (tous les termes techniques,
+   rattachés à la séance où ils servent).
+8. **Petites erreurs.** 4e : « Cinq activités » (il y en a six) ; « (règle n°126) » et « (règle n°114) » visibles par
+   l'élève ; « mesurer humidité » dans le code donné, « lire humidité » partout ailleurs ; pastille « 3e » sur le QCM de
+   4e. 5e : l'option « large : 24 » au lieu de « 24 ».
+
+### Ce que le lot fait
+
+- **Activité 6 de 4e.** Question : « Par rapport au programme de la pompe, qu'est-ce qui change ? », bonne réponse « la
+  grandeur mesurée, les seuils et l'action » ; l'aide de niveau 1 ne dit plus que le sens change (« change-t-il
+  vraiment ? ») ; la correction dit que le sens ne change pas.
+- **Menus des activités, règles n°144 et n°198 appliquées.** Chaque proposition porte une affirmation, pas sa
+  démonstration (la justification reste dans la correction) ; les distracteurs trop courts reçoivent la même densité ; les
+  bonnes réponses changent de place. 4e : en tête 5 fois sur 22, aucune détachée de plus de 8 caractères ; les cinq menus
+  de l'activité 1 donnent les sept fonctions dans l'ordre des chaînes (« DISTRIBUER — c'est le préactionneur » devient
+  « DISTRIBUER »). 5e : en tête 2 fois sur 19, aucune détachée. Vérificateurs mis à jour (préfixes `startsWith` en 4e,
+  réponses exactes `sv()` en 5e). Le billet d'entrée garde « je ne sais pas encore » en dernier.
+- **Bilan de 4e** : « 4e_C9.1 et 4e_C9.2 (modifier l'algorithme, le traduire en programme) » et « 4e_C9.3 (tester et
+  mettre au point le programme) » — mêmes deux échelles, mêmes noms de champs : rien ne se perd dans les sauvegardes.
+- **Situation de 4e** : « Imagine-le : le capteur d'humidité est planté dans la terre, sur son support, et la pompe est
+  branchée » ; « Ce jardin pourrait être celui de ton collège ». Le README du lot, qui décrit l'arc C7 → C8 → C9 pour
+  l'enseignant, n'est pas changé.
+- **5e, geste 4** : « Puis : entre dans le dossier de ta classe (double-clic), puis Ctrl + V… » précède « Comment savoir
+  que c'est fait ».
+- **5e_C9.3, partie ③ de l'activité 5** : « Écrire le programme de la barrière » — la règle en français, un champ sauvegardé,
+  un squelette en version étayée (`places = ____` / `if places ____ 0:` / `else:`), un vérificateur (`progBarrOk` : une
+  condition `places > 0`, `>= 1` ou `!= 0`, un `else`, les deux messages ; `>= 0` refusé), la correction et le critère de
+  réussite. L'activité 5 passe de 5 à 6 points. « Pour aller au bout » fait exécuter ce programme dans Vittascience avec
+  10, 32 puis 0. Aide de niveau 1 en liste (contrôle de hiérarchie, règle n°307). README, fiche pédagogique, matrice
+  (une ligne, MOD3-MOD4) et synthèse professeur suivent.
+- **Lexiques par séance** (outil du 23/09/2026, sans retouche de la page engendrée) : `vocabulaire_4e_C9.1.json`,
+  **48 mots** (ouverture 6, séance 1 21, séance 2 10, séance 3 11) ; `vocabulaire_5e_C9.1.json`, **35 mots** (ouverture 7
+  dont « OST » du vocabulaire commun, séance 1 10, séance 2 12, séance 3 6). Les 30 notions de chaque QCM suivent, inchangées.
+  Lien « 📖 Les mots de cette séance » en tête des trois panneaux de chaque séquence. Sources : Larousse en ligne, TLFi,
+  FranceTerme (« bogue »), Grand dictionnaire terminologique de l'OQLF (préactionneur, algorigramme, jeu d'essai, broche,
+  réinvestissement des apprentissages…), documentation Python, ressources Éduscol STI 3759 et 18030, cours des académies de
+  Limoges et de Guyane pour les sept fonctions des chaînes. Le guide d'accompagnement Éduscol de mai 2024 n'a pas pu être
+  ouvert sur `sti.eduscol` (erreur serveur) : la copie hébergée par l'académie de Guyane est citée avec son adresse.
+  **Sources plus faibles, déclarées** : Wikipédia (pseudo-code, hystérésis, « Flowchart » en anglais pour le terminal) et
+  Wiktionnaire (chronogramme). **Non ajoutés faute de source lue** : « trace d'exécution » et « bande morte » (seule
+  source trouvée : IEV 351-45-15 *dead band*, en anglais, sans équivalent français confirmé).
+- **Petites erreurs** : « Six activités » ; numéros de règle retirés du texte élève ; « lire humidité » ; pastille « 4e » ;
+  « 24 ».
+
+### Ce que le lot ne fait pas
+
+- **Le titre du thème 3** a trois libellés dans le dépôt (« … : des objets et des systèmes techniques à créer » sur 20
+  séquences, « Création, conception, réalisation » sur 9, « …, innovations : des objets à concevoir et à réaliser » dans
+  l'index) : transversal, à trancher par Pascal dans une branche sans motif de thème.
+- **La capture 4d de l'échauffement de 5e** (le nom de classe tapé) manque toujours : seule une vraie capture convient
+  (règle n°308), à faire sur le poste de Pascal. Le texte, lui, est dans le bon ordre.
+- **`controle_longueurs.py` ne lit toujours pas les menus des séquences** : `_outils/` hors des deux outils communs est le
+  périmètre du thème 2. La garde est posée dans les deux suites du lot ; l'étendre au dépôt est à proposer.
+- **COMMUNIQUER** : les cours de Limoges et de Guyane font envoyer les ordres par COMMUNIQUER ; la séquence, comme la
+  ressource Éduscol 18030, les fait partir de TRAITER. La définition du lexique suit la séquence. À arbitrer par Pascal.
+- **« mot-clé » en 5e** : la légende du code en couleurs range `print` avec les mots-clés ; pour Python, `print` est une
+  fonction. La définition s'appuie sur `if` / `else`. La palette commune (règle n°13) n'est pas touchée.
+
+### Vérifié
+
+Suites du lot, rejouées sur la branche (Chromium, Playwright) : **4e 70 / 70** (67 avant : trois contrôles ajoutés, réponses
+choisies par leur texte et non plus par leur rang) ; **5e 54 / 54** (48 avant : trois contrôles des menus, trois de la
+partie ③). **Mutation, elle mord** : la bonne réponse de `a5_q4` (4e) remise à sa formulation longue d'avant → le contrôle de
+longueur échoue et nomme `a5_q4`. `generer_lexique.py` accepte les deux vocabulaires (formes présentes dans leur panneau,
+sources présentes, aucun conflit avec un « à retenir ») ; son banc **28 / 28**. Citations relues à la source par un second
+lecteur, au hasard : Larousse « simulateur », « relais », « constante », FranceTerme « bogue » — conformes. Captures 390 px :
+le lien « 📖 Les mots de cette séance » sous les onglets, la partie ③ de 5e, le lexique de 5e. **Contrôles du dépôt** : les
+22 contrôles Python et `verif_regles_audit.py` sortent à 0 (`controle_hierarchie` a d'abord refusé l'aide de niveau 1 de
+l'activité 5 de 5e, une énumération ①②③ en ligne : passée en liste ; `controle_rapports_tests` a refusé le rapport de 4e,
+qui nommait le banc de `generer_lexique.py` comme s'il était dans le dossier du lot : reformulé) ; des 5 contrôles en navigateur, 4 sortent à 0 et
+`controle_squelette.mjs` refuse la même seule page que sur `main` (`3e_C1.5`, thème 1, hors lot). `build_audit.py` et
+`make_index.py` régénérés.

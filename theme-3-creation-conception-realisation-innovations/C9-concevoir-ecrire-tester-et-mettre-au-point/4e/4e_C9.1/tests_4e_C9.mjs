@@ -70,14 +70,41 @@ const run = async () => {
 
   /* ════════ SÉQUENCE ════════ */
   const SEQ = "sequence_4e_C9_jardin-programme.html";
+  /* Les bonnes réponses sont choisies par leur TEXTE : depuis le 19/10/2026, elles ne sont plus
+     toutes en première position (règles n°144 et n°198 appliquées aux activités). */
+  const BONNE = {
+    be_1: "une boîte qui porte un nom et contient une valeur",
+    be_2: "une condition : une question vraie ou fausse",
+    a1_5: "DISTRIBUER",
+    a1_r1: "parce qu'elle demande trop de courant pour une broche",
+    a1_r2: "non : il laisse passer celle de l'alimentation 12 V",
+    a2_q1: "parce que c'est UNE seule décision sur deux conditions",
+    a2_q2: "non : le programme boucle et ne doit pas s'arrêter",
+    a2_q3: "3 : mesurer, allumer et éteindre",
+    a2_q4: "la sortie NON : l'heure est hors de la plage",
+    a3_q1: "pour changer le réglage à un seul endroit",
+    a3_q2: "au losange de décision",
+    a3_q3: "la pompe s'allume dès qu'UNE condition est vraie",
+    a3_q4: "les lignes H = 25, heure = 8 et les print",
+    a4_a6: "pompe OFF, sans aucun message d'alerte",
+    a4_m1: "parce que lui seul distingue « H < 40 » de « H ≤ 40 »",
+    a4_m2: "non : il n'arrose pas, mais il ne signale rien",
+    a5_q1: "6 fois, pour 2 points d'humidité",
+    a5_q2: "oui : c'est la règle elle-même qui est mal choisie",
+    a5_q3: "d'un capteur réel : aucune mesure n'est stable",
+    a5_q4: "RIEN : la pompe garde son état",
+    a5_q5: "une mémoire : une variable qui retient l'état",
+    a6_q1: "la grandeur mesurée, les seuils et l'action",
+  };
+  const bonne = (id) => page.selectOption("#" + id, BONNE[id]);
   await page.goto(url(SEQ));
   await page.waitForTimeout(600);
   await shot(page, "sequence_accueil");
   ok("séquence : chargement file:// sans erreur JS", erreursJS.length === 0, erreursJS.join(" | "));
 
   /* billet d'entrée — sans note, hors progression (règle n°26) */
-  await page.selectOption("#be_1", { index: 1 });
-  await page.selectOption("#be_2", { index: 1 });
+  await bonne("be_1");
+  await bonne("be_2");
   await page.selectOption("#be_3", "ACQUÉRIR");
   await page.click("#btnBillet");
   const billet = await page.textContent("#fbBillet");
@@ -94,12 +121,27 @@ const run = async () => {
   /* ── tableau de bord (règle n°30) ── */
   ok("tableau de bord : les 6 activités listées", await page.locator("#tachesBandeau .tache").count() === 6);
 
+  /* ── règles n°144 et n°198 dans les activités : ni le rang ni la longueur ne désignent la bonne réponse ── */
+  const forme = await page.evaluate((B) => Object.entries(B).map(([id, rep]) => {
+    const o = [...document.querySelectorAll("#" + id + " option")].map(x => x.textContent)
+      .filter(x => x && !x.startsWith("—") && x !== "je ne sais pas encore");
+    const autres = o.filter(x => x !== rep).map(x => x.length);
+    return { id, rang: o.indexOf(rep), detachee: rep.length > Math.max(...autres) + 8 || rep.length < Math.min(...autres) - 8 };
+  }), BONNE);
+  const premieres = forme.filter(x => x.rang === 0).length;
+  ok("activités : chaque bonne réponse existe dans son menu", forme.every(x => x.rang >= 0),
+     forme.filter(x => x.rang < 0).map(x => x.id).join(", "));
+  ok("activités : la bonne réponse n'est en tête que dans moins d'un tiers des menus (" + premieres + "/" + forme.length + ")",
+     premieres * 3 < forme.length);
+  ok("activités : aucune bonne réponse détachée par sa longueur (> 8 caractères)", forme.every(x => !x.detachee),
+     forme.filter(x => x.detachee).map(x => x.id).join(", "));
+
   /* ════════ ACTIVITÉ 1 ════════ */
   for (const [id, v] of [["a1_1","ACQUÉRIR"],["a1_2","TRAITER"],["a1_3","COMMUNIQUER"],["a1_4","CONVERTIR"]])
     await page.selectOption("#" + id, v);
-  await page.selectOption("#a1_5", { index: 1 });
-  await page.selectOption("#a1_r1", { index: 1 });
-  await page.selectOption("#a1_r2", { index: 1 });
+  await bonne("a1_5");
+  await bonne("a1_r1");
+  await bonne("a1_r2");
   await page.click('[data-check="1"]');
   ok("verrou de rédaction : act. 1 refusée sans la justification écrite",
      (await page.textContent("#fb1")).includes("justification"));
@@ -111,7 +153,7 @@ const run = async () => {
   /* ════════ ACTIVITÉ 2 ════════ */
   for (const [id, v] of [["ag1","1"],["ag2","2"],["ag3","3"],["ag4","4"],["ag5","5"]])
     await page.selectOption("#" + id, v);
-  for (const id of ["a2_q1","a2_q2","a2_q3","a2_q4"]) await page.selectOption("#" + id, { index: 1 });
+  for (const id of ["a2_q1","a2_q2","a2_q3","a2_q4"]) await bonne(id);
   await page.fill("#prog1", "SEUIL = 40\nlire humidite -> H\nlire heure -> heure\nSI H < SEUIL ET heure >= 6 ET heure <= 10 ALORS\n    allumer pompe\nSINON\n    eteindre pompe\nFIN SI");
   await page.click('[data-check="2"]');
   ok("activité 2 validée (ordre + lecture + pseudo-code avec ET et bornes)",
@@ -140,7 +182,7 @@ const run = async () => {
   await shot(page, "banc_frontieres", "#bancCard");
 
   /* ════════ ACTIVITÉ 3 ════════ */
-  for (const id of ["a3_q1","a3_q2","a3_q3","a3_q4"]) await page.selectOption("#" + id, { index: 1 });
+  for (const id of ["a3_q1","a3_q2","a3_q3","a3_q4"]) await bonne(id);
   await page.click('[data-check="3"]');
   ok("verrou de rédaction : act. 3 refusée sans journal chiffré",
      (await page.textContent("#fb3")).includes("VALEURS"));
@@ -155,9 +197,9 @@ const run = async () => {
   for (const [id, v] of [["a4_a1","pompe ON"],["a4_a2","pompe OFF"],["a4_a3","pompe OFF"],
                          ["a4_a4","pompe ON"],["a4_a5","pompe OFF"]])
     await page.selectOption("#" + id, v);
-  await page.selectOption("#a4_a6", { index: 1 });
-  await page.selectOption("#a4_m1", { index: 1 });
-  await page.selectOption("#a4_m2", { index: 1 });
+  await bonne("a4_a6");
+  await bonne("a4_m1");
+  await bonne("a4_m2");
   for (let i = 1; i <= 6; i++) await page.selectOption("#a4_o" + i, "conforme");
   await page.click('[data-check="4"]');
   ok("activité 4 validée (8/8 attendus + 6 observés + frontières exécutées)",
@@ -166,7 +208,7 @@ const run = async () => {
 
   /* ════════ ACTIVITÉ 5 — la démonstration de l'hystérésis ════════ */
   await page.click('.seance-tab[data-panel="s3"]');
-  for (const id of ["a5_q1","a5_q2","a5_q3","a5_q4","a5_q5"]) await page.selectOption("#" + id, { index: 1 });
+  for (const id of ["a5_q1","a5_q2","a5_q3","a5_q4","a5_q5"]) await bonne(id);
   await page.fill("#a5_diag", "La pompe change d'état 6 fois en 70 secondes alors que l'humidité n'a varié que de 2 points. Le relais s'use à chaque manœuvre, la pompe démarre sans cesse, et l'eau arrive par à-coups qui ne descendent jamais aux racines.");
   await page.fill("#prog3", "SEUIL_BAS = 35\nSEUIL_HAUT = 45\nlire humidite -> H\nSI H < SEUIL_BAS ALORS\n    allumer pompe\nSINON SI H > SEUIL_HAUT ALORS\n    eteindre pompe\nFIN SI");
 
@@ -197,7 +239,7 @@ const run = async () => {
   await shot(page, "act5_validee");
 
   /* ════════ ACTIVITÉ 6 — réinvestissement sans squelette ════════ */
-  await page.selectOption("#a6_q1", { index: 1 });
+  await bonne("a6_q1");
   await page.click('[data-check="6"]');
   ok("verrou : act. 6 refusée sans programme complet", (await page.textContent("#fb6")).includes("seuils"));
   await page.fill("#reinv", "SEUIL_BAS = 20\nSEUIL_HAUT = 60\nlire luminosite -> L\nSI L < SEUIL_BAS ALORS\n    allumer lampadaire\nSINON SI L > SEUIL_HAUT ALORS\n    eteindre lampadaire\nFIN SI");

@@ -20,7 +20,7 @@ tout vocabulaire savant. Progressivité de l'arc (règle n°8) : 5e LIT et teste
 |---|---|---|
 | 1 La boîte | 1. Simulateur de mémoire (4 étapes) · 2. Table de suivi | 4 étapes déroulées |
 | 2 Lire et tester (C9.1) | 3. Prédire→tester→reporter (guillemets) · 4. Banc de tests du programme fourni | éditeur ouvert · 3 tests exécutés |
-| 3 Modifier et régler (C9.2-C9.3) | 5. Corriger + adapter (32 places) puis régler la barrière (banc, cas limite 0) | 3 tests barrière |
+| 3 Modifier et régler (C9.2-C9.3) | 5. Corriger + adapter (32 places), régler la barrière (banc, cas limite 0), puis écrire son programme (`if places > 0` / `else`) | 3 tests barrière + programme de la barrière |
 
 ## Versions (règle n°3)
 🅱 simulateur + éditeur Vittascience dans un onglet, en mode code (principal) · 🅲 tables de suivi au cahier

@@ -128,3 +128,18 @@ deux zones.
 
 **Corrigé le 05/10/2026** (sur décision de Pascal) : une version étayée courte (trois débuts de phrase) est ajoutée à la zone
 « Ma réponse au Bonus ». Le contrôle n°31 donne désormais « 3 étayages pour 3 zones » : **48 / 48** à la rejouée du 05/10/2026.
+
+## 7. Rejouée le 19/10/2026 (relecture pour le distanciel)
+
+**Ce que la relecture a trouvé.** Dans les menus des activités, la bonne réponse était en tête 12 fois sur 19 et la plus longue
+15 fois sur 19 ; l'option « large : 24 » (scorie) remplaçait « 24 » ; au geste 4, « entre dans le dossier, puis Ctrl + V » venait
+**après** « Comment savoir que c'est fait » ; et 5e_C9.3 (*réaliser* un programme commandant un OST) n'avait plus de production
+depuis le retrait de la version 🅰 : l'élève cliquait trois tests, il n'écrivait aucun programme.
+
+**Ce qui change dans la suite.** Le choix de `a1q2` suit sa nouvelle formulation ; trois contrôles mesurent les menus à partir des
+vérificateurs `sv("id","réponse")` de la page (19 menus : en tête 2 / 19, aucune réponse détachée de plus de 8 caractères) ; trois
+contrôles portent sur la partie ③ de l'activité 5 : sans programme, **5/6** et pas de validation ; avec `if places > 0` / `else`,
+**6/6** et validée ; avec `places >= 0` (frontière fausse), refusée. **Résultat : 54 / 54** (48 avant).
+
+Non rejoué ici : l'exécution dans Vittascience (service externe) ; le lexique régénéré (35 mots par séance), vérifié par
+`generer_lexique.py` et son banc (28 / 28).
