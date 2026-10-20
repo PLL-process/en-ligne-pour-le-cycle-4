@@ -212,7 +212,6 @@ figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
   .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
   .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
   .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
-  body.parcours-a [data-parcours]:not([data-parcours="a"]),
   body.parcours-b [data-parcours]:not([data-parcours="b"]),
   body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
   .taches-bandeau{display:grid;gap:6px}
@@ -255,6 +254,7 @@ figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
 /* règle d'or n°305 — une activité qui demande Internet le dit à son début */
 .activite-en-ligne{border-left:4px solid #ffd66b;background:rgba(255,214,107,.12);padding:.55em .85em;border-radius:0 8px 8px 0;margin:.6em 0 .8em;font-size:.95em;line-height:1.45}
 @media print{.activite-en-ligne,.activite-en-ligne b{color:#1a1a1a!important}.activite-en-ligne{background:#fff8e1!important;border-left-color:#8a6400!important}}
+.mots-seance{margin:0 0 10px;font-size:.92em}
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -345,7 +345,6 @@ figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
 </div>
 <div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
   <span class="parcours-label">🔀 Mon parcours :</span>
-  <button class="btn ghost parcours-btn" data-choix="a" aria-pressed="false">🅰 Avec matériel</button>
   <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 En simulation</button>
   <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sans matériel</button>
   <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
@@ -369,11 +368,11 @@ figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
   <p>Cet atelier s'appuie sur ce que tu as fait en 4e et en 5e. Trois questions pour savoir, toi comme le professeur, sur quoi on peut s'appuyer. <b>Elles ne comptent pas dans ta progression et ne sont pas notées</b> — « je ne sais pas » est une réponse utile.</p>
   <div class="exo">
     <label for="be_1" style="display:block;margin:8px 0">1. En 5e, tu as rencontré la <b>boîte étiquetée</b>. Une variable, c'est…
-      <select id="be_1"><option value="">— choisir —</option><option>un nom, et une valeur qu'on peut remplacer</option><option>un nombre qui change tout seul</option><option>une ligne de programme</option><option>je ne sais pas encore</option></select></label>
+      <select id="be_1"><option value="">— choisir —</option><option>un nombre qui change tout seul, au hasard</option><option>un nom, et une valeur qu'on peut remplacer</option><option>une ligne écrite dans le programme</option><option>je ne sais pas encore</option></select></label>
     <label for="be_2" style="display:block;margin:8px 0">2. En 4e, tu as corrigé un programme qui faisait clignoter une pompe. Un programme qui donne un mauvais résultat…
-      <select id="be_2"><option value="">— choisir —</option><option>peut très bien fonctionner sans planter — il se trompe, c'est tout</option><option>s'arrête toujours avec un message d'erreur</option><option>ne démarre jamais</option><option>je ne sais pas encore</option></select></label>
+      <select id="be_2"><option value="">— choisir —</option><option>s'arrête toujours avec un message d'erreur</option><option>ne démarre jamais : l'ordinateur le refuse</option><option>peut tourner sans planter, et se tromper</option><option>je ne sais pas encore</option></select></label>
     <label for="be_3" style="display:block;margin:8px 0">3. Pour prouver qu'un programme marche, il faut…
-      <select id="be_3"><option value="">— choisir —</option><option>écrire les résultats attendus AVANT de l'exécuter</option><option>le lancer une fois et regarder si ça a l'air bon</option><option>compter ses lignes</option><option>je ne sais pas encore</option></select></label>
+      <select id="be_3"><option value="">— choisir —</option><option>le lancer une fois et regarder si ça a l'air bon</option><option>compter ses lignes et vérifier leur nombre</option><option>écrire les résultats attendus AVANT de l'exécuter</option><option>je ne sais pas encore</option></select></label>
     <button class="btn small" id="btnBillet" type="button">Voir où j'en suis</button>
     <p class="feedback" id="fbBillet" role="status"></p>
   </div>
@@ -468,9 +467,8 @@ figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
 </section>
 
 <section class="card">
-  <h2>🔀 Trois façons de vivre l'atelier</h2>
+  <h2>🔀 Deux façons de vivre l'atelier</h2>
   <div class="donnees">
-    <p data-parcours="a">🅰 <b>Avec matériel</b> : l'éditeur Vittascience piloté vers une carte réelle (Arduino/mBot2 du collège, <b>très basse tension uniquement</b> — le TP mBot2 du dossier prolonge cet atelier).</p>
     <p data-parcours="b">🅱 <b>En simulation</b> : l'éditeur Python Vittascience <b>s'ouvre dans un nouvel onglet</b>, en <b>mode code</b> — tu écris ton programme au clavier, la console est en dessous. C'est le parcours principal. Cherche les <b>barres 🧪 bleues</b> dans les séances 2, 3 et 4 : un clic les déplie.</p>
     <p data-parcours="c">🅲 <b>Sans matériel</b> : le simulateur de mémoire (séance 1, activité 1 — le bouton « ▶ Étape suivante ») + les tables de suivi (séance 1, activité 2) à refaire au cahier.</p>
   </div>
@@ -489,6 +487,7 @@ figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
 
 <!-- ══════ SÉANCE 1 ══════ -->
 <div class="seance-panel active" id="s1" role="tabpanel">
+<p class="mots-seance"><a href="lexique_3e_C9.1.html#seance-s1">📖 Les mots de cette séance</a></p>
 <section class="card">
   <h2>📦 Séance 1 — La variable : une boîte étiquetée (3e_C9.1)</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : que se passe-t-il RÉELLEMENT dans la mémoire quand un programme s'exécute ?</p>
@@ -529,13 +528,13 @@ figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
     <div class="exo">
       <p><b>Après l'exécution complète, réponds :</b></p>
       <label for="a1q1">1. Après la ligne <code>minutes = minutes - 1</code>, que contient la boîte <code>minutes</code> ?
-      <select id="a1q1"><option value="">— je choisis —</option><option>4</option><option>3</option><option>4 et 3 en même temps</option><option>rien, elle est vidée</option></select></label>
+      <select id="a1q1"><option value="">— je choisis —</option><option>4</option><option>4 et 3 en même temps</option><option>3</option><option>rien, elle est vidée</option></select></label>
       <label for="a1q2">2. Où est passé l'ancien contenu (le 4) ?
-      <select id="a1q2"><option value="">— je choisis —</option><option>il est rangé dans une autre boîte</option><option>il est perdu : affecter, c'est REMPLACER</option><option>il reste derrière le 3</option><option>il retourne dans le programme</option></select></label>
+      <select id="a1q2"><option value="">— je choisis —</option><option>il est rangé dans une autre boîte</option><option>il reste caché derrière le 3</option><option>il est retourné dans le programme</option><option>il est perdu : il a été remplacé</option></select></label>
       <label for="a1q3">3. Le signe <code>=</code> en Python signifie :
-      <select id="a1q3"><option value="">— je choisis —</option><option>« est égal à », comme en maths</option><option>« mets cette valeur dans la boîte »</option><option>« compare les deux côtés »</option><option>« affiche à l'écran »</option></select></label>
+      <select id="a1q3"><option value="">— je choisis —</option><option>« mets cette valeur dans la boîte »</option><option>« est égal à », comme en maths</option><option>« compare les deux côtés du signe »</option><option>« affiche la valeur à l'écran »</option></select></label>
       <label for="a1q4">4. <code>minutes = minutes - 1</code> se lit :
-      <select id="a1q4"><option value="">— je choisis —</option><option>de gauche à droite, comme une phrase</option><option>de droite à gauche : je CALCULE d'abord, je RANGE ensuite</option><option>dans n'importe quel sens</option><option>c'est une équation impossible</option></select></label>
+      <select id="a1q4"><option value="">— je choisis —</option><option>de gauche à droite, comme une phrase française</option><option>de droite à gauche : je calcule, puis je range</option><option>dans n'importe quel sens, le résultat est le même</option><option>c'est une équation impossible à résoudre</option></select></label>
     </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Regarde le simulateur : à la ligne 4, la boîte <code>minutes</code> a-t-elle DEUX valeurs, ou une seule ? Une boîte ne contient jamais qu'UNE valeur à la fois.</p></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Pour la question 4 : Python commence par calculer TOUT ce qui est à droite du <code>=</code> (il lit <code>minutes</code>, trouve 4, calcule 4 − 1 = 3). Ce n'est qu'À LA FIN qu'il range le résultat dans la boîte de gauche. C'est pour ça que la même variable peut être des deux côtés sans contradiction.</p></details>
@@ -588,7 +587,7 @@ figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
     <div class="meta-grid">
       <div><b>Objectif :</b> suivre les valeurs d'un programme ligne par ligne AVEC UNE TABLE — la méthode qui marche à tous les coups.</div>
       <div><b>Compétence :</b> 3e_C9.1.</div>
-      <div><b>Production attendue :</b> la table de suivi complète (6 cases).</div>
+      <div><b>Production attendue :</b> la table de suivi complète et les 5 réponses.</div>
       <div><b>Ressources :</b> le programme ci-dessous, ton cerveau, PAS l'ordinateur.</div>
     </div>
     <div class="consigne"><b>Consigne :</b> voici le programme du compteur de voyageurs du tourniquet. SANS l'exécuter, complète la table de suivi : la valeur de chaque variable APRÈS chaque ligne.</div>
@@ -599,15 +598,15 @@ groupe = groupe - 1
 passages = passages + groupe</pre>
     <div class="exo">
       <label for="a2q1">Après la ligne 3, <code>passages</code> vaut :
-      <select id="a2q1"><option value="">—</option><option>0</option><option>3</option><option>6</option><option>« passages + groupe »</option></select></label>
+      <select id="a2q1"><option value="">—</option><option>0</option><option>6</option><option>3</option><option>« passages + groupe »</option></select></label>
       <label for="a2q2">Après la ligne 4, <code>groupe</code> vaut :
-      <select id="a2q2"><option value="">—</option><option>3</option><option>2</option><option>1</option><option>0</option></select></label>
+      <select id="a2q2"><option value="">—</option><option>3</option><option>1</option><option>0</option><option>2</option></select></label>
       <label for="a2q3">Après la ligne 5, <code>passages</code> vaut :
-      <select id="a2q3"><option value="">—</option><option>3</option><option>5</option><option>6</option><option>8</option></select></label>
+      <select id="a2q3"><option value="">—</option><option>6</option><option>5</option><option>3</option><option>8</option></select></label>
       <label for="a2q4">Combien de FOIS la boîte <code>passages</code> a-t-elle changé de contenu (ligne 1 comprise) ?
-      <select id="a2q4"><option value="">—</option><option>1 fois</option><option>2 fois</option><option>3 fois</option><option>5 fois</option></select></label>
+      <select id="a2q4"><option value="">—</option><option>1 fois</option><option>3 fois</option><option>2 fois</option><option>5 fois</option></select></label>
       <label for="a2q5">Quelle phrase décrit le rôle de ce programme ?
-      <select id="a2q5"><option value="">—</option><option>il compte des passages en accumulant dans une variable</option><option>il compare deux nombres</option><option>il affiche un message</option><option>il efface la mémoire</option></select></label>
+      <select id="a2q5"><option value="">—</option><option>il compare deux nombres et garde le plus grand</option><option>il affiche un message sur le panneau du quai</option><option>il additionne les passages dans une variable</option><option>il efface la mémoire avant chaque passage</option></select></label>
     </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Fais ta table au brouillon : deux colonnes (<code>passages</code>, <code>groupe</code>), une ligne par ligne de programme. Remplis case par case, sans sauter.</p></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Ligne 3 : à droite, <code>passages + groupe</code> = 0 + 3 = 3 → je range 3 dans <code>passages</code>. Ligne 4 : <code>groupe - 1</code> = 3 − 1 = 2 → dans <code>groupe</code>. Ligne 5 : 3 + 2 = 5 → dans <code>passages</code>. La table ne ment jamais.</p></details>
@@ -630,6 +629,7 @@ passages = passages + groupe</pre>
 
 <!-- ══════ SÉANCE 2 ══════ -->
 <div class="seance-panel" id="s2" role="tabpanel">
+<p class="mots-seance"><a href="lexique_3e_C9.1.html#seance-s2">📖 Les mots de cette séance</a></p>
 <!-- gestes-outil-v1 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau. -->
 <section class="card gestes-outil" aria-labelledby="gestes-vittascience">
   <h2 id="gestes-vittascience">🧰 Avant de commencer (échauffement) — les quatre gestes de Vittascience</h2>
@@ -703,7 +703,7 @@ passages = passages + groupe</pre>
       <figure class="geste-capture">
         <img src="Images/geste_vitta_4e_sortir_resultat.png" width="1400" height="538" loading="lazy"
              alt="Fenêtre de l'Explorateur ouverte sur « Documents › 3E1 » : un seul fichier, « 3e-VARIABLES-DUPONT_202694_171953.py », de type Python.File, 619 octets, sélectionné.">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> en haut, <b>Documents › 3E1</b>&nbsp;; dans la liste, ton fichier <code>.py</code>. Il n'est plus dans Téléchargements&nbsp;: il est rangé. Entre dans le dossier (double-clic), puis <b>Ctrl&nbsp;+&nbsp;V</b> pour y coller ton fichier.</figcaption>
+        <figcaption><b>Puis&nbsp;:</b> entre dans le dossier de ta classe (double-clic), puis <b>Ctrl&nbsp;+&nbsp;V</b> pour y coller ton fichier. <b>Comment savoir que c'est fait&nbsp;:</b> en haut, <b>Documents › 3E1</b>&nbsp;; dans la liste, ton fichier <code>.py</code>. Il n'est plus dans Téléchargements&nbsp;: il est rangé.</figcaption>
       </figure>
     </li>
   </ol>
@@ -729,15 +729,14 @@ passages = passages + groupe</pre>
     <div class="exo">
       <p><b>Expérience A :</b> <code>print(3 + 4)</code></p>
       <label for="a3p1">① Je prédis :
-      <select id="a3p1"><option value="">—</option><option>7</option><option>34</option><option>une erreur</option></select></label>
+      <select id="a3p1"><option value="">—</option><option>34</option><option>7</option><option>une erreur</option></select></label>
       <p><b>Expérience B :</b> <code>print("3" + "4")</code></p>
       <label for="a3p2">① Je prédis :
-      <select id="a3p2"><option value="">—</option><option>7</option><option>34</option><option>une erreur</option></select></label>
+      <select id="a3p2"><option value="">—</option><option>34</option><option>7</option><option>une erreur</option></select></label>
       <p><b>Expérience C :</b> <code>print("Train " + "Q", 2 + 1, "min")</code></p>
       <label for="a3p3">① Je prédis :
-      <select id="a3p3"><option value="">—</option><option>Train Q 3 min</option><option>Train Q 21 min</option><option>TrainQ3min</option><option>une erreur</option></select></label>
+      <select id="a3p3"><option value="">—</option><option>Train Q 21 min</option><option>TrainQ3min</option><option>Train Q 3 min</option><option>une erreur</option></select></label>
     </div>
-    <p class="saved-note" data-parcours="a">🅰 <b>Avec la carte</b> : exécute les trois expériences dans l'éditeur, puis téléverse la dernière sur la carte — l'affichage doit être identique à la console.</p>
     <p class="saved-note" data-parcours="c">🅲 <b>Sans matériel</b> : ouvre quand même la barre 🧪 (elle enregistre ton passage), écris les trois expériences au cahier et reporte les résultats donnés par la correction de l'activité.</p>
     <details class="vs" id="vs1" open>
       <summary>🧪 ② Ouvrir l'éditeur Python Vittascience — teste tes trois expériences dans l'onglet Vittascience</summary>
@@ -749,15 +748,15 @@ passages = passages + groupe</pre>
     <div class="exo">
       <p><b>③ Je reporte ce que la console a affiché :</b></p>
       <label for="a3r1">Expérience A a affiché :
-      <select id="a3r1"><option value="">—</option><option>7</option><option>34</option><option>une erreur</option></select></label>
+      <select id="a3r1"><option value="">—</option><option>34</option><option>7</option><option>une erreur</option></select></label>
       <label for="a3r2">Expérience B a affiché :
-      <select id="a3r2"><option value="">—</option><option>7</option><option>34</option><option>une erreur</option></select></label>
+      <select id="a3r2"><option value="">—</option><option>34</option><option>7</option><option>une erreur</option></select></label>
       <label for="a3r3">Expérience C a affiché :
-      <select id="a3r3"><option value="">—</option><option>Train Q 3 min</option><option>Train Q 21 min</option><option>TrainQ3min</option><option>une erreur</option></select></label>
+      <select id="a3r3"><option value="">—</option><option>Train Q 21 min</option><option>TrainQ3min</option><option>Train Q 3 min</option><option>une erreur</option></select></label>
       <label for="a3r4">Conclusion — que fait <code>+</code> entre deux <b>textes</b> (str) ?
-      <select id="a3r4"><option value="">—</option><option>il additionne leurs valeurs</option><option>il les COLLE bout à bout (concaténation)</option><option>il provoque toujours une erreur</option><option>il les compare</option></select></label>
+      <select id="a3r4"><option value="">—</option><option>il additionne leurs valeurs, chiffre par chiffre</option><option>il provoque toujours une erreur de type</option><option>il les compare, comme le fait ==</option><option>il les COLLE bout à bout (concaténation)</option></select></label>
       <label for="a3r5">Et maintenant, LE bug du panneau : le stagiaire a écrit <code>minutes = "4" + "1"</code> au lieu de <code>minutes = 4 + 1</code>. Le panneau affiche donc :
-      <select id="a3r5"><option value="">—</option><option>5 min</option><option>41 min… voilà d'où viennent les minutes fantômes !</option><option>une erreur</option><option>4 min</option></select></label>
+      <select id="a3r5"><option value="">—</option><option>5 min</option><option>4 min</option><option>41 min</option><option>une erreur</option></select></label>
     </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Regarde le document 2 : la carte <b>str</b> dit « entre guillemets = TEXTE, même si ce sont des chiffres ». Que fait <code>+</code> avec deux textes ?</p></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Si tu n'arrives pas à ouvrir l'éditeur (pas de réseau), utilise la version 🅲 : applique la règle du document 2 — <code>3 + 4</code> (deux int) → addition → 7 ; <code>"3" + "4"</code> (deux str) → collage → <code>"34"</code>. Puis reporte ces valeurs.</p></details>
@@ -783,6 +782,7 @@ passages = passages + groupe</pre>
 
 <!-- ══════ SÉANCE 3 ══════ -->
 <div class="seance-panel" id="s3" role="tabpanel">
+<p class="mots-seance"><a href="lexique_3e_C9.1.html#seance-s3">📖 Les mots de cette séance</a></p>
 <section class="card">
   <h2>🚇 Séance 3 — Répare le panneau du quai 96 St (3e_C9.1)</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : sauras-tu trouver les TROIS bugs que la classe de Manhattan a manqués ?</p>
@@ -796,7 +796,7 @@ passages = passages + groupe</pre>
       <div><b>Production attendue :</b> 3 bugs identifiés et corrigés + test réel.</div>
       <div><b>Ressources :</b> le programme du panneau + l'éditeur Vittascience.</div>
     </div>
-    <div class="consigne"><b>Consigne :</b> voici le programme laissé par le stagiaire. Le panneau doit afficher <code>Q - 96 St - 3 min</code> et la température en °C. Trouve les 3 bugs 🔎 : pour chacun, choisis sa LIGNE puis sa CORRECTION. Termine en assemblant le programme corrigé dans l'éditeur pour PROUVER qu'il affiche la bonne chose (badge 🔓).</div>
+    <div class="consigne"><b>Consigne :</b> voici le programme laissé par le stagiaire. Le panneau doit afficher le train, le quai, le temps d'attente en minutes et la température en °C. Trouve les 3 bugs 🔎 : pour chacun, choisis sa LIGNE puis sa CORRECTION. Termine en assemblant le programme corrigé dans l'éditeur pour PROUVER qu'il affiche la bonne chose (badge 🔓).</div>
     <pre class="code">1  train = "Q"
 2  quai = "96 St"
 3  minutes = "2" + "1"
@@ -808,21 +808,20 @@ passages = passages + groupe</pre>
     <div class="exo">
       <p><b>🔎 Bug n°1 — les minutes fantômes.</b></p>
       <label for="a4b1l">Il se cache à la ligne :
-      <select id="a4b1l"><option value="">—</option><option>1</option><option>3</option><option>6</option><option>8</option></select></label>
+      <select id="a4b1l"><option value="">—</option><option>1</option><option>6</option><option>3</option><option>8</option></select></label>
       <label for="a4b1c">La correction :
-      <select id="a4b1c"><option value="">—</option><option>minutes = 2 + 1 (des nombres, pas des textes)</option><option>minutes = "2 + 1"</option><option>minutes = "21"</option><option>supprimer la ligne</option></select></label>
-      <p><b>🔎 Bug n°2 — la virgule qui fâche Python.</b></p>
+      <select id="a4b1c"><option value="">—</option><option>minutes = "2 + 1"</option><option>minutes = "21"</option><option>minutes = 2 + 1</option><option>supprimer la ligne 3</option></select></label>
+      <p><b>🔎 Bug n°2 — la virgule qui trompe.</b> Attention : pour celui-ci, Python n'affiche aucune erreur.</p>
       <label for="a4b2l">Il se cache à la ligne :
-      <select id="a4b2l"><option value="">—</option><option>4</option><option>5</option><option>6</option><option>7</option></select></label>
+      <select id="a4b2l"><option value="">—</option><option>4</option><option>6</option><option>7</option><option>5</option></select></label>
       <label for="a4b2c">La correction :
-      <select id="a4b2c"><option value="">—</option><option>écrire 1.8 : en Python, la virgule décimale est un POINT</option><option>écrire 18 sans virgule</option><option>mettre 1,8 entre guillemets</option><option>remplacer / par ×</option></select></label>
-      <p><b>🔎 Bug n°3 — le calcul impossible.</b> Même corrigée en <code>2 + 1</code>… la ligne 7 va planter si on garde la ligne 3 d'origine.</p>
+      <select id="a4b2c"><option value="">—</option><option>écrire 18, sans virgule</option><option>écrire 1.8, avec un point</option><option>mettre 1,8 entre guillemets</option><option>remplacer / par ×</option></select></label>
+      <p><b>🔎 Bug n°3 — le calcul impossible.</b> Avec la ligne 3 d'origine, le programme s'arrête à la ligne 7 sur une erreur.</p>
       <label for="a4b3c">Pourquoi <code>minutes - 1</code> plantait-il avec la version d'origine ?
-      <select id="a4b3c"><option value="">—</option><option>on ne peut pas soustraire un nombre d'un TEXTE ("21" - 1 → erreur de type)</option><option>7 est un numéro de ligne interdit</option><option>minutes est écrit en minuscules</option><option>il manque des parenthèses</option></select></label>
+      <select id="a4b3c"><option value="">—</option><option>7 est un numéro de ligne interdit</option><option>on ne soustrait pas un nombre d'un texte</option><option>minutes est écrit en minuscules</option><option>il manque des parenthèses autour</option></select></label>
       <label for="a4b4">Une fois les 3 bugs corrigés, la ligne 8 affiche :
-      <select id="a4b4"><option value="">—</option><option>Q - 96 St - 2 min | 25.0 C</option><option>Q - 96 St - 21 min | 25.0 C</option><option>Q96St2min25C</option><option>une erreur</option></select></label>
+      <select id="a4b4"><option value="">—</option><option>Q - 96 St 21 min | 25.0 C</option><option>Q - 96 St 2 min | 25.0 C</option><option>Q96St2min25C</option><option>une erreur</option></select></label>
     </div>
-    <p class="saved-note" data-parcours="a">🅰 <b>Avec la carte</b> : le programme corrigé est celui que tu téléverses — le panneau réel affiche alors la bonne durée.</p>
     <p class="saved-note" data-parcours="c">🅲 <b>Sans matériel</b> : ouvre la barre 🧪, recopie le programme corrigé au cahier ligne à ligne, et vérifie ta ligne 8 avec la correction complète.</p>
     <details class="vs" id="vs2" open>
       <summary>🧪 Assemble et exécute le programme CORRIGÉ dans l'onglet Vittascience — la preuve par la console 🔓</summary>
@@ -831,7 +830,7 @@ passages = passages + groupe</pre>
 <p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
 <p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
     </details>
-    <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Bug 1 : séance 2, expérience B. Bug 2 : document 2, carte <b>float</b>. Bug 3 : quel est le TYPE de <code>minutes</code> après la ligne 3 d'origine ?</p></details>
+    <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Bug 1 : séance 2, expérience B. Bug 2 : document 2, carte <b>float</b> — Python ne t'avertira pas, cherche un nombre décimal mal écrit. Bug 3 : quel est le TYPE de <code>minutes</code> après la ligne 3 d'origine ?</p></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Chasse aux bugs méthodique :<br>① je tiens la table de suivi avec les TYPES (<code>minutes : str "21"</code> ← alerte !) ;<br>② je repère les opérations impossibles (str − int) ;<br>③ je corrige UNE chose à la fois et je réexécute à chaque fois. Un bug corrigé peut en révéler un autre — c'est normal, c'est la mise au point.</p></details>
     <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
     <p class="feedback" id="fb4" role="status"></p>
@@ -841,13 +840,18 @@ passages = passages + groupe</pre>
       éléments, elle ne fait pas les décimales ; correction : <code>1.8</code>. Bug 3 : avec la ligne 3
       d'origine, <code>minutes</code> est un TEXTE, et <code>"21" - 1</code> déclenche une erreur de type
       (TypeError) — on ne soustrait pas un nombre d'un texte. Programme corrigé : minutes = 3 puis 3 − 1 = 2,
-      (77 − 32)/1.8 = 25.0 → <b>Q - 96 St - 2 min | 25.0 C</b>.</p>
+      (77 − 32)/1.8 = 25.0 → la console affiche <b>Q - 96 St 2 min | 25.0 C</b>.</p>
+      <p><b>Pourquoi pas de tiret avant le 2 ?</b> <code>print</code> sépare ce qu'on lui donne par de simples
+      espaces ; le seul tiret vient de <code>message</code>, entre « Q » et « 96 St ».</p>
+      <p><b>Pourquoi le bug 2 ne se voit pas tout seul ?</b> Avec <code>1,8</code>, Python ne signale rien : il lit
+      deux valeurs séparées par la virgule, <code>(77 − 32) / 1</code> et <code>8</code>, et la température devient
+      <code>(45.0, 8)</code>. Le panneau afficherait « (45.0, 8) C » : seul un test le révèle.</p>
       <p><b>Erreur classique :</b> corriger le bug 1 et s'arrêter là parce que « ça a l'air bon » — sans
       exécuter, le bug 2 attend tranquillement la ligne 5. On ne déclare jamais un programme réparé
       sans l'avoir RÉEXÉCUTÉ en entier.</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> les 3 familles de bugs du débutant : le TEXTE déguisé en nombre (guillemets), la VIRGULE décimale (c'est un point), l'OPÉRATION impossible entre types. La table de suivi avec les types les attrape tous.</div>
-    <p class="critere"><b>🎯 Critère de réussite :</b> mon programme corrigé affiche exactement <code>Q - 96 St - 2 min | 25.0 C</code> dans la console.</p>
+    <p class="critere"><b>🎯 Critère de réussite :</b> mon programme corrigé affiche exactement <code>Q - 96 St 2 min | 25.0 C</code> dans la console.</p>
   </div>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s4" type="button">Séance 4 — Mise au point ›</button></p>
@@ -855,6 +859,7 @@ passages = passages + groupe</pre>
 
 <!-- ══════ SÉANCE 4 ══════ -->
 <div class="seance-panel" id="s4" role="tabpanel">
+<p class="mots-seance"><a href="lexique_3e_C9.1.html#seance-s4">📖 Les mots de cette séance</a></p>
 <section class="card">
   <h2>🌬 Séance 4 — Du besoin au programme testé : la ventilation de la station (3e_C9.1)</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : comment PROUVER qu'un programme répond au besoin — et pas seulement qu'il « a marché une fois » ?</p>
@@ -883,13 +888,13 @@ passages = passages + groupe</pre>
     else:
         return ▢3</pre>
       <label for="a5t1">▢1 :
-      <select id="a5t1"><option value="">—</option><option>&gt;</option><option>&lt;</option><option>==</option><option>=</option></select></label>
+      <select id="a5t1"><option value="">—</option><option>&lt;</option><option>==</option><option>&gt;</option><option>=</option></select></label>
       <label for="a5t2">▢2 :
       <select id="a5t2"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>"3"</option></select></label>
       <label for="a5t3">▢3 :
       <select id="a5t3"><option value="">—</option><option>0</option><option>1</option><option>2</option><option>3</option></select></label>
       <label for="a5t4">Pourquoi une FONCTION plutôt que du code en vrac ?
-      <select id="a5t4"><option value="">—</option><option>on peut l'appeler mille fois avec des valeurs différentes, et la tester séparément</option><option>c'est plus joli</option><option>Python l'exige toujours</option><option>ça rend le programme plus rapide</option></select></label>
+      <select id="a5t4"><option value="">—</option><option>c'est plus joli à lire, sans autre effet</option><option>on peut la rejouer et la tester à volonté</option><option>Python l'exige pour tout programme</option><option>ça rend le programme plus rapide</option></select></label>
     </div>
     <div class="consigne"><b>② Le banc de mise au point :</b> exécute les 4 tests (dans l'ordre que tu veux) en cliquant ▶ — la page calcule ce que TA fonction (celle du document 3, avec <code>air &gt; 100</code>) renvoie vraiment.</div>
     <div class="bench">
@@ -907,9 +912,9 @@ passages = passages + groupe</pre>
       <label for="a5q1">Le test T4 a montré que la fonction renvoie :
       <select id="a5q1"><option value="">—</option><option>3</option><option>2</option><option>1</option><option>une erreur</option></select></label>
       <label for="a5q2">Pour respecter le besoin, il faut corriger la condition en :
-      <select id="a5q2"><option value="">—</option><option>air &gt;= 100</option><option>air &gt; 99.9</option><option>air == 100</option><option>air &lt; 100</option></select></label>
+      <select id="a5q2"><option value="">—</option><option>air &gt; 99.9</option><option>air == 100</option><option>air &gt;= 100</option><option>air &lt; 100</option></select></label>
       <label for="a5q3">Après cette correction, que DOIT-on faire ?
-      <select id="a5q3"><option value="">—</option><option>rien, la correction est évidente</option><option>rejouer TOUS les tests du banc, pas seulement T4</option><option>supprimer le test T4</option><option>changer aussi les autres return</option></select></label>
+      <select id="a5q3"><option value="">—</option><option>rien : la correction est évidente</option><option>supprimer le test T4, devenu inutile</option><option>rejouer tous les tests du banc</option><option>changer aussi les autres return</option></select></label>
     </div>
     <details class="vs" id="vs3" open>
       <summary>🧪 Pour aller au bout : recopie la fonction corrigée et ton banc de tests dans l'éditeur</summary>
@@ -992,7 +997,7 @@ passages = passages + groupe</pre>
   </div>
   <div class="donnees">
     <p><b>🧭 Et après ?</b> Le TP <a href="tp_mbot2_python.html">mBot2 en Python</a> fait rouler tes variables
-    sur un vrai robot (version 🅰). En 4e, tu as programmé <a href="../../../../theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2/sequence-jardin-connecte-arrosage-automatique.html">l'arrosage du jardin connecté</a> —
+    sur un vrai robot, au collège (très basse tension). En 4e, tu as programmé <a href="../../../../theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2/sequence-jardin-connecte-arrosage-automatique.html">l'arrosage du jardin connecté</a> —
     relis-le : tu y verras des variables partout, maintenant que tu sais les voir.</p>
   </div>
 </section>
@@ -1009,7 +1014,7 @@ passages = passages + groupe</pre>
 <footer class="footer">
   <p>Atelier 3e_C9.1 · Thème 3 · New York — refonte de la ressource « Vittascience : variables » (enquête
   Vittascience adaptée par P. Gouacide, reconstruite au gabarit du dépôt). Page unique hors-ligne (éditeur
-  embarqué : connexion requise), sauvegarde locale uniquement — aucune donnée envoyée. Images : SVG originaux CC0.</p>
+  Vittascience dans un onglet : connexion requise), sauvegarde locale uniquement — aucune donnée envoyée. Images : SVG originaux CC0.</p>
 </footer>
 <script>
 (function(){
@@ -1106,38 +1111,38 @@ function qmark(e, state){ let m = e.previousElementSibling; if(!(m && m.classLis
 function sv(id, ok){ const e = $(id); if(!e) return false; const good = e.value === ok; e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value); qmark(e, e.value ? good : null); return good; }
 const CHECKS = {
   1(){ let s = 0;
-    s += sv("a1q1","3"); s += sv("a1q2","il est perdu : affecter, c'est REMPLACER");
+    s += sv("a1q1","3"); s += sv("a1q2","il est perdu : il a été remplacé");
     s += sv("a1q3","« mets cette valeur dans la boîte »");
-    s += sv("a1q4","de droite à gauche : je CALCULE d'abord, je RANGE ensuite");
+    s += sv("a1q4","de droite à gauche : je calcule, puis je range");
     const exp = !!window.__exp.memoire;
     return {score: s, total: 4, exp, expMsg: "Déroule les 6 étapes du simulateur (▶) pour obtenir ton badge d'exécution 🔓."};
   },
   2(){ let s = 0;
     s += sv("a2q1","3"); s += sv("a2q2","2"); s += sv("a2q3","5"); s += sv("a2q4","3 fois");
-    s += sv("a2q5","il compte des passages en accumulant dans une variable");
+    s += sv("a2q5","il additionne les passages dans une variable");
     return {score: s, total: 5, exp: true};
   },
   3(){ let s = 0;
     ["a3p1","a3p2","a3p3"].forEach(id => { const e = $(id); if(e.value) s++; e.classList.toggle("ok", !!e.value); qmark(e, e.value ? true : null); });
     s += sv("a3r1","7"); s += sv("a3r2","34"); s += sv("a3r3","Train Q 3 min");
     s += sv("a3r4","il les COLLE bout à bout (concaténation)");
-    s += sv("a3r5","41 min… voilà d'où viennent les minutes fantômes !");
+    s += sv("a3r5","41 min");
     const exp = !!window.__exp.vs1;
     return {score: s, total: 8, exp, expMsg: "Ouvre l'éditeur Vittascience (🧪) et exécute tes 3 expériences avant de reporter."};
   },
   4(){ let s = 0;
-    s += sv("a4b1l","3"); s += sv("a4b1c","minutes = 2 + 1 (des nombres, pas des textes)");
-    s += sv("a4b2l","5"); s += sv("a4b2c","écrire 1.8 : en Python, la virgule décimale est un POINT");
-    s += sv("a4b3c","on ne peut pas soustraire un nombre d'un TEXTE (\"21\" - 1 → erreur de type)");
-    s += sv("a4b4","Q - 96 St - 2 min | 25.0 C");
+    s += sv("a4b1l","3"); s += sv("a4b1c","minutes = 2 + 1");
+    s += sv("a4b2l","5"); s += sv("a4b2c","écrire 1.8, avec un point");
+    s += sv("a4b3c","on ne soustrait pas un nombre d'un texte");
+    s += sv("a4b4","Q - 96 St 2 min | 25.0 C");
     const exp = !!window.__exp.vs2;
     return {score: s, total: 6, exp, expMsg: "Assemble le programme corrigé dans l'éditeur (🧪) — la preuve par la console est obligatoire."};
   },
   5(){ let s = 0;
     s += sv("a5t1",">"); s += sv("a5t2","3"); s += sv("a5t3","1");
-    s += sv("a5t4","on peut l'appeler mille fois avec des valeurs différentes, et la tester séparément");
+    s += sv("a5t4","on peut la rejouer et la tester à volonté");
     s += sv("a5q1","1"); s += sv("a5q2","air >= 100");
-    s += sv("a5q3","rejouer TOUS les tests du banc, pas seulement T4");
+    s += sv("a5q3","rejouer tous les tests du banc");
     const exp = !!window.__exp.tests;
     return {score: s, total: 7, exp, expMsg: "Exécute les 4 tests du banc (▶) — le cas limite T4 compris."};
   }
@@ -1183,7 +1188,7 @@ function majTaches(){
 if($("btnBillet")) $("btnBillet").addEventListener("click", () => {
   const bon = [
     $("be_1").value.startsWith("un nom"),
-    $("be_2").value.startsWith("peut très bien"),
+    $("be_2").value.startsWith("peut tourner"),
     $("be_3").value.startsWith("écrire les résultats")
   ];
   const ok = bon.filter(Boolean).length;
@@ -1217,15 +1222,16 @@ if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
 
 /* ══ Règle d'or n°122 — trois parcours, pas trois paragraphes ══ */
 function majParcours(){
-  const choix = (window.__exp && window.__exp.parcours) || "tous";
-  document.body.classList.remove("parcours-a","parcours-b","parcours-c");
+  const brut = (window.__exp && window.__exp.parcours) || "tous";
+  const choix = (brut === "b" || brut === "c") ? brut : "tous";   // l'ancien choix « a » (retiré le 20/10/2026) retombe sur « tous »
+  document.body.classList.remove("parcours-b","parcours-c");
   if(choix !== "tous") document.body.classList.add("parcours-" + choix);
   document.querySelectorAll(".parcours-btn").forEach(b => {
     b.setAttribute("aria-pressed", b.dataset.choix === choix ? "true" : "false");
   });
   const n = $("parcoursNote");
   if(n){
-    const NOMS = {a:"🅰 avec matériel", b:"🅱 en simulation", c:"🅲 sans matériel", tous:"tous"};
+    const NOMS = {b:"🅱 en simulation", c:"🅲 sans matériel", tous:"tous"};
     n.innerHTML = "Parcours affiché : <b>" + (NOMS[choix] || "tous") + "</b>.";
   }
 }

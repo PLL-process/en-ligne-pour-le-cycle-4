@@ -22181,3 +22181,69 @@ pas à 0 (`tests_4e_C7.mjs` et `tests_4e_C8.mjs` 38 / 41 ; les suites de séquen
 5e_C8.1 s'arrêtent sans bilan avec la commande de leur rapport) : à reprendre lot par lot. **Contrôles du dépôt** : les 22
 contrôles Python et `verif_regles_audit.py` sortent à 0 ; en navigateur, 4 sur 5 à 0 et `controle_squelette.mjs` refuse
 la même seule page que sur `main` (`3e_C1.5`, thème 1). `build_audit.py` et `make_index.py` régénérés.
+
+## 20/10/2026 — Thème 3 · 3e_C9.1 : relecture pour le distanciel — la sortie réelle de Python, des réponses qui ne se devinent plus, la version 🅰 retirée, les mots de chaque séance
+
+**Demande de Pascal.** Ses 3e suivent « Variables, types et systèmes » à distance (mouvements sociaux en Martinique) :
+vérifier la séquence et donner l'entrée du cahier de textes de la séance 1 ; puis, après le rapport : « Oui, tu as carte
+blanche afin d'effectuer toutes les modifications nécessaires. » Ce lot est **empilé sur** `fable/theme-3/titre-officiel-theme-3`
+(même journal, mêmes fichiers engendrés) : fusionner d'abord le titre, puis ce lot.
+
+### Ce que la relecture a trouvé (mesuré sur `main` à `2d250ee`)
+
+1. **Bloquant — activité 4.** Le programme corrigé, **exécuté avec Python 3**, affiche `Q - 96 St 2 min | 25.0 C` :
+   `print` sépare ce qu'on lui donne par des espaces, et le seul tiret vient de `message`. La page attendait « exactement »
+   `Q - 96 St - 2 min | 25.0 C` (menu `a4b4`, correction, critère, synthèse professeur), et la consigne annonçait
+   `Q - 96 St - 3 min`. Un élève qui fait ce que la séquence demande — exécuter et comparer — voyait un écart qui n'en
+   était pas un. La suite du lot ne comparait pas la page à ce que Python affiche.
+2. **Bug n°2 « la virgule qui fâche Python ».** Python ne se fâche pas : `(77 - 32) / 1,8` est un tuple, `(45.0, 8)`,
+   sans erreur. Et « Même corrigée en 2 + 1… la ligne 7 va planter si on garde la ligne 3 d'origine » se contredisait.
+3. **Menus des activités.** Bonne réponse la plus longue dans 17 menus sur 26, souvent par sa justification
+   (« minutes = 2 + 1 (des nombres, pas des textes) », « 41 min… voilà d'où viennent les minutes fantômes ! ») ; en tête 9 fois.
+4. **Version 🅰.** Elle promettait « l'éditeur Vittascience piloté vers une carte réelle » et « téléverse la dernière sur la
+   carte », depuis l'éditeur **Python** en mode code, qui ne pilote aucune carte : c'est la raison du retrait de la 🅰 en
+   5e (04/10) et en 4e (05/10).
+5. **Échauffement, geste 4** : « Entre dans le dossier, puis Ctrl + V » venait après « Comment savoir que c'est fait »
+   (même défaut qu'en 5e, corrigé le 19/10).
+6. **Lexique** : les 30 notions du QCM seulement, aucun mot des séances.
+7. **Petites erreurs** : « la table de suivi complète (6 cases) » pour 5 questions ; « éditeur embarqué » dans le pied de
+   page, alors que l'éditeur s'ouvre dans un onglet ; le badge du thème (lot du titre).
+
+### Ce que le lot fait
+
+- **Activité 4.** Consigne : « Le panneau doit afficher le train, le quai, le temps d'attente en minutes et la température
+  en °C » ; réponse attendue `Q - 96 St 2 min | 25.0 C` (menu, vérificateur, correction, critère, synthèse professeur) ; la
+  correction explique l'espace de `print` et pourquoi le bug 2 ne se voit pas seul (`(45.0, 8)`, « (45.0, 8) C » au
+  panneau) ; bug n°2 « la virgule qui trompe », avec « pour celui-ci, Python n'affiche aucune erreur » ; bug n°3 : « Avec la
+  ligne 3 d'origine, le programme s'arrête à la ligne 7 sur une erreur » ; aide de niveau 1 du bug 2 : « Python ne
+  t'avertira pas ».
+- **Menus, règles n°144 et n°198.** 27 menus vérifiés : en tête 2 fois, aucune bonne réponse détachée de plus de 8
+  caractères ; les justifications passent dans les corrections, qui les portaient déjà. Prédictions et reports de
+  l'activité 3 gardent le même ordre. Billet d'entrée : « je ne sais pas encore » reste en dernier, le vérificateur suit
+  (« peut tourner »).
+- **Version 🅰 retirée** : bouton, bloc de présentation (« Deux façons de vivre l'atelier »), notes des activités 3 et 4,
+  règle CSS ; un ancien choix « a » mémorisé retombe sur « tous », comme en 5e. Le TP mBot2 reste, présenté comme le
+  prolongement sur robot réel, au collège (bilan, README, fiche, synthèses, une question du QCM qui disait « version 🅰 »).
+- **Geste 4** dans l'ordre ; « la table de suivi complète et les 5 réponses » ; « éditeur Vittascience dans un onglet ».
+- **Lexique par séance** (outil du 23/09/2026, page engendrée sans retouche) : `vocabulaire_3e_C9.1.json`, **55 mots**
+  (ouverture 15, séance 1 12, séance 2 12, séance 3 3, séance 4 13), dont 25 repris de 4e_C9.1 et 5e_C9.1 avec la même
+  source, octet pour octet, et un exemple tiré de la 3e ; les 30 notions du QCM suivent, inchangées. Lien « 📖 Les mots de
+  cette séance » en tête des quatre panneaux. Sources nouvelles : Larousse en ligne, TLFi, Dictionnaire de l'Académie
+  (« ventilation »), OQLF (test de non-régression, compteur), documentation Python (§ 3.1.1 pour `int`, `float` et
+  « affecter », glossaire et § 4.8 pour « fonction » et `return` ; « Text », `bool` et `TypeError` cités en anglais, la page
+  n'étant pas traduite), site de la MTA (en anglais). **Source plus faible, déclarée** : Wikipédia pour « indice » (qualité
+  de l'air). **Non ajouté** : « Celsius » — le mot n'a aucune forme dans le texte de la séance 3 (seulement « °C »).
+  « Fahrenheit » n'a pour forme que le nom de fonction `fahrenheit_vers_celsius` : gardé, l'élève le lit dans le défi.
+
+### Vérifié
+
+Programme corrigé de l'activité 4 **exécuté avec Python 3** : `Q - 96 St 2 min | 25.0 C` ; ligne 5 d'origine seule :
+`(45.0, 8)`, sans erreur ; `"21" - 1` : `TypeError`. Suite du lot rejouée sur la branche (Chromium, Playwright) :
+**42 / 42** (35 avant) — sept contrôles ajoutés (menus mesurés à partir des vérificateurs `sv()`, activité 4 validée
+6/6 avec la sortie réelle, plus de « - 2 min » ni de « - 3 min », plus de 🅰, une sauvegarde au parcours « a » qui retombe
+sur « tous »). `generer_lexique.py` accepte le vocabulaire (formes présentes dans leur zone, sources présentes, aucun
+conflit avec un « à retenir ») ; son banc **28 / 28**. Citations nouvelles relues à la source : Larousse
+« sous-programme », documentation Python § 3.1.1 (`int`, `float`, « affecter ») — conformes. Capture 390 px : le lien
+« 📖 Les mots de cette séance » sous les onglets. **Contrôles du dépôt** : les 22 contrôles Python et
+`verif_regles_audit.py` sortent à 0 ; en navigateur, 4 sur 5 à 0 et `controle_squelette.mjs` refuse la même seule page
+que sur `main` (`3e_C1.5`, thème 1, hors lot). `build_audit.py` et `make_index.py` régénérés.
