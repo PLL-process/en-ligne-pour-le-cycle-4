@@ -106,6 +106,33 @@ de la capture — c'est ce que l'écran affichait, pas un ajout.
 **Les captures de comparaison** (avant : dessin plat du 25/09 ; après : dessin isométrique), à 1280 px, dans `_generation/figure_iso_velo_cargo/captures/` : captures du
 navigateur de ce lot, CC0.
 
+## La voix du dessin animé du vélo-cargo (séance 1)
+
+**Voix de synthèse neuronale, hors ligne. Aucune voix humaine enregistrée.** Les six fichiers sont engendrés par
+`_generation/voix_velo_cargo/generer.py` à partir des six phrases validées par Pascal le 25/09/2026, lues mot pour mot.
+
+| Fichier | Nature |
+|---|---|
+| `Audio/velo-cargo_scene1.ogg` · `.mp3` | Scène 1 : voix de synthèse, Opus mono 32 kb/s (20.5 Ko) et MP3 mono 48 kb/s de secours (29.4 Ko) |
+| `Audio/velo-cargo_scene2.ogg` · `.mp3` | Scène 2 : voix de synthèse, Opus mono 32 kb/s (13.5 Ko) et MP3 mono 48 kb/s de secours (19.4 Ko) |
+| `Audio/velo-cargo_scene3.ogg` · `.mp3` | Scène 3 : voix de synthèse, Opus mono 32 kb/s (23.9 Ko) et MP3 mono 48 kb/s de secours (35.1 Ko) |
+| `Audio/velo-cargo_scene4.ogg` · `.mp3` | Scène 4 : voix de synthèse, Opus mono 32 kb/s (19.2 Ko) et MP3 mono 48 kb/s de secours (28.0 Ko) |
+| `Audio/velo-cargo_scene5.ogg` · `.mp3` | Scène 5 : voix de synthèse, Opus mono 32 kb/s (28.3 Ko) et MP3 mono 48 kb/s de secours (41.2 Ko) |
+| `Audio/velo-cargo_scene6.ogg` · `.mp3` | Scène 6 : voix de synthèse, Opus mono 32 kb/s (37.6 Ko) et MP3 mono 48 kb/s de secours (54.9 Ko) |
+
+- **Moteur** : Piper (`piper-tts` 1.8.0), sous GPL-3. Il n'est pas dans le dépôt, et un fichier audio qu'il produit n'est pas une œuvre dérivée du moteur.
+- **Modèle** : `fr_FR-siwis-medium` (voix féminine, locutrice unique), entraîné sur la base **SIWIS** de l'Université d'Édimbourg
+  (datashare.is.ed.ac.uk/handle/10283/2353). Voix choisie par Pascal le 21/10/2026 parmi quatre candidates (essai en vitesse normale).
+- **Licence** : **CC BY 4.0** (fiche `MODEL_CARD` du modèle, dépôt `rhasspy/piper-voices`). La licence de la base d'entraînement est celle que la fiche
+  déclare ; l'origine des enregistrements n'a pas été vérifiée plus loin.
+- **Attribution exigée** : « Voix de synthèse Piper « fr_FR-siwis-medium », entraînée sur la base SIWIS (Université d'Édimbourg), CC BY 4.0. »
+  Elle figure ici, dans `_generation/voix_velo_cargo/voix.json` et, en version courte (« Voix de synthèse : SIWIS (CC BY 4.0) »),
+  dans la description détaillée du dessin animé, sous le schéma fixe de la séance 1.
+- **Chaîne audio** : silences du début et de la fin coupés (−45 dB), volume normalisé à −16 LUFS (crête −1,5 dB), mono.
+- **Reproductibilité** : à l'octet, non (la synthèse tire du bruit à chaque prise) ; les fichiers de `Audio/` sont la référence.
+- **Dans la page** : rien n'est chargé depuis le réseau ; les fichiers ne se lisent qu'après un geste de l'élève (« Écouter » ou
+  « Regarder ») ; si un fichier ne se lit pas, la voix française locale du navigateur prend le relais, sinon l'élève lit la phrase.
+
 ## Accessibilité
 
 Chaque figure porte un `<title>` court et un `<desc>` long qui **décrit le contenu, pas

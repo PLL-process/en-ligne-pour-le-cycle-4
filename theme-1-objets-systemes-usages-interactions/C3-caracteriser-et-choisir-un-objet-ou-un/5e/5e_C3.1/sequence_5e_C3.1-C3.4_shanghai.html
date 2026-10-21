@@ -469,8 +469,10 @@ corrections et les compléments si la page te paraît chargée.</p>
        _generation/figure_iso_velo_cargo/build.mjs entre les marqueurs « figure_iso_velo_cargo » (ne pas
        éditer à la main). L'état final est le schéma fixe
        Images/chaine_energie_velo_cargo.svg. Tout ce que montre une scène est dit par sa phrase
-       (n°119). Voix : synthèse vocale LOCALE du navigateur, jamais le réseau ; rien ne démarre sans
-       un geste. Aucune bibliothèque, aucune vidéo (n°40, n°305). -->
+       (n°119). Voix : fichiers locaux, jamais le réseau ; rien ne démarre sans
+       un geste. Aucune bibliothèque, aucune vidéo (n°40, n°305). La voix est celle des fichiers Audio/
+       (Piper, voix « fr_FR-siwis-medium », CC BY 4.0 : voir SOURCES_MEDIAS.md), engendrés par
+       _generation/voix_velo_cargo/generer.py ; la voix locale du navigateur ne sert que de secours. -->
   <div class="vpp" id="velo-cargo-pas-a-pas">
     <button type="button" class="btn vpp-ouvrir" id="vppOuvrir" aria-expanded="false" aria-controls="vppPanneau">▶ Voir le dessin animé, scène par scène</button>
     <div class="vpp-panneau" id="vppPanneau" hidden>
@@ -514,6 +516,7 @@ corrections et les compléments si la page te paraît chargée.</p>
     </figure>
     <details class="vpp-desc"><summary>Description détaillée du schéma</summary>
       <p>Un vélo-cargo dessiné en trois dimensions, posé sur une route, avec un colis dans le bac avant. Sous le porte-bagages arrière, la batterie, allumée. Un câble, surligné, la relie au moteur placé au centre de la roue arrière. Une flèche courbe autour de la roue arrière indique qu'elle tourne. Sous le dessin, la chaîne d'énergie en quatre cases reliées par des flèches : batterie, énergie électrique, moteur, énergie mécanique.</p>
+      <p style="font-size:.85em;color:var(--sub)">Voix de synthèse&nbsp;: SIWIS (CC BY 4.0)</p>
     </details>
   </details>
   <fieldset class="qcm-groupe" id="a1_5">
@@ -1545,18 +1548,22 @@ var CAMERA = {"1":[413.4390977626192,144.59382026442626,1.232,215],"2":[627.8095
   var prec = $v("vppPrec"), suiv = $v("vppSuiv"), pred = $v("vppPrediction");
   var bRegarder = $v("vppRegarder"), bEcouter = $v("vppEcouter"), sansVoix = $v("vppSansVoix");
 
-  // ── La voix : une voix française LOCALE du système (jamais une voix en ligne). ──
-  var synth = window.speechSynthesis || null, voix = null;
+  // ── La voix : les fichiers de la séance (Audio/, synthèse neuronale hors ligne, jamais le réseau) ; en secours, ──
+  // ── une voix française LOCALE du système (jamais une voix en ligne). Rien ne se lit sans un geste de l'élève. ──
+  var lecteur = new Audio(), ext = "";
+  try { ext = lecteur.canPlayType('audio/ogg; codecs="opus"') ? "ogg" : (lecteur.canPlayType("audio/mpeg") ? "mp3" : ""); }
+  catch (e) { ext = ""; }
+  var son = !!ext, synth = window.speechSynthesis || null, voix = null;
   function choisirVoix(){
     var fr = (synth ? synth.getVoices() : []).filter(function(v){ return /^fr/i.test(v.lang) && v.localService; });
     voix = fr.filter(function(v){ return /^fr-FR/i.test(v.lang); })[0] || fr[0] || null;
-    bEcouter.hidden = !voix; sansVoix.hidden = !!voix;
+    bEcouter.hidden = !(son || voix); sansVoix.hidden = !!(son || voix);
   }
   if (synth && "onvoiceschanged" in synth) synth.addEventListener("voiceschanged", choisirVoix);
   function brut(i){ var d = document.createElement("div"); d.innerHTML = SCENES[i - 1].p; return d.textContent; }
   // Durée de lecture estimée d'une phrase (élève de 5e, environ 150 mots par minute).
   function duree(i){ return Math.max(3500, brut(i).split(/\s+/).length * 400) + 1000; }
-  function parler(i, fin){
+  function parlerSynth(i, fin){
     var j = ++jeton;
     if (!voix) { if (fin) minuterie = setTimeout(function(){ if (j === jeton) fin(); }, duree(i)); return; }
     synth.cancel();
@@ -1567,8 +1574,27 @@ var CAMERA = {"1":[413.4390977626192,144.59382026442626,1.232,215],"2":[627.8095
     secours = setTimeout(f, duree(i) * 2 + 2000);   // filet : un « end » perdu ne bloque pas « Regarder »
     synth.speak(u);
   }
+  // Lit le fichier de la scène ; il se termine → « fin » (Regarder enchaîne). Un fichier qui ne se lit pas → la voix locale.
+  function parler(i, fin){
+    if (!son) { parlerSynth(i, fin); return; }
+    var j = ++jeton, fait = false, secours;
+    if (synth) synth.cancel();
+    function f(){ if (fait || j !== jeton) return; fait = true; clearTimeout(secours); if (fin) fin(); }
+    function bascule(){
+      if (fait || j !== jeton) return;
+      fait = true; clearTimeout(secours); lecteur.pause();
+      if (!voix) { bEcouter.hidden = true; sansVoix.hidden = false; }
+      parlerSynth(i, fin);
+    }
+    lecteur.onended = f; lecteur.onerror = bascule;
+    secours = setTimeout(f, duree(i) * 2 + 2000);   // filet : un « ended » perdu ne bloque pas « Regarder »
+    lecteur.src = "Audio/velo-cargo_scene" + i + "." + ext;
+    var essai = lecteur.play();
+    if (essai && essai.catch) essai.catch(bascule);
+  }
   function arreter(){
     regarde = false; jeton++; clearTimeout(minuterie);
+    lecteur.pause();
     if (synth) synth.cancel();
     bRegarder.textContent = "▶ Regarder";
   }

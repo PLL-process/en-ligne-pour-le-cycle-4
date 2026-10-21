@@ -22353,3 +22353,55 @@ rotation de la roue mesurée à la scène 5 et au repos à la scène 6, `control
 - Un correctif à part pour les contrôles rouges préexistants : `controle_squelette.mjs` (3e_C1.5), `verif_guidage.py` sur
   `tp_3e_boitier_etanche` et `tp_5e_de_calottes`, `tests_4e_C8` et `tests_4e_C7` (« 30 sans explication »), `tests_3e_C6.1` et
   `tests_4e_C6.1`, et le test n°31 de 5e_C3.1 (10 zones / 9 étayages).
+
+## 21/10/2026 — Thème 1 · 5e_C3.1 : le vélo-cargo parle (voix de synthèse neuronale hors ligne, phase 1 bis)
+
+**Demande de Pascal.** Une voix naturelle pour le dessin animé du vélo-cargo, sans voix humaine enregistrée. Étape 1 hors du dépôt
+(`figures-iso-essais/voix-velo-cargo/`) : Piper installé, les sept voix françaises du catalogue lues une à une, quatre candidates rendues sur la
+scène 2 à deux vitesses. **Pascal a choisi `fr_FR-siwis-medium`, vitesse normale** (il a renvoyé le chemin de `siwis-medium_normale.wav`).
+
+### Les licences lues (fiche `MODEL_CARD` de chaque voix, dépôt `rhasspy/piper-voices`)
+
+| Voix | Licence | Décision |
+|---|---|---|
+| `siwis` (low, medium) | CC BY 4.0 | **retenue — voix du dessin animé** |
+| `upmc-medium` (Jessica, Pierre) | CC BY-SA 4.0 | retenue, rendue en essai, non choisie |
+| `gilles-low` | CC0 | retenue, rendue en essai, non choisie |
+| `mls-medium`, `mls_1840-low` | CC BY 4.0 | retenues, non rendues |
+| `tom-medium` | **AGPLv3** | **écartée** : licence copyleft de logiciel, hors de la liste CC0 / domaine public / CC BY / CC BY-SA |
+
+La licence lue est celle du jeu d'entraînement que la fiche déclare ; l'origine des enregistrements n'a pas été vérifiée plus loin.
+
+### Ce que le lot fait
+
+- **Six voix** : `5e_C3.1/Audio/velo-cargo_scene1…6.ogg` (Opus mono 32 kb/s) et `.mp3` (mono 48 kb/s, secours) — 351 Ko pour les douze, de 14 à 58 Ko
+  chacun. Les six phrases sont celles du tableau `SCENES`, **validées le 25/09/2026, lues mot pour mot** (`generer.py` refuse de produire si une phrase
+  de `phrases.json` n'est plus celle de la séquence). Silences du début et de la fin coupés (−45 dB), volume normalisé à −16 LUFS (mesuré : −15,4 à −16,5).
+- **Générateur** : `5e_C3.1/_generation/voix_velo_cargo/` — `phrases.json`, `voix.json` (modèle, licence, attribution, réglages), `generer.py`.
+  Piper, espeak-ng et le modèle ne sont PAS dans le dépôt (moteur GPL-3, modèle = donnée à part). **Non reproductible à l'octet** : Piper tire du
+  bruit à chaque prise et Ogg porte un numéro de flux aléatoire ; les fichiers de `Audio/` sont la référence, et si une phrase change on régénère les six.
+- **Lecteur** (`sequence_5e_C3.1-C3.4_shanghai.html`, script du dessin animé) : « Écouter » et « Regarder » jouent le fichier de la scène (Opus si le navigateur
+  le lit, MP3 sinon) ; « Regarder » enchaîne à la fin de l'audio, avec la pause de 1,2 s d'avant ; le déroulé s'arrête toujours à la scène 4 (prédiction). Un
+  fichier qui ne se lit pas : la voix française locale du navigateur prend le relais, comme avant ; ni fichier ni voix : le bouton « Écouter » disparaît
+  et le message « lis les phrases » s'affiche. Rien ne se charge ni ne se joue sans geste ; rien ne vient du réseau. Le reste du lecteur (prédiction,
+  sauvegarde, lien direct, impression) est inchangé.
+- `SOURCES_MEDIAS.md` : voix de synthèse, modèle, licence, **attribution exigée**. Nouveauté pour l'index. Index et audit régénérés.
+
+### Ce qui a vraiment tourné
+
+- Banc `tests_voix_velo_cargo.py` (nouveau) : **24 / 24** — douze fichiers de bonne forme et < 100 Ko ; phrases = séquence ; aucun fichier demandé ni joué à
+  l'ouverture ; « Écouter » joue `scene2.ogg` ; « Regarder » joue `scene1.ogg` puis passe à la scène 2 et joue son fichier ; « Pause » arrête l'enchaînement ;
+  sans Opus, le MP3 ; fichier refusé, la voix locale dit la phrase ; ni fichier ni voix, le message de repli ; aucune ressource distante ni erreur JavaScript.
+- Contrôles du dépôt : tous les `controle_*` et `tests_controle_*` verts, sauf `controle_squelette.mjs` (3e_C1.5, rouge avant ce lot) et `controle_verrous.mjs` avec son banc (rouges sur `main` depuis la PR #482 ; corrigés dans la PR #483, non fusionnée au moment de l'essai). Banc du lot : 28 / 29, le test n°31 étant rouge avant ce lot. Fusion d'essai avec la branche de la règle n°309 (#483) : contrôle n°309 vert, banc 34 / 34, banc de la voix 24 / 24 ; conflits attendus seulement sur ce journal et sur `index.html` (à régénérer).
+
+### Non vérifié
+
+- **L'écoute.** La voix n'a pas été écoutée par moi (pas d'oreille) : seule la durée, la hauteur et le volume sont mesurés. Prononciation de « vélo-cargo »,
+  des liaisons et de l'intonation des questions : à écouter en classe.
+- Lecture sous Safari, iPad ou téléphone : seul Chromium a tourné ; le MP3 de secours est là pour eux, non essayé.
+
+### À RELIRE PAR PASCAL
+
+1. **Écouter les six fichiers** (surtout les scènes 1 et 4, qui sont des questions) et dire si la vitesse convient à des 5e ; sinon régénérer les six avec `length_scale` 1,1.
+2. **Le crédit CC BY** (demandé par Pascal le 21/10/2026) : « Voix de synthèse : SIWIS (CC BY 4.0) » en petit dans la description détaillée du dessin animé ; l'attribution complète dans `SOURCES_MEDIAS.md` et `voix.json`.
+3. Le test n°31 du banc du lot (10 zones / 9 étayages) reste rouge, comme avant ; ce lot n'y touche pas.
