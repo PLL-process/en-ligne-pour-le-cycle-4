@@ -22148,3 +22148,76 @@ l'activité 5 de 5e, une énumération ①②③ en ligne : passée en liste ; `
 qui nommait le banc de `generer_lexique.py` comme s'il était dans le dossier du lot : reformulé) ; des 5 contrôles en navigateur, 4 sortent à 0 et
 `controle_squelette.mjs` refuse la même seule page que sur `main` (`3e_C1.5`, thème 1, hors lot). `build_audit.py` et
 `make_index.py` régénérés.
+
+## 21/10/2026 — Thème 1 · 5e_C3.1 : le vélo-cargo du dessin animé passe en volume (pilote des figures isométriques, phase 1)
+
+**Demande de Pascal.** Le pilote « dessin animé par scènes » du 25/09/2026 (`#velo-cargo-pas-a-pas`, séance 1 de
+`5e_C3.1`) avait un dessin plat de profil, avec un livreur. Pascal a validé le prototype hors dépôt (six scènes, 1280 et
+390 px) et demandé l'intégration : même lecteur, mêmes phrases, mêmes couleurs, dessin en volume fait avec Anatomy.
+
+### Ce qui change
+
+- **Le dessin** : un vélo-cargo isométrique, pièces pleines, ombrage à quatre tons recalé sur la palette des pages
+  (`--bg:#050f24`). Un seul mécanisme : batterie → câble → moteur dans le moyeu de la roue arrière → roue. Le cadre, le bac,
+  le colis et la roue avant restent en tons neutres ; **une seule pièce est éclairée par scène**, de la couleur de sa notion
+  (n°120 : source `#ffd66b`, électrique `#61dafb`, moteur `#c68ef2`, mécanique `#81fba1`). Plateau → pignon : la chaîne du
+  pédalier est dessinée. La route remplace le socle.
+- **Le livreur disparaît** (option (a) du prototype : Anatomy ne dessine pas de personnage). À la scène 5, le pédalier et les
+  deux roues tournent dans leur plan ; la route défile. Rien ne bouge sans un clic de l'élève ; sous « mouvement réduit », rien
+  ne bouge (mesuré : transformation de la roue = identité aux scènes 1, 5 et 6).
+- **Le générateur** : `5e_C3.1/_generation/figure_iso_velo_cargo/build.mjs` (+ copie du kit Anatomy, `LICENSE` MIT, `VERSION` =
+  `1482e84`). Il écrit dans la séquence, entre les marqueurs `figure_iso_velo_cargo` : le dessin, le style, la ligne `CAMERA` et
+  le script de rotation ; et le schéma fixe `Images/chaine_energie_velo_cargo.svg`. Il lance l'audit d'Anatomy avant d'écrire
+  (« audit passed » ou rien n'est écrit). Relancé deux fois, mêmes empreintes (`git hash-object`) : reproductible à l'octet près.
+- **Dans la page, à la main** (une fois) : suppression des règles CSS de l'ancien dessin plat (`vpp-roue`, `vpp-cadre`,
+  `vpp-flux`, etc. et leurs animations), la caméra gagne une ordonnée de centrage, le cadre du dessin se raccourcit à la
+  scène 6 pour laisser la place aux quatre cases, le commentaire du bloc renvoie au générateur. Le lecteur (boutons, voix,
+  prédiction `#a1_pred_moteur`, sauvegarde, lien `#velo-cargo-pas-a-pas`, impression) est **inchangé**.
+- **Textes qui suivent le nouveau dessin** : l'`alt` du schéma fixe et sa description repliable (plus de livreur, plus de
+  « vu de côté »).
+- **Deux dettes payées** : `Images/chaine_energie_velo_cargo.svg` a enfin une entrée dans `SOURCES_MEDIAS.md` (avec les six
+  phrases recopiées, le code MIT du kit et les couleurs) ; et ce journal a enfin l'entrée du pilote vers lequel renvoyait le
+  commentaire du bloc (le storyboard du 25/09 figure dans `SOURCES_MEDIAS.md`).
+
+### Poids
+
+Le dessin pèse **226,4 Ko** dans la page (225 Ko pour le groupe du prototype), le schéma fixe **232,9 Ko**. C'est
+**au-dessus des 200 Ko visés, sous les 300 Ko autorisés** par la règle images du dépôt. Le style (6,0 Ko) et le script de
+rotation (3,5 Ko) s'ajoutent à la page ; l'ancien dessin plat en occupait environ 9 Ko (5,4 Ko de SVG, 3,4 Ko de règles) et
+  l'ancien schéma fixe 7,1 Ko. La séquence passe de 149 à 388 Ko. Les facettes ont déjà été réduites au
+prototype (291 → 182 Ko) ; on ne les réduit pas davantage sans perdre les rayons de la roue.
+
+### Avant / après
+
+Captures à 1280 px des six scènes, dans `5e_C3.1/_generation/figure_iso_velo_cargo/captures/` : `avant-1280-s1…s6.png` (dessin
+plat du 25/09, tel que la page de `main` l'affichait) et `apres-1280-s1…s6.png` (la page intégrée), plus `apres-390-s6.png`.
+
+### Ce qui a vraiment tourné
+
+- `node build.mjs` : **audit passed** (0 problème : jeux, terminaisons, appuis, ordre de peinture, croisements, ondulations,
+  encombrement) ; `lines.mjs` : **line ends: 0** aux six scènes, avant intégration ; zéro erreur JavaScript à 1280 et à 390 px
+  (page intégrée) ; chaque scène lue en capture à 1280 et 390 px.
+- Dépôt : `controle_hors_ligne.mjs`, `controle_impression.mjs`, `controle_contraste_liens.mjs`, `controle_squelette.mjs`,
+  `controle_debordement.py`, `controle_medias.py`, `controle_marqueurs.py` : tous verts.
+- Banc du lot `tests_5e_C3.1-C3.4_shanghai.py` : **28 / 29**. Le test rouge, « chaque zone de rédaction a sa version étayée
+  (n°31) — 10 zones / 9 étayages », **l'est déjà sur `main`** (vérifié en remettant la page d'avant) ; il n'est pas causé par
+  ce lot et n'est pas corrigé ici.
+- Mouvement réduit : mesuré, aucune rotation. Impression : le dessin animé s'efface, le schéma fixe s'imprime.
+
+### Non vérifié
+
+Le contraste du schéma fixe imprimé en niveaux de gris n'a pas été relu sur papier ; le clavier n'a pas été rejoué
+scène par scène (les boutons sont natifs et inchangés).
+
+### À RELIRE PAR PASCAL
+
+1. **L'assistance.** Sur un vélo-cargo à assistance, le moteur n'aide que si le cycliste pédale. Les six phrases le
+   simplifient (« le moteur transforme l'énergie électrique en énergie mécanique : le mouvement de la roue »). **Aucune phrase
+   n'a été changée** ; le pédalier tourne à la scène 5, ce qui montre bien le cycliste sans le dessiner.
+2. **L'`alt` du schéma fixe** : « Schéma de la chaîne d'énergie du vélo-cargo, dessiné en trois dimensions : la batterie sous
+   le porte-bagages arrière, le câble qui la relie au moteur placé dans la roue arrière, et la chaîne écrite en quatre cases
+   sous le dessin. »
+3. **La description détaillée** : « Un vélo-cargo dessiné en trois dimensions, posé sur une route, avec un colis dans le bac
+   avant. Sous le porte-bagages arrière, la batterie, allumée. […] »
+4. **Le test rouge du banc** (n°31, une zone de rédaction sans étayage) : à traiter dans un lot à part ?
+5. **Le verdict de classe** : le prompt maître demande de ne lancer la phase 2 qu'après votre verdict en classe.
