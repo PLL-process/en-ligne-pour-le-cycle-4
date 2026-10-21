@@ -1660,7 +1660,6 @@ var CAMERA = {"1":[413.4390977626192,144.59382026442626,1.232,215],"2":[627.8095
   var HUB = {rw: [606.0316538878496,200.14488580318016], fw: [204.8035815822821,174.10764172366555]};   // centre des rayons : sur la face avant de la jante
   var ARMC = {"1": [459.5377985907943,197.45522048194036], "-1": [470.5133298130187,180.25505984484445]};
   var BBs = [465.0255642019065,188.85514016339243];
-  var CAMS = {"1":[413.4390977626192,144.59382026442626,1.232,215],"2":[627.8095249658796,82.90911044418561,2.3],"3":[624.5225820217238,148.9624390549052,1.7],"4":[607.1749383901647,198.35320240348267,2.4],"5":[413.4390977626192,144.59382026442626,1.232,215],"6":[413.4390977626192,144.59382026442626,1.066,161]};
   // rotation d'angle t dans le plan de la roue (x, z), vue à l'écran : A = M R M⁻¹
   function mat(t, c){
     var co = Math.cos(t), si = Math.sin(t);
@@ -1687,9 +1686,7 @@ var CAMERA = {"1":[413.4390977626192,144.59382026442626,1.232,215],"2":[627.8095
       var q = [mc.A[0]*p[0] + mc.A[2]*p[1] + mc.e, mc.A[1]*p[0] + mc.A[3]*p[1] + mc.f];
       g.setAttribute("transform", "translate("+(q[0]-p[0])+" "+(q[1]-p[1])+")"); });
   }
-  window.__vppPose = pose;
   function tourne(now){
-    if (window.__vppStop) { raf = 0; return; }
     if (!t0) t0 = now;
     pose(((now - t0) / 6000) * Math.PI * 2);
     raf = bloc.getAttribute("data-scene") === "5" && !still.matches ? requestAnimationFrame(tourne) : 0;
@@ -1699,7 +1696,6 @@ var CAMERA = {"1":[413.4390977626192,144.59382026442626,1.232,215],"2":[627.8095
     if (s === "5" && !still.matches && !raf) { t0 = 0; raf = requestAnimationFrame(tourne); }
     if (s !== "5") { cancelAnimationFrame(raf); raf = 0; pose(0); }
   }).observe(bloc, {attributes: true, attributeFilter: ["data-scene"]});
-  window.__vppCam = CAMS;
 })();
 </script>
 <!-- figure_iso_velo_cargo (rotation) : fin -->

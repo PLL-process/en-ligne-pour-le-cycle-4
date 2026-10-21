@@ -22338,6 +22338,14 @@ séquence. Les « Règle 1 : une variable = une boîte » de 5e_C1.1 et 5e_C9.1 
    programme officiel. » (et, dans l'index, « servent à ranger les séquences »).
 4. Le choix de rendre **`fiche_*`** (fiche de maths pour les collègues) et **`tp_modele_demonstration.html`** hors du champ.
 
+### Un contrôle devenu rouge par la PR du vélo-cargo, corrigé ici (commit séparé)
+
+En relançant « les contrôles qui étaient verts » sur le résultat recalé, `controle_verrous.mjs` s'est révélé rouge : la PR du
+vélo-cargo (#482) avait laissé trois crochets de test du prototype dans le script de rotation (`window.__vppCam`, `__vppPose`,
+`__vppStop`), que le contrôle lit comme des verrous ouverts au chargement (règle n°226). Je ne l'avais pas relancé avant d'ouvrir
+cette PR. Les crochets sont retirés du générateur (`figure_iso_velo_cargo/build.mjs`) et de la page, régénérée ; audit « audit passed »,
+rotation de la roue mesurée à la scène 5 et au repos à la scène 6, `controle_verrous.mjs` vert.
+
 ### Notes pour plus tard (décidées le 21/10/2026, non faites ici)
 
 - Sortir de l'index public les volets « 🔧 Fichiers de maintenance » et le pied « Page générée automatiquement… ».
