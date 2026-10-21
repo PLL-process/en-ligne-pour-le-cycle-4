@@ -506,7 +506,6 @@ const live = `
   var HUB = {rw: ${JSON.stringify(screenOf([RC[0], 2, RC[2]]))}, fw: ${JSON.stringify(screenOf([FC[0], 2, FC[2]]))}};   // centre des rayons : sur la face avant de la jante
   var ARMC = {"1": ${JSON.stringify(screenOf([BB[0], 9.6, BB[2]]))}, "-1": ${JSON.stringify(screenOf([BB[0], -9.6, BB[2]]))}};
   var BBs = ${JSON.stringify(screenOf(BB))};
-  var CAMS = ${JSON.stringify(CAM)};
   // rotation d'angle t dans le plan de la roue (x, z), vue à l'écran : A = M R M⁻¹
   function mat(t, c){
     var co = Math.cos(t), si = Math.sin(t);
@@ -533,9 +532,7 @@ const live = `
       var q = [mc.A[0]*p[0] + mc.A[2]*p[1] + mc.e, mc.A[1]*p[0] + mc.A[3]*p[1] + mc.f];
       g.setAttribute("transform", "translate("+(q[0]-p[0])+" "+(q[1]-p[1])+")"); });
   }
-  window.__vppPose = pose;
   function tourne(now){
-    if (window.__vppStop) { raf = 0; return; }
     if (!t0) t0 = now;
     pose(((now - t0) / 6000) * Math.PI * 2);
     raf = bloc.getAttribute("data-scene") === "5" && !still.matches ? requestAnimationFrame(tourne) : 0;
@@ -545,7 +542,6 @@ const live = `
     if (s === "5" && !still.matches && !raf) { t0 = 0; raf = requestAnimationFrame(tourne); }
     if (s !== "5") { cancelAnimationFrame(raf); raf = 0; pose(0); }
   }).observe(bloc, {attributes: true, attributeFilter: ["data-scene"]});
-  window.__vppCam = CAMS;
 })();
 `;
 
