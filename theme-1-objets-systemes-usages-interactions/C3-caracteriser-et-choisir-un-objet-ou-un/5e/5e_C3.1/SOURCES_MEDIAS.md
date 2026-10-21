@@ -80,6 +80,32 @@ de la capture — c'est ce que l'écran affichait, pas un ajout.
 | `Images/geste_activite4_formule_3_resultat.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 13/09/2026 (fenêtre entière, élargie) | Fable, sur le poste de Pascal | CC0 1.0 | activité 4 b), geste Recopier — résultat : 12 / 10,5 / 9,5, la barre montre =O4/2+R4+S4 — 89 Ko |
 | `Images/geste_activite4_formule_4_erreur_tape.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 13/09/2026 (fenêtre entière, élargie) | Fable, sur le poste de Pascal | CC0 1.0 | activité 4 b), geste Recopier — erreur typique : résultats tapés à la main, la barre de U4 ne montre que 9,5 — 88 Ko |
 
+## Le vélo-cargo isométrique (séance 1, dessin animé par scènes)
+
+| Fichier | Nature | Auteur | Licence | Rôle pédagogique |
+|---|---|---|---|---|
+| `Images/chaine_energie_velo_cargo.svg` | SVG original **engendré** par `_generation/figure_iso_velo_cargo/build.mjs` (vélo-cargo en volume, isométrique, SVG seul, aucune bibliothèque, aucune ressource distante) ; `<title>` et `<desc>` accessibles | Fable, pour ce dépôt, avec le moteur de dessin Anatomy (code MIT) | CC0 1.0 pour le dessin ; MIT pour le code du kit | Le schéma fixe = état final du dessin animé (scène 6) : la batterie, le câble, le moteur dans la roue arrière, la flèche de rotation et les quatre cases de la chaîne d'énergie. Poids : 232,9 Ko (visé : 200, plafond : 300) |
+| dessin du bloc `#velo-cargo-pas-a-pas` (dans `sequence_5e_C3.1-C3.4_shanghai.html`, entre les marqueurs `figure_iso_velo_cargo`) | même générateur | idem | idem | Le même vélo, scène par scène, avec une seule pièce éclairée à la fois. Poids du dessin : 226,4 Ko |
+
+**Le code.** Les fichiers `iso-kit.mjs`, `lathe.mjs`, `tube.mjs` et `audit.mjs` de `_generation/figure_iso_velo_cargo/` sont des copies du skill Anatomy
+(commit noté dans `VERSION`), sous licence MIT (`LICENSE`). Le dessin lui-même ne reprend aucune marque ni aucun modèle réel : c'est un vélo-cargo
+électrique imaginé, à très basse tension.
+
+**Les couleurs.** Chaque notion garde sa couleur dans toute la séquence : batterie (source) `#ffd66b`, énergie électrique `#61dafb`, moteur `#c68ef2`,
+énergie mécanique `#81fba1`.
+
+**Les six phrases** (celles de Pascal, validées le 25/09/2026, inchangées) :
+
+1. *Le vélo attend* — « Ce vélo-cargo doit livrer un colis. Pour rouler, il lui faut de l'énergie. D'où vient-elle ? »
+2. *La source* — « La batterie. C'est la **source** : c'est là que l'énergie est stockée. »
+3. *La forme* — « De la batterie sort de l'**énergie électrique**. C'est la **forme** de l'énergie : ce qu'elle est, pendant qu'elle voyage. »
+4. *À ton avis ?* — « Le moteur reçoit de l'énergie électrique. À ton avis, quelle forme d'énergie en sort ? »
+5. *Le moteur* — « Le moteur transforme l'énergie électrique en **énergie mécanique** : le mouvement de la roue. Même énergie, autre forme. »
+6. *La chaîne entière* — « Source, puis forme, puis transformation : c'est la **chaîne d'énergie**. Retiens la différence : la batterie est une source, l'électricité est une forme. »
+
+**Les captures de comparaison** (avant : dessin plat du 25/09 ; après : dessin isométrique), à 1280 px, dans `_generation/figure_iso_velo_cargo/captures/` : captures du
+navigateur de ce lot, CC0.
+
 ## Accessibilité
 
 Chaque figure porte un `<title>` court et un `<desc>` long qui **décrit le contenu, pas
