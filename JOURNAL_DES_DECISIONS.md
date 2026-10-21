@@ -22221,3 +22221,127 @@ scène par scène (les boutons sont natifs et inchangés).
    avant. Sous le porte-bagages arrière, la batterie, allumée. […] »
 4. **Le test rouge du banc** (n°31, une zone de rédaction sans étayage) : à traiter dans un lot à part ?
 5. **Le verdict de classe** : le prompt maître demande de ne lancer la phase 2 qu'après votre verdict en classe.
+## 21/10/2026 — Règle d'or n°309 : l'élève lit le savoir, pas la fabrique (tous thèmes, index, _outils)
+
+> **Règle d'or n°309 — l'élève lit le savoir, pas la fabrique.** Dans toute page, tout SVG ou tout QCM lu par un élève :
+> **aucune trace de la démarche de conception** — ni numéro de règle, ni « convention du dépôt », ni « décision de Pascal »,
+> ni nom d'agent, de lot ou de vague. Une explication utile à l'élève se dit **en mots d'élève, sans renvoi**.
+> **Permis** : les commentaires HTML, CSS et JavaScript, le journal, les fiches pédagogiques, les synthèses professeur.
+
+### Pourquoi
+
+Un élève de 5e ne sait pas ce qu'est « la règle n°18 », ni « le dépôt » : la phrase le renvoie vers un document qu'il
+n'ouvrira jamais, et lui apprend au passage que la page qu'il lit est un produit, pas un savoir. Sous un plan de métro,
+« comme tous les plans de métro du monde (règle n°8 : le bon outil pour la bonne question) » : la première moitié est du
+cours, la parenthèse est de la fabrique. L'élève n'en a que faire ; le journal, si.
+
+### Mesuré (sur `main` à `2d250ee1`, le 21/10/2026)
+
+Balayage des 2 218 fichiers suivis (.html, .svg), commentaires et `<style>` retirés, attributs et chaînes JavaScript gardés :
+**56 numéros de règle visibles dans 18 fichiers** (11 dans l'index, 6 dans le TP modèle, 4 dans chacune de quatre séquences de
+thème 3…), auxquels s'ajoutent, relevés ensuite par le contrôle lui-même : 5 « (règle 18) » sans `n°` dans les nouveautés de
+l'index, des badges « CRCN règle 7 » et un « (règle 8) » dans trois séquences de thème 3. Hors numéros : « du dépôt » /
+« ce dépôt » (une trentaine, dont 7 dans l'index), 21 titres « recopié, pas reformulé », 4 pieds de page « v1 Grok — v2 mise en
+conformité règles … (Fable, 01/08/2026) », des « lot 3e_C9.2 » et « Lot Shanghai » (une vingtaine dans l'index), 17 champs
+`"lot": "Thème 2 — LOT 04"` dans `nouveautes.json`, un lien vers le journal.
+Environ 190 autres occurrences (« agent » de sécurité, « banc d'essai ») sont du vocabulaire de la matière, pas de la fabrique.
+
+### Ce que le lot fait (73 fichiers modifiés avant cette entrée)
+
+- **Numéros de règle** : supprimés des titres, légendes et phrases (« Le contrat de la séquence », « CRCN mobilisés »,
+  « Le concept invariant »…). Là où la phrase portait un sens, elle le garde sans le renvoi : « En haut du schéma, par
+  convention, en technologie. » ; « Plan simplifié, non à l'échelle — comme tous les plans de métro du monde. » ;
+  « chaînes d'information et d'énergie » au lieu de « chaînes de la règle n°6 ».
+- **« Codification opérationnelle »** (10 séquences, 3 infobulles, l'index) : « Ces codes servent à ranger les séquences ; ils ne
+  viennent pas du programme officiel. »
+- **« du dépôt »** : « convention » ; « format demandé » ; « les archives » ; « l'entraînement DNB » ; « dans tous les schémas
+  de ce type » ; la phrase sur le « référentiel du dépôt » (5e_C4.7, c'est le référentiel Pronote de Pascal, pas le BO) et le
+  panneau-loquet de l'activité de 4e_C6.2 (consigne pour le professeur) sont **supprimés**.
+- **Versions et agents** : les quatre pieds de page « v1 Grok — v2 … (Fable …) » et le « v1 archivée — règle d'or n°12 » du
+  jardin connecté disparaissent ; « lot 3e_C9.2 » devient « séquence 3e_C9.2 ».
+- **Titre « Ce que dit le programme — recopié, pas reformulé »** (21 séquences) : « Ce que dit le programme ». La promesse
+  reste tenue par `controle_formulations.py` (il lit le début du titre) ; sa docstring le dit.
+- **Nouveautés de l'index** : 26 entrées reformulées en ce qui change pour l'élève (plus de numéros, de lots, de « suites de
+  tests » ni de « contrôles » là où la phrase était de la coulisse), les 17 champs `lot` supprimés (le générateur ne les lisait
+  pas), le lien vers le journal retiré.
+
+### Où ça s'écrit (les générateurs d'abord)
+
+| Page produite | Source modifiée | Régénérée ? |
+|---|---|---|
+| `index.html` | `_outils/make_index.py` et `nouveautes.json` | oui, `make_index.py` + `build_audit.py` |
+| `tp_3e_boitier_etanche`, `tp_4e_socle_assemblage`, `tp_5e_de_calottes`, `tp_5e_de_onshape` | `atelier-cao/scenarios/*.json` (champ `pied`) et `_generation/build_tp.py` | oui, `build_tp.py` ; relancé avant modification, il redonnait les quatre pages à l'octet près |
+| `lexique_3e_C9.1.html` | `qcm_3e_C9.1_…` (source écrite à la main) | oui, `generer_lexique.py` ; seule la ligne visée change |
+| `qcm_5e_C1.1-C1.6_chengdu.html` | `5e_C1.1/_generation/q.py` | **non** : le gabarit a dérivé depuis la dernière génération (31 lignes de permutation A/B/C/D diffèrent) ; la phrase est changée dans `q.py` ET dans la page, à l'identique |
+| `atelier_[345]e_C7.1_planification_taches.html` | `atelier-planification/_generation/build_atelier.py` | **non** : régénérer fait perdre 8 lignes (le bouton « séance suivante » de la règle n°101, posé après coup) ; même traitement que ci-dessus |
+
+Les autres pages touchées sont écrites à la main : elles sont la source.
+
+### Ce qui a été touché, thème par thème (76 fichiers)
+
+La règle est transversale : la PR traverse les trois thèmes, `_outils/` et la racine, et n'a pas été découpée (décision de Pascal).
+
+- **Thème 1 — 14 fichiers.** Dix séquences portaient « codes de classement internes à ce dépôt » (3e_C1.1, 4e_C1.1, 5e_C1.1,
+  5e_C1.2, 3e_C2.1, 4e_C2.1, 5e_C2.1, 3e_C3.1, 4e_C3.1, 5e_C3.1) : la phrase de rangement de B1 ; infobulles « Code de
+  classement » de 3e_C2.1 et 4e_C2.1. `5e_C1.5` : titre « recopié, pas reformulé ». `5e_C1.1` : « (règle n°47) » retiré du QCM
+  Chengdu, dans `_generation/q.py` et dans la page. `carte_des_representations.html` : « par convention, en technologie. »
+- **Thème 2 — 11 fichiers.** `4e_C4.1_book-train` (6) : « convention du dépôt » dans quatre SVG de chaînes, « dans tous les
+  schémas du dépôt » dans le QCM, « format du dépôt » dans la séquence. `5e_C4.7` : trois « (règle n°22) » et la phrase sur le
+  référentiel Pronote, supprimée. `3e_C6.1`, `4e_C6.1`, `5e_C6.1` : « (règle n°18) » et « règle d'or n°18 » dans des titres.
+  `4e_C6.2` (jardin connecté) : « chaînes de la règle n°6 », « (règle d'or n°12) » du pied de page, paragraphe-loquet supprimé.
+- **Thème 3 — 44 fichiers.** `3e_C7`, `4e_C7`, `4e_C8`, `5e_C7` : pieds de page « v1 Grok — v2 … (Fable) », « CRCN mobilisés
+  (règle d'or n°7) », badges « CRCN règle 7 », « (règle 8) » ; titre « recopié, pas reformulé » dans vingt séquences de C7 et C8 ;
+  « lot 3e_C9.2 » et « les règles du lot 3e_C7.4 » ; `5e_C8.2` : synthèse élève. `3e_C9.1` : le SVG du plan de métro, la
+  séquence (« gabarit du dépôt »), `vittascience_variables.html` (« archives du dépôt »), le QCM et le lexique (« règle n°6 ! »).
+  `3e_C9.2` : « l'entraînement DNB du dépôt », la légende du SVG de chaîne. `4e_C9.1` : légende du SVG du jardin. Atelier CAO :
+  les quatre TP, par leurs scénarios JSON et `build_tp.py`. Atelier de planification : trois pages et `build_atelier.py`.
+- **Transversal — 7 fichiers.** `_outils/` : `controle_regles_visibles.py` et son banc (nouveaux), `make_index.py` (index),
+  `controle_formulations.py` (docstring). Racine : `index.html` (régénéré), `nouveautes.json` (26 entrées reformulées, 17 champs
+  `lot` retirés, un lien retiré), ce journal.
+- **Non touchés** : thème 1 sans autre fichier que ceux ci-dessus ; `_archive-anciennes-versions` ; les synthèses professeur ;
+  `tp_modele_demonstration.html` ; `fiche_maths_tp_4e_socle.html`.
+
+### Le contrôle permanent
+
+`_outils/controle_regles_visibles.py`, avec son banc `_outils/tests_controle_regles_visibles.py` (**34 contrôles**, dont les cas
+réels du jour, les cas permis, la panne d'une racine vide — règle n°299 — et le dépôt réel). Il lit le texte que l'élève voit
+ou entend (corps, attributs, `<desc>`, chaînes JavaScript des QCM), sans les commentaires HTML/CSS/JS, et refuse un numéro de
+règle (« règle n°12 », « (règle 18) », « CRCN règle 7 »), « du dépôt » / « ce dépôt » (même coupé par un retour à la ligne),
+Fable, Grok, « décision de Pascal », « journal des décisions », « garde-périmètre », un lot ou une vague (« lot 3e_C9.2 »,
+« LOT 04 », « Lot Shanghai »), « recopié, pas reformulé ». Sortie 0 / 1 / 2.
+Il ne lit pas : `_archive-anciennes-versions`, `_outils`, `_generation`, les synthèses professeur, les fiches (`fiche_*`) et les
+rapports de tests (par **début de nom** : une première version cherchait `PLAN_` n'importe où dans le nom et prenait
+`ligne_q_plan_simplifie.svg` pour un document de planification).
+**Exemptions nommées** : `memoire_boites_etiquetees.svg` — « Règle n°1 / 2 / 3 » sont les trois règles de la mémoire de
+l'ordinateur, du cours ; `tp_modele_demonstration.html` — modèle de scénario pour les auteurs de TP, ni dans l'index ni dans une
+séquence. Les « Règle 1 : une variable = une boîte » de 5e_C1.1 et 5e_C9.1 ne sont pas refusées pour la même raison (pas de `n°`).
+**Non lu** : une trace dite sans mot-clé, le texte porté par les pixels d'une capture, la clarté d'une explication.
+
+### Ce qui reste, et que ce lot ne tranche pas
+
+1. **Index, 113 volets repliés « 🔧 Fichiers de maintenance »** (un par séquence ou lot) : ils listent `SOURCES_MEDIAS.md`,
+   `manifest_lot_*.json` et `tests_*.py` par lot. C'est de la fabrique, mais elle porte un titre honnête et s'adresse au
+   professeur. Laissée.
+2. **Index, pied de page** : « Page générée automatiquement depuis `_outils/data_competences.py` — aucun intitulé n'est ressaisi à
+   la main » : le numéro de règle est retiré, la phrase reste.
+3. **Pieds de page des TP** : « images et licences dans `SOURCES_MEDIAS.md` » est gardé (attribution) ; « méthode dans
+   `GUIDAGE_PAS_A_PAS.md` », « engendrées par `calotte.py` » et « modèle de référence dans `_modele/` » sont retirés.
+4. **Nouveautés de l'index non signalées par le contrôle** mais de ton « coulisse » (« suites de tests », « audit », « contrôle ») :
+   une vingtaine d'entrées d'août ; seules les 26 qui portaient une marque de fabrique ont été reformulées.
+
+### À RELIRE PAR PASCAL
+
+1. Les **26 nouveautés réécrites** (`nouveautes.json`) : ce sont tes phrases publiques.
+2. La suppression de **tout le paragraphe** « Ce panneau est un loquet de confort… » de `sequence-jardin-connecte-arrosage-automatique.html`
+   (tu avais demandé la phrase de consigne ; la phrase voisine n'avait plus de sens seule).
+3. La phrase de remplacement des **codes de classement** : « Ces codes servent à ranger les séquences ; ils ne viennent pas du
+   programme officiel. » (et, dans l'index, « servent à ranger les séquences »).
+4. Le choix de rendre **`fiche_*`** (fiche de maths pour les collègues) et **`tp_modele_demonstration.html`** hors du champ.
+
+### Notes pour plus tard (décidées le 21/10/2026, non faites ici)
+
+- Sortir de l'index public les volets « 🔧 Fichiers de maintenance » et le pied « Page générée automatiquement… ».
+- Reformuler les nouveautés d'août restées de ton « coulisse » (tests, audits, contrôles).
+- Un correctif à part pour les contrôles rouges préexistants : `controle_squelette.mjs` (3e_C1.5), `verif_guidage.py` sur
+  `tp_3e_boitier_etanche` et `tp_5e_de_calottes`, `tests_4e_C8` et `tests_4e_C7` (« 30 sans explication »), `tests_3e_C6.1` et
+  `tests_4e_C6.1`, et le test n°31 de 5e_C3.1 (10 zones / 9 étayages).

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """controle_formulations.py — « le programme dit » doit dire ce que le programme dit.
 
-Nos séquences ouvrent par un encadré qui promet : **« Ce que dit le programme —
-recopié, pas reformulé »**. Nos fiches titrent « Formulation du référentiel
+Nos séquences ouvrent par un encadré **« Ce que dit le programme »** qui promet
+de citer le programme mot pour mot (le sous-titre « recopié, pas reformulé » a été retiré de
+la page le 21/10/2026, règle d'or n°309 : la promesse reste, le contrôle la tient). Nos fiches titrent « Formulation du référentiel
 (2024) ». Nos README de pointeurs citent le libellé officiel en exergue. Trois
 promesses, faites à un collègue qui ne lira pas le Bulletin officiel derrière
 nous.
