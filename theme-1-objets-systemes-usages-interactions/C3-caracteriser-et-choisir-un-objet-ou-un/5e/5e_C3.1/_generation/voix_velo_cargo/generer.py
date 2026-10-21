@@ -21,6 +21,12 @@ CE QU'IL FAUT SUR LE POSTE (rien de tout cela n'est dans le dépôt)
 Ne jamais copier Piper, espeak-ng ni le modèle dans le dépôt : le moteur est sous GPL-3, le modèle est une donnée à part.
 Licence de la voix et attribution : voix.json et SOURCES_MEDIAS.md.
 
+AVERTISSEMENT — TOUTE RÉGÉNÉRATION EXIGE UNE NOUVELLE ÉCOUTE DE PASCAL. Les fichiers de Audio/ sont des prises validées à
+l'oreille (scènes 2 et 5 : première écoute ; scènes 1, 3, 4, 6 : troisième écoute, avec des phonèmes corrigés à la main, voir
+voix.json, clé « prises_validees »). Ce script lit « dit » (le texte affiché) et ne reprend PAS ces corrections : ses prises
+auraient les liaisons robotiques que Pascal a refusées, et même avec elles Piper tirerait un autre bruit. Ne jamais remplacer un
+fichier de Audio/ par une sortie de ce script sans faire réécouter les six scènes.
+
 ATTENTION : ce n'est PAS reproductible à l'octet. Piper tire du bruit à chaque prise (noise_scale, noise_w_scale) et le
 conteneur Ogg porte un numéro de flux aléatoire : deux générations de la même phrase donnent deux prises un peu différentes
 (rythme et intonation voisins). Les fichiers de Audio/ sont donc LA référence : ne régénérer que si une phrase change, et
@@ -93,6 +99,7 @@ def main():
     verifier(phrases)
     if "--verifier" in sys.argv:
         return
+    print("ATTENTION : toute régénération exige une nouvelle écoute de Pascal (prises validées à l'oreille, voir voix.json « prises_validees »).")
     py = piper_python()
     onnx = modele(voix, py)
     ff = os.environ.get("FFMPEG", "ffmpeg")

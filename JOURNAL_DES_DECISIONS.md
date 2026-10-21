@@ -22405,3 +22405,36 @@ La licence lue est celle du jeu d'entraînement que la fiche déclare ; l'origin
 1. **Écouter les six fichiers** (surtout les scènes 1 et 4, qui sont des questions) et dire si la vitesse convient à des 5e ; sinon régénérer les six avec `length_scale` 1,1.
 2. **Le crédit CC BY** (demandé par Pascal le 21/10/2026) : « Voix de synthèse : SIWIS (CC BY 4.0) » en petit dans la description détaillée du dessin animé ; l'attribution complète dans `SOURCES_MEDIAS.md` et `voix.json`.
 3. Le test n°31 du banc du lot (10 zones / 9 étayages) reste rouge, comme avant ; ce lot n'y touche pas.
+
+## 21/10/2026 — Thème 1 · 5e_C3.1 : la voix du vélo-cargo, liaisons corrigées et prises validées à l'oreille
+
+**Demande de Pascal.** À l'écoute, les scènes 2 et 5 étaient bonnes ; les scènes 1, 3, 4 et 6 avaient des liaisons robotiques. Trois écoutes : (1) les
+phonèmes d'espeak-ng lus phrase par phrase, chaque liaison diagnostiquée (manquante, forcée, mal enchaînée), deux variantes a et b par scène ;
+(2) trois essais c, d, e pour « lui » (scène 1) et « puis » (scène 6, deux fois) ; (3) choix final.
+
+### Les prises retenues (copiées à l'octet près dans `Audio/`, jamais régénérées)
+
+| Scène | Essai | Texte envoyé à la voix | Phonèmes envoyés |
+|---|---|---|---|
+| 1 | c | « … il **luit** faut de l'énergie. D'où vient-elle ? » | `sə- velˈokaʁɡˈo dwˈa livʁˈe œ̃ kolˈi.` · `puʁ ʁulˈe, il lyˈi fo də- lenɛʁʒˈi.` · `du vjɛ̃tˈɛl?` |
+| 2 | première | texte affiché | sortie d'espeak-ng, sans correction |
+| 3 | b | texte affiché | `də- la- batʁˈi sˈɔʁ də- lenɛʁʒi elɛktʁˈik.` · `sɛ la- fˈɔʁm də- lenɛʁʒˈi: sə- kɛlɛ, pɑ̃dˈɑ̃ kɛl vwajˈaʒ.` |
+| 4 | b | texte affiché | `lə- motˈœʁ ʁəswˈa də- lenɛʁʒi elɛktʁˈik.` · `a tɔ̃navˈi, kɛl fˈɔʁm denɛʁʒi ɑ̃ sˈɔʁ?` |
+| 5 | première | texte affiché | sortie d'espeak-ng, sans correction |
+| 6 | c | « Source, **puits** forme, **puits** transformation … » | `sˈuʁs, pyˈi fˈɔʁm, pyˈi tʁɑ̃sfɔʁmasjˈɔ̃: sɛ la- ʃˈɛn denɛʁʒˈi.` · `ʁətjˈɛ̃ la- difeʁˈɑ̃s: la- batʁˈi ɛ tyn sˈuʁs, lelɛktʁisitˈe ɛ tyn fˈɔʁm.` |
+
+Ce sont des **prises validées à l'oreille par Pascal**. Les phrases affichées à l'élève et `phrases.json` ne changent pas : seul ce qui est envoyé à la voix
+diffère. Les empreintes SHA-256 ont été relevées sur les fichiers d'essai puis sur ceux de `Audio/` : identiques ; scènes 2 et 5 inchangées.
+
+### Ce qui a été appris
+
+- espeak-ng transcrit « lui » et « puis » en deux syllabes (`lyˌi`, `pyˈi`) ; l'homophone « luit » / « puits » donne la même transcription. L'essai c a été
+  retenu **à l'oreille** : c'est la prise qui est bonne, pas la méthode qui est prouvée. Les essais d (`lɥi`, `pɥi`) et e (`lwi`, `pwi`) n'ont pas été retenus.
+- Les blocs `[[phonèmes]]` insérés dans le texte de Piper avalent la ponctuation et fusionnent les phrases : inutilisables. La méthode qui marche : remplacer
+  la fonction de phonétisation par les phonèmes d'espeak corrigés, une chaîne par phrase.
+
+### Règle posée
+
+**Toute régénération de `Audio/velo-cargo_scene*` exige une nouvelle écoute de Pascal.** `generer.py` l'écrit en tête et l'affiche à chaque lancement ; il ne
+reprend pas les corrections de liaison (il lit `dit`), donc ses prises seraient moins bonnes. Détail par scène : `voix.json`, clé `prises_validees`.
+Poids des douze fichiers : 350 Ko.

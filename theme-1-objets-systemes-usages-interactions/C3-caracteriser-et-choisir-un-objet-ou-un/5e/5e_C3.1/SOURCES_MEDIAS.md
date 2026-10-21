@@ -113,12 +113,12 @@ navigateur de ce lot, CC0.
 
 | Fichier | Nature |
 |---|---|
-| `Audio/velo-cargo_scene1.ogg` · `.mp3` | Scène 1 : voix de synthèse, Opus mono 32 kb/s (20.5 Ko) et MP3 mono 48 kb/s de secours (29.4 Ko) |
+| `Audio/velo-cargo_scene1.ogg` · `.mp3` | Scène 1 : voix de synthèse, Opus mono 32 kb/s (20.8 Ko) et MP3 mono 48 kb/s de secours (30.2 Ko) |
 | `Audio/velo-cargo_scene2.ogg` · `.mp3` | Scène 2 : voix de synthèse, Opus mono 32 kb/s (13.5 Ko) et MP3 mono 48 kb/s de secours (19.4 Ko) |
-| `Audio/velo-cargo_scene3.ogg` · `.mp3` | Scène 3 : voix de synthèse, Opus mono 32 kb/s (23.9 Ko) et MP3 mono 48 kb/s de secours (35.1 Ko) |
-| `Audio/velo-cargo_scene4.ogg` · `.mp3` | Scène 4 : voix de synthèse, Opus mono 32 kb/s (19.2 Ko) et MP3 mono 48 kb/s de secours (28.0 Ko) |
+| `Audio/velo-cargo_scene3.ogg` · `.mp3` | Scène 3 : voix de synthèse, Opus mono 32 kb/s (22.3 Ko) et MP3 mono 48 kb/s de secours (32.4 Ko) |
+| `Audio/velo-cargo_scene4.ogg` · `.mp3` | Scène 4 : voix de synthèse, Opus mono 32 kb/s (18.5 Ko) et MP3 mono 48 kb/s de secours (26.8 Ko) |
 | `Audio/velo-cargo_scene5.ogg` · `.mp3` | Scène 5 : voix de synthèse, Opus mono 32 kb/s (28.3 Ko) et MP3 mono 48 kb/s de secours (41.2 Ko) |
-| `Audio/velo-cargo_scene6.ogg` · `.mp3` | Scène 6 : voix de synthèse, Opus mono 32 kb/s (37.6 Ko) et MP3 mono 48 kb/s de secours (54.9 Ko) |
+| `Audio/velo-cargo_scene6.ogg` · `.mp3` | Scène 6 : voix de synthèse, Opus mono 32 kb/s (39.0 Ko) et MP3 mono 48 kb/s de secours (57.6 Ko) |
 
 - **Moteur** : Piper (`piper-tts` 1.8.0), sous GPL-3. Il n'est pas dans le dépôt, et un fichier audio qu'il produit n'est pas une œuvre dérivée du moteur.
 - **Modèle** : `fr_FR-siwis-medium` (voix féminine, locutrice unique), entraîné sur la base **SIWIS** de l'Université d'Édimbourg
@@ -130,6 +130,7 @@ navigateur de ce lot, CC0.
   dans la description détaillée du dessin animé, sous le schéma fixe de la séance 1.
 - **Chaîne audio** : silences du début et de la fin coupés (−45 dB), volume normalisé à −16 LUFS (crête −1,5 dB), mono.
 - **Reproductibilité** : à l'octet, non (la synthèse tire du bruit à chaque prise) ; les fichiers de `Audio/` sont la référence.
+- **Prises validées à l'oreille** par Pascal (scènes 2 et 5 : première écoute ; scènes 1, 3, 4, 6 : troisième écoute, liaisons corrigées dans ce qui est envoyé à la voix, sans changer les phrases affichées). Le texte et les phonèmes envoyés sont dans `_generation/voix_velo_cargo/voix.json` (clé `prises_validees`). **Toute régénération exige une nouvelle écoute.**
 - **Dans la page** : rien n'est chargé depuis le réseau ; les fichiers ne se lisent qu'après un geste de l'élève (« Écouter » ou
   « Regarder ») ; si un fichier ne se lit pas, la voix française locale du navigateur prend le relais, sinon l'élève lit la phrase.
 
