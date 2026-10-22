@@ -22438,3 +22438,66 @@ diffère. Les empreintes SHA-256 ont été relevées sur les fichiers d'essai pu
 **Toute régénération de `Audio/velo-cargo_scene*` exige une nouvelle écoute de Pascal.** `generer.py` l'écrit en tête et l'affiche à chaque lancement ; il ne
 reprend pas les corrections de liaison (il lit `dit`), donc ses prises seraient moins bonnes. Détail par scène : `voix.json`, clé `prises_validees`.
 Poids des douze fichiers : 350 Ko.
+
+## 21/10/2026 — Règle d'or n°310 : les blocs disent ce qui est fait, les flèches disent ce qui circule (chaînes d'énergie) — reprise de la PR #485
+
+> **Règle d'or n°310 — Dans une chaîne d'énergie, les blocs disent ce qui est fait, les flèches disent ce qui circule.**
+> Les blocs portent les fonctions techniques, avec un verbe ; sous chaque bloc, le composant qui la réalise ; les formes d'énergie
+> sur les flèches, entre les blocs, à l'entrée et à la sortie ; l'action finale à la sortie ; une énergie stockée s'annote sous son
+> composant. Source : Éduscol STI, *La chaîne d'énergie*.
+> Elle **s'ajoute** à la convention de la technologie, conservée : **l'information en haut, l'énergie en bas, l'ordre qui descend.**
+
+### Pourquoi
+
+Les schémas de chaîne d'énergie mélangeaient dans un même bloc la fonction (« DISTRIBUER »), le composant (« régulateur ») et la forme
+d'énergie (« électrique »), et les montages solaires plaçaient la batterie avant la régulation de charge. La règle sépare les trois :
+le bloc dit ce qui est fait, le dessous dit qui le fait, la flèche dit ce qui circule. Le skill de dépôt
+`.claude/skills/chaine-energie-fonctionnelle/SKILL.md` l'applique à tout nouveau schéma.
+
+### La PR #485 (Codex) relue, puis reprise aux normes Fable
+
+La #485 harmonise six schémas (lampadaire 5e, jardin 4e, alimentation à élaborer 3e, station d'alerte 3e, Book Train 4e, vélo-cargo 5e),
+avec un générateur (`_outils/regenerer_chaines_energie.py`), un vérificateur (`_outils/verifier_chaines_energie.py`), les sources draw.io et un
+compte rendu (`docs/corrections-chaines-energie-2026-10-21.md`). **Elle avait retiré la convention** « information en haut, énergie en bas, l'ordre
+descend » des titres, descriptions, repères, pieds de schéma, alt et légendes. La reprise (`fable/chaines-energie-fonctionnelles`, sans motif de
+thème dans le nom : la garde-périmètre ne s'applique pas, comme pour la règle n°309) :
+
+- **rétablit la convention par le générateur**, en la combinant avec la présentation de la règle n°310 : titre « …l'information (en haut) commande
+  l'énergie (en bas) », chaînes repérées « en haut (elle décide) » / « en bas (elle obéit) », flèche d'ordre « l'ordre descend », pied de schéma ;
+  les alt et descriptions des pages disent de nouveau « En haut… En bas… » ; `verifier_chaines_energie.py` contrôle qu'elle est dite **et dessinée** ;
+- replace des étiquettes qui se posaient sur un trait ou sous un autre bloc (lampadaire, jardin, station, Book Train) ;
+- corrige dans 3e_C9.2 une phrase qui contredisait le schéma (« l'ordre atterrit sur CONVERTIR ») et renvoyait à un encadré retiré ;
+- liste, avant / après, chaque activité et chaque QCM changé : voir `docs/corrections-chaines-energie-2026-10-21.md` (section « Reprise Fable »).
+  **Aucun indice de bonne réponse n'a changé ; le contenu de la bonne réponse a changé à 7 questions** (lampadaire n°6, jardin n°1, 3, 4, 5,
+  station n°2, Book Train n°18). Aucun de ces QCM n'a de banque ni de générateur : le HTML est la source (seul celui du Book Train est retouché
+  par `regenerer_chaines_energie.py`, rejoué sans écart).
+- **Périmètre / garde** : `_outils/` n'est accepté que d'une branche « theme-2 » ; `docs/` n'est dans aucun périmètre ; un nom de branche sans motif
+  de thème n'est pas jugé (avertissement). La branche est donc nommée sans motif de thème.
+
+### À RELIRE PAR PASCAL
+
+1. **3e_C9.2 : la #485 a retiré de la page l'encadré « Deux questions que le schéma soulève » et la planche des trois cas** (`ordre_preactionneur_trois_cas.svg` :
+   station / gyrophare / portail, avec la règle « l'ordre atterrit sur le premier bloc de la chaîne d'énergie qu'il commande »). Ce n'était pas dans la
+   demande de convention ; le fichier SVG reste dans le dossier et dans le manifeste sans plus être affiché. **Rien n'est restauré** : la planche
+   dit « l'ordre arrive sur CONVERTIR », ce que le schéma corrigé ne dit plus.
+2. **Fonctions hors des quatre** introduites par la #485 : « ADAPTER la tension », « OUVRIR ou FERMER un passage d'eau », « RÉGULER la charge »,
+   « STOCKER / ALIMENTER ». À valider ou à ramener à ALIMENTER / DISTRIBUER / CONVERTIR / TRANSMETTRE.
+3. **Vélo-cargo** : la #485 change la scène 6 et son audio (nouvelle prise **non écoutée**) et réécrit le générateur `figure_iso_velo_cargo/` ; la branche locale
+   `fable/theme-1/bandeau-fonctionnel-velo-cargo` (non poussée, bandeau de cinq cases) modifie les mêmes fichiers : **les deux ne se fusionnent pas**, il faut
+   choisir un bandeau. Le bandeau de cette branche locale place le composant **dans** le bloc et n'a ni flèche d'entrée ni flèche de sortie : il ne respecte
+   pas la règle n°310 telle qu'écrite.
+4. Jardin 4e : « électrique → hydraulique » pour la pompe (la #485 supprime l'étape mécanique) ; à valider.
+5. `3e_C9.2/generer_les_quatre_pages.py` est en panne sur `main` (« repère introuvable : 🎁 Bonus ») : les pages découpées se maintiennent à la main.
+
+### Ce qui a vraiment tourné (reprise de la #485)
+
+- **Deux contrôles rouges sur la #485 telle quelle, verts après reprise** : `controle_banque_qcm.py` (3 lignes « Banque » fausses : 29 questions au lieu de 30,
+  26 au lieu de 30, 35 au lieu de 36) et `controle_effectifs_qcm.py` (`manifest_lot_05.json` : 6 illustrées annoncées, 5 comptées). Cause : les 6 questions
+  réécrites par la #485 étaient des blocs JSON indentés (clés entre guillemets) dans des banques écrites au format compact du dépôt ; les deux contrôles
+  lisent `{c:"…"` et `img:{`. Les 6 questions sont remises au format du dépôt, **contenu identique** (comparaison des tableaux à clés triées, avant / après).
+- `verifier_chaines_energie.py` : **45 / 45** (44 / 45 avant : il comparait des octets, et sous Windows le SVG du vélo sort en CRLF alors que le générateur écrit
+  en LF ; il compare maintenant sans les fins de ligne). Il contrôle en plus que la convention est dite et dessinée.
+- Contrôles du dépôt : les 24 contrôles Python verts (dont n°309 et son banc 34 / 34) ; Node : contraste, impression, verrous, hors ligne verts.
+  **`controle_squelette.mjs` reste rouge** sur `3e_C1.5` (rouge sur `main`, corrigé sur la branche locale `fable/bancs-rouges-prealables`, non poussée).
+- Bancs : lampadaire 30 / 30 et QCM 25 / 25, jardin 35 / 35, station énergie 23 / 23, station programmée 135 / 135, voix du vélo 24 / 24,
+  Shanghai **28 / 29** (le test n°31, corrigé sur la même branche locale).
