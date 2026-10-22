@@ -1,0 +1,60 @@
+  /* Pont en H — « pour aller plus loin » (hors programme de cycle 4). Simulateur SVG fait main, hors ligne, sans bibliothèque. */
+  .ph .ph-hp{color:var(--sub);font-size:.92em}
+  .ph .ph-idee{margin:6px 0 10px 1.3em}
+  .ph .ph-idee li{margin:6px 0}
+  .ph .ph-conseil{margin:10px 0}
+  .ph-sim{max-width:640px;margin:10px auto}
+  .ph-svg{display:block;width:100%;height:auto}
+  .ph-svg .ph-fond{fill:#08132c;stroke:var(--border);stroke-width:2}
+  .ph-svg .ph-w{fill:none;stroke:#5b7bb8;stroke-width:4;stroke-linecap:round}
+  .ph-svg .ph-w.on{stroke:#ffd66b;stroke-width:6;stroke-dasharray:14 8;animation:ph-courant .9s linear infinite}
+  .ph-svg .ph-w.cc{stroke:#ff7b88;stroke-width:6;stroke-dasharray:14 8;animation:ph-courant .45s linear infinite}
+  .ph-svg .ph-lev{fill:none;stroke:#e4eaf5;stroke-width:5;stroke-linecap:round}
+  .ph-svg .ph-pt{fill:#e4eaf5}
+  .ph-svg .ph-nom,.ph-svg .ph-M,.ph-svg .ph-pole{fill:#e4eaf5;font:700 34px system-ui,sans-serif}
+  .ph-svg .ph-pole{font-size:44px}
+  .ph-svg .ph-moteur{fill:#0d2347;stroke:#c68ef2;stroke-width:5}
+  .ph-svg .ph-pale{fill:none;stroke:#c68ef2;stroke-width:5;stroke-linecap:round}
+  .ph-svg .ph-M{fill:#c68ef2}
+  .ph-svg #ph_rotor{transform-origin:300px 180px}
+  .ph-svg #ph_rotor.sens1{animation:ph-tourne 1.6s linear infinite}
+  .ph-svg #ph_rotor.sens2{animation:ph-tourne 1.6s linear infinite reverse}
+  .ph-svg .ph-fl,.ph-svg .ph-pointe{fill:#ffd66b}
+  .ph-svg .ph-arc{fill:none;stroke:#ffd66b;stroke-width:4}
+  .ph-svg .ph-fl,.ph-svg .ph-arc{display:none}
+  .ph-svg .ph-fl.on,.ph-svg .ph-arc.on{display:inline}
+  .ph-svg .ph-etat{fill:#e4eaf5;font:700 28px system-ui,sans-serif}
+  .ph-svg.cc .ph-fond{stroke:#ff7b88;stroke-width:4}
+  @keyframes ph-courant{to{stroke-dashoffset:-22}}
+  @keyframes ph-tourne{to{transform:rotate(360deg)}}
+  .ph-cmd{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
+  .ph-sw{min-height:48px;padding:8px 12px;border-radius:12px;border:2px solid var(--border);background:var(--input-bg);color:var(--text);font:600 1em system-ui,sans-serif;cursor:pointer}
+  .ph-sw[aria-pressed="true"]{background:var(--btn-h);border-color:var(--hl);box-shadow:inset 0 0 0 2px var(--hl)}
+  .ph-sw:focus-visible,.ph-svg .ph-swg:focus-visible{outline:3px solid #fff;outline-offset:2px}
+  .ph-zero{grid-column:1 / -1}
+  .ph-dit{min-height:3.2em;margin:8px 0;padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:var(--panel2);font-size:1.04em}
+  .ph-dit.cc{border-color:var(--err)}
+  .ph-comp{min-height:1.4em;margin:4px 0;color:var(--sub)}
+  .ph-suite{margin:12px 0 4px}
+  /* Règle n°119 : le mouvement n'est jamais seul à porter l'information (tout est écrit) ; mouvement réduit : plus aucune animation,
+     le trajet reste tracé en trait plein et les flèches fixes disent le sens. */
+  @media (prefers-reduced-motion: reduce){
+    .ph-svg .ph-w.on,.ph-svg .ph-w.cc{animation:none;stroke-dasharray:none}
+    .ph-svg #ph_rotor.sens1,.ph-svg #ph_rotor.sens2{animation:none}
+  }
+  @media (max-width:420px){ .ph-cmd{gap:8px} .ph-sw{font-size:.95em} }
+  @media print{
+    .ph-sim{break-inside:avoid}
+    .ph-svg .ph-fond{fill:#fff;stroke:#999}
+    .ph-svg .ph-w{stroke:#555}
+    .ph-svg .ph-w.on{stroke:#8a5a00;animation:none;stroke-dasharray:none}
+    .ph-svg .ph-w.cc{stroke:#b00020;animation:none;stroke-dasharray:none}
+    .ph-svg .ph-lev,.ph-svg .ph-pt{stroke:#222;fill:#222}
+    .ph-svg .ph-lev{fill:none}
+    .ph-svg .ph-nom,.ph-svg .ph-pole,.ph-svg .ph-etat{fill:#111}
+    .ph-svg .ph-moteur{fill:#fff;stroke:#5b2a91}.ph-svg .ph-pale,.ph-svg .ph-M{stroke:#5b2a91}.ph-svg .ph-M{fill:#5b2a91;stroke:none}
+    .ph-svg .ph-fl,.ph-svg .ph-pointe{fill:#8a5a00}.ph-svg .ph-arc{stroke:#8a5a00}
+    .ph-sw,.ph-dit{background:#fff;color:#111;border-color:#999}
+    #ph_pred,#ph_pred option{background:#fff!important;color:#111!important}
+    .ph-sw[aria-pressed="true"]{background:#e8eefc;box-shadow:none}
+  }

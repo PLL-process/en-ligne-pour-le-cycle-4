@@ -1,0 +1,85 @@
+    <details class="approfondissement ph" id="pont-en-h" style="margin:1rem 0">
+      <summary>🚀 Pour aller plus loin : le pont en H</summary>
+      <p class="ph-hp"><b>Hors programme de cycle 4</b> : rien ici n'est évalué, rien n'est obligatoire. C'est pour comprendre ce que fait le « pont en H » du cas ③.</p>
+
+      <h4>L'idée en cinq phrases</h4>
+      <ol class="ph-idee">
+        <li><b>Un moteur tourne dans le sens où le courant le traverse.</b> Si le courant entre par l'autre borne, il tourne dans l'autre sens.</li>
+        <li><b>Un pont en H, ce sont 4 interrupteurs autour du moteur,</b> dessinés comme un H : le moteur est la barre du milieu. En haut, <b>A</b> (gauche) et <b>B</b> (droite), reliés au +. En bas, <b>C</b> (gauche) et <b>D</b> (droite), reliés au −.</li>
+        <li><b>A et D fermés :</b> le courant va du + vers le −, en traversant le moteur de gauche à droite. <b>B et C fermés :</b> il le traverse de droite à gauche, donc le moteur tourne dans l'autre sens.</li>
+        <li><b>Un relais simple ne suffit pas pour inverser :</b> c'est un seul interrupteur, il laisse passer le courant ou le coupe, <b>toujours dans le même sens</b>. Le moteur tourne ou s'arrête, mais il ne repart jamais en arrière. Pour inverser, il faut pouvoir changer le sens du courant : c'est le rôle des 4 interrupteurs.</li>
+        <li><b>Attention au court-circuit :</b> si les deux interrupteurs d'un même côté sont fermés (A et C, ou B et D), le courant va du + au − sans traverser le moteur. L'intensité devient énorme, les fils chauffent, la protection saute. Un vrai pont en H l'empêche ; dans le simulateur, tu peux le provoquer pour le voir.</li>
+      </ol>
+
+      <h4>À toi de jouer</h4>
+      <div class="assoc">
+        <label for="ph_pred">Avant de tester (facultatif) : à ton avis, si je ferme A et D, le moteur…</label>
+        <select id="ph_pred">
+          <option value="">— choisir —</option>
+          <option value="sens1">tourne dans le sens 1 (sens des aiguilles d'une montre)</option>
+          <option value="sens2">tourne dans le sens 2 (sens inverse des aiguilles d'une montre)</option>
+          <option value="arret">ne tourne pas</option>
+          <option value="nsp">je ne sais pas encore</option>
+        </select>
+      </div>
+      <p class="ph-conseil">Ferme ou ouvre les interrupteurs avec les boutons. Le dessin s'allume, et <b>tout ce qui bouge est aussi écrit</b> dans la phrase sous le dessin. Essaie aussi de fermer deux interrupteurs du même côté : tu ne risques rien, c'est un simulateur.</p>
+
+      <div class="ph-sim" id="ph_sim">
+        <svg class="ph-svg" id="ph_svg" viewBox="0 0 600 360" role="img" aria-labelledby="ph_t ph_d" focusable="false">
+          <title id="ph_t">Simulateur du pont en H</title>
+          <desc id="ph_d">Un moteur au centre, quatre interrupteurs autour de lui dessinés en forme de H : A en haut à gauche, B en haut à droite, C en bas à gauche, D en bas à droite. Le pôle plus est en haut, le pôle moins en bas. Ce que montre le dessin est écrit dans la phrase placée sous lui.</desc>
+          <rect class="ph-fond" x="0" y="0" width="600" height="360" rx="14"/>
+          <!-- rails -->
+          <path class="ph-w" id="ph_t0" d="M150 40 H200"/><path class="ph-w" id="ph_t1" d="M200 40 H400"/>
+          <path class="ph-w" id="ph_b0" d="M150 320 H200"/><path class="ph-w" id="ph_b1" d="M200 320 H400"/>
+          <text class="ph-pole" x="120" y="48" text-anchor="middle">+</text>
+          <text class="ph-pole" x="120" y="328" text-anchor="middle">−</text>
+          <!-- côté gauche : A (haut), C (bas) -->
+          <path class="ph-w" id="ph_L1" d="M200 40 V110"/>
+          <path class="ph-w" id="ph_L2" d="M200 150 V180"/>
+          <path class="ph-w" id="ph_L3" d="M200 180 V210"/>
+          <path class="ph-w" id="ph_L4" d="M200 250 V320"/>
+          <!-- côté droit : B (haut), D (bas) -->
+          <path class="ph-w" id="ph_R1" d="M400 40 V110"/>
+          <path class="ph-w" id="ph_R2" d="M400 150 V180"/>
+          <path class="ph-w" id="ph_R3" d="M400 180 V210"/>
+          <path class="ph-w" id="ph_R4" d="M400 250 V320"/>
+          <!-- fils du moteur -->
+          <path class="ph-w" id="ph_ML" d="M200 180 H252"/><path class="ph-w" id="ph_MR" d="M348 180 H400"/>
+          <!-- interrupteurs : fermé = trait droit, ouvert = trait penché -->
+          <g class="ph-swg" id="ph_swA" aria-hidden="true"><path class="ph-lev" d="M200 150 L222 118"/><circle class="ph-pt" cx="200" cy="110" r="4"/><circle class="ph-pt" cx="200" cy="150" r="4"/></g>
+          <g class="ph-swg" id="ph_swB" aria-hidden="true"><path class="ph-lev" d="M400 150 L422 118"/><circle class="ph-pt" cx="400" cy="110" r="4"/><circle class="ph-pt" cx="400" cy="150" r="4"/></g>
+          <g class="ph-swg" id="ph_swC" aria-hidden="true"><path class="ph-lev" d="M200 250 L222 218"/><circle class="ph-pt" cx="200" cy="210" r="4"/><circle class="ph-pt" cx="200" cy="250" r="4"/></g>
+          <g class="ph-swg" id="ph_swD" aria-hidden="true"><path class="ph-lev" d="M400 250 L422 218"/><circle class="ph-pt" cx="400" cy="210" r="4"/><circle class="ph-pt" cx="400" cy="250" r="4"/></g>
+          <text class="ph-nom" x="170" y="136" text-anchor="middle">A</text>
+          <text class="ph-nom" x="430" y="136" text-anchor="middle">B</text>
+          <text class="ph-nom" x="170" y="236" text-anchor="middle">C</text>
+          <text class="ph-nom" x="430" y="236" text-anchor="middle">D</text>
+          <!-- moteur -->
+          <circle class="ph-moteur" cx="300" cy="180" r="48"/>
+          <g id="ph_rotor"><path class="ph-pale" d="M300 180 V146"/><path class="ph-pale" d="M300 180 L329 197"/><path class="ph-pale" d="M300 180 L271 197"/></g>
+          <text class="ph-M" x="300" y="186" text-anchor="middle">M</text>
+          <!-- flèches fixes : sens du courant et sens de rotation (visibles aussi sans animation) -->
+          <path class="ph-fl" id="ph_fl1" d="M222 172 L240 180 L222 188 Z"/>
+          <path class="ph-fl" id="ph_fl2" d="M378 172 L360 180 L378 188 Z"/>
+          <path class="ph-arc" id="ph_rot1" d="M262 140 A48 48 0 0 1 338 140" marker-end="url(#ph_pointe)"/>
+          <path class="ph-arc" id="ph_rot2" d="M338 140 A48 48 0 0 0 262 140" marker-end="url(#ph_pointe)"/>
+          <defs><marker id="ph_pointe" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0 L10 5 L0 10 Z" class="ph-pointe"/></marker></defs>
+          <text class="ph-etat" id="ph_etat" x="300" y="346" text-anchor="middle"></text>
+        </svg>
+
+        <div class="ph-cmd" role="group" aria-label="Les quatre interrupteurs">
+          <button type="button" class="ph-sw" data-sw="A" aria-pressed="false"></button>
+          <button type="button" class="ph-sw" data-sw="B" aria-pressed="false"></button>
+          <button type="button" class="ph-sw" data-sw="C" aria-pressed="false"></button>
+          <button type="button" class="ph-sw" data-sw="D" aria-pressed="false"></button>
+          <button type="button" class="ph-sw ph-zero" id="ph_zero">Tout ouvrir</button>
+        </div>
+
+        <p class="ph-dit" id="ph_dit" role="status" aria-live="polite"></p>
+        <p class="ph-comp" id="ph_comp" role="status" aria-live="polite"></p>
+      </div>
+
+      <p class="ph-suite">📝 Pour t'entraîner : <a href="miniquiz_pont_en_h.html">le mini-quiz du pont en H</a> (3 questions, à part du QCM de la séquence).</p>
+      <noscript><p class="ph-hp">Le simulateur demande JavaScript. Sans lui, l'idée en cinq phrases ci-dessus suffit à comprendre.</p></noscript>
+    </details>

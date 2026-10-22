@@ -22506,3 +22506,50 @@ Restent ouverts : `3e_C9.2/generer_les_quatre_pages.py` est en panne sur `main` 
   **`controle_squelette.mjs` reste rouge** sur `3e_C1.5` (rouge sur `main`, corrigé sur la branche locale `fable/bancs-rouges-prealables`, non poussée).
 - Bancs : lampadaire 30 / 30 et QCM 25 / 25, jardin 35 / 35, station énergie 23 / 23, station programmée 135 / 135, voix du vélo 24 / 24,
   Shanghai **28 / 29** (le test n°31, corrigé sur la même branche locale).
+
+## 21/10/2026 — Thème 3 · 3e_C9.2 : le pont en H, expliqué et simulé (« pour aller plus loin », hors programme de cycle 4)
+
+**Demande de Pascal.** Expliquer et simuler le pont en H là où la planche des trois cas le mentionne (cas ③ : « pont en H séparé »). Storyboard présenté avant la construction ;
+décisions de Pascal : **mini-quiz séparé** (le QCM principal reste à 30 questions), **aucun verrou** (« pour aller plus loin » : il ne bloque aucun vérificateur),
+**emplacement** : juste après la planche, dans un volet replié « Pour aller plus loin : le pont en H ».
+
+### Ce que le lot fait
+
+- **Volet** `#pont-en-h` (replié, `approfondissement`, donc masqué en mode essentiel), dans la page tout-en-un et dans la page 1, après la planche. Il dit « Hors programme de
+  cycle 4 », puis l'idée en cinq phrases : un moteur tourne dans le sens où le courant le traverse ; quatre interrupteurs autour du moteur (A, B en haut, C, D en bas) ; A et D
+  d'un côté, B et C de l'autre ; **pourquoi un relais simple ne suffit pas pour inverser** (il laisse passer ou coupe, toujours dans le même sens) ; le court-circuit.
+- **Simulateur SVG fait à la main** (pas d'Anatomy, pas de bibliothèque, hors ligne, aucune requête) : quatre boutons à bascule (clavier : Tab, Espace, Entrée ; cibles ≥ 44 px),
+  les interrupteurs du dessin sont aussi cliquables. Le trajet du courant s'allume ; le moteur tourne dans le sens 1, dans le sens 2 ou s'arrête ; **deux interrupteurs du
+  même côté fermés = court-circuit, affiché en rouge et expliqué, jamais interdit**. Tout ce qui bouge est aussi écrit, dans une phrase qui nomme les interrupteurs fermés
+  (n°119) ; mouvement réduit : aucune animation, trajet en trait plein, flèches fixes ; 390 px : textes du dessin ≥ 10 px à l'écran, pas de débord ; impression lisible.
+- **Prédiction avant résultat** : une liste déroulante facultative (« si je ferme A et D, le moteur… »), enregistrée avec le reste du travail, comparée au résultat quand l'élève
+  ferme A et D. Traces `window.__exp.pontH` (avant, arrière, court-circuit) **enregistrées, jamais exigées**.
+- **Mini-quiz** `miniquiz_pont_en_h.html` : 3 questions de 4 propositions (changer le sens, le relais simple, le court-circuit), chaque correction explique aussi pourquoi les
+  autres réponses ne vont pas ; sans note, rien d'enregistré. Le QCM principal n'est pas touché.
+- **Lexique** : `vocabulaire_3e_C9.2.json` — pont en H, court-circuit, relais, préactionneur, transistor, chacun avec sa source (Larousse en ligne, Wikipédia), lue avant d'être citée.
+- **Sources de la page** : `_generation/pont_en_h/` (`pont_en_h.html`, `.css`, `.js`) ; `inserer.py` les pose entre des marqueurs, à l'identique, dans les deux pages (le générateur des
+  quatre pages est en panne sur `main` : elles se maintiennent à la main) ; relancé, il redonne les pages à l'octet près.
+
+### Ce qui a été changé dans un outil commun
+
+`_outils/generer_lexique.py` ramenait l'élève vers la **première** page `sequence*.html` : pour 3e_C9.2, la page 1 découpée, qui n'a pas d'onglets et donc pas de panneau `#s1`
+où ranger le vocabulaire des séances (refus : « n'a pas de panneau #s1 »). Il préfère maintenant la première page qui porte une barre d'onglets, et garde la première page sinon.
+Banc : `tests_generer_lexique.py` 29 / 29 (un cas ajouté). Le lexique de 3e_C9.2 renvoie désormais à la page tout-en-un.
+Constat au passage : régénérer tous les lexiques du thème 2 modifie ceux de 3e_C4.1, 4e_C4.1 et 5e_C4.1 — leurs QCM ont changé avec la #486 sans que les lexiques suivent ; **non touchés ici**.
+
+### À RELIRE PAR PASCAL
+
+1. L'explication en cinq phrases et les phrases du simulateur (états : arrêt, un seul interrupteur, deux du même pôle, sens 1, sens 2, court-circuit).
+2. La convention « sens 1 = sens des aiguilles d'une montre » (A et D) et « sens 2 = sens inverse » (B et C), propre au simulateur.
+3. Les définitions du lexique et leurs sources — « préactionneur » s'appuie sur l'article Wikipédia « Distributeur (automatisme) », faute d'une source plus directe.
+
+### Ce qui a vraiment tourné
+
+- `tests_pont_en_h.mjs` (nouveau) **37 / 37** : le volet existe, replié, après la planche, dans les deux pages ; **les 16 combinaisons d'interrupteurs** donnent l'état attendu
+  (comparées à un calcul de connexité fait à part dans le banc) ; chaque état est dit en texte ; aucune trace à l'ouverture ; clavier ; mouvement réduit ; impression ; 390 px
+  (pas de débord, textes ≥ 10 px, cibles ≥ 44 px) ; prédiction enregistrée et comparée ; zéro requête réseau ; mini-quiz.
+- Premier passage : **5 contrôles rouges, tous de mon fait**, corrigés — le fragment `pont_en_h.html` était pris pour une page (renommé `.fragment`), `window.__exp.pontH` était créé
+  à l'ouverture (règle n°226 : créé au premier geste), la liste déroulante de prédiction et un lien du mini-quiz étaient illisibles à l'impression.
+- Contrôles du dépôt : les 24 contrôles Python verts (dont n°309), contraste, impression, verrous, hors ligne verts ; `3e_C9.2` **135 / 135** ; `tests_generer_lexique.py` 29 / 29 ;
+  `verifier_chaines_energie.py` 54 / 54 ; voix du vélo 24 / 24.
+- Restent rouges, déjà rouges sur `main` : `controle_squelette.mjs` (3e_C1.5) et le test n°31 de 5e_C3.1 (28 / 29) — corrigés sur `fable/bancs-rouges-prealables`, non poussée.

@@ -151,3 +151,13 @@ Explorateur Windows, sans aucune retouche (n°127) :
 `Images/chaine_info_energie_station.svg` : schéma fonctionnel corrigé, production originale CC0. Fonctions dans les blocs, composants en dessous, formes d’énergie sur les flèches ; « Énergie chimique stockée » sous les batteries. Les descriptions accessibles suivent le dessin.
 
 Génération déterministe : `python _outils/regenerer_chaines_energie.py` depuis la racine. Source draw.io modifiable dans `_generation/chaines_energie/` (Book Train : `fichiers_drawio/`). Le SVG contient aussi cette source et utilise des textes SVG natifs, sans ressource distante.
+
+## Le pont en H — « pour aller plus loin » (hors programme de cycle 4)
+
+Volet replié « Pour aller plus loin : le pont en H », juste après la planche des trois cas, dans la page tout-en-un et dans la page 1.
+
+- **Simulateur** : un SVG écrit **à la main**, dans la page (aucune image, aucun fichier, aucune bibliothèque, aucune ressource distante). Original, CC0 comme le reste du lot.
+  Sources de la page : `_generation/pont_en_h/` (`pont_en_h.fragment`, `.css`, `.js`) ; `inserer.py` les pose entre les marqueurs « pont_en_h » des deux pages.
+- **Mini-quiz** : `miniquiz_pont_en_h.html` (3 questions, à part du QCM de la séquence, qui reste à 30), original, CC0.
+- **Vocabulaire** : `vocabulaire_3e_C9.2.json` — pont en H, court-circuit, relais, préactionneur, transistor ; chaque définition porte sa source
+  (Larousse en ligne, Wikipédia), lue avant d'être citée. Il alimente `lexique_3e_C9.2.html`.
