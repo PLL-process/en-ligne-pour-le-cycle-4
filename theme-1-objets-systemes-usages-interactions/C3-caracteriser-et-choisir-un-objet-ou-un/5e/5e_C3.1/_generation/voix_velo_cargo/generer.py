@@ -4,6 +4,7 @@ neuronale hors ligne (Piper), jamais une voix humaine enregistrée.
 
     python3 generer.py              # lit phrases.json et voix.json, écrit ../../Audio/velo-cargo_scene1…6 (.ogg et .mp3)
     python3 generer.py --verifier   # vérifie seulement que les phrases dites sont celles de la séquence (rien n'est écrit)
+    python3 generer.py --scene 6    # nouvelle prise de la seule scène 6, les autres fichiers restent inchangés
 
 CE QUE LE SCRIPT FAIT
   1. Compare chaque phrase de phrases.json au tableau SCENES de la séquence, mot pour mot (balises et espaces
@@ -21,18 +22,19 @@ CE QU'IL FAUT SUR LE POSTE (rien de tout cela n'est dans le dépôt)
 Ne jamais copier Piper, espeak-ng ni le modèle dans le dépôt : le moteur est sous GPL-3, le modèle est une donnée à part.
 Licence de la voix et attribution : voix.json et SOURCES_MEDIAS.md.
 
-AVERTISSEMENT — TOUTE RÉGÉNÉRATION EXIGE UNE NOUVELLE ÉCOUTE DE PASCAL. Les fichiers de Audio/ sont des prises validées à
-l'oreille (scènes 2 et 5 : première écoute ; scènes 1, 3, 4, 6 : troisième écoute, avec des phonèmes corrigés à la main, voir
-voix.json, clé « prises_validees »). Ce script lit « dit » (le texte affiché) et ne reprend PAS ces corrections : ses prises
-auraient les liaisons robotiques que Pascal a refusées, et même avec elles Piper tirerait un autre bruit. Ne jamais remplacer un
-fichier de Audio/ par une sortie de ce script sans faire réécouter les six scènes.
+AVERTISSEMENT — TOUTE RÉGÉNÉRATION EXIGE UNE NOUVELLE ÉCOUTE DE PASCAL. Les six fichiers de Audio/ sont des prises validées à l'oreille
+(scène 6 : narration du 21/10/2026, écoutée et validée le 21/10/2026 ; voir voix.json « prises_validees »). Ce script lit « dit » (le texte
+affiché) et ne reprend pas les corrections phonétiques manuelles des scènes 1, 3, 4 et 6 anciennes. Ne pas qualifier une prise de
+« validée à l'oreille » sans écoute humaine ; actualiser sa trace dans voix.json après génération.
 
 ATTENTION : ce n'est PAS reproductible à l'octet. Piper tire du bruit à chaque prise (noise_scale, noise_w_scale) et le
 conteneur Ogg porte un numéro de flux aléatoire : deux générations de la même phrase donnent deux prises un peu différentes
 (rythme et intonation voisins). Les fichiers de Audio/ sont donc LA référence : ne régénérer que si une phrase change, et
-alors régénérer les six, pour qu'elles gardent le même grain.
+alors utiliser --scene N pour conserver les autres prises validées. Le même modèle et les mêmes réglages sont conservés.
+Une prise nouvellement produite est à écouter ; sa génération ne constitue pas une validation à l'oreille.
 """
 import json
+import argparse
 import os
 import pathlib
 import re
@@ -94,10 +96,14 @@ def modele(voix, py):
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Voix du vélo-cargo : vérifier les textes ou produire une prise à écouter.")
+    parser.add_argument("--verifier", action="store_true")
+    parser.add_argument("--scene", type=int, choices=range(1, 7), help="Ne régénérer que cette scène.")
+    args = parser.parse_args()
     phrases = json.loads((ICI / "phrases.json").read_text(encoding="utf-8"))["phrases"]
     voix = json.loads((ICI / "voix.json").read_text(encoding="utf-8"))
     verifier(phrases)
-    if "--verifier" in sys.argv:
+    if args.verifier:
         return
     print("ATTENTION : toute régénération exige une nouvelle écoute de Pascal (prises validées à l'oreille, voir voix.json « prises_validees »).")
     py = piper_python()
@@ -110,6 +116,8 @@ def main():
              "loudnorm=I=-16:TP=-1.5:LRA=11")
     with tempfile.TemporaryDirectory() as tmp:
         for p in phrases:
+            if args.scene is not None and p["n"] != args.scene:
+                continue
             wav = pathlib.Path(tmp) / ("s%d.wav" % p["n"])
             subprocess.run([py, "-m", "piper", "-m", str(onnx), "-f", str(wav), "--length-scale", str(r["length_scale"]),
                             "--noise-scale", str(r["noise_scale"]), "--noise-w-scale", str(r["noise_w_scale"])],
