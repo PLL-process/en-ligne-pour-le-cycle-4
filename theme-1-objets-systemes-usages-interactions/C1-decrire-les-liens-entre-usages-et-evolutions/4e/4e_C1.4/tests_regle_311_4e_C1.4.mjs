@@ -11,4 +11,5 @@ await lancerBanc311({
   ancreS1: 'bloc1-risques',
   ancreSN: 'bloc5-traces',
   panneauSN: 's3',
+  titreDansVolet: true,
 });

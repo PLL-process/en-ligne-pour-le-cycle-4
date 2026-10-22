@@ -315,8 +315,12 @@
     }
 
     /* RESPONSIVE */
+    .sb-break{display:none}
     @media (max-width: 480px) {
       .container { padding: 0 8px; }
+      /* n°311 : Recalculer / Enregistrer / PDF tiennent sur une seule ligne */
+      .sb-break{display:block;flex-basis:100%;height:0}
+      .scorebar .btn{width:auto;flex:1 1 0;min-width:0;padding:8px 4px;font-size:.82rem;white-space:nowrap}
       .panel { padding: 10px; margin-bottom: 12px; }
       .scorebar-inner { flex-direction: column; gap: 6px; text-align: center; }
       .score-pill { flex: none; min-width: auto; }
@@ -552,6 +556,7 @@
 
       <span class="score-pill">⏱️ <span id="chrono">00:00</span></span>
       <span class="score-pill">🏁 <strong id="scoreTotal">0</strong>/<strong id="scoreMax">69</strong></span>
+      <span class="sb-break" aria-hidden="true"></span>
       <button class="btn" id="btnRecalc">🔄 Recalculer</button>
       <button class="btn" id="btnSave">💾 Enregistrer</button>
       <button class="btn" id="btnPDF">📄 PDF</button>
@@ -561,17 +566,15 @@
 
 <!-- INTRO : terminal + musique -->
 <div class="container">
-  <div class="section panel">
-    <h1>💻 Bienvenue dans la cybersécurité — Séquence 4e 🔐</h1>
 <div class="toolbar">
   <button class="btn-essentiel" id="btnEssentiel" type="button" aria-pressed="false">🎯 Mode essentiel : OFF</button>
 </div>
-  </div>
 </div>
 <details class="rappel-ouverture" id="ouverture" open>
 <summary>📖 Rappel : la situation et ton hypothèse</summary>
 <div class="container">
   <div class="section panel">
+    <h1>💻 Bienvenue dans la cybersécurité — Séquence 4e 🔐</h1>
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
   <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
   <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>

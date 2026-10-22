@@ -25,8 +25,8 @@ const INIT = () => { window.__vis = (e) => !!e && e.checkVisibility({ contentVis
  * @param {string} o.ancreS1   id d'un élément de la séance 1 (ou de l'ouverture)
  * @param {string} o.ancreSN   id d'un élément d'une séance 2 ou suivante
  * @param {string} o.panneauSN id du panneau qui contient ancreSN (s2, s3…)
+ * @param {boolean} [o.titreDansVolet] la carte du titre (h1) est dans le volet : masquée dès la séance 2
  * @param {string} [o.boutonSauvegarde] sélecteur du bouton à cliquer avant de recharger, si la page n'enregistre pas toute seule
- * @param {number} [o.debordPreexistant] px de défilement horizontal déjà présents avant la règle (jamais plus)
  */
 export async function lancerBanc311(o) {
   const ia = process.argv.indexOf('--captures');
@@ -80,8 +80,8 @@ export async function lancerBanc311(o) {
       e = await etat(p);
       t(e.actif === id && !e.open && e.volet && e.summaryVisible && e.h2Visibles === 0,
         `${nom} px : séance ${lib} (${id}) = volet « Rappel » replié, ouverture masquée`);
-      t(e.titre && e.toolbar && e.mission !== false && !e.badges, `${nom} px : séance ${lib} = titre${e.mission === null ? '' : ', mission'} et barre d'outils visibles, badges masqués`);
-      t(e.debord <= (nom === '390' ? (o.debordPreexistant || 0) : 0), `${nom} px : séance ${lib} sans défilement horizontal nouveau (${e.debord} px${o.debordPreexistant && nom === '390' ? ', dont ' + o.debordPreexistant + ' déjà là avant la règle' : ''})`);
+      t((o.titreDansVolet ? !e.titre : e.titre) && e.toolbar && e.mission !== false && !e.badges, `${nom} px : séance ${lib} = ${o.titreDansVolet ? 'carte de titre repliée dans le volet' : 'titre' + (e.mission === null ? '' : ', mission')}, barre d'outils visible, badges masqués`);
+      t(e.debord <= 0, `${nom} px : séance ${lib} sans défilement horizontal (${e.debord})`);
       if (OUT && lib === '2') { await p.evaluate(() => scrollTo(0, 0)); await p.waitForTimeout(250); await p.screenshot({ path: path.join(OUT, `${o.code}-seance2-${nom}.png`) }); }
     }
     await p.click(onglet(S2)); await p.evaluate(() => scrollTo(0, 0));

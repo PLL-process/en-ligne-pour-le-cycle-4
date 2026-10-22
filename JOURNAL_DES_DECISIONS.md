@@ -22601,14 +22601,15 @@ puis le volet `details.rappel-ouverture` qui enveloppe badges, note d'enregistre
 **3e_C1.5** et **4e_C1.4**, dont l'ouverture était éparpillée et qui ont reçu un traitement sur mesure (leur propre script d'onglets garde la dernière séance et la rétablit au chargement : le volet suit).
 5e_C3.1 était le pilote (#490). Pages sans onglets, `3e_C9.2` (thème 3) et `C1.3-C1.4_SI` : non concernées ici.
 
-**3e_C1.5 et 4e_C1.4 : ce qui est particulier.** Ni l'une ni l'autre n'a de mission en une phrase sous le titre (3e_C1.5 : le titre seul ; 4e_C1.4 : le titre dans un encadré, avec la barre d'outils) : la règle n'en invente pas, à rédiger par Pascal s'il la veut.
-Dans 4e_C1.4, le titre est dans son propre encadré, le volet rouvre ensuite le même conteneur : deux encadrés au lieu d'un. Dans 3e_C1.5, le bouton « Séance 2 — Métiers et économie › » de la séance 1 était **hors de son panneau**
+**3e_C1.5 et 4e_C1.4 : ce qui est particulier.** Ni l'une ni l'autre n'a de mission en une phrase sous le titre : la règle n'en invente pas, à rédiger par Pascal s'il la veut.
+Dans 4e_C1.4, la carte « Bienvenue dans la cybersécurité — Séquence 4e » entre **dans le volet** (sur la demande de Pascal) : à partir de la séance 2, le haut de page est la barre de score (qui porte déjà « Séquence 4e — Cybersécurité »), la barre d'outils, puis le volet ;
+à 390 px, les boutons Recalculer / Enregistrer / PDF de la barre de score tiennent sur une seule ligne. Dans 3e_C1.5, le bouton « Séance 2 — Métiers et économie › » de la séance 1 était **hors de son panneau**
 (balises déséquilibrées, signalé D5 par le contrôle avant ce lot) ; le volet rétablit l'imbrication et le bouton rentre dans le panneau s1. C'est un effet de bord heureux, à connaître : `fable/bancs-rouges-prealables` corrige le même défaut autrement.
 
 **Bancs.** Un banc par page, `tests_regle_311_<code>.mjs`, qui appellent le banc commun `theme-1-…/banc_regle_311.mjs` (modèle : le pilote). 33 tests par page : séance 1 complète, séance 2 et dernière séance repliées (1280 et 390 px, titre, barre d'outils,
 badges masqués, pas de débord), clavier (Entrée ouvre, Espace referme), champ de l'ouverture conservé, retour à la séance 1, rechargement (le volet suit la séance rétablie), sauvegarde, liens directs vers une ancre de séance et de séance 1,
 sans JavaScript, impression (`beforeprint` / `afterprint`), zéro erreur JS. **11 / 11 pages, 33 / 33.**
-Deux écarts **déjà présents avant la règle** sont portés au banc, pas cachés : 5e_C1.2 déborde de 6 px à 390 px en séance 2 (avec ou sans volet ; `debordPreexistant: 6`), et 3e_C1.5 n'enregistre qu'au bouton « Sauvegarder mon travail » (le banc le clique).
+Deux défauts **déjà présents avant la règle** : 5e_C1.2 débordait de 6 px à 390 px en séance 2 — un nom de fichier long (`releves_essai_college_….csv`) ne se coupait pas ; corrigé sur la page (`code{overflow-wrap:anywhere}`), le banc exige 0 px ; et 3e_C1.5 n'enregistre qu'au bouton « Sauvegarder mon travail » (le banc le clique, décision de Pascal : on garde).
 
 **Contrôles.** `controle_squelette` **vert sur tout le thème 1** (3e_C1.5 n'est plus refusée : son D5 disparaît avec le volet, voir plus haut), D6 : 0 ; impression, contraste des liens, verrous, hors ligne verts.
 Bancs Python des pages : 3e_C1.1 50/50, 4e_C1.1 42/42, 5e_C1.1 43/43, 5e_C1.2 36/36 ; 3e_C2.1 53/54, 4e_C2.1 59/60, 5e_C2.1 46/47, 3e_C3.1 29/30, 4e_C3.1 27/28 — **le seul échec, identique avant la règle (vérifié sur les pages de `main`), est le n°31**

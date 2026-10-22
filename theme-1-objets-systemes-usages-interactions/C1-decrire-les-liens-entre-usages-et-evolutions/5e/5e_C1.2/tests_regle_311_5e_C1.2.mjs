@@ -11,5 +11,4 @@ await lancerBanc311({
   ancreS1: 'be_1__1',
   ancreSN: 'a3_1__1',
   panneauSN: 's3',
-  debordPreexistant: 6,
 });
