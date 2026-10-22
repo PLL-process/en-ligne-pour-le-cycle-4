@@ -18893,7 +18893,7 @@ avant la prochaine vague.
 ## 22/09/2026 — Règle d'or n°306, « la clé de voûte » : l'architecture d'une séquence se vérifie dans ce que voit l'élève (_outils)
 
 > **Règle d'or n°306.** Une séquence suit un squelette unique, qui réunit les n°301, 302 et 304.
-> **Ouverture**, visible dès le premier écran : 🔄 Avant de commencer : ce que je vérifie → situation →
+> **Ouverture**, visible dès le premier écran *(à la séance 1 ; repliée dans le volet « 📖 Rappel » à partir de la séance 2, jamais supprimée — règle n°311, 22/10/2026)* : 🔄 Avant de commencer : ce que je vérifie → situation →
 > problématique → hypothèse de départ → référentiel « Je serai capable de… » → billet d'entrée.
 > **Séances** : chacune porte ses activités. **Clôture**, visible **seulement à la dernière séance** :
 > Bonus (champs et corrigé) → Bilan (retour à l'hypothèse, **métacognition**, « Je me
@@ -22558,3 +22558,38 @@ La correction de `_outils/generer_lexique.py` (le retour du lexique vise la prem
 **Ce qui change.** `page_de_retour` préfère la première page qui porte une barre d'onglets (`role="tablist"`) et garde la première page à défaut, comme avant. Banc `tests_generer_lexique.py` : un cas ajouté (29 / 29).
 
 **Pourquoi une branche à part.** La garde-périmètre a refusé la #487 : `_outils/` est du périmètre du thème 2. Règle retenue : **tout changement dans `_outils/` passe par une branche `fable/theme-2/…` ou par une règle transversale `fable/…`**, jamais par une branche d'un autre thème. Les lexiques de 3e_C4.1, 4e_C4.1 et 5e_C4.1, en retard sur les QCM de la #486, seront régénérés dans un lot à part.
+
+## 22/10/2026 — Règle d'or n°311 : à partir de la séance 2, l'élève voit sa séance, pas le décor (transversale, `_outils`)
+
+> **Règle d'or n°311 — À partir de la séance 2, l'élève voit sa séance, pas le décor.**
+> **Séance 1** : l'ouverture complète (titre, situation, problématique, hypothèse, référentiel, matériel, badges…).
+> **À partir de la séance 2** : le titre de la séquence sur une ligne, la mission en une phrase, la barre d'outils, puis un volet replié
+> **« 📖 Rappel : la situation et ton hypothèse »** qui contient tous les blocs d'ouverture et les badges, puis la séance.
+> Le bilan reste à la fin de la dernière séance et rappelle l'hypothèse. **L'ouverture est repliée, jamais supprimée.**
+
+**Contraintes tenues.** Sans JavaScript et à l'impression, tout s'affiche (le volet est ouvert, son bouton masqué ; `beforeprint` ouvre, `afterprint` rétablit). Un lien direct vers une ancre
+(`#herschel-pas-a-pas`, `#velo-cargo-pas-a-pas`, `#pont-en-h`…) ouvre la bonne séance, sans l'ouverture. Sauvegarde, verrous et navigation entre séances sont inchangés (les champs restent dans la
+page, repliés). Le bouton du volet est un `<summary>` : clavier (Tab, Entrée, Espace), cible de 44 px, 390 px sans débord.
+
+**Texte de la n°306 mis à jour.** *L'ouverture est visible dès le premier écran* devient *l'ouverture est visible à la séance 1, repliée dans le volet « Rappel » à partir de la séance 2, jamais supprimée*.
+Le reste du squelette (séances, clôture à la dernière séance, ordre Bonus → Bilan → QCM) ne change pas. D4 (ouverture au premier écran) garde son sens : le premier écran est la séance 1.
+
+**`controle_squelette.mjs` — défaut D6.** Sur une page à onglets qui porte `details.rappel-ouverture` : (a) à la séance 1, le volet est ouvert et sans bouton ; (b) à chaque séance suivante,
+aucun bloc d'ouverture n'est visible hors du volet ; (c) le volet garde un bouton visible. Une page **sans** volet n'est pas refusée : elle est **signalée** (« n°311 non appliquée ») le temps des vagues
+par thème, puis D6 deviendra obligatoire. `details.rappel-ouverture` entre dans les exceptions de D5 (il enveloppe l'ouverture).
+
+**La visibilité se juge avec `checkVisibility()`.** Dans Chromium, le contenu d'un `<details>` fermé garde son `offsetParent` et ses rectangles : l'ancien `vis()` l'aurait dit visible, et le contrôle
+aurait accepté un volet qui ne replie rien. `vis()` utilise désormais `checkVisibility({contentVisibilityAuto:true, checkVisibilityCSS:true})` (repli sur l'ancienne mesure si la méthode manque).
+Comparaison avant / après sur les 60 séquences du dépôt : même résultat (un seul refus, 3e_C1.5 D5, déjà rouge sur `main`).
+
+**Le pilote : `5e_C3.1`** (`sequence_5e_C3.1-C3.4_shanghai.html`). La barre d'outils est remontée au-dessus des badges (à la séance 1, elle précède donc les badges, alors qu'elle les suivait).
+Banc `tests_regle_311_5e_C3.1.mjs` : **26 / 26**, à 1280 et 390 px (séance 1 complète, séance 3 repliée, clavier, hypothèse conservée, séance 2, retour à la séance 1, sauvegarde après rechargement, liens directs,
+sans JavaScript, impression, zéro erreur JS). Captures validées par Pascal.
+
+**Ce que la règle ne fait pas.** Les pages d'une séquence découpée en plusieurs fichiers (3e_C9.2, pages 2 à 4) restent inchangées ; `C1.3-C1.4_SI` est traitée à part, en dernier ;
+les pages sans onglets ne sont pas concernées. Pas de générateur pour ces pages : un banc par page, sur le modèle du pilote.
+
+**Suite.** Une vague par thème (`fable/theme-1/regle-311-vague`, puis theme-2, puis theme-3), chacune depuis le `main` du jour, avec deux captures montrées avant de pousser.
+
+**Ce qui a vraiment tourné.** `tests_controle_squelette.mjs` **31 / 31** (6 cas D6 ajoutés : volet replié → passe ; jamais replié, sans bouton, déjà replié à la séance 1 → refusé ; page sans volet → signalée ;
+volet après la barre d'onglets → exception de D5) ; banc du pilote 26 / 26.
