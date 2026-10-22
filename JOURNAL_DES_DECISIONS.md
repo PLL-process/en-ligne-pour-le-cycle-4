@@ -22526,7 +22526,7 @@ décisions de Pascal : **mini-quiz séparé** (le QCM principal reste à 30 ques
   ferme A et D. Traces `window.__exp.pontH` (avant, arrière, court-circuit) **enregistrées, jamais exigées**.
 - **Mini-quiz** `miniquiz_pont_en_h.html` : 3 questions de 4 propositions (changer le sens, le relais simple, le court-circuit), chaque correction explique aussi pourquoi les
   autres réponses ne vont pas ; sans note, rien d'enregistré. Le QCM principal n'est pas touché.
-- **Lexique** : `vocabulaire_3e_C9.2.json` — pont en H, court-circuit, relais, préactionneur, transistor, chacun avec sa source (Larousse en ligne, Wikipédia), lue avant d'être citée.
+- **Lexique** : `vocabulaire_3e_C9.2.json` — pont en H, court-circuit, relais, préactionneur, transistor, chacun avec sa source (Larousse en ligne, Wikipédia, Éduscol STI), lue avant d'être citée, sauf la ressource Éduscol (voir ci-dessous).
 - **Sources de la page** : `_generation/pont_en_h/` (`pont_en_h.html`, `.css`, `.js`) ; `inserer.py` les pose entre des marqueurs, à l'identique, dans les deux pages (le générateur des
   quatre pages est en panne sur `main` : elles se maintiennent à la main) ; relancé, il redonne les pages à l'octet près.
 
@@ -22541,7 +22541,7 @@ Constat au passage : régénérer tous les lexiques du thème 2 modifie ceux de 
 
 1. L'explication en cinq phrases et les phrases du simulateur (états : arrêt, un seul interrupteur, deux du même pôle, sens 1, sens 2, court-circuit).
 2. La convention « sens 1 = sens des aiguilles d'une montre » (A et D) et « sens 2 = sens inverse » (B et C), propre au simulateur.
-3. Les définitions du lexique et leurs sources — « préactionneur » s'appuie sur l'article Wikipédia « Distributeur (automatisme) », faute d'une source plus directe.
+3. Les définitions du lexique et leurs sources. **Décision de Pascal** : « préactionneur » ne s'appuie plus sur Wikipédia mais cite la ressource Éduscol STI 18030 (fonction DISTRIBUER), **sans guillemets ni phrase attribuée**. La phrase « le préactionneur distribue l'énergie à l'actionneur sur ordre de la partie commande » est une **reformulation de Pascal, pas une citation** d'Éduscol. Limite : `sti.eduscol.education.fr` refusait la connexion (ECONNREFUSED) le 2026-10-22, le document n'a donc pas pu être rouvert ; son titre vient de l'intitulé relevé par la recherche et l'adresse de son PDF. À revérifier quand le site répond.
 
 ### Ce qui a vraiment tourné
 

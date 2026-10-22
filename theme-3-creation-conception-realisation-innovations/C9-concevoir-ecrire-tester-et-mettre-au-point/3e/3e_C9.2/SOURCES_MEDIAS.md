@@ -160,4 +160,4 @@ Volet replié « Pour aller plus loin : le pont en H », juste après la planche
   Sources de la page : `_generation/pont_en_h/` (`pont_en_h.fragment`, `.css`, `.js`) ; `inserer.py` les pose entre les marqueurs « pont_en_h » des deux pages.
 - **Mini-quiz** : `miniquiz_pont_en_h.html` (3 questions, à part du QCM de la séquence, qui reste à 30), original, CC0.
 - **Vocabulaire** : `vocabulaire_3e_C9.2.json` — pont en H, court-circuit, relais, préactionneur, transistor ; chaque définition porte sa source
-  (Larousse en ligne, Wikipédia), lue avant d'être citée. Il alimente `lexique_3e_C9.2.html`.
+  (Larousse en ligne, Wikipédia, Éduscol STI), lue avant d'être citée. Il alimente `lexique_3e_C9.2.html`.
