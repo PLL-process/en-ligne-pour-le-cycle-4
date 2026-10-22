@@ -22550,3 +22550,11 @@ La correction de `_outils/generer_lexique.py` (le retour du lexique vise la prem
 - Contrôles du dépôt : les 24 contrôles Python verts (dont n°309), contraste, impression, verrous, hors ligne verts ; `3e_C9.2` **135 / 135** ; `tests_generer_lexique.py` 29 / 29 (avec la correction de la #488) ;
   `verifier_chaines_energie.py` 54 / 54 ; voix du vélo 24 / 24.
 - Restent rouges, déjà rouges sur `main` : `controle_squelette.mjs` (3e_C1.5) et le test n°31 de 5e_C3.1 (28 / 29) — corrigés sur `fable/bancs-rouges-prealables`, non poussée.
+
+## 22/10/2026 — Thème 2 · outil du lexique : le retour vise la page qui a des onglets
+
+**Pourquoi.** `_outils/generer_lexique.py` ramenait l'élève vers la **première** page `sequence*.html`. Pour 3e_C9.2, séquence découpée en pages reliées, c'est une page sans onglets, donc sans panneau `#s1` où ranger le vocabulaire des séances : refus « n'a pas de panneau #s1 ». Le lot du pont en H (#487) en avait besoin.
+
+**Ce qui change.** `page_de_retour` préfère la première page qui porte une barre d'onglets (`role="tablist"`) et garde la première page à défaut, comme avant. Banc `tests_generer_lexique.py` : un cas ajouté (29 / 29).
+
+**Pourquoi une branche à part.** La garde-périmètre a refusé la #487 : `_outils/` est du périmètre du thème 2. Règle retenue : **tout changement dans `_outils/` passe par une branche `fable/theme-2/…` ou par une règle transversale `fable/…`**, jamais par une branche d'un autre thème. Les lexiques de 3e_C4.1, 4e_C4.1 et 5e_C4.1, en retard sur les QCM de la #486, seront régénérés dans un lot à part.
