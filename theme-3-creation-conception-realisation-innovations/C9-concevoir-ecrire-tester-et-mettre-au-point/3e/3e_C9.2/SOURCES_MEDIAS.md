@@ -145,3 +145,9 @@ Explorateur Windows, sans aucune retouche (n°127) :
 | `Images/geste_vitta_5c_sortir_nouveau_dossier.png` | **Capture d'écran réelle** (règle n°94) | Explorateur de fichiers Windows (fenêtre seule, rétrécie à une ligne), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 5 — Documents : nouveau dossier à renommer | 50 Ko |
 | `Images/geste_vitta_5d_sortir_nom_de_classe.png` | **Capture d'écran réelle** (règle n°94) | Explorateur de fichiers Windows (fenêtre seule, rétrécie à une ligne), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 5 — le nom 3E1 saisi | 48 Ko |
 | `Images/geste_vitta_5e_sortir_resultat.png` | **Capture d'écran réelle** (règle n°94) | Explorateur de fichiers Windows (fenêtre seule, rétrécie à une ligne), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 5 — Documents › 3E1 contient le fichier | 57 Ko |
+
+## Correction des chaînes — 21/10/2026
+
+`Images/chaine_info_energie_station.svg` : schéma fonctionnel corrigé, production originale CC0. Fonctions dans les blocs, composants en dessous, formes d’énergie sur les flèches ; « Énergie chimique stockée » sous les batteries. Les descriptions accessibles suivent le dessin.
+
+Génération déterministe : `python _outils/regenerer_chaines_energie.py` depuis la racine. Source draw.io modifiable dans `_generation/chaines_energie/` (Book Train : `fichiers_drawio/`). Le SVG contient aussi cette source et utilise des textes SVG natifs, sans ressource distante.

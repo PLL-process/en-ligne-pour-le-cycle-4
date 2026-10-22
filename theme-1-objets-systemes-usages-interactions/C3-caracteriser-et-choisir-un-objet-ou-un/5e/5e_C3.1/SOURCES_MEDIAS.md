@@ -84,7 +84,7 @@ de la capture — c'est ce que l'écran affichait, pas un ajout.
 
 | Fichier | Nature | Auteur | Licence | Rôle pédagogique |
 |---|---|---|---|---|
-| `Images/chaine_energie_velo_cargo.svg` | SVG original **engendré** par `_generation/figure_iso_velo_cargo/build.mjs` (vélo-cargo en volume, isométrique, SVG seul, aucune bibliothèque, aucune ressource distante) ; `<title>` et `<desc>` accessibles | Fable, pour ce dépôt, avec le moteur de dessin Anatomy (code MIT) | CC0 1.0 pour le dessin ; MIT pour le code du kit | Le schéma fixe = état final du dessin animé (scène 6) : la batterie, le câble, le moteur dans la roue arrière, la flèche de rotation et les quatre cases de la chaîne d'énergie. Poids : 232,9 Ko (visé : 200, plafond : 300) |
+| `Images/chaine_energie_velo_cargo.svg` | SVG original **engendré** par `_generation/figure_iso_velo_cargo/build.mjs` (vélo-cargo en volume, isométrique, SVG seul, aucune bibliothèque, aucune ressource distante) ; `<title>` et `<desc>` accessibles | Fable, pour ce dépôt, avec le moteur de dessin Anatomy (code MIT) | CC0 1.0 pour le dessin ; MIT pour le code du kit | Le schéma fixe = état final du dessin animé (scène 6) : la batterie, le câble, le moteur dans la roue arrière, la flèche de rotation et les quatre fonctions de la chaîne d'énergie. Poids : 232,9 Ko (visé : 200, plafond : 300) |
 | dessin du bloc `#velo-cargo-pas-a-pas` (dans `sequence_5e_C3.1-C3.4_shanghai.html`, entre les marqueurs `figure_iso_velo_cargo`) | même générateur | idem | idem | Le même vélo, scène par scène, avec une seule pièce éclairée à la fois. Poids du dessin : 226,4 Ko |
 
 **Le code.** Les fichiers `iso-kit.mjs`, `lathe.mjs`, `tube.mjs` et `audit.mjs` de `_generation/figure_iso_velo_cargo/` sont des copies du skill Anatomy
@@ -101,7 +101,7 @@ de la capture — c'est ce que l'écran affichait, pas un ajout.
 3. *La forme* — « De la batterie sort de l'**énergie électrique**. C'est la **forme** de l'énergie : ce qu'elle est, pendant qu'elle voyage. »
 4. *À ton avis ?* — « Le moteur reçoit de l'énergie électrique. À ton avis, quelle forme d'énergie en sort ? »
 5. *Le moteur* — « Le moteur transforme l'énergie électrique en **énergie mécanique** : le mouvement de la roue. Même énergie, autre forme. »
-6. *La chaîne entière* — « Source, puis forme, puis transformation : c'est la **chaîne d'énergie**. Retiens la différence : la batterie est une source, l'électricité est une forme. »
+6. *La chaîne entière* — « La batterie stocke de l’énergie chimique et fournit de l’énergie électrique. Le contrôleur distribue cette énergie au moteur, qui la convertit en énergie mécanique. Dans le moyeu arrière, le moteur entraîne la roue et aide à déplacer le vélo et sa charge. »
 
 **Les captures de comparaison** (avant : dessin plat du 25/09 ; après : dessin isométrique), à 1280 px, dans `_generation/figure_iso_velo_cargo/captures/` : captures du
 navigateur de ce lot, CC0.
@@ -157,3 +157,11 @@ C'est l'application de la règle d'or n°27 : ce qui n'est vrai que chez nous se
 `Segoe UI`, `system-ui`, `-apple-system`, `Arial`. Ce sont les deux premières pages du dépôt à
 n'appeler aucune ressource réseau : elles fonctionnent à l'identique dans un collège au réseau
 filtré.
+
+## Correction des chaînes — 21/10/2026
+
+`Images/chaine_energie_velo_cargo.svg` : schéma fonctionnel corrigé, production originale CC0. Fonctions dans les blocs, composants en dessous, formes d’énergie sur les flèches ; « Énergie chimique stockée » sous les batteries. Les descriptions accessibles suivent le dessin.
+
+Sources du dessin et du bandeau : `_generation/figure_iso_velo_cargo/`. Le contrôleur de puissance est représenté entre la batterie et le moteur du moyeu arrière, avec deux câbles. La scène 6 et le schéma fixe sont issus du même générateur.
+
+La nouvelle narration de la scène 6 utilise la voix Piper `fr_FR-siwis-medium` et les mêmes réglages que les scènes précédentes. Durée MP3 : 14,63 s ; Opus et MP3 de secours fournis. Les scènes 1 à 5 sont conservées à l’octet près. La nouvelle prise est **à écouter** ; l’ancienne trace de validation de la scène 6 est conservée en historique dans `voix.json`, sans attribuer cette validation à la nouvelle prise. Licence et attribution SIWIS/Piper inchangées.

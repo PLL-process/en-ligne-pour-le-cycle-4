@@ -33,3 +33,9 @@ référence distante, chacun porteur d'un `<title>` et d'un `<desc>`.
 
 Aucune photographie de composant réel, aucune capture de catalogue : ce sont des dessins,
 lisibles en niveaux de gris et imprimables.
+
+## Correction des chaînes — 21/10/2026
+
+`Images/chaines_jardin_connecte.svg` : schéma fonctionnel corrigé, production originale CC0. Fonctions dans les blocs, composants en dessous, formes d’énergie sur les flèches ; « Énergie chimique stockée » sous les batteries. Les descriptions accessibles suivent le dessin.
+
+Génération déterministe : `python _outils/regenerer_chaines_energie.py` depuis la racine. Source draw.io modifiable dans `_generation/chaines_energie/` (Book Train : `fichiers_drawio/`). Le SVG contient aussi cette source et utilise des textes SVG natifs, sans ressource distante.

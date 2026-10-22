@@ -19,7 +19,7 @@ const PAGE = join(HERE, "..", "..", "sequence_5e_C3.1-C3.4_shanghai.html");
 const FIXE = join(HERE, "..", "..", "Images", "chaine_energie_velo_cargo.svg");
 
 const W = 820;
-const H = 430;
+const H = 570;
 const CAM_H = 322;
 const DEG = Math.PI / 180;
 
@@ -285,18 +285,32 @@ slabItem("rack", { x: -34, y: -8.5, w: 62, d: 17, r: 2 }, 78, 2, { tone: "mid", 
   put("bat", [18, 6 + end / 2, 87], `<g class="pv-bat">` + S(G.disc(0, end, 1.4, F, P, { steps: 10 }), { tone: "mid" }) + `</g>`, { name: nb, bias: 0.2, shapes: [record(A.disc(F, 0, end, 1.4, { name: nb, owner: "bat" }))] });
 }
 
-// ── Le câble (énergie électrique) : de la prise de la batterie au moyeu moteur ──
+// ── Le contrôleur de puissance, fixé entre la batterie et le moyeu moteur ──
+{
+  const plan = { x: 14, y: 8, w: 8, d: 7, r: 0.8 };
+  const id = R.nameFor("controller.body");
+  const fins = [60, 63, 66].map((z) => Ln(k.sideSeam(plan, z, P, 3), { tone: "mid" })).join("");
+  put("controller", [18, JY, 64], `<g class="pv-controller"><title>Contrôleur de puissance</title>` + S(k.slabOf(plan, 57, 14, P, 3, 0.4), { tone: "hi", inner: fins }) + `</g>`,
+    { name: id, shapes: [record(A.slab(plan, 57, 14, { name: id, owner: "controller" }, 3))] });
+}
+
+// ── Deux câbles : batterie → contrôleur, puis contrôleur → moyeu moteur ──
 const CABLE_R = 0.8;
 const plugPos = [18, JY, 87];
 {
   const id = R.nameFor("cable.plug");
   put("cable", plugPos, `<g class="pv-cable">` + S(G.sphereOf(plugPos, BALL, P, { steps: 14 }), { tone: "hi" }) + `</g>`, { name: id, bias: 0.25, shapes: [record(A.ball(plugPos, BALL, { name: id, owner: "bat" }))] });
-  const pts = [[18, JY, plugPos[2] - BALL], [18, JY, 33], [BALL, JY, 33]];
+  const paths = [
+    [[18, JY, plugPos[2] - BALL], [18, JY, 71]],
+    [[18, JY, 57], [18, JY, 33], [BALL, JY, 33]],
+  ];
+  paths.forEach((pts, segment) => {
   const route = G.fillet(pts, 6, 12, { P, tube: CABLE_R });
   R.route("cable", route, CABLE_R, { owner: "cable", piece: "cable", ride: "cable" });
   tubePieces(route, CABLE_R, P, { maxLength: 14, spacing: 1 }).forEach((part, index) =>
-    put("cable", part.mid, `<g class="pv-cable">` + tubeSvg(part, { tone: "hi" }) + `</g>`, { bias: 0.2, name: `cable:${index}`, shapes: [A.tube(part.points, part.radii)] }),
+    put("cable", part.mid, `<g class="pv-cable">` + tubeSvg(part, { tone: "hi" }) + `</g>`, { bias: 0.2, name: `cable:${segment}:${index}`, shapes: [A.tube(part.points, part.radii)] }),
   );
+  });
 }
 
 // ── Pédalier : bras et pédales (tournent à la scène 5) ──
@@ -468,6 +482,7 @@ const decl = (o2) => Object.entries(o2).map(([n, v]) => `${n}:${v}`).join(";");
 const STATES = {
   bat: { c: COULEUR.source, on: [2, 6], was: [3, 4, 5] },
   cable: { c: COULEUR.elec, on: [3, 6], was: [4, 5] },
+  controller: { c: COULEUR.elec, on: [3, 6], was: [4, 5] },
   motor: { c: COULEUR.moteur, on: [4, 6], was: [5] },
 };
 let css = "";
@@ -489,7 +504,7 @@ css += `@media (prefers-reduced-motion: reduce){.vpp .iso-fill,.vpp .iso-shade,.
 const NEUTRE = { face: "#1c3c72", top: "#3f6db2", s0: "#183466", s1: "#20427c", s2: "#2a5192", s3: "#3561a6", hi: "#e2eafa", mid: "#a9c0e9", lo: "#7593c9", faint: "#4669aa" };
 const TOKENS = `.iso-g{--anatomy-paper:${BG};--anatomy-face:${NEUTRE.face};--anatomy-top:${NEUTRE.top};--anatomy-shade-0:${NEUTRE.s0};--anatomy-shade-1:${NEUTRE.s1};--anatomy-shade-2:${NEUTRE.s2};--anatomy-shade-3:${NEUTRE.s3};--anatomy-hi:${NEUTRE.hi};--anatomy-mid:${NEUTRE.mid};--anatomy-lo:${NEUTRE.lo};--anatomy-faint:${NEUTRE.faint};--anatomy-dot:#c9d6ee;--anatomy-halo:#02081a;--anatomy-halo-opacity:.9;--anatomy-weight:.9px}\n`;
 
-// ── Le bandeau des quatre cases : texte et couleurs inchangés (fichiers voisins) ──
+// ── Quatre fonctions, composants dessous et énergies sur les flèches ──
 const band = readFileSync(join(HERE, "bande_quatre_cases.svg.fragment"), "utf8").replace(/\r\n/g, "\n");
 const bandCss = readFileSync(join(HERE, "bande_quatre_cases.css"), "utf8").replace(/\r\n/g, "\n");
 
@@ -547,7 +562,7 @@ const live = `
 
 // ── Écriture dans la séquence, entre les marqueurs (le reste de la page n'est jamais touché) ──
 const kept = k.ISO_CSS.split("\n").filter((l) => /^\.(iso-fill|iso-shade|iso-top|iso-solid|iso-line|iso-dots|iso-halo|iso-svg|tb-)/.test(l)).join("\n");
-const pageCss = `${kept}\n${TOKENS}${css}`;
+const pageCss = `${kept}\n${TOKENS}${css}\n${bandCss}`;
 const cameraJs = `var CAMERA = ${JSON.stringify(CAM)}, VUE_H = ${H}, CADRE_H = ${CAM_H};`;
 {
   const brut = readFileSync(PAGE, "utf8");
@@ -583,7 +598,7 @@ if (process.argv.includes("--poids")) {
   const sixOnly = css.split("\n").filter((l) => l.includes('data-scene="6"') && !l.includes("@media")).map((l) => l.replace(/\.vpp\[data-scene="[\d"\],.\[a-z=\-\s]*?\](\s+[^,{]+)/g, "$1")).join("\n");
   const fixe = `<svg xmlns="http://www.w3.org/2000/svg" class="iso-svg vpp" data-scene="6" viewBox="0 0 ${W} ${H}" role="img" aria-labelledby="t d" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif">
 <title id="t">La chaîne d'énergie du vélo-cargo</title>
-<desc id="d">Un vélo-cargo vu de côté, en trois dimensions : sous le plateau arrière, la batterie ; un câble la relie au moteur placé au centre de la roue arrière ; une flèche courbe montre que la roue tourne. Sous le dessin, la chaîne d'énergie en quatre cases reliées par des flèches : batterie, énergie électrique, moteur, énergie mécanique.</desc>
+<desc id="d">L’assistance électrique du vélo-cargo : la batterie stocke de l’énergie chimique et fournit de l’énergie électrique au contrôleur de puissance, dessiné entre la batterie et le moteur du moyeu arrière. Le moteur convertit l’énergie électrique en énergie mécanique et entraîne la roue. Le bandeau distingue les fonctions ALIMENTER, DISTRIBUER, CONVERTIR et TRANSMETTRE, les composants en dessous et les formes d’énergie sur les flèches. L’effort du cycliste n’est pas représenté.</desc>
 <style>${TOKENS}${kept}\n${css.split("\n").filter((l) => !l.includes("@media") && !l.includes("vppLueur") && !l.includes("transition")).join("\n")}\n${bandCss}</style>
 <defs><clipPath id="fixeClip"><rect width="${W}" height="${CAM_H}"/></clipPath></defs><rect width="${W}" height="${H}" fill="${BG}"/><g clip-path="url(#fixeClip)"><g transform="translate(${410 - CAM[6][0] * CAM[6][2]} ${CAM[6][3] - CAM[6][1] * CAM[6][2]}) scale(${CAM[6][2]})">${dessin}</g></g>${band}</svg>`;
   writeFileSync(FIXE, fixe);

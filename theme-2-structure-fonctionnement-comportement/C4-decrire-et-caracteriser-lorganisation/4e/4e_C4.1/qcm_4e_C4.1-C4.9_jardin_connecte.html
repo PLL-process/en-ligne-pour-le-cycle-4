@@ -273,14 +273,32 @@
    ne correspondait pas à ce fichier. */
 const QUESTIONS = [
 /* ═══ EN — chaîne d'énergie C4.1-C4.2 (7 q) ═══ */
-{c:"EN",n:"Fonction du panneau",q:"Dans la chaîne d'énergie du jardin, le panneau solaire a pour fonction de…",
- img:{src:"Images/chaines_jardin_connecte.svg",alt:"Les deux chaînes du jardin connecté : énergie et information"},
- o:["STOCKER l'énergie pour la nuit venue","DISTRIBUER l'eau jusque dans les bacs","TRAITER les mesures venues des capteurs","ALIMENTER : la lumière devient courant"],r:3,
- expl:"Le panneau est la porte d'entrée de l'énergie : il capte la lumière et la convertit en électricité. C'est la fonction ALIMENTER de la chaîne d'énergie.",
- ex:"Sur le schéma, c'est le premier bloc de la flèche orange.",
- err:"Confondre la source d'énergie et son réservoir.",
- d:["Le stockage, c'est la batterie — le panneau ne garde rien pour plus tard.","L'eau est distribuée par l'électrovanne, en bout de chaîne.","Le traitement des mesures appartient à la chaîne d'INFORMATION (la carte).",""],
- ret:"Panneau solaire = ALIMENTER (convertit lumineuse → électrique)."},
+{
+ "c": "EN",
+ "n": "Fonction du panneau",
+ "q": "Dans le jardin connecté, que fait le panneau solaire ?",
+ "o": [
+  "il stocke l’énergie pour la nuit",
+  "il distribue l’eau aux bacs",
+  "il traite les mesures",
+  "il convertit l’énergie lumineuse en énergie électrique"
+ ],
+ "r": 3,
+ "expl": "Le panneau réalise une conversion qui contribue à l’alimentation électrique du jardin.",
+ "ex": "Lis les fonctions, puis les composants et les énergies sur les flèches.",
+ "err": "Confondre les fonctions, les composants et les formes d’énergie.",
+ "d": [
+  "Le stockage est assuré par la batterie.",
+  "Le panneau n’appartient pas au circuit d’eau.",
+  "La carte traite les données.",
+  ""
+ ],
+ "ret": "Panneau solaire : CONVERTIR l’énergie lumineuse en énergie électrique.",
+ "img": {
+  "src": "Images/chaines_jardin_connecte.svg",
+  "alt": "Panneau solaire : CONVERTIR l’énergie lumineuse en énergie électrique."
+ }
+},
 {c:"EN",n:"Fonction de la batterie",q:"La batterie 12 V du jardin sert à…",
  o:["convertir l'électricité en lumière","STOCKER l'énergie pour la nuit","mesurer l'humidité présente dans les bacs","pousser l'eau dans les tuyaux d'arrosage"],r:1,
  expl:"Le soleil ne brille pas la nuit : la batterie met l'énergie en réserve sous forme chimique et la restitue quand le panneau ne produit plus.",
@@ -288,27 +306,73 @@ const QUESTIONS = [
  err:"Croire que la batterie « produit » de l'électricité.",
  d:["La conversion en lumière n'existe pas dans ce système (pas d'éclairage).","","La mesure d'humidité est le travail des capteurs.","Pousser l'eau, c'est la pompe."],
  ret:"Batterie = STOCKER (énergie chimique, restituée à la demande)."},
-{c:"EN",n:"Transformation dans la pompe",q:"Dans la POMPE, quelle transformation d'énergie a lieu ?",
- o:["électrique → mécanique","lumineuse → électrique","chimique → lumineuse","mécanique → chimique"],r:0,
- expl:"La pompe est un convertisseur : elle reçoit de l'énergie électrique et produit un mouvement (rotation, pression) qui pousse l'eau. Nature d'entrée ≠ nature de sortie = transformation.",
- ex:"Comme le moteur d'une trottinette électrique : électrique → mécanique.",
- err:"Chercher la transformation au mauvais endroit de la chaîne.",
- d:["","Lumineuse → électrique, c'est le PANNEAU.","Cette transformation n'existe pas dans le jardin.","L'inverse ne se produit nulle part ici."],
- ret:"Pompe = CONVERTIR (électrique → mécanique)."},
-{c:"EN",n:"Trajet complet",q:"Le trajet COMPLET des natures d'énergie, du soleil à l'eau poussée, est :",
- o:["chimique → électrique → lumineuse → mécanique","électrique → chimique → lumineuse → mécanique","lumineuse → électrique → chimique → mécanique","lumineuse → mécanique → électrique → chimique"],r:2,
- expl:"Panneau (lumineuse→électrique), batterie (stockage chimique), régulateur (redistribue en électrique), pompe (électrique→mécanique). Suivre la flèche orange bloc par bloc donne le trajet.",
- ex:"C'est le même raisonnement qu'en 5e sur le lampadaire — avec un maillon de plus.",
- err:"Réciter des natures au hasard au lieu de suivre la chaîne.",
- d:["Le trajet ne COMMENCE pas par la batterie : sans soleil, elle serait vide.","Rien ne produit de lumière dans ce système.","","La mécanique n'apparaît qu'à la FIN (la pompe)."],
- ret:"Suivre la chaîne bloc par bloc = lire le trajet des natures d'énergie."},
-{c:"EN",n:"Stockage ou transformation ?",q:"La batterie transforme-t-elle l'énergie comme le fait la pompe ?",img:{src:"Images/energie_stockage_transformation.svg",alt:"Batterie : l'énergie ressort de même nature (stockage). Pompe : l'énergie change de nature, électrique vers hydraulique (transformation)."},
- o:["oui, exactement de la même façon","oui : elle la transforme en eau","non : elle la STOCKE, puis la restitue","non : elle la détruit lentement"],r:2,
- expl:"La distinction est essentielle : la pompe convertit pour AGIR (pousser l'eau) ; la batterie met en réserve puis restitue la même énergie électrique. Réservoir ≠ convertisseur.",
- ex:"Comme une gourde : elle stocke l'eau, elle ne la boit pas.",
- err:"Mettre « transformer » partout où l'énergie passe.",
- d:["La pompe change l'usage (mouvement) ; la batterie rend la même électricité.","L'eau n'est pas une énergie produite par la batterie !","","L'énergie ne se détruit pas — elle se dissipe au pire."],
- ret:"Stocker ≠ convertir : la batterie est un réservoir."},
+{
+ "c": "EN",
+ "n": "Transformation dans la pompe",
+ "q": "Quelle conversion réalise l’électropompe au profit du circuit d’eau ?",
+ "o": [
+  "électrique → hydraulique",
+  "lumineuse → électrique",
+  "chimique → lumineuse",
+  "mécanique → chimique"
+ ],
+ "r": 0,
+ "expl": "L’électropompe reçoit de l’énergie électrique et fournit à l’eau une énergie hydraulique liée notamment à sa pression et à son débit.",
+ "ex": "Lis les fonctions, puis les composants et les énergies sur les flèches.",
+ "err": "Confondre les fonctions, les composants et les formes d’énergie.",
+ "d": [
+  "",
+  "Cette conversion est celle du panneau solaire.",
+  "La pompe ne produit pas de lumière.",
+  "La pompe ne recharge pas la batterie."
+ ],
+ "ret": "Électropompe : énergie électrique → énergie hydraulique."
+},
+{
+ "c": "EN",
+ "n": "Charge puis arrosage",
+ "q": "Si l’énergie passe par le stockage dans la batterie avant l’arrosage, quelle succession de formes est correcte ?",
+ "o": [
+  "chimique → lumineuse → électrique",
+  "électrique → lumineuse → chimique",
+  "lumineuse → électrique → chimique stockée → électrique → hydraulique",
+  "lumineuse → hydraulique → chimique"
+ ],
+ "r": 2,
+ "expl": "La charge et la décharge correspondent à deux moments. Le panneau fournit de l’électricité ; la batterie stocke de l’énergie chimique, puis fournit de l’électricité à la pompe.",
+ "ex": "Lis les fonctions, puis les composants et les énergies sur les flèches.",
+ "err": "Confondre les fonctions, les composants et les formes d’énergie.",
+ "d": [
+  "Cette succession oublie le panneau et la pompe.",
+  "La batterie ne se recharge pas avec une émission de lumière.",
+  "",
+  "La lumière n’est pas directement convertie en énergie hydraulique."
+ ],
+ "ret": "La branche batterie représente un stockage chimique ; les échanges avec le régulateur sont électriques."
+},
+{
+ "c": "EN",
+ "n": "Stockage et conversion",
+ "img": {"src":"Images/chaines_jardin_connecte.svg","alt":"Branche de stockage : batterie reliée au régulateur, énergie chimique stockée et échanges électriques de charge et de décharge."},
+ "q": "Quel rôle distingue la batterie de la pompe ?",
+ "o": [
+  "elles produisent toutes deux de l’eau",
+  "la batterie détruit l’énergie",
+  "la batterie stocke l’énergie ; la pompe fournit de l’énergie à l’eau",
+  "la pompe stocke de l’énergie chimique"
+ ],
+ "r": 2,
+ "expl": "La batterie assure le stockage avec conversion électrique vers chimique à la charge, puis chimique vers électrique à la décharge. La pompe fournit de l’énergie hydraulique à l’eau.",
+ "ex": "Lis les fonctions, puis les composants et les énergies sur les flèches.",
+ "err": "Confondre les fonctions, les composants et les formes d’énergie.",
+ "d": [
+  "La batterie ne produit pas d’eau.",
+  "L’énergie ne disparaît pas.",
+  "",
+  "Le stockage chimique concerne la batterie."
+ ],
+ "ret": "La fonction de la batterie est STOCKER ; son fonctionnement comporte des conversions électrochimiques."
+},
 {c:"EN",n:"Les trois flux",q:"Sur le schéma du jardin, on distingue TROIS flux différents :",
  o:["chaud, froid, tiède","électricité, gaz, pétrole","wifi, bluetooth, 4G","énergie, eau, information"],r:3,
  expl:"Un système technique fait circuler plusieurs flux de natures différentes. Les repérer et les distinguer, c'est la compétence C4.2 : l'eau n'est PAS de l'énergie électrique, l'information n'est ni l'un ni l'autre.",
