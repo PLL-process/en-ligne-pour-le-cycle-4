@@ -317,22 +317,11 @@ def main():
         finally:
             shutil.rmtree(d)
 
-    # Une séquence découpée en pages reliées : seule la page tout-en-un a des onglets (#sN) ; c'est elle que vise le lexique (3e_C9.2).
-    d = pathlib.Path(tempfile.mkdtemp())
-    try:
-        (d / "sequence_1_page_decoupee.html").write_text("x", encoding="utf-8")
-        (d / "sequence_z_tout_en_un.html").write_text('<body><div role="tablist"></div></body>', encoding="utf-8")
-        obtenu = page_de_retour(str(d))
-        if obtenu != "sequence_z_tout_en_un.html":
-            echecs.append("pages découpées : le retour vise %r au lieu de la page à onglets" % obtenu)
-    finally:
-        shutil.rmtree(d)
-
     e_vocab, n_vocab = cas_vocabulaire()
     e_garde, n_garde = cas_garde()
     e_commun, n_commun = cas_commun()
     echecs += e_vocab + e_garde + e_commun
-    n = len(CAS) + 1 + n_vocab + n_garde + n_commun
+    n = len(CAS) + n_vocab + n_garde + n_commun
     if echecs:
         for e in echecs:
             print("❌ " + e)

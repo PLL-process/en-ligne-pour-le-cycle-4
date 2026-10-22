@@ -567,11 +567,6 @@ def page_de_retour(dossier):
     for motif in ("sequence*.html", "tp_*.html"):
         trouves = sorted(glob.glob(os.path.join(dossier, motif)))
         if trouves:
-            # Une séquence découpée en pages reliées (3e_C9.2) n'a d'onglets que dans sa page tout-en-un : c'est elle qui porte les
-            # panneaux #sN où le vocabulaire des séances doit se trouver. À défaut d'onglets, la première page, comme avant.
-            for f in trouves:
-                if 'role="tablist"' in open(f, encoding="utf-8", errors="ignore").read():
-                    return os.path.basename(f)
             return os.path.basename(trouves[0])
     return ""
 

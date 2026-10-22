@@ -22532,10 +22532,7 @@ décisions de Pascal : **mini-quiz séparé** (le QCM principal reste à 30 ques
 
 ### Ce qui a été changé dans un outil commun
 
-`_outils/generer_lexique.py` ramenait l'élève vers la **première** page `sequence*.html` : pour 3e_C9.2, la page 1 découpée, qui n'a pas d'onglets et donc pas de panneau `#s1`
-où ranger le vocabulaire des séances (refus : « n'a pas de panneau #s1 »). Il préfère maintenant la première page qui porte une barre d'onglets, et garde la première page sinon.
-Banc : `tests_generer_lexique.py` 29 / 29 (un cas ajouté). Le lexique de 3e_C9.2 renvoie désormais à la page tout-en-un.
-Constat au passage : régénérer tous les lexiques du thème 2 modifie ceux de 3e_C4.1, 4e_C4.1 et 5e_C4.1 — leurs QCM ont changé avec la #486 sans que les lexiques suivent ; **non touchés ici**.
+La correction de `_outils/generer_lexique.py` (le retour du lexique vise la première page qui a des onglets) **n'est pas dans ce lot** : la garde-périmètre l'a refusée, `_outils/` étant du thème 2. Elle a sa propre PR (#488, `fable/theme-2/lexique-page-a-onglets`) ; ce lot s'appuie sur elle pour régénérer `lexique_3e_C9.2.html`, déjà régénéré ici. Constat au passage : régénérer tous les lexiques du thème 2 modifie ceux de 3e_C4.1, 4e_C4.1 et 5e_C4.1 — leurs QCM ont changé avec la #486 sans que les lexiques suivent ; lot à part.
 
 ### À RELIRE PAR PASCAL
 
@@ -22550,6 +22547,6 @@ Constat au passage : régénérer tous les lexiques du thème 2 modifie ceux de 
   (pas de débord, textes ≥ 10 px, cibles ≥ 44 px) ; prédiction enregistrée et comparée ; zéro requête réseau ; mini-quiz.
 - Premier passage : **5 contrôles rouges, tous de mon fait**, corrigés — le fragment `pont_en_h.html` était pris pour une page (renommé `.fragment`), `window.__exp.pontH` était créé
   à l'ouverture (règle n°226 : créé au premier geste), la liste déroulante de prédiction et un lien du mini-quiz étaient illisibles à l'impression.
-- Contrôles du dépôt : les 24 contrôles Python verts (dont n°309), contraste, impression, verrous, hors ligne verts ; `3e_C9.2` **135 / 135** ; `tests_generer_lexique.py` 29 / 29 ;
+- Contrôles du dépôt : les 24 contrôles Python verts (dont n°309), contraste, impression, verrous, hors ligne verts ; `3e_C9.2` **135 / 135** ; `tests_generer_lexique.py` 29 / 29 (avec la correction de la #488) ;
   `verifier_chaines_energie.py` 54 / 54 ; voix du vélo 24 / 24.
 - Restent rouges, déjà rouges sur `main` : `controle_squelette.mjs` (3e_C1.5) et le test n°31 de 5e_C3.1 (28 / 29) — corrigés sur `fable/bancs-rouges-prealables`, non poussée.
