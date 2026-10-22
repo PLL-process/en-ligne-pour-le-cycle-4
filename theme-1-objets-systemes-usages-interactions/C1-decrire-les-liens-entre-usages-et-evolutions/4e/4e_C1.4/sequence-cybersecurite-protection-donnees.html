@@ -473,6 +473,13 @@
     .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}
     .qcm-groupe .qcm-option input[type=radio]{-webkit-appearance:auto;appearance:auto}
   }
+
+/* Règle d'or n°311 — à partir de la séance 2, l'élève voit sa séance, pas le décor.
+   Sans JavaScript le volet reste ouvert et sans titre : tout s'affiche, comme avant. */
+.rappel-ouverture>summary{display:none}
+.rappel-ouverture.volet>summary{display:block;cursor:pointer;min-height:44px;line-height:44px;padding:0 14px;margin:10px 0;border:1.5px solid #234d8c;border-radius:12px;background:#0b2f5c;color:#61dafb;font-weight:700}
+.rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media print{.rappel-ouverture>summary{display:none!important}}
 </style>
 <style id="ressource-css">
 /* Bloc « ressource externe » — posé par _outils poser_ressource.py. Ne pas éditer à la main. */
@@ -556,6 +563,15 @@
 <div class="container">
   <div class="section panel">
     <h1>💻 Bienvenue dans la cybersécurité — Séquence 4e 🔐</h1>
+<div class="toolbar">
+  <button class="btn-essentiel" id="btnEssentiel" type="button" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+</div>
+  </div>
+</div>
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
+<div class="container">
+  <div class="section panel">
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
   <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
   <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
@@ -576,10 +592,6 @@
   <p class="change"><b>Dans cette séquence&nbsp;:</b> on se demande <b>qui pourrait lire tes données sans en avoir le droit</b>, et comment on l'en empêche. Il ne s'agit pas seulement de ranger l'information : il faut la <b>protéger</b>.</p>
   <p class="filet">Ce qu'il faut garder en tête tient en une phrase : tes données passent par des machines qui ne t'appartiennent pas.</p>
 </section>
-
-<div class="toolbar">
-  <button class="btn-essentiel" id="btnEssentiel" type="button" aria-pressed="false">🎯 Mode essentiel : OFF</button>
-</div>
 <p style="text-align:center;font-size:.85em;opacity:.8">Le <b>mode essentiel</b> masque le tableau des compétences et les boutons d'aide et de correction : il ne reste que les consignes et les exercices.</p>
 
 <section class="card" id="billet-entree">
@@ -656,6 +668,8 @@
   </div>
 
   
+</details>
+
 <div class="seance-tabs" role="tablist" id="seances" aria-label="Séances de la séquence">
   <button class="seance-tab active" role="tab" aria-selected="true" aria-controls="s1"
           data-panel="s1" id="tab-s1">Séance 1<span class="quoi">Reconnaître</span></button>
@@ -3275,6 +3289,25 @@ recalc();
   "use strict";
   var onglets = document.querySelectorAll(".seance-tab");
   var avis = document.getElementById("avis-hors");
+  /* Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « Rappel », replié. */
+  function appliqueSeance(idPanneau){
+    var v = document.getElementById("ouverture"); if(!v) return;
+    var n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+    v.classList.toggle("volet", n >= 2);
+    v.open = n < 2;
+  }
+  var ouvertEnImpression = null;
+  window.addEventListener("beforeprint", function(){ var v=document.getElementById("ouverture"); if(v){ ouvertEnImpression=v.open; v.open=true; } });
+  window.addEventListener("afterprint", function(){ var v=document.getElementById("ouverture"); if(v && ouvertEnImpression!==null){ v.open=ouvertEnImpression; ouvertEnImpression=null; } });
+  /* Lien direct : #ancre ouvre la séance qui la contient, sans l'ouverture. */
+  function ouvrirSeanceDeLAncre(){
+    var id = decodeURIComponent(location.hash.slice(1)); if(!id) return;
+    var cible = document.getElementById(id); var pan = cible && cible.closest(".seance-panel");
+    if(!pan || pan.classList.contains("active")) return;
+    var onglet = document.querySelector('.seance-tab[data-panel="' + pan.id + '"]');
+    if(onglet) onglet.click();
+    setTimeout(function(){ cible.scrollIntoView({block:"start"}); }, 60);
+  }
   function montrer(cle){
     onglets.forEach(function(o){
       var actif = o.dataset.panel === cle;
@@ -3285,6 +3318,7 @@ recalc();
       p.classList.toggle("active", p.id === cle);
     });
     if (avis) avis.hidden = (cle !== "shors");
+    appliqueSeance(cle);
     try { localStorage.setItem("seance_4e_C1.4", cle); } catch(e){}
   }
   onglets.forEach(function(o){
@@ -3299,6 +3333,9 @@ recalc();
     var garde = localStorage.getItem("seance_4e_C1.4");
     if (garde && document.getElementById(garde)) montrer(garde);
   } catch(e){}
+  appliqueSeance((document.querySelector(".seance-panel.active")||{}).id);
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  ouvrirSeanceDeLAncre();
 
   // Règle d'or n°101 — chaque séance mène explicitement à la suivante
   document.querySelectorAll(".vers-seance").forEach(function(b){
