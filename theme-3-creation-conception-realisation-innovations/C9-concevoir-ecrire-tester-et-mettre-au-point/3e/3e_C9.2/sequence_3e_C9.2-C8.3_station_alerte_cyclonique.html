@@ -240,6 +240,68 @@
   .gestes-outil figure.geste-capture figcaption{margin:.35rem 0 0;font-size:.88em;line-height:1.45;opacity:.92}
   .gestes-outil figure.geste-capture figcaption b{color:inherit}
   @media print{.gestes-outil figure.geste-capture{break-inside:avoid;page-break-inside:avoid}}
+/* pont_en_h (style) : début */
+  /* Pont en H — « pour aller plus loin » (hors programme de cycle 4). Simulateur SVG fait main, hors ligne, sans bibliothèque. */
+  .ph .ph-hp{color:var(--sub);font-size:.92em}
+  .ph .ph-idee{margin:6px 0 10px 1.3em}
+  .ph .ph-idee li{margin:6px 0}
+  .ph .ph-conseil{margin:10px 0}
+  .ph-sim{max-width:640px;margin:10px auto}
+  .ph-svg{display:block;width:100%;height:auto}
+  .ph-svg .ph-fond{fill:#08132c;stroke:var(--border);stroke-width:2}
+  .ph-svg .ph-w{fill:none;stroke:#5b7bb8;stroke-width:4;stroke-linecap:round}
+  .ph-svg .ph-w.on{stroke:#ffd66b;stroke-width:6;stroke-dasharray:14 8;animation:ph-courant .9s linear infinite}
+  .ph-svg .ph-w.cc{stroke:#ff7b88;stroke-width:6;stroke-dasharray:14 8;animation:ph-courant .45s linear infinite}
+  .ph-svg .ph-lev{fill:none;stroke:#e4eaf5;stroke-width:5;stroke-linecap:round}
+  .ph-svg .ph-pt{fill:#e4eaf5}
+  .ph-svg .ph-nom,.ph-svg .ph-M,.ph-svg .ph-pole{fill:#e4eaf5;font:700 34px system-ui,sans-serif}
+  .ph-svg .ph-pole{font-size:44px}
+  .ph-svg .ph-moteur{fill:#0d2347;stroke:#c68ef2;stroke-width:5}
+  .ph-svg .ph-pale{fill:none;stroke:#c68ef2;stroke-width:5;stroke-linecap:round}
+  .ph-svg .ph-M{fill:#c68ef2}
+  .ph-svg #ph_rotor{transform-origin:300px 180px}
+  .ph-svg #ph_rotor.sens1{animation:ph-tourne 1.6s linear infinite}
+  .ph-svg #ph_rotor.sens2{animation:ph-tourne 1.6s linear infinite reverse}
+  .ph-svg .ph-fl,.ph-svg .ph-pointe{fill:#ffd66b}
+  .ph-svg .ph-arc{fill:none;stroke:#ffd66b;stroke-width:4}
+  .ph-svg .ph-fl,.ph-svg .ph-arc{display:none}
+  .ph-svg .ph-fl.on,.ph-svg .ph-arc.on{display:inline}
+  .ph-svg .ph-etat{fill:#e4eaf5;font:700 28px system-ui,sans-serif}
+  .ph-svg.cc .ph-fond{stroke:#ff7b88;stroke-width:4}
+  @keyframes ph-courant{to{stroke-dashoffset:-22}}
+  @keyframes ph-tourne{to{transform:rotate(360deg)}}
+  .ph-cmd{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
+  .ph-sw{min-height:48px;padding:8px 12px;border-radius:12px;border:2px solid var(--border);background:var(--input-bg);color:var(--text);font:600 1em system-ui,sans-serif;cursor:pointer}
+  .ph-sw[aria-pressed="true"]{background:var(--btn-h);border-color:var(--hl);box-shadow:inset 0 0 0 2px var(--hl)}
+  .ph-sw:focus-visible,.ph-svg .ph-swg:focus-visible{outline:3px solid #fff;outline-offset:2px}
+  .ph-zero{grid-column:1 / -1}
+  .ph-dit{min-height:3.2em;margin:8px 0;padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:var(--panel2);font-size:1.04em}
+  .ph-dit.cc{border-color:var(--err)}
+  .ph-comp{min-height:1.4em;margin:4px 0;color:var(--sub)}
+  .ph-suite{margin:12px 0 4px}
+  /* Règle n°119 : le mouvement n'est jamais seul à porter l'information (tout est écrit) ; mouvement réduit : plus aucune animation,
+     le trajet reste tracé en trait plein et les flèches fixes disent le sens. */
+  @media (prefers-reduced-motion: reduce){
+    .ph-svg .ph-w.on,.ph-svg .ph-w.cc{animation:none;stroke-dasharray:none}
+    .ph-svg #ph_rotor.sens1,.ph-svg #ph_rotor.sens2{animation:none}
+  }
+  @media (max-width:420px){ .ph-cmd{gap:8px} .ph-sw{font-size:.95em} }
+  @media print{
+    .ph-sim{break-inside:avoid}
+    .ph-svg .ph-fond{fill:#fff;stroke:#999}
+    .ph-svg .ph-w{stroke:#555}
+    .ph-svg .ph-w.on{stroke:#8a5a00;animation:none;stroke-dasharray:none}
+    .ph-svg .ph-w.cc{stroke:#b00020;animation:none;stroke-dasharray:none}
+    .ph-svg .ph-lev,.ph-svg .ph-pt{stroke:#222;fill:#222}
+    .ph-svg .ph-lev{fill:none}
+    .ph-svg .ph-nom,.ph-svg .ph-pole,.ph-svg .ph-etat{fill:#111}
+    .ph-svg .ph-moteur{fill:#fff;stroke:#5b2a91}.ph-svg .ph-pale,.ph-svg .ph-M{stroke:#5b2a91}.ph-svg .ph-M{fill:#5b2a91;stroke:none}
+    .ph-svg .ph-fl,.ph-svg .ph-pointe{fill:#8a5a00}.ph-svg .ph-arc{stroke:#8a5a00}
+    .ph-sw,.ph-dit{background:#fff;color:#111;border-color:#999}
+    #ph_pred,#ph_pred option{background:#fff!important;color:#111!important}
+    .ph-sw[aria-pressed="true"]{background:#e8eefc;box-shadow:none}
+  }
+/* pont_en_h (style) : fin */
   /* Règle d'or n°29 — mode essentiel */
   body.essentiel .referentiel-card,
   body.essentiel details.correction,
@@ -680,6 +742,198 @@
       <p style="font-size:.9em;color:var(--sub)"><b>Source de la valeur des broches :</b> fiche technique officielle de l'Arduino UNO Rev3 — « DC Current per I/O Pin : 20 mA », avec la mention qu'un maximum de 40 mA ne doit jamais être dépassé sous peine de dommage permanent du microcontrôleur.</p>
     </details>
 
+<!-- pont_en_h : début -->
+    <details class="approfondissement ph" id="pont-en-h" style="margin:1rem 0">
+      <summary>🚀 Pour aller plus loin : le pont en H</summary>
+      <p class="ph-hp"><b>Hors programme de cycle 4</b> : rien ici n'est évalué, rien n'est obligatoire. C'est pour comprendre ce que fait le « pont en H » du cas ③.</p>
+
+      <h4>L'idée en cinq phrases</h4>
+      <ol class="ph-idee">
+        <li><b>Un moteur tourne dans le sens où le courant le traverse.</b> Si le courant entre par l'autre borne, il tourne dans l'autre sens.</li>
+        <li><b>Un pont en H, ce sont 4 interrupteurs autour du moteur,</b> dessinés comme un H : le moteur est la barre du milieu. En haut, <b>A</b> (gauche) et <b>B</b> (droite), reliés au +. En bas, <b>C</b> (gauche) et <b>D</b> (droite), reliés au −.</li>
+        <li><b>A et D fermés :</b> le courant va du + vers le −, en traversant le moteur de gauche à droite. <b>B et C fermés :</b> il le traverse de droite à gauche, donc le moteur tourne dans l'autre sens.</li>
+        <li><b>Un relais simple ne suffit pas pour inverser :</b> c'est un seul interrupteur, il laisse passer le courant ou le coupe, <b>toujours dans le même sens</b>. Le moteur tourne ou s'arrête, mais il ne repart jamais en arrière. Pour inverser, il faut pouvoir changer le sens du courant : c'est le rôle des 4 interrupteurs.</li>
+        <li><b>Attention au court-circuit :</b> si les deux interrupteurs d'un même côté sont fermés (A et C, ou B et D), le courant va du + au − sans traverser le moteur. L'intensité devient énorme, les fils chauffent, la protection saute. Un vrai pont en H l'empêche ; dans le simulateur, tu peux le provoquer pour le voir.</li>
+      </ol>
+
+      <h4>À toi de jouer</h4>
+      <div class="assoc">
+        <label for="ph_pred">Avant de tester (facultatif) : à ton avis, si je ferme A et D, le moteur…</label>
+        <select id="ph_pred">
+          <option value="">— choisir —</option>
+          <option value="sens1">tourne dans le sens 1 (sens des aiguilles d'une montre)</option>
+          <option value="sens2">tourne dans le sens 2 (sens inverse des aiguilles d'une montre)</option>
+          <option value="arret">ne tourne pas</option>
+          <option value="nsp">je ne sais pas encore</option>
+        </select>
+      </div>
+      <p class="ph-conseil">Ferme ou ouvre les interrupteurs avec les boutons. Le dessin s'allume, et <b>tout ce qui bouge est aussi écrit</b> dans la phrase sous le dessin. Essaie aussi de fermer deux interrupteurs du même côté : tu ne risques rien, c'est un simulateur.</p>
+
+      <div class="ph-sim" id="ph_sim">
+        <svg class="ph-svg" id="ph_svg" viewBox="0 0 600 360" role="img" aria-labelledby="ph_t ph_d" focusable="false">
+          <title id="ph_t">Simulateur du pont en H</title>
+          <desc id="ph_d">Un moteur au centre, quatre interrupteurs autour de lui dessinés en forme de H : A en haut à gauche, B en haut à droite, C en bas à gauche, D en bas à droite. Le pôle plus est en haut, le pôle moins en bas. Ce que montre le dessin est écrit dans la phrase placée sous lui.</desc>
+          <rect class="ph-fond" x="0" y="0" width="600" height="360" rx="14"/>
+          <!-- rails -->
+          <path class="ph-w" id="ph_t0" d="M150 40 H200"/><path class="ph-w" id="ph_t1" d="M200 40 H400"/>
+          <path class="ph-w" id="ph_b0" d="M150 320 H200"/><path class="ph-w" id="ph_b1" d="M200 320 H400"/>
+          <text class="ph-pole" x="120" y="48" text-anchor="middle">+</text>
+          <text class="ph-pole" x="120" y="328" text-anchor="middle">−</text>
+          <!-- côté gauche : A (haut), C (bas) -->
+          <path class="ph-w" id="ph_L1" d="M200 40 V110"/>
+          <path class="ph-w" id="ph_L2" d="M200 150 V180"/>
+          <path class="ph-w" id="ph_L3" d="M200 180 V210"/>
+          <path class="ph-w" id="ph_L4" d="M200 250 V320"/>
+          <!-- côté droit : B (haut), D (bas) -->
+          <path class="ph-w" id="ph_R1" d="M400 40 V110"/>
+          <path class="ph-w" id="ph_R2" d="M400 150 V180"/>
+          <path class="ph-w" id="ph_R3" d="M400 180 V210"/>
+          <path class="ph-w" id="ph_R4" d="M400 250 V320"/>
+          <!-- fils du moteur -->
+          <path class="ph-w" id="ph_ML" d="M200 180 H252"/><path class="ph-w" id="ph_MR" d="M348 180 H400"/>
+          <!-- interrupteurs : fermé = trait droit, ouvert = trait penché -->
+          <g class="ph-swg" id="ph_swA" aria-hidden="true"><path class="ph-lev" d="M200 150 L222 118"/><circle class="ph-pt" cx="200" cy="110" r="4"/><circle class="ph-pt" cx="200" cy="150" r="4"/></g>
+          <g class="ph-swg" id="ph_swB" aria-hidden="true"><path class="ph-lev" d="M400 150 L422 118"/><circle class="ph-pt" cx="400" cy="110" r="4"/><circle class="ph-pt" cx="400" cy="150" r="4"/></g>
+          <g class="ph-swg" id="ph_swC" aria-hidden="true"><path class="ph-lev" d="M200 250 L222 218"/><circle class="ph-pt" cx="200" cy="210" r="4"/><circle class="ph-pt" cx="200" cy="250" r="4"/></g>
+          <g class="ph-swg" id="ph_swD" aria-hidden="true"><path class="ph-lev" d="M400 250 L422 218"/><circle class="ph-pt" cx="400" cy="210" r="4"/><circle class="ph-pt" cx="400" cy="250" r="4"/></g>
+          <text class="ph-nom" x="170" y="136" text-anchor="middle">A</text>
+          <text class="ph-nom" x="430" y="136" text-anchor="middle">B</text>
+          <text class="ph-nom" x="170" y="236" text-anchor="middle">C</text>
+          <text class="ph-nom" x="430" y="236" text-anchor="middle">D</text>
+          <!-- moteur -->
+          <circle class="ph-moteur" cx="300" cy="180" r="48"/>
+          <g id="ph_rotor"><path class="ph-pale" d="M300 180 V146"/><path class="ph-pale" d="M300 180 L329 197"/><path class="ph-pale" d="M300 180 L271 197"/></g>
+          <text class="ph-M" x="300" y="186" text-anchor="middle">M</text>
+          <!-- flèches fixes : sens du courant et sens de rotation (visibles aussi sans animation) -->
+          <path class="ph-fl" id="ph_fl1" d="M222 172 L240 180 L222 188 Z"/>
+          <path class="ph-fl" id="ph_fl2" d="M378 172 L360 180 L378 188 Z"/>
+          <path class="ph-arc" id="ph_rot1" d="M262 140 A48 48 0 0 1 338 140" marker-end="url(#ph_pointe)"/>
+          <path class="ph-arc" id="ph_rot2" d="M338 140 A48 48 0 0 0 262 140" marker-end="url(#ph_pointe)"/>
+          <defs><marker id="ph_pointe" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0 L10 5 L0 10 Z" class="ph-pointe"/></marker></defs>
+          <text class="ph-etat" id="ph_etat" x="300" y="346" text-anchor="middle"></text>
+        </svg>
+
+        <div class="ph-cmd" role="group" aria-label="Les quatre interrupteurs">
+          <button type="button" class="ph-sw" data-sw="A" aria-pressed="false"></button>
+          <button type="button" class="ph-sw" data-sw="B" aria-pressed="false"></button>
+          <button type="button" class="ph-sw" data-sw="C" aria-pressed="false"></button>
+          <button type="button" class="ph-sw" data-sw="D" aria-pressed="false"></button>
+          <button type="button" class="ph-sw ph-zero" id="ph_zero">Tout ouvrir</button>
+        </div>
+
+        <p class="ph-dit" id="ph_dit" role="status" aria-live="polite"></p>
+        <p class="ph-comp" id="ph_comp" role="status" aria-live="polite"></p>
+      </div>
+
+      <p class="ph-suite">📝 Pour t'entraîner : <a href="miniquiz_pont_en_h.html">le mini-quiz du pont en H</a> (3 questions, à part du QCM de la séquence).</p>
+      <noscript><p class="ph-hp">Le simulateur demande JavaScript. Sans lui, l'idée en cinq phrases ci-dessus suffit à comprendre.</p></noscript>
+    </details>
+<script>
+/* Pont en H — simulateur (pour aller plus loin, hors programme de cycle 4). Hors ligne, sans bibliothèque.
+   Tout ce qui bouge est aussi dit en texte (n°119). Traces dans window.__exp.pontH, créées au premier geste seulement : enregistrées, jamais exigées (aucun verrou). */
+(function(){
+  "use strict";
+  var racine = document.getElementById("ph_sim");
+  if (!racine) return;
+  var ferme = {A:false, B:false, C:false, D:false};
+  var NOM = {A:"A (haut, à gauche)", B:"B (haut, à droite)", C:"C (bas, à gauche)", D:"D (bas, à droite)"};
+  var OUVERT = {A:"M200 150 L222 118", B:"M400 150 L422 118", C:"M200 250 L222 218", D:"M400 250 L422 218"};
+  var FERME  = {A:"M200 150 L200 110", B:"M400 150 L400 110", C:"M200 250 L200 210", D:"M400 250 L400 210"};
+  var FILS = ["t0","t1","b0","b1","L1","L2","L3","L4","R1","R2","R3","R4","ML","MR"];
+  var TRAJET = {
+    sens1: ["t0","L1","L2","ML","MR","R3","R4","b1","b0"],
+    sens2: ["t0","t1","R1","R2","MR","ML","L3","L4","b0"],
+    ccG:   ["t0","L1","L2","L3","L4","b0"],
+    ccD:   ["t0","t1","R1","R2","R3","R4","b1","b0"]
+  };
+  var svg = document.getElementById("ph_svg"), rotor = document.getElementById("ph_rotor");
+  var dit = document.getElementById("ph_dit"), comp = document.getElementById("ph_comp"), etat = document.getElementById("ph_etat");
+  var boutons = racine.querySelectorAll(".ph-sw[data-sw]");
+  window.__exp = window.__exp || {};
+  function trace(k){ window.__exp.pontH = window.__exp.pontH || {}; window.__exp.pontH[k] = true; }   // rien à l'initialisation : seulement ce que l'élève a fait
+
+  function el(id){ return document.getElementById("ph_" + id); }
+  function liste(l){ return l.length === 2 ? l[0] + " et " + l[1] : l.length > 2 ? l.slice(0, -1).join(", ") + " et " + l[l.length - 1] : l[0]; }
+
+  function calcule(){
+    var f = Object.keys(ferme).filter(function(k){ return ferme[k]; });
+    var ccG = ferme.A && ferme.C, ccD = ferme.B && ferme.D, type;
+    if (ccG || ccD) type = "cc";
+    else if (ferme.A && ferme.D) type = "sens1";
+    else if (ferme.B && ferme.C) type = "sens2";
+    else type = "arret";
+    return {f:f, ccG:ccG, ccD:ccD, type:type};
+  }
+
+  function phrase(e){
+    var qui = e.f.length ? "Fermé" + (e.f.length > 1 ? "s" : "") + " : " + liste(e.f) + ". " : "";
+    if (e.type === "sens1") return qui + "Le courant va du + vers le −, en traversant le moteur de gauche à droite : le moteur tourne dans le sens 1 (sens des aiguilles d'une montre).";
+    if (e.type === "sens2") return qui + "Le courant va du + vers le −, en traversant le moteur de droite à gauche : le moteur tourne dans le sens 2 (sens inverse des aiguilles d'une montre).";
+    if (e.type === "cc"){
+      var cote = e.ccG && e.ccD ? "des côtés gauche et droit" : e.ccG ? "du côté gauche" : "du côté droit";
+      return "⚠ Court-circuit ! " + qui + "Le courant va directement du + au − par les deux interrupteurs " + cote + ", sans traverser le moteur : intensité énorme, fils qui chauffent, protection qui saute. Le moteur est arrêté. Dans un vrai montage, la protection coupe vite ; ici, tu peux le voir sans danger. Pour y remédier, ouvre l'un des deux interrupteurs de ce côté.";
+    }
+    if (!e.f.length) return "Aucun interrupteur fermé : pas de courant, le moteur est arrêté.";
+    if (e.f.length === 1) return qui + "Un seul interrupteur fermé : le courant ne peut pas revenir vers le −, le moteur est arrêté.";
+    return qui + "Les deux bornes du moteur sont reliées au " + (ferme.A ? "+" : "−") + " : il ne passe aucun courant, le moteur est arrêté.";
+  }
+
+  function comparaison(e){
+    var p = (document.getElementById("ph_pred") || {}).value || "";
+    if (e.type !== "sens1" || e.f.length !== 2 || !p || p === "nsp") return "";
+    if (p === "sens1") return "Tu avais prévu le sens 1 : bien vu.";
+    if (p === "sens2") return "Tu avais prévu le sens 2. Avec A et D fermés, le courant traverse le moteur de gauche à droite : c'est le sens 1. Le sens 2 s'obtient avec B et C.";
+    return "Tu avais prévu que le moteur ne tourne pas. Avec A et D fermés, le courant traverse le moteur : il tourne, dans le sens 1.";
+  }
+
+  function dessine(){
+    var e = calcule();
+    FILS.forEach(function(id){ el(id).setAttribute("class", "ph-w"); });
+    var on = e.type === "sens1" || e.type === "sens2" ? TRAJET[e.type] : [];
+    on.forEach(function(id){ el(id).setAttribute("class", "ph-w on"); });
+    if (e.type === "cc"){
+      (e.ccG ? TRAJET.ccG : []).concat(e.ccD ? TRAJET.ccD : []).forEach(function(id){ el(id).setAttribute("class", "ph-w cc"); });
+    }
+    Object.keys(ferme).forEach(function(k){
+      el("sw" + k).querySelector(".ph-lev").setAttribute("d", ferme[k] ? FERME[k] : OUVERT[k]);
+    });
+    rotor.setAttribute("class", e.type === "sens1" ? "sens1" : e.type === "sens2" ? "sens2" : "");
+    el("fl1").setAttribute("class", "ph-fl" + (e.type === "sens1" ? " on" : ""));
+    el("fl2").setAttribute("class", "ph-fl" + (e.type === "sens2" ? " on" : ""));
+    el("rot1").setAttribute("class", "ph-arc" + (e.type === "sens1" ? " on" : ""));
+    el("rot2").setAttribute("class", "ph-arc" + (e.type === "sens2" ? " on" : ""));
+    svg.setAttribute("class", "ph-svg" + (e.type === "cc" ? " cc" : ""));
+    etat.textContent = e.type === "sens1" ? "Moteur : sens 1 ↻" : e.type === "sens2" ? "Moteur : sens 2 ↺" : e.type === "cc" ? "COURT-CIRCUIT !" : "Moteur arrêté";
+    dit.textContent = phrase(e);
+    dit.setAttribute("class", "ph-dit" + (e.type === "cc" ? " cc" : ""));
+    comp.textContent = comparaison(e);
+    boutons.forEach(function(b){
+      var k = b.getAttribute("data-sw");
+      b.setAttribute("aria-pressed", ferme[k] ? "true" : "false");
+      b.textContent = NOM[k] + " : " + (ferme[k] ? "fermé" : "ouvert");
+    });
+    if (e.type === "sens1") trace("avant");
+    if (e.type === "sens2") trace("arriere");
+    if (e.type === "cc") trace("cc");
+  }
+
+  function bascule(k){ ferme[k] = !ferme[k]; dessine(); }
+  boutons.forEach(function(b){ b.addEventListener("click", function(){ bascule(b.getAttribute("data-sw")); }); });
+  ["A","B","C","D"].forEach(function(k){
+    var g = el("sw" + k);
+    g.style.cursor = "pointer";
+    g.addEventListener("click", function(){ bascule(k); });
+  });
+  document.getElementById("ph_zero").addEventListener("click", function(){
+    Object.keys(ferme).forEach(function(k){ ferme[k] = false; });
+    dessine();
+  });
+  var pred = document.getElementById("ph_pred");
+  if (pred) pred.addEventListener("change", dessine);
+  dessine();
+})();
+</script>
+<!-- pont_en_h : fin -->
     <details class="approfondissement" style="margin:1rem 0">
       <summary>🔎 Un même composant peut appartenir aux deux analyses</summary>
       <p>Le voyant <b>convertit de l’énergie électrique en lumière</b> dans l’analyse énergétique. Sa couleur <b>communique le niveau d’alerte</b> dans l’analyse informationnelle. Ce sont deux points de vue sur le même composant.</p>
