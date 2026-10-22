@@ -14,8 +14,9 @@ from playwright.sync_api import sync_playwright
 
 ROOT=Path(__file__).resolve().parents[1]
 LOT=ROOT/'theme-1-objets-systemes-usages-interactions/C3-caracteriser-et-choisir-un-objet-ou-un/5e/5e_C3.1'
+FONCTIONS_PERMISES={'ACQUÉRIR','TRAITER','COMMUNIQUER','ALIMENTER','STOCKER','DISTRIBUER','CONVERTIR','TRANSMETTRE'}
 INFO_ET_ENERGIE={'chaines_energie_information_lampadaire.svg','chaines_jardin_connecte.svg','chaine_info_energie_station.svg','chaine_energie_book-train.svg'}
-NAMES=['chaines_energie_information_lampadaire.svg','chaines_jardin_connecte.svg','chaine_energie_a_elaborer.svg','chaine_info_energie_station.svg','chaine_energie_book-train.svg','chaine_energie_velo_cargo.svg']
+NAMES=['chaines_energie_information_lampadaire.svg','chaines_jardin_connecte.svg','chaine_energie_a_elaborer.svg','chaine_info_energie_station.svg','chaine_energie_book-train.svg','chaine_energie_velo_cargo.svg','ordre_preactionneur_trois_cas.svg']
 FILES=[next(ROOT.glob('theme-*/**/Images/'+n)) for n in NAMES]
 OUT=Path(sys.argv[1]).resolve() if len(sys.argv)>1 else None
 if OUT:OUT.mkdir(parents=True,exist_ok=True)
@@ -48,6 +49,13 @@ with sync_playwright() as p:
         }''')
         check(f.name+' : textes dans le cadre, sans chevauchement',not r['outside'] and not r['pairs'],r['outside']+r['pairs'])
         check(f.name+' : énergies hors des blocs, alternative présente, autonome',not r['inside'] and r['accessible'] and not r['remote'],r['inside'])
+        if f.name!='chaine_energie_velo_cargo.svg':
+            # Vocabulaire fixe (règle d'or n°310) : un bloc de fonction ne porte que ALIMENTER (STOCKER pour la batterie), DISTRIBUER, CONVERTIR, TRANSMETTRE
+            # (et ACQUÉRIR, TRAITER, COMMUNIQUER pour l'information). La précision passe sous le bloc.
+            src=f.read_text(encoding='utf-8')
+            noms=[' '.join(re.findall(r'<text[^>]*>(.*?)</text>',g)) for g in re.findall(r'<g data-role="function".*?</g>',src,re.S)]
+            hors=[n for n in noms if n not in FONCTIONS_PERMISES]
+            check(f.name+' : vocabulaire fixe des fonctions dans les blocs',bool(noms) and not hors,hors)
         if f.name in INFO_ET_ENERGIE:
             # Convention conservée (règle d'or du schéma) : la chaîne d'information est AU-DESSUS de la chaîne d'énergie, l'ordre descend.
             src=f.read_text(encoding='utf-8')
