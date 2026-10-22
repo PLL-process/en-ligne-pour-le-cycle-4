@@ -13,6 +13,8 @@ import re
 ROOT = Path(__file__).resolve().parents[1]
 C4 = Path('theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation')
 C9 = Path('theme-3-creation-conception-realisation-innovations/C9-concevoir-ecrire-tester-et-mettre-au-point/3e/3e_C9.2')
+CONVENTION = 'Convention de la technologie : l’information en haut, l’énergie en bas, l’ordre qui descend.'
+PIED_CONVENTION = 'Convention : l’information EN HAUT, l’énergie EN BAS — l’ordre descend, comme le cerveau commande les muscles.'
 BG, BOX, WHITE = '#050f24', '#0d2347', '#e4eaf5'
 CYAN, YELLOW, VIOLET, GREEN, ORANGE, BLUE = '#61dafb', '#ffd66b', '#c68ef2', '#81fba1', '#ffb454', '#81aaff'
 
@@ -55,7 +57,7 @@ class Diagram:
         if stock:
             self.text(x+w/2, y+111+len(component.split('\n'))*28, 'Énergie chimique\nstockée', YELLOW, 19, role='stock')
 
-    def arrow(self, points, color=ORANGE, label=None, lx=None, ly=None, dashed=False, both=False):
+    def arrow(self, points, color=ORANGE, label=None, lx=None, ly=None, dashed=False, both=False, lanchor='middle'):
         d='M '+' L '.join(f'{x} {y}' for x,y in points)
         dash=' stroke-dasharray="8 6"' if dashed else ''
         self.parts.append(f'<path d="{d}" fill="none" stroke="{color}" stroke-width="3" stroke-linejoin="round" marker-end="url(#a{color[1:]})"{f" marker-start={chr(34)}url(#a{color[1:]}){chr(34)}" if both else ""}{dash}/>')
@@ -67,7 +69,7 @@ class Diagram:
         a=ET.SubElement(g,'Array',**{'as':'points'})
         for x,y in points[1:-1]: ET.SubElement(a,'mxPoint',x=str(x),y=str(y))
         if label:
-            self.text(lx if lx is not None else (points[0][0]+points[-1][0])/2, ly if ly is not None else points[0][1]-30, label, color, 18, role='flow')
+            self.text(lx if lx is not None else (points[0][0]+points[-1][0])/2, ly if ly is not None else points[0][1]-30, label, color, 18, anchor=lanchor, role='flow')
 
     def section(self,y,label,color):
         self.text(35,y,label,color,23,True,anchor='start')
@@ -98,16 +100,16 @@ class Diagram:
 
 
 def lampadaire():
-    d=Diagram('Lampadaire solaire : information et énergie',
-        'Les capteurs de luminosité et de mouvement acquièrent les informations. La carte traite et communique un ordre à l’interrupteur électronique. Le panneau convertit l’énergie lumineuse en énergie électrique. Le régulateur de charge relie panneau, batterie et alimentation des LED. La batterie stocke de l’énergie chimique ; ses échanges avec le régulateur sont électriques, dans les deux sens. L’interrupteur distribue l’énergie électrique au bloc LED qui la convertit en lumière pour éclairer la zone.',890)
-    d.section(95,"CHAÎNE D’INFORMATION",CYAN)
+    d=Diagram('Lampadaire solaire : l’information (en haut) commande l’énergie (en bas)',
+        CONVENTION + ' Les capteurs de luminosité et de mouvement acquièrent les informations. La carte traite et communique un ordre à l’interrupteur électronique. Le panneau convertit l’énergie lumineuse en énergie électrique. Le régulateur de charge relie panneau, batterie et alimentation des LED. La batterie stocke de l’énergie chimique ; ses échanges avec le régulateur sont électriques, dans les deux sens. L’interrupteur distribue l’énergie électrique au bloc LED qui la convertit en lumière pour éclairer la zone.',935)
+    d.section(95,"CHAÎNE D’INFORMATION — en haut (elle décide)",CYAN)
     d.block(160,125,'ACQUÉRIR','Capteur de luminosité\nDétecteur de mouvement',CYAN)
     d.block(590,125,'TRAITER','Carte électronique\nSi nuit et passage : allumer',VIOLET,w=250)
     d.block(1060,125,'COMMUNIQUER','Sortie de commande\nde la carte',GREEN,w=240)
     d.arrow([(370,163),(580,163)],CYAN,'Mesures',475,143)
     d.arrow([(840,163),(1050,163)],CYAN,'Décision',945,143)
-    d.arrow([(1180,262),(1180,315),(945,315),(945,390)],GREEN,'Ordre d’allumage',1180,294,dashed=True)
-    d.section(352,"CHAÎNE D’ÉNERGIE",ORANGE)
+    d.arrow([(1180,262),(1180,315),(945,315),(945,390)],GREEN,'Ordre d’allumage : l’ordre descend',1195,300,dashed=True,lanchor='start')
+    d.section(352,"CHAÎNE D’ÉNERGIE — en bas (elle obéit)",ORANGE)
     for args in [(155,'CONVERTIR','Panneau solaire',ORANGE),(510,'RÉGULER','Régulateur de charge',YELLOW),(840,'DISTRIBUER','Interrupteur électronique\n(ou pilote de LED)',CYAN),(1195,'CONVERTIR','Bloc LED',VIOLET)]:
         d.block(args[0],410,*args[1:])
     d.arrow([(15,448),(145,448)],ORANGE,'Énergie\nlumineuse',76,385)
@@ -115,22 +117,23 @@ def lampadaire():
     d.arrow([(1405,448),(1555,448)],ORANGE,'Énergie\nlumineuse',1480,385)
     d.text(1480,500,'Éclairer\nla zone',WHITE,22,True)
     d.block(510,650,'STOCKER /\nALIMENTER','Batterie',YELLOW,stock=True)
-    d.arrow([(720,470),(780,470),(780,688),(720,688)],YELLOW,'Énergie électrique\nCharge / décharge',950,605,both=True)
-    d.text(800,865,'Les fonctions sont dans les blocs ; les composants en dessous ; les formes d’énergie sur les flèches.',BLUE,18)
+    d.arrow([(720,470),(780,470),(780,688),(720,688)],YELLOW,'Énergie électrique\nCharge / décharge',795,600,both=True,lanchor='start')
+    d.text(800,872,PIED_CONVENTION,BLUE,19)
+    d.text(800,908,'Les fonctions sont dans les blocs ; les composants en dessous ; les formes d’énergie sur les flèches.',BLUE,18)
     d.save(C4/'5e/5e_C4.1/Images/chaines_energie_information_lampadaire.svg')
 
 
 def jardin():
-    d=Diagram('Jardin connecté : information, énergie et eau',
-        'Les capteurs d’humidité transmettent les mesures à la carte qui décide et communique les données au réseau et à l’application. Les ordres pilotent les interfaces de puissance de la pompe et des électrovannes. Le panneau fournit de l’énergie électrique au régulateur de charge. La batterie, reliée au régulateur, stocke de l’énergie chimique. La pompe convertit l’énergie électrique en énergie hydraulique. Les actionneurs des électrovannes convertissent l’énergie électrique en mouvement d’ouverture ou de fermeture. Le circuit d’eau, séparé, va du réservoir à la pompe puis aux électrovannes et aux bacs. Une vanne commune arrose simultanément ; une vanne par bac permet une commande indépendante.',1120)
-    d.section(95,"CHAÎNE D’INFORMATION",CYAN)
+    d=Diagram('Jardin connecté : l’information (en haut) commande l’énergie (en bas)',
+        CONVENTION + ' Les capteurs d’humidité transmettent les mesures à la carte qui décide et communique les données au réseau et à l’application. Les ordres pilotent les interfaces de puissance de la pompe et des électrovannes. Le panneau fournit de l’énergie électrique au régulateur de charge. La batterie, reliée au régulateur, stocke de l’énergie chimique. La pompe convertit l’énergie électrique en énergie hydraulique. Les actionneurs des électrovannes convertissent l’énergie électrique en mouvement d’ouverture ou de fermeture. Le circuit d’eau, séparé, va du réservoir à la pompe puis aux électrovannes et aux bacs. Une vanne commune arrose simultanément ; une vanne par bac permet une commande indépendante.',1165)
+    d.section(95,"CHAÎNE D’INFORMATION — en haut (elle décide)",CYAN)
     d.block(100,120,'ACQUÉRIR','Capteurs d’humidité\nun par bac',CYAN)
     d.block(580,120,'TRAITER','Carte programmable\nCompare aux seuils',VIOLET,w=250)
     d.block(1160,120,'COMMUNIQUER','Module Wi-Fi et application\nMesures et courbes',GREEN,w=290)
     d.arrow([(310,158),(570,158)],CYAN,'Mesures',440,138)
     d.arrow([(830,158),(1150,158)],CYAN,'Données à afficher',990,138)
-    d.arrow([(705,258),(705,304),(940,304),(940,380)],GREEN,'Ordres d’arrosage',1020,292,dashed=True)
-    d.section(350,"CHAÎNE D’ÉNERGIE",ORANGE)
+    d.arrow([(705,258),(705,304),(940,304),(940,380)],GREEN,'Ordres d’arrosage : l’ordre descend',960,288,dashed=True,lanchor='start')
+    d.section(350,"CHAÎNE D’ÉNERGIE — en bas (elle obéit)",ORANGE)
     d.block(150,400,'CONVERTIR','Panneau solaire',ORANGE)
     d.block(495,400,'RÉGULER','Régulateur de charge',YELLOW)
     d.block(835,400,'DISTRIBUER','Relais ou transistors\nCommande des actionneurs',CYAN)
@@ -151,12 +154,13 @@ def jardin():
     d.text(800,1005,'La pompe et les électrovannes sont les mêmes composants que dans la chaîne d’énergie.',BLUE,20)
     d.text(800,1050,'Vanne commune : arrosage simultané. Une vanne par bac : commande indépendante des bacs.',BLUE,20)
     d.text(800,1093,'Schéma de principe : les raccordements du régulateur et les interfaces dépendent du matériel choisi.',BLUE,18)
+    d.text(800,1138,PIED_CONVENTION,BLUE,20)
     d.save(C4/'4e/4e_C4.1/Images/chaines_jardin_connecte.svg')
 
 
 def gabarit():
     d=Diagram('Station autonome : élaborer son alimentation électrique',
-        'Gabarit à compléter : conversion solaire, régulation de charge, sélection de la source puis adaptation de tension vers les équipements de la station. La batterie est une branche de stockage reliée au régulateur, avec énergie chimique stockée et échanges électriques de charge et décharge. Une alimentation secteur isolée de 12 volts constitue une autre branche vers le sélecteur de source, utilisable quand le secteur est disponible. Cinq composants à placer : panneau (1), batterie (2), régulateur (3), convertisseur de tension (4) et basculement (5). L’ampoule et le haut-parleur sont hors du périmètre de cette alimentation ; ils seraient des récepteurs alimentés par elle.',1080)
+        'En haut, le gabarit à compléter ; en bas, la palette des composants. Gabarit : conversion solaire, régulation de charge, sélection de la source puis adaptation de tension vers les équipements de la station. La batterie est une branche de stockage reliée au régulateur, avec énergie chimique stockée et échanges électriques de charge et décharge. Une alimentation secteur isolée de 12 volts constitue une autre branche vers le sélecteur de source, utilisable quand le secteur est disponible. Cinq composants à placer : panneau (1), batterie (2), régulateur (3), convertisseur de tension (4) et basculement (5). L’ampoule et le haut-parleur sont hors du périmètre de cette alimentation ; ils seraient des récepteurs alimentés par elle.',1080)
     d.text(800,88,'À compléter : associe les composants aux fonctions, puis nomme les énergies sur les flèches.',WHITE,22)
     d.section(145,'GABARIT — fonctions fournies, composants à choisir',ORANGE)
     for x,f,c in [(155,'CONVERTIR','1. ………………………'),(500,'RÉGULER','3. ………………………'),(850,'DISTRIBUER','5. ………………………'),(1200,'ADAPTER','4. ………………………')]: d.block(x,235,f,c,YELLOW)
@@ -180,17 +184,17 @@ def gabarit():
 
 
 def station():
-    d=Diagram('Station d’alerte : mesurer, décider et avertir',
-        'La chaîne d’information acquiert une tension analogique simulant le vent sur A1, convertie par le CAN, et un signal logique du bouton sur D2. Le programme traite les mesures et l’acquittement. Le LCD, les voyants et le buzzer communiquent l’alerte à l’agent. Un ordre issu du traitement commande la distribution de l’énergie par les sorties de la carte et les interfaces des modules. L’alimentation USB fournit de l’énergie électrique ; les voyants et le buzzer la convertissent en énergies lumineuse et sonore. La présence d’un transistor intégré dépend du module. Aucune transmission mécanique séparée n’est nécessaire.',850)
-    d.section(100,"CHAÎNE D’INFORMATION",CYAN)
+    d=Diagram('Station d’alerte : l’information (en haut) commande l’énergie (en bas)',
+        CONVENTION + ' La chaîne d’information acquiert une tension analogique simulant le vent sur A1, convertie par le CAN, et un signal logique du bouton sur D2. Le programme traite les mesures et l’acquittement. Le LCD, les voyants et le buzzer communiquent l’alerte à l’agent. Un ordre issu du traitement commande la distribution de l’énergie par les sorties de la carte et les interfaces des modules. L’alimentation USB fournit de l’énergie électrique ; les voyants et le buzzer la convertissent en énergies lumineuse et sonore. La présence d’un transistor intégré dépend du module. Aucune transmission mécanique séparée n’est nécessaire.',885)
+    d.section(100,"CHAÎNE D’INFORMATION — en haut (elle décide)",CYAN)
     d.block(130,130,'ACQUÉRIR','Anémomètre simulé : A1\nBouton d’acquittement : D2',CYAN,w=300)
     d.text(280,308,'A1 : CAN 10 bits (0 à 1023)\nD2 : entrée logique (0 ou 1)',BLUE,19)
     d.block(660,130,'TRAITER','Microcontrôleur et programme\nSeuils et mémoire d’acquittement',VIOLET,w=300)
     d.block(1200,130,'COMMUNIQUER','Écran LCD, voyants, buzzer\nVers l’agent d’accueil',GREEN,w=300)
     d.arrow([(430,168),(650,168)],CYAN,'Données',540,148)
     d.arrow([(960,168),(1190,168)],CYAN,'Résultats / décisions',1070,148)
-    d.arrow([(810,290),(810,365),(755,365),(755,470)],GREEN,'Ordres de commande',1015,351,dashed=True)
-    d.section(420,"CHAÎNE D’ÉNERGIE — signalisation lumineuse et sonore",ORANGE)
+    d.arrow([(810,290),(810,365),(755,365),(755,470)],GREEN,'Ordres de commande : l’ordre descend et arrive sur DISTRIBUER',830,335,dashed=True,lanchor='start')
+    d.section(420,"CHAÎNE D’ÉNERGIE — en bas (elle obéit) — signalisation lumineuse et sonore",ORANGE,)
     d.block(160,490,'ALIMENTER','USB de l’ordinateur\n5 V continu',YELLOW,w=240)
     d.block(610,490,'DISTRIBUER','Sorties de la carte et\ninterfaces des modules',CYAN,w=290)
     d.block(1120,490,'CONVERTIR','Voyants et buzzer',VIOLET,w=250)
@@ -203,17 +207,18 @@ def station():
     d.text(755,663,'Shield Grove : raccordement\nInterface de commande : intégrée ou séparée selon le module',BLUE,19)
     d.text(800,748,'Un voyant ou un buzzer convertit de l’énergie et communique une information : deux points de vue sur le même composant.',BLUE,19)
     d.text(800,797,'Pas de transmission mécanique séparée nécessaire. Vérifier le câblage et les caractéristiques des modules utilisés.',BLUE,19)
+    d.text(800,846,'L’information en haut, l’énergie en bas, la flèche d’ordre qui descend : la disposition montre qui commande.',BLUE,19)
     d.save(C9/'Images/chaine_info_energie_station.svg')
 
 
 def book():
     d=Diagram('Book Train : chaîne d’énergie du déplacement',
-        'Modèle fonctionnel simplifié du Book Train. Le réseau électrique alimente une alimentation adaptée. La commande de puissance distribue l’énergie électrique au moteur sur ordre de l’automate. Le moteur convertit l’énergie électrique en énergie mécanique de rotation. Le réducteur et les organes d’entraînement transmettent le mouvement pour déplacer le wagonnet et sa nacelle. Les capteurs fournissent des comptes rendus à la chaîne d’information. Les détails de tensions, de stockage et d’entraînement doivent être établis à partir de la documentation technique.',730)
-    d.section(100,"CHAÎNE D’INFORMATION — rappel",CYAN)
+        CONVENTION + ' Modèle fonctionnel simplifié du Book Train. Le réseau électrique alimente une alimentation adaptée. La commande de puissance distribue l’énergie électrique au moteur sur ordre de l’automate. Le moteur convertit l’énergie électrique en énergie mécanique de rotation. Le réducteur et les organes d’entraînement transmettent le mouvement pour déplacer le wagonnet et sa nacelle. Les capteurs fournissent des comptes rendus à la chaîne d’information. Les détails de tensions, de stockage et d’entraînement doivent être établis à partir de la documentation technique.',765)
+    d.section(100,"CHAÎNE D’INFORMATION — en haut (rappel)",CYAN)
     d.block(600,130,'TRAITER','Automate et programme\nDonnées issues des capteurs',VIOLET,w=300)
-    d.arrow([(650,270),(650,325),(585,325),(585,430)],GREEN,'Ordres : démarrer, ralentir, arrêter',930,309,dashed=True)
+    d.arrow([(650,270),(650,325),(585,325),(585,430)],GREEN,'Ordres : démarrer, ralentir, arrêter — l’ordre descend',700,309,dashed=True,lanchor='start')
     d.arrow([(1265,415),(1265,170),(910,170)],CYAN,'Comptes rendus des capteurs',1220,130,dashed=True)
-    d.section(385,"CHAÎNE D’ÉNERGIE",ORANGE)
+    d.section(385,"CHAÎNE D’ÉNERGIE — en bas",ORANGE)
     d.block(135,450,'ALIMENTER','Alimentation électrique\nadaptée',YELLOW,w=200)
     d.block(485,450,'DISTRIBUER','Commande de puissance',CYAN,w=200)
     d.block(835,450,'CONVERTIR','Moteur électrique',VIOLET,w=200)
@@ -226,6 +231,7 @@ def book():
     d.arrow([(1405,488),(1570,488)],ORANGE,'Énergie\nmécanique',1488,425)
     d.text(1490,555,'Déplacer\nle wagonnet\net sa nacelle',WHITE,20,True)
     d.text(800,675,'Modèle fonctionnel : tensions, éventuel secours et détails d’entraînement à préciser d’après la documentation technique.',BLUE,18)
+    d.text(800,722,'Schéma original CC0 — séquence « Book Train » · convention : information en haut, énergie en bas, la flèche d’ordre descend.',BLUE,17)
     d.save(C4/'4e/4e_C4.1_book-train/Images/chaine_energie_book-train.svg')
     # Même schéma disponible depuis le dossier des fichiers modifiables.
     src=ROOT/C4/'4e/4e_C4.1_book-train/Images/chaine_energie_book-train.svg'

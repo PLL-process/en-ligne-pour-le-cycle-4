@@ -14,6 +14,7 @@ from playwright.sync_api import sync_playwright
 
 ROOT=Path(__file__).resolve().parents[1]
 LOT=ROOT/'theme-1-objets-systemes-usages-interactions/C3-caracteriser-et-choisir-un-objet-ou-un/5e/5e_C3.1'
+INFO_ET_ENERGIE={'chaines_energie_information_lampadaire.svg','chaines_jardin_connecte.svg','chaine_info_energie_station.svg','chaine_energie_book-train.svg'}
 NAMES=['chaines_energie_information_lampadaire.svg','chaines_jardin_connecte.svg','chaine_energie_a_elaborer.svg','chaine_info_energie_station.svg','chaine_energie_book-train.svg','chaine_energie_velo_cargo.svg']
 FILES=[next(ROOT.glob('theme-*/**/Images/'+n)) for n in NAMES]
 OUT=Path(sys.argv[1]).resolve() if len(sys.argv)>1 else None
@@ -24,7 +25,7 @@ Thread(target=server.serve_forever,daemon=True).start()
 base='http://127.0.0.1:'+str(server.server_address[1])+'/'
 def check(label,ok,detail=''):
     results.append(bool(ok));print(('OK ' if ok else 'ECHEC ')+label+(' : '+str(detail) if detail else ''))
-def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def digest(p):return hashlib.sha256(p.read_bytes().replace(b'\r\n',b'\n')).hexdigest()   # fins de ligne ignorées : sous Windows le dépôt sort en CRLF, les générateurs écrivent en LF
 
 with sync_playwright() as p:
     b=p.chromium.launch()
@@ -47,6 +48,13 @@ with sync_playwright() as p:
         }''')
         check(f.name+' : textes dans le cadre, sans chevauchement',not r['outside'] and not r['pairs'],r['outside']+r['pairs'])
         check(f.name+' : énergies hors des blocs, alternative présente, autonome',not r['inside'] and r['accessible'] and not r['remote'],r['inside'])
+        if f.name in INFO_ET_ENERGIE:
+            # Convention conservée (règle d'or du schéma) : la chaîne d'information est AU-DESSUS de la chaîne d'énergie, l'ordre descend.
+            src=f.read_text(encoding='utf-8')
+            y_info=[float(y) for y in re.findall(r'<text x="[^"]*" y="([^"]*)"[^>]*>CHAÎNE D’INFORMATION',src)]
+            y_ener=[float(y) for y in re.findall(r'<text x="[^"]*" y="([^"]*)"[^>]*>CHAÎNE D’ÉNERGIE',src)]
+            check(f.name+' : convention « information en haut, énergie en bas, l’ordre descend » — dite et dessinée',
+                  bool(y_info) and bool(y_ener) and y_info[0]<y_ener[0] and all(k in src.lower() for k in ('en haut','en bas','descend')),(y_info,y_ener))
         if OUT:pg.locator('svg').screenshot(path=str(OUT/(f.stem+'.png')))
         if f.name!='chaine_energie_velo_cargo.svg':
             pg.emulate_media(media='print')
