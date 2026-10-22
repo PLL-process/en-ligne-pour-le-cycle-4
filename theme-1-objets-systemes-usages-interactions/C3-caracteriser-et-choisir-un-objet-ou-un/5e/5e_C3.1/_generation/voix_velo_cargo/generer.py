@@ -22,10 +22,10 @@ CE QU'IL FAUT SUR LE POSTE (rien de tout cela n'est dans le dépôt)
 Ne jamais copier Piper, espeak-ng ni le modèle dans le dépôt : le moteur est sous GPL-3, le modèle est une donnée à part.
 Licence de la voix et attribution : voix.json et SOURCES_MEDIAS.md.
 
-AVERTISSEMENT — UNE NOUVELLE PRISE EST À ÉCOUTER. Les scènes 1 à 5 de Audio/ sont les prises validées à l'oreille par Pascal.
-La scène 6 est une nouvelle prise correspondant à la narration du 21/10/2026 ; voir voix.json « prises_a_ecouter ».
-Ce script lit « dit » (le texte affiché) et ne reprend pas les corrections phonétiques manuelles des anciennes prises.
-Ne pas qualifier une prise de « validée à l'oreille » sans écoute humaine ; actualiser sa trace dans voix.json après génération.
+AVERTISSEMENT — TOUTE RÉGÉNÉRATION EXIGE UNE NOUVELLE ÉCOUTE DE PASCAL. Les six fichiers de Audio/ sont des prises validées à l'oreille
+(scène 6 : narration du 21/10/2026, écoutée et validée le 21/10/2026 ; voir voix.json « prises_validees »). Ce script lit « dit » (le texte
+affiché) et ne reprend pas les corrections phonétiques manuelles des scènes 1, 3, 4 et 6 anciennes. Ne pas qualifier une prise de
+« validée à l'oreille » sans écoute humaine ; actualiser sa trace dans voix.json après génération.
 
 ATTENTION : ce n'est PAS reproductible à l'octet. Piper tire du bruit à chaque prise (noise_scale, noise_w_scale) et le
 conteneur Ogg porte un numéro de flux aléatoire : deux générations de la même phrase donnent deux prises un peu différentes

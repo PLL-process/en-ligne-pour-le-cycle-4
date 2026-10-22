@@ -9,18 +9,33 @@ description: Dessiner ou corriger tout schéma de chaîne d'énergie du dépôt 
 > Les blocs portent les fonctions techniques, avec un verbe ; sous chaque bloc, le composant qui la réalise ; les formes
 > d'énergie sur les flèches, entre les blocs, à l'entrée et à la sortie ; l'action finale à la sortie ; une énergie stockée
 > s'annote sous son composant.
+> **Vocabulaire fixe des fonctions : ALIMENTER (STOCKER pour la batterie), DISTRIBUER, CONVERTIR, TRANSMETTRE.**
 > Source : Éduscol STI, *La chaîne d'énergie*.
 
 Elle **s'ajoute** à la convention de la technologie, qui reste en vigueur : **l'information EN HAUT, l'énergie EN BAS, l'ordre
 qui descend** (la disposition montre qui commande). Une chaîne d'énergie seule n'a pas de chaîne d'information à placer
 au-dessus : la convention ne s'applique alors qu'à l'ordre de lecture (gauche → droite).
 
+## Vocabulaire fixe des fonctions (aucun autre verbe dans un bloc)
+
+| Bloc | Ce qu'il dit | Où va la précision (sous le bloc) |
+|---|---|---|
+| **ALIMENTER** | fournir l'énergie au reste de la chaîne | batterie (le bloc s'appelle alors **STOCKER**, avec « Énergie chimique stockée » dessous), alimentation secteur, USB, **régulateur de charge**, **convertisseur 12 V → 5 V** |
+| **DISTRIBUER** | acheminer et commander l'énergie vers les récepteurs | interrupteur électronique, relais, pont en H, sortie de la carte, **électrovanne** (ouvre ou ferme le passage) |
+| **CONVERTIR** | changer la forme de l'énergie | panneau solaire, moteur, pompe (électrique → mécanique : l'eau est mise en mouvement), LED, buzzer |
+| **TRANSMETTRE** | acheminer et adapter un mouvement | réducteur, courroie, crémaillère |
+
+**Interdits dans un bloc** : RÉGULER, ADAPTER, OUVRIR / FERMER, STOCKER / ALIMENTER, et tout verbe d'une autre liste. « Réguler la charge »,
+« adapter la tension » et « ouvrir ou fermer » sont des **précisions** : elles s'écrivent sous le bloc (ALIMENTER : régulateur de charge ;
+ALIMENTER : convertisseur 12 V → 5 V ; DISTRIBUER : électrovanne). Pour la chaîne d'information, les verbes restent ACQUÉRIR, TRAITER, COMMUNIQUER.
+`verifier_chaines_energie.py` refuse tout autre texte dans un bloc de fonction.
+
 ## Ce que porte chaque élément
 
 | Élément | Il contient | Il ne contient jamais |
 |---|---|---|
-| **Bloc** | une fonction, en majuscules, à l'infinitif : ALIMENTER, DISTRIBUER, CONVERTIR, TRANSMETTRE ; RÉGULER pour une charge ; STOCKER / ALIMENTER pour une batterie | un nom de composant, une forme d'énergie |
-| **Sous le bloc** | le composant qui réalise la fonction (« Moteur dans le moyeu arrière ») | un verbe de fonction |
+| **Bloc** | une fonction du vocabulaire fixe, en majuscules, à l'infinitif : ALIMENTER, DISTRIBUER, CONVERTIR, TRANSMETTRE ; STOCKER pour une batterie | un nom de composant, une précision de fonction, une forme d'énergie |
+| **Sous le bloc** | le composant qui réalise la fonction (« Moteur dans le moyeu arrière »), et la précision utile (« Régulateur de charge », « Pont en H, carte séparée ») | un verbe de fonction |
 | **Sur la flèche** | la forme d'énergie qui circule : électrique, mécanique, lumineuse, hydraulique, sonore, chimique… | un composant |
 | **Entrée** | une flèche étiquetée qui arrive au premier bloc (« Énergie lumineuse » vers le panneau) ; la source est nommée si utile | — |
 | **Sortie** | une flèche étiquetée qui quitte le dernier bloc, **puis l'action finale écrite en gras** (« Éclairer la zone », « Déplacer le vélo et sa charge ») | — |
@@ -36,11 +51,13 @@ au-dessus : la convention ne s'applique alors qu'à l'ordre de lecture (gauche �
 3. **Ne pas dessiner un bloc absent « pour faire complet »** (pas de TRANSMETTRE si rien ne se déplace) : le dire en une phrase.
 4. **L'eau n'est pas de l'énergie.** Un circuit de matière (eau) se dessine à part, d'une couleur distincte, avec ses propres
    flèches ; l'énergie hydraulique est la forme à la sortie de la pompe.
-5. **Le même composant peut apparaître dans deux chaînes** (le voyant convertit de l'énergie, et communique une information) :
+5. **L'ordre arrive toujours sur DISTRIBUER.** Le préactionneur — sortie de la carte, transistor intégré au module (buzzer Grove) ou carte
+   séparée (relais, pont en H) — se dit **sous le bloc DISTRIBUER**, jamais en déplaçant la flèche (planche des trois cas de 3e_C9.2).
+6. **Le même composant peut apparaître dans deux chaînes** (le voyant convertit de l'énergie, et communique une information) :
    le dire, ne pas le dédoubler en deux composants.
-6. **L'étiquette d'une flèche se place à côté d'elle, jamais dessus ni sous un autre bloc** : sur un trait vertical, l'étiquette
+7. **L'étiquette d'une flèche se place à côté d'elle, jamais dessus ni sous un autre bloc** : sur un trait vertical, l'étiquette
    commence à droite du trait (`lanchor='start'` dans le générateur).
-7. **Un bandeau de cinq blocs ne tient pas sur une ligne à 390 px** : prévoir une disposition large (une ligne) et une disposition
+8. **Un bandeau de cinq blocs ne tient pas sur une ligne à 390 px** : prévoir une disposition large (une ligne) et une disposition
    étroite (une colonne), choisies selon la largeur affichée ; ne jamais descendre sous 10 px à l'écran.
 
 ## Comment le faire

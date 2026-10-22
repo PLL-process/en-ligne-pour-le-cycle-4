@@ -22445,6 +22445,8 @@ Poids des douze fichiers : 350 Ko.
 > Les blocs portent les fonctions techniques, avec un verbe ; sous chaque bloc, le composant qui la réalise ; les formes d'énergie
 > sur les flèches, entre les blocs, à l'entrée et à la sortie ; l'action finale à la sortie ; une énergie stockée s'annote sous son
 > composant. Source : Éduscol STI, *La chaîne d'énergie*.
+> **Vocabulaire fixe des fonctions** : ALIMENTER (STOCKER pour la batterie), DISTRIBUER, CONVERTIR, TRANSMETTRE. Aucun autre verbe dans un bloc ;
+> toute précision (régulation de charge, adaptation de tension, ouverture ou fermeture) passe **sous le bloc**.
 > Elle **s'ajoute** à la convention de la technologie, conservée : **l'information en haut, l'énergie en bas, l'ordre qui descend.**
 
 ### Pourquoi
@@ -22465,7 +22467,15 @@ thème dans le nom : la garde-périmètre ne s'applique pas, comme pour la règl
 - **rétablit la convention par le générateur**, en la combinant avec la présentation de la règle n°310 : titre « …l'information (en haut) commande
   l'énergie (en bas) », chaînes repérées « en haut (elle décide) » / « en bas (elle obéit) », flèche d'ordre « l'ordre descend », pied de schéma ;
   les alt et descriptions des pages disent de nouveau « En haut… En bas… » ; `verifier_chaines_energie.py` contrôle qu'elle est dite **et dessinée** ;
-- replace des étiquettes qui se posaient sur un trait ou sous un autre bloc (lampadaire, jardin, station, Book Train) ;
+- replace des étiquettes qui se posaient sur un trait ou sous un autre bloc (lampadaire, jardin, station, Book Train, gabarit de 3e) ;
+- **applique le vocabulaire fixe** (décision de Pascal) : « RÉGULER », « ADAPTER » et « OUVRIR ou FERMER » disparaissent des blocs, de la batterie « STOCKER / ALIMENTER »
+  devient « STOCKER » ; le régulateur de charge et le convertisseur 12 V → 5 V passent sous ALIMENTER, l'électrovanne sous DISTRIBUER ; activités, corrigés et QCM suivent ;
+- **jardin : la pompe convertit l'énergie électrique en énergie mécanique** (« l'eau est mise en mouvement »), pas hydraulique : schéma, activité (options, corrigés, aides)
+  et QCM n°1, 3, 4, 5 ajustés ;
+- **rétablit l'encadré « Deux questions que le schéma soulève » et la planche des trois cas de 3e_C9.2, corrigés** : l'ordre arrive toujours sur DISTRIBUER ; le préactionneur est
+  la sortie de la carte, un transistor intégré au module (buzzer Grove) ou une carte séparée (relais, pont en H), et cela se dit sous le bloc. La planche est désormais
+  engendrée par `regenerer_chaines_energie.py` (elle était dessinée à la main, avec un texte qui en recouvrait un autre au cas 2) ;
+- QCM Book Train : « le bloc ADAPTER » (deux explications) devient « le bloc TRANSMETTRE ».
 - corrige dans 3e_C9.2 une phrase qui contredisait le schéma (« l'ordre atterrit sur CONVERTIR ») et renvoyait à un encadré retiré ;
 - liste, avant / après, chaque activité et chaque QCM changé : voir `docs/corrections-chaines-energie-2026-10-21.md` (section « Reprise Fable »).
   **Aucun indice de bonne réponse n'a changé ; le contenu de la bonne réponse a changé à 7 questions** (lampadaire n°6, jardin n°1, 3, 4, 5,
@@ -22474,20 +22484,15 @@ thème dans le nom : la garde-périmètre ne s'applique pas, comme pour la règl
 - **Périmètre / garde** : `_outils/` n'est accepté que d'une branche « theme-2 » ; `docs/` n'est dans aucun périmètre ; un nom de branche sans motif
   de thème n'est pas jugé (avertissement). La branche est donc nommée sans motif de thème.
 
-### À RELIRE PAR PASCAL
+### Décisions de Pascal (21/10/2026) sur la reprise
 
-1. **3e_C9.2 : la #485 a retiré de la page l'encadré « Deux questions que le schéma soulève » et la planche des trois cas** (`ordre_preactionneur_trois_cas.svg` :
-   station / gyrophare / portail, avec la règle « l'ordre atterrit sur le premier bloc de la chaîne d'énergie qu'il commande »). Ce n'était pas dans la
-   demande de convention ; le fichier SVG reste dans le dossier et dans le manifeste sans plus être affiché. **Rien n'est restauré** : la planche
-   dit « l'ordre arrive sur CONVERTIR », ce que le schéma corrigé ne dit plus.
-2. **Fonctions hors des quatre** introduites par la #485 : « ADAPTER la tension », « OUVRIR ou FERMER un passage d'eau », « RÉGULER la charge »,
-   « STOCKER / ALIMENTER ». À valider ou à ramener à ALIMENTER / DISTRIBUER / CONVERTIR / TRANSMETTRE.
-3. **Vélo-cargo** : la #485 change la scène 6 et son audio (nouvelle prise **non écoutée**) et réécrit le générateur `figure_iso_velo_cargo/` ; la branche locale
-   `fable/theme-1/bandeau-fonctionnel-velo-cargo` (non poussée, bandeau de cinq cases) modifie les mêmes fichiers : **les deux ne se fusionnent pas**, il faut
-   choisir un bandeau. Le bandeau de cette branche locale place le composant **dans** le bloc et n'a ni flèche d'entrée ni flèche de sortie : il ne respecte
-   pas la règle n°310 telle qu'écrite.
-4. Jardin 4e : « électrique → hydraulique » pour la pompe (la #485 supprime l'étape mécanique) ; à valider.
-5. `3e_C9.2/generer_les_quatre_pages.py` est en panne sur `main` (« repère introuvable : 🎁 Bonus ») : les pages découpées se maintiennent à la main.
+1. **3e_C9.2** : l'encadré et la planche des trois cas sont rétablis, corrigés (ci-dessus).
+2. **Fonctions** : vocabulaire fixe ALIMENTER (STOCKER pour la batterie), DISTRIBUER, CONVERTIR, TRANSMETTRE ; ADAPTER, RÉGULER, OUVRIR/FERMER sortent des blocs.
+3. **Vélo-cargo** : le bandeau de la #485 est gardé ; la branche locale `fable/theme-1/bandeau-fonctionnel-velo-cargo` est abandonnée. L'audio de la scène 6 de la #485
+   est **identique à l'octet** (MP3 et Ogg) à celui que Pascal a écouté et validé : rien n'est remplacé, la mention « non écoutée » est retirée.
+4. **Jardin** : la pompe convertit en énergie mécanique.
+
+Restent ouverts : `3e_C9.2/generer_les_quatre_pages.py` est en panne sur `main` (« repère introuvable : 🎁 Bonus ») : les pages découpées se maintiennent à la main.
 
 ### Ce qui a vraiment tourné (reprise de la #485)
 
