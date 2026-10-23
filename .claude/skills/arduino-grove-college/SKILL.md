@@ -52,11 +52,12 @@ secours si le réseau tombe.
 
 ## Code C++ ou blocs
 
-⏳ À trancher par Pascal (question du 23/10/2026) : garder l'exigence « C++ commenté
-ligne par ligne + compilation Arduino CLI », ou passer en priorité par les blocs de
-Vittascience (interface Arduino) ? — en attendant : pratique constatée dans `3e_C9.2`.
-L'élève programme dans Vittascience, interface Arduino, mode blocs, avec le simulateur,
-puis lit le C++ généré. Le programme de référence
+**Décision de Pascal du 23/10/2026 : l'exigence est gardée.** Tout montage programmé
+a son programme C++ commenté ligne par ligne, et sa compilation est vérifiée avec
+Arduino CLI ; ce n'est pas une option. Côté élève, la pratique de `3e_C9.2` reste le
+modèle : il programme dans Vittascience, interface Arduino, mode blocs, avec le
+simulateur, puis lit le C++ généré ; les blocs qu'on lui montre sont des captures
+réelles (n°308). Le programme de référence
 `station_alerte_cyclonique/station_alerte_cyclonique.ino` est commenté ligne à ligne ;
 sa compilation pour `arduino:avr:uno` est vérifiée par `banc-docker/` (arduino-cli,
 enseignant seulement).

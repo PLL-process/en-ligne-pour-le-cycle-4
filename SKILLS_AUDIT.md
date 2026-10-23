@@ -20,10 +20,11 @@ journal jusqu'à la règle d'or n°311. Détail par skill (raison, preuve, quest
 | `licences-medias-education` | 21/07/2026 (lot 0) | 23/10/2026 | provenance des médias, SOURCES_MEDIAS.md, documents d'éditeur | Python 3 stdlib | **UTILISÉE** |
 | `chaine-energie-fonctionnelle` | 21/10/2026 (n°310) | 23/10/2026 | schémas des chaînes d'énergie, représentation fonctionnelle | Python 3 stdlib | **UTILISÉE** |
 
-Questions pédagogiques posées à Pascal le 23/10/2026 et notées « ⏳ À trancher » dans
-ces skills : QCM à 30 questions fixes ou à tirage aléatoire ; séquence modèle à nommer ;
-fonction absente d'une chaîne (pointillés de la n°131 ou une phrase) ; Arduino en C++
-ou en blocs Vittascience d'abord.
+Questions pédagogiques posées à Pascal le 23/10/2026, **tranchées le même jour** et
+écrites dans ces skills : QCM à **30 questions fixes**, sans tirage aléatoire ; séquence
+modèle **5e_C3.1** ; fonction absente d'une chaîne **en pointillés grisés avec sa raison**
+(n°131 ; générateur et page 3e_C9.2 à mettre en conformité) ; Arduino : **C++ commenté et
+compilation Arduino CLI gardés**, l'élève programmant en blocs Vittascience.
 
 ## Skills du compte claude.ai de Pascal qui parlent du dépôt
 
@@ -60,4 +61,4 @@ dépendances, réseau, permissions, réputation) avant décision, consignée ici
 | Source | Inspectée | Décision |
 |---|---|---|
 | ECC — `affaan-m/ECC` (licence MIT), plugin Claude Code | 23/10/2026 | **Plugin REFUSÉ** : conçu pour le développement logiciel (tests d'abord, couverture de 80 %, build), il présente tout son catalogue (311 skills, 71 agents) au modèle à chaque session, ses hooks exécutent des scripts à chaque action, et sa mémoire et son « apprentissage continu » doublonnent la gouvernance par le journal. **Deux idées adaptées, réécrites de zéro** (aucun code tiers exécuté) : `inventaire-skills` (d'après `skill-stocktake`) et `balayage-navigateur` (d'après `e2e-testing`), skills du compte claude.ai, Python 3 stdlib + Playwright. |
-| Skills tiers importés sur le compte claude.ai (Trail of Bits, K-12, diagrammes, électronique…) | 23/10/2026, par l'inventaire | Jamais consignés jusqu'ici. Ceux qui touchent le dépôt : `webapp-testing` (à mettre à jour : forme `'file://' + chemin` interdite par la n°299), `drawio-skill` (à améliorer : texte `html=1` contraire à la n°310), `k12-lesson-planning` et `k12-lesson-differentiation` (cadre américain, sortie Word, sans technologie : retrait proposé, **réponse de Pascal attendue**). Les autres ne touchent pas le dépôt ; leurs verdicts sont dans l'inventaire du 23/10. |
+| Skills tiers importés sur le compte claude.ai (Trail of Bits, K-12, diagrammes, électronique…) | 23/10/2026, par l'inventaire | Jamais consignés jusqu'ici. Ceux qui touchent le dépôt : `webapp-testing` (à mettre à jour : forme `'file://' + chemin` interdite par la n°299), `drawio-skill` (à améliorer : texte `html=1` contraire à la n°310), `k12-lesson-planning` et `k12-lesson-differentiation` (cadre américain, sortie Word, sans technologie : **gardés par Pascal le 23/10**, le premier réservé aux demandes explicites de plans de séance en .docx). Les autres ne touchent pas le dépôt ; leurs verdicts sont dans l'inventaire du 23/10, et Pascal les a tous gardés (réponses du 23/10). |

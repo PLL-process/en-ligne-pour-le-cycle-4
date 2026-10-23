@@ -50,10 +50,11 @@ ALIMENTER : convertisseur 12 V → 5 V ; DISTRIBUER : électrovanne). Pour la ch
    Placer la batterie avant la régulation est une erreur technique, pas une variante de dessin.
 2. **Une fonction n'est pas une forme d'énergie.** « Électrique » ne va jamais dans un bloc ; « CONVERTIR » ne va jamais sur
    une flèche. Les trois mélanges (fonction / composant / énergie dans le même bloc) sont ce que la règle corrige.
-3. **Fonction absente** (pas de TRANSMETTRE si rien ne se déplace) : ne pas inventer un bloc « pour faire complet ».
-   ⏳ À trancher par Pascal (question du 23/10/2026) : la dessiner en pointillés, grisée, avec sa raison à côté (règle d'or n°131,
-   26/08/2026), ou la dire en une phrase ? — en attendant : une phrase, sans bloc. C'est ce que font le générateur (station 3e_C9.2 :
-   « Pas de transmission mécanique séparée nécessaire ») et la page station 1 de 3e_C9.2 (« TRANSMETTRE est absent parce que rien ne se déplace »).
+3. **Fonction absente** (pas de TRANSMETTRE si rien ne se déplace) : ne jamais inventer un bloc plein « pour faire complet ».
+   **La dessiner en pointillés, grisée, avec sa raison écrite à côté** (règle d'or n°131, 26/08/2026 ; confirmé par Pascal le
+   23/10/2026). ⚠️ Pas encore appliqué partout : le générateur (station 3e_C9.2 : « Pas de transmission mécanique séparée
+   nécessaire ») et la page station 1 de 3e_C9.2 (« TRANSMETTRE est absent parce que rien ne se déplace ») l'écrivent en une
+   phrase, sans bloc — à mettre en conformité par un lot du thème 2 (générateur, `_outils/`) puis du thème 3 (page).
    La n°310 a déjà remplacé la n°131 sur un autre point : la flèche d'ordre n'arrive plus « sur le convertisseur quand la puissance est
    faible », elle arrive **toujours sur DISTRIBUER** (piège 5 ; reprise du 21/10/2026 au journal).
 4. **L'eau n'est pas de l'énergie.** Un circuit de matière (eau) se dessine à part, d'une couleur distincte, avec ses propres
