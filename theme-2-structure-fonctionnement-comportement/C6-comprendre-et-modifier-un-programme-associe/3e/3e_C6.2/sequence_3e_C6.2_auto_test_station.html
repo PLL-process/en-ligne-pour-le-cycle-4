@@ -202,6 +202,10 @@
     border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
   .rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
   @media print{.rappel-ouverture>summary{display:none!important}}
+  @media (max-width:480px){   /* n°311 : à 390 px, la barre d'outils tient sur deux lignes au plus */
+    .toolbar{gap:6px;margin:8px auto 12px}
+    .toolbar .btn{flex:1 1 40%;min-width:0;min-height:44px;padding:6px;font-size:.8rem;line-height:1.2}
+  }
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -297,8 +301,6 @@
 <p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections
 et les compléments&nbsp;: il ne reste que les consignes et les exercices. À activer si la page te paraît trop chargée.</p>
 
-<div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
-
 <section class="card">
   <h2>🌀 La situation : la station a bien marché… l'an dernier</h2>
   <p><b>Sainte-Luce, début juin.</b> La station d'alerte cyclonique que le club techno a réparée puis améliorée
@@ -361,6 +363,8 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
     <div class="progress-fill" id="progFill"></div>
   </div>
 </div>
+
+<div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
 
 <div class="seance-tabs" id="seances" role="tablist" aria-label="Séances de l'atelier">
   <button class="seance-tab active" role="tab" aria-selected="true" data-panel="seance1" id="tab-s1">Séance 1<br>Comprendre et concevoir<span class="done" id="done-s1"></span></button>
