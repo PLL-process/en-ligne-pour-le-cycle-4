@@ -5,7 +5,9 @@ description: Dessiner ou corriger tout schéma de chaîne d'énergie du dépôt 
 
 # Chaîne d'énergie fonctionnelle (règle d'or n°310)
 
-> **Règle d'or n°310.** Dans une chaîne d'énergie, les blocs disent ce qui est fait, les flèches disent ce qui circule.
+Mis à jour le 23/10/2026 (inventaire des skills) : aligné sur le journal jusqu'à la règle d'or n°311.
+
+> **Règle d'or n°310 (21/10/2026).** Dans une chaîne d'énergie, les blocs disent ce qui est fait, les flèches disent ce qui circule.
 > Les blocs portent les fonctions techniques, avec un verbe ; sous chaque bloc, le composant qui la réalise ; les formes
 > d'énergie sur les flèches, entre les blocs, à l'entrée et à la sortie ; l'action finale à la sortie ; une énergie stockée
 > s'annote sous son composant.
@@ -48,9 +50,15 @@ ALIMENTER : convertisseur 12 V → 5 V ; DISTRIBUER : électrovanne). Pour la ch
    Placer la batterie avant la régulation est une erreur technique, pas une variante de dessin.
 2. **Une fonction n'est pas une forme d'énergie.** « Électrique » ne va jamais dans un bloc ; « CONVERTIR » ne va jamais sur
    une flèche. Les trois mélanges (fonction / composant / énergie dans le même bloc) sont ce que la règle corrige.
-3. **Ne pas dessiner un bloc absent « pour faire complet »** (pas de TRANSMETTRE si rien ne se déplace) : le dire en une phrase.
+3. **Fonction absente** (pas de TRANSMETTRE si rien ne se déplace) : ne pas inventer un bloc « pour faire complet ».
+   ⏳ À trancher par Pascal (question du 23/10/2026) : la dessiner en pointillés, grisée, avec sa raison à côté (règle d'or n°131,
+   26/08/2026), ou la dire en une phrase ? — en attendant : une phrase, sans bloc. C'est ce que font le générateur (station 3e_C9.2 :
+   « Pas de transmission mécanique séparée nécessaire ») et la page station 1 de 3e_C9.2 (« TRANSMETTRE est absent parce que rien ne se déplace »).
+   La n°310 a déjà remplacé la n°131 sur un autre point : la flèche d'ordre n'arrive plus « sur le convertisseur quand la puissance est
+   faible », elle arrive **toujours sur DISTRIBUER** (piège 5 ; reprise du 21/10/2026 au journal).
 4. **L'eau n'est pas de l'énergie.** Un circuit de matière (eau) se dessine à part, d'une couleur distincte, avec ses propres
-   flèches ; l'énergie hydraulique est la forme à la sortie de la pompe.
+   flèches. La pompe convertit l'énergie électrique en énergie **mécanique** (« l'eau est mise en mouvement »), pas hydraulique
+   (décision de Pascal du 21/10/2026, n°4 de la reprise au journal).
 5. **L'ordre arrive toujours sur DISTRIBUER.** Le préactionneur — sortie de la carte, transistor intégré au module (buzzer Grove) ou carte
    séparée (relais, pont en H) — se dit **sous le bloc DISTRIBUER**, jamais en déplaçant la flèche (planche des trois cas de 3e_C9.2).
 6. **Le même composant peut apparaître dans deux chaînes** (le voyant convertit de l'énergie, et communique une information) :
@@ -62,10 +70,12 @@ ALIMENTER : convertisseur 12 V → 5 V ; DISTRIBUER : électrovanne). Pour la ch
 
 ## Comment le faire
 
-1. **Le générateur d'abord.** Les schémas des séquences de thème 2 et 3 sont écrits par `_outils/regenerer_chaines_energie.py`
-   (classe `Diagram` : `block(x, y, fonction, composant, couleur, stock=…)`, `arrow(points, couleur, étiquette, …)`,
-   `section(…)`, `text(…)`), qui écrit aussi la **source draw.io** de chaque schéma. Le vélo-cargo a son propre générateur
-   (`5e_C3.1/_generation/figure_iso_velo_cargo/`). Ne jamais éditer un SVG produit : modifier le générateur, relancer.
+1. **Le générateur d'abord.** `_outils/regenerer_chaines_energie.py` écrit six figures : lampadaire (`5e_C4.1`), jardin (`4e_C4.1`),
+   chaîne à élaborer (`3e_C4.1`), station et planche des trois cas (`3e_C9.2`), Book Train (`4e_C4.1_book-train`, figure de la page
+   et QCM compris). Classe `Diagram` : `block(x, y, fonction, composant, couleur, stock=…)`, `arrow(points, couleur, étiquette, …)`,
+   `section(…)`, `text(…)`. Il écrit aussi la **source draw.io** (`_generation/chaines_energie/`, `fichiers_drawio/` pour le Book Train).
+   Le vélo-cargo a son propre générateur (`5e_C3.1/_generation/figure_iso_velo_cargo/`). Ne jamais éditer un SVG produit :
+   modifier le générateur, relancer. Tout autre schéma est fait main : voir la liste ci-dessous.
 2. **Couleurs** (les mêmes partout) : ALIMENTER `#ffd66b` · DISTRIBUER `#61dafb` · CONVERTIR `#c68ef2` · TRANSMETTRE `#81fba1` ;
    flux d'énergie en orange `#ffb454`, d'information en cyan `#61dafb`, ordre en vert pointillé `#81fba1`. La couleur ne porte
    jamais une information que le texte ne porte pas : le schéma se lit en niveaux de gris.
@@ -80,12 +90,34 @@ ALIMENTER : convertisseur 12 V → 5 V ; DISTRIBUER : électrovanne). Pour la ch
 ## Vérifier
 
 ```
-python _outils/regenerer_chaines_energie.py     # écrit les cinq schémas, les sources draw.io, la figure du Book Train
+python _outils/regenerer_chaines_energie.py     # écrit les six figures, les sources draw.io, la figure et le QCM du Book Train
 python _outils/verifier_chaines_energie.py      # textes dans le cadre, énergies hors des blocs, convention dite ET dessinée, impression, objets HTML, scène 6
 ```
 
 Puis les contrôles du dépôt (dont `controle_regles_visibles.py`, règle n°309 : aucune trace de la fabrique dans un texte lu par
 l'élève — ni « règle n°310 » dans un schéma ou une légende) et les bancs des séquences touchées.
+
+Limite de `verifier_chaines_energie.py` : il cherche chaque nom avec `next(ROOT.glob('theme-*/**/Images/'+nom))` et ne contrôle
+donc que le **premier** fichier trouvé. Deux fichiers portent le nom `chaines_jardin_connecte.svg` (`4e_C4.1`, généré, et `4e_C9.1`,
+fait main) : seul celui de `4e_C4.1` est vérifié. Il ne voit pas non plus les schémas faits main ci-dessous.
+
+## Schémas faits main encore non conformes (relevé du 23/10/2026)
+
+Vérifiés fichier par fichier. Les autres SVG du dépôt qui dessinent une chaîne d'énergie sont produits par un générateur.
+
+- `theme-3-…/C9-…/4e/4e_C9.1/Images/chaines_jardin_connecte.svg` (séquence et QCM `4e_C9_jardin-programme`) : aucune forme
+  d'énergie sur les flèches, ni entrée ni sortie ; TRANSMETTRE justifié par « quelque chose SE DÉPLACE — l'eau » (piège 4), alors
+  que le jardin généré n'a pas de TRANSMETTRE ; le texte du schéma fait arriver l'ordre sur CONVERTIR pour un voyant (piège 5).
+- `theme-2-…/C6-…/4e/4e_C6.2/Images/schema_chaines_arrosage.svg` (séquence `jardin-connecte-arrosage-automatique`) : bloc
+  « AGIR » (verbe hors vocabulaire ; l'action va à la sortie, hors chaîne) ; « COMMANDER » ajouté à la chaîne d'information ;
+  TRANSMETTRE = « Circulation de l'eau » (piège 4) ; composant en gros et fonction en petit dans le bloc ; aucune énergie sur les
+  flèches ; ni `<title>` ni `<desc>`.
+- `theme-3-…/C9-…/5e/5e_C9.1/Images/barriere_cyclone_condition.svg` (séquence, QCM et synthèse élève `5e_C9.1`) : blocs
+  « MOTEUR » et « BARRIÈRE » (des composants, pas des fonctions) ; la barrière, qui est l'action, dessinée dans la chaîne (cas
+  déjà relevé par la règle d'or n°123, 21/08/2026) ; pas de DISTRIBUER : l'ordre descend sur le moteur ; aucune énergie sur les flèches.
+
+Pour les corriger : les faire entrer dans le générateur (nom de fichier distinct pour le jardin de `4e_C9.1`), puis ajuster alt,
+descriptions, consignes, corrigés et QCM (étape 5). Ce lot de skills ne les modifie pas.
 
 ## Ce que cette règle ne couvre pas
 
