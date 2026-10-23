@@ -171,6 +171,14 @@
   .aide2 summary{color:#ab6000!important}
   .erreurs b{color:#eb0017!important}
 }
+  /* Règle d'or n°311 — à partir de la séance 2, l'élève voit sa séance, pas le décor.
+     Sans JavaScript le volet reste ouvert et sans titre : tout s'affiche, comme avant. */
+  .rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}   /* le gabarit habille tout details en carte : pas le volet */
+  .rappel-ouverture>summary{display:none}
+  .rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;margin:10px 0;
+    border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+  .rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+  @media print{.rappel-ouverture>summary{display:none!important}}
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -234,13 +242,21 @@
 <a class="skip-link" href="#seances">Aller directement aux activités</a>
 <h1>Thème 2 · Martinique — 3e · S5 : Internet jusqu'à Sainte-Luce</h1>
 <p class="subtitle">Comment l'alerte de notre station traverse-t-elle les réseaux pour arriver jusqu'aux téléphones ?</p>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
   <h2 id="rap-spi">&#128260; Ce que tu as déjà fait</h2>
   <p class="deja">En 4e, tu as <b>donné une adresse</b> à chaque machine du jardin et tu as <b>dépanné</b> un réseau muet. Le réseau tenait dans une salle.</p>
   <p class="change"><b>Cette année, ce qui change&nbsp;:</b> on sort du collège : tu vas suivre le chemin réel d'une donnée depuis <b>Sainte-Luce</b> jusqu'à l'autre bout du monde — les câbles sous-marins, les relais, les opérateurs. Le même principe, mais à l'échelle d'une île.</p>
   <p class="filet">Tu arrives maintenant ? Retiens qu'Internet n'est pas dans les airs : c'est très majoritairement du câble, posé au fond de la mer.</p>
 </section>
-
 
 <div class="badges">
   <span class="badge niveau">Niveau 3e</span>
@@ -258,19 +274,8 @@
   <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="3e…"></div>
   <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
 </div>
-<div class="toolbar">
-  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
-  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
-  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
-  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
-</div>
-<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. À activer si la page te paraît trop chargée.</p>
-<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
 
-<div class="progress-wrap">
-  <span class="progress-label">Ma progression dans la séquence : <b id="progTxt">0 / 6 activités validées</b></span>
-  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
-</div>
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. À activer si la page te paraît trop chargée.</p>
 
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
@@ -340,6 +345,12 @@
       <p>Tout est dans cette page : simulateur de découpage en paquets (activité 3), jeu du routeur (activité 4) et simulateur de panne (activité 5). Une version imprimable du jeu du routeur permet même de jouer <b>débranché</b>, par équipes.</p></div>
   </div>
 </section>
+</details>
+
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression dans la séquence : <b id="progTxt">0 / 6 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
 
 <div class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
   <button class="seance-tab active" data-panel="s1" role="tab" aria-selected="true">Séance 1<br><small>Par où passe le message ?</small><span class="done" id="done-s1"></span></button>
@@ -814,7 +825,7 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
     document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
     document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
     tab.classList.add("active"); tab.setAttribute("aria-selected","true");
-    $(tab.dataset.panel).classList.add("active");
+    $(tab.dataset.panel).classList.add("active"); appliqueSeance(tab.dataset.panel);
     window.scrollTo({top: $("seances").offsetTop - 8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
   });
 });
@@ -1228,6 +1239,29 @@ function signale(msg){
     if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
 }
 
+
+/* Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « Rappel », replié. */
+function appliqueSeance(idPanneau){
+  const v = document.getElementById("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.open = n < 2;
+}
+let ouvertEnImpression = null;
+window.addEventListener("beforeprint", ()=>{ const v=document.getElementById("ouverture"); if(v){ ouvertEnImpression=v.open; v.open=true; } });
+window.addEventListener("afterprint", ()=>{ const v=document.getElementById("ouverture"); if(v && ouvertEnImpression!==null){ v.open=ouvertEnImpression; ouvertEnImpression=null; } });
+/* Lien direct : #ancre ouvre la séance qui la contient, sans l'ouverture. */
+function ouvrirSeanceDeLAncre(){
+  const id = decodeURIComponent(location.hash.slice(1)); if(!id) return;
+  const cible = document.getElementById(id); const pan = cible && cible.closest(".seance-panel");
+  if(!pan || pan.classList.contains("active")) return;
+  const onglet = document.querySelector('.seance-tab[data-panel="' + pan.id + '"]');
+  if(onglet) onglet.click();
+  setTimeout(()=>cible.scrollIntoView({block:"start"}), 60);
+}
+window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+appliqueSeance((document.querySelector(".seance-panel.active")||{}).id);
+ouvrirSeanceDeLAncre();
 
 /* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
 document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {

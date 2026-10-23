@@ -186,6 +186,9 @@ const coches = await p.$$eval('[id^="done-s"]', l => l.map(e => e.textContent.tr
 ok('22 · les cinq séances portent leur coche', coches.every(c => c === '✔'),
    coches.join('|'));
 
+/* Règle d'or n°311 : dès la séance 2, l'hypothèse est repliée dans le volet
+   « Rappel » ; l'élève l'écrit à la séance 1, on y retourne comme lui. */
+await ouvrirSeance(1);
 await p.fill('#hyp1', 'Je pense que le lampadaire s\'allume seulement quand il fait nuit.');
 await p.waitForTimeout(120);
 ok('23 · l\'hypothèse est rappelée dès la saisie',

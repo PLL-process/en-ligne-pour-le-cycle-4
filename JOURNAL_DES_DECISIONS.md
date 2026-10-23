@@ -22616,3 +22616,31 @@ Bancs Python des pages : 3e_C1.1 50/50, 4e_C1.1 42/42, 5e_C1.1 43/43, 5e_C1.2 36
 (« chaque zone de rédaction a sa version étayée »), corrigé sur `fable/bancs-rouges-prealables`, non poussée.
 
 **À faire à la fin** (après la dernière vague et `C1.3-C1.4_SI`) : rendre D6 obligatoire dans `controle_squelette` (aujourd'hui : signalé pour une page sans volet).
+
+## 23/10/2026 — Règle d'or n°311, vague du thème 2 : 15 séquences à onglets passent au volet « 📖 Rappel » dès la séance 2
+
+**Pages traitées (15).** C4 : 3e_C4.1, 3e_C4.3, 3e_C4.7, 3e_C4.8 (pont numérique), 4e_C4.1, 4e_C4.7 (SOS serre), 5e_C4.1, 5e_C4.7 ; C5 : 3e_C5.1, 4e_C5.1, 5e_C5.1 ; C6 : 3e_C6.1, 3e_C6.2, 4e_C6.1, 5e_C6.1.
+Le gabarit du thème 2 n'est pas celui du thème 1 (pas de `div.page`, mission en `.subtitle`, progression **au-dessus** des cartes d'ouverture) : un script propre à la vague, même résultat. À la séance 1, rien ne change à l'écran sauf la barre
+de progression, qui passe de la tête de page à **juste au-dessus des onglets** (comme au thème 1). À partir de la séance 2 : titre, mission, barre d'outils, le volet replié (badges, identité, note du mode essentiel, rappel spiralaire,
+situation, problématique, hypothèses, référentiel, choix de l'outil, versions A/B/C), la progression, les onglets. `#savedNote` (zone `role="status"`) reste à côté de la barre d'outils.
+
+**Le gabarit habille tout `details` en carte.** Sans retouche, le volet encadrait toute l'ouverture à la séance 1. Le volet est donc remis à nu (`.rappel-ouverture{background:none;border:0;padding:0;margin:0}`), et son bouton passe
+sur deux lignes sans déborder à 390 px (`display:flex`, interligne normal, 44 px minimum).
+
+**Un outil n'est pas du décor.** Deux pages rangeaient dans l'ouverture un outil des séances suivantes : **3e_C6.1**, la carte « ⌨ Le programme de la station — CodeLab Techno » (« le document de travail des trois séances », activité 4 en séance 2) ;
+**4e_C4.7**, la seconde barre d'outils « 🎯 Mode essentiel ». Toutes deux étaient le dernier bloc de l'ouverture : elles sortent juste **après** le volet, l'ordre de la séance 1 est inchangé et elles restent visibles ensuite.
+La recherche a été faite page par page (tout bouton, champ, liste ou zone éditable resté dans le volet, hors hypothèses, identité et versions étayées) : ce sont les deux seules.
+
+**Mises de côté (2), à trancher par Pascal.** **4e_C4.1 Book Train** : autre gabarit — la situation et l'hypothèse sont déjà dans un onglet « Départ » (panneau `s0`), seuls le rappel spiralaire et l'identité restent visibles partout ; le banc commun ne s'y applique pas
+(onglets `role="tab"` sans `data-panel`). **4e_C6.2 Arrosage automatique** : la page n'a **aucune hypothèse de départ** ; le libellé « …et ton hypothèse » y serait faux, et le banc commun n'a pas de champ à suivre. `controle_squelette` les signale (page sans volet), sans les refuser.
+
+**Bancs.** Un banc par page, `tests_regle_311_<code>.mjs`, qui passent par `theme-2-…/banc_regle_311_theme2.mjs` : ce relais vérifie la **mission** (`.subtitle`, visible hors du volet à la séance 1 et à la séance 2, 1280 et 390 px), que le banc commun lit dans `p.sous` seulement,
+puis appelle le banc commun du thème 1 sans le modifier. **15 / 15 pages : mission 2 / 2, banc commun 33 / 33.**
+
+**Suites des pages, branche contre `main`** (même arbre, rejouées des deux côtés) : mêmes résultats partout — 3e_C4.1 23/23, 3e_C4.3 22/23, 3e_C4.7 32/35, 3e_C5.1 30/34, 3e_C6.1 31/35, 4e_C4.1 35/35, 4e_C5.1 22/26, 4e_C6.1 25/29, 5e_C4.1 (QCM) 25/25,
+5e_C4.1 (séquence) 30/30, 5e_C5.1 22/26, 5e_C6.1 28/32 ; les échecs, identiques ligne à ligne sur `main`, sont des liens et fichiers lus par `new URL(...).pathname` (`/C:/…` sous Windows). Les deux suites Python de 3e_C6.2 échouent au chargement de la page, sur `main` comme ici.
+Une seule suite a dû changer : `tests_5e_C4.1-C4.8_sequence.mjs` saisissait l'hypothèse depuis la séance 5, où elle est désormais repliée ; elle revient à la séance 1, comme l'élève.
+
+**Contrôles.** Les 28 contrôles du dépôt (`controle_*.py` et `.mjs` : squelette, impression, contraste des liens, verrous, hors ligne…) sortent à 0 ; `controle_squelette` : 0 refus, D6 : 0.
+
+**Reste** : thème 3, puis Book Train, 4e_C6.2 et `C1.3-C1.4_SI` ; enfin D6 obligatoire.
