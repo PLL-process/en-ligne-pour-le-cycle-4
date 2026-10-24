@@ -9,6 +9,9 @@
 l'organisation du système (diagramme fonctionnel, chaînes d'information et d'énergie), traduire le trajet
 d'un livre en **algorigramme normalisé** avec draw.io, puis **exporter au bon format et le justifier**.
 Billet d'entrée sans note, mode essentiel, versions étayées de chaque production écrite.
+Au départ, une **courte vidéo du vrai Book Train** (lien YouTube et QR code, repli hors ligne) et deux questions
+d'observation ; en fin de parcours, **six défis bonus** avec cases de réponse et corrigé, dont un calcul
+« 5 minutes : tout le circuit ? ».
 
 ➡ **[QCM d'entraînement](qcm_book-train.html)** — 30 questions (10 par code), 4 illustrées, chaque
 distracteur réfuté.

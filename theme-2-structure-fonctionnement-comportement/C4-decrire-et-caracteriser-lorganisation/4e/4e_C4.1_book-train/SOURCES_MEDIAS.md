@@ -24,9 +24,13 @@ les retours d'information — et ce sont les élèves qui les précisent au fil 
 audite » est ici une compétence travaillée, pas une excuse.
 
 **Le système décrit est réel.** Le Book Train dessert les Milstein Stacks de la New York Public Library, sous
-Bryant Park. Les valeurs citées dans la séquence (480 V alternatif en entrée, 24 V continu au rail, environ
-290 m de parcours, nacelle à suspension pendulaire) proviennent de la documentation publique du système et
-sont employées à titre descriptif. La bibliothèque Schœlcher de Fort-de-France, dessinée par Pierre-Henri
+Bryant Park. Relu le 24/10/2026 contre le [communiqué de la bibliothèque du 21/09/2016](https://www.nypl.org/press/press-release/september-21-2016/new-york-public-library-installs-new-state-art-conveyor) :
+24 wagonnets de 30 lb (13,6 kg), 950 pieds de rail (≈ 290 m), 75 pieds par minute, environ 5 minutes et 375 pieds
+(11 niveaux) des réserves à la salle de lecture, 24 V continu, deux points de livraison, 2,6 millions de dollars.
+**Le 480 V alternatif n'y figure pas** : la séquence le présente comme la tension habituelle des grands bâtiments
+américains, et non comme une donnée publiée. La nacelle qui pivote pour rester horizontale et l'espacement entre
+wagonnets viennent de la presse technique de l'époque (Hackaday, 05/10/2016) ; l'ancien système (fiches de
+demande, convoyeur, monte-charge) du blog de la bibliothèque (21/12/2010), les tubes pneumatiques d'Atlas Obscura. La bibliothèque Schœlcher de Fort-de-France, dessinée par Pierre-Henri
 Picq et présentée à Paris en 1889 avant d'être remontée en Martinique, est le commanditaire fictif de la
 mission — le besoin est plausible, le projet ne l'est pas.
 
@@ -40,3 +44,23 @@ Les deux SVG portent `role="img"` avec `title` et `desc` complets : leur contenu
 Génération déterministe : `python _outils/regenerer_chaines_energie.py` depuis la racine. Source draw.io modifiable dans `_generation/chaines_energie/` (Book Train : `fichiers_drawio/`). Le SVG contient aussi cette source et utilise des textes SVG natifs, sans ressource distante.
 
 La figure incorporée dans la séquence, le SVG autonome, les fichiers draw.io complet et à compléter et les téléchargements incorporés dans `FICHIERS` sont synchronisés. Le modèle reste fonctionnel ; les tensions, le secours et la réalisation de l’entraînement se précisent d’après la documentation du système étudié.
+
+## Vidéo et figure 5 — 24/10/2026
+
+**Vidéo du Book Train (onglet Départ).** Ce n'est pas un média du dépôt : la page porte un **lien** vers YouTube
+(`https://www.youtube.com/watch?v=4IOv1O6SULY`, 2016, vidéo relayée par la revue Poets & Writers) et son QR code.
+Rien n'est intégré ni téléchargé : la page reste lisible sans Internet, avec un repli écrit. Le bloc est posé par
+`theme-3-…/C7-…/poser_ressource.py` depuis le registre `ressources_externes.json` (entrée `res-4e-C4-1-book-train`),
+où sont notés ce qui a été vérifié et ce qui reste à vérifier (auteur, durée, licence). Le QR code est un SVG
+produit localement par `segno`, sans service distant.
+
+**Figure 5 (chaîne d'information, incorporée dans la page).** Production originale CC0, retouchée à la main : le rappel
+de la chaîne d'énergie dit « Alimenter (480 V ~ → 24 V ⎓) » au lieu de « 13,2 kV AC », comme la page et le fichier
+`Images/chaine_information_book-train.svg` ; la légende passe à gauche, l'étiquette ORDRE ne la recouvre plus ; les
+mots « signaux » et « décisions » ne sont plus cachés par les blocs. Les pointes de flèche ne changent pas.
+
+**Figure 1 (schéma en coupe, incorporé dans la page).** Production originale CC0, retouchée à la main : le sous-sol
+était peint après trois étiquettes (les toilettes du parc, le perron côté parc) et les cachait ; deux autres
+(le perron monumental et ses lions) sortaient du cadre. Le fond du sous-sol est désormais peint en premier, les
+étiquettes sont replacées sous ce qu'elles nomment ; « nacelle horizontale » et « comptoir de distribution » ne
+chevauchent plus le rail ni le comptoir. Rien n'est ajouté au dessin.
