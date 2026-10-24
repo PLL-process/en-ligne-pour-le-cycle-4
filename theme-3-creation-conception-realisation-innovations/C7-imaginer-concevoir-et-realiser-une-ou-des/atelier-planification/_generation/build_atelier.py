@@ -167,6 +167,16 @@ STYLE_SUP = """
   .rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;
     background:var(--panel);border:1px dashed var(--border)}
   .rappel-spiralaire .filet{margin:.5em 0 0;font-size:.92em;opacity:.85}
+  /* Règle d'or n°304 : ce qui devrait être en place, à cocher, chacun avec son rattrapage. */
+  .rappel-spiralaire .verif{list-style:none;margin:.4em 0 .6em;padding:0}
+  .rappel-spiralaire .verif li{margin:.55em 0}
+  .rappel-spiralaire .verif .ligne{display:flex;align-items:flex-start;gap:.6em}
+  .rappel-spiralaire .verif input[type=checkbox]{flex:none;width:18px;height:18px;margin:.2em 0 0;accent-color:var(--accent);cursor:pointer}
+  .rappel-spiralaire .verif label{cursor:pointer}
+  .rappel-spiralaire .verif .code-verif{display:inline-block;font-size:.82em;opacity:.85;white-space:nowrap;margin-left:.3em}
+  .rappel-spiralaire .verif .rattrapage{margin:.2em 0 0 calc(18px + .6em);font-size:.93em}
+  .rappel-spiralaire .verif-consigne{margin:.2em 0 .3em;font-size:.95em}
+  @media print{.rappel-spiralaire .verif-consigne,.rappel-spiralaire .verif label,.rappel-spiralaire .verif .code-verif,.rappel-spiralaire .verif .rattrapage{color:#041a40!important;opacity:1!important}}
   /* Le bonus et ses corrigés (règle d'or n°86) : chaque défi porte sa réponse,
      repliée. On cherche d'abord, on ouvre ensuite — mais on ouvre. */
   .bonus .defi{margin:1em 0;padding:.8em 1em;border-radius:10px;
@@ -502,6 +512,7 @@ P5_HTML = """
   <p class="saved-note"><b>Critère de réussite&nbsp;:</b> ton point d'avancement dit ce qui est en
   retard <b>et</b> ce que ce retard décale — pas seulement « on a du retard ».</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="gp" type="button">Le logiciel — Pas à pas ›</button></p>
 </div>
 """ % {
     "table": tableau_taches(P5, ("id", "libelle", "duree", "ant", "debut")),
@@ -598,6 +609,7 @@ P4_HTML = """
   <p class="saved-note"><b>Critère de réussite&nbsp;:</b> tes dates sont justes, et tu peux dire à
   ton groupe qui travaille sur quoi <b>en même temps</b>.</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="gp" type="button">Le logiciel — Pas à pas ›</button></p>
 </div>
 """
 
@@ -710,6 +722,7 @@ P3_HTML = """
   <p class="saved-note"><b>Critère de réussite&nbsp;:</b> tu peux montrer, sur ton propre projet,
   une tâche où se précipiter ne sert à rien — et dire pourquoi.</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="gp" type="button">Le logiciel — Pas à pas ›</button></p>
 </div>
 """ % {
     "table": tableau_taches(P3),
@@ -1084,6 +1097,12 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
   });
 });
 
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
+
 /* ══════ Lecture des productions écrites (règles n°49 et n°50) ══════ */
 const bas = t => t.toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").replace(/[’']/g,"'");
 const lignes = t => t.split(/\\n+/).map(x=>x.trim()).filter(x=>x.length>2);
@@ -1269,47 +1288,62 @@ majProgres(); majBandeau();
 # diverger. Chacune s'ouvre par son rappel spiralaire (règle d'or n°87) et ne
 # montre QUE son parcours — choisir soi-même son niveau était une charge mentale
 # gratuite, et faisait voir à l'élève le travail des autres.
+# Depuis la règle d'or n°304 (21/09/2026), ce bloc ne dit jamais ce que l'élève a fait :
+# il nomme ce qui devrait être en place, avec son code, et un lien pour le reprendre.
 
 RAPPEL = {
     "5e": """
 <section class="card rappel-spiralaire" aria-labelledby="rap-t">
-  <h2 id="rap-t">&#128260; Avant de commencer&nbsp;: à quoi ça sert&nbsp;?</h2>
-  <p class="deja">Tu as <b>déjà fabriqué</b> des choses en technologie&nbsp;: tu as suivi une fiche,
-  étape après étape, et à la fin l'objet était là. Quelqu'un avait écrit ces étapes,
-  et il les avait écrites <b>dans cet ordre-là</b> pour une raison.</p>
-  <p class="change"><b>Ce qui change aujourd'hui&nbsp;:</b> on va regarder cette liste d'étapes
-  elle-même. Pas pour fabriquer&nbsp;: pour comprendre <b>pourquoi</b> certaines doivent attendre,
-  et pourquoi d'autres peuvent avancer en même temps.</p>
-  <p class="filet">Tu n'as encore jamais vu de planning&nbsp;? Parfait&nbsp;: c'est exactement
-  ce qu'on va apprendre à lire.</p>
+  <h2 id="rap-t">&#128260; Avant de commencer&nbsp;: ce que je vérifie</h2>
+  <p class="verif-consigne">Pour toi, sans note&nbsp;: coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
+  <ul class="verif">
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais dire, d'une étape d'une fiche de fabrication, si elle est terminée ou non. <span class="code-verif">cycle 3</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#les-mots">relis « Une tâche » dans la synthèse de l'atelier</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais dire, de deux étapes, laquelle doit être finie avant que l'autre commence. <span class="code-verif">cycle 3</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#les-mots">relis « Une contrainte entre tâches » dans la synthèse de l'atelier</a></p>
+    </li>
+  </ul>
+  <p class="change"><b>Dans cet atelier&nbsp;:</b> on regarde la liste d'étapes elle-même. Pas pour fabriquer&nbsp;: pour comprendre <b>pourquoi</b> certaines doivent attendre, et pourquoi d'autres peuvent avancer en même temps.</p>
+  <p class="filet">Un planning, ça ne te dit rien&nbsp;? Parfait&nbsp;: c'est exactement ce qu'on va apprendre à lire.</p>
 </section>
 """,
     "4e": """
 <section class="card rappel-spiralaire" aria-labelledby="rap-t">
-  <h2 id="rap-t">&#128260; Ce que tu as déjà fait</h2>
-  <p class="deja"><b>L'an dernier, en 5e</b>, on t'a donné un planning tout prêt pour un projet&nbsp;:
-  tu l'as <b>suivi</b>. Tu repérais la tâche du jour, tu la <b>cochais</b> quand elle était finie,
-  et tu voyais tout de suite si le groupe était en avance ou en retard.</p>
-  <p class="change"><b>Cette année, ce qui change&nbsp;:</b> personne ne te donne le planning.
-  On te donne la <b>liste des tâches</b>, en vrac, et c'est <b>toi</b> qui décides laquelle vient
-  avant laquelle. Le logiciel te dira ensuite si ton ordre tient debout.</p>
-  <p class="filet">Tu n'étais pas là l'an dernier&nbsp;? Tout ce qu'il faut savoir tient dans le
-  paragraphe ci-dessus&nbsp;: un planning, c'est des tâches, chacune avec une durée, et des
-  flèches qui disent qui attend qui.</p>
+  <h2 id="rap-t">&#128260; Avant de commencer&nbsp;: ce que je vérifie</h2>
+  <p class="verif-consigne">Pour toi, sans note&nbsp;: coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
+  <ul class="verif">
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais ce que sont une tâche, une durée et une contrainte entre tâches. <span class="code-verif">5e_C7.1</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#les-mots">relis « Les trois mots du programme » dans la synthèse de l'atelier</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais repérer la tâche du jour sur un planning, et dire ce qu'un retard décale. <span class="code-verif">5e_C7.1</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#marge">relis « La marge » dans la synthèse de l'atelier</a></p>
+    </li>
+  </ul>
+  <p class="change"><b>Dans cet atelier&nbsp;:</b> personne ne te donne le planning. Tu reçois la <b>liste des tâches</b>, en vrac, et c'est <b>toi</b> qui décides laquelle vient avant laquelle. Le logiciel te dit ensuite si ton ordre tient debout.</p>
+  <p class="filet">À garder pour tout l'atelier&nbsp;: un planning, ce sont des tâches, chacune avec une durée, et des flèches qui disent qui attend qui.</p>
 </section>
 """,
     "3e": """
 <section class="card rappel-spiralaire" aria-labelledby="rap-t">
-  <h2 id="rap-t">&#128260; Ce que tu as déjà fait</h2>
-  <p class="deja"><b>En 5e</b>, tu as <b>suivi</b> un planning qu'on t'avait donné.
-  <b>En 4e</b>, tu as <b>organisé</b> des tâches qu'on t'avait listées&nbsp;: tu as posé l'ordre
-  et tracé les liaisons, et tu as trouvé quelles tâches pouvaient avancer en même temps.</p>
-  <p class="change"><b>Cette année, ce qui change&nbsp;:</b> la liste n'existe pas. C'est toi qui
-  <b>découpes</b> le projet en tâches, qui <b>estimes</b> chaque durée, et qui réponds à la seule
-  question qui compte pour un client&nbsp;: <b>ce sera prêt quand&nbsp;?</b></p>
-  <p class="filet">Tu n'as pas fait la 4e ici&nbsp;? Retiens ceci et ça suffira&nbsp;: une tâche a
-  une durée&nbsp;; une flèche dit qu'une tâche doit finir avant qu'une autre commence&nbsp;; la
-  plus longue chaîne de flèches décide de la date de fin.</p>
+  <h2 id="rap-t">&#128260; Avant de commencer&nbsp;: ce que je vérifie</h2>
+  <p class="verif-consigne">Pour toi, sans note&nbsp;: coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
+  <ul class="verif">
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais ranger des tâches données dans l'ordre et tracer les flèches qui disent qui attend qui. <span class="code-verif">4e_C7.1</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#methode">relis « La méthode, en cinq gestes » dans la synthèse de l'atelier</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais trouver les tâches qui peuvent avancer en même temps. <span class="code-verif">4e_C7.1</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#en-meme-temps">relis « Le résultat qui surprend tout le monde » dans la synthèse de l'atelier</a></p>
+    </li>
+  </ul>
+  <p class="change"><b>Dans cet atelier&nbsp;:</b> la liste n'existe pas. C'est toi qui <b>découpes</b> le projet en tâches, qui <b>estimes</b> chaque durée, et qui réponds à la seule question qui compte pour un client&nbsp;: <b>ce sera prêt quand&nbsp;?</b></p>
+  <p class="filet">À garder en tête&nbsp;: une tâche a une durée&nbsp;; une flèche dit qu'une tâche doit finir avant qu'une autre commence&nbsp;; la plus longue chaîne de flèches décide de la date de fin.</p>
 </section>
 """,
 }
@@ -1492,6 +1526,9 @@ def barre_onglets(niv):
         % {"p": n["panel"], "o": n["onglet"], "t": n["titre_ong"]})
 
 
+ETAPE_SUIVANTE = {"5e": "5e — Suivre", "4e": "4e — Organiser", "3e": "3e — Élaborer"}
+
+
 def page(niv):
     n = NIVEAUX[niv]
 
@@ -1522,7 +1559,11 @@ def page(niv):
     if "<!--GANTT-->" in corps:
         raise SystemExit("Marqueur GANTT non remplacé dans le parcours %s." % niv)
 
-    resultat = tete + haut + PM + corps + GP_HTML + bas + script
+    # Règle n°101 : l'étape « Les mots », commune aux trois niveaux, mène au parcours du niveau.
+    fin_pm = PM.rindex("</div>")
+    pm = (PM[:fin_pm] + '<p class="page-suivante"><button class="btn vers-seance" data-vers="%s" '
+          'type="button">%s ›</button></p>\n' % (n["panel"], ETAPE_SUIVANTE[niv]) + PM[fin_pm:])
+    resultat = tete + haut + pm + corps + GP_HTML + bas + script
     # La loupe est posée ICI, après toute mise en forme « % » : le bloc contient
     # des « % » (max-width:100%) que l'opérateur de formatage prendrait pour des
     # jetons. Une seule source, importée, jamais recopiée (règle n°92).

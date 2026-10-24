@@ -27,9 +27,8 @@ NON LU : que la pointe tienne dans le dernier segment du tracé, et que le dessi
 celui d'avant la conversion. Cela se mesure au rendu (avant/après, au pixel près), pas dans un script :
 le journal du 05/10/2026 dit comment.
 
-TOLERES : fichiers qui n'ont pas encore reçu la correction, nommés un à un, avec la raison. Au 05/10/2026,
-ceux du thème 3 (16 SVG et `gantt_premium.py`) : la garde de périmètre interdit à une branche du thème 3
-de toucher `_outils/`, la liste ne peut donc pas être vidée dans leur PR. Une tolérance dont le fichier
+TOLERES : fichiers qui n'ont pas encore reçu la correction, nommés un à un, avec la raison. Du 05/10 au
+24/10/2026, ceux du thème 3 (16 SVG et `gantt_premium.py`) ; la liste est vide depuis. Une tolérance dont le fichier
 est devenu conforme est annoncée « périmée » ; elle se retire dans la PR suivante qui touche `_outils/`.
 
 Usage :
@@ -49,29 +48,10 @@ ECARTES = {".git", "node_modules", "_archive-anciennes-versions", "_outils", "__
 EXTENSIONS = (".svg", ".html", ".py", ".js", ".mjs")
 BALISE = re.compile(r"<marker\b[^>]*>")
 
-_T3 = ("theme-3-creation-conception-realisation-innovations/")
-_RAISON_T3 = ("thème 3 : la correction arrive avec la PR des pointes de flèche du thème 3 "
-              "(la garde de périmètre l'empêche de vider cette liste elle-même)")
-#: fichiers pas encore corrigés, tolérés NOMMÉMENT, avec la raison.
-TOLERES = {_T3 + chemin: _RAISON_T3 for chemin in (
-    "C7-imaginer-concevoir-et-realiser-une-ou-des/3e/3e_C7.1/Images/algorigramme_alerte_seuil.svg",
-    "C7-imaginer-concevoir-et-realiser-une-ou-des/3e/3e_C7.1/Images/test_discriminant.svg",
-    "C7-imaginer-concevoir-et-realiser-une-ou-des/4e/4e_C7.1/Images/demarche_projet_boucle.svg",
-    "C7-imaginer-concevoir-et-realiser-une-ou-des/5e/5e_C7.1/Images/algorigramme_indicateur.svg",
-    "C7-imaginer-concevoir-et-realiser-une-ou-des/5e/5e_C7.1/Images/chaine_indicateur_hall.svg",
-    "C7-imaginer-concevoir-et-realiser-une-ou-des/atelier-planification/Images/gantt_capteur-confort-ny.svg",
-    "C7-imaginer-concevoir-et-realiser-une-ou-des/atelier-planification/Images/gantt_indicateur-rangement-hall.svg",
-    "C7-imaginer-concevoir-et-realiser-une-ou-des/atelier-planification/Images/gantt_jardin-connecte-brooklyn.svg",
-    "C7-imaginer-concevoir-et-realiser-une-ou-des/atelier-planification/_generation/gantt_premium.py",
-    "C8-valider-les-solutions-techniques-par-des/4e/4e_C8.1/Images/rejouer_tout_le_protocole.svg",
-    "C9-concevoir-ecrire-tester-et-mettre-au-point/3e/3e_C9.2/Images/algorigramme_alerte.svg",
-    "C9-concevoir-ecrire-tester-et-mettre-au-point/3e/3e_C9.2/Images/chaine_info_energie_station.svg",
-    "C9-concevoir-ecrire-tester-et-mettre-au-point/3e/3e_C9.2/Images/ihm_acquittement_chronogramme.svg",
-    "C9-concevoir-ecrire-tester-et-mettre-au-point/3e/3e_C9.2/Images/ordre_preactionneur_trois_cas.svg",
-    "C9-concevoir-ecrire-tester-et-mettre-au-point/4e/4e_C9.1/Images/algorigramme_arrosage.svg",
-    "C9-concevoir-ecrire-tester-et-mettre-au-point/4e/4e_C9.1/Images/chaines_jardin_connecte.svg",
-    "C9-concevoir-ecrire-tester-et-mettre-au-point/4e/4e_C9.1/Images/hysteresis_chronogramme.svg",
-)}
+#: fichiers pas encore corrigés, tolérés NOMMÉMENT, avec la raison. Vide depuis le 24/10/2026 : les
+#: 17 fichiers du thème 3 tolérés le 05/10/2026 sont conformes depuis la fusion de leur PR. Le mécanisme
+#: reste, pour la prochaine correction qui ne pourrait pas se faire dans la même PR.
+TOLERES = {}
 
 
 def fichiers(racine):

@@ -110,10 +110,11 @@ def svg(nom_projet, niveau, T, fin):
              f'avec un rectangle pointillé qui montre la fenêtre dans laquelle elles '
              f'auraient pu être placées.</desc>')
     o.append(f'<rect width="{W}" height="{H}" fill="{C_FOND}"/>')
-    # Pointe en pixels (markerUnits="userSpaceOnUse") : 4,4 x le trait de 1,3 = 5,72 px, et pas plus que
-    # le dernier segment du tracé (6 px, de `H{mx}` à `H{x2-4}`). Avant, « 9 » se mesurait en traits :
-    # 11,7 px, plus large que ce segment — la pointe débordait sur le coude du tracé.
-    o.append('<defs><marker id="fl" viewBox="0 0 9 7" markerWidth="5.72" markerHeight="4.4489" '
+    # Pointe en pixels (markerUnits="userSpaceOnUse") : 9 x le trait de 1,3 = 11,7 px de long, 9,1 de haut.
+    # Elle tient dans le dernier segment du tracé en coude, allongé à 12 px (de `H{mx}`, mx = x2-16,
+    # à `H{x2-4}`). Le 05/10/2026, la pointe avait été ramenée à 5,72 px parce que ce segment ne faisait
+    # que 6 px ; Pascal a choisi le 24/10/2026 d'allonger le segment pour lui rendre sa taille.
+    o.append('<defs><marker id="fl" viewBox="0 0 9 7" markerWidth="11.7" markerHeight="9.1" '
              'refX="8" refY="3.5" markerUnits="userSpaceOnUse" '
              f'orient="auto"><path d="M0,0 L9,3.5 L0,7 z" fill="{C_FEN}"/></marker></defs>')
 
@@ -189,12 +190,12 @@ def svg(nom_projet, niveau, T, fin):
             y1 = y0 + pos[p] * H_LIGNE + H_LIGNE / 2
             x2 = X_LIB + b["tot_debut"] * PX_SEANCE
             y2 = y0 + pos[i] * H_LIGNE + H_LIGNE / 2
-            if x2 - x1 < 14:
+            if x2 - x1 < 20:   # le coude a besoin de 16 px avant la cible
                 # le successeur enchaîne immédiatement : simple descente
                 dy = 13 if y2 > y1 else -13
                 d = f'M{x1},{y1} V{y2-dy}'
             else:
-                mx = x2 - 10
+                mx = x2 - 16
                 d = f'M{x1},{y1} H{mx} V{y2} H{x2-4}'
             o.append(f'<path d="{d}" fill="none" stroke="{C_FEN}" stroke-width="1.3" '
                      f'marker-end="url(#fl)"/>')

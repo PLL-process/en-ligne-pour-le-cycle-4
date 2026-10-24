@@ -160,6 +160,11 @@ Deux voies, à trancher :
 En attendant, les fichiers restent, leur origine est écrite, et personne ne pourra dire qu'on
 ne savait pas.
 
+**Tranché le 24/10/2026 par Pascal : voie 1.** Les captures d'interface d'Onshape restent publiées
+au titre de l'usage pédagogique : prises sur un poste réel, non retouchées dans leur contenu,
+chacune avec sa ligne ci-dessous (logiciel, version, langue, écran, fichier ouvert). La question est close ;
+elle se rouvrirait si Onshape le demandait.
+
 ### L'inventaire, nom par nom
 Écrit en toutes lettres pour deux raisons : un contrôle qui vérifie la présence d'un nom ne
 peut rien faire d'un préfixe, et une capture ajoutée demain sans sa ligne doit réveiller ce
