@@ -203,7 +203,9 @@ def palier_html(p, n):
     if niv not in NIVEAUX:
         raise SystemExit("Palier « %s » : niveau_aide inconnu (%r)." % (p.get("titre"), niv))
     lab, cls = NIVEAUX[niv]
-    out = ['<section class="palier%s">' % (" recompense" if p.get("type") == "recompense" else "")]
+    # L'ancre #palier-N permet à l'ouverture d'un autre TP de renvoyer à ce geste-là (règle d'or n°304).
+    out = ['<section class="palier%s" id="palier-%d">'
+           % (" recompense" if p.get("type") == "recompense" else "", n)]
     out.append('<span class="niveau %s">%s</span>' % (cls, lab))
     out.append("<h2>%s &middot; %s</h2>" % (n, esc(p["titre"])))
     if p.get("intro"):
@@ -276,18 +278,40 @@ def construire(scenario_path: pathlib.Path, sortie_ailleurs=None) -> pathlib.Pat
     rap = s.get("rappel_spiralaire") or {}
     if s.get("niveau") in ("4e", "3e") and not rap:
         raise SystemExit(
-            "Règle n°87 (clé de voûte) : un TP de %s s'appuie sur un prérequis et doit\n"
-            "s'ouvrir par un rappel de ce que l'élève a DÉJÀ PRODUIT.\n"
-            'Ajoute au JSON : "rappel_spiralaire": {"deja": "…", "change": "…", "filet": "…"}'
+            "Règle n°87 (clé de voûte) : un TP de %s s'appuie sur des gestes antérieurs et doit\n"
+            "s'ouvrir sur eux. Depuis la règle d'or n°304, il nomme ce qui DEVRAIT être en place :\n"
+            'Ajoute au JSON : "rappel_spiralaire": {"verifier": [{"texte": "Je sais…", "code": "5e_C7.6",\n'
+            '  "lien": "tp_….html#palier-N", "libelle": "refais…"}], "change": "…", "filet": "…"}'
             % s["niveau"])
-    if rap and not (rap.get("deja") and rap.get("change")):
-        raise SystemExit("Règle n°87 : le rappel doit dire ce qui a été FAIT (deja) "
-                         "et ce qui CHANGE (change).")
+    if rap.get("deja"):
+        # Pascal change de collège chaque année : « En 5e, tu as… » est faux pour presque tous ses élèves,
+        # et met en défaut celui qui ne l'a pas fait (règle d'or n°304, 21/09/2026).
+        raise SystemExit("Règle d'or n°304 : l'ouverture ne dit pas le passé. Le champ « deja » est refusé ;\n"
+                         "écris « verifier » : les compétences qui devraient être en place, chacune avec\n"
+                         "son code et un lien pour la reprendre.")
+    if rap and not (rap.get("verifier") and rap.get("change")):
+        raise SystemExit("Règle n°304 : l'ouverture nomme ce qui devrait être en place (verifier) "
+                         "et ce qui CHANGE dans ce TP (change).")
+    lignes = []
+    for i, v in enumerate(rap.get("verifier", []), 1):
+        manque = [k for k in ("texte", "code", "lien", "libelle") if not v.get(k)]
+        if manque:
+            raise SystemExit("Règle n°304, point 4 : chaque compétence nommée offre un moyen de la "
+                             "rattraper — il manque %s à la ligne %d." % (", ".join(manque), i))
+        lignes.append(
+            '    <li>\n'
+            '      <div class="ligne"><input type="checkbox" id="ouv_%d"><label for="ouv_%d">%s '
+            '<span class="code-verif">%s</span></label></div>\n'
+            '      <p class="rattrapage">→ pas encore sûr·e ? <a href="%s">%s</a></p>\n'
+            '    </li>\n' % (i, i, v["texte"], v["code"], v["lien"], v["libelle"]))
     rappel = ("" if not rap else
               '<section class="card rappel-spiralaire" aria-labelledby="rap-t">\n'
-              '  <h2 id="rap-t">&#128260; Ce que tu as déjà fait</h2>\n'
-              '  <p class="deja">%s</p>\n  <p class="change">%s</p>\n%s</section>\n'
-              % (rap["deja"], rap["change"],
+              '  <h2 id="rap-t">&#128260; Avant de commencer&nbsp;: ce que je vérifie</h2>\n'
+              '  <p class="verif-consigne">Pour toi, sans note&nbsp;: coche ce qui est déjà en place. '
+              'Sous chaque ligne, un lien pour le reprendre si tu n\'en es pas sûr·e.</p>\n'
+              '  <ul class="verif">\n%s  </ul>\n'
+              '  <p class="change"><b>Dans ce TP&nbsp;:</b> %s</p>\n%s</section>\n'
+              % ("".join(lignes), rap["change"],
                  ('  <p class="filet">%s</p>\n' % rap["filet"]) if rap.get("filet") else ""))
 
     # Règle d'or n°256 : ce qui est codé en dur dans un générateur devient faux
@@ -350,6 +374,15 @@ def construire(scenario_path: pathlib.Path, sortie_ailleurs=None) -> pathlib.Pat
 .rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;
  background:rgba(255,255,255,.04);border:1px dashed #274a8a}
 .rappel-spiralaire .filet{font-size:.92em;opacity:.85}
+.rappel-spiralaire .verif{list-style:none;margin:.4em 0 .6em;padding:0}
+.rappel-spiralaire .verif li{margin:.55em 0}
+.rappel-spiralaire .verif .ligne{display:flex;align-items:flex-start;gap:.6em}
+.rappel-spiralaire .verif input[type=checkbox]{flex:none;width:18px;height:18px;margin:.2em 0 0;accent-color:var(--accent,#61dafb);cursor:pointer}
+.rappel-spiralaire .verif label{cursor:pointer}
+.rappel-spiralaire .verif .code-verif{display:inline-block;font-size:.82em;opacity:.85;white-space:nowrap;margin-left:.3em}
+.rappel-spiralaire .verif .rattrapage{margin:.2em 0 0 calc(18px + .6em);font-size:.93em}
+.rappel-spiralaire .verif-consigne{margin:.2em 0 .3em;font-size:.95em}
+@media print{.rappel-spiralaire .verif-consigne,.rappel-spiralaire .verif label,.rappel-spiralaire .verif .code-verif,.rappel-spiralaire .verif .rattrapage{color:#041a40!important;opacity:1!important}}
 #navharm{display:flex;flex-wrap:wrap;gap:10px;max-width:900px;margin:14px auto 0;padding:0 18px}
 #navharm a{padding:6px 12px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;
  color:#9bbefc;font-size:.92em;text-decoration:none;line-height:1.2}
