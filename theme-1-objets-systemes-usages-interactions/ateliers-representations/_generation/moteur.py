@@ -379,6 +379,16 @@ def avant_de_commencer(liste, cle):
     return "".join(h)
 
 
+def bloc_cours(at, niv, lien=None, ouvert=False):
+    """L'encadré « 📘 Le cours » d'un niveau : COURS[niv] dans le module de données (facultatif)."""
+    cours = getattr(at, "COURS", {}).get(niv)
+    if not cours:
+        return ""
+    suite = ('<p class="note">Le cours complet, avec les schémas et les mots&nbsp;: <a href="%s">la synthèse</a>.</p>' % lien) if lien else ""
+    return ('<details class="cours"%s><summary>📘 Le cours — ce qu\'il faut savoir</summary><div class="cours-corps">%s</div>%s</details>'
+            % (" open" if ouvert else "", cours, suite))
+
+
 def page_atelier(at, niv, chemins):
     """at : module de données ; niv : '5e' ; chemins : dict des liens calculés."""
     N = at.NIVEAUX[niv]
@@ -429,6 +439,9 @@ def page_atelier(at, niv, chemins):
              '<textarea id="%s__hyp_t" name="hyp" rows="3"></textarea>%s</section>'
              % (page_id, N["question"], page_id, page_id, Rendu("x").etayage(N["hypothese_amorces"])))
     h.append("</details>")
+    cours = bloc_cours(at, niv, chemins.get("synthese") if isinstance(chemins, dict) else None)
+    if cours:
+        h.append('<section class="card cours-carte">%s</section>' % cours)
     h.append('<div class="progression"><div class="barre" aria-hidden="true"><div id="barreProgression"></div></div>'
              '<p id="texteProgression" aria-live="polite"></p></div>')
     h.append('<div class="onglets" role="tablist" aria-label="Les exercices de l\'atelier">')

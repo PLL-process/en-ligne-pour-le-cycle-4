@@ -70,6 +70,9 @@ def eleve(at, page_niveau, chemins_fn, chemin):
     h.append('<p style="text-align:center"><button class="btn" type="button" onclick="window.print()">🖨 Imprimer ma synthèse</button></p>')
     h.append('<section class="card"><h2>🏷 Deux noms pour une même représentation</h2><p>%s</p></section>' % at.DEUX_NOMS)
     for niv, N in at.NIVEAUX.items():
+        cours = getattr(at, "COURS", {}).get(niv)
+        if cours:
+            h.append('<section class="card" id="cours-%s"><h2>📘 En %s — le cours</h2><div class="cours-corps">%s</div></section>' % (niv, niv, cours))
         h.append('<section class="card"><h2>📌 En %s — à retenir</h2><div class="retenir">%s</div>' % (niv, N["a_retenir"]))
         schema = getattr(at, "SCHEMAS_SYNTHESE", {}).get(niv)
         if schema:
