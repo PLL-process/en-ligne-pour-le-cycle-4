@@ -22821,12 +22821,16 @@ Fable (« carte blanche ») et a répondu le jour même aux questions d'usage (t
 
 ## 24/10/2026 — Décisions de Pascal du 24/10 : ouvertures n°304 de l'atelier C7.1 et des TP CAO, pointes des Gantt, bibliothèque des chaînes (transversal)
 
-**Les six décisions** (proposées après l'inventaire des skills ; réponse de Pascal : « Oui, tout ») :
+**Les six décisions** (proposées après l'inventaire des skills ; réponse de Pascal : « Oui, tout » ; la première est
+revenue vers lui après mesure) :
 
-1. **Historique Git** : les deux PDF Delagrave, retirés de `main` le 23/10 (arbitrage A5), restent lisibles dans
-   l'historique public. Pascal décide de **réécrire l'historique** pour les en retirer. L'opération est irréversible et
-   se fait hors d'une PR (`git filter-repo` sur un clone miroir, puis poussée forcée) : elle est **préparée** pour lui et
-   **c'est lui qui la lance**. Conséquence à connaître : tout clone existant est à refaire après coup.
+1. **Historique Git — en suspens.** Les deux PDF Delagrave, retirés de `main` le 23/10 (arbitrage A5), restent lisibles
+   dans l'historique public. Pascal a d'abord choisi de **réécrire l'historique**. Mesuré avant de rien préparer : les
+   PDF sont entrés le 24/09/2026 avec la PR #429, donc la réécriture toucherait **toutes les PR depuis, soit 67** (#429 et
+   les 66 fusionnées après) : leurs vues de diff disparaîtraient, tous les identifiants de commit changeraient depuis le
+   24/09, et les PDF resteraient joignables par les références `refs/pull/…` de ces PR, que seul le support de GitHub peut
+   effacer — or sa page « Removing sensitive data from a repository » dit qu'il ne retire pas les données non sensibles.
+   Coût élevé, effet partiel : la décision est **renvoyée à Pascal**, avec la recommandation de garder l'historique tel quel.
 2. **Accès en écriture de l'app GitHub de Claude** : accordé sur le principe. Le 24/10, une poussée depuis la session
    renvoie encore 403 (« Claude doesn't have GitHub access to PLL-process/en-ligne-pour-le-cycle-4 for your
    organization ») : l'installation de l'app sur l'organisation reste à faire par Pascal. D'ici là, le colis reste le
