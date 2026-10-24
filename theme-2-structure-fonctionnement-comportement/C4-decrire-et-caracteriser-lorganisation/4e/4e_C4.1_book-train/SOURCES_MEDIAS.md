@@ -6,12 +6,12 @@ aucun hotlinking.
 
 | Fichier | Type | Usage pédagogique (règle v2) | Licence | Poids |
 |---|---|---|---|---|
-| `Images/chaine_energie_book-train.svg` | SVG original (draw.io, production du lot) | image-objet : le diagramme fonctionnel de la chaîne d'énergie en quatre blocs — ALIMENTER, DISTRIBUER, CONVERTIR, TRANSMETTRE — dont les flèches portent les quatre visages de l'énergie (act. 1.2 bis, QCM q. illustrées C4.2) | CC0 | ~16 Ko |
+| `Images/chaine_energie_book-train.svg` | SVG original (draw.io, production du lot) | image-objet : le diagramme fonctionnel de la chaîne d'énergie en quatre blocs — ALIMENTER, DISTRIBUER, CONVERTIR, TRANSMETTRE — dont les flèches portent les quatre visages de l'énergie (act. 2.1, QCM q. illustrées C4.2) | CC0 | ~16 Ko |
 | `Images/chaine_information_book-train.svg` | SVG original (draw.io, production du lot) | image-objet : le diagramme fonctionnel de la chaîne d'information — ACQUÉRIR, TRAITER, COMMUNIQUER — avec la flèche d'ordre qui descend vers la chaîne d'énergie (act. 1.2, QCM q. illustrées C4.4) | CC0 | ~15 Ko |
 | `fichiers_drawio/chaine_energie_book-train.drawio` | Source draw.io | fichier modifiable du diagramme d'énergie — l'enseignant peut l'adapter à un autre système | CC0 | ~5 Ko |
 | `fichiers_drawio/chaine_energie_a_completer.drawio` | Source draw.io | version à trous distribuée aux élèves | CC0 | ~8 Ko |
-| `fichiers_drawio/chaine_information_a_completer.drawio` | Source draw.io | version à trous de la chaîne d'information (act. 1.3 : ajouter les capteurs) | CC0 | ~5 Ko |
-| `fichiers_drawio/chaine_information_correction.drawio` | Source draw.io | corrigé enseignant de l'act. 1.3 | CC0 | ~5 Ko |
+| `fichiers_drawio/chaine_information_a_completer.drawio` | Source draw.io | version à trous de la chaîne d'information (act. 2.3 : ajouter les capteurs) | CC0 | ~5 Ko |
+| `fichiers_drawio/chaine_information_correction.drawio` | Source draw.io | corrigé enseignant de l'act. 2.3 | CC0 | ~5 Ko |
 | `fichiers_drawio/bibliotheque_chaines_book-train.xml` | Bibliothèque de formes draw.io, écrite par `_outils/generer_bibliotheque_chaines.py` | 34 formes des chaînes d'information et d'énergie (fonctions, composant dessous, formes d'énergie, fonction absente, flèche d'ordre), réutilisables pour tout autre système étudié | CC0 | ~26 Ko |
 | `fichiers_drawio/schema_ensemble_book-train.jpg` | Image d'étude | schéma en coupe du parcours (tunnel, montée verticale, stations) — **généré avec une IA à partir de sources documentaires, puis vérifié et corrigé par l'enseignant** | production du lot | ~249 Ko |
 
@@ -48,11 +48,19 @@ La figure incorporée dans la séquence, le SVG autonome, les fichiers draw.io c
 ## Vidéo et figure 5 — 24/10/2026
 
 **Vidéo du Book Train (onglet Départ).** Ce n'est pas un média du dépôt : la page porte un **lien** vers YouTube
-(`https://www.youtube.com/watch?v=4IOv1O6SULY`, 2016, vidéo relayée par la revue Poets & Writers) et son QR code.
+(`https://www.youtube.com/watch?v=4IOv1O6SULY`, Tech Insider, 29/09/2016, 1 min 44 s, vidéo relayée par la revue
+Poets & Writers) et son QR code.
 Rien n'est intégré ni téléchargé : la page reste lisible sans Internet, avec un repli écrit. Le bloc est posé par
 `theme-3-…/C7-…/poser_ressource.py` depuis le registre `ressources_externes.json` (entrée `res-4e-C4-1-book-train`),
-où sont notés ce qui a été vérifié et ce qui reste à vérifier (auteur, durée, licence). Le QR code est un SVG
+où sont notés ce qui a été vérifié et ce qui reste à vérifier (la licence). Le QR code est un SVG
 produit localement par `segno`, sans service distant.
+
+**Traduction de la vidéo (24/10/2026).** La vidéo a été regardée de bout en bout avec l'outil vidIQ branché par Pascal
+(métadonnées YouTube et lecture image par image) : aucune voix, 18 phrases incrustées en anglais. Les sous-titres
+automatiques de YouTube ne traduisent pas un texte écrit dans l'image : la page donne donc, sous le lien, chaque phrase
+minutée avec sa traduction. La traduction est une production originale du lot (CC0) ; les phrases anglaises, une centaine
+de mots au total, sont reprises en courte citation, à des fins d'enseignement, avec leur source, pour que l'élève
+reconnaisse à l'écran ce qu'il lit en français.
 
 **Figure 5 (chaîne d'information, incorporée dans la page).** Production originale CC0, retouchée à la main : le rappel
 de la chaîne d'énergie dit « Alimenter (480 V ~ → 24 V ⎓) » au lieu de « 13,2 kV AC », comme la page et le fichier

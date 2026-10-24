@@ -18,7 +18,7 @@ réécrite : elle a été complétée et mise aux règles d'or n°23 à n°34.
 | SEQ-07 | le lien QCM pointe un fichier réellement présent | ✔ |
 | SEQ-08 | le nombre de questions annoncé correspond au QCM livré (30 dont 4 illustrées) | ✔ |
 | SEQ-09 | sauvegarde locale : champ restauré après rechargement | ✔ |
-| AUD-23 | durées annoncées par activité + badge « 3 séances de 55 min » (154 min pour 165) | ✔ |
+| AUD-23 | durées annoncées par activité + badge « 4 séances de 55 min » (189 min pour 220 ; jusqu'au 24/10/2026 : 3 séances, 154 min pour 165, avec quatre blocs sans durée) | ✔ |
 | AUD-26 | billet d'entrée présent et annoncé **sans note** | ✔ |
 | AUD-26b | le billet refuse les réponses vides **sans sanctionner** (« aucune note à la clé ») | ✔ |
 | AUD-26c | 2 sur 3 → orientation vers la capsule de rattrapage | ✔ |
@@ -120,3 +120,55 @@ mode essentiel à 1280 et 390 px ; séance 3 à +143 px de défilement horizonta
   Writers qui l'intègre, résultat de recherche) ; auteur, durée, licence, publicité : à regarder.
   `verificateur_ressources.mjs` doit être lancé depuis une machine avec Internet.
 - Lecteur d'écran réel, clavier seul rejoué de bout en bout, impression papier, Safari/iPad : non faits.
+
+---
+
+## Seconde passe du 24/10/2026 — vidéo traduite, quatre séances
+
+Même jour, après la fusion de la PR #498. Exécution réelle, Chromium (Playwright) en conteneur Linux, page en `file:`,
+réseau coupé.
+
+**La vidéo a été regardée.** Avec l'outil vidIQ branché par Pascal : métadonnées YouTube (chaîne « Insider Tech », soit
+Tech Insider, 29/09/2016, 1 min 44 s), transcription (« [Music] » seulement : aucune voix) et lecture image par image
+(18 phrases incrustées en anglais, minutées ; pas de publicité dans la vidéo ; contenu adapté). Le point « la vidéo
+elle-même » de la liste « Non exécuté » ci-dessus est donc levé, sauf la licence, toujours non lue.
+
+### Banc du lot — `node tests_4e_C4.1-C4.2-C4.4_book-train.mjs` : **33 / 33**
+
+Les 28 tests de la première passe tournent toujours (le Bonus et les figures sont cherchés dans l'onglet qui les
+contient, plus dans un onglet écrit en dur ; le test 23 passe sur les cinq onglets). Nouveaux :
+
+| Tests | Vérifie |
+|---|---|
+| 28 | badge « 4 séances de 55 min », cinq onglets, onze activités, chacune dans le panneau de la séance que dit son numéro |
+| 29 | plus aucun « 1.2 A », « 1.2 bis » ni « 1.2 ter » dans la page |
+| 30 | chaque séance se termine par un bouton qui ouvre la suivante (n°101) ; la dernière n'en a pas |
+| 31 | la traduction de la vidéo : 18 phrases minutées, chacune en français et en anglais (`lang="en"`), dans l'ordre, avant les questions |
+| 32 | à 390 px, au chargement, les cinq gares du rail tiennent dans le bandeau et sont alignées |
+
+**Le même banc rejoué sur la page d'avant** (copie de `main` à `8daefaf`) : **27 / 33** — échouent 28 à 32 (structure
+en trois séances, anciens numéros, aucun bouton de séance suivante, pas de traduction ; à 390 px, les quatre gares
+dépassaient du bandeau, qui les coupe, et deux d'entre elles, sur trois lignes, se soulevaient au-dessus du rail) et
+25 (hors du dépôt, la référence git manque).
+
+### Contrôles du dépôt (racine, sur la branche)
+
+| Contrôle | Sortie |
+|---|---|
+| `verif_regles_audit.py <lot>` | n°23 : **189 min (+10) pour 220** ✔ ; restent n°300 (44 listes) et n°302 (bloc des rôles commun), antérieurs |
+| `verif_regles_audit.py` (dépôt) | 240 ✘, comme après la PR #498 |
+| `controle_squelette.mjs <lot>`, `controle_verrous.mjs`, `controle_hors_ligne.mjs`, `controle_impression.mjs`, `controle_contraste_liens.mjs <lot>`, `verif_qcm_coherence.mjs <QCM du lot>` | 0 |
+| `audit_cloture_sequence.mjs <lot>`, `audit_lisibilite_qcm.mjs`, `audit_personne_eleve.mjs` | 0 — mesures |
+| `controle_regle4`, `navigation_seances`, `hierarchie <lot>`, `gestes_outil`, `formulations`, `regles_visibles`, `blocs_dessines`, `couverture`, `liens`, `atteignabilite`, `fichiers_telechargeables`, `boutons_vivants`, `debordement`, `marqueurs`, `banque_qcm`, `effectifs_qcm`, `entete_qcm`, `echantillonnage <lot>`, `longueurs <lot>`, `medias`, `cadres`, `rapports_tests` | 0 |
+| `verifier_chaines_energie.py` | 54 / 54 |
+| `regenerer_chaines_energie.py`, `generer_lexique.py <lot>` | rejoués : aucun écart |
+| `poser_ressource.py` | 1 bloc reposé (`res-4e-C4-1-book-train` : source, durée, consigne minutée), 5 « aucun changement » |
+
+`controle_navigation_seances.py` ne lit que les onglets `.seance-tab` : il ne voit pas cette page, à onglets
+`role="tab"`. Le bouton de séance suivante y est donc mesuré par le test 30 du banc, pas par ce contrôle.
+
+### Non exécuté
+
+- La licence de la vidéo : non lue (un lien ne reproduit rien ; à lire avant tout découpage ou réhébergement).
+- La traduction n'a pas été relue par un second lecteur ; les minutages sont ceux de la lecture image par image (± 1 s).
+- Lecteur d'écran réel, impression papier, Safari/iPad : non faits.
