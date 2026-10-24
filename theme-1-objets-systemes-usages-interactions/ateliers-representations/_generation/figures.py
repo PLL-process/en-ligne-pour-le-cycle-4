@@ -111,11 +111,31 @@ def pieuvre(ident, objet, bulles, titre, desc, liens_fc=(), liens_fp=(), largeur
         for k, (x, y) in enumerate(pos):
             corps.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="2"/>'
                          % (x, y, cx, cy, "#9aa8c2"))
+    # Bulles où arrive une FP : la FC qui y va aussi est décalée, pour ne pas se confondre avec la courbe.
+    arrivees_fp = {}
+    for (i, j, _l) in liens_fp:
+        (x1, y1), (x2, y2) = pos[i], pos[j]
+        qx, qy = 2 * cx - (x1 + x2) / 2, 2 * cy - (y1 + y2) / 2
+        for k, t in ((j, 0.9), (i, 0.1)):
+            arrivees_fp[k] = ((1 - t) ** 2 * x1 + 2 * (1 - t) * t * qx + t ** 2 * x2,
+                              (1 - t) ** 2 * y1 + 2 * (1 - t) * t * qy + t ** 2 * y2)
     for (k, lab) in liens_fc:
         x, y = pos[k]
+        x0, y0, fx = cx, cy, 0.55
+        if k in arrivees_fp:
+            dx, dy = x - cx, y - cy
+            d = math.hypot(dx, dy) or 1
+            px, py = -dy / d, dx / d
+            ax, ay = arrivees_fp[k]
+            signe = -1 if (ax - x) * px + (ay - y) * py > 0 else 1
+            hb_ = 78 if montrer_famille else 64
+            x = min(max(x + signe * 62 * px, x - 80), x + 80)   # l'extrémité reste dans la bulle
+            y = min(max(y + signe * 62 * py, y - hb_ / 2 + 6), y + hb_ / 2 - 6)
+            x0, y0 = cx + signe * 26 * px, cy + signe * 26 * py
+            fx = 0.42
         corps.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#b3261e" stroke-width="3.2"/>'
-                     % (x, y, cx, cy))
-        mx, my = (x * 0.55 + cx * 0.45), (y * 0.55 + cy * 0.45)
+                     % (x, y, x0, y0))
+        mx, my = (x * fx + x0 * (1 - fx)), (y * fx + y0 * (1 - fx))
         etiquettes.append((mx, my, lab, "#b3261e"))
     for (i, j, lab) in liens_fp:
         (x1, y1), (x2, y2) = pos[i], pos[j]
@@ -192,6 +212,66 @@ def bete_a_cornes(ident, a_qui, sur_quoi, objet, but, titre, desc, vivants=None,
     corps.append('<rect x="120" y="372" width="540" height="80" rx="12" fill="#fff8e6" stroke="%s" '
                  'stroke-width="2.4"%s/>' % ("#a06a00", tirets))
     corps.append(texte(390, 412, but, car=52, taille=16, gras=True, ident=v.get("but"), lignes_max=3))
+    return svg(largeur, hauteur, titre, desc, "".join(corps), ident=ident)
+
+
+def bete_vers_pieuvre(ident, a_qui, sur_quoi, objet, but, fp, fc, titre, desc, largeur=900, hauteur=420):
+    """La même liaison, deux fois : la corne de la bête à cornes (à qui → par l'objet → sur quoi) devient la
+    fonction principale FP1 du diagramme pieuvre. Repères ①②③ sur les deux schémas, légende en mots."""
+    BLEU, ROUGE, VIO = "#1f5fbf", "#b3261e", "#6d3fb5"
+    corps = [fleche_def(ident + "-pt"), fleche_def(ident + "-pg", GRIS)]
+
+    def badge(x, y, n):
+        corps.append('<circle cx="%d" cy="%d" r="13" fill="%s"/>' % (x, y, VIO))
+        corps.append(texte(x, y, n, taille=14, gras=True, couleur="#ffffff", car=3))
+
+    q = dict(couleur=GRIS, taille=12.5, italique=True, car=30)
+    # ── À gauche : la bête à cornes ──
+    corps.append(texte(210, 22, "La bête à cornes", taille=15, gras=True, car=30))
+    corps.append(texte(110, 44, "À qui rend-il service ?", **q))
+    corps.append(texte(310, 44, "Sur quoi agit-il ?", **q))
+    for (x0, val) in ((30, a_qui), (230, sur_quoi)):
+        corps.append('<rect x="%d" y="56" width="160" height="48" rx="10" fill="#ffffff" stroke="%s" stroke-width="2.2"/>' % (x0, ENCRE))
+        corps.append(texte(x0 + 80, 80, val, car=18, taille=14.5, gras=True, lignes_max=2))
+    corps.append('<path d="M110,104 C110,250 310,250 310,104" fill="none" stroke="%s" stroke-width="5" stroke-linecap="round"/>' % BLEU)
+    corps.append('<ellipse cx="210" cy="170" rx="92" ry="30" fill="#eef4ff" stroke="%s" stroke-width="2.6"/>' % ENCRE)
+    corps.append(texte(210, 170, objet, car=18, taille=15, gras=True, lignes_max=2))
+    corps.append('<line x1="210" y1="215" x2="210" y2="252" stroke="%s" stroke-width="2.6" marker-end="url(#%s-pt)"/>' % (ENCRE, ident))
+    corps.append(texte(210, 266, "Dans quel but ?", **q))
+    corps.append('<rect x="40" y="280" width="340" height="48" rx="10" fill="#fff8e6" stroke="#a06a00" stroke-width="2.2"/>')
+    corps.append(texte(210, 304, but, car=40, taille=14.5, gras=True, lignes_max=2))
+    badge(30, 56, "1"); badge(230, 56, "2"); badge(40, 280, "3")
+    # ── Au milieu : « devient » ──
+    corps.append('<line x1="418" y1="176" x2="474" y2="176" stroke="%s" stroke-width="3" marker-end="url(#%s-pg)"/>' % (GRIS, ident))
+    corps.append(texte(446, 158, "devient", taille=12.5, italique=True, couleur=GRIS, car=10))
+    # ── À droite : le diagramme pieuvre ──
+    corps.append(texte(690, 22, "Le diagramme pieuvre", taille=15, gras=True, car=30))
+    (x1, y1), (x2, y2), (cx, cy) = (565, 80), (815, 80), (690, 196)
+    # point de contrôle choisi pour que la courbe PASSE par le centre de l'objet : la même forme que la corne
+    qx, qy = 2 * cx - (x1 + x2) / 2, 2 * cy - (y1 + y2) / 2
+    corps.append('<path d="M%d,%d Q%.1f,%.1f %d,%d" fill="none" stroke="%s" stroke-width="5" stroke-linecap="round"/>'
+                 % (x1, y1, qx, qy, x2, y2, BLEU))
+    corps.append('<line x1="752" y1="186" x2="848" y2="100" stroke="%s" stroke-width="3.4"/>' % ROUGE)
+    corps.append('<ellipse cx="%d" cy="%d" rx="92" ry="30" fill="#ffffff" stroke="%s" stroke-width="2.6"/>' % (cx, cy, ENCRE))
+    corps.append(texte(cx, cy, objet, car=18, taille=15, gras=True, lignes_max=2))
+    for (bx, by, val) in ((x1, y1, a_qui), (x2, y2, sur_quoi)):
+        corps.append('<rect x="%d" y="%d" width="150" height="48" rx="22" fill="#e8f0ff" stroke="%s" stroke-width="2.2"/>' % (bx - 75, by - 24, BLEU))
+        corps.append(texte(bx, by, val, car=17, taille=14.5, gras=True, lignes_max=2))
+    for (ex, ey, lab, coul) in ((748, 140, "FP1", BLEU), (838, 146, "FC1", ROUGE)):
+        corps.append('<rect x="%d" y="%d" width="44" height="22" rx="6" fill="#ffffff" stroke="%s"/>' % (ex - 22, ey - 11, coul))
+        corps.append(texte(ex, ey, lab, taille=12.5, gras=True, couleur=coul, car=6))
+    corps.append('<rect x="500" y="262" width="380" height="48" rx="10" fill="#e8f0ff" stroke="%s" stroke-width="2.2"/>' % BLEU)
+    corps.append(texte(690, 286, "FP1 : " + fp, car=46, taille=14, gras=True, couleur=BLEU, lignes_max=2))
+    corps.append('<rect x="500" y="320" width="380" height="40" rx="10" fill="#fdeceb" stroke="%s" stroke-width="2"/>' % ROUGE)
+    corps.append(texte(690, 340, "FC1 : " + fc, car=50, taille=13, gras=True, couleur=ROUGE, lignes_max=2))
+    corps.append(texte(690, 384, "Au bout de la FP1, le même élément porte souvent aussi la FC1.", taille=12.5, italique=True,
+                       couleur=GRIS, car=70, lignes_max=1))
+    badge(x1 - 75, y1 - 24, "1"); badge(x2 - 75, y2 - 24, "2"); badge(500, 262, "3")
+    # ── Légende, en mots ──
+    for k, ligne in enumerate(["① « à qui ? » → la bulle d'où part la FP1",
+                               "② « sur quoi ? » → la bulle où arrive la FP1",
+                               "③ « dans quel but ? » → la phrase de la FP1"]):
+        corps.append(texte(30, 352 + 22 * k, ligne, ancre="start", taille=13, car=60, couleur=ENCRE, lignes_max=1))
     return svg(largeur, hauteur, titre, desc, "".join(corps), ident=ident)
 
 

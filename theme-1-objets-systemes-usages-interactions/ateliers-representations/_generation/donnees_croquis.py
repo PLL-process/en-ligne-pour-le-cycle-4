@@ -846,9 +846,9 @@ E1 = dict(
            "arrière.<br>"
            "A → la carte ✔ → le bip ✔ → la flèche s'éloigne de la borne ✔ → c'est le bon.<br>"
            "B → la carte ✔ → le bip ✔ → la flèche va vers la borne ✘ → c'est l'erreur de la première fois.<br>"
-           "C → ni Inès, ni geste ✘ → il montre comment la borne est faite, pas ce que vit l'usager.<br>"
-           "Ce qui fait réussir A → des légendes reliées, des numéros dans l'ordre, une flèche expliquée, des formes simples. "
-           "Pas la règle, pas l'échelle, pas les couleurs.</p>"],
+           "C → ni Inès, ni geste ✘ → il montre comment la borne est faite, pas ce que vit l'usager.</p>"
+           "<p><b>Ce qui fait réussir A</b> → des légendes reliées, des numéros dans l'ordre, une flèche expliquée, des formes "
+           "simples. Pas la règle, pas l'échelle, pas les couleurs.</p>"],
     jumeau=dict(consigne="Hugo raconte&nbsp;: « Je glisse mon ticket dans la fente, la barrière se lève, j'avance. » Un croquis "
                          "montre la barrière levée et une flèche qui fait <b>reculer</b> la voiture, sans aucune légende. Qu'est-ce "
                          "qui ne va pas, et comment le corriger&nbsp;?",
@@ -1447,13 +1447,13 @@ COURS = {
         "<li><b>« Est-ce que ça rentre&nbsp;? »</b>&nbsp;: on compare chaque dimension à la place disponible, une à une. Une cote qui "
         "manque empêche de conclure.</li></ul>"
         "<h3>Cinq façons de représenter une solution</h3>"
-        '<div class="defile"><table><tr><th scope="col">Représentation</th><th scope="col">Ce qu\'elle montre</th>'
+        '<div class="defile"><table><tr><th scope="col">Façon</th><th scope="col">Ce qu\'elle montre</th>'
         '<th scope="col">Quand s\'en servir</th></tr>'
-        "<tr><td>le croquis</td><td>une idée, à main levée</td><td>vite, pour chercher et montrer</td></tr>"
-        "<tr><td>le schéma</td><td>les liaisons, avec des symboles normés</td><td>précisément, pour câbler ou expliquer un principe</td></tr>"
-        "<tr><td>le graphique</td><td>une grandeur qui change</td><td>pour suivre une mesure dans le temps</td></tr>"
-        "<tr><td>l'algorithme</td><td>l'ordre des actions, avec des conditions</td><td>pour programmer</td></tr>"
-        "<tr><td>la modélisation 3D</td><td>la forme exacte, en volume</td><td>pour fabriquer avec une machine</td></tr></table></div>"
+        "<tr><td>croquis</td><td>une idée, à main levée</td><td>vite, pour chercher et montrer</td></tr>"
+        "<tr><td>schéma</td><td>les liaisons, avec des symboles normés</td><td>précisément, pour câbler ou expliquer un principe</td></tr>"
+        "<tr><td>graphique</td><td>une grandeur qui change</td><td>pour suivre une mesure dans le temps</td></tr>"
+        "<tr><td>algorithme</td><td>l'ordre des actions, avec des conditions</td><td>pour programmer</td></tr>"
+        "<tr><td>modélisation 3D</td><td>la forme exacte, en volume</td><td>pour fabriquer avec une machine</td></tr></table></div>"
         "<h3>Modéliser, simuler, fabriquer</h3>"
         "<ul><li><b>Modéliser</b>, c'est représenter la <b>forme</b> et la structure de l'objet&nbsp;: à quoi il ressemble.</li>"
         "<li><b>Simuler</b>, c'est faire « fonctionner » ce modèle dans un logiciel&nbsp;: comment il se comportera (tiendra-t-il au "

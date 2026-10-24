@@ -369,7 +369,7 @@ body.essentiel details.correction,body.essentiel .approfondir,body.essentiel det
       encoche(boite, w.name, lignes.length ? (ok ? "juste" : "faux") : "vide",
               lignes.length ? (bons + " reconnu" + (bons > 1 ? "s" : "") + ", " + w.min + " demandé" + (w.min > 1 ? "s" : "")) : "");
       if (!lignes.length) msgs.unshift(w.vide || "Ta liste est vide : écris une ligne par élément.");
-      else if (bons < w.min) msgs.unshift("Il en faut au moins " + w.min + " : tu en as " + bons + " qui conviennent.");
+      else if (bons < w.min) msgs.unshift("Il en faut au moins " + w.min + " : " + (bons === 0 ? "aucun ne convient encore." : (bons === 1 ? "un seul convient pour l'instant." : bons + " conviennent pour l'instant.")));
       var points = Math.min(bons, w.min);
       if (refus) points = Math.max(0, points - 1);
       return {justes: points, total: w.min, messages: msgs};

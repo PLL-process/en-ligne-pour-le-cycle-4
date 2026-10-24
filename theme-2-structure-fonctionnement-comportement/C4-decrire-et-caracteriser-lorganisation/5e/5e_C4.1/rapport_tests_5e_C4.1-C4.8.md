@@ -4,6 +4,8 @@
 **Outil** : Playwright (Chromium headless), viewport mobile 390×844 ·
 **Verdict global : 30 / 30 (séquence) + 25 / 25 (QCM) — les deux rejouables ✅**
 
+> **Mise à jour du 24/10/2026.** L'exercice « Lire le FAST du lampadaire » (atelier FAST, 5e) est inséré en tête de l'activité 1, qui passe à 50 min et exige sa réussite. La suite de la séquence compte désormais **34 contrôles, 34 / 34** : l'activité 1 refusée sans l'exercice, l'exercice vérifié à vide puis rempli juste, et ses réponses retrouvées au rechargement.
+
 > **Mise au point du 31/08/2026.** Ce rapport annonçait « 26 / 26 » et citait un script
 > `tests_lot05.js` qui **n'a jamais été commité**. Vingt-six coches que personne ne
 > pouvait relancer : c'est exactement ce que la règle d'or n°259 condamne. Le QCM — la

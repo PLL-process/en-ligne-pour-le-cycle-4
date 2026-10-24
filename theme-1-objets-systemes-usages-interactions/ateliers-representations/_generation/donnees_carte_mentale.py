@@ -372,7 +372,7 @@ E2 = dict(
           ("extension", "les lettres après le point, à la fin du nom d'un fichier : elles disent son format. "
            "<b>.jpg</b> : une image&nbsp;; <b>.csv</b> : un tableau de valeurs&nbsp;; <b>.odt</b> : un texte."),
           ("stocker", "enregistrer un fichier à un endroit précis, pour le garder.")],
-    documents=[dict(svg=CM_PROJET_E2, legende="La carte mentale du projet (exercice 1).",
+    documents=[dict(svg=CM_PROJET_E2, legende="La carte mentale du projet lampadaire, complétée.",
                     description="<p>Au centre&nbsp;: « Notre projet&nbsp;: le lampadaire ». Cinq branches&nbsp;: Photos, Mesures, "
                                 "Programmes, Comptes rendus, Croquis, avec deux feuilles chacune.</p>"),
                dict(svg=ARBO_A, legende="Arborescence A.",

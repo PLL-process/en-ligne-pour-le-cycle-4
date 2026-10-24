@@ -152,8 +152,22 @@ with sync_playwright() as p:
     pg.fill("#a1_parcours", PARCOURS)
     pg.click('[data-check="1"]')
     pg.wait_for_timeout(120)
+    t("activité 1 : sans le croquis inséré, l'activité le réclame",
+      "croquis" in pg.inner_text("#fb1"), pg.inner_text("#fb1")[-120:])
+    # l'exercice inséré de l'atelier croquis (4e, e1), rempli juste
+    pg.check('#cq_4e_e1 input[name="cq_4e_e1__bon"][value="A"]')
+    pg.check('#cq_4e_e1 input[name="cq_4e_e1__defaut_0"][value="sens"]')
+    pg.check('#cq_4e_e1 input[name="cq_4e_e1__defaut_1"][value="dedans"]')
+    for v in ["legendes", "numeros", "fleche", "formes"]:
+        pg.check('#cq_4e_e1 input[name="cq_4e_e1__regles"][value="%s"]' % v)
+    pg.click("#cq_4e_e1 button.verifier")
+    pg.wait_for_timeout(120)
+    t("activité 1 : l'exercice du croquis inséré se vérifie", "Tout est juste" in pg.inner_text("#cq_4e_e1 .retour"),
+      pg.inner_text("#cq_4e_e1 .retour")[:120])
+    pg.click('[data-check="1"]')
+    pg.wait_for_timeout(120)
     t("activité 1 : validée avec les cinq étapes et leurs preuves",
-      "6 / 6" in pg.inner_text("#fb1"))
+      "6 / 6" in pg.inner_text("#fb1") and "croquis" not in pg.inner_text("#fb1"), pg.inner_text("#fb1")[-120:])
     t("n°45 : le bouton vise maintenant 4e_C2.1 seul",
       pg.get_attribute("#lienQcm", "href").endswith("#codes=C2.1"),
       pg.get_attribute("#lienQcm", "href"))

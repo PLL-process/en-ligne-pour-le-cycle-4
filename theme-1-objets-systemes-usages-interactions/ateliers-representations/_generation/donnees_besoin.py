@@ -765,6 +765,18 @@ E7 = dict(
 # ─────────────────────────────────────────────────────────────────────────────
 # Le cours, niveau par niveau
 # ─────────────────────────────────────────────────────────────────────────────
+BETE_VERS_PIEUVRE = figures.bete_vers_pieuvre(
+    "bc-bp", "Léa", "ses enfants", "le vélo-cargo", "transporter ses enfants en ville",
+    "permettre à Léa de transporter ses enfants", "protéger les enfants pendant le trajet",
+    "De la bête à cornes au diagramme pieuvre",
+    "À gauche, la bête à cornes du vélo-cargo : repère 1, à qui rend-il service ? Léa ; repère 2, sur quoi agit-il ? ses "
+    "enfants ; la corne bleue relie les deux en passant sous le vélo-cargo ; repère 3, dans quel but ? transporter ses "
+    "enfants en ville. Une flèche marquée « devient » mène à droite, au diagramme pieuvre : la bulle Léa (repère 1) et la "
+    "bulle ses enfants (repère 2) sont en haut ; la courbe bleue FP1 part de Léa, descend passer par le vélo-cargo et "
+    "remonte aux enfants, comme la corne. Un trait rouge FC1 relie le vélo-cargo aux enfants. En dessous, repère 3 : FP1, "
+    "permettre à Léa de transporter ses enfants ; FC1, protéger les enfants pendant le trajet. Légende : le repère 1 est "
+    "la bulle d'où part la FP1, le repère 2 la bulle où elle arrive, le repère 3 la phrase de la FP1.")
+
 COURS = {
     "5e": ("<h3>Le besoin</h3><ul>"
            "<li>Un <b>besoin</b>, c'est ce qui manque à quelqu'un, ou ce qui lui est nécessaire. Un objet technique existe parce "
@@ -794,6 +806,16 @@ COURS = {
            "<li>La case « sur quoi&nbsp;? » nomme une personne ou une chose, pas une idée&nbsp;: « la rue », pas « la sécurité ».</li>"
            "<li>La bête à cornes ne liste pas ce que l'objet doit respecter (résister à la pluie…)&nbsp;: c'est le rôle du "
            "diagramme des interacteurs extérieurs, souvent appelé diagramme pieuvre.</li></ul>"
+           "<h3>Ensuite&nbsp;: la bête à cornes devient la fonction principale du diagramme pieuvre</h3>"
+           "<ul><li>La corne relie «&nbsp;à qui&nbsp;?&nbsp;» et «&nbsp;sur quoi&nbsp;?&nbsp;» en passant par le produit. Dans le "
+           "diagramme pieuvre, la même liaison s'appelle la <b>fonction principale</b> FP1&nbsp;: elle part de Léa, passe par le "
+           "vélo-cargo et arrive aux enfants.</li>"
+           "<li>Sa phrase dit le but&nbsp;: «&nbsp;permettre à Léa de transporter ses enfants&nbsp;». La FP1 décrit donc la "
+           "<b>fonction d'usage</b>.</li>"
+           "<li>Au bout de la FP1, les enfants imposent aussi une condition&nbsp;: c'est souvent la FC1 (les protéger pendant le "
+           "trajet).</li></ul>"
+           '<figure class="figure">' + BETE_VERS_PIEUVRE + '<figcaption>La même liaison, deux fois&nbsp;: la corne de la bête à '
+           'cornes devient la fonction principale FP1. Les repères ①②③ se répondent d\'un schéma à l\'autre.</figcaption></figure>' 
            "<h3>Choisir un objet</h3><ul>"
            "<li>Un objet répond au besoin s'il remplit <b>les trois branches</b> à la fois&nbsp;; une seule branche qui échoue "
            "suffit à l'écarter.</li>"

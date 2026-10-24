@@ -127,6 +127,7 @@ details.cours summary{cursor:pointer;font-weight:700;color:#9bd8ff}
 .figure{margin:12px 0}
 .figure img,.figure svg.schema{width:100%;height:auto;max-width:820px;display:block;margin:0 auto;border-radius:10px;border:1px solid var(--border);background:#fbfcff}
 @media (max-width:600px){.figure{overflow-x:auto;-webkit-overflow-scrolling:touch}.figure svg.schema,.figure img{min-width:560px}}
+@media (max-width:600px){.figure svg.schema.etroit{min-width:0}}
 .figure figcaption{color:var(--sub);font-size:.85em;margin-top:6px;text-align:center}
 .schema-vivant{background:#fbfcff;border-radius:10px;border:1px solid var(--border);padding:4px}
 /* Tableaux */
@@ -368,7 +369,7 @@ body.essentiel details.correction,body.essentiel .approfondir,body.essentiel det
       encoche(boite, w.name, lignes.length ? (ok ? "juste" : "faux") : "vide",
               lignes.length ? (bons + " reconnu" + (bons > 1 ? "s" : "") + ", " + w.min + " demandé" + (w.min > 1 ? "s" : "")) : "");
       if (!lignes.length) msgs.unshift(w.vide || "Ta liste est vide : écris une ligne par élément.");
-      else if (bons < w.min) msgs.unshift("Il en faut au moins " + w.min + " : tu en as " + bons + " qui conviennent.");
+      else if (bons < w.min) msgs.unshift("Il en faut au moins " + w.min + " : " + (bons === 0 ? "aucun ne convient encore." : (bons === 1 ? "un seul convient pour l'instant." : bons + " conviennent pour l'instant.")));
       var points = Math.min(bons, w.min);
       if (refus) points = Math.max(0, points - 1);
       return {justes: points, total: w.min, messages: msgs};

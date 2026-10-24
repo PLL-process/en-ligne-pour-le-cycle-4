@@ -37,6 +37,35 @@ def t(n, ok, d=""):
     print(("✔" if ok else "✘"), n, d)
 
 
+# L'exercice inséré (atelier « Le diagramme de cas d'utilisation ») : les bonnes réponses sont lues dans sa
+# définition, embarquée dans la page — le banc suit l'exercice si son rédacteur le retouche. Seule la réponse
+# écrite est donnée ici (l'exemple juste de la définition).
+REMPLIR = """([uid, textes]) => {
+  const box = document.getElementById(uid);
+  const D = JSON.parse(box.closest('.atelier-incruste').querySelector('script[type="application/json"]').textContent).exercices[uid];
+  const coche = (name, val) => { const i = box.querySelector(`input[name="${name}"][value="${val}"]`);
+    if (!i) throw new Error('option absente : ' + name + ' = ' + val); i.checked = true; i.dispatchEvent(new Event('change', {bubbles: true})); };
+  for (const w of D.widgets) {
+    if (w.type === 'choix') coche(w.name, w.bonne);
+    else if (w.type === 'cases') box.querySelectorAll(`input[name="${w.name}"]`).forEach(i => { i.checked = w.bonnes.includes(i.value); });
+    else if (w.type === 'classer') w.items.forEach(it => coche(it.name, it.bonne));
+    else if (w.type === 'slots') w.slots.forEach(s => coche(s.name, s.bonnes[0]));
+    else { const z = box.querySelector(`textarea[name="${w.name}"]`); z.value = textes[w.name.split('__')[1]]; z.dispatchEvent(new Event('input', {bubbles: true})); }
+  }
+}"""
+
+
+def exercice_insere(pg, uid, nom, textes=None):
+    """Vérifié à vide (retour 🔴), puis rempli juste (« Tout est juste »)."""
+    pg.click(f"#{uid} button.verifier")
+    pg.wait_for_timeout(80)
+    t(f"{nom} : à vide, le retour demande de reprendre", "🔴" in pg.inner_text(f"#{uid} .retour"))
+    pg.evaluate(REMPLIR, [uid, textes or {}])
+    pg.click(f"#{uid} button.verifier")
+    pg.wait_for_timeout(80)
+    t(f"{nom} : rempli juste, il est réussi", "Tout est juste" in pg.inner_text(f"#{uid} .retour"))
+
+
 LECTURE = ("habitués : 0 % (0 sur 14)\noccasionnels : 11 %\navec poussette : 25 %\n"
            "touristes : 43 %\npersonnes âgées : 50 %\n"
            "Le chiffre global cachait qu'aucun habitué n'abandonne, alors qu'une personne âgée "
@@ -128,10 +157,15 @@ with sync_playwright() as p:
       "fonts.googleapis" not in contenu and not distantes, str(distantes))
     t("séquence : lien d'accueil valide (n°11)", pathlib.Path("../../../../index.html").exists())
     t("bandeau de tâches affiché (n°30)", "Séance 1" in pg.inner_text("#tachesBandeau"))
-    n_ta = pg.eval_on_selector_all("textarea", "a=>a.length")
-    n_et = pg.eval_on_selector_all("details.etayage", "a=>a.length")
+    # Les exercices insérés (atelier des représentations) apportent leurs propres zones : comptées à part.
+    n_ta = pg.eval_on_selector_all("textarea:not(.atelier-incruste textarea)", "a=>a.length")
+    n_et = pg.eval_on_selector_all("details.etayage:not(.atelier-incruste details)", "a=>a.length")
     t("chaque zone de rédaction a sa version étayée (n°31)",
       n_ta == 8 and n_et >= n_ta, f"{n_ta} zones / {n_et} étayages")
+    i_ta = pg.eval_on_selector_all(".atelier-incruste textarea", "a=>a.length")
+    i_et = pg.eval_on_selector_all(".atelier-incruste details.etayage", "a=>a.length")
+    t("exercice inséré : chaque zone de rédaction a sa version étayée (n°31)",
+      i_ta >= 1 and i_ta == i_et, f"{i_ta} zones / {i_et} étayages")
     t("chaque champ porte une étiquette (n°34)",
       pg.evaluate("[...document.querySelectorAll('select,textarea')].every(e=>!e.id||"
                   "document.querySelector(`label[for=\"${e.id}\"]`)||e.getAttribute('aria-label'))"))
@@ -217,6 +251,15 @@ with sync_playwright() as p:
     t("activité 4 : une défense sans « ce que j'ai écarté » est refusée, et le message le nomme",
       "n'a rien choisi" in pg.inner_text("#fb4"))
     pg.fill("#a4_prod", DEFENSE)
+    pg.click('[data-check="4"]')
+    pg.wait_for_timeout(120)
+    t("activité 4 : l'exercice « Choisir le mode selon la question » est exigé",
+      "Choisir le mode selon la question" in pg.inner_text("#fb4")
+      and "3 / 4 activités" in pg.inner_text("#progTxt"), pg.inner_text("#fb4")[-90:])
+    # l'exercice inséré en tête de l'activité 4 (atelier « Le diagramme de cas d'utilisation », 3e)
+    exercice_insere(pg, "cu_3e_e6", "activité 4 : choisir le mode selon la question",
+                    {"justif": "Le diagramme de cas d'utilisation dit qui fait quoi, mais il ne montre ni l'ordre des "
+                               "étapes ni le test « si la carte est refusée » : c'est l'algorigramme qui le montre."})
     pg.click('[data-check="4"]')
     pg.wait_for_timeout(120)
     t("activité 4 : validée avec les trois points", "4 / 4" in pg.inner_text("#fb4"))

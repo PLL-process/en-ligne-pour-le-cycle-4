@@ -89,7 +89,8 @@ def section(inc):
          '<p>%s</p>' % inc["intro"]]
     if inc.get("cours", True):
         h.append(moteur.bloc_cours(at, niv, moteur.rel(d, build.synthese_eleve(at))))
-    numeros = {ex["id"]: i + 1 for i, ex in enumerate(N["exercices"])}
+    # numérotés dans l'ordre du bloc inséré (1, 2…), pas dans celui de l'atelier : la séquence lit « Exercice 1 », « Exercice 2 »
+    numeros = {exo: i + 1 for i, exo in enumerate(inc["exos"])}
     for exo in inc["exos"]:
         ex = next(x for x in N["exercices"] if x["id"] == exo)
         uid = "%s_%s_%s" % (at.COURT, niv, ex["id"])

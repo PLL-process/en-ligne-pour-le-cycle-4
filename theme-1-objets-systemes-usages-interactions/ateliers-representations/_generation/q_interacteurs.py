@@ -17,7 +17,7 @@ IMG_SCENE = {"src": "Images/velo_cargo_la_scene.svg",
 IMG_A_COMPLETER = {"src": "Images/pieuvre_velo_cargo_a_completer.svg",
                    "alt": "Diagramme pieuvre du vélo-cargo : quatre bulles remplies (Léa, le téléphone, la pluie, l'itinéraire) et trois "
                           "bulles vides qui attendent un usager, un autre objet et un élément de l'environnement ; deux courbes FP1 "
-                          "et FP2 passent par le vélo-cargo, quatre traits FC1 à FC4 le relient à un seul élément."}
+                          "et FP2 passent par le vélo-cargo, cinq traits FC1 à FC5 le relient à un seul élément."}
 IMG_CHOIX = {"src": "Images/velo_cargo_trois_choix.svg",
              "alt": "Le vélo-cargo avec trois repères : A sur le bac à rebords hauts, B sur la commande de vitesses du guidon, "
                     "C sur la chaîne près du pédalier."}
@@ -76,20 +76,21 @@ q(C, "Un objet ou une donnée",
    "L'environnement, c'est le lieu et la nature : la route, la pluie. L'itinéraire est une information produite par un appareil."],
   "Ce qu'on touche : un objet. Ce qu'on lit : une donnée.")
 
-q(C, "Une pièce n'est pas un interacteur",
-  "Parmi ces éléments, lequel est une pièce du vélo-cargo, et non un interacteur extérieur ?",
-  ["la chaîne",
-   "la pluie",
-   "les courses",
-   "la route en pente"],
-  "La chaîne est un <b>constituant</b> : elle fait partie du vélo-cargo. Un interacteur est toujours en dehors de l'objet.",
-  "Le guidon, la selle, les roues et le bac sont aussi des constituants.",
-  "Donner une bulle à une pièce parce qu'on la voit bien sur le dessin.",
+q(C, "La bête à cornes dans la pieuvre",
+  "La bête à cornes du vélo-cargo dit : à qui ? Léa ; sur quoi ? ses enfants ; dans quel but ? les transporter. Dans le diagramme pieuvre, que devient-elle ?",
+  ["la fonction principale FP1, de Léa aux enfants en passant par l'objet",
+   "une fonction contrainte FC1, du vélo-cargo vers Léa et elle seule",
+   "une bulle de plus, posée au centre à côté du vélo-cargo lui-même",
+   "rien : la bête à cornes et la pieuvre parlent de choses sans lien"],
+  "La FP1 part de « à qui ? » (Léa), passe par l'objet, arrive à « sur quoi ? » (les enfants), et sa phrase dit le but : "
+  "« permettre à Léa de transporter ses enfants ». Elle décrit la <b>fonction d'usage</b>.",
+  "Lampadaire : à qui ? les piétons ; sur quoi ? la rue ; but : l'éclairer la nuit → FP1 : permettre aux piétons de voir la rue la nuit.",
+  "Croire que la bête à cornes et la pieuvre sont deux exercices sans rapport.",
   ["",
-   "La pluie tombe sur le vélo-cargo depuis l'extérieur : c'est un interacteur (environnement).",
-   "Les courses sont transportées dans le bac, mais ne sont pas une pièce du vélo : c'est un interacteur (autre objet).",
-   "Les roues roulent sur la route, qui reste en dehors du vélo : c'est un interacteur (environnement)."],
-  "Dedans : un constituant. Dehors : un interacteur.")
+   "Une FC ne touche qu'un élément ; or la bête à cornes en relie deux, Léa et ses enfants.",
+   "Le centre est réservé à l'objet : la bête à cornes ne devient pas une bulle, elle devient un trait.",
+   "Elles parlent du même service : la bête à cornes l'annonce, la FP1 le place entre les deux éléments."],
+  "À qui + sur quoi + but = la FP1.")
 
 q(C, "Les familles sur un dessin",
   "Sur ce dessin, combien de familles différentes d'interacteurs extérieurs peut-on trouver ?",
@@ -109,19 +110,19 @@ q(C, "Les familles sur un dessin",
   img=IMG_SCENE)
 
 q(C, "Le trait vers la pluie",
-  "Le trait FC1 relie le vélo-cargo à la pluie, et à elle seule. Comment écrit-on cette fonction contrainte ?",
+  "Le trait FC2 relie le vélo-cargo à la pluie, et à elle seule. Comment écrit-on cette fonction contrainte ?",
   ["résister à la pluie",
    "la pluie",
    "la pluie mouille le vélo-cargo",
    "permettre à Léa de rouler au sec sous la pluie"],
   "Une <b>fonction contrainte</b> (FC) dit ce que l'objet doit respecter face à <b>un</b> élément extérieur. Elle commence "
   "par un verbe à l'infinitif : résister, tenir, laisser lire…",
-  "FC3 relie le vélo-cargo au téléphone : tenir le téléphone de Léa sans qu'il tombe.",
+  "FC4 relie le vélo-cargo au téléphone : tenir le téléphone de Léa sans qu'il tombe.",
   "Écrire le nom de l'interacteur, ou une phrase qui raconte, au lieu d'une fonction.",
   ["",
    "« La pluie » est le nom de l'interacteur, écrit dans sa bulle : une fonction dit ce que l'objet doit faire.",
    "Cette phrase raconte ce qui se passe ; elle ne dit pas ce que le vélo-cargo doit faire.",
-   "Cette phrase relie deux éléments, Léa et la pluie : ce serait une fonction principale, pas le trait FC1."],
+   "Cette phrase relie deux éléments, Léa et la pluie : ce serait une fonction principale, pas le trait FC2."],
   "Une fonction s'écrit avec un verbe à l'infinitif.")
 
 q(C, "Compléter une bulle",

@@ -207,7 +207,41 @@ ok('15 · activité 4 validée 4 / 4 une fois les trois pannes diagnostiquées',
    /4 \/ 4/.test(await retour(4)) && !/Résous les 3 pannes/.test(await retour(4))
    && await valide(4), (await retour(4)).slice(0, 60));
 
+/* ── activité 5 : l'exercice d'atelier incrusté en tête (cahier des charges, flexibilité) ──
+   Ses bonnes réponses sont LUES dans la définition JSON de sa section ; seul le texte de
+   l'exigence est écrit ici (c'est le champ `exemple` de sa définition d'atelier). */
+async function remplirIncruste(uid, textes = {}) {
+  await p.evaluate(({ uid, textes }) => {
+    const sec = document.getElementById(uid).closest('.atelier-incruste');
+    const D = JSON.parse(sec.querySelector('script[type="application/json"]').textContent).exercices[uid];
+    const coche = (name, v) => [...document.getElementsByName(name)].find(r => r.value === v).click();
+    for (const w of D.widgets) {
+      if (w.type === 'choix') coche(w.name, w.bonne);
+      else if (w.type === 'classer') w.items.forEach(it => coche(it.name, it.bonne));
+      else if (w.type === 'slots') w.slots.forEach(s => coche(s.name, s.bonnes[0]));
+      else if (w.type === 'cases') w.bonnes.forEach(v => coche(w.name, v));
+      else if (w.type === 'texte') {
+        const t = document.getElementById(w.name);
+        t.value = textes[w.name]; t.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    }
+  }, { uid, textes });
+}
 await remplir(5); await valider(5);
+ok('15 bis · activité 5 REFUSÉE malgré 6 réponses justes — l\'exercice du cahier des charges n\'est pas réussi',
+   /6 \/ 6/.test(await retour(5)) && /cahier des charges/.test(await retour(5)) && !(await valide(5)),
+   (await retour(5)).slice(0, 120));
+await p.click('#pv_4e_e6 button.verifier'); await p.waitForTimeout(80);
+ok('15 ter · l\'exercice du cahier des charges inséré se vérifie à vide (retour à reprendre)',
+   (await p.textContent('#pv_4e_e6 .retour')).includes('🔴'),
+   (await p.textContent('#pv_4e_e6 .retour')).slice(0, 70));
+await remplirIncruste('pv_4e_e6', {
+  pv_4e_e6__exig: "Le système doit envoyer l'état de l'arrosage au smartphone au moins 1 fois par jour." });
+await p.click('#pv_4e_e6 button.verifier'); await p.waitForTimeout(80);
+ok('15 quater · l\'exercice du cahier des charges inséré, rempli juste (F0 à F3 compris), est réussi',
+   (await p.textContent('#pv_4e_e6 .retour')).includes('Tout est juste'),
+   (await p.textContent('#pv_4e_e6 .retour')).slice(0, 70));
+await valider(5);
 ok('16 · activité 5 validée 6 / 6 (forme et procédé : 3D, injection, laser, perçage)',
    /6 \/ 6/.test(await retour(5)) && await valide(5), (await retour(5)).slice(0, 60));
 
@@ -225,6 +259,12 @@ ok('18 · rechargement : réponses, validations ET les deux verrous sont restaur
    && (await p.textContent('#progTxt')).includes('5 / 5')
    && await p.evaluate(() => !!window.__exp.table && !!window.__exp.reseau),
    await p.textContent('#progTxt'));
+{
+  const coches = await p.$$eval('#pv_4e_e6 input[type=radio]:checked', l => l.length);
+  const exig = await p.inputValue('#pv_4e_e6__exig');
+  ok('18 ter · l\'exercice du cahier des charges retrouve ses 8 choix et son exigence au rechargement',
+     coches === 8 && /smartphone/.test(exig), coches + ' choix · ' + exig.slice(0, 40));
+}
 ok('18 bis · les compteurs des deux simulateurs repartent à 3 / 3 après rechargement',
    (await p.textContent('#bacCompteur')).includes('3 / 3')
    && (await p.textContent('#panneEtat')).includes('3 / 3'),

@@ -49,7 +49,7 @@ BULLES_E3 = [dict(nom="le téléphone", famille="neutre"),
              dict(nom="Léa", famille="neutre"),
              dict(nom="l'itinéraire", famille="neutre")]
 
-FONCTIONS_VELO = dict(liens_fp=[(5, 1, "FP1"), (5, 3, "FP2")], liens_fc=[(2, "FC1"), (4, "FC2"), (0, "FC3"), (6, "FC4")])
+FONCTIONS_VELO = dict(liens_fp=[(5, 1, "FP1"), (5, 3, "FP2")], liens_fc=[(1, "FC1"), (2, "FC2"), (4, "FC3"), (0, "FC4"), (6, "FC5")])
 
 PIEUVRE_A_COMPLETER = figures.pieuvre(
     "pv-pieuvre", "Le vélo-cargo", BULLES_E3,
@@ -57,8 +57,9 @@ PIEUVRE_A_COMPLETER = figures.pieuvre(
     "Au centre, le vélo-cargo. Sept bulles autour. Quatre sont remplies : Léa, le téléphone, la pluie, "
     "l'itinéraire. Trois sont vides et annoncent seulement la famille attendue : bulle 1, un usager ; "
     "bulle 2, un autre objet ; bulle 3, un élément de l'environnement. Deux courbes partent de Léa et passent "
-    "par le vélo-cargo : FP1 arrive à la bulle 1, FP2 à la bulle 2. Quatre traits droits relient le "
-    "vélo-cargo à un seul élément : FC1 à la pluie, FC2 à la bulle 3, FC3 au téléphone, FC4 à l'itinéraire.",
+    "par le vélo-cargo : FP1 arrive à la bulle 1, FP2 à la bulle 2. Cinq traits droits relient le "
+    "vélo-cargo à un seul élément : FC1 à la bulle 1, FC2 à la pluie, FC3 à la bulle 3, FC4 au téléphone, "
+    "FC5 à l'itinéraire.",
     **FONCTIONS_VELO)
 
 BULLES_CORRIGE = [dict(nom="le téléphone", famille="objet"), dict(nom="① les enfants", famille="usager"),
@@ -73,7 +74,7 @@ PIEUVRE_CORRIGE = figures.pieuvre(
     "Bulle 1, les enfants : un usager. Le téléphone : un autre objet. Bulle 2, les courses : un autre "
     "objet. La pluie : l'environnement. Bulle 3, la route en pente : l'environnement. L'itinéraire : "
     "une donnée. Les fonctions FP1 et FP2 passent par le vélo-cargo, de Léa aux enfants et aux courses ; "
-    "FC1 à FC4 le relient à la pluie, à la route en pente, au téléphone et à l'itinéraire.",
+    "FC1 à FC5 le relient aux enfants, à la pluie, à la route en pente, au téléphone et à l'itinéraire.",
     montrer_famille=True, **FONCTIONS_VELO)
 
 BULLES_JARDIN = [dict(nom="l'heure d'arrosage choisie", famille="donnee"), dict(nom="les plantes", famille="environnement"),
@@ -90,6 +91,18 @@ PIEUVRE_JARDIN = figures.pieuvre(
     "smartphone, 5 à la gardienne, 6 à l'heure d'arrosage choisie.",
     liens_fp=[(5, 1, "1")], liens_fc=[(3, "2"), (2, "3"), (4, "4"), (5, "5"), (0, "6")], montrer_famille=True,
     largeur=820, hauteur=520)
+
+BETE_VERS_PIEUVRE = figures.bete_vers_pieuvre(
+    "pv-bp", "Léa", "ses enfants", "le vélo-cargo", "transporter ses enfants en ville",
+    "permettre à Léa de transporter ses enfants", "protéger les enfants pendant le trajet",
+    "De la bête à cornes au diagramme pieuvre",
+    "À gauche, la bête à cornes du vélo-cargo : repère 1, à qui rend-il service ? Léa ; repère 2, sur quoi agit-il ? ses "
+    "enfants ; la corne bleue relie les deux en passant sous le vélo-cargo ; repère 3, dans quel but ? transporter ses "
+    "enfants en ville. Une flèche marquée « devient » mène à droite, au diagramme pieuvre : la bulle Léa (repère 1) et la "
+    "bulle ses enfants (repère 2) sont en haut ; la courbe bleue FP1 part de Léa, descend passer par le vélo-cargo et "
+    "remonte aux enfants, comme la corne. Un trait rouge FC1 relie le vélo-cargo aux enfants. En dessous, repère 3 : FP1, "
+    "permettre à Léa de transporter ses enfants ; FC1, protéger les enfants pendant le trajet. Légende : le repère 1 est "
+    "la bulle d'où part la FP1, le repère 2 la bulle où elle arrive, le repère 3 la phrase de la FP1.")
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 5e
@@ -235,7 +248,7 @@ E2 = dict(
 )
 
 E3 = dict(
-    id="e3", titre="Compléter le diagramme pieuvre et ses fonctions", code="5e_C2.1", duree=10,
+    id="e3", titre="Compléter le diagramme pieuvre et ses fonctions", code="5e_C2.1", duree=11,
     objectif="compléter un diagramme des interacteurs extérieurs, écarter ce qui n'en est pas, et lire ses fonctions.",
     production="le diagramme pieuvre du vélo-cargo complété, la raison des deux intrus, et deux fonctions retrouvées.",
     mots=[("diagramme des interacteurs extérieurs", "le schéma qui place l'objet au centre et, autour, chaque interacteur "
@@ -255,16 +268,18 @@ E3 = dict(
           "doit respecter. Une fonction s'écrit avec un verbe à l'infinitif&nbsp;:</p>"
           "<ul><li><b>FP1</b>&nbsp;: permettre à Léa de transporter ses enfants.</li>"
           "<li><b>FP2</b>&nbsp;: permettre à Léa de transporter ses courses.</li>"
-          "<li><b>FC1</b>&nbsp;: résister à la pluie.</li>"
-          "<li><b>FC2</b>&nbsp;: … (à retrouver)</li>"
-          "<li><b>FC3</b>&nbsp;: tenir le téléphone de Léa sans qu'il tombe.</li>"
-          "<li><b>FC4</b>&nbsp;: … (à retrouver)</li></ul>",
+          "<li><b>FC1</b>&nbsp;: protéger les enfants pendant le trajet.</li>"
+          "<li><b>FC2</b>&nbsp;: résister à la pluie.</li>"
+          "<li><b>FC3</b>&nbsp;: … (à retrouver)</li>"
+          "<li><b>FC4</b>&nbsp;: tenir le téléphone de Léa sans qu'il tombe.</li>"
+          "<li><b>FC5</b>&nbsp;: … (à retrouver)</li></ul>",
     consigne="<p><b>Complète les trois bulles vides</b> avec les mots de la banque&nbsp;: <i>les enfants · les courses · "
              "la route en pente · la pédale · la chaîne</i>. Tes choix s'écrivent dans le schéma. Deux mots de la banque "
              "sont des <b>intrus</b>&nbsp;: <b>dis pourquoi</b> ils n'ont pas de bulle. Puis <b>explique</b> pourquoi FP1 passe "
-             "par le vélo-cargo, et <b>retrouve</b> les phrases de FC2 et de FC4.</p>",
+             "par le vélo-cargo, <b>retrouve</b> les phrases de FC3 et de FC5, et <b>relie</b> la bête à cornes du vélo-cargo "
+             "à son diagramme pieuvre.</p>",
     critere="chaque bulle porte un interacteur de la famille annoncée, tu donnes la bonne raison pour les intrus, et tu "
-            "retrouves FC2 et FC4.",
+            "retrouves FC3 et FC5.",
     widgets=[dict(type="slots", intro='<figure class="figure schema-vivant">' + PIEUVRE_A_COMPLETER +
                   '<figcaption>Le diagramme pieuvre du vélo-cargo, avec ses fonctions. Tes choix s\'écrivent dans les bulles en pointillés.</figcaption></figure>',
                   slots=[dict(name="b1", cible="pv-b1", legende="Bulle ① — elle attend <b>un usager</b>",
@@ -301,8 +316,17 @@ E3 = dict(
                               ("pente", "monter les pentes sans trop d'effort"),
                               ("lire", "laisser lire l'itinéraire à Léa sans lâcher le guidon"),
                               ("pluie", "résister à la pluie")],
-                  items=[("FC2 — le trait vers la route en pente&nbsp;: quelle phrase&nbsp;?", "pente", "FC2 va vers la route en pente : que doit faire le vélo-cargo face à une côte ?"),
-                         ("FC4 — le trait vers l'itinéraire&nbsp;: quelle phrase&nbsp;?", "lire", "FC4 va vers l'itinéraire, une information que Léa doit pouvoir lire en roulant.")])],
+                  items=[("FC3 — le trait vers la route en pente&nbsp;: quelle phrase&nbsp;?", "pente", "FC3 va vers la route en pente : que doit faire le vélo-cargo face à une côte ?"),
+                         ("FC5 — le trait vers l'itinéraire&nbsp;: quelle phrase&nbsp;?", "lire", "FC5 va vers l'itinéraire, une information que Léa doit pouvoir lire en roulant.")]),
+             dict(type="classer", name="bete",
+                  intro="<p>La bête à cornes du vélo-cargo dit&nbsp;: <b>à qui</b>&nbsp;? Léa · <b>sur quoi</b>&nbsp;? ses enfants · "
+                        "<b>dans quel but</b>&nbsp;? les transporter en ville. Où chaque partie se retrouve-t-elle dans le diagramme pieuvre&nbsp;?</p>",
+                  categories=[("depart", "la bulle d'où part la FP1"), ("arrivee", "la bulle où arrive la FP1"),
+                              ("phrase", "la phrase de la FP1"), ("centre", "l'objet au centre, par où passe la FP1")],
+                  items=[("« À qui ? » — Léa", "depart", "La FP1 part de la personne à qui l'objet rend service."),
+                         ("« Sur quoi ? » — ses enfants", "arrivee", "La FP1 arrive à ce sur quoi l'objet agit."),
+                         ("« Dans quel but ? » — les transporter", "phrase", "Le but devient la phrase : permettre à Léa de les transporter."),
+                         ("Le vélo-cargo", "centre", "Le produit est au milieu dans les deux schémas : la FP1 passe par lui.")])],
     aides=["<p>Lis d'abord la famille annoncée dans chaque bulle vide, puis cherche dans la banque le mot qui lui correspond. "
            "Il restera deux mots&nbsp;: demande-toi s'ils sont dedans ou dehors. Pour les fonctions, regarde vers quelle bulle "
            "va chaque trait.</p>",
@@ -311,7 +335,7 @@ E3 = dict(
            "Bulle ③ → ce sur quoi roulent les roues.<br>"
            "Restent la pédale et la chaîne → on les trouve <b>dans</b> le vélo-cargo → pas de bulle.<br>"
            "FP1 → touche <b>deux</b> éléments (Léa, les enfants) → c'est le service rendu.<br>"
-           "FC2 → va vers la route en pente → le vélo-cargo doit permettre de la monter.</p>"],
+           "FC3 → va vers la route en pente → le vélo-cargo doit permettre de la monter.</p>"],
     jumeau=dict(consigne="Le diagramme pieuvre d'un parapluie&nbsp;: un trait part de la personne, passe par le parapluie et "
                          "arrive à la pluie&nbsp;; un autre relie seulement le parapluie au vent. Lequel est une FP, lequel une FC&nbsp;?",
                 correction="Le trait personne → parapluie → pluie relie <b>deux</b> éléments en passant par l'objet&nbsp;: c'est la "
@@ -326,8 +350,14 @@ E3 = dict(
         "Les trois autres raisons ne tiennent pas&nbsp;: les enfants bougent aussi et ont une bulle&nbsp;; la pluie n'est pas une "
         "personne et a une bulle&nbsp;; la taille ne décide de rien.",
         "<b>FP1</b> → relie <b>deux</b> éléments, Léa et ses enfants, <b>en passant par</b> le vélo-cargo → le service rendu",
-        "<b>FC2</b> → le vélo-cargo et la route en pente → « monter les pentes sans trop d'effort »",
-        "<b>FC4</b> → le vélo-cargo et l'itinéraire → « laisser lire l'itinéraire à Léa sans lâcher le guidon »",
+        "<b>FP1 et la bête à cornes</b> → Léa, c'est «&nbsp;à qui&nbsp;?&nbsp;» (la bulle de départ) ; les enfants, «&nbsp;sur "
+        "quoi&nbsp;?&nbsp;» (la bulle d'arrivée) ; transporter, «&nbsp;dans quel but&nbsp;?&nbsp;» (la phrase) ; le vélo-cargo, au "
+        "centre des deux schémas → la FP1 dit la <b>fonction d'usage</b>, c'est la corne de la bête à cornes",
+        '<figure class="figure">' + BETE_VERS_PIEUVRE + '<figcaption>La corne devient la FP1.</figcaption></figure>',
+        "<b>FC1</b> → au bout de FP1, les enfants imposent aussi une contrainte → «&nbsp;protéger les enfants pendant le trajet&nbsp;» "
+        "(c'est souvent le cas&nbsp;: ce sur quoi l'objet agit lui impose une condition)",
+        "<b>FC3</b> → le vélo-cargo et la route en pente → « monter les pentes sans trop d'effort »",
+        "<b>FC5</b> → le vélo-cargo et l'itinéraire → « laisser lire l'itinéraire à Léa sans lâcher le guidon »",
         ("conclusion", "Une bulle&nbsp;: <b>dedans ou dehors&nbsp;?</b> Un trait&nbsp;: <b>deux éléments par l'objet</b> (FP) ou "
                        "<b>un seul</b> (FC)."),
     ],
@@ -798,11 +828,21 @@ COURS = {
         "<b>un seul</b> interacteur. C'est ce que l'objet <b>doit respecter</b>&nbsp;: «&nbsp;résister à la pluie&nbsp;».</li>"
         "<li>Une fonction s'écrit avec un <b>verbe à l'infinitif</b>, et se numérote&nbsp;: FP1, FP2… FC1, FC2…</li>"
         "<li>Un même interacteur peut avoir plusieurs traits&nbsp;: Léa est dans FP1 et dans FP2.</li></ul>"
+        "<h3>La fonction principale, c'est la bête à cornes dans le diagramme</h3>"
+        "<ul><li>La FP1 part de l'élément «&nbsp;<b>à qui</b> l'objet rend-il service&nbsp;?&nbsp;» (Léa), passe par l'objet, et "
+        "arrive à l'élément «&nbsp;<b>sur quoi</b> agit-il&nbsp;?&nbsp;» (ses enfants).</li>"
+        "<li>Sa phrase dit «&nbsp;<b>dans quel but</b>&nbsp;?&nbsp;»&nbsp;: «&nbsp;permettre à Léa de transporter ses enfants&nbsp;». "
+        "La FP1 décrit donc la <b>fonction d'usage</b> de l'objet.</li>"
+        "<li>Très souvent, l'élément au bout de la FP1 impose <b>aussi</b> une contrainte, qu'on numérote FC1&nbsp;: les enfants "
+        "demandent d'être protégés pendant le trajet. C'est fréquent, ce n'est pas une règle.</li></ul>"
+        '<figure class="figure">' + BETE_VERS_PIEUVRE + '<figcaption>La même liaison, deux fois&nbsp;: la corne de la bête à '
+        'cornes devient la fonction principale FP1. Les repères ①②③ se répondent d\'un schéma à l\'autre.</figcaption></figure>' 
         "<h3>Construire le diagramme, pas à pas</h3>"
         "<ol><li>Imaginer l'objet en train de servir, du départ à l'arrivée.</li>"
         "<li>Faire la liste de ce qui l'entoure, famille par famille&nbsp;: une liste de personnes seulement est à moitié faite.</li>"
         "<li>Écarter les pièces, les caractéristiques et les règles.</li>"
-        "<li>Tracer la ou les fonctions principales, puis une fonction contrainte par condition à respecter.</li></ol>"
+        "<li>Tracer la ou les fonctions principales (la bête à cornes les donne), puis une fonction contrainte par condition "
+        "à respecter, en commençant par l'élément au bout de la FP1.</li></ol>"
     ),
     "4e": (
         "<h3>Du diagramme pieuvre aux contraintes</h3>"

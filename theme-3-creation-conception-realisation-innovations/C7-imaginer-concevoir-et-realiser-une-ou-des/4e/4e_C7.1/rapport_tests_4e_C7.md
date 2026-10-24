@@ -8,6 +8,8 @@ viewport 1280×900 + émulation téléphone 390×844 · Suite : `tests_4e_C7.mjs
 > Règle d'or n°136 : chaque dispositif est vérifié par la **mesure de son effet** — un
 > nombre —, jamais par la présence de ses commandes.
 
+> **Mise à jour du 24/10/2026.** L'exercice « Ajouter une fonction au jardin » (atelier FAST, 4e) est inséré en tête du REFAIRE, qui passe à ~30 min et exige sa réussite. La suite compte désormais **47 contrôles, 44 / 47** : les six nouveaux (REFAIRE refusé sans l'exercice, exercice à vide puis juste, fonction écrite dans le FAST, REFAIRE validé, réponses retrouvées au rechargement) passent ; les trois échecs portent sur le QCM, passé au format maison actuel (`o`, `r`, `d`, `expl`) alors que la suite lit encore l'ancien (`opts`, `exp`, sans réfutation).
+
 ## 1. Tests automatisés exécutés — 41/41 réussis
 
 ### Les dispositifs installés à l'harmonisation

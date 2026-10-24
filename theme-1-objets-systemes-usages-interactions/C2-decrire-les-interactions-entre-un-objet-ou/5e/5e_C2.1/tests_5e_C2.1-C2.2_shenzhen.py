@@ -141,6 +141,8 @@ with sync_playwright() as p:
     pg.check('#pv_5e_e3 input[name="pv_5e_e3__fp"][value="service"]')
     pg.check('#pv_5e_e3 input[name="pv_5e_e3__fc_0"][value="pente"]')
     pg.check('#pv_5e_e3 input[name="pv_5e_e3__fc_1"][value="lire"]')
+    for k, v in enumerate(["depart", "arrivee", "phrase", "centre"]):
+        pg.check('#pv_5e_e3 input[name="pv_5e_e3__bete_%d"][value="%s"]' % (k, v))
     pg.click("#pv_5e_e3 button.verifier")
     pg.wait_for_timeout(120)
     t("c) exercice 3 : le diagramme complété est reconnu", "Tout est juste" in pg.inner_text("#pv_5e_e3 .retour"))

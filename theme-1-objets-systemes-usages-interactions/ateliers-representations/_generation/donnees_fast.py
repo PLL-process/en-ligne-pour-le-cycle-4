@@ -186,7 +186,7 @@ E1 = dict(
           ("carte programmable", "une petite carte électronique qui suit un programme&nbsp;: elle reçoit des informations et décide "
            "quoi faire.")],
     documents=[dict(svg=LAMPADAIRE_LIRE, legende="Le diagramme FAST du lampadaire intelligent. Trois solutions sont cachées "
-                                                 "(?)&nbsp;: tu les trouveras à l'exercice 2.",
+                                                 "(?)&nbsp;: lis leur fonction, la solution viendra ensuite.",
                     description="<p>À gauche, la fonction d'usage&nbsp;: <b>éclairer la rue la nuit quand un piéton passe</b>.</p>"
                                 "<p>Au milieu, six fonctions techniques, chacune suivie de sa solution&nbsp;:</p><ul>"
                                 "<li>détecter la nuit → le capteur de luminosité&nbsp;;</li>"
