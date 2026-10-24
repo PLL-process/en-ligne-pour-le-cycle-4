@@ -841,7 +841,15 @@ def _extrait(texte: str, m) -> str:
 EXCEPTIONS_302 = {
     "sequence_3e_C9.2-C8.3_station_1_besoin-et-algorithme.html": ["La mairie vous appelle"],
     "sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html": ["La mairie vous appelle"],
+    # 24/10/2026 — le nom d'un onglet de Vittascience (fenêtre « Ouvrir un projet »), cité tel que
+    # l'élève le voit à l'écran, dans la légende de la capture « Ce que tu dois voir ». Le réécrire
+    # au tutoiement enverrait l'élève chercher un onglet qui n'existe pas.
+    "sequence_3e_C7_capteur-confort-ny.html": ["Depuis votre appareil"],
+    "sequence_5e_C7_mini-projet-objet.html": ["Depuis votre appareil"],
+    "sequence_4e_C9_jardin-programme.html": ["Depuis votre appareil"],
 }
+# La liste est PLEINE (5 / 5) depuis le 24/10/2026. Le prochain cas légitime ne s'y ajoute pas : il
+# demande de revoir la règle — par exemple reconnaître un libellé d'interface balisé comme tel.
 
 assert sum(len(v) for v in EXCEPTIONS_302.values()) <= 5, (
     "la liste d'exceptions de la n°302 dépasse cinq entrées : c'est la règle "

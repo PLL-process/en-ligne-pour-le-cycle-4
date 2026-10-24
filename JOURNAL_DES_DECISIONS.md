@@ -23236,3 +23236,29 @@ lots du jour ; `controle_formulations.py` ne lit que les encarts « Ce que dit l
 - `controle_formulations`, `controle_hierarchie`, `controle_regles_visibles`, `controle_liens`,
   `controle_effectifs_qcm`, `controle_couverture` : 0 ; Node sur tout le dépôt : `controle_squelette`,
   `controle_impression`, `controle_contraste_liens`, `controle_hors_ligne` : 0.
+
+## 24/10/2026 — n°302 : « Depuis votre appareil » est le nom d'un onglet de Vittascience ; la liste d'exceptions est pleine (_outils)
+
+**Demande de Pascal.** Carte blanche : « je ne vois pas encore l'impact ».
+
+**Le cas.** Après la PR #503, trois pages restaient signalées par la n°302 : `3e_C7.1`
+(`sequence_3e_C7_capteur-confort-ny.html`), `5e_C7.1` (`sequence_5e_C7_mini-projet-objet.html`) et `4e_C9.1`
+(`sequence_4e_C9_jardin-programme.html`). Le « vous » est dans la légende de la capture « Ce que tu dois voir » :
+« clique le dossier dans la barre d'outils, puis l'onglet **Depuis votre appareil** ». C'est le **nom réel d'un
+onglet** de la fenêtre « Ouvrir un projet » de Vittascience. La capture le montre, et son texte alternatif l'écrit.
+Ce n'est pas la page qui vouvoie : elle cite le logiciel.
+
+**La décision.** Garder le libellé tel que l'élève le voit à l'écran : le réécrire au tutoiement l'enverrait chercher
+un onglet qui n'existe pas. On applique la décision de Pascal du 20/09/2026 sur « La mairie vous appelle » :
+une **parole rapportée**, tolérée par **fichier + phrase** dans `EXCEPTIONS_302`, jamais par catégorie. Trois entrées
+sont ajoutées. Avant de les ajouter, j'ai vérifié qu'aucun autre « vous » ne se cache dans ces trois légendes, puisque
+la tolérance couvre l'intitulé entier.
+
+**Ce que ça change.** Rien pour l'élève : aucune page n'est modifiée. Seul le verdict du contrôle change :
+`verif_regles_audit.py` (dépôt) passe à **218 ✘** (221 sur `main`), et **plus aucune page n'échoue la n°302**.
+`tests_verif_regles_audit.py` : 61 / 61.
+
+**La limite, atteinte.** La liste compte maintenant **5 entrées sur 5**. Le 20/09, Pascal a posé que la liste ne
+dépasse pas cinq entrées. Le prochain cas légitime ne s'y ajoutera donc pas : il demandera de revoir la règle. La piste
+la plus probable : reconnaître un **libellé d'interface balisé comme tel**. Ces trois pages écrivent les libellés en
+`<b>`, comme 124 à 443 autres mots en gras de leur texte, et ne peuvent pas encore être distinguées.
