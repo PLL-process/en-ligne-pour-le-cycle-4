@@ -169,29 +169,50 @@ E1 = dict(
 )
 
 E2 = dict(
-    id="e2", titre="Classer les interacteurs en quatre familles", code="5e_C2.1", duree=7,
-    objectif="ranger chaque interacteur dans l'une des quatre familles du programme.",
-    production="le classement de quatre interacteurs du vélo-cargo.",
+    id="e2", titre="Classer les interacteurs, écarter les fausses bulles", code="5e_C2.1", duree=9,
+    objectif="ranger chaque interacteur dans l'une des quatre familles du programme, et reconnaître ce qui n'est pas un interacteur.",
+    production="le classement de quatre interacteurs du vélo-cargo, et les fausses bulles d'un diagramme écartées.",
     mots=[("usager", "une personne qui se sert de l'objet, ou que l'objet sert (Léa, ses enfants)."),
           ("donnée", "une information&nbsp;: on la lit, on l'entend ou on la mesure, mais on ne peut pas la toucher."),
           ("autre objet", "une chose que l'on peut toucher et qui n'est pas une pièce de notre objet."),
-          ("élément de l'environnement", "ce qui vient du lieu ou de la nature&nbsp;: le sol, l'air, la pluie, le soleil, la pente…")],
+          ("élément de l'environnement", "ce qui vient du lieu ou de la nature&nbsp;: le sol, l'air, la pluie, le soleil, la pente…"),
+          ("caractéristique", "ce qui décrit l'objet lui-même&nbsp;: sa masse, sa taille, sa couleur. Elle est DANS l'objet, pas autour.")],
     consigne="<p>Le programme de technologie range les interacteurs extérieurs en <b>quatre familles</b>&nbsp;: les <b>usagers</b> "
              "(des personnes), les <b>données</b> (des informations, qu'on ne touche pas), les <b>autres objets</b> (des choses "
              "qu'on peut toucher) et les <b>éléments de l'environnement</b> (le lieu, la nature, la météo).</p>"
-             "<p><b>Range chacun de ces quatre interacteurs du vélo-cargo dans sa famille.</b></p>",
-    critere="les quatre lignes sont justes, et tu sais dire pourquoi le téléphone et l'itinéraire ne sont pas de la même famille.",
+             "<p><b>Range chacun de ces quatre interacteurs du vélo-cargo dans sa famille.</b> Puis regarde le brouillon d'un "
+             "camarade&nbsp;: il a mis six bulles autour du vélo-cargo. <b>Coche celles qui n'ont pas leur place</b> dans le "
+             "diagramme, parce que ce ne sont pas des interacteurs extérieurs.</p>",
+    critere="les quatre lignes sont justes, les trois fausses bulles sont cochées, et tu sais dire pourquoi le téléphone et "
+            "l'itinéraire ne sont pas de la même famille.",
     widgets=[dict(type="classer", name="cl", categories=FAMILLES,
                   items=[("Léa", "usager", "Léa est une personne qui se sert du vélo-cargo."),
                          ("Le téléphone fixé au guidon", "objet", "Le téléphone, on peut le toucher et le décrocher : c'est une chose, pas une information."),
                          ("L'itinéraire affiché sur l'écran", "donnee", "L'itinéraire, on ne peut pas le toucher : c'est une information que l'on lit."),
-                         ("La pluie", "environnement", "La pluie vient du ciel : elle fait partie de la météo, donc de l'environnement.")])],
+                         ("La pluie", "environnement", "La pluie vient du ciel : elle fait partie de la météo, donc de l'environnement.")]),
+             dict(type="cases", name="fausses",
+                  legende="Le brouillon du camarade&nbsp;: quelles bulles n'ont <b>pas</b> leur place autour du vélo-cargo&nbsp;?",
+                  options=[("masse", "la masse du vélo-cargo"),
+                           ("loi", "la loi qui oblige les vélos à avoir un éclairage"),
+                           ("beaute", "la beauté du vélo-cargo"),
+                           ("pietons", "les piétons sur le trottoir"),
+                           ("soleil", "le soleil"),
+                           ("cadenas", "le cadenas de Léa")],
+                  bonnes=["masse", "loi", "beaute"],
+                  retours={"masse": "La masse décrit le vélo-cargo lui-même : c'est une caractéristique, DANS l'objet. Elle servira plus tard de critère.",
+                           "loi": "Une loi ne touche pas le vélo-cargo : elle s'impose à ceux qui le fabriquent. C'est une exigence, pas une bulle.",
+                           "beaute": "La beauté est une qualité qu'on attend de l'objet, pas quelqu'un ou quelque chose autour de lui.",
+                           "pietons": "Les piétons sont des personnes autour du vélo-cargo, qu'il doit éviter : ce sont bien des interacteurs.",
+                           "soleil": "Le soleil chauffe et éblouit : c'est un élément de l'environnement, il a sa bulle.",
+                           "cadenas": "Le cadenas est une chose qu'on touche et qui n'est pas une pièce du vélo : un autre objet, il a sa bulle."})],
     aides=["<p>Pour chaque ligne, pose-toi les questions dans cet ordre&nbsp;: est-ce une <b>personne</b>&nbsp;? une <b>chose qu'on "
            "peut toucher</b>&nbsp;? une <b>information</b>&nbsp;? quelque chose qui vient <b>du lieu ou de la nature</b>&nbsp;?</p>",
            "<p>Le test qui départage le plus souvent&nbsp;: <b>peut-on le toucher&nbsp;?</b></p>"
            "<p>Le téléphone → oui, on le touche → <b>un autre objet</b>.<br>"
            "L'itinéraire → non, on le lit sur l'écran → <b>une donnée</b>.<br>"
-           "Ils vont ensemble, mais ce ne sont pas la même chose&nbsp;: l'un affiche, l'autre est affiché.</p>"],
+           "Ils vont ensemble, mais ce ne sont pas la même chose&nbsp;: l'un affiche, l'autre est affiché.</p>"
+           "<p>Pour le brouillon, une seule question&nbsp;: <b>est-ce quelqu'un ou quelque chose, en dehors du vélo-cargo&nbsp;?</b> "
+           "Une masse, une beauté, une loi&nbsp;: ni quelqu'un, ni quelque chose autour de lui.</p>"],
     jumeau=dict(consigne="Classe ces quatre interacteurs d'une barrière de parking&nbsp;: le gardien&nbsp;; le code d'accès "
                          "tapé au clavier&nbsp;; la voiture&nbsp;; le vent.",
                 correction="Le gardien → <b>un usager</b>. Le code d'accès → <b>une donnée</b> (on ne la touche pas, on la tape). "
@@ -201,12 +222,16 @@ E2 = dict(
         "<b>Le téléphone</b> → une chose qu'on touche et qu'on peut décrocher du guidon → <b>un autre objet</b>",
         "<b>L'itinéraire</b> → une information qu'on lit sur l'écran, qu'on ne touche pas → <b>une donnée</b>",
         "<b>La pluie</b> → elle vient du ciel → <b>un élément de l'environnement</b>",
+        "<b>Fausses bulles</b> → la masse (une caractéristique du vélo-cargo, dedans) · la loi sur l'éclairage (une règle&nbsp;: "
+        "une exigence pour le fabricant) · la beauté (une qualité attendue)",
+        "<b>Vraies bulles</b> → les piétons (des personnes autour) · le soleil (l'environnement) · le cadenas (un autre objet)",
         ("conclusion", "Le piège est entre le téléphone et l'itinéraire&nbsp;: le téléphone est un <b>objet</b>, ce qu'il affiche est "
                        "une <b>donnée</b>. Ils sont liés, mais pas de la même famille."),
     ],
     retenir="quatre familles d'interacteurs&nbsp;: <b>usagers, données, autres objets, éléments de l'environnement</b>. Une liste "
             "qui ne contient que des personnes est une liste à moitié faite.",
-    piege="mettre l'appareil et l'information qu'il affiche dans la même famille.",
+    piege="mettre l'appareil et l'information qu'il affiche dans la même famille, ou donner une bulle à une caractéristique "
+          "de l'objet (sa masse, sa beauté) ou à une loi.",
 )
 
 E3 = dict(
@@ -748,6 +773,73 @@ IMAGES = {
     "pieuvre_jardin_arrosage.svg": PIEUVRE_JARDIN,
 }
 SCHEMAS_SYNTHESE = {"5e": PIEUVRE_CORRIGE, "4e": PIEUVRE_JARDIN}
+
+COURS = {
+    "5e": (
+        "<h3>À quoi sert ce diagramme</h3>"
+        "<ul><li>Le <b>diagramme des interacteurs extérieurs</b> — le <b>diagramme pieuvre</b> — décrit un objet <b>de "
+        "l'extérieur</b>, pendant qu'il sert&nbsp;: l'objet au centre, et autour, une bulle pour chaque interacteur.</li>"
+        "<li>Un <b>interacteur extérieur</b> remplit deux conditions à la fois&nbsp;: il est <b>en dehors</b> de l'objet, et il "
+        "est <b>en relation</b> avec lui (il le touche, agit sur lui, ou subit son action).</li></ul>"
+        "<h3>Les quatre familles d'interacteurs</h3>"
+        "<ul><li><b>Les usagers</b>&nbsp;: les personnes qui se servent de l'objet ou que l'objet sert (Léa, ses enfants).</li>"
+        "<li><b>Les données</b>&nbsp;: les informations, qu'on lit ou qu'on mesure sans pouvoir les toucher (l'itinéraire).</li>"
+        "<li><b>Les autres objets</b>&nbsp;: les choses qu'on touche et qui ne sont pas des pièces de l'objet (le téléphone, les courses).</li>"
+        "<li><b>Les éléments de l'environnement</b>&nbsp;: le lieu, la nature, la météo (la route, la pluie, le soleil).</li></ul>"
+        "<h3>Ce qui n'a pas de bulle</h3>"
+        "<ul><li>Une <b>pièce de l'objet</b> (la chaîne, la pédale)&nbsp;: elle est dedans.</li>"
+        "<li>Une <b>caractéristique de l'objet</b> (sa masse, sa couleur, sa beauté)&nbsp;: elle décrit l'objet, elle n'est pas autour de lui.</li>"
+        "<li>Une <b>règle</b>, une loi, une norme&nbsp;: elle ne touche pas l'objet&nbsp;; elle s'impose à ceux qui le conçoivent. "
+        "C'est une <b>exigence</b>.</li></ul>"
+        "<h3>Les traits sont des fonctions</h3>"
+        "<ul><li>La <b>fonction principale</b> (FP)&nbsp;: une courbe qui part d'un interacteur, <b>passe par l'objet</b> et arrive à "
+        "un autre interacteur. C'est le <b>service rendu</b>&nbsp;: «&nbsp;permettre à Léa de transporter ses enfants&nbsp;».</li>"
+        "<li>La <b>fonction contrainte</b> (FC) — on dit aussi fonction complémentaire&nbsp;: un trait droit entre l'objet et "
+        "<b>un seul</b> interacteur. C'est ce que l'objet <b>doit respecter</b>&nbsp;: «&nbsp;résister à la pluie&nbsp;».</li>"
+        "<li>Une fonction s'écrit avec un <b>verbe à l'infinitif</b>, et se numérote&nbsp;: FP1, FP2… FC1, FC2…</li>"
+        "<li>Un même interacteur peut avoir plusieurs traits&nbsp;: Léa est dans FP1 et dans FP2.</li></ul>"
+        "<h3>Construire le diagramme, pas à pas</h3>"
+        "<ol><li>Imaginer l'objet en train de servir, du départ à l'arrivée.</li>"
+        "<li>Faire la liste de ce qui l'entoure, famille par famille&nbsp;: une liste de personnes seulement est à moitié faite.</li>"
+        "<li>Écarter les pièces, les caractéristiques et les règles.</li>"
+        "<li>Tracer la ou les fonctions principales, puis une fonction contrainte par condition à respecter.</li></ol>"
+    ),
+    "4e": (
+        "<h3>Du diagramme pieuvre aux contraintes</h3>"
+        "<ul><li>La <b>fonction principale</b> (FP) relie deux interacteurs <b>en passant par l'objet</b>&nbsp;: c'est le service rendu.</li>"
+        "<li>Chaque <b>fonction contrainte</b> (FC) relie l'objet à <b>un seul</b> interacteur&nbsp;: c'est une condition à respecter. "
+        "Devant chaque bulle, on se demande&nbsp;: «&nbsp;quelle condition cet interacteur impose-t-il à l'objet&nbsp;?&nbsp;»</li>"
+        "<li>Un même interacteur peut imposer plusieurs contraintes&nbsp;; un interacteur oublié, c'est une contrainte que personne "
+        "n'écrira.</li></ul>"
+        "<h3>Le cahier des charges fonctionnel</h3>"
+        "<ul><li>Le <b>cahier des charges fonctionnel</b> (CdCF) met par écrit ce que le client attend de l'objet, <b>avant</b> de "
+        "chercher des solutions. Il rassemble l'expression du besoin, le diagramme pieuvre et le tableau des fonctions.</li>"
+        "<li>Le tableau a cinq colonnes&nbsp;: <b>Fonction</b> (FP1, FC1…) · <b>Désignation</b> (la phrase, verbe à l'infinitif) · "
+        "<b>Critère</b> · <b>Niveau</b> · <b>Flexibilité</b>.</li></ul>"
+        "<h3>Critère, niveau, flexibilité</h3>"
+        "<ul><li>Le <b>critère</b> est ce que l'on observe ou mesure pour savoir si la fonction est remplie&nbsp;: un volume d'eau, "
+        "une durée, un indice de protection. Il a souvent une <b>unité</b>.</li>"
+        "<li>Le <b>niveau</b> est la valeur à atteindre&nbsp;: «&nbsp;10&nbsp;L par jour&nbsp;», «&nbsp;IPX4 au moins&nbsp;», "
+        "«&nbsp;en moins de 2&nbsp;min&nbsp;». Il peut aussi être une qualité&nbsp;: «&nbsp;couleur&nbsp;: vert&nbsp;».</li>"
+        "<li>La <b>flexibilité</b> dit l'écart que le client accepte autour du niveau. Elle s'écrit soit comme une marge chiffrée "
+        "(«&nbsp;± 1&nbsp;L&nbsp;», «&nbsp;au plus&nbsp;», «&nbsp;au moins&nbsp;»), soit par une classe&nbsp;:</li></ul>"
+        '<div class="defile"><table><tr><th>Classe</th><th>Flexibilité</th><th>Le niveau est…</th><th>Ce que dit le client</th></tr>'
+        "<tr><td>F0</td><td>nulle</td><td>impératif</td><td>«&nbsp;Pas question d'autre chose.&nbsp;»</td></tr>"
+        "<tr><td>F1</td><td>faible</td><td>peu négociable</td><td>«&nbsp;À la rigueur, mais seulement si…&nbsp;»</td></tr>"
+        "<tr><td>F2</td><td>moyenne</td><td>négociable</td><td>«&nbsp;Un peu plus ou un peu moins, ça ira.&nbsp;»</td></tr>"
+        "<tr><td>F3</td><td>forte</td><td>très négociable</td><td>«&nbsp;N'importe quelle valeur me va.&nbsp;»</td></tr></table></div>"
+        "<h3>D'où vient le niveau</h3>"
+        "<ul><li>D'une <b>norme</b> (un texte officiel, le même pour tous les fabricants&nbsp;: les codes IP), d'un <b>label</b> (une "
+        "qualité garantie&nbsp;: l'économie d'eau), d'une <b>certification</b>, ou de la demande du client écrite dans le cahier des charges.</li></ul>"
+        "<h3>Les erreurs à éviter</h3>"
+        "<ul><li>Écrire une <b>solution</b> à la place d'un critère&nbsp;: «&nbsp;une électrovanne&nbsp;» n'est pas un critère, "
+        "«&nbsp;le volume d'eau par jour&nbsp;» en est un.</li>"
+        "<li>Écrire un niveau <b>sans unité</b>, ou un critère qui ne se mesure pas («&nbsp;bien&nbsp;», «&nbsp;joli&nbsp;»).</li>"
+        "<li>Choisir la flexibilité d'après l'<b>importance</b> de la fonction&nbsp;: elle dépend de l'<b>écart accepté</b> par le client.</li>"
+        "<li>Mettre une norme dans une bulle du diagramme&nbsp;: c'est une exigence, qui fixe un niveau.</li></ul>"
+    ),
+}
+
 VOCAB_EN = [("interacteur", "interactor (external element)"), ("usager", "user"), ("donnée", "data"),
             ("environnement", "environment"), ("contrainte", "constraint"), ("exigence", "requirement"),
             ("critère", "criterion"), ("niveau", "level"), ("norme", "standard"), ("cahier des charges", "specifications")]
@@ -760,7 +852,12 @@ CHAINE = ("<p><b>Analyse externe</b>&nbsp;: besoin <i>(bête à cornes)</i> → 
           "des interacteurs, « pieuvre »)</i></b> → contraintes et exigences → cahier des charges.</p>"
           "<p>Cet atelier est le deuxième maillon. Il <b>suit</b> la formulation du besoin et <b>précède</b> le tableau des "
           "contraintes et exigences (4e_C2.1, Hangzhou) et le diagramme des exigences.</p>")
-NOTES_PROF = ("<ul><li>Choix de Pascal (13/10/2026)&nbsp;: le diagramme pieuvre en 5e_C2.1, 5e_C2.2 et 4e_C2.2 seulement.</li>"
+NOTES_PROF = ("<ul><li>Le cours (encadré « 📘 Le cours ») et deux mécaniques — écarter les fausses bulles (exercice 2), "
+              "le tableau du cahier des charges avec la flexibilité (exercice 6) — s'inspirent du cahier « 123 Techno » "
+              "(Bordas 2021) utilisé par Pascal, sans rien en reprendre&nbsp;: objets, mots et schémas sont ceux du site. "
+              "Écarts assumés avec ce cahier&nbsp;: aucune caractéristique (masse, esthétique) ni « législation » en bulle&nbsp;; "
+              "FC lue « fonction contrainte » (on signale « fonction complémentaire »)&nbsp;; classes F0–F3 définies et travaillées.</li>"
+              "<li>Choix de Pascal (13/10/2026)&nbsp;: le diagramme pieuvre en 5e_C2.1, 5e_C2.2 et 4e_C2.2 seulement.</li>"
               "<li>Demande de Pascal (24/10/2026)&nbsp;: le diagramme montre ses fonctions dès la 5e — la fonction principale (FP) "
               "passe par l'objet entre deux éléments, chaque fonction contrainte (FC) relie l'objet à un seul élément — et le cahier "
               "des charges de 4e porte la flexibilité, par classes F0 à F3. En 5e, l'élève LIT et complète les fonctions&nbsp;; "
