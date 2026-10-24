@@ -12,7 +12,7 @@
 | Domaines du socle | D1.3 « Les langages mathématiques, scientifiques et informatiques » (lire un diagramme fonctionnel, respecter une norme de représentation, rédiger une justification technique) · D2 « Les méthodes et outils pour apprendre » (binôme, draw.io, fichiers nommés et rangés) · D4 « Les systèmes naturels et les systèmes techniques » (analyse d'un système automatisé réel) |
 | CRCN | **3.4 Programmer** (niv. 2) — lire et construire un algorigramme normalisé · **3.3 Adapter les documents à leur finalité** (niv. 2) — choisir ET justifier un format d'export. Travaillées par les activités, pas par le QCM : le CRCN est le résultat d'une activité authentique, jamais une étiquette (règle d'or n°7) |
 | Logiciels | **draw.io** (installé ou `app.diagrams.net` — aucun compte, aucun envoi de fichier) et **LibreOffice Impress** |
-| Durée | 3 séances de 55 min — 154 min d'activités annoncées pour 165 disponibles, marge de service comptée (règle d'or n°23) |
+| Durée | 3 séances de 55 min — 154 min d'activités annoncées pour 165 disponibles, marge de service comptée (règle d'or n°23). La vidéo du départ (≈ 4 min, comme la lecture de la situation) et les activités 1.2 bis, 1.2 ter et 3.1 n'ont pas de durée écrite : la séance 1 est chargée (voir la synthèse professeur) |
 
 ## Sous-compétences
 
@@ -41,6 +41,10 @@ vérificateur le dit à l'élève en toutes lettres (règle d'or n°26).
 
 ## Déroulé
 
+**Départ — Le vrai Book Train (24/10/2026).** Après la situation, une courte vidéo du système (YouTube, 2016 ; lien et
+QR code, repli hors ligne) et deux questions d'observation en boutons radio : les wagonnets roulent-ils seuls ? la nacelle
+reste-t-elle à plat dans la montée verticale ? Sans connexion, les deux réponses sont dans la situation.
+
 **Séance 1 — Décoder le Book Train.** Billet d'entrée, puis remise en ordre du trajet d'un livre (act. 1.1),
 tri information / énergie (act. 1.2), diagramme fonctionnel fonction ↔ solution (act. 1.2 A), transformations
 d'énergie bloc par bloc (act. 1.2 bis) et complétion de la chaîne d'information dans draw.io (act. 1.3).
@@ -53,8 +57,14 @@ guide pas à pas inclus.
 écrite** du choix (act. 3.2), puis export et construction d'un diaporama de 6 diapositives sous Impress
 (act. 3.3). Bilan, confrontation à l'hypothèse de départ, auto-positionnement par code, QCM 30 questions.
 
-Un **mode essentiel** (bouton en tête de page, persistant) masque référentiel, corrections et
-approfondissements pour les élèves que la densité met en difficulté (règle d'or n°29).
+**Bonus (avant le bilan).** Six défis, chacun avec sa case de réponse, un début de phrase pour chacun (version étayée) et un
+corrigé commun : algorigramme du retour, adaptation à la Schœlcher, coût comparé, évolution du système (tubes
+pneumatiques, convoyeur, monte-charge), audit d'un brouillon d'IA contre le communiqué officiel, et un calcul
+« 5 minutes : tout le circuit ? » (114 m de trajet pour 290 m de rail).
+
+Un **mode essentiel** (bouton en tête de page, persistant) masque corrections et
+approfondissements pour les élèves que la densité met en difficulté (règle d'or n°29). Le billet d'entrée y reste
+visible : jusqu'au 24/10/2026, il portait par erreur la classe du référentiel et disparaissait justement pour ces élèves.
 
 ## Outils, versions, sécurité
 
@@ -90,5 +100,13 @@ corrigé par l'enseignant** : c'est écrit sous la figure, et la séquence en fa
 trois points y restent volontairement à préciser, et ce sont les élèves qui les précisent. Les deux
 diagrammes fonctionnels sont des **SVG originaux** produits pour ce lot avec draw.io, livrés avec leurs
 sources `.drawio` modifiables et une bibliothèque de formes réutilisable. Le Book Train de la New York Public
-Library est un système réel ; les valeurs citées (480 V, 24 V, 290 m de rail) proviennent de la documentation
-publique du système et sont employées à titre descriptif.
+Library est un système réel. Relu le 24/10/2026 contre le communiqué de la bibliothèque (21/09/2016) : 24 wagonnets de
+30 lb (13,6 kg), 950 pieds de rail (≈ 290 m), 75 pieds par minute, environ 5 minutes et 375 pieds (11 niveaux) des
+réserves à la salle de lecture, **24 V continu**, 2,6 millions de dollars. **Le 480 V ~ n'y figure pas** : la page le
+présente comme la tension habituelle des grands bâtiments américains. Le 13,2 kV qu'affichait la figure 5 et les
+« 4 niveaux » de la situation ont été corrigés.
+
+**Vocabulaire de l'énergie (24/10/2026).** Un seul usage dans la séquence, le QCM, les synthèses et le lexique : la
+*forme* d'énergie (électrique, mécanique) ne change que dans CONVERTIR ; ALIMENTER change le *type de courant*,
+TRANSMETTRE le *type de mouvement*. Le programme de 5e dit « nature » de l'énergie : la page signale que c'est le même
+sens. Le rail porte et amène l'énergie ; c'est la commande de puissance (variateur) qui DISTRIBUE, sur ordre.

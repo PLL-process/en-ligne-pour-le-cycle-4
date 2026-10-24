@@ -22899,3 +22899,113 @@ revenue vers lui après mesure) :
   5,72 px, champ `deja` du TP de 4e) : à mettre à jour après la fusion.
 - Dette n°310 inchangée : trois schémas faits main (4e_C9.1, 4e_C6.2, 5e_C9.1) et la fonction absente de la station
   3e_C9.2 à dessiner en pointillés grisés (n°131).
+
+## 24/10/2026 — Thème 2 · 4e_C4.1 Book Train : la vraie vidéo, des chiffres vérifiés, un Bonus qui se corrige (transversal : registre des ressources du thème 3)
+
+**Demande de Pascal.** Il a découvert une vidéo du Book Train (page de la revue Poets & Writers) et a demandé si elle
+était exploitable ; puis : « Dans mon github il y a des séquences qui parlent du Book Train. Si tu peux les améliorer :
+tu as carte blanche. » Branche `fable/book-train-video-chiffres-bonus`, **sans motif de thème** : le registre des
+vidéos, `theme-3-…/C7-…/ressources_externes.json`, vit dans le thème 3 (n°302, n°307 ; voir plus bas, thème par thème).
+
+### Ce que la relecture a trouvé (mesuré sur `main` à `33080a6`)
+
+- **Les chiffres.** Relus contre le communiqué de la NYPL du 21/09/2016 : 24 wagonnets de 30 lb, 950 pieds de rail,
+  75 pieds/min, environ 5 min et **375 pieds sur 11 niveaux** des réserves à la salle de lecture, **24 V continu**,
+  2,6 M$, deux points de livraison. La situation disait « 290 mètres et **4 niveaux** » ; la figure 5, incorporée,
+  disait « Alimenter (**13,2 kV AC**) » quand l'activité 1.2 bis et le fichier `Images/` disaient 480 V ;
+  **le 480 V ne figure dans aucune source lue**, alors que la fiche le disait tiré de « la documentation publique ».
+  Le « 24 V » du Défi 5 (« la source officielle dit 24 V ») est, lui, exact.
+- **Le billet d'entrée disparaissait en mode essentiel** : il portait la classe `referentiel-card` (posée par
+  `retrofit_regles_audit.py`), que le mode essentiel masque — `checkVisibility()` = faux à 1280 et 390 px. La n°298 le
+  prenait d'ailleurs pour un référentiel.
+- **Trois vocabulaires de l'énergie.** La séquence disait que l'énergie change de *nature* dans CONVERTIR et de *forme*
+  dans ALIMENTER ; la capsule de la même page, le QCM et la synthèse élève disaient *forme* pour électrique → mécanique ;
+  le QCM disait aussi *domaine*, et *nature du courant* pour alternatif/continu.
+- **Le rail « distribue »** dans la correction de l'activité 1.2, le QCM (trois endroits) et la synthèse élève, quand
+  l'activité 1.2 bis, la figure 4 et la n°310 placent sous DISTRIBUER la commande de puissance, qui reçoit l'ordre.
+- **Le Bonus n'avait ni champ ni corrigé** (n°301) ; le Défi 4 affirmait sans source « un système utilisé pendant 25 ans,
+  où une seule courroie en panne pouvait tout paralyser ».
+- **L'ouverture affirmait le passé** (« L'an dernier, sur le lampadaire intelligent, tu as tracé… ») : faux pour presque
+  tous les élèves de Pascal (n°304).
+- **Figures.** Figure 1 : le fond du sous-sol, peint après elles, cachait trois étiquettes (toilettes du parc, perron
+  côté parc) ; trois autres sortaient du cadre (perron monumental, lions). Figure 5 : l'étiquette ORDRE recouvrait la
+  légende, « signaux » et « décisions » étaient mangés par les blocs.
+- **390 px.** La séance 3 défilait de 143 px à l'horizontale : les étiquettes masquées du tableau 3.2, en position
+  absolue, sortaient du tableau défilant ; la séance 1 de 5 px (un nom de fichier dans un bouton).
+
+### Ce que le lot fait
+
+- **Départ — « 🎬 Le vrai Book Train, en vidéo ».** Bloc « Ressource vidéo » posé par `poser_ressource.py` depuis une
+  nouvelle entrée du registre (`res-4e-C4-1-book-train` : lien YouTube, QR code SVG local, repli imprimé), annonce n°305,
+  puis deux questions d'observation en boutons radio (n°300 : légende, valeur = texte) — les wagonnets roulent-ils
+  seuls ? la nacelle reste-t-elle à plat ? — avec vérificateur et correction. Sans connexion, les deux réponses sont
+  dans la situation, qui gagne une phrase vérifiée (« chaque wagonnet roule seul… l'automate les espace »).
+  **Pas de durée affichée** : comme la lecture de la situation, la vidéo n'entre pas dans les 154 min ; la synthèse
+  professeur et la fiche le disent (≈ 4 min).
+- **Chiffres.** « 11 niveaux » ; 480 V présenté comme la tension habituelle des grands bâtiments américains, et le
+  24 V comme la seule tension publiée ; « issu du 13,2 kV urbain » et « secourues par onduleur » deviennent « souvent
+  secourue par un onduleur dans ce genre d'installation » ; ligne de source sous la situation, lien au Défi 5.
+- **Ouverture n°304** sur le modèle du 24/10 : « 🔄 Avant de commencer : ce que je vérifie », trois cases
+  (5e_C4.1, 5e_C4.5, 5e_C4.3) qui renvoient à la capsule du billet d'entrée ; le lien ouvre l'onglet Départ et la
+  capsule depuis n'importe quelle séance (le script des liens `#seance-N` est généralisé à toute ancre d'onglet).
+- **Billet d'entrée** : classe `billet-entree`, ancre `#billet` ; il reste visible en mode essentiel.
+- **Vocabulaire** : *forme* d'énergie (électrique, mécanique) — elle ne change que dans CONVERTIR ; *type de courant*
+  dans ALIMENTER ; *type de mouvement* dans TRANSMETTRE. La page signale une fois que le programme de 5e dit « nature »
+  dans le même sens. Le rail porte et amène l'énergie ; la commande de puissance DISTRIBUE. Séquence, QCM (7 questions
+  C4.2), synthèses ; lexique régénéré (`generer_lexique.py`, trois définitions changent).
+- **Bonus** : six défis, chacun avec sa case (6 zones de texte, 2 champs), une version étayée commune, un corrigé ;
+  Défi 4 réécrit sur sources (fiches de demande, convoyeur à caisses, monte-charge — blog de la NYPL, 2010 — et tubes
+  pneumatiques — Atlas Obscura) ; **Défi 6 de calcul** : 75 pieds/min → 22,86 m/min, 5 min → 114 m = les 375 pieds du
+  communiqué, soit 40 % des 290 m de rail (voie de retour, embranchements, 1ᵉʳ étage).
+- **Figures 1 et 5** retouchées à la main, rien d'ajouté au dessin ; pointes de flèche inchangées.
+- **390 px** : `table.comparatif{position:relative}`, `code` et `.kbd` qui passent à la ligne, nom de fichier des
+  boutons de téléchargement aussi.
+- **Synthèse professeur** : déroulé complet (1.2 bis, 1.2 ter, 3.1 nommées), alerte sur la charge de la séance 1 (trois
+  activités et la vidéo sans durée écrite), vocabulaire, liste réelle des défis, prolongement possible avec un robot
+  suiveur de ligne à ultrasons (Q-Scout de Robobloq, par exemple), honnêteté des chiffres réécrite.
+- **Banc du lot** `tests_4e_C4.1-C4.2-C4.4_book-train.mjs` (nouveau) : la « suite Playwright (32 vérifications) »
+  annoncée le 08/08/2026 n'avait jamais été commitée.
+
+### Thème par thème
+
+- **Thème 2** : `4e_C4.1_book-train/` — séquence, QCM, lexique, deux synthèses, fiche, README, sources, manifeste,
+  rapport de tests, banc, captures avant/après (`_generation/captures_2026-10-24/`).
+- **Thème 3** : `C7-…/ressources_externes.json` (+1 entrée). `poser_ressource.py` relancé : les cinq blocs déjà posés
+  ailleurs sortent « aucun changement ».
+- **Communs** : `nouveautes.json` (+1), `index.html` et `audit_couverture.*` régénérés, ce journal.
+
+### Ce que le lot ne fait pas
+
+- **n°300** : les 44 listes déroulantes de la page restent (vague du thème 2 à venir) ; seules les deux questions
+  nouvelles sont en boutons radio.
+- **n°302** : « Si vous êtes trois ou quatre » vient du bloc des rôles commun à quatorze pages (`poser_roles.py`) : lot
+  transversal à part.
+- **Captures reconstituées** du guide draw.io et du guide Impress (16) : déclarées comme telles (n°94), elles restent ;
+  les remplacer par de vraies captures (n°297) se fait sur le poste de Pascal.
+- **Mots des séances** : pas de `vocabulaire_*.json` pour ce lot (nacelle, cardan, convoyeur, monte-charge, pneumatique…).
+- **Durées** : 1.2 bis, 1.2 ter et 3.1 restent sans durée ; la séance 1 est chargée. Signalé, pas tranché.
+
+### À RELIRE PAR PASCAL
+
+1. **La vidéo** : la regarder (durée, contenu, publicité) ; l'auteur et la licence ne sont pas confirmés (la page
+   YouTube refuse le conteneur). `node verificateur_ressources.mjs --maj` depuis ta machine, ou une version Digiview.
+2. **Le 480 V** : le garder comme « tension habituelle », ou retirer la valeur et dire seulement « réseau alternatif du
+   bâtiment » ?
+3. **« forme » plutôt que « nature »** : choix de la physique et de la n°310 ; le programme de 5e dit « nature ».
+4. **La charge de la séance 1** : déplacer 1.2 ter en ouverture de la séance 2 ?
+5. **Le prolongement Q-Scout** dans la synthèse professeur.
+
+### Ce qui a vraiment tourné
+
+- Banc du lot `tests_4e_C4.1-C4.2-C4.4_book-train.mjs` : **28 / 28** (1280 et 390 px, réseau coupé).
+- `verif_regles_audit.py` : n°298 et n°304 passent au vert sur le lot ; restent n°300 et n°302, antérieurs ; dépôt :
+  **240 ✘ contre 242** sur `main`. n°23 : 154 min (+10) pour 165 — la vidéo n'est pas chiffrée (voir plus haut).
+- Node : `controle_squelette` (lot), `controle_verrous`, `controle_hors_ligne`, `controle_impression`,
+  `audit_cloture_sequence` (lot), `audit_lisibilite_qcm`, `verif_qcm_coherence` (QCM du lot) : 0.
+  `controle_contraste_liens` (lot) : **1 refus de mon fait** au premier passage (le lien de la synthèse professeur en
+  bleu par défaut sur fond sombre), corrigé, puis 0.
+- Python : `controle_hierarchie` **1 refus de mon fait** (trois énumérations en ligne dans le corrigé du Bonus),
+  corrigé, puis 0 ; les 22 autres contrôles de `controle-qualite-lot` : 0 ; `verifier_chaines_energie.py` 54 / 54 ;
+  `regenerer_chaines_energie.py` rejoué sans écart ; `generer_lexique.py` identique sur `main`.
+- `build_audit.py` et `make_index.py` régénérés. Captures avant / après à 390 et 1280 px dans
+  `4e_C4.1_book-train/_generation/captures_2026-10-24/`.
