@@ -5,9 +5,11 @@
    représentation et le cahier du niveau partagent donc le même travail. */
 (function(){
   "use strict";
-  var D;
-  try { D = JSON.parse(document.getElementById("donnees-page").textContent); }
-  catch(e){ return; }
+  /* Deux usages : une page d'atelier ou de cahier entière (données dans #donnees-page),
+     ou des exercices incrustés dans une séquence (sections .atelier-incruste, chacune avec
+     ses données). En mode incrusté, rien d'autre de la séquence n'est touché : ni ses
+     onglets, ni ses boutons, ni sa sauvegarde. */
+  function lancer(D, racine, page){
 
   /* ── Mémoire locale, jamais bloquante ─────────────────────────────── */
   function lire(k){ try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch(e){ return null; } }
@@ -280,7 +282,7 @@
     var etat = exoEtat(id);
     etat.v = v; etat.verifie = true; etat.reussi = (ratio === 1); etat.score = [justes, total];
     ecrire(def.cle, etat);
-    majProgression();
+    if (page) majProgression();
   }
 
   /* ── Sauvegarde de tout ce qui porte data-cle ─────────────────────── */
@@ -309,7 +311,7 @@
   }
 
   /* ── Onglets ──────────────────────────────────────────────────────── */
-  var onglets = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  var onglets = page ? Array.prototype.slice.call(document.querySelectorAll('[role="tab"]')) : [];
   var cleOnglet = D.page + "__onglet";
   function montrer(i, focus){
     if (!onglets.length) return;
@@ -337,7 +339,7 @@
       else if (e.key === "End"){ e.preventDefault(); montrer(onglets.length - 1, true); }
     });
   });
-  document.querySelectorAll("button.suivant[data-vers]").forEach(function(b){
+  if (page) document.querySelectorAll("button.suivant[data-vers]").forEach(function(b){
     b.addEventListener("click", function(){
       montrer(parseInt(b.getAttribute("data-vers"), 10), false);
       var barre = document.querySelector(".onglets");
@@ -400,10 +402,10 @@
       });
     }
   }
-  document.querySelectorAll("canvas.croquis-zone").forEach(croquis);
+  racine.querySelectorAll("canvas.croquis-zone").forEach(croquis);
 
   /* ── Branchements ─────────────────────────────────────────────────── */
-  var boites = document.querySelectorAll("[data-cle]");
+  var boites = racine.querySelectorAll("[data-cle]");
   for (var i = 0; i < boites.length; i++){
     (function(b){
       var e = lire(b.getAttribute("data-cle"));
@@ -416,6 +418,7 @@
     })(boites[i]);
   }
 
+  if (!page) return;
   var btnImp = document.getElementById("btnImprimer");
   if (btnImp) btnImp.addEventListener("click", function(){ window.print(); });
   var btnEff = document.getElementById("btnEffacer");
@@ -448,5 +451,22 @@
   }
   montrer(typeof depart === "number" ? depart : 0, false);
   if (ancre){ var c2 = document.getElementById(ancre); if (c2) setTimeout(function(){ c2.scrollIntoView({block: "start"}); }, 30); }
+  window.addEventListener("hashchange", function(){
+    var a = (location.hash || "").replace("#", ""), c = a ? document.getElementById(a) : null;
+    var pn = c ? c.closest('[role="tabpanel"]') : null;
+    if (!pn) return;
+    var i = onglets.findIndex(function(o){ return o.getAttribute("aria-controls") === pn.id; });
+    if (i >= 0){ montrer(i, false); setTimeout(function(){ c.scrollIntoView({block: "start"}); }, 30); }
+  });
   majProgression();
+  }
+
+  var source = document.getElementById("donnees-page");
+  if (source){ try { lancer(JSON.parse(source.textContent), document, true); } catch(e){} }
+  var incrustes = document.querySelectorAll(".atelier-incruste");
+  for (var k = 0; k < incrustes.length; k++){
+    var donnees = incrustes[k].querySelector('script[type="application/json"]');
+    if (!donnees) continue;
+    try { lancer(JSON.parse(donnees.textContent), incrustes[k], false); } catch(e){}
+  }
 })();

@@ -16,7 +16,8 @@ IMG_SCENE = {"src": "Images/velo_cargo_la_scene.svg",
                     "un téléphone au guidon affiche un trajet."}
 IMG_A_COMPLETER = {"src": "Images/pieuvre_velo_cargo_a_completer.svg",
                    "alt": "Diagramme pieuvre du vélo-cargo : quatre bulles remplies (Léa, le téléphone, la pluie, l'itinéraire) et trois "
-                          "bulles vides qui attendent un usager, un autre objet et un élément de l'environnement."}
+                          "bulles vides qui attendent un usager, un autre objet et un élément de l'environnement ; deux courbes FP1 "
+                          "et FP2 passent par le vélo-cargo, quatre traits FC1 à FC4 le relient à un seul élément."}
 IMG_CHOIX = {"src": "Images/velo_cargo_trois_choix.svg",
              "alt": "Le vélo-cargo avec trois repères : A sur le bac à rebords hauts, B sur la commande de vitesses du guidon, "
                     "C sur la chaîne près du pédalier."}
@@ -107,21 +108,21 @@ q(C, "Les familles sur un dessin",
   "Quatre familles : usagers, données, autres objets, environnement.",
   img=IMG_SCENE)
 
-q(C, "La liste à moitié faite",
-  "Une liste d'interacteurs contient seulement : Léa, les enfants, un piéton. Que lui manque-t-il ?",
-  ["les données, les autres objets et l'environnement",
-   "rien : les personnes sont les seuls vrais interacteurs",
-   "les pièces du vélo-cargo, comme la chaîne et la selle",
-   "les usages, comme « aller au marché » ou « rentrer »"],
-  "Les trois éléments sont des usagers ou des personnes. Il manque les objets (téléphone, courses), les données (itinéraire) "
-  "et l'environnement (pluie, route).",
-  "Une liste complète se vérifie famille par famille : au moins un interacteur dans chacune, quand il y en a.",
-  "S'arrêter aux personnes, parce que ce sont elles qu'on remarque en premier.",
+q(C, "Le trait vers la pluie",
+  "Le trait FC1 relie le vélo-cargo à la pluie, et à elle seule. Comment écrit-on cette fonction contrainte ?",
+  ["résister à la pluie",
+   "la pluie",
+   "la pluie mouille le vélo-cargo",
+   "permettre à Léa de rouler au sec sous la pluie"],
+  "Une <b>fonction contrainte</b> (FC) dit ce que l'objet doit respecter face à <b>un</b> élément extérieur. Elle commence "
+  "par un verbe à l'infinitif : résister, tenir, laisser lire…",
+  "FC3 relie le vélo-cargo au téléphone : tenir le téléphone de Léa sans qu'il tombe.",
+  "Écrire le nom de l'interacteur, ou une phrase qui raconte, au lieu d'une fonction.",
   ["",
-   "La pluie ou la route agissent sur le vélo-cargo autant que Léa : ils ont leur place dans la liste.",
-   "Les pièces sont dans l'objet : les ajouter rendrait la liste fausse, pas complète.",
-   "Un usage est une action, pas quelqu'un ou quelque chose : il n'a pas de bulle."],
-  "Une liste de personnes seulement est une liste à moitié faite.")
+   "« La pluie » est le nom de l'interacteur, écrit dans sa bulle : une fonction dit ce que l'objet doit faire.",
+   "Cette phrase raconte ce qui se passe ; elle ne dit pas ce que le vélo-cargo doit faire.",
+   "Cette phrase relie deux éléments, Léa et la pluie : ce serait une fonction principale, pas le trait FC1."],
+  "Une fonction s'écrit avec un verbe à l'infinitif.")
 
 q(C, "Compléter une bulle",
   "Quel mot met-on dans la bulle ③, qui attend un élément de l'environnement ?",
@@ -155,20 +156,21 @@ q(C, "Fixé, mais pas une pièce",
    "Le guidon est fixé au vélo, et c'est une pièce : être fixé ne suffit pas."],
   "Pièce ou non : peut-on l'enlever sans que l'objet cesse d'être lui-même ?")
 
-q(C, "Ce que relie un trait",
-  "Dans un diagramme pieuvre, que relie chaque trait ?",
-  ["l'objet, au centre, à un de ses interacteurs",
-   "deux pièces de l'objet entre elles",
-   "deux étapes de l'utilisation, dans l'ordre",
-   "une fonction à la solution qui la réalise"],
-  "Le diagramme pieuvre dit avec qui ou quoi l'objet est en relation : chaque trait part de l'objet et va vers un interacteur.",
-  "Le trait entre le vélo-cargo et la pluie dit : la pluie agit sur le vélo-cargo.",
-  "Croire que les traits montrent un ordre ou un fonctionnement interne.",
+q(C, "La courbe qui passe par l'objet",
+  "Sur le diagramme pieuvre du vélo-cargo, la courbe FP1 part de Léa, passe par le vélo-cargo et arrive aux enfants. Elle montre…",
+  ["le service rendu : permettre à Léa de transporter ses enfants",
+   "une contrainte : le vélo-cargo doit supporter le poids des enfants",
+   "l'ordre des étapes : Léa monte, puis installe ses enfants",
+   "une pièce du vélo-cargo, qui relie la selle de Léa au bac"],
+  "Une courbe qui relie <b>deux</b> éléments extérieurs en passant par l'objet est une <b>fonction principale</b> (FP) : "
+  "ce que l'objet fait pour eux. Elle s'écrit avec un verbe à l'infinitif.",
+  "FP2 relie Léa et ses courses par le vélo-cargo : permettre à Léa de transporter ses courses.",
+  "Prendre toute courbe pour une contrainte, ou lire le schéma comme une suite d'étapes.",
   ["",
-   "Les pièces de l'objet n'apparaissent pas dans ce diagramme : il regarde l'objet du dehors.",
-   "Un ordre d'étapes se montre avec un algorigramme ou un storyboard, pas avec une pieuvre.",
-   "Relier une fonction à sa solution, c'est le rôle d'un autre schéma, le diagramme FAST."],
-  "Un trait = une relation entre l'objet et un interacteur.")
+   "Une contrainte ne relie l'objet qu'à un seul élément ; FP1 en touche deux, Léa et les enfants.",
+   "Le diagramme pieuvre ne montre pas d'ordre : il dit avec qui l'objet est en relation.",
+   "Les pièces du vélo-cargo n'apparaissent pas dans ce diagramme : il regarde l'objet du dehors."],
+  "Deux éléments reliés par l'objet : fonction principale (FP).")
 
 q(C, "Une règle n'est pas un interacteur",
   "La ville impose que tous les vélos-cargos aient un éclairage. Cette règle est-elle un interacteur extérieur ?",
@@ -441,21 +443,20 @@ q(C, "Très basse tension",
    "La fiabilité concerne les pannes ; ici, c'est un danger pour les personnes qui est évité."],
   "Éviter qu'une personne soit blessée : sécurité.")
 
-q(C, "La panne après l'orage",
-  "« Après chaque orage, le boîtier tombe en panne. » Quelle catégorie de contrainte a été oubliée ?",
-  ["la fiabilité",
-   "l'ergonomie",
-   "les formes et fonctions",
-   "la qualité"],
-  "Un objet qui cesse de fonctionner avec le temps ou sous la pluie manque de <b>fiabilité</b> : la contrainte « résister à la "
-  "pluie » n'a pas été écrite.",
-  "Un vélo dont la chaîne casse après deux semaines manque de fiabilité.",
-  "Dire « qualité » pour tout ce qui ne va pas.",
+q(C, "Neuf ou onze litres",
+  "Niveau demandé : 10 L d'eau par jour. La gardienne ajoute : « 9 ou 11 litres, ça ira aussi. » Quelle classe de flexibilité ?",
+  ["F2 : flexibilité moyenne, négociable",
+   "F0 : flexibilité nulle, impératif",
+   "F1 : flexibilité faible, peu négociable",
+   "F3 : flexibilité forte, très négociable"],
+  "Un petit écart (un litre de plus ou de moins) est accepté <b>sans condition</b> : le niveau est négociable, classe <b>F2</b>.",
+  "« Pas question d'amener le 230 V au jardin : 12 V, rien d'autre » → aucun écart → F0.",
+  "Choisir la classe d'après l'importance de la fonction au lieu de l'écart que le client accepte.",
   ["",
-   "L'ergonomie parle de facilité d'usage ; la panne n'est pas une gêne d'utilisation, c'est un arrêt.",
-   "Les formes et fonctions concernent ce que l'objet doit faire et sa forme ; ici il le faisait, jusqu'à l'orage.",
-   "La qualité est un mot large ; la catégorie précise d'une panne qui arrive avec le temps ou la météo est la fiabilité."],
-  "Tenir sans panne, longtemps : fiabilité.")
+   "F0 voudrait dire : 10 L exactement, rien d'autre. Or la gardienne accepte 9 ou 11 L.",
+   "F1 voudrait dire : un écart accepté seulement à une condition précise. Ici, aucune condition n'est posée.",
+   "F3 voudrait dire : n'importe quel volume lui irait. Or elle fixe une marge d'un litre."],
+  "Petit écart accepté sans condition : F2.")
 
 q(C, "Pourquoi commencer par la pieuvre",
   "Pourquoi tracer toutes les bulles du diagramme pieuvre AVANT d'écrire les exigences ?",
@@ -473,20 +474,21 @@ q(C, "Pourquoi commencer par la pieuvre",
    "Le diagramme pieuvre ne contient aucun prix."],
   "Le diagramme pieuvre sert à ne rien oublier.")
 
-q(C, "Le critère du réglage",
-  "« Le système doit se régler sans outil. » Quel critère permet de le vérifier ?",
-  ["le nombre d'outils nécessaires, avec le niveau 0",
-   "la couleur du bouton qui sert au réglage",
-   "le volume d'eau contenu dans la cuve pleine",
-   "l'avis du vendeur qui a installé le système d'arrosage"],
-  "Pour vérifier « sans outil », on compte les outils nécessaires au réglage : le niveau à atteindre est zéro.",
-  "« Changer l'heure en moins d'une minute » : critère, le temps ; niveau, 1 min.",
-  "Choisir un critère qui ne se rapporte pas à la contrainte.",
+q(C, "La colonne flexibilité",
+  "Dans le cahier des charges fonctionnel, que dit la colonne « flexibilité » ?",
+  ["de combien on peut s'écarter du niveau demandé",
+   "si la fonction compte beaucoup pour le client",
+   "combien de fois on testera la fonction",
+   "de quel matériau l'objet sera fabriqué"],
+  "La <b>flexibilité</b> est la marge acceptée autour du niveau. Elle se note par une classe : F0 (impératif), F1 (peu "
+  "négociable), F2 (négociable), F3 (très négociable).",
+  "Niveau 10 L par jour, flexibilité F2 : 9 ou 11 L conviennent aussi.",
+  "Croire que la flexibilité dit l'importance de la fonction.",
   ["",
-   "La couleur peut aider à trouver le bouton, mais elle ne dit pas si un outil est nécessaire.",
-   "Le volume de la cuve concerne l'eau disponible, pas le réglage.",
-   "L'avis d'une personne ne se mesure pas : ce n'est pas un critère."],
-  "Un critère se mesure ou se compte.")
+   "Une fonction très importante peut avoir un niveau négociable : la flexibilité dit l'écart accepté, pas l'importance.",
+   "Le nombre de tests n'est pas une colonne du cahier des charges.",
+   "Le matériau est une solution technique : le cahier des charges ne la choisit pas."],
+  "Flexibilité : l'écart accepté autour du niveau.")
 
 q(C, "Dans la FP et dans une FC",
   "La gardienne apparaît dans la fonction principale et dans une fonction contrainte. Est-ce une erreur ?",
@@ -494,13 +496,13 @@ q(C, "Dans la FP et dans une FC",
    "Oui : un interacteur ne peut avoir qu'un seul trait.",
    "Oui : une personne ne peut jamais être dans une FC.",
    "Non : mais seulement parce qu'elle est la plus importante."],
-  "Le système rend service à la gardienne (FP) et doit aussi s'adapter à elle : se régler sans outil (FC). Un même interacteur "
+  "Le système rend service à la gardienne (FP) et doit aussi s'adapter à elle : se régler facilement (FC). Un même interacteur "
   "peut avoir plusieurs traits.",
   "Léa est servie par le vélo-cargo, et la selle doit aussi être réglable pour elle.",
   "Croire qu'un interacteur n'a qu'un trait.",
   ["",
    "Dans ce diagramme, la gardienne a bien deux traits, et c'est juste : elle est servie et elle impose une condition.",
-   "Une FC peut concerner une personne : « se régler sans outil » concerne la gardienne.",
+   "Une FC peut concerner une personne : « se régler facilement » concerne la gardienne.",
    "L'importance n'est pas la raison : c'est parce qu'elle a deux relations différentes avec l'objet."],
   "Un interacteur peut avoir plusieurs traits.")
 

@@ -41,25 +41,29 @@ SCENE_REPERES = dessins.velo_cargo(
     "entre la roue arrière et le pédalier.",
     reperes=[("A", 560, 140, 470, 274), ("B", 230, 140, 352, 234), ("C", 150, 300, 280, 378)])
 
-BULLES_E3 = [dict(nom="Léa", famille="neutre"),
+BULLES_E3 = [dict(nom="le téléphone", famille="neutre"),
              dict(nom="", famille="vide", vivant="pv-b1", vide="① un usager ?", prefixe="①"),
-             dict(nom="le téléphone", famille="neutre"),
-             dict(nom="", famille="vide", vivant="pv-b2", vide="② un autre objet ?", prefixe="②"),
              dict(nom="la pluie", famille="neutre"),
+             dict(nom="", famille="vide", vivant="pv-b2", vide="② un autre objet ?", prefixe="②"),
              dict(nom="", famille="vide", vivant="pv-b3", vide="③ un élément de l'environnement ?", prefixe="③"),
+             dict(nom="Léa", famille="neutre"),
              dict(nom="l'itinéraire", famille="neutre")]
+
+FONCTIONS_VELO = dict(liens_fp=[(5, 1, "FP1"), (5, 3, "FP2")], liens_fc=[(2, "FC1"), (4, "FC2"), (0, "FC3"), (6, "FC4")])
 
 PIEUVRE_A_COMPLETER = figures.pieuvre(
     "pv-pieuvre", "Le vélo-cargo", BULLES_E3,
     "Diagramme des interacteurs extérieurs du vélo-cargo, à compléter",
-    "Au centre, le vélo-cargo. Sept traits le relient à sept bulles. Quatre sont remplies : Léa, le "
-    "téléphone, la pluie, l'itinéraire. Trois sont vides et annoncent seulement la famille attendue : "
-    "bulle 1, un usager ; bulle 2, un autre objet ; bulle 3, un élément de l'environnement.")
+    "Au centre, le vélo-cargo. Sept bulles autour. Quatre sont remplies : Léa, le téléphone, la pluie, "
+    "l'itinéraire. Trois sont vides et annoncent seulement la famille attendue : bulle 1, un usager ; "
+    "bulle 2, un autre objet ; bulle 3, un élément de l'environnement. Deux courbes partent de Léa et passent "
+    "par le vélo-cargo : FP1 arrive à la bulle 1, FP2 à la bulle 2. Quatre traits droits relient le "
+    "vélo-cargo à un seul élément : FC1 à la pluie, FC2 à la bulle 3, FC3 au téléphone, FC4 à l'itinéraire.",
+    **FONCTIONS_VELO)
 
-BULLES_CORRIGE = [dict(nom="Léa", famille="usager"), dict(nom="① les enfants", famille="usager"),
-                  dict(nom="le téléphone", famille="objet"), dict(nom="② les courses", famille="objet"),
-                  dict(nom="la pluie", famille="environnement"),
-                  dict(nom="③ la route en pente", famille="environnement"),
+BULLES_CORRIGE = [dict(nom="le téléphone", famille="objet"), dict(nom="① les enfants", famille="usager"),
+                  dict(nom="la pluie", famille="environnement"), dict(nom="② les courses", famille="objet"),
+                  dict(nom="③ la route en pente", famille="environnement"), dict(nom="Léa", famille="usager"),
                   dict(nom="l'itinéraire", famille="donnee")]
 
 PIEUVRE_CORRIGE = figures.pieuvre(
@@ -68,11 +72,13 @@ PIEUVRE_CORRIGE = figures.pieuvre(
     "Au centre, le vélo-cargo. Sept bulles, chacune avec sa famille écrite dessous. Léa : un usager. "
     "Bulle 1, les enfants : un usager. Le téléphone : un autre objet. Bulle 2, les courses : un autre "
     "objet. La pluie : l'environnement. Bulle 3, la route en pente : l'environnement. L'itinéraire : "
-    "une donnée.", montrer_famille=True)
+    "une donnée. Les fonctions FP1 et FP2 passent par le vélo-cargo, de Léa aux enfants et aux courses ; "
+    "FC1 à FC4 le relient à la pluie, à la route en pente, au téléphone et à l'itinéraire.",
+    montrer_famille=True, **FONCTIONS_VELO)
 
-BULLES_JARDIN = [dict(nom="la gardienne", famille="usager"), dict(nom="les plantes", famille="environnement"),
+BULLES_JARDIN = [dict(nom="l'heure d'arrosage choisie", famille="donnee"), dict(nom="les plantes", famille="environnement"),
                  dict(nom="la cuve d'eau de pluie", famille="objet"), dict(nom="la pluie et le soleil", famille="environnement"),
-                 dict(nom="le smartphone", famille="objet"), dict(nom="l'heure d'arrosage choisie", famille="donnee")]
+                 dict(nom="le smartphone", famille="objet"), dict(nom="la gardienne", famille="usager")]
 
 PIEUVRE_JARDIN = figures.pieuvre(
     "pv-jardin", "Le système d'arrosage", BULLES_JARDIN,
@@ -82,7 +88,7 @@ PIEUVRE_JARDIN = figures.pieuvre(
     "qui part de la gardienne, passe par le système et arrive aux plantes. Les traits 2 à 6 sont "
     "droits et relient le système à un seul interacteur : 2 à la pluie et au soleil, 3 à la cuve, 4 au "
     "smartphone, 5 à la gardienne, 6 à l'heure d'arrosage choisie.",
-    liens_fp=[(0, 1, "1")], liens_fc=[(3, "2"), (2, "3"), (4, "4"), (0, "5"), (5, "6")], montrer_famille=True,
+    liens_fp=[(5, 1, "1")], liens_fc=[(3, "2"), (2, "3"), (4, "4"), (5, "5"), (0, "6")], montrer_famille=True,
     largeur=820, hauteur=520)
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -204,22 +210,38 @@ E2 = dict(
 )
 
 E3 = dict(
-    id="e3", titre="Compléter le diagramme pieuvre", code="5e_C2.1", duree=7,
-    objectif="compléter un diagramme des interacteurs extérieurs et écarter ce qui n'en est pas.",
-    production="le diagramme pieuvre du vélo-cargo, complété, et la raison des deux intrus.",
+    id="e3", titre="Compléter le diagramme pieuvre et ses fonctions", code="5e_C2.1", duree=10,
+    objectif="compléter un diagramme des interacteurs extérieurs, écarter ce qui n'en est pas, et lire ses fonctions.",
+    production="le diagramme pieuvre du vélo-cargo complété, la raison des deux intrus, et deux fonctions retrouvées.",
     mots=[("diagramme des interacteurs extérieurs", "le schéma qui place l'objet au centre et, autour, chaque interacteur "
-           "extérieur, relié à l'objet par un trait. C'est le nom du programme de technologie."),
+           "extérieur. C'est le nom du programme de technologie."),
           ("diagramme pieuvre", "l'autre nom, très employé, du même schéma&nbsp;: l'objet est la tête, les traits sont les tentacules."),
+          ("fonction principale (FP)", "le service rendu par l'objet&nbsp;: un trait qui relie <b>deux</b> éléments extérieurs "
+           "<b>en passant par</b> l'objet."),
+          ("fonction contrainte (FC)", "on dit aussi fonction complémentaire&nbsp;: ce que l'objet doit respecter pour s'adapter "
+           "à <b>un</b> élément extérieur. Le trait va de l'objet à cet élément, et à lui seul."),
           ("intrus", "un mot qui n'a pas sa place dans la liste.")],
     intro="<p>Ce schéma s'appelle le <b>diagramme des interacteurs extérieurs</b>&nbsp;; on l'appelle aussi le "
           "<b>diagramme pieuvre</b>. Le vélo-cargo est au centre. Quatre bulles sont déjà remplies. Les trois bulles en "
-          "pointillés sont vides&nbsp;: chacune annonce seulement la <b>famille</b> attendue.</p>",
+          "pointillés sont vides&nbsp;: chacune annonce seulement la <b>famille</b> attendue.</p>"
+          "<p>Chaque trait porte un nom. <b>FP</b> veut dire <b>fonction principale</b>&nbsp;: la courbe part d'un élément, "
+          "<b>passe par le vélo-cargo</b> et arrive à un autre élément — c'est le service rendu. <b>FC</b> veut dire "
+          "<b>fonction contrainte</b>&nbsp;: le trait relie le vélo-cargo à <b>un seul</b> élément — c'est ce que le vélo-cargo "
+          "doit respecter. Une fonction s'écrit avec un verbe à l'infinitif&nbsp;:</p>"
+          "<ul><li><b>FP1</b>&nbsp;: permettre à Léa de transporter ses enfants.</li>"
+          "<li><b>FP2</b>&nbsp;: permettre à Léa de transporter ses courses.</li>"
+          "<li><b>FC1</b>&nbsp;: résister à la pluie.</li>"
+          "<li><b>FC2</b>&nbsp;: … (à retrouver)</li>"
+          "<li><b>FC3</b>&nbsp;: tenir le téléphone de Léa sans qu'il tombe.</li>"
+          "<li><b>FC4</b>&nbsp;: … (à retrouver)</li></ul>",
     consigne="<p><b>Complète les trois bulles vides</b> avec les mots de la banque&nbsp;: <i>les enfants · les courses · "
              "la route en pente · la pédale · la chaîne</i>. Tes choix s'écrivent dans le schéma. Deux mots de la banque "
-             "sont des <b>intrus</b>&nbsp;: <b>dis pourquoi</b> ils n'ont pas de bulle.</p>",
-    critere="chaque bulle porte un interacteur de la famille annoncée, et tu choisis la bonne raison pour les deux intrus.",
+             "sont des <b>intrus</b>&nbsp;: <b>dis pourquoi</b> ils n'ont pas de bulle. Puis <b>explique</b> pourquoi FP1 passe "
+             "par le vélo-cargo, et <b>retrouve</b> les phrases de FC2 et de FC4.</p>",
+    critere="chaque bulle porte un interacteur de la famille annoncée, tu donnes la bonne raison pour les intrus, et tu "
+            "retrouves FC2 et FC4.",
     widgets=[dict(type="slots", intro='<figure class="figure schema-vivant">' + PIEUVRE_A_COMPLETER +
-                  '<figcaption>Le diagramme pieuvre du vélo-cargo. Tes choix s\'écrivent dans les bulles en pointillés.</figcaption></figure>',
+                  '<figcaption>Le diagramme pieuvre du vélo-cargo, avec ses fonctions. Tes choix s\'écrivent dans les bulles en pointillés.</figcaption></figure>',
                   slots=[dict(name="b1", cible="pv-b1", legende="Bulle ① — elle attend <b>un usager</b>",
                               options=["les enfants", "les courses", "la route en pente", "la pédale", "la chaîne"], bonnes=["les enfants"],
                               indice="Bulle ① : il faut une personne que le vélo-cargo sert."),
@@ -238,30 +260,56 @@ E3 = dict(
                   retours={"bouger": "Les enfants bougent aussi, et ils ont une bulle : bouger ou non ne décide de rien.",
                            "personnes": "La pluie et la route ne sont pas des personnes non plus, et ce sont des interacteurs.",
                            "petites": "La taille ne décide de rien : seule compte la question « dedans ou dehors ? ».",
-                           "pieces": "Oui : un interacteur est toujours extérieur. Une pièce de l'objet est dedans."})],
+                           "pieces": "Oui : un interacteur est toujours extérieur. Une pièce de l'objet est dedans."}),
+             dict(type="choix", name="fp", legende="Pourquoi le trait FP1 passe-t-il par le vélo-cargo&nbsp;?",
+                  options=[("lea", "Parce que Léa est plus importante que les autres éléments."),
+                           ("service", "Parce qu'il relie Léa et ses enfants grâce au vélo-cargo&nbsp;: c'est le service rendu."),
+                           ("long", "Parce que FP1 est le trait le plus long du schéma."),
+                           ("dedans", "Parce que les enfants sont à l'intérieur du vélo-cargo.")],
+                  bonne="service",
+                  retours={"lea": "Léa a aussi une place dans le schéma, mais l'importance d'une personne ne décide pas de la forme du trait.",
+                           "long": "La longueur d'un trait ne veut rien dire : c'est le nombre d'éléments qu'il relie qui compte.",
+                           "dedans": "Les enfants sont assis dans le bac, mais ce ne sont pas des pièces du vélo-cargo : ils restent des éléments extérieurs.",
+                           "service": "Oui : une fonction principale relie deux éléments extérieurs en passant par l'objet. C'est ce que l'objet fait POUR eux."}),
+             dict(type="classer", name="fc",
+                  categories=[("fp", "permettre à Léa de transporter ses enfants"),
+                              ("pente", "monter les pentes sans trop d'effort"),
+                              ("lire", "laisser lire l'itinéraire à Léa sans lâcher le guidon"),
+                              ("pluie", "résister à la pluie")],
+                  items=[("FC2 — le trait vers la route en pente&nbsp;: quelle phrase&nbsp;?", "pente", "FC2 va vers la route en pente : que doit faire le vélo-cargo face à une côte ?"),
+                         ("FC4 — le trait vers l'itinéraire&nbsp;: quelle phrase&nbsp;?", "lire", "FC4 va vers l'itinéraire, une information que Léa doit pouvoir lire en roulant.")])],
     aides=["<p>Lis d'abord la famille annoncée dans chaque bulle vide, puis cherche dans la banque le mot qui lui correspond. "
-           "Il restera deux mots&nbsp;: demande-toi s'ils sont dedans ou dehors.</p>",
+           "Il restera deux mots&nbsp;: demande-toi s'ils sont dedans ou dehors. Pour les fonctions, regarde vers quelle bulle "
+           "va chaque trait.</p>",
            "<p>Bulle ① → une personne → parmi les mots, une seule désigne des personnes.<br>"
            "Bulle ② → une chose qu'on touche, transportée par le vélo.<br>"
            "Bulle ③ → ce sur quoi roulent les roues.<br>"
-           "Restent la pédale et la chaîne → on les trouve <b>dans</b> le vélo-cargo → pas de bulle.</p>"],
-    jumeau=dict(consigne="Pour une trottinette, deux bulles attendent « un usager » et « un élément de l'environnement ». "
-                         "Banque&nbsp;: <i>le guidon · la personne qui roule · le trottoir · la batterie</i>. Que mets-tu dans chaque bulle&nbsp;?",
-                correction="Un usager → <b>la personne qui roule</b>. Un élément de l'environnement → <b>le trottoir</b>. "
-                           "Le guidon et la batterie sont des pièces de la trottinette&nbsp;: des intrus."),
+           "Restent la pédale et la chaîne → on les trouve <b>dans</b> le vélo-cargo → pas de bulle.<br>"
+           "FP1 → touche <b>deux</b> éléments (Léa, les enfants) → c'est le service rendu.<br>"
+           "FC2 → va vers la route en pente → le vélo-cargo doit permettre de la monter.</p>"],
+    jumeau=dict(consigne="Le diagramme pieuvre d'un parapluie&nbsp;: un trait part de la personne, passe par le parapluie et "
+                         "arrive à la pluie&nbsp;; un autre relie seulement le parapluie au vent. Lequel est une FP, lequel une FC&nbsp;?",
+                correction="Le trait personne → parapluie → pluie relie <b>deux</b> éléments en passant par l'objet&nbsp;: c'est la "
+                           "<b>FP</b> (protéger la personne de la pluie). Le trait parapluie → vent ne touche qu'<b>un</b> élément&nbsp;: "
+                           "c'est une <b>FC</b> (résister au vent)."),
     correction=[
-        '<figure class="figure">' + PIEUVRE_CORRIGE + '<figcaption>Le diagramme corrigé : chaque bulle porte sa famille.</figcaption></figure>',
+        '<figure class="figure">' + PIEUVRE_CORRIGE + '<figcaption>Le diagramme corrigé : chaque bulle porte sa famille, chaque trait sa fonction.</figcaption></figure>',
         "<b>Bulle ①</b>, un usager → <b>les enfants</b> → le vélo-cargo les transporte",
         "<b>Bulle ②</b>, un autre objet → <b>les courses</b> → une chose qu'on touche, que le bac porte",
         "<b>Bulle ③</b>, un élément de l'environnement → <b>la route en pente</b> → les roues roulent dessus",
         "<b>Les intrus</b> → la pédale et la chaîne → ce sont des <b>pièces du vélo-cargo</b>, dedans",
         "Les trois autres raisons ne tiennent pas&nbsp;: les enfants bougent aussi et ont une bulle&nbsp;; la pluie n'est pas une "
         "personne et a une bulle&nbsp;; la taille ne décide de rien.",
-        ("conclusion", "La seule question qui décide&nbsp;: <b>dedans ou dehors&nbsp;?</b>"),
+        "<b>FP1</b> → relie <b>deux</b> éléments, Léa et ses enfants, <b>en passant par</b> le vélo-cargo → le service rendu",
+        "<b>FC2</b> → le vélo-cargo et la route en pente → « monter les pentes sans trop d'effort »",
+        "<b>FC4</b> → le vélo-cargo et l'itinéraire → « laisser lire l'itinéraire à Léa sans lâcher le guidon »",
+        ("conclusion", "Une bulle&nbsp;: <b>dedans ou dehors&nbsp;?</b> Un trait&nbsp;: <b>deux éléments par l'objet</b> (FP) ou "
+                       "<b>un seul</b> (FC)."),
     ],
-    retenir="le diagramme des interacteurs extérieurs — le <b>diagramme pieuvre</b> — met l'objet au centre et relie à lui "
-            "chaque interacteur par un trait. Ce qui est dans l'objet n'a pas de bulle.",
-    piege="donner une bulle à une pièce de l'objet parce qu'on la voit bien sur le dessin.",
+    retenir="le <b>diagramme pieuvre</b> met l'objet au centre. Une <b>fonction principale</b> (FP) relie deux éléments "
+            "extérieurs en passant par l'objet&nbsp;; une <b>fonction contrainte</b> (FC) relie l'objet à un seul élément. "
+            "Chaque fonction s'écrit avec un verbe à l'infinitif.",
+    piege="donner une bulle à une pièce de l'objet, ou appeler « fonction principale » un trait qui ne touche qu'un élément.",
 )
 
 E4 = dict(
@@ -393,28 +441,58 @@ E5 = dict(
 )
 
 E6 = dict(
-    id="e6", titre="Écrire une contrainte qu'on peut vérifier", code="4e_C2.2", duree=12,
-    objectif="donner à une contrainte un critère et un niveau, et dire d'où vient ce niveau.",
-    production="trois critères choisis, l'origine d'un niveau, et une exigence écrite avec critère et niveau.",
+    id="e6", titre="Le cahier des charges : critère, niveau, flexibilité", code="4e_C2.2", duree=15,
+    objectif="donner à une contrainte un critère, un niveau et une flexibilité, et dire d'où vient ce niveau.",
+    production="trois critères choisis, l'origine d'un niveau, quatre classes de flexibilité, et une exigence écrite avec "
+               "critère et niveau.",
     mots=[("critère", "ce que l'on mesure ou contrôle pour savoir si la contrainte est respectée."),
           ("niveau", "la valeur à atteindre pour ce critère (au moins…, au plus…)."),
           ("norme", "un texte officiel qui fixe la même règle pour tous les fabricants, dans tout un pays ou dans le monde."),
           ("indice de protection (IP)", "un code fixé par une norme internationale&nbsp;; le chiffre après IPX dit à quelle eau "
            "l'appareil résiste (IPX4&nbsp;: projections d'eau de tous côtés)."),
-          ("cahier des charges", "le document qui rassemble ce que le client demande à l'objet."),
+          ("cahier des charges fonctionnel (CdCF)", "le document qui rassemble ce que le client demande à l'objet&nbsp;: "
+           "chaque fonction y reçoit un critère, un niveau et une flexibilité."),
+          ("flexibilité", "la marge acceptée autour du niveau&nbsp;: de combien on peut s'en écarter sans que le client refuse l'objet."),
+          ("classe de flexibilité", "un code de F0 à F3 qui dit si le niveau se négocie&nbsp;: F0, pas du tout (impératif)&nbsp;; "
+           "F1, un peu&nbsp;; F2, assez&nbsp;; F3, beaucoup."),
           ("label", "une étiquette officielle qui garantit une qualité (économie d'eau, d'énergie…).")],
     intro="<p>« Résister à la pluie »&nbsp;: c'est une bonne contrainte, mais <b>qui décide</b> si c'est réussi&nbsp;? Pour qu'on "
           "puisse la vérifier, on lui ajoute un <b>critère</b> (ce qu'on mesure ou contrôle) et un <b>niveau</b> (la valeur à "
-          "atteindre). On obtient une <b>exigence</b>.</p>",
+          "atteindre). On obtient une <b>exigence</b>.</p>"
+          "<p>Le <b>cahier des charges fonctionnel</b> (CdCF) range ces exigences dans un tableau. La dernière colonne, la "
+          "<b>flexibilité</b>, dit de combien on peut s'écarter du niveau. On la note par une <b>classe</b>&nbsp;:</p>"
+          "<ul><li><b>F0</b>&nbsp;: flexibilité nulle — le niveau est impératif&nbsp;;</li>"
+          "<li><b>F1</b>&nbsp;: flexibilité faible — le niveau est peu négociable&nbsp;;</li>"
+          "<li><b>F2</b>&nbsp;: flexibilité moyenne — le niveau est négociable&nbsp;;</li>"
+          "<li><b>F3</b>&nbsp;: flexibilité forte — le niveau est très négociable.</li></ul>"
+          '<div class="defile"><table><caption>Extrait du cahier des charges du système d\'arrosage (les traits sont ceux du '
+          "diagramme de l'exercice 5)</caption>"
+          "<tr><th>Fonction</th><th>Désignation</th><th>Critère</th><th>Niveau</th><th>Flexibilité</th></tr>"
+          "<tr><td>FP (trait 1)</td><td>Permettre à la gardienne d'arroser les plantes sans être là</td>"
+          "<td>Jours d'arrosage sans la gardienne</td><td>7 jours sur 7, vacances comprises</td><td>F0&nbsp;: aucun jour oublié</td></tr>"
+          "<tr><td>FC (trait 2)</td><td>Résister à la pluie et au soleil</td><td>Indice de protection</td><td>IPX4 au moins</td>"
+          "<td>à trouver</td></tr>"
+          "<tr><td>FC (trait 3)</td><td>Prendre seulement l'eau dont les plantes ont besoin</td><td>Volume d'eau par jour</td>"
+          "<td>10&nbsp;L</td><td>à trouver</td></tr>"
+          "<tr><td>FC (trait 4)</td><td>Envoyer l'état de l'arrosage au smartphone</td><td>à écrire (dernière question)</td>"
+          "<td>à écrire</td><td>—</td></tr>"
+          "<tr><td>FC (trait 5)</td><td>Être sans danger pour la gardienne</td><td>Tension d'alimentation</td><td>12&nbsp;V</td>"
+          "<td>à trouver</td></tr>"
+          "<tr><td>FC (trait 5)</td><td>Se régler facilement</td><td>Temps pour changer l'heure d'arrosage</td><td>2&nbsp;min au plus</td>"
+          "<td>à trouver</td></tr>"
+          "</table></div>"
+          "<p>La gardienne a deux lignes&nbsp;: un même interacteur peut imposer plusieurs contraintes.</p>",
     consigne="<p><b>Pour chaque contrainte, choisis le critère qui permet de la vérifier.</b> Puis dis d'où vient le niveau "
-             "« IPX4 », et <b>écris l'exigence complète</b> de la contrainte du smartphone.</p>",
-    critere="trois critères justes, la bonne origine pour IPX4, et une exigence qui contient un nombre et son unité.",
+             "« IPX4 ». <b>Classe</b> ensuite chaque réponse de la gardienne dans sa classe de flexibilité (F0 à F3), et "
+             "<b>écris l'exigence complète</b> de la contrainte du smartphone.</p>",
+    critere="trois critères justes, la bonne origine pour IPX4, quatre classes de flexibilité justes, et une exigence qui "
+            "contient un nombre et son unité.",
     widgets=[dict(type="classer", name="crit",
                   categories=[("ip", "l'indice de protection contre l'eau (IP)"), ("litres", "le volume d'eau utilisé par jour, en litres"),
-                              ("outil", "le nombre d'outils nécessaires pour changer l'heure"), ("couleur", "la couleur du boîtier")],
+                              ("temps", "le temps pour changer l'heure d'arrosage, en minutes"), ("couleur", "la couleur du boîtier")],
                   items=[("« Résister à la pluie et au soleil »", "ip", "Résister à la pluie : ce qu'on contrôle, c'est l'eau qui peut entrer."),
                          ("« Prendre seulement l'eau dont les plantes ont besoin »", "litres", "Ne pas gaspiller : ce qu'on mesure, c'est une quantité d'eau."),
-                         ("« Se régler facilement, sans outil »", "outil", "Sans outil : ce qu'on compte, ce sont les outils.")]),
+                         ("« Se régler facilement »", "temps", "Facilement : ce qu'on mesure, c'est le temps que prend le réglage.")]),
              dict(type="choix", name="ipx4", legende="Le niveau « IPX4 au moins » vient…",
                   options=[("gardienne", "…de l'avis de la gardienne, qui préfère cette valeur."),
                            ("norme", "…d'une norme&nbsp;: un texte officiel qui fixe les mêmes codes IP pour tous les fabricants."),
@@ -425,6 +503,19 @@ E6 = dict(
                            "label": "Un label garantit une qualité (économiser l'eau, par exemple) ; il ne définit pas les codes de résistance à l'eau.",
                            "couleur": "La couleur ne dit rien de l'étanchéité : ce sont les joints et la forme du boîtier qui comptent.",
                            "norme": "Oui : les codes IP sont fixés par une norme internationale. IPX4 veut dire : résiste aux projections d'eau de tous côtés."}),
+             dict(type="classer", name="flex",
+                  categories=[("f0", "F0 — flexibilité nulle&nbsp;: le niveau est impératif"),
+                              ("f1", "F1 — flexibilité faible&nbsp;: peu négociable"),
+                              ("f2", "F2 — flexibilité moyenne&nbsp;: négociable"),
+                              ("f3", "F3 — flexibilité forte&nbsp;: très négociable")],
+                  items=[("Sans danger, 12&nbsp;V. La gardienne&nbsp;: « Pas question d'amener le 230&nbsp;V au jardin. »", "f0",
+                          "« Pas question » : aucun écart n'est accepté, et le 230 V est un danger."),
+                         ("Résister à la pluie, IPX4. La gardienne&nbsp;: « IPX3 sous l'abri, à la rigueur, si on me prouve que la pluie n'y entre pas. »", "f1",
+                          "Un écart est possible, mais seulement à une condition précise : c'est peu négociable."),
+                         ("L'eau nécessaire, 10&nbsp;L par jour. La gardienne&nbsp;: « 9 ou 11 litres, ça ira aussi. »", "f2",
+                          "Un écart d'un litre est accepté sans condition : c'est négociable."),
+                         ("Se régler en 2&nbsp;min au plus. La gardienne&nbsp;: « Même 5 minutes, ça m'ira&nbsp;: je ne le fais qu'une fois par mois. »", "f3",
+                          "Un écart très large est accepté, sans condition : c'est très négociable.")]),
              dict(type="texte", name="exig", lignes=3,
                   label="Écris l'exigence complète de la contrainte « envoyer l'état de l'arrosage au smartphone » : avec un critère et un niveau.",
                   criteres=[dict(label="ton exigence parle bien du smartphone ou du message envoyé",
@@ -442,7 +533,9 @@ E6 = dict(
            "<p>Exigence = contrainte + critère + niveau.<br>"
            "« Résister à la pluie » → critère&nbsp;: l'indice de protection → niveau&nbsp;: IPX4 au moins.<br>"
            "« Envoyer l'état au smartphone » → critère&nbsp;: le nombre de messages, ou le temps avant qu'il arrive → niveau&nbsp;: "
-           "un nombre avec son unité.</p>"],
+           "un nombre avec son unité.<br>"
+           "Flexibilité → écoute ce que la gardienne accepte&nbsp;: aucun écart → F0&nbsp;; un écart à une condition → F1&nbsp;; "
+           "un petit écart sans condition → F2&nbsp;; tout lui va → F3.</p>"],
     jumeau=dict(consigne="« La pompe ne doit pas gêner les voisins. » Donne un critère et un niveau.",
                 correction="Critère&nbsp;: le <b>niveau sonore</b>, en décibels (dB), mesuré à un mètre. Niveau&nbsp;: <b>au plus 35&nbsp;dB</b> "
                            "la nuit. (Autre réponse juste&nbsp;: critère « heures de fonctionnement », niveau « jamais entre 22&nbsp;h et 7&nbsp;h ».)"),
@@ -450,17 +543,26 @@ E6 = dict(
         "<b>« Résister à la pluie et au soleil »</b> → critère&nbsp;: <b>l'indice de protection (IP)</b> → niveau&nbsp;: IPX4 au moins",
         "<b>« Prendre seulement l'eau nécessaire »</b> → critère&nbsp;: <b>le volume d'eau par jour</b> → niveau&nbsp;: par exemple au plus 10&nbsp;L, "
         "fixé dans le cahier des charges du jardin",
-        "<b>« Se régler sans outil »</b> → critère&nbsp;: <b>le nombre d'outils</b> → niveau&nbsp;: 0",
+        "<b>« Se régler facilement »</b> → critère&nbsp;: <b>le temps pour changer l'heure</b> → niveau&nbsp;: 2&nbsp;min au plus",
         "La couleur du boîtier ne vérifie aucune des trois contraintes.",
         "<b>IPX4</b> → vient d'une <b>norme</b> internationale&nbsp;: elle fixe les codes IP pour tous les fabricants.",
+        "<b>12&nbsp;V</b> → « pas question » d'autre chose → aucun écart → <b>F0</b> (le 230&nbsp;V serait un danger mortel au jardin)",
+        "<b>IPX4</b> → IPX3 accepté à une seule condition (sous l'abri, preuve à l'appui) → <b>F1</b>",
+        "<b>10&nbsp;L par jour</b> → 9 ou 11&nbsp;L acceptés sans condition → <b>F2</b>",
+        "<b>Réglage en 2&nbsp;min</b> → même 5&nbsp;min acceptées, sans condition → écart très large → <b>F3</b>",
+        "Le piège&nbsp;: croire que la flexibilité dépend de l'importance de la fonction. Elle dépend de ce que le client "
+        "<b>accepte</b> comme écart&nbsp;: la gardienne tient beaucoup à ses plantes, et pourtant le volume d'eau est en F2.",
         "<b>Une exigence attendue&nbsp;:</b> « Le système doit envoyer l'état de l'arrosage au smartphone <b>au moins 1 fois par jour</b>. » "
         "ou « …le message doit arriver <b>en moins de 5 minutes</b> après l'arrosage. »",
-        ("conclusion", "Exigence = <b>contrainte + critère + niveau</b>. Le niveau vient d'une norme, d'un cahier des charges, d'un label "
-                       "ou d'une certification."),
+        ("conclusion", "Exigence = <b>contrainte + critère + niveau</b>, et la <b>flexibilité</b> dit de combien le niveau peut "
+                       "bouger (F0 impératif → F3 très négociable). Le niveau vient d'une norme, d'un cahier des charges, d'un "
+                       "label ou d'une certification."),
     ],
-    retenir="une contrainte devient vérifiable avec un <b>critère</b> (ce qu'on mesure) et un <b>niveau</b> (la valeur à atteindre)&nbsp;; "
-            "ce niveau vient d'une <b>norme</b>, d'un <b>cahier des charges</b>, d'un <b>label</b> ou d'une <b>certification</b>.",
-    piege="écrire un niveau sans unité (« au moins 1 ») ou un critère qui ne se mesure pas (« bien », « joli »).",
+    retenir="dans le cahier des charges, chaque fonction reçoit un <b>critère</b> (ce qu'on mesure), un <b>niveau</b> (la valeur à "
+            "atteindre) et une <b>flexibilité</b> (l'écart accepté), notée de <b>F0</b> (impératif) à <b>F3</b> (très négociable)&nbsp;; "
+            "le niveau vient d'une <b>norme</b>, d'un <b>cahier des charges</b>, d'un <b>label</b> ou d'une <b>certification</b>.",
+    piege="écrire un niveau sans unité (« au moins 1 »), un critère qui ne se mesure pas (« bien », « joli »), ou choisir la "
+          "flexibilité d'après l'importance de la fonction au lieu de l'écart que le client accepte.",
 )
 
 E7 = dict(
@@ -555,6 +657,9 @@ NIVEAUX = {
                   "et relie à lui, par un trait, tout ce qui est en relation avec lui.</li>"
                   "<li>Un interacteur est toujours <b>en dehors</b> de l'objet. Il appartient à l'une des quatre familles&nbsp;: "
                   "<b>usagers, données, autres objets, éléments de l'environnement</b>.</li>"
+                  "<li>Une <b>fonction principale</b> (FP) relie deux éléments extérieurs en passant par l'objet&nbsp;: c'est le "
+                  "service rendu. Une <b>fonction contrainte</b> (FC) relie l'objet à un seul élément&nbsp;: c'est ce qu'il doit "
+                  "respecter.</li>"
                   "<li>Un choix de conception s'explique par l'interacteur qu'il sert et par son domaine&nbsp;: <b>sécurité, "
                   "ergonomie, développement durable</b>.</li></ul>",
         bonus=[dict(titre="Le vélo-cargo à la plage",
@@ -596,6 +701,9 @@ NIVEAUX = {
                   "rendu. Une <b>fonction contrainte</b> (FC) relie l'objet à un seul interacteur&nbsp;: c'est une condition.</li>"
                   "<li>Une contrainte devient une <b>exigence</b> vérifiable avec un <b>critère</b> (ce qu'on mesure) et un "
                   "<b>niveau</b> (la valeur à atteindre).</li>"
+                  "<li>Le <b>cahier des charges fonctionnel</b> range les fonctions dans un tableau&nbsp;: fonction, désignation, "
+                  "critère, niveau, <b>flexibilité</b>. La flexibilité dit l'écart accepté autour du niveau&nbsp;: <b>F0</b> "
+                  "impératif, <b>F1</b> peu négociable, <b>F2</b> négociable, <b>F3</b> très négociable.</li>"
                   "<li>Le niveau vient d'une <b>norme</b>, d'un <b>cahier des charges</b>, d'un <b>label</b> ou d'une "
                   "<b>certification</b>. Un interacteur oublié, c'est une contrainte que personne n'écrira.</li></ul>",
         bonus=[dict(titre="La pompe qui réveille la voisine",
@@ -643,7 +751,8 @@ SCHEMAS_SYNTHESE = {"5e": PIEUVRE_CORRIGE, "4e": PIEUVRE_JARDIN}
 VOCAB_EN = [("interacteur", "interactor (external element)"), ("usager", "user"), ("donnée", "data"),
             ("environnement", "environment"), ("contrainte", "constraint"), ("exigence", "requirement"),
             ("critère", "criterion"), ("niveau", "level"), ("norme", "standard"), ("cahier des charges", "specifications")]
-VERBES = {"5e": "<b>lister, classer, compléter</b> le diagramme, puis <b>expliquer</b> un choix de conception par un interacteur",
+VERBES = {"5e": "<b>lister, classer, compléter</b> le diagramme et <b>lire</b> ses fonctions (FP, FC), puis <b>expliquer</b> un "
+                "choix de conception par un interacteur",
           "4e": "<b>distinguer</b> service rendu et contraintes, puis <b>formuler</b> une contrainte avec critère et niveau",
           "3e": "pas d'exercice de ce diagramme&nbsp;: en 3e, le programme demande de <b>choisir</b> ses modes de représentation "
                 "pour décrire l'expérience de l'utilisateur (3e_C2.1). Le diagramme pieuvre y est un choix possible, parmi d'autres."}
@@ -651,8 +760,11 @@ CHAINE = ("<p><b>Analyse externe</b>&nbsp;: besoin <i>(bête à cornes)</i> → 
           "des interacteurs, « pieuvre »)</i></b> → contraintes et exigences → cahier des charges.</p>"
           "<p>Cet atelier est le deuxième maillon. Il <b>suit</b> la formulation du besoin et <b>précède</b> le tableau des "
           "contraintes et exigences (4e_C2.1, Hangzhou) et le diagramme des exigences.</p>")
-NOTES_PROF = ("<ul><li>Choix de Pascal (13/10/2026)&nbsp;: le diagramme pieuvre en 5e_C2.1, 5e_C2.2 et 4e_C2.2 seulement. "
-              "Le sigle FC n'apparaît qu'en 4e, avec son entrée au lexique.</li>"
+NOTES_PROF = ("<ul><li>Choix de Pascal (13/10/2026)&nbsp;: le diagramme pieuvre en 5e_C2.1, 5e_C2.2 et 4e_C2.2 seulement.</li>"
+              "<li>Demande de Pascal (24/10/2026)&nbsp;: le diagramme montre ses fonctions dès la 5e — la fonction principale (FP) "
+              "passe par l'objet entre deux éléments, chaque fonction contrainte (FC) relie l'objet à un seul élément — et le cahier "
+              "des charges de 4e porte la flexibilité, par classes F0 à F3. En 5e, l'élève LIT et complète les fonctions&nbsp;; "
+              "en 4e, il les FORMULE avec critère, niveau et flexibilité.</li>"
               "<li>Le programme ne nomme ni « pieuvre » ni « fonction contrainte »&nbsp;: il dit <i>interacteurs, contraintes, "
               "exigences, cahier des charges</i>. Le diagramme est donc toujours nommé deux fois&nbsp;: d'abord par le mot du "
               "programme, puis par son nom courant.</li>"

@@ -33,6 +33,10 @@ LISTE_OK = ("l'usager abonné : il prend et rend un vélo\n"
             "la pluie (environnement) : elle mouille les bornes\n"
             "le trottoir (environnement) : la station y est fixée")
 
+# c) Le vélo-cargo : cinq interacteurs extérieurs (exercice 1 de l'atelier, incrusté).
+LISTE_VELO_OK = "Léa\nles enfants\nles courses\nla pluie\nle téléphone"
+LISTE_VELO_FAUSSE = "Léa\nla pédale\naller au marché\nla pluie"
+
 # Huit entrées, mais aucune donnée : la famille qu'on oublie toujours.
 LISTE_SANS_DONNEE = ("l'usager abonné\nl'agent de maintenance\nle riverain\nle maire\n"
                      "le vélo\nle smartphone\nla pluie\nle trottoir")
@@ -83,7 +87,9 @@ with sync_playwright() as p:
     n_ta = pg.eval_on_selector_all("textarea", "a=>a.length")
     n_et = pg.eval_on_selector_all("details.etayage", "a=>a.length")
     t("chaque zone de rédaction a sa version étayée (n°31)",
-      n_ta == 7 and n_et >= n_ta, f"{n_ta} zones / {n_et} étayages")
+      # Le nombre de zones a changé avec les exercices incrustés du vélo-cargo (24/10/2026) :
+      # on vérifie la règle (une version étayée par zone), plus un compte figé.
+      n_ta >= 7 and n_et >= n_ta, f"{n_ta} zones / {n_et} étayages")
 
     t("chaque champ porte une étiquette (n°34)",
       pg.evaluate("[...document.querySelectorAll('select,textarea')].every(e=>!e.id||"
@@ -111,19 +117,36 @@ with sync_playwright() as p:
                 ".forEach(i=>{const g=document.getElementById(i);const r=g.querySelector('input[type=radio]');if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
     pg.click('[data-check="1"]')
     pg.wait_for_timeout(120)
-    t("activité 1 : la liste des quatre familles est exigée",
-      "QUATRE familles" in pg.inner_text("#fb1"), pg.inner_text("#fb1")[-50:])
-    pg.fill("#a1_liste", LISTE_SANS_DONNEE)
+    t("activité 1 : les exercices du vélo-cargo (c) sont exigés",
+      "vélo-cargo" in pg.inner_text("#fb1"), pg.inner_text("#fb1")[-60:])
+    # c) exercice 1 — une liste avec une pièce et une action : refusée, et l'élève sait pourquoi
+    pg.fill("#pv_5e_e1__liste", LISTE_VELO_FAUSSE)
+    pg.click("#pv_5e_e1 button.verifier")
+    pg.wait_for_timeout(120)
+    retour = pg.inner_text("#pv_5e_e1 .retour")
+    t("c) exercice 1 : une pièce et un usage sont refusés, avec leur raison",
+      "pièce du vélo-cargo" in retour and "usage" in retour, retour[-80:])
+    pg.fill("#pv_5e_e1__liste", LISTE_VELO_OK)
+    pg.click("#pv_5e_e1 button.verifier")
+    pg.wait_for_timeout(120)
+    t("c) exercice 1 : cinq interacteurs extérieurs acceptés",
+      "Tout est juste" in pg.inner_text("#pv_5e_e1 .retour"))
+    # c) exercice 3 — compléter le diagramme pieuvre ; le choix s'écrit dans le schéma
+    pg.check('#pv_5e_e3 input[name="pv_5e_e3__b1"][value="les enfants"]')
+    t("c) exercice 3 : le mot choisi s'écrit dans la bulle du schéma",
+      "les enfants" in pg.text_content("#pv-b1"))
+    pg.check('#pv_5e_e3 input[name="pv_5e_e3__b2"][value="les courses"]')
+    pg.check('#pv_5e_e3 input[name="pv_5e_e3__b3"][value="la route en pente"]')
+    pg.check('#pv_5e_e3 input[name="pv_5e_e3__intrus"][value="pieces"]')
+    pg.check('#pv_5e_e3 input[name="pv_5e_e3__fp"][value="service"]')
+    pg.check('#pv_5e_e3 input[name="pv_5e_e3__fc_0"][value="pente"]')
+    pg.check('#pv_5e_e3 input[name="pv_5e_e3__fc_1"][value="lire"]')
+    pg.click("#pv_5e_e3 button.verifier")
+    pg.wait_for_timeout(120)
+    t("c) exercice 3 : le diagramme complété est reconnu", "Tout est juste" in pg.inner_text("#pv_5e_e3 .retour"))
     pg.click('[data-check="1"]')
     pg.wait_for_timeout(120)
-    # Le message doit NOMMER la famille manquante : un refus qui n'aide pas
-    # l'élève à repartir n'est pas un vérificateur, c'est un mur.
-    t("activité 1 : une liste sans données est refusée, et la famille est nommée",
-      "DONNÉES" in pg.inner_text("#fb1"), pg.inner_text("#fb1")[-70:])
-    pg.fill("#a1_liste", LISTE_OK)
-    pg.click('[data-check="1"]')
-    pg.wait_for_timeout(120)
-    t("activité 1 : validée quand les quatre familles sont couvertes",
+    t("activité 1 : validée quand les deux exercices du vélo-cargo sont réussis",
       "7 / 7" in pg.inner_text("#fb1"), pg.inner_text("#fb1")[:30])
     t("progression mise à jour", "1 / 3" in pg.inner_text("#progTxt"))
 
@@ -183,7 +206,7 @@ with sync_playwright() as p:
     pg.reload()
     pg.wait_for_timeout(400)
     t("sauvegarde locale restaurée après rechargement",
-      pg.input_value("#a1_liste").startswith("l'usager abonné")
+      pg.input_value("#pv_5e_e1__liste").startswith("Léa")
       and "3 / 3" in pg.inner_text("#progTxt"))
 
     # blocs de la règle n°4

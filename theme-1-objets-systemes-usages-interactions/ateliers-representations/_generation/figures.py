@@ -122,7 +122,7 @@ def pieuvre(ident, objet, bulles, titre, desc, liens_fc=(), liens_fp=(), largeur
         corps.append('<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" fill="none" stroke="#1f5fbf" '
                      'stroke-width="3.2"/>' % (x1, y1, qx, qy, x2, y2))
         # étiquette au quart de la courbe, côté de la seconde bulle
-        t = 0.86
+        t = 0.80
         ex_ = (1 - t) ** 2 * x1 + 2 * (1 - t) * t * qx + t ** 2 * x2
         ey_ = (1 - t) ** 2 * y1 + 2 * (1 - t) * t * qy + t ** 2 * y2
         etiquettes.append((ex_, ey_, lab, "#1f5fbf"))

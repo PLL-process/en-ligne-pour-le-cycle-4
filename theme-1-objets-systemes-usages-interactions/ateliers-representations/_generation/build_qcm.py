@@ -117,6 +117,8 @@ def construire(module):
         (r"<footer>\s*<p>.*?</p>",
          "<footer>\n  <p>QCM d’entraînement %s · Thème 1 · Technologie cycle 4 (2024) · ateliers associés : %s</p>"
          % (" · ".join(codes), pages)),
+        (r"#navharm\{position:sticky;top:0;z-index:1200;display:flex;gap:8px;",
+         "#navharm{position:sticky;top:0;z-index:1200;display:flex;flex-wrap:wrap;gap:8px;"),
         (r'<nav id="navharm".*?</nav>', '<nav id="navharm" aria-label="Navigation du site">%s</nav>' % "".join(nav)),
         (r'⬅ Revenir à l\'atelier de ton niveau : .*?</p>', "⬅ Revenir à l'atelier de ton niveau : %s</p>" % pages),
     ]

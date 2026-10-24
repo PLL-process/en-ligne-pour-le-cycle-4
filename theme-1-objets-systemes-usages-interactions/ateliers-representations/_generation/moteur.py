@@ -235,6 +235,7 @@ class Rendu:
              '<label class="champ" for="%s_desc">Si tu ne peux pas dessiner à l\'écran&nbsp;: décris ton croquis en mots '
              '(ce que l\'on voit, où, avec quelles légendes)</label>' % name,
              '<textarea id="%s_desc" name="%s_desc" rows="3"></textarea>' % (name, name),
+             self.etayage(["Au centre de mon croquis, on voit …", "Les légendes nomment …", "La flèche montre …"]),
              '<fieldset class="qcm-groupe"><legend>Je relis mon croquis&nbsp;: je coche ce qui y est vraiment</legend><div class="options">']
         for i, c in enumerate(w["checklist"]):
             ident = "%s_check-%d" % (name, i)
@@ -282,8 +283,10 @@ def mots(liste):
             % "".join("<dt>%s</dt><dd>%s</dd>" % (m, d) for m, d in liste))
 
 
-def exercice(ex, numero, uid, cle, base_img=""):
-    """Rend la carte d'un exercice ; renvoie (html, def_json)."""
+def exercice(ex, numero, uid, cle, base_img="", balise="h2", duree_au_titre=True):
+    """Rend la carte d'un exercice ; renvoie (html, def_json).
+    `balise` : le niveau du titre (h2 dans une page d'atelier, plus bas quand l'exercice est
+    incrusté dans une activité de séquence)."""
     r = Rendu(uid)
     corps = []
     for w in ex["widgets"]:
@@ -294,10 +297,12 @@ def exercice(ex, numero, uid, cle, base_img=""):
             corps.append(getattr(r, t)(w))
     code = ex["code"]
     h = ['<section class="card exercice" id="%s" data-exo="%s" data-cle="%s" aria-labelledby="%s-titre">' % (uid, uid, cle, uid),
-         '<h2 id="%s-titre">Exercice %d — %s <span class="note">(≈ %d min)</span></h2>' % (uid, numero, ex["titre"], ex["duree"]),
+         ('<%s id="%s-titre">Exercice %d — %s <span class="note">(≈ %d min)</span></%s>' % (balise, uid, numero, ex["titre"], ex["duree"], balise))
+         if duree_au_titre else ('<%s id="%s-titre">Exercice %d — %s</%s>' % (balise, uid, numero, ex["titre"], balise)),
          '<div class="meta"><b>🎯 Objectif&nbsp;:</b> %s<br><b>🧩 Compétence&nbsp;:</b> <span title="%s" aria-label="%s : %s">%s</span>'
-         '<br><b>✍ Ce que tu produis&nbsp;:</b> %s</div>'
-         % (ex["objectif"], e(formulation(code)), e(code), e(formulation(code)), e(code), ex["production"]),
+         '<br><b>✍ Ce que tu produis&nbsp;:</b> %s%s</div>'
+         % (ex["objectif"], e(formulation(code)), e(code), e(formulation(code)), e(code), ex["production"],
+            "" if duree_au_titre else "<br><b>Durée&nbsp;:</b> environ %d minutes, comptées dans celle de l'activité." % ex["duree"]),
          mots(ex.get("mots"))]
     for doc in ex.get("documents", []):
         corps_doc = figure(doc, base_img)
@@ -319,8 +324,9 @@ def exercice(ex, numero, uid, cle, base_img=""):
             jumeau = ('<div class="critere"><b>🔁 Exercice jumeau, à faire seul ensuite&nbsp;:</b> %s</div>' % ex["jumeau"]["consigne"])
             jumeau += ('<label class="champ" for="%s__jumeau">Ma réponse à l\'exercice jumeau</label>'
                        '<textarea id="%s__jumeau" name="%s__jumeau" rows="2"></textarea>'
-                       '<details class="correction"><summary>🔍 Correction de l\'exercice jumeau</summary>%s</details>'
-                       % (uid, uid, uid, ex["jumeau"]["correction"]))
+                       '%s<details class="correction"><summary>🔍 Correction de l\'exercice jumeau</summary>%s</details>'
+                       % (uid, uid, uid, r.etayage(ex["jumeau"].get("amorces", ["Dans cette nouvelle situation, je pose la même question que dans l'aide 2 : …",
+                                                                                    "Ma réponse : … parce que …"])), ex["jumeau"]["correction"]))
         h.append('<details class="aide"><summary>💡 Aide 2 — le raisonnement pas à pas</summary>%s%s</details>' % (aides[1], jumeau))
     h.append('<details class="correction"><summary>🔍 La correction complète, et pourquoi</summary>%s</details>'
              % correction_demo(ex["correction"]))
@@ -464,6 +470,7 @@ def cloture(at, niv, chemins):
         h.append('<h3>Défi %d — %s</h3><div>%s</div>' % (i + 1, b["titre"], b["consigne"]))
         h.append('<label class="champ" for="%s__bonus%d">Ma réponse</label><textarea id="%s__bonus%d" name="bonus%d" rows="3"></textarea>'
                  % (pid, i, pid, i, i))
+        h.append(Rendu("x").etayage(b.get("amorces", ["Je relis la question du défi : on me demande …", "Ma réponse : … parce que …"])))
         h.append('<details class="corrige-bonus"><summary>🔍 Voir la correction du défi %d</summary>%s</details>'
                  % (i + 1, correction_demo(b["correction"])))
     h.append("</section>")
@@ -477,6 +484,7 @@ def cloture(at, niv, chemins):
                                  "Je change d'avis sur… : l'exercice … m'a montré que…"]))
     h.append('<label class="champ" for="%s__bilan_m">%s</label><textarea id="%s__bilan_m" name="bilan_m" rows="3"></textarea>'
              % (pid, N.get("metacognition", "Où as-tu hésité&nbsp;? Qu'est-ce que tu dois encore revoir, et comment vas-tu t'y prendre&nbsp;?"), pid))
+    h.append(Rendu("x").etayage(["J'ai hésité entre … et … dans l'exercice …", "Je dois encore revoir … ; pour cela, je vais refaire …"]))
     h.append('<h3>Je me positionne</h3><p class="lsu-legende">Pour chaque compétence travaillée, choisis la phrase qui te ressemble aujourd\'hui. '
              'Ce n\'est pas une note&nbsp;: c\'est ce qui t\'aide, toi et ton professeur, à savoir quoi reprendre.</p>')
     for c in N["codes"]:
