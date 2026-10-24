@@ -103,6 +103,16 @@
   .rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;
     background:var(--panel);border:1px dashed var(--border)}
   .rappel-spiralaire .filet{margin:.5em 0 0;font-size:.92em;opacity:.85}
+  /* Règle d'or n°304 : ce qui devrait être en place, à cocher, chacun avec son rattrapage. */
+  .rappel-spiralaire .verif{list-style:none;margin:.4em 0 .6em;padding:0}
+  .rappel-spiralaire .verif li{margin:.55em 0}
+  .rappel-spiralaire .verif .ligne{display:flex;align-items:flex-start;gap:.6em}
+  .rappel-spiralaire .verif input[type=checkbox]{flex:none;width:18px;height:18px;margin:.2em 0 0;accent-color:var(--accent);cursor:pointer}
+  .rappel-spiralaire .verif label{cursor:pointer}
+  .rappel-spiralaire .verif .code-verif{display:inline-block;font-size:.82em;opacity:.85;white-space:nowrap;margin-left:.3em}
+  .rappel-spiralaire .verif .rattrapage{margin:.2em 0 0 calc(18px + .6em);font-size:.93em}
+  .rappel-spiralaire .verif-consigne{margin:.2em 0 .3em;font-size:.95em}
+  @media print{.rappel-spiralaire .verif-consigne,.rappel-spiralaire .verif label,.rappel-spiralaire .verif .code-verif,.rappel-spiralaire .verif .rattrapage{color:#041a40!important;opacity:1!important}}
   /* Le bonus et ses corrigés (règle d'or n°86) : chaque défi porte sa réponse,
      repliée. On cherche d'abord, on ouvre ensuite — mais on ouvre. */
   .bonus .defi{margin:1em 0;padding:.8em 1em;border-radius:10px;
@@ -188,16 +198,20 @@ les corrections et les compléments&nbsp;: il ne reste que les consignes et les 
 perdu — un second clic ramène tout.</p>
 
 <section class="card rappel-spiralaire" aria-labelledby="rap-t">
-  <h2 id="rap-t">&#128260; Ce que tu as déjà fait</h2>
-  <p class="deja"><b>L'an dernier, en 5e</b>, on t'a donné un planning tout prêt pour un projet&nbsp;:
-  tu l'as <b>suivi</b>. Tu repérais la tâche du jour, tu la <b>cochais</b> quand elle était finie,
-  et tu voyais tout de suite si le groupe était en avance ou en retard.</p>
-  <p class="change"><b>Cette année, ce qui change&nbsp;:</b> personne ne te donne le planning.
-  On te donne la <b>liste des tâches</b>, en vrac, et c'est <b>toi</b> qui décides laquelle vient
-  avant laquelle. Le logiciel te dira ensuite si ton ordre tient debout.</p>
-  <p class="filet">Tu n'étais pas là l'an dernier&nbsp;? Tout ce qu'il faut savoir tient dans le
-  paragraphe ci-dessus&nbsp;: un planning, c'est des tâches, chacune avec une durée, et des
-  flèches qui disent qui attend qui.</p>
+  <h2 id="rap-t">&#128260; Avant de commencer&nbsp;: ce que je vérifie</h2>
+  <p class="verif-consigne">Pour toi, sans note&nbsp;: coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
+  <ul class="verif">
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais ce que sont une tâche, une durée et une contrainte entre tâches. <span class="code-verif">5e_C7.1</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#les-mots">relis « Les trois mots du programme » dans la synthèse de l'atelier</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais repérer la tâche du jour sur un planning, et dire ce qu'un retard décale. <span class="code-verif">5e_C7.1</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#marge">relis « La marge » dans la synthèse de l'atelier</a></p>
+    </li>
+  </ul>
+  <p class="change"><b>Dans cet atelier&nbsp;:</b> personne ne te donne le planning. Tu reçois la <b>liste des tâches</b>, en vrac, et c'est <b>toi</b> qui décides laquelle vient avant laquelle. Le logiciel te dit ensuite si ton ordre tient debout.</p>
+  <p class="filet">À garder pour tout l'atelier&nbsp;: un planning, ce sont des tâches, chacune avec une durée, et des flèches qui disent qui attend qui.</p>
 </section>
 
 <section class="card">
