@@ -23009,3 +23009,22 @@ vidéos, `theme-3-…/C7-…/ressources_externes.json`, vit dans le thème 3 (n�
   `regenerer_chaines_energie.py` rejoué sans écart ; `generer_lexique.py` identique sur `main`.
 - `build_audit.py` et `make_index.py` régénérés. Captures avant / après à 390 et 1280 px dans
   `4e_C4.1_book-train/_generation/captures_2026-10-24/`.
+
+## 24/10/2026 — Décision 1 tranchée : l'historique Git est gardé tel quel (transversal)
+
+**La réponse.** Le 24/10 à 10:01 (heure de Pascal), à la question laissée en suspens dans l'entrée « Décisions de Pascal
+du 24/10 » (point 1), Pascal a répondu « 2a » : **on garde l'historique**. C'était la recommandation de Fable.
+
+**Pourquoi c'est la bonne issue.** Réécrire l'historique aurait touché les 67 PR fusionnées depuis le 24/09/2026 (#429 et
+les suivantes) : vues de diff perdues, identifiants de commit changés, et les PDF seraient restés joignables par les
+références `refs/pull/…`, que le support de GitHub ne retire pas pour des données non sensibles. Les deux PDF Delagrave ne
+sont plus publiés par le site depuis le 23/10 (arbitrage A5) : c'est ce qui comptait.
+
+**Conséquences.**
+- Aucune réécriture n'est préparée ni lancée. La question est close ; elle ne se rouvrirait que sur la demande d'un ayant
+  droit (l'éditeur).
+- `.claude/skills/licences-medias-education/SKILL.md` le dit à la ligne « PDF Delagrave », pour qu'aucune session ne la
+  propose de nouveau.
+
+**Ce qui a tourné.** Rien d'autre que l'écriture de cette entrée et de la ligne du skill ; `build_audit.py` et
+`make_index.py` relancés.

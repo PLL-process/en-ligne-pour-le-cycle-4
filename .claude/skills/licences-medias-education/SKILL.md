@@ -71,7 +71,7 @@ Modèle : `_archive-anciennes-versions/…/3e_C9.1/SOURCES_MEDIAS.md`.
   - `5e_C1.3/Images/image_extraite_01` à `08.png` : PNG lourds à la licence mal documentée, le 08 un extrait de manuel ; retirés (01 à 07 le 25/07/2026 ; 08, oublié, le 31/08/2026, commit `bbd1962`). Le dossier ne porte plus que des SVG.
   - Captures de `3e_C9.1` : documentées (captures réelles du 04/10/2026). Celles de la ressource héritée sont archivées avec elle (`_archive-anciennes-versions/…/3e_C9.1/`), sans licence écrite ; l'archive est hors de `controle_medias.py`.
   - Les SVG originaux de `4e_C4.7`, dessinés pour remplacer ces images tierces, sont de nouveau affichés par les QCM du lot (journal du 02/09/2026, règle d'or n°279) ; `4e_C4.7` est sorti de la liste des orphelines.
-  - PDF Delagrave : voir « Documents d'éditeur ». Ils restent dans l'historique git ; l'effacer réécrirait `main`, décision de Pascal.
+  - PDF Delagrave : voir « Documents d'éditeur ». Ils restent dans l'historique git : Pascal a décidé le 24/10/2026 de garder l'historique tel quel (journal, entrée « Décision 1 tranchée »). Ne pas proposer de nouveau de le réécrire, sauf si un ayant droit le demande.
 - Encore ouvert : les 20 images orphelines relevées par `controle_medias.py` (5 lots, dont les captures de l'atelier CAO). Chaque lot se tranche dans sa propre PR.
 
 ## Critères de réussite
