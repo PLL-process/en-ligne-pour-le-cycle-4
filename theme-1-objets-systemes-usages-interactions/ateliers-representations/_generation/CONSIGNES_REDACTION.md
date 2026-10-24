@@ -25,6 +25,20 @@ ligne à ligne, est l'atelier pilote : `donnees_interacteurs.py` et `q_interacte
 `vivants`, `cible`) commence par `COURT` suivi d'un tiret (`bc-…`). Les cahiers de niveau mettent
 tous les ateliers dans une même page : deux identifiants égaux s'y écraseraient.
 
+## Le cours (`COURS`)
+
+`COURS = {"5e": html, "4e": html, …}` (un niveau = un bloc) : ce qu'il faut savoir, en clair, pour faire les
+exercices de ce niveau. Le moteur le pose trois fois : dans la page d'atelier (encadré replié « 📘 Le cours », sous
+l'ouverture), dans la synthèse élève (« 📘 En 5e — le cours », avant « à retenir »), et dans chaque bloc d'exercices
+inséré dans une séquence. Forme : de courts intertitres `<h3>`, des listes `<ul>`, au besoin un petit tableau dans
+`<div class="defile">` ; pas de pavé. Le cours ne remplace pas « à retenir » (trois à cinq phrases) : il le détaille.
+
+Il s'inspire du cahier « 123 Techno » (Bordas 2021) que le professeur utilise — inventaires de lecture dans
+`/tmp/claude-0/-home-claude/d6298444-879c-5293-88ba-e1819d5abba1/scratchpad/inventaire_*.md` — **sans jamais le
+recopier** : nos mots, nos exemples (objets-fils), nos schémas. Le site est public ; aucun énoncé, aucune image,
+aucune tournure reconnaissable de l'éditeur. Ne jamais citer Bordas dans une page élève (n°309) ; la source
+d'inspiration se dit dans `NOTES_PROF`.
+
 ## Les exercices
 
 - 3 à 7 exercices **pour toute la représentation**, répartis sur les niveaux prévus au plan.
@@ -37,6 +51,10 @@ tous les ateliers dans une même page : deux identifiants égaux s'y écraseraie
   (cases d'un schéma vivant), `croquis` (dessin à l'écran, avec relecture). Les options d'un choix
   s'écrivent une par ligne : le moteur les met en colonne.
 - Une page de niveau totalise 30 à 40 minutes d'exercices.
+- **Pour le banc de tests automatique** : chaque widget `texte` porte un champ `exemple` — une réponse juste qui
+  satisfait tous ses critères et aucun interdit (le moteur l'ignore, le banc la saisit). Un widget `liste` dont les
+  `nom` des attendus ne satisfont pas leurs propres motifs porte aussi `exemple` (les lignes justes, séparées par
+  `\n`).
 
 ## Les règles du site, celles qui pèsent ici
 
@@ -61,6 +79,15 @@ tous les ateliers dans une même page : deux identifiants égaux s'y écraseraie
   5e : vélo-cargo, lampadaire intelligent ; 4e : jardin connecté (système d'arrosage) ;
   3e : station d'alerte cyclonique.
 - **Jamais la couleur seule** dans un schéma : chaque couleur est doublée d'un mot.
+- **Décisions du professeur du 24/10/2026** : le diagramme pieuvre montre ses fonctions dès la 5e — la fonction
+  principale (FP) relie deux éléments extérieurs **en passant par l'objet**, chaque fonction contrainte (FC) relie
+  l'objet à **un seul** élément ; une fonction s'écrit avec un verbe à l'infinitif. Le cahier des charges fonctionnel
+  est un tableau Fonction · Désignation · Critère · Niveau · Flexibilité, la flexibilité notée par classe : F0
+  (nulle : impératif), F1 (faible : peu négociable), F2 (moyenne : négociable), F3 (forte : très négociable). Les
+  normes et règles restent des exigences, jamais des bulles de la pieuvre. Le pilote (`donnees_interacteurs.py`,
+  exercices 3 et 6) montre la forme.
+- **Mécaniques d'exercice variées** : compléter, relier (`classer`), trouver l'intrus, corriger une erreur dans un
+  schéma, construire, justifier un choix — pas seulement des choix successifs.
 
 ## Le QCM (`q_<module>.py`)
 
@@ -82,6 +109,10 @@ tous les ateliers dans une même page : deux identifiants égaux s'y écraseraie
    `python3 _outils/controle_hierarchie.py <dossier de l'atelier>`,
    `python3 _outils/controle_regles_visibles.py <dossier de l'atelier>`,
    `python3 _outils/controle_medias.py <dossier de l'atelier>`.
-3. Ouvrir chaque page de niveau dans Chromium (Playwright) : zéro erreur JavaScript, pas de défilement
+3. `python3 banc_ateliers.py <module>` (depuis `_generation/`) : il doit finir sur « N / N tests passés ».
+   Il ouvre chaque page à 390 px, vérifie chaque exercice à vide puis rempli juste (avec les `exemple`),
+   la sauvegarde, le QCM et les synthèses.
+4. Ouvrir chaque page de niveau dans Chromium (Playwright) : zéro erreur JavaScript, pas de défilement
    horizontal à 390 px, chaque exercice vérifié une fois juste et une fois faux.
-4. Regarder chaque dessin rendu (capture PNG) : aucun texte qui déborde, aucune flèche qui vise à côté.
+5. Regarder chaque dessin rendu (capture PNG) : aucun texte qui déborde, aucune flèche qui vise à côté.
+6. Écrire au fur et à mesure : une session peut être interrompue ; un fichier écrit à moitié vaut mieux que rien.
