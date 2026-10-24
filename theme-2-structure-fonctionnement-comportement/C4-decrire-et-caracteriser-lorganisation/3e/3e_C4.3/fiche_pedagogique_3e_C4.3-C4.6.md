@@ -21,7 +21,7 @@
 | 3e_C4.3 | Décrire un OST en caractérisant sa chaîne d'information. | 1, 2, R |
 | 3e_C4.4 | Associer des grandeurs analogiques issues d'un OST à des données exploitables. | 3, R |
 | 3e_C4.5 | Représenter sous forme de données les informations de diverses natures utilisées par un OST. | 4, R |
-| 3e_C4.6 | Identifier, selon les cas, leur mise en forme, leur transmission ou leur stockage dans des fichiers (texte, image, son…). | 5, 6, R |
+| 3e_C4.6 | Identifier, selon les cas, leur mise en forme, leur transmission ou leur stockage dans des fichiers (texte, image, nombre) afin de comprendre le fonctionnement de l’OST. | 5, 6, R |
 
 ## Prérequis
 

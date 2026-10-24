@@ -18,13 +18,13 @@
 | Code | Intitulé | Activités |
 |---|---|---|
 | 5e_C4.1 | Associer des solutions techniques à une ou des fonctions techniques. | 1, R |
-| 5e_C4.2 | Identifier des constituants de la chaîne d'énergie (organisation fournie). | 2, R |
-| 5e_C4.3 | Indiquer la nature des énergies en entrée et en sortie des constituants. | 2, R |
-| 5e_C4.4 | Identifier les principaux matériaux constitutifs d'un OST. | 1, R |
-| 5e_C4.5 | Identifier des constituants de la chaîne d'information (organisation fournie). | 3, R |
-| 5e_C4.6 | Déterminer des descripteurs (types, formats) pour décrire des objets en données. | 4 |
-| 5e_C4.7 | Identifier les composants d'un réseau local et sa topologie. | 5, R |
-| 5e_C4.8 | Justifier la nécessité d'identifier les terminaux (activité débranchée + simulation). | 6 |
+| 5e_C4.2 | Identifier des constituants de la chaîne d’énergie d’un objet technique (l’organisation de la chaîne d’énergie étant fournie). | 2, R |
+| 5e_C4.3 | Indiquer la nature des énergies en entrée et en sortie des constituants de la chaîne d’énergie. | 2, R |
+| 5e_C4.4 | Identifier les principaux matériaux constitutifs d’un OST. | 1, R |
+| 5e_C4.5 | Identifier des constituants de la chaîne d’information d’un OST (l’organisation de la chaîne d’information étant fournie). | 3, R |
+| 5e_C4.6 | Déterminer des descripteurs permettant de décrire des objets sous forme de données en précisant leurs types et leurs formats. | 4 |
+| 5e_C4.7 | Identifier les composants qui constituent un réseau local (terminaux, commutateurs, liaisons filaires et sans fil (WiFi)) et sa topologie. | 5, R |
+| 5e_C4.8 | Justifier la nécessité d’identifier les terminaux pour communiquer sur un réseau local (activité débranchée et vérification par un outil de simulation). | 6 |
 
 ## Prérequis
 

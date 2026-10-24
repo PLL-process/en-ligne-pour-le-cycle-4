@@ -583,6 +583,30 @@ def main():
         cas("n°34 — " + titre, lambda h=html, a=attendu: None if (V.regle_34(h)[0] == "OK") == (a == "OK")
             else "rendu %s : %s" % V.regle_34(h))
 
+    # n°42 (24/10/2026) : la règle partait du MOT « referentiel-card », y compris dans la CSS
+    # (`body.essentiel .referentiel-card{display:none}`), et lisait le premier tableau venu.
+    # Elle accusait ainsi trois spirales « D'où tu viens » (3e_C7.4, 3e_C7.8, 3e_C8.2).
+    # Cas dans les deux sens (règle d'or n°277) : ce qu'elle doit voir, ce qu'elle doit laisser.
+    css = "<style>body.essentiel .referentiel-card{display:none}</style>"
+    spirale = ("<h2>D'où tu viens</h2><table><tr><th>Niveau</th><th>Ce qu'on te demandait</th></tr>"
+               "<tr><td>5e — 5e_C7.4</td><td>Choisir une source pour l'indicateur du hall.</td></tr></table>")
+    ref = ("<h2>Ce que dit le programme</h2><table class=\"refs\"><tr><th>Code</th>"
+           "<th>Formulation officielle (programme 2024)</th><th>Où</th></tr>"
+           "<tr><td><b>5e_C7.4</b></td><td>%s</td><td>1</td></tr></table>")
+    exacte = V.FORMULATIONS[("5e", "C7.4")]
+    tronquee = "Choisir une source d’énergie."
+    carte = ("<div class=\"card referentiel-card\"><table><tr><th>Code</th><th>Compétence</th></tr>"
+             "<tr><td>5e_C7.4</td><td>%s</td></tr></table></div>")
+    for titre, html, attendu in [
+        ("une spirale après une règle CSS n'est pas un référentiel → sans objet", css + spirale, "SANS OBJET"),
+        ("tableau « Code | Formulation officielle » tronqué → refusé", css + spirale + ref % tronquee, "ECHEC"),
+        ("le même tableau, formulation recopiée → accepté", css + spirale + ref % exacte, "OK"),
+        ("élément « referentiel-card » tronqué → refusé", carte % tronquee, "ECHEC"),
+        ("élément « referentiel-card » exact → accepté", carte % exacte, "OK"),
+    ]:
+        cas("n°42 — " + titre, lambda h=html, a=attendu: None if V.regle_42(h)[0] == a
+            else "rendu %s : %s" % V.regle_42(h))
+
     if echecs:
         for e in echecs:
             print("❌ " + e)
