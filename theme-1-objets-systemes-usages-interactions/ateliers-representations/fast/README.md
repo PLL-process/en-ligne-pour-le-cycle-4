@@ -33,6 +33,7 @@ Le programme de technologie parle de fonctions techniques, de principes techniqu
 | `theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/3e/3e_C7.1/sequence_3e_C7_capteur-confort-ny.html` | 3e | e6 |
 | `theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation/5e/5e_C4.1/sequence_5e_C4.1-C4.8_lampadaire_intelligent.html` | 5e | e1 |
 | `theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/4e/4e_C7.1/sequence_4e_C7_jardin-conception.html` | 4e | e5 |
+| `theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/5e/5e_C1.2/sequence_5e_C1.2_sainte_luce_freinage.html` | 5e | e3 |
 | `theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation/5e/5e_C4.1/sequence_5e_C4.1-C4.8_lampadaire_intelligent.html` | 5e | e2 |
 
 Ne pas modifier ces pages à la main : elles sont produites par `../_generation/` (`python3 build.py fast`, `python3 build_qcm.py fast`, `python3 gouvernance.py fast`).

@@ -92,17 +92,70 @@ def fleche_def(ident="pointe", couleur=ENCRE):
 # Diagramme des interacteurs extérieurs (diagramme pieuvre)
 # ─────────────────────────────────────────────────────────────────────────────
 def pieuvre(ident, objet, bulles, titre, desc, liens_fc=(), liens_fp=(), largeur=800, hauteur=500,
-            montrer_famille=False):
+            montrer_famille=False, rotation=0):
     """bulles : liste de dicts {nom, famille, vivant(id ou None), vide(str)}.
     liens_fc : [(index_bulle, "FC1")] trait objet–bulle étiqueté.
-    liens_fp : [(i, j, "FP1")] courbe bulle–objet–bulle étiquetée."""
+    liens_fp : [(i, j, "FP1")] courbe bulle–objet–bulle étiquetée.
+    rotation : décalage (degrés) de la première bulle, depuis le haut, dans le sens des aiguilles d'une montre.
+    Pour qu'une FP se lise comme un U (la corne de la bête à cornes), ses deux interacteurs sont VOISINS sur le cercle."""
     cx, cy = largeur / 2, hauteur / 2 + 6
     rx, ry = largeur * 0.36, hauteur * 0.36
     n = len(bulles)
     pos = []
     for k in range(n):
-        a = -math.pi / 2 + 2 * math.pi * k / n
+        a = -math.pi / 2 + math.radians(rotation) + 2 * math.pi * k / n
         pos.append((cx + rx * math.cos(a), cy + ry * math.sin(a)))
+    # Chaque interacteur est une ELLIPSE (convention du diagramme pieuvre), comme l'objet au centre.
+    BRX = 100                                         # demi-largeur d'une bulle
+    bry = 44 if montrer_famille else 35               # demi-hauteur (plus haute quand la famille s'écrit dessous)
+    ORX, ORY = 106, 52                                # l'ellipse de l'objet
+
+    def dans_bulle(x, y, dx, dy, marge=7):
+        """Le point (x+dx, y+dy), ramené dans l'ellipse de la bulle centrée en (x, y) s'il en sort."""
+        r = math.hypot(dx / (BRX - marge), dy / (bry - marge))
+        return (x + dx / r, y + dy / r) if r > 1 else (x + dx, y + dy)
+
+    def controle_fp(x1, y1, x2, y2):
+        """Point de contrôle (Bézier quadratique) d'une FP. La courbe ENTRE dans l'ellipse de l'objet et y plonge, comme
+        un U, jusqu'au point p situé à mi-chemin entre son centre et son bord, du côté des deux interacteurs (le nom de
+        l'objet s'écarte de l'autre côté) : elle se lit « passer par l'objet ». Une quadratique passe à t = 0,5 par
+        (P1 + 2q + P2) / 4 : pour qu'elle passe par p, q = 2·p − m, m étant le milieu des deux interacteurs."""
+        mx_, my_ = (x1 + x2) / 2, (y1 + y2) / 2
+        ux, uy = mx_ - cx, my_ - cy
+        d = math.hypot(ux, uy)
+        ux, uy = (ux / d, uy / d) if d > 1 else (0.0, -1.0)
+        bord = 1 / math.hypot(ux / ORX, uy / ORY)     # rayon de l'ellipse de l'objet dans cette direction
+        px_, py_ = cx + ux * 0.52 * bord, cy + uy * 0.52 * bord
+        return 2 * px_ - mx_, 2 * py_ - my_
+
+    nb_fp = {}
+    for (i, j, _l) in liens_fp:
+        nb_fp[i] = nb_fp.get(i, 0) + 1
+        nb_fp[j] = nb_fp.get(j, 0) + 1
+
+    def bouts_fp(i, j):
+        """Les deux extrémités d'une FP. Quand un interacteur porte plusieurs FP, chacune part de la moitié de sa bulle
+        tournée vers son autre interacteur : les courbes ne se superposent pas en sortant de la bulle."""
+        (x1, y1), (x2, y2) = pos[i], pos[j]
+        d = math.hypot(x2 - x1, y2 - y1) or 1
+        vx, vy = (x2 - x1) / d, (y2 - y1) / d
+        if nb_fp.get(i, 0) > 1:
+            x1, y1 = dans_bulle(x1, y1, 48 * vx, 48 * vy)
+        if nb_fp.get(j, 0) > 1:
+            x2, y2 = dans_bulle(x2, y2, -48 * vx, -48 * vy)
+        return x1, y1, x2, y2
+
+    def point_fp(i, j, t):
+        x1, y1, x2, y2 = bouts_fp(i, j)
+        qx, qy = controle_fp(x1, y1, x2, y2)
+        u = 1 - t
+        return u * u * x1 + 2 * u * t * qx + t * t * x2, u * u * y1 + 2 * u * t * qy + t * t * y2
+
+    def sens_fp(x1, y1, x2, y2):
+        ux, uy = (x1 + x2) / 2 - cx, (y1 + y2) / 2 - cy
+        d = math.hypot(ux, uy)
+        return (ux / d, uy / d) if d > 1 else (0.0, -1.0)
+
     corps = [fleche_def(ident + "-pt")]
     # Traits d'abord (sous les bulles)
     etiquettes = []
@@ -114,11 +167,8 @@ def pieuvre(ident, objet, bulles, titre, desc, liens_fc=(), liens_fp=(), largeur
     # Bulles où arrive une FP : la FC qui y va aussi est décalée, pour ne pas se confondre avec la courbe.
     arrivees_fp = {}
     for (i, j, _l) in liens_fp:
-        (x1, y1), (x2, y2) = pos[i], pos[j]
-        qx, qy = 2 * cx - (x1 + x2) / 2, 2 * cy - (y1 + y2) / 2
         for k, t in ((j, 0.9), (i, 0.1)):
-            arrivees_fp[k] = ((1 - t) ** 2 * x1 + 2 * (1 - t) * t * qx + t ** 2 * x2,
-                              (1 - t) ** 2 * y1 + 2 * (1 - t) * t * qy + t ** 2 * y2)
+            arrivees_fp[k] = point_fp(i, j, t)
     for (k, lab) in liens_fc:
         x, y = pos[k]
         x0, y0, fx = cx, cy, 0.55
@@ -128,39 +178,38 @@ def pieuvre(ident, objet, bulles, titre, desc, liens_fc=(), liens_fp=(), largeur
             px, py = -dy / d, dx / d
             ax, ay = arrivees_fp[k]
             signe = -1 if (ax - x) * px + (ay - y) * py > 0 else 1
-            hb_ = 78 if montrer_famille else 64
-            x = min(max(x + signe * 62 * px, x - 80), x + 80)   # l'extrémité reste dans la bulle
-            y = min(max(y + signe * 62 * py, y - hb_ / 2 + 6), y + hb_ / 2 - 6)
+            x, y = dans_bulle(x, y, signe * 62 * px, signe * 62 * py)   # l'extrémité reste dans la bulle
             x0, y0 = cx + signe * 26 * px, cy + signe * 26 * py
             fx = 0.42
         corps.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#b3261e" stroke-width="3.2"/>'
                      % (x, y, x0, y0))
         mx, my = (x * fx + x0 * (1 - fx)), (y * fx + y0 * (1 - fx))
         etiquettes.append((mx, my, lab, "#b3261e"))
+    # L'objet au centre, puis les courbes des FP PAR-DESSUS : on voit le trait entrer dans l'ellipse et en ressortir.
+    corps.append('<ellipse cx="%.1f" cy="%.1f" rx="%d" ry="%d" fill="#ffffff" stroke="%s" stroke-width="3"/>'
+                 % (cx, cy, ORX, ORY, ENCRE))
     for (i, j, lab) in liens_fp:
-        (x1, y1), (x2, y2) = pos[i], pos[j]
-        # Le point de contrôle est choisi pour que la courbe PASSE par le centre de l'objet.
-        qx, qy = 2 * cx - (x1 + x2) / 2, 2 * cy - (y1 + y2) / 2
+        x1, y1, x2, y2 = bouts_fp(i, j)
+        qx, qy = controle_fp(x1, y1, x2, y2)
         corps.append('<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" fill="none" stroke="#1f5fbf" '
-                     'stroke-width="3.2"/>' % (x1, y1, qx, qy, x2, y2))
-        # étiquette au quart de la courbe, côté de la seconde bulle
-        t = 0.80
-        ex_ = (1 - t) ** 2 * x1 + 2 * (1 - t) * t * qx + t ** 2 * x2
-        ey_ = (1 - t) ** 2 * y1 + 2 * (1 - t) * t * qy + t ** 2 * y2
+                     'stroke-width="3.2" stroke-linecap="round"/>' % (x1, y1, qx, qy, x2, y2))
+        # étiquette aux quatre cinquièmes de la courbe, côté de la seconde bulle
+        ex_, ey_ = point_fp(i, j, 0.80)
         etiquettes.append((ex_, ey_, lab, "#1f5fbf"))
-    # L'objet au centre
-    corps.append('<ellipse cx="%.1f" cy="%.1f" rx="98" ry="46" fill="#ffffff" stroke="%s" stroke-width="3"/>'
-                 % (cx, cy, ENCRE))
-    corps.append(texte(cx, cy, objet, car=16, taille=19, gras=True))
-    # Les bulles
+    # Le nom de l'objet s'écarte un peu du côté où plongent les FP, pour que la courbe ne le touche pas.
+    sx = sum(sens_fp(*bouts_fp(i, j))[0] for (i, j, _l) in liens_fp)
+    sy = sum(sens_fp(*bouts_fp(i, j))[1] for (i, j, _l) in liens_fp)
+    ds = math.hypot(sx, sy)
+    tx, ty = (cx - 16 * sx / ds, cy - 13 * sy / ds) if ds > 0.3 else (cx, cy)
+    corps.append(texte(tx, ty, objet, car=16, taille=19, gras=True))
+    # Les bulles : une ellipse par interacteur
     for k, b in enumerate(bulles):
         x, y = pos[k]
         fam = b.get("famille", "neutre")
         trait, fond_b, mot = FAMILLES.get(fam, FAMILLES["neutre"])
         tirets = ' stroke-dasharray="7 5"' if fam == "vide" else ""
-        hb = 78 if (montrer_famille and mot) else 64
-        corps.append('<rect x="%.1f" y="%.1f" width="186" height="%d" rx="30" fill="%s" stroke="%s" '
-                     'stroke-width="2.4"%s/>' % (x - 93, y - hb / 2, hb, fond_b, trait, tirets))
+        corps.append('<ellipse cx="%.1f" cy="%.1f" rx="%d" ry="%d" fill="%s" stroke="%s" '
+                     'stroke-width="2.4"%s/>' % (x, y, BRX, bry, fond_b, trait, tirets))
         if b.get("vivant"):
             corps.append(texte(x, y - (10 if montrer_famille and mot else 0), b.get("nom", ""), car=19, taille=14.5,
                                gras=True, ident=b["vivant"], lignes_max=2, vide=b.get("vide", "…"),
@@ -168,9 +217,10 @@ def pieuvre(ident, objet, bulles, titre, desc, liens_fc=(), liens_fp=(), largeur
         else:
             corps.append(texte(x, y - (10 if montrer_famille and mot else 0), b.get("nom", ""), car=19,
                                taille=14.5, gras=True, lignes_max=2))
-        if b.get("repere"):
-            corps.append('<circle cx="%.1f" cy="%.1f" r="12" fill="%s"/>' % (x - 88, y - 28, trait))
-            corps.append(texte(x - 88, y - 28, b["repere"], taille=13, gras=True, couleur="#ffffff", car=3))
+        if b.get("repere"):   # pastille posée sur le bord haut-gauche de l'ellipse
+            bx_, by_ = x - BRX * 0.707, y - bry * 0.707
+            corps.append('<circle cx="%.1f" cy="%.1f" r="12" fill="%s"/>' % (bx_, by_, trait))
+            corps.append(texte(bx_, by_, b["repere"], taille=13, gras=True, couleur="#ffffff", car=3))
         if montrer_famille and mot:
             corps.append(texte(x, y + 22, mot, car=30, taille=12, couleur=trait, italique=True, lignes_max=1))
     for (mx, my, lab, coul) in etiquettes:
@@ -246,16 +296,20 @@ def bete_vers_pieuvre(ident, a_qui, sur_quoi, objet, but, fp, fc, titre, desc, l
     corps.append(texte(446, 158, "devient", taille=12.5, italique=True, couleur=GRIS, car=10))
     # ── À droite : le diagramme pieuvre ──
     corps.append(texte(690, 22, "Le diagramme pieuvre", taille=15, gras=True, car=30))
-    (x1, y1), (x2, y2), (cx, cy) = (565, 80), (815, 80), (690, 196)
-    # point de contrôle choisi pour que la courbe PASSE par le centre de l'objet : la même forme que la corne
-    qx, qy = 2 * cx - (x1 + x2) / 2, 2 * cy - (y1 + y2) / 2
+    (x1, y1), (x2, y2), (cx, cy) = (565, 80), (815, 80), (690, 200)
+    # La courbe ENTRE dans l'ellipse de l'objet et y plonge en U, au-dessus de son nom (même forme que la corne) :
+    # elle passe, à t = 0,5, par le point visé p ; le point de contrôle vaut donc 2·p − milieu(bulles).
+    orx, ory = 96, 40
+    px_, py_ = cx, cy - 0.74 * ory
+    qx, qy = 2 * px_ - (x1 + x2) / 2, 2 * py_ - (y1 + y2) / 2
+    corps.append('<line x1="752" y1="186" x2="848" y2="100" stroke="%s" stroke-width="3.4"/>' % ROUGE)
+    corps.append('<ellipse cx="%d" cy="%d" rx="%d" ry="%d" fill="#ffffff" stroke="%s" stroke-width="2.6"/>'
+                 % (cx, cy, orx, ory, ENCRE))
     corps.append('<path d="M%d,%d Q%.1f,%.1f %d,%d" fill="none" stroke="%s" stroke-width="5" stroke-linecap="round"/>'
                  % (x1, y1, qx, qy, x2, y2, BLEU))
-    corps.append('<line x1="752" y1="186" x2="848" y2="100" stroke="%s" stroke-width="3.4"/>' % ROUGE)
-    corps.append('<ellipse cx="%d" cy="%d" rx="92" ry="30" fill="#ffffff" stroke="%s" stroke-width="2.6"/>' % (cx, cy, ENCRE))
-    corps.append(texte(cx, cy, objet, car=18, taille=15, gras=True, lignes_max=2))
-    for (bx, by, val) in ((x1, y1, a_qui), (x2, y2, sur_quoi)):
-        corps.append('<rect x="%d" y="%d" width="150" height="48" rx="22" fill="#e8f0ff" stroke="%s" stroke-width="2.2"/>' % (bx - 75, by - 24, BLEU))
+    corps.append(texte(cx, cy + 8, objet, car=18, taille=15, gras=True, lignes_max=2))
+    for (bx, by, val) in ((x1, y1, a_qui), (x2, y2, sur_quoi)):   # les interacteurs : des ellipses
+        corps.append('<ellipse cx="%d" cy="%d" rx="80" ry="27" fill="#e8f0ff" stroke="%s" stroke-width="2.2"/>' % (bx, by, BLEU))
         corps.append(texte(bx, by, val, car=17, taille=14.5, gras=True, lignes_max=2))
     for (ex, ey, lab, coul) in ((748, 140, "FP1", BLEU), (838, 146, "FC1", ROUGE)):
         corps.append('<rect x="%d" y="%d" width="44" height="22" rx="6" fill="#ffffff" stroke="%s"/>' % (ex - 22, ey - 11, coul))
@@ -266,7 +320,7 @@ def bete_vers_pieuvre(ident, a_qui, sur_quoi, objet, but, fp, fc, titre, desc, l
     corps.append(texte(690, 340, "FC1 : " + fc, car=50, taille=13, gras=True, couleur=ROUGE, lignes_max=2))
     corps.append(texte(690, 384, "Au bout de la FP1, le même élément porte souvent aussi la FC1.", taille=12.5, italique=True,
                        couleur=GRIS, car=70, lignes_max=1))
-    badge(x1 - 75, y1 - 24, "1"); badge(x2 - 75, y2 - 24, "2"); badge(500, 262, "3")
+    badge(x1 - 57, y1 - 19, "1"); badge(x2 - 57, y2 - 19, "2"); badge(500, 262, "3")
     # ── Légende, en mots ──
     for k, ligne in enumerate(["① « à qui ? » → la bulle d'où part la FP1",
                                "② « sur quoi ? » → la bulle où arrive la FP1",

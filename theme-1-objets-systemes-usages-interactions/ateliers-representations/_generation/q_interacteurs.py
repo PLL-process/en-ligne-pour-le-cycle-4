@@ -373,7 +373,7 @@ q(C, "Ce que relie une FC",
    "à la solution technique qu'on choisira ensuite"],
   "Une FC dit une condition que l'objet doit respecter pour s'adapter à <b>un</b> interacteur : résister à la pluie, ne pas "
   "gaspiller l'eau de la cuve…",
-  "FC : « le système doit résister à la pluie et au soleil ».",
+  "FC : « résister à la pluie et au soleil » — une fonction commence par un verbe à l'infinitif.",
   "Confondre la FC avec le service rendu.",
   ["",
    "Relier deux interacteurs en passant par l'objet, c'est la fonction principale.",
@@ -497,13 +497,13 @@ q(C, "Dans la FP et dans une FC",
    "Oui : un interacteur ne peut avoir qu'un seul trait.",
    "Oui : une personne ne peut jamais être dans une FC.",
    "Non : mais seulement parce qu'elle est la plus importante."],
-  "Le système rend service à la gardienne (FP) et doit aussi s'adapter à elle : se régler facilement (FC). Un même interacteur "
+  "Le système rend service à la gardienne (FP) et doit aussi s'adapter à elle : être facile à régler par elle (FC). Un même interacteur "
   "peut avoir plusieurs traits.",
   "Léa est servie par le vélo-cargo, et la selle doit aussi être réglable pour elle.",
   "Croire qu'un interacteur n'a qu'un trait.",
   ["",
    "Dans ce diagramme, la gardienne a bien deux traits, et c'est juste : elle est servie et elle impose une condition.",
-   "Une FC peut concerner une personne : « se régler facilement » concerne la gardienne.",
+   "Une FC peut concerner une personne : « être facile à régler par la gardienne » concerne la gardienne.",
    "L'importance n'est pas la raison : c'est parce qu'elle a deux relations différentes avec l'objet."],
   "Un interacteur peut avoir plusieurs traits.")
 
