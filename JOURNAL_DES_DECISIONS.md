@@ -22771,3 +22771,50 @@ refonte de l'activité 3 bis, qui s'appuie sur la page publique de l'Arcep. L'an
 **Ce que ce lot ne fait pas.** Les deux fichiers restent dans **l'historique git** (et dans toute copie déjà faite du dépôt) : les en effacer demanderait de
 réécrire l'historique de `main`, opération irréversible qui reste une décision de Pascal. Les mentions du cahier comme **source d'inspiration**
 (`3e_C7.1/synthese_professeur_3e_C7.html`, `4e_C9.1/CRCN_regle7.md`) restent : citer un ouvrage n'est pas le rediffuser.
+
+## 23/10/2026 — Inventaire des skills : METHODE.md, les sept skills du dépôt et SKILLS_AUDIT.md réalignés sur le journal (transversal)
+
+**D'où vient ce lot.** Pascal a fait inventorier ses skills le 23/10 (skill `inventaire-skills`, adapté de `skill-stocktake` du dépôt
+ECC — voir `SKILLS_AUDIT.md`) : 42 skills jugés contre le journal, dont les sept de `.claude/skills/`. Verdict : six sur sept « à mettre
+à jour », presque tous antérieurs aux règles qui ont changé la forme des séquences (n°298 à 311). Cause commune : `_outils/METHODE.md`,
+dont plusieurs skills se réclament, prescrivait encore les listes déroulantes et le Bonus après le bilan. Pascal a confié la suite à
+Fable (« carte blanche ») et a répondu le jour même aux questions d'usage (toutes « a »).
+
+**Ce qui change.**
+- `_outils/METHODE.md` : boutons radio dans un `<fieldset>` (n°300) ; Bonus avec champs et corrigé, clôture Bonus → Bilan → QCM à la
+  dernière séance (n°301, n°306) ; éditeur Vittascience ouvert dans un nouvel onglet (13/09) et activité en ligne annoncée (n°305) ;
+  n°66 et n°5 amendées ; branches transversales (n°302, n°307) ; liste des règles qui changent la forme de toute séquence (298-311) ;
+  sept skills du dépôt. Le document ne recopie pas le registre : le journal fait foi.
+- Les sept skills de `.claude/skills/` portent « Mis à jour le 23/10/2026 » et renvoient aux règles et aux contrôles de `_outils/` qui
+  les vérifient. Chaque preuve a été relue au journal. `qcm-html-accessible` interdit désormais de relancer `build_qcms.py` (il réécrirait
+  des QCM retouchés à la main, n°257) ; `controle-qualite-lot` ne remet plus rien « à ChatGPT » et liste les 35 contrôles ;
+  `sequence-pedagogique-engageante` suit le squelette n°306 avec la n°311.
+- `SKILLS_AUDIT.md` : tableau des sept skills avec leurs dates, skills du compte claude.ai qui parlent du dépôt, inspection d'ECC
+  consignée (plugin refusé, deux idées réécrites).
+
+**Décisions de Pascal (23/10/2026), écrites dans les skills.**
+1. QCM : **30 questions fixes**, sans tirage aléatoire.
+2. Séquence modèle : **5e_C3.1** (pilote de la n°311). À ne pas en recopier tant qu'elle n'est pas corrigée : la carte référentiel
+   (n°298), le Bonus sans corrigé (n°301), des étiquettes sans `title`, un `<summary>` au vouvoiement.
+3. Fonction absente d'une chaîne d'énergie : **en pointillés, grisée, avec sa raison** (n°131). Le générateur
+   `regenerer_chaines_energie.py` et la page station 1 de 3e_C9.2 l'écrivent encore en une phrase : à mettre en conformité.
+4. Arduino : **C++ commenté ligne par ligne et compilation Arduino CLI gardés** ; l'élève programme en blocs Vittascience.
+5. Skills du compte claude.ai : tous gardés, y compris les skills tiers (K-12, ROS 2, KiCad…), avec les révisions demandées.
+
+**Dette relevée en route, non corrigée ici (lots à venir).**
+- **n°299** : douze contrôles sortent encore à 0 sur une racine vide (liste dans `controle-qualite-lot`) ;
+  `_outils/controle_impression.mjs` construit `'file://' + abs`, forme interdite par son premier corollaire.
+- **n°304** : « L'an dernier, en 5e » dans l'atelier de planification 4e_C7.1 (page et `build_atelier.py`) et dans
+  `atelier-cao/tp_4e_socle_assemblage.html`.
+- **n°310** : trois schémas faits main non conformes (4e_C9.1 `chaines_jardin_connecte.svg`, 4e_C6.2 `schema_chaines_arrosage.svg`,
+  5e_C9.1 `barriere_cyclone_condition.svg`) ; `verifier_chaines_energie.py` ne vérifie qu'un des deux `chaines_jardin_connecte.svg`.
+- **QCM** : `build_qcms.py` est toujours exécutable et destructeur (une garde de refus serait utile) ; `fix_r.js` n'est pas réparé
+  à la source (n°149) ; six QCM ont 32 à 36 questions et un en a 11, au regard de la décision 1.
+- **À trancher** : la n°306 garde « Je serai capable de… » dans l'ouverture quand la n°298 retire le référentiel de la page élève.
+- **Documents figés** : l'imprimante 3D est encore « à confirmer » dans `inventaire_materiel.csv`, `ENVIRONNEMENT_TECHNIQUE.md`,
+  `INVENTAIRE_PEDAGOGIQUE.md` et `FEUILLE_DE_ROUTE_COMPLETION.md` (confirmée par la n°281) ; `AUDIT_COUVERTURE_PEDAGOGIQUE.md` et la
+  feuille de route présentent encore Delagrave comme à arbitrer ; l'en-tête de ce journal dit encore « les décisions de publication
+  restent à ChatGPT », et son registre central s'arrête à la n°21.
+
+**Ce qui a vraiment tourné.** `build_audit.py` et `make_index.py` régénérés ; `controle_liens.py`, `controle_atteignabilite.py` et
+`controle_medias.py` relancés (résultats dans la PR). Aucune page élève n'est modifiée par ce lot.

@@ -4,13 +4,19 @@ Méthode éprouvée sur les LOTs 01-09 du Thème 2 (juillet 2026). Trois piliers
 produire un lot · livrer et gouverner · rédiger une progression annuelle.
 Référence des décisions : `JOURNAL_DES_DECISIONS.md` à la racine du dépôt.
 
+> **Mis à jour le 23/10/2026** (inventaire des skills) : les passages contredits par
+> des règles d'or postérieures sont corrigés — n°5 et n°66 amendées, n°300, 301, 302,
+> 305, 306, 308, 310, 311, et les cadres Vittascience devenus des liens (13/09/2026).
+> Ce document ne recopie pas les 311 règles du registre : **le journal fait foi**.
+
 ## Pilier 1 — Produire un lot pédagogique premium
 
 ### Avant de concevoir (préalables obligatoires)
 
 1. **Lire le journal depuis un main à jour** (règle d'or n°10 : le journal
    fait foi) et consulter le registre central des règles d'or en tête de
-   fichier — les règles 7 à 11 sont postérieures à ce document.
+   fichier — 311 règles au 23/10/2026 ; toute règle postérieure à ce document
+   l'emporte sur lui.
 2. **Lire `_ressources-communes/`** : documents institutionnels (programme
    2024, socle, CRCN, cahiers Pix, guides matériels) et sources d'inspiration
    déposés par Pascal. Toute séquence s'y adosse ; tout CRCN déclaré suit la
@@ -25,8 +31,8 @@ Référence des décisions : `JOURNAL_DES_DECISIONS.md` à la racine du dépôt.
 4. **Skills externes = FOND, règles d'or = FORME** : les skills
    pédagogiques installés (explicit-instruction, questioning-discussion,
    curriculum-assessment-cycle4, self-regulated-learning, k12…) nourrissent
-   la conception ; en cas d'écart de forme, les règles d'or et le présent
-   document font foi.
+   la conception ; en cas d'écart de forme, le journal fait foi (n°10), puis
+   le présent document.
 
 ### Le lot est un ensemble INDIVISIBLE
 
@@ -37,7 +43,7 @@ JSON + README pointeurs pour les codes mutualisés + entrées nouveautes.json +
 mise à jour OVERLAY (audit) + entrée au journal. On ne livre jamais une
 séquence sans son QCM ni ses synthèses.
 
-### Les règles d'or (registre complet en tête du journal — 12 à ce jour)
+### Les règles d'or (registre complet en tête du journal — 311 au 23/10/2026)
 
 Les six fondatrices sont détaillées ci-dessous ; s'y ajoutent :
 **7** CRCN observable, tracé, justifié (5 éléments obligatoires) ·
@@ -49,6 +55,20 @@ travail, entrée par lot, réservation des numéros au registre) ·
 (`_outils/heritees.json`) tant que le remplaçant n'existe pas, archivage
 dans `_archive-anciennes-versions/` DANS LE MÊME COMMIT que la livraison du
 remplaçant, avec mise à jour de tous les câblages — jamais de suppression.
+
+Parmi les plus récentes, celles qui changent la forme de toute séquence :
+**298** la page élève ne se lit pas comme un référentiel (ligne d'étiquettes
+sous le titre ; le référentiel complet va dans la synthèse professeur) ·
+**299** un contrôle qui n'a rien vérifié est en panne, pas vert (codes 0/1/2) ·
+**300** une question à choix est un groupe de boutons radio dans un
+`<fieldset>`, jamais une liste déroulante · **301** le bilan clôt la séquence ·
+**304** l'ouverture ne dit pas le passé (compétences attendues + moyen de les
+rattraper) · **305** une page se lit sans Internet · **306** squelette unique
+(ouverture → séances → clôture Bonus → Bilan → QCM), contrôlé par
+`_outils/controle_squelette.mjs` · **308** un bloc ne se dessine pas, il se
+capture · **310** chaînes d'énergie : les blocs disent la fonction, les
+flèches la forme d'énergie (skill `chaine-energie-fonctionnelle`) · **311** à
+partir de la séance 2, l'ouverture est repliée dans le volet « 📖 Rappel ».
 
 ### Les 6 règles d'or fondatrices (texte complet au journal)
 
@@ -63,16 +83,20 @@ remplaçant, avec mise à jour de tous les câblages — jamais de suppression.
 4. **Blocs élève obligatoires** : titre `<h1>` + sous-titre-mission EN
    PREMIER ; bloc « 🧠 Prêt·e à t'entraîner ? » (nb de questions, nb
    d'illustrées, UN SEUL bouton QCM de toute la séquence) ; bloc « 🎁 Bonus
-   (facultatif — hors parcours obligatoire) » avec 2-3 défis ouverts sans
-   vérificateur. Les deux blocs closent la page : après le bilan, avant le
-   pied de page.
+   (facultatif — hors parcours obligatoire) » avec **champs de réponse ET
+   corrigé**. La clôture n'est visible qu'à la **dernière séance**, dans cet
+   ordre : **Bonus → Bilan → renvoi au QCM** (règles n°301 et n°306, 20 et
+   22/09/2026). *Texte d'origine remplacé : « défis sans vérificateur », « après
+   le bilan ».*
 5. **Gouvernance** : voir pilier 2.
 6. **Convention des chaînes** : information EN HAUT, énergie EN BAS, flèche
    d'ORDRE qui descend. À toute consigne de traçage, insérer l'encadré
    canonique : « 📐 Règle d'or du schéma : l'INFORMATION en haut, l'ÉNERGIE
    en bas, la flèche d'ORDRE qui descend — le cerveau au-dessus des muscles,
    la commande au-dessus de la puissance. La disposition EST une leçon :
-   elle montre qui commande, sans un mot. »
+   elle montre qui commande, sans un mot. » Le contenu des blocs suit la
+   **représentation fonctionnelle** de la règle n°310 (21/10/2026) : skill
+   `chaine-energie-fonctionnelle`.
 
 ### Titres et navigation (charte harmonisée, juillet 2026)
 
@@ -99,20 +123,25 @@ remplaçant, avec mise à jour de tous les câblages — jamais de suppression.
   mairie, club) — l'élève devient l'expert qu'on appelle. Objet-fil par
   niveau (5e : lampadaire intelligent · 4e : jardin connecté · 3e : station
   d'alerte cyclonique) : le même objet se décrit, se programme, se dépanne.
-- **Structure** : hypothèse de départ (rappelée au bilan) → séances en
-  onglets → activités avec méta (objectif/compétence/production/ressources),
-  consigne, exercices en LISTES DÉROULANTES exclusivement (DYS), aides à
-  2 niveaux, vérificateur, correction complète repliée, « à retenir »,
-  pièges classiques, critère de réussite → bilan avec auto-positionnement
-  par code → blocs règle n°4.
-- **Programmation : éditeur Vittascience EMBARQUÉ** (standard demandé par
-  Pascal, 30/07/2026) : toute séquence de programmation intègre l'éditeur
-  directement dans la page (iframe `fr.vittascience.com/python/?mode=mixed&
-  console=bottom` — blocs + Python côte à côte), jamais un simple lien
-  sortant. L'iframe étant hors de notre page, le verrou suit le motif
-  **prédire → tester dans l'éditeur → reporter** : l'élève prédit (liste
-  déroulante), exécute, puis reporte la valeur observée — une valeur que
-  seule l'exécution révèle.
+- **Structure** : le squelette unique de la règle n°306 — ouverture
+  (hypothèse de départ, rappelée au bilan ; repliée dans le volet « 📖 Rappel »
+  à partir de la séance 2, n°311) → séances en onglets → activités avec méta
+  (objectif/compétence/production/ressources), consigne, questions à choix en
+  **groupe de boutons radio dans un `<fieldset>`** dont la `<legend>` porte
+  l'énoncé — jamais en liste déroulante (règle n°300, 20/09/2026, qui remplace
+  « listes déroulantes exclusivement ») —, aides à 2 niveaux, vérificateur,
+  correction complète repliée, « à retenir », pièges classiques, critère de
+  réussite → clôture à la dernière séance : Bonus → Bilan (auto-positionnement
+  par code) → renvoi au QCM.
+- **Programmation : éditeur Vittascience OUVERT DANS UN NOUVEL ONGLET**.
+  Le cadre embarqué du 30/07/2026 a été abandonné le 13/09/2026 : le site
+  répond `X-Frame-Options: SAMEORIGIN`, le cadre restait blanc (gabarit
+  `_outils/gabarits/vittascience_embed.html`). L'activité l'annonce à son
+  début : « 🌐 Cette activité demande une connexion Internet » (règle n°305).
+  Le verrou suit le motif **prédire → tester dans l'éditeur → reporter** :
+  l'élève prédit (boutons radio, n°300), exécute, puis reporte la valeur
+  observée — une valeur que seule l'exécution révèle. Les programmes en blocs
+  montrés à l'élève sont des **captures réelles** (règle n°308).
 - **Verrous expérientiels** : les manipulations obligatoires (simulateur,
   exploration) sont tracées (`window.__exp`) et EXIGÉES par le vérificateur —
   l'élève doit vraiment faire l'expérience, pas seulement répondre.
@@ -132,11 +161,16 @@ Clé localStorage `qcm_<codes>_<slug>`.
 ### La barre qualité (non négociable)
 
 - Ne déclarer QUE des tests réellement exécutés (suite Playwright : verrous,
-  sauvegarde/restauration, liens, blocs règle n°4, zéro erreur JS).
+  sauvegarde/restauration, liens, blocs règle n°4, zéro erreur JS ; puis les
+  contrôles de `_outils/`, dont `controle_squelette.mjs`). Un contrôle qui n'a
+  rien vérifié est en panne, pas vert (règle n°299).
 - Jamais de corrigé d'évaluation sommative dans le dépôt public.
 - Très basse tension uniquement ; le secteur 230 V est nommé comme interdit.
-- Ne jamais modifier les fichiers existants d'un autre auteur : les intégrer
-  comme ressources complémentaires (référencées dans README et séquence).
+- **On ouvre le dossier avant d'y écrire** (règle n°66, premier volet). Une
+  ressource qui fonctionne ne s'écrase jamais sans laisser de trace, même
+  quand elle nous appartient : la lire, en tirer ce qui vaut, l'archiver avec
+  le motif, écrire ce qu'on a repris (n°66 amendée, 08/08/2026, qui remplace
+  « ne jamais modifier les fichiers d'un autre auteur »).
 - Statuts d'audit : dossier principal = COMPLET ET VALIDABLE ; autres codes
   de la séquence mutualisée = COUVERT + README pointeur.
 
@@ -148,6 +182,10 @@ Clé localStorage `qcm_<codes>_<slug>`.
    dossier du thème + fichiers communs (index.html, README.md,
    audit_couverture.*, nouveautes.json, JOURNAL_DES_DECISIONS.md,
    `_progressions/`). `_outils/` = Thème 2 ; `.github/` = Pascal.
+   Un lot **transversal** (plusieurs thèmes, `_outils/`, `.claude/`, fichiers
+   hors périmètre) se livre par une branche **sans motif de thème**,
+   `fable/<slug>` : la garde l'accepte avec un avertissement, et l'entrée du
+   journal dit, thème par thème, ce qui a été touché (règles n°302 et n°307).
 2. **Fichiers générés** (index, README racine, audit) : JAMAIS édités à la
    main, JAMAIS fusionnés manuellement. On régénère, toujours sur un arbre à
    jour de main : `python _outils/build_audit.py` puis
@@ -160,9 +198,12 @@ Clé localStorage `qcm_<codes>_<slug>`.
    GitHub : recharger la page ou fermer/rouvrir la PR. Un « Re-run » rejoue
    l'ANCIENNE version d'un workflow — pour prendre une correction, il faut
    un nouveau déclenchement (close/reopen).
-5. **Circuits de livraison** : Fable → bundle git déposé chez Pascal, qui
-   pousse (`git fetch <bundle> branche:branche` puis push). ChatGPT →
-   push direct + PR. Grok (sans réseau) → script autonome + JSON via Pascal.
+5. **Circuits de livraison** : Fable pousse ses branches et ouvre ses PR en
+   autonomie quand la session en a le droit (règle n°5 amendée, 30/07/2026) ;
+   sinon, plan B : colis git (bundle) déposé chez Pascal, qui le pousse avec
+   `pousser-lots.ps1` — détail dans le skill `livraison-depot-cycle4`.
+   ChatGPT → push direct + PR. Grok (sans réseau) → script autonome + JSON via
+   Pascal. La fusion reste la validation de Pascal.
 6. **Capture avant/après à 390 px** pour toute PR qui change la FORME d'un
    champ de réponse ou d'un bloc lu par l'élève (conversion n°300, refonte de
    gabarit, changement de composant). Deux images de la MÊME question, à la
@@ -227,15 +268,17 @@ réutilisent sans modification.
 
 ## Skills spécialisés du dépôt (compléments)
 
-Ce document est le chapeau ; pour le détail opérationnel, six skills
-spécialisés existent dans `.claude/skills/` du dépôt :
-`sequence-pedagogique-engageante` (gabarit de séquence),
-`qcm-html-accessible` (chaîne QCM), `controle-qualite-lot` (revue de fin de
+Ce document est le chapeau ; pour le détail opérationnel, sept skills
+spécialisés existent dans `.claude/skills/` du dépôt (mis à jour sur le
+journal le 23/10/2026 ; registre : `SKILLS_AUDIT.md`) :
+`sequence-pedagogique-engageante` (squelette de séquence),
+`qcm-html-accessible` (QCM), `controle-qualite-lot` (revue de fin de
 lot), `licences-medias-education` (médias et SOURCES_MEDIAS.md),
 `audit-couverture-cycle4` (matrice des 114 codes),
-`arduino-grove-college` (activités carte/capteurs, versions A/B/C, TBT).
-En cas d'écart entre un skill ancien et les règles d'or du journal, LE
-JOURNAL FAIT FOI (les règles n°4 et n°6 sont postérieures à ces skills).
+`arduino-grove-college` (activités carte/capteurs, versions A/B/C, TBT),
+`chaine-energie-fonctionnelle` (schémas des chaînes, règle n°310).
+En cas d'écart entre un skill et les règles d'or du journal, LE JOURNAL FAIT
+FOI.
 
 ## Code coloré façon IDE (règle d'or n°13)
 
@@ -274,11 +317,11 @@ de programmation, Bonus outillé pour les rapides.
 
 ## Blocs ↔ Python (règle d'or n°16)
 
-L'éditeur Vittascience embarqué (mode mixte) est le pont : construire en
-blocs → LIRE le Python généré ; modifier le Python → OBSERVER les blocs.
-Gabarit canonique : `_outils/gabarits/vittascience_embed.html` (barre 🧪
-voyante, CSS, suivi `__exp`) — à INJECTER à la conception, jamais à inclure
-dynamiquement (chaque page reste monofichier hors ligne).
+L'éditeur Vittascience (mode mixte), ouvert dans un nouvel onglet depuis le
+13/09/2026, est le pont : construire en blocs → LIRE le Python généré ;
+modifier le Python → OBSERVER les blocs. Gabarit canonique :
+`_outils/gabarits/vittascience_embed.html` — à INJECTER à la conception,
+jamais à inclure dynamiquement (chaque page reste monofichier hors ligne).
 
 ## Typographie française des titres et problématiques
 
