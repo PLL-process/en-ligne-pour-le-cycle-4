@@ -19,7 +19,7 @@
 | Code | Intitulé | Activités |
 |---|---|---|
 | 3e_C4.7 | Identifier et représenter la circulation d'une information dans le réseau Internet. | 1, 2, 3, R |
-| 3e_C4.8 | Justifier la nécessité d'un protocole de routage pour faire communiquer plusieurs réseaux (activité débranchée). | 4, 5, R |
+| 3e_C4.8 | Justifier la nécessité d’un protocole de routage pour faire communiquer plusieurs réseaux (activité débranchée, table de routage donnée). | 4, 5, R |
 
 ## Prérequis
 

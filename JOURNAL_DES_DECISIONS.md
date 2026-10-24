@@ -23103,3 +23103,52 @@ façon de donner le français à l'élève est de l'écrire dans la page.
 - La licence de la vidéo n'est pas lue ; une version Digiview (sans suggestions ni pistage) reste à faire sur le
   poste de Pascal.
 - n°300 (44 listes déroulantes) et n°302 (bloc des rôles commun) : inchangés, lots à part.
+
+## 24/10/2026 — Règle d'or n°42 : sur six séquences accusées, trois reformulations réelles corrigées et trois fausses alertes du détecteur (transversal : thème 2 et `_outils/`)
+
+**La demande.** Pascal a choisi le 24/10 (« 1a ») de commencer la dette relevée par `verif_regles_audit.py` par la
+n°42 : six séquences en écart (lampadaire 5e ; station d'alerte cyclonique et internet Sainte-Luce, 3e, thème 2 ;
+énergie de la station, deux stations et mât de la station, 3e, thème 3).
+
+**Ce que la mesure a montré : douter du contrôle d'abord** (leçon de l'entrée du 8 août sur la n°42). La règle
+cherchait le mot `referentiel-card` puis lisait le tableau suivant. Or 27 séquences ne portent ce mot que dans leur
+CSS (`body.essentiel .referentiel-card{display:none}`) : la règle partait de cette ligne de style et lisait le
+**premier tableau venu**. Sur 3e_C7.4, 3e_C7.8 et 3e_C8.2, c'était la spirale « 🔄 D'où tu viens » (colonnes
+« Niveau » et « Ce qu'on te demandait »), qui ne prétend pas recopier le programme : trois fausses alertes. Sur
+d'autres pages, ce hasard tombait sur le bon tableau (« 🎯 Ce que dit le programme ») et donnait un vert de chance ;
+sur quatre pages il empêchait de lire le vrai tableau.
+
+**Le détecteur corrigé** (`_outils/verif_regles_audit.py`, fonction `_carte_sur_la_page`) :
+- il cherche un **élément** qui porte la classe `referentiel-card`, plus le mot ;
+- sans carte, il reconnaît le tableau de référentiel à son **en-tête** : première colonne « Code », deuxième
+  « Formulation… », « Je serai capable de… » ou « Sous-compétence… ». Une spirale n'en est pas un ;
+- sinon, comme avant, il lit le bloc `referentiel-eleve` de la synthèse professeur (n°298).
+Effet sur le dépôt : les trois spirales ne sont plus accusées ; 3e_C8.1, 5e_C8.1 et les deux pages 3e_C9.2
+« station » passent de « sans objet » à conformes, leur vrai tableau étant enfin lu ; aucune page ne passe de
+conforme à sans objet.
+
+**Les trois vraies reformulations, recopiées de `_outils/data_competences.py`** (thème 2) :
+- `3e_C4.3` : 3e_C4.6 disait « (texte, image, son…) » et s'arrêtait là ; le programme dit « (texte, image,
+  nombre) afin de comprendre le fonctionnement de l'OST ». Corrigé dans la synthèse professeur, la fiche
+  pédagogique, et les quatre lignes « Compétence : » de la page (3e_C4.3 à 3e_C4.6, toutes reformulées).
+- `3e_C4.7` : 3e_C4.8 disait « (activité débranchée possible) » ; le programme dit « (activité débranchée, table de
+  routage donnée) ». Corrigé dans la synthèse professeur et la fiche pédagogique.
+- `5e_C4.1` (lampadaire) : le tableau « 📋 Référentiel officiel » de la page coupait six formulations sur huit à la
+  parenthèse — « (l'organisation de la chaîne d'énergie étant fournie) », « en précisant leurs types et leurs
+  formats », « (terminaux, commutateurs, liaisons filaires et sans fil (WiFi)) et sa topologie », « et vérification
+  par un outil de simulation »… C'est exactement ce que la n°42 interdit : la parenthèse fixe le niveau. Les huit
+  lignes sont recopiées, dans la page et dans la fiche pédagogique.
+
+**Laissé tel quel, et pourquoi.** Les étiquettes courtes du QCM de 3e_C4.3 (« 3e_C4.5 — Représenter en données ») sont
+des titres de rubrique, pas des formulations. Le tableau du lampadaire reste sur la page élève : le déplacer dans la
+synthèse professeur relève de la n°298 (43 séquences), pas de ce lot.
+
+**Ce qui a vraiment tourné.**
+- `verif_regles_audit.py` : **0 ✘ n°42** (6 avant) ; dépôt **234 manquements contre 240** sur `main`.
+- `tests_verif_regles_audit.py` : **61 / 61** (56 + 5 cas n°42 dans les deux sens, n°277). Contre-épreuve : le banc
+  rejoué sur l'ancien détecteur échoue à 59 / 61, sur la spirale et sur le tableau exact.
+- Bancs des lots : 3e_C4.3 23/23, 3e_C4.7 35/35, 5e_C4.1 séquence 30/30 et QCM 25/25, `tests_regle_311` 33/33 ×3.
+- `controle_formulations.py`, `controle_liens.py`, `controle_regles_visibles.py` : 0.
+- Rendu Chromium à 390 et 1280 px des deux pages élèves et des deux synthèses : pas de défilement horizontal,
+  0 erreur JS.
+- `build_audit.py` et `make_index.py` régénérés.

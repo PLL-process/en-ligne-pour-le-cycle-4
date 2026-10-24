@@ -263,11 +263,37 @@ def _synthese_professeur(chemin: pathlib.Path | None) -> pathlib.Path | None:
     return c[0] if len(c) == 1 else None
 
 
+def _carte_sur_la_page(src: str):
+    """Le tableau de référentiel d'une page pas encore migrée (n°298), ou None.
+
+    On cherche un ÉLÉMENT qui porte la classe `referentiel-card` — pas le mot : 27 pages
+    le portent seulement dans leur CSS (`body.essentiel .referentiel-card{display:none}`),
+    et l'ancienne recherche `referentiel-card.*?</table>` partait de cette règle CSS pour
+    lire le premier tableau venu (une spirale « D'où tu viens », un tableau de mesures),
+    sans jamais aller lire la synthèse professeur (constaté le 24/10/2026). Sans carte, on
+    reconnaît le tableau de référentiel à son en-tête : première colonne « Code », deuxième
+    colonne « Formulation… », « Je serai capable de… » ou « Sous-compétence… » (titres
+    « 🎯 Ce que dit le programme », « 📋 Référentiel officiel »). Une spirale « D'où tu
+    viens » (colonnes « Niveau », « Ce qu'on te demandait ») n'en est pas un.
+    """
+    m = re.search(r"<[a-z][a-z0-9]*\b[^>]*\bclass=[\"'][^\"']*\breferentiel-card\b[^>]*>.*?</table>",
+                  src, re.S)
+    if m is not None:
+        return m
+    for t in re.finditer(r"<table\b[^>]*>.*?</table>", src, re.S):
+        ths = [html.unescape(re.sub(r"<[^>]+>", "", x)).strip().lower()
+               for x in re.findall(r"<th\b[^>]*>(.*?)</th>", t.group(0), re.S)]
+        if (len(ths) > 1 and ths[0].startswith("code")
+                and re.search(r"formulation|capable|sous-comp", ths[1])):
+            return t
+    return None
+
+
 def regle_42(src: str, chemin: pathlib.Path | None = None) -> tuple[str, str]:
     # Depuis la règle d'or n°298 (15/09/2026), le référentiel vit dans la synthèse
     # professeur, dans un bloc `referentiel-eleve`. Une page pas encore migrée est
     # encore lue sur place — et la n°298 la signale.
-    m = re.search(r"referentiel-card.*?</table>", src, re.S)
+    m = _carte_sur_la_page(src)
     ou = "carte"
     if not m:
         synth = _synthese_professeur(chemin)
