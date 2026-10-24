@@ -75,7 +75,9 @@ ALIMENTER : convertisseur 12 V → 5 V ; DISTRIBUER : électrovanne). Pour la ch
    chaîne à élaborer (`3e_C4.1`), station et planche des trois cas (`3e_C9.2`), Book Train (`4e_C4.1_book-train`, figure de la page
    et QCM compris). Classe `Diagram` : `block(x, y, fonction, composant, couleur, stock=…)`, `arrow(points, couleur, étiquette, …)`,
    `section(…)`, `text(…)`. Il écrit aussi la **source draw.io** (`_generation/chaines_energie/`, `fichiers_drawio/` pour le Book Train).
-   Le vélo-cargo a son propre générateur (`5e_C3.1/_generation/figure_iso_velo_cargo/`). Ne jamais éditer un SVG produit :
+   Le vélo-cargo a son propre générateur (`5e_C3.1/_generation/figure_iso_velo_cargo/`). La bibliothèque de formes draw.io
+   des élèves (Book Train, `fichiers_drawio/bibliotheque_chaines_book-train.xml`, 34 formes) sort de
+   `_outils/generer_bibliotheque_chaines.py` (24/10/2026). Ne jamais éditer un SVG ou une bibliothèque produits :
    modifier le générateur, relancer. Tout autre schéma est fait main : voir la liste ci-dessous.
 2. **Couleurs** (les mêmes partout) : ALIMENTER `#ffd66b` · DISTRIBUER `#61dafb` · CONVERTIR `#c68ef2` · TRANSMETTRE `#81fba1` ;
    flux d'énergie en orange `#ffb454`, d'information en cyan `#61dafb`, ordre en vert pointillé `#81fba1`. La couleur ne porte

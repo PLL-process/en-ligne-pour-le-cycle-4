@@ -22818,3 +22818,80 @@ Fable (« carte blanche ») et a répondu le jour même aux questions d'usage (t
 
 **Ce qui a vraiment tourné.** `build_audit.py` et `make_index.py` régénérés ; `controle_liens.py`, `controle_atteignabilite.py` et
 `controle_medias.py` relancés (résultats dans la PR). Aucune page élève n'est modifiée par ce lot.
+
+## 24/10/2026 — Décisions de Pascal du 24/10 : ouvertures n°304 de l'atelier C7.1 et des TP CAO, pointes des Gantt, bibliothèque des chaînes (transversal)
+
+**Les six décisions** (proposées après l'inventaire des skills ; réponse de Pascal : « Oui, tout ») :
+
+1. **Historique Git** : les deux PDF Delagrave, retirés de `main` le 23/10 (arbitrage A5), restent lisibles dans
+   l'historique public. Pascal décide de **réécrire l'historique** pour les en retirer. L'opération est irréversible et
+   se fait hors d'une PR (`git filter-repo` sur un clone miroir, puis poussée forcée) : elle est **préparée** pour lui et
+   **c'est lui qui la lance**. Conséquence à connaître : tout clone existant est à refaire après coup.
+2. **Accès en écriture de l'app GitHub de Claude** : accordé sur le principe. Le 24/10, une poussée depuis la session
+   renvoie encore 403 (« Claude doesn't have GitHub access to PLL-process/en-ligne-pour-le-cycle-4 for your
+   organization ») : l'installation de l'app sur l'organisation reste à faire par Pascal. D'ici là, le colis reste le
+   plan B (n°5 amendée).
+3. **Pointes des Gantt** : la question ouverte le 05/10 est tranchée — on **allonge le dernier segment** des tracés en
+   coude pour rendre aux pointes leurs 11,7 px (fait dans ce lot).
+4. **Captures d'interface d'Onshape** : **gardées au titre de l'usage pédagogique** (voie 1 de
+   `atelier-cao/SOURCES_MEDIAS.md`, question ouverte le 31/08/2026, close).
+5. **Programme en blocs tiré d'un sujet officiel du DNB** : c'est un **document cité**, gardé dans sa forme d'origine
+   avec sa source (session, série). La n°308 (blocs = captures réelles de Vittascience) vaut pour les programmes que
+   nous écrivons ; elle ne demande pas de refaire un extrait de sujet d'examen.
+6. **Bibliothèque de formes des chaînes** : `PLL-chaines.xml`, fournie par Pascal, refaite selon la n°310, remplace
+   celle du Book Train (fait dans ce lot).
+
+### Ce qui a été fait
+
+- **Atelier de planification C7.1.** `build_atelier.py` reprend d'abord les 8 lignes qu'il avait de retard (boutons
+  « séance suivante » de la n°101) : régénérer redonnait alors les trois pages **à l'octet près**. Puis les trois
+  ouvertures passent à la n°304 : « Ce que tu as déjà fait », « L'an dernier, en 5e… », « Tu n'étais pas là l'an
+  dernier ? » et « Tu as déjà fabriqué des choses en technologie » disparaissent ; chaque page s'ouvre sur
+  « 🔄 Avant de commencer : ce que je vérifie », deux compétences à cocher (cycle 3 pour la 5e, `5e_C7.1` pour la 4e,
+  `4e_C7.1` pour la 3e), chacune avec un lien vers la synthèse élève de l'atelier, qui reçoit quatre ancres
+  (`#les-mots`, `#marge`, `#methode`, `#en-meme-temps`).
+- **Atelier CAO.** `build_tp.py` refuse désormais le champ `deja` et demande `verifier` (compétence, code, lien,
+  libellé : le point 4 de la n°304 devient une condition de génération). Les TP de 4e et de 3e s'ouvrent sur ce qui
+  devrait être en place, avec des renvois aux paliers précis des TP précédents ; chaque palier des quatre TP porte une
+  ancre `#palier-N`. Le TP de 3e (« En 5e, tu as… En 4e, tu as… ») n'était pas dans le relevé du 23/10 : il
+  enfreignait la règle de la même façon.
+- **Gantt** : `gantt_premium.py` coude à `mx = x2-16` (dernier segment de 12 px), seuil de descente simple à 20 px,
+  marqueur 11,7 × 9,1 px en `userSpaceOnUse` ; les trois SVG régénérés (8 lignes changent).
+- **Bibliothèque des chaînes** : `_outils/generer_bibliotheque_chaines.py` (nouveau) écrit 34 formes conformes aux
+  n°310, n°131 et n°6, en `html=0`, sauts de ligne `&#10;`, pointillés `fixDash=1`, et remplace
+  `fichiers_drawio/bibliotheque_chaines_book-train.xml` ainsi que sa copie incorporée dans la page. Son banc :
+  `tests_generer_bibliotheque_chaines.py`. Tutoriel de l'étape H mis à jour (menu « Ouvrir une librairie… » de
+  l'application installée, contenu réel de la palette).
+- **`controle_marqueurs.py`** : `TOLERES` vidée (les 17 fichiers du thème 3 conformes depuis le 05/10), comme demandé
+  ce jour-là.
+
+### Ce que les mesures ont appris
+
+- **L'ancienne bibliothèque du Book Train n'était pas lisible** : écrite en XML brut à l'intérieur de `<mxlibrary>`, elle
+  n'est pas du XML bien formé ; le lecteur XML du navigateur la refuse. Un élève qui suivait l'étape H a très
+  probablement buté sur une erreur. Aucun contrôle ne lisait ce fichier : le nouveau générateur le relit comme draw.io.
+- **Un saut de ligne écrit tel quel dans un attribut XML devient une espace** à la lecture (normalisation des attributs) :
+  les huit étiquettes sur deux lignes de `PLL-chaines.xml` s'affichaient sur une seule. D'où `&#10;`, et un cas du banc.
+- **draw.io multiplie un motif de pointillés par l'épaisseur du trait** : `dashPattern=8 6` sur un trait de 3 donne des
+  tirets de 24 px. `fixDash=1` garde les 8/6 px des figures du dépôt.
+
+### Contrôles
+
+- `verif_chaine.py` (planification) : 0 écart ; `tests_atelier_C7.1.py` : **48/48**.
+- Atelier CAO : `verif_chaine.py` 0 écart (empreintes recalculées) ; `tests_verif_effectifs.py` **21/21** ;
+  `verif_guidage.py` : mêmes résultats que sur `main` (deux échecs n°77 déjà présents, sans rapport).
+- Détecteur n°304 de `verif_regles_audit.py` appliqué aux cinq pages touchées (il ne lit d'ordinaire que les
+  séquences) : **5 échecs avant, 5 réussites après**. `verif_regles_audit.py` : 242 manquements, comme `main`.
+- `controle_marqueurs.py` ✅ (banc 15/15) ; `tests_generer_bibliotheque_chaines.py` **9/9** ; `regenerer_chaines_energie.py`
+  relancé sans autre changement ; `verifier_chaines_energie.py` **54/54** ; `controle_fichiers_telechargeables.py` ✅ ;
+  `controle_liens.py` : 0 lien mort, 0 ancre introuvable ; `controle_regles_visibles.py` ✅.
+- Rendu Chromium 1280 et 390 px des cinq ouvertures : 0 erreur JS, pas de défilement horizontal ; case cochée par son
+  libellé, bouton « séance suivante » vers le bon onglet, cibles `#palier-N` trouvées ; Gantt avant/après comparés ;
+  bibliothèque téléchargée depuis la page : 34 formes. Bibliothèque chargée par Pascal dans draw.io pour Windows.
+
+### Reste à faire (hors de ce lot)
+
+- Les skills claude.ai `gantt-pedagogique` et `onshape-survitamine` décrivent l'état d'avant ce lot (pointes de
+  5,72 px, champ `deja` du TP de 4e) : à mettre à jour après la fusion.
+- Dette n°310 inchangée : trois schémas faits main (4e_C9.1, 4e_C6.2, 5e_C9.1) et la fonction absente de la station
+  3e_C9.2 à dessiner en pointillés grisés (n°131).
