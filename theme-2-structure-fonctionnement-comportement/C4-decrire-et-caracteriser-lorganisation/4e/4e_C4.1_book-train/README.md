@@ -25,7 +25,7 @@ distracteur réfuté.
 | `fichiers_drawio/chaine_information_correction.drawio` | corrigé enseignant de l'act. 1.3 |
 | `fichiers_drawio/chaine_energie_a_completer.drawio` | version à trous de la chaîne d'énergie |
 | `fichiers_drawio/chaine_energie_book-train.drawio` | diagramme complet, modifiable pour un autre système |
-| `fichiers_drawio/bibliotheque_chaines_book-train.xml` | palette de blocs fonctionnels réutilisable |
+| `fichiers_drawio/bibliotheque_chaines_book-train.xml` | palette des chaînes (34 formes), écrite par `_outils/generer_bibliotheque_chaines.py` : ne pas la modifier à la main |
 
 draw.io fonctionne **hors ligne** (application installée ou `app.diagrams.net`) : aucun compte, aucun envoi
 de fichier.

@@ -12,7 +12,7 @@ aucun hotlinking.
 | `fichiers_drawio/chaine_energie_a_completer.drawio` | Source draw.io | version à trous distribuée aux élèves | CC0 | ~8 Ko |
 | `fichiers_drawio/chaine_information_a_completer.drawio` | Source draw.io | version à trous de la chaîne d'information (act. 1.3 : ajouter les capteurs) | CC0 | ~5 Ko |
 | `fichiers_drawio/chaine_information_correction.drawio` | Source draw.io | corrigé enseignant de l'act. 1.3 | CC0 | ~5 Ko |
-| `fichiers_drawio/bibliotheque_chaines_book-train.xml` | Bibliothèque de formes draw.io | palette de blocs fonctionnels réutilisable pour tout autre système étudié | CC0 | ~5 Ko |
+| `fichiers_drawio/bibliotheque_chaines_book-train.xml` | Bibliothèque de formes draw.io, écrite par `_outils/generer_bibliotheque_chaines.py` | 34 formes des chaînes d'information et d'énergie (fonctions, composant dessous, formes d'énergie, fonction absente, flèche d'ordre), réutilisables pour tout autre système étudié | CC0 | ~26 Ko |
 | `fichiers_drawio/schema_ensemble_book-train.jpg` | Image d'étude | schéma en coupe du parcours (tunnel, montée verticale, stations) — **généré avec une IA à partir de sources documentaires, puis vérifié et corrigé par l'enseignant** | production du lot | ~249 Ko |
 
 ## Deux points d'honnêteté
