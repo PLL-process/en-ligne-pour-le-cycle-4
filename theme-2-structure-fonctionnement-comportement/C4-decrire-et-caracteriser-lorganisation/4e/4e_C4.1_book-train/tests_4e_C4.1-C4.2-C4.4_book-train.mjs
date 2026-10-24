@@ -26,6 +26,11 @@
  * Sur la page d'avant, à 390 px, l'étiquette « présenter » de la dernière gare était déjà rognée par le
  * bandeau (test 32).
  *
+ * TROISIÈME PASSE (24/10/2026) : conversion n°300 des 44 listes déroulantes en groupes de boutons radio.
+ * Le test 18 coche au lieu de choisir dans une liste ; tests 33 à 38 : forme des groupes, chaque
+ * exercice se valide, billet d'entrée, réponses sauvegardées AVANT la conversion relues, tableaux
+ * empilés sur téléphone.
+ *
  * Usage, depuis ce dossier :  node tests_4e_C4.1-C4.2-C4.4_book-train.mjs
  * Playwright/Chromium requis. Sortie 0 si tout passe, 1 sinon, 2 si rien n'a pu être mesuré.
  */
@@ -169,12 +174,12 @@ ok('16 · les boutons radio, les cases du Bonus et la coche d\'ouverture revienn
    && /114 m/.test(repris.d6c) && repris.ouv1, JSON.stringify(repris));
 ok('17 · rechargement sans erreur JS', err.length === 0, err.join(' | '));
 
-/* ── 7. Une activité d'avant : le vérificateur des listes marche toujours ─── */
+/* ── 7. Une activité d'avant : le vérificateur marche toujours, en boutons radio ─ */
 await p.click('#tab-s1');
-const listes = await p.$$eval('#exo12 select[data-bonne]', ss => ss.map(s => [s.id, s.dataset.bonne]));
-for (const [id, v] of listes) await p.selectOption('#' + id, v);
+const listes = await p.$$eval('#exo12 fieldset[data-bonne]', fs => fs.map(f => [f.id, f.dataset.bonne]));
+for (const [id, v] of listes) await p.check(`#${id} input[type=radio][value="${v.replace(/"/g, '\\"')}"]`);
 await p.click('button.verif[data-exo="exo12"]');
-ok('18 · l\'activité 1.2 se valide comme avant (listes déroulantes)', new RegExp(`${listes.length}/${listes.length}`).test(await p.textContent('#res-exo12')), listes.length);
+ok('18 · l\'activité 1.2 se valide comme avant (désormais en boutons radio)', listes.length === 5 && new RegExp(`${listes.length}/${listes.length}`).test(await p.textContent('#res-exo12')), listes.length);
 
 /* ── 8. Figures 1 et 5 : le bon rappel, aucun texte caché, coupé ou recouvert ── */
 await p.evaluate(() => document.querySelectorAll('.panneau details').forEach(d => d.open = true));
@@ -261,6 +266,75 @@ ok('31 · la vidéo a sa traduction minutée : 18 phrases, chacune en français 
    !!trad && trad.n === 18 && trad.complets && trad.croissants && trad.avantQuestions, JSON.stringify(trad));
 await ctx.close();
 
+/* ── 9 quater. Règle n°300 : plus une liste déroulante, des groupes conformes ─ */
+({ ctx, p, err } = await ouvrir(1280));
+const formes = await p.evaluate(() => {
+  const groupes = [...document.querySelectorAll('fieldset.qcm-groupe')];
+  const defauts = [];
+  for (const f of groupes) {
+    const radios = [...f.querySelectorAll('input[type=radio]')];
+    const leg = f.querySelector(':scope > legend');
+    if (!leg || !leg.textContent.trim()) defauts.push(f.id + ' : sans légende');
+    if (radios.length < 2) defauts.push(f.id + ' : moins de deux propositions');
+    if (new Set(radios.map(r => r.name)).size !== 1 || radios[0].name !== f.id) defauts.push(f.id + ' : noms différents');
+    for (const r of radios) {
+      const l = document.querySelector(`label[for="${r.id}"]`);
+      if (!l || l.textContent.trim() !== r.value) defauts.push(r.id + ' : étiquette ≠ valeur');
+    }
+    if (f.dataset.bonne !== undefined && !radios.some(r => r.value === f.dataset.bonne)) defauts.push(f.id + ' : bonne réponse absente');
+  }
+  return { listes: document.querySelectorAll('select').length, groupes: groupes.length,
+           notes: groupes.filter(f => f.dataset.bonne !== undefined).length, defauts };
+});
+ok('33 · n°300 : aucune liste déroulante ; 46 groupes radio (44 convertis + 2 de la vidéo), chacun avec sa légende, un seul nom, une étiquette = la valeur, la bonne réponse parmi les propositions',
+   formes.listes === 0 && formes.groupes === 46 && formes.notes === 42 && formes.defauts.length === 0, JSON.stringify(formes).slice(0, 300));
+
+// Chaque exercice noté se valide quand on coche les bonnes réponses (lues dans data-bonne).
+const exercices = [['exo11', 6], ['exo12', 5], ['exo12df', 6], ['exo12b', 9], ['exo21', 5], ['exo32', 6]];
+const bilans = [];
+for (const [exo, n] of exercices) {
+  await ongletDe(p, '#' + exo);
+  const bonnes = await p.$$eval(`#${exo} fieldset[data-bonne]`, fs => fs.map(f => [f.id, f.dataset.bonne]));
+  for (const [id, v] of bonnes) await p.check(`#${id} input[type=radio][value="${v.replace(/"/g, '\\"')}"]`);
+  if (exo === 'exo32') {                      // le verrou : l'expérience du zoom, puis la justification
+    await p.evaluate(() => { const z = document.getElementById('zoom'); z.value = '6'; z.dispatchEvent(new Event('input', { bubbles: true })); z.dispatchEvent(new Event('change', { bubbles: true })); });
+    await p.fill('#justif', 'Je choisis le SVG : il reste net en plein écran et il est plus léger que le PNG.');
+  }
+  await p.click(`button.verif[data-exo="${exo}"]`);
+  const r = await p.textContent('#res-' + exo);
+  if (bonnes.length !== n || !new RegExp(`${n}/${n}`).test(r)) bilans.push(`${exo} : ${bonnes.length} groupes, « ${r.trim().slice(0, 40)} »`);
+}
+ok('34 · les six exercices notés se valident en cochant les bonnes réponses (1.1, 1.2, 1.3, 2.1, 3.1, 4.2)', bilans.length === 0, bilans.join(' | '));
+const signale = await p.evaluate(() => { const g = [...document.querySelectorAll('#exo11 fieldset.qcm-groupe')]; return g.length === 6 && g.every(f => f.classList.contains('bon')); });
+ok('35 · le vérificateur marque chaque groupe juste (classe « bon » sur le groupe)', signale);
+
+await p.click('#tab-s0');
+const billet = await p.$$eval('#billet fieldset[data-bonne]', fs => fs.map(f => [f.id, f.dataset.bonne]));
+for (const [id, v] of billet) await p.check(`#${id} input[type=radio][value="${v.replace(/"/g, '\\"')}"]`);
+await p.click('#btn-billet');
+const b3 = await p.textContent('#fb-billet');
+let b2 = '(billet sans boutons radio)';
+if (billet.length === 3) {                    // sur une page non convertie, rien à cocher : le test échoue sans attendre
+  await p.check('#be1 input[type=radio][data-code="b"]');
+  await p.click('#btn-billet');
+  b2 = await p.textContent('#fb-billet');
+}
+ok('36 · billet d\'entrée en boutons radio : 3 / 3 puis, une réponse changée, 2 / 3 et la capsule', billet.length === 3 && /3 \/ 3/.test(b3) && /^2 \/ 3/.test(b2.trim()), b3.slice(0, 30) + ' | ' + b2.slice(0, 30));
+await ctx.close();
+
+// Une réponse enregistrée AVANT la conversion (le code de l'option) revient, réécrite en texte.
+({ ctx, p, err } = await ouvrir(1280, { 'seq_4e_book-train': JSON.stringify({ e11a: 'commande', e12f: 'elec-ac', be1: 'fonction', ap1: '🟢 J\'y arrive seul·e', e32b: 'pixel' }) }));
+const relu = await p.evaluate(() => {
+  const coche = id => { const c = document.querySelector(`#${id} input[type=radio]:checked`); return c ? c.value : ''; };
+  return { e11a: coche('e11a'), e12f: coche('e12f'), be1: coche('be1'), ap1: coche('ap1'), e32b: coche('e32b'),
+           stocke: JSON.parse(localStorage.getItem('seq_4e_book-train')) };
+});
+ok('37 · les réponses sauvegardées avant la conversion reviennent, et sont réécrites en texte',
+   /^Le lecteur commande/.test(relu.e11a) && relu.e12f === 'électrique alternative (AC)' && /^ce qu'une partie/.test(relu.be1)
+   && relu.ap1 === '🟢 J\'y arrive seul·e' && relu.e32b === 'Se pixellise'
+   && relu.stocke.e11a === relu.e11a && relu.stocke.e12f === relu.e12f && relu.stocke.be1 === relu.be1, JSON.stringify(relu).slice(0, 300));
+await ctx.close();
+
 /* ── 10. 390 px : rien ne déborde ─────────────────────────────────────────── */
 ({ ctx, p, err } = await ouvrir(390));
 // Mesuré au chargement, onglet Départ ouvert : c'est l'état que voit l'élève en arrivant.
@@ -279,6 +353,19 @@ for (const o of ['#tab-s0', '#tab-s1', '#tab-s2', '#tab-s3', '#tab-s4']) {
   debords.push(await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth));
 }
 ok('23 · à 390 px, aucun défilement horizontal (Départ et les quatre séances)', debords.every(d => d <= 0), debords.join(','));
+const pile = [];
+for (const zone of ['#exo12df', '#exo12b']) {
+  await ongletDe(p, zone);
+  pile.push(await p.evaluate(z => {
+    const t = document.querySelector(z + ' table.tableau-qcm');
+    if (!t) return { td: 'absent', legende: false, largeur: 0 };
+    const td = t.querySelector('td'), leg = t.querySelector('fieldset legend');
+    if (!leg) return { td: getComputedStyle(td).display, legende: false, largeur: 0 };
+    return { td: getComputedStyle(td).display, legende: leg.getBoundingClientRect().width > 50, largeur: Math.round(td.getBoundingClientRect().width) };
+  }, zone));
+}
+ok('38 · à 390 px, les deux tableaux à cocher (1.3, 2.1) s\'empilent : chaque case prend la largeur, sa légende se voit',
+   pile.length === 2 && pile.every(x => x.td === 'block' && x.legende && x.largeur > 280), JSON.stringify(pile));
 await ctx.close();
 
 /* ── 11. QCM : 30 questions, aucun indice de bonne réponse déplacé ─────────── */

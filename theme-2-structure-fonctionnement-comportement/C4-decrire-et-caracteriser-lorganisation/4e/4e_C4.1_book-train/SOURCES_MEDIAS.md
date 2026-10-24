@@ -52,7 +52,9 @@ La figure incorporée dans la séquence, le SVG autonome, les fichiers draw.io c
 Poets & Writers) et son QR code.
 Rien n'est intégré ni téléchargé : la page reste lisible sans Internet, avec un repli écrit. Le bloc est posé par
 `theme-3-…/C7-…/poser_ressource.py` depuis le registre `ressources_externes.json` (entrée `res-4e-C4-1-book-train`),
-où sont notés ce qui a été vérifié et ce qui reste à vérifier (la licence). Le QR code est un SVG
+où sont notés ce qui a été vérifié et comment. **Licence lue le 24/10/2026** : licence YouTube standard (la
+description dépliée ne porte aucune ligne « Licence », que YouTube n'affiche que pour une vidéo Creative Commons) ;
+lien, QR code et intégration permis, téléchargement, découpage et réhébergement non. Le QR code est un SVG
 produit localement par `segno`, sans service distant.
 
 **Traduction de la vidéo (24/10/2026).** La vidéo a été regardée de bout en bout avec l'outil vidIQ branché par Pascal

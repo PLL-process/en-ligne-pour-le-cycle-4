@@ -519,7 +519,7 @@ OVERLAY = {
                   "en l'état : écart assumé et signalé au rapport de tests. "
                   "Complète la séance 1 du Jardin connecté (4e_C4.1).",
         accessibilite="Clavier, tous les champs étiquetés (label ou aria-label), "
-                      "SVG avec title/desc, listes déroulantes (DYS), mode essentiel, "
+                      "SVG avec title/desc, questions en boutons radio dans le flux (n°300, 24/10/2026), mode essentiel, "
                       "impression A4.",
         medias="2 SVG originaux CC0 + sources .drawio + bibliothèque de formes ; "
                "schéma d'ensemble assumé comme généré par IA puis vérifié et corrigé "
