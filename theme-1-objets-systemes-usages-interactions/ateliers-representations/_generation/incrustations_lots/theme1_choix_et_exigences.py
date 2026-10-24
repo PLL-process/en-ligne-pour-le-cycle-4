@@ -12,8 +12,9 @@ entrent dans quatre séquences du thème 1. Chaque exercice tient dans le temps 
     3e Pékin (3e_C2.1)         séance 3 : 30 → 43 min   cas d'utilisation 3e e6, en tête de l'activité 4
                                                         (+ bilan personnel facultatif 10 min : 53 min)
 
-Non posé : 4e Tsinghua (4e_C1.2, 4e_C1.3) — séances de 50, 50, 45 et 55 min ; au plus 10 min libres (séance 3),
+Non posé ici : 4e Tsinghua (4e_C1.2, 4e_C1.3) — séances de 50, 50, 45 et 55 min ; au plus 10 min libres (séance 3),
 alors que « Le besoin évolue » (besoin 4e e4) demande 12 min et la carte mentale 4e e3, 15 min.
+Repris le 24/10/2026 dans une séance 5 créée pour eux (demande du professeur) : voir `tsinghua_s5.py`.
 """
 T1 = "theme-1-objets-systemes-usages-interactions/"
 C2 = T1 + "C2-decrire-les-interactions-entre-un-objet-ou/"

@@ -129,9 +129,11 @@ OVERLAY = {
                                  "entrée : trois principes de MESURE, sans objet à manipuler. Voir "
                                  "le tableau comparatif du README de 5e_C1.2.",
         qualite="Lot « Sainte-Luce : quel frein pour les vélos du collège ? » (Fable, 09/08/2026), "
-                "REFONTE au gabarit — 3 séances, QCM 30 q dont 8 illustrées, 2 synthèses, fiche, "
+                "REFONTE au gabarit — 4 séances de 55 min depuis le 24/10/2026 (séance 4 d'exercices : "
+                "l'exercice FAST 5e « Deux principes pour une même fonction » inséré, et « Léa dans la "
+                "grande descente », la clôture y est passée), QCM 30 q dont 8 illustrées, 2 synthèses, fiche, "
                 "matrice, 2 jeux de données simulés et cohérents entre eux, 2 corrigés graphiques "
-                "CC0, suite de 36 tests exécutés et verts. PREMIER LOT DU DÉPÔT à placer une "
+                "CC0, suite de 50 tests exécutés et verts. PREMIER LOT DU DÉPÔT à placer une "
                 "manipulation d'objet réel au parcours obligatoire (règle n°58) : un vélo, cinq "
                 "minutes, trois versions A/B/C validées par le même vérificateur.",
         anomalies="Les quinze mesures sont fournies, non relevées par les élèves. Le prix d'achat "
@@ -371,7 +373,8 @@ OVERLAY = {
         statut="EXISTANT À AMÉLIORER",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
-        qualite="Séquence « Numérique, société, économie, environnement, santé » + QCM 24 q.",
+        qualite="Séquence « Numérique, société, économie, environnement, santé », 4 séances de 55 min "
+                "(l'activité 5, en séance 4, fait écrire l'argumentaire court de 3e_C1.3) + QCM 30 q.",
         anomalies="Pas de différenciation.",
         accessibilite="À vérifier.",
         medias="L'activité 3 bis s'appuie sur la page publique de l'Arcep ; l'affiche "
@@ -1791,7 +1794,7 @@ OVERLAY = {
                 "séance 1, complétion en séance 6). Versions A/B/C, QCM 36 q dont 6 illustrées, "
                 "synthèses, fiche, matrice, 3 SVG CC0, rapport de tests et "
                 "deux suites rejouables — `tests_5e_C4.1-C4.8_qcm.mjs` (25/25) et "
-                "`tests_5e_C4.1-C4.8_sequence.mjs` (46/46 depuis la séance 6, le 24/10/2026). "
+                "`tests_5e_C4.1-C4.8_sequence.mjs` (51/51 depuis la séance 6, le 24/10/2026). "
                 "Première entrée 5e du Thème 2, langue calibrée 12 ans.",
         anomalies="Quatre des huit codes n'ont que 4 questions DANS cette banque "
                   "(C4.4, C4.5, C4.7, C4.8) : ils sont renforcés ailleurs, et le "
