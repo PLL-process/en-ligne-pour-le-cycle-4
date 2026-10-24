@@ -399,8 +399,7 @@ a:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid var
 <p class="sub">Séquences, QCM et ressources classés par <strong>Thème → Compétence de fin de cycle → Niveau → Repère</strong></p>
 <p class="note"><b>Référence normative</b> : programme de technologie du cycle 4, <b>BO n°9 du 29 février 2024</b> —
 il fixe les trois thèmes, les neuf compétences de fin de cycle, les connaissances, les capacités et les repères de progressivité 5e → 4e → 3e.<br>
-<b>Codification opérationnelle</b> : les identifiants du type <code>5e_C4.1</code> sont des <b>codes de classement internes</b> à ce dépôt,
-construits à partir de ces repères de progressivité et de la structuration des cahiers Nathan 2024. <b>Ils ne figurent pas comme tels au BO.</b></p>
+<b>Codification opérationnelle</b> : les identifiants du type <code>5e_C4.1</code> servent à ranger les séquences ; <b>ils ne viennent pas du programme officiel.</b></p>
 </header>
 <div class="socle-cle"><b>Domaines du socle commun</b> — D1 : les langages pour penser et communiquer · D2 : les méthodes et outils pour apprendre ·
 D3 : la formation de la personne et du citoyen · D4 : les systèmes naturels et les systèmes techniques ·
@@ -441,7 +440,7 @@ for theme_n in [1, 2, 3]:
                     nom = fn.rsplit("/", 1)[-1]
                     genre = classer(nom)
                     lien = f'{html.escape(r)}/{html.escape(fn)}'
-                    herit = ('<span class="badge-herit" title="Ressource héritée — modernisation prévue (règle d\'or n°12)">🛠</span>'
+                    herit = ('<span class="badge-herit" title="Ressource héritée — modernisation prévue">🛠</span>'
                              if f"{r}/{fn}" in HERITEES else "")
                     if genre:
                         emoji, libelle = genre
@@ -491,7 +490,7 @@ if _rep:
 parts.append(f"""<footer>
 <p>📦 <a href="_ressources-communes/">Ressources communes</a> · 🗄️ <a href="_archive-anciennes-versions/">Archive des anciennes versions</a> · <a href="RAPPORT_MIGRATION.md">Rapport de migration</a></p>
 {LIGNE_REPERES}
-<p><b>Référence normative</b> : programme de technologie du cycle 4 — BO n°9 du 29 février 2024.<br><b>Codification opérationnelle</b> : adaptation pédagogique de ce dépôt, appuyée sur les repères de progressivité du programme et sur les cahiers Nathan 5e/4e/3e (éd. 2024). Structure générée depuis le classeur <em>Référentiel_Technologie_Cycle4_2024.xlsx</em>.<br><span style="color:#7d9bd6">Page générée automatiquement depuis <code>_outils/data_competences.py</code> — aucun intitulé n'est ressaisi à la main (règle d'or n°38).</span></p>
+<p><b>Référence normative</b> : programme de technologie du cycle 4 — BO n°9 du 29 février 2024.<br><b>Codification opérationnelle</b> : adaptation pédagogique de ce site, appuyée sur les repères de progressivité du programme et sur les cahiers Nathan 5e/4e/3e (éd. 2024). Structure générée depuis le classeur <em>Référentiel_Technologie_Cycle4_2024.xlsx</em>.<br><span style="color:#7d9bd6">Page générée automatiquement depuis <code>_outils/data_competences.py</code> — aucun intitulé n'est ressaisi à la main.</span></p>
 </footer>
 <script>
 /* ── Badges NEW automatiques (source : nouveautes.json, embarqué à la génération) ── */

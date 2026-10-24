@@ -34,6 +34,12 @@
  *   · champs et boutons sans aucun titre (book-train)          → refusé
  *   · seulement tableau de bord (n°30), avis hors parcours, pied de page → passe
  *   · un bloc hors panneau mais caché                          → passe
+ *
+ * D6, la règle n°311 (22/10/2026) — « à partir de la séance 2, l'élève voit sa séance, pas le décor » :
+ *   · volet replié dès la séance 2, ouvert à la séance 1                → passe
+ *   · volet jamais replié / sans bouton visible / déjà replié à la 1    → refusé
+ *   · page sans volet : l'ouverture visible aux séances 2+ est SIGNALÉE (pas refusée, le temps des vagues)
+ *   · volet placé après la barre d'onglets                              → exception de D5
  * Usage : node _outils/tests_controle_squelette.mjs   Sortie : 0 si tout passe.
  */
 import fs from 'fs';
@@ -171,6 +177,41 @@ for (const [nom, attendu, html] of CAS) {
     const r = await juger(ctx, f);
     const reconnue = !r.aRediger.includes('pas de métacognition');
     dire(reconnue === attendu, `${nom} → ${attendu ? 'reconnue' : 'signalée « pas de métacognition »'}${r.meta.questions.length ? ' — « ' + r.meta.questions[0].slice(0, 50) + ' »' : ''}`);
+  }
+  await nav.close();
+}
+// ── D6 (n°311) : à partir de la séance 2, l'ouverture est repliée dans le volet « Rappel » ──
+{
+  const css = '<style>.rappel-ouverture>summary{display:none}.rappel-ouverture.volet>summary{display:block}</style>';
+  // le script de la page : séance >= 2 → volet marqué et replié (ou non, selon le cas)
+  const js = (plier) => `<script>const v=document.getElementById('ouverture');
+document.querySelectorAll('.seance-tab').forEach(b=>b.addEventListener('click',()=>{const n=parseInt(b.dataset.panel.replace(/[^0-9]/g,''),10);
+v.classList.toggle('volet',n>=2);${plier ? 'v.open=n<2;' : ''}}));</script>`;
+  const volet = (ouvert = true) => `<details class="rappel-ouverture" id="ouverture"${ouvert ? ' open' : ''}><summary>📖 Rappel : la situation et ton hypothèse</summary>${OUV}${BILLET}</details>`;
+  const avec = (v, script) => page(css + v + onglets(3) + '<div>' + panneau(1, ACT(1), true) + panneau(2, ACT(2)) + panneau(3, ACT(3) + CLOT) + '</div>' + script);
+  const D6 = [
+    ['volet replié dès la séance 2, ouvert à la séance 1', false, avec(volet(), js(true)), null],
+    ['volet jamais replié : l\'ouverture reste visible à la séance 2', true, avec(volet(), js(false)), 'D6'],
+    ['volet replié mais sans bouton (summary masqué) : ouverture inaccessible', true, avec(volet(), js(true).replace("v.classList.toggle('volet',n>=2);", '')), 'D6'],
+    ['volet déjà replié à la séance 1 (ouverture absente du premier écran : D4 aussi)', true, avec(volet(false), js(true)), 'D6'],
+    ['page sans volet : ouverture visible à la séance 2 → signalée, pas refusée', false,
+      page(OUV + BILLET + onglets(3) + '<div>' + panneau(1, ACT(1), true) + panneau(2, ACT(2)) + panneau(3, ACT(3) + CLOT) + '</div>'), null],
+    ['volet placé après la barre d\'onglets : exception de D5', false,
+      page(css + onglets(3) + volet() + '<div>' + panneau(1, ACT(1), true) + panneau(2, ACT(2)) + panneau(3, ACT(3) + CLOT) + '</div>' + js(true)), null],
+  ];
+  const nav = await chromium.launch();
+  const ctx = await nav.newContext();
+  for (const [nom, attendu, html, code] of D6) {
+    const d = fs.mkdtempSync(path.join(tmp, 'd6-'));
+    const f = path.join(d, 'sequence_banc.html');
+    fs.writeFileSync(f, html);
+    const r = await juger(ctx, f);
+    const d6 = r.defauts.some((x) => x.code === 'D6');
+    const autres = r.defauts.filter((x) => x.code !== "D6" && !(x.code === "D4" && /déjà replié/.test(nom)));
+    const signale = r.signales.some((s) => /n°311 non appliquée/.test(s));
+    const attendSignal = /sans volet/.test(nom);
+    dire(d6 === attendu && autres.length === 0 && signale === attendSignal,
+      `D6 — ${nom} → ${attendu ? 'refusé' : 'passe'}${attendSignal ? ' (signalé)' : ''}${autres.length ? ' (AUTRES : ' + autres.map((a) => a.code).join(',') + ')' : ''}`);
   }
   await nav.close();
 }

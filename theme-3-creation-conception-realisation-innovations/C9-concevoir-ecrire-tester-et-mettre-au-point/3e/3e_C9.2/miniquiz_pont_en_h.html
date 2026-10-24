@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mini-quiz — Le pont en H (pour aller plus loin) · 3e_C9.2</title>
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+  h1{font-size:1.6em;text-align:center;margin:24px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin:0 0 14px}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.8em;font-weight:600;border:1px solid var(--border);background:#0d2347;color:var(--hl)}
+  main{max-width:760px;margin:0 auto}
+  .retour{display:inline-block;margin:6px 0 14px;color:var(--hl)}
+  fieldset.q{border:1px solid var(--border);border-radius:14px;background:var(--panel);margin:0 0 18px;padding:16px 18px}
+  fieldset.q legend{font-weight:700;color:#fff;padding:0 6px}
+  .opt{display:flex;align-items:flex-start;gap:10px;margin:8px 0;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--panel2);min-height:48px}
+  .opt input{margin-top:5px;width:20px;height:20px;flex:none}
+  .opt label{flex:1;cursor:pointer}
+  .opt:focus-within{outline:3px solid #fff;outline-offset:2px}
+  .btn{min-height:48px;padding:10px 20px;border-radius:12px;border:2px solid var(--hl);background:var(--btn);color:#fff;font:700 1em system-ui,sans-serif;cursor:pointer}
+  .btn:hover{background:var(--btn-h)}
+  .btn:focus-visible{outline:3px solid #fff;outline-offset:2px}
+  .btn.ghost{background:transparent}
+  .corr{margin:10px 0 0;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:#08132c}
+  .corr.bon{border-color:var(--ok)} .corr.mauvais{border-color:var(--err)}
+  .corr b.m{color:var(--ok)} .corr.mauvais b.m{color:var(--err)}
+  .corr ul{margin:6px 0 6px 1.2em;padding:0}
+  .corr .ret{color:var(--sub)}
+  #bilan{margin:14px 0;font-size:1.1em;font-weight:700;min-height:1.6em}
+  footer{max-width:760px;margin:30px auto 0;color:var(--sub);font-size:.85em;text-align:center}
+  a{color:var(--hl)} a:visited{color:#c9b3ff}
+  @media print{
+    body{background:#fff;color:#111}
+    h1,legend{color:#111} .subtitle,footer,.corr .ret{color:#333}
+    fieldset.q,.opt,.corr{background:#fff;border-color:#999}
+    .badge{background:#fff;color:#111;border-color:#999} a,.retour,a:visited{color:#0a3d91}
+    .corr b.m{color:#0a5d20} .corr.mauvais b.m{color:#a00018}
+    .btn{display:none}
+  }
+</style>
+</head>
+<body>
+<h1>Mini-quiz — Le pont en H</h1>
+<p class="subtitle">Pour aller plus loin · hors programme de cycle 4 · à part du QCM de la séquence</p>
+<div class="badges"><span class="badge">3e_C9.2</span><span class="badge">3 questions</span><span class="badge">pour s'entraîner, sans note</span></div>
+<main>
+  <a class="retour" href="sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html#pont-en-h">← Retour au pont en H de la séquence</a>
+  <form id="quiz" aria-describedby="consigne">
+    <p id="consigne">Réponds aux trois questions, puis vérifie. Chaque correction explique aussi pourquoi les autres réponses ne vont pas. Rien n'est noté ni enregistré.</p>
+    <div id="questions"></div>
+    <p><button type="submit" class="btn" id="verifier">Vérifier mes réponses</button> <button type="button" class="btn ghost" id="recommencer" hidden>Recommencer</button></p>
+    <p id="bilan" role="status" aria-live="polite"></p>
+  </form>
+</main>
+<footer>Fonctionne hors connexion · aucune donnée envoyée · rien n'est enregistré sur cet appareil.</footer>
+<script>
+"use strict";
+var QUESTIONS = [
+{n:"Changer le sens",q:"Avec A et D fermés, le moteur tourne dans un sens. Que faut-il faire pour qu'il tourne dans l'autre sens ?",
+ o:["Fermer aussi B et C, sans ouvrir A et D","Ouvrir A et D, puis fermer B et C","Fermer seulement l'interrupteur A","Fermer A et B"],r:1,
+ expl:"Le sens du courant dans le moteur décide du sens de rotation. Avec B et C fermés, le courant traverse le moteur de droite à gauche : c'est l'autre sens.",
+ d:["Les quatre interrupteurs fermés relient le + au − sans passer par le moteur : c'est un court-circuit, pas un changement de sens.","","Un seul interrupteur fermé ne crée aucun circuit complet : le moteur s'arrête.","A et B fermés relient les deux bornes du moteur au + : il ne passe aucun courant."],
+ ret:"Pour inverser, on change le sens du courant dans le moteur : A et D, ou B et C."},
+{n:"Le relais simple",q:"Pourquoi un relais simple ne suffit-il pas pour inverser le sens d'un moteur ?",
+ o:["Il est trop lent pour un moteur","Il consomme trop d'énergie","Il laisse passer le courant ou le coupe, toujours dans le même sens","Il ne sait pas alimenter un moteur"],r:2,
+ expl:"Un relais simple est un seul interrupteur commandé : passer ou ne pas passer. Il ne change jamais le sens du courant, donc le moteur tourne ou s'arrête, sans jamais repartir en arrière.",
+ d:["La vitesse du relais n'est pas en cause : un interrupteur, même rapide, ne change pas le sens du courant.","Sa consommation est faible ; ce n'est pas elle qui l'empêche d'inverser.","","Un relais peut très bien alimenter un moteur (comme un gyrophare) ; il ne sait seulement pas l'inverser."],
+ ret:"Un relais simple : passer ou couper. Un pont en H : passer dans un sens ou dans l'autre."},
+{n:"Le court-circuit",q:"Les interrupteurs A et C, du même côté, sont fermés en même temps. Que se passe-t-il ?",
+ o:["Le moteur tourne plus vite","Court-circuit : le courant va du + au − sans traverser le moteur","Le moteur change de sens","Le moteur freine doucement"],r:1,
+ expl:"A et C fermés forment un chemin direct du + au −, sans moteur : l'intensité devient énorme, les fils chauffent, la protection saute. Un vrai pont en H empêche cette situation.",
+ d:["Le courant ne passe pas par le moteur : il ne peut le faire tourner ni plus vite ni moins vite.","","Le sens change seulement quand le courant traverse le moteur dans l'autre direction, avec B et C fermés.","Rien ne freine le moteur : c'est le chemin A-C qui prend tout le courant, ce qui est dangereux."],
+ ret:"Deux interrupteurs du même côté fermés = court-circuit."}
+];
+(function(){
+  var zone = document.getElementById("questions"), form = document.getElementById("quiz");
+  var bilan = document.getElementById("bilan"), bV = document.getElementById("verifier"), bR = document.getElementById("recommencer");
+  function monte(){
+    zone.innerHTML = "";
+    QUESTIONS.forEach(function(q, i){
+      var fs = document.createElement("fieldset"); fs.className = "q"; fs.id = "q" + i;
+      var lg = document.createElement("legend"); lg.textContent = (i + 1) + ". " + q.q; fs.appendChild(lg);
+      q.o.forEach(function(t, k){
+        var d = document.createElement("div"); d.className = "opt";
+        var r = document.createElement("input"); r.type = "radio"; r.name = "q" + i; r.value = String(k); r.id = "q" + i + "_" + k;
+        var l = document.createElement("label"); l.htmlFor = r.id; l.textContent = t;
+        d.appendChild(r); d.appendChild(l); fs.appendChild(d);
+      });
+      var c = document.createElement("div"); c.id = "c" + i; c.setAttribute("aria-live", "polite"); fs.appendChild(c);
+      zone.appendChild(fs);
+    });
+    bilan.textContent = ""; bV.hidden = false; bR.hidden = true;
+  }
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var bons = 0, repondu = 0;
+    QUESTIONS.forEach(function(q, i){
+      var ch = form.querySelector('input[name="q' + i + '"]:checked'), c = document.getElementById("c" + i);
+      if (!ch){ c.innerHTML = ""; c.className = ""; return; }
+      repondu++;
+      var k = +ch.value, ok = k === q.r; if (ok) bons++;
+      var h = '<p><b class="m">' + (ok ? "✔ Bonne réponse." : "✘ Pas tout à fait.") + "</b> " + q.expl + "</p>";
+      if (!ok) h += "<p>Ta réponse (« " + q.o[k] + " ») ne va pas : " + q.d[k] + "</p>";
+      var autres = q.d.map(function(t, j){ return (j !== q.r && j !== k && t) ? "<li>« " + q.o[j] + " » : " + t + "</li>" : ""; }).join("");
+      if (autres) h += "<p>Pourquoi les autres réponses ne vont pas :</p><ul>" + autres + "</ul>";
+      h += '<p class="ret">À retenir : ' + q.ret + "</p>";
+      c.className = "corr " + (ok ? "bon" : "mauvais"); c.innerHTML = h;
+    });
+    bilan.textContent = repondu < QUESTIONS.length ? "Il reste " + (QUESTIONS.length - repondu) + " question(s) sans réponse. " + bons + " bonne(s) réponse(s) sur " + repondu + " répondue(s)." : bons + " bonne(s) réponse(s) sur " + QUESTIONS.length + (bons === QUESTIONS.length ? " : bravo !" : " : relis les corrections, puis recommence.");
+    bR.hidden = false;
+  });
+  bR.addEventListener("click", function(){ monte(); document.getElementById("q0_0").focus(); });
+  monte();
+})();
+</script>
+</body>
+</html>

@@ -385,7 +385,7 @@ q("C1.3", "Une erreur qui remonte tous les étages",
   "Une adresse mal saisie à l'inscription se retrouve sur les bulletins, les convocations "
   "et les courriers, jusqu'à ce que quelqu'un la corrige à la source.",
   "L'erreur classique est de supposer qu'un logiciel « vérifie ». Il vérifie ce qu'on lui "
-  "a demandé de vérifier, et rien d'autre (règle n°47).",
+  "a demandé de vérifier, et rien d'autre.",
   ["",
    "Le tableur calcule ce qu'on lui demande sur ce qu'on lui donne : il n'a aucun moyen "
    "de savoir qu'une valeur est physiquement impossible.",

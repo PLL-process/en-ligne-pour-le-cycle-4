@@ -389,7 +389,7 @@ Les encadrés orange préviennent des pièges. À la fin de chaque partie, une i
 """ % {"desc": html.escape(s.get("description", "")), "titre_page": html.escape(s["titre_page"]),
        "css": CSS, "css_tp": STYLE_TP + (STYLE_COTE_MATHS if any(p.get("cote_maths") for p in paliers) else ""), "titre": esc(s["titre"]), "sous": esc(s["sous_titre"]),
        "niveau": esc(s["niveau"]), "logiciel": esc(s["logiciel"]), "badges": badges,
-       "corps": corps, "pied": esc(s.get("pied", "Ressource originale du dépôt.")),
+       "corps": corps, "pied": esc(s.get("pied", "Ressource originale.")),
        # ce qui suit « Et ensuite » : traces à garder, « Prêt·e à t'entraîner », Bonus
        # (règle n°4 §4). HTML brut, ligne à ligne, tel quel — le scénario en est la
        # source ; l'écrire dans la page engendrée s'efface à la régénération (n°283).

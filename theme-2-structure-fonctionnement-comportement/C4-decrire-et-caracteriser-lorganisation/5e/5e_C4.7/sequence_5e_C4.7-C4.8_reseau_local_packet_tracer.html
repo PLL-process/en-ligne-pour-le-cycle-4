@@ -161,6 +161,18 @@
   .aide2 summary{color:#ab6000!important}
   .erreurs b{color:#eb0017!important}
 }
+  /* Règle d'or n°311 — à partir de la séance 2, l'élève voit sa séance, pas le décor.
+     Sans JavaScript le volet reste ouvert et sans titre : tout s'affiche, comme avant. */
+  .rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}   /* le gabarit habille tout details en carte : pas le volet */
+  .rappel-ouverture>summary{display:none}
+  .rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;margin:10px 0;
+    border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+  .rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+  @media print{.rappel-ouverture>summary{display:none!important}}
+  @media (max-width:480px){   /* n°311 : à 390 px, la barre d'outils tient sur deux lignes au plus */
+    .toolbar{gap:6px;margin:8px auto 12px}
+    .toolbar .btn{flex:1 1 40%;min-width:0;min-height:44px;padding:6px;font-size:.8rem;line-height:1.2}
+  }
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -231,6 +243,15 @@
 <a class="skip-link" href="#seances">Aller directement aux séances</a>
 <h1>🌐 Le réseau de la salle techno — l'enquête de l'imprimante folle</h1>
 <p class="subtitle">Thème 2 · Martinique — 5e · Atelier : composants et topologie d'un réseau local, identification des terminaux (Cisco Packet Tracer 8.2)</p>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Tout effacer</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+</div>
+<p class="saved-note" id="savedNote" aria-live="polite"></p>
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
 <div class="badges">
   <span class="badge niveau">5e — cycle 4</span>
   <span class="badge code">5e_C4.7</span>
@@ -251,27 +272,15 @@
   .gestes-outil li b:first-child{color:#ffb300}
 </style>
 
-
 <div class="identite">
   <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
   <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
   <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="5e …"></div>
   <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
 </div>
-<div class="toolbar">
-  <button class="btn" id="btnSave">💾 Sauvegarder</button>
-  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
-  <button class="btn ghost" id="btnReset">🗑 Tout effacer</button>
-  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
-</div>
+
 <p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections
 et les compléments&nbsp;: il ne reste que les consignes et les exercices. À activer si la page te paraît trop chargée.</p>
-<p class="saved-note" id="savedNote" aria-live="polite"></p>
-
-<div class="progress-wrap">
-  <span class="progress-label" id="progTxt">0 / 5 activités validées</span>
-  <div class="progress-bar" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><div id="progFill"></div></div>
-</div>
 
 <section class="card">
   <h2>🚨 La situation : l'imprimante imprime le devoir… de quelqu'un d'autre</h2>
@@ -314,8 +323,7 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
   <p><b>D2 — Les méthodes et outils pour apprendre</b>&nbsp;: composante «&nbsp;coopération et réalisation de projets&nbsp;» (binômes pilote/copilote à rôles tournants, jeu de rôles du facteur) et composante «&nbsp;outils numériques pour échanger et communiquer&nbsp;» (le simulateur, le fichier .pkt nommé et rangé).</p>
   <p><b>D4 — Les systèmes naturels et les systèmes techniques</b>&nbsp;: composante «&nbsp;conception, création, réalisation&nbsp;» (concevoir SON schéma puis le réaliser en simulation) et composante «&nbsp;démarches scientifiques&nbsp;» (hypothèse de départ, expérience du doublon, preuve par le ping).</p>
   <h4>Et le domaine 1 du socle&nbsp;?</h4>
-  <p>Le référentiel du dépôt rattache officiellement ces deux codes à <b>D2</b> et <b>D4</b>&nbsp;: c'est ce
-  qui est affiché en haut de page. Mais l'atelier mobilise aussi, en pratique, le <b>domaine 1 — Les langages
+  <p>L'atelier mobilise aussi, en pratique, le <b>domaine 1 — Les langages
   pour penser et communiquer</b>&nbsp;: on y <em>lit un schéma comme un document technique</em> (act. 2),
   on y <em>écrit une adresse dans une notation normalisée</em> (act. 4) et on y <em>rédige ce qu'un test
   prouve</em> (act. 5). C'est utile à savoir pour le remplissage du LSU&nbsp;: la trace écrite de cet
@@ -341,6 +349,12 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
     <div class="version vc"><h4>🅲 Sans ordinateur</h4><p>Jouer le réseau en vrai avec le jeu du facteur (activité 1), lire les schémas de la page (identiques à l'écran du logiciel), et utiliser le mini-simulateur d'enveloppe intégré à l'activité 5.</p></div>
   </div>
 </section>
+</details>
+
+<div class="progress-wrap">
+  <span class="progress-label" id="progTxt">0 / 5 activités validées</span>
+  <div class="progress-bar" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><div id="progFill"></div></div>
+</div>
 
 <div class="seance-tabs" id="seances" role="tablist" aria-label="Les trois séances">
   <button class="seance-tab active" role="tab" aria-selected="true" data-panel="seance1" id="tab-s1">Séance 1<br>À quoi ressemble un réseau&nbsp;?<span class="done" id="done-s1"></span></button>
@@ -512,9 +526,9 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
   <div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> nommer les composants d'un réseau local et reconnaître sa forme (sa topologie).</div>
     <div><b>Compétence&nbsp;:</b> 5e_C4.7 — Identifier les composants qui constituent un réseau local (terminaux, commutateurs, liaisons filaires et sans fil (WiFi)) et sa topologie.</div>
-    <div><b>Production&nbsp;:</b> TON schéma du réseau conçu au cahier (recette guidée, règle n°22) + description enregistrée, puis le schéma du technicien lu et vérifié.</div>
+    <div><b>Production&nbsp;:</b> TON schéma du réseau conçu au cahier (recette guidée) + description enregistrée, puis le schéma du technicien lu et vérifié.</div>
     <div><b>Ressources&nbsp;:</b> le schéma d'ensemble ci-dessous — c'est le réseau que TU construiras en séance 2.</div>
-    <div style="grid-column:1/-1"><b>Socle&nbsp;:</b> D4 «&nbsp;conception, création, réalisation&nbsp;» — CONCEVOIR son schéma avant de lire la référence (règle n°22) · D2 — organiser l'information sous forme de schéma normé (traits pleins / pointillés).</div>
+    <div style="grid-column:1/-1"><b>Socle&nbsp;:</b> D4 «&nbsp;conception, création, réalisation&nbsp;» — CONCEVOIR son schéma avant de lire la référence · D2 — organiser l'information sous forme de schéma normé (traits pleins / pointillés).</div>
   </div>
   <div class="consigne"><b>Consigne (dans cet ordre — on conçoit AVANT de regarder la solution)&nbsp;:</b>
   ① lire l'encadré «&nbsp;les 4 mots du réseau&nbsp;»&nbsp;; ② CONCEVOIR ton propre schéma au cahier en suivant la
@@ -529,7 +543,7 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
     <p style="font-size:.9em">Les appareils de la salle&nbsp;: <b>2 ordinateurs câblés · 1 portable, 1 tablette et 1 smartphone en WiFi · 1 commutateur · 1 borne WiFi (point d'accès)</b>. À toi de les organiser sur ton dessin — la recette te guide, ÉTAPE PAR ÉTAPE et en images, mais le schéma est LE TIEN.</p>
     <figure style="margin:10px 0">
       <img src="Images/conception_recette_4_etapes.svg" alt="La recette en quatre vignettes : 1, une feuille avec le commutateur seul au centre ; 2, trois traits pleins le relient à PC0, PC1 et la borne WiFi ; 3, des pointillés relient la borne au portable, à la tablette et au smartphone — jamais directement au commutateur ; 4, le schéma terminé dessine une étoile. En bas, le rappel : les positions peuvent différer, ce sont les quatre règles qui doivent être respectées." style="width:100%;border-radius:12px;border:1px solid var(--border)">
-      <figcaption style="font-size:.8em;color:var(--sub);text-align:center">Chaque étape de la recette, en image (règle n°22) — la vignette ① va avec la question 1, la ② avec la 2, etc.</figcaption>
+      <figcaption style="font-size:.8em;color:var(--sub);text-align:center">Chaque étape de la recette, en image — la vignette ① va avec la question 1, la ② avec la 2, etc.</figcaption>
     </figure>
     <div class="ligne-exo"><label for="e2c_1">🍳 Recette, étape 1 — par quel appareil COMMENCER ton dessin, et où le placer&nbsp;?</label>
       <select id="e2c_1"><option value="">— je choisis —</option>
@@ -1044,7 +1058,7 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
     document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
     document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
     tab.classList.add("active"); tab.setAttribute("aria-selected","true");
-    $(tab.dataset.panel).classList.add("active");
+    $(tab.dataset.panel).classList.add("active"); appliqueSeance(tab.dataset.panel);
     window.scrollTo({top: $("seances").offsetTop - 8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
   });
 });
@@ -1436,6 +1450,29 @@ function signale(msg){
     if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
 }
 
+
+/* Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « Rappel », replié. */
+function appliqueSeance(idPanneau){
+  const v = document.getElementById("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.open = n < 2;
+}
+let ouvertEnImpression = null;
+window.addEventListener("beforeprint", ()=>{ const v=document.getElementById("ouverture"); if(v){ ouvertEnImpression=v.open; v.open=true; } });
+window.addEventListener("afterprint", ()=>{ const v=document.getElementById("ouverture"); if(v && ouvertEnImpression!==null){ v.open=ouvertEnImpression; ouvertEnImpression=null; } });
+/* Lien direct : #ancre ouvre la séance qui la contient, sans l'ouverture. */
+function ouvrirSeanceDeLAncre(){
+  const id = decodeURIComponent(location.hash.slice(1)); if(!id) return;
+  const cible = document.getElementById(id); const pan = cible && cible.closest(".seance-panel");
+  if(!pan || pan.classList.contains("active")) return;
+  const onglet = document.querySelector('.seance-tab[data-panel="' + pan.id + '"]');
+  if(onglet) onglet.click();
+  setTimeout(()=>cible.scrollIntoView({block:"start"}), 60);
+}
+window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+appliqueSeance((document.querySelector(".seance-panel.active")||{}).id);
+ouvrirSeanceDeLAncre();
 
 /* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
 document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {

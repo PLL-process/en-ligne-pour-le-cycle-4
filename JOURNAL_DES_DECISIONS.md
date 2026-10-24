@@ -18893,7 +18893,7 @@ avant la prochaine vague.
 ## 22/09/2026 — Règle d'or n°306, « la clé de voûte » : l'architecture d'une séquence se vérifie dans ce que voit l'élève (_outils)
 
 > **Règle d'or n°306.** Une séquence suit un squelette unique, qui réunit les n°301, 302 et 304.
-> **Ouverture**, visible dès le premier écran : 🔄 Avant de commencer : ce que je vérifie → situation →
+> **Ouverture**, visible dès le premier écran *(à la séance 1 ; repliée dans le volet « 📖 Rappel » à partir de la séance 2, jamais supprimée — règle n°311, 22/10/2026)* : 🔄 Avant de commencer : ce que je vérifie → situation →
 > problématique → hypothèse de départ → référentiel « Je serai capable de… » → billet d'entrée.
 > **Séances** : chacune porte ses activités. **Clôture**, visible **seulement à la dernière séance** :
 > Bonus (champs et corrigé) → Bilan (retour à l'hypothèse, **métacognition**, « Je me
@@ -22181,3 +22181,505 @@ pas à 0 (`tests_4e_C7.mjs` et `tests_4e_C8.mjs` 38 / 41 ; les suites de séquen
 5e_C8.1 s'arrêtent sans bilan avec la commande de leur rapport) : à reprendre lot par lot. **Contrôles du dépôt** : les 22
 contrôles Python et `verif_regles_audit.py` sortent à 0 ; en navigateur, 4 sur 5 à 0 et `controle_squelette.mjs` refuse
 la même seule page que sur `main` (`3e_C1.5`, thème 1). `build_audit.py` et `make_index.py` régénérés.
+
+## 21/10/2026 — Thème 1 · 5e_C3.1 : le vélo-cargo du dessin animé passe en volume (pilote des figures isométriques, phase 1)
+
+**Demande de Pascal.** Le pilote « dessin animé par scènes » du 25/09/2026 (`#velo-cargo-pas-a-pas`, séance 1 de
+`5e_C3.1`) avait un dessin plat de profil, avec un livreur. Pascal a validé le prototype hors dépôt (six scènes, 1280 et
+390 px) et demandé l'intégration : même lecteur, mêmes phrases, mêmes couleurs, dessin en volume fait avec Anatomy.
+
+### Ce qui change
+
+- **Le dessin** : un vélo-cargo isométrique, pièces pleines, ombrage à quatre tons recalé sur la palette des pages
+  (`--bg:#050f24`). Un seul mécanisme : batterie → câble → moteur dans le moyeu de la roue arrière → roue. Le cadre, le bac,
+  le colis et la roue avant restent en tons neutres ; **une seule pièce est éclairée par scène**, de la couleur de sa notion
+  (n°120 : source `#ffd66b`, électrique `#61dafb`, moteur `#c68ef2`, mécanique `#81fba1`). Plateau → pignon : la chaîne du
+  pédalier est dessinée. La route remplace le socle.
+- **Le livreur disparaît** (option (a) du prototype : Anatomy ne dessine pas de personnage). À la scène 5, le pédalier et les
+  deux roues tournent dans leur plan ; la route défile. Rien ne bouge sans un clic de l'élève ; sous « mouvement réduit », rien
+  ne bouge (mesuré : transformation de la roue = identité aux scènes 1, 5 et 6).
+- **Le générateur** : `5e_C3.1/_generation/figure_iso_velo_cargo/build.mjs` (+ copie du kit Anatomy, `LICENSE` MIT, `VERSION` =
+  `1482e84`). Il écrit dans la séquence, entre les marqueurs `figure_iso_velo_cargo` : le dessin, le style, la ligne `CAMERA` et
+  le script de rotation ; et le schéma fixe `Images/chaine_energie_velo_cargo.svg`. Il lance l'audit d'Anatomy avant d'écrire
+  (« audit passed » ou rien n'est écrit). Relancé deux fois, mêmes empreintes (`git hash-object`) : reproductible à l'octet près.
+- **Dans la page, à la main** (une fois) : suppression des règles CSS de l'ancien dessin plat (`vpp-roue`, `vpp-cadre`,
+  `vpp-flux`, etc. et leurs animations), la caméra gagne une ordonnée de centrage, le cadre du dessin se raccourcit à la
+  scène 6 pour laisser la place aux quatre cases, le commentaire du bloc renvoie au générateur. Le lecteur (boutons, voix,
+  prédiction `#a1_pred_moteur`, sauvegarde, lien `#velo-cargo-pas-a-pas`, impression) est **inchangé**.
+- **Textes qui suivent le nouveau dessin** : l'`alt` du schéma fixe et sa description repliable (plus de livreur, plus de
+  « vu de côté »).
+- **Deux dettes payées** : `Images/chaine_energie_velo_cargo.svg` a enfin une entrée dans `SOURCES_MEDIAS.md` (avec les six
+  phrases recopiées, le code MIT du kit et les couleurs) ; et ce journal a enfin l'entrée du pilote vers lequel renvoyait le
+  commentaire du bloc (le storyboard du 25/09 figure dans `SOURCES_MEDIAS.md`).
+
+### Poids
+
+Le dessin pèse **226,4 Ko** dans la page (225 Ko pour le groupe du prototype), le schéma fixe **232,9 Ko**. C'est
+**au-dessus des 200 Ko visés, sous les 300 Ko autorisés** par la règle images du dépôt. Le style (6,0 Ko) et le script de
+rotation (3,5 Ko) s'ajoutent à la page ; l'ancien dessin plat en occupait environ 9 Ko (5,4 Ko de SVG, 3,4 Ko de règles) et
+  l'ancien schéma fixe 7,1 Ko. La séquence passe de 149 à 388 Ko. Les facettes ont déjà été réduites au
+prototype (291 → 182 Ko) ; on ne les réduit pas davantage sans perdre les rayons de la roue.
+
+### Avant / après
+
+Captures à 1280 px des six scènes, dans `5e_C3.1/_generation/figure_iso_velo_cargo/captures/` : `avant-1280-s1…s6.png` (dessin
+plat du 25/09, tel que la page de `main` l'affichait) et `apres-1280-s1…s6.png` (la page intégrée), plus `apres-390-s6.png`.
+
+### Ce qui a vraiment tourné
+
+- `node build.mjs` : **audit passed** (0 problème : jeux, terminaisons, appuis, ordre de peinture, croisements, ondulations,
+  encombrement) ; `lines.mjs` : **line ends: 0** aux six scènes, avant intégration ; zéro erreur JavaScript à 1280 et à 390 px
+  (page intégrée) ; chaque scène lue en capture à 1280 et 390 px.
+- Dépôt : `controle_hors_ligne.mjs`, `controle_impression.mjs`, `controle_contraste_liens.mjs`, `controle_squelette.mjs`,
+  `controle_debordement.py`, `controle_medias.py`, `controle_marqueurs.py` : tous verts.
+- Banc du lot `tests_5e_C3.1-C3.4_shanghai.py` : **28 / 29**. Le test rouge, « chaque zone de rédaction a sa version étayée
+  (n°31) — 10 zones / 9 étayages », **l'est déjà sur `main`** (vérifié en remettant la page d'avant) ; il n'est pas causé par
+  ce lot et n'est pas corrigé ici.
+- Mouvement réduit : mesuré, aucune rotation. Impression : le dessin animé s'efface, le schéma fixe s'imprime.
+
+### Non vérifié
+
+Le contraste du schéma fixe imprimé en niveaux de gris n'a pas été relu sur papier ; le clavier n'a pas été rejoué
+scène par scène (les boutons sont natifs et inchangés).
+
+### À RELIRE PAR PASCAL
+
+1. **L'assistance.** Sur un vélo-cargo à assistance, le moteur n'aide que si le cycliste pédale. Les six phrases le
+   simplifient (« le moteur transforme l'énergie électrique en énergie mécanique : le mouvement de la roue »). **Aucune phrase
+   n'a été changée** ; le pédalier tourne à la scène 5, ce qui montre bien le cycliste sans le dessiner.
+2. **L'`alt` du schéma fixe** : « Schéma de la chaîne d'énergie du vélo-cargo, dessiné en trois dimensions : la batterie sous
+   le porte-bagages arrière, le câble qui la relie au moteur placé dans la roue arrière, et la chaîne écrite en quatre cases
+   sous le dessin. »
+3. **La description détaillée** : « Un vélo-cargo dessiné en trois dimensions, posé sur une route, avec un colis dans le bac
+   avant. Sous le porte-bagages arrière, la batterie, allumée. […] »
+4. **Le test rouge du banc** (n°31, une zone de rédaction sans étayage) : à traiter dans un lot à part ?
+5. **Le verdict de classe** : le prompt maître demande de ne lancer la phase 2 qu'après votre verdict en classe.
+## 21/10/2026 — Règle d'or n°309 : l'élève lit le savoir, pas la fabrique (tous thèmes, index, _outils)
+
+> **Règle d'or n°309 — l'élève lit le savoir, pas la fabrique.** Dans toute page, tout SVG ou tout QCM lu par un élève :
+> **aucune trace de la démarche de conception** — ni numéro de règle, ni « convention du dépôt », ni « décision de Pascal »,
+> ni nom d'agent, de lot ou de vague. Une explication utile à l'élève se dit **en mots d'élève, sans renvoi**.
+> **Permis** : les commentaires HTML, CSS et JavaScript, le journal, les fiches pédagogiques, les synthèses professeur.
+
+### Pourquoi
+
+Un élève de 5e ne sait pas ce qu'est « la règle n°18 », ni « le dépôt » : la phrase le renvoie vers un document qu'il
+n'ouvrira jamais, et lui apprend au passage que la page qu'il lit est un produit, pas un savoir. Sous un plan de métro,
+« comme tous les plans de métro du monde (règle n°8 : le bon outil pour la bonne question) » : la première moitié est du
+cours, la parenthèse est de la fabrique. L'élève n'en a que faire ; le journal, si.
+
+### Mesuré (sur `main` à `2d250ee1`, le 21/10/2026)
+
+Balayage des 2 218 fichiers suivis (.html, .svg), commentaires et `<style>` retirés, attributs et chaînes JavaScript gardés :
+**56 numéros de règle visibles dans 18 fichiers** (11 dans l'index, 6 dans le TP modèle, 4 dans chacune de quatre séquences de
+thème 3…), auxquels s'ajoutent, relevés ensuite par le contrôle lui-même : 5 « (règle 18) » sans `n°` dans les nouveautés de
+l'index, des badges « CRCN règle 7 » et un « (règle 8) » dans trois séquences de thème 3. Hors numéros : « du dépôt » /
+« ce dépôt » (une trentaine, dont 7 dans l'index), 21 titres « recopié, pas reformulé », 4 pieds de page « v1 Grok — v2 mise en
+conformité règles … (Fable, 01/08/2026) », des « lot 3e_C9.2 » et « Lot Shanghai » (une vingtaine dans l'index), 17 champs
+`"lot": "Thème 2 — LOT 04"` dans `nouveautes.json`, un lien vers le journal.
+Environ 190 autres occurrences (« agent » de sécurité, « banc d'essai ») sont du vocabulaire de la matière, pas de la fabrique.
+
+### Ce que le lot fait (73 fichiers modifiés avant cette entrée)
+
+- **Numéros de règle** : supprimés des titres, légendes et phrases (« Le contrat de la séquence », « CRCN mobilisés »,
+  « Le concept invariant »…). Là où la phrase portait un sens, elle le garde sans le renvoi : « En haut du schéma, par
+  convention, en technologie. » ; « Plan simplifié, non à l'échelle — comme tous les plans de métro du monde. » ;
+  « chaînes d'information et d'énergie » au lieu de « chaînes de la règle n°6 ».
+- **« Codification opérationnelle »** (10 séquences, 3 infobulles, l'index) : « Ces codes servent à ranger les séquences ; ils ne
+  viennent pas du programme officiel. »
+- **« du dépôt »** : « convention » ; « format demandé » ; « les archives » ; « l'entraînement DNB » ; « dans tous les schémas
+  de ce type » ; la phrase sur le « référentiel du dépôt » (5e_C4.7, c'est le référentiel Pronote de Pascal, pas le BO) et le
+  panneau-loquet de l'activité de 4e_C6.2 (consigne pour le professeur) sont **supprimés**.
+- **Versions et agents** : les quatre pieds de page « v1 Grok — v2 … (Fable …) » et le « v1 archivée — règle d'or n°12 » du
+  jardin connecté disparaissent ; « lot 3e_C9.2 » devient « séquence 3e_C9.2 ».
+- **Titre « Ce que dit le programme — recopié, pas reformulé »** (21 séquences) : « Ce que dit le programme ». La promesse
+  reste tenue par `controle_formulations.py` (il lit le début du titre) ; sa docstring le dit.
+- **Nouveautés de l'index** : 26 entrées reformulées en ce qui change pour l'élève (plus de numéros, de lots, de « suites de
+  tests » ni de « contrôles » là où la phrase était de la coulisse), les 17 champs `lot` supprimés (le générateur ne les lisait
+  pas), le lien vers le journal retiré.
+
+### Où ça s'écrit (les générateurs d'abord)
+
+| Page produite | Source modifiée | Régénérée ? |
+|---|---|---|
+| `index.html` | `_outils/make_index.py` et `nouveautes.json` | oui, `make_index.py` + `build_audit.py` |
+| `tp_3e_boitier_etanche`, `tp_4e_socle_assemblage`, `tp_5e_de_calottes`, `tp_5e_de_onshape` | `atelier-cao/scenarios/*.json` (champ `pied`) et `_generation/build_tp.py` | oui, `build_tp.py` ; relancé avant modification, il redonnait les quatre pages à l'octet près |
+| `lexique_3e_C9.1.html` | `qcm_3e_C9.1_…` (source écrite à la main) | oui, `generer_lexique.py` ; seule la ligne visée change |
+| `qcm_5e_C1.1-C1.6_chengdu.html` | `5e_C1.1/_generation/q.py` | **non** : le gabarit a dérivé depuis la dernière génération (31 lignes de permutation A/B/C/D diffèrent) ; la phrase est changée dans `q.py` ET dans la page, à l'identique |
+| `atelier_[345]e_C7.1_planification_taches.html` | `atelier-planification/_generation/build_atelier.py` | **non** : régénérer fait perdre 8 lignes (le bouton « séance suivante » de la règle n°101, posé après coup) ; même traitement que ci-dessus |
+
+Les autres pages touchées sont écrites à la main : elles sont la source.
+
+### Ce qui a été touché, thème par thème (76 fichiers)
+
+La règle est transversale : la PR traverse les trois thèmes, `_outils/` et la racine, et n'a pas été découpée (décision de Pascal).
+
+- **Thème 1 — 14 fichiers.** Dix séquences portaient « codes de classement internes à ce dépôt » (3e_C1.1, 4e_C1.1, 5e_C1.1,
+  5e_C1.2, 3e_C2.1, 4e_C2.1, 5e_C2.1, 3e_C3.1, 4e_C3.1, 5e_C3.1) : la phrase de rangement de B1 ; infobulles « Code de
+  classement » de 3e_C2.1 et 4e_C2.1. `5e_C1.5` : titre « recopié, pas reformulé ». `5e_C1.1` : « (règle n°47) » retiré du QCM
+  Chengdu, dans `_generation/q.py` et dans la page. `carte_des_representations.html` : « par convention, en technologie. »
+- **Thème 2 — 11 fichiers.** `4e_C4.1_book-train` (6) : « convention du dépôt » dans quatre SVG de chaînes, « dans tous les
+  schémas du dépôt » dans le QCM, « format du dépôt » dans la séquence. `5e_C4.7` : trois « (règle n°22) » et la phrase sur le
+  référentiel Pronote, supprimée. `3e_C6.1`, `4e_C6.1`, `5e_C6.1` : « (règle n°18) » et « règle d'or n°18 » dans des titres.
+  `4e_C6.2` (jardin connecté) : « chaînes de la règle n°6 », « (règle d'or n°12) » du pied de page, paragraphe-loquet supprimé.
+- **Thème 3 — 44 fichiers.** `3e_C7`, `4e_C7`, `4e_C8`, `5e_C7` : pieds de page « v1 Grok — v2 … (Fable) », « CRCN mobilisés
+  (règle d'or n°7) », badges « CRCN règle 7 », « (règle 8) » ; titre « recopié, pas reformulé » dans vingt séquences de C7 et C8 ;
+  « lot 3e_C9.2 » et « les règles du lot 3e_C7.4 » ; `5e_C8.2` : synthèse élève. `3e_C9.1` : le SVG du plan de métro, la
+  séquence (« gabarit du dépôt »), `vittascience_variables.html` (« archives du dépôt »), le QCM et le lexique (« règle n°6 ! »).
+  `3e_C9.2` : « l'entraînement DNB du dépôt », la légende du SVG de chaîne. `4e_C9.1` : légende du SVG du jardin. Atelier CAO :
+  les quatre TP, par leurs scénarios JSON et `build_tp.py`. Atelier de planification : trois pages et `build_atelier.py`.
+- **Transversal — 7 fichiers.** `_outils/` : `controle_regles_visibles.py` et son banc (nouveaux), `make_index.py` (index),
+  `controle_formulations.py` (docstring). Racine : `index.html` (régénéré), `nouveautes.json` (26 entrées reformulées, 17 champs
+  `lot` retirés, un lien retiré), ce journal.
+- **Non touchés** : thème 1 sans autre fichier que ceux ci-dessus ; `_archive-anciennes-versions` ; les synthèses professeur ;
+  `tp_modele_demonstration.html` ; `fiche_maths_tp_4e_socle.html`.
+
+### Le contrôle permanent
+
+`_outils/controle_regles_visibles.py`, avec son banc `_outils/tests_controle_regles_visibles.py` (**34 contrôles**, dont les cas
+réels du jour, les cas permis, la panne d'une racine vide — règle n°299 — et le dépôt réel). Il lit le texte que l'élève voit
+ou entend (corps, attributs, `<desc>`, chaînes JavaScript des QCM), sans les commentaires HTML/CSS/JS, et refuse un numéro de
+règle (« règle n°12 », « (règle 18) », « CRCN règle 7 »), « du dépôt » / « ce dépôt » (même coupé par un retour à la ligne),
+Fable, Grok, « décision de Pascal », « journal des décisions », « garde-périmètre », un lot ou une vague (« lot 3e_C9.2 »,
+« LOT 04 », « Lot Shanghai »), « recopié, pas reformulé ». Sortie 0 / 1 / 2.
+Il ne lit pas : `_archive-anciennes-versions`, `_outils`, `_generation`, les synthèses professeur, les fiches (`fiche_*`) et les
+rapports de tests (par **début de nom** : une première version cherchait `PLAN_` n'importe où dans le nom et prenait
+`ligne_q_plan_simplifie.svg` pour un document de planification).
+**Exemptions nommées** : `memoire_boites_etiquetees.svg` — « Règle n°1 / 2 / 3 » sont les trois règles de la mémoire de
+l'ordinateur, du cours ; `tp_modele_demonstration.html` — modèle de scénario pour les auteurs de TP, ni dans l'index ni dans une
+séquence. Les « Règle 1 : une variable = une boîte » de 5e_C1.1 et 5e_C9.1 ne sont pas refusées pour la même raison (pas de `n°`).
+**Non lu** : une trace dite sans mot-clé, le texte porté par les pixels d'une capture, la clarté d'une explication.
+
+### Ce qui reste, et que ce lot ne tranche pas
+
+1. **Index, 113 volets repliés « 🔧 Fichiers de maintenance »** (un par séquence ou lot) : ils listent `SOURCES_MEDIAS.md`,
+   `manifest_lot_*.json` et `tests_*.py` par lot. C'est de la fabrique, mais elle porte un titre honnête et s'adresse au
+   professeur. Laissée.
+2. **Index, pied de page** : « Page générée automatiquement depuis `_outils/data_competences.py` — aucun intitulé n'est ressaisi à
+   la main » : le numéro de règle est retiré, la phrase reste.
+3. **Pieds de page des TP** : « images et licences dans `SOURCES_MEDIAS.md` » est gardé (attribution) ; « méthode dans
+   `GUIDAGE_PAS_A_PAS.md` », « engendrées par `calotte.py` » et « modèle de référence dans `_modele/` » sont retirés.
+4. **Nouveautés de l'index non signalées par le contrôle** mais de ton « coulisse » (« suites de tests », « audit », « contrôle ») :
+   une vingtaine d'entrées d'août ; seules les 26 qui portaient une marque de fabrique ont été reformulées.
+
+### À RELIRE PAR PASCAL
+
+1. Les **26 nouveautés réécrites** (`nouveautes.json`) : ce sont tes phrases publiques.
+2. La suppression de **tout le paragraphe** « Ce panneau est un loquet de confort… » de `sequence-jardin-connecte-arrosage-automatique.html`
+   (tu avais demandé la phrase de consigne ; la phrase voisine n'avait plus de sens seule).
+3. La phrase de remplacement des **codes de classement** : « Ces codes servent à ranger les séquences ; ils ne viennent pas du
+   programme officiel. » (et, dans l'index, « servent à ranger les séquences »).
+4. Le choix de rendre **`fiche_*`** (fiche de maths pour les collègues) et **`tp_modele_demonstration.html`** hors du champ.
+
+### Un contrôle devenu rouge par la PR du vélo-cargo, corrigé ici (commit séparé)
+
+En relançant « les contrôles qui étaient verts » sur le résultat recalé, `controle_verrous.mjs` s'est révélé rouge : la PR du
+vélo-cargo (#482) avait laissé trois crochets de test du prototype dans le script de rotation (`window.__vppCam`, `__vppPose`,
+`__vppStop`), que le contrôle lit comme des verrous ouverts au chargement (règle n°226). Je ne l'avais pas relancé avant d'ouvrir
+cette PR. Les crochets sont retirés du générateur (`figure_iso_velo_cargo/build.mjs`) et de la page, régénérée ; audit « audit passed »,
+rotation de la roue mesurée à la scène 5 et au repos à la scène 6, `controle_verrous.mjs` vert.
+
+### Notes pour plus tard (décidées le 21/10/2026, non faites ici)
+
+- Sortir de l'index public les volets « 🔧 Fichiers de maintenance » et le pied « Page générée automatiquement… ».
+- Reformuler les nouveautés d'août restées de ton « coulisse » (tests, audits, contrôles).
+- Un correctif à part pour les contrôles rouges préexistants : `controle_squelette.mjs` (3e_C1.5), `verif_guidage.py` sur
+  `tp_3e_boitier_etanche` et `tp_5e_de_calottes`, `tests_4e_C8` et `tests_4e_C7` (« 30 sans explication »), `tests_3e_C6.1` et
+  `tests_4e_C6.1`, et le test n°31 de 5e_C3.1 (10 zones / 9 étayages).
+
+## 21/10/2026 — Thème 1 · 5e_C3.1 : le vélo-cargo parle (voix de synthèse neuronale hors ligne, phase 1 bis)
+
+**Demande de Pascal.** Une voix naturelle pour le dessin animé du vélo-cargo, sans voix humaine enregistrée. Étape 1 hors du dépôt
+(`figures-iso-essais/voix-velo-cargo/`) : Piper installé, les sept voix françaises du catalogue lues une à une, quatre candidates rendues sur la
+scène 2 à deux vitesses. **Pascal a choisi `fr_FR-siwis-medium`, vitesse normale** (il a renvoyé le chemin de `siwis-medium_normale.wav`).
+
+### Les licences lues (fiche `MODEL_CARD` de chaque voix, dépôt `rhasspy/piper-voices`)
+
+| Voix | Licence | Décision |
+|---|---|---|
+| `siwis` (low, medium) | CC BY 4.0 | **retenue — voix du dessin animé** |
+| `upmc-medium` (Jessica, Pierre) | CC BY-SA 4.0 | retenue, rendue en essai, non choisie |
+| `gilles-low` | CC0 | retenue, rendue en essai, non choisie |
+| `mls-medium`, `mls_1840-low` | CC BY 4.0 | retenues, non rendues |
+| `tom-medium` | **AGPLv3** | **écartée** : licence copyleft de logiciel, hors de la liste CC0 / domaine public / CC BY / CC BY-SA |
+
+La licence lue est celle du jeu d'entraînement que la fiche déclare ; l'origine des enregistrements n'a pas été vérifiée plus loin.
+
+### Ce que le lot fait
+
+- **Six voix** : `5e_C3.1/Audio/velo-cargo_scene1…6.ogg` (Opus mono 32 kb/s) et `.mp3` (mono 48 kb/s, secours) — 351 Ko pour les douze, de 14 à 58 Ko
+  chacun. Les six phrases sont celles du tableau `SCENES`, **validées le 25/09/2026, lues mot pour mot** (`generer.py` refuse de produire si une phrase
+  de `phrases.json` n'est plus celle de la séquence). Silences du début et de la fin coupés (−45 dB), volume normalisé à −16 LUFS (mesuré : −15,4 à −16,5).
+- **Générateur** : `5e_C3.1/_generation/voix_velo_cargo/` — `phrases.json`, `voix.json` (modèle, licence, attribution, réglages), `generer.py`.
+  Piper, espeak-ng et le modèle ne sont PAS dans le dépôt (moteur GPL-3, modèle = donnée à part). **Non reproductible à l'octet** : Piper tire du
+  bruit à chaque prise et Ogg porte un numéro de flux aléatoire ; les fichiers de `Audio/` sont la référence, et si une phrase change on régénère les six.
+- **Lecteur** (`sequence_5e_C3.1-C3.4_shanghai.html`, script du dessin animé) : « Écouter » et « Regarder » jouent le fichier de la scène (Opus si le navigateur
+  le lit, MP3 sinon) ; « Regarder » enchaîne à la fin de l'audio, avec la pause de 1,2 s d'avant ; le déroulé s'arrête toujours à la scène 4 (prédiction). Un
+  fichier qui ne se lit pas : la voix française locale du navigateur prend le relais, comme avant ; ni fichier ni voix : le bouton « Écouter » disparaît
+  et le message « lis les phrases » s'affiche. Rien ne se charge ni ne se joue sans geste ; rien ne vient du réseau. Le reste du lecteur (prédiction,
+  sauvegarde, lien direct, impression) est inchangé.
+- `SOURCES_MEDIAS.md` : voix de synthèse, modèle, licence, **attribution exigée**. Nouveauté pour l'index. Index et audit régénérés.
+
+### Ce qui a vraiment tourné
+
+- Banc `tests_voix_velo_cargo.py` (nouveau) : **24 / 24** — douze fichiers de bonne forme et < 100 Ko ; phrases = séquence ; aucun fichier demandé ni joué à
+  l'ouverture ; « Écouter » joue `scene2.ogg` ; « Regarder » joue `scene1.ogg` puis passe à la scène 2 et joue son fichier ; « Pause » arrête l'enchaînement ;
+  sans Opus, le MP3 ; fichier refusé, la voix locale dit la phrase ; ni fichier ni voix, le message de repli ; aucune ressource distante ni erreur JavaScript.
+- Contrôles du dépôt : tous les `controle_*` et `tests_controle_*` verts, sauf `controle_squelette.mjs` (3e_C1.5, rouge avant ce lot) et `controle_verrous.mjs` avec son banc (rouges sur `main` depuis la PR #482 ; corrigés dans la PR #483, non fusionnée au moment de l'essai). Banc du lot : 28 / 29, le test n°31 étant rouge avant ce lot. Fusion d'essai avec la branche de la règle n°309 (#483) : contrôle n°309 vert, banc 34 / 34, banc de la voix 24 / 24 ; conflits attendus seulement sur ce journal et sur `index.html` (à régénérer).
+
+### Non vérifié
+
+- **L'écoute.** La voix n'a pas été écoutée par moi (pas d'oreille) : seule la durée, la hauteur et le volume sont mesurés. Prononciation de « vélo-cargo »,
+  des liaisons et de l'intonation des questions : à écouter en classe.
+- Lecture sous Safari, iPad ou téléphone : seul Chromium a tourné ; le MP3 de secours est là pour eux, non essayé.
+
+### À RELIRE PAR PASCAL
+
+1. **Écouter les six fichiers** (surtout les scènes 1 et 4, qui sont des questions) et dire si la vitesse convient à des 5e ; sinon régénérer les six avec `length_scale` 1,1.
+2. **Le crédit CC BY** (demandé par Pascal le 21/10/2026) : « Voix de synthèse : SIWIS (CC BY 4.0) » en petit dans la description détaillée du dessin animé ; l'attribution complète dans `SOURCES_MEDIAS.md` et `voix.json`.
+3. Le test n°31 du banc du lot (10 zones / 9 étayages) reste rouge, comme avant ; ce lot n'y touche pas.
+
+## 21/10/2026 — Thème 1 · 5e_C3.1 : la voix du vélo-cargo, liaisons corrigées et prises validées à l'oreille
+
+**Demande de Pascal.** À l'écoute, les scènes 2 et 5 étaient bonnes ; les scènes 1, 3, 4 et 6 avaient des liaisons robotiques. Trois écoutes : (1) les
+phonèmes d'espeak-ng lus phrase par phrase, chaque liaison diagnostiquée (manquante, forcée, mal enchaînée), deux variantes a et b par scène ;
+(2) trois essais c, d, e pour « lui » (scène 1) et « puis » (scène 6, deux fois) ; (3) choix final.
+
+### Les prises retenues (copiées à l'octet près dans `Audio/`, jamais régénérées)
+
+| Scène | Essai | Texte envoyé à la voix | Phonèmes envoyés |
+|---|---|---|---|
+| 1 | c | « … il **luit** faut de l'énergie. D'où vient-elle ? » | `sə- velˈokaʁɡˈo dwˈa livʁˈe œ̃ kolˈi.` · `puʁ ʁulˈe, il lyˈi fo də- lenɛʁʒˈi.` · `du vjɛ̃tˈɛl?` |
+| 2 | première | texte affiché | sortie d'espeak-ng, sans correction |
+| 3 | b | texte affiché | `də- la- batʁˈi sˈɔʁ də- lenɛʁʒi elɛktʁˈik.` · `sɛ la- fˈɔʁm də- lenɛʁʒˈi: sə- kɛlɛ, pɑ̃dˈɑ̃ kɛl vwajˈaʒ.` |
+| 4 | b | texte affiché | `lə- motˈœʁ ʁəswˈa də- lenɛʁʒi elɛktʁˈik.` · `a tɔ̃navˈi, kɛl fˈɔʁm denɛʁʒi ɑ̃ sˈɔʁ?` |
+| 5 | première | texte affiché | sortie d'espeak-ng, sans correction |
+| 6 | c | « Source, **puits** forme, **puits** transformation … » | `sˈuʁs, pyˈi fˈɔʁm, pyˈi tʁɑ̃sfɔʁmasjˈɔ̃: sɛ la- ʃˈɛn denɛʁʒˈi.` · `ʁətjˈɛ̃ la- difeʁˈɑ̃s: la- batʁˈi ɛ tyn sˈuʁs, lelɛktʁisitˈe ɛ tyn fˈɔʁm.` |
+
+Ce sont des **prises validées à l'oreille par Pascal**. Les phrases affichées à l'élève et `phrases.json` ne changent pas : seul ce qui est envoyé à la voix
+diffère. Les empreintes SHA-256 ont été relevées sur les fichiers d'essai puis sur ceux de `Audio/` : identiques ; scènes 2 et 5 inchangées.
+
+### Ce qui a été appris
+
+- espeak-ng transcrit « lui » et « puis » en deux syllabes (`lyˌi`, `pyˈi`) ; l'homophone « luit » / « puits » donne la même transcription. L'essai c a été
+  retenu **à l'oreille** : c'est la prise qui est bonne, pas la méthode qui est prouvée. Les essais d (`lɥi`, `pɥi`) et e (`lwi`, `pwi`) n'ont pas été retenus.
+- Les blocs `[[phonèmes]]` insérés dans le texte de Piper avalent la ponctuation et fusionnent les phrases : inutilisables. La méthode qui marche : remplacer
+  la fonction de phonétisation par les phonèmes d'espeak corrigés, une chaîne par phrase.
+
+### Règle posée
+
+**Toute régénération de `Audio/velo-cargo_scene*` exige une nouvelle écoute de Pascal.** `generer.py` l'écrit en tête et l'affiche à chaque lancement ; il ne
+reprend pas les corrections de liaison (il lit `dit`), donc ses prises seraient moins bonnes. Détail par scène : `voix.json`, clé `prises_validees`.
+Poids des douze fichiers : 350 Ko.
+
+## 21/10/2026 — Règle d'or n°310 : les blocs disent ce qui est fait, les flèches disent ce qui circule (chaînes d'énergie) — reprise de la PR #485
+
+> **Règle d'or n°310 — Dans une chaîne d'énergie, les blocs disent ce qui est fait, les flèches disent ce qui circule.**
+> Les blocs portent les fonctions techniques, avec un verbe ; sous chaque bloc, le composant qui la réalise ; les formes d'énergie
+> sur les flèches, entre les blocs, à l'entrée et à la sortie ; l'action finale à la sortie ; une énergie stockée s'annote sous son
+> composant. Source : Éduscol STI, *La chaîne d'énergie*.
+> **Vocabulaire fixe des fonctions** : ALIMENTER (STOCKER pour la batterie), DISTRIBUER, CONVERTIR, TRANSMETTRE. Aucun autre verbe dans un bloc ;
+> toute précision (régulation de charge, adaptation de tension, ouverture ou fermeture) passe **sous le bloc**.
+> Elle **s'ajoute** à la convention de la technologie, conservée : **l'information en haut, l'énergie en bas, l'ordre qui descend.**
+
+### Pourquoi
+
+Les schémas de chaîne d'énergie mélangeaient dans un même bloc la fonction (« DISTRIBUER »), le composant (« régulateur ») et la forme
+d'énergie (« électrique »), et les montages solaires plaçaient la batterie avant la régulation de charge. La règle sépare les trois :
+le bloc dit ce qui est fait, le dessous dit qui le fait, la flèche dit ce qui circule. Le skill de dépôt
+`.claude/skills/chaine-energie-fonctionnelle/SKILL.md` l'applique à tout nouveau schéma.
+
+### La PR #485 (Codex) relue, puis reprise aux normes Fable
+
+La #485 harmonise six schémas (lampadaire 5e, jardin 4e, alimentation à élaborer 3e, station d'alerte 3e, Book Train 4e, vélo-cargo 5e),
+avec un générateur (`_outils/regenerer_chaines_energie.py`), un vérificateur (`_outils/verifier_chaines_energie.py`), les sources draw.io et un
+compte rendu (`docs/corrections-chaines-energie-2026-10-21.md`). **Elle avait retiré la convention** « information en haut, énergie en bas, l'ordre
+descend » des titres, descriptions, repères, pieds de schéma, alt et légendes. La reprise (`fable/chaines-energie-fonctionnelles`, sans motif de
+thème dans le nom : la garde-périmètre ne s'applique pas, comme pour la règle n°309) :
+
+- **rétablit la convention par le générateur**, en la combinant avec la présentation de la règle n°310 : titre « …l'information (en haut) commande
+  l'énergie (en bas) », chaînes repérées « en haut (elle décide) » / « en bas (elle obéit) », flèche d'ordre « l'ordre descend », pied de schéma ;
+  les alt et descriptions des pages disent de nouveau « En haut… En bas… » ; `verifier_chaines_energie.py` contrôle qu'elle est dite **et dessinée** ;
+- replace des étiquettes qui se posaient sur un trait ou sous un autre bloc (lampadaire, jardin, station, Book Train, gabarit de 3e) ;
+- **applique le vocabulaire fixe** (décision de Pascal) : « RÉGULER », « ADAPTER » et « OUVRIR ou FERMER » disparaissent des blocs, de la batterie « STOCKER / ALIMENTER »
+  devient « STOCKER » ; le régulateur de charge et le convertisseur 12 V → 5 V passent sous ALIMENTER, l'électrovanne sous DISTRIBUER ; activités, corrigés et QCM suivent ;
+- **jardin : la pompe convertit l'énergie électrique en énergie mécanique** (« l'eau est mise en mouvement »), pas hydraulique : schéma, activité (options, corrigés, aides)
+  et QCM n°1, 3, 4, 5 ajustés ;
+- **rétablit l'encadré « Deux questions que le schéma soulève » et la planche des trois cas de 3e_C9.2, corrigés** : l'ordre arrive toujours sur DISTRIBUER ; le préactionneur est
+  la sortie de la carte, un transistor intégré au module (buzzer Grove) ou une carte séparée (relais, pont en H), et cela se dit sous le bloc. La planche est désormais
+  engendrée par `regenerer_chaines_energie.py` (elle était dessinée à la main, avec un texte qui en recouvrait un autre au cas 2) ;
+- QCM Book Train : « le bloc ADAPTER » (deux explications) devient « le bloc TRANSMETTRE ».
+- corrige dans 3e_C9.2 une phrase qui contredisait le schéma (« l'ordre atterrit sur CONVERTIR ») et renvoyait à un encadré retiré ;
+- liste, avant / après, chaque activité et chaque QCM changé : voir `docs/corrections-chaines-energie-2026-10-21.md` (section « Reprise Fable »).
+  **Aucun indice de bonne réponse n'a changé ; le contenu de la bonne réponse a changé à 7 questions** (lampadaire n°6, jardin n°1, 3, 4, 5,
+  station n°2, Book Train n°18). Aucun de ces QCM n'a de banque ni de générateur : le HTML est la source (seul celui du Book Train est retouché
+  par `regenerer_chaines_energie.py`, rejoué sans écart).
+- **Périmètre / garde** : `_outils/` n'est accepté que d'une branche « theme-2 » ; `docs/` n'est dans aucun périmètre ; un nom de branche sans motif
+  de thème n'est pas jugé (avertissement). La branche est donc nommée sans motif de thème.
+
+### Décisions de Pascal (21/10/2026) sur la reprise
+
+1. **3e_C9.2** : l'encadré et la planche des trois cas sont rétablis, corrigés (ci-dessus).
+2. **Fonctions** : vocabulaire fixe ALIMENTER (STOCKER pour la batterie), DISTRIBUER, CONVERTIR, TRANSMETTRE ; ADAPTER, RÉGULER, OUVRIR/FERMER sortent des blocs.
+3. **Vélo-cargo** : le bandeau de la #485 est gardé ; la branche locale `fable/theme-1/bandeau-fonctionnel-velo-cargo` est abandonnée. L'audio de la scène 6 de la #485
+   est **identique à l'octet** (MP3 et Ogg) à celui que Pascal a écouté et validé : rien n'est remplacé, la mention « non écoutée » est retirée.
+4. **Jardin** : la pompe convertit en énergie mécanique.
+
+Restent ouverts : `3e_C9.2/generer_les_quatre_pages.py` est en panne sur `main` (« repère introuvable : 🎁 Bonus ») : les pages découpées se maintiennent à la main.
+
+### Ce qui a vraiment tourné (reprise de la #485)
+
+- **Deux contrôles rouges sur la #485 telle quelle, verts après reprise** : `controle_banque_qcm.py` (3 lignes « Banque » fausses : 29 questions au lieu de 30,
+  26 au lieu de 30, 35 au lieu de 36) et `controle_effectifs_qcm.py` (`manifest_lot_05.json` : 6 illustrées annoncées, 5 comptées). Cause : les 6 questions
+  réécrites par la #485 étaient des blocs JSON indentés (clés entre guillemets) dans des banques écrites au format compact du dépôt ; les deux contrôles
+  lisent `{c:"…"` et `img:{`. Les 6 questions sont remises au format du dépôt, **contenu identique** (comparaison des tableaux à clés triées, avant / après).
+- `verifier_chaines_energie.py` : **45 / 45** (44 / 45 avant : il comparait des octets, et sous Windows le SVG du vélo sort en CRLF alors que le générateur écrit
+  en LF ; il compare maintenant sans les fins de ligne). Il contrôle en plus que la convention est dite et dessinée.
+- Contrôles du dépôt : les 24 contrôles Python verts (dont n°309 et son banc 34 / 34) ; Node : contraste, impression, verrous, hors ligne verts.
+  **`controle_squelette.mjs` reste rouge** sur `3e_C1.5` (rouge sur `main`, corrigé sur la branche locale `fable/bancs-rouges-prealables`, non poussée).
+- Bancs : lampadaire 30 / 30 et QCM 25 / 25, jardin 35 / 35, station énergie 23 / 23, station programmée 135 / 135, voix du vélo 24 / 24,
+  Shanghai **28 / 29** (le test n°31, corrigé sur la même branche locale).
+
+## 21/10/2026 — Thème 3 · 3e_C9.2 : le pont en H, expliqué et simulé (« pour aller plus loin », hors programme de cycle 4)
+
+**Demande de Pascal.** Expliquer et simuler le pont en H là où la planche des trois cas le mentionne (cas ③ : « pont en H séparé »). Storyboard présenté avant la construction ;
+décisions de Pascal : **mini-quiz séparé** (le QCM principal reste à 30 questions), **aucun verrou** (« pour aller plus loin » : il ne bloque aucun vérificateur),
+**emplacement** : juste après la planche, dans un volet replié « Pour aller plus loin : le pont en H ».
+
+### Ce que le lot fait
+
+- **Volet** `#pont-en-h` (replié, `approfondissement`, donc masqué en mode essentiel), dans la page tout-en-un et dans la page 1, après la planche. Il dit « Hors programme de
+  cycle 4 », puis l'idée en cinq phrases : un moteur tourne dans le sens où le courant le traverse ; quatre interrupteurs autour du moteur (A, B en haut, C, D en bas) ; A et D
+  d'un côté, B et C de l'autre ; **pourquoi un relais simple ne suffit pas pour inverser** (il laisse passer ou coupe, toujours dans le même sens) ; le court-circuit.
+- **Simulateur SVG fait à la main** (pas d'Anatomy, pas de bibliothèque, hors ligne, aucune requête) : quatre boutons à bascule (clavier : Tab, Espace, Entrée ; cibles ≥ 44 px),
+  les interrupteurs du dessin sont aussi cliquables. Le trajet du courant s'allume ; le moteur tourne dans le sens 1, dans le sens 2 ou s'arrête ; **deux interrupteurs du
+  même côté fermés = court-circuit, affiché en rouge et expliqué, jamais interdit**. Tout ce qui bouge est aussi écrit, dans une phrase qui nomme les interrupteurs fermés
+  (n°119) ; mouvement réduit : aucune animation, trajet en trait plein, flèches fixes ; 390 px : textes du dessin ≥ 10 px à l'écran, pas de débord ; impression lisible.
+- **Prédiction avant résultat** : une liste déroulante facultative (« si je ferme A et D, le moteur… »), enregistrée avec le reste du travail, comparée au résultat quand l'élève
+  ferme A et D. Traces `window.__exp.pontH` (avant, arrière, court-circuit) **enregistrées, jamais exigées**.
+- **Mini-quiz** `miniquiz_pont_en_h.html` : 3 questions de 4 propositions (changer le sens, le relais simple, le court-circuit), chaque correction explique aussi pourquoi les
+  autres réponses ne vont pas ; sans note, rien d'enregistré. Le QCM principal n'est pas touché.
+- **Lexique** : `vocabulaire_3e_C9.2.json` — pont en H, court-circuit, relais, préactionneur, transistor, chacun avec sa source (Larousse en ligne, Wikipédia, Éduscol STI), lue avant d'être citée, sauf la ressource Éduscol (voir ci-dessous).
+- **Sources de la page** : `_generation/pont_en_h/` (`pont_en_h.html`, `.css`, `.js`) ; `inserer.py` les pose entre des marqueurs, à l'identique, dans les deux pages (le générateur des
+  quatre pages est en panne sur `main` : elles se maintiennent à la main) ; relancé, il redonne les pages à l'octet près.
+
+### Ce qui a été changé dans un outil commun
+
+La correction de `_outils/generer_lexique.py` (le retour du lexique vise la première page qui a des onglets) **n'est pas dans ce lot** : la garde-périmètre l'a refusée, `_outils/` étant du thème 2. Elle a sa propre PR (#488, `fable/theme-2/lexique-page-a-onglets`) ; ce lot s'appuie sur elle pour régénérer `lexique_3e_C9.2.html`, déjà régénéré ici. Constat au passage : régénérer tous les lexiques du thème 2 modifie ceux de 3e_C4.1, 4e_C4.1 et 5e_C4.1 — leurs QCM ont changé avec la #486 sans que les lexiques suivent ; lot à part.
+
+### À RELIRE PAR PASCAL
+
+1. L'explication en cinq phrases et les phrases du simulateur (états : arrêt, un seul interrupteur, deux du même pôle, sens 1, sens 2, court-circuit).
+2. La convention « sens 1 = sens des aiguilles d'une montre » (A et D) et « sens 2 = sens inverse » (B et C), propre au simulateur.
+3. Les définitions du lexique et leurs sources. **Décision de Pascal** : « préactionneur » ne s'appuie plus sur Wikipédia mais cite la ressource Éduscol STI 18030 (fonction DISTRIBUER), **sans guillemets ni phrase attribuée**. La phrase « le préactionneur distribue l'énergie à l'actionneur sur ordre de la partie commande » est une **reformulation de Pascal, pas une citation** d'Éduscol. Limite : `sti.eduscol.education.fr` refusait la connexion (ECONNREFUSED) le 2026-10-22, le document n'a donc pas pu être rouvert ; son titre vient de l'intitulé relevé par la recherche et l'adresse de son PDF. À revérifier quand le site répond.
+
+### Ce qui a vraiment tourné
+
+- `tests_pont_en_h.mjs` (nouveau) **37 / 37** : le volet existe, replié, après la planche, dans les deux pages ; **les 16 combinaisons d'interrupteurs** donnent l'état attendu
+  (comparées à un calcul de connexité fait à part dans le banc) ; chaque état est dit en texte ; aucune trace à l'ouverture ; clavier ; mouvement réduit ; impression ; 390 px
+  (pas de débord, textes ≥ 10 px, cibles ≥ 44 px) ; prédiction enregistrée et comparée ; zéro requête réseau ; mini-quiz.
+- Premier passage : **5 contrôles rouges, tous de mon fait**, corrigés — le fragment `pont_en_h.html` était pris pour une page (renommé `.fragment`), `window.__exp.pontH` était créé
+  à l'ouverture (règle n°226 : créé au premier geste), la liste déroulante de prédiction et un lien du mini-quiz étaient illisibles à l'impression.
+- Contrôles du dépôt : les 24 contrôles Python verts (dont n°309), contraste, impression, verrous, hors ligne verts ; `3e_C9.2` **135 / 135** ; `tests_generer_lexique.py` 29 / 29 (avec la correction de la #488) ;
+  `verifier_chaines_energie.py` 54 / 54 ; voix du vélo 24 / 24.
+- Restent rouges, déjà rouges sur `main` : `controle_squelette.mjs` (3e_C1.5) et le test n°31 de 5e_C3.1 (28 / 29) — corrigés sur `fable/bancs-rouges-prealables`, non poussée.
+
+## 22/10/2026 — Thème 2 · outil du lexique : le retour vise la page qui a des onglets
+
+**Pourquoi.** `_outils/generer_lexique.py` ramenait l'élève vers la **première** page `sequence*.html`. Pour 3e_C9.2, séquence découpée en pages reliées, c'est une page sans onglets, donc sans panneau `#s1` où ranger le vocabulaire des séances : refus « n'a pas de panneau #s1 ». Le lot du pont en H (#487) en avait besoin.
+
+**Ce qui change.** `page_de_retour` préfère la première page qui porte une barre d'onglets (`role="tablist"`) et garde la première page à défaut, comme avant. Banc `tests_generer_lexique.py` : un cas ajouté (29 / 29).
+
+**Pourquoi une branche à part.** La garde-périmètre a refusé la #487 : `_outils/` est du périmètre du thème 2. Règle retenue : **tout changement dans `_outils/` passe par une branche `fable/theme-2/…` ou par une règle transversale `fable/…`**, jamais par une branche d'un autre thème. Les lexiques de 3e_C4.1, 4e_C4.1 et 5e_C4.1, en retard sur les QCM de la #486, seront régénérés dans un lot à part.
+
+## 22/10/2026 — Règle d'or n°311 : à partir de la séance 2, l'élève voit sa séance, pas le décor (transversale, `_outils`)
+
+> **Règle d'or n°311 — À partir de la séance 2, l'élève voit sa séance, pas le décor.**
+> **Séance 1** : l'ouverture complète (titre, situation, problématique, hypothèse, référentiel, matériel, badges…).
+> **À partir de la séance 2** : le titre de la séquence sur une ligne, la mission en une phrase, la barre d'outils, puis un volet replié
+> **« 📖 Rappel : la situation et ton hypothèse »** qui contient tous les blocs d'ouverture et les badges, puis la séance.
+> Le bilan reste à la fin de la dernière séance et rappelle l'hypothèse. **L'ouverture est repliée, jamais supprimée.**
+
+**Contraintes tenues.** Sans JavaScript et à l'impression, tout s'affiche (le volet est ouvert, son bouton masqué ; `beforeprint` ouvre, `afterprint` rétablit). Un lien direct vers une ancre
+(`#herschel-pas-a-pas`, `#velo-cargo-pas-a-pas`, `#pont-en-h`…) ouvre la bonne séance, sans l'ouverture. Sauvegarde, verrous et navigation entre séances sont inchangés (les champs restent dans la
+page, repliés). Le bouton du volet est un `<summary>` : clavier (Tab, Entrée, Espace), cible de 44 px, 390 px sans débord.
+
+**Texte de la n°306 mis à jour.** *L'ouverture est visible dès le premier écran* devient *l'ouverture est visible à la séance 1, repliée dans le volet « Rappel » à partir de la séance 2, jamais supprimée*.
+Le reste du squelette (séances, clôture à la dernière séance, ordre Bonus → Bilan → QCM) ne change pas. D4 (ouverture au premier écran) garde son sens : le premier écran est la séance 1.
+
+**`controle_squelette.mjs` — défaut D6.** Sur une page à onglets qui porte `details.rappel-ouverture` : (a) à la séance 1, le volet est ouvert et sans bouton ; (b) à chaque séance suivante,
+aucun bloc d'ouverture n'est visible hors du volet ; (c) le volet garde un bouton visible. Une page **sans** volet n'est pas refusée : elle est **signalée** (« n°311 non appliquée ») le temps des vagues
+par thème, puis D6 deviendra obligatoire. `details.rappel-ouverture` entre dans les exceptions de D5 (il enveloppe l'ouverture).
+
+**La visibilité se juge avec `checkVisibility()`.** Dans Chromium, le contenu d'un `<details>` fermé garde son `offsetParent` et ses rectangles : l'ancien `vis()` l'aurait dit visible, et le contrôle
+aurait accepté un volet qui ne replie rien. `vis()` utilise désormais `checkVisibility({contentVisibilityAuto:true, checkVisibilityCSS:true})` (repli sur l'ancienne mesure si la méthode manque).
+Comparaison avant / après sur les 60 séquences du dépôt : même résultat (un seul refus, 3e_C1.5 D5, déjà rouge sur `main`).
+
+**Le pilote : `5e_C3.1`** (`sequence_5e_C3.1-C3.4_shanghai.html`). La barre d'outils est remontée au-dessus des badges (à la séance 1, elle précède donc les badges, alors qu'elle les suivait).
+Banc `tests_regle_311_5e_C3.1.mjs` : **26 / 26**, à 1280 et 390 px (séance 1 complète, séance 3 repliée, clavier, hypothèse conservée, séance 2, retour à la séance 1, sauvegarde après rechargement, liens directs,
+sans JavaScript, impression, zéro erreur JS). Captures validées par Pascal.
+
+**Ce que la règle ne fait pas.** Les pages d'une séquence découpée en plusieurs fichiers (3e_C9.2, pages 2 à 4) restent inchangées ; `C1.3-C1.4_SI` est traitée à part, en dernier ;
+les pages sans onglets ne sont pas concernées. Pas de générateur pour ces pages : un banc par page, sur le modèle du pilote.
+
+**Suite.** Une vague par thème (`fable/theme-1/regle-311-vague`, puis theme-2, puis theme-3), chacune depuis le `main` du jour, avec deux captures montrées avant de pousser.
+
+**Ce qui a vraiment tourné.** `tests_controle_squelette.mjs` **31 / 31** (6 cas D6 ajoutés : volet replié → passe ; jamais replié, sans bouton, déjà replié à la séance 1 → refusé ; page sans volet → signalée ;
+volet après la barre d'onglets → exception de D5) ; banc du pilote 26 / 26.
+
+## 22/10/2026 — Règle d'or n°311, vague du thème 1 : 11 séquences à onglets passent au volet « 📖 Rappel » dès la séance 2
+
+**Pages traitées (11).** 3e_C1.1, 4e_C1.1, 5e_C1.1, 5e_C1.2 (famille C1) ; 3e_C2.1, 4e_C2.1, 5e_C2.1 (famille C2) ; 3e_C3.1, 4e_C3.1 (famille C3) — **neuf pages du même gabarit**, transformées par le même script (titre et mission, barre d'outils,
+puis le volet `details.rappel-ouverture` qui enveloppe badges, note d'enregistrement et blocs d'ouverture ; CSS, impression, `appliqueSeance()`, lien direct vers une ancre) — et les deux pages **découpées par `decouper.py`**,
+**3e_C1.5** et **4e_C1.4**, dont l'ouverture était éparpillée et qui ont reçu un traitement sur mesure (leur propre script d'onglets garde la dernière séance et la rétablit au chargement : le volet suit).
+5e_C3.1 était le pilote (#490). Pages sans onglets, `3e_C9.2` (thème 3) et `C1.3-C1.4_SI` : non concernées ici.
+
+**3e_C1.5 et 4e_C1.4 : ce qui est particulier.** Ni l'une ni l'autre n'a de mission en une phrase sous le titre : la règle n'en invente pas, à rédiger par Pascal s'il la veut.
+Dans 4e_C1.4, la carte « Bienvenue dans la cybersécurité — Séquence 4e » entre **dans le volet** (sur la demande de Pascal) : à partir de la séance 2, le haut de page est la barre de score (qui porte déjà « Séquence 4e — Cybersécurité »), la barre d'outils, puis le volet ;
+à 390 px, les boutons Recalculer / Enregistrer / PDF de la barre de score tiennent sur une seule ligne. Dans 3e_C1.5, le bouton « Séance 2 — Métiers et économie › » de la séance 1 était **hors de son panneau**
+(balises déséquilibrées, signalé D5 par le contrôle avant ce lot) ; le volet rétablit l'imbrication et le bouton rentre dans le panneau s1. C'est un effet de bord heureux, à connaître : `fable/bancs-rouges-prealables` corrige le même défaut autrement.
+
+**Bancs.** Un banc par page, `tests_regle_311_<code>.mjs`, qui appellent le banc commun `theme-1-…/banc_regle_311.mjs` (modèle : le pilote). 33 tests par page : séance 1 complète, séance 2 et dernière séance repliées (1280 et 390 px, titre, barre d'outils,
+badges masqués, pas de débord), clavier (Entrée ouvre, Espace referme), champ de l'ouverture conservé, retour à la séance 1, rechargement (le volet suit la séance rétablie), sauvegarde, liens directs vers une ancre de séance et de séance 1,
+sans JavaScript, impression (`beforeprint` / `afterprint`), zéro erreur JS. **11 / 11 pages, 33 / 33.**
+Deux défauts **déjà présents avant la règle** : 5e_C1.2 débordait de 6 px à 390 px en séance 2 — un nom de fichier long (`releves_essai_college_….csv`) ne se coupait pas ; corrigé sur la page (`code{overflow-wrap:anywhere}`), le banc exige 0 px ; et 3e_C1.5 n'enregistre qu'au bouton « Sauvegarder mon travail » (le banc le clique, décision de Pascal : on garde).
+
+**Contrôles.** `controle_squelette` **vert sur tout le thème 1** (3e_C1.5 n'est plus refusée : son D5 disparaît avec le volet, voir plus haut), D6 : 0 ; impression, contraste des liens, verrous, hors ligne verts.
+Bancs Python des pages : 3e_C1.1 50/50, 4e_C1.1 42/42, 5e_C1.1 43/43, 5e_C1.2 36/36 ; 3e_C2.1 53/54, 4e_C2.1 59/60, 5e_C2.1 46/47, 3e_C3.1 29/30, 4e_C3.1 27/28 — **le seul échec, identique avant la règle (vérifié sur les pages de `main`), est le n°31**
+(« chaque zone de rédaction a sa version étayée »), corrigé sur `fable/bancs-rouges-prealables`, non poussée.
+
+**À faire à la fin** (après la dernière vague et `C1.3-C1.4_SI`) : rendre D6 obligatoire dans `controle_squelette` (aujourd'hui : signalé pour une page sans volet).
+
+## 23/10/2026 — Règle d'or n°311, vague du thème 2 : 16 séquences à onglets passent au volet « 📖 Rappel » dès la séance 2
+
+**Pages traitées (16).** C4 : 3e_C4.1, 3e_C4.3, 3e_C4.7, 3e_C4.8 (pont numérique), 4e_C4.1, 4e_C4.7 (SOS serre), 5e_C4.1, 5e_C4.7 ; C5 : 3e_C5.1, 4e_C5.1, 5e_C5.1 ; C6 : 3e_C6.1, 3e_C6.2, 4e_C6.1, 4e_C6.2, 5e_C6.1.
+Le gabarit du thème 2 n'est pas celui du thème 1 (pas de `div.page`, mission en `.subtitle`, progression **au-dessus** des cartes d'ouverture) : un script propre à la vague, même résultat. À la séance 1, rien ne change à l'écran sauf la barre
+de progression, qui passe de la tête de page à **juste au-dessus des onglets** (comme au thème 1). À partir de la séance 2 : titre, mission, barre d'outils, le volet replié (badges, identité, note du mode essentiel, rappel spiralaire,
+situation, problématique, hypothèses, référentiel, choix de l'outil, versions A/B/C), la progression, les onglets. `#savedNote` (zone `role="status"`) reste à côté de la barre d'outils.
+
+**Le gabarit habille tout `details` en carte.** Sans retouche, le volet encadrait toute l'ouverture à la séance 1. Le volet est donc remis à nu (`.rappel-ouverture{background:none;border:0;padding:0;margin:0}`), et son bouton passe
+sur deux lignes sans déborder à 390 px (`display:flex`, interligne normal, 44 px minimum).
+
+**Un outil n'est pas du décor.** Deux pages rangeaient dans l'ouverture un outil des séances suivantes : **3e_C6.1**, la carte « ⌨ Le programme de la station — CodeLab Techno » (« le document de travail des trois séances », activité 4 en séance 2) ;
+**4e_C4.7**, la seconde barre d'outils « 🎯 Mode essentiel ». Toutes deux étaient le dernier bloc de l'ouverture : elles sortent juste **après** le volet, l'ordre de la séance 1 est inchangé et elles restent visibles ensuite.
+La recherche a été faite page par page (tout bouton, champ, liste ou zone éditable resté dans le volet, hors hypothèses, identité et versions étayées) : ce sont les deux seules.
+Un troisième, sans bouton, a échappé à cette recherche et a été rattrapé par la suite de la page : **3e_C6.2**, le **bandeau des tâches de la séance** (`#tachesBandeau`, règle n°30 : « la barre compte, ce bandeau situe »). Il reprend sa place sur `main`, juste sous la barre de progression,
+hors du volet ; la recherche porte désormais aussi sur les zones `aria-live` et `role=status|progressbar|region|log` — aucune autre dans les 16 volets.
+
+**Book Train et 4e_C6.2, tranchés par Pascal.** **4e_C4.1 Book Train reste telle quelle** : la situation et l'hypothèse y sont déjà dans un onglet « Départ » (panneau `s0`) ; l'onglet respecte la règle.
+**4e_C6.2 Arrosage automatique** n'a **aucune hypothèse de départ** : son volet s'appelle **« 📖 Rappel : la situation »**. Son rappel spiralaire, posé entre le titre et la mission, entre dans le volet comme ailleurs ; la feuille de style des gestes Vittascience qui l'accompagnait sort juste après le titre.
+Son banc suit une réponse de la séance 1 (`#a1q1`, liste déroulante) faute de champ dans l'ouverture : le relais prend l'option `choix` et le banc commun reste intact (`theme-1-…` est hors du périmètre du thème 2).
+
+**Barre d'outils compacte à 390 px.** Les quatre boutons (Sauvegarder, Imprimer, Effacer, Mode essentiel) s'empilaient sur quatre lignes (188 px). Sous 480 px, ils passent à deux par ligne, à 44 px de haut au moins ; un libellé trop long passe à la ligne
+dans son bouton au lieu d'être coupé : deux lignes de 390 à 320 px (94 px), comme 4e_C1.4 au thème 1. Le relais du banc le vérifie à la séance 2.
+
+**Bancs.** Un banc par page, `tests_regle_311_<code>.mjs`, qui passent par `theme-2-…/banc_regle_311_theme2.mjs` : ce relais vérifie la **mission** (`.subtitle`, visible hors du volet à la séance 1 et à la séance 2, 1280 et 390 px), que le banc commun lit dans `p.sous` seulement,
+puis appelle le banc commun du thème 1 sans le modifier. **16 / 16 pages : mission 2 / 2, barre compacte, banc commun 33 / 33.**
+
+**Suites des pages, branche contre `main`** (même arbre, rejouées des deux côtés) : mêmes résultats partout — 3e_C4.1 23/23, 3e_C4.3 22/23, 3e_C4.7 32/35, 3e_C5.1 30/34, 3e_C6.1 31/35, 4e_C4.1 35/35, 4e_C5.1 22/26, 4e_C6.1 25/29, 5e_C4.1 (QCM) 25/25,
+5e_C4.1 (séquence) 30/30, 5e_C5.1 22/26, 5e_C6.1 28/32, 4e_C6.2 38/38, 3e_C6.2 22/22 et 21/21 (entraînement DNB) ; les échecs, identiques ligne à ligne sur `main`, sont des liens et fichiers lus par `new URL(...).pathname` (`/C:/…` sous Windows). Les deux suites Python de 3e_C6.2 se lancent depuis leur dossier (lancées d'ailleurs, elles échouent au chargement, sur `main` comme ici).
+Une seule suite a dû changer : `tests_5e_C4.1-C4.8_sequence.mjs` saisissait l'hypothèse depuis la séance 5, où elle est désormais repliée ; elle revient à la séance 1, comme l'élève.
+
+**Contrôles.** Les 28 contrôles du dépôt (`controle_*.py` et `.mjs` : squelette, impression, contraste des liens, verrous, hors ligne…) sortent à 0 ; `controle_squelette` : 0 refus, D6 : 0.
+
+**Reste** : thème 3, puis `C1.3-C1.4_SI` ; enfin D6 obligatoire. Hors règle, vu en passant : 4e_C6.1 déborde de 22 px à 320 px, déjà sur `main`.

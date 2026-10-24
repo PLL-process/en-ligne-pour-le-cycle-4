@@ -31,9 +31,10 @@
  */
 import { chromium } from 'playwright';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
 
-const ICI = path.dirname(new URL(import.meta.url).pathname);
+const ICI = path.dirname(fileURLToPath(import.meta.url));
 const SEQ = path.join(ICI, 'sequence_3e_C4.1-C4.2_energie_station.html');
 const QCM = path.join(ICI, 'qcm_3e_C4.1-C4.2_energie_station.html');
 
