@@ -20,6 +20,12 @@
  * IL NE RECOPIE PAS LES BONNES RÉPONSES : il les lit dans la page (`data-bonne`) et compare les indices
  * de bonne réponse du QCM à ceux de la version de référence, lue dans git (`origin/main`) quand elle existe.
  *
+ * SECONDE PASSE (24/10/2026, même jour) : la séquence passe à 4 séances (nouvelle séance 2 « Les deux
+ * chaînes », activités renumérotées pour que le numéro dise la séance), chaque séance mène à la suivante
+ * (n°101) et les phrases anglaises incrustées dans la vidéo sont traduites et minutées : tests 28 à 32.
+ * Sur la page d'avant, à 390 px, l'étiquette « présenter » de la dernière gare était déjà rognée par le
+ * bandeau (test 32).
+ *
  * Usage, depuis ce dossier :  node tests_4e_C4.1-C4.2-C4.4_book-train.mjs
  * Playwright/Chromium requis. Sortie 0 si tout passe, 1 sinon, 2 si rien n'a pu être mesuré.
  */
@@ -63,6 +69,8 @@ async function ouvrir(largeur, storage = null) {
   await p.waitForTimeout(200);
   return { ctx, p, err, reseau };
 }
+/* L'onglet qui contient un élément : le banc ne suppose pas dans quelle séance vit un bloc. */
+const ongletDe = async (p, sel) => p.click('#tab-' + await p.evaluate(s => document.querySelector(s).closest('.panneau').id, sel));
 const visible = (p, sel) => p.evaluate(s => { const e = document.querySelector(s); return !!e && e.checkVisibility(); }, sel);
 
 /* ── 1. Chargement ─────────────────────────────────────────────────────────── */
@@ -124,7 +132,7 @@ await p.click(verifVideo);
 ok('13 · deux bonnes réponses : 2/2', /2\/2/.test(await p.textContent('#res-exo-video')));
 
 /* ── 5. Bonus (n°301) : des champs, une version étayée, un corrigé ──────────── */
-await p.click('#tab-s3');
+await ongletDe(p, '.bloc-bonus');
 const bonus = await p.evaluate(() => {
   const z = document.querySelector('.bloc-bonus');
   const champs = [...z.querySelectorAll('textarea, input[type=text]')];
@@ -169,7 +177,7 @@ await p.click('button.verif[data-exo="exo12"]');
 ok('18 · l\'activité 1.2 se valide comme avant (listes déroulantes)', new RegExp(`${listes.length}/${listes.length}`).test(await p.textContent('#res-exo12')), listes.length);
 
 /* ── 8. Figures 1 et 5 : le bon rappel, aucun texte caché, coupé ou recouvert ── */
-await p.evaluate(() => document.querySelectorAll('#s1 details').forEach(d => d.open = true));
+await p.evaluate(() => document.querySelectorAll('.panneau details').forEach(d => d.open = true));
 const mesurer = sel => p.evaluate(s => {
   const svg = document.querySelector(s);
   const vb = svg.viewBox.baseVal;
@@ -192,6 +200,7 @@ const mesurer = sel => p.evaluate(s => {
   return { texte: svg.textContent, chevauche, hors, caches };
 }, sel);
 for (const [n, sel] of [['1', 'svg[aria-labelledby="fig1t fig1d"]'], ['5', 'svg[aria-labelledby="fig5t fig5d"]']]) {
+  await ongletDe(p, sel);
   await p.evaluate(s => document.querySelector(s).scrollIntoView({ block: 'center', behavior: 'instant' }), sel);
   await p.waitForTimeout(100);
   const m = await mesurer(sel);
@@ -202,19 +211,74 @@ for (const [n, sel] of [['1', 'svg[aria-labelledby="fig1t fig1d"]'], ['5', 'svg[
 }
 
 /* ── 9. Un seul vocabulaire de l'énergie, des chiffres sourcés ────────────── */
-const texte = await p.evaluate(() => document.body.innerText);
+const texte = await p.evaluate(() => document.body.textContent);
 ok('21 · la page ne dit plus « change de nature » ni « 4 niveaux »', !/change(r|ment)? de nature|4 niveaux/.test(texte));
 ok('22 · la source des chiffres est citée (communiqué de la NYPL)', /nypl\.org\/press\/press-release\/september-21-2016/.test(src));
+
+/* ── 9 bis. Quatre séances : le numéro de l'activité dit la séance ─────────── */
+const structure = await p.evaluate(() => {
+  const onglets = [...document.querySelectorAll('[role=tab]')].map(t => t.getAttribute('aria-controls'));
+  const mal = [];
+  for (const h of document.querySelectorAll('h3')) {
+    const m = h.textContent.match(/^\s*Activité (\d)\.\d\b/);
+    if (m && h.closest('.panneau').id !== 's' + m[1]) mal.push(h.textContent.trim().slice(0, 30) + ' dans ' + h.closest('.panneau').id);
+  }
+  const titres = [1, 2, 3, 4].map(n => { const t = document.getElementById('seance-' + n); return !!t && t.closest('.panneau').id === 's' + n; });
+  return { onglets, mal, titres, activites: [...document.querySelectorAll('h3')].filter(h => /^\s*Activité \d\.\d/.test(h.textContent)).length };
+});
+ok('28 · « 4 séances de 55 min », cinq onglets, onze activités, chacune dans la séance que dit son numéro',
+   /⏱ 4 séances de 55 min/.test(src) && structure.onglets.join() === 's0,s1,s2,s3,s4' && structure.titres.every(Boolean)
+   && structure.mal.length === 0 && structure.activites === 11, JSON.stringify(structure));
+ok('29 · plus aucun ancien numéro d\'activité (1.2 A, 1.2 bis, 1.2 ter) dans la page', !/1\.2 (A|bis|ter)\b/.test(texte));
+const suites = [];
+for (const [de, vers] of [['s0', 's1'], ['s1', 's2'], ['s2', 's3'], ['s3', 's4']]) {
+  if (await p.locator('#tab-' + de).count() === 0) { suites.push(de + ' absent'); continue; }
+  await p.click('#tab-' + de);
+  const btn = p.locator(`#${de} > p.page-suivante:last-of-type button.vers-seance[data-vers="${vers}"]`);
+  if (await btn.count() !== 1) { suites.push(de + ' sans bouton'); continue; }
+  await btn.click(); await p.waitForTimeout(150);
+  if (!(await p.evaluate(v => document.getElementById(v).classList.contains('actif'), vers))) suites.push(de + ' → ' + vers + ' n\'ouvre pas');
+}
+ok('30 · chaque séance se termine par un bouton qui ouvre la suivante (n°101), la dernière n\'en a pas',
+   suites.length === 0 && (await p.locator('#s4').count()) === 1 && (await p.locator('#s4 button.vers-seance').count()) === 0, suites.join(' | '));
+
+/* ── 9 ter. La vidéo parle anglais dans l'image : la page la traduit ─────── */
+const trad = await p.evaluate(() => {
+  const d = document.querySelector('#video-book-train details#video-fr');
+  if (!d) return null;
+  const lignes = [...d.querySelectorAll('ol.trad-liste > li')].map(li => ({
+    t: (li.querySelector('.trad-t') || {}).textContent || '',
+    fr: ((li.querySelector('.trad-fr') || {}).textContent || '').trim().length,
+    en: !!li.querySelector('.trad-en[lang="en"]'),
+  }));
+  const sec = t => { const m = t.match(/^(\d+):(\d\d)$/); return m ? +m[1] * 60 + +m[2] : NaN; };
+  const temps = lignes.map(l => sec(l.t));
+  return { n: lignes.length, complets: lignes.every(l => l.fr > 0 && l.en),
+           croissants: temps.every((x, i) => !isNaN(x) && (i === 0 || x > temps[i - 1])) && temps[temps.length - 1] <= 104,
+           avantQuestions: !!(d.compareDocumentPosition(document.getElementById('exo-video')) & Node.DOCUMENT_POSITION_FOLLOWING) };
+});
+ok('31 · la vidéo a sa traduction minutée : 18 phrases, chacune en français et en anglais (lang="en"), dans l\'ordre, avant les questions',
+   !!trad && trad.n === 18 && trad.complets && trad.croissants && trad.avantQuestions, JSON.stringify(trad));
 await ctx.close();
 
 /* ── 10. 390 px : rien ne déborde ─────────────────────────────────────────── */
 ({ ctx, p, err } = await ouvrir(390));
+// Mesuré au chargement, onglet Départ ouvert : c'est l'état que voit l'élève en arrivant.
+const rail = await p.evaluate(() => {
+  const bas = document.querySelector('header').getBoundingClientRect().bottom;
+  const gares = [...document.querySelectorAll('[role=tab]')];
+  const quais = gares.map(g => Math.round(g.querySelector('.quai').getBoundingClientRect().top));
+  const debordent = gares.filter(g => g.getBoundingClientRect().bottom > bas + 0.5).length;   // le bandeau coupe ce qui dépasse (overflow:hidden)
+  return { debordent, quais: [...new Set(quais)].length };
+});
+ok('32 · à 390 px, les cinq gares tiennent dans le bandeau et sont alignées sur le rail', rail.debordent === 0 && rail.quais === 1, JSON.stringify(rail));
 const debords = [];
-for (const o of ['#tab-s0', '#tab-s1', '#tab-s3']) {
+for (const o of ['#tab-s0', '#tab-s1', '#tab-s2', '#tab-s3', '#tab-s4']) {
+  if (await p.locator(o).count() === 0) continue;
   await p.click(o); await p.waitForTimeout(100);
   debords.push(await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth));
 }
-ok('23 · à 390 px, aucun défilement horizontal (Départ, séance 1, séance 3)', debords.every(d => d <= 0), debords.join(','));
+ok('23 · à 390 px, aucun défilement horizontal (Départ et les quatre séances)', debords.every(d => d <= 0), debords.join(','));
 await ctx.close();
 
 /* ── 11. QCM : 30 questions, aucun indice de bonne réponse déplacé ─────────── */

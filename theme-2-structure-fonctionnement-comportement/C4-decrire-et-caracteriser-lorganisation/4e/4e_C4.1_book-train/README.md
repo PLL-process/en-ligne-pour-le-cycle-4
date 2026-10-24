@@ -5,12 +5,12 @@
 
 ## 🚃 Le lot (ce dossier)
 
-➡ **[Séquence complète](sequence_4e_C4.1-C4.2-C4.4_book-train.html)** — 3 séances de 55 min : décoder
-l'organisation du système (diagramme fonctionnel, chaînes d'information et d'énergie), traduire le trajet
-d'un livre en **algorigramme normalisé** avec draw.io, puis **exporter au bon format et le justifier**.
+➡ **[Séquence complète](sequence_4e_C4.1-C4.2-C4.4_book-train.html)** — 4 séances de 55 min : décoder
+l'organisation du système (trajet, diagramme fonctionnel), construire ses **deux chaînes** (énergie, information)
+dans draw.io, traduire le trajet d'un livre en **algorigramme normalisé**, puis **exporter au bon format et le justifier**.
 Billet d'entrée sans note, mode essentiel, versions étayées de chaque production écrite.
-Au départ, une **courte vidéo du vrai Book Train** (lien YouTube et QR code, repli hors ligne) et deux questions
-d'observation ; en fin de parcours, **six défis bonus** avec cases de réponse et corrigé, dont un calcul
+Au départ, une **courte vidéo du vrai Book Train** (1 min 44 s, sans voix ; lien YouTube et QR code, repli hors ligne ;
+ses phrases anglaises traduites et minutées sous le lien) et deux questions d'observation ; en fin de parcours, **six défis bonus** avec cases de réponse et corrigé, dont un calcul
 « 5 minutes : tout le circuit ? ».
 
 ➡ **[QCM d'entraînement](qcm_book-train.html)** — 30 questions (10 par code), 4 illustrées, chaque
@@ -24,8 +24,8 @@ distracteur réfuté.
 
 | Fichier | À quoi il sert |
 |---|---|
-| `fichiers_drawio/chaine_information_a_completer.drawio` | distribué aux élèves — act. 1.3, les capteurs sont à ajouter |
-| `fichiers_drawio/chaine_information_correction.drawio` | corrigé enseignant de l'act. 1.3 |
+| `fichiers_drawio/chaine_information_a_completer.drawio` | distribué aux élèves — act. 2.3, les capteurs sont à ajouter |
+| `fichiers_drawio/chaine_information_correction.drawio` | corrigé enseignant de l'act. 2.3 |
 | `fichiers_drawio/chaine_energie_a_completer.drawio` | version à trous de la chaîne d'énergie |
 | `fichiers_drawio/chaine_energie_book-train.drawio` | diagramme complet, modifiable pour un autre système |
 | `fichiers_drawio/bibliotheque_chaines_book-train.xml` | palette des chaînes (34 formes), écrite par `_outils/generer_bibliotheque_chaines.py` : ne pas la modifier à la main |
