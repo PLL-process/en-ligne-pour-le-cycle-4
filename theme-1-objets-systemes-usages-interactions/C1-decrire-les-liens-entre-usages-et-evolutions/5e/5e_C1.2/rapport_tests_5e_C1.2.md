@@ -1,46 +1,63 @@
 # Rapport de tests — lot 5e_C1.2 « Sainte-Luce »
 
-**Exécuté le 9 août 2026** · Chromium via Playwright · `python3 tests_5e_C1.2_sainte_luce.py`
-**Résultat : 36 contrôles, 36 verts, aucune erreur JavaScript.**
+**Exécuté le 24 octobre 2026**, après l'ajout de la **séance 4** (exercices) · Chromium via Playwright
+· `python3 tests_5e_C1.2_sainte_luce.py` et `node tests_regle_311_5e_C1.2.mjs`
+**Résultat : 50 contrôles sur 50 au banc du lot (33 séquence + 17 QCM), 33 sur 33 au banc de la règle
+n°311, aucune erreur JavaScript.**
 
-Ne figurent ici que des tests **réellement exécutés**. La suite est livrée avec le lot.
+Ne figurent ici que des tests **réellement exécutés**. Première exécution du lot : 9 août 2026,
+36 / 36 (19 séquence + 17 QCM), sur la page à trois séances.
 
 ## Périmètre déclaré (règle n°47)
 
-**Vérifié** — les quatre verrous, fermés sur une page vide et ouverts sur une production complète ;
-le **refus argumenté** du frein à patins en séance 3 ; la progression, la sauvegarde et sa
-restauration ; la cible du bouton d'entraînement avant et après la séquence ; les deux blocs de la
-règle n°4, corrigé du Bonus compris ; la mention de la manipulation obligatoire ; pour le QCM, le
-titre **affiché** et son sous-titre, le nombre de questions et d'illustrées, la répartition des
-bonnes réponses, la réfutation de chaque distracteur, la formulation du référentiel, l'ouverture
-ciblée, le chargement effectif des images et le lien de retour.
+**Vérifié** — les six verrous (billet + cinq activités), fermés sur une page vide et ouverts sur une
+production complète ; celui de l'activité 4 ne s'ouvre qu'après l'exercice du diagramme FAST
+**réellement rempli et vérifié dans la page** ; le **refus argumenté** du frein à patins en séance 3
+et du frein à tambour pour Léa en séance 4 ; la progression sur cinq activités, la sauvegarde et sa
+restauration ; l'exclusion des champs de l'exercice inséré hors de la sauvegarde de la séquence ; la
+reprise d'un travail enregistré **avant** l'ajout de la séance 4 ; quatre onglets, le passage de la
+séance 3 à la séance 4, la clôture dans la séance 4 seule ; la cible du bouton d'entraînement ; les
+deux blocs de la règle n°4, corrigé du Bonus compris ; la manipulation obligatoire ; pour le QCM
+(inchangé), le titre **affiché** et son sous-titre, le nombre de questions et d'illustrées, la
+répartition des bonnes réponses, la réfutation de chaque distracteur, la formulation du référentiel,
+l'ouverture ciblée, le chargement effectif des images et le lien de retour.
 
-**Non vérifié** — l'exactitude pédagogique des corrigés, le rendu à l'impression, l'ergonomie en
-classe, et **la faisabilité de la manipulation sur le vélo**, qui se vérifie devant un vélo.
+**Non vérifié** — l'exactitude pédagogique des corrigés, le rendu à l'impression au-delà de ce que
+mesure `controle_impression`, l'ergonomie en classe, **la faisabilité de la manipulation sur le
+vélo**, qui se vérifie devant un vélo, et la tenue réelle de la séance 4 en 50 minutes.
 
-## Séquence — 19 contrôles
+## Séquence — 33 contrôles
 
 | Contrôle | Résultat |
 |---|---|
-| Les quatre verrous refusent une page vide | ✅ 4/4 |
-| Les quatre verrous s'ouvrent sur une production complète | ✅ 4/4 |
+| Quatre onglets de séance, s1 à s4 | ✅ |
+| La clôture (Bonus, Bilan, QCM) est dans la séance 4, et nulle part ailleurs | ✅ |
+| Le bouton de fin de séance 3 ouvre la séance 4 | ✅ |
+| Les six verrous refusent une page vide | ✅ 6/6 |
 | Le bouton QCM à zéro validation ouvre le parcours court | ✅ |
-| **Le choix du frein à patins est refusé, et la raison chiffrée est donnée** | ✅ |
-| La progression atteint 3 / 3 après remise d'une défense valable | ✅ |
+| L'exercice FAST inséré, rempli et vérifié dans la page, est enregistré réussi (`rep_fast_5e_e3`) | ✅ |
+| Les six verrous s'ouvrent sur une production complète | ✅ 6/6 |
+| **Le tambour est refusé pour Léa, et la raison chiffrée (10,4 m freins chauds) est donnée** | ✅ |
+| **Le choix du frein à patins est refusé en séance 3, et la raison chiffrée est donnée** | ✅ |
+| La progression atteint 5 / 5, et les quatre onglets portent leur ✔ | ✅ 2/2 |
 | Le bouton QCM en fin ouvre le parcours complet | ✅ |
-| Les zones de rédaction survivent à un rechargement | ✅ |
-| La progression survit à un rechargement | ✅ |
-| Bloc « Prêt·e à t'entraîner ? » présent (règle n°4) | ✅ |
-| Bloc « Bonus » présent, et son corrigé | ✅ |
+| La sauvegarde de la séquence contient la séance 4, et aucun champ de l'exercice inséré | ✅ |
+| Après rechargement : zones de rédaction (séance 1 et séance 4), exercice inséré (sa propre mémoire), progression | ✅ 4/4 |
+| **Un travail enregistré à trois séances se rouvre à 3 / 5**, champs rendus, séance 4 à faire | ✅ |
+| Blocs « Prêt·e à t'entraîner ? », « Bonus » et corrigé du Bonus présents (règle n°4) | ✅ 3/3 |
 | La manipulation est annoncée comme obligatoire (règle n°58) | ✅ |
 | Zéro erreur JavaScript | ✅ |
 
-> Le contrôle du **refus argumenté** est nouveau dans le dépôt. Il ne vérifie pas seulement qu'une
-> mauvaise réponse est rejetée, mais que le message **cite le chiffre** qui la disqualifie —
-> « 8,9 m sous la pluie » — et renvoie au Bonus où le même choix devient le bon. Un refus qui
-> n'aide pas l'élève à repartir n'est pas un vérificateur, c'est un mur.
+> Rejoué sur la page d'avant (trois séances, copie de `main` dans un dossier de travail) : le banc
+> s'arrête au troisième contrôle — aucun bouton ne mène à une séance 4. Il mesure donc bien ce qui
+> a changé.
 
-## QCM — 17 contrôles
+Le vérificateur de l'activité 5 a en plus été éprouvé à la main sur **neuf réponses d'élève**
+(script hors banc) : quatre conseils justes acceptés (phrases de la version étayée, réponse courte,
+« je ne conseille pas le tambour, je conseille le disque », décimales à point) ; cinq refusés avec
+le bon message (tambour, patins, sans perte, sans ce qui distingue Léa du collège, sans chiffres).
+
+## QCM — 17 contrôles (QCM inchangé)
 
 | Contrôle | Résultat |
 |---|---|
@@ -58,22 +75,46 @@ classe, et **la faisabilité de la manipulation sur le vélo**, qui se vérifie 
 | Clé de sauvegarde propre au lot | ✅ |
 | Zéro erreur JavaScript | ✅ |
 
+## Règle n°311 — 33 contrôles (`tests_regle_311_5e_C1.2.mjs`)
+
+Séance 1 complète, séance 2 et **dernière séance (s4)** repliées, à 1280 et 390 px (titre, barre
+d'outils, badges masqués, aucun défilement horizontal), clavier, hypothèse conservée dans le volet,
+retour à la séance 1, rechargement, sauvegarde, liens directs `#a5_1__1` (ouvre s4) et `#be_1__1`,
+sans JavaScript, impression. **33 / 33.**
+
+## À 390 px (script de vérification, hors banc)
+
+Chaque séance s'ouvre sans défilement horizontal ; les boutons de fin de séance 1, 2 et 3 ouvrent la
+suivante ; une saisie de la séance 4 revient après rechargement ; l'ouverture y est repliée ; zéro
+erreur JS. **10 / 10.**
+
+## Contrôles du dépôt (dernière ligne de chacun, 24/10/2026)
+
+| Contrôle | Sortie | Dernière ligne |
+|---|---|---|
+| `controle_squelette.mjs` (dossier) | 0 | ✅ ouverture au premier écran, clôture à la dernière séance (s4), dans l'ordre — 0 défaut, 0 « à rédiger » |
+| `controle_navigation_seances.py` (dépôt) | 0 | ✅ chaque séance (hors la dernière de sa page) mène explicitement à la suivante |
+| `controle_hierarchie.py` | 0 | ✅ aucune énumération en ligne, aucun mur sans repère… |
+| `controle_regles_visibles.py` | 0 | ✅ aucune page lue par un élève ne laisse voir la fabrique |
+| `controle_liens.py` | 0 | ✅ aucun lien mort, aucune ancre introuvable |
+| `controle_debordement.py` | 0 | ✅ aucun tableau de 3 colonnes ou plus sans filet mobile |
+| `controle_longueurs.py` | 0 | aucune banque signalée |
+| `controle_medias.py` | 0 | ✅ chaque image a une provenance écrite |
+| `controle_verrous.mjs`, `controle_impression.mjs`, `controle_contraste_liens.mjs`, `controle_hors_ligne.mjs` | 0 | ✅ |
+| `mesurer_temps_seances.py` | 0 | 4 × 55 min = 220 ; 190 annoncés (le script compte aussi les 5 min de la manipulation 🅰) ; marge +30 |
+| `incrustations.py --verifier --seq 5e/5e_C1.2/` | 0 | à jour |
+
 ## Vérificateur de règles
 
-`python3 _outils/verif_regles_audit.py` sur le dossier : **8 sur 8** — n°23 (150 min pour 165),
-n°26, n°29 (mode essentiel), n°30 (tableau de bord), n°31 (4 versions étayées pour 9 zones),
-n°33 (aération), n°34 (accessibilité), n°42 (formulation du référentiel).
+`python3 _outils/verif_regles_audit.py` sur le dossier : **15 ✔, 1 ✘**. n°23 (190 min pour 220),
+n°31 (8 versions étayées pour 16 zones, dont les 2 de l'exercice inséré), n°33 (aucun pavé), n°300
+(aucune liste déroulante), n°301 (le bilan clôt, le Bonus le précède)… Le **✘ n°298** (la carte du
+référentiel et la légende des étiquettes sur la page élève) est **antérieur** à la séance 4 et hors
+de ce lot.
 
-**La règle n°67 est levée** : la page comptait **zéro** champ de saisie et annonçait trois fois une
-production attendue. Elle en compte désormais **18 listes déroulantes et 9 zones de rédaction**.
+## Incidents
 
-## Deux incidents de production, sans conséquence sur le lot
-
-Consignés parce qu'ils se répètent et qu'il faudra en tirer une règle.
-
-1. **La banque de questions s'est d'abord écrite hors du dépôt**, un `cd` résiduel ayant déplacé le
-   répertoire courant entre deux commandes. Récupérée et remise en place, pas réécrite. C'est la
-   deuxième occurrence de la journée — la première concernait une entrée de journal.
-2. **Le premier générateur a refusé d'écrire** en signalant des restes « 3e_C3 » : c'était le
-   garde-fou de la règle n°51 qui faisait son travail, sur le titre affiché du gabarit que nous
-   avions nous-mêmes corrigé la veille. Le contrôle avait raison.
+1. Un pavé de 113 mots (l'introduction du bloc inséré) a fait lever la n°33 : raccourci, le bloc
+   reposé par `incrustations.py`.
+2. Le tableau du vendeur montait sur huit lignes d'en-tête à 390 px : en-têtes raccourcis, unités
+   insécables, la condition « freins chauds » dite dans la phrase d'avant.

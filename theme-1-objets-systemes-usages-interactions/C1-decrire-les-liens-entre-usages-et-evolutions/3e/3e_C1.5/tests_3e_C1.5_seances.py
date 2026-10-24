@@ -3,13 +3,18 @@
 
 Écrit le 24/10/2026, quand la séquence est passée de trois à quatre séances de 55 min :
 la clôture débordait de la séance 3, elle a suivi la nouvelle séance 4, qui porte
-l'activité 5 « L'argumentaire court » (3e_C1.3). Ne sont déclarés que les tests
-présents ici et réellement exécutés.
+l'activité 5 « L'argumentaire court » (3e_C1.3). Le même jour, l'activité 1 bis « Ce que
+la loi change à une application » (3e_C1.4) a pris le temps libre de la séance 1.
+Ne sont déclarés que les tests présents ici et réellement exécutés.
 
 PÉRIMÈTRE (règle n°47) — ce que ce banc vérifie, à 390 px de large :
   · les cinq onglets dans l'ordre (s1 à s4, puis le hors-parcours) et le titre court
     de la séance 4 ; chaque panneau s'ouvre, sans défilement horizontal ;
   · le bouton de fin de chaque séance ouvre la suivante ; la séance 4, dernière, n'en a pas ;
+  · le vérificateur de l'activité 1 bis (séance 1) : à vide (🔴, 8 encoches « sans réponse ») ;
+    des choix faux et un texte qui ne parle que de technique (réfutations, score partiel) ;
+    le modèle de la correction et une réponse écrite avec la version étayée acceptés (🎉) ;
+    la reprise après rechargement ;
   · Bonus, Bilan, synthèse, autoévaluation et QCM sont dans la séance 4, après l'activité 5,
     dans cet ordre ; le volet « Rappel » y est replié ;
   · le vérificateur de l'activité 5 : à vide (🔴, 11 encoches « sans réponse ») ; des choix
@@ -54,6 +59,22 @@ MODELE = "\n".join([
     "Ce que mon argumentaire ne sait pas : ce que vaut ce chiffre pour la Martinique, où l'électricité ne vient pas "
     "des mêmes sources, ni ce qu'en pensent ceux qui n'ont pas de smartphone."])
 DERNIERE_FAUSSE = "Mon argumentaire est complet : il n'y a rien à ajouter."
+B1_MODELE = "\n".join([
+    "Le RGPD et le droit à l'image obligent le club à obtenir l'accord des joueurs avant de publier leur photo, "
+    "et celui d'un parent pour ceux qui ont moins de 15 ans.",
+    "Cette règle protège les joueurs, presque tous mineurs : une photo publiée peut les suivre longtemps.",
+    "C'est pourquoi l'application affiche, avant toute publication, une case à cocher vide pour le joueur et une autre pour un parent.",
+    "Elle réserve aussi les photos aux membres du club et ajoute un bouton « Demander le retrait de ma photo ».",
+    "En conclusion, la loi rend l'application plus longue à concevoir, mais les familles peuvent lui faire confiance."])
+B1_ETAYE = "\n".join([
+    "La loi oblige le club à demander l'accord des joueurs avant de publier leur photo.",
+    "Elle protège les joueurs, parce qu'ils sont mineurs.",
+    "C'est pourquoi l'application doit afficher une case à cocher vide.",
+    "Elle doit aussi proposer un bouton pour retirer sa photo.",
+    "En conclusion, c'est plus long à faire, mais plus sûr."])
+B1_TECHNIQUE = "\n".join([
+    "L'application doit être rapide.", "Elle doit tenir dans la mémoire du téléphone.",
+    "Elle aura un menu bleu.", "En conclusion, elle sera belle et légère pour tout le monde."])
 ETAYE = "\n".join([
     "Je pense que le smartphone est utile pour la société, parce qu'il aide à rester en contact.",
     "Par exemple, il a fait naître des métiers comme vendre en ligne.",
@@ -124,6 +145,48 @@ def banc_page(b, url):
         t(actif(pg) == vers, f"le bouton de fin de {de} ouvre {vers}")
     t(pg.evaluate("document.querySelectorAll('#s4 .vers-seance').length") == 0,
       "la séance 4, dernière, n'a pas de bouton « séance suivante »")
+
+    # Activité 1 bis (séance 1) — le vérificateur
+    pg.click('.seance-tab[data-panel="s1"]')
+    pg.wait_for_timeout(100)
+    t(pg.evaluate("document.getElementById('loi-application').closest('.seance-panel').id") == "s1",
+      "l'activité 1 bis est dans la séance 1, avant le bouton vers la séance 2")
+    pg.click("#b1_verifier")
+    pg.wait_for_timeout(100)
+    t(pg.inner_text("#b1_retour").startswith("🔴 0 point"), "1 bis, vérification à vide : 🔴 0 point sur 8")
+    enc = pg.evaluate("[...document.querySelectorAll('#loi-application .enc')].map(e => e.className)")
+    t(len(enc) == 8 and all("vide" in c for c in enc), f"1 bis : 8 encoches « sans réponse » à vide ({len(enc)})")
+    pg.check("#b1_q1__1")
+    pg.check("#b1_q2__2")
+    pg.fill("#b1_arg", B1_TECHNIQUE)
+    pg.click("#b1_verifier")
+    pg.wait_for_timeout(100)
+    r = pg.inner_text("#b1_retour")
+    t(pg.inner_text("#b1_q1_fb").startswith("✘") and "technique" in pg.inner_text("#b1_q1_fb"),
+      "1 bis, Q1 fausse : réfutation affichée (contrainte technique)")
+    t(pg.inner_text("#b1_q2_fb").startswith("✘") and "cochée d'avance" in pg.inner_text("#b1_q2_fb"),
+      "1 bis, Q2 fausse : réfutation affichée (case cochée d'avance)")
+    t(r.startswith("🔴 2 points sur 8") and "ce que la loi impose" in r,
+      f"1 bis, texte purement technique : score partiel et contrainte manquante ({r.splitlines()[0][:40]})")
+    pg.check("#b1_q1__2")
+    pg.check("#b1_q2__3")
+    pg.fill("#b1_arg", B1_MODELE)
+    pg.click("#b1_verifier")
+    pg.wait_for_timeout(100)
+    t(pg.inner_text("#b1_retour").startswith("🎉 Tout est juste"), "1 bis, modèle de la correction : « Tout est juste » (8/8)")
+    pg.fill("#b1_arg", B1_ETAYE)
+    pg.click("#b1_verifier")
+    pg.wait_for_timeout(100)
+    t(pg.inner_text("#b1_retour").startswith("🎉 Tout est juste"), "1 bis, réponse écrite avec la version étayée : « Tout est juste »")
+    pg.wait_for_timeout(1000)
+    t(pg.inner_text("#b1_sauve").startswith("✔ Enregistré"), "1 bis : sauvegarde à la saisie")
+    pg.reload()
+    pg.wait_for_timeout(400)
+    if actif(pg) != "s1":
+        pg.click('.seance-tab[data-panel="s1"]')
+    t(pg.input_value("#b1_arg") == B1_ETAYE and pg.is_checked("#b1_q2__3"), "1 bis, après rechargement : argumentaire et choix repris")
+    pg.click('.seance-tab[data-panel="s4"]')
+    pg.wait_for_timeout(150)
 
     clo = pg.evaluate("['bonus','bilan','synthese-meta','auto-eval','pret-a-s-entrainer']"
                       ".map(id => document.getElementById(id).closest('.seance-panel').id)")

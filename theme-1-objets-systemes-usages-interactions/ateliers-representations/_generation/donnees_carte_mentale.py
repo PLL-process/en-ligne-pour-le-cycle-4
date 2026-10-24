@@ -470,8 +470,9 @@ E3 = dict(
     id="e3", titre="Les avantages et les inconvénients de l'arrosage connecté", code="4e_C1.2", duree=15,
     objectif="organiser, sur une carte mentale, les <b>avantages</b> et les <b>inconvénients</b> d'une évolution technologique.",
     production="la carte mentale de l'arrosage connecté complétée, la raison d'un hors-sujet, et une feuille écrite par toi.",
-    mots=[("évolution technologique", "le passage d'une ancienne façon de faire à une nouvelle, grâce à un objet ou à un "
-           "programme (ici&nbsp;: de l'arrosoir à l'arrosage connecté)."),
+    mots=[("évolution technologique", "le passage d'une ancienne façon de faire à une nouvelle, qui fait mieux la même "
+           "chose grâce à un objet ou à un programme (ici&nbsp;: de l'arrosoir à l'arrosage connecté — il s'agit "
+           "toujours d'arroser les plantes)."),
           ("avantage", "ce que l'évolution apporte de mieux, à quelqu'un ou à quelque chose."),
           ("inconvénient", "ce que l'évolution coûte, fait perdre ou rend fragile."),
           ("hors sujet", "une phrase qui peut être vraie, mais qui ne répond pas à la question posée."),

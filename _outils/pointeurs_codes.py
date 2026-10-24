@@ -122,13 +122,13 @@ POINTEURS = {
  "3e_C1.4": (C1 + "/3e/3e_C1.4",
              "../3e_C1.5/sequence-numerique-societe-economie-environnement-sante.html",
              "Séquence 3e — Numérique, société, environnement et santé",
-             "L'activité 2 (séance 2, partie 2.b) fait expliquer pourquoi le site d'une activité "
-             "en ligne doit respecter la loi — RGPD, propriété intellectuelle, mentions légales — et ce "
-             "que cela impose à sa conception : HTTPS, paiement sécurisé, sauvegardes. La "
-             "partie 3 bis (séance 3) demande pourquoi préférer des appareils réparables, "
-             "reconditionnés ou éco-conçus. Ce sont des réponses de quelques lignes, pas "
-             "encore un argumentaire court consacré à ce code ; le bilan y fait se positionner "
-             "l'élève.", True),
+             "L'activité 1 bis (séance 1) fait écrire un argumentaire court de quatre à six "
+             "lignes : ce que la loi — RGPD, droit à l'image, accord d'un parent sous 15 ans, "
+             "droit à l'effacement — oblige l'application de photos d'un club du collège à "
+             "prévoir, et ce que cela change à l'application (cases d'accord vides au départ, "
+             "accès réservé, bouton de retrait, durée de conservation). La partie 2.b (séance "
+             "2) y revient avec le site d'une activité en ligne, et le bilan y fait se "
+             "positionner l'élève.", True),
  "3e_C3.2": (C3 + "/3e/3e_C3.2", "../3e_C3.1/sequence_3e_C3.1-C3.4_shenzhen.html",
              "Séquence 3e — Shenzhen, comment refroidir un local qui surchauffe ?",
              "Les activités 4 et 5 argumentent le choix à trois entrées — environnement, "

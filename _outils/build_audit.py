@@ -374,7 +374,7 @@ OVERLAY = {
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
         qualite="Séquence « Numérique, société, économie, environnement, santé », 4 séances de 55 min "
-                "(l'activité 5, en séance 4, fait écrire l'argumentaire court de 3e_C1.3) + QCM 30 q.",
+                "(argumentaires courts : activité 1 bis pour 3e_C1.4, activité 5 pour 3e_C1.3) + QCM 30 q.",
         anomalies="Pas de différenciation.",
         accessibilite="À vérifier.",
         medias="L'activité 3 bis s'appuie sur la page publique de l'Arcep ; l'affiche "
