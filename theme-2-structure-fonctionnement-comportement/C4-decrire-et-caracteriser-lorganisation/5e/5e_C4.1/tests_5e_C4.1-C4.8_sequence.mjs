@@ -96,6 +96,22 @@ async function remplir(n) {
 const valider = async n => { await p.click(`[data-check="${n}"]`); await p.waitForTimeout(90); };
 const retour = n => p.textContent('#fb' + n);
 
+/** L'exercice d'atelier incrusté en tête de l'activité 1 (diagramme FAST) : ses bonnes
+    réponses sont LUES dans la définition JSON de sa section, comme celles des CHECKS. */
+async function remplirIncruste(uid) {
+  await p.evaluate(uid => {
+    const sec = document.getElementById(uid).closest('.atelier-incruste');
+    const D = JSON.parse(sec.querySelector('script[type="application/json"]').textContent).exercices[uid];
+    const coche = (name, v) => [...document.getElementsByName(name)].find(r => r.value === v).click();
+    for (const w of D.widgets) {
+      if (w.type === 'choix') coche(w.name, w.bonne);
+      else if (w.type === 'classer') w.items.forEach(it => coche(it.name, it.bonne));
+      else if (w.type === 'slots') w.slots.forEach(s => coche(s.name, s.bonnes[0]));
+      else if (w.type === 'cases') w.bonnes.forEach(v => coche(w.name, v));
+    }
+  }, uid);
+}
+
 /* ── activité 1 : associations + matériaux + justification ───────────────── */
 await remplir(1);
 await valider(1);
@@ -103,7 +119,23 @@ ok('6 · act. 1 refusée tant que la justification ne parle pas du sel marin',
    !/Excellent|Bravo|Très bien/.test(await retour(1)), (await retour(1)).slice(0, 80));
 await p.fill('#e1_just', "Près de la mer, les embruns apportent du sel : l'acier rouille vite.");
 await valider(1);
-ok('7 · act. 1 validée avec les 9 réponses et la justification', /9 \/ 9/.test(await retour(1)),
+ok('6 bis · act. 1 refusée tant que l\'exercice du diagramme FAST inséré n\'est pas réussi',
+   /diagramme FAST/.test(await retour(1)) && !(await p.evaluate(() => !!window.__valid[1])),
+   (await retour(1)).slice(0, 120));
+await p.click('#fa_5e_e1 button.verifier');
+await p.waitForTimeout(80);
+ok('6 ter · l\'exercice FAST inséré se vérifie à vide (retour à reprendre)',
+   (await p.textContent('#fa_5e_e1 .retour')).includes('🔴'),
+   (await p.textContent('#fa_5e_e1 .retour')).slice(0, 70));
+await remplirIncruste('fa_5e_e1');
+await p.click('#fa_5e_e1 button.verifier');
+await p.waitForTimeout(80);
+ok('6 quater · l\'exercice FAST inséré, rempli juste, est réussi',
+   (await p.textContent('#fa_5e_e1 .retour')).includes('Tout est juste'),
+   (await p.textContent('#fa_5e_e1 .retour')).slice(0, 70));
+await valider(1);
+ok('7 · act. 1 validée avec les 9 réponses, la justification et l\'exercice FAST',
+   /9 \/ 9/.test(await retour(1)) && await p.evaluate(() => !!window.__valid[1]),
    (await retour(1)).slice(0, 70));
 
 /* ── activité 2 : chaîne d'énergie, ordre et natures ─────────────────────── */
@@ -203,6 +235,9 @@ ok('25 · les validations survivent au rechargement',
    (await p.textContent('#progTxt')).includes('7 / 7'), await p.textContent('#progTxt'));
 ok('26 · les traces d\'expériences survivent au rechargement',
    await p.evaluate(() => ['jour', 'nuit', 'nuit+passage'].every(k => k in (window.__exp || {}))));
+const cochesFast = await p.$$eval('#fa_5e_e1 input[type=radio]:checked', l => l.length);
+ok('26 bis · l\'exercice FAST inséré retrouve ses 8 réponses au rechargement (sa propre sauvegarde)',
+   cochesFast === 8, cochesFast + ' cases cochées');
 
 /* ── liens locaux et hygiène ─────────────────────────────────────────────── */
 const liens = await p.$$eval('a[href]', a => a.map(x => x.getAttribute('href')));

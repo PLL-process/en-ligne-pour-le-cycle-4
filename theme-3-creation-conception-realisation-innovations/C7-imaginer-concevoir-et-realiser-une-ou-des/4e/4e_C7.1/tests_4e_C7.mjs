@@ -278,6 +278,48 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   await page.selectOption("#a1o2", "2");
 }
 
+/* — REFAIRE : l'exercice d'atelier incrusté en tête (ajouter une fonction au FAST) le verrouille.
+     Ses bonnes réponses sont LUES dans la définition JSON de sa section ; seule la fonction
+     écrite vient d'ici (le champ `exemple` de sa définition d'atelier). — */
+{
+  await page.fill("#reinv", "Besoin : cultiver malgré le vent. Idée A suspendue, idée B lestée. Je choisis B. Plastique.");
+  await page.click('.btn.check[data-check="5"]');
+  await page.waitForTimeout(150);
+  const fb5 = await page.locator("#fb5").textContent();
+  ok("REFAIRE : refusé (🔒) tant que l'exercice FAST inséré n'est pas réussi",
+     /🔒/.test(fb5) && /diagramme FAST/.test(fb5), fb5.slice(0, 80));
+  await page.click("#fa_4e_e5 button.verifier");
+  await page.waitForTimeout(100);
+  const vide = await page.locator("#fa_4e_e5 .retour").textContent();
+  ok("REFAIRE : l'exercice FAST inséré se vérifie à vide (retour à reprendre)", /🔴/.test(vide), vide.slice(0, 60));
+  await page.evaluate(() => {
+    const uid = "fa_4e_e5";
+    const sec = document.getElementById(uid).closest(".atelier-incruste");
+    const D = JSON.parse(sec.querySelector('script[type="application/json"]').textContent).exercices[uid];
+    const coche = (name, v) => [...document.getElementsByName(name)].find(r => r.value === v).click();
+    for (const w of D.widgets) {
+      if (w.type === "choix") coche(w.name, w.bonne);
+      else if (w.type === "classer") w.items.forEach(it => coche(it.name, it.bonne));
+      else if (w.type === "slots") w.slots.forEach(s => coche(s.name, s.bonnes[0]));
+      else if (w.type === "texte") {
+        const t = document.getElementById(w.name);
+        t.value = "mesurer le niveau d'eau de la cuve";
+        t.dispatchEvent(new Event("input", { bubbles: true }));
+      }
+    }
+  });
+  await page.click("#fa_4e_e5 button.verifier");
+  await page.waitForTimeout(100);
+  const juste = await page.locator("#fa_4e_e5 .retour").textContent();
+  ok("REFAIRE : l'exercice FAST inséré, rempli juste, est réussi", /Tout est juste/.test(juste), juste.slice(0, 60));
+  ok("REFAIRE : la fonction écrite s'affiche dans la case du FAST",
+     /niveau d'eau/.test(await page.locator("#fa-e5-ft").textContent()));
+  await page.click('.btn.check[data-check="5"]');
+  await page.waitForTimeout(150);
+  ok("REFAIRE : validé une fois l'exercice FAST réussi",
+     /activité validée/.test(await page.locator("#fb5").textContent()));
+}
+
 /* — sauvegarde / restauration — */
 {
   await page.waitForTimeout(200);
@@ -285,8 +327,13 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   ok("sauvegarde : la clé localStorage attendue est écrite", !!cle && cle.length > 50, CFG.cle);
   await page.reload();
   await page.waitForTimeout(400);
+  /* activités 0, 1 et 5 (REFAIRE) validées plus haut */
   ok("restauration : la progression survit au rechargement",
-     /^[12] \/ 6/.test((await page.locator("#progTxt").textContent()).trim()));
+     /^3 \/ 6/.test((await page.locator("#progTxt").textContent()).trim()),
+     (await page.locator("#progTxt").textContent()).trim());
+  const cochesFast = await page.locator("#fa_4e_e5 input[type=radio]:checked").count();
+  ok("restauration : l'exercice FAST inséré retrouve ses 3 choix et sa fonction écrite",
+     cochesFast === 3 && /niveau/.test(await page.inputValue("#fa_4e_e5__ft")), cochesFast + " choix");
   ok("restauration : le tableau de bord retrouve ses coches",
      (await page.locator("#tachesBandeau .tache.fait").count()) >= 1);
 }
@@ -324,10 +371,8 @@ await ctx.close();
   const ctxq = await nav.newContext({ viewport: { width: 1280, height: 900 } });
   const { page: pq, erreurs: eq } = await ouvrir(ctxq, CFG.qcm);
   ok("QCM : chargement sans erreur JS", eq.length === 0, eq.slice(0, 2).join(" | "));
-  /* Ces deux QCM sont de la GÉNÉRATION ANCIENNE du dépôt : format
-     {q, opts, ok, exp}, sans réfutation par distracteur, et 28 questions au lieu
-     de 30. On mesure ce qu'ils sont — on ne prétend pas qu'ils sont au standard.
-     La mise à niveau est déclarée « restant à faire » dans le rapport. */
+  /* Ces QCM sont passés à la génération actuelle du dépôt (30 questions, {q, o, r, expl, d…}, une
+     réfutation par distracteur) : le banc lit les deux formats et vérifie les réfutations (24/10/2026). */
   const meta = await pq.evaluate(src => {
     const m = src.match(/const (?:QUESTIONS|questions)\s*=\s*(\[[\s\S]*?\n\];)/);
     if (!m) return null;
@@ -336,8 +381,9 @@ await ctx.close();
     if (!Array.isArray(q)) return null;
     const rep = {};
     q.forEach(x => { const i = (x.ok !== undefined ? x.ok : x.r); rep[i] = (rep[i] || 0) + 1; });
-    const sansExp = q.filter(x => !(x.exp && String(x.exp).trim())).length;
-    const sansQuatre = q.filter(x => !(x.opts && x.opts.length === 4)).length;
+    /* deux générations de QCM : l'ancienne {q, opts, ok, exp}, l'actuelle {q, o, r, expl, d…} */
+    const sansExp = q.filter(x => !((x.exp || x.expl) && String(x.exp || x.expl).trim())).length;
+    const sansQuatre = q.filter(x => !((x.opts || x.o) && (x.opts || x.o).length === 4)).length;
     const refutations = q.filter(x => Array.isArray(x.d)).length;
     return { n: q.length, rep, sansExp, sansQuatre, refutations };
   }, fs.readFileSync(path.join(LOT, CFG.qcm), "utf8"));
@@ -347,8 +393,8 @@ await ctx.close();
     ok("QCM : chaque question porte une explication", meta.sansExp === 0, meta.sansExp + " sans explication");
     ok("QCM : les 4 positions servent de bonne réponse",
        Object.keys(meta.rep).length === 4, JSON.stringify(meta.rep));
-    ok("QCM : état déclaré — génération ancienne, sans réfutation par distracteur",
-       meta.refutations === 0, meta.refutations + " question(s) avec réfutations (0 attendu ici)");
+    ok("QCM : génération actuelle — chaque question réfute ses distracteurs",
+       meta.refutations === meta.n, meta.refutations + " question(s) sur " + meta.n + " avec réfutations");
   } else {
     ok("QCM : le tableau des questions est lisible depuis la source", false,
        "const questions = [...] introuvable ou non évaluable — contrôle NON exécuté");

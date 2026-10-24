@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 1 · 5e-4e-3e — QCM : des fonctions aux solutions techniques (diagramme FAST) (5e_C4.1 · 5e_C1.2 · 4e_C4.4 · 4e_C7.2 · 3e_C7.2)</title>
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;margin:0;padding:0 16px 70px;line-height:1.55}
+  h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:10px;font-size:.95em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  section.card{max-width:880px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.08em;margin-top:0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:880px;margin:0 auto 10px}
+  @media(max-width:720px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.75em;color:var(--sub);display:block;margin-bottom:3px}
+  input,select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.9em}
+  .btn:hover{background:var(--btn-h)}
+  .btn.small{padding:6px 11px;font-size:.8em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.warn{background:#8a4a1d}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  /* tableau de bord */
+  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
+  .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
+  .dash b{display:block;font-size:1.35em}
+  .dash .v-ok{color:var(--ok)} .dash .v-err{color:var(--err)} .dash .v-hl{color:var(--hl)} .dash .v-warn{color:var(--warn)}
+  .progress-bar{height:12px;background:#08132c;border-radius:999px;overflow:hidden;margin:4px 0 10px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .4s;border-radius:999px}
+  /* minuteur */
+  .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .timer-display{font-family:ui-monospace,'Cascadia Mono','Consolas',monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
+  .timer-off{color:#5b7bb8;font-size:.8em}
+  /* modes */
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
+  /* grille navigation */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:10px}
+  .grille button{aspect-ratio:1;border-radius:9px;border:1px solid var(--input-bd);background:var(--input-bg);color:var(--text);font-weight:700;cursor:pointer;font-family:inherit;font-size:.85em;position:relative}
+  .grille button.actuelle{outline:3px solid var(--hl)}
+  .grille button.q-ok{background:#123322;border-color:var(--ok);color:var(--ok)}
+  .grille button.q-err{background:#3a1218;border-color:var(--err);color:var(--err)}
+  .grille button.q-rep{background:#173666;border-color:var(--hl)}
+  .grille button .marque{position:absolute;top:-6px;right:-4px;font-size:.8em}
+  .filtres{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .filtres .btn.actif{background:var(--btn-h);outline:2px solid var(--hl)}
+  /* question */
+  .q-comp{font-size:.78em;color:var(--head);font-weight:600}
+  .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
+  .options{display:grid;gap:9px}
+  .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
+  .option:hover:not(:disabled){border-color:var(--hl)}
+  .option .lettre{font-weight:700;color:var(--hl)}
+  .option.choisie{border-color:var(--hl);background:#12305e}
+  .option.bonne{border-color:var(--ok);background:rgba(129,251,161,.1)}
+  .option.mauvaise{border-color:var(--err);background:rgba(255,123,136,.1)}
+  .option:disabled{cursor:default;opacity:.92}
+  .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  /* correction */
+  .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
+  .correction-bloc.show{display:block}
+  .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
+  .correction-bloc.c-err{background:rgba(255,123,136,.07);border:1px solid #6b2f38}
+  .correction-bloc h3{margin:0 0 6px;font-size:1em}
+  .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
+  .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
+  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.nuance{border:1px solid #3d5c8a;background:rgba(20,34,66,.72)}
+  .bloc-detail.nuance b{color:#8fb6ff}
+  .bloc-detail.retenir{border:1px solid #2f6b40}
+  .bloc-detail.retenir b{color:var(--ok)}
+  .bloc-detail.encoura{border:1px solid #6a5a1f}
+  .bloc-detail.encoura b{color:var(--warn)}
+  .dist-liste{margin:4px 0 0;padding-left:18px;font-size:.88em}
+  .dist-liste li{margin:4px 0}
+  /* résultats */
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:.85em}
+  @media(max-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .res-grid b{display:block;font-size:1.5em}
+  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
+  table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+  table.bilan th{background:var(--input-bg);color:var(--hl)}
+  .maitrise-ok{color:var(--ok);font-weight:600}
+  .maitrise-moyen{color:var(--warn);font-weight:600}
+  .maitrise-ko{color:var(--err);font-weight:600}
+  footer{max-width:880px;margin:26px auto 0;text-align:center;color:#5b7bb8;font-size:.78em}
+  .ecran{display:none}
+  .ecran.actif{display:block}
+  .saved-note{font-size:.76em;color:var(--ok);text-align:center;min-height:1.1em}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff;color:#111}
+    section.card{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    .btn,.grille,.filtres,.modes,.timer-zone{display:none!important}
+    .ecran{display:block!important}
+    h1,h2{color:#111}
+  }
+
+
+
+@media print{
+/* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
+  #id_classe,#id_date,#id_nom,#id_prenom,.badge,.bilan th,.dash div,.loupe-cliquable,.option,.progress-bar,.res-grid div{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .v-hl{color:#047fa0!important}
+  .option span{color:#0a1b3d!important}
+  .badge{color:#0d2347!important}
+  #qImgCap,.card span,.identite label,.subtitle{color:#1a6af8!important}
+  .note20,.v-warn{color:#946b00!important}
+  .q-comp{color:#a145ea!important}
+}
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../index.html">⌂ Accueil</a><a href="atelier_5e_fast.html">← Atelier 5e</a><a href="atelier_4e_fast.html">← Atelier 4e</a><a href="atelier_3e_fast.html">← Atelier 3e</a><a href="../../_reperes/carte_des_representations.html">🧭 Toutes les représentations</a></nav>
+<h1>🌳 QCM — Des fonctions aux solutions techniques</h1>
+<p class="subtitle">Lire et compléter un diagramme FAST, comparer deux principes (5e) ; associer constituants et fonctions, ajouter une fonction (4e) ; proposer, contrôler et choisir des solutions (3e)</p>
+<div class="badges">
+  <span class="badge niveau">5e · 4e · 3e</span>
+  <span class="badge code">5e_C4.1</span>
+  <span class="badge code">5e_C1.2</span>
+  <span class="badge code">4e_C4.4</span>
+  <span class="badge code">4e_C7.2</span>
+  <span class="badge code">3e_C7.2</span>
+  <span class="badge theme">30 questions · 7 illustrées · chaque distracteur réfuté</span>
+</div>
+<p style="text-align:center">⬅ Revenir à l'atelier de ton niveau : <a href="atelier_5e_fast.html">Atelier 5e</a> · <a href="atelier_4e_fast.html">Atelier 4e</a> · <a href="atelier_3e_fast.html">Atelier 3e</a></p>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<section class="card">
+  <h2>📊 Ma progression</h2>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar"><div id="pfill"></div></div>
+  <div class="dash">
+    <div>Répondu<b id="dRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="dOk" class="v-ok">0</b></div>
+    <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
+    <div>Score<b id="dScore" class="v-hl">0 %</b></div>
+    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+  </div>
+  <div class="timer-zone">
+    <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
+    <button class="btn small" id="tStart">▶ Démarrer</button>
+    <button class="btn small ghost" id="tPause" disabled>⏸ Pause</button>
+    <button class="btn small ghost" id="tResume" disabled>⏵ Reprendre</button>
+    <label class="timer-off" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="tSans" style="width:auto"> travailler sans minuteur</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎛 Mode de travail</h2>
+  <div class="modes">
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="cible">Révision ciblée</button>
+    <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
+    <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
+  </div>
+  <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <select id="selComp" style="max-width:420px;display:inline-block">
+      <option value="5e_C4.1">5e_C4.1 — Associer des solutions techniques à une ou des fonctions techniques.</option>
+      <option value="5e_C1.2">5e_C1.2 — Comparer des principes techniques pour une même fonction technique.</option>
+      <option value="4e_C4.4">4e_C4.4 — Identifier les constituants de la chaîne d’information d’un objet réel et les associer à leur fonction.</option>
+      <option value="4e_C7.2">4e_C7.2 — Proposer et fabriquer une solution pour ajouter une nouvelle fonction à un OST (croquis, schéma, graphique, algorithme, modélisation).</option>
+      <option value="3e_C7.2">3e_C7.2 — Proposer et fabriquer un ensemble de solutions pour produire un nouvel OST (croquis, schéma, graphique, algorithme, modélisation).</option>
+    </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🗺 Navigation</h2>
+  <div class="filtres" role="group" aria-label="Filtres de la grille">
+    <button class="btn small actif" data-filtre="toutes">Toutes</button>
+    <button class="btn small" data-filtre="non">Non répondues</button>
+    <button class="btn small" data-filtre="ok">Correctes</button>
+    <button class="btn small" data-filtre="err">Incorrectes</button>
+    <button class="btn small" data-filtre="marq">🔖 À revoir</button>
+  </div>
+  <div class="grille" id="grille" aria-label="Grille des questions"></div>
+</section>
+
+<section class="card ecran actif" id="ecranQuestion">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span class="q-comp" id="qComp">—</span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
+  </div>
+  <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
+  <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
+  <div class="q-actions">
+    <button class="btn" id="btnValider">✔ Valider ma réponse</button>
+    <button class="btn ghost" id="btnPrec">← Précédente</button>
+    <button class="btn ghost" id="btnSuiv">Suivante →</button>
+    <button class="btn ghost" id="btnNonRep">⏭ Prochaine non répondue</button>
+    <button class="btn warn" id="btnTerminer">🏁 Terminer et voir le bilan</button>
+  </div>
+  <div class="correction-bloc" id="corrBloc" aria-live="polite"></div>
+</section>
+
+<section class="card ecran" id="ecranResultat">
+  <h2>🏁 Résultat final</h2>
+  <div class="note20" id="rNote">— /20</div>
+  <div class="res-grid">
+    <div>Questions<b id="rTot">30</b></div>
+    <div>Répondues<b id="rRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
+    <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
+    <div>Non répondues<b id="rNon" style="color:var(--warn)">0</b></div>
+    <div>Score brut<b id="rBrut">0</b></div>
+    <div>Pourcentage<b id="rPct">0 %</b></div>
+    <div>Temps total<b id="rTemps">—</b></div>
+  </div>
+  <h2 style="margin-top:16px">📚 Bilan par compétence</h2>
+  <table class="bilan" id="tblBilan">
+    <thead><tr><th>Compétence</th><th>Score</th><th>Maîtrise</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div id="rNotions" style="margin-top:12px;font-size:.92em"></div>
+  <p id="rEncoura" style="margin-top:12px;font-weight:600;color:var(--warn)"></p>
+  <div class="q-actions" style="justify-content:center">
+    <button class="btn" id="btnRejouerErreurs">🔁 Réessayer mes erreurs</button>
+    <button class="btn warn" id="btnRecommencer">♻ Recommencer entièrement</button>
+    <button class="btn ghost" id="btnImprimer">🖨 Imprimer / PDF</button>
+    <button class="btn ghost" id="btnRetourQ">← Revenir aux questions</button>
+  </div>
+</section>
+
+<footer>
+  <p>QCM d’entraînement 5e_C4.1 · 5e_C1.2 · 4e_C4.4 · 4e_C7.2 · 3e_C7.2 · Thème 1 · Technologie cycle 4 (2024) · ateliers associés : <a href="atelier_5e_fast.html">Atelier 5e</a> · <a href="atelier_4e_fast.html">Atelier 4e</a> · <a href="atelier_3e_fast.html">Atelier 3e</a></p>
+  <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
+</footer>
+
+<script>
+"use strict";
+/* Banque de questions — Atelier : des fonctions aux solutions techniques (diagramme FAST). 30 questions (5e_C4.1 : 8 · 5e_C1.2 : 5 · 4e_C4.4 : 6 · 4e_C7.2 : 5 · 3e_C7.2 : 6), dont 7 illustrées. Source : _generation/q_fast.py */
+const QUESTIONS = [
+/* ═══ 5e_C4.1 ═══ */
+{c:"5e_C4.1",n:"Reconnaître une fonction",q:"Dans un diagramme FAST, laquelle de ces étiquettes est une fonction technique ?",
+ o:["le panneau solaire du toit","la batterie du lampadaire","stocker l'énergie pour la nuit","le capteur de luminosité du mât"],r:2,
+ expl:"Une <b>fonction technique</b> dit ce que l'objet doit faire : elle commence par un <b>verbe à l'infinitif</b>. Les trois autres étiquettes sont des noms : ce sont des <b>solutions techniques</b>, des éléments qu'on peut toucher.",
+ ex:"« Détecter un passant », « capter l'énergie du soleil » : des fonctions. « Le détecteur de mouvement » : une solution.",
+ err:"Prendre « capteur » pour un verbe, parce qu'il ressemble à « capter ».",
+ d:["« Le panneau solaire » est un nom : c'est la solution de « capter l'énergie du soleil ».","« La batterie » est un nom : c'est l'élément qui réalise « stocker l'énergie », pas la fonction elle-même.","","« Le capteur » ressemble au verbe « capter », mais c'est un composant : une solution, pas une fonction."],
+ ret:"Fonction : un verbe. Solution : un nom."},
+{c:"5e_C4.1",n:"Lire vers la droite",q:"Sur ce FAST du lampadaire, comment le lampadaire détecte-t-il un passant ?",
+ img:{src:"Images/fast_lampadaire_complet.svg",alt:"Diagramme FAST du lampadaire intelligent : la fonction d'usage « éclairer la rue la nuit quand un piéton passe » se décompose en six fonctions techniques, chacune avec sa solution : détecter la nuit, le capteur de luminosité ; détecter un passant, le détecteur de mouvement ; décider quand allumer, la carte programmable ; produire la lumière, le bloc de LED ; stocker l'énergie pour la nuit, la batterie ; capter l'énergie du soleil, le panneau solaire."},
+ o:["avec le détecteur de mouvement","avec le capteur de luminosité","avec la carte programmable","avec le bloc de LED qui s'allume"],r:0,
+ expl:"Vers la droite, le FAST répond à « <b>comment ?</b> ». Sur la ligne « détecter un passant », la case de droite dit : le détecteur de mouvement.",
+ ex:"Comment produire la lumière ? → vers la droite → le bloc de LED.",
+ err:"Lire la case d'une autre ligne, ou lire le schéma dans le mauvais sens.",
+ d:["","Le capteur de luminosité est sur la ligne « détecter la nuit » : il dit s'il fait jour ou nuit, il ne voit pas les passants.","La carte programmable est sur la ligne « décider quand allumer » : elle décide, elle ne détecte rien elle-même.","Le bloc de LED répond à « comment produire la lumière ? » : il éclaire, il ne détecte pas."],
+ ret:"Vers la droite : « comment ? »."},
+{c:"5e_C4.1",n:"Lire vers la gauche",q:"Pourquoi le lampadaire intelligent a-t-il un panneau solaire ?",
+ o:["pour capter l'énergie du soleil","pour stocker l'énergie la nuit","pour détecter le lever du jour","pour produire la lumière le soir"],r:0,
+ expl:"Vers la gauche, le FAST répond à « <b>pourquoi ?</b> » : le panneau solaire → capter l'énergie du soleil → éclairer la rue la nuit quand un piéton passe.",
+ ex:"Pourquoi une batterie ? → vers la gauche → stocker l'énergie pour la nuit.",
+ err:"Confondre le panneau, qui capte, et la batterie, qui stocke.",
+ d:["","La nuit, le panneau ne reçoit plus de lumière et ne garde rien : c'est la batterie qui stocke l'énergie.","Dans ce lampadaire, c'est le capteur de luminosité qui dit s'il fait jour ou nuit, sur sa propre ligne.","Produire la lumière, c'est la ligne du bloc de LED : le panneau ne s'allume pas le soir."],
+ ret:"Vers la gauche : « pourquoi ? »."},
+{c:"5e_C4.1",n:"Le sens de lecture",q:"Dans un diagramme FAST, quand on va d'une fonction technique vers la droite, on répond à la question…",
+ o:["« Comment ? »","« Pourquoi ? »","« Combien ? »","« Pour qui ? »"],r:0,
+ expl:"Vers la droite, on cherche <b>comment</b> la fonction est réalisée : la solution technique. Vers la gauche, on cherche <b>pourquoi</b> elle existe.",
+ ex:"Détecter la nuit → comment ? → le capteur de luminosité.",
+ err:"Inverser les deux sens de lecture.",
+ d:["","« Pourquoi ? » se lit vers la gauche : de la solution vers la fonction, puis vers la fonction d'usage.","Le FAST ne compte rien : aucune case ne donne une quantité ou un nombre de pièces.","« Pour qui ? » est une question de la bête à cornes (à qui l'objet rend service), pas une lecture du FAST."],
+ ret:"Droite : comment. Gauche : pourquoi."},
+{c:"5e_C4.1",n:"À quoi sert le FAST",q:"Un diagramme FAST sert à…",
+ o:["relier la fonction d'usage aux solutions","lister ce qui entoure l'objet et agit sur lui","placer les tâches d'un projet dans le temps","dire à qui l'objet rend service, et pourquoi"],r:0,
+ expl:"Le FAST part de la <b>fonction d'usage</b>, la décompose en <b>fonctions techniques</b> et associe à chacune la <b>solution technique</b> qui la réalise.",
+ ex:"Éclairer la rue → détecter un passant → le détecteur de mouvement.",
+ err:"Confondre les schémas de l'analyse fonctionnelle entre eux.",
+ d:["","Lister ce qui entoure l'objet, c'est le diagramme des interacteurs extérieurs (le diagramme pieuvre).","Placer des tâches dans le temps, c'est le diagramme de Gantt : il organise un projet, pas un objet.","Dire à qui l'objet rend service, sur quoi il agit et dans quel but, c'est la bête à cornes."],
+ ret:"FAST : fonction d'usage → fonctions techniques → solutions."},
+{c:"5e_C4.1",n:"Le nom du schéma",q:"D'où vient le nom « diagramme FAST » ?",
+ o:["du mot anglais « fast », qui veut dire rapide","des initiales de quatre mots anglais","du nom de l'ingénieur qui l'a inventé","d'une marque de logiciel de dessin"],r:1,
+ expl:"FAST est un sigle anglais : <i lang=\"en\">Function Analysis System Technique</i>, c'est-à-dire « technique d'analyse fonctionnelle ».",
+ ex:"Le programme, lui, ne dit pas « FAST » : il parle de fonctions techniques et de solutions techniques.",
+ err:"Lire « fast » comme le mot anglais « rapide ».",
+ d:["Le mot anglais « fast » veut bien dire « rapide », mais ici chaque lettre est l'initiale d'un mot : c'est un sigle.","","Aucun nom de personne : les quatre lettres sont les initiales de Function, Analysis, System, Technique.","Le FAST se dessine sur papier comme sur n'importe quel logiciel : ce n'est pas une marque."],
+ ret:"FAST = Function Analysis System Technique."},
+{c:"5e_C4.1",n:"La case de la batterie",q:"Sur ce FAST à compléter, quelle solution met-on dans la case vide de la ligne « stocker l'énergie pour la nuit » ?",
+ img:{src:"Images/fast_lampadaire_a_completer.svg",alt:"Diagramme FAST du lampadaire intelligent à compléter : trois cases de solution sont vides, en pointillés, sur les lignes « détecter un passant », « stocker l'énergie pour la nuit » et « capter l'énergie du soleil » ; les autres solutions sont le capteur de luminosité, la carte programmable et le bloc de LED."},
+ o:["le panneau solaire","la batterie","le bloc de LED","la carte programmable"],r:1,
+ expl:"La batterie se charge le jour et rend l'énergie la nuit : c'est elle qui <b>stocke</b>.",
+ ex:"Dans une lampe de poche, ce sont les piles qui stockent l'énergie.",
+ err:"Mettre le panneau solaire, qui capte mais ne garde rien.",
+ d:["Le panneau solaire capte l'énergie du soleil, le jour ; la nuit, il ne donne plus rien et ne garde rien.","","Le bloc de LED consomme l'énergie pour produire la lumière : il ne la stocke pas.","La carte programmable décide quand allumer : elle ne garde aucune réserve d'énergie."],
+ ret:"Stocker l'énergie : la batterie."},
+{c:"5e_C4.1",n:"Une solution, deux fonctions",q:"Dans certaines lampes de jardin, le panneau solaire capte l'énergie et sert aussi à détecter la nuit. Que montre leur FAST ?",
+ o:["une seule fonction, écrite deux fois de suite","une erreur : une solution n'a qu'une fonction","deux panneaux solaires, un pour chaque fonction","la même solution en face de deux fonctions"],r:3,
+ expl:"Une même solution peut réaliser <b>deux</b> fonctions : le panneau capte l'énergie, et quand il ne donne plus rien, la carte sait que c'est la nuit.",
+ ex:"Le module Wi-Fi du jardin envoie l'état de l'arrosage et peut aussi envoyer une alerte : une solution, deux fonctions.",
+ err:"Croire qu'à chaque fonction correspond une pièce différente.",
+ d:["« Capter l'énergie » et « détecter la nuit » sont deux actions différentes : deux fonctions, pas une seule répétée.","Ce n'est pas une erreur : une solution peut servir deux fonctions, et cela fait une pièce de moins à fabriquer.","Un seul panneau suffit dans ces lampes : il fait les deux choses, on n'en ajoute pas un second.",""],
+ ret:"Une solution peut servir plusieurs fonctions."},
+/* ═══ 5e_C1.2 ═══ */
+{c:"5e_C1.2",n:"Le mot « ou »",q:"Sur cet extrait du FAST du vélo-cargo, que veut dire le mot « ou » sur la ligne « ralentir la roue » ?",
+ img:{src:"Images/fast_velo_cargo_freinage.svg",alt:"Extrait du diagramme FAST du vélo-cargo : la fonction « ralentir la roue » a deux solutions reliées par « ou » : frein à patins, frottement sur la jante, ou frein à disque, frottement sur un disque."},
+ o:["le frein à disque remplace la chaîne","il faut monter les deux freins à la fois","deux principes possibles : on en choisira un","la fonction a été écrite deux fois par erreur"],r:2,
+ expl:"Deux cases reliées par « ou » sont une <b>alternative</b> : deux principes techniques pour la même fonction. On les compare, puis on choisit.",
+ ex:"Pour la station d'alerte, « diffuser l'alerte » a trois solutions reliées par « ou ».",
+ err:"Lire « ou » comme « et ».",
+ d:["La chaîne est sur une autre ligne, « transmettre l'effort de Léa à la roue » : le frein ne la remplace pas.","« Ou » propose un choix : Léa n'a besoin que d'un seul système de freinage par roue.","","La fonction « ralentir la roue » n'est écrite qu'une fois ; ce sont ses solutions qui sont deux."],
+ ret:"« Ou » : une alternative, à trancher."},
+{c:"5e_C1.2",n:"Ce qu'est un principe",q:"Un principe technique, c'est…",
+ o:["la façon physique de réaliser une fonction","le prix de la solution qu'on achète","le nom de la pièce choisie au magasin","ce à quoi sert l'objet, pour celui qui l'utilise"],r:0,
+ expl:"Le <b>principe</b> dit par quel phénomène, et à quel endroit, la fonction est réalisée : frotter des patins sur la jante, frotter des plaquettes sur un disque.",
+ ex:"Sécher le linge : l'air chaud d'une machine, ou le soleil et le vent sur un étendoir — deux principes.",
+ err:"Confondre le principe et la solution qu'on achète.",
+ d:["","Le prix est un critère de choix entre principes, pas le principe lui-même.","Le nom de la pièce achetée, c'est la solution ; le principe dit comment elle agit.","Ce à quoi sert l'objet, c'est sa fonction d'usage, tout à gauche du FAST."],
+ ret:"Principe : quel phénomène, à quel endroit."},
+{c:"5e_C1.2",n:"Le même phénomène",q:"Le frein à patins et le frein à disque ralentissent tous les deux la roue par…",
+ o:["aimantation","frottement","aspiration de l'air","électricité"],r:1,
+ expl:"Les deux freins serrent une pièce qui tourne avec la roue : la <b>jante</b> pour l'un, un <b>disque</b> pour l'autre. Même phénomène, le frottement, mais pas au même endroit.",
+ ex:"Frotter ses mains l'une contre l'autre les chauffe : le frottement freine et chauffe.",
+ err:"Croire que deux principes différents utilisent forcément deux phénomènes différents.",
+ d:["Aucun aimant dans ces deux freins : ce sont des patins ou des plaquettes qui serrent.","","Ni le patin ni le disque n'aspirent l'air : ils serrent une pièce qui tourne.","Ces deux freins de vélo sont mécaniques : ils ne consomment pas d'électricité pour freiner."],
+ ret:"Même phénomène, endroits différents."},
+{c:"5e_C1.2",n:"Pour Léa, sous la pluie",q:"Léa descend des côtes sous la pluie avec ses deux enfants dans le bac. Quel frein lui conseiller ?",
+ o:["le frein à patins : il use bien la jante","le frein à patins : il est moins cher","le frein à disque : il freine bien mouillé","aucun : en descente, il suffit de ne pas pédaler"],r:2,
+ expl:"Sous la pluie, le pneu projette l'eau sur la jante et les patins glissent ; le disque, au centre de la roue, est plus à l'abri. Pour Léa, le freinage sous la pluie compte plus que le prix.",
+ ex:"Pour un vélo qui ne roule que par beau temps, sur du plat, le frein à patins peut suffire.",
+ err:"Choisir d'après le prix sans regarder la situation.",
+ d:["User la jante est un inconvénient du frein à patins, pas une raison de le choisir.","Moins cher, c'est vrai, mais Léa descend des côtes sous la pluie : le freinage mouillé passe avant le prix.","","Pour ralentir, il faut justement un frein : un vélo-cargo chargé prend de la vitesse tout seul en descente."],
+ ret:"On choisit selon la situation."},
+{c:"5e_C1.2",n:"Le meilleur, pour qui ?",q:"Pourquoi ne peut-on pas dire « le frein à disque est meilleur », sans rien ajouter ?",
+ o:["parce que les deux freins sont toujours égaux","parce que le frein à disque freine moins bien","parce que le bon choix dépend de la situation","parce que le frein à disque est interdit en ville"],r:2,
+ expl:"Chaque principe a des avantages et des inconvénients. Le disque freine mieux sous la pluie, le patin coûte moins cher et se règle facilement : le choix dépend de l'usage, de la météo, du budget.",
+ ex:"Pour un petit vélo d'enfant, léger et lent, le frein à patins est souvent un bon choix.",
+ err:"Chercher un « meilleur » dans l'absolu.",
+ d:["Ils utilisent le même phénomène, mais pas au même endroit : ils ne se valent pas sous la pluie.","Le frein à disque freine mieux sous la pluie : ce n'est pas lui qui freine moins bien.","","Les freins à disque sont autorisés sur les vélos : ce n'est pas une question de règle."],
+ ret:"Meilleur, oui, mais dans quelle situation ?"},
+/* ═══ 4e_C4.4 ═══ */
+{c:"4e_C4.4",n:"Acquérir",q:"Dans le système d'arrosage, quel constituant acquiert l'information « la terre est sèche » ?",
+ o:["le module Wi-Fi","la carte programmable","le capteur d'humidité du sol","le smartphone de la gardienne"],r:2,
+ expl:"<b>Acquérir</b>, c'est prendre une information sur le monde : c'est le rôle d'un <b>capteur</b>. Le capteur d'humidité, planté dans la terre, mesure l'eau qu'elle contient.",
+ ex:"Dans le lampadaire, le détecteur de mouvement acquiert l'information « quelqu'un passe ».",
+ err:"Donner ce rôle à la carte, parce que c'est elle qui « sait » qu'il faut arroser.",
+ d:["Le module Wi-Fi envoie l'état du jardin au smartphone : il communique, il ne mesure rien.","La carte reçoit la mesure et la compare au seuil : elle traite l'information, elle ne la prend pas dans la terre.","","Le smartphone reçoit l'état du jardin, loin des bacs : il ne mesure pas l'eau de la terre."],
+ ret:"Acquérir : le capteur."},
+{c:"4e_C4.4",n:"Traiter",q:"Sur ce FAST du jardin, quel constituant réalise « décider quand arroser » ?",
+ img:{src:"Images/fast_jardin_arrosage.svg",alt:"Diagramme FAST du système d'arrosage : mesurer l'humidité du sol, le capteur d'humidité du sol ; décider quand arroser, la carte programmable ; envoyer l'état au smartphone, le module Wi-Fi ; laisser passer l'eau ou la bloquer, l'électrovanne ; faire circuler l'eau jusqu'aux bacs, la pompe et les tuyaux ; stocker l'eau de pluie, la cuve."},
+ o:["l'électrovanne","le capteur d'humidité du sol","la carte programmable","le smartphone de la gardienne"],r:2,
+ expl:"Décider, c'est <b>traiter</b> l'information : la carte programmable compare la mesure d'humidité au seuil et suit son programme.",
+ ex:"Dans le lampadaire, la carte programmable décide quand allumer.",
+ err:"Croire que le capteur décide, parce qu'il « sent » la sécheresse.",
+ d:["L'électrovanne s'ouvre sur ordre de la carte : elle exécute, elle ne décide pas.","Le capteur mesure l'humidité, il ne compare rien : il donne une valeur, la carte décide.","","Le smartphone reçoit l'état du jardin ; il n'est pas une solution du FAST et ne décide pas de l'arrosage."],
+ ret:"Traiter : la carte programmable."},
+{c:"4e_C4.4",n:"Communiquer",q:"Le module Wi-Fi envoie l'état du jardin au smartphone. Dans la chaîne d'information, il…",
+ o:["distribue l'énergie","acquiert","traite","communique"],r:3,
+ expl:"<b>Communiquer</b>, c'est envoyer l'information à une personne ou à un autre appareil : c'est le rôle du module Wi-Fi.",
+ ex:"Un afficheur à l'entrée d'un parking communique le nombre de places libres.",
+ err:"Confondre « envoyer » et « prendre » une information.",
+ d:["Distribuer l'énergie est une fonction de la chaîne d'énergie : le module, lui, envoie une information.","Acquérir, c'est prendre une mesure sur le monde : le capteur d'humidité le fait, pas le module Wi-Fi.","Traiter, c'est comparer et décider : la carte programmable le fait.",""],
+ ret:"Communiquer : envoyer l'information."},
+{c:"4e_C4.4",n:"Hors de la chaîne d'information",q:"Lequel de ces constituants du jardin n'appartient pas à la chaîne d'information ?",
+ o:["le capteur d'humidité","l'électrovanne","la carte programmable","le module Wi-Fi"],r:1,
+ expl:"L'électrovanne reçoit l'ordre de la carte, mais elle ne traite aucune information : elle <b>agit</b> sur l'eau. Elle appartient à la chaîne d'énergie.",
+ ex:"Dans le lampadaire, le bloc de LED reçoit l'ordre d'allumer : il est dans la chaîne d'énergie.",
+ err:"Mettre dans la chaîne d'information tout ce qui reçoit un ordre.",
+ d:["Le capteur d'humidité prend une information sur la terre : il acquiert, il est dans la chaîne d'information.","","La carte compare et décide : elle traite, au cœur de la chaîne d'information.","Le module Wi-Fi envoie l'état au smartphone : il communique, il est dans la chaîne d'information."],
+ ret:"Ce qui agit sur le monde : chaîne d'énergie."},
+{c:"4e_C4.4",n:"Pourquoi une électrovanne",q:"Lis le FAST vers la gauche : pourquoi le système d'arrosage a-t-il une électrovanne ?",
+ o:["pour laisser passer l'eau ou la bloquer","pour mesurer l'humidité de la terre","pour envoyer l'état au smartphone","pour décider à quelle heure arroser les bacs"],r:0,
+ expl:"Vers la gauche, l'électrovanne mène à « laisser passer l'eau ou la bloquer », puis à la fonction d'usage : arroser les plantes quand la terre est sèche.",
+ ex:"Pourquoi une cuve ? → vers la gauche → stocker l'eau de pluie.",
+ err:"Attribuer à un constituant la fonction de son voisin.",
+ d:["","Mesurer l'humidité, c'est la ligne du capteur d'humidité du sol.","Envoyer l'état au smartphone, c'est la ligne du module Wi-Fi.","Décider, c'est la ligne de la carte programmable : l'électrovanne ne fait qu'obéir."],
+ ret:"Vers la gauche : la fonction du constituant."},
+{c:"4e_C4.4",n:"Deux constituants, une fonction",q:"La pompe et les tuyaux sont tous les deux en face de « faire circuler l'eau jusqu'aux bacs ». Est-ce possible ?",
+ o:["oui, mais seulement s'ils sont faits de la même matière","non : chaque fonction n'a qu'un seul constituant","non : les tuyaux ne sont pas des constituants","oui : une fonction peut demander deux constituants"],r:3,
+ expl:"Une fonction technique peut demander <b>plusieurs</b> constituants qui travaillent ensemble : la pompe pousse l'eau, les tuyaux la conduisent jusqu'aux bacs.",
+ ex:"Pour « ralentir la roue », un frein à patins demande un levier, un câble et deux patins.",
+ err:"Croire qu'il faut un trait par ligne, une pièce par fonction.",
+ d:["La matière ne décide rien : la pompe et les tuyaux sont de matières différentes, et ils servent la même fonction.","Dans ce jardin, l'eau ne circule qu'avec la pompe ET les tuyaux : il en faut deux pour une même fonction.","Les tuyaux sont des éléments du système d'arrosage : ce sont bien des constituants.",""],
+ ret:"Une fonction peut demander plusieurs constituants."},
+/* ═══ 4e_C7.2 ═══ */
+{c:"4e_C7.2",n:"La fonction qui manque",q:"Pour « prévenir la gardienne quand la cuve est presque vide », quelle fonction technique manque d'abord au FAST du jardin ?",
+ o:["le module Wi-Fi déjà présent au jardin","un capteur de niveau dans la cuve","arroser les plantes plus souvent","mesurer le niveau d'eau de la cuve"],r:3,
+ expl:"Pour prévenir, le système doit d'abord <b>savoir</b> combien d'eau reste : aucune branche ne le mesure. La fonction s'écrit avec un verbe : « mesurer le niveau d'eau de la cuve ».",
+ ex:"Pour prévenir quand la batterie du lampadaire est faible, il faut d'abord « mesurer la charge de la batterie ».",
+ err:"Écrire le nom d'un objet dans une case de fonction.",
+ d:["Le module Wi-Fi est déjà dans le FAST, et c'est un objet : il enverra l'alerte, mais il ne mesure rien.","« Un capteur de niveau » est un objet : c'est la solution, qui ira dans la case de droite.","Arroser plus souvent viderait la cuve plus vite, sans prévenir personne.",""],
+ ret:"D'abord la fonction qui manque, avec un verbe."},
+{c:"4e_C7.2",n:"Réutiliser",q:"Sur ce FAST, la branche du bas est nouvelle. Quelle solution, déjà présente, enverra l'alerte « cuve presque vide » au smartphone ?",
+ img:{src:"Images/fast_jardin_nouvelle_branche.svg",alt:"Diagramme FAST du système d'arrosage avec une septième branche, en bas : mesurer le niveau d'eau de la cuve, réalisée par le capteur de niveau d'eau. Les six autres branches : capteur d'humidité du sol, carte programmable, module Wi-Fi, électrovanne, pompe et tuyaux, cuve."},
+ o:["le module Wi-Fi","la carte programmable","le capteur d'humidité","l'électrovanne"],r:0,
+ expl:"Le module Wi-Fi envoie déjà l'état du jardin au smartphone : on le <b>réutilise</b> pour un message de plus. Une même solution peut servir deux fonctions.",
+ ex:"Le panneau solaire de certaines lampes de jardin capte l'énergie et détecte aussi la nuit.",
+ err:"Ajouter une pièce alors qu'une solution présente sait déjà le faire.",
+ d:["","La carte décide qu'il faut prévenir, mais elle n'a pas de liaison sans fil : c'est le module Wi-Fi qui envoie.","Le capteur d'humidité mesure la terre : il n'envoie aucun message.","L'électrovanne agit sur l'eau : elle ne prévient personne."],
+ ret:"Réutiliser ce qui existe déjà."},
+{c:"4e_C7.2",n:"Ce qui change dans la carte",q:"Après l'ajout du capteur de niveau d'eau, que faut-il modifier dans la carte programmable ?",
+ o:["son alimentation : la brancher sur le 230 V","son programme : comparer le niveau à un seuil","rien : le capteur de niveau prévient tout seul","sa place : la poser au fond de la cuve"],r:1,
+ expl:"La carte traite la nouvelle mesure : son <b>programme</b> reçoit une condition, « si le niveau est sous le seuil, alors envoyer un message à la gardienne ».",
+ ex:"Ajouter un capteur de pluie demanderait aussi une condition de plus : « s'il pleut, ne pas arroser ».",
+ err:"Oublier qu'une nouvelle fonction change souvent le programme.",
+ d:["Le système reste en très basse tension : le 230 V au jardin, sous la pluie, serait un danger mortel.","","Un capteur acquiert une mesure, il ne décide pas et n'envoie rien : il faut la carte et le module Wi-Fi.","La carte reste au sec dans son boîtier : c'est le capteur de niveau qui va dans la cuve."],
+ ret:"Nouvelle fonction → nouveau programme."},
+{c:"4e_C7.2",n:"Une case de fonction bien écrite",q:"Laquelle de ces propositions est bien écrite pour une case de fonction du FAST ?",
+ o:["la cuve est presque vide","le flotteur qui monte et descend dans la cuve","niveau de la cuve trop bas","surveiller le niveau de la cuve"],r:3,
+ expl:"Une case de fonction commence par un <b>verbe à l'infinitif</b>, suivi de ce sur quoi il porte : « surveiller le niveau de la cuve ».",
+ ex:"« Détecter un passant », « décider quand arroser » : verbe + complément.",
+ err:"Écrire un objet, un état ou une phrase qui raconte.",
+ d:["« La cuve est presque vide » raconte une situation : ce n'est pas une action du système.","« Le flotteur » est un objet : c'est une solution, pour la case de droite.","« Niveau trop bas » décrit un état, sans verbe : on ne sait pas ce que le système doit faire.",""],
+ ret:"Une fonction : verbe à l'infinitif + complément."},
+{c:"4e_C7.2",n:"Ajouter une branche",q:"Dans un diagramme FAST, ajouter une nouvelle fonction à un objet, c'est surtout…",
+ o:["effacer une branche pour faire de la place","changer la fonction d'usage de l'objet","ajouter une branche : fonction et solution","redessiner l'objet entier, sans le FAST"],r:2,
+ expl:"On ajoute une <b>branche</b> : la fonction technique qui manque et sa solution. Le reste du FAST est gardé, et parfois réutilisé.",
+ ex:"Jardin : nouvelle branche « mesurer le niveau d'eau de la cuve » → le capteur de niveau d'eau.",
+ err:"Croire qu'il faut tout recommencer.",
+ d:["Rien n'est effacé : les branches existantes restent nécessaires, et l'une d'elles (le module Wi-Fi) est réutilisée.","La fonction d'usage reste « arroser les plantes quand la terre est sèche » : on lui ajoute une fonction, on ne la change pas.","","Le FAST sert justement à voir où ajouter : on garde ce qui marche, on ajoute ce qui manque."],
+ ret:"Nouvelle fonction : nouvelle branche."},
+/* ═══ 3e_C7.2 ═══ */
+{c:"3e_C7.2",n:"Un nom dans une case de fonction",q:"Sur ce FAST proposé par une équipe, la deuxième case de fonction contient « le programme d'alerte ». Pourquoi est-ce une erreur ?",
+ img:{src:"Images/fast_station_alerte_erreurs.svg",alt:"Diagramme FAST de la station d'alerte proposé par une équipe : six branches ; la deuxième a pour case de fonction « le programme d'alerte » et pour solution la carte programmable ; la quatrième met le panneau solaire en face de « stocker l'énergie pour la nuit » ; la sixième est « éclairer la rue la nuit », le bloc de LED."},
+ o:["la case devrait être tout à gauche du schéma","un programme n'a pas sa place dans un FAST","il manque le prix du programme dans la case","c'est un nom : il faut un verbe d'action"],r:3,
+ expl:"Une case de fonction dit ce que l'objet doit <b>faire</b> : elle commence par un verbe à l'infinitif. Ici : « décider du niveau d'alerte », réalisé par la carte programmable.",
+ ex:"« Le capteur d'obstacle » dans une case de fonction → « détecter les obstacles ».",
+ err:"Accepter un nom dans une case de fonction parce qu'il « parle » de la bonne chose.",
+ d:["Tout à gauche, il n'y a que la fonction d'usage : « prévenir les habitants quand un cyclone approche ».","Le programme peut apparaître dans une solution (« la carte programmable et son programme ») : c'est sa place qui est fausse.","Le FAST ne porte aucun prix : ce n'est pas ce qui manque.",""],
+ ret:"Case de fonction : un verbe."},
+{c:"3e_C7.2",n:"Quand le réseau tombe",q:"Pendant un cyclone, le réseau téléphonique tombe. Sur ce FAST, quelle solution d'alerte ne marche plus ?",
+ img:{src:"Images/fast_station_alerte.svg",alt:"Diagramme FAST de la station d'alerte cyclonique : mesurer la vitesse du vent, l'anémomètre ; décider du niveau d'alerte, la carte programmable ; diffuser l'alerte aux habitants, la sirène ou un message sur les téléphones ou un panneau lumineux à LED ; stocker l'énergie pour la nuit, la batterie 12 V ; capter l'énergie du soleil, le panneau solaire."},
+ o:["la sirène de la station","le message sur les téléphones","le panneau lumineux à LED","aucune des trois solutions"],r:1,
+ expl:"Le message passe par les antennes du réseau téléphonique. La sirène et le panneau sont reliés à la station, qui a sa batterie et son panneau solaire.",
+ ex:"Une radio à piles marche sans réseau téléphonique : elle reçoit les ondes d'un émetteur.",
+ err:"Oublier de quoi chaque solution a besoin pour atteindre les habitants.",
+ d:["La sirène est branchée sur la station, alimentée par sa batterie : elle n'a pas besoin du réseau.","","Le panneau lumineux est relié à la station : il s'allume sans antenne de téléphone.","Le message, lui, dépend des antennes : sans réseau, il n'arrive pas."],
+ ret:"Une solution dépend de ce qu'elle utilise."},
+{c:"3e_C7.2",n:"Un critère qui élimine",q:"Le critère « alimentée en très basse tension » est rempli par les trois solutions d'alerte. Ce critère…",
+ o:["ne concerne que la sirène de la station","peut être effacé : il ne départage rien","désigne la solution la plus économe","écarte toute solution qui ne le remplit pas"],r:3,
+ expl:"C'est une <b>exigence impérative</b> (flexibilité F0) : elle ne départage pas, elle <b>élimine</b>. Une solution sur le 230 V, sous la pluie d'un cyclone, serait écartée d'office.",
+ ex:"« Résister à des vents de cyclone » élimine aussi tout panneau qui s'envolerait.",
+ err:"Effacer un critère parce que toutes les solutions le remplissent.",
+ d:["La sirène, le module de messages et le panneau sont tous concernés : tous doivent rester en très basse tension.","Effacé, le critère ne protégerait plus contre une solution dangereuse proposée plus tard.","Il dit oui ou non, il ne classe pas les consommations : il ne désigne aucune solution.",""],
+ ret:"Un critère impératif élimine."},
+{c:"3e_C7.2",n:"Combiner deux solutions",q:"Pourquoi une équipe peut-elle choisir de combiner la sirène et le panneau lumineux ?",
+ o:["deux appareils coûtent moins cher qu'un seul","chacune couvre le point faible de l'autre","la sirène ne marche pas sans le panneau","il est interdit de n'avoir qu'une alerte"],r:1,
+ expl:"La sirène réveille la nuit mais n'atteint pas une personne sourde ; le panneau l'atteint mais ne réveille personne. Ensemble, elles couvrent les deux cas, et marchent sans réseau.",
+ ex:"Un vélo a un phare (voir) et un catadioptre (être vu même phare éteint) : deux solutions qui se complètent.",
+ err:"Croire qu'on doit toujours garder une seule solution par fonction.",
+ d:["Deux appareils coûtent plus cher qu'un : on les combine malgré le coût, pour couvrir plus de cas.","","La sirène fonctionne seule, branchée sur la station : elle n'a pas besoin du panneau.","Aucune règle n'impose deux alertes : c'est le tableau des critères qui conduit à les combiner."],
+ ret:"Combiner : couvrir les points faibles."},
+{c:"3e_C7.2",n:"Ce que le FAST fait vraiment",q:"Laquelle de ces phrases sur le diagramme FAST est vraie ?",
+ o:["il associe des solutions à des fonctions","il dessine la forme de chaque solution","il fait partie du cahier des charges","il liste toutes les pièces de l'objet"],r:0,
+ expl:"Le FAST décompose la fonction d'usage en fonctions techniques et <b>associe</b> à chacune une ou plusieurs solutions. Il les nomme, sans les dessiner.",
+ ex:"Station : « mesurer la vitesse du vent » → l'anémomètre.",
+ err:"Confondre le FAST avec le croquis, avec le cahier des charges ou avec la nomenclature.",
+ d:["","Le FAST nomme les solutions dans des cases : leur forme se dessine ensuite, dans un croquis ou un schéma.","Le cahier des charges dit ce qu'on attend de l'objet ; le FAST, qui vient après, dit comment on y répond.","Le FAST ne garde que les éléments qui réalisent les fonctions étudiées : pas les vis, ni chaque câble."],
+ ret:"Le FAST associe ; il ne dessine pas, ne liste pas tout."},
+{c:"3e_C7.2",n:"Un argumentaire complet",q:"Lequel de ces textes est un argumentaire complet pour choisir une alerte ?",
+ o:["« J'aime la sirène : elle fait beaucoup de bruit. »","« La sirène, parce que c'est la meilleure alerte. »","« La sirène réveille. Le panneau, lui, s'allume. »","« La sirène, car elle réveille ; mais elle consomme. »"],r:3,
+ expl:"Un argumentaire complet dit le <b>choix</b>, le <b>critère</b> qui le justifie (réveiller la nuit) et la <b>limite</b> qui reste (la consommation).",
+ ex:"« Le message, car il atteint les personnes sourdes ; mais il dépend du réseau. »",
+ err:"Donner un avis sans critère, ou cacher la limite de son choix.",
+ d:["« J'aime » est un goût personnel : il ne s'appuie sur aucun critère du tableau.","« La meilleure » n'est pas un critère : on ne sait ni pourquoi, ni dans quelle situation.","Ce texte décrit deux solutions, mais ne choisit rien et ne justifie rien.",""],
+ ret:"Argumenter : choix + critère + limite."}
+];
+
+</script>
+
+<script>
+"use strict";
+/* ═══════════ Moteur du QCM ═══════════ */
+const KEY="qcm_fast";
+const $=id=>document.getElementById(id);
+/* `demande` remplace une boîte de confirmation : le premier clic annonce, le
+   second dans les six secondes exécute. On ne supprime jamais une confirmation
+   destructive — on la rend non bloquante. */
+let _demandes={};
+function demande(cle,msg){
+  const t=Date.now();
+  if(_demandes[cle] && t-_demandes[cle] < 6000){ _demandes[cle]=0; return true; }
+  _demandes[cle]=t;
+  signale(msg + " — clique une seconde fois pour confirmer.");
+  return false;
+}
+/* Règle d'or n°188 : on informe sans bloquer. `signale` écrit dans le bandeau
+   #savedNote, qui porte role="status" et aria-live="polite". Si la page n'en a
+   pas, il en crée un : une confirmation en deux temps dont le premier temps ne
+   dit rien serait un effacement silencieux, donc pire que la boîte modale. */
+let _signalTimer=null;
+function _zoneSignal(){
+  let z=document.getElementById("savedNote");
+  if(z){ return z; }
+  z=document.createElement("div");
+  z.id="savedNote"; z.dataset.cree="1";
+  z.setAttribute("role","status"); z.setAttribute("aria-live","polite");
+  z.style.cssText="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);"
+    +"max-width:90vw;background:#1d4e89;color:#fff;padding:10px 16px;border-radius:8px;"
+    +"font:500 15px/1.45 system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);"
+    +"z-index:9999;visibility:hidden";
+  (document.body||document.documentElement).appendChild(z);
+  return z;
+}
+function signale(msg){
+  const z=_zoneSignal();
+  z.textContent=msg; z.classList.add("show");
+  if(z.dataset.cree){ z.style.visibility="visible"; }
+  clearTimeout(_signalTimer);
+  _signalTimer=setTimeout(()=>{ z.textContent=""; z.classList.remove("show");
+    if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
+}
+const COMP_LABELS={
+  "5e_C4.1":"5e_C4.1 — Associer des solutions techniques à une ou des fonctions techniques.",
+  "5e_C1.2":"5e_C1.2 — Comparer des principes techniques pour une même fonction technique.",
+  "4e_C4.4":"4e_C4.4 — Identifier les constituants de la chaîne d’information d’un objet réel et les associer à leur fonction.",
+  "4e_C7.2":"4e_C7.2 — Proposer et fabriquer une solution pour ajouter une nouvelle fonction à un OST (croquis, schéma, graphique, algorithme, modélisation).",
+  "3e_C7.2":"3e_C7.2 — Proposer et fabriquer un ensemble de solutions pour produire un nouvel OST (croquis, schéma, graphique, algorithme, modélisation)." };
+const N=QUESTIONS.length;
+
+/* état */
+let etat={
+  reponses:Array(N).fill(null),   // index choisi ou null
+  validees:Array(N).fill(false),
+  marquees:Array(N).fill(false),
+  courante:0,
+  mode:"complet",
+  sousListe:null,                 // indices actifs selon le mode
+  tempsMs:0, timerOn:false, sansMinuteur:false,
+  identite:{}
+};
+let timerInterval=null, choixTemp=null;
+
+/* ───── sauvegarde ───── */
+function save(){
+  etat.identite={nom:$("id_nom").value,prenom:$("id_prenom").value,classe:$("id_classe").value,date:$("id_date").value};
+  try{ localStorage.setItem(KEY, JSON.stringify(etat)); }catch(e){}
+}
+function restore(){
+  let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
+  if(!o) return;
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  const idt=etat.identite||{};
+  $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
+  $("tSans").checked=!!etat.sansMinuteur;
+  if(etat.tempsMs>0){ $("savedNote").textContent="✔ Progression restaurée : tu peux reprendre où tu t'étais arrêté·e."; }
+}
+
+/* ───── minuteur ───── */
+function fmt(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return (h?String(h).padStart(2,"0")+":":"")+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0"); }
+function majTimer(){ $("timerDisp").textContent=fmt(etat.tempsMs); }
+function timerStart(){ if(etat.sansMinuteur||etat.timerOn) return;
+  etat.timerOn=true; $("tStart").disabled=true; $("tPause").disabled=false; $("tResume").disabled=true;
+  let last=Date.now();
+  timerInterval=setInterval(()=>{ const now=Date.now(); etat.tempsMs+=now-last; last=now; majTimer(); },500);
+}
+function timerPause(){ if(!etat.timerOn) return;
+  etat.timerOn=false; clearInterval(timerInterval);
+  $("tPause").disabled=true; $("tResume").disabled=false; save();
+}
+$("tStart").addEventListener("click",timerStart);
+$("tPause").addEventListener("click",timerPause);
+$("tResume").addEventListener("click",timerStart);
+$("tSans").addEventListener("change",e=>{
+  etat.sansMinuteur=e.target.checked;
+  if(etat.sansMinuteur){ timerPause(); $("tStart").disabled=true; }
+  else { $("tStart").disabled=etat.timerOn; }
+  save();
+});
+
+/* ───── listes selon mode ───── */
+function listeActive(){
+  if(etat.sousListe && etat.sousListe.length) return etat.sousListe;
+  return [...Array(N).keys()];
+}
+function setMode(mode){
+  etat.mode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
+  $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
+  if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="dix"){
+    const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
+    const base=nonRep.length>=10?nonRep:[...Array(N).keys()];
+    // échantillon régulier, stable (pas d'aléatoire)
+    const pas=base.length/10; etat.sousListe=[...Array(10).keys()].map(k=>base[Math.floor(k*pas)]);
+  }
+  else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
+  else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
+    if(!etat.sousListe.length){ signale("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
+    if(!etat.sousListe.length){ signale("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+  const l=listeActive();
+  if(!l.includes(etat.courante)) etat.courante=l[0];
+  save(); rendreTout();
+}
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("selComp").addEventListener("change",()=>setMode("cible"));
+
+/* ───── grille + filtres ───── */
+let filtre="toutes";
+document.querySelectorAll("[data-filtre]").forEach(b=>b.addEventListener("click",()=>{
+  filtre=b.dataset.filtre;
+  document.querySelectorAll("[data-filtre]").forEach(x=>x.classList.toggle("actif",x===b));
+  rendreGrille();
+}));
+function visibleParFiltre(i){
+  const rep=etat.validees[i], ok=rep&&etat.reponses[i]===QUESTIONS[i].r;
+  switch(filtre){
+    case "non": return !rep;
+    case "ok": return ok;
+    case "err": return rep&&!ok;
+    case "marq": return etat.marquees[i];
+    default: return true;
+  }
+}
+function rendreGrille(){
+  const g=$("grille"); g.innerHTML="";
+  listeActive().forEach(i=>{
+    if(!visibleParFiltre(i)) return;
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.setAttribute("aria-label",`Question ${i+1}`);
+    if(etat.validees[i]) b.classList.add(etat.reponses[i]===QUESTIONS[i].r?"q-ok":"q-err");
+    else if(etat.reponses[i]!==null) b.classList.add("q-rep");
+    if(i===etat.courante) b.classList.add("actuelle");
+    if(etat.marquees[i]){ const m=document.createElement("span"); m.className="marque"; m.textContent="🔖"; b.appendChild(m); }
+    b.addEventListener("click",()=>{ etat.courante=i; montrerEcran("q"); rendreTout(); });
+    g.appendChild(b);
+  });
+  if(!g.children.length){ g.innerHTML='<p style="grid-column:1/-1;color:#5b7bb8;font-size:.85em">Aucune question ne correspond à ce filtre.</p>'; }
+}
+
+/* ───── tableau de bord ───── */
+function stats(){
+  let ok=0,err=0,rep=0;
+  for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
+  return {ok,err,rep,rest:N-rep,marq:etat.marquees.filter(Boolean).length};
+}
+function rendreDash(){
+  const s=stats();
+  $("dRep").textContent=s.rep; $("dOk").textContent=s.ok; $("dErr").textContent=s.err;
+  $("dRest").textContent=s.rest; $("dMarq").textContent=s.marq;
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=pct+" %";
+  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("pfill").style.width=(s.rep/N*100)+"%";
+  $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
+}
+
+/* ───── écran question ───── */
+function montrerEcran(quel){
+  $("ecranQuestion").classList.toggle("actif",quel==="q");
+  $("ecranResultat").classList.toggle("actif",quel==="r");
+}
+function rendreQuestion(){
+  const i=etat.courante, Q=QUESTIONS[i];
+  $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
+  $("qNum").textContent=i+1; $("qTot").textContent=N;
+  $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
+  $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
+  const zone=$("qOptions"); zone.innerHTML="";
+  const lettres=["A","B","C","D"];
+  Q.o.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
+    if(etat.validees[i]){
+      b.disabled=true;
+      if(k===Q.r) b.classList.add("bonne");
+      if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
+    } else {
+      if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
+      b.addEventListener("click",()=>{ choixTemp=k; rendreQuestion(); });
+    }
+    zone.appendChild(b);
+  });
+  $("btnValider").disabled=etat.validees[i];
+  rendreCorrection();
+}
+const ENC_OK=["Très bien : tu as correctement identifié la notion clé !","Excellente réponse — la démarche est maîtrisée.","Bravo ! Cette notion est solide, continue ainsi."];
+const ENC_KO=["Ce n'est pas encore acquis, mais l'explication ci-dessous va t'aider — relis-la puis réessaie.","Bonne tentative : vérifie le raisonnement expliqué ci-dessous, puis retente ta chance.","Relis la notion, observe l'exemple, puis essaie une nouvelle fois : c'est comme ça qu'on progresse."];
+const ENC_NR=["Tu n'avais pas répondu à cette question : lis la correction puis réessaie-la."];
+function rendreCorrection(){
+  const i=etat.courante,Q=QUESTIONS[i],bloc=$("corrBloc");
+  if(!etat.validees[i]){ bloc.className="correction-bloc"; bloc.innerHTML=""; return; }
+  const choix=etat.reponses[i], ok=choix===Q.r, lettres=["A","B","C","D"];
+  const verdict= choix===null ? `<span class="verdict-nr">⭘ Non répondu</span>` : ok? `<span class="verdict-ok">✔ Correct</span>`:`<span class="verdict-err">✘ Incorrect</span>`;
+  const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
+  let dist="";
+  Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
+  bloc.innerHTML=`
+    <h3>${verdict}</h3>
+    <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
+    <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
+    <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
+    ${Q.err ? `<div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>` : ""}
+    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    ${Q.nuance ? `<div class="bloc-detail nuance"><b>🤔 Et si tu te disais…</b> ${Q.nuance}</div>` : ""}
+    <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
+    <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
+    <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
+  $("btnRetenter").addEventListener("click",()=>{
+    etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+  });
+}
+$("btnValider").addEventListener("click",()=>{
+  const i=etat.courante;
+  if(etat.validees[i]) return;
+  if(choixTemp===null&&etat.reponses[i]===null){
+    if(!demande("valider","Tu n'as choisi aucune réponse : elle comptera comme non répondue.")) return;
+  }
+  if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  etat.validees[i]=true; choixTemp=null;
+  if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
+  save(); rendreTout();
+});
+$("btnMarquer").addEventListener("click",()=>{
+  etat.marquees[etat.courante]=!etat.marquees[etat.courante]; save(); rendreTout();
+});
+function aller(delta){
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const np=Math.min(l.length-1,Math.max(0,pos+delta));
+  etat.courante=l[np]; choixTemp=null; montrerEcran("q"); rendreTout();
+}
+$("btnPrec").addEventListener("click",()=>aller(-1));
+$("btnSuiv").addEventListener("click",()=>aller(1));
+$("btnNonRep").addEventListener("click",()=>{
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
+  const cible=apres.find(i=>!etat.validees[i]);
+  if(cible===undefined){ signale("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  etat.courante=cible; choixTemp=null; rendreTout();
+});
+
+/* ───── résultat final ───── */
+$("btnTerminer").addEventListener("click",()=>{
+  timerPause(); rendreResultat(); montrerEcran("r");
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+$("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
+$("btnImprimer").addEventListener("click",()=>window.print());
+$("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
+$("btnRecommencer").addEventListener("click",()=>{
+  if(demande("recommencer","Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés.")){
+    const idt=etat.identite;
+    etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
+    clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
+    save(); majTimer(); montrerEcran("q"); setMode("complet");
+  }
+});
+function rendreResultat(){
+  const s=stats();
+  const note=Math.round(s.ok/N*20*10)/10;
+  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
+  $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
+  $("rBrut").textContent=s.ok+" / "+N;
+  $("rPct").textContent=(s.rep?Math.round(s.ok/N*100):0)+" %";
+  $("rTemps").textContent=etat.sansMinuteur?"sans minuteur":fmt(etat.tempsMs);
+  /* bilan par compétence */
+  const tb=document.querySelector("#tblBilan tbody"); tb.innerHTML="";
+  const acquis=[],arevoir=[];
+  Object.keys(COMP_LABELS).forEach(c=>{
+    const idx=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c);
+    const okC=idx.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+    const ratio=okC/idx.length;
+    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${COMP_LABELS[c]}</td><td>${okC} / ${idx.length}</td><td class="${cls}">${lbl}</td></tr>`);
+    /* notions */
+    idx.forEach(i=>{
+      if(etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r) acquis.push(QUESTIONS[i].n);
+      else if(etat.validees[i]) arevoir.push(QUESTIONS[i].n+" ("+c+")");
+    });
+  });
+  let html="";
+  if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
+  if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
+  const msg= note>=16?"Remarquable ! Fonctions, chaînes d’énergie et d’information, matériaux et réseau n’ont plus de secret pour toi — tu es prêt·e pour l’évaluation.":
+    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+    "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
+  $("rEncoura").textContent=msg;
+}
+
+/* ───── init ───── */
+document.addEventListener("input",()=>save());
+function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
+restore(); majTimer();
+if(etat.sansMinuteur) $("tStart").disabled=true;
+setMode(etat.mode||"complet");
+</script>
+
+<!-- loupe-images-v1 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:2rem;box-sizing:border-box;overflow:auto;
+    align-items:center;justify-content:center}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  .loupe-fond img{max-width:100%;max-height:88vh;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:fixed;left:0;right:0;bottom:.9rem;text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif;padding:0 2rem}
+  .loupe-fermer{position:fixed;top:.8rem;right:1rem;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer \u2715";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    // L'alternative textuelle sert de légende : elle DIT ce que l'image montre.
+    legende.textContent = img.alt ? img.alt + "  \u2014  \u00c9chap pour refermer"
+                                  : "\u00c9chap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page.
+  // On les sérialise à la volée pour les afficher en grand — sans réseau : le
+  // dessin est déjà là, on ne fait que le relire.
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    if (!copie.getAttribute("xmlns")) {
+      copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    legende.textContent = mot ? mot + "  \u2014  \u00c9chap pour refermer"
+                              : "\u00c9chap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+
+/* ══════ Ouvrir sur les questions du niveau de l'élève ══════
+   L'atelier de chaque niveau appelle ce QCM avec ?codes=<codes du niveau>.
+   On ouvre alors sur ces questions-là ; le parcours complet reste à un clic. */
+(function ouvrirSurMonNiveau(){
+  const m = /codes=([^&#]+)/.exec((location.search || "") + (location.hash || ""));
+  if (!m) return;
+  const codes = decodeURIComponent(m[1]).split(",").filter(Boolean);
+  const liste = [...Array(N).keys()].filter(i => codes.includes(QUESTIONS[i].c));
+  if (!liste.length) return;
+  const sel = $("selComp");
+  if (codes.length === 1) { sel.value = codes[0]; setMode("cible"); }
+  else { setMode("cible"); etat.sousListe = liste; etat.courante = liste[0]; save(); rendreTout(); }
+  signale("🎯 Le QCM s'ouvre sur les " + liste.length + " questions de ton niveau. Pour toutes les questions, choisis « Parcours complet ».");
+})();
+</script>
+</body>
+</html>

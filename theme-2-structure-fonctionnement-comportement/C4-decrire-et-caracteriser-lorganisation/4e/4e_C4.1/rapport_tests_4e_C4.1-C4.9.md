@@ -4,6 +4,8 @@
 (Chromium headless), viewport mobile 390 × 844, pages en `file://` (hors ligne) ·
 **Rejouée le 31/08/2026** · **Verdict : 35 / 35 ✅**
 
+> **Mise à jour du 24/10/2026.** L'exercice « Le cahier des charges : critère, niveau, flexibilité » (atelier du diagramme pieuvre, 4e) est inséré en tête de l'activité 5, qui passe à 55 min et exige sa réussite. La suite compte désormais **39 contrôles, 39 / 39** : l'activité 5 refusée sans l'exercice, l'exercice vérifié à vide puis rempli juste (classes F0 à F3 comprises), et ses réponses retrouvées au rechargement.
+
 ```
 cd theme-2-.../C4-.../4e/4e_C4.1 && node tests_4e_C4.1-C4.9.mjs
 ```

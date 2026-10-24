@@ -7,6 +7,29 @@ QCM = pathlib.Path("qcm_4e_C3.1-C3.3_hangzhou.html").resolve().as_uri()
 res = []
 def t(n, ok, d=""): res.append((n, bool(ok))); print(("✔" if ok else "✘"), n, d)
 
+# L'exercice inséré (atelier « Le besoin ») : les bonnes réponses sont lues dans sa définition,
+# embarquée dans la page — le banc suit l'exercice si son rédacteur le retouche.
+REMPLIR = """([uid, textes]) => {
+  const box = document.getElementById(uid);
+  const D = JSON.parse(box.closest('.atelier-incruste').querySelector('script[type="application/json"]').textContent).exercices[uid];
+  const coche = (name, val) => { const i = box.querySelector(`input[name="${name}"][value="${val}"]`);
+    if (!i) throw new Error('option absente : ' + name + ' = ' + val); i.checked = true; i.dispatchEvent(new Event('change', {bubbles: true})); };
+  for (const w of D.widgets) {
+    if (w.type === 'choix') coche(w.name, w.bonne);
+    else if (w.type === 'cases') box.querySelectorAll(`input[name="${w.name}"]`).forEach(i => { i.checked = w.bonnes.includes(i.value); });
+    else if (w.type === 'classer') w.items.forEach(it => coche(it.name, it.bonne));
+    else if (w.type === 'slots') w.slots.forEach(s => coche(s.name, s.bonnes[0]));
+    else { const z = box.querySelector(`textarea[name="${w.name}"]`); z.value = textes[w.name.split('__')[1]]; z.dispatchEvent(new Event('input', {bubbles: true})); }
+  }
+}"""
+def exercice_insere(pg, uid, nom, textes=None):
+    """Vérifié à vide (retour 🔴), puis rempli juste (« Tout est juste »)."""
+    pg.click(f"#{uid} button.verifier"); pg.wait_for_timeout(80)
+    t(f"{nom} : à vide, le retour demande de reprendre", "🔴" in pg.inner_text(f"#{uid} .retour"))
+    pg.evaluate(REMPLIR, [uid, textes or {}])
+    pg.click(f"#{uid} button.verifier"); pg.wait_for_timeout(80)
+    t(f"{nom} : rempli juste, il est réussi", "Tout est juste" in pg.inner_text(f"#{uid} .retour"))
+
 with sync_playwright() as p:
     b = p.chromium.launch(); pg = b.new_page(viewport={"width":1280,"height":900})
     errs = []; pg.on("pageerror", lambda e: errs.append(str(e)))
@@ -27,10 +50,15 @@ with sync_playwright() as p:
     t("séquence : hors ligne, aucune ressource distante (n°40)",
       "fonts.googleapis" not in pg.content() and not distantes, str(distantes))
     t("bandeau de tâches affiché (n°30)", "Séance 1" in pg.inner_text("#tachesBandeau"))
-    n_ta = pg.eval_on_selector_all("textarea", "a=>a.length")
-    n_et = pg.eval_on_selector_all("details.etayage", "a=>a.length")
+    # Les exercices insérés (atelier des représentations) apportent leurs propres zones : comptées à part.
+    n_ta = pg.eval_on_selector_all("textarea:not(.atelier-incruste textarea)", "a=>a.length")
+    n_et = pg.eval_on_selector_all("details.etayage:not(.atelier-incruste details)", "a=>a.length")
     t("chaque zone de rédaction a sa version étayée (n°31)",
-      n_ta == n_et == 9, f"{n_ta} zones / {n_et} étayages")
+      n_ta >= 9 and n_et >= n_ta, f"{n_ta} zones / {n_et} étayages")
+    i_ta = pg.eval_on_selector_all(".atelier-incruste textarea", "a=>a.length")
+    i_et = pg.eval_on_selector_all(".atelier-incruste details.etayage", "a=>a.length")
+    t("exercices insérés : chaque zone de rédaction a sa version étayée (n°31)",
+      i_ta >= 1 and i_ta == i_et, f"{i_ta} zones / {i_et} étayages")
     t("chaque champ porte une étiquette (n°34)",
       pg.evaluate("[...document.querySelectorAll('select,textarea')].every(e=>!e.id||"
                   "document.querySelector(`label[for=\"${e.id}\"]`)||e.getAttribute('aria-label'))"))
@@ -49,6 +77,12 @@ with sync_playwright() as p:
     pg.fill("#a1_cdc", "Exigence 1 : durée de vie au moins 8 ans. Exigence 2 : coût sous 60 € "
                        "par vélo et par an. Exigence 3 : pièces disponibles, réparation sous "
                        "40 min. Exigence 4 : antivol au moins 4 sur 5.")
+    pg.click('[data-check="1"]'); pg.wait_for_timeout(150)
+    t("activité 1 : l'exercice « Du besoin aux caractéristiques » est exigé",
+      "Du besoin aux caractéristiques" in pg.inner_text("#fb1") and "0 / 5" in pg.inner_text("#progTxt"),
+      pg.inner_text("#fb1")[-90:])
+    # l'exercice inséré en tête de l'activité 1 (atelier « Le besoin », 4e)
+    exercice_insere(pg, "bc_4e_e5", "activité 1 : du besoin aux caractéristiques")
     pg.click('[data-check="1"]'); pg.wait_for_timeout(150)
     t("activité 1 : validée une fois le cahier rédigé", "6 / 6" in pg.inner_text("#fb1"))
     t("progression mise à jour", "1 / 5" in pg.inner_text("#progTxt"))

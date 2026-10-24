@@ -291,6 +291,51 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
      (await page.locator("#tachesBandeau .tache.fait").count()) >= 1);
 }
 
+/* — activité 2 : l'exercice inséré depuis l'atelier des représentations (diagramme des exigences,
+     4e, exercice 3) est exigé par le vérificateur de l'activité (24/10/2026) — */
+{
+  for (const [id, v] of [["#a2c1", "Oui"], ["#a2c2", "Oui"], ["#a2c3", "Oui"], ["#a2c4", "Non"], ["#a2dec", "À améliorer"]])
+    await page.selectOption(id, v);
+  await page.fill("#a2diag", "Le plastique devient cassant au froid. Test : refaire la nuit de gel avec une attache en inox.");
+  await page.click('.btn.check[data-check="3"]');
+  await page.waitForTimeout(150);
+  const fbVerrou = (await page.locator("#fb3").textContent()) || "";
+  ok("act. 2 : refusée tant que l'exercice du diagramme des exigences n'est pas réussi",
+     /🔒/.test(fbVerrou) && /diagramme des exigences/.test(fbVerrou), fbVerrou.slice(0, 80));
+
+  await page.click("#ex_4e_e3 button.verifier");
+  await page.waitForTimeout(100);
+  ok("act. 2 : l'exercice inséré se vérifie à vide (retour à reprendre)",
+     /🔴/.test(await page.locator("#ex_4e_e3 .retour").innerText()));
+  for (const [i, v] of ["t3", "t1", "t4", "t2"].entries())
+    await page.check(`input[name="ex_4e_e3__lien_${i}"][value="${v}"]`);
+  for (const [i, v] of ["atteint", "hors", "marge", "f0"].entries())
+    await page.check(`input[name="ex_4e_e3__verdict_${i}"][value="${v}"]`);
+  await page.fill("#ex_4e_e3__proto", "Je lance un arrosage. Dès qu'il s'arrête, je démarre un chronomètre et je mesure le temps " +
+                  "jusqu'à l'arrivée du compte rendu sur le smartphone. L'exigence est validée si le message arrive en 5 min au plus.");
+  await page.click("#ex_4e_e3 button.verifier");
+  await page.waitForTimeout(100);
+  ok("act. 2 : l'exercice inséré, rempli juste, est réussi",
+     /Tout est juste/.test(await page.locator("#ex_4e_e3 .retour").innerText()));
+  await shot(page, "exigences_insere", "#ex_4e_e3 .retour");
+
+  await page.click('.btn.check[data-check="3"]');
+  await page.waitForTimeout(150);
+  const fb3 = (await page.locator("#fb3").textContent()) || "";
+  ok("act. 2 : validée 6/6 une fois l'exercice inséré réussi", /activité validée/.test(fb3) && /6\/6/.test(fb3), fb3.slice(0, 60));
+  ok("progression : 3 / 6 après les activités 0, 1 et 2",
+     /^3 \/ 6/.test((await page.locator("#progTxt").textContent()).trim()));
+
+  await page.waitForTimeout(150);
+  const memo = await page.evaluate(k => JSON.parse(localStorage.getItem(k) || "{}"), CFG.cle);
+  ok("sauvegarde : les champs de l'exercice inséré restent hors de la clé de la séquence",
+     !Object.keys(memo.inputs || {}).some(id => id.startsWith("ex_4e_e3")));
+  await page.reload();
+  await page.waitForTimeout(400);
+  ok("restauration : la réponse de l'exercice inséré survit au rechargement (clé de l'atelier)",
+     /chronomètre/.test(await page.inputValue("#ex_4e_e3__proto")));
+}
+
 /* — aucun envoi réseau — */
 {
   const sorties = [];
@@ -324,10 +369,8 @@ await ctx.close();
   const ctxq = await nav.newContext({ viewport: { width: 1280, height: 900 } });
   const { page: pq, erreurs: eq } = await ouvrir(ctxq, CFG.qcm);
   ok("QCM : chargement sans erreur JS", eq.length === 0, eq.slice(0, 2).join(" | "));
-  /* Ces deux QCM sont de la GÉNÉRATION ANCIENNE du dépôt : format
-     {q, opts, ok, exp}, sans réfutation par distracteur, et 28 questions au lieu
-     de 30. On mesure ce qu'ils sont — on ne prétend pas qu'ils sont au standard.
-     La mise à niveau est déclarée « restant à faire » dans le rapport. */
+  /* Ces QCM sont passés à la génération actuelle du dépôt (30 questions, {q, o, r, expl, d…}, une
+     réfutation par distracteur) : le banc lit les deux formats et vérifie les réfutations (24/10/2026). */
   const meta = await pq.evaluate(src => {
     const m = src.match(/const (?:QUESTIONS|questions)\s*=\s*(\[[\s\S]*?\n\];)/);
     if (!m) return null;
@@ -336,8 +379,9 @@ await ctx.close();
     if (!Array.isArray(q)) return null;
     const rep = {};
     q.forEach(x => { const i = (x.ok !== undefined ? x.ok : x.r); rep[i] = (rep[i] || 0) + 1; });
-    const sansExp = q.filter(x => !(x.exp && String(x.exp).trim())).length;
-    const sansQuatre = q.filter(x => !(x.opts && x.opts.length === 4)).length;
+    /* deux générations de QCM : l'ancienne {q, opts, ok, exp}, l'actuelle {q, o, r, expl, d…} */
+    const sansExp = q.filter(x => !((x.exp || x.expl) && String(x.exp || x.expl).trim())).length;
+    const sansQuatre = q.filter(x => !((x.opts || x.o) && (x.opts || x.o).length === 4)).length;
     const refutations = q.filter(x => Array.isArray(x.d)).length;
     return { n: q.length, rep, sansExp, sansQuatre, refutations };
   }, fs.readFileSync(path.join(LOT, CFG.qcm), "utf8"));
@@ -347,8 +391,8 @@ await ctx.close();
     ok("QCM : chaque question porte une explication", meta.sansExp === 0, meta.sansExp + " sans explication");
     ok("QCM : les 4 positions servent de bonne réponse",
        Object.keys(meta.rep).length === 4, JSON.stringify(meta.rep));
-    ok("QCM : état déclaré — génération ancienne, sans réfutation par distracteur",
-       meta.refutations === 0, meta.refutations + " question(s) avec réfutations (0 attendu ici)");
+    ok("QCM : génération actuelle — chaque question réfute ses distracteurs",
+       meta.refutations === meta.n, meta.refutations + " question(s) sur " + meta.n + " avec réfutations");
   } else {
     ok("QCM : le tableau des questions est lisible depuis la source", false,
        "const questions = [...] introuvable ou non évaluable — contrôle NON exécuté");
