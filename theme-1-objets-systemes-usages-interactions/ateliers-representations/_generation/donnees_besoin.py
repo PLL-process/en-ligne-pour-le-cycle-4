@@ -857,11 +857,12 @@ NIVEAUX = {
                ("Je sais distinguer la personne qui se sert d'un objet et ce que cet objet transporte ou transforme.",
                 "cycle 3 — sciences et technologie", "@synthese#les-mots", "les mots de l'atelier, dans la synthèse (2 minutes)")],
         situation_titre="Deux noms pour une même idée",
-        situation="<p>Avant de fabriquer ou de choisir un objet, on se demande <b>à quoi il doit servir</b>. Le programme de "
-                  "technologie parle d'<b>exprimer le besoin</b>. On le fait avec trois questions&nbsp;: à qui l'objet rend-il "
-                  "service&nbsp;? sur quoi agit-il&nbsp;? dans quel but&nbsp;? Le schéma qui rassemble les trois réponses s'appelle "
-                  "souvent la <b>bête à cornes</b>&nbsp;: avec ses deux cases en haut et sa grande courbe, il fait penser à une "
-                  "tête de taureau.</p>"
+        situation="<p>Avant de fabriquer ou de choisir un objet, on se demande <b>à quoi il doit servir</b>&nbsp;: le programme "
+                  "de technologie parle d'<b>exprimer le besoin</b>. On pose trois questions&nbsp;:</p>"
+                  "<ul><li><b>à qui</b> l'objet rend-il service&nbsp;?</li><li><b>sur quoi</b> agit-il&nbsp;?</li>"
+                  "<li><b>dans quel but</b> existe-t-il&nbsp;?</li></ul>"
+                  "<p>Le schéma qui rassemble les trois réponses s'appelle souvent la <b>bête à cornes</b>&nbsp;: avec ses deux "
+                  "cases en haut et sa grande courbe, il fait penser à une tête de taureau.</p>"
                   "<p>Dans cet atelier, tu lis la bête à cornes du <b>vélo-cargo</b> de Léa, tu complètes celle du <b>lampadaire "
                   "intelligent</b> d'un parking de Sainte-Luce, puis tu t'en sers pour <b>choisir</b> un objet.</p>",
         question="Comment dire, en peu de mots, ce qu'un objet doit faire — avant même de savoir quel objet choisir&nbsp;?",
@@ -1044,6 +1045,10 @@ NOTES_PROF = (
     "jamais une idée (« la sécurité », « le confort »)&nbsp;; les mêmes personnes peuvent occuper les deux cases du haut (la "
     "station d'alerte rend service aux habitants et agit sur eux)&nbsp;; le but commence par un verbe à l'infinitif et ne nomme "
     "aucune solution&nbsp;; le commanditaire (la mairie, la commune) n'est pas l'usager.</li>"
+    "<li>Deux buts portent une condition, voulue par le plan&nbsp;: « sans voiture » (5e, exercice 3) et « sans gaspiller "
+    "l'eau » (4e, exercice 1). Ce sont des parties du besoin lui-même — sans elles, l'objet choisi ne serait pas le même — et "
+    "non des contraintes de conception. Une contrainte comme « sans éblouir » ou « résister à la pluie » n'entre pas dans le "
+    "but&nbsp;: elle va au diagramme des interacteurs (c'est l'un des distracteurs de l'exercice 1 de 5e).</li>"
     "<li>Source d'inspiration&nbsp;: le cahier « 123 Techno » (Bordas, 2021), fiches « bête à cornes » de 4e et de 3e — pour "
     "des mécaniques seulement&nbsp;: compléter un gabarit partiellement rempli, distinguer celui qui commande de celui à qui "
     "l'objet rend service, dire ce que la bête à cornes ne fait pas (elle ne liste pas les contraintes), reconnaître la "

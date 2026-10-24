@@ -379,7 +379,7 @@ q(C, "Ce qu'est un OST",
   "OST = un objet ou un système fabriqué.")
 
 q(C, "La liste de départ",
-  "Avec ce besoin, quelle liste de départ est la plus utile ? (Un SMS est un texto.)",
+  "Avec ce besoin, quelle liste de départ est la plus utile ? (Un SMS est un texto ; un OST, un objet ou système technique.)",
   ["sirène, SMS, radio locale, haut-parleur, panneau lumineux",
    "le SMS seulement, puisque presque tout le monde a un téléphone",
    "la mairie, les pompiers, les voisins, la gendarmerie",
@@ -395,12 +395,12 @@ q(C, "La liste de départ",
   img=IMG_ALERTE)
 
 q(C, "Pourquoi une liste longue",
-  "Pourquoi établir une longue liste d'OST plutôt que garder la première idée ?",
+  "Pourquoi établir une longue liste d'OST (objets ou systèmes techniques) plutôt que garder la première idée ?",
   ["parce que chaque OST a ses faiblesses, qu'un autre peut compenser",
    "parce qu'il faudra ensuite acheter et installer tous les OST de la liste",
    "parce que la première idée est toujours la plus mauvaise",
    "parce qu'une longue liste montre qu'on a beaucoup travaillé"],
-  "Le SMS a besoin du réseau, que le cyclone peut couper ; la sirène s'entend mal dans une maison fermée. Une liste longue "
+  "Le SMS (le texto) a besoin du réseau, que le cyclone peut couper ; la sirène s'entend mal dans une maison fermée. Une liste longue "
   "garde des possibilités pour choisir ensuite.",
   "Pour la fin de la récréation : sonnerie, cloche, haut-parleur… si la sonnerie tombe en panne, une autre idée existe.",
   "Confondre établir une liste et décider d'acheter.",
@@ -424,7 +424,7 @@ q(C, "Utile, mais hors du besoin",
    "Les volets sont bien des objets fabriqués : le problème est leur but, pas leur nature.",
    "Le coût viendra au moment de choisir ; ici, ils ne répondent pas au but.",
    "On en pose justement près de la mer : ils protègent, mais ne préviennent pas."],
-  "Un OST de la liste répond au but écrit.")
+  "Un objet de la liste répond au but écrit.")
 
 q(C, "La case qui nomme une solution",
   "Sur cette bête à cornes, quelle case nomme déjà une solution ?",
@@ -432,7 +432,7 @@ q(C, "La case qui nomme une solution",
    "la case « à qui ? »",
    "la case « sur quoi ? »",
    "aucune case : tout est juste"],
-  "« Envoyer un SMS » est un moyen : une solution. Le but devrait dire ce qu'il faut obtenir — prévenir les habitants de "
+  "« Envoyer un SMS » (un texto) est un moyen : une solution. Le but devrait dire ce qu'il faut obtenir — prévenir les habitants de "
   "l'arrivée d'un cyclone.",
   "« Installer un écran qui affiche le menu » nomme aussi une solution ; « informer les élèves du menu » n'en nomme aucune.",
   "Croire qu'un but très précis est forcément meilleur.",
@@ -460,28 +460,28 @@ q(C, "Une idée n'est pas une chose",
   "Sur quoi ? → une personne ou une chose.")
 
 q(C, "Le but qui rouvre la liste",
-  "Quel but rouvre la liste des OST possibles ?",
+  "Quel but rouvre la liste des OST (objets ou systèmes techniques) possibles ?",
   ["Prévenir les habitants du quartier de l'arrivée d'un cyclone",
-   "Envoyer un SMS et une notification à chaque habitant du quartier",
+   "Envoyer un texto et une notification à chaque habitant du quartier",
    "Faire sonner une sirène sur le toit de la mairie de Sainte-Luce",
    "Les habitants du quartier, menacés par les cyclones chaque année"],
-  "Un verbe, qui (les habitants), de quoi (le cyclone), et aucune solution : la sirène, le SMS, la radio peuvent tous entrer "
+  "Un verbe, qui (les habitants), de quoi (le cyclone), et aucune solution : la sirène, le texto, la radio peuvent tous entrer "
   "dans la liste.",
   "« Informer les élèves du menu du jour » rouvre la liste : écran, affiche, annonce…",
   "Remplacer une solution par une autre dans le but.",
   ["",
-   "Le SMS et la notification sont des solutions : ce but ferme encore la liste.",
+   "Le texto et la notification sont des solutions : ce but ferme encore la liste.",
    "La sirène est une solution : on a changé d'idée, mais la liste reste fermée.",
    "Il n'y a pas de verbe : c'est une description des habitants, pas un but."],
   "Un but sans solution ouvre la liste.")
 
 q(C, "Le SMS n'est pas interdit",
-  "Le but réécrit ne parle plus du SMS. Le SMS est-il interdit pour autant ?",
-  ["Non : il reste une solution possible, dans la liste des OST.",
+  "Le but réécrit ne parle plus du SMS (le texto). Le SMS est-il interdit pour autant ?",
+  ["Non : il reste une solution possible, dans la liste à comparer.",
    "Oui : une solution écrite une fois dans le but est toujours mauvaise.",
    "Oui : le téléphone ne marche jamais pendant un cyclone.",
    "Non : mais il doit être obligatoirement choisi à la fin."],
-  "Le SMS n'avait rien de mauvais ; il n'était pas à sa place. Dans la liste, il sera comparé aux autres OST.",
+  "Le SMS n'avait rien de mauvais ; il n'était pas à sa place. Dans la liste, il sera comparé aux autres objets possibles.",
   "La sirène, la radio et le SMS seront ensuite comparés : fonctionnent-ils sans électricité ? sans réseau ?",
   "Croire qu'une solution mal placée est une mauvaise solution.",
   ["",
@@ -506,7 +506,7 @@ q(C, "Les mêmes dans les deux cases",
   "La même personne peut être servie par l'objet et agie par lui.")
 
 q(C, "Après la liste",
-  "Une fois la liste des OST possibles établie, que fait-on ensuite ?",
+  "Une fois la liste des OST (objets ou systèmes techniques) possibles établie, que fait-on ensuite ?",
   ["On compare les OST selon des critères, puis on choisit.",
    "On installe le premier OST de la liste, le plus simple.",
    "On recommence la bête à cornes avec un nouvel objet.",

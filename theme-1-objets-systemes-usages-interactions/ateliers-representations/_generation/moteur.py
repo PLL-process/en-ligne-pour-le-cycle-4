@@ -182,6 +182,8 @@ class Rendu:
                           "refuses": w.get("refuses", []), "inconnu": w.get("inconnu"), "vide": w.get("vide")})
         h = ['<label class="champ" for="%s">%s <span class="encoche" data-pour="%s"></span></label>' % (name, w["label"], name),
              '<textarea id="%s" name="%s" rows="%d" spellcheck="true"></textarea>' % (name, name, w.get("lignes", 6))]
+        if w.get("intro"):
+            h.insert(0, "<div>%s</div>" % w["intro"])
         if w.get("etayage"):
             h.append(self.etayage(w["etayage"]))
         return "".join(h)
@@ -194,6 +196,8 @@ class Rendu:
         miroir = (' data-miroir="%s"' % w["miroir"]) if w.get("miroir") else ""
         h = ['<label class="champ" for="%s">%s <span class="encoche" data-pour="%s"></span></label>' % (name, w["label"], name),
              '<textarea id="%s" name="%s" rows="%d" spellcheck="true"%s></textarea>' % (name, name, w.get("lignes", 3), miroir)]
+        if w.get("intro"):
+            h.insert(0, "<div>%s</div>" % w["intro"])
         h.append('<div class="note">Ce que je regarde dans ta réponse&nbsp;:<ul>')
         for i, c in enumerate(w["criteres"]):
             h.append('<li>%s <span class="encoche" data-pour="%s::%d"></span></li>' % (c["label"], name, i))

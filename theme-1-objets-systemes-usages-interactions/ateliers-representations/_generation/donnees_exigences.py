@@ -270,11 +270,11 @@ E1 = dict(
           "qu'on appelle souvent <b>diagramme des exigences SysML</b>. SysML veut dire <i>Systems Modeling Language</i>, "
           "« langage de modélisation des systèmes »&nbsp;: des schémas que les ingénieurs du monde entier lisent de la "
           "même façon.</p>",
-    consigne="<p>Chaque rectangle est un <b>bloc d'exigence</b>. En haut, le mot «&nbsp;requirement&nbsp;» (exigence, en "
+    consigne="<p><b>Un bloc d'exigence</b>, c'est chaque rectangle. En haut, le mot «&nbsp;requirement&nbsp;» (exigence, en "
              "anglais) et le <b>nom</b> de l'exigence. Dessous, l'<b>Id</b> — son identifiant, un numéro — puis sa phrase, "
              "le <b>texte</b>. Le trait qui part d'un petit cercle à croix ⊕ est un lien de <b>contenance</b>&nbsp;: "
              "l'exigence-mère, du côté du ⊕, contient les exigences-filles.</p>"
-             "<p>Le texte d'une exigence porte un <b>critère</b> (ce qu'on mesure) et un <b>niveau</b> (la valeur à "
+             "<p><b>Le texte</b> d'une exigence porte un <b>critère</b> (ce qu'on mesure) et un <b>niveau</b> (la valeur à "
              "atteindre). Le programme range les exigences en catégories&nbsp;: <b>sécurité</b> (ne blesser personne), "
              "<b>incidences environnementales</b> (les effets sur la planète&nbsp;: eau, énergie, déchets), <b>formes et "
              "fonctions</b>, <b>ergonomie</b> (facile et confortable à utiliser), <b>qualité</b>, <b>fiabilité</b> "
@@ -431,13 +431,13 @@ E2 = dict(
     aides=["<p>Pour chaque bloc, lis sa ligne du tableau. Le nom résume la désignation en un ou deux mots. Le texte doit "
            "contenir <b>le critère et le niveau</b>&nbsp;: cherche le texte où tu retrouves le nombre de la ligne et son "
            "unité. Pour la mère, demande-toi&nbsp;: <b>quelle phrase ces deux blocs précisent-ils&nbsp;?</b></p>",
-           "<p>Ligne 1 → «&nbsp;compte rendu&nbsp;» → critère&nbsp;: le temps avant l'arrivée du message → niveau&nbsp;: "
-           "5&nbsp;min au plus → un seul texte contient «&nbsp;5&nbsp;min au plus&nbsp;».<br>"
+           "<p><b>Les deux blocs.</b> Ligne 1 → «&nbsp;compte rendu&nbsp;» → critère&nbsp;: le temps avant l'arrivée du "
+           "message → niveau&nbsp;: 5&nbsp;min au plus → un seul texte contient «&nbsp;5&nbsp;min au plus&nbsp;».<br>"
            "Ligne 2 → «&nbsp;cuve presque vide&nbsp;» → critère&nbsp;: le volume qui reste → niveau&nbsp;: 50&nbsp;L → un "
-           "seul texte contient «&nbsp;50&nbsp;L&nbsp;».<br>"
-           "«&nbsp;Assez vite&nbsp;» → pas de nombre → impossible à vérifier → refusé.<br>"
-           "«&nbsp;Une carte Wi-Fi&nbsp;» → un composant → c'est <b>comment</b> on fera → une solution, pas une exigence.<br>"
-           "A et B parlent du smartphone → ils précisent «&nbsp;Suivi à distance&nbsp;» → Id 2.1 et 2.2.</p>"],
+           "seul texte contient «&nbsp;50&nbsp;L&nbsp;».</p>"
+           "<p><b>Les refus.</b> «&nbsp;Assez vite&nbsp;» → pas de nombre → impossible à vérifier → refusé.<br>"
+           "«&nbsp;Une carte Wi-Fi&nbsp;» → un composant → c'est <b>comment</b> on fera → une solution, pas une exigence.</p>"
+           "<p><b>La mère.</b> A et B parlent du smartphone → ils précisent «&nbsp;Suivi à distance&nbsp;» → Id 2.1 et 2.2.</p>"],
     jumeau=dict(consigne="Une troisième ligne&nbsp;: «&nbsp;Signaler une panne de la pompe — Critère&nbsp;: temps entre la "
                          "panne et l'alerte — Niveau&nbsp;: 10&nbsp;min au plus&nbsp;». Écris le nom, le texte et l'Id de son bloc.",
                 correction="Nom&nbsp;: <b>Alerte panne</b>. Texte&nbsp;: «&nbsp;Une alerte doit arriver sur le smartphone "
@@ -559,12 +559,15 @@ E3 = dict(
     aides=["<p>Pour relier, cherche dans chaque test <b>ce qu'il mesure</b>&nbsp;: un volume d'eau, une tension, des gouttes, "
            "une durée. Un test qui ne mesure rien ne vérifie rien. Pour juger, calcule l'écart (résultat − niveau), puis "
            "compare-le à la marge de la flexibilité.</p>",
-           "<p>1.1 → de l'eau qui entre&nbsp;? → T3 l'arrose → <b>T3</b>.<br>"
-           "1.2 → un volume par jour → T1 relève le compteur → <b>T1</b>. 1.3 → une durée et des outils → <b>T4</b>. 1.4 → des "
-           "volts → le multimètre → <b>T2</b>. T5 ne mesure rien&nbsp;: c'est un avis.<br>"
-           "1.2&nbsp;: 11,5&nbsp;L → écart +1,5&nbsp;L → la marge s'arrête à 11&nbsp;L → <b>hors de la marge</b>, même de peu.<br>"
-           "1.4&nbsp;: 24&nbsp;V au lieu de 12&nbsp;V → F0 → <b>aucun écart accepté</b>.<br>"
-           "Protocole → <b>ce que je mesure</b> (une durée) → <b>avec quoi</b> (un chronomètre) → <b>le seuil</b> (5&nbsp;min au plus).</p>"],
+           "<p><b>Relier.</b> 1.1 → de l'eau qui entre&nbsp;? → T3 l'arrose → <b>T3</b>.<br>"
+           "1.2 → un volume par jour → T1 relève le compteur → <b>T1</b>.<br>"
+           "1.3 → une durée et des outils → <b>T4</b>.<br>"
+           "1.4 → des volts → le multimètre → <b>T2</b>. T5 ne mesure rien&nbsp;: c'est un avis.</p>"
+           "<p><b>Juger.</b> 1.2&nbsp;: 11,5&nbsp;L → écart +1,5&nbsp;L → la marge s'arrête à 11&nbsp;L → <b>hors de la "
+           "marge</b>, même de peu.<br>"
+           "1.4&nbsp;: 24&nbsp;V au lieu de 12&nbsp;V → F0 → <b>aucun écart accepté</b>.</p>"
+           "<p><b>Le protocole.</b> <b>Ce que je mesure</b> (une durée) → <b>avec quoi</b> (un chronomètre) → <b>le "
+           "seuil</b> (5&nbsp;min au plus).</p>"],
     jumeau=dict(consigne="Exigence 2.2&nbsp;: «&nbsp;Une alerte doit partir sur le smartphone dès qu'il reste 50&nbsp;L dans la "
                          "cuve.&nbsp;» Écris son protocole de test.",
                 correction="Je vide la cuve peu à peu en lisant ses <b>graduations</b> (ou une jauge)&nbsp;; je note le "
@@ -1005,12 +1008,12 @@ NIVEAUX = {
                 "4e_C2.2", "@atelier:interacteurs:4e#pv_4e_e7",
                 "l'atelier « diagramme des interacteurs extérieurs », exercice sur les contraintes oubliées (12 minutes)")],
         situation_titre="Deux noms pour un même schéma",
-        situation="<p>Le programme de technologie parle de <b>contraintes</b>, d'<b>exigences</b> et de <b>cahier des "
-                  "charges</b>. Quand on dessine les exigences d'un système dans des blocs reliés entre eux, on obtient le "
-                  "<b>diagramme des exigences</b>. Les ingénieurs l'appellent <b>diagramme des exigences SysML</b>&nbsp;: "
-                  "SysML veut dire <i>Systems Modeling Language</i>, « langage de modélisation des systèmes », un ensemble "
-                  "de schémas qui se lisent de la même façon dans le monde entier.</p>"
-                  "<p>Dans cet atelier, le système est le <b>système d'arrosage connecté</b> du jardin partagé du collège. Ses "
+        situation="<p><b>Les mots du programme</b>&nbsp;: contraintes, exigences, cahier des charges. Quand on dessine "
+                  "les exigences d'un système dans des blocs reliés entre eux, on obtient le <b>diagramme des "
+                  "exigences</b>. Les ingénieurs l'appellent <b>diagramme des exigences SysML</b>&nbsp;: SysML veut dire "
+                  "<i>Systems Modeling Language</i>, « langage de modélisation des systèmes », un ensemble de schémas qui "
+                  "se lisent de la même façon dans le monde entier.</p>"
+                  "<p><b>Dans cet atelier</b>, le système est le <b>système d'arrosage connecté</b> du jardin partagé du collège. Ses "
                   "exigences sont déjà dans un tableau&nbsp;: tu vas les voir en schéma, en ajouter, puis les "
                   "<b>vérifier</b> par des tests.</p>",
         question="Comment montrer d'un coup d'œil toutes les exigences d'un système — et comment prouver que chacune est "
@@ -1058,12 +1061,12 @@ NIVEAUX = {
                ("Je sais relier une exigence au test qui la vérifie, et juger un résultat avec la flexibilité.",
                 "4e_C8.3", "@niveau:4e#ex_4e_e3", "l'atelier de 4e, exercice sur les tests (15 minutes)")],
         situation_titre="Deux noms pour un même schéma",
-        situation="<p>Le programme de technologie demande d'<b>évaluer</b> des objets selon des <b>exigences</b> ou des "
-                  "<b>critères</b>&nbsp;: caractéristiques, performances, coût, indice de réparabilité. Pour avoir toutes "
+        situation="<p><b>Évaluer des objets</b> selon des exigences ou des critères — caractéristiques, performances, "
+                  "coût, indice de réparabilité&nbsp;: c'est ce que demande le programme de technologie. Pour avoir toutes "
                   "les exigences sous les yeux, on les dessine dans un <b>diagramme des exigences</b>, que les ingénieurs "
                   "appellent <b>diagramme des exigences SysML</b> — SysML veut dire <i>Systems Modeling Language</i>, "
                   "« langage de modélisation des systèmes ».</p>"
-                  "<p>Dans cet atelier, le système est la <b>station d'alerte cyclonique</b> du quartier. Deux boîtiers "
+                  "<p><b>Dans cet atelier</b>, le système est la <b>station d'alerte cyclonique</b> du quartier. Deux boîtiers "
                   "sont proposés&nbsp;; aucun n'est parfait.</p>",
         question="Quand aucune solution ne satisfait toutes les exigences, comment choisir — et comment le justifier&nbsp;?",
         hypothese_amorces=["Je pense qu'on choisit la solution qui…", "Pour départager deux solutions, je regarderais…",
