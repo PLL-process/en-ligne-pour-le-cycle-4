@@ -15,7 +15,7 @@ IMG_PROJET = {"src": "Images/carte_mentale_projet_lampadaire.svg",
               "alt": "Carte mentale : au centre « Notre projet : le lampadaire » ; cinq branches, Photos, Mesures, Programmes, "
                      "Comptes rendus et Croquis, avec deux feuilles chacune."}
 IMG_ARBO = {"src": "Images/arborescence_lampadaire.svg",
-            "alt": "Arborescence A : Documents contient 5eB, qui contient Lampadaire ; dans Lampadaire, les dossiers Photos, "
+            "alt": "Arborescence A : Documents contient 5e, qui contient Lampadaire ; dans Lampadaire, les dossiers Photos, "
                    "Mesures, Programmes, Comptes rendus et Croquis ; Photos et Mesures contiennent chacun deux fichiers."}
 IMG_FAUTIVE = {"src": "Images/carte_mentale_arrosage_a_corriger.svg",
                "alt": "Carte mentale à corriger : au centre « 4e B — mardi » ; branches Avantages, Inconvénients, Divers, et une "
@@ -117,7 +117,7 @@ q(C, "De la carte au dossier",
    "l'extension des fichiers"],
   "L'idée centrale devient le <b>dossier du projet</b> (Lampadaire) ; chaque branche, un dossier rangé dedans ; chaque "
   "feuille, un fichier.",
-  "Documents › 5eB › Lampadaire › Photos › lampadaire_nuit.jpg.",
+  "Documents › 5e › Lampadaire › Photos › lampadaire_nuit.jpg.",
   "Oublier le dossier du projet et mettre les dossiers des branches directement dans celui de la classe.",
   ["",
    "Un fichier image correspond à une feuille de la branche Photos, pas à l'idée centrale.",
@@ -127,29 +127,29 @@ q(C, "De la carte au dossier",
 
 q(C, "Lire une arborescence",
   "Dans cette arborescence, quel dossier contient directement le dossier Lampadaire ?",
-  ["5eB",
+  ["5e",
    "Documents",
    "Photos",
    "Mesures"],
-  "Lampadaire est rangé <b>dans 5eB</b>, qui est lui-même rangé dans Documents. On lit l'arborescence du plus grand dossier "
+  "Lampadaire est rangé <b>dans 5e</b>, qui est lui-même rangé dans Documents. On lit l'arborescence du plus grand dossier "
   "au plus petit.",
-  "Pour arriver à releves_mardi.csv : Documents › 5eB › Lampadaire › Mesures.",
+  "Pour arriver à releves_mardi.csv : Documents › 5e › Lampadaire › Mesures.",
   "Confondre « contient » et « contient quelque part plus bas ».",
   ["",
-   "Documents contient 5eB, qui contient Lampadaire : Documents ne le contient pas directement.",
+   "Documents contient 5e, qui contient Lampadaire : Documents ne le contient pas directement.",
    "Photos est rangé DANS Lampadaire : c'est l'inverse.",
    "Mesures est rangé DANS Lampadaire, à côté de Photos : il ne le contient pas."],
   "Une arborescence se lit du plus grand dossier au plus petit.",
   img=IMG_ARBO)
 
 q(C, "Lire un chemin",
-  "Dans « Documents › 5eB › Lampadaire › Photos › lampadaire_nuit.jpg », qu'est-ce qui est un fichier ?",
+  "Dans « Documents › 5e › Lampadaire › Photos › lampadaire_nuit.jpg », qu'est-ce qui est un fichier ?",
   ["lampadaire_nuit.jpg",
    "le dossier Photos",
    "le dossier Lampadaire",
    "le dossier Documents"],
   "Un chemin se termine par le <b>fichier</b> ; tout ce qui est avant est un dossier. L'extension .jpg le confirme : c'est une image.",
-  "Dans Documents › 5eB › Lampadaire › Mesures › releves_mardi.csv, le fichier est releves_mardi.csv.",
+  "Dans Documents › 5e › Lampadaire › Mesures › releves_mardi.csv, le fichier est releves_mardi.csv.",
   "Prendre le dernier dossier pour le fichier.",
   ["",
    "Photos est le dernier dossier du chemin : il contient le fichier, il n'en est pas un.",

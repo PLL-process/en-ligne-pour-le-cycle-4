@@ -24,7 +24,7 @@ TITRE_COURT = "la carte mentale (carte heuristique)"
 TITRE_COMPLET = "La carte mentale, aussi appelée carte heuristique (mind map en anglais)"
 ETIQUETTE = "🗺️ carte mentale"
 ETIQUETTE_COURTE = "Carte mentale"
-MENTION_FICTION = ("Situations imaginées pour les exercices : les fichiers de la 5e B, le jardin du collège et Mme Joseph, "
+MENTION_FICTION = ("Situations imaginées pour les exercices : les fichiers de la classe de 5e, le jardin du collège et Mme Joseph, "
                    "la station d'alerte de la commune et ses chiffres sont inventés.")
 
 e = figures.e
@@ -111,11 +111,11 @@ def arborescence(ident, lettre, lignes, titre, desc, largeur=400):
 BRANCHES_DOSSIERS = ["Programmes", "Comptes rendus", "Croquis"]
 ARBO_A = arborescence(
     "cm-arbo-a", "A",
-    [(0, "Documents", "d"), (1, "5eB", "d"), (2, "Lampadaire", "d"), (3, "Photos", "d"),
+    [(0, "Documents", "d"), (1, "5e", "d"), (2, "Lampadaire", "d"), (3, "Photos", "d"),
      (4, "lampadaire_nuit.jpg", "f"), (4, "capteur_de_pres.jpg", "f"), (3, "Mesures", "d"),
      (4, "releves_lundi.csv", "f"), (4, "releves_mardi.csv", "f")] + [(3, b, "d") for b in BRANCHES_DOSSIERS],
-    "Arborescence A : Documents, 5eB, Lampadaire, puis un dossier par branche",
-    "Arborescence A. Le dossier Documents contient le dossier 5eB, qui contient le dossier Lampadaire. Dans Lampadaire, "
+    "Arborescence A : Documents, 5e, Lampadaire, puis un dossier par branche",
+    "Arborescence A. Le dossier Documents contient le dossier 5e, qui contient le dossier Lampadaire. Dans Lampadaire, "
     "cinq dossiers : Photos (avec les fichiers lampadaire_nuit.jpg et capteur_de_pres.jpg), Mesures (avec releves_lundi.csv "
     "et releves_mardi.csv), Programmes, Comptes rendus et Croquis. Une icône de chemise désigne un dossier, une icône de "
     "page un fichier.")
@@ -129,11 +129,11 @@ ARBO_B = arborescence(
     "releves_mardi.csv, seance1_compte_rendu.odt, capteur_de_pres.jpg, croquis_mat.jpg, releves_lundi.csv. Aucun autre dossier.")
 ARBO_C = arborescence(
     "cm-arbo-c", "C",
-    [(0, "Documents", "d"), (1, "5eB", "d"), (2, "Photos", "d"),
+    [(0, "Documents", "d"), (1, "5e", "d"), (2, "Photos", "d"),
      (3, "lampadaire_nuit.jpg", "f"), (3, "capteur_de_pres.jpg", "f"), (2, "Mesures", "d"),
      (3, "releves_lundi.csv", "f"), (3, "releves_mardi.csv", "f")] + [(2, b, "d") for b in BRANCHES_DOSSIERS],
-    "Arborescence C : Documents, 5eB, puis les dossiers des branches directement",
-    "Arborescence C. Le dossier Documents contient le dossier 5eB. Dans 5eB, directement, cinq dossiers : Photos (avec "
+    "Arborescence C : Documents, 5e, puis les dossiers des branches directement",
+    "Arborescence C. Le dossier Documents contient le dossier 5e. Dans 5e, directement, cinq dossiers : Photos (avec "
     "lampadaire_nuit.jpg et capteur_de_pres.jpg), Mesures (avec releves_lundi.csv et releves_mardi.csv), Programmes, "
     "Comptes rendus et Croquis. Il n'y a pas de dossier Lampadaire.")
 
@@ -286,7 +286,7 @@ E1 = dict(
           ("lux", "l'unité de la luminosité : environ 100 000 lux en plein soleil, moins de 10 lux la nuit dans une rue sombre."),
           ("LED", "une petite lampe qui consomme peu d'électricité (de l'anglais <i lang=\"en\">light-emitting diode</i>, "
            "diode électroluminescente).")],
-    intro="<p>La 5e B construit un <b>lampadaire intelligent</b> pour une rue de Sainte-Luce&nbsp;: la nuit tombe, le capteur "
+    intro="<p>La classe de 5e construit un <b>lampadaire intelligent</b> pour une rue de Sainte-Luce&nbsp;: la nuit tombe, le capteur "
           "mesure la lumière, et la LED s'allume toute seule. Après trois séances, l'équipe a beaucoup de choses sur sa table "
           "et sur sa tablette. Pour ne rien perdre, elle les range dans une <b>carte mentale</b>&nbsp;: au centre, le projet&nbsp;; "
           "sur chaque branche, une famille de données.</p>",
@@ -367,8 +367,8 @@ E2 = dict(
     mots=[("dossier", "une « chemise » de l'ordinateur : il contient des fichiers, ou d'autres dossiers."),
           ("fichier", "une donnée enregistrée, avec un nom : une photo, un tableau, un texte…"),
           ("arborescence", "la façon dont les dossiers sont rangés les uns dans les autres, comme les branches d'un arbre."),
-          ("chemin", "la suite des dossiers à ouvrir pour arriver à un fichier, du plus grand au plus petit : "
-           "Documents › 5eB › Lampadaire › Mesures › releves_mardi.csv."),
+          ("chemin", "la suite des dossiers à traverser pour arriver à un fichier, du plus grand au plus petit : "
+           "Documents › 5e › Lampadaire › Mesures › releves_mardi.csv."),
           ("extension", "les lettres après le point, à la fin du nom d'un fichier : elles disent son format. "
            "<b>.jpg</b> : une image&nbsp;; <b>.csv</b> : un tableau de valeurs&nbsp;; <b>.odt</b> : un texte."),
           ("stocker", "enregistrer un fichier à un endroit précis, pour le garder.")],
@@ -376,34 +376,34 @@ E2 = dict(
                     description="<p>Au centre&nbsp;: « Notre projet&nbsp;: le lampadaire ». Cinq branches&nbsp;: Photos, Mesures, "
                                 "Programmes, Comptes rendus, Croquis, avec deux feuilles chacune.</p>"),
                dict(svg=ARBO_A, legende="Arborescence A.",
-                    description="<p>Documents › 5eB › Lampadaire, puis cinq dossiers&nbsp;: Photos (lampadaire_nuit.jpg, "
+                    description="<p>Documents › 5e › Lampadaire, puis cinq dossiers&nbsp;: Photos (lampadaire_nuit.jpg, "
                                 "capteur_de_pres.jpg), Mesures (releves_lundi.csv, releves_mardi.csv), Programmes, Comptes "
                                 "rendus, Croquis.</p>"),
                dict(svg=ARBO_B, legende="Arborescence B.",
                     description="<p>Documents contient directement six fichiers mélangés&nbsp;: deux photos, deux tableaux de "
                                 "relevés, un compte rendu, un croquis. Aucun autre dossier.</p>"),
                dict(svg=ARBO_C, legende="Arborescence C.",
-                    description="<p>Documents › 5eB, puis directement cinq dossiers&nbsp;: Photos, Mesures, Programmes, Comptes "
+                    description="<p>Documents › 5e, puis directement cinq dossiers&nbsp;: Photos, Mesures, Programmes, Comptes "
                                 "rendus, Croquis. Il n'y a pas de dossier Lampadaire.</p>")],
     intro="<p>La carte mentale range les idées. Sur l'ordinateur, on range les fichiers de la même façon&nbsp;: l'<b>idée "
           "centrale</b> devient le <b>dossier du projet</b>, chaque <b>branche</b> devient un <b>dossier</b> rangé dedans, et "
           "chaque <b>feuille</b> devient un <b>fichier</b>. En classe, on enregistre toujours dans <b>Documents</b>, puis dans "
-          "le <b>dossier au nom de la classe</b>&nbsp;: <b>5eB</b>.</p>",
+          "le <b>dossier au nom de la classe</b>&nbsp;: <b>5e</b>.</p>",
     consigne="<p>Une <b>arborescence</b>, c'est la façon dont les dossiers sont rangés les uns dans les autres. <b>Choisis "
              "l'arborescence qui correspond à la carte mentale</b> et à la règle de la classe. Puis <b>range</b> quatre nouveaux "
              "fichiers&nbsp;: les lettres après le point, l'<b>extension</b>, disent le format (.jpg une image, .csv un tableau "
              "de valeurs, .odt un texte), mais c'est le nom qui dit de quoi parle le fichier. Enfin, <b>écris le chemin</b> "
-             "complet du fichier releves_mardi.csv&nbsp;: la suite des dossiers à ouvrir, du plus grand au plus petit.</p>",
-    critere="la bonne arborescence, quatre fichiers bien rangés, et un chemin qui passe, dans l'ordre, par 5eB, Lampadaire et "
+             "complet du fichier releves_mardi.csv&nbsp;: la suite des dossiers à traverser, du plus grand au plus petit.</p>",
+    critere="la bonne arborescence, quatre fichiers bien rangés, et un chemin qui passe, dans l'ordre, par 5e, Lampadaire et "
             "Mesures jusqu'au fichier.",
     widgets=[dict(type="choix", name="arbo",
                   legende="Quelle arborescence range les fichiers comme la carte mentale, et comme le demande la classe&nbsp;?",
                   options=[("a", "L'arborescence A."),
                            ("b", "L'arborescence B&nbsp;: tous les fichiers sont visibles d'un seul coup."),
-                           ("c", "L'arborescence C&nbsp;: un dossier par branche, juste dans 5eB."),
+                           ("c", "L'arborescence C&nbsp;: un dossier par branche, juste dans 5e."),
                            ("toutes", "Les trois se valent&nbsp;: l'ordinateur retrouve un fichier de toute façon.")],
                   bonne="a",
-                  retours={"a": "Oui : Documents › 5eB, puis le dossier du projet (l'idée centrale), puis un dossier par branche.",
+                  retours={"a": "Oui : Documents › 5e, puis le dossier du projet (l'idée centrale), puis un dossier par branche.",
                            "b": "Dans B, rien n'est rangé : la carte avait cinq branches, il n'y a ici aucun dossier. Avec trente fichiers, on ne s'y retrouve plus.",
                            "c": "Dans C, il manque le dossier du projet, l'idée centrale. Au prochain projet, les photos du vélo-cargo se mélangeront à celles du lampadaire.",
                            "toutes": "La recherche de l'ordinateur aide, mais seulement si l'on connaît le nom exact du fichier. Un rangement clair, lui, se retrouve sans chercher."},
@@ -417,27 +417,27 @@ E2 = dict(
                          ("croquis_boitier_v2.jpg", "croquis", "croquis_boitier_v2.jpg : c'est bien une image (.jpg), mais le nom dit ce qu'elle montre : un croquis.")]),
              dict(type="texte", name="chemin", lignes=2, minCar=10,
                   label="Écris le chemin complet du fichier releves_mardi.csv, en séparant les dossiers par « › » (ou par « / »).",
-                  criteres=[dict(label="ton chemin passe par le dossier de la classe (5eB)", motifs=[r"5\s?e\s?b"],
-                                 manque="Il manque le dossier de la classe : dans Documents, on ouvre d'abord 5eB."),
+                  criteres=[dict(label="ton chemin passe par le dossier de la classe (5e)", motifs=[r"\b5\s?e\b"],
+                                 manque="Il manque le dossier de la classe : dans Documents, on ouvre d'abord 5e."),
                             dict(label="il passe par le dossier du projet (Lampadaire)", motifs=["lampadaire"],
                                  manque="Il manque le dossier du projet : l'idée centrale de la carte, Lampadaire."),
                             dict(label="il passe par la bonne branche (Mesures)", motifs=["mesure"],
                                  manque="Il manque la bonne branche : un tableau de relevés va dans le dossier Mesures."),
-                            dict(label="les dossiers sont dans l'ordre, du plus grand au plus petit", motifs=[r"5\s?e\s?b.*lampadaire.*mesure"],
-                                 manque="Remets les dossiers dans l'ordre où on les ouvre : 5eB, puis Lampadaire, puis Mesures."),
+                            dict(label="les dossiers sont dans l'ordre, du plus grand au plus petit", motifs=[r"\b5\s?e\b.*lampadaire.*mesure"],
+                                 manque="Remets les dossiers dans l'ordre où on les ouvre : 5e, puis Lampadaire, puis Mesures."),
                             dict(label="le chemin finit par le nom du fichier", motifs=[r"mesures?\W.*releves?.?mardi"],
                                  manque="Termine le chemin par le nom du fichier : releves_mardi.csv.")],
                   etayage=["Documents › … › … › … › releves_mardi.csv",
-                           "J'ouvre Documents, puis le dossier de ma classe, puis le dossier du projet, puis la branche…"],
-                  exemple="Documents › 5eB › Lampadaire › Mesures › releves_mardi.csv")],
+                           "Je pars de Documents, puis le dossier de ma classe, puis le dossier du projet, puis la branche…"],
+                  exemple="Documents › 5e › Lampadaire › Mesures › releves_mardi.csv")],
     aides=["<p>Pose la carte mentale à côté des arborescences. Cherche où est passée l'<b>idée centrale</b> (le projet), puis "
            "les <b>branches</b> (les dossiers). Pour ranger un fichier, lis d'abord son <b>nom</b>&nbsp;: il dit de quoi parle le "
            "fichier&nbsp;; l'extension dit seulement son format.</p>",
            "<p>Carte → dossiers&nbsp;: idée centrale → <b>Lampadaire</b>&nbsp;; branches → <b>Photos, Mesures…</b>&nbsp;; feuilles → "
-           "fichiers.<br>Règle de la classe → tout commence par <b>Documents › 5eB</b>.<br>"
-           "A → Documents › 5eB › Lampadaire › branches → ✔.<br>"
+           "fichiers.<br>Règle de la classe → tout commence par <b>Documents › 5e</b>.<br>"
+           "A → Documents › 5e › Lampadaire › branches → ✔.<br>"
            "croquis_boitier_v2.jpg → .jpg, une image… mais le nom dit « croquis » → dossier <b>Croquis</b>.<br>"
-           "Chemin → on écrit chaque dossier ouvert, dans l'ordre&nbsp;: Documents › 5eB › Lampadaire › Mesures › puis le fichier.</p>"],
+           "Chemin → on écrit chaque dossier ouvert, dans l'ordre&nbsp;: Documents › 5e › Lampadaire › Mesures › puis le fichier.</p>"],
     jumeau=dict(consigne="La 5e A range son projet « Vélo-cargo » de la même façon. Écris le chemin de la photo velo_cote.jpg.",
                 correction="<b>Documents › 5eA › Vélo-cargo › Photos › velo_cote.jpg</b>&nbsp;: d'abord le dossier de la classe, "
                            "puis celui du projet (l'idée centrale), puis la branche Photos, et enfin le fichier."),
@@ -445,7 +445,7 @@ E2 = dict(
         "<b>L'idée centrale</b> « Notre projet&nbsp;: le lampadaire » → devient le dossier <b>Lampadaire</b>",
         "<b>Les cinq branches</b> → deviennent cinq dossiers dans Lampadaire&nbsp;: Photos, Mesures, Programmes, Comptes rendus, Croquis",
         "<b>Les feuilles</b> → deviennent les fichiers, chacun dans le dossier de sa branche",
-        "<b>A</b> → Documents › 5eB › Lampadaire › un dossier par branche → ✔ c'est la carte, rangée comme le veut la classe",
+        "<b>A</b> → Documents › 5e › Lampadaire › un dossier par branche → ✔ c'est la carte, rangée comme le veut la classe",
         "<b>B</b> → aucun dossier, tout est mélangé → ✘ les branches de la carte ont disparu",
         "<b>C</b> → pas de dossier Lampadaire → ✘ l'idée centrale manque&nbsp;; au projet suivant, tout se mélange",
         "« Les trois se valent » → ✘ la recherche de l'ordinateur ne marche que si l'on connaît le nom exact du fichier",
@@ -454,7 +454,7 @@ E2 = dict(
         "<b>seance4_compte_rendu.odt</b> → un texte → <b>Comptes rendus</b>",
         "<b>croquis_boitier_v2.jpg</b> → une image (.jpg), mais c'est un dessin du boîtier → <b>Croquis</b>&nbsp;: on range "
         "d'après ce que montre le fichier, pas d'après son extension seule",
-        "<b>Le chemin attendu&nbsp;:</b> Documents › 5eB › Lampadaire › Mesures › releves_mardi.csv",
+        "<b>Le chemin attendu&nbsp;:</b> Documents › 5e › Lampadaire › Mesures › releves_mardi.csv",
         ("conclusion", "Une carte mentale bien faite donne l'arborescence&nbsp;: <b>idée centrale → dossier du projet</b>, "
                        "<b>branches → dossiers</b>, <b>feuilles → fichiers</b>. Le chemin se lit du plus grand dossier au plus petit."),
     ],
@@ -920,7 +920,7 @@ COURS = {
           "<tr><td>une branche</td><td>un dossier rangé dedans</td><td>Mesures</td></tr>"
           "<tr><td>une feuille</td><td>un fichier</td><td>releves_mardi.csv</td></tr></table></div>"
           "<ul><li>En classe, tout commence par <b>Documents</b>, puis le <b>dossier de la classe</b>&nbsp;: "
-          "Documents › 5eB › Lampadaire › Mesures › releves_mardi.csv. Cette suite s'appelle le <b>chemin</b> du fichier.</li>"
+          "Documents › 5e › Lampadaire › Mesures › releves_mardi.csv. Cette suite s'appelle le <b>chemin</b> du fichier.</li>"
           "<li>L'<b>extension</b>, après le point, dit le format&nbsp;: <b>.jpg</b> une image, <b>.csv</b> un tableau de "
           "valeurs, <b>.odt</b> un texte. Le <b>nom</b> dit de quoi parle le fichier&nbsp;: sans espace ni accent, avec un "
           "numéro de séance ou de version.</li></ul>"
@@ -991,7 +991,7 @@ NIVEAUX = {
                   "organiser tout cela, on dessine une <b>carte mentale</b>&nbsp;: le projet au centre, une branche par famille "
                   "de données. Le programme de technologie ne lui donne pas de nom&nbsp;; on l'appelle <b>carte mentale</b>, ou "
                   "<b>carte heuristique</b>.</p>"
-                  "<p>Dans cet atelier, le projet est le <b>lampadaire intelligent</b> de la 5e B, pour une rue de Sainte-Luce.</p>",
+                  "<p>Dans cet atelier, le projet est le <b>lampadaire intelligent</b> de la classe de 5e, pour une rue de Sainte-Luce.</p>",
         question="Comment ranger les données d'un projet pour les retrouver en quelques secondes, même trois mois plus tard&nbsp;?",
         hypothese_amorces=["Je pense qu'il faudrait d'abord…", "Pour retrouver un fichier, je rangerais…",
                            "Je crois qu'on peut regrouper les données par…"],
@@ -1000,7 +1000,7 @@ NIVEAUX = {
                   "<b>branche</b> porte le nom d'une famille, chaque <b>feuille</b> une idée ou une donnée, en quelques mots.</li>"
                   "<li>Une <b>donnée</b> s'enregistre dans un fichier&nbsp;; un objet, non&nbsp;: on enregistre sa photo.</li>"
                   "<li>La carte donne l'<b>arborescence</b>&nbsp;: le dossier du projet au centre, un dossier par branche, un fichier "
-                  "par feuille. Le <b>chemin</b> se lit du plus grand dossier au plus petit&nbsp;: Documents › 5eB › Lampadaire › "
+                  "par feuille. Le <b>chemin</b> se lit du plus grand dossier au plus petit&nbsp;: Documents › 5e › Lampadaire › "
                   "Mesures › releves_mardi.csv.</li>"
                   "<li>La carte mentale <b>range</b> des idées&nbsp;: elle ne montre ni ce qui circule ni l'ordre des opérations.</li></ul>",
         bonus=[dict(titre="La carte de ton cartable",
@@ -1171,7 +1171,7 @@ NOTES_PROF = ("<ul><li>Le programme 2024 ne nomme pas la carte mentale&nbsp;: il
               "3e_C1.3 (argumentaire court). Chaque niveau a son objet-fil&nbsp;: le lampadaire intelligent, l'arrosage connecté "
               "du jardin, la station d'alerte cyclonique.</li>"
               "<li>Exercice 2 (5e)&nbsp;: la règle de rangement est celle de la classe — Documents, puis un dossier au nom de la "
-              "classe. Adapter « 5eB » au nom réel de la classe si besoin.</li>"
+              "classe. Adapter « 5e » au nom réel de la classe si besoin.</li>"
               "<li>Source d'inspiration, jamais recopiée&nbsp;: le cahier « 123 Techno » (Bordas 2021). On en retient la place "
               "de la carte mentale parmi les outils de présentation (organiser des idées, synthèse de cours), les exercices « "
               "choisir la représentation adaptée à une situation », et la mécanique « problème / solution » sur un document mal "

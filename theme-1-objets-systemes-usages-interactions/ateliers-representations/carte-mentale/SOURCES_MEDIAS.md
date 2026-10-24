@@ -4,7 +4,7 @@ Toutes les images de ce dossier sont des **SVG originaux**, écrits par programm
 
 | Fichier | Nature | Auteur | Licence | Ce que l'élève en fait |
 |---|---|---|---|---|
-| `Images/arborescence_lampadaire.svg` | SVG original, écrit par programme | Claude (Anthropic), pour ce dépôt | CC0 1.0 | Arborescence A : Documents, 5eB, Lampadaire, puis un dossier par branche |
+| `Images/arborescence_lampadaire.svg` | SVG original, écrit par programme | Claude (Anthropic), pour ce dépôt | CC0 1.0 | Arborescence A : Documents, 5e, Lampadaire, puis un dossier par branche |
 | `Images/carte_mentale_arrosage.svg` | SVG original, écrit par programme | Claude (Anthropic), pour ce dépôt | CC0 1.0 | Carte mentale de l'arrosage connecté du jardin, complétée |
 | `Images/carte_mentale_arrosage_a_corriger.svg` | SVG original, écrit par programme | Claude (Anthropic), pour ce dépôt | CC0 1.0 | Carte mentale de l'arrosage connecté, faite par un élève : à corriger |
 | `Images/carte_mentale_projet_lampadaire.svg` | SVG original, écrit par programme | Claude (Anthropic), pour ce dépôt | CC0 1.0 | Carte mentale des données du projet lampadaire, complétée |

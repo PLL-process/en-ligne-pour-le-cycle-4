@@ -89,6 +89,8 @@ DEPOT = pathlib.Path(os.path.dirname(os.path.abspath(__file__))).parent
 ECARTES = [
     ("_archive-anciennes-versions/", "versions gelées : leurs liens décrivent un état passé"),
     ("_outils/dnb_gabarit.html", "gabarit : ses adresses sont des marques à remplacer"),
+    ("theme-1-objets-systemes-usages-interactions/ateliers-representations/_generation/gabarit_qcm.html",
+     "gabarit : copie gelée d'un QCM d'atelier, ses liens sont réécrits par build_qcm.py"),
 ]
 
 DISTANT = re.compile(r"^(https?:|mailto:|tel:|data:|javascript:|//)", re.I)

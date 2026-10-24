@@ -29,5 +29,6 @@ Dans le programme de technologie, ce schéma s'appelle le diagramme des interact
 |---|---|---|
 | `theme-1-objets-systemes-usages-interactions/C2-decrire-les-interactions-entre-un-objet-ou/5e/5e_C2.1/sequence_5e_C2_shenzhen_station_velos.html` | 5e | e1, e3 |
 | `theme-1-objets-systemes-usages-interactions/C2-decrire-les-interactions-entre-un-objet-ou/4e/4e_C2.1/sequence_4e_C2_hangzhou_borne.html` | 4e | e5 |
+| `theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation/4e/4e_C4.1/sequence_4e_C4.1-C4.9_jardin_connecte.html` | 4e | e6 |
 
 Ne pas modifier ces pages à la main : elles sont produites par `../_generation/` (`python3 build.py interacteurs`, `python3 build_qcm.py interacteurs`, `python3 gouvernance.py interacteurs`).

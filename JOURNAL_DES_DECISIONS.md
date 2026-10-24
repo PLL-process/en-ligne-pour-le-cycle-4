@@ -23201,3 +23201,104 @@ tableau 1.3 de 640 à 2 440 px. C'est le prix, déjà payé au thème 1, d'une q
 
 - n°302 : « Si vous êtes trois ou quatre » vient du bloc des rôles commun (`poser_roles.py`, quatorze pages).
 - Lecteur d'écran réel et impression papier : non faits.
+
+## 24/10/2026 — Ateliers des représentations : sept ateliers d'exercices (5e → 3e), leurs cours, et leurs exercices insérés dans douze séquences (transversal : thèmes 1, 2, 3 et `_outils/`)
+
+**Demande de Pascal.** « Tout ce qui est absent "Dans le dépôt" [de la carte des représentations] — bête à cornes,
+diagramme des exigences, diagramme pieuvre, etc. — doit faire l'objet d'un ou plusieurs exercices, de préférence
+plusieurs : entre 3 et 7, sur plusieurs niveaux si le référentiel le permet, de façon spiralaire. » Réponses aux trois
+questions posées : ranger **à la fois** dans un atelier par représentation (une page par niveau), dans un cahier par
+niveau, et dans les séquences existantes ; **les six représentations absentes + le croquis** (Gantt et CAO existaient) ;
+**lot complet avec QCM**. Branche `fable/ateliers-representations`, sans motif de thème.
+
+### Décisions de Pascal prises en cours de lot (24/10/2026)
+
+- **Le diagramme pieuvre montre ses fonctions dès la 5e** : la fonction principale (FP) relie deux éléments
+  extérieurs **en passant par l'objet** ; chaque fonction contrainte (FC, « on dit aussi fonction complémentaire »)
+  relie l'objet à **un seul** élément. Une fonction s'écrit avec un verbe à l'infinitif. Remplace le choix du 13/10
+  (« le sigle FC seulement en 4e »).
+- **Le cahier des charges porte la flexibilité, par classes** : tableau Fonction · Désignation · Critère · Niveau ·
+  Flexibilité ; F0 nulle (impératif), F1 faible (peu négociable), F2 moyenne (négociable), F3 forte (très négociable) ;
+  la flexibilité dit l'écart que le client accepte, pas l'importance de la fonction. Travaillée en 4e (atelier pieuvre,
+  exercice 6) et dans l'atelier des exigences (4e et 3e).
+- **La FP1 décrit la fonction d'usage : c'est la corne de la bête à cornes reportée dans le diagramme.** Elle part de
+  « à qui ? », passe par l'objet, arrive à « sur quoi ? », et sa phrase dit « dans quel but ? ». Très souvent,
+  l'élément au bout de la FP1 porte aussi la **FC1** (fréquent, pas une règle). Matérialisé par un schéma
+  « de la bête à cornes au diagramme pieuvre » (repères ①②③, `figures.bete_vers_pieuvre`) dans les cours de la
+  pieuvre (5e) et de la bête à cornes (5e), une question de correspondance dans l'exercice 3 de la pieuvre, et une
+  question du QCM. Sur le vélo-cargo : FC1 « protéger les enfants pendant le trajet », au bout de FP1.
+- **Un encadré « 📘 Le cours » par niveau** dans chaque atelier ; le moteur le pose aussi dans la synthèse élève et
+  dans chaque bloc inséré dans une séquence.
+- **Le cahier « 123 Techno » (Bordas 2021, ancien programme) sert d'inspiration pour les représentations** — cours et
+  mécaniques d'exercices, **jamais de recopie** (site public : nos mots, nos objets-fils, nos SVG). Exception à
+  `manuels-2024-mecaniques`, qui excluait l'ancien programme. Lu en entier (DIC et MSOST, 5e, 4e, 3e : 170 pages
+  scannées, six inventaires) ; aucun de ces cahiers ne contient de page de cours, et plusieurs fichiers « Correction »
+  sont des cahiers vierges.
+- **Normes et règles restent des exigences**, jamais des bulles de la pieuvre (l'éditeur met « Législation »,
+  « Esthétique », « Masse » en bulles : c'est devenu l'exercice « écarter les fausses bulles », 5e).
+- **Carte blanche** sur les points « à trancher » : pages de la bête à cornes à 22–25 min (fidèles à la carte :
+  « dix minutes, jamais un objectif évalué ») ; « porte-à-porte » seul refusé comme objet ou système (« avec quel
+  objet ? »), accepté avec un mégaphone ; le dossier de classe « 5eB » devient « 5e » ; l'e6 de la pieuvre placé dans
+  la séance 4 du jardin connecté (la seule qui avait le temps) ; découpage déduit des séances de la page 4e C7 ;
+  version étayée ajoutée à la réponse du Bonus de quatre séquences (n°31, jusque-là laissée à Pascal le 04/10).
+
+### Ce que le lot fait
+
+- **Moteur commun** `theme-1-…/ateliers-representations/_generation/` : rendu des exercices (choix, cases, classer,
+  liste, texte, schémas vivants, croquis à l'écran avec relecture), sauvegarde par exercice partagée entre atelier,
+  cahier et séquence (`rep_<slug>_<niv>_<id>`), figures SVG (pieuvre FP/FC, bête à cornes, FAST, exigences SysML,
+  cas d'utilisation, carte mentale, scènes), QCM depuis le gabarit maison (30 questions fixes, `fix_r.js`), synthèses,
+  cahiers, pages-pointeurs par code (n°83), gouvernance générée (fiche, matrice n°124, README, manifest, rapport de
+  tests exécutés), **banc Playwright `banc_ateliers.py`** (chaque exercice à vide puis rempli juste, sauvegarde, QCM,
+  synthèses, cahiers, à 390 et 1280 px), insertion dans les séquences (`incrustations.py`, un fichier par séquence
+  dans `incrustations_lots/`). Consignes des rédacteurs : `CONSIGNES_REDACTION.md`.
+- **Sept ateliers, 46 exercices, 210 questions** : le besoin — bête à cornes (7 ex., 5e/4e/3e) · les interacteurs
+  — diagramme pieuvre (7 ex., 5e/4e) · le diagramme des exigences, SysML (6 ex., 4e/3e) · le diagramme des cas
+  d'utilisation, SysML (7 ex., 5e/4e/3e) · le croquis (6 ex., 4e/3e) · le FAST (7 ex., 5e/4e/3e) · la carte mentale
+  (6 ex., 5e/4e/3e). Trois cahiers de niveau les rassemblent.
+- **Insertions : 14 blocs dans 12 séquences**, chacun dans le temps libre de sa séance, exigé par le vérificateur
+  de l'activité hôte, banc du lot adapté : Shenzhen 5e_C2.1 (pieuvre e1, e3) · Hangzhou 4e_C2.1 (pieuvre e5 ;
+  croquis e1) · Pékin 3e_C2.1 (cas d'utilisation e6) · Shanghai 5e_C3 (besoin e1, e3) · Hangzhou 4e_C3 (besoin e5) ·
+  Shenzhen 3e_C3 (besoin e6 ; exigences e5, flexibilité) · gestion des données 5e_C1.3-C1.4 (carte mentale e1) ·
+  numérique et société 3e_C1.5 (carte mentale e5) · lampadaire 5e_C4.1, thème 2 (FAST e1) · jardin connecté
+  4e_C4.1, thème 2 (pieuvre e6, flexibilité) · conception du jardin 4e_C7, thème 3 (FAST e5) · validation du jardin
+  4e_C8, thème 3 (exigences e3).
+- **Pas inséré, faute de temps libre** (aucun exercice raccourci) : Tsinghua 4e_C1 (séances à 50/50/45/55),
+  freinage de Sainte-Luce 5e_C1.2, capteur de confort 3e_C7.
+- **Carte des représentations** à jour : chaque représentation est « produite » avec le lien de son atelier (Gantt et
+  CAO compris), note du 24/10.
+- **Skills** (compte de Pascal) : `representations-techniques-cycle4` (cours, progression, exercices types, pièges,
+  pages de 123 Techno), `ateliers-representations-depot` (le moteur), `manuels-2024-mecaniques` (exception 123 Techno).
+
+### Thème par thème (branche transversale, n°302, n°307)
+
+- **Thème 1** : `ateliers-representations/` (nouveau), pointeurs dans les dossiers des codes servis, `_reperes/carte_des_representations.html`,
+  huit séquences et leurs bancs (Shenzhen 5e C2, Hangzhou 4e C2 — nom de fichier long replié à 390 px —, Pékin 3e C2,
+  Shanghai 5e C3, Hangzhou 4e C3, Shenzhen 3e C3, 5e C1.3, 3e C1.5).
+- **Thème 2** : séquences du lampadaire 5e et du jardin connecté 4e, et leurs bancs.
+- **Thème 3** : séquences 4e C7 et 4e C8 ; leurs bancs lisent maintenant le format actuel du QCM (`o`, `expl`, `d`).
+- **`_outils/controle_liens.py`** : le gabarit QCM gelé des ateliers rejoint les pages écartées (ses liens sont
+  réécrits par `build_qcm.py`).
+
+### Ce qui a tourné
+
+- `banc_ateliers.py` : **303 / 303** (sept ateliers, QCM, synthèses, trois cahiers).
+- Bancs des séquences touchées : Shenzhen 5e 50/50 · Hangzhou 4e C2 65/65 · Pékin 58/58 · Shanghai 35/35 (+ voix 24/24)
+  · Hangzhou 4e C3 32/32 · Shenzhen 3e C3 37/37 · lampadaire 34/34 (QCM 25/25) · jardin 39/39 · 4e C7 47/47 ·
+  4e C8 48/48 ; n°311 : 33/33 partout (26/26 Shanghai), 3e C1.5 33/33. Le banc statique de 5e C1.3-C1.4
+  (`_outils/test_lot_theme1_5e_c1_3_c1_4.py`) garde ses six échecs antérieurs (QCM, rapport absent), sans lien avec l'insertion.
+- `controle_liens` 0 lien mort (783 pages) · `controle_squelette` · `controle_hierarchie` · `controle_regles_visibles`
+  · `controle_medias` · `controle_longueurs` · `controle_debordement` (filet mobile ajouté aux synthèses) ·
+  `controle_fichiers_telechargeables` · `controle_hors_ligne` · `controle_verrous` · `controle_contraste_liens` :
+  verts. `verif_qcm_coherence` : 7 QCM, 8/7/7/8, réfutations alignées.
+- Captures avant / après à 390 px : `ateliers-representations/_generation/captures_2026-10-24/`.
+
+### Ce que le lot ne fait pas
+
+- La séance 3 de 3e_C1.5 dépassait déjà 55 min avant l'insertion ; le README de 3e_C1.3 annonce une « activité 5 »
+  d'argumentaire qui n'existe pas (généré par `_outils/pointeurs_codes.py`) ; la séance 5 du lampadaire annonce 75 min.
+- Les fiches pédagogiques des séquences hôtes gardent leurs totaux de minutes d'avant l'insertion.
+- Moteur : un seul niveau de fonctions dans `figures.fast`, pas de texte d'attente dans les cases vides des figures
+  autres que la pieuvre, pas de rectangle « acteur » pour un système dans le diagramme de cas d'utilisation, une seule
+  zone de dessin par exercice — signalés par les rédacteurs, non contournés.
+- Lecteur d'écran réel et impression papier : non faits.

@@ -26,7 +26,7 @@ Analyse externe : besoin (bête à cornes) → fonction d'usage → interacteurs
 - **4e** : distinguer service rendu et contraintes, puis formuler une contrainte avec critère et niveau
 - **3e** : pas d'exercice de ce diagramme : en 3e, le programme demande de choisir ses modes de représentation pour décrire l'expérience de l'utilisateur (3e_C2.1). Le diagramme pieuvre y est un choix possible, parmi d'autres.
 
-## 5e — Dessiner tout ce qui entoure un objet, puis voir que chacune de ses formes répond à l'un d'eux. (≈ 39 min)
+## 5e — Dessiner tout ce qui entoure un objet, puis voir que chacune de ses formes répond à l'un d'eux. (≈ 40 min)
 
 **Question de départ** : Comment montrer, d'un seul coup d'œil, tout ce qui entoure un objet et agit sur lui — sans rien oublier ?
 
@@ -34,7 +34,7 @@ Analyse externe : besoin (bête à cornes) → fonction d'usage → interacteurs
 |---|---|---|---|---|
 | 1. Lister ce qui entoure le vélo-cargo | 5e_C2.1 | 8 min | repérer, dans une scène, tout ce qui est en dehors du vélo-cargo et en relation avec lui. | ✍ conçoit seul : une liste de cinq interacteurs extérieurs, un par ligne. |
 | 2. Classer les interacteurs, écarter les fausses bulles | 5e_C2.1 | 9 min | ranger chaque interacteur dans l'une des quatre familles du programme, et reconnaître ce qui n'est pas un interacteur. | le classement de quatre interacteurs du vélo-cargo, et les fausses bulles d'un diagramme écartées. |
-| 3. Compléter le diagramme pieuvre et ses fonctions | 5e_C2.1 | 10 min | compléter un diagramme des interacteurs extérieurs, écarter ce qui n'en est pas, et lire ses fonctions. | le diagramme pieuvre du vélo-cargo complété, la raison des deux intrus, et deux fonctions retrouvées. |
+| 3. Compléter le diagramme pieuvre et ses fonctions | 5e_C2.1 | 11 min | compléter un diagramme des interacteurs extérieurs, écarter ce qui n'en est pas, et lire ses fonctions. | le diagramme pieuvre du vélo-cargo complété, la raison des deux intrus, et deux fonctions retrouvées. |
 | 4. Relier une forme à un interacteur | 5e_C2.2 | 12 min | expliquer un choix de conception par l'interacteur qu'il sert et par son domaine. | ✍ conçoit seul : trois choix reliés à leur interacteur et à leur domaine, et une explication écrite. |
 
 **À retenir** : Le diagramme des interacteurs extérieurs — le diagramme pieuvre — met l'objet au centre et relie à lui, par un trait, tout ce qui est en relation avec lui.Un interacteur est toujours en dehors de l'objet. Il appartient à l'une des quatre familles : usagers, données, autres objets, éléments de l'environnement.Une fonction principale (FP) relie deux éléments extérieurs en passant par l'objet : c'est le service rendu. Une fonction contrainte (FC) relie l'objet à un seul élément : c'est ce qu'il doit respecter.Un choix de conception s'explique par l'interacteur qu'il sert et par son domaine : sécurité, ergonomie, développement durable.

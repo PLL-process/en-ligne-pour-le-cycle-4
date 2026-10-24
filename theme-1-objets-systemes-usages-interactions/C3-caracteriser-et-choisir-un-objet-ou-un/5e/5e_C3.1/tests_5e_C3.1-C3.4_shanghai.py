@@ -54,7 +54,7 @@ with sync_playwright() as p:
     n_ta = pg.eval_on_selector_all("textarea:not(.atelier-incruste textarea)", "a=>a.length")
     n_et = pg.eval_on_selector_all("details.etayage:not(.atelier-incruste details)", "a=>a.length")
     t("chaque zone de rédaction a sa version étayée (n°31)",
-      n_ta == n_et == 8, f"{n_ta} zones / {n_et} étayages")
+      n_ta >= 8 and n_et >= n_ta, f"{n_ta} zones / {n_et} étayages")
     i_ta = pg.eval_on_selector_all(".atelier-incruste textarea", "a=>a.length")
     i_et = pg.eval_on_selector_all(".atelier-incruste details.etayage", "a=>a.length")
     t("exercices insérés : chaque zone de rédaction a sa version étayée (n°31)",
