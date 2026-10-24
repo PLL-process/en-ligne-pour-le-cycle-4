@@ -27,6 +27,11 @@ Deux décisions de conception
 
 Et l'échange se fait **à la moitié de la séance**, pas d'une séance à l'autre : le tort
 qu'on veut corriger se produit en une heure.
+
+Le 24/10/2026, le bloc a perdu son « vous » (règle d'or n°302 : le dépôt tutoie). Pour
+reposer un bloc déjà en place après une retouche du gabarit, appeler `poser(page)` sur
+chaque page qui le porte : `main()` ne touche pas aux blocs existants, et il en pose
+d'autres là où le travail de groupe est nommé.
 """
 
 import argparse
@@ -83,9 +88,9 @@ BLOC = """<!-- roles: {cle} -->
       <em>Il a le droit d'arrêter le groupe.</em></li>
   </ul>
   <details>
-    <summary>Si vous êtes trois ou quatre</summary>
+    <summary>Si tu travailles à trois ou à quatre</summary>
     <ul>
-      <li><b>Le scribe</b> écrit la trace commune — et note aussi ce que vous n'avez pas su faire.</li>
+      <li><b>Le scribe</b> écrit la trace commune — et note aussi ce que le groupe n'a pas su faire.</li>
       <li><b>Le porte-parole</b> explique à la classe. Il ne parle qu'avec ce que le scribe a écrit&nbsp;:
         si la trace ne suffit pas, c'est la trace qu'il faut reprendre.</li>
     </ul>
