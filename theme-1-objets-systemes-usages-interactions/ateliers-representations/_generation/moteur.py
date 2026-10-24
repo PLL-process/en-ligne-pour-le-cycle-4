@@ -480,6 +480,8 @@ def cloture(at, niv, chemins):
     h = ['<section class="card"><h2>📌 À retenir de l\'atelier</h2>%s' % N["a_retenir"]]
     if chemins.get("synthese"):
         h.append('<p>📜 La trace à garder&nbsp;: <a href="%s">la synthèse de l\'atelier</a>, à imprimer ou à recopier.</p>' % chemins["synthese"])
+    if chemins.get("synthese_prof"):
+        h.append('<p class="note">🎓 Pour le professeur&nbsp;: <a href="%s">la synthèse professeur</a> (référentiel, déroulé, corrigés en bref).</p>' % chemins["synthese_prof"])
     h.append("</section>")
     # Bonus
     h.append('<section class="card bonus" data-cle="%s__bonus"><h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>' % pid)

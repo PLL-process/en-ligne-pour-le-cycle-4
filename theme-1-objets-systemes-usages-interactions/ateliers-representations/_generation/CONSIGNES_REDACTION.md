@@ -9,7 +9,7 @@ ligne à ligne, est l'atelier pilote : `donnees_interacteurs.py` et `q_interacte
   (scène, croquis) s'écrit dans `donnees_<module>.py`, avec les aides de `figures.py` (`svg`, `texte`,
   `fleche_def`, `e`).
 - On ne modifie jamais le moteur : `moteur.py`, `kit.js`, `kit.css`, `figures.py`, `dessins.py`,
-  `build.py`, `build_qcm.py`, `syntheses.py`, `cahiers.py`, `qbanque.py`, `gabarit_qcm.html`.
+  `build.py`, `build_qcm.py`, `syntheses.py`, `cahiers.py`, `qbanque.py`, `gabarit_qcm.tpl`.
   Un manque du moteur se signale, il ne se contourne pas.
 - On assemble avec `python3 build.py <module>` puis `python3 build_qcm.py <module>` (jamais `build.py`
   sans argument : il réécrit les cahiers communs).

@@ -103,7 +103,8 @@ def chemins(at, niv, depuis):
          "sequence": moteur.rel(depuis, seq) if seq else None,
          "cahier": moteur.rel(depuis, cahier(niv)),
          "carte": moteur.rel(depuis, CARTE),
-         "synthese": moteur.rel(depuis, synthese_eleve(at))}
+         "synthese": moteur.rel(depuis, synthese_eleve(at)),
+         "synthese_prof": moteur.rel(depuis, synthese_prof(at))}
     n = compte_qcm(at)
     if n:
         c.update(qcm=moteur.rel(depuis, qcm(at)), qcm_nb=n[0], qcm_illustrees=n[1], qcm_ancre="?codes=" + ",".join(at.NIVEAUX[niv]["codes"]))

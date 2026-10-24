@@ -23202,7 +23202,68 @@ tableau 1.3 de 640 à 2 440 px. C'est le prix, déjà payé au thème 1, d'une q
 - n°302 : « Si vous êtes trois ou quatre » vient du bloc des rôles commun (`poser_roles.py`, quatorze pages).
 - Lecteur d'écran réel et impression papier : non faits.
 
-## 24/10/2026 — Ateliers des représentations : sept ateliers d'exercices (5e → 3e), leurs cours, et leurs exercices insérés dans douze séquences (transversal : thèmes 1, 2, 3 et `_outils/`)
+## 24/10/2026 — Règle d'or n°302 : le bloc des rôles tutoie sur ses 14 pages ; 4e_C4.1 retrouve son intitulé officiel dans le Book Train (transversal)
+
+**Demande de Pascal.** « oui » à deux propositions de la même réponse : corriger l'intitulé de 4e_C4.1 dans la
+synthèse professeur et la fiche du Book Train, et faire le lot n°302 du bloc des rôles. Branche
+`fable/roles-tutoiement-c41`, sans motif de thème (thèmes 1, 2 et 3).
+
+### Le bloc des rôles (n°302)
+
+- `_outils/poser_roles.py` vouvoyait dans son gabarit : `<summary>Si vous êtes trois ou quatre</summary>`, et
+  « ce que vous n'avez pas su faire » dans le corps. Le dépôt tutoie (« le vouvoiement est exclu »).
+  Nouveau texte : **« Si tu travailles à trois ou à quatre »** ; « ce que **le groupe** n'a pas su faire ».
+- **Les 14 blocs en place étaient identiques au gabarit** (vérifié bloc par bloc avant de toucher quoi que ce
+  soit) : ils sont reposés par `poser()` entre leurs balises, sans retouche à la main. `main()` n'a pas été
+  lancé : il ne repose pas les blocs existants et en ajouterait ailleurs ; le docstring le dit maintenant.
+- `verif_regles_audit.py` (dépôt) : **221 ✘** contre 233 sur `main`. Trois pages gardent un ✘ n°302, d'une autre
+  origine : la légende « Ce que tu dois voir » cite le bouton « Depuis votre appareil » d'un logiciel
+  (`3e_C7.1`, `5e_C7.1`, `4e_C9.1`). C'est le nom d'un bouton, donc une parole rapportée, à déclarer dans
+  `EXCEPTIONS_302` : lot à part.
+
+### L'intitulé de 4e_C4.1
+
+La synthèse professeur et la fiche du Book Train donnaient à **4e_C4.1** l'intitulé de la **compétence-mère
+4e_C4** (« Décrire et caractériser l'organisation interne… »). Le référentiel, tel que le porte
+`audit_couverture.csv`, dit : « **Identifier les constituants d'une chaîne d'énergie et les associer à leurs
+fonctions.** » — c'est aussi ce que dit le badge de la page élève. Les deux documents nomment désormais la
+compétence-mère à part (mise en route, act. 1.1) et 4e_C4.1 avec son texte (act. 1.3, 2.2). Antérieur aux trois
+lots du jour ; `controle_formulations.py` ne lit que les encarts « Ce que dit le programme ».
+
+### Ce qui a tourné
+
+- `tests_verif_regles_audit.py` : 61 / 61. Banc du Book Train : 39 / 39.
+- `controle_formulations`, `controle_hierarchie`, `controle_regles_visibles`, `controle_liens`,
+  `controle_effectifs_qcm`, `controle_couverture` : 0 ; Node sur tout le dépôt : `controle_squelette`,
+  `controle_impression`, `controle_contraste_liens`, `controle_hors_ligne` : 0.
+
+## 24/10/2026 — n°302 : « Depuis votre appareil » est le nom d'un onglet de Vittascience ; la liste d'exceptions est pleine (_outils)
+
+**Demande de Pascal.** Carte blanche : « je ne vois pas encore l'impact ».
+
+**Le cas.** Après la PR #503, trois pages restaient signalées par la n°302 : `3e_C7.1`
+(`sequence_3e_C7_capteur-confort-ny.html`), `5e_C7.1` (`sequence_5e_C7_mini-projet-objet.html`) et `4e_C9.1`
+(`sequence_4e_C9_jardin-programme.html`). Le « vous » est dans la légende de la capture « Ce que tu dois voir » :
+« clique le dossier dans la barre d'outils, puis l'onglet **Depuis votre appareil** ». C'est le **nom réel d'un
+onglet** de la fenêtre « Ouvrir un projet » de Vittascience. La capture le montre, et son texte alternatif l'écrit.
+Ce n'est pas la page qui vouvoie : elle cite le logiciel.
+
+**La décision.** Garder le libellé tel que l'élève le voit à l'écran : le réécrire au tutoiement l'enverrait chercher
+un onglet qui n'existe pas. On applique la décision de Pascal du 20/09/2026 sur « La mairie vous appelle » :
+une **parole rapportée**, tolérée par **fichier + phrase** dans `EXCEPTIONS_302`, jamais par catégorie. Trois entrées
+sont ajoutées. Avant de les ajouter, j'ai vérifié qu'aucun autre « vous » ne se cache dans ces trois légendes, puisque
+la tolérance couvre l'intitulé entier.
+
+**Ce que ça change.** Rien pour l'élève : aucune page n'est modifiée. Seul le verdict du contrôle change :
+`verif_regles_audit.py` (dépôt) passe à **218 ✘** (221 sur `main`), et **plus aucune page n'échoue la n°302**.
+`tests_verif_regles_audit.py` : 61 / 61.
+
+**La limite, atteinte.** La liste compte maintenant **5 entrées sur 5**. Le 20/09, Pascal a posé que la liste ne
+dépasse pas cinq entrées. Le prochain cas légitime ne s'y ajoutera donc pas : il demandera de revoir la règle. La piste
+la plus probable : reconnaître un **libellé d'interface balisé comme tel**. Ces trois pages écrivent les libellés en
+`<b>`, comme 124 à 443 autres mots en gras de leur texte, et ne peuvent pas encore être distinguées.
+
+## 24/10/2026 — Ateliers des représentations : sept ateliers d'exercices (5e → 3e), leurs cours, et leurs exercices insérés dans douze séquences (transversal : thèmes 1, 2 et 3)
 
 **Demande de Pascal.** « Tout ce qui est absent "Dans le dépôt" [de la carte des représentations] — bête à cornes,
 diagramme des exigences, diagramme pieuvre, etc. — doit faire l'objet d'un ou plusieurs exercices, de préférence
@@ -23277,8 +23338,8 @@ niveau, et dans les séquences existantes ; **les six représentations absentes 
   Shanghai 5e C3, Hangzhou 4e C3, Shenzhen 3e C3, 5e C1.3, 3e C1.5).
 - **Thème 2** : séquences du lampadaire 5e et du jardin connecté 4e, et leurs bancs.
 - **Thème 3** : séquences 4e C7 et 4e C8 ; leurs bancs lisent maintenant le format actuel du QCM (`o`, `expl`, `d`).
-- **`_outils/controle_liens.py`** : le gabarit QCM gelé des ateliers rejoint les pages écartées (ses liens sont
-  réécrits par `build_qcm.py`).
+- **`_outils/`** : rien de modifié. Le gabarit QCM gelé des ateliers s'appelle `gabarit_qcm.tpl` : ce n'est pas une
+  page, ni `controle_liens` ni `controle_atteignabilite` n'ont à l'écarter.
 
 ### Ce qui a tourné
 
@@ -23287,7 +23348,7 @@ niveau, et dans les séquences existantes ; **les six représentations absentes 
   · Hangzhou 4e C3 32/32 · Shenzhen 3e C3 37/37 · lampadaire 34/34 (QCM 25/25) · jardin 39/39 · 4e C7 47/47 ·
   4e C8 48/48 ; n°311 : 33/33 partout (26/26 Shanghai), 3e C1.5 33/33. Le banc statique de 5e C1.3-C1.4
   (`_outils/test_lot_theme1_5e_c1_3_c1_4.py`) garde ses six échecs antérieurs (QCM, rapport absent), sans lien avec l'insertion.
-- `controle_liens` 0 lien mort (783 pages) · `controle_squelette` · `controle_hierarchie` · `controle_regles_visibles`
+- `controle_liens` 0 lien mort (784 pages) · `controle_atteignabilite` 406/406 · `controle_squelette` · `controle_hierarchie` · `controle_regles_visibles`
   · `controle_medias` · `controle_longueurs` · `controle_debordement` (filet mobile ajouté aux synthèses) ·
   `controle_fichiers_telechargeables` · `controle_hors_ligne` · `controle_verrous` · `controle_contraste_liens` :
   verts. `verif_qcm_coherence` : 7 QCM, 8/7/7/8, réfutations alignées.

@@ -3,7 +3,7 @@
 
 Le moteur du QCM (barème, minuteur, modes, sauvegarde) n'est pas réécrit : il est
 repris tel quel du gabarit (copie figée du QCM de l'atelier de planification,
-`gabarit_qcm.html`) ; seuls le bloc `const QUESTIONS`, la clé, les libellés et la
+`gabarit_qcm.tpl`) ; seuls le bloc `const QUESTIONS`, la clé, les libellés et la
 navigation sont remplacés. Le générateur REFUSE d'écrire s'il reste une trace du
 gabarit d'origine.
 
@@ -23,7 +23,7 @@ import build  # noqa: E402
 import moteur  # noqa: E402
 
 ORDRE = ("expl", "ex", "err")
-GABARIT = ICI / "gabarit_qcm.html"
+GABARIT = ICI / "gabarit_qcm.tpl"
 
 
 def bloc_question(o):

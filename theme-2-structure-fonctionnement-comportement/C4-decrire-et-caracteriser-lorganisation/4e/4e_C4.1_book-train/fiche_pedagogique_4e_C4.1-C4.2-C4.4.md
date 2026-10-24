@@ -18,7 +18,8 @@
 
 | Code | Intitulé officiel | Activités | QCM |
 |---|---|---|---|
-| 4e_C4.1 | Décrire et caractériser l'organisation interne d'un objet ou système technique et ses échanges avec son environnement (énergies, données). | 1.1, 1.3, 2.2 | 10 q |
+| 4e_C4 (compétence-mère) | Décrire et caractériser l'organisation interne d'un objet ou système technique et ses échanges avec son environnement (énergies, données). | 1.1 (mise en route) | — |
+| 4e_C4.1 | Identifier les constituants d'une chaîne d'énergie et les associer à leurs fonctions. | 1.3, 2.2 | 10 q |
 | 4e_C4.2 | Repérer les transformations d'énergie et les flux d'énergie au sein de l'OST. | 2.1 | 10 q |
 | 4e_C4.4 | Identifier les constituants de la chaîne d'information d'un objet réel et les associer à leur fonction. | 1.2, 2.3, 3.1, 3.2 | 10 q |
 
