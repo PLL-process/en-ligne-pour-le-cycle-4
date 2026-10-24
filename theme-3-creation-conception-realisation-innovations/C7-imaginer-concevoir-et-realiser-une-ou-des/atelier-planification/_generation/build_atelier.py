@@ -502,6 +502,7 @@ P5_HTML = """
   <p class="saved-note"><b>Critère de réussite&nbsp;:</b> ton point d'avancement dit ce qui est en
   retard <b>et</b> ce que ce retard décale — pas seulement « on a du retard ».</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="gp" type="button">Le logiciel — Pas à pas ›</button></p>
 </div>
 """ % {
     "table": tableau_taches(P5, ("id", "libelle", "duree", "ant", "debut")),
@@ -598,6 +599,7 @@ P4_HTML = """
   <p class="saved-note"><b>Critère de réussite&nbsp;:</b> tes dates sont justes, et tu peux dire à
   ton groupe qui travaille sur quoi <b>en même temps</b>.</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="gp" type="button">Le logiciel — Pas à pas ›</button></p>
 </div>
 """
 
@@ -710,6 +712,7 @@ P3_HTML = """
   <p class="saved-note"><b>Critère de réussite&nbsp;:</b> tu peux montrer, sur ton propre projet,
   une tâche où se précipiter ne sert à rien — et dire pourquoi.</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="gp" type="button">Le logiciel — Pas à pas ›</button></p>
 </div>
 """ % {
     "table": tableau_taches(P3),
@@ -1083,6 +1086,12 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
       behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
   });
 });
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 
 /* ══════ Lecture des productions écrites (règles n°49 et n°50) ══════ */
 const bas = t => t.toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").replace(/[’']/g,"'");
@@ -1492,6 +1501,9 @@ def barre_onglets(niv):
         % {"p": n["panel"], "o": n["onglet"], "t": n["titre_ong"]})
 
 
+ETAPE_SUIVANTE = {"5e": "5e — Suivre", "4e": "4e — Organiser", "3e": "3e — Élaborer"}
+
+
 def page(niv):
     n = NIVEAUX[niv]
 
@@ -1522,7 +1534,11 @@ def page(niv):
     if "<!--GANTT-->" in corps:
         raise SystemExit("Marqueur GANTT non remplacé dans le parcours %s." % niv)
 
-    resultat = tete + haut + PM + corps + GP_HTML + bas + script
+    # Règle n°101 : l'étape « Les mots », commune aux trois niveaux, mène au parcours du niveau.
+    fin_pm = PM.rindex("</div>")
+    pm = (PM[:fin_pm] + '<p class="page-suivante"><button class="btn vers-seance" data-vers="%s" '
+          'type="button">%s ›</button></p>\n' % (n["panel"], ETAPE_SUIVANTE[niv]) + PM[fin_pm:])
+    resultat = tete + haut + pm + corps + GP_HTML + bas + script
     # La loupe est posée ICI, après toute mise en forme « % » : le bloc contient
     # des « % » (max-width:100%) que l'opérateur de formatage prendrait pour des
     # jetons. Une seule source, importée, jamais recopiée (règle n°92).
