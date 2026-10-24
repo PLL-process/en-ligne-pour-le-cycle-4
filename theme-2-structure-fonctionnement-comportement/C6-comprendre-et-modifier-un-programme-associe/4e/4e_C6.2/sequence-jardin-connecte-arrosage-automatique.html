@@ -156,12 +156,33 @@
 /* règle d'or n°305 — une activité qui demande Internet le dit à son début */
 .activite-en-ligne{border-left:4px solid #ffd66b;background:rgba(255,214,107,.12);padding:.55em .85em;border-radius:0 8px 8px 0;margin:.6em 0 .8em;font-size:.95em;line-height:1.45}
 @media print{.activite-en-ligne,.activite-en-ligne b{color:#1a1a1a!important}.activite-en-ligne{background:#fff8e1!important;border-left-color:#8a6400!important}}
+  /* Règle d'or n°311 — à partir de la séance 2, l'élève voit sa séance, pas le décor.
+     Sans JavaScript le volet reste ouvert et sans titre : tout s'affiche, comme avant. */
+  .rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}   /* le gabarit habille tout details en carte : pas le volet */
+  .rappel-ouverture>summary{display:none}
+  .rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;margin:10px 0;
+    border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+  .rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+  @media print{.rappel-ouverture>summary{display:none!important}}
+  @media (max-width:480px){   /* n°311 : à 390 px, la barre d'outils tient sur deux lignes au plus */
+    .toolbar{gap:6px;margin:8px auto 12px}
+    .toolbar .btn{flex:1 1 40%;min-width:0;min-height:44px;padding:6px;font-size:.8rem;line-height:1.2}
+  }
 </style>
 </head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_4e_C6.2.html">📖 Lexique</a></nav>
 
 <h1>🌱 Le jardin connecté — arrosage automatique</h1>
+<div class="subtitle">Comment concevoir un système capable d'arroser automatiquement une plante en fonction de l'humidité du sol ?</div>
+<div class="toolbar">
+  <button class="btn small" id="btnSave" type="button">💾 Sauvegarder</button>
+  <button class="btn small ghost" id="btnPrint" type="button">🖨 Imprimer</button>
+  <button class="btn small ghost" id="btnReset" type="button">🗑 Tout effacer</button>
+</div>
+<p class="saved-note" id="savedNote"></p>
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation</summary>
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
   <h2 id="rap-spi">&#128260; Ce que tu as déjà fait</h2>
   <p class="deja">En 5e, sur le lampadaire, tu as <b>traduit un programme en français</b> et <b>réglé ses paramètres</b> pour observer l'effet sur l'objet réel.</p>
@@ -188,8 +209,6 @@
   .preambule-carte .copie-etat{margin-left:.6rem;font-size:.9em}
 </style>
 
-
-<div class="subtitle">Comment concevoir un système capable d'arroser automatiquement une plante en fonction de l'humidité du sol ?</div>
 <div class="badges">
   <span class="badge niveau">4e</span>
   <span class="badge theme">Thème 2 — Structure, fonctionnement, comportement</span>
@@ -197,12 +216,6 @@
   <span class="badge socle">D1.3 · D2 · D4</span>
   <span class="badge duree">⏱ 3 séances de 55 min</span>
 </div>
-<div class="toolbar">
-  <button class="btn small" id="btnSave" type="button">💾 Sauvegarder</button>
-  <button class="btn small ghost" id="btnPrint" type="button">🖨 Imprimer</button>
-  <button class="btn small ghost" id="btnReset" type="button">🗑 Tout effacer</button>
-</div>
-<p class="saved-note" id="savedNote"></p>
 
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
@@ -271,6 +284,7 @@
   <img class="diagram" src="Images/schema_chaines_arrosage.svg" alt="Schéma des chaînes d'information et d'énergie du système d'arrosage automatique" loading="lazy">
   <p style="font-size:.88em;color:var(--sub)">La carte relie les deux chaînes : elle <em>traite</em> l'information reçue du capteur puis <em>commande</em> le relais qui alimente la pompe. 📐 <b>Règle du schéma :</b> l'information en haut, l'énergie en bas, l'ordre qui descend.</p>
 </section>
+</details>
 
 <div class="progress-wrap">
   <div class="progress-bar" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="progress-fill" id="progFill"></div></div>
@@ -704,7 +718,7 @@ document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click"
   document.querySelectorAll(".seance-tab").forEach(x => { x.classList.remove("active"); x.setAttribute("aria-selected","false"); });
   document.querySelectorAll(".seance-panel").forEach(p => p.classList.remove("active"));
   t.classList.add("active"); t.setAttribute("aria-selected","true");
-  $(t.dataset.panel).classList.add("active");
+  $(t.dataset.panel).classList.add("active"); appliqueSeance(t.dataset.panel);
 }));
 
 /* ── règle d'or n°13 : coloration des listings pre.code ── */
@@ -1101,6 +1115,29 @@ function signale(msg){
     if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
 }
 
+
+/* Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « Rappel », replié. */
+function appliqueSeance(idPanneau){
+  const v = document.getElementById("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.open = n < 2;
+}
+let ouvertEnImpression = null;
+window.addEventListener("beforeprint", ()=>{ const v=document.getElementById("ouverture"); if(v){ ouvertEnImpression=v.open; v.open=true; } });
+window.addEventListener("afterprint", ()=>{ const v=document.getElementById("ouverture"); if(v && ouvertEnImpression!==null){ v.open=ouvertEnImpression; ouvertEnImpression=null; } });
+/* Lien direct : #ancre ouvre la séance qui la contient, sans l'ouverture. */
+function ouvrirSeanceDeLAncre(){
+  const id = decodeURIComponent(location.hash.slice(1)); if(!id) return;
+  const cible = document.getElementById(id); const pan = cible && cible.closest(".seance-panel");
+  if(!pan || pan.classList.contains("active")) return;
+  const onglet = document.querySelector('.seance-tab[data-panel="' + pan.id + '"]');
+  if(onglet) onglet.click();
+  setTimeout(()=>cible.scrollIntoView({block:"start"}), 60);
+}
+window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+appliqueSeance((document.querySelector(".seance-panel.active")||{}).id);
+ouvrirSeanceDeLAncre();
 
 /* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
 document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
