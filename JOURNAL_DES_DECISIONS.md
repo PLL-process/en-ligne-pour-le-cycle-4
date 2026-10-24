@@ -23363,3 +23363,97 @@ niveau, et dans les séquences existantes ; **les six représentations absentes 
   autres que la pieuvre, pas de rectangle « acteur » pour un système dans le diagramme de cas d'utilisation, une seule
   zone de dessin par exercice — signalés par les rédacteurs, non contournés.
 - Lecteur d'écran réel et impression papier : non faits.
+
+## 24/10/2026 — Séances supplémentaires de 55 min dans cinq séquences, et nouveau dessin du diagramme pieuvre (transversal : thèmes 1, 2 et 3)
+
+**Demande de Pascal.** Après la fusion de #505, sur les trois défauts signalés (la séance 3 de 3e_C1.5 au-delà de
+55 min, l'« activité 5 » que le README de 3e_C1.3 annonce sans la donner, la séance 5 du lampadaire à 75 min) : « on peut
+ajouter des exercices en faisant par exemple une autre séance de 55 min ». Puis « 1 et 2 » à la question des trois
+séquences restées sans exercice d'atelier faute de temps (Tsinghua 4e, capteur de New York 3e, freinage 5e) : les
+trois. Branche `fable/seances-supplementaires`, sans motif de thème.
+
+### Décisions de Pascal prises en cours de lot (24/10/2026)
+
+- **Un exercice qui ne tient dans aucune séance n'est pas raccourci : on ajoute une séance de 55 min** faite
+  d'exercices (ceux des ateliers, ou une activité que la séquence promettait). La clôture (Bonus → Bilan → QCM) passe à
+  la nouvelle dernière séance (n°306).
+- **Le dessin du diagramme pieuvre** : l'objet et **chaque interacteur dans une ellipse** ; la courbe de la FP **entre
+  dans l'ellipse de l'objet et y plonge en U**, comme la corne de la bête à cornes (elle ne s'arrête plus au bord) ;
+  les deux interacteurs d'une FP sont voisins sur le cercle. Appliqué par le moteur des ateliers à toutes leurs
+  pieuvres (pages, cahiers, synthèses, QCM, blocs insérés dans Shenzhen 5e, Hangzhou 4e C2, jardin connecté 4e,
+  Shanghai 5e).
+- **Toute fonction, FP ou FC, commence par un verbe à l'infinitif** : « résister à la pluie et au soleil », jamais
+  « le système doit… » (forme d'une exigence). Les phrases de l'exercice 5 de la pieuvre, la FC « se régler
+  facilement » (devenue « être facile à régler par la gardienne »), une question du QCM et le corrigé d'un défi sont
+  réécrits.
+- **Un même interacteur peut porter la FP et une FC — et on le dit à l'élève**, qui ne le sait pas encore : la
+  gardienne porte la FP1 et la FC4. Le trait n'est pas supprimé ; la consigne de l'exercice 5 et les cours 5e et 4e le
+  disent, et la correction montre le diagramme étiqueté FP1, FC1 à FC5 avec chaque fonction (choix de Pascal : les
+  traits restent numérotés dans l'énoncé, puisque l'élève doit trouver FP ou FC).
+
+### Ce que le lot fait, séquence par séquence (minutes d'activités annoncées)
+
+- **Numérique et société 3e_C1.5** (thème 1) : 4 séances. S1 ≈ 30 → 50 (nouvelle **activité 1 bis**, l'argumentaire
+  court de 3e_C1.4 : ce que la loi — RGPD, droit à l'image, accord d'un parent sous 15 ans, droit à l'effacement —
+  change à l'application de photos d'un club ; faits vérifiés sur cnil.fr, cités) · S2 49 · S3 ≈ 68 → 45 · **S4 48**
+  (nouvelle **activité 5, l'argumentaire court de 3e_C1.3**, que le README promettait, puis la clôture). Durées écrites
+  dans chaque titre, étiquettes dans le volet Rappel, banc des séances versé au dépôt (`tests_3e_C1.5_seances.py`).
+  README de 3e_C1.3 et 3e_C1.4 corrigés par `_outils/pointeurs_codes.py` (celui de 3e_C1.4 décrivait une activité 4
+  qui n'est pas celle de la page).
+- **Lampadaire 5e_C4.1** (thème 2) : 6 séances. S5 75 → 50 · **S6 35** : activité 7, l'exercice FAST e2 « Compléter les
+  solutions techniques », puis la sonnette, le Bonus — qui reçoit enfin ses champs et un corrigé complet pour ses
+  trois défis (n°301) — et le Bilan, qui reçoit un auto-positionnement sur les huit codes. Reprise d'une sauvegarde
+  faite à cinq séances vérifiée. La bête à cornes 5e e2 est écartée : son code (5e_C3.3) n'est pas de la séquence.
+- **Tsinghua 4e_C1.1-C1.3** (thème 1) : 5 séances. S4 55 → 45 · **S5 52** : activité 5 « Justifier une évolution,
+  sur un autre objet » (besoin 4e e4, carte mentale 4e e3 et e4), puis la clôture. La définition d'« évolution
+  technologique » de l'atelier carte mentale dit désormais « qui fait mieux la même chose », comme l'encadré « Trois
+  mots » de la séquence. Moteur : option `premier_numero` d'`incrustations.py` (deux blocs dans une même activité).
+- **Capteur de confort 3e_C7** (thème 3) : 3 séances. S1 55 · S2 45 · **S3 45** : activités 6 (FAST 3e e6) et 7
+  (croquis 3e e4, e6), au service de 3e_C7.2, ajouté au badge et au référentiel. La page défile d'un seul tenant
+  (pas d'onglets, comme les autres pages C7) : en-têtes « Séance N » et boutons « Séance suivante », sans refonte en
+  onglets. Le Bonus reçoit son corrigé ; le bilan, le retour à l'hypothèse, la métacognition et le positionnement.
+- **Freinage de Sainte-Luce 5e_C1.2** (thème 1) : 4 séances. S3 50 → 40 · **S4 50** : activité 4 (FAST 5e e3, deux
+  principes de freinage pour le vélo-cargo de Léa) et **activité 5, écrite dans la séquence** : « Léa dans la grande
+  descente : conseiller avec des chiffres » (150 kg au lieu de 60, critère « freins chauds » ; tableau du vendeur
+  simulé, dit à l'élève). QCM inchangé (la séance 4 mobilise des notions déjà interrogées).
+- Docstrings des fichiers d'entrées des ateliers mises à jour (`fast_et_flexibilite.py`, `theme1_choix_et_exigences.py`) ;
+  quatre fichiers d'entrées nouveaux (`lampadaire_s6.py`, `tsinghua_s5.py`, `capteur_ny_s3.py`, `freinage_s4.py`) ;
+  gouvernance des ateliers régénérée ; skills `representations-techniques-cycle4` et `ateliers-representations-depot`
+  mis à jour (dessin de la pieuvre, verbe à l'infinitif, FP et FC sur un même interacteur, séance ajoutée).
+
+### Thème par thème (branche transversale, n°302, n°307)
+
+- **Thème 1** : 3e_C1.5, 4e_C1.1 (et les README de 4e_C1.2, 4e_C1.3), 5e_C1.2, README de 3e_C1.3 et 3e_C1.4 ;
+  `ateliers-representations/` (moteur `figures.py`, `incrustations.py`, données de la pieuvre et de la carte mentale,
+  pages et blocs régénérés) ; blocs régénérés dans Shenzhen 5e C2, Hangzhou 4e C2, Shanghai 5e C3.
+- **Thème 2** : lampadaire 5e_C4.1 ; bloc régénéré dans le jardin connecté 4e_C4.1.
+- **Thème 3** : capteur de confort 3e_C7.1.
+- **`_outils/`** : `build_audit.py` (surcouche de 5e_C4.1, 3e_C1.5, 4e_C1.1 à C1.3, 5e_C1.2), `libelles_bandeaux_taches.py`
+  (lampadaire), `pointeurs_codes.py` (entrées 3e_C1.3 et 3e_C1.4, README régénérés un par un, table filtrée).
+
+### Ce qui a tourné
+
+- Bancs des séquences : 3e_C1.5 séances 45/45 · lampadaire 51/51 (QCM 25/25) · Tsinghua 63/63 · capteur 3e_C7 71/71 ·
+  freinage 50/50 ; n°311 : 33/33 pour chacune (le thème 3 n'a pas de banc 311). Bancs des séquences hôtes de #505,
+  rejoués : Shenzhen 5e 50/50 · Hangzhou 4e C2 65/65 · Pékin 58/58 · Shanghai 35/35 (voix 24/24) · Hangzhou 4e C3
+  32/32 · Shenzhen 3e C3 37/37 · jardin 39/39 · 4e C7 47/47 · 4e C8 48/48 ; n°311 33/33 (26/26 Shanghai).
+- `banc_ateliers.py` 303/303 après le nouveau dessin ; `incrustations.py --verifier` : 15 séquences à jour.
+- `controle_liens` (aucun lien mort) · `controle_atteignabilite` · `controle_squelette` · `controle_navigation_seances` ·
+  `controle_hierarchie` · `controle_regles_visibles` · `controle_debordement` · `controle_medias` · `controle_longueurs`
+  · `controle_fichiers_telechargeables` · `controle_hors_ligne` · `controle_contraste_liens` · `controle_verrous` : verts.
+  `mesurer_temps_seances.py` : marge positive partout (3e_C1.5 +28, lampadaire +75, Tsinghua +33, capteur +20,
+  freinage +30). Playwright à 390 px sur chaque séquence : zéro erreur JS, pas de défilement horizontal, passage d'une
+  séance à la suivante, reprise après rechargement, reprise d'une sauvegarde faite avant l'ajout de la séance.
+- Captures avant / après : `ateliers-representations/_generation/captures_seances_2026-10-24/`.
+
+### Ce que le lot ne fait pas
+
+- Les classeurs de progression (`_progressions/`) comptent encore l'ancien nombre de séances (3e_C1.5 : 2 ; 3e_C7.1 :
+  « 3 séances de 1 h 30 » ; Tsinghua : 3 ; le lampadaire ne connaît ni l'activité 7 ni la séance 6 et annonce un QCM
+  de 32 questions pour 36) : non modifiés, à Pascal.
+- Défauts antérieurs relevés et laissés : la carte « Référentiel officiel » sur la page élève dans les cinq séquences
+  (n°298) ; 51 listes déroulantes au lampadaire et 20 au capteur (n°300) ; le bloc « Ce que tu as déjà fait » du
+  capteur (n°304) et deux zones sans version étayée dans son activité 3 (n°31) ; le README de 3e_C7.2 ne parle pas de
+  la séance 3 ; les champs du Bonus et du Bilan de Tsinghua sans version étayée.
+- La page du capteur reste sans onglets (volet Rappel n°311 sans objet) : une refonte en onglets serait un autre lot.
+- Lecteur d'écran réel, impression papier, essai en classe : non faits.
