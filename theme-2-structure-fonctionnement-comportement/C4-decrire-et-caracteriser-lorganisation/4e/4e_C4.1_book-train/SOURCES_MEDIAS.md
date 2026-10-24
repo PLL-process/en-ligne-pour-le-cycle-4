@@ -32,3 +32,11 @@ mission — le besoin est plausible, le projet ne l'est pas.
 
 Les deux SVG portent `role="img"` avec `title` et `desc` complets : leur contenu est intégralement accessible
 à un lecteur d'écran, y compris la description des flux entre les blocs.
+
+## Correction des chaînes — 21/10/2026
+
+`Images/chaine_energie_book-train.svg` : schéma fonctionnel corrigé, production originale CC0. Fonctions dans les blocs, composants en dessous, formes d’énergie sur les flèches ; « Énergie chimique stockée » sous les batteries. Les descriptions accessibles suivent le dessin.
+
+Génération déterministe : `python _outils/regenerer_chaines_energie.py` depuis la racine. Source draw.io modifiable dans `_generation/chaines_energie/` (Book Train : `fichiers_drawio/`). Le SVG contient aussi cette source et utilise des textes SVG natifs, sans ressource distante.
+
+La figure incorporée dans la séquence, le SVG autonome, les fichiers draw.io complet et à compléter et les téléchargements incorporés dans `FICHIERS` sont synchronisés. Le modèle reste fonctionnel ; les tensions, le secours et la réalisation de l’entraînement se précisent d’après la documentation du système étudié.

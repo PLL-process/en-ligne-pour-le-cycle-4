@@ -80,6 +80,60 @@ de la capture — c'est ce que l'écran affichait, pas un ajout.
 | `Images/geste_activite4_formule_3_resultat.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 13/09/2026 (fenêtre entière, élargie) | Fable, sur le poste de Pascal | CC0 1.0 | activité 4 b), geste Recopier — résultat : 12 / 10,5 / 9,5, la barre montre =O4/2+R4+S4 — 89 Ko |
 | `Images/geste_activite4_formule_4_erreur_tape.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 13/09/2026 (fenêtre entière, élargie) | Fable, sur le poste de Pascal | CC0 1.0 | activité 4 b), geste Recopier — erreur typique : résultats tapés à la main, la barre de U4 ne montre que 9,5 — 88 Ko |
 
+## Le vélo-cargo isométrique (séance 1, dessin animé par scènes)
+
+| Fichier | Nature | Auteur | Licence | Rôle pédagogique |
+|---|---|---|---|---|
+| `Images/chaine_energie_velo_cargo.svg` | SVG original **engendré** par `_generation/figure_iso_velo_cargo/build.mjs` (vélo-cargo en volume, isométrique, SVG seul, aucune bibliothèque, aucune ressource distante) ; `<title>` et `<desc>` accessibles | Fable, pour ce dépôt, avec le moteur de dessin Anatomy (code MIT) | CC0 1.0 pour le dessin ; MIT pour le code du kit | Le schéma fixe = état final du dessin animé (scène 6) : la batterie, le câble, le moteur dans la roue arrière, la flèche de rotation et les quatre fonctions de la chaîne d'énergie. Poids : 232,9 Ko (visé : 200, plafond : 300) |
+| dessin du bloc `#velo-cargo-pas-a-pas` (dans `sequence_5e_C3.1-C3.4_shanghai.html`, entre les marqueurs `figure_iso_velo_cargo`) | même générateur | idem | idem | Le même vélo, scène par scène, avec une seule pièce éclairée à la fois. Poids du dessin : 226,4 Ko |
+
+**Le code.** Les fichiers `iso-kit.mjs`, `lathe.mjs`, `tube.mjs` et `audit.mjs` de `_generation/figure_iso_velo_cargo/` sont des copies du skill Anatomy
+(commit noté dans `VERSION`), sous licence MIT (`LICENSE`). Le dessin lui-même ne reprend aucune marque ni aucun modèle réel : c'est un vélo-cargo
+électrique imaginé, à très basse tension.
+
+**Les couleurs.** Chaque notion garde sa couleur dans toute la séquence : batterie (source) `#ffd66b`, énergie électrique `#61dafb`, moteur `#c68ef2`,
+énergie mécanique `#81fba1`.
+
+**Les six phrases** (celles de Pascal, validées le 25/09/2026, inchangées) :
+
+1. *Le vélo attend* — « Ce vélo-cargo doit livrer un colis. Pour rouler, il lui faut de l'énergie. D'où vient-elle ? »
+2. *La source* — « La batterie. C'est la **source** : c'est là que l'énergie est stockée. »
+3. *La forme* — « De la batterie sort de l'**énergie électrique**. C'est la **forme** de l'énergie : ce qu'elle est, pendant qu'elle voyage. »
+4. *À ton avis ?* — « Le moteur reçoit de l'énergie électrique. À ton avis, quelle forme d'énergie en sort ? »
+5. *Le moteur* — « Le moteur transforme l'énergie électrique en **énergie mécanique** : le mouvement de la roue. Même énergie, autre forme. »
+6. *La chaîne entière* — « La batterie stocke de l’énergie chimique et fournit de l’énergie électrique. Le contrôleur distribue cette énergie au moteur, qui la convertit en énergie mécanique. Dans le moyeu arrière, le moteur entraîne la roue et aide à déplacer le vélo et sa charge. »
+
+**Les captures de comparaison** (avant : dessin plat du 25/09 ; après : dessin isométrique), à 1280 px, dans `_generation/figure_iso_velo_cargo/captures/` : captures du
+navigateur de ce lot, CC0.
+
+## La voix du dessin animé du vélo-cargo (séance 1)
+
+**Voix de synthèse neuronale, hors ligne. Aucune voix humaine enregistrée.** Les six fichiers sont engendrés par
+`_generation/voix_velo_cargo/generer.py` à partir des six phrases validées par Pascal le 25/09/2026, lues mot pour mot.
+
+| Fichier | Nature |
+|---|---|
+| `Audio/velo-cargo_scene1.ogg` · `.mp3` | Scène 1 : voix de synthèse, Opus mono 32 kb/s (20.8 Ko) et MP3 mono 48 kb/s de secours (30.2 Ko) |
+| `Audio/velo-cargo_scene2.ogg` · `.mp3` | Scène 2 : voix de synthèse, Opus mono 32 kb/s (13.5 Ko) et MP3 mono 48 kb/s de secours (19.4 Ko) |
+| `Audio/velo-cargo_scene3.ogg` · `.mp3` | Scène 3 : voix de synthèse, Opus mono 32 kb/s (22.3 Ko) et MP3 mono 48 kb/s de secours (32.4 Ko) |
+| `Audio/velo-cargo_scene4.ogg` · `.mp3` | Scène 4 : voix de synthèse, Opus mono 32 kb/s (18.5 Ko) et MP3 mono 48 kb/s de secours (26.8 Ko) |
+| `Audio/velo-cargo_scene5.ogg` · `.mp3` | Scène 5 : voix de synthèse, Opus mono 32 kb/s (28.3 Ko) et MP3 mono 48 kb/s de secours (41.2 Ko) |
+| `Audio/velo-cargo_scene6.ogg` · `.mp3` | Scène 6 : voix de synthèse, Opus mono 32 kb/s (39.0 Ko) et MP3 mono 48 kb/s de secours (57.6 Ko) |
+
+- **Moteur** : Piper (`piper-tts` 1.8.0), sous GPL-3. Il n'est pas dans le dépôt, et un fichier audio qu'il produit n'est pas une œuvre dérivée du moteur.
+- **Modèle** : `fr_FR-siwis-medium` (voix féminine, locutrice unique), entraîné sur la base **SIWIS** de l'Université d'Édimbourg
+  (datashare.is.ed.ac.uk/handle/10283/2353). Voix choisie par Pascal le 21/10/2026 parmi quatre candidates (essai en vitesse normale).
+- **Licence** : **CC BY 4.0** (fiche `MODEL_CARD` du modèle, dépôt `rhasspy/piper-voices`). La licence de la base d'entraînement est celle que la fiche
+  déclare ; l'origine des enregistrements n'a pas été vérifiée plus loin.
+- **Attribution exigée** : « Voix de synthèse Piper « fr_FR-siwis-medium », entraînée sur la base SIWIS (Université d'Édimbourg), CC BY 4.0. »
+  Elle figure ici, dans `_generation/voix_velo_cargo/voix.json` et, en version courte (« Voix de synthèse : SIWIS (CC BY 4.0) »),
+  dans la description détaillée du dessin animé, sous le schéma fixe de la séance 1.
+- **Chaîne audio** : silences du début et de la fin coupés (−45 dB), volume normalisé à −16 LUFS (crête −1,5 dB), mono.
+- **Reproductibilité** : à l'octet, non (la synthèse tire du bruit à chaque prise) ; les fichiers de `Audio/` sont la référence.
+- **Prises validées à l'oreille** par Pascal (scènes 2 et 5 : première écoute ; scènes 1, 3, 4, 6 : troisième écoute, liaisons corrigées dans ce qui est envoyé à la voix, sans changer les phrases affichées). Le texte et les phonèmes envoyés sont dans `_generation/voix_velo_cargo/voix.json` (clé `prises_validees`). **Toute régénération exige une nouvelle écoute.**
+- **Dans la page** : rien n'est chargé depuis le réseau ; les fichiers ne se lisent qu'après un geste de l'élève (« Écouter » ou
+  « Regarder ») ; si un fichier ne se lit pas, la voix française locale du navigateur prend le relais, sinon l'élève lit la phrase.
+
 ## Accessibilité
 
 Chaque figure porte un `<title>` court et un `<desc>` long qui **décrit le contenu, pas
@@ -103,3 +157,11 @@ C'est l'application de la règle d'or n°27 : ce qui n'est vrai que chez nous se
 `Segoe UI`, `system-ui`, `-apple-system`, `Arial`. Ce sont les deux premières pages du dépôt à
 n'appeler aucune ressource réseau : elles fonctionnent à l'identique dans un collège au réseau
 filtré.
+
+## Correction des chaînes — 21/10/2026
+
+`Images/chaine_energie_velo_cargo.svg` : schéma fonctionnel corrigé, production originale CC0. Fonctions dans les blocs, composants en dessous, formes d’énergie sur les flèches ; « Énergie chimique stockée » sous les batteries. Les descriptions accessibles suivent le dessin.
+
+Sources du dessin et du bandeau : `_generation/figure_iso_velo_cargo/`. Le contrôleur de puissance est représenté entre la batterie et le moteur du moyeu arrière, avec deux câbles. La scène 6 et le schéma fixe sont issus du même générateur.
+
+La nouvelle narration de la scène 6 utilise la voix Piper `fr_FR-siwis-medium` et les mêmes réglages que les scènes précédentes. Durée MP3 : 14,63 s ; Opus et MP3 de secours fournis. Les scènes 1 à 5 sont conservées à l’octet près. La nouvelle prise a été **écoutée et validée par Pascal le 21/10/2026** (le fichier qu'il a écouté est identique à l'octet à celui du dépôt, SHA-256 dans `voix.json`) ; l’ancienne trace de validation de la scène 6 reste en historique dans `voix.json`. Licence et attribution SIWIS/Piper inchangées.

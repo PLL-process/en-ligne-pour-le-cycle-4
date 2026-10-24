@@ -42,7 +42,7 @@ en toutes lettres** sur l'écran (règle d'or n°119).
 | `Images/blocs_palier2_decider.svg` | SVG original (reconstitution schématique) | Création Fable pour ce projet | CC0 | Image-explication : résultat attendu du palier 2 | ~5 Ko |
 | `Images/blocs_palier3_afficher.svg` | SVG original (reconstitution schématique) | Création Fable pour ce projet | CC0 | Image-explication : résultat attendu du palier 3 | ~5 Ko |
 | `Images/blocs_palier4_acquitter.svg` | SVG original (reconstitution schématique) | Création Fable pour ce projet | CC0 | Image-explication : résultat attendu du palier 4 (act. 4) | ~5 Ko |
-| `Images/ordre_preactionneur_trois_cas.svg` | SVG original | Création Fable pour ce projet | CC0 | Image-objet : où atterrit la flèche d'ORDRE, en trois cas comparés (voyant 5 V direct · gyrophare 12 V avec relais · portail avec moteur ET transmission) — act. 1 | ~10 Ko |
+| `Images/ordre_preactionneur_trois_cas.svg` | SVG original | Création Fable pour ce projet | CC0 | Image-objet : où arrive la flèche d'ORDRE — toujours sur DISTRIBUER — en trois cas comparés (voyant 5 V et buzzer Grove : sortie de la carte et transistor intégré · gyrophare 12 V : carte relais séparée · portail : pont en H séparé, moteur ET transmission) ; engendrée par `_outils/regenerer_chaines_energie.py`, avec sa source draw.io — act. 1 | ~25 Ko |
 | `Images/vittascience/C_1_demarrage.png` | **Capture d'écran réelle** (règle n°94) | Écran de Vittascience (interface Arduino, mode BLOCS), 25/08/2026 — programme de référence construit pour ce lot | Capture d'interface à usage pédagogique ; le programme photographié est une création originale du lot (CC0) | Image à LIRE : les neuf affectations du bloc « au démarrage », dont l'initialisation de `niveauPrecedent` | ~61 Ko |
 | `Images/vittascience/C_2_boucle_haut.png` | **Capture d'écran réelle** | idem | idem | Image à LIRE : lecture + conversion + compteur de pulsation + cascade de décision (seuil le plus haut d'abord) | ~129 Ko |
 | `Images/vittascience/C_3_boucle_bas.png` | **Capture d'écran réelle** | idem | idem | Image à LIRE : la cascade d'aiguillage vers les quatre sous-programmes, la trace console, le `attendre 300 ms` | ~98 Ko |
@@ -145,3 +145,19 @@ Explorateur Windows, sans aucune retouche (n°127) :
 | `Images/geste_vitta_5c_sortir_nouveau_dossier.png` | **Capture d'écran réelle** (règle n°94) | Explorateur de fichiers Windows (fenêtre seule, rétrécie à une ligne), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 5 — Documents : nouveau dossier à renommer | 50 Ko |
 | `Images/geste_vitta_5d_sortir_nom_de_classe.png` | **Capture d'écran réelle** (règle n°94) | Explorateur de fichiers Windows (fenêtre seule, rétrécie à une ligne), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 5 — le nom 3E1 saisi | 48 Ko |
 | `Images/geste_vitta_5e_sortir_resultat.png` | **Capture d'écran réelle** (règle n°94) | Explorateur de fichiers Windows (fenêtre seule, rétrécie à une ligne), Chrome 154 à profil vierge, poste de Pascal, 03/10/2026, compte de test de la classe | CC0 | Geste 5 — Documents › 3E1 contient le fichier | 57 Ko |
+
+## Correction des chaînes — 21/10/2026
+
+`Images/chaine_info_energie_station.svg` : schéma fonctionnel corrigé, production originale CC0. Fonctions dans les blocs, composants en dessous, formes d’énergie sur les flèches ; « Énergie chimique stockée » sous les batteries. Les descriptions accessibles suivent le dessin.
+
+Génération déterministe : `python _outils/regenerer_chaines_energie.py` depuis la racine. Source draw.io modifiable dans `_generation/chaines_energie/` (Book Train : `fichiers_drawio/`). Le SVG contient aussi cette source et utilise des textes SVG natifs, sans ressource distante.
+
+## Le pont en H — « pour aller plus loin » (hors programme de cycle 4)
+
+Volet replié « Pour aller plus loin : le pont en H », juste après la planche des trois cas, dans la page tout-en-un et dans la page 1.
+
+- **Simulateur** : un SVG écrit **à la main**, dans la page (aucune image, aucun fichier, aucune bibliothèque, aucune ressource distante). Original, CC0 comme le reste du lot.
+  Sources de la page : `_generation/pont_en_h/` (`pont_en_h.fragment`, `.css`, `.js`) ; `inserer.py` les pose entre les marqueurs « pont_en_h » des deux pages.
+- **Mini-quiz** : `miniquiz_pont_en_h.html` (3 questions, à part du QCM de la séquence, qui reste à 30), original, CC0.
+- **Vocabulaire** : `vocabulaire_3e_C9.2.json` — pont en H, court-circuit, relais, préactionneur, transistor ; chaque définition porte sa source
+  (Larousse en ligne, Wikipédia, Éduscol STI), lue avant d'être citée. Il alimente `lexique_3e_C9.2.html`.

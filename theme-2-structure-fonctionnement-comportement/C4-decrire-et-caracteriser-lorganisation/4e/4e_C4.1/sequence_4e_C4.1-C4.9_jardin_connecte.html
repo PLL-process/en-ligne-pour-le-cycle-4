@@ -162,6 +162,18 @@
   .critere b,.duree{color:#946b00!important}
   .erreurs b{color:#eb0017!important}
 }
+  /* Règle d'or n°311 — à partir de la séance 2, l'élève voit sa séance, pas le décor.
+     Sans JavaScript le volet reste ouvert et sans titre : tout s'affiche, comme avant. */
+  .rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}   /* le gabarit habille tout details en carte : pas le volet */
+  .rappel-ouverture>summary{display:none}
+  .rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;margin:10px 0;
+    border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+  .rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+  @media print{.rappel-ouverture>summary{display:none!important}}
+  @media (max-width:480px){   /* n°311 : à 390 px, la barre d'outils tient sur deux lignes au plus */
+    .toolbar{gap:6px;margin:8px auto 12px}
+    .toolbar .btn{flex:1 1 40%;min-width:0;min-height:44px;padding:6px;font-size:.8rem;line-height:1.2}
+  }
 </style>
 </head>
 <body>
@@ -210,6 +222,15 @@
 <a class="skip-link" href="#seances">Aller directement aux activités</a>
 <h1>Thème 2 · Martinique — 4e · S4-S5 : Le jardin connecté</h1>
 <p class="subtitle">Lire l'organisation complète du jardin du collège : ses chaînes, ses données, son réseau, ses pièces</p>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
   <h2 id="rap-spi">&#128260; Ce que tu as déjà fait</h2>
   <p class="deja">L'an dernier, sur le <b>lampadaire intelligent</b>, tu as <b>tracé la chaîne d'énergie</b> de la prise jusqu'à l'ampoule, tu as dit <b>qui décide</b> quand il s'allume, tu as <b>rangé les informations</b> du parc de lampadaires, et tu les as mis en réseau.</p>
@@ -230,18 +251,8 @@
   <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="4e…"></div>
   <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
 </div>
-<div class="toolbar">
-  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
-  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
-  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
-  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
-</div>
+
 <p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. À activer si la page te paraît trop chargée.</p>
-<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
-<div class="progress-wrap">
-  <span class="progress-label">Ma progression : <b id="progTxt">0 / 5 activités validées</b></span>
-  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
-</div>
 
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
@@ -284,6 +295,12 @@
     <p>🅲 <b>Sans matériel</b> : les trois documents imprimés et les tableaux à compléter au cahier.</p>
   </div>
 </section>
+</details>
+
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression : <b id="progTxt">0 / 5 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
 
 <div class="seance-tabs" role="tablist" id="seances">
   <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1 — L'énergie<span id="done-s1"></span></button>
@@ -360,23 +377,23 @@
       <h4>a) Chaque constituant a sa fonction (C4.1)</h4>
       <div class="assoc"><label for="e1_1">Le panneau solaire :</label><select id="e1_1"><option value="">— choisir —</option><option>ALIMENTER : il convertit l'énergie lumineuse en énergie électrique</option><option>STOCKER l'énergie pour la nuit</option><option>DISTRIBUER l'eau vers les bacs</option><option>TRAITER les données des capteurs</option></select></div>
       <div class="assoc"><label for="e1_2">La batterie :</label><select id="e1_2"><option value="">— choisir —</option><option>STOCKER l'énergie (sous forme chimique) pour la nuit et les jours gris</option><option>CONVERTIR l'électricité en mouvement</option><option>ACQUÉRIR l'humidité du sol</option><option>COMMUNIQUER avec le serveur</option></select></div>
-      <div class="assoc"><label for="e1_3">Le régulateur :</label><select id="e1_3"><option value="">— choisir —</option><option>DISTRIBUER l'énergie électrique en protégeant la batterie</option><option>STOCKER l'eau de pluie</option><option>RESTITUER les courbes aux élèves</option><option>convertir l'énergie mécanique en électricité</option></select></div>
-      <div class="assoc"><label for="e1_4">La pompe :</label><select id="e1_4"><option value="">— choisir —</option><option>CONVERTIR l'énergie électrique en énergie mécanique (pousser l'eau)</option><option>STOCKER l'énergie chimique</option><option>ACQUÉRIR la température de l'eau</option><option>ALIMENTER le panneau solaire</option></select></div>
-      <div class="assoc"><label for="e1_5">L'électrovanne :</label><select id="e1_5"><option value="">— choisir —</option><option>DISTRIBUER l'eau vers le bon bac, sur ordre de la carte</option><option>CONVERTIR la lumière en électricité</option><option>TRAITER la table de données</option><option>STOCKER l'énergie mécanique</option></select></div>
+      <div class="assoc"><label for="e1_3">Le régulateur :</label><select id="e1_3"><option value="">— choisir —</option><option>ALIMENTER en protégeant la batterie (régulateur de charge)</option><option>STOCKER l'eau de pluie</option><option>RESTITUER les courbes aux élèves</option><option>convertir l'énergie mécanique en électricité</option></select></div>
+      <div class="assoc"><label for="e1_4">La pompe :</label><select id="e1_4"><option value="">— choisir —</option><option>CONVERTIR l'énergie électrique en énergie mécanique (l'eau est mise en mouvement)</option><option>STOCKER l'énergie chimique</option><option>ACQUÉRIR la température de l'eau</option><option>ALIMENTER le panneau solaire</option></select></div>
+      <div class="assoc"><label for="e1_5">L'électrovanne :</label><select id="e1_5"><option value="">— choisir —</option><option>DISTRIBUER l'eau en ouvrant ou fermant le passage, sur ordre de la carte</option><option>CONVERTIR la lumière en électricité</option><option>TRAITER la table de données</option><option>STOCKER l'énergie mécanique</option></select></div>
       <h4>b) Lire les transformations et les flux (C4.2)</h4>
       <div class="assoc"><label for="e1_6">Dans la POMPE, l'énergie se transforme :</label><select id="e1_6"><option value="">— choisir —</option><option>électrique → mécanique</option><option>lumineuse → chimique</option><option>mécanique → électrique</option><option>chimique → lumineuse</option></select></div>
       <div class="assoc"><label for="e1_7">Le trajet COMPLET des natures d'énergie est :</label><select id="e1_7"><option value="">— choisir —</option><option>lumineuse → électrique → chimique → électrique → mécanique</option><option>chimique → lumineuse → mécanique → électrique</option><option>électrique → lumineuse → chimique → mécanique</option><option>mécanique → électrique → chimique → lumineuse</option></select></div>
-      <div class="assoc"><label for="e1_8">La BATTERIE transforme-t-elle l'énergie ?</label><select id="e1_8"><option value="">— choisir —</option><option>elle la STOCKE sous forme chimique (charge) puis la restitue : stockage, pas transformation d'usage</option><option>oui, elle la transforme en lumière</option><option>non, elle la détruit peu à peu</option><option>oui, elle la transforme en eau</option></select></div>
+      <div class="assoc"><label for="e1_8">La BATTERIE transforme-t-elle l'énergie ?</label><select id="e1_8"><option value="">— choisir —</option><option>elle stocke de l'énergie chimique : conversion électrique vers chimique à la charge, puis inverse à la décharge</option><option>oui, elle la transforme en lumière</option><option>non, elle la détruit peu à peu</option><option>oui, elle la transforme en eau</option></select></div>
       <div class="assoc"><label for="e1_9">Quel bloc fait le PONT entre la chaîne d'information et la chaîne d'énergie ?</label><select id="e1_9"><option value="">— choisir —</option><option>la carte programmable : son ordre d'arrosage déclenche pompe et électrovanne</option><option>le panneau solaire</option><option>le bac C</option><option>la borne wifi de la cour</option></select></div>
     </div>
     <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Les fonctions s'écrivent avec 5 verbes : ALIMENTER, STOCKER, DISTRIBUER, CONVERTIR… Suis la flèche orange du schéma bloc par bloc, et note la nature de l'énergie qui ENTRE et celle qui SORT.</p></details>
-    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Il y a transformation quand la nature CHANGE (lumineuse→électrique dans le panneau, électrique→mécanique dans la pompe). La batterie stocke (chimique) ; le régulateur et l'électrovanne distribuent sans changer la nature. Le pont : cherche la flèche verte en pointillés.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Il y a transformation quand la nature CHANGE (lumineuse→électrique dans le panneau, électrique→mécanique dans la pompe). La batterie stocke de l’énergie chimique ; le régulateur de charge alimente en protégeant la batterie ; les interfaces de puissance commandent la pompe et les électrovannes. Le pont : cherche la flèche verte en pointillés.</p></details>
     <button class="btn small" data-check="1" type="button">✅ Vérifier mes réponses</button>
     <p class="feedback" id="fb1" role="status"></p>
     <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
       <p>Panneau = alimenter/convertir (lumineuse→électrique) · batterie = stocker (chimique) · régulateur =
-      distribuer · pompe = convertir (électrique→mécanique) · électrovanne = distribuer l'eau. Trajet complet :
-      <b>lumineuse → électrique → chimique → électrique → mécanique</b>. La batterie ne transforme pas l'usage :
+      alimenter en régulant la charge · pompe = convertir (électrique→mécanique : l’eau est mise en mouvement) · électrovanne = distribuer l’eau (ouvrir ou fermer le passage). Trajet complet :
+      <b>lumineuse → électrique → chimique → électrique → mécanique</b>. La batterie assure le stockage :
       elle met l'énergie en réserve. Et le pont entre les deux chaînes, c'est <b>la carte</b> : l'information
       COMMANDE l'énergie — c'est toute l'intelligence du jardin (et le cœur de la 4e).</p>
     </details>
@@ -663,7 +680,7 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
     document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
     document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
     tab.classList.add("active"); tab.setAttribute("aria-selected","true");
-    $(tab.dataset.panel).classList.add("active");
+    $(tab.dataset.panel).classList.add("active"); appliqueSeance(tab.dataset.panel);
     window.scrollTo({top: $("seances").offsetTop - 8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
   });
 });
@@ -737,12 +754,12 @@ const CHECKS = {
     let ok=0;
     const att={e1_1:"ALIMENTER : il convertit l'énergie lumineuse en énergie électrique",
                e1_2:"STOCKER l'énergie (sous forme chimique) pour la nuit et les jours gris",
-               e1_3:"DISTRIBUER l'énergie électrique en protégeant la batterie",
-               e1_4:"CONVERTIR l'énergie électrique en énergie mécanique (pousser l'eau)",
-               e1_5:"DISTRIBUER l'eau vers le bon bac, sur ordre de la carte",
+               e1_3:"ALIMENTER en protégeant la batterie (régulateur de charge)",
+               e1_4:"CONVERTIR l'énergie électrique en énergie mécanique (l'eau est mise en mouvement)",
+               e1_5:"DISTRIBUER l'eau en ouvrant ou fermant le passage, sur ordre de la carte",
                e1_6:"électrique → mécanique",
                e1_7:"lumineuse → électrique → chimique → électrique → mécanique",
-               e1_8:"elle la STOCKE sous forme chimique (charge) puis la restitue : stockage, pas transformation d'usage",
+               e1_8:"elle stocke de l'énergie chimique : conversion électrique vers chimique à la charge, puis inverse à la décharge",
                e1_9:"la carte programmable : son ordre d'arrosage déclenche pompe et électrovanne"};
     Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
     return {score:ok,total:9,valide:ok>=8};
@@ -944,6 +961,29 @@ function signale(msg){
     if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
 }
 
+
+/* Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « Rappel », replié. */
+function appliqueSeance(idPanneau){
+  const v = document.getElementById("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.open = n < 2;
+}
+let ouvertEnImpression = null;
+window.addEventListener("beforeprint", ()=>{ const v=document.getElementById("ouverture"); if(v){ ouvertEnImpression=v.open; v.open=true; } });
+window.addEventListener("afterprint", ()=>{ const v=document.getElementById("ouverture"); if(v && ouvertEnImpression!==null){ v.open=ouvertEnImpression; ouvertEnImpression=null; } });
+/* Lien direct : #ancre ouvre la séance qui la contient, sans l'ouverture. */
+function ouvrirSeanceDeLAncre(){
+  const id = decodeURIComponent(location.hash.slice(1)); if(!id) return;
+  const cible = document.getElementById(id); const pan = cible && cible.closest(".seance-panel");
+  if(!pan || pan.classList.contains("active")) return;
+  const onglet = document.querySelector('.seance-tab[data-panel="' + pan.id + '"]');
+  if(onglet) onglet.click();
+  setTimeout(()=>cible.scrollIntoView({block:"start"}), 60);
+}
+window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+appliqueSeance((document.querySelector(".seance-panel.active")||{}).id);
+ouvrirSeanceDeLAncre();
 
 /* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
 document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {

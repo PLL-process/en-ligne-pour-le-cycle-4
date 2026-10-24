@@ -52,6 +52,8 @@
     border:1px solid var(--input-bd);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:.94em}
   textarea{min-height:78px;resize:vertical}
   table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.86em}
+  /* un nom de fichier long (releves_essai_college_….csv) ne doit pas élargir la page à 390 px */
+  code{overflow-wrap:anywhere}
   th,td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
   th{background:var(--panel2);color:var(--sub)}
   .legende-badges{max-width:880px;margin:0 auto 12px;font-size:.82em;color:var(--sub);
@@ -75,6 +77,12 @@
   .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
   .retenir{border-left:3px solid var(--ok);padding-left:11px;color:var(--ok)}
   .piege{border-left:3px solid var(--err);padding-left:11px;color:#ffb0b8}
+  /* Règle d'or n°311 — à partir de la séance 2, l'élève voit sa séance, pas le décor.
+     Sans JavaScript le volet reste ouvert et sans titre : tout s'affiche, comme avant. */
+  .rappel-ouverture>summary{display:none}
+  .rappel-ouverture.volet>summary{display:block;cursor:pointer;min-height:44px;line-height:44px;padding:0 14px;margin:10px 0;
+    border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+  .rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
   /* Règle d'or n°29 — mode essentiel */
   body.essentiel .referentiel-card, body.essentiel details.correction,
   body.essentiel .approfondissement{display:none}
@@ -87,7 +95,7 @@
   footer{color:var(--sub);font-size:.84em;text-align:center;margin-top:22px}
   @media(max-width:620px){.seance-tab{min-width:118px;font-size:.78em}}
   @media print{body{background:#fff;color:#111}.toolbar,.btn,.seance-tabs,.progress-wrap,
-    .saved-note,#tachesBandeau,#navharm{display:none!important}
+    .saved-note,#tachesBandeau,#navharm,.rappel-ouverture>summary{display:none!important}
     .seance-panel{display:block!important}.card{background:#fff;border-color:#999}
     h1,h2,h3{color:#111}}
   @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
@@ -185,6 +193,13 @@
 <div class="page">
 <h1>🚲 Sainte-Luce — quel frein pour les vélos du collège&nbsp;?</h1>
 <p class="sous">Une seule fonction, trois principes — et un tableau qui ne décide rien tout seul.</p>
+<div class="toolbar">
+  <button class="btn" id="btnPrint" title="Imprimer la page, ou l'enregistrer en PDF. Tes réponses écrites sont imprimées avec.">🖨 Imprimer</button>
+  <button class="btn ghost" id="btnReset" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Une confirmation te sera demandée.">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false" aria-describedby="aide-essentiel" title="Masquer le référentiel, les corrections et les compléments, pour ne garder que les consignes et les exercices.">🎯 Mode essentiel : OFF</button>
+</div>
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
 <div class="badges">
   <span class="badge niveau" title="Niveau de classe auquel cette séquence est destinée.">5e</span>
   <span class="badge code" title="Comparer des principes techniques pour une même fonction technique.">5e_C1.2</span>
@@ -222,11 +237,6 @@
 <b>socle commun</b>, les grandes familles de ce qu'on apprend au collège.
 <b>CRCN</b>&nbsp;: le cadre des compétences numériques, celui qu'on retrouve dans <b>Pix</b>.
 <b>3 séances de 55 min</b>&nbsp;: le temps prévu, sans compter le QCM. <b>🔧 Objet réel</b>&nbsp;: une manipulation sur un vrai vélo fait partie du parcours, elle n'est pas facultative.</p>
-<div class="toolbar">
-  <button class="btn" id="btnPrint" title="Imprimer la page, ou l'enregistrer en PDF. Tes réponses écrites sont imprimées avec.">🖨 Imprimer</button>
-  <button class="btn ghost" id="btnReset" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Une confirmation te sera demandée.">🗑 Effacer ma sauvegarde</button>
-  <button class="btn ghost" id="btnEssentiel" aria-pressed="false" aria-describedby="aide-essentiel" title="Masquer le référentiel, les corrections et les compléments, pour ne garder que les consignes et les exercices.">🎯 Mode essentiel : OFF</button>
-</div>
 <p class="saved-note">Tes réponses sont enregistrées <b>dans ce navigateur uniquement</b>&nbsp;:
 elles ne partent nulle part, et tu les retrouveras sur <b>ce même ordinateur</b>.</p>
 <p class="saved-note" id="aide-essentiel">🎯 <b>Le mode essentiel</b> masque le référentiel, les
@@ -278,8 +288,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 <section class="card referentiel-card">
   <h2>📚 Le référentiel de la séquence — en toutes lettres</h2>
   <p class="meta"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du
-  29 février 2024.<br><b>Codification opérationnelle</b>&nbsp;: <code>5e_C1.2</code> est un code de
-  classement <b>interne à ce dépôt</b>. Il ne figure pas comme tel au BO. La formulation ci-dessous,
+  29 février 2024.<br><b>Codification opérationnelle</b>&nbsp;: <code>5e_C1.2</code>. Ce code sert à ranger la séquence ; il ne vient pas du programme officiel. La formulation ci-dessous,
   elle, est celle du référentiel. <b>À la fin de cette séquence, je serai capable de…</b> — l'intitulé de la colonne est de nous&nbsp;; les formulations citées, elles, sont celles du BO, qui ne dit pas «&nbsp;je&nbsp;».</p>
   <table>
     <tr><th>Code</th><th>Je serai capable de…</th><th>Où</th></tr>
@@ -313,6 +322,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <b>même vérificateur</b>. La version 🅰 n'est pas «&nbsp;la vraie&nbsp;»&nbsp;: c'est la plus
   rapide.</p>
 </section>
+</details>
 </div>
 
 <div class="progress-wrap">
@@ -1083,17 +1093,41 @@ $("btnReset").addEventListener("click", ()=>{
 });
 
 /* ══════ Onglets de séance ══════ */
+/* Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « Rappel », replié. */
+function appliqueSeance(idPanneau){
+  const v = $("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.open = n < 2;
+}
+let ouvertEnImpression = null;
+window.addEventListener("beforeprint", ()=>{ const v=$("ouverture"); if(v){ ouvertEnImpression=v.open; v.open=true; } });
+window.addEventListener("afterprint", ()=>{ const v=$("ouverture"); if(v && ouvertEnImpression!==null){ v.open=ouvertEnImpression; ouvertEnImpression=null; } });
 document.querySelectorAll(".seance-tab").forEach(tab=>{
   tab.addEventListener("click", ()=>{
     document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
     document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
     tab.classList.add("active"); tab.setAttribute("aria-selected","true");
     $(tab.dataset.panel).classList.add("active");
+    appliqueSeance(tab.dataset.panel);
     majTaches();
     window.scrollTo({top:$("seances").offsetTop-8,
       behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
   });
 });
+
+/* Lien direct : #ancre ouvre la séance qui la contient, sans l'ouverture. */
+function ouvrirSeanceDeLAncre(){
+  const id = decodeURIComponent(location.hash.slice(1)); if(!id) return;
+  const cible = document.getElementById(id); const pan = cible && cible.closest(".seance-panel");
+  if(!pan || pan.classList.contains("active")) return;
+  const onglet = document.querySelector('.seance-tab[data-panel="' + pan.id + '"]');
+  if(onglet) onglet.click();
+  setTimeout(()=>cible.scrollIntoView({block:"start"}), 60);
+}
+window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+appliqueSeance((document.querySelector(".seance-panel.active")||{}).id);
+ouvrirSeanceDeLAncre();
 
 /* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
 document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {

@@ -31,9 +31,10 @@
  */
 import { chromium } from 'playwright';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
 
-const ICI = path.dirname(new URL(import.meta.url).pathname);
+const ICI = path.dirname(fileURLToPath(import.meta.url));
 const PAGE = path.join(ICI, 'sequence_5e_C4.1-C4.8_lampadaire_intelligent.html');
 
 const b = await chromium.launch();
@@ -185,6 +186,9 @@ const coches = await p.$$eval('[id^="done-s"]', l => l.map(e => e.textContent.tr
 ok('22 · les cinq séances portent leur coche', coches.every(c => c === '✔'),
    coches.join('|'));
 
+/* Règle d'or n°311 : dès la séance 2, l'hypothèse est repliée dans le volet
+   « Rappel » ; l'élève l'écrit à la séance 1, on y retourne comme lui. */
+await ouvrirSeance(1);
 await p.fill('#hyp1', 'Je pense que le lampadaire s\'allume seulement quand il fait nuit.');
 await p.waitForTimeout(120);
 ok('23 · l\'hypothèse est rappelée dès la saisie',

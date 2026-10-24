@@ -11,7 +11,8 @@
  * la fermeture des panneaux de séance, donc visibles à tous les onglets. Corrigé en #418.
  *
  * LA RÈGLE — un squelette unique, qui réunit les n°301, 302 et 304
- *   OUVERTURE, visible dès le premier écran : 🔄 Avant de commencer → situation →
+ *   OUVERTURE, visible dès le premier écran (séance 1 ; repliée dans le volet « 📖 Rappel » dès la
+ *     séance 2, jamais supprimée — n°311, voir D6) : 🔄 Avant de commencer → situation →
  *     problématique → hypothèse de départ → référentiel « Je serai capable de… » →
  *     billet d'entrée.
  *   SÉANCES : chacune porte ses activités.
@@ -57,7 +58,15 @@
  *           SITUE l'élève dans la séquence, il est fait pour être vu à chaque séance ;
  *         · .seance-avis — l'avis « ce bloc est hors parcours », qui accompagne l'onglet ;
  *         · footer — le pied de page (crédits, licence), qui n'est pas du contenu de séance.
+ *         · details.rappel-ouverture — le volet « 📖 Rappel » de la n°311 : il ENVELOPPE l'ouverture.
  *       Rapport : par page, les titres de ce qui fuit (à défaut, le premier texte).
+ *   D6  (n°311, 22/10/2026) « à partir de la séance 2, l'élève voit sa séance, pas le décor » :
+ *       sur une page à onglets qui porte le volet details.rappel-ouverture, l'ouverture (situation,
+ *       problématique, hypothèse, référentiel…) est VISIBLE à la séance 1 — volet ouvert, sans
+ *       bouton — puis REPLIÉE dans le volet à partir de la séance 2 : repliée, jamais supprimée,
+ *       et le volet garde un bouton visible. La visibilité se juge avec checkVisibility() : le
+ *       contenu d'un <details> fermé garde ses rectangles dans Chromium. Une page sans volet est
+ *       seulement SIGNALÉE tant que les vagues de la n°311 ne l'ont pas atteinte.
  * SIGNALÉ, non refusé (« à rédiger », pour la révision) : Bonus sans champ ou sans
  * corrigé, bilan sans retour à l'hypothèse, sans métacognition, sans
  * positionnement ; ordre des blocs d'ouverture différent du squelette.
@@ -97,7 +106,11 @@ export function sequences(depart) {
 
 /** Relevé, dans la page, de chaque bloc des deux familles. Exécuté dans le navigateur. */
 function releverBlocs() {
-  const vis = (e) => !!e && (e.offsetParent !== null || e.getClientRects().length > 0) && getComputedStyle(e).visibility !== 'hidden';
+  // checkVisibility : le contenu d'un <details> fermé garde ses rectangles dans Chromium (n°311) ;
+  // offsetParent et getClientRects le diraient visible alors que l'élève ne le voit pas.
+  const vis = (e) => !!e && (typeof e.checkVisibility === 'function'
+    ? e.checkVisibility({ contentVisibilityAuto: true, checkVisibilityCSS: true })
+    : (e.offsetParent !== null || e.getClientRects().length > 0) && getComputedStyle(e).visibility !== 'hidden');
   const y = (e) => Math.round(e.getBoundingClientRect().top + scrollY);
   const conteneur = (e) => e.closest('section, article, .card, details, .activite') || e.parentElement;
   const premierTitre = (h) => { const c = conteneur(h); return c && c.querySelector('h1,h2,h3,h4,summary') === h; };
@@ -183,7 +196,7 @@ function releverBlocs() {
   const pv = [...document.querySelectorAll('.seance-panel, [role="tabpanel"]')].find((x) => vis(x));
   // ── D5 : ce qui, après la barre d'onglets, n'est dans aucun panneau ──
   // Jugé par le conteneur. Les exceptions sont listées dans l'en-tête, et nulle part ailleurs.
-  const EXCEPTIONS = '#tachesBandeau, section#taches, .seance-avis, footer';
+  const EXCEPTIONS = '#tachesBandeau, section#taches, .seance-avis, footer, details.rappel-ouverture';
   const onglet1 = document.querySelector('button.seance-tab, [role="tab"]:not(a), button[data-panel]');
   const barre = onglet1 && (onglet1.closest('.seance-tabs, [role="tablist"], #seances') || onglet1.parentElement);
   const fuites = [];
@@ -196,7 +209,9 @@ function releverBlocs() {
       fuites.push({ titre: /^H\d$/.test(e.tagName), txt: texte(e).slice(0, 60) || `${e.tagName.toLowerCase()}${e.id ? '#' + e.id : ''}` });
     }
   }
+  const volet = document.querySelector('details.rappel-ouverture');
   return {
+    volet: volet ? { ouvert: volet.open, bouton: vis(volet.querySelector(':scope > summary')) } : null,
     fuites: { n: fuites.length, titres: [...new Set(fuites.filter((f) => f.titre).map((f) => f.txt))], premier: fuites.length ? fuites[0].txt : null },
     panneauVisible: pv ? (pv.id || '(sans id)') : null,
     blocs: blocs.map((b) => ({ famille: b.famille, type: b.type, visible: vis(b.el), y: vis(b.el) ? y(b.el) : null, panneau: panneau(b.el) })),
@@ -259,6 +274,19 @@ export async function juger(ctx, fichier) {
     // l'ouverture, au premier écran
     const ouvCachee = initial.blocs.filter((b) => b.famille === 'ouverture' && !b.visible);
     if (ouvCachee.length) defauts.push({ code: 'D4', dit: `ouverture absente du premier écran : ${types(ouvCachee).join(', ')}` });
+    // D6 (n°311) : à partir de la séance 2, l'ouverture est repliée dans le volet « Rappel », pas supprimée.
+    // Jugé sur les pages qui portent le volet ; les autres sont signalées, le temps des vagues.
+    const aVolet = !!initial.volet;
+    const suite = seances.slice(1);
+    if (aVolet) {
+      const decor = suite.map((e) => ({ e, vus: e.releve.blocs.filter((b) => b.famille === 'ouverture' && b.visible) })).filter((x) => x.vus.length);
+      if (decor.length) defauts.push({ code: 'D6', dit: `onglet « ${decor[0].e.onglet.libelle} » : ${types(decor[0].vus).join(', ')} encore visible(s) hors du volet « Rappel »` });
+      const sansBouton = suite.filter((e) => !e.releve.volet || !e.releve.volet.bouton);
+      if (sansBouton.length) defauts.push({ code: 'D6', dit: `onglet « ${sansBouton[0].onglet.libelle} » : le volet « Rappel » n'a pas de bouton visible, l'ouverture est inaccessible` });
+      if (!initial.volet.ouvert || initial.volet.bouton) defauts.push({ code: 'D6', dit: 'séance 1 : le volet doit être ouvert et sans bouton (ouverture complète)' });
+    } else if (suite.length && suite.some((e) => e.releve.blocs.some((b) => b.famille === 'ouverture' && b.visible))) {
+      signales.push('n°311 non appliquée : l\'ouverture reste visible aux séances 2 et suivantes');
+    }
     // D5 : visible hors de tout panneau, dans l'un au moins des états (page ouverte, chaque onglet)
     const tous = [initial, ...etats.map((e) => e.releve)].map((r) => r.fuites).filter((f) => f.n);
     if (tous.length) {
@@ -310,9 +338,9 @@ export async function main(argv = []) {
   if (json) { console.log(JSON.stringify(rapports, null, 1)); return refusees.length ? 1 : 0; }
   const aOnglets = rapports.filter((r) => r.onglets).length;
   console.log(`${rapports.length} séquence(s) ouvertes onglet par onglet · ${aOnglets} à onglets · ${rapports.length - aOnglets} sans · ${refusees.length} refusée(s)`);
-  for (const code of ['D1', 'D2', 'D3', 'D4', 'D5']) {
+  for (const code of ['D1', 'D2', 'D3', 'D4', 'D5', 'D6']) {
     const n = rapports.filter((r) => r.defauts.some((d) => d.code === code)).length;
-    console.log(`     ${code} ${{ D1: 'clôture visible avant la dernière séance', D2: 'clôture invisible à la dernière séance', D3: 'ordre de clôture à l\'écran', D4: 'ouverture absente du premier écran', D5: 'visible hors de tout panneau de séance' }[code]} : ${n}`);
+    console.log(`     ${code} ${{ D1: 'clôture visible avant la dernière séance', D2: 'clôture invisible à la dernière séance', D3: 'ordre de clôture à l\'écran', D4: 'ouverture absente du premier écran', D5: 'visible hors de tout panneau de séance', D6: 'ouverture non repliée dans le volet « Rappel » dès la séance 2' }[code]} : ${n}`);
   }
   for (const r of refusees) {
     console.log(`\n  ✘ ${r.rel}`);
