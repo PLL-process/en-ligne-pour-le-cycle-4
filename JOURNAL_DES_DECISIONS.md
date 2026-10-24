@@ -23028,3 +23028,78 @@ sont plus publiés par le site depuis le 23/10 (arbitrage A5) : c'est ce qui com
 
 **Ce qui a tourné.** Rien d'autre que l'écriture de cette entrée et de la ligne du skill ; `build_audit.py` et
 `make_index.py` relancés.
+
+## 24/10/2026 — Thème 2 · 4e_C4.1 Book Train, seconde passe : la vidéo traduite pour l'élève, quatre séances (transversal : registre des ressources du thème 3)
+
+**Demande de Pascal.** Après la fusion de la PR #498, il branche l'outil vidIQ, puis : « j'aimerais plutôt que tu
+regardes la vidéo parce que le sous-titre est en anglais et s'il y a possibilité de le mettre en français directement
+pour l'élève », et carte blanche sur les cinq points laissés « à relire » par la PR #498. Branche
+`fable/book-train-video-fr-seances`, **sans motif de thème** (le registre des vidéos vit dans le thème 3).
+
+### Ce que la vidéo est vraiment
+
+Regardée avec vidIQ (métadonnées YouTube, transcription, lecture image par image) : **Tech Insider** (chaîne « Insider
+Tech »), 29/09/2016, **1 min 44 s**, **aucune voix** (la transcription ne contient que « [Music] »), **18 phrases
+incrustées dans l'image**, en anglais, pas de publicité dans la vidéo, contenu adapté. Conséquence : il n'y a pas de
+sous-titre à traduire. Les sous-titres automatiques de YouTube ne lisent pas un texte écrit dans l'image ; la seule
+façon de donner le français à l'élève est de l'écrire dans la page.
+
+### Ce que le lot fait
+
+- **Traduction minutée** sous le bloc vidéo (`details#video-fr`, fermé par défaut) : chaque phrase avec son moment,
+  le français d'abord, l'anglais de l'écran ensuite (`lang="en"`, pour s'y retrouver en regardant), les unités
+  converties (pieds, « lb » — qui se lit « livre » mais n'en est pas une). « The cart sways » est traduit « se
+  balance » et non « bascule », le mot d'un distracteur de la question 2.
+- **Registre** `res-4e-C4-1-book-train` : source (Tech Insider, 29/09/2016), durée (1 min 44 s, puce affichée),
+  consigne minutée (« vers 0:54 ») ; `verifie_comment` dit ce qui a été vu. **Seule la licence reste non lue.**
+  `poser_ressource.py` relancé : 1 bloc reposé, 5 « aucun changement ».
+- **Quatre séances de 55 min au lieu de trois.** La version à trois séances annonçait 154 min pour 165, mais la
+  vidéo et trois activités n'avaient pas de durée écrite ; chiffrées honnêtement (vidéo 5, énergies 10, chaîne
+  d'énergie dans draw.io 15, zoom 5), elles portaient le total à **189 min** et la séance 1 à environ 80 min.
+  Déplacer seulement 1.2 ter (la piste proposée le matin) aurait fait déborder la séance 2. Nouvelle **séance 2 « Les
+  deux chaînes, dans draw.io »** entre le décodage et l'algorigramme ; n°23 : 189 (+10) pour 220.
+- **Renumérotation** pour que le numéro dise la séance : 1.2 A → 1.3, 1.2 bis → 2.1, 1.2 ter → 2.2, 1.3 → 2.3,
+  2.x → 3.x, 3.x → 4.x. Les identifiants internes (`exo12b`, `e12t1`…) ne changent pas : les réponses déjà
+  sauvegardées par un élève reviennent. Renvois de séance réécrits un par un (« la séance 3 : à l'export » → 4…).
+- **Règle n°101** : un bouton en fin de Départ et de chaque séance ouvre la suivante et remonte au rail. Cette page à
+  onglets `role="tab"` échappe à `controle_navigation_seances.py` (qui lit `.seance-tab`) : le banc le mesure (test 30).
+- **Rail à cinq gares** : la barre grandit avec ses étiquettes au lieu de les laisser couper par le bandeau, les gares
+  restent alignées sur le rail (une étiquette sur trois lignes soulevait la sienne), « Algori-gramme » se coupe à
+  390 px. Défaut antérieur : à 390 px, les quatre gares d'avant dépassaient déjà du bandeau.
+- **Synthèse professeur, fiche, README, SOURCES_MEDIAS, matrice, manifeste (v1.2), rapport de tests** alignés. La
+  matrice perd aussi sa notion « Domaine et forme d'énergie », restée de l'ancien vocabulaire : « Forme d'énergie
+  et type de courant ».
+
+### Les autres questions, tranchées sur carte blanche
+
+1. **480 V** : gardé, présenté comme la tension habituelle des grands bâtiments américains (24 V ⎓ seul publié). Le
+   retirer laisserait le bloc ALIMENTER sans valeur d'entrée, alors que c'est lui qui enseigne « le type de courant
+   change, pas la forme ».
+2. **« forme » plutôt que « nature »** : gardé (n°310, vocabulaire de la physique) ; la page signale une fois que
+   le programme dit « nature » dans le même sens.
+3. **Charge de la séance 1** : quatre séances (ci-dessus).
+4. **Prolongement Q-Scout** : gardé dans la synthèse professeur, présenté comme possible, pas comme une étape.
+5. **La vidéo** : regardée (ci-dessus).
+
+### Thème par thème
+
+- **Thème 2** : `4e_C4.1_book-train/` — séquence, synthèse professeur, fiche, README, sources, matrice, manifeste,
+  rapport de tests, banc, captures (`_generation/captures_2026-10-24/seconde-passe_*.png`).
+- **Thème 3** : `C7-…/ressources_externes.json` (entrée `res-4e-C4-1-book-train` complétée).
+- **Communs** : `nouveautes.json` (+1), `index.html` et `audit_couverture.*` régénérés, ce journal.
+
+### Ce qui a vraiment tourné
+
+- Banc du lot : **33 / 33** (28 + 5 nouveaux) ; rejoué sur la page d'avant : 27 / 33 (les 5 nouveaux échouent,
+  et le 25, hors dépôt).
+- `verif_regles_audit.py` : n°23 ✔ (189 + 10 pour 220) ; dépôt 240 ✘, comme après la PR #498.
+- Node : `controle_squelette` (lot), `controle_verrous`, `controle_hors_ligne`, `controle_impression`,
+  `controle_contraste_liens` (lot), `verif_qcm_coherence` : 0 ; audits de mesure : 0.
+- Python : les 22 contrôles de `controle-qualite-lot` : 0 ; `verifier_chaines_energie.py` 54 / 54 ;
+  `regenerer_chaines_energie.py` et `generer_lexique.py` rejoués sans écart.
+
+### Ce que le lot ne fait pas
+
+- La licence de la vidéo n'est pas lue ; une version Digiview (sans suggestions ni pistage) reste à faire sur le
+  poste de Pascal.
+- n°300 (44 listes déroulantes) et n°302 (bloc des rôles commun) : inchangés, lots à part.

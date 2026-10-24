@@ -12,15 +12,15 @@
 | Domaines du socle | D1.3 « Les langages mathématiques, scientifiques et informatiques » (lire un diagramme fonctionnel, respecter une norme de représentation, rédiger une justification technique) · D2 « Les méthodes et outils pour apprendre » (binôme, draw.io, fichiers nommés et rangés) · D4 « Les systèmes naturels et les systèmes techniques » (analyse d'un système automatisé réel) |
 | CRCN | **3.4 Programmer** (niv. 2) — lire et construire un algorigramme normalisé · **3.3 Adapter les documents à leur finalité** (niv. 2) — choisir ET justifier un format d'export. Travaillées par les activités, pas par le QCM : le CRCN est le résultat d'une activité authentique, jamais une étiquette (règle d'or n°7) |
 | Logiciels | **draw.io** (installé ou `app.diagrams.net` — aucun compte, aucun envoi de fichier) et **LibreOffice Impress** |
-| Durée | 3 séances de 55 min — 154 min d'activités annoncées pour 165 disponibles, marge de service comptée (règle d'or n°23). La vidéo du départ (≈ 4 min, comme la lecture de la situation) et les activités 1.2 bis, 1.2 ter et 3.1 n'ont pas de durée écrite : la séance 1 est chargée (voir la synthèse professeur) |
+| Durée | 4 séances de 55 min — 189 min d'activités annoncées (+10 de marge de service) pour 220 disponibles (règle d'or n°23). Passée de 3 à 4 séances le 24/10/2026 : en trois séances, la vidéo et trois activités sans durée écrite (≈ 35 min) faisaient déborder la première séance d'environ 25 min |
 
 ## Sous-compétences
 
 | Code | Intitulé officiel | Activités | QCM |
 |---|---|---|---|
-| 4e_C4.1 | Décrire et caractériser l'organisation interne d'un objet ou système technique et ses échanges avec son environnement (énergies, données). | 1.1, 1.2 A | 10 q |
-| 4e_C4.2 | Repérer les transformations d'énergie et les flux d'énergie au sein de l'OST. | 1.2 bis | 10 q |
-| 4e_C4.4 | Identifier les constituants de la chaîne d'information d'un objet réel et les associer à leur fonction. | 1.2, 1.3, 2.1, 2.2 | 10 q |
+| 4e_C4.1 | Décrire et caractériser l'organisation interne d'un objet ou système technique et ses échanges avec son environnement (énergies, données). | 1.1, 1.3, 2.2 | 10 q |
+| 4e_C4.2 | Repérer les transformations d'énergie et les flux d'énergie au sein de l'OST. | 2.1 | 10 q |
+| 4e_C4.4 | Identifier les constituants de la chaîne d'information d'un objet réel et les associer à leur fonction. | 1.2, 2.3, 3.1, 3.2 | 10 q |
 
 ## Prérequis
 
@@ -41,21 +41,26 @@ vérificateur le dit à l'élève en toutes lettres (règle d'or n°26).
 
 ## Déroulé
 
-**Départ — Le vrai Book Train (24/10/2026).** Après la situation, une courte vidéo du système (YouTube, 2016 ; lien et
-QR code, repli hors ligne) et deux questions d'observation en boutons radio : les wagonnets roulent-ils seuls ? la nacelle
-reste-t-elle à plat dans la montée verticale ? Sans connexion, les deux réponses sont dans la situation.
+**Départ — Le vrai Book Train (24/10/2026).** Après la situation, une vidéo du système (Tech Insider, 2016,
+1 min 44 s, sans voix ; lien et QR code, repli hors ligne). Ses phrases, incrustées en anglais, sont traduites et
+minutées juste en dessous. Puis deux questions d'observation en boutons radio : les wagonnets roulent-ils seuls ? la
+nacelle reste-t-elle à plat dans la montée verticale ? Sans connexion, les deux réponses sont dans la situation.
 
-**Séance 1 — Décoder le Book Train.** Billet d'entrée, puis remise en ordre du trajet d'un livre (act. 1.1),
-tri information / énergie (act. 1.2), diagramme fonctionnel fonction ↔ solution (act. 1.2 A), transformations
-d'énergie bloc par bloc (act. 1.2 bis) et complétion de la chaîne d'information dans draw.io (act. 1.3).
+**Séance 1 — Décoder le Book Train.** Billet d'entrée et vidéo, puis remise en ordre du trajet d'un livre (act. 1.1),
+tri information / énergie (act. 1.2) et diagramme fonctionnel fonction ↔ solution (act. 1.3).
 
-**Séance 2 — Traduire en algorigramme.** Chaque forme normalisée et son métier (act. 2.1), puis construction
-complète de l'algorigramme du trajet dans draw.io, avec ses deux tests et sa boucle d'attente (act. 2.2),
+**Séance 2 — Les deux chaînes, dans draw.io.** Transformations d'énergie bloc par bloc (act. 2.1), chaîne d'énergie
+complétée dans draw.io (act. 2.2), puis chaîne d'information complétée de ses capteurs (act. 2.3).
+
+**Séance 3 — Traduire en algorigramme.** Chaque forme normalisée et son métier (act. 3.1), puis construction
+complète de l'algorigramme du trajet dans draw.io, avec ses deux tests et sa boucle d'attente (act. 3.2),
 guide pas à pas inclus.
 
-**Séance 3 — Exporter et présenter.** Expérience du zoom, tableau comparatif SVG / PNG et **justification
-écrite** du choix (act. 3.2), puis export et construction d'un diaporama de 6 diapositives sous Impress
-(act. 3.3). Bilan, confrontation à l'hypothèse de départ, auto-positionnement par code, QCM 30 questions.
+**Séance 4 — Exporter et présenter.** Expérience du zoom (act. 4.1), tableau comparatif SVG / PNG et **justification
+écrite** du choix (act. 4.2), puis export et construction d'un diaporama de 6 diapositives sous Impress
+(act. 4.3). Bilan, confrontation à l'hypothèse de départ, auto-positionnement par code, QCM 30 questions.
+
+Chaque séance se termine par un bouton qui ouvre la suivante (règle d'or n°101).
 
 **Bonus (avant le bilan).** Six défis, chacun avec sa case de réponse, un début de phrase pour chacun (version étayée) et un
 corrigé commun : algorigramme du retour, adaptation à la Schœlcher, coût comparé, évolution du système (tubes
