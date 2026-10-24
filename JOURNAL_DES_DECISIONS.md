@@ -23201,3 +23201,38 @@ tableau 1.3 de 640 à 2 440 px. C'est le prix, déjà payé au thème 1, d'une q
 
 - n°302 : « Si vous êtes trois ou quatre » vient du bloc des rôles commun (`poser_roles.py`, quatorze pages).
 - Lecteur d'écran réel et impression papier : non faits.
+
+## 24/10/2026 — Règle d'or n°302 : le bloc des rôles tutoie sur ses 14 pages ; 4e_C4.1 retrouve son intitulé officiel dans le Book Train (transversal)
+
+**Demande de Pascal.** « oui » à deux propositions de la même réponse : corriger l'intitulé de 4e_C4.1 dans la
+synthèse professeur et la fiche du Book Train, et faire le lot n°302 du bloc des rôles. Branche
+`fable/roles-tutoiement-c41`, sans motif de thème (thèmes 1, 2 et 3).
+
+### Le bloc des rôles (n°302)
+
+- `_outils/poser_roles.py` vouvoyait dans son gabarit : `<summary>Si vous êtes trois ou quatre</summary>`, et
+  « ce que vous n'avez pas su faire » dans le corps. Le dépôt tutoie (« le vouvoiement est exclu »).
+  Nouveau texte : **« Si tu travailles à trois ou à quatre »** ; « ce que **le groupe** n'a pas su faire ».
+- **Les 14 blocs en place étaient identiques au gabarit** (vérifié bloc par bloc avant de toucher quoi que ce
+  soit) : ils sont reposés par `poser()` entre leurs balises, sans retouche à la main. `main()` n'a pas été
+  lancé : il ne repose pas les blocs existants et en ajouterait ailleurs ; le docstring le dit maintenant.
+- `verif_regles_audit.py` (dépôt) : **221 ✘** contre 233 sur `main`. Trois pages gardent un ✘ n°302, d'une autre
+  origine : la légende « Ce que tu dois voir » cite le bouton « Depuis votre appareil » d'un logiciel
+  (`3e_C7.1`, `5e_C7.1`, `4e_C9.1`). C'est le nom d'un bouton, donc une parole rapportée, à déclarer dans
+  `EXCEPTIONS_302` : lot à part.
+
+### L'intitulé de 4e_C4.1
+
+La synthèse professeur et la fiche du Book Train donnaient à **4e_C4.1** l'intitulé de la **compétence-mère
+4e_C4** (« Décrire et caractériser l'organisation interne… »). Le référentiel, tel que le porte
+`audit_couverture.csv`, dit : « **Identifier les constituants d'une chaîne d'énergie et les associer à leurs
+fonctions.** » — c'est aussi ce que dit le badge de la page élève. Les deux documents nomment désormais la
+compétence-mère à part (mise en route, act. 1.1) et 4e_C4.1 avec son texte (act. 1.3, 2.2). Antérieur aux trois
+lots du jour ; `controle_formulations.py` ne lit que les encarts « Ce que dit le programme ».
+
+### Ce qui a tourné
+
+- `tests_verif_regles_audit.py` : 61 / 61. Banc du Book Train : 39 / 39.
+- `controle_formulations`, `controle_hierarchie`, `controle_regles_visibles`, `controle_liens`,
+  `controle_effectifs_qcm`, `controle_couverture` : 0 ; Node sur tout le dépôt : `controle_squelette`,
+  `controle_impression`, `controle_contraste_liens`, `controle_hors_ligne` : 0.
