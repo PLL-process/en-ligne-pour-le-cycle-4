@@ -8,7 +8,7 @@
 
 ➡ **[Séquence 3e — Numérique, société, environnement et santé](../3e_C1.5/sequence-numerique-societe-economie-environnement-sante.html)**
 
-L'activité 4 travaille ce qui ne se convertit pas en chiffres, et pourquoi un ratio parfaitement juste peut rester fragile : la contrainte sociétale ne se réduit pas à une unité.
+L'activité 2 (séance 2, partie 2.b) fait expliquer pourquoi le site d'une activité en ligne doit respecter la loi — RGPD, propriété intellectuelle, mentions légales — et ce que cela impose à sa conception : HTTPS, paiement sécurisé, sauvegardes. La partie 3 bis (séance 3) demande pourquoi préférer des appareils réparables, reconditionnés ou éco-conçus. Ce sont des réponses de quelques lignes, pas encore un argumentaire court consacré à ce code ; le bilan y fait se positionner l'élève.
 
 **Ce code y est évalué.** La banque de la ressource porte 10 questions étiquetées `3e_C1.4` (`qcm_numerique_societe.html`) : le score se reporte.
 
