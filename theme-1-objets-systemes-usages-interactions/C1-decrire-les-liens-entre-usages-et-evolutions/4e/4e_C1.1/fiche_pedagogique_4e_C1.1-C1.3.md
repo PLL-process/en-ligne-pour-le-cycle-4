@@ -1,6 +1,6 @@
 # Fiche pédagogique — 4e_C1.1 à C1.3 « Tsinghua : concevoir avant de connecter »
 
-**Niveau** 4e · **Thème 1** · **Durée** 4 séances de 55 min (200 min annoncés pour 220 — séance 4 : 45 + 10 = 55 min ; l'activité 4 était annoncée à 50 min, ce qui faisait 60 avec le bilan dans un créneau de 55 — audit du 08/09)
+**Niveau** 4e · **Thème 1** · **Durée** 5 séances de 55 min (242 min annoncés pour 275 — séances de 50, 50, 45, 45 et 52 min ; la séance 5, ajoutée le 24/10/2026, porte l'activité 5 (42 min) et le bilan (10 min). Avant : 4 séances, 200 min pour 220, séance 4 à 45 + 10 = 55 min ; l'activité 4 était annoncée à 50 min, ce qui faisait 60 avec le bilan dans un créneau de 55 — audit du 08/09)
 **Matériel** un **thermomètre** (mesure de 10 min en séance 1, comprise dans l'activité) · un
 tableur, utile mais **pas indispensable**
 
@@ -22,8 +22,8 @@ cahier des charges. Il s'arrête volontairement là : le « comment » appartien
 | Code | Formulation du référentiel (recopiée) | Séance |
 |---|---|---|
 | **4e_C1.1** | Mettre en relation les OST avec leurs usages. | 1 et 4 |
-| **4e_C1.2** | Identifier les avantages et les inconvénients associés aux évolutions technologiques et informatiques. | 3 |
-| **4e_C1.3** | Justifier l'évolution d'un OST pour répondre à l'évolution des besoins. | 4 |
+| **4e_C1.2** | Identifier les avantages et les inconvénients associés aux évolutions technologiques et informatiques. | 3 et 5 |
+| **4e_C1.3** | Justifier l'évolution d'un OST pour répondre à l'évolution des besoins. | 4 et 5 |
 
 **Socle** : D1.3 · D2 · D3 · D4. **CRCN 1.3 — traiter des données, niveau 2** ; la trace est le
 fichier transformé et son export avec avertissement, **pas le fait d'avoir ouvert un tableur**
@@ -41,7 +41,9 @@ elle procède.
 | 2 | **Estimer, et dire ce que l'estimation vaut** | 50 min | le ratio, l'estimation, **et l'avertissement en trois points** |
 | 3 | **Comparer sans confondre les périmètres** | 45 min | quatre équivalences avec **leur unité exacte** |
 | 4 | **Du nombre au besoin technique** | 45 min | **cinq exigences vérifiables**, sans aucun composant |
-| Bilan | Hypothèse, métacognition, auto-positionnement sur les 3 codes | 10 min | — |
+| 5 | **Justifier une évolution, sur un autre objet** — trois exercices des ateliers des représentations | 42 min | les trois exercices **réussis** : deux bêtes à cornes comparées et un nouveau but (4e_C1.3), une carte mentale complétée, une carte mentale corrigée (4e_C1.2) |
+| Bilan (séance 5) | Hypothèse, métacognition, auto-positionnement sur les 3 codes | 10 min | — |
+| Bonus (séance 5) | Martinique, sans caméra, équivalence retournée — **facultatif** | hors temps | corrigé replié |
 
 ## 🔧 La mesure dans la cour — dix minutes, et elle n'est pas facultative
 
@@ -81,6 +83,36 @@ donne sa conséquence : l'erreur est multipliée par le nombre de places du trai
 
 **Séance 4** — le passage exigence / solution est le geste du niveau. Toute exigence qui nomme un
 composant est refusée, avec sa raison : « tu as choisi le moyen avant d'avoir dit le but ».
+
+**Séance 5** — « on ne parle plus des feux ? » C'est voulu : un geste réussi sur un seul objet n'est pas
+encore acquis. L'intro de chaque exercice dit le lien (le seuil seul devenu croisement d'indices, les
+deux faces de la détection automatisée). Les résistances attendues : écrire « grâce à un capteur » dans
+le nouveau but (le même refus qu'en séance 4 : c'est une solution) ; garder une phrase vraie mais hors
+sujet sur la carte ; prendre pour un défaut l'absence de flèches ou d'ordre.
+
+## La séance 5 — trois exercices des ateliers des représentations (ajoutée le 24/10/2026)
+
+Aucune des quatre séances (50, 50, 45, 55 min) n'avait le temps d'accueillir un exercice des ateliers.
+À la demande du professeur, une **séance 5 de 55 min** les accueille, et la clôture (Bonus → Bilan →
+QCM) y passe — ce qui libère 10 min en séance 4 (45 min).
+
+| Exercice | Atelier | Code | Durée |
+|---|---|---|---|
+| 1 — Le besoin évolue : de l'arrosoir au système connecté | Le besoin (bête à cornes), 4e e4 | 4e_C1.3 | 12 min |
+| 2 — Les avantages et les inconvénients de l'arrosage connecté | La carte mentale, 4e e3 | 4e_C1.2 | 15 min |
+| 3 — Corriger une carte mentale mal faite | La carte mentale, 4e e4 | 4e_C1.2 | 15 min |
+
+Les trois exercices portent sur **un autre objet** — le jardin partagé d'un collège, de l'arrosoir à
+l'arrosage connecté — et chaque bloc s'ouvre sur une intro qui le relie aux feux et aux technologies de
+la séquence. Avec le bilan, la séance compte 52 min : l'exercice 3 tient, il n'a pas été reporté. Chaque
+exercice a son cours replié, ses deux aides, son exercice jumeau, sa correction complète, et sa propre
+sauvegarde, partagée avec la page de l'atelier et le cahier de 4e. Le vérificateur de l'activité 5 exige
+les trois exercices **réussis**.
+
+⚠️ À relire : l'exercice 2 définit l'« évolution technologique » comme « le passage d'une ancienne façon
+de faire à une nouvelle », quand l'encadré « Trois mots » de la séance 4 en donne le sens restreint
+(améliorer un objet qui existe déjà). Les deux ne se contredisent pas, mais l'élève lit deux définitions
+du même mot dans la page.
 
 ## ⚠️ Trois précautions
 

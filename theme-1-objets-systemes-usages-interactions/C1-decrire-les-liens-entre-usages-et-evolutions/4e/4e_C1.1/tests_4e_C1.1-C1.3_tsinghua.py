@@ -2,11 +2,18 @@
 """Suite de tests du lot 4e_C1.1 à C1.3 — Tsinghua, concevoir avant de connecter.
 
 Ne sont déclarés dans le rapport que les tests présents ici et réellement
-exécutés. Deux fichiers sont couverts : la séquence (25 contrôles) et le QCM
+exécutés. Deux fichiers sont couverts : la séquence (44 contrôles) et le QCM
 (17 contrôles).
 
 PÉRIMÈTRE (règle d'or n°47) — ce que cette suite vérifie :
-  · les cinq verrous, fermés sur une page vide et ouverts sur une production complète ;
+  · les six verrous, fermés sur une page vide et ouverts sur une production complète ;
+  · la séance 5 (24/10/2026) : ses trois exercices d'atelier (besoin 4e e4, carte mentale
+    4e e3 et e4), chacun refusé à vide puis réussi rempli juste — les réponses sont lues dans
+    leur définition embarquée —, exigés par le vérificateur de l'activité 5, numérotés 1 à 3 ;
+    la clôture (Bonus, Bilan, QCM) passée de la séance 4 à la séance 5 ; le bouton qui mène de
+    la séance 4 à la séance 5 ; la sauvegarde de la page qui laisse les champs des exercices
+    insérés à leur propre sauvegarde ; la reprise d'un travail enregistré avant l'ajout de la
+    séance 5 ;
   · les DEUX refus argumentés : une exigence qui nomme un composant, et l'oubli
     du mot « passager » dans une équivalence — dans les deux cas on vérifie que
     le message DIT la raison, pas seulement qu'il refuse ;
@@ -26,6 +33,7 @@ Usage : python3 tests_4e_C1.1-C1.3_tsinghua.py
 """
 
 import asyncio
+import json
 import pathlib
 
 from playwright.async_api import async_playwright
@@ -62,12 +70,35 @@ TXT={"a1_mesure":"À l'ombre du préau j'ai relevé 29,4 °C et en plein soleil 
  "a2_estim":"Ratio : 20 000 000 ÷ 504 002 ≈ 39,68 tonnes de CO2 par hectare.\nEstimation : 50 000 × 39,68 ≈ 1,98 million de tonnes.\nAttention : ce ratio est un proxy calculé pour l'Union européenne en 2023, donc un autre territoire et une autre année. Il ne tient pas compte du type de végétation, de l'humidité, de la sévérité du feu ni du devenir du carbone.\nCe résultat ne doit pas être présenté comme une mesure officielle des émissions françaises de 2026.",
  "a3_equiv":"Voiture : environ 14,0 milliards de km. Question : le facteur inclut-il la fabrication du véhicule ?\nTGV : environ 677 milliards de passager-km. Question : compare-t-on un véhicule-km ou un passager-km ?\nAvion : environ 11,9 milliards de passager-km. Question : les traînées de condensation sont-elles incluses ?\nRepas : environ 399 millions de repas. Question : un repas type représente-t-il tous les régimes ?",
  "a4_exig":"Le système doit signaler un départ de feu en moins de 10 minutes après son début.\nLe système doit confirmer par au moins 2 indices indépendants avant d'émettre une alerte.\nLe système doit transmettre une alerte horodatée et localisée à au moins 5 km depuis une zone sans réseau.\nLe système doit fonctionner 6 mois sans intervention.\nLe système doit permettre à un opérateur de vérifier et d'annuler une alerte avant l'engagement des secours."}
+# Les exercices insérés en séance 5 (ateliers des représentations) : les bonnes réponses sont
+# lues dans leur définition, embarquée dans la page — le banc suit l'exercice si son rédacteur le
+# retouche. Les textes libres sont les réponses-exemples des ateliers (champ `exemple`).
+REMPLIR = """([uid, textes]) => {
+  const box = document.getElementById(uid);
+  const D = JSON.parse(box.closest('.atelier-incruste').querySelector('script[type="application/json"]').textContent).exercices[uid];
+  const coche = (name, val) => { const i = box.querySelector(`input[name="${name}"][value="${val}"]`);
+    if (!i) throw new Error('option absente : ' + name + ' = ' + val); i.checked = true; i.dispatchEvent(new Event('change', {bubbles: true})); };
+  for (const w of D.widgets) {
+    if (w.type === 'choix') coche(w.name, w.bonne);
+    else if (w.type === 'cases') box.querySelectorAll(`input[name="${w.name}"]`).forEach(i => { i.checked = w.bonnes.includes(i.value); i.dispatchEvent(new Event('change', {bubbles: true})); });
+    else if (w.type === 'classer') w.items.forEach(it => coche(it.name, it.bonne));
+    else if (w.type === 'slots') w.slots.forEach(s => coche(s.name, s.bonnes[0]));
+    else { const z = box.querySelector(`textarea[name="${w.name}"]`); z.value = textes[w.name.split('__')[1]]; z.dispatchEvent(new Event('input', {bubbles: true})); }
+  }
+}"""
+INSERES = [("bc_4e_e4", "Exercice 1", {"but": "Arroser les plantes du jardin même quand la gardienne est absente, sans gaspiller l'eau de la cuve."}),
+           ("cm_4e_e3", "Exercice 2", {"mafeuille": "les capteurs s'usent, à changer"}),
+           ("cm_4e_e4", "Exercice 3", {"motscles": "plus besoin de venir"})]
+CLES = ["rep_besoin-bete-a-cornes_4e_e4", "rep_carte-mentale_4e_e3", "rep_carte-mentale_4e_e4"]
+
+
 async def tester_sequence(p):
     b=await p.chromium.launch(); pg=await b.new_page()
     errs=[]; pg.on("pageerror", lambda e: errs.append(str(e)))
     pg.on("console", lambda m: errs.append("console:"+m.text) if m.type=="error" else None)
     await pg.goto(SEQ); r=[]
-    for n in range(5):
+    await pg.evaluate("localStorage.clear()"); await pg.reload()
+    for n in range(6):
         await pg.click("#tab-s%d"%max(1,n)); await pg.click(f"[data-check='{n}']")
         cls=await pg.evaluate(f"document.getElementById('fb{n}').className")
         r.append(("verrou fermé check %d"%n, "ok" not in cls.split()))
@@ -81,7 +112,38 @@ async def tester_sequence(p):
           r.checked=true; r.dispatchEvent(new Event('change',{bubbles:true})); return;}
         e.value=v; e.dispatchEvent(new Event('input',{bubbles:true}));});
         return manquants;}""", {**BON,**TXT})
-    for n in range(5):
+    # ── Séance 5 : structure, puis les trois exercices insérés ──
+    await pg.click("#tab-s4"); await pg.click(".vers-seance[data-vers='s5']"); await pg.wait_for_timeout(100)
+    r.append(("le bouton de la séance 4 mène à la séance 5",
+              await pg.evaluate("document.querySelector('.seance-panel.active').id")=="s5"))
+    t5=await pg.evaluate("document.getElementById('fb5').textContent")
+    r.append(("activité 5 à vide : le message nomme les exercices à réussir", "Le besoin évolue" in t5 and "Corriger une carte mentale" in t5, t5[:120]))
+    titres=await pg.evaluate("[...document.querySelectorAll('#s5 .atelier-incruste .card.exercice')].map(s=>[s.id,s.querySelector('h4').textContent])")
+    r.append(("séance 5 : trois exercices d'atelier, numérotés 1 à 3, dans l'activité 5",
+              [x[0] for x in titres]==[u for u,_,_ in INSERES] and all(x[1].startswith(n+" —") for x,(_,n,_) in zip(titres,INSERES))
+              and await pg.evaluate("document.querySelectorAll('#activite-5 .atelier-incruste').length")==2, str(titres)))
+    pos=await pg.evaluate("""(()=>{const s5=document.getElementById('s5'), s4=document.getElementById('s4');
+        const h=[...s5.querySelectorAll('h2')].map(x=>x.textContent);
+        const i=k=>h.findIndex(x=>x.includes(k));
+        return {ordre: i('Activité 5')===0 && i('Activité 5')<i('Bonus') && i('Bonus')<i('Bilan') && i('Bilan')<i("t'entraîner"),
+                s4: [...s4.querySelectorAll('h2')].some(x=>/Bonus|Bilan|entraîner/.test(x.textContent)),
+                qcm: !!s5.querySelector('#lienQcm')};})()""")
+    r.append(("la clôture (Bonus → Bilan → QCM) est en séance 5, après l'activité 5, et plus en séance 4",
+              pos["ordre"] and pos["qcm"] and not pos["s4"], str(pos)))
+    i_ta=await pg.evaluate("document.querySelectorAll('#s5 .atelier-incruste textarea').length")
+    i_et=await pg.evaluate("document.querySelectorAll('#s5 .atelier-incruste details.etayage').length")
+    r.append(("exercices insérés : chaque zone de rédaction a sa version étayée (n°31)", i_ta>=3 and i_et>=i_ta, f"{i_ta} zones / {i_et} étayages"))
+    for uid, nom, textes in INSERES:
+        await pg.click(f"#{uid} button.verifier"); await pg.wait_for_timeout(60)
+        r.append((f"{nom} ({uid}) : à vide, le retour demande de reprendre", "🔴" in await pg.inner_text(f"#{uid} .retour")))
+        await pg.evaluate(REMPLIR, [uid, textes])
+        await pg.click(f"#{uid} button.verifier"); await pg.wait_for_timeout(60)
+        r.append((f"{nom} ({uid}) : rempli juste, il est réussi", "Tout est juste" in await pg.inner_text(f"#{uid} .retour")))
+    cles=await pg.evaluate("Object.keys(collect().inputs)")
+    insere=await pg.evaluate("[...document.querySelectorAll('.atelier-incruste textarea, .atelier-incruste fieldset')].map(e=>e.id).filter(Boolean)")
+    r.append(("la sauvegarde de la page laisse les champs des exercices insérés à leur propre sauvegarde",
+              not (set(cles) & set(insere)) and "a2_estim" in cles and "bilan1" in cles))
+    for n in range(6):
         await pg.click("#tab-s%d"%max(1,n)); await pg.click(f"[data-check='{n}']")
         cls=await pg.evaluate(f"document.getElementById('fb{n}').className")
         txt=await pg.evaluate(f"document.getElementById('fb{n}').textContent")
@@ -106,17 +168,36 @@ async def tester_sequence(p):
     for n in (3,4):
         await pg.click("#tab-s%d"%n); await pg.click(f"[data-check='{n}']")
     prog=await pg.evaluate("document.getElementById('progTxt').textContent")
-    r.append(("progression 4/4", prog.strip().startswith("4 / 4")))
+    r.append(("progression 5/5, onglet de la séance 5 coché", prog.strip().startswith("5 / 5")
+              and "✔" in await pg.inner_text("#done-s5")))
     h=await pg.evaluate("document.getElementById('lienQcm').getAttribute('href')")
     r.append(("QCM complet en fin", "#" not in h))
     # à mi-parcours, le bouton doit cibler les seules compétences validées
     await pg.evaluate("window.__valid={1:true,3:true}; majProgress();")
     h2=await pg.evaluate("document.getElementById('lienQcm').getAttribute('href')")
     r.append(("QCM ciblé = #codes=C1.1,C1.2", h2.endswith("#codes=C1.1,C1.2"), h2))
-    await pg.evaluate("window.__valid={1:true,2:true,3:true,4:true}; majProgress(); save();")
+    await pg.evaluate("window.__valid={5:true}; majProgress();")
+    h3=await pg.evaluate("document.getElementById('lienQcm').getAttribute('href')")
+    r.append(("QCM ciblé après la seule activité 5 = #codes=C1.2,C1.3", h3.endswith("#codes=C1.2,C1.3"), h3))
+    await pg.evaluate("window.__valid={1:true,2:true,3:true,4:true,5:true}; majProgress(); save();")
     await pg.reload()
     r.append(("restauration textarea", "39,68" in await pg.evaluate("document.getElementById('a2_estim').value")))
-    r.append(("restauration progression", (await pg.evaluate("document.getElementById('progTxt').textContent")).strip().startswith("4 / 4")))
+    r.append(("restauration progression", (await pg.evaluate("document.getElementById('progTxt').textContent")).strip().startswith("5 / 5")))
+    r.append(("les exercices insérés retrouvent leur travail après rechargement",
+              await pg.evaluate("document.querySelector('#bc_4e_e4 textarea').value.startsWith('Arroser')")
+              and await pg.evaluate("(k=>k.every(c=>JSON.parse(localStorage.getItem(c)||'{}').reussi))(%s)" % json.dumps(CLES))))
+    # reprise d'un travail enregistré AVANT l'ajout de la séance 5 (quatre activités, aucun exercice d'atelier)
+    await pg.evaluate("""(k)=>{localStorage.clear(); localStorage.setItem(k, JSON.stringify({inputs:{a2_estim:"Ratio : 39,68 t/ha (ancienne sauvegarde)", bilan1:"ancien bilan"},
+        valid:{1:true,2:true,3:true,4:true}, exp:{}}));}""", "seq_4e_C1_tsinghua_feux")
+    await pg.reload()
+    ancien=await pg.evaluate("""({p:document.getElementById('progTxt').textContent.trim(), a:document.getElementById('a2_estim').value,
+        b:document.getElementById('bilan1').value, s4:document.getElementById('done-s4').textContent, s5:document.getElementById('done-s5').textContent})""")
+    r.append(("reprise d'une sauvegarde d'avant la séance 5 : 4 / 5, réponses restaurées, séance 5 à faire",
+              ancien["p"].startswith("4 / 5") and "ancienne sauvegarde" in ancien["a"] and ancien["b"]=="ancien bilan"
+              and "✔" in ancien["s4"] and "✔" not in ancien["s5"], str(ancien)))
+    await pg.click("#tab-s5"); await pg.click("[data-check='5']")
+    r.append(("…et l'activité 5 reste fermée tant que ses exercices ne sont pas faits",
+              "ok" not in (await pg.evaluate("document.getElementById('fb5').className")).split()))
     body=await pg.evaluate("document.body.textContent")
     for lbl,mot in (("bloc entraînement","t'entraîner"),("bloc Bonus","Bonus"),("corrigé du Bonus","Corrigé du Bonus"),
                     ("garde-fous humains","Garde-fous humains"),("bloc CRCN avec sa trace","transformations")):
@@ -131,6 +212,17 @@ async def tester_sequence(p):
     figs=await pg.evaluate("[...document.querySelectorAll('object[data]')].map(o=>Math.round(o.getBoundingClientRect().height))")
     r.append(("les deux corrigés graphiques sont rendus", len(figs)==2 and all(h>150 for h in figs), str(figs)))
     r.append(("zéro erreur JS", not errs))
+    await b.close()
+    # ── à 390 px : chaque séance s'ouvre sans défilement horizontal ──
+    b=await p.chromium.launch(); pg=await b.new_page(viewport={"width":390,"height":844})
+    errs=[]; pg.on("pageerror", lambda e: errs.append(str(e)))
+    await pg.goto(SEQ); await pg.evaluate("localStorage.clear()"); await pg.reload()
+    deb=[]
+    for s in range(1,6):
+        await pg.click("#tab-s%d"%s); await pg.wait_for_timeout(120)
+        deb.append(await pg.evaluate("[document.querySelector('.seance-panel.active').id, document.documentElement.scrollWidth-document.documentElement.clientWidth]"))
+    r.append(("390 px : les cinq séances s'ouvrent, sans défilement horizontal, sans erreur JS",
+              [x[0] for x in deb]==["s1","s2","s3","s4","s5"] and all(x[1]<=0 for x in deb) and not errs, str(deb)))
     for x in r:
         n,o = x[0], x[1]
         print(("✅" if o else "❌"), n, x[2] if len(x)>2 else "")

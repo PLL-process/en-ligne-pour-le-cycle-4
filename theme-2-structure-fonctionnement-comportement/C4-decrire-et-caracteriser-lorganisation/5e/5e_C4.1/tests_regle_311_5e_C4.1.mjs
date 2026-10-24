@@ -9,6 +9,6 @@ await lancerBanc311Theme2({
   champ: '#hyp1',
   texte: 'Mon hypothèse : essai du banc 311.',
   ancreS1: 'act1',
-  ancreSN: 'act5',
-  panneauSN: 's5',
+  ancreSN: 'act8',   // activité 7, séance 6 : la dernière séance depuis le 24/10/2026
+  panneauSN: 's6',
 });

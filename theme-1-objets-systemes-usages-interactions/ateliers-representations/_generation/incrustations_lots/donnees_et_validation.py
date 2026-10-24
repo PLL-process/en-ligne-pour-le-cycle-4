@@ -33,7 +33,10 @@ ENTREES = [
                "des inconvénients, comme ceux triés en 2.a. Pour en faire un <b>argumentaire court</b>, on prépare ses idées "
                "dans une <b>carte mentale</b>. Entraîne-toi sur un autre objet technique, la <b>station d'alerte "
                "cyclonique</b> d'une commune&nbsp;: trie les feuilles de sa carte, puis écris l'argumentaire. Un exercice, un "
-               "peu moins de vingt minutes&nbsp;; il se vérifie tout seul et a sa correction complète.",
+               "peu moins de vingt minutes&nbsp;; il se vérifie tout seul et a sa correction complète. La même méthode te "
+               "resservira à la séance 4, pour écrire ton propre argumentaire sur le smartphone.",
+         # 24/10/2026 (séance 4 ajoutée) : l'exercice reste en séance 2 — la séance 4 n'aurait pas tenu en 55 min avec
+         # lui, l'activité 5 et la clôture ; il y sert d'entraînement, l'activité 5 de réinvestissement.
          suite="un exercice pour choisir entre la carte mentale et une autre représentation, et le QCM de l'atelier"),
     dict(id="ex-4e-jardin-validation", module="exigences", niveau="4e", exos=["e3"],
          sequence=C8 + "4e/4e_C8.1/sequence_4e_C8_jardin-validation.html",

@@ -7,9 +7,17 @@
  * QCM a reçu sa suite le 31/08/2026 ; la séquence est restée avec sa liste de
  * bonnes intentions (règle d'or n°259).
  *
- * Ce fichier conduit la séquence POUR DE VRAI : il remplit les sept activités,
+ * Ce fichier conduit la séquence POUR DE VRAI : il remplit les huit activités,
  * manœuvre le simulateur, provoque un passage devant le détecteur, et lit ce
  * que la page répond.
+ *
+ * SIX SÉANCES DEPUIS LE 24/10/2026
+ * --------------------------------
+ * La séance 5 annonçait 25 + 25 + 25 = 75 min pour 55. Le réinvestissement (la
+ * sonnette, clé 7) et la clôture passent en séance 6, avec l'activité 7 « Le FAST
+ * du lampadaire, complet » (clé 8 : l'exercice 2 de l'atelier FAST, inséré). Les
+ * clés des activités déjà validées ne changent pas : une sauvegarde faite avec la
+ * version à cinq séances se relit (contrôles 31 à 35).
  *
  * IL NE RECOPIE PAS LES BONNES RÉPONSES. Elles sont extraites des fonctions
  * `CHECKS` de la page elle-même : un test qui recopie ce qu'il doit vérifier
@@ -72,13 +80,14 @@ const ATT = await p.evaluate(() => {
 });
 const totalChamps = Object.values(ATT).reduce((s, o) => s + Object.keys(o).length, 0);
 ok('5 · les bonnes réponses sont extraites de la page, pas recopiées ici',
-   Object.keys(ATT).length === 7 && totalChamps >= 45,
+   Object.keys(ATT).length === 8 && totalChamps >= 45,
    `${Object.keys(ATT).length} activités · ${totalChamps} champs`);
 
-/* Les activités vivent dans cinq onglets de séance, et un onglet inactif est
+/* Les activités vivent dans six onglets de séance, et un onglet inactif est
    masqué : il faut l'ouvrir comme un élève le ferait. La répartition est celle
-   de `majProgress()` dans la page — s5 porte les activités 5, 6 et 7. */
-const SEANCE = { 1: 's1', 2: 's2', 3: 's3', 4: 's4', 5: 's5', 6: 's5', 7: 's5' };
+   de `majProgress()` dans la page — s5 porte les clés 5 et 6, s6 les clés 8
+   (activité 7, le FAST) et 7 (la sonnette). */
+const SEANCE = { 1: 's1', 2: 's2', 3: 's3', 4: 's4', 5: 's5', 6: 's5', 7: 's6', 8: 's6' };
 async function ouvrirSeance(n) {
   await p.click(`.seance-tab[data-panel="${SEANCE[n]}"]`);
   await p.waitForTimeout(120);
@@ -211,11 +220,42 @@ await valider(7);
 ok('20 · act. 7 réinvestissement sonnette connectée validée (6/6)',
    /6 \/ 6/.test(await retour(7)), (await retour(7)).slice(0, 70));
 
+/* ── séance 6, activité 7 (clé 8) : l'exercice 2 de l'atelier FAST, inséré ── */
+await ouvrirSeance(8);
+await valider(8);
+ok('20 bis · activité 7 (FAST) refusée tant que l\'exercice inséré n\'est pas réussi',
+   /Tout est juste/.test(await retour(8)) && !(await p.evaluate(() => !!window.__valid[8])),
+   (await retour(8)).slice(0, 110));
+await p.click('#fa_5e_e2 button.verifier');
+await p.waitForTimeout(80);
+ok('20 ter · l\'exercice FAST e2 inséré se vérifie à vide (retour à reprendre)',
+   (await p.textContent('#fa_5e_e2 .retour')).includes('🔴'),
+   (await p.textContent('#fa_5e_e2 .retour')).slice(0, 70));
+await remplirIncruste('fa_5e_e2');
+await p.click('#fa_5e_e2 button.verifier');
+await p.waitForTimeout(80);
+ok('20 quater · l\'exercice FAST e2, rempli juste, est réussi',
+   (await p.textContent('#fa_5e_e2 .retour')).includes('Tout est juste'),
+   (await p.textContent('#fa_5e_e2 .retour')).slice(0, 70));
+const caseSchema = await p.evaluate(() => [...document.querySelectorAll('#fa_5e_e2 [data-miroir], #fa-lamp2 text')]
+  .map(e => e.textContent).join(' | '));
+ok('20 quinquies · les choix s\'écrivent dans le schéma vivant (batterie, panneau, détecteur)',
+   /batterie/.test(caseSchema) && /panneau solaire/.test(caseSchema) && /détecteur de mouvement/.test(caseSchema),
+   caseSchema.slice(0, 120));
+await valider(8);
+ok('20 sexies · activité 7 (FAST) validée une fois l\'exercice réussi',
+   /5 \/ 5/.test(await retour(8)) && await p.evaluate(() => !!window.__valid[8]),
+   (await retour(8)).slice(0, 70));
+const sauvee = await p.evaluate(() => JSON.parse(localStorage.getItem('seq_5e_C4.1-C4.8_lampadaire') || '{}'));
+const capte = [...Object.keys(sauvee.inputs || {}), ...Object.keys(sauvee.radios || {})].filter(k => /^fa_5e_/.test(k));
+ok('20 septies · la sauvegarde de la page ne capte pas les champs des exercices insérés (ils ont leur clé)',
+   capte.length === 0, capte.slice(0, 4).join(' · '));
+
 /* ── progression, hypothèse, persistance ─────────────────────────────────── */
-ok('21 · progression 7 / 7 activités validées',
-   (await p.textContent('#progTxt')).includes('7 / 7'), await p.textContent('#progTxt'));
+ok('21 · progression 8 / 8 activités validées',
+   (await p.textContent('#progTxt')).includes('8 / 8'), await p.textContent('#progTxt'));
 const coches = await p.$$eval('[id^="done-s"]', l => l.map(e => e.textContent.trim()));
-ok('22 · les cinq séances portent leur coche', coches.every(c => c === '✔'),
+ok('22 · les six séances portent leur coche', coches.length === 6 && coches.every(c => c === '✔'),
    coches.join('|'));
 
 /* Règle d'or n°311 : dès la séance 2, l'hypothèse est repliée dans le volet
@@ -232,12 +272,15 @@ await p.waitForTimeout(350);
 ok('24 · les réponses survivent au rechargement',
    (await p.inputValue('#e5_1')) === ATT[5].e5_1, await p.inputValue('#e5_1'));
 ok('25 · les validations survivent au rechargement',
-   (await p.textContent('#progTxt')).includes('7 / 7'), await p.textContent('#progTxt'));
+   (await p.textContent('#progTxt')).includes('8 / 8'), await p.textContent('#progTxt'));
 ok('26 · les traces d\'expériences survivent au rechargement',
    await p.evaluate(() => ['jour', 'nuit', 'nuit+passage'].every(k => k in (window.__exp || {}))));
 const cochesFast = await p.$$eval('#fa_5e_e1 input[type=radio]:checked', l => l.length);
 ok('26 bis · l\'exercice FAST inséré retrouve ses 8 réponses au rechargement (sa propre sauvegarde)',
    cochesFast === 8, cochesFast + ' cases cochées');
+const cochesFast2 = await p.$$eval('#fa_5e_e2 input[type=radio]:checked', l => l.length);
+ok('26 ter · l\'exercice FAST e2 (séance 6) retrouve ses 5 réponses au rechargement',
+   cochesFast2 === 5, cochesFast2 + ' cases cochées');
 
 /* ── liens locaux et hygiène ─────────────────────────────────────────────── */
 const liens = await p.$$eval('a[href]', a => a.map(x => x.getAttribute('href')));
@@ -252,6 +295,54 @@ ok('28 · aucun identifiant HTML en double', ids.length === new Set(ids).size);
 ok('29 · aucune boîte modale sur tout le parcours', dlg.length === 0, dlg.join(' | '));
 ok('30 · aucune erreur JS après l\'ensemble des interactions', err.length === 0,
    err.slice(0, 2).join(' | '));
+
+/* ── six séances : le temps, la navigation, la clôture ───────────────────── */
+const decoupe = await p.evaluate(() => {
+  const ong = [...document.querySelectorAll('.seance-tab')].map(o => o.dataset.panel);
+  const minutes = ong.map(id => [...document.querySelectorAll('#' + id + ' .activite > header .duree')]
+    .reduce((s, d) => s + parseInt(d.textContent.replace(/\D+/g, ''), 10), 0));
+  const bandeau = (document.querySelector('.badge.duree') || {}).textContent || '';
+  return { ong, minutes, bandeau };
+});
+ok('31 · six onglets, et le bandeau dit « 6 séances de 55 min »',
+   decoupe.ong.join() === 's1,s2,s3,s4,s5,s6' && /6 séances de 55 min/.test(decoupe.bandeau),
+   decoupe.ong.join() + ' · ' + decoupe.bandeau);
+ok('32 · chaque séance annonce 55 min d\'activités au plus (s5 : 50, s6 : 35)',
+   decoupe.minutes.every(m => m > 0 && m <= 55) && decoupe.minutes[4] === 50 && decoupe.minutes[5] === 35,
+   decoupe.minutes.join(' / '));
+await ouvrirSeance(5);
+await p.click('#s5 .vers-seance[data-vers="s6"]');
+await p.waitForTimeout(150);
+const apresBouton = await p.evaluate(() => ({ actif: document.querySelector('.seance-panel.active').id,
+  volet: document.getElementById('ouverture').classList.contains('volet'),
+  taches: document.getElementById('tachesBandeau').textContent }));
+ok('33 · le bouton de fin de séance 5 ouvre la séance 6 (volet « Rappel » replié, tâches de la séance 6)',
+   apresBouton.actif === 's6' && apresBouton.volet && /Séance 6/.test(apresBouton.taches) && /FAST/.test(apresBouton.taches),
+   JSON.stringify(apresBouton).slice(0, 140));
+const cloture = await p.evaluate(() => {
+  const ou = t => [...document.querySelectorAll('.seance-panel')].filter(pn => [...pn.querySelectorAll('h2')].some(h => h.textContent.includes(t))).map(pn => pn.id).join();
+  return { bonus: ou('Bonus'), bilan: ou('Mon bilan'), qcm: ou('Prêt·e'), synth: ou('Synthèse de la séquence'), sonnette: document.getElementById('act7').closest('.seance-panel').id };
+});
+ok('34 · la sonnette, la synthèse, le Bonus, le bilan et le QCM sont en séance 6, et seulement là',
+   Object.values(cloture).every(v => v === 's6'), JSON.stringify(cloture));
+
+/* Une sauvegarde faite avec la version à cinq séances (activités 1 à 7 validées) se relit. */
+await p.evaluate(() => {
+  localStorage.removeItem('rep_fast_5e_e2');
+  localStorage.setItem('seq_5e_C4.1-C4.8_lampadaire', JSON.stringify({
+    inputs: { e5_1: 'terminaux', e7_1: 'la sonnerie (haut-parleur) de la vie scolaire', hyp1: 'Ancienne hypothèse.' },
+    radios: { confiance: '3' }, valid: { 1: true, 2: true, 3: true, 4: true, 5: true, 6: true, 7: true },
+    exp: { jour: 'eteint', nuit: 'veille', 'nuit+passage': 'fort' } }));
+});
+const errAvant = err.length;
+await p.reload({ waitUntil: 'load' });
+await p.waitForTimeout(350);
+const reprise = await p.evaluate(() => ({ prog: document.getElementById('progTxt').textContent,
+  s5: document.getElementById('done-s5').textContent.trim(), s6: document.getElementById('done-s6').textContent.trim(),
+  e7: document.getElementById('e7_1').value, hyp: document.getElementById('hyp1').value }));
+ok('35 · une sauvegarde de la version à cinq séances se relit : 7 / 8, séance 5 cochée, séance 6 à finir',
+   err.length === errAvant && reprise.prog.includes('7 / 8') && reprise.s5 === '✔' && reprise.s6 === '' &&
+   reprise.e7.startsWith('la sonnerie') && reprise.hyp === 'Ancienne hypothèse.', JSON.stringify(reprise));
 
 const n = T.filter(t => t.ok).length;
 console.log(T.map(t => `${t.ok ? '✅' : '❌'} ${t.n}${t.d ? ' — ' + t.d : ''}`).join('\n'));

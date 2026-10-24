@@ -9,6 +9,6 @@ await lancerBanc311({
   champ: '#hyp1',
   texte: 'Mon hypothèse : essai du banc 311.',
   ancreS1: 'be_1__1',
-  ancreSN: 'roles-4e_C1-1',
-  panneauSN: 's4',
+  ancreSN: 'activite-5',   // la séance 5 (24/10/2026) est désormais la dernière : elle porte la clôture
+  panneauSN: 's5',
 });

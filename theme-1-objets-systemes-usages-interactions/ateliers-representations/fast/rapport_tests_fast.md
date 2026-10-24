@@ -60,7 +60,7 @@ Code de sortie : **0** — 45 / 45 tests passés
 | `controle_hierarchie.py` | 0 | 4 page(s) lues · ✅ aucune énumération en ligne, aucun mur sans repère, aucun paragraphe tout en gras, aucune cellule-pavé, aucun item-pavé, aucun pavé hors séquence |
 | `controle_regles_visibles.py` | 0 | ✅ aucune page lue par un élève ne laisse voir la fabrique (règle d'or n°309) |
 | `controle_medias.py` | 0 | ✅ chaque image du dépôt a une provenance écrite, et aucune n'est promise en vain |
-| `controle_liens.py` | 0 | ✅ aucun lien mort, aucune ancre introuvable dans le périmètre regardé |
+| `controle_liens.py` | 1 |        → lexique_4e_C1.1.html#seance-s5 |
 | `verif_qcm_coherence.mjs` | 0 | ✅ qcm_fast.html · 30 q · positions {"0":8,"1":7,"2":7,"3":8} · réfutations alignées |
 
 ## Non exécuté ici

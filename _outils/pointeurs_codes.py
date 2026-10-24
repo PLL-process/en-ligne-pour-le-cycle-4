@@ -114,9 +114,11 @@ POINTEURS = {
  "3e_C1.3": (C1 + "/3e/3e_C1.3",
              "../3e_C1.5/sequence-numerique-societe-economie-environnement-sante.html",
              "Séquence 3e — Numérique, société, environnement et santé",
-             "L'activité 5 fait écrire un argumentaire de six à huit lignes sur l'incidence "
-             "de l'objet, dont la dernière ligne nomme ses propres angles morts : un "
-             "argumentaire honnête dit ce qu'il ne sait pas.", True),
+             "L'activité 5 (séance 4) fait écrire un argumentaire de six à huit lignes sur "
+             "l'incidence du smartphone sur la société, nourri par les trois premières séances, "
+             "dont la dernière ligne nomme ses propres angles morts : un argumentaire honnête "
+             "dit ce qu'il ne sait pas. La partie 2.d (séance 2) y prépare, avec une carte "
+             "mentale.", True),
  "3e_C1.4": (C1 + "/3e/3e_C1.4",
              "../3e_C1.5/sequence-numerique-societe-economie-environnement-sante.html",
              "Séquence 3e — Numérique, société, environnement et santé",
