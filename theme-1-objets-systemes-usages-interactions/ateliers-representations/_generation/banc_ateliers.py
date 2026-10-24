@@ -66,8 +66,13 @@ def remplir(pg, uid, d, exs):
             for it in w["items"]:
                 pg.check(sel + 'input[name="%s"][value="%s"]' % (it["name"], it["bonne"]))
         elif ty == "slots":
+            pris = {}   # dans un même groupe, chaque case reçoit une bonne réponse différente
             for s in w["slots"]:
-                pg.check(sel + 'input[name="%s"][value="%s"]' % (s["name"], s["bonnes"][0]))
+                g = s.get("groupe")
+                deja = pris.setdefault(g, set()) if g else set()
+                rep = next((x for x in s["bonnes"] if x not in deja), s["bonnes"][0])
+                deja.add(rep)
+                pg.check(sel + 'input[name="%s"][value="%s"]' % (s["name"], rep))
         elif ty == "liste":
             texte = exs.get(w["name"]) or "\n".join(a["nom"] for a in w["attendus"])
             pg.fill("#" + w["name"], texte)

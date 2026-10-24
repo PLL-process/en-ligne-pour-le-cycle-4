@@ -142,11 +142,15 @@ def poser(inc, texte):
 
 
 def main(argv):
+    """python3 incrustations.py [--verifier] [--seq <morceau du chemin de séquence>]…"""
     verifier = "--verifier" in argv
+    filtres = [argv[i + 1] for i, a in enumerate(argv) if a == "--seq" and i + 1 < len(argv)]
     import incrustations_table as table
     ecarts = 0
     par_page = {}
     for inc in table.INCRUSTATIONS:
+        if filtres and not any(f in inc["sequence"] for f in filtres):
+            continue
         par_page.setdefault(inc["sequence"], []).append(inc)
     for seq, incs in par_page.items():
         p = DEPOT / seq

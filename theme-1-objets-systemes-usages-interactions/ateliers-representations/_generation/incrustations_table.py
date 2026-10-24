@@ -31,3 +31,17 @@ INCRUSTATIONS = [
                "Un exercice, environ dix minutes&nbsp;; il se vérifie tout seul et a sa correction complète.",
          suite="le cahier des charges avec la flexibilité, les plaintes des usagers, et le QCM de l'atelier"),
 ]
+
+# Les autres séquences : un fichier par séquence dans incrustations_lots/ (variable ENTREES), pour que plusieurs
+# rédacteurs puissent travailler en même temps sans se marcher dessus.
+import importlib.util as _iu
+import pathlib as _pl
+
+for _f in sorted((_pl.Path(__file__).resolve().parent / "incrustations_lots").glob("*.py")):
+    _spec = _iu.spec_from_file_location("incrustations_lots." + _f.stem, _f)
+    _mod = _iu.module_from_spec(_spec)
+    _spec.loader.exec_module(_mod)
+    INCRUSTATIONS.extend(getattr(_mod, "ENTREES", []))
+
+_ids = [i["id"] for i in INCRUSTATIONS]
+assert len(_ids) == len(set(_ids)), "identifiants d'incrustation en double"

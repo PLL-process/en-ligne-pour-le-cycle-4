@@ -35,6 +35,8 @@ SIGLE = ("diagramme FAST", "de l'anglais <i lang=\"en\">Function Analysis System
 MOT_FU = ("fonction d'usage", "ce à quoi sert l'objet, pour la personne qui l'utilise. Elle s'écrit avec un verbe à l'infinitif.")
 MOT_FT = ("fonction technique", "une action que l'objet doit réaliser pour rendre son service. Elle commence par un "
           "<b>verbe à l'infinitif</b>&nbsp;: détecter, stocker, mesurer…")
+MOT_LED = ("LED", "de l'anglais <i lang=\"en\">light-emitting diode</i>, diode électroluminescente&nbsp;: une petite lampe qui "
+           "éclaire beaucoup en consommant peu.")
 MOT_ST = ("solution technique", "l'élément de l'objet — une pièce, un composant — qui réalise une fonction technique. C'est un "
           "<b>nom</b>&nbsp;: la batterie, le capteur…")
 
@@ -180,8 +182,7 @@ E1 = dict(
              "et d'une solution vers sa fonction («&nbsp;pourquoi&nbsp;?&nbsp;»).",
     production="six étiquettes rangées (fonction ou solution) et deux lectures du schéma.",
     mots=[SIGLE, MOT_FU, MOT_FT, MOT_ST,
-          ("LED", "de l'anglais <i lang=\"en\">light-emitting diode</i>, diode électroluminescente&nbsp;: une petite lampe qui "
-           "éclaire beaucoup en consommant peu."),
+          MOT_LED,
           ("carte programmable", "une petite carte électronique qui suit un programme&nbsp;: elle reçoit des informations et décide "
            "quoi faire.")],
     documents=[dict(svg=LAMPADAIRE_LIRE, legende="Le diagramme FAST du lampadaire intelligent. Trois solutions sont cachées "
@@ -340,7 +341,7 @@ E2 = dict(
                          "«&nbsp;produire la lumière&nbsp;». Banque&nbsp;: <i>une LED · une batterie · un panneau solaire</i>. Complète, "
                          "et dis quel mot est l'intrus.",
                 correction="Stocker l'énergie → <b>une batterie</b>. Produire la lumière → <b>une LED</b>. Intrus&nbsp;: <b>le panneau "
-                           "solaire</b> → cette lampe se recharge sur une prise USB, aucune de ses fonctions ne capte le soleil."),
+                           "solaire</b> → cette lampe se recharge avec le câble d'un chargeur, aucune de ses fonctions ne capte le soleil."),
     correction=[
         figure_corrigee(LAMPADAIRE_CORRIGE, "Le FAST du lampadaire, complet."),
         "<b>Détecter un passant</b> → <b>le détecteur de mouvement</b> → il repère qu'une personne bouge",
@@ -473,8 +474,9 @@ E4 = dict(
           ("acquérir", "prendre une information sur le monde (une mesure, une présence). C'est le rôle d'un capteur."),
           ("traiter", "comparer, calculer, décider à partir des informations. C'est le rôle de la carte programmable."),
           ("communiquer", "envoyer une information à une personne ou à un autre appareil."),
-          ("chaîne d'énergie", "les constituants qui alimentent, distribuent, convertissent et transmettent l'énergie pour agir sur "
-           "le monde."),
+          ("chaîne d'énergie", "les constituants qui alimentent, stockent, distribuent, convertissent et transmettent l'énergie pour "
+           "agir sur le monde."),
+          MOT_LED,
           ("électrovanne", "un robinet commandé par un signal électrique&nbsp;: il s'ouvre ou se ferme sur ordre."),
           ("module Wi-Fi", "un composant qui envoie et reçoit des informations sans fil, par ondes radio, comme une box Internet."),
           ("seuil", "la valeur à partir de laquelle on décide d'agir (ici&nbsp;: «&nbsp;terre trop sèche&nbsp;»).")],
@@ -577,7 +579,7 @@ E5 = dict(
             "réutilises le module Wi-Fi et tu vois que le programme de la carte change.",
     widgets=[dict(type="texte", name="ft", lignes=2, miroir="fa-e5-ft", minCar=10,
                   exemple="mesurer le niveau d'eau de la cuve",
-                  intro="", label="La fonction technique qui manque (elle s'écrit dans la case en pointillés du FAST)",
+                  label="La fonction technique qui manque (elle s'écrit dans la case en pointillés du FAST)",
                   criteres=[dict(label="elle commence par un verbe à l'infinitif (mesurer, surveiller, détecter…)",
                                  motifs=[r"^\w+(er|ir|re)\b"],
                                  manque="Commence par un verbe à l'infinitif : « mesurer… », « surveiller… », « détecter… »."),
@@ -658,6 +660,7 @@ E6 = dict(
     production="les trois erreurs repérées et leur correction.",
     mots=[SIGLE,
           ("anémomètre", "un capteur qui mesure la vitesse du vent."),
+          MOT_LED,
           ("batterie 12 V", "une batterie de 12 volts&nbsp;: une très basse tension, sans danger au toucher. Elle stocke l'énergie du "
            "panneau solaire pour la nuit."),
           ("alternative", "plusieurs solutions possibles pour une même fonction, reliées par «&nbsp;ou&nbsp;»&nbsp;: on choisira plus tard.")],
@@ -939,7 +942,8 @@ COURS = {
         "<li>On peut <b>combiner</b> deux solutions quand chacune couvre le point faible de l'autre.</li>"
         "<li>Un argumentaire dit&nbsp;: <b>ce que je choisis</b>, <b>les critères</b> qui le justifient, et <b>la limite</b> qui reste.</li></ul>"
         "<h3>Ce que le FAST n'est pas</h3><ul>"
-        "<li>Il ne liste pas toutes les pièces de l'objet&nbsp;: seulement celles qui réalisent les fonctions étudiées.</li>"
+        "<li>Il ne reprend pas toutes les fonctions ni toutes les pièces de l'objet&nbsp;: seulement les fonctions étudiées et les "
+        "constituants qui les réalisent.</li>"
         "<li>Il ne dessine pas les solutions&nbsp;: il les <b>nomme</b>. Le croquis et le schéma viennent ensuite.</li>"
         "<li>Il ne fait pas partie du cahier des charges&nbsp;: celui-ci dit ce qu'on attend de l'objet&nbsp;; le FAST dit comment on y répond.</li></ul>"),
 }
@@ -1126,7 +1130,7 @@ VERBES = {"5e": "<b>lire</b> le FAST dans les deux sens (comment&nbsp;? pourquoi
 CHAINE = ("<p><b>Analyse externe</b>&nbsp;: besoin <i>(bête à cornes)</i> → fonction d'usage → interacteurs <i>(diagramme pieuvre)</i> "
           "→ contraintes et exigences → cahier des charges.<br><b>Charnière</b>&nbsp;: <b>fonction d'usage → fonctions techniques → "
           "solutions techniques <i>(diagramme FAST)</i></b>.<br><b>Analyse interne</b>&nbsp;: constituants → chaîne d'information "
-          "(acquérir, traiter, communiquer) et chaîne d'énergie (alimenter, distribuer, convertir, transmettre).</p>"
+          "(acquérir, traiter, communiquer) et chaîne d'énergie (alimenter, stocker, distribuer, convertir, transmettre).</p>"
           "<p>Cet atelier est la <b>charnière</b> entre le «&nbsp;pourquoi&nbsp;» (l'analyse externe, qui dit à quoi sert l'objet) et le "
           "«&nbsp;comment&nbsp;» (l'analyse interne, qui dit ce qui le fait). Il <b>suit</b> le diagramme pieuvre et le cahier des "
           "charges&nbsp;; il <b>précède</b> les schémas des chaînes d'information et d'énergie, le croquis et la fabrication.</p>")

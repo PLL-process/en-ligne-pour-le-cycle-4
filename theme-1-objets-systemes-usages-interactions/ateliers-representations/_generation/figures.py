@@ -71,6 +71,8 @@ def texte(x, y, contenu, car=22, taille=15, gras=False, couleur=ENCRE, ancre="mi
 
 def svg(largeur, hauteur, titre, desc, corps, classe="schema", ident=None):
     i = (' id="%s"' % ident) if ident else ""
+    if classe == "schema" and largeur <= 560:
+        classe = "schema etroit"   # sur téléphone, un schéma étroit n'est pas élargi à 560 px
     return ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d" width="%d" height="%d" class="%s"%s role="img" '
             'aria-labelledby="%s-t %s-d" %s>'
             '<title id="%s-t">%s</title><desc id="%s-d">%s</desc>'
