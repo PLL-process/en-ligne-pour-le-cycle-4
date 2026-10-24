@@ -23152,3 +23152,52 @@ synthèse professeur relève de la n°298 (43 séquences), pas de ce lot.
 - Rendu Chromium à 390 et 1280 px des deux pages élèves et des deux synthèses : pas de défilement horizontal,
   0 erreur JS.
 - `build_audit.py` et `make_index.py` régénérés.
+
+## 24/10/2026 — Thème 2 · 4e_C4.1 Book Train : les 44 listes déroulantes passent en boutons radio (n°300), la licence de la vidéo est lue (transversal : registre du thème 3, overlay de `build_audit.py`)
+
+**Demande de Pascal.** « lance la conversion des listes déroulantes. vérifie La licence de la vidéo ». Branche
+`fable/book-train-listes-radio`, sans motif de thème.
+
+### La licence
+
+Lue dans le navigateur de l'application Claude (le conteneur n'atteint pas YouTube ; Chrome n'était pas joignable) :
+la description dépliée ne porte **aucune ligne « Licence »**, et YouTube n'en affiche une que pour une vidéo Creative
+Commons. C'est donc la **licence YouTube standard** : le lien, le QR code et l'intégration (autorisée par le
+propriétaire) sont permis ; télécharger, découper, réhéberger ne le sont pas. Registre (`licence`,
+`licence_verifiee: true`), puce « Licence YouTube standard » dans le bloc, SOURCES_MEDIAS, synthèse professeur.
+
+### La conversion
+
+- **44 listes → 44 groupes** au gabarit n°300 (`fieldset.qcm-groupe`, `legend`, même `name`, valeur = texte de la
+  proposition), par un convertisseur à usage unique qui compte chaque motif et s'arrête s'il reste une liste.
+  Cinq formes de départ : énoncé dans un `label` au-dessus (billet), ligne numérotée (1.1, 1.2, bilan 2.1, 3.1),
+  case de tableau à `aria-label` (1.3, 2.1), case de tableau à étiquette masquée (4.2), auto-positionnement.
+- **`data-bonne` porte désormais le TEXTE** de la bonne proposition ; `data-code` garde l'ancienne valeur de
+  l'option. La sauvegarde la reconnaît : une réponse enregistrée avant la conversion revient cochée et est
+  réécrite en texte (test 37). Le billet d'entrée lit le bouton coché ; le vérificateur ne cherche plus de liste.
+- **Les cases de tableau** (la première exclusion de la n°300, que le contrôle mécanisé ne fait pas) : gardées en tableau sur
+  grand écran, légende masquée qui porte l'énoncé (« ALIMENTER — énergie d'entrée » : les deux listes d'une même
+  ligne portaient jusque-là le MÊME `aria-label`) ; **empilées sur téléphone**, légende alors visible.
+- **Légende flottante** dans le groupe : sur plusieurs lignes, la légende native chevauchait le haut du filet.
+  Vu sur capture, comme le dit la leçon du pilote, et non par un contrôle.
+- Trois variantes de mise en page : `qcm-court` (propositions côte à côte), `qcm-grille` (deux colonnes sur grand
+  écran, 1.1), `qcm-cellule` (case de tableau), chacune avec sa version imprimée.
+- Hors lot : `_outils/build_audit.py`, overlay 4e_C4.2, dit « questions en boutons radio » au lieu de « listes
+  déroulantes (DYS) » ; `audit_couverture.*` régénérés.
+
+### Ce que ça coûte
+
+La page s'allonge : sur téléphone, l'activité 1.1 passe de 480 à 3 630 px (six positions × six étapes) et le
+tableau 1.3 de 640 à 2 440 px. C'est le prix, déjà payé au thème 1, d'une question qu'on lit pendant qu'on y répond.
+
+### Ce qui a tourné
+
+- Banc du lot **39 / 39** (6 tests nouveaux) ; rejoué sur la page d'avant : 18 et 33 à 38 échouent.
+- `verif_regles_audit.py` : **n°300 ✔** sur le lot ; dépôt **233 ✘** (234 sur `main` après la PR #501).
+- Node et Python de `controle-qualite-lot` : 0. Captures avant / après à 390 px dans
+  `4e_C4.1_book-train/_generation/captures_2026-10-24/n300_*`.
+
+### Ce que le lot ne fait pas
+
+- n°302 : « Si vous êtes trois ou quatre » vient du bloc des rôles commun (`poser_roles.py`, quatorze pages).
+- Lecteur d'écran réel et impression papier : non faits.

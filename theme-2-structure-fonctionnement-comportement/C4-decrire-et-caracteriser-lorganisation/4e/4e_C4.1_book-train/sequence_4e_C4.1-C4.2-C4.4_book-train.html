@@ -499,6 +499,33 @@ table.comparatif{position:relative}
 .trad-t{grid-row:span 2;font-weight:700;font-variant-numeric:tabular-nums;color:var(--hl)}
 .trad-en{font-size:.85rem;font-style:italic;color:var(--sub)}
 .trad-note{font-size:.92rem}
+/* Conversion n°300 du 24/10/2026 : les 44 listes déroulantes deviennent des groupes de boutons radio.
+   qcm-court : propositions courtes, côte à côte ; qcm-grille : longues, en deux colonnes sur grand écran ;
+   qcm-cellule : dans une case de tableau, énoncé porté par la légende (lue par les lecteurs d'écran). */
+.qcm-groupe legend .num{display:inline-flex;align-items:center;justify-content:center;width:1.7rem;height:1.7rem;
+  margin-right:.45rem;border-radius:50%;background:var(--btn);color:#fff;font-size:.85rem;font-weight:700;vertical-align:middle}
+.qcm-groupe legend .code-comp{font-weight:600}
+/* Une légende sur plusieurs lignes chevauche le haut du groupe (comportement natif du <legend>) : flottante,
+   elle redevient un bloc ordinaire, entièrement le long du filet. */
+.qcm-groupe>legend{float:left;width:100%}
+.qcm-groupe>legend+*{clear:both}
+.qcm-court .qcm-choix{display:flex;flex-wrap:wrap;gap:.4rem}
+.qcm-court .qcm-option{margin:0}
+.qcm-grille .qcm-choix{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));column-gap:.6rem}
+.qcm-cellule{position:relative;margin:0;padding-left:8px}
+.qcm-cellule .qcm-option{padding:5px 7px;margin:4px 0;font-size:.92rem}
+.qcm-cellule .qcm-option input[type=radio]{width:17px;height:17px}
+/* Sur téléphone, les deux tableaux à cocher (1.3, 2.1) s'empilent ligne par ligne : chaque case prend
+   toute la largeur et sa légende devient visible (elle dit la fonction, ou le bloc et le sens de l'énergie). */
+@media (max-width:640px){
+  .tableau-qcm,.tableau-qcm tbody,.tableau-qcm tr,.tableau-qcm th,.tableau-qcm td{display:block;width:auto!important}
+  .tableau-qcm thead{display:none}
+  .tableau-qcm tr{border:1px solid var(--border);border-radius:10px;margin:.7rem 0;padding:.35rem .4rem}
+  .tableau-qcm th,.tableau-qcm td{border:0!important;padding:.3rem .2rem!important}
+  .tableau-qcm .qcm-cellule legend.visually-hidden{position:static;width:auto;height:auto;overflow:visible;clip:auto;
+    display:block;margin:0 0 .3rem;font-weight:600;color:var(--encre)}
+  #exo12df .tableau-qcm th[scope="row"]{display:none}
+}
 /* Règle d'or n°101 — chaque séance mène explicitement à la suivante. */
 .page-suivante{text-align:right;margin:1.2rem 0 .3rem}
 button.vers-seance{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:.6rem 1.2rem;font:inherit;font-weight:700;cursor:pointer}
@@ -513,6 +540,8 @@ button.vers-seance:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
   .qcm-groupe,.qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
   .qcm-groupe legend,.qcm-option label,.source-chiffres,.source-chiffres a,.bloc-bonus label.reponse{color:#0b1b39!important}
   .trad-video{background:#fff!important;border-color:#999!important}
+  .qcm-groupe legend .num{background:#fff!important;color:#0b1b39!important;border:1px solid #0b1b39}
+  .qcm-groupe legend .code-comp{color:#0b1b39!important}
   .trad-t,.trad-fr,.trad-en,.trad-note,.trad-video>summary{color:#0b1b39!important}
   .page-suivante{display:none}
   .qcm-option input[type=radio]{-webkit-appearance:auto;appearance:auto}
@@ -616,6 +645,7 @@ button.vers-seance:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
   <header class="ressource-tete">
     <span class="ressource-genre">🎬 Ressource vidéo</span>
     <span class="ressource-chip">1 min 44 s</span>
+    <span class="ressource-chip">Licence YouTube standard</span>
     <span class="ressource-verif">lien vérifié le 2026-10-24</span>
   </header>
   <h4 class="ressource-titre">New York Public Library installed a book train conveyor system</h4>
@@ -718,32 +748,35 @@ button.vers-seance:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
     <p><strong>3 bonnes réponses :</strong> tu enchaînes sur l'activité 1.1.<br>
     <strong>2 ou moins :</strong> ouvre la capsule « Je révise la 5e en 3 minutes » juste en dessous — et tu repars à égalité.</p>
 
-    <p><label for="be1">Une <strong>fonction technique</strong>, c'est…</label><br>
-    <select id="be1" data-save data-bonne="fonction" aria-label="Une fonction technique, c'est">
-      <option value="">— je choisis —</option>
-      <option value="fonction">ce qu'une partie de l'objet doit FAIRE, exprimé par un verbe à l'infinitif</option>
-      <option value="a">le nom du composant utilisé</option>
-      <option value="b">le prix de la pièce</option>
-      <option value="c">la marque du fabricant</option>
-    </select></p>
+    <fieldset class="qcm-groupe" id="be1" data-bonne="ce qu&#x27;une partie de l&#x27;objet doit FAIRE, exprimé par un verbe à l&#x27;infinitif">
+      <legend>Une <strong>fonction technique</strong>, c'est…</legend>
+      <div class="qcm-choix">
+      <div class="qcm-option"><input type="radio" name="be1" id="be1__1" data-save data-code="fonction" value="ce qu&#x27;une partie de l&#x27;objet doit FAIRE, exprimé par un verbe à l&#x27;infinitif"><label for="be1__1">ce qu'une partie de l'objet doit FAIRE, exprimé par un verbe à l'infinitif</label></div>
+      <div class="qcm-option"><input type="radio" name="be1" id="be1__2" data-save data-code="a" value="le nom du composant utilisé"><label for="be1__2">le nom du composant utilisé</label></div>
+      <div class="qcm-option"><input type="radio" name="be1" id="be1__3" data-save data-code="b" value="le prix de la pièce"><label for="be1__3">le prix de la pièce</label></div>
+      <div class="qcm-option"><input type="radio" name="be1" id="be1__4" data-save data-code="c" value="la marque du fabricant"><label for="be1__4">la marque du fabricant</label></div>
+      </div>
+    </fieldset>
 
-    <p><label for="be2">Un <strong>capteur</strong> sert à…</label><br>
-    <select id="be2" data-save data-bonne="capteur" aria-label="Un capteur sert à">
-      <option value="">— je choisis —</option>
-      <option value="capteur">recueillir une information sur le système ou son environnement</option>
-      <option value="a">faire bouger une partie de l'objet</option>
-      <option value="b">alimenter l'objet en électricité</option>
-      <option value="c">protéger l'objet des chocs</option>
-    </select></p>
+    <fieldset class="qcm-groupe" id="be2" data-bonne="recueillir une information sur le système ou son environnement">
+      <legend>Un <strong>capteur</strong> sert à…</legend>
+      <div class="qcm-choix">
+      <div class="qcm-option"><input type="radio" name="be2" id="be2__1" data-save data-code="capteur" value="recueillir une information sur le système ou son environnement"><label for="be2__1">recueillir une information sur le système ou son environnement</label></div>
+      <div class="qcm-option"><input type="radio" name="be2" id="be2__2" data-save data-code="a" value="faire bouger une partie de l&#x27;objet"><label for="be2__2">faire bouger une partie de l'objet</label></div>
+      <div class="qcm-option"><input type="radio" name="be2" id="be2__3" data-save data-code="b" value="alimenter l&#x27;objet en électricité"><label for="be2__3">alimenter l'objet en électricité</label></div>
+      <div class="qcm-option"><input type="radio" name="be2" id="be2__4" data-save data-code="c" value="protéger l&#x27;objet des chocs"><label for="be2__4">protéger l'objet des chocs</label></div>
+      </div>
+    </fieldset>
 
-    <p><label for="be3">Dans un objet technique, l'énergie électrique peut devenir…</label><br>
-    <select id="be3" data-save data-bonne="energie" aria-label="Dans un objet technique, l'énergie électrique peut devenir">
-      <option value="">— je choisis —</option>
-      <option value="energie">du mouvement, de la lumière ou de la chaleur</option>
-      <option value="a">de l'information uniquement</option>
-      <option value="b">rien : elle reste toujours électrique</option>
-      <option value="c">de la matière</option>
-    </select></p>
+    <fieldset class="qcm-groupe" id="be3" data-bonne="du mouvement, de la lumière ou de la chaleur">
+      <legend>Dans un objet technique, l'énergie électrique peut devenir…</legend>
+      <div class="qcm-choix">
+      <div class="qcm-option"><input type="radio" name="be3" id="be3__1" data-save data-code="energie" value="du mouvement, de la lumière ou de la chaleur"><label for="be3__1">du mouvement, de la lumière ou de la chaleur</label></div>
+      <div class="qcm-option"><input type="radio" name="be3" id="be3__2" data-save data-code="a" value="de l&#x27;information uniquement"><label for="be3__2">de l'information uniquement</label></div>
+      <div class="qcm-option"><input type="radio" name="be3" id="be3__3" data-save data-code="b" value="rien : elle reste toujours électrique"><label for="be3__3">rien : elle reste toujours électrique</label></div>
+      <div class="qcm-option"><input type="radio" name="be3" id="be3__4" data-save data-code="c" value="de la matière"><label for="be3__4">de la matière</label></div>
+      </div>
+    </fieldset>
 
     <button type="button" class="btn verif" id="btn-billet">Vérifier mon billet d'entrée</button>
     <p class="feedback" id="fb-billet" role="status"></p>
@@ -882,18 +915,72 @@ button.vers-seance:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
     <p class="competence-visee">🎯 <strong>4e_C4 (compétence-mère — mise en route)</strong> — Décrire et caractériser l'organisation interne d'un objet ou système technique et ses échanges avec son environnement (énergies, données) : tu remets d'abord le fonctionnement global dans l'ordre, avant d'identifier les chaînes (activités suivantes, 4e_C4.1 · 4e_C4.4).</p>
     <div class="consigne">📌 <strong>Consigne :</strong> le carnet de l'ingénieur est tombé, les étapes sont mélangées ! Pour chaque position (de 1 à 6), choisis l'étape qui s'y déroule. <strong>Document de référence :</strong> le <strong>schéma d'ensemble ci-dessus</strong> et le récit de la mission — les positions 1 à 6 suivent le voyage du livre, de la demande du lecteur jusqu'au comptoir du 3ᵉ étage.</div>
     <div id="exo11">
-      <div class="ligne-exo"><span class="num">1</span><label class="visually-hidden" for="e11a">Étape 1</label>
-        <select id="e11a" data-save data-bonne="commande"><option value="">— je choisis —</option><option value="depot">Le magasinier dépose le livre dans un wagonnet vacant</option><option value="commande">Le lecteur commande le livre depuis un terminal de la salle de lecture</option><option value="retour">Le wagonnet vide repart automatiquement vers le sous-sol</option><option value="montee">Le wagonnet traverse le tunnel puis monte à la verticale</option><option value="cherche">Le magasinier trouve l'ouvrage dans les rayonnages souterrains</option><option value="remise">Le bibliothécaire du 3ᵉ étage remet le livre au lecteur</option></select></div>
-      <div class="ligne-exo"><span class="num">2</span><label class="visually-hidden" for="e11b">Étape 2</label>
-        <select id="e11b" data-save data-bonne="cherche"><option value="">— je choisis —</option><option value="depot">Le magasinier dépose le livre dans un wagonnet vacant</option><option value="commande">Le lecteur commande le livre depuis un terminal de la salle de lecture</option><option value="retour">Le wagonnet vide repart automatiquement vers le sous-sol</option><option value="montee">Le wagonnet traverse le tunnel puis monte à la verticale</option><option value="cherche">Le magasinier trouve l'ouvrage dans les rayonnages souterrains</option><option value="remise">Le bibliothécaire du 3ᵉ étage remet le livre au lecteur</option></select></div>
-      <div class="ligne-exo"><span class="num">3</span><label class="visually-hidden" for="e11c">Étape 3</label>
-        <select id="e11c" data-save data-bonne="depot"><option value="">— je choisis —</option><option value="depot">Le magasinier dépose le livre dans un wagonnet vacant</option><option value="commande">Le lecteur commande le livre depuis un terminal de la salle de lecture</option><option value="retour">Le wagonnet vide repart automatiquement vers le sous-sol</option><option value="montee">Le wagonnet traverse le tunnel puis monte à la verticale</option><option value="cherche">Le magasinier trouve l'ouvrage dans les rayonnages souterrains</option><option value="remise">Le bibliothécaire du 3ᵉ étage remet le livre au lecteur</option></select></div>
-      <div class="ligne-exo"><span class="num">4</span><label class="visually-hidden" for="e11d">Étape 4</label>
-        <select id="e11d" data-save data-bonne="montee"><option value="">— je choisis —</option><option value="depot">Le magasinier dépose le livre dans un wagonnet vacant</option><option value="commande">Le lecteur commande le livre depuis un terminal de la salle de lecture</option><option value="retour">Le wagonnet vide repart automatiquement vers le sous-sol</option><option value="montee">Le wagonnet traverse le tunnel puis monte à la verticale</option><option value="cherche">Le magasinier trouve l'ouvrage dans les rayonnages souterrains</option><option value="remise">Le bibliothécaire du 3ᵉ étage remet le livre au lecteur</option></select></div>
-      <div class="ligne-exo"><span class="num">5</span><label class="visually-hidden" for="e11e">Étape 5</label>
-        <select id="e11e" data-save data-bonne="remise"><option value="">— je choisis —</option><option value="depot">Le magasinier dépose le livre dans un wagonnet vacant</option><option value="commande">Le lecteur commande le livre depuis un terminal de la salle de lecture</option><option value="retour">Le wagonnet vide repart automatiquement vers le sous-sol</option><option value="montee">Le wagonnet traverse le tunnel puis monte à la verticale</option><option value="cherche">Le magasinier trouve l'ouvrage dans les rayonnages souterrains</option><option value="remise">Le bibliothécaire du 3ᵉ étage remet le livre au lecteur</option></select></div>
-      <div class="ligne-exo"><span class="num">6</span><label class="visually-hidden" for="e11f">Étape 6</label>
-        <select id="e11f" data-save data-bonne="retour"><option value="">— je choisis —</option><option value="depot">Le magasinier dépose le livre dans un wagonnet vacant</option><option value="commande">Le lecteur commande le livre depuis un terminal de la salle de lecture</option><option value="retour">Le wagonnet vide repart automatiquement vers le sous-sol</option><option value="montee">Le wagonnet traverse le tunnel puis monte à la verticale</option><option value="cherche">Le magasinier trouve l'ouvrage dans les rayonnages souterrains</option><option value="remise">Le bibliothécaire du 3ᵉ étage remet le livre au lecteur</option></select></div>
+      <fieldset class="qcm-groupe qcm-grille" id="e11a" data-bonne="Le lecteur commande le livre depuis un terminal de la salle de lecture">
+        <legend><span class="num" aria-hidden="true">1</span> Étape 1 du voyage du livre</legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="e11a" id="e11a__1" data-save data-code="depot" value="Le magasinier dépose le livre dans un wagonnet vacant"><label for="e11a__1">Le magasinier dépose le livre dans un wagonnet vacant</label></div>
+        <div class="qcm-option"><input type="radio" name="e11a" id="e11a__2" data-save data-code="commande" value="Le lecteur commande le livre depuis un terminal de la salle de lecture"><label for="e11a__2">Le lecteur commande le livre depuis un terminal de la salle de lecture</label></div>
+        <div class="qcm-option"><input type="radio" name="e11a" id="e11a__3" data-save data-code="retour" value="Le wagonnet vide repart automatiquement vers le sous-sol"><label for="e11a__3">Le wagonnet vide repart automatiquement vers le sous-sol</label></div>
+        <div class="qcm-option"><input type="radio" name="e11a" id="e11a__4" data-save data-code="montee" value="Le wagonnet traverse le tunnel puis monte à la verticale"><label for="e11a__4">Le wagonnet traverse le tunnel puis monte à la verticale</label></div>
+        <div class="qcm-option"><input type="radio" name="e11a" id="e11a__5" data-save data-code="cherche" value="Le magasinier trouve l&#x27;ouvrage dans les rayonnages souterrains"><label for="e11a__5">Le magasinier trouve l'ouvrage dans les rayonnages souterrains</label></div>
+        <div class="qcm-option"><input type="radio" name="e11a" id="e11a__6" data-save data-code="remise" value="Le bibliothécaire du 3ᵉ étage remet le livre au lecteur"><label for="e11a__6">Le bibliothécaire du 3ᵉ étage remet le livre au lecteur</label></div>
+        </div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="e11b" data-bonne="Le magasinier trouve l&#x27;ouvrage dans les rayonnages souterrains">
+        <legend><span class="num" aria-hidden="true">2</span> Étape 2 du voyage du livre</legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="e11b" id="e11b__1" data-save data-code="depot" value="Le magasinier dépose le livre dans un wagonnet vacant"><label for="e11b__1">Le magasinier dépose le livre dans un wagonnet vacant</label></div>
+        <div class="qcm-option"><input type="radio" name="e11b" id="e11b__2" data-save data-code="commande" value="Le lecteur commande le livre depuis un terminal de la salle de lecture"><label for="e11b__2">Le lecteur commande le livre depuis un terminal de la salle de lecture</label></div>
+        <div class="qcm-option"><input type="radio" name="e11b" id="e11b__3" data-save data-code="retour" value="Le wagonnet vide repart automatiquement vers le sous-sol"><label for="e11b__3">Le wagonnet vide repart automatiquement vers le sous-sol</label></div>
+        <div class="qcm-option"><input type="radio" name="e11b" id="e11b__4" data-save data-code="montee" value="Le wagonnet traverse le tunnel puis monte à la verticale"><label for="e11b__4">Le wagonnet traverse le tunnel puis monte à la verticale</label></div>
+        <div class="qcm-option"><input type="radio" name="e11b" id="e11b__5" data-save data-code="cherche" value="Le magasinier trouve l&#x27;ouvrage dans les rayonnages souterrains"><label for="e11b__5">Le magasinier trouve l'ouvrage dans les rayonnages souterrains</label></div>
+        <div class="qcm-option"><input type="radio" name="e11b" id="e11b__6" data-save data-code="remise" value="Le bibliothécaire du 3ᵉ étage remet le livre au lecteur"><label for="e11b__6">Le bibliothécaire du 3ᵉ étage remet le livre au lecteur</label></div>
+        </div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="e11c" data-bonne="Le magasinier dépose le livre dans un wagonnet vacant">
+        <legend><span class="num" aria-hidden="true">3</span> Étape 3 du voyage du livre</legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="e11c" id="e11c__1" data-save data-code="depot" value="Le magasinier dépose le livre dans un wagonnet vacant"><label for="e11c__1">Le magasinier dépose le livre dans un wagonnet vacant</label></div>
+        <div class="qcm-option"><input type="radio" name="e11c" id="e11c__2" data-save data-code="commande" value="Le lecteur commande le livre depuis un terminal de la salle de lecture"><label for="e11c__2">Le lecteur commande le livre depuis un terminal de la salle de lecture</label></div>
+        <div class="qcm-option"><input type="radio" name="e11c" id="e11c__3" data-save data-code="retour" value="Le wagonnet vide repart automatiquement vers le sous-sol"><label for="e11c__3">Le wagonnet vide repart automatiquement vers le sous-sol</label></div>
+        <div class="qcm-option"><input type="radio" name="e11c" id="e11c__4" data-save data-code="montee" value="Le wagonnet traverse le tunnel puis monte à la verticale"><label for="e11c__4">Le wagonnet traverse le tunnel puis monte à la verticale</label></div>
+        <div class="qcm-option"><input type="radio" name="e11c" id="e11c__5" data-save data-code="cherche" value="Le magasinier trouve l&#x27;ouvrage dans les rayonnages souterrains"><label for="e11c__5">Le magasinier trouve l'ouvrage dans les rayonnages souterrains</label></div>
+        <div class="qcm-option"><input type="radio" name="e11c" id="e11c__6" data-save data-code="remise" value="Le bibliothécaire du 3ᵉ étage remet le livre au lecteur"><label for="e11c__6">Le bibliothécaire du 3ᵉ étage remet le livre au lecteur</label></div>
+        </div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="e11d" data-bonne="Le wagonnet traverse le tunnel puis monte à la verticale">
+        <legend><span class="num" aria-hidden="true">4</span> Étape 4 du voyage du livre</legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="e11d" id="e11d__1" data-save data-code="depot" value="Le magasinier dépose le livre dans un wagonnet vacant"><label for="e11d__1">Le magasinier dépose le livre dans un wagonnet vacant</label></div>
+        <div class="qcm-option"><input type="radio" name="e11d" id="e11d__2" data-save data-code="commande" value="Le lecteur commande le livre depuis un terminal de la salle de lecture"><label for="e11d__2">Le lecteur commande le livre depuis un terminal de la salle de lecture</label></div>
+        <div class="qcm-option"><input type="radio" name="e11d" id="e11d__3" data-save data-code="retour" value="Le wagonnet vide repart automatiquement vers le sous-sol"><label for="e11d__3">Le wagonnet vide repart automatiquement vers le sous-sol</label></div>
+        <div class="qcm-option"><input type="radio" name="e11d" id="e11d__4" data-save data-code="montee" value="Le wagonnet traverse le tunnel puis monte à la verticale"><label for="e11d__4">Le wagonnet traverse le tunnel puis monte à la verticale</label></div>
+        <div class="qcm-option"><input type="radio" name="e11d" id="e11d__5" data-save data-code="cherche" value="Le magasinier trouve l&#x27;ouvrage dans les rayonnages souterrains"><label for="e11d__5">Le magasinier trouve l'ouvrage dans les rayonnages souterrains</label></div>
+        <div class="qcm-option"><input type="radio" name="e11d" id="e11d__6" data-save data-code="remise" value="Le bibliothécaire du 3ᵉ étage remet le livre au lecteur"><label for="e11d__6">Le bibliothécaire du 3ᵉ étage remet le livre au lecteur</label></div>
+        </div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="e11e" data-bonne="Le bibliothécaire du 3ᵉ étage remet le livre au lecteur">
+        <legend><span class="num" aria-hidden="true">5</span> Étape 5 du voyage du livre</legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="e11e" id="e11e__1" data-save data-code="depot" value="Le magasinier dépose le livre dans un wagonnet vacant"><label for="e11e__1">Le magasinier dépose le livre dans un wagonnet vacant</label></div>
+        <div class="qcm-option"><input type="radio" name="e11e" id="e11e__2" data-save data-code="commande" value="Le lecteur commande le livre depuis un terminal de la salle de lecture"><label for="e11e__2">Le lecteur commande le livre depuis un terminal de la salle de lecture</label></div>
+        <div class="qcm-option"><input type="radio" name="e11e" id="e11e__3" data-save data-code="retour" value="Le wagonnet vide repart automatiquement vers le sous-sol"><label for="e11e__3">Le wagonnet vide repart automatiquement vers le sous-sol</label></div>
+        <div class="qcm-option"><input type="radio" name="e11e" id="e11e__4" data-save data-code="montee" value="Le wagonnet traverse le tunnel puis monte à la verticale"><label for="e11e__4">Le wagonnet traverse le tunnel puis monte à la verticale</label></div>
+        <div class="qcm-option"><input type="radio" name="e11e" id="e11e__5" data-save data-code="cherche" value="Le magasinier trouve l&#x27;ouvrage dans les rayonnages souterrains"><label for="e11e__5">Le magasinier trouve l'ouvrage dans les rayonnages souterrains</label></div>
+        <div class="qcm-option"><input type="radio" name="e11e" id="e11e__6" data-save data-code="remise" value="Le bibliothécaire du 3ᵉ étage remet le livre au lecteur"><label for="e11e__6">Le bibliothécaire du 3ᵉ étage remet le livre au lecteur</label></div>
+        </div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="e11f" data-bonne="Le wagonnet vide repart automatiquement vers le sous-sol">
+        <legend><span class="num" aria-hidden="true">6</span> Étape 6 du voyage du livre</legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="e11f" id="e11f__1" data-save data-code="depot" value="Le magasinier dépose le livre dans un wagonnet vacant"><label for="e11f__1">Le magasinier dépose le livre dans un wagonnet vacant</label></div>
+        <div class="qcm-option"><input type="radio" name="e11f" id="e11f__2" data-save data-code="commande" value="Le lecteur commande le livre depuis un terminal de la salle de lecture"><label for="e11f__2">Le lecteur commande le livre depuis un terminal de la salle de lecture</label></div>
+        <div class="qcm-option"><input type="radio" name="e11f" id="e11f__3" data-save data-code="retour" value="Le wagonnet vide repart automatiquement vers le sous-sol"><label for="e11f__3">Le wagonnet vide repart automatiquement vers le sous-sol</label></div>
+        <div class="qcm-option"><input type="radio" name="e11f" id="e11f__4" data-save data-code="montee" value="Le wagonnet traverse le tunnel puis monte à la verticale"><label for="e11f__4">Le wagonnet traverse le tunnel puis monte à la verticale</label></div>
+        <div class="qcm-option"><input type="radio" name="e11f" id="e11f__5" data-save data-code="cherche" value="Le magasinier trouve l&#x27;ouvrage dans les rayonnages souterrains"><label for="e11f__5">Le magasinier trouve l'ouvrage dans les rayonnages souterrains</label></div>
+        <div class="qcm-option"><input type="radio" name="e11f" id="e11f__6" data-save data-code="remise" value="Le bibliothécaire du 3ᵉ étage remet le livre au lecteur"><label for="e11f__6">Le bibliothécaire du 3ᵉ étage remet le livre au lecteur</label></div>
+        </div>
+      </fieldset>
     </div>
     <details class="aide1"><summary>🖐 Aide niveau 1</summary><div class="contenu">Relis la situation déclenchante : tout commence par une <em>demande</em> et tout finit quand le wagonnet est <em>de nouveau disponible</em>.</div></details>
     <details class="aide2"><summary>✋ Aide niveau 2</summary><div class="contenu">Ordre logique : quelqu'un demande → quelqu'un cherche → on charge → ça voyage → on livre → le wagonnet redevient libre. Associe chaque phrase à l'un de ces six verbes.</div></details>
@@ -916,16 +1003,41 @@ button.vers-seance:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
     <div class="encadre-regle">
       <p style="margin:.2rem 0 .6rem"><strong>📐 Le mot officiel :</strong> ces schémas s'appellent des <strong>diagrammes fonctionnels</strong> — c'est LA représentation attendue par la compétence <code>4e_C4.1</code> : chaque bloc porte une <em>fonction</em> (un verbe à l'infinitif !), les flèches portent les <em>flux</em>. Quand un sujet d'évaluation dit « complète le diagramme fonctionnel », c'est de ceci qu'il parle.</p>📐 <strong>Règle d'or du schéma :</strong> l'INFORMATION en haut, l'ÉNERGIE en bas, la flèche d'ORDRES qui descend — le cerveau au-dessus des muscles, la commande au-dessus de la puissance. La disposition EST une leçon : elle montre qui commande, sans un mot.</div>
     <div id="exo12">
-      <div class="ligne-exo"><span class="num">a</span><label for="e12a">Le terminal de commande de la salle de lecture :</label>
-        <select id="e12a" data-save data-bonne="info"><option value="">— je choisis —</option><option value="info">Chaîne d'information</option><option value="energie">Chaîne d'énergie</option></select></div>
-      <div class="ligne-exo"><span class="num">b</span><label for="e12b">Le moteur électrique du wagonnet :</label>
-        <select id="e12b" data-save data-bonne="energie"><option value="">— je choisis —</option><option value="info">Chaîne d'information</option><option value="energie">Chaîne d'énergie</option></select></div>
-      <div class="ligne-exo"><span class="num">c</span><label for="e12c">La destination programmée dans le wagonnet :</label>
-        <select id="e12c" data-save data-bonne="info"><option value="">— je choisis —</option><option value="info">Chaîne d'information</option><option value="energie">Chaîne d'énergie</option></select></div>
-      <div class="ligne-exo"><span class="num">d</span><label for="e12d">Le rail qui guide et alimente les wagonnets :</label>
-        <select id="e12d" data-save data-bonne="energie"><option value="">— je choisis —</option><option value="info">Chaîne d'information</option><option value="energie">Chaîne d'énergie</option></select></div>
-      <div class="ligne-exo"><span class="num">e</span><label for="e12e">Les capteurs qui détectent l'arrivée du wagonnet à la bonne station :</label>
-        <select id="e12e" data-save data-bonne="info"><option value="">— je choisis —</option><option value="info">Chaîne d'information</option><option value="energie">Chaîne d'énergie</option></select></div>
+      <fieldset class="qcm-groupe qcm-court" id="e12a" data-bonne="Chaîne d&#x27;information">
+        <legend><span class="num" aria-hidden="true">a</span> Le terminal de commande de la salle de lecture :</legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="e12a" id="e12a__1" data-save data-code="info" value="Chaîne d&#x27;information"><label for="e12a__1">Chaîne d'information</label></div>
+        <div class="qcm-option"><input type="radio" name="e12a" id="e12a__2" data-save data-code="energie" value="Chaîne d&#x27;énergie"><label for="e12a__2">Chaîne d'énergie</label></div>
+        </div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-court" id="e12b" data-bonne="Chaîne d&#x27;énergie">
+        <legend><span class="num" aria-hidden="true">b</span> Le moteur électrique du wagonnet :</legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="e12b" id="e12b__1" data-save data-code="info" value="Chaîne d&#x27;information"><label for="e12b__1">Chaîne d'information</label></div>
+        <div class="qcm-option"><input type="radio" name="e12b" id="e12b__2" data-save data-code="energie" value="Chaîne d&#x27;énergie"><label for="e12b__2">Chaîne d'énergie</label></div>
+        </div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-court" id="e12c" data-bonne="Chaîne d&#x27;information">
+        <legend><span class="num" aria-hidden="true">c</span> La destination programmée dans le wagonnet :</legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="e12c" id="e12c__1" data-save data-code="info" value="Chaîne d&#x27;information"><label for="e12c__1">Chaîne d'information</label></div>
+        <div class="qcm-option"><input type="radio" name="e12c" id="e12c__2" data-save data-code="energie" value="Chaîne d&#x27;énergie"><label for="e12c__2">Chaîne d'énergie</label></div>
+        </div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-court" id="e12d" data-bonne="Chaîne d&#x27;énergie">
+        <legend><span class="num" aria-hidden="true">d</span> Le rail qui guide et alimente les wagonnets :</legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="e12d" id="e12d__1" data-save data-code="info" value="Chaîne d&#x27;information"><label for="e12d__1">Chaîne d'information</label></div>
+        <div class="qcm-option"><input type="radio" name="e12d" id="e12d__2" data-save data-code="energie" value="Chaîne d&#x27;énergie"><label for="e12d__2">Chaîne d'énergie</label></div>
+        </div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-court" id="e12e" data-bonne="Chaîne d&#x27;information">
+        <legend><span class="num" aria-hidden="true">e</span> Les capteurs qui détectent l'arrivée du wagonnet à la bonne station :</legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="e12e" id="e12e__1" data-save data-code="info" value="Chaîne d&#x27;information"><label for="e12e__1">Chaîne d'information</label></div>
+        <div class="qcm-option"><input type="radio" name="e12e" id="e12e__2" data-save data-code="energie" value="Chaîne d&#x27;énergie"><label for="e12e__2">Chaîne d'énergie</label></div>
+        </div>
+      </fieldset>
     </div>
     <details class="aide1"><summary>🖐 Aide niveau 1</summary><div class="contenu">Pose-toi la question : cet élément <em>décide/renseigne</em> (information) ou il <em>fait bouger</em> (énergie) ?</div></details>
     <details class="aide2"><summary>✋ Aide niveau 2</summary><div class="contenu">Terminal, destination, capteurs = ce sont des <em>données</em> qui circulent. Moteur et alimentation par le rail = c'est de la <em>puissance</em> qui fait avancer.</div></details>
@@ -946,15 +1058,87 @@ button.vers-seance:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
     <p class="competence-visee">🎯 <strong>5e_C4.1 (rappel de 5e)</strong> — Associer des solutions techniques à une ou des fonctions techniques.</p>
     <div class="consigne">📌 <strong>Consigne :</strong> avant de suivre l'énergie, remplis le <strong>diagramme fonctionnel</strong> du Book Train : pour chaque <strong>fonction technique</strong>, choisis la <strong>solution technique</strong> que les ingénieurs ont retenue. <em>(En 3e, tu ajouteras une colonne « fonction d'usage » à gauche pour bâtir le schéma-bloc complet — compétence 3e_C4.1.)</em></div>
     <div id="exo12df">
-      <table style="width:100%;border-collapse:collapse;margin:.6rem 0">
+      <table class="tableau-qcm" style="width:100%;border-collapse:collapse;margin:.6rem 0">
         <thead><tr><th style="padding:.5rem;border:1px solid var(--border);text-align:left">Fonction technique</th><th style="padding:.5rem;border:1px solid var(--border);text-align:left">Solution technique</th></tr></thead>
         <tbody>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Fournir une énergie exploitable par le système</th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12ta" data-save data-bonne="convertisseur" style="width:100%" aria-label="Fournir une énergie exploitable par le système"><option value="">— je choisis —</option><option value="rail">le rail + galets porteurs</option><option value="moteur">le moteur électrique 24 V ⎓</option><option value="reducteur">le réducteur + galets d'entraînement</option><option value="nacelle">la nacelle à suspension pendulaire (cardan)</option><option value="capteurs">les capteurs le long du rail</option><option value="convertisseur">le convertisseur 480 V ~ / 24 V ⎓</option></select></td></tr>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Soutenir et guider le wagonnet sur tout le parcours</th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12tb" data-save data-bonne="rail" style="width:100%" aria-label="Soutenir et guider le wagonnet sur tout le parcours"><option value="">— je choisis —</option><option value="rail">le rail + galets porteurs</option><option value="moteur">le moteur électrique 24 V ⎓</option><option value="reducteur">le réducteur + galets d'entraînement</option><option value="nacelle">la nacelle à suspension pendulaire (cardan)</option><option value="capteurs">les capteurs le long du rail</option><option value="convertisseur">le convertisseur 480 V ~ / 24 V ⎓</option></select></td></tr>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Mettre le wagonnet en mouvement</th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12tc" data-save data-bonne="moteur" style="width:100%" aria-label="Mettre le wagonnet en mouvement"><option value="">— je choisis —</option><option value="rail">le rail + galets porteurs</option><option value="moteur">le moteur électrique 24 V ⎓</option><option value="reducteur">le réducteur + galets d'entraînement</option><option value="nacelle">la nacelle à suspension pendulaire (cardan)</option><option value="capteurs">les capteurs le long du rail</option><option value="convertisseur">le convertisseur 480 V ~ / 24 V ⎓</option></select></td></tr>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Adapter la vitesse et l'effort au rail</th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12td" data-save data-bonne="reducteur" style="width:100%" aria-label="Adapter la vitesse et l'effort au rail"><option value="">— je choisis —</option><option value="rail">le rail + galets porteurs</option><option value="moteur">le moteur électrique 24 V ⎓</option><option value="reducteur">le réducteur + galets d'entraînement</option><option value="nacelle">la nacelle à suspension pendulaire (cardan)</option><option value="capteurs">les capteurs le long du rail</option><option value="convertisseur">le convertisseur 480 V ~ / 24 V ⎓</option></select></td></tr>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Maintenir les livres à plat, même à la verticale</th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12te" data-save data-bonne="nacelle" style="width:100%" aria-label="Maintenir les livres à plat, même à la verticale"><option value="">— je choisis —</option><option value="rail">le rail + galets porteurs</option><option value="moteur">le moteur électrique 24 V ⎓</option><option value="reducteur">le réducteur + galets d'entraînement</option><option value="nacelle">la nacelle à suspension pendulaire (cardan)</option><option value="capteurs">les capteurs le long du rail</option><option value="convertisseur">le convertisseur 480 V ~ / 24 V ⎓</option></select></td></tr>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Détecter la position du wagonnet</th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12tf" data-save data-bonne="capteurs" style="width:100%" aria-label="Détecter la position du wagonnet"><option value="">— je choisis —</option><option value="rail">le rail + galets porteurs</option><option value="moteur">le moteur électrique 24 V ⎓</option><option value="reducteur">le réducteur + galets d'entraînement</option><option value="nacelle">la nacelle à suspension pendulaire (cardan)</option><option value="capteurs">les capteurs le long du rail</option><option value="convertisseur">le convertisseur 480 V ~ / 24 V ⎓</option></select></td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Fournir une énergie exploitable par le système</th><td style="padding:.5rem;border:1px solid var(--border)">
+            <fieldset class="qcm-groupe qcm-cellule" id="e12ta" data-bonne="le convertisseur 480 V ~ / 24 V ⎓">
+              <legend class="visually-hidden">Solution technique pour la fonction : Fournir une énergie exploitable par le système</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e12ta" id="e12ta__1" data-save data-code="rail" value="le rail + galets porteurs"><label for="e12ta__1">le rail + galets porteurs</label></div>
+              <div class="qcm-option"><input type="radio" name="e12ta" id="e12ta__2" data-save data-code="moteur" value="le moteur électrique 24 V ⎓"><label for="e12ta__2">le moteur électrique 24 V ⎓</label></div>
+              <div class="qcm-option"><input type="radio" name="e12ta" id="e12ta__3" data-save data-code="reducteur" value="le réducteur + galets d&#x27;entraînement"><label for="e12ta__3">le réducteur + galets d'entraînement</label></div>
+              <div class="qcm-option"><input type="radio" name="e12ta" id="e12ta__4" data-save data-code="nacelle" value="la nacelle à suspension pendulaire (cardan)"><label for="e12ta__4">la nacelle à suspension pendulaire (cardan)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12ta" id="e12ta__5" data-save data-code="capteurs" value="les capteurs le long du rail"><label for="e12ta__5">les capteurs le long du rail</label></div>
+              <div class="qcm-option"><input type="radio" name="e12ta" id="e12ta__6" data-save data-code="convertisseur" value="le convertisseur 480 V ~ / 24 V ⎓"><label for="e12ta__6">le convertisseur 480 V ~ / 24 V ⎓</label></div>
+              </div>
+            </fieldset>
+          </td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Soutenir et guider le wagonnet sur tout le parcours</th><td style="padding:.5rem;border:1px solid var(--border)">
+            <fieldset class="qcm-groupe qcm-cellule" id="e12tb" data-bonne="le rail + galets porteurs">
+              <legend class="visually-hidden">Solution technique pour la fonction : Soutenir et guider le wagonnet sur tout le parcours</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e12tb" id="e12tb__1" data-save data-code="rail" value="le rail + galets porteurs"><label for="e12tb__1">le rail + galets porteurs</label></div>
+              <div class="qcm-option"><input type="radio" name="e12tb" id="e12tb__2" data-save data-code="moteur" value="le moteur électrique 24 V ⎓"><label for="e12tb__2">le moteur électrique 24 V ⎓</label></div>
+              <div class="qcm-option"><input type="radio" name="e12tb" id="e12tb__3" data-save data-code="reducteur" value="le réducteur + galets d&#x27;entraînement"><label for="e12tb__3">le réducteur + galets d'entraînement</label></div>
+              <div class="qcm-option"><input type="radio" name="e12tb" id="e12tb__4" data-save data-code="nacelle" value="la nacelle à suspension pendulaire (cardan)"><label for="e12tb__4">la nacelle à suspension pendulaire (cardan)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12tb" id="e12tb__5" data-save data-code="capteurs" value="les capteurs le long du rail"><label for="e12tb__5">les capteurs le long du rail</label></div>
+              <div class="qcm-option"><input type="radio" name="e12tb" id="e12tb__6" data-save data-code="convertisseur" value="le convertisseur 480 V ~ / 24 V ⎓"><label for="e12tb__6">le convertisseur 480 V ~ / 24 V ⎓</label></div>
+              </div>
+            </fieldset>
+          </td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Mettre le wagonnet en mouvement</th><td style="padding:.5rem;border:1px solid var(--border)">
+            <fieldset class="qcm-groupe qcm-cellule" id="e12tc" data-bonne="le moteur électrique 24 V ⎓">
+              <legend class="visually-hidden">Solution technique pour la fonction : Mettre le wagonnet en mouvement</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e12tc" id="e12tc__1" data-save data-code="rail" value="le rail + galets porteurs"><label for="e12tc__1">le rail + galets porteurs</label></div>
+              <div class="qcm-option"><input type="radio" name="e12tc" id="e12tc__2" data-save data-code="moteur" value="le moteur électrique 24 V ⎓"><label for="e12tc__2">le moteur électrique 24 V ⎓</label></div>
+              <div class="qcm-option"><input type="radio" name="e12tc" id="e12tc__3" data-save data-code="reducteur" value="le réducteur + galets d&#x27;entraînement"><label for="e12tc__3">le réducteur + galets d'entraînement</label></div>
+              <div class="qcm-option"><input type="radio" name="e12tc" id="e12tc__4" data-save data-code="nacelle" value="la nacelle à suspension pendulaire (cardan)"><label for="e12tc__4">la nacelle à suspension pendulaire (cardan)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12tc" id="e12tc__5" data-save data-code="capteurs" value="les capteurs le long du rail"><label for="e12tc__5">les capteurs le long du rail</label></div>
+              <div class="qcm-option"><input type="radio" name="e12tc" id="e12tc__6" data-save data-code="convertisseur" value="le convertisseur 480 V ~ / 24 V ⎓"><label for="e12tc__6">le convertisseur 480 V ~ / 24 V ⎓</label></div>
+              </div>
+            </fieldset>
+          </td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Adapter la vitesse et l'effort au rail</th><td style="padding:.5rem;border:1px solid var(--border)">
+            <fieldset class="qcm-groupe qcm-cellule" id="e12td" data-bonne="le réducteur + galets d&#x27;entraînement">
+              <legend class="visually-hidden">Solution technique pour la fonction : Adapter la vitesse et l'effort au rail</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e12td" id="e12td__1" data-save data-code="rail" value="le rail + galets porteurs"><label for="e12td__1">le rail + galets porteurs</label></div>
+              <div class="qcm-option"><input type="radio" name="e12td" id="e12td__2" data-save data-code="moteur" value="le moteur électrique 24 V ⎓"><label for="e12td__2">le moteur électrique 24 V ⎓</label></div>
+              <div class="qcm-option"><input type="radio" name="e12td" id="e12td__3" data-save data-code="reducteur" value="le réducteur + galets d&#x27;entraînement"><label for="e12td__3">le réducteur + galets d'entraînement</label></div>
+              <div class="qcm-option"><input type="radio" name="e12td" id="e12td__4" data-save data-code="nacelle" value="la nacelle à suspension pendulaire (cardan)"><label for="e12td__4">la nacelle à suspension pendulaire (cardan)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12td" id="e12td__5" data-save data-code="capteurs" value="les capteurs le long du rail"><label for="e12td__5">les capteurs le long du rail</label></div>
+              <div class="qcm-option"><input type="radio" name="e12td" id="e12td__6" data-save data-code="convertisseur" value="le convertisseur 480 V ~ / 24 V ⎓"><label for="e12td__6">le convertisseur 480 V ~ / 24 V ⎓</label></div>
+              </div>
+            </fieldset>
+          </td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Maintenir les livres à plat, même à la verticale</th><td style="padding:.5rem;border:1px solid var(--border)">
+            <fieldset class="qcm-groupe qcm-cellule" id="e12te" data-bonne="la nacelle à suspension pendulaire (cardan)">
+              <legend class="visually-hidden">Solution technique pour la fonction : Maintenir les livres à plat, même à la verticale</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e12te" id="e12te__1" data-save data-code="rail" value="le rail + galets porteurs"><label for="e12te__1">le rail + galets porteurs</label></div>
+              <div class="qcm-option"><input type="radio" name="e12te" id="e12te__2" data-save data-code="moteur" value="le moteur électrique 24 V ⎓"><label for="e12te__2">le moteur électrique 24 V ⎓</label></div>
+              <div class="qcm-option"><input type="radio" name="e12te" id="e12te__3" data-save data-code="reducteur" value="le réducteur + galets d&#x27;entraînement"><label for="e12te__3">le réducteur + galets d'entraînement</label></div>
+              <div class="qcm-option"><input type="radio" name="e12te" id="e12te__4" data-save data-code="nacelle" value="la nacelle à suspension pendulaire (cardan)"><label for="e12te__4">la nacelle à suspension pendulaire (cardan)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12te" id="e12te__5" data-save data-code="capteurs" value="les capteurs le long du rail"><label for="e12te__5">les capteurs le long du rail</label></div>
+              <div class="qcm-option"><input type="radio" name="e12te" id="e12te__6" data-save data-code="convertisseur" value="le convertisseur 480 V ~ / 24 V ⎓"><label for="e12te__6">le convertisseur 480 V ~ / 24 V ⎓</label></div>
+              </div>
+            </fieldset>
+          </td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Détecter la position du wagonnet</th><td style="padding:.5rem;border:1px solid var(--border)">
+            <fieldset class="qcm-groupe qcm-cellule" id="e12tf" data-bonne="les capteurs le long du rail">
+              <legend class="visually-hidden">Solution technique pour la fonction : Détecter la position du wagonnet</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e12tf" id="e12tf__1" data-save data-code="rail" value="le rail + galets porteurs"><label for="e12tf__1">le rail + galets porteurs</label></div>
+              <div class="qcm-option"><input type="radio" name="e12tf" id="e12tf__2" data-save data-code="moteur" value="le moteur électrique 24 V ⎓"><label for="e12tf__2">le moteur électrique 24 V ⎓</label></div>
+              <div class="qcm-option"><input type="radio" name="e12tf" id="e12tf__3" data-save data-code="reducteur" value="le réducteur + galets d&#x27;entraînement"><label for="e12tf__3">le réducteur + galets d'entraînement</label></div>
+              <div class="qcm-option"><input type="radio" name="e12tf" id="e12tf__4" data-save data-code="nacelle" value="la nacelle à suspension pendulaire (cardan)"><label for="e12tf__4">la nacelle à suspension pendulaire (cardan)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12tf" id="e12tf__5" data-save data-code="capteurs" value="les capteurs le long du rail"><label for="e12tf__5">les capteurs le long du rail</label></div>
+              <div class="qcm-option"><input type="radio" name="e12tf" id="e12tf__6" data-save data-code="convertisseur" value="le convertisseur 480 V ~ / 24 V ⎓"><label for="e12tf__6">le convertisseur 480 V ~ / 24 V ⎓</label></div>
+              </div>
+            </fieldset>
+          </td></tr>
         </tbody>
       </table>
     </div>
@@ -1007,21 +1191,116 @@ button.vers-seance:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
       </svg>
       <figcaption style="font-size:.8rem;opacity:.75;font-style:italic">Les quatre visages de l'énergie dans le Book Train — repère-les avant de remplir le tableau.</figcaption>
       </figure>
-      <table style="width:100%;border-collapse:collapse;margin:.6rem 0">
+      <table class="tableau-qcm" style="width:100%;border-collapse:collapse;margin:.6rem 0">
         <thead><tr>
           <th style="padding:.5rem;border:1px solid var(--border);text-align:left">Bloc fonctionnel</th>
           <th style="padding:.5rem;border:1px solid var(--border);text-align:left">⬅ Énergie d'entrée</th>
           <th style="padding:.5rem;border:1px solid var(--border);text-align:left">Énergie de sortie ➡</th>
         </tr></thead>
         <tbody>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left">ALIMENTER<br><small style="font-weight:normal">convertisseur 480 V / 24 V</small></th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12f" data-save data-bonne="elec-ac" style="width:100%" aria-label="ALIMENTERconvertisseur 480 V / 24 V"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12g" data-save data-bonne="elec-dc" style="width:100%" aria-label="ALIMENTERconvertisseur 480 V / 24 V"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td></tr>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left">DISTRIBUER<br><small style="font-weight:normal">armoire : contacteurs, relais, variateur</small></th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12m" data-save data-bonne="elec-dc" style="width:100%" aria-label="DISTRIBUERarmoire : contacteurs, relais, variateur"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12n" data-save data-bonne="elec-dc" style="width:100%" aria-label="DISTRIBUERarmoire : contacteurs, relais, variateur"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td></tr>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left">CONVERTIR<br><small style="font-weight:normal">moteur électrique</small></th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12h" data-save data-bonne="elec-dc" style="width:100%" aria-label="CONVERTIRmoteur électrique"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12i" data-save data-bonne="rotation" style="width:100%" aria-label="CONVERTIRmoteur électrique"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td></tr>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left">TRANSMETTRE<br><small style="font-weight:normal">réducteur + galets</small></th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12j" data-save data-bonne="rotation" style="width:100%" aria-label="TRANSMETTREréducteur + galets"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12k" data-save data-bonne="translation" style="width:100%" aria-label="TRANSMETTREréducteur + galets"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left">ALIMENTER<br><small style="font-weight:normal">convertisseur 480 V / 24 V</small></th><td style="padding:.5rem;border:1px solid var(--border)">
+            <fieldset class="qcm-groupe qcm-cellule" id="e12f" data-bonne="électrique alternative (AC)">
+              <legend class="visually-hidden">ALIMENTER — énergie d'entrée</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e12f" id="e12f__1" data-save data-code="elec-ac" value="électrique alternative (AC)"><label for="e12f__1">électrique alternative (AC)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12f" id="e12f__2" data-save data-code="elec-dc" value="électrique continue (DC)"><label for="e12f__2">électrique continue (DC)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12f" id="e12f__3" data-save data-code="rotation" value="mécanique de rotation"><label for="e12f__3">mécanique de rotation</label></div>
+              <div class="qcm-option"><input type="radio" name="e12f" id="e12f__4" data-save data-code="translation" value="mécanique de translation"><label for="e12f__4">mécanique de translation</label></div>
+              <div class="qcm-option"><input type="radio" name="e12f" id="e12f__5" data-save data-code="thermique" value="thermique"><label for="e12f__5">thermique</label></div>
+              </div>
+            </fieldset>
+          </td><td style="padding:.5rem;border:1px solid var(--border)">
+            <fieldset class="qcm-groupe qcm-cellule" id="e12g" data-bonne="électrique continue (DC)">
+              <legend class="visually-hidden">ALIMENTER — énergie de sortie</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e12g" id="e12g__1" data-save data-code="elec-ac" value="électrique alternative (AC)"><label for="e12g__1">électrique alternative (AC)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12g" id="e12g__2" data-save data-code="elec-dc" value="électrique continue (DC)"><label for="e12g__2">électrique continue (DC)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12g" id="e12g__3" data-save data-code="rotation" value="mécanique de rotation"><label for="e12g__3">mécanique de rotation</label></div>
+              <div class="qcm-option"><input type="radio" name="e12g" id="e12g__4" data-save data-code="translation" value="mécanique de translation"><label for="e12g__4">mécanique de translation</label></div>
+              <div class="qcm-option"><input type="radio" name="e12g" id="e12g__5" data-save data-code="thermique" value="thermique"><label for="e12g__5">thermique</label></div>
+              </div>
+            </fieldset>
+          </td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left">DISTRIBUER<br><small style="font-weight:normal">armoire : contacteurs, relais, variateur</small></th><td style="padding:.5rem;border:1px solid var(--border)">
+            <fieldset class="qcm-groupe qcm-cellule" id="e12m" data-bonne="électrique continue (DC)">
+              <legend class="visually-hidden">DISTRIBUER — énergie d'entrée</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e12m" id="e12m__1" data-save data-code="elec-ac" value="électrique alternative (AC)"><label for="e12m__1">électrique alternative (AC)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12m" id="e12m__2" data-save data-code="elec-dc" value="électrique continue (DC)"><label for="e12m__2">électrique continue (DC)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12m" id="e12m__3" data-save data-code="rotation" value="mécanique de rotation"><label for="e12m__3">mécanique de rotation</label></div>
+              <div class="qcm-option"><input type="radio" name="e12m" id="e12m__4" data-save data-code="translation" value="mécanique de translation"><label for="e12m__4">mécanique de translation</label></div>
+              <div class="qcm-option"><input type="radio" name="e12m" id="e12m__5" data-save data-code="thermique" value="thermique"><label for="e12m__5">thermique</label></div>
+              </div>
+            </fieldset>
+          </td><td style="padding:.5rem;border:1px solid var(--border)">
+            <fieldset class="qcm-groupe qcm-cellule" id="e12n" data-bonne="électrique continue (DC)">
+              <legend class="visually-hidden">DISTRIBUER — énergie de sortie</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e12n" id="e12n__1" data-save data-code="elec-ac" value="électrique alternative (AC)"><label for="e12n__1">électrique alternative (AC)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12n" id="e12n__2" data-save data-code="elec-dc" value="électrique continue (DC)"><label for="e12n__2">électrique continue (DC)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12n" id="e12n__3" data-save data-code="rotation" value="mécanique de rotation"><label for="e12n__3">mécanique de rotation</label></div>
+              <div class="qcm-option"><input type="radio" name="e12n" id="e12n__4" data-save data-code="translation" value="mécanique de translation"><label for="e12n__4">mécanique de translation</label></div>
+              <div class="qcm-option"><input type="radio" name="e12n" id="e12n__5" data-save data-code="thermique" value="thermique"><label for="e12n__5">thermique</label></div>
+              </div>
+            </fieldset>
+          </td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left">CONVERTIR<br><small style="font-weight:normal">moteur électrique</small></th><td style="padding:.5rem;border:1px solid var(--border)">
+            <fieldset class="qcm-groupe qcm-cellule" id="e12h" data-bonne="électrique continue (DC)">
+              <legend class="visually-hidden">CONVERTIR — énergie d'entrée</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e12h" id="e12h__1" data-save data-code="elec-ac" value="électrique alternative (AC)"><label for="e12h__1">électrique alternative (AC)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12h" id="e12h__2" data-save data-code="elec-dc" value="électrique continue (DC)"><label for="e12h__2">électrique continue (DC)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12h" id="e12h__3" data-save data-code="rotation" value="mécanique de rotation"><label for="e12h__3">mécanique de rotation</label></div>
+              <div class="qcm-option"><input type="radio" name="e12h" id="e12h__4" data-save data-code="translation" value="mécanique de translation"><label for="e12h__4">mécanique de translation</label></div>
+              <div class="qcm-option"><input type="radio" name="e12h" id="e12h__5" data-save data-code="thermique" value="thermique"><label for="e12h__5">thermique</label></div>
+              </div>
+            </fieldset>
+          </td><td style="padding:.5rem;border:1px solid var(--border)">
+            <fieldset class="qcm-groupe qcm-cellule" id="e12i" data-bonne="mécanique de rotation">
+              <legend class="visually-hidden">CONVERTIR — énergie de sortie</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e12i" id="e12i__1" data-save data-code="elec-ac" value="électrique alternative (AC)"><label for="e12i__1">électrique alternative (AC)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12i" id="e12i__2" data-save data-code="elec-dc" value="électrique continue (DC)"><label for="e12i__2">électrique continue (DC)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12i" id="e12i__3" data-save data-code="rotation" value="mécanique de rotation"><label for="e12i__3">mécanique de rotation</label></div>
+              <div class="qcm-option"><input type="radio" name="e12i" id="e12i__4" data-save data-code="translation" value="mécanique de translation"><label for="e12i__4">mécanique de translation</label></div>
+              <div class="qcm-option"><input type="radio" name="e12i" id="e12i__5" data-save data-code="thermique" value="thermique"><label for="e12i__5">thermique</label></div>
+              </div>
+            </fieldset>
+          </td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left">TRANSMETTRE<br><small style="font-weight:normal">réducteur + galets</small></th><td style="padding:.5rem;border:1px solid var(--border)">
+            <fieldset class="qcm-groupe qcm-cellule" id="e12j" data-bonne="mécanique de rotation">
+              <legend class="visually-hidden">TRANSMETTRE — énergie d'entrée</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e12j" id="e12j__1" data-save data-code="elec-ac" value="électrique alternative (AC)"><label for="e12j__1">électrique alternative (AC)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12j" id="e12j__2" data-save data-code="elec-dc" value="électrique continue (DC)"><label for="e12j__2">électrique continue (DC)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12j" id="e12j__3" data-save data-code="rotation" value="mécanique de rotation"><label for="e12j__3">mécanique de rotation</label></div>
+              <div class="qcm-option"><input type="radio" name="e12j" id="e12j__4" data-save data-code="translation" value="mécanique de translation"><label for="e12j__4">mécanique de translation</label></div>
+              <div class="qcm-option"><input type="radio" name="e12j" id="e12j__5" data-save data-code="thermique" value="thermique"><label for="e12j__5">thermique</label></div>
+              </div>
+            </fieldset>
+          </td><td style="padding:.5rem;border:1px solid var(--border)">
+            <fieldset class="qcm-groupe qcm-cellule" id="e12k" data-bonne="mécanique de translation">
+              <legend class="visually-hidden">TRANSMETTRE — énergie de sortie</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e12k" id="e12k__1" data-save data-code="elec-ac" value="électrique alternative (AC)"><label for="e12k__1">électrique alternative (AC)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12k" id="e12k__2" data-save data-code="elec-dc" value="électrique continue (DC)"><label for="e12k__2">électrique continue (DC)</label></div>
+              <div class="qcm-option"><input type="radio" name="e12k" id="e12k__3" data-save data-code="rotation" value="mécanique de rotation"><label for="e12k__3">mécanique de rotation</label></div>
+              <div class="qcm-option"><input type="radio" name="e12k" id="e12k__4" data-save data-code="translation" value="mécanique de translation"><label for="e12k__4">mécanique de translation</label></div>
+              <div class="qcm-option"><input type="radio" name="e12k" id="e12k__5" data-save data-code="thermique" value="thermique"><label for="e12k__5">thermique</label></div>
+              </div>
+            </fieldset>
+          </td></tr>
         </tbody>
       </table>
-      <div class="ligne-exo"><span class="num">★</span><label for="e12l">Le bilan : dans quel bloc l'énergie change-t-elle de <strong>forme</strong> (électrique → mécanique) ?</label>
-        <select id="e12l" data-save data-bonne="convertir"><option value="">— je choisis —</option><option value="alimenter">ALIMENTER</option><option value="distribuer">DISTRIBUER</option><option value="convertir">CONVERTIR</option><option value="transmettre">TRANSMETTRE</option></select></div>
+      <fieldset class="qcm-groupe qcm-court" id="e12l" data-bonne="CONVERTIR">
+        <legend><span class="num" aria-hidden="true">★</span> Le bilan : dans quel bloc l'énergie change-t-elle de <strong>forme</strong> (électrique → mécanique) ?</legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="e12l" id="e12l__1" data-save data-code="alimenter" value="ALIMENTER"><label for="e12l__1">ALIMENTER</label></div>
+        <div class="qcm-option"><input type="radio" name="e12l" id="e12l__2" data-save data-code="distribuer" value="DISTRIBUER"><label for="e12l__2">DISTRIBUER</label></div>
+        <div class="qcm-option"><input type="radio" name="e12l" id="e12l__3" data-save data-code="convertir" value="CONVERTIR"><label for="e12l__3">CONVERTIR</label></div>
+        <div class="qcm-option"><input type="radio" name="e12l" id="e12l__4" data-save data-code="transmettre" value="TRANSMETTRE"><label for="e12l__4">TRANSMETTRE</label></div>
+        </div>
+      </fieldset>
     </div>
     <details class="aide1"><summary>🖐 Aide niveau 1</summary><div class="contenu">Suis les billes ambrées du schéma : elles portent l'énergie de bloc en bloc. Ce qui entre dans un bloc, c'est ce qui sortait du bloc précédent — comme les wagons d'un train.</div></details>
     <details class="aide2"><summary>✋ Aide niveau 2</summary><div class="contenu">Dans ALIMENTER, un <strong>convertisseur 480 V ~ → 24 V ⎓</strong> (à l'intérieur : transformateur, redresseur, lisseur) change l'alternatif du bâtiment en bus continu. DISTRIBUER, lui, ne transforme rien : ses contacteurs et son variateur <em>autorisent et modulent (MLI)</em> ce 24 V ⎓ sur ordre. Le moteur transforme l'<strong>énergie électrique</strong> en <strong>énergie mécanique</strong> (une rotation) ; réducteur et galets restent dans la mécanique : ils changent la rotation en <em>translation</em> (le wagonnet avance).</div></details>
@@ -1384,16 +1663,51 @@ button.vers-seance:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
     <p class="competence-visee">🎯 <strong>CRCN 3.4</strong> — Programmer — lire et construire un algorigramme normalisé (niveau 2).</p>
     <div class="consigne">📌 <strong>Consigne :</strong> associe chaque élément du trajet du livre au symbole normalisé qui doit le représenter dans l'algorigramme.</div>
     <div id="exo21">
-      <div class="ligne-exo"><span class="num">a</span><label for="e21a">« Le lecteur saisit sa commande au terminal » :</label>
-        <select id="e21a" data-save data-bonne="para"><option value="">— je choisis —</option><option value="ovale">Ovale (Début/Fin)</option><option value="para">Parallélogramme (Entrée/Sortie)</option><option value="rect">Rectangle (Action)</option><option value="losange">Losange (Test)</option></select></div>
-      <div class="ligne-exo"><span class="num">b</span><label for="e21b">« Un wagonnet vacant est-il disponible ? » :</label>
-        <select id="e21b" data-save data-bonne="losange"><option value="">— je choisis —</option><option value="ovale">Ovale (Début/Fin)</option><option value="para">Parallélogramme (Entrée/Sortie)</option><option value="rect">Rectangle (Action)</option><option value="losange">Losange (Test)</option></select></div>
-      <div class="ligne-exo"><span class="num">c</span><label for="e21c">« Déposer le livre dans le wagonnet » :</label>
-        <select id="e21c" data-save data-bonne="rect"><option value="">— je choisis —</option><option value="ovale">Ovale (Début/Fin)</option><option value="para">Parallélogramme (Entrée/Sortie)</option><option value="rect">Rectangle (Action)</option><option value="losange">Losange (Test)</option></select></div>
-      <div class="ligne-exo"><span class="num">d</span><label for="e21d">« FIN — le wagonnet est de nouveau disponible » :</label>
-        <select id="e21d" data-save data-bonne="ovale"><option value="">— je choisis —</option><option value="ovale">Ovale (Début/Fin)</option><option value="para">Parallélogramme (Entrée/Sortie)</option><option value="rect">Rectangle (Action)</option><option value="losange">Losange (Test)</option></select></div>
-      <div class="ligne-exo"><span class="num">e</span><label for="e21e">« Le wagonnet est-il arrivé à la station du 3ᵉ étage ? » :</label>
-        <select id="e21e" data-save data-bonne="losange"><option value="">— je choisis —</option><option value="ovale">Ovale (Début/Fin)</option><option value="para">Parallélogramme (Entrée/Sortie)</option><option value="rect">Rectangle (Action)</option><option value="losange">Losange (Test)</option></select></div>
+      <fieldset class="qcm-groupe qcm-court" id="e21a" data-bonne="Parallélogramme (Entrée/Sortie)">
+        <legend><span class="num" aria-hidden="true">a</span> « Le lecteur saisit sa commande au terminal » :</legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="e21a" id="e21a__1" data-save data-code="ovale" value="Ovale (Début/Fin)"><label for="e21a__1">Ovale (Début/Fin)</label></div>
+        <div class="qcm-option"><input type="radio" name="e21a" id="e21a__2" data-save data-code="para" value="Parallélogramme (Entrée/Sortie)"><label for="e21a__2">Parallélogramme (Entrée/Sortie)</label></div>
+        <div class="qcm-option"><input type="radio" name="e21a" id="e21a__3" data-save data-code="rect" value="Rectangle (Action)"><label for="e21a__3">Rectangle (Action)</label></div>
+        <div class="qcm-option"><input type="radio" name="e21a" id="e21a__4" data-save data-code="losange" value="Losange (Test)"><label for="e21a__4">Losange (Test)</label></div>
+        </div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-court" id="e21b" data-bonne="Losange (Test)">
+        <legend><span class="num" aria-hidden="true">b</span> « Un wagonnet vacant est-il disponible ? » :</legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="e21b" id="e21b__1" data-save data-code="ovale" value="Ovale (Début/Fin)"><label for="e21b__1">Ovale (Début/Fin)</label></div>
+        <div class="qcm-option"><input type="radio" name="e21b" id="e21b__2" data-save data-code="para" value="Parallélogramme (Entrée/Sortie)"><label for="e21b__2">Parallélogramme (Entrée/Sortie)</label></div>
+        <div class="qcm-option"><input type="radio" name="e21b" id="e21b__3" data-save data-code="rect" value="Rectangle (Action)"><label for="e21b__3">Rectangle (Action)</label></div>
+        <div class="qcm-option"><input type="radio" name="e21b" id="e21b__4" data-save data-code="losange" value="Losange (Test)"><label for="e21b__4">Losange (Test)</label></div>
+        </div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-court" id="e21c" data-bonne="Rectangle (Action)">
+        <legend><span class="num" aria-hidden="true">c</span> « Déposer le livre dans le wagonnet » :</legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="e21c" id="e21c__1" data-save data-code="ovale" value="Ovale (Début/Fin)"><label for="e21c__1">Ovale (Début/Fin)</label></div>
+        <div class="qcm-option"><input type="radio" name="e21c" id="e21c__2" data-save data-code="para" value="Parallélogramme (Entrée/Sortie)"><label for="e21c__2">Parallélogramme (Entrée/Sortie)</label></div>
+        <div class="qcm-option"><input type="radio" name="e21c" id="e21c__3" data-save data-code="rect" value="Rectangle (Action)"><label for="e21c__3">Rectangle (Action)</label></div>
+        <div class="qcm-option"><input type="radio" name="e21c" id="e21c__4" data-save data-code="losange" value="Losange (Test)"><label for="e21c__4">Losange (Test)</label></div>
+        </div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-court" id="e21d" data-bonne="Ovale (Début/Fin)">
+        <legend><span class="num" aria-hidden="true">d</span> « FIN — le wagonnet est de nouveau disponible » :</legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="e21d" id="e21d__1" data-save data-code="ovale" value="Ovale (Début/Fin)"><label for="e21d__1">Ovale (Début/Fin)</label></div>
+        <div class="qcm-option"><input type="radio" name="e21d" id="e21d__2" data-save data-code="para" value="Parallélogramme (Entrée/Sortie)"><label for="e21d__2">Parallélogramme (Entrée/Sortie)</label></div>
+        <div class="qcm-option"><input type="radio" name="e21d" id="e21d__3" data-save data-code="rect" value="Rectangle (Action)"><label for="e21d__3">Rectangle (Action)</label></div>
+        <div class="qcm-option"><input type="radio" name="e21d" id="e21d__4" data-save data-code="losange" value="Losange (Test)"><label for="e21d__4">Losange (Test)</label></div>
+        </div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-court" id="e21e" data-bonne="Losange (Test)">
+        <legend><span class="num" aria-hidden="true">e</span> « Le wagonnet est-il arrivé à la station du 3ᵉ étage ? » :</legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="e21e" id="e21e__1" data-save data-code="ovale" value="Ovale (Début/Fin)"><label for="e21e__1">Ovale (Début/Fin)</label></div>
+        <div class="qcm-option"><input type="radio" name="e21e" id="e21e__2" data-save data-code="para" value="Parallélogramme (Entrée/Sortie)"><label for="e21e__2">Parallélogramme (Entrée/Sortie)</label></div>
+        <div class="qcm-option"><input type="radio" name="e21e" id="e21e__3" data-save data-code="rect" value="Rectangle (Action)"><label for="e21e__3">Rectangle (Action)</label></div>
+        <div class="qcm-option"><input type="radio" name="e21e" id="e21e__4" data-save data-code="losange" value="Losange (Test)"><label for="e21e__4">Losange (Test)</label></div>
+        </div>
+      </fieldset>
     </div>
     <details class="aide1"><summary>🖐 Aide niveau 1</summary><div class="contenu">Une phrase qui se termine par un « ? » a toujours le même symbole…</div></details>
     <details class="aide2"><summary>✋ Aide niveau 2</summary><div class="contenu">Question → losange. Donnée qui entre dans le système (une saisie) → parallélogramme. Ordre/verbe d'action → rectangle. Borne du programme → ovale.</div></details>
@@ -1701,14 +2015,62 @@ button.vers-seance:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
       <thead><tr><th scope="col">Critère</th><th scope="col">SVG (vectoriel)</th><th scope="col">PNG (matriciel)</th></tr></thead>
       <tbody id="exo32">
         <tr><td>Qualité quand on zoome / vidéoprojette</td>
-          <td><label class="visually-hidden" for="e32a">SVG au zoom</label><select id="e32a" data-save data-bonne="net"><option value="">—</option><option value="net">Reste parfaitement net</option><option value="pixel">Se pixellise</option></select></td>
-          <td><label class="visually-hidden" for="e32b">PNG au zoom</label><select id="e32b" data-save data-bonne="pixel"><option value="">—</option><option value="net">Reste parfaitement net</option><option value="pixel">Se pixellise</option></select></td></tr>
+          <td>
+            <fieldset class="qcm-groupe qcm-cellule" id="e32a" data-bonne="Reste parfaitement net">
+              <legend class="visually-hidden">SVG au zoom</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e32a" id="e32a__1" data-save data-code="net" value="Reste parfaitement net"><label for="e32a__1">Reste parfaitement net</label></div>
+              <div class="qcm-option"><input type="radio" name="e32a" id="e32a__2" data-save data-code="pixel" value="Se pixellise"><label for="e32a__2">Se pixellise</label></div>
+              </div>
+            </fieldset>
+          </td>
+          <td>
+            <fieldset class="qcm-groupe qcm-cellule" id="e32b" data-bonne="Se pixellise">
+              <legend class="visually-hidden">PNG au zoom</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e32b" id="e32b__1" data-save data-code="net" value="Reste parfaitement net"><label for="e32b__1">Reste parfaitement net</label></div>
+              <div class="qcm-option"><input type="radio" name="e32b" id="e32b__2" data-save data-code="pixel" value="Se pixellise"><label for="e32b__2">Se pixellise</label></div>
+              </div>
+            </fieldset>
+          </td></tr>
         <tr><td>Nature du fichier</td>
-          <td><label class="visually-hidden" for="e32c">Nature du SVG</label><select id="e32c" data-save data-bonne="texte"><option value="">—</option><option value="texte">Du texte (des formes décrites en XML)</option><option value="grille">Une grille de pixels colorés</option></select></td>
-          <td><label class="visually-hidden" for="e32d">Nature du PNG</label><select id="e32d" data-save data-bonne="grille"><option value="">—</option><option value="texte">Du texte (des formes décrites en XML)</option><option value="grille">Une grille de pixels colorés</option></select></td></tr>
+          <td>
+            <fieldset class="qcm-groupe qcm-cellule" id="e32c" data-bonne="Du texte (des formes décrites en XML)">
+              <legend class="visually-hidden">Nature du SVG</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e32c" id="e32c__1" data-save data-code="texte" value="Du texte (des formes décrites en XML)"><label for="e32c__1">Du texte (des formes décrites en XML)</label></div>
+              <div class="qcm-option"><input type="radio" name="e32c" id="e32c__2" data-save data-code="grille" value="Une grille de pixels colorés"><label for="e32c__2">Une grille de pixels colorés</label></div>
+              </div>
+            </fieldset>
+          </td>
+          <td>
+            <fieldset class="qcm-groupe qcm-cellule" id="e32d" data-bonne="Une grille de pixels colorés">
+              <legend class="visually-hidden">Nature du PNG</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e32d" id="e32d__1" data-save data-code="texte" value="Du texte (des formes décrites en XML)"><label for="e32d__1">Du texte (des formes décrites en XML)</label></div>
+              <div class="qcm-option"><input type="radio" name="e32d" id="e32d__2" data-save data-code="grille" value="Une grille de pixels colorés"><label for="e32d__2">Une grille de pixels colorés</label></div>
+              </div>
+            </fieldset>
+          </td></tr>
         <tr><td>Poids pour une même qualité d'algorigramme</td>
-          <td><label class="visually-hidden" for="e32e">Poids du SVG</label><select id="e32e" data-save data-bonne="leger"><option value="">—</option><option value="leger">Léger</option><option value="lourd">Lourd</option></select></td>
-          <td><label class="visually-hidden" for="e32f">Poids du PNG</label><select id="e32f" data-save data-bonne="lourd"><option value="">—</option><option value="leger">Léger</option><option value="lourd">Lourd</option></select></td></tr>
+          <td>
+            <fieldset class="qcm-groupe qcm-cellule" id="e32e" data-bonne="Léger">
+              <legend class="visually-hidden">Poids du SVG</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e32e" id="e32e__1" data-save data-code="leger" value="Léger"><label for="e32e__1">Léger</label></div>
+              <div class="qcm-option"><input type="radio" name="e32e" id="e32e__2" data-save data-code="lourd" value="Lourd"><label for="e32e__2">Lourd</label></div>
+              </div>
+            </fieldset>
+          </td>
+          <td>
+            <fieldset class="qcm-groupe qcm-cellule" id="e32f" data-bonne="Lourd">
+              <legend class="visually-hidden">Poids du PNG</legend>
+              <div class="qcm-choix">
+              <div class="qcm-option"><input type="radio" name="e32f" id="e32f__1" data-save data-code="leger" value="Léger"><label for="e32f__1">Léger</label></div>
+              <div class="qcm-option"><input type="radio" name="e32f" id="e32f__2" data-save data-code="lourd" value="Lourd"><label for="e32f__2">Lourd</label></div>
+              </div>
+            </fieldset>
+          </td></tr>
         <tr><td>Compatibilité</td>
           <td>Pages web, Impress, PowerPoint récents</td>
           <td>Compris <em>partout</em> (y compris Pronote et les vieux logiciels)</td></tr>
@@ -2035,18 +2397,42 @@ button.vers-seance:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
     </details>
     <h3>Mon auto-positionnement</h3>
     <div class="autopos" id="autopos">
-      <div class="ligne-exo"><span class="code-comp">Décrire un système automatisé (chaînes d'information et d'énergie) :</span>
-        <label class="visually-hidden" for="ap1">Auto-positionnement chaînes</label>
-        <select id="ap1" data-save><option value="">— je me positionne —</option><option>🔴 J'ai besoin d'aide</option><option>🟡 J'y arrive avec le modèle</option><option>🟢 J'y arrive seul·e</option><option>⭐ Je peux l'expliquer à un camarade</option></select></div>
-      <div class="ligne-exo"><span class="code-comp">🎯 CRCN 3.4 — Construire un algorigramme normalisé (symboles, tests, boucles) :</span>
-        <label class="visually-hidden" for="ap2">Auto-positionnement algorigramme</label>
-        <select id="ap2" data-save><option value="">— je me positionne —</option><option>🔴 J'ai besoin d'aide</option><option>🟡 J'y arrive avec le modèle</option><option>🟢 J'y arrive seul·e</option><option>⭐ Je peux l'expliquer à un camarade</option></select></div>
-      <div class="ligne-exo"><span class="code-comp">🎯 CRCN 3.3 — Choisir et justifier un format d'export adapté à la destination :</span>
-        <label class="visually-hidden" for="ap3">Auto-positionnement format</label>
-        <select id="ap3" data-save><option value="">— je me positionne —</option><option>🔴 J'ai besoin d'aide</option><option>🟡 J'y arrive avec le modèle</option><option>🟢 J'y arrive seul·e</option><option>⭐ Je peux l'expliquer à un camarade</option></select></div>
-      <div class="ligne-exo"><span class="code-comp">Communiquer un fonctionnement technique dans un diaporama structuré :</span>
-        <label class="visually-hidden" for="ap4">Auto-positionnement diaporama</label>
-        <select id="ap4" data-save><option value="">— je me positionne —</option><option>🔴 J'ai besoin d'aide</option><option>🟡 J'y arrive avec le modèle</option><option>🟢 J'y arrive seul·e</option><option>⭐ Je peux l'expliquer à un camarade</option></select></div>
+      <fieldset class="qcm-groupe qcm-court" id="ap1">
+        <legend><span class="code-comp">Décrire un système automatisé (chaînes d'information et d'énergie) :</span></legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="ap1" id="ap1__1" data-save data-code="🔴 J&#x27;ai besoin d&#x27;aide" value="🔴 J&#x27;ai besoin d&#x27;aide"><label for="ap1__1">🔴 J'ai besoin d'aide</label></div>
+        <div class="qcm-option"><input type="radio" name="ap1" id="ap1__2" data-save data-code="🟡 J&#x27;y arrive avec le modèle" value="🟡 J&#x27;y arrive avec le modèle"><label for="ap1__2">🟡 J'y arrive avec le modèle</label></div>
+        <div class="qcm-option"><input type="radio" name="ap1" id="ap1__3" data-save data-code="🟢 J&#x27;y arrive seul·e" value="🟢 J&#x27;y arrive seul·e"><label for="ap1__3">🟢 J'y arrive seul·e</label></div>
+        <div class="qcm-option"><input type="radio" name="ap1" id="ap1__4" data-save data-code="⭐ Je peux l&#x27;expliquer à un camarade" value="⭐ Je peux l&#x27;expliquer à un camarade"><label for="ap1__4">⭐ Je peux l'expliquer à un camarade</label></div>
+        </div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-court" id="ap2">
+        <legend><span class="code-comp">🎯 CRCN 3.4 — Construire un algorigramme normalisé (symboles, tests, boucles) :</span></legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="ap2" id="ap2__1" data-save data-code="🔴 J&#x27;ai besoin d&#x27;aide" value="🔴 J&#x27;ai besoin d&#x27;aide"><label for="ap2__1">🔴 J'ai besoin d'aide</label></div>
+        <div class="qcm-option"><input type="radio" name="ap2" id="ap2__2" data-save data-code="🟡 J&#x27;y arrive avec le modèle" value="🟡 J&#x27;y arrive avec le modèle"><label for="ap2__2">🟡 J'y arrive avec le modèle</label></div>
+        <div class="qcm-option"><input type="radio" name="ap2" id="ap2__3" data-save data-code="🟢 J&#x27;y arrive seul·e" value="🟢 J&#x27;y arrive seul·e"><label for="ap2__3">🟢 J'y arrive seul·e</label></div>
+        <div class="qcm-option"><input type="radio" name="ap2" id="ap2__4" data-save data-code="⭐ Je peux l&#x27;expliquer à un camarade" value="⭐ Je peux l&#x27;expliquer à un camarade"><label for="ap2__4">⭐ Je peux l'expliquer à un camarade</label></div>
+        </div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-court" id="ap3">
+        <legend><span class="code-comp">🎯 CRCN 3.3 — Choisir et justifier un format d'export adapté à la destination :</span></legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="ap3" id="ap3__1" data-save data-code="🔴 J&#x27;ai besoin d&#x27;aide" value="🔴 J&#x27;ai besoin d&#x27;aide"><label for="ap3__1">🔴 J'ai besoin d'aide</label></div>
+        <div class="qcm-option"><input type="radio" name="ap3" id="ap3__2" data-save data-code="🟡 J&#x27;y arrive avec le modèle" value="🟡 J&#x27;y arrive avec le modèle"><label for="ap3__2">🟡 J'y arrive avec le modèle</label></div>
+        <div class="qcm-option"><input type="radio" name="ap3" id="ap3__3" data-save data-code="🟢 J&#x27;y arrive seul·e" value="🟢 J&#x27;y arrive seul·e"><label for="ap3__3">🟢 J'y arrive seul·e</label></div>
+        <div class="qcm-option"><input type="radio" name="ap3" id="ap3__4" data-save data-code="⭐ Je peux l&#x27;expliquer à un camarade" value="⭐ Je peux l&#x27;expliquer à un camarade"><label for="ap3__4">⭐ Je peux l'expliquer à un camarade</label></div>
+        </div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-court" id="ap4">
+        <legend><span class="code-comp">Communiquer un fonctionnement technique dans un diaporama structuré :</span></legend>
+        <div class="qcm-choix">
+        <div class="qcm-option"><input type="radio" name="ap4" id="ap4__1" data-save data-code="🔴 J&#x27;ai besoin d&#x27;aide" value="🔴 J&#x27;ai besoin d&#x27;aide"><label for="ap4__1">🔴 J'ai besoin d'aide</label></div>
+        <div class="qcm-option"><input type="radio" name="ap4" id="ap4__2" data-save data-code="🟡 J&#x27;y arrive avec le modèle" value="🟡 J&#x27;y arrive avec le modèle"><label for="ap4__2">🟡 J'y arrive avec le modèle</label></div>
+        <div class="qcm-option"><input type="radio" name="ap4" id="ap4__3" data-save data-code="🟢 J&#x27;y arrive seul·e" value="🟢 J&#x27;y arrive seul·e"><label for="ap4__3">🟢 J'y arrive seul·e</label></div>
+        <div class="qcm-option"><input type="radio" name="ap4" id="ap4__4" data-save data-code="⭐ Je peux l&#x27;expliquer à un camarade" value="⭐ Je peux l&#x27;expliquer à un camarade"><label for="ap4__4">⭐ Je peux l'expliquer à un camarade</label></div>
+        </div>
+      </fieldset>
     </div>
   </div>
 
@@ -2102,7 +2488,16 @@ button.vers-seance:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
        texte de la proposition (règle n°300). */
     if(ch.type === "radio"){
       var groupe = ch.name;
-      if(etat.hasOwnProperty(groupe)) ch.checked = (etat[groupe] === ch.value);
+      if(etat.hasOwnProperty(groupe)){
+        var deja = etat[groupe];
+        /* Avant la conversion n°300 du 24/10/2026, une liste déroulante enregistrait le CODE de
+           l'option (« commande », « elec-ac »…) : data-code le reconnaît, et la réponse est
+           réécrite en texte. Rien de ce qu'un élève avait déjà répondu ne se perd. */
+        if(ch.value === deja || ch.getAttribute("data-code") === deja){
+          ch.checked = true;
+          if(ch.value !== deja){ etat[groupe] = ch.value; ecrireEtat(etat); }
+        }
+      }
       ch.addEventListener("change", function(){
         if(ch.checked){ etat[groupe] = ch.value; ecrireEtat(etat); }
       });
@@ -2274,7 +2669,7 @@ button.vers-seance:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
         return;
       }
 
-      var selects = zone.querySelectorAll("select[data-bonne], fieldset[data-bonne]");
+      var selects = zone.querySelectorAll("fieldset[data-bonne]");   /* plus aucune liste déroulante depuis le 24/10/2026 (n°300) */
       var total = selects.length, bons = 0, vides = 0;
       selects.forEach(function(s){
         s.classList.remove("bon","faux");
@@ -2344,8 +2739,9 @@ button.vers-seance:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
     var ids = ['be1','be2','be3'], ok = 0, vides = 0;
     ids.forEach(function(id){
       var el = document.getElementById(id);
-      if (!el || !el.value) { vides++; return; }
-      if (el.value === el.getAttribute('data-bonne')) ok++;
+      var coche = el ? el.querySelector('input[type=radio]:checked') : null;
+      if (!coche) { vides++; return; }
+      if (coche.value === el.getAttribute('data-bonne')) ok++;
     });
     var fb = document.getElementById('fb-billet');
     if (!fb) return;

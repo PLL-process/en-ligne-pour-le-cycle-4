@@ -82,7 +82,8 @@ en local, rien n'est transmis à un serveur.
 Billet d'entrée avec capsule de rattrapage ; **version étayée** (phrases à compléter) proposée pour chacune
 des trois productions écrites — l'exigence scientifique est identique, seul l'obstacle linguistique est
 retiré (règle d'or n°31) ; mode essentiel ; aides à deux niveaux par activité ; corrections complètes
-repliées ; exercices en listes déroulantes toutes étiquetées pour les lecteurs d'écran ; guides logiciels
+repliées ; questions à choix en boutons radio dans le flux de la page, l'énoncé dans la légende du groupe
+(règle d'or n°300 : plus aucune liste déroulante depuis le 24/10/2026) ; guides logiciels
 pas à pas sans étape implicite ; impression A4.
 
 ## Évaluation

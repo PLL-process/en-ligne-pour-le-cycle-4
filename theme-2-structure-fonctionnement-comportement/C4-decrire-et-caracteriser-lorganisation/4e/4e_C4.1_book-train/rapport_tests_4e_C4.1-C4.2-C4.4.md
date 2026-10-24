@@ -172,3 +172,53 @@ dépassaient du bandeau, qui les coupe, et deux d'entre elles, sur trois lignes,
 - La licence de la vidéo : non lue (un lien ne reproduit rien ; à lire avant tout découpage ou réhébergement).
 - La traduction n'a pas été relue par un second lecteur ; les minutages sont ceux de la lecture image par image (± 1 s).
 - Lecteur d'écran réel, impression papier, Safari/iPad : non faits.
+
+---
+
+## Troisième passe du 24/10/2026 — conversion n°300, licence de la vidéo
+
+Même jour. Exécution réelle, Chromium (Playwright) en conteneur Linux, page en `file:`, réseau coupé.
+
+**Licence de la vidéo, lue** dans le navigateur de l'application Claude (le conteneur n'atteint pas YouTube) :
+description dépliée sans ligne « Licence », que YouTube n'affiche que pour une vidéo Creative Commons — donc
+**licence YouTube standard** ; intégration autorisée par le propriétaire, vidéo tous publics, disponible dans
+249 pays. Registre et page mis à jour (`poser_ressource.py` : 1 bloc reposé, 5 « aucun changement »).
+
+**Conversion n°300.** Les 44 listes déroulantes deviennent 44 groupes de boutons radio, par un convertisseur à
+usage unique qui compte chaque motif et refuse de finir s'il reste une liste : billet d'entrée 3, activité 1.1
+6, 1.2 5, tableau 1.3 6, tableau 2.1 8 et son bilan 1, 3.1 5, tableau 4.2 6, auto-positionnement 4. L'invite
+« — je choisis — » est reconnue à sa valeur vide.
+
+### Banc du lot — **39 / 39**
+
+| Tests | Vérifie |
+|---|---|
+| 18 | l'activité 1.2 se valide comme avant, en cochant |
+| 33 | aucune liste ; 46 groupes (44 + les 2 de la vidéo), chacun avec légende, un seul `name` égal à l'`id`, étiquette = valeur, bonne réponse parmi les propositions (42 groupes notés) |
+| 34 | les six exercices notés (1.1, 1.2, 1.3, 2.1, 3.1, 4.2) donnent N/N quand on coche les bonnes réponses lues dans `data-bonne` (4.2 : expérience du zoom faite, justification écrite) |
+| 35 | le vérificateur marque chaque groupe juste |
+| 36 | billet d'entrée : 3 / 3, puis 2 / 3 et l'orientation vers la capsule |
+| 37 | des réponses enregistrées **avant** la conversion (codes « commande », « elec-ac », « fonction », « pixel », texte de l'auto-positionnement) reviennent cochées et sont réécrites en texte |
+| 38 | à 390 px, les tableaux 1.3 et 2.1 s'empilent : chaque case pleine largeur, légende visible |
+
+Le même banc sur la page d'avant (copie de `main` à `8e5eeee`) : 18 et 33 à 38 échouent, et 25 (hors dépôt).
+
+### Contrôles
+
+| Contrôle | Sortie |
+|---|---|
+| `verif_regles_audit.py <lot>` | **n°300 ✔** ; reste n°302 (bloc des rôles commun) |
+| `verif_regles_audit.py` (dépôt) | 233 ✘ (234 sur `main` après la PR #501) |
+| `controle_squelette`, `controle_verrous`, `controle_hors_ligne`, `controle_impression`, `controle_contraste_liens`, `verif_qcm_coherence` | 0 |
+| `audit_cloture_sequence`, `audit_lisibilite_qcm`, `audit_personne_eleve` | 0 — mesures ; la page ne figure plus dans l'inventaire des listes |
+| les 22 contrôles Python de `controle-qualite-lot` | 0 |
+
+Captures avant / après à 390 px, même position de défilement (METHODE.md, pilier 2, point 6) :
+`_generation/captures_2026-10-24/n300_*_avant_390.png` et `n300_*_apres_390.png` (billet, activité 1.2, tableaux
+2.1 et 4.2, auto-positionnement).
+
+### Non exécuté
+
+- Lecteur d'écran réel (NVDA, VoiceOver) sur les groupes : non fait ; le nom accessible vient de la légende,
+  visible ou masquée dans les cases de tableau.
+- Impression papier réelle : seul le rendu `media: print` est mesuré (`controle_impression.mjs`).
