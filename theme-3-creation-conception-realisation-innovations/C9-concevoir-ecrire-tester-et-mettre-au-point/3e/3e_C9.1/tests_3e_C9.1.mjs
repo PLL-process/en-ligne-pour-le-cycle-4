@@ -218,13 +218,87 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   await shot(page, "simulateur_memoire", "#memEcran");
 
   await page.selectOption("#a1q1", "3");
-  await page.selectOption("#a1q2", "il est perdu : affecter, c'est REMPLACER");
+  await page.selectOption("#a1q2", "il est perdu : il a été remplacé");
   await page.selectOption("#a1q3", "« mets cette valeur dans la boîte »");
-  await page.selectOption("#a1q4", "de droite à gauche : je CALCULE d'abord, je RANGE ensuite");
+  await page.selectOption("#a1q4", "de droite à gauche : je calcule, puis je range");
   await page.click('.btn.check[data-check="1"]');
   await page.waitForTimeout(150);
   const fb1 = await page.locator("#fb1").textContent();
   ok("act. 1 : validée 4/4 avec le vérificateur exact", /activité validée/.test(fb1), fb1.slice(0, 50));
+}
+
+/* — règles n°144 et n°198 dans les activités : ni le rang ni la longueur ne désignent la bonne réponse —
+     (lu dans les vérificateurs sv("id","réponse") de la page : c'est leur réponse qui est mesurée) */
+{
+  const src = fs.readFileSync(path.join(LOT, "sequence_3e_C9.1_variables_types_systemes.html"), "utf8");
+  const paires = [...src.matchAll(/sv\("([^"]+)","((?:[^"\\]|\\.)*)"\)/g)].map(m => [m[1], m[2].replace(/\\"/g, '"')]);
+  const forme = await page.evaluate((P) => P.map(([id, rep]) => {
+    const o = [...document.querySelectorAll("#" + id + " option")].map(x => x.textContent).filter(x => x && !x.startsWith("—"));
+    const autres = o.filter(x => x !== rep).map(x => x.length);
+    return { id, rang: o.indexOf(rep), detachee: rep.length > Math.max(...autres) + 8 || rep.length < Math.min(...autres) - 8 };
+  }), paires);
+  const premieres = forme.filter(x => x.rang === 0).length;
+  ok("activités : chaque réponse attendue existe dans son menu (" + forme.length + " menus)",
+     forme.length >= 20 && forme.every(x => x.rang >= 0), forme.filter(x => x.rang < 0).map(x => x.id).join(", "));
+  ok("activités : la bonne réponse n'est en tête que dans moins d'un tiers des menus (" + premieres + "/" + forme.length + ")",
+     premieres * 3 < forme.length);
+  ok("activités : aucune bonne réponse détachée par sa longueur (> 8 caractères)", forme.every(x => !x.detachee),
+     forme.filter(x => x.detachee).map(x => x.id).join(", "));
+}
+
+/* — activité 4 : la réponse attendue est ce que Python affiche VRAIMENT —
+     (programme corrigé exécuté avec Python 3 le 20/10/2026 : print sépare par des espaces) */
+{
+  await page.click("#tab-s3");
+  await page.waitForTimeout(150);
+  await page.evaluate(() => {           // ouvre la barre 🧪 sans quitter la page (le lien part dans un onglet)
+    const a = document.querySelector("#vs2 .vs-lien");
+    a.addEventListener("click", e => e.preventDefault(), { once: true });
+    a.click();
+  });
+  for (const [id, v] of [["a4b1l", "3"], ["a4b1c", "minutes = 2 + 1"], ["a4b2l", "5"],
+                         ["a4b2c", "écrire 1.8, avec un point"], ["a4b3c", "on ne soustrait pas un nombre d'un texte"],
+                         ["a4b4", "Q - 96 St 2 min | 25.0 C"]])
+    await page.selectOption("#" + id, v);
+  await page.click('.btn.check[data-check="4"]');
+  await page.waitForTimeout(150);
+  const fb4 = await page.locator("#fb4").textContent();
+  ok("act. 4 : validée 6/6 avec la sortie réelle de Python", /activité validée/.test(fb4) && /6\/6/.test(fb4), fb4.slice(0, 60));
+  const texte = await page.evaluate(() => document.body.innerText);
+  ok("act. 4 : plus aucune trace de « Q - 96 St - 2 min » ni de « Q - 96 St - 3 min »",
+     !/96 St - [23] min/.test(texte));
+  await shot(page, "act4_sortie_reelle", "#fb4");
+  // l'activité 4 validée compte dans la progression : on la rend neutre pour la suite du banc
+  await page.evaluate(() => { localStorage.clear(); });
+  await page.reload();
+  await page.waitForTimeout(400);
+  for (let i = 0; i < 6; i++) { await page.click("#memNext"); await page.waitForTimeout(60); }
+  await page.selectOption("#a1q1", "3");
+  await page.selectOption("#a1q2", "il est perdu : il a été remplacé");
+  await page.selectOption("#a1q3", "« mets cette valeur dans la boîte »");
+  await page.selectOption("#a1q4", "de droite à gauche : je calcule, puis je range");
+  await page.click('.btn.check[data-check="1"]');
+  await page.waitForTimeout(150);
+}
+
+/* — la version 🅰 est retirée (20/10/2026) : ni bouton, ni bloc ; un ancien choix « a » retombe sur « tous » — */
+{
+  ok("parcours : plus de bouton ni de bloc 🅰",
+     (await page.locator('.parcours-btn[data-choix="a"]').count()) === 0 &&
+     (await page.locator('[data-parcours="a"]').count()) === 0);
+  await page.click("#btnSave");
+  await page.waitForTimeout(150);
+  await page.evaluate(() => {           // une sauvegarde d'avant le retrait : le parcours « a » y est mémorisé
+    const K = "seq_3e_C9.1_variables_types_systemes";
+    const o = JSON.parse(localStorage.getItem(K)); o.exp = o.exp || {}; o.exp.parcours = "a";
+    localStorage.setItem(K, JSON.stringify(o));
+  });
+  await page.reload();
+  await page.waitForTimeout(400);
+  const r = await page.evaluate(() => ({ classe: document.body.className, note: document.getElementById("parcoursNote").textContent }));
+  ok("parcours : un ancien choix « a » mémorisé retombe sur « tous »", !/parcours-a/.test(r.classe) && /tous/.test(r.note), r.note.trim());
+  await page.click('.parcours-btn[data-choix="tous"]');
+  await page.waitForTimeout(100);
 }
 
 /* — le verrou expérientiel de l'activité 5 refuse sans les essais — */

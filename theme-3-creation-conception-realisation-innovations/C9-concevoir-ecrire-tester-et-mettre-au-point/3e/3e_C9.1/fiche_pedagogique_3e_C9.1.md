@@ -23,8 +23,8 @@ lecture de programme → mise au point, sur un fil narratif New York (le panneau
 | 4 Mise au point | 5. Algorithme → fonction → banc de 4 tests + cas limite | 4 tests exécutés |
 
 ## Versions (règle n°3)
-🅰 éditeur → carte réelle (mBot2/Arduino, TBT uniquement ; TP mBot2 en prolongement) ·
-🅱 éditeur Vittascience dans un nouvel onglet (parcours principal) · 🅲 simulateur + tables au cahier (hors ligne).
+🅱 éditeur Vittascience dans un nouvel onglet (parcours principal) · 🅲 simulateur + tables au cahier (hors ligne). La version 🅰 (éditeur → carte réelle) est retirée le
+20/10/2026 : l'éditeur Python ne pilote aucune carte ; le TP mBot2 reste le prolongement sur robot réel, au collège.
 
 ## Évaluation
 Formative : vérificateurs + QCM 30 q (VAR/TYP/PRG/MAP → positionnement par famille).
@@ -40,7 +40,7 @@ d'où part la classe, pas à noter) · **mode essentiel** (masque référentiel,
 compléments : il ne reste que les consignes) · **tableau de bord** des 5 activités, coché au
 fur et à mesure · **deux versions étayées** pour les zones de rédaction · **durées annoncées**
 (185 min d'activités pour 220 disponibles — la marge est voulue) · **sélecteur de parcours**
-🅰/🅱/🅲 qui masque ce qui ne concerne pas l'élève **sans retirer aucune question**.
+🅱/🅲 qui masque ce qui ne concerne pas l'élève **sans retirer aucune question**.
 
 > Les barres 🧪 des éditeurs restent visibles dans les trois parcours : ce sont elles qui
 > portent le verrou d'expérience des activités 3 et 4. En 🅲, une consigne dédiée dit quoi

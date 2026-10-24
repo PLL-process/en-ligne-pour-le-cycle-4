@@ -105,3 +105,21 @@ Aucun test en échec à la remise (35/35). Les deux échecs rencontrés en cours
 campagne — le sélecteur de parcours sans effet, et un contrôle QCM qui exigeait
 à tort que le tableau `QUESTIONS` soit exposé sur `window` — ont été corrigés,
 l'un dans la séquence, l'autre dans la suite elle-même.
+
+## 6. Rejouée le 20/10/2026 (relecture pour le distanciel)
+
+**Ce que la relecture a trouvé, et que la suite ne voyait pas.** Le programme corrigé de l'activité 4, **exécuté avec
+Python 3**, affiche `Q - 96 St 2 min | 25.0 C` (`print` sépare par des espaces) ; la page attendait
+`Q - 96 St - 2 min | 25.0 C`, et sa consigne annonçait « 3 min ». La suite ne validait que l'activité 1 et le verrou de
+l'activité 5 : elle n'ouvrait jamais l'activité 4. Les menus des activités avaient leur bonne réponse la plus longue
+17 fois sur 26.
+
+**Ce qui change dans la suite** (sept contrôles ajoutés) : les menus mesurés à partir des vérificateurs `sv()` de la page
+(27 menus : réponse attendue présente, en tête 2 fois, aucune détachée de plus de 8 caractères) ; l'activité 4 validée
+**6/6** avec la sortie réelle de Python, le lien de l'éditeur cliqué sans quitter la page ; plus aucune trace de
+« Q - 96 St - 2 min » ni de « - 3 min » dans le texte ; plus de bouton ni de bloc 🅰 ; une sauvegarde d'avant le retrait,
+qui mémorise le parcours « a », retombe sur « tous ». Les choix de l'activité 1 suivent les nouvelles formulations.
+**Résultat : 42 / 42** (35 avant).
+
+Le TP mBot2 n'est plus la « version 🅰 » de l'atelier, mais le prolongement sur robot réel, au collège : il reste
+**non testé** ici, comme le disait la section 4.
