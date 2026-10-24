@@ -23457,3 +23457,45 @@ trois. Branche `fable/seances-supplementaires`, sans motif de thème.
   la séance 3 ; les champs du Bonus et du Bilan de Tsinghua sans version étayée.
 - La page du capteur reste sans onglets (volet Rappel n°311 sans objet) : une refonte en onglets serait un autre lot.
 - Lecteur d'écran réel, impression papier, essai en classe : non faits.
+
+## 24/10/2026 — Classeurs de progression : l'onglet « 🧭 Progression » suit les séquences en ligne (_progressions)
+
+**Demande de Pascal.** « Classeurs de progression : mets-les à jour », après la PR #506 (séances supplémentaires).
+Question posée : textes seulement, ou aussi le nombre de créneaux (Moteur « à ne modifier qu'en Conseil », calendrier
+décalé) ? Réponse : **textes seulement** — « cette année, à aucun moment je n'ai 1 h 30 avec les élèves ».
+
+### Ce qui change
+
+Onglet « 🧭 Progression », colonnes « Répartition » (H) et « Ressources en ligne » (I), onze cellules :
+- **3e** : ligne 2 « Le numérique dans la société » (H5, I5 : la séquence en 4 séances de 55 min, ses deux
+  argumentaires courts, et la séquence de Pékin pour 3e_C2.1) ; ligne 7 « Projet fil rouge — Volet 1 » (H10, I10 : le
+  capteur de confort en 3 séances de 55 min) ; ligne 8 « Volet 2 » (I11 : 3e_C7.2 en séance 3 du capteur, et les six
+  lots de la station pour 3e_C7.3 à C7.8). Les trois portaient « 🔜 À produire ».
+- **4e** : ligne 1 « Des objets qui évoluent » (H4, I4 : Tsinghua en 5 séances de 55 min, QCM 33 q). Portait « 🔜 À produire ».
+- **5e** : ligne 2 « Comparer pour choisir » (I5 : Chengdu, Sainte-Luce en 4 séances de 55 min, la gestion des
+  données, Shanghai) ; lignes 3, 4, 5 (I6, I7, I8 : le lampadaire en 6 séances de 55 min, QCM 36 q au lieu de 32,
+  Shenzhen pour 5e_C2.1-C2.2, l'îlot 5e_C6 « Programmer le lampadaire » au lieu de « 🔜 »).
+- Ne bougent pas : la colonne « Séances » (des créneaux), le Moteur, le calendrier, la frise, les générateurs S1–S9.
+
+### Méthode : chirurgie XML, pas de réécriture du classeur
+
+Les classeurs ont été enregistrés par Excel (miniature, `calcChain`) ou par openpyxl (chaînes en ligne). Plutôt que de
+les réécrire avec openpyxl (qui perd ce qu'il ne connaît pas), le script ne touche que la feuille de l'onglet
+Progression (indice de chaîne ou chaîne en ligne des cellules ciblées) et, en 3e, `sharedStrings.xml` (chaînes
+ajoutées à la fin) ; chaque cellule doit contenir exactement l'ancien texte attendu, sinon rien n'est écrit. Script et
+banc : session du 24/10/2026, non versés (`maj_progressions.py`, `banc_progressions.py`).
+
+### Ce qui a tourné (banc d'essai sur copies, puis contre-vérification des fichiers du dépôt contre `main`)
+
+- 29/29 : mêmes membres d'archive et même ordre ; tous identiques à l'octet près hors la feuille Progression et
+  `sharedStrings.xml` (41 en 3e, 35 en 4e et en 5e) ; `vbaProject.bin` identique (macros) ; toutes les cellules hors
+  cibles identiques (3e : 3 000 dont 505 formules ; 4e : 2 793 dont 427 ; 5e : 2 792 dont 428) ; chaque cible passe de
+  l'ancien texte au nouveau ; chaque classeur s'ouvre dans LibreOffice. Rendu de l'onglet regardé : les textes tiennent
+  dans les lignes (78 pt), aucun n'est plus long que le plus long texte existant.
+
+### Constat pour la suite (non traité)
+
+- Les classeurs sont construits sur **une séance de 1 h 30 par semaine** (titre du Calendrier, Accueil, Moteur, pilier 3
+  de `_outils/METHODE.md`), alors que Pascal n'a jamais 1 h 30 d'affilée avec ses élèves cette année et que ses
+  séquences en ligne comptent des séances de 55 min. Les six lots de la station (3e_C7.3 à C7.8) sont écrits en
+  **séances de 90 min**. Une refonte des classeurs en séances de 55 min (Moteur, calendrier) relève d'un Conseil.
