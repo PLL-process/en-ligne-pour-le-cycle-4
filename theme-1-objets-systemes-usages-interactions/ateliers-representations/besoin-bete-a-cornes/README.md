@@ -32,5 +32,6 @@ Le programme de technologie parle d'exprimer le besoin : dire à qui l'objet ren
 | `theme-1-objets-systemes-usages-interactions/C3-caracteriser-et-choisir-un-objet-ou-un/5e/5e_C3.1/sequence_5e_C3.1-C3.4_shanghai.html` | 5e | e1, e3 |
 | `theme-1-objets-systemes-usages-interactions/C3-caracteriser-et-choisir-un-objet-ou-un/4e/4e_C3.1/sequence_4e_C3.1-C3.3_hangzhou.html` | 4e | e5 |
 | `theme-1-objets-systemes-usages-interactions/C3-caracteriser-et-choisir-un-objet-ou-un/3e/3e_C3.1/sequence_3e_C3.1-C3.4_shenzhen.html` | 3e | e6 |
+| `theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/4e/4e_C1.1/sequence_4e_C1.1-C1.3_tsinghua_feux.html` | 4e | e4 |
 
 Ne pas modifier ces pages à la main : elles sont produites par `../_generation/` (`python3 build.py besoin`, `python3 build_qcm.py besoin`, `python3 gouvernance.py besoin`).

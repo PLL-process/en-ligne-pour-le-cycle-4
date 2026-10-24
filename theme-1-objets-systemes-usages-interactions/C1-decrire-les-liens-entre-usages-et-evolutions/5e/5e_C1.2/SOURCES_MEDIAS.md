@@ -72,6 +72,21 @@ Les ordres de grandeur (distances d'arrêt, masses, coûts d'entretien) sont **p
 arrondis**, à usage pédagogique. Ils ne valent pas fiche technique de fournisseur, et aucun
 fournisseur réel n'est nommé.
 
+**Séance 4 (ajoutée le 24/10/2026)** — le **tableau du vendeur de Léa** (activité 5) est écrit dans
+la page, sans fichier : trois freins sur un vélo-cargo chargé à environ 150 kg, à sec, sous la pluie
+et freins chauds en bas d'une longue descente. Il est **simulé** et la page le dit à l'élève ;
+masses et coûts d'entretien sont ceux du collège, les distances sont construites pour rester
+cohérentes avec eux (voir la fiche pédagogique). Léa est un personnage inventé.
+
+## La figure insérée en séance 4
+
+L'activité 4 accueille un exercice de l'atelier « Des fonctions aux solutions techniques » (diagramme
+FAST, 5e). Sa figure — l'extrait du diagramme FAST du vélo-cargo, deux principes pour ralentir la
+roue — est un **SVG original sous CC0 1.0**, écrit dans la page par le générateur de l'atelier, avec
+son titre et sa description ; il est déclaré dans le `SOURCES_MEDIAS.md` de l'atelier
+(`ateliers-representations/fast/`, ligne `fast_velo_cargo_freinage.svg`). Aucune image n'est ajoutée
+au dossier `Images/` de ce lot.
+
 ## Ce que le lot ne contient pas
 
 - aucune photographie, aucune capture d'écran de logiciel — les modes opératoires tableur sont

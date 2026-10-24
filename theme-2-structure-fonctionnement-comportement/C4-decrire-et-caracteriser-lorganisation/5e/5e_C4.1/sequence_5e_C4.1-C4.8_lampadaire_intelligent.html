@@ -171,6 +171,14 @@
     border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
   .rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
   @media print{.rappel-ouverture>summary{display:none!important}}
+  /* Bilan : je me positionne, un groupe de boutons radio par compétence */
+  fieldset.positionnement{border:1px solid var(--border);border-radius:10px;padding:8px 12px 10px;margin:10px 0;background:rgba(23,54,102,.35);min-width:0}
+  fieldset.positionnement legend{font-weight:700;color:var(--hl);padding:0 6px;font-size:.92em}
+  fieldset.positionnement .qcm-option{display:flex;gap:8px;align-items:flex-start;padding:4px 0;font-size:.88em}
+  fieldset.positionnement input{accent-color:var(--hl);margin-top:4px;flex:none}
+  fieldset.positionnement label{cursor:pointer}
+  .bonus-defi h3{margin-top:0}
+  @media print{fieldset.positionnement{background:#fff!important;border-color:#999!important}fieldset.positionnement legend{color:#111!important}}
   @media (max-width:480px){   /* n°311 : à 390 px, la barre d'outils tient sur deux lignes au plus */
     .toolbar{gap:6px;margin:8px auto 12px}
     .toolbar .btn{flex:1 1 40%;min-width:0;min-height:44px;padding:6px;font-size:.8rem;line-height:1.2}
@@ -747,11 +755,106 @@
 
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-  <p>🔦 <b>Défi maquette :</b> avec le professeur, monte le lampadaire Grove (capteur luminosité + PIR + LED) et retrouve les 4 expériences de l'activité 3 en vrai.</p>
-  <p>🏠 <b>Défi maison :</b> choisis un objet chez toi (réveil, ventilateur, console…) et dessine SA chaîne d'énergie avec les natures — montre-la à la classe.</p>
-  <p>🌐 <b>Défi Filius :</b> reconstruis le réseau du collège dans Filius et envoie un message de PC-TECHNO-01 vers TABLETTE-07.</p>
-  <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
-  <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+  <p>Trois défis au choix, pour aller plus loin. Chacun a son champ, enregistré avec ton travail, et son corrigé replié&nbsp;: ouvre-le <b>après</b> avoir répondu.</p>
+
+  <div class="exo bonus-defi" id="bonus-maquette">
+    <h3>🔦 Défi maquette</h3>
+    <p>Avec le professeur, monte le lampadaire Grove — capteur de luminosité, détecteur de mouvement PIR et module LED sur la carte Arduino, en très basse tension, câblage vérifié par le professeur. Refais en vrai les quatre expériences de l'activité 3&nbsp;: capteur éclairé ou couvert, main agitée ou non devant le détecteur.</p>
+    <label for="bonusRep"><b>✍ Ce que fait la LED dans chacune des quatre expériences, et ce qui t'a surpris&nbsp;:</b></label>
+    <textarea id="bonusRep" data-save rows="4" placeholder="Capteur éclairé, sans mouvement : la LED…"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <ul>
+    <li>Capteur éclairé, sans mouvement : la LED ____.</li>
+    <li>Capteur couvert, sans mouvement : la LED ____ ; avec la main agitée : ____.</li>
+    <li>Ce qui m'a surpris, c'est ____, parce que ____.</li>
+  </ul>
+</details>
+    <details class="correction corrige-bonus"><summary>✅ Corrigé du défi maquette</summary>
+      <p><b>Ce que tu dois observer</b>, si le programme de la maquette suit la règle de l'activité 3&nbsp;:</p>
+      <ul>
+        <li>capteur éclairé (le jour), aucun mouvement → LED <b>éteinte</b>&nbsp;;</li>
+        <li>capteur couvert (la nuit), aucun mouvement → LED <b>en veille</b>, faible&nbsp;;</li>
+        <li>capteur couvert et main agitée devant le PIR → LED <b>à pleine puissance</b> quelques secondes, puis retour en veille&nbsp;;</li>
+        <li>capteur éclairé et main agitée → LED <b>éteinte</b>.</li>
+      </ul>
+      <p><b>Pourquoi&nbsp;:</b> le capteur de luminosité et le PIR <b>acquièrent</b>&nbsp;; la carte Arduino <b>traite</b> avec la règle «&nbsp;SI nuit ET passage ALORS pleine puissance&nbsp;; SI nuit sans passage ALORS veille&nbsp;»&nbsp;; la LED reçoit l'ordre. Le jour, la règle ne regarde même pas le passage&nbsp;: allumer serait du gaspillage. C'est le simulateur de l'activité 3, en vrai.</p>
+      <p><b>Si la LED reste éteinte la nuit sans passage</b>, le programme de ta maquette ne fait sans doute pas de veille (tout ou rien)&nbsp;: ce n'est pas une panne, c'est une autre règle. Lis-la avec le professeur.</p>
+      <p><b>Erreurs classiques&nbsp;:</b></p>
+      <ul>
+        <li>couvrir le détecteur PIR au lieu du capteur de luminosité → tu ne fais pas la nuit, tu caches le passage&nbsp;;</li>
+        <li>tester tout de suite après la mise sous tension → un détecteur PIR met parfois plusieurs secondes, voire quelques dizaines de secondes, à se stabiliser&nbsp;;</li>
+        <li>poser le capteur de luminosité juste à côté de la LED → la nuit, la LED l'éclaire, la carte «&nbsp;croit&nbsp;» qu'il fait jour et éteint la LED, qui se rallume&nbsp;: elle clignote. Les vrais lampadaires placent leur capteur à l'abri de leur propre lumière&nbsp;;</li>
+        <li>croire que le PIR voit un objet immobile → il réagit à un corps chaud <b>qui bouge</b>&nbsp;;</li>
+        <li>brancher quoi que ce soit sur une prise du secteur → jamais&nbsp;: la maquette reste en très basse tension, alimentée par la carte.</li>
+      </ul>
+    </details>
+  </div>
+
+  <div class="exo bonus-defi" id="bonus-maison">
+    <h3>🏠 Défi maison</h3>
+    <p>Choisis un objet chez toi (réveil, ventilateur, console…) et dessine <b>sa</b> chaîne d'énergie&nbsp;: une flèche d'entrée, des blocs avec leur fonction et le composant écrit dessous, la forme d'énergie sur chaque flèche, et l'action finale à la sortie. Montre-la à la classe.</p>
+    <label for="bonusMaison"><b>✍ Mon objet, et sa chaîne écrite en une ligne avec des flèches →&nbsp;:</b></label>
+    <textarea id="bonusMaison" data-save rows="4" placeholder="Mon objet : … — énergie … → ALIMENTER (…) → …"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <ul>
+    <li>Mon objet est ____ ; l'énergie entre sous forme ____.</li>
+    <li>____ (bloc) : c'est ____ (composant) qui le fait ; sur la flèche suivante passe l'énergie ____.</li>
+    <li>À la sortie, l'action finale est ____.</li>
+  </ul>
+</details>
+    <details class="correction corrige-bonus"><summary>✅ Corrigé du défi maison</summary>
+      <p><b>Il n'y a pas une seule bonne réponse</b>&nbsp;: chaque objet a sa chaîne. Une chaîne juste a toujours une entrée avec sa forme d'énergie, des blocs qui portent une fonction — ALIMENTER (STOCKER pour une pile ou une batterie), DISTRIBUER, CONVERTIR, TRANSMETTRE —, le composant écrit sous chaque bloc, la forme d'énergie sur chaque flèche, et l'action finale à la sortie.</p>
+      <p><b>Exemple 1, le ventilateur&nbsp;:</b> énergie électrique du réseau → ALIMENTER (la prise et le câble) → électrique → DISTRIBUER (l'interrupteur, le sélecteur de vitesse) → électrique → CONVERTIR (le moteur électrique) → mécanique → TRANSMETTRE (l'axe du moteur fait tourner l'hélice) → mécanique → <b>brasser l'air</b>. Une partie de l'énergie se perd en chaleur&nbsp;: le moteur chauffe.</p>
+      <p><b>Exemple 2, le réveil à piles&nbsp;:</b> STOCKER (deux piles — énergie chimique stockée) → électrique → DISTRIBUER (le circuit électronique) → électrique → CONVERTIR (le haut-parleur, qui donne de l'énergie sonore&nbsp;; l'afficheur, qui donne de l'énergie lumineuse) → <b>réveiller, afficher l'heure</b>. TRANSMETTRE est absent&nbsp;: rien ne se déplace. Dessine-le en pointillés, grisé, avec cette raison écrite à côté.</p>
+      <p><b>Pourquoi&nbsp;:</b> ce sont les fonctions de la chaîne d'énergie du lampadaire (activité 2)&nbsp;; d'un objet à l'autre, seuls les composants et les formes d'énergie changent.</p>
+      <p><b>Erreurs classiques&nbsp;:</b></p>
+      <ul>
+        <li>écrire le nom du composant dans le bloc → le bloc dit ce qui est fait (un verbe), le composant va dessous&nbsp;;</li>
+        <li>écrire «&nbsp;électrique&nbsp;» dans un bloc → une forme d'énergie va sur une flèche&nbsp;;</li>
+        <li>dire que la prise «&nbsp;produit&nbsp;» l'électricité → elle amène l'énergie du réseau&nbsp;;</li>
+        <li>mettre la télécommande dans la chaîne d'énergie → elle envoie une information&nbsp;: elle appartient à la chaîne d'information&nbsp;;</li>
+        <li>inventer un bloc TRANSMETTRE quand rien ne bouge, ou oublier les pertes en chaleur.</li>
+      </ul>
+    </details>
+  </div>
+
+  <div class="exo bonus-defi" id="bonus-filius">
+    <h3>🌐 Défi Filius</h3>
+    <p>Reconstruis le réseau du collège dans le logiciel gratuit Filius, puis envoie un message de PC-TECHNO-01 vers TABLETTE-07. Enfin, donne à une deuxième machine la même adresse que la tablette, et recommence.</p>
+    <label for="bonusFilius"><b>✍ Ce que j'ai construit, l'adresse de chaque machine, et ce que j'ai observé&nbsp;:</b></label>
+    <textarea id="bonusFilius" data-save rows="4" placeholder="J'ai relié … au switch. PC-TECHNO-01 a l'adresse … Quand j'envoie …"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <ul>
+    <li>J'ai relié ____ machines au switch avec des câbles.</li>
+    <li>PC-TECHNO-01 a l'adresse ____ et TABLETTE-07 l'adresse ____.</li>
+    <li>Quand j'ai envoyé un ping, j'ai vu ____ ; avec deux adresses identiques, ____.</li>
+  </ul>
+</details>
+    <details class="correction corrige-bonus"><summary>✅ Corrigé du défi Filius</summary>
+      <p><b>Ce que tu construis</b> (mode conception)&nbsp;: un ordinateur ou un portable pour chaque équipement — PC-TECHNO-01, TABLETTE-07, IMPRIMANTE-CDI, SERVEUR-COLLEGE —, un <b>switch</b> (le commutateur), et un câble de chaque machine jusqu'au switch. Filius n'a pas de borne Wi-Fi&nbsp;: la tablette y devient un portable relié par un câble. C'est une simplification du logiciel, pas du vrai réseau.</p>
+      <p><b>Ce que tu règles&nbsp;:</b> chaque machine reçoit son nom <b>et une adresse IP différente</b>, avec le même masque 255.255.255.0 — par exemple 192.168.0.1 pour PC-TECHNO-01, 192.168.0.7 pour TABLETTE-07, 192.168.0.10 pour SERVEUR-COLLEGE.</p>
+      <p><b>Ce que tu dois observer</b> (mode simulation)&nbsp;:</p>
+      <ul>
+        <li>sur PC-TECHNO-01, installe la «&nbsp;Ligne de commande&nbsp;» et tape <code>ping 192.168.0.7</code> → des lignes de réponse arrivent, qui commencent par «&nbsp;From 192.168.0.7&nbsp;»&nbsp;: le message est arrivé, et la tablette a répondu&nbsp;;</li>
+        <li>clic droit sur TABLETTE-07, puis «&nbsp;Afficher les échanges de données&nbsp;» → chaque message porte l'adresse de l'expéditeur et celle du destinataire&nbsp;;</li>
+        <li>avec deux machines à la même adresse 192.168.0.7 → le ping peut encore répondre, mais tu ne sais plus <b>quelle</b> machine a répondu&nbsp;: regarde les échanges de données des deux. C'est le doublon «&nbsp;TABLETTE-07&nbsp;» du jeu du courrier.</li>
+      </ul>
+      <p><b>Pourquoi&nbsp;:</b> le réseau ne livre pas au nom écrit sur l'étiquette, il livre à l'<b>adresse</b>&nbsp;: dans Filius, le ping se fait avec l'adresse IP. Le nom aide les personnes&nbsp;; l'adresse, unique, sert au réseau. Ta simulation vérifie la règle trouvée avec les enveloppes.</p>
+      <p><b>Erreurs classiques&nbsp;:</b></p>
+      <ul>
+        <li>oublier de relier une machine au switch → aucune réponse n'arrive&nbsp;;</li>
+        <li>taper le nom au lieu de l'adresse dans le ping → sans serveur de noms, la commande ne trouve pas la machine&nbsp;;</li>
+        <li>rester en mode conception → rien ne peut être envoyé&nbsp;: passe en mode simulation&nbsp;;</li>
+        <li>donner deux fois la même adresse sans le vouloir → c'est le conflit du jeu du courrier.</li>
+      </ul>
+    </details>
+  </div>
 </section>
 
 <section class="card">
@@ -812,6 +915,64 @@
       </div>
     </div>
   </div>
+  <h3 id="je-me-positionne">Je me positionne</h3>
+  <p>Pour chaque compétence travaillée, coche où tu en es aujourd'hui. Ce n'est pas une note&nbsp;: c'est ce que tu sais faire, et ce qu'il te reste à revoir. Ton choix est enregistré avec ton travail.</p>
+  <fieldset class="qcm-groupe positionnement" id="pos_c41">
+    <legend>5e_C4.1 — associer une solution à chaque fonction technique&nbsp;:</legend>
+    <div class="qcm-option"><input type="radio" name="pos_c41" id="pos_c41_1" value="insuffisante"><label for="pos_c41_1">🔴 Maîtrise insuffisante — je confonds encore fonction et solution</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c41" id="pos_c41_2" value="fragile"><label for="pos_c41_2">🟠 Maîtrise fragile — j'associe avec le schéma ou le FAST sous les yeux</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c41" id="pos_c41_3" value="satisfaisante"><label for="pos_c41_3">🟢 Maîtrise satisfaisante — je lis un FAST dans les deux sens, « comment ? » et « pourquoi ? »</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c41" id="pos_c41_4" value="tres-bonne"><label for="pos_c41_4">⭐ Très bonne maîtrise — je complète le FAST d'un objet nouveau et j'écarte l'intrus</label></div>
+  </fieldset>
+  <fieldset class="qcm-groupe positionnement" id="pos_c42">
+    <legend>5e_C4.2 — repérer les constituants de la chaîne d'énergie&nbsp;:</legend>
+    <div class="qcm-option"><input type="radio" name="pos_c42" id="pos_c42_1" value="insuffisante"><label for="pos_c42_1">🔴 Maîtrise insuffisante — je ne sais pas encore par où passe l'énergie</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c42" id="pos_c42_2" value="fragile"><label for="pos_c42_2">🟠 Maîtrise fragile — je les retrouve avec la chaîne fournie sous les yeux</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c42" id="pos_c42_3" value="satisfaisante"><label for="pos_c42_3">🟢 Maîtrise satisfaisante — je place panneau, régulateur, batterie, interrupteur et LED dans la chaîne fournie</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c42" id="pos_c42_4" value="tres-bonne"><label for="pos_c42_4">⭐ Très bonne maîtrise — je retrouve la chaîne d'énergie d'un objet nouveau</label></div>
+  </fieldset>
+  <fieldset class="qcm-groupe positionnement" id="pos_c43">
+    <legend>5e_C4.3 — dire la nature de l'énergie à chaque étape&nbsp;:</legend>
+    <div class="qcm-option"><input type="radio" name="pos_c43" id="pos_c43_1" value="insuffisante"><label for="pos_c43_1">🔴 Maîtrise insuffisante — je confonds encore les formes d'énergie</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c43" id="pos_c43_2" value="fragile"><label for="pos_c43_2">🟠 Maîtrise fragile — je les retrouve avec l'aide</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c43" id="pos_c43_3" value="satisfaisante"><label for="pos_c43_3">🟢 Maîtrise satisfaisante — je dis ce qui entre et ce qui sort de chaque constituant</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c43" id="pos_c43_4" value="tres-bonne"><label for="pos_c43_4">⭐ Très bonne maîtrise — je dis aussi où l'énergie se perd en chaleur</label></div>
+  </fieldset>
+  <fieldset class="qcm-groupe positionnement" id="pos_c44">
+    <legend>5e_C4.4 — reconnaître les matériaux et justifier leur choix&nbsp;:</legend>
+    <div class="qcm-option"><input type="radio" name="pos_c44" id="pos_c44_1" value="insuffisante"><label for="pos_c44_1">🔴 Maîtrise insuffisante — je ne relie pas un matériau à l'endroit où vit la pièce</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c44" id="pos_c44_2" value="fragile"><label for="pos_c44_2">🟠 Maîtrise fragile — je nomme les matériaux, sans justifier</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c44" id="pos_c44_3" value="satisfaisante"><label for="pos_c44_3">🟢 Maîtrise satisfaisante — je justifie un matériau par son rôle et son environnement</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c44" id="pos_c44_4" value="tres-bonne"><label for="pos_c44_4">⭐ Très bonne maîtrise — je propose et je justifie le matériau d'une pièce nouvelle</label></div>
+  </fieldset>
+  <fieldset class="qcm-groupe positionnement" id="pos_c45">
+    <legend>5e_C4.5 — repérer les constituants de la chaîne d'information&nbsp;:</legend>
+    <div class="qcm-option"><input type="radio" name="pos_c45" id="pos_c45_1" value="insuffisante"><label for="pos_c45_1">🔴 Maîtrise insuffisante — je confonds encore chaîne d'information et chaîne d'énergie</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c45" id="pos_c45_2" value="fragile"><label for="pos_c45_2">🟠 Maîtrise fragile — je retrouve acquérir, traiter, commander avec le schéma</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c45" id="pos_c45_3" value="satisfaisante"><label for="pos_c45_3">🟢 Maîtrise satisfaisante — je dis quel constituant acquiert, traite et commande</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c45" id="pos_c45_4" value="tres-bonne"><label for="pos_c45_4">⭐ Très bonne maîtrise — j'explique comment l'information commande l'énergie</label></div>
+  </fieldset>
+  <fieldset class="qcm-groupe positionnement" id="pos_c46">
+    <legend>5e_C4.6 — choisir des descripteurs et lire une table&nbsp;:</legend>
+    <div class="qcm-option"><input type="radio" name="pos_c46" id="pos_c46_1" value="insuffisante"><label for="pos_c46_1">🔴 Maîtrise insuffisante — je confonds encore ligne et colonne</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c46" id="pos_c46_2" value="fragile"><label for="pos_c46_2">🟠 Maîtrise fragile — je lis la table, mais je choisis mal un descripteur</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c46" id="pos_c46_3" value="satisfaisante"><label for="pos_c46_3">🟢 Maîtrise satisfaisante — je choisis un descripteur clair, avec son type, et je lis la table pour agir</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c46" id="pos_c46_4" value="tres-bonne"><label for="pos_c46_4">⭐ Très bonne maîtrise — j'ajoute un descripteur utile, avec son type et son format</label></div>
+  </fieldset>
+  <fieldset class="qcm-groupe positionnement" id="pos_c47">
+    <legend>5e_C4.7 — reconnaître les composants d'un réseau local&nbsp;:</legend>
+    <div class="qcm-option"><input type="radio" name="pos_c47" id="pos_c47_1" value="insuffisante"><label for="pos_c47_1">🔴 Maîtrise insuffisante — je confonds encore commutateur et borne Wi-Fi</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c47" id="pos_c47_2" value="fragile"><label for="pos_c47_2">🟠 Maîtrise fragile — je les reconnais avec l'aide</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c47" id="pos_c47_3" value="satisfaisante"><label for="pos_c47_3">🟢 Maîtrise satisfaisante — je nomme terminaux, commutateur, borne Wi-Fi, serveur, et je distingue filaire et sans fil</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c47" id="pos_c47_4" value="tres-bonne"><label for="pos_c47_4">⭐ Très bonne maîtrise — je décris qui est relié à quoi, et comment</label></div>
+  </fieldset>
+  <fieldset class="qcm-groupe positionnement" id="pos_c48">
+    <legend>5e_C4.8 — justifier l'identification unique des terminaux&nbsp;:</legend>
+    <div class="qcm-option"><input type="radio" name="pos_c48" id="pos_c48_1" value="insuffisante"><label for="pos_c48_1">🔴 Maîtrise insuffisante — je ne sais pas encore pourquoi un terminal porte un nom</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c48" id="pos_c48_2" value="fragile"><label for="pos_c48_2">🟠 Maîtrise fragile — je livre les messages, mais j'explique mal le conflit</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c48" id="pos_c48_3" value="satisfaisante"><label for="pos_c48_3">🟢 Maîtrise satisfaisante — je justifie qu'une identification unique est nécessaire pour livrer</label></div>
+    <div class="qcm-option"><input type="radio" name="pos_c48" id="pos_c48_4" value="tres-bonne"><label for="pos_c48_4">⭐ Très bonne maîtrise — je prédis ce que donnent deux adresses identiques, et je l'ai vérifié</label></div>
+  </fieldset>
 </section>
 
 <section class="card" style="text-align:center">

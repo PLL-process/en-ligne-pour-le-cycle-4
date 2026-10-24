@@ -215,6 +215,8 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
 .a5 .liste-consigne{margin:4px 0 10px;padding-left:22px}
 .a5 .liste-consigne li{margin:3px 0}
 .a5 label.champ{display:block;font-weight:600;margin:12px 0 4px;color:var(--subtitle)}
+.a5 textarea{font-family:inherit;font-size:.96em;line-height:1.45}
+.a5 .etayage>ul{padding-left:32px}
 .a5 .regard{font-size:.94em;margin:8px 0}
 .a5 .regard ul{margin:4px 0;padding-left:22px}
 .a5 .enc{font-weight:700;margin-left:6px}
@@ -1105,16 +1107,18 @@ parce que des classes l'utilisent déjà.</p>
     return p.map(function(x){ return x.trim(); }).filter(function(x){ return x.length > 1; });
   }
   function verifierChoix(msgs){
-    var justes = 0;
+    var justes = 0, vides = 0;
     Object.keys(QUESTIONS).forEach(function(nom){
       var q = QUESTIONS[nom], c = racine.querySelector('input[name="' + nom + '"]:checked');
       var fb = document.getElementById(nom + "_fb");
-      if (!c){ marquer(nom, "vide"); if (fb) fb.textContent = ""; msgs.push("Une question de 5.a n'a pas encore de réponse : choisis une proposition."); return; }
+      if (!c){ vides++; marquer(nom, "vide"); if (fb) fb.textContent = ""; return; }
       var ok = c.id === q.bonne;
       if (ok) justes++;
       marquer(nom, ok ? "juste" : "faux");
       if (fb) fb.textContent = (ok ? "✔ " : "✘ ") + q.retours[c.id];
     });
+    if (vides) msgs.push(vides === 1 ? "Une question de 5.a n'a pas encore de réponse : choisis une proposition."
+                                     : vides + " questions de 5.a n'ont pas encore de réponse : choisis une proposition pour chacune.");
     return justes;
   }
   function verifierTexte(msgs){

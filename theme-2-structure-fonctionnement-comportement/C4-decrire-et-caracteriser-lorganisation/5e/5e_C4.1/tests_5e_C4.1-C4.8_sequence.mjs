@@ -344,6 +344,51 @@ ok('35 · une sauvegarde de la version à cinq séances se relit : 7 / 8, séanc
    err.length === errAvant && reprise.prog.includes('7 / 8') && reprise.s5 === '✔' && reprise.s6 === '' &&
    reprise.e7.startsWith('la sonnerie') && reprise.hyp === 'Ancienne hypothèse.', JSON.stringify(reprise));
 
+/* ── clôture : le Bonus a un champ et un corrigé complet par défi ; le bilan a son positionnement ── */
+await ouvrirSeance(7);
+const bonus = await p.evaluate(() => {
+  const sec = [...document.querySelectorAll('#s6 section.card')].find(s => /Bonus/.test(s.querySelector('h2')?.textContent || ''));
+  return [...sec.querySelectorAll('.bonus-defi')].map(d => {
+    const c = d.querySelector('details.correction');
+    const champ = d.querySelector('textarea[id]');
+    return { id: d.id, champ: champ ? champ.id : null,
+      etaye: !!(champ && champ.nextElementSibling && champ.nextElementSibling.matches('details.etayage')),
+      replie: !!c && !c.open, resume: c ? c.querySelector('summary').textContent : '',
+      erreurs: !!c && /Erreurs classiques/.test(c.textContent), pourquoi: !!c && /Pourquoi/.test(c.textContent),
+      texte: c ? c.textContent : '' };
+  });
+});
+ok('36 · Bonus : trois défis, chacun avec son champ, sa version étayée et un corrigé replié (réponse, pourquoi, erreurs classiques)',
+   bonus.length === 3 && bonus.every(b => b.champ && b.etaye && b.replie && /Corrigé/.test(b.resume) && b.erreurs && b.pourquoi),
+   bonus.map(b => `${b.id}:${b.champ}/${b.etaye}/${b.replie}/${b.erreurs}/${b.pourquoi}`).join(' · '));
+const [maq, mai, fil] = bonus.map(b => b.texte);
+ok('37 · les corrigés disent ce qu\'il faut observer : 4 états de la LED, une chaîne exemple fléchée, le ping et le doublon d\'adresse dans Filius',
+   /éteinte[\s\S]*en veille[\s\S]*pleine puissance[\s\S]*éteinte/.test(maq)
+   && /ALIMENTER[\s\S]*DISTRIBUER[\s\S]*CONVERTIR/.test(mai) && /TRANSMETTRE est absent/.test(mai)
+   && /ping 192\.168\.0\.7/.test(fil) && /même adresse/.test(fil) && /Afficher les échanges de données/.test(fil),
+   [maq.length, mai.length, fil.length].join(' / ') + ' caractères');
+await p.fill('#bonusFilius', 'Essai : PC-TECHNO-01 en 192.168.0.1.');
+const pos = await p.evaluate(() => [...document.querySelectorAll('#s6 fieldset.positionnement')].map(f => ({
+  code: (f.querySelector('legend')?.textContent || '').slice(0, 7),
+  radios: f.querySelectorAll('input[type=radio]').length,
+  noms: new Set([...f.querySelectorAll('input[type=radio]')].map(r => r.name)).size,
+  etiquetes: [...f.querySelectorAll('input[type=radio]')].every(r => !!document.querySelector(`label[for="${r.id}"]`)) })));
+const codes = ['5e_C4.1', '5e_C4.2', '5e_C4.3', '5e_C4.4', '5e_C4.5', '5e_C4.6', '5e_C4.7', '5e_C4.8'];
+ok('38 · bilan : « Je me positionne », un groupe de quatre boutons radio par code (les huit), chacun étiqueté',
+   pos.length === 8 && pos.every((g, i) => g.code === codes[i] && g.radios === 4 && g.noms === 1 && g.etiquetes),
+   pos.map(g => `${g.code}:${g.radios}`).join(' '));
+for (const [i, c] of ['c41', 'c42', 'c43', 'c44', 'c45', 'c46', 'c47', 'c48'].entries())
+  await p.check(`#pos_${c}_${(i % 4) + 1}`);
+await p.waitForTimeout(800);
+await p.reload({ waitUntil: 'load' });
+await p.waitForTimeout(350);
+const posApres = await p.evaluate(() => ['c41', 'c42', 'c43', 'c44', 'c45', 'c46', 'c47', 'c48']
+  .map(c => (document.querySelector(`input[name="pos_${c}"]:checked`) || {}).value || '-'));
+ok('39 · le positionnement et les champs du Bonus survivent au rechargement',
+   posApres.join() === 'insuffisante,fragile,satisfaisante,tres-bonne,insuffisante,fragile,satisfaisante,tres-bonne'
+   && (await p.inputValue('#bonusFilius')).startsWith('Essai'), posApres.join(' '));
+ok('40 · aucune erreur JS jusqu\'à la fin', err.length === 0, err.slice(0, 2).join(' | '));
+
 const n = T.filter(t => t.ok).length;
 console.log(T.map(t => `${t.ok ? '✅' : '❌'} ${t.n}${t.d ? ' — ' + t.d : ''}`).join('\n'));
 console.log(`\n${n} / ${T.length}`);

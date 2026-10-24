@@ -2,7 +2,7 @@
 """Suite de tests du lot 4e_C1.1 à C1.3 — Tsinghua, concevoir avant de connecter.
 
 Ne sont déclarés dans le rapport que les tests présents ici et réellement
-exécutés. Deux fichiers sont couverts : la séquence (44 contrôles) et le QCM
+exécutés. Deux fichiers sont couverts : la séquence (46 contrôles) et le QCM
 (17 contrôles).
 
 PÉRIMÈTRE (règle d'or n°47) — ce que cette suite vérifie :
@@ -223,6 +223,15 @@ async def tester_sequence(p):
         deb.append(await pg.evaluate("[document.querySelector('.seance-panel.active').id, document.documentElement.scrollWidth-document.documentElement.clientWidth]"))
     r.append(("390 px : les cinq séances s'ouvrent, sans défilement horizontal, sans erreur JS",
               [x[0] for x in deb]==["s1","s2","s3","s4","s5"] and all(x[1]<=0 for x in deb) and not errs, str(deb)))
+    # de séance en séance par le bouton « Séance N — … › » en bas de chaque panneau, puis la reprise après rechargement
+    await pg.click("#tab-s1"); suite=[]
+    for _ in range(4):
+        await pg.click(".seance-panel.active .vers-seance"); await pg.wait_for_timeout(120)
+        suite.append(await pg.evaluate("[document.querySelector('.seance-panel.active').id, document.documentElement.scrollWidth-document.documentElement.clientWidth]"))
+    r.append(("390 px : chaque séance mène à la suivante par son bouton, jusqu'à la séance 5", [x[0] for x in suite]==["s2","s3","s4","s5"] and all(x[1]<=0 for x in suite), str(suite)))
+    await pg.evaluate("""()=>{const e=document.getElementById('meta1'); e.value='reprise à 390 px'; e.dispatchEvent(new Event('input',{bubbles:true}));}""")
+    await pg.reload(); await pg.wait_for_timeout(200)
+    r.append(("390 px : la réponse du bilan (séance 5) survit au rechargement", await pg.evaluate("document.getElementById('meta1').value")=="reprise à 390 px" and not errs))
     for x in r:
         n,o = x[0], x[1]
         print(("✅" if o else "❌"), n, x[2] if len(x)>2 else "")

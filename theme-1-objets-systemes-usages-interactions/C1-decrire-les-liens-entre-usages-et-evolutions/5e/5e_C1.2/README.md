@@ -1,8 +1,9 @@
 # 5e_C1.2 — « Sainte-Luce : quel frein pour les vélos du collège ? »
 
 **Lot complet** — séquence + QCM 30 questions + 2 synthèses + fiche + matrice + 2 jeux de données +
-2 corrigés graphiques CC0 + suite de 36 tests. Auteur : **Fable**, 9 août 2026. **Refonte (v2)** :
-l'état antérieur est archivé.
+2 corrigés graphiques CC0 + suite de 50 tests (et un banc de 33 pour l'ouverture repliée). Auteur :
+**Fable**, 9 août 2026. **Refonte (v2)** : l'état antérieur est archivé. **v2.1 (24/10/2026)** : une
+séance 4 d'exercices.
 
 ➡️ **[Ouvrir la séquence](sequence_5e_C1.2_sainte_luce_freinage.html)** ·
 [Le QCM](qcm_5e_C1.2_freinage.html) ·
@@ -21,8 +22,11 @@ est à quelques centaines de mètres.
 | 1 | **Une fonction, trois principes** — avec un vélo dans les mains | 40 min |
 | 2 | **Comparer avec des chiffres** — six critères, et ce qu'ils ne disent pas | 50 min |
 | 3 | **Choisir pour Sainte-Luce** — un principe, deux chiffres, une perte assumée | 40 min |
+| 4 | **Conseiller** — le vélo-cargo de Léa : deux principes dans un diagramme FAST (exercice de l'atelier FAST 5e), puis la grande descente, chargée, à conseiller avec des chiffres ; Bonus, bilan et QCM | 15 + 25 + 10 min |
 
-145 min annoncés pour 165 disponibles, billet d'entrée et bilan compris (5 + 40 + 50 + 40 + 10).
+185 min annoncés pour 220 disponibles (4 séances de 55 min), billet d'entrée et bilan compris
+(5 + 40 · 50 · 40 · 15 + 25 + 10). La séance 4, faite d'exercices, a été ajoutée le 24/10/2026 à la
+demande du professeur ; la clôture y est passée.
 
 **Le piège qui porte tout le lot** : le frein à patins gagne sur **trois critères sur six** — masse,
 prix, réparabilité — et c'est pourtant le mauvais choix ici. Compter les colonnes gagnées revient à

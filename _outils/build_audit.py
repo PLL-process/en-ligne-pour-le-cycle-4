@@ -320,7 +320,7 @@ OVERLAY = {
                 "5 séances de 55 min portant 4e_C1.1 à C1.3 (la 5e, ajoutée le 24/10/2026 : trois "
                 "exercices des ateliers des représentations — bête à cornes, carte mentale — puis la "
                 "clôture), QCM 33 q dont 6 illustrées, 2 synthèses, fiche, "
-                "matrice, 2 corrigés graphiques CC0, suite de 61 tests exécutés et verts. SEUL LOT "
+                "matrice, 2 corrigés graphiques CC0, suite de 63 tests exécutés et verts. SEUL LOT "
                 "DU DÉPÔT bâti sur des données réelles et sourcées (ministère de l'Intérieur, "
                 "JRC/EFFIS, ADEME). Mesure de température au parcours obligatoire (règle n°58).",
         anomalies="Aucune donnée n'est produite par les élèves sauf la température. Les chiffres "

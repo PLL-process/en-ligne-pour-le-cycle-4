@@ -30,5 +30,6 @@ Le programme de technologie ne donne pas de nom à ce schéma : il demande d'exp
 |---|---|---|
 | `theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/5e/5e_C1.3/sequence_C1.3-C1.4_SI_gestion_donnees.html` | 5e | e1 |
 | `theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/3e/3e_C1.5/sequence-numerique-societe-economie-environnement-sante.html` | 3e | e5 |
+| `theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/4e/4e_C1.1/sequence_4e_C1.1-C1.3_tsinghua_feux.html` | 4e | e3, e4 |
 
 Ne pas modifier ces pages à la main : elles sont produites par `../_generation/` (`python3 build.py carte_mentale`, `python3 build_qcm.py carte_mentale`, `python3 gouvernance.py carte_mentale`).
