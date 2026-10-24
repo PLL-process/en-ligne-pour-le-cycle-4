@@ -140,7 +140,7 @@ ARBO_C = arborescence(
 # 4e — l'arrosage connecté du jardin partagé
 OPTIONS_E3 = ["n'arrose que si la terre est sèche",
               "Mme Joseph suit tout sur son téléphone",
-              "la pompe consomme de l'électricité",
+              "la pompe a besoin d'électricité",
               "s'arrête si le réseau wifi est coupé",
               "les plantes ont besoin d'eau pour pousser",
               "le jardin est derrière la cantine"]
@@ -169,7 +169,7 @@ CM_ARROSAGE_A_COMPLETER = _arrosage(
 CM_ARROSAGE_CORRIGE = _arrosage(
     "cm-arrosage-c", "Carte mentale de l'arrosage connecté du jardin, complétée",
     "Avantages : « arrose même pendant les vacances », « n'arrose que si la terre est sèche », « Mme Joseph suit tout sur son "
-    "téléphone ». Inconvénients : « coûte cher à l'achat », « la pompe consomme de l'électricité », « s'arrête si le réseau "
+    "téléphone ». Inconvénients : « coûte cher à l'achat », « la pompe a besoin d'électricité », « s'arrête si le réseau "
     "wifi est coupé », « les capteurs s'usent, à changer ».",
     ["arrose même pendant les vacances", OPTIONS_E3[0], OPTIONS_E3[1]],
     ["coûte cher à l'achat", OPTIONS_E3[2], OPTIONS_E3[3], "les capteurs s'usent, à changer"])
@@ -494,13 +494,13 @@ E3 = dict(
                               options=OPTIONS_E3, bonnes=OPTIONS_E3[0:2], groupe="av",
                               indice="Branche Avantages : choisis ce que le système fait de mieux que l'arrosoir (et pas deux fois la même étiquette)."),
                          dict(name="a2", cible="cm-a2", legende="Branche « Avantages » — seconde feuille vide",
-                              options=OPTIONS_E3, bonnes=OPTIONS_E3[0:2], groupe="av",
+                              options=OPTIONS_E3, bonnes=[OPTIONS_E3[1], OPTIONS_E3[0]], groupe="av",
                               indice="Branche Avantages : choisis ce que le système fait de mieux que l'arrosoir (et pas deux fois la même étiquette)."),
                          dict(name="i1", cible="cm-i1", legende="Branche « Inconvénients » — première feuille vide",
                               options=OPTIONS_E3, bonnes=OPTIONS_E3[2:4], groupe="inc",
                               indice="Branche Inconvénients : choisis ce que le système coûte ou rend fragile (et pas deux fois la même étiquette)."),
                          dict(name="i2", cible="cm-i2", legende="Branche « Inconvénients » — deuxième feuille vide",
-                              options=OPTIONS_E3, bonnes=OPTIONS_E3[2:4], groupe="inc",
+                              options=OPTIONS_E3, bonnes=[OPTIONS_E3[3], OPTIONS_E3[2]], groupe="inc",
                               indice="Branche Inconvénients : choisis ce que le système coûte ou rend fragile (et pas deux fois la même étiquette).")]),
              dict(type="choix", name="hors",
                   legende="Pourquoi « les plantes ont besoin d'eau pour pousser » n'a-t-il pas de feuille&nbsp;?",
@@ -512,7 +512,8 @@ E3 = dict(
                   retours={"faux": "C'est vrai, au contraire : les plantes ont besoin d'eau. Le problème est ailleurs.",
                            "long": "Elle tiendrait en deux lignes. Ce n'est pas sa longueur qui l'écarte, c'est son sujet.",
                            "plantes": "Les plantes ont bien leur feuille dans « Pour qui ? ». Mais cette phrase-là ne dit ni un avantage ni un inconvénient.",
-                           "hors": "Oui : c'est vrai avec l'arrosoir comme avec le système. Ce n'est donc ni un avantage ni un inconvénient de l'évolution."}),
+                           "hors": "Oui : c'est vrai avec l'arrosoir comme avec le système. Ce n'est donc ni un avantage ni un inconvénient de l'évolution."},
+                  indice="Demande-toi si cette phrase était déjà vraie au temps de l'arrosoir."),
              dict(type="texte", name="mafeuille", lignes=2, minCar=6, miroir="cm-ix",
                   label="Ta feuille, dans la dernière case des Inconvénients&nbsp;: un autre inconvénient, en quelques mots.",
                   criteres=[dict(label="ta feuille est courte&nbsp;: quelques mots, pas plus de deux lignes de la carte",
@@ -525,7 +526,7 @@ E3 = dict(
                                          r"moins (de |d.)?(eleves|visite|passage|observ)|plus personne|ne viennent plus|"
                                          r"ne voi|regard"],
                                  manque="Dis ce que le système coûte, fait perdre ou rend fragile : l'argent, l'énergie, les pannes, la présence des élèves…")],
-                  interdits=[dict(motifs=[r"wifi", r"pompe consomme", r"cher a l.achat"],
+                  interdits=[dict(motifs=[r"wifi", r"pompe (a besoin|consomme)", r"cher a l.achat"],
                                   message="Cette idée est déjà sur la carte : trouve un autre inconvénient.")],
                   etayage=["Il faut … (changer, réparer, payer) …", "Les élèves … (venir, regarder) …"],
                   exemple="les capteurs s'usent, à changer")],
@@ -534,7 +535,7 @@ E3 = dict(
            "sujet.</p>",
            "<p>« n'arrose que si la terre est sèche » → moins d'eau perdue qu'à l'arrosoir → <b>avantage</b>.<br>"
            "« Mme Joseph suit tout sur son téléphone » → elle sait ce qui se passe sans venir → <b>avantage</b>.<br>"
-           "« la pompe consomme de l'électricité » → l'arrosoir n'en consommait pas → <b>inconvénient</b>.<br>"
+           "« la pompe a besoin d'électricité » → l'arrosoir n'en avait pas besoin → <b>inconvénient</b>.<br>"
            "« s'arrête si le réseau wifi est coupé » → le système devient fragile → <b>inconvénient</b>.<br>"
            "« les plantes ont besoin d'eau » → vrai avant comme après → <b>hors sujet</b>.</p>"],
     jumeau=dict(consigne="Le collège remplace les clés de la salle de technologie par un badge électronique. Donne un avantage, "
@@ -546,7 +547,7 @@ E3 = dict(
         '<figure class="figure">' + CM_ARROSAGE_CORRIGE + '<figcaption>La carte mentale complétée (la dernière feuille est un exemple de réponse).</figcaption></figure>',
         "<b>« n'arrose que si la terre est sèche »</b> → moins d'eau gaspillée qu'à l'arrosoir → <b>Avantages</b>",
         "<b>« Mme Joseph suit tout sur son téléphone »</b> → elle sait sans se déplacer → <b>Avantages</b>",
-        "<b>« la pompe consomme de l'électricité »</b> → une dépense d'énergie nouvelle → <b>Inconvénients</b>",
+        "<b>« la pompe a besoin d'électricité »</b> → une dépense d'énergie nouvelle → <b>Inconvénients</b>",
         "<b>« s'arrête si le réseau wifi est coupé »</b> → le système dépend du réseau → <b>Inconvénients</b>",
         "<b>« les plantes ont besoin d'eau pour pousser »</b> → vrai, mais vrai aussi à l'arrosoir → <b>hors sujet</b>",
         "<b>« le jardin est derrière la cantine »</b> → vrai, mais sans rapport avec l'évolution → <b>hors sujet</b>",
@@ -818,7 +819,8 @@ E6 = dict(
                   retours={"4": "Oui : la carte mentale range les idées par familles, sans ordre. On sait ce que fait la station, pas dans quel ordre.",
                            "1": "Le texte donne l'ordre avec ses mots : « lit… si… sinon… puis elle recommence ».",
                            "2": "L'algorithme donne l'ordre ligne après ligne : on lit le vent d'abord, on teste ensuite.",
-                           "3": "L'algorigramme donne l'ordre avec ses flèches : la lecture du vent est avant le losange."}),
+                           "3": "L'algorigramme donne l'ordre avec ses flèches : la lecture du vent est avant le losange."},
+                  indice="Cherche la représentation qui n'a ni « puis », ni lignes successives, ni flèches."),
              dict(type="classer", name="choix",
                   categories=[("carte", "la carte mentale"), ("energie", "la chaîne d'énergie"), ("algo", "l'algorigramme"),
                               ("pieuvre", "le diagramme des interacteurs extérieurs (diagramme pieuvre)"), ("tableau", "un tableau")],
@@ -851,10 +853,13 @@ E6 = dict(
            "rassembler, réviser → organiser des idées&nbsp;; montrer comment l'énergie arrive → un chemin&nbsp;; dans quel ordre → "
            "des étapes et des tests&nbsp;; ce qui entoure → l'objet au centre&nbsp;; comparer des valeurs → des lignes et des "
            "colonnes.</p>",
-           "<p>① des phrases → <b>texte</b>&nbsp;; ② des lignes « si… alors… sinon » → <b>algorithme</b>&nbsp;; ③ un losange et "
-           "des flèches → <b>algorigramme</b>&nbsp;; ④ un centre et des branches → <b>carte mentale</b>.<br>"
-           "L'ordre&nbsp;: ①, ② et ③ disent « d'abord… ensuite… »&nbsp;; ④ n'a ni flèche ni ligne numérotée → <b>pas d'ordre</b>.<br>"
-           "Questions 1 et 6 → organiser, retenir → <b>carte mentale</b>.<br>"
+           "<p>Les quatre formes&nbsp;:</p><ul><li>① des phrases → <b>texte</b>&nbsp;;</li>"
+           "<li>② des lignes « si… alors… sinon » → <b>algorithme</b>&nbsp;;</li>"
+           "<li>③ un losange et des flèches → <b>algorigramme</b>&nbsp;;</li>"
+           "<li>④ un centre et des branches → <b>carte mentale</b>.</li></ul>"
+           "<p>L'ordre&nbsp;: les trois premières disent « d'abord… ensuite… »&nbsp;; la carte mentale n'a ni flèche ni ligne "
+           "→ <b>pas d'ordre</b>.</p>"
+           "<p>Questions 1 et 6 → organiser, retenir → <b>carte mentale</b>.<br>"
            "Question 2 → le soleil, le panneau, la batterie, la sirène&nbsp;: un chemin de l'énergie → <b>chaîne d'énergie</b>.<br>"
            "Question 3 → lire, comparer, déclencher&nbsp;: un ordre et un test → <b>algorigramme</b>.<br>"
            "Question 4 → la station au centre, ce qui l'entoure autour → <b>diagramme des interacteurs</b>.<br>"
@@ -941,8 +946,10 @@ COURS = {
           "<tr><td>chaque idée dans sa branche</td><td>un avantage rangé dans les inconvénients</td></tr></table></div>"
           "<h3>Ce qu'elle ne montre pas</h3><ul>"
           "<li>Pas de flèches, pas d'ordre&nbsp;: ce n'est pas un défaut. Pour montrer ce qui circule ou dans quel ordre, on "
-          "prend une chaîne d'énergie, une chaîne d'information ou un algorigramme.</li></ul>",
-    "3e": "<h3>De la carte à l'argumentaire</h3><ul>"
+          "prend une chaîne d'énergie, une chaîne d'information ou un algorigramme.</li>"
+          "<li>Elle ne fait pas partie du cahier des charges&nbsp;: elle aide à <b>préparer</b> et à <b>débattre</b>, elle "
+          "n'exige rien de l'objet.</li></ul>",
+    "3e":"<h3>De la carte à l'argumentaire</h3><ul>"
           "<li>La carte mentale <b>prépare</b> le texte&nbsp;: chaque branche est une idée possible.</li>"
           "<li>On choisit une branche <b>positive</b> et une branche <b>négative</b>, avec un exemple chacune.</li>"
           "<li>Un <b>argumentaire court</b> (5 à 8 lignes)&nbsp;: incidence positive et exemple → connecteur d'opposition, "

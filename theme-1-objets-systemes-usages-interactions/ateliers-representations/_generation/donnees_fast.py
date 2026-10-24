@@ -243,13 +243,13 @@ E1 = dict(
     aides=["<p>Pour ranger une étiquette, regarde son <b>premier mot</b>&nbsp;: un verbe (détecter, stocker, capter) → une fonction&nbsp;; "
            "un nom précédé de «&nbsp;le&nbsp;» ou «&nbsp;la&nbsp;» → une solution. Pour lire le schéma, pose le doigt sur une case et suis "
            "le trait&nbsp;: vers la droite → «&nbsp;comment&nbsp;?&nbsp;», vers la gauche → «&nbsp;pourquoi&nbsp;?&nbsp;».</p>",
-           "<p>«&nbsp;capter l'énergie du soleil&nbsp;» → commence par <b>capter</b>, un verbe → <b>fonction</b>.<br>"
-           "«&nbsp;le capteur de luminosité&nbsp;» → commence par <b>le</b>, puis un nom → <b>solution</b>. «&nbsp;Capteur&nbsp;» "
-           "ressemble à «&nbsp;capter&nbsp;», mais c'est l'objet, pas l'action.<br>"
-           "Comment détecter la nuit&nbsp;? → je pars de la case «&nbsp;détecter la nuit&nbsp;» → je vais à droite → le capteur de "
-           "luminosité.<br>"
-           "Pourquoi un bloc de LED&nbsp;? → je pars de la case «&nbsp;le bloc de LED&nbsp;» → je vais à gauche → produire la lumière → "
-           "encore à gauche → éclairer la rue quand un piéton passe.</p>"],
+           "<ul><li><b>«&nbsp;capter l'énergie du soleil&nbsp;»</b> → commence par <b>capter</b>, un verbe → <b>fonction</b>.</li>"
+           "<li><b>«&nbsp;le capteur de luminosité&nbsp;»</b> → commence par <b>le</b>, puis un nom → <b>solution</b>. «&nbsp;Capteur&nbsp;» "
+           "ressemble à «&nbsp;capter&nbsp;», mais c'est l'objet, pas l'action.</li>"
+           "<li><b>Comment détecter la nuit&nbsp;?</b> → je pars de la case «&nbsp;détecter la nuit&nbsp;» → je vais à droite → le "
+           "capteur de luminosité.</li>"
+           "<li><b>Pourquoi un bloc de LED&nbsp;?</b> → je pars de la case «&nbsp;le bloc de LED&nbsp;» → je vais à gauche → produire la "
+           "lumière → encore à gauche → éclairer la rue quand un piéton passe.</li></ul>"],
     jumeau=dict(consigne="Le FAST d'une lampe de poche dit&nbsp;: «&nbsp;stocker l'énergie&nbsp;» → «&nbsp;deux piles&nbsp;» et "
                          "«&nbsp;produire la lumière&nbsp;» → «&nbsp;une LED&nbsp;». Pourquoi la lampe a-t-elle deux piles&nbsp;? "
                          "Comment produit-elle la lumière&nbsp;?",
@@ -378,9 +378,9 @@ E3 = dict(
                                 "<li>ralentir la roue → <b>frein à patins</b> (frottement sur la jante) <b>ou</b> <b>frein à disque</b> "
                                 "(frottement sur un disque)&nbsp;;</li>"
                                 "<li>porter les enfants et les courses → le bac à rebords hauts.</li></ul>")],
-    intro="<p>Léa transporte ses deux enfants et ses courses dans le bac de son <b>vélo-cargo</b>. Pour rentrer chez elle, elle descend "
+    intro="<p><b>Léa</b> transporte ses deux enfants et ses courses dans le bac de son <b>vélo-cargo</b>. Pour rentrer chez elle, elle descend "
           "deux côtes, souvent sous la pluie. Elle doit changer ses freins, et le vendeur lui propose deux modèles.</p>"
-          "<p>Dans le FAST, la fonction «&nbsp;ralentir la roue&nbsp;» a <b>deux</b> cases reliées par «&nbsp;ou&nbsp;»&nbsp;: deux "
+          "<p><b>Deux principes, une fonction.</b> Dans le FAST, «&nbsp;ralentir la roue&nbsp;» a <b>deux</b> cases reliées par «&nbsp;ou&nbsp;»&nbsp;: deux "
           "<b>principes techniques</b> pour la <b>même</b> fonction. Les deux freinent par <b>frottement</b>, mais pas au même "
           "endroit&nbsp;: les patins serrent la <b>jante</b>, au bord de la roue, là où le pneu projette l'eau et la boue&nbsp;; les "
           "plaquettes serrent un <b>disque</b> fixé au <b>moyeu</b>, au centre de la roue, plus à l'abri.</p>",
@@ -585,7 +585,9 @@ E5 = dict(
                                  motifs=["niveau", "cuve", r"\beau\b", "reste", "reserve", "quantite", "volume", "remplissage"],
                                  manque="Dis sur quoi porte la fonction : l'eau qui reste dans la cuve.")],
                   interdits=[dict(motifs=["capteur", "flotteur", "module", r"\bcarte\b", "sonde", "electrovanne"],
-                                  message="Tu as écrit le nom d'un objet : il ira dans la case de droite. La case de fonction dit seulement ce qu'il faut faire.")],
+                                  message="Tu as écrit le nom d'un objet : il ira dans la case de droite. La case de fonction dit seulement ce qu'il faut faire."),
+                             dict(motifs=[r"^(prevenir|alerter|avertir|envoyer|informer)\b"],
+                                  message="Prévenir la gardienne, c'est la demande de Mme Joseph, et le module Wi-Fi saura envoyer le message. Ce qui manque, c'est ce que le système doit SAVOIR avant de prévenir.")],
                   etayage=["Pour prévenir la gardienne, le système doit d'abord … le … d'eau de la cuve.",
                            "mesurer … / surveiller … / détecter …"]),
              dict(type="slots", intro=figure_vivante(JARDIN_AJOUT, "Le FAST du système d'arrosage, avec la nouvelle branche en bas. "
@@ -817,13 +819,14 @@ E7 = dict(
     aides=["<p>Pour chaque case du tableau, demande-toi <b>de quoi la solution a besoin</b> pour atteindre quelqu'un&nbsp;: des antennes de "
            "téléphone&nbsp;? une personne réveillée qui regarde&nbsp;? une personne qui entend&nbsp;? Pour l'argumentaire, cherche la "
            "solution qui a le moins de «&nbsp;non&nbsp;», puis celle qui comble ses «&nbsp;non&nbsp;».</p>",
-           "<p>A → seul le message passe par les antennes → message&nbsp;: <b>non</b>&nbsp;; sirène et panneau, reliés à la station&nbsp;: <b>oui</b>.<br>"
-           "B → un son fort réveille → sirène <b>oui</b>&nbsp;; un téléphone sonne s'il n'est pas en silencieux → message <b>en partie</b>&nbsp;; "
-           "personne ne regarde un panneau en dormant → panneau <b>non</b>.<br>"
-           "C → une personne sourde n'entend pas la sirène → <b>non</b>&nbsp;; elle lit un message ou un panneau → <b>oui</b>.<br>"
-           "D → oui partout → il ne départage pas, il <b>élimine</b> ce qui demanderait le 230 volts.<br>"
-           "Argumentaire → aucune solution n'a que des «&nbsp;oui&nbsp;» → la sirène a un seul «&nbsp;non&nbsp;» (C), que le panneau comble → "
-           "une combinaison sirène + panneau couvre A, B et C → limite&nbsp;: deux appareils à alimenter sur la même batterie.</p>"],
+           "<ul><li><b>A</b> → seul le message passe par les antennes → message&nbsp;: <b>non</b>&nbsp;; sirène et panneau, reliés à la "
+           "station&nbsp;: <b>oui</b>.</li>"
+           "<li><b>B</b> → un son fort réveille → sirène <b>oui</b>&nbsp;; un téléphone sonne s'il n'est pas en silencieux → message <b>en "
+           "partie</b>&nbsp;; personne ne regarde un panneau en dormant → panneau <b>non</b>.</li>"
+           "<li><b>C</b> → une personne sourde n'entend pas la sirène → <b>non</b>&nbsp;; elle lit un message ou un panneau → <b>oui</b>.</li>"
+           "<li><b>D</b> → oui partout → il ne départage pas, il <b>élimine</b> ce qui demanderait le 230 volts.</li>"
+           "<li><b>Argumentaire</b> → aucune solution n'a que des «&nbsp;oui&nbsp;» → la sirène a un seul «&nbsp;non&nbsp;» (C), que le "
+           "panneau comble → sirène + panneau couvrent A, B et C → limite&nbsp;: deux appareils sur la même batterie.</li></ul>"],
     jumeau=dict(consigne="Pour la fonction «&nbsp;indiquer qu'une place de parking est libre&nbsp;», on hésite entre un voyant vert "
                          "au-dessus de chaque place et un affichage du nombre de places à l'entrée. Donne un critère qui départage, et un "
                          "critère qui élimine.",

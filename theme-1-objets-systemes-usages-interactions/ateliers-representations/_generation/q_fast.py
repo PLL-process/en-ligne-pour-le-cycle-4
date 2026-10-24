@@ -4,7 +4,7 @@
 Toutes les bonnes réponses sont en position 0 ici : la répartition sur A/B/C/D
 est faite ensuite par `_outils/fix_r.js`, de façon déterministe.
 
-Répartition : 5e_C4.1 (8) · 5e_C1.2 (5) · 4e_C4.4 (6) · 4e_C7.2 (5) · 3e_C7.2 (6). Quatre questions illustrées.
+Répartition : 5e_C4.1 (8) · 5e_C1.2 (5) · 4e_C4.4 (6) · 4e_C7.2 (5) · 3e_C7.2 (6). Sept questions illustrées.
 """
 from qbanque import Banque
 
@@ -25,6 +25,20 @@ IMG_JARDIN = {"src": "Images/fast_jardin_arrosage.svg",
                      "arroser, la carte programmable ; envoyer l'état au smartphone, le module Wi-Fi ; laisser passer l'eau ou la "
                      "bloquer, l'électrovanne ; faire circuler l'eau jusqu'aux bacs, la pompe et les tuyaux ; stocker l'eau de "
                      "pluie, la cuve."}
+IMG_LAMPADAIRE_TROUS = {"src": "Images/fast_lampadaire_a_completer.svg",
+                       "alt": "Diagramme FAST du lampadaire intelligent à compléter : trois cases de solution sont vides, en "
+                              "pointillés, sur les lignes « détecter un passant », « stocker l'énergie pour la nuit » et « capter "
+                              "l'énergie du soleil » ; les autres solutions sont le capteur de luminosité, la carte programmable et "
+                              "le bloc de LED."}
+IMG_JARDIN_AJOUT = {"src": "Images/fast_jardin_nouvelle_branche.svg",
+                    "alt": "Diagramme FAST du système d'arrosage avec une septième branche, en bas : mesurer le niveau d'eau de la "
+                           "cuve, réalisée par le capteur de niveau d'eau. Les six autres branches : capteur d'humidité du sol, carte "
+                           "programmable, module Wi-Fi, électrovanne, pompe et tuyaux, cuve."}
+IMG_ERREURS = {"src": "Images/fast_station_alerte_erreurs.svg",
+               "alt": "Diagramme FAST de la station d'alerte proposé par une équipe : six branches ; la deuxième a pour case de "
+                      "fonction « le programme d'alerte » et pour solution la carte programmable ; la quatrième met le panneau "
+                      "solaire en face de « stocker l'énergie pour la nuit » ; la sixième est « éclairer la rue la nuit », le bloc "
+                      "de LED."}
 IMG_STATION = {"src": "Images/fast_station_alerte.svg",
                "alt": "Diagramme FAST de la station d'alerte cyclonique : mesurer la vitesse du vent, l'anémomètre ; décider du "
                       "niveau d'alerte, la carte programmable ; diffuser l'alerte aux habitants, la sirène ou un message sur les "
@@ -132,7 +146,7 @@ q(C, "Le nom du schéma",
   "FAST = Function Analysis System Technique.")
 
 q(C, "La case de la batterie",
-  "Dans le FAST du lampadaire, quelle solution met-on en face de « stocker l'énergie pour la nuit » ?",
+  "Sur ce FAST à compléter, quelle solution met-on dans la case vide de la ligne « stocker l'énergie pour la nuit » ?",
   ["la batterie",
    "le panneau solaire",
    "le bloc de LED",
@@ -144,7 +158,8 @@ q(C, "La case de la batterie",
    "Le panneau solaire capte l'énergie du soleil, le jour ; la nuit, il ne donne plus rien et ne garde rien.",
    "Le bloc de LED consomme l'énergie pour produire la lumière : il ne la stocke pas.",
    "La carte programmable décide quand allumer : elle ne garde aucune réserve d'énergie."],
-  "Stocker l'énergie : la batterie.")
+  "Stocker l'énergie : la batterie.",
+  img=IMG_LAMPADAIRE_TROUS)
 
 q(C, "Une solution, deux fonctions",
   "Dans certaines lampes de jardin, le panneau solaire capte l'énergie et sert aussi à détecter la nuit. Que montre leur FAST ?",
@@ -364,7 +379,7 @@ q(C, "La fonction qui manque",
   "D'abord la fonction qui manque, avec un verbe.")
 
 q(C, "Réutiliser",
-  "Quelle solution, déjà dans le FAST du jardin, enverra l'alerte « cuve presque vide » au smartphone ?",
+  "Sur ce FAST, la branche du bas est nouvelle. Quelle solution, déjà présente, enverra l'alerte « cuve presque vide » au smartphone ?",
   ["le module Wi-Fi",
    "la carte programmable",
    "le capteur d'humidité",
@@ -377,7 +392,8 @@ q(C, "Réutiliser",
    "La carte décide qu'il faut prévenir, mais elle n'a pas de liaison sans fil : c'est le module Wi-Fi qui envoie.",
    "Le capteur d'humidité mesure la terre : il n'envoie aucun message.",
    "L'électrovanne agit sur l'eau : elle ne prévient personne."],
-  "Réutiliser ce qui existe déjà.")
+  "Réutiliser ce qui existe déjà.",
+  img=IMG_JARDIN_AJOUT)
 
 q(C, "Ce qui change dans la carte",
   "Après l'ajout du capteur de niveau d'eau, que faut-il modifier dans la carte programmable ?",
@@ -430,7 +446,7 @@ q(C, "Ajouter une branche",
 C = "3e_C7.2"
 
 q(C, "Un nom dans une case de fonction",
-  "Dans le FAST d'une équipe, une case de fonction contient « le programme d'alerte ». Pourquoi est-ce une erreur ?",
+  "Sur ce FAST proposé par une équipe, la deuxième case de fonction contient « le programme d'alerte ». Pourquoi est-ce une erreur ?",
   ["c'est un nom : il faut un verbe d'action",
    "un programme n'a pas sa place dans un FAST",
    "il manque le prix du programme dans la case",
@@ -443,7 +459,8 @@ q(C, "Un nom dans une case de fonction",
    "Le programme peut apparaître dans une solution (« la carte programmable et son programme ») : c'est sa place qui est fausse.",
    "Le FAST ne porte aucun prix : ce n'est pas ce qui manque.",
    "Tout à gauche, il n'y a que la fonction d'usage : « prévenir les habitants quand un cyclone approche »."],
-  "Case de fonction : un verbe.")
+  "Case de fonction : un verbe.",
+  img=IMG_ERREURS)
 
 q(C, "Quand le réseau tombe",
   "Pendant un cyclone, le réseau téléphonique tombe. Sur ce FAST, quelle solution d'alerte ne marche plus ?",
