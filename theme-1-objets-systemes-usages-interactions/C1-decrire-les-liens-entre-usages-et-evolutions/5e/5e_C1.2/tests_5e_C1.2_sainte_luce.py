@@ -2,15 +2,24 @@
 """Suite de tests du lot 5e_C1.2 — Sainte-Luce, quel frein pour les vélos du collège.
 
 Ne sont déclarés dans le rapport que les tests présents ici et réellement
-exécutés. Deux fichiers sont couverts : la séquence (19 contrôles) et le QCM
+exécutés. Deux fichiers sont couverts : la séquence (33 contrôles) et le QCM
 (17 contrôles).
 
 PÉRIMÈTRE (règle d'or n°47) — ce que cette suite vérifie :
-  · les quatre verrous de la séquence, fermés sur une page vide et ouverts sur
-    une production complète ;
-  · le REFUS argumenté du frein à patins en séance 3, avec la raison chiffrée —
-    un vérificateur qui refuse sans expliquer n'est pas un vérificateur ;
-  · la progression, la sauvegarde et sa restauration après rechargement ;
+  · les six verrous de la séquence (billet + cinq activités), fermés sur une
+    page vide et ouverts sur une production complète — celui de l'activité 4
+    ne s'ouvre qu'une fois l'exercice du diagramme FAST inséré réellement
+    rempli et vérifié dans la page (clé rep_fast_5e_e3) ;
+  · le REFUS argumenté du frein à patins en séance 3, et celui du frein à
+    tambour pour Léa en séance 4, avec la raison chiffrée — un vérificateur qui
+    refuse sans expliquer n'est pas un vérificateur ;
+  · la progression (5 activités), la sauvegarde et sa restauration après
+    rechargement ; les champs de l'exercice inséré restent HORS de la
+    sauvegarde de la séquence (ils ont la leur, partagée avec l'atelier) ;
+  · la reprise d'un travail enregistré AVANT l'ajout de la séance 4 (trois
+    activités validées : la page dit 3 / 5, sans erreur) ;
+  · quatre onglets, le passage de la séance 3 à la séance 4 par le bouton de
+    fin de séance, et la clôture (Bonus, Bilan, QCM) dans la séance 4 seule ;
   · la cible du bouton d'entraînement avant et après la séquence (règle n°45) ;
   · la présence des deux blocs de la règle n°4, corrigé du Bonus compris, et la
     mention de la manipulation obligatoire (règle n°58) ;
@@ -52,21 +61,51 @@ BON={"be_1":"ce que l'objet doit faire, dit par un verbe à l'infinitif, sans di
  "a3_1":"la résistance à la corrosion : le sel de l'air attaque les métaux toute l'année",
  "a3_2":"la distance d'arrêt sous la pluie, et l'écart entre sec et mouillé",
  "a3_3":"une erreur : compter les colonnes gagnées revient à donner à tous les critères la même importance",
- "a3_4":"le frein à patins deviendrait le meilleur choix : le même tableau, un autre contexte"}
+ "a3_4":"le frein à patins deviendrait le meilleur choix : le même tableau, un autre contexte",
+ "a5_1":"environ 2,5 fois plus grande : elle augmente comme la masse, 150 kg au lieu de 60",
+ "a5_2":"passe dans les deux surfaces qui frottent, qui chauffent de plus en plus",
+ "a5_3":"compte très peu : 440 g sur 150 kg, c'est moins de 1 % de ce qu'elle transporte",
+ "a5_4":"la chaleur reste enfermée dans le tambour : trop chaudes, les surfaces qui frottent freinent moins bien",
+ "a5_5":"le frein à disque : 8,3 m sous la pluie et 7,5 m freins chauds, le plus court les deux fois"}
 TXT={"a1_manip":"Quand on serre le levier, le câble se tend et deux bras pivotent.\nLes deux pièces qui se touchent sont le patin de caoutchouc et la jante de la roue.\nLa chaleur apparaît sur la jante, à l'endroit où le patin a frotté.",
  "a2_tableau":"Arrêt sur sol sec : le meilleur est le disque (5,4 m), le moins bon est le tambour (6,1 m).\nArrêt sous la pluie : le meilleur est le disque (6,4 m), le moins bon est le patin (8,9 m).\nMasse : le meilleur est le patin (320 g), le moins bon est le tambour (760 g).\nEntretien : le patin gagne (18 euros par an), le disque perd (34 euros).\nRéparabilité : le patin est premier (5/5), le tambour est dernier (3/5).\nCorrosion : le tambour est le meilleur (5/5), le patin est le moins bon (2/5).\nCe tableau ne dit pas quel critère est le plus important. Il donne les faits, pas leur importance, et cela dépend du contexte et du lieu.",
- "a3_choix":"Je retiens le frein à disque. Première raison : sous la pluie il s'arrête en 6,4 m contre 8,9 m pour les patins, soit deux mètres et demi de moins, et il y a une descente sur le trajet. Deuxième raison : sa résistance à la corrosion est de 4/5 alors que celle des patins est de 2/5, et le collège est au bord de la mer. J'accepte de perdre 190 g de plus et 34 euros d'entretien par an au lieu de 18, ainsi qu'un réglage plus technique."}
+ "a3_choix":"Je retiens le frein à disque. Première raison : sous la pluie il s'arrête en 6,4 m contre 8,9 m pour les patins, soit deux mètres et demi de moins, et il y a une descente sur le trajet. Deuxième raison : sa résistance à la corrosion est de 4/5 alors que celle des patins est de 2/5, et le collège est au bord de la mer. J'accepte de perdre 190 g de plus et 34 euros d'entretien par an au lieu de 18, ainsi qu'un réglage plus technique.",
+ "a5_conseil":"Léa, je te conseille le frein à disque. Sous la pluie, chargé, il s'arrête en 8,3 m, contre 11,6 m pour les patins. En bas de la grande descente, freins chauds, il lui faut 7,5 m, contre 10,4 m pour le tambour. Tu acceptes de perdre 34 € d'entretien par an au lieu de 18 ou 27. Ce n'est pas le choix du collège, parce que tu transportes 150 kg dans une longue descente : ton frein chauffe beaucoup plus."}
+# l'exercice du diagramme FAST inséré en séance 4 (atelier, module fast, 5e e3) : ses bonnes réponses
+FAST_E3={"fa_5e_e3__prop_0":"disque","fa_5e_e3__prop_1":"patins","fa_5e_e3__prop_2":"disque",
+ "fa_5e_e3__prop_3":"deux","fa_5e_e3__prop_4":"patins","fa_5e_e3__choix":"disque"}
+FAST_E3_JUSTIF="Je choisis le frein à disque parce qu'il freine presque aussi bien sous la pluie, et Léa descend des côtes avec ses enfants."
+# onglet de chaque vérificateur : billet et activité 1 en séance 1, … activités 4 et 5 en séance 4
+ONGLET={0:1, 1:1, 2:2, 3:3, 4:4, 5:4}
 async def tester_sequence(p):
     b=await p.chromium.launch(); pg=await b.new_page()
     errs=[]; pg.on("pageerror", lambda e: errs.append(str(e)))
     pg.on("console", lambda m: errs.append("console:"+m.text) if m.type=="error" else None)
     await pg.goto(SEQ); r=[]
-    for n in range(4):
-        await pg.click("#tab-s%d"%max(1,n)); await pg.click(f"[data-check='{n}']")
+    onglets=await pg.evaluate("[...document.querySelectorAll('.seance-tab')].map(t=>t.dataset.panel)")
+    r.append(("quatre onglets de séance, s1 à s4", onglets==["s1","s2","s3","s4"]))
+    clot=await pg.evaluate("""(()=>{const s4=document.getElementById('s4'), t=s4?s4.textContent:'';
+        const ailleurs=[...document.querySelectorAll('.seance-panel:not(#s4)')].map(x=>x.textContent).join(' ');
+        return t.includes('Bonus (facultatif')&&t.includes('Bilan')&&!!s4.querySelector('#lienQcm')
+          &&!ailleurs.includes('Bonus (facultatif')&&!ailleurs.includes('Prêt·e à t');})()""")
+    r.append(("clôture (Bonus, Bilan, QCM) dans la séance 4 seule", clot))
+    await pg.click("#tab-s3"); await pg.click("#s3 [data-vers='s4']"); await pg.wait_for_timeout(100)
+    actif=await pg.evaluate("document.querySelector('.seance-panel.active').id")
+    r.append(("le bouton de fin de séance 3 ouvre la séance 4", actif=="s4"))
+    for n in range(6):
+        await pg.click("#tab-s%d"%ONGLET[n]); await pg.click(f"[data-check='{n}']")
         cls=await pg.evaluate(f"document.getElementById('fb{n}').className")
         r.append(("verrou fermé check %d"%n, "ok" not in cls.split()))
     h=await pg.evaluate("document.getElementById('lienQcm').getAttribute('href')")
     r.append(("QCM à zéro = parcours court", h.endswith("#depart=court")))
+    # l'exercice inséré, rempli et vérifié dans la page comme le ferait un élève
+    await pg.click("#tab-s4")
+    for nom,v in FAST_E3.items():
+        await pg.check(f"#fa_5e_e3 input[name='{nom}'][value='{v}']")
+    await pg.fill("#fa_5e_e3__justif", FAST_E3_JUSTIF)
+    await pg.click("#fa_5e_e3 .btn.verifier")
+    reussi=await pg.evaluate("JSON.parse(localStorage.getItem('rep_fast_5e_e3')||'{}').reussi===true")
+    r.append(("exercice FAST inséré : réussi et enregistré sous rep_fast_5e_e3", reussi))
     await pg.evaluate("""(d)=>{const manquants=[];Object.entries(d).forEach(([id,v])=>{
         const e=document.getElementById(id); if(!e){manquants.push(id);return;}
         if(e.tagName==='FIELDSET'){
@@ -75,12 +114,22 @@ async def tester_sequence(p):
           r.checked=true; r.dispatchEvent(new Event('change',{bubbles:true})); return;}
         e.value=v; e.dispatchEvent(new Event('input',{bubbles:true}));});
         return manquants;}""", {**BON,**TXT})
-    for n in range(4):
-        await pg.click("#tab-s%d"%max(1,n)); await pg.click(f"[data-check='{n}']")
+    for n in range(6):
+        await pg.click("#tab-s%d"%ONGLET[n]); await pg.click(f"[data-check='{n}']")
         cls=await pg.evaluate(f"document.getElementById('fb{n}').className")
         txt=await pg.evaluate(f"document.getElementById('fb{n}').textContent")
         r.append(("verrou ouvert check %d"%n, "ok" in cls.split()))
         if "ok" not in cls.split(): print("  ↳",n,txt[:260])
+    # refus explicite du tambour pour Léa : la raison chiffrée (10,4 m freins chauds) est dite
+    await pg.evaluate("""()=>{const e=document.getElementById('a5_conseil');
+        e.value="Léa, je te conseille le frein à tambour. Sous la pluie il s'arrête en 9,1 m et il est enfermé, donc protégé. Tu acceptes de perdre 27 € par an d'entretien et un frein plus lourd, mais tu transportes tes enfants.";
+        e.dispatchEvent(new Event('input',{bubbles:true}));}""")
+    await pg.click("#tab-s4"); await pg.click("[data-check='5']")
+    t5=await pg.evaluate("document.getElementById('fb5').textContent")
+    r.append(("le tambour est refusé pour Léa, et la raison est dite", "10,4 m" in t5 and "ok" not in (await pg.evaluate("document.getElementById('fb5').className")).split()))
+    await pg.evaluate("""()=>{const e=document.getElementById('a5_conseil');e.value=%r;
+        e.dispatchEvent(new Event('input',{bubbles:true}));}""" % TXT["a5_conseil"])
+    await pg.click("[data-check='5']")
     # refus explicite du choix « patins »
     await pg.evaluate("""()=>{const e=document.getElementById('a3_choix');
         e.value="Je retiens le frein à patins. Il pèse 320 g, coûte 18 euros par an et se répare en 5/5. J'accepte de perdre un peu de distance sous la pluie mais ce n'est pas grave du tout pour nous.";
@@ -88,17 +137,33 @@ async def tester_sequence(p):
     await pg.click("#tab-s3"); await pg.click("[data-check='3']")
     t3=await pg.evaluate("document.getElementById('fb3').textContent")
     r.append(("le choix des patins est refusé, et la raison est dite", "8,9 m sous la pluie" in t3))
-    r.append(("progression 3/3 après remise du bon texte", True))
     await pg.evaluate("""()=>{const e=document.getElementById('a3_choix');e.value=%r;
         e.dispatchEvent(new Event('input',{bubbles:true}));}""" % TXT["a3_choix"])
     await pg.click("[data-check='3']")
     prog=await pg.evaluate("document.getElementById('progTxt').textContent")
-    r[-1]=("progression 3/3 après remise du bon texte", prog.strip().startswith("3 / 3"))
+    r.append(("progression 5/5 après remise du bon texte", prog.strip().startswith("5 / 5")))
+    coches=await pg.evaluate("['s1','s2','s3','s4'].map(s=>document.getElementById('done-'+s).textContent.includes('✔'))")
+    r.append(("les quatre onglets portent leur ✔", all(coches)))
     h=await pg.evaluate("document.getElementById('lienQcm').getAttribute('href')")
     r.append(("QCM complet en fin", "#" not in h))
+    sauv=await pg.evaluate("Object.keys(JSON.parse(localStorage.getItem('seq_5e_C1.2_sainte_luce')||'{}').inputs||{})")
+    r.append(("sauvegarde de la séquence : a5_conseil dedans, aucun champ de l'exercice inséré",
+              "a5_conseil" in sauv and not any(k.startswith("fa_5e_e3") for k in sauv)))
     await pg.reload()
     r.append(("restauration textarea", "jante" in await pg.evaluate("document.getElementById('a1_manip').value")))
-    r.append(("restauration progression", (await pg.evaluate("document.getElementById('progTxt').textContent")).strip().startswith("3 / 3")))
+    r.append(("restauration textarea de la séance 4", "11,6 m" in await pg.evaluate("document.getElementById('a5_conseil').value")))
+    r.append(("restauration de l'exercice inséré (sa propre mémoire)", await pg.evaluate("document.getElementById('fa_5e_e3__justif').value")==FAST_E3_JUSTIF))
+    r.append(("restauration progression", (await pg.evaluate("document.getElementById('progTxt').textContent")).strip().startswith("5 / 5")))
+    # un travail enregistré avant l'ajout de la séance 4 : trois activités validées, sans clé 4 ni 5
+    await pg.evaluate("""()=>{localStorage.clear(); localStorage.setItem('seq_5e_C1.2_sainte_luce', JSON.stringify(
+        {inputs:{a1_manip:"ancien relevé : le patin et la jante", a3_1:"la masse"}, valid:{"0":true,"1":true,"2":true,"3":true}, exp:{}}));}""")
+    await pg.reload()
+    anc=await pg.evaluate("""({p:document.getElementById('progTxt').textContent.trim(),
+        a:document.getElementById('a1_manip').value, s4:document.getElementById('done-s4').textContent,
+        s3:document.getElementById('done-s3').textContent, l:document.getElementById('lienQcm').getAttribute('href')})""")
+    r.append(("reprise d'un travail enregistré à trois séances : 3 / 5, champs rendus, séance 4 à faire",
+              anc["p"].startswith("3 / 5") and "ancien relevé" in anc["a"] and "✔" in anc["s3"] and "✔" not in anc["s4"]
+              and anc["l"].endswith("#depart=court")))
     body=await pg.evaluate("document.body.textContent")
     r.append(("bloc entraînement présent", "t'entraîner" in body))
     r.append(("bloc Bonus présent", "Bonus" in body))

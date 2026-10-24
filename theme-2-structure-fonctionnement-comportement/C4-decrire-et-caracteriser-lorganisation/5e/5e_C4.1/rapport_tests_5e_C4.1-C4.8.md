@@ -2,7 +2,11 @@
 
 **Date** : 2026-07-23, **QCM rejoué le 2026-08-31** · **Agent** : Fable (Thème 2) ·
 **Outil** : Playwright (Chromium headless), viewport mobile 390×844 ·
-**Verdict global : 30 / 30 (séquence) + 25 / 25 (QCM) — les deux rejouables ✅**
+**Verdict global : 51 / 51 (séquence) + 25 / 25 (QCM) + 33 / 33 (règle n°311) — rejouables ✅** (au 24/10/2026, six séances)
+
+> **Complément du 24/10/2026 — clôture.** Le Bonus a maintenant, pour chacun de ses trois défis (maquette, maison, Filius), un champ, une version étayée et un corrigé replié : ce qu'il faut observer, pourquoi, les erreurs classiques. Le bilan a son « Je me positionne » : un groupe de quatre boutons radio par code, les huit, enregistré avec le travail. `controle_squelette.mjs --json` ne signale plus rien à rédiger. La suite de la séquence passe à **51 contrôles, 51 / 51** (contrôles 36 à 40 : corrigés du Bonus, positionnement, reprise).
+
+> **Mise à jour du 24/10/2026 — six séances.** La séance 5 annonçait 25 + 25 + 25 = 75 min pour 55. Elle garde le réseau local (act. 5) et le jeu du courrier (act. 6) : 50 min. Une **séance 6** « Défi final et bilan » reçoit l'activité 7 « Le FAST du lampadaire, complet » (exercice 2 de l'atelier FAST, 10 min, inséré par `incrustations_lots/lampadaire_s6.py`), le réinvestissement de la sonnette (25 min) et la clôture (synthèse, Bonus, bilan, QCM) : 35 min d'activités annoncées. Minutes par séance : 50 · 40 · 40 · 40 · 50 · 35. La suite de la séquence compte **46 contrôles, 46 / 46** : en plus des précédents, l'activité 7 refusée tant que l'exercice inséré n'est pas réussi, l'exercice vérifié à vide puis rempli juste, ses choix écrits dans le schéma, ses 5 réponses retrouvées au rechargement, la sauvegarde de la page qui ne capte plus les champs des exercices insérés, six onglets et le bandeau « 6 séances de 55 min », chaque séance à 55 min au plus, le bouton de fin de séance 5 qui ouvre la séance 6, la clôture en séance 6 seulement, et la relecture d'une sauvegarde faite avec la version à cinq séances (7 / 8, séance 5 cochée). Banc n°311 : **33 / 33** (lien direct vers l'activité 7, séance 6). QCM inchangé : **25 / 25**.
 
 > **Mise à jour du 24/10/2026.** L'exercice « Lire le FAST du lampadaire » (atelier FAST, 5e) est inséré en tête de l'activité 1, qui passe à 50 min et exige sa réussite. La suite de la séquence compte désormais **34 contrôles, 34 / 34** : l'activité 1 refusée sans l'exercice, l'exercice vérifié à vide puis rempli juste, et ses réponses retrouvées au rechargement.
 
@@ -49,7 +53,10 @@ identifiants en double.
 | Act. 5 réseau local : validation 6/6 | ✅ |
 | Act. 6 jeu du courrier (conflit de noms, sans destinataire) : validation 5/5 | ✅ |
 | Act. 7 réinvestissement sonnette connectée : validée | ✅ |
-| Progression 7/7 activités + coches des 5 séances | ✅ |
+| Activité 7 de la séance 6 (FAST complété, exercice d'atelier inséré) : refusée puis validée 5/5 | ✅ |
+| Six séances : temps ≤ 55 min chacune, bouton s5 → s6, clôture en s6, ancienne sauvegarde relue | ✅ |
+| Bonus : un champ et un corrigé replié par défi ; bilan : positionnement sur les huit codes, sauvegardé | ✅ |
+| Progression 8/8 activités + coches des 6 séances (24/10/2026) | ✅ |
 | Reprise après rechargement : réponses restaurées | ✅ |
 | Reprise : validations ET traces d'expériences (__exp) restaurées | ✅ |
 | Zéro lien local cassé (SVG, QCM, synthèses, pointeurs) | ✅ |

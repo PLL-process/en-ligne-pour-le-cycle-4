@@ -129,9 +129,11 @@ OVERLAY = {
                                  "entrée : trois principes de MESURE, sans objet à manipuler. Voir "
                                  "le tableau comparatif du README de 5e_C1.2.",
         qualite="Lot « Sainte-Luce : quel frein pour les vélos du collège ? » (Fable, 09/08/2026), "
-                "REFONTE au gabarit — 3 séances, QCM 30 q dont 8 illustrées, 2 synthèses, fiche, "
+                "REFONTE au gabarit — 4 séances de 55 min depuis le 24/10/2026 (séance 4 d'exercices : "
+                "l'exercice FAST 5e « Deux principes pour une même fonction » inséré, et « Léa dans la "
+                "grande descente », la clôture y est passée), QCM 30 q dont 8 illustrées, 2 synthèses, fiche, "
                 "matrice, 2 jeux de données simulés et cohérents entre eux, 2 corrigés graphiques "
-                "CC0, suite de 36 tests exécutés et verts. PREMIER LOT DU DÉPÔT à placer une "
+                "CC0, suite de 50 tests exécutés et verts. PREMIER LOT DU DÉPÔT à placer une "
                 "manipulation d'objet réel au parcours obligatoire (règle n°58) : un vélo, cinq "
                 "minutes, trois versions A/B/C validées par le même vérificateur.",
         anomalies="Les quinze mesures sont fournies, non relevées par les élèves. Le prix d'achat "
@@ -317,8 +319,10 @@ OVERLAY = {
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
         qualite="Lot « Tsinghua : concevoir avant de connecter » (Fable, 09/08/2026), REFONTE — "
-                "4 séances portant 4e_C1.1 à C1.3, QCM 30 q dont 6 illustrées, 2 synthèses, fiche, "
-                "matrice, 2 corrigés graphiques CC0, suite de 42 tests exécutés et verts. SEUL LOT "
+                "5 séances de 55 min portant 4e_C1.1 à C1.3 (la 5e, ajoutée le 24/10/2026 : trois "
+                "exercices des ateliers des représentations — bête à cornes, carte mentale — puis la "
+                "clôture), QCM 33 q dont 6 illustrées, 2 synthèses, fiche, "
+                "matrice, 2 corrigés graphiques CC0, suite de 63 tests exécutés et verts. SEUL LOT "
                 "DU DÉPÔT bâti sur des données réelles et sourcées (ministère de l'Intérieur, "
                 "JRC/EFFIS, ADEME). Mesure de température au parcours obligatoire (règle n°58).",
         anomalies="Aucune donnée n'est produite par les élèves sauf la température. Les chiffres "
@@ -334,7 +338,9 @@ OVERLAY = {
         evaluation=False, correction=False, situation=False, problematique=False,
         mutualise_avec="4e_C1.1",
         qualite="Travaillé en séance 3 du lot Tsinghua : quatre équivalences et leurs périmètres, "
-                "puis les deux faces d'une évolution technique. 9 questions au QCM.",
+                "puis les deux faces d'une évolution technique, et en séance 5 : deux cartes "
+                "mentales des avantages et inconvénients de l'arrosage connecté (atelier carte "
+                "mentale, 4e). 9 questions au QCM.",
         anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
     ),
     "4e_C1.3": dict(
@@ -343,7 +349,9 @@ OVERLAY = {
         evaluation=False, correction=False, situation=False, problematique=False,
         mutualise_avec="4e_C1.1",
         qualite="Travaillé en séance 4 du lot Tsinghua : cinq exigences vérifiables, sans nommer "
-                "aucun composant, et la garde humaine comme exigence. 9 questions au QCM.",
+                "aucun composant, et la garde humaine comme exigence — puis, en séance 5 : justifier "
+                "le passage de l'arrosoir à l'arrosage connecté en comparant deux bêtes à cornes "
+                "(atelier besoin, 4e). 12 questions au QCM.",
         anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
     ),
     "4e_C1.4": dict(
@@ -365,7 +373,8 @@ OVERLAY = {
         statut="EXISTANT À AMÉLIORER",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
-        qualite="Séquence « Numérique, société, économie, environnement, santé » + QCM 24 q.",
+        qualite="Séquence « Numérique, société, économie, environnement, santé », 4 séances de 55 min "
+                "(argumentaires courts : activité 1 bis pour 3e_C1.4, activité 5 pour 3e_C1.3) + QCM 30 q.",
         anomalies="Pas de différenciation.",
         accessibilite="À vérifier.",
         medias="L'activité 3 bis s'appuie sur la page publique de l'Arcep ; l'affiche "
@@ -1774,17 +1783,18 @@ OVERLAY = {
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=True, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
-        qualite="Séquence-îlot « Le lampadaire intelligent » (5 séances) couvrant "
+        qualite="Séquence-îlot « Le lampadaire intelligent » (6 séances de 55 min) couvrant "
                 "les 8 codes 5e de la compétence C4 sur un objet-fil unique : "
                 "fonctions/solutions + matériaux, chaîne d'énergie et natures, "
                 "chaîne d'information avec simulateur interactif (verrou "
                 "expérientiel : jour/nuit/nuit+passage), descripteurs et données "
                 "(table des 6 lampadaires), réseau local et jeu du courrier "
                 "débranché (prescription C4.8), réinvestissement sonnette "
-                "connectée. Versions A/B/C, QCM 36 q dont 6 illustrées, "
+                "connectée ; deux exercices de l'atelier FAST insérés (lecture en "
+                "séance 1, complétion en séance 6). Versions A/B/C, QCM 36 q dont 6 illustrées, "
                 "synthèses, fiche, matrice, 3 SVG CC0, rapport de tests et "
                 "deux suites rejouables — `tests_5e_C4.1-C4.8_qcm.mjs` (25/25) et "
-                "`tests_5e_C4.1-C4.8_sequence.mjs` (30/30). "
+                "`tests_5e_C4.1-C4.8_sequence.mjs` (51/51 depuis la séance 6, le 24/10/2026). "
                 "Première entrée 5e du Thème 2, langue calibrée 12 ans.",
         anomalies="Quatre des huit codes n'ont que 4 questions DANS cette banque "
                   "(C4.4, C4.5, C4.7, C4.8) : ils sont renforcés ailleurs, et le "

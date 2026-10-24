@@ -86,3 +86,44 @@ en `?mode=mixed` ; plus de version 🅰 (ni bouton, ni carte, ni « Avec le mat�
 (34 / 37), ne viennent pas de ce lot, et sont traités dans un lot « bancs » dédié. Ce que la fiche de remise annonçait (« 37 / 37 ») n'était donc plus exact avant ce lot.
 
 Le contenu de Vittascience (blocs, Python, réouverture du fichier) a été mesuré à la main avec les programmes exacts de l'activité 3b et du Bonus (`elif`, `PRÉ-ALERTE`) et n'est pas rejoué ici : service externe.
+
+## 7. Rejouée le 24/10/2026 — une séance 3 ajoutée (exercices des ateliers des représentations)
+
+**Demande du professeur** : aucune des deux séances n'avait le temps d'accueillir un exercice des ateliers (séance 1 :
+55 min annoncées pour 55 ; séance 2 : 45). La séquence passe à **3 séances de 55 min** :
+
+| Séance | Contenu | Avant | Après |
+|---|---|---|---|
+| 1 — Faire, concevoir, valider | activités 0, 1, 2 | 55 | 55 |
+| 2 — L'algorigramme, puis le code | gestes Vittascience, activité 3, REFAIRE | 45 | 45 |
+| 3 — Représenter les solutions | activité 6 (FAST 3e e6, 13) · activité 7 (croquis 3e e4 + e6, 25) · bilan (7) | — | 45 |
+
+Les trois exercices tiennent (45 min pour 55) : aucun n'a été retiré. La page défile d'un seul tenant (elle n'a jamais eu
+d'onglets) : chaque séance s'ouvre par un en-tête `.seance-entete#seance-N` et se ferme par un bouton vers la suivante ;
+la clôture (synthèse → Bonus → bilan → QCM) vient après la séance 3. Les exercices sont posés par
+`theme-1-objets-systemes-usages-interactions/ateliers-representations/_generation/incrustations_lots/capteur_ny_s3.py`
+(`python3 incrustations.py --seq 3e_C7.1/sequence_3e_C7_capteur-confort-ny`).
+
+**Suite : 71 / 71 tests réussis** (`node tests_3e_C7.mjs .`). Ajouts au banc : 3 séances et 8 activités ; le total annoncé par l'en-tête (145 min) égal au total écrit ; minutes par
+séance (55 · 45 · 45, chacune ≤ 55) ; ordre REFAIRE → séance 3 → activités 6, 7 → Bonus → Bilan → QCM ; les boutons
+« Séance 2 », « Séance 3 » amènent à leur en-tête ; les deux blocs d'atelier posés, chacun annonçant la station d'alerte
+cyclonique et la reliant au capteur ; activités 6 et 7 refusées (🔒) tant que leurs exercices ne sont pas réussis, puis
+validées ; exercices vérifiés à vide (🔴) puis remplis juste (« Tout est juste ») avec les réponses lues dans leur
+définition JSON ; champs des exercices insérés exclus de la sauvegarde de la page ; reprise après rechargement (3 / 8,
+réponses des exercices, positionnement en boutons radio) ; reprise d'une sauvegarde faite AVANT l'ajout (6 / 8, sans
+erreur) ; les trois séances ouvertes à 390 px sans défilement horizontal. Le banc lisait déjà le format actuel du QCM
+`{q, o, r, expl, d}` : rien à changer de ce côté.
+
+**Contrôles du dépôt** (dernière ligne) :
+
+- `controle_squelette.mjs` : ✅ ouverture au premier écran, clôture à la dernière séance, dans l'ordre — « à rédiger » :
+  aucun (avant : Bonus sans corrigé, bilan sans retour à l'hypothèse, sans métacognition, sans positionnement) ;
+- `controle_navigation_seances.py` : ✅ (la page, sans onglets, n'entre pas dans son périmètre ; navigation éprouvée au banc) ;
+- `controle_hierarchie.py`, `controle_regles_visibles.py`, `controle_liens.py`, `controle_debordement.py` : ✅ ;
+- `mesurer_temps_seances.py` : 3 × 55 min = 165, 145 min d'activités, marge +20 min.
+
+**Restent déclarés, antérieurs à l'ajout** (`verif_regles_audit.py`, 4 ✘ inchangés) : le bloc « 🔄 Ce que tu as déjà
+fait » affirme le passé (n°304) ; 20 questions en listes déroulantes (n°300) ; la carte du référentiel en toutes lettres
+sur la page élève (n°298) ; une « image sans alternative » qui est un faux positif (le texte alternatif d'une capture
+contient « > »). Deux zones de rédaction de l'activité 3 (pseudo-code, correction du clignotement) n'ont pas de version
+étayée propre (n°31). Le contenu de Vittascience n'est pas rejoué (service externe).

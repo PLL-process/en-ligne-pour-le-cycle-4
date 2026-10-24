@@ -21,12 +21,17 @@ de chaque séance, contre 55 min. Un exercice n'entre que dans le temps libre de
     après l'activité 2 (10 + 15 + 25 = 50 | 20 + 15 = 35). En tête de l'activité 2, la séance 1
     passerait à 65 min ; en tête du REFAIRE, la séance 2 passe de 35 à 50 min.
 
-  ÉCARTÉES (non posées, exercices non raccourcis)
+  ÉCARTÉES ICI (non posées dans le temps existant, exercices non raccourcis)
   · freinage 5e (5e_C1.2) — fast 5e e3 (14 min) : 10 / 5 / 5 min libres par séance.
   · jardin connecté 4e — fast 4e e4 (18 min) : 6 / 0 / 10 / 15 min libres, et la séance 4 est
     pleine une fois e6 posé (priorité à e6).
   · capteur de confort 3e (3e_C7.2) — fast 3e e6 (13 min) : 100 min d'activités pour 110, la
     séance 1 pleine (55), la séance 2 à 45 (10 min libres).
+
+  REPRISES LE 24/10/2026 (demande du professeur : « une autre séance de 55 min »)
+  · freinage 5e — fast 5e e3 posé dans une séance 4 créée pour lui : `freinage_s4.py`.
+  · capteur de confort 3e — fast 3e e6 posé dans une séance 3 créée pour lui : `capteur_ny_s3.py`.
+  · lampadaire 5e — fast 5e e2 posé dans une séance 6 : `lampadaire_s6.py`.
 """
 T2 = "theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation/"
 T3 = "theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/"

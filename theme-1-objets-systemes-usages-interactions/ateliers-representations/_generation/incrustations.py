@@ -90,7 +90,9 @@ def section(inc):
     if inc.get("cours", True):
         h.append(moteur.bloc_cours(at, niv, moteur.rel(d, build.synthese_eleve(at))))
     # numérotés dans l'ordre du bloc inséré (1, 2…), pas dans celui de l'atelier : la séquence lit « Exercice 1 », « Exercice 2 »
-    numeros = {exo: i + 1 for i, exo in enumerate(inc["exos"])}
+    # `premier_numero` (facultatif, 1 par défaut) : quand deux blocs se suivent dans la même activité, le second
+    # continue la numérotation du premier (« Exercice 2 », « Exercice 3 ») au lieu de repartir à 1.
+    numeros = {exo: i + inc.get("premier_numero", 1) for i, exo in enumerate(inc["exos"])}
     for exo in inc["exos"]:
         ex = next(x for x in N["exercices"] if x["id"] == exo)
         uid = "%s_%s_%s" % (at.COURT, niv, ex["id"])

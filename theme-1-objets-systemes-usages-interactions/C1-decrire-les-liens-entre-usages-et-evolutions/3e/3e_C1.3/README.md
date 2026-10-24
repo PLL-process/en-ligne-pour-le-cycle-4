@@ -8,7 +8,7 @@
 
 ➡ **[Séquence 3e — Numérique, société, environnement et santé](../3e_C1.5/sequence-numerique-societe-economie-environnement-sante.html)**
 
-L'activité 5 fait écrire un argumentaire de six à huit lignes sur l'incidence de l'objet, dont la dernière ligne nomme ses propres angles morts : un argumentaire honnête dit ce qu'il ne sait pas.
+L'activité 5 (séance 4) fait écrire un argumentaire de six à huit lignes sur l'incidence du smartphone sur la société, nourri par les trois premières séances, dont la dernière ligne nomme ses propres angles morts : un argumentaire honnête dit ce qu'il ne sait pas. La partie 2.d (séance 2) y prépare, avec une carte mentale.
 
 **Ce code y est évalué.** La banque de la ressource porte 10 questions étiquetées `3e_C1.3` (`qcm_numerique_societe.html`) : le score se reporte.
 

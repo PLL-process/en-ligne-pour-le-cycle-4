@@ -9,7 +9,7 @@ await lancerBanc311({
   champ: '#auto_15',
   texte: 'Mon hypothèse : essai du banc 311.',
   ancreS1: 'goodrep',
-  ancreSN: 'impact-env',
-  panneauSN: 's3',
+  ancreSN: 'argumentaire-court',
+  panneauSN: 's4',
   boutonSauvegarde: 'button[onclick="saveProgress4()"]',
 });

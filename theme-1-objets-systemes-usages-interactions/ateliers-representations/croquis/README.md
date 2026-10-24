@@ -27,6 +27,7 @@ Dans le programme de technologie, ce dessin s'appelle simplement le croquis. Dan
 
 | Séquence | Niveau | Exercices |
 |---|---|---|
+| `theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/3e/3e_C7.1/sequence_3e_C7_capteur-confort-ny.html` | 3e | e4, e6 |
 | `theme-1-objets-systemes-usages-interactions/C2-decrire-les-interactions-entre-un-objet-ou/4e/4e_C2.1/sequence_4e_C2_hangzhou_borne.html` | 4e | e1 |
 
 Ne pas modifier ces pages à la main : elles sont produites par `../_generation/` (`python3 build.py croquis`, `python3 build_qcm.py croquis`, `python3 gouvernance.py croquis`).

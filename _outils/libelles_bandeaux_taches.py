@@ -88,7 +88,7 @@ L["sequence_4e_C4.7-C4.9_sos_serre_packet_tracer.html"] = {
 
 L["sequence_5e_C4.1-C4.8_lampadaire_intelligent.html"] = {
  "s1": ("Séance 1 — Fonctions et matériaux", [
-   (1, "Associer fonctions, solutions et matériaux")]),
+   (1, "Lire le diagramme FAST, puis associer fonctions, solutions et matériaux")]),
  "s2": ("Séance 2 — La chaîne d'énergie", [
    (2, "Remonter la chaîne d'énergie du lampadaire")]),
  "s3": ("Séance 3 — La chaîne d'information", [
@@ -97,7 +97,9 @@ L["sequence_5e_C4.1-C4.8_lampadaire_intelligent.html"] = {
    (4, "Lire et exploiter la table des lampadaires")]),
  "s5": ("Séance 5 — Le réseau local", [
    (5, "Identifier les habitants du réseau local"),
-   (6, "Jouer le jeu du courrier et en tirer la règle de l'adresse unique"),
+   (6, "Jouer le jeu du courrier et en tirer la règle de l'adresse unique")]),
+ "s6": ("Séance 6 — Défi final et bilan", [   # 24/10/2026 : séance ajoutée (la séance 5 annonçait 75 min)
+   (8, "Compléter le FAST du lampadaire et écarter l'intrus"),
    (7, "Analyser la sonnette connectée du portail")]),
 }
 

@@ -11,13 +11,13 @@
 | Référentiel | BO n°9 du 29/02/2024 · cahier Nathan 5e (éd. 2024) |
 | Domaines du socle | D1.3, D2, D3, D4, D5 |
 | CRCN | 1.3 Traiter des données · 5.1 Résoudre des problèmes techniques |
-| Durée | 5 séances de 55 min |
+| Durée | 6 séances de 55 min |
 
 ## Sous-compétences
 
 | Code | Intitulé | Activités |
 |---|---|---|
-| 5e_C4.1 | Associer des solutions techniques à une ou des fonctions techniques. | 1, R |
+| 5e_C4.1 | Associer des solutions techniques à une ou des fonctions techniques. | 1, 7, R |
 | 5e_C4.2 | Identifier des constituants de la chaîne d’énergie d’un objet technique (l’organisation de la chaîne d’énergie étant fournie). | 2, R |
 | 5e_C4.3 | Indiquer la nature des énergies en entrée et en sortie des constituants de la chaîne d’énergie. | 2, R |
 | 5e_C4.4 | Identifier les principaux matériaux constitutifs d’un OST. | 1, R |
@@ -37,7 +37,9 @@ Cycle 3 : fonction d'usage, premiers objets techniques. Aucun prérequis de cycl
 
 ## Déroulé
 
-S1 : fonctions/solutions sur l'objet réel + matériaux et critères de choix (act. 1). S2 : chaîne d'énergie fournie à compléter + natures des énergies à chaque étape (act. 2). S3 : chaîne d'information + **simulateur interactif** du lampadaire — jour / nuit / nuit + passage, avec verrou expérientiel (act. 3). S4 : décrire les 6 lampadaires de la mairie par des données — descripteurs, types, formats, lecture pour agir (act. 4). S5 : le réseau local du collège (act. 5) + **jeu du courrier débranché** sur l'identification (act. 6) + réinvestissement sonnette connectée (R) + bilan + QCM.
+S1 : fonctions/solutions sur l'objet réel + matériaux et critères de choix (act. 1). S2 : chaîne d'énergie fournie à compléter + natures des énergies à chaque étape (act. 2). S3 : chaîne d'information + **simulateur interactif** du lampadaire — jour / nuit / nuit + passage, avec verrou expérientiel (act. 3). S4 : décrire les 6 lampadaires de la mairie par des données — descripteurs, types, formats, lecture pour agir (act. 4). S5 : le réseau local du collège (act. 5) + **jeu du courrier débranché** sur l'identification (act. 6) — 50 min. S6 : le diagramme FAST du lampadaire complété (act. 7, exercice 2 de l'atelier FAST : trois solutions, un intrus, une lecture « pourquoi ? » — il reprend le FAST lu en séance 1 avec ce que les séances 2 et 3 ont établi) + réinvestissement sonnette connectée (R) — 35 min — puis synthèse, Bonus, bilan et QCM.
+
+> **24/10/2026 — six séances au lieu de cinq.** La séance 5 annonçait 25 + 25 + 25 = 75 min pour 55. Le réinvestissement et la clôture sont passés dans une séance 6, complétée par l'exercice 2 de l'atelier FAST (10 min). Minutes d'activités annoncées par séance : 50 · 40 · 40 · 40 · 50 · 35. L'exercice « Compléter la bête à cornes du lampadaire » (atelier besoin) a été écarté : son code, 5e_C3.3, n'est pas un code de la séquence. Une sauvegarde faite avec la version à cinq séances se relit (activités 1 à 7 gardent leur clé ; la progression passe à 7 / 8).
 
 ## Outils, versions, sécurité
 

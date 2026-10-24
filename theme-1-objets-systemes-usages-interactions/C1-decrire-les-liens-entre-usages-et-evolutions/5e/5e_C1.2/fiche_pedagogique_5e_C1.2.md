@@ -1,14 +1,21 @@
 # Fiche pédagogique — 5e_C1.2 « Sainte-Luce : quel frein pour les vélos du collège ? »
 
-**Niveau** 5e · **Thème 1** · **Durée** 3 séances de 55 min (145 min annoncés pour 165 : 5 + 40 + 50 + 40 + 10)
+**Niveau** 5e · **Thème 1** · **Durée** 4 séances de 55 min (185 min annoncés pour 220 : séance 1 5 + 40,
+séance 2 50, séance 3 40, séance 4 15 + 25 + 10)
 **Matériel** un **vélo** (manipulation obligatoire, séance 1) et une clé Allen · un tableur, utile
 mais **pas nécessaire** en séance 2
+
+> **24/10/2026 — une séance 4 de 55 min, faite d'exercices** (demande du professeur). La clôture
+> (Bonus → Bilan → QCM) y passe ; la séance 3 garde l'activité 3 seule (40 min). La séance 4
+> accueille l'exercice de l'atelier FAST de 5e « Deux principes pour une même fonction » (activité 4)
+> et une activité écrite pour la séquence, « Léa dans la grande descente » (activité 5).
 
 ## Où ce lot se situe sur la chaîne d'analyse (règle n°64)
 
 Sur le versant **analyse externe**, juste avant le cahier des charges : on compare des principes
 pour une fonction déjà énoncée. Ce qui vient après — décomposer en fonctions techniques avec un
-FAST — relève du Thème 2.
+FAST — relève du Thème 2. La séance 4 en **lit** seulement un extrait, pour voir deux principes
+d'une même fonction écrits dans deux cases reliées par « ou » ; le construire reste au Thème 2.
 
 ## Le référentiel
 
@@ -41,7 +48,9 @@ contexte**, et assumer ce qu'on perd.
 | 1 | **Une fonction, trois principes** | 40 min | un relevé d'observation en trois lignes + 5 appariements |
 | 2 | **Comparer avec des chiffres** | 50 min | six critères, meilleur et moins bon, **et ce que le tableau ne dit pas** |
 | 3 | **Choisir pour Sainte-Luce** | 40 min | un principe, **deux raisons chiffrées**, et **une perte assumée** |
-| Bilan | Retour sur l'hypothèse, métacognition, auto-positionnement | 10 min | — |
+| 4 | **Conseiller** — act. 4 : le vélo-cargo de Léa, deux principes dans un FAST (exercice de l'atelier FAST 5e) | 15 min | cinq propriétés rangées, un choix, une phrase (vérifié par l'exercice, clé `rep_fast_5e_e3`) |
+| 4 | act. 5 : **Léa dans la grande descente** — conseiller avec des chiffres | 25 min | un frein, **deux chiffres**, **une perte**, et ce qui distingue Léa du collège |
+| Bilan | (séance 4) Retour sur l'hypothèse, métacognition, auto-positionnement | 10 min | — |
 
 ## 🔧 La manipulation — au parcours obligatoire (règle n°58)
 
@@ -71,6 +80,22 @@ au lieu d'être appris.
 Toutes **simulées** et **déterministes** (règle n°48). L'écart sec/pluie vaut **+3,1 m** pour les
 patins, **+1,0 m** pour le disque, **+0,8 m** pour le tambour : c'est là que le choix se joue.
 
+**Séance 4 — le tableau du vendeur de Léa**, écrit dans la page (pas de fichier) et déclaré simulé à
+l'élève : vélo-cargo chargé à environ 150 kg, lancé à 18 km/h comme les vélos du collège.
+
+| Frein | Sec | Pluie | Freins chauds (bas de la grande descente, sec) | Masse | Entretien |
+|---|---|---|---|---|---|
+| Patins | 7,5 m | 11,6 m | 8,2 m | 320 g | 18 €/an |
+| Disque | 7,0 m | 8,3 m | 7,5 m | 510 g | 34 €/an |
+| Tambour | 7,9 m | 9,1 m | 10,4 m | 760 g | 27 €/an |
+
+Construit pour rester cohérent avec le collège : masses et entretien inchangés (ce sont des
+propriétés du frein), distances plus longues avec la charge, écarts sec/pluie plus grands
+(+4,1 / +1,3 / +1,2 m), et l'essai 15 du collège (« chauffe en fin de descente ») qui devient ici un
+critère. Seul l'ordre des grandeurs physiques est affirmé : l'énergie à dissiper est proportionnelle
+à la masse (cinétique ½mv², de position mgh), d'où le facteur 150 ÷ 60 = 2,5 ; un frein dont la
+chaleur reste enfermée perd de son efficacité quand il chauffe (l'« évanouissement » du freinage).
+
 ## Où ça résiste
 
 **Séance 1** — la distinction fonction / principe / solution se dit en trois minutes et se perd en
@@ -85,6 +110,17 @@ plus dur). C'est la dernière phrase attendue, et c'est elle qui bloque.
 
 **Séance 3** — le vérificateur **refuse** le frein à patins et lui dit pourquoi, en chiffres, en
 renvoyant au Bonus 1 où ce même choix devient le bon.
+
+**Séance 4** — difficulté attendue (pas encore observée en classe) : recopier le choix de la
+séance 3. Pour Léa, le vérificateur **refuse le
+tambour** (10,4 m freins chauds, presque 3 m de plus que le disque) et les patins (11,6 m sous la
+pluie). Ici une seule réponse tient — le disque — et c'est voulu : le contraste avec les deux
+réponses défendables du collège porte la leçon (« le même raisonnement, un autre usage, une autre
+réponse »). Le calcul 150 ÷ 60 = 2,5 est de la proportionnalité de 5e ; la masse du frein
+(440 g sur 150 kg) montre qu'un critère peut presque disparaître quand l'usage change.
+L'activité 4 ne se valide qu'une fois l'exercice inséré réussi : sa sauvegarde est celle de
+l'atelier FAST, partagée avec lui et avec le cahier de 5e ; « Effacer ma sauvegarde » de la
+séquence ne l'efface pas.
 
 ## ⚠️ Deux précautions
 
@@ -108,3 +144,6 @@ qu'une seule des deux, Sainte-Luce est la plus complète sur ce code.
   ou trois freinages dans la cour, au décamètre.
 - **Le prix d'achat n'apparaît pas**, seulement le coût d'entretien — volontairement : il aurait
   écrasé la discussion.
+- **Le QCM n'a pas changé** avec la séance 4 : ce qu'elle mobilise y est déjà (l'énergie devient
+  chaleur, le revers du tambour fermé, la pente change tout, le même tableau ailleurs). Elle n'y
+  ajoute pas de question sur le diagramme FAST, qui a son propre QCM dans l'atelier.

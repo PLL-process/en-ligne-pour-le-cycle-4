@@ -1,7 +1,7 @@
 # 4e_C1.1 à C1.3 — « Tsinghua : concevoir avant de connecter »
 
 **Lot complet** — séquence + QCM 33 questions + 2 synthèses + fiche + matrice + 2 corrigés
-graphiques CC0 + suite de 42 tests. **Refonte (v2)** : l'état antérieur est archivé.
+graphiques CC0 + suite de 63 tests. **Refonte (v2)** : l'état antérieur est archivé.
 
 ➡️ **[Ouvrir la séquence](sequence_4e_C1.1-C1.3_tsinghua_feux.html)** ·
 [Le QCM](qcm_4e_C1.1-C1.3_tsinghua.html) ·
@@ -20,9 +20,10 @@ sont hétérogènes, les périmètres sont incompatibles. C'est précisément ce
 | 1 | **Lire avant de calculer** — et une mesure dans la cour | 45 min |
 | 2 | **Estimer, et dire ce que l'estimation vaut** | 50 min |
 | 3 | **Comparer sans confondre les périmètres** | 45 min |
-| 4 | **Du nombre au besoin technique** | 50 min |
+| 4 | **Du nombre au besoin technique** | 45 min |
+| 5 | **Justifier une évolution, sur un autre objet** — trois exercices des ateliers des représentations (bête à cornes, carte mentale), puis le bilan | 42 + 10 min |
 
-200 min annoncés pour 220 disponibles.
+242 min annoncés pour 275 disponibles (cinq séances de 55 min ; la séance 5 a été ajoutée le 24/10/2026).
 
 ## Ce que la séquence démontre
 

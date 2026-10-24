@@ -8,7 +8,7 @@
 
 ➡ **[Séquence 3e — Numérique, société, environnement et santé](../3e_C1.5/sequence-numerique-societe-economie-environnement-sante.html)**
 
-L'activité 4 travaille ce qui ne se convertit pas en chiffres, et pourquoi un ratio parfaitement juste peut rester fragile : la contrainte sociétale ne se réduit pas à une unité.
+L'activité 1 bis (séance 1) fait écrire un argumentaire court de quatre à six lignes : ce que la loi — RGPD, droit à l'image, accord d'un parent sous 15 ans, droit à l'effacement — oblige l'application de photos d'un club du collège à prévoir, et ce que cela change à l'application (cases d'accord vides au départ, accès réservé, bouton de retrait, durée de conservation). La partie 2.b (séance 2) y revient avec le site d'une activité en ligne, et le bilan y fait se positionner l'élève.
 
 **Ce code y est évalué.** La banque de la ressource porte 10 questions étiquetées `3e_C1.4` (`qcm_numerique_societe.html`) : le score se reporte.
 

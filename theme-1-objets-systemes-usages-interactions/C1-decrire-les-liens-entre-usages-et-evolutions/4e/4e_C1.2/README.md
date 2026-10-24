@@ -16,4 +16,10 @@ paie. La détection automatisée fait gagner du temps, et elle apporte des fauss
 une consommation d'énergie, et des caméras qui regardent aussi ce qui n'est pas la forêt. **Nommer
 le prix n'est pas condamner l'évolution.**
 
+**Séance 5 — « Justifier une évolution, sur un autre objet »** (ajoutée le 24/10/2026). Deux exercices
+de l'atelier « La carte mentale » (4e), sur l'arrosage connecté du jardin partagé d'un collège :
+compléter la carte de ses avantages et de ses inconvénients en laissant dehors ce qui est vrai mais hors
+sujet, puis corriger une carte mal faite. Ils se retrouvent dans
+[l'atelier de la carte mentale](atelier_carte_mentale.html), avec la même sauvegarde.
+
 **QCM** : 9 questions sur ce code.
