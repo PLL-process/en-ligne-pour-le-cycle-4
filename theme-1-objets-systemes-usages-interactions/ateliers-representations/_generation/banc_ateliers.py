@@ -2,7 +2,7 @@
 """Banc de tests des ateliers des représentations (Playwright / Chromium).
 
     python3 banc_ateliers.py                 # tous les ateliers construits, leurs QCM, synthèses et les cahiers
-    python3 banc_ateliers.py interacteurs    # un ou plusieurs modules
+    python3 banc_ateliers.py interacteurs    # un ou plusieurs modules (--json fichier : résultats écrits)
 
 Pour chaque page de niveau, à 390 px :
   - aucune erreur JavaScript, aucun défilement horizontal ;
@@ -152,7 +152,7 @@ def page_simple(b, chemin, nom, attendu_q=None):
         ctx.close()
 
 
-def main(modules):
+def main(modules, cahiers=False, sortie_json=None):
     construits = []
     for m in modules:
         try:
@@ -172,17 +172,28 @@ def main(modules):
             page_simple(b, build.qcm(at), at.SLUG + " QCM", attendu_q=30)
             page_simple(b, build.synthese_eleve(at), at.SLUG + " synthèse élève")
             page_simple(b, build.synthese_prof(at), at.SLUG + " synthèse professeur")
-        if len(sys.argv) == 1:
+        if cahiers:
             for niv in ("5e", "4e", "3e"):
-                page_simple(b, build.cahier(niv), "cahier " + niv)
+                if build.cahier(niv).exists():
+                    page_simple(b, build.cahier(niv), "cahier " + niv)
         b.close()
     ok = sum(1 for _, r in RESULTATS if r)
     print("\n%d / %d tests passés" % (ok, len(RESULTATS)))
     echecs = [n for n, r in RESULTATS if not r]
     if echecs:
         print("Échecs :\n  - " + "\n  - ".join(echecs))
+    if sortie_json:
+        pathlib.Path(sortie_json).write_text(json.dumps([{"test": n, "ok": r} for n, r in RESULTATS],
+                                                        ensure_ascii=False, indent=1), encoding="utf-8")
     return 0 if not echecs else 1
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1:] or build.MODULES))
+    args = sys.argv[1:]
+    sortie = None
+    if "--json" in args:
+        i = args.index("--json")
+        sortie = args[i + 1]
+        del args[i:i + 2]
+    # sans module nommé : tous les ateliers, et les cahiers de niveau
+    sys.exit(main(args or build.MODULES, cahiers=not args, sortie_json=sortie))
