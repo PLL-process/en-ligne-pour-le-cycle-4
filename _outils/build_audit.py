@@ -366,13 +366,10 @@ OVERLAY = {
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
         qualite="Séquence « Numérique, société, économie, environnement, santé » + QCM 24 q.",
-        anomalies="Lien PDF cassé au format DOS 8.3 (DELAGR~1.PDF) — le fichier visé est "
-                  "_ressources-communes/Ressources pédagogiques/Programme 2024/"
-                  "affiche-ecologie-numerique-delagrave.pdf ; "
-                  "cette affiche est un document éditeur (Delagrave) : licence de "
-                  "rediffusion À VÉRIFIER ; pas de différenciation.",
+        anomalies="Pas de différenciation.",
         accessibilite="À vérifier.",
-        medias="Affiche Delagrave : droit de rediffusion non établi.",
+        medias="L'activité 3 bis s'appuie sur la page publique de l'Arcep ; l'affiche "
+               "Delagrave n'est plus visée, ni rediffusée par le dépôt (arbitrage A5, 23/10/2026).",
     ),
     "3e_C2.1": dict(
         statut="COMPLET ET VALIDABLE",

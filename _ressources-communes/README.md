@@ -17,9 +17,10 @@ les outils d'évaluation et les images mutualisés dans le dépôt.
 ### Ressources pédagogiques
 
 - [Programme 2024](Ressources%20p%C3%A9dagogiques/Programme%202024/)
-  - [Cahier PIX 2026 — Delagrave](Ressources%20p%C3%A9dagogiques/Programme%202024/cahier-pix-2026-delagrave.pdf)
   - [Guide console — Vittascience](Ressources%20p%C3%A9dagogiques/Programme%202024/guide-console-vittascience.pdf)
-  - [Affiche sur l'écologie du numérique — Delagrave](Ressources%20p%C3%A9dagogiques/Programme%202024/affiche-ecologie-numerique-delagrave.pdf)
+- Documents d'éditeur, **consultables chez l'éditeur seulement** (ils ne sont pas rediffusés ici) :
+  - [Si alors — Cahier d'activités Pix Collège (2026), Delagrave](https://www.editions-delagrave.fr/livre/9782206119663-si-alors-cahier-d-activites-pix-college-2026-cahier-eleve) : cahier élève vendu par l'éditeur.
+  - [Affiches Delagrave pour la technologie, dont « L'écologie du numérique »](https://www.editions-delagrave.fr/article/telechargez-nos-affiches-pour-animer-vos-cours-de-technologie) : téléchargement gratuit avec un compte enseignant, pour l'imprimer et l'afficher en classe.
 - [Anciens programmes](Ressources%20p%C3%A9dagogiques/Anciens%20programmes/) :
   ressources antérieures au programme 2024, conservées à titre d'archive.
 

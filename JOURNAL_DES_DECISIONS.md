@@ -69,7 +69,7 @@ les décisions de publication restent à ChatGPT.*
 | A2 | QCM eCall : 4e_C4.4 → 4e_C4.5 ? | — | **RÉSOLU** : reste en 4e_C4.4 (rattachement correct ; erreur d'analyse de l'audit initial, confondue avec 5e_C4.4) |
 | A3 | `5e_C1.2/sequence.mhtml` : contenu 5e ou 4e ? | Pascal | ouvert |
 | A4 | QCM domotique/éclairage : rester en 4e_C6.2 ? | Pascal | ouvert |
-| A5 | Affiche Delagrave : droit de rediffusion ? | Pascal | ouvert |
+| A5 | Affiche Delagrave : droit de rediffusion ? | Pascal | **RÉSOLU le 23/10/2026** : droit non établi, l'affiche et le cahier Pix Delagrave sont retirés du dépôt, un lien vers l'éditeur les remplace (voir l'entrée du jour) |
 | A6 | Progression 3e (P1→P5) et périmètre du LOT 1 | Pascal | ouvert |
 | A7 | Publication du lot 0 (audit) sur `main` | ChatGPT | en cours (PR brouillon depuis `draft/agent-sequences`) |
 
@@ -22749,3 +22749,25 @@ Une seule suite a dû changer : `tests_5e_C4.1-C4.8_sequence.mjs` saisissait l'h
 **Contrôles.** Les 28 contrôles du dépôt (`controle_*.py` et `.mjs` : squelette, impression, contraste des liens, verrous, hors ligne…) sortent à 0 ; `controle_squelette` : 0 refus, D6 : 0.
 
 **Reste** : thème 3, puis `C1.3-C1.4_SI` ; enfin D6 obligatoire. Hors règle, vu en passant : 4e_C6.1 déborde de 22 px à 320 px, déjà sur `main`.
+
+## 23/10/2026 — Arbitrage A5 clos : les deux PDF Delagrave quittent le dépôt, un lien vers l'éditeur les remplace (transversal)
+
+**Le constat.** L'inventaire des skills du 23/10 (lot A, puis vérification directe) a trouvé dans `_ressources-communes/Ressources pédagogiques/Programme 2024/`
+deux documents d'éditeur **versionnés et publiés** avec le site (`.nojekyll`), liés depuis `_ressources-communes/README.md` :
+- `cahier-pix-2026-delagrave.pdf` (15 Mo, 76 pages) : le cahier élève *Si alors — Cahier d'activités Pix Collège (2026)*, ISBN 9782206119663, vendu par
+  l'éditeur ; chaque page porte « © Delagrave 2026 — La photocopie non autorisée est un délit » ;
+- `affiche-ecologie-numerique-delagrave.pdf` (une page) : l'affiche *L'écologie du numérique*, que l'éditeur propose en téléchargement gratuit **avec un
+  compte enseignant**, pour l'imprimer et l'afficher en classe — sans rien dire d'une rediffusion publique.
+
+Ajoutés le 29/07 par la réorganisation des ressources communes, alors que l'arbitrage A5 (« droit de rediffusion ? ») était ouvert depuis le 21/07.
+
+**La décision.** Pascal a confié l'arbitrage à Fable le 23/10 (« carte blanche »). Le droit de rediffusion n'étant établi pour aucun des deux, ils sortent du
+dépôt. `_ressources-communes/README.md` renvoie désormais aux pages de l'éditeur (fiche du cahier ; page des affiches à télécharger). A5 passe à **RÉSOLU**.
+Le professeur qui possède ces documents peut toujours les distribuer en classe, comme le disait déjà 3e_C1.5 (activité 3 bis).
+
+**Au passage.** `_outils/build_audit.py` portait pour 3e_C1.5 une anomalie périmée (lien `DELAGR~1.PDF` cassé) : la page ne vise plus ce fichier depuis la
+refonte de l'activité 3 bis, qui s'appuie sur la page publique de l'Arcep. L'anomalie est retirée, la ligne « médias » dit ce qui est vrai aujourd'hui.
+
+**Ce que ce lot ne fait pas.** Les deux fichiers restent dans **l'historique git** (et dans toute copie déjà faite du dépôt) : les en effacer demanderait de
+réécrire l'historique de `main`, opération irréversible qui reste une décision de Pascal. Les mentions du cahier comme **source d'inspiration**
+(`3e_C7.1/synthese_professeur_3e_C7.html`, `4e_C9.1/CRCN_regle7.md`) restent : citer un ouvrage n'est pas le rediffuser.
