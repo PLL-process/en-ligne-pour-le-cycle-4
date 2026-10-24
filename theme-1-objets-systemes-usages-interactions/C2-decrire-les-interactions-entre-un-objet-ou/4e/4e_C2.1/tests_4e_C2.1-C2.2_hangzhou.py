@@ -107,8 +107,11 @@ with sync_playwright() as p:
 
     n_ta = pg.eval_on_selector_all("textarea", "a=>a.length")
     n_et = pg.eval_on_selector_all("details.etayage", "a=>a.length")
+    # Règle plutôt que compte figé : les exercices insérés par l'atelier des représentations ajoutent des zones.
+    sans = pg.evaluate("""()=>[...document.querySelectorAll('textarea')].filter(t=>{let e=t.parentElement,n=0;
+        while(e && !e.querySelector('details.etayage') && n<4){e=e.parentElement;n++} return !(e && e.querySelector('details.etayage'))}).map(t=>t.id)""")
     t("chaque zone de rédaction a sa version étayée (n°31)",
-      n_ta == 8 and n_et >= n_ta, f"{n_ta} zones / {n_et} étayages")
+      n_ta >= 8 and not sans, f"{n_ta} zones / {n_et} étayages, sans étayage : {sans}")
     t("chaque champ porte une étiquette (n°34)",
       pg.evaluate("[...document.querySelectorAll('select,textarea')].every(e=>!e.id||"
                   "document.querySelector(`label[for=\"${e.id}\"]`)||e.getAttribute('aria-label'))"))
@@ -204,6 +207,20 @@ with sync_playwright() as p:
     t("activité 4 : quatre exigences d'une seule famille sont refusées",
       "TROIS familles" in pg.inner_text("#fb4"))
     pg.fill("#a4_exig", EXIG)
+    pg.click('[data-check="4"]')
+    pg.wait_for_timeout(120)
+    t("activité 4 : le diagramme pieuvre inséré est exigé", "diagramme pieuvre" in pg.inner_text("#fb4"))
+    # l'exercice inséré de l'atelier des représentations (diagramme pieuvre du système d'arrosage)
+    pg.click("#pv_4e_e5 button.verifier")
+    pg.wait_for_timeout(80)
+    t("activité 4 : l'exercice pieuvre inséré se vérifie à vide (retour à reprendre)", "🔴" in pg.inner_text("#pv_4e_e5 .retour"))
+    for i, v in enumerate(["fp", "fc", "fc", "fc", "fc", "fc"]):
+        pg.check('input[name="pv_4e_e5__type_%d"][value="%s"]' % (i, v))
+    for i, v in enumerate(["meteo", "cuve", "tel"]):
+        pg.check('input[name="pv_4e_e5__phrase_%d"][value="%s"]' % (i, v))
+    pg.click("#pv_4e_e5 button.verifier")
+    pg.wait_for_timeout(80)
+    t("activité 4 : l'exercice pieuvre inséré, rempli juste, est réussi", "Tout est juste" in pg.inner_text("#pv_4e_e5 .retour"))
     pg.click('[data-check="4"]')
     pg.wait_for_timeout(120)
     t("activité 4 : validée avec trois familles et leurs verbatims",

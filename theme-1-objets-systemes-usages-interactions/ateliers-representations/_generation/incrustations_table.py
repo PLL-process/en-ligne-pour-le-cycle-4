@@ -20,4 +20,14 @@ INCRUSTATIONS = [
                "interacteurs extérieurs</b>, qu'on appelle aussi le <b>diagramme pieuvre</b>. Deux exercices, environ "
                "un quart d'heure&nbsp;; chacun se vérifie tout seul et a sa correction complète.",
          suite="un exercice pour classer ses interacteurs, un autre sur ses choix de conception, et le QCM de l'atelier"),
+    dict(id="pv-4e-hangzhou", module="interacteurs", niveau="4e", exos=["e5"],
+         sequence=C2 + "4e/4e_C2.1/sequence_4e_C2_hangzhou_borne.html",
+         avant='  <p>Le programme en nomme <b>six familles</b>.',
+         balise="h4", balise_exo="h5",
+         titre="D'abord les contraintes&nbsp;: le diagramme pieuvre d'un autre objet",
+         intro="Avant d'écrire des exigences, les concepteurs font le tour de ce qui entoure l'objet&nbsp;: chaque "
+               "interacteur impose une condition. Entraîne-toi sur un autre objet, le <b>système d'arrosage connecté</b> "
+               "d'un jardin partagé, avec son <b>diagramme des interacteurs extérieurs</b> — le <b>diagramme pieuvre</b>. "
+               "Un exercice, environ dix minutes&nbsp;; il se vérifie tout seul et a sa correction complète.",
+         suite="le cahier des charges avec la flexibilité, les plaintes des usagers, et le QCM de l'atelier"),
 ]

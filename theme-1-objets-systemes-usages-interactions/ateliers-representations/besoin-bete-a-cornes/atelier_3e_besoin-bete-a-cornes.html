@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Atelier de 3e : le besoin (bête à cornes) — exercices corrigés, 3e_C3.1.">
+<title>Thème 1 · 3e — Atelier : le besoin (bête à cornes) (3e_C3.1)</title>
+<style>
+/* Ateliers des représentations — feuille commune, recopiée dans chaque page
+   par le générateur (une page = un fichier, lisible sans Internet).
+   Palette de la charte du site ; aucune police distante. */
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;
+      --sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;
+      --err:#ff7b88;--input-bg:#0b1b39;--input-bd:#2f5695;--btn:#1d4e89}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--bg);color:var(--text);margin:0;padding:0 0 46px;line-height:1.6;
+     font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif;font-size:17px}
+.evitement{position:absolute;left:-9999px;top:0;background:#fff;color:#000;padding:8px 14px;z-index:10000}
+.evitement:focus{left:10px;top:10px}
+.page{max-width:940px;margin:0 auto;padding:0 16px}
+h1{font-size:1.5em;color:var(--title);text-align:center;margin:18px 0 4px;line-height:1.3}
+h2{font-size:1.15em;color:var(--head);margin:18px 0 8px;line-height:1.35}
+h3{font-size:1.02em;color:var(--hl);margin:16px 0 6px}
+h4{font-size:.96em;color:var(--sub);margin:12px 0 4px}
+p{margin:.45em 0 .7em}
+.mission{text-align:center;color:var(--sub);margin:0 0 10px;font-size:1.02em}
+a{color:var(--hl);text-decoration:underline;text-underline-offset:2px}
+a,a:where(:visited){color:var(--hl)}
+#navharm{display:flex;flex-wrap:wrap;gap:8px;max-width:940px;margin:12px auto 0;padding:0 16px;position:sticky;top:0;
+  z-index:50;background:rgba(5,15,36,.94);padding-top:8px;padding-bottom:8px}
+#navharm a{padding:6px 12px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);
+  color:var(--sub);font-size:.88em;text-decoration:none;line-height:1.25}
+#navharm a:hover{border-color:var(--hl);color:var(--hl)}
+.etiquettes{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:6px 0 12px}
+.etiquette{padding:4px 12px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border);background:var(--panel)}
+.etiquette.niveau{color:var(--hl)}
+.etiquette.code{background:#173666;color:#fff}
+.etiquette.duree{color:var(--warn)}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0}
+.btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:10px 16px;cursor:pointer;
+     font-family:inherit;font-weight:600;font-size:.92em;min-height:44px;text-decoration:none;display:inline-block}
+.btn.ghost{background:transparent;border:1px solid var(--input-bd);color:var(--sub)}
+.btn.verifier{background:#145c3a;border:1px solid var(--ok)}
+.btn.qcm{background:#2b1a3f;border:1px solid var(--head);color:var(--head)}
+.btn.suivant{background:transparent;border:1.5px solid var(--hl);color:var(--hl);margin-top:14px}
+.btn:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible,
+canvas:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:14px 0}
+.card.exercice{border-left:5px solid var(--hl)}
+.card.bonus{border-left:5px solid var(--warn)}
+.card.bilan{border-left:5px solid var(--ok)}
+.meta{background:var(--panel2);border-left:3px solid var(--hl);border-radius:0 8px 8px 0;padding:8px 13px;margin:8px 0;font-size:.9em}
+.meta b{color:var(--sub)}
+.consigne{font-size:1.03em}
+.consigne b{color:#fff}
+.situation-fictive{font-size:.84em;color:var(--sub);font-style:italic}
+/* Progression */
+.progression{max-width:940px;margin:6px auto 4px;padding:0 16px}
+.progression .barre{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:999px;height:12px;overflow:hidden}
+.progression .barre>div{background:linear-gradient(90deg,#1d4e89,#61dafb);height:100%;width:0;transition:width .3s}
+.progression p{text-align:center;color:var(--sub);font-size:.86em;margin:4px 0}
+/* Onglets */
+.onglets{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 14px;max-width:940px;padding:0 16px}
+.onglet{flex:1;min-width:132px;padding:9px 8px;border-radius:10px;background:var(--input-bg);
+  border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.84em;font-weight:600;
+  color:var(--text);font-family:inherit;line-height:1.35;min-height:44px}
+.onglet[aria-selected="true"]{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+.onglet .etat{display:block;font-size:.85em;font-weight:500;color:var(--sub)}
+.onglet[aria-selected="true"] .etat{color:#d8ecff}
+.panneau[hidden]{display:none}
+/* Rappel de l'ouverture (à partir du 2e onglet) */
+.rappel-ouverture>summary{display:none}
+.rappel-ouverture.volet>summary{display:block;cursor:pointer;min-height:44px;line-height:44px;padding:0 14px;margin:10px 0;
+  border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+/* Formulaires */
+textarea,input[type=text]{width:100%;background:var(--input-bg);color:var(--text);border:1px solid var(--input-bd);
+  border-radius:8px;padding:9px 11px;font-family:inherit;font-size:.96em}
+textarea{min-height:84px;resize:vertical}
+label.champ{display:block;font-weight:600;margin:8px 0 4px;color:var(--sub)}
+fieldset.qcm-groupe{border:1px solid var(--input-bd);border-radius:10px;margin:10px 0;padding:8px 12px 10px;min-width:0}
+fieldset.qcm-groupe legend{font-weight:600;color:#fff;padding:0 6px;max-width:100%;white-space:normal}
+.options{display:flex;flex-direction:column;gap:4px;margin-top:4px}
+.option{display:flex;align-items:flex-start;gap:9px;padding:7px 9px;border-radius:8px;border:1px solid transparent;cursor:pointer}
+.option:hover{border-color:var(--input-bd);background:rgba(29,78,137,.25)}
+.option input{margin-top:.32em;width:1.15em;height:1.15em;flex:0 0 auto;accent-color:#61dafb}
+.encoche{display:inline-block;min-width:1.3em;font-weight:700;margin-left:6px}
+.encoche.juste{color:var(--ok)} .encoche.faux{color:var(--err)} .encoche.vide{color:var(--warn)}
+.encoche-texte{font-size:.86em;font-weight:600;margin-left:4px}
+.retour-option{display:block;font-size:.88em;margin:2px 0 4px 2.1em;color:var(--sub)}
+.retour{margin:10px 0;padding:10px 14px;border-radius:9px;display:none;border:1px solid transparent}
+.retour.visible{display:block}
+.retour.ok{background:rgba(129,251,161,.12);border-color:#2f6b40;color:var(--ok)}
+.retour.mixte{background:rgba(255,214,107,.12);border-color:#7a6a2a;color:var(--warn)}
+.retour.err{background:rgba(255,123,136,.12);border-color:#7a2f38;color:#ffc2c8}
+.retour ul{margin:6px 0 2px;padding-left:20px;color:var(--text)}
+.retour li{margin:3px 0}
+/* Aides, correction */
+details.aide,details.correction,details.etayage,details.mots,details.description,details.corrige-bonus{margin:8px 0;border:1px solid var(--input-bd);
+  border-radius:9px;padding:6px 12px;background:rgba(11,27,57,.6)}
+details summary{cursor:pointer;font-weight:600;color:var(--sub);min-height:32px;padding:4px 0}
+details.aide summary{color:var(--hl)}
+details.correction summary{color:var(--warn)}
+details.corrige-bonus summary{color:var(--warn)}
+details.etayage{border-left:4px solid var(--hl)}
+details.mots{border-left:4px solid var(--head)}
+details.mots summary{color:var(--head)}
+details.mots dl{margin:6px 0}
+details.mots dt{font-weight:700;color:#fff;margin-top:6px}
+details.mots dd{margin:0 0 4px 14px}
+.demo{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;margin:6px 0}
+.demo .ligne{padding:4px 10px;border-left:3px solid var(--input-bd);background:rgba(11,27,57,.5);border-radius:0 6px 6px 0}
+.demo .ligne b{color:var(--hl)}
+.demo .conclusion{border-left-color:var(--ok)}
+details.cours{margin:8px 0;border:1px solid var(--input-bd);border-left:4px solid #61dafb;border-radius:0 10px 10px 0;padding:6px 12px;background:rgba(97,218,251,.06)}
+details.cours summary{cursor:pointer;font-weight:700;color:#9bd8ff}
+.cours-corps h3{font-size:1em;margin:12px 0 4px;color:#9bd8ff}
+.cours-corps ul{margin:4px 0 8px}
+.retenir{border-left:4px solid var(--ok);padding:6px 12px;margin:10px 0;background:rgba(129,251,161,.07);border-radius:0 8px 8px 0}
+.retenir b{color:var(--ok)}
+.piege{border-left:4px solid var(--err);padding:6px 12px;margin:10px 0;background:rgba(255,123,136,.07);border-radius:0 8px 8px 0}
+.piege b{color:#ffb0b8}
+.critere{border-left:4px solid var(--warn);padding:6px 12px;margin:10px 0;background:rgba(255,214,107,.06);border-radius:0 8px 8px 0}
+.critere b{color:var(--warn)}
+/* Figures */
+.figure{margin:12px 0}
+.figure img,.figure svg.schema{width:100%;height:auto;max-width:820px;display:block;margin:0 auto;border-radius:10px;border:1px solid var(--border);background:#fbfcff}
+@media (max-width:600px){.figure{overflow-x:auto;-webkit-overflow-scrolling:touch}.figure svg.schema,.figure img{min-width:560px}}
+.figure figcaption{color:var(--sub);font-size:.85em;margin-top:6px;text-align:center}
+.schema-vivant{background:#fbfcff;border-radius:10px;border:1px solid var(--border);padding:4px}
+/* Tableaux */
+.defile{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.9em}
+th,td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
+th{background:var(--panel2);color:var(--sub)}
+/* Croquis */
+.croquis-zone{background:#fff;border:2px dashed #7d9bd6;border-radius:10px;touch-action:none;display:block;width:100%;max-width:760px;margin:6px auto;cursor:crosshair}
+.croquis-outils{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:6px 0}
+.croquis-outils .btn{padding:7px 12px;min-height:40px}
+.croquis-outils .btn[aria-pressed="true"]{background:#2e6db3;outline:2px solid var(--hl)}
+/* Avant de commencer */
+.verif-liste{list-style:none;padding:0;margin:6px 0}
+.verif-liste li{margin:8px 0;padding:8px 10px;border:1px solid var(--input-bd);border-radius:8px;background:rgba(11,27,57,.5)}
+.verif-liste label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.verif-liste input{width:1.15em;height:1.15em;margin-top:.3em;flex:0 0 auto}
+.verif-liste .code{font-size:.8em;color:var(--sub)}
+.positionnement td,.positionnement th{text-align:center}
+.positionnement td:first-child{text-align:left}
+.lsu-legende{font-size:.84em;color:var(--sub)}
+.note{color:var(--sub);font-size:.9em}
+footer.pied{max-width:940px;margin:30px auto 0;padding:0 16px;color:#7d9bd6;font-size:.82em;text-align:center}
+/* Mode essentiel : on garde les consignes et les réponses, on replie le reste */
+body.essentiel details.correction,body.essentiel .approfondir,body.essentiel details.description{display:none}
+@media (max-width:600px){body{font-size:16px}.card{padding:12px 12px}.onglet{min-width:46%}h1{font-size:1.32em}}
+@media print{
+  body{background:#fff;color:#111;font-size:12pt}
+  #navharm,.toolbar,.onglets,.progression,.btn,.croquis-outils,.evitement{display:none!important}
+  .panneau[hidden]{display:block!important}
+  .card{background:#fff;border-color:#999;break-inside:avoid-page}
+  h1,h2,h3,h4{color:#111}
+  .etiquette{background:#fff!important;color:#111!important;border-color:#999}
+  a,a:visited{color:#00309e!important}
+  textarea,input[type=text]{background:#fff;color:#111;border-color:#999}
+  fieldset.qcm-groupe legend,.consigne b{color:#111}
+  .meta,.demo .ligne,details,.verif-liste li{background:#fff!important;color:#111}
+  .retenir,.piege,.critere{background:#fff!important}
+  .retenir b{color:#176b2c}.piege b{color:#a1122a}.critere b{color:#7a5a00}
+  .retour{background:#fff!important;color:#111!important}
+  .mission,.note,.situation-fictive,details summary,.retour-option,.meta b{color:#1a3a7a!important}
+  .rappel-ouverture>summary{display:none!important}
+  .cours-corps h3,details.cours summary{color:#111!important}
+}
+</style>
+</head>
+<body>
+<a class="evitement" href="#contenu">Aller au contenu</a>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../index.html">&#8962; Accueil</a><a href="../../C3-caracteriser-et-choisir-un-objet-ou-un/3e/3e_C3.1/sequence_3e_C3.1-C3.4_shenzhen.html">&#8592; Revenir à la séquence</a><a href="../cahiers/cahier_3e_representations.html">📒 Mon cahier de 3e</a><a href="../../_reperes/carte_des_representations.html">🧭 Toutes les représentations</a></nav>
+<main id="contenu" class="page"><h1>🐂 Le besoin</h1><p class="mission">Partir d'un besoin bien écrit pour établir une liste large d'objets ou de systèmes possibles — et voir ce qu'un besoin mal écrit fait perdre.</p><div class="toolbar"><button type="button" class="btn" id="btnImprimer">🖨 Imprimer</button><button type="button" class="btn ghost" id="btnEffacer">🗑 Effacer ma sauvegarde</button><button type="button" class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : désactivé</button></div><p class="note" id="noteSauvegarde" style="text-align:center" aria-live="polite">Ton travail s'enregistre tout seul dans ce navigateur.</p><div class="etiquettes"><span class="etiquette niveau" title="Niveau de classe" aria-label="Niveau : 3e">3e</span><span class="etiquette code" title="Établir une liste d’OST possibles en vue de répondre à un besoin." aria-label="Compétence 3e_C3.1 : Établir une liste d’OST possibles en vue de répondre à un besoin.">3e_C3.1</span><span class="etiquette duree" title="Durée indicative de tous les exercices" aria-label="Durée indicative : environ 22 minutes">⏱ ≈ 22 min</span><span class="etiquette" title="Le besoin, souvent représenté par la bête à cornes" aria-label="Représentation : Le besoin, souvent représenté par la bête à cornes">🐂 bête à cornes</span></div><details class="rappel-ouverture" open><summary>📖 Rappel : la situation et ton hypothèse</summary><section class="card" data-cle="rep_besoin-bete-a-cornes_3e__avant"><h2>🔄 Avant de commencer&nbsp;: ce que je vérifie</h2><p>Coche ce que tu sais déjà faire. Pour ce qui n'est pas encore en place, ouvre le lien&nbsp;: il te donne de quoi le rattraper en quelques minutes.</p><ul class="verif-liste"><li><label for="rep_besoin-bete-a-cornes_3e__avant-0"><input type="checkbox" id="rep_besoin-bete-a-cornes_3e__avant-0" name="avant" value="0"><span>Je sais formuler un but avec un verbe à l'infinitif, sans nommer de solution, et dire pourquoi un objet évolue quand le besoin évolue. <span class="code">(4e_C1.3)</span></span></label><div class="note">Pour le rattraper&nbsp;: <a href="atelier_4e_besoin-bete-a-cornes.html#bc_4e_e4">l'atelier de 4e, exercice 1 (12 minutes)</a></div></li><li><label for="rep_besoin-bete-a-cornes_3e__avant-1"><input type="checkbox" id="rep_besoin-bete-a-cornes_3e__avant-1" name="avant" value="1"><span>Je sais dire quelles caractéristiques comptent pour choisir un objet qui répond à un besoin. <span class="code">(4e_C3.1)</span></span></label><div class="note">Pour le rattraper&nbsp;: <a href="atelier_4e_besoin-bete-a-cornes.html#bc_4e_e5">l'atelier de 4e, exercice 2 (10 minutes)</a></div></li></ul></section><section class="card"><h2>🧭 Deux noms pour une même idée</h2><p>Avant de chercher des solutions, on écrit le <b>besoin</b>&nbsp;: à qui l'objet rendra service, sur quoi il agira, dans quel but. C'est ce que le programme appelle <b>exprimer le besoin</b>&nbsp;; le schéma qui le montre s'appelle souvent la <b>bête à cornes</b>. En 3e, on s'en sert pour <b>établir une liste</b> d'objets ou de systèmes techniques possibles — avant de choisir.</p><p>Dans cet atelier, le projet est celui d'une <b>alerte cyclonique</b> pour un quartier de Sainte-Luce.</p></section><section class="card" data-cle="rep_besoin-bete-a-cornes_3e__hyp"><h2>💭 Ton hypothèse de départ</h2><p><b>La question&nbsp;:</b> Comment trouver toutes les solutions possibles à un besoin, sans s'enfermer dans la première idée&nbsp;?</p><label class="champ" for="rep_besoin-bete-a-cornes_3e__hyp_t">Ce que je pense avant les exercices</label><textarea id="rep_besoin-bete-a-cornes_3e__hyp_t" name="hyp" rows="3"></textarea><details class="etayage"><summary>🪜 Version étayée : des débuts de phrase pour t'aider</summary><ul><li>Je pense qu'il faut d'abord écrire…</li><li>Pour ne pas m'enfermer dans une idée, je…</li><li>Une liste de solutions est utile parce que…</li></ul></details></section></details><section class="card cours-carte"><details class="cours"><summary>📘 Le cours — ce qu'il faut savoir</summary><div class="cours-corps"><h3>Rappel&nbsp;: un besoin bien écrit</h3><ul><li>À qui&nbsp;? sur quoi&nbsp;? dans quel but&nbsp;? Le but commence par un verbe à l'infinitif et ne nomme <b>aucune solution</b>.</li><li>Les mêmes personnes peuvent être dans les deux cases du haut&nbsp;: un réveil rend service à l'élève et agit sur l'élève — il le réveille&nbsp;; la station d'alerte rend service aux habitants et agit sur eux — elle les prévient.</li><li>Celui qui commande et paie (la commune) n'est pas forcément celui à qui l'objet rend service (les habitants).</li></ul><h3>Établir une liste d'OST possibles</h3><ul><li>Un <b>OST</b> est un <b>objet ou système technique</b>&nbsp;: un objet fabriqué, ou plusieurs objets qui travaillent ensemble.</li><li><b>Élargir</b>&nbsp;: chercher famille par famille (le son, la lumière ou l'image, le téléphone, la voix d'une personne…), sans juger trop tôt.</li><li>Ne pas mettre dans la liste&nbsp;: une <b>personne</b> ou un service (la mairie), une <b>action</b> (évacuer), le danger lui-même (le vent), ni un objet qui répond à un autre but (des volets protègent, ils ne préviennent pas).</li></ul><h3>Un but qui nomme une solution ferme la liste</h3><ul><li>« Envoyer un SMS aux habitants » donne la réponse avant d'avoir cherché&nbsp;: la liste ne contient qu'une ligne, et ceux qui n'ont pas de réseau sont oubliés.</li><li>La solution n'est pas mauvaise pour autant&nbsp;: sa place est <b>dans la liste</b>, pas dans le but.</li></ul><h3>Et ensuite&nbsp;?</h3><ul><li>Une fois la liste établie, on <b>choisit</b>&nbsp;: on compare les OST selon des critères (fonctionner sans électricité, coût, entretien…) et on argumente son choix.</li></ul></div><p class="note">Le cours complet, avec les schémas et les mots&nbsp;: <a href="Synthèses/synthese_eleve_besoin-bete-a-cornes.html">la synthèse</a>.</p></details></section><div class="progression"><div class="barre" aria-hidden="true"><div id="barreProgression"></div></div><p id="texteProgression" aria-live="polite"></p></div><div class="onglets" role="tablist" aria-label="Les exercices de l'atelier"><button type="button" class="onglet" role="tab" id="tab-p-bc_3e_e6" aria-controls="p-bc_3e_e6" aria-selected="true" tabindex="0">Exercice 1<span class="etat" id="onglet-etat-bc_3e_e6">à faire</span></button><button type="button" class="onglet" role="tab" id="tab-p-bc_3e_e7" aria-controls="p-bc_3e_e7" aria-selected="false" tabindex="-1">Exercice 2<span class="etat" id="onglet-etat-bc_3e_e7">à faire</span></button><button type="button" class="onglet" role="tab" id="tab-p-fin" aria-controls="p-fin" aria-selected="false" tabindex="-1">🏁 Pour finir<span class="etat">retenir, bonus, bilan</span></button></div><section class="panneau" role="tabpanel" id="p-bc_3e_e6" aria-labelledby="tab-p-bc_3e_e6"><section class="card exercice" id="bc_3e_e6" data-exo="bc_3e_e6" data-cle="rep_besoin-bete-a-cornes_3e_e6" aria-labelledby="bc_3e_e6-titre"><h2 id="bc_3e_e6-titre">Exercice 1 — Établir une liste d'objets ou de systèmes possibles <span class="note">(≈ 12 min)</span></h2><div class="meta"><b>🎯 Objectif&nbsp;:</b> à partir d'un besoin, établir une liste d'objets ou de systèmes techniques possibles, de familles différentes, sans y mettre ce qui n'en est pas.<br><b>🧩 Compétence&nbsp;:</b> <span title="Établir une liste d’OST possibles en vue de répondre à un besoin." aria-label="3e_C3.1 : Établir une liste d’OST possibles en vue de répondre à un besoin.">3e_C3.1</span><br><b>✍ Ce que tu produis&nbsp;:</b> une liste d'au moins quatre objets ou systèmes techniques qui pourraient répondre au besoin, et la raison d'une liste longue.</div><details class="mots"><summary>📖 Les mots de cet exercice</summary><dl><dt>besoin</dt><dd>ce qui manque à quelqu'un, ou ce qui lui est nécessaire. C'est le point de départ de tout objet technique&nbsp;: on fabrique ou on choisit un objet parce que quelqu'un en a besoin.</dd><dt>bête à cornes</dt><dd>le nom courant du schéma qui exprime le besoin&nbsp;: deux cases en haut (à qui&nbsp;? sur quoi&nbsp;?), le produit au milieu, le but en bas. Sa grande courbe fait penser aux cornes d'un taureau.</dd><dt>OST</dt><dd>objet ou système technique&nbsp;: un objet fabriqué (une sirène), ou plusieurs objets qui travaillent ensemble (une sirène, une antenne et un programme).</dd><dt>établir une liste</dt><dd>chercher le plus de possibilités, de familles différentes, avant de choisir.</dd><dt>SMS</dt><dd>un court message écrit envoyé d'un téléphone portable à un autre&nbsp;; on dit aussi « texto ». Le sigle vient de l'anglais <i>short message service</i>.</dd><dt>commune</dt><dd>la ville ou le village, et la mairie qui l'administre.</dd><dt>cyclone</dt><dd>une tempête tropicale très violente&nbsp;: vents forts, pluies intenses, mer qui monte. Aux Antilles, la saison cyclonique va de juin à novembre.</dd></dl></details><figure class="figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 470" width="780" height="470" class="schema" id="bc-alerte" role="img" aria-labelledby="bc-alerte-t bc-alerte-d" font-family="'Segoe UI',system-ui,Arial,sans-serif"><title id="bc-alerte-t">Le besoin du quartier, avant de chercher les objets possibles</title><desc id="bc-alerte-d">À qui le produit rend-il service : les habitants du quartier. Sur quoi agit-il : les habitants du quartier, qu&#x27;il faut prévenir. Au centre, à la place du produit, une question : quel objet ? Dans quel but : prévenir les habitants du quartier de l&#x27;arrivée d&#x27;un cyclone.</desc><rect x="0" y="0" width="780" height="470" fill="#fbfcff"/><defs><marker id="bc-alerte-pt" viewBox="0 0 12 10" refX="11" refY="5" markerWidth="12" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L12,5 L0,10 z" fill="#1b2438"/></marker></defs><text x="175.0" y="34.0" font-size="13.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="175.0" dy="-0.00em">À qui le produit rend-il service ?</tspan></text><text x="605.0" y="34.0" font-size="13.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="605.0" dy="-0.00em">Sur quoi le produit agit-il ?</tspan></text><rect x="40" y="52" width="270" height="74" rx="12" fill="#ffffff" stroke="#1b2438" stroke-width="2.4"/><text x="175.0" y="89.0" font-size="16" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="175.0" dy="-0.00em">les habitants du quartier</tspan></text><rect x="470" y="52" width="270" height="74" rx="12" fill="#ffffff" stroke="#1b2438" stroke-width="2.4"/><text x="605.0" y="89.0" font-size="16" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="605.0" dy="-0.00em">les habitants du quartier</tspan></text><path d="M175,126 C175,330 605,330 605,126" fill="none" stroke="#1b2438" stroke-width="5" stroke-linecap="round"/><ellipse cx="390" cy="200" rx="130" ry="40" fill="#eef4ff" stroke="#1b2438" stroke-width="3"/><text x="390.0" y="200.0" font-size="18" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="390.0" dy="-0.00em">Quel objet ?</tspan></text><line x1="390" y1="279" x2="390" y2="340" stroke="#1b2438" stroke-width="3" marker-end="url(#bc-alerte-pt)"/><text x="390.0" y="356.0" font-size="13.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="390.0" dy="-0.00em">Dans quel but ?</tspan></text><rect x="120" y="372" width="540" height="80" rx="12" fill="#fff8e6" stroke="#a06a00" stroke-width="2.4"/><text x="390.0" y="412.0" font-size="16" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="390.0" dy="-0.57em">prévenir les habitants du quartier de l&#x27;arrivée d&#x27;un</tspan><tspan x="390.0" dy="1.15em">cyclone</tspan></text></svg><figcaption>Le besoin du quartier, avant de choisir&nbsp;: le produit est encore à trouver. <span class="note">(clique sur l'image pour l'agrandir)</span></figcaption></figure><details class="description"><summary>📝 Ce que montre le schéma, en mots</summary><ul><li><b>À qui&nbsp;?</b> Les habitants du quartier.</li><li><b>Sur quoi&nbsp;?</b> Les habitants du quartier, qu'il faut prévenir.</li><li><b>Au centre&nbsp;:</b> une question, quel objet&nbsp;?</li><li><b>Dans quel but&nbsp;?</b> Prévenir les habitants du quartier de l'arrivée d'un cyclone.</li></ul></details><div><p>À Sainte-Luce, la commune veut mieux protéger un quartier proche de la mer. Avant de construire quoi que ce soit, l'équipe du projet écrit le <b>besoin</b>&nbsp;: prévenir les habitants du quartier de l'arrivée d'un cyclone. La commune commande et paie&nbsp;; mais c'est aux <b>habitants</b> que l'objet rendra service. Ici, les mêmes personnes sont dans les deux cases du haut&nbsp;: l'objet rend service aux habitants en agissant sur eux — il les prévient.</p></div><div class="consigne"><p>Un <b>OST</b> — un <b>objet ou système technique</b> — est un objet fabriqué, ou plusieurs objets qui travaillent ensemble. <b>Établis la liste des OST qui pourraient répondre à ce besoin</b>&nbsp;: au moins quatre, un par ligne, de familles différentes (un son, une lumière ou une image, un téléphone, la voix d'une personne…). Ne mets dans ta liste <b>ni une personne, ni une action, ni le cyclone lui-même</b>. Puis dis pourquoi une liste longue vaut mieux qu'une seule idée.</p></div><p class="critere"><b>✅ Tu as réussi si…</b> au moins quatre OST reconnus, aucun refus, et tu sais dire ce que gagne une liste longue.</p><label class="champ" for="bc_3e_e6__liste">Mes objets ou systèmes techniques possibles (un par ligne) <span class="encoche" data-pour="bc_3e_e6__liste"></span></label><textarea id="bc_3e_e6__liste" name="bc_3e_e6__liste" rows="7" spellcheck="true"></textarea><details class="etayage"><summary>🪜 Version étayée : des débuts de phrase pour t'aider</summary><ul><li>Un objet qui fait du bruit dans tout le quartier : …</li><li>Un objet que presque chaque habitant a dans sa poche : …</li><li>Un objet qu'on écoute à la maison ou en voiture : …</li><li>Un objet qui montre un message ou une lumière dans la rue : …</li><li>Un objet qui porte la voix d'une personne dans une rue : …</li></ul></details><fieldset class="qcm-groupe"><legend>Pourquoi établir une longue liste d'OST, au lieu de garder la première idée&nbsp;? <span class="encoche" data-pour="bc_3e_e6__longue"></span></legend><div class="options"><label class="option" for="bc_3e_e6__longue-0"><input type="radio" id="bc_3e_e6__longue-0" name="bc_3e_e6__longue" value="faiblesses"><span>Parce que chaque OST a ses faiblesses&nbsp;: si le cyclone coupe le réseau, il faut d'autres moyens.</span></label><label class="option" for="bc_3e_e6__longue-1"><input type="radio" id="bc_3e_e6__longue-1" name="bc_3e_e6__longue" value="travail"><span>Parce qu'une liste longue montre qu'on a beaucoup travaillé sur le projet.</span></label><label class="option" for="bc_3e_e6__longue-2"><input type="radio" id="bc_3e_e6__longue-2" name="bc_3e_e6__longue" value="tous"><span>Parce qu'il faudra installer tous les OST de la liste, pour être sûr.</span></label><label class="option" for="bc_3e_e6__longue-3"><input type="radio" id="bc_3e_e6__longue-3" name="bc_3e_e6__longue" value="premiere"><span>Parce que la première idée est toujours la moins bonne de toutes.</span></label></div></fieldset><p><button type="button" class="btn verifier">✔ Vérifier mes réponses</button></p><div class="retour" data-retour aria-live="polite"></div><details class="aide"><summary>💡 Aide 1 — pour démarrer</summary><p>Cherche famille par famille&nbsp;: ce qui fait du bruit&nbsp;; ce qui se voit (une lumière, un écran)&nbsp;; ce que les habitants ont dans leur poche&nbsp;; ce qu'ils écoutent ou regardent à la maison&nbsp;; ce qui porte la voix d'une personne. Pour chaque idée, demande-toi&nbsp;: est-ce un objet qu'on pourrait fabriquer ou acheter&nbsp;?</p></details><details class="aide"><summary>💡 Aide 2 — le raisonnement pas à pas</summary><p>Une sirène → un objet fabriqué ✔ → elle prévient tout le quartier en même temps.<br>La radio locale → un système (un émetteur, des postes chez les habitants) ✔.<br>La mairie → un service ✘ → elle choisit l'OST, elle n'en est pas un.<br>« Fermer les volets » → une action ✘ → elle protège, elle ne prévient pas.<br>Le vent → le danger lui-même ✘.</p><div class="critere"><b>🔁 Exercice jumeau, à faire seul ensuite&nbsp;:</b> Besoin&nbsp;: à qui&nbsp;? les élèves du collège&nbsp;; sur quoi&nbsp;? les élèves&nbsp;; but&nbsp;: leur signaler la fin de la récréation. Établis une liste de trois OST possibles.</div><label class="champ" for="bc_3e_e6__jumeau">Ma réponse à l'exercice jumeau</label><textarea id="bc_3e_e6__jumeau" name="bc_3e_e6__jumeau" rows="2"></textarea><details class="etayage"><summary>🪜 Version étayée : des débuts de phrase pour t'aider</summary><ul><li>Dans cette nouvelle situation, je pose la même question que dans l'aide 2 : …</li><li>Ma réponse : … parce que …</li></ul></details><details class="correction"><summary>🔍 Correction de l'exercice jumeau</summary>Par exemple&nbsp;: <b>une sonnerie</b> électrique, <b>une cloche</b>, <b>un haut-parleur</b> qui diffuse un message, <b>un écran</b> dans la cour, <b>un sifflet</b>. Refusés&nbsp;: « le surveillant » (une personne) et « rentrer en classe » (une action).</details></details><details class="correction"><summary>🔍 La correction complète, et pourquoi</summary><div class="demo"><div class="ligne"><b>Ce qui fait du bruit</b> → une sirène, les cloches de l'église, un haut-parleur ou un mégaphone sur une voiture</div><div class="ligne"><b>Ce qui se voit</b> → un gyrophare, un panneau lumineux à l'entrée du quartier</div><div class="ligne"><b>Ce que les habitants ont dans la poche</b> → un SMS (un texto) sur le téléphone, une application qui envoie une alerte</div><div class="ligne"><b>Ce qu'on écoute ou regarde à la maison</b> → la radio locale, la télévision, un site internet</div><div class="ligne"><b>Ce qui porte la voix</b> → un talkie-walkie pour les secouristes, un mégaphone</div><div class="ligne"><b>Refusés&nbsp;:</b> la mairie, les pompiers, les voisins → des personnes ou des services&nbsp;; « fermer les volets », « évacuer » → des actions&nbsp;; le porte-à-porte seul → une organisation (avec quel objet&nbsp;?)&nbsp;; le vent, le cyclone → le danger lui-même&nbsp;; les volets, un abri → des objets, mais ils protègent, ils ne préviennent pas</div><div class="ligne"><b>Pourquoi une liste longue</b> → chaque OST a ses faiblesses&nbsp;: le SMS a besoin du réseau téléphonique, que le cyclone peut couper&nbsp;; la sirène s'entend mal dans une maison fermée → d'autres OST prennent le relais</div><div class="ligne">Refusés&nbsp;: « on a beaucoup travaillé » → la quantité de travail ne dit rien du choix&nbsp;; « tout installer » → établir n'est pas acheter&nbsp;; « la première idée est mauvaise » → elle peut être la meilleure, la liste sert à le vérifier.</div><div class="ligne conclusion">Établir une liste, c'est <b>élargir</b> avant de choisir&nbsp;: un but écrit sans solution laisse entrer des OST de familles différentes. On ne choisit qu'ensuite, avec des critères.</div></div></details><p class="retenir"><b>📌 À retenir&nbsp;:</b> pour établir une liste d'OST possibles, on part d'un but <b>sans solution</b> et on cherche dans des <b>familles différentes</b>&nbsp;; une personne, une action ou le danger lui-même ne sont pas des OST.</p><p class="piege"><b>⚠ Le piège classique&nbsp;:</b> mettre dans la liste une personne (la mairie, les pompiers) ou une action (évacuer)&nbsp;: ce ne sont ni des objets ni des systèmes techniques.</p></section><p><button type="button" class="btn suivant" data-vers="1">Exercice 2 ›</button></p></section><section class="panneau" role="tabpanel" id="p-bc_3e_e7" aria-labelledby="tab-p-bc_3e_e7" hidden><section class="card exercice" id="bc_3e_e7" data-exo="bc_3e_e7" data-cle="rep_besoin-bete-a-cornes_3e_e7" aria-labelledby="bc_3e_e7-titre"><h2 id="bc_3e_e7-titre">Exercice 2 — Un besoin mal formulé ferme la liste <span class="note">(≈ 10 min)</span></h2><div class="meta"><b>🎯 Objectif&nbsp;:</b> repérer les erreurs d'une bête à cornes, comprendre pourquoi un but qui nomme une solution ferme la liste des OST possibles, et réécrire ce but.<br><b>🧩 Compétence&nbsp;:</b> <span title="Établir une liste d’OST possibles en vue de répondre à un besoin." aria-label="3e_C3.1 : Établir une liste d’OST possibles en vue de répondre à un besoin.">3e_C3.1</span><br><b>✍ Ce que tu produis&nbsp;:</b> les trois cases jugées, la raison du problème, et le but réécrit sans solution.</div><details class="mots"><summary>📖 Les mots de cet exercice</summary><dl><dt>formuler</dt><dd>dire ou écrire avec des mots précis.</dd><dt>une idée (et non une chose)</dt><dd>ce qu'on ne peut ni voir ni toucher&nbsp;: la sécurité, le confort, la santé. On peut vouloir l'obtenir, mais on n'agit pas « sur » elle.</dd><dt>solution technique</dt><dd>une pièce ou un moyen qui dit <b>comment</b> on répond au besoin&nbsp;: un SMS, une sirène, une radio. Sa place est dans la liste des OST, pas dans le but.</dd><dt>SMS</dt><dd>un court message écrit envoyé d'un téléphone portable à un autre (un « texto »).</dd></dl></details><figure class="figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 470" width="780" height="470" class="schema" id="bc-mal" role="img" aria-labelledby="bc-mal-t bc-mal-d" font-family="'Segoe UI',system-ui,Arial,sans-serif"><title id="bc-mal-t">La bête à cornes d&#x27;une autre équipe, à vérifier</title><desc id="bc-mal-d">À qui le produit rend-il service : les habitants du quartier. Sur quoi agit-il : la sécurité du quartier. Au centre, une question : quel objet ? Dans quel but : envoyer un SMS aux habitants.</desc><rect x="0" y="0" width="780" height="470" fill="#fbfcff"/><defs><marker id="bc-mal-pt" viewBox="0 0 12 10" refX="11" refY="5" markerWidth="12" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L12,5 L0,10 z" fill="#1b2438"/></marker></defs><text x="175.0" y="34.0" font-size="13.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="175.0" dy="-0.00em">À qui le produit rend-il service ?</tspan></text><text x="605.0" y="34.0" font-size="13.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="605.0" dy="-0.00em">Sur quoi le produit agit-il ?</tspan></text><rect x="40" y="52" width="270" height="74" rx="12" fill="#ffffff" stroke="#1b2438" stroke-width="2.4"/><text x="175.0" y="89.0" font-size="16" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="175.0" dy="-0.00em">les habitants du quartier</tspan></text><rect x="470" y="52" width="270" height="74" rx="12" fill="#ffffff" stroke="#1b2438" stroke-width="2.4"/><text x="605.0" y="89.0" font-size="16" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="605.0" dy="-0.00em">la sécurité du quartier</tspan></text><path d="M175,126 C175,330 605,330 605,126" fill="none" stroke="#1b2438" stroke-width="5" stroke-linecap="round"/><ellipse cx="390" cy="200" rx="130" ry="40" fill="#eef4ff" stroke="#1b2438" stroke-width="3"/><text x="390.0" y="200.0" font-size="18" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="390.0" dy="-0.00em">Quel objet ?</tspan></text><line x1="390" y1="279" x2="390" y2="340" stroke="#1b2438" stroke-width="3" marker-end="url(#bc-mal-pt)"/><text x="390.0" y="356.0" font-size="13.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="390.0" dy="-0.00em">Dans quel but ?</tspan></text><rect x="120" y="372" width="540" height="80" rx="12" fill="#fff8e6" stroke="#a06a00" stroke-width="2.4"/><text x="390.0" y="412.0" font-size="16" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="390.0" dy="-0.00em">envoyer un SMS aux habitants</tspan></text></svg><figcaption>La bête à cornes d'une autre équipe&nbsp;: trouve ce qui ne va pas. <span class="note">(clique sur l'image pour l'agrandir)</span></figcaption></figure><details class="description"><summary>📝 Ce que montre le schéma, en mots</summary><ul><li><b>À qui&nbsp;?</b> Les habitants du quartier.</li><li><b>Sur quoi&nbsp;?</b> La sécurité du quartier.</li><li><b>Au centre&nbsp;:</b> une question, quel objet&nbsp;?</li><li><b>Dans quel but&nbsp;?</b> Envoyer un SMS aux habitants.</li></ul></details><div><p>Une autre équipe a commencé le même projet d'alerte. Voici sa bête à cornes. Résultat&nbsp;: sa liste d'OST ne contient qu'une ligne — « un SMS ».</p></div><div class="consigne"><p>Dans une bête à cornes, la case « sur quoi&nbsp;? » nomme <b>une personne ou une chose</b> sur laquelle l'objet agit, et le but s'écrit avec un verbe à l'infinitif <b>sans nommer de solution</b>. <b>Juge chaque case</b>&nbsp;: juste, ou à corriger&nbsp;? Puis <b>dis pourquoi</b> ce but a fermé la liste, et <b>réécris-le</b>.</p></div><p class="critere"><b>✅ Tu as réussi si…</b> trois cases bien jugées, la bonne raison, et un but réécrit qui dit qui prévenir et de quel danger, sans aucune solution.</p><fieldset class="qcm-groupe"><legend>Case « à qui&nbsp;? »&nbsp;: « les habitants du quartier » <span class="encoche" data-pour="bc_3e_e7__cases_0"></span></legend><div class="options"><label class="option" for="bc_3e_e7__cases_0-0"><input type="radio" id="bc_3e_e7__cases_0-0" name="bc_3e_e7__cases_0" value="juste"><span>juste</span></label><label class="option" for="bc_3e_e7__cases_0-1"><input type="radio" id="bc_3e_e7__cases_0-1" name="bc_3e_e7__cases_0" value="idee"><span>à corriger&nbsp;: c'est une idée, pas une personne ni une chose</span></label><label class="option" for="bc_3e_e7__cases_0-2"><input type="radio" id="bc_3e_e7__cases_0-2" name="bc_3e_e7__cases_0" value="solution"><span>à corriger&nbsp;: elle nomme déjà une solution</span></label></div></fieldset><fieldset class="qcm-groupe"><legend>Case « sur quoi&nbsp;? »&nbsp;: « la sécurité du quartier » <span class="encoche" data-pour="bc_3e_e7__cases_1"></span></legend><div class="options"><label class="option" for="bc_3e_e7__cases_1-0"><input type="radio" id="bc_3e_e7__cases_1-0" name="bc_3e_e7__cases_1" value="juste"><span>juste</span></label><label class="option" for="bc_3e_e7__cases_1-1"><input type="radio" id="bc_3e_e7__cases_1-1" name="bc_3e_e7__cases_1" value="idee"><span>à corriger&nbsp;: c'est une idée, pas une personne ni une chose</span></label><label class="option" for="bc_3e_e7__cases_1-2"><input type="radio" id="bc_3e_e7__cases_1-2" name="bc_3e_e7__cases_1" value="solution"><span>à corriger&nbsp;: elle nomme déjà une solution</span></label></div></fieldset><fieldset class="qcm-groupe"><legend>Case « dans quel but&nbsp;? »&nbsp;: « envoyer un SMS aux habitants » <span class="encoche" data-pour="bc_3e_e7__cases_2"></span></legend><div class="options"><label class="option" for="bc_3e_e7__cases_2-0"><input type="radio" id="bc_3e_e7__cases_2-0" name="bc_3e_e7__cases_2" value="juste"><span>juste</span></label><label class="option" for="bc_3e_e7__cases_2-1"><input type="radio" id="bc_3e_e7__cases_2-1" name="bc_3e_e7__cases_2" value="idee"><span>à corriger&nbsp;: c'est une idée, pas une personne ni une chose</span></label><label class="option" for="bc_3e_e7__cases_2-2"><input type="radio" id="bc_3e_e7__cases_2-2" name="bc_3e_e7__cases_2" value="solution"><span>à corriger&nbsp;: elle nomme déjà une solution</span></label></div></fieldset><fieldset class="qcm-groupe"><legend>Pourquoi ce but a-t-il fermé la liste des OST possibles&nbsp;? <span class="encoche" data-pour="bc_3e_e7__pourquoi"></span></legend><div class="options"><label class="option" for="bc_3e_e7__pourquoi-0"><input type="radio" id="bc_3e_e7__pourquoi-0" name="bc_3e_e7__pourquoi" value="ferme"><span>Il nomme déjà une solution&nbsp;: seul le SMS entre dans la liste, et ceux qui n'ont pas de réseau sont oubliés.</span></label><label class="option" for="bc_3e_e7__pourquoi-1"><input type="radio" id="bc_3e_e7__pourquoi-1" name="bc_3e_e7__pourquoi" value="mauvais"><span>Parce que le SMS est une mauvaise solution, qu'il faut interdire.</span></label><label class="option" for="bc_3e_e7__pourquoi-2"><input type="radio" id="bc_3e_e7__pourquoi-2" name="bc_3e_e7__pourquoi" value="court"><span>Parce qu'un but doit toujours tenir sur plusieurs lignes pour être complet.</span></label><label class="option" for="bc_3e_e7__pourquoi-3"><input type="radio" id="bc_3e_e7__pourquoi-3" name="bc_3e_e7__pourquoi" value="habitants"><span>Parce qu'un but ne doit jamais nommer les habitants.</span></label></div></fieldset><label class="champ" for="bc_3e_e7__but">Réécris le but, sans nommer aucune solution. <span class="encoche" data-pour="bc_3e_e7__but"></span></label><textarea id="bc_3e_e7__but" name="bc_3e_e7__but" rows="3" spellcheck="true"></textarea><div class="note">Ce que je regarde dans ta réponse&nbsp;:<ul><li>ton but commence par un verbe à l'infinitif (prévenir, avertir…) <span class="encoche" data-pour="bc_3e_e7__but::0"></span></li><li>il dit qui prévenir&nbsp;: les habitants du quartier <span class="encoche" data-pour="bc_3e_e7__but::1"></span></li><li>il dit de quoi&nbsp;: le cyclone, le danger <span class="encoche" data-pour="bc_3e_e7__but::2"></span></li></ul></div><details class="etayage"><summary>🪜 Version étayée : des débuts de phrase pour t'aider</summary><ul><li>Prévenir … de …, pour qu'ils …</li><li>Avertir les habitants du quartier que …</li></ul></details><p><button type="button" class="btn verifier">✔ Vérifier mes réponses</button></p><div class="retour" data-retour aria-live="polite"></div><details class="aide"><summary>💡 Aide 1 — pour démarrer</summary><p>Pour la case « sur quoi&nbsp;? », demande-toi&nbsp;: peut-on toucher, déplacer ou prévenir ce qui est écrit&nbsp;? Pour le but, demande-toi&nbsp;: est-ce ce qu'on veut obtenir, ou un moyen d'y arriver&nbsp;?</p></details><details class="aide"><summary>💡 Aide 2 — le raisonnement pas à pas</summary><p>« Les habitants du quartier » → c'est eux que l'objet aidera → juste.<br>« La sécurité du quartier » → une idée, qu'on ne touche pas → c'est ce qu'on veut obtenir&nbsp;; dans la case, on met <b>les habitants</b>, que l'objet prévient.<br>« Envoyer un SMS » → un moyen, une solution → la liste ne contiendra que lui.<br>Réécrire → un verbe (prévenir) + qui (les habitants) + de quoi (le cyclone), et aucun objet.</p><div class="critere"><b>🔁 Exercice jumeau, à faire seul ensuite&nbsp;:</b> Pour la cantine, une bête à cornes dit&nbsp;: à qui&nbsp;? les élèves&nbsp;; sur quoi&nbsp;? les élèves&nbsp;; but&nbsp;: « installer un écran qui affiche le menu ». Qu'est-ce qui ne va pas&nbsp;? Réécris le but.</div><label class="champ" for="bc_3e_e7__jumeau">Ma réponse à l'exercice jumeau</label><textarea id="bc_3e_e7__jumeau" name="bc_3e_e7__jumeau" rows="2"></textarea><details class="etayage"><summary>🪜 Version étayée : des débuts de phrase pour t'aider</summary><ul><li>Dans cette nouvelle situation, je pose la même question que dans l'aide 2 : …</li><li>Ma réponse : … parce que …</li></ul></details><details class="correction"><summary>🔍 Correction de l'exercice jumeau</summary>Le but nomme une solution (un écran). Réécrit&nbsp;: « <b>Informer les élèves du menu du jour</b> ». La liste s'ouvre alors&nbsp;: un écran, une affiche, une annonce au haut-parleur, un message sur l'espace numérique du collège…</details></details><details class="correction"><summary>🔍 La correction complète, et pourquoi</summary><div class="demo"><div class="ligne"><figure class="figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 470" width="780" height="470" class="schema" id="bc-alerte-c" role="img" aria-labelledby="bc-alerte-c-t bc-alerte-c-d" font-family="'Segoe UI',system-ui,Arial,sans-serif"><title id="bc-alerte-c-t">La bête à cornes de l&#x27;autre équipe, corrigée</title><desc id="bc-alerte-c-d">À qui le produit rend-il service : les habitants du quartier. Sur quoi agit-il : les habitants du quartier, qu&#x27;il faut prévenir. Au centre, à la place du produit, une question : quel objet ? Dans quel but : prévenir les habitants du quartier de l&#x27;arrivée d&#x27;un cyclone.</desc><rect x="0" y="0" width="780" height="470" fill="#fbfcff"/><defs><marker id="bc-alerte-c-pt" viewBox="0 0 12 10" refX="11" refY="5" markerWidth="12" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L12,5 L0,10 z" fill="#1b2438"/></marker></defs><text x="175.0" y="34.0" font-size="13.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="175.0" dy="-0.00em">À qui le produit rend-il service ?</tspan></text><text x="605.0" y="34.0" font-size="13.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="605.0" dy="-0.00em">Sur quoi le produit agit-il ?</tspan></text><rect x="40" y="52" width="270" height="74" rx="12" fill="#ffffff" stroke="#1b2438" stroke-width="2.4"/><text x="175.0" y="89.0" font-size="16" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="175.0" dy="-0.00em">les habitants du quartier</tspan></text><rect x="470" y="52" width="270" height="74" rx="12" fill="#ffffff" stroke="#1b2438" stroke-width="2.4"/><text x="605.0" y="89.0" font-size="16" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="605.0" dy="-0.00em">les habitants du quartier</tspan></text><path d="M175,126 C175,330 605,330 605,126" fill="none" stroke="#1b2438" stroke-width="5" stroke-linecap="round"/><ellipse cx="390" cy="200" rx="130" ry="40" fill="#eef4ff" stroke="#1b2438" stroke-width="3"/><text x="390.0" y="200.0" font-size="18" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="390.0" dy="-0.00em">Quel objet ?</tspan></text><line x1="390" y1="279" x2="390" y2="340" stroke="#1b2438" stroke-width="3" marker-end="url(#bc-alerte-c-pt)"/><text x="390.0" y="356.0" font-size="13.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="390.0" dy="-0.00em">Dans quel but ?</tspan></text><rect x="120" y="372" width="540" height="80" rx="12" fill="#fff8e6" stroke="#a06a00" stroke-width="2.4"/><text x="390.0" y="412.0" font-size="16" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="390.0" dy="-0.57em">prévenir les habitants du quartier de l&#x27;arrivée d&#x27;un</tspan><tspan x="390.0" dy="1.15em">cyclone</tspan></text></svg><figcaption>La bête à cornes corrigée&nbsp;: les habitants dans les deux cases du haut, et un but sans solution.</figcaption></figure></div><div class="ligne"><b>« À qui&nbsp;? » — les habitants du quartier</b> → c'est eux que l'objet aidera → <b>juste</b></div><div class="ligne"><b>« Sur quoi&nbsp;? » — la sécurité du quartier</b> → une idée, qu'on ne peut ni toucher ni prévenir → c'est ce qu'on veut obtenir → <b>à corriger</b>&nbsp;: l'objet agit sur <b>les habitants</b>, il les prévient</div><div class="ligne"><b>« Dans quel but&nbsp;? » — envoyer un SMS</b> → un moyen, une solution → <b>à corriger</b></div><div class="ligne"><b>Pourquoi la liste s'est fermée</b> → le but donnait déjà la réponse&nbsp;: seul le SMS pouvait y entrer. Les habitants sans téléphone, ou privés de réseau quand le cyclone frappe, étaient oubliés.</div><div class="ligne">Refusés&nbsp;: « le SMS est mauvais » → non, il reste une bonne idée, à sa place dans la liste&nbsp;; « un but doit être long » → la longueur ne compte pas&nbsp;; « ne jamais nommer les habitants » → au contraire, ils doivent y être.</div><div class="ligne"><b>Un but attendu&nbsp;:</b> « Prévenir les habitants du quartier de l'arrivée d'un cyclone. » → un verbe, qui, de quoi, et aucune solution</div><div class="ligne conclusion">Un but qui nomme une solution <b>ferme</b> la liste avant qu'on la fasse. Écrit sans solution, il l'<b>ouvre</b>&nbsp;: c'est ensuite, avec des critères, qu'on choisit.</div></div></details><p class="retenir"><b>📌 À retenir&nbsp;:</b> un but qui nomme une solution ferme la liste des OST possibles&nbsp;; on l'écrit avec un verbe, en disant <b>qui</b> et <b>de quoi</b>, et on garde les solutions pour la liste.</p><p class="piege"><b>⚠ Le piège classique&nbsp;:</b> croire que la solution écrite dans le but est mauvaise&nbsp;: elle est peut-être bonne — mais à sa place, dans la liste, pas dans le but.</p></section><p><button type="button" class="btn suivant" data-vers="2">Pour finir ›</button></p></section><section class="panneau" role="tabpanel" id="p-fin" aria-labelledby="tab-p-fin" hidden><section class="card"><h2>📌 À retenir de l'atelier</h2><ul><li>Pour <b>établir une liste d'OST possibles</b> (objets ou systèmes techniques), on part d'un besoin dont le but ne nomme <b>aucune solution</b>.</li><li>On cherche dans des <b>familles différentes</b>&nbsp;; une personne, une action ou le danger lui-même ne sont pas des OST.</li><li>Un but qui nomme une solution <b>ferme</b> la liste avant qu'on la fasse&nbsp;: la solution n'est pas mauvaise, mais sa place est dans la liste.</li><li>La liste établie, on <b>choisit</b> ensuite, avec des critères, et on argumente.</li></ul><p>📜 La trace à garder&nbsp;: <a href="Synthèses/synthese_eleve_besoin-bete-a-cornes.html">la synthèse de l'atelier</a>, à imprimer ou à recopier.</p></section><section class="card bonus" data-cle="rep_besoin-bete-a-cornes_3e__bonus"><h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2><h3>Défi 1 — Le réveil</h3><div><p>Écris la bête à cornes d'un <b>réveil</b>. Pourquoi la même personne est-elle dans les deux cases du haut&nbsp;?</p></div><label class="champ" for="rep_besoin-bete-a-cornes_3e__bonus0">Ma réponse</label><textarea id="rep_besoin-bete-a-cornes_3e__bonus0" name="bonus0" rows="3"></textarea><details class="etayage"><summary>🪜 Version étayée : des débuts de phrase pour t'aider</summary><ul><li>Je relis la question du défi : on me demande …</li><li>Ma réponse : … parce que …</li></ul></details><details class="corrige-bonus"><summary>🔍 Voir la correction du défi 1</summary><div class="demo"><div class="ligne"><b>À qui&nbsp;?</b> → l'élève qui doit se lever</div><div class="ligne"><b>Sur quoi&nbsp;?</b> → l'élève lui-même&nbsp;: c'est lui que le réveil réveille</div><div class="ligne"><b>But</b> → réveiller l'élève à l'heure choisie</div><div class="ligne conclusion">L'objet rend service à la personne en agissant sur elle&nbsp;: les deux cases portent alors le même nom, et ce n'est pas une erreur.</div></div></details><h3>Défi 2 — Après le cyclone</h3><div><p>Nouveau besoin&nbsp;: <i>permettre aux habitants de donner des nouvelles à leur famille après le cyclone, même si le réseau est coupé</i>. Établis une liste de quatre OST possibles.</p></div><label class="champ" for="rep_besoin-bete-a-cornes_3e__bonus1">Ma réponse</label><textarea id="rep_besoin-bete-a-cornes_3e__bonus1" name="bonus1" rows="3"></textarea><details class="etayage"><summary>🪜 Version étayée : des débuts de phrase pour t'aider</summary><ul><li>Je relis la question du défi : on me demande …</li><li>Ma réponse : … parce que …</li></ul></details><details class="corrige-bonus"><summary>🔍 Voir la correction du défi 2</summary><div class="demo"><div class="ligne"><b>Possibles</b> → un téléphone satellite, une radio amateur, un talkie-walkie, une borne de recharge solaire pour les téléphones, un panneau d'affichage à la mairie</div><div class="ligne"><b>Refusés</b> → « attendre le retour du réseau » (une action), « les voisins » (des personnes)</div><div class="ligne conclusion">« Même si le réseau est coupé » élargit la liste vers des OST qui n'en ont pas besoin.</div></div></details></section><section class="card bilan" data-cle="rep_besoin-bete-a-cornes_3e__bilan"><h2>🏁 Bilan</h2><p><b>Retour à ton hypothèse.</b> La question était&nbsp;: Comment trouver toutes les solutions possibles à un besoin, sans s'enfermer dans la première idée&nbsp;?</p><label class="champ" for="rep_besoin-bete-a-cornes_3e__bilan_h">Relis ton hypothèse de départ (onglet 1). Qu'est-ce que tu gardes, qu'est-ce que tu changes&nbsp;?</label><textarea id="rep_besoin-bete-a-cornes_3e__bilan_h" name="bilan_h" rows="3"></textarea><details class="etayage"><summary>🪜 Version étayée : des débuts de phrase pour t'aider</summary><ul><li>Au départ je pensais que… ; maintenant je sais que…</li><li>Je garde l'idée que… parce que…</li><li>Je change d'avis sur… : l'exercice … m'a montré que…</li></ul></details><label class="champ" for="rep_besoin-bete-a-cornes_3e__bilan_m">Où as-tu hésité&nbsp;? Par exemple entre un objet et une action, ou entre un but et une solution. Qu'est-ce que tu dois encore revoir, et comment&nbsp;?</label><textarea id="rep_besoin-bete-a-cornes_3e__bilan_m" name="bilan_m" rows="3"></textarea><details class="etayage"><summary>🪜 Version étayée : des débuts de phrase pour t'aider</summary><ul><li>J'ai hésité entre … et … dans l'exercice …</li><li>Je dois encore revoir … ; pour cela, je vais refaire …</li></ul></details><h3>Je me positionne</h3><p class="lsu-legende">Pour chaque compétence travaillée, choisis la phrase qui te ressemble aujourd'hui. Ce n'est pas une note&nbsp;: c'est ce qui t'aide, toi et ton professeur, à savoir quoi reprendre.</p><fieldset class="qcm-groupe"><legend>Établir une liste d’<abbr title="objet ou système technique">OST</abbr> possibles en vue de répondre à un besoin. <span class="note">(3e_C3.1)</span></legend><div class="options"><label class="option" for="rep_besoin-bete-a-cornes_3e__pos_3e_C3_1-0"><input type="radio" id="rep_besoin-bete-a-cornes_3e__pos_3e_C3_1-0" name="pos_3e_C3_1" value="0"><span>Maîtrise insuffisante</span></label><label class="option" for="rep_besoin-bete-a-cornes_3e__pos_3e_C3_1-1"><input type="radio" id="rep_besoin-bete-a-cornes_3e__pos_3e_C3_1-1" name="pos_3e_C3_1" value="1"><span>Maîtrise fragile</span></label><label class="option" for="rep_besoin-bete-a-cornes_3e__pos_3e_C3_1-2"><input type="radio" id="rep_besoin-bete-a-cornes_3e__pos_3e_C3_1-2" name="pos_3e_C3_1" value="2"><span>Maîtrise satisfaisante</span></label><label class="option" for="rep_besoin-bete-a-cornes_3e__pos_3e_C3_1-3"><input type="radio" id="rep_besoin-bete-a-cornes_3e__pos_3e_C3_1-3" name="pos_3e_C3_1" value="3"><span>Très bonne maîtrise</span></label></div></fieldset></section></section></main><footer class="pied"><p>Situations imaginées pour les exercices : Léa et ses enfants, le lampadaire du parking, Mme Joseph et le jardin du collège, l'équipe du projet d'alerte et son quartier de Sainte-Luce sont inventés.</p><p>Technologie cycle 4 · programme 2024 · page utilisable sans Internet · ton travail reste dans ce navigateur, rien n'est envoyé.</p></footer><script type="application/json" id="donnees-page">{"page": "rep_besoin-bete-a-cornes_3e", "exercices": {"bc_3e_e6": {"cle": "rep_besoin-bete-a-cornes_3e_e6", "widgets": [{"type": "liste", "name": "bc_3e_e6__liste", "min": 4, "attendus": [{"nom": "une sirène", "motifs": ["sirene", "corne de brume", "klaxon", "alarme sonore", "trompe"]}, {"nom": "une application d'alerte sur le smartphone", "motifs": ["application", "\\bappli", "notification", "\\bapp\\b"]}, {"nom": "un SMS sur le téléphone", "motifs": ["\\bsms\\b", "texto", "message", "appel", "telephone", "portable", "smartphone", "mobile"]}, {"nom": "un talkie-walkie", "motifs": ["talkie", "walkie", "emetteur", "\\bcb\\b"]}, {"nom": "la radio locale", "motifs": ["radio", "\\bposte\\b", "\\bfm\\b"]}, {"nom": "la télévision", "motifs": ["televi", "\\btele\\b", "\\btv\\b", "journal televise"]}, {"nom": "un haut-parleur sur une voiture", "motifs": ["haut.?parleur", "megaphone", "porte.?voix", "\\bsono"]}, {"nom": "un gyrophare", "motifs": ["gyrophare", "clignot", "\\bflash", "\\bfeux?\\b", "lumiere qui"]}, {"nom": "un panneau lumineux", "motifs": ["panneau", "ecran", "affich", "lumineux"]}, {"nom": "un site internet", "motifs": ["\\bsite", "internet", "reseaux? soci", "facebook", "whatsapp", "e.?mail", "courriel", "\\bweb\\b"]}, {"nom": "les cloches de l'église", "motifs": ["cloche", "carillon"]}], "refuses": [{"motifs": ["^(le |du |faire du |faire le )?porte.?a.?porte\\s*$", "^(fermer|rester|partir|evacuer|courir|se cacher|se proteger|s'abriter|crier|aller)\\b"], "message": "{ligne} est une action ou une façon de s'organiser, pas un objet ni un système technique. Avec quel objet ? (un mégaphone, un téléphone…)"}, {"motifs": ["^(la |le |les |l'|des |un |une )?(mairie|maire|commune|pompiers?|gendarmes?|policiers?|voisins?|benevoles?|habitants?|meteo.?france|prefecture|secouristes?|gens)\\b"], "message": "{ligne} est une personne ou un service : il choisit ou utilise un OST, il n'en est pas un. Quel objet utiliserait-il pour prévenir ?"}, {"motifs": ["^(le |la |l'|un |une )?(vent|cyclone|ouragan|pluie|nuages?|ciel|mer|houle|danger|peur|securite|tempete)\\b"], "message": "{ligne} n'est pas un objet : c'est le danger lui-même, ou ce qu'on veut obtenir."}, {"motifs": ["volets?|\\babri|bache|sacs? de sable|groupe electrogene|planches?|contreplaque|lampe torche|bougie"], "message": "{ligne} est bien un objet, mais il protège ; il ne prévient pas. Relis la case « dans quel but ? »."}], "inconnu": "{ligne} : je ne le reconnais pas. Vérifie que c'est un objet qu'on peut fabriquer ou acheter, et qu'il préviendrait les habitants — ou écris-le avec un autre mot.", "vide": null}, {"type": "choix", "name": "bc_3e_e6__longue", "bonne": "faiblesses", "retours": {"faiblesses": "Oui : le SMS a besoin du réseau téléphonique, que le cyclone peut couper ; la sirène s'entend mal dans une maison fermée. Une liste longue garde d'autres possibilités.", "travail": "Le travail fourni ne dit rien de la qualité du choix : la liste sert à ne pas passer à côté d'un OST qui répondrait mieux au besoin.", "tous": "La liste n'est pas une commande : on choisira ensuite, avec des critères (fonctionner sans électricité, coût…). Établir n'est pas acheter.", "premiere": "La première idée peut être excellente ! Mais sans liste, on ne peut pas le vérifier : c'est la comparaison qui le dit."}, "indice": null}]}, "bc_3e_e7": {"cle": "rep_besoin-bete-a-cornes_3e_e7", "widgets": [{"type": "classer", "items": [{"name": "bc_3e_e7__cases_0", "bonne": "juste", "indice": "Case « à qui ? » : qui l'objet aidera-t-il ?"}, {"name": "bc_3e_e7__cases_1", "bonne": "idee", "indice": "Case « sur quoi ? » : la sécurité, peut-on la toucher, la déplacer, la prévenir ?"}, {"name": "bc_3e_e7__cases_2", "bonne": "solution", "indice": "Case « dans quel but ? » : un SMS, est-ce ce qu'on veut obtenir, ou un moyen d'y arriver ?"}]}, {"type": "choix", "name": "bc_3e_e7__pourquoi", "bonne": "ferme", "retours": {"ferme": "Oui : un but qui nomme une solution donne la réponse avant d'avoir cherché.", "mauvais": "Le SMS n'est pas une mauvaise solution : il a sa place DANS la liste, à côté de la sirène ou de la radio. Ce qui ne va pas, c'est de l'écrire dans le but.", "court": "La longueur ne compte pas : « prévenir les habitants de l'arrivée d'un cyclone » est court, et juste.", "habitants": "Au contraire : le but dit qui l'objet doit prévenir. Les habitants y ont leur place ; c'est le SMS qui n'y a pas la sienne."}, "indice": null}, {"type": "texte", "name": "bc_3e_e7__but", "criteres": [{"motifs": ["^\\W*(pour |il doit |il sert a |sert a |le but est de |le but est d'|son but est de |son but est d')?(?!lumiere\\b|derriere\\b|premiere\\b|riviere\\b|entre\\b|notre\\b|votre\\b|autre\\b|leur\\b)[a-z]+(er|ir|re)\\b"], "min": 1, "manque": "Commence ton but par un verbe à l'infinitif : « Prévenir… », « Avertir… »."}, {"motifs": ["habitant|population|\\bgens\\b|familles?|personnes|\\bmonde\\b|quartier|riverain|voisin|resident"], "min": 1, "manque": "Dis QUI doit être prévenu."}, {"motifs": ["cyclone|ouragan|tempete|danger|alerte|menace|risque|vent violent|intemperie|catastrophe"], "min": 1, "manque": "Dis DE QUOI il faut prévenir : de quel danger ?"}], "minCar": 12, "interdits": [{"motifs": ["\\bsms\\b|texto|message|telephone|portable|smartphone|application|\\bappli\\b|sirene|radio|haut.?parleur|megaphone|internet|reseau|panneau|ecran|televi|e.?mail|whatsapp|facebook|gyrophare|cloche|notification|klaxon"], "message": "Ton but nomme encore une solution (un SMS, un message, une sirène, la radio, une application…). Garde ces idées pour la liste des OST : le but dit seulement ce qu'il faut obtenir."}], "vide": null}]}}}</script>
+<script>
+/* Ateliers des représentations — moteur commun des exercices.
+   Recopié tel quel dans chaque page par le générateur : aucune bibliothèque,
+   aucun réseau, aucune donnée envoyée. Les réponses de l'élève restent dans le
+   navigateur (localStorage), sous une clé PAR EXERCICE : l'atelier d'une
+   représentation et le cahier du niveau partagent donc le même travail. */
+(function(){
+  "use strict";
+  /* Deux usages : une page d'atelier ou de cahier entière (données dans #donnees-page),
+     ou des exercices incrustés dans une séquence (sections .atelier-incruste, chacune avec
+     ses données). En mode incrusté, rien d'autre de la séquence n'est touché : ni ses
+     onglets, ni ses boutons, ni sa sauvegarde. */
+  function lancer(D, racine, page){
+
+  /* ── Mémoire locale, jamais bloquante ─────────────────────────────── */
+  function lire(k){ try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch(e){ return null; } }
+  function ecrire(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+  function oublier(k){ try { localStorage.removeItem(k); } catch(e){} }
+
+  function norm(s){
+    return String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
+      .replace(/[’`]/g, "'").replace(/œ/g, "oe").replace(/æ/g, "ae")
+      .replace(/[  ]/g, " ").replace(/\s+/g, " ").trim();
+  }
+  function correspond(texte, motifs){
+    for (var i = 0; i < motifs.length; i++){
+      try { if (new RegExp(motifs[i]).test(texte)) return true; } catch(e){}
+    }
+    return false;
+  }
+  function echapper(s){
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  /* ── Valeurs des champs d'un conteneur ────────────────────────────── */
+  function valeurs(boite){
+    var v = {}, champs = boite.querySelectorAll("input[name], textarea[name]");
+    for (var i = 0; i < champs.length; i++){
+      var c = champs[i];
+      if (c.closest("[data-cle]") !== boite) continue;
+      if (c.type === "radio"){ if (c.checked) v[c.name] = c.value; }
+      else if (c.type === "checkbox"){
+        if (!v[c.name]) v[c.name] = [];
+        if (c.checked) v[c.name].push(c.value);
+      } else v[c.name] = c.value;
+    }
+    return v;
+  }
+  function restaurer(boite, v){
+    if (!v) return;
+    var champs = boite.querySelectorAll("input[name], textarea[name]");
+    for (var i = 0; i < champs.length; i++){
+      var c = champs[i];
+      if (c.closest("[data-cle]") !== boite) continue;
+      if (!(c.name in v)) continue;
+      if (c.type === "radio") c.checked = (v[c.name] === c.value);
+      else if (c.type === "checkbox") c.checked = (v[c.name] || []).indexOf(c.value) >= 0;
+      else c.value = v[c.name];
+    }
+  }
+
+  /* ── Schémas vivants : le texte choisi s'écrit dans le dessin ─────── */
+  function ecrireSvg(el, chaine){
+    if (!el) return;
+    var car = parseInt(el.getAttribute("data-car") || "18", 10);
+    var max = parseInt(el.getAttribute("data-lignes") || "3", 10);
+    var vide = el.getAttribute("data-vide") || "…";
+    var x = el.getAttribute("x"), interligne = parseFloat(el.getAttribute("data-interligne") || "1.15");
+    var brut = String(chaine || "").trim();
+    var prefixe = el.getAttribute("data-prefixe") || "";
+    var mots = (brut ? (prefixe ? prefixe + " " : "") + brut : "").split(/\s+/).filter(Boolean);
+    var lignes = [], cour = "";
+    var source = mots.length ? mots : vide.split(/\s+/);
+    for (var i = 0; i < source.length; i++){
+      var essai = cour ? cour + " " + source[i] : source[i];
+      if (essai.length > car && cour){ lignes.push(cour); cour = source[i]; } else cour = essai;
+    }
+    if (cour) lignes.push(cour);
+    if (lignes.length > max){ lignes = lignes.slice(0, max); lignes[max - 1] = lignes[max - 1].replace(/.{0,2}$/, "…"); }
+    while (el.firstChild) el.removeChild(el.firstChild);
+    var debut = -((lignes.length - 1) / 2) * interligne;
+    for (var j = 0; j < lignes.length; j++){
+      var t = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+      t.setAttribute("x", x);
+      t.setAttribute("dy", (j === 0 ? debut : interligne) + "em");
+      t.textContent = lignes[j];
+      el.appendChild(t);
+    }
+    if (el.classList) el.classList.toggle("rempli", mots.length > 0);
+  }
+  function miroirs(boite){
+    var liens = boite.querySelectorAll("[data-miroir]");
+    for (var i = 0; i < liens.length; i++){
+      var c = liens[i], cible = document.getElementById(c.getAttribute("data-miroir"));
+      if (!cible) continue;
+      if (c.type === "radio"){ if (c.checked) ecrireSvg(cible, c.getAttribute("data-texte") || c.value); }
+      else if (c.tagName === "TEXTAREA" || c.type === "text") ecrireSvg(cible, c.value);
+    }
+    // Un groupe de boutons sans choix laisse la bulle vide.
+    var groupes = {};
+    for (var k = 0; k < liens.length; k++){
+      var r = liens[k];
+      if (r.type !== "radio") continue;
+      groupes[r.name] = groupes[r.name] || {cible: r.getAttribute("data-miroir"), coche: false};
+      if (r.checked) groupes[r.name].coche = true;
+    }
+    for (var n in groupes){ if (!groupes[n].coche) ecrireSvg(document.getElementById(groupes[n].cible), ""); }
+  }
+
+  /* ── Encoches ─────────────────────────────────────────────────────── */
+  function encoche(boite, pour, etat, texte){
+    var el = boite.querySelector('.encoche[data-pour="' + pour + '"]');
+    if (!el) return;
+    var sym = {juste: "✔", faux: "✘", vide: "○"}[etat] || "";
+    var mot = texte || {juste: "juste", faux: "à revoir", vide: "sans réponse"}[etat] || "";
+    el.className = "encoche " + etat;
+    el.innerHTML = sym + '<span class="encoche-texte">' + mot + "</span>";
+  }
+  function effacerEncoches(boite){
+    var els = boite.querySelectorAll(".encoche"), i;
+    for (i = 0; i < els.length; i++){ els[i].className = "encoche"; els[i].textContent = ""; }
+    var rs = boite.querySelectorAll(".retour-option");
+    for (i = 0; i < rs.length; i++) rs[i].remove();
+  }
+  function retourOption(boite, name, valeur, texte){
+    var c = boite.querySelector('input[name="' + name + '"][value="' + CSS.escape(valeur) + '"]');
+    if (!c || !texte) return;
+    var lab = c.closest(".option");
+    var s = document.createElement("span");
+    s.className = "retour-option";
+    s.textContent = texte;
+    lab.insertAdjacentElement("afterend", s);
+  }
+
+  /* ── Les vérificateurs, un par type de question ──────────────────── */
+  var VERIF = {
+    choix: function(w, v, boite){
+      var r = v[w.name];
+      if (!r){ encoche(boite, w.name, "vide"); return {justes: 0, total: 1, messages: [w.vide || "Choisis une réponse."]}; }
+      var ok = (r === w.bonne);
+      encoche(boite, w.name, ok ? "juste" : "faux");
+      retourOption(boite, w.name, r, (w.retours || {})[r]);
+      return {justes: ok ? 1 : 0, total: 1, messages: ok ? [] : [w.indice || "Relis la question : une seule proposition y répond vraiment."]};
+    },
+    cases: function(w, v, boite){
+      var coches = v[w.name] || [], justes = 0, total = w.toutes.length, msgs = [];
+      for (var i = 0; i < w.toutes.length; i++){
+        var val = w.toutes[i], attendu = w.bonnes.indexOf(val) >= 0, coche = coches.indexOf(val) >= 0;
+        var ok = (attendu === coche);
+        if (ok) justes++;
+        encoche(boite, w.name + "::" + i, ok ? "juste" : "faux", ok ? (coche ? "bien coché" : "bien laissé") : (coche ? "à décocher" : "à cocher"));
+        if (coche) retourOption(boite, w.name, val, (w.retours || {})[val]);
+      }
+      if (!coches.length) msgs.push(w.vide || "Coche au moins une case.");
+      else if (justes < total) msgs.push(w.indice || "Une ou plusieurs cases sont à revoir : relis chaque proposition seule.");
+      return {justes: coches.length ? justes : 0, total: total, messages: msgs};
+    },
+    classer: function(w, v, boite){
+      var justes = 0, msgs = [], vides = 0;
+      for (var i = 0; i < w.items.length; i++){
+        var it = w.items[i], r = v[it.name];
+        if (!r){ vides++; encoche(boite, it.name, "vide"); continue; }
+        var ok = (r === it.bonne);
+        if (ok) justes++;
+        encoche(boite, it.name, ok ? "juste" : "faux");
+        if (!ok && it.indice) msgs.push(it.indice);
+      }
+      if (vides) msgs.unshift(vides + (vides > 1 ? " lignes n'ont" : " ligne n'a") + " pas encore de réponse.");
+      return {justes: justes, total: w.items.length, messages: msgs};
+    },
+    liste: function(w, v, boite){
+      var lignes = String(v[w.name] || "").split(/\n|;/).map(function(l){ return l.trim(); }).filter(Boolean);
+      var vus = {}, bons = 0, msgs = [], refus = 0;
+      function cite(l){ return "« " + l + " »"; }
+      lignes.forEach(function(l){
+        var n = norm(l), i;
+        for (i = 0; i < (w.refuses || []).length; i++){
+          if (correspond(n, w.refuses[i].motifs)){ refus++; msgs.push(w.refuses[i].message.replace("{ligne}", cite(l))); return; }
+        }
+        for (i = 0; i < w.attendus.length; i++){
+          if (correspond(n, w.attendus[i].motifs)){
+            if (vus[i]){ msgs.push(cite(l) + " : déjà dans ta liste sous un autre nom."); return; }
+            vus[i] = true; bons++; return;
+          }
+        }
+        msgs.push((w.inconnu || "{ligne} : je ne le reconnais pas. Vérifie qu'il est bien dans la situation.").replace("{ligne}", cite(l)));
+      });
+      var ok = bons >= w.min && refus === 0;
+      encoche(boite, w.name, lignes.length ? (ok ? "juste" : "faux") : "vide",
+              lignes.length ? (bons + " reconnu" + (bons > 1 ? "s" : "") + ", " + w.min + " demandé" + (w.min > 1 ? "s" : "")) : "");
+      if (!lignes.length) msgs.unshift(w.vide || "Ta liste est vide : écris une ligne par élément.");
+      else if (bons < w.min) msgs.unshift("Il en faut au moins " + w.min + " : tu en as " + bons + " qui conviennent.");
+      var points = Math.min(bons, w.min);
+      if (refus) points = Math.max(0, points - 1);
+      return {justes: points, total: w.min, messages: msgs};
+    },
+    texte: function(w, v, boite){
+      var brut = String(v[w.name] || ""), n = norm(brut), msgs = [], justes = 0, i;
+      if (brut.trim().length < (w.minCar || 10)){
+        encoche(boite, w.name, "vide");
+        return {justes: 0, total: w.criteres.length, messages: [w.vide || "Écris ta réponse : une phrase complète suffit."]};
+      }
+      for (i = 0; i < (w.interdits || []).length; i++){
+        if (correspond(n, w.interdits[i].motifs)) msgs.push(w.interdits[i].message);
+      }
+      for (i = 0; i < w.criteres.length; i++){
+        var c = w.criteres[i], nb = 0;
+        for (var j = 0; j < c.motifs.length; j++){ try { if (new RegExp(c.motifs[j]).test(n)) nb++; } catch(e){} }
+        var ok = nb >= (c.min || 1);
+        if (ok) justes++; else msgs.push(c.manque);
+        encoche(boite, w.name + "::" + i, ok ? "juste" : "faux");
+      }
+      var pen = (w.interdits || []).some(function(x){ return correspond(n, x.motifs); }) ? 1 : 0;
+      var total = w.criteres.length;
+      encoche(boite, w.name, (justes === total && !pen) ? "juste" : "faux", justes + " point" + (justes > 1 ? "s" : "") + " sur " + total);
+      return {justes: Math.max(0, justes - pen), total: total, messages: msgs};
+    },
+    slots: function(w, v, boite){
+      var justes = 0, vides = 0, msgs = [], groupes = {}, i;
+      for (i = 0; i < w.slots.length; i++){
+        var s = w.slots[i];
+        if (s.groupe){ groupes[s.groupe] = groupes[s.groupe] || []; groupes[s.groupe].push(s); }
+      }
+      var dejaVu = {};
+      for (i = 0; i < w.slots.length; i++){
+        var sl = w.slots[i], r = v[sl.name];
+        if (!r){ vides++; encoche(boite, sl.name, "vide"); continue; }
+        var ok;
+        if (sl.groupe){
+          var cle = sl.groupe + "|" + r;
+          ok = sl.bonnes.indexOf(r) >= 0 && !dejaVu[cle];
+          dejaVu[cle] = true;
+        } else ok = sl.bonnes.indexOf(r) >= 0;
+        if (ok) justes++; else if (sl.indice) msgs.push(sl.indice);
+        encoche(boite, sl.name, ok ? "juste" : "faux");
+      }
+      if (vides) msgs.unshift(vides + (vides > 1 ? " cases du schéma sont" : " case du schéma est") + " encore vide" + (vides > 1 ? "s" : "") + ".");
+      return {justes: justes, total: w.slots.length, messages: msgs};
+    },
+    croquis: function(w, v, boite){
+      var etat = lire(w.cle + "__croquis") || {}, traits = etat.traits || 0, msgs = [];
+      var desc = String(v[w.name + "_desc"] || "").trim();
+      var coches = v[w.name + "_check"] || [];
+      var dessine = traits >= (w.minTraits || 4) || desc.length >= 60;
+      if (!dessine) msgs.push(w.vide || "Ton croquis est encore presque vide : trace au moins les grandes formes.");
+      var nbCrit = w.checklist.length, justes = (dessine ? 1 : 0) + Math.min(coches.length, nbCrit);
+      if (dessine && coches.length < nbCrit) msgs.push("Relis ton croquis avec la liste : " + (nbCrit - coches.length) + " point(s) ne sont pas encore cochés. Ajoute-les au dessin, puis coche.");
+      encoche(boite, w.name, dessine && coches.length === nbCrit ? "juste" : (dessine ? "faux" : "vide"),
+              dessine ? (coches.length + " point(s) sur " + nbCrit + " cochés") : "croquis à faire");
+      return {justes: justes, total: nbCrit + 1, messages: msgs};
+    }
+  };
+
+  /* ── Un exercice ──────────────────────────────────────────────────── */
+  var EXOS = D.exercices || {};
+  function exoEtat(id){ return lire(EXOS[id].cle) || {}; }
+
+  function verifier(boite){
+    var id = boite.getAttribute("data-exo"), def = EXOS[id];
+    if (!def) return;
+    effacerEncoches(boite);
+    var v = valeurs(boite), justes = 0, total = 0, messages = [];
+    def.widgets.forEach(function(w){
+      var f = VERIF[w.type];
+      if (!f) return;
+      var r = f(w, v, boite);
+      justes += r.justes; total += r.total;
+      messages = messages.concat(r.messages || []);
+    });
+    var ratio = total ? justes / total : 0;
+    var zone = boite.querySelector(".retour[data-retour]");
+    var classe = ratio === 1 ? "ok" : (ratio >= 0.5 ? "mixte" : "err");
+    var titre = ratio === 1 ? (def.bravo || "🎉 Tout est juste. Ouvre quand même la correction : elle dit pourquoi, et c'est ce qui se retient.")
+              : (ratio >= 0.5 ? "🟡 C'est bien parti : " + justes + " point" + (justes > 1 ? "s" : "") + " sur " + total + ". Corrige les lignes marquées ✘, puis vérifie à nouveau."
+              : "🔴 " + justes + " point" + (justes > 1 ? "s" : "") + " sur " + total + " pour l'instant. Relis la consigne, ouvre l'aide 1, puis vérifie à nouveau : on apprend en se corrigeant.");
+    if (zone){
+      zone.className = "retour visible " + classe;
+      var html = "<b>" + echapper(titre) + "</b>";
+      var uniques = messages.filter(function(m, i){ return m && messages.indexOf(m) === i; });
+      if (uniques.length) html += "<ul>" + uniques.map(function(m){ return "<li>" + echapper(m) + "</li>"; }).join("") + "</ul>";
+      zone.innerHTML = html;
+    }
+    var etat = exoEtat(id);
+    etat.v = v; etat.verifie = true; etat.reussi = (ratio === 1); etat.score = [justes, total];
+    ecrire(def.cle, etat);
+    if (page) majProgression();
+  }
+
+  /* ── Sauvegarde de tout ce qui porte data-cle ─────────────────────── */
+  function sauver(boite){
+    var cle = boite.getAttribute("data-cle");
+    if (boite.hasAttribute("data-exo")){
+      var etat = lire(cle) || {};
+      etat.v = valeurs(boite);
+      ecrire(cle, etat);
+    } else ecrire(cle, {v: valeurs(boite)});
+    miroirs(boite);
+    var note = document.getElementById("noteSauvegarde");
+    if (note) note.textContent = "✔ Enregistré dans ce navigateur à " + new Date().toLocaleTimeString("fr-FR", {hour: "2-digit", minute: "2-digit"});
+  }
+
+  function majProgression(){
+    var ids = Object.keys(EXOS), faits = 0;
+    ids.forEach(function(id){
+      var e = exoEtat(id), b = document.getElementById("onglet-etat-" + id);
+      if (e.reussi) faits++;
+      if (b) b.textContent = e.reussi ? "✔ réussi" : (e.verifie ? "◐ à reprendre" : (e.v ? "○ commencé" : "à faire"));
+    });
+    var barre = document.getElementById("barreProgression"), txt = document.getElementById("texteProgression");
+    if (barre) barre.style.width = (ids.length ? Math.round(100 * faits / ids.length) : 0) + "%";
+    if (txt) txt.textContent = faits + " exercice" + (faits > 1 ? "s" : "") + " réussi" + (faits > 1 ? "s" : "") + " sur " + ids.length;
+  }
+
+  /* ── Onglets ──────────────────────────────────────────────────────── */
+  var onglets = page ? Array.prototype.slice.call(document.querySelectorAll('[role="tab"]')) : [];
+  var cleOnglet = D.page + "__onglet";
+  function montrer(i, focus){
+    if (!onglets.length) return;
+    i = Math.max(0, Math.min(onglets.length - 1, i));
+    onglets.forEach(function(o, j){
+      var p = document.getElementById(o.getAttribute("aria-controls"));
+      o.setAttribute("aria-selected", j === i ? "true" : "false");
+      o.tabIndex = (j === i) ? 0 : -1;
+      if (p) p.hidden = (j !== i);
+    });
+    var volet = document.querySelector(".rappel-ouverture");
+    if (volet){
+      if (i === 0){ volet.classList.remove("volet"); volet.open = true; }
+      else { volet.classList.add("volet"); volet.open = false; }
+    }
+    ecrire(cleOnglet, i);
+    if (focus) onglets[i].focus();
+  }
+  onglets.forEach(function(o, i){
+    o.addEventListener("click", function(){ montrer(i, false); });
+    o.addEventListener("keydown", function(e){
+      if (e.key === "ArrowRight"){ e.preventDefault(); montrer(i + 1, true); }
+      else if (e.key === "ArrowLeft"){ e.preventDefault(); montrer(i - 1, true); }
+      else if (e.key === "Home"){ e.preventDefault(); montrer(0, true); }
+      else if (e.key === "End"){ e.preventDefault(); montrer(onglets.length - 1, true); }
+    });
+  });
+  if (page) document.querySelectorAll("button.suivant[data-vers]").forEach(function(b){
+    b.addEventListener("click", function(){
+      montrer(parseInt(b.getAttribute("data-vers"), 10), false);
+      var barre = document.querySelector(".onglets");
+      if (barre) barre.scrollIntoView({block: "start"});
+    });
+  });
+
+  /* ── Croquis : un vrai crayon, au doigt ou à la souris ────────────── */
+  function croquis(canvas){
+    var cle = canvas.getAttribute("data-cle-croquis"), ctx = canvas.getContext("2d");
+    var outil = "crayon", trace = false, pile = [], etat = lire(cle) || {traits: 0};
+    function fond(){ ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, canvas.width, canvas.height); }
+    fond();
+    if (etat.image){ var im = new Image(); im.onload = function(){ ctx.drawImage(im, 0, 0); }; im.src = etat.image; }
+    function point(e){
+      var r = canvas.getBoundingClientRect();
+      return {x: (e.clientX - r.left) * canvas.width / r.width, y: (e.clientY - r.top) * canvas.height / r.height};
+    }
+    var minuterie = null;
+    function memoriser(){
+      clearTimeout(minuterie);
+      minuterie = setTimeout(function(){
+        try { etat.image = canvas.toDataURL("image/png"); } catch(e){}
+        ecrire(cle, etat);
+        var note = document.getElementById("noteSauvegarde");
+        if (note) note.textContent = "✔ Croquis enregistré dans ce navigateur";
+      }, 500);
+    }
+    canvas.addEventListener("pointerdown", function(e){
+      e.preventDefault();
+      try { pile.push(ctx.getImageData(0, 0, canvas.width, canvas.height)); if (pile.length > 20) pile.shift(); } catch(x){}
+      trace = true; canvas.setPointerCapture(e.pointerId);
+      var p = point(e); ctx.beginPath(); ctx.moveTo(p.x, p.y);
+      ctx.lineCap = "round"; ctx.lineJoin = "round";
+      ctx.strokeStyle = outil === "gomme" ? "#ffffff" : (outil === "rouge" ? "#c0182b" : "#1b2438");
+      ctx.lineWidth = outil === "gomme" ? 22 : (outil === "epais" ? 6 : 3);
+    });
+    canvas.addEventListener("pointermove", function(e){
+      if (!trace) return;
+      var p = point(e); ctx.lineTo(p.x, p.y); ctx.stroke();
+    });
+    function fin(){ if (!trace) return; trace = false; if (outil !== "gomme") etat.traits = (etat.traits || 0) + 1; memoriser(); }
+    canvas.addEventListener("pointerup", fin);
+    canvas.addEventListener("pointercancel", fin);
+    var barre = canvas.parentNode.querySelector(".croquis-outils");
+    if (barre){
+      barre.querySelectorAll("[data-outil]").forEach(function(b){
+        b.addEventListener("click", function(){
+          outil = b.getAttribute("data-outil");
+          barre.querySelectorAll("[data-outil]").forEach(function(x){ x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+        });
+      });
+      var annuler = barre.querySelector("[data-action=annuler]"), tout = barre.querySelector("[data-action=effacer]");
+      if (annuler) annuler.addEventListener("click", function(){
+        if (pile.length){ ctx.putImageData(pile.pop(), 0, 0); etat.traits = Math.max(0, (etat.traits || 0) - 1); memoriser(); }
+      });
+      if (tout) tout.addEventListener("click", function(){
+        if (!window.confirm("Effacer tout ton croquis ?")) return;
+        pile = []; fond(); etat = {traits: 0}; memoriser();
+      });
+    }
+  }
+  racine.querySelectorAll("canvas.croquis-zone").forEach(croquis);
+
+  /* ── Branchements ─────────────────────────────────────────────────── */
+  var boites = racine.querySelectorAll("[data-cle]");
+  for (var i = 0; i < boites.length; i++){
+    (function(b){
+      var e = lire(b.getAttribute("data-cle"));
+      if (e) restaurer(b, e.v);
+      miroirs(b);
+      b.addEventListener("input", function(){ sauver(b); });
+      b.addEventListener("change", function(){ sauver(b); });
+      var bouton = b.querySelector("button.verifier");
+      if (bouton && b.hasAttribute("data-exo")) bouton.addEventListener("click", function(){ verifier(b); });
+    })(boites[i]);
+  }
+
+  if (!page) return;
+  var btnImp = document.getElementById("btnImprimer");
+  if (btnImp) btnImp.addEventListener("click", function(){ window.print(); });
+  var btnEff = document.getElementById("btnEffacer");
+  if (btnEff) btnEff.addEventListener("click", function(){
+    if (!window.confirm("Effacer tout ce que tu as écrit sur cette page ? Le travail des mêmes exercices disparaîtra aussi de ton cahier.")) return;
+    for (var j = 0; j < boites.length; j++){ oublier(boites[j].getAttribute("data-cle")); }
+    document.querySelectorAll("canvas.croquis-zone").forEach(function(c){ oublier(c.getAttribute("data-cle-croquis")); });
+    oublier(cleOnglet);
+    location.reload();
+  });
+  var btnEss = document.getElementById("btnEssentiel"), cleEss = D.page + "__essentiel";
+  function essentiel(on){
+    document.body.classList.toggle("essentiel", on);
+    if (btnEss){ btnEss.setAttribute("aria-pressed", on ? "true" : "false"); btnEss.textContent = "🎯 Mode essentiel : " + (on ? "activé" : "désactivé"); }
+  }
+  if (btnEss){
+    essentiel(!!lire(cleEss));
+    btnEss.addEventListener("click", function(){ var on = !document.body.classList.contains("essentiel"); essentiel(on); ecrire(cleEss, on); });
+  }
+
+  var depart = lire(cleOnglet);
+  var ancre = (location.hash || "").replace("#", "");
+  if (ancre){
+    var cible = document.getElementById(ancre);
+    var panneau = cible ? cible.closest('[role="tabpanel"]') : null;
+    if (panneau){
+      var idx = onglets.findIndex(function(o){ return o.getAttribute("aria-controls") === panneau.id; });
+      if (idx >= 0) depart = idx;
+    }
+  }
+  montrer(typeof depart === "number" ? depart : 0, false);
+  if (ancre){ var c2 = document.getElementById(ancre); if (c2) setTimeout(function(){ c2.scrollIntoView({block: "start"}); }, 30); }
+  window.addEventListener("hashchange", function(){
+    var a = (location.hash || "").replace("#", ""), c = a ? document.getElementById(a) : null;
+    var pn = c ? c.closest('[role="tabpanel"]') : null;
+    if (!pn) return;
+    var i = onglets.findIndex(function(o){ return o.getAttribute("aria-controls") === pn.id; });
+    if (i >= 0){ montrer(i, false); setTimeout(function(){ c.scrollIntoView({block: "start"}); }, 30); }
+  });
+  majProgression();
+  }
+
+  var source = document.getElementById("donnees-page");
+  if (source){ try { lancer(JSON.parse(source.textContent), document, true); } catch(e){} }
+  var incrustes = document.querySelectorAll(".atelier-incruste");
+  for (var k = 0; k < incrustes.length; k++){
+    var donnees = incrustes[k].querySelector('script[type="application/json"]');
+    if (!donnees) continue;
+    try { lancer(JSON.parse(donnees.textContent), incrustes[k], false); } catch(e){}
+  }
+})();
+</script>
+
+<!-- loupe-images-v1 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:2rem;box-sizing:border-box;overflow:auto;
+    align-items:center;justify-content:center}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  .loupe-fond img{max-width:100%;max-height:88vh;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:fixed;left:0;right:0;bottom:.9rem;text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif;padding:0 2rem}
+  .loupe-fermer{position:fixed;top:.8rem;right:1rem;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer \u2715";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    // L'alternative textuelle sert de légende : elle DIT ce que l'image montre.
+    legende.textContent = img.alt ? img.alt + "  \u2014  \u00c9chap pour refermer"
+                                  : "\u00c9chap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page.
+  // On les sérialise à la volée pour les afficher en grand — sans réseau : le
+  // dessin est déjà là, on ne fait que le relire.
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    if (!copie.getAttribute("xmlns")) {
+      copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    legende.textContent = mot ? mot + "  \u2014  \u00c9chap pour refermer"
+                              : "\u00c9chap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
+</body>
+</html>
