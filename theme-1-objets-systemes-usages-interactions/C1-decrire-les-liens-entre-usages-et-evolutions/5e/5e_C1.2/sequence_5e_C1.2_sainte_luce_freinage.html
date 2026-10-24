@@ -1451,9 +1451,11 @@ const CHECKS = {
                a5_5:"le frein à disque : 8,3 m sous la pluie et 7,5 m freins chauds, le plus court les deux fois"};
     let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
     const t = val("a5_conseil"), b = bas(t);
-    /* le frein conseillé : celui qui suit « conseille / choisis / retiens », sinon le premier nommé
-       (un bon conseil nomme aussi les autres freins, pour comparer) */
-    const m = b.match(/(?:conseil|choisi|retien|prend|opte)[^.]*?(disque|tambour|patin)/) || b.match(/(disque|tambour|patin)/);
+    /* le frein conseillé : celui qui suit directement « conseille / choisis / retiens / prends / opte pour »
+       (« je ne conseille PAS le tambour » ne compte pas), sinon le premier nommé — un bon conseil
+       nomme aussi les autres freins, pour comparer */
+    const m = b.match(/(?:conseill|choisi|retien|prend|opte)\w*\s+(?:pour\s+)?(?:le\s+|la\s+|les\s+|un\s+)?(?:frein\s+)?(?:a\s+)?(disque|tambour|patin)/)
+           || b.match(/(disque|tambour|patin)/);
     const choix = m ? m[1] : "";
     /* deux chiffres pris dans le tableau du vendeur */
     const chiffres = [nombre(b,"8","3"), nombre(b,"7","5"), nombre(b,"11","6"), nombre(b,"9","1"),
