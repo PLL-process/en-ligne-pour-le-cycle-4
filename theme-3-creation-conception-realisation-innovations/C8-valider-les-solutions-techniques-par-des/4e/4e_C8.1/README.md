@@ -1,6 +1,6 @@
 # 4e_C8.1 — Valider les solutions techniques par des tests
 
-**Thème 3** — Création, conception, réalisation, innovations
+**Thème 3** — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser
 
 > **4e_C8.1** — Paramétrer une simulation fournie pour valider la tenue mécanique d'un matériau.
 > **4e_C8.2** — Proposer un protocole de test pour valider la tenue mécanique d'un matériau.

@@ -22149,6 +22149,39 @@ qui nommait le banc de `generer_lexique.py` comme s'il était dans le dossier du
 `controle_squelette.mjs` refuse la même seule page que sur `main` (`3e_C1.5`, thème 1, hors lot). `build_audit.py` et
 `make_index.py` régénérés.
 
+## 20/10/2026 — Thème 3 : un seul titre, celui du programme officiel
+
+**Décision de Pascal** (20/10/2026, à la suite du lot du 19/10) : « les unifier dans un lot à part, sur tout le thème ».
+
+**Le constat.** Le titre du thème 3 avait trois libellés dans les pages du thème :
+- « Création, conception, réalisation : des objets et des systèmes techniques à créer » : 22 occurrences (badges de
+  20 séquences, deux fiches, dont une où le libellé est coupé sur deux lignes). La seconde moitié n'existe pas dans le programme : elle reprend la forme du thème 2
+  (« … : des objets et des systèmes techniques à comprendre ») ;
+- « Création, conception, réalisation » seul : 9 badges, 5 pieds de page (3e_C9.2), 2 fiches ;
+- « Création, conception, réalisation, innovations » sans sa seconde moitié : le README de 4e_C8.1 et une fiche.
+
+**Le libellé retenu** est celui du programme, recopié de l'annexe du BO n°9 du 29/02/2024
+(`education.gouv.fr/sites/default/files/ensel802_annexe.pdf`), et déjà celui de `_outils/data_competences.py`
+(`THEME_TITLES[3]`), donc de l'index : **« Création, conception, réalisation, innovations : des objets à concevoir et
+à réaliser »**.
+
+**Ce que le lot fait.** 40 remplacements dans 35 fichiers du dossier du thème 3 (29 pages, 6 fiches et README), par
+un script qui s'arrête si une forme reste non traitée. Les titres courts du type « Thème 3 · 4e — … » et « Thème 3 · New
+York » ne nomment pas le thème : ils ne changent pas. **Non touchés** : `_archive-anciennes-versions/` (une version
+v1 archivée de 4e_C9.1 porte l'ancien libellé : une archive garde l'état de sa date) et les entrées passées de ce
+journal.
+
+### Vérifié
+
+Aucune régression mesurable. **Rendu** : les 29 pages ouvertes à 390 et 1280 px, sur `main` puis sur la branche —
+débordement horizontal 0 px partout, le badge du thème reste dans l'écran, mesures identiques. **Suites des lots** :
+les 25 suites qui ouvrent les pages modifiées, lancées avec leur commande documentée, sur `main` puis sur la branche —
+**résultats identiques, suite par suite**. Constat sur `main`, hors lot et non corrigé ici : 7 de ces suites ne sortent
+pas à 0 (`tests_4e_C7.mjs` et `tests_4e_C8.mjs` 38 / 41 ; les suites de séquence de 3e_C7.4, 4e_C7.4, 5e_C7.4, 3e_C8.1 et
+5e_C8.1 s'arrêtent sans bilan avec la commande de leur rapport) : à reprendre lot par lot. **Contrôles du dépôt** : les 22
+contrôles Python et `verif_regles_audit.py` sortent à 0 ; en navigateur, 4 sur 5 à 0 et `controle_squelette.mjs` refuse
+la même seule page que sur `main` (`3e_C1.5`, thème 1). `build_audit.py` et `make_index.py` régénérés.
+
 ## 21/10/2026 — Thème 1 · 5e_C3.1 : le vélo-cargo du dessin animé passe en volume (pilote des figures isométriques, phase 1)
 
 **Demande de Pascal.** Le pilote « dessin animé par scènes » du 25/09/2026 (`#velo-cargo-pas-a-pas`, séance 1 de

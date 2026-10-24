@@ -1,7 +1,7 @@
 # Fiche pédagogique — 3e_C8.1 « Le mât de la station »
 
 > **Mettre en œuvre une simulation pour valider la tenue mécanique d’un matériau.**
-> Programme 2024, cycle 4, thème 3 — Création, conception, réalisation.
+> Programme 2024, cycle 4, thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser.
 
 | | |
 |---|---|

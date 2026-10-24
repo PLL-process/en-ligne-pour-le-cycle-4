@@ -6,7 +6,7 @@
 |---|---|
 | Niveau | 3e (programme 2024) |
 | Codes | **3e_C9.2** (dossier principal) · **3e_C8.3** (couvert, README pointeur) |
-| Thème | Thème 3 — Création, conception, réalisation : des objets et des systèmes techniques à créer |
+| Thème | Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser |
 | Compétences parentes | C9 — Concevoir, écrire, tester et mettre au point un programme · C8 — Valider les solutions techniques par des essais et des tests |
 | Référentiel | BO n°9 du 29/02/2024 |
 | Domaines du socle | D1.3, D2, D3, D4, D5 |
