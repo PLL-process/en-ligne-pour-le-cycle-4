@@ -78,7 +78,7 @@ _banc     = ligne('id="bancCard"')
 _s        = {n: ligne(f'id="s{n}" role="tabpanel"') for n in range(1, NB_SEANCES + 1)}
 _footer   = ligne("<footer>")
 _script   = ligne("<script>", _footer)
-_loupe    = ligne("loupe-images-v1") - 1
+_loupe    = ligne("loupe-images-v2") - 1
 
 assert _situ < _banc < _tabs, "la situation, le banc puis les onglets : l'ordre de la source a changé"
 
