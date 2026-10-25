@@ -156,7 +156,7 @@
   .tpa-dessin .tpa-mot{font-size:17px}
   .tpa-dessin .tpa-centre,.tpa-mini .tpa-centre{text-anchor:middle}
   .tpa-dessin [data-de],.tpa-dessin [data-a]{transition:opacity .55s ease calc(var(--i,0) * .25s),visibility 0s}
-  .tpa-dessin .tpa-cache{opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s linear .3s}
+  .tpa-dessin .lpp-cache{opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s linear .3s}
   /* la fonction */
   .tpa-cube-face{fill:rgba(97,218,251,.06);stroke:#7d9bd6;stroke-width:1.5;stroke-dasharray:6 5}
   .tpa-cube-haut{fill:rgba(97,218,251,.1);stroke:#7d9bd6;stroke-width:1.5;stroke-dasharray:6 5}
@@ -313,6 +313,236 @@
     .qcm-groupe .qcm-option input[type=radio]{-webkit-appearance:auto;appearance:auto}
   }
 </style>
+<!-- lecteur-pas-a-pas v1 : début — lecteur commun des animations pas à pas ; source unique : _outils/lecteur_pas_a_pas/ (poser.py). Ne pas le modifier dans la page. -->
+<style>
+/* Lecteur pas à pas commun — source unique : _outils/lecteur_pas_a_pas/lecteur.css (posée par poser.py). */
+[data-lpp-racine] [data-de],[data-lpp-racine] [data-a],[data-lpp-racine] [data-des],[data-lpp-racine] [data-seul]{transition:opacity .35s ease calc(var(--i,0) * .12s),visibility 0s linear 0s}
+[data-lpp-racine] .lpp-cache{opacity:0!important;visibility:hidden;transition:opacity .2s ease,visibility 0s linear .2s}
+[data-lpp-racine] [data-aller][aria-current]{outline:2px solid currentColor;outline-offset:2px}
+.lpp-imprime{display:none}
+@media (prefers-reduced-motion: reduce){
+  [data-lpp-racine] [data-de],[data-lpp-racine] [data-a],[data-lpp-racine] [data-des],[data-lpp-racine] [data-seul],[data-lpp-racine] .lpp-cache{transition:none!important}
+}
+@media print{
+  [data-lpp-racine].lpp-sans-impression{display:none!important}
+  [data-lpp-racine] [data-lpp="controles"],[data-lpp-racine] [data-lpp="chapitres"],
+  [data-lpp-racine] [data-lpp="texte"],[data-lpp-racine] [data-lpp="sansvoix"],[data-lpp-racine] [data-lpp="ouvrir"]{display:none!important}
+  [data-lpp-racine] [data-lpp="panneau"]{display:block!important}
+  [data-lpp-racine] .lpp-imprime{display:block;margin:8px 0 0 1.2em;padding:0;color:#000}
+  [data-lpp-racine] .lpp-imprime li{margin:2px 0;break-inside:avoid}
+}
+</style>
+<script>
+/* Lecteur pas à pas commun (règles d'or n°119 et n°305). Source unique : _outils/lecteur_pas_a_pas/lecteur.js,
+   posé dans chaque page par _outils/lecteur_pas_a_pas/poser.py — ne pas le modifier dans une page.
+   La page garde son dessin et ses scènes ; le lecteur fait le reste : étapes, chapitres, voix, déroulé,
+   mouvement réduit, impression, lien direct. Rien ne démarre ni ne parle sans un geste de l'élève. */
+(function(){
+  "use strict";
+  if (window.LecteurPasAPas) return;
+  var calme = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : {matches: false};
+  var lecteurs = [];                                     // un seul lecteur de la page parle à la fois
+
+  function LecteurPasAPas(bloc, o){
+    if (!bloc) return null;
+    o = o || {};
+    bloc.setAttribute("data-lpp-racine", "");
+    if (o.voix) bloc.setAttribute("data-lpp-voix", o.voix);     // lu par le banc : chaque étape a son fichier
+    var S = o.scenes || [], N = S.length, scene = 1, tScene = 0, MOT = o.mot || "Étape";
+    function q(nom){ return bloc.querySelector('[data-lpp="' + nom + '"]'); }
+    var dessin = q("dessin"), titre = q("titre"), texte = q("texte"), compte = q("compte");
+    var prec = q("prec"), suiv = q("suiv"), zero = q("zero");
+    var bRegarder = q("regarder"), bEcouter = q("ecouter"), sansVoix = q("sansvoix");
+    var bOuvrir = q("ouvrir"), panneau = q("panneau");
+    var chapitres = [].slice.call(bloc.querySelectorAll("[data-aller]"));
+    var moi = {};
+
+    // ── L'impression : la liste des étapes (rien n'est porté par le seul mouvement) ──
+    if (o.imprimer !== false) {
+      var liste = document.createElement("ol");
+      liste.className = "lpp-imprime";
+      S.forEach(function(s){
+        var li = document.createElement("li");
+        li.innerHTML = (s.t ? "<b>" + s.t + "</b> — " : "") + s.p;
+        liste.appendChild(li);
+      });
+      bloc.appendChild(liste);
+    } else bloc.classList.add("lpp-sans-impression");
+
+    // ── La boucle : elle ne tourne que si le bloc est à l'écran, l'onglet visible, et le mouvement permis ──
+    var raf = 0, avantT = 0, visible = true;
+    function ouvert(){ return !panneau || !panneau.hidden; }
+    function doitTourner(){
+      if (!o.maj || !visible || document.hidden || !ouvert()) return false;
+      return !calme.matches || !!(o.tourne && o.tourne(scene));
+    }
+    function boucle(ts){
+      raf = 0;
+      if (!doitTourner()) { avantT = 0; return; }
+      var dt = avantT ? Math.min(.05, (ts - avantT) / 1000) : 0;
+      avantT = ts; tScene += dt; o.maj(dt, scene, tScene);
+      raf = requestAnimationFrame(boucle);
+    }
+    function relancer(){ if (!raf && doitTourner()) { avantT = 0; raf = requestAnimationFrame(boucle); } }
+    function imageFixe(){ if (o.fixe) o.fixe(scene); else if (o.maj) o.maj(0, scene, tScene); }
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function(e){ visible = e[e.length - 1].isIntersecting; relancer(); }).observe(bloc);
+    }
+    document.addEventListener("visibilitychange", relancer);
+    if (calme.addEventListener) calme.addEventListener("change", function(){ if (calme.matches) imageFixe(); relancer(); });
+
+    // ── Changer d'étape ──
+    // auto : l'étape vient du déroulé (« Regarder »), pas d'un clic de l'élève.
+    function montrer(n, auto){
+      var cible = Math.max(1, Math.min(N, n)), ancienne = scene;
+      if (o.avant && cible > ancienne && o.avant(ancienne, cible, !!auto) === false) return false;   // étape à mériter
+      scene = cible; tScene = 0;
+      bloc.setAttribute("data-scene", String(scene));
+      // data-de / data-a : de l'étape n à l'étape m ; data-des et data-seul : les noms écrits par les générateurs
+      // des premières animations (vélo-cargo), lus tels quels.
+      bloc.querySelectorAll("[data-de],[data-a],[data-des],[data-seul]").forEach(function(el){
+        var de = +(el.getAttribute("data-de") || el.getAttribute("data-des") || el.getAttribute("data-seul") || 1);
+        var a = +(el.getAttribute("data-a") || el.getAttribute("data-seul") || N);
+        el.classList.toggle("lpp-cache", scene < de || scene > a);
+      });
+      var s = S[scene - 1] || {};
+      if (dessin && s.d) dessin.setAttribute("aria-label", s.d);
+      if (titre) titre.textContent = MOT + " " + scene + (s.t ? " — " + s.t : "");
+      if (texte) texte.innerHTML = "<p>" + (s.p || "") + "</p>";
+      if (compte) compte.textContent = MOT + " " + scene + " / " + N;
+      if (prec) prec.disabled = scene === 1;
+      if (suiv) suiv.disabled = scene === N;
+      var courant = null;
+      chapitres.forEach(function(b){ if (+b.getAttribute("data-aller") <= scene) courant = b; });
+      chapitres.forEach(function(b){ if (b === courant) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current"); });
+      if (o.entrer) o.entrer(scene, ancienne, !!auto);
+      if (calme.matches) imageFixe(); else if (o.maj) o.maj(0, scene, tScene);
+      relancer();
+      return true;
+    }
+
+    // ── La voix : les fichiers de la séance (synthèse neuronale hors ligne, jamais le réseau) ; en secours, ──
+    // ── une voix française LOCALE du système (jamais une voix en ligne). ──
+    var regarde = false, minuterie = null, jeton = 0, lecteur = null, ext = "";
+    if (o.voix) {
+      lecteur = new Audio();
+      try { ext = lecteur.canPlayType('audio/ogg; codecs="opus"') ? "ogg" : (lecteur.canPlayType("audio/mpeg") ? "mp3" : ""); }
+      catch (e) { ext = ""; }
+    }
+    var son = !!ext, synth = (bEcouter || bRegarder) ? (window.speechSynthesis || null) : null, voix = null;
+    function choisirVoix(){
+      var fr = (synth ? synth.getVoices() : []).filter(function(v){ return /^fr/i.test(v.lang) && v.localService; });
+      voix = fr.filter(function(v){ return /^fr-FR/i.test(v.lang); })[0] || fr[0] || null;
+      if (bEcouter) bEcouter.hidden = !(son || voix);
+      if (sansVoix) sansVoix.hidden = !!(son || voix);
+    }
+    if (synth && "onvoiceschanged" in synth) synth.addEventListener("voiceschanged", choisirVoix);
+    function brut(i){ var d = document.createElement("div"); d.innerHTML = S[i - 1].p; return d.textContent; }
+    function duree(i){ return Math.max(3500, brut(i).split(/\s+/).length * (o.msParMot || 400)) + 1000; }
+    function parlerSynth(i, finir){
+      var j = ++jeton;
+      if (!voix) { if (finir) minuterie = setTimeout(function(){ if (j === jeton) finir(); }, duree(i)); return; }
+      synth.cancel();
+      var u = new SpeechSynthesisUtterance(brut(i)), fait = false, secours;
+      u.voice = voix; u.lang = voix.lang; u.rate = .95;
+      function f(){ if (fait || j !== jeton) return; fait = true; clearTimeout(secours); if (finir) finir(); }
+      u.onend = f; u.onerror = f;
+      secours = setTimeout(f, duree(i) * 2 + 2000);
+      synth.speak(u);
+    }
+    function parler(i, finir){
+      lecteurs.forEach(function(l){ if (l !== moi) l.arreter(); });
+      if (!son) { parlerSynth(i, finir); return; }
+      var j = ++jeton, fait = false, secours;
+      if (synth) synth.cancel();
+      function f(){ if (fait || j !== jeton) return; fait = true; clearTimeout(secours); if (finir) finir(); }
+      function bascule(){
+        if (fait || j !== jeton) return;
+        fait = true; clearTimeout(secours); lecteur.pause();
+        if (!voix) { if (bEcouter) bEcouter.hidden = true; if (sansVoix) sansVoix.hidden = false; }
+        parlerSynth(i, finir);
+      }
+      lecteur.onended = f; lecteur.onerror = bascule;
+      secours = setTimeout(f, duree(i) * 2 + 2000);
+      lecteur.src = o.voix + i + "." + ext;
+      var essai = lecteur.play();
+      if (essai && essai.catch) essai.catch(bascule);
+    }
+    function arreter(){
+      regarde = false; jeton++; clearTimeout(minuterie);
+      if (lecteur) lecteur.pause();
+      if (synth) synth.cancel();
+      if (bRegarder) bRegarder.textContent = "▶ Regarder";
+    }
+    function derouler(){
+      if (!regarde) return;
+      parler(scene, function(){
+        minuterie = setTimeout(function(){
+          if (!regarde) return;
+          if (scene < N && montrer(scene + 1, true)) derouler(); else arreter();
+        }, 1200);
+      });
+    }
+    function demarrer(){
+      if (scene === N) montrer(1);
+      regarde = true; if (bRegarder) bRegarder.textContent = "⏸ Pause"; derouler();
+    }
+    if (prec) prec.addEventListener("click", function(){ arreter(); montrer(scene - 1); });
+    if (suiv) suiv.addEventListener("click", function(){ arreter(); montrer(scene + 1); });
+    if (zero) zero.addEventListener("click", function(){ arreter(); montrer(1); if (suiv) suiv.focus(); });
+    if (bRegarder) bRegarder.addEventListener("click", function(){ if (regarde) arreter(); else demarrer(); });
+    if (bEcouter) bEcouter.addEventListener("click", function(){ arreter(); parler(scene); });
+    chapitres.forEach(function(b){ b.addEventListener("click", function(){ arreter(); montrer(+b.getAttribute("data-aller")); }); });
+    if (bOuvrir && panneau) bOuvrir.addEventListener("click", function(){
+      var ouvrir = panneau.hidden;
+      panneau.hidden = !ouvrir;
+      bOuvrir.setAttribute("aria-expanded", String(ouvrir));
+      if (o.ouvrir) o.ouvrir(ouvrir);
+      if (!ouvrir) arreter();
+      relancer();
+    });
+    document.addEventListener("click", function(e){ if (e.target.closest && e.target.closest("[role=tab]")) arreter(); });
+    document.addEventListener("visibilitychange", function(){ if (document.hidden) arreter(); });
+    window.addEventListener("pagehide", arreter);
+
+    // ── Impression : l'étape choisie (la dernière par défaut) le temps d'imprimer ──
+    var avantImpression = null;
+    window.addEventListener("beforeprint", function(){
+      if (o.imprimer === false) return;
+      arreter(); avantImpression = scene;
+      montrer(typeof o.imprimer === "number" ? o.imprimer : N); imageFixe();
+    });
+    window.addEventListener("afterprint", function(){
+      if (avantImpression !== null) { montrer(avantImpression); avantImpression = null; }
+    });
+
+    // ── Lien direct (cahier de textes) : #id du bloc ouvre la séance qui le porte, puis le bloc ──
+    function allerAuLien(){
+      if (!bloc.id || location.hash !== "#" + bloc.id) return;
+      var onglet = o.onglet ? document.getElementById(o.onglet) : null;
+      if (onglet && !onglet.classList.contains("active")) onglet.click();
+      if (bOuvrir && panneau && panneau.hidden) bOuvrir.click();
+      setTimeout(function(){ bloc.scrollIntoView({block: "start"}); }, 450);
+    }
+    window.addEventListener("hashchange", allerAuLien);
+    if (document.readyState === "complete") allerAuLien();
+    else window.addEventListener("load", allerAuLien);
+
+    moi.montrer = montrer;
+    moi.arreter = arreter;
+    moi.regarder = function(){ if (!regarde) demarrer(); };
+    moi.relancer = relancer;
+    moi.scene = function(){ return scene; };
+    moi.calme = function(){ return calme.matches; };
+    lecteurs.push(moi);
+    choisirVoix();
+    montrer(o.depart || 1);
+    return moi;
+  }
+  window.LecteurPasAPas = LecteurPasAPas;
+})();
+</script>
+<!-- lecteur-pas-a-pas v1 : fin -->
 </head>
 <body>
 <style id="navharm-css">
@@ -523,7 +753,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
        la voix locale du navigateur ne sert que de secours. Lecteur repris de celui du vélo-cargo (5e_C3.1). -->
   <div class="tpa" id="trois-principes-pas-a-pas" data-scene="1" hidden>
     <p class="tpa-intro">🎬 <b>Les trois principes, en animation.</b> Avance étape par étape avec «&nbsp;Suivant&nbsp;», ou laisse-la se dérouler avec «&nbsp;Regarder&nbsp;».</p>
-    <nav class="tpa-chapitres" aria-label="Aller à une partie de l'animation">
+    <nav class="tpa-chapitres" data-lpp="chapitres" aria-label="Aller à une partie de l'animation">
       <button type="button" data-aller="1">La fonction</button>
       <button type="button" data-aller="2" class="c1">P1 · lumière</button>
       <button type="button" data-aller="5" class="c2">P2 · pesée</button>
@@ -531,7 +761,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       <button type="button" data-aller="11">Les trois ensemble</button>
     </nav>
     <div class="tpa-scene">
-<svg class="tpa-dessin" id="tpaDessin" viewBox="0 0 480 337.4" role="img" aria-label="" data-loupe="non" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" data-legende-unites="37.4">
+<svg class="tpa-dessin" id="tpaDessin" data-lpp="dessin" viewBox="0 0 480 337.4" role="img" aria-label="" data-loupe="non" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" data-legende-unites="37.4">
 <defs>
   <linearGradient id="tpaFaisceau" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#ffd08a" stop-opacity=".95"/><stop offset="1" stop-color="#ffd08a" stop-opacity=".3"/></linearGradient>
   <radialGradient id="tpaEclat"><stop offset="0" stop-color="#fff6d8"/><stop offset=".45" stop-color="#ffd08a" stop-opacity=".9"/><stop offset="1" stop-color="#ffd08a" stop-opacity="0"/></radialGradient>
@@ -713,19 +943,19 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       <button type="button" class="btn small ghost" id="tpaLentille" aria-pressed="false" hidden>🧽 Salir la lentille</button>
     </div>
     <p class="tpa-note" id="tpaNoteSale" hidden>🧽 <b>Lentille sale</b>&nbsp;: le capteur compte aussi des éclats qui ne viennent d'aucun grain. L'appareil «&nbsp;voit&nbsp;» de la poussière qui n'existe pas — et rien ne le signale.</p>
-    <p class="tpa-titre" id="tpaTitre"></p>
-    <div class="tpa-texte" id="tpaTexte" aria-live="polite"></div>
+    <p class="tpa-titre" id="tpaTitre" data-lpp="titre"></p>
+    <div class="tpa-texte" id="tpaTexte" data-lpp="texte" aria-live="polite"></div>
     <div class="tpa-nav">
-      <button type="button" class="btn ghost" id="tpaPrec">◀ Précédent</button>
-      <span class="tpa-compte" id="tpaCompte">Étape 1 / 11</span>
-      <button type="button" class="btn" id="tpaSuiv">Suivant ▶</button>
+      <button type="button" class="btn ghost" id="tpaPrec" data-lpp="prec">◀ Précédent</button>
+      <span class="tpa-compte" id="tpaCompte" data-lpp="compte">Étape 1 / 11</span>
+      <button type="button" class="btn" id="tpaSuiv" data-lpp="suiv">Suivant ▶</button>
     </div>
     <div class="tpa-nav">
-      <button type="button" class="btn" id="tpaRegarder">▶ Regarder</button>
-      <button type="button" class="btn ghost" id="tpaEcouter" hidden>🔊 Écouter</button>
-      <button type="button" class="btn ghost" id="tpaZero">↺ Recommencer</button>
+      <button type="button" class="btn" id="tpaRegarder" data-lpp="regarder">▶ Regarder</button>
+      <button type="button" class="btn ghost" id="tpaEcouter" data-lpp="ecouter" hidden>🔊 Écouter</button>
+      <button type="button" class="btn ghost" id="tpaZero" data-lpp="zero">↺ Recommencer</button>
     </div>
-    <p class="tpa-sansvoix" id="tpaSansVoix" hidden>Pas de voix française installée sur cet ordinateur&nbsp;: lis les phrases. «&nbsp;▶ Regarder&nbsp;» les enchaîne au rythme de la lecture.</p>
+    <p class="tpa-sansvoix" id="tpaSansVoix" data-lpp="sansvoix" hidden>Pas de voix française installée sur cet ordinateur&nbsp;: lis les phrases. «&nbsp;▶ Regarder&nbsp;» les enchaîne au rythme de la lecture.</p>
     <p class="tpa-credit">Voix de synthèse&nbsp;: SIWIS (CC BY 4.0)</p>
   </div>
   <!-- trois_principes_pas_a_pas : fin -->
@@ -2282,9 +2512,6 @@ majEssentiel(); majProgress(); majHyp();
   }
   function pose(e, a, v){ e.setAttribute(a, typeof v === "number" ? v.toFixed(1) : v); }
   var dessin = $t("tpaDessin"), final = $t("tpaFinal");
-  var titre = $t("tpaTitre"), texte = $t("tpaTexte"), compte = $t("tpaCompte");
-  var prec = $t("tpaPrec"), suiv = $t("tpaSuiv");
-  var bRegarder = $t("tpaRegarder"), bEcouter = $t("tpaEcouter"), sansVoix = $t("tpaSansVoix");
   var bLentille = $t("tpaLentille"), noteSale = $t("tpaNoteSale");
   var chapitres = bloc.querySelectorAll("[data-aller]");
 
@@ -2610,67 +2837,23 @@ majEssentiel(); majProgress(); majHyp();
   $t("tpaPlusHeure").addEventListener("click", function(){ avancer(1); afficherFin(); if (calme.matches) poseFin(); });
   $t("tpaHorlogeZero").addEventListener("click", function(){ zeroFin(); if (calme.matches) poseFin(); });
 
-  // ── La boucle : elle ne tourne que si l'animation est à l'écran, l'onglet visible, et le mouvement permis ──
-  var raf = 0, avantT = 0, visible = true;
-  function doitTourner(){ return visible && !document.hidden && (!calme.matches || (scene === N && fin.marche)); }
+  // ── Le lecteur commun (_outils/lecteur_pas_a_pas/) : étapes, chapitres, voix, déroulé, mouvement réduit, ──
+  // ── lien direct #trois-principes-pas-a-pas. La page garde le dessin et ce que fait chaque étape. ──
+  var lpp = null;
+  function relancer(){ if (lpp) lpp.relancer(); }
   function maj(dt){
-    tScene += dt;
     if (scene === 1) majF(dt);
     else if (scene <= 4) majP1(dt);
     else if (scene <= 7) majP2(dt);
     else if (scene <= 10) majP3(dt);
     else majFin(dt);
   }
-  function boucle(ts){
-    raf = 0;
-    if (!doitTourner()) { avantT = 0; return; }
-    var dt = avantT ? Math.min(.05, (ts - avantT) / 1000) : 0;
-    avantT = ts; maj(dt);
-    raf = requestAnimationFrame(boucle);
-  }
-  function relancer(){ if (!raf && doitTourner()) { avantT = 0; raf = requestAnimationFrame(boucle); } }
   function imageFixe(){
     if (scene === 1) dessinerF();
     else if (scene <= 4) poseP1();
     else if (scene <= 7) poseP2();
     else if (scene <= 10) poseP3();
     else poseFin();
-  }
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(function(entrees){ visible = entrees[entrees.length - 1].isIntersecting; relancer(); }).observe(bloc);
-  }
-  document.addEventListener("visibilitychange", relancer);
-  if (calme.addEventListener) calme.addEventListener("change", function(){ if (calme.matches) imageFixe(); relancer(); });
-
-  // ── Changer de scène ──
-  function montrer(n){
-    var ancienne = scene;
-    scene = Math.max(1, Math.min(N, n)); tScene = 0;
-    bloc.setAttribute("data-scene", String(scene));
-    bloc.querySelectorAll("[data-de]").forEach(function(el){
-      var cache = scene < +el.getAttribute("data-de") || (el.hasAttribute("data-a") && scene > +el.getAttribute("data-a"));
-      el.classList.toggle("tpa-cache", cache);
-    });
-    bloc.querySelectorAll("[data-a]:not([data-de])").forEach(function(el){ el.classList.toggle("tpa-cache", scene > +el.getAttribute("data-a")); });
-    dessin.style.display = scene === N ? "none" : ""; final.hidden = scene !== N;
-    dessin.setAttribute("aria-label", SCENES[scene - 1].d);
-    titre.textContent = "Étape " + scene + " — " + SCENES[scene - 1].t;
-    texte.innerHTML = "<p>" + SCENES[scene - 1].p + "</p>";
-    compte.textContent = "Étape " + scene + " / " + N;
-    prec.disabled = scene === 1; suiv.disabled = scene === N;
-    var ch = scene >= 11 ? 4 : scene >= 8 ? 3 : scene >= 5 ? 2 : scene >= 2 ? 1 : 0;
-    chapitres.forEach(function(b, i){ if (i === ch) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current"); });
-    bLentille.hidden = scene !== 4; noteSale.hidden = !(scene === 4 && p1.sale);
-    if (scene === 4 && ancienne !== 4) p1.compte = 0;
-    if (scene === 5) { p2.h = 0; p2.angle = 0; }
-    if (scene === 6) p2.chiffres = 0;
-    if (scene >= 8 && scene <= 10 && (ancienne < 8 || ancienne > 10)) p3.betas.forEach(function(b){ b.actif = false; });
-    if (scene === N) {                                   // l'horloge tourne seule, sauf sous « mouvement réduit »
-      if (!fin.lance) { fin.lance = true; zeroFin(); }
-      fin.marche = !calme.matches; afficherFin();
-    } else fin.marche = false;
-    if (calme.matches) imageFixe(); else maj(0);
-    relancer();
   }
   bLentille.addEventListener("click", function(){
     p1.sale = !p1.sale;
@@ -2679,91 +2862,26 @@ majEssentiel(); majProgress(); majHyp();
     noteSale.hidden = !p1.sale;
     if (calme.matches) poseP1(); else dessinerP1();
   });
-  chapitres.forEach(function(b){ b.addEventListener("click", function(){ arreter(); montrer(+b.getAttribute("data-aller")); }); });
-
-  // ── La voix : les fichiers de la séance (Audio/, synthèse neuronale hors ligne, jamais le réseau) ; en secours, ──
-  // ── une voix française LOCALE du système (jamais une voix en ligne). Rien ne se lit sans un geste de l'élève. ──
-  var regarde = false, minuterie = null, jeton = 0;
-  var lecteur = new Audio(), ext = "";
-  try { ext = lecteur.canPlayType('audio/ogg; codecs="opus"') ? "ogg" : (lecteur.canPlayType("audio/mpeg") ? "mp3" : ""); }
-  catch (e) { ext = ""; }
-  var son = !!ext, synth = window.speechSynthesis || null, voix = null;
-  function choisirVoix(){
-    var fr = (synth ? synth.getVoices() : []).filter(function(v){ return /^fr/i.test(v.lang) && v.localService; });
-    voix = fr.filter(function(v){ return /^fr-FR/i.test(v.lang); })[0] || fr[0] || null;
-    bEcouter.hidden = !(son || voix); sansVoix.hidden = !!(son || voix);
-  }
-  if (synth && "onvoiceschanged" in synth) synth.addEventListener("voiceschanged", choisirVoix);
-  function brut(i){ var d = document.createElement("div"); d.innerHTML = SCENES[i - 1].p; return d.textContent; }
-  function duree(i){ return Math.max(3500, brut(i).split(/\s+/).length * 400) + 1000; }   // lecture d'un élève de 5e
-  function parlerSynth(i, finir){
-    var j = ++jeton;
-    if (!voix) { if (finir) minuterie = setTimeout(function(){ if (j === jeton) finir(); }, duree(i)); return; }
-    synth.cancel();
-    var u = new SpeechSynthesisUtterance(brut(i)), fait = false, secours;
-    u.voice = voix; u.lang = voix.lang; u.rate = .95;
-    function f(){ if (fait || j !== jeton) return; fait = true; clearTimeout(secours); if (finir) finir(); }
-    u.onend = f; u.onerror = f;
-    secours = setTimeout(f, duree(i) * 2 + 2000);
-    synth.speak(u);
-  }
-  function parler(i, finir){
-    if (!son) { parlerSynth(i, finir); return; }
-    var j = ++jeton, fait = false, secours;
-    if (synth) synth.cancel();
-    function f(){ if (fait || j !== jeton) return; fait = true; clearTimeout(secours); if (finir) finir(); }
-    function bascule(){
-      if (fait || j !== jeton) return;
-      fait = true; clearTimeout(secours); lecteur.pause();
-      if (!voix) { bEcouter.hidden = true; sansVoix.hidden = false; }
-      parlerSynth(i, finir);
+  lpp = LecteurPasAPas(bloc, {
+    scenes: SCENES, voix: "Audio/trois-principes_scene", onglet: "tab-s1",
+    imprimer: false,                                     // à l'impression : la planche des trois schémas fixes
+    maj: function(dt, n, t){ scene = n; tScene = t; maj(dt); },
+    fixe: function(n){ scene = n; imageFixe(); },
+    tourne: function(n){ return n === N && fin.marche; },  // sous « mouvement réduit », seule l'horloge lancée tourne
+    entrer: function(n, ancienne){
+      scene = n; tScene = 0;
+      dessin.style.display = scene === N ? "none" : ""; final.hidden = scene !== N;
+      bLentille.hidden = scene !== 4; noteSale.hidden = !(scene === 4 && p1.sale);
+      if (scene === 4 && ancienne !== 4) p1.compte = 0;
+      if (scene === 5) { p2.h = 0; p2.angle = 0; }
+      if (scene === 6) p2.chiffres = 0;
+      if (scene >= 8 && scene <= 10 && (ancienne < 8 || ancienne > 10)) p3.betas.forEach(function(b){ b.actif = false; });
+      if (scene === N) {                                 // l'horloge tourne seule, sauf sous « mouvement réduit »
+        if (!fin.lance) { fin.lance = true; zeroFin(); }
+        fin.marche = !calme.matches; afficherFin();
+      } else fin.marche = false;
     }
-    lecteur.onended = f; lecteur.onerror = bascule;
-    secours = setTimeout(f, duree(i) * 2 + 2000);
-    lecteur.src = "Audio/trois-principes_scene" + i + "." + ext;
-    var essai = lecteur.play();
-    if (essai && essai.catch) essai.catch(bascule);
-  }
-  function arreter(){
-    regarde = false; jeton++; clearTimeout(minuterie);
-    lecteur.pause();
-    if (synth) synth.cancel();
-    bRegarder.textContent = "▶ Regarder";
-  }
-  function derouler(){
-    if (!regarde) return;
-    parler(scene, function(){
-      minuterie = setTimeout(function(){
-        if (!regarde) return;
-        if (scene < N) { montrer(scene + 1); derouler(); } else arreter();
-      }, 1200);
-    });
-  }
-  function demarrer(){
-    if (scene === N) montrer(1);
-    regarde = true; bRegarder.textContent = "⏸ Pause"; derouler();
-  }
-  prec.addEventListener("click", function(){ arreter(); montrer(scene - 1); });
-  suiv.addEventListener("click", function(){ arreter(); montrer(scene + 1); });
-  $t("tpaZero").addEventListener("click", function(){ arreter(); montrer(1); suiv.focus(); });
-  bRegarder.addEventListener("click", function(){ if (regarde) arreter(); else demarrer(); });
-  bEcouter.addEventListener("click", function(){ arreter(); parler(scene); });
-  document.addEventListener("click", function(e){ if (e.target.closest && e.target.closest("[role=tab]")) arreter(); });
-  document.addEventListener("visibilitychange", function(){ if (document.hidden) arreter(); });
-  window.addEventListener("pagehide", arreter);
-  choisirVoix();
-  montrer(1);
-
-  // Lien direct (cahier de textes) : #trois-principes-pas-a-pas ouvre la séance 1 et l'animation.
-  function allerAuLien(){
-    if (location.hash !== "#trois-principes-pas-a-pas") return;
-    var onglet = document.getElementById("tab-s1");
-    if (onglet && !onglet.classList.contains("active")) onglet.click();
-    setTimeout(function(){ bloc.scrollIntoView({block: "start"}); }, 450);
-  }
-  window.addEventListener("hashchange", allerAuLien);
-  if (document.readyState === "complete") allerAuLien();
-  else window.addEventListener("load", allerAuLien);
+  });
 })();
 </script>
 <!-- trois_principes_pas_a_pas (script) : fin -->

@@ -24152,3 +24152,105 @@ séparé et comparé le résultat aux pages en ligne.
 
 **Vu, non corrigé.** Dans `5e_C1.1/Images/la_donnee_qui_designe.svg`, la dernière ligne de l'encadré C (« une
 organisation, pas quelqu'un. ») passe sous le bord de son cadre, sur `main` comme ici.
+
+---
+
+## 25/10/2026 — Un seul lecteur pour toutes les animations pas à pas, et le jardin (4e_C8.1) s'anime : « Une année sur le toit » et le banc de l'activité 0 (transversal : thèmes 1 et 3, _outils)
+
+*Demande de Pascal, 25/10/2026, devant la loupe du jardin : « le schéma demande beaucoup d'imagination […] en faire
+une animation comme précédemment, ou quelque chose d'ultra premium […] ce serait plus engageant », puis « la situation
+déclenchante ne dit pas à l'élève quoi faire ». Proposition faite (situation animée + banc animé), décisions
+« 1a 2a 3b 4b » : 1a les deux ; 2a la voix SIWIS ; 3b l'ancien schéma supprimé ; 4b le lecteur commun **maintenant**
+(décision 4a du 25/10/2026 avancée). Branche transversale `fable/lecteur-pas-a-pas`.*
+
+### Le lecteur commun (`_outils/lecteur_pas_a_pas/`)
+
+Trois animations avaient chacune leur copie du lecteur (Herschel 24/09, vélo-cargo 25/09 puis 21/10, trois principes
+25/10) : la troisième était déjà la copie de la deuxième, et chaque copie dérivait. Le lecteur est maintenant **une
+source** (`lecteur.js`, `lecteur.css`), **posée** dans chaque page par `poser.py` (bloc avant `</head>`, entre deux
+marqueurs « lecteur-pas-a-pas v1 »), **contrôlée** par `_outils/controle_lecteur_pas_a_pas.py` — le même schéma que
+l'agrandisseur (`audit/loupe.py`, `controle_loupe.py`).
+
+- **Ce que fait le lecteur** : étapes (Précédent, Suivant, Recommencer, « Étape n / N »), chapitres (`data-aller`),
+  parties du dessin qui apparaissent (`data-de`, `data-a` ; `data-des` et `data-seul` des générateurs du vélo-cargo
+  lus tels quels), voix (fichiers Opus / MP3 de la séance, puis voix française **locale** du système en secours,
+  jamais une voix en ligne), « Regarder » qui enchaîne au rythme de la voix ou de la lecture, bouton d'ouverture,
+  boucle d'animation qui ne tourne qu'à l'écran, « mouvement réduit » (une image fixe par étape), impression (la
+  liste des étapes, ou rien si la page imprime un schéma fixe), lien direct `#…-pas-a-pas` (ouvre la séance), un
+  seul lecteur qui parle à la fois. **Rien ne démarre ni ne parle sans un geste de l'élève.**
+- **Ce que garde la page** : son dessin, ses phrases (`SCENES`) et ce que fait chaque étape (`entrer`, `maj`, `fixe`,
+  `avant` pour une étape à mériter ou un arrêt du déroulé, `ouvrir`).
+- **Les quatre animations passent au lecteur commun**, chacune avec ses bancs inchangés et verts : trois principes
+  (Chengdu, 5e_C1.1), Herschel (Tsinghua, 3e_C1.1), vélo-cargo (Shanghai, 5e_C3.1 : « Scène » au lieu d'« Étape »,
+  « Regarder » s'arrête à la scène 4 pour la prédiction, comme avant), jardin (4e_C8.1, nouveau).
+- **Banc commun** `_outils/lecteur_pas_a_pas/banc_lecteur.py` : chaque animation parcourue à 1280 et 390 px et sous
+  « mouvement réduit », chaque étape avec sa phrase et son compteur, zéro erreur JavaScript, les fichiers de voix
+  présents, l'impression, le lien direct. Il sait échouer : sur une copie du jardin privée d'un fichier de voix et
+  dont « Suivant » se bloquait à l'étape 5, il refuse les deux (sortie 1).
+
+### Le jardin (4e_C8.1)
+
+**Situation déclenchante : « Une année sur le toit »** (bloc `#annee-sur-le-toit-pas-a-pas`), sept étapes : le toit
+d'une école de New York (réservoir d'eau en bois sur le toit voisin), la jardinière, le support bleu, le capteur
+vert et la LED violette de 4e_C7 ; la commande de **40 jardinières** ; le **vent de canyon** ; l'orage ; le soleil de
+midi et le jardinier à **3 m** ; une nuit à **−8 °C** (le thermomètre descend, le givre se forme) ; puis « À toi » :
+quatre cartes (stabilité, pluie, LED au soleil, gel) marquées d'un point d'interrogation, « Lequel va-t-il rater ? »,
+et le bouton **« ✍ Écrire mon hypothèse »**, qui amène au champ de l'hypothèse. **Aucune étape ne montre le résultat
+d'un test** : l'hypothèse puis le banc le donnent. Couleurs constantes (n°120) : support #6ea8ff, capteur #81fba1,
+LED #c68ef2 ; vent, pluie, soleil, gel ont chacun la leur, la même sur les cartes.
+
+**L'ancien schéma est supprimé** (3b) : trois boîtes et un arc, et la ligne « IMAGE-OBJET — schéma à lire… », une
+trace de fabrique visible de l'élève (n°309). À l'impression, l'animation imprime ses sept étapes.
+
+**Voix** : SIWIS, mêmes réglages et même chaîne audio que le vélo-cargo et les trois principes ; générateur
+`_generation/voix_situation/` (qui refuse une phrase différente de la page). « LED » se dit « lède » (l'automatique
+épelait L-E-D à l'étape 5), « canyon » à la française. Crédit « Voix de synthèse : SIWIS (CC BY 4.0) » sous
+l'animation. **Prises produites, non écoutées.**
+
+**Le banc de l'activité 0 s'anime** (`#bnDessin`, script `banc_anime`, appelé par « Lancer le test ») : table vibrante
+et règle grossie (0,5 cm), arroseur puis boîtier ouvert à la loupe (0 goutte), projecteur « plein soleil » et œil à
+3 m, congélateur une nuit à −8 °C puis petit marteau (l'attache se fissure). **Le banc montre une mesure, il ne juge
+plus** : les anciennes phrases disaient « Étanchéité au rendez-vous » ou donnaient l'attendu (« Attendu : moins de
+1 cm »), ce qui ôtait son sens à la question Q2 (« sans le résultat attendu écrit à l'avance, peux-tu dire si un test
+est réussi ? »). Seule la fissure se voit comme un échec — c'est ce que Q1 demande de repérer. Sous « mouvement
+réduit », la mesure s'affiche aussitôt. Les textes restent dans le tableau `BANC` de la page (une seule source).
+
+### Ce qui a vraiment tourné
+
+- **Bancs des quatre pages, sur le lecteur final** (lancés en sous-processus) : trois principes
+  `tests_animation_trois_principes.py` **50 / 50**, `tests_5e_C1.1_chengdu.py` **43 / 43**, `tests_regle_311_5e_C1.1.mjs`
+  **33 / 33** ; Herschel `tests_3e_C1.1-C1.4_tsinghua.py` **50 / 50**, `tests_regle_311_3e_C1.1.mjs` **33 / 33** ;
+  vélo-cargo `tests_5e_C3.1-C3.4_shanghai.py` **35 / 35**, `tests_voix_velo_cargo.py` **24 / 24**,
+  `tests_regle_311_5e_C3.1.mjs` **26 / 26** ; jardin `tests_4e_C8.mjs` **48 / 48** (il attend la fin de chaque test
+  du banc et refuse désormais un verdict dans la mesure).
+- **Banc commun** `banc_lecteur.py` : **vert** sur les 4 animations (7, 11, 6 et 7 étapes) ; il refuse une copie
+  cassée du jardin (sortie 1, les deux défauts nommés).
+- `controle_lecteur_pas_a_pas.py` : sortie 0 ; son banc `tests_controle_lecteur_pas_a_pas.py` **11 / 11** (page sans
+  le lecteur commun, appel sans lecteur, lecteur modifié, deux lecteurs, `poser.py` idempotent, archives, racine vide).
+- **Voix** : `generer.py --verifier` — les sept phrases dites sont celles de la page, mot pour mot.
+- **Captures regardées** (`4e_C8.1/_generation/captures_animations/`) : sept étapes à 1280 px, trois à 390 px, les
+  quatre postes du banc pendant et après le test. Retouches faites en les regardant : panneau sombre derrière le
+  thermomètre (le « 0 °C » se perdait dans les fenêtres), règle du banc grossie (graduations qui se chevauchaient),
+  loupe déplacée hors du couvercle ouvert, fissure épaissie et nommée.
+- **Contrôles du dépôt, branche contre `main`** (après fusion de `main`, mêmes commandes) : les 23 contrôles
+  statiques donnent les mêmes sorties (`controle_regle4` à 1 des deux côtés : préexistant ; `controle_liens` lit une
+  page et une ancre de plus — le README du lecteur, le lien de la nouveauté — 0 cassé) ; `controle_unites` et
+  `controle_sigles` (règles n°312 et n°313, arrivées par la fusion) : 0 ; `controle_loupe` : 0. Au navigateur :
+  les 6 contrôles (`controle_hors_ligne`, `controle_impression`, `controle_contraste_liens`,
+  `controle_verrous`, `controle_squelette`, `verifier_chaines_energie`) sortent à 0 des deux côtés. `controle_impression`
+  compte sur la branche 2 contrastes faibles de moins que `main` (le titre et le crédit de l'animation s'impriment en
+  sombre) ; à l'impression, l'animation montre son étape 1 (ciel de jour, les trois pièces nommées) et la liste des
+  sept étapes — rendu regardé.
+
+### Non vérifié
+
+- **L'écoute** des sept prises de la situation.
+- Safari, iPad, téléphone réel : seul Chromium a tourné.
+- La clarté des deux animations pour des 4e : cela se voit en classe.
+
+### À RELIRE PAR PASCAL
+
+1. **Écouter les sept prises** (`4e_C8.1/Audio/situation_scene1…7`), surtout 1 et 5 (« lède ») et 3 (« canyon »).
+2. **Le banc sans verdict** : les phrases disent ce qu'on mesure (« le haut du support bouge de 0,5 cm, puis
+   s'immobilise ») ; la correction de l'activité 0 est inchangée.
+3. **« Scène » / « Étape »** : le vélo-cargo garde « Scène » ; les autres disent « Étape ». Uniformiser ?

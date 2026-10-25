@@ -106,6 +106,281 @@ details.correction>div{padding:0 14px 12px}
   .chrono,.etayage summary{color:#946b00!important}
 }
 </style>
+<style>
+/* annee_sur_le_toit_pas_a_pas (style) : début — situation déclenchante animée (25/10/2026).
+   Couleurs constantes (n°120) : support bleu #6ea8ff, capteur vert #81fba1, LED violet #c68ef2 (celles de 4e_C7) ;
+   vent #b8c4d6, pluie #7cc4ff, soleil #ffd66b, gel #e0f2ff — les mêmes sur les cartes de la dernière étape. */
+.jt{margin:12px 0 4px;border:1px solid var(--border);border-radius:12px;background:#050f24;padding:10px 12px 12px;scroll-margin-top:72px}
+.jt-intro{margin:2px 2px 8px;font-size:.92em;color:var(--sub)}
+.jt-dessin{width:100%;max-width:720px;height:auto;display:block;margin:0 auto;border-radius:10px;background:#0a1b3d}
+.jt-dessin text{fill:#e4eaf5;font-size:18px}
+.jt-dessin .jt-gros{font-size:21px;font-weight:700}
+.jt-dessin .jt-mot{font-size:22px;font-weight:700}
+.jt-dessin .jt-petit{font-size:14px;fill:#c9d6ee}
+.jt-dessin .jt-et-support{fill:#9cc4ff;font-weight:700}.jt-dessin .jt-et-capteur{fill:#81fba1;font-weight:700}.jt-dessin .jt-et-led{fill:#d9b3ff;font-weight:700}
+.jt-dessin .jt-c-vent{fill:#dbe3ef}.jt-dessin .jt-c-soleil{fill:#ffd66b}.jt-dessin .jt-c-gel{fill:#e0f2ff}
+.jt-carte rect{fill:#0d2347;stroke-width:2.5}
+.jt-b-vent rect{stroke:#b8c4d6}.jt-b-pluie rect{stroke:#7cc4ff}.jt-b-soleil rect{stroke:#ffd66b}.jt-b-gel rect{stroke:#e0f2ff}
+.jt-dessin .jt-carte text{font-size:17px;font-weight:700}
+.jt-dessin .jt-q{font-size:26px;font-weight:800;fill:#ffd66b}
+.jt-dessin .jt-question{font-size:30px;font-weight:800;fill:#ffd66b}
+.jt-dessin [data-de],.jt-dessin [data-a]{transition:opacity .55s ease calc(var(--i,0) * .25s),visibility 0s}
+.jt-dessin .lpp-cache{opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s linear .3s}
+.jt-carte{transition:opacity .5s ease calc(var(--i,0) * .3s)}
+.jt-titre{margin:10px 2px 2px;font-weight:700;color:var(--title)}
+.jt-texte{min-height:3.2em;margin:0 2px;line-height:1.5}
+.jt-texte p{margin:4px 0}
+.jt-tache{margin:8px 2px 2px}
+.jt-nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin-top:8px}
+.jt-nav .btn{min-height:44px}
+.jt-compte{font-weight:600;color:var(--sub);min-width:7em;text-align:center}
+.jt-sansvoix{margin:8px 2px 0;font-size:.88em;color:var(--warn)}
+.jt-credit{color:var(--sub);font-size:.75em;text-align:right;margin:8px 4px 0}
+@media (max-width:480px){.jt{padding:8px}.jt-dessin text{font-size:22px}.jt-dessin .jt-carte text{font-size:17px}}
+@media print{.jt-intro,.jt-tache{display:none!important}.jt{border:1px solid #999;background:#fff}.jt-titre,.jt-credit{color:#1b2a4a!important}}
+/* annee_sur_le_toit_pas_a_pas (style) : fin */
+</style>
+<!-- lecteur-pas-a-pas v1 : début — lecteur commun des animations pas à pas ; source unique : _outils/lecteur_pas_a_pas/ (poser.py). Ne pas le modifier dans la page. -->
+<style>
+/* Lecteur pas à pas commun — source unique : _outils/lecteur_pas_a_pas/lecteur.css (posée par poser.py). */
+[data-lpp-racine] [data-de],[data-lpp-racine] [data-a],[data-lpp-racine] [data-des],[data-lpp-racine] [data-seul]{transition:opacity .35s ease calc(var(--i,0) * .12s),visibility 0s linear 0s}
+[data-lpp-racine] .lpp-cache{opacity:0!important;visibility:hidden;transition:opacity .2s ease,visibility 0s linear .2s}
+[data-lpp-racine] [data-aller][aria-current]{outline:2px solid currentColor;outline-offset:2px}
+.lpp-imprime{display:none}
+@media (prefers-reduced-motion: reduce){
+  [data-lpp-racine] [data-de],[data-lpp-racine] [data-a],[data-lpp-racine] [data-des],[data-lpp-racine] [data-seul],[data-lpp-racine] .lpp-cache{transition:none!important}
+}
+@media print{
+  [data-lpp-racine].lpp-sans-impression{display:none!important}
+  [data-lpp-racine] [data-lpp="controles"],[data-lpp-racine] [data-lpp="chapitres"],
+  [data-lpp-racine] [data-lpp="texte"],[data-lpp-racine] [data-lpp="sansvoix"],[data-lpp-racine] [data-lpp="ouvrir"]{display:none!important}
+  [data-lpp-racine] [data-lpp="panneau"]{display:block!important}
+  [data-lpp-racine] .lpp-imprime{display:block;margin:8px 0 0 1.2em;padding:0;color:#000}
+  [data-lpp-racine] .lpp-imprime li{margin:2px 0;break-inside:avoid}
+}
+</style>
+<script>
+/* Lecteur pas à pas commun (règles d'or n°119 et n°305). Source unique : _outils/lecteur_pas_a_pas/lecteur.js,
+   posé dans chaque page par _outils/lecteur_pas_a_pas/poser.py — ne pas le modifier dans une page.
+   La page garde son dessin et ses scènes ; le lecteur fait le reste : étapes, chapitres, voix, déroulé,
+   mouvement réduit, impression, lien direct. Rien ne démarre ni ne parle sans un geste de l'élève. */
+(function(){
+  "use strict";
+  if (window.LecteurPasAPas) return;
+  var calme = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : {matches: false};
+  var lecteurs = [];                                     // un seul lecteur de la page parle à la fois
+
+  function LecteurPasAPas(bloc, o){
+    if (!bloc) return null;
+    o = o || {};
+    bloc.setAttribute("data-lpp-racine", "");
+    if (o.voix) bloc.setAttribute("data-lpp-voix", o.voix);     // lu par le banc : chaque étape a son fichier
+    var S = o.scenes || [], N = S.length, scene = 1, tScene = 0, MOT = o.mot || "Étape";
+    function q(nom){ return bloc.querySelector('[data-lpp="' + nom + '"]'); }
+    var dessin = q("dessin"), titre = q("titre"), texte = q("texte"), compte = q("compte");
+    var prec = q("prec"), suiv = q("suiv"), zero = q("zero");
+    var bRegarder = q("regarder"), bEcouter = q("ecouter"), sansVoix = q("sansvoix");
+    var bOuvrir = q("ouvrir"), panneau = q("panneau");
+    var chapitres = [].slice.call(bloc.querySelectorAll("[data-aller]"));
+    var moi = {};
+
+    // ── L'impression : la liste des étapes (rien n'est porté par le seul mouvement) ──
+    if (o.imprimer !== false) {
+      var liste = document.createElement("ol");
+      liste.className = "lpp-imprime";
+      S.forEach(function(s){
+        var li = document.createElement("li");
+        li.innerHTML = (s.t ? "<b>" + s.t + "</b> — " : "") + s.p;
+        liste.appendChild(li);
+      });
+      bloc.appendChild(liste);
+    } else bloc.classList.add("lpp-sans-impression");
+
+    // ── La boucle : elle ne tourne que si le bloc est à l'écran, l'onglet visible, et le mouvement permis ──
+    var raf = 0, avantT = 0, visible = true;
+    function ouvert(){ return !panneau || !panneau.hidden; }
+    function doitTourner(){
+      if (!o.maj || !visible || document.hidden || !ouvert()) return false;
+      return !calme.matches || !!(o.tourne && o.tourne(scene));
+    }
+    function boucle(ts){
+      raf = 0;
+      if (!doitTourner()) { avantT = 0; return; }
+      var dt = avantT ? Math.min(.05, (ts - avantT) / 1000) : 0;
+      avantT = ts; tScene += dt; o.maj(dt, scene, tScene);
+      raf = requestAnimationFrame(boucle);
+    }
+    function relancer(){ if (!raf && doitTourner()) { avantT = 0; raf = requestAnimationFrame(boucle); } }
+    function imageFixe(){ if (o.fixe) o.fixe(scene); else if (o.maj) o.maj(0, scene, tScene); }
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function(e){ visible = e[e.length - 1].isIntersecting; relancer(); }).observe(bloc);
+    }
+    document.addEventListener("visibilitychange", relancer);
+    if (calme.addEventListener) calme.addEventListener("change", function(){ if (calme.matches) imageFixe(); relancer(); });
+
+    // ── Changer d'étape ──
+    // auto : l'étape vient du déroulé (« Regarder »), pas d'un clic de l'élève.
+    function montrer(n, auto){
+      var cible = Math.max(1, Math.min(N, n)), ancienne = scene;
+      if (o.avant && cible > ancienne && o.avant(ancienne, cible, !!auto) === false) return false;   // étape à mériter
+      scene = cible; tScene = 0;
+      bloc.setAttribute("data-scene", String(scene));
+      // data-de / data-a : de l'étape n à l'étape m ; data-des et data-seul : les noms écrits par les générateurs
+      // des premières animations (vélo-cargo), lus tels quels.
+      bloc.querySelectorAll("[data-de],[data-a],[data-des],[data-seul]").forEach(function(el){
+        var de = +(el.getAttribute("data-de") || el.getAttribute("data-des") || el.getAttribute("data-seul") || 1);
+        var a = +(el.getAttribute("data-a") || el.getAttribute("data-seul") || N);
+        el.classList.toggle("lpp-cache", scene < de || scene > a);
+      });
+      var s = S[scene - 1] || {};
+      if (dessin && s.d) dessin.setAttribute("aria-label", s.d);
+      if (titre) titre.textContent = MOT + " " + scene + (s.t ? " — " + s.t : "");
+      if (texte) texte.innerHTML = "<p>" + (s.p || "") + "</p>";
+      if (compte) compte.textContent = MOT + " " + scene + " / " + N;
+      if (prec) prec.disabled = scene === 1;
+      if (suiv) suiv.disabled = scene === N;
+      var courant = null;
+      chapitres.forEach(function(b){ if (+b.getAttribute("data-aller") <= scene) courant = b; });
+      chapitres.forEach(function(b){ if (b === courant) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current"); });
+      if (o.entrer) o.entrer(scene, ancienne, !!auto);
+      if (calme.matches) imageFixe(); else if (o.maj) o.maj(0, scene, tScene);
+      relancer();
+      return true;
+    }
+
+    // ── La voix : les fichiers de la séance (synthèse neuronale hors ligne, jamais le réseau) ; en secours, ──
+    // ── une voix française LOCALE du système (jamais une voix en ligne). ──
+    var regarde = false, minuterie = null, jeton = 0, lecteur = null, ext = "";
+    if (o.voix) {
+      lecteur = new Audio();
+      try { ext = lecteur.canPlayType('audio/ogg; codecs="opus"') ? "ogg" : (lecteur.canPlayType("audio/mpeg") ? "mp3" : ""); }
+      catch (e) { ext = ""; }
+    }
+    var son = !!ext, synth = (bEcouter || bRegarder) ? (window.speechSynthesis || null) : null, voix = null;
+    function choisirVoix(){
+      var fr = (synth ? synth.getVoices() : []).filter(function(v){ return /^fr/i.test(v.lang) && v.localService; });
+      voix = fr.filter(function(v){ return /^fr-FR/i.test(v.lang); })[0] || fr[0] || null;
+      if (bEcouter) bEcouter.hidden = !(son || voix);
+      if (sansVoix) sansVoix.hidden = !!(son || voix);
+    }
+    if (synth && "onvoiceschanged" in synth) synth.addEventListener("voiceschanged", choisirVoix);
+    function brut(i){ var d = document.createElement("div"); d.innerHTML = S[i - 1].p; return d.textContent; }
+    function duree(i){ return Math.max(3500, brut(i).split(/\s+/).length * (o.msParMot || 400)) + 1000; }
+    function parlerSynth(i, finir){
+      var j = ++jeton;
+      if (!voix) { if (finir) minuterie = setTimeout(function(){ if (j === jeton) finir(); }, duree(i)); return; }
+      synth.cancel();
+      var u = new SpeechSynthesisUtterance(brut(i)), fait = false, secours;
+      u.voice = voix; u.lang = voix.lang; u.rate = .95;
+      function f(){ if (fait || j !== jeton) return; fait = true; clearTimeout(secours); if (finir) finir(); }
+      u.onend = f; u.onerror = f;
+      secours = setTimeout(f, duree(i) * 2 + 2000);
+      synth.speak(u);
+    }
+    function parler(i, finir){
+      lecteurs.forEach(function(l){ if (l !== moi) l.arreter(); });
+      if (!son) { parlerSynth(i, finir); return; }
+      var j = ++jeton, fait = false, secours;
+      if (synth) synth.cancel();
+      function f(){ if (fait || j !== jeton) return; fait = true; clearTimeout(secours); if (finir) finir(); }
+      function bascule(){
+        if (fait || j !== jeton) return;
+        fait = true; clearTimeout(secours); lecteur.pause();
+        if (!voix) { if (bEcouter) bEcouter.hidden = true; if (sansVoix) sansVoix.hidden = false; }
+        parlerSynth(i, finir);
+      }
+      lecteur.onended = f; lecteur.onerror = bascule;
+      secours = setTimeout(f, duree(i) * 2 + 2000);
+      lecteur.src = o.voix + i + "." + ext;
+      var essai = lecteur.play();
+      if (essai && essai.catch) essai.catch(bascule);
+    }
+    function arreter(){
+      regarde = false; jeton++; clearTimeout(minuterie);
+      if (lecteur) lecteur.pause();
+      if (synth) synth.cancel();
+      if (bRegarder) bRegarder.textContent = "▶ Regarder";
+    }
+    function derouler(){
+      if (!regarde) return;
+      parler(scene, function(){
+        minuterie = setTimeout(function(){
+          if (!regarde) return;
+          if (scene < N && montrer(scene + 1, true)) derouler(); else arreter();
+        }, 1200);
+      });
+    }
+    function demarrer(){
+      if (scene === N) montrer(1);
+      regarde = true; if (bRegarder) bRegarder.textContent = "⏸ Pause"; derouler();
+    }
+    if (prec) prec.addEventListener("click", function(){ arreter(); montrer(scene - 1); });
+    if (suiv) suiv.addEventListener("click", function(){ arreter(); montrer(scene + 1); });
+    if (zero) zero.addEventListener("click", function(){ arreter(); montrer(1); if (suiv) suiv.focus(); });
+    if (bRegarder) bRegarder.addEventListener("click", function(){ if (regarde) arreter(); else demarrer(); });
+    if (bEcouter) bEcouter.addEventListener("click", function(){ arreter(); parler(scene); });
+    chapitres.forEach(function(b){ b.addEventListener("click", function(){ arreter(); montrer(+b.getAttribute("data-aller")); }); });
+    if (bOuvrir && panneau) bOuvrir.addEventListener("click", function(){
+      var ouvrir = panneau.hidden;
+      panneau.hidden = !ouvrir;
+      bOuvrir.setAttribute("aria-expanded", String(ouvrir));
+      if (o.ouvrir) o.ouvrir(ouvrir);
+      if (!ouvrir) arreter();
+      relancer();
+    });
+    document.addEventListener("click", function(e){ if (e.target.closest && e.target.closest("[role=tab]")) arreter(); });
+    document.addEventListener("visibilitychange", function(){ if (document.hidden) arreter(); });
+    window.addEventListener("pagehide", arreter);
+
+    // ── Impression : l'étape choisie (la dernière par défaut) le temps d'imprimer ──
+    var avantImpression = null;
+    window.addEventListener("beforeprint", function(){
+      if (o.imprimer === false) return;
+      arreter(); avantImpression = scene;
+      montrer(typeof o.imprimer === "number" ? o.imprimer : N); imageFixe();
+    });
+    window.addEventListener("afterprint", function(){
+      if (avantImpression !== null) { montrer(avantImpression); avantImpression = null; }
+    });
+
+    // ── Lien direct (cahier de textes) : #id du bloc ouvre la séance qui le porte, puis le bloc ──
+    function allerAuLien(){
+      if (!bloc.id || location.hash !== "#" + bloc.id) return;
+      var onglet = o.onglet ? document.getElementById(o.onglet) : null;
+      if (onglet && !onglet.classList.contains("active")) onglet.click();
+      if (bOuvrir && panneau && panneau.hidden) bOuvrir.click();
+      setTimeout(function(){ bloc.scrollIntoView({block: "start"}); }, 450);
+    }
+    window.addEventListener("hashchange", allerAuLien);
+    if (document.readyState === "complete") allerAuLien();
+    else window.addEventListener("load", allerAuLien);
+
+    moi.montrer = montrer;
+    moi.arreter = arreter;
+    moi.regarder = function(){ if (!regarde) demarrer(); };
+    moi.relancer = relancer;
+    moi.scene = function(){ return scene; };
+    moi.calme = function(){ return calme.matches; };
+    lecteurs.push(moi);
+    choisirVoix();
+    montrer(o.depart || 1);
+    return moi;
+  }
+  window.LecteurPasAPas = LecteurPasAPas;
+})();
+</script>
+<!-- lecteur-pas-a-pas v1 : fin -->
+<style>
+/* banc_anime (style) : début — le banc de tests virtuel, animé (25/10/2026). Mêmes couleurs que la situation. */
+.bn-dessin{width:100%;max-width:640px;height:auto;display:block;margin:4px auto 10px;border-radius:10px}
+.bn-dessin text{fill:#e4eaf5;font-size:17px}
+.bn-dessin .bn-mot{font-size:20px;font-weight:700;fill:#ffd66b}
+.bn-dessin .bn-petit{font-size:15px;fill:#c9d6ee}
+.bn-dessin .bn-alerte{font-size:20px;font-weight:800;fill:#ff7b88}
+.bn-dessin .bn-regle{font-size:13px;fill:#0a1b3d;font-weight:700}
+@media print{.bn-dessin{display:none}}
+/* banc_anime (style) : fin */
+</style>
 </head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="qcm_4e_C8_jardin-validation.html">🧠 QCM</a><a href="lexique_4e_C8.1.html">📖 Lexique</a></nav>
@@ -209,21 +484,116 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 <section class="card">
 <h2>📖 Situation déclenchante</h2>
 <p class="declencheur">Support de capteur conçu (C7) pour un jardin scolaire new-yorkais. Avant de le généraliser à toutes les jardinières&nbsp;: protocole de tests (stabilité, pluie, gel, LED, vent urbain).</p>
-<div class="schema">
-<svg viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t d">
-<title id="t">Protocole de validation : support, capteur, LED</title>
-<desc id="d">Trois blocs liés : Support → Capteur → LED, avec flèche de test pluie/gel au-dessus</desc>
-<rect x="20" y="35" width="100" height="55" rx="6" fill="#1d4e89" stroke="#61dafb"/>
-<text x="70" y="68" text-anchor="middle" fill="#e4eaf5" font-size="12">Support</text>
-<circle cx="180" cy="62" r="26" fill="#0d2347" stroke="#81fba1"/>
-<text x="180" y="66" text-anchor="middle" fill="#81fba1" font-size="11">Capteur</text>
-<rect x="250" y="40" width="90" height="45" rx="6" fill="#2b1a3f" stroke="#c68ef2"/>
-<text x="295" y="68" text-anchor="middle" fill="#c68ef2" font-size="11">LED</text>
-<path d="M70 20 Q95 8 120 20" stroke="#61dafb" fill="none" stroke-width="2"/>
-<text x="95" y="12" text-anchor="middle" fill="#9bbefc" font-size="10">Test pluie / gel</text>
-</svg>
-<p style="font-size:.78em;color:#9bbefc;margin:6px 0 0">IMAGE-OBJET — schéma à lire pour comprendre le protocole</p>
+<!-- annee_sur_le_toit_pas_a_pas : début — situation déclenchante animée, pas à pas (décision de Pascal du 25/10/2026) -->
+<div class="jt" id="annee-sur-le-toit-pas-a-pas" data-lpp-racine data-scene="1">
+  <p class="jt-intro">🎬 <b>Une année sur le toit.</b> Avance avec «&nbsp;Suivant&nbsp;▶&nbsp;», ou laisse l'histoire se dérouler avec «&nbsp;▶&nbsp;Regarder&nbsp;». À la dernière étape, une question t'attend.</p>
+  <svg class="jt-dessin" id="jtDessin" data-lpp="dessin" viewBox="0 0 640 360" role="img" aria-label="" data-loupe="non" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif">
+    <defs>
+      <linearGradient id="jtCielG" x1="0" y1="0" x2="0" y2="1"><stop id="jtCiel1" offset="0" stop-color="#1e4b8f"/><stop id="jtCiel2" offset="1" stop-color="#7fb2e5"/></linearGradient>
+    </defs>
+    <rect width="640" height="360" fill="url(#jtCielG)"/>
+    <!-- la ville : des tours, et le réservoir d'eau en bois d'un toit voisin, comme partout à New York -->
+    <g id="jtVille"></g>
+    <g class="jt-reservoir">
+      <path d="M150 154 L153 130 M180 154 L177 130 M150 142 H180" stroke="#3b2a1c" stroke-width="3" fill="none"/>
+      <rect x="144" y="100" width="42" height="31" rx="3" fill="#6b4a2e" stroke="#3b2a1c" stroke-width="1.5"/>
+      <path d="M144 110 H186 M144 121 H186" stroke="#3b2a1c" stroke-width="1.5"/>
+      <path d="M140 101 L165 82 L190 101 Z" fill="#4a3322" stroke="#3b2a1c" stroke-width="1.5"/>
+    </g>
+    <!-- le toit de l'école -->
+    <rect x="0" y="300" width="640" height="60" fill="#262f40"/>
+    <rect x="0" y="295" width="640" height="7" fill="#3a465c"/>
+    <!-- la jardinière -->
+    <g id="jtPlantesG"><path d="M282 252 C276 230 286 222 292 214 C296 228 294 242 288 252Z M296 252 C300 232 312 226 320 222 C316 238 308 248 300 252Z M308 252 C306 238 312 232 318 228 C324 238 320 248 314 252Z" fill="#4fae7a"/></g>
+    <g id="jtPlantesD"><path d="M418 252 C414 234 422 226 430 220 C434 234 430 246 424 252Z M432 252 C436 236 446 230 452 228 C450 240 444 248 438 252Z" fill="#69c98f"/></g>
+    <rect x="264" y="249" width="192" height="10" rx="3" fill="#3b2a1c"/>
+    <rect x="260" y="256" width="200" height="44" rx="4" fill="#7a4e2c" stroke="#5a3820" stroke-width="1.5"/>
+    <path d="M260 271 H460 M260 286 H460" stroke="#5a3820" stroke-width="1.2"/>
+    <!-- le support (bleu), le capteur (vert), la LED (violet) : les couleurs de 4e_C7 -->
+    <g id="jtSupport">
+      <rect id="jtPoteau" x="366" y="132" width="8" height="126" rx="2" fill="#6ea8ff"/>
+      <rect x="361" y="182" width="20" height="8" rx="2" fill="#c9d6ee"/>
+      <rect x="380" y="172" width="30" height="34" rx="4" fill="#0d2347" stroke="#81fba1" stroke-width="2.5"/>
+      <path d="M388 206 V262 M402 206 V262" stroke="#81fba1" stroke-width="2.5"/>
+      <circle id="jtHalo" cx="370" cy="125" r="18" fill="#c68ef2" opacity=".22"/>
+      <circle cx="370" cy="125" r="7" fill="#c68ef2"/>
+      <path id="jtGivre" d="M366 140 v8 M374 160 v8 M366 210 v8 M374 236 v8 M382 172 h8 M398 172 h8" stroke="#eaf6ff" stroke-width="2.5" stroke-linecap="round" opacity="0"/>
+    </g>
+    <g data-de="1" data-a="1" class="jt-etiquettes">
+      <path d="M362 150 L318 150" stroke="#6ea8ff" stroke-width="1.5"/><text x="312" y="156" text-anchor="end" class="jt-et-support">support</text>
+      <path d="M412 188 L440 188" stroke="#81fba1" stroke-width="1.5"/><text x="446" y="194" class="jt-et-capteur">capteur</text>
+      <path d="M378 120 L408 108" stroke="#c68ef2" stroke-width="1.5"/><text x="412" y="110" class="jt-et-led">LED</text>
+    </g>
+    <!-- 2 : la commande -->
+    <g data-de="2" data-a="2">
+      <rect x="18" y="150" width="226" height="140" rx="10" fill="#0b1a33" fill-opacity=".9" stroke="#9bbefc" stroke-width="1.5"/>
+      <text x="131" y="176" text-anchor="middle" class="jt-gros">40 jardinières</text>
+      <g id="jtQuarante"></g>
+    </g>
+    <!-- 3 : le vent de canyon -->
+    <g data-de="3" data-a="3"><g id="jtVent"></g><text x="300" y="72" text-anchor="middle" class="jt-mot jt-c-vent">vent de canyon</text></g>
+    <!-- 4 : l'orage -->
+    <g data-de="4" data-a="4">
+      <g fill="#4a5568"><ellipse cx="150" cy="40" rx="90" ry="30"/><ellipse cx="260" cy="30" rx="100" ry="34"/><ellipse cx="400" cy="38" rx="110" ry="30"/><ellipse cx="540" cy="34" rx="100" ry="32"/></g>
+      <g id="jtPluie"></g>
+    </g>
+    <!-- 5 : le soleil de midi, et le jardinier à 3 m -->
+    <g data-de="5" data-a="5">
+      <g transform="translate(560 64)"><g id="jtRayons"></g><circle r="24" fill="#ffd66b"/></g>
+      <g class="jt-jardinier"><circle cx="112" cy="234" r="10" fill="#e4eaf5"/><path d="M112 246 V280 M112 256 L98 270 M112 256 L126 266 M112 280 L102 300 M112 280 L122 300" stroke="#e4eaf5" stroke-width="5" stroke-linecap="round" fill="none"/></g>
+      <path d="M124 232 L360 128" stroke="#ffd66b" stroke-width="2" stroke-dasharray="7 6"/>
+      <text x="232" y="168" text-anchor="middle" class="jt-mot jt-c-soleil">3 m</text>
+    </g>
+    <!-- 6 : la nuit de gel -->
+    <g data-de="6" data-a="6">
+      <path d="M86 40 a24 24 0 1 0 24 34 a19 19 0 1 1 -24 -34Z" fill="#e8eefc"/>
+      <g id="jtNeige"></g>
+      <g class="jt-thermo">
+        <rect x="540" y="70" width="92" height="192" rx="12" fill="#050f24" fill-opacity=".82"/>
+        <rect x="568" y="108" width="16" height="126" rx="8" fill="#0a1b3d" stroke="#c9d6ee" stroke-width="1.5"/>
+        <rect id="jtColonne" x="572" y="170" width="8" height="64" fill="#7cc4ff"/>
+        <circle cx="576" cy="240" r="13" fill="#7cc4ff" stroke="#c9d6ee" stroke-width="1.5"/>
+        <path d="M584 160 H592" stroke="#c9d6ee" stroke-width="1.5"/><text x="596" y="165" class="jt-petit">0 °C</text>
+        <text id="jtTemp" x="576" y="96" text-anchor="middle" class="jt-gros jt-c-gel">+5 °C</text>
+      </g>
+    </g>
+    <!-- 7 : à toi -->
+    <g data-de="7" data-a="7">
+      <rect width="640" height="360" fill="#050f24" fill-opacity=".62"/>
+      <g class="jt-carte jt-b-vent" style="--i:0"><rect x="24" y="22" width="134" height="120" rx="12"/>
+        <path d="M50 62 q22 -10 44 0 t44 0 M50 82 q22 -10 44 0 t30 0 M50 102 q22 -10 44 0 t44 0" fill="none" stroke="#b8c4d6" stroke-width="4" stroke-linecap="round"/>
+        <text x="91" y="132" text-anchor="middle">Stabilité</text><text x="146" y="50" text-anchor="end" class="jt-q">?</text></g>
+      <g class="jt-carte jt-b-pluie" style="--i:1"><rect x="176" y="22" width="134" height="120" rx="12"/>
+        <ellipse cx="243" cy="66" rx="40" ry="18" fill="#7a8aa3"/>
+        <path d="M222 92 l-5 14 M243 92 l-5 14 M264 92 l-5 14" stroke="#7cc4ff" stroke-width="4" stroke-linecap="round"/>
+        <text x="243" y="132" text-anchor="middle">Pluie</text><text x="298" y="50" text-anchor="end" class="jt-q">?</text></g>
+      <g class="jt-carte jt-b-soleil" style="--i:2"><rect x="328" y="22" width="134" height="120" rx="12"/>
+        <circle cx="378" cy="76" r="18" fill="#ffd66b"/><circle cx="424" cy="92" r="8" fill="#c68ef2"/>
+        <path d="M378 48 v-8 M378 104 v8 M350 76 h-8 M406 76 h8" stroke="#ffd66b" stroke-width="3" stroke-linecap="round"/>
+        <text x="395" y="132" text-anchor="middle">LED au soleil</text><text x="450" y="50" text-anchor="end" class="jt-q">?</text></g>
+      <g class="jt-carte jt-b-gel" style="--i:3"><rect x="480" y="22" width="134" height="120" rx="12"/>
+        <path d="M547 52 v48 M526 64 l42 24 M526 88 l42 -24" stroke="#e0f2ff" stroke-width="4" stroke-linecap="round"/>
+        <text x="547" y="132" text-anchor="middle">Gel −8 °C</text><text x="602" y="50" text-anchor="end" class="jt-q">?</text></g>
+      <text x="200" y="214" text-anchor="middle" class="jt-question">Lequel va-t-il rater ?</text>
+    </g>
+  </svg>
+  <p class="jt-titre" data-lpp="titre"></p>
+  <div class="jt-texte" data-lpp="texte" aria-live="polite"></div>
+  <p class="jt-tache" id="jtTache" hidden><a class="btn" href="#hypothese" id="jtVersHypothese">✍ Écrire mon hypothèse</a></p>
+  <div class="jt-nav" data-lpp="controles">
+    <button type="button" class="btn ghost" data-lpp="prec">◀ Précédent</button>
+    <span class="jt-compte" data-lpp="compte">Étape 1 / 7</span>
+    <button type="button" class="btn" data-lpp="suiv">Suivant ▶</button>
+  </div>
+  <div class="jt-nav" data-lpp="controles">
+    <button type="button" class="btn" data-lpp="regarder">▶ Regarder</button>
+    <button type="button" class="btn ghost" data-lpp="ecouter" hidden>🔊 Écouter</button>
+    <button type="button" class="btn ghost" data-lpp="zero">↺ Recommencer</button>
+  </div>
+  <p class="jt-sansvoix" data-lpp="sansvoix" hidden>Pas de voix française installée sur cet ordinateur&nbsp;: lis les phrases. «&nbsp;▶&nbsp;Regarder&nbsp;» les enchaîne au rythme de la lecture.</p>
+  <p class="jt-credit">Voix de synthèse&nbsp;: SIWIS (CC BY 4.0)</p>
 </div>
+<!-- annee_sur_le_toit_pas_a_pas : fin -->
 </section>
 
 <section class="card">
@@ -269,6 +639,61 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 <label>Test à lancer&nbsp;: <select id="simTest" style="width:auto" aria-label="Test à lancer au banc virtuel"><option>Stabilité (secousses 10 s)</option><option>Pluie battante (30 s)</option><option>LED visible à 3 m plein soleil</option><option>Nuit de gel (-8 °C)</option></select></label>
 &nbsp;<button class="btn" id="simGo" type="button">▶️ Lancer le test</button>
 </p>
+<!-- banc_anime : début — le banc de tests virtuel, animé poste par poste (décision de Pascal du 25/10/2026) -->
+<svg class="bn-dessin" id="bnDessin" viewBox="0 0 640 260" role="img" aria-label="Le banc d'essai attend un test : le support, son capteur et sa LED, plantés dans un bac de terre." data-loupe="non" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif">
+  <rect width="640" height="260" fill="#0a1b3d"/>
+  <path d="M0 236 H640" stroke="#274a8a" stroke-width="2"/>
+  <g id="bnTable"><rect x="226" y="226" width="188" height="12" rx="3" fill="#3a465c"/><text x="320" y="254" text-anchor="middle" class="bn-petit" id="bnTableMot"></text></g>
+  <g id="bnEprouvette">
+    <rect x="262" y="196" width="116" height="32" rx="4" fill="#7a4e2c" stroke="#5a3820" stroke-width="1.5"/>
+    <rect x="266" y="190" width="108" height="9" rx="3" fill="#3b2a1c"/>
+    <g id="bnSupport">
+      <rect x="316" y="76" width="8" height="124" rx="2" fill="#6ea8ff"/>
+      <rect id="bnAttache" x="311" y="128" width="20" height="8" rx="2" fill="#c9d6ee"/>
+      <g id="bnFissure" opacity="0"><path d="M314 126 l4 4 -4 3 5 5" stroke="#ff7b88" stroke-width="3" fill="none" stroke-linejoin="round"/><path d="M262 160 L312 136" stroke="#ff7b88" stroke-width="2"/><text x="186" y="176" class="bn-alerte">fissure</text></g>
+      <g id="bnBoitier"><rect x="330" y="118" width="30" height="34" rx="4" fill="#0d2347" stroke="#81fba1" stroke-width="2.5"/>
+        <rect id="bnCouvercle" x="330" y="118" width="30" height="34" rx="4" fill="#123a5c" stroke="#81fba1" stroke-width="2.5"/></g>
+      <path d="M338 152 V198 M352 152 V198" stroke="#81fba1" stroke-width="2.5"/>
+      <circle id="bnHalo" cx="320" cy="69" r="16" fill="#c68ef2" opacity=".2"/>
+      <circle cx="320" cy="69" r="7" fill="#c68ef2"/>
+    </g>
+  </g>
+  <!-- poste 1 : la table vibrante et la règle -->
+  <g id="bnStab" class="bn-poste">
+    <rect x="300" y="34" width="170" height="24" rx="3" fill="#e4eaf5"/>
+    <g id="bnGraduations"></g>
+    <path id="bnMax" d="M320 30 l-5 -8 h10z" fill="#ffd66b" opacity="0"/>
+    <path id="bnCurseur" d="M320 30 v30" stroke="#ff7b88" stroke-width="3"/>
+    <text x="480" y="54" class="bn-mot" id="bnStabMesure"></text>
+  </g>
+  <!-- poste 2 : l'arroseur, puis le boîtier ouvert -->
+  <g id="bnPluie" class="bn-poste">
+    <path d="M120 24 h40 l14 10 h-60z" fill="#9bbefc"/><path d="M114 34 v12 h60 v-12" fill="none" stroke="#9bbefc" stroke-width="3"/>
+    <g id="bnGouttes"></g>
+    <g id="bnLoupe" opacity="0"><circle cx="472" cy="130" r="44" fill="#0d2347" stroke="#e4eaf5" stroke-width="3"/><path d="M503 161 l20 20" stroke="#e4eaf5" stroke-width="6" stroke-linecap="round"/><path d="M436 132 L400 136" stroke="#e4eaf5" stroke-width="2" stroke-dasharray="4 4"/>
+      <text x="470" y="137" text-anchor="middle" class="bn-mot">0 goutte</text></g>
+  </g>
+  <!-- poste 3 : le projecteur « plein soleil » et l'œil à 3 m -->
+  <g id="bnLed" class="bn-poste">
+    <g transform="translate(560 46)"><g id="bnRayons"></g><circle r="22" fill="#ffd66b"/></g>
+    <g transform="translate(70 110)"><path d="M-22 0 Q0 -16 22 0 Q0 16 -22 0Z" fill="#e4eaf5"/><circle r="7" fill="#0a1b3d"/></g>
+    <path d="M96 106 L310 72" stroke="#ffd66b" stroke-width="2" stroke-dasharray="7 6"/>
+    <text x="196" y="80" text-anchor="middle" class="bn-mot">3 m</text>
+  </g>
+  <!-- poste 4 : la nuit au congélateur, puis le petit choc -->
+  <g id="bnGel" class="bn-poste">
+    <rect id="bnFroid" x="244" y="40" width="152" height="196" rx="10" fill="#bfe6ff" fill-opacity=".14" stroke="#bfe6ff" stroke-width="2"/>
+    <g transform="translate(470 0)">
+      <rect x="0" y="60" width="14" height="110" rx="7" fill="#0a1b3d" stroke="#c9d6ee" stroke-width="1.5"/>
+      <rect id="bnColonne" x="4" y="110" width="6" height="60" fill="#7cc4ff"/>
+      <circle cx="7" cy="176" r="11" fill="#7cc4ff" stroke="#c9d6ee" stroke-width="1.5"/>
+      <text id="bnTemp" x="28" y="120" class="bn-mot">+20 °C</text>
+    </g>
+    <text id="bnHeure" x="470" y="214" class="bn-petit"></text>
+    <g id="bnMarteau" opacity="0"><rect x="230" y="128" width="70" height="7" rx="2" fill="#c9d6ee"/><rect x="296" y="118" width="13" height="26" rx="3" fill="#9bbefc"/></g>
+  </g>
+</svg>
+<!-- banc_anime : fin -->
 <div class="banc-resultat" id="simRes" role="status">Le banc attend ton premier test…</div>
 </div>
 <p style="margin-top:10px">Q1 — Quel test le prototype RATE-t-il&nbsp;?
@@ -424,14 +849,15 @@ window.__exp = window.__exp || {};
 
 /* banc de tests (FAIRE — règle n°18) : verrou = 3 tests différents */
 const BANC = {
-  "Stabilité (secousses 10 s)":"🔩 Secousses 10 s → le support bouge de 0,5 cm puis se stabilise. (Attendu : moins de 1 cm.)",
-  "Pluie battante (30 s)":"💧 30 s d'arrosage → aucune goutte à l'intérieur du boîtier. Étanchéité au rendez-vous.",
-  "LED visible à 3 m plein soleil":"💡 LED bien visible à 3 m, même en plein soleil de midi.",
-  "Nuit de gel (-8 °C)":"❄️ Après une nuit à -8 °C… l'attache plastique est FISSURÉE. Elle cassera au prochain choc."
+  // Ce que le banc MESURE, sans verdict : juger demande un résultat attendu écrit avant (question Q2, activité 1).
+  "Stabilité (secousses 10 s)":"🔩 Secousses pendant 10 s : le haut du support bouge de 0,5 cm, puis s'immobilise.",
+  "Pluie battante (30 s)":"💧 Arrosage pendant 30 s, puis on ouvre le boîtier : 0 goutte à l'intérieur.",
+  "LED visible à 3 m plein soleil":"💡 Plein soleil de midi, à 3 m : on voit la LED allumée.",
+  "Nuit de gel (-8 °C)":"❄️ Une nuit à −8 °C, puis un petit choc : l'attache plastique se fissure."
 };
 $("simGo").addEventListener("click", () => {
   const t = $("simTest").value;
-  $("simRes").textContent = t + " → " + BANC[t];
+  if (!(window.bancAnime && window.bancAnime.lancer(t, BANC[t]))) $("simRes").textContent = t + " → " + BANC[t];
   window.__exp.banc = window.__exp.banc || {};
   window.__exp.banc[t] = true;
   save();
@@ -1402,5 +1828,258 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
 })();
 </script>
 <!-- /ateliers-representations:moteur -->
+<!-- annee_sur_le_toit_pas_a_pas (script) : début — situation déclenchante animée (25/10/2026) -->
+<script>
+(function(){
+  "use strict";
+  // La phrase affichée est la phrase dite : _generation/voix_situation/generer.py la compare, mot pour mot.
+  // La situation montre les quatre épreuves, JAMAIS leur résultat : l'hypothèse puis le banc (activité 0) le donnent.
+  var SCENES = [
+    {t: "Le toit", p: "Sur le toit d'une école de New York, le club jardine. Dans la jardinière, ton <b>support</b> tient le <b>capteur</b> d'humidité de la terre et sa <b>LED</b>, que le jardinier regarde pour savoir s'il faut arroser.",
+     d: "Le toit d'une école, devant les tours de New York et un réservoir d'eau en bois. Dans une jardinière, un poteau bleu, le support, tient un boîtier vert, le capteur, dont les pointes entrent dans la terre ; en haut du poteau, une LED violette."},
+    {t: "La commande", p: "Le collège veut équiper les <b>40 jardinières</b> du toit. Avant d'en fabriquer quarante, il faut être sûr que le premier support tient.",
+     d: "À gauche, un tableau se remplit de quarante petites jardinières, chacune avec son support."},
+    {t: "Le vent", p: "Entre les tours, le vent s'engouffre et accélère : c'est le <b>vent de canyon</b>. Le support est secoué.",
+     d: "Des traînées de vent traversent le toit ; les plantes et le support se balancent."},
+    {t: "L'orage", p: "Un orage d'été : la pluie frappe le boîtier du capteur pendant des heures.",
+     d: "Le ciel est sombre, couvert de nuages ; la pluie tombe en biais sur la jardinière et sur le boîtier du capteur."},
+    {t: "Le soleil", p: "À midi, le soleil tape fort. Le jardinier doit voir la LED à <b>3 mètres</b>.",
+     d: "Un grand soleil en haut à droite. À gauche, le jardinier regarde la LED ; une ligne en pointillés de 3 mètres les relie."},
+    {t: "Le gel", p: "En janvier, une nuit à <b>−8 °C</b>. Le support la passe dehors, dans le froid.",
+     d: "La nuit, la lune, de la neige qui tombe. Un thermomètre descend jusqu'à moins 8 degrés ; du givre se forme sur le support."},
+    {t: "À toi", p: "Quatre épreuves l'attendent : le vent, la pluie, le soleil, le gel. <b>Lequel de ces tests va-t-il rater ?</b> Écris ton hypothèse juste en dessous, avant de lancer le banc.",
+     d: "Quatre cartes : stabilité, pluie, LED au soleil, gel à moins 8 degrés, chacune avec un point d'interrogation. Dessous : lequel va-t-il rater ?"}
+  ];
+  var CIEL = [null, ["#1e4b8f", "#7fb2e5"], ["#1e4b8f", "#7fb2e5"], ["#33507a", "#8ea6c2"], ["#141c29", "#3a4659"],
+              ["#2a6fc4", "#ffd98a"], ["#050b1c", "#1a2e5a"], ["#13284d", "#41659c"]];
+  var N = SCENES.length, scene = 1;
+  var bloc = document.getElementById("annee-sur-le-toit-pas-a-pas");
+  if (!bloc || !window.LecteurPasAPas) return;
+  var NS = "http://www.w3.org/2000/svg";
+  function $j(id){ return document.getElementById(id); }
+  function cree(nom, attrs, parent){
+    var e = document.createElementNS(NS, nom);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function pose(e, a, v){ e.setAttribute(a, typeof v === "number" ? v.toFixed(1) : v); }
+  var graine = 7;
+  function hasard(){ graine = (graine * 16807) % 2147483647; return (graine - 1) / 2147483646; }
+
+  // ── La ville : des tours, des fenêtres (allumées la nuit) ──
+  var ville = $j("jtVille"), fenetres = [];
+  [[0, 120, 70], [74, 78, 58], [134, 154, 60], [470, 58, 52], [526, 108, 66], [596, 138, 44]].forEach(function(t){
+    cree("rect", {x: t[0], y: t[1], width: t[2], height: 300 - t[1], fill: "#13254a"}, ville);
+    for (var y = t[1] + 12; y < 286; y += 22) for (var x = t[0] + 8; x < t[0] + t[2] - 8; x += 15)
+      fenetres.push(cree("rect", {x: x, y: y, width: 6, height: 9, fill: "#ffd66b", opacity: ".12"}, ville));
+  });
+  cree("path", {d: "M496 58 V34 L501 18 L506 34 V58Z", fill: "#13254a"}, ville);
+
+  // ── 2 : les quarante jardinières ──
+  var quarante = [];
+  for (var i = 0; i < 40; i++) {
+    var g = cree("g", {}, $j("jtQuarante")), x = 34 + (i % 8) * 25, y = 192 + Math.floor(i / 8) * 18;
+    cree("rect", {x: x, y: y + 4, width: 20, height: 8, rx: 1.5, fill: "#7a4e2c"}, g);
+    cree("rect", {x: x + 12, y: y - 4, width: 2.5, height: 9, fill: "#6ea8ff"}, g);
+    cree("circle", {cx: x + 5, cy: y + 2, r: 3, fill: "#4fae7a"}, g);
+    quarante.push(g);
+  }
+  // ── 3 : le vent ; 4 : la pluie ; 6 : la neige ──
+  var vent = [], pluie = [], neige = [];
+  for (i = 0; i < 8; i++) vent.push({e: cree("path", {fill: "none", stroke: "#dbe3ef", "stroke-width": 3, "stroke-linecap": "round", opacity: ".75"}, $j("jtVent")),
+                                     x: hasard() * 700 - 60, y: 90 + hasard() * 190, l: 50 + hasard() * 60, v: 260 + hasard() * 140});
+  for (i = 0; i < 46; i++) pluie.push({e: cree("path", {stroke: "#7cc4ff", "stroke-width": 2.2, "stroke-linecap": "round", opacity: ".85"}, $j("jtPluie")),
+                                       x: hasard() * 680 - 20, y: 60 + hasard() * 240, v: 380 + hasard() * 120});
+  for (i = 0; i < 34; i++) neige.push({e: cree("circle", {r: 1.6 + hasard() * 2.2, fill: "#ffffff", opacity: ".9"}, $j("jtNeige")),
+                                       x: hasard() * 640, y: hasard() * 300, v: 18 + hasard() * 22, p: hasard() * 6.28});
+  var rayons = [];
+  for (i = 0; i < 12; i++) rayons.push(cree("path", {d: "M0 -32 V-46", stroke: "#ffd66b", "stroke-width": 4, "stroke-linecap": "round",
+                                                      transform: "rotate(" + i * 30 + ")"}, $j("jtRayons")));
+  var support = $j("jtSupport"), plantesG = $j("jtPlantesG"), plantesD = $j("jtPlantesD"), halo = $j("jtHalo");
+  var givre = $j("jtGivre"), colonne = $j("jtColonne"), temp = $j("jtTemp"), tache = $j("jtTache");
+
+  function balancer(a){
+    pose(support, "transform", "rotate(" + a.toFixed(2) + " 370 258)");
+    pose(plantesG, "transform", "rotate(" + (a * 1.6).toFixed(2) + " 300 252)");
+    pose(plantesD, "transform", "rotate(" + (a * 1.6).toFixed(2) + " 434 252)");
+  }
+  function thermometre(c){                                // la colonne : 0 °C à y = 160, 6 px par degré
+    var haut = 160 - c * 6;
+    pose(colonne, "y", haut); pose(colonne, "height", 234 - haut);
+    temp.textContent = (c > 0 ? "+" : c < 0 ? "−" : "") + Math.abs(Math.round(c)) + " °C";
+  }
+  function dessinerVent(){ vent.forEach(function(v){ pose(v.e, "d", "M" + v.x.toFixed(1) + " " + v.y.toFixed(1) + " q" + (v.l / 2).toFixed(1) + " -7 " + v.l.toFixed(1) + " 0"); }); }
+  function dessinerPluie(){ pluie.forEach(function(d){ pose(d.e, "d", "M" + d.x.toFixed(1) + " " + d.y.toFixed(1) + " l-5 15"); }); }
+  function dessinerNeige(t){ neige.forEach(function(f){ pose(f.e, "cx", f.x + Math.sin(t + f.p) * 6); pose(f.e, "cy", f.y); }); }
+
+  function maj(dt, n, t){
+    scene = n;
+    if (n === 1) { balancer(Math.sin(t * 1.4) * .6); pose(halo, "opacity", .18 + .1 * Math.sin(t * 2)); }
+    else if (n === 2) quarante.forEach(function(g, k){ g.style.opacity = k < t * 16 ? 1 : 0; });
+    else if (n === 3) {
+      balancer(Math.sin(t * 5.5) * 3.2 + Math.sin(t * 2.1) * 1.4);
+      vent.forEach(function(v){ v.x += v.v * dt; if (v.x > 660) { v.x = -v.l - 40; v.y = 90 + hasard() * 190; } });
+      dessinerVent();
+    } else if (n === 4) {
+      balancer(Math.sin(t * 2.4) * .8);
+      pluie.forEach(function(d){ d.y += d.v * dt; d.x -= d.v * dt / 3; if (d.y > 300) { d.y = 50 + hasard() * 30; d.x = hasard() * 700; } });
+      dessinerPluie();
+    } else if (n === 5) {
+      rayons.forEach(function(r, k){ pose(r, "transform", "rotate(" + (k * 30 + t * 18) + ")"); });
+      pose(halo, "opacity", .3 + .2 * Math.sin(t * 2.6));
+    } else if (n === 6) {
+      thermometre(Math.max(-8, 5 - t * 3.2));
+      neige.forEach(function(f){ f.y += f.v * dt; if (f.y > 300) { f.y = -6; f.x = hasard() * 640; } });
+      dessinerNeige(t);
+      pose(givre, "opacity", Math.min(1, Math.max(0, (t - 2.5) / 2)));
+    } else if (n === 7) balancer(0);
+  }
+  function fixe(n){                                       // mouvement réduit, impression : une image par étape
+    scene = n; balancer(0); pose(halo, "opacity", n === 5 ? .45 : .22);
+    quarante.forEach(function(g){ g.style.opacity = 1; });
+    dessinerVent(); dessinerPluie(); dessinerNeige(0);
+    rayons.forEach(function(r, k){ pose(r, "transform", "rotate(" + k * 30 + ")"); });
+    thermometre(n === 6 ? -8 : 5); pose(givre, "opacity", n === 6 ? 1 : 0);
+  }
+  function entrer(n){
+    scene = n;
+    $j("jtCiel1").setAttribute("stop-color", CIEL[n][0]); $j("jtCiel2").setAttribute("stop-color", CIEL[n][1]);
+    fenetres.forEach(function(f){ f.setAttribute("opacity", n === 6 ? ".75" : n === 4 ? ".35" : ".12"); });
+    if (n === 2) quarante.forEach(function(g){ g.style.opacity = 0; });
+    if (n === 6) { thermometre(5); pose(givre, "opacity", 0); }
+    else pose(givre, "opacity", 0);
+    if (n !== 3 && n !== 4) balancer(0);
+    tache.hidden = n !== N;
+  }
+  $j("jtVersHypothese").addEventListener("click", function(e){
+    var champ = document.getElementById("hypothese");
+    if (!champ) return;
+    e.preventDefault();
+    champ.scrollIntoView({block: "center"});
+    try { champ.focus({preventScroll: true}); } catch (x) { champ.focus(); }
+  });
+  dessinerVent(); dessinerPluie(); dessinerNeige(0);
+  // À l'impression : l'étape 1 (le ciel de jour, les trois pièces nommées) et la liste des sept étapes.
+  LecteurPasAPas(bloc, {scenes: SCENES, voix: "Audio/situation_scene", imprimer: 1, maj: maj, fixe: fixe, entrer: entrer});
+})();
+</script>
+<!-- annee_sur_le_toit_pas_a_pas (script) : fin -->
+<!-- banc_anime (script) : début — le banc de tests virtuel, animé poste par poste (25/10/2026) -->
+<script>
+(function(){
+  "use strict";
+  // Le banc MONTRE une mesure, il ne juge pas : sans résultat attendu écrit avant, l'élève ne peut pas dire
+  // « réussi » (question Q2). Seule la fissure du gel se voit. Rien ne bouge sous « mouvement réduit ».
+  var dessin = document.getElementById("bnDessin");
+  if (!dessin) return;
+  var NS = "http://www.w3.org/2000/svg";
+  function $b(id){ return document.getElementById(id); }
+  function cree(nom, attrs, parent){ var e = document.createElementNS(NS, nom); for (var k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+  function pose(e, a, v){ e.setAttribute(a, typeof v === "number" ? v.toFixed(1) : v); }
+  var calme = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : {matches: false};
+  var POSTES = {
+    "Stabilité (secousses 10 s)": {g: "bnStab", duree: 4.2,
+      d: "Poste 1 : le bac est posé sur une table vibrante ; une règle mesure de combien le haut du support bouge."},
+    "Pluie battante (30 s)": {g: "bnPluie", duree: 4.6,
+      d: "Poste 2 : un arroseur asperge le boîtier du capteur, puis on ouvre le boîtier et on regarde dedans à la loupe."},
+    "LED visible à 3 m plein soleil": {g: "bnLed", duree: 3.6,
+      d: "Poste 3 : un projecteur imite le soleil de midi ; un œil regarde la LED depuis 3 mètres."},
+    "Nuit de gel (-8 °C)": {g: "bnGel", duree: 5.4,
+      d: "Poste 4 : le support passe la nuit dans un congélateur à moins 8 degrés ; au matin, un petit marteau tape l'attache."}
+  };
+  var grads = $b("bnGraduations");
+  for (var x = 320, k = 0; x <= 460; x += 20, k++) {
+    cree("path", {d: "M" + x + " 34 v" + (k % 2 ? 7 : 12), stroke: "#0a1b3d", "stroke-width": 1.5}, grads);
+  }
+  [["0", 320], ["0,5", 360], ["1 cm", 404]].forEach(function(t){ var e = cree("text", {x: t[1], y: 54, "text-anchor": "middle", "class": "bn-regle"}, grads); e.textContent = t[0]; });
+  var gouttes = [];
+  for (k = 0; k < 18; k++) gouttes.push({e: cree("circle", {r: 3, fill: "#7cc4ff"}, $b("bnGouttes")), p: k / 18});
+  var rayons = [];
+  for (k = 0; k < 10; k++) rayons.push(cree("path", {d: "M0 -28 V-40", stroke: "#ffd66b", "stroke-width": 4, "stroke-linecap": "round", transform: "rotate(" + k * 36 + ")"}, $b("bnRayons")));
+  var eprouvette = $b("bnEprouvette"), table = $b("bnTable"), support = $b("bnSupport"), halo = $b("bnHalo");
+  var curseur = $b("bnCurseur"), max = $b("bnMax"), mesureStab = $b("bnStabMesure"), couvercle = $b("bnCouvercle"), loupe = $b("bnLoupe");
+  var colonne = $b("bnColonne"), temp = $b("bnTemp"), heure = $b("bnHeure"), marteau = $b("bnMarteau"), fissure = $b("bnFissure"), froid = $b("bnFroid");
+  var res = $b("simRes"), courant = null, texte = "", t = 0, raf = 0, avantT = 0, fini = null;
+
+  function montrerPoste(nom){
+    Object.keys(POSTES).forEach(function(n){ $b(POSTES[n].g).style.display = n === nom ? "" : "none"; });
+    $b("bnTableMot").textContent = nom && nom.indexOf("Stabilité") === 0 ? "table vibrante" : "";
+    if (nom) dessin.setAttribute("aria-label", POSTES[nom].d);
+  }
+  function thermo(c){ var y = 140 - c * 2.6; pose(colonne, "y", y); pose(colonne, "height", 170 - y); temp.textContent = (c > 0 ? "+" : c < 0 ? "−" : "") + Math.abs(Math.round(c)) + " °C"; }
+  function etat(nom, u){                                  // u : de 0 (début) à 1 (fin) ; dessine le poste à l'instant u
+    var p = POSTES[nom];
+    pose(eprouvette, "transform", ""); pose(table, "transform", ""); pose(support, "transform", "");
+    if (p.g === "bnStab") {
+      var vibre = u < .75 ? Math.sin(u * 140) : 0, enveloppe = Math.min(1, u * 5);
+      var dx = vibre * 3 * enveloppe, haut = vibre * 40 * enveloppe;      // la règle grossit : 40 px = 0,5 cm
+      pose(table, "transform", "translate(" + dx.toFixed(1) + " 0)"); pose(eprouvette, "transform", "translate(" + dx.toFixed(1) + " 0)");
+      pose(support, "transform", "rotate(" + (haut / 124 * 57.3 * .15).toFixed(2) + " 320 200)");
+      pose(curseur, "d", "M" + (320 + Math.abs(haut)).toFixed(1) + " 30 v30");
+      pose(max, "opacity", u > .1 ? 1 : 0); pose(max, "d", "M" + (320 + 40 * Math.min(1, u * 5)) + " 30 l-6 -9 h12z");
+      mesureStab.textContent = u >= 1 ? "0,5 cm" : "";
+    } else if (p.g === "bnPluie") {
+      var arrose = u < .62;
+      gouttes.forEach(function(g, i){
+        var s = ((u * 9 + g.p) % 1);
+        pose(g.e, "cx", 160 + s * 170 + (i % 3) * 4); pose(g.e, "cy", 48 + s * 90 + (i % 4) * 6);
+        g.e.style.opacity = arrose ? 1 : 0;
+      });
+      var ouvre = Math.max(0, Math.min(1, (u - .68) / .15));
+      pose(couvercle, "transform", "translate(" + (ouvre * 36).toFixed(1) + " 0)");
+      pose(loupe, "opacity", u >= .85 ? 1 : 0);
+    } else if (p.g === "bnLed") {
+      rayons.forEach(function(r, k2){ pose(r, "transform", "rotate(" + (k2 * 36 + u * 60) + ")"); });
+      pose(halo, "opacity", .35 + .25 * Math.sin(u * 18));
+    } else if (p.g === "bnGel") {
+      var nuit = Math.min(1, u / .7);
+      thermo(20 - 28 * Math.min(1, nuit * 1.4));
+      var h = Math.round(20 + nuit * 11) % 24;
+      heure.textContent = "🌙 " + (h < 10 ? "0" : "") + h + " h";
+      pose(froid, "opacity", u < .78 ? 1 : 0);
+      var choc = Math.max(0, Math.min(1, (u - .8) / .12));
+      pose(marteau, "opacity", u > .76 ? 1 : 0);
+      pose(marteau, "transform", "rotate(" + (-25 + 25 * Math.sin(choc * Math.PI)).toFixed(1) + " 230 131)");
+      pose(fissure, "opacity", u >= .9 ? 1 : 0);
+    }
+  }
+  function repos(){                                       // l'éprouvette intacte, avant tout test
+    pose(couvercle, "transform", ""); pose(loupe, "opacity", 0); pose(fissure, "opacity", 0);
+    pose(marteau, "opacity", 0); pose(halo, "opacity", .2); mesureStab.textContent = ""; thermo(20); heure.textContent = "";
+  }
+  function boucle(ts){
+    raf = 0;
+    var dt = avantT ? Math.min(.05, (ts - avantT) / 1000) : 0;
+    avantT = ts; t += dt;
+    var u = Math.min(1, t / POSTES[courant].duree);
+    etat(courant, u);
+    if (u >= 1) { finir(); return; }
+    raf = requestAnimationFrame(boucle);
+  }
+  function finir(){
+    if (raf) { cancelAnimationFrame(raf); raf = 0; }
+    etat(courant, 1);
+    res.textContent = courant + " → " + texte;
+    if (fini) fini();
+  }
+  // Appelé par le bouton « Lancer le test » de la page.
+  window.bancAnime = {
+    lancer: function(nom, ce, quandFini){                // ce : ce que le banc a mesuré (tableau BANC de la page)
+      if (!POSTES[nom]) return false;
+      texte = ce;
+      if (raf) { cancelAnimationFrame(raf); raf = 0; }
+      courant = nom; t = 0; avantT = 0; fini = quandFini || null;
+      repos(); montrerPoste(nom);
+      if (calme.matches || document.hidden) { finir(); return true; }
+      res.textContent = nom + " → ⏳ test en cours…";
+      raf = requestAnimationFrame(boucle);
+      return true;
+    }
+  };
+  montrerPoste(null); repos();
+})();
+</script>
+<!-- banc_anime (script) : fin -->
 </body>
 </html>

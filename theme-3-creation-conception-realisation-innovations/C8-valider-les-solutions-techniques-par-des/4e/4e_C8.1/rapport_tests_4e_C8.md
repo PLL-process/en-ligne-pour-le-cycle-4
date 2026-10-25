@@ -87,3 +87,19 @@ sans cette assertion, une erreur de rotation aurait faussé silencieusement tout
 
 Aucun test en échec à la remise (41/41). Le défaut majeur trouvé — le QCM entièrement
 concentré en position B — est décrit au §3 ; il touchait ce lot comme son jumeau 4e_C7.
+
+## 6. 25/10/2026 — La situation animée « Une année sur le toit » et le banc animé (lecteur pas à pas commun)
+
+Décisions de Pascal « 1a 2a 3b 4b » (journal du 25/10/2026). Commandes lancées comme on les lance, en sous-processus :
+
+| Commande | Résultat |
+|---|---|
+| `node tests_4e_C8.mjs` | **48 / 48** — le banc attend la fin de chaque test animé et refuse un verdict dans la mesure (« réussi », « conforme », « au rendez-vous », « FISSURÉE ») |
+| `python3 ../../../../_outils/lecteur_pas_a_pas/banc_lecteur.py` (depuis la racine : sans argument) | **vert** sur les 4 animations du dépôt, dont `#annee-sur-le-toit-pas-a-pas` (7 étapes) : 1280 et 390 px, mouvement réduit, 14 fichiers de voix présents, impression (7 étapes), lien direct |
+| `python3 _generation/voix_situation/generer.py --verifier` | les 7 phrases de `phrases.json` sont celles de la page, mot pour mot |
+| `python3 _outils/controle_lecteur_pas_a_pas.py` (racine) | sortie 0 |
+
+Regardé à l'œil, captures dans `_generation/captures_animations/` : les sept étapes à 1280 px, trois étapes à 390 px,
+les quatre postes du banc pendant puis à la fin du test. Aucune étape de la situation ne montre le résultat d'un test.
+
+**Non exécuté** : l'écoute des sept prises (Pascal) ; Safari, iPad, téléphone réel.

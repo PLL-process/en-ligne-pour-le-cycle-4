@@ -240,10 +240,11 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   for (const essai of CFG.essaisBanc) {
     for (const [sel, val] of Object.entries(essai)) await page.selectOption(sel, val);
     await page.click("#simGo");
-    await page.waitForTimeout(90);
+    // le banc est animé (25/10/2026) : sa mesure s'affiche à la fin du test
+    await page.waitForFunction(() => !document.getElementById("simRes").textContent.includes("⏳"), null, {timeout: 9000});
   }
   const res = await page.locator("#simRes").textContent();
-  ok("act. 0 : le banc rend un verdict pour l'essai joué", res.trim().length > 20, res.trim().slice(0, 70));
+  ok("act. 0 : le banc rend sa mesure pour l'essai joué, sans verdict", res.trim().length > 20 && !/réussi|conforme|au rendez-vous|FISSURÉE/.test(res), res.trim().slice(0, 90));
   await shot(page, "banc", "#simRes");
 
   for (const [sel, val] of Object.entries(CFG.reponsesAct0)) await page.selectOption(sel, val);
