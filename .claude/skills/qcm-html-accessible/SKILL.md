@@ -37,7 +37,9 @@ Mis à jour le 23/10/2026 (inventaire des skills) : aligné sur le journal jusqu
   (n°137, 26/08/2026).
 - Une question se lit seule : chaque unité savante y est nommée en toutes lettres à sa première
   apparition, « 12 V (volts) » (n°312, 25/10/2026). Si l'unité est dans les options, toutes les
-  options qui la portent reçoivent le nom : aucune ne doit se distinguer.
+  options qui la portent reçoivent le nom : aucune ne doit se distinguer. Si UNE SEULE option porte l'unité,
+  elle s'y écrit en toutes lettres, sans parenthèse (« il ne manipule que du 5 volts ») : une parenthèse la
+  distinguerait, un rappel dans l'énoncé la désignerait (le contrôle refuse l'option seule nommée).
 
 ## En-tête standard (règle d'or n°2, 22/07/2026)
 

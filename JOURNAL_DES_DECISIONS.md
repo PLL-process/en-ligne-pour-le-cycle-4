@@ -23782,3 +23782,105 @@ l'année en séances de 55 min et 20 min au plus de travail maison par semaine (
 
 - Les pages gardent leur propre découpage en séances ; la semaine du travail maison est dans le classeur.
 - Les fiches pédagogiques et les synthèses professeur ne mentionnent pas encore le travail maison.
+
+## 25/10/2026 — Règle d'or n°312 : une unité se lit en toutes lettres (transversale : thèmes 1, 2 et 3, `_outils`, `.claude/skills`)
+
+> **Règle d'or n°312 — Une unité se lit en toutes lettres.**
+> À sa première apparition dans chaque activité, chaque tableau et chaque question de QCM, une unité que l'élève ne
+> connaît pas depuis l'école est suivie de son nom en toutes lettres, au pluriel, entre parenthèses : « 1,2 W (watts) »,
+> « 12 V (volts) », « 432 Wh (wattheures) ». Dans un tableau dont toute la colonne (ou toute la ligne) porte la même
+> unité, le nom va dans l'intitulé : « Courant (en milliampères) », « Consommation (en watts) ». Le symbole reste : l'élève
+> le retrouvera dans les documents et au DNB. N'ont pas besoin d'être nommées : m, cm, mm, km, g, kg, L, mL, s, min, h,
+> °C, €, %, km/h, m², m³. Dans un choix (question de QCM, liste, boutons) où **une seule** option porte l'unité, elle s'y
+> écrit en toutes lettres, sans parenthèse : « il ne manipule que du 5 volts ». Une parenthèse distinguerait cette
+> option ; un rappel dans l'énoncé la désignerait.
+
+**Demande de Pascal (25/10/2026).** Devant le tableau « Les chiffres pour choisir » de Chengdu (« Consommation : 1,2 W ·
+0,4 W · 12 W ») : « beaucoup d'élèves ne pourront pas dire que ce sont des watts […] moins de charge cognitive d'une part,
+et d'autre part, même s'il l'a vu en physique, il ne s'en souvient pas toujours. Donc indispensable, nécessaire de faire
+un rappel en toutes lettres ». Choix tranchés par Pascal : le symbole puis le nom (« 1,2 W (watts) ») ; la première fois
+dans chaque activité, chaque tableau et chaque question. Branche `fable/unites-en-toutes-lettres`, sans motif de thème.
+
+### Le contrôle : `_outils/controle_unites.py` (et son banc `tests_controle_unites.py`)
+
+- Deux mesures. (1) Dans chaque zone, toute unité écrite après un nombre doit y voir son nom. (2) Aucun choix n'a une
+  seule option portant un nom entre parenthèses (questions de QCM ; listes `<select>` qui commencent par « — je
+  choisis — », donc des questions et non des réglages de simulateur ; étiquettes d'un `<fieldset>`).
+- Pages lues : les pages élèves sous `theme-*` (séquences, QCM, synthèses élève, lexiques, ateliers, TP, cahiers…), hors
+  synthèses professeur, archive et dossiers « _… ». Zones : une activité (entre deux h2 ou deux débuts d'activité), un
+  tableau, une question de QCM (lue dans le tableau `QUESTIONS` du script). Dans chaque zone, toute unité écrite après un
+  nombre doit y voir son nom. Sorties 0 / 1 / 2 (n°299 : une racine vide est une panne).
+- Ce qu'il ne mesure pas, et le dit : que le nom suive la PREMIÈRE apparition ; le texte écrit par un simulateur ; les
+  listings de code ; les schémas SVG (le texte d'un SVG intégré est compté à part, les fichiers SVG ne sont pas lus).
+- Fausses pistes écartées, chacune par un cas du banc : une adresse MAC (« 00:1A »), « niveau 2 A », « 12 Volts »,
+  « W/m² », et la case de Gantt « <td>2</td><td>A</td> » (une durée, puis une tâche) : une case, un item, un paragraphe
+  sont des frontières.
+- Banc : **15 / 15** (le tableau de Chengdu refusé puis accepté, le nom dans l'intitulé, la frontière entre deux activités,
+  watt ≠ wattheure, unités connues, listing et schéma non exigés, fausses pistes, QCM question par question, l'option
+  seule nommée refusée puis acceptée en toutes lettres, la liste de réglage ignorée, synthèse professeur hors périmètre,
+  racine vide en panne, dépôt réel lu).
+- État de départ, mesuré sur `main` : **336 pages lues, 1 361 grandeurs, 475 unités sans leur nom dans 107 pages**
+  (V 163, Wh 64, mA 54, N 42, W 33, MPa 30…). Après le lot : **0**, et aucune option seule nommée.
+
+### Ce que le lot change dans les pages
+
+- **107 pages** (thème 1 : 20, thème 2 : 37, thème 3 : 50) : 35 séquences, 38 QCM, 19 synthèses élève, 9 lexiques,
+  4 ateliers, 2 cahiers. Environ 500 noms : ~460 entre parenthèses après le symbole, 18 dans un intitulé de tableau,
+  27 sous la forme « (12 V, en volts) » quand la grandeur était déjà entre parenthèses.
+- Une première passe par script ajoute « (nom) » à la première apparition dans chaque zone où le nom manque, dans le
+  HTML ou dans les chaînes du QCM, sans rien toucher d'autre. Puis quatre retouches :
+  - **dans un choix**, le nom ajouté à une option l'est à toutes les options qui portent la même unité (aucune ne doit
+    se distinguer) ; dans un QCM, de même pour toutes les options d'une question ;
+  - **une citation n'est pas modifiée** : « « 18 Wh par km » (wattheures) », « « Reply from … time=200ms »
+    (millisecondes) » — on ne réécrit ni ce qu'a dit quelqu'un, ni ce qu'affiche une console (27 cas) ;
+  - **dans un tableau** dont la colonne ou la ligne porte une seule unité, le nom passe dans l'intitulé : une case
+    étroite de nombres (« 45 mA ») ne s'élargit pas ;
+  - **une liste déroulante garde sa valeur** : 27 options n'avaient pas d'attribut `value` (le navigateur prend alors le
+    texte) ; elles reçoivent leur ancien texte en `value`. Pour 13 d'entre elles, le script de la page compare bien ce
+    texte : sans cette précaution, les vérificateurs auraient refusé la bonne réponse.
+- **Une option seule à porter l'unité** : relu question par question après la première passe. Dans 6 questions de QCM
+  et 4 listes, la bonne réponse était la seule à porter « (volts) » ou « (milliampères) » : elle se voyait. Premier
+  essai, le nom déplacé dans l'énoncé (« (les tensions sont en volts, V) ») : abandonné, l'énoncé désignait alors la
+  seule option qui parle de tension. Retenu : l'unité en toutes lettres dans l'option (« adaptation à 5 volts »,
+  « ne descend guère sous 30 milliampères », comme sa voisine « quelques microampères »). Même traitement pour les
+  13 questions et 7 listes où c'était un distracteur, sinon « la seule option nommée est fausse » devenait une règle
+  qu'un élève attentif apprendrait. Dans les listes d'association (même liste sous plusieurs items), l'option change
+  dans toutes les listes à la fois.
+- **Une vérification cassée, trouvée et réparée** : la liste a3q3 de 5e_C8.1 (« leur limite élastique est la même
+  (45 MPa) … ») n'avait pas d'attribut `value`, et son option avait reçu le nom après la passe qui pose les `value` :
+  la bonne réponse aurait été refusée. Le banc de la séquence ne joue pas cette question (39 / 39 avant comme après).
+  Elle a été vue par une comparaison ajoutée en fin de lot : les valeurs que lisent les vérificateurs (`value` d'une
+  option ou son texte, `value` d'un bouton) sont identiques avant et après le lot, sur les 107 pages : **0 écart**.
+- Neuf cas faits à la main (unité déjà suivie d'une parenthèse : « 54 dB(A) », « Câble USB 5 V (500 mA) », « 200 MPa
+  (×4) », « 1 W (3,7 Wh par jour) », « Pompe immergée 5 V (TBT) », « Flèche sous 100 N (mm) »…).
+- `_outils/METHODE.md` (liste des règles récentes) ; skills du dépôt `sequence-pedagogique-engageante`,
+  `qcm-html-accessible` et `controle-qualite-lot` : la règle et le contrôle.
+- Captures avant / après à 390 px : `_outils/captures_regle_312_2026-10-25/` (le tableau de Chengdu, le tableau de
+  consommation de 3e_C7.4, une consigne de 3e_C4.1).
+
+### Ce qui a tourné
+
+BANCS
+
+- `controle_squelette` sur les 35 séquences : ✅ ; `controle_hierarchie`, `controle_regles_visibles` (n°309),
+  `controle_debordement`, `controle_formulations`, `controle_liens`, `controle_banque_qcm` : verts, comme sur `main`.
+- `mesurer_temps_seances` : mesures identiques sur les 59 séquences (aucun nom ne porte de durée).
+- `controle_longueurs` (n°144, n°198) : aucune banque signalée, avant comme après.
+- Bancs des lots touchés (43 lots, 68 bancs), sur `main` puis sur la branche : 65 identiques d'emblée, trois écarts
+  corrigés, puis 68 / 68 identiques à `main` : Book Train (deux étiquettes de boutons doivent rester égales à leur valeur ; 39 / 39), le QCM de
+  3e_C7.5 (31 / 32 : une bonne réponse détachée par sa longueur ; 32 / 32) et 4e_C7.8 (43 / 46 sous charge, 46 / 46 seul).
+  Trois bancs (`tests_5e_C7.4_sequence`, `tests_5e_C8.1_sequence`, `tests_3e_C8.1_sequence`) demandent leurs arguments
+  (page, attendus, niveau) : lancés avec, 34 / 34, 39 / 39 et 62 / 62, comme sur `main`.
+- Après la fusion de `main` (PR #511 et #512, qui touchaient 7 des mêmes pages) : `controle_unites` et
+  `controle_squelette` verts ; les 14 bancs des 6 lots en commun identiques à `main`.
+- Playwright à 390 px, les 107 pages, sur `main` puis sur la branche : zéro erreur JS ; mêmes largeurs (deux pages
+  débordent déjà sur `main`, inchangées).
+
+### Ce que le lot ne fait pas
+
+- **Les schémas** : 29 fichiers SVG portent 104 grandeurs, et 34 autres sont dans des SVG intégrés. Ils seront repris à
+  part (une légende ou le nom dans l'étiquette), avec le skill des médias.
+- Le texte écrit par les simulateurs à l'exécution n'est pas lu par le contrôle.
+- Le contrôle accepte le nom n'importe où dans la zone : qu'il suive la première apparition se juge à l'œil.
+- Une liste de réglage d'un simulateur (« Source d'énergie », « Cas de charge ») n'est pas une question : une seule
+  option peut y porter le nom.
