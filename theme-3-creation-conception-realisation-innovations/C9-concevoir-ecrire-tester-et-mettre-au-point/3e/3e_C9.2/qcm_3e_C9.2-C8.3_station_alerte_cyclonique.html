@@ -342,7 +342,7 @@ const QUESTIONS = [
  expl:"niveauAlerte est l'ÉTAT actuel ; niveauPrecedent est l'état mémorisé au tour de boucle précédent. S'ils diffèrent, c'est que le niveau VIENT DE changer : un événement. Le programme en profite pour remettre alarmeAcquittee à faux — nouvel événement, nouvel avertissement sonore.",
  ex:"Ouragan → ouragan majeur : l'événement est détecté, l'acquittement précédent est effacé, le buzzer repart.",
  err:"Confondre l'état (l'alerte DURE) et l'événement (l'instant où elle COMMENCE) : l'alarme se ré-arme sur l'événement, pas sur l'état.",
- d:["","Le diagnostic du capteur se ferait sur la mesure brute, pas sur les niveaux.","La cadence de la boucle vient du délai (200 ms), pas d'une comparaison.","Comparer deux entiers ne consomme presque rien."],
+ d:["","Le diagnostic du capteur se ferait sur la mesure brute, pas sur les niveaux.","La cadence de la boucle vient du délai (200 ms, en millisecondes), pas d'une comparaison.","Comparer deux entiers ne consomme presque rien."],
  ret:"Événement = état actuel ≠ état mémorisé du tour précédent. C'est LE motif de la détection de changement."},
 {c:"C9.2",n:"Lire le chronogramme",q:"Sur le chronogramme, à t5 le buzzer se remet à sonner SANS nouvel appui sur le bouton. Pourquoi ?",
  img:{src:"Images/ihm_acquittement_chronogramme.svg",alt:"Chronogramme : le niveau passe en ouragan majeur à t2, le buzzer sonne, l'agent appuie à t3 et le buzzer se tait, le niveau redescend en ouragan à t4 puis repasse en ouragan majeur à t5 et le buzzer ressonne, un voyant reste allumé en continu dès la tempête tropicale"},

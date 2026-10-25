@@ -150,6 +150,12 @@ La synthèse « à retenir » se place avant le Bonus (pratique de `3e_C5.1` et 
 
 - Le lot est indivisible : voir `_outils/METHODE.md`, partie « Le lot est un ensemble INDIVISIBLE ». Il comprend la séquence,
   le QCM, les synthèses élève et professeur, la fiche pédagogique, la matrice, `SOURCES_MEDIAS.md`, le rapport de tests et le manifeste.
+- Unités (n°312, 25/10/2026) : à sa première apparition dans chaque activité et chaque tableau, une unité que l'élève ne
+  connaît pas depuis l'école est suivie de son nom en toutes lettres, au pluriel, entre parenthèses : « 1,2 W (watts) »,
+  « 12 V (volts) », « 432 Wh (wattheures) ». Dans un tableau dont toute la colonne (ou la ligne) porte la même unité, le nom
+  va dans l'intitulé : « Courant (en milliampères) ». Dans une liste à choix ou un groupe de boutons où une seule option
+  porte l'unité, elle s'y écrit en toutes lettres (« la pile 9 volts ») et la `value` garde le texte que le vérificateur
+  compare. Pas besoin pour m, cm, mm, km, g, kg, L, s, min, h, °C, €, %, km/h.
 - Personnes (n°302) : la page élève dit « tu » quand elle guide, « je » pour ce que l'élève saura faire et pour son positionnement.
   La troisième personne est réservée aux pages destinées à un collègue (synthèse professeur, fiche pédagogique).
 - Prévoir la sauvegarde locale et la reprise, les exports, une impression propre (n°102), une navigation complète au clavier
@@ -176,7 +182,7 @@ La synthèse « à retenir » se place avant le Bonus (pratique de `3e_C5.1` et 
   (Bonus sans champ ou sans corrigé, bilan sans métacognition…) : le rapport texte ne les imprime pas.
 - `python3 _outils/verif_regles_audit.py <dossier>` : compter les ✘, car la sortie vaut 0 même quand il y en a.
 - `python3 _outils/controle_hierarchie.py <dossier>` (n°307) ; sur tout le dépôt : `controle_navigation_seances.py`,
-  `controle_blocs_dessines.py`, `controle_regles_visibles.py`.
+  `controle_blocs_dessines.py`, `controle_regles_visibles.py`, `controle_unites.py` (n°312).
 - Ensuite, la revue complète du skill `controle-qualite-lot`.
 
 ## Critères de réussite

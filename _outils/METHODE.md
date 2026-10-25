@@ -74,6 +74,11 @@ rattraper) · **305** une page se lit sans Internet · **306** squelette unique
 capture · **310** chaînes d'énergie : les blocs disent la fonction, les
 flèches la forme d'énergie (skill `chaine-energie-fonctionnelle`) · **311** à
 partir de la séance 2, l'ouverture est repliée dans le volet « 📖 Rappel » ·
+**312** une unité se lit en toutes lettres : « 1,2 W (watts) » à sa première
+apparition dans chaque activité, chaque tableau et chaque question de QCM ; dans
+un tableau, le nom peut aller dans l'intitulé (« Courant (en milliampères) ») ;
+dans un choix où une seule option porte l'unité, elle s'y écrit en toutes lettres
+(« 5 volts ») ; contrôlé par `_outils/controle_unites.py` (25/10/2026) ·
 **313** un sigle garde ses capitales — FAST, jamais « fast », jusque dans
 l'index ; contrôlé par `_outils/controle_sigles.py` (25/10/2026).
 

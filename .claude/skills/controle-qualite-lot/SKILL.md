@@ -21,7 +21,9 @@ on le corrige d'abord. Une fois le lot vert, on le livre avec le skill `livraiso
 - durée réaliste, matériel confirmé ou versions 🅱/🅲 présentes ;
 - exercices originaux, corrections de qualité, niveau de langue collège ;
 - sigles en capitales, FAST et non « fast » (n°313, 25/10/2026) : `python3 _outils/controle_sigles.py` ;
-- squelette respecté : n°306 (22/09/2026) et n°311 (22/10/2026), voir le skill `sequence-pedagogique-engageante`.
+- squelette respecté : n°306 (22/09/2026) et n°311 (22/10/2026), voir le skill `sequence-pedagogique-engageante` ;
+- chaque unité savante nommée en toutes lettres dans son activité, son tableau, sa question : n°312 (25/10/2026),
+  `python3 _outils/controle_unites.py`.
 
 **Technique** :
 - HTML valide, aucun lien local cassé, aucune erreur console ;

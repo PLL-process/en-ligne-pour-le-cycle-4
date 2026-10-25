@@ -212,7 +212,7 @@ table.releve td input{padding:4px 8px}
   <h2>⚠️ Sécurité — à lire avant de brancher quoi que ce soit</h2>
   <div class="declencheur">
     <ul>
-      <li>Tout le montage fonctionne en <b>très basse tension</b> : 5 V. Le « secteur » de la
+      <li>Tout le montage fonctionne en <b>très basse tension</b> : 5 V (volts). Le « secteur » de la
         liste, <b>c'est l'adaptateur USB fermé</b>, jamais la prise ni le câble d'alimentation.
         On ne l'ouvre pas, on ne le coupe pas. <b>Côté élève, il n'y a que du 5 V.</b></li>
       <li><b>De l'eau et de l'électricité au même endroit</b> : le boîtier de commande reste
@@ -246,12 +246,12 @@ table.releve td input{padding:4px 8px}
   total. <b>Éteins la pompe. Puis rallume-la et éteins la carte.</b></p>
   <div class="banc">
     <table class="conso">
-      <tr><th></th><th>Ce qui consomme</th><th>Courant</th><th>Par jour</th><th>Énergie</th></tr>
-      <tr id="tr0"><td class="ck"><input type="checkbox" id="ck0" checked></td><td>Carte Arduino UNO</td><td class="n">45 mA</td><td class="n">24 h</td><td class="n" id="wh0">5,400 Wh</td></tr>
+      <tr><th></th><th>Ce qui consomme</th><th>Courant (en milliampères)</th><th>Par jour</th><th>Énergie</th></tr>
+      <tr id="tr0"><td class="ck"><input type="checkbox" id="ck0" checked></td><td>Carte Arduino UNO</td><td class="n">45 mA</td><td class="n">24 h</td><td class="n" id="wh0">5,400 Wh (wattheures)</td></tr>
       <tr id="tr1"><td class="ck"><input type="checkbox" id="ck1" checked></td><td>Capteur d'humidité du sol</td><td class="n">2 mA</td><td class="n">24 h</td><td class="n" id="wh1">0,240 Wh</td></tr>
       <tr id="tr2"><td class="ck"><input type="checkbox" id="ck2" checked></td><td>Écran LCD RGB</td><td class="n">40 mA</td><td class="n">1 h</td><td class="n" id="wh2">0,200 Wh</td></tr>
       <tr id="tr3"><td class="ck"><input type="checkbox" id="ck3" checked></td><td>Module relais</td><td class="n">70 mA</td><td class="n">1 min</td><td class="n" id="wh3">0,006 Wh</td></tr>
-      <tr id="tr4"><td class="ck"><input type="checkbox" id="ck4" checked></td><td>Pompe immergée 5 V</td><td class="n">300 mA</td><td class="n">1 min</td><td class="n" id="wh4">0,025 Wh</td></tr>
+      <tr id="tr4"><td class="ck"><input type="checkbox" id="ck4" checked></td><td>Pompe immergée 5 V (volts)</td><td class="n">300 mA</td><td class="n">1 min</td><td class="n" id="wh4">0,025 Wh</td></tr>
       <tr class="tot"><td class="ck"></td><td colspan="3">Consommation du montage, par jour</td>
           <td class="n" id="etot">—</td></tr>
     </table>
@@ -267,7 +267,7 @@ table.releve td input{padding:4px 8px}
         <span><i style="background:#ffb454"></i>Capteur d'humidité du sol</span>
         <span><i style="background:#81fba1"></i>Écran LCD RGB</span>
         <span><i style="background:#c68ef2"></i>Module relais</span>
-        <span><i style="background:#ff7b88"></i>Pompe immergée 5 V</span>
+        <span><i style="background:#ff7b88"></i>Pompe immergée 5 V (volts)</span>
     </div>
 
     <div class="banc-cmd">
@@ -277,12 +277,12 @@ table.releve td input{padding:4px 8px}
         <option>4 piles AA alcalines</option>
         <option>Accu Li-ion 18650 rechargeable</option>
         <option>Secteur — adaptateur USB scellé</option>
-        <option>Panneau solaire 1 W crête + accu</option>
+        <option value="Panneau solaire 1 W crête + accu">Panneau solaire 1 W (watts) crête + accu</option>
       </select>
     </div>
     <table class="srcd">
       <tr><th>Énergie stockée dans la source</th><td id="sBrute">—</td></tr>
-      <tr><th id="sRendLbl">Rendement de la mise en 5 V</th><td id="sRend">—</td></tr>
+      <tr><th id="sRendLbl">Rendement de la mise en 5 V (volts)</th><td id="sRend">—</td></tr>
       <tr><th>Énergie réellement disponible</th><td id="sUtile">—</td></tr>
     </table>
     <p class="verdict" id="verdict">—</p>
@@ -293,7 +293,7 @@ table.releve td input{padding:4px 8px}
   <div class="exo">
 
     <h4>Après avoir éteint l'une, puis l'autre</h4>
-    <p><b>1.</b> Éteindre la pompe fait passer le total de 5,87 Wh à…</p>
+    <p><b>1.</b> Éteindre la pompe fait passer le total de 5,87 Wh (wattheures) à…</p>
     <select id="a0q1">
       <option value="">— je choisis —</option>
       <option>5,85 Wh — presque rien ne change</option>
@@ -309,7 +309,7 @@ table.releve td input{padding:4px 8px}
       <option>0,47 Wh — presque tout disparaît</option>
       <option>0,00 Wh — il ne reste rien</option>
     </select>
-    <p><b>3.</b> Pourquoi la pompe, qui tire 300 mA, pèse-t-elle si peu&nbsp;?</p>
+    <p><b>3.</b> Pourquoi la pompe, qui tire 300 mA (milliampères), pèse-t-elle si peu&nbsp;?</p>
     <select id="a0q3">
       <option value="">— je choisis —</option>
       <option>parce qu'elle ne tourne que 60 secondes par jour</option>
@@ -326,7 +326,7 @@ table.releve td input{padding:4px 8px}
       fois plus que la carte… pendant <b>60 secondes par jour</b>. La carte tire 45 mA pendant
       <b>24 heures</b>. Le produit courant × durée écrase l'intuition :</p>
       <table class="refs">
-        <tr><th>Ce qui consomme</th><th>Courant</th><th>Par jour</th><th>Énergie</th><th>Part</th></tr>
+        <tr><th>Ce qui consomme</th><th>Courant (en milliampères)</th><th>Par jour</th><th>Énergie (en wattheures)</th><th>Part</th></tr>
         <tr><td>Carte Arduino UNO</td><td>45 mA</td><td>24 h</td><td>5,400 Wh</td><td><b>92,0 %</b></td></tr>
         <tr><td>Capteur d'humidité</td><td>2 mA</td><td>24 h</td><td>0,240 Wh</td><td>4,1 %</td></tr>
         <tr><td>Écran LCD RGB</td><td>40 mA</td><td>1 h</td><td>0,200 Wh</td><td>3,4 %</td></tr>
@@ -429,7 +429,7 @@ table.releve td input{padding:4px 8px}
   <p>Remonte au banc, <b>toutes les lignes rallumées</b>, et passe les cinq sources. Pour
   chacune, dis ce que le banc conclut.</p>
   <div class="exo">
-    <p style="margin-top:12px"><b>Pile 9 V alcaline</b></p>
+    <p style="margin-top:12px"><b>Pile 9 V (volts) alcaline</b></p>
     <select id="a2g0">
       <option value="">— je choisis —</option>
       <option>elle ne suffit pas : il manque de l'énergie chaque jour</option>
@@ -465,7 +465,7 @@ table.releve td input{padding:4px 8px}
       <option>un jour et demi, puis il faut le recharger</option>
       <option>un peu plus de deux jours</option>
     </select>
-    <p style="margin-top:12px"><b>Panneau solaire 1 W crête + accu</b></p>
+    <p style="margin-top:12px"><b>Panneau solaire 1 W (watts) crête + accu</b></p>
     <select id="a2g4">
       <option value="">— je choisis —</option>
       <option>elle ne suffit pas : il manque de l'énergie chaque jour</option>
@@ -528,7 +528,7 @@ table.releve td input{padding:4px 8px}
       <option>il produit trop de déchets chaque année</option>
       <option>il est dangereux, même avec un adaptateur fermé</option>
     </select>
-    <p><b>Question 3.</b> Le panneau 1 W récolte 3,7 Wh par jour et le jardin en consomme 5,87.
+    <p><b>Question 3.</b> Le panneau 1 W (watts) récolte 3,7 Wh (wattheures) par jour et le jardin en consomme 5,87.
     Il manque donc…</p>
     <select id="a3q3">
       <option value="">— je choisis —</option>
@@ -570,15 +570,15 @@ table.releve td input{padding:4px 8px}
   1 réponse + 1 phrase.</p>
   <p>Retour à l'activité 0 : la carte pèse <b>92 %</b>. Une carte de mesure moderne peut se
   mettre en <b>veille profonde</b> entre deux lectures et ne consommer, en moyenne, que
-  <b>5 mA</b> au lieu de 45.</p>
+  <b>5 mA (milliampères)</b> au lieu de 45.</p>
   <p><b>Fais le calcul au banc :</b> éteins la ligne de la carte, lis le total qui reste, puis
-  ajoute ce que consommerait la carte à faible consommation — 5 mA sous 5 V pendant 24 h, soit
-  0,60 Wh.</p>
+  ajoute ce que consommerait la carte à faible consommation — 5 mA sous 5 V (volts) pendant 24 h, soit
+  0,60 Wh (wattheures).</p>
   <div class="exo">
 
     <p><b>1.</b> Le nouveau total de consommation, par jour&nbsp;:</p>
     <input type="text" inputmode="decimal" id="a4tot" placeholder="… Wh">
-    <p><b>2.</b> Avec ce montage, le panneau solaire 1 W (3,7 Wh par jour)…</p>
+    <p><b>2.</b> Avec ce montage, le panneau solaire 1 W (watts), qui donne 3,7 Wh par jour…</p>
     <select id="a4q2">
       <option value="">— je choisis —</option>
       <option>suffit largement, avec plus du triple de marge</option>
@@ -643,9 +643,9 @@ table.releve td input{padding:4px 8px}
       pour le besoin. Le poids d'une source est une caractéristique ; ce n'est un critère que si
       l'objet bouge.</li>
     <li><b>Courant × tension × durée</b> — l'énergie. Un courant seul ne dit rien : la pompe
-      tire 300 mA et pèse 0,4 %, la carte tire 45 mA et pèse 92 %.</li>
+      tire 300 mA (milliampères) et pèse 0,4 %, la carte tire 45 mA et pèse 92 %.</li>
     <li><b>Réservoir ou robinet</b> — une pile stocke et s'épuise ; le secteur et le panneau ne
-      stockent rien et donnent. Un manque quotidien de 2,17 Wh vide n'importe quel accu.</li>
+      stockent rien et donnent. Un manque quotidien de 2,17 Wh (wattheures) vide n'importe quel accu.</li>
     <li><b>Le coût sur une durée</b> — 131 piles pour deux mois d'été, soit 459 €, contre 15 €
       de panneau. Le prix d'achat n'est pas le coût.</li>
     <li><b>Aucun candidat ne gagne partout</b> — sinon il n'y aurait rien à comparer. Une bonne
@@ -659,10 +659,10 @@ table.releve td input{padding:4px 8px}
 <section class="card bonus">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
   <p><b>💰 Défi coût réel :</b> compare, sur <b>quatre années scolaires</b>, le coût total des
-  quatre piles AA (4,00 € le jeu, 2,1 jours d'autonomie) et celui du panneau 2 W (15 €, plus un
-  accu à 8 € tous les trois ans). À partir de quel mois le panneau devient-il moins cher&nbsp;?</p>
+  quatre piles AA (4,00 € le jeu, 2,1 jours d'autonomie) et celui du panneau 2 W (watts) — 15 €, plus un
+  accu à 8 € tous les trois ans. À partir de quel mois le panneau devient-il moins cher&nbsp;?</p>
   <p><b>🔍 Défi mesure :</b> avec un multimètre en série, mesure le courant réel de ta carte au
-  repos. Est-il de 45 mA&nbsp;? Écris l'écart, et une raison possible.</p>
+  repos. Est-il de 45 mA (milliampères)&nbsp;? Écris l'écart, et une raison possible.</p>
   <p><b>🌧 Défi saison des pluies :</b> le banc compte 5,3 heures d'équivalent plein soleil en
   moyenne annuelle. Cherche ce que devient ce chiffre en septembre en Martinique, et dis de
   combien il faudrait grossir l'accu pour passer une semaine grise.</p>

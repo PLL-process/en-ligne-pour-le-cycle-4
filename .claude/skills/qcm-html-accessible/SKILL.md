@@ -35,6 +35,11 @@ Mis à jour le 23/10/2026 (inventaire des skills) : aligné sur le journal jusqu
   (n°144, 27/08/2026 ; n°198, 28/08/2026).
 - Les bonnes réponses se répartissent sur toutes les positions offertes, à une unité près
   (n°137, 26/08/2026).
+- Une question se lit seule : chaque unité savante y est nommée en toutes lettres à sa première
+  apparition, « 12 V (volts) » (n°312, 25/10/2026). Si l'unité est dans les options, toutes les
+  options qui la portent reçoivent le nom : aucune ne doit se distinguer. Si UNE SEULE option porte l'unité,
+  elle s'y écrit en toutes lettres, sans parenthèse (« il ne manipule que du 5 volts ») : une parenthèse la
+  distinguerait, un rappel dans l'énoncé la désignerait (le contrôle refuse l'option seule nommée).
 
 ## En-tête standard (règle d'or n°2, 22/07/2026)
 
@@ -113,6 +118,7 @@ Répartition des bonnes réponses (n°137) :
 
 - `python3 _outils/controle_entete_qcm.py --muet` — titre, badges, pied, menu (n°292). Sortie 1 si écart.
 - `python3 _outils/controle_banque_qcm.py --muet` — la ligne « Banque : … » dit ce que le tableau contient.
+- `python3 _outils/controle_unites.py --muet` — chaque unité nommée dans sa question (n°312).
 - `python3 _outils/controle_effectifs_qcm.py --muet` — chaque nombre annoncé (page, manifeste,
   lexique) vaut la taille réelle de la banque (n°261, 31/08/2026).
 - `python3 _outils/controle_echantillonnage.py` — codes évaluables (≥ 5 questions) ou seulement
