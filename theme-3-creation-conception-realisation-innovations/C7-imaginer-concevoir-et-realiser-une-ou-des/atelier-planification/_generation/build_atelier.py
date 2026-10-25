@@ -1568,7 +1568,7 @@ def page(niv):
     # des « % » (max-width:100%) que l'opérateur de formatage prendrait pour des
     # jetons. Une seule source, importée, jamais recopiée (règle n°92).
     resultat = resultat.replace("@@LOUPE@@", _loupe().replace("</style>", N303 + "</style>", 1))
-    if "@@LOUPE@@" in resultat or "loupe-images-v1" not in resultat:
+    if "@@LOUPE@@" in resultat or "loupe-images-v2" not in resultat:
         raise SystemExit("Règle n°92 : l'agrandisseur d'images n'a pas été posé "
                          "dans le parcours %s — arrêt avant écriture." % niv)
     return resultat

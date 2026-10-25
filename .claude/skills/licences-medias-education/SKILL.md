@@ -5,7 +5,7 @@ description: Choisir, documenter et attribuer correctement chaque média (image,
 
 # Licences des médias éducatifs
 
-Mis à jour le 23/10/2026 (inventaire des skills) : aligné sur le journal jusqu'à la règle d'or n°311.
+Mis à jour le 23/10/2026 (inventaire des skills) : aligné sur le journal jusqu'à la règle d'or n°311. Agrandisseur v2 : 25/10/2026.
 
 Le journal (`JOURNAL_DES_DECISIONS.md`) fait foi (règle n°10) : les règles citées ici y sont en entier.
 
@@ -56,7 +56,7 @@ Modèle : `_archive-anciennes-versions/…/3e_C9.1/SOURCES_MEDIAS.md`.
 
 - Nom de fichier explicite, taille optimisée (< 300 Ko sauf justification, WebP/PNG selon contenu), légende si informative, version SVG dès que le contenu est schématique.
 - **`alt` court, description longue à côté** (règle d'or n°117, 21/08/2026) : l'`alt` dit la fonction de l'image en une phrase ; la description détaillée vit dans un volet dépliable à côté de l'image, ouvert à tous. Chronogrammes, câblages et algorigrammes reçoivent en plus un équivalent en tableau.
-- **Agrandissement** (règle d'or n°92, 11/08/2026) : toute image d'une page élève s'agrandit d'un clic ou d'Entrée, et se referme par Échap, sans bibliothèque ni réseau. Outil : `theme-3-creation-conception-realisation-innovations/audit/loupe.py <dossier>` (bloc `loupe-images-v1`). L'agrandissement montre l'`alt` en légende : un `alt` creux se voit. Défaut connu du bloc v1 : un `alt` long fait recouvrir l'image par sa légende (journal du 24/09/2026) ; le bloc corrigé `loupe-images-v2` est prévu, pas encore posé.
+- **Agrandissement** (règle d'or n°92, 11/08/2026) : toute image d'une page élève s'agrandit d'un clic ou d'Entrée, et se referme par Échap, sans bibliothèque ni réseau. Outil : `theme-3-creation-conception-realisation-innovations/audit/loupe.py <dossier>` (bloc `loupe-images-v2`, posé sur tout le site le 25/10/2026 ; `--remplacer` passe un v1 en v2). Un schéma SVG écrit dans la page s'agrandit avec ses couleurs, sa police et son fond ; la légende, sous l'image, est la figcaption visible de la figure (sans « (clique sur l'image pour l'agrandir) »), sinon l'`alt`, ramené à sa première phrase s'il dépasse deux lignes (l'`alt` complet reste sur l'image agrandie) : un `alt` creux se voit. Contrôles : `_outils/controle_loupe.py` (marqueur v2, une loupe par page) et `_outils/banc_loupe.py` (fidélité et légende, au navigateur).
 - Schémas techniques : scientifiquement justes, symboles compréhensibles, information/énergie/matière/action distinguées, lisibles en niveaux de gris imprimés. Chaîne d'énergie : skill `chaine-energie-fonctionnelle`.
 
 ## Contrôles
