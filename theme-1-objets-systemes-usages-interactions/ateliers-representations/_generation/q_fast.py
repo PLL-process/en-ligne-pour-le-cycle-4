@@ -42,7 +42,7 @@ IMG_ERREURS = {"src": "Images/fast_station_alerte_erreurs.svg",
 IMG_STATION = {"src": "Images/fast_station_alerte.svg",
                "alt": "Diagramme FAST de la station d'alerte cyclonique : mesurer la vitesse du vent, l'anémomètre ; décider du "
                       "niveau d'alerte, la carte programmable ; diffuser l'alerte aux habitants, la sirène ou un message sur les "
-                      "téléphones ou un panneau lumineux à LED ; stocker l'énergie pour la nuit, la batterie 12 V ; capter "
+                      "téléphones ou un panneau lumineux à LED ; stocker l'énergie pour la nuit, la batterie 12 V (volts) ; capter "
                       "l'énergie du soleil, le panneau solaire."}
 
 # ═══════════════ 5e_C4.1 — Associer des solutions techniques à des fonctions techniques (8) ═══════════════
@@ -398,7 +398,7 @@ q(C, "Réutiliser",
 q(C, "Ce qui change dans la carte",
   "Après l'ajout du capteur de niveau d'eau, que faut-il modifier dans la carte programmable ?",
   ["son programme : comparer le niveau à un seuil",
-   "son alimentation : la brancher sur le 230 V",
+   "son alimentation : la brancher sur le 230 volts",
    "rien : le capteur de niveau prévient tout seul",
    "sa place : la poser au fond de la cuve"],
   "La carte traite la nouvelle mesure : son <b>programme</b> reçoit une condition, « si le niveau est sous le seuil, alors envoyer "
@@ -485,7 +485,7 @@ q(C, "Un critère qui élimine",
    "peut être effacé : il ne départage rien",
    "désigne la solution la plus économe",
    "ne concerne que la sirène de la station"],
-  "C'est une <b>exigence impérative</b> (flexibilité F0) : elle ne départage pas, elle <b>élimine</b>. Une solution sur le 230 V, "
+  "C'est une <b>exigence impérative</b> (flexibilité F0) : elle ne départage pas, elle <b>élimine</b>. Une solution sur le 230 V (volts), "
   "sous la pluie d'un cyclone, serait écartée d'office.",
   "« Résister à des vents de cyclone » élimine aussi tout panneau qui s'envolerait.",
   "Effacer un critère parce que toutes les solutions le remplissent.",

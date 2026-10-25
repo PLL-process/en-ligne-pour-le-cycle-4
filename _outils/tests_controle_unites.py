@@ -3,7 +3,8 @@
 
 Rejoue le cas qui a fait naître la règle (le tableau « Les chiffres pour choisir » de Chengdu : « 1,2 W ·
 0,4 W · 12 W » sans le mot « watts »), les cas qui doivent passer (le nom entre parenthèses, le nom dans
-l'intitulé du tableau, une unité connue de l'école, un listing de code, un schéma intégré), la frontière
+l'intitulé du tableau, une unité connue de l'école, un listing de code), les schémas (un SVG intégré ou un
+fichier est une zone : sa <desc> ne compte pas, la ligne « Unités : … » le fait passer), la frontière
 des zones (un nom écrit dans l'activité d'avant ne compte pas ; une question de QCM se lit seule), les
 fausses pistes écartées (adresse MAC, « niveau 2 A »), l'option seule à porter le nom dans un choix (refusée ;
 écrite en toutes lettres, elle passe), la panne d'une racine vide (règle d'or n°299) et le dépôt réel.
@@ -75,11 +76,29 @@ verifier("le nom de l'activité 1 ne vaut pas pour l'activité 2", code == 1 and
 code, out = jouer({"sequence_a.html": PAGE % '<h2>Activité 1</h2><p>Il faut 432 Wh, soit une puissance en watts.</p>'})
 verifier("« watts » ne nomme pas « Wh »", code == 1 and "Wh sans « wattheures »" in out, out)
 
-# 6. unités connues, code et schéma : pas exigés
+# 6. unités connues et code : pas exigés
 code, out = jouer({"sequence_a.html": PAGE % ('<h2>Activité 1</h2><p>50 km/h, 26 °C, 17,4 kg, 3 min, 25 %.</p>'
-                                               '<pre>tension = 5 V</pre><code>12 V</code>'
-                                               '<svg><text>12 V</text></svg>')})
-verifier("unités connues, listing et schéma intégré ne sont pas exigés", code == 0, out)
+                                               '<pre>tension = 5 V</pre><code>12 V</code>')})
+verifier("unités connues et listing ne sont pas exigés", code == 0, out)
+
+# 6 bis. un schéma est une zone (phase 2, 25/10/2026) : le nom de l'activité ne vaut pas pour lui ; sa
+# <desc> ne compte pas (l'œil ne la voit pas) ; la ligne « Unités : V (volts) » sous le dessin, si
+SCHEMA = ('<svg viewBox="0 0 400 100"><desc>Une batterie de 12 volts.</desc><rect width="400" height="100" fill="#fff"/>'
+          '<text x="10" y="50">batterie 12 V</text></svg>')
+code, out = jouer({"sequence_a.html": PAGE % ('<h2>Activité 1</h2><p>La batterie fait 12 V (volts).</p>' + SCHEMA)})
+verifier("un schéma intégré qui écrit « 12 V » sans « volts » visible est refusé, même si sa desc le dit",
+         code == 1 and "[schéma 1] V sans « volts »" in out, out)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import legende_unites as L  # noqa: E402
+pose = L.poser(SCHEMA)
+code, out = jouer({"sequence_a.html": PAGE % ('<h2>Activité 1</h2><p>La batterie fait 12 V (volts).</p>' + pose)})
+verifier("la ligne « Unités : V (volts) » posée sous le dessin le fait passer ; elle se retire à l'identique",
+         code == 0 and "Unités : V (volts)" in pose and 'viewBox="0 0 400 135.2"' in pose and L.retirer(pose) == SCHEMA
+         and L.poser(pose) == pose, out + pose)
+code, out = jouer({"Images/schema_a.svg": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100"><text>sirène 12 V</text></svg>',
+                   "fichiers_drawio/source.svg": '<svg viewBox="0 0 10 10"><text>12 V</text></svg>'})
+verifier("un fichier SVG est lu comme une zone ; une source draw.io ne l'est pas",
+         code == 1 and "schema_a.svg" in out and "source.svg" not in out, out)
 
 # 7. fausses pistes : adresse MAC, « niveau 2 A », symbole collé à un mot
 code, out = jouer({"sequence_a.html": PAGE % ('<h2>Activité 1</h2><p>MAC : 00:1A:2B:3C. Aide de niveau 2 A : regarde. '
@@ -135,7 +154,7 @@ finally:
 # 11. le dépôt réel, lancé comme on le lance vraiment
 r = subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)), "controle_unites.py"), "--muet"],
                    capture_output=True, text=True, timeout=600)
-verifier("le dépôt réel est lu (sortie 0 ou 1, jamais 2)", r.returncode in (0, 1) and "page(s) lues" in r.stdout,
+verifier("le dépôt réel est lu (sortie 0 ou 1, jamais 2)", r.returncode in (0, 1) and "schéma(s) lus" in r.stdout,
          r.stdout + r.stderr)
 
 print("\n%d / %d" % (ok, ok + ko))

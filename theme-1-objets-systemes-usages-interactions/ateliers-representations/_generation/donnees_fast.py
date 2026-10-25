@@ -1079,7 +1079,7 @@ NIVEAUX = {
                                 ("conclusion", "Une fonction technique se décompose à son tour&nbsp;: le FAST a plusieurs niveaux, jusqu'à ce "
                                                "que chaque case reçoive une solution.")]),
                dict(titre="La batterie tiendra-t-elle&nbsp;?",
-                    consigne="<p>Une sirène 12 V consomme environ 2 ampères quand elle sonne. La batterie de la station peut fournir "
+                    consigne="<p>Une sirène 12 V (volts) consomme environ 2 ampères quand elle sonne. La batterie de la station peut fournir "
                              "environ 20 ampères pendant une heure (on dit 20 ampères-heures). Combien d'heures de sirène, au plus&nbsp;? "
                              "Pourquoi l'équipe prévoit-elle de n'en compter que la moitié&nbsp;?</p>",
                     correction=["20 ampères-heures ÷ 2 ampères → <b>10 heures</b> de sirène, au plus",

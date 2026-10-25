@@ -563,7 +563,7 @@ E6 = dict(
           "<td>10&nbsp;L</td><td>à trouver</td></tr>"
           "<tr><td>FC (le smartphone)</td><td>Envoyer l'état de l'arrosage au smartphone</td><td>à écrire (dernière question)</td>"
           "<td>à écrire</td><td>—</td></tr>"
-          "<tr><td>FC (la gardienne)</td><td>Être sans danger pour la gardienne</td><td>Tension d'alimentation</td><td>12&nbsp;V</td>"
+          "<tr><td>FC (la gardienne)</td><td>Être sans danger pour la gardienne</td><td>Tension d'alimentation</td><td>12&nbsp;V (volts)</td>"
           "<td>à trouver</td></tr>"
           "<tr><td>FC (la gardienne)</td><td>Être facile à régler par la gardienne</td><td>Temps pour changer l'heure d'arrosage</td><td>2&nbsp;min au plus</td>"
           "<td>à trouver</td></tr>"
@@ -595,7 +595,7 @@ E6 = dict(
                               ("f1", "F1 — flexibilité faible&nbsp;: peu négociable"),
                               ("f2", "F2 — flexibilité moyenne&nbsp;: négociable"),
                               ("f3", "F3 — flexibilité forte&nbsp;: très négociable")],
-                  items=[("Sans danger, 12&nbsp;V. La gardienne&nbsp;: « Pas question d'amener le 230&nbsp;V au jardin. »", "f0",
+                  items=[("Sans danger, 12&nbsp;V (volts). La gardienne&nbsp;: « Pas question d'amener le 230&nbsp;V au jardin. »", "f0",
                           "« Pas question » : aucun écart n'est accepté, et le 230 V est un danger."),
                          ("Résister à la pluie, IPX4. La gardienne&nbsp;: « IPX3 sous l'abri, à la rigueur, si on me prouve que la pluie n'y entre pas. »", "f1",
                           "Un écart est possible, mais seulement à une condition précise : c'est peu négociable."),

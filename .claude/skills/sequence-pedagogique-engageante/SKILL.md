@@ -155,7 +155,9 @@ La synthèse « à retenir » se place avant le Bonus (pratique de `3e_C5.1` et 
   « 12 V (volts) », « 432 Wh (wattheures) ». Dans un tableau dont toute la colonne (ou la ligne) porte la même unité, le nom
   va dans l'intitulé : « Courant (en milliampères) ». Dans une liste à choix ou un groupe de boutons où une seule option
   porte l'unité, elle s'y écrit en toutes lettres (« la pile 9 volts ») et la `value` garde le texte que le vérificateur
-  compare. Pas besoin pour m, cm, mm, km, g, kg, L, s, min, h, °C, €, %, km/h.
+  compare. Un schéma (SVG intégré ou fichier) est une zone à lui seul : ses unités sont nommées par la ligne
+  « Unités : V (volts) » sous le dessin, posée par `python3 _outils/legende_unites.py <fichier.svg|page.html>` (le texte
+  de `<title>`/`<desc>` ne compte pas : l'œil ne le voit pas). Pas besoin pour m, cm, mm, km, g, kg, L, s, min, h, °C, €, %, km/h.
 - Personnes (n°302) : la page élève dit « tu » quand elle guide, « je » pour ce que l'élève saura faire et pour son positionnement.
   La troisième personne est réservée aux pages destinées à un collègue (synthèse professeur, fiche pédagogique).
 - Prévoir la sauvegarde locale et la reprise, les exports, une impression propre (n°102), une navigation complète au clavier

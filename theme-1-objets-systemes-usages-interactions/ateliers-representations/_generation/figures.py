@@ -69,7 +69,23 @@ def texte(x, y, contenu, car=22, taille=15, gras=False, couleur=ENCRE, ancre="mi
     return "<text %s>%s</text>" % (" ".join(attrs), "".join(tsp))
 
 
+def _legende_unites(dessin):
+    """Règle d'or n°312 : une unité écrite dans le dessin sans son nom reçoit la ligne « Unités : V (volts) »
+    sous le dessin (outil commun `_outils/legende_unites.py`, qui ne touche à rien d'autre)."""
+    import pathlib
+    import sys
+    outils = str(pathlib.Path(__file__).resolve().parents[3] / "_outils")
+    if outils not in sys.path:
+        sys.path.insert(0, outils)
+    import legende_unites
+    return legende_unites.poser(dessin)
+
+
 def svg(largeur, hauteur, titre, desc, corps, classe="schema", ident=None):
+    return _legende_unites(_svg(largeur, hauteur, titre, desc, corps, classe, ident))
+
+
+def _svg(largeur, hauteur, titre, desc, corps, classe="schema", ident=None):
     i = (' id="%s"' % ident) if ident else ""
     if classe == "schema" and largeur <= 560:
         classe = "schema etroit"   # sur téléphone, un schéma étroit n'est pas élargi à 560 px

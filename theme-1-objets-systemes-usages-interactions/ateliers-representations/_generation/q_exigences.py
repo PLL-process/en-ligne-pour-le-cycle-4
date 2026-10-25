@@ -16,7 +16,7 @@ IMG_ARROSAGE = {"src": "Images/exigences_arrosage.svg",
                 "alt": "Diagramme des exigences du système d'arrosage : en haut l'exigence 1, Arrosage autonome ; reliées à "
                        "elle par un petit cercle à croix, quatre exigences-filles : 1.1 Étanchéité (IPX4 au moins), "
                        "1.2 Sobriété (au plus 10 L par jour), 1.3 Réglage (sans outil, 2 min au plus), 1.4 Sécurité "
-                       "électrique (très basse tension, 12 V)."}
+                       "électrique (très basse tension, 12 V, en volts)."}
 IMG_TESTS = {"src": "Images/exigences_arrosage_tests_verify.svg",
              "alt": "Le même diagramme du système d'arrosage, avec sous chaque exigence un bloc testCase relié par une "
                     "flèche en tirets « verify » qui monte du test vers l'exigence : T3 vers 1.1, T1 vers 1.2, T4 vers "
@@ -190,7 +190,7 @@ q(C, "L'étanchéité, quelle catégorie ?",
   ["",
    "La finition ne protège pas de l'eau : ce sont les joints et la forme du boîtier qui comptent.",
    "L'écran peut être très lisible et s'éteindre quand même à la première averse.",
-   "Le boîtier fonctionne en très basse tension, 12 V : l'eau le fait tomber en panne, elle ne le rend pas dangereux."],
+   "Le boîtier fonctionne en très basse tension, 12 V (volts) : l'eau le fait tomber en panne, elle ne le rend pas dangereux."],
   "Fonctionner sans panne, par tous les temps : fiabilité.")
 
 q(C, "Sous la bonne mère",
@@ -330,7 +330,7 @@ q(C, "Presque, en F0",
    "non validée : il fallait mesurer en minutes"],
   "En <b>F0</b>, le niveau est impératif : 31 s pour « 30 s au plus », c'est un écart, donc l'exigence n'est pas validée. "
   "On règle, puis on refait le test.",
-  "Même logique pour 12 V en F0 : 24 V mesurés, ce n'est pas validé, même si 24 V reste une très basse tension.",
+  "Même logique pour 12 V (volts) en F0 : 24 V mesurés, ce n'est pas validé, même si 24 V reste une très basse tension.",
   "Valider un résultat « presque bon ».",
   ["",
    "« Presque » ne compte pas en F0 : c'est justement la classe où le client n'accepte aucun écart.",
