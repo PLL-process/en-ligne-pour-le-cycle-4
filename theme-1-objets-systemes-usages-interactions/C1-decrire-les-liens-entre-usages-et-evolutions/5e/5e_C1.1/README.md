@@ -9,6 +9,12 @@
 [Synthèse professeur](Synthèses/synthese_professeur_5e_C1.1-C1.6.html) ·
 [Fiche pédagogique](fiche_pedagogique_5e_C1.1-C1.6.md)
 
+🎬 **Depuis le 25/10/2026**, l'activité 1 montre les trois principes en **animation pas à pas** (11 étapes, voix de
+synthèse SIWIS, finale avec curseur de poussière et horloge accélérée) :
+[lien direct pour le cahier de textes](sequence_5e_C1.1-C1.6_chengdu_air.html#trois-principes-pas-a-pas).
+À l'écran elle remplace les trois schémas fixes, qui s'impriment toujours. Banc : `tests_animation_trois_principes.py` ;
+voix : `_generation/voix_trois_principes/` et `SOURCES_MEDIAS.md`.
+
 ## Un seul objet pour six codes
 
 Le relevé du capteur de la cour est **mesuré** (C1.2), **collecté et trié** (C1.1), **rangé** (C1.4),
