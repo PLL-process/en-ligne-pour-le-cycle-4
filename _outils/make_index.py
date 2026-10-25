@@ -107,7 +107,60 @@ def classer(nom):
 SIGLES = {"fast": "FAST", "qcm": "QCM", "dnb": "DNB", "crcn": "CRCN", "pix": "Pix", "nfc": "NFC", "rfid": "RFID",
           "ip": "IP", "sysml": "SysML", "sadt": "SADT", "uml": "UML", "cao": "CAO", "dao": "DAO", "tbt": "TBT",
           "lcd": "LCD", "gps": "GPS", "usb": "USB", "ia": "IA", "3d": "3D", "ny": "NY", "xxl": "XXL",
-          "zigbee": "Zigbee"}
+          "zigbee": "Zigbee", "sos": "SOS", "2fa": "2FA", "mq": "MQ"}
+# Même mécanisme pour les accents et les noms propres, perdus dans les noms de fichiers : « Jeu de données —
+# Velos hangzhou simulees » devient « Vélos Hangzhou simulées ». Les mots ambigus sans accent (de, du, des,
+# la, sur, alerte, compte, mesure, programme, serre) ne sont pas dans la table : ils restent tels quels.
+MOTS = {"activites": "activités", "ameliore": "amélioré", "bete": "bête", "boite": "boîte", "boitier": "boîtier",
+        "chaine": "chaîne", "college": "collège", "connecte": "connecté", "cybersecurite": "cybersécurité",
+        "depanner": "dépanner", "donnees": "données", "depart": "départ", "eclairage": "éclairage", "economie": "économie",
+        "energie": "énergie", "entrainement": "entraînement", "equiper": "équiper", "etabli": "établi",
+        "etiquetee": "étiquetée", "generer": "générer", "kilometre": "kilomètre", "materiaux": "matériaux",
+        "mat": "mât", "numerique": "numérique", "patere": "patère", "poussieres": "poussières", "preau": "préau",
+        "publie": "publié", "raisonne": "raisonné", "releves": "relevés", "reparer": "réparer",
+        "repartir": "répartir", "reseau": "réseau", "reseaux": "réseaux", "sante": "santé", "simulee": "simulée",
+        "simulees": "simulées", "simules": "simulés", "societe": "société", "synthese": "synthèse",
+        "systemes": "systèmes", "taches": "tâches", "vehicules": "véhicules", "velos": "vélos",
+        # noms propres
+        "chengdu": "Chengdu", "hangzhou": "Hangzhou", "shenzhen": "Shenzhen", "shanghai": "Shanghai",
+        "pekin": "Pékin", "tsinghua": "Tsinghua", "ecall": "eCall", "onshape": "Onshape", "python": "Python",
+        "mbot2": "mBot2"}
+# deux jetons qui n'en font qu'un, ou qui se lisent ensemble
+PAIRES = {("sainte", "luce"): ["Sainte-Luce"], ("book", "train"): ["Book", "Train"],
+          ("packet", "tracer"): ["Packet", "Tracer"], ("le", "de"): ["le", "dé"]}
+
+
+def ecrire_jeton(j):
+    """Le jeton tel qu'il s'écrit : sigle, accent, nom propre ; la casse du nom de fichier est respectée."""
+    bas = j.lower()
+    if bas in SIGLES:
+        return SIGLES[bas]
+    if bas == "a" and j == "a":  # « bete_a_cornes » : la préposition ; « PANNE A » garde sa lettre
+        return "à"
+    if bas in MOTS:
+        m = MOTS[bas]
+        if j.isupper() and len(j) > 1:
+            return m.upper()
+        if j[0].isupper() and m[0].islower():
+            return m[0].upper() + m[1:]
+        return m
+    return j
+
+
+def recoller(jetons):
+    out, i = [], 0
+    while i < len(jetons):
+        cle = tuple(t.lower() for t in jetons[i:i + 2])
+        if len(cle) == 2 and cle in PAIRES:
+            rempl = list(PAIRES[cle])
+            if jetons[i][0].isupper() and rempl[0][0].islower():
+                rempl[0] = rempl[0][0].upper() + rempl[0][1:]
+            out += rempl
+            i += 2
+        else:
+            out.append(jetons[i])
+            i += 1
+    return out
 
 
 def titre_pedagogique(nom, libelle):
@@ -127,10 +180,12 @@ def titre_pedagogique(nom, libelle):
     for j in jetons:
         if re.fullmatch(r"\d+e", j) or re.fullmatch(r"C\d+", j, re.I) or re.fullmatch(r"\d+", j):
             continue
-        garde.append(SIGLES.get(j.lower(), j))
-    base = " ".join(garde).strip()
+        garde.append(ecrire_jeton(j))
+    base = " ".join(recoller(garde)).strip()
     if not base:
         return libelle
+    if re.match(r"[a-z][A-Z]", base):  # eCall, mBot2 : la minuscule de tête fait partie du nom
+        return f"{libelle} — {base}"
     return f"{libelle} — {base[0].upper() + base[1:]}"
 
 
