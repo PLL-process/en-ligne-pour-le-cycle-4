@@ -676,7 +676,19 @@ table.releve td input{padding:4px 8px}
 <script>
 (function(){
 "use strict";
-const KEY = "seq_4e_C7_4";
+const KEY = "seq_4e_C7_8";
+/* Jusqu'au 25/10/2026, cette page enregistrait sous la clé de 4e_C7.4 (« seq_4e_C7_4 ») :
+   les deux séquences mélangeaient le travail de l'élève. Migration UNE SEULE FOIS : si la
+   clé propre n'existe pas encore et que l'ancienne existe, on la COPIE (sans l'effacer :
+   4e_C7.4 s'en sert), puis cette page ne relit plus jamais l'ancienne clé — dès la première
+   ouverture, la clé propre existe (majLien() appelle save() au chargement). */
+const ANCIENNE_CLE = "seq_4e_C7_4";
+try{
+  if(localStorage.getItem(KEY) === null){
+    const v = localStorage.getItem(ANCIENNE_CLE);
+    if(v !== null) localStorage.setItem(KEY, v);
+  }
+}catch(e){}
 const $ = id => document.getElementById(id);
 window.__exp = window.__exp || {};
 

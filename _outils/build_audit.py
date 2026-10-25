@@ -1409,7 +1409,9 @@ OVERLAY = {
                 "activites plus tard, quand douze mesures liberees d'un coup seraient toutes "
                 "datees de la meme minute. Trois verrous experientiels. QCM 30 q / 90 "
                 "refutations (C7.8 x20, C1.4 x10), lexique 30 notions, deux syntheses, fiche, "
-                "matrice de 17 notions, tests reels 35/35 et 26/26 avec scripts livres.",
+                "matrice de 17 notions, tests reels 46/46 et 32/32 avec scripts livres. Cle "
+                "de sauvegarde propre seq_4e_C7_8 depuis le 25/10/2026 (elle partageait celle "
+                "de 4e_C7.4), avec copie unique de l'ancienne a la premiere ouverture.",
         anomalies="Aucune liaison reelle : le banc simule l'echange, et la version A le fait avec "
                   "deux cartes et le moniteur serie — ce sont alors les trames observees qui font "
                   "foi. Le format JSON est impose par le banc ; le choix d'un format est traite "
@@ -1478,8 +1480,9 @@ OVERLAY = {
         sequence=True, qcm=True, projet=True, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
         qualite="Séquence « La station d'alerte cyclonique se programme » (objet-fil "
-                "3e, commande de la mairie avec exigence de PV de recette) : 4 séances "
-                "de 1 h 30, 7 activités, banc d'essai de la station INTÉGRÉ (curseur de "
+                "3e, commande de la mairie avec exigence de PV de recette) : 8 séances "
+                "de 55 min (24/10/2026, ex-4 × 1 h 30 ; l'activité 3 de ~70 min en deux "
+                "parties), 7 activités, banc d'essai de la station INTÉGRÉ (curseur de "
                 "vent, LCD, DEL, buzzer, bouton d'acquittement, chrono, boucle 200 ms) "
                 "avec verrous expérientiels sur les activités 3, 4 et 7 ; programmation "
                 "ArduBlock par paliers façon « dé de 5e » (image du résultat attendu et "
@@ -1506,11 +1509,12 @@ OVERLAY = {
         statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
         sequence=True, qcm=True, projet=True, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
-        qualite="Proposer un protocole de test : séance 4 entière de la séquence "
-                "« La station d'alerte cyclonique se programme » (3e_C9.2) — l'élève "
-                "RÉDIGE son protocole (act. 6 : nominaux, frontières 99/100/149/150, "
-                "performance chronométrée, interaction) puis l'EXÉCUTE au banc et signe "
-                "le PV (act. 7, verrous sur les frontières et le chrono). 15 questions "
+        qualite="Proposer un protocole de test : séances 7 et 8 (55 min chacune) de la "
+                "séquence « La station d'alerte cyclonique se programme » (3e_C9.2) — l'élève "
+                "RÉDIGE son protocole (act. 6, séance 7 : nominaux, frontières 62/63, "
+                "117/118, 177/178, performance chronométrée, interaction) puis l'EXÉCUTE au "
+                "banc et signe le PV (act. 7, séance 8, verrous sur les frontières et le "
+                "chrono). 15 questions "
                 "de QCM dédiées. README pointeur en place.",
         anomalies="",
     ),

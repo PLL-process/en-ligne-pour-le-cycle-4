@@ -57,7 +57,7 @@ devient.
 
 ## Tests
 
-**35 / 35** sur la séquence, **32 / 32** sur le QCM, rejouables : scripts et jeu de réponses
+**46 / 46** sur la séquence (dont la clé de sauvegarde propre et la reprise d'une sauvegarde faite avant), **32 / 32** sur le QCM, rejouables : scripts et jeu de réponses
 livrés dans le dossier. Voir [`rapport_tests_4e_C7.8.md`](rapport_tests_4e_C7.8.md).
 
 ## Fichiers

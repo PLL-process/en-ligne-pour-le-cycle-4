@@ -13,7 +13,7 @@ sortie de la dernière exécution, recopiée telle quelle.
 > sur un geste ; vérifié après correction : `__exp` est **vide** à l'ouverture, et le verrou
 > s'ouvre normalement dès les manipulations réelles (règles d'or n°226 et n°265).
 ```bash
-node tests_4e_C7.4_sequence.mjs "$PWD/sequence_4e_C7.4_energie-du-jardin.html" 4e reponses_4e.json
+node tests_4e_C7.4_sequence.mjs "$PWD/sequence_4e_C7.4_energie-du-jardin.html" 4e reponses_4e_C7.4.json
 node tests_4e_C7.4_qcm.mjs      "$PWD/qcm_4e_C7.4_energie-du-jardin.html" 4e_C7.4 4e_C3.1 sequence_4e_C7.4_energie-du-jardin.html
 python3 energie.py          # recalcule toutes les valeurs du banc
 ```

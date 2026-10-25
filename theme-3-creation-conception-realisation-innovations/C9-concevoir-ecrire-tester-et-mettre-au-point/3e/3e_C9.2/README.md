@@ -11,7 +11,9 @@ programme désormais — et se prouve.
 ## Ressources
 
 * **`sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html`** — la séquence
-  complète (4 séances de 1 h 30, 7 activités) : commande de la mairie avec
+  complète (8 séances de 55 min, 7 activités — une par séance, l'activité 3
+  de ~70 min étant coupée en deux parties, paliers 1-2 puis palier 3 et
+  vérification) : commande de la mairie avec
   exigence de PV de recette, algorithme → algorigramme (pont DNB), programmation
   **Vittascience** (interface Arduino, mode BLOCS, simulateur intégré) **par
   paliers** avec planche du résultat attendu à chaque palier — ArduBlock reste
@@ -21,9 +23,12 @@ programme désormais — et se prouve.
   **Banc d'essai de la station intégré** (curseur de vent, LCD, DEL, buzzer,
   bouton d'acquittement, chrono de performance) avec verrous expérientiels —
   les activités 3, 4 et 7 exigent les manipulations réelles.
-* **Les mêmes activités, découpées en quatre pages** — une par séance :
-  `..._station_1_besoin-et-algorithme.html`, `..._station_2_programmer.html`,
-  `..._station_3_interaction.html`, `..._station_4_recette.html`.
+* **Les mêmes activités, découpées en quatre pages** — une par grande étape,
+  chacune portant deux séances de 55 min annoncées en tête de page :
+  `..._station_1_besoin-et-algorithme.html` (séances 1-2),
+  `..._station_2_programmer.html` (séances 3-4),
+  `..._station_3_interaction.html` (séances 5-6), `..._station_4_recette.html`
+  (séances 7-8).
   **Rien n'est perdu au découpage** : l'union des quatre pages contient exactement
   les mêmes questions que la page complète (c'est un test de la suite), et les
   **réponses sont partagées** — un élève peut commencer sur une page et finir sur
@@ -36,7 +41,7 @@ programme désormais — et se prouve.
   complète, puis on relance `python3 generer_les_quatre_pages.py`. Une retouche
   faite dans une page découpée serait écrasée à la prochaine exécution, et aurait
   divergé en silence entre-temps.
-* **`tests_3e_C9.2-C8.3.mjs`** — la suite de tests (125 tests, Playwright), qui
+* **`tests_3e_C9.2-C8.3.mjs`** — la suite de tests (156 tests, Playwright), qui
   vérifie entre autres qu'aucune question n'est perdue au découpage et que les
   réponses circulent bien entre les cinq fichiers : `node tests_3e_C9.2-C8.3.mjs .`
 * **`Images/vittascience/`** — **treize captures d'écran réelles** du programme de
@@ -92,7 +97,7 @@ et l'écart est expliqué en légende. Une capture ne se retouche pas.
 
 **Logiciel** : **Vittascience**, interface Arduino en mode BLOCS
 (`fr.vittascience.com/arduino`) — seul élément de la séquence qui demande une
-connexion Internet, avec repli hors-ligne complet prévu en séance 2. ArduBlock
+connexion Internet, avec repli hors-ligne complet prévu aux séances 3 et 4. ArduBlock
 Éducation 1.7 reste disponible en **bonus facultatif** (hors parcours
 obligatoire). Les versions 🅱 (banc intégré) et 🅲 (banc + traces fournies)
 couvrent tout le parcours sans matériel.
