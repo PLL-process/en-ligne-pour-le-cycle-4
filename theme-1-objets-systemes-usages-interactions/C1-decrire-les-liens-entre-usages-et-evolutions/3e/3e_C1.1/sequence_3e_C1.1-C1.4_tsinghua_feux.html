@@ -153,8 +153,8 @@
 .hpp-dessin .fort{font-weight:600}
 .hpp-dessin .c-violet{fill:#c68ef2}.hpp-dessin .c-bleu{fill:#6ea8ff}.hpp-dessin .c-vert{fill:#81fba1}
 .hpp-dessin .c-jaune{fill:#ffd66b}.hpp-dessin .c-orange{fill:#ffb454}.hpp-dessin .c-rouge{fill:#ff7b88}
-.hpp-dessin [data-des]{transition:opacity .35s ease calc(var(--i,0) * .12s)}
-.hpp-dessin [data-des].hpp-cache{opacity:0}
+.hpp-dessin [data-de]{transition:opacity .35s ease calc(var(--i,0) * .12s)}
+.hpp-dessin [data-de].lpp-cache{opacity:0}
 .hpp-dessin .hpp-col{transform-box:fill-box;transform-origin:50% 100%;
   transition:transform .6s ease calc(var(--i,0) * .08s)}
 .hpp-dessin .hpp-col.hpp-vide{transform:scaleY(0)}
@@ -174,6 +174,236 @@
 @media (prefers-reduced-motion: reduce){.hpp-dessin *{transition:none!important}}
 @media print{.hpp{display:none!important}}
 </style>
+<!-- lecteur-pas-a-pas v1 : début — lecteur commun des animations pas à pas ; source unique : _outils/lecteur_pas_a_pas/ (poser.py). Ne pas le modifier dans la page. -->
+<style>
+/* Lecteur pas à pas commun — source unique : _outils/lecteur_pas_a_pas/lecteur.css (posée par poser.py). */
+[data-lpp-racine] [data-de],[data-lpp-racine] [data-a],[data-lpp-racine] [data-des],[data-lpp-racine] [data-seul]{transition:opacity .35s ease calc(var(--i,0) * .12s),visibility 0s linear 0s}
+[data-lpp-racine] .lpp-cache{opacity:0!important;visibility:hidden;transition:opacity .2s ease,visibility 0s linear .2s}
+[data-lpp-racine] [data-aller][aria-current]{outline:2px solid currentColor;outline-offset:2px}
+.lpp-imprime{display:none}
+@media (prefers-reduced-motion: reduce){
+  [data-lpp-racine] [data-de],[data-lpp-racine] [data-a],[data-lpp-racine] [data-des],[data-lpp-racine] [data-seul],[data-lpp-racine] .lpp-cache{transition:none!important}
+}
+@media print{
+  [data-lpp-racine].lpp-sans-impression{display:none!important}
+  [data-lpp-racine] [data-lpp="controles"],[data-lpp-racine] [data-lpp="chapitres"],
+  [data-lpp-racine] [data-lpp="texte"],[data-lpp-racine] [data-lpp="sansvoix"],[data-lpp-racine] [data-lpp="ouvrir"]{display:none!important}
+  [data-lpp-racine] [data-lpp="panneau"]{display:block!important}
+  [data-lpp-racine] .lpp-imprime{display:block;margin:8px 0 0 1.2em;padding:0;color:#000}
+  [data-lpp-racine] .lpp-imprime li{margin:2px 0;break-inside:avoid}
+}
+</style>
+<script>
+/* Lecteur pas à pas commun (règles d'or n°119 et n°305). Source unique : _outils/lecteur_pas_a_pas/lecteur.js,
+   posé dans chaque page par _outils/lecteur_pas_a_pas/poser.py — ne pas le modifier dans une page.
+   La page garde son dessin et ses scènes ; le lecteur fait le reste : étapes, chapitres, voix, déroulé,
+   mouvement réduit, impression, lien direct. Rien ne démarre ni ne parle sans un geste de l'élève. */
+(function(){
+  "use strict";
+  if (window.LecteurPasAPas) return;
+  var calme = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : {matches: false};
+  var lecteurs = [];                                     // un seul lecteur de la page parle à la fois
+
+  function LecteurPasAPas(bloc, o){
+    if (!bloc) return null;
+    o = o || {};
+    bloc.setAttribute("data-lpp-racine", "");
+    if (o.voix) bloc.setAttribute("data-lpp-voix", o.voix);     // lu par le banc : chaque étape a son fichier
+    var S = o.scenes || [], N = S.length, scene = 1, tScene = 0, MOT = o.mot || "Étape";
+    function q(nom){ return bloc.querySelector('[data-lpp="' + nom + '"]'); }
+    var dessin = q("dessin"), titre = q("titre"), texte = q("texte"), compte = q("compte");
+    var prec = q("prec"), suiv = q("suiv"), zero = q("zero");
+    var bRegarder = q("regarder"), bEcouter = q("ecouter"), sansVoix = q("sansvoix");
+    var bOuvrir = q("ouvrir"), panneau = q("panneau");
+    var chapitres = [].slice.call(bloc.querySelectorAll("[data-aller]"));
+    var moi = {};
+
+    // ── L'impression : la liste des étapes (rien n'est porté par le seul mouvement) ──
+    if (o.imprimer !== false) {
+      var liste = document.createElement("ol");
+      liste.className = "lpp-imprime";
+      S.forEach(function(s){
+        var li = document.createElement("li");
+        li.innerHTML = (s.t ? "<b>" + s.t + "</b> — " : "") + s.p;
+        liste.appendChild(li);
+      });
+      bloc.appendChild(liste);
+    } else bloc.classList.add("lpp-sans-impression");
+
+    // ── La boucle : elle ne tourne que si le bloc est à l'écran, l'onglet visible, et le mouvement permis ──
+    var raf = 0, avantT = 0, visible = true;
+    function ouvert(){ return !panneau || !panneau.hidden; }
+    function doitTourner(){
+      if (!o.maj || !visible || document.hidden || !ouvert()) return false;
+      return !calme.matches || !!(o.tourne && o.tourne(scene));
+    }
+    function boucle(ts){
+      raf = 0;
+      if (!doitTourner()) { avantT = 0; return; }
+      var dt = avantT ? Math.min(.05, (ts - avantT) / 1000) : 0;
+      avantT = ts; tScene += dt; o.maj(dt, scene, tScene);
+      raf = requestAnimationFrame(boucle);
+    }
+    function relancer(){ if (!raf && doitTourner()) { avantT = 0; raf = requestAnimationFrame(boucle); } }
+    function imageFixe(){ if (o.fixe) o.fixe(scene); else if (o.maj) o.maj(0, scene, tScene); }
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function(e){ visible = e[e.length - 1].isIntersecting; relancer(); }).observe(bloc);
+    }
+    document.addEventListener("visibilitychange", relancer);
+    if (calme.addEventListener) calme.addEventListener("change", function(){ if (calme.matches) imageFixe(); relancer(); });
+
+    // ── Changer d'étape ──
+    // auto : l'étape vient du déroulé (« Regarder »), pas d'un clic de l'élève.
+    function montrer(n, auto){
+      var cible = Math.max(1, Math.min(N, n)), ancienne = scene;
+      if (o.avant && cible > ancienne && o.avant(ancienne, cible, !!auto) === false) return false;   // étape à mériter
+      scene = cible; tScene = 0;
+      bloc.setAttribute("data-scene", String(scene));
+      // data-de / data-a : de l'étape n à l'étape m ; data-des et data-seul : les noms écrits par les générateurs
+      // des premières animations (vélo-cargo), lus tels quels.
+      bloc.querySelectorAll("[data-de],[data-a],[data-des],[data-seul]").forEach(function(el){
+        var de = +(el.getAttribute("data-de") || el.getAttribute("data-des") || el.getAttribute("data-seul") || 1);
+        var a = +(el.getAttribute("data-a") || el.getAttribute("data-seul") || N);
+        el.classList.toggle("lpp-cache", scene < de || scene > a);
+      });
+      var s = S[scene - 1] || {};
+      if (dessin && s.d) dessin.setAttribute("aria-label", s.d);
+      if (titre) titre.textContent = MOT + " " + scene + (s.t ? " — " + s.t : "");
+      if (texte) texte.innerHTML = "<p>" + (s.p || "") + "</p>";
+      if (compte) compte.textContent = MOT + " " + scene + " / " + N;
+      if (prec) prec.disabled = scene === 1;
+      if (suiv) suiv.disabled = scene === N;
+      var courant = null;
+      chapitres.forEach(function(b){ if (+b.getAttribute("data-aller") <= scene) courant = b; });
+      chapitres.forEach(function(b){ if (b === courant) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current"); });
+      if (o.entrer) o.entrer(scene, ancienne, !!auto);
+      if (calme.matches) imageFixe(); else if (o.maj) o.maj(0, scene, tScene);
+      relancer();
+      return true;
+    }
+
+    // ── La voix : les fichiers de la séance (synthèse neuronale hors ligne, jamais le réseau) ; en secours, ──
+    // ── une voix française LOCALE du système (jamais une voix en ligne). ──
+    var regarde = false, minuterie = null, jeton = 0, lecteur = null, ext = "";
+    if (o.voix) {
+      lecteur = new Audio();
+      try { ext = lecteur.canPlayType('audio/ogg; codecs="opus"') ? "ogg" : (lecteur.canPlayType("audio/mpeg") ? "mp3" : ""); }
+      catch (e) { ext = ""; }
+    }
+    var son = !!ext, synth = (bEcouter || bRegarder) ? (window.speechSynthesis || null) : null, voix = null;
+    function choisirVoix(){
+      var fr = (synth ? synth.getVoices() : []).filter(function(v){ return /^fr/i.test(v.lang) && v.localService; });
+      voix = fr.filter(function(v){ return /^fr-FR/i.test(v.lang); })[0] || fr[0] || null;
+      if (bEcouter) bEcouter.hidden = !(son || voix);
+      if (sansVoix) sansVoix.hidden = !!(son || voix);
+    }
+    if (synth && "onvoiceschanged" in synth) synth.addEventListener("voiceschanged", choisirVoix);
+    function brut(i){ var d = document.createElement("div"); d.innerHTML = S[i - 1].p; return d.textContent; }
+    function duree(i){ return Math.max(3500, brut(i).split(/\s+/).length * (o.msParMot || 400)) + 1000; }
+    function parlerSynth(i, finir){
+      var j = ++jeton;
+      if (!voix) { if (finir) minuterie = setTimeout(function(){ if (j === jeton) finir(); }, duree(i)); return; }
+      synth.cancel();
+      var u = new SpeechSynthesisUtterance(brut(i)), fait = false, secours;
+      u.voice = voix; u.lang = voix.lang; u.rate = .95;
+      function f(){ if (fait || j !== jeton) return; fait = true; clearTimeout(secours); if (finir) finir(); }
+      u.onend = f; u.onerror = f;
+      secours = setTimeout(f, duree(i) * 2 + 2000);
+      synth.speak(u);
+    }
+    function parler(i, finir){
+      lecteurs.forEach(function(l){ if (l !== moi) l.arreter(); });
+      if (!son) { parlerSynth(i, finir); return; }
+      var j = ++jeton, fait = false, secours;
+      if (synth) synth.cancel();
+      function f(){ if (fait || j !== jeton) return; fait = true; clearTimeout(secours); if (finir) finir(); }
+      function bascule(){
+        if (fait || j !== jeton) return;
+        fait = true; clearTimeout(secours); lecteur.pause();
+        if (!voix) { if (bEcouter) bEcouter.hidden = true; if (sansVoix) sansVoix.hidden = false; }
+        parlerSynth(i, finir);
+      }
+      lecteur.onended = f; lecteur.onerror = bascule;
+      secours = setTimeout(f, duree(i) * 2 + 2000);
+      lecteur.src = o.voix + i + "." + ext;
+      var essai = lecteur.play();
+      if (essai && essai.catch) essai.catch(bascule);
+    }
+    function arreter(){
+      regarde = false; jeton++; clearTimeout(minuterie);
+      if (lecteur) lecteur.pause();
+      if (synth) synth.cancel();
+      if (bRegarder) bRegarder.textContent = "▶ Regarder";
+    }
+    function derouler(){
+      if (!regarde) return;
+      parler(scene, function(){
+        minuterie = setTimeout(function(){
+          if (!regarde) return;
+          if (scene < N && montrer(scene + 1, true)) derouler(); else arreter();
+        }, 1200);
+      });
+    }
+    function demarrer(){
+      if (scene === N) montrer(1);
+      regarde = true; if (bRegarder) bRegarder.textContent = "⏸ Pause"; derouler();
+    }
+    if (prec) prec.addEventListener("click", function(){ arreter(); montrer(scene - 1); });
+    if (suiv) suiv.addEventListener("click", function(){ arreter(); montrer(scene + 1); });
+    if (zero) zero.addEventListener("click", function(){ arreter(); montrer(1); if (suiv) suiv.focus(); });
+    if (bRegarder) bRegarder.addEventListener("click", function(){ if (regarde) arreter(); else demarrer(); });
+    if (bEcouter) bEcouter.addEventListener("click", function(){ arreter(); parler(scene); });
+    chapitres.forEach(function(b){ b.addEventListener("click", function(){ arreter(); montrer(+b.getAttribute("data-aller")); }); });
+    if (bOuvrir && panneau) bOuvrir.addEventListener("click", function(){
+      var ouvrir = panneau.hidden;
+      panneau.hidden = !ouvrir;
+      bOuvrir.setAttribute("aria-expanded", String(ouvrir));
+      if (o.ouvrir) o.ouvrir(ouvrir);
+      if (!ouvrir) arreter();
+      relancer();
+    });
+    document.addEventListener("click", function(e){ if (e.target.closest && e.target.closest("[role=tab]")) arreter(); });
+    document.addEventListener("visibilitychange", function(){ if (document.hidden) arreter(); });
+    window.addEventListener("pagehide", arreter);
+
+    // ── Impression : l'étape choisie (la dernière par défaut) le temps d'imprimer ──
+    var avantImpression = null;
+    window.addEventListener("beforeprint", function(){
+      if (o.imprimer === false) return;
+      arreter(); avantImpression = scene;
+      montrer(typeof o.imprimer === "number" ? o.imprimer : N); imageFixe();
+    });
+    window.addEventListener("afterprint", function(){
+      if (avantImpression !== null) { montrer(avantImpression); avantImpression = null; }
+    });
+
+    // ── Lien direct (cahier de textes) : #id du bloc ouvre la séance qui le porte, puis le bloc ──
+    function allerAuLien(){
+      if (!bloc.id || location.hash !== "#" + bloc.id) return;
+      var onglet = o.onglet ? document.getElementById(o.onglet) : null;
+      if (onglet && !onglet.classList.contains("active")) onglet.click();
+      if (bOuvrir && panneau && panneau.hidden) bOuvrir.click();
+      setTimeout(function(){ bloc.scrollIntoView({block: "start"}); }, 450);
+    }
+    window.addEventListener("hashchange", allerAuLien);
+    if (document.readyState === "complete") allerAuLien();
+    else window.addEventListener("load", allerAuLien);
+
+    moi.montrer = montrer;
+    moi.arreter = arreter;
+    moi.regarder = function(){ if (!regarde) demarrer(); };
+    moi.relancer = relancer;
+    moi.scene = function(){ return scene; };
+    moi.calme = function(){ return calme.matches; };
+    lecteurs.push(moi);
+    choisirVoix();
+    montrer(o.depart || 1);
+    return moi;
+  }
+  window.LecteurPasAPas = LecteurPasAPas;
+})();
+</script>
+<!-- lecteur-pas-a-pas v1 : fin -->
 </head>
 <body>
 <style id="navharm-css">
@@ -473,14 +703,14 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
          SOURCES_DONNEES_IMPACTS_3e.md. L'état final du dessin est le schéma fixe du volet
          « Ce qu'Herschel a observé ». Aucune information portée par le seul mouvement (n°119) :
          chaque étape est dite par sa phrase. -->
-    <div class="hpp" id="herschel-pas-a-pas">
-      <button type="button" class="btn hpp-ouvrir" id="hppOuvrir" aria-expanded="false" aria-controls="hppPanneau">▶ Voir l'expérience pas à pas</button>
-      <div class="hpp-panneau" id="hppPanneau" hidden>
+    <div class="hpp" id="herschel-pas-a-pas" data-lpp-racine>
+      <button type="button" class="btn hpp-ouvrir" id="hppOuvrir" data-lpp="ouvrir" aria-expanded="false" aria-controls="hppPanneau">▶ Voir l'expérience pas à pas</button>
+      <div class="hpp-panneau" id="hppPanneau" data-lpp="panneau" hidden>
         <svg class="hpp-dessin" data-loupe="non" viewBox="0 0 820 400" aria-hidden="true" focusable="false"
              font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif">
         <rect width="820" height="400" fill="#050f24"/>
-        <g data-des="1"><circle cx="64" cy="104" r="28" fill="#ffd66b"/><text class="nom" x="40" y="156">Soleil</text></g>
-        <g data-des="2">
+        <g data-de="1"><circle cx="64" cy="104" r="28" fill="#ffd66b"/><text class="nom" x="40" y="156">Soleil</text></g>
+        <g data-de="2">
           <rect x="128" y="68" width="10" height="28" fill="#274a8a"/><rect x="128" y="104" width="10" height="44" fill="#274a8a"/>
           <text class="nom lb-fenetre" x="92" y="172">fenêtre masquée</text>
           <path d="M 92 100 L 206 100" stroke="#fff3c4" stroke-width="4" fill="none"/>
@@ -488,7 +718,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
           <text class="nom" x="194" y="148">prisme</text>
           <rect x="270" y="336" width="546" height="14" rx="2" fill="#34425e"/>
         </g>
-        <g data-des="3">
+        <g data-de="3">
           <path d="M 228 104 L 300 324 L 370 324 Z" fill="#c68ef2" fill-opacity="0.22"/>
           <path d="M 228 104 L 370 324 L 440 324 Z" fill="#6ea8ff" fill-opacity="0.22"/>
           <path d="M 228 104 L 440 324 L 510 324 Z" fill="#81fba1" fill-opacity="0.22"/>
@@ -503,19 +733,19 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
           <text x="459" y="370" class="c-vert">vert</text><text x="525" y="370" class="c-jaune">jaune</text>
           <text x="590" y="370" class="c-orange">orange</text><text x="664" y="370" class="c-rouge">rouge</text>
         </g>
-        <g class="hpp-th" data-des="4" style="--i:0"><rect class="tube" x="330" y="196" width="10" height="126" rx="5"/><circle class="liquide" cx="335" cy="326" r="8"/></g>
+        <g class="hpp-th" data-de="4" style="--i:0"><rect class="tube" x="330" y="196" width="10" height="126" rx="5"/><circle class="liquide" cx="335" cy="326" r="8"/></g>
         <rect class="liquide hpp-col" data-monte="5" style="--i:0" x="332.5" y="302" width="5" height="20"/>
-        <g class="hpp-th" data-des="4" style="--i:1"><rect class="tube" x="400" y="196" width="10" height="126" rx="5"/><circle class="liquide" cx="405" cy="326" r="8"/></g>
+        <g class="hpp-th" data-de="4" style="--i:1"><rect class="tube" x="400" y="196" width="10" height="126" rx="5"/><circle class="liquide" cx="405" cy="326" r="8"/></g>
         <rect class="liquide hpp-col" data-monte="5" style="--i:1" x="402.5" y="294" width="5" height="28"/>
-        <g class="hpp-th" data-des="4" style="--i:2"><rect class="tube" x="470" y="196" width="10" height="126" rx="5"/><circle class="liquide" cx="475" cy="326" r="8"/></g>
+        <g class="hpp-th" data-de="4" style="--i:2"><rect class="tube" x="470" y="196" width="10" height="126" rx="5"/><circle class="liquide" cx="475" cy="326" r="8"/></g>
         <rect class="liquide hpp-col" data-monte="5" style="--i:2" x="472.5" y="286" width="5" height="36"/>
-        <g class="hpp-th" data-des="4" style="--i:3"><rect class="tube" x="540" y="196" width="10" height="126" rx="5"/><circle class="liquide" cx="545" cy="326" r="8"/></g>
+        <g class="hpp-th" data-de="4" style="--i:3"><rect class="tube" x="540" y="196" width="10" height="126" rx="5"/><circle class="liquide" cx="545" cy="326" r="8"/></g>
         <rect class="liquide hpp-col" data-monte="5" style="--i:3" x="542.5" y="274" width="5" height="48"/>
-        <g class="hpp-th" data-des="4" style="--i:4"><rect class="tube" x="610" y="196" width="10" height="126" rx="5"/><circle class="liquide" cx="615" cy="326" r="8"/></g>
+        <g class="hpp-th" data-de="4" style="--i:4"><rect class="tube" x="610" y="196" width="10" height="126" rx="5"/><circle class="liquide" cx="615" cy="326" r="8"/></g>
         <rect class="liquide hpp-col" data-monte="5" style="--i:4" x="612.5" y="262" width="5" height="60"/>
-        <g class="hpp-th" data-des="4" style="--i:5"><rect class="tube" x="680" y="196" width="10" height="126" rx="5"/><circle class="liquide" cx="685" cy="326" r="8"/></g>
+        <g class="hpp-th" data-de="4" style="--i:5"><rect class="tube" x="680" y="196" width="10" height="126" rx="5"/><circle class="liquide" cx="685" cy="326" r="8"/></g>
         <rect class="liquide hpp-col" data-monte="5" style="--i:5" x="682.5" y="250" width="5" height="72"/>
-        <g data-des="6">
+        <g data-de="6">
           <rect class="zone" x="722" y="178" width="78" height="164" rx="6"/>
           <text class="hpp-note" x="614" y="146">Sur la table, ici,</text>
           <text class="hpp-note" x="614" y="164">l'œil ne voit <tspan class="fort">aucune couleur</tspan>.</text>
@@ -524,17 +754,17 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
         </g>
         <rect class="liquide hpp-col" data-monte="7" x="758.5" y="222" width="5" height="100"/>
         </svg>
-        <div class="hpp-texte" id="hppTexte" aria-live="polite"></div>
+        <div class="hpp-texte" id="hppTexte" data-lpp="texte" aria-live="polite"></div>
         <div class="hpp-prediction" id="hppPrediction" hidden>
           <label for="a1_prediction"><b>Ma prédiction</b> (facultatif)&nbsp;: que va indiquer le thermomètre posé au-delà du rouge&nbsp;?</label>
           <textarea id="a1_prediction" style="min-height:60px"></textarea>
           <button type="button" class="btn" id="hppResultat">Voir le résultat</button>
         </div>
-        <div class="hpp-nav">
-          <button type="button" class="btn ghost" id="hppPrec">◀ Précédent</button>
-          <span class="hpp-compte" id="hppCompte">Étape 1 / 7</span>
-          <button type="button" class="btn" id="hppSuiv">Suivant ▶</button>
-          <button type="button" class="btn ghost" id="hppZero">↺ Recommencer</button>
+        <div class="hpp-nav" data-lpp="controles">
+          <button type="button" class="btn ghost" id="hppPrec" data-lpp="prec">◀ Précédent</button>
+          <span class="hpp-compte" id="hppCompte" data-lpp="compte">Étape 1 / 7</span>
+          <button type="button" class="btn" id="hppSuiv" data-lpp="suiv">Suivant ▶</button>
+          <button type="button" class="btn ghost" id="hppZero" data-lpp="zero">↺ Recommencer</button>
         </div>
       </div>
     </div>
@@ -1848,57 +2078,27 @@ majEssentiel(); majProgress(); majHyp();
     ["C'est au-delà du rouge, là où l'on ne voit rien, que le thermomètre monte le plus.",
      "Herschel en conclut qu'il existe, au-delà du rouge, des rayons invisibles qui chauffent. Il les appelle « rayons calorifiques » ; on les appelle aujourd'hui l'infrarouge."]
   ];
-  var N = TEXTES.length, etape = 1;
   var bloc = document.getElementById("herschel-pas-a-pas");
-  if (!bloc) return;
-  var ouvrir = document.getElementById("hppOuvrir"), panneau = document.getElementById("hppPanneau");
-  var texte = document.getElementById("hppTexte"), compte = document.getElementById("hppCompte");
-  var prec = document.getElementById("hppPrec"), suiv = document.getElementById("hppSuiv");
+  if (!bloc || !window.LecteurPasAPas) return;
+  var ouvrir = document.getElementById("hppOuvrir"), suiv = document.getElementById("hppSuiv");
   var pred = document.getElementById("hppPrediction");
-
-  function montrer(n){
-    etape = Math.max(1, Math.min(N, n));
-    bloc.querySelectorAll("[data-des]").forEach(function(el){
-      el.classList.toggle("hpp-cache", etape < +el.getAttribute("data-des"));
-    });
-    bloc.querySelectorAll("[data-monte]").forEach(function(el){
-      el.classList.toggle("hpp-vide", etape < +el.getAttribute("data-monte"));
-    });
-    var t = TEXTES[etape - 1]; texte.textContent = "";
-    (Array.isArray(t) ? t : [t]).forEach(function(ph){
-      var p = document.createElement("p"); p.textContent = ph; texte.appendChild(p);
-    });
-    compte.textContent = "Étape " + etape + " / " + N;
-    prec.disabled = etape === 1; suiv.disabled = etape === N;
-    pred.hidden = etape !== 6;
-  }
-  function deplier(){
-    panneau.hidden = false; ouvrir.setAttribute("aria-expanded", "true");
-    ouvrir.textContent = "▼ L'expérience pas à pas";
-  }
-  ouvrir.addEventListener("click", function(){
-    if (panneau.hidden) { deplier(); montrer(1); suiv.focus(); }
-    else { panneau.hidden = true; ouvrir.setAttribute("aria-expanded", "false");
-           ouvrir.textContent = "▶ Voir l'expérience pas à pas"; }
+  // Le lecteur commun (_outils/lecteur_pas_a_pas/) : étapes, bouton d'ouverture, lien direct #herschel-pas-a-pas.
+  var lpp = LecteurPasAPas(bloc, {
+    scenes: TEXTES.map(function(t){ return {p: (Array.isArray(t) ? t : [t]).join("</p><p>")}; }),
+    onglet: "tab-s1",
+    imprimer: false,                                     // à l'impression : le schéma fixe, dans son volet
+    entrer: function(etape){
+      bloc.querySelectorAll("[data-monte]").forEach(function(el){
+        el.classList.toggle("hpp-vide", etape < +el.getAttribute("data-monte"));
+      });
+      pred.hidden = etape !== 6;
+    },
+    ouvrir: function(ouvert){
+      ouvrir.textContent = ouvert ? "▼ L'expérience pas à pas" : "▶ Voir l'expérience pas à pas";
+      if (ouvert && lpp) { lpp.montrer(1); suiv.focus(); }
+    }
   });
-  prec.addEventListener("click", function(){ montrer(etape - 1); });
-  suiv.addEventListener("click", function(){ montrer(etape + 1); });
-  document.getElementById("hppZero").addEventListener("click", function(){ montrer(1); suiv.focus(); });
-  document.getElementById("hppResultat").addEventListener("click", function(){ montrer(7); suiv.focus(); });
-  montrer(1);
-
-  // Lien direct (cahier de textes) : #herschel-pas-a-pas ouvre la séance 1 et l'expérience,
-  // quelle que soit la séance affichée ou mémorisée.
-  function allerAuLien(){
-    if (location.hash !== "#herschel-pas-a-pas") return;
-    var onglet = document.getElementById("tab-s1");
-    if (onglet && !onglet.classList.contains("active")) onglet.click();
-    if (panneau.hidden) { deplier(); montrer(1); }
-    setTimeout(function(){ bloc.scrollIntoView({block: "start"}); }, 450);
-  }
-  window.addEventListener("hashchange", allerAuLien);
-  if (document.readyState === "complete") allerAuLien();
-  else window.addEventListener("load", allerAuLien);
+  document.getElementById("hppResultat").addEventListener("click", function(){ lpp.montrer(7); suiv.focus(); });
 
   // À l'impression, seul le schéma fixe : son volet s'ouvre le temps d'imprimer.
   var observe = document.getElementById("hppObserve"), etaitOuvert = false;

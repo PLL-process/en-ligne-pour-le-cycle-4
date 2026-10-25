@@ -1,0 +1,16 @@
+/* Lecteur pas à pas commun — source unique : _outils/lecteur_pas_a_pas/lecteur.css (posée par poser.py). */
+[data-lpp-racine] [data-de],[data-lpp-racine] [data-a],[data-lpp-racine] [data-des],[data-lpp-racine] [data-seul]{transition:opacity .35s ease calc(var(--i,0) * .12s),visibility 0s linear 0s}
+[data-lpp-racine] .lpp-cache{opacity:0!important;visibility:hidden;transition:opacity .2s ease,visibility 0s linear .2s}
+[data-lpp-racine] [data-aller][aria-current]{outline:2px solid currentColor;outline-offset:2px}
+.lpp-imprime{display:none}
+@media (prefers-reduced-motion: reduce){
+  [data-lpp-racine] [data-de],[data-lpp-racine] [data-a],[data-lpp-racine] [data-des],[data-lpp-racine] [data-seul],[data-lpp-racine] .lpp-cache{transition:none!important}
+}
+@media print{
+  [data-lpp-racine].lpp-sans-impression{display:none!important}
+  [data-lpp-racine] [data-lpp="controles"],[data-lpp-racine] [data-lpp="chapitres"],
+  [data-lpp-racine] [data-lpp="texte"],[data-lpp-racine] [data-lpp="sansvoix"],[data-lpp-racine] [data-lpp="ouvrir"]{display:none!important}
+  [data-lpp-racine] [data-lpp="panneau"]{display:block!important}
+  [data-lpp-racine] .lpp-imprime{display:block;margin:8px 0 0 1.2em;padding:0;color:#000}
+  [data-lpp-racine] .lpp-imprime li{margin:2px 0;break-inside:avoid}
+}

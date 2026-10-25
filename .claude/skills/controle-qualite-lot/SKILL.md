@@ -87,6 +87,8 @@ Lancer depuis la racine du dépôt. Python : `python3 _outils/<outil>.py`. Node 
 | `controle_marqueurs.py` | pointes de flèche SVG mesurées en pixels |
 | `controle_loupe.py` | n°92 : l'agrandisseur de chaque page est le v2, une seule fois (25/10/2026) |
 | `banc_loupe.py [racine] [--captures <dossier>]` | n°92 au navigateur : un schéma SVG agrandi garde ses couleurs (écart mesuré), la légende ne recouvre pas l'image, à 1280, 390, 1920 px et 1280 px zoomé 150 % |
+| `controle_lecteur_pas_a_pas.py` | décision 4b (25/10/2026) : chaque animation pas à pas utilise le lecteur commun (`_outils/lecteur_pas_a_pas/`), posé une fois, à jour |
+| `lecteur_pas_a_pas/banc_lecteur.py [racine]` | chaque animation pas à pas, au navigateur : étapes, 390 px, mouvement réduit, voix sur le disque, impression, lien direct |
 
 **Évaluation (QCM)**
 
