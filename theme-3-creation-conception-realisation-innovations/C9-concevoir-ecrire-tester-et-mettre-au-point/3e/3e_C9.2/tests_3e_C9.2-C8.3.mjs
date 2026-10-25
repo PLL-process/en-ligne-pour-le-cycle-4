@@ -721,7 +721,9 @@ const run = async () => {
      Seules exceptions permises : la capture ArduBlock datée, qui montre « 100 et
      150 » et le dit — ses formulations ne tombent sous aucun motif ci-dessous. */
   const ANCIENS = [/\b100\s*\/\s*150\b/, /sous 100\b/, /au-dessus de 150/, /150 se teste avant 100/,
-                   /seuils? (?:de )?100\b/, /\bniveau\s*=\s*2\b/, /niveau vaut 2\b/, /passer à 2\b/,
+                   /* « (niveau = 2) » : le buzzer de l'ancienne version ; la trace de l'activité 5
+                      « vent(km/h)=131  niveau=2 » est juste (131 km/h = ouragan = niveau 2) */
+                   /seuils? (?:de )?100\b/, /\(niveau\s*=\s*2[),]/, /niveau vaut 2\b/, /passer à 2\b/,
                    /revient à 2\b/, /égale 2\b/, /\bA0\b/, /vert\s+D2\b/];
   for (const f of [SEQ, ...P4]) {
     await page.goto(url(f)); await page.waitForTimeout(300);

@@ -41,6 +41,19 @@ ajoutés :
 | Page 2 : le lien « Séance 4 » amène l'en-tête de la séance 4 en haut de l'écran | ✅ |
 | Mobile 390 px : les 8 séances s'ouvrent par leur onglet sans débord ; de la séance 1 à la 8 par les boutons | ✅ (2 tests) |
 
+**Correction des seuils et broches d'avant (25/10/2026) — 164/164.** L'expérience ② de
+l'activité 4 (« sous 100, puis au-dessus de 150 ») ne faisait jamais repartir le
+buzzer, qui ne sonne qu'en ouragan majeur : elle dit désormais « redescends sous 178
+(à 177), puis remonte à 178 ou plus ». Corrigés aussi : le critère de l'activité 2
+(178 avant 118 avant 63), l'aide 2, les erreurs fréquentes et l'alt de l'activité 4
+(buzzer au niveau 3), la planche `blocs_palier4_acquitter.svg` (« niveauAlerte = 3 »),
+le corrigé du défi « anémomètre réel » (63, 118, 178), la fiche 🅰 de l'activité 3
+(un seul montage, celui du programme de référence ; légende sous le schéma qui ne
+dessine qu'un voyant), et deux renvois de la synthèse professeur (essai 13, 13
+verdicts). 8 tests ajoutés : l'expérience ② rejouée telle qu'écrite (177 puis 178),
+sa consigne, et un garde-fou qui refuse le retour des anciens seuils et broches
+dans les cinq fichiers et dans la planche du palier 4.
+
 Contrôles du dépôt après redécoupage : `controle_squelette` 0 refus (D1 à D6 : 0),
 `controle_navigation_seances`, `controle_hierarchie`, `controle_regles_visibles`,
 `controle_liens` (aucun lien mort), `controle_atteignabilite` (406/406),
