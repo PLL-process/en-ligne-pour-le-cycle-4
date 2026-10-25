@@ -23782,3 +23782,50 @@ l'année en séances de 55 min et 20 min au plus de travail maison par semaine (
 
 - Les pages gardent leur propre découpage en séances ; la semaine du travail maison est dans le classeur.
 - Les fiches pédagogiques et les synthèses professeur ne mentionnent pas encore le travail maison.
+
+## 25/10/2026 — Règle d'or n°313 : un sigle garde ses capitales — FAST, jamais « fast » (transversale : index, `_outils`, `.claude/skills`)
+
+> **Règle d'or n°313 — Un sigle garde ses capitales.**
+> FAST (Function Analysis System Technique) s'écrit toujours en capitales, comme QCM, DNB, CRCN, NFC, RFID, et SysML
+> dans sa forme propre : dans le texte, les titres, les libellés de l'index, les questions, les options, les messages,
+> les schémas. Écrit « fast », le sigle se lit comme le mot anglais, « rapide » — c'est justement un distracteur du QCM
+> de l'atelier. Ne changent pas : les noms de fichiers, les adresses et les identifiants de code
+> (`atelier_diagramme_fast.html`, `module="fast"`), qui ne sont pas des textes lus. Seul le mot cité entre guillemets,
+> « fast », le mot anglais, garde ses minuscules.
+
+**Demande de Pascal (25/10/2026).** « FAST doit toujours être écrit en majuscules, car je l'ai vu en minuscules. Peut-être
+qu'il faudra une règle d'or. »
+
+**Où c'était.** Pas dans les pages : sur les 404 pages HTML et les 225 schémas SVG relus sous `theme-*`, aucun n'écrit
+« fast » hors du mot anglais cité. C'était **l'index du site** : « Activité — Diagramme fast », cinq fois, une par atelier FAST inséré dans une
+séquence (5e_C1.2, 5e_C4.1, 4e_C4.4, 4e_C7.2, 3e_C7.2). `make_index.py` tire ce libellé du nom de fichier, écrit en
+minuscules. Le même mécanisme écrivait « Activité — Crcn donnees freinage », « Activité — Pix crcn jardin »,
+« Entraînement — Dnb algorigrammes », « Fiche pédagogique — Entrainement dnb », « Ressource — Repartir qcm »,
+« QCM — Adressage ip », « QCM — Xxl reseaux ip nfc rfid zigbee », « Séquence — Capteur confort ny ».
+
+**Ce que le lot change.**
+- `_outils/make_index.py` : une table `SIGLES` rend sa forme à chaque jeton du nom de fichier qui est un sigle (FAST, QCM,
+  DNB, CRCN, Pix, NFC, RFID, IP, SysML, SADT, UML, CAO, DAO, TBT, LCD, GPS, USB, IA, 3D, NY, XXL, Zigbee). `index.html` régénéré :
+  14 liens changent de libellé, 10 libellés distincts (« Activité — Diagramme FAST » cinq fois, « QCM — Adressage IP »,
+  « Séquence — Capteur confort NY »…) ; les 900 adresses ne bougent pas. Le README racine ne porte pas ces libellés.
+- `_outils/controle_sigles.py` et son banc `tests_controle_sigles.py` (**9 / 9** : le cas d'origine refusé puis accepté,
+  le mot anglais cité, noms de fichiers, chemins, listings et identifiants de script ignorés, une question de QCM, un
+  attribut `alt`, « Sysml » et « Qcm », un schéma SVG, la racine vide en panne, le dépôt réel). Pages lues : toutes les
+  pages HTML sous `theme-*` (élève et professeur), les schémas SVG, l'index et le README racine. Textes lus : le corps de
+  la page hors `script`/`style`/`pre`/`code`, les attributs `title`, `alt`, `aria-label`, `placeholder`, et les chaînes du
+  JavaScript (questions de QCM, messages des vérificateurs) sauf celles qui ne sont qu'un identifiant. Sur `main` :
+  **12 sigles mal écrits, tous dans l'index** ; après le lot : **0**.
+- `_outils/METHODE.md` (liste des règles récentes) ; skills du dépôt `controle-qualite-lot`,
+  `sequence-pedagogique-engageante` et `qcm-html-accessible`.
+- Capture avant / après à 390 px : `_outils/captures_regle_313_2026-10-25/index_avant_apres_390px.png`.
+
+**Ce qui a tourné.** `controle_sigles` ✅ (631 fichiers lus) ; son banc 9 / 9 ; `tests_index.py` 19 / 20, comme sur `main`
+(le contrôle « référence normative et codification interne » échoue déjà sur `main`, sans rapport avec ce lot).
+
+**Ce que le lot ne fait pas.**
+- « IP » et « wifi » ne sont pas suivis par le contrôle : la commande Cisco « ip route » s'écrit en minuscules, et « wifi »
+  est un nom commun que l'usage écrit en minuscules.
+- Le texte des images PNG et les fichiers Markdown autres que le README racine (rapports de tests, fiches, où « fast » est
+  souvent le nom du module) ne sont pas lus.
+- Les libellés de l'index tirés des noms de fichiers restent sans accents (« donnees », « Entrainement ») : un autre sujet,
+  signalé ici.
