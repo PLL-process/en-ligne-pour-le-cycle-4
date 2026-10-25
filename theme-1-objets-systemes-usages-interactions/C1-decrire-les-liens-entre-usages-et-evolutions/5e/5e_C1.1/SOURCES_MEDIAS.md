@@ -131,8 +131,8 @@ produire si une phrase de la page a changé). Les phrases des étapes ①②③ 
 - **Texte envoyé à la voix** : celui de la page, sauf aux étapes 2 (parenthèses dites entre virgules), 5 (« 24 h » dit « vingt-quatre heures »)
   et 11 (« µg/m³ » dit « microgrammes par mètre cube ») ; phonèmes corrigés aux étapes 4, 5, 6 et 8 (liaisons fausses d'espeak-ng).
   Détail dans `phrases.json`.
-- **Prises NON ÉCOUTÉES** au 25/10/2026 : produites, mesurées (durée, volume), pas validées à l'oreille. **L'écoute de Pascal valide, ou
-  demande une correction** ; la trace s'écrit dans `voix.json` (clé `prises`). Reproductibilité à l'octet : non (Piper tire du bruit à chaque prise).
+- **Prises validées à l'oreille** par Pascal le 25/10/2026, les onze, à la première écoute ; trace dans `voix.json` (clé `prises`).
+  **Toute régénération exige une nouvelle écoute.** Reproductibilité à l'octet : non (Piper tire du bruit à chaque prise).
 - **Dans la page** : rien n'est chargé depuis le réseau ; les fichiers ne se lisent qu'après un geste de l'élève (« Écouter » ou
   « Regarder ») ; si un fichier ne se lit pas, la voix française locale du navigateur prend le relais, sinon l'élève lit la phrase.
 

@@ -138,4 +138,7 @@ un élève (cela se voit en classe) ; Safari, iPad, téléphone réel.
 | `controle_verrous.mjs` | 0 | 118 pages à verrous ouvertes dans un contexte neuf ; l'animation ne pose aucun verrou |
 
 **Non exécutés** : validation HTML (aucun outil du dépôt) ; parcours au clavier seul rejoué touche par touche (les commandes
-sont des boutons natifs) ; écoute des prises.
+sont des boutons natifs).
+
+**Validé par Pascal le 25/10/2026** : les onze prises de voix, à l'écoute, et l'animation, telle que publiée
+(sans podiums dans la finale ; balance 100 000 → 100 020 µg gardée).
