@@ -23725,7 +23725,7 @@ ne perd une séance que si le travail maison couvre une séance entière, et jam
   l'étiquette 🏠 sur les activités des pages est un lot à part.
 - Les questions directrices restent celles des pages : le bloc donne l'objectif de la première activité du jour.
 
-## 25/10/2026 — Pastille « 🏠 Peut se faire à la maison » sur les activités que le plan donne à la maison (transversal : thèmes 1, 2 et 3)
+## 25/10/2026 — Pastille « 🏠 Peut se faire à la maison » sur les activités que le plan donne à la maison (transversal : thèmes 1, 2 et 3, _outils)
 
 **Demande de Pascal (25/10/2026).** « Il faudra que les séquences maison soient identifiables », avec le plan de
 l'année en séances de 55 min et 20 min au plus de travail maison par semaine (entrée précédente, branche
@@ -23744,6 +23744,11 @@ l'année en séances de 55 min et 20 min au plus de travail maison par semaine (
   bord de la couleur du texte : elle reste lisible en thème sombre comme en thème clair. Elle ne dit rien de la
   fabrique (n°309).
 - Captures avant / après à 390 px : `_progressions/captures_pastille_maison_2026-10-25/` (une par page).
+- `_outils/METHODE.md`, pilier 3 : « 20 min au plus de travail maison par semaine » (activités sans matériel, sans
+  logiciel en ligne, sans tableur, sans travail de groupe), repérable dans la colonne 🏠 du Moteur et du Calendrier,
+  au lieu de « 1 h 30 max de travail maison par semaine ». Cette mise à jour devait partir avec les classeurs, mais
+  la garde-périmètre la refuse sur la branche `fable/progressions-55-min` (motif « progressions ») : elle part ici,
+  sur une branche transversale.
 
 ### Ce qui a tourné
 
