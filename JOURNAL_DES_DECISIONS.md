@@ -23554,3 +23554,77 @@ progression comptent une séance de 55 min par semaine (Moteur et calendrier à 
   absente au bilan dans la plupart de ces lots ; le volet Rappel (n°311) ne s'applique pas à ces pages sans onglets.
 - Textes à relire par Pascal : questions directrices des séances ajoutées, encadrés de fin de première partie, phrases
   de reprise (celle de Vittascience ne nomme pas le bouton qui rouvre un fichier : non vérifié).
+
+## 25/10/2026 — Classeurs de progression : le plan de l'année en séances de 55 min, et le travail maison repérable (_progressions, _outils/METHODE.md)
+
+**Demandes et décisions de Pascal (25/10/2026).** Refaire le Moteur et le calendrier des trois classeurs « à partir
+du 2 novembre », sans toucher aux 8 semaines d'avant la Toussaint, « une séquence par ligne, ajustée ». Seule
+3e_C9.1 est déjà faite (octobre). Puis : « On peut donner des devoirs maison et gagner du temps ». Réponses :
+activités sans matériel, 20 min au plus par semaine, tous les élèves ont de quoi ouvrir les pages chez eux. Enfin
+« Tu as carte blanche ; il faudra que les séquences maison soient identifiables ». Branche
+`fable/progressions-55-min`, sans motif de thème.
+
+### Le plan retenu (une séance de 55 min par semaine du 2/11 à la fin de l'année)
+
+Une activité peut finir à la maison si elle ne demande ni matériel, ni logiciel en ligne (Vittascience, Tinkercad,
+Filius, Packet Tracer…), ni tableur ou fichier à ouvrir, ni travail de groupe. Le tri a été fait par script, puis
+chaque activité donnée à la maison a été relue à la main : simulateur ou questions de la page, cahier. Une séquence
+ne perd une séance que si le travail maison couvre une séance entière, et jamais plus que ce que sa page annonce.
+
+| Niveau | Séances en classe | Séquences (séances en classe ; entre parenthèses, celles de la page) | Tampons dès le 2/11 |
+|---|---|---|---|
+| 5e | 22 | S1 Le compte du club 2 (3) · S2 Chengdu 4 (5) + Shanghai 3 (4) · S3 Le lampadaire intelligent 6 · S4 Programmer le lampadaire 2 (3) · S6 SOS panne 2 (3) · S7 Mini-projet 3 | 7 |
+| 4e | 21 | S1 Tsinghua 4 (5) · S2 Cybersécurité 3 · S3 Hangzhou, quelle flotte 4 · S4 Le jardin connecté 3 (4) · S6 SOS jardin connecté 3 + Ajuster le programme 2 · S7 Concevoir et réaliser 2 | 8 |
+| 3e | 24 | S2 Pékin 3 · S4 La station d'alerte cyclonique 4 · S5 Internet jusqu'à Sainte-Luce 3 · S6 SOS station 3 (4) + Programmer l'alerte 3 · S7 Capteur de confort 3 · S8 72 heures sans secteur 3 · S9 Le mât, la simulation 2 (3) | 2 + 3 sem. de révisions DNB |
+
+- Choix tranchés par Fable (carte blanche) : en 3e, « Programmer l'alerte » (3e_C6, souvent au DNB) plutôt que
+  « L'énergie de la station », au prix du TAMPON P3, devenu une séance ; en 4e, « SOS jardin connecté » (dépannage,
+  4e_C5) plutôt que « Valider une solution », puisqu'il va avec la ligne S6 « diagnostic, pièce et programme ».
+- Lignes sans séance cette année : 5e S5 et 4e S5 (leur réseau est travaillé dans le lampadaire et dans le jardin) ;
+  3e S1 et S3 (pas de place) : 3e_C1.1 à C1.4 et 3e_C3.1 à C3.4 restent sans séquence.
+- Codes couverts (sur 38, codes de toutes les séquences retenues) : 5e 27, 4e 25, 3e 19 (avec 3e_C9.1, faite en octobre).
+- Le gain réel du travail maison : 5 séances en 5e, 2 en 4e, 2 en 3e — et non « une dizaine », chiffre annoncé
+  trop vite à Pascal, puis corrigé. Les activités de 3e demandent presque toutes la classe.
+
+### Ce qui change dans les classeurs
+
+- **⚙ Moteur** : créneaux 1 à 8 « ✔ Avant la Toussaint » ; créneaux 9 à 37 refaits, tampons gardés à leur place de
+  fin de période ; colonne C « Séquence », colonne D « 🏠 À la maison » (par exemple « 🏠 ~20 min : finir l'activité 1,
+  puis commencer l'activité 2 ») ; note d'en-tête.
+- **📅 Calendrier** : colonnes I « Séquence » et J « 🏠 À la maison », calculées comme la colonne D (elles suivent
+  les imprévus) ; J surlignée en vert quand il y a du travail maison. Titre en 55 min, réserve d'aléas à 7 / 8 / 5.
+  En 5e, la zone d'impression va jusqu'à J.
+- **🧭 Progression** : période, nombre de séances, répartition 🏫 / 🏠, ressources en ligne, fin calculée (dernière
+  séance de la ligne) ; « — (aucune séance) » pour une ligne vide ; total.
+- **🏠 Accueil** : « une séance de 55 min par semaine, 20 min au plus à la maison », tampons, codes couverts.
+- **Générateurs S1-S9** : en-tête (période, séances de 55 min, séquences) ; « Ressources en ligne » ; pour chaque
+  séance, un bloc réécrit à partir de la page : semaine, 🏫 ou 🏫 + 🏠, objectif, activités du jour, démarche, trace,
+  et les deux champs du cahier de texte. Le bouton « 📋 Cahier de texte de la semaine » sort donc le travail
+  maison de la semaine. Des blocs sont ajoutés là où il en manquait : 5e S2 +3, S3 +2 ; 4e S1, S2, S6 +1 ; 3e S2 +1,
+  S6 +2. Les blocs en trop sont marqués « non utilisée dans le plan du 25/10/2026 ». Les onglets des thèmes 1 et 3
+  sont touchés (règle « l'IA du thème seule » levée par la carte blanche de Pascal).
+- Anciens classeurs archivés (n°12, n°66) : `_archive-anciennes-versions/progressions-avant-plan-55-min-2026-10-25/`,
+  avec un README (ce qui est repris, ce qui ne l'est pas).
+- `_progressions/README.md` (le plan, où lire le travail maison) ; `_outils/METHODE.md`, pilier 3 : « 20 min au plus
+  de travail maison par semaine » au lieu de « 1 h 30 max ».
+
+### Méthode et ce qui a tourné
+
+- Chirurgie XML (scripts de session, non versés : `chirurgie.py`, `refaire_classeurs.py`, `banc_55.py`) : chaque
+  cellule touchée est gardée par son ancien contenu ; tout le reste est recopié à l'octet près. Macros
+  (`vbaProject.bin`) identiques ; membres de l'archive identiques et dans le même ordre (36 en 5e et 4e, 43 en 3e).
+- Banc sur copies : toute cellule changée tombe dans une zone prévue (Moteur, colonnes I-J et D2 du Calendrier,
+  Progression, cellules d'Accueil, générateurs) ; formules modifiées : D2 et les fins de la Progression seulement,
+  plus les 74 formules des colonnes I-J ; validations identiques ; aucune fusion perdue.
+- Recalcul forcé par LibreOffice 24.2 : les 37 semaines de chaque calendrier donnent exactement le plan (créneau,
+  séquence, travail maison) ; Progression (début, fin, total 22 / 21 / 24), Frise et Accueil cohérents. En 3e
+  (enregistré par Excel), les valeurs en cache des formules sont celles du recalcul (0 écart sur Accueil,
+  Calendrier, Frise, Progression) et le calcul complet à l'ouverture est demandé (`fullCalcOnLoad`).
+- Rendu PDF regardé : calendrier (colonne J verte), générateurs, Moteur.
+
+### Ce que le lot ne fait pas
+
+- Pas d'ouverture dans Excel (pas d'Excel ici) : à vérifier chez Pascal, notamment le bouton du cahier de texte.
+- Les pages des séquences gardent leur propre découpage (une page peut annoncer 3 séances, la classe en fait 2) ;
+  l'étiquette 🏠 sur les activités des pages est un lot à part.
+- Les questions directrices restent celles des pages : le bloc donne l'objectif de la première activité du jour.
