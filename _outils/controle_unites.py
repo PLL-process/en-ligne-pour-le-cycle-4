@@ -33,7 +33,11 @@ Zones (là où le nom doit apparaître) :
     « activite », titre h3 « Activité N », « REFAIRE », « Réinvestissement », « Bilan », « Bonus ») ;
   - un tableau : tout son texte, intitulés compris ;
   - une question de QCM : tous les textes de l'objet de la question (énoncé, options, explication, exemple,
-    erreur classique, réfutations, à retenir), lus dans le tableau QUESTIONS du script.
+    erreur classique, réfutations, à retenir), lus dans le tableau QUESTIONS du script ;
+  - un schéma (depuis le 25/10/2026, phase 2) : chaque <svg> intégré à une page, et chaque fichier .svg sous
+    theme-* (hors dossiers « _… » et « fichiers_drawio », qui gardent les sources d'édition). Son texte
+    VISIBLE (<text>, <tspan>) doit nommer ses unités : la forme retenue est la ligne « Unités : V (volts) »
+    sous le dessin, posée par `_outils/legende_unites.py`.
 
 Mesuré : dans chaque zone, chaque unité écrite après un nombre (« 12 V », « 0,4 W », « 2 000 mAh ») doit
 y voir son nom en toutes lettres au moins une fois (singulier ou pluriel, avec ou sans accent).
@@ -45,8 +49,8 @@ option est vide (« — je choisis — » : une question, pas un réglage de sim
 NON mesuré, donc NON couvert, et à juger à l'œil :
   - que le nom suive bien la PREMIÈRE apparition (le contrôle accepte le nom n'importe où dans la zone) ;
   - le texte écrit par un script à l'exécution (simulateurs), les listings de code (<pre>, <code>) ;
-  - les schémas : le texte d'un <svg> intégré est COMPTÉ à part (« images »), pas exigé ; les fichiers SVG
-    appelés par <img> ne sont pas lus ;
+  - le texte d'un schéma qui n'est que dans son <title> ou sa <desc> (l'œil ne le voit pas) : seuls <text> et
+    <tspan> comptent ;
   - une unité écrite sans nombre devant (« en V ») ou séparée de son nombre par une balise de mise en forme
     (« <b>12</b> V ») — cette dernière est rattrapée : le texte est aplati avant la lecture.
 
@@ -61,7 +65,11 @@ import os
 import re
 import sys
 
-from bs4 import BeautifulSoup, Comment, NavigableString, Tag
+import warnings
+
+from bs4 import BeautifulSoup, Comment, NavigableString, Tag, XMLParsedAsHTMLWarning
+
+warnings.filterwarnings("ignore", category=XMLParsedAsHTMLWarning)
 
 DEPOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ECARTES = ("_archive-anciennes-versions",)
@@ -159,6 +167,8 @@ def pages(racines):
                 continue
             for f in fichiers:
                 if f.endswith(".html") and f.startswith(MOTIFS) and "professeur" not in f:
+                    vues.add(os.path.join(dossier, f))
+                elif f.endswith(".svg") and "fichiers_drawio" not in d:
                     vues.add(os.path.join(dossier, f))
     return sorted(vues)
 
@@ -270,10 +280,12 @@ def zones(src):
         t.insert(0, NavigableString(" ¦ "))
         t.append(NavigableString(" ¦ "))
     images = []
-    for s in soup.find_all("svg"):
-        images.append(plat(s.get_text(" ")))
-        s.decompose()
     res = []
+    for k, s in enumerate(soup.find_all("svg"), 1):
+        t = schema_visible(s)
+        images.append(t)
+        res.append(("schéma %d" % k, t))
+        s.decompose()
     for k, tab in enumerate(soup.find_all("table"), 1):
         titre = tab.find_previous(["h2", "h3", "h4"])
         res.append(("tableau %d%s" % (k, (" — " + plat(titre.get_text(" "))[:50]) if titre else ""), plat(tab.get_text(" "))))
@@ -301,6 +313,14 @@ def zones(src):
     return res + qz, images
 
 
+def schema_visible(svg):
+    """Le texte que l'œil lit dans un schéma (un Tag <svg>) : chaque <text> séparé de son voisin, sans <title>
+    ni <desc>."""
+    for t in svg.find_all(["title", "desc", "style", "script", "metadata"]):
+        t.decompose()
+    return plat(" ¦ ".join(t.get_text(" ") for t in svg.find_all("text")))
+
+
 def manques(texte):
     """[(symbole, extrait)] : unités écrites après un nombre dont le nom n'apparaît pas dans le texte."""
     vus = {}
@@ -313,6 +333,12 @@ def manques(texte):
 
 def lire_page(chemin):
     src = ouvrir(chemin)
+    if chemin.endswith(".svg"):
+        racine = BeautifulSoup(src, "html.parser").find("svg")
+        texte = schema_visible(racine) if racine else ""
+        ecarts = [dict(zone="schéma", unite=s, nom=NOMS[s][1], extrait=ex) for s, ex in manques(texte)]
+        n = sum(1 for _ in OCC.finditer(texte))
+        return dict(zones=1, occurrences=n, ecarts=ecarts, images=n)
     zs, images = zones(src)
     ecarts, occurrences = [], 0
     for lib, texte in zs:
@@ -360,13 +386,13 @@ def main(argv=None):
                     else:
                         print("    [%s] %s sans « %s » — …%s…" % (e["zone"][:45], e["unite"], e["nom"], e["extrait"]))
         pages_ko = sum(1 for r in bilan.values() if r["ecarts"])
-        print("%d page(s) lues · %d zones · %d grandeurs avec unité · %d autres dans des schémas intégrés (comptées à part)"
+        print("%d page(s) et schéma(s) lus · %d zones · %d grandeurs avec unité, dont %d dans des schémas"
               % (len(liste), zones_lues, occ, img))
         if n_ecarts:
             print("✘ %d écart(s) — unité sans son nom, ou option seule à le porter — dans %d page(s) (règle d'or n°312)"
                   % (n_ecarts, pages_ko))
         else:
-            print("✅ chaque unité est nommée en toutes lettres dans son activité, son tableau ou sa question (règle d'or n°312)")
+            print("✅ chaque unité est nommée en toutes lettres dans son activité, son tableau, sa question ou son schéma (règle d'or n°312)")
     return 1 if n_ecarts else 0
 
 
