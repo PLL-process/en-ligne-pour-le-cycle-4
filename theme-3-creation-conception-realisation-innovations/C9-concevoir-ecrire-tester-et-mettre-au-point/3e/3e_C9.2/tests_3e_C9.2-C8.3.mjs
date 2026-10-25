@@ -656,7 +656,8 @@ const run = async () => {
     const info = await page.evaluate(([a, b]) => ({
       sous: document.querySelector(".subtitle").textContent,
       ancres: [...document.querySelectorAll(".seance-bloc")].map(d => d.id),
-      titres: [...document.querySelectorAll(".seance-bloc")].map(d => (d.querySelector("h2") || {}).textContent || ""),
+      /* l'échauffement Vittascience précède le titre de la séance 3, comme dans le tout-en-un */
+      titres: [...document.querySelectorAll(".seance-bloc")].map(d => [...d.querySelectorAll("h2")].map(h => h.textContent).join(" | ")),
       lien: !!document.querySelector(`#seance-${a} a.lien-seance[href="#seance-${b}"]`),
       coche: !!document.getElementById("done-p1"),
     }), [a, b]);

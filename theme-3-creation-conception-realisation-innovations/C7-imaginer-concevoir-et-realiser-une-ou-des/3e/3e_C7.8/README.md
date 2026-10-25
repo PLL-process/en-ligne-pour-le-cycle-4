@@ -65,7 +65,7 @@ devient.
 
 ## Tests
 
-**52 / 52** sur la séquence (dont le découpage en trois séances et la relecture d'une sauvegarde faite avant), **32 / 32** sur le QCM, rejouables : scripts et jeu de réponses
+**58 / 58** sur la séquence (dont le découpage en trois séances, la clé de sauvegarde propre et la reprise d'une sauvegarde faite avant), **32 / 32** sur le QCM, rejouables : scripts et jeu de réponses
 livrés dans le dossier. Voir [`rapport_tests_3e_C7.8.md`](rapport_tests_3e_C7.8.md).
 
 ## Fichiers

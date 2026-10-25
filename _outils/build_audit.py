@@ -789,11 +789,10 @@ OVERLAY = {
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
-        qualite="Lot « Le mat de la station — proposer un protocole » : 3 seances de 55 min "
-                "pour 160 min d'activites (50 / 55 / 55 ; redecoupage du 24/10/2026, une heure "
-                "de cours par semaine : l'activite 2 coupee entre les six decisions, 2a en fin de "
-                "seance 1 avec son verificateur, et la redaction, 2b en tete de seance 2 ; rien "
-                "n'est retire), banc d'essai ORIGINAL integre a la page avec DEUX "
+        qualite="Lot « Le mat de la station — proposer un protocole » : 4 seances de 55 min "
+                "pour 160 min d'activites (40 / 35 / 50 / 35 ; redecoupage du 24/10/2026, une "
+                "heure de cours par semaine, aucune activite coupee ni raccourcie — trois seances "
+                "n'auraient laisse que 5 min de service, n°23), banc d'essai ORIGINAL integre a la page avec DEUX "
                 "sollicitations sur le meme mat (flexion et traction), trois verrous "
                 "experientiels. Le pivot du lot est une mesure, pas une affirmation : les cinq "
                 "candidats ne se classent pas dans le meme ordre selon l'essai — la barre "
@@ -803,7 +802,7 @@ OVERLAY = {
                 "d'en proposer un autre. Les dix releves de l'activite 3 sont compares aux "
                 "vraies valeurs du banc a 0,05 pres : 41 au lieu de 41,1 est refuse. "
                 "QCM 30 q / 90 refutations (C8.2 x20, C3.4 x10), lexique 30 notions, deux "
-                "syntheses, fiche, matrice de 23 notions, tests reels 46/46 et 32/32, "
+                "syntheses, fiche, matrice de 23 notions, tests reels 44/44 et 32/32, "
                 "scripts de test et de calcul livres dans le dossier.",
         anomalies="Aucun essai physique : le banc est une simulation, calculee par "
                   "profils_3e_C8.2.py avec les formules de la poutre encastree et les "
@@ -1441,7 +1440,9 @@ OVERLAY = {
                 "tolerance, quel delai), delai de silence justifie (trois periodes d'emission), "
                 "et six essais dont la moitie portent sur des pannes. QCM 30 q / 90 refutations "
                 "(C7.8 x20, C8.3 x10), lexique 30 notions, deux syntheses, fiche, matrice de 17 "
-                "notions, tests reels 52/52 et 32/32 avec scripts livres.",
+                "notions, tests reels 58/58 et 32/32 avec scripts livres. Cle de sauvegarde "
+                "propre seq_3e_C7_8 depuis le 24/10/2026 (elle partageait celle de 3e_C7.4), "
+                "avec copie unique de l'ancienne a la premiere ouverture.",
         anomalies="Aucune liaison reelle : le banc simule. Le routage et l'adressage ne sont ni "
                   "travailles ni evalues ici — ils le sont par 3e_C4.7 et 3e_C4.8, et le lot "
                   "s'appuie dessus sans les refaire. La synchronisation des horloges est laissee "

@@ -160,27 +160,47 @@ const ANCIENNE = { inputs: { hyp: 'Si l’une des deux tombe, la sirène ne part
     hors: "déclenche seule, et signale qu'elle est seule", a2regle: 'La sirène part si les deux annoncent au moins 2.',
     a3ph: 'Quand l’autre se tait, la station déclenche et le dit.', reinv: 'À trois, on vote deux sur trois et on affiche la troisième.' },
   checks: { ch0: true, ch1: true, ch2: true, ch3: true, ch4: true, ch5: true }, exp: { msgEssaye: true, msgOk: true, coupe: true } };
-// ── une sauvegarde faite avec l'ancien découpage (2 séances de 90 min) se relit ──
-// save() n'a pas changé : même clé, mêmes identifiants. On écrit une sauvegarde de
-// l'ancienne page, telle que save() la produisait, puis on recharge la page découpée.
+// ── sauvegarde : clé propre et migration unique depuis seq_3e_C7_4 (24/10/2026) ──
+// Jusqu'au 24/10/2026, la page enregistrait sous la clé de 3e_C7.4 : les deux séquences
+// mélangeaient le travail de l'élève. Une sauvegarde écrite par l'ancienne page (même format,
+// save() n'a pas changé) se trouve donc sous seq_3e_C7_4.
 {
+  const CLE = (src.match(/const KEY = "([^"]+)"/) || [])[1];
+  ok('la page enregistre sous sa propre clé', CLE === 'seq_3e_C7_8', CLE);
   const ctx = await b.newContext({ viewport: { width: 390, height: 844 } });
   const q = await ctx.newPage(); const e2 = [];
   q.on('pageerror', e => e2.push(e.message));
-  const CLE = (src.match(/const KEY = "([^"]+)"/) || [])[1];
-  await q.goto('file://' + f, { waitUntil: 'load' });
-  await q.evaluate(([k, v]) => localStorage.setItem(k, v), [CLE, JSON.stringify(ANCIENNE)]);
+  const lit = k => q.evaluate(k => localStorage.getItem(k), k);
+  await q.goto('file://' + f, { waitUntil: 'load' }); await q.waitForTimeout(200);
+  ok('première ouverture : la clé propre est créée, rien sous seq_3e_C7_4',
+     (await lit('seq_3e_C7_8')) !== null && (await lit('seq_3e_C7_4')) === null);
+  // l'ancienne sauvegarde existe, la clé propre pas encore : la page doit COPIER l'ancienne
+  await q.evaluate(v => { localStorage.removeItem('seq_3e_C7_8'); localStorage.setItem('seq_3e_C7_4', v); },
+                   JSON.stringify(ANCIENNE));
   await q.reload({ waitUntil: 'load' }); await q.waitForTimeout(300);
-  ok('ancienne sauvegarde : la page se recharge sans erreur JS', e2.length === 0, e2.slice(0, 2).join(' | '));
+  ok('migration : la page se recharge sans erreur JS', e2.length === 0, e2.slice(0, 2).join(' | '));
   const relu = {};
   for (const id of Object.keys(ANCIENNE.inputs)) relu[id] = await q.inputValue('#' + id);
-  ok('ancienne sauvegarde : chaque réponse revient à sa place, séance 3 comprise',
+  ok('migration : chaque réponse de seq_3e_C7_4 apparaît à sa place, séance 3 comprise',
      Object.entries(ANCIENNE.inputs).every(([k, v]) => relu[k] === v),
      Object.entries(relu).map(([k, v]) => k + '=' + String(v).slice(0, 14)).join(' · '));
-  ok('ancienne sauvegarde : l’idée de départ est rappelée au bilan',
+  ok('migration : l’idée de départ est rappelée au bilan',
      (await q.textContent('#rappelHyp')) === ANCIENNE.inputs.hyp);
-  ok('ancienne sauvegarde : les verrous sont conservés',
+  ok('migration : les verrous sont conservés',
      await q.evaluate(v => v.every(x => !!window.__exp[x]), Object.keys(ANCIENNE.exp)));
+  ok('migration : copie sans effacer — seq_3e_C7_4 est intacte',
+     (await lit('seq_3e_C7_4')) === JSON.stringify(ANCIENNE));
+  // écrire dans 3e_C7.8 ne touche plus seq_3e_C7_4
+  const NOUV = 'Nouvelle idée, écrite dans 3e_C7.8.';
+  await q.fill('#hyp', NOUV); await q.waitForTimeout(100);
+  ok('écrire dans 3e_C7.8 ne modifie plus seq_3e_C7_4', (await lit('seq_3e_C7_4')) === JSON.stringify(ANCIENNE));
+  ok('… et ce qui est écrit va sous seq_3e_C7_8', ((await lit('seq_3e_C7_8')) || '').includes(NOUV));
+  // 3e_C7.4 change ensuite son travail : 3e_C7.8 ne le relit plus jamais
+  await q.evaluate(() => localStorage.setItem('seq_3e_C7_4',
+    JSON.stringify({ inputs: { hyp: 'IDÉE ÉCRITE DANS 3e_C7.4' }, checks: {}, exp: {} })));
+  await q.reload({ waitUntil: 'load' }); await q.waitForTimeout(300);
+  ok('migration une seule fois : 3e_C7.8 ne relit plus seq_3e_C7_4', (await q.inputValue('#hyp')) === NOUV,
+     await q.inputValue('#hyp'));
   await ctx.close();
 }
 

@@ -12,6 +12,13 @@ les scripts et le jeu de réponses sont dans ce dossier, on peut tout rejouer.
 > 390 px sans défilement horizontal) et recharge la page sur une sauvegarde écrite au format de
 > l'ancienne page : chaque réponse revient à sa place. Le QCM n'a pas changé ; son banc a été rejoué.
 
+> **Clé de sauvegarde propre, 24/10/2026.** Jusque-là, la page enregistrait sous la clé de
+> 3e_C7.4 (`seq_3e_C7_4`) : les deux séquences mélangeaient le travail de l'élève dans un même
+> navigateur. Elle enregistre désormais sous `seq_3e_C7_8`. À la première ouverture, si cette clé
+> n'existe pas et que `seq_3e_C7_4` existe, elle en fait une copie (sans rien effacer), puis ne la
+> relit plus jamais. Le banc vérifie la clé, la migration, la copie sans effacement, qu'écrire
+> dans 3e_C7.8 ne touche plus `seq_3e_C7_4`, et que la migration ne se rejoue pas.
+
 ```bash
 node tests_3e_C7.8_sequence.mjs "$PWD/sequence_3e_C7.8_deux-stations.html" 3e reponses_3e_C7.8.json
 node tests_3e_C7.8_qcm.mjs      "$PWD/qcm_3e_C7.8_deux-stations.html" 3e_C7.8 3e_C8.3 sequence_3e_C7.8_deux-stations.html
@@ -19,7 +26,7 @@ node tests_3e_C7.8_qcm.mjs      "$PWD/qcm_3e_C7.8_deux-stations.html" 3e_C7.8 3e
 
 ---
 
-## 1. Séquence — **52 / 52**
+## 1. Séquence — **58 / 58**
 
 ```
 ✅ charge sans erreur JS
@@ -70,10 +77,16 @@ node tests_3e_C7.8_qcm.mjs      "$PWD/qcm_3e_C7.8_deux-stations.html" 3e_C7.8 3e
 ✅ les réponses survivent au rechargement — a1msg = {"id":"robert","v":124,"u":"km/h","t":"14:07","niv":2,"seq":417}
 ✅ les verrous survivent au rechargement
 ✅ les champs cochés survivent au rechargement
-✅ ancienne sauvegarde : la page se recharge sans erreur JS
-✅ ancienne sauvegarde : chaque réponse revient à sa place, séance 3 comprise — hyp=Si l’une des d · hors=déclenche seul · a2regle=La sirène part · a3ph=Quand l’autre  · reinv=À trois, on vo
-✅ ancienne sauvegarde : l’idée de départ est rappelée au bilan
-✅ ancienne sauvegarde : les verrous sont conservés
+✅ la page enregistre sous sa propre clé — seq_3e_C7_8
+✅ première ouverture : la clé propre est créée, rien sous seq_3e_C7_4
+✅ migration : la page se recharge sans erreur JS
+✅ migration : chaque réponse de seq_3e_C7_4 apparaît à sa place, séance 3 comprise — hyp=Si l’une des d · hors=déclenche seul · a2regle=La sirène part · a3ph=Quand l’autre  · reinv=À trois, on vo
+✅ migration : l’idée de départ est rappelée au bilan
+✅ migration : les verrous sont conservés
+✅ migration : copie sans effacer — seq_3e_C7_4 est intacte
+✅ écrire dans 3e_C7.8 ne modifie plus seq_3e_C7_4
+✅ … et ce qui est écrit va sous seq_3e_C7_8
+✅ migration une seule fois : 3e_C7.8 ne relit plus seq_3e_C7_4 — Nouvelle idée, écrite dans 3e_C7.8.
 ```
 
 ## 2. QCM — **32 / 32**

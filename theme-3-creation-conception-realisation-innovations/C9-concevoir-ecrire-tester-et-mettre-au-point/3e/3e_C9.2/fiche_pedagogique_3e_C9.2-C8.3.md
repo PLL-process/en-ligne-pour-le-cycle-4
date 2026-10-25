@@ -11,7 +11,7 @@
 | Référentiel | BO n°9 du 29/02/2024 |
 | Domaines du socle | D1.3, D2, D3, D4, D5 |
 | CRCN | 3.4 Programmer · 5.2 Évoluer dans un environnement numérique |
-| Durée | 4 séances de 1 h 30 |
+| Durée | 8 séances de 55 min (285 min d'activités annoncées) |
 | Objet-fil 3e | La station d'alerte cyclonique (décrite en 3e_C4.3, programmée ici, auto-testée en 3e_C6.2) |
 
 ## Sous-compétences travaillées (formulations officielles)
