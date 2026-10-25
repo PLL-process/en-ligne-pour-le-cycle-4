@@ -76,7 +76,7 @@ q("C1.1", "Une donnée n'est pas une information",
   "Donnée brute → information (mise en rapport) → connaissance (ce qui reste)."),
 
 q("C1.1", "La valeur impossible",
-  "Dans les relevés, mercredi 11 h porte la valeur −4,2 µg/m³. Que faut-il en conclure ?",
+  "Dans les relevés, mercredi 11 h porte la valeur −4,2 µg/m³ (microgrammes par mètre cube). Que faut-il en conclure ?",
   ["c'est une valeur impossible : une concentration ne peut pas être négative, il y a un défaut de mesure",
    "l'air était exceptionnellement pur ce jour-là",
    "il faut la remplacer par 0, qui est la plus proche valeur possible",
@@ -142,7 +142,7 @@ q("C1.1", "La donnée manquante",
   "Une case vide se signale et se compte comme manquante. Elle ne se remplit pas."),
 
 q("C1.1", "Ce que coûte une donnée sale",
-  "Moyenne calculée sur les 90 relevés : 27,4 µg/m³. Moyenne après écart des deux "
+  "Moyenne calculée sur les 90 relevés : 27,4 µg/m³ (microgrammes par mètre cube). Moyenne après écart des deux "
   "valeurs fausses (−4,2 et 251) : 25,2. Que montre cet écart de 2,2 ?",
   ["que quelques valeurs fausses suffisent à déplacer un résultat, et donc qu'il faut nettoyer avant de calculer",
    "que la différence est faible, donc qu'on pouvait se dispenser du nettoyage",

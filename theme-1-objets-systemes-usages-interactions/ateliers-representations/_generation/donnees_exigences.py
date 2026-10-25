@@ -332,7 +332,7 @@ E1 = dict(
            "1.4 non tenue → quelqu'un peut s'électrocuter → <b>sécurité</b>. 1.2 non tenue → de l'eau gaspillée → "
            "<b>incidences environnementales</b>.</p>"],
     jumeau=dict(consigne="Dans le même diagramme, on ajoute le bloc «&nbsp;Id = 1.5 — Discrétion&nbsp;: la pompe doit faire "
-                         "au plus 35&nbsp;dB (décibels) à 1&nbsp;m, la nuit&nbsp;». Qui est sa mère&nbsp;? Quel est son "
+                         "au plus 35&nbsp;dB à 1&nbsp;m, la nuit&nbsp;» (décibels). Qui est sa mère&nbsp;? Quel est son "
                          "critère, quel est son niveau&nbsp;?",
                 correction="Sa mère est l'exigence <b>1</b> (Id 1.5 = cinquième fille de 1). Critère&nbsp;: <b>le niveau "
                            "sonore à 1&nbsp;m, la nuit</b> (ce qu'on mesure). Niveau&nbsp;: <b>au plus 35&nbsp;dB</b> (la "
@@ -466,7 +466,7 @@ E2 = dict(
     retenir="pour passer du cahier des charges au diagramme, on garde le <b>critère et le niveau</b> dans le texte du bloc, "
             "et on range le bloc sous l'exigence-mère qu'il précise&nbsp;; une exigence dit <b>ce que</b>, jamais "
             "<b>comment</b>.",
-    piege="écrire une solution (une carte Wi-Fi, une pompe 12&nbsp;V) dans un bloc «&nbsp;requirement&nbsp;»&nbsp;: c'est un "
+    piege="écrire une solution (une carte Wi-Fi, une pompe 12&nbsp;V, en volts) dans un bloc «&nbsp;requirement&nbsp;»&nbsp;: c'est un "
           "<b>comment</b>, pas une exigence.",
 )
 
@@ -476,7 +476,7 @@ TABLE_EXIGENCES_E3 = (
     "<tr><td>1.1</td><td>Étanchéité</td><td>IPX4 au moins&nbsp;: aucune eau dans le boîtier sous des projections</td><td>F1</td></tr>"
     "<tr><td>1.2</td><td>Sobriété</td><td>au plus 10&nbsp;L d'eau par jour</td><td>F2&nbsp;: de 9 à 11&nbsp;L acceptés</td></tr>"
     "<tr><td>1.3</td><td>Réglage</td><td>sans outil, en 2&nbsp;min au plus</td><td>F3&nbsp;: jusqu'à 5&nbsp;min acceptées, toujours sans outil</td></tr>"
-    "<tr><td>1.4</td><td>Sécurité électrique</td><td>très basse tension&nbsp;: 12&nbsp;V</td><td>F0&nbsp;: aucun écart</td></tr>"
+    "<tr><td>1.4</td><td>Sécurité électrique</td><td>très basse tension&nbsp;: 12&nbsp;V (volts)</td><td>F0&nbsp;: aucun écart</td></tr>"
     "</table></div>")
 
 TABLE_TESTS_E3 = (
@@ -922,7 +922,7 @@ TABLE_LIENS = ('<div class="defile"><table><tr><th>Lien</th><th>Comment il se de
 
 TABLE_FLEX = ('<div class="defile"><table><tr><th>Classe</th><th>Flexibilité</th><th>Ce que dit le client</th>'
               "<th>Exemple au jardin</th></tr>"
-              "<tr><td>F0</td><td>nulle&nbsp;: impératif</td><td>«&nbsp;Pas question.&nbsp;»</td><td>12&nbsp;V, rien d'autre</td></tr>"
+              "<tr><td>F0</td><td>nulle&nbsp;: impératif</td><td>«&nbsp;Pas question.&nbsp;»</td><td>12&nbsp;V (volts), rien d'autre</td></tr>"
               "<tr><td>F1</td><td>faible&nbsp;: peu négociable</td><td>«&nbsp;À la rigueur, si…&nbsp;» (un écart, à une condition)</td>"
               "<td>IPX3 seulement sous l'abri, preuve à l'appui</td></tr>"
               "<tr><td>F2</td><td>moyenne&nbsp;: négociable</td><td>«&nbsp;Un peu plus, un peu moins, ça ira.&nbsp;»</td>"
@@ -947,7 +947,7 @@ COURS = {
           "Wi-Fi&nbsp;» est une solution, pas une exigence.</li></ul>"
           "<h3>Les liens</h3>" + TABLE_LIENS +
           "<h3>Chaque exigence a sa catégorie</h3><ul>"
-          "<li>Le programme en cite six&nbsp;: <b>sécurité</b> (12&nbsp;V, très basse tension), <b>incidences "
+          "<li>Le programme en cite six&nbsp;: <b>sécurité</b> (12&nbsp;volts, très basse tension), <b>incidences "
           "environnementales</b> (10&nbsp;L d'eau par jour au plus), <b>ergonomie</b> (réglage sans outil), <b>fiabilité</b> "
           "(IPX4&nbsp;: fonctionner sous la pluie), <b>formes et fonctions</b>, <b>qualité</b>.</li></ul>"
           "<h3>Proposer un protocole de test</h3><ul>"
@@ -1033,8 +1033,8 @@ NIVEAUX = {
                     consigne="<p>La nuit, la pompe du système réveille la voisine. Écris le <b>bloc d'exigence</b> qui manque "
                              "(nom, Id, texte avec critère et niveau), sa <b>catégorie</b>, et le <b>test</b> qui la vérifiera.</p>",
                     correction=["<b>Nom</b> → Discrétion → <b>Id</b> → 1.5, cinquième fille de l'exigence 1",
-                                "<b>Texte</b> → «&nbsp;La pompe doit faire au plus 35&nbsp;dB (décibels) à 1&nbsp;m, entre 22&nbsp;h "
-                                "et 7&nbsp;h.&nbsp;» → critère&nbsp;: le niveau sonore&nbsp;; niveau&nbsp;: 35&nbsp;dB au plus",
+                                "<b>Texte</b> → «&nbsp;La pompe doit faire au plus 35&nbsp;dB à 1&nbsp;m, entre 22&nbsp;h "
+                                "et 7&nbsp;h.&nbsp;» (décibels) → critère&nbsp;: le niveau sonore&nbsp;; niveau&nbsp;: 35&nbsp;dB au plus",
                                 "<b>Catégorie</b> → incidences environnementales&nbsp;: le bruit est une nuisance pour les voisins",
                                 "<b>Test</b> → un sonomètre (l'appareil qui mesure le bruit) à 1&nbsp;m de la pompe, pendant un "
                                 "arrosage de nuit&nbsp;; seuil&nbsp;: 35&nbsp;dB au plus",
@@ -1042,7 +1042,7 @@ NIVEAUX = {
                                                "diagramme, avec son test.")]),
                dict(titre="Le diagramme qui se trompe",
                     consigne="<p>Un élève a dessiné une flèche «&nbsp;verify&nbsp;» qui part de l'exigence 1.2 et va vers le "
-                             "test T1. Il a aussi écrit «&nbsp;pompe 12&nbsp;V&nbsp;» dans un bloc «&nbsp;requirement&nbsp;». "
+                             "test T1. Il a aussi écrit «&nbsp;pompe 12&nbsp;V&nbsp;» (volts) dans un bloc «&nbsp;requirement&nbsp;». "
                              "Trouve les deux erreurs et corrige-les.</p>",
                     correction=["<b>Erreur 1</b> → la flèche «&nbsp;verify&nbsp;» va <b>du test vers l'exigence</b>&nbsp;: de T1 "
                                 "vers 1.2, pas l'inverse",

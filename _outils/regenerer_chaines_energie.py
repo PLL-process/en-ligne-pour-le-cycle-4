@@ -96,6 +96,11 @@ class Diagram:
         for c,dark in [(CYAN,'#006a86'),(YELLOW,'#805600'),(VIOLET,'#7836ad'),(GREEN,'#126c2a'),(ORANGE,'#925000'),(BLUE,'#244e9a'),(RED,'#a01818')]:
             css+='@media print{[fill="%s"]{fill:%s}[stroke="%s"]{stroke:%s}}' % (c,dark,c,dark)
         svg=f'<svg xmlns="http://www.w3.org/2000/svg" width="{self.w}" height="{self.h}" style="width:100%;height:auto" viewBox="0 0 {self.w} {self.h}" role="img" aria-labelledby="t d" font-family="Segoe UI, Arial, sans-serif" content="{escape(native,quote=True)}">\n<title id="t">{escape(self.title)}</title><desc id="d">{escape(self.desc)}</desc>\n<defs>{markers}</defs><style>{css}</style><rect class="paper" width="{self.w}" height="{self.h}" fill="{BG}"/>\n'+ '\n'.join(self.parts)+'\n</svg>\n'
+        # Règle d'or n°312 : une unité écrite dans le dessin sans son nom → la ligne « Unités : V (volts) » sous le dessin
+        import sys as _sys
+        _sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import legende_unites
+        svg = legende_unites.poser(svg)
         dest.write_text(svg,encoding='utf-8')
         print(path)
 

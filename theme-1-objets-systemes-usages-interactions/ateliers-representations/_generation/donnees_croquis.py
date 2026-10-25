@@ -1314,7 +1314,7 @@ E6 = dict(
     documents=[dict(svg=QUATRE, legende="La station d'alerte, montrée de quatre façons.",
                     description="<ul><li><b>Vue 1</b> — à main levée&nbsp;: le poteau, la sirène tenue par un collier, une flèche "
                                 "rouge « vent », une légende, une cote « Ø 60 ».</li>"
-                                "<li><b>Vue 2</b> — des traits droits et des symboles reliés en boucle&nbsp;: une batterie de 12 V, un "
+                                "<li><b>Vue 2</b> — des traits droits et des symboles reliés en boucle&nbsp;: une batterie de 12 V (volts), un "
                                 "interrupteur ouvert, une sirène.</li>"
                                 "<li><b>Vue 3</b> — un boîtier en volume, aux arêtes nettes et aux faces ombrées, dans une fenêtre "
                                 "d'ordinateur, avec trois petits axes x, y, z.</li>"

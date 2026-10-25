@@ -24089,3 +24089,66 @@ seul cas restant est le « A » de « PANNE A », qui n'en prend pas. Capture av
 
 **Ce qui a tourné.** `tests_index.py` 19 / 20, comme sur `main` (« référence normative et codification interne » échoue
 déjà sur `main`) ; `controle_sigles` ✅.
+
+## 25/10/2026 — Règle d'or n°312, phase 2 : les schémas nomment leurs unités, et les générateurs portent la règle (transversale : thèmes 1, 2 et 3, `_outils`, `.claude/skills`)
+
+**Suite annoncée par l'entrée de la n°312** (« les schémas seront repris à part »). Un schéma se lit souvent seul :
+agrandi par la loupe, ouvert comme image, repris dans un QCM. C'est donc une zone à part entière, comme un tableau.
+
+**La forme retenue pour un schéma.** Sous le dessin, une ligne dans sa police et ses couleurs :
+« Unités : V (volts) · mA (milliampères) ». Écrire « batterie 12 V (volts) » dans une étiquette aurait fait déborder des
+blocs dessinés pour « batterie 12 V ». Une capture de console Packet Tracer (« time=12ms ») n'est pas réécrite : la
+ligne est posée sous la capture, hors du cadre de la console. Seul le texte visible compte (`<text>`, `<tspan>`) : un
+« 12 volts » écrit seulement dans la `<desc>`, l'œil ne le voit pas.
+
+**L'outil : `_outils/legende_unites.py`.**
+- Il pose la ligne sous un fichier SVG ou sous chaque SVG intégré d'une page, avec `--verifier` pour seulement dire ce
+  qui changerait.
+- Il agrandit le viewBox d'une bande, allonge d'autant le fond (même couleur, même dégradé, mêmes coins arrondis), met à
+  l'échelle l'attribut `height` et ajoute la même phrase à la `<desc>`.
+- La ligne prend l'encre du dessin : elle suit donc ses règles d'impression.
+- Il est idempotent : une ligne déjà posée se retire à l'identique, puis se recalcule.
+
+**Ce qui change.**
+- **28 fichiers SVG** reçoivent la ligne (thème 1 : 7, thème 2 : 17, thème 3 : 4). 20 sont faits main ; 4 schémas
+  fonctionnels sortent de `regenerer_chaines_energie.py`, et 4 figures du générateur des ateliers.
+- **17 schémas intégrés** dans 11 pages : la croquis-station, le FAST de la station et les diagrammes d'exigences, dans
+  les ateliers, les cahiers, les synthèses et les séquences où ils sont incrustés (3e_C7.1, 4e_C8.1). S'y ajoutent
+  l'animation des trois principes de Chengdu (« Unités : µg/m³ (microgrammes par mètre cube) », à la taille que la
+  feuille de style de la page impose au dessin) et la chaîne d'information du Book Train.
+- `_outils/controle_unites.py` lit maintenant chaque schéma comme une zone : les SVG intégrés et les fichiers `.svg`
+  sous `theme-*`. Il ne lit pas les dossiers « _… », ni `fichiers_drawio`, qui gardent les sources d'édition. Le banc
+  passe à **18 / 18** (le schéma refusé malgré sa `desc`, la ligne posée qui le fait passer puis se retire à
+  l'identique, un fichier SVG lu, une source draw.io ignorée). Résultat : **559 pages et schémas lus, 136 grandeurs
+  dans des schémas, 0 écart**.
+
+**Les générateurs portent la règle — et un risque de la phase 1 est levé.** Le lot n°312 avait modifié des pages
+qu'un script produit. Les relancer aurait effacé les noms. J'ai relancé chaque générateur dans un arbre de travail
+séparé et comparé le résultat aux pages en ligne.
+- **Ateliers de représentation** (`theme-1-…/ateliers-representations/_generation/`) : le rebuild de `main` revenait
+  sur 7 pages et 3 QCM. Les 21 changements de la n°312 sont reportés dans les sources (`donnees_croquis.py`,
+  `donnees_exigences.py`, `donnees_fast.py`, `donnees_interacteurs.py`, `q_exigences.py`, `q_fast.py`,
+  `q_interacteurs.py`). `figures.py` fait passer chaque figure par `legende_unites.poser()`. Après `build.py`,
+  `build_qcm.py` et `incrustations.py`, les pages ne diffèrent de `main` que par les lignes de légende et deux
+  parenthèses imbriquées défaites (« (12 V (volts), très basse tension) » → « (12 volts, très basse tension) » ;
+  « pompe 12 V (volts)) » → « pompe 12 V, en volts) »). Constaté en route sur `main` : `incrustations.py --verifier`
+  signalait trois séquences en écart (3e_C7.1, 4e_C8.1, 4e_C4.1) ; elles sont désormais à jour.
+- **Schémas fonctionnels** : `_outils/regenerer_chaines_energie.py` pose la ligne en écrivant. Relancé, il reproduit
+  les fichiers à l'octet près ; `verifier_chaines_energie.py` donne 54 / 54, comme sur `main`.
+- **QCM de Chengdu** (`5e_C1.1/_generation/q.py`) : les deux noms ajoutés par la n°312 y sont reportés.
+- Pas de générateur dans le dépôt pour les données `energie.py` (C7.4) et `materiaux.py` (C7.3) : les pages en sont la
+  source ; rien à reporter.
+
+**Ce qui a tourné.**
+- `controle_unites` ✅ (559) ; son banc 18 / 18 ; `controle_sigles` ✅ ; `controle_regles_visibles` ✅ (n°309).
+- `legende_unites.py --verifier` sur tous les fichiers touchés : rien ne change au second passage, quel que soit
+  l'ordre de hachage de Python.
+- `banc_ateliers.py` : fast 45 / 45, exigences 37 / 37, croquis 37 / 37, interacteurs 39 / 39, comme sur `main`.
+- Bancs des séquences touchées, sur la branche puis sur `main` : 3e_C7.1 71 / 71, 4e_C8.1 48 / 48, Book Train 39 / 39,
+  5e_C1.1 43 / 43, animation des trois principes 50 / 50.
+- Les 11 pages modifiées, à 390 px, sur `main` puis sur la branche : mêmes largeurs, aucune erreur JavaScript.
+- Captures avant / après : `_outils/captures_regle_312_schemas_2026-10-25/` (l'animation de Chengdu à 390 px, le FAST
+  de l'atelier, le bas de `ordre_preactionneur_trois_cas.svg`, une console de ping).
+
+**Vu, non corrigé.** Dans `5e_C1.1/Images/la_donnee_qui_designe.svg`, la dernière ligne de l'encadré C (« une
+organisation, pas quelqu'un. ») passe sous le bord de son cadre, sur `main` comme ici.
