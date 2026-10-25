@@ -20,6 +20,7 @@ on le corrige d'abord. Une fois le lot vert, on le livre avec le skill `livraiso
 - progressivité 5e → 4e → 3e et cohérence problématique ↔ activités ↔ évaluation ;
 - durée réaliste, matériel confirmé ou versions 🅱/🅲 présentes ;
 - exercices originaux, corrections de qualité, niveau de langue collège ;
+- sigles en capitales, FAST et non « fast » (n°313, 25/10/2026) : `python3 _outils/controle_sigles.py` ;
 - squelette respecté : n°306 (22/09/2026) et n°311 (22/10/2026), voir le skill `sequence-pedagogique-engageante`.
 
 **Technique** :

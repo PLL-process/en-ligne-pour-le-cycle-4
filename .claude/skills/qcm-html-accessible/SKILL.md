@@ -120,6 +120,8 @@ Répartition des bonnes réponses (n°137) :
 - `python3 _outils/controle_longueurs.py` — bonnes réponses détachées par leur longueur (n°144,
   n°198) ; banque signalée au-delà de 15 %.
 - `node _outils/mesures_qcm.mjs` — position des bonnes réponses (n°137).
+- `python3 _outils/controle_sigles.py` — sigles en capitales dans les questions et les options, FAST et non « fast »
+  (n°313) ; seul le mot cité entre guillemets (« fast », le mot anglais) garde ses minuscules.
 - `node _outils/verif_qcm_coherence.mjs <fichiers…>` — après rotation : réfutation vide pour la
   bonne réponse, non vide pour les autres.
 
