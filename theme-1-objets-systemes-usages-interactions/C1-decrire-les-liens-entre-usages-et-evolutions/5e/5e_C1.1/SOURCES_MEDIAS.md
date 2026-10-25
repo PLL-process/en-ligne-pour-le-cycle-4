@@ -90,10 +90,62 @@ ce dossier. Le volet de navigation, qui listait des dossiers personnels, est mas
 | `Images/geste_activite2_formule_2_resultat.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 13/09/2026 | activité 2, geste Moyenne — résultat 27,363333333 dans C92, la formule encore dans la barre (fenêtre entière) | CC0 | 108 Ko |
 | `Images/geste_activite2_formule_3_erreur_sans_egal.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 13/09/2026 | activité 2, geste Moyenne — erreur typique : MOYENNE(C2:C91) sans le =, affiché comme du texte en C93 (fenêtre entière) | CC0 | 108 Ko |
 
+## L'animation des trois principes et sa voix (activité 1, ajoutée le 25/10/2026)
+
+**L'animation** (bloc `#trois-principes-pas-a-pas` de la séquence) est une **création originale** : SVG et JavaScript écrits à la
+main dans la page, sans bibliothèque, sans image externe, sans réseau. Auteur : écosystème Pascal/Claude (Fable), licence **CC0 1.0**,
+comme les schémas du lot. À l'écran, elle remplace les trois schémas fixes de la planche ; ceux-ci restent dans la page et
+**s'impriment** (rien ne change sur papier). Couleurs de la planche conservées : P1 bleu, P2 vert, P3 violet. Les nombres de
+l'étape 7 (20 µg dans 2 m³, soit 10 µg/m³) sont ceux de l'encadré « D'abord, ce qu'on mesure », pour qu'il n'y ait qu'un exemple.
+
+**La voix : synthèse neuronale, hors ligne. Aucune voix humaine enregistrée.** Les onze fichiers sont engendrés par
+`_generation/voix_trois_principes/generer.py` à partir des onze phrases de l'animation, lues mot pour mot (le script refuse de
+produire si une phrase de la page a changé). Les phrases des étapes ①②③ sont celles des cartes P1, P2, P3.
+
+| Fichier | Nature |
+|---|---|
+| `Audio/trois-principes_scene1.ogg` · `.mp3` | Étape 1 : voix de synthèse, Opus mono 32 kb/s (36.2 Ko) et MP3 mono 48 kb/s de secours (52.7 Ko) |
+| `Audio/trois-principes_scene2.ogg` · `.mp3` | Étape 2 : voix de synthèse, Opus mono 32 kb/s (18.7 Ko) et MP3 mono 48 kb/s de secours (27.1 Ko) |
+| `Audio/trois-principes_scene3.ogg` · `.mp3` | Étape 3 : voix de synthèse, Opus mono 32 kb/s (12.2 Ko) et MP3 mono 48 kb/s de secours (17.1 Ko) |
+| `Audio/trois-principes_scene4.ogg` · `.mp3` | Étape 4 : voix de synthèse, Opus mono 32 kb/s (37.9 Ko) et MP3 mono 48 kb/s de secours (55.6 Ko) |
+| `Audio/trois-principes_scene5.ogg` · `.mp3` | Étape 5 : voix de synthèse, Opus mono 32 kb/s (14.2 Ko) et MP3 mono 48 kb/s de secours (19.9 Ko) |
+| `Audio/trois-principes_scene6.ogg` · `.mp3` | Étape 6 : voix de synthèse, Opus mono 32 kb/s (8.8 Ko) et MP3 mono 48 kb/s de secours (12.7 Ko) |
+| `Audio/trois-principes_scene7.ogg` · `.mp3` | Étape 7 : voix de synthèse, Opus mono 32 kb/s (18.3 Ko) et MP3 mono 48 kb/s de secours (26.2 Ko) |
+| `Audio/trois-principes_scene8.ogg` · `.mp3` | Étape 8 : voix de synthèse, Opus mono 32 kb/s (22.3 Ko) et MP3 mono 48 kb/s de secours (31.7 Ko) |
+| `Audio/trois-principes_scene9.ogg` · `.mp3` | Étape 9 : voix de synthèse, Opus mono 32 kb/s (8.8 Ko) et MP3 mono 48 kb/s de secours (12.1 Ko) |
+| `Audio/trois-principes_scene10.ogg` · `.mp3` | Étape 10 : voix de synthèse, Opus mono 32 kb/s (36.3 Ko) et MP3 mono 48 kb/s de secours (52.3 Ko) |
+| `Audio/trois-principes_scene11.ogg` · `.mp3` | Étape 11 : voix de synthèse, Opus mono 32 kb/s (41.5 Ko) et MP3 mono 48 kb/s de secours (59.7 Ko) |
+
+- **Moteur** : Piper (`piper-tts` 1.8.0), sous GPL-3. Il n'est pas dans le dépôt, et un fichier audio qu'il produit n'est pas une œuvre dérivée du moteur.
+- **Modèle** : `fr_FR-siwis-medium`, la voix choisie par Pascal le 21/10/2026 pour le vélo-cargo (5e_C3.1), entraînée sur la base **SIWIS**
+  de l'Université d'Édimbourg (datashare.is.ed.ac.uk/handle/10283/2353). Le fichier du modèle a été pris le 25/10/2026 dans la redistribution
+  GitHub de `k2-fsa/sherpa-onnx` (version `tts-models`, archive `vits-piper-fr_FR-siwis-medium.tar.bz2`), le dépôt d'origine
+  (`rhasspy/piper-voices`, Hugging Face) n'étant pas joignable ; empreintes et mesures de comparaison avec les prises du vélo-cargo dans
+  `_generation/voix_trois_principes/voix.json`.
+- **Licence** : **CC BY 4.0** (fiche `MODEL_CARD` livrée avec le modèle). La licence de la base d'entraînement est celle que la fiche
+  déclare ; l'origine des enregistrements n'a pas été vérifiée plus loin.
+- **Attribution exigée** : « Voix de synthèse Piper « fr_FR-siwis-medium », entraînée sur la base SIWIS (Université d'Édimbourg), CC BY 4.0. »
+  Elle figure ici, dans `voix.json` et, en version courte (« Voix de synthèse : SIWIS (CC BY 4.0) »), sous l'animation.
+- **Chaîne audio** : celle du vélo-cargo — silences du début et de la fin coupés (−45 dB), volume normalisé à −16 LUFS (mesuré : −16,9 à −15,6
+  sur quatre fichiers), crête −1,5 dB, mono.
+- **Texte envoyé à la voix** : celui de la page, sauf aux étapes 2 (parenthèses dites entre virgules), 5 (« 24 h » dit « vingt-quatre heures »)
+  et 11 (« µg/m³ » dit « microgrammes par mètre cube ») ; phonèmes corrigés aux étapes 4, 5, 6 et 8 (liaisons fausses d'espeak-ng).
+  Détail dans `phrases.json`.
+- **Prises NON ÉCOUTÉES** au 25/10/2026 : produites, mesurées (durée, volume), pas validées à l'oreille. **L'écoute de Pascal valide, ou
+  demande une correction** ; la trace s'écrit dans `voix.json` (clé `prises`). Reproductibilité à l'octet : non (Piper tire du bruit à chaque prise).
+- **Dans la page** : rien n'est chargé depuis le réseau ; les fichiers ne se lisent qu'après un geste de l'élève (« Écouter » ou
+  « Regarder ») ; si un fichier ne se lit pas, la voix française locale du navigateur prend le relais, sinon l'élève lit la phrase.
+
+**Les captures de comparaison** de la PR, dans `_generation/animation_trois_principes/captures/` : `avant-390-planche.png`
+(la planche telle que `main` l'affichait, schémas fixes) et `apres-390-planche.png` (la même position, avec l'animation),
+à 390 px ; `apres-1280-onze-etapes.png` (les onze étapes, à 1280 px, réduites). Captures du navigateur de ce lot (Chromium),
+25/10/2026, quantifiées à 256 couleurs, CC0. Elles ne sont affichées par aucune page élève.
+
 ## Ce que le lot ne contient pas
 
 - aucune photographie ;
-- aucun appel réseau, aucune police distante, aucun script tiers.
+- aucun appel réseau, aucune police distante, aucun script tiers ;
+- aucune voix humaine enregistrée (la voix de l'animation est une synthèse, ci-dessus).
 
 ## Quatre SVG présents mais employés par aucune page (relevé du 31/08/2026)
 
