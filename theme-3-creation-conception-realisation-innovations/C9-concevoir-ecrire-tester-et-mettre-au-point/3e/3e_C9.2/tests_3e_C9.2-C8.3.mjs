@@ -280,6 +280,19 @@ const run = async () => {
   ok("banc : nouvel événement — le buzzer REPART sans appui",
      (await page.getAttribute("#simBuz", "class")).includes("on"));
   await shot(page, "banc_retrigger", "#bancCard");
+  /* l'expérience ② telle que la consigne l'écrit : acquitter à 178 ou plus,
+     redescendre à 177 (ouragan), remonter à 178 — le buzzer doit repartir */
+  ok("consigne de l'activité 4 : l'expérience ② cite la frontière 177/178, plus les anciens seuils",
+     (await page.textContent("#act4")).includes("redescends sous 178") &&
+     !/sous 100|au-dessus de 150/.test(await page.textContent("#act4")));
+  await page.fill("#simVentNum", "200"); await page.waitForTimeout(300);
+  await page.click("#btnAcquit"); await page.waitForTimeout(300);
+  const muetApresAppui = !(await page.getAttribute("#simBuz", "class")).includes("on");
+  await page.fill("#simVentNum", "177"); await page.waitForTimeout(400);
+  const muetA177 = !(await page.getAttribute("#simBuz", "class")).includes("on");
+  await page.fill("#simVentNum", "178"); await page.waitForTimeout(400);
+  ok("banc : l'expérience ② telle qu'écrite — muet après l'appui, muet à 177, le buzzer REPART à 178",
+     muetApresAppui && muetA177 && (await page.getAttribute("#simBuz", "class")).includes("on"));
 
   /* activité 4 */
   for (const id of ["a4_q1","a4_q2","a4_q3","a4_q4"]) await page.selectOption("#"+id, { index: 1 });
@@ -699,6 +712,30 @@ const run = async () => {
      await page.locator("#vers-quatre-pages a").count() === 4);
   await shot(page, "quatre_pages_persistance_croisee");
   await page.evaluate(() => localStorage.clear());
+
+  /* ════════ Garde-fou : les seuils et broches d'avant ne reviennent pas ════════
+     La séquence a connu deux seuils (100 / 150 km/h, trois niveaux, buzzer au
+     niveau 2) et une « maquette » câblée A0 / D2 vert. Le programme de référence
+     n'a plus qu'un montage (A1, D2 bouton, D3 orange, D4 rouge, D5 buzzer, D6 vert,
+     D7 jaune, LCD I2C) et trois seuils (63 / 118 / 178, buzzer au niveau 3).
+     Seules exceptions permises : la capture ArduBlock datée, qui montre « 100 et
+     150 » et le dit — ses formulations ne tombent sous aucun motif ci-dessous. */
+  const ANCIENS = [/\b100\s*\/\s*150\b/, /sous 100\b/, /au-dessus de 150/, /150 se teste avant 100/,
+                   /seuils? (?:de )?100\b/, /\bniveau\s*=\s*2\b/, /niveau vaut 2\b/, /passer à 2\b/,
+                   /revient à 2\b/, /égale 2\b/, /\bA0\b/, /vert\s+D2\b/];
+  for (const f of [SEQ, ...P4]) {
+    await page.goto(url(f)); await page.waitForTimeout(300);
+    const texte = await page.evaluate(() => {
+      const c = document.body.cloneNode(true);
+      c.querySelectorAll("script,style").forEach(e => e.remove());
+      return c.textContent + " " + [...document.querySelectorAll("[alt]")].map(e => e.getAttribute("alt")).join(" ");
+    });
+    const trouves = ANCIENS.filter(r => r.test(texte)).map(String);
+    ok(`garde-fou « anciens seuils » : ${f.replace("sequence_3e_C9.2-C8.3_", "")}`, trouves.length === 0, trouves.join(" · "));
+  }
+  const planche4 = fs.readFileSync(path.join(LOT, "Images/blocs_palier4_acquitter.svg"), "utf8");
+  ok("garde-fou « anciens seuils » : la planche du palier 4 fait sonner le buzzer au niveau 3",
+     planche4.includes("= 3 (ouragan majeur)") && !ANCIENS.some(r => r.test(planche4.replace(/<[^>]+>/g, ""))));
 
   /* ════════ Synthèses + mobile ════════ */
   for (const f of ["Synthèses/synthese_eleve_3e_C9.2-C8.3.html", "Synthèses/synthese_professeur_3e_C9.2-C8.3.html"]) {

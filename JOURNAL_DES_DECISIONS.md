@@ -23499,3 +23499,58 @@ banc : session du 24/10/2026, non versés (`maj_progressions.py`, `banc_progress
   de `_outils/METHODE.md`), alors que Pascal n'a jamais 1 h 30 d'affilée avec ses élèves cette année et que ses
   séquences en ligne comptent des séances de 55 min. Les six lots de la station (3e_C7.3 à C7.8) sont écrits en
   **séances de 90 min**. Une refonte des classeurs en séances de 55 min (Moteur, calendrier) relève d'un Conseil.
+
+## 25/10/2026 — Une séance dure 55 min, à tous les niveaux : les lots du thème 3 écrits en séances de 90 min sont redécoupés ; les clés de sauvegarde partagées de 3e_C7.8 et 4e_C7.8 sont séparées (transversal : thème 3, _outils)
+
+**Décision de Pascal (24 et 25/10/2026).** « Il faudrait que chaque séance ait 55 min. Car je n'ai qu'une heure avec
+les élèves, pour tous les niveaux. » Une heure d'affilée, une séance par semaine et par classe ; « en technologie,
+c'est légalement 1 h 30 par semaine, mais dans la pratique on ne fait jamais une heure et demie […] il n'y a jamais de
+semaine où je les vois 2 h ». Conséquences : toute séquence s'écrit en séances de 55 min ; les classeurs de
+progression comptent une séance de 55 min par semaine (Moteur et calendrier à refaire, voir plus bas). Branche
+`fable/seances-55-min`, sans motif de thème.
+
+### Ce que le lot fait
+
+- **Onze pages redécoupées**, rien n'est retiré ni raccourci, aucune activité inventée ; chaque séance ≤ 55 min
+  annoncées, et la règle n°23 respectée (activités + 10 min de service ≤ séances × 55) — c'est elle qui impose
+  parfois une séance de plus que le seul calcul des minutes :
+  - le boîtier 3e_C7.3 et produire le boîtier 3e_C7.7 : 2 × 90 → **4 × 55** (50 / 50 / 35 / 25 + clôture) ;
+    l'activité 1 coupée en 1a / 1b, avec un vérificateur de la première partie ;
+  - l'énergie 3e_C7.4 et deux stations 3e_C7.8 : 2 × 90 → **3 × 55** (45 / 55 / 50), aucune activité coupée ;
+  - la station à équiper 3e_C7.5 et le mât 3e_C8.2 : 2 × 90 → **4 × 55**, aucune activité coupée ;
+  - la station programmée 3e_C9.2-C8.3 (page complète et ses quatre pages par étape) : 4 × 90 → **8 × 55**,
+    l'activité 3 coupée entre ses paliers 2 et 3 ; les quatre pages gardent leurs noms et annoncent chacune deux
+    séances ; `generer_les_quatre_pages.py`, qui ne tournait plus depuis l'ordre Bonus → Bilan → QCM, est réparé et
+    les pages en sont régénérées.
+  - Pages sans onglets (comme le capteur 3e_C7.1) : en-têtes « 🗓 Séance N », boutons « ➡ Séance N+1 », liens vers
+    les séances sous le titre. Une sauvegarde faite avec l'ancien découpage se relit (vérifié aux bancs).
+- **Clés de sauvegarde partagées** : 3e_C7.8 enregistrait sous la clé de 3e_C7.4 (`seq_3e_C7_4`), et 4e_C7.8 sous
+  celle de 4e_C7.4 — ce qu'un élève écrivait dans l'une réapparaissait dans l'autre et l'écrasait. 3e_C7.8 et
+  4e_C7.8 ont maintenant leur clé, avec une copie unique de l'ancienne à la première ouverture (rien n'est perdu ; un
+  texte tapé dans l'autre séquence peut revenir une fois). Laissés tels quels : la clé commune des cinq pages de la
+  station 3e_C9.2 (une seule séquence) et celle des ateliers de planification 5e, 4e et 3e (à revoir dans leur
+  générateur).
+- **`_outils/METHODE.md`**, pilier 3 : « 1 séance de 55 min par semaine et par classe, à tous les niveaux »
+  (1 h 30 réglementaires, une heure dans la pratique) ; surcouche de `build_audit.py` à jour pour les lots touchés.
+- **Le plan de l'année** : une page « Plan de l'année 2026-2027 » (artefact privé de Pascal) montre, niveau par
+  niveau, ce que l'année contient avec une séance par semaine — 5e : 29 places pour 53 séances en ligne ; 4e : 28
+  pour 53 ; 3e : 30 pour 78 — et quels codes restent sans séquence (au mieux 30/38, 31/38, 26/38). Pascal y choisit ;
+  le Moteur et le calendrier des classeurs seront refaits sur ses choix.
+
+### Ce qui a tourné
+
+- Bancs : 3e_C7.3 68/68 · 3e_C7.7 77/77 · 3e_C7.4 54/54 · 3e_C7.8 58/58 · 3e_C7.5 54/54 · 3e_C8.2 44/44 · 3e_C9.2-C8.3
+  156/156 (pont en H 37/37) · 4e_C7.4 35/35 · 4e_C7.8 46/46 ; QCM 32/32 partout où rejoués.
+- `verif_regles_audit` : n°23 ✔ sur chaque page, aucun ✘ nouveau ; `controle_squelette`, `controle_navigation_seances`,
+  `controle_hierarchie`, `controle_regles_visibles`, `controle_liens`, `controle_atteignabilite`,
+  `controle_debordement`, `controle_contraste_liens` (deux couleurs de liens corrigées en passant) : verts ;
+  Playwright à 390 px sur chaque page : zéro erreur JS, pas de débord, chaque séance atteinte, reprise après rechargement.
+
+### Ce que le lot ne fait pas
+
+- Le Moteur et le calendrier des classeurs : en attente des choix de Pascal sur la page du plan.
+- Défauts antérieurs relevés et laissés : carte du référentiel sur la page élève (n°298), listes déroulantes (n°300),
+  ouvertures qui disent le passé (n°304), zones sans version étayée (n°31), Bonus sans corrigé et métacognition
+  absente au bilan dans la plupart de ces lots ; le volet Rappel (n°311) ne s'applique pas à ces pages sans onglets.
+- Textes à relire par Pascal : questions directrices des séances ajoutées, encadrés de fin de première partie, phrases
+  de reprise (celle de Vittascience ne nomme pas le bouton qui rouvre un fichier : non vérifié).
