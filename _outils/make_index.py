@@ -101,6 +101,15 @@ def classer(nom):
     return "📄", "Ressource"
 
 
+# Règle d'or n°313 (25/10/2026) : un sigle garde ses capitales. Le libellé se tire du nom de fichier, écrit en
+# minuscules : `atelier_diagramme_fast.html` donnait « Activité — Diagramme fast », vu par Pascal sur l'index.
+# Un jeton qui est un sigle reprend ici son écriture.
+SIGLES = {"fast": "FAST", "qcm": "QCM", "dnb": "DNB", "crcn": "CRCN", "pix": "Pix", "nfc": "NFC", "rfid": "RFID",
+          "ip": "IP", "sysml": "SysML", "sadt": "SADT", "uml": "UML", "cao": "CAO", "dao": "DAO", "tbt": "TBT",
+          "lcd": "LCD", "gps": "GPS", "usb": "USB", "ia": "IA", "3d": "3D", "ny": "NY", "xxl": "XXL",
+          "zigbee": "Zigbee"}
+
+
 def titre_pedagogique(nom, libelle):
     """Un nom lisible, tiré du fichier — jamais le nom physique (règle n°37).
 
@@ -118,7 +127,7 @@ def titre_pedagogique(nom, libelle):
     for j in jetons:
         if re.fullmatch(r"\d+e", j) or re.fullmatch(r"C\d+", j, re.I) or re.fullmatch(r"\d+", j):
             continue
-        garde.append(j)
+        garde.append(SIGLES.get(j.lower(), j))
     base = " ".join(garde).strip()
     if not base:
         return libelle

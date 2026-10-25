@@ -169,6 +169,8 @@ La synthèse « à retenir » se place avant le Bonus (pratique de `3e_C5.1` et 
 - Un contexte local artificiel, des questions piège, l'humiliation en cas d'erreur, les stéréotypes, du matériel non confirmé
   présenté comme disponible.
 - Affirmer ce que l'élève a déjà fait (n°304).
+- Écrire un sigle en minuscules : FAST, QCM, DNB, CRCN, SysML gardent leur forme partout où l'élève les lit (n°313,
+  25/10/2026). Les noms de fichiers et les identifiants de code (`atelier_diagramme_fast.html`) ne changent pas.
 - Laisser une trace de la fabrique dans ce que lit l'élève : numéro de règle, « convention du dépôt », nom d'agent ou de lot
   (n°309, 21/10/2026).
 - Charger quoi que ce soit depuis Internet (n°305). Encadrer fr.vittascience.com dans un `<iframe>` (le site refuse).
