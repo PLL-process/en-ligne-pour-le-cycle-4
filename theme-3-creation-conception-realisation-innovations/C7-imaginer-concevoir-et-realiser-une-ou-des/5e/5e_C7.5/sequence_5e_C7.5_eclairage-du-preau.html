@@ -212,7 +212,7 @@ Il attend son capteur sur une entrée précise, et sa DEL sur une sortie précis
 <section class="card">
   <h2>⚡ Sécurité — à lire avant de toucher quoi que ce soit</h2>
   <div class="danger">
-    <p><b>Très basse tension uniquement.</b> Tout ce que tu manipules ici fonctionne en 5 V :
+    <p><b>Très basse tension uniquement.</b> Tout ce que tu manipules ici fonctionne en 5 V (volts) :
     la carte, le shield, le capteur, la DEL. <b>Aucun élève ne manipule le secteur</b> — ni la
     prise murale, ni le câble d'un adaptateur branché. L'énergie arrive par le câble USB relié
     à un ordinateur, et c'est le professeur qui branche l'adaptateur s'il y en a un.</p>
@@ -332,7 +332,7 @@ Il attend son capteur sur une entrée précise, et sa DEL sur une sortie précis
       <tr id="tr_shield"><td><b>Base Shield V2</b></td><td>il donne des ports Grove à la carte</td><td class="ma" id="ma_shield">—</td><td class="pt"><select id="pt_shield" aria-label="Port de Base Shield V2"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
       <tr id="tr_lum"><td><b>Capteur de luminosité Grove</b></td><td>il mesure la lumière du préau</td><td class="ma" id="ma_lum">—</td><td class="pt"><select id="pt_lum" aria-label="Port de Capteur de luminosité Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
       <tr id="tr_del"><td><b>Module DEL Grove</b></td><td>il éclaire le préau</td><td class="ma" id="ma_del">—</td><td class="pt"><select id="pt_del" aria-label="Port de Module DEL Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_usb"><td><b>Câble USB 5 V (500 mA)</b></td><td>il apporte l'énergie</td><td class="ma" id="ma_usb">—</td><td class="pt"><select id="pt_usb" aria-label="Port de Câble USB 5 V (500 mA)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_usb"><td><b>Câble USB 5 V (volts), 500 mA (milliampères)</b></td><td>il apporte l'énergie</td><td class="ma" id="ma_usb">—</td><td class="pt"><select id="pt_usb" aria-label="Port de Câble USB 5 V (500 mA)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
     </table>
     <p class="budget" id="budget">—</p>
     <p style="font-size:.9em;color:var(--sub);margin:10px 0 2px">Le programme téléversé dans la carte (on ne le modifie pas) :</p>
@@ -359,7 +359,7 @@ sinon
     <select id="a1q1">
       <option value="">— je choisis —</option>
       <option>sa sortie varie continûment : une entrée numérique ne lirait que 0 ou 1</option>
-      <option>le port D4 est réservé aux modules qui consomment moins de 5 mA</option>
+      <option value="le port D4 est réservé aux modules qui consomment moins de 5 mA">le port D4 est réservé aux modules qui consomment moins de 5 milliampères</option>
       <option>le capteur est trop loin du port D4 sur le Base Shield</option>
       <option>D4 est déjà occupé par la DEL dans tous les montages</option>
     </select>
@@ -374,7 +374,7 @@ sinon
       programme : <code>analogRead(A0)</code> et <code>digitalWrite(5, …)</code>. Un montage
       juste avec un programme qui regarde ailleurs ne fait rien du tout — le branchement et le
       programme doivent dire la même chose.</p>
-      <p><b>1.</b> Sa sortie varie continûment entre 0 et 5 V. Une entrée numérique ne sait
+      <p><b>1.</b> Sa sortie varie continûment entre 0 et 5 V (volts). Une entrée numérique ne sait
       répondre que « il y a de la tension » ou « il n'y en a pas » : elle ne saurait pas
       distinguer la pénombre du plein jour. L'entrée analogique, elle, rend un nombre entre
       0 et 1023.</p>
@@ -517,7 +517,7 @@ sinon
       pour n'importe quel montage électrique — <b>on câble hors tension</b>. Et le tout dernier
       geste n'est pas un branchement : c'est une <b>vérification</b>. Masquer le capteur avec la
       main, c'est se donner la preuve que le prototype fait ce qu'on attend.</p>
-      <p style="color:var(--sub)">Rappel : ici tout est en 5 V, très basse tension. Le secteur
+      <p style="color:var(--sub)">Rappel : ici tout est en 5 V (volts), très basse tension. Le secteur
       n'est jamais manipulé par un élève.</p>
     </div></details>
   </div>
@@ -527,7 +527,7 @@ sinon
   <h2>🔄 REFAIRE — Réinvestissement ⏱ ~15 min</h2>
 <p>Le principal est content, et il en veut plus : <b>l'éclairage doit aussi
   s'allumer la nuit quand quelqu'un passe</b>, même si le capteur de luminosité n'y suffit pas.
-  On te fournit un capteur de mouvement Grove : sortie numérique, 12 mA.</p>
+  On te fournit un capteur de mouvement Grove : sortie numérique, 12 mA (milliampères).</p>
   <p>Écris, en quelques lignes : <b>quel type de port</b> tu lui donnes et pourquoi, <b>quelle
   fonction</b> il tient, et ce que devient le <b>courant total</b> demandé au câble USB.</p>
   <textarea id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>

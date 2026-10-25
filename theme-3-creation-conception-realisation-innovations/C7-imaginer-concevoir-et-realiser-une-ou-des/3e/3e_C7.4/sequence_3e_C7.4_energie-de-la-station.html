@@ -239,7 +239,7 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
   <h2>⚠️ Sécurité — à lire avant de brancher quoi que ce soit</h2>
   <div class="declencheur">
     <ul>
-      <li>Tout le montage fonctionne en <b>très basse tension</b> : 5 V. Le « secteur », <b>c'est
+      <li>Tout le montage fonctionne en <b>très basse tension</b> : 5 V (volts). Le « secteur », <b>c'est
         l'adaptateur USB fermé</b>, jamais la prise, jamais le câble d'alimentation. On ne
         l'ouvre pas, on ne le coupe pas. <b>Côté élève, il n'y a que du 5 V.</b></li>
       <li><b>Les accus Li-ion ne sont pas des piles.</b> Court-circuités, percés, écrasés ou
@@ -280,8 +280,8 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
   une journée calme. <b>Compare les deux, puis passe les cinq sources.</b></p>
   <div class="banc" id="banc">
     <table class="conso">
-      <tr><th></th><th>Ce qui consomme</th><th>Courant</th><th>Par jour</th><th>Énergie</th></tr>
-      <tr id="tr0"><td class="ck"><input type="checkbox" id="ck0" checked></td><td>Carte Arduino UNO</td><td class="n">45 mA</td><td class="n">24 h</td><td class="n" id="wh0">5,400 Wh</td></tr>
+      <tr><th></th><th>Ce qui consomme</th><th>Courant (en milliampères)</th><th>Par jour</th><th>Énergie</th></tr>
+      <tr id="tr0"><td class="ck"><input type="checkbox" id="ck0" checked></td><td>Carte Arduino UNO</td><td class="n">45 mA</td><td class="n">24 h</td><td class="n" id="wh0">5,400 Wh (wattheures)</td></tr>
       <tr id="tr1"><td class="ck"><input type="checkbox" id="ck1" checked></td><td>Anémomètre à impulsions</td><td class="n">1 mA</td><td class="n">24 h</td><td class="n" id="wh1">0,120 Wh</td></tr>
       <tr id="tr2"><td class="ck"><input type="checkbox" id="ck2" checked></td><td>Girouette</td><td class="n">1 mA</td><td class="n">24 h</td><td class="n" id="wh2">0,120 Wh</td></tr>
       <tr id="tr3"><td class="ck"><input type="checkbox" id="ck3" checked></td><td>Buzzer d'alerte</td><td class="n">30 mA</td><td class="n">2 h</td><td class="n" id="wh3">0,300 Wh</td></tr>
@@ -307,16 +307,16 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
     <div class="banc-cmd">
       <label for="src">Source d'énergie :</label>
       <select id="src">
-        <option>Pile 9 V alcaline</option>
+        <option value="Pile 9 V alcaline">Pile 9 V (volts) alcaline</option>
         <option>4 piles AA alcalines</option>
         <option>Accu Li-ion 18650 rechargeable</option>
         <option>Secteur — adaptateur USB scellé</option>
-        <option>Panneau solaire 1 W crête + accu</option>
+        <option value="Panneau solaire 1 W crête + accu">Panneau solaire 1 W (watts) crête + accu</option>
       </select>
     </div>
     <table class="srcd">
       <tr><th>Énergie stockée dans la source</th><td id="sBrute">—</td></tr>
-      <tr><th id="sRendLbl">Rendement de la mise en 5 V</th><td id="sRend">—</td></tr>
+      <tr><th id="sRendLbl">Rendement de la mise en 5 V (volts)</th><td id="sRend">—</td></tr>
       <tr><th>Énergie réellement disponible</th><td id="sUtile">—</td></tr>
     </table>
     <p class="verdict" id="verdict">—</p>
@@ -330,7 +330,7 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
     <p><b>1.</b> Entre un jour calme et un jour d'alerte, la consommation…</p>
     <select id="a0q1">
       <option value="">— je choisis —</option>
-      <option>change peu : 5,64 Wh contre 6,04 Wh</option>
+      <option value="change peu : 5,64 Wh contre 6,04 Wh">change peu : 5,64 contre 6,04 wattheures</option>
       <option>double : le buzzer consomme autant que tout le reste</option>
       <option>ne change pas du tout</option>
       <option>est divisée par deux le jour d'alerte</option>
@@ -374,7 +374,7 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
   <p><b>Objectif :</b> passer d'une consommation journalière à une réserve
   dimensionnée. <b>Compétence :</b> 3e_C7.4. <b>Production attendue :</b> 3 calculs +
   2 réponses.</p>
-  <p>Un accu Li-ion 18650 délivre <b>9,4 Wh</b> utiles sous 5 V — c'est le chiffre du banc.
+  <p>Un accu Li-ion 18650 délivre <b>9,4 Wh (wattheures)</b> utiles sous 5 V (volts) — c'est le chiffre du banc.
   On peut en mettre plusieurs côte à côte.</p>
   <div class="exo">
 
@@ -409,7 +409,7 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
       <p><b>3 — environ 4 %.</b> (18,8 − 18,12) ÷ 18,12 = 3,8 %.</p>
       <p><b>4 — trop faible</b>, et tu as déjà rencontré exactement cette situation :</p>
       <div class="declencheur"><p>En 5<sup>e</sup>, la patère du hall exigeait 40 kg et le bois
-      cassait à 41. En 3<sup>e</sup>, le mât exigeait 300 N et le tube acier galvanisé était
+      cassait à 41. En 3<sup>e</sup>, le mât exigeait 300 N (newtons) et le tube acier galvanisé était
       recalé pour 1,1 mm de flèche. <b>Tout juste n'est pas assez</b>, et pour la même raison
       à chaque fois : l'éprouvette de l'essai n'a pas les défauts de la pièce réelle.</p></div>
       <p>Ici les défauts sont connus et nommés : un accu perd environ <b>20 % de sa capacité</b>
@@ -430,7 +430,7 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
 <section class="card seance-entete" id="seance-2" aria-labelledby="seance-2-titre">
   <h2 id="seance-2-titre">🗓 Séance 2 — Recharger ou tenir, et à quel prix</h2>
   <p class="seance-duree">Durée&nbsp;: 55 minutes · activités 2 et 3, soit 55 minutes d'activités.</p>
-  <p><b>Ce dont tu repars&nbsp;:</b> un jour d'alerte, la station consomme 6,04&nbsp;Wh&nbsp;; pour tenir 72&nbsp;heures, il lui faut 18,12&nbsp;Wh, et trois accus en donnent 28,2 (activité 1).</p>
+  <p><b>Ce dont tu repars&nbsp;:</b> un jour d'alerte, la station consomme 6,04&nbsp;Wh (wattheures)&nbsp;; pour tenir 72&nbsp;heures, il lui faut 18,12&nbsp;Wh, et trois accus en donnent 28,2 (activité 1).</p>
   <p><b>La question de la séance&nbsp;:</b> un panneau solaire rend-il la station autonome, et que coûte chaque source sur toute sa vie&nbsp;?</p>
 </section>
 
@@ -439,7 +439,7 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
   <p><b>Objectif :</b> distinguer ce qui <em>recharge</em> de ce qui <em>tient</em>.
   <b>Compétence :</b> 3e_C7.4. <b>Production attendue :</b> 3 réponses + une phrase.</p>
   <p>« Un panneau solaire, c'est autonome. » C'est la phrase qui vient d'abord, et c'est celle
-  qu'il faut examiner. <a href="#banc">Le banc</a> (activité 0) annonce <b>3,7 Wh par jour</b> pour un panneau de 1 W crête,
+  qu'il faut examiner. <a href="#banc">Le banc</a> (activité 0) annonce <b>3,7 Wh (wattheures) par jour</b> pour un panneau de 1 W (watts) crête,
   en moyenne annuelle, plein soleil compris.</p>
   <div class="exo">
 
@@ -547,8 +547,8 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
       <option>Fabrication très énergivore, puis vingt ans de production sans rien consommer : c'est la durée qui décide.</option>
       <option>Rien à fabriquer côté station, mais l'énergie vient d'ailleurs — en Martinique, encore largement du thermique.</option>
     </select>
-    <p style="margin-top:16px"><b>Le chiffre qui tranche.</b> La station consomme 6,04 Wh par
-    jour. Une pile 9 V en délivre 2,8 utiles. Combien de piles 9 V faudrait-il
+    <p style="margin-top:16px"><b>Le chiffre qui tranche.</b> La station consomme 6,04 Wh (wattheures) par
+    jour. Une pile 9 V (volts) en délivre 2,8 utiles. Combien de piles 9 V faudrait-il
     <b>par an</b>&nbsp;?</p>
     <input type="text" inputmode="numeric" id="a3piles" placeholder="… piles par an">
     <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
@@ -596,7 +596,7 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
       <option>le secteur, complété par le panneau qui le soulage</option>
       <option>les trois accus, qu'on recharge une fois par semaine</option>
       <option>le panneau seul : il suffit un jour normal</option>
-      <option>les piles 9 V, qu'on remplace régulièrement</option>
+      <option value="les piles 9 V, qu'on remplace régulièrement">les piles 9 volts, qu'on remplace régulièrement</option>
     </select>
     <p><b>Question 2.</b> Et le rôle des trois accus&nbsp;?</p>
     <select id="a4q2">
@@ -625,8 +625,8 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
       <table class="refs">
         <tr><th>Élément</th><th>Rôle</th><th>Dimensionnement</th></tr>
         <tr><td>Secteur (adaptateur scellé)</td><td>source normale, 360 jours par an</td><td>illimitée tant qu'il y a du réseau</td></tr>
-        <tr><td><b>3 accus 18650</b></td><td><b>tenir quand le réseau tombe</b></td><td><b>28,2 Wh pour 18,12 exigés — 112 h</b></td></tr>
-        <tr><td>Panneau 2 W crête</td><td>recharger la réserve, soulager le secteur</td><td>7,4 Wh/jour pour 6,04 consommés</td></tr>
+        <tr><td><b>3 accus 18650</b></td><td><b>tenir quand le réseau tombe</b></td><td><b>28,2 Wh (wattheures) pour 18,12 exigés — 112 h</b></td></tr>
+        <tr><td>Panneau 2 W (watts) crête</td><td>recharger la réserve, soulager le secteur</td><td>7,4 Wh/jour pour 6,04 consommés</td></tr>
       </table>
       <p><b>Ce que le choix coûte, et qu'il faut écrire :</b> trois accus à remplacer tous les
       trois à quatre ans (et à rapporter en collecte) ; un panneau à fixer, orienter et nettoyer ;
@@ -651,18 +651,18 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
   <button class="btn check" data-check="5" type="button">✅ Vérifier le réinvestissement</button>
   <div class="feedback" id="fb5"></div>
   <details class="correction"><summary>📖 Correction</summary><div>
-    <p><b>Ce qui ne change pas :</b> la consommation du pire jour (6,04 Wh), la règle du
+    <p><b>Ce qui ne change pas :</b> la consommation du pire jour (6,04 Wh, en wattheures), la règle du
     dimensionnement sur le pire cas, et le fait que le panneau ne produit pas pendant
     l'événement.</p>
     <p><b>Ce qui change, et c'est énorme :</b> il n'y a plus de secteur pour rattraper les
     mauvais jours. Le panneau ne soulage plus une source principale — <b>il EST la source
     principale</b>, et il doit couvrir la consommation même en semaine grise. Avec 5,3 h
     d'équivalent plein soleil en moyenne mais deux à trois fois moins en septembre, un panneau
-    de 2 W ne suffit plus : il en faut au moins <b>5 W</b>, et une réserve dimensionnée non plus
+    de 2 W (watts) ne suffit plus : il en faut au moins <b>5 W</b>, et une réserve dimensionnée non plus
     sur 72 heures mais sur <b>une semaine sans soleil</b>, soit environ 42 Wh — cinq accus.</p>
     <p><b>La décision de 4<sup>e</sup> qu'il faut ressortir :</b> avant d'agrandir le panneau et
     la batterie, <b>regarder la charge</b>. La carte pèse 89 %. Une carte à faible consommation
-    (5 mA en moyenne) ferait tomber le besoin de 6,04 à environ 1,2 Wh par jour — et alors un
+    (5 mA (milliampères) en moyenne) ferait tomber le besoin de 6,04 à environ 1,2 Wh par jour — et alors un
     panneau de 2 W et deux accus suffiraient largement, sur un îlet où personne ne vient
     dépanner.</p>
     <p class="retenir">📌 <b>Plus l'accès est difficile, plus il est rentable de consommer
@@ -675,7 +675,7 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
   <h2>📝 Synthèse — à retenir</h2>
   <ul>
     <li><b>Dimensionner sur le pire cas</b> — une réserve calculée sur la moyenne est vide le
-      jour où elle sert. Ici, le pire cas est le jour d'alerte : 6,04 Wh.</li>
+      jour où elle sert. Ici, le pire cas est le jour d'alerte : 6,04 Wh (wattheures).</li>
     <li><b>Le besoin sur une durée</b> — 6,04 Wh/jour × 3 jours = 18,12 Wh pour tenir 72 heures.
       Une autonomie ne s'exprime pas sans la durée exigée.</li>
     <li><b>Tout juste n'est pas assez</b> — deux accus donnent 18,8 Wh pour 18,12 exigés, soit

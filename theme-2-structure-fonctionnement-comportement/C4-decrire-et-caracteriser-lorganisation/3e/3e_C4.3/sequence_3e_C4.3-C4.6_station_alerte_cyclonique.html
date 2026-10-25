@@ -331,7 +331,7 @@
   <h2>🔀 Trois façons de vivre la séquence</h2>
   <div class="versions">
     <div class="version va"><h4>🅰 Matériel réel</h4>
-      <p>Arduino UNO (ou R4 Minima) + Grove Base Shield (sélecteur <b>5 V</b>) + capteur de luminosité sur <b>A0</b> + écran LCD RGB.
+      <p>Arduino UNO (ou R4 Minima) + Grove Base Shield (sélecteur <b>5 V (volts)</b>) + capteur de luminosité sur <b>A0</b> + écran LCD RGB.
       Lire la valeur brute <code>analogRead(A0)</code> (0-1023) et l'afficher : c'est le CAN en vrai !</p>
       <p style="color:var(--sub)">Sécurité : très basse tension uniquement, câblage vérifié par le professeur avant branchement USB.</p></div>
     <div class="version vb"><h4>🅱 Simulation</h4>
@@ -468,7 +468,7 @@
       <div><b>Production attendue :</b> 2 lectures de simulateur + 3 calculs vérifiés + 1 explication rédigée.</div>
       <div><b>Ressources :</b> simulateur ci-dessous (version 🅲) — ou montage Arduino/Grove (🅰), VittaScience (🅱).</div>
     </div>
-    <div class="consigne"><b>Consigne :</b> déplace le curseur du simulateur pour reproduire les situations demandées, lis les valeurs, puis effectue les calculs. Le baromètre simulé mesure de <b>868 hPa</b> à <b>1018 hPa</b> et son CAN travaille sur <b>10 bits</b> (0 à 1023).</div>
+    <div class="consigne"><b>Consigne :</b> déplace le curseur du simulateur pour reproduire les situations demandées, lis les valeurs, puis effectue les calculs. Le baromètre simulé mesure de <b>868 hPa (hectopascals)</b> à <b>1018 hPa</b> et son CAN travaille sur <b>10 bits</b> (0 à 1023).</div>
 
     <div class="exo">
       <div class="simu">
@@ -528,7 +528,7 @@
     <div class="retenir"><b>📌 À retenir :</b> le <b>CAN</b> (Convertisseur Analogique → Numérique) échantillonne une tension continue et produit un nombre entier sur n bits : 2ⁿ paliers. Formule : <b>valeur = min + N × (étendue ÷ (2ⁿ − 1))</b>. En anglais : ADC, <i>Analog to Digital Converter</i>.</div>
     <div class="critere"><b>🎯 Critère de réussite :</b> 5 réponses numériques justes sur 5 et une explication utilisant correctement « continu » et « paliers ».</div>
     <details class="prof"><summary>🅰 Fiche montage version matériel réel (à faire avec le professeur)</summary>
-      <p><b>Matériel :</b> Arduino UNO classique <em>ou</em> UNO R4 Minima + câble USB + Grove Base Shield V2 (sélecteur sur <b>5 V</b>) + capteur de luminosité Grove sur <b>A0</b> + écran LCD RGB Grove sur <b>I2C</b>.</p>
+      <p><b>Matériel :</b> Arduino UNO classique <em>ou</em> UNO R4 Minima + câble USB + Grove Base Shield V2 (sélecteur sur <b>5 V (volts)</b>) + capteur de luminosité Grove sur <b>A0</b> + écran LCD RGB Grove sur <b>I2C</b>.</p>
       <p><b>Programme (Arduino IDE) :</b> lire <code>analogRead(A0)</code> et afficher la valeur brute 0-1023 sur le LCD. En couvrant plus ou moins le capteur avec la main, on <em>voit</em> le CAN travailler.</p>
       <p><b>Protocole de test :</b><br>1. brancher le shield seul → vérifier l'alimentation ;<br>2. téléverser ;<br>3. capteur découvert = valeur haute, couvert = proche de 0 ;<br>4. noter 3 couples (situation, N).</p>
       <p><b>Dépannage :</b> rien à l'écran → vérifier le connecteur I2C et la bibliothèque <code>Grove - LCD RGB Backlight</code> ; valeurs figées → mauvais port analogique ; UNO R4 : vérifier que la carte sélectionnée dans l'IDE est bien « UNO R4 Minima » (bibliothèque LCD compatible non testée au labo — <b>MATÉRIEL À CONFIRMER : prévoir l'alternative VittaScience</b>).</p>
@@ -675,7 +675,7 @@
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>La colonne <b>vigilance</b> change de valeur à des lignes précises : repère la <em>première</em> ligne « rouge ». Pour le minimum et le maximum, parcours les colonnes — ou utilise les fonctions MIN() et MAX() dans LibreOffice.</p></details>
     <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Dans LibreOffice Calc : <code>=MIN(E3:E50)</code> pour la pression minimale, <code>=MAX(D3:D50)</code> pour la rafale. Le passage en orange se lit le jour 28, celui en violette le jour 29 : compte les lignes entre les deux (1 ligne = 1 heure).</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>1.</b> Premier « rouge » : le <b>29 à 08:00</b> (réponse attendue : 8).<br><b>2.</b> Pression minimale : <b>966,8 hPa</b> (dernière ligne, cœur du phénomène au plus près).<br><b>3.</b> Rafale maximale : <b>223 km/h</b>.<br><b>4.</b> Orange le 28 à 15:00, violette le 29 à 15:00 → <b>24 heures</b>.</p>
+      <p><b>1.</b> Premier « rouge » : le <b>29 à 08:00</b> (réponse attendue : 8).<br><b>2.</b> Pression minimale : <b>966,8 hPa (hectopascals)</b> (dernière ligne, cœur du phénomène au plus près).<br><b>3.</b> Rafale maximale : <b>223 km/h</b>.<br><b>4.</b> Orange le 28 à 15:00, violette le 29 à 15:00 → <b>24 heures</b>.</p>
       <p><b>Méthode :</b> une table structurée se lit par colonnes (descripteurs) et par lignes (enregistrements). Les fonctions MIN/MAX du tableur évitent les erreurs de lecture — c'est exactement pour cela que les données sont <em>structurées</em>.</p>
       <p><b>5. Conclusion attendue :</b> quand le vent augmente, la pression <b>chute</b> (de 1012 à 967 hPa) : les deux grandeurs varient en sens inverse. En croisant deux capteurs indépendants, la station évite les fausses alertes : une rafale isolée sans chute de pression (par exemple un grain passager) ne déclenchera pas la sirène. C'est le principe de la <b>validation croisée</b> des mesures.</p>
       <p><b>Erreur à éviter dans la conclusion :</b> écrire « la pression fait monter le vent » — on observe une <em>corrélation</em>, le cyclone est la cause des deux.</p>

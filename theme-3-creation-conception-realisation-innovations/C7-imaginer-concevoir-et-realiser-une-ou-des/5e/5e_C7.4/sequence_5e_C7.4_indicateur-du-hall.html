@@ -195,7 +195,7 @@ table.releve td input{padding:4px 8px}
   <p class="problematique">Le même objet peut être alimenté de plusieurs façons. Laquelle choisir, et sur quoi s'appuyer pour le dire&nbsp;?</p>
   <div class="exo">
     <h4>💡 Ton idée à toi, avant tout essai</h4>
-    <p>Cinq sources te sont proposées : une pile 9 V, quatre piles AA, un accu rechargeable,
+    <p>Cinq sources te sont proposées : une pile 9 V (volts), quatre piles AA, un accu rechargeable,
     une prise de courant avec son adaptateur, un petit panneau solaire. <b>Laquelle
     choisirais-tu, là, tout de suite&nbsp;?</b> Et qu'est-ce qui te ferait changer d'avis&nbsp;?</p>
     <textarea id="hyp" rows="3" placeholder="Je prendrais… parce que… et je changerais d'avis si…"></textarea>
@@ -209,7 +209,7 @@ table.releve td input{padding:4px 8px}
   <h2>⚠️ Sécurité — à lire avant de brancher quoi que ce soit</h2>
   <div class="declencheur">
     <ul>
-      <li>Tout le montage fonctionne en <b>très basse tension</b> : 5 V. C'est la tension d'un
+      <li>Tout le montage fonctionne en <b>très basse tension</b> : 5 V (volts). C'est la tension d'un
         port USB, et elle est sans danger.</li>
       <li>Le « secteur » de la liste, <b>c'est l'adaptateur USB fermé</b>, jamais la prise
         elle-même. On ne l'ouvre pas, on ne le modifie pas, on ne coupe pas son câble.
@@ -242,8 +242,8 @@ table.releve td input{padding:4px 8px}
   ce que devient la ligne du bas.</p>
   <div class="banc">
     <table class="conso">
-      <tr><th></th><th>Ce qui consomme</th><th>Courant</th><th>Par jour</th><th>Énergie</th></tr>
-      <tr id="tr0"><td class="ck"><input type="checkbox" id="ck0" checked></td><td>Carte Arduino UNO</td><td class="n">45 mA</td><td class="n">10 h</td><td class="n" id="wh0">2,250 Wh</td></tr>
+      <tr><th></th><th>Ce qui consomme</th><th>Courant (en milliampères)</th><th>Par jour</th><th>Énergie</th></tr>
+      <tr id="tr0"><td class="ck"><input type="checkbox" id="ck0" checked></td><td>Carte Arduino UNO</td><td class="n">45 mA</td><td class="n">10 h</td><td class="n" id="wh0">2,250 Wh (wattheures)</td></tr>
       <tr id="tr1"><td class="ck"><input type="checkbox" id="ck1" checked></td><td>Capteur d'humidité du sol</td><td class="n">2 mA</td><td class="n">10 h</td><td class="n" id="wh1">0,100 Wh</td></tr>
       <tr id="tr2"><td class="ck"><input type="checkbox" id="ck2" checked></td><td>DEL indicatrice</td><td class="n">10 mA</td><td class="n">10 h</td><td class="n" id="wh2">0,500 Wh</td></tr>
       <tr class="tot"><td class="ck"></td><td colspan="3">Consommation du montage, par jour</td>
@@ -263,16 +263,16 @@ table.releve td input{padding:4px 8px}
     <div class="banc-cmd">
       <label for="src">Source d'énergie :</label>
       <select id="src">
-        <option>Pile 9 V alcaline</option>
+        <option value="Pile 9 V alcaline">Pile 9 V (volts) alcaline</option>
         <option>4 piles AA alcalines</option>
         <option>Accu Li-ion 18650 rechargeable</option>
         <option>Secteur — adaptateur USB scellé</option>
-        <option>Panneau solaire 1 W crête + accu</option>
+        <option value="Panneau solaire 1 W crête + accu">Panneau solaire 1 W (watts) crête + accu</option>
       </select>
     </div>
     <table class="srcd">
       <tr><th>Énergie stockée dans la source</th><td id="sBrute">—</td></tr>
-      <tr><th id="sRendLbl">Rendement de la mise en 5 V</th><td id="sRend">—</td></tr>
+      <tr><th id="sRendLbl">Rendement de la mise en 5 V (volts)</th><td id="sRend">—</td></tr>
       <tr><th>Énergie réellement disponible</th><td id="sUtile">—</td></tr>
     </table>
     <p class="verdict" id="verdict">—</p>
@@ -306,7 +306,7 @@ table.releve td input{padding:4px 8px}
 
       <p><b>1 — environ une journée.</b> 24 heures, exactement. Une pile 9 V paraît sérieuse
       parce qu'elle est grosse et qu'elle affiche un gros nombre ; elle ne contient pourtant
-      que <b>4,95 Wh</b>, et le régulateur qui ramène ses 9 V à 5 V en jette près de la moitié
+      que <b>4,95 Wh (wattheures)</b>, et le régulateur qui ramène ses 9 V à 5 V en jette près de la moitié
       en chaleur avant que l'indicateur n'en voie la couleur.</p>
       <p><b>2 — le secteur et le panneau solaire.</b> Ce ne sont pas des <em>réservoirs</em>,
       ce sont des <b>robinets</b> : ils ne stockent rien, ils donnent. Le secteur donne tant
@@ -323,7 +323,7 @@ table.releve td input{padding:4px 8px}
   <p>Une source d'énergie n'est pas de l'électricité : c'est ce qui va <em>devenir</em> de
   l'électricité. Associe chaque source à la forme d'énergie qu'elle contient <b>au départ</b>.</p>
   <div class="exo">
-    <p style="margin-top:12px"><b>Pile 9 V alcaline</b></p>
+    <p style="margin-top:12px"><b>Pile 9 V (volts) alcaline</b></p>
     <select id="a1f0">
       <option value="">— je choisis —</option>
       <option>chimique aussi — quatre fois la même réaction</option>
@@ -359,7 +359,7 @@ table.releve td input{padding:4px 8px}
       <option>rayonnement du soleil — de la lumière, pas du courant</option>
       <option>électrique — elle arrive déjà sous cette forme</option>
     </select>
-    <p style="margin-top:12px"><b>Panneau solaire 1 W crête + accu</b></p>
+    <p style="margin-top:12px"><b>Panneau solaire 1 W (watts) crête + accu</b></p>
     <select id="a1f4">
       <option value="">— je choisis —</option>
       <option>chimique aussi — quatre fois la même réaction</option>
@@ -406,11 +406,11 @@ table.releve td input{padding:4px 8px}
   <div class="exo">
   <table class="releve">
     <tr><th>Source</th><th class="num">Ce que le banc affiche</th></tr>
-    <tr><td>Pile 9 V alcaline</td><td class="num"><input type="text" inputmode="decimal" id="rel0" placeholder="… Wh"></td></tr>
+    <tr><td>Pile 9 V (volts) alcaline</td><td class="num"><input type="text" inputmode="decimal" id="rel0" placeholder="… Wh"></td></tr>
     <tr><td>4 piles AA alcalines</td><td class="num"><input type="text" inputmode="decimal" id="rel1" placeholder="… Wh"></td></tr>
     <tr><td>Accu Li-ion 18650 rechargeable</td><td class="num"><input type="text" inputmode="decimal" id="rel2" placeholder="… Wh"></td></tr>
-    <tr><td>Secteur — adaptateur USB scellé</td><td class="num"><select id="rel3"><option value="">— je choisis —</option><option>illimitée</option><option>2,8 Wh</option><option>0 Wh</option></select></td></tr>
-    <tr><td>Panneau solaire 1 W crête + accu</td><td class="num"><input type="text" inputmode="decimal" id="rel4" placeholder="… Wh par jour"></td></tr>
+    <tr><td>Secteur — adaptateur USB scellé</td><td class="num"><select id="rel3"><option value="">— je choisis —</option><option>illimitée</option><option value="2,8 Wh">2,8 Wh (wattheures)</option><option value="0 Wh">0 Wh (wattheures)</option></select></td></tr>
+    <tr><td>Panneau solaire 1 W (watts) crête + accu</td><td class="num"><input type="text" inputmode="decimal" id="rel4" placeholder="… Wh par jour"></td></tr>
   </table>
     <p style="font-size:.9em;color:var(--warn)">🔒 Passe les cinq sources au banc : on ne recopie pas un relevé qu'on n'a pas fait.</p>
     <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
@@ -418,13 +418,13 @@ table.releve td input{padding:4px 8px}
     <details class="correction"><summary>📖 Correction</summary><div>
       <table class="refs">
       <tr><th>Source</th><th>Énergie disponible</th></tr>
-      <tr><td>Pile 9 V alcaline</td><td><b>2,8 Wh</b></td></tr>
+      <tr><td>Pile 9 V (volts) alcaline</td><td><b>2,8 Wh (wattheures)</b></td></tr>
       <tr><td>4 piles AA alcalines</td><td><b>12,5 Wh</b></td></tr>
       <tr><td>Accu Li-ion 18650 rechargeable</td><td><b>9,4 Wh</b></td></tr>
       <tr><td>Secteur — adaptateur USB scellé</td><td><b>illimitée</b></td></tr>
-      <tr><td>Panneau solaire 1 W crête + accu</td><td><b>3,7 Wh par jour</b></td></tr>
+      <tr><td>Panneau solaire 1 W (watts) crête + accu</td><td><b>3,7 Wh par jour</b></td></tr>
       </table>
-      <p style="margin-top:10px"><b>Le piège de la pile 9 V.</b> Elle stocke 4,95 Wh et n'en
+      <p style="margin-top:10px"><b>Le piège de la pile 9 V.</b> Elle stocke 4,95 Wh (wattheures) et n'en
       délivre que 2,8. La différence part en chaleur dans le régulateur, qui doit faire tomber
       9 V à 5 V : il jette 4 V sur 9, soit <b>44 %</b>. Les quatre piles AA font 6 V, le
       régulateur n'a plus qu'un volt à jeter sur six : il n'en perd que 17 %.</p>
@@ -449,7 +449,7 @@ table.releve td input{padding:4px 8px}
   </div>
   <div class="exo">
 
-    <p><b>Question 1.</b> Le banc dit que le panneau solaire récolte 3,7 Wh par jour pour
+    <p><b>Question 1.</b> Le banc dit que le panneau solaire récolte 3,7 Wh (wattheures) par jour pour
     2,85 consommés : il suffit. Pourquoi n'est-il pourtant pas le bon choix ici&nbsp;?</p>
     <select id="a3q1">
       <option value="">— je choisis —</option>
@@ -471,7 +471,7 @@ table.releve td input{padding:4px 8px}
     <select id="a3q3">
       <option value="">— je choisis —</option>
       <option>le secteur, par son adaptateur USB fermé</option>
-      <option>la pile 9 V, la plus simple à brancher</option>
+      <option value="la pile 9 V, la plus simple à brancher">la pile 9 volts, la plus simple à brancher</option>
       <option>le panneau solaire, le plus écologique</option>
       <option>les quatre piles AA, les moins chères</option>
     </select>
@@ -507,7 +507,7 @@ table.releve td input{padding:4px 8px}
   <p>Le banc ne connaît que des watts-heures. Associe chaque source à ce qu'il <em>ignore</em>
   d'elle.</p>
   <div class="exo">
-    <p style="margin-top:12px"><b>Pile 9 V alcaline</b></p>
+    <p style="margin-top:12px"><b>Pile 9 V (volts) alcaline</b></p>
     <select id="a4a0">
       <option value="">— je choisis —</option>
       <option>Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas.</option>
@@ -531,7 +531,7 @@ table.releve td input{padding:4px 8px}
       <option>Il lui faut du soleil, donc un dehors, une orientation et un nettoyage.</option>
       <option>Le déchet : une pile par jour, c'est un bac de collecte plein à Noël.</option>
     </select>
-    <p style="margin-top:12px"><b>Panneau solaire 1 W crête + accu</b></p>
+    <p style="margin-top:12px"><b>Panneau solaire 1 W (watts) crête + accu</b></p>
     <select id="a4a3">
       <option value="">— je choisis —</option>
       <option>Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas.</option>
@@ -564,7 +564,7 @@ table.releve td input{padding:4px 8px}
   <button class="btn check" data-check="5" type="button">✅ Vérifier le réinvestissement</button>
   <div class="feedback" id="fb5"></div>
   <details class="correction"><summary>📖 Correction</summary><div>
-    <p><b>Le panneau solaire.</b> Il récolte 3,7 Wh par jour pour 2,85 consommés — les mêmes
+    <p><b>Le panneau solaire.</b> Il récolte 3,7 Wh (wattheures) par jour pour 2,85 consommés — les mêmes
     chiffres qu'à l'activité 3, exactement les mêmes — et cette fois il y a du soleil.</p>
     <p><b>Rien n'a changé dans l'objet. Tout a changé dans la situation.</b> C'est pour cela que
     la compétence dit « choisir une source d'énergie » et pas « connaître la meilleure source » :
@@ -584,7 +584,7 @@ table.releve td input{padding:4px 8px}
       dans les fils, lumineuse au bout de la DEL. Une chaîne s'écrit avec des flèches.</li>
     <li><b>Réservoir ou robinet</b> — une pile stocke une quantité et s'épuise ; le secteur et
       le panneau ne stockent rien et donnent. On ne les compare pas de la même façon.</li>
-    <li><b>Énergie utile</b> — ce qui arrive vraiment au bout. Une pile 9 V stocke 4,95 Wh et
+    <li><b>Énergie utile</b> — ce qui arrive vraiment au bout. Une pile 9 V (volts) stocke 4,95 Wh et
       n'en délivre que 2,8 : le régulateur jette le reste en chaleur.</li>
     <li><b>Watt-heure (Wh)</b> — l'unité de l'énergie stockée. Un courant seul ne dit rien :
       il faut aussi une tension et une durée.</li>
@@ -597,7 +597,7 @@ table.releve td input{padding:4px 8px}
 
 <section class="card bonus">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-  <p><b>🔋 Défi pile :</b> une pile 9 V coûte 3,50 € et tient 24 h. Combien coûterait une année
+  <p><b>🔋 Défi pile :</b> une pile 9 V (volts) coûte 3,50 € et tient 24 h. Combien coûterait une année
   scolaire d'indicateur alimenté ainsi&nbsp;? Compare au prix de l'adaptateur, une fois pour toutes.</p>
   <p><b>☀ Défi Martinique :</b> le banc compte 5,3 heures d'équivalent plein soleil par jour, en
   moyenne annuelle. Cherche ce que devient ce chiffre en saison des pluies, et dis ce que ça

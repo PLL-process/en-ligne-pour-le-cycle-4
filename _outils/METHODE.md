@@ -73,7 +73,11 @@ rattraper) · **305** une page se lit sans Internet · **306** squelette unique
 `_outils/controle_squelette.mjs` · **308** un bloc ne se dessine pas, il se
 capture · **310** chaînes d'énergie : les blocs disent la fonction, les
 flèches la forme d'énergie (skill `chaine-energie-fonctionnelle`) · **311** à
-partir de la séance 2, l'ouverture est repliée dans le volet « 📖 Rappel ».
+partir de la séance 2, l'ouverture est repliée dans le volet « 📖 Rappel » ·
+**312** une unité se lit en toutes lettres : « 1,2 W (watts) » à sa première
+apparition dans chaque activité, chaque tableau et chaque question de QCM ; dans
+un tableau, le nom peut aller dans l'intitulé (« Courant (en milliampères) ») ;
+contrôlé par `_outils/controle_unites.py` (25/10/2026).
 
 ### Les 6 règles d'or fondatrices (texte complet au journal)
 
