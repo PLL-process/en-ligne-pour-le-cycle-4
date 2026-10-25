@@ -23724,3 +23724,39 @@ ne perd une séance que si le travail maison couvre une séance entière, et jam
 - Les pages des séquences gardent leur propre découpage (une page peut annoncer 3 séances, la classe en fait 2) ;
   l'étiquette 🏠 sur les activités des pages est un lot à part.
 - Les questions directrices restent celles des pages : le bloc donne l'objectif de la première activité du jour.
+
+## 25/10/2026 — Pastille « 🏠 Peut se faire à la maison » sur les activités que le plan donne à la maison (transversal : thèmes 1, 2 et 3)
+
+**Demande de Pascal (25/10/2026).** « Il faudra que les séquences maison soient identifiables », avec le plan de
+l'année en séances de 55 min et 20 min au plus de travail maison par semaine (entrée précédente, branche
+`fable/progressions-55-min`). Branche `fable/pastille-maison`, sans motif de thème.
+
+### Ce que le lot fait
+
+- **23 pastilles dans 9 pages**, chacune posée juste après le titre d'une activité que le plan envoie, en partie ou
+  en entier, à la maison : « 🏠 Peut se faire à la maison (sans matériel, sur téléphone) ». Ce sont les mêmes
+  activités que dans la colonne 🏠 des classeurs.
+  - 5e : Le compte du club (activités 1, 2, 4, REFAIRE) · Chengdu (bilan personnel) · Shanghai (activité 2) ·
+    Programmer le lampadaire (activité 2, réinvestissement) · SOS panne (activités 2, 3, réinvestissement) ;
+  - 4e : Tsinghua (activités 3, 5, bilan) · Le jardin connecté (activités 1, 2, 4, 5) ;
+  - 3e : SOS station (activité 4, réinvestissement) · Le mât, la simulation avant le banc (activités 2, 3, REFAIRE).
+- Rien d'autre ne change : ni texte, ni activité, ni durée, ni sauvegarde. La pastille a un style en ligne, avec un
+  bord de la couleur du texte : elle reste lisible en thème sombre comme en thème clair. Elle ne dit rien de la
+  fabrique (n°309).
+- Captures avant / après à 390 px : `_progressions/captures_pastille_maison_2026-10-25/` (une par page).
+
+### Ce qui a tourné
+
+- Bancs des lots, avant → après : 5e_C1.5 38/38 → 38/38 · 5e_C1.1 43/43 → 43/43 · 5e_C3.1 35/35 → 35/35 ·
+  5e_C6.1 32/32 → 32/32 · 5e_C5.1 26/26 → 26/26 · 4e_C1.1 63/63 → 63/63 · 4e_C4.1 39/39 → 39/39 ·
+  3e_C5.1 34/34 → 34/34 · 3e_C8.1 62/62 → 62/62.
+- `controle_squelette` sur les 9 pages ✅ ; `controle_hierarchie`, `controle_regles_visibles` (n°309),
+  `controle_debordement`, `controle_formulations`, `controle_liens` : verts ; `mesurer_temps_seances` : mesures
+  identiques avant / après (la pastille ne porte aucune durée).
+- Playwright à 390 px, activité ciblée de chaque page : zéro erreur JS ; pas de défilement horizontal, sauf
+  3e_C5.1, qui déborde déjà sur `main` (417 px, onglet de séance 2 ouvert) : défaut antérieur, non traité ici.
+
+### Ce que le lot ne fait pas
+
+- Les pages gardent leur propre découpage en séances ; la semaine du travail maison est dans le classeur.
+- Les fiches pédagogiques et les synthèses professeur ne mentionnent pas encore le travail maison.
