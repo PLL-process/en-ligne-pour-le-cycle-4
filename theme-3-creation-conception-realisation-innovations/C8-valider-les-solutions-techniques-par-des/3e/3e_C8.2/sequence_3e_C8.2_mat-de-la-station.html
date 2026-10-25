@@ -128,6 +128,7 @@ table.releve td.num{width:34%}
 .fin-seance .vers-seance{min-height:44px;line-height:28px}
 .seances-nav{max-width:940px;margin:0 auto 16px;text-align:center;font-size:.92em;color:var(--sub)}
 .seances-nav p{margin:0}
+.seances-nav a{display:inline-block;padding:2px 0}
 #banc,#a2proto{scroll-margin-top:60px}
 @media print{.fin-seance,.seances-nav{display:none}
   .seance-entete h2,.seance-entete .seance-duree{color:#0d2347!important}}
@@ -148,6 +149,15 @@ table.releve td.num{width:34%}
   .btn,.on{color:#1d4e89!important}
   .verdict-non{color:#eb0017!important}
 }
+
+  /* ── Règle d'or n°303 — un lien se lit (ajouté le 24/10/2026 avec les liens
+     de navigation entre séances : la page n'avait jusque-là aucun lien hors du
+     bandeau du haut). À l'écran ET sur le papier, cliqué ou non. */
+  a,a:where(:visited){color:#9ecbff}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
 </style>
 </head>
 <body>
