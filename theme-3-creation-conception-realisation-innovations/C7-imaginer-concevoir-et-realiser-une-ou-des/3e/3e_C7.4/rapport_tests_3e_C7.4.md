@@ -12,15 +12,23 @@ sortie de la dernière exécution, recopiée telle quelle.
 > l'initialisation, et elle enregistrait ce qu'elle affichait. Le verrou « les cinq sources » n'en réclamait donc plus que quatre. La fonction ne trace plus que
 > sur un geste ; vérifié après correction : `__exp` est **vide** à l'ouverture, et le verrou
 > s'ouvre normalement dès les manipulations réelles (règles d'or n°226 et n°265).
+> **Découpage du 24/10/2026 — trois séances de 55 min au lieu de deux de 90.** La séquence se fait
+> désormais en une heure de cours par semaine : séance 1 = activités 0 et 1 (45 min), séance 2 =
+> activités 2 et 3 (55 min), séance 3 = activité 4 et REFAIRE (50 min), puis la clôture. Aucune
+> activité n'est coupée ni raccourcie. Le banc de la séquence le vérifie (bandeau, trois en-têtes
+> dans l'ordre, minutes par séance, clôture à la seule séance 3, boutons et liens de séance,
+> 390 px sans défilement horizontal) et recharge la page sur une sauvegarde écrite au format de
+> l'ancienne page : chaque réponse revient à sa place. Le QCM n'a pas changé ; son banc a été rejoué.
+
 ```bash
-node tests_3e_C7.4_sequence.mjs "$PWD/sequence_3e_C7.4_energie-de-la-station.html" 3e reponses_3e.json
+node tests_3e_C7.4_sequence.mjs "$PWD/sequence_3e_C7.4_energie-de-la-station.html" 3e reponses_3e_C7.4.json
 node tests_3e_C7.4_qcm.mjs      "$PWD/qcm_3e_C7.4_energie-de-la-station.html" 3e_C7.4 3e_C3.2 sequence_3e_C7.4_energie-de-la-station.html
 python3 energie.py          # recalcule toutes les valeurs du banc
 ```
 
 ---
 
-## 1. Séquence — **36 / 36**
+## 1. Séquence — **54 / 54**
 
 ```
 ✅ charge sans erreur JS
@@ -42,12 +50,26 @@ python3 energie.py          # recalcule toutes les valeurs du banc
 ✅ la barre donne la part exacte de la carte — 89.404
 ✅ verrou des cinq sources ouvert
 ✅ verrou « un consommateur éteint » ouvert
-✅ bandeau de durée présent — ⏱ 2 séances de 90 min (1 h 30)
+✅ bandeau de durée présent — ⏱ 3 séances de 55 min
 ✅ un seul bouton QCM
 ✅ hypothèse d’entrée présente
 ✅ encadré de sécurité TBT présent
 ✅ les trois versions A/B/C sont annoncées
 ✅ aucun marqueur de gabarit non remplacé
+✅ bandeau : 3 séances de 55 min — ⏱ 3 séances de 55 min
+✅ le bandeau de durée a un title et un aria-label
+✅ trois en-têtes de séance, dans l’ordre — seance-1,seance-2,seance-3
+✅ seance-1 : 45 min d’activités annoncées, au plus 55 — 45 min — 🖐️ Activité 0 + 🔢 Activité 1
+✅ seance-2 : 55 min d’activités annoncées, au plus 55 — 55 min — ☀ Activité 2 + ♻️ Activité 3
+✅ seance-3 : 50 min d’activités annoncées, au plus 55 — 50 min — ✍️ Activité 4 + 🔄 REFAIRE
+✅ aucune activité avant la séance 1, et 150 min en tout
+✅ clôture à la dernière séance seulement : Bonus → Bilan → QCM — Bonus → Bilan → QCM
+✅ un bouton vers la séance suivante au bas des séances 1 et 2 — #seance-2,#seance-3
+✅ des liens vers les trois séances sous le titre — #seance-1,#seance-2,#seance-3
+✅ chaque lien « banc » mène à un banc qui existe
+✅ à 390 px, le bouton ➡ mène à la séance 2 — haut à 60 px
+✅ à 390 px, le bouton ➡ mène à la séance 3 — haut à 60 px
+✅ à 390 px, aucun défilement horizontal — 390
 ✅ verrou eteint ouvert après les gestes exigés
 ✅ verrou srcAll ouvert après les gestes exigés
 ✅ activité 0 validée (3/3) — 🎉 Activité validée — 3/3. Ouvre la correction pour comparer.
@@ -59,6 +81,10 @@ python3 energie.py          # recalcule toutes les valeurs du banc
 ✅ un relevé approximatif est refusé (18) — 🟡 4/5 — les encoches ✘ te montrent où regard
 ✅ les réponses survivent au rechargement — a3piles = 787
 ✅ les verrous survivent au rechargement
+✅ ancienne sauvegarde : la page se recharge sans erreur JS
+✅ ancienne sauvegarde : chaque réponse revient à sa place, séance 3 comprise — hyp=Un panneau sol · src=Accu Li-ion 18 · a1besoin=18,12 · a3piles=787 · a4avis=Source normale · reinv=Sur l’îlet, il
+✅ ancienne sauvegarde : l’idée de départ est rappelée au bilan
+✅ ancienne sauvegarde : les verrous sont conservés
 ```
 
 ## 2. QCM — **32 / 32**

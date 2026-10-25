@@ -3,8 +3,14 @@
 > **Interfacer deux objets techniques communicants.**
 > Programme 2024 · cycle 4 · thème 3 · socle D1.3 · D2 · D3 · D4 · D5
 
-➡ **[Ouvrir la séquence](sequence_3e_C7.8_deux-stations.html)** — 2 séances de 90 min (1 h 30), banc de liaison intégré, hors ligne,
+➡ **[Ouvrir la séquence](sequence_3e_C7.8_deux-stations.html)** — 3 séances de 55 min (45 + 55 + 50 min d'activités), banc de liaison intégré, hors ligne,
 sans installation ni compte.
+
+| Séance | Activités | Minutes |
+|---|---|---|
+| 1 — Ce que deux machines s'échangent | situation et idée de départ, activités 0 et 1 | 45 |
+| 2 — Se mettre d'accord, et quand l'autre se tait | activités 2 et 3 | 55 |
+| 3 — Prouver que la liaison tient, puis passer à trois | activité 4, REFAIRE, puis synthèse, Bonus, bilan et QCM | 50 |
 
 ---
 
@@ -59,14 +65,14 @@ devient.
 
 ## Tests
 
-**34 / 34** sur la séquence, **32 / 32** sur le QCM, rejouables : scripts et jeu de réponses
+**52 / 52** sur la séquence (dont le découpage en trois séances et la relecture d'une sauvegarde faite avant), **32 / 32** sur le QCM, rejouables : scripts et jeu de réponses
 livrés dans le dossier. Voir [`rapport_tests_3e_C7.8.md`](rapport_tests_3e_C7.8.md).
 
 ## Fichiers
 
 | Fichier | Contenu |
 |---|---|
-| [`sequence_3e_C7.8_deux-stations.html`](sequence_3e_C7.8_deux-stations.html) | 6 activités chronométrées, banc intégré |
+| [`sequence_3e_C7.8_deux-stations.html`](sequence_3e_C7.8_deux-stations.html) | 6 activités chronométrées en 3 séances de 55 min, banc intégré |
 | [`qcm_3e_C7.8_deux-stations.html`](qcm_3e_C7.8_deux-stations.html) | 30 q · 90 réfutations · 3e_C7.8 ×20, 3e_C8.3 ×10 |
 | [`lexique_3e_C7.8.html`](lexique_3e_C7.8.html) | 30 notions, générées depuis le QCM du lot |
 | [`synthese_eleve_3e_C7.8.html`](synthese_eleve_3e_C7.8.html) | à imprimer, lisible en noir et blanc |

@@ -137,6 +137,20 @@ table.releve td input{padding:4px 8px}
 .grille{list-style:none;padding:0;margin:8px 0}
 .grille li{border-left:3px solid var(--head);background:rgba(198,142,242,.08);padding:7px 12px;border-radius:0 8px 8px 0;margin:6px 0;font-size:.94em}
 
+/* ── Séances de 55 min : en-têtes, liens, fin de séance, parties d'activité ── */
+.seance-entete{border-left:6px solid var(--hl);scroll-margin-top:60px}
+.seance-entete h2{font-size:1.2em;color:var(--hl)}
+.seance-entete .seance-duree{color:var(--sub);font-weight:600;margin:0 0 8px}
+section.card[id^="activite-"]{scroll-margin-top:60px}
+.fin-seance{max-width:940px;margin:0 auto 22px;text-align:center}
+.fin-seance p{margin:0 0 6px;color:var(--sub)}
+.seances-liens{max-width:940px;margin:0 auto 16px;text-align:center;font-size:.92em}
+.seances-liens a{color:var(--hl)}
+.reprise{border-left:4px solid var(--hl);background:rgba(97,218,251,.07);padding:8px 12px;border-radius:0 10px 10px 0}
+.suite-note{font-size:.9em;color:var(--sub);margin:10px 0 0}
+@media print{.fin-seance{display:none}
+  .seance-entete h2,.seance-entete .seance-duree,.seances-liens a{color:#0d2347!important}}
+
 
 
 @media print{
@@ -179,8 +193,9 @@ table.releve td input{padding:4px 8px}
   <span class="badge code">3e_C8.1 (appui)</span>
   <span class="badge theme">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span>
   <span class="badge socle">Socle : D1.3 · D2 · D3 · D4</span>
-  <span class="badge duree">⏱ 2 séances de 90 min</span>
+  <span class="badge duree">⏱ 4 séances de 55 min</span>
 </div>
+<nav class="seances-liens" aria-label="Aller à une séance">🗓 Aller à ma séance&nbsp;: <a href="#seance-1">Séance 1 — L'empreinte, puis le verdict de l'atelier</a> · <a href="#seance-2">Séance 2 — Corriger le dessin, et rien d'autre</a> · <a href="#seance-3">Séance 3 — Une seule fournée</a> · <a href="#seance-4">Séance 4 — Un autre atelier, puis conclure</a></nav>
 
 <section class="card">
   <h2>🔄 Ce que tu sais déjà faire — et ce qu'on ne refera pas</h2>
@@ -201,8 +216,8 @@ table.releve td input{padding:4px 8px}
   <h2>🎯 Ce que dit le programme</h2>
   <table class="refs">
     <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
-    <tr><td><b>3e_C7.7</b></td><td>Choisir les moyens et produire la forme voulue.</td><td>Activités 1 à 3 et REFAIRE</td></tr>
-    <tr><td>3e_C8.1 <span style="color:var(--sub)">(appui)</span></td><td>Mettre en œuvre une simulation pour valider la tenue mécanique d’un matériau.</td><td>Activité 3, REFAIRE et synthèse</td></tr>
+    <tr><td><b>3e_C7.7</b></td><td>Choisir les moyens et produire la forme voulue.</td><td>Activités 1 à 3 et REFAIRE — séances 1 à 4</td></tr>
+    <tr><td>3e_C8.1 <span style="color:var(--sub)">(appui)</span></td><td>Mettre en œuvre une simulation pour valider la tenue mécanique d’un matériau.</td><td>Activité 3 (séance 3), REFAIRE et synthèse (séance 4)</td></tr>
   </table>
 </section>
 
@@ -263,6 +278,11 @@ demandé</b>, avec les moyens qu'elle a. Le dessin, lui, avait été fait sans e
   </ul>
 </section>
 
+<section class="card seance-entete" id="seance-1" aria-labelledby="seance-1-titre">
+  <h2 id="seance-1-titre">🗓 Séance 1 — L'empreinte, puis le verdict de l'atelier</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · l'activité 0, puis la première partie de l'activité 1.</p>
+  <p><b>La question de la séance&nbsp;:</b> que fera chaque machine du dessin, et laquelle sait produire le boîtier tel qu'il sort de la modélisation&nbsp;?</p>
+</section>
 
 <section class="card">
   <h2>🔍 Activité 0 — Ce que la machine fera de ton dessin ⏱ ~25 min</h2>
@@ -334,8 +354,8 @@ demandé</b>, avec les moyens qu'elle a. Le dessin, lui, avait été fait sans e
   </div>
 </section>
 
-<section class="card">
-  <h2>🚫 Activité 1 — Personne ne sait produire ce dessin ⏱ ~35 min</h2>
+<section class="card" id="activite-1a">
+  <h2>🚫 Activité 1a — Personne ne sait produire ce dessin : le verdict de l'atelier ⏱ ~25 min</h2>
   <p>Voici l'atelier, chargé du dessin tel qu'il sort de la modélisation. Clique sur
   <b>🏭 Lancer l'atelier</b>.</p>
   <p>La jauge affiche <b>0</b>. Regarde maintenant la colonne de gauche du tableau des cotes :
@@ -402,7 +422,31 @@ demandé</b>, avec les moyens qu'elle a. Le dessin, lui, avait été fait sans e
       <option>l'impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent</option>
       <option>une couche fait 0,2 mm : un détail de 0,3 mm, c'est une couche et demie</option>
     </select>
-    <p style="margin-top:14px"><b>1.</b> Deux cotes ne bloquent rien : la <b>paroi de 2,9 mm</b>
+    <button class="btn check" data-check="1a" type="button">✅ Vérifier la première partie</button>
+    <div class="feedback" id="fb1a"></div>
+    <p class="suite-note">La suite de l'activité 1 — trois questions, puis la correction — ouvre la séance 2.</p>
+  </div>
+</section>
+
+<nav class="fin-seance" aria-label="Fin de la séance 1">
+  <p>Fin de la séance 1. La suite, la prochaine fois&nbsp;:</p>
+  <a class="btn vers-seance" href="#seance-2">➡ Séance 2 — Corriger le dessin, et rien d'autre</a>
+</nav>
+
+<section class="card seance-entete" id="seance-2" aria-labelledby="seance-2-titre">
+  <h2 id="seance-2-titre">🗓 Séance 2 — Corriger le dessin, et rien d'autre</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · la fin de l'activité 1, puis l'activité 2.</p>
+  <p><b>La question de la séance&nbsp;:</b> quelles cotes corriger pour que la buse sache faire le boîtier, sans toucher au cahier des charges ni à ce qui passe déjà&nbsp;?</p>
+</section>
+
+<section class="card" id="activite-1b">
+  <h2>🚫 Activité 1b — Personne ne sait produire ce dessin : ce qui bloque, et ce qui va ⏱ ~10 min</h2>
+  <p class="reprise"><b>Pour reprendre&nbsp;:</b> lancé sur le dessin tel qu'il sort de la modélisation, l'atelier
+  ne trouve aucun moyen capable, et trois lignes du tableau des cotes portent une croix
+  (<a href="#activite-1a">activité 1a, plus haut</a>). Reste à dire ce qu'on fait des deux autres. La
+  vérification ci-dessous reprend aussi les trois associations de la première partie.</p>
+  <div class="exo">
+    <p style="margin-top:4px"><b>1.</b> Deux cotes ne bloquent rien : la <b>paroi de 2,9 mm</b>
     et les <b>angles internes vifs</b>. Que faut-il en faire ?</p>
     <select id="a1q1">
       <option value="">— je choisis —</option>
@@ -533,7 +577,17 @@ demandé</b>, avec les moyens qu'elle a. Le dessin, lui, avait été fait sans e
   </div>
 </section>
 
-<section class="card">
+<nav class="fin-seance" aria-label="Fin de la séance 2">
+  <p>Fin de la séance 2. La suite, la prochaine fois&nbsp;:</p>
+  <a class="btn vers-seance" href="#seance-3">➡ Séance 3 — Une seule fournée</a>
+</nav>
+
+<section class="card seance-entete" id="seance-3" aria-labelledby="seance-3-titre">
+  <h2 id="seance-3-titre">🗓 Séance 3 — Une seule fournée</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · l'activité 3.</p>
+  <p><b>La question de la séance&nbsp;:</b> sans second tirage, que faut-il savoir avant d'imprimer douze boîtiers, et que doit dire la note qui part avec le fichier&nbsp;?</p>
+</section>
+<section class="card" id="activite-3">
   <h2>🚚 Activité 3 — Une seule fournée ⏱ ~35 min</h2>
   <p>Le dessin est corrigé, l'atelier retient l'impression 3D. Reste à produire —
   et pas un boîtier : <b>douze</b>, un par bâtiment.</p>
@@ -613,7 +667,17 @@ demandé</b>, avec les moyens qu'elle a. Le dessin, lui, avait été fait sans e
   </div>
 </section>
 
-<section class="card">
+<nav class="fin-seance" aria-label="Fin de la séance 3">
+  <p>Fin de la séance 3. La suite, la prochaine fois&nbsp;:</p>
+  <a class="btn vers-seance" href="#seance-4">➡ Séance 4 — Un autre atelier, puis conclure</a>
+</nav>
+
+<section class="card seance-entete" id="seance-4" aria-labelledby="seance-4-titre">
+  <h2 id="seance-4-titre">🗓 Séance 4 — Un autre atelier, puis conclure</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · le REFAIRE, puis le bilan de la séquence et le renvoi au QCM.</p>
+  <p><b>La question de la séance&nbsp;:</b> un atelier libre dès lundi sait-il produire ce boîtier — et que retenir de toute la séquence&nbsp;?</p>
+</section>
+<section class="card" id="activite-refaire">
   <h2>🔄 REFAIRE — Réinvestissement ⏱ ~25 min</h2>
 <p>Le lycée voisin répond : ses quatre machines sont prises pour trois semaines, mais
   il possède une <b>fraiseuse numérique</b> libre dès lundi, et des plaques de <b>PMMA</b> de
@@ -934,6 +998,14 @@ const CHECKS = {
        s += sv("a1r0", "au-delà de 45° la buse a besoin d'un support, et le support laisse une surface rugueuse"); s += sv("a1r1", "une couche fait 0,2 mm : un détail de 0,3 mm, c'est une couche et demie"); s += sv("a1r2", "l'impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent"); s += sv("a1q1","rien : elles passent déjà, et les modifier ne ferait qu'ajouter du risque"); s += sv("a1q2","d'un calcul de 3e_C7.3 : elle tient le vent, et l'impression la sait faire"); s += sv("a1q3","à ne pas dépenser une heure de machine pour découvrir ce qu'un tableau disait");
        return {score: s, total: 6, exp: !!window.__exp.zero,
                expMsg: "Lance d'abord l'atelier sur le dessin d'origine : le résultat de cette activité est justement ce que l'atelier affiche."}; },
+  /* Activité 1 coupée entre la séance 1 et la séance 2 : sa première partie se
+     vérifie seule, avant la fin de la séance 1 ; la vérification de l'activité
+     entière, à la suite, reprend les mêmes champs (aucun champ ni aucune réponse
+     attendue n'a changé). */
+  "1a"(){ let s = 0;
+       s += sv("a1r0", "au-delà de 45° la buse a besoin d'un support, et le support laisse une surface rugueuse"); s += sv("a1r1", "une couche fait 0,2 mm : un détail de 0,3 mm, c'est une couche et demie"); s += sv("a1r2", "l'impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent");
+       return {score: s, total: 3, partie: true, exp: !!window.__exp.zero,
+               expMsg: "Lance d'abord l'atelier sur le dessin d'origine : le résultat de cette activité est justement ce que l'atelier affiche."}; },
   2(){ let s = 0;
        s += nb("rel0", 45, 0); s += nb("rel1", 0.6, 0.05); s += nb("rel2", 0.4, 0.05); s += sv("a2q1","oui : c'est la pente qui écarte l'eau, et 45° est déjà une forte pente"); s += sv("a2q2","rien : même matière, même encombrement, même étanchéité, même masse admise"); s += sv("a2q3","là on changeait ce que l'objet doit faire ; ici on change comment on le dessine");
        return {score: s, total: 6, exp: !!window.__exp.unSeul,
@@ -946,9 +1018,13 @@ const CHECKS = {
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
-  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
+  if(ratio === 1){ fb.textContent = r.partie
+      ? "🎉 Première partie validée — " + r.score + "/" + r.total + ". La suite de l'activité, et sa correction complète, ouvrent la prochaine séance."
+      : "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
-  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + (r.partie
+      ? " — reprends l'énoncé, et re-vérifie quand tu veux."
+      : " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."); fb.className = "feedback show ko"; }
   save();
 }));
 

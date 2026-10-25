@@ -5,7 +5,7 @@
 | **Code** | `3e_C7.7` — Choisir les moyens et produire la forme voulue. |
 | **Appui** | `3e_C8.1` — Mettre en œuvre une simulation pour valider la tenue mécanique d’un matériau. |
 | **Niveau** | 3<sup>e</sup> · Thème 3 |
-| **Durée** | 2 séances de 90 min (160 min d'activités) |
+| **Durée** | 4 séances de 55 min (160 min d'activités) |
 | **Socle** | D1.3 · D2 · D3 · D4 |
 | **Matériel** | aucun matériel obligatoire — le banc fonctionne dans un navigateur, hors ligne |
 
@@ -15,13 +15,24 @@
 
 ## Déroulé
 
-| # | Activité | Durée | Verrou expérientiel |
-|---|---|---|---|
-| 0 | Ce que la machine fera de ton dessin | 25 min | — |
-| 1 | Personne ne sait produire ce dessin | 35 min | verrou : `zero` |
-| 2 | Corriger le dessin, et rien d'autre | 40 min | verrou : `unSeul` |
-| 3 | Une seule fournée | 35 min | — |
-| 4 | REFAIRE — réinvestissement | 25 min | — |
+| Séance | # | Activité | Durée | Verrou expérientiel |
+|---|---|---|---|---|
+| 1 · 50 min | 0 | Ce que la machine fera de ton dessin | 25 min | — |
+| 1 | 1a | Personne ne sait produire ce dessin : le verdict de l'atelier — lancer, associer chaque cote bloquante à son motif | 25 min | verrou : `zero` |
+| 2 · 50 min | 1b | Personne ne sait produire ce dessin : ce qui bloque, et ce qui va — trois questions, la correction | 10 min | verrou : `zero` |
+| 2 | 2 | Corriger le dessin, et rien d'autre | 40 min | verrou : `unSeul` |
+| 3 · 35 min | 3 | Une seule fournée | 35 min | — |
+| 4 · 25 min | 4 | REFAIRE — réinvestissement, puis synthèse, Bonus, bilan et QCM | 25 min | — |
+
+**Quatre séances de 55 min, et pourquoi pas trois.** Une heure par semaine : aucune paire d'activités
+voisines ne tient dans une séance (25 + 35, 35 + 40, 40 + 35, 35 + 25). Trois séances (165 min)
+suffiraient en comptant au plus juste, mais ne laisseraient pas, pour 160 min d'activités, les dix minutes
+de lancement, de transitions et de bilan que demande la règle n°23 — c'est exactement le défaut « 170 min
+pour 165 » qui l'a fait naître. On garde donc quatre séances, et **une seule activité est coupée :
+l'activité 1**, entre deux parties entières — le lancement de l'atelier et les trois cotes bloquantes (fin de la séance 1), puis les trois questions sur ce qu'on fait des deux cotes qui passent (début de la séance 2). Chaque partie a son bouton de vérification ;
+celle de l'activité entière, en tête de la séance 2, reprend aussi les champs de la première partie.
+Les séances 3 (35 min) et 4 (25 min, puis la synthèse, le Bonus, le bilan et les 30 questions du QCM
+d'entraînement) laissent du temps : il n'est pas comblé par une activité inventée.
 
 ## Les trois versions
 

@@ -8,6 +8,10 @@ Référence des décisions : `JOURNAL_DES_DECISIONS.md` à la racine du dépôt.
 > des règles d'or postérieures sont corrigés — n°5 et n°66 amendées, n°300, 301, 302,
 > 305, 306, 308, 310, 311, et les cadres Vittascience devenus des liens (13/09/2026).
 > Ce document ne recopie pas les 311 règles du registre : **le journal fait foi**.
+>
+> **Mis à jour le 24/10/2026** (décision de Pascal) : une séance dure **55 min**, une par
+> semaine et par classe, à tous les niveaux — pilier 3 corrigé (il disait 1 h 30), et toute
+> séquence s'écrit en séances de 55 min.
 
 ## Pilier 1 — Produire un lot pédagogique premium
 
@@ -229,9 +233,13 @@ Un classeur PAR CLASSE (`_progressions/<niveau>/Progression_Techno_<niveau>_
 2. **📅 Calendrier** : UNE ligne par semaine réelle de l'année scolaire de
    l'académie (Martinique : rentrée, Toussaint, Noël, Carnaval, Pâques —
    vérifier les fériés TOMBANT EN PÉRIODE DE CLASSE, ex. 11 nov., Vendredi
-   saint, lundi de Pâques), périodes P1-P5 teintées. **1 séance de 1 h 30
-   par semaine** — c'est la contrainte reine : tout le volume annuel s'y
-   plie (≈ 30 séances utiles + tampons).
+   saint, lundi de Pâques), périodes P1-P5 teintées. **1 séance de 55 min
+   par semaine et par classe, à tous les niveaux** (décision de Pascal,
+   24/10/2026 : « je n'ai qu'une heure avec les élèves », une heure
+   d'affilée, jamais 1 h 30) — c'est la contrainte reine : tout le volume
+   annuel s'y plie (≈ 30 séances utiles + tampons), et chaque séquence
+   s'écrit en séances de 55 min. *Texte d'origine remplacé : « 1 séance de
+   1 h 30 par semaine ».*
 3. **Le moteur d'imprévus** (le cœur réutilisable) : la colonne
    « Affectation » du calendrier est calculée par formule
    (INDEX sur la liste ordonnée des créneaux de l'onglet ⚙ Moteur, via un

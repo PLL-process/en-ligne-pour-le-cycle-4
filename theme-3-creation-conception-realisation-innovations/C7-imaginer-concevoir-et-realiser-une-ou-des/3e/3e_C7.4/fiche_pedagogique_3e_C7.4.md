@@ -8,7 +8,7 @@
 | **Niveau** | 3e |
 | **Code principal** | 3e_C7.4 — 20 questions de QCM |
 | **Code d'appui** | 3e_C3.2 — *Choisir un OST et argumenter ce choix en prenant en compte son cycle de vie et les trois piliers du développement durable.* — 10 questions |
-| **Durée** | 2 séances de 90 min (1 h 30) — 150 min d'activités obligatoires |
+| **Durée** | 3 séances de 55 min (depuis le 24/10/2026, au lieu de 2 séances de 90 min) — 150 min d'activités obligatoires : 45 + 55 + 50 |
 | **Matériel** | un navigateur, hors ligne. Aucune installation, aucun compte. |
 | **Version A** | montage réel + multimètre en série ; les mesures remplacent alors le banc |
 
@@ -34,14 +34,29 @@ marge. C'est le bois qui cassait à 41 kg pour 40 en 5ᵉ et le mât recalé pou
 
 ## 2. Déroulé
 
-| # | Activité | Durée | Réponses attendues | Verrou expérientiel |
-|---|---|---|---|---|
-| 0 | FAIRE d'abord : quel jour faut-il dimensionner | ~20 min | 3 | srcAll |
-| 1 | Le besoin sur 72 heures, et ce qu'il faut de réserve | ~25 min | 5 | — |
-| 2 | Pourquoi le panneau ne fait pas l'autonomie | ~25 min | 4 | — |
-| 3 | Le cycle de vie, pas seulement l'autonomie | ~30 min | 6 | — |
-| 4 | L'avis à la mairie | ~30 min | 4 | — |
-| — | REFAIRE | ~20 min | 1 | — |
+Trois séances de 55 min (une heure de cours par semaine). La page défile d'un seul tenant : un
+en-tête « 🗓 Séance N » ouvre chaque séance (durée, question de la séance, et à partir de la
+séance 2 ce dont l'élève repart), un bouton « ➡ Séance N+1 » la ferme, et des liens sous le titre
+mènent à chacune. Aucune activité n'est coupée ni raccourcie : on coupe entre deux activités.
+
+| Séance | # | Activité | Durée | Réponses attendues | Verrou expérientiel |
+|---|---|---|---|---|---|
+| **1 — Combien d'énergie, pour combien de temps** (45 min) | 0 | FAIRE d'abord : quel jour faut-il dimensionner | ~20 min | 3 | srcAll |
+| | 1 | Le besoin sur 72 heures, et ce qu'il faut de réserve | ~25 min | 5 | — |
+| **2 — Recharger ou tenir, et à quel prix** (55 min) | 2 | Pourquoi le panneau ne fait pas l'autonomie | ~25 min | 4 | — |
+| | 3 | Le cycle de vie, pas seulement l'autonomie | ~30 min | 6 | — |
+| **3 — L'avis à signer, puis l'îlet** (50 min) | 4 | L'avis à la mairie | ~30 min | 4 | — |
+| | — | REFAIRE | ~20 min | 1 | — |
+| | | puis synthèse, Bonus facultatif, bilan, renvoi au QCM | | | |
+
+**Pourquoi ce découpage.** C'est le seul en trois séances qui ne coupe aucune activité (la
+séance 1 ne peut finir qu'après l'activité 1, la séance 2 qu'après l'activité 3), et il suit le
+raisonnement : la séance 1 établit le besoin (le pire jour, la réserve sur 72 h), la séance 2
+compare les sources (recharger n'est pas tenir, le cycle de vie), la séance 3 décide et
+transfère (l'avis à la mairie, l'îlet sans secteur). Les 10 min libres de la séance 1 servent
+à la situation, à l'idée de départ et à l'encadré de sécurité ; les 5 min de la séance 3, à la
+synthèse et au bilan. **La séance 2 est pleine (55 min, sans marge)** : si elle déborde, la fin
+de l'activité 3 (le calcul des 787 piles) peut ouvrir la séance 3.
 
 ## 3. Ce que le montage consomme
 

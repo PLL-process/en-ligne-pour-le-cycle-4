@@ -159,6 +159,88 @@ ok('les verrous survivent au rechargement',
 ok('le tableau est reconstruit au rechargement',
   (await p.$$eval('#tab tr', n => n.length)) > 1);
 
+// ── les séances de 55 min (décision du 24/10/2026 : une heure par semaine) ──
+if (REP.seances) {
+  const S = REP.seances;
+  ok('le bandeau annonce « ' + S.nombre + ' séances de ' + S.unite + ' min »',
+    duree.includes(S.nombre + ' séances de ' + S.unite + ' min'), duree);
+  ok('activités + 10 min de service (lancement, transitions, bilan) tiennent dans les séances annoncées',
+    S.nombre * S.unite === REP.annonce && REP.activitesMin + 10 <= REP.annonce,
+    REP.activitesMin + ' + 10 pour ' + S.nombre + ' × ' + S.unite + ' = ' + S.nombre * S.unite);
+  // Les durées de chaque séance, lues à l'écran : en-tête de séance, puis les
+  // titres d'activité (⏱ ~N min) jusqu'à l'en-tête suivant, hors Bonus.
+  const plan = await p.evaluate(() => {
+    const ent = [...document.querySelectorAll('section.seance-entete[id^="seance-"]')];
+    const tous = [...document.querySelectorAll('section.seance-entete[id^="seance-"], h2, a.vers-seance, a.btn[href*="qcm"]')];
+    return ent.map((e, i) => {
+      const deb = tous.indexOf(e), fin = i + 1 < ent.length ? tous.indexOf(ent[i + 1]) : tous.length;
+      const morceau = tous.slice(deb + 1, fin);
+      const acts = morceau.filter(x => x.tagName === 'H2' && !x.closest('.seance-entete')).map(h => h.textContent.trim());
+      const min = acts.filter(t => !/bonus|facultat/i.test(t) && /⏱\s*[~≈]?\s*\d+\s*min/.test(t))
+        .map(t => t.match(/⏱\s*[~≈]?\s*(\d+)\s*min/)[1] * 1);
+      const vers = morceau.filter(x => x.matches('a.vers-seance')).map(a => a.getAttribute('href'));
+      return { id: e.id, titre: e.querySelector('h2').textContent.trim(), min, total: min.reduce((a, b) => a + b, 0),
+               vers, bonus: acts.some(t => /bonus/i.test(t)), qcm: morceau.some(x => x.matches('a.btn[href*="qcm"]')) };
+    });
+  });
+  ok(S.nombre + ' en-têtes de séance, dans l’ordre', plan.length === S.nombre &&
+    plan.every((s, i) => s.id === 'seance-' + (i + 1)), plan.map(s => s.id).join(' '));
+  plan.forEach((s, i) => {
+    ok('séance ' + (i + 1) + ' : ' + s.total + ' min d’activités annoncées, au plus ' + S.unite,
+      s.total <= S.unite && s.total === S.minutes[i], s.min.join(' + ') + ' = ' + s.total);
+    if (i + 1 < plan.length)
+      ok('séance ' + (i + 1) + ' : finit par le bouton vers la séance ' + (i + 2),
+        s.vers.length === 1 && s.vers[0] === '#seance-' + (i + 2), s.vers.join(' '));
+  });
+  ok('la somme des séances égale les activités annoncées (' + REP.activitesMin + ' min)',
+    plan.reduce((a, s) => a + s.total, 0) === REP.activitesMin);
+  const der = plan[plan.length - 1] || {};
+  ok('la clôture (Bonus, puis QCM) est dans la dernière séance seulement',
+    der.bonus && der.qcm && plan.slice(0, -1).every(s => !s.bonus && !s.qcm));
+  const liens = await p.$$eval('nav.seances-liens a', n => n.map(a => a.getAttribute('href')));
+  ok('le haut de page mène à chaque séance',
+    plan.every(s => liens.includes('#' + s.id)), liens.join(' '));
+  // Une activité coupée en deux : la première partie se vérifie seule.
+  for (const [n, tot] of Object.entries(REP.parties || {})) {
+    await p.evaluate(n => document.querySelector('[data-check="' + n + '"]').click(), n);
+    const fb = await p.textContent('#fb' + n);
+    ok('activité ' + n + ' (première partie) validée seule (' + tot + ')',
+      fb.includes(tot) && fb.includes('Première partie'), fb.slice(0, 60));
+  }
+  // Une sauvegarde faite avec l'ancien découpage (deux séances de 90 min) se relit.
+  const ancienne = REP.ancienneSauvegarde;
+  if (ancienne) {
+    const e0 = err.length;
+    await p.evaluate(([k, v]) => localStorage.setItem(k, JSON.stringify(v)), [ancienne.cle, ancienne.valeur]);
+    await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(400);
+    const relu = await p.evaluate(ins => Object.entries(ins).every(([id, v]) => {
+      const e = document.getElementById(id); return e && e.value === v; }), ancienne.valeur.inputs);
+    ok('une sauvegarde de l’ancien découpage se relit sans erreur', relu && err.length === e0,
+      err.slice(e0).join(' | '));
+  }
+  // À 390 px : pas de défilement horizontal, chaque séance atteinte, passage à la suivante.
+  const m = await b.newPage({ viewport: { width: 390, height: 844 } });
+  const errM = []; m.on('pageerror', e => errM.push(e.message));
+  await m.goto('file://' + f, { waitUntil: 'load' }); await m.waitForTimeout(300);
+  ok('à 390 px : aucun défilement horizontal',
+    !(await m.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)));
+  const enVue = id => m.evaluate(id => { const r = document.getElementById(id).getBoundingClientRect();
+    return r.top >= -2 && r.top < window.innerHeight / 2; }, id);
+  for (let i = 1; i <= S.nombre; i++) {
+    await m.click('nav.seances-liens a[href="#seance-' + i + '"]'); await m.waitForTimeout(150);
+    ok('à 390 px : le lien du haut atteint la séance ' + i, await enVue('seance-' + i));
+  }
+  for (let i = 1; i < S.nombre; i++) {
+    await m.click('a.vers-seance[href="#seance-' + (i + 1) + '"]'); await m.waitForTimeout(150);
+    ok('à 390 px : « ➡ Séance ' + (i + 1) + ' » mène à son en-tête', await enVue('seance-' + (i + 1)));
+  }
+  await m.goto('file://' + f + '#seance-' + S.nombre, { waitUntil: 'load' }); await m.waitForTimeout(300);
+  await m.reload({ waitUntil: 'load' }); await m.waitForTimeout(300);
+  ok('à 390 px : après rechargement, la page reste sur la séance ' + S.nombre, await enVue('seance-' + S.nombre));
+  ok('à 390 px : zéro erreur JS', errM.length === 0, errM.slice(0, 2).join(' | '));
+  await m.close();
+}
+
 const n0 = T.filter(t => t.ok).length;
 console.log(T.map(t => `${t.ok ? '✅' : '❌'} ${t.n}${t.d ? ' — ' + t.d : ''}`).join('\n'));
 console.log(`\n${n0} / ${T.length}`);

@@ -8,7 +8,7 @@
 | **Niveau** | 3e |
 | **Code principal** | 3e_C7.8 — 20 questions de QCM |
 | **Code d'appui** | 3e_C8.3 — *Proposer un protocole de test pour valider le comportement et les performances d'un objet technique.* — 10 questions |
-| **Durée** | 2 séances de 90 min (1 h 30) — 150 min d'activités obligatoires |
+| **Durée** | 3 séances de 55 min (depuis le 24/10/2026, au lieu de 2 séances de 90 min) — 150 min d'activités obligatoires : 45 + 55 + 50 |
 | **Matériel** | un navigateur, hors ligne. Aucune installation, aucun compte. |
 | **Version A** | deux cartes réelles + moniteur série ; les trames observées font alors foi |
 
@@ -33,14 +33,31 @@ cette fois à une sirène.
 
 ## 2. Déroulé
 
-| # | Activité | Durée | Réponses attendues | Verrou expérientiel |
-|---|---|---|---|---|
-| 0 | FAIRE d'abord : faire parler les deux stations | ~20 min | 3 | msgEssaye |
-| 1 | Le message entre deux machines | ~25 min | 6 | msgOk |
-| 2 | Écrire la règle d'accord | ~25 min | 4 | — |
-| 3 | Et quand l'autre se tait | ~30 min | 5 | coupe |
-| 4 | Écrire les essais qui le prouvent | ~30 min | 6 | — |
-| — | REFAIRE | ~20 min | 1 | — |
+Trois séances de 55 min (une heure de cours par semaine). La page défile d'un seul tenant : un
+en-tête « 🗓 Séance N » ouvre chaque séance (durée, question de la séance, et à partir de la
+séance 2 ce dont l'élève repart), un bouton « ➡ Séance N+1 » la ferme, et des liens sous le titre
+mènent à chacune. Aucune activité n'est coupée ni raccourcie : on coupe entre deux activités.
+
+| Séance | # | Activité | Durée | Réponses attendues | Verrou expérientiel |
+|---|---|---|---|---|---|
+| **1 — Ce que deux machines s'échangent** (45 min) | 0 | FAIRE d'abord : faire parler les deux stations | ~20 min | 3 | msgEssaye |
+| | 1 | Le message entre deux machines | ~25 min | 6 | msgOk |
+| **2 — Se mettre d'accord, et quand l'autre se tait** (55 min) | 2 | Écrire la règle d'accord | ~25 min | 4 | — |
+| | 3 | Et quand l'autre se tait | ~30 min | 5 | coupe |
+| **3 — Prouver que la liaison tient, puis passer à trois** (50 min) | 4 | Écrire les essais qui le prouvent | ~30 min | 6 | — |
+| | — | REFAIRE | ~20 min | 1 | — |
+| | | puis synthèse, Bonus facultatif, bilan, renvoi au QCM | | | |
+
+**Pourquoi ce découpage.** C'est le seul en trois séances qui ne coupe aucune activité (la
+séance 1 ne peut finir qu'après l'activité 1, la séance 2 qu'après l'activité 3), et il suit le
+raisonnement : la séance 1 décide du message (ce qu'une machine ne devine pas), la séance 2
+porte la problématique entière (la règle d'accord, puis le silence de l'autre — sa question est
+celle de la séquence), la séance 3 prouve et transfère (les six essais, la troisième station).
+L'activité 3 (séance 2) se fait au banc, qui est à l'activité 0 (séance 1) : l'en-tête de la
+séance 2 et la consigne y renvoient par un lien ; les cases cochées du banc sont sauvegardées,
+l'état « lien coupé » non (on le recoupe d'un clic). Les 10 min libres de la séance 1 servent à
+la situation, à l'idée de départ et à l'encadré « ce qui ne sort jamais » ; les 5 min de la
+séance 3, à la synthèse et au bilan. **La séance 2 est pleine (55 min, sans marge).**
 
 ## 3. Le message du lot
 

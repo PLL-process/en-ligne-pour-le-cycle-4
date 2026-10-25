@@ -128,6 +128,21 @@ table.releve td input{padding:4px 8px}
 .grille{list-style:none;padding:0;margin:8px 0}
 .grille li{border-left:3px solid var(--head);background:rgba(198,142,242,.08);padding:7px 12px;border-radius:0 8px 8px 0;margin:6px 0;font-size:.94em}
 
+/* ── Trois séances de 55 min (24/10/2026) : la page défile d'un seul tenant, un en-tête par
+   séance, un bouton vers la suivante, des liens sous le titre (comme le capteur 3e_C7.1) ── */
+.seances-nav{max-width:940px;margin:0 auto 16px;text-align:center}
+.seances-liens{font-size:.92em;color:var(--sub);margin:0}.seances-liens a,.seances-liens a:visited{color:var(--hl)}
+.seance-entete{border-left:6px solid var(--hl);scroll-margin-top:60px}
+.seance-entete h2{font-size:1.2em;color:var(--hl)}
+.seance-entete .seance-duree{color:var(--sub);font-weight:600;margin:0 0 8px}
+.fin-seance{max-width:940px;margin:0 auto 22px;text-align:center}
+.fin-seance p{margin:0 0 6px;color:var(--sub)}
+#banc{scroll-margin-top:60px}
+a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
+@media print{.fin-seance,.seances-nav{display:none}
+  .seance-entete h2,.seance-entete .seance-duree{color:#0d2347!important}
+  a[href="#banc"],a[href="#banc"]:visited{color:#047fa0!important}}
+
 
 
 @media print{
@@ -157,8 +172,11 @@ table.releve td input{padding:4px 8px}
   <span class="badge code">3e_C3.2 (appui)</span>
   <span class="badge theme">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span>
   <span class="badge socle">Socle : D1.3 · D2 · D3 · D4 · D5</span>
-  <span class="badge duree">⏱ 2 séances de 90 min (1 h 30)</span>
+  <span class="badge duree" title="Durée : 3 séances de 55 minutes, 150 minutes d'activités" aria-label="Durée : 3 séances de 55 minutes">⏱ 3 séances de 55 min</span>
 </div>
+<nav class="seances-nav" aria-label="Les trois séances de la séquence">
+  <p class="seances-liens">🗓 Aller à&nbsp;: <a href="#seance-1">Séance 1 — Combien d'énergie, pour combien de temps</a> · <a href="#seance-2">Séance 2 — Recharger ou tenir, et à quel prix</a> · <a href="#seance-3">Séance 3 — L'avis à signer, puis l'îlet</a></p>
+</nav>
 
 <section class="card">
   <h2>🔄 D'où tu viens — la spirale C7.4</h2>
@@ -183,8 +201,8 @@ table.releve td input{padding:4px 8px}
   <h2>🎯 Ce que dit le programme</h2>
   <table class="refs">
     <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
-    <tr><td><b>3e_C7.4</b></td><td>Choisir une source d'énergie pour un OST.</td><td>Activités 0, 1, 2, 4 et REFAIRE</td></tr>
-    <tr><td>3e_C3.2 <span style="color:var(--sub)">(appui)</span></td><td>Choisir un OST et argumenter ce choix en prenant en compte son cycle de vie et les trois piliers du développement durable.</td><td>Activité 3</td></tr>
+    <tr><td><b>3e_C7.4</b></td><td>Choisir une source d'énergie pour un OST.</td><td>Séance 1 : activités 0 et 1 · séance 2 : activité 2 · séance 3 : activité 4 et REFAIRE</td></tr>
+    <tr><td>3e_C3.2 <span style="color:var(--sub)">(appui)</span></td><td>Choisir un OST et argumenter ce choix en prenant en compte son cycle de vie et les trois piliers du développement durable.</td><td>Séance 2 : activité 3</td></tr>
   </table>
 </section>
 
@@ -249,12 +267,18 @@ table.releve td input{padding:4px 8px}
   </ul>
 </section>
 
+<section class="card seance-entete" id="seance-1" aria-labelledby="seance-1-titre">
+  <h2 id="seance-1-titre">🗓 Séance 1 — Combien d'énergie, pour combien de temps</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · la situation et ton idée de départ, puis les activités 0 et 1, soit 45 minutes d'activités.</p>
+  <p><b>La question de la séance&nbsp;:</b> sur quel jour faut-il compter, et quelle réserve faut-il pour tenir 72 heures sans réseau&nbsp;?</p>
+</section>
+
 <section class="card">
   <h2>🖐️ Activité 0 — FAIRE d'abord : quel jour faut-il dimensionner ⏱ ~20 min</h2>
   <p>Avant toute explication. Le banc compte ce que la station consomme en une
   journée <b>d'alerte</b> : buzzer et voyant allumés deux heures. Éteins-les, et tu obtiens
   une journée calme. <b>Compare les deux, puis passe les cinq sources.</b></p>
-  <div class="banc">
+  <div class="banc" id="banc">
     <table class="conso">
       <tr><th></th><th>Ce qui consomme</th><th>Courant</th><th>Par jour</th><th>Énergie</th></tr>
       <tr id="tr0"><td class="ck"><input type="checkbox" id="ck0" checked></td><td>Carte Arduino UNO</td><td class="n">45 mA</td><td class="n">24 h</td><td class="n" id="wh0">5,400 Wh</td></tr>
@@ -398,12 +422,24 @@ table.releve td input{padding:4px 8px}
   </div>
 </section>
 
+<nav class="fin-seance" aria-label="Fin de la séance 1">
+  <p>Fin de la séance 1. La suite, la prochaine fois&nbsp;:</p>
+  <a class="btn vers-seance" href="#seance-2">➡ Séance 2 — Recharger ou tenir, et à quel prix</a>
+</nav>
+
+<section class="card seance-entete" id="seance-2" aria-labelledby="seance-2-titre">
+  <h2 id="seance-2-titre">🗓 Séance 2 — Recharger ou tenir, et à quel prix</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · activités 2 et 3, soit 55 minutes d'activités.</p>
+  <p><b>Ce dont tu repars&nbsp;:</b> un jour d'alerte, la station consomme 6,04&nbsp;Wh&nbsp;; pour tenir 72&nbsp;heures, il lui faut 18,12&nbsp;Wh, et trois accus en donnent 28,2 (activité 1).</p>
+  <p><b>La question de la séance&nbsp;:</b> un panneau solaire rend-il la station autonome, et que coûte chaque source sur toute sa vie&nbsp;?</p>
+</section>
+
 <section class="card">
   <h2>☀ Activité 2 — Pourquoi le panneau ne fait pas l'autonomie ⏱ ~25 min</h2>
   <p><b>Objectif :</b> distinguer ce qui <em>recharge</em> de ce qui <em>tient</em>.
   <b>Compétence :</b> 3e_C7.4. <b>Production attendue :</b> 3 réponses + une phrase.</p>
   <p>« Un panneau solaire, c'est autonome. » C'est la phrase qui vient d'abord, et c'est celle
-  qu'il faut examiner. Le banc annonce <b>3,7 Wh par jour</b> pour un panneau de 1 W crête,
+  qu'il faut examiner. <a href="#banc">Le banc</a> (activité 0) annonce <b>3,7 Wh par jour</b> pour un panneau de 1 W crête,
   en moyenne annuelle, plein soleil compris.</p>
   <div class="exo">
 
@@ -533,6 +569,18 @@ table.releve td input{padding:4px 8px}
       sa vie</em>.</p>
     </div></details>
   </div>
+</section>
+
+<nav class="fin-seance" aria-label="Fin de la séance 2">
+  <p>Fin de la séance 2. La suite, la prochaine fois&nbsp;:</p>
+  <a class="btn vers-seance" href="#seance-3">➡ Séance 3 — L'avis à signer, puis l'îlet</a>
+</nav>
+
+<section class="card seance-entete" id="seance-3" aria-labelledby="seance-3-titre">
+  <h2 id="seance-3-titre">🗓 Séance 3 — L'avis à signer, puis l'îlet</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · l'activité 4 et le REFAIRE, soit 50 minutes d'activités, puis la synthèse, le bilan et le renvoi au QCM.</p>
+  <p><b>Ce dont tu repars&nbsp;:</b> trois accus tiennent 112&nbsp;heures (activité 1)&nbsp;; le panneau recharge, mais il ne tient pas pendant le cyclone (activité 2)&nbsp;; et le cycle de vie se raisonne par usage (activité 3).</p>
+  <p><b>La question de la séance&nbsp;:</b> quelle architecture d'alimentation proposer à la mairie, chiffres à l'appui — et que devient-elle sur un îlet sans secteur&nbsp;?</p>
 </section>
 
 <section class="card">

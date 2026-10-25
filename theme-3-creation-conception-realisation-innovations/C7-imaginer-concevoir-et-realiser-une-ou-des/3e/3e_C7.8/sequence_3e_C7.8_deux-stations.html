@@ -131,6 +131,21 @@ table.releve td input{padding:4px 8px}
 .grille{list-style:none;padding:0;margin:8px 0}
 .grille li{border-left:3px solid var(--head);background:rgba(198,142,242,.08);padding:7px 12px;border-radius:0 8px 8px 0;margin:6px 0;font-size:.94em}
 
+/* ── Trois séances de 55 min (24/10/2026) : la page défile d'un seul tenant, un en-tête par
+   séance, un bouton vers la suivante, des liens sous le titre (comme le capteur 3e_C7.1) ── */
+.seances-nav{max-width:940px;margin:0 auto 16px;text-align:center}
+.seances-liens{font-size:.92em;color:var(--sub);margin:0}.seances-liens a,.seances-liens a:visited{color:var(--hl)}
+.seance-entete{border-left:6px solid var(--hl);scroll-margin-top:60px}
+.seance-entete h2{font-size:1.2em;color:var(--hl)}
+.seance-entete .seance-duree{color:var(--sub);font-weight:600;margin:0 0 8px}
+.fin-seance{max-width:940px;margin:0 auto 22px;text-align:center}
+.fin-seance p{margin:0 0 6px;color:var(--sub)}
+#banc{scroll-margin-top:60px}
+a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
+@media print{.fin-seance,.seances-nav{display:none}
+  .seance-entete h2,.seance-entete .seance-duree{color:#0d2347!important}
+  a[href="#banc"],a[href="#banc"]:visited{color:#047fa0!important}}
+
 
 
 @media print{
@@ -159,8 +174,11 @@ table.releve td input{padding:4px 8px}
   <span class="badge code">3e_C8.3 (appui)</span>
   <span class="badge theme">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span>
   <span class="badge socle">Socle : D1.3 · D2 · D3 · D4 · D5</span>
-  <span class="badge duree">⏱ 2 séances de 90 min (1 h 30)</span>
+  <span class="badge duree" title="Durée : 3 séances de 55 minutes, 150 minutes d'activités" aria-label="Durée : 3 séances de 55 minutes">⏱ 3 séances de 55 min</span>
 </div>
+<nav class="seances-nav" aria-label="Les trois séances de la séquence">
+  <p class="seances-liens">🗓 Aller à&nbsp;: <a href="#seance-1">Séance 1 — Ce que deux machines s'échangent</a> · <a href="#seance-2">Séance 2 — Se mettre d'accord, et quand l'autre se tait</a> · <a href="#seance-3">Séance 3 — Prouver que la liaison tient, puis passer à trois</a></p>
+</nav>
 
 <section class="card">
   <h2>🔄 D'où tu viens — la spirale C7.8</h2>
@@ -184,8 +202,8 @@ table.releve td input{padding:4px 8px}
   <h2>🎯 Ce que dit le programme</h2>
   <table class="refs">
     <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
-    <tr><td><b>3e_C7.8</b></td><td>Interfacer deux objets techniques communicants.</td><td>Activités 0 à 3 et REFAIRE</td></tr>
-    <tr><td>3e_C8.3 <span style="color:var(--sub)">(appui)</span></td><td>Proposer un protocole de test pour valider le comportement et les performances d'un objet technique.</td><td>Activité 4</td></tr>
+    <tr><td><b>3e_C7.8</b></td><td>Interfacer deux objets techniques communicants.</td><td>Séance 1 : activités 0 et 1 · séance 2 : activités 2 et 3 · séance 3 : REFAIRE</td></tr>
+    <tr><td>3e_C8.3 <span style="color:var(--sub)">(appui)</span></td><td>Proposer un protocole de test pour valider le comportement et les performances d'un objet technique.</td><td>Séance 3 : activité 4</td></tr>
   </table>
 </section>
 
@@ -209,7 +227,7 @@ table.releve td input{padding:4px 8px}
     <h4>💡 Ton idée à toi, avant tout essai</h4>
     <p>« La sirène ne part que si les deux stations sont d'accord. » <b>Quel problème cette règle
     crée-t-elle&nbsp;?</b> Écris ta réponse avant tout essai : c'est la question de toute la
-    séance, et on la relira au bilan.</p>
+    séquence, et on la relira au bilan.</p>
     <textarea id="hyp" rows="3" placeholder="Si les deux doivent être d'accord, alors le jour où…"></textarea>
 
     <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan.
@@ -250,13 +268,19 @@ table.releve td input{padding:4px 8px}
   </ul>
 </section>
 
+<section class="card seance-entete" id="seance-1" aria-labelledby="seance-1-titre">
+  <h2 id="seance-1-titre">🗓 Séance 1 — Ce que deux machines s'échangent</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · la situation et ton idée de départ, puis les activités 0 et 1, soit 45 minutes d'activités.</p>
+  <p><b>La question de la séance&nbsp;:</b> que doit contenir un message pour qu'une machine, à l'autre bout, puisse s'en servir sans rien deviner&nbsp;?</p>
+</section>
+
 <section class="card">
   <h2>🖐️ Activité 0 — FAIRE d'abord : faire parler les deux stations ⏱ ~20 min</h2>
   <p>Avant toute explication. Le banc met les deux stations face à face. À gauche,
   celle du Robert compose son message ; à droite, celle de Sainte-Anne le reçoit — et
   <b>c'est une machine</b>, pas quelqu'un. <b>Coche des champs et lis ce qu'elle peut en
   faire.</b></p>
-  <div class="lien">
+  <div class="lien" id="banc">
     <div class="lien-schema">
       <div class="boite"><b>Station du Robert</b><span>il mesure et il envoie</span></div>
       <div class="canal" id="canal">──▶<small id="canalTxt">lien établi</small></div>
@@ -340,7 +364,7 @@ table.releve td input{padding:4px 8px}
       elle sait qu'il en manque un. Sans numérotation, un message perdu ne laisse aucune trace :
       <b>l'absence ne se remarque pas toute seule.</b></p>
       <p><b>3 — l'objet ne sait pas quoi faire.</b> Et c'est exactement le trou de conception
-      que la séance va combler. Un comportement non décidé n'est pas un comportement neutre :
+      que la séance 2 va combler. Un comportement non décidé n'est pas un comportement neutre :
       c'est un comportement subi.</p>
     </div></details>
   </div>
@@ -351,7 +375,7 @@ table.releve td input{padding:4px 8px}
   <p><b>Objectif :</b> décider ce que deux machines s'échangent. <b>Compétence :</b>
   3e_C7.8. <b>Production attendue :</b> un message valide + 5 réponses.</p>
   <p>En 4<sup>e</sup>, le destinataire était un humain devant un écran : il pouvait deviner,
-  s'étonner, appeler. Ici, personne. Remonte au banc et compose le message — <b>six champs
+  s'étonner, appeler. Ici, personne. <a href="#banc">Remonte au banc</a> et compose le message — <b>six champs
   utiles, aucun des deux champs de trop</b>.</p>
   <div class="exo">
 
@@ -426,6 +450,18 @@ table.releve td input{padding:4px 8px}
   </div>
 </section>
 
+<nav class="fin-seance" aria-label="Fin de la séance 1">
+  <p>Fin de la séance 1. La suite, la prochaine fois&nbsp;:</p>
+  <a class="btn vers-seance" href="#seance-2">➡ Séance 2 — Se mettre d'accord, et quand l'autre se tait</a>
+</nav>
+
+<section class="card seance-entete" id="seance-2" aria-labelledby="seance-2-titre">
+  <h2 id="seance-2-titre">🗓 Séance 2 — Se mettre d'accord, et quand l'autre se tait</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · activités 2 et 3, soit 55 minutes d'activités.</p>
+  <p><b>Ce dont tu repars&nbsp;:</b> le message utile tient en six champs — identifiant, vitesse, unité, heure, niveau calculé, numéro d'ordre — et ne transporte jamais de secret (activité 1). <a href="#banc">Le banc</a> est en haut de la page, à l'activité 0&nbsp;: l'activité 3 en a besoin.</p>
+  <p><b>La question de la séance&nbsp;:</b> comment deux machines se mettent-elles d'accord — et que fait chacune quand l'autre se tait&nbsp;?</p>
+</section>
+
 <section class="card">
   <h2>🤝 Activité 2 — Écrire la règle d'accord ⏱ ~25 min</h2>
   <p><b>Objectif :</b> transformer « les deux sont d'accord » en une règle qu'une
@@ -498,7 +534,7 @@ table.releve td input{padding:4px 8px}
   <h2>🔇 Activité 3 — Et quand l'autre se tait ⏱ ~30 min</h2>
   <p><b>Objectif :</b> décider du comportement en cas de silence. <b>Compétence :</b>
   3e_C7.8. <b>Production attendue :</b> 4 réponses + une phrase.</p>
-  <p>C'est la question de la séance. Remonte au banc, <b>coupe le lien</b>, essaie les trois
+  <p>C'est la question de la séance. <a href="#banc">Remonte au banc</a>, <b>coupe le lien</b>, essaie les trois
   comportements, et lis le journal à chaque fois. Souviens-toi du contexte : le lien tombe
   précisément quand il y a un cyclone.</p>
   <div class="exo">
@@ -564,6 +600,18 @@ table.releve td input{padding:4px 8px}
       dégradation vaut mieux qu'un système parfait qui se tait.</b></p>
     </div></details>
   </div>
+</section>
+
+<nav class="fin-seance" aria-label="Fin de la séance 2">
+  <p>Fin de la séance 2. La suite, la prochaine fois&nbsp;:</p>
+  <a class="btn vers-seance" href="#seance-3">➡ Séance 3 — Prouver que la liaison tient, puis passer à trois</a>
+</nav>
+
+<section class="card seance-entete" id="seance-3" aria-labelledby="seance-3-titre">
+  <h2 id="seance-3-titre">🗓 Séance 3 — Prouver que la liaison tient, puis passer à trois</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · l'activité 4 et le REFAIRE, soit 50 minutes d'activités, puis la synthèse, le bilan et le renvoi au QCM.</p>
+  <p><b>Ce dont tu repars&nbsp;:</b> la règle d'accord — au moins le niveau 2 des deux côtés, sur des messages de moins de 15 minutes (activité 2) — et le comportement quand l'autre se tait&nbsp;: déclencher seule et le signaler, après trois messages manqués (activité 3).</p>
+  <p><b>La question de la séance&nbsp;:</b> quels essais prouvent que la liaison tient, y compris quand une station tombe — et que change une troisième station&nbsp;?</p>
 </section>
 
 <section class="card">
@@ -726,7 +774,7 @@ table.releve td input{padding:4px 8px}
   <h2>🙋 Mon bilan personnel</h2>
   <p><b>🔙 Ton idée de départ :</b> <span id="rappelHyp" style="font-style:italic;color:var(--sub)">—</span></p>
 <p>Tu avais écrit, avant tout essai, quel problème la règle « les deux
-  d'accord » créait. Relis-toi. C'était probablement la bonne intuition — et ce que la séance
+  d'accord » créait. Relis-toi. C'était probablement la bonne intuition — et ce que la séquence
   ajoute, c'est qu'on ne choisit pas entre supprimer les fausses alertes et garder les vraies :
   <em>on déclenche, et on dit qu'on était seul</em>.</p>
   <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
@@ -751,7 +799,19 @@ table.releve td input{padding:4px 8px}
 <script>
 (function(){
 "use strict";
-const KEY = "seq_3e_C7_4";
+const KEY = "seq_3e_C7_8";
+/* Jusqu'au 24/10/2026, cette page enregistrait sous la clé de 3e_C7.4 (« seq_3e_C7_4 ») :
+   les deux séquences mélangeaient le travail de l'élève. Migration UNE SEULE FOIS : si la
+   clé propre n'existe pas encore et que l'ancienne existe, on la COPIE (sans l'effacer :
+   3e_C7.4 s'en sert), puis cette page ne relit plus jamais l'ancienne clé — dès la première
+   ouverture, la clé propre existe (majLien() appelle save() au chargement). */
+const ANCIENNE_CLE = "seq_3e_C7_4";
+try{
+  if(localStorage.getItem(KEY) === null){
+    const v = localStorage.getItem(ANCIENNE_CLE);
+    if(v !== null) localStorage.setItem(KEY, v);
+  }
+}catch(e){}
 const $ = id => document.getElementById(id);
 window.__exp = window.__exp || {};
 

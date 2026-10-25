@@ -126,6 +126,17 @@ table.releve td input{padding:4px 8px}
 .grille{list-style:none;padding:0;margin:8px 0}
 .grille li{border-left:3px solid var(--head);background:rgba(198,142,242,.08);padding:7px 12px;border-radius:0 8px 8px 0;margin:6px 0;font-size:.94em}
 
+/* ── Séances de 55 min (24/10/2026) : en-tête de séance, bouton vers la suivante ── */
+.seance-entete{border-left:6px solid var(--hl);scroll-margin-top:60px}
+.seance-entete h2{font-size:1.2em;color:var(--hl)}
+.seance-entete .seance-duree{color:var(--sub);font-weight:600;margin:0 0 8px}
+.fin-seance{max-width:940px;margin:0 auto 22px;text-align:center}
+.fin-seance p{margin:0 0 6px;color:var(--sub)}
+.seances-nav{max-width:940px;margin:0 auto 16px;text-align:center;font-size:.92em;color:var(--sub)}
+.seances-nav p{margin:0}
+#securite,#etabli{scroll-margin-top:60px}
+@media print{.fin-seance,.seances-nav{display:none}
+  .seance-entete h2,.seance-entete .seance-duree{color:#0d2347!important}}
 
 
 @media print{
@@ -168,8 +179,11 @@ table.releve td input{padding:4px 8px}
   <span class="badge code">3e_C4.3 (appui)</span>
   <span class="badge theme">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span>
   <span class="badge socle">Socle : D2 · D3 · D4</span>
-  <span class="badge duree">⏱ 2 séances de 90 min</span>
+  <span class="badge duree" title="Durée : 4 séances de 55 minutes" aria-label="Durée : 4 séances de 55 minutes">⏱ 4 séances de 55 min</span>
 </div>
+<nav class="seances-nav" aria-label="Les quatre séances">
+  <p>🗓 Aller à&nbsp;: <a href="#seance-1">Séance 1 — Ce que chaque exigence impose</a> · <a href="#seance-2">Séance 2 — Choisir, et l'écrire</a> · <a href="#seance-3">Séance 3 — Assembler, puis retirer</a> · <a href="#seance-4">Séance 4 — Le choix qui coûte</a></p>
+</nav>
 
 <section class="card">
   <h2>🔄 Ce que tu sais déjà faire — et ce qu'on ne refera pas</h2>
@@ -186,8 +200,8 @@ table.releve td input{padding:4px 8px}
   <h2>🎯 Ce que dit le programme</h2>
   <table class="refs">
     <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
-    <tr><td><b>3e_C7.5</b></td><td>Choisir les constituants et assembler un prototype.</td><td>Activités 1 à 4 et REFAIRE</td></tr>
-    <tr><td>3e_C4.3 <span style="color:var(--sub)">(appui)</span></td><td>Décrire un OST en caractérisant sa chaîne d'information.</td><td>Activité 0 et synthèse</td></tr>
+    <tr><td><b>3e_C7.5</b></td><td>Choisir les constituants et assembler un prototype.</td><td>Séance 2 : activité 1 · séance 3 : activités 2 et 3 · séance 4 : activité 4 et REFAIRE</td></tr>
+    <tr><td>3e_C4.3 <span style="color:var(--sub)">(appui)</span></td><td>Décrire un OST en caractérisant sa chaîne d'information.</td><td>Séance 1 : activité 0 · séance 4 : synthèse</td></tr>
   </table>
 </section>
 
@@ -217,7 +231,7 @@ cahier des charges de <em>votre</em> collège.</p>
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="securite">
   <h2>⚡ Sécurité — une station qui reste dehors</h2>
   <div class="danger">
     <p><b>Très basse tension uniquement.</b> Carte, capteurs, bandeau, batterie : tout est en
@@ -249,6 +263,12 @@ cahier des charges de <em>votre</em> collège.</p>
   </ul>
 </section>
 
+
+<section class="card seance-entete" id="seance-1" aria-labelledby="seance-1-titre">
+  <h2 id="seance-1-titre">🗓 Séance 1 — Ce que chaque exigence impose</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · la situation, ton idée de départ, puis l'activité 0.</p>
+  <p><b>La question de la séance&nbsp;:</b> chacune des quatre exigences de la commission, quel constituant impose-t-elle&nbsp;?</p>
+</section>
 
 <section class="card">
   <h2>📋 Activité 0 — Ce que chaque exigence impose ⏱ ~25 min</h2>
@@ -318,6 +338,17 @@ cahier des charges de <em>votre</em> collège.</p>
   </div>
 </section>
 
+<nav class="fin-seance" aria-label="Fin de la séance 1">
+  <p>Fin de la séance 1. La suite, la prochaine fois&nbsp;:</p>
+  <a class="btn vers-seance" href="#seance-2">➡ Séance 2 — Choisir, et l'écrire</a>
+</nav>
+
+<section class="card seance-entete" id="seance-2" aria-labelledby="seance-2-titre">
+  <h2 id="seance-2-titre">🗓 Séance 2 — Choisir, et l'écrire</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · activité 1.</p>
+  <p><b>La question de la séance&nbsp;:</b> deux constituants qui fonctionnent parfaitement peuvent-ils quand même rester dans le carton&nbsp;?</p>
+</section>
+
 <section class="card">
   <h2>🎯 Activité 1 — Choisir, et l'écrire ⏱ ~35 min</h2>
   <p>Le catalogue propose dix constituants. Le cahier des charges en impose une
@@ -384,6 +415,18 @@ cahier des charges de <em>votre</em> collège.</p>
       répondent à un autre besoin que celui-ci — c'est tout ce que « choisir » veut dire.</p>
     </div></details>
   </div>
+</section>
+
+<nav class="fin-seance" aria-label="Fin de la séance 2">
+  <p>Fin de la séance 2. La suite, la prochaine fois&nbsp;:</p>
+  <a class="btn vers-seance" href="#seance-3">➡ Séance 3 — Assembler, puis retirer</a>
+</nav>
+
+<section class="card seance-entete" id="seance-3" aria-labelledby="seance-3-titre">
+  <h2 id="seance-3-titre">🗓 Séance 3 — Assembler, puis retirer</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · activités 2 et 3.</p>
+  <p><b>La question de la séance&nbsp;:</b> le montage choisi fonctionne-t-il, et que perd la station quand on lui retire un constituant&nbsp;?</p>
+  <p>⚡ <b>Avant de câbler&nbsp;:</b> <a href="#securite">relis l'encadré Sécurité</a> — très basse tension uniquement, le bandeau de DEL chauffe, et le mât reste au sol.</p>
 </section>
 
 <section class="card">
@@ -518,6 +561,18 @@ sinon
       près » équiper une station.</p>
     </div></details>
   </div>
+</section>
+
+<nav class="fin-seance" aria-label="Fin de la séance 3">
+  <p>Fin de la séance 3. La suite, la prochaine fois&nbsp;:</p>
+  <a class="btn vers-seance" href="#seance-4">➡ Séance 4 — Le choix qui coûte</a>
+</nav>
+
+<section class="card seance-entete" id="seance-4" aria-labelledby="seance-4-titre">
+  <h2 id="seance-4-titre">🗓 Séance 4 — Le choix qui coûte</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · activité 4 et REFAIRE, puis le bilan de la séquence.</p>
+  <p><b>La question de la séance&nbsp;:</b> le seul afficheur qui tienne l'exigence 2 a-t-il créé un problème ailleurs dans le montage&nbsp;?</p>
+  <p>L'établi est dans l'activité 2, <a href="#etabli">plus haut</a>. S'il est vide (autre ordinateur, sauvegarde effacée), remonte d'abord la station complète&nbsp;: la correction de l'activité 2 donne le port de chaque constituant.</p>
 </section>
 
 <section class="card">

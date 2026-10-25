@@ -3,10 +3,27 @@
 > **Proposer un protocole de test pour valider la tenue mécanique d'un matériau.**
 > Programme 2024 · cycle 4 · thème 3 · socle D1.3 · D2 · D3 · D4
 
-➡ **[Ouvrir la séquence](sequence_3e_C8.2_mat-de-la-station.html)** — 2 séances de 90 min,
+➡ **[Ouvrir la séquence](sequence_3e_C8.2_mat-de-la-station.html)** — 3 séances de 55 min,
 banc d'essai intégré, hors ligne, sans installation ni compte.
 
 ---
+
+## Trois séances de 55 min
+
+La page défile d'un seul tenant (sans onglets) : un en-tête « 🗓 Séance N » ouvre chaque séance,
+un bouton « ➡ Séance N+1 » la termine, et une ligne sous le titre mène à chacune.
+
+| Séance | Activités | Minutes annoncées |
+|---|---|---|
+| 1 | la situation, l'hypothèse de départ, puis les activités 0 (casser trois mâts), 1 (le protocole de 5<sup>e</sup> ne répond pas) et **2a** (les six décisions) | 15 + 25 + 10 = 50 |
+| 2 | **2b** (rédiger le protocole, relecture du binôme) et 3 (exécuter son protocole) | 25 + 30 = 55 |
+| 3 | 4 (ce que le protocole ne voit pas), 5 (décider, signer l'avis) et REFAIRE, puis synthèse, Bonus, bilan et renvoi au QCM | 20 + 20 + 15 = 55 |
+
+Découpage du 24/10/2026 (décision de Pascal : une heure de cours par semaine). Rien n'est retiré ni
+raccourci. L'activité 2 (35 min) est coupée en deux parties entières, à la frontière que la page
+nommait déjà (« prends-les une par une, puis rédige ») : **2a**, les six décisions, avec son propre
+vérificateur, finit la séance 1 ; **2b**, la rédaction, ouvre la séance 2 par une phrase de reprise
+qui renvoie aux décisions. Sans cette coupe, il faudrait quatre séances (40 · 35 · 50 · 35).
 
 ## Ce que le lot fait
 
@@ -87,14 +104,14 @@ mise en œuvre, pas la capacité à retrouver un ordre de grandeur.
 
 | Fichier | Contenu |
 |---|---|
-| [`sequence_3e_C8.2_mat-de-la-station.html`](sequence_3e_C8.2_mat-de-la-station.html) | 7 blocs chronométrés, banc intégré, 3 verrous |
+| [`sequence_3e_C8.2_mat-de-la-station.html`](sequence_3e_C8.2_mat-de-la-station.html) | 8 blocs chronométrés (l'activité 2 en 2a et 2b), 3 séances de 55 min, banc intégré, 3 verrous |
 | [`qcm_3e_C8.2_mat-de-la-station.html`](qcm_3e_C8.2_mat-de-la-station.html) | 30 q · 90 réfutations · 3e_C8.2 ×20, 3e_C3.4 ×10 |
 | [`lexique_3e_C8.2.html`](lexique_3e_C8.2.html) | 30 notions, générées depuis le QCM du lot |
 | [`synthese_eleve_3e_C8.2.html`](synthese_eleve_3e_C8.2.html) | à imprimer, lisible en noir et blanc |
 | [`synthese_professeur_3e_C8.2.html`](synthese_professeur_3e_C8.2.html) | pari didactique, verrous, limites, repères LSU |
 | [`fiche_pedagogique_3e_C8.2.md`](fiche_pedagogique_3e_C8.2.md) | déroulé, valeurs, différenciation, prolongements |
 | [`matrice_couverture_3e_C8.2.csv`](matrice_couverture_3e_C8.2.csv) | 23 notions → activité → production → questions |
-| [`rapport_tests_3e_C8.2.md`](rapport_tests_3e_C8.2.md) | **32/32** séquence · **26/26** QCM, rejouables |
+| [`rapport_tests_3e_C8.2.md`](rapport_tests_3e_C8.2.md) | **46/46** séquence · **32/32** QCM, rejouables |
 | [`tests_3e_C8.2_sequence.mjs`](tests_3e_C8.2_sequence.mjs) · [`tests_3e_C8.2_qcm.mjs`](tests_3e_C8.2_qcm.mjs) | les tests eux-mêmes |
 | [`profils_3e_C8.2.py`](profils_3e_C8.2.py) | recalcule toutes les valeurs du banc |
 

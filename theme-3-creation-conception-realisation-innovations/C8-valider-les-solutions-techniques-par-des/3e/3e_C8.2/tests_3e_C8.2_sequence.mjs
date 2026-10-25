@@ -129,8 +129,68 @@ ok('les cinq listes de l’activité 4 offrent les mêmes 5 angles morts',
    Object.values(ANGLES).every(v => v.length === 6), JSON.stringify(Object.keys(ANGLES)));
 
 // ── durée, QCM, hypothèse ──────────────────────────────────────────────────
+// 24/10/2026 : « chaque séance a 55 min » (décision de Pascal) — 2 séances de 90 min
+// deviennent 4 séances de 55 min (trois ne laisseraient que 5 min de service pour
+// 160 min d'activités : n°23). Aucune activité n'est coupée. Page sans onglets : un
+// en-tête .seance-entete#seance-N ouvre chaque séance, un bouton .vers-seance la
+// termine, la clôture suit la dernière.
+const SEANCES = 4;
 const duree = await p.$eval('.badge.duree', e => e.textContent.trim()).catch(() => 'absent');
-ok('bandeau de durée présent', duree.includes('2 séances de 90 min'), duree);
+ok('bandeau de durée : ' + SEANCES + ' séances de 55 min', duree.includes(SEANCES + ' séances de 55 min'), duree);
+const parSeance = await p.evaluate(() => {
+  const ent = [...document.querySelectorAll(".seance-entete[id^='seance-']")];
+  return ent.map((h, i) => {
+    const r = document.createRange();
+    r.setStartAfter(h);
+    if (ent[i + 1]) r.setEndBefore(ent[i + 1]); else r.setEndAfter(document.querySelector('footer'));
+    let min = 0; const act = [];
+    r.cloneContents().querySelectorAll('h2').forEach(t => {
+      const s = t.textContent;
+      if (/bonus|facultatif/i.test(s)) return;
+      const m = s.match(/~\s*(\d+)\s*min/);
+      if (m) { min += parseInt(m[1], 10); act.push((s.match(/Activité \d+[ab]?|REFAIRE/) || ['?'])[0]); }
+    });
+    return { id: h.id, min, act };
+  });
+});
+ok(SEANCES + ' en-têtes de séance, dans l’ordre',
+   parSeance.length === SEANCES && parSeance.every((s, i) => s.id === 'seance-' + (i + 1)),
+   parSeance.map(s => s.id).join(', '));
+ok('chaque séance tient dans ses 55 min d’activités annoncées',
+   parSeance.length === SEANCES && parSeance.every(s => s.min > 0 && s.min <= 55),
+   parSeance.map(s => s.id + ' = ' + s.min + ' min').join(' · '));
+ok('le temps total des activités est conservé (160 min)',
+   parSeance.reduce((a, s) => a + s.min, 0) === 160, String(parSeance.reduce((a, s) => a + s.min, 0)));
+ok('chaque activité est dans sa séance (0, 1 | 2 | 3, 4 | 5, REFAIRE)',
+   parSeance.map(s => s.act.join('+')).join(' | ') ===
+   'Activité 0+Activité 1 | Activité 2 | Activité 3+Activité 4 | Activité 5+REFAIRE',
+   parSeance.map(s => s.act.join('+')).join(' | '));
+const ordre = await p.evaluate(() => {
+  const pos = el => el ? [...document.querySelectorAll('*')].indexOf(el) : -1;
+  const h2 = re => [...document.querySelectorAll('h2')].find(h => re.test(h.textContent));
+  return { s4: pos(document.getElementById('seance-4')), refaire: pos(h2(/REFAIRE/)),
+           synthese: pos(h2(/Synthèse/)), bonus: pos(h2(/Bonus/)), bilan: pos(h2(/bilan personnel/)),
+           qcm: pos(h2(/Prêt·e à t.entraîner/)) };
+});
+ok('la clôture suit la dernière séance : synthèse → Bonus → Bilan → QCM',
+   ordre.s4 < ordre.refaire && ordre.refaire < ordre.synthese && ordre.synthese < ordre.bonus
+   && ordre.bonus < ordre.bilan && ordre.bilan < ordre.qcm, JSON.stringify(ordre));
+const liens = await p.$$eval('nav.fin-seance a.vers-seance', a => a.map(x => x.getAttribute('href')));
+ok('chaque séance (sauf la dernière) mène explicitement à la suivante',
+   liens.join(',') === '#seance-2,#seance-3,#seance-4', liens.join(', '));
+const nav = await p.$$eval('nav.seances-nav a', a => a.map(x => x.getAttribute('href')));
+ok('le haut de page mène à chacune des séances',
+   nav.join(',') === '#seance-1,#seance-2,#seance-3,#seance-4', nav.join(', '));
+ok('la séance 3 renvoie au protocole rédigé et au banc',
+   await p.$eval('#seance-3', e => !!e.querySelector('a[href="#a2proto"]') && !!e.querySelector('a[href="#banc"]'))
+   && !!(await p.$('#banc')));
+for (const cible of ['#seance-2', '#seance-3', '#seance-4']) {
+  await p.click('nav.fin-seance a[href="' + cible + '"]'); await p.waitForTimeout(250);
+  const top = await p.evaluate(s => document.querySelector(s).getBoundingClientRect().top, cible);
+  ok('le bouton « ' + cible.replace('#seance-', 'Séance ') + ' » amène à son en-tête, sous la barre du haut',
+     top >= 0 && top < 140, Math.round(top) + ' px');
+}
+await p.evaluate(() => window.scrollTo(0, 0));
 const qcm = await p.$$eval('a.btn[href*="qcm"]', n => n.length);
 ok('un seul bouton QCM', qcm === 1, String(qcm));
 ok('hypothèse d’entrée présente', !!(await p.$('#hyp')));
@@ -176,6 +236,21 @@ await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(400);
 ok('les relevés survivent au rechargement', (await p.inputValue('#rup0')) === '467',
    await p.inputValue('#rup0'));
 ok('les verrous survivent au rechargement', await p.evaluate(() => !!window.__exp.flex5));
+
+// ── une sauvegarde faite avec l'ancien découpage (2 séances de 90 min) se relit ──
+// Même clé, même forme {inputs, exp, flex, trac} : le découpage n'a ajouté ni retiré
+// aucun champ. Forme relevée sur une sauvegarde réelle de la page d'avant le 24/10/2026.
+const err0 = err.length;
+await p.evaluate(() => localStorage.setItem('seq_3e_C8_2_mat_station', JSON.stringify({
+  inputs: { hyp: "A mon avis l'essai de traction suffit.", prof: 'Tube aluminium Ø50 × 3',
+            a2q1: 'le pousser en tête, perpendiculairement, comme le vent', a2q4: '300', a2proto: '' },
+  exp: { flex3: true }, flex: ['Tube aluminium Ø50 × 3', 'Tube PVC Ø50 × 3', 'Poutre bois 40 × 40'], trac: [] })));
+await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(400);
+ok('une sauvegarde de l’ancien découpage se relit sans erreur',
+   err.length === err0 && (await p.inputValue('#a2q1')).startsWith('le pousser en tête')
+   && (await p.inputValue('#a2q4')) === '300' && (await p.textContent('#rappelHyp')).includes('traction suffit')
+   && await p.evaluate(() => !!window.__exp.flex3),
+   err.slice(err0).join(' | ') || (await p.inputValue('#a2q4')));
 
 const r = T.filter(t => t.ok).length;
 console.log(T.map(t => `${t.ok ? '✅' : '❌'} ${t.n}${t.d ? ' — ' + t.d : ''}`).join('\n'));

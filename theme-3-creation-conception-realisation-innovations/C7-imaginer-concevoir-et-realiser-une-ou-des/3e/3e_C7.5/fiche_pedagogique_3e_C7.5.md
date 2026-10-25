@@ -5,7 +5,7 @@
 | **Code** | `3e_C7.5` — Choisir les constituants et assembler un prototype. |
 | **Appui** | `3e_C4.3` — Décrire un OST en caractérisant sa chaîne d'information. |
 | **Niveau** | 3<sup>e</sup> · Thème 3 |
-| **Durée** | 2 séances de 90 min (150 min d'activités) |
+| **Durée** | 4 séances de 55 min (150 min d'activités) |
 | **Socle** | D2 · D3 · D4 |
 | **Matériel** | carte Arduino UNO + Base Shield V2 + modules Grove — **TBT 5 V uniquement** |
 
@@ -15,14 +15,27 @@
 
 ## Déroulé
 
-| # | Activité | Durée | Verrou expérientiel |
-|---|---|---|---|
-| 0 | Ce que chaque exigence impose | 25 min | — |
-| 1 | Choisir, et l'écrire | 35 min | — |
-| 2 | Assembler et prouver | 30 min | verrou : `ok` |
-| 3 | Ce que coûte chaque retrait | 25 min | verrou : `retire` |
-| 4 | Le choix qui coûte | 20 min | verrou : `diag_budget` |
-| 5 | REFAIRE — réinvestissement | 15 min | — |
+| Séance | # | Activité | Durée | Verrou expérientiel |
+|---|---|---|---|---|
+| 1 | 0 | Ce que chaque exigence impose | 25 min | — |
+| 2 | 1 | Choisir, et l'écrire | 35 min | — |
+| 3 | 2 | Assembler et prouver | 30 min | verrou : `ok` |
+| 3 | 3 | Ce que coûte chaque retrait | 25 min | verrou : `retire` |
+| 4 | 4 | Le choix qui coûte | 20 min | verrou : `diag_budget` |
+| 4 | 5 | REFAIRE — réinvestissement | 15 min | — |
+
+**Quatre séances de 55 min** (une heure de cours par semaine, décision du 24/10/2026) :
+25, 35, 55 et 35 min d'activités annoncées. La séance 1 porte aussi la lecture de la situation,
+la problématique, l'hypothèse de départ et l'encadré de sécurité ; la séance 4 se termine par la
+synthèse, le Bonus facultatif, le bilan (retour à l'hypothèse, positionnement) et le renvoi au
+QCM. Aucune activité n'est coupée : l'activité 1 ne tient pas avec l'activité 0 (60 min), et
+l'activité 3 est une seule question à quatre retraits. La séance 3 est pleine (55 min) : le
+montage sur l'établi y est suivi des retraits, dans la même heure — ce qui compte, car le
+verrou `retire` ne s'ouvre qu'après un essai réussi dans la même ouverture de la page.
+
+À la séance 4, l'activité 4 demande le montage complet : s'il a été perdu (autre ordinateur,
+sauvegarde effacée), l'en-tête de la séance invite à le remonter d'après la correction de
+l'activité 2.
 
 ## Les trois versions
 

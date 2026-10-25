@@ -234,6 +234,74 @@
   .gestes-outil ol{margin:0;padding-left:1.3rem}
   .gestes-outil li{margin:.45rem 0}
   .gestes-outil li b:first-child{color:#ffb300}
+  .gestes-outil figure.geste-capture{margin:.6rem 0 .9rem;max-width:560px}
+  .gestes-outil figure.geste-capture img{width:100%;height:auto;display:block;border:1px solid var(--border,#2a3550);
+    border-radius:8px;background:#fff}
+  .gestes-outil figure.geste-capture figcaption{margin:.35rem 0 0;font-size:.88em;line-height:1.45;opacity:.92}
+  .gestes-outil figure.geste-capture figcaption b{color:inherit}
+  @media print{.gestes-outil figure.geste-capture{break-inside:avoid;page-break-inside:avoid}}
+/* pont_en_h (style) : début */
+  /* Pont en H — « pour aller plus loin » (hors programme de cycle 4). Simulateur SVG fait main, hors ligne, sans bibliothèque. */
+  .ph .ph-hp{color:var(--sub);font-size:.92em}
+  .ph .ph-idee{margin:6px 0 10px 1.3em}
+  .ph .ph-idee li{margin:6px 0}
+  .ph .ph-conseil{margin:10px 0}
+  .ph-sim{max-width:640px;margin:10px auto}
+  .ph-svg{display:block;width:100%;height:auto}
+  .ph-svg .ph-fond{fill:#08132c;stroke:var(--border);stroke-width:2}
+  .ph-svg .ph-w{fill:none;stroke:#5b7bb8;stroke-width:4;stroke-linecap:round}
+  .ph-svg .ph-w.on{stroke:#ffd66b;stroke-width:6;stroke-dasharray:14 8;animation:ph-courant .9s linear infinite}
+  .ph-svg .ph-w.cc{stroke:#ff7b88;stroke-width:6;stroke-dasharray:14 8;animation:ph-courant .45s linear infinite}
+  .ph-svg .ph-lev{fill:none;stroke:#e4eaf5;stroke-width:5;stroke-linecap:round}
+  .ph-svg .ph-pt{fill:#e4eaf5}
+  .ph-svg .ph-nom,.ph-svg .ph-M,.ph-svg .ph-pole{fill:#e4eaf5;font:700 34px system-ui,sans-serif}
+  .ph-svg .ph-pole{font-size:44px}
+  .ph-svg .ph-moteur{fill:#0d2347;stroke:#c68ef2;stroke-width:5}
+  .ph-svg .ph-pale{fill:none;stroke:#c68ef2;stroke-width:5;stroke-linecap:round}
+  .ph-svg .ph-M{fill:#c68ef2}
+  .ph-svg #ph_rotor{transform-origin:300px 180px}
+  .ph-svg #ph_rotor.sens1{animation:ph-tourne 1.6s linear infinite}
+  .ph-svg #ph_rotor.sens2{animation:ph-tourne 1.6s linear infinite reverse}
+  .ph-svg .ph-fl,.ph-svg .ph-pointe{fill:#ffd66b}
+  .ph-svg .ph-arc{fill:none;stroke:#ffd66b;stroke-width:4}
+  .ph-svg .ph-fl,.ph-svg .ph-arc{display:none}
+  .ph-svg .ph-fl.on,.ph-svg .ph-arc.on{display:inline}
+  .ph-svg .ph-etat{fill:#e4eaf5;font:700 28px system-ui,sans-serif}
+  .ph-svg.cc .ph-fond{stroke:#ff7b88;stroke-width:4}
+  @keyframes ph-courant{to{stroke-dashoffset:-22}}
+  @keyframes ph-tourne{to{transform:rotate(360deg)}}
+  .ph-cmd{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
+  .ph-sw{min-height:48px;padding:8px 12px;border-radius:12px;border:2px solid var(--border);background:var(--input-bg);color:var(--text);font:600 1em system-ui,sans-serif;cursor:pointer}
+  .ph-sw[aria-pressed="true"]{background:var(--btn-h);border-color:var(--hl);box-shadow:inset 0 0 0 2px var(--hl)}
+  .ph-sw:focus-visible,.ph-svg .ph-swg:focus-visible{outline:3px solid #fff;outline-offset:2px}
+  .ph-zero{grid-column:1 / -1}
+  .ph-dit{min-height:3.2em;margin:8px 0;padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:var(--panel2);font-size:1.04em}
+  .ph-dit.cc{border-color:var(--err)}
+  .ph-comp{min-height:1.4em;margin:4px 0;color:var(--sub)}
+  .ph-suite{margin:12px 0 4px}
+  /* Règle n°119 : le mouvement n'est jamais seul à porter l'information (tout est écrit) ; mouvement réduit : plus aucune animation,
+     le trajet reste tracé en trait plein et les flèches fixes disent le sens. */
+  @media (prefers-reduced-motion: reduce){
+    .ph-svg .ph-w.on,.ph-svg .ph-w.cc{animation:none;stroke-dasharray:none}
+    .ph-svg #ph_rotor.sens1,.ph-svg #ph_rotor.sens2{animation:none}
+  }
+  @media (max-width:420px){ .ph-cmd{gap:8px} .ph-sw{font-size:.95em} }
+  @media print{
+    .ph-sim{break-inside:avoid}
+    .ph-svg .ph-fond{fill:#fff;stroke:#999}
+    .ph-svg .ph-w{stroke:#555}
+    .ph-svg .ph-w.on{stroke:#8a5a00;animation:none;stroke-dasharray:none}
+    .ph-svg .ph-w.cc{stroke:#b00020;animation:none;stroke-dasharray:none}
+    .ph-svg .ph-lev,.ph-svg .ph-pt{stroke:#222;fill:#222}
+    .ph-svg .ph-lev{fill:none}
+    .ph-svg .ph-nom,.ph-svg .ph-pole,.ph-svg .ph-etat{fill:#111}
+    .ph-svg .ph-moteur{fill:#fff;stroke:#5b2a91}.ph-svg .ph-pale,.ph-svg .ph-M{stroke:#5b2a91}.ph-svg .ph-M{fill:#5b2a91;stroke:none}
+    .ph-svg .ph-fl,.ph-svg .ph-pointe{fill:#8a5a00}.ph-svg .ph-arc{stroke:#8a5a00}
+    .ph-sw,.ph-dit{background:#fff;color:#111;border-color:#999}
+    #ph_pred,#ph_pred option{background:#fff!important;color:#111!important}
+    .ph-sw[aria-pressed="true"]{background:#e8eefc;box-shadow:none}
+  }
+/* pont_en_h (style) : fin */
   /* Règle d'or n°29 — mode essentiel */
   body.essentiel .referentiel-card,
   body.essentiel details.correction,
@@ -255,19 +323,27 @@
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  #a6_redac,#a6_v1,#a6_v2,#a6_v3,#a6_v4,#a6_v5,#a7_a10,#a7_a5,#a7_a6,#a7_a7,#a7_a8,#a7_a9,#a7_pv,#a7_r1,#a7_r10,#a7_r11,#a7_r12,#a7_r13,#a7_r2,#a7_r3,#a7_r4,#a7_r5,#a7_r6,#a7_r7,#a7_r8,#a7_r9,#bilan1,#bilan2,#bilan3,#id_classe,#id_date,#id_nom,#id_prenom,#simVentNum,.badge,.buzzer-sim,.confiance label,.correction,.del-sim,.etayage,.figure,.lcd-sim,.meta-grid div,.num,.recette th,.skip-link,.tag{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
-  #simBrut,.consigne b,.etayage summary,.meta-grid b,.repli-tout-en-un a{color:#04708c!important}
-  .correction summary,.description-image summary,.retenir b{color:#048827!important}
+  .filet,.pourquoi{opacity:1!important}
+  #a1_1,#a1_2,#a1_3,#a1_4,#a1_5,#a1_6,#a1_e1,#a1_e2,#a1_e3,#a1_just,#a2_q1,#a2_q10,#a2_q2,#a2_q3,#a2_q4,#a2_q5,#a2_q6,#a2_q7,#a2_q8,#a2_q9,#a2_s1,#a2_s2,#a2_s3,#a2_s4,#a3_journal,#a3_p1,#a3_p1b,#a3_p2,#a3_p2b,#a3_p3,#a3_p3b,#a4_exp,#a4_q1,#a4_q2,#a4_q3,#a4_q4,#a5_exp,#a5_q1,#a5_q2,#a5_q3,#a5_q4,#a5_q5,#a6_redac,#a6_v1,#a6_v2,#a6_v3,#a6_v4,#a6_v5,#a7_a10,#a7_a5,#a7_a6,#a7_a7,#a7_a8,#a7_a9,#a7_pv,#a7_r1,#a7_r10,#a7_r11,#a7_r12,#a7_r13,#a7_r2,#a7_r3,#a7_r4,#a7_r5,#a7_r6,#a7_r7,#a7_r8,#a7_r9,#be_1,#be_2,#be_3,#bilan1,#bilan2,#bilan3,#hyp1,#hyp2,#id_classe,#id_date,#id_nom,#id_prenom,#simVentNum,.badge,.buzzer-sim,.code,.confiance label,.correction,.courrier,.del-sim,.etayage,.exo p,.figure,.lcd-sim,.meta-grid div,.niv-rang,.num,.prof,.prof th,.recette th,.refs th,.regle-or-schema,.repli-vitta,.retenir th,.skip-link,.tag,.version{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  #simBrut,.approfondissement summary,.consigne b,.etayage summary,.faire,.faire b,.faire code,.faire i,.kw,.meta-grid b,.repli-tout-en-un a,.repli-vitta-details summary{color:#04708c!important}
+  .correction summary,.niv-dit b,.niv-genre b,.niv-glose b,.niv-ici b,.niv-qui b,.retenir b{color:#048827!important}
+  .fn{color:#08132c!important}
   .badge{color:#0d2347!important}
-  .activite h3{color:#111111!important}
-  .description-image b,.description-image figcaption{color:#122a17!important}
-  .assoc option,.recette option{color:#173666!important}
-  #v-acquit,#v-bornes,#v-chrono,#v-lecture,#v-niveaux,#v-retrigger,.banc b,.card b,.critere,.identite label,.repli-tout-en-un,.subtitle{color:#1a6af8!important}
+  .activite h3,.card b,.description-image b,.description-image figcaption,.description-image summary{color:#111111!important}
+  .assoc option,.exo option,.recette option{color:#173666!important}
+  #v-acquit,#v-bornes,#v-chrono,#v-lecture,#v-niveaux,#v-retrigger,.approfondissement b,.banc b,.card code,.card i,.critere,.description-image code,.exo b,.identite label,.niv-eti,.niv-genre,.niv-glose,.palier b,.palier code,.palier figcaption,.palier i,.repli-tout-en-un,.repli-tout-en-un b,.retenir caption,.subtitle{color:#1a6af8!important}
+  .prof b,.prof code,.prof figcaption,.prof i,.prof summary{color:#1c1030!important}
   .num,.skip-link{color:#1d4e89!important}
-  .aide1 summary,.critere b,.duree{color:#946b00!important}
+  .cmt{color:#5f7d3c!important}
+  .aide1 summary,.critere b,.duree,.rituel,.rituel code{color:#946b00!important}
+  .exo h4,.palier h4{color:#a145ea!important}
   .aide2 summary{color:#ab6000!important}
   .erreurs b{color:#eb0017!important}
 }
+
+/* règle d'or n°305 — une activité qui demande Internet le dit à son début */
+.activite-en-ligne{border-left:4px solid #ffd66b;background:rgba(255,214,107,.12);padding:.55em .85em;border-radius:0 8px 8px 0;margin:.6em 0 .8em;font-size:.95em;line-height:1.45}
+@media print{.activite-en-ligne,.activite-en-ligne b{color:#1a1a1a!important}.activite-en-ligne{background:#fff8e1!important;border-left-color:#8a6400!important}}
 </style>
 <body>
 <style id="navharm-css">
@@ -291,7 +367,7 @@
 </style>
 
 <style id="quatre-pages-css">
-/* Découpage en quatre pages (règle d'or n°116) */
+/* Découpage en quatre pages (règle d'or n°116), deux séances de 55 min par page */
 .seance-tabs a.seance-tab{text-decoration:none;display:block}
 .seance-tabs a.seance-tab:focus-visible{outline:3px solid #ffb300;outline-offset:2px}
 .repli-tout-en-un{max-width:940px;margin:0 auto 14px;padding:8px 12px;border-left:3px solid var(--sub);
@@ -299,13 +375,14 @@
 .repli-tout-en-un a{color:var(--hl)}
 .page-suivante{max-width:940px;margin:22px auto 8px;text-align:right}
 .page-suivante .btn{text-decoration:none;display:inline-block}
+.seance-bloc{scroll-margin-top:56px}
 @media print{.page-suivante{display:none}}
 </style>
 
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_3e_C9.2.html">📖 Lexique</a></nav>
 <a class="skip-link" href="#seances">Aller directement aux activités</a>
 <h1>Thème 3 · Martinique — 3e : La station d'alerte cyclonique se programme — Protocole et recette</h1>
-<p class="subtitle">🎯 Page 4 sur 4 — Rédiger le protocole de test, l'exécuter, signer le procès-verbal.</p>
+<p class="subtitle">🎯 Page 4 sur 4 · séances 7 et 8 (2 séances de 55 min) — Rédiger le protocole de test, l'exécuter, signer le procès-verbal.</p>
 <p class="repli-tout-en-un">📄 Réseau capricieux, ou besoin de tout avoir sous la main ? <a href="sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html">La séquence entière en une seule page</a> — mêmes activités, mêmes réponses enregistrées, aucun chargement entre les séances.</p>
 <div class="badges">
   <span class="badge niveau">Niveau 3e</span>
@@ -314,7 +391,7 @@
   <span class="badge theme">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span>
   <span class="badge socle">Socle : D1.3 · D2 · D3 · D4 · D5</span>
   <span class="badge crcn">CRCN : 3.4 · 5.2</span>
-  <span class="badge duree">⏱ 4 séances de 90 min (1 h 30)</span>
+  <span class="badge duree">⏱ 8 séances de 55 min</span>
 </div>
 <div class="identite" id="identite">
   <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
@@ -336,15 +413,15 @@
   <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
 </div>
 <nav class="seance-tabs" id="seances" aria-label="Les quatre pages de la séquence">
-  <a class="seance-tab" href="sequence_3e_C9.2-C8.3_station_1_besoin-et-algorithme.html" data-page="1">Page 1<br><small>Besoin et algorithme</small><span class="done" id="done-s1"></span></a>
-  <a class="seance-tab" href="sequence_3e_C9.2-C8.3_station_2_programmer.html" data-page="2">Page 2<br><small>Programmer par paliers</small><span class="done" id="done-s2"></span></a>
-  <a class="seance-tab" href="sequence_3e_C9.2-C8.3_station_3_interaction.html" data-page="3">Page 3<br><small>L'humain dans la boucle</small><span class="done" id="done-s3"></span></a>
-  <a class="seance-tab active" href="sequence_3e_C9.2-C8.3_station_4_recette.html" data-page="4" aria-current="page">Page 4<br><small>Protocole et recette</small><span class="done" id="done-s4"></span></a>
+  <a class="seance-tab" href="sequence_3e_C9.2-C8.3_station_1_besoin-et-algorithme.html" data-page="1">Page 1<br><small>Besoin et algorithme · séances 1 et 2</small><span class="done" id="done-p1"></span></a>
+  <a class="seance-tab" href="sequence_3e_C9.2-C8.3_station_2_programmer.html" data-page="2">Page 2<br><small>Programmer par paliers · séances 3 et 4</small><span class="done" id="done-p2"></span></a>
+  <a class="seance-tab" href="sequence_3e_C9.2-C8.3_station_3_interaction.html" data-page="3">Page 3<br><small>L'humain dans la boucle · séances 5 et 6</small><span class="done" id="done-p3"></span></a>
+  <a class="seance-tab active" href="sequence_3e_C9.2-C8.3_station_4_recette.html" data-page="4" aria-current="page">Page 4<br><small>Protocole et recette · séances 7 et 8</small><span class="done" id="done-p4"></span></a>
 </nav>
 <div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
 <section class="card" id="bancCard" aria-labelledby="banc-titre">
   <h2 id="banc-titre">🌀 Le banc d'essai de la station (version 🅱 — toujours disponible)</h2>
-  <p style="font-size:.9em;color:var(--sub)">C'est la station, simulée fidèlement : le curseur joue le rôle du potentiomètre-anémomètre (A1) ; l'écran, les quatre voyants (vert D6, jaune D7, orange D3, rouge D4), le buzzer (D5) et le bouton (D2) réagissent comme sur la vraie carte — y compris la boucle du programme, exécutée environ 5 fois par seconde. <b>Tes expériences ici sont tracées</b> : elles servent à valider les activités et à exécuter ta recette de la séance 4.</p>
+  <p style="font-size:.9em;color:var(--sub)">C'est la station, simulée fidèlement : le curseur joue le rôle du potentiomètre-anémomètre (A1) ; l'écran, les quatre voyants (vert D6, jaune D7, orange D3, rouge D4), le buzzer (D5) et le bouton (D2) réagissent comme sur la vraie carte — y compris la boucle du programme, exécutée environ 5 fois par seconde. <b>Tes expériences ici sont tracées</b> : elles servent à valider les activités et à exécuter ta recette de la séance 8.</p>
   <div class="banc">
     <div>
       <label for="simVent"><b>🌬 Vitesse du vent simulée (tourne le potentiomètre) :</b></label>
@@ -381,8 +458,9 @@
     </div>
   </div>
 </section>
+<div class="seance-bloc" id="seance-7">
 <section class="card">
-  <h2>📋 Séance 4 — La recette : prouver que ça marche</h2>
+  <h2>📋 Séance 7 — Prouver (1) : rédiger le protocole de test</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : quels essais suffisent à PROUVER à la mairie que la station respecte tout le cahier des charges ?</p>
 
   <div class="activite" id="act6">
@@ -431,6 +509,13 @@
     <div class="retenir"><b>📌 À retenir :</b> un <b>protocole de test</b> se rédige AVANT l'exécution : essais nominaux + <b>cas limites aux frontières</b> des seuils + exigences de <b>performance chiffrées</b> + interaction humain-machine, avec pour chaque essai le résultat ATTENDU et une <b>règle de décision</b> explicite.</div>
     <div class="critere"><b>🎯 Critère de réussite :</b> 5 choix justes ET un protocole rédigé qui contient les 4 familles d'essais + une règle de décision.</div>
   </div>
+</section>
+<p class="page-suivante"><a class="btn lien-seance" href="#seance-8">Séance 8 — La recette ›</a></p>
+</div>
+<div class="seance-bloc" id="seance-8">
+<section class="card">
+  <h2>📋 Séance 8 — Prouver (2) : exécuter la recette et signer le procès-verbal</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : la station respecte-t-elle le cahier des charges — et comment l'écrire dans un procès-verbal qui engage ?</p>
 
   <div class="activite" id="act7">
     <header><span class="num">Activité 7</span><h3>Exécuter la recette et signer le procès-verbal</h3><span class="duree">⏱ ~35 min</span></header>
@@ -527,6 +612,7 @@
     <div class="critere"><b>🎯 Critère de réussite :</b> 6 attendus de frontières justes, 13 verdicts remplis, les 6 frontières + le chrono réellement exécutés au banc (coches ✔), et un PV rédigé avec une conclusion explicite.</div>
   </div>
 </section>
+
 <section class="card">
   <h2>📝 Synthèse de la séquence — à retenir</h2>
   <p style="font-size:.88em;color:var(--sub)">Toutes ces notions ont été construites dans les activités 1 à 7 — rien de nouveau ici.</p>
@@ -639,6 +725,7 @@
   <a class="btn qcm" href="qcm_3e_C9.2-C8.3_station_alerte_cyclonique.html" style="display:inline-block;text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
 
+</div>
 
 <footer>
   <p>Séquence 3e_C9.2 (dossier principal) + 3e_C8.3 · Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser · Technologie cycle 4 (programme 2024)</p>
@@ -944,9 +1031,15 @@ function majProgress(){
   $("progTxt").textContent = `${n} / 7 activités validées`;
   $("progFill").style.width = (n/7*100)+"%";
   $("progBar").setAttribute("aria-valuenow", n);
-  const par = {s1:[1,2], s2:[3], s3:[4,5], s4:[6,7]};
+  /* Huit séances de 55 min : l'activité 3 couvre les séances 3 et 4 (première
+     partie, puis suite avec son vérificateur). Les quatre pages découpées
+     portent des onglets de PAGE (done-p1 à done-p4), deux séances chacune :
+     chaque coche n'est posée que si son élément existe dans la page. */
+  const par = {s1:[1], s2:[2], s3:[3], s4:[3], s5:[4], s6:[5], s7:[6], s8:[7],
+               p1:[1,2], p2:[3], p3:[4,5], p4:[6,7]};
   Object.entries(par).forEach(([s,acts])=>{
-    $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : "";
+    const coche = $("done-"+s);
+    if(coche) coche.textContent = acts.every(a=>v[a]) ? " ✔" : "";
   });
 }
 
@@ -1028,14 +1121,18 @@ majEssentiel(); majParcours(); majProgress(); majHyp(); majVerrous(); simTick();
 
 /* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
 const TACHES = {
-  "s1": {titre:"Séance 1 — « La mairie vous appelle »", taches:[{n:1, libelle:"Relire le cahier des charges et poser les deux chaînes"}, {n:2, libelle:"Élaborer l'algorithme et lire l'algorigramme des quatre niveaux"}]},
-  "s2": {titre:"Séance 2 — Programmer en blocs (Vittascience)", taches:[{n:3, libelle:"Construire le programme palier par palier sur Vittascience : lire, décider, alerter"}]},
-  "s3": {titre:"Séance 3 — L'humain dans la boucle", taches:[{n:4, libelle:"Programmer l'acquittement et comprendre l'événement"}, {n:5, libelle:"Lire le C++ généré et diagnostiquer avec la trace"}]},
-  "s4": {titre:"Séance 4 — La recette : prouver que ça marche", taches:[{n:6, libelle:"Rédiger le protocole de test (nominaux, frontières, performance, interaction)"}, {n:7, libelle:"Exécuter la recette au banc et signer le procès-verbal"}]}
+  "s1": {titre:"Séance 1 — « La mairie vous appelle »", taches:[{n:1, libelle:"Relire le cahier des charges et poser les deux chaînes"}]},
+  "s2": {titre:"Séance 2 — De l'algorithme à l'algorigramme", taches:[{n:2, libelle:"Élaborer l'algorithme et lire l'algorigramme des quatre niveaux"}]},
+  "s3": {titre:"Séance 3 — Programmer en blocs : lire et décider", taches:[{n:3, libelle:"Activité 3, première partie : préparer Vittascience, puis les paliers 1 et 2 (lire le vent, décider du niveau)"}]},
+  "s4": {titre:"Séance 4 — Programmer en blocs : alerter", taches:[{n:3, libelle:"Activité 3, suite : le palier 3 (alerter), le journal de paliers et la vérification"}]},
+  "s5": {titre:"Séance 5 — L'humain dans la boucle", taches:[{n:4, libelle:"Programmer l'acquittement et comprendre l'événement"}]},
+  "s6": {titre:"Séance 6 — Lire le C++ et diagnostiquer", taches:[{n:5, libelle:"Lire le C++ généré et diagnostiquer avec la trace"}]},
+  "s7": {titre:"Séance 7 — Le protocole de test", taches:[{n:6, libelle:"Rédiger le protocole de test (nominaux, frontières, performance, interaction)"}]},
+  "s8": {titre:"Séance 8 — La recette : prouver que ça marche", taches:[{n:7, libelle:"Exécuter la recette au banc et signer le procès-verbal"}]}
 };
 function majTaches(){
   const hote = document.getElementById("tachesBandeau"); if(!hote) return;
-  const bloc = TACHES["s4"];
+  const bloc = {titre: "Séances 7 et 8 — Protocole et recette", taches: [].concat(TACHES["s7"].taches, TACHES["s8"].taches)};
   if(!bloc){ hote.hidden = true; return; }
   hote.hidden = false;
   const v = window.__valid || {};

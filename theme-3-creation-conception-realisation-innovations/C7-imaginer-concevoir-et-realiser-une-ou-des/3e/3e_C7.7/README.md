@@ -2,7 +2,7 @@
 
 > Le dessin est juste et la pièce est ratée. Que faut-il corriger — et surtout, que faut-il surtout ne pas toucher ?
 
-**Thème 3 · 3<sup>e</sup> — Choisir les moyens et produire la forme voulue.** · appui `3e_C8.1` · 2 séances de 90 min (160 min d'activités)
+**Thème 3 · 3<sup>e</sup> — Choisir les moyens et produire la forme voulue.** · appui `3e_C8.1` · 4 séances de 55 min (160 min d'activités)
 
 ➡ **[Ouvrir la séquence](sequence_3e_C7.7_produire-le-boitier.html)** — hors ligne, sans installation ni compte.
 
@@ -51,7 +51,7 @@ Toutes les valeurs viennent de `moyens.py` : temps, domaines, empreintes et verd
 | [`rapport_tests_3e_C7.7.md`](rapport_tests_3e_C7.7.md) | la sortie des deux suites, telle quelle |
 | `moyens.py` · `atelier.py` · `tests_3e_C7.7_sequence.mjs` · `tests_3e_C7.7_qcm.mjs` · `reponses_3e_C7.7.json` | de quoi tout rejouer |
 
-**Tests réels : 52/52 sur la séquence, 32/32 sur le QCM.**
+**Tests réels : 77/77 sur la séquence (dont le découpage en quatre séances de 55 min, vérifié à 390 px), 32/32 sur le QCM.**
 
 ## Ancrage
 

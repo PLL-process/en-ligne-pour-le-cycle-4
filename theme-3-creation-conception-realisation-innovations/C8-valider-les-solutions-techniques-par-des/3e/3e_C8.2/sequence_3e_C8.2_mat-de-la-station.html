@@ -119,6 +119,18 @@ table.releve td.num{width:34%}
 .verdict-ok{color:var(--ok);font-weight:700}
 .verdict-non{color:var(--err);font-weight:700}
 
+/* ── Séances de 55 min (24/10/2026) : en-tête de séance, bouton vers la suivante ── */
+.seance-entete{border-left:6px solid var(--hl);scroll-margin-top:60px}
+.seance-entete h2{font-size:1.2em;color:var(--hl)}
+.seance-entete .seance-duree{color:var(--sub);font-weight:600;margin:0 0 8px}
+.fin-seance{max-width:940px;margin:0 auto 22px;text-align:center}
+.fin-seance p{margin:0 0 6px;color:var(--sub)}
+.seances-nav{max-width:940px;margin:0 auto 16px;text-align:center;font-size:.92em;color:var(--sub)}
+.seances-nav p{margin:0}
+#banc,#a2proto{scroll-margin-top:60px}
+@media print{.fin-seance,.seances-nav{display:none}
+  .seance-entete h2,.seance-entete .seance-duree{color:#0d2347!important}}
+
 
 
 @media print{
@@ -149,8 +161,11 @@ table.releve td.num{width:34%}
   <span class="badge code">3e_C3.4 (appui)</span>
   <span class="badge theme">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span>
   <span class="badge socle">Socle : D1.3 · D2 · D3 · D4</span>
-  <span class="badge duree">⏱ 2 séances de 90 min (1 h 30)</span>
+  <span class="badge duree" title="Durée : 4 séances de 55 minutes" aria-label="Durée : 4 séances de 55 minutes">⏱ 4 séances de 55 min</span>
 </div>
+<nav class="seances-nav" aria-label="Les quatre séances">
+  <p>🗓 Aller à&nbsp;: <a href="#seance-1">Séance 1 — Le protocole de 5<sup>e</sup> ne suffit pas</a> · <a href="#seance-2">Séance 2 — Proposer ton protocole</a> · <a href="#seance-3">Séance 3 — L'exécuter, et voir ce qu'il ne voit pas</a> · <a href="#seance-4">Séance 4 — Décider, et signer l'avis</a></p>
+</nav>
 
 <section class="card">
   <h2>🔄 D'où tu viens — la spirale C8</h2>
@@ -177,11 +192,11 @@ table.releve td.num{width:34%}
     <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
     <tr><td><b>3e_C8.2</b></td>
         <td>Proposer un protocole de test pour valider la tenue mécanique d'un matériau.</td>
-        <td>Activités 1, 2, 3 et 5</td></tr>
+        <td>Séance 1 : activité 1 · séance 2 : activité 2 · séance 3 : activité 3 · séance 4 : activité 5</td></tr>
     <tr><td>3e_C3.4 <span style="color:var(--sub)">(appui)</span></td>
         <td>Définir et mettre en œuvre un protocole pour mesurer une caractéristique,
             une performance d'un OST.</td>
-        <td>Activités 2, 3 et 4</td></tr>
+        <td>Séance 2 : activité 2 · séance 3 : activités 3 et 4</td></tr>
   </table>
   <p class="retenir"><b>Le verbe est « proposer ».</b> On n'évalue donc pas d'abord ton
   résultat : on évalue <em>ton protocole</em> — ce qu'il mesure, ce qu'il verrouille, et
@@ -246,13 +261,19 @@ table.releve td.num{width:34%}
   </ul>
 </section>
 
+<section class="card seance-entete" id="seance-1" aria-labelledby="seance-1-titre">
+  <h2 id="seance-1-titre">🗓 Séance 1 — Le protocole de 5<sup>e</sup> ne suffit pas</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · la situation, ton idée de départ, puis les activités 0 et 1.</p>
+  <p><b>La question de la séance&nbsp;:</b> l'essai de traction de 5<sup>e</sup>, appliqué sans erreur, désigne-t-il le mât qu'il faut à la mairie&nbsp;?</p>
+</section>
+
 <section class="card">
   <h2>🖐️ Activité 0 — FAIRE d'abord : casser trois mâts ⏱ ~15 min</h2>
   <p>Avant toute explication. Le banc tient un mât par le pied et pousse en tête, comme le
   vent. Choisis un profilé, augmente la poussée, regarde <em>où</em> et <em>quand</em> il cède.
   <b>Casse au moins trois profilés différents</b> avant de continuer.</p>
 
-  <div class="banc">
+  <div class="banc" id="banc">
     <div>
       <svg viewBox="0 0 220 260" role="img" aria-labelledby="bancTitre bancDesc">
         <title id="bancTitre">Banc d'essai de mât : flexion ou traction</title>
@@ -443,6 +464,17 @@ table.releve td.num{width:34%}
   </div>
 </section>
 
+<nav class="fin-seance" aria-label="Fin de la séance 1">
+  <p>Fin de la séance 1. La suite, la prochaine fois&nbsp;:</p>
+  <a class="btn vers-seance" href="#seance-2">➡ Séance 2 — Proposer ton protocole</a>
+</nav>
+
+<section class="card seance-entete" id="seance-2" aria-labelledby="seance-2-titre">
+  <h2 id="seance-2-titre">🗓 Séance 2 — Proposer ton protocole</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · activité 2.</p>
+  <p><b>La question de la séance&nbsp;:</b> quelles décisions faut-il prendre avant l'essai pour qu'il réponde à la question de la mairie, et comment les écrire pour qu'un autre groupe puisse l'exécuter&nbsp;?</p>
+</section>
+
 <section class="card">
   <h2>✍️ Activité 2 — PROPOSER ton protocole ⏱ ~35 min</h2>
   <p><b>Objectif :</b> écrire un protocole qui répond à la question de la mairie.
@@ -548,6 +580,18 @@ table.releve td.num{width:34%}
       difficile de la séquence.</p>
     </div></details>
   </div>
+</section>
+
+<nav class="fin-seance" aria-label="Fin de la séance 2">
+  <p>Fin de la séance 2. La suite, la prochaine fois&nbsp;:</p>
+  <a class="btn vers-seance" href="#seance-3">➡ Séance 3 — L'exécuter, et voir ce qu'il ne voit pas</a>
+</nav>
+
+<section class="card seance-entete" id="seance-3" aria-labelledby="seance-3-titre">
+  <h2 id="seance-3-titre">🗓 Séance 3 — L'exécuter, et voir ce qu'il ne voit pas</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · activités 3 et 4.</p>
+  <p><b>La question de la séance&nbsp;:</b> ton protocole, exécuté ligne par ligne, désigne-t-il un mât qui tient les deux critères — et que ne pourra-t-il jamais voir&nbsp;?</p>
+  <p>Garde sous les yeux <a href="#a2proto">ton protocole rédigé</a> (activité 2)&nbsp;; le banc d'essai est dans l'activité 0, <a href="#banc">plus haut</a>.</p>
 </section>
 
 <section class="card">
@@ -656,6 +700,18 @@ table.releve td.num{width:34%}
       été essayés.</p>
     </div></details>
   </div>
+</section>
+
+<nav class="fin-seance" aria-label="Fin de la séance 3">
+  <p>Fin de la séance 3. La suite, la prochaine fois&nbsp;:</p>
+  <a class="btn vers-seance" href="#seance-4">➡ Séance 4 — Décider, et signer l'avis</a>
+</nav>
+
+<section class="card seance-entete" id="seance-4" aria-labelledby="seance-4-titre">
+  <h2 id="seance-4-titre">🗓 Séance 4 — Décider, et signer l'avis</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · activité 5 et REFAIRE, puis le bilan de la séquence.</p>
+  <p><b>La question de la séance&nbsp;:</b> quel avis peut-on signer devant la mairie, et que faut-il y écrire de ce que l'essai n'a pas vérifié&nbsp;?</p>
+  <p>L'avis s'appuie sur tes dix relevés de l'activité 3, plus haut. S'ils ont disparu (autre ordinateur, sauvegarde effacée), la correction de l'activité 3 les donne.</p>
 </section>
 
 <section class="card">
