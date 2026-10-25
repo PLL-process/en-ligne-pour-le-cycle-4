@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-p4 d-p4">
 <title id="t-p4">Palier 4 — reconstitution du programme en blocs : le bouton acquitte le buzzer, un changement de niveau relance l'alarme</title>
-<desc id="d-p4">Reconstitution schématique (pas une capture d'écran). Trois groupes de blocs ajoutés dans la boucle. Groupe 1, lire l'humain : « si lire broche numérique D2 est vrai, alors alarmeAcquittee prend la valeur vrai ». Groupe 2, détecter l'événement : « si niveauAlerte est différent de niveauPrecedent, alors alarmeAcquittee prend la valeur faux » — un changement de niveau est un nouvel événement, l'alarme doit repartir. Groupe 3, commander le buzzer : « le buzzer D5 sonne si niveauAlerte égale 2 ET alarmeAcquittee est faux », puis « niveauPrecedent prend la valeur de niveauAlerte » pour mémoriser d'un tour à l'autre. Résultat attendu : en alerte rouge le buzzer sonne, un appui le coupe, la DEL et l'écran restent en alerte, et si le niveau change puis revient à 2 le buzzer repart.</desc>
+<desc id="d-p4">Reconstitution schématique (pas une capture d'écran). Trois groupes de blocs ajoutés dans la boucle. Groupe 1, lire l'humain : « si lire broche numérique D2 est vrai, alors alarmeAcquittee prend la valeur vrai ». Groupe 2, détecter l'événement : « si niveauAlerte est différent de niveauPrecedent, alors alarmeAcquittee prend la valeur faux » — un changement de niveau est un nouvel événement, l'alarme doit repartir. Groupe 3, commander le buzzer : « le buzzer D5 sonne si niveauAlerte égale 3, l'ouragan majeur, ET alarmeAcquittee est faux », puis « niveauPrecedent prend la valeur de niveauAlerte » pour mémoriser d'un tour à l'autre. Résultat attendu : en ouragan majeur le buzzer sonne, un appui le coupe, la DEL et l'écran restent en alerte, et si le niveau change puis revient à 3 le buzzer repart.</desc>
 <rect width="760" height="400" fill="#050f24"/>
 <text x="380" y="26" text-anchor="middle" fill="#81aaff" font-size="17" font-weight="700">Palier 4 — l'humain entre dans la boucle</text>
 <text x="380" y="46" text-anchor="middle" fill="#ffd66b" font-size="11" font-style="italic">⚠ reconstitution schématique — pas une capture : l'aspect des blocs peut différer légèrement dans ta version</text>
@@ -18,7 +18,7 @@
 
   <text x="60" y="238" fill="#61dafb" font-size="12" font-weight="700">③ Commander le buzzer, puis mémoriser</text>
   <rect x="60" y="246" width="352" height="46" rx="6" fill="#1d4e89" stroke="#61dafb" stroke-width="1.5"/>
-  <text x="72" y="264">buzzer <tspan font-weight="700">D5</tspan> : sonne si <tspan fill="#ffd66b" font-weight="700">niveauAlerte</tspan> = 2</text>
+  <text x="72" y="264">buzzer <tspan font-weight="700">D5</tspan> : sonne si <tspan fill="#ffd66b" font-weight="700">niveauAlerte</tspan> = 3 (ouragan majeur)</text>
   <text x="86" y="282"><tspan font-weight="700">ET</tspan> <tspan fill="#ffd66b" font-weight="700">alarmeAcquittee</tspan> = faux</text>
   <rect x="60" y="300" width="352" height="30" rx="6" fill="#2b6b40" stroke="#81fba1" stroke-width="1.5"/>
   <text x="72" y="320"><tspan fill="#ffd66b" font-weight="700">niveauPrecedent</tspan> ← <tspan fill="#ffd66b" font-weight="700">niveauAlerte</tspan>   <tspan fill="#9df5b9">(mémoire du tour d'avant)</tspan></text>

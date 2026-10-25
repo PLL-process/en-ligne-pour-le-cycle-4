@@ -8,7 +8,7 @@ cyclonique se programme »**, dont le dossier principal est
 [`3e_C9.2`](../../../C9-concevoir-ecrire-tester-et-mettre-au-point/3e/3e_C9.2/README.md) :
 
 ➡ **[Ouvrir la séquence](../../../C9-concevoir-ecrire-tester-et-mettre-au-point/3e/3e_C9.2/sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html)** —
-la **séance 4** y est consacrée à 3e_C8.3 :
+les **séances 7 et 8** (55 min chacune) y sont consacrées à 3e_C8.3 :
 
 * **Activité 6 — Rédiger le protocole de recette** : l'élève *propose* (verbe du
   code) son protocole AVANT toute exécution — 4 essais nominaux, **6 cas limites**
@@ -34,8 +34,8 @@ c'est la condition de livraison du projet.*
 
 ## Où travailler, page par page
 
-La séquence existe aussi **découpée en quatre pages**, une par séance. Pour 3e_C8.3,
-tout se passe sur la quatrième :
+La séquence existe aussi **découpée en quatre pages**, une par grande étape de deux
+séances. Pour 3e_C8.3, tout se passe sur la quatrième (séances 7 et 8) :
 [`..._station_4_recette.html`](../../../C9-concevoir-ecrire-tester-et-mettre-au-point/3e/3e_C9.2/sequence_3e_C9.2-C8.3_station_4_recette.html).
 Les cinq fichiers partagent le même enregistrement : un élève qui a travaillé sur la
 page complète retrouve ses réponses ici, et réciproquement.

@@ -9,7 +9,7 @@
 | **Code principal** | 3e_C8.2 — 20 questions de QCM |
 | **Code d'appui** | 3e_C3.4 — *définir et mettre en œuvre un protocole pour mesurer une caractéristique, une performance d'un OST* — 10 questions |
 | **Socle** | D1.3 · D2 · D3 · D4 |
-| **Durée** | 2 séances de 90 min (1 h 30) — 160 min d'activités obligatoires, marge +20 min |
+| **Durée** | 4 séances de 55 min — 160 min d'activités obligatoires, marge +60 min |
 | **Matériel** | un navigateur, hors ligne. Aucune installation, aucun compte. |
 | **Contexte de projet** | la station d'alerte cyclonique de `3e_C9.2`, une fois sa recette signée, doit être installée dehors |
 
@@ -48,18 +48,29 @@ fois moins résistant — parce que sa matière est au centre, là où elle ne t
 
 ## 3. Déroulé
 
-| # | Activité | Durée | Production attendue | Verrou |
-|---|---|---|---|---|
-| 0 | **FAIRE** — casser trois mâts au banc | ~15 min | 2 réponses | `flex3` |
-| 1 | **Le protocole de 5<sup>e</sup> ne répond pas** | ~25 min | 5 relevés de traction + 3 réponses + 1 phrase | `trac5` |
-| 2 | **PROPOSER ton protocole** | ~35 min | 6 décisions + 6 lignes rédigées | — |
-| 3 | **Exécuter TON protocole** | ~30 min | 10 relevés (flèche + rupture) | `flex5` |
-| 4 | **Ce que ton protocole ne voit pas** | ~20 min | 5 associations | — |
-| 5 | **Décider, et signer l'avis** | ~20 min | 3 réponses + avis rédigé | — |
-| — | **REFAIRE** — le panneau solaire | ~15 min | 4 lignes | — |
+| Séance | # | Activité | Durée | Production attendue | Verrou |
+|---|---|---|---|---|---|
+| 1 | 0 | **FAIRE** — casser trois mâts au banc | ~15 min | 2 réponses | `flex3` |
+| 1 | 1 | **Le protocole de 5<sup>e</sup> ne répond pas** | ~25 min | 5 relevés de traction + 3 réponses + 1 phrase | `trac5` |
+| 2 | 2 | **PROPOSER ton protocole** | ~35 min | 6 décisions + 6 lignes rédigées | — |
+| 3 | 3 | **Exécuter TON protocole** | ~30 min | 10 relevés (flèche + rupture) | `flex5` |
+| 3 | 4 | **Ce que ton protocole ne voit pas** | ~20 min | 5 associations | — |
+| 4 | 5 | **Décider, et signer l'avis** | ~20 min | 3 réponses + avis rédigé | — |
+| 4 | — | **REFAIRE** — le panneau solaire | ~15 min | 4 lignes | — |
 
-**Découpage en deux séances suggéré :** séance 1 = activités 0 à 2 (75 min + 15 min de
-mise en route et de bilan intermédiaire) ; séance 2 = activités 3 à 5 et REFAIRE (85 min).
+**Quatre séances de 55 min** (une heure de cours par semaine, décision du 24/10/2026) :
+40, 35, 50 et 35 min d'activités annoncées. La séance 1 porte aussi la situation, la
+problématique, l'hypothèse de départ et le cahier des charges ; la séance 4 se termine par la
+synthèse, le Bonus facultatif, le bilan (retour à l'hypothèse, positionnement) et le renvoi au
+QCM. Aucune activité n'est coupée. Trois séances auraient demandé de couper l'activité 2 entre
+les six décisions et la rédaction (50 · 55 · 55) : il ne restait alors que 5 min de service pour
+160 min d'activités, en deçà des 10 min que la règle de durée (n°23) réserve au lancement, aux
+transitions et au bilan — d'où la quatrième séance.
+
+À la séance 3, l'exécution du protocole demande de rompre à nouveau les cinq profilés au banc
+(c'est le protocole qui le dit) ; à la séance 4, l'avis s'appuie sur les dix relevés de la
+séance 3 — si la sauvegarde a été perdue (autre ordinateur), l'en-tête de séance renvoie à la
+correction de l'activité 3.
 
 ## 4. Les valeurs du banc
 
@@ -141,13 +152,13 @@ Les dix relevés sont en outre comparés aux **vraies** valeurs du banc, à 0,05
 
 ```
 3e_C8.2/
-├── sequence_3e_C8.2_mat-de-la-station.html   banc de flexion + traction intégré, 7 blocs
+├── sequence_3e_C8.2_mat-de-la-station.html   banc de flexion + traction intégré, 7 blocs, 4 séances
 ├── qcm_3e_C8.2_mat-de-la-station.html        30 q · 90 réfutations · C8.2 ×20, C3.4 ×10
 ├── lexique_3e_C8.2.html                      30 notions, généré depuis le QCM
 ├── synthese_eleve_3e_C8.2.html               à imprimer, noir et blanc
 ├── synthese_professeur_3e_C8.2.html          pari didactique, verrous, limites, LSU
 ├── fiche_pedagogique_3e_C8.2.md              cette fiche
 ├── matrice_couverture_3e_C8.2.csv            notion → activité → production → QCM
-├── rapport_tests_3e_C8.2.md                  32/32 sur la séquence, 26/26 sur le QCM
+├── rapport_tests_3e_C8.2.md                  44/44 sur la séquence, 32/32 sur le QCM
 └── README.md
 ```

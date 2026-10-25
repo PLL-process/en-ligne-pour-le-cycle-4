@@ -105,7 +105,8 @@ const run = async () => {
   ok("activité 1 validée (9/9 + justification)", (await page.textContent("#fb1")).includes("9 / 9"), await page.textContent("#fb1"));
   await shot(page, "act1_validee");
 
-  /* activité 2 */
+  /* activité 2 — séance 2 */
+  await page.click('.seance-tab[data-panel="s2"]');
   await page.fill("#a2_s1", "178"); await page.fill("#a2_s2", "118"); await page.fill("#a2_s3", "63");
   await page.selectOption("#a2_s4", "veille");
   for (const id of ["a2_q1","a2_q2","a2_q3","a2_q4","a2_q5","a2_q6","a2_q7","a2_q8","a2_q9","a2_q10"])
@@ -121,10 +122,14 @@ const run = async () => {
   ok("l'algorigramme distingue le commentaire du symbole (question a2_q7)",
      (await page.textContent("#a2_q7")).includes("commentaire de lecture"));
 
-  /* verrou : act3 doit REFUSER sans expériences au banc */
-  await page.click('.seance-tab[data-panel="s2"]');
+  /* verrou : act3 doit REFUSER sans expériences au banc.
+     Séances de 55 min : l'activité 3 est coupée en deux — paliers 1 et 2 en
+     séance 3, palier 3, journal et vérificateur en séance 4. */
+  await page.click('.seance-tab[data-panel="s3"]');
   await page.fill("#a3_p1", "125");   // échelle unique : 512 x 250 / 1023
-  for (const id of ["a3_p1b", "a3_p2", "a3_p2b", "a3_p3", "a3_p3b"]) await page.selectOption("#"+id, { index: 1 });
+  for (const id of ["a3_p1b", "a3_p2", "a3_p2b"]) await page.selectOption("#"+id, { index: 1 });
+  await page.click('.seance-tab[data-panel="s4"]');
+  for (const id of ["a3_p3", "a3_p3b"]) await page.selectOption("#"+id, { index: 1 });
   await page.click('[data-check="3"]');
   ok("verrou expérientiel : act. 3 refusée sans manipulation au banc",
      (await page.textContent("#fb3")).includes("banc"), (await page.textContent("#fb3")).slice(0, 90));
@@ -207,16 +212,39 @@ const run = async () => {
      (await page.locator("#vitta-embed iframe").count()) === 0 &&
      (await page.textContent("#vitta-embed")).includes("Plan B") &&
      !(await page.textContent("#vitta-embed")).includes("Plan A"));
-  ok("séance 2 : une SEULE échelle, affirmée et sans reste (aucune trace de la maquette 0-100)",
-     (await page.textContent("#act3")).includes("Une seule échelle, une seule station") &&
-     (await page.textContent("#act3")).includes("250 km/h") &&
-     !(await page.textContent("#act3")).includes("seuil_vigilance"));
-  const texteAct3 = await page.textContent("#act3");
-  ok("séance 2 : les trois seuils de Saffir-Simpson sont dans les paliers",
+  /* l'activité 3 vit dans deux panneaux : sa première partie (#act3, séance 3)
+     et sa suite (#act3-suite, séance 4) — on lit les deux ensemble */
+  const texteAct3 = (await page.textContent("#act3")) + (await page.textContent("#act3-suite"));
+  ok("séances 3-4 : une SEULE échelle, affirmée et sans reste (aucune trace de la maquette 0-100)",
+     texteAct3.includes("Une seule échelle, une seule station") &&
+     texteAct3.includes("250 km/h") &&
+     !texteAct3.includes("seuil_vigilance"));
+  ok("séances 3-4 : les trois seuils de Saffir-Simpson sont dans les paliers",
      ["63","118","178"].every(v => texteAct3.includes(v)));
-  ok("séance 2 : ArduBlock est devenu un bonus facultatif hors parcours",
-     (await page.textContent("#act3")).includes("Bonus (facultatif — hors parcours obligatoire)") &&
-     (await page.textContent("#act3")).includes("ArduBlock"));
+  ok("séances 3-4 : ArduBlock est devenu un bonus facultatif hors parcours",
+     texteAct3.includes("Bonus (facultatif — hors parcours obligatoire)") &&
+     texteAct3.includes("ArduBlock"));
+  /* 55 min : l'activité de ~70 min est coupée en deux parties nommées, à la
+     frontière palier 2 / palier 3, et la suite s'ouvre sur une reprise */
+  const parties = await page.evaluate(() => ["act3", "act3-suite"].map(id => {
+    const a = document.getElementById(id);
+    return a ? { num: a.querySelector(".num").textContent, duree: a.querySelector(".duree").textContent,
+                 panneau: a.closest(".seance-panel").id,
+                 paliers: [...a.querySelectorAll(".palier h4")].map(h => h.textContent.slice(0, 8)) } : null;
+  }));
+  ok("55 min : activité 3 en deux parties nommées (première partie / suite), 35 + 35 min, séances 3 et 4",
+     parties[0] && parties[1] &&
+     parties[0].num.includes("première partie") && parties[1].num.includes("suite") &&
+     parties[0].duree.includes("~35") && parties[1].duree.includes("~35") &&
+     parties[0].panneau === "s3" && parties[1].panneau === "s4", JSON.stringify(parties));
+  ok("55 min : la coupe tombe entre le palier 2 et le palier 3",
+     parties[0] && parties[0].paliers.includes("Palier 1") && parties[0].paliers.includes("Palier 2") &&
+     !parties[0].paliers.includes("Palier 3") && parties[1].paliers.includes("Palier 3"));
+  ok("55 min : la suite commence par une phrase de reprise, sans affirmer ce que l'élève a fait",
+     await page.evaluate(() => {
+       const r = document.querySelector("#act3-suite .reprise");
+       return !!r && r.textContent.includes("Reprise de l'activité 3") && !/tu as (fait|construit|programmé)/i.test(r.textContent);
+     }));
   for (const src of ["Images/bonus_ardublock_palier1.png", "Images/bonus_ardublock_palier2.png"])
     ok("capture réelle ArduBlock présente : " + src, (await page.locator(`img[src="${src}"]`).count()) === 1);
 
@@ -236,10 +264,10 @@ const run = async () => {
      (await page.textContent("body")).includes("tous les voyants sont dessinés en vert") &&
      (await page.textContent("body")).includes("les voyants sont tous dessinés en vert"));
   ok("écart assumé : les 300 ms du programme réel sont expliqués, pas masqués",
-     (await page.textContent("#act3")).includes("300 ms"));
+     texteAct3.includes("300 ms"));
 
-  /* séance 3 : acquittement puis re-déclenchement */
-  await page.click('.seance-tab[data-panel="s3"]');
+  /* séance 5 : acquittement puis re-déclenchement */
+  await page.click('.seance-tab[data-panel="s5"]');
   await page.fill("#simVentNum", "200"); await page.waitForTimeout(300);
   await page.click("#btnAcquit"); await page.waitForTimeout(300);
   ok("banc : acquittement — buzzer muet, écran TOUJOURS rouge, voyant rouge TOUJOURS allumé",
@@ -252,6 +280,19 @@ const run = async () => {
   ok("banc : nouvel événement — le buzzer REPART sans appui",
      (await page.getAttribute("#simBuz", "class")).includes("on"));
   await shot(page, "banc_retrigger", "#bancCard");
+  /* l'expérience ② telle que la consigne l'écrit : acquitter à 178 ou plus,
+     redescendre à 177 (ouragan), remonter à 178 — le buzzer doit repartir */
+  ok("consigne de l'activité 4 : l'expérience ② cite la frontière 177/178, plus les anciens seuils",
+     (await page.textContent("#act4")).includes("redescends sous 178") &&
+     !/sous 100|au-dessus de 150/.test(await page.textContent("#act4")));
+  await page.fill("#simVentNum", "200"); await page.waitForTimeout(300);
+  await page.click("#btnAcquit"); await page.waitForTimeout(300);
+  const muetApresAppui = !(await page.getAttribute("#simBuz", "class")).includes("on");
+  await page.fill("#simVentNum", "177"); await page.waitForTimeout(400);
+  const muetA177 = !(await page.getAttribute("#simBuz", "class")).includes("on");
+  await page.fill("#simVentNum", "178"); await page.waitForTimeout(400);
+  ok("banc : l'expérience ② telle qu'écrite — muet après l'appui, muet à 177, le buzzer REPART à 178",
+     muetApresAppui && muetA177 && (await page.getAttribute("#simBuz", "class")).includes("on"));
 
   /* activité 4 */
   for (const id of ["a4_q1","a4_q2","a4_q3","a4_q4"]) await page.selectOption("#"+id, { index: 1 });
@@ -260,22 +301,24 @@ const run = async () => {
   ok("activité 4 validée (chronogramme + 2 expériences tracées)", (await page.textContent("#fb4")).includes("4 / 4") && !(await page.textContent("#fb4")).includes("banc"));
   await shot(page, "act4_validee");
 
-  /* activité 5 */
+  /* activité 5 — séance 6 */
+  await page.click('.seance-tab[data-panel="s6"]');
   for (const id of ["a5_q1","a5_q2","a5_q3","a5_q4","a5_q5"]) await page.selectOption("#"+id, { index: 1 });
   await page.fill("#a5_exp", "La trace montre que la vitesse monte correctement de 97 à 161 : le capteur et la conversion sont innocentés, c'est la décision qui rate.");
   await page.click('[data-check="5"]');
   ok("activité 5 validée (lecture C++ + diagnostic)", (await page.textContent("#fb5")).includes("5 / 5"));
   await shot(page, "act5_validee");
 
-  /* séance 4 : activité 6 */
-  await page.click('.seance-tab[data-panel="s4"]');
+  /* séance 7 : activité 6 */
+  await page.click('.seance-tab[data-panel="s7"]');
   for (const id of ["a6_v1","a6_v2","a6_v3","a6_v4","a6_v5"]) await page.selectOption("#"+id, { index: 1 });
   await page.fill("#a6_redac", "Essais nominaux : 40 (veille), 90 (tempête tropicale), 150 (ouragan), 200 (ouragan majeur). Frontières : 62 et 63, 117 et 118, 177 et 178, car les bugs vivent aux frontières. Performance : je chronomètre le temps entre le franchissement de 178 et l'affichage, exigence moins d'une seconde. Interaction : appui sur le bouton pendant l'alarme (le son se coupe), puis redescente et remontée (le buzzer repart). Règle de décision : recette prononcée si 13 essais sur 13 sont réussis, sinon ajournée avec réserves.");
   await page.click('[data-check="6"]');
   ok("activité 6 validée (protocole rédigé, 4 familles + règle)", (await page.textContent("#fb6")).includes("5 / 5") && !(await page.textContent("#fb6")).includes("familles"));
   await shot(page, "act6_protocole_redige");
 
-  /* activité 7 : exécution — frontières exactes + chrono */
+  /* activité 7 (séance 8) : exécution — frontières exactes + chrono */
+  await page.click('.seance-tab[data-panel="s8"]');
   for (const v of [62, 63, 117, 118, 177, 178]) { await page.fill("#simVentNum", String(v)); await page.waitForTimeout(320); }
   await shot(page, "banc_frontieres_executees", "#bancCard");
   await page.click("#btnChrono");
@@ -295,8 +338,8 @@ const run = async () => {
 
   /* progression + persistance */
   ok("progression : 7 / 7 activités validées", (await page.textContent("#progTxt")).includes("7 / 7"));
-  const coches = await page.evaluate(() => ["s1","s2","s3","s4"].map(s => document.getElementById("done-"+s).textContent.trim()).join(""));
-  ok("onglets : les 4 séances cochées ✔", coches === "✔✔✔✔", coches);
+  const coches = await page.evaluate(() => ["s1","s2","s3","s4","s5","s6","s7","s8"].map(s => document.getElementById("done-"+s).textContent.trim()).join(""));
+  ok("onglets : les 8 séances cochées ✔", coches === "✔".repeat(8), coches);
   await page.fill("#bilan1", "J'ai appris à programmer une interaction humain-machine.");
   await page.check('input[name="conf_c92"][value="3"]');
   await page.check('input[name="conf_c83"][value="3"]');
@@ -372,13 +415,52 @@ const run = async () => {
        })));
 
   /* ── règle n°101 : chaque séance mène explicitement à la suivante ── */
-  ok("règle n°101 : 3 boutons « séance suivante » dans la page tout-en-un",
-     await page.locator("button.vers-seance").count() === 3);
+  ok("règle n°101 : 7 boutons « séance suivante » dans la page tout-en-un (8 séances)",
+     await page.locator("button.vers-seance").count() === 7);
+  ok("règle n°101 : chaque séance sauf la dernière mène à la suivante, dans l'ordre",
+     await page.evaluate(() => [1,2,3,4,5,6,7].every(n => {
+       const b = document.querySelector(`#s${n} button.vers-seance`);
+       return b && b.dataset.vers === "s" + (n + 1) && b.textContent.startsWith("Séance " + (n + 1));
+     })) && await page.locator("#s8 button.vers-seance").count() === 0);
   await page.click('.seance-tab[data-panel="s1"]');
   await page.locator('button.vers-seance[data-vers="s2"]').click();
   await page.waitForTimeout(250);
   ok("règle n°101 : le bouton bascule réellement sur la séance suivante",
      await page.locator("#s2.active").count() === 1);
+  await page.click('.seance-tab[data-panel="s3"]');
+  await page.locator('button.vers-seance[data-vers="s4"]').click();
+  await page.waitForTimeout(250);
+  ok("règle n°101 : de la première partie de l'activité 3 à sa suite (séance 3 → séance 4)",
+     await page.locator("#s4.active").count() === 1 && await page.isVisible("#act3-suite"));
+
+  /* ── séances de 55 min : bandeau et tableau de bord ── */
+  ok("bandeau : « 8 séances de 55 min », plus aucune trace des 90 min",
+     (await page.textContent(".badge.duree")).includes("8 séances de 55 min") &&
+     !(await page.textContent("body")).includes("1 h 30") && !(await page.textContent("body")).includes("90 min"));
+  ok("8 onglets, 8 panneaux de séance",
+     await page.locator(".seance-tab").count() === 8 && await page.locator(".seance-panel").count() === 8);
+  await page.click('.seance-tab[data-panel="s6"]');
+  await page.waitForTimeout(150);
+  ok("tableau de bord : il suit la séance ouverte (séance 6)",
+     (await page.textContent("#tachesBandeau")).includes("Séance 6"), (await page.textContent("#tachesBandeau")).slice(0, 60));
+
+  /* ── une sauvegarde faite avec l'ancien découpage (4 séances) se relit ── */
+  const erreursAvantAncienne = erreursJS.length;
+  await page.evaluate(() => localStorage.setItem("seq_3eC92-3eC83_station-alerte", JSON.stringify({
+    inputs: { hyp1: "Sauvegarde du découpage en quatre séances.", a2_s1: "178", a6_redac: "Protocole d'avant." },
+    radios: { conf_c92: "2" },
+    valid: { 1: true, 2: true, 3: true, 4: true, 5: true, 6: true, 7: false },
+    exp: { lecture: true, niveaux: true, parcours: "tous" } })));
+  await page.reload(); await page.waitForTimeout(700);
+  ok("ancienne sauvegarde : relue sans erreur JS, réponses et progression rétablies (6 / 7)",
+     erreursJS.length === erreursAvantAncienne &&
+     (await page.inputValue("#a2_s1")) === "178" && (await page.inputValue("#a6_redac")) === "Protocole d'avant." &&
+     (await page.textContent("#progTxt")).includes("6 / 7"), (await page.textContent("#progTxt")));
+  ok("ancienne sauvegarde : coches réparties sur les 8 séances (activités 1 à 6 → séances 1 à 7 ✔, séance 8 non)",
+     await page.evaluate(() => ["s1","s2","s3","s4","s5","s6","s7","s8"]
+       .map(s => document.getElementById("done-" + s).textContent.trim() ? 1 : 0).join("")) === "11111110");
+  await page.evaluate(() => localStorage.clear());
+  await page.reload(); await page.waitForTimeout(500);
 
   /* ── règle n°122 : trois parcours, pas trois paragraphes ── */
   ok("règle n°122 : le sélecteur de parcours est dans la barre d'outils (4 boutons)",
@@ -581,7 +663,28 @@ const run = async () => {
        liens.includes("sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html"));
     ok(`page ${i + 1} : porte les 4 onglets-liens`,
        await page.locator("nav.seance-tabs a.seance-tab").count() === 4);
+    /* une page par grande étape : elle annonce SES deux séances de 55 min,
+       chacune ancrée sous son en-tête, la première menant à la seconde */
+    const [a, b] = [2 * i + 1, 2 * i + 2];
+    const info = await page.evaluate(([a, b]) => ({
+      sous: document.querySelector(".subtitle").textContent,
+      ancres: [...document.querySelectorAll(".seance-bloc")].map(d => d.id),
+      /* l'échauffement Vittascience précède le titre de la séance 3, comme dans le tout-en-un */
+      titres: [...document.querySelectorAll(".seance-bloc")].map(d => [...d.querySelectorAll("h2")].map(h => h.textContent).join(" | ")),
+      lien: !!document.querySelector(`#seance-${a} a.lien-seance[href="#seance-${b}"]`),
+      coche: !!document.getElementById("done-p1"),
+    }), [a, b]);
+    ok(`page ${i + 1} : annonce les séances ${a} et ${b} (2 séances de 55 min) et les ancre sous leur en-tête`,
+       info.sous.includes(`séances ${a} et ${b} (2 séances de 55 min)`) &&
+       JSON.stringify(info.ancres) === JSON.stringify([`seance-${a}`, `seance-${b}`]) &&
+       info.titres.every((t, k) => t.includes(`Séance ${[a, b][k]} —`)), JSON.stringify(info));
+    ok(`page ${i + 1} : la séance ${a} mène à la séance ${b} par un lien interne (règle n°101)`, info.lien && info.coche);
   }
+  /* le lien interne amène bien l'en-tête de la séance suivante à l'écran */
+  await page.goto(url(P4[1])); await page.waitForTimeout(400);
+  await page.click('a.lien-seance[href="#seance-4"]'); await page.waitForTimeout(400);
+  ok("page 2 : le lien « Séance 4 » amène l'en-tête de la séance 4 en haut de l'écran",
+     await page.evaluate(() => { const r = document.getElementById("seance-4").getBoundingClientRect().top; return r >= 0 && r < 200; }));
 
   /* persistance croisée : on répond page 1, on va page 4, on revient */
   await page.goto(url(P4[0])); await page.waitForTimeout(450);
@@ -610,6 +713,47 @@ const run = async () => {
   await shot(page, "quatre_pages_persistance_croisee");
   await page.evaluate(() => localStorage.clear());
 
+  /* ════════ Garde-fou : les seuils et broches d'avant ne reviennent pas ════════
+     La séquence a connu deux seuils (100 / 150 km/h, trois niveaux, buzzer au
+     niveau 2) et une « maquette » câblée A0 / D2 vert. Le programme de référence
+     n'a plus qu'un montage (A1, D2 bouton, D3 orange, D4 rouge, D5 buzzer, D6 vert,
+     D7 jaune, LCD I2C) et trois seuils (63 / 118 / 178, buzzer au niveau 3).
+     Seules exceptions permises : la capture ArduBlock datée, qui montre « 100 et
+     150 » et le dit — ses formulations ne tombent sous aucun motif ci-dessous. */
+  const ANCIENS = [/\b100\s*\/\s*150\b/, /sous 100\b/, /au-dessus de 150/, /150 se teste avant 100/,
+                   /* « (niveau = 2) » : le buzzer de l'ancienne version ; la trace de l'activité 5
+                      « vent(km/h)=131  niveau=2 » est juste (131 km/h = ouragan = niveau 2) */
+                   /seuils? (?:de )?100\b/, /\(niveau\s*=\s*2[),]/, /niveau vaut 2\b/, /passer à 2\b/,
+                   /revient à 2\b/, /égale 2\b/, /\bA0\b/, /vert\s+D2\b/];
+  for (const f of [SEQ, ...P4]) {
+    await page.goto(url(f)); await page.waitForTimeout(300);
+    const texte = await page.evaluate(() => {
+      const c = document.body.cloneNode(true);
+      c.querySelectorAll("script,style").forEach(e => e.remove());
+      return c.textContent + " " + [...document.querySelectorAll("[alt]")].map(e => e.getAttribute("alt")).join(" ");
+    });
+    const trouves = ANCIENS.filter(r => r.test(texte)).map(String);
+    ok(`garde-fou « anciens seuils » : ${f.replace("sequence_3e_C9.2-C8.3_", "")}`, trouves.length === 0, trouves.join(" · "));
+  }
+  const planche4 = fs.readFileSync(path.join(LOT, "Images/blocs_palier4_acquitter.svg"), "utf8");
+  ok("garde-fou « anciens seuils » : la planche du palier 4 fait sonner le buzzer au niveau 3",
+     planche4.includes("= 3 (ouragan majeur)") && !ANCIENS.some(r => r.test(planche4.replace(/<[^>]+>/g, ""))));
+  /* le schéma de câblage : l'élève câble d'après lui — les huit branchements du
+     programme de référence, et plus la DEL unique « rouge » sur D3 */
+  const montage = fs.readFileSync(path.join(LOT, "Images/montage_station_grove.svg"), "utf8");
+  const etiquettes = ["A1", "D2", "I2C", "D5", "D6", "D7", "D3", "D4"].filter(b => !montage.includes(`>${b}</text>`));
+  ok("schéma de câblage : les huit branchements du programme (A1, D2, I2C, D5, D6, D7, D3, D4), title et desc",
+     etiquettes.length === 0 && /<title id="t-montage">/.test(montage) && /<desc id="d-montage">[^<]{300,}/.test(montage),
+     etiquettes.join(", "));
+  ok("schéma de câblage : plus de DEL unique « rouge », ni « vigilance », ni « alerte rouge », ni secteur",
+     !/DEL rouge|vigilance|alerte rouge/i.test(montage) && montage.includes("jamais de secteur 230 V"));
+  /* le QCM : ses questions ne citent plus les anciens seuils, broches ni la DEL unique */
+  const qcmTexte = fs.readFileSync(path.join(LOT, QCM), "utf8");
+  const blocQ = qcmTexte.slice(qcmTexte.indexOf("const QUESTIONS"), qcmTexte.indexOf("\n];", qcmTexte.indexOf("const QUESTIONS")));
+  const qcmAnciens = [...ANCIENS, /DEL sur D3/, /DEL rouge sur D3/, /DEL est commandée par D3/, /Vigilance → alerte/]
+    .filter(r => r.test(blocQ)).map(String);
+  ok("garde-fou « anciens seuils » : les 30 questions du QCM", qcmAnciens.length === 0, qcmAnciens.join(" · "));
+
   /* ════════ Synthèses + mobile ════════ */
   for (const f of ["Synthèses/synthese_eleve_3e_C9.2-C8.3.html", "Synthèses/synthese_professeur_3e_C9.2-C8.3.html"]) {
     await page.goto(url(f)); await page.waitForTimeout(300);
@@ -623,6 +767,21 @@ const run = async () => {
   const debordement = await pm.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   ok("mobile 390 px : pas de défilement horizontal, zéro erreur JS", debordement <= 1 && errMob.length === 0, "débord=" + debordement);
   await pm.screenshot({ path: path.join(CAP, String(++nCap).padStart(2, "0") + "_mobile_390px.png") });
+  /* chaque séance atteinte à 390 px, par son onglet puis par le bouton de la séance précédente */
+  const atteintes = [];
+  for (let n = 1; n <= 8; n++) {
+    await pm.click(`.seance-tab[data-panel="s${n}"]`); await pm.waitForTimeout(120);
+    atteintes.push(await pm.evaluate(n => document.getElementById("s" + n).classList.contains("active") &&
+      document.documentElement.scrollWidth - document.documentElement.clientWidth <= 1, n));
+  }
+  ok("mobile 390 px : les 8 séances s'ouvrent par leur onglet, sans débord", atteintes.every(Boolean), atteintes.join(","));
+  const passages = [];
+  await pm.click('.seance-tab[data-panel="s1"]');
+  for (let n = 1; n < 8; n++) {
+    await pm.locator(`#s${n} button.vers-seance`).click(); await pm.waitForTimeout(150);
+    passages.push(await pm.locator(`#s${n + 1}.active`).count() === 1);
+  }
+  ok("mobile 390 px : de la séance 1 à la séance 8 par les boutons « séance suivante »", passages.every(Boolean), passages.join(","));
   await mob.close();
 
   await navigateur.close();

@@ -11,7 +11,18 @@ node tests_3e_C7.5_qcm.mjs      "$PWD/qcm_3e_C7.5_station-a-equiper.html" 3e_C7.
 
 ---
 
-## 1. Séquence — **42 / 42**
+## 1. Séquence — **54 / 54**
+
+Dernière exécution : 25/10/2026, après le redécoupage en **4 séances de 55 min** (décision de
+Pascal du 24/10/2026 : une heure de cours par semaine). Le banc compte désormais les séances :
+bandeau « 4 séances de 55 min », quatre en-têtes dans l'ordre, minutes d'activités annoncées par
+séance (25 · 35 · 55 · 35, chacune ≤ 55, total 150 conservé), place de chaque activité, clôture
+après la dernière séance (synthèse → Bonus → Bilan → QCM), boutons « ➡ Séance N+1 » qui amènent
+à leur en-tête sous la barre du haut, ligne de navigation du haut de page, renvoi de la séance 3
+à l'encadré de sécurité, et relecture sans erreur d'une sauvegarde faite avec l'ancien découpage
+(même clé, même forme `{inputs, checks, exp}`, relevée sur la page d'avant). Les 42 tests
+d'avant sont tous gardés ; « bandeau de durée présent » est devenu « bandeau de durée : 4 séances
+de 55 min ».
 
 ```
 ✅ charge sans erreur JS
@@ -39,7 +50,18 @@ node tests_3e_C7.5_qcm.mjs      "$PWD/qcm_3e_C7.5_station-a-equiper.html" 3e_C7.
 ✅ verrou « ok » ouvert
 ✅ verrou « panne » ouvert
 ✅ verrou « retire » ouvert
-✅ bandeau de durée présent — ⏱ 2 séances de 90 min
+✅ bandeau de durée : 4 séances de 55 min — ⏱ 4 séances de 55 min
+✅ 4 en-têtes de séance, dans l’ordre — seance-1, seance-2, seance-3, seance-4
+✅ chaque séance tient dans ses 55 min d’activités annoncées — seance-1 = 25 min · seance-2 = 35 min · seance-3 = 55 min · seance-4 = 35 min
+✅ le temps total des activités est conservé (150 min) — 150
+✅ chaque activité est dans sa séance (0 | 1 | 2, 3 | 4, REFAIRE) — Activité 0 | Activité 1 | Activité 2+Activité 3 | Activité 4+REFAIRE
+✅ la clôture suit la dernière séance : synthèse → Bonus → Bilan → QCM — {"s4":605,"refaire":676,"synthese":700,"bonus":713,"bilan":724,"qcm":739}
+✅ chaque séance (sauf la dernière) mène explicitement à la suivante — #seance-2, #seance-3, #seance-4
+✅ le haut de page mène à chacune des séances — #seance-1, #seance-2, #seance-3, #seance-4
+✅ le bouton « Séance 2 » amène à son en-tête, sous la barre du haut — 60 px
+✅ le bouton « Séance 3 » amène à son en-tête, sous la barre du haut — 60 px
+✅ le bouton « Séance 4 » amène à son en-tête, sous la barre du haut — 60 px
+✅ la séance 3 (montage) renvoie à l’encadré de sécurité
 ✅ un seul bouton QCM
 ✅ hypothèse d’entrée présente
 ✅ consigne de sécurité très basse tension présente
@@ -56,6 +78,7 @@ node tests_3e_C7.5_qcm.mjs      "$PWD/qcm_3e_C7.5_station-a-equiper.html" 3e_C7.
 ✅ les réponses survivent au rechargement — a2q1 = parce que le programme écrit sur D6, et qu'on ne le modifie pas ici
 ✅ le montage survit au rechargement — SOCLE
 ✅ les verrous survivent au rechargement
+✅ une sauvegarde de l’ancien découpage se relit sans erreur — A0
 ```
 
 ## 2. QCM — **32 / 32**

@@ -59,7 +59,7 @@
 <h2 style="margin-top:0">🖐 L'interaction humain-machine (le cœur de 3e_C9.2)</h2>
 <ul>
   <li>Le bouton (D2) est un <b>capteur de décision humaine</b> : fonction Acquérir — l'information ENTRE dans la station.</li>
-  <li>L'<b>acquittement</b> : un appui bref à effet durable → un <b>booléen-mémoire</b> <code>alarmeAcquittee</code>. Le buzzer sonne si (niveau = 2) <b>ET</b> (non acquitté). <span class="ok">On coupe le SON, jamais l'INFORMATION</span> : écran et DEL restent en alerte.</li>
+  <li>L'<b>acquittement</b> : un appui bref à effet durable → un <b>booléen-mémoire</b> <code>alarmeAcquittee</code>. Le buzzer sonne si (niveau = 3, ouragan majeur) <b>ET</b> (non acquitté). <span class="ok">On coupe le SON, jamais l'INFORMATION</span> : écran et DEL restent en alerte.</li>
   <li><b>État ≠ événement</b> : l'état dure (« alerte »), l'événement est l'instant du changement. Détection : <code>niveauAlerte ≠ niveauPrecedent</code> → l'alarme se <b>ré-arme</b> (nouvel événement, nouvel avertissement).</li>
   <li>Les blocs deviennent du C++ : « calibrer » → <code>map()</code> · « si/sinon » → <code>if/else</code> · l'affichage vit dans le <b>sous-programme</b> <code>afficherEtat()</code> (structuration exigée en 3e).</li>
   <li><b>Mise au point</b> : la trace du moniteur série innocente la chaîne tronçon par tronçon — on cherche le PREMIER endroit où les valeurs deviennent fausses.</li>

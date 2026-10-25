@@ -4,6 +4,13 @@ Tests **réels**, joués dans un navigateur Chromium par Playwright, sur les fic
 qu'ils sont livrés. Cette page est la sortie de la dernière exécution, recopiée telle quelle —
 les scripts et le jeu de réponses sont dans ce dossier, on peut tout rejouer.
 
+> **Clé de sauvegarde propre, 25/10/2026.** Jusque-là, la page enregistrait sous la clé de
+> 4e_C7.4 (`seq_4e_C7_4`) : les deux séquences mélangeaient le travail de l'élève dans un même
+> navigateur. Elle enregistre désormais sous `seq_4e_C7_8`. À la première ouverture, si cette clé
+> n'existe pas et que `seq_4e_C7_4` existe, elle en fait une copie (sans rien effacer), puis ne la
+> relit plus jamais. Le banc vérifie la clé, la migration, la copie sans effacement, qu'écrire
+> dans 4e_C7.8 ne touche plus `seq_4e_C7_4`, et que la migration ne se rejoue pas.
+
 ```bash
 node tests_4e_C7.8_sequence.mjs "$PWD/sequence_4e_C7.8_le-jardin-publie.html" 4e reponses_4e_C7.8.json
 node tests_4e_C7.8_qcm.mjs      "$PWD/qcm_4e_C7.8_le-jardin-publie.html" 4e_C7.8 4e_C1.4 sequence_4e_C7.8_le-jardin-publie.html
@@ -11,7 +18,7 @@ node tests_4e_C7.8_qcm.mjs      "$PWD/qcm_4e_C7.8_le-jardin-publie.html" 4e_C7.8
 
 ---
 
-## 1. Séquence — **35 / 35**
+## 1. Séquence — **46 / 46**
 
 ```
 ✅ charge sans erreur JS
@@ -49,6 +56,17 @@ node tests_4e_C7.8_qcm.mjs      "$PWD/qcm_4e_C7.8_le-jardin-publie.html" 4e_C7.8
 ✅ les réponses survivent au rechargement — a1msg = {"id":"jardin-cour","h":38,"u":"%","t":"14:07","pompe":false}
 ✅ les verrous survivent au rechargement
 ✅ les champs cochés survivent au rechargement
+✅ la page enregistre sous sa propre clé — seq_4e_C7_8
+✅ première ouverture : la clé propre est créée, rien sous seq_4e_C7_4
+✅ migration : la page se recharge sans erreur JS
+✅ migration : chaque réponse de seq_4e_C7_4 apparaît à sa place, bilan compris — hyp=Le jardin doit · hors=garde les mesu · a3ph=Hors ligne, le · reinv=Avec trois jar · bilan=Je sais compos
+✅ migration : les cases cochées reviennent
+✅ migration : l’idée de départ est rappelée au bilan
+✅ migration : les verrous sont conservés
+✅ migration : copie sans effacer — seq_4e_C7_4 est intacte
+✅ écrire dans 4e_C7.8 ne modifie plus seq_4e_C7_4
+✅ … et ce qui est écrit va sous seq_4e_C7_8
+✅ migration une seule fois : 4e_C7.8 ne relit plus seq_4e_C7_4 — Nouvelle idée, écrite dans 4e_C7.8.
 ```
 
 ## 2. QCM — **32 / 32**

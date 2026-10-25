@@ -14,10 +14,27 @@ pages directement.** On modifie la page tout-en-un, puis on relance ce script.
 Toute retouche faite dans une page découpée sera écrasée à la prochaine
 exécution — et, pire, aura divergé silencieusement en attendant.
 
+Séances de 55 min (décision de Pascal du 24/10/2026) : la page tout-en-un compte
+HUIT séances (onglets s1 à s8). Les quatre pages gardent leurs noms de fichier —
+aucun lien du dépôt ne casse — et deviennent une page par GRANDE ÉTAPE, chacune
+portant deux séances de 55 min, annoncées en tête de page et séparées par un
+en-tête « Séance N » et un bouton qui mène à la séance suivante (règle n°101) :
+
+    page 1 · besoin et algorithme       séances 1 et 2  (activités 1, 2)
+    page 2 · programmer par paliers     séances 3 et 4  (activité 3, en deux parties)
+    page 3 · l'humain dans la boucle    séances 5 et 6  (activités 4, 5)
+    page 4 · protocole et recette       séances 7 et 8  (activités 6, 7, clôture)
+
 Le découpage est vérifié par la suite `tests_3e_C9.2-C8.3.mjs` : union des champs
 identique à la page source, et persistance croisée dans les deux sens.
+
+Réparé le 24/10/2026 (le script ne tournait plus sur la source) : le Bonus est
+passé AVANT le bilan (règle n°301) et la clôture comme l'échauffement
+Vittascience vivent DANS leur panneau de séance — on prend donc les panneaux
+entiers, sans recoller ces blocs une seconde fois ; la situation s'arrête avant
+le banc d'essai, qui n'est pas sur la page 1.
 """
-import io, re, sys, pathlib
+import io, re, sys, json, pathlib
 
 LOT = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else ".")
 SRC = LOT / "sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html"
@@ -45,12 +62,11 @@ def ferme(depuis, balise):
 # Les bornes se cherchent par repères, jamais par numéros figés : la source
 # est éditée sans cesse (seuils, figures, corrections) et des numéros en dur
 # se décalent en silence.
+NB_SEANCES = 8
 _style1   = ligne("</style>")
 _navcss   = ligne('<style id="navharm-css">')
-_body     = ligne("<body>")
 _rappel   = ligne('<section class="card rappel-spiralaire"')
 _billet   = ligne('aria-labelledby="billet-titre"')
-_gestes   = ligne('class="card gestes-outil"')
 _badges   = ligne('<div class="badges">')
 _identite = ligne('<div class="identite"')
 _toolbar  = ligne('<div class="toolbar">')
@@ -59,17 +75,12 @@ _situ     = ligne("<h2>📖 Situation déclenchante</h2>") - 1
 _tabs     = ligne('<div class="seance-tabs"')
 _taches   = ligne('id="tachesBandeau"')
 _banc     = ligne('id="bancCard"')
-_s1       = ligne('id="s1" role="tabpanel"')
-_s2       = ligne('id="s2" role="tabpanel"')
-_s3       = ligne('id="s3" role="tabpanel"')
-_s4       = ligne('id="s4" role="tabpanel"')
-_synth    = ligne("<h2>📝 Synthèse de la séquence") - 1
-_bilan    = ligne("<h2>🪞 Mon bilan personnel</h2>") - 1
-_pret     = ligne('justify-content:center">🧠') - 1
-_bonus    = ligne("🎁 Bonus (facultatif", _pret) - 1
+_s        = {n: ligne(f'id="s{n}" role="tabpanel"') for n in range(1, NB_SEANCES + 1)}
 _footer   = ligne("<footer>")
 _script   = ligne("<script>", _footer)
 _loupe    = ligne("loupe-images-v1") - 1
+
+assert _situ < _banc < _tabs, "la situation, le banc puis les onglets : l'ordre de la source a changé"
 
 HEAD        = seg(1, _style1)
 NAVCSS      = seg(_navcss, ferme(_navcss, "</style>"))
@@ -77,45 +88,54 @@ NAV         = seg(ligne('<nav id="navharm"'), ligne('class="skip-link"'))
 H1          = seg(ligne("<h1>"), ligne("<h1>"))
 RAPPEL      = seg(_rappel, ferme(_rappel, "</section>"))
 BILLET      = seg(_billet - 1, ferme(_billet, "</section>"))
-GESTES      = seg(_gestes, ferme(_gestes, "</section>"))
 BADGES      = seg(_badges, ferme(_badges, "</div>"))
 IDENTITE    = seg(_identite, ferme(_identite, "</div>"))
 TOOLBAR     = seg(_toolbar, _progress - 2)
 PROGRESS    = seg(_progress, ferme(_progress, "</div>"))
-SITUATION   = seg(_situ, _tabs - 1)
+SITUATION   = seg(_situ, _banc - 1)          # le banc a sa place à part (pages 2 à 4)
 TACHES      = seg(_taches, _taches)
 BANC        = seg(_banc, ferme(_banc, "</section>"))
-S1          = seg(_s1 + 1, ferme(_s1, "</div>") - 1)
-S2          = seg(_s2 + 1, ferme(_s2, "</div>") - 1)
-S3          = seg(_s3 + 1, ferme(_s3, "</div>") - 1)
-S4          = seg(_s4 + 1, ferme(_s4, "</div>") - 1)
-SYNTHESE    = seg(_synth, _bilan - 1)
-BILAN       = seg(_bilan, _pret - 1)
-PRET        = seg(_pret, _bonus - 1)
-BONUS       = seg(_bonus, _footer - 1)
+# Le panneau entier : l'échauffement Vittascience est dans s3, la clôture
+# (synthèse → Bonus → bilan → QCM) dans s8.
+S           = {n: seg(_s[n] + 1, ferme(_s[n], "</div>") - 1) for n in _s}
 FOOTER      = seg(_footer, ferme(_footer, "</footer>"))
 SCRIPT      = seg(_script, ferme(_script, "</script>"))
 LOUPE       = seg(_loupe, len(L))
 
+# Le nom de chaque séance, tel que la source l'écrit sur son bouton « séance
+# suivante » (règle n°101) : une seule écriture, aucune divergence possible.
+NOM_SEANCE = {}
+for n in range(2, NB_SEANCES + 1):
+    m = re.search(rf'<button class="btn vers-seance" data-vers="s{n}">(.*?)</button>', S[n - 1])
+    if not m:
+        raise SystemExit(f"bouton vers la séance {n} introuvable dans le panneau s{n-1}")
+    NOM_SEANCE[n] = m.group(1)
+
 # ─────────────────────────── les quatre pages ───────────────────────────
 PAGES = [
     dict(n=1, fichier="sequence_3e_C9.2-C8.3_station_1_besoin-et-algorithme.html",
-         titre="Besoin et algorithme",
-         sous="🎯 Page 1 sur 4 — Comprendre ce que la mairie demande, et écrire l'algorithme AVANT de programmer.",
-         corps=[RAPPEL, BILLET, SITUATION, "TABS", TACHES, S1]),
+         titre="Besoin et algorithme", seances=(1, 2),
+         but="Comprendre ce que la mairie demande, et écrire l'algorithme AVANT de programmer.",
+         avant=[RAPPEL, BILLET, SITUATION, "TABS", TACHES]),
     dict(n=2, fichier="sequence_3e_C9.2-C8.3_station_2_programmer.html",
-         titre="Programmer par paliers",
-         sous="🎯 Page 2 sur 4 — Traduire l'algorithme en blocs sur Vittascience, palier par palier.",
-         corps=[GESTES, "TABS", TACHES, BANC, S2]),
+         titre="Programmer par paliers", seances=(3, 4),
+         but="Traduire l'algorithme en blocs sur Vittascience, palier par palier.",
+         avant=["TABS", TACHES, BANC]),
     dict(n=3, fichier="sequence_3e_C9.2-C8.3_station_3_interaction.html",
-         titre="L'humain dans la boucle",
-         sous="🎯 Page 3 sur 4 — Programmer l'acquittement, lire le code généré, diagnostiquer une panne.",
-         corps=["TABS", TACHES, BANC, S3]),
+         titre="L'humain dans la boucle", seances=(5, 6),
+         but="Programmer l'acquittement, lire le code généré, diagnostiquer une panne.",
+         avant=["TABS", TACHES, BANC]),
     dict(n=4, fichier="sequence_3e_C9.2-C8.3_station_4_recette.html",
-         titre="Protocole et recette",
-         sous="🎯 Page 4 sur 4 — Rédiger le protocole de test, l'exécuter, signer le procès-verbal.",
-         corps=["TABS", TACHES, BANC, S4, SYNTHESE, BILAN, PRET, BONUS]),
+         titre="Protocole et recette", seances=(7, 8),
+         but="Rédiger le protocole de test, l'exécuter, signer le procès-verbal.",
+         avant=["TABS", TACHES, BANC]),
 ]
+assert sorted(s for p in PAGES for s in p["seances"]) == list(range(1, NB_SEANCES + 1)), \
+    "chaque séance doit figurer sur une page, et une seule"
+
+def les_seances(p):
+    a, b = p["seances"]
+    return f"séances {a} et {b}"
 
 def tabs(courante):
     """Les onglets deviennent des liens entre pages, coches ✔ conservées."""
@@ -125,8 +145,8 @@ def tabs(courante):
         aria = ' aria-current="page"' if p["n"] == courante else ""
         lignes.append(
             f'  <a class="seance-tab{actif}" href="{p["fichier"]}" data-page="{p["n"]}"{aria}>'
-            f'Page {p["n"]}<br><small>{p["titre"]}</small>'
-            f'<span class="done" id="done-s{p["n"]}"></span></a>')
+            f'Page {p["n"]}<br><small>{p["titre"]} · {les_seances(p)}</small>'
+            f'<span class="done" id="done-p{p["n"]}"></span></a>')
     lignes.append("</nav>")
     return "\n".join(lignes)
 
@@ -137,24 +157,44 @@ REPLI = (
     f'<a href="{TOUT_EN_UN}">La séquence entière en une seule page</a> — '
     'mêmes activités, mêmes réponses enregistrées, aucun chargement entre les séances.</p>')
 
-def sans_bouton_seance(bloc):
+BOUTON = re.compile(r'<button class="btn vers-seance" data-vers="s(\d+)">(.*?)</button>')
+
+def boutons_de_seance(bloc, page):
     """Le bouton « séance suivante » de la page tout-en-un bascule un ONGLET.
-    Dans les pages découpées, la navigation se fait par des LIENS : on retire donc
-    ce bouton-là, sinon il ferait doublon avec le lien de bas de page — et il
+    Dans une page découpée, il devient un LIEN vers l'en-tête de la séance
+    suivante quand celle-ci est sur la même page ; sinon on le retire, car le
+    lien de bas de page (« Page N+1 ») mène déjà à la suite — et un bouton
     viserait un onglet qui n'existe pas."""
-    return "\n".join(l for l in bloc.split("\n") if 'vers-seance' not in l)
+    out = []
+    for l in bloc.split("\n"):
+        m = BOUTON.search(l)
+        if not m:
+            out.append(l)
+            continue
+        cible = int(m.group(1))
+        if cible in page["seances"]:
+            out.append(BOUTON.sub(
+                lambda mm: f'<a class="btn lien-seance" href="#seance-{mm.group(1)}">{mm.group(2)}</a>', l))
+    return "\n".join(out)
+
+def bloc_seance(n, page):
+    """Une séance de 55 min dans sa page : un conteneur ancré (#seance-N), son
+    contenu, et — si la suivante est sur la même page — le lien qui y mène."""
+    return (f'<div class="seance-bloc" id="seance-{n}">\n'
+            + boutons_de_seance(S[n], page)
+            + "\n</div>")
 
 def suivant(n):
     """Règle d'or n°101 — chaque page mène explicitement à la suivante."""
-    if n == 4:
+    if n == len(PAGES):
         return ""
     p = PAGES[n]      # PAGES[n] = page n+1 (liste 0-indexée)
     return (f'\n<p class="page-suivante">'
-            f'<a class="btn" href="{p["fichier"]}">Page {p["n"]} → {p["titre"]} ›</a></p>\n')
+            f'<a class="btn" href="{p["fichier"]}">Page {p["n"]} → {p["titre"]}, {les_seances(p)} ›</a></p>\n')
 
 CSS_SUP = """
 <style id="quatre-pages-css">
-/* Découpage en quatre pages (règle d'or n°116) */
+/* Découpage en quatre pages (règle d'or n°116), deux séances de 55 min par page */
 .seance-tabs a.seance-tab{text-decoration:none;display:block}
 .seance-tabs a.seance-tab:focus-visible{outline:3px solid #ffb300;outline-offset:2px}
 .repli-tout-en-un{max-width:940px;margin:0 auto 14px;padding:8px 12px;border-left:3px solid var(--sub);
@@ -162,6 +202,7 @@ CSS_SUP = """
 .repli-tout-en-un a{color:var(--hl)}
 .page-suivante{max-width:940px;margin:22px auto 8px;text-align:right}
 .page-suivante .btn{text-decoration:none;display:inline-block}
+.seance-bloc{scroll-margin-top:56px}
 @media print{.page-suivante{display:none}}
 </style>
 """
@@ -200,10 +241,14 @@ def corriger_script(js, page):
 
 """)
 
-    # 5) majTaches : la séance courante est celle de la page
-    js = js.replace('const onglet = document.querySelector(".seance-tab.active");\n'
-                    '  const bloc = TACHES[onglet ? onglet.dataset.panel : ""];',
-                    f'const bloc = TACHES["s{page}"];')
+    # 5) majTaches : les tâches de la page sont celles de SES deux séances
+    a, b = page["seances"]
+    titre = json.dumps(f"Séances {a} et {b} — {page['titre']}", ensure_ascii=False)
+    ancien_bloc = ('const onglet = document.querySelector(".seance-tab.active");\n'
+                   '  const bloc = TACHES[onglet ? onglet.dataset.panel : ""];')
+    assert js.count(ancien_bloc) == 1, "majTaches() introuvable"
+    js = js.replace(ancien_bloc,
+                    f'const bloc = {{titre: {titre}, taches: [].concat(TACHES["s{a}"].taches, TACHES["s{b}"].taches)}};')
     js = re.sub(r'document\.querySelectorAll\("\.seance-tab"\)\.forEach\(t =>\s*\n\s*t\.addEventListener\("click", \(\) ?=> ?setTimeout\(majTaches, 0\)\)\);', '', js)
 
     # 6) le banc n'est pas sur toutes les pages : ses fonctions et ses
@@ -212,9 +257,6 @@ def corriger_script(js, page):
                     "function simSetVent(v){\n  if(!$(\"simVent\")) return;   /* page sans banc d'essai */")
     js = js.replace("function simTick(){",
                     "function simTick(){\n  if(!$(\"simVent\")) return;   /* page sans banc d'essai */")
-    for cible in ['$("simVent").addEventListener', '$("simVentNum").addEventListener',
-                  '$("btnAcquit").addEventListener', '$("btnChrono").addEventListener']:
-        js = js.replace(cible, "if($(" + cible.split('"')[1].join('""') + ")) " + cible) if False else js
     js = re.sub(r'^\$\("(simVent|simVentNum|btnAcquit|btnChrono)"\)\.addEventListener',
                 lambda m: 'if($("%s")) $("%s").addEventListener' % (m.group(1), m.group(1)),
                 js, flags=re.M)
@@ -232,12 +274,6 @@ def corriger_script(js, page):
   if(!$("rappelHyp")) return;""")
     js = js.replace('$("hyp1").addEventListener("input", majHyp);',
                     'if($("hyp1")) $("hyp1").addEventListener("input", majHyp);')
-    return js
-
-def garder_banc(js, avec_banc):
-    """Le script est le MÊME sur les quatre pages : on ne coupe rien, on
-    garde-fou les accès DOM. Une seule version à maintenir, et aucune
-    divergence possible entre les pages."""
     return js
 
 def selecteur_parcours_utile(toolbar, corps_assemble):
@@ -275,17 +311,17 @@ def selecteur_parcours_utile(toolbar, corps_assemble):
 
 # ─────────────────────────────── écriture ───────────────────────────────
 for p in PAGES:
-    corps = []
-    for bloc in p["corps"]:
-        corps.append(tabs(p["n"]) if bloc == "TABS" else sans_bouton_seance(bloc))
+    corps = [tabs(p["n"]) if bloc == "TABS" else bloc for bloc in p["avant"]]
+    corps += [bloc_seance(n, p) for n in p["seances"]]
     corps_assemble = "\n".join(corps)
     toolbar = selecteur_parcours_utile(TOOLBAR, corps_assemble)
-    js = corriger_script(SCRIPT, p["n"])
-    js = garder_banc(js, any(b is BANC for b in p["corps"]))
+    js = corriger_script(SCRIPT, p)
     h1 = H1.replace("</h1>", f" — {p['titre']}</h1>")
+    a, b = p["seances"]
+    sous = (f'<p class="subtitle">🎯 Page {p["n"]} sur {len(PAGES)} · {les_seances(p)} '
+            f'(2 séances de 55 min) — {p["but"]}</p>')
     page = "\n".join([
-        HEAD, "<body>", NAVCSS, CSS_SUP, NAV, h1,
-        f'<p class="subtitle">{p["sous"]}</p>', REPLI,
+        HEAD, "<body>", NAVCSS, CSS_SUP, NAV, h1, sous, REPLI,
         BADGES, IDENTITE, toolbar, PROGRESS,
         corps_assemble,
         suivant(p["n"]),

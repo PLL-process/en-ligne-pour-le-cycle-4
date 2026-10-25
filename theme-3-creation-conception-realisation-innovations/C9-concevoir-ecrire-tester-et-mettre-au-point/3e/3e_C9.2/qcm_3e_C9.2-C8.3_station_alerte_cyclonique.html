@@ -64,7 +64,7 @@
   .q-comp{font-size:.78em;color:var(--head);font-weight:600}
   .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
   .q-figure{margin:0 0 14px}
-  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure img{width:100%;max-width:760px;max-height:80vh;object-fit:contain;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
   .q-figure figcaption{text-align:center;color:var(--sub);font-size:.8em;margin-top:4px}
   .options{display:grid;gap:9px}
   .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
@@ -274,7 +274,7 @@ const QUESTIONS = [
 /* ═══ C9.2 ═══ */
 {c:"C9.2",n:"Commander un système réel",q:"Que signifie « le programme commande un SYSTÈME RÉEL » pour la station d'alerte ?",
  o:["le programme dessine une station à l'écran de l'ordinateur","le programme pilote de vrais composants, à partir de vraies entrées","le programme fonctionne sans aucune carte électronique","le programme commande d'autres programmes de la station"],r:1,
- expl:"Un système réel, c'est du matériel : le programme lit des entrées physiques (potentiomètre sur A1, bouton sur D2) et commande des sorties physiques (LCD, DEL sur D3, buzzer sur D5). L'information qu'il calcule devient de la lumière, du son, un affichage.",
+ expl:"Un système réel, c'est du matériel : le programme lit des entrées physiques (potentiomètre sur A1, bouton sur D2) et commande des sorties physiques (écran LCD, voyants sur D6, D7, D3 et D4, buzzer sur D5). L'information qu'il calcule devient de la lumière, du son, un affichage.",
  ex:"Quand vitesseVent atteint 178, la broche D5 passe à l'état haut : le buzzer sonne pour de vrai dans la cour.",
  err:"Confondre la simulation (le banc d'essai de la page) avec le but : la simulation prépare et teste, mais la compétence visée est bien de commander le matériel.",
  d:["Dessiner à l'écran est une simulation : utile pour tester, mais ce n'est pas commander le matériel.","","Sans carte, il n'y a plus de système réel à commander.","La station n'a qu'un seul programme : celui du microcontrôleur."],
@@ -323,7 +323,7 @@ const QUESTIONS = [
  d:["","512 est la mesure BRUTE : il faut la convertir avant de l'interpréter.","250 correspondrait à mesureBrute = 1023.","La conversion transforme la valeur, elle ne l'efface pas."],
  ret:"calibrer / map = proportionnalité : valeur = brute × (étendue de sortie ÷ 1023)."},
 {c:"C9.2",n:"Le bouton : une entrée humaine",q:"Sur le montage, le bouton d'acquittement est branché en D2. Dans la chaîne d'information, il assure la fonction…",
- img:{src:"Images/montage_station_grove.svg",alt:"Schéma de câblage : Arduino UNO et shield Grove au centre, LCD RGB sur I2C, potentiomètre sur A1, bouton d'acquittement sur D2, DEL rouge sur D3, buzzer sur D5, câble USB d'alimentation 5 volts"},
+ img:{src:"Images/montage_station_grove.svg",alt:"Schéma de câblage : Arduino UNO et shield Grove sur 5 V ; potentiomètre sur A1 et bouton d'acquittement sur D2 ; écran LCD RGB sur I2C et buzzer sur D5 ; quatre voyants, vert sur D6, jaune sur D7, orange sur D3, rouge sur D4 ; câble USB d'alimentation 5 volts"},
  o:["communiquer : on « communique » en appuyant sur le bouton","acquérir : il fait ENTRER une information dans le système","traiter : c'est lui qui décide du niveau d'alerte","alimenter : il fournit le courant nécessaire au buzzer"],r:1,
  expl:"Regarde le SENS de l'information : l'appui entre dans la station, comme la mesure du vent. Le bouton est donc un capteur — d'un genre particulier : il capte une décision HUMAINE et non une grandeur physique. C'est l'entrée de l'interaction humain-machine.",
  ex:"digitalRead(BROCHE_BOUTON) == HIGH : le programme LIT le bouton exactement comme il lit un capteur.",
@@ -332,7 +332,7 @@ const QUESTIONS = [
  ret:"Le bouton = un capteur de décision humaine : fonction Acquérir, entrée de l'interaction humain-machine."},
 {c:"C9.2",n:"Le booléen-mémoire",q:"À quoi sert la variable booléenne alarmeAcquittee dans le programme de la station ?",
  o:["à choisir la couleur d'affichage de l'écran LCD","à mémoriser la vitesse maximale atteinte par le vent","à compter le nombre d'appuis sur le bouton d'acquittement","à retenir que l'agent a répondu, pour couper le son"],r:3,
- expl:"Un appui ne dure qu'un instant, mais son effet doit durer : alarmeAcquittee (vrai/faux) mémorise « l'agent a répondu ». Le buzzer sonne seulement si (niveau = 2) ET (alarmeAcquittee = faux) : le son se tait, l'écran et la DEL restent.",
+ expl:"Un appui ne dure qu'un instant, mais son effet doit durer : alarmeAcquittee (vrai/faux) mémorise « l'agent a répondu ». Le buzzer sonne seulement si (niveau = 3, ouragan majeur) ET (alarmeAcquittee = faux) : le son se tait, l'écran et la DEL restent.",
  ex:"Appui à 14 h 03 : alarmeAcquittee passe à vrai — et le buzzer reste muet à 14 h 04, 14 h 05… tant que l'alerte ne change pas.",
  err:"Couper le buzzer directement dans le « si bouton appuyé » : dès le tour de boucle suivant, il re-sonnerait — l'appui est déjà oublié.",
  d:["La couleur dépend de niveauAlerte, pas de l'acquittement.","La vitesse vit dans vitesseVent ; alarmeAcquittee ne connaît que vrai/faux.","Compter demanderait un nombre entier ; un booléen n'a que deux valeurs.",""],
@@ -340,7 +340,7 @@ const QUESTIONS = [
 {c:"C9.2",n:"État et événement",q:"Dans le programme, à quoi sert la comparaison « niveauAlerte ≠ niveauPrecedent » ?",
  o:["à détecter l'ÉVÉNEMENT « le niveau vient de changer »","à vérifier que le capteur de vent fonctionne encore","à ralentir la boucle pour économiser le processeur","à économiser la batterie quand rien ne se passe"],r:0,
  expl:"niveauAlerte est l'ÉTAT actuel ; niveauPrecedent est l'état mémorisé au tour de boucle précédent. S'ils diffèrent, c'est que le niveau VIENT DE changer : un événement. Le programme en profite pour remettre alarmeAcquittee à faux — nouvel événement, nouvel avertissement sonore.",
- ex:"Vigilance → alerte : l'événement est détecté, l'acquittement précédent est effacé, le buzzer repart.",
+ ex:"Ouragan → ouragan majeur : l'événement est détecté, l'acquittement précédent est effacé, le buzzer repart.",
  err:"Confondre l'état (l'alerte DURE) et l'événement (l'instant où elle COMMENCE) : l'alarme se ré-arme sur l'événement, pas sur l'état.",
  d:["","Le diagnostic du capteur se ferait sur la mesure brute, pas sur les niveaux.","La cadence de la boucle vient du délai (200 ms), pas d'une comparaison.","Comparer deux entiers ne consomme presque rien."],
  ret:"Événement = état actuel ≠ état mémorisé du tour précédent. C'est LE motif de la détection de changement."},
@@ -357,7 +357,7 @@ const QUESTIONS = [
  expl:"L'acquittement veut dire « j'ai entendu », pas « le danger est fini ». Le son, pénible, peut être coupé une fois l'agent prévenu ; l'information visuelle (écran rouge, DEL) doit rester tant que dure l'alerte, pour tous les autres.",
  ex:"Le courrier de la mairie : « acquitter l'alarme sonore… sans jamais éteindre l'affichage ni le signal lumineux ».",
  err:"Programmer l'acquittement sur TOUTES les sorties : la station deviendrait muette ET aveugle après un appui — contresens dangereux.",
- d:["","C'est un choix explicite du cahier des charges, traduit dans la condition du buzzer uniquement.","La DEL est commandée par D3 : le programme peut l'éteindre — il ne le DOIT pas.","Le bouton ne fournit aucune énergie : il envoie une information au programme."],
+ d:["","C'est un choix explicite du cahier des charges, traduit dans la condition du buzzer uniquement.","Le voyant rouge est commandé par D4 : le programme peut l'éteindre — il ne le DOIT pas.","Le bouton ne fournit aucune énergie : il envoie une information au programme."],
  ret:"Acquitter = couper le SON, jamais l'INFORMATION : le danger continue tant que l'alerte dure."},
 {c:"C9.2",n:"Les constantes",q:"Dans le C++ généré, les seuils sont déclarés « const int SEUIL_ROUGE = 178; ». Qu'apporte le mot-clé const ?",
  o:["le seuil s'adapte automatiquement à la vitesse du vent","le programme s'exécute environ deux fois plus vite","la valeur devient invisible pour le programmeur qui relit","la valeur ne peut plus être modifiée pendant l'exécution"],r:3,

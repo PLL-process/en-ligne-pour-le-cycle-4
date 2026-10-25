@@ -76,6 +76,57 @@ ok('les trois versions A/B/C sont annoncées', ['🅰', '🅱', '🅲'].every(x 
 ok('aucun marqueur de gabarit non remplacé', !/__[A-Z_0-9]+__/.test(src),
    (src.match(/__[A-Z_0-9]+__/g) || []).slice(0, 3).join(' '));
 
+// ── les trois séances de 55 min (découpage du 24/10/2026) ──────────────────
+ok('bandeau : 3 séances de 55 min', duree.includes('3 séances de 55 min'), duree);
+ok('le bandeau de durée a un title et un aria-label',
+   await p.$eval('.badge.duree', e => !!e.getAttribute('title') && !!e.getAttribute('aria-label')));
+const S = await p.$$eval('section.seance-entete', l => l.map(s => s.id));
+ok('trois en-têtes de séance, dans l’ordre', S.join() === 'seance-1,seance-2,seance-3', S.join());
+const parSeance = await p.evaluate(() => {
+  const out = {}; let cur = null;
+  for (const el of document.querySelectorAll('section.card')) {
+    if (el.classList.contains('seance-entete')) { cur = el.id; out[cur] = { min: 0, acts: [], clot: [] }; continue; }
+    if (!cur) continue;
+    const h = el.querySelector('h2'); if (!h) continue;
+    const t = h.textContent, m = t.match(/⏱\s*~?\s*(\d+)\s*min/);
+    if (m && !/bonus|facultatif/i.test(t)) { out[cur].min += +m[1]; out[cur].acts.push(t.split('—')[0].trim()); }
+    if (/bonus/i.test(t)) out[cur].clot.push('Bonus');
+    if (/bilan/i.test(t)) out[cur].clot.push('Bilan');
+    if (/entraîner/i.test(t)) out[cur].clot.push('QCM');
+  }
+  return out;
+});
+for (const [id, m] of Object.entries({ 'seance-1': 45, 'seance-2': 55, 'seance-3': 50 }))
+  ok(id + ' : ' + m + ' min d’activités annoncées, au plus 55',
+     !!parSeance[id] && parSeance[id].min === m && m <= 55,
+     parSeance[id] ? parSeance[id].min + ' min — ' + parSeance[id].acts.join(' + ') : 'absente');
+ok('aucune activité avant la séance 1, et 150 min en tout',
+   Object.values(parSeance).reduce((s, x) => s + x.min, 0) === 150
+   && (await p.evaluate(() => { const s1 = document.getElementById('seance-1');
+        return [...document.querySelectorAll('section.card h2')].filter(h => /⏱/.test(h.textContent)
+          && (h.compareDocumentPosition(s1) & Node.DOCUMENT_POSITION_FOLLOWING)).length; })) === 0);
+ok('clôture à la dernière séance seulement : Bonus → Bilan → QCM',
+   !!parSeance['seance-3'] && parSeance['seance-3'].clot.join(' → ') === 'Bonus → Bilan → QCM'
+   && !parSeance['seance-1'].clot.length && !parSeance['seance-2'].clot.length,
+   parSeance['seance-3'] ? parSeance['seance-3'].clot.join(' → ') : '');
+const btns = await p.$$eval('nav.fin-seance a.vers-seance', l => l.map(a => a.getAttribute('href')));
+ok('un bouton vers la séance suivante au bas des séances 1 et 2', btns.join() === '#seance-2,#seance-3', btns.join());
+const liens = await p.$$eval('.seances-nav a', l => l.map(a => a.getAttribute('href')));
+ok('des liens vers les trois séances sous le titre', liens.join() === '#seance-1,#seance-2,#seance-3', liens.join());
+ok('chaque lien « banc » mène à un banc qui existe',
+   await p.evaluate(() => [...document.querySelectorAll('a[href="#banc"]')].length > 0 && !!document.getElementById('banc')));
+await p.setViewportSize({ width: 390, height: 844 });
+for (const cible of ['seance-2', 'seance-3']) {
+  await p.click(`nav.fin-seance a[href="#${cible}"]`); await p.waitForTimeout(200);
+  const top = await p.$eval('#' + cible, e => e.getBoundingClientRect().top);
+  ok('à 390 px, le bouton ➡ mène à la séance ' + cible.slice(-1), top >= 0 && top < 160, 'haut à ' + Math.round(top) + ' px');
+}
+ok('à 390 px, aucun défilement horizontal',
+   (await p.evaluate(() => document.documentElement.scrollWidth)) <= 390,
+   String(await p.evaluate(() => document.documentElement.scrollWidth)));
+await p.setViewportSize({ width: 1280, height: 720 });
+await p.evaluate(() => { history.replaceState(null, '', location.pathname); scrollTo(0, 0); });
+
 // ── les activités ────────────────────────────────────────────────────────
 for (const [n, champs] of Object.entries(REP.activites)) {
   for (const [id, val] of Object.entries(champs)) {
@@ -104,6 +155,54 @@ ok('les réponses survivent au rechargement', (await p.inputValue('#' + idT)) ==
    idT + ' = ' + (await p.inputValue('#' + idT)));
 ok('les verrous survivent au rechargement', await p.evaluate(() => !!window.__exp.msgOk));
 ok('les champs cochés survivent au rechargement', await p.isChecked('#ch0'));
+
+const ANCIENNE = { inputs: { hyp: 'Si l’une des deux tombe, la sirène ne part plus.',
+    hors: "déclenche seule, et signale qu'elle est seule", a2regle: 'La sirène part si les deux annoncent au moins 2.',
+    a3ph: 'Quand l’autre se tait, la station déclenche et le dit.', reinv: 'À trois, on vote deux sur trois et on affiche la troisième.' },
+  checks: { ch0: true, ch1: true, ch2: true, ch3: true, ch4: true, ch5: true }, exp: { msgEssaye: true, msgOk: true, coupe: true } };
+// ── sauvegarde : clé propre et migration unique depuis seq_3e_C7_4 (24/10/2026) ──
+// Jusqu'au 24/10/2026, la page enregistrait sous la clé de 3e_C7.4 : les deux séquences
+// mélangeaient le travail de l'élève. Une sauvegarde écrite par l'ancienne page (même format,
+// save() n'a pas changé) se trouve donc sous seq_3e_C7_4.
+{
+  const CLE = (src.match(/const KEY = "([^"]+)"/) || [])[1];
+  ok('la page enregistre sous sa propre clé', CLE === 'seq_3e_C7_8', CLE);
+  const ctx = await b.newContext({ viewport: { width: 390, height: 844 } });
+  const q = await ctx.newPage(); const e2 = [];
+  q.on('pageerror', e => e2.push(e.message));
+  const lit = k => q.evaluate(k => localStorage.getItem(k), k);
+  await q.goto('file://' + f, { waitUntil: 'load' }); await q.waitForTimeout(200);
+  ok('première ouverture : la clé propre est créée, rien sous seq_3e_C7_4',
+     (await lit('seq_3e_C7_8')) !== null && (await lit('seq_3e_C7_4')) === null);
+  // l'ancienne sauvegarde existe, la clé propre pas encore : la page doit COPIER l'ancienne
+  await q.evaluate(v => { localStorage.removeItem('seq_3e_C7_8'); localStorage.setItem('seq_3e_C7_4', v); },
+                   JSON.stringify(ANCIENNE));
+  await q.reload({ waitUntil: 'load' }); await q.waitForTimeout(300);
+  ok('migration : la page se recharge sans erreur JS', e2.length === 0, e2.slice(0, 2).join(' | '));
+  const relu = {};
+  for (const id of Object.keys(ANCIENNE.inputs)) relu[id] = await q.inputValue('#' + id);
+  ok('migration : chaque réponse de seq_3e_C7_4 apparaît à sa place, séance 3 comprise',
+     Object.entries(ANCIENNE.inputs).every(([k, v]) => relu[k] === v),
+     Object.entries(relu).map(([k, v]) => k + '=' + String(v).slice(0, 14)).join(' · '));
+  ok('migration : l’idée de départ est rappelée au bilan',
+     (await q.textContent('#rappelHyp')) === ANCIENNE.inputs.hyp);
+  ok('migration : les verrous sont conservés',
+     await q.evaluate(v => v.every(x => !!window.__exp[x]), Object.keys(ANCIENNE.exp)));
+  ok('migration : copie sans effacer — seq_3e_C7_4 est intacte',
+     (await lit('seq_3e_C7_4')) === JSON.stringify(ANCIENNE));
+  // écrire dans 3e_C7.8 ne touche plus seq_3e_C7_4
+  const NOUV = 'Nouvelle idée, écrite dans 3e_C7.8.';
+  await q.fill('#hyp', NOUV); await q.waitForTimeout(100);
+  ok('écrire dans 3e_C7.8 ne modifie plus seq_3e_C7_4', (await lit('seq_3e_C7_4')) === JSON.stringify(ANCIENNE));
+  ok('… et ce qui est écrit va sous seq_3e_C7_8', ((await lit('seq_3e_C7_8')) || '').includes(NOUV));
+  // 3e_C7.4 change ensuite son travail : 3e_C7.8 ne le relit plus jamais
+  await q.evaluate(() => localStorage.setItem('seq_3e_C7_4',
+    JSON.stringify({ inputs: { hyp: 'IDÉE ÉCRITE DANS 3e_C7.4' }, checks: {}, exp: {} })));
+  await q.reload({ waitUntil: 'load' }); await q.waitForTimeout(300);
+  ok('migration une seule fois : 3e_C7.8 ne relit plus seq_3e_C7_4', (await q.inputValue('#hyp')) === NOUV,
+     await q.inputValue('#hyp'));
+  await ctx.close();
+}
 
 const n0 = T.filter(t => t.ok).length;
 console.log(T.map(t => `${t.ok ? '✅' : '❌'} ${t.n}${t.d ? ' — ' + t.d : ''}`).join('\n'));

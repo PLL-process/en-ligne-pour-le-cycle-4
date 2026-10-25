@@ -11,7 +11,7 @@
 | Référentiel | BO n°9 du 29/02/2024 |
 | Domaines du socle | D1.3, D2, D3, D4, D5 |
 | CRCN | 3.4 Programmer · 5.2 Évoluer dans un environnement numérique |
-| Durée | 4 séances de 1 h 30 |
+| Durée | 8 séances de 55 min (285 min d'activités annoncées) |
 | Objet-fil 3e | La station d'alerte cyclonique (décrite en 3e_C4.3, programmée ici, auto-testée en 3e_C6.2) |
 
 ## Sous-compétences travaillées (formulations officielles)
@@ -43,42 +43,80 @@ PV de recette, pas le QCM (qui consolide).
   séquence distingue explicitement mesure, vigilance et alerte ;
   anémomètre **simulé par un potentiomètre**, dit explicitement aux élèves.
 
-## Déroulé (4 × 1 h 30)
+## Déroulé (8 × 55 min)
 
-### S1 — « La mairie vous appelle » (C9.2)
+Une heure de cours par semaine et par classe (décision de Pascal du 24/10/2026) :
+la séquence, écrite d'abord en quatre séances de 1 h 30, passe à **huit séances de
+55 min**, sans rien retirer. Chaque séance garde 15 à 25 min hors activités annoncées
+pour le lancement, l'échauffement logiciel, les transitions et le bilan (règle n°23).
+La seule activité de plus de 55 min (act. 3, ~70 min) est coupée en deux parties
+nommées, à la frontière palier 2 / palier 3.
+
+| Séance | Contenu | Activités annoncées | Page découpée |
+|---|---|---|---|
+| S1 | Accroche (courrier, hypothèses, billet d'entrée) + act. 1 | 30 min | page 1 |
+| S2 | Act. 2 | 35 min | page 1 |
+| S3 | Échauffement Vittascience (cinq gestes) + act. 3, première partie | 35 min | page 2 |
+| S4 | Act. 3, suite (reprise, palier 3, journal, vérificateur) | 35 min | page 2 |
+| S5 | Act. 4 | 40 min | page 3 |
+| S6 | Act. 5 | 35 min | page 3 |
+| S7 | Act. 6 | 40 min | page 4 |
+| S8 | Act. 7 + clôture (synthèse, Bonus, bilan, QCM) | 35 min | page 4 |
+
+Avant / après : S1 90 min (act. 1 + 2 = 65) → S1 + S2 ; S2 (act. 3 = 70) → S3 + S4 ;
+S3 (act. 4 + 5 = 75) → S5 + S6 ; S4 (act. 6 + 7 = 75, clôture) → S7 + S8.
+
+### S1 — « La mairie vous appelle » : du besoin aux deux chaînes (C9.2)
 Accroche (15 min) : courrier + hypothèses + billet d'entrée sans note.
 Act. 1 (30 min) : exigences (comportement/performance), les deux chaînes, place
 du bouton (règle n°6 : information en haut, énergie en bas, ordre qui descend).
+
+### S2 — Du besoin à l'algorithme (C9.2)
 Act. 2 (35 min) : algorithme en langage naturel puis algorigramme des 4 niveaux
 (ordre des tests ; encart 🎓 DNB). Synthèse (10 min).
 
-### S2 — Programmer la station en blocs (C9.2)
-Act. 3 (70 min) : TP par **paliers** façon « dé de 5e » — 1. lire (A1, calibrer),
-2. décider (SI/SINON, seuil haut d'abord), 3. afficher (LCD couleur, DEL) ;
-chaque palier : geste → image du résultat attendu → rituel d'enregistrement.
-Palier 4 en aperçu. Rotation îlot 🅰 pendant travail 🅱/🅲 au banc intégré.
+### S3 — Programmer la station en blocs : lire et décider (C9.2)
+Échauffement : les cinq gestes de Vittascience (ouvrir, catégories, nommer,
+simuler, sortir).
+Act. 3, première partie (35 min) : TP par **paliers** façon « dé de 5e » —
+1. lire (A1, calibrer), 2. décider (SI/SINON, seuil haut d'abord) ; chaque palier :
+geste → image du résultat attendu → rituel d'enregistrement. Fin de partie :
+programme du palier 2 enregistré et rangé dans le dossier de la classe.
 
-### S3 — L'humain dans la boucle (C9.2)
+### S4 — Programmer la station en blocs : alerter, puis vérifier (C9.2)
+Act. 3, suite (35 min) : reprise (rouvrir le programme du palier 2, ou le
+reconstruire avec les planches), 3. alerter (sous-programmes de mode, LCD
+couleur, DEL), palier 4 en aperçu, captures réelles du programme de référence,
+journal de paliers et vérificateur (verrous du banc). Rotation îlot 🅰 pendant
+travail 🅱/🅲 au banc intégré.
+
+### S5 — L'humain dans la boucle (C9.2)
 Act. 4 (40 min) : acquittement — booléen-mémoire, événement (niveau ≠ précédent),
 ré-armement ; chronogramme ; 2 expériences tracées au banc.
+
+### S6 — Sous le capot : lire le C++ (C9.2)
 Act. 5 (35 min) : lecture guidée du C++ généré (const, map, else if, sous-programme
 `afficherEtat()`) + diagnostic sur trace série (version 🅲 incluse).
 
-### S4 — La recette (C8.3)
+### S7 — Prouver (1) : le protocole (C8.3)
 Act. 6 (40 min) : **rédiger** le protocole : nominaux, cas limites aux six frontières 62/63, 117/118, 177/178,
 performance chronométrée, 2 essais d'interaction, règle de décision.
+
+### S8 — Prouver (2) : la recette (C8.3)
 Act. 7 (35 min) : **exécuter** au banc (frontières et chrono tracés), tableau
 essai/attendu/observé/verdict rempli PENDANT, **PV de recette** rédigé et signé.
+Puis la clôture : synthèse, Bonus facultatif, bilan (retour à l'hypothèse,
+positionnement), renvoi au QCM.
 
 ## Versions 🅰🅱🅲
 
 | Version | Dispositif |
 |---|---|
-| 🅰 Matériel réel | **Séance 2 (maquette)** : UNO + shield Grove 5 V, capteur rotatif A0, voyants D2 vert / D3 orange / D4 rouge, buzzer D5 — programme construit sur **Vittascience** (interface Arduino, mode BLOCS) et téléversé. **Séances 3-4 (station du labo)** : potentiomètre A1, bouton D2, DEL D3, buzzer D5, LCD I2C. TBT uniquement. |
+| 🅰 Matériel réel | **Séances 3-4 (maquette)** : UNO + shield Grove 5 V, capteur rotatif A0, voyants D2 vert / D3 orange / D4 rouge, buzzer D5 — programme construit sur **Vittascience** (interface Arduino, mode BLOCS) et téléversé. **Séances 5 à 8 (station du labo)** : potentiomètre A1, bouton D2, DEL D3, buzzer D5, LCD I2C. TBT uniquement. |
 | 🅱 Simulation | Banc d'essai intégré à la page : mêmes seuils, même logique (boucle 200 ms), verrous expérientiels `window.__exp`. |
 | 🅲 Sans matériel | Banc intégré + traces d'exécution fournies (act. 5 et 7). Parcours complet, y compris à la maison. |
 
-**Point de vigilance outil (refonte v2)** : la séance 2 se fait désormais sur
+**Point de vigilance outil (refonte v2)** : les séances 3 et 4 se font sur
 **Vittascience**, interface Arduino en mode **BLOCS**
 (`fr.vittascience.com/arduino`). Motif : Vittascience **simule**, ArduBlock non —
 or les tests aux **six valeurs frontières** (62/63, 117/118, 177/178), cœur de la compétence
@@ -92,13 +130,13 @@ le code d'intégration officiel (embed=1) répond X-Frame-Options: SAMEORIGIN
 (mesuré le 13/09/2026), aucun cadre ne s'affiche.
 
 **ArduBlock Éducation 1.7** n'est pas abandonné : il devient un **bonus
-facultatif — hors parcours obligatoire** de la séance 2, illustré par **deux
+facultatif — hors parcours obligatoire** de la séance 4, illustré par **deux
 captures réelles** du logiciel (paliers 1 et 2, poste du labo — règle d'or
 n°94). Ce bonus a une vraie valeur pédagogique : il montre le **même
 raisonnement** dans deux logiciels et à deux échelles, ce qui prépare la question
 « ce qu'un algorigramme ne dit pas » (act. 2 c).
 
-Les planches de la séance 2 sont des **reconstitutions schématiques** de l'écran
+Les planches des séances 3 et 4 sont des **reconstitutions schématiques** de l'écran
 Vittascience, étiquetées comme telles (pas des captures) : à remplacer par des
 captures du poste réel dès que les programmes de la classe existent
 (règles n°70/73/94).
@@ -139,6 +177,6 @@ déconnexion de module sous tension.
 
 - 3e_C6.2 « L'auto-test de la station » (non-régression outillée) — même objet-fil.
 - 3e_C8.1 / C8.2 (essais, mesures, comparaison aux performances attendues).
-- DNB : algorigrammes (encart 🎓 en S1, questions illustrées du QCM).
+- DNB : algorigrammes (encart 🎓 en S2, questions illustrées du QCM).
 - EDD : culture du risque cyclonique, rôle des systèmes d'alerte en milieu insulaire.
 - EPI possible : Physique-Chimie (pression, vent), Géographie (risques naturels).

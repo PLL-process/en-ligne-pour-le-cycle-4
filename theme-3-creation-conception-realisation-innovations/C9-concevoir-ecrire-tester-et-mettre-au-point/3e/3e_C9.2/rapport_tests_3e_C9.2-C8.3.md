@@ -1,6 +1,6 @@
 # Rapport de tests — Lot 3e_C9.2 + 3e_C8.3 « La station d'alerte cyclonique se programme »
 
-Date : 2026-08-26 (**refonte v3** ; v2 : 2026-08-21 ; 1re livraison : 2026-08-19) ·
+Date : 2026-10-25 (**séances de 55 min** ; refonte v3 : 2026-08-26 ; v2 : 2026-08-21 ; 1re livraison : 2026-08-19) ·
 Agent : Fable · Environnement : Chromium headless (Playwright 1.55),
 viewport 1280×900 + émulation téléphone 390×844 · Suite : `tests_3e_C9.2-C8.3.mjs`
 (committée dans ce dossier, rejouable : `node tests_3e_C9.2-C8.3.mjs .`).
@@ -12,7 +12,70 @@ l'acquittement, le ré-armement, le chrono —, bilan, persistance croisée entr
 pages, mode essentiel, loupe, QCM et ses scénarios, mobile). Les captures sont
 livrées à part (non committées).
 
-## 1. Tests automatisés exécutés — 113/113 réussis
+## 0. Redécoupage en huit séances de 55 min (24-25/10/2026) — 156/156 réussis
+
+Décision de Pascal : une heure par semaine et par classe. Les quatre séances de
+1 h 30 deviennent **huit séances de 55 min**, sans rien retirer : une activité par
+séance (30 à 40 min annoncées), l'activité 3 (~70 min) coupée en deux parties
+nommées entre le palier 2 et le palier 3 (« première partie » en séance 3, « suite »
+en séance 4, avec une phrase de reprise). Les quatre pages découpées gardent leurs
+noms de fichier et portent chacune deux séances (1-2, 3-4, 5-6, 7-8) ; elles sont
+régénérées par `generer_les_quatre_pages.py`, réparé au passage (il ne tournait
+plus sur la source depuis le passage du Bonus avant le bilan).
+
+Suite rejouée en entier : **135/135 avant** le redécoupage, **156/156 après**. Les
+tests qui ouvraient les onglets s2 à s4 ouvrent désormais s2 à s8 ; 21 tests
+ajoutés :
+
+| Test ajouté | Résultat |
+|---|---|
+| Activité 3 en deux parties nommées (première partie / suite), 35 + 35 min, panneaux s3 et s4 | ✅ |
+| La coupe tombe entre le palier 2 et le palier 3 | ✅ |
+| La suite s'ouvre sur une phrase de reprise, sans « tu as fait » (n°304) | ✅ |
+| Règle n°101 : 7 boutons « séance suivante » (test existant, 3 → 7), chacun vers la séance suivante, aucun en séance 8 (ajouté) | ✅ |
+| Passage séance 3 → séance 4 (de la première partie à la suite) | ✅ |
+| Bandeau « 8 séances de 55 min », plus aucune trace de « 1 h 30 » ni « 90 min » | ✅ |
+| 8 onglets, 8 panneaux · tableau de bord qui suit la séance ouverte | ✅ (2 tests) |
+| Une sauvegarde écrite avec l'ancien découpage se relit sans erreur JS (réponses, progression 6/7, coches réparties sur les 8 séances) | ✅ (2 tests) |
+| Chaque page découpée annonce ses deux séances (« 2 séances de 55 min »), les ancre sous leur en-tête, et la première mène à la seconde par un lien interne | ✅ (8 tests) |
+| Page 2 : le lien « Séance 4 » amène l'en-tête de la séance 4 en haut de l'écran | ✅ |
+| Mobile 390 px : les 8 séances s'ouvrent par leur onglet sans débord ; de la séance 1 à la 8 par les boutons | ✅ (2 tests) |
+
+**Correction des seuils et broches d'avant (25/10/2026) — 164/164.** L'expérience ② de
+l'activité 4 (« sous 100, puis au-dessus de 150 ») ne faisait jamais repartir le
+buzzer, qui ne sonne qu'en ouragan majeur : elle dit désormais « redescends sous 178
+(à 177), puis remonte à 178 ou plus ». Corrigés aussi : le critère de l'activité 2
+(178 avant 118 avant 63), l'aide 2, les erreurs fréquentes et l'alt de l'activité 4
+(buzzer au niveau 3), la planche `blocs_palier4_acquitter.svg` (« niveauAlerte = 3 »),
+le corrigé du défi « anémomètre réel » (63, 118, 178), la fiche 🅰 de l'activité 3
+(un seul montage, celui du programme de référence ; légende sous le schéma qui ne
+dessine qu'un voyant), et deux renvois de la synthèse professeur (essai 13, 13
+verdicts). 8 tests ajoutés : l'expérience ② rejouée telle qu'écrite (177 puis 178),
+sa consigne, et un garde-fou qui refuse le retour des anciens seuils et broches
+dans les cinq fichiers et dans la planche du palier 4.
+
+**Schéma de câblage redessiné et QCM vérifié (25/10/2026) — 167/167.**
+`Images/montage_station_grove.svg` ne montrait qu'une DEL « rouge » sur D3 : il est
+redessiné d'après le programme de référence (A1, D2, I2C, D5, voyants D6 · D7 · D3 · D4),
+en portrait pour le téléphone. Au QCM, cinq passages corrigés (question 2 « DEL sur D3 »,
+alt de la question illustrée, question 10 « (niveau = 2) », exemple de la question 11
+« vigilance → alerte », réfutation de la question 13 « DEL commandée par D3 ») et la
+hauteur des figures plafonnée ; synthèse élève : buzzer au niveau 3. 3 tests ajoutés
+(les huit branchements du schéma, plus de DEL unique, garde-fou sur les 30 questions).
+`verif_qcm_coherence` : 30 q, 8/7/7/8, réfutations alignées · `controle_medias` vert.
+
+Contrôles du dépôt après redécoupage : `controle_squelette` 0 refus (D1 à D6 : 0),
+`controle_navigation_seances`, `controle_hierarchie`, `controle_regles_visibles`,
+`controle_liens` (aucun lien mort), `controle_atteignabilite` (406/406),
+`controle_debordement`, `controle_blocs_dessines`, `controle_impression` : verts.
+`mesurer_temps_seances.py` : tout-en-un 8 × 55 = 440 min pour 285 min d'activités
+(+155) ; chaque page découpée 2 × 55 = 110 min (+45, +40, +35, +35).
+`verif_regles_audit.py` : 14 ✘ avant, 14 ✘ après, identiques ligne à ligne (n°298,
+n°300, n°301 des pages 1 à 3 sans clôture, n°304, n°34 — tous antérieurs).
+Playwright à 390 px sur les cinq fichiers : zéro erreur JS, débord 0, chaque séance
+atteinte, passage d'une séance à la suivante, reprise après rechargement.
+
+## 1. Tests automatisés exécutés — 113/113 réussis (refonte v3, 26/08/2026)
 
 ### Ce que la refonte v3 a ajouté à la suite (39 tests)
 
@@ -83,7 +146,7 @@ livrées à part (non committées).
 | Activité 6 : protocole rédigé exigé — 4 familles, dont **au moins 4 des 6 frontières** citées, + règle de décision | ✅ |
 | Activité 7 : exécution réelle exigée — **6 frontières** + chrono tracés, **13 verdicts**, 6 attendus justes, PV | ✅ |
 | Chrono de performance : franchissement de **178** mesuré, verdict CONFORME (< 1 s) | ✅ |
-| Progression 7/7, coches ✔ des 4 séances, rappel d'hypothèse au bilan | ✅ |
+| Progression 7/7, coches ✔ des séances (8 depuis le 25/10/2026), rappel d'hypothèse au bilan | ✅ |
 | **Sauvegarde/restauration** après rechargement : progression, réponses, verrous du banc | ✅ |
 | Encadré jumelage : présent, replié par défaut (encadré interne compris), 5 ouragans cités (1938, Irene, Sandy, Henri, Ida), 2 tableaux, hors parcours obligatoire, limite du prototype nommée | ✅ (10 tests) |
 | Règle n°4 : un SEUL bouton QCM · Règle n°86 : 3 défis bonus, 3 corrigés repliés | ✅ |
@@ -158,7 +221,7 @@ Chargement des deux synthèses (élève, professeur) sans erreur JS : ✅.
   D3 orange, D4 rouge, D5 buzzer, D6 vert, D7 jaune, LCD I2C) et le téléversement
   depuis Vittascience ;
 - **accès réseau** : vérifier que `fr.vittascience.com` n'est pas filtré par le
-  réseau du collège AVANT la séance 2 (sinon, le repli hors-ligne prend le relais) ;
+  réseau du collège AVANT la séance 3 (sinon, le repli hors-ligne prend le relais) ;
 - le **formulaire `/learn/form`** de Vittascience (déclaration publique de la
   ressource) : contenu rédigé et prêt, **non soumis** ;
 - relecture orthotypographique humaine ; rendu GitHub Pages après publication.

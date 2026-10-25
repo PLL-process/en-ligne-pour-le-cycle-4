@@ -2,7 +2,7 @@
 
 > Aucun matériau ne tient le cahier des charges. Que fait-on — et qui paie la sortie qu'on choisit ?
 
-**Thème 3 · 3<sup>e</sup> — Choisir un matériau constitutif d’un objet et/ou système technique.** · appui `3e_C4.2` · 2 séances de 90 min (160 min d'activités)
+**Thème 3 · 3<sup>e</sup> — Choisir un matériau constitutif d’un objet et/ou système technique.** · appui `3e_C4.2` · 4 séances de 55 min (160 min d'activités)
 
 ➡ **[Ouvrir la séquence](sequence_3e_C7.3_boitier-de-la-station.html)** — hors ligne, sans installation ni compte.
 
@@ -47,7 +47,7 @@ Toutes les valeurs viennent de `materiaux.py` : masses, coûts, épaisseurs et v
 | [`rapport_tests_3e_C7.3.md`](rapport_tests_3e_C7.3.md) | la sortie des deux suites, telle quelle |
 | `materiaux.py` · `banc_mat.py` · `tests_3e_C7.3_sequence.mjs` · `tests_3e_C7.3_qcm.mjs` · `reponses_3e_C7.3.json` | de quoi tout rejouer |
 
-**Tests réels : 43/43 sur la séquence, 32/32 sur le QCM.**
+**Tests réels : 68/68 sur la séquence (dont le découpage en quatre séances de 55 min, vérifié à 390 px), 32/32 sur le QCM.**
 
 ## Ancrage
 

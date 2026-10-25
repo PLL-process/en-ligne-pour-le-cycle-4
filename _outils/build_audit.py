@@ -789,8 +789,10 @@ OVERLAY = {
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
-        qualite="Lot « Le mat de la station — proposer un protocole » : 2 seances de 90 min "
-                "pour 160 min d'activites, banc d'essai ORIGINAL integre a la page avec DEUX "
+        qualite="Lot « Le mat de la station — proposer un protocole » : 4 seances de 55 min "
+                "pour 160 min d'activites (40 / 35 / 50 / 35 ; redecoupage du 24/10/2026, une "
+                "heure de cours par semaine, aucune activite coupee ni raccourcie — trois seances "
+                "n'auraient laisse que 5 min de service, n°23), banc d'essai ORIGINAL integre a la page avec DEUX "
                 "sollicitations sur le meme mat (flexion et traction), trois verrous "
                 "experientiels. Le pivot du lot est une mesure, pas une affirmation : les cinq "
                 "candidats ne se classent pas dans le meme ordre selon l'essai — la barre "
@@ -800,7 +802,7 @@ OVERLAY = {
                 "d'en proposer un autre. Les dix releves de l'activite 3 sont compares aux "
                 "vraies valeurs du banc a 0,05 pres : 41 au lieu de 41,1 est refuse. "
                 "QCM 30 q / 90 refutations (C8.2 x20, C3.4 x10), lexique 30 notions, deux "
-                "syntheses, fiche, matrice de 23 notions, tests reels 32/32 et 26/26, "
+                "syntheses, fiche, matrice de 23 notions, tests reels 44/44 et 32/32, "
                 "scripts de test et de calcul livres dans le dossier.",
         anomalies="Aucun essai physique : le banc est une simulation, calculee par "
                   "profils_3e_C8.2.py avec les formules de la poutre encastree et les "
@@ -872,8 +874,9 @@ OVERLAY = {
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
-        qualite="Lot « La station doit tenir 72 heures sans secteur » : 2 seances de 90 min pour "
-                "150 min d'activites, meme banc d'energie. Le reseau tombe au moment precis ou la "
+        qualite="Lot « La station doit tenir 72 heures sans secteur » : 3 seances de 55 min "
+                "(45 + 55 + 50, redecoupees le 24/10/2026 depuis 2 seances de 90 min, aucune "
+                "activite coupee) pour 150 min d'activites, meme banc d'energie. Le reseau tombe au moment precis ou la "
                 "station sert : la reponse attendue n'est pas UNE source mais une ARCHITECTURE — "
                 "secteur en source normale, trois accus 18650 (28,2 Wh pour 18,12 exiges, 112 h) en "
                 "reserve, panneau 2 W en recharge. Deux accus donneraient 18,8 Wh pour 18,12, soit "
@@ -882,7 +885,7 @@ OVERLAY = {
                 "trois fois, sur trois objets sans rapport. Le cycle de vie s'argumente avec un "
                 "nombre : 787 piles 9 V par an pour une seule station. QCM 30 q / 90 refutations "
                 "(C7.4 x20, C3.2 x10), lexique 30 notions, deux syntheses, fiche, matrice de 19 "
-                "notions, tests reels 36/36 et 26/26 avec scripts livres.",
+                "notions, tests reels 54/54 et 32/32 avec scripts livres.",
         anomalies="Aucune mesure reelle. « Moins d'un dixieme » de recolte solaire sous cyclone est un "
                   "ordre de grandeur, pas un releve, et la page ne le presente pas autrement. Le "
                   "vieillissement des accus est traite en un seul chiffre (environ 20 % apres "
@@ -1167,7 +1170,10 @@ OVERLAY = {
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
-        qualite="Lot « Produire le boitier » : 2 seances de 90 min pour 160 min d'activites. "
+        qualite="Lot « Produire le boitier » : 4 seances de 55 min pour 160 min d'activites "
+                "(50, 50, 35, 25 ; une heure par semaine, decision du 24/10/2026 — trois seances "
+                "ne laisseraient pas les 10 min de service de la regle n°23 ; seule l'activite 1 "
+                "est coupee, 1a 25 min en seance 1 et 1b 10 min en seance 2). "
                 "Meme phrase de programme qu'en 4e, geste tout autre — ici le moyen est CHOISI "
                 "DEPUIS LONGTEMPS (3e_C7.3 : PETG imprime au college) et la forme est MODELISEE "
                 "(3e_C7.6). Tout est decide, et rien n'est fabricable : trois cotes sur cinq sont "
@@ -1184,7 +1190,7 @@ OVERLAY = {
                 "toucher est compte sur une JAUGE A PART (regle d'or n°219). Enfin l'impression "
                 "deportee supprime l'iteration : meme temps machine, un delai, UNE SEULE FOURNEE. "
                 "QCM 30 q / 90 refutations (C7.7 x20, C8.1 x10), lexique 30 notions, deux "
-                "syntheses, fiche, matrice, tests reels 52/52 et 32/32, scripts livres.",
+                "syntheses, fiche, matrice, tests reels 77/77 et 32/32, scripts livres.",
         anomalies="Aucune piece n'est imprimee dans la version B : la version A imprime une "
                   "EPROUVETTE DE COIN — 15 mm de boitier, 8 min — ou les trois defauts se voient a "
                   "l'oeil nu, et c'est elle qui fait foi. Aucune simulation n'est lancee : "
@@ -1269,7 +1275,10 @@ OVERLAY = {
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
-        qualite="Lot « Le boitier de la station » : 2 seances de 90 min pour 160 min d'activites. "
+        qualite="Lot « Le boitier de la station » : 4 seances de 55 min pour 160 min d'activites "
+                "(50, 50, 35, 25 ; une heure par semaine, decision du 24/10/2026 — trois seances "
+                "ne laisseraient pas les 10 min de service de la regle n°23 ; seule l'activite 1 "
+                "est coupee, 1a 25 min en seance 1 et 1b 10 min en seance 2). "
                 "Le mot du code est CONSTITUTIF, et le lot en tire deux consequences que les deux "
                 "niveaux precedents n'avaient pas. (1) L'EPAISSEUR N'EST PAS DONNEE : elle se "
                 "deduit du materiau par e = e0 x racine(s0/s), si bien que l'aluminium, presque "
@@ -1282,7 +1291,7 @@ OVERLAY = {
                 "Une contrainte relachee ne disparait pas : elle CHANGE DE PORTEUR. Deux verrous "
                 "experientiels (evaluer, obtenir exactement un retenu). QCM 30 q / 90 refutations "
                 "(C7.3 x20, C4.2 x10), lexique 30 notions, deux syntheses, fiche, matrice de 30 "
-                "notions, tests reels 43/43 et 32/32, scripts livres.",
+                "notions, tests reels 68/68 et 32/32, scripts livres.",
         anomalies="Aucune eprouvette n'est cassee : la loi en racine carree est admise, pas "
                   "mesuree — la version A imprime trois plaques a 1, 2 et 3 mm et les casse sur le "
                   "banc de flexion de 3e_C8.2. Cette loi est une simplification : paroi plane, "
@@ -1358,8 +1367,9 @@ OVERLAY = {
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
-        qualite="Lot « La station qu'il faut equiper » : 2 seances de 90 min pour 150 min "
-                "d'activites. Le catalogue contient dix constituants pour un cahier des charges "
+        qualite="Lot « La station qu'il faut equiper » : 4 seances de 55 min pour 150 min "
+                "d'activites (25 / 35 / 55 / 35 ; redecoupage du 24/10/2026, une heure de cours "
+                "par semaine, aucune activite coupee ni raccourcie). Le catalogue contient dix constituants pour un cahier des charges "
                 "a quatre exigences, et le lot ne porte pas sur le tri mais sur la PROPAGATION : "
                 "l'exigence « visible depuis la cour » impose le bandeau de DEL, le bandeau "
                 "impose 480 mA, 580 mA au total imposent la batterie, et la batterie remet en "
@@ -1367,7 +1377,7 @@ OVERLAY = {
                 "suivant — c'est ce qu'un exercice de tri ne montre jamais. Quatre retraits "
                 "produisent quatre refus de quatre NATURES : une grandeur, un usage, une preuve, "
                 "une quantite d'energie. QCM 30 q / 90 refutations (C7.5 x20, C4.3 x10), lexique "
-                "30 notions, deux syntheses, fiche, matrice de 30 notions, tests reels 42/42 et "
+                "30 notions, deux syntheses, fiche, matrice de 30 notions, tests reels 54/54 et "
                 "32/32, scripts livres.",
         anomalies="Aucune station reelle : l'etabli simule, la version A utilise le carton "
                   "complet et la contrainte de courant s'y mesure au multimetre. L'autonomie "
@@ -1399,7 +1409,9 @@ OVERLAY = {
                 "activites plus tard, quand douze mesures liberees d'un coup seraient toutes "
                 "datees de la meme minute. Trois verrous experientiels. QCM 30 q / 90 "
                 "refutations (C7.8 x20, C1.4 x10), lexique 30 notions, deux syntheses, fiche, "
-                "matrice de 17 notions, tests reels 35/35 et 26/26 avec scripts livres.",
+                "matrice de 17 notions, tests reels 46/46 et 32/32 avec scripts livres. Cle "
+                "de sauvegarde propre seq_4e_C7_8 depuis le 25/10/2026 (elle partageait celle "
+                "de 4e_C7.4), avec copie unique de l'ancienne a la premiere ouverture.",
         anomalies="Aucune liaison reelle : le banc simule l'echange, et la version A le fait avec "
                   "deux cartes et le moniteur serie — ce sont alors les trames observees qui font "
                   "foi. Le format JSON est impose par le banc ; le choix d'un format est traite "
@@ -1417,8 +1429,9 @@ OVERLAY = {
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
-        qualite="Lot « Deux stations qui se parlent » : 2 seances de 90 min pour 150 min "
-                "d'activites, meme banc de liaison. Deux objets, et personne pour arbitrer : "
+        qualite="Lot « Deux stations qui se parlent » : 3 seances de 55 min (45 + 55 + 50, "
+                "redecoupees le 24/10/2026 depuis 2 seances de 90 min, aucune activite coupee) "
+                "pour 150 min d'activites, meme banc de liaison. Deux objets, et personne pour arbitrer : "
                 "tout ce qu'un humain compensait sans y penser doit devenir un champ, une regle "
                 "ou un delai. Le ressort de la seance est que la regle de la mairie — la sirene "
                 "ne part que si les deux stations sont d'accord — cree aussitot un defaut PIRE "
@@ -1429,7 +1442,9 @@ OVERLAY = {
                 "tolerance, quel delai), delai de silence justifie (trois periodes d'emission), "
                 "et six essais dont la moitie portent sur des pannes. QCM 30 q / 90 refutations "
                 "(C7.8 x20, C8.3 x10), lexique 30 notions, deux syntheses, fiche, matrice de 17 "
-                "notions, tests reels 34/34 et 26/26 avec scripts livres.",
+                "notions, tests reels 58/58 et 32/32 avec scripts livres. Cle de sauvegarde "
+                "propre seq_3e_C7_8 depuis le 24/10/2026 (elle partageait celle de 3e_C7.4), "
+                "avec copie unique de l'ancienne a la premiere ouverture.",
         anomalies="Aucune liaison reelle : le banc simule. Le routage et l'adressage ne sont ni "
                   "travailles ni evalues ici — ils le sont par 3e_C4.7 et 3e_C4.8, et le lot "
                   "s'appuie dessus sans les refaire. La synchronisation des horloges est laissee "
@@ -1465,8 +1480,9 @@ OVERLAY = {
         sequence=True, qcm=True, projet=True, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
         qualite="Séquence « La station d'alerte cyclonique se programme » (objet-fil "
-                "3e, commande de la mairie avec exigence de PV de recette) : 4 séances "
-                "de 1 h 30, 7 activités, banc d'essai de la station INTÉGRÉ (curseur de "
+                "3e, commande de la mairie avec exigence de PV de recette) : 8 séances "
+                "de 55 min (24/10/2026, ex-4 × 1 h 30 ; l'activité 3 de ~70 min en deux "
+                "parties), 7 activités, banc d'essai de la station INTÉGRÉ (curseur de "
                 "vent, LCD, DEL, buzzer, bouton d'acquittement, chrono, boucle 200 ms) "
                 "avec verrous expérientiels sur les activités 3, 4 et 7 ; programmation "
                 "ArduBlock par paliers façon « dé de 5e » (image du résultat attendu et "
@@ -1493,11 +1509,12 @@ OVERLAY = {
         statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
         sequence=True, qcm=True, projet=True, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
-        qualite="Proposer un protocole de test : séance 4 entière de la séquence "
-                "« La station d'alerte cyclonique se programme » (3e_C9.2) — l'élève "
-                "RÉDIGE son protocole (act. 6 : nominaux, frontières 99/100/149/150, "
-                "performance chronométrée, interaction) puis l'EXÉCUTE au banc et signe "
-                "le PV (act. 7, verrous sur les frontières et le chrono). 15 questions "
+        qualite="Proposer un protocole de test : séances 7 et 8 (55 min chacune) de la "
+                "séquence « La station d'alerte cyclonique se programme » (3e_C9.2) — l'élève "
+                "RÉDIGE son protocole (act. 6, séance 7 : nominaux, frontières 62/63, "
+                "117/118, 177/178, performance chronométrée, interaction) puis l'EXÉCUTE au "
+                "banc et signe le PV (act. 7, séance 8, verrous sur les frontières et le "
+                "chrono). 15 questions "
                 "de QCM dédiées. README pointeur en place.",
         anomalies="",
     ),

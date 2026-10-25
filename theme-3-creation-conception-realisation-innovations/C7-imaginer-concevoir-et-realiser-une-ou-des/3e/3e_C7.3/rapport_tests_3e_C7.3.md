@@ -11,7 +11,9 @@ node tests_3e_C7.3_qcm.mjs      "$PWD/qcm_3e_C7.3_boitier-de-la-station.html" 3e
 
 ---
 
-## 1. Séquence — **43 / 43**
+## 1. Séquence — **68 / 68**
+
+Rejoué le 24/10/2026 après le redécoupage en **quatre séances de 55 min** (une heure de cours par semaine) : le banc vérifie désormais le bandeau « 4 séances de 55 min », les quatre en-têtes de séance, les minutes de chaque séance (50, 50, 35, 25 — chacune au plus 55, total 160, plus les 10 min de service), le bouton de fin de chaque séance, les liens du haut de page, la vérification de la première partie de l'activité 1, la relecture d'une sauvegarde faite avec l'ancien découpage, et, à 390 px, l'absence de défilement horizontal, chaque séance atteinte, le passage d'une séance à la suivante et la reprise après rechargement.
 
 ```
 ✅ charge sans erreur JS
@@ -37,8 +39,8 @@ node tests_3e_C7.3_qcm.mjs      "$PWD/qcm_3e_C7.3_boitier-de-la-station.html" 3e
 ✅ « sortie C — tenue au soleil 10 → 5 ans » : ce sont les bons — PETG (filament d'impression 3D technique) · PVC rigide (stabilisé anti-UV) · Polypropylène
 ✅ « sortie C — tenue au soleil 10 → 5 ans » : le moins cher est 1,27 € — 1,27 €
 ✅ « sortie C — tenue au soleil 10 → 5 ans » : le verdict le dit — 3 candidats tiennent : PETG (filament d'impression 3D technique) (12,74 €) · PVC
-✅ bandeau de durée présent — ⏱ 2 séances de 90 min
-✅ le bandeau annonce plus de temps que les activités n’en demandent — 180 contre 160
+✅ bandeau de durée présent — ⏱ 4 séances de 55 min
+✅ le bandeau annonce plus de temps que les activités n’en demandent — 220 contre 160
 ✅ un seul bouton QCM
 ✅ hypothèse d’entrée présente
 ✅ consigne de sécurité d’atelier présente
@@ -57,6 +59,31 @@ node tests_3e_C7.3_qcm.mjs      "$PWD/qcm_3e_C7.3_boitier-de-la-station.html" 3e
 ✅ les seuils du banc survivent au rechargement — 5
 ✅ les verrous survivent au rechargement
 ✅ le tableau est reconstruit au rechargement
+✅ le bandeau annonce « 4 séances de 55 min » — ⏱ 4 séances de 55 min
+✅ activités + 10 min de service (lancement, transitions, bilan) tiennent dans les séances annoncées — 160 + 10 pour 4 × 55 = 220
+✅ 4 en-têtes de séance, dans l’ordre — seance-1 seance-2 seance-3 seance-4
+✅ séance 1 : 50 min d’activités annoncées, au plus 55 — 25 + 25 = 50
+✅ séance 1 : finit par le bouton vers la séance 2 — #seance-2
+✅ séance 2 : 50 min d’activités annoncées, au plus 55 — 10 + 40 = 50
+✅ séance 2 : finit par le bouton vers la séance 3 — #seance-3
+✅ séance 3 : 35 min d’activités annoncées, au plus 55 — 35 = 35
+✅ séance 3 : finit par le bouton vers la séance 4 — #seance-4
+✅ séance 4 : 25 min d’activités annoncées, au plus 55 — 25 = 25
+✅ la somme des séances égale les activités annoncées (160 min)
+✅ la clôture (Bonus, puis QCM) est dans la dernière séance seulement
+✅ le haut de page mène à chaque séance — #seance-1 #seance-2 #seance-3 #seance-4
+✅ activité 1a (première partie) validée seule (4/4) — 🎉 Première partie validée — 4/4. La suite de l'activité, et
+✅ une sauvegarde de l’ancien découpage se relit sans erreur
+✅ à 390 px : aucun défilement horizontal
+✅ à 390 px : le lien du haut atteint la séance 1
+✅ à 390 px : le lien du haut atteint la séance 2
+✅ à 390 px : le lien du haut atteint la séance 3
+✅ à 390 px : le lien du haut atteint la séance 4
+✅ à 390 px : « ➡ Séance 2 » mène à son en-tête
+✅ à 390 px : « ➡ Séance 3 » mène à son en-tête
+✅ à 390 px : « ➡ Séance 4 » mène à son en-tête
+✅ à 390 px : après rechargement, la page reste sur la séance 4
+✅ à 390 px : zéro erreur JS
 ```
 
 ## 2. QCM — **32 / 32**

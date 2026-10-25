@@ -11,7 +11,12 @@ python3 profils_3e_C8.2.py      # recalcule toutes les valeurs du banc
 
 ---
 
-## 1. Séquence — **32 / 32**
+## 1. Séquence — **44 / 44**
+
+Dernière exécution : 25/10/2026, après le redécoupage en **4 séances de 55 min** (décision de
+Pascal du 24/10/2026 : une heure de cours par semaine). Les 32 tests d'avant sont gardés ; le
+n°21 lit désormais « 4 séances de 55 min », et douze tests s'ajoutent (tableau « Séances de 55 min »
+ci-dessous).
 
 ### Chargement
 | # | Test | Résultat |
@@ -67,16 +72,30 @@ retrouver un ordre de grandeur.
 | # | Test | Mesuré |
 |---|---|---|
 | 20 | les cinq listes de l'activité 4 offrent les mêmes 5 angles morts | 5 listes × 6 options |
-| 21 | bandeau de durée présent | `⏱ 2 séances de 90 min (1 h 30)` |
+| 21 | bandeau de durée : 4 séances de 55 min | `⏱ 4 séances de 55 min` |
 | 22 | **un seul** bouton de QCM | `1` |
 | 23 | hypothèse d'entrée présente | `#hyp` |
 | 30 | grille de relecture du binôme : 7 critères | `7` |
+
+### Séances de 55 min (24/10/2026)
+| # | Test | Mesuré |
+|---|---|---|
+| 33 | 4 en-têtes de séance, dans l'ordre | `seance-1, seance-2, seance-3, seance-4` |
+| 34 | chaque séance tient dans ses 55 min d'activités annoncées | `40 · 35 · 50 · 35` |
+| 35 | le temps total des activités est conservé | `160` |
+| 36 | chaque activité est dans sa séance | `0+1 · 2 · 3+4 · 5+REFAIRE` |
+| 37 | la clôture suit la dernière séance : synthèse → Bonus → Bilan → QCM | ordre des titres dans la page |
+| 38 | chaque séance (sauf la dernière) mène explicitement à la suivante | `#seance-2, #seance-3, #seance-4` |
+| 39 | le haut de page mène à chacune des séances | 4 liens |
+| 40 | la séance 3 renvoie au protocole rédigé et au banc | `#a2proto`, `#banc` |
+| 41–43 | chaque bouton « ➡ Séance N » amène à son en-tête, sous la barre du haut | `60 px` |
 
 ### Persistance
 | # | Test | Mesuré |
 |---|---|---|
 | 31 | les relevés survivent au rechargement | `467` |
 | 32 | les verrous survivent au rechargement | `flex5` toujours ouvert |
+| 44 | une sauvegarde faite avec l'ancien découpage se relit sans erreur | même clé, même forme `{inputs, exp, flex, trac}` ; `a2q4 = 300`, `flex3` ouvert |
 
 ---
 

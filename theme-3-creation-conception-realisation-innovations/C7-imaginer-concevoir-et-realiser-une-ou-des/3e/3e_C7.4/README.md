@@ -3,8 +3,14 @@
 > **Choisir une source d'énergie pour un OST.**
 > Programme 2024 · cycle 4 · thème 3 · socle D1.3 · D2 · D3 · D4 · D5
 
-➡ **[Ouvrir la séquence](sequence_3e_C7.4_energie-de-la-station.html)** — 2 séances de 90 min (1 h 30), banc d'énergie intégré, hors ligne, sans
+➡ **[Ouvrir la séquence](sequence_3e_C7.4_energie-de-la-station.html)** — 3 séances de 55 min (45 + 55 + 50 min d'activités), banc d'énergie intégré, hors ligne, sans
 installation ni compte.
+
+| Séance | Activités | Minutes |
+|---|---|---|
+| 1 — Combien d'énergie, pour combien de temps | situation et idée de départ, activités 0 et 1 | 45 |
+| 2 — Recharger ou tenir, et à quel prix | activités 2 et 3 | 55 |
+| 3 — L'avis à signer, puis l'îlet | activité 4, REFAIRE, puis synthèse, Bonus, bilan et QCM | 50 |
 
 ---
 
@@ -54,14 +60,14 @@ sont tenus ici et lesquels sont **sans objet**, puisque rien n'est programmé da
 
 ## Tests
 
-**36 / 36** sur la séquence, **32 / 32** sur le QCM, rejouables : les deux scripts et le jeu de
+**54 / 54** sur la séquence (dont le découpage en trois séances et la relecture d'une sauvegarde faite avant), **32 / 32** sur le QCM, rejouables : les deux scripts et le jeu de
 réponses sont livrés dans le dossier. Voir [`rapport_tests_3e_C7.4.md`](rapport_tests_3e_C7.4.md).
 
 ## Fichiers
 
 | Fichier | Contenu |
 |---|---|
-| [`sequence_3e_C7.4_energie-de-la-station.html`](sequence_3e_C7.4_energie-de-la-station.html) | 6 activités chronométrées, banc intégré |
+| [`sequence_3e_C7.4_energie-de-la-station.html`](sequence_3e_C7.4_energie-de-la-station.html) | 6 activités chronométrées en 3 séances de 55 min, banc intégré |
 | [`qcm_3e_C7.4_energie-de-la-station.html`](qcm_3e_C7.4_energie-de-la-station.html) | 30 q · 90 réfutations · 3e_C7.4 ×20, 3e_C3.2 ×10 |
 | [`lexique_3e_C7.4.html`](lexique_3e_C7.4.html) | 30 notions, générées depuis le QCM du lot |
 | [`synthese_eleve_3e_C7.4.html`](synthese_eleve_3e_C7.4.html) | à imprimer, lisible en noir et blanc |
