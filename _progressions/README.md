@@ -5,6 +5,30 @@ classe a UN fichier : calendrier Martinique 2026-2027, référentiels (cycle 4 +
 niveau), progression annuelle, puis un onglet **générateur de séquence** par
 séquence, dans l'ordre de l'année.
 
+## Plan du 25/10/2026 : une séance de 55 min par semaine, 20 min au plus à la maison
+
+Décision de Pascal (24-25/10/2026) : une seule heure de cours par semaine et par classe, à tous les
+niveaux. À partir du 2 novembre, les classeurs suivent le plan qu'il a validé : une séquence en ligne
+par ligne du classeur, et les activités sans matériel peuvent se terminer à la maison (20 min au plus
+par semaine). Les 8 semaines d'avant la Toussaint ne bougent pas (« ✔ Avant la Toussaint »).
+
+- **5e** : 22 séances en classe + 7 tampons. Lignes S1 à S7, la ligne S5 sans séance (son réseau local
+  est travaillé dans « Le lampadaire intelligent », S3).
+- **4e** : 21 séances + 8 tampons. La ligne S5 est sans séance (son réseau est dans « Le jardin connecté », S4).
+- **3e** : 24 séances + 2 tampons + 3 semaines de révisions DNB. Les lignes S1 et S3 sont sans séance :
+  3e_C1.1 à C1.4 et 3e_C3.1 à C3.4 restent sans séquence. Le TAMPON P3 est devenu une séance.
+
+Où lire le travail maison : colonne D du ⚙ Moteur, colonne J du 📅 Calendrier (surlignée en vert, elle
+suit les imprévus), colonne « Répartition » de la 🧭 Progression, et bloc « 📋 Travail à faire » de
+chaque séance dans les générateurs. Le bouton « 📋 Cahier de texte de la semaine » le copie pour Pronote.
+
+Les déroulés des générateurs (en-tête, objectif, activités, démarche, trace, cahier de texte) ont été
+réécrits par Fable à partir des pages en ligne, avec l'accord de Pascal (« tu as carte blanche »), y
+compris dans les onglets des thèmes 1 et 3. Les anciens classeurs sont archivés dans
+`_archive-anciennes-versions/progressions-avant-plan-55-min-2026-10-25/`.
+`remplir_S7_theme3.py` date du plan de juillet : le relancer réécrirait les onglets S7 avec l'ancien
+déroulé.
+
 ## Fichiers
 
 | Fichier | Statut | Ossature | Générateurs remplis |
