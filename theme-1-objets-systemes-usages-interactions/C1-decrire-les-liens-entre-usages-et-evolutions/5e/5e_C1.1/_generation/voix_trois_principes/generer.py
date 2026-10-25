@@ -25,7 +25,8 @@ CE QU'IL FAUT SUR LE POSTE (rien de tout cela n'est dans le dépôt)
 Ne jamais copier Piper, espeak-ng ni le modèle dans le dépôt : le moteur est sous GPL-3, le modèle est une donnée à part.
 
 AVERTISSEMENT — UNE PRISE PRODUITE N'EST PAS UNE PRISE VALIDÉE. Seule l'écoute de Pascal valide une prise ; voix.json
-« prises » dit, scène par scène, ce qui a été écouté. Piper tire du bruit à chaque prise et Ogg porte un numéro de flux
+« prises » dit, scène par scène, ce qui a été écouté (les onze prises de Audio/ : validées le 25/10/2026). Toute
+régénération exige une nouvelle écoute de Pascal. Piper tire du bruit à chaque prise et Ogg porte un numéro de flux
 aléatoire : ce n'est PAS reproductible à l'octet. Les fichiers de Audio/ sont la référence : ne régénérer que si une
 phrase change, avec --scene N pour garder les autres prises.
 """

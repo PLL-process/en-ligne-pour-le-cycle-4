@@ -23650,6 +23650,23 @@ en une animation ludique, simple à comprendre, engageante, « ultra premium ».
 - Le contrôle `verif_regles_audit.py` marque la page « n°298 » (référentiel en toutes lettres) : **préexistant** sur `main`,
   non traité ici. `controle_regle4.py` refuse 18 ateliers des représentations : **préexistant** sur `main` (sortie identique).
 
+## 25/10/2026 — Thème 1 · 5e_C1.1 : l'animation des trois principes et ses onze prises de voix, validées par Pascal
+
+**Ce que Pascal a dit** (après la fusion de la PR #509) : « J'ai écouté l'audio, il est bon » — fichier d'écoute des onze
+étapes enchaînées —, puis « Je valide l'animation des 3 principes ».
+
+**Ce qui est inscrit** :
+- `5e_C1.1/_generation/voix_trois_principes/voix.json`, clé `prises` : les onze prises `Audio/trois-principes_scene1…11`
+  sont **validées à l'oreille** (première écoute), phonèmes corrigés compris (étapes 4, 5, 6, 8). Les fichiers ne changent pas.
+- `SOURCES_MEDIAS.md`, `rapport_tests_5e_C1.1-C1.6.md` et l'en-tête de `generer.py` le disent ; **toute régénération exige
+  une nouvelle écoute**, comme pour le vélo-cargo.
+
+**Les deux questions laissées ouvertes par l'entrée précédente sont closes par cette validation** :
+1. **Pas de podiums par critère** dans la finale : elle reste telle qu'elle est (quand chaque appareil répond).
+2. **La balance garde 100 000 → 100 020 µg.**
+
+Reste ouverte la décision 4a (le lecteur pas à pas comme modèle commun des animations du thème 1), pour une PR à part.
+
 ## 25/10/2026 — Classeurs de progression : le plan de l'année en séances de 55 min, et le travail maison repérable (_progressions)
 
 **Demandes et décisions de Pascal (25/10/2026).** Refaire le Moteur et le calendrier des trois classeurs « à partir
