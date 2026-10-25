@@ -438,7 +438,7 @@ Les encadrés orange préviennent des pièges. À la fin de chaque partie, une i
     # glisse dans le <style> de la loupe, là où la retouche du 21/09 l'avait posé à
     # la main dans les pages : l'écrire ici évite qu'une régénération l'efface.
     page = page.replace("@@LOUPE@@", _loupe().replace("</style>", N303 + "</style>", 1))
-    if "@@LOUPE@@" in page or "loupe-images-v1" not in page:
+    if "@@LOUPE@@" in page or "loupe-images-v2" not in page:
         raise SystemExit("Règle n°92 : l'agrandisseur d'images n'a pas été posé "
                          "dans la page — arrêt avant écriture.")
     sortie.write_text(page, encoding="utf-8")
