@@ -264,13 +264,8 @@ Un classeur PAR CLASSE (`_progressions/<niveau>/Progression_Techno_<niveau>_
    A/B/C, liens EPI, repères manuel, ressources en ligne) + tableau des
    compétences officielles + déroulé séance par séance avec blocs
    **📋 CAHIER DE TEXTE prêts à coller dans Pronote** (contenu de séance +
-   travail à faire, **20 min au plus de travail maison par semaine**) + ligne
-   de suivi enseignant (jamais pré-remplie). Le travail maison ne prend que
-   des activités sans matériel, sans logiciel en ligne, sans tableur et sans
-   travail de groupe, faisables sur téléphone. Il est repérable dans la
-   colonne 🏠 du ⚙ Moteur et du 📅 Calendrier, qui suit les imprévus (Pascal,
-   25/10/2026 : « il faudra que les séquences maison soient identifiables »).
-   *Texte d'origine remplacé : « 1 h 30 max de travail maison par semaine ».*
+   travail à faire, 1 h 30 max de travail maison par semaine) + ligne de
+   suivi enseignant (jamais pré-remplie).
 8. **Règles de remplissage** : chaque IA ne remplit QUE ses onglets ;
    vérification croisée des compétences écrites entre thèmes (« parfois on
    se trompe ») ; les liens des générateurs se câblent sur les ressources

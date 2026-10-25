@@ -23650,7 +23650,7 @@ en une animation ludique, simple à comprendre, engageante, « ultra premium ».
 - Le contrôle `verif_regles_audit.py` marque la page « n°298 » (référentiel en toutes lettres) : **préexistant** sur `main`,
   non traité ici. `controle_regle4.py` refuse 18 ateliers des représentations : **préexistant** sur `main` (sortie identique).
 
-## 25/10/2026 — Classeurs de progression : le plan de l'année en séances de 55 min, et le travail maison repérable (_progressions, _outils/METHODE.md)
+## 25/10/2026 — Classeurs de progression : le plan de l'année en séances de 55 min, et le travail maison repérable (_progressions)
 
 **Demandes et décisions de Pascal (25/10/2026).** Refaire le Moteur et le calendrier des trois classeurs « à partir
 du 2 novembre », sans toucher aux 8 semaines d'avant la Toussaint, « une séquence par ligne, ajustée ». Seule
@@ -23700,8 +23700,9 @@ ne perd une séance que si le travail maison couvre une séance entière, et jam
   sont touchés (règle « l'IA du thème seule » levée par la carte blanche de Pascal).
 - Anciens classeurs archivés (n°12, n°66) : `_archive-anciennes-versions/progressions-avant-plan-55-min-2026-10-25/`,
   avec un README (ce qui est repris, ce qui ne l'est pas).
-- `_progressions/README.md` (le plan, où lire le travail maison) ; `_outils/METHODE.md`, pilier 3 : « 20 min au plus
-  de travail maison par semaine » au lieu de « 1 h 30 max ».
+- `_progressions/README.md` : le plan, et où lire le travail maison. La mise à jour de `_outils/METHODE.md`
+  (pilier 3) part avec le lot suivant : la branche `fable/progressions-55-min` porte le motif « progressions », et
+  la garde-périmètre n'y admet que les fichiers communs.
 
 ### Méthode et ce qui a tourné
 
