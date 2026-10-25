@@ -24063,3 +24063,29 @@ BANCS
 - Le contrôle accepte le nom n'importe où dans la zone : qu'il suive la première apparition se juge à l'œil.
 - Une liste de réglage d'un simulateur (« Source d'énergie », « Cas de charge ») n'est pas une question : une seule
   option peut y porter le nom.
+
+## 25/10/2026 — Index : les libellés tirés des noms de fichiers retrouvent leurs accents et leurs noms propres (`_outils/make_index.py`, index)
+
+**Constat.** Signalé dans le lot de la règle n°313 : les libellés que `make_index.py` tire des noms de fichiers n'ont pas
+d'accents, car un nom de fichier n'en porte pas. L'index affichait « Jeu de données — Velos hangzhou simulees »,
+« QCM — Eclairage du preau », « Activité — Bete a cornes », « Séquence — Station a equiper », « QCM — Le de ameliore ».
+
+**Ce que le lot change.** C'est le mécanisme de la n°313 : la table `SIGLES` est complétée (SOS, 2FA, MQ), et deux tables
+s'y ajoutent.
+- `MOTS` : 45 mots accentués (activités, boîtier, chaîne, données, éclairage, énergie, entraînement, mât, préau,
+  réseau, simulées, vélos…) et les noms propres (Chengdu, Hangzhou, Shenzhen, Shanghai, Pékin, Tsinghua, eCall, Onshape,
+  Python, mBot2).
+- `PAIRES` : deux jetons qui se lisent ensemble (« sainte luce » → Sainte-Luce, Book Train, Packet Tracer, « le de » →
+  « le dé »).
+- La casse du nom de fichier est respectée : « Serre DEPART » devient « Serre DÉPART ». « a » en minuscule devient « à »
+  (« Bête à cornes ») ; « PANNE A » garde sa lettre. eCall et mBot2 gardent leur minuscule de tête.
+- Les mots qui existent aussi sans accent (de, du, des, la, sur, alerte, compte, mesure, programme, serre) ne sont pas
+  dans la table : ils restent tels quels.
+
+**Résultat.** 115 liens de l'index changent de libellé (97 libellés distincts). Les 900 adresses sont identiques, et aucun
+nom de fichier ne change. Après le lot, il ne reste dans les libellés aucun mot que les pages écrivent avec un accent : le
+seul cas restant est le « A » de « PANNE A », qui n'en prend pas. Capture avant / après à 390 px :
+`_outils/captures_accents_index_2026-10-25/index_avant_apres_390px.png`.
+
+**Ce qui a tourné.** `tests_index.py` 19 / 20, comme sur `main` (« référence normative et codification interne » échoue
+déjà sur `main`) ; `controle_sigles` ✅.
