@@ -23783,6 +23783,138 @@ l'année en séances de 55 min et 20 min au plus de travail maison par semaine (
 - Les pages gardent leur propre découpage en séances ; la semaine du travail maison est dans le classeur.
 - Les fiches pédagogiques et les synthèses professeur ne mentionnent pas encore le travail maison.
 
+---
+
+## 25/10/2026 — Tout le site : l'agrandisseur d'images passe en v2 (les schémas gardent leurs couleurs et leur police, la légende passe sous l'image)
+
+*Constat de Pascal, 25/10/2026, sur la séquence Chengdu (5e_C1.1) : « j'ai cliqué pour agrandir une image. Et ça
+m'a donné cela. Il manque des couleurs et je vois pas tout le texte », puis « C'est valable pour les autres images ».
+Décision « 2a » : corriger la loupe des schémas dessinés dans les pages, sur tout le site, par une PR transversale
+(branche `fable/loupe-images-v2`, hors motif de thème). C'est la campagne prévue le 24/09/2026 (entrée de 3e_C1.1,
+« Pour la campagne, thème par thème »), faite en une fois.*
+
+Ses captures montraient la page **d'avant** l'animation des trois principes (navigateur non actualisé) : les
+schémas P1, P2 et P3 y étaient encore à l'écran. Le défaut, lui, était bien réel : mesuré sur cette page, l'image
+agrandie par le v1 s'écarte du schéma de **0,83** (sur 1) ; par le v2, de **0,006**.
+
+### Les deux défauts du v1
+
+1. **Un schéma SVG écrit dans la page était agrandi sans la feuille de style de la page.** Le v1 sérialisait le
+   dessin tel quel en image : tout ce que la page colore par une classe CSS (`.p1 rect{fill:…}`) sortait noir, le
+   texte prenait la police par défaut du navigateur (à empattements, plus large) et débordait du cadre. Les
+   schémas dont les couleurs sont écrites en attributs (`fill="#…"`) s'agrandissaient bien — c'est pourquoi le
+   défaut ne touchait qu'une partie du site.
+2. **La légende recouvrait le bas de l'image** (barre en position fixe). Constaté le 24/09/2026 et corrigé alors
+   dans la seule page 3e_C1.1 ; les 132 autres pages l'avaient encore.
+
+### Ce que fait le v2 (`theme-3-…/audit/loupe.py`, source unique, marqueur `loupe-images-v2`)
+
+- **Le style suit le dessin.** Avant de sérialiser un schéma, la loupe recopie sur chaque élément de la copie son
+  style calculé par la page : couleurs de remplissage et de trait, épaisseurs, pointillés, opacités, police,
+  taille, graisse, ancrage du texte, marqueurs, filtres, masques. La transformation CSS n'est recopiée que si
+  l'élément n'a pas déjà un attribut `transform`. Les dégradés, motifs, marqueurs et symboles que le dessin
+  appelle (`url(#…)`, `href="#…"`) mais qui sont définis ailleurs dans la page sont rapatriés dans la copie.
+- **Le fond suit le dessin** : celui du schéma, ou du premier parent opaque, posé sous l'image agrandie. Un
+  schéma sur fond sombre reste sur fond sombre.
+- **Net au TBI** : le dessin est rendu à 1 600 px de large au moins.
+- **La légende passe sous l'image**, dans le flux (disposition en colonne de 3e_C1.1) ; la hauteur de l'image
+  est calculée pour laisser sa place à la légende.
+- **Ce que dit la légende** : voir la règle n°92 amendée, ci-dessous.
+- **Inchangé** : clic ou Entrée pour agrandir, Échap pour refermer et rendre le focus à l'image ; ne sont armés
+  que les images et schémas visibles à l'ouverture de la page, d'au moins 120 × 90 px ; `data-loupe="non"`
+  exclut un dessin (le lecteur pas à pas de Chengdu, par exemple) ; mouvement réduit respecté ; aucune
+  bibliothèque, aucun réseau (n°305). Le bloc pèse 12,2 Ko au lieu de 5,7 Ko par page.
+
+### Règle d'or n°92, amendée
+
+**Ancien texte** : « L'agrandissement affiche l'alternative textuelle en légende. »
+
+**Nouveau texte** : **l'agrandissement affiche en légende la figcaption visible de la figure (sans la consigne
+« (clique sur l'image pour l'agrandir) » que portent 67 d'entre elles : l'image est déjà agrandie) ; à défaut, le
+texte alternatif, ramené à sa première phrase s'il dépasse deux lignes. La légende se lit sous l'image, jamais
+par-dessus.** Le texte alternatif complet reste sur l'image agrandie (lecteurs d'écran). Un `alt` vide ou creux
+se dénonce toujours à l'usage, puisque rien ne s'écrit sous l'image.
+
+**Ajout** : **un schéma agrandi garde les couleurs, la police et le fond qu'il a dans la page.** Un agrandissement
+qui change le dessin n'en est pas un : l'élève lit autre chose que ce que le professeur montre.
+
+Le dernier paragraphe de la règle (« savoir si l'image agrandie est lisible, aucun script ne saura le faire »)
+reste vrai ; ce qui se mesure désormais, c'est qu'elle soit **fidèle** au schéma de la page.
+
+### Ce qui change, fichier par fichier
+
+- **133 pages** passent du v1 au v2, remplacées sur place par `loupe.py --remplacer`, qui garde le code que
+  d'autres lots avaient ajouté au bloc (styles n°303 et n°135, scripts n°45, n°101, n°188) : thème 1, **56**
+  (dont 28 ateliers des représentations) ; thème 2, **28** ; thème 3, **48** ; `_outils/dnb_gabarit.html`.
+  Les trois pages qui portaient un agrandisseur **sans marqueur** (3e_C7.1 capteur de New York, 5e_C7.1
+  mini-projet, 4e_C9.1 jardin) ont le v2, marqué, à sa place.
+- **Les générateurs** qui posent la loupe ne la feront pas revenir en v1 :
+  `ateliers-representations/_generation/gabarit_qcm.tpl` porte le v2 (régénération `build.py` et
+  `build_qcm.py --tous` : **identique à l'octet** aux pages remplacées) ; `atelier-cao/_generation/build_tp.py`
+  (régénération des 4 TP : identique) ; `atelier-planification/_generation/build_atelier.py` (garde mise à jour,
+  **non relancé** : le journal note qu'il perd 8 lignes) ; `3e_C9.2/generer_les_quatre_pages.py` (garde mise à
+  jour ; ce générateur était déjà en panne sur `main`, non réparé ici).
+- **Captures** avant / après (1280 px : Chengdu P1 avant l'animation, jardin 4e_C8.1) et après à 390 px :
+  `theme-3-…/audit/captures_loupe_v2/`, à côté de l'outil qui pose la loupe.
+- **Deux outils neufs**, dans `_outils/` :
+  `controle_loupe.py` (statique : chaque page et chaque gabarit `.tpl` hors archives porte au plus un
+  agrandisseur, et c'est le v2 avec sa recopie des styles ; sortie 0 / 1 / 2) et son banc
+  `tests_controle_loupe.py` ; `banc_loupe.py` (au navigateur : fidélité mesurée, légende hors de l'image, image
+  dans la largeur, Échap, à 1280, 390, 1920 px et 1280 px zoomé 150 %).
+- **Skills** : `licences-medias-education` (paragraphe de la loupe) et `controle-qualite-lot` (les deux outils
+  dans la table).
+
+### Ce qui a vraiment tourné
+
+- **`banc_loupe.py`, tout le site, sur le code final** : 132 pages lues (les 133 moins le gabarit DNB, à jetons),
+  **45 schémas SVG** et **42 images** agrandis à 1280 px, puis les 33 pages à schéma armé à 390, 1920 et 1280 px
+  zoomé 150 % : **zéro refus**. Fidélité : médiane 0,004, pire 0,078 (pieuvre 5e, schéma 2 : la pluie hachurée ;
+  capture regardée, le dessin est le même).
+- **Le banc sait échouer (n°299)** :
+  - Chengdu d'avant l'animation, avec le v1 : écart **0,83** aux deux schémas armés → refus ; la même page avec le
+    v2 : 0,006 → accepté.
+  - `main` entier, ses 130 pages v1 affublées d'un faux marqueur v2 pour le tromper : sortie 1, **9 refus** « la
+    légende recouvre l'image » et **1** « agrandissement infidèle » (jardin 4e_C8.1, 0,65). Les autres schémas du
+    v1 étaient fidèles : leurs couleurs sont écrites en attributs, pas en classes.
+- **Un faux refus corrigé dans le banc, pas dans le seuil.** Le premier passage refusait 4 QR codes
+  (cybersécurité 4e_C1.4, Sainte-Luce ×2, Book Train ; écarts 0,34 à 0,36). Les captures montraient des QR
+  agrandis fidèles : le banc photographiait le schéma **avec son cadre de page** (bordure et marge intérieure de
+  6 px, 12 % d'un QR de 120 px) et le comparait à une image sans cadre. Il photographie maintenant le seul dessin :
+  0,019. Seuil inchangé (0,12).
+- **Le banc ne prenait que les deux premiers schémas d'une page** : il les prend tous (37 → 45).
+- **Une retouche vue sur les captures** : la légende reprenait « (clique sur l'image pour l'agrandir) » de 67
+  figcaptions, sur une image déjà agrandie. La loupe l'enlève de la légende ; la figcaption de la page ne change
+  pas. Ligne identique posée dans `loupe.py`, les 133 pages et le gabarit (une occurrence exigée par fichier).
+- `controle_loupe.py` : 409 pages lues, 134 avec un agrandisseur (133 pages et le gabarit des QCM), sortie 0 ;
+  `tests_controle_loupe.py` **10 / 10** ; `loupe.py --verifier` : 0 page à passer.
+- **Générateurs** : `build.py` et `build_qcm.py --tous` (ateliers des représentations), `build_tp.py` sur ses 5
+  scénarios : toutes les pages du dépôt **identiques à l'octet** avant et après (sommes MD5).
+- **Contrôles du dépôt, branche contre `main`**, mêmes commandes : les 23 contrôles statiques donnent les **mêmes
+  sorties** (`controle_regle4` sort à 1 des deux côtés — 18 ateliers, préexistant ; `controle_liens` compte 7
+  zones commentées de plus : les commentaires du v2) ; au navigateur : les 6 contrôles (`controle_hors_ligne`, `controle_impression`,
+  `controle_contraste_liens`, `controle_verrous`, `controle_squelette`, `verifier_chaines_energie` 54 / 54) sortent à 0
+  des deux côtés, sorties identiques à l'horodatage près. Ils ont tourné avant la dernière retouche (la consigne retirée
+  de la légende : une ligne de script, sans effet sur ce qu'ils mesurent) ; le banc de la loupe, lui, a retourné sur
+  le code final.
+- `build_audit.py` et `make_index.py` relancés : seule la nouveauté entre dans `index.html`.
+
+### Non vérifié
+
+- Safari, iPad, téléphone réel : seul Chromium a tourné. La recopie des styles utilise `getComputedStyle`, que
+  tous les navigateurs ont ; le rendu d'une image SVG en `data:` peut différer d'un moteur à l'autre.
+- Les schémas qui ne sont pas visibles à l'ouverture de la page (séances repliées, onglets) ne sont pas armés :
+  c'était déjà le cas du v1, ce lot ne le change pas.
+- La **lisibilité** d'un schéma agrandi pour un élève : elle se regarde (captures jointes à la PR), elle ne se
+  mesure pas.
+
+### À RELIRE PAR PASCAL
+
+1. **Le nouveau texte de la règle n°92** (légende = figcaption visible, sinon la première phrase de l'alt quand
+   il dépasse deux lignes) : le garder tel quel ?
+2. **Ouvrir un schéma agrandi sur deux ou trois pages en classe** (TBI, puis un téléphone) — Chengdu n'est plus le
+   bon exemple, ses trois schémas étant remplacés à l'écran par l'animation ; le jardin (4e_C8.1) ou le FAST
+   du lampadaire (atelier, 5e) le sont.
+
 ## 25/10/2026 — Règle d'or n°312 : une unité se lit en toutes lettres (transversale : thèmes 1, 2 et 3, `_outils`, `.claude/skills`)
 
 > **Règle d'or n°312 — Une unité se lit en toutes lettres.**
