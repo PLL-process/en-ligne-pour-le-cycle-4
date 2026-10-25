@@ -33,7 +33,7 @@ en toutes lettres** sur l'écran (règle d'or n°119).
 
 | Fichier | Type | Source / auteur | Licence | Rôle pédagogique (image à LIRE) | Poids |
 |---|---|---|---|---|---|
-| `Images/montage_station_grove.svg` | SVG original | Création Fable pour ce projet | CC0 (domaine public) | Image-objet : câblage à lire (broches A1/D2/D3/D5/I2C), utilisée en act. 3 (fiche 🅰) et au QCM (q. illustrée) | ~8 Ko |
+| `Images/montage_station_grove.svg` | SVG original (redessiné le 25/10/2026, voir la note sous le tableau) | Création Fable pour ce projet | CC0 (domaine public) | Image-objet : câblage à lire — potentiomètre A1, bouton D2, écran LCD I2C, buzzer D5, voyants vert D6 · jaune D7 · orange D3 · rouge D4 —, utilisée en act. 3 (fiche 🅰) et au QCM (q. illustrée) | ~12 Ko |
 | `Images/chaine_info_energie_station.svg` | SVG original | Création Fable pour ce projet | CC0 | Image-objet : les deux chaînes selon la règle n°6 (info en haut, énergie en bas, ordre qui descend), act. 1 | ~7 Ko |
 | `Images/algorigramme_alerte.svg` | SVG original | Création Fable pour ce projet | CC0 | Image-objet : algorigramme normalisé (pont DNB) à lire en act. 2 et au QCM (q. illustrée) | ~7 Ko |
 | `Images/ihm_acquittement_chronogramme.svg` | SVG original | Création Fable pour ce projet | CC0 | Image-objet : chronogramme de l'acquittement à lire en act. 4, au QCM (q. illustrée) et en synthèse | ~6 Ko |
@@ -41,7 +41,7 @@ en toutes lettres** sur l'écran (règle d'or n°119).
 | `Images/blocs_palier1_lire_vent.svg` | SVG original (reconstitution schématique, PAS une capture) | Création Fable pour ce projet | CC0 | Image-explication : résultat attendu du palier 1 (règle n°77) | ~4 Ko |
 | `Images/blocs_palier2_decider.svg` | SVG original (reconstitution schématique) | Création Fable pour ce projet | CC0 | Image-explication : résultat attendu du palier 2 | ~5 Ko |
 | `Images/blocs_palier3_afficher.svg` | SVG original (reconstitution schématique) | Création Fable pour ce projet | CC0 | Image-explication : résultat attendu du palier 3 | ~5 Ko |
-| `Images/blocs_palier4_acquitter.svg` | SVG original (reconstitution schématique) | Création Fable pour ce projet | CC0 | Image-explication : résultat attendu du palier 4 (act. 4) | ~5 Ko |
+| `Images/blocs_palier4_acquitter.svg` | SVG original (reconstitution schématique ; corrigé le 25/10/2026 : buzzer au niveau 3) | Création Fable pour ce projet | CC0 | Image-explication : résultat attendu du palier 4 (act. 4) | ~5 Ko |
 | `Images/ordre_preactionneur_trois_cas.svg` | SVG original | Création Fable pour ce projet | CC0 | Image-objet : où arrive la flèche d'ORDRE — toujours sur DISTRIBUER — en trois cas comparés (voyant 5 V et buzzer Grove : sortie de la carte et transistor intégré · gyrophare 12 V : carte relais séparée · portail : pont en H séparé, moteur ET transmission) ; engendrée par `_outils/regenerer_chaines_energie.py`, avec sa source draw.io — act. 1 | ~25 Ko |
 | `Images/vittascience/C_1_demarrage.png` | **Capture d'écran réelle** (règle n°94) | Écran de Vittascience (interface Arduino, mode BLOCS), 25/08/2026 — programme de référence construit pour ce lot | Capture d'interface à usage pédagogique ; le programme photographié est une création originale du lot (CC0) | Image à LIRE : les neuf affectations du bloc « au démarrage », dont l'initialisation de `niveauPrecedent` | ~61 Ko |
 | `Images/vittascience/C_2_boucle_haut.png` | **Capture d'écran réelle** | idem | idem | Image à LIRE : lecture + conversion + compteur de pulsation + cascade de décision (seuil le plus haut d'abord) | ~129 Ko |
@@ -161,3 +161,26 @@ Volet replié « Pour aller plus loin : le pont en H », juste après la planche
 - **Mini-quiz** : `miniquiz_pont_en_h.html` (3 questions, à part du QCM de la séquence, qui reste à 30), original, CC0.
 - **Vocabulaire** : `vocabulaire_3e_C9.2.json` — pont en H, court-circuit, relais, préactionneur, transistor ; chaque définition porte sa source
   (Larousse en ligne, Wikipédia, Éduscol STI), lue avant d'être citée. Il alimente `lexique_3e_C9.2.html`.
+
+## Le schéma de câblage redessiné — 25/10/2026
+
+`Images/montage_station_grove.svg` décrivait encore le montage d'avant les quatre niveaux :
+**une seule DEL, « rouge », sur D3**, « allumée dès la vigilance », et un buzzer qui
+« sonne en alerte rouge ». Or l'élève câble d'après ce schéma, et le programme de référence
+(`station_alerte_cyclonique/station_alerte_cyclonique.ino`), les captures Vittascience et les
+tableaux de la séquence décrivent tous **un seul montage** : potentiomètre **A1**, bouton
+**D2**, voyants vert **D6** · jaune **D7** · orange **D3** · rouge **D4**, buzzer **D5**,
+écran LCD RGB sur **I2C**, shield Grove sur **5 V**. Le schéma est redessiné d'après ce
+montage, toujours écrit à la main, original, **CC0** :
+
+- format portrait (600 × 812) pour rester lisible sur un téléphone ; chaque broche dans
+  une étiquette en gros caractères ; entrées en haut, carte au centre, sorties en bas ;
+- les quatre voyants nommés par leur couleur ET par leur niveau, « fixe » ou « pulse »
+  écrit en toutes lettres (règle d'or n°119 : jamais la couleur seule) ;
+- `title` et `desc` complets, câbles de signal, I2C et USB distingués dans une légende,
+  encadré très basse tension (5 V, jamais de secteur 230 V) ;
+- textes alternatifs mis à jour dans la séquence (fiche 🅰 de l'activité 3, d'où la
+  légende provisoire est retirée) et dans la question illustrée du QCM.
+
+Même jour : la planche `Images/blocs_palier4_acquitter.svg` fait sonner le buzzer au
+**niveau 3** (ouragan majeur) et non plus au niveau 2, comme le programme de référence.

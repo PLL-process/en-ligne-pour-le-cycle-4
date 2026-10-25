@@ -738,6 +738,21 @@ const run = async () => {
   const planche4 = fs.readFileSync(path.join(LOT, "Images/blocs_palier4_acquitter.svg"), "utf8");
   ok("garde-fou « anciens seuils » : la planche du palier 4 fait sonner le buzzer au niveau 3",
      planche4.includes("= 3 (ouragan majeur)") && !ANCIENS.some(r => r.test(planche4.replace(/<[^>]+>/g, ""))));
+  /* le schéma de câblage : l'élève câble d'après lui — les huit branchements du
+     programme de référence, et plus la DEL unique « rouge » sur D3 */
+  const montage = fs.readFileSync(path.join(LOT, "Images/montage_station_grove.svg"), "utf8");
+  const etiquettes = ["A1", "D2", "I2C", "D5", "D6", "D7", "D3", "D4"].filter(b => !montage.includes(`>${b}</text>`));
+  ok("schéma de câblage : les huit branchements du programme (A1, D2, I2C, D5, D6, D7, D3, D4), title et desc",
+     etiquettes.length === 0 && /<title id="t-montage">/.test(montage) && /<desc id="d-montage">[^<]{300,}/.test(montage),
+     etiquettes.join(", "));
+  ok("schéma de câblage : plus de DEL unique « rouge », ni « vigilance », ni « alerte rouge », ni secteur",
+     !/DEL rouge|vigilance|alerte rouge/i.test(montage) && montage.includes("jamais de secteur 230 V"));
+  /* le QCM : ses questions ne citent plus les anciens seuils, broches ni la DEL unique */
+  const qcmTexte = fs.readFileSync(path.join(LOT, QCM), "utf8");
+  const blocQ = qcmTexte.slice(qcmTexte.indexOf("const QUESTIONS"), qcmTexte.indexOf("\n];", qcmTexte.indexOf("const QUESTIONS")));
+  const qcmAnciens = [...ANCIENS, /DEL sur D3/, /DEL rouge sur D3/, /DEL est commandée par D3/, /Vigilance → alerte/]
+    .filter(r => r.test(blocQ)).map(String);
+  ok("garde-fou « anciens seuils » : les 30 questions du QCM", qcmAnciens.length === 0, qcmAnciens.join(" · "));
 
   /* ════════ Synthèses + mobile ════════ */
   for (const f of ["Synthèses/synthese_eleve_3e_C9.2-C8.3.html", "Synthèses/synthese_professeur_3e_C9.2-C8.3.html"]) {

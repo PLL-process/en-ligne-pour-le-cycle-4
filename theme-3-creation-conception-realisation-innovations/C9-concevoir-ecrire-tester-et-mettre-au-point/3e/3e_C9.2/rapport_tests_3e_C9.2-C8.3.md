@@ -54,6 +54,16 @@ verdicts). 8 tests ajoutés : l'expérience ② rejouée telle qu'écrite (177 p
 sa consigne, et un garde-fou qui refuse le retour des anciens seuils et broches
 dans les cinq fichiers et dans la planche du palier 4.
 
+**Schéma de câblage redessiné et QCM vérifié (25/10/2026) — 167/167.**
+`Images/montage_station_grove.svg` ne montrait qu'une DEL « rouge » sur D3 : il est
+redessiné d'après le programme de référence (A1, D2, I2C, D5, voyants D6 · D7 · D3 · D4),
+en portrait pour le téléphone. Au QCM, cinq passages corrigés (question 2 « DEL sur D3 »,
+alt de la question illustrée, question 10 « (niveau = 2) », exemple de la question 11
+« vigilance → alerte », réfutation de la question 13 « DEL commandée par D3 ») et la
+hauteur des figures plafonnée ; synthèse élève : buzzer au niveau 3. 3 tests ajoutés
+(les huit branchements du schéma, plus de DEL unique, garde-fou sur les 30 questions).
+`verif_qcm_coherence` : 30 q, 8/7/7/8, réfutations alignées · `controle_medias` vert.
+
 Contrôles du dépôt après redécoupage : `controle_squelette` 0 refus (D1 à D6 : 0),
 `controle_navigation_seances`, `controle_hierarchie`, `controle_regles_visibles`,
 `controle_liens` (aucun lien mort), `controle_atteignabilite` (406/406),
