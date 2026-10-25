@@ -139,6 +139,135 @@
     .p3table td.plus{color:#048827!important}.p3table td.moins{color:#ed0018!important}
     .p3idee{border-color:#048827!important}.p3lex dt{color:#047fa0!important}
     .p3card h5{color:#111!important}.p3table th{color:#0a1b3d!important}}
+  /* trois_principes_pas_a_pas (style) : début — animation pas à pas des trois principes (25/10/2026).
+     Couleurs de la planche (n°120) : P1 bleu, P2 vert, P3 violet ; lumière #ffd08a, poussière #9bbefc, capteur #61dafb. */
+  .tpa{margin:12px 0;border:1px solid var(--border);border-radius:12px;background:#050f24;padding:10px 12px 12px;scroll-margin-top:72px}
+  .tpa-intro{margin:2px 2px 8px;font-size:.92em;color:var(--sub)}
+  .tpa-chapitres{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}
+  .tpa-chapitres button{flex:1 1 auto;min-height:40px;padding:6px 10px;border-radius:999px;border:1px solid var(--input-bd);
+    background:var(--input-bg);color:var(--text);font-family:inherit;font-size:.82em;font-weight:600;cursor:pointer}
+  .tpa-chapitres button.c1{border-color:#3f6bb5}.tpa-chapitres button.c2{border-color:#4fae7a}.tpa-chapitres button.c3{border-color:#a077d8}
+  .tpa-chapitres button[aria-current="step"]{background:var(--btn);color:#fff;box-shadow:0 0 0 2px var(--hl) inset}
+  .tpa-chapitres button:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  .tpa-dessin{width:100%;max-width:640px;height:auto;display:block;margin:0 auto;border-radius:10px;background:#071633}
+  .tpa-dessin text{fill:#e4eaf5;font-size:17px}
+  .tpa-dessin .tpa-sm{fill:#9bbefc;font-size:14px}
+  .tpa-dessin .tpa-eq{font-size:17px}
+  .tpa-dessin .tpa-mot{font-size:17px}
+  .tpa-dessin .tpa-centre,.tpa-mini .tpa-centre{text-anchor:middle}
+  .tpa-dessin [data-de],.tpa-dessin [data-a]{transition:opacity .55s ease calc(var(--i,0) * .25s),visibility 0s}
+  .tpa-dessin .tpa-cache{opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s linear .3s}
+  /* la fonction */
+  .tpa-cube-face{fill:rgba(97,218,251,.06);stroke:#7d9bd6;stroke-width:1.5;stroke-dasharray:6 5}
+  .tpa-cube-haut{fill:rgba(97,218,251,.1);stroke:#7d9bd6;stroke-width:1.5;stroke-dasharray:6 5}
+  .tpa-cube-cote{fill:rgba(97,218,251,.03);stroke:#7d9bd6;stroke-width:1.5;stroke-dasharray:6 5}
+  .tpa-grain{fill:#9bbefc}
+  .tpa-puce rect{fill:#0d2347;stroke-width:2}
+  .tpa-dessin .tpa-puce text{font-size:15px;font-weight:700;text-anchor:middle}
+  .tpa-puce.c1 rect{stroke:#3f6bb5}.tpa-dessin .tpa-puce.c1 text{fill:#8fb6ff}
+  .tpa-puce.c2 rect{stroke:#4fae7a}.tpa-dessin .tpa-puce.c2 text{fill:#81fba1}
+  .tpa-puce.c3 rect{stroke:#a077d8}.tpa-dessin .tpa-puce.c3 text{fill:#c68ef2}
+  /* P1 */
+  .tpa-boitier{fill:#0b1b39;stroke:#3f6bb5;stroke-width:2}
+  .tpa-tube{fill:#0b1b39;stroke:#3f6bb5;stroke-width:1.5}
+  .tpa-air path{fill:none;stroke:#61dafb;stroke-opacity:.4;stroke-width:1.5;stroke-dasharray:4 10;animation:tpaFlux 1.1s linear infinite}
+  .tpa-air.tpa-arret path{animation-play-state:paused;stroke-opacity:.15}
+  @keyframes tpaFlux{to{stroke-dashoffset:-14}}
+  .tpa-lampe-boite{fill:#122a52;stroke:#7d9bd6;stroke-width:1.5}
+  .tpa-lampe{fill:#ffd08a}
+  .tpa-faisceau{transform-box:fill-box;transform-origin:0 50%}
+  .tpa[data-scene="2"] .tpa-faisceau{animation:tpaAllume 1.3s cubic-bezier(.2,.8,.2,1) both}
+  .tpa[data-scene="2"] .tpa-halo{animation:tpaLueur 1.6s ease-in-out infinite alternate}
+  @keyframes tpaAllume{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @keyframes tpaLueur{from{opacity:.55}to{opacity:1}}
+  .tpa-piege{fill:#1a2a44;stroke:#3f6bb5}
+  .tpa-rai{fill:none;stroke:#ffd08a;stroke-width:1.6;stroke-linecap:round}
+  .tpa-rai-long{fill:none;stroke:#ffd08a;stroke-width:1.6;stroke-dasharray:4 3}
+  .tpa-det{fill:#61dafb}
+  .tpa-capteur.tpa-vu .tpa-det{fill:#d4f6ff}
+  .tpa-dessin .tpa-detlb,.tpa-mini .tpa-detlb{fill:#052033;font-size:12px;font-weight:700}
+  .tpa-lentille{fill:#bfefff;stroke:#61dafb}
+  .tpa-salete{fill:#7a5a2e;opacity:0;transition:opacity .4s}
+  .tpa-sale .tpa-salete{opacity:.9}
+  .tpa-afficheur rect{fill:#0d2347;stroke:#61dafb;stroke-width:1.5}
+  .tpa-dessin .tpa-nombre{font-size:30px;font-weight:700;fill:#61dafb;font-variant-numeric:tabular-nums}
+  /* P2 */
+  .tpa-paroi{fill:none;stroke:#4fae7a;stroke-width:2.5}
+  .tpa-filtre,.tpa-filtre-cote{fill:#f4f6fb;stroke:#7d9bd6;stroke-width:1}
+  .tpa-depot-cote,.tpa-depot-face{fill:#4b5a78}
+  .tpa-pompe{fill:#0d3320;stroke:#4fae7a;stroke-width:2}
+  .tpa-pale{fill:none;stroke:#81fba1;stroke-width:3;stroke-linecap:round}
+  .tpa-lien{fill:none;stroke:#7d9bd6;stroke-width:1;stroke-dasharray:3 3}
+  .tpa-cadran{fill:#0d2347;stroke:#81fba1;stroke-width:2}
+  .tpa-graduations{stroke:#81fba1;stroke-width:2}
+  .tpa-aiguille{stroke:#ffd66b;stroke-width:3;stroke-linecap:round}
+  .tpa-axe{fill:#ffd66b}
+  .tpa-dessin .tpa-nombre-vert{font-size:22px;font-weight:700;fill:#81fba1;font-variant-numeric:tabular-nums}
+  .tpa-bal-tige{stroke:#9bbefc;stroke-width:3}
+  .tpa-bal-plateau{fill:#3b5785;stroke:#9bbefc}
+  .tpa-bal-socle{fill:#122a52;stroke:#7d9bd6;stroke-width:1.5}
+  .tpa-bal-ecran{fill:#031a0d;stroke:#4fae7a}
+  .tpa-dessin .tpa-bal-chiffres{fill:#81fba1;font-size:17px;font-weight:700;font-variant-numeric:tabular-nums}
+  .tpa-dessin .tpa-ok{fill:#81fba1;font-weight:700}
+  /* P3 */
+  .tpa-source{fill:#2b1f0d;stroke:#ffb454;stroke-width:2}
+  .tpa-dessin .tpa-src-sym{fill:#ffb454;font-size:20px}
+  .tpa-dessin .tpa-ambre{fill:#ffb454}
+  .tpa-bande{fill:#dfe6f2}
+  .tpa-rouleau{fill:#1a2a44;stroke:#9bbefc;stroke-width:1.5}
+  .tpa-beta{fill:#c68ef2}
+  .tpa-panneau-mesure{fill:#0d2347;stroke:#a077d8;stroke-width:1.5}
+  .tpa-jauge-fond{fill:#1a2a44}
+  .tpa-jauge{fill:#c68ef2}
+  .tpa-dessin .tpa-heure-cachee{opacity:0;transition:opacity .4s}
+  /* sous le dessin */
+  .tpa-outils{text-align:center;margin:6px 0 0}
+  .tpa-outils .btn[aria-pressed="true"]{border-color:#ffd66b;color:#ffd66b}
+  .tpa-note{margin:6px 4px 0;padding:6px 10px;border-left:3px solid #ffd66b;background:rgba(255,214,107,.08);border-radius:0 8px 8px 0;font-size:.9em}
+  .tpa-titre{margin:10px 4px 0;color:var(--sub);font-weight:600;font-size:.9em}
+  .tpa-texte{min-height:3.2em;margin:4px 4px 6px;font-size:1.02em}
+  .tpa-texte p{margin:.3em 0}
+  .tpa-nav{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin-top:8px}
+  .tpa-compte{font-weight:600;min-width:7em;text-align:center}
+  .tpa .btn:disabled{opacity:.45;cursor:default}
+  .tpa-sansvoix{color:var(--sub);font-size:.85em;text-align:center;margin:6px 4px 0}
+  .tpa-credit{color:var(--sub);font-size:.75em;text-align:right;margin:8px 4px 0}
+  /* les trois ensemble */
+  .tpa-final{max-width:760px;margin:0 auto}
+  .tpa-reglage label{display:block;font-weight:600;margin:2px 0}
+  .tpa-reglage output{color:var(--hl);font-variant-numeric:tabular-nums}
+  .tpa-reglage input[type=range]{width:100%;min-height:32px;accent-color:#61dafb}
+  .tpa-bornes{display:flex;justify-content:space-between;font-size:.8em;color:var(--sub)}
+  .tpa-horloge{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;justify-content:space-between;margin:8px 0;padding:6px 10px;
+    border:1px solid var(--border);border-radius:10px;background:var(--panel2);font-size:.9em}
+  .tpa-horloge b{font-variant-numeric:tabular-nums}
+  .tpa-horloge small{color:var(--sub)}
+  .tpa-horloge-btns{display:flex;gap:6px;flex-wrap:wrap}
+  .tpa-trois{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .tpa-app{border:1px solid var(--border);border-radius:10px;padding:8px 10px;background:var(--panel2);min-width:0}
+  .tpa-app.p1{border-color:#3f6bb5}.tpa-app.p2{border-color:#4fae7a}.tpa-app.p3c{border-color:#a077d8}
+  .tpa-app h5{margin:0 0 6px;font-size:.95em;color:var(--text)}
+  .tpa-mini{width:100%;height:auto;display:block;background:#071633;border-radius:8px}
+  .tpa-mini .tpa-mini-lb{fill:#9bbefc;font-size:13px}
+  .tpa-res{margin:6px 0 2px;font-size:.92em;display:flex;justify-content:space-between;gap:6px;align-items:baseline}
+  .tpa-res b{font-size:1.25em;font-variant-numeric:tabular-nums}
+  .tpa-res b.tpa-neuf{animation:tpaNeuf 1s ease-out}
+  @keyframes tpaNeuf{from{color:#ffd66b;text-shadow:0 0 10px rgba(255,214,107,.8)}to{color:var(--text);text-shadow:none}}
+  .tpa-attente{height:8px;border-radius:4px;background:#1a2a44;overflow:hidden;margin:4px 0}
+  .tpa-attente>div{height:100%;width:0;background:#61dafb}
+  .tpa-attente>div.tpa-plein{width:100%}
+  .tpa-rythme{font-size:.8em;color:var(--sub);margin:2px 0 0}
+  .tpa-mini-note{font-size:.84em;color:var(--sub);margin:8px 2px 0}
+  @media(max-width:620px){.tpa{margin:12px -10px;padding:8px 6px}.tpa-trois{grid-template-columns:1fr}
+    .tpa-dessin text{font-size:20px}.tpa-dessin .tpa-sm{font-size:16.5px}.tpa-mini .tpa-mini-lb{font-size:19px}
+    .tpa-dessin .tpa-l2{transform:translateY(4px)}
+    .tpa-app{display:grid;grid-template-columns:minmax(0,9fr) minmax(0,11fr);gap:0 10px;align-items:center}
+    .tpa-app h5{grid-column:1/-1}.tpa-app .tpa-mini{grid-row:2/span 3}}
+  /* À l'écran, l'animation remplace les trois schémas fixes ; ils restent dans la page et s'impriment. */
+  @media screen{.p3.tpa-actif .schema3,.p3.tpa-actif .p3reperer{display:none}.p3.tpa-actif .p3body{grid-template-columns:1fr}}
+  @media (prefers-reduced-motion: reduce){.tpa *{animation:none!important;transition:none!important}}
+  @media print{.tpa{display:none!important}}
+  /* trois_principes_pas_a_pas (style) : fin */
   @media print{.p3 .lb,.p3 .sm{fill:#111!important}.p3 .box{fill:#fff!important;stroke:#555!important}
     .p3 .beam,.p3 .ray{stroke:#b8860b!important}.p3 .beamhead,.p3 .lamp{fill:#b8860b!important}
     .p3 .dust{fill:#4b5a78!important}.p3 .rad{stroke:#7a3fb5!important}.p3 .arrow{stroke:#333!important}
@@ -384,6 +513,222 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     <p>Le <b>µg</b> (microgramme) est un <b>millionième de gramme</b> — un grain de sable pèse déjà
     1&nbsp;000&nbsp;µg. Le <b>m³</b> est un cube d'un mètre de côté, à peu près l'air d'une cabine de douche.</p>
   </div>
+  <!-- trois_principes_pas_a_pas : début
+       Animation pas à pas des trois principes (demande de Pascal du 25/10/2026) : elle remplace À L'ÉCRAN les trois
+       schémas fixes de la planche, qui restent dans la page et s'impriment (classe « tpa-actif » posée par le script ;
+       sans JavaScript, la planche reste telle qu'avant). Chaque scène dit par sa phrase ce qu'elle montre (n°119) ;
+       les phrases des étapes ①②③ sont celles des cartes, mot pour mot. Aucune bibliothèque, aucun réseau (n°305) ;
+       rien ne bouge sous « mouvement réduit », rien ne se lit sans un geste. Voix : Audio/trois-principes_sceneN
+       (Piper, voix SIWIS, CC BY 4.0, voir SOURCES_MEDIAS.md), engendrés par _generation/voix_trois_principes/generer.py ;
+       la voix locale du navigateur ne sert que de secours. Lecteur repris de celui du vélo-cargo (5e_C3.1). -->
+  <div class="tpa" id="trois-principes-pas-a-pas" data-scene="1" hidden>
+    <p class="tpa-intro">🎬 <b>Les trois principes, en animation.</b> Avance étape par étape avec «&nbsp;Suivant&nbsp;», ou laisse-la se dérouler avec «&nbsp;Regarder&nbsp;».</p>
+    <nav class="tpa-chapitres" aria-label="Aller à une partie de l'animation">
+      <button type="button" data-aller="1">La fonction</button>
+      <button type="button" data-aller="2" class="c1">P1 · lumière</button>
+      <button type="button" data-aller="5" class="c2">P2 · pesée</button>
+      <button type="button" data-aller="8" class="c3">P3 · rayonnement</button>
+      <button type="button" data-aller="11">Les trois ensemble</button>
+    </nav>
+    <div class="tpa-scene">
+<svg class="tpa-dessin" id="tpaDessin" viewBox="0 0 480 300" role="img" aria-label="" data-loupe="non" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif">
+<defs>
+  <linearGradient id="tpaFaisceau" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#ffd08a" stop-opacity=".95"/><stop offset="1" stop-color="#ffd08a" stop-opacity=".3"/></linearGradient>
+  <radialGradient id="tpaEclat"><stop offset="0" stop-color="#fff6d8"/><stop offset=".45" stop-color="#ffd08a" stop-opacity=".9"/><stop offset="1" stop-color="#ffd08a" stop-opacity="0"/></radialGradient>
+  <radialGradient id="tpaHalo"><stop offset="0" stop-color="#ffd08a" stop-opacity=".6"/><stop offset="1" stop-color="#ffd08a" stop-opacity="0"/></radialGradient>
+</defs>
+<!-- Scène 1 : la fonction -->
+<g data-de="1" data-a="1">
+  <polygon class="tpa-cube-haut" points="160,78 196,52 336,52 300,78"/>
+  <polygon class="tpa-cube-cote" points="300,78 336,52 336,182 300,208"/>
+  <rect class="tpa-cube-face" x="160" y="78" width="140" height="130"/>
+  <text x="160" y="42">1 m³ d'air</text>
+  <g id="tpaFGrains"></g>
+  <text class="tpa-centre" x="240" y="236">Combien de µg de poussière dans 1 m³ ?</text>
+  <g class="tpa-puce c1" data-de="1" style="--i:2"><rect x="14" y="252" width="140" height="34" rx="17"/><text x="84" y="274">P1 · lumière</text></g>
+  <g class="tpa-puce c2" data-de="1" style="--i:4"><rect x="170" y="252" width="140" height="34" rx="17"/><text x="240" y="274">P2 · pesée</text></g>
+  <g class="tpa-puce c3" data-de="1" style="--i:6"><rect x="326" y="252" width="140" height="34" rx="17"/><text x="396" y="274">P3 · rayonnement</text></g>
+</g>
+<!-- Scènes 2 à 4 : P1, observer la lumière -->
+<g data-de="2" data-a="4">
+  <rect class="tpa-boitier" x="20" y="34" width="330" height="222" rx="16"/>
+  <text class="tpa-sm" x="34" y="56">boîtier</text>
+  <rect class="tpa-tube p1" x="168" y="8" width="44" height="28"/>
+  <rect class="tpa-tube p1" x="168" y="254" width="44" height="28"/>
+  <g class="tpa-air"><path d="M180 8 V282"/><path d="M190 8 V282"/><path d="M200 8 V282"/></g>
+  <text class="tpa-sm" x="220" y="26">air ↓</text>
+  <rect class="tpa-lampe-boite" x="28" y="106" width="30" height="28" rx="5"/>
+  <circle class="tpa-halo" cx="64" cy="120" r="24" fill="url(#tpaHalo)"/>
+  <circle class="tpa-lampe" cx="64" cy="120" r="7"/>
+  <text class="tpa-centre" x="46" y="160">lampe</text>
+  <rect class="tpa-faisceau" x="72" y="114" width="250" height="12" fill="url(#tpaFaisceau)"/>
+  <rect class="tpa-piege" x="322" y="106" width="16" height="28" rx="3"/>
+  <text class="tpa-sm tpa-centre" x="262" y="104">faisceau</text>
+  <text class="tpa-sm" x="44" y="226" data-de="3">grains de</text>
+  <text class="tpa-sm tpa-l2" x="44" y="243" data-de="3">poussière ↗</text>
+  <g id="tpaP1Grains" data-de="3"></g>
+  <g id="tpaP1Eclats"></g>
+  <g id="tpaP1Capteur" class="tpa-capteur" data-de="4">
+    <rect class="tpa-det" x="244" y="190" width="64" height="24" rx="5"/>
+    <ellipse class="tpa-lentille" cx="276" cy="190" rx="16" ry="5"/>
+    <g class="tpa-salete"><ellipse cx="270" cy="190" rx="8" ry="3.4"/><ellipse cx="282" cy="189" rx="5" ry="2.6"/><circle cx="276" cy="192" r="2.4"/></g>
+    <text class="tpa-detlb tpa-centre" x="276" y="207">capteur</text>
+    <text class="tpa-sm tpa-centre" x="276" y="236">sur le côté</text>
+  </g>
+  <g class="tpa-afficheur" data-de="4">
+    <rect x="362" y="140" width="110" height="100" rx="12"/>
+    <text class="tpa-sm tpa-centre" x="417" y="164">éclats</text>
+    <text class="tpa-sm tpa-centre tpa-l2" x="417" y="181">comptés</text>
+    <text class="tpa-nombre tpa-centre" id="tpaP1Compte" x="417" y="222">0</text>
+  </g>
+</g>
+<!-- Scènes 5 à 7 : P2, peser un filtre -->
+<g data-de="5" data-a="7">
+  <g data-a="5">
+    <path class="tpa-paroi" d="M20 96 H330 M20 144 H330"/>
+    <g class="tpa-air tpa-air2" id="tpaP2Air"><path d="M22 110 H328"/><path d="M22 120 H328"/><path d="M22 130 H328"/></g>
+    <text class="tpa-sm" x="24" y="88">air →</text>
+    <rect class="tpa-filtre-cote" x="150" y="96" width="8" height="48"/>
+    <rect class="tpa-depot-cote" id="tpaP2DepotCote" x="149" y="96" width="1" height="48"/>
+    <text class="tpa-centre" x="154" y="80">filtre</text>
+    <g id="tpaP2Grains"></g>
+    <circle class="tpa-pompe" cx="262" cy="120" r="20"/>
+    <g id="tpaP2Pales"><path class="tpa-pale" d="M262 120 L262 104 M262 120 L276 128 M262 120 L248 128"/></g>
+    <text class="tpa-centre" x="262" y="80">pompe</text>
+    <path class="tpa-lien" d="M154 146 V172"/>
+    <circle class="tpa-filtre" cx="154" cy="210" r="34"/>
+    <circle class="tpa-depot-face" id="tpaP2DepotFace" cx="154" cy="210" r="30" fill-opacity="0"/>
+    <text class="tpa-sm" x="196" y="206">le filtre,</text>
+    <text class="tpa-sm tpa-l2" x="196" y="223">vu de face</text>
+    <circle class="tpa-cadran" cx="414" cy="186" r="36"/>
+    <path class="tpa-graduations" d="M414 154 V160 M414 212 V218 M382 186 H388 M440 186 H446"/>
+    <line class="tpa-aiguille" id="tpaP2Aiguille" x1="414" y1="186" x2="414" y2="160"/>
+    <circle class="tpa-axe" cx="414" cy="186" r="3"/>
+    <text class="tpa-nombre-vert tpa-centre" id="tpaP2Heures" x="414" y="250">0 h</text>
+    <text class="tpa-sm tpa-centre" x="414" y="140">pendant 24 h</text>
+  </g>
+  <g data-de="6">
+    <text class="tpa-centre" x="120" y="40">avant</text>
+    <path class="tpa-bal-tige" d="M120 120 V104"/>
+    <ellipse class="tpa-bal-plateau" cx="120" cy="102" rx="48" ry="7"/>
+    <ellipse class="tpa-filtre" cx="120" cy="94" rx="30" ry="6"/>
+    <rect class="tpa-bal-socle" x="48" y="120" width="144" height="58" rx="8"/>
+    <rect class="tpa-bal-ecran" x="62" y="134" width="116" height="30" rx="4"/>
+    <text class="tpa-bal-chiffres tpa-centre" id="tpaP2Avant" x="120" y="156">100 000 µg</text>
+  </g>
+  <g data-de="6" style="--i:4">
+    <text class="tpa-centre" x="360" y="40">après</text>
+    <path class="tpa-bal-tige" d="M360 120 V104"/>
+    <ellipse class="tpa-bal-plateau" cx="360" cy="102" rx="48" ry="7"/>
+    <ellipse class="tpa-filtre" cx="360" cy="94" rx="30" ry="6"/>
+    <ellipse class="tpa-depot-face" cx="360" cy="94" rx="26" ry="4.6" fill-opacity=".75"/>
+    <rect class="tpa-bal-socle" x="288" y="120" width="144" height="58" rx="8"/>
+    <rect class="tpa-bal-ecran" x="302" y="134" width="116" height="30" rx="4"/>
+    <text class="tpa-bal-chiffres tpa-centre" id="tpaP2Apres" x="360" y="156">100 000 µg</text>
+  </g>
+  <text class="tpa-eq tpa-centre" data-de="7" x="240" y="226">100 020 µg − 100 000 µg = <tspan class="tpa-ok">20 µg</tspan> de poussière</text>
+  <text class="tpa-eq tpa-centre" data-de="7" style="--i:4" x="240" y="266">20 µg ÷ 2 m³ d'air aspiré = <tspan class="tpa-ok">10 µg/m³</tspan></text>
+</g>
+<!-- Scènes 8 à 10 : P3, freiner un rayonnement -->
+<g data-de="8" data-a="10">
+  <rect class="tpa-source" x="212" y="18" width="56" height="36" rx="9"/>
+  <text class="tpa-src-sym tpa-centre" x="240" y="43">☢</text>
+  <text class="tpa-ambre" x="278" y="34">source scellée</text>
+  <text class="tpa-sm tpa-l2" x="278" y="52">dans une capsule</text>
+  <g class="tpa-air tpa-air3" data-de="9"><path d="M30 66 Q 196 66 234 134"/><path d="M30 88 Q 186 88 246 134"/><path d="M240 146 Q 226 196 120 206"/></g>
+  <text class="tpa-sm" x="30" y="58" data-de="9">air</text>
+  <g id="tpaP3Grains" data-de="9"></g>
+  <g id="tpaP3Bande">
+    <circle class="tpa-rouleau" cx="30" cy="138" r="14"/>
+    <circle class="tpa-rouleau" cx="450" cy="138" r="14"/>
+    <rect class="tpa-bande" x="30" y="132" width="420" height="12"/>
+    <ellipse class="tpa-depot-face" id="tpaP3Depot" cx="240" cy="138" rx="28" ry="5" fill-opacity="0"/>
+  </g>
+  <text class="tpa-sm" x="30" y="166">bande de papier filtre</text>
+  <g id="tpaP3Betas"></g>
+  <g data-de="10">
+    <rect class="tpa-det" x="206" y="222" width="68" height="24" rx="5"/>
+    <text class="tpa-detlb tpa-centre" x="240" y="239">compteur</text>
+    <rect class="tpa-panneau-mesure" x="294" y="190" width="176" height="92" rx="12"/>
+    <text class="tpa-sm tpa-centre" x="382" y="212">ce qui traverse</text>
+    <rect class="tpa-jauge-fond" x="312" y="224" width="140" height="12" rx="6"/>
+    <rect class="tpa-jauge" id="tpaP3Jauge" x="312" y="224" width="140" height="12" rx="6"/>
+    <text class="tpa-centre tpa-mot" id="tpaP3Mot" x="382" y="266">il en passe beaucoup</text>
+    <text class="tpa-sm" id="tpaP3Heure" x="30" y="295">une mesure chaque heure : la bande avance</text>
+  </g>
+</g>
+</svg>
+      <div class="tpa-final" id="tpaFinal" hidden>
+        <div class="tpa-reglage">
+          <label for="tpaCurseur">🌫️ Poussière dans l'air&nbsp;: <output id="tpaValeur" for="tpaCurseur">25 µg/m³</output></label>
+          <input type="range" id="tpaCurseur" min="5" max="80" step="1" value="25">
+          <div class="tpa-bornes" aria-hidden="true"><span>peu</span><span>beaucoup</span></div>
+        </div>
+        <div class="tpa-horloge">
+          <span>🕒 <b id="tpaHeure">Jour 1 · 00 h</b> <small>(horloge accélérée&nbsp;: une heure passe en une seconde)</small></span>
+          <span class="tpa-horloge-btns">
+            <button type="button" class="btn small ghost" id="tpaHorlogeBtn">⏸ Pause</button>
+            <button type="button" class="btn small ghost" id="tpaPlusHeure">⏩ + 1 h</button>
+            <button type="button" class="btn small ghost" id="tpaHorlogeZero">↺ 0 h</button>
+          </span>
+        </div>
+        <div class="tpa-trois">
+          <div class="tpa-app p1">
+            <h5><span class="p3code">P1</span> lumière</h5>
+            <svg class="tpa-mini" id="tpaMini1" viewBox="0 0 200 90" aria-hidden="true" data-loupe="non">
+              <defs><linearGradient id="tpaFaisceauMini" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#ffd08a" stop-opacity=".95"/><stop offset="1" stop-color="#ffd08a" stop-opacity=".3"/></linearGradient></defs>
+              <rect x="22" y="38" width="150" height="10" fill="url(#tpaFaisceauMini)"/><circle cx="18" cy="43" r="6" class="tpa-lampe"/>
+              <rect class="tpa-det" x="128" y="68" width="40" height="14" rx="4"/><g id="tpaMini1G"></g>
+            </svg>
+            <p class="tpa-res"><span>Résultat</span> <b id="tpaR1">25 µg/m³</b></p>
+            <div class="tpa-attente" aria-hidden="true"><div class="tpa-plein"></div></div>
+            <p class="tpa-rythme">la valeur du moment, toutes les 5&nbsp;s</p>
+          </div>
+          <div class="tpa-app p2">
+            <h5><span class="p3code">P2</span> pesée</h5>
+            <svg class="tpa-mini" viewBox="0 0 200 90" aria-hidden="true" data-loupe="non">
+              <circle class="tpa-filtre" cx="66" cy="45" r="32"/><circle class="tpa-depot-face" id="tpaMini2D" cx="66" cy="45" r="28" fill-opacity="0"/>
+              <text class="tpa-mini-lb" x="112" y="42">filtre</text><text class="tpa-mini-lb" x="112" y="62">du jour</text>
+            </svg>
+            <p class="tpa-res"><span>Résultat</span> <b id="tpaR2">—</b></p>
+            <div class="tpa-attente" aria-hidden="true"><div id="tpaB2"></div></div>
+            <p class="tpa-rythme" id="tpaT2">pas encore de résultat&nbsp;: il faut attendre 24&nbsp;h</p>
+          </div>
+          <div class="tpa-app p3c">
+            <h5><span class="p3code">P3</span> rayonnement</h5>
+            <svg class="tpa-mini" id="tpaMini3" viewBox="0 0 200 90" aria-hidden="true" data-loupe="non">
+              <rect x="88" y="4" width="24" height="14" rx="4" class="tpa-source"/>
+              <rect class="tpa-bande" x="10" y="42" width="180" height="8"/><ellipse class="tpa-depot-face" id="tpaMini3D" cx="100" cy="46" rx="16" ry="3.6" fill-opacity="0"/>
+              <rect class="tpa-det" x="82" y="72" width="36" height="12" rx="3"/><g id="tpaMini3G"></g>
+            </svg>
+            <p class="tpa-res"><span>Résultat</span> <b id="tpaR3">—</b></p>
+            <div class="tpa-attente" aria-hidden="true"><div id="tpaB3"></div></div>
+            <p class="tpa-rythme" id="tpaT3">pas encore de résultat&nbsp;: il faut attendre 1&nbsp;h</p>
+          </div>
+        </div>
+        <p class="tpa-mini-note">La pesée donne la moyenne des 24 dernières heures, le rayonnement celle de la dernière heure, la lumière la valeur du moment.</p>
+      </div>
+    </div>
+    <div class="tpa-outils">
+      <button type="button" class="btn small ghost" id="tpaLentille" aria-pressed="false" hidden>🧽 Salir la lentille</button>
+    </div>
+    <p class="tpa-note" id="tpaNoteSale" hidden>🧽 <b>Lentille sale</b>&nbsp;: le capteur compte aussi des éclats qui ne viennent d'aucun grain. L'appareil «&nbsp;voit&nbsp;» de la poussière qui n'existe pas — et rien ne le signale.</p>
+    <p class="tpa-titre" id="tpaTitre"></p>
+    <div class="tpa-texte" id="tpaTexte" aria-live="polite"></div>
+    <div class="tpa-nav">
+      <button type="button" class="btn ghost" id="tpaPrec">◀ Précédent</button>
+      <span class="tpa-compte" id="tpaCompte">Étape 1 / 11</span>
+      <button type="button" class="btn" id="tpaSuiv">Suivant ▶</button>
+    </div>
+    <div class="tpa-nav">
+      <button type="button" class="btn" id="tpaRegarder">▶ Regarder</button>
+      <button type="button" class="btn ghost" id="tpaEcouter" hidden>🔊 Écouter</button>
+      <button type="button" class="btn ghost" id="tpaZero">↺ Recommencer</button>
+    </div>
+    <p class="tpa-sansvoix" id="tpaSansVoix" hidden>Pas de voix française installée sur cet ordinateur&nbsp;: lis les phrases. «&nbsp;▶ Regarder&nbsp;» les enchaîne au rythme de la lecture.</p>
+    <p class="tpa-credit">Voix de synthèse&nbsp;: SIWIS (CC BY 4.0)</p>
+  </div>
+  <!-- trois_principes_pas_a_pas : fin -->
   <div class="p3grid">
     <article class="p3card p1">
       <h5><span class="p3code">P1</span> Observer la lumière <small>(diffusion optique)</small></h5>
@@ -1888,6 +2233,540 @@ if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
 majEssentiel(); majProgress(); majHyp();
 </script>
 
+<!-- trois_principes_pas_a_pas (script) : début — animation pas à pas des trois principes (25/10/2026) -->
+<script>
+(function(){
+  "use strict";
+  // La phrase affichée est la phrase dite : _generation/voix_trois_principes/generer.py la compare, mot pour mot.
+  // Étapes ①②③ : les phrases des cartes P1, P2, P3, recopiées ; « d » décrit le dessin pour un lecteur d'écran.
+  var SCENES = [
+    {t: "La fonction", p: "Une seule fonction : <b>mesurer la concentration de poussières</b> dans l'air. Trois appareils la remplissent, chacun avec son <b>principe</b> : le phénomène physique qu'il emploie.",
+     d: "Un cube d'un mètre cube d'air, avec des grains de poussière. Dessous : combien de microgrammes de poussière dans un mètre cube ? Puis trois étiquettes : P1 lumière, P2 pesée, P3 rayonnement."},
+    {t: "P1 · ① la lampe", p: "Une petite lampe (une diode ou un laser) éclaire l'air qui passe dans le boîtier.",
+     d: "Un boîtier traversé de haut en bas par l'air. À gauche, une petite lampe s'allume : son faisceau traverse le boîtier à l'horizontale."},
+    {t: "P1 · ② les grains", p: "Chaque grain de poussière renvoie un peu de lumière sur le côté.",
+     d: "Des grains de poussière descendent avec l'air. Quand un grain traverse le faisceau, il brille et renvoie de petits éclats de lumière tout autour de lui."},
+    {t: "P1 · ③ le capteur", p: "Un capteur de lumière compte ces éclats : plus il y en a, plus l'air est chargé. Le capteur est <b>sur le côté</b> : il ne reçoit que la lumière <b>déviée</b> par les grains.",
+     d: "Sous le faisceau, sur le côté, un capteur reçoit les éclats renvoyés par les grains ; il ne voit pas la lampe. Un afficheur donne le nombre d'éclats comptés."},
+    {t: "P2 · ① le filtre", p: "Une pompe fait passer l'air à travers un filtre pendant <b>24 h</b>.",
+     d: "L'air passe dans un tuyau, à travers un filtre, tiré par une pompe. Une horloge tourne de 0 à 24 heures ; le filtre, vu de face, se couvre peu à peu de poussière grise."},
+    {t: "P2 · ② la balance", p: "On pèse le filtre <b>avant</b>, puis <b>après</b>.",
+     d: "Deux balances. Avant : le filtre propre pèse 100 000 microgrammes. Après : le filtre chargé pèse 100 020 microgrammes."},
+    {t: "P2 · ③ le calcul", p: "La différence de masse, c'est la poussière ; on la divise par le volume d'air aspiré.",
+     d: "Le calcul : 100 020 moins 100 000 égale 20 microgrammes de poussière. 20 microgrammes divisés par 2 mètres cubes d'air aspiré égale 10 microgrammes par mètre cube."},
+    {t: "P3 · ① la source", p: "Une petite source radioactive <b>scellée</b> envoie un rayonnement à travers une bande de papier filtre.",
+     d: "En haut, une source enfermée dans une capsule envoie un rayonnement vers le bas, à travers une bande de papier filtre."},
+    {t: "P3 · ② le dépôt", p: "L'air dépose sa poussière sur la bande.",
+     d: "L'air arrive de la gauche et traverse la bande : une tache de poussière grise s'y forme, de plus en plus foncée."},
+    {t: "P3 · ③ le compteur", p: "Un compteur mesure ce qui traverse : plus le dépôt est épais, moins il en passe. On en déduit la masse déposée, puis la concentration grâce au volume d'air aspiré.",
+     d: "Sous la bande, un compteur mesure ce qui traverse. Quand la tache s'épaissit, il passe de moins en moins de rayonnement : la jauge passe de beaucoup à peu. Chaque heure, la bande avance."},
+    {t: "Les trois ensemble", p: "Trois façons d'arriver au même résultat : une concentration, en µg/m³. Bouge le curseur de poussière, puis regarde quand chaque appareil donne son résultat.",
+     d: ""}
+  ];
+  var N = SCENES.length, scene = 1, tScene = 0;
+  var bloc = document.getElementById("trois-principes-pas-a-pas");
+  if (!bloc) return;
+  function $t(id){ return document.getElementById(id); }
+  var planche = $t("planche3");
+  bloc.hidden = false;
+  if (planche) planche.classList.add("tpa-actif");     // à l'écran, l'animation remplace les trois schémas fixes
+  var NS = "http://www.w3.org/2000/svg";
+  var calme = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : {matches: false};
+  var graine = 11;                                       // tirage reproductible : mêmes dessins à chaque ouverture
+  function hasard(){ graine = (graine * 16807) % 2147483647; return (graine - 1) / 2147483646; }
+  function cree(nom, attrs, parent){
+    var e = document.createElementNS(NS, nom);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function pose(e, a, v){ e.setAttribute(a, typeof v === "number" ? v.toFixed(1) : v); }
+  var dessin = $t("tpaDessin"), final = $t("tpaFinal");
+  var titre = $t("tpaTitre"), texte = $t("tpaTexte"), compte = $t("tpaCompte");
+  var prec = $t("tpaPrec"), suiv = $t("tpaSuiv");
+  var bRegarder = $t("tpaRegarder"), bEcouter = $t("tpaEcouter"), sansVoix = $t("tpaSansVoix");
+  var bLentille = $t("tpaLentille"), noteSale = $t("tpaNoteSale");
+  var chapitres = bloc.querySelectorAll("[data-aller]");
+
+  // ── Scène 1 : des grains qui flottent dans le mètre cube ──
+  var fGrains = [];
+  (function(){
+    var g = $t("tpaFGrains");
+    for (var i = 0; i < 22; i++) fGrains.push({x: 168 + hasard() * 124, y: 86 + hasard() * 114, vx: 0, vy: 0,
+      e: cree("circle", {r: (1.8 + hasard() * 1.6).toFixed(1), "class": "tpa-grain"}, g)});
+  })();
+  function dessinerF(){ fGrains.forEach(function(g){ pose(g.e, "cx", g.x); pose(g.e, "cy", g.y); }); }
+  function majF(dt){
+    fGrains.forEach(function(g){
+      g.vx = (g.vx + (hasard() - .5) * 80 * dt) * .97; g.vy = (g.vy + (hasard() - .5) * 80 * dt) * .97;
+      g.x += g.vx * dt; g.y += g.vy * dt;
+      if (g.x < 166) { g.x = 166; g.vx = Math.abs(g.vx); } if (g.x > 294) { g.x = 294; g.vx = -Math.abs(g.vx); }
+      if (g.y < 84) { g.y = 84; g.vy = Math.abs(g.vy); } if (g.y > 202) { g.y = 202; g.vy = -Math.abs(g.vy); }
+    });
+    dessinerF();
+  }
+
+  // ── P1 : des grains tombent dans le faisceau, ils renvoient de la lumière, le capteur la compte ──
+  var LENTILLE = {x: 276, y: 186}, FAISCEAU_Y = 120;
+  var p1 = {grains: [], eclats: [], prochain: 0, fantome: 0, compte: 0, vu: 0, sale: false};
+  (function(){
+    var g = $t("tpaP1Grains"), e = $t("tpaP1Eclats"), i, k;
+    for (i = 0; i < 9; i++) p1.grains.push({actif: false, x: 0, y: 0, v: 0, passe: false, e: cree("circle", {r: "3", "class": "tpa-grain", opacity: "0"}, g)});
+    for (i = 0; i < 8; i++) {
+      var gr = cree("g", {opacity: "0"}, e), rayons = [];
+      for (k = 0; k < 6; k++) rayons.push(cree("line", {"class": "tpa-rai"}, gr));
+      p1.eclats.push({vie: 0, x: 0, y: 0, lien: false, rond: true, g: gr, rayons: rayons,
+        long: cree("line", {"class": "tpa-rai-long"}, gr), halo: cree("circle", {r: "0", fill: "url(#tpaEclat)"}, gr)});
+    }
+  })();
+  var p1Compte = $t("tpaP1Compte"), p1Capteur = $t("tpaP1Capteur");
+  function eclat(x, y, lien, rond){
+    var ec = null;
+    for (var i = 0; i < p1.eclats.length; i++) if (p1.eclats[i].vie <= 0) { ec = p1.eclats[i]; break; }
+    if (!ec) return;
+    ec.vie = .6; ec.x = x; ec.y = y; ec.lien = lien; ec.rond = rond;
+    if (lien) { p1.compte++; p1.vu = .14; }
+  }
+  function dessinerEclat(ec){
+    if (ec.vie <= 0) { ec.g.setAttribute("opacity", "0"); return; }
+    var k = 1 - ec.vie / .6;
+    ec.g.setAttribute("opacity", (1 - k * .85).toFixed(2));
+    pose(ec.halo, "cx", ec.x); pose(ec.halo, "cy", ec.y); pose(ec.halo, "r", 4 + 12 * k);
+    ec.rayons.forEach(function(l, j){
+      var a = j * Math.PI / 3 + .5, r1 = 6, r2 = ec.rond ? 6 + 16 * Math.min(1, k * 1.6) : 6;
+      pose(l, "x1", ec.x + r1 * Math.cos(a)); pose(l, "y1", ec.y + r1 * Math.sin(a));
+      pose(l, "x2", ec.x + r2 * Math.cos(a)); pose(l, "y2", ec.y + r2 * Math.sin(a));
+    });
+    ec.long.setAttribute("opacity", ec.lien ? "1" : "0");
+    if (ec.lien) {
+      var t = Math.min(1, k * 2.2);
+      pose(ec.long, "x1", ec.x); pose(ec.long, "y1", ec.y);
+      pose(ec.long, "x2", ec.x + (LENTILLE.x - ec.x) * t); pose(ec.long, "y2", ec.y + (LENTILLE.y - ec.y) * t);
+    }
+  }
+  function dessinerP1(){
+    p1.grains.forEach(function(g){ g.e.setAttribute("opacity", g.actif ? "1" : "0"); if (g.actif) { pose(g.e, "cx", g.x); pose(g.e, "cy", g.y); } });
+    p1.eclats.forEach(dessinerEclat);
+    p1Compte.textContent = String(p1.compte);
+    p1Capteur.classList.toggle("tpa-vu", p1.vu > 0);
+    p1Capteur.classList.toggle("tpa-sale", p1.sale);
+  }
+  function majP1(dt){
+    var grains = scene >= 3;
+    p1.prochain -= dt;
+    if (grains && p1.prochain <= 0) {
+      p1.prochain = .5 + hasard() * .25;
+      for (var i = 0; i < p1.grains.length; i++) if (!p1.grains[i].actif) {
+        var g = p1.grains[i]; g.actif = true; g.passe = false; g.x = 176 + hasard() * 28; g.y = 30; g.v = 48 + hasard() * 16; break;
+      }
+    }
+    p1.grains.forEach(function(g){
+      if (!g.actif) return;
+      g.y += g.v * dt;
+      if (!g.passe && g.y >= FAISCEAU_Y) { g.passe = true; eclat(g.x, FAISCEAU_Y, scene === 4, true); }
+      if (g.y > 256) g.actif = false;
+    });
+    if (scene === 4 && p1.sale) {
+      p1.fantome -= dt;
+      if (p1.fantome <= 0) { p1.fantome = .55 + hasard() * .4; eclat(LENTILLE.x - 8 + hasard() * 16, LENTILLE.y + 1, false, false); p1.compte++; p1.vu = .14; }
+    }
+    p1.eclats.forEach(function(ec){ ec.vie -= dt; });
+    p1.vu -= dt;
+    if (!grains) p1.grains.forEach(function(g){ g.actif = false; });
+    dessinerP1();
+  }
+  function poseP1(){                                      // image fixe (mouvement réduit)
+    p1.grains.forEach(function(g){ g.actif = false; }); p1.eclats.forEach(function(ec){ ec.vie = 0; });
+    if (scene >= 3) {
+      [[184, 58], [197, FAISCEAU_Y], [180, 176], [201, 226]].forEach(function(xy, i){
+        var g = p1.grains[i]; g.actif = true; g.x = xy[0]; g.y = xy[1];
+      });
+      eclat(197, FAISCEAU_Y, scene === 4, true); p1.eclats[0].vie = .32;
+      if (scene === 4) { p1.compte = 12; if (p1.sale) { eclat(271, LENTILLE.y + 1, false, false); p1.eclats[1].vie = .3; p1.compte = 17; } }
+    }
+    p1.vu = 0; dessinerP1();
+  }
+
+  // ── P2 : la pompe tire l'air à travers le filtre pendant 24 h, puis la balance ──
+  var p2 = {h: 0, angle: 0, grains: [], prochain: 0, chiffres: 0};
+  (function(){
+    var g = $t("tpaP2Grains");
+    for (var i = 0; i < 10; i++) p2.grains.push({actif: false, x: 0, y: 0, v: 0, e: cree("circle", {r: "2.6", "class": "tpa-grain", opacity: "0"}, g)});
+  })();
+  var p2Aiguille = $t("tpaP2Aiguille"), p2Heures = $t("tpaP2Heures"), p2Pales = $t("tpaP2Pales"), p2Air = $t("tpaP2Air");
+  var p2Cote = $t("tpaP2DepotCote"), p2Face = $t("tpaP2DepotFace"), p2Apres = $t("tpaP2Apres");
+  function microgrammes(v){ return String(v).replace(/\B(?=(\d{3})+(?!\d))/g, "\u202f") + "\u00a0µg"; }
+  function dessinerP2(){
+    var fini = p2.h >= 24, c = p2.h / 24;
+    pose(p2Aiguille, "x2", 414 + 26 * Math.sin(p2.h / 12 * 2 * Math.PI));
+    pose(p2Aiguille, "y2", 186 - 26 * Math.cos(p2.h / 12 * 2 * Math.PI));
+    p2Heures.textContent = Math.floor(p2.h) + " h";
+    p2Pales.setAttribute("transform", "rotate(" + p2.angle.toFixed(1) + " 262 120)");
+    p2Air.classList.toggle("tpa-arret", fini);
+    var w = 1 + 6 * c; pose(p2Cote, "x", 150 - w); pose(p2Cote, "width", w);
+    p2Face.setAttribute("fill-opacity", (.08 + .72 * c).toFixed(2));
+    p2.grains.forEach(function(g){ g.e.setAttribute("opacity", g.actif ? "1" : "0"); if (g.actif) { pose(g.e, "cx", g.x); pose(g.e, "cy", g.y); } });
+    p2Apres.textContent = microgrammes(100000 + p2.chiffres);
+  }
+  function majP2(dt){
+    if (scene === 5) {
+      var avant = p2.h;
+      p2.h = Math.min(24, tScene * 3.2);                   // 24 h en 7,5 s
+      if (p2.h < 24) {
+        p2.angle = (p2.angle + dt * 540) % 360;
+        p2.prochain -= dt;
+        if (p2.prochain <= 0) {
+          p2.prochain = .2 + hasard() * .15;
+          for (var i = 0; i < p2.grains.length; i++) if (!p2.grains[i].actif) {
+            var g = p2.grains[i]; g.actif = true; g.x = 24; g.y = 104 + hasard() * 32; g.v = 120 + hasard() * 40; break;
+          }
+        }
+      }
+      p2.grains.forEach(function(g){ if (g.actif) { g.x += g.v * dt; if (g.x >= 146) g.actif = false; } });
+      if (avant < 24 && p2.h >= 24) p2.grains.forEach(function(g){ g.actif = false; });
+    } else {
+      var t = Math.max(0, Math.min(1, (tScene - 1.4) / .9));      // l'afficheur « après » monte, un chiffre à la fois
+      p2.chiffres = scene === 6 ? Math.round(20 * (1 - Math.pow(1 - t, 3))) : 20;
+    }
+    dessinerP2();
+  }
+  function poseP2(){
+    p2.grains.forEach(function(g){ g.actif = false; });
+    p2.h = 24; p2.angle = 0; p2.chiffres = 20; dessinerP2();
+  }
+
+  // ── P3 : la source envoie un rayonnement à travers la bande ; le dépôt le freine ──
+  var p3 = {betas: [], grains: [], prochain: 0, prochainG: 0, depot: 0, decale: 0};
+  (function(){
+    var b = $t("tpaP3Betas"), g = $t("tpaP3Grains"), i;
+    for (i = 0; i < 40; i++) p3.betas.push({actif: false, x: 0, y: 0, absorbe: 0, e: cree("circle", {r: "2.2", "class": "tpa-beta", opacity: "0"}, b)});
+    for (i = 0; i < 8; i++) p3.grains.push({actif: false, s: 0, v: 0, d: 0, e: cree("circle", {r: "2.6", "class": "tpa-grain", opacity: "0"}, g)});
+  })();
+  var p3Depot = $t("tpaP3Depot"), p3Jauge = $t("tpaP3Jauge"), p3Mot = $t("tpaP3Mot"), p3Heure = $t("tpaP3Heure");
+  var ATTENUATION = 2.4;
+  // ce que le rayonnement traverse : la tache sous le faisceau (quand la bande avance, une partie propre arrive dessous)
+  function sousFaisceau(){ return p3.depot * Math.max(0, 1 - p3.decale / 30); }
+  function passe(){ return Math.exp(-ATTENUATION * sousFaisceau()); }
+  function chemin(s, d){                                  // point sur la courbe d'air (Bézier quadratique)
+    var y0 = 66 + d * 22, x2 = 234 + d * 12, u = 1 - s;
+    return {x: u * u * 30 + 2 * u * s * (196 - d * 10) + s * s * x2, y: u * u * y0 + 2 * u * s * y0 + s * s * 134};
+  }
+  function dessinerP3(){
+    p3Depot.setAttribute("fill-opacity", Math.min(.92, p3.depot * 1.05).toFixed(2));
+    p3Depot.setAttribute("transform", "translate(" + p3.decale.toFixed(1) + " 0)");
+    var f = passe();
+    pose(p3Jauge, "width", Math.max(4, 140 * f));
+    p3Mot.textContent = f > .5 ? "il en passe beaucoup" : "il en passe peu";
+    p3Heure.style.opacity = p3.decale > 0 ? "1" : "0";
+    p3.betas.forEach(function(b){
+      if (!b.actif) { b.e.setAttribute("opacity", "0"); return; }
+      pose(b.e, "cx", b.x); pose(b.e, "cy", b.y);
+      b.e.setAttribute("opacity", ((b.absorbe > 0 ? b.absorbe / .3 : 1) * (scene === 9 ? .45 : 1)).toFixed(2));
+    });
+    p3.grains.forEach(function(g){
+      g.e.setAttribute("opacity", g.actif ? "1" : "0");
+      if (g.actif) { var p = chemin(g.s, g.d); pose(g.e, "cx", p.x); pose(g.e, "cy", p.y); }
+    });
+  }
+  function majP3(dt){
+    // le dépôt : nul à la scène 8 ; il se forme à la scène 9 ; à la scène 10, il se forme, la bande avance, on recommence
+    if (scene === 8) { p3.depot = 0; p3.decale = 0; }
+    else if (scene === 9) { p3.depot = Math.min(.85, tScene / 8); p3.decale = 0; }
+    else {
+      var c = tScene % 11.5;
+      if (c < 9) { p3.depot = Math.min(.9, c / 7); p3.decale = 0; }
+      else { p3.decale = Math.min(1, (c - 9) / 1.6) * 90; }
+    }
+    p3.prochain -= dt;
+    while (p3.prochain <= 0) {
+      p3.prochain += 1 / 18;
+      for (var i = 0; i < p3.betas.length; i++) if (!p3.betas[i].actif) {
+        var b = p3.betas[i]; b.actif = true; b.absorbe = 0; b.franchi = false; b.x = 233 + hasard() * 14; b.y = 56; break;
+      }
+    }
+    var bas = scene >= 10 ? 222 : 300;
+    p3.betas.forEach(function(b){
+      if (!b.actif) return;
+      if (b.absorbe > 0) { b.absorbe -= dt; if (b.absorbe <= 0) b.actif = false; return; }
+      b.y += 150 * dt;
+      if (!b.franchi && b.y >= 136) {
+        b.franchi = true;
+        var dans = Math.abs(b.x - 240) < 28;
+        if (dans && hasard() > passe()) { b.y = 136; b.absorbe = .3; return; }
+      }
+      if (b.y >= bas) b.actif = false;
+    });
+    if (scene >= 9) {
+      p3.prochainG -= dt;
+      if (p3.prochainG <= 0 && p3.decale === 0) {
+        p3.prochainG = .45 + hasard() * .3;
+        for (var j = 0; j < p3.grains.length; j++) if (!p3.grains[j].actif) {
+          var g = p3.grains[j]; g.actif = true; g.s = 0; g.d = hasard(); g.v = .42 + hasard() * .12; break;
+        }
+      }
+      p3.grains.forEach(function(g){ if (g.actif) { g.s += g.v * dt; if (g.s >= 1) g.actif = false; } });
+    } else p3.grains.forEach(function(g){ g.actif = false; });
+    dessinerP3();
+  }
+  function poseP3(){
+    p3.betas.forEach(function(b){ b.actif = false; }); p3.grains.forEach(function(g){ g.actif = false; });
+    p3.decale = 0; p3.depot = scene === 8 ? 0 : (scene === 9 ? .6 : .85);
+    var ys = scene === 8 ? [72, 100, 128, 160, 196, 236, 270] : [70, 96, 124, 136, 136, 176];
+    ys.forEach(function(y, i){
+      var b = p3.betas[i]; b.actif = true; b.x = 234 + (i % 3) * 5; b.y = y; b.absorbe = (scene >= 9 && y === 136) ? .15 : 0;
+    });
+    if (scene >= 9) [.25, .55, .85].forEach(function(s, i){ var g = p3.grains[i]; g.actif = true; g.s = s; g.d = i / 2; });
+    dessinerP3();
+  }
+
+  // ── Les trois ensemble : un curseur de poussière, une horloge accélérée, trois résultats ──
+  var fin = {h: 0, c: 25, marche: false, lance: false, acc2: 0, acc3: 0, r2: null, r3: null, grains: [], betas: [], prochain1: 0, prochain3: 0};
+  var curseur = $t("tpaCurseur"), valeur = $t("tpaValeur"), heure = $t("tpaHeure");
+  var bHorloge = $t("tpaHorlogeBtn"), r1 = $t("tpaR1"), r2 = $t("tpaR2"), r3 = $t("tpaR3");
+  var b2 = $t("tpaB2"), b3 = $t("tpaB3"), t2 = $t("tpaT2"), t3 = $t("tpaT3"), m2 = $t("tpaMini2D"), m3 = $t("tpaMini3D");
+  (function(){
+    var g1 = $t("tpaMini1G"), g3 = $t("tpaMini3G"), i;
+    for (i = 0; i < 10; i++) fin.grains.push({actif: false, x: 0, y: 0, eclat: 0, e: cree("circle", {r: "2.4", "class": "tpa-grain", opacity: "0"}, g1),
+      h: cree("circle", {r: "0", fill: "#ffd08a", opacity: "0"}, g1)});
+    for (i = 0; i < 16; i++) fin.betas.push({actif: false, x: 0, y: 0, absorbe: 0, e: cree("circle", {r: "1.8", "class": "tpa-beta", opacity: "0"}, g3)});
+  })();
+  function neuf(b, texte){ if (b.textContent === texte) return; b.textContent = texte; b.classList.remove("tpa-neuf"); void b.offsetWidth; b.classList.add("tpa-neuf"); }
+  function deux(n){ return (n < 10 ? "0" : "") + n; }
+  function afficherFin(){
+    var h = Math.floor(fin.h + 1e-9);
+    heure.textContent = "Jour " + (Math.floor(h / 24) + 1) + " · " + deux(h % 24) + " h";
+    valeur.textContent = fin.c + " µg/m³";
+    r1.textContent = fin.c + " µg/m³";                    // P1 : la valeur du moment (un résultat toutes les 5 s)
+    if (fin.r2 !== null) neuf(r2, fin.r2 + " µg/m³");
+    if (fin.r3 !== null) neuf(r3, fin.r3 + " µg/m³");
+    var reste = 24 - (fin.h % 24);
+    b2.style.width = ((fin.h % 24) / 24 * 100).toFixed(1) + "%";
+    b3.style.width = ((fin.h % 1) * 100).toFixed(1) + "%";
+    t2.textContent = (fin.r2 === null ? "pas encore de résultat : il faut attendre 24 h" : "la moyenne des 24 dernières heures") +
+      " · prochain résultat dans " + Math.ceil(reste - 1e-9) + " h";
+    t3.textContent = fin.r3 === null ? "pas encore de résultat : il faut attendre 1 h" : "la moyenne de la dernière heure, chaque heure";
+    m2.setAttribute("fill-opacity", Math.min(.9, .05 + fin.acc2 / (24 * 35)).toFixed(2));
+    m3.setAttribute("fill-opacity", Math.min(.9, fin.acc3 / 80 * 1.2).toFixed(2));
+    bHorloge.textContent = fin.marche ? "⏸ Pause" : "▶ Faire tourner l'horloge";
+  }
+  function avancer(dh){                                  // l'horloge avance de dh heures ; P2 et P3 moyennent ce qu'ils ont reçu
+    while (dh > 1e-9) {
+      var hDans = 1 - (fin.h % 1), pas = Math.min(dh, hDans);
+      fin.acc2 += fin.c * pas; fin.acc3 += fin.c * pas; fin.h += pas; dh -= pas;
+      if (Math.abs(fin.h - Math.round(fin.h)) < 1e-9) {
+        fin.h = Math.round(fin.h);
+        fin.r3 = Math.round(fin.acc3); fin.acc3 = 0;
+        if (fin.h % 24 === 0) { fin.r2 = Math.round(fin.acc2 / 24); fin.acc2 = 0; }
+      }
+    }
+  }
+  function zeroFin(){ fin.h = 0; fin.acc2 = 0; fin.acc3 = 0; fin.r2 = null; fin.r3 = null; r2.textContent = "—"; r3.textContent = "—"; afficherFin(); }
+  function minis(dt){
+    var taux = fin.c / 25 * 2.2, i, g;
+    fin.prochain1 -= dt;
+    if (fin.prochain1 <= 0) {
+      fin.prochain1 = 1 / taux * (.6 + hasard() * .8);
+      for (i = 0; i < fin.grains.length; i++) if (!fin.grains[i].actif) { g = fin.grains[i]; g.actif = true; g.x = 92 + hasard() * 16; g.y = 2; g.eclat = 0; break; }
+    }
+    fin.grains.forEach(function(g){
+      if (!g.actif) { g.e.setAttribute("opacity", "0"); g.h.setAttribute("opacity", "0"); return; }
+      var avant = g.y; g.y += 40 * dt;
+      if (avant < 43 && g.y >= 43) g.eclat = .45;
+      g.eclat -= dt;
+      if (g.y > 90) g.actif = false;
+      pose(g.e, "cx", g.x); pose(g.e, "cy", g.y); g.e.setAttribute("opacity", "1");
+      var k = Math.max(0, g.eclat) / .45;
+      pose(g.h, "cx", g.x); pose(g.h, "cy", 43); pose(g.h, "r", 3 + 7 * (1 - k)); g.h.setAttribute("opacity", k.toFixed(2));
+    });
+    var tache = Math.min(.9, fin.acc3 / 80 * 1.2);
+    fin.prochain3 -= dt;
+    while (fin.prochain3 <= 0) {
+      fin.prochain3 += 1 / 9;
+      for (i = 0; i < fin.betas.length; i++) if (!fin.betas[i].actif) { g = fin.betas[i]; g.actif = true; g.x = 95 + hasard() * 10; g.y = 18; g.absorbe = 0; g.franchi = false; break; }
+    }
+    fin.betas.forEach(function(b){
+      if (!b.actif) { b.e.setAttribute("opacity", "0"); return; }
+      if (b.absorbe > 0) { b.absorbe -= dt; if (b.absorbe <= 0) b.actif = false; }
+      else {
+        b.y += 60 * dt;
+        if (!b.franchi && b.y >= 44) { b.franchi = true; if (hasard() > Math.exp(-ATTENUATION * tache)) { b.y = 44; b.absorbe = .3; } }
+        if (b.y >= 72) b.actif = false;
+      }
+      pose(b.e, "cx", b.x); pose(b.e, "cy", b.y); b.e.setAttribute("opacity", b.absorbe > 0 ? (b.absorbe / .3).toFixed(2) : "1");
+    });
+  }
+  function majFin(dt){
+    if (fin.marche) avancer(dt);                          // une heure par seconde
+    if (!calme.matches) minis(dt);
+    afficherFin();
+  }
+  function poseFin(){
+    fin.grains.forEach(function(g, i){ g.actif = i < 2; g.x = 96 + i * 8; g.y = i ? 64 : 43; g.eclat = i ? 0 : .2; });
+    fin.betas.forEach(function(b, i){ b.actif = i < 3; b.x = 96 + i * 4; b.y = 26 + i * 18; b.absorbe = 0; });
+    minis(0); afficherFin();
+  }
+  curseur.addEventListener("input", function(){ fin.c = +curseur.value; afficherFin(); });
+  bHorloge.addEventListener("click", function(){ fin.marche = !fin.marche; afficherFin(); relancer(); });
+  $t("tpaPlusHeure").addEventListener("click", function(){ avancer(1); afficherFin(); if (calme.matches) poseFin(); });
+  $t("tpaHorlogeZero").addEventListener("click", function(){ zeroFin(); if (calme.matches) poseFin(); });
+
+  // ── La boucle : elle ne tourne que si l'animation est à l'écran, l'onglet visible, et le mouvement permis ──
+  var raf = 0, avantT = 0, visible = true;
+  function doitTourner(){ return visible && !document.hidden && (!calme.matches || (scene === N && fin.marche)); }
+  function maj(dt){
+    tScene += dt;
+    if (scene === 1) majF(dt);
+    else if (scene <= 4) majP1(dt);
+    else if (scene <= 7) majP2(dt);
+    else if (scene <= 10) majP3(dt);
+    else majFin(dt);
+  }
+  function boucle(ts){
+    raf = 0;
+    if (!doitTourner()) { avantT = 0; return; }
+    var dt = avantT ? Math.min(.05, (ts - avantT) / 1000) : 0;
+    avantT = ts; maj(dt);
+    raf = requestAnimationFrame(boucle);
+  }
+  function relancer(){ if (!raf && doitTourner()) { avantT = 0; raf = requestAnimationFrame(boucle); } }
+  function imageFixe(){
+    if (scene === 1) dessinerF();
+    else if (scene <= 4) poseP1();
+    else if (scene <= 7) poseP2();
+    else if (scene <= 10) poseP3();
+    else poseFin();
+  }
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function(entrees){ visible = entrees[entrees.length - 1].isIntersecting; relancer(); }).observe(bloc);
+  }
+  document.addEventListener("visibilitychange", relancer);
+  if (calme.addEventListener) calme.addEventListener("change", function(){ if (calme.matches) imageFixe(); relancer(); });
+
+  // ── Changer de scène ──
+  function montrer(n){
+    var ancienne = scene;
+    scene = Math.max(1, Math.min(N, n)); tScene = 0;
+    bloc.setAttribute("data-scene", String(scene));
+    bloc.querySelectorAll("[data-de]").forEach(function(el){
+      var cache = scene < +el.getAttribute("data-de") || (el.hasAttribute("data-a") && scene > +el.getAttribute("data-a"));
+      el.classList.toggle("tpa-cache", cache);
+    });
+    bloc.querySelectorAll("[data-a]:not([data-de])").forEach(function(el){ el.classList.toggle("tpa-cache", scene > +el.getAttribute("data-a")); });
+    dessin.style.display = scene === N ? "none" : ""; final.hidden = scene !== N;
+    dessin.setAttribute("aria-label", SCENES[scene - 1].d);
+    titre.textContent = "Étape " + scene + " — " + SCENES[scene - 1].t;
+    texte.innerHTML = "<p>" + SCENES[scene - 1].p + "</p>";
+    compte.textContent = "Étape " + scene + " / " + N;
+    prec.disabled = scene === 1; suiv.disabled = scene === N;
+    var ch = scene >= 11 ? 4 : scene >= 8 ? 3 : scene >= 5 ? 2 : scene >= 2 ? 1 : 0;
+    chapitres.forEach(function(b, i){ if (i === ch) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current"); });
+    bLentille.hidden = scene !== 4; noteSale.hidden = !(scene === 4 && p1.sale);
+    if (scene === 4 && ancienne !== 4) p1.compte = 0;
+    if (scene === 5) { p2.h = 0; p2.angle = 0; }
+    if (scene === 6) p2.chiffres = 0;
+    if (scene >= 8 && scene <= 10 && (ancienne < 8 || ancienne > 10)) p3.betas.forEach(function(b){ b.actif = false; });
+    if (scene === N) {                                   // l'horloge tourne seule, sauf sous « mouvement réduit »
+      if (!fin.lance) { fin.lance = true; zeroFin(); }
+      fin.marche = !calme.matches; afficherFin();
+    } else fin.marche = false;
+    if (calme.matches) imageFixe(); else maj(0);
+    relancer();
+  }
+  bLentille.addEventListener("click", function(){
+    p1.sale = !p1.sale;
+    bLentille.setAttribute("aria-pressed", String(p1.sale));
+    bLentille.textContent = p1.sale ? "✨ Nettoyer la lentille" : "🧽 Salir la lentille";
+    noteSale.hidden = !p1.sale;
+    if (calme.matches) poseP1(); else dessinerP1();
+  });
+  chapitres.forEach(function(b){ b.addEventListener("click", function(){ arreter(); montrer(+b.getAttribute("data-aller")); }); });
+
+  // ── La voix : les fichiers de la séance (Audio/, synthèse neuronale hors ligne, jamais le réseau) ; en secours, ──
+  // ── une voix française LOCALE du système (jamais une voix en ligne). Rien ne se lit sans un geste de l'élève. ──
+  var regarde = false, minuterie = null, jeton = 0;
+  var lecteur = new Audio(), ext = "";
+  try { ext = lecteur.canPlayType('audio/ogg; codecs="opus"') ? "ogg" : (lecteur.canPlayType("audio/mpeg") ? "mp3" : ""); }
+  catch (e) { ext = ""; }
+  var son = !!ext, synth = window.speechSynthesis || null, voix = null;
+  function choisirVoix(){
+    var fr = (synth ? synth.getVoices() : []).filter(function(v){ return /^fr/i.test(v.lang) && v.localService; });
+    voix = fr.filter(function(v){ return /^fr-FR/i.test(v.lang); })[0] || fr[0] || null;
+    bEcouter.hidden = !(son || voix); sansVoix.hidden = !!(son || voix);
+  }
+  if (synth && "onvoiceschanged" in synth) synth.addEventListener("voiceschanged", choisirVoix);
+  function brut(i){ var d = document.createElement("div"); d.innerHTML = SCENES[i - 1].p; return d.textContent; }
+  function duree(i){ return Math.max(3500, brut(i).split(/\s+/).length * 400) + 1000; }   // lecture d'un élève de 5e
+  function parlerSynth(i, finir){
+    var j = ++jeton;
+    if (!voix) { if (finir) minuterie = setTimeout(function(){ if (j === jeton) finir(); }, duree(i)); return; }
+    synth.cancel();
+    var u = new SpeechSynthesisUtterance(brut(i)), fait = false, secours;
+    u.voice = voix; u.lang = voix.lang; u.rate = .95;
+    function f(){ if (fait || j !== jeton) return; fait = true; clearTimeout(secours); if (finir) finir(); }
+    u.onend = f; u.onerror = f;
+    secours = setTimeout(f, duree(i) * 2 + 2000);
+    synth.speak(u);
+  }
+  function parler(i, finir){
+    if (!son) { parlerSynth(i, finir); return; }
+    var j = ++jeton, fait = false, secours;
+    if (synth) synth.cancel();
+    function f(){ if (fait || j !== jeton) return; fait = true; clearTimeout(secours); if (finir) finir(); }
+    function bascule(){
+      if (fait || j !== jeton) return;
+      fait = true; clearTimeout(secours); lecteur.pause();
+      if (!voix) { bEcouter.hidden = true; sansVoix.hidden = false; }
+      parlerSynth(i, finir);
+    }
+    lecteur.onended = f; lecteur.onerror = bascule;
+    secours = setTimeout(f, duree(i) * 2 + 2000);
+    lecteur.src = "Audio/trois-principes_scene" + i + "." + ext;
+    var essai = lecteur.play();
+    if (essai && essai.catch) essai.catch(bascule);
+  }
+  function arreter(){
+    regarde = false; jeton++; clearTimeout(minuterie);
+    lecteur.pause();
+    if (synth) synth.cancel();
+    bRegarder.textContent = "▶ Regarder";
+  }
+  function derouler(){
+    if (!regarde) return;
+    parler(scene, function(){
+      minuterie = setTimeout(function(){
+        if (!regarde) return;
+        if (scene < N) { montrer(scene + 1); derouler(); } else arreter();
+      }, 1200);
+    });
+  }
+  function demarrer(){
+    if (scene === N) montrer(1);
+    regarde = true; bRegarder.textContent = "⏸ Pause"; derouler();
+  }
+  prec.addEventListener("click", function(){ arreter(); montrer(scene - 1); });
+  suiv.addEventListener("click", function(){ arreter(); montrer(scene + 1); });
+  $t("tpaZero").addEventListener("click", function(){ arreter(); montrer(1); suiv.focus(); });
+  bRegarder.addEventListener("click", function(){ if (regarde) arreter(); else demarrer(); });
+  bEcouter.addEventListener("click", function(){ arreter(); parler(scene); });
+  document.addEventListener("click", function(e){ if (e.target.closest && e.target.closest("[role=tab]")) arreter(); });
+  document.addEventListener("visibilitychange", function(){ if (document.hidden) arreter(); });
+  window.addEventListener("pagehide", arreter);
+  choisirVoix();
+  montrer(1);
+
+  // Lien direct (cahier de textes) : #trois-principes-pas-a-pas ouvre la séance 1 et l'animation.
+  function allerAuLien(){
+    if (location.hash !== "#trois-principes-pas-a-pas") return;
+    var onglet = document.getElementById("tab-s1");
+    if (onglet && !onglet.classList.contains("active")) onglet.click();
+    setTimeout(function(){ bloc.scrollIntoView({block: "start"}); }, 450);
+  }
+  window.addEventListener("hashchange", allerAuLien);
+  if (document.readyState === "complete") allerAuLien();
+  else window.addEventListener("load", allerAuLien);
+})();
+</script>
+<!-- trois_principes_pas_a_pas (script) : fin -->
 <!-- loupe-images-v1 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
      réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
      refermer. Le focus revient sur l'image quittée. -->

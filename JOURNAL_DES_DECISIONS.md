@@ -23555,6 +23555,101 @@ progression comptent une séance de 55 min par semaine (Moteur et calendrier à 
 - Textes à relire par Pascal : questions directrices des séances ajoutées, encadrés de fin de première partie, phrases
   de reprise (celle de Vittascience ne nomme pas le bouton qui rouvre un fichier : non vérifié).
 
+## 25/10/2026 — Thème 1 · 5e_C1.1 : les trois principes de mesure passent en animation pas à pas, avec la voix SIWIS
+
+**Demande de Pascal.** Dans l'activité 1 de Chengdu (« Une fonction, trois principes »), transformer les trois principes
+en une animation ludique, simple à comprendre, engageante, « ultra premium ». Proposition faite (avis, storyboard en
+5 écrans, points de vigilance), puis **décisions de Pascal (« 1b 2b 3b 4a »)** :
+1. **b** — l'animation **remplace à l'écran** les trois schémas fixes, qui restent pour l'impression ;
+2. **b** — la **voix off dès ce lot** ;
+3. **b** — **directement dans la séquence**, branche et PR (pas de prototype à part) ;
+4. **a** — faire ensuite du lecteur pas à pas le **modèle commun des animations du thème 1** (non fait ici, noté plus bas).
+
+### Ce qui change dans la page (bloc `#trois-principes-pas-a-pas`, entre les marqueurs `trois_principes_pas_a_pas`)
+
+- **Onze étapes**, en cinq chapitres cliquables : la fonction (le mètre cube d'air : « combien de µg dans 1 m³ ? ») ;
+  **P1** ① la lampe ② les grains ③ le capteur ; **P2** ① le filtre ② la balance ③ le calcul ; **P3** ① la source ② le dépôt
+  ③ le compteur ; **les trois ensemble**. Les phrases des étapes ①②③ sont **celles des cartes, mot pour mot** ; à l'étape ③
+  de P1 s'ajoute le « À repérer » de la carte (le capteur est sur le côté), puisque le schéma qui le portait est masqué.
+- **Ce que chaque étape montre** (n°119 : la phrase le dit, le dessin le montre ; une description pour les lecteurs d'écran
+  par étape) : P1, des grains descendent avec l'air, brillent dans le faisceau, renvoient leurs éclats ; le capteur, sur le
+  côté, ne reçoit que la lumière déviée et un afficheur compte. Bouton **« Salir la lentille »** : des éclats qui ne viennent
+  d'aucun grain s'ajoutent au compte, sans alerte (la note le dit en toutes lettres). P2 : la pompe tire l'air à travers le
+  filtre, une horloge va de 0 à 24 h et s'arrête, le filtre vu de face grisaille ; deux balances (100 000 µg avant,
+  100 020 µg après) ; le calcul 20 µg ÷ 2 m³ = 10 µg/m³ — **l'exemple de l'encadré « D'abord, ce qu'on mesure »**, pour qu'il
+  n'y en ait qu'un (2 m³ en 24 h : un débit de préleveur individuel, 1,4 L/min). P3 : la source scellée envoie son
+  rayonnement à travers la bande, la tache de poussière s'épaissit, la jauge passe de « il en passe beaucoup » à « il en
+  passe peu », puis la bande avance (« une mesure chaque heure »).
+- **La finale** : un curseur « Poussière dans l'air » (5 à 80 µg/m³) et une horloge accélérée (une heure par seconde,
+  pause, + 1 h, remise à 0 h). P1 donne la valeur du moment ; P3 la **moyenne de la dernière heure**, à chaque heure ; P2 la
+  **moyenne des 24 dernières heures**, une fois par jour. Bouger le curseur montre qui répond et quand. **Aucun vainqueur,
+  aucun classement** : le choix de la question c) reste à l'élève.
+- **À l'écran**, les trois schémas fixes et leurs « À repérer » sont masqués (la classe `tpa-actif`, posée par le script :
+  sans JavaScript, la planche reste comme avant) ; les cartes passent sur une colonne. **À l'impression**, rien ne change :
+  l'animation disparaît, les schémas reviennent.
+- **Le lecteur** est celui du vélo-cargo (5e_C3.1) : Précédent / Suivant, Regarder (enchaîne au rythme de la voix),
+  Écouter, Recommencer ; la voix se tait quand on change de séance ou d'onglet ; lien direct `#trois-principes-pas-a-pas`
+  pour le cahier de textes (il ouvre la séance 1). **Rien ne bouge sous « mouvement réduit »** (image fixe de chaque étape ;
+  l'horloge de la finale attend un geste) ; la boucle d'animation ne tourne que si le bloc est à l'écran.
+- **Couleurs de la planche** (n°120) : P1 bleu, P2 vert, P3 violet ; lumière, poussière et capteur dans les teintes des
+  schémas fixes. Aucune bibliothèque, aucun réseau (n°305), aucune trace de fabrique dans ce que lit l'élève (n°309).
+- **Poids** : la séquence passe de 171 à 221 Ko ; les 22 fichiers audio pèsent 672 Ko (de 8,8 à 59,7 Ko chacun).
+
+### La voix (`_generation/voix_trois_principes/`, `Audio/trois-principes_scene1…11`)
+
+- **Même voix que le vélo-cargo** : `fr_FR-siwis-medium`, mêmes réglages, même chaîne audio (−16 LUFS ; mesuré −16,9 à
+  −15,6). Générateur `generer.py` (vérifie d'abord que les phrases sont celles de la page), `phrases.json`, `voix.json`.
+- **Le modèle** : Hugging Face (`rhasspy/piper-voices`) refusé par le proxy de l'espace de travail ; l'accès au dossier
+  `~/figures-iso-essais/voix-velo-cargo/modeles` du poste de Pascal refusé par le contrôle d'autorisation de la session.
+  Pris dans la redistribution GitHub de `k2-fsa/sherpa-onnx` (version `tts-models`) : même fiche (SIWIS, CC BY 4.0,
+  affiné depuis lessac medium), 256 symboles. **Écarté** : le `fr-siwis-medium` de la version v0.0.2 de `rhasspy/piper`,
+  essayé d'abord — sa table de symboles n'a pas le tilde des voyelles nasales (« Missing phoneme from id map » à chaque
+  an, on, in, un). Comparaison aux prises validées du vélo-cargo (scènes 2 et 5) : voir `voix.json`.
+- **Texte envoyé** : celui de la page, sauf étapes 2 (parenthèses entre virgules), 5 (« vingt-quatre heures ») et 11
+  (« microgrammes par mètre cube ») ; **phonèmes corrigés** aux étapes 4 (« il y en a » sans glissement forcé), 5, 6 et 8
+  (« à travers un », « puis après », « à travers une » sans liaison en z). Détail dans `phrases.json`.
+- **Prises non écoutées** : produites et mesurées, pas validées. Leur validation est l'écoute de Pascal (règle du
+  vélo-cargo, 21/10/2026).
+
+### Ce qui a vraiment tourné
+
+- **Banc nouveau `tests_animation_trois_principes.py` : 50 / 50** — fichiers ; phrases = page ; écran / impression ;
+  rien chargé ni joué sans geste ; onze étapes, chapitres, boutons ; Écouter, Regarder, Pause ; MP3 de secours ; voix
+  locale de secours ; message « lis les phrases » ; compteur et lentille sale ; horloge 0 → 24 h ; balance ; jauge ;
+  finale (moyennes **calculées à la main** : 40 µg/m³ pendant 1 h, 20 pendant 11 h, 60 pendant 12 h → P2 = 980 / 24 = 40,8
+  → 41, P3 = 60 ; puis 80 pendant 1 h → P3 = 80, P2 garde 41) ; mouvement réduit ; aucun débordement à 390 px aux onze
+  étapes ; lien direct ; zéro erreur JavaScript, aucune ressource distante.
+- **Bancs existants** : `tests_5e_C1.1_chengdu.py` **43 / 43** ; `tests_regle_311_5e_C1.1.mjs` **33 / 33**.
+- **Contrôles du dépôt** : voir `rapport_tests_5e_C1.1-C1.6.md` (section du 25/10/2026), code de sortie par outil.
+- **Captures** lues une à une, à 1280 et 390 px, des onze étapes ; contrôle des textes du dessin (aucun hors cadre, aucun
+  chevauchement, aux deux largeurs) ; rendu d'impression de la planche regardé.
+  Avant / après à 390 px et planche des onze étapes à 1280 px : `5e_C1.1/_generation/animation_trois_principes/captures/`.
+
+### Non vérifié
+
+- **L'écoute** des onze prises (prononciation, liaisons, rythme pour des 5e).
+- Safari, iPad, téléphone réel : seul Chromium a tourné ; le MP3 de secours est là, non essayé hors Chromium.
+- La clarté de l'animation pour un élève de 5e : cela se voit en classe.
+
+### À RELIRE PAR PASCAL
+
+1. **Écouter les onze prises** (`Audio/trois-principes_scene1…11`), surtout 4, 5, 6 et 8 (phonèmes corrigés) et 11
+   (« microgrammes par mètre cube »). Dire « validée » ou la correction par étape ; la trace s'écrit dans `voix.json`.
+2. **Les podiums par critère** de la finale, annoncés dans la proposition, **ne sont pas faits** : ils auraient fait à la
+   place de l'élève la lecture du tableau que demande la question c), et un podium « vitesse, justesse, prix » oublie
+   la ligne « ce qu'il exige » — le piège classique de l'activité. La finale montre à la place **quand** chaque appareil
+   répond (le délai découle du principe). À trancher : les ajouter ou non.
+3. Les **nombres de la balance** (100 000 et 100 020 µg) : un filtre de 100 mg, ordre de grandeur réaliste ; à garder ?
+4. Le **remplacement à l'écran** masque aussi les trois « 👀 À repérer » (ils parlaient d'un dessin masqué) ; leur contenu
+   est dans les phrases des étapes 4, 6 et 10.
+
+### Notes pour plus tard (décidées le 25/10/2026, non faites ici)
+
+- **Décision 4a** : faire du lecteur pas à pas un **modèle commun** des animations du thème 1 (vélo-cargo, Herschel, trois
+  principes) — même composant, mêmes boutons, mêmes contrôles ; à concevoir dans une PR transversale.
+- Le contrôle `verif_regles_audit.py` marque la page « n°298 » (référentiel en toutes lettres) : **préexistant** sur `main`,
+  non traité ici. `controle_regle4.py` refuse 18 ateliers des représentations : **préexistant** sur `main` (sortie identique).
+
 ## 25/10/2026 — Classeurs de progression : le plan de l'année en séances de 55 min, et le travail maison repérable (_progressions, _outils/METHODE.md)
 
 **Demandes et décisions de Pascal (25/10/2026).** Refaire le Moteur et le calendrier des trois classeurs « à partir
