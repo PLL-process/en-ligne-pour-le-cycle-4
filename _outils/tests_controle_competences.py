@@ -50,8 +50,23 @@ t("un code de rangement (4e_C8.1) n'est pas une compétence", not g("<p>Compéte
 t("une étiquette « CRCN » seule est refusée", g('<div class="badges"><span class="badge">CRCN</span></div>'))
 t("une étiquette CRCN sans infobulle est refusée",
   g('<div class="badges"><span class="badge">🎯 CRCN 3.4 Programmer — Niv. 2</span></div>'))
-t("une étiquette CRCN avec son infobulle en toutes lettres passe",
-  not g('<div class="badges"><span class="badge" title="Compétence numérique du CRCN : 3.4 Programmer.">🎯 CRCN 3.4 Programmer — Niv. 2</span></div>'))
+BULLE_34 = nc.titre_crcn(["3.4"], {"3.4": "niveau 2"}, {"3.4": "tu écris l'algorithme SI T > 30 ALORS alerte, puis le testes"})
+BULLE_34_HTML = BULLE_34.replace("&", "&amp;").replace('"', "&quot;").replace(">", "&gt;").replace("\n", "&#10;")
+t("une bulle qui ne redit que l'intitulé est refusée (« traiter des données, c'est vaste »)",
+  g('<div class="badges"><span class="badge" title="Compétence numérique du CRCN : 3.4 Programmer.">🎯 CRCN 3.4 Programmer — Niv. 2</span></div>'))
+t("une bulle à trois étages (intitulé et niveau, cadre, « Ici : ») passe",
+  not g('<div class="badges"><span class="badge" title="%s">🎯 CRCN 3.4 Programmer — Niv. 2</span></div>' % BULLE_34_HTML),
+  g('<div class="badges"><span class="badge" title="%s">🎯 CRCN 3.4 Programmer — Niv. 2</span></div>' % BULLE_34_HTML))
+t("une bulle sans « Ici : » est refusée, et le grief dit ce qui manque",
+  [x[1] for x in g('<span class="badge" title="%s">CRCN 3.4 Programmer</span>' % nc.titre_crcn(["3.4"]))]
+  == ["étiquette CRCN : la bulle de 3.4 (Programmer) ne donne pas « Ici : » ce que l'élève fait"])
+t("le cadre doit être celui de la compétence : le cadre de 1.3 sous 3.4 est refusé",
+  g('<span class="badge" title="CRCN 3.4 Programmer.&#10;Le cadre : « Appliquer des traitements à des données pour les '
+    'analyser et les interpréter. »&#10;Ici : tu programmes l\'alerte de la station.">CRCN 3.4 Programmer</span>'))
+deux = nc.titre_crcn(["1.3", "5.1"], {}, {"1.3": "tu ranges tes mesures dans un tableau et en tires une décision"})
+t("deux compétences : chacune a son « Ici : » (celui de 1.3 ne vaut pas pour 5.1)",
+  len(g('<span class="badge" title="%s">CRCN 1.3 Traiter des données · 5.1 Résoudre des problèmes techniques</span>'
+        % deux.replace("\n", "&#10;"))) == 1)
 t("une étiquette du socle sans infobulle est refusée", g('<div class="badges"><span class="badge socle">Socle : D2 · D4</span></div>'))
 t("une infobulle du socle abrégée (« D4 systèmes techniques ») est refusée",
   g('<span class="badge" title="D2 méthodes et outils pour apprendre, D4 systèmes techniques">D2 · D4</span>'))
@@ -61,18 +76,30 @@ t("une étiquette du socle avec ses domaines en toutes lettres passe",
 src = page('<div class="badges"><span class="badge theme" title="Compétence numérique travaillée : '
            'les données — l\'élève exploite un tableau de mesures.">🖥 CRCN 1.3 · niveau 2</span>'
            '<span class="badge" title="Compétences numériques du CRCN : traiter des données.">CRCN 1.3 Traiter des données</span>'
-           '<span class="badge theme">D1.3 · D2 · D4 · CRCN 1.3 niv. 2</span><span class="badge socle">Socle : D2 · D4 (+ D1)</span></div>'
+           '<span class="badge theme">D1.3 · D2 · D4 · CRCN 1.3 niv. 2</span><span class="badge socle">Socle : D2 · D4 (+ D1)</span>'
+           '<span class="badge" title="%s">🎯 CRCN 3.4 Programmer — Niv. 2</span>'
+           '<span class="badge">CRCN : 5.1 Résoudre des problèmes techniques (niv. 2→3) · 3.4 Programmer (Niv. 1-2)</span></div>'
            '<h2>Activité 3 (CRCN 3.4)</h2><p><strong>CRCN 3.4 Programmer</strong> — lire un algorigramme.</p>'
-           "<script>const L = 'CRCN 4.1 sécurité'; /* CRCN 1.2 */</script><!-- CRCN 5.2 -->")
+           "<script>const L = 'CRCN 4.1 sécurité'; /* CRCN 1.2 */</script><!-- CRCN 5.2 -->" % BULLE_34_HTML)
 apres, ajouts, changees = nc.nommer(src)
-t("l'outil rend une page que le contrôle accepte", not cc.griefs(apres), cc.griefs(apres))
+reste = cc.griefs(apres)
+t("après l'outil, le contrôle ne réclame plus que les « Ici : », qui s'écrivent à la main",
+  reste and all(x[1].endswith("ne donne pas « Ici : » ce que l'élève fait") for x in reste), reste)
 t("l'outil est idempotent", nc.nommer(apres)[0] == apres)
 t("l'outil écrit l'intitulé après le code, dans un titre", "Activité 3 (CRCN 3.4 Programmer)" in apres)
-t("l'outil ne double pas un intitulé déjà écrit après une balise", apres.count("Programmer") == apres.count("3.4"), apres)
+t("l'outil ne double pas un intitulé déjà écrit après une balise",
+  apres.count("<strong>CRCN 3.4 Programmer</strong> — lire") == 1 and "Programmer Programmer" not in apres, apres)
 t("l'outil écrit l'apostrophe typographique dans une chaîne JavaScript", "'CRCN 4.1 Sécuriser l’environnement numérique sécurité'" in apres, apres)
 t("l'outil ne touche pas aux commentaires", "/* CRCN 1.2 */" in apres and "<!-- CRCN 5.2 -->" in apres)
-t("l'outil garde ce que l'ancienne infobulle ajoutait", "L'élève exploite un tableau de mesures." in apres, apres)
-t("l'outil ne touche pas une infobulle qui dit déjà tout", 'title="Compétences numériques du CRCN : traiter des données."' in apres, apres)
+t("l'outil écrit le niveau et le cadre officiel dans la bulle",
+  "CRCN 1.3 Traiter des données — niveau 2.&#10;Le cadre : « Appliquer des traitements à des données pour les analyser et"
+  " les interpréter. »" in apres, apres)
+t("l'outil lit « niv. 2→3 » et « Niv. 1-2 »", "— niveau 2, vers le 3." in apres and "— niveaux 1 à 2." in apres, apres)
+t("l'outil garde ce que l'ancienne infobulle ajoutait, comme « Ici : »", "Ici : L'élève exploite un tableau de mesures." in apres, apres)
+t("l'outil n'invente pas de « Ici : »", apres.count("Ici : ") == 2, apres)
+t("l'outil ne touche pas une bulle qui a ses trois étages", 'title="%s"' % BULLE_34_HTML in apres, apres)
+t("l'outil écrit « > » en &gt; dans une bulle, et relit une balise dont la bulle contient « > »",
+  "SI T &gt; 30" in apres and "SI T > 30" not in apres, apres)
 t("l'outil sépare une étiquette mixte en deux (socle, puis CRCN)",
   apres.count('class="badge theme"') == 3 and ">D1.3 · D2 · D4</span> <span" in apres, apres)
 t("l'outil lit « (+ D1) » comme un domaine", "D1 Les langages pour penser et communiquer" in apres)

@@ -23,7 +23,7 @@ on le corrige d'abord. Une fois le lot vert, on le livre avec le skill `livraiso
 - sigles en capitales, FAST et non « fast » (n°313, 25/10/2026) : `python3 _outils/controle_sigles.py` ;
 - chaque compétence du CRCN en toutes lettres, à l'écran et au survol (n°314, 26/10/2026) :
   `python3 _outils/controle_competences.py` ; l'outil `python3 _outils/nommer_competences.py <page>` écrit les intitulés et
-  les infobulles ;
+  les deux premiers étages de la bulle (intitulé et niveau, le cadre) ; le « Ici : » s'écrit à la main ;
 - en mode essentiel, aucune carte réduite à son titre (n°29, contrôle du 26/10/2026) : `python3 _outils/controle_mode_essentiel.py` ;
 - squelette respecté : n°306 (22/09/2026) et n°311 (22/10/2026), voir le skill `sequence-pedagogique-engageante` ;
 - chaque unité savante nommée en toutes lettres dans son activité, son tableau, sa question, son schéma : n°312
@@ -94,7 +94,7 @@ Lancer depuis la racine du dépôt. Python : `python3 _outils/<outil>.py`. Node 
 | `banc_loupe.py [racine] [--captures <dossier>]` | n°92 au navigateur : un schéma SVG agrandi garde ses couleurs (écart mesuré), la légende ne recouvre pas l'image, à 1280, 390, 1920 px et 1280 px zoomé 150 % |
 | `controle_lecteur_pas_a_pas.py` | décision 4b (25/10/2026) : chaque animation pas à pas utilise le lecteur commun (`_outils/lecteur_pas_a_pas/`), posé une fois, à jour |
 | `lecteur_pas_a_pas/banc_lecteur.py [racine]` | chaque animation pas à pas, au navigateur : étapes, 390 px, mouvement réduit, voix sur le disque, impression, lien direct |
-| `controle_competences.py` | n°314 (26/10/2026) : chaque code CRCN montré à l'élève porte son intitulé officiel ; chaque étiquette CRCN ou du socle le redit au survol |
+| `controle_competences.py` | n°314 (26/10/2026) : chaque code CRCN montré à l'élève porte son intitulé officiel ; la bulle d'une étiquette CRCN donne, pour chaque compétence, l'intitulé, la description du cadre et « Ici : » ; celle du socle, chaque domaine en toutes lettres |
 | `controle_mode_essentiel.py [racine]` | n°29, au navigateur (26/10/2026) : le mode essentiel ne laisse aucune carte réduite à son titre |
 | `controle_impression_papier.py` | décision 1a (25/10/2026) : chaque séquence porte la fiche papier (`_outils/impression_papier/`), posée une fois, à jour |
 | `impression_papier/banc_papier.py [racine] [--pdf <dossier>] [--filtre <texte>]` | chaque séquence imprimée en PDF A4, séance par séance : pages comptées, en-tête, une seule séance, aucun champ d'écran, aucun texte pâle, zéro erreur JavaScript |

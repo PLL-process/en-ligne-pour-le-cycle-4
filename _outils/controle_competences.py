@@ -14,7 +14,13 @@ LA RÈGLE (n°314, décisions de Pascal du 26/10/2026)
 -------------------------------------------------
 Toute compétence du CRCN montrée à l'élève — étiquette, titre d'activité, consigne, cartouche — porte son code ET son
 intitulé officiel, visibles sans survol : « CRCN 1.3 Traiter des données », jamais « CRCN 1.3 » seul. Une étiquette CRCN
-redonne aussi, au survol (`title`), chaque compétence en toutes lettres. Les domaines du socle gardent leur code dans la
+porte une bulle (`title`) à trois étages pour chacune de ses compétences — « Traiter des données, c'est vaste » (Pascal) :
+  1. le code, l'intitulé et le niveau : « CRCN 1.3 Traiter des données — niveau 2. » ;
+  2. ce que la compétence recouvre, mot pour mot dans le cadre de référence : « Le cadre : « Appliquer des traitements à
+     des données pour les analyser et les interpréter. » » (le CRCN n'a pas de sous-compétences officielles : c'est
+     cette description qui précise l'intitulé) ;
+  3. ce que l'élève en fait dans cette séquence : « Ici : tu ranges les résultats de tes tests dans un tableau… ».
+Le troisième étage s'écrit à la main, page par page : aucun outil ne sait ce que fait l'élève. Les domaines du socle gardent leur code dans la
 ligne d'étiquettes (règle n°298), mais leur infobulle donne chaque domaine en toutes lettres. Les codes de rangement des
 séquences (4e_C8.1…) ne sont pas des compétences : la règle ne les vise pas.
 
@@ -28,7 +34,8 @@ commentaires ni les <style>.
 CE QU'IL REFUSE
   · un code CRCN (« 1.3 » dans « CRCN 1.3 », « CRCN : 1.2 · 1.3 ») que ne suit pas son intitulé officiel ;
   · une étiquette (`.badge`, ou élément de `.badges`) qui dit « CRCN » sans nommer de compétence ;
-  · une étiquette CRCN dont l'infobulle ne redonne pas chaque compétence en toutes lettres (ou qui n'en a pas) ;
+  · une étiquette CRCN dont la bulle, pour l'une de ses compétences, ne donne pas l'intitulé, la description du cadre
+    ou « Ici : » (ou qui n'a pas de bulle) ;
   · une étiquette de domaines du socle (D1 à D5) dont l'infobulle ne donne pas chaque domaine en toutes lettres.
 Ce qu'il laisse : « le CRCN », « compétences du CRCN » (le cadre, pas une compétence) ; les niveaux (« niv. 2 »,
 « N3 ») ; les domaines du socle écrits dans le texte, hors étiquettes (la n°298 les a déjà retirés de la page élève).
@@ -71,6 +78,43 @@ CRCN = {
     "4.3": "Protéger la santé, le bien-être et l'environnement",
     "5.1": "Résoudre des problèmes techniques",
     "5.2": "Évoluer dans un environnement numérique",
+}
+#: Ce que chaque compétence recouvre, mot pour mot : la première proposition de sa description dans le cadre de
+#: référence (décret n° 2019-919, BO n°37 du 10/10/2019, annexe, relevé le 26/10/2026), sans la parenthèse d'exemples
+#: d'outils qui la suit. C'est le deuxième étage de la bulle (« Le cadre : « … » »).
+CADRE = {
+    "1.1": "Mener une recherche et une veille d'information pour répondre à un besoin d'information et se tenir au courant "
+           "de l'actualité d'un sujet tout en étant en mesure de vérifier les sources et la fiabilité de l'information",
+    "1.2": "Stocker et organiser des données pour les retrouver, les conserver et en faciliter l'accès et la gestion",
+    "1.3": "Appliquer des traitements à des données pour les analyser et les interpréter",
+    "2.1": "Interagir avec des individus et des petits groupes pour échanger dans divers contextes liés à la vie privée ou "
+           "à une activité professionnelle, de façon ponctuelle et récurrente",
+    "2.2": "Partager et publier des informations et des contenus pour communiquer ses propres productions ou opinions, "
+           "relayer celles des autres en contexte de communication publique en apportant un regard critique sur la nature "
+           "du contenu",
+    "2.3": "Collaborer dans un groupe pour réaliser un projet, co-produire des ressources, des connaissances, des données, "
+           "et pour apprendre",
+    "2.4": "Maîtriser les enjeux de la présence en ligne, développer des stratégies et des pratiques autonomes en respectant "
+           "les règles, les droits et les valeurs qui leur sont liés, pour se positionner en tant qu'acteur social, "
+           "économique et citoyen dans le monde numérique",
+    "3.1": "Produire des documents à contenu majoritairement textuel pour communiquer des idées, rendre compte et valoriser "
+           "ses travaux",
+    "3.2": "Développer des documents à contenu multimédia pour créer ses propres productions multimédia, enrichir ses "
+           "créations textuelles",
+    "3.3": "Adapter des documents de tous types en fonction de l'usage envisagé et maîtriser l'usage des licences pour "
+           "permettre, faciliter et encadrer l'utilisation dans divers contextes",
+    "3.4": "Écrire des programmes et des algorithmes pour répondre à un besoin",
+    "4.1": "Sécuriser les équipements, les communications et les données pour se prémunir contre les attaques, pièges, "
+           "désagréments et incidents susceptibles de nuire au bon fonctionnement des matériels, logiciels, sites internet, "
+           "et de compromettre les transactions et les données",
+    "4.2": "Maîtriser ses traces et gérer les données personnelles pour protéger sa vie privée et celle des autres, et "
+           "adopter une pratique éclairée",
+    "4.3": "Prévenir et limiter les risques générés par le numérique sur la santé, le bien-être et l'environnement mais "
+           "aussi tirer parti de ses potentialités pour favoriser le développement personnel, le soin, l'inclusion dans la "
+           "société et la qualité des conditions de vie, pour soi et pour les autres",
+    "5.1": "Résoudre des problèmes techniques pour garantir et rétablir le bon fonctionnement d'un environnement informatique",
+    "5.2": "Installer, configurer et enrichir un environnement numérique (matériels, outils, services) pour disposer d'un "
+           "cadre adapté aux activités menées, à leur contexte d'exercice ou à des valeurs",
 }
 #: Les domaines du socle commun (décret n° 2015-372 du 31 mars 2015 modifié ; texte d'éduscol relevé le 26/10/2026).
 SOCLE = {
@@ -130,6 +174,32 @@ def chaine(texte, i):
             n = motif.match(texte, k)
             if n and n.group(0).strip():
                 j = n.end()
+
+
+ICI = re.compile(r"\bIci\s*:\s*\S.{19,}", re.S)
+
+
+def segments(title):
+    """{code: partie de l'infobulle} — de « CRCN x.y » jusqu'à la compétence suivante. Une bulle à trois étages parle
+    de chaque compétence dans son propre paragraphe : « CRCN 1.3 Traiter des données — niveau 2. / Le cadre : « … » /
+    Ici : … »."""
+    out = {}
+    ms = list(re.finditer(r"\bCRCN\s+([1-5]\.[1-4])\b", title))
+    for k, m in enumerate(ms):
+        out.setdefault(m.group(1), title[m.start():ms[k + 1].start() if k + 1 < len(ms) else len(title)])
+    return out
+
+
+def etages_manquants(code, segment):
+    """Ce qui manque à la bulle d'une compétence : l'intitulé, le cadre officiel, « Ici : » (ce que l'élève fait)."""
+    manque = []
+    if norme(CRCN.get(code, "§§§")) not in norme(segment):
+        manque.append("l'intitulé")
+    if norme(CADRE.get(code, "§§§")) not in norme(segment):
+        manque.append("ce que dit le cadre")
+    if not ICI.search(segment):
+        manque.append("« Ici : » ce que l'élève fait")
+    return manque
 
 
 class Etiquettes(HTMLParser):
@@ -193,10 +263,12 @@ def griefs(texte):
             codes = [c for c, _, _ in chaine(t, re.search(r"\bCRCN\b", t).end())]
             if not codes:
                 trouves.append((n, "une étiquette « CRCN » qui ne nomme aucune compétence", t[:80]))
-            manque = [c for c in codes if norme(CRCN.get(c, "§§§")) not in norme(title)]
-            if codes and manque:
-                trouves.append((n, "étiquette CRCN dont le survol ne redonne pas %s en toutes lettres"
-                                % ", ".join("%s (%s)" % (c, CRCN.get(c, "?")) for c in manque), t[:80]))
+            segs = segments(title)
+            for c in codes:
+                manque = etages_manquants(c, segs.get(c, ""))
+                if manque:
+                    trouves.append((n, "étiquette CRCN : la bulle de %s (%s) ne donne pas %s"
+                                    % (c, CRCN.get(c, "?"), ", ".join(manque)), t[:80]))
         doms = re.findall(r"(?<![\w.])(D[1-5](?:\.[1-4])?)(?![\w.]*\d)", t)
         if doms and re.fullmatch(r"(?:Socle\s*:?\s*)?(?:D[1-5](?:\.[1-4])?\s*[·•,/]?\s*)+.*", t):
             manque = [d for d in doms if norme(SOCLE_CLE.get(d, "§§§")) not in norme(title)]
@@ -236,9 +308,11 @@ def main(muet=False, racine=None):
             print("  %s" % rel)
             for ligne, nom, extrait in g:
                 print("     ligne %d · %s : … %s …" % (ligne, nom, extrait))
-        print("\n     Écris « CRCN 1.3 Traiter des données », et donne au survol de l'étiquette chaque compétence en toutes lettres.")
+        print("\n     Écris « CRCN 1.3 Traiter des données ». Pour la bulle : `nommer_competences.py` écrit l'intitulé, le niveau"
+              " et le cadre ;\n     « Ici : » (ce que l'élève fait dans la séquence) s'écrit à la main.")
         return 1
-    print("\n✅ chaque compétence du CRCN se lit en toutes lettres, et chaque étiquette le redit au survol (règle d'or n°314)")
+    print("\n✅ chaque compétence du CRCN se lit en toutes lettres, et chaque étiquette la détaille au survol — intitulé,"
+          " cadre, « Ici : » (règle d'or n°314)")
     return 0
 
 
