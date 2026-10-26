@@ -177,12 +177,18 @@ with sync_playwright() as p:
     t("n°44 : aucun badge ni bouton sans infobulle",
       pg.evaluate("[...document.querySelectorAll('.badges .badge, .toolbar .btn')]"
                   ".filter(e=>!e.title).length") == 0)
-    t("n°44 : la légende des badges est lisible sans survol", pg.is_visible(".legende-badges"))
+    # n°298 (15/09/2026) remplace, sur la page élève, la légende des étiquettes (n°44, 3e élément)
+    # et la carte de référentiel (n°42) : les deux vivent dans la synthèse professeur.
+    sp = pathlib.Path("Synthèses/synthese_professeur_3e_C2.1.html").read_text(encoding="utf-8")
+    bloc = sp[sp.find("referentiel-eleve"): sp.find("</div>", sp.find("referentiel-eleve"))]
+    t("n°298 : la légende des badges a quitté la page élève pour la synthèse professeur",
+      pg.locator(".legende-badges").count() == 0 and 'class="legende-badges"' in bloc)
 
-    # n°42, troisième volet : l'ambiguïté de « choisis » est déclarée à l'élève
-    t("n°42 : l'ambiguïté de « choisis » est dite à l'élève",
-      "sans dire" in pg.inner_text(".referentiel-card")
-      and "peut faire autrement" in pg.inner_text(".referentiel-card"))
+    # n°42, troisième volet : l'ambiguïté de « choisis » est déclarée — dans le référentiel,
+    # désormais lu dans la synthèse professeur (n°298)
+    t("n°42 : l'ambiguïté de « choisis » est dite, dans le référentiel de la synthèse professeur",
+      pg.locator(".referentiel-card").count() == 0
+      and "sans dire" in bloc and "peut faire autrement" in bloc)
     t("la marche du C2 sur trois niveaux est écrite à l'élève",
       "Shenzhen" in contenu and "Hangzhou" in contenu and "compétence C2" in contenu)
 

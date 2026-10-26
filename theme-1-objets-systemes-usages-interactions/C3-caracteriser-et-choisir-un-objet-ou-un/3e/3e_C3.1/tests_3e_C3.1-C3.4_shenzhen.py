@@ -108,9 +108,11 @@ with sync_playwright() as p:
     pg.click('[data-check="2"]'); pg.wait_for_timeout(150)
     t("activité 2 : validée une fois rédigée", "6 / 6" in pg.inner_text("#fb2"))
     # mode essentiel
+    # n°298 : la page n'a plus de carte de référentiel ; le témoin est le nombre de corrections visibles
+    avant = pg.locator("details.correction:visible").count()
     pg.click("#btnEssentiel"); pg.wait_for_timeout(150)
-    t("mode essentiel masque référentiel et corrections (n°29)",
-      not pg.is_visible(".referentiel-card") and not pg.is_visible("details.correction"))
+    t("mode essentiel masque les corrections, et la page n'a plus de carte de référentiel (n°29, n°298)",
+      avant > 0 and not pg.is_visible("details.correction") and pg.locator(".referentiel-card").count() == 0)
     # la version étayée de la séquence (celle de l'exercice inséré est rangée dans son aide 2, repliée)
     t("mode essentiel laisse les versions étayées visibles",
       pg.is_visible(".seance-panel.active details.etayage:not(.atelier-incruste details)"))
