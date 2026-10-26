@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 26/10/2026 09:39 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 26/10/2026 09:42 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - **PR #521 fusionnée** le 26/10 vers 09:17 (heure de la Martinique) : règle d'or n°314 (bulle CRCN à trois étages, en-tête pédagogique dissous, 3 compétences retirées).
@@ -11,14 +11,14 @@ Mis à jour le 26/10/2026 09:39 (heure de la Martinique). Le journal des décisi
 _(écrit par Claude le 26/10/2026 09:39)_
 
 ## Branche et PR
-- Branche : `fable/regle-314-competences` — dernier commit b4c6ac0fb Règle d'or n°314 : résultats de la vérification au journal ; « Ici » du jardin 4e_C9 au mot de la pa
+- Branche : `fable/theme-3-regle-298` — dernier commit a95199a8f Merge pull request #521 from PLL-process/fable/regle-314-competences
 - Aucune PR ouverte.
 
 ## Décisions en attente
 _Aucune._
 
 ## Prochaine action
-➡️ Vague n°298 du thème 3 sur une nouvelle branche ; pousser les mods dès que Pascal a créé PLL-process/mods-claude.
+➡️ Tu peux créer le dépôt `PLL-process/mods-claude` quand tu veux : je pousserai les mods dès que tu me dis « créé ».
 
 ## Décisions prises récemment (messages de Pascal)
 _Aucune relevée._
