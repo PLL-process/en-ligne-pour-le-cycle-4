@@ -24559,7 +24559,20 @@ travaillées — en toutes lettres ») : 11 en 3e, 8 en 4e, 7 en 5e, C7, C8 et C
 
 ### Vérifié
 
-RESULTATS_298
+- **`verif_regles_audit.py`** : ✘ **219 → 193** sur le dépôt, exactement les 26 pages (n°298 : 43 → 17, les thèmes 1
+  et 2) ; **n°42 ✔ sur les 29 séquences du thème 3**, lue désormais « (synthèse professeur) » ; rien d'autre ne change.
+- **Contrôles**, identiques à `main` : `controle_formulations.py` **104 citations · 104 justes**, `controle_liens.py` (aucun
+  lien mort, aucune ancre introuvable), `controle_impression_papier.py`, `controle_regles_visibles.py`,
+  `controle_competences.py`, `controle_marqueurs.py`, `controle_debordement.py`, `controle_hierarchie.py`,
+  `controle_atteignabilite.py`, `controle_rapports_tests.py`, `controle_boutons_vivants.py`, `controle_squelette.mjs` ✅ ;
+  `controle_mode_essentiel.py` ✅ après correction : la carte « 🪜 Où tu en es dans le cycle » de 5e_C9.1 restait un titre
+  seul en mode essentiel ; elle porte maintenant la classe `approfondissement`, masquée entière.
+- **Bancs du thème 3**, comparés à `main` sur les mêmes outils : les **50 bancs** sans argument et les **17 bancs** de
+  séquences C7/C8 avec leurs arguments donnent le même résultat qu'à `main` — dont les **onze bancs adaptés**
+  (3e_C7 71/71, 4e_C7, 5e_C7, 4e_C8, 3e_C9.1, 5e_C9.1, 3e_C9.2, 4e_C9 ; 3e_C8.1 **62/62**, 5e_C8.1 **39/39**, 5e_C8.2
+  **24/24**). Le crash de 5e_C7.4 est le même des deux côtés.
+- **Au navigateur** : la synthèse 3e_C7.3 (le tableau, puis la référence normative), la synthèse et la carte du cycle de
+  5e_C9.1, la ligne d'étiquettes de 4e_C7.4 à 390 px — aucune erreur JavaScript, aucun défilement horizontal.
 
 ### Ce qui reste
 
