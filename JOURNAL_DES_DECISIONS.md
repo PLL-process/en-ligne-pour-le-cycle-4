@@ -24479,7 +24479,26 @@ carte « 🎯 CRCN mobilisés » vide : il en masquait le contenu (n°29), pas l
   élève a déjà saisi reste) ; le tableau disparaît — les codes étaient déjà dans les étiquettes.
 - Skills `sequence-pedagogique-engageante` (ligne d'étiquettes) et `controle-qualite-lot` (contrôles bloquants, tableau).
 
-RESULTATS_314
+### Vérifié (26/10/2026, branche comparée à `main`, mêmes outils)
+
+- **36 contrôles du dépôt** : 33 identiques à `main` ; les 3 écarts sont attendus — `controle_competences.py` et
+  `controle_mode_essentiel.py` (absents de `main`, verts sur la branche), et le nombre de pages lues par
+  `controle_cadres.py` (408 contre 434 : une installation de test côté `main`, aucun refus des deux côtés).
+  `verif_regles_audit.py` donne les mêmes ✘ (219) ; `controle_regle4.py` refuse les mêmes 18 pages qu'avant (préexistant).
+  Impression papier, squelette, débordement, règles visibles : inchangés.
+- **128 bancs de lot** (109 sans argument, 17 séquences du thème 3 avec leurs arguments, 2 de 5e_C1.5 avec ceux de leur
+  rapport) : identiques à `main`, sauf trois lignes expliquées — le banc 3e_C7 lisait « 145 min d'activités annoncées »
+  dans l'en-tête dissous : il la lit dans la bulle de l'étiquette ⏱ (71 / 71) ; 3e_C5.1 (33 / 34 sur `main`, 34 / 34
+  ici) et la règle n°311 de 5e_C5.1 (33 / 34 dans la série, 34 / 34 deux fois seul) sont l'aléa connu de ces bancs
+  sous charge. Le crash de 5e_C7.4 est le même des deux côtés.
+- **Banc `tests_controle_competences.py`** : 41 / 41 (dont la bulle à trois étages, le cadre de la bonne compétence,
+  un « Ici » par compétence, « > » échappé dans une bulle).
+- **L'en-tête dissous, au navigateur**, sur les quatre pages : plus de titre « En-tête pédagogique » ; Nom, Prénom et
+  Classe saisis puis relus après rechargement (mêmes `id`) ; aucune erreur JavaScript ; aucun défilement horizontal à
+  390 px ; captures d'écran regardées à 1280 et 390 px.
+- **Les 56 « Ici »** relus contre leur page, puis chacun de leurs mots cherché dans le texte de la page : ne manquent que
+  des verbes conjugués et quelques mots de reformulation (« relecture », « identité », « paragraphe ») ; « battement »,
+  absent du jardin 4e_C9, est devenu « basculements », le mot de la page.
 
 ### Non vérifié
 
