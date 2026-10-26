@@ -3,8 +3,9 @@
 
     python3 _outils/impression_papier/poser.py <page.html> [<page.html> …]
 
-Le bloc (style + script de `papier.css` et `papier.js`, ce dossier) se place juste avant `</head>`, entre
-deux marqueurs « fiche-papier … : début / fin ». Une page qui le porte déjà le reçoit à jour, à la même
+Le bloc (style + script de `papier.css` et `papier.js`, ce dossier) se place juste avant `</head>` — ou, dans
+une page qui omet la balise `</head>` (permis en HTML : les quatre pages engendrées de la station 3e_C9.2),
+juste avant `</body>` —, entre deux marqueurs « fiche-papier … : début / fin ». Une page qui le porte déjà le reçoit à jour, à la même
 place ; une page qui ne le porte pas le reçoit une fois. Rien d'autre dans la page n'est touché : le bloc
 n'agit qu'à l'impression (et ajoute, cachés à l'écran, les éléments que le papier remplace).
 
@@ -33,16 +34,18 @@ def blocs_de(html):
 
 
 def poser(html):
-    """Rend la page avec le bloc à jour, ou lève ValueError (deux blocs, pas de </head>)."""
+    """Rend la page avec le bloc à jour, ou lève ValueError (deux blocs, ou aucune place unique où le poser)."""
     b = bloc()
     trouves = blocs_de(html)
     if len(trouves) > 1:
         raise ValueError("%d blocs de la fiche papier dans la page" % len(trouves))
     if trouves:
         return _BLOC_RE.sub(lambda _m: b, html, count=1)
-    if html.count("</head>") != 1:
-        raise ValueError("pas de </head> unique où poser la fiche papier")
-    return html.replace("</head>", b + "\n</head>", 1)
+    if html.count("</head>") == 1:
+        return html.replace("</head>", b + "\n</head>", 1)
+    if html.count("</head>") == 0 and html.count("</body>") == 1:
+        return html.replace("</body>", b + "\n</body>", 1)
+    raise ValueError("ni </head> unique, ni (sans </head>) </body> unique, où poser la fiche papier")
 
 
 def main(args):

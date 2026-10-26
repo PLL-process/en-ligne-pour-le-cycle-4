@@ -1456,5 +1456,313 @@ function signale(msg){
     if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
 }
 </script>
+<!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
+<style>
+/* Fiche papier — source unique : _outils/impression_papier/papier.css (posée par poser.py ; ne pas modifier dans la page).
+   À l'impression, la séquence devient une fiche d'élève : en-tête, texte foncé, zones de réponse pour le crayon ; ce qui ne
+   sert qu'à l'écran disparaît, ce qui est replié à l'écran ne s'imprime pas, et seule la séance affichée s'imprime. */
+.pp-papier{display:none}
+@page{size:A4;margin:14mm 13mm 16mm 13mm;
+  @bottom-left{content:var(--pp-pied,"");font:8pt "Segoe UI",system-ui,sans-serif;color:#64748b}
+  @bottom-right{content:"page " counter(page) " / " counter(pages);font:8pt "Segoe UI",system-ui,sans-serif;color:#64748b}}
+@page :first{margin-top:10mm}
+@media print{
+  /* la palette du dépôt, en encre foncée (les couleurs restent, assombries) ; les fonds deviennent le papier.
+     Aussi dans les ateliers incrustés, qui redéfinissent la palette sur eux-mêmes. */
+  html:root,html body .atelier-incruste{--text:#111827;--encre:#111827;--sub:#334155;--subtitle:#334155;--muted:#334155;--title:#1e3a8a;--head:#5b21b6;--heading:#5b21b6;
+        --vio:#5b21b6;--hl:#0369a1;--accent:#0369a1;--highlight:#0369a1;--ok:#166534;--warn:#92400e;--err:#b91c1c;--ko:#b91c1c;
+        --crcn:#0f766e;--energie:#9a3412;--wagon:#b91c1c;
+        --bg:#fff;--bg2:#fff;--panel:#fff;--panel2:#fff;--carte:#fff;--papier:#fff;--input-bg:#fff;--border:#cbd5e1;--line:#cbd5e1;
+        --pp-accent:#4338ca}
+  html,body{background:#fff!important;color:#111827!important;font-family:"Segoe UI",system-ui,-apple-system,sans-serif!important;
+            font-size:10pt!important;line-height:1.42!important;margin:0!important;padding:0!important}
+  body *{box-shadow:none!important;text-shadow:none!important}
+  .pp-papier{display:revert}
+  /* ce qui ne sert qu'à l'écran */
+  .toolbar,#navharm,.skip-link,.progress-wrap,.progress,.choix-parcours-boutons,.parcours-label,.feedback,.saved-note,
+  .taches-bandeau,.badges,.legende-badges,.subtitle,h1,.seance-tabs,[role=tablist],.vers-seance,.page-suivante,.encoche,.qmark,
+  .identite,.referentiel-card,.crcn,.pp-ecran,button,.btn,noscript,details:not([open]),.lpp-sans-impression,
+  .note-bar,.score-pill,.scorebar,.compteur,:is(.resultat,.banc-resultat,.meteo-resultat,.badge):empty{display:none!important}
+  select,textarea,input[type=text],input[type=number],input:not([type]),input[type=radio],input[type=checkbox],input[type=range]{display:none!important}
+  /* une séquence à séances : la séance affichée ; l'ouverture avec la première, la clôture avec la dernière */
+  /* (seulement si papier.js a tourné : sans JavaScript, la page imprime toutes ses séances, comme avant) */
+  html[data-pp] [role=tabpanel]:not([data-pp-actif]){display:none!important}
+  html[data-pp] [role=tabpanel][data-pp-actif]{display:block!important}
+  html:not([data-pp-premiere]) [data-pp-hors="avant"],html:not([data-pp-derniere]) [data-pp-hors="apres"]{display:none!important}
+  /* la séance suit l'en-tête sur la même feuille (d'anciennes règles la renvoyaient à la page suivante) */
+  html body :is([role=tabpanel],.seance-panel,.panneau),html body :is([role=tabpanel],.seance-panel,.panneau)::before{break-before:auto!important;page-break-before:auto!important}
+  /* l'en-tête de la fiche */
+  .pp-entete{display:block;margin:0 0 5mm;padding:0 0 3mm;border-bottom:2.2pt solid var(--pp-accent)}
+  .pp-entete .pp-surtitre{font-weight:600;font-size:8.5pt;line-height:1.25;letter-spacing:.06em;text-transform:uppercase;color:var(--pp-accent)}
+  .pp-entete .pp-titre{font-weight:750;font-size:19pt;line-height:1.15;color:#0f172a;margin:1.5mm 0 1mm}
+  .pp-entete .pp-sous{font-size:9.5pt;color:#334155}
+  .pp-entete .pp-ident{display:flex;gap:5mm;margin-top:3.5mm;font-size:9pt;color:#334155}
+  .pp-entete .pp-ident span{flex:1;border-bottom:.6pt solid #94a3b8;padding-bottom:1mm}
+  .pp-entete .pp-ident span.pp-court{flex:.55}
+  /* les blocs : du blanc et des filets */
+  section,.card,.exo,.activite,.simu,.panel,.seance-panel{background:#fff!important;color:#111827!important}
+  section.card,.card{border:0!important;border-radius:0!important;padding:0!important;margin:0 0 4.2mm!important;max-width:none!important;break-inside:auto!important}
+  .exo{border:0!important;padding:0!important;margin:1.5mm 0!important;break-inside:auto!important}
+  section.card>h2,.card>h2,[role=tabpanel] h2{font-weight:700!important;font-size:12.5pt!important;line-height:1.25!important;color:#0f172a!important;
+    margin:0 0 2mm!important;padding:1.2mm 0 1.2mm 3mm!important;border:0!important;border-left:3pt solid var(--pp-accent)!important;background:#eef2ff!important;break-after:avoid}
+  h3,h4{font-size:10.5pt!important;color:#0f172a!important;margin:2.5mm 0 1mm!important;break-after:avoid}
+  p{margin:1mm 0 1.6mm!important}
+  .chrono,.duree{font-weight:600;color:var(--pp-accent)!important}
+  .retenir{background:#f0fdf4!important;border:0!important;border-left:2.5pt solid #16a34a!important;padding:1.6mm 3mm!important;margin:2mm 0!important;color:#111827!important;break-inside:avoid}
+  .declencheur,.problematique{font-style:italic;border:0!important;border-left:2pt solid #94a3b8!important;background:#fff!important;padding:.5mm 0 .5mm 3mm!important}
+  table{border-collapse:collapse!important;width:100%!important;font-size:9pt!important}
+  th,td{border:.5pt solid #cbd5e1!important;padding:1.2mm 1.6mm!important;background:#fff!important;color:#111827!important}
+  th{background:#f1f5f9!important}
+  img,figure,svg{break-inside:avoid;max-width:100%!important}
+  pre,code,.codebox,.code-block{background:#fff!important;border:.5pt solid #cbd5e1!important}
+  pre,.codebox,.code-block{color:#111827!important}
+  pre code{border:0!important}
+  a{color:#1e3a8a!important;text-decoration:none!important}
+  /* les accents que d'anciennes règles d'impression imposaient trop clairs ; les couleurs claires écrites dans la page
+     (style="color:…") : papier.js les reconnaît au chargement et donne la même teinte, assombrie */
+  html body .retenir :is(b,strong,i,em,span,code,a,small){color:#14532d!important}
+  html body h2 span,html body h3 span,html body .chrono,html body .card h2 span,html body .card h3 span,html body [role=tabpanel] h2 span{color:var(--pp-accent)!important}
+  html body figcaption,html body footer,html body small,html body .small,html body .note,html body .meta,html body .legende{color:#334155!important}
+  html body :is(.retenir,.card,table) caption{color:#334155!important}
+  html body .pp-encre{color:var(--pp-encre,#111827)!important}
+  /* les grands fonds foncés (écrits dans la page, ou par classe) : un rectangle d'encre ; ils deviennent un cadre */
+  html body .pp-fond,html body details.vs{background:#fff!important;background-image:none!important;border:.6pt solid #cbd5e1!important;color:#111827!important}
+  /* les zones de réponse, pour le crayon */
+  .pp-lignes{display:block;margin:1.2mm 0 2mm;height:calc(var(--n,3) * 7.5mm);break-inside:avoid;
+    background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(7.5mm - .5pt),#94a3b8 calc(7.5mm - .5pt),#94a3b8 7.5mm)}
+  .pp-trait{display:inline-block;min-width:30mm;width:var(--l,38mm);max-width:100%;border-bottom:.6pt solid #94a3b8;height:5mm;vertical-align:bottom}
+  td .pp-trait{width:100%;min-width:12mm}
+  .pp-choix{display:inline;line-height:1.9}
+  .pp-choix .pp-case{white-space:nowrap;margin-right:4mm}
+  .pp-choix .pp-case::before,.pp-coche::before{content:"";display:inline-block;width:3mm;height:3mm;border:.7pt solid #334155;border-radius:.6mm;margin-right:1.4mm;vertical-align:-.3mm}
+  .pp-coche.pp-rond::before{border-radius:50%}
+  .pp-coche{display:inline}
+  .pp-options{display:flex!important;flex-wrap:wrap!important;gap:.6mm 5mm!important;align-items:baseline}
+  .pp-option{display:inline-flex!important;align-items:baseline;margin:0!important;padding:0!important;border:0!important;background:none!important;width:auto!important;min-height:0!important}
+  .qcm-groupe{border:0!important;padding:0!important;margin:0 0 1.8mm!important;break-inside:avoid;min-width:0}
+  .qcm-groupe legend{font-weight:600;padding:0!important;margin:0 0 .6mm!important}
+  .qcm-groupe .options{display:flex!important;flex-wrap:wrap;gap:.8mm 5mm;margin:0!important}
+  .qcm-groupe .option,.qcm-option{display:inline-flex!important;align-items:center;border:0!important;padding:0!important;margin:0 4mm .6mm 0!important;background:none!important;min-height:0!important;width:auto!important}
+  /* ce qui se fait en ligne */
+  .pp-enligne{display:block;margin:1.5mm 0;padding:2mm 3mm;border:.6pt dashed var(--pp-accent);border-radius:2mm;font-size:9.5pt;color:#1e1b4b;break-inside:avoid}
+  .pp-enligne table{margin-top:1.5mm}
+  .pp-enligne td{height:8mm}
+  /* les animations pas à pas : l'image et la liste des étapes, côte à côte */
+  [data-lpp-racine]:not(.lpp-sans-impression){display:grid!important;grid-template-columns:92mm 1fr;gap:5mm;align-items:start;border:0!important;padding:0!important;background:#fff!important}
+  [data-lpp-racine] [data-lpp="dessin"]{max-width:none!important;width:100%!important;margin:0!important}
+  [data-lpp-racine] .lpp-imprime{margin:0!important;padding-left:4.5mm!important;font-size:9pt}
+  [data-lpp-racine]:not(.lpp-sans-impression)>:not([data-lpp="dessin"]):not(.lpp-imprime){display:none!important}
+}
+</style>
+<script>
+/* Fiche papier — source unique : _outils/impression_papier/papier.js (posé par poser.py ; ne pas modifier dans la page).
+   Prépare, une fois, ce que le papier remplace (cachés à l'écran : .pp-papier) ; avant chaque impression, marque la séance
+   affichée. Rien ne change à l'écran. */
+(function(){
+  "use strict";
+  if (window.__fichePapier) return;
+  window.__fichePapier = true;
+  function el(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt) e.textContent = txt; return e; }
+  var ECRAN = ".toolbar,.choix-parcours-boutons,#navharm,.pp-papier,[role=tablist]";
+  var panneaux = [];
+
+  function propre(t){ return String(t || "").replace(/\s+/g, " ").trim(); }
+  function sansEmoji(t){ return propre(t).replace(/^[^0-9A-Za-zÀ-ÿ«"(]+/, ""); }
+
+  function entete(){
+    var h1 = document.querySelector("h1"), sous = document.querySelector(".subtitle");
+    var titre = sansEmoji(h1 ? h1.textContent : document.title);
+    var niv = document.querySelector(".badge.niveau");
+    var codes = [].slice.call(document.querySelectorAll(".badge.code")).map(function(c){ return propre(c.textContent); }).filter(Boolean);
+    var niveau = niv ? propre(niv.textContent) : "";
+    var e = el("header", "pp-papier pp-entete");
+    var sur = el("div", "pp-surtitre", ["Technologie", niveau, codes.join(", ")].filter(Boolean).join(" · "));
+    e.appendChild(sur);
+    e.appendChild(el("div", "pp-titre", titre));
+    if (sous && propre(sous.textContent)) e.appendChild(el("div", "pp-sous", propre(sous.textContent)));
+    var id = el("div", "pp-ident");
+    ["Nom", "Prénom", "Classe", "Date"].forEach(function(n, i){ id.appendChild(el("span", i > 1 ? "pp-court" : "", n + " :")); });
+    e.appendChild(id);
+    document.body.insertBefore(e, document.body.firstChild);
+    document.documentElement.style.setProperty("--pp-pied", JSON.stringify(titre + (niveau ? " · " + niveau : "")));
+    return sur;
+  }
+
+  // Les blocs qui ne servent qu'à l'écran, reconnus à leur titre (ils n'ont pas de classe commune).
+  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique/i;
+  function blocsEcran(){
+    document.querySelectorAll("section, .card").forEach(function(c){
+      var t = c.querySelector(":scope > h2, :scope > h3");
+      if (t && TITRES_ECRAN.test(t.textContent)) c.classList.add("pp-ecran");
+    });
+  }
+
+  function champs(){
+    document.querySelectorAll("select").forEach(function(s){
+      if (s.closest(ECRAN) || s.closest(".simu,.banc")) return;
+      var c = el("span", "pp-papier pp-choix");
+      [].slice.call(s.options).forEach(function(o){
+        var t = propre(o.textContent);
+        if (!t || /^[—–-]/.test(t)) return;
+        c.appendChild(el("span", "pp-case", t)); c.appendChild(document.createTextNode(" "));
+      });
+      s.insertAdjacentElement("afterend", c);
+    });
+    document.querySelectorAll("textarea").forEach(function(t){
+      if (t.closest(ECRAN)) return;
+      var n = Math.max(2, Math.min(7, (+t.getAttribute("rows") || 2) + 1));
+      var l = el("div", "pp-papier pp-lignes"); l.style.setProperty("--n", n);
+      t.insertAdjacentElement("afterend", l);
+    });
+    document.querySelectorAll("input").forEach(function(i){
+      if (i.closest(ECRAN) || i.closest(".simu,.banc")) return;
+      var type = (i.getAttribute("type") || "text").toLowerCase();
+      if (type === "radio" || type === "checkbox") {
+        i.insertAdjacentElement("beforebegin", el("span", "pp-papier pp-coche" + (type === "radio" ? " pp-rond" : "")));
+        // les réponses d'une question, alignées sur une ligne (sauf dans un tableau)
+        var lab = i.closest("label") || (i.id && document.querySelector('label[for="' + i.id + '"]')) || null;
+        var bloc = lab && lab.parentElement && lab.parentElement.contains(i) ? lab : i.parentElement;
+        if (bloc && !bloc.closest("td, th") && bloc.parentElement) {
+          bloc.classList.add("pp-option");
+          if (bloc.parentElement.querySelectorAll(":scope > .pp-option").length >= 2) bloc.parentElement.classList.add("pp-options");
+        }
+      }
+      else if (type === "text" || type === "number") {
+        var w = i.getBoundingClientRect().width;
+        var tr = el("span", "pp-papier pp-trait");
+        if (w > 0) tr.style.setProperty("--l", Math.max(30, Math.min(160, w * .26)) + "mm");
+        i.insertAdjacentElement("afterend", tr);
+      }
+    });
+  }
+
+  // Un simulateur se fait en ligne : sur papier, on dit où, et on garde une place pour noter ce qu'on observe.
+  function simulateurs(){
+    document.querySelectorAll(".simu, .banc").forEach(function(s){
+      if (s.parentElement && s.parentElement.closest(".simu, .banc")) return;
+      var b = el("div", "pp-papier pp-enligne");
+      b.appendChild(el("div", "", "🖥  Cette partie se fait sur la page en ligne. Note ici ce que tu observes."));
+      var sel = s.querySelector("select");
+      var tab = el("table"), tr = el("tr");
+      tr.appendChild(el("th", "", sel ? "Essai" : "Ce que je règle")); tr.appendChild(el("th", "", "Ce que j'observe")); tab.appendChild(tr);
+      var lignes = sel ? [].slice.call(sel.options).map(function(o){ return propre(o.textContent); }).filter(function(t){ return t && !/^[—–-]/.test(t); }) : ["", "", ""];
+      lignes.slice(0, 8).forEach(function(t){ var r = el("tr"); r.appendChild(el("td", "", t)); r.appendChild(el("td")); tab.appendChild(r); });
+      b.appendChild(tab);
+      s.insertAdjacentElement("afterend", b);
+      s.classList.add("pp-ecran");
+    });
+  }
+
+  // Les couleurs claires écrites dans la page (style="color:…") : pensées pour un fond d'écran sombre, elles
+  // disparaissent sur le papier blanc. On les reconnaît ici (une couleur écrite dans la page est la même à l'écran et
+  // à l'impression) et on calcule la même teinte, assez foncée pour le papier ; elle ne sert qu'à l'impression.
+  var toile = null;
+  function rvb(t){
+    if (!t || /var\(|inherit|initial|unset|currentcolor|transparent/i.test(t)) return null;
+    if (!/^rgb/i.test(t)) {                                  // « white », « #fff » : le navigateur les écrit en clair
+      toile = toile || document.createElement("canvas").getContext("2d");
+      if (!toile) return null;
+      toile.fillStyle = "#010203"; toile.fillStyle = t;
+      var h = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(toile.fillStyle);
+      return h && toile.fillStyle !== "#010203" ? [parseInt(h[1], 16), parseInt(h[2], 16), parseInt(h[3], 16)] : rvb(toile.fillStyle === "#010203" ? "" : toile.fillStyle);
+    }
+    var m = /rgba?\(\s*([\d.]+)[ ,]+([\d.]+)[ ,]+([\d.]+)(?:[ ,/]+([\d.]+))?/.exec(t);
+    return m && (m[4] === undefined || +m[4] > .5) ? [+m[1], +m[2], +m[3]] : null;
+  }
+  function lum(c){ return c.reduce(function(s, v, k){ v /= 255; v = v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); return s + [.2126, .7152, .0722][k] * v; }, 0); }
+  function fondDe(e){                                     // la couleur moyenne d'un fond écrit dans la page (couleur ou dégradé)
+    var l = [], c = rvb(e.style.backgroundColor);
+    if (c) l.push(lum(c));
+    (String(e.style.backgroundImage || "").match(/rgba?\([^)]*\)|#[0-9a-f]{3,8}\b/gi) || []).forEach(function(x){ var d = rvb(x); if (d) l.push(lum(d)); });
+    return l.length ? l.reduce(function(a, b){ return a + b; }) / l.length : null;
+  }
+  // Un bloc (pas une étiquette : celles-là gardent leur couleur et leur texte clair) au fond foncé écrit dans la page.
+  // Il peut être caché au chargement (une autre séance) : on le reconnaît à sa balise, pas à sa taille.
+  var BLOCS = /^(DIV|SECTION|ARTICLE|DETAILS|ASIDE|HEADER|FOOTER|FIGURE|FORM|FIELDSET|MAIN|NAV|UL|OL|BLOCKQUOTE)$/;
+  function fonds(){
+    document.querySelectorAll("body [style*='background' i]").forEach(function(e){
+      var f = fondDe(e);
+      if (f !== null && f < .3 && BLOCS.test(e.tagName)) e.classList.add("pp-fond");
+    });
+  }
+  // Un bloc qui ne porte que des boutons (« Vérifier », « Correction ») : vide sur le papier, il laisserait un cadre vide.
+  function boutonsSeuls(){
+    document.querySelectorAll("body :is(div,p,nav,span,footer)").forEach(function(e){
+      if (e.closest(ECRAN) || !e.querySelector("button, .btn")) return;
+      var c = e.cloneNode(true);
+      c.querySelectorAll("button, .btn, script, style, .pp-papier").forEach(function(x){ x.remove(); });
+      if (!propre(c.textContent) && !c.querySelector("img, svg, canvas, video, object, input, select, textarea, table")) e.classList.add("pp-ecran");
+    });
+  }
+  function encres(){
+    document.querySelectorAll("body [style*='color' i]").forEach(function(e){
+      var c = rvb(e.style.color);
+      if (!c || lum(c) <= .18) return;                       // déjà lisible sur blanc (4,5 : 1 et plus)
+      for (var a = e; a && a !== document.body; a = a.parentElement) {
+        if (a.classList.contains("pp-fond")) break;          // ce fond-là devient blanc : le texte doit foncer
+        var f = fondDe(a);
+        if (f !== null && f < .3) return;                    // texte clair sur un petit fond foncé (une étiquette) : voulu
+      }
+      var k = 1, d = c;
+      while (lum(d) > .05 && k > .05) { k -= .04; d = c.map(function(v){ return Math.round(v * k); }); }
+      e.classList.add("pp-encre"); e.style.setProperty("--pp-encre", "rgb(" + d.join(",") + ")");
+    });
+  }
+
+  // Séquence à séances : ce qui est hors des onglets, avant (l'ouverture) ou après (la clôture).
+  function horsOnglets(){
+    panneaux = [].slice.call(document.querySelectorAll("[role=tabpanel]"));
+    if (!panneaux.length) return;
+    var premier = panneaux[0], dernier = panneaux[panneaux.length - 1], vus = [];
+    panneaux.forEach(function(p){
+      for (var a = p; a && a.parentElement && a !== document.body; a = a.parentElement) {
+        [].slice.call(a.parentElement.children).forEach(function(f){
+          if (f === a || vus.indexOf(f) >= 0 || f.querySelector("[role=tabpanel]") || f.matches("[role=tabpanel], script, style, .pp-papier")) return;
+          vus.push(f);
+          var avant = f.compareDocumentPosition(premier) & Node.DOCUMENT_POSITION_FOLLOWING;
+          var apres = f.compareDocumentPosition(dernier) & Node.DOCUMENT_POSITION_PRECEDING;
+          if (avant) f.setAttribute("data-pp-hors", "avant"); else if (apres) f.setAttribute("data-pp-hors", "apres");
+        });
+      }
+    });
+  }
+
+  var surtitre = null, surtitreBase = "";
+  function morceaux(e){                                    // « Séance 3 » + « Mes traces » : les textes de l'onglet, un à un
+    var out = [];
+    [].forEach.call(e.childNodes, function(n){
+      if (n.nodeType === 3) { if (propre(n.textContent)) out.push(propre(n.textContent)); }
+      else if (n.nodeType === 1 && !/^(svg|img|script|style)$/i.test(n.tagName) && n.getAttribute("aria-hidden") !== "true") out = out.concat(morceaux(n));
+    });
+    return out;
+  }
+  function seanceAffichee(){
+    var r = document.documentElement;
+    if (!panneaux.length) { r.setAttribute("data-pp-premiere", ""); r.setAttribute("data-pp-derniere", ""); return; }
+    var actif = panneaux.filter(function(p){ return getComputedStyle(p).display !== "none"; })[0] || panneaux[0];
+    // le rang, dans l'ordre des onglets que voit l'élève (une page peut ranger ses panneaux autrement)
+    var onglet = document.getElementById(actif.getAttribute("aria-labelledby") || "");
+    var onglets = [].slice.call(document.querySelectorAll("[role=tab]"));
+    var i = onglet && onglets.length === panneaux.length ? onglets.indexOf(onglet) : panneaux.indexOf(actif);
+    if (i < 0) i = panneaux.indexOf(actif);
+    panneaux.forEach(function(p){ p.toggleAttribute("data-pp-actif", p === actif); });
+    r.toggleAttribute("data-pp-premiere", i === 0);
+    r.toggleAttribute("data-pp-derniere", i === panneaux.length - 1);
+    var nomSeance = actif.getAttribute("data-titre") ? sansEmoji(actif.getAttribute("data-titre"))
+      : onglet ? sansEmoji(morceaux(onglet).join(" — ")) : "Séance " + (i + 1);
+    if (surtitre) surtitre.textContent = surtitreBase + " · " + nomSeance + " (" + (i + 1) + " / " + panneaux.length + ")";
+  }
+
+  function preparer(){
+    document.documentElement.setAttribute("data-pp", "");    // la fiche est prête : le choix de la séance peut s'appliquer
+    surtitre = entete(); surtitreBase = surtitre.textContent;
+    blocsEcran(); simulateurs(); champs(); boutonsSeuls(); fonds(); encres(); horsOnglets(); seanceAffichee();
+    window.addEventListener("beforeprint", seanceAffichee);
+    if (window.matchMedia) { var m = window.matchMedia("print"); if (m.addEventListener) m.addEventListener("change", function(e){ if (e.matches) seanceAffichee(); }); }
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", preparer); else preparer();
+})();
+</script>
+<!-- fiche-papier v1 : fin -->
 </body>
 </html>

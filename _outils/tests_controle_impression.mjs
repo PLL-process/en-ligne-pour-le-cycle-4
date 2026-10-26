@@ -7,7 +7,8 @@
  *   · le texte BLANC sur fond sombre — lisible sur le papier ; le refuser aurait
  *     accusé dix-neuf pages dont l'en-tête se lit très bien (erreur du 02/09) ;
  *   · le texte pâle sur fond clair — une seconde dette, réelle, mais qui demande
- *     une décision de palette et non un correctif mécanique ;
+ *     une décision de palette et non un correctif mécanique ; SAUF sur une page
+ *     qui porte la fiche papier, où cette décision est prise et où il est refusé ;
  *   · un élément CACHÉ, ou dont un ANCÊTRE est caché — le bandeau des tâches, que
  *     chaque page masque à l'impression, avait produit vingt faux défauts
  *     (règle d'or n°282) ;
@@ -99,6 +100,20 @@ await cas('un texte pâle sur fond clair est une dette, pas un refus',
   page(`<p class="sous">Un sous-titre pâle, lisible de justesse.</p>`,
        `.sous{color:#9bbefc}`),
   false, 'sous 4,5 : 1 sur fond clair');
+
+// ══ SUR LA FICHE PAPIER, LE TEXTE PÂLE EST REFUSÉ (décision 1a, 25/10/2026) ══
+await cas('sur une page qui porte la fiche papier, un texte pâle est refusé',
+  page(`<header class="pp-entete">Fiche</header><p class="consigne">Une consigne trop pâle pour le papier.</p>`,
+       `.consigne{color:#9bbefc}`),
+  true, 'texte pâle sur la fiche papier');
+
+await cas('sur une page qui porte la fiche papier, le texte foncé passe',
+  page(`<header class="pp-entete">Fiche</header><p>Une consigne en encre foncée.</p>`),
+  false, '1 page(s) portent la fiche papier');
+
+await cas('un texte de dessin SVG n’est pas lu : il peint avec son remplissage, pas avec sa couleur CSS',
+  page(`<svg width="200" height="60" style="background:${SOMBRE}"><text x="10" y="30" fill="#9cc4ff">support</text></svg>`),
+  false);
 
 await cas('un élément caché ne s’imprime pas',
   page(`<div class="panneau" style="display:none"><p>Texte d’un bloc masqué.</p></div>`,
@@ -226,7 +241,7 @@ if (echecs.length) {
   console.log(`\n${controles - echecs.length} / ${controles}`);
   process.exit(1);
 }
-console.log(`✅ ${controles} contrôles — le sombre-sur-sombre est refusé, et rien d’autre ne l’est ;`);
+console.log(`✅ ${controles} contrôles — le sombre-sur-sombre est refusé, le pâle aussi sur la fiche papier, et rien d’autre ;`);
 console.log(`   le script lancé en ligne de commande parle, et privé de pages il sort en panne.`);
 if (mesure) console.log(`   Dépôt réel : ${mesure}`);
 console.log(`\n${controles} / ${controles}`);

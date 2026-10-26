@@ -3,7 +3,10 @@
    Modèle : tests_regle_311_5e_C3.1.mjs (le pilote).
 
    Séance 1 : ouverture complète. Séance 2 et suivantes : titre, barre d'outils, puis le volet « 📖 Rappel : la situation et ton hypothèse », replié.
-   Sans JavaScript et à l'impression, tout s'affiche. Un lien direct vers une ancre ouvre la bonne séance sans l'ouverture.
+   Sans JavaScript, tout s'affiche. Un lien direct vers une ancre ouvre la bonne séance sans l'ouverture.
+   À l'impression : une page qui porte la fiche papier (décision 1a de Pascal, 25/10/2026, `_outils/impression_papier/`)
+   imprime la séance affichée — l'ouverture avec la séance 1, et le niveau et le code dans l'en-tête de la fiche ; une page
+   sans fiche papier imprime tout (le volet ouvert, son bouton masqué).
    NB : le contenu d'un <details> fermé garde ses rectangles dans Chromium ; la visibilité se juge donc avec checkVisibility().
 
    Usage d'une page : node tests_regle_311_<code>.mjs [--captures <dossier>]   (séance 1, séance 2, volet ouvert ; 1280 et 390 px) */
@@ -127,13 +130,31 @@ export async function lancerBanc311(o) {
   }
   {
     const ctx = await b.newContext({ viewport: { width: 1280, height: 900 } }); const p = await ctx.newPage(); await p.addInitScript(INIT);
-    await p.goto(URL0); await p.evaluate(() => localStorage.clear()); await p.reload(); await p.click(onglet(SN)); await p.emulateMedia({ media: 'print' });
-    await p.evaluate(() => window.dispatchEvent(new Event('beforeprint'))); await p.waitForTimeout(80);
-    const r = await p.evaluate(() => { const vis = window.__vis; const v = document.getElementById('ouverture');
-      return { open: v.open, h2: [...v.querySelectorAll('h2')].every(vis), badges: document.querySelector('.badges') ? vis(document.querySelector('.badges')) : true, summary: vis(v.querySelector(':scope > summary')) }; });
-    t(r.open && r.h2 && r.badges && !r.summary, 'impression : ouverture et badges affichés, sans le bouton du volet');
-    await p.evaluate(() => window.dispatchEvent(new Event('afterprint'))); await p.waitForTimeout(60);
-    t((await etat(p)).open === false, 'après l\'impression : le volet est replié de nouveau');
+    await p.goto(URL0); await p.evaluate(() => localStorage.clear()); await p.reload(); await p.click(onglet(SN));
+    const imprimer = async () => { await p.evaluate(() => window.dispatchEvent(new Event('beforeprint'))); await p.emulateMedia({ media: 'print' }); await p.waitForTimeout(80);
+      return p.evaluate(() => { const vis = window.__vis; const v = document.getElementById('ouverture'), en = document.querySelector('.pp-entete');
+        //: sur la fiche papier, un bloc qui ne sert qu'à l'écran (« Avant de commencer », le référentiel) ne s'imprime pas
+        const h2 = [...v.querySelectorAll('h2')].filter(h => !en || !h.closest('.pp-ecran'));
+        return { open: v.open, h2: h2.length > 0 && h2.every(vis), aucunH2: ![...v.querySelectorAll('h2')].some(vis),
+                 badges: document.querySelector('.badges') ? vis(document.querySelector('.badges')) : true, summary: vis(v.querySelector(':scope > summary')),
+                 fiche: !!en, entete: en ? vis(en) : false, surtitre: en ? en.querySelector('.pp-surtitre').textContent : '' }; }); };
+    let r = await imprimer();
+    if (r.fiche) {
+      //: décision 1a (25/10/2026) : la fiche papier imprime la séance affichée ; l'ouverture est sur la fiche de la séance 1
+      t(r.entete && !r.summary && r.aucunH2, `impression depuis ${SN} (fiche papier) : la séance seule, sans l'ouverture ni le bouton du volet`);
+      await p.evaluate(() => window.dispatchEvent(new Event('afterprint'))); await p.emulateMedia({ media: 'screen' }); await p.waitForTimeout(60);
+      t((await etat(p)).open === false, 'après l\'impression : le volet est replié de nouveau');
+      await p.click(onglet(ids[0])); r = await imprimer();
+      const niv = await p.evaluate(() => { const b = document.querySelector('.badge.niveau'), c = document.querySelector('.badge.code');
+        return [b, c].filter(Boolean).map(x => x.textContent.replace(/\s+/g, ' ').trim()); });
+      t(r.entete && r.h2 && !r.summary && niv.every(x => r.surtitre.includes(x)),
+        `impression depuis la séance 1 (fiche papier) : l'ouverture, et l'en-tête qui porte ${niv.join(' et ') || 'le titre'}`);
+      await p.emulateMedia({ media: 'screen' });
+    } else {
+      t(r.open && r.h2 && r.badges && !r.summary, 'impression : ouverture et badges affichés, sans le bouton du volet');
+      await p.evaluate(() => window.dispatchEvent(new Event('afterprint'))); await p.waitForTimeout(60);
+      t((await etat(p)).open === false, 'après l\'impression : le volet est replié de nouveau');
+    }
     await ctx.close();
   }
   await b.close();

@@ -7,8 +7,9 @@
   @bottom-right{content:"page " counter(page) " / " counter(pages);font:8pt "Segoe UI",system-ui,sans-serif;color:#64748b}}
 @page :first{margin-top:10mm}
 @media print{
-  /* la palette du dépôt, en encre foncée (les couleurs restent, assombries) ; les fonds deviennent le papier */
-  :root{--text:#111827;--encre:#111827;--sub:#334155;--subtitle:#334155;--muted:#334155;--title:#1e3a8a;--head:#5b21b6;--heading:#5b21b6;
+  /* la palette du dépôt, en encre foncée (les couleurs restent, assombries) ; les fonds deviennent le papier.
+     Aussi dans les ateliers incrustés, qui redéfinissent la palette sur eux-mêmes. */
+  html:root,html body .atelier-incruste{--text:#111827;--encre:#111827;--sub:#334155;--subtitle:#334155;--muted:#334155;--title:#1e3a8a;--head:#5b21b6;--heading:#5b21b6;
         --vio:#5b21b6;--hl:#0369a1;--accent:#0369a1;--highlight:#0369a1;--ok:#166534;--warn:#92400e;--err:#b91c1c;--ko:#b91c1c;
         --crcn:#0f766e;--energie:#9a3412;--wagon:#b91c1c;
         --bg:#fff;--bg2:#fff;--panel:#fff;--panel2:#fff;--carte:#fff;--papier:#fff;--input-bg:#fff;--border:#cbd5e1;--line:#cbd5e1;
@@ -20,12 +21,16 @@
   /* ce qui ne sert qu'à l'écran */
   .toolbar,#navharm,.skip-link,.progress-wrap,.progress,.choix-parcours-boutons,.parcours-label,.feedback,.saved-note,
   .taches-bandeau,.badges,.legende-badges,.subtitle,h1,.seance-tabs,[role=tablist],.vers-seance,.page-suivante,.encoche,.qmark,
-  .identite,.referentiel-card,.crcn,.pp-ecran,button,.btn,noscript,details:not([open]),.lpp-sans-impression{display:none!important}
+  .identite,.referentiel-card,.crcn,.pp-ecran,button,.btn,noscript,details:not([open]),.lpp-sans-impression,
+  .note-bar,.score-pill,.scorebar,.compteur,:is(.resultat,.banc-resultat,.meteo-resultat,.badge):empty{display:none!important}
   select,textarea,input[type=text],input[type=number],input:not([type]),input[type=radio],input[type=checkbox],input[type=range]{display:none!important}
   /* une séquence à séances : la séance affichée ; l'ouverture avec la première, la clôture avec la dernière */
-  [role=tabpanel]:not([data-pp-actif]){display:none!important}
-  [role=tabpanel][data-pp-actif]{display:block!important}
+  /* (seulement si papier.js a tourné : sans JavaScript, la page imprime toutes ses séances, comme avant) */
+  html[data-pp] [role=tabpanel]:not([data-pp-actif]){display:none!important}
+  html[data-pp] [role=tabpanel][data-pp-actif]{display:block!important}
   html:not([data-pp-premiere]) [data-pp-hors="avant"],html:not([data-pp-derniere]) [data-pp-hors="apres"]{display:none!important}
+  /* la séance suit l'en-tête sur la même feuille (d'anciennes règles la renvoyaient à la page suivante) */
+  html body :is([role=tabpanel],.seance-panel,.panneau),html body :is([role=tabpanel],.seance-panel,.panneau)::before{break-before:auto!important;page-break-before:auto!important}
   /* l'en-tête de la fiche */
   .pp-entete{display:block;margin:0 0 5mm;padding:0 0 3mm;border-bottom:2.2pt solid var(--pp-accent)}
   .pp-entete .pp-surtitre{font-weight:600;font-size:8.5pt;line-height:1.25;letter-spacing:.06em;text-transform:uppercase;color:var(--pp-accent)}
@@ -49,32 +54,19 @@
   th,td{border:.5pt solid #cbd5e1!important;padding:1.2mm 1.6mm!important;background:#fff!important;color:#111827!important}
   th{background:#f1f5f9!important}
   img,figure,svg{break-inside:avoid;max-width:100%!important}
-  pre,code,.codebox{background:#f8fafc!important;color:#111827!important;border:.5pt solid #cbd5e1!important}
+  pre,code,.codebox,.code-block{background:#fff!important;border:.5pt solid #cbd5e1!important}
+  pre,.codebox,.code-block{color:#111827!important}
+  pre code{border:0!important}
   a{color:#1e3a8a!important;text-decoration:none!important}
-  /* les accents que d'anciennes règles d'impression imposaient trop clairs, et les couleurs claires écrites en dur */
-  html body .retenir b,html body .retenir strong{color:#14532d!important}
+  /* les accents que d'anciennes règles d'impression imposaient trop clairs ; les couleurs claires écrites dans la page
+     (style="color:…") : papier.js les reconnaît au chargement et donne la même teinte, assombrie */
+  html body .retenir :is(b,strong,i,em,span,code,a,small){color:#14532d!important}
   html body h2 span,html body h3 span,html body .chrono,html body .card h2 span,html body .card h3 span,html body [role=tabpanel] h2 span{color:var(--pp-accent)!important}
   html body figcaption,html body footer,html body small,html body .small,html body .note,html body .meta,html body .legende{color:#334155!important}
-  html body [style*="color:#9bbefc" i],html body [style*="color: #9bbefc" i]{color:#334155!important}
-  html body [style*="color:#e4eaf5" i],html body [style*="color: #e4eaf5" i]{color:#111827!important}
-  html body [style*="color:#eaf1ff" i],html body [style*="color: #eaf1ff" i]{color:#111827!important}
-  html body [style*="color:#edf4ff" i],html body [style*="color: #edf4ff" i]{color:#111827!important}
-  html body [style*="color:#81aaff" i],html body [style*="color: #81aaff" i]{color:#1e3a8a!important}
-  html body [style*="color:#89b4ff" i],html body [style*="color: #89b4ff" i]{color:#1e3a8a!important}
-  html body [style*="color:#c68ef2" i],html body [style*="color: #c68ef2" i]{color:#5b21b6!important}
-  html body [style*="color:#61dafb" i],html body [style*="color: #61dafb" i]{color:#0369a1!important}
-  html body [style*="color:#81fba1" i],html body [style*="color: #81fba1" i]{color:#166534!important}
-  html body [style*="color:#8be7ad" i],html body [style*="color: #8be7ad" i]{color:#166534!important}
-  html body [style*="color:#ffd66b" i],html body [style*="color: #ffd66b" i]{color:#92400e!important}
-  html body [style*="color:#ffd479" i],html body [style*="color: #ffd479" i]{color:#92400e!important}
-  html body [style*="color:#ff7b88" i],html body [style*="color: #ff7b88" i]{color:#b91c1c!important}
-  html body [style*="color:#7ee0c3" i],html body [style*="color: #7ee0c3" i]{color:#0f766e!important}
-  html body [style*="color:#cfe1ff" i],html body [style*="color: #cfe1ff" i]{color:#334155!important}
-  html body [style*="color:#bfd3ff" i],html body [style*="color: #bfd3ff" i]{color:#334155!important}
-  html body [style*="color:#b9c9df" i],html body [style*="color: #b9c9df" i]{color:#334155!important}
-  html body [style*="color:#ffb454" i],html body [style*="color: #ffb454" i]{color:#9a3412!important}
-  html body [style*="color:#5b7bb8" i],html body [style*="color: #5b7bb8" i]{color:#334155!important}
-  html body [style*="color:#8fb6ff" i],html body [style*="color: #8fb6ff" i]{color:#1e3a8a!important}
+  html body :is(.retenir,.card,table) caption{color:#334155!important}
+  html body .pp-encre{color:var(--pp-encre,#111827)!important}
+  /* les grands fonds foncés (écrits dans la page, ou par classe) : un rectangle d'encre ; ils deviennent un cadre */
+  html body .pp-fond,html body details.vs{background:#fff!important;background-image:none!important;border:.6pt solid #cbd5e1!important;color:#111827!important}
   /* les zones de réponse, pour le crayon */
   .pp-lignes{display:block;margin:1.2mm 0 2mm;height:calc(var(--n,3) * 7.5mm);break-inside:avoid;
     background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(7.5mm - .5pt),#94a3b8 calc(7.5mm - .5pt),#94a3b8 7.5mm)}
