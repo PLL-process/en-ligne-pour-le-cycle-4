@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 26/10/2026 10:37 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 26/10/2026 10:45 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - **PR #522 ouverte** (vague n°298, thème 3) : 26 pages élèves sans carte « Ce que dit le programme », 25 synthèses professeur avec le bloc `referentiel-eleve`, 43 étiquettes de codes avec leur formulation au survol, 11 bancs adaptés. CI verte, fusionnable.
@@ -12,7 +12,7 @@ _(écrit par Claude le 26/10/2026 10:03)_
 
 ## Branche et PR
 - Branche : `fable/theme-1-regle-298` — dernier commit 67a9bea19 Merge pull request #522 from PLL-process/fable/theme-3-regle-298
-- 24 fichier(s) modifié(s) non commité(s) au moment du relais
+- 34 fichier(s) modifié(s) non commité(s) au moment du relais
 - Aucune PR ouverte.
 
 ## Décisions en attente
@@ -21,7 +21,7 @@ _(écrit par Claude le 26/10/2026 10:03)_
 - b : il part dans la synthèse professeur.
 
 ## Prochaine action
-➡️ Sur GitHub, ouvre Settings → Applications → Installed GitHub Apps → Claude → Configure → Repository access, ajoute `mods-claude`, enregistre, puis redis-moi « créé ».
+➡️ Crée-le, puis dis « créé » : je pousse les six mods et je te donne les lignes d'installation.
 
 ## Décisions prises récemment (messages de Pascal)
 _Aucune relevée._
