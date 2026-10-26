@@ -24518,3 +24518,65 @@ carte « 🎯 CRCN mobilisés » vide : il en masquait le contenu (n°29), pas l
    tourner le CAN) et sur SOS station 3e_C5 (le simulateur de dépannage, FreeCAD en version logiciel).
 4. **Les trois compétences retirées** (4.1 sur Tsinghua 3e, 1.3 et 2.2 sur Internet Sainte-Luce) : les rendre exige une
    activité qui les travaille, à écrire dans un lot à part.
+
+## 26/10/2026 — Vague n°298, thème 3 : le référentiel quitte 26 pages élèves pour leur synthèse professeur (thème 3)
+
+*Décision de Pascal, 26/10/2026 (« 1a 2a 3a », point 3a) : après la règle d'or n°314, reprendre la vague n°298 laissée
+en chemin le 15/09 — une PR par thème, le thème 3 d'abord, et regarder de près 5e_C9.1 (« Ce que dit le programme —
+et où tu en es dans le cycle »). Branche `fable/theme-3-regle-298`.*
+
+### Ce que fait cette PR
+
+**26 séquences du thème 3** portaient encore le référentiel « en toutes lettres » (« 🎯 Ce que dit le programme »,
+« 📋 Ce que dit le programme officiel », « 📋 Référentiel officiel (programme 2024) », « 📚 Les trois compétences
+travaillées — en toutes lettres ») : 11 en 3e, 8 en 4e, 7 en 5e, C7, C8 et C9.
+
+- **La carte quitte la page élève.** Elle entre, **recopiée sans réécriture**, dans la synthèse professeur de son lot,
+  en tête (juste après le titre), dans un bloc `<div class="bloc referentiel-eleve">` précédé d'un commentaire qui nomme
+  la page d'origine et la date — la forme de la vague du 15/09. Aucune carte n'écrivait la distinction entre la
+  référence normative et la codification interne : la phrase du gabarit (« Référence normative : programme de
+  technologie du cycle 4, BO n°9 du 29 février 2024. Codification opérationnelle : les codes … sont des codes de
+  classement internes à ce dépôt ; ils ne figurent pas comme tels au BO. ») est **ajoutée** au bloc.
+- **25 synthèses** reçoivent un bloc : les deux pages de la station 3e_C9.2 (`station_1` et la page complète)
+  portaient la même carte et partagent une synthèse — un seul bloc.
+- **La ligne d'étiquettes reste, avec ses infobulles** (n°298) : 43 étiquettes de codes n'en avaient pas ; elles
+  reçoivent la formulation de leur code, telle que la carte la donnait (« Programme 2024 — 3e_C7.3 : Choisir un
+  matériau constitutif d'un objet et/ou système technique. »), « (appui) » compris, une ligne par code pour une
+  étiquette qui en nomme plusieurs (« 4e_C7.1 · C7.2 · C7.3 », « 5e_C9.1 → C9.3 »).
+- **5e_C9.1, regardé de près** : la carte portait, sous le tableau des codes, un dépliant écrit pour l'élève — « 🪜 Où
+  mène cet atelier — les trois années du cycle en un tableau » (ce qu'on lui fournit en 5e, en 4e, en 3e, et pourquoi
+  lire un programme est le geste le plus utile). Il parle de sa progression, pas du référentiel : **il reste sur la
+  page**, dans une carte « 🪜 Où tu en es dans le cycle », masquée en mode essentiel comme l'était le dépliant ; seul
+  le tableau des codes part. Décision par défaut, soumise à Pascal.
+- **CSS non touchée** : `.referentiel-card` ne vit plus que dans des listes de sélecteurs (le mode essentiel, et deux
+  blocs partagés entre toutes les séquences) ; une liste qui nomme une classe absente ne coûte rien, et un bloc
+  partagé ne se modifie pas page par page.
+- **Huit bancs** lisaient la carte : le témoin du mode essentiel devient le nombre de corrections visibles (et la page
+  ne doit plus porter de carte), et la vérification des formulations au mot près (n°42) lit le bloc de la synthèse
+  professeur. Même nombre de vérifications, même sévérité.
+- L'outil de la vague (`migrer.py`) reste hors du dépôt : la garde de périmètre d'une branche du thème 3 refuse
+  `_outils/` ; ce qu'il fait est écrit ci-dessus.
+
+### Vérifié
+
+- **`verif_regles_audit.py`** : ✘ **219 → 193** sur le dépôt, exactement les 26 pages (n°298 : 43 → 17, les thèmes 1
+  et 2) ; **n°42 ✔ sur les 29 séquences du thème 3**, lue désormais « (synthèse professeur) » ; rien d'autre ne change.
+- **Contrôles**, identiques à `main` : `controle_formulations.py` **104 citations · 104 justes**, `controle_liens.py` (aucun
+  lien mort, aucune ancre introuvable), `controle_impression_papier.py`, `controle_regles_visibles.py`,
+  `controle_competences.py`, `controle_marqueurs.py`, `controle_debordement.py`, `controle_hierarchie.py`,
+  `controle_atteignabilite.py`, `controle_rapports_tests.py`, `controle_boutons_vivants.py`, `controle_squelette.mjs` ✅ ;
+  `controle_mode_essentiel.py` ✅ après correction : la carte « 🪜 Où tu en es dans le cycle » de 5e_C9.1 restait un titre
+  seul en mode essentiel ; elle porte maintenant la classe `approfondissement`, masquée entière.
+- **Bancs du thème 3**, comparés à `main` sur les mêmes outils : les **50 bancs** sans argument et les **17 bancs** de
+  séquences C7/C8 avec leurs arguments donnent le même résultat qu'à `main` — dont les **onze bancs adaptés**
+  (3e_C7 71/71, 4e_C7, 5e_C7, 4e_C8, 3e_C9.1, 5e_C9.1, 3e_C9.2, 4e_C9 ; 3e_C8.1 **62/62**, 5e_C8.1 **39/39**, 5e_C8.2
+  **24/24**). Le crash de 5e_C7.4 est le même des deux côtés.
+- **Au navigateur** : la synthèse 3e_C7.3 (le tableau, puis la référence normative), la synthèse et la carte du cycle de
+  5e_C9.1, la ligne d'étiquettes de 4e_C7.4 à 390 px — aucune erreur JavaScript, aucun défilement horizontal.
+
+### Ce qui reste
+
+- **17 pages** portent encore le référentiel (thèmes 1 et 2) : la suite de la vague, une PR par thème.
+- **Les trois ateliers de planification** (`atelier_3e|4e|5e_C7.1_planification_taches.html`) portent une carte
+  `referentiel-card` que `verif_regles_audit.py` ne lit pas (il ne lit que les séquences) ; ils sont **générés** par
+  `atelier-planification/_generation/build_atelier.py` : c'est le gabarit qu'il faut changer, dans un lot à part.

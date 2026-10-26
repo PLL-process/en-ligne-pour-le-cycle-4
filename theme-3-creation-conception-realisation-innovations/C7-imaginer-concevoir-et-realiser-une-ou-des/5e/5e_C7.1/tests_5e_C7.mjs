@@ -127,12 +127,15 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
 
 /* — n°29 : le mode essentiel masque un nombre MESURÉ de blocs — */
 {
-  const visibleAvant = await page.locator("section.card.referentiel-card").isVisible();
+  // n°298 (vague du thème 3, 26/10/2026) : la carte de référentiel a quitté la page élève ; le témoin du mode
+  // essentiel est désormais le nombre de corrections visibles.
+  const visibleAvant = await page.evaluate(() => [...document.querySelectorAll("details.correction")].filter(e => e.offsetParent !== null).length);
   await page.click("#btnEssentiel");
   await page.waitForTimeout(150);
-  const visibleApres = await page.locator("section.card.referentiel-card").isVisible();
-  ok("n°29 : le mode essentiel masque la carte de référentiel",
-     visibleAvant === true && visibleApres === false);
+  const visibleApres = await page.evaluate(() => [...document.querySelectorAll("details.correction")].filter(e => e.offsetParent !== null).length);
+  ok("n°29 : le mode essentiel masque les corrections, et la page n'a plus de carte de référentiel (n°298)",
+     visibleAvant > 0 && visibleApres === 0 && (await page.locator(".referentiel-card").count()) === 0,
+     visibleAvant + " → " + visibleApres);
   const total = await page.locator("details.correction").count();
   const cachees = await page.evaluate(() =>
     [...document.querySelectorAll("details.correction")].filter(e => e.offsetParent === null).length);
@@ -141,7 +144,7 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   await page.click("#btnEssentiel");
   await page.waitForTimeout(120);
   ok("n°29 : un second clic rétablit l'affichage complet",
-     await page.locator("section.card.referentiel-card").isVisible());
+     (await page.evaluate(() => [...document.querySelectorAll("details.correction")].filter(e => e.offsetParent !== null).length)) > 0);
 }
 
 /* — n°30 : le tableau de bord — */
@@ -175,9 +178,13 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   ok("n°34 : aucun champ sans étiquette", orphelins.length === 0, orphelins.slice(0, 5).join(", "));
 }
 
-/* — n°42 : la carte recopie le programme, au mot près — */
+/* — n°42 : le référentiel recopie le programme, au mot près — lu dans la synthèse professeur depuis la
+   vague n°298 du thème 3 (26/10/2026) : la page élève ne le porte plus — */
 {
-  const txt = (await page.locator("section.card.referentiel-card").innerText()).replace(/’/g, "'");
+  const synth = fs.readFileSync(path.join(LOT, "synthese_professeur_5e_C7.html"), "utf8");
+  const debut = synth.indexOf("referentiel-eleve");
+  const txt = synth.slice(debut, synth.indexOf("</table>", debut)).replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ")
+    .replace(/&#39;|&apos;/g, "'").replace(/\s+/g, " ").replace(/’/g, "'");
   const manquants = CFG.formulations.filter(f => !txt.includes(f));
   ok("n°42 : les 3 formulations sont celles du programme, au mot près",
      manquants.length === 0, manquants.map(m => m.slice(0, 40)).join(" | "));

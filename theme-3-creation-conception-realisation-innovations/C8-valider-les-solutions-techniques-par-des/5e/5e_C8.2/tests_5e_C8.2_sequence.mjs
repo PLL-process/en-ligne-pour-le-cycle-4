@@ -148,8 +148,11 @@ ok('14 · activité 3 validée (4/4)', (await p.textContent('#fb3')).includes('4
 // ── ce que le tableau écrit à la main ne vérifiait pas ──────────────────────
 const texte = (await p.textContent('body')).replace(/\s+/g, ' ');
 const nu = s => s.replace(/[’']/g, "'").replace(/\s+/g, ' ').trim();
-ok('15 · la formulation officielle du code est recopiée exactement',
-   nu(texte).includes(nu(formulationOfficielle())),
+// Règle d'or n°298 (vague du thème 3, 26/10/2026) : la formulation vit dans la synthèse professeur du lot.
+const synthese = fs.readFileSync(path.join(path.dirname(f), 'synthese_professeur_5e_C8.2.html'), 'utf-8')
+  .replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ');
+ok('15 · la formulation officielle du code est recopiée exactement (synthèse professeur, n°298)',
+   nu(synthese).includes(nu(formulationOfficielle())),
    formulationOfficielle().slice(0, 60));
 // Le banc est un simulateur : le risque n'est pas électrique. La consigne doit
 // donc dire les DEUX choses — qu'il n'y a pas de secteur, et ce qu'on fait si le

@@ -486,7 +486,7 @@ const run = async () => {
   await page.click("#btnEssentiel");
   ok("mode essentiel : référentiel et corrections masqués",
      await page.evaluate(() => document.body.classList.contains("essentiel") &&
-       getComputedStyle(document.querySelector(".referentiel-card")).display === "none"));
+       [...document.querySelectorAll("details.correction")].every(e => e.offsetParent === null) && !document.querySelector(".referentiel-card")));
   await shot(page, "mode_essentiel_on");
   await page.click("#btnEssentiel");
   await page.locator('img.figure').first().click();

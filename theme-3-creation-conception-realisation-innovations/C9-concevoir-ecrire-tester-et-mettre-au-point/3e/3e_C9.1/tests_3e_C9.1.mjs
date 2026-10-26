@@ -110,18 +110,21 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
 
 /* — règle n°29 : le mode essentiel masque réellement — */
 {
-  const avant = await page.locator("section.card.referentiel-card").isVisible();
+  // n°298 (vague du thème 3, 26/10/2026) : la carte de référentiel a quitté la page élève ; le témoin du mode
+  // essentiel est désormais le nombre de corrections visibles.
+  const avant = await page.evaluate(() => [...document.querySelectorAll("details.correction")].filter(e => e.offsetParent !== null).length);
   await page.click("#btnEssentiel");
   await page.waitForTimeout(150);
-  const apres = await page.locator("section.card.referentiel-card").isVisible();
+  const apres = await page.evaluate(() => [...document.querySelectorAll("details.correction")].filter(e => e.offsetParent !== null).length);
   const etat = await page.locator("#btnEssentiel").getAttribute("aria-pressed");
-  ok("n°29 : le mode essentiel masque vraiment la carte de référentiel",
-     avant === true && apres === false && etat === "true");
+  ok("n°29 : le mode essentiel masque vraiment les corrections, et la page n'a plus de carte de référentiel (n°298)",
+     avant > 0 && apres === 0 && etat === "true" && (await page.locator(".referentiel-card").count()) === 0,
+     avant + " → " + apres);
   await shot(page, "mode_essentiel");
   await page.click("#btnEssentiel");   // on rétablit
   await page.waitForTimeout(120);
   ok("n°29 : un second clic rétablit l'affichage complet",
-     await page.locator("section.card.referentiel-card").isVisible());
+     (await page.evaluate(() => [...document.querySelectorAll("details.correction")].filter(e => e.offsetParent !== null).length)) > 0);
 }
 
 /* — règle n°30 : le tableau de bord des tâches — */
