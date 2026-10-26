@@ -3,8 +3,11 @@
    affichée. Rien ne change à l'écran. */
 (function(){
   "use strict";
-  if (window.__fichePapier) return;
-  window.__fichePapier = true;
+  // Une seule fois par page. La garde est un attribut, pas une variable globale : une variable « __… » à vrai serait lue
+  // par controle_verrous.mjs comme un verrou ouvert au chargement (règle n°226).
+  var RACINE = document.documentElement;
+  if (RACINE.hasAttribute("data-pp-script")) return;
+  RACINE.setAttribute("data-pp-script", "v1");
   function el(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt) e.textContent = txt; return e; }
   var ECRAN = ".toolbar,.choix-parcours-boutons,#navharm,.pp-papier,[role=tablist]";
   var panneaux = [];
@@ -18,7 +21,15 @@
     var niv = document.querySelector(".badge.niveau");
     var codes = [].slice.call(document.querySelectorAll(".badge.code")).map(function(c){ return propre(c.textContent); }).filter(Boolean);
     var niveau = niv ? propre(niv.textContent) : "";
-    var e = el("header", "pp-papier pp-entete");
+    if (!niveau || !codes.length) {                         // badges sans classe : reconnus à leur texte (« 4e », « 4e_C8.1 · C8.2 »)
+      [].forEach.call(document.querySelectorAll(".badges .badge, .badges > span"), function(b){
+        var x = propre(b.textContent);
+        if (!niveau && /^[3-5]e$/.test(x)) niveau = x;
+        else if (/^[3-5]e_C\d/.test(x) && codes.indexOf(x) < 0 && !document.querySelector(".badge.code")) codes.push(x);
+      });
+    }
+    // un <div>, pas un <header> : des scripts et des bancs prennent « le » header de la page (querySelector("header"))
+    var e = el("div", "pp-papier pp-entete");
     var sur = el("div", "pp-surtitre", ["Technologie", niveau, codes.join(", ")].filter(Boolean).join(" · "));
     e.appendChild(sur);
     e.appendChild(el("div", "pp-titre", titre));
@@ -32,7 +43,7 @@
   }
 
   // Les blocs qui ne servent qu'à l'écran, reconnus à leur titre (ils n'ont pas de classe commune).
-  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique/i;
+  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique|crcn mobilisés/i;
   function blocsEcran(){
     document.querySelectorAll("section, .card").forEach(function(c){
       var t = c.querySelector(":scope > h2, :scope > h3");
@@ -40,6 +51,14 @@
     });
   }
 
+  var menus = [];
+  // Avant l'impression : la case de la réponse choisie dans un menu est cochée (un menu « — choisis — » ne coche rien).
+  function reponsesChoisies(){
+    menus.forEach(function(c){ [].forEach.call(c.querySelectorAll(".pp-case"), function(k){
+      var o = k.ppOption; k.classList.toggle("pp-pris", !!o && o.selected && !!o.value && !/^[—–-]/.test(propre(o.textContent)));
+    }); });
+  }
+  function avantImpression(){ seanceAffichee(); reponsesChoisies(); }
   function champs(){
     document.querySelectorAll("select").forEach(function(s){
       if (s.closest(ECRAN) || s.closest(".simu,.banc")) return;
@@ -47,34 +66,21 @@
       [].slice.call(s.options).forEach(function(o){
         var t = propre(o.textContent);
         if (!t || /^[—–-]/.test(t)) return;
-        c.appendChild(el("span", "pp-case", t)); c.appendChild(document.createTextNode(" "));
+        var k = el("span", "pp-case", t); k.ppOption = o;
+        c.appendChild(k); c.appendChild(document.createTextNode(" "));
       });
       s.insertAdjacentElement("afterend", c);
+      menus.push(c);
     });
-    document.querySelectorAll("textarea").forEach(function(t){
-      if (t.closest(ECRAN)) return;
-      var n = Math.max(2, Math.min(7, (+t.getAttribute("rows") || 2) + 1));
-      var l = el("div", "pp-papier pp-lignes"); l.style.setProperty("--n", n);
-      t.insertAdjacentElement("afterend", l);
-    });
-    document.querySelectorAll("input").forEach(function(i){
+    // Les champs de texte, les cases et les boutons radio changent d'habit à l'impression (papier.css) : rien n'est inséré
+    // à côté d'eux. On aligne seulement les réponses d'une même question sur une ligne (sauf dans un tableau).
+    document.querySelectorAll("input[type=radio], input[type=checkbox]").forEach(function(i){
       if (i.closest(ECRAN) || i.closest(".simu,.banc")) return;
-      var type = (i.getAttribute("type") || "text").toLowerCase();
-      if (type === "radio" || type === "checkbox") {
-        i.insertAdjacentElement("beforebegin", el("span", "pp-papier pp-coche" + (type === "radio" ? " pp-rond" : "")));
-        // les réponses d'une question, alignées sur une ligne (sauf dans un tableau)
-        var lab = i.closest("label") || (i.id && document.querySelector('label[for="' + i.id + '"]')) || null;
-        var bloc = lab && lab.parentElement && lab.parentElement.contains(i) ? lab : i.parentElement;
-        if (bloc && !bloc.closest("td, th") && bloc.parentElement) {
-          bloc.classList.add("pp-option");
-          if (bloc.parentElement.querySelectorAll(":scope > .pp-option").length >= 2) bloc.parentElement.classList.add("pp-options");
-        }
-      }
-      else if (type === "text" || type === "number") {
-        var w = i.getBoundingClientRect().width;
-        var tr = el("span", "pp-papier pp-trait");
-        if (w > 0) tr.style.setProperty("--l", Math.max(30, Math.min(160, w * .26)) + "mm");
-        i.insertAdjacentElement("afterend", tr);
+      var lab = i.closest("label") || (i.id && document.querySelector('label[for="' + i.id + '"]')) || null;
+      var bloc = lab && lab.parentElement && lab.parentElement.contains(i) ? lab : i.parentElement;
+      if (bloc && !bloc.closest("td, th") && bloc.parentElement) {
+        bloc.classList.add("pp-option");
+        if (bloc.parentElement.querySelectorAll(":scope > .pp-option").length >= 2) bloc.parentElement.classList.add("pp-options");
       }
     });
   }
@@ -200,8 +206,8 @@
     document.documentElement.setAttribute("data-pp", "");    // la fiche est prête : le choix de la séance peut s'appliquer
     surtitre = entete(); surtitreBase = surtitre.textContent;
     blocsEcran(); simulateurs(); champs(); boutonsSeuls(); fonds(); encres(); horsOnglets(); seanceAffichee();
-    window.addEventListener("beforeprint", seanceAffichee);
-    if (window.matchMedia) { var m = window.matchMedia("print"); if (m.addEventListener) m.addEventListener("change", function(e){ if (e.matches) seanceAffichee(); }); }
+    window.addEventListener("beforeprint", avantImpression);
+    if (window.matchMedia) { var m = window.matchMedia("print"); if (m.addEventListener) m.addEventListener("change", function(e){ if (e.matches) avantImpression(); }); }
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", preparer); else preparer();
 })();

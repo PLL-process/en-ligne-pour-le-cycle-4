@@ -6,7 +6,8 @@
 Pour chaque `sequence*.html` (hors archives) :
   · imprimée comme le fait le navigateur (événement « beforeprint », puis PDF A4) : séance 1 affichée, puis chaque
     autre séance (onglet cliqué) ; nombre de pages de chaque fiche ;
-  · en « media: print », à la largeur d'une page A4 : aucun champ d'écran visible (menu, case, champ de texte, bouton),
+  · en « media: print », à la largeur d'une page A4 : aucun champ d'écran visible (un menu, un bouton, ou un champ, une
+    case, un bouton radio qui n'a pas pris son habit de papier),
     aucun texte sous 4,5 : 1 sur un fond clair (un fond en dégradé compte pour la moyenne de ses couleurs), aucun grand
     fond foncé (plus de 30 000 px² : un rectangle d'encre), l'en-tête de la fiche présent, une seule séance imprimée ;
   · dans le PDF : la première page porte autre chose que l'en-tête (une séance renvoyée à la page 2 la laisse vide) ;
@@ -52,7 +53,16 @@ MESURE = """() => {
   let pales = [], champs = [], sombres = [];
   for (const e of document.querySelectorAll('body *')) {
     if (/^(SCRIPT|STYLE|SVG|PATH|TEXT|TSPAN|G|IMG|CANVAS|NOSCRIPT|OPTION)$/i.test(e.tagName)) continue;
-    if (/^(SELECT|TEXTAREA|INPUT|BUTTON)$/.test(e.tagName)) { if (e.type !== 'hidden' && vu(e)) champs.push(e.tagName.toLowerCase() + (e.id ? '#' + e.id : '')); continue; }
+    // un menu ou un bouton imprimé est un champ d'écran ; un champ de texte, une case ou un bouton radio s'imprime habillé
+    // pour le papier (appearance:none : des lignes, un trait, un carré, un rond) — sinon, c'est encore l'écran
+    if (/^(SELECT|TEXTAREA|INPUT|BUTTON)$/.test(e.tagName)) {
+      const cs = getComputedStyle(e);
+      // habillé : sans apparence d'écran, et, pour un champ de texte, avec ses lignes (fond rayé) ou son trait (bordure basse)
+      const ecrit = e.tagName === 'TEXTAREA' || !/^(radio|checkbox)$/.test(e.type);
+      const habille = /^(TEXTAREA|INPUT)$/.test(e.tagName) && cs.appearance === 'none'
+        && (!ecrit || (e.tagName === 'TEXTAREA' ? /gradient/.test(cs.backgroundImage) : parseFloat(cs.borderBottomWidth) > 0));
+      if (e.type !== 'hidden' && vu(e) && !habille) champs.push(e.tagName.toLowerCase() + (e.id ? '#' + e.id : ''));
+      continue; }
     if (!/^(IMG|SVG|CANVAS|VIDEO|OBJECT|PICTURE)$/i.test(e.tagName) && !e.closest('svg')) {
       const r = e.getBoundingClientRect(), v = fond(getComputedStyle(e));
       if (v !== null && v < .25 && r.width * r.height > 30000 && vu(e)) sombres.push(nom(e) + ' ' + Math.round(r.width) + '×' + Math.round(r.height));

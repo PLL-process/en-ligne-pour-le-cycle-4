@@ -56,11 +56,11 @@ try:
     poser.poser(deux); t("poser.py refuse une page à deux fiches", False)
 except ValueError:
     t("poser.py refuse une page à deux fiches", True)
-sans_tete = poser.poser("<html><title>t</title><body>sans balise de fin de tête</body></html>")
-t("une page sans </head> (permis en HTML) reçoit la fiche juste avant </body>",
-  sans_tete.index(poser.FIN) < sans_tete.index("</body>") and poser.poser(sans_tete) == sans_tete)
+sans_tete = poser.poser("<html><title>t</title><body>sans balise de fin de tête <a href='qcm.html'>QCM</a></body></html>")
+t("une page sans </head> (permis en HTML) reçoit la fiche juste avant <body>, jamais après le contenu",
+  sans_tete.index(poser.FIN) < sans_tete.index("<body>") and poser.poser(sans_tete) == sans_tete)
 try:
-    poser.poser("<html><body>ni l'un</body><body>ni l'autre</body></html>"); t("poser.py refuse une page sans place unique", False)
+    poser.poser("<html><body>ni l'un</body><body >ni l'autre</body></html>"); t("poser.py refuse une page sans place unique", False)
 except ValueError:
     t("poser.py refuse une page sans place unique", True)
 t("poser.py est idempotent", poser.poser(bon) == bon)

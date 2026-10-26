@@ -1,6 +1,8 @@
 /* Banc du pilote de la règle d'or n°311 — « À partir de la séance 2, l'élève voit sa séance, pas le décor » — sur 5e_C3.1.
    Séance 1 : ouverture complète. Séance 2 et suivantes : titre, mission, barre d'outils, puis le volet « 📖 Rappel : la situation et ton hypothèse », replié.
-   Sans JavaScript et à l'impression, tout s'affiche. Un lien direct vers une ancre ouvre la bonne séance sans l'ouverture.
+   Sans JavaScript, tout s'affiche. Un lien direct vers une ancre ouvre la bonne séance sans l'ouverture.
+   À l'impression, la fiche papier (décision 1a de Pascal, 25/10/2026) imprime la séance affichée : l'ouverture sur la
+   fiche de la séance 1, le niveau et les codes dans l'en-tête (même vérification que banc_regle_311.mjs).
 
    Usage : node tests_regle_311_5e_C3.1.mjs [--captures <dossier>]     (les captures : séances 1 et 3, volet ouvert, 1280 et 390 px)
    NB : le contenu d'un <details> fermé garde ses rectangles dans Chromium ; la visibilité se juge donc avec checkVisibility(). */
@@ -86,11 +88,17 @@ for (const [nom, w, h] of [['1280', 1280, 900], ['390', 390, 844]]) {
 }
 {
   const ctx = await b.newContext({ viewport: { width: 1280, height: 900 } }); const p = await ctx.newPage(); await p.addInitScript(INIT);
-  await p.goto(URL0); await p.click('#tab-s3'); await p.emulateMedia({ media: 'print' });
-  await p.evaluate(() => window.dispatchEvent(new Event('beforeprint'))); await p.waitForTimeout(80);
-  const r = await p.evaluate(() => { const vis = window.__vis; const v = document.getElementById('ouverture');
-    return { open: v.open, h2: [...v.querySelectorAll('h2')].every(vis), badges: vis(document.querySelector('.badges')), summary: vis(v.querySelector(':scope > summary')) }; });
-  t(r.open && r.h2 && r.badges && !r.summary, 'impression : ouverture et badges affichés, sans le bouton du volet');
+  await p.goto(URL0); await p.click('#tab-s3');
+  const imprimer = async () => { await p.evaluate(() => window.dispatchEvent(new Event('beforeprint'))); await p.emulateMedia({ media: 'print' }); await p.waitForTimeout(80);
+    return p.evaluate(() => { const vis = window.__vis; const v = document.getElementById('ouverture'), en = document.querySelector('.pp-entete');
+      const niv = [document.querySelector('.badge.niveau'), document.querySelector('.badge.code')].filter(Boolean).map(x => x.textContent.replace(/\s+/g, ' ').trim());
+      return { aucunH2: ![...v.querySelectorAll('h2')].some(vis), summary: vis(v.querySelector(':scope > summary')), entete: !!en && vis(en),
+               niv, surtitre: en ? en.querySelector('.pp-surtitre').textContent : '' }; }); };
+  let r = await imprimer();
+  t(r.entete && r.aucunH2 && !r.summary, 'impression depuis s3 (fiche papier) : la séance seule, sans l\'ouverture ni le bouton du volet');
+  await p.evaluate(() => window.dispatchEvent(new Event('afterprint'))); await p.emulateMedia({ media: 'screen' }); await p.click('#tab-s1');
+  r = await imprimer();
+  t(r.entete && !r.aucunH2 && !r.summary && r.niv.every(x => r.surtitre.includes(x)), `impression depuis la séance 1 (fiche papier) : l'ouverture, et l'en-tête qui porte ${r.niv.join(' et ')}`);
   await ctx.close();
 }
 await b.close();

@@ -133,9 +133,9 @@ export async function lancerBanc311(o) {
     await p.goto(URL0); await p.evaluate(() => localStorage.clear()); await p.reload(); await p.click(onglet(SN));
     const imprimer = async () => { await p.evaluate(() => window.dispatchEvent(new Event('beforeprint'))); await p.emulateMedia({ media: 'print' }); await p.waitForTimeout(80);
       return p.evaluate(() => { const vis = window.__vis; const v = document.getElementById('ouverture'), en = document.querySelector('.pp-entete');
-        //: sur la fiche papier, un bloc qui ne sert qu'à l'écran (« Avant de commencer », le référentiel) ne s'imprime pas
-        const h2 = [...v.querySelectorAll('h2')].filter(h => !en || !h.closest('.pp-ecran'));
-        return { open: v.open, h2: h2.length > 0 && h2.every(vis), aucunH2: ![...v.querySelectorAll('h2')].some(vis),
+        //: sur la fiche papier, les blocs qui ne servent qu'à l'écran (« Avant de commencer », le référentiel…) ne
+        //: s'impriment pas : on demande que l'ouverture soit là (un de ses titres au moins), pas chacun de ses blocs
+        return { open: v.open, h2: [...v.querySelectorAll('h2')].every(vis), aucunH2: ![...v.querySelectorAll('h2')].some(vis),
                  badges: document.querySelector('.badges') ? vis(document.querySelector('.badges')) : true, summary: vis(v.querySelector(':scope > summary')),
                  fiche: !!en, entete: en ? vis(en) : false, surtitre: en ? en.querySelector('.pp-surtitre').textContent : '' }; }); };
     let r = await imprimer();
@@ -147,7 +147,7 @@ export async function lancerBanc311(o) {
       await p.click(onglet(ids[0])); r = await imprimer();
       const niv = await p.evaluate(() => { const b = document.querySelector('.badge.niveau'), c = document.querySelector('.badge.code');
         return [b, c].filter(Boolean).map(x => x.textContent.replace(/\s+/g, ' ').trim()); });
-      t(r.entete && r.h2 && !r.summary && niv.every(x => r.surtitre.includes(x)),
+      t(r.entete && !r.aucunH2 && !r.summary && niv.every(x => r.surtitre.includes(x)),
         `impression depuis la séance 1 (fiche papier) : l'ouverture, et l'en-tête qui porte ${niv.join(' et ') || 'le titre'}`);
       await p.emulateMedia({ media: 'screen' });
     } else {

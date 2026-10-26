@@ -18,10 +18,12 @@ hasard près). À l'impression :
 - **l'encre foncée** : la palette du dépôt redéfinie pour le papier (aussi dans les ateliers incrustés, qui la
   redéfinissent sur eux-mêmes) ; les couleurs claires écrites dans la page (`style="color:…"`) reconnues au chargement et
   rendues dans la même teinte, foncée (`.pp-encre`) ; les grands fonds foncés changés en cadre blanc (`.pp-fond`) ;
-- **le crayon** : un menu devient des cases à cocher, un champ de texte des lignes d'écriture (autant que de lignes à
-  l'écran, plus une), un champ court un trait, une case ou un bouton radio un carré ou un rond ; les réponses d'une
-  question s'alignent sur une ligne ; un simulateur devient un encadré « cette partie se fait sur la page en ligne » avec
-  un tableau pour noter ce qu'on observe ;
+- **le crayon** : le champ lui-même change d'habit (rien n'est inséré à côté de lui) — une zone de texte devient des
+  lignes d'écriture (autant que de lignes à l'écran, plus une), un champ court un trait, une case ou un bouton radio un
+  carré ou un rond ; ce que l'élève a écrit ou coché s'imprime ; un menu devient des cases (la réponse choisie cochée) ;
+  les réponses d'une question s'alignent ; un simulateur devient un encadré « cette partie se fait sur la page en
+  ligne » avec un tableau pour noter ce qu'on observe ;
+- **les fonds s'impriment** même si « graphiques d'arrière-plan » est décoché (`print-color-adjust: exact`) ;
 - **ce qui ne sert qu'à l'écran disparaît** : barre d'outils, menus de navigation, boutons, scores, compteurs, billet
   d'entrée, « où j'en suis », référentiel, ce qui est replié (`details` fermé), un bloc qui ne porte que des boutons ;
   un bloc marqué `pp-ecran` par la page elle-même ;
@@ -29,10 +31,14 @@ hasard près). À l'impression :
   première, la clôture avec la dernière ; la séance suit l'en-tête sur la même feuille ;
 - les animations pas à pas : l'image et la liste des étapes, côte à côte.
 
-Fichiers : `papier.css`, `papier.js` (la source), `poser.py` (la pose, avant `</head>`, ou avant `</body>` dans une page
+Fichiers : `papier.css`, `papier.js` (la source), `poser.py` (la pose, avant `</head>`, ou avant `<body>` dans une page
 qui omet `</head>`), `banc_papier.py` (le banc au navigateur). Contrôles : `_outils/controle_impression_papier.py` (le
 bloc est là, une fois, à jour) et `_outils/controle_impression.mjs` (sur une page qui porte la fiche, un texte sous
 4,5 : 1 est refusé). Le générateur des quatre pages de la station (3e_C9.2) pose la fiche par `poser.py`.
+
+Précautions (apprises des bancs des lots) : l'en-tête est un `<div>`, pas un `<header>` ; la garde « une seule fois » est
+l'attribut `data-pp-script` de `<html>`, pas une variable `window.__…` (lue comme un verrou par `controle_verrous.mjs`) ;
+les règles des champs portent `:not(#pp-z)` (le poids d'un identifiant) ; la pose ne se fait jamais en fin de page.
 
 Pour une nouvelle séquence : `python3 _outils/impression_papier/poser.py <page>`, puis
 `python3 _outils/impression_papier/banc_papier.py --filtre <dossier du lot> --pdf <dossier>`, et regarder les PDF.

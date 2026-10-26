@@ -207,7 +207,9 @@ section.card[id^="activite-"]{scroll-margin-top:60px}
   .taches-bandeau,.badges,.legende-badges,.subtitle,h1,.seance-tabs,[role=tablist],.vers-seance,.page-suivante,.encoche,.qmark,
   .identite,.referentiel-card,.crcn,.pp-ecran,button,.btn,noscript,details:not([open]),.lpp-sans-impression,
   .note-bar,.score-pill,.scorebar,.compteur,:is(.resultat,.banc-resultat,.meteo-resultat,.badge):empty{display:none!important}
-  select,textarea,input[type=text],input[type=number],input:not([type]),input[type=radio],input[type=checkbox],input[type=range]{display:none!important}
+  select,input[type=range],input[type=file],input[type=color],input[type=button],input[type=submit],input[type=reset],input[type=image]{display:none!important}
+  /* le papier garde la couleur des fonds (lignes d'écriture, bandeaux de titres) même si « graphiques d'arrière-plan » est décoché */
+  html,body{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   /* une séquence à séances : la séance affichée ; l'ouverture avec la première, la clôture avec la dernière */
   /* (seulement si papier.js a tourné : sans JavaScript, la page imprime toutes ses séances, comme avant) */
   html[data-pp] [role=tabpanel]:not([data-pp-actif]){display:none!important}
@@ -251,16 +253,34 @@ section.card[id^="activite-"]{scroll-margin-top:60px}
   html body .pp-encre{color:var(--pp-encre,#111827)!important}
   /* les grands fonds foncés (écrits dans la page, ou par classe) : un rectangle d'encre ; ils deviennent un cadre */
   html body .pp-fond,html body details.vs{background:#fff!important;background-image:none!important;border:.6pt solid #cbd5e1!important;color:#111827!important}
-  /* les zones de réponse, pour le crayon */
-  .pp-lignes{display:block;margin:1.2mm 0 2mm;height:calc(var(--n,3) * 7.5mm);break-inside:avoid;
-    background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(7.5mm - .5pt),#94a3b8 calc(7.5mm - .5pt),#94a3b8 7.5mm)}
-  .pp-trait{display:inline-block;min-width:30mm;width:var(--l,38mm);max-width:100%;border-bottom:.6pt solid #94a3b8;height:5mm;vertical-align:bottom}
-  td .pp-trait{width:100%;min-width:12mm}
+  /* les zones de réponse, pour le crayon : le champ lui-même change d'habit (rien n'est inséré à côté de lui, aucun script
+     de la page ne voit sa structure changer) ; ce que l'élève a déjà écrit ou coché s'imprime. « :not(#pp-z) » donne à ces règles le poids d'un identifiant : des pages
+     imposent fond et bordure de leurs champs par des listes d'identifiants (#hypothese, #a0q1…{background:#fff!important}) */
+  html[data-pp] textarea:not(#pp-z){display:block!important;-webkit-appearance:none!important;appearance:none!important;width:100%!important;max-width:100%!important;
+    min-height:0!important;height:calc(var(--pp-n,3) * 7.5mm)!important;margin:1.2mm 0 2mm!important;padding:0 1mm!important;border:0!important;
+    border-radius:0!important;resize:none!important;overflow:hidden!important;color:#111827!important;font-family:inherit!important;font-size:10pt!important;
+    line-height:7.5mm!important;break-inside:avoid;break-before:avoid;   /* les lignes restent avec leur question */
+    background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(7.5mm - .5pt),#94a3b8 calc(7.5mm - .5pt),#94a3b8 7.5mm)!important}
+  html[data-pp] textarea:not(#pp-z)[rows="1"]{--pp-n:2} html[data-pp] textarea:not(#pp-z)[rows="2"]{--pp-n:3} html[data-pp] textarea:not(#pp-z)[rows="3"]{--pp-n:4}
+  html[data-pp] textarea:not(#pp-z)[rows="4"]{--pp-n:5} html[data-pp] textarea:not(#pp-z):is([rows="5"],[rows="6"]){--pp-n:6}
+  html[data-pp] textarea:not(#pp-z):is([rows="7"],[rows="8"],[rows="9"],[rows="10"],[rows="12"],[rows="14"],[rows="15"],[rows="20"]){--pp-n:7}
+  html[data-pp] input:not(#pp-z):is(:not([type]),[type=text],[type=number],[type=email],[type=search],[type=tel],[type=url],[type=date],[type=time]){
+    display:inline-block!important;-webkit-appearance:none!important;appearance:none!important;min-width:30mm;max-width:100%!important;height:5.5mm!important;
+    padding:0 1mm!important;border:0!important;border-bottom:.6pt solid #94a3b8!important;border-radius:0!important;background:transparent!important;
+    color:#111827!important;font-family:inherit!important;font-size:10pt!important;vertical-align:bottom}
+  html[data-pp] td input:is(:not([type]),[type=text],[type=number]){width:100%!important;min-width:12mm}
+  html[data-pp] input:not(#pp-z)[type=number]::-webkit-inner-spin-button,html[data-pp] input:not(#pp-z)[type=number]::-webkit-outer-spin-button{display:none}
+  html[data-pp] :is(input,textarea):not(#pp-z)::placeholder{color:transparent!important}
+  html[data-pp] input:not(#pp-z):is([type=radio],[type=checkbox]){display:inline-block!important;-webkit-appearance:none!important;appearance:none!important;
+    width:3mm!important;height:3mm!important;min-width:0!important;margin:0 1.4mm 0 0!important;padding:0!important;border:.7pt solid #334155!important;
+    border-radius:.6mm!important;background:#fff!important;vertical-align:-.3mm;flex:none!important;position:static!important;opacity:1!important;
+    transform:none!important;clip:auto!important;clip-path:none!important}
+  html[data-pp] input:not(#pp-z)[type=radio]{border-radius:50%!important}
+  html[data-pp] input:not(#pp-z):is([type=radio],[type=checkbox]):checked{background:radial-gradient(circle,#334155 0 45%,#fff 50%)!important}
   .pp-choix{display:inline;line-height:1.9}
   .pp-choix .pp-case{white-space:nowrap;margin-right:4mm}
-  .pp-choix .pp-case::before,.pp-coche::before{content:"";display:inline-block;width:3mm;height:3mm;border:.7pt solid #334155;border-radius:.6mm;margin-right:1.4mm;vertical-align:-.3mm}
-  .pp-coche.pp-rond::before{border-radius:50%}
-  .pp-coche{display:inline}
+  .pp-choix .pp-case::before{content:"";display:inline-block;width:3mm;height:3mm;border:.7pt solid #334155;border-radius:.6mm;margin-right:1.4mm;vertical-align:-.3mm}
+  .pp-choix .pp-case.pp-pris::before{background:radial-gradient(circle,#334155 0 45%,#fff 50%)}
   .pp-options{display:flex!important;flex-wrap:wrap!important;gap:.6mm 5mm!important;align-items:baseline}
   .pp-option{display:inline-flex!important;align-items:baseline;margin:0!important;padding:0!important;border:0!important;background:none!important;width:auto!important;min-height:0!important}
   .qcm-groupe{border:0!important;padding:0!important;margin:0 0 1.8mm!important;break-inside:avoid;min-width:0}
@@ -284,8 +304,11 @@ section.card[id^="activite-"]{scroll-margin-top:60px}
    affichée. Rien ne change à l'écran. */
 (function(){
   "use strict";
-  if (window.__fichePapier) return;
-  window.__fichePapier = true;
+  // Une seule fois par page. La garde est un attribut, pas une variable globale : une variable « __… » à vrai serait lue
+  // par controle_verrous.mjs comme un verrou ouvert au chargement (règle n°226).
+  var RACINE = document.documentElement;
+  if (RACINE.hasAttribute("data-pp-script")) return;
+  RACINE.setAttribute("data-pp-script", "v1");
   function el(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt) e.textContent = txt; return e; }
   var ECRAN = ".toolbar,.choix-parcours-boutons,#navharm,.pp-papier,[role=tablist]";
   var panneaux = [];
@@ -299,7 +322,15 @@ section.card[id^="activite-"]{scroll-margin-top:60px}
     var niv = document.querySelector(".badge.niveau");
     var codes = [].slice.call(document.querySelectorAll(".badge.code")).map(function(c){ return propre(c.textContent); }).filter(Boolean);
     var niveau = niv ? propre(niv.textContent) : "";
-    var e = el("header", "pp-papier pp-entete");
+    if (!niveau || !codes.length) {                         // badges sans classe : reconnus à leur texte (« 4e », « 4e_C8.1 · C8.2 »)
+      [].forEach.call(document.querySelectorAll(".badges .badge, .badges > span"), function(b){
+        var x = propre(b.textContent);
+        if (!niveau && /^[3-5]e$/.test(x)) niveau = x;
+        else if (/^[3-5]e_C\d/.test(x) && codes.indexOf(x) < 0 && !document.querySelector(".badge.code")) codes.push(x);
+      });
+    }
+    // un <div>, pas un <header> : des scripts et des bancs prennent « le » header de la page (querySelector("header"))
+    var e = el("div", "pp-papier pp-entete");
     var sur = el("div", "pp-surtitre", ["Technologie", niveau, codes.join(", ")].filter(Boolean).join(" · "));
     e.appendChild(sur);
     e.appendChild(el("div", "pp-titre", titre));
@@ -313,7 +344,7 @@ section.card[id^="activite-"]{scroll-margin-top:60px}
   }
 
   // Les blocs qui ne servent qu'à l'écran, reconnus à leur titre (ils n'ont pas de classe commune).
-  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique/i;
+  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique|crcn mobilisés/i;
   function blocsEcran(){
     document.querySelectorAll("section, .card").forEach(function(c){
       var t = c.querySelector(":scope > h2, :scope > h3");
@@ -321,6 +352,14 @@ section.card[id^="activite-"]{scroll-margin-top:60px}
     });
   }
 
+  var menus = [];
+  // Avant l'impression : la case de la réponse choisie dans un menu est cochée (un menu « — choisis — » ne coche rien).
+  function reponsesChoisies(){
+    menus.forEach(function(c){ [].forEach.call(c.querySelectorAll(".pp-case"), function(k){
+      var o = k.ppOption; k.classList.toggle("pp-pris", !!o && o.selected && !!o.value && !/^[—–-]/.test(propre(o.textContent)));
+    }); });
+  }
+  function avantImpression(){ seanceAffichee(); reponsesChoisies(); }
   function champs(){
     document.querySelectorAll("select").forEach(function(s){
       if (s.closest(ECRAN) || s.closest(".simu,.banc")) return;
@@ -328,34 +367,21 @@ section.card[id^="activite-"]{scroll-margin-top:60px}
       [].slice.call(s.options).forEach(function(o){
         var t = propre(o.textContent);
         if (!t || /^[—–-]/.test(t)) return;
-        c.appendChild(el("span", "pp-case", t)); c.appendChild(document.createTextNode(" "));
+        var k = el("span", "pp-case", t); k.ppOption = o;
+        c.appendChild(k); c.appendChild(document.createTextNode(" "));
       });
       s.insertAdjacentElement("afterend", c);
+      menus.push(c);
     });
-    document.querySelectorAll("textarea").forEach(function(t){
-      if (t.closest(ECRAN)) return;
-      var n = Math.max(2, Math.min(7, (+t.getAttribute("rows") || 2) + 1));
-      var l = el("div", "pp-papier pp-lignes"); l.style.setProperty("--n", n);
-      t.insertAdjacentElement("afterend", l);
-    });
-    document.querySelectorAll("input").forEach(function(i){
+    // Les champs de texte, les cases et les boutons radio changent d'habit à l'impression (papier.css) : rien n'est inséré
+    // à côté d'eux. On aligne seulement les réponses d'une même question sur une ligne (sauf dans un tableau).
+    document.querySelectorAll("input[type=radio], input[type=checkbox]").forEach(function(i){
       if (i.closest(ECRAN) || i.closest(".simu,.banc")) return;
-      var type = (i.getAttribute("type") || "text").toLowerCase();
-      if (type === "radio" || type === "checkbox") {
-        i.insertAdjacentElement("beforebegin", el("span", "pp-papier pp-coche" + (type === "radio" ? " pp-rond" : "")));
-        // les réponses d'une question, alignées sur une ligne (sauf dans un tableau)
-        var lab = i.closest("label") || (i.id && document.querySelector('label[for="' + i.id + '"]')) || null;
-        var bloc = lab && lab.parentElement && lab.parentElement.contains(i) ? lab : i.parentElement;
-        if (bloc && !bloc.closest("td, th") && bloc.parentElement) {
-          bloc.classList.add("pp-option");
-          if (bloc.parentElement.querySelectorAll(":scope > .pp-option").length >= 2) bloc.parentElement.classList.add("pp-options");
-        }
-      }
-      else if (type === "text" || type === "number") {
-        var w = i.getBoundingClientRect().width;
-        var tr = el("span", "pp-papier pp-trait");
-        if (w > 0) tr.style.setProperty("--l", Math.max(30, Math.min(160, w * .26)) + "mm");
-        i.insertAdjacentElement("afterend", tr);
+      var lab = i.closest("label") || (i.id && document.querySelector('label[for="' + i.id + '"]')) || null;
+      var bloc = lab && lab.parentElement && lab.parentElement.contains(i) ? lab : i.parentElement;
+      if (bloc && !bloc.closest("td, th") && bloc.parentElement) {
+        bloc.classList.add("pp-option");
+        if (bloc.parentElement.querySelectorAll(":scope > .pp-option").length >= 2) bloc.parentElement.classList.add("pp-options");
       }
     });
   }
@@ -481,8 +507,8 @@ section.card[id^="activite-"]{scroll-margin-top:60px}
     document.documentElement.setAttribute("data-pp", "");    // la fiche est prête : le choix de la séance peut s'appliquer
     surtitre = entete(); surtitreBase = surtitre.textContent;
     blocsEcran(); simulateurs(); champs(); boutonsSeuls(); fonds(); encres(); horsOnglets(); seanceAffichee();
-    window.addEventListener("beforeprint", seanceAffichee);
-    if (window.matchMedia) { var m = window.matchMedia("print"); if (m.addEventListener) m.addEventListener("change", function(e){ if (e.matches) seanceAffichee(); }); }
+    window.addEventListener("beforeprint", avantImpression);
+    if (window.matchMedia) { var m = window.matchMedia("print"); if (m.addEventListener) m.addEventListener("change", function(e){ if (e.matches) avantImpression(); }); }
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", preparer); else preparer();
 })();
