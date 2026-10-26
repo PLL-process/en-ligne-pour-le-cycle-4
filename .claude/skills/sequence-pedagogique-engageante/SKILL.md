@@ -34,7 +34,12 @@ Dans l'ordre :
 1. Titre `<h1>` et mission en une phrase (n°4, 24/07/2026).
 2. Barre d'outils : imprimer, effacer ma sauvegarde, mode essentiel (n°29, 08/08/2026).
 3. Ligne d'étiquettes sous le titre (niveau, codes, socle et CRCN, durée). Chaque étiquette a un `title` et un `aria-label`
-   (n°44, 08/08/2026, maintenus par la n°298). Sur la page élève, le référentiel se limite à cette ligne.
+   (n°44, 08/08/2026, maintenus par la n°298). Sur la page élève, le référentiel se limite à cette ligne. Une compétence du
+   CRCN s'y lit **en toutes lettres** — « 🎯 CRCN 1.3 Traiter des données — Niv. 2 », jamais « CRCN 1.3 » ni « CRCN » seul —
+   et son infobulle la redit ; une étiquette du socle garde ses codes, son infobulle donne chaque domaine en toutes lettres
+   (n°314, 26/10/2026 : `python3 _outils/nommer_competences.py <page>`, puis `python3 _outils/controle_competences.py`).
+   Même règle pour un code CRCN dans un titre d'activité ou une consigne. Les cartouches complets (n°7) vont dans la
+   synthèse professeur.
 4. « 🔄 Avant de commencer : ce que je vérifie » (n°304, 21/09/2026, titre choisi par Pascal) : les compétences qui
    devraient être en place, avec leurs codes. Chacune a un moyen de la rattraper : lexique, capsule « Je révise » ou fiche.
    Jamais « tu as fait », que ce soit l'année précédente ou plus tôt dans l'année. Une séquence de la même année se cite au conditionnel.
