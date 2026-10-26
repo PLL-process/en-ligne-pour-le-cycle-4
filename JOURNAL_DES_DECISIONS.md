@@ -24254,3 +24254,21 @@ réduit », la mesure s'affiche aussitôt. Les textes restent dans le tableau `B
 2. **Le banc sans verdict** : les phrases disent ce qu'on mesure (« le haut du support bouge de 0,5 cm, puis
    s'immobilise ») ; la correction de l'activité 0 est inchangée.
 3. **« Scène » / « Étape »** : le vélo-cargo garde « Scène » ; les autres disent « Étape ». Uniformiser ?
+
+---
+
+## 25/10/2026 — Thème 3 · 4e_C8.1 : les sept prises de « Une année sur le toit », écoutées et validées par Pascal
+
+*Écoute de Pascal, 25/10/2026, sur les sept fichiers envoyés : « Jardin etape3 : Canyon est mal prononcé car francisé ».*
+
+- **Étape 3 refaite** : le texte envoyé à la voix écrivait « cagnon » pour obtenir un « canyon » à la française ; c'était
+  justement le défaut. Deux versions ont été produites et écoutées : **A** « ka-nyonne » (la prononciation automatique,
+  sans réécriture) et **B** « ka-nyeune » (phonèmes à l'anglaise). Pascal : « Etape3 a ka nyonne · MP3 est la meilleure ».
+  **A** est en ligne (`Audio/situation_scene3.ogg` et `.mp3`) ; `phrases.json` n'a plus de réécriture pour l'étape 3.
+- **Les six autres prises** (1, 2, 4, 5, 6, 7) : écoutées, sans remarque — validées.
+- `voix.json` (clé `prises`) et `SOURCES_MEDIAS.md` disent l'écoute ; le générateur vérifie toujours que les sept phrases
+  dites sont celles de la page (`generer.py --verifier`).
+
+Restent ouvertes, réglées par défaut faute de réponse : le vélo-cargo garde « Scène » (les autres disent « Étape ») ; le
+texte amendé de la règle n°92 (loupe) est gardé.
+

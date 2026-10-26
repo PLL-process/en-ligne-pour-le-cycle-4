@@ -44,7 +44,8 @@ Aucune image externe. Aucun hotlinking. Aucun scan de manuel.
   Elle figure ici, dans `voix.json` et, en version courte (« Voix de synthèse : SIWIS (CC BY 4.0) »), sous l'animation.
 - **Chaîne audio** : celle du vélo-cargo et des trois principes (silences coupés à −45 dB, −16 LUFS, crête −1,5 dB, mono).
 - **Texte envoyé à la voix** : celui de la page, sauf « LED » dit « lède » (étapes 1 et 5 ; la phonétisation automatique épelait L-E-D à
-  l'étape 5), « canyon » dit à la française (étape 3), « 3 mètres » et « −8 °C » écrits en toutes lettres (étapes 5 et 6). Détail dans
+  l'étape 5), « 3 mètres » et « −8 °C » écrits en toutes lettres (étapes 5 et 6). Détail dans
   `_generation/voix_situation/phrases.json`.
-- **Prises produites le 25/10/2026, NON écoutées** : la validation est l'écoute de Pascal ; trace dans `voix.json` (clé `prises`).
+- **Prises validées à l'oreille par Pascal le 25/10/2026.** L'étape 3 a été refaite : « canyon » y était francisé (« canion ») ;
+  de deux nouvelles versions, Pascal a choisi la prononciation automatique (« ka-nyonne »). Trace dans `voix.json` (clé `prises`).
   Reproductibilité à l'octet : non (Piper tire du bruit à chaque prise).
