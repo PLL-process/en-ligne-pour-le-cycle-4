@@ -30,6 +30,10 @@ const src = readFileSync(f, 'utf8');
 const norm = t => t.replace(/<[^>]+>/g, ' ').replace(/[’‘]/g, "'").replace(/\s+/g, ' ');
 const plat = norm(src);
 const dit = phrase => plat.includes(norm(phrase));
+/* Règle d'or n°298 (vague du thème 3, 26/10/2026) : le référentiel — formulation officielle, code d'appui —
+ * a quitté la page élève pour la synthèse professeur du lot. On l'y lit, au mot près. */
+const platSynthese = norm(readFileSync(new URL('Synthèses/synthese_professeur_5e_C8.1.html', new URL('file://' + f)), 'utf8'));
+const ditSynthese = phrase => platSynthese.includes(norm(phrase));
 
 const b = await chromium.launch();
 const p = await b.newPage();
@@ -66,11 +70,11 @@ ok('hypothèse d’entrée présente', !!(await p.$('#hyp')));
 ok('bandeau de durée présent', /\d+ séances? de \d+ min/.test(await $('.badge.duree')));
 ok('le bandeau annonce plus de temps que les activités n’en demandent',
   REP.annonce > REP.activitesMin, REP.annonce + ' contre ' + REP.activitesMin);
-ok('la formulation officielle est recopiée', dit(REP.formulation),
+ok('la formulation officielle est recopiée (synthèse professeur, n°298)', ditSynthese(REP.formulation),
   REP.formulation.slice(0, 40));
-ok('le code d’appui est cité', dit(REP.appui), REP.appui);
-ok('la formulation officielle du code d’appui est recopiée exactement',
-  dit(REP.formulationAppui), REP.formulationAppui.slice(0, 46));
+ok('le code d’appui est cité (synthèse professeur, n°298)', ditSynthese(REP.appui), REP.appui);
+ok('la formulation officielle du code d’appui est recopiée exactement (synthèse professeur, n°298)',
+  ditSynthese(REP.formulationAppui), REP.formulationAppui.slice(0, 46));
 ok('consigne de sécurité présente', dit(REP.securite), REP.securite.slice(0, 40));
 ok('le secteur est explicitement écarté', /secteur/i.test(src));
 ok('les trois versions A/B/C sont annoncées', ['🅰', '🅱', '🅲'].every(x => src.includes(x)));
