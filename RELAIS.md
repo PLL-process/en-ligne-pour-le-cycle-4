@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 26/10/2026 09:54 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 26/10/2026 10:02 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - **PR #521 fusionnée** le 26/10 vers 09:17 (heure de la Martinique) : règle d'or n°314 (bulle CRCN à trois étages, en-tête pédagogique dissous, 3 compétences retirées).
@@ -11,13 +11,13 @@ Mis à jour le 26/10/2026 09:54 (heure de la Martinique). Le journal des décisi
 _(écrit par Claude le 26/10/2026 09:39)_
 
 ## Branche et PR
-- Branche : `fable/theme-3-regle-298` — dernier commit 16ca12ccd Vague n°298, thème 3 : le référentiel quitte 26 pages élèves pour leur synthèse professeur
+- Branche : `fable/theme-3-regle-298` — dernier commit c17962bea Vague n°298, thème 3 : trois bancs C8 lisent la formulation et le code d'appui dans la synthèse prof
 - Aucune PR ouverte.
 
 ## Décisions en attente
-🔶 1. Le dépliant de 5e_C9.1 (« Où mène cet atelier — les trois années du cycle ») parle à l'élève de sa progression.
-- **a (par défaut)** : il reste sur la page élève, dans une carte « 🪜 Où tu en es dans le cycle ».
-- b : il part aussi dans la synthèse professeur.
+🔶 1. Le dépliant de 5e_C9.1, qui explique à l'élève sa progression sur les trois années du cycle :
+- **a (par défaut)** : il reste sur la page élève.
+- b : il part dans la synthèse professeur.
 
 ## Prochaine action
 ➡️ Dis-moi « créé » quand le dépôt `PLL-process/mods-claude` existe, pour que j'y pousse les mods.
