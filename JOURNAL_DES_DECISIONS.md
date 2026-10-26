@@ -24399,3 +24399,122 @@ niveau et le code ; après l'impression, le volet est replié de nouveau. Le ban
 2. **Les 23 séquences sans onglets** (thème 3 surtout) s'impriment entières : 5 à 14 pages. Les découper en séances
    (onglets) est un autre lot.
 3. **« Mode essentiel : ON » par défaut** (décision 3) : toujours ouverte.
+
+---
+
+## 26/10/2026 — Règle d'or n°314 : une compétence numérique se lit en toutes lettres, à l'écran et au survol (transversale : thèmes 1, 2 et 3, `_outils`, `.claude/skills`)
+
+*Constat de Pascal, 26/10/2026, sur le jardin de New York (4e_C8.1) ouvert au hasard : « je vois : CRCN et 🎯 CRCN
+mobilisés, alors qu'il n'y a aucune précision sur la compétence. On ne sait pas quelles compétences » ; puis « le survol
+donne la compétence en toutes lettres. Cela mérite peut-être une règle d'or » ; « aussi le survol donne la compétence en
+toutes lettres ». Décisions : **1a** l'intitulé visible, l'infobulle en complément (et elle redit la compétence en toutes
+lettres) ; périmètre et découpage : **carte blanche** ; puis, devant la règle n°298 retrouvée en préparant le lot :
+**1a** les domaines du socle gardent leur code, leur infobulle donne chaque domaine en toutes lettres ; **2a** le bloc
+« CRCN mobilisés » quitte la page élève pour la synthèse professeur. Puis, devant la première bulle : « Il serait bien
+d'avoir plus de précisions. C'est-à-dire la sous-compétence aussi. Exemple, traiter les données, c'est vaste » et « Ce
+serait bien que le détail soit dans la bulle » — **bulle à trois étages** (intitulé et niveau, le cadre, « Ici : »). Et,
+sur la même page : « 📋 En-tête pédagogique — ne devraient-elles pas être en haut de page ? Je me demande si elle apparaît
+partout » — **1a** l'en-tête se dissout, **2a** dans ce lot, **3a** la vague n°298 reprend ensuite, un thème par lot.
+Branche transversale `fable/regle-314-competences`.*
+
+> **Règle d'or n°314 — Une compétence numérique se lit en toutes lettres, à l'écran et au survol.** Toute compétence du
+> CRCN montrée à l'élève — étiquette, titre d'activité, consigne, cartouche — porte son code **et** son intitulé officiel,
+> visibles sans survol : « CRCN 1.3 Traiter des données », jamais « CRCN 1.3 » ni « CRCN » seul. Son étiquette porte une
+> bulle (`title`) à **trois étages** par compétence : **1.** le code, l'intitulé et le niveau (« CRCN 1.3 Traiter des
+> données — niveau 2. ») ; **2.** ce que la compétence recouvre, mot pour mot dans le cadre de référence (« Le cadre :
+> « Appliquer des traitements à des données pour les analyser et les interpréter. » ») ; **3.** ce que l'élève en fait
+> dans cette séquence (« Ici : tu ranges les résultats de tes tests dans un tableau… »). Le troisième étage s'écrit à la
+> main, page par page, d'après les activités : aucun outil ne sait ce que fait l'élève. Une compétence qu'aucune activité
+> ne travaille n'a pas de « Ici » à écrire : elle quitte l'étiquette (n°7). Le survol n'existe ni au doigt (tablette,
+> téléphone) ni sur le papier : il complète, il ne remplace pas. Les domaines du socle gardent leur code dans la ligne d'étiquettes (n°298), et leur
+> infobulle donne chaque domaine en toutes lettres. Les codes de rangement des séquences (4e_C8.1…) ne sont pas des
+> compétences : la règle ne les vise pas.
+
+### Le constat, mesuré
+
+Sur `main`, le 26/10/2026 : **179** compétences qui ne se lisent pas en toutes lettres, dans **63** fichiers lus par les
+élèves (séquences, QCM, lexique, ateliers, synthèse élève) — 98 codes CRCN sans leur intitulé (« CRCN : 1.2 · 1.3 · 3.4 ·
+5.2 », « (CRCN 3.4) » dans un titre d'activité), 22 étiquettes CRCN dont le survol ne disait pas tout, **3 étiquettes
+« CRCN » seules** (capteur de confort 3e_C7, jardin-conception 4e_C7, jardin-validation 4e_C8.1), et 56 étiquettes du
+socle dont le survol abrégeait (« D4 systèmes techniques », « D5 représentations du monde ») ou manquait. Le survol ne
+donnait la compétence en toutes lettres que sur quatre pages du thème 1. Et sur le jardin, le mode essentiel laissait la
+carte « 🎯 CRCN mobilisés » vide : il en masquait le contenu (n°29), pas le titre.
+
+### Ce qui change
+
+- **Les intitulés officiels** : ceux du CRCN (16 compétences ; décret n° 2019-919, note de service du 23/01/2026 ; skill
+  CRCN revérifié le 24/10/2026) et des domaines du socle (décret n° 2015-372 modifié ; éduscol, relevé le 26/10/2026),
+  écrits une fois, dans `_outils/controle_competences.py`.
+- **L'outil `_outils/nommer_competences.py <page>`** écrit l'intitulé après chaque code CRCN qui ne l'avait pas, donne à
+  chaque étiquette CRCN ou du socle son infobulle en toutes lettres (en gardant ce que l'ancienne ajoutait, et sans toucher
+  une infobulle qui dit déjà tout), sépare en deux une étiquette qui mêlait socle et CRCN (5 étiquettes : Shenzhen 3e,
+  Hangzhou 4e, Shanghai 5e, variables 3e_C9.1, boîte étiquetée 5e_C9.1) ; il ne touche ni aux commentaires (HTML, CSS, JavaScript)
+  ni aux <style>, et écrit l'apostrophe typographique (’) pour ne casser ni une chaîne JavaScript ni un attribut. Il est
+  idempotent. Repris à la main : 5 doublons du Book Train (« CRCN 3.4 Programmer</strong> — Programmer — ») et une
+  question du QCM du capteur (« CRCN 1.3 Traiter des données « traiter des données » »), et les trois étiquettes
+  « CRCN » seules, écrites depuis les cartouches de leur page (« 🎯 CRCN 1.3 Traiter des données (Niv. 2-3) · 5.1
+  Résoudre des problèmes techniques (Niv. 2) » pour le jardin).
+- **Le bloc « CRCN mobilisés »** des trois pages de New York part dans la synthèse professeur du lot (« CRCN mobilisés —
+  les cartouches complets », 3 + 2 + 2 cartouches, avec leurs notes pour le professeur), comme la n°298 le voulait déjà
+  pour tout le référentiel. Sur la page élève restent l'étiquette 🎯 et la compétence nommée dans l'activité qui la
+  travaille.
+- **Deux contrôles** : `controle_competences.py` (n°314 ; statique, même lecture que `controle_regles_visibles.py`) et
+  `controle_mode_essentiel.py` (n°29, au navigateur : le mode essentiel ne laisse aucune carte réduite à son titre). Sur
+  `main`, ils refusent ce que Pascal a vu (179 compétences sur 63 fichiers ; la carte vide du jardin) ; sur la branche,
+  ils sont verts. Leur banc commun `tests_controle_competences.py` : **41 / 41**.
+- **La bulle à trois étages**, écrite pour les **56 compétences** des **29 étiquettes CRCN** (28 pages). Le CRCN n'a pas
+  de sous-compétences officielles : ce qui précise « Traiter des données », c'est la description que le cadre en donne
+  (décret n° 2019-919, annexe, BO n°37 du 10/10/2019), citée mot pour mot, sans la parenthèse d'exemples d'outils qui la
+  suit ; elle est écrite une fois, dans `controle_competences.py` (`CADRE`). Les 56 « Ici : » ont été écrits à la main,
+  depuis les activités, les cartouches et les fiches de chaque page, à la deuxième personne. L'outil écrit les deux premiers
+  étages et garde un « Ici » déjà écrit ; il n'en invente jamais : le contrôle le réclame.
+- **Trois compétences retirées de leur étiquette**, faute d'activité qui les travaille (le « Ici » ne pouvait pas
+  s'écrire) : 4.1 Sécuriser l'environnement numérique (Tsinghua 3e_C1.1 ; sa fiche ne déclarait que 1.3) ; 1.3 Traiter
+  des données et 2.2 Partager et publier (Internet jusqu'à Sainte-Luce, 3e_C4.7 ; fiche professeur alignée). Décision
+  par défaut, soumise à Pascal.
+- **L'en-tête pédagogique dissous** sur les quatre pages qui le portaient (capteur 3e_C7, jardin-conception 4e_C7,
+  mini-projet 5e_C7, jardin-validation 4e_C8) : la durée devient une étiquette « ⏱ 3 séances de 55 min » (le détail des
+  séances dans sa bulle), le socle une étiquette « Socle : D2 · D3 · D4 · D5 » (aucune des quatre n'en avait), l'ancrage
+  la bulle de l'étiquette « New York » ; Nom, Prénom et Classe montent sous les étiquettes, avec les mêmes `id` (ce qu'un
+  élève a déjà saisi reste) ; le tableau disparaît — les codes étaient déjà dans les étiquettes.
+- Skills `sequence-pedagogique-engageante` (ligne d'étiquettes) et `controle-qualite-lot` (contrôles bloquants, tableau).
+
+### Vérifié (26/10/2026, branche comparée à `main`, mêmes outils)
+
+- **36 contrôles du dépôt** : 33 identiques à `main` ; les 3 écarts sont attendus — `controle_competences.py` et
+  `controle_mode_essentiel.py` (absents de `main`, verts sur la branche), et le nombre de pages lues par
+  `controle_cadres.py` (408 contre 434 : une installation de test côté `main`, aucun refus des deux côtés).
+  `verif_regles_audit.py` donne les mêmes ✘ (219) ; `controle_regle4.py` refuse les mêmes 18 pages qu'avant (préexistant).
+  Impression papier, squelette, débordement, règles visibles : inchangés.
+- **128 bancs de lot** (109 sans argument, 17 séquences du thème 3 avec leurs arguments, 2 de 5e_C1.5 avec ceux de leur
+  rapport) : identiques à `main`, sauf trois lignes expliquées — le banc 3e_C7 lisait « 145 min d'activités annoncées »
+  dans l'en-tête dissous : il la lit dans la bulle de l'étiquette ⏱ (71 / 71) ; 3e_C5.1 (33 / 34 sur `main`, 34 / 34
+  ici) et la règle n°311 de 5e_C5.1 (33 / 34 dans la série, 34 / 34 deux fois seul) sont l'aléa connu de ces bancs
+  sous charge. Le crash de 5e_C7.4 est le même des deux côtés.
+- **Banc `tests_controle_competences.py`** : 41 / 41 (dont la bulle à trois étages, le cadre de la bonne compétence,
+  un « Ici » par compétence, « > » échappé dans une bulle).
+- **L'en-tête dissous, au navigateur**, sur les quatre pages : plus de titre « En-tête pédagogique » ; Nom, Prénom et
+  Classe saisis puis relus après rechargement (mêmes `id`) ; aucune erreur JavaScript ; aucun défilement horizontal à
+  390 px ; captures d'écran regardées à 1280 et 390 px.
+- **Les 56 « Ici »** relus contre leur page, puis chacun de leurs mots cherché dans le texte de la page : ne manquent que
+  des verbes conjugués et quelques mots de reformulation (« relecture », « identité », « paragraphe ») ; « battement »,
+  absent du jardin 4e_C9, est devenu « basculements », le mot de la page.
+
+### Non vérifié
+
+- La lecture par un lecteur d'écran réel (les `aria-label` existants n'ont pas été réécrits, sauf ceux qui portaient un
+  code CRCN).
+- Le texte des captures d'écran (une compétence écrite dans une image).
+- Ce qu'un script n'écrit qu'après un clic, s'il ne figure pas en clair dans la page.
+
+### À RELIRE PAR PASCAL
+
+1. **Les étiquettes CRCN longues** (station d'alerte 3e_C4.3 : quatre compétences en toutes lettres) : elles passent à la
+   ligne, rien ne déborde à 390 px — mais c'est plus de lecture en tête de page.
+2. **Les cartouches dans la synthèse professeur** : les « repères » n'ont pas été revérifiés mot pour mot (n°7) ; ils ont
+   été déplacés tels quels.
+3. **Les 56 « Ici : »** : écrits depuis les pages, ils disent ce que l'élève fait ; un professeur qui fait autrement en
+   classe les reprend dans la bulle. Les plus minces : 5.2 sur la station d'alerte 3e_C4.3 (choisir son outil et y faire
+   tourner le CAN) et sur SOS station 3e_C5 (le simulateur de dépannage, FreeCAD en version logiciel).
+4. **Les trois compétences retirées** (4.1 sur Tsinghua 3e, 1.3 et 2.2 sur Internet Sainte-Luce) : les rendre exige une
+   activité qui les travaille, à écrire dans un lot à part.

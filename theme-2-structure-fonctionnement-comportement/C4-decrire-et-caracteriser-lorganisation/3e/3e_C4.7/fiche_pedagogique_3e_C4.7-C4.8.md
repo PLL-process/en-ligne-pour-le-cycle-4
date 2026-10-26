@@ -10,7 +10,7 @@
 | Compétence parente | C4 — Décrire et caractériser l'organisation interne d'un OST et ses échanges avec son environnement (énergies, données) |
 | Référentiel | BO n°9 du 29/02/2024 · cahier Nathan 3e (éd. 2024) |
 | Domaines du socle | D1.3, D2, D4, D5 |
-| CRCN | 1.3 Traiter des données · 2.2 Partager et publier · 5.2 Évoluer dans un environnement numérique |
+| CRCN | 5.2 Évoluer dans un environnement numérique (1.3 et 2.2 retirés le 26/10/2026, règle n°314 : aucune activité ne les travaille) |
 | Durée | 3 séances de 55 min |
 | Discipline pilote | Technologie |
 

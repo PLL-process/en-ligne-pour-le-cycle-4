@@ -123,8 +123,12 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   const dispo = cadre ? parseInt(cadre[1], 10) * parseInt(cadre[2], 10) : 0;
   ok("n°23 : le total tient dans le cadre annoncé, marge comprise",
      total + 10 <= dispo, total + " min pour " + dispo + " disponibles");
-  const annonce = txt.match(/(\d+)\s*min d'activités annoncées/);
-  ok("n°23 : l'en-tête annonce le total réellement écrit dans les activités",
+  /* L'en-tête pédagogique a été dissous le 26/10/2026 (n°314, décision 1a de Pascal) : le détail de la durée,
+     total annoncé compris, vit désormais dans la bulle de l'étiquette « ⏱ 3 séances de 55 min ». */
+  const bulleDuree = await page.evaluate(() => [...document.querySelectorAll(".badges .badge")]
+    .map(b => b.title).find(t => /min d'activités annoncées/.test(t)) || "");
+  const annonce = (txt + " " + bulleDuree).match(/(\d+)\s*min d'activités annoncées/);
+  ok("n°23 : l'étiquette de durée annonce, dans sa bulle, le total réellement écrit dans les activités",
      !!annonce && parseInt(annonce[1], 10) === total, (annonce ? annonce[1] : "—") + " annoncées · " + total + " mesurées");
   ok("n°23 : le cadre annonce " + CFG.seances + " séances de 55 min",
      !!cadre && parseInt(cadre[1], 10) === CFG.seances && parseInt(cadre[2], 10) === 55, cadre ? cadre[0] : "absent");
