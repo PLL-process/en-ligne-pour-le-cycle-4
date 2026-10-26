@@ -115,13 +115,16 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
 
 /* — n°29 : le mode essentiel masque réellement — */
 {
-  const avant = await page.locator("section.card.referentiel-card").isVisible();
+  // n°298 (vague du thème 3, 26/10/2026) : la carte de référentiel a quitté la page élève ; le témoin du mode
+  // essentiel est désormais le nombre de corrections visibles.
+  const avant = await page.evaluate(() => [...document.querySelectorAll("details.correction")].filter(e => e.offsetParent !== null).length);
   await page.click("#btnEssentiel");
   await page.waitForTimeout(150);
-  const apres = await page.locator("section.card.referentiel-card").isVisible();
+  const apres = await page.evaluate(() => [...document.querySelectorAll("details.correction")].filter(e => e.offsetParent !== null).length);
   const etat = await page.locator("#btnEssentiel").getAttribute("aria-pressed");
-  ok("n°29 : le mode essentiel masque vraiment la carte de référentiel",
-     avant === true && apres === false && etat === "true");
+  ok("n°29 : le mode essentiel masque vraiment les corrections, et la page n'a plus de carte de référentiel (n°298)",
+     avant > 0 && apres === 0 && etat === "true" && (await page.locator(".referentiel-card").count()) === 0,
+     avant + " → " + apres);
   const corrCachees = await page.evaluate(() =>
     [...document.querySelectorAll("details.correction")].filter(e => e.offsetParent === null).length);
   const corrTotal = await page.locator("details.correction").count();
@@ -131,7 +134,7 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   await page.click("#btnEssentiel");
   await page.waitForTimeout(120);
   ok("n°29 : un second clic rétablit l'affichage complet",
-     await page.locator("section.card.referentiel-card").isVisible());
+     (await page.evaluate(() => [...document.querySelectorAll("details.correction")].filter(e => e.offsetParent !== null).length)) > 0);
 }
 
 /* — n°30 : le tableau de bord — */
@@ -172,9 +175,13 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
      explicites === selects, explicites + "/" + selects);
 }
 
-/* — n°42 : la carte de référentiel recopie le programme, au mot près — */
+/* — n°42 : le référentiel recopie le programme, au mot près — lu dans la synthèse professeur depuis la
+   vague n°298 du thème 3 (26/10/2026) ; la page élève garde, d'elle, le dépliant « Où tu en es dans le cycle » — */
 {
-  const txt = await page.locator("section.card.referentiel-card").innerText();
+  const synth = fs.readFileSync(path.join(LOT, "Synthèses", "synthese_professeur_5e_C9.1-C9.3.html"), "utf8");
+  const debut = synth.indexOf("referentiel-eleve");
+  const txt = synth.slice(debut, synth.indexOf("</table>", debut)).replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ")
+    .replace(/&#39;|&apos;/g, "'").replace(/\s+/g, " ");
   const attendus = [
     "Analyser un programme simple fourni et tester s'il répond au besoin ou au problème posé",
     "Modifier un programme fourni pour répondre au besoin ou à un problème posé",

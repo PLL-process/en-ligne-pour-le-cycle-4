@@ -337,7 +337,7 @@ const run = async () => {
   await page.click("#btnEssentiel");
   ok("règle n°29 : le mode essentiel masque le référentiel",
      await page.evaluate(() => document.body.classList.contains("essentiel") &&
-       getComputedStyle(document.querySelector(".referentiel-card")).display === "none"));
+       [...document.querySelectorAll("details.correction")].every(e => e.offsetParent === null) && !document.querySelector(".referentiel-card")));
   await shot(page, "mode_essentiel");
   await page.click("#btnEssentiel");
 
