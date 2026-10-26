@@ -162,6 +162,11 @@ La synthèse « à retenir » se place avant le Bonus (pratique de `3e_C5.1` et 
   La troisième personne est réservée aux pages destinées à un collègue (synthèse professeur, fiche pédagogique).
 - Prévoir la sauvegarde locale et la reprise, les exports, une impression propre (n°102), une navigation complète au clavier
   et un étiquetage visible des voies 🅰/🅱/🅲. Garder séparées les pages élève, professeur et inspection.
+- L'impression d'une séquence est la **fiche papier** commune (décision 1a de Pascal, 25/10/2026) : la poser avec
+  `python3 _outils/impression_papier/poser.py <page>` (en-tête Nom / Prénom / Classe / Date, encre foncée, menus et champs
+  changés en cases et en lignes, la séance affichée seule). Ne pas écrire d'`@media print` qui la contredise ; un bloc qui
+  ne sert qu'à l'écran prend la classe `pp-ecran`. Vérifier avec `_outils/controle_impression_papier.py` et
+  `_outils/impression_papier/banc_papier.py --filtre <dossier du lot> --pdf <dossier>`, et regarder les PDF.
 - Note /20 : la version précédente de ce skill exigeait dans la séquence une note /20 à pondération paramétrable. Aucune règle
   d'or ne la porte, et aucune des 60 séquences n'en a (relevé du 23/10/2026) : la note /20 est celle du QCM du lot.
 

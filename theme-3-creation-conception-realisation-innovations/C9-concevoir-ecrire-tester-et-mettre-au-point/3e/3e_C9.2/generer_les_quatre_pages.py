@@ -37,6 +37,16 @@ le banc d'essai, qui n'est pas sur la page 1.
 import io, re, sys, json, pathlib
 
 LOT = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else ".")
+
+# La fiche papier (impression en fiche d'élève, décision de Pascal du 25/10/2026) se pose par SA source unique,
+# `_outils/impression_papier/poser.py` : une page engendrée la reçoit à jour, exactement comme la pose à la main.
+import importlib.util
+_racine = next((d for d in pathlib.Path(__file__).resolve().parents if (d / "_outils" / "impression_papier" / "poser.py").is_file()), None)
+if _racine is None:
+    raise SystemExit("_outils/impression_papier/poser.py introuvable au-dessus de ce script : la fiche papier ne peut pas être posée")
+_spec = importlib.util.spec_from_file_location("poser_papier", _racine / "_outils" / "impression_papier" / "poser.py")
+FICHE_PAPIER = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(FICHE_PAPIER)
 SRC = LOT / "sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html"
 L = io.open(SRC, encoding="utf-8").read().split("\n")
 
@@ -327,5 +337,6 @@ for p in PAGES:
         suivant(p["n"]),
         FOOTER, js, LOUPE,
     ])
+    page = FICHE_PAPIER.poser(page)     # la fiche papier, source unique (_outils/impression_papier/)
     io.open(LOT / p["fichier"], "w", encoding="utf-8").write(page)
     print("écrit :", p["fichier"], len(page) // 1024, "Ko")

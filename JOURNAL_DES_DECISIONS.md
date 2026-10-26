@@ -24272,3 +24272,130 @@ réduit », la mesure s'affiche aussitôt. Les textes restent dans le tableau `B
 Restent ouvertes, réglées par défaut faute de réponse : le vélo-cargo garde « Scène » (les autres disent « Étape ») ; le
 texte amendé de la règle n°92 (loupe) est gardé.
 
+
+---
+
+## 25/10/2026 — La fiche papier : chaque séquence s'imprime en fiche d'élève, la séance affichée seule, en encre foncée (transversal : thèmes 1, 2 et 3, `_outils`)
+
+*Demande de Pascal, 25/10/2026 : « Imprimer en PDF : les consignes ne sont pas vues parce que la police et sa couleur est
+trop claire. Cela fait beaucoup de pages » ; « s'il y avait moyen de rendre ces impressions en PDF ultra premium et moins
+longues… que me proposes-tu ? ». Prototype sur le jardin (4e_C8.1), jugé : « la qualité d'impression que tu donnes là est
+super, bravo ». Décisions : **1a** la fiche papier sur les 60 séquences, avec un contrôle qui refuse un texte trop pâle
+sur le papier ; **2a** on imprime la fiche élève ; séquences à onglets : **1a** on imprime **la séance affichée**.
+Branche transversale `fable/impression-papier`.*
+
+### Le constat, mesuré
+
+Le banc `_outils/impression_papier/banc_papier.py`, lancé sur `main` avant toute pose : imprimer les 60 séquences telles
+qu'elles s'ouvrent donnait **978 pages** (16,3 en moyenne ; 35 pour le Book Train, 31 pour le capteur de New York), avec
+**3 713 textes sous 4,5 : 1** sur fond clair et **4 480 champs d'écran** imprimés (menus, champs vides, boutons). La
+cause des textes pâles : la campagne du 02/09 avait blanchi les fonds à l'impression, mais laissé les couleurs de texte
+pensées pour un fond marine (`--sub:#9bbefc`, `color:#e0e7ff` écrit dans les pages…).
+
+### La fiche papier (`_outils/impression_papier/`)
+
+Une source (`papier.css`, `papier.js`), posée dans chaque séquence par `poser.py` (bloc entre deux marqueurs
+« fiche-papier v1 », avant `</head>`), contrôlée par `_outils/controle_impression_papier.py` — le schéma de la loupe et
+du lecteur pas à pas. **Rien ne change à l'écran.** À l'impression :
+
+- **un en-tête** : « Technologie · niveau · codes · séance (rang / nombre) », le titre, Nom / Prénom / Classe / Date ; au
+  pied de chaque page, le titre et « page n / N » ;
+- **l'encre foncée** : la palette du dépôt redéfinie pour le papier, aussi dans les ateliers incrustés (qui la
+  redéfinissent sur eux-mêmes) ; les couleurs claires écrites dans les pages reconnues au chargement et rendues dans
+  la même teinte, foncée ; les grands fonds foncés (écrits dans la page, ou `details.vs`) changés en cadre blanc ; le
+  code sur fond blanc ;
+- **le crayon** : le champ lui-même change d'habit — une zone de texte devient des lignes d'écriture (autant que de
+  lignes à l'écran, plus une), un champ court un trait, une case ou un bouton radio un carré ou un rond ; **ce que l'élève
+  a déjà écrit ou coché s'imprime** ; un menu devient des cases (la réponse choisie cochée) ; les réponses d'une question
+  s'alignent ; les lignes restent avec leur question ; un simulateur devient un encadré « 🖥 cette partie se fait sur la
+  page en ligne », avec un tableau pour noter ce qu'on observe. Rien n'est inséré à côté d'un champ (sauf la liste des
+  cases d'un menu) : un premier essai insérait des lignes après chaque zone de texte, et le banc de 5e_C4.1 a montré
+  qu'un script peut compter sur l'élément qui suit un champ ;
+- **les fonds s'impriment** même si « graphiques d'arrière-plan » est décoché dans la boîte d'impression
+  (`print-color-adjust: exact`) : sans cela, les lignes d'écriture et les bandeaux de titres disparaîtraient ;
+- **ce qui ne sert qu'à l'écran disparaît** : barres d'outils et de navigation, boutons, scores, compteurs, billet
+  d'entrée, « où j'en suis », référentiel, ce qui est replié, un bloc qui ne porte que des boutons ;
+- **une séance** : la séance affichée et elle seule (37 séquences à onglets) ; l'ouverture avec la séance 1, la clôture
+  avec la dernière ; la séance suit l'en-tête sur la même feuille (deux pages la renvoyaient à la page 2). Les 23
+  séquences sans onglets (thème 3 surtout, et les quatre pages de la station 3e_C9.2) s'impriment entières, en fiche.
+  Sans JavaScript, la page imprime toutes ses séances, comme avant ;
+- les animations pas à pas : l'image et la liste des étapes, côte à côte.
+
+Le générateur `3e_C9.2/generer_les_quatre_pages.py` pose la fiche par `poser.py` (ses quatre pages omettent `</head>` :
+la fiche s'y pose avant `<body>` — pas en fin de page : `controle_regle4.py` situe le bouton QCM dans le source, et un
+premier essai, posé avant `</body>`, l'a fait refuser la page 4) ; le régénérer redonne les pages à l'octet près.
+
+Trois précautions apprises des bancs des lots : l'en-tête de la fiche est un `<div>` (le banc du Book Train mesure
+« le » `header` de la page, et c'était le mien, caché) ; la garde « une seule fois » est un attribut de `<html>`, pas une
+variable `window.__…` (que `controle_verrous.mjs` lit comme un verrou ouvert) ; les règles des champs portent
+`:not(#pp-z)`, le poids d'un identifiant, car des pages imposent le fond de leurs champs par des listes d'identifiants
+(`#hypothese, #a0q1…{background:#fff!important}` effaçait les lignes d'écriture).
+
+### Les contrôles
+
+- `controle_impression.mjs` : **sur une page qui porte la fiche papier, un texte sous 4,5 : 1 sur fond clair est
+  refusé** (décision 1a) ; ailleurs, il reste compté. Et un défaut corrigé : sa liste des balises à écarter était en
+  capitales, les balises SVG s'écrivent en minuscules (« text ») — les textes des dessins étaient jugés sur leur couleur
+  CSS, que le dessin n'emploie pas. Sa propre documentation dit qu'il ne lit pas les images : tout ce qui est dans un SVG
+  est désormais écarté. Son banc : 17 / 17 (deux cas fiche papier, un cas SVG).
+- `controle_impression_papier.py` (nouveau) : chaque séquence porte la fiche, une fois, à jour ; banc 15 / 15.
+- `banc_papier.py` (nouveau) : chaque séquence imprimée en PDF A4, séance par séance — pages comptées, en-tête, une
+  seule séance, aucun menu ni bouton imprimé, chaque champ habillé pour le papier (une zone de texte avec ses lignes, un
+  champ court avec son trait), aucun texte pâle (un fond en dégradé compte pour la moyenne de ses couleurs), aucun
+  grand fond foncé, une première page remplie, zéro erreur JavaScript. Il est né de ce que je n'avais pas vu : les
+  planches m'ont montré une première page vide (Cybersécurité), un rectangle bleu nuit (glisser-déposer), une barre de
+  boutons vide ; chacun a sa mesure.
+
+### Amendement de la règle d'or n°311 (impression)
+
+La n°311 (22/10/2026) disait : « Sans JavaScript et à l'impression, tout s'affiche (le volet est ouvert, son bouton
+masqué) ». **À l'impression, la décision 1a la remplace sur les pages qui portent la fiche papier** : la séance affichée
+s'imprime seule, l'ouverture sur la fiche de la séance 1, le niveau et les codes (les badges) dans l'en-tête de la fiche.
+Sans JavaScript, rien ne change. Le banc commun `theme-1-…/banc_regle_311.mjs` le vérifie : depuis la dernière séance,
+la séance seule, sans l'ouverture ni le bouton du volet ; depuis la séance 1, l'ouverture et l'en-tête qui porte le
+niveau et le code ; après l'impression, le volet est replié de nouveau. Le banc pilote `5e_C3.1/tests_regle_311_5e_C3.1.mjs`
+(qui a son propre code) vérifie la même chose.
+
+### Ce qui a vraiment tourné
+
+- **Banc papier** `banc_papier.py`, les 60 séquences, chaque séance imprimée en PDF A4 : **128 fiches, 555 pages**
+  (4,3 en moyenne) ; la séquence telle qu'elle s'ouvre : **320 pages au lieu de 978** ; jardin 14 → 7, Chengdu 28 → 4
+  (séance 1), Book Train 35 → 4, capteur de New York (sans onglets) 31 → 14 ; **0** texte pâle, **0** champ d'écran
+  imprimé, **0** grand fond foncé, **0** première page vide, 0 erreur JavaScript. Sortie 0.
+- **Planches des 128 fiches regardées**, deux fois (avant et après le passage aux champs habillés) : c'est en les
+  regardant que j'ai trouvé la première page vide, le rectangle bleu nuit, la barre de boutons vide, le titre
+  « CRCN mobilisés » sans contenu, et les lignes d'écriture effacées par une liste d'identifiants.
+- **Écran inchangé** : captures pleine page à 1280 px des 60 séquences, `main` contre la branche, images chargées des
+  deux côtés : 3 écarts, tous voulus par les pages (étiquettes mélangées au hasard en cybersécurité, poussières placées
+  au hasard à Chengdu, anticrénelage à 0 pixel nettement différent dans l'animation du jardin).
+- **Les 109 bancs des lots, lancés sur la branche et sur `main`** (copie de travail de `main`, mêmes commandes) : mêmes
+  sorties, sauf trois bancs de la n°311 qui échouent par intermittence sous charge, des deux côtés (4e_C1.4 et 5e_C6.1
+  sur `main`, 5e_C4.1 sur la branche — 34 / 34 trois fois de suite seul ; le défilement de 4e_C1.4 à 390 px dépend du
+  mélange des étiquettes, constaté aussi sur `main`). Les 38 bancs C7 / C8 du thème 3 et ceux de 5e_C1.5 attendent leurs
+  arguments : relancés avec ceux de leurs rapports de tests, **identiques des deux côtés** (de 24 / 24 à 77 / 77 ;
+  5e_C7.4 plante des deux côtés, préexistant).
+- **Trois régressions trouvées par ces bancs, corrigées** : Book Train (390 px) — le banc mesurait mon `header` caché ;
+  5e_C4.1 (Bonus) — mes lignes s'inséraient entre un champ et sa version étayée ; 3e_C1.1, 4e_C1.4, 5e_C3.1 (n°311) —
+  l'impression a changé par décision, les bancs sont mis à jour (amendement ci-dessus). Après correction : Book Train
+  39 / 39, 5e_C4.1 51 / 51, 3e_C1.1 34 / 34, 5e_C3.1 27 / 27.
+- **Contrôles du dépôt, branche contre `main`** : les 27 contrôles statiques et les 6 au navigateur donnent les mêmes
+  sorties (`controle_regle4` à 1 des deux côtés, préexistant ; `controle_cadres` lit 26 pages de moins sur la branche :
+  ma copie de `main` portait un lien vers `node_modules`), plus `controle_impression_papier` : 0. `controle_verrous` et
+  `controle_regle4` avaient refusé une version intermédiaire (variable `window.__…`, pose en fin de page) : corrigé.
+- Bancs des contrôles : `tests_controle_impression.mjs` **17 / 17**, `tests_controle_impression_papier.py` **15 / 15** ;
+  `banc_lecteur.py` vert (les animations s'impriment) ; `tests_controle_lecteur_pas_a_pas.py` 11 / 11.
+
+### Non vérifié
+
+- Une vraie impression sur la HP Color LaserJet de la salle : seuls des PDF de Chromium ont été produits et regardés.
+- Firefox et Safari (leur « Imprimer » respecte-t-il `@page` et les cases de pied de page ?) ; seul Chromium a tourné.
+- Les images elles-mêmes : des captures d'écran sombres (tableur en thème sombre du Shanghai s4, blocs Vittascience de la
+  station 3e_C9.2, terminal du SOS serre) restent des rectangles sombres ; ce sont des images, pas du style.
+
+### À RELIRE PAR PASCAL
+
+1. **Imprimer une ou deux fiches sur l'imprimante de la salle** (le jardin 4e_C8.1, une séance de Chengdu) : lisibilité,
+   place pour écrire, nombre de pages.
+2. **Les 23 séquences sans onglets** (thème 3 surtout) s'impriment entières : 5 à 14 pages. Les découper en séances
+   (onglets) est un autre lot.
+3. **« Mode essentiel : ON » par défaut** (décision 3) : toujours ouverte.

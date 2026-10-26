@@ -30,7 +30,11 @@
  * c'est une question d'intendance, pas de lisibilité ; ce contrôle la compte à
  * part plutôt que de trancher à la place de Pascal.
  *
- * Il COMPTE, sans refuser, tout texte sous 4,5 : 1 sur fond clair.
+ * Il COMPTE, sans refuser, tout texte sous 4,5 : 1 sur fond clair — SAUF sur une
+ * page qui porte la fiche papier (`_outils/impression_papier/`, décision 1a de
+ * Pascal du 25/10/2026) : là, la palette a été décidée, encre foncée partout, et
+ * un texte pâle est REFUSÉ. C'est ce que Pascal a vu en imprimant : « les
+ * consignes ne sont pas vues parce que la police et sa couleur sont trop claires ».
  *
  * ET IL FAUT ÊTRE EXACT SUR CE QUE CE COMPTE VEUT DIRE. En livrant les PR #338,
  * #339 et #340, j'ai écrit que ces textes étaient « faibles en niveaux de gris,
@@ -136,7 +140,10 @@ export async function relever(page, url) {
     const refus = [], signales = [], encre = [];
     let lus = 0;
     for (const el of document.querySelectorAll('body *')) {
-      if (/^(STYLE|SCRIPT|SVG|PATH|TEXT|OBJECT|IMG|CANVAS|NOSCRIPT)$/.test(el.tagName)) continue;
+      //: Les dessins ne sont pas lus (voir « CE QU'IL NE FAIT PAS »). La liste était en capitales et les balises SVG
+      //: s'écrivent en minuscules (« text », « tspan ») : leurs textes étaient jugés sur leur couleur CSS, que le
+      //: dessin n'emploie pas (il peint avec « fill »). Corrigé le 25/10/2026 : tout ce qui est dans un SVG est écarté.
+      if (/^(STYLE|SCRIPT|SVG|PATH|TEXT|TSPAN|OBJECT|IMG|CANVAS|NOSCRIPT)$/i.test(el.tagName) || el.closest('svg')) continue;
       const propre = [...el.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent.trim()).join(' ').trim();
       if (propre.length < 3) continue;
       if (cache(el)) continue;                 // règle n°282 : ni lui, ni aucun ancêtre
@@ -156,7 +163,8 @@ export async function relever(page, url) {
         else encre.push(ligne);
       } else if (r < SIGNALE) signales.push(ligne);
     }
-    return { lus, refus, signales, encre };
+    //: La fiche papier se reconnaît à son en-tête, posé par papier.js au chargement.
+    return { lus, refus, signales, encre, fiche: !!document.querySelector('.pp-entete') };
   }, { FOND_SOMBRE, SIGNALE });
 }
 
@@ -183,7 +191,7 @@ export async function main(muet = false, racine = DEPOT, tolerees = TOLEREES) {
   const p = await ctx.newPage();
   await p.emulateMedia({ media: 'print' });
 
-  let lus = 0, nSignales = 0, nEncre = 0, inspectees = 0;
+  let lus = 0, nSignales = 0, nEncre = 0, inspectees = 0, fiches = 0;
   const fautives = [], tolereesVues = [];
   for (const abs of liste) {
     const rel = path.relative(racine, abs).split(path.sep).join('/');
@@ -191,7 +199,11 @@ export async function main(muet = false, racine = DEPOT, tolerees = TOLEREES) {
     try { r = await relever(p, 'file://' + abs); }
     catch (e) { fautives.push({ rel, refus: [{ txt: String(e).slice(0, 70), pourquoi: 'page illisible' }] }); continue; }
     inspectees++;
-    lus += r.lus; nSignales += r.signales.length; nEncre += r.encre.length;
+    lus += r.lus; nEncre += r.encre.length;
+    //: Sur la fiche papier, la palette est décidée : un texte pâle y est un refus,
+    //: pas une dette comptée.
+    if (r.fiche) { fiches++; r.refus.push(...r.signales.map(x => ({ ...x, pourquoi: 'texte pâle sur la fiche papier — il ne se lit pas' }))); }
+    else nSignales += r.signales.length;
     if (!r.refus.length) continue;
     if (rel in tolerees) tolereesVues.push(rel); else fautives.push({ rel, refus: r.refus });
   }
@@ -212,7 +224,8 @@ export async function main(muet = false, racine = DEPOT, tolerees = TOLEREES) {
   if (!muet) {
     console.log(`${liste.length} page(s) ouvertes en « media: print » · ${lus} texte(s) lus · `
       + `${fautives.length} page(s) refusée(s)`);
-    console.log(`     ${nSignales} texte(s) sous 4,5 : 1 sur fond clair — comptés, jamais refusés.`
+    console.log(`     ${fiches} page(s) portent la fiche papier : sur elles, un texte sous 4,5 : 1 est refusé.`);
+    console.log(`     ${nSignales} texte(s) sous 4,5 : 1 sur fond clair, hors fiche papier — comptés, jamais refusés.`
       + `\n     Ce sont de VRAIS contrastes faibles, en couleur comme en gris : une seconde`
       + `\n     dette, qui demande une décision de palette et non un correctif mécanique.`);
     console.log(`     ${nEncre} texte(s) blancs sur un fond resté sombre : lisibles sur le papier,`

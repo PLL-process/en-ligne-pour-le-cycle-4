@@ -1,0 +1,115 @@
+/* Fiche papier — source unique : _outils/impression_papier/papier.css (posée par poser.py ; ne pas modifier dans la page).
+   À l'impression, la séquence devient une fiche d'élève : en-tête, texte foncé, zones de réponse pour le crayon ; ce qui ne
+   sert qu'à l'écran disparaît, ce qui est replié à l'écran ne s'imprime pas, et seule la séance affichée s'imprime. */
+.pp-papier{display:none}
+@page{size:A4;margin:14mm 13mm 16mm 13mm;
+  @bottom-left{content:var(--pp-pied,"");font:8pt "Segoe UI",system-ui,sans-serif;color:#64748b}
+  @bottom-right{content:"page " counter(page) " / " counter(pages);font:8pt "Segoe UI",system-ui,sans-serif;color:#64748b}}
+@page :first{margin-top:10mm}
+@media print{
+  /* la palette du dépôt, en encre foncée (les couleurs restent, assombries) ; les fonds deviennent le papier.
+     Aussi dans les ateliers incrustés, qui redéfinissent la palette sur eux-mêmes. */
+  html:root,html body .atelier-incruste{--text:#111827;--encre:#111827;--sub:#334155;--subtitle:#334155;--muted:#334155;--title:#1e3a8a;--head:#5b21b6;--heading:#5b21b6;
+        --vio:#5b21b6;--hl:#0369a1;--accent:#0369a1;--highlight:#0369a1;--ok:#166534;--warn:#92400e;--err:#b91c1c;--ko:#b91c1c;
+        --crcn:#0f766e;--energie:#9a3412;--wagon:#b91c1c;
+        --bg:#fff;--bg2:#fff;--panel:#fff;--panel2:#fff;--carte:#fff;--papier:#fff;--input-bg:#fff;--border:#cbd5e1;--line:#cbd5e1;
+        --pp-accent:#4338ca}
+  html,body{background:#fff!important;color:#111827!important;font-family:"Segoe UI",system-ui,-apple-system,sans-serif!important;
+            font-size:10pt!important;line-height:1.42!important;margin:0!important;padding:0!important}
+  body *{box-shadow:none!important;text-shadow:none!important}
+  .pp-papier{display:revert}
+  /* ce qui ne sert qu'à l'écran */
+  .toolbar,#navharm,.skip-link,.progress-wrap,.progress,.choix-parcours-boutons,.parcours-label,.feedback,.saved-note,
+  .taches-bandeau,.badges,.legende-badges,.subtitle,h1,.seance-tabs,[role=tablist],.vers-seance,.page-suivante,.encoche,.qmark,
+  .identite,.referentiel-card,.crcn,.pp-ecran,button,.btn,noscript,details:not([open]),.lpp-sans-impression,
+  .note-bar,.score-pill,.scorebar,.compteur,:is(.resultat,.banc-resultat,.meteo-resultat,.badge):empty{display:none!important}
+  select,input[type=range],input[type=file],input[type=color],input[type=button],input[type=submit],input[type=reset],input[type=image]{display:none!important}
+  /* le papier garde la couleur des fonds (lignes d'écriture, bandeaux de titres) même si « graphiques d'arrière-plan » est décoché */
+  html,body{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  /* une séquence à séances : la séance affichée ; l'ouverture avec la première, la clôture avec la dernière */
+  /* (seulement si papier.js a tourné : sans JavaScript, la page imprime toutes ses séances, comme avant) */
+  html[data-pp] [role=tabpanel]:not([data-pp-actif]){display:none!important}
+  html[data-pp] [role=tabpanel][data-pp-actif]{display:block!important}
+  html:not([data-pp-premiere]) [data-pp-hors="avant"],html:not([data-pp-derniere]) [data-pp-hors="apres"]{display:none!important}
+  /* la séance suit l'en-tête sur la même feuille (d'anciennes règles la renvoyaient à la page suivante) */
+  html body :is([role=tabpanel],.seance-panel,.panneau),html body :is([role=tabpanel],.seance-panel,.panneau)::before{break-before:auto!important;page-break-before:auto!important}
+  /* l'en-tête de la fiche */
+  .pp-entete{display:block;margin:0 0 5mm;padding:0 0 3mm;border-bottom:2.2pt solid var(--pp-accent)}
+  .pp-entete .pp-surtitre{font-weight:600;font-size:8.5pt;line-height:1.25;letter-spacing:.06em;text-transform:uppercase;color:var(--pp-accent)}
+  .pp-entete .pp-titre{font-weight:750;font-size:19pt;line-height:1.15;color:#0f172a;margin:1.5mm 0 1mm}
+  .pp-entete .pp-sous{font-size:9.5pt;color:#334155}
+  .pp-entete .pp-ident{display:flex;gap:5mm;margin-top:3.5mm;font-size:9pt;color:#334155}
+  .pp-entete .pp-ident span{flex:1;border-bottom:.6pt solid #94a3b8;padding-bottom:1mm}
+  .pp-entete .pp-ident span.pp-court{flex:.55}
+  /* les blocs : du blanc et des filets */
+  section,.card,.exo,.activite,.simu,.panel,.seance-panel{background:#fff!important;color:#111827!important}
+  section.card,.card{border:0!important;border-radius:0!important;padding:0!important;margin:0 0 4.2mm!important;max-width:none!important;break-inside:auto!important}
+  .exo{border:0!important;padding:0!important;margin:1.5mm 0!important;break-inside:auto!important}
+  section.card>h2,.card>h2,[role=tabpanel] h2{font-weight:700!important;font-size:12.5pt!important;line-height:1.25!important;color:#0f172a!important;
+    margin:0 0 2mm!important;padding:1.2mm 0 1.2mm 3mm!important;border:0!important;border-left:3pt solid var(--pp-accent)!important;background:#eef2ff!important;break-after:avoid}
+  h3,h4{font-size:10.5pt!important;color:#0f172a!important;margin:2.5mm 0 1mm!important;break-after:avoid}
+  p{margin:1mm 0 1.6mm!important}
+  .chrono,.duree{font-weight:600;color:var(--pp-accent)!important}
+  .retenir{background:#f0fdf4!important;border:0!important;border-left:2.5pt solid #16a34a!important;padding:1.6mm 3mm!important;margin:2mm 0!important;color:#111827!important;break-inside:avoid}
+  .declencheur,.problematique{font-style:italic;border:0!important;border-left:2pt solid #94a3b8!important;background:#fff!important;padding:.5mm 0 .5mm 3mm!important}
+  table{border-collapse:collapse!important;width:100%!important;font-size:9pt!important}
+  th,td{border:.5pt solid #cbd5e1!important;padding:1.2mm 1.6mm!important;background:#fff!important;color:#111827!important}
+  th{background:#f1f5f9!important}
+  img,figure,svg{break-inside:avoid;max-width:100%!important}
+  pre,code,.codebox,.code-block{background:#fff!important;border:.5pt solid #cbd5e1!important}
+  pre,.codebox,.code-block{color:#111827!important}
+  pre code{border:0!important}
+  a{color:#1e3a8a!important;text-decoration:none!important}
+  /* les accents que d'anciennes règles d'impression imposaient trop clairs ; les couleurs claires écrites dans la page
+     (style="color:…") : papier.js les reconnaît au chargement et donne la même teinte, assombrie */
+  html body .retenir :is(b,strong,i,em,span,code,a,small){color:#14532d!important}
+  html body h2 span,html body h3 span,html body .chrono,html body .card h2 span,html body .card h3 span,html body [role=tabpanel] h2 span{color:var(--pp-accent)!important}
+  html body figcaption,html body footer,html body small,html body .small,html body .note,html body .meta,html body .legende{color:#334155!important}
+  html body :is(.retenir,.card,table) caption{color:#334155!important}
+  html body .pp-encre{color:var(--pp-encre,#111827)!important}
+  /* les grands fonds foncés (écrits dans la page, ou par classe) : un rectangle d'encre ; ils deviennent un cadre */
+  html body .pp-fond,html body details.vs{background:#fff!important;background-image:none!important;border:.6pt solid #cbd5e1!important;color:#111827!important}
+  /* les zones de réponse, pour le crayon : le champ lui-même change d'habit (rien n'est inséré à côté de lui, aucun script
+     de la page ne voit sa structure changer) ; ce que l'élève a déjà écrit ou coché s'imprime. « :not(#pp-z) » donne à ces règles le poids d'un identifiant : des pages
+     imposent fond et bordure de leurs champs par des listes d'identifiants (#hypothese, #a0q1…{background:#fff!important}) */
+  html[data-pp] textarea:not(#pp-z){display:block!important;-webkit-appearance:none!important;appearance:none!important;width:100%!important;max-width:100%!important;
+    min-height:0!important;height:calc(var(--pp-n,3) * 7.5mm)!important;margin:1.2mm 0 2mm!important;padding:0 1mm!important;border:0!important;
+    border-radius:0!important;resize:none!important;overflow:hidden!important;color:#111827!important;font-family:inherit!important;font-size:10pt!important;
+    line-height:7.5mm!important;break-inside:avoid;break-before:avoid;   /* les lignes restent avec leur question */
+    background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(7.5mm - .5pt),#94a3b8 calc(7.5mm - .5pt),#94a3b8 7.5mm)!important}
+  html[data-pp] textarea:not(#pp-z)[rows="1"]{--pp-n:2} html[data-pp] textarea:not(#pp-z)[rows="2"]{--pp-n:3} html[data-pp] textarea:not(#pp-z)[rows="3"]{--pp-n:4}
+  html[data-pp] textarea:not(#pp-z)[rows="4"]{--pp-n:5} html[data-pp] textarea:not(#pp-z):is([rows="5"],[rows="6"]){--pp-n:6}
+  html[data-pp] textarea:not(#pp-z):is([rows="7"],[rows="8"],[rows="9"],[rows="10"],[rows="12"],[rows="14"],[rows="15"],[rows="20"]){--pp-n:7}
+  html[data-pp] input:not(#pp-z):is(:not([type]),[type=text],[type=number],[type=email],[type=search],[type=tel],[type=url],[type=date],[type=time]){
+    display:inline-block!important;-webkit-appearance:none!important;appearance:none!important;min-width:30mm;max-width:100%!important;height:5.5mm!important;
+    padding:0 1mm!important;border:0!important;border-bottom:.6pt solid #94a3b8!important;border-radius:0!important;background:transparent!important;
+    color:#111827!important;font-family:inherit!important;font-size:10pt!important;vertical-align:bottom}
+  html[data-pp] td input:is(:not([type]),[type=text],[type=number]){width:100%!important;min-width:12mm}
+  html[data-pp] input:not(#pp-z)[type=number]::-webkit-inner-spin-button,html[data-pp] input:not(#pp-z)[type=number]::-webkit-outer-spin-button{display:none}
+  html[data-pp] :is(input,textarea):not(#pp-z)::placeholder{color:transparent!important}
+  html[data-pp] input:not(#pp-z):is([type=radio],[type=checkbox]){display:inline-block!important;-webkit-appearance:none!important;appearance:none!important;
+    width:3mm!important;height:3mm!important;min-width:0!important;margin:0 1.4mm 0 0!important;padding:0!important;border:.7pt solid #334155!important;
+    border-radius:.6mm!important;background:#fff!important;vertical-align:-.3mm;flex:none!important;position:static!important;opacity:1!important;
+    transform:none!important;clip:auto!important;clip-path:none!important}
+  html[data-pp] input:not(#pp-z)[type=radio]{border-radius:50%!important}
+  html[data-pp] input:not(#pp-z):is([type=radio],[type=checkbox]):checked{background:radial-gradient(circle,#334155 0 45%,#fff 50%)!important}
+  .pp-choix{display:inline;line-height:1.9}
+  .pp-choix .pp-case{white-space:nowrap;margin-right:4mm}
+  .pp-choix .pp-case::before{content:"";display:inline-block;width:3mm;height:3mm;border:.7pt solid #334155;border-radius:.6mm;margin-right:1.4mm;vertical-align:-.3mm}
+  .pp-choix .pp-case.pp-pris::before{background:radial-gradient(circle,#334155 0 45%,#fff 50%)}
+  .pp-options{display:flex!important;flex-wrap:wrap!important;gap:.6mm 5mm!important;align-items:baseline}
+  .pp-option{display:inline-flex!important;align-items:baseline;margin:0!important;padding:0!important;border:0!important;background:none!important;width:auto!important;min-height:0!important}
+  .qcm-groupe{border:0!important;padding:0!important;margin:0 0 1.8mm!important;break-inside:avoid;min-width:0}
+  .qcm-groupe legend{font-weight:600;padding:0!important;margin:0 0 .6mm!important}
+  .qcm-groupe .options{display:flex!important;flex-wrap:wrap;gap:.8mm 5mm;margin:0!important}
+  .qcm-groupe .option,.qcm-option{display:inline-flex!important;align-items:center;border:0!important;padding:0!important;margin:0 4mm .6mm 0!important;background:none!important;min-height:0!important;width:auto!important}
+  /* ce qui se fait en ligne */
+  .pp-enligne{display:block;margin:1.5mm 0;padding:2mm 3mm;border:.6pt dashed var(--pp-accent);border-radius:2mm;font-size:9.5pt;color:#1e1b4b;break-inside:avoid}
+  .pp-enligne table{margin-top:1.5mm}
+  .pp-enligne td{height:8mm}
+  /* les animations pas à pas : l'image et la liste des étapes, côte à côte */
+  [data-lpp-racine]:not(.lpp-sans-impression){display:grid!important;grid-template-columns:92mm 1fr;gap:5mm;align-items:start;border:0!important;padding:0!important;background:#fff!important}
+  [data-lpp-racine] [data-lpp="dessin"]{max-width:none!important;width:100%!important;margin:0!important}
+  [data-lpp-racine] .lpp-imprime{margin:0!important;padding-left:4.5mm!important;font-size:9pt}
+  [data-lpp-racine]:not(.lpp-sans-impression)>:not([data-lpp="dessin"]):not(.lpp-imprime){display:none!important}
+}

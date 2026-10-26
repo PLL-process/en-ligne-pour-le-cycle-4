@@ -82,7 +82,7 @@ Lancer depuis la racine du dépôt. Python : `python3 _outils/<outil>.py`. Node 
 | `controle_boutons_vivants.py` ⚠ 0 | chaque bouton appelle une fonction qui existe dans sa page |
 | `controle_verrous.mjs` | n°226 (31/08/2026) : aucun verrou expérientiel ouvert au chargement |
 | `controle_hors_ligne.mjs [--source]` | n°305 (21/09/2026) : aucune ressource chargée depuis Internet |
-| `controle_impression.mjs` | rendu `media: print` : aucun texte sombre sur fond sombre |
+| `controle_impression.mjs` | rendu `media: print` : aucun texte sombre sur fond sombre ; sur une page qui porte la fiche papier, aucun texte sous 4,5 : 1 (25/10/2026) |
 | `controle_contraste_liens.mjs [chemin]` | n°303 (21/09/2026) : chaque lien se lit (contraste) |
 | `controle_debordement.py` | n°135 (second passage du 27/09/2026) : un tableau large défile au lieu de casser la page sur mobile |
 | `controle_marqueurs.py` | pointes de flèche SVG mesurées en pixels |
@@ -90,6 +90,8 @@ Lancer depuis la racine du dépôt. Python : `python3 _outils/<outil>.py`. Node 
 | `banc_loupe.py [racine] [--captures <dossier>]` | n°92 au navigateur : un schéma SVG agrandi garde ses couleurs (écart mesuré), la légende ne recouvre pas l'image, à 1280, 390, 1920 px et 1280 px zoomé 150 % |
 | `controle_lecteur_pas_a_pas.py` | décision 4b (25/10/2026) : chaque animation pas à pas utilise le lecteur commun (`_outils/lecteur_pas_a_pas/`), posé une fois, à jour |
 | `lecteur_pas_a_pas/banc_lecteur.py [racine]` | chaque animation pas à pas, au navigateur : étapes, 390 px, mouvement réduit, voix sur le disque, impression, lien direct |
+| `controle_impression_papier.py` | décision 1a (25/10/2026) : chaque séquence porte la fiche papier (`_outils/impression_papier/`), posée une fois, à jour |
+| `impression_papier/banc_papier.py [racine] [--pdf <dossier>] [--filtre <texte>]` | chaque séquence imprimée en PDF A4, séance par séance : pages comptées, en-tête, une seule séance, aucun champ d'écran, aucun texte pâle, zéro erreur JavaScript |
 
 **Évaluation (QCM)**
 
