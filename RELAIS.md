@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 28/10/2026 15:59 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 28/10/2026 16:15 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - Vague n°298 terminée et fusionnée (#522–#526).
@@ -18,7 +18,7 @@ _(écrit par Claude le 28/10/2026 15:59)_
 _Aucune._
 
 ## Prochaine action
-➡️ Attendre la prochaine demande de Pascal.
+➡️ Relance Claude Code. Ton écran affiche aussi « Restart to update » : une mise à jour de Claude Code est prête, et le redémarrage charge en même temps tous les mods.
 
 ## Décisions prises récemment (messages de Pascal)
 - 28/10/2026 13:38 — « <system-reminder>The user's timezone is America/Martinique (UTC-04:00). Message sent at Wed 2026-10-28 13:38 local time.</system-reminder>
