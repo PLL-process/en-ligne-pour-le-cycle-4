@@ -25026,3 +25026,55 @@ Même traitement qu'aux thèmes 1 et 2 :
   infobulles des codes) avant de le relancer — sinon il défait ces retouches.
 - **Le déclencheur de la n°26**, dans `_outils/` (thème 2) : la n°304 est maintenant finie sur les trois thèmes ; la
   n°26 reconnaît encore une page « qui s'appuie sur une année antérieure » aux phrases que la n°304 a retirées.
+
+---
+
+## 28/10/2026 — Règle d'or n°26 : le déclencheur lit aussi le bloc « Avant de commencer » (transversal, `_outils/`)
+
+*Carte blanche de Pascal (28/10/2026), après #528. C'était le reste noté par les trois vagues de la n°304. Branche
+`fable/regle-26-declencheur` : elle ne touche que `_outils/` et ce journal.*
+
+### Le problème
+
+La n°26 (« un diagnostic d'entrée avant toute séquence qui s'appuie sur l'année précédente ») reconnaissait une telle
+séquence à ses **mots** : « en 4e », « l'an dernier ». La n°304 a retiré ces mots de toutes les ouvertures. À leur
+place, elle a mis une liste de ce qui devrait être en place, chaque ligne avec **le code du niveau précédent**
+(« 4e_C7.3 », « cycle 3 »). La séquence s'appuie toujours autant sur l'année d'avant. Mais le déclencheur ne la
+voyait plus : les **8 séquences du thème 2** qui étaient ✘ la veille de #527 sont passées à « sans objet » sans
+qu'un billet d'entrée ait été écrit. Le compte de l'audit avait baissé sans que rien ne soit réparé.
+
+### Ce que fait cette PR
+
+- **`regle_26`** lit aussi les codes du bloc `rappel-spiralaire` : un code d'un niveau **antérieur** à celui de la
+  séquence (`4e_` dans une 3e, `5e_` dans une 4e), ou « cycle 3 » dans une 5e, 4e ou 3e, déclenche la règle. Un code
+  du même niveau ne déclenche rien, comme dans les mots. Les mots déclenchent toujours.
+- **Le diagnostic se cherche hors du bloc.** Le bloc dit lui-même « Pour toi, sans note : coche ce qui est déjà en
+  place ». Compté avec le reste, ce « sans note » aurait validé n'importe quelle page qui prononce « billet d'entrée »
+  ailleurs. Et une case cochée n'est pas un diagnostic : c'est l'élève qui se déclare prêt, rien ne le vérifie ni ne
+  l'aiguille. La n°26 demande les deux.
+- **Le message dit ce qui manque** : « le bloc d'ouverture s'appuie sur le niveau précédent (4e_C4.1, 4e_C4.2) sans
+  diagnostic d'entrée sans note — les cases à cocher ne vérifient rien ».
+- **Le banc** (`tests_verif_regles_audit.py`) gagne **7 cas** dans les deux sens. Quatre mutations (retirer les
+  codes, compter le « sans note » du bloc, prendre le même niveau, oublier le cycle 3) le font rougir chacune.
+
+### Vérifié
+
+- `verif_regles_audit.py` : ✘ **133 → 156**. Ce n'est pas une régression : c'est le compte d'avant la n°304, rendu
+  visible. **29 séquences** cessent d'être « sans objet » :
+  - **6 ✔**, qui ont leur billet d'entrée sans note : `3e_C1.1`, `4e_C1.1`, `4e_C8.1`, `4e_C9.1`, `3e_C9.2` ×2 ;
+  - **23 ✘**, qui s'appuient sur le niveau précédent sans diagnostic d'entrée :
+    - thème 1 : `5e_C1.5` ;
+    - thème 2 : `3e_C4.1`, `3e_C4.3`, `3e_C4.7`, `3e_C5.1`, `4e_C5.1`, `3e_C6.1`, `4e_C6.1`, `4e_C6.2` — les 8 de la
+      veille de #527 ;
+    - thème 3 : `3e_C7.3`, `3e_C7.4`, `3e_C7.5`, `3e_C7.8`, `4e_C7.3`, `4e_C7.4`, `4e_C7.5`, `4e_C7.7`, `4e_C7.8`,
+      `5e_C7.3`, `5e_C7.4`, `5e_C7.5`, `3e_C8.2`, `5e_C8.2`.
+  Aucune séquence ne passe de ✔ à ✘ : les 28 qui avaient un billet le gardent reconnu.
+- Les 23 ✘ ont été relus un par un : aucune n'a de billet d'entrée. Sur ces pages, le seul « billet d'entrée » écrit
+  est dans le script de la fiche papier (`TITRES_ECRAN`), que le contrôle ne lit pas.
+- `tests_verif_regles_audit.py` **68 / 68** (61 + 7). `controle_hierarchie.py` et son banc, qui citent ce
+  vérificateur, et `tests_5e_C1.1_chengdu.py` (43 / 43) inchangés.
+
+### Ce qui reste
+
+- **Écrire les 23 billets d'entrée** : trois questions sans note, une par ligne « Je sais… » du bloc, et pour
+  aiguillage le lien de rattrapage que la ligne porte déjà. Une PR par thème (1 + 8 + 14).
