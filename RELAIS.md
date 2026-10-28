@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 28/10/2026 13:41 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 28/10/2026 13:44 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - Vague n°298 TERMINÉE : #522 (thème 3), #523 (thème 1), #524 (thème 2), #525 (ateliers de planification) toutes fusionnées. Plus aucune page élève (60 séquences, 3 ateliers) ne porte le référentiel.
@@ -20,7 +20,7 @@ _(écrit par Claude le 28/10/2026 13:33)_
 _Aucune._
 
 ## Prochaine action
-➡️ Réponds « 1a 2a 3a 4a 5a », ou change les lettres. Je lance aussitôt ce que tu valides.
+➡️ Réponds « 5a », « 5b » avec tes corrections, ou « 5c ».
 
 ## Décisions prises récemment (messages de Pascal)
 - 28/10/2026 13:38 — « <system-reminder>The user's timezone is America/Martinique (UTC-04:00). Message sent at Wed 2026-10-28 13:38 local time.</system-reminder>
