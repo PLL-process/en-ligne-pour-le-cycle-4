@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 28/10/2026 19:45 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 28/10/2026 19:55 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - #529 (n°26, déclencheur) fusionnée le 28/10 : verif_regles_audit ✘ 156 sur main ; la n°26 compte 25 ✘ (séquences qui s'appuient sur le niveau précédent sans billet d'entrée).
@@ -17,9 +17,9 @@ _(écrit par Claude le 28/10/2026 18:34)_
 _Aucune._
 
 ## Prochaine action
-➡️ Fusionner #531 et #532. Je passe au thème 3 (16 billets).
+➡️ Réponds « 1a » pour ajouter la phrase « ce n'est pas encore un diagramme pieuvre » et passer les flèches dans les deux sens, ou « 1b » pour laisser la figure telle quelle.
 
 ## Décisions prises récemment (messages de Pascal)
-_Aucune relevée._
+- 28/10/2026 19:52 — « 1a »
 
 _Résumés de compaction : `COMPACTIONS.md`, même branche._
