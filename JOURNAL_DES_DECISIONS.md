@@ -25104,6 +25104,9 @@ sur le niveau précédent sans diagnostic d'entrée. Une PR par thème ; celle-c
   Au rechargement, si les trois réponses sont là, le retour se réaffiche ; « Effacer ma sauvegarde » efface tout.
 - CSS et script **portés par la page**, limités à `#billet` ; aucun moteur d'activité n'est touché, et le billet
   n'entre ni dans la progression ni dans le tableau des tâches.
+- *Complément (#532)* : le script lit le nombre de questions (`BONNES.length`) au lieu d'en supposer trois — c'est le
+  même script, au caractère près, que celui du thème 1 (deux questions) et du thème 3. Comportement inchangé sur ces
+  huit pages : billet 80/80 et bloc 72/72 rejoués.
 
 | page | les trois questions (ligne du bloc → réponse) |
 |---|---|

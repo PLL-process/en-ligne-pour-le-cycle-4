@@ -808,13 +808,14 @@
   }
   function bilan(){
     var fb = document.getElementById("fbBillet"), ok = 0, manque = [];
-    for(var i = 1; i <= 3; i++){
+    for(var i = 1; i <= BONNES.length; i++){
       var r = document.querySelector('#billet input[name="be_' + i + '"]:checked');
       if(r && r.value === BONNES[i - 1]) ok++; else manque.push(i);
     }
     fb.textContent = "";
     var tete = document.createElement("p");
-    tete.innerHTML = "<b>" + ok + " / 3</b> — " + (ok === 3
+    var n = BONNES.length;
+    tete.innerHTML = "<b>" + ok + " / " + n + "</b> — " + (ok === n
       ? "tout ce qu'il faut est en place : tu peux commencer."
       : (ok ? "une partie est en place. Avant de te lancer, relis :" : "rien n'est encore en place — ce n'est pas grave. Avant de te lancer, relis :"));
     fb.appendChild(tete);
@@ -832,11 +833,11 @@
     note.className = "billet-note";
     note.textContent = "Ce billet n'est pas noté et ne compte pas dans ta progression.";
     fb.appendChild(note);
-    fb.className = "billet-retour " + (ok === 3 ? "ok" : ok ? "warn" : "ko");
+    fb.className = "billet-retour " + (ok === n ? "ok" : ok ? "warn" : "ko");
   }
   document.getElementById("btnBillet").addEventListener("click", bilan);
   window.addEventListener("load", function(){
-    if(document.querySelectorAll("#billet input[type=radio]:checked").length === 3) bilan();
+    if(document.querySelectorAll("#billet input[type=radio]:checked").length === BONNES.length) bilan();
   });
 })();
 </script>
