@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 28/10/2026 18:24 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 28/10/2026 18:27 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - #528 (n°304, thème 3) fusionnée par Pascal le 28/10 : la n°304 n'a plus aucun manquement sur les 60 séquences (thèmes 1, 2, 3). verif_regles_audit ✘ 133 sur main.
@@ -18,7 +18,7 @@ _(écrit par Claude le 28/10/2026 18:24)_
 _Aucune._
 
 ## Prochaine action
-➡️ Attendre le choix de Pascal sur le lot suivant (★ déclencheur de la n°26).
+➡️ Réponds « 1a » ou « 1b », ou « carte blanche ».
 
 ## Décisions prises récemment (messages de Pascal)
 _Aucune relevée._
