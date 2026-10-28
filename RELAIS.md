@@ -1,19 +1,18 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 26/10/2026 10:46 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 28/10/2026 12:12 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
-- Vague n°298 thème 3 : PR #522 fusionnée.
-- Vague n°298 thème 1 : branche `fable/theme-1-regle-298`, 13 pages migrées (12 par `scratchpad/n298/migrer_t1.py`, 3e_C1.5 à la main : synthèse professeur créée, index régénéré). 6 bancs adaptés ; bancs du thème 1 identiques à main. Contrôles en cours (`scratchpad/n298/ctl_main.txt` / `ctl_branche.txt`), puis entrée de journal (déjà écrite, sauf « Vérifié »), commit, PR.
-- Mods : dépôt `scratchpad/mods-claude` prêt (commit ce466f8, scan propre, 23 tests). memoire-compaction corrigé : un autre plugin (cc-plugin-sec-default) répond à la compaction sans la passer, le résumé est désormais repris par `session.append` porte `compaction`. Push bloqué : PLL-process/mods-claude pas encore accessible à l'app Claude.
-- Ensuite : vague n°298 thème 2 (4 pages : 4e_C4.7, 5e_C4.1, 5e_C4.7, 4e_C6.2), puis les 3 ateliers de planification (gabarit build_atelier.py).
+- Vague n°298 thème 1 : PR #523 ouverte, CI verte (perimetre ✔ sur c9f3fff55), sans conflit — attend la fusion par Pascal. La garde avait refusé le premier commit : deux synthèses de 4e_C6.2 (thème 2) régénérées par erreur en lançant `synthese_4e_C6.2.py` ; rendues à leur état de main.
+- ⚠️ `synthese_4e_C6.2.py` est périmé : le relancer défait des corrections faites à la main (impression, Vittascience). Ne pas le lancer.
+- Ensuite : vague n°298 thème 2 (4e_C4.7, 5e_C4.1, 5e_C4.7, 4e_C6.2), branche depuis main ; puis les 3 ateliers de planification (gabarit build_atelier.py).
+- Mods : `scratchpad/mods-claude` prêt (commit ce466f8, 23 tests, scan propre). PLL-process/mods-claude toujours inaccessible à l'app Claude (add_repo refusé le 28/10).
 
-_(écrit par Claude le 26/10/2026 10:46)_
+_(écrit par Claude le 28/10/2026 12:12)_
 
 ## Branche et PR
-- Branche : `fable/theme-1-regle-298` — dernier commit 67a9bea19 Merge pull request #522 from PLL-process/fable/theme-3-regle-298
-- 34 fichier(s) modifié(s) non commité(s) au moment du relais
-- Aucune PR ouverte.
+- Branche : `fable/theme-1-regle-298` — dernier commit c9f3fff55 Vague n°298, thème 1 : rendre à 4e_C6.2 ses deux synthèses, régénérées par erreur
+- PR #523 ouverte (`fable/theme-1-regle-298`) — Vague n°298, thème 1 : le référentiel quitte 13 pages élèves pour leur synthèse professeur — CI : success
 
 ## Décisions en attente
 🔶 1. Le dépliant de 5e_C9.1, qui montre à l'élève où il en est sur les trois années du cycle :
@@ -21,7 +20,7 @@ _(écrit par Claude le 26/10/2026 10:46)_
 - b : il part dans la synthèse professeur.
 
 ## Prochaine action
-➡️ Finir les contrôles du thème 1, ouvrir la PR ; pousser les mods dès que Pascal a donné l'accès.
+➡️ Pascal fusionne #523 ; j'ouvre la vague du thème 2.
 
 ## Décisions prises récemment (messages de Pascal)
 _Aucune relevée._
