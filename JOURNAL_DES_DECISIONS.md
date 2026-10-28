@@ -24653,3 +24653,52 @@ antérieur à cette PR ; le corriger, c'est réécrire la fiche — hors du mand
   l'éditeur Vittascience ouvert dans un onglet à part) : **relancer le script défait ces corrections**. Le bloc du
   référentiel ira dans la page ; le script, devenu périmé, est à signaler, pas à relancer.
 - **Les trois ateliers de planification** (C7.1), générés : leur gabarit, dans un lot à part.
+
+---
+
+## 28/10/2026 — Vague n°298, thème 2 : le référentiel quitte les 4 dernières pages élèves (thème 2)
+
+*Décision de Pascal, 26/10/2026 (point 3a) : la vague n°298, une PR par thème. Le thème 3 (#522) et le thème 1 (#523)
+sont fusionnés ; voici le dernier. Branche `fable/theme-2-regle-298`.*
+
+### Ce que fait cette PR
+
+**4 séquences du thème 2** portaient encore le référentiel : 4e_C4.7 (SOS serre) et 5e_C4.7 (réseau local), deux
+cartes « 📚 Le référentiel de l'atelier — en toutes lettres » écrites en paragraphes ; 5e_C4.1 (lampadaire), un
+tableau « 📋 Référentiel officiel (programme 2024) » ; 4e_C6.2 (jardin connecté), un tableau « 📋 Référentiel (2024) ».
+
+- **La carte quitte la page élève** et entre, **recopiée sans réécriture**, dans la synthèse professeur du lot, en
+  tête, dans le bloc `referentiel-eleve`, avec la phrase « Référence normative … Codification opérationnelle … » —
+  la forme des thèmes 3 et 1. Aucune légende des étiquettes au thème 2.
+- **14 étiquettes de codes reçoivent leur infobulle**, la formulation telle que la carte la donnait. L'outil de la
+  vague lit désormais aussi les codes écrits en paragraphes (« **4e_C4.7** — « … » → … ») ou dans une cellule
+  (« **4e_C6.2** — … ») : sans cela, les ateliers Packet Tracer n'en auraient reçu aucune. Les 14 formulations ont
+  été comparées à celles du programme, au mot près (le pivot de la n°42) : toutes justes.
+- **`synthese_4e_C6.2.py` ne s'exécute plus sans `--forcer`.** Les deux synthèses de 4e_C6.2 ont été corrigées à la
+  main depuis leur génération, et la synthèse professeur porte maintenant le référentiel : le script les déferait —
+  il l'a fait le 26/10, rattrapé par la garde de périmètre avant la fusion de #523. Son en-tête le dit.
+- **CSS non touchée**, comme aux thèmes 3 et 1.
+- **4e_C6.2** : la ligne « Compétences mobilisées » portait ses codes en étiquettes `.tag`, que la synthèse ne
+  stylait pas (« 4e_C6.24e_C4.1 » se lisait d'un bloc) : la règle `.tag` de la page est reprise dans la synthèse,
+  fond blanc à l'impression compris. Le texte n'est pas touché.
+
+### Vérifié
+
+- **`verif_regles_audit.py`** : ✘ **180 → 176**, exactement les 4 pages ; **n°298 ✔ sur les 60 séquences du dépôt** —
+  plus aucune page élève ne porte le référentiel. n°42 : 5e_C4.1 ✔ (8 formulations, lues « (synthèse professeur) ») ;
+  les trois autres restent « sans objet », comme sur `main` (codes en paragraphes, ou en cellules d'en-tête).
+- **Contrôles**, identiques à `main` : formulations, liens, impression papier, règles visibles, compétences, hiérarchie,
+  atteignabilité, rapports de tests, boutons, débordement, squelette, verrous, hors ligne, impression, contraste des
+  liens, chaînes d'énergie (54/54), mode essentiel ✅.
+- **Bancs du thème 2** : les **32 bancs**, mêmes résultats qu'à `main` — dont ceux des quatre lots : 5e_C4.1 séquence
+  **51/51** et QCM **25/25**, 4e_C6.2 **38/38**, n°311 **34/34** sur les quatre. Aucun ne lisait la carte : aucun n'est
+  adapté.
+- **Au navigateur** : les synthèses de 4e_C4.7, 5e_C4.1 (390 px) et 4e_C6.2, les étiquettes de 5e_C4.1 (390 px) et
+  5e_C4.7 — aucune erreur JavaScript, aucun défilement horizontal.
+
+### Ce qui reste
+
+- **La vague n°298 est finie pour les séquences** : 3e, 4e et 5e, les trois thèmes.
+- **Les trois ateliers de planification** (C7.1) portent encore une carte `referentiel-card` ; `verif_regles_audit.py`
+  ne les lit pas (il ne lit que les séquences). Ils sont **générés** par
+  `atelier-planification/_generation/build_atelier.py` : c'est le gabarit qu'il faut changer, dans un lot à part.
