@@ -335,7 +335,7 @@ const run = async () => {
   }
 
   await page.click("#btnEssentiel");
-  ok("règle n°29 : le mode essentiel masque le référentiel",
+  ok("règle n°29 : le mode essentiel masque les corrections, et la page n'a plus de référentiel (n°298)",
      await page.evaluate(() => document.body.classList.contains("essentiel") &&
        [...document.querySelectorAll("details.correction")].every(e => e.offsetParent === null) && !document.querySelector(".referentiel-card")));
   await shot(page, "mode_essentiel");

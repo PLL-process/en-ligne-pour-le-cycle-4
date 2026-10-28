@@ -24755,3 +24755,72 @@ seul geste, dans un lot transversal, si Pascal le veut.
 
 - **La vague n°298 est finie** : 60 séquences et 3 ateliers, plus aucune page élève ne porte le référentiel.
 - Le point ci-dessus (la phrase du mode essentiel sur 39 pages), si Pascal le veut.
+
+---
+
+## 28/10/2026 — Fin de la vague n°298 : les trois décisions de Pascal, et le mode essentiel qui ne masque plus de référentiel (transversal : thèmes 1, 2 et 3, `_outils`)
+
+*Décision de Pascal, 28/10/2026 : « 1a 2a 3a 4a 5a ». Branche `fable/mode-essentiel-sans-referentiel` (transversale,
+comme la n°314).*
+
+### Tranché par Pascal — les défauts de la vague sont confirmés
+
+1. **3e_C1.5** : la synthèse professeur créée pour recevoir la fiche d'activité **reste** (#523), avec son encadré
+   « Synthèse à compléter ».
+2. **3e_C2.1 (Pékin)** : la « précision d'honnêteté » sur « choisis » (n°42, troisième volet) **reste dans la synthèse
+   professeur**, avec le référentiel (#523). La consigne de l'activité suffit à l'élève.
+3. **Ateliers de planification** : le paragraphe « diagramme de Gantt » **reste à l'élève**, dans sa carte « 🔤 Deux
+   noms pour le même dessin » (#525).
+
+### 4. Ce que fait cette PR — la phrase du mode essentiel
+
+Sur **39 pages** (36 séquences, 3 ateliers), le bouton du mode essentiel et sa note disaient qu'il « masque **le
+référentiel**, les corrections et les compléments ». Depuis la vague n°298, aucune de ces pages ne porte de
+référentiel : la phrase promettait de cacher quelque chose qui n'est plus là. Elle devient « masque les corrections
+et les compléments » — on retire « le référentiel, », rien d'autre ; le reste de chaque note est inchangé.
+
+- **48 retouches** dans les 39 pages : 9 infobulles du bouton (« Masquer les corrections et les compléments, pour ne
+  garder que les consignes et les exercices. ») et 39 notes — y compris celles où la phrase était coupée en fin de
+  ligne, et la variante « masque le référentiel et les corrections » de 3e_C4.8.
+- **Les deux sources qui l'écriraient de nouveau** : le gabarit des ateliers (`build_atelier.py`, pages régénérées à
+  l'identique — `verif_chaine.py` ✅) et la note que pose `_outils/retrofit_regles_audit.py`.
+- **Laissé tel quel** : les rapports de tests et ce journal, qui racontent ce qui a été vérifié à leur date.
+
+### Deux bancs, vus en passant (« carte blanche » de Pascal, 28/10)
+
+- `tests_3e_C6.2.py` vérifiait que le mode essentiel masque une carte de référentiel **qui n'existe plus depuis le
+  15/09** : il passait sans rien prouver. Il compte maintenant les corrections visibles, au moins une avant, aucune
+  après (2 → 0), et que la page n'a pas de carte. **22/22**, même nombre de tests.
+- `tests_4e_C9.mjs` vérifiait déjà les corrections et l'absence de carte ; seul son libellé disait « masque le
+  référentiel ». Libellé corrigé. **70/70**.
+
+### 5. La fiche d'activité de 3e_C1.5 — proposé, puis validé par Pascal (« carte blanche », 28/10)
+
+La ligne « Attendu de fin de cycle » de la fiche (désormais dans `Synthèses/synthese_professeur_3e_C1.5.html`) cite
+les formulations de **5e_C1.5 et 5e_C1.6**, alors que les étiquettes de la page nomment **3e_C1.3, 3e_C1.4 et
+3e_C1.5**. Proposition, les trois formulations du BO au mot près, la troisième ligne de la fiche gardée et dite pour
+ce qu'elle est :
+
+> 3e_C1.3 — Exprimer dans un argumentaire court l'incidence d'un OST sur la société.
+> 3e_C1.4 — Exprimer dans un argumentaire court l'incidence des contraintes sociétales sur les OST.
+> 3e_C1.5 — Exprimer dans un argumentaire court le rôle du développement stratégique du numérique au sein de la
+> société et des environnements professionnels (ou des métiers).
+> *Visée propre à la séquence (hors BO)* : comprendre l'impact environnemental des technologies et adopter des gestes
+> sobres (impression, vidéo, stockage).
+
+**Appliqué** dans la synthèse professeur, avec un commentaire qui date la décision. Les trois formulations sont
+justes au pivot de la n°42, et `verif_regles_audit.py` lit désormais ce lot : n°42 ✔ (il était « sans objet »). Pourquoi
+la 3e et pas la 5e : la page est bâtie sur l'argumentaire (le mot revient plus de cent fois) et cite 3e_C1.3 à C1.5 en
+28 endroits, jamais 5e_C1.5 ni 5e_C1.6 ; la fiche était le reste d'une version antérieure.
+
+### Vérifié
+
+- **Plus aucune page** (hors archive) ne dit « masque le référentiel » ; lues au navigateur sur quatre pages (3e_C1.1,
+  3e_C4.8, 5e_C3.1, atelier 3e) : la note et l'infobulle se lisent d'un trait, aucune erreur JavaScript.
+- **Tous les bancs du dépôt** (110), comparés à `main` : mêmes résultats. Un écart d'un passage — `tests_4e_C6.2.mjs`
+  37/38 **sur `main`** pendant que les deux suites tournaient en parallèle — ne s'est pas reproduit : 38/38 deux fois
+  de suite, seul.
+- **Contrôles**, identiques à `main` : `verif_regles_audit.py` (✘ 176 ; n°42 ✔ désormais sur 3e_C1.5), formulations
+  (104 justes), liens, impression papier, règles visibles, compétences, hiérarchie, atteignabilité, rapports de tests,
+  boutons, débordement, squelette, verrous, hors ligne, impression, contraste des liens, chaînes d'énergie, mode
+  essentiel ✅ ; `verif_chaine.py` des ateliers ✅.
