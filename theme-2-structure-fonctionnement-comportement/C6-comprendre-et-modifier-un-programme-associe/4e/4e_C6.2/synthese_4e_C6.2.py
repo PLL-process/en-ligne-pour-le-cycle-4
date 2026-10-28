@@ -13,8 +13,15 @@ serait un troisième document à maintenir, et il divergerait au premier
 ajustement.
 
 Usage : python3 synth62.py
+
+⚠️ PÉRIMÉ (28/10/2026). Les deux synthèses ont été corrigées à la main après leur génération (fond
+blanc à l'impression, éditeur Vittascience ouvert dans un onglet à part), puis la synthèse professeur a
+reçu le référentiel de la page élève (règle d'or n°298). Ce script ne connaît rien de tout cela : le
+relancer DÉFAIT ces changements (c'est arrivé le 26/10, rattrapé avant la fusion). Il ne s'exécute plus
+qu'avec `--forcer`. Les synthèses se corrigent désormais directement dans leur page.
 """
 import pathlib
+import sys
 
 DOS = pathlib.Path(__file__).parent
 CODE = "4e_C6.2"
@@ -166,4 +173,7 @@ def main():
 
 
 if __name__ == "__main__":
+    if "--forcer" not in sys.argv:
+        sys.exit("synthese_4e_C6.2.py est périmé : il déferait les corrections faites à la main dans les deux "
+                 "synthèses et le référentiel (n°298). Voir l'en-tête du script ; --forcer pour l'exécuter quand même.")
     main()
