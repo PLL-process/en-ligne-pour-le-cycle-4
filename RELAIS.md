@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 28/10/2026 18:37 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 28/10/2026 19:45 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - #529 (n°26, déclencheur) fusionnée le 28/10 : verif_regles_audit ✘ 156 sur main ; la n°26 compte 25 ✘ (séquences qui s'appuient sur le niveau précédent sans billet d'entrée).
@@ -17,7 +17,7 @@ _(écrit par Claude le 28/10/2026 18:34)_
 _Aucune._
 
 ## Prochaine action
-➡️ Réponds « 1a », « 1b » ou « carte blanche ».
+➡️ Fusionner #531 et #532. Je passe au thème 3 (16 billets).
 
 ## Décisions prises récemment (messages de Pascal)
 _Aucune relevée._
