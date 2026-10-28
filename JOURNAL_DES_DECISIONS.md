@@ -24824,3 +24824,89 @@ la 3e et pas la 5e : la page est bâtie sur l'argumentaire (le mot revient plus 
   (104 justes), liens, impression papier, règles visibles, compétences, hiérarchie, atteignabilité, rapports de tests,
   boutons, débordement, squelette, verrous, hors ligne, impression, contraste des liens, chaînes d'énergie, mode
   essentiel ✅ ; `verif_chaine.py` des ateliers ✅.
+
+---
+
+## 28/10/2026 — Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé (thème 2)
+
+*Carte blanche de Pascal, 28/10/2026 (« Tu as carte blanche ») : choisir le lot suivant. Choisi parce que c'est le
+manquement de l'audit qui touche le plus sa situation — il change d'établissement chaque année, ses élèves n'ont jamais
+fait ses séquences de l'année d'avant — et parce que le thème 1 l'a réglé le 21/09 (#415 et sa suite) : le modèle
+existe. Branche `fable/theme-2-regle-304`. Le thème 3 (23 pages) suit, dans sa PR.*
+
+### Ce que fait cette PR
+
+**Douze séquences du thème 2** ouvraient sur « 🔄 Ce que tu as déjà fait — En 4e, tu as… », « L'an dernier, sur le
+lampadaire… ». Même traitement que le thème 1, mot pour mot :
+
+- **Le titre** devient « 🔄 Avant de commencer : ce que je vérifie », avec la phrase d'accueil du thème 1 (« Pour toi,
+  sans note : coche ce qui est déjà en place… »).
+- **Le paragraphe qui affirmait le passé disparaît.** À sa place, trois lignes : une vraie case reliée à sa phrase
+  « Je sais… », le code **du niveau précédent** (`4e_` pour une 3e, `5e_` pour une 4e), et dessous, toujours visible,
+  « → pas encore sûr·e ? » avec un lien vers **la partie citée** d'une synthèse élève, ouverte et lue avant d'être
+  citée. Les lignes reprennent ce que l'ancien paragraphe disait que l'élève avait fait, tourné en compétence utile au
+  début de la séquence.
+- **« Cette année, ce qui change »** devient « Dans cette séquence », au présent, sans « ne… plus » ni « au lieu
+  d'éclairer » ; **« Tu arrives cette année ? »** / « Tu n'as pas fait la 4e ici ? » devient « Un mot à garder en
+  tête : », la phrase utile gardée.
+- **25 ancres** sur les titres cités, dans dix synthèses élèves du thème 2 (`partie-N` pour un titre numéroté, un nom
+  court sinon : `chaines`, `donnee`, `diagnostic`, `remplacer`, `inspection`, `protocole`, `demarche`, `analyser`,
+  `tester`, `condition`, `frontiere`).
+- **La CSS du bloc** reçoit les règles du thème 1, écran et impression (encre foncée des nouvelles classes sur papier).
+- **La mémoire** garde l'état des cases, selon l'idiome de chaque page : neuf pages gardaient la *valeur* des champs
+  (`el.value`, toujours « on » pour une case) — une ligne ajoutée à `collect()` garde l'état des seules cases du bloc,
+  et `restore()` les recoche ; la page `4e_C6.2` a le même idiome sous le nom `save()` ; les deux ateliers Packet
+  Tracer (`3e_C4.8`, `4e_C4.7`) gardaient déjà toute case munie d'un id : rien à faire. Les autres cases des pages ne
+  sont pas touchées.
+
+| page | les trois lignes (codes) | rattrapage |
+|---|---|---|
+| `3e_C4.1` énergie de la station | blocs et fonctions `4e_C4.1` · formes d'énergie `4e_C4.2` · lire un schéma de chaîne `4e_C4.1` | synthèses 4e_C4.1 à C4.9 et Book Train |
+| `3e_C4.3` station d'alerte | chaîne d'information `4e_C4.4` · voyage de la mesure `4e_C4.5` · table de données `4e_C4.6` | idem |
+| `3e_C4.7` internet à Sainte-Luce | lire une adresse IP · adresse fixe `4e_C4.7` · dépanner avec méthode `4e_C4.8` | synthèse 4e_C4.7 à C4.9 |
+| `3e_C4.8` pont numérique | IP fixe `4e_C4.7` · simulation fournie `4e_C4.9` · dépanner `4e_C4.8` | idem |
+| `4e_C4.1` jardin connecté | chaîne d'énergie `5e_C4.2` · chaîne d'information `5e_C4.5` · une adresse par appareil `5e_C4.8` | synthèses 5e_C4.1 à C4.8, 5e_C4.7 et C4.8 |
+| `4e_C4.7` SOS serre | composants du réseau `5e_C4.7` · lire une adresse IP · prouver au ping `5e_C4.8` | synthèse 5e_C4.7 et C4.8 |
+| `3e_C5.1` SOS station | symptôme et cause · suite de tests `4e_C5.1` · remplacer sans protocole `4e_C5.2` | synthèse 4e_C5.1 à C5.3 |
+| `4e_C5.1` dépanner le jardin | inspection visuelle `5e_C5.1` · suivre un protocole · finir par un test `5e_C5.2` | synthèse 5e_C5.1 à C5.3 |
+| `3e_C6.1` programmer l'alerte | analyser les relevés `4e_C6.1` · SI… ALORS… SINON `4e_C6.2` · tester une modification `4e_C6.3` | synthèses 4e_C6.1 à C6.3 et 4e_C6.2 |
+| `3e_C6.2` auto-test | lire un algorigramme · le cas frontière `4e_C6.2` · tester une modification `4e_C6.3` | idem |
+| `4e_C6.1` ajuster le programme | entrées et sorties `5e_C6.1` · traduire en phrases `5e_C6.2` · régler un paramètre `5e_C6.3` | synthèse 5e_C6.1 à C6.3 |
+| `4e_C6.2` jardin qui s'arrose | entrées et sorties `5e_C6.1` · traduire `5e_C6.2` · un seuil est un paramètre `5e_C6.3` | idem |
+
+- `synthese_eleve_4e_C6.2.html` reçoit ses deux ancres à la main : son script, périmé, ne tourne plus sans `--forcer`
+  (#524).
+- L'outil de la vague (`ouvertures_t2.py`) reste hors du dépôt, comme ceux de la n°298.
+- **4e_C6.2**, deux retouches vues au contrôle et au navigateur : ses liens n'ont pas de couleur d'écran (le bleu par
+  défaut du navigateur, 1,66 : 1 sur le fond — `controle_contraste_liens.mjs` l'a refusé) → les liens de rattrapage
+  prennent `var(--hl)` ; et une règle `label` de la page décalait la phrase de 7 px sous sa case → neutralisée dans le
+  bloc.
+
+### Vérifié
+
+- **`verif_regles_audit.py`** : ✘ **176 → 156**. Les douze n°304 passent au ✔ (« bloc d'ouverture reconnu par la
+  classe rappel-spiralaire, sans affirmation »). Et **huit n°26 passent de ✘ à « sans objet »** : comme au thème 1, la
+  n°26 reconnaît une page « qui s'appuie sur une année antérieure » à « en 4e », « l'an dernier » — exactement les
+  phrases que la n°304 retire. Son déclencheur reste à revoir (le bloc d'ouverture lui-même, ou ses codes d'un niveau
+  antérieur) ; le bloc « Avant de commencer » est, lui, un diagnostic sans note. La n°67 compte trois champs de plus
+  par page (les cases) et reste ✔.
+- **Comme un élève**, dans Chromium à 390 px, page par page : trois cases ; cocher la 1re et la 3e **en cliquant sur la
+  phrase** ; texte du bloc **identique** avant et après ; recharger : 1re et 3e cochées, 2e non ; « 🗑 Effacer ma
+  sauvegarde » : tout décoché ; chaque lien de rattrapage ouvre sa synthèse **avec le titre cité à l'écran** ; aucun
+  défilement horizontal ; console vide — **108 / 108**. Le rechargement mord : sans la ligne de mémoire, les cases
+  reviendraient décochées.
+- **Contrôles**, identiques à `main` après la retouche de 4e_C6.2 : `controle_liens.py` (les 25 ancres trouvées),
+  `controle_contraste_liens.mjs` (0 lien sous le seuil, à l'écran, cliqué, sur papier), `controle_impression.mjs`,
+  `controle_impression_papier.py`, `controle_regles_visibles.py`, `controle_formulations.py`, `controle_competences.py`,
+  `controle_hierarchie.py`, `controle_atteignabilite.py`, `controle_rapports_tests.py`, `controle_boutons_vivants.py`,
+  `controle_debordement.py`, `controle_squelette.mjs`, `controle_verrous.mjs`, `controle_hors_ligne.mjs`,
+  `verifier_chaines_energie.py`, `controle_mode_essentiel.py` ✅.
+- **Bancs du thème 2** : les **32 bancs**, mêmes résultats qu'à `main` (dont `tests_4e_C6.2.mjs` 38/38, relancé après
+  la retouche).
+
+### Ce qui reste
+
+- **Le thème 3** : 23 pages, en trois familles (sept blocs `rappel-spiralaire` comme ici ; seize cartes « 🔄 Ce que tu
+  sais déjà faire — et ce qu'on ne refera pas » ou « 🔄 D'où tu viens — la spirale C7.x / C8 » des séquences d'atelier).
+  Sa PR suit.
+- **Le déclencheur de la n°26**, dans `_outils/` (thème 2) : à revoir quand la n°304 sera finie partout.

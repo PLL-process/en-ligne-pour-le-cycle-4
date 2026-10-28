@@ -55,7 +55,7 @@
 <div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
 
 <div class="bloc">
-  <h2 style="margin-top:0">1. Le plan d'adressage (4e_C4.7)</h2>
+  <h2 id="partie-1" style="margin-top:0">1. Le plan d'adressage (4e_C4.7)</h2>
   <object class="schema" data="../Images/plan_adressage_serre.svg" type="image/svg+xml" aria-label="Le plan de la serre : rue 192.168.20, passerelle .1 réservée, PC-Prof .10, Imprimante .30, Capteur .50, Serveur .100">Le plan de la serre</object>
   <dl>
     <dt>La recette (AVANT de brancher)</dt><dd>① recenser les habitants → ② choisir la <b>rue</b> commune (<code>192.168.20</code>) → ③ un <b>numéro unique</b> par appareil, le <b>.1 réservé</b> → ④ écrire le <b>masque</b>.</dd>
@@ -67,7 +67,7 @@
 
 <div class="cols">
 <div class="bloc">
-  <h2 style="margin-top:0">2. L'adresse IP fixe (4e_C4.7)</h2>
+  <h2 id="partie-2" style="margin-top:0">2. L'adresse IP fixe (4e_C4.7)</h2>
   <dl>
     <dt>Pourquoi FIXE&nbsp;?</dt><dd>un objet connecté qu'on doit <b>joindre à coup sûr</b> (capteur, serveur, imprimante) ne peut pas changer d'adresse au hasard → <b>Static</b>, pas DHCP.</dd>
     <dt>Les 4 lignes</dt><dd><b>Static</b> coché · <b>IPv4</b> <code>192.168.20.50</code> · <b>masque</b> <code>255.255.255.0</code> · <b>Default Gateway</b> <code>192.168.20.1</code> ⭐ la nouveauté de 4e.</dd>
@@ -76,7 +76,7 @@
   </dl>
 </div>
 <div class="bloc">
-  <h2 style="margin-top:0">3. Valider par la simulation (4e_C4.9)</h2>
+  <h2 id="partie-3" style="margin-top:0">3. Valider par la simulation (4e_C4.9)</h2>
   <dl>
     <dt>Compléter, pas reconstruire</dt><dd>le fichier .pkt est <b>fourni</b>&nbsp;: on y <b>ajoute le test</b> (Add Simple PDU&nbsp;: clic expéditeur → clic destinataire), puis Play.</dd>
     <dt>Lire le film</dt><dd>l'<b>Event List</b> horodate chaque étape&nbsp;: <code>0.000 PC-Prof → 0.001 Switch0 → 0.002 Serveur</code>. Tout passe par le commutateur (étoile).</dd>
@@ -86,7 +86,7 @@
 </div>
 
 <div class="bloc">
-  <h2 style="margin-top:0">4. Dépanner avec méthode (4e_C4.8)</h2>
+  <h2 id="partie-4" style="margin-top:0">4. Dépanner avec méthode (4e_C4.8)</h2>
   <object class="schema" data="../Images/demarche_diagnostic.svg" type="image/svg+xml" aria-label="La boucle du dépanneur : symptôme, hypothèse, test, remède, re-test">La boucle du dépanneur</object>
   <dl>
     <dt>La boucle du dépanneur</dt><dd><b>symptôme → hypothèse → test → remède → RE-test</b>. Jamais de remède sans test, jamais de «&nbsp;réparé&nbsp;» sans re-test.</dd>
