@@ -24648,6 +24648,8 @@ antérieur à cette PR ; le corriger, c'est réécrire la fiche — hors du mand
 
 ### Ce qui reste
 
-- **4 pages du thème 2** (4e_C4.7, 5e_C4.1, 5e_C4.7, 4e_C6.2) : la dernière PR de la vague. La synthèse professeur de
-  4e_C6.2 est écrite par `synthese_4e_C6.2.py` : le bloc devra entrer dans le script, pas seulement dans la page.
+- **4 pages du thème 2** (4e_C4.7, 5e_C4.1, 5e_C4.7, 4e_C6.2) : la dernière PR de la vague. Les synthèses de 4e_C6.2
+  sont nées de `synthese_4e_C6.2.py`, mais elles ont été corrigées à la main depuis (le fond blanc à l'impression,
+  l'éditeur Vittascience ouvert dans un onglet à part) : **relancer le script défait ces corrections**. Le bloc du
+  référentiel ira dans la page ; le script, devenu périmé, est à signaler, pas à relancer.
 - **Les trois ateliers de planification** (C7.1), générés : leur gabarit, dans un lot à part.
