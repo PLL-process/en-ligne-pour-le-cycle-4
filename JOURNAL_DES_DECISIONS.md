@@ -25084,6 +25084,61 @@ qu'un billet d'entrée ait été écrit. Le compte de l'audit avait baissé sans
 
 ---
 
+## 28/10/2026 — Règle d'or n°26 : huit billets d'entrée au thème 2 (thème 2)
+
+*Carte blanche de Pascal « jusqu'à la fin » (28/10/2026), après #529 : la n°26 refusait 25 séquences qui s'appuient
+sur le niveau précédent sans diagnostic d'entrée. Une PR par thème ; celle-ci, le thème 2 (8). Branche
+`fable/theme-2-billets-entree`.*
+
+### Ce que fait cette PR
+
+- **Un billet « 🎫 Billet d'entrée — trois questions, sans note »** en tête de la séance 1 de chaque page, comme le
+  pilote `3e_C1.1` : posé avant les panneaux, il s'afficherait au-dessus de chaque séance (n°306, D5).
+- **Une question par ligne du bloc « Avant de commencer »**, dans le même ordre. La réponse juste est dans la partie
+  de synthèse que la ligne cite déjà (relue avant d'écrire la question). Trois propositions et « je ne sais pas
+  encore », en **boutons radio** (n°300 : pas de liste déroulante), au gabarit visuel du pilote.
+- **« 🎫 Voir où j'en suis »** donne le score sur 3. Pour chaque question manquée, il affiche **le lien de rattrapage
+  que porte la ligne correspondante du bloc** : c'est l'aiguillage que la n°26 demande, sans second jeu de liens à
+  tenir. Il dit à chaque fois « Ce billet n'est pas noté et ne compte pas dans ta progression ».
+- **La mémoire** garde les réponses : les deux lignes de la n°304 (cases du bloc) s'élargissent aux boutons du billet.
+  Au rechargement, si les trois réponses sont là, le retour se réaffiche ; « Effacer ma sauvegarde » efface tout.
+- CSS et script **portés par la page**, limités à `#billet` ; aucun moteur d'activité n'est touché, et le billet
+  n'entre ni dans la progression ni dans le tableau des tâches.
+
+| page | les trois questions (ligne du bloc → réponse) |
+|---|---|
+| `3e_C4.1` énergie de la station | la batterie → STOCKER · le panneau → lumineuse vers électrique · sur les flèches → la forme d'énergie |
+| `3e_C4.3` station d'alerte | qui décide → la carte · horodater → la date et l'heure · une ligne de table → une mesure |
+| `3e_C4.7` internet à Sainte-Luce | même « rue » → même réseau · IP fixe → toujours joignable · 1re étape → le symptôme |
+| `3e_C5.1` SOS station | symptôme ou cause · prouver avant de remplacer · couper d'abord, tester à la fin |
+| `4e_C5.1` dépanner le jardin | inspecter sans démonter · étape n°1 : couper · fini quand le test le prouve |
+| `3e_C6.1` programmer l'alerte | remonter à la règle en cause · le SINON · sauvegarder l'original |
+| `4e_C6.1` ajuster le programme | la luminosité : une entrée · ET : les deux à la fois · seuil 30 → 45 : plus tôt |
+| `4e_C6.2` jardin qui s'arrose | l'état de la lampe : une sortie · le SINON · un seuil se règle, la logique ne change pas |
+
+### Vérifié
+
+- **`verif_regles_audit.py`** : ✘ **156 → 148**, les 8 n°26 passent au ✔ ; aucune autre règle ne bouge (la n°300 ne
+  voit aucune liste déroulante nouvelle).
+- **Comme un élève**, dans Chromium à 390 px, page par page : billet visible à la séance 1 et caché à la séance 2 ;
+  une juste, un « je ne sais pas encore », une fausse → « 1 / 3 » et **les deux liens des lignes 2 et 3 du bloc** ;
+  la phrase « pas noté » ; recharger → les trois réponses reviennent et le retour se réaffiche ; trois justes →
+  « 3 / 3 » sans renvoi ; pas de défilement horizontal ; console vide — **80 / 80**. Le bloc « Avant de commencer »
+  rejoué à côté (cocher, recharger, effacer, rattrapages) : **72 / 72**.
+- **Contrôles**, identiques à `main` : `controle_squelette.mjs` (rapports des 17 séquences du thème identiques,
+  défauts, signalements et « à rédiger »), `controle_contraste_liens.mjs`, `controle_impression.mjs`,
+  `controle_impression_papier.py` (le billet reste hors de la fiche papier, reconnu à son titre),
+  `controle_boutons_vivants.py`, `controle_unites.py` (« kilomètres par heure » en toutes lettres),
+  `controle_regles_visibles.py`, `controle_debordement.py`, et les autres de la liste habituelle.
+- **Les 32 bancs du thème 2** : mêmes résultats qu'à `main`. `tests_4e_C4.1-C4.2-C4.4_book-train.mjs` a donné 38/39
+  une fois sous la charge de quatre suites en parallèle ; sa page n'est pas touchée, et il passe 39/39 deux fois seul.
+
+### Ce qui reste
+
+- Les billets du thème 1 (`5e_C1.5`) et du thème 3 (16 séquences), chacun dans sa PR.
+
+---
+
 ## 28/10/2026 — Règle d'or n°26 : le billet d'entrée de `5e_C1.5` (thème 1)
 
 *Suite de la carte blanche (28/10/2026) : la seule séquence du thème 1 que la n°26 refusait. Branche
