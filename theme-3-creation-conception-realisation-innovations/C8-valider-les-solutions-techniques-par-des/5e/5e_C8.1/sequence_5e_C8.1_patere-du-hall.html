@@ -90,6 +90,9 @@ table.releve tr.ko td{background:rgba(255,123,136,.10)}
   .btn{color:#1d4e89!important}
   .chrono,.etayage summary{color:#946b00!important}
 }
+
+/* Règle d'or n°304 : le bloc d'ouverture dit ce qui devrait être en place — à cocher, chacun avec son rattrapage. */
+.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.rappel-spiralaire .verif{list-style:none;margin:.4em 0 .6em;padding:0}.rappel-spiralaire .verif li{margin:.55em 0}.rappel-spiralaire .verif .ligne{display:flex;align-items:flex-start;gap:.6em}.rappel-spiralaire .verif input[type=checkbox]{flex:none;width:18px;height:18px;margin:.2em 0 0;accent-color:#61dafb;cursor:pointer}.rappel-spiralaire .verif label{cursor:pointer}.rappel-spiralaire .verif .code-verif{display:inline-block;font-size:.82em;opacity:.85;white-space:nowrap;margin-left:.3em}.rappel-spiralaire .verif .rattrapage{margin:.2em 0 0 calc(18px + .6em);font-size:.93em}.rappel-spiralaire .verif-consigne{margin:.2em 0 .3em;font-size:.95em}.rappel-spiralaire .rattrapage a,.rappel-spiralaire .rattrapage a:visited{color:var(--hl)}@media print{.rappel-spiralaire .verif-consigne,.rappel-spiralaire .verif label,.rappel-spiralaire .verif .code-verif,.rappel-spiralaire .verif .rattrapage,.rappel-spiralaire .verif .rattrapage a{color:#041a40!important;opacity:1!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -440,17 +443,27 @@ table.releve tr.ko td{background:rgba(255,123,136,.10)}
   <span class="badge duree">⏱ 2 séances de 55 min</span>
 </div>
 
-<section class="card">
-  <h2>🔄 D'où tu viens — la spirale C8</h2>
-  <p>Dans <b>La patère du hall — éprouver un matériau</b> (5e_C8.2), tu as appliqué un protocole
-  fourni : charger, ajouter, recommencer, noter la charge à laquelle chaque crochet <b>casse</b>.
-  Tu as obtenu cinq chiffres, et tu as classé.</p>
-  <p><b>Ce qui change aujourd'hui :</b> tu ne casses rien. Un service technique t'envoie une
-  <b>simulation</b> déjà réglée, et tu t'en sers pour décider. Le verbe du programme est
-  « utiliser » — pas « écrire », pas « régler ». En 4<sup>e</sup> tu la paramètreras ; en
-  3<sup>e</sup> tu la mettras en œuvre toi-même.</p>
+<section class="card rappel-spiralaire" aria-labelledby="rap-spi">
+  <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
+  <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
+  <ul class="verif">
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais qu'on ne compare deux matériaux que dans les mêmes conditions : même éprouvette, même banc. <span class="code-verif">cycle 3</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../5e_C8.2/synthese_eleve_5e_C8.2.html#protocole">relis « Le protocole, en six lignes » dans la synthèse 5e_C8.2</a> — c'est la séquence 5e_C8.2 qui la travaille, si tu l'as suivie</p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais ce qu'est une charge de rupture : la charge à laquelle la pièce casse. <span class="code-verif">cycle 3</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../5e_C8.2/synthese_eleve_5e_C8.2.html#mots">relis « Les six mots à savoir » dans la synthèse 5e_C8.2</a> — c'est la séquence 5e_C8.2 qui la travaille, si tu l'as suivie</p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_3"><label for="ouv_3">Je sais pourquoi on prend de la marge : on fait tenir plus que la charge prévue, parce qu'on ne connaît ni la vraie charge ni la vraie pièce. <span class="code-verif">cycle 3</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../5e_C8.2/synthese_eleve_5e_C8.2.html#decider">relis « Décider » dans la synthèse 5e_C8.2</a> — c'est la séquence 5e_C8.2 qui la travaille, si tu l'as suivie</p>
+    </li>
+  </ul>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> tu ne casses rien. Un service technique t'envoie une <b>simulation</b> déjà réglée, et tu t'en sers pour décider. Le verbe du programme est « utiliser » — pas « écrire », pas « régler ».</p>
   <div class="retenir">Une simulation ne remplace pas l'essai réel : elle permet
   d'<b>éliminer vite</b>, sans rien détruire, avant d'aller au banc.</div>
+  <p class="filet">Un mot à garder en tête : une contrainte, c'est l'effort que la charge fait subir à l'intérieur de la matière ; elle dépend de la charge et de la forme, jamais du matériau.</p>
 </section>
 
 <section class="card">
@@ -985,6 +998,8 @@ document.querySelectorAll("[data-check]").forEach(b => b.addEventListener("click
 function save(){
   const o = {inputs: {}, exp: window.__exp || {}, releves: releves};
   document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
+  // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
+  document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { o.inputs[c.id] = c.checked; });
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
 }
 function restore(){
@@ -992,6 +1007,8 @@ function restore(){
   if(!o) return;
   Object.entries(o.inputs || {}).forEach(([k, v]) => {
     const e = document.getElementById(k); if(e) e.value = v; });
+  // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
+  document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { const v = (o.inputs || {})[c.id]; if(v !== undefined) c.checked = (v === true); });
   window.__exp = o.exp || {};
   Object.entries(o.releves || {}).forEach(([k, v]) => { releves[k] = v; });
   tableau();

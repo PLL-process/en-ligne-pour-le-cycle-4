@@ -189,7 +189,7 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
 .bench .res{font-weight:700}
 figure{width:100%;margin:14px 0}
 figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
-.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}  /* ══ Filet de lisibilité des tableaux (règle d'or n°135) ══
+.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.rappel-spiralaire .verif{list-style:none;margin:.4em 0 .6em;padding:0}.rappel-spiralaire .verif li{margin:.55em 0}.rappel-spiralaire .verif .ligne{display:flex;align-items:flex-start;gap:.6em}.rappel-spiralaire .verif input[type=checkbox]{flex:none;width:18px;height:18px;margin:.2em 0 0;accent-color:#61dafb;cursor:pointer}.rappel-spiralaire .verif label{cursor:pointer}.rappel-spiralaire .verif .code-verif{display:inline-block;font-size:.82em;opacity:.85;white-space:nowrap;margin-left:.3em}.rappel-spiralaire .verif .rattrapage{margin:.2em 0 0 calc(18px + .6em);font-size:.93em}.rappel-spiralaire .verif-consigne{margin:.2em 0 .3em;font-size:.95em}.rappel-spiralaire .rattrapage a,.rappel-spiralaire .rattrapage a:visited{color:var(--hl)}@media print{.rappel-spiralaire .verif-consigne,.rappel-spiralaire .verif label,.rappel-spiralaire .verif .code-verif,.rappel-spiralaire .verif .rattrapage,.rappel-spiralaire .verif .rattrapage a{color:#041a40!important;opacity:1!important}}  /* ══ Filet de lisibilité des tableaux (règle d'or n°135) ══
      Un tableau qui n'a pas de classe n'a aucune mise en forme : à trois colonnes
      ou plus, l'œil ne sait plus quelle cellule va avec quelle ligne. On habille
      donc l'ÉLÉMENT, pas seulement la classe — comme cela, oublier la classe ne
@@ -635,10 +635,24 @@ figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
 <h1>Thème 3 · New York — 3e · Atelier : Variables, types et systèmes</h1>
 <p class="subtitle">Le panneau du quai 96 St affiche n'importe quoi — répare le programme, et deviens celui ou celle qui COMPREND les variables</p>
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
-  <h2 id="rap-spi">&#128260; Ce que tu as déjà fait</h2>
-  <p class="deja">En 5e, tu as manipulé la <b>variable comme une boîte étiquetée</b>. En 4e, sur le jardin, tu as <b>écrit</b> un programme complet, tu l'as testé et mis au point.</p>
-  <p class="change"><b>Cette année, ce qui change&nbsp;:</b> on regarde <b>dans</b> la boîte. Toutes les variables ne se valent pas : un nombre entier, un nombre à virgule, un texte, un vrai-ou-faux ne se rangent pas de la même façon et ne réagissent pas pareil. C'est ce qui explique la moitié des bogues que tu as rencontrés l'an dernier.</p>
-  <p class="filet">Tu arrives maintenant ? Il suffit de savoir qu'une variable porte un nom et contient une valeur qu'on peut changer en cours de programme.</p>
+  <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
+  <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
+  <ul class="verif">
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais lire un algorigramme : un rectangle fait, un losange demande, et la flèche qui remonte recommence. <span class="code-verif">4e_C9.1</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../4e/4e_C9.1/Synthèses/synthese_eleve_4e_C9.html#partie-1">relis la partie 1 de la synthèse 4e_C9.1 à C9.3, « Concevoir : dessiner avant d'écrire »</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais traduire un algorithme en programme, et je sais que = range une valeur quand == compare. <span class="code-verif">4e_C9.2</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../4e/4e_C9.1/Synthèses/synthese_eleve_4e_C9.html#partie-3">relis la partie 3 de la synthèse 4e_C9.1 à C9.3, « Traduire en programme »</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_3"><label for="ouv_3">Je sais tester un programme : écrire le résultat attendu avant d'exécuter, et essayer la valeur frontière. <span class="code-verif">4e_C9.3</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../4e/4e_C9.1/Synthèses/synthese_eleve_4e_C9.html#partie-4">relis la partie 4 de la synthèse 4e_C9.1 à C9.3, « Tester : prouver, pas espérer »</a></p>
+    </li>
+  </ul>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> on regarde <b>dans</b> la boîte. Toutes les variables ne se valent pas : un nombre entier, un nombre à virgule, un texte, un vrai-ou-faux ne se rangent pas de la même façon et ne réagissent pas pareil. C'est ce qui explique une bonne part des bogues de débutant.</p>
+  <p class="filet">Un mot à garder en tête : une variable porte un nom et contient une valeur qu'on peut changer en cours de programme.</p>
 </section>
 
 <style>
@@ -1563,6 +1577,8 @@ document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click
 function save(){
   const o = {inputs: {}, par, exp: window.__exp || {}, ae: {}};
   document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
+  // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
+  document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { o.inputs[c.id] = c.checked; });
   document.querySelectorAll(".ae-btns").forEach(w => { const s = w.querySelector(".sel"); if(s) o.ae[w.dataset.k] = s.textContent; });
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
   const sn = $("savedNote"); if(sn){ sn.textContent = "💾 Travail sauvegardé sur CET ordinateur (" + new Date().toLocaleTimeString() + ")"; }
@@ -1571,6 +1587,8 @@ function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
   if(!o) return;
   Object.entries(o.inputs || {}).forEach(([id, v]) => { const e = $(id); if(e) e.value = v; });
+  // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
+  document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { const v = (o.inputs || {})[c.id]; if(v !== undefined) c.checked = (v === true); });
   (o.par && o.par.s || []).forEach(n => { if(!par.s.includes(n)) par.s.push(n); });
   window.__exp = Object.assign(window.__exp || {}, o.exp || {});
   if(window.__exp.memoire){ step = PROG.length - 1; renderMem(); }

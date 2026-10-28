@@ -227,7 +227,7 @@
   .rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}
   .rappel-spiralaire h2{margin:.1em 0 .5em}
   .rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}
-  .rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}
+  .rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.rappel-spiralaire .verif{list-style:none;margin:.4em 0 .6em;padding:0}.rappel-spiralaire .verif li{margin:.55em 0}.rappel-spiralaire .verif .ligne{display:flex;align-items:flex-start;gap:.6em}.rappel-spiralaire .verif input[type=checkbox]{flex:none;width:18px;height:18px;margin:.2em 0 0;accent-color:#61dafb;cursor:pointer}.rappel-spiralaire .verif label{cursor:pointer}.rappel-spiralaire .verif .code-verif{display:inline-block;font-size:.82em;opacity:.85;white-space:nowrap;margin-left:.3em}.rappel-spiralaire .verif .rattrapage{margin:.2em 0 0 calc(18px + .6em);font-size:.93em}.rappel-spiralaire .verif-consigne{margin:.2em 0 .3em;font-size:.95em}.rappel-spiralaire .rattrapage a,.rappel-spiralaire .rattrapage a:visited{color:var(--hl)}@media print{.rappel-spiralaire .verif-consigne,.rappel-spiralaire .verif label,.rappel-spiralaire .verif .code-verif,.rappel-spiralaire .verif .rattrapage,.rappel-spiralaire .verif .rattrapage a{color:#041a40!important;opacity:1!important}}
   .gestes-outil{border:1px solid var(--border);border-left:4px solid #ffb300;border-radius:10px;padding:1rem 1.15rem;margin:1.1rem 0;background:var(--panel)}
   .gestes-outil h2{margin:0 0 .35rem;font-size:1.05em}
   .gestes-outil .pourquoi{margin:.2rem 0 .8rem;opacity:.85;font-size:.95em}
@@ -711,10 +711,24 @@
 <a href="sequence_3e_C9.2-C8.3_station_4_recette.html">4 · Protocole et recette — séances 7 et 8</a>.</p>
 
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
-  <h2 id="rap-spi">&#128260; Ce que tu as déjà fait</h2>
-  <p class="deja">Tu connais déjà cette station : au Thème 2 (séquence 3e_C4.3), tu as <b>décrit sa chaîne d'information</b> — capteur, microcontrôleur, alerte — et manipulé son CAN. Et dans l'atelier « Variables, types et systèmes » (3e_C9.1), tu as appris qu'une <b>variable</b> est une boîte étiquetée, qu'un programme se structure en <b>sous-programmes</b>, et qu'on le met au point avec un <b>banc de tests</b>.</p>
-  <p class="change"><b>Cette fois, ce qui change&nbsp;:</b> tu ne décris plus la station, tu la <b>COMMANDES</b>. Ton programme va piloter un <b>système réel</b> — écran, DEL, buzzer — et dialoguer avec un <b>humain</b> qui appuie sur un bouton. Puis tu changeras de casquette : avant la mise en service, c'est TOI qui rédigeras le <b>protocole de test</b> qui prouve à la mairie que ça marche.</p>
-  <p class="filet">Tu n'as pas fait ces séquences ? Il suffit de savoir qu'un capteur produit un nombre (0 à 1023), qu'une variable garde une valeur en mémoire, et qu'un programme se lit dans l'ordre.</p>
+  <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
+  <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
+  <ul class="verif">
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais nommer les fonctions d'une chaîne d'information — acquérir, traiter, communiquer — et je sais qu'un capteur informe, il ne décide pas. <span class="code-verif">4e_C4.4</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../../../theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation/4e/4e_C4.1_book-train/Synthèses/synthese_eleve_4e_C4.1-C4.2-C4.4.html#partie-3">relis la partie 3 de la synthèse 4e_C4.1, C4.2 et C4.4, « Suivre l'information »</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais traduire un algorithme en programme : les réglages nommés en haut, puis les entrées, puis la décision. <span class="code-verif">4e_C9.2</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../4e/4e_C9.1/Synthèses/synthese_eleve_4e_C9.html#partie-3">relis la partie 3 de la synthèse 4e_C9.1 à C9.3, « Traduire en programme »</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_3"><label for="ouv_3">Je sais écrire un protocole de test : des étapes ordonnées, et pour chacune l'action et le résultat attendu. <span class="code-verif">4e_C8.3</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../../C8-valider-les-solutions-techniques-par-des/4e/4e_C8.1/synthese_eleve_4e_C8.html#protocole">relis « Le protocole de test » dans la synthèse 4e_C8.1 à C8.3</a></p>
+    </li>
+  </ul>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> tu <b>commandes</b> la station d'alerte. Ton programme pilote un <b>système réel</b> — écran, DEL, buzzer — et dialogue avec un <b>humain</b> qui appuie sur un bouton. Puis tu changes de casquette : avant la mise en service, c'est toi qui rédiges le <b>protocole de test</b> qui prouve à la mairie que ça marche.</p>
+  <p class="filet">Un mot à garder en tête : un capteur produit un nombre (de 0 à 1023), une variable garde une valeur en mémoire, et un programme se lit dans l'ordre.</p>
 </section>
 
 <section class="card" aria-labelledby="billet-titre">
@@ -2206,6 +2220,8 @@ function collect(){
     o.inputs[el.id] = el.value;
   });
   document.querySelectorAll("input[type=radio]").forEach(r=>{ if(r.checked) o.radios[r.name]=r.value; });
+  // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
+  document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { o.inputs[c.id] = c.checked; });
   return o;
 }
 function save(showNote){
@@ -2219,6 +2235,8 @@ function restore(){
   try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o = null; }
   if(!o) return;
   Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(el && id!=="simVent" && id!=="simVentNum") el.value=v; });
+  // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
+  document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { const v = (o.inputs || {})[c.id]; if(v !== undefined) c.checked = (v === true); });
   Object.entries(o.radios||{}).forEach(([n,v])=>{ const r=document.querySelector(`input[name="${n}"][value="${v}"]`); if(r) r.checked=true; });
   window.__valid = o.valid || {};
   window.__exp = Object.assign(window.__exp || {}, o.exp || {});

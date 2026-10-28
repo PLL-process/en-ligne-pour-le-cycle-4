@@ -193,7 +193,7 @@
   .rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}
   .rappel-spiralaire h2{margin:.1em 0 .5em}
   .rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}
-  .rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}
+  .rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.rappel-spiralaire .verif{list-style:none;margin:.4em 0 .6em;padding:0}.rappel-spiralaire .verif li{margin:.55em 0}.rappel-spiralaire .verif .ligne{display:flex;align-items:flex-start;gap:.6em}.rappel-spiralaire .verif input[type=checkbox]{flex:none;width:18px;height:18px;margin:.2em 0 0;accent-color:#61dafb;cursor:pointer}.rappel-spiralaire .verif label{cursor:pointer}.rappel-spiralaire .verif .code-verif{display:inline-block;font-size:.82em;opacity:.85;white-space:nowrap;margin-left:.3em}.rappel-spiralaire .verif .rattrapage{margin:.2em 0 0 calc(18px + .6em);font-size:.93em}.rappel-spiralaire .verif-consigne{margin:.2em 0 .3em;font-size:.95em}.rappel-spiralaire .rattrapage a,.rappel-spiralaire .rattrapage a:visited{color:var(--hl)}@media print{.rappel-spiralaire .verif-consigne,.rappel-spiralaire .verif label,.rappel-spiralaire .verif .code-verif,.rappel-spiralaire .verif .rattrapage,.rappel-spiralaire .verif .rattrapage a{color:#041a40!important;opacity:1!important}}
   .gestes-outil{border:1px solid var(--border);border-left:4px solid #ffb300;border-radius:10px;padding:1rem 1.15rem;margin:1.1rem 0;background:var(--panel)}
   .gestes-outil h2{margin:0 0 .35rem;font-size:1.05em}
   .gestes-outil .pourquoi{margin:.2rem 0 .8rem;opacity:.85;font-size:.95em}
@@ -663,10 +663,24 @@
 </div>
 
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
-  <h2 id="rap-spi">🔁 Ce que tu as déjà fait</h2>
-  <p>L'an dernier, avec la <b>boîte étiquetée</b>, tu as compris ce qu'est une variable, tu as <b>testé un programme fourni</b>, et tu l'as <b>modifié</b> pour régler une barrière.</p>
-  <p class="change"><b>Cette année, ce qui change :</b> il n'y a plus de programme fourni — tu l'<b>écris</b>. Concevoir, écrire, tester, mettre au point : les quatre gestes, dans cet ordre. Et tu vas découvrir que le plus long n'est pas d'écrire.</p>
-  <p class="filet">Tu n'étais pas là l'an dernier ? Une variable est une boîte étiquetée : un nom, et une valeur qu'on peut changer. C'est tout ce qu'il faut savoir pour commencer.</p>
+  <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
+  <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
+  <ul class="verif">
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais qu'une variable est une boîte étiquetée : un nom, et une seule valeur, que le signe = remplace. <span class="code-verif">5e_C9.1</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../5e/5e_C9.1/Synthèses/synthese_eleve_5e_C9.1-C9.3.html#variable">relis « La variable » dans la synthèse 5e_C9.1 à C9.3</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais tester un programme fourni : comparer ce que le besoin attend à ce que la console donne, sur plusieurs cas. <span class="code-verif">5e_C9.1</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../5e/5e_C9.1/Synthèses/synthese_eleve_5e_C9.1-C9.3.html#tester">relis « Lire et TESTER un programme fourni » dans la synthèse 5e_C9.1 à C9.3</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_3"><label for="ouv_3">Je sais modifier la bonne ligne d'un programme, puis rejouer tous les tests. <span class="code-verif">5e_C9.2</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../5e/5e_C9.1/Synthèses/synthese_eleve_5e_C9.1-C9.3.html#modifier">relis « Modifier et régler » dans la synthèse 5e_C9.1 à C9.3</a></p>
+    </li>
+  </ul>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> il n'y a pas de programme fourni — tu l'<b>écris</b>. Concevoir, écrire, tester, mettre au point : les quatre gestes, dans cet ordre. Et tu vas découvrir que le plus long n'est pas d'écrire.</p>
+  <p class="filet">Un mot à garder en tête : une variable est une boîte étiquetée — un nom, et une valeur qu'on peut changer.</p>
 </section>
 
 <!-- ════════ BILLET D'ENTRÉE — règle d'or n°26 ════════ -->
@@ -1502,6 +1516,8 @@ function collect(){
     o.inputs[e.id] = e.value;
   });
   document.querySelectorAll('input[type="radio"][name]:checked').forEach(e=>{ o.radios[e.name] = e.value; });
+  // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
+  document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { o.inputs[c.id] = c.checked; });
   return o;
 }
 let tSave = null;
@@ -1517,6 +1533,8 @@ function restore(){
   try{ d = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ return; }
   if(!d) return;
   Object.entries(d.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e && e.type!=="radio") e.value=v; });
+  // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
+  document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { const v = (d.inputs || {})[c.id]; if(v !== undefined) c.checked = (v === true); });
   Object.entries(d.radios||{}).forEach(([n,v])=>{
     const e=document.querySelector('input[type="radio"][name="'+n+'"][value="'+v+'"]'); if(e) e.checked=true;
   });

@@ -176,6 +176,9 @@ section.card[id^="activite-"]{scroll-margin-top:60px}
     a,a:visited{color:#00309e!important}
     a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
   }
+
+/* Règle d'or n°304 : le bloc d'ouverture dit ce qui devrait être en place — à cocher, chacun avec son rattrapage. */
+.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.rappel-spiralaire .verif{list-style:none;margin:.4em 0 .6em;padding:0}.rappel-spiralaire .verif li{margin:.55em 0}.rappel-spiralaire .verif .ligne{display:flex;align-items:flex-start;gap:.6em}.rappel-spiralaire .verif input[type=checkbox]{flex:none;width:18px;height:18px;margin:.2em 0 0;accent-color:#61dafb;cursor:pointer}.rappel-spiralaire .verif label{cursor:pointer}.rappel-spiralaire .verif .code-verif{display:inline-block;font-size:.82em;opacity:.85;white-space:nowrap;margin-left:.3em}.rappel-spiralaire .verif .rattrapage{margin:.2em 0 0 calc(18px + .6em);font-size:.93em}.rappel-spiralaire .verif-consigne{margin:.2em 0 .3em;font-size:.95em}.rappel-spiralaire .rattrapage a,.rappel-spiralaire .rattrapage a:visited{color:var(--hl)}@media print{.rappel-spiralaire .verif-consigne,.rappel-spiralaire .verif label,.rappel-spiralaire .verif .code-verif,.rappel-spiralaire .verif .rattrapage,.rappel-spiralaire .verif .rattrapage a{color:#041a40!important;opacity:1!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -528,19 +531,25 @@ section.card[id^="activite-"]{scroll-margin-top:60px}
 </div>
 <nav class="seances-liens" aria-label="Aller à une séance">🗓 Aller à ma séance&nbsp;: <a href="#seance-1">Séance 1 — L'épaisseur, puis le verdict du banc</a> · <a href="#seance-2">Séance 2 — Trois sorties, et qui paie</a> · <a href="#seance-3">Séance 3 — Justifier le matériau et son procédé</a> · <a href="#seance-4">Séance 4 — Trancher autrement, puis conclure</a></nav>
 
-<section class="card">
-  <h2>🔄 Ce que tu sais déjà faire — et ce qu'on ne refera pas</h2>
-  <p>En 5<sup>e</sup>, le banc de la cour t'a appris qu'un cahier des charges <em>élimine</em>.
-  En 4<sup>e</sup>, le bac du jardin t'a appris que trois candidats retenus se <em>classent</em> —
-  et que le classement dépend de la durée qu'on choisit. Dans les deux cas, il restait quelqu'un.</p>
-  <p><b>Ce qui change aujourd'hui, et qui change tout :</b> le cahier des charges du boîtier, tel
-  qu'il est écrit, ne retient <b>personne</b>. Aucun des six candidats ne passe. Ce n'est pas une
-  erreur du banc, et ce n'est pas rare : c'est la situation ordinaire d'un bureau d'études. Le
-  travail n'est plus de choisir dans une liste, il est de <b>rouvrir le cahier des charges</b> —
-  et de dire qui paie.</p>
-  <p style="color:var(--sub)">Deuxième changement, plus discret : jusqu'ici l'épaisseur des pièces
-  était donnée. Ici, elle ne l'est pas. Elle <em>dépend du matériau</em>, et c'est ce qui rend les
-  masses impossibles à deviner.</p>
+<section class="card rappel-spiralaire" aria-labelledby="rap-spi">
+  <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
+  <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
+  <ul class="verif">
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais nommer toutes les exigences qu'un matériau manque dans un tableau de seuils, pas seulement la première. <span class="code-verif">4e_C7.3</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../4e/4e_C7.3/synthese_eleve_4e_C7.3.html#plusieurs-seuils">relis « Un candidat peut manquer plusieurs seuils » dans la synthèse 4e_C7.3</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais dire d'où vient une exigence : du lieu où vit l'objet, de l'objet lui-même, ou d'un engagement pris. <span class="code-verif">4e_C7.3</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../4e/4e_C7.3/synthese_eleve_4e_C7.3.html#site-ou-objet">relis « Du site, ou de l'objet » dans la synthèse 4e_C7.3</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_3"><label for="ouv_3">Je sais comparer des matériaux sur la même grandeur, avec la même unité et la même méthode. <span class="code-verif">4e_C7.3</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../4e/4e_C7.3/synthese_eleve_4e_C7.3.html#comparer">relis « Comparer n'est pas préférer » dans la synthèse 4e_C7.3</a></p>
+    </li>
+  </ul>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> le cahier des charges du boîtier, tel qu'il est écrit, ne retient <b>personne</b> — aucun des six candidats ne passe. Ce n'est pas une erreur du banc, et ce n'est pas rare : c'est la situation ordinaire d'un bureau d'études. Le travail consiste à <b>rouvrir le cahier des charges</b> — et à dire qui paie. Autre difficulté : l'épaisseur des pièces n'est pas donnée. Elle <em>dépend du matériau</em>, et c'est ce qui rend les masses impossibles à deviner.</p>
+  <p class="filet">Un mot à garder en tête : on ne déplace qu'un seuil à la fois ; deux seuils déplacés ensemble, et le résultat n'a plus de cause identifiable.</p>
 </section>
 
 <section class="card">

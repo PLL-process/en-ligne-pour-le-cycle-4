@@ -24910,3 +24910,119 @@ lampadaire… ». Même traitement que le thème 1, mot pour mot :
   sais déjà faire — et ce qu'on ne refera pas » ou « 🔄 D'où tu viens — la spirale C7.x / C8 » des séquences d'atelier).
   Sa PR suit.
 - **Le déclencheur de la n°26**, dans `_outils/` (thème 2) : à revoir quand la n°304 sera finie partout.
+
+---
+
+## 28/10/2026 — Règle d'or n°304, vague du thème 3 : vingt-trois ouvertures ne disent plus le passé (thème 3)
+
+*Suite de la carte blanche de Pascal (28/10/2026), après la fusion de #527 (thème 2). Branche
+`fable/theme-3-regle-304`, partie de `main` après #527 : les rattrapages du thème 3 renvoient aussi vers les ancres que
+#527 a posées dans les synthèses du thème 2 — sans toucher à ces fichiers.*
+
+### Ce que fait cette PR
+
+**Vingt-trois pages du thème 3** ouvraient sur ce que l'élève avait fait : « En 5e, tu as imaginé… En 4e, sur le
+jardin… », « Avec le banc de la cour, tu as vu qu'un cahier des charges élimine », « Tu as programmé cette station
+(3e_C9.2), signé sa recette… ». Trois familles :
+
+- **sept blocs `rappel-spiralaire`** « 🔄 Ce que tu as déjà fait » (mini-projets `3e_C7.1`, `4e_C7.1`, `4e_C8.1`,
+  séquences `3e_C9.1`, `3e_C9.2` ×2, `4e_C9.1` — celle-ci en 🔁) ;
+- **seize cartes ordinaires** « 🔄 Ce que tu sais déjà faire — et ce qu'on ne refera pas », « 🔄 D'où tu viens — la
+  spirale C7.x / C8 » (parfois avec un tableau de progression 5e → 4e → 3e), « 🔄 Ce que tu as déjà fait » : les
+  séquences d'atelier C7.3 à C7.8 et C8. Elles reçoivent la classe `rappel-spiralaire`.
+
+Même traitement qu'aux thèmes 1 et 2 :
+
+- **Le titre** « 🔄 Avant de commencer : ce que je vérifie », la phrase d'accueil du thème 1, et **trois lignes** : une
+  vraie case reliée à sa phrase « Je sais… », le code **du niveau précédent** (`4e_` pour une 3e, `5e_` pour une 4e,
+  « cycle 3 » pour une 5e), et dessous, toujours visible, « → pas encore sûr·e ? » avec un lien vers **la partie citée**
+  d'une synthèse élève, lue avant d'être citée. En 5e, quand la synthèse est celle d'une autre séquence de l'année :
+  « — c'est la séquence 5e_C3.1 qui la travaille, si tu l'as suivie ».
+- **« Ce qui change aujourd'hui »** / « Cette année, ce qui change » devient « Dans cette séquence », au présent, sans
+  « ne… plus » ni « jusqu'ici » ; **« Tu arrives cette année ? »** devient « Un mot à garder en tête : ».
+- **Les encadrés `.retenir` qui ne disent rien du passé restent** dans le bloc, tels quels : « Sans grille, on ne
+  compare pas : on préfère » (`4e_C7.4`), « Un objet branché n'est pas un objet qui communique » (`4e_C7.8`), « Une
+  simulation mal réglée ne se trompe pas » (`3e_C8.1`), « Une simulation ne remplace pas l'essai réel » (`5e_C8.1`),
+  « Ce qui change quand le destinataire est une machine » (`3e_C7.8`, « compensait » → « compense »). Celui de
+  `3e_C8.2` (« en 5e, si le protocole était mauvais… ») part avec le passé.
+- **Les tableaux « D'où tu viens »** (`3e_C7.4`, `3e_C7.8`, `3e_C8.2`) disparaissent : ils disaient ce qu'on avait
+  demandé à l'élève en 5e et en 4e.
+- **36 ancres** sur les titres cités, dans treize synthèses élèves du thème 3 (`partie-N` pour un titre numéroté, un nom
+  court sinon). Les synthèses des thèmes 1 et 2 citées ont déjà leurs ancres : elles ne sont que lues.
+- **La CSS du bloc** : les règles du thème 1, écran et impression. Les seize cartes reçoivent aussi les sous-règles
+  `.change` et `.filet`, **mais pas** la règle `.rappel-spiralaire{…}` de premier niveau : sur les pages du thème 3 qui
+  l'avaient, `section.card` la recouvre et le bloc garde l'allure d'une carte, centrée — on garde cette allure partout.
+  Les liens de rattrapage prennent `var(--hl)` : le thème 3 ne colore pas ses liens, et le bleu par défaut du
+  navigateur tombait sur le fond sombre (vu à la capture).
+- **La mémoire** garde l'état des cases, selon l'idiome de chaque page : treize pages gardaient déjà toute case munie
+  d'un id (dictionnaire `checks` des séquences d'atelier, liste `coches` de `3e_C7.1`) — rien à faire ; dix gardaient la
+  *valeur* des champs (« on » pour une case) — une ligne dans `save()` ou `collect()` garde l'état des seules cases du
+  bloc, une ligne dans `restore()` les recoche.
+
+| page | les trois lignes (codes) |
+|---|---|
+| `3e_C7.1` capteur de confort | découper et estimer `4e_C7.1` · protocole de test `4e_C8.3` · lire un algorigramme `4e_C9.1` |
+| `3e_C7.3` boîtier de la station | tous les seuils manqués · d'où vient une exigence · comparer le comparable `4e_C7.3` |
+| `3e_C7.4` énergie de la station | critères avant de regarder · lire le banc en Wh `4e_C7.4` · écrire une caractéristique `4e_C3.1` |
+| `3e_C7.5` station à équiper | constituant ↔ fonction `4e_C4.4` · budget de courant · commander n'est pas actionner `4e_C7.5` |
+| `3e_C7.8` deux stations | brancher ≠ interfacer · message suffisant `4e_C7.8` · adresse IP fixe `4e_C4.7` |
+| `4e_C7.1` jardin, conception | une tâche finie ou non `5e_C7.1` · un seuil `5e_C7.3` · mesurer, décider, agir `5e_C4.5` |
+| `4e_C7.3` bac du jardin | ni bon ni mauvais · un seuil · plusieurs passent : un critère de plus `5e_C7.3` |
+| `4e_C7.4` énergie du jardin | formes d'énergie · réservoir ou robinet `5e_C7.4` · décrire un objet `5e_C3.1` |
+| `4e_C7.5` jardin incomplet | les quatre fonctions `5e_C7.5` · la chaîne d'information `5e_C4.5` · le type de port `5e_C7.5` |
+| `4e_C7.7` support du capteur | esquisse, cotes, extrusion · exporter en STL `5e_C7.6` · familles de matériaux `5e_C7.3` |
+| `4e_C7.8` le jardin publie | composants du réseau `5e_C4.7` · une adresse par appareil `5e_C4.8` · donnée ≠ information `5e_C1.1` |
+| `5e_C7.3` banc de la cour | de quoi un objet est fait · décrire un objet · le besoin en exigences (cycle 3) |
+| `5e_C7.4` indicateur du hall | d'où vient l'énergie · formes d'énergie · le besoin en exigences (cycle 3) |
+| `5e_C7.5` éclairage du préau | brancher hors tension · mesurer, décider, agir · suivre un schéma de câblage (cycle 3) |
+| `3e_C8.1` mât, simulation | élastique ou rupture · ce que la simulation ne voit pas `4e_C8.1` · conforme ou non `4e_C8.3` |
+| `3e_C8.2` mât, protocole | écrire un protocole · éprouvettes identiques · charge × coefficient `4e_C8.2` |
+| `4e_C8.1` jardin, validation | suivre un protocole `5e_C8.3` · une seule chose change `5e_C3.4` · un essai ne prouve que ce qu'il teste `5e_C8.2` |
+| `5e_C8.1` patère, simulation | mêmes conditions · charge de rupture · la marge (cycle 3) |
+| `5e_C8.2` patère, protocole | suivre une consigne · une seule chose change · noter avec l'unité (cycle 3) |
+| `3e_C9.1` variables et types | lire un algorigramme `4e_C9.1` · traduire, `=` et `==` `4e_C9.2` · tester, la frontière `4e_C9.3` |
+| `3e_C9.2` station ×2 | chaîne d'information `4e_C4.4` · traduire en programme `4e_C9.2` · protocole de test `4e_C8.3` |
+| `4e_C9.1` jardin programmé | la variable · tester un programme fourni `5e_C9.1` · modifier, puis tout rejouer `5e_C9.2` |
+
+- **`3e_C9.2`** : les quatre pages sont engendrées depuis la page tout-en-un par `generer_les_quatre_pages.py`, mais ce
+  script n'est plus synchrone avec elles — relancé dans une copie, il écrase les badges CRCN propres à chaque page et
+  les infobulles des badges de code. On ne l'a donc pas relancé : la page tout-en-un et la page 1 reçoivent le même
+  bloc, à l'identique ; les pages 2 à 4, sans bloc d'ouverture, gardent les cases par la fusion de `collect()` (même
+  clé de sauvegarde).
+- L'outil de la vague (`ouvertures_t3.py`) reste hors du dépôt, comme ceux des thèmes 1 et 2.
+
+### Vérifié
+
+- **`verif_regles_audit.py`** : ✘ **156 → 133**. Les 23 n°304 passent au ✔ : **la n°304 n'a plus aucun manquement sur
+  les 60 séquences du dépôt** (thèmes 1, 2 et 3). Deux n°26 passent de ✔ à « sans objet » (`4e_C8.1`, `4e_C9.1`) — le
+  même déclencheur qu'aux thèmes 1 et 2 (voir « Ce qui reste »). La n°67 compte trois champs de plus (les cases) et
+  reste ✔ partout.
+- **Comme un élève**, dans Chromium à 390 px, page par page : trois cases ; cocher la 1re et la 3e **en cliquant sur la
+  phrase** ; texte du bloc **identique** avant et après ; recharger : 1re et 3e cochées, 2e non ; « 🗑 Effacer ma
+  sauvegarde » là où la page en a un (`3e_C9.1`, `3e_C9.2` ×2, `4e_C9.1`) : tout décoché ; chaque lien de rattrapage
+  ouvre sa synthèse **avec le titre cité à l'écran** (la dernière partie d'une synthèse courte, qui ne peut pas monter
+  en haut d'écran, est acceptée si son titre est visible page défilée jusqu'au bout) ; aucun défilement horizontal ;
+  console vide — **188 / 188**.
+- **Au regard**, captures à 390 et 1 000 px : la capture a montré les liens de rattrapage illisibles sur seize pages
+  (bleu par défaut sur fond sombre) avant la règle `var(--hl)` ; `controle_contraste_liens.mjs` le refusait aussi.
+- **Contrôles**, identiques à `main` : `controle_contraste_liens.mjs` (après la retouche), `controle_liens.py` (les 36
+  ancres nouvelles, et celles des thèmes 1 et 2, trouvées), `controle_impression.mjs`, `controle_impression_papier.py`,
+  `controle_squelette.mjs`, `controle_verrous.mjs`, `controle_hors_ligne.mjs`, `controle_regles_visibles.py`,
+  `controle_formulations.py`, `controle_competences.py`, `controle_hierarchie.py`, `controle_atteignabilite.py`,
+  `controle_boutons_vivants.py`, `controle_debordement.py`, `controle_rapports_tests.py`,
+  `verifier_chaines_energie.py` ✅.
+- **Bancs du thème 3** : les **50 bancs**, mêmes résultats qu'à `main`. Trente-sept prennent des arguments (page,
+  niveau, fichier de réponses) : lancés avec les lignes de commande de leurs rapports de tests — séquences 3e_C7.3 68/68,
+  3e_C7.4 54/54, 3e_C7.5 54/54, 3e_C7.7 77/77, 3e_C7.8 58/58, 4e_C7.3 44/44, 4e_C7.4 35/35, 4e_C7.5 39/39,
+  4e_C7.7 38/38, 4e_C7.8 46/46, 5e_C7.3 41/41, 5e_C7.4 34/34, 5e_C7.5 39/39, 3e_C8.1 62/62, 3e_C8.2 44/44,
+  5e_C8.1 39/39, et chaque QCM 31 ou 32 sur 31 ou 32 ; `tests_3e_C9.2-C8.3.mjs` 167/167 (union des champs des quatre
+  pages identique à la page source, persistance croisée), `tests_atelier_C7.1.py` 48/48, `tests_qcm_c7_c8.mjs` 71/71.
+  Deux rapports de tests donnent des lignes à reprendre à la main (`5e_C7.4` nomme `reponses_5e.json`, le fichier
+  s'appelle `reponses_5e_C7.4.json` ; `3e_C8.1` et `5e_C8.1` abrègent la ligne du QCM par « … ») : non touchés ici.
+
+### Ce qui reste
+
+- **`generer_les_quatre_pages.py`** (`3e_C9.2`) : à resynchroniser avec ses quatre pages (badges CRCN par page,
+  infobulles des codes) avant de le relancer — sinon il défait ces retouches.
+- **Le déclencheur de la n°26**, dans `_outils/` (thème 2) : la n°304 est maintenant finie sur les trois thèmes ; la
+  n°26 reconnaît encore une page « qui s'appuie sur une année antérieure » aux phrases que la n°304 a retirées.
