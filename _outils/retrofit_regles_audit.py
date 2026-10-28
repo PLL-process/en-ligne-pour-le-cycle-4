@@ -46,7 +46,7 @@ CSS_ESSENTIEL = """
 BOUTON = ('\n  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">'
           '🎯 Mode essentiel : OFF</button>')
 
-NOTE = ('\n<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, '
+NOTE = ('\n<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque '
         'les corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. '
         'À activer si la page te paraît trop chargée.</p>')
 

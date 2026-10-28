@@ -35,11 +35,14 @@ with sync_playwright() as p:
     pg.click('button[data-check="4"]'); pg.wait_for_timeout(200)
     t("verrou expérientiel : l'activité 4 refuse sans les deux essais",
       "6" in pg.inner_text("#fb4"), pg.inner_text("#fb4")[:60].replace("\n"," "))
-    # mode essentiel
+    # mode essentiel — depuis la n°298 (15/09/2026), la page n'a plus de carte de référentiel : le témoin est le
+    # nombre de corrections visibles, au moins une avant, aucune après (28/10/2026)
+    avant = pg.locator("details.correction:visible").count()
     pg.click("#btnEssentiel"); pg.wait_for_timeout(150)
-    t("mode essentiel : bascule et masque le référentiel (n°29)",
-      pg.evaluate("document.body.classList.contains('essentiel')") and
-      not pg.is_visible(".referentiel-card"), "")
+    apres = pg.locator("details.correction:visible").count()
+    t("mode essentiel : bascule et masque les corrections, sans carte de référentiel (n°29, n°298)",
+      pg.evaluate("document.body.classList.contains('essentiel')") and avant > 0 and apres == 0
+      and pg.locator(".referentiel-card").count() == 0, f"corrections visibles : {avant} → {apres}")
     pg.click("#btnEssentiel")
     # sauvegarde / restauration
     pg.click("#tab-s1"); pg.wait_for_timeout(200)
