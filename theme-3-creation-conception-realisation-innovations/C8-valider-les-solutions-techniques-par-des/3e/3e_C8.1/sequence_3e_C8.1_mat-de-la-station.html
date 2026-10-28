@@ -86,6 +86,9 @@ table.releve tr.ko td{background:rgba(255,123,136,.08)}
   .btn{color:#1d4e89!important}
   .chrono,.etayage summary{color:#946b00!important}
 }
+
+/* Règle d'or n°304 : le bloc d'ouverture dit ce qui devrait être en place — à cocher, chacun avec son rattrapage. */
+.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.rappel-spiralaire .verif{list-style:none;margin:.4em 0 .6em;padding:0}.rappel-spiralaire .verif li{margin:.55em 0}.rappel-spiralaire .verif .ligne{display:flex;align-items:flex-start;gap:.6em}.rappel-spiralaire .verif input[type=checkbox]{flex:none;width:18px;height:18px;margin:.2em 0 0;accent-color:#61dafb;cursor:pointer}.rappel-spiralaire .verif label{cursor:pointer}.rappel-spiralaire .verif .code-verif{display:inline-block;font-size:.82em;opacity:.85;white-space:nowrap;margin-left:.3em}.rappel-spiralaire .verif .rattrapage{margin:.2em 0 0 calc(18px + .6em);font-size:.93em}.rappel-spiralaire .verif-consigne{margin:.2em 0 .3em;font-size:.95em}.rappel-spiralaire .rattrapage a,.rappel-spiralaire .rattrapage a:visited{color:var(--hl)}@media print{.rappel-spiralaire .verif-consigne,.rappel-spiralaire .verif label,.rappel-spiralaire .verif .code-verif,.rappel-spiralaire .verif .rattrapage,.rappel-spiralaire .verif .rattrapage a{color:#041a40!important;opacity:1!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -436,16 +439,27 @@ qu'à la question que tu lui as posée.</p>
   <span class="badge duree">⏱ 3 séances de 55 min</span>
 </div>
 
-<section class="card">
-  <h2>🔄 D'où tu viens — la spirale C8</h2>
-  <p>Dans <b>Le mât de la station — proposer un protocole</b> (3e_C8.2), tu as écrit toi-même un
-  protocole, tu l'as exécuté au banc, et tu as retenu <b>un seul</b> des cinq profilés : le tube
-  aluminium Ø50 × 3. Les quatre autres sont tombés sur la charge de rupture ou sur la flèche.</p>
-  <p><b>Ce qui change aujourd'hui :</b> tu n'as plus de banc. Tu as une simulation, et
-  <b>c'est toi qui la règles</b>. En 5<sup>e</sup> on l'utilisait toute faite ; en 4<sup>e</sup>
-  on en paramétrait les valeurs ; en 3<sup>e</sup> on choisit <b>la question</b>.</p>
+<section class="card rappel-spiralaire" aria-labelledby="rap-spi">
+  <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
+  <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
+  <ul class="verif">
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais distinguer la limite élastique et la rupture : une pièce plie avant de rompre, et plier est déjà une panne. <span class="code-verif">4e_C8.1</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../5e/5e_C8.1/Synthèses/synthese_eleve_5e_C8.1.html#mots">relis « Les six mots à savoir » dans la synthèse 5e_C8.1</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais qu'une simulation ne voit que ce qu'on lui donne : une charge, une fois, sur une matière neuve. <span class="code-verif">4e_C8.1</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../5e/5e_C8.1/Synthèses/synthese_eleve_5e_C8.1.html#angle-mort">relis « Ce que la simulation ne voit pas » dans la synthèse 5e_C8.1</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_3"><label for="ouv_3">Je sais comparer un résultat observé à l'attendu, et juger : conforme, partiel ou non conforme. <span class="code-verif">4e_C8.3</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../4e/4e_C8.1/synthese_eleve_4e_C8.html#analyser">relis « Analyser les résultats » dans la synthèse 4e_C8.1 à C8.3</a></p>
+    </li>
+  </ul>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> une simulation à la place du banc, et <b>c'est toi qui la règles</b> — le cas de charge, la géométrie, la limite à laquelle on compare. Tu choisis <b>la question</b> qu'elle doit trancher pour le mât de la station.</p>
   <div class="retenir">Une simulation mal réglée ne se trompe pas : elle répond juste, à une
   autre question que la tienne.</div>
+  <p class="filet">Un mot à garder en tête : mettre en œuvre une simulation, c'est choisir le cas de charge, la géométrie et la limite à laquelle on compare.</p>
 </section>
 
 <section class="card">
@@ -959,6 +973,8 @@ document.querySelectorAll("[data-check]").forEach(b => b.addEventListener("click
 function save(){
   const o = {inputs: {}, exp: window.__exp || {}, dernier: dernier};
   document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
+  // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
+  document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { o.inputs[c.id] = c.checked; });
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
 }
 function restore(){
@@ -966,6 +982,8 @@ function restore(){
   if(!o) return;
   Object.entries(o.inputs || {}).forEach(([k, v]) => {
     const e = document.getElementById(k); if(e) e.value = v; });
+  // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
+  document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { const v = (o.inputs || {})[c.id]; if(v !== undefined) c.checked = (v === true); });
   window.__exp = o.exp || {};
   if(o.dernier) simuler();
   const h = document.getElementById("hyp"), r = document.getElementById("rappelHyp");

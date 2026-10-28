@@ -64,7 +64,7 @@ details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
 .algostep{display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px}
 .algostep select{width:78px}
 .algoshape{font-size:.78em;color:var(--sub);min-width:88px;text-align:right}
-.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══
+.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.rappel-spiralaire .verif{list-style:none;margin:.4em 0 .6em;padding:0}.rappel-spiralaire .verif li{margin:.55em 0}.rappel-spiralaire .verif .ligne{display:flex;align-items:flex-start;gap:.6em}.rappel-spiralaire .verif input[type=checkbox]{flex:none;width:18px;height:18px;margin:.2em 0 0;accent-color:#61dafb;cursor:pointer}.rappel-spiralaire .verif label{cursor:pointer}.rappel-spiralaire .verif .code-verif{display:inline-block;font-size:.82em;opacity:.85;white-space:nowrap;margin-left:.3em}.rappel-spiralaire .verif .rattrapage{margin:.2em 0 0 calc(18px + .6em);font-size:.93em}.rappel-spiralaire .verif-consigne{margin:.2em 0 .3em;font-size:.95em}.rappel-spiralaire .rattrapage a,.rappel-spiralaire .rattrapage a:visited{color:var(--hl)}@media print{.rappel-spiralaire .verif-consigne,.rappel-spiralaire .verif label,.rappel-spiralaire .verif .code-verif,.rappel-spiralaire .verif .rattrapage,.rappel-spiralaire .verif .rattrapage a{color:#041a40!important;opacity:1!important}}  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══
      Deux causes de défilement horizontal sur téléphone, toutes deux invisibles
      au bureau : un tableau plus large que l'écran, et une URL longue qui n'offre
      aucun point de coupure. On les traite sur l'ÉLÉMENT, une fois pour toutes. */
@@ -514,10 +514,24 @@ details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
 
 <h1>🌡️ Capteur de confort scolaire — New York</h1>
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
-  <h2 id="rap-spi">&#128260; Ce que tu as déjà fait</h2>
-  <p class="deja">En 5e, tu as imaginé puis validé une solution pour l'indicateur du hall. En 4e, sur le jardin, tu as <b>comparé des matériaux</b>, tu as <b>tracé la démarche de projet</b> en diagramme de flux, et tu as <b>organisé les tâches</b> qu'on te donnait.</p>
-  <p class="change"><b>Cette année, ce qui change&nbsp;:</b> personne ne te donne la liste. Une infirmière dit qu'il fait trop chaud en salle 214, l'emploi du temps dit le contraire, et c'est ta mesure qui tranchera. Tu vas <b>élaborer</b> le processus complet — découper, estimer, tenir une date — sur un problème dont on ignore la réponse.</p>
-  <p class="filet">Tu arrives cette année ? Retiens qu'un projet technique commence toujours par une question qu'on ne sait pas trancher autrement qu'en mesurant.</p>
+  <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
+  <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
+  <ul class="verif">
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais découper un projet en tâches dont on peut dire si elles sont finies, et estimer la durée de chacune en séances. <span class="code-verif">4e_C7.1</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../atelier-planification/Synthèses/synthese_eleve_C7.1_planification.html#methode">relis « La méthode, en cinq gestes » dans la synthèse de l'atelier de planification</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais écrire un protocole de test avant d'essayer : pour chaque étape, l'action et le résultat attendu. <span class="code-verif">4e_C8.3</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../../C8-valider-les-solutions-techniques-par-des/4e/4e_C8.1/synthese_eleve_4e_C8.html#protocole">relis « Le protocole de test » dans la synthèse 4e_C8.1 à C8.3</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_3"><label for="ouv_3">Je sais lire un algorigramme : un rectangle fait, un losange demande, et la flèche qui remonte recommence. <span class="code-verif">4e_C9.1</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../../C9-concevoir-ecrire-tester-et-mettre-au-point/4e/4e_C9.1/Synthèses/synthese_eleve_4e_C9.html#partie-1">relis la partie 1 de la synthèse 4e_C9.1 à C9.3, « Concevoir : dessiner avant d'écrire »</a></p>
+    </li>
+  </ul>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> personne ne te donne la liste des tâches. Une infirmière dit qu'il fait trop chaud en salle 214, l'emploi du temps dit le contraire, et c'est ta mesure qui tranchera. Tu vas <b>élaborer</b> le processus complet — découper, estimer, tenir une date — sur un problème dont on ignore la réponse.</p>
+  <p class="filet">Un mot à garder en tête : un projet technique commence toujours par une question qu'on ne sait pas trancher autrement qu'en mesurant.</p>
 </section>
 
 

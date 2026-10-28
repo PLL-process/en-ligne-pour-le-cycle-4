@@ -165,6 +165,9 @@ table.releve td input{padding:4px 8px}
     a,a:visited{color:#00309e!important}
     a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
   }
+
+/* Règle d'or n°304 : le bloc d'ouverture dit ce qui devrait être en place — à cocher, chacun avec son rattrapage. */
+.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.rappel-spiralaire .verif{list-style:none;margin:.4em 0 .6em;padding:0}.rappel-spiralaire .verif li{margin:.55em 0}.rappel-spiralaire .verif .ligne{display:flex;align-items:flex-start;gap:.6em}.rappel-spiralaire .verif input[type=checkbox]{flex:none;width:18px;height:18px;margin:.2em 0 0;accent-color:#61dafb;cursor:pointer}.rappel-spiralaire .verif label{cursor:pointer}.rappel-spiralaire .verif .code-verif{display:inline-block;font-size:.82em;opacity:.85;white-space:nowrap;margin-left:.3em}.rappel-spiralaire .verif .rattrapage{margin:.2em 0 0 calc(18px + .6em);font-size:.93em}.rappel-spiralaire .verif-consigne{margin:.2em 0 .3em;font-size:.95em}.rappel-spiralaire .rattrapage a,.rappel-spiralaire .rattrapage a:visited{color:var(--hl)}@media print{.rappel-spiralaire .verif-consigne,.rappel-spiralaire .verif label,.rappel-spiralaire .verif .code-verif,.rappel-spiralaire .verif .rattrapage,.rappel-spiralaire .verif .rattrapage a{color:#041a40!important;opacity:1!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -516,15 +519,25 @@ table.releve td input{padding:4px 8px}
   <span class="badge duree">⏱ 2 séances de 55 min</span>
 </div>
 
-<section class="card">
-  <h2>🔄 Ce que tu sais déjà faire — et ce qu'on ne refera pas</h2>
-  <p>Tu as <b>modifié une forme à l'aide d'une modélisation</b> (<code>4e_C7.6</code>, le dé sur
-  son socle), et tu as <b>comparé des matériaux</b> pour choisir le bac du jardin
-  (<code>4e_C7.3</code>). Tu sais dessiner une pièce, et tu sais en quoi la faire.</p>
-  <p><b>Ce qui change aujourd'hui :</b> il faut la <em>produire</em>. Et entre le dessin et la
-  pièce, il y a une machine — qui a ses limites, et qui ne les annonce pas. Un dessin
-  parfaitement juste peut être <b>infabricable ici</b>, ou sortir différent de ce qu'on a
-  demandé.</p>
+<section class="card rappel-spiralaire" aria-labelledby="rap-spi">
+  <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
+  <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
+  <ul class="verif">
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais dessiner une pièce simple : une esquisse sur un plan, des cotes, puis une extrusion. <span class="code-verif">5e_C7.6</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../5e/5e_C7.6/Synthèses/synthese_eleve_5e_C7.6.html#gestes">relis « Les gestes du dé » dans la synthèse 5e_C7.6</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais exporter une pièce pour l'imprimante 3D : au format STL, en millimètres. <span class="code-verif">5e_C7.6</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../5e/5e_C7.6/Synthèses/synthese_eleve_5e_C7.6.html#exporter">relis « Emporter son travail » dans la synthèse 5e_C7.6</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_3"><label for="ouv_3">Je sais ranger un matériau dans sa famille : métal, polymère, céramique, composite ou matériau organique naturel. <span class="code-verif">5e_C7.3</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../5e/5e_C7.3/synthese_eleve_5e_C7.3.html#familles">relis « Les familles de matériaux » dans la synthèse 5e_C7.3</a></p>
+    </li>
+  </ul>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> il faut <em>produire</em> la pièce. Entre le dessin et la pièce, il y a une machine — qui a ses limites, et qui ne les annonce pas. Un dessin parfaitement juste peut être <b>infabricable ici</b>, ou sortir différent de ce qu'on a demandé.</p>
+  <p class="filet">Un mot à garder en tête : un moyen de fabrication a un domaine, pas une qualité — hors de son domaine, il ne fait pas « moins bien », il ne fait pas.</p>
 </section>
 
 <section class="card">

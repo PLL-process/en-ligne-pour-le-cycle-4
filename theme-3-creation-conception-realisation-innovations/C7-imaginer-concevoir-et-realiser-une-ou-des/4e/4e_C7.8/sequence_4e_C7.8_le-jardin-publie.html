@@ -145,6 +145,9 @@ table.releve td input{padding:4px 8px}
   .badge,.boite span,.card option,.exo option,.lien-cmd option{color:#173666!important}
   .btn{color:#1d4e89!important}
 }
+
+/* Règle d'or n°304 : le bloc d'ouverture dit ce qui devrait être en place — à cocher, chacun avec son rattrapage. */
+.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.rappel-spiralaire .verif{list-style:none;margin:.4em 0 .6em;padding:0}.rappel-spiralaire .verif li{margin:.55em 0}.rappel-spiralaire .verif .ligne{display:flex;align-items:flex-start;gap:.6em}.rappel-spiralaire .verif input[type=checkbox]{flex:none;width:18px;height:18px;margin:.2em 0 0;accent-color:#61dafb;cursor:pointer}.rappel-spiralaire .verif label{cursor:pointer}.rappel-spiralaire .verif .code-verif{display:inline-block;font-size:.82em;opacity:.85;white-space:nowrap;margin-left:.3em}.rappel-spiralaire .verif .rattrapage{margin:.2em 0 0 calc(18px + .6em);font-size:.93em}.rappel-spiralaire .verif-consigne{margin:.2em 0 .3em;font-size:.95em}.rappel-spiralaire .rattrapage a,.rappel-spiralaire .rattrapage a:visited{color:var(--hl)}@media print{.rappel-spiralaire .verif-consigne,.rappel-spiralaire .verif label,.rappel-spiralaire .verif .code-verif,.rappel-spiralaire .verif .rattrapage,.rappel-spiralaire .verif .rattrapage a{color:#041a40!important;opacity:1!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -496,16 +499,28 @@ table.releve td input{padding:4px 8px}
   <span class="badge duree">⏱ 2 séances de 55 min</span>
 </div>
 
-<section class="card">
-  <h2>🔄 Ce que tu sais déjà faire — et ce qu'on ne refera pas</h2>
-  <p>Dans l'atelier <b>SOS serre</b> (4e_C4.7), tu as construit un plan d'adressage, donné une
-  <b>adresse IP fixe</b> à un objet connecté, réglé la passerelle et prouvé que le tout
-  communiquait. Tu sais donc <em>raccorder</em> un objet à un réseau.</p>
-  <p><b>Ce qui change aujourd'hui :</b> le raccordement est fait, l'objet est joignable — et il
-  n'a toujours rien à dire. Le programme parle d'<b>interfacer</b>, pas de brancher.</p>
+<section class="card rappel-spiralaire" aria-labelledby="rap-spi">
+  <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
+  <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
+  <ul class="verif">
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais nommer les composants d'un réseau local : terminaux, commutateur, liaisons filaires et WiFi. <span class="code-verif">5e_C4.7</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../../../theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation/5e/5e_C4.7/Synthèses/synthese_eleve_5e_C4.7-C4.8.html#partie-1">relis la partie 1 de la synthèse 5e_C4.7 et C4.8, « Les composants du réseau local »</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais pourquoi chaque appareil d'un réseau a besoin de sa propre adresse. <span class="code-verif">5e_C4.8</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../../../theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation/5e/5e_C4.7/Synthèses/synthese_eleve_5e_C4.7-C4.8.html#partie-2">relis la partie 2 de la synthèse 5e_C4.7 et C4.8, « Identifier chaque terminal : l'adresse IP »</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_3"><label for="ouv_3">Je sais qu'un nombre seul n'est pas une information : il faut savoir ce qu'il mesure et à quoi le comparer. <span class="code-verif">5e_C1.1</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../../../theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/5e/5e_C1.1/Synthèses/synthese_eleve_5e_C1.1-C1.6.html#partie-1">relis la partie 1 de la synthèse 5e_C1.1 à C1.6, « Une donnée n'est pas encore une information »</a></p>
+    </li>
+  </ul>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> le raccordement est fait, l'objet est joignable — et il n'a rien à dire. Le programme parle d'<b>interfacer</b>, pas de brancher.</p>
   <p class="retenir">📌 <b>Un objet branché n'est pas un objet qui communique.</b> Ce qui reste à
   décider est de son côté à lui : <em>ce qu'il envoie, quand, à qui — et ce qu'il fait quand plus
   personne n'écoute.</em></p>
+  <p class="filet">Un mot à garder en tête : un nombre sans unité n'est pas une grandeur — le destinataire ne devine pas.</p>
 </section>
 
 <section class="card">
