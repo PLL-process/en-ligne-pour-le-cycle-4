@@ -24702,3 +24702,56 @@ tableau « 📋 Référentiel officiel (programme 2024) » ; 4e_C6.2 (jardin con
 - **Les trois ateliers de planification** (C7.1) portent encore une carte `referentiel-card` ; `verif_regles_audit.py`
   ne les lit pas (il ne lit que les séquences). Ils sont **générés** par
   `atelier-planification/_generation/build_atelier.py` : c'est le gabarit qu'il faut changer, dans un lot à part.
+
+---
+
+## 28/10/2026 — Vague n°298, les ateliers de planification : le référentiel quitte leur gabarit (thème 3)
+
+*Suite de la décision de Pascal du 26/10 (point 3a). Les séquences des trois thèmes sont faites (#522, #523, #524) ; il
+restait les trois pages de l'atelier de planification des tâches (C7.1), que `verif_regles_audit.py` ne lit pas.
+Branche `fable/theme-3-regle-298-ateliers`.*
+
+### Ce que fait cette PR
+
+Les trois pages `atelier_5e|4e|3e_C7.1_planification_taches.html` sont **engendrées** par
+`atelier-planification/_generation/build_atelier.py` : c'est le gabarit qui change, puis les pages sont régénérées.
+
+- **Vérifié avant de toucher** : régénérées dans une copie, les trois pages ne différaient de celles du dépôt que par
+  **une ligne** — l'infobulle de l'étiquette du socle, corrigée à la main après génération. Elle entre d'abord dans le
+  gabarit (sinon la régénération l'aurait défaite, comme `synthese_4e_C6.2.py` le 26/10).
+- **La carte « 📚 Le référentiel — en toutes lettres »** (le tableau des quatre formulations et le paragraphe « Le
+  programme nomme trois choses ») et **la légende « 🔎 Ce que disent ces étiquettes »** quittent le gabarit. Elles
+  entrent, recopiées sans réécriture, dans `Synthèses/synthese_professeur_C7.1_planification.html`, la synthèse
+  commune aux trois niveaux, en tête, avec la phrase BO / codification (5e_C7.1 · 4e_C7.1 · 3e_C7.1).
+- **Le paragraphe « diagramme de Gantt » reste à l'élève**, dans une carte « 🔤 Deux noms pour le même dessin »,
+  masquée en mode essentiel comme l'était le référentiel : l'étape « Le logiciel » ouvre GanttProject sur un onglet
+  « Diagramme de Gantt », et ce paragraphe est le seul endroit de la page qui dit que c'est le diagramme de
+  planification du programme. Décision par défaut, soumise à Pascal — comme le dépliant de 5e_C9.1.
+- **Le banc** (`tests_atelier_C7.1.py`) vérifiait que le mode essentiel masque la carte de référentiel : il vérifie
+  que la page n'en porte plus, et que le mode essentiel masque la carte « Deux noms » et les corrections. Même
+  nombre de contrôles (48). Le rapport de tests et la fiche pédagogique disent la même chose.
+
+### Un point pour Pascal, non tranché
+
+Sur **les 39 pages** désormais sans référentiel (36 séquences et ces 3 ateliers), le bouton du mode essentiel et son
+aide disent encore qu'il « masque **le référentiel**, les corrections et les compléments ». Le référentiel n'y est
+plus. Laissé tel quel ici, pour ne pas toucher 39 pages dans une PR d'ateliers : c'est une phrase à changer d'un
+seul geste, dans un lot transversal, si Pascal le veut.
+
+### Vérifié
+
+- **Le gabarit et les pages s'accordent** : `verif_chaine.py` ✅ (« chaque page est exactement ce que
+  `_corrige_calcule.json` et le générateur produisent ») ; `_verifier_planning.py` réécrit `_corrige_calcule.json`
+  à l'identique ; `_generation/verif_chemins.py` : 0 manquement sur les 3 pages.
+- **Banc de l'atelier** : **48/48** sur la branche, comme à `main`.
+- **Contrôles du dépôt**, identiques à `main` : `verif_regles_audit.py` (✘ 176, les ateliers ne sont pas lus),
+  formulations, liens, impression papier, règles visibles, compétences, hiérarchie, atteignabilité, rapports de tests,
+  boutons, débordement, squelette, verrous, hors ligne, impression, contraste des liens, chaînes d'énergie, mode
+  essentiel ✅.
+- **Au navigateur** : la carte « Deux noms pour le même dessin » (4e), masquée en mode essentiel ; les étiquettes de
+  la page 3e à 390 px ; le bloc de la synthèse — aucune erreur JavaScript, aucun défilement horizontal.
+
+### Ce qui reste
+
+- **La vague n°298 est finie** : 60 séquences et 3 ateliers, plus aucune page élève ne porte le référentiel.
+- Le point ci-dessus (la phrase du mode essentiel sur 39 pages), si Pascal le veut.
