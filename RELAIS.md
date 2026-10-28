@@ -4,9 +4,9 @@ Mis à jour le 28/10/2026 16:18 (heure de la Martinique). Le journal des décisi
 
 ## Où on en est
 - Vague n°298 terminée et fusionnée (#522–#526).
-- Mods publiés et INSTALLÉS chez Pascal (28/10) : https://github.com/PLL-process/mods-claude, branche par défaut `publication`. `/relais lire`, `/tableau`, `/decisions` fonctionnent.
-- Installation (une commande par message) : `/plugin marketplace add PLL-process/mods-claude`, puis `/plugin install <mod>@mods-claude` ; mise à jour : `/plugin marketplace update mods-claude` puis redémarrer.
-- PR #1 (README) fusionnée. PR #2 ouverte : le relais gardait le rappel `<system-reminder>` au lieu de la réponse de Pascal ; corrigé par `texteDePascal()` dans commun.ts (5 mods), 24 tests ✔.
+- Mods publiés et installés chez Pascal ; PR #1 (README) et #2 (relais : réponse sans le rappel system-reminder, 24 tests) de mods-claude fusionnées.
+- Mise à jour chez Pascal : `/plugin marketplace update mods-claude` seul, puis redémarrer Claude Code.
+- Deux vérifications programmées (20:55Z et 21:09Z) trouveront les PR fusionnées : rien à faire.
 
 _(écrit par Claude le 28/10/2026 16:18)_
 
@@ -18,7 +18,7 @@ _(écrit par Claude le 28/10/2026 16:18)_
 _Aucune._
 
 ## Prochaine action
-➡️ Pascal fusionne la PR #2 de mods-claude, puis met à jour la place de marché.
+➡️ Attendre la prochaine demande de Pascal.
 
 ## Décisions prises récemment (messages de Pascal)
 - 28/10/2026 13:38 — « <system-reminder>The user's timezone is America/Martinique (UTC-04:00). Message sent at Wed 2026-10-28 13:38 local time.</system-reminder>
