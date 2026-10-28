@@ -77,7 +77,7 @@ Critères de réussite affichés à l'élève :
 
 ## Différenciation
 
-Le **mode essentiel** masque référentiel, corrections et compléments. Les exercices sont en listes
+Le **mode essentiel** masque corrections et compléments (le référentiel est dans la synthèse professeur depuis le 28/10/2026, règle d'or n°298). Les exercices sont en listes
 déroulantes exclusivement (lisibilité DYS). Les aides sont à deux niveaux, et les corrections
 complètes sont repliées, jamais supprimées.
 

@@ -28,7 +28,7 @@ Le banc boucle sur les trois pages. Les onglets attendus sont déclarés page pa
   ✔ le verrou expérientiel tient : sans les bandes découpées, rien n'est validé
   ✔ une fois les bandes déclarées faites, l'activité 1 se valide
   ✔ les réponses et les validations reviennent après rechargement
-  ✔ le mode essentiel masque bien le référentiel et les corrections
+  ✔ le mode essentiel masque bien les compléments et les corrections (la page n'a plus de référentiel, n°298)
   ✔ à l'impression, aucun panneau n'est caché
 ── page 4e
   ✔ les cinq captures sont référencées ET présentes sur le disque
@@ -46,7 +46,7 @@ Le banc boucle sur les trois pages. Les onglets attendus sont déclarés page pa
   ✔ les dates au plus tôt du corrigé calculé sont bien celles que la page accepte
   ✔ une date fausse est refusée — le vérificateur vérifie vraiment
   ✔ les réponses et les validations reviennent après rechargement
-  ✔ le mode essentiel masque bien le référentiel et les corrections
+  ✔ le mode essentiel masque bien les compléments et les corrections (la page n'a plus de référentiel, n°298)
   ✔ à l'impression, aucun panneau n'est caché
 ── page 3e
   ✔ les cinq captures sont référencées ET présentes sur le disque
@@ -63,7 +63,7 @@ Le banc boucle sur les trois pages. Les onglets attendus sont déclarés page pa
   ✔ une fois les bandes déclarées faites, l'activité 1 se valide
   ✔ le chemin le plus long offert en réponse est exactement celui du calcul
   ✔ les réponses et les validations reviennent après rechargement
-  ✔ le mode essentiel masque bien le référentiel et les corrections
+  ✔ le mode essentiel masque bien les compléments et les corrections (la page n'a plus de référentiel, n°298)
   ✔ à l'impression, aucun panneau n'est caché
 
 48 contrôles exécutés, 48 réussis.
@@ -117,10 +117,10 @@ Les contrôles ont donc été rejoués à la main sur la page, et voici ce qu'il
 | Règle | Résultat |
 |---|---|
 | n°23 durée annoncée | ✔ « 1 séance de 55 min », et un temps par étape |
-| n°29 mode essentiel | ✔ bouton présent, masque référentiel et corrections (vérifié par Playwright) |
+| n°29 mode essentiel | ✔ bouton présent, masque les compléments et les corrections (vérifié par Playwright) |
 | n°30 tableau de bord | ✔ barre de progression + bandeau « Dans cette étape » |
 | n°34 accessibilité | ✔ **40 champs, 0 sans étiquette** (`<label for>` ou `aria-label`) |
-| n°42 formulation du référentiel | ✔ le texte du programme est cité mot pour mot, pas résumé |
+| n°42 formulation du référentiel | ✔ le texte du programme est cité mot pour mot, pas résumé — depuis le 28/10/2026 dans la synthèse professeur (n°298) |
 | n°51 titre affiché | ✔ le `<h1>` et le `<title>` parlent bien de C7.1 et du cycle 4 |
 | n°54 nombre annoncé ailleurs | ✔ « 5 illustrées » annoncées, 5 images dans le QCM |
 | n°67 consigne sans champ | ✔ 6 zones de rédaction pour les 6 productions annoncées |

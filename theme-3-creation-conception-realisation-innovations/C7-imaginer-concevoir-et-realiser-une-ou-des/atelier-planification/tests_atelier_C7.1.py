@@ -149,12 +149,15 @@ def verifier(niveau, PAGE):
         assert pg.evaluate("window.__valid['1']") is True
         ok("les réponses et les validations reviennent après rechargement")
 
-        # mode essentiel
+        # mode essentiel — n°298 (28/10/2026) : la page n'a plus de carte de référentiel ; le témoin est la
+        # carte « Deux noms pour le même dessin », visible avant, masquée après, comme l'était le référentiel
+        assert pg.locator(".referentiel-card").count() == 0, "la page porte encore une carte de référentiel (n°298)"
+        assert pg.is_visible("#deux-noms"), "la carte « Deux noms pour le même dessin » n'est pas visible"
         pg.click("#btnEssentiel")
         assert pg.eval_on_selector("body", "e=>e.classList.contains('essentiel')")
-        assert pg.eval_on_selector(".referentiel-card",
-                                   "e=>getComputedStyle(e).display==='none'")
-        ok("le mode essentiel masque bien le référentiel et les corrections")
+        assert pg.eval_on_selector("#deux-noms", "e=>getComputedStyle(e).display==='none'")
+        assert not pg.is_visible("details.correction")
+        ok("le mode essentiel masque bien les compléments et les corrections (la page n'a plus de référentiel, n°298)")
 
         # impression : aucun panneau caché
         pg.emulate_media(media="print")
