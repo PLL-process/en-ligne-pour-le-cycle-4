@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 28/10/2026 16:25 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 28/10/2026 16:30 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - Vague n°298 terminée et fusionnée (#522–#526).
@@ -10,14 +10,14 @@ Mis à jour le 28/10/2026 16:25 (heure de la Martinique). Le journal des décisi
 _(écrit par Claude le 28/10/2026 16:25)_
 
 ## Branche et PR
-- Branche : `fable/mode-essentiel-sans-referentiel` — dernier commit a4c00d193 Fin de la vague n°298 : le mode essentiel ne promet plus de masquer un référentiel absent
+- Branche : `fable/theme-2-regle-304` — dernier commit 4f18d3107 Merge pull request #526 from PLL-process/fable/mode-essentiel-sans-referentiel
 - Aucune PR ouverte.
 
 ## Décisions en attente
 _Aucune._
 
 ## Prochaine action
-➡️ Attendre la prochaine demande de Pascal.
+➡️ Dis-moi le prochain lot à lancer.
 
 ## Décisions prises récemment (messages de Pascal)
 _Aucune relevée._
