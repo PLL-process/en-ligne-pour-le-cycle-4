@@ -25069,12 +25069,15 @@ qu'un billet d'entrée ait été écrit. Le compte de l'audit avait baissé sans
     - thème 3 : `3e_C7.3`, `3e_C7.4`, `3e_C7.5`, `3e_C7.8`, `4e_C7.3`, `4e_C7.4`, `4e_C7.5`, `4e_C7.7`, `4e_C7.8`,
       `5e_C7.3`, `5e_C7.4`, `5e_C7.5`, `3e_C8.2`, `5e_C8.2`.
   Aucune séquence ne passe de ✔ à ✘ : les 28 qui avaient un billet le gardent reconnu.
-- Les 23 ✘ ont été relus un par un : aucune n'a de billet d'entrée. Sur ces pages, le seul « billet d'entrée » écrit
-  est dans le script de la fiche papier (`TITRES_ECRAN`), que le contrôle ne lit pas.
+- Les 23 ✘ ont été vérifiés un par un dans leur texte visible : aucun billet, passeport ni diagnostic d'entrée ; le
+  seul « sans note » est celui du bloc. Le seul « billet d'entrée » écrit sur ces pages est dans le script de la fiche
+  papier (`TITRES_ECRAN`), que le contrôle ne lit pas.
+- Deux séquences étaient déjà ✘ sur `main`, par leurs mots : `3e_C8.1` et `5e_C8.1`. La n°26 compte donc **25 ✘**.
 - `tests_verif_regles_audit.py` **68 / 68** (61 + 7). `controle_hierarchie.py` et son banc, qui citent ce
   vérificateur, et `tests_5e_C1.1_chengdu.py` (43 / 43) inchangés.
 
 ### Ce qui reste
 
-- **Écrire les 23 billets d'entrée** : trois questions sans note, une par ligne « Je sais… » du bloc, et pour
-  aiguillage le lien de rattrapage que la ligne porte déjà. Une PR par thème (1 + 8 + 14).
+- **Écrire les 25 billets d'entrée** (les 23, plus `3e_C8.1` et `5e_C8.1`) : trois questions sans note, une par ligne
+  « Je sais… » du bloc, et pour aiguillage le lien de rattrapage que la ligne porte déjà. Une PR par thème
+  (1 + 8 + 16).
