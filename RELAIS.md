@@ -1,24 +1,25 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 28/10/2026 17:15 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 28/10/2026 18:22 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
-- Carte blanche de Pascal (28/10) : vague n°304 « l'ouverture ne dit pas le passé » sur les thèmes 2 et 3.
-- Thème 2 : PR #527 (12 pages, 25 ancres dans 10 synthèses), verif ✘ 176 → 156, 108/108 au navigateur, bancs et contrôles = main. Outil : `scratchpad/n304/ouvertures_t2.py` ; vérif élève : `scratchpad/n304/eleve.cjs`.
-- Thème 3 en préparation : 23 pages, worktree `scratchpad/wt_t3` (branche fable/theme-3-regle-304) ; trois familles : 7 blocs rappel-spiralaire, 16 cartes « Ce que tu sais déjà faire… » / « D'où tu viens — la spirale ».
-- À revoir ensuite : le déclencheur de la n°26 dans `_outils/`.
+- #527 (thème 2, n°304) fusionnée par Pascal.
+- **PR #528 ouverte** : n°304, vague du thème 3 (23 pages, branche `fable/theme-3-regle-304`, commit 386e09fbf). Avec elle, la n°304 tombe à zéro sur les 60 séquences.
+- Vérifié : verif ✘ 156 → 133 ; élève à 390 px 188/188 ; 50 bancs du thème 3 (dont 37 à arguments) et tous les contrôles identiques à main.
+- Outils hors dépôt : `scratchpad/n304/ouvertures_t3.py`, `eleve.cjs`, `bancs_args.sh` (bancs à arguments, lignes des rapports de tests).
+- Reste noté au journal : resynchroniser `generer_les_quatre_pages.py` (3e_C9.2) ; revoir le déclencheur de la n°26 (`_outils/`).
 
-_(écrit par Claude le 28/10/2026 17:15)_
+_(écrit par Claude le 28/10/2026 18:22)_
 
 ## Branche et PR
 - Branche : `fable/theme-2-regle-304` — dernier commit 5a5ededb4 Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé
-- PR #527 ouverte (`fable/theme-2-regle-304`) — Règle d’or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé — CI : in_progress
+- PR #528 ouverte (`fable/theme-3-regle-304`) — Règle d'or n°304, vague du thème 3 : vingt-trois ouvertures ne disent plus le passé — CI : in_progress
 
 ## Décisions en attente
 _Aucune._
 
 ## Prochaine action
-➡️ Pascal relit et fusionne #527 ; je prépare la vague n°304 du thème 3.
+➡️ Attendre la CI puis la fusion de #528 par Pascal ; ensuite, proposer le lot suivant (déclencheur n°26).
 
 ## Décisions prises récemment (messages de Pascal)
 _Aucune relevée._
