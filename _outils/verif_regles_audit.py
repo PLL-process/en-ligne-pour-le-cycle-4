@@ -14,7 +14,8 @@ Une règle qu'on ne peut pas vérifier est une règle qui meurt. Ce script contr
 sur toute séquence HTML du dépôt, les règles mécanisables :
 
   n°23  durée annoncée ≥ somme des durées d'activités (+ marge de service)
-  n°26  diagnostic d'entrée sans note quand la page invoque l'année précédente
+  n°26  diagnostic d'entrée sans note quand la page invoque l'année précédente — en
+        mots, ou par les codes du niveau précédent de son bloc d'ouverture (n°304)
   n°29  mode essentiel présent
   n°30  bandeau/tableau de bord des tâches quand il y a plusieurs tâches
   n°31  version étayée proposée pour chaque production écrite exigée
@@ -108,6 +109,44 @@ def texte_de_consigne(src: str) -> str:
     return texte_visible(t)
 
 
+#: Le bloc d'ouverture de la n°304 et les codes qu'il cite (« 4e_C7.3 », « cycle 3 »).
+BLOC_OUVERTURE_304 = re.compile(
+    r'<section\b[^>]*class="[^"]*rappel-spiralaire[^"]*"[^>]*>.*?</section>', re.S | re.I)
+CODE_VERIF = re.compile(r'class="code-verif"[^>]*>\s*([^<]+?)\s*<', re.I)
+
+
+def prerequis_du_bloc(src: str, rang: int) -> list[str]:
+    """Les codes d'un niveau ANTÉRIEUR que cite le bloc « Avant de commencer » (n°304).
+
+    POURQUOI LA N°26 LES LIT (28/10/2026). Elle reconnaissait une séquence qui
+    s'appuie sur l'année précédente à ses MOTS : « en 4e », « l'an dernier ». La
+    n°304 a retiré ces mots de toutes les ouvertures (thèmes 1 à 3) et les a
+    remplacés par une liste de ce qui devrait être en place, chaque ligne avec le
+    code du niveau précédent. La séquence s'appuie toujours autant sur l'année
+    d'avant — elle le dit mieux. Mais le déclencheur ne voyait plus rien : les 8
+    séquences du thème 2 qui étaient ✘ la veille sont passées à « sans objet »
+    sans qu'un seul billet d'entrée ait été écrit. Un contrôle qui se tait parce
+    qu'on a changé de formulation ne mesure plus la règle. Mesuré en lisant aussi
+    les codes du bloc : 29 séquences cessent d'être « sans objet » — 6 ont leur
+    billet d'entrée (✔), 23 n'en ont pas (✘).
+
+    « cycle 3 » est antérieur à toute séquence de 5e, 4e ou 3e : c'est la 6e, et
+    l'école d'avant. Un code du MÊME niveau (« 3e_C9.2 » dans une 3e) ne déclenche
+    rien, comme dans les mots."""
+    bloc = BLOC_OUVERTURE_304.search(src)
+    if not bloc:
+        return []
+    trouves = []
+    for code in CODE_VERIF.findall(bloc.group(0)):
+        code = " ".join(html.unescape(code).split())
+        m = re.match(r"(\de)_C", code)
+        if m and ORDRE_NIVEAUX.get(m.group(1), 99) < rang:
+            trouves.append(code)
+        elif re.fullmatch(r"cycle 3", code, re.I) and rang > ORDRE_NIVEAUX["6e"]:
+            trouves.append(code)
+    return list(dict.fromkeys(trouves))
+
+
 def regle_26(src: str, niveau: str | None = None) -> tuple[str, str]:
     t = texte_de_consigne(src)
     rang = ORDRE_NIVEAUX.get(niveau or "", 99)
@@ -116,11 +155,24 @@ def regle_26(src: str, niveau: str | None = None) -> tuple[str, str]:
     # et citer un niveau postérieur (« tu la reverras en 3e ») encore moins.
     anterieurs = [n for n, r in ORDRE_NIVEAUX.items() if r < rang]
     motif = "|".join([rf"\ben {n}\b" for n in anterieurs] + [r"l'an dernier", r"l'année dernière"])
-    if not anterieurs or not re.search(motif, t, re.I):
+    par_les_mots = bool(anterieurs) and re.search(motif, t, re.I)
+    codes = prerequis_du_bloc(src, rang)
+    if not par_les_mots and not codes:
         return "SANS OBJET", "la page ne s'appuie pas sur une année antérieure"
-    a_diag = ("passeport" in t.lower() or "billet d'entrée" in t.lower()) and "sans note" in t.lower()
-    return ("OK", "diagnostic d'entrée sans note présent") if a_diag else (
-        "ECHEC", "la page invoque une année antérieure sans diagnostic d'entrée sans note")
+    # Le diagnostic se cherche HORS du bloc d'ouverture. Le bloc dit lui-même « Pour toi,
+    # sans note : coche ce qui est déjà en place » : compté avec le reste, ce « sans note »
+    # suffisait à valider n'importe quelle page qui prononce « billet d'entrée » ailleurs.
+    # Et une case cochée n'est pas un diagnostic : c'est l'élève qui se déclare prêt, rien
+    # ne le vérifie ni ne l'aiguille — la n°26 demande les deux.
+    hors_bloc = texte_de_consigne(BLOC_OUVERTURE_304.sub(" ", src, count=1)).lower()
+    a_diag = ("passeport" in hors_bloc or "billet d'entrée" in hors_bloc) and "sans note" in hors_bloc
+    if a_diag:
+        return "OK", "diagnostic d'entrée sans note présent"
+    if codes:
+        cites = ", ".join(codes[:4]) + (" …" if len(codes) > 4 else "")
+        return "ECHEC", ("le bloc d'ouverture s'appuie sur le niveau précédent (%s) sans diagnostic "
+                         "d'entrée sans note — les cases à cocher ne vérifient rien" % cites)
+    return "ECHEC", "la page invoque une année antérieure sans diagnostic d'entrée sans note"
 
 
 def regle_29(src: str) -> tuple[str, str]:

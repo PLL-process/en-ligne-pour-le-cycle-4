@@ -607,6 +607,48 @@ def main():
         cas("n°42 — " + titre, lambda h=html, a=attendu: None if V.regle_42(h)[0] == a
             else "rendu %s : %s" % V.regle_42(h))
 
+    # n°26 (28/10/2026) : la règle reconnaissait l'appui sur l'année précédente à ses MOTS
+    # (« en 4e », « l'an dernier »). La n°304 a remplacé ces mots par une liste de prérequis
+    # codés (« 4e_C7.3 », « cycle 3 ») : 29 séquences restaient « sans objet » en s'appuyant
+    # pourtant sur le niveau précédent.
+    # Cas dans les deux sens (règle d'or n°277), et un par branche pour que chaque mutation
+    # (retirer les codes, compter le « sans note » du bloc, prendre le même niveau, oublier
+    # le cycle 3) fasse rougir au moins un cas.
+    def bloc_304(*codes):
+        lignes = "".join(
+            '<li><div class="ligne"><input type="checkbox" id="ouv_%d"><label for="ouv_%d">Je sais '
+            'faire ceci. <span class="code-verif">%s</span></label></div>'
+            '<p class="rattrapage">→ pas encore sûr·e ? <a href="s.html#a">relis</a></p></li>'
+            % (i, i, c) for i, c in enumerate(codes, 1))
+        return ('<section class="card rappel-spiralaire" aria-labelledby="rap-spi">'
+                '<h2 id="rap-spi">🔄 Avant de commencer : ce que je vérifie</h2>'
+                '<p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place.</p>'
+                '<ul class="verif">%s</ul><p class="change"><b>Dans cette séquence :</b> on avance.</p>'
+                '</section>' % lignes)
+    billet = ("<section class=\"card\"><h2>🎫 Billet d'entrée — trois questions, sans note</h2>"
+              "<p>Il oriente, il ne compte pas.</p></section>")
+    billet_muet = "<section class=\"card\"><h2>🎫 Billet d'entrée</h2><p>Trois questions.</p></section>"
+    for titre, html, niveau, attendu, mot in [
+        ("bloc n°304 aux codes de 4e, sans billet, dans une 3e → refusé",
+         bloc_304("4e_C7.3", "4e_C3.1"), "3e", "ECHEC", "bloc d'ouverture"),
+        ("le même bloc, avec un billet d'entrée sans note → accepté",
+         bloc_304("4e_C7.3", "4e_C3.1") + billet, "3e", "OK", ""),
+        ("le « sans note » du BLOC ne valide pas un billet qui ne le dit pas → refusé",
+         bloc_304("4e_C7.3") + billet_muet, "3e", "ECHEC", "bloc d'ouverture"),
+        ("un code du MÊME niveau (3e_C9.2 dans une 3e) → sans objet",
+         bloc_304("3e_C9.2"), "3e", "SANS OBJET", ""),
+        ("« cycle 3 » dans une 5e, sans billet → refusé",
+         bloc_304("cycle 3", "cycle 3"), "5e", "ECHEC", "cycle 3"),
+        ("les MOTS déclenchent toujours, sans bloc : « l'an dernier » → refusé",
+         "<section><h2>Activité 1</h2><p>L'an dernier, on mesurait.</p></section>", "4e", "ECHEC",
+         "année antérieure"),
+        ("ni mots ni bloc → sans objet",
+         "<section><h2>Activité 1</h2><p>On commence.</p></section>", "4e", "SANS OBJET", ""),
+    ]:
+        cas("n°26 — " + titre, lambda h=html, n_=niveau, a=attendu, m_=mot: None
+            if V.regle_26(h, n_)[0] == a and m_ in V.regle_26(h, n_)[1]
+            else "rendu %s : %s" % V.regle_26(h, n_))
+
     if echecs:
         for e in echecs:
             print("❌ " + e)
