@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 28/10/2026 13:33 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 28/10/2026 13:41 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - Vague n°298 TERMINÉE : #522 (thème 3), #523 (thème 1), #524 (thème 2), #525 (ateliers de planification) toutes fusionnées. Plus aucune page élève (60 séquences, 3 ateliers) ne porte le référentiel.
@@ -12,18 +12,18 @@ Mis à jour le 28/10/2026 13:33 (heure de la Martinique). Le journal des décisi
 _(écrit par Claude le 28/10/2026 13:33)_
 
 ## Branche et PR
-- Branche : `fable/theme-3-regle-298-ateliers` — dernier commit 0fb8e1da3 Vague n°298, ateliers de planification : le référentiel quitte leur gabarit
+- Branche : `fable/mode-essentiel-sans-referentiel` — dernier commit 87f07d9e0 Merge pull request #525 from PLL-process/fable/theme-3-regle-298-ateliers
+- 42 fichier(s) modifié(s) non commité(s) au moment du relais
 - Aucune PR ouverte.
 
 ## Décisions en attente
-🔶 1. Le dépliant de 5e_C9.1, qui montre à l'élève où il en est sur les trois années du cycle :
-- **a (par défaut)** : il reste sur la page élève.
-- b : il part dans la synthèse professeur.
+_Aucune._
 
 ## Prochaine action
-➡️ Attendre les réponses de Pascal (décisions 1 à 3, lot « mode essentiel ») et l'accès au dépôt mods-claude.
+➡️ Réponds « 1a 2a 3a 4a 5a », ou change les lettres. Je lance aussitôt ce que tu valides.
 
 ## Décisions prises récemment (messages de Pascal)
-_Aucune relevée._
+- 28/10/2026 13:38 — « <system-reminder>The user's timezone is America/Martinique (UTC-04:00). Message sent at Wed 2026-10-28 13:38 local time.</system-reminder>
+1 »
 
 _Résumés de compaction : `COMPACTIONS.md`, même branche._
