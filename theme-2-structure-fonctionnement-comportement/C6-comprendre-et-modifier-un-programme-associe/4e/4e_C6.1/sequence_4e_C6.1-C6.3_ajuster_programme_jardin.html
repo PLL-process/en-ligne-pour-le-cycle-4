@@ -146,7 +146,7 @@ select.ko,input.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(
   body.essentiel .referentiel-card,
   body.essentiel details.correction,
   body.essentiel .approfondissement { display:none }
-.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}
+.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.rappel-spiralaire .verif{list-style:none;margin:.4em 0 .6em;padding:0}.rappel-spiralaire .verif li{margin:.55em 0}.rappel-spiralaire .verif .ligne{display:flex;align-items:flex-start;gap:.6em}.rappel-spiralaire .verif input[type=checkbox]{flex:none;width:18px;height:18px;margin:.2em 0 0;accent-color:#61dafb;cursor:pointer}.rappel-spiralaire .verif label{cursor:pointer}.rappel-spiralaire .verif .code-verif{display:inline-block;font-size:.82em;opacity:.85;white-space:nowrap;margin-left:.3em}.rappel-spiralaire .verif .rattrapage{margin:.2em 0 0 calc(18px + .6em);font-size:.93em}.rappel-spiralaire .verif-consigne{margin:.2em 0 .3em;font-size:.95em}@media print{.rappel-spiralaire .verif-consigne,.rappel-spiralaire .verif label,.rappel-spiralaire .verif .code-verif,.rappel-spiralaire .verif .rattrapage{color:#041a40!important;opacity:1!important}}
 
 
 @media print{
@@ -569,10 +569,24 @@ select.ko,input.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(
 <details class="rappel-ouverture" id="ouverture" open>
 <summary>📖 Rappel : la situation et ton hypothèse</summary>
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
-  <h2 id="rap-spi">&#128260; Ce que tu as déjà fait</h2>
-  <p class="deja">L'an dernier, sur le lampadaire, tu as <b>lu un programme</b> pour dire ce qu'il prend en entrée et ce qu'il produit, tu l'as <b>traduit en français</b>, et tu as <b>réglé ses paramètres</b> pour voir l'effet sur l'objet.</p>
-  <p class="change"><b>Cette année, ce qui change&nbsp;:</b> tu ne règles plus : tu <b>modifies</b>. Le programme du jardin arrose trop, ou pas assez, et il va falloir changer sa logique — pas seulement un nombre. Un programme qu'on modifie peut cesser de fonctionner, et c'est ça qui est nouveau.</p>
-  <p class="filet">Tu n'as pas fait la 5e ici ? Il suffit de savoir qu'un programme lit des entrées, décide, et commande des sorties.</p>
+  <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
+  <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
+  <ul class="verif">
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais dire ce qu'un programme prend en entrée et ce qu'il produit en sortie. <span class="code-verif">5e_C6.1</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../5e/5e_C6.1/Synthèses/synthese_eleve_5e_C6.1-C6.3.html#partie-1">relis la partie 1 de la synthèse 5e_C6.1 à C6.3, « Lire le programme : la carte d'identité »</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais traduire un programme par blocs en phrases, avec SI, ET, SINON. <span class="code-verif">5e_C6.2</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../5e/5e_C6.1/Synthèses/synthese_eleve_5e_C6.1-C6.3.html#partie-2">relis la partie 2 de la synthèse 5e_C6.1 à C6.3, « Traduire en français »</a></p>
+    </li>
+    <li>
+      <div class="ligne"><input type="checkbox" id="ouv_3"><label for="ouv_3">Je sais régler un paramètre (un seuil, une durée) et prévoir son effet sur l'objet. <span class="code-verif">5e_C6.3</span></label></div>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../5e/5e_C6.1/Synthèses/synthese_eleve_5e_C6.1-C6.3.html#partie-3">relis la partie 3 de la synthèse 5e_C6.1 à C6.3, « Régler les paramètres »</a></p>
+    </li>
+  </ul>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> régler un nombre ne suffit pas : tu <b>modifies</b> le programme. Celui du jardin arrose trop, ou pas assez, et il va falloir changer sa logique. Un programme qu'on modifie peut cesser de fonctionner — c'est tout l'enjeu.</p>
+  <p class="filet">Un mot à garder en tête : un programme lit des entrées, décide, et commande des sorties.</p>
 </section>
 
 <div class="badges">
@@ -898,6 +912,8 @@ const $ = id => document.getElementById(id);
 function collect(){
   const o = {inputs:{}, valid: window.__valid || {}, exp: window.__exp || {}};
   document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ o.inputs[el.id]=el.value; });
+  // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
+  document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c=>{ o.inputs[c.id]=c.checked; });
   return o;
 }
 function save(showNote){
@@ -909,7 +925,8 @@ function save(showNote){
 function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o=null; }
   if(!o) return;
-  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(el) el.value=v; });
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(!el) return;
+    if(el.type==="checkbox" && el.closest(".rappel-spiralaire")) el.checked = (v===true); else el.value=v; });
   window.__valid = o.valid || {};
   window.__exp = o.exp || {};
 }
