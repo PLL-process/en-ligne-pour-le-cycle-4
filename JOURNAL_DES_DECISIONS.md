@@ -25136,3 +25136,33 @@ sur le niveau précédent sans diagnostic d'entrée. Une PR par thème ; celle-c
 ### Ce qui reste
 
 - Les billets du thème 1 (`5e_C1.5`) et du thème 3 (16 séquences), chacun dans sa PR.
+
+---
+
+## 28/10/2026 — Règle d'or n°26 : le billet d'entrée de `5e_C1.5` (thème 1)
+
+*Suite de la carte blanche (28/10/2026) : la seule séquence du thème 1 que la n°26 refusait. Branche
+`fable/theme-1-billet-entree`. Même billet qu'au thème 2 (#530).*
+
+- **Deux questions**, parce que le bloc « Avant de commencer » de `5e_C1.5` a deux lignes : *une donnée* (« « 4
+  incidents », enregistré dans un tableau », et non « le vélo V-104 doit être contrôlé », qui est déjà une information
+  — partie 1 de la synthèse 5e_C1.3 et C1.4) ; *un mot de passe ne se prête pas* (partie 6 de la synthèse 5e_C1.1 à
+  C1.6). Titre : « deux questions, sans note ».
+- **Posé juste avant l'activité 0** : la page n'a ni onglets ni en-têtes de séance ; il vient donc après la
+  situation, la problématique et la règle de la séquence (ordre de la n°306).
+- **Mémoire** : la page garde toute case dans `o.checks` ; les boutons du billet y entrent aussi (un bouton radio
+  rangé par sa valeur revenait décoché).
+- L'outil gère maintenant 2 ou 3 lignes, et trois emplacements : panneau de la séance 1, en-tête de la séance 1, ou
+  avant la première activité. Le contrôle « comme un élève » du bloc (`eleve.cjs`) compte ses cases au lieu d'en
+  supposer trois.
+
+### Vérifié
+
+- `verif_regles_audit.py` : ✘ 156 → **155** sur cette branche (la n°26 de `5e_C1.5`) ; aucune autre règle ne bouge.
+- **Comme un élève à 390 px** : billet 9/9 (une juste et un « je ne sais pas encore » → « 1 / 2 » et le renvoi de
+  la ligne 2 ; réponses gardées et retour réaffiché au rechargement ; « 2 / 2 » sans renvoi) ; bloc « Avant de
+  commencer » 7/7.
+- **Bancs du thème 1** : mêmes résultats qu'à `main` ; les deux bancs du lot, lancés avec les lignes de leur rapport :
+  séquence 38/38, QCM 34/34, sur `main` comme ici.
+- **Contrôles** identiques à `main`. `controle_squelette.mjs` a échoué une fois sur `main` sous la charge de quatre
+  suites en parallèle et passe seul ; sur cette branche, il passe.
