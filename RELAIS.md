@@ -1,14 +1,14 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 28/10/2026 15:04 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 28/10/2026 15:59 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
-- Vague n°298 TERMINÉE et fusionnée : #522, #523, #524, #525, puis #526 (mode essentiel sans « référentiel » sur 39 pages, fiche 3e_C1.5 alignée sur 3e_C1.3–C1.5, bancs 3e_C6.2 et 4e_C9). Toutes les décisions de Pascal (1a 2a 3a 4a 5a) sont appliquées et au journal.
-- Plus rien d'ouvert sur la vague.
-- Reste : pousser les six mods (`scratchpad/mods-claude`, commit ce466f8, 23 tests, scan propre) dès que l'app Claude a accès à PLL-process/mods-claude — refusé jusqu'ici (dernier essai 28/10, 18:18Z).
-- Une vérification programmée (#526, 19:09Z) se lancera et trouvera la PR fusionnée : rien à faire.
+- Vague n°298 terminée et fusionnée (#522–#526).
+- Mods PUBLIÉS : https://github.com/PLL-process/mods-claude (public), branche par défaut `publication` (le garde-fou refuse tout push sur main ; les évolutions passeront par PR). Commit ce466f8 : six mods (relais, memoire-compaction, decisions-en-attente, tableau-de-bord, garde-fous, francais-toujours), 23 tests, marketplace validée. Clone local : /home/claude/mods-claude.
+- Installation : `/plugin install <mod> --marketplace PLL-process/mods-claude`.
+- PLL-process est un compte personnel (pas une organisation) : réglages des apps sur https://github.com/settings/installations.
 
-_(écrit par Claude le 28/10/2026 15:04)_
+_(écrit par Claude le 28/10/2026 15:59)_
 
 ## Branche et PR
 - Branche : `fable/mode-essentiel-sans-referentiel` — dernier commit a4c00d193 Fin de la vague n°298 : le mode essentiel ne promet plus de masquer un référentiel absent
@@ -18,7 +18,7 @@ _(écrit par Claude le 28/10/2026 15:04)_
 _Aucune._
 
 ## Prochaine action
-➡️ Attendre la prochaine demande de Pascal ; pousser les mods dès que le dépôt est accessible.
+➡️ Attendre la prochaine demande de Pascal.
 
 ## Décisions prises récemment (messages de Pascal)
 - 28/10/2026 13:38 — « <system-reminder>The user's timezone is America/Martinique (UTC-04:00). Message sent at Wed 2026-10-28 13:38 local time.</system-reminder>
