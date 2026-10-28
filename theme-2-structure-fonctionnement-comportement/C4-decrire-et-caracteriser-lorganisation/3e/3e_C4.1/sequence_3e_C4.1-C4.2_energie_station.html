@@ -173,6 +173,9 @@
     .toolbar{gap:6px;margin:8px auto 12px}
     .toolbar .btn{flex:1 1 40%;min-width:0;min-height:44px;padding:6px;font-size:.8rem;line-height:1.2}
   }
+
+/* Billet d'entrée (règle d'or n°26) : sans note ; il renvoie aux rattrapages du bloc « Avant de commencer ». */
+#billet .billet-intro{margin:.2em 0 .6em}#billet .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;border-left:3px solid var(--input-bd,var(--border,#274a8a));border-radius:0;background:none}#billet .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600;color:var(--text)}#billet .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;padding:7px 9px;background:var(--input-bg,rgba(127,127,127,.10));border:2px solid transparent;border-radius:9px}#billet .qcm-option:hover,#billet .qcm-option:focus-within{border-color:var(--hl)}#billet .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}#billet .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;font-weight:400}#billet .billet-retour{margin:.7em 0 0;padding:.55em .8em;border-radius:8px;border-left:4px solid var(--hl);background:rgba(127,127,127,.10)}#billet .billet-retour:empty{display:none}#billet .billet-retour.ok{border-left-color:var(--ok)}#billet .billet-retour.warn{border-left-color:var(--warn)}#billet .billet-retour.ko{border-left-color:var(--err)}#billet .billet-retour p{margin:.2em 0}#billet .billet-retour ul{margin:.3em 0 .2em 1.2em;padding:0}#billet .billet-retour li{margin:.25em 0}#billet .billet-retour a,#billet .billet-retour a:visited{color:var(--hl)}#billet .billet-note{font-size:.9em;opacity:.85}@media print{#billet .billet-retour,#billet .billet-retour a{color:#041a40!important;opacity:1!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -658,6 +661,79 @@
 
 <!-- ══════ SÉANCE 1 ══════ -->
 <div class="seance-panel active" id="s1" role="tabpanel">
+<!-- Billet d'entrée (n°26) : en tête de la séance 1, comme le pilote 3e_C1.1. Une question par ligne du bloc
+     « Avant de commencer » ; « Voir où j'en suis » renvoie aux rattrapages de ces lignes. -->
+<section class="card" id="billet" aria-labelledby="billet-t">
+  <h2 id="billet-t">🎫 Billet d'entrée — trois questions, sans note</h2>
+  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. « Je ne sais pas encore » est une réponse utile.</p>
+  <fieldset class="qcm-groupe" id="be_1">
+      <legend>Dans une chaîne d'énergie, la <b>batterie</b> remplit la fonction…</legend>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="CONVERTIR"><label for="be_1__1">CONVERTIR</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="STOCKER"><label for="be_1__2">STOCKER</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="DISTRIBUER"><label for="be_1__3">DISTRIBUER</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
+  </fieldset>
+  <fieldset class="qcm-groupe" id="be_2">
+      <legend>Un <b>panneau solaire</b> reçoit de l'énergie… et fournit de l'énergie…</legend>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="lumineuse, et fournit de l&#x27;énergie électrique"><label for="be_2__1">lumineuse, et fournit de l'énergie électrique</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="électrique, et fournit de l&#x27;énergie lumineuse"><label for="be_2__2">électrique, et fournit de l'énergie lumineuse</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="chimique, et fournit de l&#x27;énergie électrique"><label for="be_2__3">chimique, et fournit de l'énergie électrique</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
+  </fieldset>
+  <fieldset class="qcm-groupe" id="be_3">
+      <legend>Sur un schéma de chaîne d'énergie, ce qu'on écrit <b>sur les flèches</b>, c'est…</legend>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="le nom du composant"><label for="be_3__1">le nom du composant</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="la fonction du bloc"><label for="be_3__2">la fonction du bloc</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="la forme d&#x27;énergie qui circule"><label for="be_3__3">la forme d'énergie qui circule</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="je ne sais pas encore"><label for="be_3__4">je ne sais pas encore</label></div>
+  </fieldset>
+  <button type="button" class="btn" id="btnBillet">🎫 Voir où j'en suis</button>
+  <div class="billet-retour" id="fbBillet" role="status" aria-live="polite"></div>
+</section>
+<script>
+/* Billet d'entrée — sans note, hors progression (règle d'or n°26). Chaque question vérifie une ligne du bloc
+   « Avant de commencer » ; une réponse manquée renvoie au rattrapage que cette ligne porte déjà. */
+(function(){
+  var BONNES = ["STOCKER", "lumineuse, et fournit de l'énergie électrique", "la forme d'énergie qui circule"];
+  function rattrapage(n){
+    var c = document.getElementById("ouv_" + n), li = c && c.closest("li");
+    return li ? li.querySelector(".rattrapage a") : null;
+  }
+  function bilan(){
+    var fb = document.getElementById("fbBillet"), ok = 0, manque = [];
+    for(var i = 1; i <= 3; i++){
+      var r = document.querySelector('#billet input[name="be_' + i + '"]:checked');
+      if(r && r.value === BONNES[i - 1]) ok++; else manque.push(i);
+    }
+    fb.textContent = "";
+    var tete = document.createElement("p");
+    tete.innerHTML = "<b>" + ok + " / 3</b> — " + (ok === 3
+      ? "tout ce qu'il faut est en place : tu peux commencer."
+      : (ok ? "une partie est en place. Avant de te lancer, relis :" : "rien n'est encore en place — ce n'est pas grave. Avant de te lancer, relis :"));
+    fb.appendChild(tete);
+    if(manque.length){
+      var ul = document.createElement("ul");
+      manque.forEach(function(i){
+        var li = document.createElement("li"), a = rattrapage(i);
+        li.appendChild(document.createTextNode("question " + i + " → "));
+        if(a) li.appendChild(a.cloneNode(true)); else li.appendChild(document.createTextNode("la ligne " + i + " du bloc « Avant de commencer »"));
+        ul.appendChild(li);
+      });
+      fb.appendChild(ul);
+    }
+    var note = document.createElement("p");
+    note.className = "billet-note";
+    note.textContent = "Ce billet n'est pas noté et ne compte pas dans ta progression.";
+    fb.appendChild(note);
+    fb.className = "billet-retour " + (ok === 3 ? "ok" : ok ? "warn" : "ko");
+  }
+  document.getElementById("btnBillet").addEventListener("click", bilan);
+  window.addEventListener("load", function(){
+    if(document.querySelectorAll("#billet input[type=radio]:checked").length === 3) bilan();
+  });
+})();
+</script>
+
 <section class="card">
   <h2>⚡ Séance 1 — Élaborer la chaîne d'énergie autonome (3e_C4.1)</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : quels blocs, dans quel ordre, pour que la station produise et gère SA propre énergie ?</p>
@@ -952,8 +1028,8 @@ const $ = id => document.getElementById(id);
 function collect(){
   const o = {inputs:{}, valid: window.__valid || {}, exp: window.__exp || {}};
   document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ o.inputs[el.id]=el.value; });
-  // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
-  document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c=>{ o.inputs[c.id]=c.checked; });
+  // les cases « Avant de commencer » (n°304) et les réponses du billet d'entrée (n°26) : cochées ou non
+  document.querySelectorAll(".rappel-spiralaire input[type=checkbox], #billet input[type=radio]").forEach(c=>{ o.inputs[c.id]=c.checked; });
   return o;
 }
 function save(showNote){
@@ -966,7 +1042,7 @@ function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o=null; }
   if(!o) return;
   Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(!el) return;
-    if(el.type==="checkbox" && el.closest(".rappel-spiralaire")) el.checked = (v===true); else el.value=v; });
+    if((el.type==="checkbox" || el.type==="radio") && el.closest(".rappel-spiralaire, #billet")) el.checked = (v===true); else el.value=v; });
   window.__valid = o.valid || {};
   window.__exp = o.exp || {};
 }
