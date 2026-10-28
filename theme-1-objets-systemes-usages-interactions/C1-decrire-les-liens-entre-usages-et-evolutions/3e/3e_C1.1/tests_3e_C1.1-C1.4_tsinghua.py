@@ -13,7 +13,8 @@ PÉRIMÈTRE (règle n°47) — ce que cette suite vérifie :
   · la cible du bouton d'entraînement aux trois moments prévus (règle n°45) ;
   · la présence des deux blocs de la règle n°4, corrigé du Bonus compris ;
   · que la phrase éthique de l'activité 4 est VISIBLE et non repliée (règle n°68) ;
-  · que la carte de référentiel porte les quatre formulations ;
+  · que le référentiel, dans la synthèse professeur depuis la n°298, porte les quatre codes,
+    et que la page élève n'a plus de carte de référentiel ;
   · la partie d) de l'activité 1 : sans les trois métiers, le verrou 1 reste fermé ;
   · la problématique recentrée (17/09/2026), le schéma de Herschel placé dans
     l'activité 1 et dont l'alternative ne donne pas la réponse du QCM, et le bloc de
@@ -155,7 +156,11 @@ async def tester_sequence(p):
     r.append(("la pénurie de coupeurs dans le cas de la canne", "manque aujourd'hui de coupeurs" in canne.replace(" "," ")))
     desc=await pg.evaluate("document.querySelector('meta[name=description]').content")
     r.append(("meta description du lot (3e, pas Shenzhen)", "3e" in desc and "Shenzhen" not in desc and "5e_C2" not in desc))
-    r.append(("les quatre codes en carte de référentiel", 4==await pg.evaluate("document.querySelectorAll('.referentiel-card tbody tr, .referentiel-card tr').length-1")))
+    # n°298 : le référentiel est lu dans la synthèse professeur ; la page élève n'en porte plus.
+    sp=pathlib.Path("Synthèses/synthese_professeur_3e_C1.1-C1.4.html").read_text(encoding="utf-8"); d=sp.find("referentiel-eleve")
+    r.append(("les quatre codes au référentiel de la synthèse professeur, plus de carte sur la page (n°298)",
+              d>0 and 4==sp[d:sp.find("</table>",d)].count("<tr")-1
+              and 0==await pg.evaluate("document.querySelectorAll('.referentiel-card').length")))
     imgs=await pg.evaluate("""(async()=>{const m=[];for(const i of document.querySelectorAll('img')){
         const ok=await new Promise(res=>{const x=new Image();x.onload=()=>res(1);x.onerror=()=>res(0);x.src=i.getAttribute('src');});
         if(!ok)m.push(i.getAttribute('src'));}return m;})()""")

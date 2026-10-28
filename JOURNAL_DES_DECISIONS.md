@@ -24580,3 +24580,76 @@ travaillées — en toutes lettres ») : 11 en 3e, 8 en 4e, 7 en 5e, C7, C8 et C
 - **Les trois ateliers de planification** (`atelier_3e|4e|5e_C7.1_planification_taches.html`) portent une carte
   `referentiel-card` que `verif_regles_audit.py` ne lit pas (il ne lit que les séquences) ; ils sont **générés** par
   `atelier-planification/_generation/build_atelier.py` : c'est le gabarit qu'il faut changer, dans un lot à part.
+
+---
+
+## 26/10/2026 — Vague n°298, thème 1 : le référentiel quitte 13 pages élèves pour leur synthèse professeur (thème 1)
+
+*Décision de Pascal, 26/10/2026 (point 3a) : reprendre la vague n°298 laissée en chemin le 15/09, une PR par thème —
+le thème 3 est fusionné (#522), voici le thème 1. Branche `fable/theme-1-regle-298`.*
+
+### Ce que fait cette PR
+
+**13 séquences du thème 1** portaient encore le référentiel « en toutes lettres » : 4 en 3e, 4 en 4e, 5 en 5e — les
+13 pages que comptait l'entrée du 15/09. Dix cartes « 📚 Le référentiel de la séquence — en toutes lettres », une
+« 🎯 Ce que dit le programme » (5e_C1.5, le compte du club), une « 📊 Compétences & connaissances (Socle / Techno /
+CRCN) » (4e_C1.4, cybersécurité) et un tableau « Fiche d'activité » (3e_C1.5, numérique et société).
+
+- **La carte quitte la page élève** et entre, **recopiée sans réécriture**, dans la synthèse professeur du lot, en
+  tête, dans un bloc `<div class="bloc referentiel-eleve">` précédé d'un commentaire qui nomme la page d'origine et la
+  date — la forme du 15/09 et du thème 3. La phrase « Référence normative … Codification opérationnelle … » est
+  ajoutée là où la carte ne l'écrivait pas.
+- **Six légendes « 🔎 Ce que disent ces étiquettes »** (3e_C1.1, 4e_C1.1, 5e_C1.1, 5e_C1.2, 3e_C2.1, 4e_C2.1) partent
+  avec le référentiel, dans le même bloc : la n°298 remplace, pour la page élève, le troisième élément de la n°44.
+- **La ligne d'étiquettes reste, avec ses infobulles** : 15 étiquettes de codes n'en avaient pas (5e_C1.5, 5e_C2.1,
+  3e_C3.1, 4e_C3.1, 5e_C3.1) ; elles reçoivent la formulation de leur code, telle que la carte la donnait.
+- **4e_C1.4 (cybersécurité)** : la carte vivait dans le dépliant d'ouverture ; elle part avec son commentaire
+  `<!-- Compétences -->`, devenu orphelin.
+- **3e_C1.5 n'avait pas de synthèse professeur** (le dossier `Synthèses/` n'avait que son `.gitkeep`). Elle est créée,
+  `Synthèses/synthese_professeur_3e_C1.5.html`, sur le gabarit de celle de 5e_C1.5 : le tableau « Fiche d'activité »
+  recopié tel quel sous un titre « 🎯 Fiche d'activité », la phrase BO / codification (les codes des étiquettes :
+  3e_C1.3 · 3e_C1.4 · 3e_C1.5), et un encadré qui dit que le reste de la synthèse est à écrire. `index.html` est
+  régénéré : une ligne de plus, ce lien. Décision par défaut, soumise à Pascal.
+- **3e_C2.1 (Pékin)** : la carte portait le troisième volet de la n°42 (« Une précision d'honnêteté » : le programme
+  écrit « choisis » sans dire par qui ; ici c'est toi qui choisis ; ton professeur peut faire autrement) et le
+  paragraphe « 🔑 Le mot qui compte est « choisis » ». Ils partent avec le référentiel, comme les phrases écrites à
+  l'élève de 3e_C6.2 le 15/09 : la n°298 remplace la n°42 sur la page élève. La consigne de l'activité dit toujours
+  à l'élève « Pour chaque question, choisis le mode qui y répond le mieux ». Décision par défaut, soumise à Pascal.
+- **CSS non touchée**, comme au thème 3 : `.referentiel-card` ne vit plus que dans des listes de sélecteurs.
+- **Six bancs** lisaient la carte ou la légende sur la page : ils les lisent dans la synthèse professeur (et la page
+  ne doit plus en porter) ; le témoin du mode essentiel devient le nombre de corrections visibles. Même nombre de
+  vérifications.
+
+### Un point pour Pascal, non tranché
+
+La « Fiche d'activité » de 3e_C1.5, recopiée sans réécriture, cite comme « Attendu de fin de cycle » les
+formulations de **5e_C1.5 et 5e_C1.6** (« Identifier des règles permettant de sécuriser un environnement
+numérique… », « Appréhender la responsabilité de chacun dans les dérives… »), alors que les étiquettes de la page
+nomment **3e_C1.3, 3e_C1.4 et 3e_C1.5**. La n°42 ne la lit pas (les codes y sont écrits sans niveau). L'écart est
+antérieur à cette PR ; le corriger, c'est réécrire la fiche — hors du mandat de la vague.
+
+### Vérifié
+
+- **`verif_regles_audit.py`** : ✘ **193 → 180** sur le dépôt, exactement les 13 pages (n°298 : 17 → 4, les quatre pages
+  du thème 2) ; sur les 14 séquences du thème 1, **n°298 ✔ partout** et **n°42 ✔ sur les 12** qui ont un tableau de
+  codes, lue « (synthèse professeur) » ; 3e_C1.5 est « sans objet » (la fiche écrit ses codes sans niveau).
+- **Contrôles**, identiques à `main` : `controle_formulations.py` **104 citations · 104 justes**, `controle_liens.py`
+  (aucun lien mort — la synthèse créée compris), `controle_impression_papier.py`, `controle_regles_visibles.py`,
+  `controle_competences.py`, `controle_hierarchie.py`, `controle_atteignabilite.py`, `controle_rapports_tests.py`,
+  `controle_boutons_vivants.py`, `controle_debordement.py`, `controle_squelette.mjs`, `controle_verrous.mjs`,
+  `controle_hors_ligne.mjs`, `controle_impression.mjs`, `controle_contraste_liens.mjs`, `controle_mode_essentiel.py` ✅.
+  `controle_blocs_dessines.py` lit une page de plus : la synthèse créée.
+- **Bancs du thème 1**, comparés à `main` sur les mêmes outils : les **27 bancs** sans argument donnent le même
+  résultat, dont les six adaptés (3e_C1.1 **50/50**, 3e_C2.1 **58/58**, 4e_C2.1 **65/65**, 3e_C3.1 **37/37**, 4e_C3.1
+  **32/32**, 5e_C3.1 **35/35**) ; les deux bancs de 5e_C1.5, lancés avec les arguments que donne leur rapport :
+  séquence **38/38**, QCM **34/34**, des deux côtés.
+- **Au navigateur** : les synthèses de 3e_C1.5 (à 1000 et 390 px), 3e_C2.1 et 4e_C1.4, la ligne d'étiquettes de
+  5e_C3.1 à 390 px, la page de 3e_C1.5 — aucune erreur JavaScript, aucun défilement horizontal.
+
+### Ce qui reste
+
+- **4 pages du thème 2** (4e_C4.7, 5e_C4.1, 5e_C4.7, 4e_C6.2) : la dernière PR de la vague. Les synthèses de 4e_C6.2
+  sont nées de `synthese_4e_C6.2.py`, mais elles ont été corrigées à la main depuis (le fond blanc à l'impression,
+  l'éditeur Vittascience ouvert dans un onglet à part) : **relancer le script défait ces corrections**. Le bloc du
+  référentiel ira dans la page ; le script, devenu périmé, est à signaler, pas à relancer.
+- **Les trois ateliers de planification** (C7.1), générés : leur gabarit, dans un lot à part.

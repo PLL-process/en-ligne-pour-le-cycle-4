@@ -124,8 +124,11 @@ with sync_playwright() as p:
     t("n°44 : aucun badge ni bouton sans infobulle",
       pg.evaluate("[...document.querySelectorAll('.badges .badge, .toolbar .btn')]"
                   ".filter(e=>!e.title).length") == 0)
-    t("n°44 : la légende des badges est lisible sans survol",
-      pg.is_visible(".legende-badges"))
+    # n°298 (15/09/2026) remplace, sur la page élève, la légende des étiquettes (n°44, 3e élément)
+    sp = pathlib.Path("Synthèses/synthese_professeur_4e_C2.1-C2.2.html").read_text(encoding="utf-8")
+    t("n°298 : la légende des badges a quitté la page élève pour la synthèse professeur",
+      pg.locator(".legende-badges").count() == 0
+      and 'class="legende-badges"' in sp[sp.find("referentiel-eleve"):])
     t("n°44 : le mode essentiel est expliqué en clair", pg.is_visible("#aide-essentiel"))
 
     # billet d'entrée
