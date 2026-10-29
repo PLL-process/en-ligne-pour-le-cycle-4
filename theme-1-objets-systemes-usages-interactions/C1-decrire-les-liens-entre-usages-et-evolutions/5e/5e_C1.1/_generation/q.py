@@ -11,6 +11,11 @@ utilisable, et c'est elle que la séquence appelle par `#codes=` (règle n°45).
 
 Règle tenue pour chaque distracteur : la réfutation EXPLIQUE pourquoi la
 réponse est fausse — elle ne se contente pas de dire qu'elle l'est.
+Règle n°144 (la bonne réponse ne se devine pas à sa longueur) : les propositions
+avaient été rééquilibrées dans la page publiée, pas ici. Reportées ici le
+28/10/2026 (28 questions, 73 propositions, et une réfutation nuancée) : régénéré depuis ce fichier, le
+QCM redonne la banque de questions publiée à l'identique. On corrige ICI, puis on
+régénère.
 """
 
 IMG_PRINCIPES = {
@@ -55,9 +60,9 @@ def q(c, n, question, options, expl, ex, err, refs, ret, img=None):
 
 q("C1.1", "Une donnée n'est pas une information",
   "Le capteur écrit « 26,4 » dans le fichier. Ce nombre est…",
-  ["une donnée : brute, elle ne dit rien tant qu'on ne l'a pas mise en rapport avec autre chose",
+  ["une donnée brute : elle ne dit rien toute seule",
    "une information : elle renseigne sur la qualité de l'air",
-   "une connaissance : elle s'ajoute à ce que la classe sait déjà",
+   "une connaissance : elle s'ajoute à ce que la classe sait",
    "une mesure fausse tant qu'on ne l'a pas vérifiée"],
   "Une donnée est un fait brut enregistré. Elle devient une information quand on la "
   "compare, qu'on la situe, qu'on la relie : « 26,4 aujourd'hui, contre 67 les mardis » "
@@ -77,10 +82,10 @@ q("C1.1", "Une donnée n'est pas une information",
 
 q("C1.1", "La valeur impossible",
   "Dans les relevés, mercredi 11 h porte la valeur −4,2 µg/m³ (microgrammes par mètre cube). Que faut-il en conclure ?",
-  ["c'est une valeur impossible : une concentration ne peut pas être négative, il y a un défaut de mesure",
+  ["c'est une valeur impossible : défaut de mesure",
    "l'air était exceptionnellement pur ce jour-là",
-   "il faut la remplacer par 0, qui est la plus proche valeur possible",
-   "il faut la garder telle quelle : on ne modifie jamais des mesures"],
+   "il faut la remplacer par 0, la valeur la plus proche",
+   "il faut la garder : on ne modifie jamais une mesure"],
   "Une masse de poussières par mètre cube est une quantité de matière : elle vaut zéro "
   "au minimum. Une valeur négative ne décrit aucun état du monde — elle décrit une panne, "
   "une dérive de l'électronique ou une erreur d'enregistrement.",
@@ -99,7 +104,7 @@ q("C1.1", "La valeur impossible",
 
 q("C1.1", "Le capteur bloqué",
   "Vendredi, de 9 h à 14 h, le fichier porte six fois exactement 23,7. C'est le signe…",
-  ["d'un capteur bloqué : une vraie mesure varie toujours un peu d'une heure à l'autre",
+  ["très probablement d'un capteur figé : une vraie mesure varie",
    "d'un air parfaitement stable pendant cinq heures",
    "d'une erreur de recopie faite par un élève",
    "de rien du tout : une valeur peut se répéter"],
@@ -109,7 +114,8 @@ q("C1.1", "Le capteur bloqué",
   "Une montre qui affiche 14 h 03 pendant une heure n'indique pas que le temps s'est "
   "arrêté : elle indique qu'elle est arrêtée.",
   "L'erreur classique est de chercher l'anomalie dans les valeurs extrêmes seulement. "
-  "Ici, la valeur est parfaitement plausible : c'est sa RÉPÉTITION qui est impossible.",
+  "Ici, la valeur est parfaitement plausible : c'est sa RÉPÉTITION qui est très improbable — un soupçon fort, "
+  "à vérifier sur l'appareil.",
   ["",
    "Un air stable donnerait des valeurs proches, 23,5 puis 23,9 puis 24,1 — jamais six "
    "fois la même décimale : c'est cette identité parfaite qui est invraisemblable.",
@@ -121,7 +127,7 @@ q("C1.1", "Le capteur bloqué",
 
 q("C1.1", "La donnée manquante",
   "Lundi 14 h, aucune ligne n'a été enregistrée. La bonne conduite est…",
-  ["de le signaler et de calculer sans elle : on n'invente jamais une mesure absente",
+  ["de le signaler et de calculer sans elle",
    "de recopier la valeur de 13 h, la plus proche",
    "d'écrire 0 pour que la colonne soit complète",
    "d'écarter toute la journée du lundi"],
@@ -144,10 +150,10 @@ q("C1.1", "La donnée manquante",
 q("C1.1", "Ce que coûte une donnée sale",
   "Moyenne calculée sur les 90 relevés : 27,4 µg/m³ (microgrammes par mètre cube). Moyenne après écart des deux "
   "valeurs fausses (−4,2 et 251) : 25,2. Que montre cet écart de 2,2 ?",
-  ["que quelques valeurs fausses suffisent à déplacer un résultat, et donc qu'il faut nettoyer avant de calculer",
-   "que la différence est faible, donc qu'on pouvait se dispenser du nettoyage",
+  ["que quelques valeurs fausses déplacent un résultat",
+   "que la différence est faible, donc le nettoyage inutile",
    "que la moyenne est un mauvais indicateur",
-   "que le capteur doit être remplacé"],
+   "que le capteur doit être remplacé sans tarder"],
   "Deux valeurs sur quatre-vingt-dix — à peine 2 % des lignes — déplacent la moyenne "
   "de près de 9 %. C'est l'effet d'une valeur aberrante : 251 au lieu de 25,1 pèse à elle "
   "seule autant que dix relevés normaux.",
@@ -166,9 +172,9 @@ q("C1.1", "Ce que coûte une donnée sale",
 
 q("C1.1", "Écarter n'est pas effacer",
   "Une fois les quatre anomalies repérées, que fait-on du fichier d'origine ?",
-  ["on les écarte du calcul mais on les garde dans le fichier, avec une note qui dit pourquoi",
+  ["on les écarte du calcul, en gardant une note",
    "on les efface définitivement pour ne plus les voir",
-   "on les corrige en devinant la valeur qu'elles auraient dû avoir",
+   "on les corrige en devinant la valeur attendue",
    "on garde le fichier tel quel et on ne calcule rien"],
   "Le fichier d'origine est une trace : il dit ce que le capteur a réellement produit. "
   "On travaille sur une copie, on y écarte les valeurs défectueuses, et on note l'écart "
@@ -190,10 +196,10 @@ q("C1.1", "Écarter n'est pas effacer",
 
 q("C1.2", "Fonction ou principe",
   "« Mesurer la concentration de poussières dans l'air. » Cet énoncé est…",
-  ["une fonction technique : il dit ce qu'il faut obtenir, sans dire par quel moyen",
-   "un principe technique : il décrit le phénomène physique employé",
-   "une solution technique : il désigne un appareil précis",
-   "un critère de choix : il permet de départager deux appareils"],
+  ["une fonction technique : le quoi, pas le comment",
+   "un principe technique : il décrit un phénomène",
+   "une solution technique : il désigne un appareil",
+   "un critère de choix entre deux appareils"],
   "Une fonction technique s'énonce par un verbe à l'infinitif et un complément, et elle "
   "n'impose aucun moyen. C'est justement ce qui permet à plusieurs principes différents "
   "de la remplir tous les trois.",
@@ -214,7 +220,7 @@ q("C1.2", "Fonction ou principe",
 q("C1.2", "Trois principes, une seule fonction",
   "Diffusion optique, gravimétrie, atténuation bêta : trois appareils différents pour la "
   "même fonction. Qu'est-ce que cela montre ?",
-  ["qu'une fonction n'impose pas sa solution : il y a toujours plusieurs chemins pour y parvenir",
+  ["qu'une fonction n'impose pas sa solution",
    "que deux des trois principes sont inutiles",
    "que les concepteurs ne se sont pas concertés",
    "que la fonction a été mal définie au départ"],
@@ -260,10 +266,10 @@ q("C1.2", "Le délai comme critère",
 
 q("C1.2", "Une contrainte qui élimine",
   "L'atténuation bêta emploie une source radioactive scellée. Pour un collège, cela…",
-  ["l'élimine : une source scellée relève d'un contrôle réglementaire qu'un collège ne peut pas assurer",
+  ["l'élimine : un collège ne peut pas assurer ce contrôle",
    "n'a aucune importance, puisque la source est scellée",
-   "impose seulement de former un professeur",
-   "l'empêche de mesurer les particules fines"],
+   "impose seulement de former un professeur référent",
+   "l'empêche de mesurer les particules les plus fines"],
   "Certains critères ne se pondèrent pas : ils éliminent. Un principe hors de portée "
   "réglementaire ou juridique sort de la comparaison, même s'il gagne sur tous les autres "
   "points. On appelle cela une contrainte éliminatoire.",
@@ -282,10 +288,10 @@ q("C1.2", "Une contrainte qui élimine",
 
 q("C1.2", "Ce qu'on accepte de perdre",
   "La classe retient la diffusion optique. Que perd-elle en la choisissant ?",
-  ["de la précision — ± 10 % au lieu de ± 2 % — et la possibilité d'entretenir l'optique elle-même",
+  ["de la précision, et l'entretien de l'optique",
    "rien : c'est le principe le moins cher et le plus rapide",
    "la possibilité de mesurer les particules fines",
-   "la possibilité de comparer ses résultats d'un jour à l'autre"],
+   "la possibilité de comparer d'un jour à l'autre"],
   "Choisir, c'est renoncer. Le rôle d'une comparaison de principes n'est pas de désigner "
   "un gagnant sans défaut : c'est de savoir, en s'engageant, ce que l'on abandonne — et "
   "de vérifier que cela ne gêne pas l'usage visé.",
@@ -307,10 +313,10 @@ q("C1.2", "Ce qu'on accepte de perdre",
 
 q("C1.3", "Ce qu'est un système d'information",
   "Un système d'information, c'est…",
-  ["l'ensemble des personnes, des outils et des règles qui font circuler l'information",
-   "un ordinateur puissant",
-   "un logiciel de gestion",
-   "le réseau internet"],
+  ["les personnes, les outils et les règles réunis",
+   "un ordinateur suffisamment puissant",
+   "un logiciel de gestion de base de données",
+   "le réseau internet du collège"],
   "Le mot « système » compte autant que le mot « information ». Il y a des machines, mais "
   "aussi des gens, des habitudes et des règles : qui dépose quoi, où, quand, et qui a le "
   "droit de le lire. Retirez les règles, il ne reste qu'un tas d'appareils.",
@@ -330,7 +336,7 @@ q("C1.3", "Ce qu'est un système d'information",
 
 q("C1.3", "Où la donnée devient information",
   "Dans la chaîne du capteur à l'ENT, à quel étage la donnée devient-elle une information ?",
-  ["au traitement : c'est là qu'on trie, qu'on écarte et qu'on calcule",
+  ["au traitement : on y trie, on y écarte, on y calcule",
    "à la source, dès que le capteur mesure",
    "au stockage, quand la valeur est enregistrée",
    "à la diffusion, quand le graphique est publié"],
@@ -353,8 +359,8 @@ q("C1.3", "Où la donnée devient information",
 
 q("C1.3", "Travailler sur une copie",
   "Pourquoi la classe travaille-t-elle sur une copie du fichier de relevés ?",
-  ["pour que l'original reste intact et qu'on puisse toujours revenir en arrière",
-   "pour aller plus vite",
+  ["pour que l'original reste intact et consultable",
+   "pour aller plus vite dans les calculs",
    "pour économiser de la place sur le serveur",
    "parce que l'original est protégé par un mot de passe"],
   "L'original est la trace de ce que le capteur a produit. Tant qu'il existe, toute "
@@ -375,9 +381,9 @@ q("C1.3", "Travailler sur une copie",
 
 q("C1.3", "Une erreur qui remonte tous les étages",
   "Une valeur fausse enregistrée à la source…",
-  ["se propage à tous les étages tant que personne ne l'écarte",
+  ["se propage à tous les étages du système",
    "est corrigée automatiquement par le tableur",
-   "disparaît au moment du stockage",
+   "disparaît au moment du stockage définitif",
    "n'a d'effet qu'au moment de la diffusion"],
   "Aucun étage ne nettoie tout seul. Une valeur fausse est stockée telle quelle, entre "
   "dans les calculs, puis dans le graphique, puis dans la décision. Elle ne s'arrête que "
@@ -397,8 +403,8 @@ q("C1.3", "Une erreur qui remonte tous les étages",
 
 q("C1.3", "Écrire qui a le droit de faire quoi",
   "À quoi sert d'écrire, pour chaque étage, qui a le droit d'y écrire ?",
-  ["à savoir qui peut modifier quoi, et donc où chercher quand quelque chose a changé",
-   "à empêcher les élèves de travailler sur les données",
+  ["à savoir qui peut modifier quoi, et où chercher",
+   "à empêcher les élèves de toucher aux données",
    "à respecter une obligation administrative",
    "à accélérer le fonctionnement du système"],
   "Les droits ne servent pas seulement à empêcher : ils servent à comprendre. Quand une "
@@ -422,10 +428,10 @@ q("C1.3", "Écrire qui a le droit de faire quoi",
 
 q("C1.4", "Un nom dit ce que c'est",
   "Le fichier « capteur mardi PIC ATTENTION.csv » est mal nommé parce qu'il…",
-  ["dit ce qu'on en pense, et non ce que le fichier contient",
-   "est trop court",
-   "ne contient pas de chiffre",
-   "est écrit en français"],
+  ["dit ce qu'on en pense, pas ce qu'il contient",
+   "est beaucoup trop court pour être utile",
+   "ne contient pas le moindre chiffre",
+   "est écrit en français et non en anglais"],
   "Un nom de fichier est une adresse, pas un commentaire. « PIC ATTENTION » est une "
   "interprétation, valable un jour et fausse le suivant ; « releves-air-2026-s10 » reste "
   "exact et retrouvable dans deux ans.",
@@ -466,9 +472,9 @@ q("C1.4", "La date qui met de l'ordre",
 
 q("C1.4", "Le doublon",
   "« finalV2 (copie).csv » est identique, octet pour octet, à « finalV2.csv ». Que faire ?",
-  ["le supprimer : deux fichiers identiques créent un doute, pas une sécurité",
-   "le garder, on ne sait jamais",
-   "le renommer finalV3",
+  ["le supprimer : deux fichiers identiques",
+   "le garder de côté : on ne sait jamais",
+   "le renommer en finalV3 pour s'y retrouver",
    "le déplacer dans un dossier « à ranger »"],
   "Une sauvegarde est une copie rangée AILLEURS, datée, et dont on sait qu'elle en est "
   "une. Un doublon posé à côté de l'original n'est pas une sauvegarde : c'est une source "
@@ -489,10 +495,10 @@ q("C1.4", "Le doublon",
 
 q("C1.4", "Ni espaces, ni accents",
   "Pourquoi éviter les espaces, les accents et les majuscules dans un nom de fichier ?",
-  ["pour qu'un nom survive au passage d'un ordinateur, d'un site ou d'un système à un autre",
-   "pour taper plus vite",
-   "parce que c'est interdit",
-   "pour économiser de la place"],
+  ["pour qu'un nom survive au passage d'un système à l'autre",
+   "pour taper le nom du fichier plus rapidement",
+   "parce que les accents sont formellement interdits",
+   "pour économiser de la place sur le disque"],
   "Les systèmes ne traitent pas ces caractères de la même façon : un accent peut se "
   "transformer en suite illisible, une majuscule être ignorée ici et distinguée là, un "
   "espace couper une adresse en deux. Un nom sobre traverse tout sans se déformer.",
@@ -510,10 +516,10 @@ q("C1.4", "Ni espaces, ni accents",
 
 q("C1.4", "Un dossier qui ne dit rien",
   "Un dossier nommé « Nouveau dossier/ » pose problème parce qu'il…",
-  ["ne dit rien de ce qu'il contient : son nom n'aide personne à chercher",
-   "est vide",
-   "a été créé par erreur",
-   "ne peut pas être renommé"],
+  ["ne dit rien de ce qu'il contient",
+   "est vide de tout contenu utile",
+   "a manifestement été créé par erreur",
+   "ne pourra plus jamais être renommé"],
   "Une arborescence sert à retrouver sans ouvrir. Chaque niveau doit réduire la "
   "recherche : « 1-releves », « 2-analyses », « 3-documents ». Un nom qui ne réduit rien "
   "oblige à ouvrir — et l'arborescence ne sert plus à rien.",
@@ -536,9 +542,9 @@ q("C1.4", "Un dossier qui ne dit rien",
 q("C1.5", "La première question après un incident",
   "Une valeur du fichier partagé a été modifiée, personne ne sait par qui. Par quoi "
   "commence-t-on ?",
-  ["par regarder qui avait le droit d'écrire dans ce fichier",
-   "par interroger toute la classe",
-   "par supprimer le fichier",
+  ["par regarder qui avait le droit d'y écrire",
+   "par interroger toute la classe, un par un",
+   "par supprimer le fichier et recommencer",
    "par changer le mot de passe de l'ENT"],
   "La liste des personnes autorisées transforme une question ouverte en question fermée. "
   "C'est la raison profonde pour laquelle on écrit les droits AVANT l'incident : sans "
@@ -558,10 +564,10 @@ q("C1.5", "La première question après un incident",
 
 q("C1.5", "Le droit minimal",
   "Quelle règle aurait le mieux évité cet incident ?",
-  ["donner à chacun le droit minimal dont il a besoin : lire ne demande pas d'écrire",
-   "mettre un mot de passe plus long",
-   "interdire l'accès à l'ENT aux élèves",
-   "sauvegarder le fichier plus souvent"],
+  ["donner à chacun le droit minimal dont il a besoin",
+   "mettre un mot de passe nettement plus long",
+   "interdire l'accès à l'ENT à tous les élèves",
+   "sauvegarder le fichier beaucoup plus souvent"],
   "C'est le principe du moindre privilège : chacun reçoit exactement ce que sa tâche "
   "exige, pas davantage. Une classe qui doit consulter des relevés a besoin de les lire ; "
   "le droit d'écrire, qu'elle n'utilise pas, ne fait qu'ouvrir une possibilité d'erreur.",
@@ -580,8 +586,8 @@ q("C1.5", "Le droit minimal",
 
 q("C1.5", "À quoi sert une version datée",
   "Garder une copie datée du fichier chaque soir permet…",
-  ["de comparer, donc de savoir ce qui a changé et de revenir en arrière",
-   "d'empêcher toute modification",
+  ["de comparer, donc de revenir en arrière",
+   "d'empêcher toute modification ultérieure",
    "d'identifier à coup sûr le coupable",
    "de rendre le fichier illisible pour les autres"],
   "Une suite de versions datées est une mémoire. Elle ne protège de rien par elle-même, "
@@ -602,7 +608,7 @@ q("C1.5", "À quoi sert une version datée",
 
 q("C1.5", "La notice trouvée sur internet",
   "La notice du capteur, en anglais, vient du site du fabricant. La republier sur l'ENT…",
-  ["demande de vérifier la licence, et de citer la source dans tous les cas",
+  ["demande de vérifier la licence et de citer",
    "est libre : elle est déjà sur internet",
    "est interdite en toutes circonstances",
    "ne pose de question que si elle est payante"],
@@ -624,8 +630,8 @@ q("C1.5", "La notice trouvée sur internet",
 
 q("C1.5", "Le mot de passe partagé",
   "Un mot de passe unique, partagé par toute la classe…",
-  ["ne protège plus rien et empêche de savoir qui a fait quoi",
-   "est acceptable s'il est assez long",
+  ["ne protège rien et cache qui a fait quoi",
+   "est acceptable, s'il est assez long",
    "est plus sûr qu'un mot de passe par élève",
    "est obligatoire pour travailler en classe"],
   "Un mot de passe remplit deux fonctions : empêcher l'accès des autres, et rattacher "
@@ -648,10 +654,10 @@ q("C1.5", "Le mot de passe partagé",
 q("C1.6", "Exacte et inacceptable",
   "Publier « le pic vient du passage de M. ___, agent d'entretien », avec sa photo. "
   "Cette publication est…",
-  ["exacte et inacceptable : une mesure d'air devient une accusation contre une personne identifiable",
-   "fausse, donc à écarter",
-   "acceptable, puisque c'est vrai",
-   "acceptable si l'agent a été prévenu"],
+  ["exacte et inacceptable : elle désigne quelqu'un",
+   "fausse, et donc à écarter de la publication",
+   "acceptable, puisque c'est la stricte vérité",
+   "acceptable, si l'agent a été prévenu avant"],
   "C'est le cœur de la question : la vérité d'un fait ne suffit pas à autoriser sa "
   "publication. Il faut aussi se demander qui il désigne, devant qui, et avec quel effet "
   "sur cette personne.",
@@ -672,10 +678,10 @@ q("C1.6", "Exacte et inacceptable",
 q("C1.6", "Acceptable et inutile",
   "Publier seulement « la concentration monte les mardis et jeudis à 7 h », sans dire "
   "pourquoi. Cette publication est…",
-  ["acceptable et inutile : personne ne peut agir sans savoir d'où vient le pic",
-   "la meilleure des trois, puisqu'elle ne met personne en cause",
-   "malhonnête, puisqu'elle cache la cause",
-   "identique à la troisième publication"],
+  ["acceptable et inutile : on ne peut pas agir",
+   "la meilleure des trois : elle ne met personne en cause",
+   "malhonnête, puisqu'elle cache la cause du pic",
+   "identique à la troisième publication proposée"],
   "Protéger quelqu'un en supprimant toute information utile n'est pas une solution : "
   "c'est un renoncement. Le travail consiste à trouver la formulation qui protège ET "
   "permet d'agir — pas à choisir entre les deux.",
@@ -695,9 +701,9 @@ q("C1.6", "Acceptable et inutile",
 
 q("C1.6", "Désigner sans nommer",
   "Écrire « la personne qui passe la balayeuse le mardi », sans donner de nom…",
-  ["la désigne quand même : dans un collège, une seule personne correspond à cette description",
+  ["la désigne quand même sans la nommer",
    "protège suffisamment son identité",
-   "rend l'information anonyme",
+   "rend l'information parfaitement anonyme",
    "ne relève pas des données personnelles"],
   "Une donnée est personnelle dès qu'elle permet d'identifier quelqu'un, directement ou "
   "indirectement. Le croisement de quelques détails — un métier, un jour, un lieu — suffit "
@@ -719,9 +725,9 @@ q("C1.6", "Désigner sans nommer",
 q("C1.6", "Ce qui distingue la bonne publication",
   "Publier « le pic correspond au nettoyage mécanique de la cour ; peut-on le décaler "
   "avant l'arrivée des élèves ? ». Ce qui distingue cette version des deux autres :",
-  ["elle désigne une organisation — l'horaire du nettoyage — et non une personne",
-   "elle est plus courte",
-   "elle ne donne aucun chiffre",
+  ["elle désigne une organisation, pas une personne",
+   "elle est plus courte que les deux autres",
+   "elle ne donne aucun chiffre contestable",
    "elle évite de dire toute la vérité"],
   "Elle dit le même fait, complètement, et le rattache à ce qui peut être changé : un "
   "horaire, une organisation. Une décision devient possible, et personne n'est mis en "

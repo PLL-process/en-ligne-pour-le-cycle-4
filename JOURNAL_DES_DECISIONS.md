@@ -25346,6 +25346,8 @@ l'usager).
   usagers, données, autres objets, éléments de l'environnement ; les règles de la ville sont des **exigences**.
 - ⚠️ Non corrigé, signalé : cinq lignes d'options du QCM `qcm_5e_C2_shenzhen_station_velos.html` diffèrent de `q.py`
   (raccourcies dans la page, pas dans la source) — dérive antérieure à cette PR ; régénérer le QCM les annulerait.
+  *Rectifié le soir même : ce ne sont pas cinq lignes mais **24 questions** — ma comparaison était tronquée. Voir
+  l'entrée « le QCM se régénère sans perdre la n°144 ».*
 
 ### Vérifié
 
@@ -25357,3 +25359,56 @@ l'usager).
 - **Bancs du lot** : `tests_5e_C2.1-C2.2_shenzhen.py` 50/50, `tests_regle_311_5e_C2.1.mjs` 34/34 — sur `main` comme ici.
 - **Contrôles** : identiques à `main` (médias, liens, impression, contraste, squelette, règles visibles, verif, et le
   reste de la liste habituelle).
+
+---
+
+## 28/10/2026 — Trois QCM du thème 1 se régénèrent sans perdre la n°144 (`5e_C2.1`, `5e_C1.1`, `5e_C1.2`)
+
+*Carte blanche de Pascal (28/10/2026) sur la décision « reporter dans `q.py` les retouches du QCM ». Branche
+`fable/theme-1-qcm-5e-c2-source`.*
+
+### Le défaut — plus grand que je ne l'avais annoncé
+
+En préparant #536, j'avais signalé « cinq lignes » du QCM différentes de leur source `q.py`. Ma comparaison était
+tronquée : ce sont **24 questions sur 30** (68 propositions). Quelqu'un avait rééquilibré les propositions **dans la
+page publiée** pour la règle n°144 (la bonne réponse ne se devine pas à sa longueur), sans reporter le travail dans
+`q.py`. Mesuré par `controle_longueurs.py` :
+
+| QCM | publié : détachées · écart moyen | régénéré depuis l'ancien `q.py` |
+|---|---|---|
+| `5e_C2.1` Shenzhen | 1 / 30 · +3,7 | **24 / 30 · +30,6** |
+| `5e_C1.1` Chengdu | 3 / 30 · +3,6 | **30 / 30 · +39,6** |
+| `5e_C1.2` Sainte-Luce | 1 / 30 · +2,9 | **28 / 30 · +45,9** |
+
+Autrement dit, la prochaine correction faite « dans les règles » (corriger `q.py`, régénérer — n°38) aurait remis un
+QCM où cocher la plus longue suffit.
+
+Le balayage des huit générateurs de QCM du dépôt a trouvé le même défaut à `5e_C1.1` et `5e_C1.2`. Les autres :
+`3e_C2.1`, `4e_C2.1` et l'atelier de planification (thème 3) se régénèrent à l'identique ; `3e_C1.1` et `4e_C1.1`
+ont un générateur **figé** depuis le 24/09 (il refuse de tourner : la page est la source) ; l'atelier des
+représentations a son propre assembleur, hors de ce balayage.
+
+### Ce que fait cette PR
+
+- **`5e_C1.1`** : 73 propositions de 28 questions, et une réfutation que la page avait nuancée (« sa RÉPÉTITION est
+  très improbable — un soupçon fort, à vérifier sur l'appareil », et non « impossible »).
+- **`5e_C1.2`** : 86 propositions de 27 questions. L'en-tête de `build_qcm.py` donnait la graine 317 ; la vraie est
+  218 (la constante `GRAINE`, et le rapport de tests) — corrigé.
+- **`5e_C2.1` — les 68 propositions publiées sont reportées dans `q.py`**, question par question, à la même place (les
+  réfutations `d[]` restent en face de leur proposition). Le report est fait par programme : chaque question de la
+  page est retrouvée dans `q.py` par ses quatre propositions, puis chaque proposition changée remplacée à l'identique.
+- Le docstring de `q.py` dit pourquoi, et rappelle : on corrige ici, puis on régénère.
+- La page publiée **ne change pas**.
+
+### Vérifié
+
+- `build_qcm.py` (gabarit `3e_C3.1`) puis `fix_r.js`, dans une copie : la **banque de questions** régénérée est
+  identique à la publiée pour les trois lots ; pour `5e_C2.1`, la page entière l'est à l'octet. Pour `5e_C1.1` et
+  `5e_C1.2`, le reste de la page diffère seulement par le moteur du gabarit, plus récent (styles de la loupe, bandeau
+  de portée déplacé) : rien de la page publiée ne se perdrait.
+- `controle_longueurs.py` sur les banques régénérées : les mêmes chiffres que les pages publiées.
+
+### Ce qui reste
+
+- L'atelier des représentations (`ateliers-representations/_generation/build_qcm.py`), qui a son propre
+  assembleur : même vérification à faire.
