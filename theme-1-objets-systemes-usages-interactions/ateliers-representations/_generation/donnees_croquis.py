@@ -390,10 +390,10 @@ def croquis_gardienne(ident, titre, desc):
     h.append(c.trait([(540, 322), (488, 398), (384, 340)], ep=3.2))
     h.append(c.rond(370, 318, 26, 21, ep=2.8, rempli=PEAU, double=False))
     h.append(c.trait([(352, 300), (302, 266), (296, 274), (344, 310)], ferme=True, ep=2.4, rempli=PEAU, double=False))
-    # la bulle : ce qu'elle ressent
-    h.append(c.trait([(404, 112), (630, 112), (630, 172), (566, 172), (556, 198), (548, 172), (404, 172)], ferme=True,
+    # la bulle : ce qu'elle ressent — à 12 unités du boîtier, pas collée à lui (règle d'or n°315)
+    h.append(c.trait([(422, 112), (632, 112), (632, 172), (566, 172), (556, 198), (548, 172), (422, 172)], ferme=True,
                      ep=2.4, rempli="#ffffff", double=False))
-    h.append(ecrit(517, 142, ["Le soleil sur l'écran :", "je ne vois presque rien !"], taille=14, ancre="middle", halo=False))
+    h.append(ecrit(527, 142, ["Le soleil sur l'écran :", "je ne vois presque rien !"], taille=14, ancre="middle", halo=False))
     # le geste : appuyer sur +, vingt-quatre fois
     h.append(c.fleche(452, 222, 308, 250, courbe=16))
     h.append(ecrit(470, 212, "× 24", taille=17, coul=ROUGE, gras=True))

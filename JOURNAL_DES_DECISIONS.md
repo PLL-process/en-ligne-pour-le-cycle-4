@@ -25606,3 +25606,60 @@ tiennent **une couleur par notion**.
 - Le skill `controle-qualite-lot` décrit l'ordre nouveau.
 
 Aucun texte ni aucune image des quatre fiches n'est repris : la forme seulement.
+
+---
+
+## 29/10/2026 — n°315, thème 1 : les 283 schémas revus, aucun défaut ne reste
+
+*Suite de la règle d'or n°315 (#539, #540) : « l'ensemble des schémas doivent être revus », thème par thème, contrôle
+puis revue visuelle (décision de Pascal). Le thème 1 est le premier.*
+
+### Les chiffres
+
+| | avant | après |
+|---|---|---|
+| schémas lus (fichiers SVG et SVG dans les pages) | 283 | 283 |
+| schémas avec au moins un ✘ | 59 | **0** |
+| ✘ (contact, débordement, superposés, traversée) | 226 | **0** |
+| ⚠ « écrasée » (feuille de style qui écrase tailles et couleurs) | 30 | **0** |
+| schémas avec un ⚠ restant (presque tous « serré », 8 à 16 unités d'air) | — | 69 |
+
+### Ce qui a été fait
+
+- **Générateur des ateliers** (`ateliers-representations/_generation/figures.py`, `donnees_croquis.py`) : les feuilles
+  d'une carte mentale ont 18 unités d'air entre elles ; dans la pieuvre, l'étiquette d'une FC se pose au milieu de la
+  partie visible du trait, celle d'une FP glisse le long de sa courbe jusqu'à ne toucher ni l'objet, ni une bulle, ni
+  une autre étiquette ; dans le diagramme des exigences, les flèches «satisfy» / «verify» partent de points écartés et
+  leur mot se pose à côté de la flèche ; la bulle du croquis de la gardienne ne touche plus le boîtier. Pages des
+  ateliers, cahiers et incrustations régénérés — dont une page du thème 3 (`4e_C8.1`, le diagramme «verify» incrusté) :
+  c'est la sortie du même générateur, d'où une branche sans motif de thème.
+- **Onze schémas écrits à la main** repris un par un (3e_C1.1, 3e_C2.1, 4e_C1.1, 5e_C1.1, 5e_C1.2, 5e_C1.3,
+  `_reperes`) : cadres élargis, lignes coupées en deux, boucle de retour de la chaîne d'analyse passée dans un couloir à
+  gauche (elle traversait le cadre « Thème 3 » et son nom était écrit sur le cadre « Thème 2 »), faisceaux de
+  Herschel en dégradé, arborescence dessinée en vrais dossiers, sauvegarde montrée en paires « copier / restaurer ».
+- **Vingt-trois schémas dont la feuille de style écrasait les attributs** (`text{fill:…;font-size:…}`) : les titres
+  prévus en couleur et en grand sortaient blancs et à 12 px. Correctif mécanique : la règle ne vise plus que les textes
+  sans attribut (`text:not([fill])`, `text:not([font-size])`) ; quand le schéma a un bloc d'impression, les couleurs
+  d'écran passent sous `@media screen`, et le papier reste réglé par ce bloc, comme avant.
+- **Revue visuelle** de la planche (162 images distinctes) : trois défauts que le contrôle ne voit pas, corrigés — un
+  texte à cheval sur le bord de son cadre (`la_donnee_qui_designe`, `cycle_de_vie_ost`), le mot « réseau » écrit sur
+  l'arc en tirets (`local_serveur_distant`), des cadres trop étroits pour leur texte (`systeme_information_cdi`).
+
+### Deux erreurs de fond trouvées en route
+
+- **3e_C2.1, l'algorigramme corrigé de la borne de Pékin** encaissait **avant** de tester le papier — l'ordre même que
+  le corrigé dénonce, et le contraire de l'algorigramme attendu écrit dans la séquence et de son texte alternatif. Il
+  suit maintenant l'ordre attendu : test du papier, encaissement, test du paiement, impression. Le graphique de la même
+  figure passe en barres horizontales (les noms de profils se chevauchaient).
+- **5e_C1.2, le corrigé des trois freins** portait des balises HTML `<b>` dans le SVG : dans la page, tout ce qui
+  suivait disparaissait (P2 et P3 inclus) ; et la phrase « Sur ces deux critères, le frein à patins est… » du corrigé
+  du critère était coupée. Les deux sont réparés.
+
+### Ce qui reste
+
+- **Le contrôle** ne voit pas : un texte à cheval sur le bord d'un cadre, un mot posé sur un trait sans pointe, une
+  balise HTML dans un SVG. À ajouter à `_outils/controle_schemas.mjs` (branche transversale ou du thème 2).
+- Les cas d'utilisation SysML gardent quelques traits qui se croisent (aucun ne touche un cas) : à reprendre dans le
+  générateur si Pascal le souhaite.
+- Les thèmes 2 et 3, de la même façon. Trois SVG du thème 2 et des ressources communes portent du HTML (exports
+  draw.io : à vérifier lors du thème 2).
