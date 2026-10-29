@@ -834,7 +834,6 @@ IMAGES = {
     "pieuvre_velo_cargo_corrige.svg": PIEUVRE_CORRIGE,
     "pieuvre_jardin_arrosage.svg": PIEUVRE_JARDIN,
 }
-SCHEMAS_SYNTHESE = {"5e": PIEUVRE_CORRIGE, "4e": PIEUVRE_JARDIN}
 
 COURS = {
     "5e": (

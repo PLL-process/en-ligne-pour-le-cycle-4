@@ -18,7 +18,7 @@ ligne à ligne, est l'atelier pilote : `donnees_interacteurs.py` et `q_interacte
 
 `SLUG`, `COURT` (2 lettres, unique), `EMOJI`, `TITRE` (le mot du programme), `TITRE_COURT`,
 `TITRE_COMPLET`, `ETIQUETTE`, `ETIQUETTE_COURTE`, `MENTION_FICTION`, `NIVEAUX`, `MODULE`,
-`NOM_PANNEAU`, `PANNEAU_TEXTE`, `IMAGES`, `SCHEMAS_SYNTHESE`, `VOCAB_EN`, `VERBES`, `CHAINE`,
+`NOM_PANNEAU`, `PANNEAU_TEXTE`, `IMAGES`, `VOCAB_EN`, `VERBES`, `CHAINE`,
 `NOTES_PROF`, `DEUX_NOMS`, `QCM_SOUS_TITRE`. Voir le pilote pour le rôle de chacune.
 
 **Identifiants uniques** : tout identifiant de SVG (`ident`) et toute case vivante (`vivant`,
@@ -28,9 +28,9 @@ tous les ateliers dans une même page : deux identifiants égaux s'y écraseraie
 ## Le cours (`COURS`)
 
 `COURS = {"5e": html, "4e": html, …}` (un niveau = un bloc) : ce qu'il faut savoir, en clair, pour faire les
-exercices de ce niveau. Le moteur le pose trois fois : dans la page d'atelier (encadré replié « 📘 Le cours », sous
-l'ouverture), dans la synthèse élève (« 📘 En 5e — le cours », avant « à retenir »), et dans chaque bloc d'exercices
-inséré dans une séquence. Forme : de courts intertitres `<h3>`, des listes `<ul>`, au besoin un petit tableau dans
+exercices de ce niveau. Le moteur le pose deux fois : dans la page d'atelier (encadré replié « 📘 Le cours », sous
+l'ouverture), et dans chaque bloc d'exercices inséré dans une séquence. La synthèse élève ne le recopie plus
+depuis la règle d'or n°316 : elle a son propre texte (voir plus bas). Forme : de courts intertitres `<h3>`, des listes `<ul>`, au besoin un petit tableau dans
 `<div class="defile">` ; pas de pavé. Le cours ne remplace pas « à retenir » (trois à cinq phrases) : il le détaille.
 
 Il s'inspire du cahier « 123 Techno » (Bordas 2021) que le professeur utilise — inventaires de lecture dans
@@ -38,6 +38,23 @@ Il s'inspire du cahier « 123 Techno » (Bordas 2021) que le professeur utilise 
 recopier** : nos mots, nos exemples (objets-fils), nos schémas. Le site est public ; aucun énoncé, aucune image,
 aucune tournure reconnaissable de l'éditeur. Ne jamais citer Bordas dans une page élève (n°309) ; la source
 d'inspiration se dit dans `NOTES_PROF`.
+
+## La synthèse élève (`synthese_<module>.py`, règle d'or n°316 révisée)
+
+Depuis le 29/10/2026, la synthèse élève suit le skill `synthese-vulgarisee` et le pilote `5e_C1.1` : une fiche de
+révision qu'un élève de 6e lit seul, sur **deux pages A4**. Son texte est dans `_generation/synthese_<module>.py`
+(modèle : `synthese_besoin.py`) :
+
+- `H1`, `PB` (la ligne sous le titre), `QUESTION` (la question de l'atelier, au centre de la carte) ;
+- `PARTIES` : cinq à sept parties, rangées 5e → 4e → 3e, chacune avec `niveau`, `emoji`, `titre` (une question),
+  `titre_court`, `carte` (la réponse en une phrase), `exemple` (l'exemple de l'atelier en une ou deux lignes, au plus
+  une rangée de cases `div.chaine`, sans schéma SVG), `retenir` et `piege` (une ligne, celui que vise le QCM) ;
+- `LEXIQUE` [(français, anglais, définition d'une ligne)] : 15 à 19 mots. Son titre porte l'ancre `#les-mots`, la
+  cible des liens « @synthese#les-mots » des ouvertures.
+
+« Ce que dit le programme » est tiré du référentiel (`moteur.formulation`), jamais recopié. Avant de livrer :
+`python3 _outils/mesurer_impression.py <synthèse>`, puis avec `--police 'Liberation Sans'` : deux pages, aucun titre
+seul. Phrases de 25 mots au plus ; unités en toutes lettres dans chaque partie (n°312) ; sigles expliqués (n°313).
 
 ## Les exercices
 

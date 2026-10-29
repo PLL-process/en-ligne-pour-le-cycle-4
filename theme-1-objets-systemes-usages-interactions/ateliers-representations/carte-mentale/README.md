@@ -10,7 +10,7 @@ Le programme de technologie ne donne pas de nom à ce schéma : il demande d'exp
 | `atelier_4e_carte-mentale.html` | l'atelier de 4e |
 | `atelier_3e_carte-mentale.html` | l'atelier de 3e |
 | `qcm_carte-mentale.html` | le QCM (30 questions fixes) |
-| `Synthèses/synthese_eleve_carte-mentale.html` | la synthèse élève (le cours, à retenir, les mots) |
+| `Synthèses/synthese_eleve_carte-mentale.html` | la synthèse élève (deux pages A4 : la carte « Ce que je dois retenir », les parties, le lexique) |
 | `Synthèses/synthese_professeur_carte-mentale.html` | la synthèse professeur |
 | `fiche_pedagogique_carte-mentale.md`, `matrice_couverture_carte-mentale.csv` | gouvernance |
 | `rapport_tests_carte-mentale.md`, `manifest_carte-mentale.json` | tests exécutés, inventaire |

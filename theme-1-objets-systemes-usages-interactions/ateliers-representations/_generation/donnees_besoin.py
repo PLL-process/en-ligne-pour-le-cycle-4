@@ -1033,7 +1033,6 @@ IMAGES = {
     "bete_a_cornes_alerte_cyclonique.svg": BAC_ALERTE,
     "bete_a_cornes_alerte_mal_formulee.svg": BAC_MAL,
 }
-SCHEMAS_SYNTHESE = {"5e": BAC_LAMPE_C, "4e": BAC_ARROSAGE_C, "3e": BAC_ALERTE}
 VOCAB_EN = [("besoin", "need"), ("bête à cornes", "need diagram"), ("rendre service", "to serve, to help"),
             ("but", "purpose"), ("fonction d'usage", "main function, use function"), ("usager", "user"),
             ("solution technique", "technical solution"), ("caractéristique", "feature, characteristic"),

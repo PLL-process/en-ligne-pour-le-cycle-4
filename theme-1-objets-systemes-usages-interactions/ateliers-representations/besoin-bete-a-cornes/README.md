@@ -10,7 +10,7 @@ Le programme de technologie parle d'exprimer le besoin : dire à qui l'objet ren
 | `atelier_4e_besoin-bete-a-cornes.html` | l'atelier de 4e |
 | `atelier_3e_besoin-bete-a-cornes.html` | l'atelier de 3e |
 | `qcm_besoin-bete-a-cornes.html` | le QCM (30 questions fixes) |
-| `Synthèses/synthese_eleve_besoin-bete-a-cornes.html` | la synthèse élève (le cours, à retenir, les mots) |
+| `Synthèses/synthese_eleve_besoin-bete-a-cornes.html` | la synthèse élève (deux pages A4 : la carte « Ce que je dois retenir », les parties, le lexique) |
 | `Synthèses/synthese_professeur_besoin-bete-a-cornes.html` | la synthèse professeur |
 | `fiche_pedagogique_besoin-bete-a-cornes.md`, `matrice_couverture_besoin-bete-a-cornes.csv` | gouvernance |
 | `rapport_tests_besoin-bete-a-cornes.md`, `manifest_besoin-bete-a-cornes.json` | tests exécutés, inventaire |

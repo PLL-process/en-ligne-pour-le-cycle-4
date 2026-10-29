@@ -1125,7 +1125,6 @@ ROLES_IMAGES = {
     "arrosage_cas_utilisation_avec_erreurs.svg": "document de l'exercice 3 de 4e (erreurs à repérer) ; question illustrée du QCM",
     "station_alerte_cas_utilisation_corrige.svg": "corrigé de l'exercice 2 de 3e ; schéma de la synthèse (3e) ; question illustrée du QCM",
 }
-SCHEMAS_SYNTHESE = {"5e": FIG_LAMPADAIRE, "4e": FIG_BORNE_C, "3e": FIG_CYCLONE_C}
 VOCAB_EN = [("diagramme de cas d'utilisation", "use case diagram"), ("acteur", "actor"), ("cas d'utilisation", "use case"),
             ("frontière du système", "system boundary"), ("association", "association"), ("verbatim", "user quote (verbatim)"),
             ("ressenti", "user feeling"), ("algorigramme", "flowchart"), ("storyboard", "storyboard"),

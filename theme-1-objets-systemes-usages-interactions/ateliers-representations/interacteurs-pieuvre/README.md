@@ -9,7 +9,7 @@ Dans le programme de technologie, ce schéma s'appelle le diagramme des interact
 | `atelier_5e_interacteurs-pieuvre.html` | l'atelier de 5e |
 | `atelier_4e_interacteurs-pieuvre.html` | l'atelier de 4e |
 | `qcm_interacteurs-pieuvre.html` | le QCM (30 questions fixes) |
-| `Synthèses/synthese_eleve_interacteurs-pieuvre.html` | la synthèse élève (le cours, à retenir, les mots) |
+| `Synthèses/synthese_eleve_interacteurs-pieuvre.html` | la synthèse élève (deux pages A4 : la carte « Ce que je dois retenir », les parties, le lexique) |
 | `Synthèses/synthese_professeur_interacteurs-pieuvre.html` | la synthèse professeur |
 | `fiche_pedagogique_interacteurs-pieuvre.md`, `matrice_couverture_interacteurs-pieuvre.csv` | gouvernance |
 | `rapport_tests_interacteurs-pieuvre.md`, `manifest_interacteurs-pieuvre.json` | tests exécutés, inventaire |

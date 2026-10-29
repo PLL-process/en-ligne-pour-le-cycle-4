@@ -9,7 +9,7 @@ Dans le programme de technologie, ce dessin s'appelle simplement le croquis. Dan
 | `atelier_4e_croquis.html` | l'atelier de 4e |
 | `atelier_3e_croquis.html` | l'atelier de 3e |
 | `qcm_croquis.html` | le QCM (30 questions fixes) |
-| `Synthèses/synthese_eleve_croquis.html` | la synthèse élève (le cours, à retenir, les mots) |
+| `Synthèses/synthese_eleve_croquis.html` | la synthèse élève (deux pages A4 : la carte « Ce que je dois retenir », les parties, le lexique) |
 | `Synthèses/synthese_professeur_croquis.html` | la synthèse professeur |
 | `fiche_pedagogique_croquis.md`, `matrice_couverture_croquis.csv` | gouvernance |
 | `rapport_tests_croquis.md`, `manifest_croquis.json` | tests exécutés, inventaire |

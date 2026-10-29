@@ -25868,3 +25868,61 @@ aussi le haut du bloc visé.
 `controle_liens`, `controle_hierarchie`, `controle_regles_visibles`, `controle_debordement`, `controle_unites`,
 `controle_sigles`, `controle_contraste_liens.mjs`, `controle_impression.mjs` : ✅ sur les dix pages. Bancs des
 séquences qui lisent leur synthèse : Pékin 58/58, Shenzhen 50/50, Hangzhou 65/65, Chengdu 43/43.
+
+---
+
+## 29/10/2026 — n°316 révisée : les sept synthèses élève des ateliers des représentations, en deux pages A4 (générées)
+
+*Après #545, la décision posée à Pascal (choix par défaut ★) était de passer aux sept synthèses des ateliers. Une
+première version, à six temps par partie (sept à huit pages), a été dépassée en cours de route par la n°316 révisée
+(#546, « 2 pages A4 ») : elle est reprise ici au format deux pages, comme le dit #546 (« Les sept synthèses des
+ateliers de représentation […] directement au format deux pages »). Branche transversale : elle touche aussi le skill
+`synthese-vulgarisee`.*
+
+### Le générateur
+
+- `ateliers-representations/_generation/syntheses.py` : la synthèse élève prend la forme du pilote `5e_C1.1` révisé,
+  sa feuille de style mot pour mot (lien « ↑ La carte » de #548 compris) — la carte « Ce que je dois retenir » (la
+  question de l'atelier, « Ce que dit le programme » tiré du référentiel, une carte par partie) ; par partie, le
+  titre-question, l'exemple de l'atelier en une ou deux lignes et une rangée de cases, « À retenir », le piège en une
+  ligne ; un seul lexique, dont le titre porte l'ancre `#les-mots` (la cible des liens « @synthese#les-mots » des
+  ouvertures). Une pastille 5e / 4e / 3e marque le niveau de chaque partie : un atelier sert plusieurs classes.
+- Le texte de chaque atelier est dans `_generation/synthese_<module>.py` (modèle : `synthese_besoin.py`). Aucun
+  schéma SVG : les schémas restent dans les pages de l'atelier, la synthèse les montre en cases.
+- `SCHEMAS_SYNTHESE`, que plus rien ne lisait, est retiré des sept modules de données ; le `COURS` reste dans les pages
+  d'atelier. `CONSIGNES_REDACTION.md`, `gouvernance.py`, les README et le skill disent la nouvelle forme.
+
+### Les sept synthèses, mesurées par `mesurer_impression.py`
+
+| Atelier | Parties (5e · 4e · 3e) | Mots au lexique | Avant | Inter | Liberation Sans |
+|---|---|---|---|---|---|
+| Le besoin (bête à cornes) | 7 (3 · 2 · 2) | 16 | 12 pages | 2 pages (94 %, 94 %) | 2 pages (93 %, 88 %) |
+| Les interacteurs (pieuvre) | 7 (4 · 3 · —) | 18 | 11 | 2 (95 %, 95 %) | 2 (95 %, 92 %) |
+| Les exigences (SysML) | 7 (— · 4 · 3) | 17 | 11 | 2 (95 %, 94 %) | 2 (95 %, 90 %) |
+| Le cas d'utilisation | 6 (2 · 2 · 2) | 17 | 10 | 2 (93 %, 79 %) | 2 (90 %, 79 %) |
+| Le croquis | 6 (— · 3 · 3) | 19 | 9 | 2 (90 %, 75 %) | 2 (88 %, 74 %) |
+| Le FAST | 6 (2 · 2 · 2) | 19 | 12 | 2 (94 %, 76 %) | 2 (91 %, 75 %) |
+| La carte mentale | 6 (2 · 2 · 2) | 19 | 11 | 2 (89 %, 71 %) | 2 (89 %, 70 %) |
+
+Aucun titre seul en bas de page (les anciennes en avaient un dans cinq ateliers). Phrases de 9,3 à 10,6 mots en
+moyenne, aucune au-delà de 25.
+
+**Ce qui est resté dans l'atelier** (rien n'est perdu, tout est dans les pages d'atelier, leurs cours et leurs
+corrections) : les schémas, les tableaux complets (les tests T1 à T5, les critères A à D, « à éviter / à écrire »), la
+méthode pas à pas du diagramme pieuvre, les détails chiffrés des croquis (jeux, fentes, passe-câble). Le passage de
+la bête à cornes au diagramme pieuvre (« la corne devient la FP1 ») est dans la synthèse des interacteurs, la
+partie 3.
+
+### Contrôles
+
+`controle_liens`, `_unites`, `_sigles`, `_hierarchie`, `_regles_visibles`, `_debordement`, `_impression_papier`,
+`controle_impression.mjs`, `controle_contraste_liens.mjs` : ✅. Banc des ateliers : 303 / 303. Le générateur relancé
+en entier ne change que les sept synthèses élève : pages de niveau, panneaux, cahiers et synthèses professeur
+identiques.
+
+### Ce qui reste
+
+- **L'image de l'objet dans la carte** (préférence de Pascal du 29/10/2026, en cours dans le skill sur une autre
+  branche) : pour un atelier, la représentation remplie de l'exemple, en vignette. À ajouter au générateur une fois la
+  forme fixée.
+- Les neuf synthèses de #545, à ramener à deux pages ; puis les thèmes 2 et 3.
