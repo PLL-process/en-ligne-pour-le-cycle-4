@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 29/10/2026 16:59 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 29/10/2026 17:02 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - #555 fusionnée. Choix ★ A en cours : lot n°310 des trois chaînes faites main.
@@ -19,7 +19,7 @@ _(écrit par Claude le 29/10/2026 16:59)_
 _Aucune._
 
 ## Prochaine action
-➡️ Attendre les contrôles de navigation, puis ouvrir la PR.
+➡️ Rien à faire pour l'instant : je t'envoie la PR dès que les contrôles de navigation sont finis.
 
 ## Décisions prises récemment (messages de Pascal)
 - 29/10/2026 13:15 — « <agent-message from="a35e22d744f71516e"> [Subagent hand-back] The text below is the final report of a subagent this session delegated to. It »
