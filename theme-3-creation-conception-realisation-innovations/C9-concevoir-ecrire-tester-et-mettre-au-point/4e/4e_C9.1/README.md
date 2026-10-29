@@ -58,10 +58,12 @@ avec son **alimentation séparée**. Les élèves ne le montent pas : ils le lis
 
 > **Le relais n'est pas un détail de câblage : c'est le contenu de l'activité 1.**
 > Une broche de carte fournit quelques dizaines de milliampères ; un moteur de
-> pompe en demande plus de mille. La flèche d'ORDRE s'arrête donc sur le relais —
-> alors que sur la station d'alerte de 3e, dont la sortie n'est qu'un voyant, elle
-> va droit sur CONVERTIR. **Les deux lots forment une paire** : c'est en les
-> comparant que la règle devient visible.
+> pompe en demande plus de mille. La flèche d'ORDRE arrive donc sur DISTRIBUER, et
+> DISTRIBUER, ici, c'est le relais. Sur la station d'alerte de 3e, dont la sortie
+> n'est qu'un voyant, elle arrive aussi sur DISTRIBUER, mais c'est la broche de la
+> carte qui distribue. **Les deux lots forment une paire** : c'est en les comparant
+> que la règle devient visible — l'ordre arrive toujours sur DISTRIBUER ; ce qui
+> change, c'est le composant qui distribue.
 
 ## Une correction de fond, à signaler
 

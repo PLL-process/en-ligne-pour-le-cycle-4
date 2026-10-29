@@ -1,8 +1,12 @@
-"""Régénère les cinq schémas fonctionnels SVG et leurs sources draw.io.
+"""Régénère les schémas fonctionnels SVG des chaînes d'énergie et leurs sources draw.io.
 
 Fonctions dans les blocs, composants en dessous, énergies sur les flèches.
 La batterie porte une annotation de stock, distincte des flux électriques.
+Une fonction absente se dessine en pointillés, grisée, avec sa raison (règle d'or n°131).
 Aucune bibliothèque, police ou ressource distante n'est nécessaire.
+
+Usage : python _outils/regenerer_chaines_energie.py [figure…]
+Sans argument, toutes les figures ; sinon seulement celles nommées (voir FIGURES en bas du fichier).
 """
 from pathlib import Path
 from html import escape
@@ -13,11 +17,15 @@ import re
 ROOT = Path(__file__).resolve().parents[1]
 C4 = Path('theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation')
 C9 = Path('theme-3-creation-conception-realisation-innovations/C9-concevoir-ecrire-tester-et-mettre-au-point/3e/3e_C9.2')
+C9_4E = Path('theme-3-creation-conception-realisation-innovations/C9-concevoir-ecrire-tester-et-mettre-au-point/4e/4e_C9.1')
+C9_5E = Path('theme-3-creation-conception-realisation-innovations/C9-concevoir-ecrire-tester-et-mettre-au-point/5e/5e_C9.1')
+C6 = Path('theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2')
 CONVENTION = 'Convention de la technologie : l’information en haut, l’énergie en bas, l’ordre qui descend.'
 PIED_CONVENTION = 'Convention : l’information EN HAUT, l’énergie EN BAS — l’ordre descend, comme le cerveau commande les muscles.'
 BG, BOX, WHITE = '#050f24', '#0d2347', '#e4eaf5'
 CYAN, YELLOW, VIOLET, GREEN, ORANGE, BLUE = '#61dafb', '#ffd66b', '#c68ef2', '#81fba1', '#ffb454', '#81aaff'
 RED = '#ff8a8a'
+GREY = '#9aa5b8'   # fonction absente (règle d'or n°131)
 
 
 class Diagram:
@@ -36,7 +44,7 @@ class Diagram:
         c = ET.SubElement(self.root, 'mxCell', id=str(self.n), value=value, style=style, vertex='1', parent='1')
         ET.SubElement(c, 'mxGeometry', x=str(x), y=str(y), width=str(w), height=str(h), **{'as': 'geometry'})
 
-    def text(self, x, y, text, color=WHITE, size=20, bold=False, anchor='middle', role=None):
+    def text(self, x, y, text, color=WHITE, size=20, bold=False, anchor='middle', role=None, italic=False):
         # Chaque ligne est un vrai texte SVG : lisible et imprimable sans foreignObject.
         lines = text.split('\n')
         width = max(len(s) for s in lines) * size * .58 + 12
@@ -44,8 +52,24 @@ class Diagram:
         for i, line in enumerate(lines):
             ry = y + i * (size + 7)
             attrs = f' data-role="{role}"' if role else ''
+            attrs += ' font-style="italic"' if italic else ''
             self.parts.append(f'<text x="{x}" y="{ry}" fill="{color}" font-size="{size}" font-weight="{700 if bold else 400}" text-anchor="{anchor}"{attrs}>{escape(line)}</text>')
-        self.cell(text, f'text;html=0;whiteSpace=wrap;align={"center" if anchor == "middle" else "left"};verticalAlign=middle;fontFamily=Arial;fontColor={color};fontSize={size};fontStyle={1 if bold else 0};', left, y-size, width, len(lines)*(size+7))
+        style = (1 if bold else 0) + (2 if italic else 0)
+        self.cell(text, f'text;html=0;whiteSpace=wrap;align={"center" if anchor == "middle" else "left"};verticalAlign=middle;fontFamily=Arial;fontColor={color};fontSize={size};fontStyle={style};', left, y-size, width, len(lines)*(size+7))
+
+    def panel(self, x, y, w, h, color):
+        # Un cadre sous des textes (banc de tests) : à poser AVANT les textes qu'il contient.
+        self.parts.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="12" fill="{BOX}" stroke="{color}" stroke-width="2"/>')
+        self.cell('', f'rounded=1;arcSize=6;html=0;fillColor={BOX};strokeColor={color};strokeWidth=2;', x, y, w, h)
+
+    def absent(self, x, y, function, reason, w=210):
+        # Règle d'or n°131 : une fonction absente se dessine en pointillés, grisée, avec sa raison écrite dessous.
+        h = 76
+        self.parts.append(f'<g data-role="absent"><rect x="{x}" y="{y}" width="{w}" height="{h}" rx="12" fill="none" stroke="{GREY}" stroke-width="3" stroke-dasharray="8 6"/>')
+        self.text(x+w/2, y+46, function, GREY, 23, True)
+        self.parts.append('</g>')
+        self.cell(function, f'rounded=1;arcSize=16;html=0;whiteSpace=wrap;fillColor=none;strokeColor={GREY};strokeWidth=3;dashed=1;dashPattern=8 6;fixDash=1;fontColor={GREY};fontSize=23;fontStyle=1;fontFamily=Arial;', x, y, w, h)
+        self.text(x+w/2, y+111, reason, GREY, 19, role='absent', italic=True)
 
     def block(self, x, y, function, component, color=ORANGE, w=210, stock=False, ident=None):
         h = 76
@@ -93,7 +117,8 @@ class Diagram:
         source.write_text(native+'\n',encoding='utf-8')
         markers=''.join(f'<marker id="a{c[1:]}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="12" markerHeight="12" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="{c}"/></marker>' for c in (CYAN,YELLOW,VIOLET,GREEN,ORANGE,BLUE))
         css='@media print{.paper{fill:white}rect[fill="'+BOX+'"]{fill:white}text[fill="'+WHITE+'"]{fill:#172a49}}'
-        for c,dark in [(CYAN,'#006a86'),(YELLOW,'#805600'),(VIOLET,'#7836ad'),(GREEN,'#126c2a'),(ORANGE,'#925000'),(BLUE,'#244e9a'),(RED,'#a01818')]:
+        # Le gris (fonction absente) n'entre dans la feuille d'impression que s'il sert : les figures sans fonction absente restent identiques à l'octet.
+        for c,dark in [(CYAN,'#006a86'),(YELLOW,'#805600'),(VIOLET,'#7836ad'),(GREEN,'#126c2a'),(ORANGE,'#925000'),(BLUE,'#244e9a'),(RED,'#a01818')]+([(GREY,'#5f6672')] if any(GREY in x for x in self.parts) else []):
             css+='@media print{[fill="%s"]{fill:%s}[stroke="%s"]{stroke:%s}}' % (c,dark,c,dark)
         svg=f'<svg xmlns="http://www.w3.org/2000/svg" width="{self.w}" height="{self.h}" style="width:100%;height:auto" viewBox="0 0 {self.w} {self.h}" role="img" aria-labelledby="t d" font-family="Segoe UI, Arial, sans-serif" content="{escape(native,quote=True)}">\n<title id="t">{escape(self.title)}</title><desc id="d">{escape(self.desc)}</desc>\n<defs>{markers}</defs><style>{css}</style><rect class="paper" width="{self.w}" height="{self.h}" fill="{BG}"/>\n'+ '\n'.join(self.parts)+'\n</svg>\n'
         # Règle d'or n°312 : une unité écrite dans le dessin sans son nom → la ligne « Unités : V (volts) » sous le dessin
@@ -350,5 +375,144 @@ def book():
     quiz.write_text(q,encoding='utf-8')
 
 
+def circuit_eau(d, y, etapes):
+    """Le circuit d'eau, à part : l'eau est de la matière, pas de l'énergie (n°310, piège 4)."""
+    d.section(y, 'CIRCUIT D’EAU — trajet de la matière, distinct des flèches d’énergie', CYAN)
+    xs = [x for x, _ in etapes]
+    for x, txt in etapes:
+        d.text(x, y + 70, txt, WHITE, 24, True)
+    for (a, ta), (b, tb) in zip(etapes, etapes[1:]):
+        g = a + len(ta) * 24 * .58 / 2 + 20
+        h = b - len(tb) * 24 * .58 / 2 - 20
+        d.arrow([(g, y + 61), (h, y + 61)], CYAN, 'Eau', (g + h) / 2, y + 41)
+
+
+def jardin_programme():
+    """4e_C9.1 (le jardin qu'on programme) : le même jardin que 4e_C4.1, vu depuis le programme — deux entrées
+    (l'humidité, l'heure), une pompe 12 V commandée par un relais. Fichier distinct de celui de 4e_C4.1."""
+    d=Diagram('Jardin connecté : l’information (en haut) commande l’énergie (en bas)',
+        CONVENTION + ' En haut, la chaîne d’information. Deux entrées arrivent à ACQUÉRIR : l’humidité du sol, grandeur physique lue par le capteur d’humidité, et l’heure, donnée par l’horloge de la carte, sans capteur. '
+        'Une flèche « Mesures » mène à TRAITER : la carte et le programme, avec les seuils 35 et 45 et la mémoire de l’état de la pompe. '
+        'Une flèche « Décision » mène à COMMUNIQUER : l’écran ou la console affiche POMPE ON ou POMPE OFF, avec un voyant, vers le jardinier. '
+        'L’ordre descend de TRAITER et arrive sur DISTRIBUER. '
+        'En bas, la chaîne d’énergie. L’énergie électrique entre dans ALIMENTER : une alimentation 12 V séparée, pas l’USB de la carte. L’énergie électrique passe à DISTRIBUER : le relais, le préactionneur. '
+        'Puis à CONVERTIR : la pompe 12 V, dont le moteur entraîne la turbine. Elle fournit de l’énergie mécanique : l’eau est mise en mouvement. '
+        'TRANSMETTRE est dessiné en pointillés, grisé : cette fonction est absente, car la pompe met elle-même l’eau en mouvement, sans mécanisme entre le moteur et la turbine. '
+        'Le circuit d’eau, à part, va du réservoir à la pompe puis au sol du jardin : l’eau est de la matière, pas de l’énergie. '
+        'Pourquoi un relais : la pompe 12 V demande bien plus de courant qu’une broche de la carte n’en fournit ; le relais reçoit l’ordre et laisse passer l’énergie de l’alimentation, il n’en fabrique pas. '
+        'Avec un simple voyant, la broche de la carte suffirait : l’ordre arrive toujours sur DISTRIBUER.',1075)
+    d.section(95,"CHAÎNE D’INFORMATION — en haut (elle décide)",CYAN)
+    d.block(200,130,'ACQUÉRIR','Capteur d’humidité\net horloge de la carte',CYAN,w=230)
+    d.block(600,130,'TRAITER','Carte et programme\nSeuils 35 et 45\nMémoire de l’état',VIOLET,w=280)
+    d.block(1060,130,'COMMUNIQUER','Écran ou console\nPOMPE ON / OFF et voyant\nvers le jardinier',GREEN,w=300)
+    d.arrow([(15,150),(190,150)],CYAN,'Humidité du sol',20,138,lanchor='start')
+    d.arrow([(15,192),(190,192)],CYAN,'Heure',20,180,lanchor='start')
+    d.arrow([(430,168),(590,168)],CYAN,'Mesures',510,148)
+    d.arrow([(880,168),(1050,168)],CYAN,'Décision',965,148)
+    d.arrow([(740,315),(740,372),(605,372),(605,450)],GREEN,'Ordre : l’ordre descend',755,357,dashed=True,lanchor='start')
+    d.section(400,"CHAÎNE D’ÉNERGIE — en bas (elle obéit)",ORANGE)
+    d.block(150,460,'ALIMENTER','Alimentation 12 V séparée\npas l’USB de la carte',YELLOW)
+    d.block(500,460,'DISTRIBUER','Relais\nle préactionneur',CYAN)
+    d.block(850,460,'CONVERTIR','Pompe 12 V\nmoteur et turbine',VIOLET)
+    d.arrow([(15,498),(140,498)],ORANGE,'Énergie\nélectrique',77,435)
+    for a,b in [(360,490),(710,840)]: d.arrow([(a,498),(b,498)],ORANGE,'Énergie\nélectrique',(a+b)/2,435)
+    d.arrow([(1060,498),(1565,498)],ORANGE,'Énergie\nmécanique',1300,435)
+    d.text(1495,560,'Mettre l’eau\nen mouvement',WHITE,22,True)
+    d.absent(1135,535,'TRANSMETTRE','Absente : la pompe met\nelle-même l’eau en mouvement')
+    circuit_eau(d,745,[(200,'Réservoir'),(620,'Pompe'),(1080,'Sol du jardin')])
+    d.text(800,895,'Pourquoi un relais ? La pompe 12 V demande bien plus de courant qu’une broche de la carte n’en fournit.',BLUE,19)
+    d.text(800,935,'Le relais reçoit l’ordre et laisse passer l’énergie de l’alimentation : il distribue, il ne fabrique rien.',BLUE,19)
+    d.text(800,975,'Avec un simple voyant, la broche de la carte suffirait : l’ordre arrive toujours sur DISTRIBUER.',BLUE,19)
+    d.text(800,1035,PIED_CONVENTION,BLUE,20)
+    d.save(C9_4E/'Images/chaines_jardin_programme.svg')
+
+
+def arrosage():
+    """4e_C6.2 (arrosage automatique) : le prototype du lot, alimenté par une pile ; la pile stocke l'énergie (STOCKER)."""
+    d=Diagram('Arrosage automatique : l’information (en haut) commande l’énergie (en bas)',
+        CONVENTION + ' En haut, la chaîne d’information. L’humidité du sol entre dans ACQUÉRIR : le capteur d’humidité du sol. '
+        'Une flèche « Mesure » mène à TRAITER : la carte Arduino et son programme, qui compare l’humidité au seuil. '
+        'Une flèche « État du sol » mène à COMMUNIQUER : l’écran LCD affiche l’état du sol. '
+        'L’ordre descend de TRAITER et arrive sur DISTRIBUER. '
+        'En bas, la chaîne d’énergie. STOCKER : la pile, en très basse tension ; sous elle, l’énergie chimique stockée. '
+        'L’énergie électrique passe à DISTRIBUER : le relais. Puis à CONVERTIR : la petite pompe, dont le moteur entraîne la turbine. '
+        'Elle fournit de l’énergie mécanique : l’eau est mise en mouvement. '
+        'TRANSMETTRE est dessiné en pointillés, grisé : cette fonction est absente, car la pompe met elle-même l’eau en mouvement. '
+        'Le circuit d’eau, à part, va du réservoir à la pompe puis au pot de la plante : l’eau est de la matière, pas de l’énergie. '
+        'Le programme relie les deux chaînes : il lit le capteur, compare au seuil et donne l’ordre au relais.',985)
+    d.section(95,"CHAÎNE D’INFORMATION — en haut (elle décide)",CYAN)
+    d.block(200,130,'ACQUÉRIR','Capteur d’humidité\ndu sol',CYAN,w=230)
+    d.block(600,130,'TRAITER','Carte Arduino et programme\ncompare l’humidité au seuil',VIOLET,w=280)
+    d.block(1100,130,'COMMUNIQUER','Écran LCD\nl’état du sol',GREEN,w=260)
+    d.arrow([(15,168),(190,168)],CYAN,'Humidité\ndu sol',20,123,lanchor='start')
+    d.arrow([(430,168),(590,168)],CYAN,'Mesure',510,148)
+    d.arrow([(880,168),(1090,168)],CYAN,'État du sol',985,148)
+    d.arrow([(740,290),(740,372),(605,372),(605,450)],GREEN,'Ordre : l’ordre descend',755,357,dashed=True,lanchor='start')
+    d.section(400,"CHAÎNE D’ÉNERGIE — en bas (elle obéit)",ORANGE)
+    d.block(150,460,'STOCKER','Pile\ntrès basse tension',YELLOW,stock=True)
+    d.block(500,460,'DISTRIBUER','Relais',CYAN)
+    d.block(850,460,'CONVERTIR','Petite pompe\nmoteur et turbine',VIOLET)
+    for a,b in [(360,490),(710,840)]: d.arrow([(a,498),(b,498)],ORANGE,'Énergie\nélectrique',(a+b)/2,435)
+    d.arrow([(1060,498),(1565,498)],ORANGE,'Énergie\nmécanique',1300,435)
+    d.text(1495,560,'Mettre l’eau\nen mouvement',WHITE,22,True)
+    d.absent(1135,535,'TRANSMETTRE','Absente : la pompe met\nelle-même l’eau en mouvement')
+    circuit_eau(d,745,[(200,'Réservoir'),(620,'Pompe'),(1080,'Pot de la plante')])
+    d.text(800,895,'Le programme relie les deux chaînes : il lit le capteur, compare au seuil et donne l’ordre au relais.',BLUE,19)
+    d.text(800,945,PIED_CONVENTION,BLUE,20)
+    d.save(C6/'Images/schema_chaines_arrosage.svg')
+
+
+def barriere():
+    """5e_C9.1 (la boîte étiquetée) : la variable places décide ; la barrière est l'action, hors de la chaîne.
+    Le banc reprend celui de la séance 3 (10, 32, 0)."""
+    d=Diagram('Barrière du Cyclone : l’information (en haut) commande l’énergie (en bas)',
+        CONVENTION + ' Ta variable places commande un objet réel. '
+        'En haut, la chaîne d’information. ACQUÉRIR : le compteur des montées et des descentes. Une flèche « Données » mène à TRAITER : le programme et sa variable places, avec la règle SI places est plus grand que 0, OUVRIR, SINON, FERMER. '
+        'Une flèche « Décision » mène à COMMUNIQUER : le panneau COMPLET, allumé quand la barrière est fermée. '
+        'L’ordre descend de TRAITER et arrive sur DISTRIBUER. '
+        'En bas, la chaîne d’énergie. L’énergie électrique entre dans ALIMENTER : une alimentation en très basse tension. L’énergie électrique passe à DISTRIBUER : la commande du moteur, dans les deux sens. '
+        'Puis à CONVERTIR : le moteur électrique, qui fournit de l’énergie mécanique à TRANSMETTRE : le réducteur, lent et fort. '
+        'L’énergie mécanique sort de la chaîne : ouvrir ou fermer la barrière. '
+        'À droite, le banc de tests et le résultat attendu : places égale 10, barrière ouverte ; places égale 32, ouverte ; places égale 0, fermée, c’est le cas limite. '
+        'Le programme est réglé quand les trois tests passent, cas limite compris.',835)
+    d.text(800,88,'Ta variable places commande un objet réel.',WHITE,22)
+    d.section(140,"CHAÎNE D’INFORMATION — en haut (elle décide)",CYAN)
+    d.block(60,170,'ACQUÉRIR','Compteur des montées\net des descentes',CYAN,w=230)
+    d.block(450,170,'TRAITER','Programme : variable places\nSI places > 0 : OUVRIR\nSINON : FERMER',VIOLET,w=280)
+    d.block(880,170,'COMMUNIQUER','Panneau « COMPLET »\nallumé si fermé',GREEN,w=240)
+    d.arrow([(290,208),(440,208)],CYAN,'Données',365,188)
+    d.arrow([(730,208),(870,208)],CYAN,'Décision',800,188)
+    d.panel(1180,120,390,262,GREEN)
+    d.text(1375,160,'LE BANC DE TESTS',GREEN,21,True)
+    d.text(1200,200,'places = 10 → OUVERTE',WHITE,19,anchor='start')
+    d.text(1200,235,'places = 32 → OUVERTE',WHITE,19,anchor='start')
+    d.text(1200,270,'places = 0 → FERMÉE',YELLOW,19,True,anchor='start')
+    d.text(1200,298,'le cas limite : zéro pile',YELLOW,18,anchor='start')
+    d.text(1200,335,'Réglé = les trois tests passent,\ncas limite compris.',BLUE,18,anchor='start')
+    d.arrow([(590,352),(590,480)],GREEN,'Ordre : l’ordre descend',605,420,dashed=True,lanchor='start')
+    d.section(425,"CHAÎNE D’ÉNERGIE — en bas (elle obéit)",ORANGE)
+    d.block(135,490,'ALIMENTER','Alimentation\ntrès basse tension',YELLOW)
+    d.block(485,490,'DISTRIBUER','Commande du moteur\n(dans les deux sens)',CYAN)
+    d.block(835,490,'CONVERTIR','Moteur électrique',VIOLET)
+    d.block(1185,490,'TRANSMETTRE','Réducteur\nlent et fort',GREEN)
+    d.arrow([(15,528),(125,528)],ORANGE,'Énergie\nélectrique',70,465)
+    d.arrow([(345,528),(475,528)],ORANGE,'Énergie\nélectrique',410,465)
+    d.arrow([(695,528),(825,528)],ORANGE,'Énergie\nélectrique',760,465)
+    d.arrow([(1045,528),(1175,528)],ORANGE,'Énergie\nmécanique',1110,465)
+    d.arrow([(1395,528),(1570,528)],ORANGE,'Énergie\nmécanique',1483,465)
+    d.text(1490,595,'Ouvrir ou\nfermer la\nbarrière',WHITE,22,True)
+    d.text(800,705,'Ta variable places est dans TRAITER : c’est elle qui décide, la barrière obéit.',WHITE,20)
+    d.text(800,750,'À toi de lire : que fait la barrière si places vaut exactement 0 ? Pourquoi ce test est-il le plus important ?',BLUE,19)
+    d.text(800,800,PIED_CONVENTION,BLUE,19)
+    d.save(C9_5E/'Images/barriere_cyclone_condition.svg')
+
+
+FIGURES = {f.__name__: f for f in (lampadaire, jardin, gabarit, station, trois_cas, book, jardin_programme, arrosage, barriere)}
+
 if __name__=='__main__':
-    for generate in (lampadaire,jardin,gabarit,station,trois_cas,book): generate()
+    import sys
+    noms = sys.argv[1:] or list(FIGURES)
+    inconnus = [n for n in noms if n not in FIGURES]
+    if inconnus:
+        sys.exit('Figure inconnue : ' + ', '.join(inconnus) + ' — figures : ' + ', '.join(FIGURES))
+    for n in noms: FIGURES[n]()

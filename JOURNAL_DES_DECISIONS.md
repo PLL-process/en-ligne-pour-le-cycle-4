@@ -26287,3 +26287,101 @@ bas (0, 31, 95… 231). Elle pointe maintenant vers le bas.
   « allait droit sur CONVERTIR » en 3e, et TRANSMETTRE est justifié par le déplacement de l'eau. Le skill
   `chaine-energie-fonctionnelle` en fait un lot à part, avec deux autres chaînes faites main (`4e_C6.2`, `5e_C9.1`) :
   les faire entrer dans le générateur, puis reprendre textes alternatifs, consignes, corrigés et QCM.
+
+---
+
+## 29/10/2026 — Règle n°310 : les trois chaînes d'énergie faites main entrent dans le générateur (`_outils`, thèmes 2 et 3)
+
+*Choix par défaut ★ A (décision posée avec #555, fusionnée sans réponse) : le lot n°310 des trois chaînes dessinées à la
+main, relevées le 23/10/2026 par le skill `chaine-energie-fonctionnelle`.*
+
+### Le générateur
+
+`_outils/regenerer_chaines_energie.py` écrit trois figures de plus, avec leur source draw.io dans
+`_generation/chaines_energie/` de chaque lot :
+- `jardin_programme` → `4e_C9.1/Images/chaines_jardin_programme.svg`. **Nom distinct** : l'ancien
+  `chaines_jardin_connecte.svg` de 4e_C9.1 portait le même nom que la figure générée de 4e_C4.1 ; il est supprimé ;
+- `arrosage` → `4e_C6.2/Images/schema_chaines_arrosage.svg` (même nom) ;
+- `barriere` → `5e_C9.1/Images/barriere_cyclone_condition.svg` (même nom).
+
+Trois outils nouveaux dans la classe `Diagram` : `absent()` dessine une **fonction absente en pointillés, grisée, avec sa
+raison dessous** (n°131, décision de Pascal du 23/10/2026) ; `panel()` pose un cadre sous des textes (le banc de tests
+de la barrière) ; `circuit_eau()` dessine le circuit d'eau à part (n°310, piège 4). `python
+_outils/regenerer_chaines_energie.py barriere` ne produit que la figure nommée. Les six figures d'avant sortent
+**identiques à l'octet** : la règle d'impression du gris n'entre dans la feuille de style que si la figure l'emploie.
+
+`_outils/verifier_chaines_energie.py` lit les figures par leur **chemin** (`next(glob)` ne vérifiait que le premier de
+deux fichiers de même nom), contrôle chaque fonction absente (vocabulaire fixe, pointillés, raison écrite) et charge les
+trois nouvelles figures dans leur page — balise `img` (4e_C9.1, 4e_C6.2) ou objet (5e_C9.1, sans blanc ni coupure).
+
+### Ce que disaient les trois schémas, et ce qu'ils disent
+
+- **Jardin de 4e_C9.1.** Avant : aucune forme d'énergie sur les flèches, ni entrée ni sortie ; TRANSMETTRE justifié par
+  « quelque chose SE DÉPLACE — l'eau » ; une note et une « règle » écrites dans le dessin faisaient arriver l'ordre
+  « droit sur CONVERTIR » pour un voyant. Après : énergie électrique en entrée et entre les blocs, énergie mécanique en
+  sortie, « Mettre l'eau en mouvement » ; l'ordre arrive sur DISTRIBUER (le relais, le préactionneur) ; TRANSMETTRE
+  **absent**, en pointillés : « la pompe met elle-même l'eau en mouvement » ; circuit d'eau réservoir → pompe → sol ;
+  sous le dessin, pourquoi un relais, et « avec un simple voyant, la broche de la carte suffirait : l'ordre arrive
+  toujours sur DISTRIBUER ».
+- **Arrosage de 4e_C6.2.** Avant : bloc « AGIR » (verbe hors vocabulaire) pour l'arrosage, « COMMANDER » ajouté à la
+  chaîne d'information, TRANSMETTRE = « Circulation de l'eau », composant en gros et fonction en petit dans chaque
+  bloc, aucune énergie sur les flèches, ni `<title>` ni `<desc>`, une « pile 9V » alors que la page parle d'une
+  « petite pompe 5 V ». Après : STOCKER (la pile, très basse tension, énergie chimique stockée) → DISTRIBUER (le
+  relais) → CONVERTIR (la petite pompe) ; TRANSMETTRE absent ; circuit d'eau à part ; plus aucune tension écrite.
+- **Barrière de 5e_C9.1.** Avant : blocs « MOTEUR » et « BARRIÈRE » (des composants), la barrière — qui est l'action —
+  dessinée dans la chaîne, pas de DISTRIBUER, aucune énergie sur les flèches ; le banc du dessin testait **24** places
+  quand celui de la séance 3 teste **32** (le nouveau train). Après : ALIMENTER → DISTRIBUER (la commande du moteur,
+  dans les deux sens) → CONVERTIR (le moteur) → TRANSMETTRE (le réducteur, lent et fort) → « Ouvrir ou fermer la
+  barrière » ; ACQUÉRIR (le compteur des montées et des descentes), TRAITER (la variable `places` et sa règle),
+  COMMUNIQUER (le panneau COMPLET) ; le banc dit 10, 32 et 0, comme la page.
+
+### Les textes qui suivent
+
+- **4e_C9.1** : texte alternatif et description détaillée de l'activité 1 ; correction b) (« il est le bloc
+  DISTRIBUER », au lieu de « le premier bloc de la chaîne d'énergie ») ; « Limite » (la chaîne s'arrête à la pompe ; le
+  reste est le circuit d'eau) ; erreurs fréquentes (« elle arrive toujours sur DISTRIBUER » ; chercher TRANSMETTRE dans
+  l'eau qui coule) ; à retenir. Côté professeur, la synthèse, le `README.md` et la fiche décrivaient la paire
+  4e_C9.1 / 3e_C9.2 avec l'ancienne règle (« va droit sur CONVERTIR ») : la paire dit maintenant que l'ordre arrive
+  toujours sur DISTRIBUER, et que ce qui change, c'est le composant qui distribue. Vocabulaire : « convertir » (la pompe :
+  électrique → mécanique) et « transmettre » (fonction absente ici). `SOURCES_MEDIAS.md`, manifeste.
+- **4e_C6.2** : texte alternatif et légende de la carte « Chaînes fonctionnelles » ; dans `qcm_jardin_connecte.html`,
+  l'aide de la question 17 disait « la pile et le tuyau relèvent de l'énergie » : le tuyau transporte de l'eau, de la
+  matière, et n'est dans aucune des deux chaînes. `SOURCES_MEDIAS.md`.
+- **5e_C9.1** : description de l'objet dans la séquence, texte alternatif du QCM (il ne parlait que du banc), une
+  ligne de la synthèse élève (« compteur → programme → ordre à la commande du moteur → barrière »),
+  `SOURCES_MEDIAS.md`.
+
+### Deux questions de QCM changent (rang de la bonne réponse inchangé)
+
+| QCM | Avant | Après |
+|---|---|---|
+| `qcm_4e_C9_jardin-programme.html`, « Les deux chaînes » — énoncé | « la flèche d'ORDRE descend de TRAITER et s'arrête sur le relais, pas sur le moteur. Pourquoi ? » | « …et arrive sur DISTRIBUER (le relais), pas sur CONVERTIR (la pompe). Pourquoi ? » |
+| idem — bonne réponse (3ᵉ) | « parce que le relais est le premier organe que l'ordre atteint » | « parce que l'ordre ouvre ou ferme le passage de l'énergie » |
+| idem — explication, exemple, à retenir | « atterrit sur le premier bloc commandé » ; en 3e « allait droit sur CONVERTIR » ; « s'arrête au premier organe commandé » | l'ordre ouvre ou ferme le passage : c'est DISTRIBUER ; avec un voyant, la broche distribue ; « arrive toujours sur DISTRIBUER : ici le relais, ailleurs la broche de la carte » |
+| `qcm_5e_C9.1-C9.3_boite_etiquetee.html`, « Commander le réel » — bonne réponse (4ᵉ) | « un ORDRE au moteur : l'information commande l'énergie » | « un ORDRE : l'information commande l'énergie » |
+| idem — explication | « compteur → variable → condition → moteur de la barrière » | « … → ordre à la commande du moteur, qui laisse passer l'énergie : la barrière s'ouvre ou se ferme » |
+
+Les distracteurs ne changent pas ; `controle_longueurs.py` : aucune question détachée de plus.
+
+### Le lexique de 4e_C9.1
+
+Régénéré par `_outils/generer_lexique.py` (nouveau « à retenir » de la question, deux définitions). Le générateur
+refusait ce lot depuis la vague n°304 du 28/10/2026 : l'ouverture ne contient plus le mot « algorithme ». Le mot passe
+dans les mots de la séance 1, où il est employé ; « 12 V (volts) » est écrit dans la définition d'« alimenter », comme
+dans le lexique d'avant.
+
+### Contrôles
+
+`verifier_chaines_energie.py` : **77/77** (54 avant, sur sept figures). `controle_schemas.mjs` sur les trois lots :
+0 ✘. Bancs : 4e_C9.1 70/70, 5e_C9.1 54/54, 4e_C6.2 38/38 et 34/34. Les 24 contrôles statiques donnent les mêmes codes
+que `main` (`controle_regle4.py` en échec des deux côtés, comme avant) ; `controle_unites`, `_sigles`,
+`_impression_papier`, `_competences`, `_mode_essentiel`, `_lecteur_pas_a_pas` : ✅. Synthèse élève de 5e_C9.1 : toujours
+2 pages, 0 titre seul, en Inter et en Liberation Sans. `audit_couverture` régénéré (listes de fichiers des trois lots).
+
+### Ce qui reste
+
+- La **station de 3e_C9.2** écrit encore sa fonction absente en une phrase (« Pas de transmission mécanique séparée
+  nécessaire ») : `absent()` peut maintenant la dessiner ; la page station 1 dit la même chose en une phrase.
+- Le **lexique de 5e_C9.1** est refusé par son générateur (« OST » n'est plus dans l'ouverture) : non touché ici.
+- Les figures générées ont des textes de 18 à 23 unités dans 1 600 : à 800 px, `controle_schemas.mjs` les dit
+  « minuscules » (⚠), comme les six figures d'avant.

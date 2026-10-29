@@ -1,4 +1,4 @@
-"""Vérifie les six figures et la scène 6 du vélo dans Chromium.
+"""Vérifie les figures des chaînes d'énergie et la scène 6 du vélo dans Chromium.
 
 Usage : python _outils/verifier_chaines_energie.py [dossier de captures]
 Requiert Playwright/Chromium, comme les suites pédagogiques du dépôt.
@@ -15,9 +15,24 @@ from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
 LOT=ROOT/'theme-1-objets-systemes-usages-interactions/C3-caracteriser-et-choisir-un-objet-ou-un/5e/5e_C3.1'
 FONCTIONS_PERMISES={'ACQUÉRIR','TRAITER','COMMUNIQUER','ALIMENTER','STOCKER','DISTRIBUER','CONVERTIR','TRANSMETTRE'}
-INFO_ET_ENERGIE={'chaines_energie_information_lampadaire.svg','chaines_jardin_connecte.svg','chaine_info_energie_station.svg','chaine_energie_book-train.svg'}
-NAMES=['chaines_energie_information_lampadaire.svg','chaines_jardin_connecte.svg','chaine_energie_a_elaborer.svg','chaine_info_energie_station.svg','chaine_energie_book-train.svg','chaine_energie_velo_cargo.svg','ordre_preactionneur_trois_cas.svg']
-FILES=[next(ROOT.glob('theme-*/**/Images/'+n)) for n in NAMES]
+INFO_ET_ENERGIE={'chaines_energie_information_lampadaire.svg','chaines_jardin_connecte.svg','chaine_info_energie_station.svg','chaine_energie_book-train.svg',
+                 'chaines_jardin_programme.svg','schema_chaines_arrosage.svg','barriere_cyclone_condition.svg'}
+# Chemins explicites : un nom de fichier peut exister dans deux lots (jusqu'au 29/10/2026, deux chaines_jardin_connecte.svg,
+# et next(glob) ne vérifiait que le premier). Les six premières figures gardent leur rang : FILES[0], [1], [2], [4] servent plus bas.
+T2C4='theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation'
+T3C9='theme-3-creation-conception-realisation-innovations/C9-concevoir-ecrire-tester-et-mettre-au-point'
+CHEMINS=[T2C4+'/5e/5e_C4.1/Images/chaines_energie_information_lampadaire.svg',
+         T2C4+'/4e/4e_C4.1/Images/chaines_jardin_connecte.svg',
+         T2C4+'/3e/3e_C4.1/Images/chaine_energie_a_elaborer.svg',
+         T3C9+'/3e/3e_C9.2/Images/chaine_info_energie_station.svg',
+         T2C4+'/4e/4e_C4.1_book-train/Images/chaine_energie_book-train.svg',
+         'theme-1-objets-systemes-usages-interactions/C3-caracteriser-et-choisir-un-objet-ou-un/5e/5e_C3.1/Images/chaine_energie_velo_cargo.svg',
+         T3C9+'/3e/3e_C9.2/Images/ordre_preactionneur_trois_cas.svg',
+         # 29/10/2026 : les trois schémas faits main entrés dans le générateur (n°310)
+         T3C9+'/4e/4e_C9.1/Images/chaines_jardin_programme.svg',
+         'theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2/Images/schema_chaines_arrosage.svg',
+         T3C9+'/5e/5e_C9.1/Images/barriere_cyclone_condition.svg']
+FILES=[ROOT/c for c in CHEMINS]
 OUT=Path(sys.argv[1]).resolve() if len(sys.argv)>1 else None
 if OUT:OUT.mkdir(parents=True,exist_ok=True)
 results=[]
@@ -56,6 +71,10 @@ with sync_playwright() as p:
             noms=[' '.join(re.findall(r'<text[^>]*>(.*?)</text>',g)) for g in re.findall(r'<g data-role="function".*?</g>',src,re.S)]
             hors=[n for n in noms if n not in FONCTIONS_PERMISES]
             check(f.name+' : vocabulaire fixe des fonctions dans les blocs',bool(noms) and not hors,hors)
+            # Règle d'or n°131 : une fonction absente porte un nom du vocabulaire fixe, en pointillés, et sa raison écrite dessous.
+            for g in re.findall(r'<g data-role="absent".*?</g>',src,re.S):
+                nom=' '.join(re.findall(r'<text[^>]*>(.*?)</text>',g))
+                check(f.name+' : fonction absente '+nom+' en pointillés, avec sa raison',nom in FONCTIONS_PERMISES and 'stroke-dasharray' in g and 'data-role="absent"' in src.split(g,1)[1][:600] and 'Absente' in src.split(g,1)[1][:600],nom)
         if f.name in INFO_ET_ENERGIE:
             # Convention conservée (règle d'or du schéma) : la chaîne d'information est AU-DESSUS de la chaîne d'énergie, l'ordre descend.
             src=f.read_text(encoding='utf-8')
@@ -109,6 +128,26 @@ with sync_playwright() as p:
         pg.wait_for_function("name=>{let e=document.querySelector('object[data=\"Images/'+name+'\"]');return e&&e.contentDocument&&e.contentDocument.querySelector('svg')}",arg=f.name,timeout=10000)
         r=obj.evaluate("e=>({largeur:e.getBoundingClientRect().width,svg:e.contentDocument.querySelector('svg').getBoundingClientRect().width})")
         check(f.name+' : tient dans son objet HTML',r['svg']<=r['largeur']+1,r)
+    # Les trois figures du 29/10/2026, dans leurs pages : une balise img (4e_C9.1, 4e_C6.2) ou un objet (5e_C9.1).
+    for f,page in [(FILES[7],FILES[7].parent.parent/'sequence_4e_C9_jardin-programme.html'),
+                   (FILES[8],FILES[8].parent.parent/'sequence-jardin-connecte-arrosage-automatique.html'),
+                   (FILES[9],FILES[9].parent.parent/'sequence_5e_C9.1-C9.3_boite_etiquetee.html')]:
+        pg.goto(base+quote(page.relative_to(ROOT).as_posix()))
+        el=pg.locator('img[src="Images/'+f.name+'"], object[data="Images/'+f.name+'"]')
+        check(f.name+' : appelée une fois par sa page',el.count()==1,el.count())
+        if el.count()!=1:continue
+        panel=el.evaluate("e=>e.closest('.seance-panel')?.id")
+        if panel:pg.locator('.seance-tab[data-panel="'+panel+'"]').click()
+        el.evaluate("e=>{for(let x=e;x;x=x.parentElement)if(x.tagName==='DETAILS')x.open=true}")
+        el.scroll_into_view_if_needed()
+        if el.evaluate("e=>e.tagName")=='IMG':
+            pg.wait_for_function("name=>{let e=document.querySelector('img[src=\"Images/'+name+'\"]');return e&&e.complete&&e.naturalWidth>0}",arg=f.name,timeout=10000)
+            r=el.evaluate("e=>({largeur:e.parentElement.getBoundingClientRect().width,image:e.getBoundingClientRect().width,naturelle:e.naturalWidth})")
+            check(f.name+' : se charge et tient dans sa page',r['naturelle']>0 and r['image']<=r['largeur']+1,r)
+        else:
+            pg.wait_for_function("name=>{let e=document.querySelector('object[data=\"Images/'+name+'\"]');return e&&e.contentDocument&&e.contentDocument.querySelector('svg')}",arg=f.name,timeout=10000)
+            r=el.evaluate("e=>({largeur:e.clientWidth,hauteur:e.clientHeight,svg:e.contentDocument.querySelector('svg').getBoundingClientRect()})")   # client* : sans la bordure de l'objet
+            check(f.name+' : tient dans son objet HTML, sans blanc ni coupure',r['svg']['width']<=r['largeur']+1 and abs(r['svg']['height']-r['hauteur'])<=2,r)
     b.close()
 server.shutdown()
 server.server_close()

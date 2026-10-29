@@ -5,7 +5,7 @@
 
 | Fichier | Type | Usage pédagogique (règle v2) | Licence | Poids |
 |---|---|---|---|---|
-| `Images/schema_chaines_arrosage.svg` | SVG original (Fable) | image-objet : les chaînes d'information et d'énergie du système d'arrosage, affichée dans la séquence | CC0 | ~7 Ko |
+| `Images/schema_chaines_arrosage.svg` | SVG original (Fable), produit par `_outils/regenerer_chaines_energie.py` (figure `arrosage`, source draw.io dans `_generation/chaines_energie/`) depuis le 29/10/2026 | image-objet : les chaînes d'information et d'énergie du système d'arrosage, affichée dans la séquence — fonctions dans les blocs, composants dessous, énergies sur les flèches, TRANSMETTRE absent en pointillés, circuit d'eau à part | CC0 | ~31 Ko |
 | `Images/schema_eclairage_automatique.svg` | SVG **exporté depuis draw.io** — voir la réserve ci-dessous | algorigramme de l'éclairage automatique : Début → « Fait-il nuit ? » → « Présence ? » → allumer / attendre 3 min / éteindre | **à confirmer** | ~67 Ko |
 
 La fiche pédagogique du lot annonce ces deux fichiers comme « deux SVG originaux ».
