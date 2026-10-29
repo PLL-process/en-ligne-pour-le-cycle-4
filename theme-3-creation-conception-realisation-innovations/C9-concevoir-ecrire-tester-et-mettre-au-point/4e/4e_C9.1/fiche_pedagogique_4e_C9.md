@@ -126,6 +126,7 @@ d'évaluation sommative.
 **Aval** — 3e : les mêmes gestes se disent **écrire** et **concevoir**, et le
 protocole de test devient une **recette** avec procès-verbal (lot 3e_C9.2 +
 3e_C8.3, la station d'alerte cyclonique). Les deux lots forment d'ailleurs une
-paire sur la chaîne d'énergie : ici la flèche d'ORDRE s'arrête sur un **relais**
-(la pompe est trop gourmande) ; là-bas elle va droit sur **CONVERTIR** (la sortie
-n'est qu'un voyant). C'est en les comparant que la règle devient visible.
+paire sur la chaîne d'énergie : la flèche d'ORDRE arrive toujours sur **DISTRIBUER**,
+mais ici DISTRIBUER est un **relais** (la pompe est trop gourmande) ; là-bas, c'est la
+**broche de la carte** (la sortie n'est qu'un voyant). C'est en les comparant que la
+règle devient visible.
