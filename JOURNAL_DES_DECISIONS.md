@@ -25478,13 +25478,13 @@ les outils **installés sans demander, et notés au journal**. Branche transvers
 ### Le constat, mesuré
 
 Sur `main`, le 28/10/2026 au soir (après #538), `controle_schemas.mjs` lit **448 schémas** : 226 fichiers SVG et 222
-schémas écrits dans 58 pages. **138** portent au moins un ✘ :
+schémas écrits dans 58 pages. **128** portent au moins un ✘ :
 
 | thème | schémas lus | avec ✘ | ✘ contact | ✘ débordement | ✘ superposés | ✘ traversée |
 |---|---|---|---|---|---|---|
-| 1 | 283 | 68 | 249 | 10 | 5 | 16 |
-| 2 | 114 | 48 | 83 | 36 | 11 | 20 |
-| 3 | 51 | 22 | 56 | 17 | 3 | 30 |
+| 1 | 283 | 59 | 195 | 10 | 5 | 16 |
+| 2 | 114 | 47 | 70 | 36 | 11 | 20 |
+| 3 | 51 | 22 | 51 | 17 | 3 | 30 |
 
 Au thème 1, les trois quarts viennent des ateliers de représentations (cartes mentales, diagrammes pieuvre, bête à
 cornes, exigences), repris dans les cahiers, les synthèses et les séquences qui les incrustent : les cadres-feuilles
@@ -25500,11 +25500,12 @@ générateur est un seul endroit à corriger.
   cadre, deux textes l'un sur l'autre, une flèche qui passe dans un cadre (ni départ ni arrivée) ou sur un texte ; il
   signale (⚠) les cadres à moins de 16 unités, un texte à moins de 4 unités du bord, une taille de police posée en
   attribut et écrasée par la feuille de style, un texte qui ferait moins de 10 px à 800 px de large. Les cellules d'un
-  tableau (bord contre bord et alignées, ou coin contre coin) ne comptent pas. Il range du pire au meilleur et fabrique
+  tableau (bord contre bord et alignées, ou coin contre coin) ne comptent pas, ni une pastille (32 unités au plus, un
+  repère de 3 caractères au plus : ①, FP1) posée sur le coin d'un cadre, dont elle fait partie. Il range du pire au meilleur et fabrique
   la **planche** de captures (`--planche`) pour la revue à l'œil. Une capture « page entière » d'un document SVG attend
   dans Chromium des polices qui ne viennent jamais : il capture une zone.
-- **Son banc**, `_outils/tests_controle_schemas.mjs` : neuf schémas fabriqués, chacun avec un défaut connu ou aucun —
-  **10 / 10**.
+- **Son banc**, `_outils/tests_controle_schemas.mjs` : dix schémas fabriqués, chacun avec un défaut connu ou aucun —
+  **11 / 11**.
 - Le contrôle n'entre pas encore dans la CI : il refuserait `main`. Il y entrera quand les trois thèmes seront revus.
 
 ### Ce qui reste

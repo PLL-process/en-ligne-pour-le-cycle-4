@@ -18,7 +18,8 @@
  * pas le fond. Une FLÈCHE est un trait qui porte une pointe (marker). Les mesures sont en unités du schéma.
  *
  *   ✘ contact     deux cadres dont aucun ne contient l'autre se chevauchent, ou sont à moins de 8 unités.
- *                 (Les cellules d'un tableau — bord contre bord et alignées, ou coin contre coin — ne comptent pas.)
+ *                 (Les cellules d'un tableau — bord contre bord et alignées, ou coin contre coin — ne comptent pas, ni une
+ *                 pastille — 32 unités au plus, un repère de 3 caractères au plus — posée sur le coin d'un cadre.)
  *   ✘ débordement un texte ancré dans un cadre (là où il commence, ou son milieu s'il est centré) en dépasse le bord.
  *   ✘ superposés  deux textes se recouvrent.
  *   ✘ traversée   une flèche passe dans un cadre qui n'est ni son départ ni son arrivée, ou sur un texte.
@@ -85,7 +86,7 @@ const MESURER = (svg) => {
   let cadres = [...svg.querySelectorAll('rect,ellipse,circle,polygon,path')]
     .filter(e => dans(e) && vis(e) && peint(e) && !(e.tagName === 'path' && !/[zZ]\s*$/.test(e.getAttribute('d') || '')))
     .map(e => ({ el: e, b: r(e) }))
-    .filter(c => c.b.w * c.b.h < 0.85 * surfaceSvg && U(c.b.w) >= 24 && U(c.b.h) >= 14)
+    .filter(c => c.b.w * c.b.h < 0.85 * surfaceSvg && U(c.b.w) >= 18 && U(c.b.h) >= 12)
     .filter(c => textes.some(t => contientPt(c.b, t.a)));
   // un voile posé exactement sur un cadre n'est pas un second cadre
   cadres = cadres.filter((c, i) => !cadres.some((d, j) => j < i && Math.abs(d.b.x - c.b.x) < 1 && Math.abs(d.b.y - c.b.y) < 1 && Math.abs(d.b.X - c.b.X) < 1 && Math.abs(d.b.Y - c.b.Y) < 1));
@@ -106,9 +107,16 @@ const MESURER = (svg) => {
     };
     c.bord = (pt) => Math.min(...c.contour.map(q => Math.hypot(q.x - pt.x, q.y - pt.y)));
   }
+  // Une PASTILLE (un rond ou un carré de 32 unités au plus, qui porte un repère de 3 caractères au plus : ①, FP1, 3)
+  // posée sur le coin d'un cadre en fait partie : ce n'est pas une seconde entité.
+  for (const c of cadres) {
+    const t = textes.filter(t => c.dedans(t.a));
+    c.pastille = U(c.b.w) <= 32 && U(c.b.h) <= 32 && t.length && t.every(t => t.s.trim().length <= 3);
+  }
   // ✘ contact / ⚠ serré entre cadres
   for (let i = 0; i < cadres.length; i++) for (let j = i + 1; j < cadres.length; j++) {
     const A = cadres[i], B = cadres[j];
+    if (A.pastille || B.pastille) continue;
     if (contient(A.b, B.b) && B.contour.every(A.dedans)) continue;          // B est dans A
     if (contient(B.b, A.b) && A.contour.every(B.dedans)) continue;          // A est dans B
     // les cellules d'un tableau : deux rectangles bord contre bord et alignés, ou coin contre coin
