@@ -1,23 +1,24 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 29/10/2026 09:02 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 29/10/2026 10:22 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
-- n°316 révisée (#546, #548 de l'autre session : 2 pages A4, lien « ↑ La carte »). PR #547 reprise au format deux pages : les 7 synthèses élève des ateliers des représentations, générées par `ateliers-representations/_generation/syntheses.py` + `synthese_<module>.py` (modèle synthese_besoin.py). Toutes en 2 pages (Inter et Liberation Sans), 0 titre seul ; contrôles ✅, banc ateliers 303/303 ; CI périmètre ✅, mergeable.
-- SCHEMAS_SYNTHESE retiré ; CONSIGNES, gouvernance, README, skill (paragraphe « synthèses générées ») à jour ; journal : entrée « n°316 révisée : les sept synthèses des ateliers ».
-- Reste : image de l'objet dans la carte (forme en cours dans le skill, branche fable/syntheses-deux-pages-theme-1 de l'autre session) ; les 9 synthèses de #545 à ramener à 2 pages (l'autre session semble s'en charger) ; angles morts de controle_schemas.mjs ; thèmes 2 et 3.
+- #547 fusionnée (7 synthèses des ateliers, 2 pages). L'autre session a fusionné #550 (9 synthèses des séquences en 2 pages + « l'image de l'objet » dans la carte, forme fixée dans le skill).
+- PR #551 ouverte (branche fable/controle-schemas-angles-morts, worktree $S/wt_cs) : controle_schemas.mjs mesure débordement en hauteur, texte à cheval, trait sans pointe sur texte, balise HTML dans un SVG ; 2 défauts du thème 1 corrigés → thème 1 : 0 ✘ / 263. CI ✅.
+- Mesuré : thème 2 = 201 ✘ (60/114 schémas), thème 3 = 125 ✘ (28/51). JSON : $S/cs_23.json, planche $S/cs_planche23.
+- Reste : schémas du thème 2 puis 3 ; image de l'objet dans la carte des 7 ateliers (synthese_<module>.py + syntheses.py).
 
-_(écrit par Claude le 29/10/2026 09:02)_
+_(écrit par Claude le 29/10/2026 10:22)_
 
 ## Branche et PR
 - Branche : `fable/theme-2-regle-304` — dernier commit 5a5ededb4 Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé
-- PR #547 ouverte (`fable/syntheses-ateliers-n316`) — n°316 révisée : les sept synthèses élève des ateliers, en deux pages A4 (générées) — CI : success
+- PR #551 ouverte (`fable/controle-schemas-angles-morts`) — n°315 : le contrôle des schémas voit ses trois angles morts ; thème 1 à 0 ✘ — CI : success
 
 ## Décisions en attente
 _Aucune._
 
 ## Prochaine action
-➡️ Pascal : fusionner #547.
+➡️ Pascal : fusionner #551.
 
 ## Décisions prises récemment (messages de Pascal)
 - 29/10/2026 08:53 — « <task-notification> <task-id>af946527d87389d7a</task-id> <tool-use-id>toolu_0188d6PXtzDfAqV1vmMvk727</tool-use-id> <output-file>/tmp/claude- »
