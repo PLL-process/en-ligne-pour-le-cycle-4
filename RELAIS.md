@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 29/10/2026 10:22 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 29/10/2026 10:26 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - #547 fusionnée (7 synthèses des ateliers, 2 pages). L'autre session a fusionné #550 (9 synthèses des séquences en 2 pages + « l'image de l'objet » dans la carte, forme fixée dans le skill).
@@ -12,13 +12,13 @@ _(écrit par Claude le 29/10/2026 10:22)_
 
 ## Branche et PR
 - Branche : `fable/theme-2-regle-304` — dernier commit 5a5ededb4 Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé
-- PR #551 ouverte (`fable/controle-schemas-angles-morts`) — n°315 : le contrôle des schémas voit ses trois angles morts ; thème 1 à 0 ✘ — CI : success
+- Aucune PR ouverte.
 
 ## Décisions en attente
 _Aucune._
 
 ## Prochaine action
-➡️ Pascal : fusionner #551.
+➡️ Fusionne #551.
 
 ## Décisions prises récemment (messages de Pascal)
 - 29/10/2026 08:53 — « <task-notification> <task-id>af946527d87389d7a</task-id> <tool-use-id>toolu_0188d6PXtzDfAqV1vmMvk727</tool-use-id> <output-file>/tmp/claude- »
