@@ -31,8 +31,9 @@
   #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
 
   /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
-  /* Une couleur par notion, la même partout : la donnée en jaune, l'information en vert. */
-  .d{color:var(--warn);font-weight:600}.i{color:var(--ok);font-weight:600}
+  /* Une couleur par famille de solutions, la même partout, celle du schéma de la séquence : passive en vert, active
+     en cyan, organisationnelle en violet. */
+  .pas{color:var(--ok);font-weight:600}.act{color:var(--hl);font-weight:600}.org{color:var(--head);font-weight:600}
   /* La carte « Ce que je dois retenir » */
   .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
   .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
@@ -47,35 +48,58 @@
   .cartes a:hover{border-color:var(--hl)}
   .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
   .cartes .r{display:block;font-size:.92em}
-  /* Les six temps d'une partie */
-  .comme-vie{background:#132b52;border-radius:8px;padding:8px 12px;margin:4px 0 10px}
-  dl.voc{display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;margin:8px 0;font-size:.93em}
-  dl.voc dt{color:var(--hl);font-weight:600}dl.voc dd{margin:0}
-  @media(max-width:600px){dl.voc{grid-template-columns:1fr;gap:0}dl.voc dd{margin:0 0 6px}}
-  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* L'image de l'objet, à droite du programme (n°316, § 4) ; dessous sur un téléphone. */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
   .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
   .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
-  details.verifie{border:1px dashed var(--sub);border-radius:8px;padding:6px 12px;margin:10px 0 2px}
-  details.verifie summary{cursor:pointer;font-weight:600;color:var(--sub)}
-  details.verifie p{margin:6px 0 2px}
-  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
   .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
   .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  ul.serre li{margin:1px 0}
   .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
 
-  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
     h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
-    .carte{page-break-after:always;break-after:page}
-    .cartes a,.comme-vie,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; un schéma ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    .schema,table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
     .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
-    .d{color:#8a5a00}.i{color:#1d6b38}.vert{color:#1d6b38}.rouge{color:#b3261e}
-    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,details.verifie summary,dl.voc dt{color:#222}
-    .bloc{break-inside:auto;padding:6px 10px;margin-bottom:8px}details.verifie{break-inside:avoid}
-    /* papier : les schémas à 60 % de la largeur, des marges serrées — la carte tient sur une page, les parties sur peu */
+    .pas{color:#1d6b38}.act{color:#0b5f7a}.org{color:#6a2c9e}.vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
     .schema{width:60%;display:block;margin:4px auto}
     h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
-    .comme-vie,.retenir,.piege,details.verifie{padding:3px 8px;margin:4px 0}
-    table{margin:3px 0}th,td{padding:2px 6px}dl.voc{margin:4px 0;gap:1px 10px}.chaine{gap:6px;margin:4px 0}}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
@@ -111,7 +135,7 @@
 <div class="page">
 <h1>📌 Synthèse élève — Shenzhen&nbsp;: refroidir un local qui surchauffe</h1>
 <p class="pb">Établir les possibles, évaluer, définir le protocole, puis choisir.</p>
-<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (la carte sur une page, puis les parties)</button></div>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
 
 <!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
 <section class="carte" aria-labelledby="carte-titre">
@@ -127,15 +151,15 @@
   </div>
   <div class="cartes">
     <a href="#partie-1"><span class="q">💡 1. Comment trouver toutes les solutions possibles&nbsp;?</span>
-      <span class="r">On recense avant de juger, et on cherche dans trois familles&nbsp;: passives, actives, organisationnelles.</span></a>
-    <a href="#partie-2"><span class="q">📊 2. Comparer les solutions honnêtement&nbsp;?</span>
+      <span class="r">Tu cherches tout avant de juger. Une bonne liste couvre les trois familles de solutions.</span></a>
+    <a href="#partie-2"><span class="q">📊 2. Comment comparer les solutions honnêtement&nbsp;?</span>
       <span class="r">Sur le coût de toute la durée d'usage, avec des poids annoncés avant le calcul.</span></a>
-    <a href="#partie-3"><span class="q">🌡️ 3. Un protocole que n'importe qui peut suivre&nbsp;?</span>
-      <span class="r">Il dit tout&nbsp;: grandeur, unité, appareil, où, quand, combien de fois, et ce qui doit rester constant.</span></a>
+    <a href="#partie-3"><span class="q">🌡️ 3. Comment écrire un protocole que n'importe qui peut suivre&nbsp;?</span>
+      <span class="r">Un camarade doit le suivre sans poser de question. Tu mesures au moment le plus défavorable.</span></a>
     <a href="#partie-4"><span class="q">🧩 4. Faut-il choisir une seule solution&nbsp;?</span>
-      <span class="r">Non&nbsp;: on peut en combiner plusieurs, de familles différentes. L'addition donne un ordre de grandeur.</span></a>
-    <a href="#partie-5"><span class="q">🌱 5. Un bon choix, en développement durable&nbsp;?</span>
-      <span class="r">Un choix qui tient ensemble l'environnement, l'économie et le social, sur tout le cycle de vie.</span></a>
+      <span class="r">Non&nbsp;: tu peux en combiner plusieurs. L'addition donne un ordre de grandeur, à vérifier sur place.</span></a>
+    <a href="#partie-5"><span class="q">🌱 5. Un bon choix, c'est quoi, en développement durable&nbsp;?</span>
+      <span class="r">Un choix qui tient les trois piliers ensemble, sur tout le cycle de vie.</span></a>
   </div>
 </section>
 
@@ -143,137 +167,118 @@
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-1" style="margin-top:0">1. Comment trouver toutes les solutions possibles&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme une chambre trop chaude</b>&nbsp;: tu peux ouvrir deux fenêtres pour faire un courant d'air, fermer le volet, allumer un ventilateur… ou éteindre l'ordinateur qui chauffe. Si tu penses seulement «&nbsp;ventilateur&nbsp;», tu rates les autres.</p>
-  <h3>Le local des serveurs qui surchauffe, à Shenzhen</h3>
-  <object class="schema" data="../Images/familles_de_solutions.svg" type="image/svg+xml" aria-label="Les trois familles de solutions pour refroidir le local : passives, actives, organisationnelles, avec des exemples">Les trois familles de solutions</object>
-  <table>
-    <tr><th>Famille</th><th>Ce qu'elle fait</th><th>Exemples</th></tr>
-    <tr><td><b>passive</b></td><td>ne consomme rien</td><td>ventilation naturelle, ombrage, isolation</td></tr>
-    <tr><td><b>active</b></td><td>consomme pour agir</td><td>extracteur d'air, climatiseur, refroidissement par eau</td></tr>
-    <tr><td><b>organisa&shy;tionnelle</b></td><td>change le problème</td><td>déplacer le local, réduire le nombre de machines</td></tr>
-  </table>
-  <p>On cherche d'abord <b>tout</b> ce qui pourrait marcher&nbsp;; on juge <b>ensuite</b>, avec des chiffres. Trois
-  climatiseurs de marques différentes, c'est une seule solution proposée trois fois.</p>
-  <dl class="voc">
-    <dt>solution passive <span class="en">— passive solution</span></dt><dd>une solution qui ne consomme pas d'énergie pour agir.</dd>
-    <dt>solution organisationnelle <span class="en">— organisational solution</span></dt><dd>une solution qui change la façon de faire, pas l'appareil.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: <b>recenser</b> n'est pas <b>évaluer</b>. Une liste se juge à sa <b>diversité</b>&nbsp;: des solutions des <b>trois familles</b>. Et <b>réduire le besoin</b> est aussi une solution technique.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: juger pendant qu'on cherche, et ne garder que sa première idée. Autre piège&nbsp;: ne penser qu'aux appareils à installer.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: ta liste contient un climatiseur, un extracteur et un refroidissement par eau. Pourquoi est-elle pauvre&nbsp;?</summary>
-    <p>Parce que les trois sont de la même famille&nbsp;: active. Il manque les solutions passives (ventilation, ombrage) et organisationnelles (réduire le nombre de machines), souvent moins chères et moins émettrices.</p></details>
+  <p>À Shenzhen, le local des serveurs est monté à 41&nbsp;°C. Demande-toi d'abord d'où vient la chaleur, et par où
+  elle peut partir. Puis cherche dans trois familles&nbsp;:</p>
+  <div class="chaine">
+    <div><b class="pas">🌬️ Passives</b>Elles ne consomment rien&nbsp;: ventilation naturelle, ombrage, isolation.</div>
+    <div><b class="act">⚙️ Actives</b>Elles consomment pour agir&nbsp;: extracteur d'air, climatiseur, refroidissement par eau.</div>
+    <div><b class="org">🗂️ Organisationnelles</b>Elles changent le problème&nbsp;: déplacer le local, réduire le nombre de machines.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: <b>recenser</b> n'est pas <b>évaluer</b>&nbsp;: tu cherches tout, puis tu juges
+  avec des chiffres. Une liste se juge à sa <b>diversité</b>, et <b>réduire le besoin</b> est aussi une solution technique.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: proposer trois climatiseurs de marques différentes. C'est une seule solution,
+  proposée trois fois.</p>
 </div>
 
 <!-- ══ 2 ══ -->
 <div class="bloc faire">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-2" style="margin-top:0">2. Comment comparer les solutions honnêtement&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme une imprimante pas chère</b>&nbsp;: 50&nbsp;€ à l'achat, mais des cartouches hors de prix. Sur trois ans, elle coûte plus qu'une imprimante plus chère au départ.</p>
-  <h3>Le coût sur dix ans</h3>
-  <table>
-    <tr><th>Solution</th><th>Installation</th><th>Par an</th><th>Sur 10 ans</th></tr>
-    <tr><td>ventilation naturelle</td><td>450&nbsp;€</td><td>15&nbsp;€</td><td class="vert">600&nbsp;€</td></tr>
-    <tr><td>climatiseur</td><td>2&nbsp;400&nbsp;€</td><td>340&nbsp;€</td><td class="rouge">5&nbsp;800&nbsp;€</td></tr>
-  </table>
-  <ul>
-    <li>On compare sur <b>toute la durée d'usage</b>&nbsp;: installation <b>plus</b> fonctionnement.</li>
-    <li>Une case vide n'est pas toujours un oubli&nbsp;: une solution qui n'installe aucun appareil n'a ni durée de vie,
-    ni indice de réparabilité.</li>
-    <li><b>Pondérer</b>, c'est décider quel critère compte le plus. C'est honnête si les poids sont <b>annoncés avant</b>
-    le calcul et justifiés par le besoin.</li>
-    <li>Une performance se paie&nbsp;: le climatiseur refroidit le mieux, mais il consomme, émet et se répare le moins bien.</li>
-  </ul>
-  <dl class="voc">
-    <dt>pondération <span class="en">— weighting</span></dt><dd>donner plus de poids à un critère qu'à un autre.</dd>
-    <dt>indice de réparabilité <span class="en">— repairability index</span></dt><dd>une note sur 10 qui dit si l'objet se répare facilement.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on compare sur le <b>coût de toute la durée d'usage</b>, jamais sur le seul prix de départ. Les <b>poids</b> s'annoncent <b>avant</b> le calcul&nbsp;: deux groupes honnêtes peuvent obtenir deux classements.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: régler les poids jusqu'à obtenir le classement qu'on voulait. Autre piège&nbsp;: comparer seulement les prix d'installation.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: le climatiseur coûte 2&nbsp;400&nbsp;€ à installer, la ventilation 450&nbsp;€. L'écart sur dix ans est-il le même&nbsp;?</summary>
-    <p>Non, il est bien plus grand. Il faut ajouter le fonctionnement&nbsp;: 340&nbsp;€ par an contre 15. Sur dix ans, 5&nbsp;800&nbsp;€ contre 600&nbsp;€.</p></details>
+  <p>Compte l'installation, plus dix ans de fonctionnement. L'écart se creuse&nbsp;:</p>
+  <div class="chaine">
+    <div class="ok"><b class="pas">Ventilation naturelle</b>450&nbsp;€ + 10 × 15&nbsp;€ = <strong>600&nbsp;€</strong> sur dix ans.</div>
+    <div class="ko"><b class="act">Climatiseur</b>2&nbsp;400&nbsp;€ + 10 × 340&nbsp;€ = <strong>5&nbsp;800&nbsp;€</strong>. Il refroidit le mieux,
+    mais se répare le moins bien&nbsp;: 5 sur 10.</div>
+    <div><b>Pondérer</b>Décider quel critère pèse le plus. Les poids s'annoncent avant le calcul.</div>
+  </div>
+  <p>Une case vide n'est pas toujours un oubli&nbsp;: réduire le nombre de machines n'installe rien, donc n'a pas d'indice
+  de réparabilité.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: tu compares sur le <b>coût de toute la durée d'usage</b>, pas sur le prix
+  de départ. Les <b>poids</b> s'annoncent <b>avant</b> le calcul&nbsp;: deux groupes honnêtes peuvent obtenir deux classements.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: régler les poids jusqu'à ce que la solution que tu préférais arrive en tête.</p>
 </div>
 
 <!-- ══ 3 ══ -->
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-3" style="margin-top:0">3. Comment écrire un protocole que n'importe qui peut suivre&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme une recette pour quelqu'un d'autre</b>&nbsp;: «&nbsp;cuire un peu&nbsp;» ne suffit pas. «&nbsp;20 minutes à 180&nbsp;°C, au milieu du four&nbsp;» se suit sans poser de question.</p>
-  <h3>Mesurer la chaleur du local</h3>
-  <p>Un protocole précise&nbsp;:</p>
-  <ol>
-    <li><b>la grandeur</b> et son <b>unité</b>&nbsp;: la température, en °C (degrés Celsius)&nbsp;;</li>
-    <li><b>l'appareil</b>&nbsp;: un thermomètre, ou un capteur relevé automatiquement&nbsp;;</li>
-    <li><b>les points de mesure</b>&nbsp;: l'air chaud monte, donc on mesure en bas <b>et</b> en haut&nbsp;;</li>
-    <li><b>les moments</b>&nbsp;: dont le plus chaud de la journée&nbsp;;</li>
-    <li><b>le nombre de relevés</b>&nbsp;;</li>
-    <li><b>les conditions constantes</b>, et la température <b>dehors</b>&nbsp;: sans elle, un relevé ne s'interprète pas.</li>
-  </ol>
-  <p>L'exigence donne le niveau attendu, la mesure donne l'écart. Les serveurs admettent au plus 32&nbsp;°C&nbsp;;
-  on a relevé 41&nbsp;°C. Il faut donc gagner au moins <b>9&nbsp;°C</b>.</p>
-  <dl class="voc">
-    <dt>protocole <span class="en">— protocol</span></dt><dd>la suite précise des gestes pour mesurer, toujours de la même façon.</dd>
-    <dt>relevé <span class="en">— reading</span></dt><dd>une valeur mesurée et notée, avec son heure et son lieu.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un <b>protocole</b> s'écrit pour <b>quelqu'un d'autre</b>&nbsp;: un camarade doit pouvoir le suivre sans question. On mesure au moment le <b>plus défavorable</b>, pas en moyenne.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: oublier le nombre de relevés et les conditions à garder constantes&nbsp;: ce sont les deux oublis les plus fréquents.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: tu mesures 35&nbsp;°C à 9&nbsp;h, près du sol. Peux-tu dire que l'exigence de 32&nbsp;°C est presque tenue&nbsp;?</summary>
-    <p>Non. À 9&nbsp;h et près du sol, c'est l'endroit et le moment les plus frais. Il faut mesurer aussi en hauteur, au moment le plus chaud, et noter la température dehors. C'est là qu'on a relevé 41&nbsp;°C.</p></details>
+  <p>Pour savoir combien de degrés gagner, tu mesures d'abord le local tel qu'il est. Le protocole précise&nbsp;:</p>
+  <div class="chaine">
+    <div><b>Quoi, avec quoi</b>La température, en °C (degrés Celsius), avec un thermomètre.</div>
+    <div><b>Où</b>Près de l'entrée d'air, au niveau des machines, sous le plafond&nbsp;: l'air chaud monte.</div>
+    <div><b>Quand</b>Trois moments, dont la fin d'après-midi, la plus chaude. Plusieurs relevés à chaque fois.</div>
+    <div><b>À conditions constantes</b>Même place du capteur, porte fermée, mêmes machines allumées. Et la température dehors.</div>
+  </div>
+  <p>Au pic, le relevé donne 41&nbsp;°C&nbsp;; les serveurs admettent au plus 32&nbsp;°C. La solution devra faire gagner au moins
+  9&nbsp;°C.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un <b>protocole</b> s'écrit pour <b>quelqu'un d'autre</b>&nbsp;: un
+  camarade doit le suivre sans poser de question. Tu mesures au moment <b>le plus défavorable</b>, pas en moyenne.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: oublier la température dehors. Sans elle, 30&nbsp;°C dans le local ne dit pas
+  si le local va mieux ou si la journée était fraîche.</p>
 </div>
 
 <!-- ══ 4 ══ -->
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-4" style="margin-top:0">4. Faut-il choisir une seule solution&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme se protéger du soleil</b>&nbsp;: une casquette, de la crème et de l'ombre. Aucune ne suffit seule&nbsp;; ensemble, elles protègent bien.</p>
-  <h3>Gagner 9&nbsp;°C dans le local</h3>
-  <table>
-    <tr><th>Solution</th><th>Famille</th><th>Baisse de température</th></tr>
-    <tr><td>réduire le nombre de machines</td><td>organisa&shy;tionnelle</td><td>5,0&nbsp;°C</td></tr>
-    <tr><td>extracteur d'air</td><td>active simple</td><td>4,0&nbsp;°C</td></tr>
-    <tr><td><b>ensemble</b></td><td></td><td><b>≈ 9&nbsp;°C</b></td></tr>
-  </table>
-  <p>Le climatiseur seul gagne aussi 9&nbsp;°C, mais il coûte, consomme et émet bien plus. La combinaison dépend moins
-  d'un seul appareil. Additionner les effets donne un <b>ordre de grandeur</b>&nbsp;: de quoi choisir quoi essayer, pas
-  de quoi promettre. On vérifie sur place.</p>
-  <dl class="voc">
-    <dt>ordre de grandeur <span class="en">— order of magnitude</span></dt><dd>une valeur approchée, pour savoir si on est loin ou près du but.</dd>
-    <dt>exigence <span class="en">— requirement</span></dt><dd>le niveau à atteindre&nbsp;: au plus 32&nbsp;°C.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: rien n'oblige à retenir <b>une seule</b> solution. On peut en <b>combiner</b> plusieurs, de familles différentes&nbsp;; leur effet total se <b>vérifie sur place</b>.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'il faut choisir une solution et une seule. Autre piège&nbsp;: promettre le résultat exact d'une addition d'effets.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: deux solutions gagnent 5&nbsp;°C et 4&nbsp;°C. Peut-on promettre 9&nbsp;°C&nbsp;?</summary>
-    <p>Non&nbsp;: on peut l'espérer. Les effets ne s'ajoutent pas toujours exactement. L'addition dit que cela vaut la peine d'essayer&nbsp;; la mesure dans le local dira si l'exigence est tenue.</p></details>
+  <p>Une seule solution gagne 9&nbsp;°C toute seule&nbsp;: le climatiseur. Mais trois solutions de familles différentes peuvent s'ajouter&nbsp;:</p>
+  <div class="chaine">
+    <div><b class="pas">Ventilation naturelle</b>−&nbsp;2,5&nbsp;°C</div>
+    <div><b class="act">Extracteur d'air</b>−&nbsp;4&nbsp;°C</div>
+    <div><b class="org">Moins de machines</b>−&nbsp;5&nbsp;°C</div>
+    <div class="ok"><b>Ensemble&nbsp;: ≈&nbsp;−&nbsp;11,5&nbsp;°C</b>Pour 1&nbsp;230&nbsp;€ d'installation, et moins d'électricité
+    consommée qu'aujourd'hui.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: rien n'oblige à choisir <b>une seule</b> solution&nbsp;: tu peux en
+  <b>combiner</b> plusieurs. Additionner leurs effets donne un <b>ordre de grandeur</b>&nbsp;: la combinaison se
+  <b>vérifie sur place</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: promettre 11,5&nbsp;°C. Les effets ne s'ajoutent pas exactement&nbsp;:
+  l'addition dit quoi essayer, pas quoi promettre.</p>
 </div>
 
 <!-- ══ 5 ══ -->
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-5" style="margin-top:0">5. Un bon choix, c'est quoi, en développement durable&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme une sortie de classe</b>&nbsp;: elle doit être bonne pour la planète, pas trop chère, et accessible à tous les élèves. Si un seul de ces points manque, ce n'est pas une bonne sortie.</p>
-  <h3>Les trois piliers, pour le local de Shenzhen</h3>
-  <table>
-    <tr><th>Pilier</th><th>La question</th><th>Dans le local</th></tr>
-    <tr><td><b>environnement</b></td><td>que coûte-t-il à la planète, sur tout son cycle de vie&nbsp;?</td><td>le climatiseur&nbsp;: 620&nbsp;kg de CO₂ rien que pour le fabriquer</td></tr>
-    <tr><td><b>économie</b></td><td>combien coûte-t-il sur toute la durée d'usage&nbsp;?</td><td>réduire les machines fait même baisser la facture</td></tr>
-    <tr><td><b>social</b></td><td>qui gagne, qui perd quelque chose&nbsp;?</td><td>renoncer à deux serveurs, c'est retirer un service à quelqu'un</td></tr>
-  </table>
-  <p>Le pilier social est le plus oublié, parce qu'il ne se met pas en colonne. Il faut le dire. Et une recommandation
-  qui nomme sa limite est plus solide, pas plus faible.</p>
-  <dl class="voc">
-    <dt>développement durable <span class="en">— sustainable development</span></dt><dd>répondre aux besoins d'aujourd'hui sans abîmer ceux de demain.</dd>
-    <dt>cycle de vie <span class="en">— life cycle</span></dt><dd>toutes les étapes d'un objet, de l'extraction de sa matière à sa fin de vie.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un choix durable tient ensemble les <b>trois piliers</b>&nbsp;: <b>environnement</b>, <b>économie</b>, <b>social</b>. Et il regarde tout le <b>cycle de vie</b>.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: oublier le pilier social. Réduire le nombre de machines est bon pour la planète et le budget, mais quelqu'un perd un service.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: réduire le nombre de serveurs est gratuit et fait baisser la facture. Y a-t-il un inconvénient&nbsp;?</summary>
-    <p>Oui, social&nbsp;: les services de ces serveurs disparaissent pour ceux qui les utilisaient. Il faut le dire dans la recommandation, et dire qui est concerné.</p></details>
+  <p>Pour le local de Shenzhen, chaque pilier pose sa question&nbsp;:</p>
+  <div class="chaine">
+    <div><b>🌍 Environnement</b>Que coûte la solution à la planète, sur tout son cycle de vie&nbsp;? Le climatiseur&nbsp;:
+    620&nbsp;kg de CO₂ pour sa seule fabrication.</div>
+    <div><b>💶 Économie</b>Que coûte-t-elle sur toute la durée d'usage&nbsp;? Moins de machines&nbsp;: 450&nbsp;€ de moins
+    par an sur la facture.</div>
+    <div><b>🤝 Social</b>Qui gagne, qui perd&nbsp;? Renoncer à deux serveurs, c'est retirer un service à quelqu'un.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un choix <b>durable</b> tient ensemble les <b>trois piliers</b>, sur tout
+  le <b>cycle de vie</b>. Une recommandation qui nomme sa <b>limite</b> est plus solide.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: oublier le pilier social, parce qu'il ne se met pas en colonne. Moins de
+  machines aide la planète et le budget, mais quelqu'un perd un service.</p>
 </div>
 
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>OST <span class="en">— technical object or system</span></dt><dd>un objet fabriqué, ou plusieurs objets qui travaillent ensemble.</dd></div>
+    <div><dt>besoin <span class="en">— need</span></dt><dd>ce qui manque à quelqu'un&nbsp;: ici, un local assez frais pour les serveurs.</dd></div>
+    <div><dt>recenser <span class="en">— to list</span></dt><dd>chercher toutes les solutions possibles, sans juger.</dd></div>
+    <div><dt>solution passive <span class="en">— passive solution</span></dt><dd>une solution qui ne consomme pas d'énergie pour agir.</dd></div>
+    <div><dt>solution active <span class="en">— active solution</span></dt><dd>une solution qui consomme de l'énergie pour agir.</dd></div>
+    <div><dt>solution organisationnelle <span class="en">— organisational solution</span></dt><dd>une solution qui change la façon de faire, pas l'appareil.</dd></div>
+    <div><dt>critère <span class="en">— criterion</span></dt><dd>ce qui sert à comparer&nbsp;: le coût, la baisse de température.</dd></div>
+    <div><dt>exigence <span class="en">— requirement</span></dt><dd>le niveau à atteindre&nbsp;: au plus 32&nbsp;°C.</dd></div>
+    <div><dt>flexibilité <span class="en">— flexibility</span></dt><dd>l'écart que le client accepte, de F0 (aucun) à F3 (large).</dd></div>
+    <div><dt>pondération <span class="en">— weighting</span></dt><dd>donner plus de poids à un critère qu'à un autre.</dd></div>
+    <div><dt>indice de réparabilité <span class="en">— repairability index</span></dt><dd>une note sur 10 qui dit si l'objet se répare facilement.</dd></div>
+    <div><dt>protocole <span class="en">— protocol</span></dt><dd>la suite précise des gestes pour mesurer, toujours de la même façon.</dd></div>
+    <div><dt>relevé <span class="en">— reading</span></dt><dd>une valeur mesurée et notée, avec son heure et son lieu.</dd></div>
+    <div><dt>cas le plus défavorable <span class="en">— worst case</span></dt><dd>le moment où le local est le plus chaud.</dd></div>
+    <div><dt>ordre de grandeur <span class="en">— order of magnitude</span></dt><dd>une valeur approchée, pour savoir si on est loin ou près du but.</dd></div>
+    <div><dt>développement durable <span class="en">— sustainable development</span></dt><dd>répondre aux besoins d'aujourd'hui sans abîmer ceux de demain.</dd></div>
+    <div><dt>pilier <span class="en">— pillar</span></dt><dd>un des trois points de vue d'un choix durable.</dd></div>
+    <div><dt>cycle de vie <span class="en">— life cycle</span></dt><dd>les étapes d'un objet, de l'extraction de sa matière à sa fin de vie.</dd></div>
+    <div><dt>transposer <span class="en">— to transfer, to adapt</span></dt><dd>refaire l'analyse ailleurs&nbsp;: à Fort-de-France, l'air chaud et humide change la réponse.</dd></div>
+  </dl>
 </div>
-<script>
-/* À l'impression, les réponses « Vérifie-toi » sont dépliées (règle d'or n°316). */
-window.addEventListener('beforeprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.dataset.etaitOuvert = d.open; d.open = true; }));
-window.addEventListener('afterprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.open = d.dataset.etaitOuvert === 'true'; }));
-</script>
+</div>
 </body>
 </html>

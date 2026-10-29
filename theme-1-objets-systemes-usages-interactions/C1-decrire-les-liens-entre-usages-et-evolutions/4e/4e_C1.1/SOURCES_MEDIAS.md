@@ -21,8 +21,8 @@ ce dossier. Le volet de navigation, qui listait des dossiers personnels, est mas
 
 | Fichier | Type | Usage pédagogique (règle v2) | Licence | Poids |
 |---|---|---|---|---|
-| `Images/corrige_du_nombre_a_l_exigence.svg` | SVG original (Fable) | corrigé-objet : la chaîne du raisonnement, de la donnée publique à l'exigence vérifiable, avec l'incertitude ajoutée à chaque étape (séquence, QCM, synthèse élève) | CC0 | ~5 Ko |
-| `Images/corrige_equivalences_et_perimetres.svg` | SVG original (Fable) | corrigé-objet : les quatre équivalences, leur unité exacte et la question critique de chacune (séquence, QCM, synthèse élève) | CC0 | ~6 Ko |
+| `Images/corrige_du_nombre_a_l_exigence.svg` | SVG original (Fable) | corrigé-objet : la chaîne du raisonnement, de la donnée publique à l'exigence vérifiable, avec l'incertitude ajoutée à chaque étape (séquence, QCM) | CC0 | ~5 Ko |
+| `Images/corrige_equivalences_et_perimetres.svg` | SVG original (Fable) | corrigé-objet : les quatre équivalences, leur unité exacte et la question critique de chacune (séquence, QCM) | CC0 | ~6 Ko |
 | `Images/geste_tableur_1_ouvrir_import_csv.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 11/09/2026 | geste 1 Ouvrir — la boîte « Import de texte », Point-virgule seul coché, aperçu en colonnes où la colonne valeur montre 0,142 à la virgule (encart d'échauffement de la séquence) | CC0 | 157 Ko |
 | `Images/geste_tableur_1b_ouvrir_resultat.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 11/09/2026 | geste 1 Ouvrir — résultat attendu : huit colonnes A à H, et les valeurs alignées à droite, donc reconnues comme des nombres (encart d'échauffement de la séquence) | CC0 | 129 Ko |
 | `Images/geste_tableur_1c_ouvrir_erreur_separateur.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 11/09/2026 | geste 1 Ouvrir — contre-exemple : séparateur Virgule, six lignes tassées dans la colonne A et quatre coupées au milieu d'un nombre (encart d'échauffement de la séquence) | CC0 | 132 Ko |

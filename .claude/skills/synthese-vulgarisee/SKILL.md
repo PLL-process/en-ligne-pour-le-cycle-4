@@ -150,7 +150,33 @@ Un seul bloc « 📖 Les mots de la séquence » (`<h2 id="les-mots">`, `dl.lexi
 synthèse et de la séquence, avec son anglais (le vocabulaire du skill `sequence-pedagogique-engageante`) et une
 définition **d'une ligne**. Deux colonnes à l'écran large comme sur papier, une sur un téléphone.
 
-### 4. La langue
+### 4. L'image de l'objet
+
+Pascal, 29/10/2026 : « Parfois, une capture d'écran ou une illustration permet d'avoir une vision plus synthétique de
+l'objet » ; « dans les synthèses aussi, quand il sera possible et nécessaire surtout ». Une synthèse qui parle d'un
+objet (une borne, un vélo, un frein, un drone, une station, un capteur) **le montre** : l'image dit d'un coup d'œil ce
+que trois phrases décrivent.
+
+- **Où** : dans la carte, à droite de « Ce que dit le programme » : `div.tete` réunit `.programme` et
+  `figure.objet` (26 % de la largeur ; dessous sur un téléphone). C'est la place qui coûte le moins : le pilote
+  `5e_C1.1` tient en deux pages avec elle. À l'impression, le sous-titre `.pb` se cache (la question de la carte dit
+  la même chose) et lui laisse sa place. Une deuxième image au plus, en vignette dans la partie qui en a besoin (la
+  capture d'un geste de logiciel, la photo d'un composant), et seulement si les deux pages tiennent.
+- **D'où**, dans l'ordre :
+  1. une image déjà dans le dossier `Images/` de la séquence : photo libre documentée, **capture d'écran réelle**
+     (n°94), SVG original ;
+  2. une **image réaliste générée avec Canva** (compte de Pascal, autorisé le 29/10/2026 : « pour des images
+     réalistes et autres »). La légende dit « Image générée par IA (Canva) », jamais « photo ». Le fichier garde ses
+     métadonnées d'origine : les conditions de Canva interdisent de présenter l'image comme faite par un humain et
+     d'en retirer les marques de provenance. Aucune personne reconnaissable. Une ligne dans `SOURCES_MEDIAS.md` :
+     image générée par IA, Canva, compte de Pascal, date, texte de la demande. L'espace de travail ne joint pas
+     Canva : Pascal télécharge le fichier depuis le lien et le joint à la conversation ;
+  3. une photo libre vérifiée à la source (skill `licences-medias-education`).
+- **Toujours** : un `alt` court qui dit ce qu'on voit (n°117), une `figcaption` qui nomme l'objet, l'agrandissement au
+  clic (n°92 : `python3 theme-3-creation-conception-realisation-innovations/audit/loupe.py <dossier Synthèses>`, puis
+  `python3 _outils/controle_loupe.py`), moins de 300 Ko.
+
+### 5. La langue
 
 - **Tu**, voix active, présent. Phrases de 15 mots en moyenne ; aucune au-delà de 25.
 - **Un mot technique est expliqué la première fois qu'il paraît**, dans la phrase même ou dans le lexique.
@@ -200,6 +226,8 @@ travail, puis on mesure avec `mesurer_impression.py`.
 - [ ] Chaque partie, dans l'ordre : titre-question, l'exemple de la séquence en deux lignes (en cases quand il compare
       ou enchaîne), À retenir (encadré, mots-clés en gras), le piège en une ligne.
 - [ ] Un seul lexique à la fin : chaque mot technique, son anglais, une définition d'une ligne.
+- [ ] L'objet montré quand la synthèse parle d'un objet : image dans la carte, `alt`, légende, loupe,
+      `SOURCES_MEDIAS.md`.
 - [ ] Une couleur par notion, la même dans toute la synthèse.
 - [ ] Relu : aucune faute d'accord ou de conjugaison.
 - [ ] Aucun mot technique sans explication ; aucune phrase au-delà de 25 mots ; aucune maxime.

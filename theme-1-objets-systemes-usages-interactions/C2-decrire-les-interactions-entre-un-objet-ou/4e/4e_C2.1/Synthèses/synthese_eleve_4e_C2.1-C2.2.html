@@ -16,7 +16,6 @@
   h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
   h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
   .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
-  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
   ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
   code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
   table{width:100%;border-collapse:collapse;margin:6px 0}
@@ -31,8 +30,6 @@
   #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
 
   /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
-  /* Une couleur par notion, la même partout : la donnée en jaune, l'information en vert. */
-  .d{color:var(--warn);font-weight:600}.i{color:var(--ok);font-weight:600}
   /* La carte « Ce que je dois retenir » */
   .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
   .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
@@ -47,35 +44,59 @@
   .cartes a:hover{border-color:var(--hl)}
   .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
   .cartes .r{display:block;font-size:.92em}
-  /* Les six temps d'une partie */
-  .comme-vie{background:#132b52;border-radius:8px;padding:8px 12px;margin:4px 0 10px}
-  dl.voc{display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;margin:8px 0;font-size:.93em}
-  dl.voc dt{color:var(--hl);font-weight:600}dl.voc dd{margin:0}
-  @media(max-width:600px){dl.voc{grid-template-columns:1fr;gap:0}dl.voc dd{margin:0 0 6px}}
-  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* L'image de l'objet, dans la carte, à droite du programme (skill synthese-vulgarisee, §4) */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* L'image garde sa forme (3:2) au lieu de prendre la hauteur du texte du programme. */
+  .objet img{aspect-ratio:3/2;flex:none;height:auto}.tete .programme{align-self:center}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
   .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
   .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
-  details.verifie{border:1px dashed var(--sub);border-radius:8px;padding:6px 12px;margin:10px 0 2px}
-  details.verifie summary{cursor:pointer;font-weight:600;color:var(--sub)}
-  details.verifie p{margin:6px 0 2px}
-  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
   .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
   .chaine b{display:block}
-  .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  /* Six cases (les six familles) : trois par rangée sur une page large et sur le papier, une par ligne sur un téléphone. */
+  .chaine.par3 div{flex-basis:30%}
+  @media (max-width:600px){.chaine.par3 div{flex-basis:170px}}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
 
-  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
     h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
-    .carte{page-break-after:always;break-after:page}
-    .cartes a,.comme-vie,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; une rangée de cases ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
     .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
-    .d{color:#8a5a00}.i{color:#1d6b38}.vert{color:#1d6b38}.rouge{color:#b3261e}
-    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,details.verifie summary,dl.voc dt{color:#222}
-    .bloc{break-inside:auto;padding:6px 10px;margin-bottom:8px}details.verifie{break-inside:avoid}
-    /* papier : les schémas à 60 % de la largeur, des marges serrées — la carte tient sur une page, les parties sur peu */
-    .schema{width:60%;display:block;margin:4px auto}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
     h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
-    .comme-vie,.retenir,.piege,details.verifie{padding:3px 8px;margin:4px 0}
-    table{margin:3px 0}th,td{padding:2px 6px}dl.voc{margin:4px 0;gap:1px 10px}.chaine{gap:6px;margin:4px 0}}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
@@ -111,31 +132,40 @@
 <div class="page">
 <h1>📌 Synthèse élève — Hangzhou&nbsp;: ce que vit l'usager devant la borne</h1>
 <p class="pb">Des mots des usagers aux exigences de l'objet, en passant par le graphique et l'algorithme.</p>
-<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (la carte sur une page, puis les parties)</button></div>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
 
 <!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
 <section class="carte" aria-labelledby="carte-titre">
   <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
   <p class="question">Comment passer de ce que disent les usagers d'une borne à ce que la borne doit faire&nbsp;?</p>
+  <div class="tete">
   <div class="programme"><b>Ce que dit le programme</b> (4e, compétence C2)&nbsp;:
     <ul>
       <li>décrire l'expérience de l'utilisateur (ressenti et facilité d'usage) d'un OST en partant du langage naturel (texte, croquis) pour aboutir aux schémas, graphiques, algorithmes&nbsp;;</li>
       <li>repérer et expliquer les contraintes, exigences prises en compte (sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité) pour répondre aux attentes des utilisateurs.</li>
     </ul>
   </div>
+  <!-- L'image de l'objet (skill synthese-vulgarisee, §4) : aucune image du dossier Images/ ne montre la borne.
+       Une image générée avec Canva est proposée ; elle viendra ici, à droite du programme :
+    <figure class="objet">
+      <img src="../Images/synthese_borne_velos_hangzhou.png" alt="Une borne de vélos en libre-service sur un trottoir : un poteau avec un écran et un lecteur de carte, des vélos accrochés à côté.">
+      <figcaption>📍 L'objet&nbsp;: la borne de retrait des vélos. <i>Image générée par IA (Canva).</i></figcaption>
+    </figure>
+  -->
+  </div>
   <div class="cartes">
     <a href="#partie-1"><span class="q">🛤️ 1. Comment décrire ce que vit un usager&nbsp;?</span>
-      <span class="r">On part de ses mots, puis on passe au schéma, au graphique et à l'algorithme. On n'efface rien.</span></a>
+      <span class="r">On part de ses mots, puis on les traduit pas à pas.</span></a>
     <a href="#partie-2"><span class="q">🎙️ 2. Recueillir les mots des usagers sans les trahir&nbsp;?</span>
-      <span class="r">On recopie les mots exacts. Et si deux usagers se contredisent, on garde les deux.</span></a>
+      <span class="r">On recopie les mots exacts, et on garde les désaccords.</span></a>
     <a href="#partie-3"><span class="q">📊 3. Où l'usager perd-il du temps&nbsp;?</span>
-      <span class="r">Le schéma nomme les étapes&nbsp;; le graphique montre la moyenne et le pire cas, côte à côte.</span></a>
-    <a href="#partie-4"><span class="q">🔀 4. À quoi sert un algorithme, si tout va bien&nbsp;?</span>
-      <span class="r">À rien&nbsp;: il sert à écrire ce qui se passe quand ça rate. Un test a toujours deux sorties.</span></a>
+      <span class="r">On trace la moyenne et le pire cas de chaque étape.</span></a>
+    <a href="#partie-4"><span class="q">🔀 4. Que montre l'algorithme&nbsp;?</span>
+      <span class="r">Ce que la borne décide quand ça rate.</span></a>
     <a href="#partie-5"><span class="q">🏷️ 5. Quelles exigences une borne doit-elle respecter&nbsp;?</span>
-      <span class="r">Six familles, avec les mots du programme&nbsp;: sécurité, environnement, formes et fonctions, ergonomie, qualité, fiabilité.</span></a>
+      <span class="r">Six familles, chacune avec sa question à l'objet.</span></a>
     <a href="#partie-6"><span class="q">✍️ 6. Comment écrire une bonne exigence&nbsp;?</span>
-      <span class="r">Ce qui est attendu, comment on le vérifie, et pour quel usager. Sans choisir la solution.</span></a>
+      <span class="r">Elle se vérifie, et elle ne choisit pas la solution.</span></a>
   </div>
 </section>
 
@@ -143,165 +173,121 @@
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-1" style="margin-top:0">1. Comment décrire ce que vit un usager&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme chez le médecin</b>. Tu dis «&nbsp;j'ai mal au ventre&nbsp;»&nbsp;: tes mots. Il te fait montrer où, il prend ta température, il suit une liste de questions. Chaque façon dit autre chose.</p>
-  <h3>La borne de vélos de Hangzhou&nbsp;: quatre représentations</h3>
-  <object class="schema" data="../Images/du_verbatim_a_l_algorigramme.svg" type="image/svg+xml" aria-label="Les quatre représentations : langage naturel, schéma, graphique, algorithme">Du verbatim à l'algorigramme</object>
-  <div class="chaine">
-    <div><b>1. Les mots</b>ce que les usagers disent, mot pour mot</div>
-    <div><b>2. Le schéma</b>les étapes du parcours, nommées</div>
-    <div><b>3. Le graphique</b>le temps passé à chaque étape</div>
-    <div><b>4. L'algorithme</b>ce que la machine décide, y compris quand ça rate</div>
+  <p>À Hangzhou, le même retrait de vélo passe par quatre représentations, l'une après l'autre&nbsp;:</p>
+  <div class="chaine etapes">
+    <div><b>1. Le langage naturel</b>Les mots des usagers, ou un croquis fait à la main.</div>
+    <div><b>2. Le schéma</b>Le parcours découpé en étapes nommées.</div>
+    <div><b>3. Le graphique</b>Le temps passé à chaque étape.</div>
+    <div><b>4. L'algorithme</b>Ce que la borne décide, même quand ça rate.</div>
   </div>
-  <p>On n'efface pas l'étape d'avant. Le graphique ne connaît pas la colère de Chen&nbsp;; les mots de Chen ne
-  connaissent pas les 40 secondes de l'étape «&nbsp;choisir&nbsp;».</p>
-  <dl class="voc">
-    <dt>expérience utilisateur <span class="en">— user experience</span></dt><dd>ce que vit une personne en utilisant un objet&nbsp;: ce qu'elle fait et ce qu'elle ressent.</dd>
-    <dt>langage naturel <span class="en">— natural language</span></dt><dd>les mots de tous les jours, ceux des usagers.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on décrit une <b>expérience utilisateur</b> en allant des <b>mots</b> vers le <b>schéma</b>, le <b>graphique</b> et l'<b>algorithme</b>. Chaque représentation garde ce que les autres ne savent pas dire.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire que la représentation la plus technique contient toutes les autres. L'algorithme ne dit rien de la colère d'un usager.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: pourquoi garder les mots de Chen, alors qu'on a le graphique des durées&nbsp;?</summary>
-    <p>Parce que le graphique dit combien de temps, pas ce que Chen a ressenti. Ses mots disent ce qui l'énerve&nbsp;: ne pas savoir si le blocage vient de lui ou de la borne.</p></details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on décrit une <b>expérience utilisateur</b> en partant des <b>mots</b> des
+  usagers, puis on la <b>traduit</b> pas à pas. Chaque représentation garde ce que les autres <b>ne savent pas dire</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire que l'algorithme, le plus technique, contient tout. Il ne dit rien de l'agacement de Chen.</p>
 </div>
 
 <!-- ══ 2 ══ -->
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-2" style="margin-top:0">2. Comment recueillir les mots des usagers sans les trahir&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme un témoin qui raconte un accident</b>&nbsp;: si tu résumes ce qu'il a dit, tu ajoutes ton avis. Les gendarmes notent ses mots exacts.</p>
-  <h3>Ce que disent les usagers de la borne</h3>
-  <ul>
-    <li>On note <b>les mots exacts</b>, sans les reformuler&nbsp;: reformuler, c'est déjà interpréter.</li>
-    <li>Wang trouve la liste des vélos décourageante&nbsp;; Ma la trouve pratique. On écrit <b>les deux</b>&nbsp;: un même
-    objet ne fait pas vivre la même chose à tout le monde. C'est un résultat.</li>
-    <li>Le ressenti n'est pas seulement la durée&nbsp;: attendre 30&nbsp;secondes <b>en le sachant</b>, ce n'est pas
-    attendre 30&nbsp;secondes sans le savoir.</li>
-    <li>La facilité dépend de la personne&nbsp;: «&nbsp;je fais ça en trente secondes, mais ma mère n'y arrive pas
-    seule&nbsp;».</li>
-  </ul>
-  <dl class="voc">
-    <dt>verbatim <span class="en">— verbatim</span></dt><dd>les mots exacts d'une personne, recopiés sans rien changer.</dd>
-    <dt>ressenti <span class="en">— feeling, perception</span></dt><dd>ce que la personne éprouve&nbsp;: de l'agacement, du stress, du plaisir.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on part des <b>mots exacts</b> des usagers. Quand deux usagers se <b>contredisent</b>, on garde les deux. Un objet facile pour l'habitué peut être difficile pour un autre.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: résumer ce qu'a dit l'usager avant de l'avoir étudié. Autre piège&nbsp;: tester l'objet seulement avec des gens qui le connaissent déjà.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: Wang dit «&nbsp;décourageant&nbsp;», Ma dit «&nbsp;pratique&nbsp;». Faut-il trancher&nbsp;?</summary>
-    <p>Non. Les deux avis sont vrais pour ceux qui les donnent. Ce désaccord est un résultat&nbsp;: la borne ne convient pas à tout le monde de la même façon.</p></details>
+  <p>À Hangzhou, douze usagers ont été interrogés. Leurs mots disent ce qu'un chronomètre ne mesure pas&nbsp;:</p>
+  <div class="chaine">
+    <div><b>Wang et Ma se contredisent</b>«&nbsp;La liste des vélos est trop longue.&nbsp;» «&nbsp;La liste, moi, ça me va.&nbsp;»</div>
+    <div><b>Feng parle d'attente</b>«&nbsp;Ce qui m'énerve […] c'est de ne pas savoir combien de temps ça va durer.&nbsp;»</div>
+    <div><b>Xu parle de facilité</b>«&nbsp;Je fais ça en trente secondes […] Ma mère n'y arrive pas seule.&nbsp;»</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: tu pars des <b>mots exacts</b> des usagers, sans les <b>reformuler</b>. Si deux usagers
+  se <b>contredisent</b>, garde les deux.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: résumer ce qu'a dit l'usager avant de l'avoir étudié. Reformuler, c'est déjà interpréter.</p>
 </div>
 
 <!-- ══ 3 ══ -->
 <div class="bloc faire">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-3" style="margin-top:0">3. Où l'usager perd-il du temps&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme la queue de la cantine</b>&nbsp;: en moyenne tu attends 5&nbsp;minutes. Mais le jour où tu en attends 20, c'est de celui-là que tu te souviens.</p>
-  <h3>Le temps passé à chaque étape (30 retraits)</h3>
-  <p>Le <b>schéma</b> découpe le parcours en étapes nommées&nbsp;: arriver, identifier, choisir, déverrouiller,
-  partir. «&nbsp;C'est trop long&nbsp;» devient «&nbsp;l'étape <i>déverrouiller</i> est trop longue&nbsp;».</p>
-  <object class="schema" data="../Images/corrige_temps_par_etape.svg" type="image/svg+xml" aria-label="Le temps par étape : moyenne et maximum, avec les 9 reprises sur 30 à l'étape déverrouiller">Le temps par étape</object>
-  <p>Le <b>graphique</b> montre deux barres par étape&nbsp;: la moyenne et le pire cas. Deux lectures&nbsp;:</p>
-  <ul>
-    <li><b>La plus longue n'est pas celle dont on se plaint.</b> «&nbsp;Choisir&nbsp;» dure 40&nbsp;s (secondes) en
-    moyenne, le record, et personne n'en parle.</li>
-    <li><b>Une moyenne cache sa queue.</b> «&nbsp;Déverrouiller&nbsp;» ne dure que 29&nbsp;s en moyenne, mais monte à
-    83&nbsp;s&nbsp;: 9 usagers sur 30 ont dû recommencer. Ce sont eux qui écrivent au service client.</li>
-  </ul>
-  <dl class="voc">
-    <dt>moyenne <span class="en">— average, mean</span></dt><dd>le total divisé par le nombre de cas&nbsp;: le milieu.</dd>
-    <dt>pire cas <span class="en">— worst case</span></dt><dd>la plus longue durée observée.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on trace toujours <b>la moyenne et le pire cas</b>&nbsp;: personne ne vit la moyenne. Et l'étape la plus <b>longue</b> n'est pas forcément la plus <b>critiquée</b>.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: décider à partir des seules moyennes. Autre piège&nbsp;: traiter d'abord la plus haute barre du graphique. La donnée la plus grosse n'est pas toujours le problème.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: «&nbsp;Déverrouiller&nbsp;» dure 29&nbsp;s en moyenne&nbsp;: c'est court. Pourquoi les usagers s'en plaignent-ils&nbsp;?</summary>
-    <p>Parce que 9 usagers sur 30 ont dû recommencer, jusqu'à 83&nbsp;s. La moyenne est basse, mais un usager sur trois vit une attente longue et un échec. La moyenne cache ces cas.</p></details>
+  <p>À Hangzhou, le schéma nomme cinq étapes. Le graphique trace la moyenne et le pire cas de chacune, sur 30 retraits&nbsp;:</p>
+  <div class="chaine">
+    <div><b>Choisir&nbsp;: la plus longue</b>40&nbsp;s (secondes) en moyenne, sans plainte au service client.</div>
+    <div><b>Déverrouiller&nbsp;: la plus critiquée</b>29&nbsp;s en moyenne, mais jusqu'à 83&nbsp;s&nbsp;: 9 retraits sur 30 à refaire.</div>
+    <div><b>Le retrait entier</b>104&nbsp;s en moyenne, jusqu'à 168&nbsp;s, presque trois minutes.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: trace toujours <b>la moyenne</b> et <b>le pire cas</b>&nbsp;: la moyenne cache
+  les longues attentes.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: corriger d'abord la plus haute barre. Ici, ce serait «&nbsp;choisir&nbsp;», dont personne ne se plaint au service client.</p>
 </div>
 
 <!-- ══ 4 ══ -->
 <div class="bloc faire">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
-  <h2 id="partie-4" style="margin-top:0">4. À quoi sert un algorithme, si tout va bien&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme une recette</b>&nbsp;: «&nbsp;si la pâte colle, ajoute de la farine&nbsp;». La recette utile est celle qui dit quoi faire quand ça ne marche pas.</p>
-  <h3>Ce que décide la borne</h3>
-  <table>
-    <tr><th>Forme</th><th>Ce qu'elle veut dire</th></tr>
-    <tr><td><b>ovale</b></td><td>le début ou la fin</td></tr>
-    <tr><td><b>rectangle</b></td><td>une action&nbsp;: «&nbsp;lire la carte&nbsp;»</td></tr>
-    <tr><td><b>losange</b></td><td>un test, avec deux sorties&nbsp;: oui et non</td></tr>
-    <tr><td><b>flèche qui remonte</b></td><td>une reprise&nbsp;: on recommence</td></tr>
-  </table>
-  <p>La sortie «&nbsp;non&nbsp;» doit mener quelque part. Une reprise sans sortie d'échec est une boucle sans fin&nbsp;:
-  c'est ce qu'a vécu Sun, qui a recommencé trois fois.</p>
-  <dl class="voc">
-    <dt>algorigramme <span class="en">— flowchart</span></dt><dd>un dessin de l'algorithme, avec des formes et des flèches.</dd>
-    <dt>test <span class="en">— test, decision</span></dt><dd>une question à laquelle la machine répond oui ou non.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un <b>algorithme</b> rend les <b>échecs</b> visibles, donc réparables. Un <b>test</b> se dessine en losange et a <b>deux sorties</b>.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: ne dessiner que la branche «&nbsp;oui&nbsp;». Le chemin où tout va bien, on le connaît déjà&nbsp;: ce n'est pas lui qu'il faut écrire.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: la borne teste «&nbsp;carte reconnue&nbsp;?&nbsp;». Si non, elle redemande la carte, sans fin. Qu'est-ce qui manque&nbsp;?</summary>
-    <p>Une sortie d'échec. Par exemple&nbsp;: après trois essais, afficher «&nbsp;carte refusée, adressez-vous au guichet&nbsp;». Sans elle, l'usager tourne en rond, comme Sun.</p></details>
+  <h2 id="partie-4" style="margin-top:0">4. Que montre l'algorithme, que le graphique ne montrait pas&nbsp;?</h2>
+  <p>À Hangzhou, l'algorigramme de l'étape «&nbsp;déverrouiller&nbsp;» écrit ce que la borne décide quand ça rate&nbsp;:</p>
+  <div class="chaine etapes">
+    <div><b>Action (rectangle)</b>Ouvrir le point d'ancrage, et afficher le temps restant.</div>
+    <div><b>Test (losange)</b>Ouvert en moins de 5&nbsp;s (secondes)&nbsp;? Si non&nbsp;: dire ce qui bloque.</div>
+    <div><b>Test (losange)</b>Troisième essai&nbsp;? Non&nbsp;: reprise. Oui&nbsp;: fin en échec, un autre vélo proposé.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: l'<b>algorigramme</b> rend les <b>échecs</b> visibles, donc réparables. Un
+  <b>test</b> se dessine dans un losange et a toujours <b>deux sorties</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: oublier la sortie d'échec. Sans elle, la reprise tourne en boucle&nbsp;: Sun a recommencé trois fois.</p>
 </div>
 
 <!-- ══ 5 ══ -->
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-5" style="margin-top:0">5. Quelles exigences une borne doit-elle respecter&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme un vélo neuf</b>. Il ne doit pas te blesser. Il ne doit pas gaspiller la matière. Ses formes servent à rouler, il est à ta taille, il fait ce qu'il promet, et il ne tombe pas en panne.</p>
-  <h3>Les six familles sur la borne</h3>
-  <object class="schema" data="../Images/six_familles_d_exigences.svg" type="image/svg+xml" aria-label="Les six familles d'exigences, la question que chacune pose, et ce qu'elle donne sur la borne">Les six familles d'exigences</object>
-  <table>
-    <tr><th>Famille</th><th>La question</th></tr>
-    <tr><td><b>sécurité</b></td><td>quelqu'un peut-il se blesser&nbsp;?</td></tr>
-    <tr><td><b>incidences environnementales</b></td><td>que coûte l'objet en matière et en énergie, sur toute sa vie&nbsp;?</td></tr>
-    <tr><td><b>formes et fonctions</b></td><td>la forme sert-elle ce que l'objet doit faire, même sous la pluie&nbsp;?</td></tr>
-    <tr><td><b>ergonomie</b></td><td>le corps et les gestes de vrais usagers sont-ils respectés&nbsp;?</td></tr>
-    <tr><td><b>qualité</b></td><td>l'objet fait-il ce qu'il annonce, et informe-t-il l'usager&nbsp;?</td></tr>
-    <tr><td><b>fiabilité</b></td><td>combien de fois sur cent échoue-t-il&nbsp;?</td></tr>
-  </table>
-  <p>Un même choix peut relever de deux familles&nbsp;: on dit laquelle domine.</p>
-  <dl class="voc">
-    <dt>fiabilité <span class="en">— reliability</span></dt><dd>le fait de marcher à chaque fois&nbsp;: elle se compte, donc elle se chiffre.</dd>
-    <dt>ergonomie <span class="en">— ergonomics</span></dt><dd>adapter l'objet au corps et aux gestes de vrais usagers.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: il y a <b>six familles</b> d'exigences&nbsp;: <b>sécurité</b>, <b>incidences environnementales</b>, <b>formes et fonctions</b>, <b>ergonomie</b>, <b>qualité</b>, <b>fiabilité</b>. Ce sont les mots du programme.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: n'examiner qu'une ou deux familles et croire l'objet couvert. Autre piège&nbsp;: tout classer en sécurité parce que «&nbsp;c'est important&nbsp;».</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: la borne affiche «&nbsp;patientez&nbsp;» sans dire combien de temps. Quelle famille est en défaut&nbsp;?</summary>
-    <p>La qualité&nbsp;: l'objet doit informer l'usager de ce qu'il fait. Un temps annoncé rend l'attente plus supportable, même si elle dure autant.</p></details>
+  <p>À Hangzhou, chacune des six familles d'exigences du programme pose sa question à la borne&nbsp;:</p>
+  <div class="chaine par3">
+    <div><b>🦺 Sécurité</b>Quelqu'un peut-il se blesser&nbsp;?<br>L'ancrage doit lâcher sans faire basculer le vélo.</div>
+    <div><b>🌱 Incidences environnementales</b>Que coûtent la matière et l'énergie&nbsp;?<br>L'écran ne doit s'allumer qu'à l'approche.</div>
+    <div><b>📐 Formes et fonctions</b>La forme sert-elle la fonction&nbsp;?<br>L'écran doit rester lisible sous la pluie.</div>
+    <div><b>✋ Ergonomie</b>Le corps et les gestes sont-ils respectés&nbsp;?<br>Le retrait doit se faire d'une seule main.</div>
+    <div><b>💬 Qualité</b>L'objet fait-il ce qu'il annonce&nbsp;?<br>«&nbsp;Patientez&nbsp;» doit dire combien de temps.</div>
+    <div><b>🔁 Fiabilité</b>Combien de fois sur cent échoue-t-il&nbsp;?<br>Le déverrouillage doit réussir 98 fois sur 100.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: le programme nomme <b>six familles</b> d'exigences. Une exigence peut relever
+  de <b>deux familles</b>&nbsp;: tu dis alors laquelle <b>domine</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: ranger en sécurité tout ce qui semble important. La sécurité, c'est&nbsp;: peut-on se blesser&nbsp;?</p>
 </div>
 
 <!-- ══ 6 ══ -->
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-6" style="margin-top:0">6. Comment écrire une bonne exigence&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme une règle de classe</b>&nbsp;: «&nbsp;soyez sages&nbsp;» ne se vérifie pas. «&nbsp;On lève la main avant de parler&nbsp;» se vérifie, et on sait pourquoi on la suit.</p>
-  <h3>Une exigence pour la borne</h3>
-  <p>Une bonne exigence fait trois choses&nbsp;:</p>
-  <ol>
-    <li>elle dit <b>ce qui est attendu</b>&nbsp;;</li>
-    <li>elle se <b>vérifie</b>, avec un nombre quand c'est possible&nbsp;;</li>
-    <li>elle nomme <b>l'usager</b> à qui elle répond.</li>
-  </ol>
-  <p>Exemple&nbsp;: «&nbsp;le déverrouillage doit réussir au moins
-  98 fois sur 100&nbsp;». Famille fiabilité, pour Chen, qui ne sait jamais si le blocage vient de lui ou de la borne.</p>
-  <table>
-    <tr><th>Exigence</th><th>Solution (trop tôt)</th></tr>
-    <tr><td>«&nbsp;rester lisible sous la pluie&nbsp;»</td><td>«&nbsp;mettre un auvent&nbsp;»</td></tr>
-  </table>
-  <p>Certaines exigences ne viennent d'aucune plainte&nbsp;: personne ne réclame qu'un écran s'éteigne la nuit. Et pour
-  choisir par où commencer, on croise <b>les mots</b> des usagers et <b>les mesures</b>.</p>
-  <dl class="voc">
-    <dt>exigence <span class="en">— requirement</span></dt><dd>ce que l'objet doit obtenir, dit de façon vérifiable.</dd>
-    <dt>contrainte <span class="en">— constraint</span></dt><dd>une condition à respecter, qui limite les choix.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une <b>exigence</b> est <b>attendue</b>, <b>vérifiable</b> et <b>rattachée</b> à un usager. Elle dit ce qu'il faut obtenir, pas <b>avec quoi</b>&nbsp;: la solution viendra après.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: écrire ce qu'on a envie d'acheter à la place de ce qu'il faut obtenir. Autre piège&nbsp;: écrire un seuil qu'on n'a aucun moyen de mesurer.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: «&nbsp;La borne doit être fiable.&nbsp;» Comment la transformer en exigence&nbsp;?</summary>
-    <p>En la chiffrant et en la rattachant à un usager. Par exemple&nbsp;: «&nbsp;le déverrouillage doit réussir au moins 98 fois sur 100, pour que l'usager ne doute pas de lui&nbsp;». Ce chiffre-là se vérifie.</p></details>
+  <p>À Hangzhou&nbsp;: «&nbsp;le déverrouillage doit réussir au moins 98 fois sur 100&nbsp;». Aujourd'hui, il réussit 21 fois sur 30.</p>
+  <div class="chaine">
+    <div class="ok"><b>1. Ce qui est attendu</b>Réussir le déverrouillage.</div>
+    <div class="ok"><b>2. Comment le vérifier</b>Au moins 98 fois sur 100&nbsp;: on compte.</div>
+    <div class="ok"><b>3. Pour quel usager</b>Chen, qui ne sait pas si le blocage vient de lui.</div>
+    <div class="ko"><b>✘ Pas une exigence</b>«&nbsp;Installer un lecteur plus rapide&nbsp;»&nbsp;: c'est une solution.</div>
+  </div>
+  <p>Une exigence peut ne venir d'aucune plainte&nbsp;: l'écran qui ne s'allume qu'à l'approche. Pour choisir par où
+  commencer, croise les mots et les mesures.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une <b>exigence</b> dit ce qu'il faut <b>obtenir</b>, se <b>vérifie</b>, et nomme
+  l'<b>usager</b> qui l'attend. Elle ne dit pas <b>avec quoi</b>&nbsp;: la solution viendra après.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: écrire une solution, comme «&nbsp;mettre un auvent&nbsp;». L'exigence dit le besoin&nbsp;: «&nbsp;rester lisible sous la pluie&nbsp;».</p>
 </div>
 
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>OST <span class="en">— technical object or system</span></dt><dd>un objet ou un système technique, comme la borne.</dd></div>
+    <div><dt>expérience utilisateur <span class="en">— user experience</span></dt><dd>ce que vit une personne avec un objet&nbsp;: ce qu'elle fait et ressent.</dd></div>
+    <div><dt>langage naturel <span class="en">— natural language</span></dt><dd>les mots de tous les jours, ceux des usagers.</dd></div>
+    <div><dt>verbatim <span class="en">— verbatim</span></dt><dd>les mots exacts d'une personne, recopiés sans rien changer.</dd></div>
+    <div><dt>ressenti <span class="en">— feeling, perception</span></dt><dd>ce que la personne éprouve&nbsp;: de l'agacement, du stress, du plaisir.</dd></div>
+    <div><dt>croquis <span class="en">— sketch</span></dt><dd>un dessin rapide, à main levée, qui montre l'essentiel.</dd></div>
+    <div><dt>moyenne <span class="en">— average, mean</span></dt><dd>le total divisé par le nombre de cas&nbsp;: le milieu.</dd></div>
+    <div><dt>pire cas <span class="en">— worst case</span></dt><dd>la plus longue durée observée.</dd></div>
+    <div><dt>algorigramme <span class="en">— flowchart</span></dt><dd>le dessin d'un algorithme&nbsp;: des formes reliées par des flèches.</dd></div>
+    <div><dt>test <span class="en">— test, decision</span></dt><dd>une question à laquelle la machine répond oui ou non.</dd></div>
+    <div><dt>reprise <span class="en">— retry</span></dt><dd>une flèche qui remonte&nbsp;: l'étape recommence.</dd></div>
+    <div><dt>exigence <span class="en">— requirement</span></dt><dd>ce que l'objet doit obtenir, dit de façon vérifiable.</dd></div>
+    <div><dt>contrainte <span class="en">— constraint</span></dt><dd>une condition à respecter, qui limite les choix.</dd></div>
+    <div><dt>ergonomie <span class="en">— ergonomics</span></dt><dd>adapter l'objet au corps et aux gestes de vrais usagers.</dd></div>
+    <div><dt>fiabilité <span class="en">— reliability</span></dt><dd>le fait de marcher à chaque fois&nbsp;: elle se compte.</dd></div>
+    <div><dt>incidences environnementales <span class="en">— environmental impact</span></dt><dd>ce que l'objet coûte en matière et en énergie, sur toute sa vie.</dd></div>
+  </dl>
 </div>
-<script>
-/* À l'impression, les réponses « Vérifie-toi » sont dépliées (règle d'or n°316). */
-window.addEventListener('beforeprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.dataset.etaitOuvert = d.open; d.open = true; }));
-window.addEventListener('afterprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.open = d.dataset.etaitOuvert === 'true'; }));
-</script>
+</div>
 </body>
 </html>

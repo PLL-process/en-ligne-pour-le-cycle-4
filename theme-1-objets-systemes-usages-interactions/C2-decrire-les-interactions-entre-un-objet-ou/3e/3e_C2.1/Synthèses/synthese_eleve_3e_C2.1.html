@@ -16,7 +16,6 @@
   h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
   h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
   .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
-  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
   ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
   code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
   table{width:100%;border-collapse:collapse;margin:6px 0}
@@ -31,8 +30,6 @@
   #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
 
   /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
-  /* Une couleur par notion, la même partout : la donnée en jaune, l'information en vert. */
-  .d{color:var(--warn);font-weight:600}.i{color:var(--ok);font-weight:600}
   /* La carte « Ce que je dois retenir » */
   .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
   .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
@@ -47,35 +44,61 @@
   .cartes a:hover{border-color:var(--hl)}
   .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
   .cartes .r{display:block;font-size:.92em}
-  /* Les six temps d'une partie */
-  .comme-vie{background:#132b52;border-radius:8px;padding:8px 12px;margin:4px 0 10px}
-  dl.voc{display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;margin:8px 0;font-size:.93em}
-  dl.voc dt{color:var(--hl);font-weight:600}dl.voc dd{margin:0}
-  @media(max-width:600px){dl.voc{grid-template-columns:1fr;gap:0}dl.voc dd{margin:0 0 6px}}
-  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* L'image de l'objet, dans la carte, à droite du programme (skill synthese-vulgarisee, §4) */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Ici, le programme tient en une ligne : l'image garde sa forme (3:2) au lieu de prendre la hauteur du texte. */
+  .objet img{aspect-ratio:3/2;flex:none;height:auto}.tete .programme{align-self:center}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
   .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
   .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
-  details.verifie{border:1px dashed var(--sub);border-radius:8px;padding:6px 12px;margin:10px 0 2px}
-  details.verifie summary{cursor:pointer;font-weight:600;color:var(--sub)}
-  details.verifie p{margin:6px 0 2px}
-  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
   .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
   .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  /* Six cases (les six modes) : trois par rangée sur une page large et sur le papier, une par ligne sur un téléphone. */
+  .chaine.par3 div{flex-basis:30%}
+  @media (max-width:600px){.chaine.par3 div{flex-basis:170px}}
   .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
 
-  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
     h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
-    .carte{page-break-after:always;break-after:page}
-    .cartes a,.comme-vie,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; une rangée de cases ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
     .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
-    .d{color:#8a5a00}.i{color:#1d6b38}.vert{color:#1d6b38}.rouge{color:#b3261e}
-    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,details.verifie summary,dl.voc dt{color:#222}
-    .bloc{break-inside:auto;padding:6px 10px;margin-bottom:8px}details.verifie{break-inside:avoid}
-    /* papier : les schémas à 60 % de la largeur, des marges serrées — la carte tient sur une page, les parties sur peu */
-    .schema{width:60%;display:block;margin:4px auto}
+    .vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
     h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
-    .comme-vie,.retenir,.piege,details.verifie{padding:3px 8px;margin:4px 0}
-    table{margin:3px 0}th,td{padding:2px 6px}dl.voc{margin:4px 0;gap:1px 10px}.chaine{gap:6px;margin:4px 0}}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
@@ -111,28 +134,37 @@
 <div class="page">
 <h1>📌 Synthèse élève — Pékin&nbsp;: trois destinataires, trois représentations</h1>
 <p class="pb">Décrire une expérience, puis choisir comment la montrer, et savoir pourquoi.</p>
-<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (la carte sur une page, puis les parties)</button></div>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
 
 <!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
 <section class="carte" aria-labelledby="carte-titre">
   <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
   <p class="question">Comment montrer ce que vivent les usagers d'une borne, à des personnes qui n'ont pas les mêmes besoins&nbsp;?</p>
+  <div class="tete">
   <div class="programme"><b>Ce que dit le programme</b> (3e, compétence C2)&nbsp;:
     <ul>
       <li>décrire l'expérience de l'utilisateur d'un OST à l'aide de modes de représentation choisis.</li>
     </ul>
   </div>
+  <!-- L'image de l'objet (skill synthese-vulgarisee, §4) : aucune image du dossier Images/ ne montre la borne.
+       Une image générée avec Canva est proposée ; elle viendra ici, à droite du programme :
+    <figure class="objet">
+      <img src="../Images/synthese_borne_tickets_pekin.png" alt="Une borne de vente de tickets dans une station de métro : un grand écran tactile, une fente pour les billets, un bac de sortie.">
+      <figcaption>📍 L'objet&nbsp;: la borne de tickets du métro. <i>Image générée par IA (Canva).</i></figcaption>
+    </figure>
+  -->
+  </div>
   <div class="cartes">
     <a href="#partie-1"><span class="q">🔢 1. Un chiffre juste suffit-il pour comprendre&nbsp;?</span>
-      <span class="r">Non. «&nbsp;Un usager sur cinq abandonne&nbsp;» est juste, mais cache que ce sont toujours les mêmes.</span></a>
+      <span class="r">Non. On le détaille par profil pour savoir qui échoue, et donc sur qui agir.</span></a>
     <a href="#partie-2"><span class="q">🖼️ 2. Combien de façons de montrer la même chose&nbsp;?</span>
-      <span class="r">Six modes. Chacun montre quelque chose, et chacun a un angle mort&nbsp;: ce qu'il ne sait pas montrer.</span></a>
-    <a href="#partie-3"><span class="q">🎯 3. Choisir le bon mode pour la bonne personne&nbsp;?</span>
-      <span class="r">On élimine les modes dont l'angle mort gêne cette personne. Un mode est bon pour quelqu'un.</span></a>
+      <span class="r">Six modes. Chacun a un angle mort&nbsp;: aucun ne dit tout.</span></a>
+    <a href="#partie-3"><span class="q">🎯 3. Comment choisir le bon mode pour la bonne personne&nbsp;?</span>
+      <span class="r">Un mode est bon pour quelqu'un&nbsp;: son angle mort ne gêne pas cette personne.</span></a>
     <a href="#partie-4"><span class="q">🔀 4. Et si le problème venait de l'ordre&nbsp;?</span>
-      <span class="r">Seul l'algorigramme montre un ordre. Ici, il faut tester le papier avant d'encaisser.</span></a>
-    <a href="#partie-5"><span class="q">🗣️ 5. Comment défendre sa représentation&nbsp;?</span>
-      <span class="r">Pour qui, quel mode et pourquoi, et ce qu'on a laissé de côté.</span></a>
+      <span class="r">L'algorigramme montre l'ordre des opérations. On teste le papier avant d'encaisser.</span></a>
+    <a href="#partie-5"><span class="q">🗣️ 5. Comment défendre ta représentation&nbsp;?</span>
+      <span class="r">En trois points. Le plus oublié&nbsp;: dire ce que tu as laissé de côté.</span></a>
   </div>
 </section>
 
@@ -140,139 +172,109 @@
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-1" style="margin-top:0">1. Un chiffre juste suffit-il pour comprendre&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme la moyenne de la classe</b>&nbsp;: 12 sur 20. Elle ne dit pas que la moitié a 18 et l'autre moitié 6. Pour aider quelqu'un, il faut savoir qui est en difficulté.</p>
-  <h3>La borne de tickets du métro de Pékin</h3>
-  <p>«&nbsp;Un usager sur cinq abandonne&nbsp;»&nbsp;: 8 sur 40, le calcul est juste. Mais par profil&nbsp;:</p>
-  <table>
-    <tr><th>Profil</th><th>Abandonnent</th></tr>
-    <tr><td>habitués</td><td class="vert">0&nbsp;%</td></tr>
-    <tr><td>occasionnels</td><td>11&nbsp;%</td></tr>
-    <tr><td>avec poussette</td><td>25&nbsp;%</td></tr>
-    <tr><td>touristes</td><td class="rouge">43&nbsp;%</td></tr>
-    <tr><td>personnes âgées</td><td class="rouge">50&nbsp;%</td></tr>
-  </table>
-  <p>Ce ne sont pas «&nbsp;20&nbsp;% des gens au hasard&nbsp;»&nbsp;: ce sont <b>toujours les mêmes</b>. Et la durée
-  moyenne, 77&nbsp;s (secondes), ne décrit personne&nbsp;: l'habitué met 41&nbsp;s, la personne âgée 123&nbsp;s.</p>
-  <p>«&nbsp;Aucune borne n'est en panne&nbsp;» est vrai, et à côté de la question&nbsp;: un objet peut <b>fonctionner</b>
-  sans <b>rendre service</b>. Pourquoi personne ne le voit&nbsp;? Ceux qui décident sont presque toujours des habitués,
-  et les habitués réussissent.</p>
-  <dl class="voc">
-    <dt>taux d'abandon <span class="en">— drop-off rate</span></dt><dd>la part des usagers qui renoncent avant la fin.</dd>
-    <dt>profil <span class="en">— profile</span></dt><dd>un groupe d'usagers qui se ressemblent&nbsp;: les touristes, les habitués…</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un chiffre global peut être <b>exact</b> et <b>inutilisable</b>. On le <b>détaille par profil</b> pour savoir <b>qui</b> échoue, et donc sur qui agir.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: prendre un chiffre global pour un diagnostic. Autre piège&nbsp;: confondre «&nbsp;ça marche&nbsp;» et «&nbsp;ça rend service&nbsp;».</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: aucune borne n'est en panne, mais une personne âgée sur deux abandonne. La borne marche-t-elle&nbsp;?</summary>
-    <p>Elle fonctionne, mais elle ne rend pas service à tout le monde. Une machine sans panne peut quand même échouer, si certains usagers n'arrivent pas à s'en servir.</p></details>
+  <p>À Pékin, «&nbsp;un usager sur cinq abandonne&nbsp;» devant la borne&nbsp;: 8 sur 40, le calcul est juste. Mais par profil&nbsp;:</p>
+  <div class="chaine">
+    <div><b>Habitués&nbsp;: <span class="vert">0&nbsp;%</span></b>Aucun abandon sur 14. Ceux qui décident en font souvent partie.</div>
+    <div><b>Occasionnels, poussettes</b>11&nbsp;% et 25&nbsp;% d'abandons.</div>
+    <div><b>Touristes, personnes âgées</b><span class="rouge">43&nbsp;% et 50&nbsp;%</span>&nbsp;: près d'un sur deux renonce.</div>
+  </div>
+  <p>La durée moyenne, 77&nbsp;s (secondes), ne décrit personne&nbsp;: l'habitué met 41&nbsp;s, la personne âgée 123&nbsp;s.
+  La moitié des abandons a lieu au choix du titre. Et aucune borne n'est en panne&nbsp;: un objet peut
+  <b>fonctionner</b> sans <b>rendre service</b>.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un chiffre global peut être <b>exact</b> et <b>inutilisable</b>. On le
+  <b>détaille par profil</b> pour savoir <b>qui</b> échoue, et donc sur qui agir.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire que les 20&nbsp;% d'abandons tombent au hasard. Ce sont toujours les mêmes usagers.</p>
 </div>
 
 <!-- ══ 2 ══ -->
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-2" style="margin-top:0">2. Combien de façons de montrer la même chose&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme raconter un match</b>&nbsp;: le score, le résumé vidéo, le récit d'un supporter, le tableau des statistiques. Aucun ne dit tout&nbsp;; chacun dit autre chose.</p>
-  <h3>Les six modes de représentation</h3>
-  <object class="schema" data="../Images/six_modes_de_representation.svg" type="image/svg+xml" aria-label="Les six modes de représentation, ce que chacun montre et son angle mort">Les six modes</object>
-  <table>
-    <tr><th>Mode</th><th>Ce qu'il montre</th><th>Son angle mort</th></tr>
-    <tr><td><b>parcours utilisateur</b></td><td>les étapes traversées, nommées</td><td>il ne chiffre rien</td></tr>
-    <tr><td><b>algorigramme</b></td><td>l'ordre des opérations et les tests</td><td>il est illisible si on ne l'a pas appris</td></tr>
-    <tr><td><b>graphique</b></td><td>des quantités comparées</td><td>il ne dit rien du vécu</td></tr>
-    <tr><td><b>carte d'empathie</b></td><td>ce que la personne dit, fait, voit, ressent</td><td>elle ne se mesure pas</td></tr>
-    <tr><td><b>storyboard</b></td><td>quelques images, comme une BD presque sans texte</td><td>il contient très peu d'informations</td></tr>
-    <tr><td><b>tableau comparatif</b></td><td>des critères face à des solutions</td><td>il se lit lentement</td></tr>
-  </table>
-  <dl class="voc">
-    <dt>mode de représentation <span class="en">— representation mode</span></dt><dd>une façon de montrer une information&nbsp;: un dessin, un graphique, un tableau…</dd>
-    <dt>angle mort <span class="en">— blind spot</span></dt><dd>ce qu'un mode ne sait pas montrer.</dd>
-    <dt>storyboard <span class="en">— storyboard</span></dt><dd>un mot du cinéma&nbsp;: le film dessiné avant d'être tourné.</dd>
-    <dt>carte d'empathie <span class="en">— empathy map</span></dt><dd>un outil des concepteurs pour se mettre à la place de l'usager.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: il y a <b>six modes</b> de représentation. Chacun montre quelque chose et a un <b>angle mort</b>&nbsp;: <b>aucun ne dit tout</b>.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'un mode est meilleur que les autres en soi. Le graphique est précis, mais il ne dit rien de ce que ressent l'usager.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: quel mode choisir pour montrer ce que ressent une touriste perdue devant la borne&nbsp;?</summary>
-    <p>La carte d'empathie&nbsp;: elle montre ce que la personne dit, fait, voit et ressent. Son angle mort, ne pas se mesurer, ne gêne pas ici&nbsp;: on veut comprendre, pas compter.</p></details>
+  <p>À Pékin, le même constat peut se montrer de six façons. Chacune montre quelque chose, et chacune a un angle mort&nbsp;:</p>
+  <div class="chaine par3">
+    <div><b>Le parcours utilisateur</b>Les étapes vécues, nommées.<br><span class="rouge">Angle mort</span>&nbsp;: il ne chiffre rien.</div>
+    <div><b>L'algorigramme</b>L'ordre des opérations et les tests.<br><span class="rouge">Angle mort</span>&nbsp;: illisible sans l'avoir appris.</div>
+    <div><b>Le graphique</b>Des quantités comparées.<br><span class="rouge">Angle mort</span>&nbsp;: il ne dit rien du vécu.</div>
+    <div><b>La carte d'empathie</b>Ce que l'usager dit, fait, voit, ressent.<br><span class="rouge">Angle mort</span>&nbsp;: elle ne se mesure pas.</div>
+    <div><b>Le storyboard</b>Quelques images, presque sans texte.<br><span class="rouge">Angle mort</span>&nbsp;: il tient peu d'informations.</div>
+    <div><b>Le tableau comparatif</b>Des critères face à des solutions.<br><span class="rouge">Angle mort</span>&nbsp;: il se lit lentement.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: il y a <b>six modes</b> de représentation. Chacun a un <b>angle mort</b>,
+  ce qu'il ne sait pas montrer&nbsp;: <b>aucun ne dit tout</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'un mode est meilleur en soi. Le graphique est précis, mais il ne dit rien de ce que ressent l'usager.</p>
 </div>
 
 <!-- ══ 3 ══ -->
 <div class="bloc faire">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-3" style="margin-top:0">3. Comment choisir le bon mode pour la bonne personne&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme expliquer un chemin</b>&nbsp;: à un ami qui connaît le quartier, tu dis «&nbsp;après la boulangerie&nbsp;». À un touriste, tu dessines un plan. Le chemin est le même&nbsp;; la façon de le dire change.</p>
-  <h3>Trois destinataires</h3>
-  <object class="schema" data="../Images/trois_destinataires.svg" type="image/svg+xml" aria-label="Trois destinataires du même constat : le technicien, l'élue, l'usager, avec ce que chacun peut faire, le temps dont il dispose et ce qu'il ne supporte pas">Les trois destinataires</object>
-  <table>
-    <tr><th>Destinataire</th><th>Ce qu'il ne supporte pas</th><th>Un mode qui lui va</th></tr>
-    <tr><td><b>le technicien</b></td><td>l'à-peu-près</td><td>l'algorigramme&nbsp;: il sait le lire</td></tr>
-    <tr><td><b>l'élue</b></td><td>le jargon, plus d'une page</td><td>un graphique, avec une phrase</td></tr>
-    <tr><td><b>l'usager dans la station</b></td><td>devoir s'arrêter pour lire</td><td>un storyboard, compris d'un coup d'œil</td></tr>
-  </table>
-  <p>On choisit par <b>élimination</b>&nbsp;: on barre les modes dont l'angle mort gêne cette personne. Un même mode
-  peut servir deux personnes, si on l'adapte.</p>
-  <dl class="voc">
-    <dt>destinataire <span class="en">— audience, recipient</span></dt><dd>la personne à qui on s'adresse.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un mode n'est jamais bon <b>en soi</b>&nbsp;: il est bon <b>pour quelqu'un</b>. On le justifie par son <b>angle mort</b>&nbsp;: il ne gêne pas cette personne-là.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: choisir le mode qu'on préfère, puis inventer la justification. «&nbsp;C'est plus visuel&nbsp;» marche pour tout le monde, donc ne justifie rien.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: pourquoi ne pas montrer l'algorigramme à l'élue&nbsp;?</summary>
-    <p>Parce que son angle mort, être illisible sans apprentissage, tombe sur ce que l'élue ne supporte pas&nbsp;: le jargon. Elle n'a ni le temps ni l'envie d'apprendre à le lire.</p></details>
+  <p>À Pékin, le même constat va à trois personnes. Tu barres les modes dont l'angle mort tombe sur ce qu'elles ne supportent pas&nbsp;:</p>
+  <div class="chaine">
+    <div class="ok"><b>🔧 Le technicien</b>Il ne supporte pas l'à-peu-près.<br>✔ L'algorigramme&nbsp;: il sait le lire.</div>
+    <div class="ok"><b>🏛️ L'élue</b>Quelques minutes, et pas de jargon.<br>✔ Un graphique, avec une phrase.</div>
+    <div class="ok"><b>🚶 L'usager dans la station</b>Trois secondes, en marchant.<br>✔ Un storyboard, compris d'un coup d'œil.</div>
+  </div>
+  <p>Le tableau comparatif, lui, ne va pas à l'usager&nbsp;: il se lit lentement. Un même mode peut servir deux personnes,
+  si tu l'adaptes à chacune.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un mode n'est jamais bon <b>en soi</b>&nbsp;: il est bon <b>pour quelqu'un</b>.
+  Tu le justifies par son <b>angle mort</b>&nbsp;: il ne gêne pas cette personne-là.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: dire «&nbsp;c'est plus visuel&nbsp;». Cette raison vaut pour tout le monde, donc elle ne justifie rien.</p>
 </div>
 
 <!-- ══ 4 ══ -->
 <div class="bloc faire">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-4" style="margin-top:0">4. Et si le problème venait de l'ordre des opérations&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme à la boulangerie</b>&nbsp;: le vendeur vérifie qu'il reste du pain avant de prendre ton argent. S'il encaisse d'abord, tu peux repartir les mains vides.</p>
-  <h3>La borne qui encaisse, puis n'imprime pas</h3>
-  <object class="schema" data="../Images/corrige_trois_representations.svg" type="image/svg+xml" aria-label="Le même constat en trois modes : l'algorigramme corrigé pour le technicien, le graphique des abandons pour l'élue, le storyboard pour l'usager">Trois représentations du même constat</object>
-  <p>Aujourd'hui, la borne encaisse, puis échoue à imprimer faute de papier&nbsp;: l'usager a payé et n'a rien. Le défaut
-  n'est pas dans une pièce, il est dans <b>l'ordre</b>. Aucun graphique ni aucun storyboard ne montre un ordre.</p>
-  <ol>
-    <li><b>Tester</b> le papier, <b>avant</b> d'encaisser.</li>
-    <li>S'il en manque&nbsp;: afficher «&nbsp;borne indisponible&nbsp;», prévenir la maintenance, et ne rien encaisser.</li>
-    <li>Sinon&nbsp;: encaisser, vérifier le paiement, puis imprimer.</li>
-  </ol>
-  <p>Le test existait déjà&nbsp;: il était au mauvais endroit. Et pendant ce temps, l'usager se demande souvent si
-  c'est lui qui s'est trompé.</p>
-  <dl class="voc">
-    <dt>algorigramme <span class="en">— flowchart</span></dt><dd>un dessin des étapes et des tests, dans l'ordre où la machine les fait.</dd>
-    <dt>fin en échec <span class="en">— failure end</span></dt><dd>ce que fait la machine quand elle ne peut pas servir&nbsp;: le dire, et prévenir.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: quand le défaut est dans <b>l'ordre</b>, seul l'<b>algorigramme</b> le montre. On ne prend jamais l'argent d'un usager <b>avant</b> d'être sûr de pouvoir le servir.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: corriger la pièce au lieu de l'ordre&nbsp;: «&nbsp;changer le rouleau plus souvent&nbsp;». Le rouleau finira toujours par s'épuiser. Autre piège&nbsp;: oublier la fin en échec.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: «&nbsp;Il suffit de changer le rouleau plus souvent.&nbsp;» Pourquoi n'est-ce pas la bonne correction&nbsp;?</summary>
-    <p>Parce que le rouleau finira toujours par s'épuiser&nbsp;: c'est un consommable. La bonne correction change l'ordre des opérations. Si on teste le papier avant d'encaisser, plus personne ne paie pour rien.</p></details>
+  <p>À Pékin, la borne encaisse, puis ne peut pas imprimer faute de papier&nbsp;: trois fois en 30&nbsp;jours.</p>
+  <div class="chaine">
+    <div class="ko"><b>Aujourd'hui</b>Encaisser ➜ tester le papier ➜ échouer.<br>L'usager a payé pour rien.</div>
+    <div class="ok"><b>Corrigé</b>Tester le papier ➜ encaisser ➜ imprimer.<br>Le test passe avant l'argent.</div>
+    <div class="ok"><b>La fin en échec</b>Pas de papier&nbsp;: «&nbsp;borne indisponible&nbsp;», alerte à la maintenance, rien d'encaissé.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un défaut d'<b>ordre</b> se voit sur l'<b>algorigramme</b>, qui montre les
+  opérations de la borne et ses <b>tests</b>. On ne prend jamais l'argent <b>avant</b> d'être sûr de pouvoir servir.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: «&nbsp;changer le rouleau plus souvent&nbsp;». Le rouleau finira toujours par manquer&nbsp;: c'est l'ordre qu'il faut corriger.</p>
 </div>
 
 <!-- ══ 5 ══ -->
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
-  <h2 id="partie-5" style="margin-top:0">5. Comment défendre la représentation qu'on a choisie&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme un exposé</b>&nbsp;: tu as dix minutes, tu ne peux pas tout dire. Expliquer pourquoi tu as laissé une partie de côté montre que tu as choisi, pas oublié.</p>
-  <h3>La défense en trois points</h3>
-  <ol>
-    <li><b>Pour qui</b>&nbsp;: ce que cette personne peut faire, et le temps dont elle dispose.</li>
-    <li><b>Quel mode, et pourquoi</b>&nbsp;: son angle mort ne gêne pas cette personne, parce que…</li>
-    <li><b>Ce que j'ai laissé de côté</b>, et pourquoi ce n'est pas grave pour elle.</li>
-  </ol>
-  <p>Le troisième point est le plus important, et le plus oublié. Représenter, c'est choisir ce qu'on montre, donc
-  aussi ce qu'on cache. Et changer d'avis avec une raison n'est pas une erreur.</p>
-  <object class="schema" data="../Images/corrige_trois_autres_modes.svg" type="image/svg+xml" aria-label="Les trois autres modes sur le même constat, chacun avec son angle mort : le parcours utilisateur, la carte d'empathie, le tableau comparatif">Les trois autres modes</object>
-  <dl class="voc">
-    <dt>arbitrer <span class="en">— to trade off</span></dt><dd>choisir entre plusieurs solutions en pesant ce qu'on gagne et ce qu'on perd.</dd>
-    <dt>parcours utilisateur <span class="en">— user journey</span></dt><dd>les étapes que vit l'usager, dans l'ordre.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: trois points pour défendre une représentation&nbsp;: <b>pour qui</b>, <b>quel mode et pourquoi</b>, <b>ce qu'on a laissé de côté</b>. Ce qu'on a écarté prouve qu'on a choisi.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: n'avoir rien laissé de côté. Mettre tout ce qu'on peut, ce n'est pas choisir.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: «&nbsp;J'ai choisi le storyboard parce qu'il est clair.&nbsp;» Qu'est-ce qui manque&nbsp;?</summary>
-    <p>Pour qui, et ce qui a été laissé de côté. Par exemple&nbsp;: «&nbsp;pour l'usager pressé, qui ne lit pas. J'ai laissé les chiffres&nbsp;: il n'en a pas besoin pour trouver la bonne borne&nbsp;».</p></details>
+  <h2 id="partie-5" style="margin-top:0">5. Comment défendre la représentation que tu as choisie&nbsp;?</h2>
+  <p>À Pékin, tu produis pour l'élue ou pour l'usager, puis tu défends ton choix en trois points&nbsp;:</p>
+  <div class="chaine etapes">
+    <div><b>1. Pour qui</b>Ce que la personne peut faire, et le temps dont elle dispose.</div>
+    <div><b>2. Quel mode, et pourquoi</b>Son angle mort ne gêne pas cette personne.</div>
+    <div><b>3. Ce que tu as laissé de côté</b>Et pourquoi ce n'est pas grave pour elle.</div>
+  </div>
+  <p>Exemple&nbsp;: «&nbsp;Pour l'usager pressé, un storyboard. J'ai laissé les chiffres&nbsp;: ils ne l'aideraient pas à passer
+  le portique.&nbsp;» Tu peux changer de mode en route, si tu dis pourquoi.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: représenter, c'est <b>choisir</b> ce qu'on montre, donc aussi ce qu'on
+  <b>cache</b>. Dire ce que tu as <b>écarté</b> prouve que tu as choisi.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: n'avoir rien laissé de côté. Mettre tout ce que tu as, ce n'est pas choisir.</p>
 </div>
 
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>OST <span class="en">— technical object or system</span></dt><dd>un objet ou un système technique, comme la borne.</dd></div>
+    <div><dt>taux d'abandon <span class="en">— drop-off rate</span></dt><dd>la part des usagers qui renoncent avant la fin.</dd></div>
+    <div><dt>profil <span class="en">— profile</span></dt><dd>un groupe d'usagers qui se ressemblent, comme les touristes.</dd></div>
+    <div><dt>moyenne <span class="en">— average</span></dt><dd>le total divisé par le nombre de cas&nbsp;: un milieu, pas une personne.</dd></div>
+    <div><dt>mode de représentation <span class="en">— representation mode</span></dt><dd>une façon de montrer une information.</dd></div>
+    <div><dt>angle mort <span class="en">— blind spot</span></dt><dd>ce qu'un mode ne sait pas montrer.</dd></div>
+    <div><dt>parcours utilisateur <span class="en">— user journey</span></dt><dd>les étapes que vit l'usager, dans l'ordre.</dd></div>
+    <div><dt>algorigramme <span class="en">— flowchart</span></dt><dd>les opérations et les tests de la machine, dans l'ordre, reliés par des flèches.</dd></div>
+    <div><dt>test <span class="en">— test</span></dt><dd>une question à deux sorties, oui ou non, dessinée dans un losange.</dd></div>
+    <div><dt>fin en échec <span class="en">— failure end</span></dt><dd>la machine ne peut pas servir&nbsp;: elle le dit et prévient.</dd></div>
+    <div><dt>graphique <span class="en">— chart</span></dt><dd>des barres ou des points qui comparent des quantités.</dd></div>
+    <div><dt>carte d'empathie <span class="en">— empathy map</span></dt><dd>un outil des concepteurs pour se mettre à la place de l'usager.</dd></div>
+    <div><dt>storyboard <span class="en">— storyboard</span></dt><dd>un mot du cinéma&nbsp;: le film dessiné avant d'être tourné.</dd></div>
+    <div><dt>tableau comparatif <span class="en">— comparison table</span></dt><dd>une grille qui croise des solutions et des critères.</dd></div>
+    <div><dt>destinataire <span class="en">— audience, recipient</span></dt><dd>la personne à qui tu t'adresses.</dd></div>
+    <div><dt>arbitrer <span class="en">— to trade off</span></dt><dd>choisir en pesant ce qu'on gagne et ce qu'on perd.</dd></div>
+  </dl>
 </div>
-<script>
-/* À l'impression, les réponses « Vérifie-toi » sont dépliées (règle d'or n°316). */
-window.addEventListener('beforeprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.dataset.etaitOuvert = d.open; d.open = true; }));
-window.addEventListener('afterprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.open = d.dataset.etaitOuvert === 'true'; }));
-</script>
+</div>
 </body>
 </html>

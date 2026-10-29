@@ -31,8 +31,6 @@
   #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
 
   /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
-  /* Une couleur par notion, la même partout : la donnée en jaune, l'information en vert. */
-  .d{color:var(--warn);font-weight:600}.i{color:var(--ok);font-weight:600}
   /* La carte « Ce que je dois retenir » */
   .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
   .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
@@ -47,35 +45,58 @@
   .cartes a:hover{border-color:var(--hl)}
   .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
   .cartes .r{display:block;font-size:.92em}
-  /* Les six temps d'une partie */
-  .comme-vie{background:#132b52;border-radius:8px;padding:8px 12px;margin:4px 0 10px}
-  dl.voc{display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;margin:8px 0;font-size:.93em}
-  dl.voc dt{color:var(--hl);font-weight:600}dl.voc dd{margin:0}
-  @media(max-width:600px){dl.voc{grid-template-columns:1fr;gap:0}dl.voc dd{margin:0 0 6px}}
-  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* L'image de l'objet, à droite du programme (n°316, § 4) ; dessous sur un téléphone. */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
   .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
   .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
-  details.verifie{border:1px dashed var(--sub);border-radius:8px;padding:6px 12px;margin:10px 0 2px}
-  details.verifie summary{cursor:pointer;font-weight:600;color:var(--sub)}
-  details.verifie p{margin:6px 0 2px}
-  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
   .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
   .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  ul.serre li{margin:1px 0}
   .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
 
-  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
     h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
-    .carte{page-break-after:always;break-after:page}
-    .cartes a,.comme-vie,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; un schéma ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    .schema,table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
     .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
-    .d{color:#8a5a00}.i{color:#1d6b38}.vert{color:#1d6b38}.rouge{color:#b3261e}
-    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,details.verifie summary,dl.voc dt{color:#222}
-    .bloc{break-inside:auto;padding:6px 10px;margin-bottom:8px}details.verifie{break-inside:avoid}
-    /* papier : les schémas à 60 % de la largeur, des marges serrées — la carte tient sur une page, les parties sur peu */
+    .vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
     .schema{width:60%;display:block;margin:4px auto}
     h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
-    .comme-vie,.retenir,.piege,details.verifie{padding:3px 8px;margin:4px 0}
-    table{margin:3px 0}th,td{padding:2px 6px}dl.voc{margin:4px 0;gap:1px 10px}.chaine{gap:6px;margin:4px 0}}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
@@ -111,7 +132,7 @@
 <div class="page">
 <h1>📌 Synthèse élève — Hangzhou&nbsp;: quelle flotte de vélos pour la ville&nbsp;?</h1>
 <p class="pb">Écrire les critères, comparer les effets sur la planète, choisir les appareils de mesure.</p>
-<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (la carte sur une page, puis les parties)</button></div>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
 
 <!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
 <section class="carte" aria-labelledby="carte-titre">
@@ -125,14 +146,14 @@
     </ul>
   </div>
   <div class="cartes">
-    <a href="#partie-1"><span class="q">📐 1. Transformer un souhait en critère vérifiable&nbsp;?</span>
-      <span class="r">Avec trois choses&nbsp;: une grandeur, une unité, un seuil. Sinon, on ne vérifie pas&nbsp;: on discute.</span></a>
-    <a href="#partie-2"><span class="q">🌍 2. Comparer l'effet des vélos sur la planète&nbsp;?</span>
-      <span class="r">On rapporte le CO₂ au service rendu&nbsp;: par kilomètre parcouru, pas en brut.</span></a>
+    <a href="#partie-1"><span class="q">📐 1. Comment transformer un souhait en critère vérifiable&nbsp;?</span>
+      <span class="r">Avec une grandeur, une unité et un seuil. Sans les trois, le critère ne se vérifie pas&nbsp;: il se discute.</span></a>
+    <a href="#partie-2"><span class="q">🌍 2. Comment comparer l'effet de vélos sur la planète&nbsp;?</span>
+      <span class="r">Tu rapportes le CO₂ au service rendu&nbsp;: par kilomètre parcouru, pas en brut.</span></a>
     <a href="#partie-3"><span class="q">⚖️ 3. Quel appareil pour mesurer quoi&nbsp;?</span>
-      <span class="r">La grandeur choisit l'appareil. Une mesure s'écrit avec son unité, et pas plus précise que l'appareil.</span></a>
+      <span class="r">La grandeur choisit l'appareil. Une mesure s'écrit avec son unité, jamais plus précise que l'appareil.</span></a>
     <a href="#partie-4"><span class="q">✅ 4. Comment décider, à la fin&nbsp;?</span>
-      <span class="r">Le filtre écarte ce qui rate une exigence. Pour départager le reste, on dit ce qu'on privilégie, et ce que ça coûte.</span></a>
+      <span class="r">Le filtre écarte, il ne choisit pas. Pour départager, tu dis ce que tu privilégies, et ce que ça coûte.</span></a>
   </div>
 </section>
 
@@ -140,117 +161,103 @@
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-1" style="margin-top:0">1. Comment transformer un souhait en critère vérifiable&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme commander une pizza</b>&nbsp;: «&nbsp;une grande&nbsp;» se discute. «&nbsp;40&nbsp;cm de diamètre au moins&nbsp;» se vérifie avec une règle&nbsp;: une grandeur (le diamètre), une unité (le centimètre), un seuil (40).</p>
-  <h3>Les mots de la ville de Hangzhou, traduits en critères</h3>
-  <object class="schema" data="../Images/du_besoin_aux_caracteristiques.svg" type="image/svg+xml" aria-label="Des mots du commanditaire à la grandeur, l'unité et le seuil">Du besoin aux caractéristiques</object>
-  <table>
-    <tr><th>Ce que dit la ville</th><th>Grandeur</th><th>Unité</th><th>Seuil</th></tr>
-    <tr><td>«&nbsp;qu'ils durent&nbsp;»</td><td>durée de vie</td><td>années</td><td>au moins 8</td></tr>
-    <tr><td>«&nbsp;pas un bras&nbsp;»</td><td>coût total, rapporté à la durée de vie</td><td>euros par vélo et par an</td><td>à fixer</td></tr>
-    <tr><td>«&nbsp;qu'on puisse les réparer&nbsp;»</td><td>pièces disponibles <b>et</b> temps de réparation</td><td>oui/non, minutes</td><td>au plus 40&nbsp;min</td></tr>
-    <tr><td>«&nbsp;pas au fond du canal&nbsp;»</td><td>résistance au vol</td><td>note sur 5</td><td>au moins 4</td></tr>
-  </table>
-  <p>«&nbsp;Pas cher&nbsp;» ne veut pas dire prix d'achat. Le coût qui compte est le coût <b>total</b>, rapporté à la
-  durée de vie. Et un seul mot peut cacher deux critères&nbsp;: «&nbsp;réparable&nbsp;» demande des pièces <b>et</b>
-  une réparation rapide. En 5e, les critères étaient fournis&nbsp;; en 4e, c'est toi qui les écris.</p>
-  <dl class="voc">
-    <dt>grandeur <span class="en">— quantity</span></dt><dd>ce qu'on observe et qu'on peut mesurer&nbsp;: une durée, une masse, un coût, une force.</dd>
-    <dt>unité <span class="en">— unit</span></dt><dd>ce dans quoi on compte la grandeur&nbsp;: années, kilogrammes, euros, newtons.</dd>
-    <dt>seuil <span class="en">— threshold</span></dt><dd>la valeur à partir de laquelle c'est satisfaisant.</dd>
-    <dt>cahier des charges <span class="en">— specifications</span></dt><dd>la liste des critères à respecter. Il dit le quoi, pas le comment.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une <b>caractéristique</b> utilisable porte une <b>grandeur</b>, une <b>unité</b> et un <b>seuil</b>. Sans les trois, elle ne se vérifie pas&nbsp;: elle se discute.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: écrire «&nbsp;solide&nbsp;» ou «&nbsp;pas cher&nbsp;»&nbsp;: ce sont des impressions. Autre piège&nbsp;: écrire une solution («&nbsp;cadre en aluminium&nbsp;») au lieu d'un besoin.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: «&nbsp;Le vélo doit être léger.&nbsp;» Comment en faire un critère&nbsp;?</summary>
-    <p>En donnant la grandeur, l'unité et le seuil&nbsp;: «&nbsp;masse du vélo&nbsp;: au plus 15&nbsp;kg (kilogrammes)&nbsp;». Chacun peut alors peser le vélo et trancher.</p></details>
+  <p>Le maire de Hangzhou a dit son besoin en mots. Chaque mot devient une caractéristique, avec son seuil&nbsp;:</p>
+  <div class="chaine">
+    <div><b>«&nbsp;Qu'ils durent&nbsp;»</b>La durée de vie&nbsp;: au moins 8&nbsp;ans.</div>
+    <div><b>«&nbsp;Pas un bras&nbsp;»</b>Le coût total, en euros par vélo et par an. Pas le prix d'achat.</div>
+    <div><b>«&nbsp;Qu'on puisse les réparer&nbsp;»</b>Deux critères&nbsp;: des pièces disponibles, et une réparation en 40&nbsp;min au plus.</div>
+    <div><b>«&nbsp;Pas au fond du canal&nbsp;»</b>L'antivol&nbsp;: une note d'au moins 4 sur 5.</div>
+  </div>
+  <p>Tu peux ajouter un critère que le maire n'a pas demandé, comme le confort, si tu le justifies&nbsp;: un vélo
+  inconfortable roule moins.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une <b>caractéristique</b> vérifiable porte une <b>grandeur</b>, une
+  <b>unité</b> et un <b>seuil</b>. Sans les trois, elle ne se vérifie pas&nbsp;: elle se discute.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: écrire «&nbsp;solide&nbsp;» ou «&nbsp;pas cher&nbsp;». Ce sont des
+  impressions&nbsp;: deux personnes ne les vérifient pas de la même façon.</p>
 </div>
 
 <!-- ══ 2 ══ -->
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-2" style="margin-top:0">2. Comment comparer l'effet de vélos sur la planète&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme comparer deux paires de chaussures</b>&nbsp;: une à 30&nbsp;€ qui dure un an, une à 60&nbsp;€ qui dure trois ans. La moins chère à l'achat n'est pas la moins chère par année de marche.</p>
-  <h3>Le CO₂ des quatre flottes de vélos</h3>
-  <p>La règle&nbsp;: (CO₂ de fabrication + CO₂ d'entretien × durée de vie) ÷ (durée de vie × kilomètres par an).
-  On obtient des grammes de CO₂ par kilomètre parcouru.</p>
-  <table>
-    <tr><th>Flotte</th><th>CO₂ de fabrication</th><th>Durée de vie</th><th>Par kilomètre</th></tr>
-    <tr><td>acier recyclé</td><td>58&nbsp;kg</td><td>10 ans</td><td class="vert">≈ 5,6&nbsp;g</td></tr>
-    <tr><td>acier robuste</td><td>96&nbsp;kg</td><td>12 ans</td><td>≈ 6,3&nbsp;g</td></tr>
-    <tr><td>aluminium léger</td><td>134&nbsp;kg</td><td>8 ans</td><td>≈ 8,3&nbsp;g</td></tr>
-    <tr><td>composite premium</td><td>210&nbsp;kg</td><td>6 ans</td><td class="rouge">≈ 13,1&nbsp;g</td></tr>
-  </table>
-  <p>Le composite cumule les deux défauts&nbsp;: il émet beaucoup à la fabrication <b>et</b> dure peu. Son cadre n'est
-  pas réparable&nbsp;: cette seule donnée, qui ne se chiffre pas, peut l'écarter.</p>
-  <p>Un bilan carbone est un <b>ordre de grandeur</b>&nbsp;: on peut affirmer un écart net, pas un gramme près. Et
-  l'effet sur la planète n'est qu'un des trois piliers du développement durable, avec le social et l'économie.</p>
-  <dl class="voc">
-    <dt>empreinte carbone <span class="en">— carbon footprint</span></dt><dd>la quantité de CO₂ émise pour fabriquer et faire vivre un objet.</dd>
-    <dt>durée de vie <span class="en">— lifespan</span></dt><dd>le nombre d'années pendant lesquelles l'objet sert.</dd>
-    <dt>service rendu <span class="en">— service provided</span></dt><dd>ce que l'objet apporte&nbsp;: ici, des kilomètres parcourus.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on ne compare jamais un bilan carbone <b>brut</b>&nbsp;: on le rapporte au <b>service rendu</b>. Et une donnée qui ne se chiffre pas peut <b>décider</b> à elle seule.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: comparer des émissions sans les rapporter aux kilomètres. Un objet qui émet peu mais sert peu n'est pas forcément le meilleur.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: le composite émet 210&nbsp;kg de CO₂ à la fabrication, l'acier robuste 96&nbsp;kg. Le composite est-il deux fois pire&nbsp;?</summary>
-    <p>Il est même pire que ça&nbsp;: il dure 6 ans au lieu de 12. Rapporté au kilomètre, il émet environ 13&nbsp;g contre 6&nbsp;g. Le chiffre brut ne suffisait pas&nbsp;: il fallait tenir compte de la durée de vie.</p></details>
+  <p>Tu divises tout le CO₂ d'un vélo, fabrication et entretien, par tous les kilomètres de sa vie&nbsp;:</p>
+  <div class="chaine">
+    <div class="ok"><b>Acier recyclé</b>58&nbsp;kg de CO₂ à la fabrication, 10&nbsp;ans de vie&nbsp;: ≈&nbsp;5,6&nbsp;g par kilomètre.</div>
+    <div><b>Acier robuste</b>96&nbsp;kg, 12&nbsp;ans&nbsp;: ≈&nbsp;6,3&nbsp;g par kilomètre.</div>
+    <div><b>Aluminium léger</b>134&nbsp;kg, 8&nbsp;ans&nbsp;: ≈&nbsp;8,3&nbsp;g par kilomètre.</div>
+    <div class="ko"><b>Composite premium</b>210&nbsp;kg, 6&nbsp;ans&nbsp;: ≈&nbsp;13,1&nbsp;g par kilomètre. Et son cadre ne se répare pas.</div>
+  </div>
+  <p>Ces nombres sont des ordres de grandeur&nbsp;: tu peux affirmer un écart net, pas un gramme près.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: ne compare jamais un <b>bilan carbone</b> brut&nbsp;: rapporte-le au
+  <b>service rendu</b>, ici le kilomètre. Une donnée qui ne se chiffre pas, comme un cadre <b>non réparable</b>, peut
+  <b>décider</b> à elle seule.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: classer sur le seul CO₂ de fabrication. Un vélo qui émet peu mais sert peu
+  n'est pas forcément le meilleur.</p>
 </div>
 
 <!-- ══ 3 ══ -->
 <div class="bloc faire">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-3" style="margin-top:0">3. Quel appareil pour mesurer quoi&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme en cuisine</b>&nbsp;: la balance pour la farine, le verre doseur pour le lait, le minuteur pour la cuisson. Personne ne pèse le lait avec un minuteur.</p>
-  <h3>À chaque grandeur son appareil</h3>
-  <object class="schema" data="../Images/appareils_de_mesure.svg" type="image/svg+xml" aria-label="Tableau grandeur, unité, appareil et précision">Les appareils de mesure</object>
-  <ol>
-    <li><b>D'abord la grandeur</b>&nbsp;: que veut-on savoir&nbsp;? Une masse, une durée, une force&nbsp;?</li>
-    <li><b>Puis l'appareil</b>&nbsp;: une force se mesure en newtons, avec un <b>dynamomètre</b>&nbsp;; une durée en
-    minutes, avec un <b>chronomètre</b>.</li>
-    <li><b>Puis l'écriture</b>&nbsp;: avec l'unité. 17,4&nbsp;kg, 17,4&nbsp;g et 17,4&nbsp;N (newtons) ne décrivent pas
-    le même objet.</li>
-  </ol>
-  <p>Deux valeurs plus proches que la précision de l'appareil ne se départagent pas, même avec dix essais. Répéter
-  réduit le hasard, pas l'imprécision de l'appareil. Et tout le monde mesure dans les mêmes conditions, avec le même
-  appareil.</p>
-  <dl class="voc">
-    <dt>dynamomètre <span class="en">— force gauge</span></dt><dd>l'appareil qui mesure une force, en newtons.</dd>
-    <dt>précision <span class="en">— accuracy</span></dt><dd>le plus petit écart que l'appareil peut voir&nbsp;: 0,1&nbsp;kg pour une balance, par exemple.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: la <b>grandeur</b> commande l'<b>appareil</b>, jamais l'inverse. Une mesure s'écrit avec son <b>unité</b>, et jamais plus précise que l'appareil.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: choisir l'appareil avant d'avoir choisi la grandeur. Autre piège&nbsp;: annoncer 17,43&nbsp;kg avec une balance précise au dixième.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: deux vélos pèsent 17,4&nbsp;kg et 17,5&nbsp;kg sur une balance précise à 0,1&nbsp;kg. Lequel est le plus lourd&nbsp;?</summary>
-    <p>On ne peut pas le dire&nbsp;: l'écart, 0,1&nbsp;kg, est égal à la précision de la balance. Refaire dix pesées n'y changera rien. Il faudrait une balance plus précise.</p></details>
+  <p>Pour vérifier les exigences de Hangzhou, nomme d'abord la grandeur, puis prends l'appareil&nbsp;:</p>
+  <div class="chaine">
+    <div><b>⚖️ Une masse</b>Une balance, en kilogrammes&nbsp;: l'acier robuste pèse 17,4&nbsp;kg.</div>
+    <div><b>⏱️ Une durée</b>Un chronomètre, en minutes&nbsp;: la réparation en 40&nbsp;min au plus.</div>
+    <div><b>💪 Une force</b>Un dynamomètre, en N (newtons)&nbsp;: l'effort qui fait céder l'antivol.</div>
+  </div>
+  <p>Tous les vélos se mesurent avec le même appareil, dans les mêmes conditions. Une balance précise à 0,1&nbsp;kg
+  départage 17,4&nbsp;kg et 18,9&nbsp;kg&nbsp;; elle ne départage pas 13,1&nbsp;kg et 13,15&nbsp;kg.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: la <b>grandeur</b> commande l'<b>appareil</b>, jamais l'inverse. Une
+  mesure s'écrit avec son <b>unité</b>, et jamais plus précise que l'appareil.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: refaire trois pesées pour départager 13,1 et 13,15&nbsp;kg. Répéter réduit le
+  hasard, pas l'imprécision de la balance.</p>
 </div>
 
 <!-- ══ 4 ══ -->
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-4" style="margin-top:0">4. Comment décider, à la fin&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme choisir un club de sport</b>&nbsp;: d'abord, tu enlèves ceux qui ont lieu pendant tes cours. Puis, entre ceux qui restent, tu choisis selon ce qui compte pour toi&nbsp;: les copains, le prix, le trajet.</p>
-  <h3>Choisir une flotte pour Hangzhou</h3>
-  <ol>
-    <li><b>Filtrer</b>&nbsp;: une exigence non satisfaite suffit à écarter. Elle ne se compense pas&nbsp;: le composite,
-    au cadre irréparable, est écarté, même s'il est très confortable.</li>
-    <li><b>Départager</b>&nbsp;: quand il reste plusieurs flottes, le filtre ne choisit pas. On dit ce qu'on privilégie,
-    et pourquoi&nbsp;: le moins de CO₂, ou le plus de confort&nbsp;?</li>
-    <li><b>Recommander</b>&nbsp;: une bonne note dit ce qu'elle conseille, sur quels chiffres, et ce que son choix coûte.</li>
-  </ol>
-  <p>Changer de ville, c'est changer de besoin&nbsp;: on refait l'analyse, on ne recopie pas le choix.</p>
-  <dl class="voc">
-    <dt>filtre <span class="en">— filter</span></dt><dd>ne garder que les solutions qui respectent toutes les exigences.</dd>
-    <dt>exigence <span class="en">— requirement</span></dt><dd>un critère obligatoire, avec son seuil.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: le <b>filtre</b> écarte, mais <b>ne choisit pas</b>. Pour choisir, on dit ce qu'on <b>privilégie</b>, sur quels <b>chiffres</b>, et ce que le choix <b>coûte</b>.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: annoncer «&nbsp;la meilleure solution&nbsp;» après un classement sur un seul critère. Autre piège&nbsp;: compenser une exigence ratée par une autre très réussie.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: après le filtre, il reste l'acier robuste et l'acier recyclé. Comment choisir&nbsp;?</summary>
-    <p>En disant ce qu'on privilégie. Par exemple&nbsp;: «&nbsp;l'acier recyclé, le moins émetteur et le moins cher.&nbsp;» Puis la perte&nbsp;: «&nbsp;il est lourd et peu confortable, 2 sur 5.&nbsp;» La perte nommée rend le choix crédible.</p></details>
+  <p>Quatre exigences servent de filtre. Une flotte qui en rate une seule est écartée&nbsp;:</p>
+  <div class="chaine">
+    <div class="ok"><b>Acier robuste ✔</b>12&nbsp;ans, réparé en 35&nbsp;min, antivol 4 sur 5&nbsp;: tout passe.</div>
+    <div class="ok"><b>Acier recyclé ✔</b>10&nbsp;ans, réparé en 30&nbsp;min, antivol 5 sur 5&nbsp;: tout passe.</div>
+    <div class="ko"><b>Aluminium ✘</b>Antivol 3 sur 5, pour un seuil de 4. Le reste est excellent.</div>
+    <div class="ko"><b>Composite ✘</b>6&nbsp;ans, pas de pièces, 70&nbsp;min&nbsp;: trois exigences ratées.</div>
+  </div>
+  <p>Il reste deux flottes. L'acier recyclé émet moins&nbsp;; l'acier robuste est plus confortable, 3 sur 5 contre 2.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: le <b>filtre</b> écarte, il <b>ne choisit pas</b>. Pour départager, tu
+  dis ce que tu <b>privilégies</b>, chiffres à l'appui, et ce que ce choix <b>coûte</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: compenser une exigence ratée par une autre très réussie. L'aluminium est
+  confortable, mais son antivol ne suffit pas.</p>
 </div>
 
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>OST <span class="en">— technical object or system</span></dt><dd>un objet ou système technique&nbsp;: ici, une flotte de vélos.</dd></div>
+    <div><dt>besoin <span class="en">— need</span></dt><dd>ce que l'usager ou la ville doit pouvoir faire.</dd></div>
+    <div><dt>cahier des charges <span class="en">— specifications</span></dt><dd>la liste des critères à respecter. Il dit le quoi, pas le comment.</dd></div>
+    <div><dt>caractéristique <span class="en">— characteristic</span></dt><dd>ce qui décrit un modèle et se compare d'un modèle à l'autre.</dd></div>
+    <div><dt>grandeur <span class="en">— quantity</span></dt><dd>ce qu'on peut mesurer, comme une masse ou une durée.</dd></div>
+    <div><dt>unité <span class="en">— unit</span></dt><dd>ce dans quoi on compte la grandeur&nbsp;: le kilogramme pour une masse.</dd></div>
+    <div><dt>seuil <span class="en">— threshold</span></dt><dd>la valeur à partir de laquelle c'est satisfaisant.</dd></div>
+    <div><dt>exigence <span class="en">— requirement</span></dt><dd>un critère obligatoire, avec son seuil&nbsp;: elle est remplie ou non.</dd></div>
+    <div><dt>souhaitable <span class="en">— desirable</span></dt><dd>se dit d'un critère qui départage, sans écarter&nbsp;: le confort.</dd></div>
+    <div><dt>bilan carbone <span class="en">— carbon footprint</span></dt><dd>le CO₂ émis pour fabriquer et faire vivre un objet&nbsp;: un ordre de grandeur.</dd></div>
+    <div><dt>durée de vie <span class="en">— lifespan</span></dt><dd>le nombre d'années pendant lesquelles l'objet sert.</dd></div>
+    <div><dt>service rendu <span class="en">— service provided</span></dt><dd>ce que l'objet apporte&nbsp;: ici, des kilomètres parcourus.</dd></div>
+    <div><dt>donnée qualitative <span class="en">— qualitative data</span></dt><dd>une donnée qui ne se chiffre pas&nbsp;: «&nbsp;cadre non réparable&nbsp;».</dd></div>
+    <div><dt>matière recyclée <span class="en">— recycled material</span></dt><dd>une matière réutilisée&nbsp;: elle agit à l'extraction, au début du cycle de vie.</dd></div>
+    <div><dt>développement durable <span class="en">— sustainable development</span></dt><dd>répondre aux besoins d'aujourd'hui sans abîmer ceux de demain.</dd></div>
+    <div><dt>balance <span class="en">— scale</span></dt><dd>l'appareil qui mesure une masse, en kilogrammes.</dd></div>
+    <div><dt>chronomètre <span class="en">— stopwatch</span></dt><dd>l'appareil qui mesure une durée.</dd></div>
+    <div><dt>dynamomètre <span class="en">— force gauge</span></dt><dd>l'appareil qui mesure une force, en N (newtons).</dd></div>
+    <div><dt>précision <span class="en">— accuracy</span></dt><dd>le plus petit écart que l'appareil peut voir&nbsp;: 0,1&nbsp;kg pour la balance.</dd></div>
+    <div><dt>protocole <span class="en">— protocol</span></dt><dd>les étapes de la mesure, mêmes conditions et même appareil pour tous.</dd></div>
+    <div><dt>filtre <span class="en">— filter</span></dt><dd>ne garder que les solutions qui respectent toutes les exigences.</dd></div>
+  </dl>
 </div>
-<script>
-/* À l'impression, les réponses « Vérifie-toi » sont dépliées (règle d'or n°316). */
-window.addEventListener('beforeprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.dataset.etaitOuvert = d.open; d.open = true; }));
-window.addEventListener('afterprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.open = d.dataset.etaitOuvert === 'true'; }));
-</script>
+</div>
 </body>
 </html>

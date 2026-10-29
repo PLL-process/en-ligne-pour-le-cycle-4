@@ -291,7 +291,7 @@ with sync_playwright() as p:
       attendu[:40] in pg.inner_text("body"))
 
     # ───────────────────────────── les synthèses ─────────────────────────────
-    for nom, uri, figs in (("élève", SYE, 6), ("professeur", SYP, 0)):
+    for nom, uri, figs in (("élève", SYE, 0), ("professeur", SYP, 0)):   # n°316 révisée (29/10/2026) : deux pages A4, les grands schémas <object> restent dans la séquence
         errs.clear()
         pg.goto(uri)
         pg.wait_for_timeout(300)
