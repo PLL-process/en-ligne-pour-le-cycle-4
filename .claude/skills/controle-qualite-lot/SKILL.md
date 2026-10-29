@@ -29,9 +29,10 @@ on le corrige d'abord. Une fois le lot vert, on le livre avec le skill `livraiso
   aucune flèche ne traverse un cadre ou un texte, un repère vit à part sans flèche, les tailles écrites sont celles qu'on voit —
   `node _outils/controle_schemas.mjs <dossier du lot> --planche <dossier>` ; puis chaque schéma regardé sur la planche :
   simple et vulgarisé (lisible par un élève de 6e), pédagogique, beau ; refait avec le meilleur outil disponible ;
-- toute synthèse élève se lit par un élève de 6e (n°316, 29/10/2026) : carte « Ce que je dois retenir », puis chaque
-  partie de l'exemple vers la règle (titre-question, comme dans la vie, dans notre séquence, les mots, encadré « À
-  retenir », le piège, vérifie-toi) — voir le skill `synthese-vulgarisee` ; ancres `#partie-N` intactes ;
+- toute synthèse élève se lit par un élève de 6e et tient sur deux pages A4 (n°316, révisée le 29/10/2026) : carte
+  « Ce que je dois retenir », puis chaque partie de l'exemple vers la règle (titre-question, exemple de la séquence en
+  deux lignes, encadré « À retenir », le piège en une ligne), un seul lexique à la fin — voir le skill
+  `synthese-vulgarisee` ; `python3 _outils/mesurer_impression.py <page>` : deux pages ; ancres `#partie-N` intactes ;
 - squelette respecté : n°306 (22/09/2026) et n°311 (22/10/2026), voir le skill `sequence-pedagogique-engageante` ;
 - chaque unité savante nommée en toutes lettres dans son activité, son tableau, sa question, son schéma : n°312
   (25/10/2026), `python3 _outils/controle_unites.py` ; un schéma reçoit sa ligne « Unités : … » par
