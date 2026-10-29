@@ -25346,6 +25346,8 @@ l'usager).
   usagers, données, autres objets, éléments de l'environnement ; les règles de la ville sont des **exigences**.
 - ⚠️ Non corrigé, signalé : cinq lignes d'options du QCM `qcm_5e_C2_shenzhen_station_velos.html` diffèrent de `q.py`
   (raccourcies dans la page, pas dans la source) — dérive antérieure à cette PR ; régénérer le QCM les annulerait.
+  *Rectifié le soir même : ce ne sont pas cinq lignes mais **24 questions** — ma comparaison était tronquée. Voir
+  l'entrée « le QCM se régénère sans perdre la n°144 ».*
 
 ### Vérifié
 
@@ -25357,3 +25359,43 @@ l'usager).
 - **Bancs du lot** : `tests_5e_C2.1-C2.2_shenzhen.py` 50/50, `tests_regle_311_5e_C2.1.mjs` 34/34 — sur `main` comme ici.
 - **Contrôles** : identiques à `main` (médias, liens, impression, contraste, squelette, règles visibles, verif, et le
   reste de la liste habituelle).
+
+---
+
+## 28/10/2026 — `5e_C2.1` Shenzhen : le QCM se régénère sans perdre la n°144 (thème 1)
+
+*Carte blanche de Pascal (28/10/2026) sur la décision « reporter dans `q.py` les retouches du QCM ». Branche
+`fable/theme-1-qcm-5e-c2-source`.*
+
+### Le défaut — plus grand que je ne l'avais annoncé
+
+En préparant #536, j'avais signalé « cinq lignes » du QCM différentes de leur source `q.py`. Ma comparaison était
+tronquée : ce sont **24 questions sur 30** (68 propositions). Quelqu'un avait rééquilibré les propositions **dans la
+page publiée** pour la règle n°144 (la bonne réponse ne se devine pas à sa longueur), sans reporter le travail dans
+`q.py`. Mesuré par `controle_longueurs.py` :
+
+| | questions détachées | la juste est la plus longue | écart moyen |
+|---|---|---|---|
+| page publiée | 1 / 30 (3 %) | 16 | +3,7 caractères |
+| page régénérée depuis l'ancien `q.py` | **24 / 30 (80 %)** | 27 | **+30,6 caractères** |
+
+Autrement dit, la prochaine correction faite « dans les règles » (corriger `q.py`, régénérer — n°38) aurait remis un
+QCM où cocher la plus longue suffit.
+
+### Ce que fait cette PR
+
+- **Les 68 propositions publiées sont reportées dans `q.py`**, question par question, à la même place (les
+  réfutations `d[]` restent en face de leur proposition). Le report est fait par programme : chaque question de la
+  page est retrouvée dans `q.py` par ses quatre propositions, puis chaque proposition changée remplacée à l'identique.
+- Le docstring de `q.py` dit pourquoi, et rappelle : on corrige ici, puis on régénère.
+- La page publiée **ne change pas**.
+
+### Vérifié
+
+- `build_qcm.py` (gabarit `3e_C3.1`) puis `fix_r.js 502`, dans une copie : la page régénérée est **identique à
+  l'octet** à la page publiée.
+- `controle_longueurs.py` sur la page régénérée : 1 / 30 détachée, comme la page publiée.
+
+### Ce qui reste
+
+- Les autres lots qui ont un `q.py` : vérifier de la même façon que leur page publiée se régénère à l'identique.

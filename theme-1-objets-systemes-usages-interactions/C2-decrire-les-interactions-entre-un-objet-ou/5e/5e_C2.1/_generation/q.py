@@ -8,6 +8,12 @@ de façon déterministe, à partir d'une graine.
 Règle tenue pour chaque distracteur : la réfutation EXPLIQUE pourquoi la
 réponse est fausse. Une réfutation courte (« Aucun rapport. ») est un aveu
 que l'auteur n'a pas cherché ce que l'élève avait en tête.
+
+Règle n°144 (la bonne réponse ne se devine pas à sa longueur) : les propositions
+avaient été rééquilibrées dans la page publiée, pas ici — régénéré depuis ce
+fichier, le QCM revenait à 24 questions sur 30 « détachées ». Reportées ici le
+28/10/2026 (24 questions, 68 propositions) : la page régénérée est maintenant
+identique à l'octet à la page publiée. On corrige ICI, puis on régénère.
 """
 
 # Le texte de remplacement décrit la figure telle qu'elle est (28/10/2026) : l'ancien citait « les règles de la
@@ -50,10 +56,10 @@ def q(c, n, question, options, expl, ex, err, refs, ret, img=None):
 # ═══════════════════════ C2.1 — recenser les interacteurs (15) ═══════════════════════
 
 q("C2.1", "Définition", "Un interacteur d'un objet technique, c'est…",
-  ["tout ce qui, à l'extérieur de l'objet, entre en relation avec lui",
+  ["tout ce qui, à l'extérieur, entre en relation",
    "chacune des pièces qui composent l'objet",
-   "la personne qui a conçu l'objet",
-   "le lieu où l'objet est installé"],
+   "la personne qui a conçu l'objet technique",
+   "le lieu précis où l'objet est installé"],
   "Le mot le dit : ce qui inter-agit. La condition décisive est d'être EXTÉRIEUR à l'objet — "
   "sinon on décrit l'objet lui-même, pas ses relations.",
   "Pour une station de vélos : l'usager, la pluie, le trottoir, le réseau informatique.",
@@ -66,9 +72,9 @@ q("C2.1", "Définition", "Un interacteur d'un objet technique, c'est…",
   img=IMG_INT)
 
 q("C2.1", "Les quatre familles", "Une liste complète d'interacteurs comporte…",
-  ["les usagers, les données, les autres objets, les éléments de l'environnement",
+  ["usagers, données, autres objets, environnement",
    "uniquement les personnes qui utilisent l'objet",
-   "des objets neufs, des objets usagés et des objets cassés",
+   "des objets neufs, usagés et cassés",
    "des interacteurs proches, moyens et lointains"],
   "Ce sont les quatre familles nommées par le programme, et elles sont également légitimes. "
   "Aucune n'est plus « technique » que les autres, et c'est en les passant en revue une par une "
@@ -85,8 +91,8 @@ q("C2.1", "Les quatre familles", "Une liste complète d'interacteurs comporte…
 
 q("C2.1", "La famille invisible", "L'identifiant de ton abonnement, que la borne lit pour te "
   "reconnaître, est…",
-  ["un interacteur de la famille « données » : sans lui, la borne ne débloque aucun vélo",
-   "une pièce interne de la borne",
+  ["un interacteur de la famille « données »",
+   "une pièce interne de la borne de retrait",
    "un interacteur de la famille « autres objets »",
    "un détail sans influence sur le fonctionnement"],
   "Un interacteur n'a pas besoin d'être visible ni matériel. Une information venue de l'extérieur "
@@ -118,10 +124,10 @@ q("C2.1", "Ce qui n'en est pas un", "Parmi ces propositions, laquelle n'est PAS 
   "Une caractéristique de l'objet n'est pas un interacteur.")
 
 q("C2.1", "Un interacteur non vivant", "La pluie est un interacteur de la station parce que…",
-  ["elle agit sur elle : elle mouille les bornes et peut les bloquer",
+  ["elle agit sur elle : elle mouille et peut bloquer",
    "elle est citée dans le relevé du service technique",
    "tout ce qui vient du ciel compte comme interacteur",
-   "elle empêche les usagers de venir"],
+   "elle empêche les usagers de venir jusqu'à la station"],
   "Ce qui fait l'interacteur, c'est l'ACTION exercée sur l'objet ou subie de lui — pas le fait "
   "d'être vivant, ni d'être mentionné quelque part.",
   "L'eau stagne sur le lecteur de carte : la borne cesse de lire les badges.",
@@ -133,9 +139,9 @@ q("C2.1", "Un interacteur non vivant", "La pluie est un interacteur de la statio
   "Un interacteur n'a pas besoin d'être vivant.")
 
 q("C2.1", "Un interacteur invisible", "Le réseau informatique auquel la borne est reliée…",
-  ["est un interacteur : sans lui, la borne ne peut ni identifier l'usager ni débloquer un vélo",
+  ["est un interacteur : sans lui, rien ne se débloque",
    "n'est pas un interacteur, car on ne le voit pas",
-   "fait partie de la station elle-même",
+   "fait partie intégrante de la station elle-même",
    "ne compte que les jours où la connexion est coupée"],
   "Un interacteur peut être immatériel. Le test est toujours le même : si on l'enlève, l'objet "
   "rend-il encore son service ?",
@@ -148,10 +154,10 @@ q("C2.1", "Un interacteur invisible", "Le réseau informatique auquel la borne e
   "Un interacteur peut être invisible.")
 
 q("C2.1", "Le réflexe coûteux", "Le réflexe qui fait manquer la moitié de la liste, c'est…",
-  ["ne citer que ce qu'on voit : des personnes et des objets",
-   "citer trop d'objets",
-   "commencer par la pluie",
-   "faire une liste trop longue"],
+  ["ne citer que ce qu'on voit : personnes et objets",
+   "citer beaucoup trop d'objets différents",
+   "commencer la liste par la pluie et le vent",
+   "faire une liste beaucoup trop longue à relire"],
   "Presque tous les élèves commencent par les humains, puis ajoutent ce qui se touche. Le remède "
   "est mécanique : passer les quatre familles en revue une par une, et se forcer à trouver deux "
   "entrées dans chacune — surtout dans celle des données, qui ne se voit pas.",
@@ -165,10 +171,10 @@ q("C2.1", "Le réflexe coûteux", "Le réflexe qui fait manquer la moitié de la
   "Une liste qui ne contient que du visible est une liste au quart faite.")
 
 q("C2.1", "Ce qui alimente", "Parmi ces interacteurs, lequel ALIMENTE la station ?",
-  ["l'alimentation électrique du mobilier urbain",
-   "le vandalisme",
-   "la largeur du trottoir",
-   "le riverain qui passe devant"],
+  ["l'alimentation électrique du mobilier",
+   "le vandalisme et les dégradations",
+   "la largeur du trottoir disponible",
+   "le riverain qui passe devant la station"],
   "Trois questions font sortir les interacteurs oubliés : qu'est-ce qui alimente l'objet, "
   "qu'est-ce qui le menace, qu'est-ce qui le contraint ?",
   "Sans courant, ni écran, ni lecteur, ni verrou électrique.",
@@ -180,10 +186,10 @@ q("C2.1", "Ce qui alimente", "Parmi ces interacteurs, lequel ALIMENTE la station
   "Trois questions à se poser : qu'est-ce qui alimente, menace, contraint ?")
 
 q("C2.1", "Ce qui contraint", "La règle municipale qui impose de laisser 1,40 m de passage sur le trottoir…",
-  ["n'est pas un interacteur mais une EXIGENCE : elle n'échange rien avec la station, elle s'impose au concepteur",
-   "est un interacteur : elle limite l'emprise au sol de la station",
-   "concerne la mairie, pas la station",
-   "ne compte que si un piéton se plaint"],
+  ["n'est pas un interacteur mais une EXIGENCE",
+   "est un interacteur : elle limite l'emprise au sol",
+   "concerne la mairie, et non pas la station",
+   "ne compte que si un piéton vient se plaindre"],
   "Un interacteur ÉCHANGE quelque chose avec l'objet : de la matière, de l'énergie, de "
   "l'information. La pluie mouille, l'usager appuie, le réseau transmet. Une règle, une norme, un "
   "label n'échangent rien : ils IMPOSENT une condition à respecter. On les appelle des exigences, "
@@ -214,9 +220,9 @@ q("C2.1", "Extérieur ou intérieur", "La batterie interne qui garde l'heure de 
   "Le seul critère : dedans ou dehors ?")
 
 q("C2.1", "Changer de lieu", "Installer la même station en Martinique plutôt qu'à Shenzhen…",
-  ["change la liste des interacteurs : certains disparaissent, d'autres apparaissent",
-   "ne change rien : c'est le même objet",
-   "ne change que le nombre d'usagers",
+  ["change la liste : certains vont, d'autres viennent",
+   "ne change rien du tout : c'est le même objet",
+   "ne change que le nombre d'usagers concernés",
    "supprime les interacteurs de type condition"],
   "L'objet est le même, mais l'environnement ne l'est pas — et c'est l'environnement qui fait la "
   "liste. C'est pourquoi un objet bien conçu ici peut échouer ailleurs.",
@@ -229,10 +235,10 @@ q("C2.1", "Changer de lieu", "Installer la même station en Martinique plutôt q
   "Changer de lieu, c'est changer d'interacteurs.")
 
 q("C2.1", "Un interacteur martiniquais", "Le cyclone, pour une station installée à Sainte-Luce, est…",
-  ["un interacteur à part entière, différent d'une forte pluie",
-   "la même chose qu'une pluie intense",
-   "un événement trop rare pour être recensé",
-   "un interacteur seulement pour les bâtiments"],
+  ["un interacteur à part entière, distinct de la pluie",
+   "exactement la même chose qu'une pluie intense",
+   "un événement bien trop rare pour être recensé",
+   "un interacteur pour les bâtiments seulement"],
   "Un cyclone ajoute le vent violent et les projectiles : ce n'est pas une pluie en plus fort. Il "
   "impose des réponses techniques propres — arrimer, démonter, protéger.",
   "Une borne qui résiste à l'averse peut être arrachée par une rafale.",
@@ -259,7 +265,7 @@ q("C2.1", "Le sel marin", "En bord de mer, l'air salin est un interacteur parce 
   "L'air salin transforme l'objet sans que personne n'y touche.")
 
 q("C2.1", "Le geste de recensement", "Pour ne rien oublier en recensant, la bonne méthode est…",
-  ["de tourner autour de l'objet par la pensée et d'interroger chaque famille une par une",
+  ["de tourner autour de l'objet, famille par famille",
    "de citer ce qui vient spontanément à l'esprit",
    "de recopier la liste d'un objet voisin",
    "de commencer par ce qui coûte le plus cher"],
@@ -276,10 +282,10 @@ q("C2.1", "Le geste de recensement", "Pour ne rien oublier en recensant, la bonn
   "Le recensement est un balayage, pas un souvenir.")
 
 q("C2.1", "À quoi ça sert", "Recenser les interacteurs sert d'abord à…",
-  ["comprendre pourquoi l'objet a la forme qu'il a, et ce qui peut le mettre en défaut",
+  ["comprendre sa forme, et ce qui peut le mettre en défaut",
    "compter combien de personnes utilisent l'objet",
    "estimer le prix de fabrication de l'objet",
-   "décider quelle marque acheter"],
+   "décider quelle marque il faudra acheter"],
   "La panne de la station de Shenzhen n'était dans aucun appareil : elle était dans une relation "
   "mal anticipée avec la pluie. Recenser, c'est prévoir ces défauts-là.",
   "Bornes bloquées par l'eau : rien n'est cassé, un interacteur a été oublié.",
@@ -293,10 +299,10 @@ q("C2.1", "À quoi ça sert", "Recenser les interacteurs sert d'abord à…",
 # ═══════════════════════ C2.2 — les choix de conception (15) ═══════════════════════
 
 q("C2.2", "Lire un objet", "Repérer un choix de conception, c'est…",
-  ["comprendre quelle décision explique une forme observée",
-   "juger si l'objet est beau ou laid",
-   "démonter l'objet pour voir l'intérieur",
-   "mesurer les dimensions de l'objet"],
+  ["comprendre quelle décision explique une forme",
+   "juger si l'objet est beau ou s'il est laid",
+   "démonter l'objet pour en voir l'intérieur",
+   "mesurer les dimensions exactes de l'objet"],
   "Chaque détail d'un objet a été décidé par quelqu'un, pour une raison. Lire l'objet, c'est "
   "remonter de la forme à la raison.",
   "La borne est inclinée : quelqu'un a décidé qu'elle ne serait pas plate, et on peut dire pourquoi.",
@@ -339,10 +345,10 @@ q("C2.2", "Trois domaines", "Les trois domaines de choix nommés par le programm
   "Ergonomie, sécurité, développement durable.")
 
 q("C2.2", "L'ergonomie", "L'ergonomie concerne…",
-  ["l'adaptation de l'objet au corps et aux gestes de celui qui l'utilise",
-   "la protection contre les accidents",
+  ["l'adaptation de l'objet au corps et aux gestes",
+   "la protection contre les accidents d'usage",
    "l'apparence et l'intégration dans le lieu",
-   "la durée de vie de l'objet"],
+   "la durée de vie de l'objet une fois installé"],
   "L'ergonomie part du corps humain : hauteurs, efforts, portées, positions. Un objet ergonomique "
   "se manipule sans se contorsionner ni forcer.",
   "L'ancrage à 90 cm est la hauteur où l'on pousse un vélo sans se baisser.",
@@ -354,10 +360,10 @@ q("C2.2", "L'ergonomie", "L'ergonomie concerne…",
   "L'ergonomie part du corps et des gestes.")
 
 q("C2.2", "La sécurité", "Les arêtes arrondies de la station relèvent surtout de…",
-  ["la sécurité : on se blesse moins en heurtant un angle arrondi",
-   "l'ergonomie uniquement",
-   "l'économie de matière",
-   "la résistance au vent"],
+  ["la sécurité : on se blesse moins",
+   "l'ergonomie du poste de retrait",
+   "l'économie de matière à la fabrication",
+   "la résistance au vent et aux intempéries"],
   "Le domaine se lit à ce que le choix ÉVITE. Ici, il évite une blessure : c'est la sécurité.",
   "Un enfant qui court et heurte l'angle d'une borne.",
   "Attribuer à l'esthétique un choix qui évite une blessure.",
@@ -368,10 +374,10 @@ q("C2.2", "La sécurité", "Les arêtes arrondies de la station relèvent surtou
   "Le domaine se lit à ce que le choix évite.")
 
 q("C2.2", "Retrouver l'interacteur", "La borne est inclinée vers le bas plutôt que plate. Ce choix répond à…",
-  ["la pluie : l'eau s'écoule au lieu de stagner sur le lecteur",
-   "l'usager, qui voit mieux l'écran",
+  ["la pluie : l'eau s'écoule au lieu de stagner",
+   "l'usager, qui voit nettement mieux l'écran",
    "l'agent de maintenance, qui ouvre plus facilement",
-   "l'esthétique : c'est plus joli ainsi"],
+   "l'esthétique : la borne est plus jolie ainsi"],
   "Derrière chaque choix, on peut nommer l'interacteur visé. Ici, une condition — et c'est "
   "précisément l'interacteur qui a été mal anticipé dans le relevé de panne.",
   "Bornes bloquées par la pluie : l'inclinaison existait, elle était insuffisante.",
@@ -384,10 +390,10 @@ q("C2.2", "Retrouver l'interacteur", "La borne est inclinée vers le bas plutôt
   img=IMG_CHX)
 
 q("C2.2", "Un choix pour la maintenance", "Le boîtier qui s'ouvre avec une vis unique répond à…",
-  ["l'agent de maintenance : il intervient vite, sans outillage spécial",
-   "l'usager, qui peut réparer lui-même",
-   "la pluie, qui entre moins",
-   "l'esthétique du boîtier"],
+  ["l'agent de maintenance, qui intervient vite",
+   "l'usager, qui peut réparer lui-même la borne",
+   "la pluie, qui entre beaucoup moins",
+   "l'esthétique générale du boîtier"],
   "L'ergonomie ne concerne pas que l'utilisateur final : celui qui répare a lui aussi un corps, "
   "des gestes et un temps compté.",
   "Vingt minutes pour sortir un vélo : c'était le deuxième symptôme du relevé.",
@@ -399,8 +405,8 @@ q("C2.2", "Un choix pour la maintenance", "Le boîtier qui s'ouvre avec une vis 
   "Celui qui répare est un utilisateur, lui aussi.")
 
 q("C2.2", "Deux domaines à la fois", "Un même choix peut-il servir deux domaines à la fois ?",
-  ["oui : un angle arrondi est plus sûr et souvent plus agréable à regarder",
-   "non : chaque choix répond à un seul domaine",
+  ["oui : un angle arrondi est plus sûr et plus beau",
+   "non : chaque choix ne répond qu'à un domaine",
    "oui, mais seulement l'ergonomie et la sécurité",
    "non, sauf en cas d'erreur de conception"],
   "Les domaines se recoupent souvent. L'exercice consiste alors à dire lequel DOMINE, et pourquoi.",
@@ -413,8 +419,8 @@ q("C2.2", "Deux domaines à la fois", "Un même choix peut-il servir deux domain
   "Quand deux domaines se recoupent, dis lequel domine.")
 
 q("C2.2", "Le coût d'un choix", "Un boîtier soudé plutôt que vissé…",
-  ["résiste mieux au vandalisme mais rend la maintenance beaucoup plus lourde",
-   "est un meilleur choix dans tous les cas",
+  ["résiste mieux, mais alourdit la maintenance",
+   "est un meilleur choix dans absolument tous les cas",
    "ne change rien pour ceux qui l'utilisent",
    "coûte forcément plus cher à fabriquer"],
   "Un choix technique n'est jamais gratuit : il déplace le problème ailleurs. Savoir dire OÙ, "
@@ -428,7 +434,7 @@ q("C2.2", "Le coût d'un choix", "Un boîtier soudé plutôt que vissé…",
   "Un choix technique déplace le problème ailleurs.")
 
 q("C2.2", "Deux réponses au même problème", "Une autre station abrite ses bornes sous un auvent au lieu de les incliner. Cela montre que…",
-  ["un même problème admet plusieurs réponses techniques, chacune avec ses conséquences",
+  ["un même problème admet plusieurs réponses",
    "l'une des deux stations est forcément une erreur",
    "les deux équipes ne se sont pas concertées",
    "le problème de la pluie n'était pas important"],
@@ -443,10 +449,10 @@ q("C2.2", "Deux réponses au même problème", "Une autre station abrite ses bor
   "Un même problème admet plusieurs réponses techniques.")
 
 q("C2.2", "Un gain payé ailleurs", "Ancrer les vélos au sol plutôt qu'à 90 cm…",
-  ["occupe moins de place mais oblige l'usager à se baisser : un gain d'encombrement payé en ergonomie",
-   "est meilleur sur tous les points",
-   "est simplement moins sûr",
-   "ne change rien pour l'usager"],
+  ["gagne de la place, et se paie en ergonomie",
+   "est meilleur sur absolument tous les points",
+   "est simplement un peu moins sûr à l'usage",
+   "ne change rien du tout pour l'usager"],
   "Nommer le gain ET le prix : c'est ce qui distingue une comparaison d'un avis.",
   "Trottoir étroit : on gagne la place, on la paie sur le dos des usagers.",
   "Ne dire que ce que le choix apporte.",
@@ -457,8 +463,8 @@ q("C2.2", "Un gain payé ailleurs", "Ancrer les vélos au sol plutôt qu'à 90 c
   "Nomme le gain ET le prix.")
 
 q("C2.2", "Justifier, pas décrire", "Laquelle de ces phrases explique vraiment un choix de conception ?",
-  ["« La borne est inclinée pour que l'eau de pluie s'écoule au lieu de stagner sur le lecteur. »",
-   "« La borne est inclinée vers le bas. »",
+  ["« La borne est inclinée pour que l'eau s'écoule. »",
+   "« La borne est inclinée vers le bas, côté rue. »",
    "« La borne est inclinée, c'est plus moderne. »",
    "« La borne est inclinée d'environ quinze degrés. »"],
   "Expliquer, c'est relier la forme à un interacteur et à un effet recherché. Sans ce lien, on "
@@ -472,9 +478,9 @@ q("C2.2", "Justifier, pas décrire", "Laquelle de ces phrases explique vraiment 
   "Expliquer, c'est relier la forme à un interacteur.")
 
 q("C2.2", "Le développement durable comme domaine", "Les pièces de la borne se remplacent une par une plutôt que de former un bloc soudé. Ce choix relève du développement durable parce que…",
-  ["un objet réparable dure plus longtemps : moins de matière à produire, moins de déchets",
-   "les pièces détachées sont fabriquées dans des matériaux naturels",
-   "le recyclage en fin de vie sera plus facile, et c'est tout",
+  ["un objet réparable dure, donc use moins de matière",
+   "les pièces sont faites de matériaux naturels",
+   "le recyclage en fin de vie sera plus facile",
    "cela rend la borne plus agréable à regarder"],
   "Un choix « en lien avec le développement durable » porte sur la matière, l'énergie et la durée "
   "de vie de l'objet — et il se prend dès la conception, pas à la fin.",
@@ -487,10 +493,10 @@ q("C2.2", "Le développement durable comme domaine", "Les pièces de la borne se
   "Développement durable : la matière, l'énergie, la durée de vie — dès la conception.")
 
 q("C2.2", "Transposer", "Pour installer cette station à Sainte-Luce, il faudrait d'abord revoir…",
-  ["les matériaux et les traitements de surface, à cause de l'air salin",
-   "la couleur des bornes, pour l'accorder au paysage",
+  ["les matériaux, à cause de l'air salin",
+   "la couleur des bornes, à accorder au paysage",
    "le nombre de vélos, plus faible qu'en Chine",
-   "rien : l'objet a fait ses preuves"],
+   "rien du tout : l'objet a déjà fait ses preuves"],
   "On repart des interacteurs qui changent, et on remonte aux choix qu'ils remettent en cause. "
   "L'ordre compte : d'abord ce qui détruit l'objet, ensuite ce qui l'améliore.",
   "Une visserie en acier ordinaire ne passe pas deux saisons près du rivage.",
