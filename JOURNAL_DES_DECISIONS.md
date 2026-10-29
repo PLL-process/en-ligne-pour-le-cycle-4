@@ -25838,3 +25838,33 @@ défilement de côté sur un téléphone.
 - Les sept synthèses des ateliers de représentation, puis les thèmes 2 et 3 : directement au format deux pages.
 - L'impression dans tout le dépôt (le plan proposé à Pascal) : mesurer toutes les pages avec `mesurer_impression.py`,
   puis une règle d'or sur l'impression et son contrôle, puis des vagues de correction.
+
+---
+
+## 29/10/2026 — Synthèses élève : revenir à la carte (thème 1, `.claude/skills`)
+
+*Pascal, sur la synthèse en ligne de `5e_C1.1`, deux captures à l'appui : « J'ai cliqué sur [une carte], j'ai eu la
+2e capture d'écran. Cependant, je ne peux pas revenir à la synthèse ».*
+
+### Ce qui manquait
+
+Les cartes « Ce que je dois retenir » mènent à leur partie (`#partie-N`), mais rien ne ramenait à la carte, sauf le
+bouton « Précédent » du navigateur, que rien n'annonce. La barre de navigation, collée en haut de l'écran, recouvrait
+aussi le haut du bloc visé.
+
+### Ce qui change
+
+- **Les dix synthèses élève à carte du thème 1** (le pilote `5e_C1.1` et les neuf de #545) : chaque partie porte,
+  juste avant son titre, un lien **« ↑ La carte »** en haut à droite, vers `#carte-titre`. Il ne s'imprime pas.
+  `scroll-margin-top` laisse le titre visé sous la barre de navigation, au lieu de dessous : 12 pixels d'écart,
+  mesurés dans les dix pages, à 390 et à 1 280 pixels de large.
+- **`5e_C1.1`, partie 4** (deuxième capture de Pascal) : les noms de fichiers des cases se coupaient en plein milieu
+  (« Relevé / Lundi.csv », « releve- / lundi.csv »). Un nom ne se coupe plus, et la marque ✘ ou ✔ reste avec lui :
+  quand la place manque, c'est la case entière qui passe à la ligne. L'impression reste à deux pages.
+- **Le skill `synthese-vulgarisee`** décrit les deux.
+
+### Contrôles
+
+`controle_liens`, `controle_hierarchie`, `controle_regles_visibles`, `controle_debordement`, `controle_unites`,
+`controle_sigles`, `controle_contraste_liens.mjs`, `controle_impression.mjs` : ✅ sur les dix pages. Bancs des
+séquences qui lisent leur synthèse : Pékin 58/58, Shenzhen 50/50, Hangzhou 65/65, Chengdu 43/43.

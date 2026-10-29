@@ -109,6 +109,11 @@ page A4 à l'impression, et la partie 1 la suit sur la même page : pas de saut 
 29/10/2026, « pas de blancs, moins de pages »). Elle tient en une demi-page. Elle obéit à la n°315 : aucune carte
 n'en touche une autre, aucun texte ne déborde.
 
+**Le retour à la carte** (Pascal, 29/10/2026 : « je ne peux pas revenir à la synthèse ») : chaque partie porte, juste
+avant son titre, `<a class="retour-carte" href="#carte-titre">↑ La carte</a>` (en haut à droite, caché à
+l'impression), et `#carte-titre,[id^="partie-"]{scroll-margin-top:64px}` empêche la barre de navigation collée en haut
+de recouvrir le titre visé.
+
 ### 2. Chaque partie : quatre temps, de l'exemple vers la règle
 
 ```
@@ -127,7 +132,9 @@ n'en touche une autre, aucun texte ne déborde.
    Shenzhen…), pas un nouveau. Quand il compare, classe ou enchaîne, il se montre **en cases** (`div.chaine`) : une
    rangée de trois ou quatre petites cases, une par principe, par valeur, par règle ou par étape, chacune avec un
    titre en gras et une ou deux lignes. Le bord dit le verdict : **vert** (`.ok`) ce qu'on garde, **rouge** (`.ko`)
-   ce qu'on écarte ; `.etapes` met une flèche entre les cases d'une suite. Ce sont les procédés des fiches de Pascal
+   ce qu'on écarte ; `.etapes` met une flèche entre les cases d'une suite. Un nom de fichier ou une valeur ne se
+   coupe pas : `.chaine code{white-space:nowrap}`, et `✘&nbsp;<code>…</code>` garde la marque avec le nom ; c'est la
+   case entière qui passe à la ligne. Ce sont les procédés des fiches de Pascal
    (le tableau qui compare, les vignettes numérotées, le nombre suivi d'étape en étape), en petit.
    **Pas de grand schéma** : à 60 % de la largeur, un schéma SVG prend un quart de page ; il reste dans la séquence.
    Un schéma n'entre dans la synthèse que s'il tient, avec tout le reste, en deux pages.

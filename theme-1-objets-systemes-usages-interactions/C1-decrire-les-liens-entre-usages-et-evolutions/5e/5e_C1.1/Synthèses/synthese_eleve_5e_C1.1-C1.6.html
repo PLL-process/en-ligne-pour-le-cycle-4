@@ -54,6 +54,7 @@
   .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
   .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
   .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
   /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
   .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
   .chaine.etapes div{position:relative}
@@ -109,6 +110,15 @@
 
 /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
 @media(max-width:680px){table{display:block;overflow-x:auto}}
+
+  /* Revenir à la carte (Pascal, 29/10/2026 : « je ne peux pas revenir à la synthèse ») : chaque partie porte, en
+     haut à droite, un lien vers la carte « Ce que je dois retenir » ; la barre de navigation collée en haut ne
+     recouvre plus le titre visé par un lien. Rien de tout cela ne s'imprime. */
+  .retour-carte{float:right;font-size:.82em;margin:1px 0 0 10px;padding:1px 10px;border:1.5px solid var(--border);
+                border-radius:999px;text-decoration:none;white-space:nowrap}
+  .retour-carte:hover,.retour-carte:focus-visible{border-color:var(--hl)}
+  #carte-titre,[id^="partie-"]{scroll-margin-top:64px}
+  @media print{.retour-carte{display:none}}
 </style></head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_5e_C1.1-C1.6_chengdu_air.html">← Séquence</a></nav>
@@ -151,6 +161,7 @@
 
 <!-- ══ 1 ══ -->
 <div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-1" style="margin-top:0">1. Un nombre tout seul veut-il dire quelque chose&nbsp;?</h2>
   <div class="chaine">
     <div><b class="d">Donnée brute</b>Le capteur de la cour écrit <code>26,4</code>. Tout seul, ce nombre ne dit rien.</div>
@@ -165,6 +176,7 @@
 
 <!-- ══ 2 ══ -->
 <div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-2" style="margin-top:0">2. Faut-il toujours le même appareil pour mesurer&nbsp;?</h2>
   <p>À Chengdu, une <b>fonction</b>&nbsp;: mesurer la poussière pour décider <b>ce matin</b> d'aérer. Trois <b>principes</b>&nbsp;:</p>
   <div class="chaine">
@@ -180,6 +192,7 @@
 
 <!-- ══ 3 ══ -->
 <div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-3" style="margin-top:0">3. Faut-il croire toutes les mesures du fichier&nbsp;?</h2>
   <p>À Chengdu, sur 90 relevés, quatre ne sont pas des mesures. Avec eux, la moyenne fait <b class="rouge">27,4</b>&nbsp;;
   sans eux, <b class="vert">25,2</b>.</p>
@@ -197,13 +210,14 @@
 
 <!-- ══ 4 ══ -->
 <div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-4" style="margin-top:0">4. Comment ranger ses fichiers pour les retrouver&nbsp;?</h2>
   <p>À Chengdu, quatorze fichiers en vrac deviennent un dossier <code>station-air-chengdu</code> et quatre sous-dossiers&nbsp;:</p>
   <div class="chaine">
-    <div><b>Dire ce que c'est</b>✘ <code>PIC ATTENTION</code><br>✔ <code>releves-air</code></div>
-    <div><b>Année-mois-jour</b>✘ <code>02-04-2026</code><br>✔ <code>2026-04-02</code></div>
-    <div><b>Sans espace ni accent</b>✘ <code>Relevé Lundi.csv</code><br>✔ <code>releve-lundi.csv</code></div>
-    <div><b>Une seule version</b>✘ <code>finalV2 (copie).csv</code><br>✔ un seul fichier, le bon</div>
+    <div><b>Dire ce que c'est</b>✘&nbsp;<code>PIC ATTENTION</code><br>✔&nbsp;<code>releves-air</code></div>
+    <div><b>Année-mois-jour</b>✘&nbsp;<code>02-04-2026</code><br>✔&nbsp;<code>2026-04-02</code></div>
+    <div><b>Sans espace ni accent</b>✘&nbsp;<code>Relevé Lundi.csv</code><br>✔&nbsp;<code>releve-lundi.csv</code></div>
+    <div><b>Une seule version</b>✘&nbsp;<code>finalV2 (copie).csv</code><br>✔ un seul fichier, le bon</div>
   </div>
   <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un bon <b>nom</b> dit <b>ce que c'est</b>, avec la date en
   <b>année-mois-jour</b>, sans espace ni accent. Chaque <b>dossier</b> doit réduire la recherche.</p>
@@ -213,6 +227,7 @@
 
 <!-- ══ 5 ══ -->
 <div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-5" style="margin-top:0">5. Comment une donnée voyage-t-elle, et qui a le droit d'y toucher&nbsp;?</h2>
   <p>À Chengdu, la mesure va du capteur de la cour au graphique publié, en quatre étapes&nbsp;:</p>
   <div class="chaine etapes">
@@ -229,6 +244,7 @@
 
 <!-- ══ 6 ══ -->
 <div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-6" style="margin-top:0">6. Comment protéger les données, et respecter les auteurs&nbsp;?</h2>
   <p>À Chengdu, la classe lit le fichier des mesures, mais n'y écrit pas. Avant de reprendre la notice du capteur,
   on vérifie sa <b>licence</b>.</p>
@@ -241,6 +257,7 @@
 
 <!-- ══ 7 ══ -->
 <div class="bloc pieges">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-7" style="margin-top:0">7. Une mesure vraie peut-elle faire du tort à quelqu'un&nbsp;?</h2>
   <p>À Chengdu, l'air monte à 67&nbsp;µg/m³ (microgrammes par mètre cube) le mardi à 7&nbsp;h&nbsp;: la balayeuse passe.
   Une seule personne la conduit.</p>
