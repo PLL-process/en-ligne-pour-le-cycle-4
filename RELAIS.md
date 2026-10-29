@@ -1,23 +1,25 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 29/10/2026 16:11 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 29/10/2026 16:34 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
-- #553 (thème 2) et #554 (thème 3) fusionnées : les trois thèmes à 0 ✘ au contrôle des schémas.
-- PR #555 ouverte (branche fable/theme-3-faits-schemas, worktree $S/wt_f3) : chronogramme d'hystérésis de 4e_C9.1 redessiné d'après la séquence (six claquements puis le basculement utile ; en bas, un seul sous 35), texte alternatif page + QCM, desc, SOURCES ; flèche « les valeurs MONTENT » de 3e_C9.2 retournée. Banc 4e_C9.1 70/70, CI ✅.
-- Reste : lot n°310 des trois chaînes faites main (4e_C9.1 jardin, 4e_C6.2, 5e_C9.1 : générateur + textes + QCM) ; image de l'objet dans la carte des 7 ateliers ; deux limites du contrôle (alpha rgba, texte coupé par le bord).
+- #555 fusionnée (chronogramme d'hystérésis, flèche du palier 1). Thèmes 1-2-3 : 0 ✘ au contrôle des schémas.
+- Choix ★ A appliqué (fusion sans réponse) : lot n°310 des trois chaînes faites main — 4e_C9.1 jardin, 4e_C6.2 arrosage, 5e_C9.1 barrière.
+- Worktree $S/wt_ch, branche `fable/chaines-energie-faites-main` (sans motif de thème : touche _outils + thèmes 2 et 3).
+- Méthode : skill chaine-energie-fonctionnelle — générateur `_outils/regenerer_chaines_energie.py` d'abord (nom distinct pour le jardin 4e_C9.1), puis alt, desc, consignes, corrigés, QCM ; verifier_chaines_energie + controle_schemas + bancs.
+- Reste ensuite : B image de l'objet dans les 7 synthèses d'ateliers ; limites du contrôle (alpha rgba, bord du viewBox) ; écarts 4e_C2.1 signalés par l'autre session.
 
-_(écrit par Claude le 29/10/2026 16:11)_
+_(écrit par Claude le 29/10/2026 16:34)_
 
 ## Branche et PR
 - Branche : `fable/theme-2-regle-304` — dernier commit 5a5ededb4 Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé
-- PR #555 ouverte (`fable/theme-3-faits-schemas`) — Thème 3 : le chronogramme d'hystérésis et la planche du palier 1 disent ce que dit la séqu — CI : success
+- PR #556 ouverte (`fable/theme-2-syntheses-deux-pages`) — Thème 2 : les dix-sept synthèses élève vulgarisées, en deux pages A4 — CI : success
 
 ## Décisions en attente
 _Aucune._
 
 ## Prochaine action
-➡️ Pascal : fusionner #555.
+➡️ Lire les trois SVG faits main et leurs textes, puis les faire entrer dans le générateur.
 
 ## Décisions prises récemment (messages de Pascal)
 - 29/10/2026 13:15 — « <agent-message from="a35e22d744f71516e"> [Subagent hand-back] The text below is the final report of a subagent this session delegated to. It »
