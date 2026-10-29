@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 28/10/2026 23:27 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 28/10/2026 23:33 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - Fusionnées ce soir : #537 (q.py de 5e_C2.1, 5e_C1.1, 5e_C1.2 reprennent les propositions publiées — n°144), #538 (carte des interacteurs Shenzhen refaite, premium).
@@ -14,13 +14,13 @@ _(écrit par Claude le 28/10/2026 23:24)_
 
 ## Branche et PR
 - Branche : `fable/theme-2-regle-304` — dernier commit 5a5ededb4 Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé
-- Aucune PR ouverte.
+- PR #540 ouverte (`fable/regle-315-pastilles`) — Règle n°315 (complément) : une pastille posée sur un cadre n'est pas un contact — CI : success
 
 ## Décisions en attente
 _Aucune._
 
 ## Prochaine action
-➡️ Fusionne #539. J'attaque le thème 1 par ce générateur.
+➡️ Fusionne #540, et réponds par exemple « 1a 2a 3a ».
 
 ## Décisions prises récemment (messages de Pascal)
 - 28/10/2026 23:09 — « un outil s'il donne un meilleur schéma ou une meilleur representation dans le sens vulgarisée, simple meme pour un 6e, et pédagogique »
