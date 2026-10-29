@@ -26244,3 +26244,46 @@ regardé avant et après sur la planche ; les mots et les faits ne changent pas,
 
 `controle_schemas.mjs` prend un fond `rgba(…, 0.08)` pour opaque (il lit `fill-opacity`, pas l'alpha de la couleur),
 et ne voit pas un texte coupé par le bord du dessin.
+
+---
+
+## 29/10/2026 — Thème 3 : deux schémas qui disaient faux, redessinés d'après la séquence
+
+*Choix par défaut ★ (décision posée avec #554, fusionnée sans réponse) : corriger les faits faux repérés pendant la
+revue des schémas du thème 3. Le texte de la séquence sert de référence.*
+
+### Le chronogramme d'hystérésis (`4e_C9.1/Images/hysteresis_chronogramme.svg`)
+
+La page, le QCM et la synthèse disent : avec un seuil, la pompe **bascule six fois** pendant que l'humidité tremble
+de deux points autour de 40 ; avec deux seuils, la **même** courbe ne donne **qu'un seul** basculement. Le dessin
+montrait autre chose : neuf passages de la ligne des 40, et, en bas, une pompe qui s'allumait vers 42 %, alors que la
+courbe ne passait jamais sous 35.
+
+Les trois affirmations ne pouvaient pas tenir ensemble telles quelles : pour qu'une même courbe fasse basculer une
+fois la pompe à deux seuils, elle doit passer sous 35 ; elle repasse alors aussi sous 40, ce qui fait un passage de
+plus en haut. Le dessin le dit maintenant :
+- **en haut** : la courbe tremble autour de 40 et la pompe **claque six fois** (l'accolade les réunit) ; puis le sol
+  sèche vraiment, la courbe descend sous 40 et la pompe s'allume — étiqueté « ON : le sol sèche vraiment » ;
+- **en bas** : la même courbe, au point près ; la pompe reste éteinte pendant tout le tremblement, et ne s'allume
+  qu'en passant sous 35 : « UN SEUL basculement : le bon ».
+
+La page (description détaillée et texte alternatif), le texte alternatif du QCM, la `<desc>` du SVG (qui parlait de
+« deux basculements » et d'une accolade verte absente) et `SOURCES_MEDIAS.md` disent la même chose. Aucune question ni
+réponse du QCM ne change.
+
+### La planche du palier 1 (`3e_C9.2/Images/blocs_palier1_lire_vent.svg`)
+
+La flèche « les valeurs MONTENT » pointait vers le haut, vers 0, alors que les valeurs du moniteur grandissent vers le
+bas (0, 31, 95… 231). Elle pointe maintenant vers le bas.
+
+### Contrôles
+
+`controle_schemas.mjs` sur les deux schémas : 0 ✘. Banc de `4e_C9.1` : 70/70. `controle_liens`, `_unites`, `_sigles`,
+`_hierarchie`, `_regles_visibles`, `_debordement`, `_impression_papier`, `_medias`, `controle_impression.mjs` : ✅.
+
+### Ce qui reste
+
+- **La chaîne du jardin de `4e_C9.1`** (`chaines_jardin_connecte.svg`) contredit la règle n°310 : la flèche d'ordre
+  « allait droit sur CONVERTIR » en 3e, et TRANSMETTRE est justifié par le déplacement de l'eau. Le skill
+  `chaine-energie-fonctionnelle` en fait un lot à part, avec deux autres chaînes faites main (`4e_C6.2`, `5e_C9.1`) :
+  les faire entrer dans le générateur, puis reprendre textes alternatifs, consignes, corrigés et QCM.

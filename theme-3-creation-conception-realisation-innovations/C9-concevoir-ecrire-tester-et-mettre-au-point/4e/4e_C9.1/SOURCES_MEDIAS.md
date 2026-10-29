@@ -11,7 +11,7 @@ comme des captures (règle d'or n°94 — on ne fait pas passer une reconstituti
 | `Images/chaines_jardin_connecte.svg` | SVG original | Création Fable pour ce projet | CC0 (domaine public) | Image-objet : les deux chaînes selon la convention du dépôt (info en haut, énergie en bas, ordre qui descend) — et la flèche d'ORDRE qui s'arrête sur le **relais**, act. 1 et QCM (q. illustrée) | ~9 Ko |
 | `Images/algorigramme_arrosage.svg` | SVG original | Création Fable pour ce projet | CC0 | Image-objet : algorigramme normalisé à cinq blocs numérotés, avec la bulle de commentaire sur le ET et la boucle sans bloc FIN — act. 2 et QCM (q. illustrée) | ~7 Ko |
 | `Images/jeu_de_tests_anatomie.svg` | SVG original | Création Fable pour ce projet | CC0 | Image-objet : les quatre familles d'essais placées sur la droite de l'humidité, le tableau attendu/observé, et l'avertissement sur le cas absurde — act. 4 et QCM (q. illustrée) | ~8 Ko |
-| `Images/hysteresis_chronogramme.svg` | SVG original | Création Fable pour ce projet | CC0 | Image-objet : **la figure centrale du lot** — la même mesure d'humidité traitée à un seuil (six basculements) puis à deux seuils (un seul), avec la bande morte tramée — act. 5 et QCM (q. illustrée) | ~8 Ko |
+| `Images/hysteresis_chronogramme.svg` | SVG original | Création Fable pour ce projet | CC0 | Image-objet : **la figure centrale du lot** — la même mesure d'humidité traitée à un seuil (six basculements pendant le tremblement, puis celui du sol sec) puis à deux seuils (un seul, sous 35), avec la bande morte tramée — act. 5 et QCM (q. illustrée) | ~8 Ko |
 
 Autres fichiers non graphiques du lot :
 
