@@ -1,13 +1,13 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 29/10/2026 11:56 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 29/10/2026 12:50 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
-- PR #553 ouverte (branche fable/theme-2-schemas-premium, worktree $S/wt_t2s) : thème 2 à 0 ✘ sur 114 schémas (201 ✘ corrigés dans 60 schémas, 53 fichiers, à la main). Main fusionnée dedans (conflit du journal résolu). CI ✅, mergeable.
-- L'autre session a fusionné #552 : images Canva dans la carte des synthèses des séquences du thème 1 (pas les ateliers).
-- Reste : thème 3 (125 ✘ dans 28 schémas sur 51) ; image de l'objet dans la carte des 7 synthèses d'ateliers.
+- #553 (thème 2 à 0 ✘ sur 114 schémas) : prête, CI ✅, sans conflit, attend la fusion.
+- Choix par défaut ★ appliqué en attendant : les schémas du thème 3 (125 ✘ dans 28 schémas sur 51). Branche fable/theme-3-schemas-premium, worktree $S/wt_t3s ; deux agents en parallèle : C9 (3e_C9.2, 3e_C9.1, 4e_C9.1, 5e_C9.1) et C7-C8 (4e_C7.1, atelier-planification, 3e_C7.1, 5e_C7.1, atelier-cao, 4e_C8.1, 5e_C8.1). Consignes : $S/brief_t3_A.md et $S/brief_t3_B.md.
+- Reste ensuite : image de l'objet dans la carte des 7 synthèses d'ateliers.
 
-_(écrit par Claude le 29/10/2026 11:56)_
+_(écrit par Claude le 29/10/2026 12:50)_
 
 ## Branche et PR
 - Branche : `fable/theme-2-regle-304` — dernier commit 5a5ededb4 Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé
