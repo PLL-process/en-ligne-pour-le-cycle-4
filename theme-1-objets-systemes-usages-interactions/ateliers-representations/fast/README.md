@@ -10,7 +10,7 @@ Le programme de technologie parle de fonctions techniques, de principes techniqu
 | `atelier_4e_fast.html` | l'atelier de 4e |
 | `atelier_3e_fast.html` | l'atelier de 3e |
 | `qcm_fast.html` | le QCM (30 questions fixes) |
-| `Synthèses/synthese_eleve_fast.html` | la synthèse élève (le cours, à retenir, les mots) |
+| `Synthèses/synthese_eleve_fast.html` | la synthèse élève (deux pages A4 : la carte « Ce que je dois retenir », les parties, le lexique) |
 | `Synthèses/synthese_professeur_fast.html` | la synthèse professeur |
 | `fiche_pedagogique_fast.md`, `matrice_couverture_fast.csv` | gouvernance |
 | `rapport_tests_fast.md`, `manifest_fast.json` | tests exécutés, inventaire |

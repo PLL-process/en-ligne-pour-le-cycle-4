@@ -10,7 +10,7 @@ Son nom français est le diagramme de cas d'utilisation ; le programme de techno
 | `atelier_4e_cas-utilisation-sysml.html` | l'atelier de 4e |
 | `atelier_3e_cas-utilisation-sysml.html` | l'atelier de 3e |
 | `qcm_cas-utilisation-sysml.html` | le QCM (30 questions fixes) |
-| `Synthèses/synthese_eleve_cas-utilisation-sysml.html` | la synthèse élève (le cours, à retenir, les mots) |
+| `Synthèses/synthese_eleve_cas-utilisation-sysml.html` | la synthèse élève (deux pages A4 : la carte « Ce que je dois retenir », les parties, le lexique) |
 | `Synthèses/synthese_professeur_cas-utilisation-sysml.html` | la synthèse professeur |
 | `fiche_pedagogique_cas-utilisation-sysml.md`, `matrice_couverture_cas-utilisation-sysml.csv` | gouvernance |
 | `rapport_tests_cas-utilisation-sysml.md`, `manifest_cas-utilisation-sysml.json` | tests exécutés, inventaire |

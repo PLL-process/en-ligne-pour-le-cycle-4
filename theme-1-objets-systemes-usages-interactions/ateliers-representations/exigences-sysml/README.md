@@ -9,7 +9,7 @@ Le programme de technologie parle d'exigences et de cahier des charges. Le sché
 | `atelier_4e_exigences-sysml.html` | l'atelier de 4e |
 | `atelier_3e_exigences-sysml.html` | l'atelier de 3e |
 | `qcm_exigences-sysml.html` | le QCM (30 questions fixes) |
-| `Synthèses/synthese_eleve_exigences-sysml.html` | la synthèse élève (le cours, à retenir, les mots) |
+| `Synthèses/synthese_eleve_exigences-sysml.html` | la synthèse élève (deux pages A4 : la carte « Ce que je dois retenir », les parties, le lexique) |
 | `Synthèses/synthese_professeur_exigences-sysml.html` | la synthèse professeur |
 | `fiche_pedagogique_exigences-sysml.md`, `matrice_couverture_exigences-sysml.csv` | gouvernance |
 | `rapport_tests_exigences-sysml.md`, `manifest_exigences-sysml.json` | tests exécutés, inventaire |

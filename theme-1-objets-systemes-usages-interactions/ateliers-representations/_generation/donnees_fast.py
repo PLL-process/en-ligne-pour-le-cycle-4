@@ -1115,7 +1115,6 @@ IMAGES = {
     "fast_station_alerte.svg": STATION,
     "fast_station_alerte_erreurs.svg": STATION_ERREURS,
 }
-SCHEMAS_SYNTHESE = {"5e": LAMPADAIRE_CORRIGE, "4e": JARDIN_AJOUT_CORRIGE, "3e": STATION}
 VOCAB_EN = [("fonction d'usage", "function of use (service function)"), ("fonction technique", "technical function"),
             ("solution technique", "technical solution"), ("principe technique", "technical principle"),
             ("diagramme FAST", "FAST diagram (Function Analysis System Technique)"), ("comment ?", "how?"),

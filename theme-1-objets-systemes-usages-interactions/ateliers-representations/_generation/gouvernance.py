@@ -170,7 +170,7 @@ def readme(at):
     for niv in at.NIVEAUX:
         L.append("| `%s` | l'atelier de %s |" % (build.page_niveau(at, niv).relative_to(d).as_posix(), niv))
     L += ["| `%s` | le QCM (30 questions fixes) |" % build.qcm(at).relative_to(d).as_posix(),
-          "| `%s` | la synthèse élève (le cours, à retenir, les mots) |" % build.synthese_eleve(at).relative_to(d).as_posix(),
+          "| `%s` | la synthèse élève (deux pages A4 : la carte « Ce que je dois retenir », les parties, le lexique) |" % build.synthese_eleve(at).relative_to(d).as_posix(),
           "| `%s` | la synthèse professeur |" % build.synthese_prof(at).relative_to(d).as_posix(),
           "| `fiche_pedagogique_%s.md`, `matrice_couverture_%s.csv` | gouvernance |" % (at.SLUG, at.SLUG),
           "| `rapport_tests_%s.md`, `manifest_%s.json` | tests exécutés, inventaire |" % (at.SLUG, at.SLUG),
@@ -246,7 +246,7 @@ def manifest(at):
 def readme_general(ateliers):
     L = ["# Les ateliers des représentations", "",
          "Une représentation technique par atelier, des exercices en spirale de la 5e à la 3e quand le référentiel le "
-         "permet, un QCM de 30 questions, une synthèse élève (avec le cours) et une synthèse professeur. Les cahiers de "
+         "permet, un QCM de 30 questions, une synthèse élève (deux pages A4) et une synthèse professeur. Les cahiers de "
          "niveau (`cahiers/`) rassemblent tous les ateliers d'un niveau. Certains exercices sont aussi insérés dans les "
          "séquences des codes qu'ils servent : la sauvegarde est la même partout.", "",
          "| Atelier | Niveaux | Codes | Exercices |", "|---|---|---|---|"]

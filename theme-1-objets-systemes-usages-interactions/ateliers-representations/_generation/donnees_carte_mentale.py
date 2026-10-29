@@ -1147,7 +1147,6 @@ IMAGES = {
     "carte_mentale_arrosage.svg": CM_ARROSAGE_CORRIGE,
     "carte_mentale_station_alerte.svg": CM_STATION,
 }
-SCHEMAS_SYNTHESE = {"5e": CM_PROJET_CORRIGE, "4e": CM_ARROSAGE_CORRIGE, "3e": CM_STATION}
 VOCAB_EN = [("carte mentale", "mind map"), ("idée centrale", "central idea"), ("branche", "branch"),
             ("mot-clé", "keyword"), ("dossier", "folder"), ("fichier", "file"), ("arborescence", "file tree (directory tree)"),
             ("chemin", "path"), ("avantage", "advantage"), ("inconvénient", "drawback"),

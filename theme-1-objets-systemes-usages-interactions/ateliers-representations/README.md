@@ -1,6 +1,6 @@
 # Les ateliers des représentations
 
-Une représentation technique par atelier, des exercices en spirale de la 5e à la 3e quand le référentiel le permet, un QCM de 30 questions, une synthèse élève (avec le cours) et une synthèse professeur. Les cahiers de niveau (`cahiers/`) rassemblent tous les ateliers d'un niveau. Certains exercices sont aussi insérés dans les séquences des codes qu'ils servent : la sauvegarde est la même partout.
+Une représentation technique par atelier, des exercices en spirale de la 5e à la 3e quand le référentiel le permet, un QCM de 30 questions, une synthèse élève (deux pages A4) et une synthèse professeur. Les cahiers de niveau (`cahiers/`) rassemblent tous les ateliers d'un niveau. Certains exercices sont aussi insérés dans les séquences des codes qu'ils servent : la sauvegarde est la même partout.
 
 | Atelier | Niveaux | Codes | Exercices |
 |---|---|---|---|

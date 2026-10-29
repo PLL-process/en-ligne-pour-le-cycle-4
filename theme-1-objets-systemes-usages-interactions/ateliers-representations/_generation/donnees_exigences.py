@@ -1140,7 +1140,6 @@ ROLES_IMAGES = {
     "exigences_station_boitier_a.svg": "ce que le boîtier A satisfait, flèches « satisfy » (3e, corrigé et QCM)",
     "exigences_station_boitier_b.svg": "ce que le boîtier B satisfait, flèches « satisfy » (3e, corrigé)",
 }
-SCHEMAS_SYNTHESE = {"4e": EX_ARROSAGE_TESTS, "3e": EX_STATION_A}
 VOCAB_EN = [("exigence", "requirement"), ("diagramme des exigences", "requirement diagram"),
             ("identifiant (Id)", "identifier (Id)"), ("contenance", "containment"), ("vérifier", "verify"),
             ("satisfaire", "satisfy"), ("cas de test", "test case"), ("protocole de test", "test procedure"),

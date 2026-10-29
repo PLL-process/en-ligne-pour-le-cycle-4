@@ -187,6 +187,12 @@ cases (les principes, les valeurs écartées, les règles de nom, les étapes, l
 lexique, deux pages remplies à 94 %. C'est le modèle à suivre pour la forme exacte (classes CSS, carte, ordre des
 temps, impression). Pour chaque nouvelle synthèse, partir de sa feuille de style et de sa carte.
 
+**Les synthèses générées** : celles des sept ateliers des représentations ne s'écrivent pas à la main. Leur texte
+est dans `ateliers-representations/_generation/synthese_<module>.py` (modèle : `synthese_besoin.py`), rendu par
+`syntheses.eleve()` avec la feuille de style du pilote ; une pastille 5e / 4e / 3e marque le niveau de chaque
+partie, puisqu'un atelier sert plusieurs classes. On régénère avec `python3 build.py <module>`, dans une copie de
+travail, puis on mesure avec `mesurer_impression.py`.
+
 ## Avant de livrer
 
 - [ ] La carte en tête : la question, « Ce que dit le programme » mot pour mot, une carte par partie avec sa phrase

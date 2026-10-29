@@ -1597,7 +1597,6 @@ ROLES_IMAGES = {
     "croquis_cote_boitier_complete.svg": "3e, correction de l'exercice 5 et synthèse : le croquis coté complété",
     "station_quatre_representations.svg": "3e, exercice 6 et QCM : la même station en quatre représentations",
 }
-SCHEMAS_SYNTHESE = {"4e": GARDIENNE, "3e": BOITIER_COMPLET}
 VOCAB_EN = [("croquis", "sketch"), ("à main levée", "freehand"), ("légende", "label"), ("flèche", "arrow"),
             ("cote", "dimension"), ("croquis coté", "dimensioned sketch"), ("storyboard", "storyboard"),
             ("schéma", "diagram"), ("modélisation 3D", "3D modelling"), ("prototype", "prototype")]
