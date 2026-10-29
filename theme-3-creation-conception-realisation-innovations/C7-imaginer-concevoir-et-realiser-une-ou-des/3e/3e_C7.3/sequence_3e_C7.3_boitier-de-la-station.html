@@ -179,6 +179,9 @@ section.card[id^="activite-"]{scroll-margin-top:60px}
 
 /* Règle d'or n°304 : le bloc d'ouverture dit ce qui devrait être en place — à cocher, chacun avec son rattrapage. */
 .rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.rappel-spiralaire .verif{list-style:none;margin:.4em 0 .6em;padding:0}.rappel-spiralaire .verif li{margin:.55em 0}.rappel-spiralaire .verif .ligne{display:flex;align-items:flex-start;gap:.6em}.rappel-spiralaire .verif input[type=checkbox]{flex:none;width:18px;height:18px;margin:.2em 0 0;accent-color:#61dafb;cursor:pointer}.rappel-spiralaire .verif label{cursor:pointer}.rappel-spiralaire .verif .code-verif{display:inline-block;font-size:.82em;opacity:.85;white-space:nowrap;margin-left:.3em}.rappel-spiralaire .verif .rattrapage{margin:.2em 0 0 calc(18px + .6em);font-size:.93em}.rappel-spiralaire .verif-consigne{margin:.2em 0 .3em;font-size:.95em}.rappel-spiralaire .rattrapage a,.rappel-spiralaire .rattrapage a:visited{color:var(--hl)}@media print{.rappel-spiralaire .verif-consigne,.rappel-spiralaire .verif label,.rappel-spiralaire .verif .code-verif,.rappel-spiralaire .verif .rattrapage,.rappel-spiralaire .verif .rattrapage a{color:#041a40!important;opacity:1!important}}
+
+/* Billet d'entrée (règle d'or n°26) : sans note ; il renvoie aux rattrapages du bloc « Avant de commencer ». */
+#billet .billet-intro{margin:.2em 0 .6em}#billet .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;border-left:3px solid var(--input-bd,var(--border,#274a8a));border-radius:0;background:none}#billet .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600;color:var(--text)}#billet .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;padding:7px 9px;background:var(--input-bg,rgba(127,127,127,.10));border:2px solid transparent;border-radius:9px}#billet .qcm-option:hover,#billet .qcm-option:focus-within{border-color:var(--hl)}#billet .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}#billet .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;font-weight:400}#billet .billet-retour{margin:.7em 0 0;padding:.55em .8em;border-radius:8px;border-left:4px solid var(--hl);background:rgba(127,127,127,.10)}#billet .billet-retour:empty{display:none}#billet .billet-retour.ok{border-left-color:var(--ok)}#billet .billet-retour.warn{border-left-color:var(--warn)}#billet .billet-retour.ko{border-left-color:var(--err)}#billet .billet-retour p{margin:.2em 0}#billet .billet-retour ul{margin:.3em 0 .2em 1.2em;padding:0}#billet .billet-retour li{margin:.25em 0}#billet .billet-retour a,#billet .billet-retour a:visited{color:var(--hl)}#billet .billet-note{font-size:.9em;opacity:.85}@media print{#billet .billet-retour,#billet .billet-retour a{color:#041a40!important;opacity:1!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -618,6 +621,79 @@ main en haut d'une échelle.</p>
   <p><b>La question de la séance&nbsp;:</b> quelle paroi chaque matériau exige-t-il, et lequel des six tient le cahier des charges tel qu'il est écrit&nbsp;?</p>
 </section>
 
+<!-- Billet d'entrée (n°26) : en tête de la séance 1, comme le pilote 3e_C1.1. Une question par ligne du bloc
+     « Avant de commencer » ; « Voir où j'en suis » renvoie aux rattrapages de ces lignes. -->
+<section class="card" id="billet" aria-labelledby="billet-t">
+  <h2 id="billet-t">🎫 Billet d'entrée — trois questions, sans note</h2>
+  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. « Je ne sais pas encore » est une réponse utile.</p>
+  <fieldset class="qcm-groupe" id="be_1">
+      <legend>L'acier galvanisé rate la tenue à l'eau <b>et</b> la masse admise. Dans ton compte rendu, tu écris…</legend>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="seulement la première qu&#x27;il rate"><label for="be_1__1">seulement la première qu'il rate</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="seulement la plus grave des deux"><label for="be_1__2">seulement la plus grave des deux</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="les deux exigences qu&#x27;il rate"><label for="be_1__3">les deux exigences qu'il rate</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
+  </fieldset>
+  <fieldset class="qcm-groupe" id="be_2">
+      <legend>Placer le bac loin de la mer lève l'exigence de tenue au sel. Cette exigence venait donc…</legend>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="du lieu où vit l&#x27;objet"><label for="be_2__1">du lieu où vit l'objet</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="de l&#x27;objet lui-même"><label for="be_2__2">de l'objet lui-même</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="d&#x27;un engagement du collège"><label for="be_2__3">d'un engagement du collège</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
+  </fieldset>
+  <fieldset class="qcm-groupe" id="be_3">
+      <legend>Pour comparer deux matériaux honnêtement, il faut…</legend>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="le même prix d&#x27;achat, chez le même fournisseur"><label for="be_3__1">le même prix d'achat, chez le même fournisseur</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="la même grandeur, la même unité, la même méthode"><label for="be_3__2">la même grandeur, la même unité, la même méthode</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="la même couleur et la même épaisseur de pièce"><label for="be_3__3">la même couleur et la même épaisseur de pièce</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="je ne sais pas encore"><label for="be_3__4">je ne sais pas encore</label></div>
+  </fieldset>
+  <button type="button" class="btn" id="btnBillet">🎫 Voir où j'en suis</button>
+  <div class="billet-retour" id="fbBillet" role="status" aria-live="polite"></div>
+</section>
+<script>
+/* Billet d'entrée — sans note, hors progression (règle d'or n°26). Chaque question vérifie une ligne du bloc
+   « Avant de commencer » ; une réponse manquée renvoie au rattrapage que cette ligne porte déjà. */
+(function(){
+  var BONNES = ["les deux exigences qu'il rate", "du lieu où vit l'objet", "la même grandeur, la même unité, la même méthode"];
+  function rattrapage(n){
+    var c = document.getElementById("ouv_" + n), li = c && c.closest("li");
+    return li ? li.querySelector(".rattrapage a") : null;
+  }
+  function bilan(){
+    var fb = document.getElementById("fbBillet"), ok = 0, manque = [];
+    for(var i = 1; i <= BONNES.length; i++){
+      var r = document.querySelector('#billet input[name="be_' + i + '"]:checked');
+      if(r && r.value === BONNES[i - 1]) ok++; else manque.push(i);
+    }
+    fb.textContent = "";
+    var tete = document.createElement("p");
+    var n = BONNES.length;
+    tete.innerHTML = "<b>" + ok + " / " + n + "</b> — " + (ok === n
+      ? "tout ce qu'il faut est en place : tu peux commencer."
+      : (ok ? "une partie est en place. Avant de te lancer, relis :" : "rien n'est encore en place — ce n'est pas grave. Avant de te lancer, relis :"));
+    fb.appendChild(tete);
+    if(manque.length){
+      var ul = document.createElement("ul");
+      manque.forEach(function(i){
+        var li = document.createElement("li"), a = rattrapage(i);
+        li.appendChild(document.createTextNode("question " + i + " → "));
+        if(a) li.appendChild(a.cloneNode(true)); else li.appendChild(document.createTextNode("la ligne " + i + " du bloc « Avant de commencer »"));
+        ul.appendChild(li);
+      });
+      fb.appendChild(ul);
+    }
+    var note = document.createElement("p");
+    note.className = "billet-note";
+    note.textContent = "Ce billet n'est pas noté et ne compte pas dans ta progression.";
+    fb.appendChild(note);
+    fb.className = "billet-retour " + (ok === n ? "ok" : ok ? "warn" : "ko");
+  }
+  document.getElementById("btnBillet").addEventListener("click", bilan);
+  window.addEventListener("load", function(){
+    if(document.querySelectorAll("#billet input[type=radio]:checked").length === BONNES.length) bilan();
+  });
+})();
+</script>
 <section class="card">
   <h2>📐 Activité 0 — L'épaisseur n'est pas donnée : elle se déduit ⏱ ~25 min</h2>
   <p>Le cahier des charges donne les dimensions <b>extérieures</b> du boîtier :
@@ -1298,7 +1374,7 @@ function save(){
   const o = {inputs: {}, checks: {}, exp: window.__exp};
   document.querySelectorAll("input, select, textarea").forEach(e => {
     if(!e.id) return;
-    if(e.type === "checkbox") o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+    if(e.type === "checkbox" || (e.type === "radio" && e.closest("#billet"))) o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
 }
 function restore(){
