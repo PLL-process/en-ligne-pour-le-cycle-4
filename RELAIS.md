@@ -1,14 +1,13 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 29/10/2026 10:26 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 29/10/2026 10:27 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
-- #547 fusionnée (7 synthèses des ateliers, 2 pages). L'autre session a fusionné #550 (9 synthèses des séquences en 2 pages + « l'image de l'objet » dans la carte, forme fixée dans le skill).
-- PR #551 ouverte (branche fable/controle-schemas-angles-morts, worktree $S/wt_cs) : controle_schemas.mjs mesure débordement en hauteur, texte à cheval, trait sans pointe sur texte, balise HTML dans un SVG ; 2 défauts du thème 1 corrigés → thème 1 : 0 ✘ / 263. CI ✅.
-- Mesuré : thème 2 = 201 ✘ (60/114 schémas), thème 3 = 125 ✘ (28/51). JSON : $S/cs_23.json, planche $S/cs_planche23.
-- Reste : schémas du thème 2 puis 3 ; image de l'objet dans la carte des 7 ateliers (synthese_<module>.py + syntheses.py).
+- #551 fusionnée (contrôle des schémas : à cheval, trait sur texte, débordement en hauteur, balise HTML ; thème 1 à 0 ✘).
+- Choix par défaut ★ appliqué : les schémas du thème 2 (201 ✘ dans 60 schémas). Branche fable/theme-2-schemas-premium, worktree $S/wt_t2s ; trois sous-agents en parallèle sur des séquences disjointes : (1) 5e_C4.7, 3e_C4.8, 3e_C4.7 ; (2) 4e_C4.1_book-train, 4e_C4.7, 4e_C4.1 ; (3) C5 (3e/4e/5e), C6 (5 séquences), 3e_C4.3, 3e_C4.1.
+- Ensuite : journal, contrôles, une PR thème 2 ; puis le thème 3 (125 ✘ dans 28 schémas) ; image de l'objet dans la carte des 7 ateliers.
 
-_(écrit par Claude le 29/10/2026 10:22)_
+_(écrit par Claude le 29/10/2026 10:27)_
 
 ## Branche et PR
 - Branche : `fable/theme-2-regle-304` — dernier commit 5a5ededb4 Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé
@@ -18,7 +17,7 @@ _(écrit par Claude le 29/10/2026 10:22)_
 _Aucune._
 
 ## Prochaine action
-➡️ Fusionne #551.
+➡️ Rien à faire pour Pascal : les schémas du thème 2 sont en cours.
 
 ## Décisions prises récemment (messages de Pascal)
 - 29/10/2026 08:53 — « <task-notification> <task-id>af946527d87389d7a</task-id> <tool-use-id>toolu_0188d6PXtzDfAqV1vmMvk727</tool-use-id> <output-file>/tmp/claude- »
