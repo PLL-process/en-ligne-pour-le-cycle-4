@@ -128,6 +128,9 @@ table.releve td input{padding:4px 8px}
 
 /* Règle d'or n°304 : le bloc d'ouverture dit ce qui devrait être en place — à cocher, chacun avec son rattrapage. */
 .rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.rappel-spiralaire .verif{list-style:none;margin:.4em 0 .6em;padding:0}.rappel-spiralaire .verif li{margin:.55em 0}.rappel-spiralaire .verif .ligne{display:flex;align-items:flex-start;gap:.6em}.rappel-spiralaire .verif input[type=checkbox]{flex:none;width:18px;height:18px;margin:.2em 0 0;accent-color:#61dafb;cursor:pointer}.rappel-spiralaire .verif label{cursor:pointer}.rappel-spiralaire .verif .code-verif{display:inline-block;font-size:.82em;opacity:.85;white-space:nowrap;margin-left:.3em}.rappel-spiralaire .verif .rattrapage{margin:.2em 0 0 calc(18px + .6em);font-size:.93em}.rappel-spiralaire .verif-consigne{margin:.2em 0 .3em;font-size:.95em}.rappel-spiralaire .rattrapage a,.rappel-spiralaire .rattrapage a:visited{color:var(--hl)}@media print{.rappel-spiralaire .verif-consigne,.rappel-spiralaire .verif label,.rappel-spiralaire .verif .code-verif,.rappel-spiralaire .verif .rattrapage,.rappel-spiralaire .verif .rattrapage a{color:#041a40!important;opacity:1!important}}
+
+/* Billet d'entrée (règle d'or n°26) : sans note ; il renvoie aux rattrapages du bloc « Avant de commencer ». */
+#billet .billet-intro{margin:.2em 0 .6em}#billet .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;border-left:3px solid var(--input-bd,var(--border,#274a8a));border-radius:0;background:none}#billet .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600;color:var(--text)}#billet .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;padding:7px 9px;background:var(--input-bg,rgba(127,127,127,.10));border:2px solid transparent;border-radius:9px}#billet .qcm-option:hover,#billet .qcm-option:focus-within{border-color:var(--hl)}#billet .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}#billet .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;font-weight:400}#billet .billet-retour{margin:.7em 0 0;padding:.55em .8em;border-radius:8px;border-left:4px solid var(--hl);background:rgba(127,127,127,.10)}#billet .billet-retour:empty{display:none}#billet .billet-retour.ok{border-left-color:var(--ok)}#billet .billet-retour.warn{border-left-color:var(--warn)}#billet .billet-retour.ko{border-left-color:var(--err)}#billet .billet-retour p{margin:.2em 0}#billet .billet-retour ul{margin:.3em 0 .2em 1.2em;padding:0}#billet .billet-retour li{margin:.25em 0}#billet .billet-retour a,#billet .billet-retour a:visited{color:var(--hl)}#billet .billet-note{font-size:.9em;opacity:.85}@media print{#billet .billet-retour,#billet .billet-retour a{color:#041a40!important;opacity:1!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -535,6 +538,79 @@ table.releve td input{padding:4px 8px}
   </ul>
 </section>
 
+<!-- Billet d'entrée (n°26) : en tête de la séance 1, comme le pilote 3e_C1.1. Une question par ligne du bloc
+     « Avant de commencer » ; « Voir où j'en suis » renvoie aux rattrapages de ces lignes. -->
+<section class="card" id="billet" aria-labelledby="billet-t">
+  <h2 id="billet-t">🎫 Billet d'entrée — trois questions, sans note</h2>
+  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. « Je ne sais pas encore » est une réponse utile.</p>
+  <fieldset class="qcm-groupe" id="be_1">
+      <legend>Une fiche de réparation dit : 1. couper l'alimentation ; 2. dévisser ; 3. remplacer. Tu commences par…</legend>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="couper l&#x27;alimentation, l&#x27;étape n°1"><label for="be_1__1">couper l'alimentation, l'étape n°1</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="l&#x27;étape qui te semble la plus rapide"><label for="be_1__2">l'étape qui te semble la plus rapide</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="remplacer la pièce, puisque c&#x27;est le but"><label for="be_1__3">remplacer la pièce, puisque c'est le but</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
+  </fieldset>
+  <fieldset class="qcm-groupe" id="be_2">
+      <legend>Pour comparer le freinage de deux vélos, on garde identiques…</legend>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="rien : on essaie chaque vélo là où on se trouve"><label for="be_2__1">rien : on essaie chaque vélo là où on se trouve</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="seulement le cycliste, le reste peut changer"><label for="be_2__2">seulement le cycliste, le reste peut changer</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="la charge, le sol et la vitesse : seul le vélo change"><label for="be_2__3">la charge, le sol et la vitesse : seul le vélo change</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
+  </fieldset>
+  <fieldset class="qcm-groupe" id="be_3">
+      <legend>Quelle mesure est bien notée ?</legend>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="« environ 41 »"><label for="be_3__1">« environ 41 »</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="« 41 kilogrammes »"><label for="be_3__2">« 41 kilogrammes »</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="« assez lourd »"><label for="be_3__3">« assez lourd »</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="je ne sais pas encore"><label for="be_3__4">je ne sais pas encore</label></div>
+  </fieldset>
+  <button type="button" class="btn" id="btnBillet">🎫 Voir où j'en suis</button>
+  <div class="billet-retour" id="fbBillet" role="status" aria-live="polite"></div>
+</section>
+<script>
+/* Billet d'entrée — sans note, hors progression (règle d'or n°26). Chaque question vérifie une ligne du bloc
+   « Avant de commencer » ; une réponse manquée renvoie au rattrapage que cette ligne porte déjà. */
+(function(){
+  var BONNES = ["couper l'alimentation, l'étape n°1", "la charge, le sol et la vitesse : seul le vélo change", "« 41 kilogrammes »"];
+  function rattrapage(n){
+    var c = document.getElementById("ouv_" + n), li = c && c.closest("li");
+    return li ? li.querySelector(".rattrapage a") : null;
+  }
+  function bilan(){
+    var fb = document.getElementById("fbBillet"), ok = 0, manque = [];
+    for(var i = 1; i <= BONNES.length; i++){
+      var r = document.querySelector('#billet input[name="be_' + i + '"]:checked');
+      if(r && r.value === BONNES[i - 1]) ok++; else manque.push(i);
+    }
+    fb.textContent = "";
+    var tete = document.createElement("p");
+    var n = BONNES.length;
+    tete.innerHTML = "<b>" + ok + " / " + n + "</b> — " + (ok === n
+      ? "tout ce qu'il faut est en place : tu peux commencer."
+      : (ok ? "une partie est en place. Avant de te lancer, relis :" : "rien n'est encore en place — ce n'est pas grave. Avant de te lancer, relis :"));
+    fb.appendChild(tete);
+    if(manque.length){
+      var ul = document.createElement("ul");
+      manque.forEach(function(i){
+        var li = document.createElement("li"), a = rattrapage(i);
+        li.appendChild(document.createTextNode("question " + i + " → "));
+        if(a) li.appendChild(a.cloneNode(true)); else li.appendChild(document.createTextNode("la ligne " + i + " du bloc « Avant de commencer »"));
+        ul.appendChild(li);
+      });
+      fb.appendChild(ul);
+    }
+    var note = document.createElement("p");
+    note.className = "billet-note";
+    note.textContent = "Ce billet n'est pas noté et ne compte pas dans ta progression.";
+    fb.appendChild(note);
+    fb.className = "billet-retour " + (ok === n ? "ok" : ok ? "warn" : "ko");
+  }
+  document.getElementById("btnBillet").addEventListener("click", bilan);
+  window.addEventListener("load", function(){
+    if(document.querySelectorAll("#billet input[type=radio]:checked").length === BONNES.length) bilan();
+  });
+})();
+</script>
 <section class="card">
   <h2>🖐️ Activité 0 — FAIRE d'abord : casser trois éprouvettes ⏱ ~10 min</h2>
   <p>Avant toute explication. Choisis un matériau, augmente la charge, regarde ce qui se passe.
@@ -1035,6 +1111,8 @@ function save(){
   document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
   // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
   document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { o.inputs[c.id] = c.checked; });
+  // les réponses du billet d'entrée (n°26) : à part, pour que restore() ne réécrive pas leur valeur
+  o.billet = {}; document.querySelectorAll("#billet input[type=radio]").forEach(c => { o.billet[c.id] = c.checked; });
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
 }
 function restore(){
@@ -1043,6 +1121,7 @@ function restore(){
   Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
   // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
   document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { const v = (o.inputs || {})[c.id]; if(v !== undefined) c.checked = (v === true); });
+  Object.entries(o.billet || {}).forEach(([k, v]) => { const c = document.getElementById(k); if(c) c.checked = (v === true); });
   window.__exp = o.exp || {};
   (o.brisees || []).forEach(b => brisees.add(b));
   const h = $("hyp"); const r = $("rappelHyp");
