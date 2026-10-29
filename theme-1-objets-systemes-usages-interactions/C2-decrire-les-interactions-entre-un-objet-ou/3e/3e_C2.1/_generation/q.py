@@ -84,7 +84,7 @@ q(C, "Qui abandonne vraiment", "En détaillant par profil, on trouve chez les ha
    "La moyenne générale ne s'applique à aucun profil en particulier : c'est justement ce que le détail révèle.",
    "Les occasionnels sont à 11 %, soit un abandon sur neuf ; les habitués, eux, n'en comptent aucun.",
    "Cinquante pour cent est le taux des personnes âgées, à l'autre extrémité de l'échelle."],
-  "Dans ces 30 retraits, aucun habitué n'abandonne : l'échec se concentre sur ceux qui découvrent la borne.")
+  "Parmi ces 40 usagers, aucun habitué n'abandonne : l'échec se concentre sur ceux qui découvrent la borne.")
 
 q(C, "La moyenne qui ne décrit personne", "La durée moyenne est de 77 s ; l'habitué met 41 s et la personne âgée 123 s. Cela montre que…",
   ["une moyenne peut ne décrire personne",

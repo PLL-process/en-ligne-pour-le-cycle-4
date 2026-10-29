@@ -342,7 +342,7 @@ with sync_playwright() as p:
         ctx.close()
 
     # ───────────────────────────── les synthèses ─────────────────────────────
-    for nom, uri, figs in (("élève", SYE, 2), ("professeur", SYP, 0)):
+    for nom, uri, figs in (("élève", SYE, 4), ("professeur", SYP, 0)):
         errs.clear()
         pg.goto(uri)
         pg.wait_for_timeout(300)
@@ -350,8 +350,9 @@ with sync_playwright() as p:
         t(f"synthèse {nom} : {figs} figure(s) référencée(s)",
           pg.eval_on_selector_all("object", "a=>a.length") == figs)
         t(f"synthèse {nom} : liens de navigation valides",
-          all(pathlib.Path("Synthèses").joinpath(h).exists()
-              for h in pg.eval_on_selector_all("a", "a=>a.map(e=>e.getAttribute('href'))")))
+          all(pathlib.Path("Synthèses").joinpath(h.split("#")[0]).exists()
+              for h in pg.eval_on_selector_all("a", "a=>a.map(e=>e.getAttribute('href'))")
+              if not h.startswith("#")))   # n°316 : la carte renvoie aux parties de la page (#partie-N)
     t("synthèse professeur : les deux variantes d'usage y sont écrites",
       "Variante A" in pg.content() and "Variante B" in pg.content())
 

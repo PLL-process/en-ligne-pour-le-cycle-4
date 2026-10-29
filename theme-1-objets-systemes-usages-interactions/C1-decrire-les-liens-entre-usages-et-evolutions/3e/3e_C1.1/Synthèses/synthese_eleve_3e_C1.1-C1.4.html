@@ -1,125 +1,272 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Synthèse élève — 3e_C1.1 à C1.4 · Tsinghua : robots, drones et IA face aux feux</title>
 <style>
-  :root{--bg:#f6f8fc;--card:#fff;--line:#b9cbe2;--title:#174f88;--ok:#22a06b;--warn:#b45309;--err:#b91c1c}
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
   *{box-sizing:border-box}
-  body{font-family:Segoe UI,system-ui,Arial,sans-serif;max-width:940px;margin:auto;padding:24px;
-       line-height:1.62;background:var(--bg);color:#13213a}
-  h1,h2{color:var(--title)} h1{font-size:1.5em} h2{font-size:1.15em;margin-top:0}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:14px 0}
-  .retenir{border-left:7px solid var(--ok)} .piege{border-left:7px solid var(--err)}
-  .exemple{border-left:7px solid var(--warn)}
-  table{width:100%;border-collapse:collapse;font-size:.95em}
-  th,td{border:1px solid #9eb3cc;padding:7px 9px;text-align:left;vertical-align:top}
-  th{background:#e8eef7}
-  code{background:#e8eef5;padding:.1rem .3rem;border-radius:.25rem}
-  nav a{display:inline-block;margin-right:12px}
-  @media print{body{background:#fff}.card{break-inside:avoid}nav{display:none}}
-#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;font-size:.95em;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+  h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
+  ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  table{width:100%;border-collapse:collapse;margin:6px 0}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--sub);font-size:.9em}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  /* règle n°304 : un lien de rattrapage arrive sur ce titre ; la barre collante (47 px) ne doit pas le recouvrir */
+  h2[id]{scroll-margin-top:60px}
+  #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
+
+  /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
+  /* Une couleur par notion, la même partout : la donnée en jaune, l'information en vert. */
+  .d{color:var(--warn);font-weight:600}.i{color:var(--ok);font-weight:600}
+  /* La carte « Ce que je dois retenir » */
+  .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
+  .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
+  .question{text-align:center;font-size:1.05em;font-weight:600;margin:0 0 10px}
+  .programme{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);
+             padding:6px 0;margin:0 0 12px}
+  .programme b{color:var(--text)}
+  .programme ul{margin:2px 0;padding-left:18px}.programme li{margin:1px 0}
+  .cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .cartes a{display:block;text-decoration:none;color:var(--text);background:var(--panel);border:1.5px solid var(--border);
+            border-radius:10px;padding:9px 12px}
+  .cartes a:hover{border-color:var(--hl)}
+  .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
+  .cartes .r{display:block;font-size:.92em}
+  /* Les six temps d'une partie */
+  .comme-vie{background:#132b52;border-radius:8px;padding:8px 12px;margin:4px 0 10px}
+  dl.voc{display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;margin:8px 0;font-size:.93em}
+  dl.voc dt{color:var(--hl);font-weight:600}dl.voc dd{margin:0}
+  @media(max-width:600px){dl.voc{grid-template-columns:1fr;gap:0}dl.voc dd{margin:0 0 6px}}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
+  .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
+  details.verifie{border:1px dashed var(--sub);border-radius:8px;padding:6px 12px;margin:10px 0 2px}
+  details.verifie summary{cursor:pointer;font-weight:600;color:var(--sub)}
+  details.verifie p{margin:6px 0 2px}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0}
+  .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
+  .chaine b{display:block}
+  .vert{color:var(--ok)}.rouge{color:var(--err)}
+
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+    h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
+    .carte{page-break-after:always;break-after:page}
+    .cartes a,.comme-vie,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
+    .d{color:#8a5a00}.i{color:#1d6b38}.vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,details.verifie summary,dl.voc dt{color:#222}
+    .bloc{break-inside:auto;padding:6px 10px;margin-bottom:8px}details.verifie{break-inside:avoid}
+    /* papier : les schémas à 60 % de la largeur, des marges serrées — la carte tient sur une page, les parties sur peu */
+    .schema{width:60%;display:block;margin:4px auto}
+    h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
+    .comme-vie,.retenir,.piege,details.verifie{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}dl.voc{margin:4px 0;gap:1px 10px}.chaine{gap:6px;margin:4px 0}}
+
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  .card th{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
 
 /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
 @media(max-width:680px){table{display:block;overflow-x:auto}}
-</style></head><body>
-<nav id="navharm" aria-label="Navigation du site">
-  <a href="../../../../../index.html">&#8962; Accueil</a>
-  <a href="../sequence_3e_C1.1-C1.4_tsinghua_feux.html">&#8592; La séquence</a>
-  <a href="../qcm_3e_C1.1-C1.4_tsinghua.html">&#129504; Le QCM</a>
-</nav>
+</style></head>
+<body>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_3e_C1.1-C1.4_tsinghua_feux.html">← Séquence</a><a href="../qcm_3e_C1.1-C1.4_tsinghua.html">🧠 Le QCM</a></nav>
+<div class="page">
+<h1>🤖 Synthèse élève — Robots, drones et IA face aux feux</h1>
+<p class="pb">Rupture ou amélioration, découverte ou usage, chiffre juste ou chiffre fragile : savoir de quoi on parle.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (la carte sur une page, puis les parties)</button></div>
 
-<nav><a href="../sequence_3e_C1.1-C1.4_tsinghua_feux.html">← Séquence</a>
-     <a href="../qcm_3e_C1.1-C1.4_tsinghua.html">QCM d'entraînement</a></nav>
+<!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
+<section class="carte" aria-labelledby="carte-titre">
+  <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
+  <p class="question">Comment les techniques pour surveiller les feux ont-elles changé, et ce changement, que fait-il à la société&nbsp;?</p>
+  <div class="programme"><b>Ce que dit le programme</b> (3e, compétence C1)&nbsp;:
+    <ul>
+      <li>identifier les innovations de rupture qui sont attachées à l'évolution d'un OST&nbsp;;</li>
+      <li>mettre en relation une découverte scientifique avec ses développements technologiques et leurs effets sur la société&nbsp;;</li>
+      <li>exprimer dans un argumentaire court l'incidence d'un OST sur la société&nbsp;;</li>
+      <li>exprimer dans un argumentaire court l'incidence des contraintes sociétales sur les OST.</li>
+    </ul>
+  </div>
+  <div class="cartes">
+    <a href="#partie-1"><span class="q">🚀 1. Une nouveauté, est-ce toujours une rupture&nbsp;?</span>
+      <span class="r">Non. Une amélioration fait mieux la même chose&nbsp;; une rupture change les usages et les métiers.</span></a>
+    <a href="#partie-2"><span class="q">🔭 2. Comment une découverte devient-elle un objet utile&nbsp;?</span>
+      <span class="r">Il faut une découverte, une capacité de fabriquer, et un besoin. Il en manque un, et rien ne se passe.</span></a>
+    <a href="#partie-3"><span class="q">🧮 3. Peut-on comparer n'importe quels chiffres&nbsp;?</span>
+      <span class="r">Non&nbsp;: même unité, même période, même périmètre. Un chiffre emprunté s'annonce comme tel.</span></a>
+    <a href="#partie-4"><span class="q">⚖️ 4. Tout se mesure-t-il avec un seul chiffre&nbsp;?</span>
+      <span class="r">Non. Certaines pertes n'ont pas d'unité commune, et la valeur des vies ne se compare jamais.</span></a>
+    <a href="#partie-5"><span class="q">🗣️ 5. Comment écrire un argumentaire qui tient&nbsp;?</span>
+      <span class="r">Dans les deux sens&nbsp;: l'objet change la société, la société change l'objet. Avec des faits, et ses limites.</span></a>
+  </div>
+</section>
 
-<h1>🤖 Synthèse — Robots, drones et IA face aux feux</h1>
-<p><b>Compétences travaillées</b> — 3e_C1.1 · C1.2 · C1.3 · C1.4.</p>
-
-<div class="card retenir">
-  <h2>1. Amélioration ou rupture</h2>
-  <p>Une <b>amélioration</b> fait <b>mieux la même chose</b>&nbsp;: une tour de guet plus haute, de
-  meilleures jumelles, deux fois plus de capteurs identiques.</p>
-  <p>Une <b>innovation de rupture</b> rend possible <b>ce qui ne l'était pas du tout</b> — et rend
-  <b>caduc un savoir-faire</b>. Pour l'établir, deux preuves&nbsp;: ce qui devient possible, et ce
-  qui cesse de suffire.</p>
+<!-- ══ 1 ══ -->
+<div class="bloc savoir">
+  <h2 id="partie-1" style="margin-top:0">1. Une nouveauté, est-ce toujours une rupture&nbsp;?</h2>
+  <p class="comme-vie">🏠 <b>Comme la musique</b>&nbsp;: un baladeur qui contient plus de chansons, c'est une amélioration. Écouter en ligne, sans rien acheter ni stocker, c'est une rupture&nbsp;: la plupart des disquaires ont disparu, d'autres métiers sont apparus.</p>
+  <h3>Surveiller les feux&nbsp;: trois régimes</h3>
+  <object class="schema" data="../Images/corrige_trois_regimes_de_surveillance.svg" type="image/svg+xml" aria-label="Les trois régimes de surveillance des feux — vigie humaine, satellite, détection multi-indices — avec pour chacun ce qu'il permet, ce qu'il ne permet pas et le métier qu'il suppose">Les trois régimes de surveillance</object>
   <table>
     <tr><th>Régime</th><th>Ce qu'il rend possible</th><th>Le métier</th></tr>
-    <tr><td>Vigie humaine</td><td>voir une fumée, et lever le doute</td><td>guetteur</td></tr>
-    <tr><td>Satellite</td><td>voir la nuit, sur un continent</td><td>analyste d'images</td></tr>
-    <tr><td>Multi-indices</td><td>surveiller en continu, localement</td><td>exploitant de système</td></tr>
+    <tr><td><b>La vigie humaine</b></td><td>voir une fumée, et lever le doute soi-même</td><td>guetteur</td></tr>
+    <tr><td><b>Le satellite</b></td><td>voir la nuit, sur tout un continent</td><td>analyste d'images</td></tr>
+    <tr><td><b>Les capteurs multi-indices</b></td><td>surveiller sans arrêt, sur place</td><td>exploitant de système</td></tr>
   </table>
-  <p><b>Et une rupture n'efface pas forcément ce qui la précède</b>&nbsp;: des tours fonctionnent
-  encore, parce qu'un œil humain lève un doute qu'aucun capteur ne lève.</p>
+  <p>Une tour de guet plus haute, avec de meilleures jumelles, c'est une <b>amélioration</b>&nbsp;: le guetteur fait
+  le même travail, en mieux. Le satellite est une <b>rupture</b>&nbsp;: il voit la nuit, ce que le guetteur ne
+  pouvait pas faire, et il demande un autre métier.</p>
+  <p>Une rupture n'efface pas toujours ce qui existait&nbsp;: des tours de guet fonctionnent encore. Un œil humain
+  lève un doute qu'aucun capteur ne lève.</p>
+  <dl class="voc">
+    <dt>invention <span class="en">— invention</span></dt><dd>une solution technique nouvelle, mise au point pour la première fois. Elle n'est pas forcément utilisée.</dd>
+    <dt>innovation <span class="en">— innovation</span></dt><dd>une nouveauté mise à la disposition de ceux qui peuvent s'en servir. Une idée seule n'en est pas une.</dd>
+    <dt>amélioration <span class="en">— improvement</span></dt><dd>mieux faire la même chose&nbsp;: l'usage et le métier ne changent pas.</dd>
+    <dt>innovation de rupture <span class="en">— disruptive innovation</span></dt><dd>une innovation qui change les usages, les marchés et les métiers&nbsp;: le savoir-faire d'avant ne suffit plus.</dd>
+    <dt>OST <span class="en">— technical object or system</span></dt><dd>objet ou système technique&nbsp;: une tour de guet, un satellite, un drone.</dd>
+  </dl>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une <b>rupture</b> se prouve deux fois&nbsp;: <b>ce qui devient possible</b>, et <b>ce qui cesse de suffire</b>. Regarde le <b>métier</b>&nbsp;: s'il change, c'est une rupture.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: confondre un gros progrès avec une rupture. Deux fois plus de capteurs identiques, c'est plus, pas autrement. Autre piège&nbsp;: croire que le nouveau remplace forcément l'ancien.</p>
+  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: on installe deux fois plus de caméras du même modèle. Amélioration ou rupture&nbsp;?</summary>
+    <p>Amélioration. On voit mieux, mais le travail reste le même, et rien de nouveau ne devient possible. Plus, ce n'est pas autrement.</p></details>
 </div>
 
-<div class="card retenir">
-  <h2>2. D'une découverte à ses effets</h2>
-  <p>En <b>1800</b>, Herschel place des thermomètres sous chaque couleur d'un spectre pour savoir
-  <b>laquelle chauffe le plus</b>. Celui posé <b>au-delà du rouge</b>, là où l'œil ne voit rien,
-  monte le plus&nbsp;: c'est l'<b>infrarouge</b>. Il ne cherchait pas cela.</p>
-  <p>Il faudra <b>plus d'un siècle</b> pour les premières caméras thermiques, puis les satellites, puis
-  le drone qui repère un point chaud sous la fumée&nbsp;:</p>
-  <p><b>découverte → capacité de fabrication → diffusion → usages nouveaux.</b></p>
-  <p>Une découverte devient une technique quand une <b>capacité de fabrication</b> ET un
-  <b>besoin</b> la rencontrent. Il en manque un, et rien ne se passe.</p>
+<!-- ══ 2 ══ -->
+<div class="bloc savoir">
+  <h2 id="partie-2" style="margin-top:0">2. Comment une découverte devient-elle un objet utile&nbsp;?</h2>
+  <p class="comme-vie">🏠 <b>Comme le micro-ondes</b>&nbsp;: un ingénieur a remarqué qu'une barre chocolatée fondait près d'un appareil radar. Il a fallu des années pour en faire un four, puis le rendre assez petit et bon marché pour les cuisines.</p>
+  <h3>De Herschel aux drones qui repèrent les feux</h3>
+  <object class="schema" data="../Images/herschel_au_dela_du_rouge.svg" type="image/svg+xml" aria-label="L'expérience de Herschel en 1800 : le montage et la mesure de température faite dans chaque zone de la table">L'expérience de Herschel</object>
+  <ol>
+    <li><b>La découverte (1800)</b>&nbsp;: Herschel pose des thermomètres sous chaque couleur de la lumière, pour savoir
+    laquelle chauffe le plus. Le plus chaud est au-delà du rouge, là où l'œil ne voit rien&nbsp;: c'est
+    l'<b>infrarouge</b>. Il ne cherchait pas cela.</li>
+    <li><b>La fabrication</b>&nbsp;: plus d'un siècle plus tard, on sait fabriquer des capteurs qui voient l'infrarouge.</li>
+    <li><b>La diffusion</b>&nbsp;: caméras thermiques, puis satellites, puis drones, de moins en moins chers.</li>
+    <li><b>Les usages nouveaux</b>&nbsp;: un drone repère un point chaud sous la fumée.</li>
+  </ol>
+  <object class="schema" data="../Images/corrige_de_la_decouverte_a_l_usage.svg" type="image/svg+xml" aria-label="Frise à l'échelle du temps : l'observation de Herschel en 1800, plus d'un siècle sans usage, les caméras thermiques puis les satellites au XXe siècle, et le drone d'aujourd'hui">De la découverte à l'usage</object>
+  <p>La diffusion change aussi <b>qui peut mesurer</b>&nbsp;: un pompier, une commune, et plus seulement un laboratoire.</p>
+  <dl class="voc">
+    <dt>découverte scientifique <span class="en">— scientific discovery</span></dt><dd>un phénomène observé pour la première fois. Ce n'est pas encore un objet.</dd>
+    <dt>infrarouge <span class="en">— infrared</span></dt><dd>une lumière invisible pour l'œil, qui transporte de la chaleur.</dd>
+  </dl>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une <b>découverte</b> devient une technique quand une <b>capacité de fabrication</b> et un <b>besoin</b> la rencontrent. Quatre maillons&nbsp;: découverte, fabrication, diffusion, usages.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: raconter l'histoire à l'envers, comme si Herschel cherchait à détecter les feux. Une découverte se fait souvent en cherchant autre chose. Autre piège&nbsp;: sauter du début à la fin sans les maillons du milieu.</p>
+  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: pourquoi a-t-il fallu plus d'un siècle entre Herschel et la première caméra thermique&nbsp;?</summary>
+    <p>Parce qu'une découverte ne suffit pas. Il fallait aussi savoir fabriquer des capteurs sensibles à l'infrarouge, et avoir une raison de le faire. Tant qu'un maillon manque, rien ne se passe.</p></details>
 </div>
 
-<div class="card">
-  <h2>3. Lire des données avant de calculer</h2>
-  <p>Comparer deux nombres suppose <b>trois accords</b>&nbsp;: même <b>unité</b>, même
-  <b>période</b>, même <b>périmètre</b>. Il en manque un, la comparaison tombe — même si le tableur
-  accepte l'opération.</p>
-  <p>Un <b>proxy</b> est une valeur empruntée faute de mieux. Il est <b>légitime</b>&nbsp;; un proxy
-  <b>tu</b> ne l'est plus. Le chiffre voyagera seul, détaché de la page qui l'expliquait&nbsp;:
-  l'avertissement doit voyager avec lui.</p>
-  <p class="exemple"><b>Exemple</b> — 20 000 000 ÷ 504 002 ≈ 39,68 tCO₂/ha (UE, 2023). Appliqué à
-  50 000 ha&nbsp;: ≈ <b>1,98 MtCO₂</b>. À écrire toujours avec&nbsp;: «&nbsp;estimation par proxy
-  européen 2023, non officielle pour la France 2026&nbsp;».</p>
+<!-- ══ 3 ══ -->
+<div class="bloc faire">
+  <h2 id="partie-3" style="margin-top:0">3. Peut-on comparer n'importe quels chiffres&nbsp;?</h2>
+  <p class="comme-vie">🏠 <b>Comme comparer deux prix</b>&nbsp;: un paquet de pâtes à 1&nbsp;€ et un autre à 1,50&nbsp;€. Le premier pèse 500&nbsp;g, le second 1&nbsp;kg&nbsp;: sans la même quantité, la comparaison ne veut rien dire.</p>
+  <h3>Estimer le CO₂ des feux en France</h3>
+  <p>Pour comparer deux nombres, il faut <b>trois accords</b>&nbsp;:</p>
+  <ul>
+    <li>la même <b>unité</b>&nbsp;: des hectares ne se comparent pas à des tonnes&nbsp;;</li>
+    <li>la même <b>période</b>&nbsp;: une année avec une année&nbsp;;</li>
+    <li>le même <b>périmètre</b>&nbsp;: ce que la mesure compte exactement (par voiture&nbsp;? par passager&nbsp;?).</li>
+  </ul>
+  <p>Il n'existe pas encore de chiffre français. On <b>emprunte</b> donc celui de l'Union européenne en 2023&nbsp;:
+  20&nbsp;000&nbsp;000 tonnes de CO₂ pour 504&nbsp;002 hectares brûlés. Cela fait environ 39,68 tonnes de CO₂ par
+  hectare. Appliqué aux 50&nbsp;000 hectares brûlés en France en 2026, cela donne environ 1,98 million de tonnes.</p>
+  <p>Ce chiffre est un <b>proxy</b>. On l'écrit toujours avec son avertissement&nbsp;: «&nbsp;estimation par un chiffre
+  européen de 2023, non officielle pour la France en 2026&nbsp;».</p>
+  <dl class="voc">
+    <dt>proxy <span class="en">— proxy</span></dt><dd>une valeur empruntée à un autre lieu ou une autre année, faute de mieux, et annoncée comme telle.</dd>
+    <dt>périmètre <span class="en">— scope</span></dt><dd>ce que la mesure compte exactement&nbsp;: un véhicule, un passager, une année.</dd>
+    <dt>équivalence <span class="en">— equivalence</span></dt><dd>traduire une quantité dans une autre de même nature. Ce n'est jamais une égalité parfaite.</dd>
+    <dt>hectare <span class="en">— hectare</span></dt><dd>une surface de 100&nbsp;m sur 100&nbsp;m, à peu près un terrain et demi de football.</dd>
+  </dl>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on ne compare que des chiffres de même <b>unité</b>, même <b>période</b> et même <b>périmètre</b>. Un chiffre emprunté, un <b>proxy</b>, voyage toujours avec son <b>avertissement</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'une comparaison est juste parce que le tableur accepte le calcul. Le tableur divise n'importe quoi&nbsp;: c'est à toi de savoir si les deux nombres vont ensemble.</p>
+  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: on compare les émissions d'un avion «&nbsp;par passager&nbsp;» à celles d'une voiture «&nbsp;par véhicule&nbsp;». Où est le problème&nbsp;?</summary>
+    <p>Le périmètre n'est pas le même. Une voiture peut transporter quatre personnes&nbsp;: pour comparer, il faut ramener les deux chiffres au passager, ou les deux au véhicule.</p></details>
 </div>
 
-<div class="card piege">
-  <h2>4. Ce qui ne se convertit pas</h2>
-  <p>Des <b>débris</b> en tonnes, des <b>cultures perdues</b> en pourcentage, une <b>eau
-  contaminée</b>&nbsp;: aucune formule ne les ramène à un chiffre unique. Ces grandeurs n'ont ni la
-  même unité, ni la même nature.</p>
-  <p>Un calcul peut être <b>juste et fragile</b> à la fois. «&nbsp;313 tonnes de débris par bâtiment
-  touché&nbsp;» s'obtient sans erreur d'arithmétique — et ne dit rien de la toxicité, de l'amiante,
-  des munitions non explosées ni de l'eau.</p>
-  <p><b>Et la frontière qu'on ne franchit pas&nbsp;:</b><br>
-  «&nbsp;Nous comparons des indicateurs et des méthodes de mesure&nbsp;; nous ne comparons ni la
-  valeur des vies, ni la gravité des souffrances, ni la légitimité des victimes.&nbsp;»</p>
+<!-- ══ 4 ══ -->
+<div class="bloc pieges">
+  <h2 id="partie-4" style="margin-top:0">4. Tout se mesure-t-il avec un seul chiffre&nbsp;?</h2>
+  <p class="comme-vie">🏠 <b>Comme une journée gâchée</b>&nbsp;: un vélo crevé, une note ratée et une dispute avec un ami ne s'additionnent pas en un seul nombre. Chaque perte se décrit à part.</p>
+  <h3>Les dégâts d'une guerre et des feux</h3>
+  <object class="schema" data="../Images/corrige_ce_qui_ne_se_convertit_pas.svg" type="image/svg+xml" aria-label="Trois zones : ce qui se convertit grâce à une unité commune, ce qui ne se convertit pas faute d'unité et de nature communes, et ce qui ne se compare jamais">Ce qui ne se convertit pas</object>
+  <ul>
+    <li><b>Ce qui se convertit</b>&nbsp;: un trajet, un repas, des feux&nbsp;: tout se ramène en kilogrammes de CO₂.</li>
+    <li><b>Ce qui ne se convertit pas</b>&nbsp;: des débris en tonnes, des cultures perdues en pourcentage, une eau
+    polluée. Ni la même unité, ni la même nature.</li>
+    <li><b>Ce qui ne se compare jamais</b>&nbsp;: la valeur des vies, la gravité des souffrances, la légitimité des victimes.</li>
+  </ul>
+  <p>Un calcul peut être <b>juste et fragile</b> à la fois. «&nbsp;313 tonnes de débris par bâtiment touché&nbsp;» est
+  juste en calcul. Mais il ne dit rien de la toxicité, de l'amiante, des munitions non explosées ni de l'eau.</p>
+  <dl class="voc">
+    <dt>incommensurable <span class="en">— incommensurable</span></dt><dd>qui ne peut pas se mesurer avec la même unité qu'autre chose.</dd>
+  </dl>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: certaines grandeurs <b>ne se convertissent pas</b>&nbsp;: on les décrit chacune à part. Et une frontière ne se franchit pas&nbsp;: on compare des <b>méthodes de mesure</b>, jamais la <b>valeur des vies</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'un calcul juste dit tout. Il est exact, mais il peut cacher l'essentiel&nbsp;: ce qu'il ne compte pas.</p>
+  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: «&nbsp;313 tonnes de débris par bâtiment&nbsp;» : le calcul est juste. Pourquoi dit-on qu'il est fragile&nbsp;?</summary>
+    <p>Parce que les bâtiments n'ont ni la même taille ni les mêmes dégâts. Et le chiffre ne dit rien du danger des débris&nbsp;: amiante, munitions, eau polluée. Juste en calcul, il reste pauvre en sens.</p></details>
 </div>
 
-<div class="card retenir">
-  <h2>5. Deux argumentaires, deux sens</h2>
+<!-- ══ 5 ══ -->
+<div class="bloc savoir">
+  <h2 id="partie-5" style="margin-top:0">5. Comment écrire un argumentaire qui tient&nbsp;?</h2>
+  <p class="comme-vie">🏠 <b>Comme demander un chien à tes parents</b>&nbsp;: «&nbsp;je le promènerai tous les soirs&nbsp;» se vérifie. «&nbsp;Ce sera génial&nbsp;» ne se vérifie pas. Et dire «&nbsp;il faudra le faire garder l'été&nbsp;» montre que tu as réfléchi.</p>
+  <h3>Le drone face aux feux, dans les deux sens</h3>
   <table>
     <tr><th>Sens</th><th>Code</th><th>Exemple</th></tr>
-    <tr><td>L'objet <b>change</b> la société</td><td>3e_C1.3</td>
-        <td>le drone réduit l'exposition des pompiers&nbsp;; le guetteur devient exploitant de système</td></tr>
-    <tr><td>La société <b>change</b> l'objet</td><td>3e_C1.4</td>
-        <td>l'espace aérien impose une autorisation, donc un mode dégradé&nbsp;; la protection des
-        données impose de limiter résolution et conservation</td></tr>
+    <tr><td><b>L'objet change la société</b></td><td>3e_C1.3</td><td>le drone expose moins les pompiers&nbsp;; le guetteur devient exploitant de système</td></tr>
+    <tr><td><b>La société change l'objet</b></td><td>3e_C1.4</td><td>l'espace aérien impose une autorisation, donc un mode de secours&nbsp;; la vie privée impose de limiter la netteté des images et leur durée de conservation</td></tr>
   </table>
-  <p>Un argumentaire est solide quand chaque affirmation s'appuie sur un <b>fait vérifiable</b>, et
-  qu'il dit <b>ce qu'il laisse de côté</b>.</p>
-  <p class="piege" style="border:0;padding:0;color:#b91c1c"><b>Piège&nbsp;:</b> un argumentaire qui
-  n'énumère que des bénéfices ne prouve rien — on pourrait l'écrire à l'identique pour n'importe
-  quelle solution. Et une contrainte nommée sans son effet sur l'objet est un inventaire, pas un
-  argument.</p>
+  <p>Une <b>contrainte</b> peut être de trois natures. Une <b>règle</b>&nbsp;: la loi sur l'espace aérien. Un
+  <b>moyen</b>&nbsp;: le budget d'une commune, pour l'achat mais aussi pour l'entretien pendant des années. Une
+  <b>attente</b>&nbsp;: le respect de la vie privée. Chaque contrainte s'écrit
+  avec son <b>effet sur l'objet</b>&nbsp;: «&nbsp;la vie privée → on détecte la chaleur sans reconnaître les personnes&nbsp;».</p>
+  <dl class="voc">
+    <dt>argumentaire <span class="en">— argument</span></dt><dd>quelques phrases qui défendent une idée avec des faits.</dd>
+    <dt>contrainte sociétale <span class="en">— societal constraint</span></dt><dd>une règle, un moyen ou une attente de la société qui oblige à concevoir autrement.</dd>
+    <dt>mode dégradé <span class="en">— fallback mode</span></dt><dd>ce que fait le système quand il ne peut pas fonctionner normalement.</dd>
+  </dl>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un argumentaire solide relie <b>une caractéristique de l'objet</b> à <b>un changement pour des personnes</b>, dans les <b>deux sens</b>. Chaque affirmation est <b>vérifiable</b>, et il dit ce qu'il laisse de côté.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: n'aligner que des bénéfices. Un tel texte pourrait être écrit pour n'importe quelle solution&nbsp;: il ne prouve rien. Autre piège&nbsp;: nommer une contrainte sans dire ce qu'elle change dans l'objet.</p>
+  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: «&nbsp;La protection des données est une contrainte importante.&nbsp;» Pourquoi n'est-ce pas encore un argument&nbsp;?</summary>
+    <p>Parce qu'il manque l'effet sur l'objet. Un argument dirait&nbsp;: «&nbsp;la protection des données oblige à limiter la netteté des images et leur durée de conservation. Le drone détecte alors la chaleur, sans reconnaître les personnes.&nbsp;»</p></details>
 </div>
 
-<div class="card">
-  <h2>Les mots à savoir employer</h2>
-  <table>
-    <tr><th>Mot</th><th>Ce qu'il désigne</th></tr>
-    <tr><td><b>OST</b></td><td>objet ou système technique</td></tr>
-    <tr><td><b>Innovation de rupture</b></td><td>changement qui rend possible ce qui ne l'était pas, et rend caduc un savoir-faire</td></tr>
-    <tr><td><b>Proxy</b></td><td>valeur empruntée à un autre contexte, employée faute de mieux — et annoncée comme telle</td></tr>
-    <tr><td><b>Périmètre</b></td><td>ce que la mesure compte exactement (un véhicule&nbsp;? un passager&nbsp;? une année&nbsp;?)</td></tr>
-    <tr><td><b>Équivalence</b></td><td>traduction d'une quantité dans une autre unité de même nature — jamais une identité</td></tr>
-    <tr><td><b>Contrainte sociétale</b></td><td>règle, moyen ou attente collective qui oblige à concevoir autrement</td></tr>
-  </table>
 </div>
-</body></html>
+<script>
+/* À l'impression, les réponses « Vérifie-toi » sont dépliées (règle d'or n°316). */
+window.addEventListener('beforeprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.dataset.etaitOuvert = d.open; d.open = true; }));
+window.addEventListener('afterprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.open = d.dataset.etaitOuvert === 'true'; }));
+</script>
+</body>
+</html>

@@ -5,39 +5,81 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Synthèse élève — Shenzhen, la station de vélos (5e_C2.1 · C2.2)</title>
 <style>
-  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
         --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
   *{box-sizing:border-box}
-  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em;
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;font-size:.95em;
        font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
   .page{max-width:860px;margin:0 auto}
   h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
   .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
-  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
-  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
-  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24}
-  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
-  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
+  h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+  h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
+  ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
   code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
-  a{color:var(--hl)}
-  .savoir{border-left:4px solid var(--ok)}.faire{border-left:4px solid var(--hl)}.pieges{border-left:4px solid var(--err)}
-  .voc{font-size:.88em}.voc td{padding:2px 8px;border-bottom:1px dashed var(--border)}
-  table{width:100%;border-collapse:collapse}
+  table{width:100%;border-collapse:collapse;margin:6px 0}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--sub);font-size:.9em}
   .toolbar{text-align:center;margin:10px 0}
   .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
-  a:focus-visible,.btn:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
   #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
   /* règle n°304 : un lien de rattrapage arrive sur ce titre ; la barre collante (47 px) ne doit pas le recouvrir */
   h2[id]{scroll-margin-top:60px}
   #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
-  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}
-    h1,h2,dt,.pb{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}}
 
+  /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
+  /* Une couleur par notion, la même partout : la donnée en jaune, l'information en vert. */
+  .d{color:var(--warn);font-weight:600}.i{color:var(--ok);font-weight:600}
+  /* La carte « Ce que je dois retenir » */
+  .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
+  .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
+  .question{text-align:center;font-size:1.05em;font-weight:600;margin:0 0 10px}
+  .programme{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);
+             padding:6px 0;margin:0 0 12px}
+  .programme b{color:var(--text)}
+  .programme ul{margin:2px 0;padding-left:18px}.programme li{margin:1px 0}
+  .cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .cartes a{display:block;text-decoration:none;color:var(--text);background:var(--panel);border:1.5px solid var(--border);
+            border-radius:10px;padding:9px 12px}
+  .cartes a:hover{border-color:var(--hl)}
+  .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
+  .cartes .r{display:block;font-size:.92em}
+  /* Les six temps d'une partie */
+  .comme-vie{background:#132b52;border-radius:8px;padding:8px 12px;margin:4px 0 10px}
+  dl.voc{display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;margin:8px 0;font-size:.93em}
+  dl.voc dt{color:var(--hl);font-weight:600}dl.voc dd{margin:0}
+  @media(max-width:600px){dl.voc{grid-template-columns:1fr;gap:0}dl.voc dd{margin:0 0 6px}}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
+  .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
+  details.verifie{border:1px dashed var(--sub);border-radius:8px;padding:6px 12px;margin:10px 0 2px}
+  details.verifie summary{cursor:pointer;font-weight:600;color:var(--sub)}
+  details.verifie p{margin:6px 0 2px}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0}
+  .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
+  .chaine b{display:block}
+  .vert{color:var(--ok)}.rouge{color:var(--err)}
 
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+    h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
+    .carte{page-break-after:always;break-after:page}
+    .cartes a,.comme-vie,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
+    .d{color:#8a5a00}.i{color:#1d6b38}.vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,details.verifie summary,dl.voc dt{color:#222}
+    .bloc{break-inside:auto;padding:6px 10px;margin-bottom:8px}details.verifie{break-inside:avoid}
+    /* papier : les schémas à 60 % de la largeur, des marges serrées — la carte tient sur une page, les parties sur peu */
+    .schema{width:60%;display:block;margin:4px auto}
+    h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
+    .comme-vie,.retenir,.piege,details.verifie{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}dl.voc{margin:4px 0;gap:1px 10px}.chaine{gap:6px;margin:4px 0}}
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  .schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
 
   /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
@@ -60,116 +102,180 @@
 <div class="page">
 <h1>📌 Synthèse élève — Shenzhen&nbsp;: la station et tout ce qui l'entoure</h1>
 <p class="pb">Recenser ce qui entre en relation avec l'objet, puis lire les décisions dans ses formes.</p>
-<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (la carte sur une page, puis les parties)</button></div>
 
+<!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
+<section class="carte" aria-labelledby="carte-titre">
+  <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
+  <p class="question">Qu'est-ce qui entoure une station de vélos, et pourquoi a-t-elle cette forme&nbsp;?</p>
+  <div class="programme"><b>Ce que dit le programme</b> (5e, compétence C2)&nbsp;:
+    <ul>
+      <li>faire la liste des interacteurs extérieurs d'un OST&nbsp;;</li>
+      <li>repérer et expliquer les choix de conception dans les domaines de l'ergonomie et de la sécurité ou en lien avec des objectifs de développement durable.</li>
+    </ul>
+  </div>
+  <div class="cartes">
+    <a href="#partie-1"><span class="q">🚲 1. Qu'est-ce qu'un interacteur&nbsp;?</span>
+      <span class="r">Tout ce qui, en dehors de l'objet, entre en relation avec lui. Il peut être invisible ou non vivant.</span></a>
+    <a href="#partie-2"><span class="q">🗂️ 2. Comment n'oublier personne… ni rien&nbsp;?</span>
+      <span class="r">Quatre familles&nbsp;: usagers, données, autres objets, environnement. Les données sont les plus oubliées.</span></a>
+    <a href="#partie-3"><span class="q">🔍 3. Pourquoi la station a-t-elle cette forme&nbsp;?</span>
+      <span class="r">Chaque forme est une décision. On la voit en demandant «&nbsp;pourquoi pas autrement&nbsp;?&nbsp;».</span></a>
+    <a href="#partie-4"><span class="q">🧭 4. Dans quel domaine ranger un choix&nbsp;?</span>
+      <span class="r">Ergonomie, sécurité, développement durable. Celui qui répare est un usager, lui aussi.</span></a>
+    <a href="#partie-5"><span class="q">⚖️ 5. Un choix est-il toujours gratuit&nbsp;?</span>
+      <span class="r">Non&nbsp;: il déplace le problème ailleurs. On nomme le gain et le prix.</span></a>
+    <a href="#partie-6"><span class="q">🌴 6. La même station marcherait-elle en Martinique&nbsp;?</span>
+      <span class="r">Pas telle quelle&nbsp;: en changeant de lieu, on change d'interacteurs, et il faut revoir des choix.</span></a>
+  </div>
+</section>
+
+<!-- ══ 1 ══ -->
 <div class="bloc savoir">
-  <h2 id="partie-1" style="margin-top:0">1. Qu'est-ce qu'un interacteur&nbsp;? (5e_C2.1)</h2>
-  <p>Un <b>interacteur</b> est tout ce qui, <b>à l'extérieur</b> de l'objet, entre en relation avec
-  lui&nbsp;: qui l'utilise, ce qu'il touche, ce qu'il subit.</p>
-  <p>Le seul critère est&nbsp;: <b>dedans ou dehors&nbsp;?</b> La couleur du cadre d'un vélo est une
-  caractéristique de l'objet, pas un interacteur. La pluie, elle, est dehors et agit.</p>
-  <p>Un interacteur n'a besoin d'être ni <b>vivant</b>, ni <b>visible</b>, ni <b>mobile</b>. Le
-  réseau informatique ne se voit pas, et sans lui aucun vélo ne sort.</p>
+  <h2 id="partie-1" style="margin-top:0">1. Qu'est-ce qu'un interacteur&nbsp;?</h2>
+  <p class="comme-vie">🏠 <b>Comme ton vélo</b>&nbsp;: toi, la route, la pluie et la pompe à vélo sont dehors et agissent sur lui. Sa couleur, elle, fait partie du vélo&nbsp;: ce n'est pas un interacteur.</p>
+  <h3>La station de Shenzhen&nbsp;: dedans ou dehors&nbsp;?</h3>
+  <object class="schema" data="../Images/la_station_et_sa_limite.svg" type="image/svg+xml" aria-label="Schéma d'une station de vélos simulée, vue de côté : la borne, son écran-lecteur, son boîtier et son point d'ancrage, avec un vélo accroché, le trottoir et le câble d'alimentation">La station et sa limite</object>
+  <p>La seule question est&nbsp;: <b>dedans ou dehors&nbsp;?</b> L'écran et le boîtier font partie de la borne. Le vélo
+  accroché, le trottoir et le câble d'alimentation sont dehors&nbsp;: ce sont des interacteurs.</p>
+  <ul>
+    <li>Un interacteur n'a pas besoin d'être <b>vivant</b>&nbsp;: la pluie agit sur la borne.</li>
+    <li>Ni d'être <b>visible</b>&nbsp;: le réseau informatique ne se voit pas, et sans lui aucun vélo ne sort.</li>
+  </ul>
+  <p>Les recenser sert à prévoir les pannes&nbsp;: un objet peut s'arrêter sans qu'aucune pièce ne casse, si le réseau
+  ou le courant manque.</p>
+  <dl class="voc">
+    <dt>interacteur <span class="en">— interactor</span></dt><dd>tout ce qui, à l'extérieur de l'objet, entre en relation avec lui.</dd>
+    <dt>OST <span class="en">— technical object or system</span></dt><dd>objet ou système technique&nbsp;: ici, la station de vélos.</dd>
+  </dl>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un <b>interacteur</b> est <b>extérieur</b> à l'objet et entre en relation avec lui. Il peut être <b>non vivant</b> ou <b>invisible</b>. Le seul critère&nbsp;: dedans ou dehors&nbsp;?</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: citer une pièce de l'objet, comme l'écran, en croyant citer un interacteur. Une pièce est dedans&nbsp;; un interacteur est dehors.</p>
+  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: la couleur jaune des vélos est-elle un interacteur de la station&nbsp;?</summary>
+    <p>Non. C'est une caractéristique du vélo, pas quelque chose qui agit sur la station. Le vélo, lui, en est un&nbsp;: il est dehors, et il s'accroche à la borne.</p></details>
+</div>
+
+<!-- ══ 2 ══ -->
+<div class="bloc faire">
+  <h2 id="partie-2" style="margin-top:0">2. Comment n'oublier personne… ni rien&nbsp;?</h2>
+  <p class="comme-vie">🏠 <b>Comme faire ton sac pour une sortie</b>&nbsp;: si tu penses seulement aux habits, tu oublies le chargeur et le parapluie. Une liste par familles évite les oublis.</p>
+  <h3>Les quatre familles autour de la station</h3>
   <object class="schema" data="../Images/interacteurs_de_la_station.svg" type="image/svg+xml" aria-label="Les quatre familles d'interacteurs autour de la station : usagers, données, autres objets, environnement">Les quatre familles d'interacteurs</object>
+  <table>
+    <tr><th>Famille</th><th>À Shenzhen</th></tr>
+    <tr><td><b>Les usagers</b></td><td>le cycliste abonné, le touriste de passage, l'agent de maintenance</td></tr>
+    <tr><td><b>Les données</b></td><td>l'identifiant de l'abonné, l'état «&nbsp;disponible&nbsp;» du vélo, le paiement</td></tr>
+    <tr><td><b>Les autres objets</b></td><td>le vélo, le smartphone, le réseau, l'alimentation électrique</td></tr>
+    <tr><td><b>L'environnement</b></td><td>la pluie, le sel marin, la température, le trottoir</td></tr>
+  </table>
+  <p>Trois questions font sortir les oubliés&nbsp;: <b>qu'est-ce qui l'alimente&nbsp;?</b> <b>Qu'est-ce qui le
+  menace&nbsp;?</b> <b>Qu'est-ce qui le contraint&nbsp;?</b></p>
+  <p>Les règles de la ville ne sont pas des interacteurs&nbsp;: elles n'échangent rien avec la station. Elles imposent
+  une condition à celui qui la conçoit&nbsp;: ce sont des <b>exigences</b>.</p>
+  <dl class="voc">
+    <dt>environnement <span class="en">— environment</span></dt><dd>tout ce qui entoure l'objet&nbsp;: le temps qu'il fait, le sol, l'air.</dd>
+    <dt>donnée <span class="en">— data</span></dt><dd>une information qui circule&nbsp;: un identifiant, un état, un paiement.</dd>
+  </dl>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on recense les interacteurs par <b>quatre familles</b>&nbsp;: <b>usagers</b>, <b>données</b>, <b>autres objets</b>, <b>environnement</b>. Une liste se juge à ses quatre familles, pas à sa longueur.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: ne citer que des personnes. C'est le réflexe de presque tout le monde&nbsp;: une liste de personnes est une liste à moitié faite.</p>
+  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: ta liste contient le cycliste, le touriste et l'agent. Que lui manque-t-il&nbsp;?</summary>
+    <p>Trois familles sur quatre. Il manque les données (l'identifiant, le paiement), les autres objets (le vélo, le réseau) et l'environnement (la pluie, le sel).</p></details>
 </div>
 
+<!-- ══ 3 ══ -->
+<div class="bloc faire">
+  <h2 id="partie-3" style="margin-top:0">3. Pourquoi la station a-t-elle cette forme&nbsp;?</h2>
+  <p class="comme-vie">🏠 <b>Comme la poignée de ta porte</b>&nbsp;: une poignée qu'on baisse plutôt qu'un bouton qu'on tourne. Quelqu'un a décidé, pour qu'on ouvre même les bras chargés.</p>
+  <h3>Cinq détails de la station</h3>
+  <object class="schema" data="../Images/cinq_choix_sur_la_station.svg" type="image/svg+xml" aria-label="Schéma de la station de vélos, vue de côté, sans vélo, avec cinq détails numérotés : la tête inclinée, l'ancrage à 90 cm, les arêtes arrondies, le boîtier à vis unique, les pièces remplaçables">Cinq choix sur la station</object>
+  <p>Devant chaque détail, on se demande <b>«&nbsp;pourquoi pas autrement&nbsp;?&nbsp;»</b>. Tant qu'on n'a pas imaginé
+  une autre forme, on ne voit pas qu'il y a eu une décision.</p>
+  <table>
+    <tr><th>Décrire (un constat)</th><th>Expliquer (avec l'interacteur et l'effet)</th></tr>
+    <tr><td>«&nbsp;La borne est inclinée.&nbsp;»</td><td>«&nbsp;La borne est inclinée pour que <b>la pluie</b> s'écoule au lieu de stagner sur le lecteur.&nbsp;»</td></tr>
+  </table>
+  <dl class="voc">
+    <dt>choix de conception <span class="en">— design choice</span></dt><dd>une décision prise en dessinant l'objet&nbsp;: une forme, une hauteur, une vis.</dd>
+  </dl>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: chaque <b>forme</b> est une <b>décision</b>, prise pour répondre à un <b>interacteur</b>. Expliquer, c'est nommer cet interacteur et l'effet recherché.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: décrire une forme en croyant l'avoir expliquée. «&nbsp;Elle est inclinée&nbsp;» est un constat&nbsp;; «&nbsp;pour que l'eau s'écoule&nbsp;» est une explication.</p>
+  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: «&nbsp;L'ancrage est à 90&nbsp;cm du sol.&nbsp;» Comment transformer ce constat en explication&nbsp;?</summary>
+    <p>En nommant l'interacteur et l'effet&nbsp;: «&nbsp;l'ancrage est à 90&nbsp;cm (centimètres) pour que l'usager pousse son vélo sans se baisser&nbsp;».</p></details>
+</div>
+
+<!-- ══ 4 ══ -->
 <div class="bloc savoir">
-  <h2 style="margin-top:0">2. Les quatre familles — et le réflexe qui coûte</h2>
-  <dl>
-    <dt>Les usagers</dt><dd>le cycliste abonné, le touriste de passage, l'agent de maintenance.</dd>
-    <dt>Les données</dt><dd>l'identifiant de l'abonné, l'état «&nbsp;disponible&nbsp;» du vélo, le
-    paiement.</dd>
-    <dt>Les autres objets</dt><dd>le vélo, le smartphone, le réseau, l'alimentation électrique.</dd>
-    <dt>Les éléments de l'environnement</dt><dd>la pluie, le sel marin, la température, le
-    trottoir.</dd>
+  <h2 id="partie-4" style="margin-top:0">4. Dans quel domaine ranger un choix&nbsp;?</h2>
+  <p class="comme-vie">🏠 <b>Comme une chaise d'école</b>. Sa hauteur va avec ton corps&nbsp;: ergonomie. Ses angles sont arrondis&nbsp;: sécurité. Ses pieds se changent un par un&nbsp;: développement durable.</p>
+  <h3>Les trois domaines, sur la station</h3>
+  <object class="schema" data="../Images/lire_un_choix_de_conception.svg" type="image/svg+xml" aria-label="Tableau : ce que j'observe, pourquoi pas autrement, l'interacteur, le domaine">Lire un choix de conception</object>
+  <table>
+    <tr><th>Domaine</th><th>La question</th><th>Sur la station</th></tr>
+    <tr><td><b>Ergonomie</b></td><td>l'objet s'adapte-t-il au corps et aux gestes&nbsp;?</td><td>l'ancrage à 90&nbsp;cm, la hauteur où l'on pousse sans se baisser</td></tr>
+    <tr><td><b>Sécurité</b></td><td>que permet-il d'éviter&nbsp;?</td><td>les arêtes arrondies blessent moins</td></tr>
+    <tr><td><b>Développement durable</b></td><td>que change-t-il pour la matière, l'énergie, la durée de vie&nbsp;?</td><td>les pièces remplaçables une par une font durer la borne</td></tr>
+  </table>
+  <p>Un choix peut servir deux domaines&nbsp;: la vis unique aide l'agent de maintenance (ergonomie) et permet de
+  réparer au lieu de jeter (développement durable). On dit alors lequel domine, et pourquoi.</p>
+  <p>L'esthétique compte, mais ce n'est pas l'un des trois domaines du programme.</p>
+  <dl class="voc">
+    <dt>ergonomie <span class="en">— ergonomics</span></dt><dd>adapter l'objet au corps et aux gestes de ceux qui l'utilisent.</dd>
+    <dt>sécurité <span class="en">— safety</span></dt><dd>protéger des accidents et des blessures.</dd>
+    <dt>développement durable <span class="en">— sustainable development</span></dt><dd>penser la matière, l'énergie et la durée de vie dès la conception.</dd>
+    <dt>maintenance <span class="en">— maintenance</span></dt><dd>l'entretien et la réparation d'un objet.</dd>
   </dl>
-  <p>Les <b>règles de la ville</b> n'en font pas partie&nbsp;: elles n'échangent rien avec la
-  station, elles imposent une condition à celui qui la conçoit. Ce sont des <b>exigences</b>.</p>
-  <p>Presque tout le monde ne cite que des <b>personnes</b> à la première tentative&nbsp;:
-  <b>une liste qui ne contient que des personnes est une liste à moitié faite.</b></p>
-  <p>Trois questions font sortir les oubliés&nbsp;: qu'est-ce qui <b>alimente</b> l'objet&nbsp;?
-  qu'est-ce qui le <b>menace</b>&nbsp;? qu'est-ce qui le <b>contraint</b>&nbsp;?</p>
-  <p>On juge une liste à sa <b>couverture des quatre familles</b>, pas à sa longueur.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un choix se range dans un <b>domaine</b>&nbsp;: <b>ergonomie</b>, <b>sécurité</b> ou <b>développement durable</b>. Le domaine se lit à ce que le choix permet ou évite.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: dire «&nbsp;c'est pour faire joli&nbsp;» devant un choix qui évite une blessure. Autre piège&nbsp;: croire que le développement durable, c'est seulement trier et recycler à la fin.</p>
+  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: la borne se démonte avec une seule vis. Pour qui, et dans quel domaine&nbsp;?</summary>
+    <p>Pour l'agent de maintenance&nbsp;: il ouvre vite, sans outil spécial (ergonomie). Et on répare au lieu de jeter&nbsp;: c'est aussi du développement durable.</p></details>
 </div>
 
-<div class="bloc faire">
-  <h2 id="partie-3" style="margin-top:0">3. Lire une décision dans une forme (5e_C2.2)</h2>
-  <p><b>Chaque forme est une décision</b>, prise par quelqu'un, pour répondre à un interacteur.</p>
-  <p>La question qui ouvre la lecture d'un objet&nbsp;: «&nbsp;<b>pourquoi pas autrement&nbsp;?</b>&nbsp;»
-  Tant qu'on n'a pas imaginé l'autre solution possible, on ne voit pas qu'il y a eu décision.</p>
-  <object class="schema" data="../Images/lire_un_choix_de_conception.svg" type="image/svg+xml" aria-label="Tableau : ce que j'observe, pourquoi pas autrement, l'interacteur, le domaine">De l'observation au domaine de conception</object>
-  <p><b>Expliquer, ce n'est pas décrire.</b> «&nbsp;La borne est inclinée&nbsp;» est un constat.
-  «&nbsp;La borne est inclinée <i>pour que</i> l'eau s'écoule au lieu de stagner sur le
-  lecteur&nbsp;» est une explication&nbsp;: elle nomme l'interacteur et l'effet recherché.</p>
-</div>
-
-<div class="bloc faire">
-  <h2 id="partie-4" style="margin-top:0">4. Les trois domaines du programme</h2>
-  <dl>
-    <dt>Ergonomie</dt><dd>l'objet s'adapte au <b>corps</b> et aux <b>gestes</b>&nbsp;: l'ancrage à
-    90&nbsp;cm est la hauteur où l'on pousse un vélo sans se baisser.</dd>
-    <dt>Sécurité</dt><dd>l'objet <b>protège des accidents</b>&nbsp;: les arêtes arrondies blessent
-    moins.</dd>
-    <dt>Développement durable</dt><dd>le choix pèse sur la <b>matière</b>, l'<b>énergie</b> et la
-    <b>durée de vie</b>&nbsp;: des pièces remplaçables une par une font durer la borne, donc il faut
-    produire moins de matière et l'on jette moins.</dd>
+<!-- ══ 5 ══ -->
+<div class="bloc pieges">
+  <h2 id="partie-5" style="margin-top:0">5. Un choix est-il toujours gratuit&nbsp;?</h2>
+  <p class="comme-vie">🏠 <b>Comme un cartable à roulettes</b>&nbsp;: ton dos est soulagé, mais il est lourd dans les escaliers. Le problème a changé de place.</p>
+  <h3>Deux stations, deux séries de choix</h3>
+  <object class="schema" data="../Images/station_A_station_B.svg" type="image/svg+xml" aria-label="Deux stations de vélos côte à côte : à gauche, borne inclinée, ancrage à 90 cm, boîtier à vis unique ; à droite, bornes sous un auvent, ancrage au sol, boîtier soudé">Deux stations</object>
+  <table>
+    <tr><th>Choix</th><th>Le gain</th><th>Le prix, ailleurs</th></tr>
+    <tr><td>boîtier soudé</td><td>résiste mieux au vandalisme</td><td>la maintenance devient très lourde</td></tr>
+    <tr><td>ancrage au sol</td><td>gagne de la place</td><td>les usagers doivent se baisser</td></tr>
+    <tr><td>auvent au lieu d'une borne inclinée</td><td>protège mieux de la pluie</td><td>prend de la place et prend le vent</td></tr>
+  </table>
+  <dl class="voc">
+    <dt>contrainte <span class="en">— constraint</span></dt><dd>une condition qu'on doit respecter et qui limite les choix.</dd>
   </dl>
-  <p>Un choix «&nbsp;en lien avec le développement durable&nbsp;» ne se réduit ni au matériau
-  «&nbsp;naturel&nbsp;» ni au recyclage de la fin&nbsp;: il se prend <b>dès la conception</b>.</p>
-  <p>Un même choix peut servir <b>deux domaines</b> à la fois&nbsp;: la vis unique sert l'ergonomie
-  de l'agent de maintenance <i>et</i> le développement durable, puisqu'elle rend la réparation
-  possible. On dit alors lequel domine, et pourquoi.</p>
-  <p>L'<b>esthétique</b> existe et compte&nbsp;: l'apparence d'un objet et son intégration dans un
-  lieu sont de vraies questions de conception. Mais elle <b>n'est pas l'un des trois domaines de ce
-  code</b> — cite-la si elle explique un choix, ne la compte pas comme un domaine.</p>
-  <p>L'ergonomie ne concerne pas que l'utilisateur final&nbsp;: <b>celui qui répare</b> a lui aussi
-  un corps, des gestes et un temps compté.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un choix technique <b>déplace le problème ailleurs</b>. Un même problème a <b>plusieurs réponses</b>&nbsp;: pour chacune, on nomme <b>le gain et le prix</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: ne dire que ce que le choix apporte. Un choix jugé sur un seul critère est mal jugé.</p>
+  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: la seconde station a des boîtiers soudés. Qui va le payer&nbsp;?</summary>
+    <p>L'agent de maintenance&nbsp;: pour réparer, il doit découper ou remplacer tout le boîtier. Le boîtier résiste au vandalisme, mais chaque réparation devient longue et coûteuse.</p></details>
 </div>
 
-<div class="bloc pieges">
-  <h2 style="margin-top:0">5. Ce qu'un choix coûte ailleurs</h2>
-  <p><b>Un choix technique n'est jamais gratuit&nbsp;: il déplace le problème ailleurs.</b> Savoir
-  dire <i>où</i>, c'est lire un objet.</p>
+<!-- ══ 6 ══ -->
+<div class="bloc savoir">
+  <h2 id="partie-6" style="margin-top:0">6. La même station marcherait-elle en Martinique&nbsp;?</h2>
+  <p class="comme-vie">🏠 <b>Comme tes habits</b>&nbsp;: ceux qui vont bien à Fort-de-France ne suffisent pas en montagne l'hiver. Toi, tu n'as pas changé&nbsp;; ce qui t'entoure, si.</p>
+  <h3>De Shenzhen à Sainte-Luce</h3>
+  <object class="schema" data="../Images/shenzhen_sainte_luce.svg" type="image/svg+xml" aria-label="Tableau qui met face à face la même station à Shenzhen et à Sainte-Luce, en Martinique, sur trois interacteurs : l'air, la pluie, le cyclone">De Shenzhen à Sainte-Luce</object>
   <ul>
-    <li>boîtier <b>soudé</b>&nbsp;: résiste mieux au vandalisme, rend la maintenance très lourde&nbsp;;</li>
-    <li>ancrage <b>au sol</b>&nbsp;: gagne de la place, se paie sur le dos des usagers&nbsp;;</li>
-    <li><b>auvent</b> au lieu d'une borne inclinée&nbsp;: protège mieux, occupe de la place et prend
-    le vent.</li>
+    <li><b>L'air salin</b> attaque les métaux&nbsp;: il faut revoir les matériaux et les protections.</li>
+    <li><b>Les pluies intenses</b> sont bien plus fortes qu'une averse&nbsp;: l'inclinaison ne suffit plus.</li>
+    <li><b>Le cyclone</b> n'est pas une pluie forte&nbsp;: c'est un interacteur à part. Il faut pouvoir démonter,
+    attacher ou protéger la station.</li>
   </ul>
-  <p>Un même problème admet <b>plusieurs réponses techniques</b>, chacune avec ses conséquences.
-  Nomme toujours le <b>gain</b> ET le <b>prix</b>.</p>
+  <dl class="voc">
+    <dt>transposer <span class="en">— to transfer, to adapt</span></dt><dd>installer un objet ailleurs, en revoyant ce qui change autour de lui.</dd>
+  </dl>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un interacteur appartient à la <b>relation</b>, pas à l'objet. <b>Changer de lieu</b>, c'est changer d'interacteurs, donc <b>revoir des choix</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: recopier la liste d'interacteurs d'un lieu à l'autre. Autre piège&nbsp;: traiter le cyclone comme une grosse pluie.</p>
+  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: pourquoi l'air de Sainte-Luce oblige-t-il à revoir la station, alors que personne n'y touche&nbsp;?</summary>
+    <p>Parce que l'air y est chargé de sel. Le sel ronge les métaux, jour après jour. L'air est un interacteur de l'environnement&nbsp;: il transforme l'objet sans que personne ne le touche.</p></details>
 </div>
 
-<div class="bloc pieges">
-  <h2 style="margin-top:0">6. Changer de lieu, c'est changer d'interacteurs</h2>
-  <p>L'objet reste le même, mais un interacteur n'appartient pas à l'objet&nbsp;: il appartient à la
-  <b>relation</b>. C'est pourquoi un objet bien conçu ici peut échouer ailleurs.</p>
-  <p>À Sainte-Luce, trois interacteurs changent&nbsp;: l'<b>air salin</b>, qui attaque les métaux
-  (revoir matériaux et traitements de surface)&nbsp;; les <b>pluies intenses</b>, bien plus fortes
-  qu'une averse (l'inclinaison ne suffit plus)&nbsp;; et le <b>cyclone</b>, qui n'est pas une pluie
-  forte mais un interacteur à part entière — il faut pouvoir démonter, arrimer ou protéger.</p>
 </div>
-
-<div class="bloc pieges">
-  <h2 style="margin-top:0">7. Les pièges qui coûtent le plus de points</h2>
-  <ul>
-    <li>ne citer que des personnes&nbsp;;</li>
-    <li>confondre une <b>caractéristique</b> de l'objet avec un interacteur&nbsp;;</li>
-    <li>croire qu'un interacteur doit être visible ou vivant&nbsp;;</li>
-    <li>décrire une forme en croyant l'avoir expliquée&nbsp;;</li>
-    <li>dire «&nbsp;c'est pour faire joli&nbsp;» devant un choix qui évite une blessure&nbsp;;</li>
-    <li>croire que le développement durable ne concerne que le tri et le recyclage&nbsp;;</li>
-    <li>ne dire que ce qu'un choix apporte, sans dire ce qu'il coûte ailleurs.</li>
-  </ul>
-</div>
-
-<div class="bloc">
-  <h2 style="margin-top:0">🇬🇧 Vocabulaire</h2>
-  <table class="voc"><tr><td>interacteur</td><td><b>interactor</b></td><td>ergonomie</td><td><b>ergonomics</b></td></tr>
-  <tr><td>environnement</td><td><b>environment</b></td><td>sécurité</td><td><b>safety</b></td></tr>
-  <tr><td>choix de conception</td><td><b>design choice</b></td><td>développement durable</td><td><b>sustainable development</b></td></tr>
-  <tr><td>contrainte</td><td><b>constraint</b></td><td>maintenance</td><td><b>maintenance</b></td></tr></table>
-</div>
-</div>
+<script>
+/* À l'impression, les réponses « Vérifie-toi » sont dépliées (règle d'or n°316). */
+window.addEventListener('beforeprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.dataset.etaitOuvert = d.open; d.open = true; }));
+window.addEventListener('afterprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.open = d.dataset.etaitOuvert === 'true'; }));
+</script>
 </body>
 </html>
