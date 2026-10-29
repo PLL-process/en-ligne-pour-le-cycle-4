@@ -66,7 +66,7 @@ SVG = """
     <path d="M228 150 l30 0 l7 40 l-44 0 z" fill="#2966b1" stroke="#81aaff" stroke-width="2"/>
     <path d="M236 150 q7 -14 14 0" fill="none" stroke="#81aaff" stroke-width="3"/>
   </g>
-  <text x="150" y="60" text-anchor="middle" fill="#9bbefc" font-size="12">contrainte maximale contre le mur</text>
+  <text x="68" y="60" fill="#9bbefc" font-size="12">contrainte maximale contre le mur</text>
   <text x="70" y="120" fill="#ff7b88" font-size="13" id="svgSigma">— MPa</text>
   <text x="150" y="205" text-anchor="middle" fill="#e4eaf5" font-size="13" id="svgEtat">règle le simulateur</text>
 </svg>

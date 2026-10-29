@@ -200,7 +200,9 @@ def station():
     d.arrow([(430,168),(650,168)],CYAN,'Données',540,148)
     d.arrow([(960,168),(1190,168)],CYAN,'Résultats / décisions',1070,148)
     d.arrow([(810,290),(810,365),(755,365),(755,470)],GREEN,'Ordres de commande : l’ordre descend et arrive sur DISTRIBUER',830,335,dashed=True,lanchor='start')
-    d.section(420,"CHAÎNE D’ÉNERGIE — en bas (elle obéit) — signalisation lumineuse et sonore",ORANGE,)
+    # Deux lignes : d'un seul tenant, ce titre court jusqu'à x = 893, au-dessus de tout DISTRIBUER, et la flèche
+    # d'ordre le traverse forcément (règle d'or n°315).
+    d.section(398,"CHAÎNE D’ÉNERGIE — en bas (elle obéit)\n— signalisation lumineuse et sonore",ORANGE,)
     d.block(160,490,'ALIMENTER','USB de l’ordinateur\n5 V continu',YELLOW,w=240)
     d.block(610,490,'DISTRIBUER','Sorties de la carte et\ninterfaces des modules',CYAN,w=290)
     d.block(1120,490,'CONVERTIR','Voyants et buzzer',VIOLET,w=250)
