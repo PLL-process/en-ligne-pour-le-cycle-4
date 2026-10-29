@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 29/10/2026 12:50 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 29/10/2026 12:54 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - #553 (thème 2 à 0 ✘ sur 114 schémas) : prête, CI ✅, sans conflit, attend la fusion.
@@ -17,7 +17,7 @@ _(écrit par Claude le 29/10/2026 12:50)_
 _Aucune._
 
 ## Prochaine action
-➡️ Pascal : fusionner #553.
+➡️ Fusionne #553.
 
 ## Décisions prises récemment (messages de Pascal)
 - 29/10/2026 11:49 — « <task-notification> <task-id>ae759d133105012df</task-id> <tool-use-id>toolu_01Rknki1AgCBLrDc5dHx7k9r</tool-use-id> <output-file>/tmp/claude- »
