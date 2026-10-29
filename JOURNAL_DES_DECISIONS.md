@@ -25172,6 +25172,148 @@ sur le niveau précédent sans diagnostic d'entrée. Une PR par thème ; celle-c
 
 ---
 
+## 28/10/2026 — Billets d'entrée : la bonne réponse ne se devine plus à sa longueur (thème 2, `_outils/`)
+
+*Suite de la carte blanche (28/10/2026). En préparant les billets du thème 3, j'ai mesuré mes propres billets avec la
+règle des QCM — et ils la ratent. Branche `fable/theme-2-billets-longueurs`.*
+
+### Le défaut
+
+Les règles d'or **n°144** et **n°198** valent pour toute question à choix : la bonne réponse ne doit pas se
+reconnaître sans lire la question. Mes huit billets du thème 2 (#530) avaient le défaut que la n°144 décrit — la
+bonne réponse portait sa justification (« ne déclenche pas la sirène : c'est le SINON qui s'applique »), les
+distracteurs tenaient en trois mots (« s'arrête »). **12 questions sur 24** étaient « détachées » (la juste s'écarte
+de plus de 8 caractères des deux autres) ; la juste était la plus longue **15 fois sur 24**, avec un écart moyen de
+**+15,5 caractères**. Pour un billet, c'est pire qu'un QCM : un élève qui coche la plus longue lit « 3 / 3 — tu peux
+commencer » sans rien savoir, et le billet ne l'aiguille plus.
+
+### Ce que fait cette PR
+
+- **Les 24 questions sont réécrites** : même énoncé, même idée juste, même ligne du bloc ; chaque distracteur est une
+  idée fausse qu'un élève peut avoir, écrite avec le même soin (« déclenche la sirène : le vent souffle déjà fort »,
+  « s'arrête : aucune des deux branches ne convient »). La place de la juste change d'une question à l'autre.
+  Résultat : **0 question détachée**, écart moyen **+1,4 caractère**. Seuls les boutons et la liste `BONNES` changent ;
+  le CSS, le script et la mémoire des pages ne bougent pas.
+- **`_outils/controle_longueurs.py` lit aussi les billets** au gabarit commun (`<section id="billet">` et
+  `var BONNES`) : un billet est court, une seule question détachée suffit à le signaler. Sur `main`, il signale ces
+  sept billets et leurs 12 questions ; sur cette branche, aucun. Les billets plus anciens, écrits comme l'activité 0
+  de leur page avec leur propre moteur, ne sont pas lus.
+- L'outil qui pose les billets refuse désormais une question détachée ; il sait **réécrire** un billet existant (seules
+  les questions changent) — rejoué sur `5e_C1.5` (thème 1), il redonne la page à l'octet près.
+- ⚠️ Une réponse gardée avant ce jour peut désigner une autre proposition (les places ont changé) ; les billets sont en
+  ligne depuis quelques heures, et ils ne sont pas notés.
+
+### Vérifié
+
+- **Comme un élève** à 390 px (une juste, un « je ne sais pas encore », une fausse → « 1 / 3 » et les renvois des
+  lignes 2 et 3 ; rechargement ; « 3 / 3 » ; caché à la séance 2 ; console vide) : **80 / 80**.
+- `controle_longueurs.py` : 9 billets mesurés (26 questions), aucun signalé ; les 72 banques de QCM inchangées.
+- `verif_regles_audit.py`, `controle_formulations.py`, `controle_sigles.py`, `controle_unites.py`,
+  `controle_impression_papier.py`, `controle_debordement.py`, `controle_regles_visibles.py`,
+  `controle_boutons_vivants.py`, `controle_competences.py` : identiques à `main`.
+
+### Ce qui reste
+
+- Les 16 billets du thème 3 partent déjà réécrits (PR du thème 3).
+
+---
+
+## 28/10/2026 — Règle d'or n°26 : seize billets d'entrée au thème 3 (thème 3)
+
+*Suite de la carte blanche (28/10/2026) : les seize séquences du thème 3 que la n°26 refusait. Branche
+`fable/theme-3-billets-entree`. Même billet qu'aux thèmes 1 et 2 (#530, #531, #532), écrit d'emblée selon la n°144
+(voir #533).*
+
+### Ce que fait cette PR
+
+- **Un billet « 🎫 Billet d'entrée — trois questions, sans note »** par page : une question par ligne du bloc « Avant
+  de commencer », dans le même ordre ; la réponse juste est dans la partie de synthèse que la ligne cite. Trois
+  propositions et « je ne sais pas encore », en boutons radio (n°300). « 🎫 Voir où j'en suis » donne le score sur 3
+  et, pour chaque question manquée, **le lien de rattrapage de la ligne correspondante du bloc** ; « Ce billet n'est
+  pas noté et ne compte pas dans ta progression ».
+- **Placé** sous l'en-tête de la séance 1 quand la page en a un (`3e_C7.3`, `3e_C7.4`, `3e_C7.5`, `3e_C7.8`,
+  `3e_C8.2`), sinon juste avant la première activité (les onze autres) : toujours après l'ouverture de la n°306.
+- **La bonne réponse ne se devine pas à sa longueur** (n°144, n°198) : une première rédaction en avait 29 sur 48
+  « détachées » — la juste portait sa justification, les distracteurs tenaient en trois mots. Réécrites avant cette
+  PR : **0 détachée**, écart moyen **+0,2 caractère**, place de la juste variée ; chaque distracteur est une idée
+  fausse plausible (« une autonomie la plus longue possible » face à « une autonomie d'au moins 3 jours »).
+- **Mémoire** : aux pages C7, les lignes de la n°304 s'élargissent aux boutons du billet ; aux pages C8, la sauvegarde
+  du thème 3 range chaque champ par sa valeur (`e.value = v` au rechargement), ce qui viderait un bouton radio : le
+  billet y a sa propre clé, `o.billet`, rangée et relue à part.
+- **Minutage** : le billet (~3 min) n'entre pas dans les durées d'activité ; il tient dans les 10 minutes de service
+  que la n°23 réserve. CSS et script portés par la page, limités à `#billet`.
+
+| page | les trois questions (ligne du bloc → réponse) |
+|---|---|
+| `3e_C7.3` boîtier | les deux exigences ratées · l'exigence vient du lieu · même grandeur, unité, méthode |
+| `3e_C7.4` énergie | critères avant les candidats · la carte, 24 h sur 24 · « au moins 3 jours » |
+| `3e_C7.5` station à équiper | ACQUÉRIR · 800 mA sur 500 : la source ne suit pas · un relais |
+| `3e_C7.8` deux stations | interfacer : quoi, quand, à qui · identifiant, valeur, unité, heure · IP fixe : toujours joignable |
+| `4e_C7.3` bac du jardin | le cahier des charges décide · chaque exigence se passe ou non · on ajoute un critère écrit |
+| `4e_C7.4` énergie du jardin | chimique → électrique → lumineuse · la pile est un réservoir · matériaux, énergie, informations |
+| `4e_C7.5` jardin incomplet | la carte TRAITE · l'actionneur agit · capteur continu sur A0 à A3 |
+| `4e_C7.7` support du capteur | esquisse 2D sur un plan · STL en millimètres · le PVC est un polymère |
+| `4e_C7.8` jardin publié | le commutateur redistribue · même IP : le réseau ne sait plus · une valeur devient information |
+| `5e_C7.3` banc de la cour | l'aimant : métal · matériaux, énergie, informations · le cahier des charges d'abord |
+| `5e_C7.4` indicateur du hall | la lumière · DEL : électrique → lumineuse · le cahier des charges d'abord |
+| `5e_C7.5` éclairage du préau | couper l'alimentation · le capteur mesure · A0 ≠ A1 : rien ne le signale |
+| `3e_C8.1` mât | au-delà de la limite élastique : déformée · la simulation ne voit pas la fatigue · observé / attendu |
+| `3e_C8.2` mât | l'attendu s'écrit avant · éprouvettes identiques · 8 kg × 5 = 40 kg |
+| `5e_C8.1` patère | des morceaux identiques · la charge de rupture · on ne connaît ni la charge ni la pièce |
+| `5e_C8.2` patère | couper d'abord · seul le vélo change · « 41 kilogrammes » |
+
+### Vérifié
+
+- **`verif_regles_audit.py`** : ✘ **147 → 131**, les 16 n°26 passent au ✔ ; aucune autre règle ne bouge.
+- **Comme un élève** à 390 px, page par page (une juste, un « je ne sais pas encore », une fausse → « 1 / 3 » et les
+  renvois des lignes 2 et 3 du bloc ; « pas noté » ; rechargement : réponses et retour revenus ; « 3 / 3 » sans
+  renvoi ; pas de défilement horizontal ; console vide) : **144 / 144**, rejoué après la réécriture des questions.
+  Le bloc « Avant de commencer » rejoué à côté (cocher, recharger, effacer, rattrapages) : **64 / 64**, deux fois.
+- `controle_longueurs.py` dans sa version de #533 : les 16 billets du thème 3 ne sont pas signalés.
+- **Bancs du thème 3** : les 13 sans argument et les 37 avec leurs arguments donnent les mêmes résultats qu'à `main`.
+- **Contrôles** : identiques à `main` (squelette, impression, impression papier, contraste des liens, hors ligne,
+  verrous, unités, sigles, formulations, boutons vivants, débordement, et le reste de la liste habituelle).
+
+### Ce qui reste
+
+- Plus aucune séquence refusée par la n°26.
+
+---
+
+## 28/10/2026 — `3e_C9.2` : le générateur des quatre pages redonne les pages publiées (thème 3)
+
+*Suite de la carte blanche (28/10/2026). Reste noté pendant la vague n°304 : `generer_les_quatre_pages.py` ne
+redonnait plus les quatre pages de la station d'alerte. Branche `fable/theme-3-generateur-c9-2`.*
+
+### Le défaut
+
+La règle n°116 fait des quatre pages des pages **engendrées** depuis la page tout-en-un : on ne les retouche jamais à
+la main. Relancé dans une copie, le script aurait **écrasé** une retouche faite à la main : les deux « Ici : » du
+badge CRCN de chaque page (règle n°314 — chaque page dit ce que l'élève y fait : page 1 l'algorithme, page 2 les
+paliers en blocs, page 3 l'acquittement et le moniteur série, page 4 la recette) seraient revenus au texte de toute
+la séquence. Dans l'autre sens, trois choses portées par la source n'avaient jamais atteint les pages 2 à 4 : la
+bulle des badges de code (« Programme 2024 — 3e_C9.2 : … »), et les lignes de la n°304 (CSS du bloc « Avant de
+commencer », mémoire de ses cases).
+
+### Ce que fait cette PR
+
+- **Le générateur connaît les « Ici : » de chaque page** (`ici=` dans `PAGES`, repris mot pour mot des pages
+  publiées) et les pose dans le badge CRCN ; il s'arrête si le badge de la source n'a plus ses deux « Ici : ».
+- **Les quatre pages sont régénérées.** Page 1 : identique à l'octet. Pages 2 à 4 : elles gagnent la bulle des
+  badges de code, comme la page 1 et la source ; les lignes de la n°304 y sont inertes (le bloc n'est que sur la page
+  1), mais elles font que la page est celle du script.
+
+### Vérifié
+
+- **Régénération** : le script relancé sur cette branche ne change plus aucun fichier.
+- **Banc du lot** `tests_3e_C9.2-C8.3.mjs` (union des champs identique à la source, persistance croisée dans les deux
+  sens) : **167 / 167**, comme sur `main`.
+- `verif_regles_audit.py`, `controle_competences.py` (n°314), `controle_formulations.py`, `controle_sigles.py`,
+  `controle_unites.py`, `controle_impression_papier.py`, `controle_debordement.py`, `controle_regles_visibles.py`,
+  `controle_boutons_vivants.py`, `controle_longueurs.py` : identiques à `main`.
+
+---
+
 ## 28/10/2026 — `5e_C2.1` Shenzhen : la carte des interacteurs n'est pas (encore) un diagramme pieuvre (thème 1)
 
 *Pascal, sur une capture de la figure de l'activité 1 : « Est-ce un diagramme pieuvre ? » Réponse : non — et la figure

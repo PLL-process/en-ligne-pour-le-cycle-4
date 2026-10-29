@@ -643,23 +643,23 @@
   <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. « Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1">
       <legend>Dans le programme du lampadaire, l'<b>état de la lampe</b> (éteinte, veille, pleine puissance) est…</legend>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="une entrée : elle renseigne le programme"><label for="be_1__1">une entrée : elle renseigne le programme</label></div>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="une sortie : le programme la produit"><label for="be_1__2">une sortie : le programme la produit</label></div>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="un paramètre qu&#x27;on règle"><label for="be_1__3">un paramètre qu'on règle</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="une sortie : le programme la produit"><label for="be_1__1">une sortie : le programme la produit</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="une entrée : elle renseigne le programme"><label for="be_1__2">une entrée : elle renseigne le programme</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="un paramètre qu&#x27;on règle à la main"><label for="be_1__3">un paramètre qu'on règle à la main</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_2">
       <legend>« SI luminosité &lt; 30 ALORS nuit SINON jour ». Avec une luminosité de 60, le programme conclut…</legend>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="jour : c&#x27;est le SINON qui s&#x27;applique"><label for="be_2__1">jour : c'est le SINON qui s'applique</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="nuit"><label for="be_2__2">nuit</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="rien, il s&#x27;arrête"><label for="be_2__3">rien, il s'arrête</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="nuit : la luminosité dépasse le seuil"><label for="be_2__1">nuit : la luminosité dépasse le seuil</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="rien : le programme s&#x27;arrête là"><label for="be_2__2">rien : le programme s'arrête là</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="jour : c&#x27;est le SINON qui s&#x27;applique"><label for="be_2__3">jour : c'est le SINON qui s'applique</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_3">
       <legend>Passer le seuil « nuit » de 30 à 45, c'est…</legend>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="réécrire la condition"><label for="be_3__1">réécrire la condition</label></div>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="ajouter un capteur"><label for="be_3__2">ajouter un capteur</label></div>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="régler un paramètre : la logique du programme ne change pas"><label for="be_3__3">régler un paramètre : la logique du programme ne change pas</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="réécrire la condition : la logique change"><label for="be_3__1">réécrire la condition : la logique change</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="régler un paramètre : la logique ne change pas"><label for="be_3__2">régler un paramètre : la logique ne change pas</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="ajouter un capteur plus sensible à la nuit"><label for="be_3__3">ajouter un capteur plus sensible à la nuit</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="je ne sais pas encore"><label for="be_3__4">je ne sais pas encore</label></div>
   </fieldset>
   <button type="button" class="btn" id="btnBillet">🎫 Voir où j'en suis</button>
@@ -669,7 +669,7 @@
 /* Billet d'entrée — sans note, hors progression (règle d'or n°26). Chaque question vérifie une ligne du bloc
    « Avant de commencer » ; une réponse manquée renvoie au rattrapage que cette ligne porte déjà. */
 (function(){
-  var BONNES = ["une sortie : le programme la produit", "jour : c'est le SINON qui s'applique", "régler un paramètre : la logique du programme ne change pas"];
+  var BONNES = ["une sortie : le programme la produit", "jour : c'est le SINON qui s'applique", "régler un paramètre : la logique ne change pas"];
   function rattrapage(n){
     var c = document.getElementById("ouv_" + n), li = c && c.closest("li");
     return li ? li.querySelector(".rattrapage a") : null;
