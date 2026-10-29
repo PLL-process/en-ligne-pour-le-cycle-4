@@ -25,6 +25,10 @@ on le corrige d'abord. Une fois le lot vert, on le livre avec le skill `livraiso
   `python3 _outils/controle_competences.py` ; l'outil `python3 _outils/nommer_competences.py <page>` écrit les intitulés et
   les deux premiers étages de la bulle (intitulé et niveau, le cadre) ; le « Ici : » s'écrit à la main ;
 - en mode essentiel, aucune carte réduite à son titre (n°29, contrôle du 26/10/2026) : `python3 _outils/controle_mode_essentiel.py` ;
+- tout schéma est premium (n°315, 28/10/2026) : aucune entité n'en touche une autre, aucun texte ne sort de son cadre,
+  aucune flèche ne traverse un cadre ou un texte, un repère vit à part sans flèche, les tailles écrites sont celles qu'on voit —
+  `node _outils/controle_schemas.mjs <dossier du lot> --planche <dossier>` ; puis chaque schéma regardé sur la planche :
+  simple et vulgarisé (lisible par un élève de 6e), pédagogique, beau ; refait avec le meilleur outil disponible ;
 - squelette respecté : n°306 (22/09/2026) et n°311 (22/10/2026), voir le skill `sequence-pedagogique-engageante` ;
 - chaque unité savante nommée en toutes lettres dans son activité, son tableau, sa question, son schéma : n°312
   (25/10/2026), `python3 _outils/controle_unites.py` ; un schéma reçoit sa ligne « Unités : … » par
@@ -96,6 +100,7 @@ Lancer depuis la racine du dépôt. Python : `python3 _outils/<outil>.py`. Node 
 | `lecteur_pas_a_pas/banc_lecteur.py [racine]` | chaque animation pas à pas, au navigateur : étapes, 390 px, mouvement réduit, voix sur le disque, impression, lien direct |
 | `controle_competences.py` | n°314 (26/10/2026) : chaque code CRCN montré à l'élève porte son intitulé officiel ; la bulle d'une étiquette CRCN donne, pour chaque compétence, l'intitulé, la description du cadre et « Ici : » ; celle du socle, chaque domaine en toutes lettres |
 | `controle_mode_essentiel.py [racine]` | n°29, au navigateur (26/10/2026) : le mode essentiel ne laisse aucune carte réduite à son titre |
+| `controle_schemas.mjs [dossier…] [--planche <dossier>] [--json <fichier>]` | n°315 (28/10/2026), au navigateur : chaque schéma (fichier SVG ou SVG d'une page) — cadres qui se touchent, texte qui déborde, textes superposés, flèche qui traverse un cadre ou un texte, taille de police écrasée ; classe du pire au meilleur, fabrique la planche de captures pour la revue à l'œil ; banc `tests_controle_schemas.mjs` |
 | `controle_impression_papier.py` | décision 1a (25/10/2026) : chaque séquence porte la fiche papier (`_outils/impression_papier/`), posée une fois, à jour |
 | `impression_papier/banc_papier.py [racine] [--pdf <dossier>] [--filtre <texte>]` | chaque séquence imprimée en PDF A4, séance par séance : pages comptées, en-tête, une seule séance, aucun champ d'écran, aucun texte pâle, zéro erreur JavaScript |
 
