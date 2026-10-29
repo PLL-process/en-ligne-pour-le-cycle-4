@@ -26015,3 +26015,57 @@ assertion n'a changé.
 - Une vingtaine de traductions anglaises nouvelles dans les lexiques sont à relire.
 - `MANIFESTE_LOT_3e_C1.1.json` porte une taille et une empreinte périmées pour la synthèse élève, déjà avant cette
   PR.
+
+---
+
+## 29/10/2026 — n°315 : le contrôle des schémas voit ses trois angles morts (`_outils`, thème 1)
+
+*Choix par défaut ★ (décision posée après #547, sans réponse) : finir le contrôle des schémas avant de reprendre les
+schémas du thème 2. Les trois angles morts avaient été notés pendant la revue du thème 1 (#543) : corrigés à la main,
+ils n'étaient pas mesurés. Branche transversale (`_outils` et deux SVG du thème 1).*
+
+### Ce que `controle_schemas.mjs` mesure en plus
+
+- **✘ débordement, en hauteur** : un texte qui sort de son cadre par le haut ou par le bas (jusqu'ici, seule la
+  largeur était mesurée). L'encre du texte est mesurée sans l'interligne, en taille de police : un texte de trois
+  lignes ne perd pas trois interlignes.
+- **✘ à cheval** : un texte dont une partie est dans un cadre qui n'est pas le sien, et l'autre dehors (neuf points
+  de son encre). Ne compte pas : le repère d'une pastille posée sur un coin (①, FP1), ni une étiquette en onglet dont
+  le cadre est lui-même posé sur le bord d'une boîte (ce cas relève du contact entre cadres).
+- **✘ trait sur texte** : un trait **sans pointe** — un pointillé « include », un fil de rappel, une ligne de grille,
+  une courbe — qui passe sur un texte, sans qu'une forme opaque peinte après lui (le fond de l'étiquette) ni un halo
+  autour du texte ne le cache. Un trait découpé (`clip-path`, masque) n'est pas mesuré : on ne sait pas où il se voit.
+- **✘ balise HTML** : `<b>`, `<br>`, `<p>`… dans le **code** d'un SVG, hors `<foreignObject>` (où le HTML des exports
+  draw.io est permis). Dans une page, l'analyseur HTML sort du schéma à cette balise : ce qui suit (P2, P3…) quitte le
+  dessin sans erreur visible. Dans un fichier `.svg`, la balise est inconnue et son texte disparaît.
+
+Essayés d'abord sur un schéma fabriqué avec un défaut de chaque sorte (et deux pièges qui ne doivent pas sortir : une
+étiquette sur fond opaque, du HTML dans un `foreignObject`) : cinq défauts trouvés, aucun faux. Puis sur tout le dépôt,
+les trouvailles regardées une à une sur la planche : deux règles d'exception sont venues de là (les pastilles,
+les onglets).
+
+### Le thème 1 : deux défauts réels, corrigés
+
+- `3e_C1.1/Images/corrige_de_la_decouverte_a_l_usage.svg` : le fil pointillé du XX<sup>e</sup> siècle traversait
+  l'année « 1950 » de la frise. Il descend maintenant droit, entre 1900 et 1950.
+- `4e_C2.1/Images/corrige_temps_par_etape.svg` : la ligne des 30 secondes traversait la valeur « 27 s ». Les valeurs
+  ont un halo couleur du fond.
+
+Thème 1 : **0 ✘** sur 263 schémas (177 ⚠, inchangés).
+
+### Les thèmes 2 et 3, mesurés (rien n'est corrigé ici)
+
+| Thème | ✘ avant | ✘ maintenant | Dont nouveaux | Schémas touchés |
+|---|---|---|---|---|
+| 2 | 137 | 201 | 28 à cheval, 33 trait sur texte, 2 débordements en hauteur, 1 balise HTML | 60 sur 114 |
+| 3 | 101 | 125 | 2 à cheval, 22 trait sur texte | 28 sur 51 |
+
+Ceux regardés sont de vrais défauts : des bulles posées sur les lignes d'un terminal (`pt_ping_simulation`), une
+légende à cheval sur le bord de la station (`transmission_stockage_fichiers`), une ligne de code qui sort de son cadre
+(`ventilation_station_algo`), un rayon qui coupe la cote « Ø10,54 » (`coupe_calotte_5e`), un `<b>` qui efface son
+texte (`plan_cote_support_girouette`).
+
+### Ce qui reste
+
+- Les schémas du thème 2 (201 ✘ dans 60 schémas), puis ceux du thème 3 (125 ✘ dans 28).
+- L'image de l'objet dans la carte des synthèses des ateliers (la forme est fixée depuis #550).
