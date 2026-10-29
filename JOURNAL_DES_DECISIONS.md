@@ -25450,3 +25450,66 @@ pas un interacteur » avait lui-même l'air d'en être un.
 - **Bancs du lot** : 50/50 et 34/34. `controle_medias`, `controle_loupe`, `controle_liens` et les contrôles qui lisent le
   texte des pages : identiques à `main`.
 - C'est le pilote de la règle d'or n°315 (« tout schéma est premium »), décidée par Pascal le même soir.
+
+---
+
+## 28/10/2026 — Règle d'or n°315 : tout schéma est premium (transversale : thèmes 1, 2 et 3, `_outils`, `.claude/skills`)
+
+*Pascal, 28/10/2026 au soir, après la carte des interacteurs de Shenzhen (#538) : « Je pense à une règle d'or un peu
+exigeante : tous les schémas doivent être premium, et s'il y a un skill ou un outil débouchant sur un résultat plus
+pédagogique, esthétique et premium, on doit l'utiliser, quitte à l'installer » ; « L'ensemble des schémas doivent être
+revus » ; « un outil s'il donne un meilleur schéma ou une meilleure représentation dans le sens vulgarisée, simple même
+pour un 6e, et pédagogique ». Décisions : un **contrôle et une revue à l'œil** ; la revue **thème par thème, en entier** ;
+les outils **installés sans demander, et notés au journal**. Branche transversale `fable/regle-315-schemas-premium`.*
+
+> **Règle d'or n°315 — Tout schéma est premium.** Un schéma montré à l'élève — fichier SVG, SVG écrit dans la page,
+> image — se lit sans hésiter, par un élève de 6e comme de 3e. **Aucune entité n'en touche une autre** : deux cadres
+> sont séparés (16 unités d'air au moins, jamais moins de 8) ; aucun texte ne sort de son cadre ni n'en recouvre un
+> autre ; une flèche va d'une entité à une autre sans traverser un cadre ni un texte. **Ce qui n'est pas une entité ne
+> se dessine pas comme une entité** : un repère, une mise en garde, une légende vivent à part, sans flèche. Les tailles
+> de texte écrites sont celles qu'on voit. Ce minimum se mesure (`_outils/controle_schemas.mjs`) ; le reste se juge à
+> l'œil, sur la planche du contrôle : **simple et vulgarisé** (lisible par un élève de 6e), **pédagogique** (il montre
+> ce que la séquence enseigne, et rien qui le contredise), **beau** (hiérarchie, air, couleurs tenues). **On prend le
+> meilleur outil** : s'il existe un skill, un générateur du dépôt ou un logiciel qui donne un schéma plus simple, plus
+> pédagogique ou plus beau — moteur de placement (Graphviz, ELK), générateur de chaînes d'énergie, ateliers de
+> représentations —, on l'utilise, quitte à l'installer ; l'installation est notée au journal, et rien de ce qui est
+> publié ne dépend du réseau. Un schéma qui a un générateur se corrige dans son générateur, puis on le relance.
+
+### Le constat, mesuré
+
+Sur `main`, le 28/10/2026 au soir (après #538), `controle_schemas.mjs` lit **448 schémas** : 226 fichiers SVG et 222
+schémas écrits dans 58 pages. **138** portent au moins un ✘ :
+
+| thème | schémas lus | avec ✘ | ✘ contact | ✘ débordement | ✘ superposés | ✘ traversée |
+|---|---|---|---|---|---|---|
+| 1 | 283 | 68 | 249 | 10 | 5 | 16 |
+| 2 | 114 | 48 | 83 | 36 | 11 | 20 |
+| 3 | 51 | 22 | 56 | 17 | 3 | 30 |
+
+Au thème 1, les trois quarts viennent des ateliers de représentations (cartes mentales, diagrammes pieuvre, bête à
+cornes, exigences), repris dans les cahiers, les synthèses et les séquences qui les incrustent : les cadres-feuilles
+d'une carte mentale sont à 6 unités les uns des autres, les étiquettes FP/FC d'un pieuvre touchent les bulles. Leur
+générateur est un seul endroit à corriger.
+
+### Ce que fait cette PR
+
+- **La règle**, ici, et dans le skill `controle-qualite-lot` (contrôles bloquants et liste des outils).
+- **`_outils/controle_schemas.mjs`**, au navigateur. Un **cadre** est une forme fermée qui porte un texte (pas le fond) ;
+  il est mesuré par sa **forme vraie** (contour de 72 points et `isPointInFill`) : une ellipse n'occupe pas les coins de
+  son rectangle. Il refuse (✘) deux cadres qui se chevauchent ou sont à moins de 8 unités, un texte qui sort de son
+  cadre, deux textes l'un sur l'autre, une flèche qui passe dans un cadre (ni départ ni arrivée) ou sur un texte ; il
+  signale (⚠) les cadres à moins de 16 unités, un texte à moins de 4 unités du bord, une taille de police posée en
+  attribut et écrasée par la feuille de style, un texte qui ferait moins de 10 px à 800 px de large. Les cellules d'un
+  tableau (bord contre bord et alignées, ou coin contre coin) ne comptent pas. Il range du pire au meilleur et fabrique
+  la **planche** de captures (`--planche`) pour la revue à l'œil. Une capture « page entière » d'un document SVG attend
+  dans Chromium des polices qui ne viennent jamais : il capture une zone.
+- **Son banc**, `_outils/tests_controle_schemas.mjs` : neuf schémas fabriqués, chacun avec un défaut connu ou aucun —
+  **10 / 10**.
+- Le contrôle n'entre pas encore dans la CI : il refuserait `main`. Il y entrera quand les trois thèmes seront revus.
+
+### Ce qui reste
+
+- La revue, **thème par thème, en entier** : le thème 1 d'abord (ses 283 schémas), en commençant par le générateur des
+  ateliers de représentations ; puis le thème 2, puis le thème 3. Chaque thème : le contrôle à zéro ✘, et chaque schéma
+  regardé sur la planche.
+- Les images PNG/JPG (334) : trier, dans chaque thème, les schémas des photos et des captures.
