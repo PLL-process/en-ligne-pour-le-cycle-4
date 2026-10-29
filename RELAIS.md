@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 29/10/2026 08:45 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 29/10/2026 08:48 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - #545 (9 synthèses des séquences, forme six temps) fusionnée. Puis une AUTRE session a fusionné #546 : n°316 RÉVISÉE, la synthèse élève tient sur 2 pages A4 (pilote 5e_C1.1 refait, `_outils/mesurer_impression.py`, skill révisé).
@@ -12,13 +12,14 @@ _(écrit par Claude le 29/10/2026 08:45)_
 
 ## Branche et PR
 - Branche : `fable/theme-2-regle-304` — dernier commit 5a5ededb4 Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé
+- PR #548 ouverte (`fable/syntheses-retour-carte`) — Synthèses élève : revenir à la carte depuis chaque partie (thème 1) — CI : success
 - PR #547 ouverte (`fable/syntheses-ateliers-n316`) — ⏸ À reprendre au format deux pages (n°316 révisée) — synthèses élève des ateliers — CI : aucune
 
 ## Décisions en attente
 _Aucune._
 
 ## Prochaine action
-➡️ Pascal : répondre à la décision 1 sur #547 (★ A, je la reprends au format deux pages).
+➡️ Réponds A ou B. Sans réponse, je continue avec A.
 
 ## Décisions prises récemment (messages de Pascal)
 - 29/10/2026 08:26 — « <task-notification> <task-id>af946527d87389d7a</task-id> <tool-use-id>toolu_014rBaJtFYqLv9jf78b6PENX</tool-use-id> <output-file>/tmp/claude- »
