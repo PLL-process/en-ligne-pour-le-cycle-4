@@ -27,6 +27,7 @@ const CAS = {
   superposes: svg(`<text x="40" y="60">Premier texte ici</text><text x="46" y="62">Second texte là</text>`),
   tableau: svg(cadre(20, 40, 160, 40, 'Famille') + cadre(180, 40, 160, 40, 'Exemple') + cadre(20, 80, 160, 40, 'Usager') + cadre(180, 80, 160, 40, 'Le cycliste')),
   ecrasee: svg(`<style>text{font-size:13px}</style>` + cadre(20, 40, 260, 60, 'Titre').replace('<text ', '<text font-size="22" ')),
+  pastille: svg(cadre(40, 40, 200, 60, 'Léa') + `<circle cx="40" cy="40" r="12" fill="#63c"/><text x="40" y="45" text-anchor="middle" fill="#fff">1</text>`),
   inclus: svg(`<rect x="20" y="20" width="400" height="200" rx="12" fill="#eef" stroke="#336"/><text x="40" y="50">Le système</text>`
     + cadre(60, 80, 160, 60, 'Un composant')),
 };
@@ -46,6 +47,7 @@ t('flèche qui passe dans un cadre : le départ et l\'arrivée ne comptent pas',
 t('deux textes l\'un sur l\'autre : superposés', types('superposes').includes('superposés'));
 t('cellules d\'un tableau bord contre bord : rien', R.tableau.croix === 0, JSON.stringify(R.tableau.defauts));
 t('taille en attribut écrasée par la feuille de style : ⚠ écrasée', R.ecrasee.defauts.some(d => d.type === 'écrasée'));
+t('une pastille sur le coin d\'un cadre : pas un contact', R.pastille.croix === 0, JSON.stringify(R.pastille.defauts));
 t('un cadre dans un autre : pas un contact', R.inclus.croix === 0, JSON.stringify(R.inclus.defauts));
 fs.rmSync(tmp, { recursive: true, force: true });
 console.log(`${ok} / ${ok + ko} tests réussis`);
