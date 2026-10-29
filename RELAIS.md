@@ -1,25 +1,25 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 29/10/2026 16:34 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 29/10/2026 16:59 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
-- #555 fusionnée (chronogramme d'hystérésis, flèche du palier 1). Thèmes 1-2-3 : 0 ✘ au contrôle des schémas.
-- Choix ★ A appliqué (fusion sans réponse) : lot n°310 des trois chaînes faites main — 4e_C9.1 jardin, 4e_C6.2 arrosage, 5e_C9.1 barrière.
-- Worktree $S/wt_ch, branche `fable/chaines-energie-faites-main` (sans motif de thème : touche _outils + thèmes 2 et 3).
-- Méthode : skill chaine-energie-fonctionnelle — générateur `_outils/regenerer_chaines_energie.py` d'abord (nom distinct pour le jardin 4e_C9.1), puis alt, desc, consignes, corrigés, QCM ; verifier_chaines_energie + controle_schemas + bancs.
-- Reste ensuite : B image de l'objet dans les 7 synthèses d'ateliers ; limites du contrôle (alpha rgba, bord du viewBox) ; écarts 4e_C2.1 signalés par l'autre session.
+- #555 fusionnée. Choix ★ A en cours : lot n°310 des trois chaînes faites main.
+- Branche `fable/chaines-energie-faites-main` poussée (commit aa713e882), worktree $S/wt_ch : générateur + 3 figures (4e_C9.1 `chaines_jardin_programme.svg`, 4e_C6.2, 5e_C9.1), absent()/panel()/circuit_eau(), vérificateur par chemins (77/77), textes, 2 QCM, lexique 4e_C9.1, skill, journal.
+- Bancs 70/70, 54/54, 38/38, 34/34 ; statiques = main. Contrôles de navigation (main vs branche) en cours dans $S/ch/nav_main et nav_br.
+- PR à ouvrir avec $S/ch/pr_body.md (remplacer __NAV__ par le résultat des contrôles de navigation).
+- Ensuite : station 3e_C9.2 (fonction absente en phrase) ; image de l'objet dans les 7 synthèses d'ateliers ; limites du contrôle des schémas ; lexique 5e_C9.1 refusé (OST).
 
-_(écrit par Claude le 29/10/2026 16:34)_
+_(écrit par Claude le 29/10/2026 16:59)_
 
 ## Branche et PR
 - Branche : `fable/theme-2-regle-304` — dernier commit 5a5ededb4 Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé
-- PR #556 ouverte (`fable/theme-2-syntheses-deux-pages`) — Thème 2 : les dix-sept synthèses élève vulgarisées, en deux pages A4 — CI : success
+- Aucune PR ouverte.
 
 ## Décisions en attente
 _Aucune._
 
 ## Prochaine action
-➡️ Lire les trois SVG faits main et leurs textes, puis les faire entrer dans le générateur.
+➡️ Attendre les contrôles de navigation, puis ouvrir la PR.
 
 ## Décisions prises récemment (messages de Pascal)
 - 29/10/2026 13:15 — « <agent-message from="a35e22d744f71516e"> [Subagent hand-back] The text below is the final report of a subagent this session delegated to. It »
