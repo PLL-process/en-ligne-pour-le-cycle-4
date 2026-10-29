@@ -143,8 +143,16 @@ page A4 à l'impression. Elle obéit à la n°315 : aucune carte n'en touche une
   de rattrapage y renvoient. Une partie coupée en deux garde son ancre sur la première moitié.
 - **Toutes les notions** que la séquence, le QCM et la synthèse professeur supposent : on explique mieux, on n'enlève
   rien. La synthèse professeur, elle, reste technique.
-- La page : la navigation, le bouton d'impression, les règles n°135, n°303 ; à l'impression, la carte sur la première
-  page, puis les parties, `<details>` ouverts (`@media print`), **deux pages A4 au plus** pour les parties.
+- La page : la navigation, le bouton d'impression, les règles n°135, n°303 ; à l'impression, la carte seule sur la
+  première page, puis les parties, les réponses « Vérifie-toi » dépliées (un petit script `beforeprint`), les schémas
+  à 60 % de la largeur. Compter **une demi-page à une page A4 par partie** : le pilote `5e_C1.1` (sept parties)
+  s'imprime en six pages, contre quatre avant — l'explication prend de la place, et c'est voulu.
+- La page tient à 390 px sans défilement de côté : sur un téléphone, `dl.voc` passe sur une colonne.
+
+## Le pilote
+
+`5e_C1.1` (Chengdu), réécrit le 29/10/2026 : c'est le modèle à suivre pour la forme exacte (classes CSS, carte, ordre
+des temps, impression). Pour chaque nouvelle synthèse, partir de sa feuille de style et de sa carte.
 
 ## Avant de livrer
 
