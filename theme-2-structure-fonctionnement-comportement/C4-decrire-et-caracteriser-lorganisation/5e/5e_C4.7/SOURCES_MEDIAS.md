@@ -14,7 +14,7 @@ titre descriptif.
 
 | Fichier | Type | Usage pédagogique (règle v2) | Licence | Poids |
 |---|---|---|---|---|
-| `Images/reseau_salle_techno_topologie.svg` | SVG original (Fable) | image-objet : composants et topologie à identifier et compter (act. 2, QCM q2/q5, synthèses) | CC0 | ~7 Ko |
+| `Images/reseau_salle_techno_topologie.svg` | SVG original (Fable) | image-objet : composants et topologie à identifier et compter (act. 2, QCM q2/q5 ; synthèse élève, l'objet dans la carte « Ce que je dois retenir ») | CC0 | ~7 Ko |
 | `Images/pt_interface_annotee.svg` | SVG original (Fable) | image-objet : les 4 zones de l'écran à repérer avant de manipuler (act. 3 étape A) | CC0 | ~6 Ko |
 | `Images/pt_cablage_menus.svg` | SVG original (Fable) | image-objet : menus de prises à lire, code des triangles (act. 3 étape D, QCM q11) | CC0 | ~7 Ko |
 | `Images/pt_wifi_ssid_module.svg` | SVG original (Fable) | image-objet : SSID, connexion WiFi, échange de module pas à pas (act. 3 étapes E-F) | CC0 | ~8 Ko |

@@ -5,122 +5,297 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Synthèse élève — Programmer l'alerte (3e_C6.1 et C6.3)</title>
 <style>
-  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
   *{box-sizing:border-box}
-  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;font-size:.95em;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
   .page{max-width:860px;margin:0 auto}
   h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
   .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
-  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
-  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  @media(max-width:680px){.cols{grid-template-columns:1fr}}
-  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
-  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24}
-  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
-  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
-  code{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
-  .savoir{border-left:4px solid var(--ok)}.faire{border-left:4px solid var(--hl)}.pieges{border-left:4px solid var(--err)}
-  .voc{font-size:.88em}.voc td{padding:2px 8px;border-bottom:1px dashed var(--border)}
+  h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+  h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
+  ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  table{width:100%;border-collapse:collapse;margin:6px 0}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--sub);font-size:.9em}
   .toolbar{text-align:center;margin:10px 0}
   .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
-  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}h1,h2,dt,.pb{color:#111}.toolbar{display:none}.page{max-width:none}code{background:#eee}}
+  a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  /* règle n°304 : un lien de rattrapage arrive sur ce titre ; la barre collante (47 px) ne doit pas le recouvrir */
+  h2[id]{scroll-margin-top:60px}
+  #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
 
+  /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
+  /* La carte « Ce que je dois retenir » */
+  .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
+  .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
+  .question{text-align:center;font-size:1.05em;font-weight:600;margin:0 0 10px}
+  .programme{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);
+             padding:6px 0;margin:0 0 12px}
+  .programme b{color:var(--text)}
+  .programme ul{margin:2px 0;padding-left:18px}.programme li{margin:1px 0}
+  .cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .cartes a{display:block;text-decoration:none;color:var(--text);background:var(--panel);border:1.5px solid var(--border);
+            border-radius:10px;padding:9px 12px}
+  .cartes a:hover{border-color:var(--hl)}
+  .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
+  .cartes .r{display:block;font-size:.92em}
+  /* L'objet en image (Pascal, 29/10/2026 : « une illustration permet d'avoir une vision plus synthétique de l'objet ») :
+     à droite du programme, dans la carte ; dessous sur un téléphone. */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
+  .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
+  .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
+  .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
+  .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  ul.serre li{margin:1px 0}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
 
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+    h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; un schéma ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    .schema,table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
+    .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
+    .schema{width:60%;display:block;margin:4px auto}
+    h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
   .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
-</style>
-</head>
-<body>
-<style id="navharm-css">
-#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
- padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
- -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
-#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
- border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
- font-size:.92em;text-decoration:none;line-height:1.2}
-#navharm a:hover{border-color:#61dafb;color:#61dafb}
-#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
-@media print{#navharm{display:none}}
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
 
 /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
 @media(max-width:680px){table{display:block;overflow-x:auto}}
-</style>
+
+  /* Revenir à la carte (Pascal, 29/10/2026 : « je ne peux pas revenir à la synthèse ») : chaque partie porte, en
+     haut à droite, un lien vers la carte « Ce que je dois retenir » ; la barre de navigation collée en haut ne
+     recouvre plus le titre visé par un lien. Rien de tout cela ne s'imprime. */
+  .retour-carte{float:right;font-size:.82em;margin:1px 0 0 10px;padding:1px 10px;border:1.5px solid var(--border);
+                border-radius:999px;text-decoration:none;white-space:nowrap}
+  .retour-carte:hover,.retour-carte:focus-visible{border-color:var(--hl)}
+  #carte-titre,[id^="partie-"]{scroll-margin-top:64px}
+  @media print{.retour-carte{display:none}}
+
+  /* Une couleur par notion, la même partout : ce qui entre dans le programme en bleu, ce qui en sort en vert. */
+  .ent{color:var(--hl);font-weight:600}.sor{color:var(--ok);font-weight:600}
+  /* Une suite de cinq essais tient sur une rangée. */
+  .chaine.cinq div{flex-basis:118px}
+  /* Une valeur frontière : bord jaune, « attention ici » (ni gardée ni écartée). */
+  .chaine div.fr{border-color:var(--warn)}
+  @media print{.ent{color:#00607a}.sor{color:#1d6b38}.chaine div.fr{border-color:#8a5a00}}
+</style></head>
+<body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_3e_C6.1-C6.3_programmer_alerte.html">← Séquence</a></nav>
 <div class="page">
-<h1>💻 Synthèse — Programmer l'alerte</h1>
-<p class="pb">Comment modifier le programme de la station sans rien casser — et le prouver par des tests ?</p>
-<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
+<h1>📌 Synthèse élève — Programmer l'alerte</h1>
+<p class="pb">Lire le programme de la station, le modifier sans rien casser, et le prouver par des essais.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
 
-<div class="bloc">
-  <h2 style="margin-top:0">1. La carte d'identité du programme (3e_C6.1)</h2>
-  <object class="schema" data="../Images/programme_entrees_sorties.svg" type="image/svg+xml" aria-label="Données utilisées et produites par le programme">Entrées/sorties du programme</object>
-  <p>Données <b>utilisées</b> = lues de l'extérieur (capteurs, constantes) · données <b>produites</b> = créées par le programme (résultat, commande, message). <b>Tracer</b> = exécuter à la main pour prédire les sorties. Les <code>elif</code> s'arrêtent au <b>premier test vrai</b> → on teste les seuils du plus FORT au plus FAIBLE. L'opérateur <code>&gt;</code> est <b>strict</b> : à la frontière exacte, le test échoue.</p>
-</div>
-
-<div class="cols">
-  <div class="bloc">
-    <h2 style="margin-top:0">2. Modifier (3e_C6.3)</h2>
-    <dl>
-      <dt>Paramètre</dt><dd>changer la <b>constante nommée</b> (<code>SEUIL_ORANGE = 60</code>) : un seul point de modification.</dd>
-      <dt>Nouvelle fonctionnalité</dt><dd>suivre la <b>spécification</b> (algorigramme) en imitant les modèles existants : initialisation sûre (<code>False</code>) → décision (branches) → commande (<code>if</code> final).</dd>
-      <dt>Indentation</dt><dd>en Python elle EST la structure : 4 espaces = « dans la branche ».</dd>
-    </dl>
-  </div>
-  <div class="bloc">
-    <h2 style="margin-top:0">3. Valider (3e_C6.3)</h2>
-    <dl>
-      <dt>Jeu d'essai</dt><dd>entrée + sortie <b>attendue calculée à la main AVANT</b> + sortie obtenue + verdict ✔/✘.</dd>
-      <dt>Frontières</dt><dd>tester seuil−1, seuil, seuil+1 : seuls points où <code>&gt;</code> et <code>&gt;=</code> diffèrent.</dd>
-      <dt>Non-régression</dt><dd>re-tester AUSSI l'ancien comportement.</dd>
-      <dt>Verdict</dt><dd>UN échec = version refusée → corriger → tout rejouer.</dd>
-    </dl>
-  </div>
-</div>
-
-<div class="cols">
-  <div class="bloc savoir">
-    <h2 style="margin-top:0">✅ Je dois savoir</h2>
+<!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
+<section class="carte" aria-labelledby="carte-titre">
+  <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
+  <p class="question">Comment modifier le programme de la station pour une alerte graduée, sans rien casser, et prouver que ça marche&nbsp;?</p>
+  <div class="programme"><b>Ce que dit le programme</b> (3e, compétence C6)&nbsp;:
     <ul>
-      <li>définir donnée utilisée / produite, constante, jeu d'essai, non-régression ;</li>
-      <li>expliquer le fonctionnement de if/elif et l'ordre des seuils ;</li>
-      <li>expliquer pourquoi &gt; est strict et pourquoi on teste aux frontières ;</li>
-      <li>pourquoi on lit un programme AVANT de le modifier.</li>
+      <li>déterminer les données utilisées et produites par un programme associé à une fonctionnalité en vue de le modifier&nbsp;;</li>
+      <li>modifier et tester le programme associé à une nouvelle fonctionnalité d'un OST.</li>
     </ul>
   </div>
-  <div class="bloc faire">
-    <h2 style="margin-top:0">🛠 Je dois savoir faire</h2>
-    <ul>
-      <li>établir la carte d'identité entrées/sorties d'un programme ;</li>
-      <li>tracer une exécution à la main ;</li>
-      <li>modifier un paramètre et prédire l'effet ;</li>
-      <li>ajouter une fonctionnalité en imitant un modèle existant ;</li>
-      <li>construire et dérouler un plan de tests aux frontières.</li>
-    </ul>
+  <div class="cartes">
+    <a href="#partie-1"><span class="q">🪪 1. Que lit le programme, et que produit-il&nbsp;?</span>
+      <span class="r">Des données <span class="ent">utilisées</span> entrent, des données <span class="sor">produites</span> sortent.</span></a>
+    <a href="#partie-2"><span class="q">✍️ 2. Comment prévoir ce qu'il fait&nbsp;?</span>
+      <span class="r">En le traçant à la main&nbsp;: le premier test vrai gagne.</span></a>
+    <a href="#partie-3"><span class="q">🎚️ 3. Comment changer un seuil sans rien casser&nbsp;?</span>
+      <span class="r">Dans sa constante, en un seul endroit, puis on retrace.</span></a>
+    <a href="#partie-4"><span class="q">🚨 4. Comment ajouter le gyrophare&nbsp;?</span>
+      <span class="r">En suivant l'algorigramme et le modèle de la sirène.</span></a>
+    <a href="#partie-5"><span class="q">🎯 5. Comment choisir ses jeux d'essai&nbsp;?</span>
+      <span class="r">Autour des seuils&nbsp;: c'est là que se cachent les erreurs.</span></a>
+    <a href="#partie-6"><span class="q">✅ 6. Quand la version est-elle acceptée&nbsp;?</span>
+      <span class="r">Quand tous les essais passent, les anciens aussi.</span></a>
   </div>
+</section>
+
+<!-- ══ 1 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-1" style="margin-top:0">1. Que lit le programme, et que produit-il&nbsp;?</h2>
+  <p>Avant de modifier, tu dresses la <b>carte d'identité</b> du programme&nbsp;: tu sais alors ce que tu risques de
+  casser. La forme est toujours la même&nbsp;; ici, remplie pour la station&nbsp;:</p>
+  <div class="chaine etapes">
+    <div><b class="ent">Ce qui entre&nbsp;?</b><code>vent_kmh</code> et <code>pression_hpa</code>, lus par les capteurs&nbsp;;
+    les seuils, des constantes.</div>
+    <div><b>Ce que fait le programme</b>Il compare le vent aux seuils, puis il décide.</div>
+    <div><b class="sor">Ce qui sort&nbsp;?</b><code>vigilance</code>, <code>sirene_active</code> et <code>message</code>,
+    envoyé à l'application.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une <span class="ent">donnée utilisée</span> vient de l'extérieur&nbsp;: un
+  <b>capteur</b> ou une <b>constante</b>. Une <span class="sor">donnée produite</span> est <b>créée</b> par le programme,
+  comme le message.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: classer <code>vigilance</code> comme utilisée, parce qu'elle sert dans le
+  message. Le programme la crée d'abord&nbsp;: elle est produite.</p>
 </div>
 
-<div class="bloc pieges">
-  <h2 style="margin-top:0">⚠ Erreurs à éviter</h2>
-  <ul>
-    <li>Lire <code>&gt;</code> comme <code>&gt;=</code> (LE piège des frontières : 118 &gt; 118 est FAUX) ;</li>
-    <li>tester les seuils dans l'ordre croissant avec des elif (l'ouragan serait classé orange !) ;</li>
-    <li>oublier l'initialisation à <code>False</code> ou l'indentation des branches ;</li>
-    <li>« tester » sans avoir calculé la sortie attendue à la main ;</li>
-    <li>ne tester que la nouveauté et oublier la non-régression ;</li>
-    <li>accepter une version avec un test en échec (4/5 = refusé !).</li>
-  </ul>
+<!-- ══ 2 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-2" style="margin-top:0">2. Comment prévoir ce que fait le programme, sans le lancer&nbsp;?</h2>
+  <p><b>Tracer</b>, c'est exécuter le programme à la main, ligne par ligne. Avec un vent de 118&nbsp;km/h&nbsp;:</p>
+  <div class="chaine etapes">
+    <div class="ko"><b>1. <code>118 &gt; 118</code>&nbsp;?</b>Faux&nbsp;: 118 n'est pas plus grand que 118. On passe.</div>
+    <div class="ok"><b>2. <code>118 &gt; 90</code>&nbsp;?</b>Vrai&nbsp;: vigilance rouge, sirène activée.</div>
+    <div><b>3. <code>118 &gt; 50</code>&nbsp;?</b>Jamais lu&nbsp;: le premier test vrai a gagné.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: avec <code>if</code> et <code>elif</code>, le <b>premier test vrai</b>
+  gagne&nbsp;: on teste donc du seuil le plus <b>fort</b> au plus faible. L'opérateur <code>&gt;</code> est
+  <b>strict</b>&nbsp;: 118&nbsp;&gt;&nbsp;118 est faux.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: lire <code>&gt;</code> comme <code>&gt;=</code>, et répondre «&nbsp;violette&nbsp;»
+  pour 118&nbsp;km/h. Il faut 119&nbsp;km/h ou plus.</p>
 </div>
 
-<div class="bloc">
-  <h2 style="margin-top:0">🇬🇧 Vocabulaire FR / EN</h2>
-  <table class="voc">
-    <tr><td>entrée → <b>input</b></td><td>sortie → <b>output</b></td><td>seuil → <b>threshold</b></td></tr>
-    <tr><td>constante → <b>constant</b></td><td>jeu d'essai → <b>test case</b></td><td>bogue → <b>bug</b></td></tr>
-    <tr><td>tracer → <b>to trace</b></td><td>non-régression → <b>regression testing</b></td><td>indentation → <b>indentation</b></td></tr>
-  </table>
+<!-- ══ 3 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-3" style="margin-top:0">3. Comment changer un seuil sans rien casser&nbsp;?</h2>
+  <p>Météo-France recalibre ses niveaux&nbsp;: le seuil orange passe de 50 à 60&nbsp;km/h.</p>
+  <div class="chaine">
+    <div class="ok"><b>D'abord</b>Garder la version d'origine, pour comparer ou revenir en arrière.</div>
+    <div class="ko"><b>✘ Dans les tests</b>Chercher chaque 50 du programme&nbsp;: un oubli, et c'est un bogue.</div>
+    <div class="ok"><b>✔ Dans la constante</b>Une seule ligne&nbsp;: <code>SEUIL_ORANGE = 60</code></div>
+    <div><b>L'effet, retracé</b>Un vent de 55&nbsp;km/h ne déclenche plus l'orange.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un seuil s'écrit dans une <b>constante nommée</b>, en MAJUSCULES en tête
+  du programme&nbsp;: tu le changes en <b>un seul endroit</b>. Après chaque modification, tu <b>retraces</b> les cas concernés.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: changer le seuil sans retracer, et croire que 55&nbsp;km/h donne encore
+  l'orange.</p>
+</div>
+
+<!-- ══ 4 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-4" style="margin-top:0">4. Comment ajouter le gyrophare au programme&nbsp;?</h2>
+  <p>L'<b>algorigramme</b> est la spécification&nbsp;: en rouge, la sirène reste seule&nbsp;; en orange et en violette,
+  le gyrophare s'allume. Tu imites le modèle de la sirène, en trois temps&nbsp;:</p>
+  <div class="chaine etapes">
+    <div><b>1. Au repos, au début</b><code>gyrophare_actif = False</code></div>
+    <div><b>2. Décider, dans les branches</b><code>gyrophare_actif = True</code><br>en orange et en violette.</div>
+    <div class="ok"><b>3. Commander, à la fin</b><code>if gyrophare_actif:</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;activer_gyrophare()</code></div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une nouvelle fonctionnalité suit sa <b>spécification</b>, en imitant un
+  <b>modèle qui marche</b>. En Python, l'<b>indentation</b> de quatre espaces range chaque ligne dans sa branche.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: ajouter <code>gyrophare_actif = True</code> dans la branche rouge. Relis
+  l'algorigramme&nbsp;: en rouge, la sirène est seule.</p>
+</div>
+
+<!-- ══ 5 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-5" style="margin-top:0">5. Comment choisir ses jeux d'essai&nbsp;?</h2>
+  <p>Un <b>jeu d'essai</b>, c'est une entrée et sa sortie attendue, calculée à la main <b>avant</b> d'exécuter. Seuil
+  orange à 60&nbsp;km/h&nbsp;:</p>
+  <div class="chaine cinq">
+    <div><b>55&nbsp;km/h</b>verte ou jaune&nbsp;: rien</div>
+    <div class="fr"><b>60, frontière</b>rien&nbsp;: 60&nbsp;&gt;&nbsp;60 est faux</div>
+    <div><b>61&nbsp;km/h</b>orange et gyrophare</div>
+    <div class="fr"><b>118, frontière</b>rouge et sirène</div>
+    <div><b>119&nbsp;km/h</b>violette, les deux</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: les erreurs se cachent aux <b>valeurs frontières</b>, pile sur un seuil
+  et juste à côté. C'est seulement là que <code>&gt;</code> et <code>&gt;=</code> donnent des résultats différents.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: choisir des valeurs «&nbsp;variées&nbsp;», loin des seuils, comme 30 ou 200.
+  Elles ne distinguent jamais <code>&gt;</code> de <code>&gt;=</code>.</p>
+</div>
+
+<!-- ══ 6 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-6" style="margin-top:0">6. Quand la nouvelle version est-elle acceptée&nbsp;?</h2>
+  <p>Au plan de tests, l'essai à 118&nbsp;km/h attend «&nbsp;rouge&nbsp;» et obtient «&nbsp;violette&nbsp;»&nbsp;:</p>
+  <div class="chaine">
+    <div class="ko"><b>Le verdict ✘</b>Un seul échec suffit&nbsp;: la version est refusée.</div>
+    <div><b>La cause probable</b><code>&gt;= 118</code> écrit à la place de <code>&gt; 118</code>.</div>
+    <div class="ok"><b>Corriger, puis tout rejouer</b>Les nouveaux essais, et ceux de la sirène.</div>
+    <div><b>Sans machine&nbsp;?</b>Tu testes quand même&nbsp;: en calculant les sorties à la main.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une version est acceptée quand <b>tous</b> les essais passent. Tu
+  rejoues aussi les essais de la sirène&nbsp;: c'est la <b>non-régression</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: compter en pourcentage. Quatre essais réussis sur cinq, ce n'est pas
+  «&nbsp;presque bon&nbsp;»&nbsp;: c'est refusé.</p>
+</div>
+
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>fonctionnalité <span class="en">— feature</span></dt><dd>le service rendu, ici l'alerte adaptée au vent.</dd></div>
+    <div><dt>OST <span class="en">— technical object or system</span></dt><dd>un objet ou un système technique.</dd></div>
+    <div><dt>donnée utilisée <span class="en">— input</span></dt><dd>elle entre&nbsp;: un capteur, une constante.</dd></div>
+    <div><dt>donnée produite <span class="en">— output</span></dt><dd>elle sort&nbsp;: le programme la crée.</dd></div>
+    <div><dt>variable <span class="en">— variable</span></dt><dd>une case nommée qui garde une valeur.</dd></div>
+    <div><dt>constante <span class="en">— constant</span></dt><dd>une valeur fixe, nommée en MAJUSCULES.</dd></div>
+    <div><dt>seuil <span class="en">— threshold</span></dt><dd>la valeur où le programme change de décision.</dd></div>
+    <div><dt>condition <span class="en">— condition</span></dt><dd>un test vrai ou faux&nbsp;: <code>if</code>, <code>elif</code>.</dd></div>
+    <div><dt>tracer <span class="en">— to trace</span></dt><dd>exécuter le programme à la main.</dd></div>
+    <div><dt>valeur frontière <span class="en">— boundary value</span></dt><dd>pile sur un seuil, ou juste à côté.</dd></div>
+    <div><dt>algorigramme <span class="en">— flowchart</span></dt><dd>le dessin des décisions du programme.</dd></div>
+    <div><dt>spécification <span class="en">— specification</span></dt><dd>ce que le programme doit faire.</dd></div>
+    <div><dt>actionneur <span class="en">— actuator</span></dt><dd>il agit&nbsp;: la sirène, le gyrophare.</dd></div>
+    <div><dt>indentation <span class="en">— indentation</span></dt><dd>le retrait qui range une ligne dans un bloc.</dd></div>
+    <div><dt>jeu d'essai <span class="en">— test case</span></dt><dd>une entrée et sa sortie attendue.</dd></div>
+    <div><dt>non-régression <span class="en">— regression testing</span></dt><dd>vérifier que l'ancien marche encore.</dd></div>
+    <div><dt>bogue <span class="en">— bug</span></dt><dd>une erreur dans le programme.</dd></div>
+  </dl>
 </div>
 </div>
 </body>

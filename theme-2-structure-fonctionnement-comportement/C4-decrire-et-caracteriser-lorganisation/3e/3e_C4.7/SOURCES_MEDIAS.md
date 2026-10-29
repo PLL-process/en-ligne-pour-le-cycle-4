@@ -17,3 +17,8 @@ Notes : adresses IP des exemples prises dans les plages réservées à la docume
 intercontinental par câbles sous-marins » est un ordre de grandeur public largement
 documenté, énoncé comme tel sans reproduction de source protégée ; lisibilité vérifiée
 en niveaux de gris (étiquettes textuelles systématiques) ; alt/desc dans chaque SVG.
+
+Synthèse élève (29/10/2026, format deux pages A4) : `Images/trajet_message_martinique_monde.svg` est repris tel quel
+dans la carte « Ce que je dois retenir », comme image du trajet étudié ; la séquence l'a déjà montré à l'activité 2.
+`Images/reseau_college_vers_internet.svg` n'est plus affiché par la synthèse élève : le réseau du collège, les étapes
+du trajet, les paquets et la table de routage y sont montrés en cases HTML.

@@ -60,7 +60,6 @@ EN_ATTENTE = {
     # Lot 3 — thème 2 · 5e_C6.1 (le lampadaire)
     T2 + "sequence_5e_C6.1-C6.3_programmer_lampadaire.html": 1,
     T2 + "qcm_5e_C6.1-C6.3_programmer_lampadaire.html": 1,
-    T2 + "Synthèses/synthese_eleve_5e_C6.1-C6.3.html": 1,
 }
 
 POIDS_MAX = 300 * 1024

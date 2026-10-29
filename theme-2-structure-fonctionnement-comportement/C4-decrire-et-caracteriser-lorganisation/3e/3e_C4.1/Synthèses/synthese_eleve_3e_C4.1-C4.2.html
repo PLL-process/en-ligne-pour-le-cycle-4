@@ -5,132 +5,590 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Synthèse élève — L'énergie de la station (3e_C4.1 et C4.2)</title>
 <style>
-  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
   *{box-sizing:border-box}
-  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;font-size:.95em;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
   .page{max-width:860px;margin:0 auto}
   h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
   .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
-  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
-  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  @media(max-width:680px){.cols{grid-template-columns:1fr}}
-  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
-  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24}
-  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
-  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
-  code{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
-  .savoir{border-left:4px solid var(--ok)}.faire{border-left:4px solid var(--hl)}.pieges{border-left:4px solid var(--err)}
-  .voc{font-size:.88em}.voc td{padding:2px 8px;border-bottom:1px dashed var(--border)}
+  h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+  h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+  ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  table{width:100%;border-collapse:collapse;margin:6px 0}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--sub);font-size:.9em}
   .toolbar{text-align:center;margin:10px 0}
   .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
-  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}h1,h2,dt,.pb{color:#111}.toolbar{display:none}.page{max-width:none}code{background:#eee}}
+  a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  /* règle n°304 : un lien de rattrapage arrive sur ce titre ; la barre collante (47 px) ne doit pas le recouvrir */
+  h2[id]{scroll-margin-top:60px}
+  #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
 
+  /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
+  /* La carte « Ce que je dois retenir » */
+  .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
+  .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
+  .question{text-align:center;font-size:1.05em;font-weight:600;margin:0 0 10px}
+  .programme{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);
+             padding:6px 0;margin:0 0 12px}
+  .programme b{color:var(--text)}
+  .programme ul{margin:2px 0;padding-left:18px}.programme li{margin:1px 0}
+  .cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .cartes a{display:block;text-decoration:none;color:var(--text);background:var(--panel);border:1.5px solid var(--border);
+            border-radius:10px;padding:9px 12px}
+  .cartes a:hover{border-color:var(--hl)}
+  .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
+  .cartes .r{display:block;font-size:.92em}
+  /* L'objet en image (Pascal, 29/10/2026 : « une illustration permet d'avoir une vision plus synthétique de l'objet ») :
+     à droite du programme, dans la carte ; dessous sur un téléphone. */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* L'image est un dessin (700 × 563) : elle garde sa forme entière, rien n'est rogné. */
+  .objet{flex-basis:20%}.objet img{aspect-ratio:700/563;flex:none;height:auto;object-fit:contain}.tete .programme{align-self:center}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
+  .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
+  .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
+  .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
+  .chaine b{display:block}
+  .chaine.cinq div{flex:1 1 112px} /* cinq cases sur une seule rangée, sur papier comme à l'écran large */
+  .chaine.six div{flex:1 1 92px}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Les chaînes en cases (chaîne d'énergie : fonction dans le bloc, composant dessous, forme d'énergie sur la
+     flèche, énergie stockée sous son composant ; chaîne d'information au-dessus quand il y a les deux). Les couleurs
+     sont celles des schémas de la séquence ; le texte dit tout, la couleur ne fait que répéter. */
+  .ce{display:flex;flex-wrap:wrap;align-items:center;gap:6px 7px;margin:8px 0;break-inside:avoid}
+  .ce .f{border:2px solid var(--border);border-radius:8px;padding:3px 9px;background:var(--panel2);text-align:center;line-height:1.25;font-size:.93em}
+  .ce .f b{display:block;letter-spacing:.03em}
+  .ce .fl{font-size:.84em;color:#ffb454;white-space:nowrap;text-align:center;line-height:1.15}
+  .ce .fl i{display:block;font-style:normal}
+  .ce .fl.info{color:var(--hl)}
+  .ce .sortie{font-weight:700;line-height:1.2}
+  .ce .stock{display:block;color:var(--warn);font-style:italic;font-size:.92em}
+  .ce .rang{font-size:.8em;color:var(--sub);font-weight:600;flex-basis:100%;margin-bottom:-3px}
+  .f.conv,.f.trait{border-color:#c68ef2}.f.alim{border-color:#ffd66b}.f.dist,.f.acq{border-color:#61dafb}.f.comm{border-color:#81fba1}
+  .ordre{margin:2px 0 2px 12px;padding:1px 10px;border-left:3px dashed #81fba1;font-size:.88em;color:var(--ok)}
+  /* Sur un téléphone, une chaîne de cinq blocs ne tient pas sur une ligne : elle passe en colonne, la flèche vers le bas. */
+  @media (max-width:600px){.ce{flex-direction:column;align-items:center}.ce .fl i{transform:rotate(90deg)}
+    .ce .rang{align-self:stretch}.ce .fl{white-space:normal}}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
 
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+    h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; une rangée de cases ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    table,.chaine,.ce{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div,.ce .f{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
+    .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
+    .vert{color:#1d6b38}.rouge{color:#b3261e}
+    .ce .fl{color:#8a4b00}.ce .fl.info{color:#00586e}.ce .stock{color:#7a5200}.ordre{color:#1d6b38;border-left-color:#2d7a4a}
+    .f.conv,.f.trait{border-color:#7b3fb5}.f.alim{border-color:#b8860b}.f.dist,.f.acq{border-color:#1b7fa3}.f.comm{border-color:#2d7a4a}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
+    h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .ce{gap:4px 6px;margin:4px 0}.ce .f{padding:2px 7px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .bloc code{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
-</style>
-</head>
-<body>
-<style id="navharm-css">
-#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
- padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
- -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
-#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
- border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
- font-size:.92em;text-decoration:none;line-height:1.2}
-#navharm a:hover{border-color:#61dafb;color:#61dafb}
-#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
-@media print{#navharm{display:none}}
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
 
 /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
 @media(max-width:680px){table{display:block;overflow-x:auto}}
-</style>
+
+  /* Revenir à la carte (Pascal, 29/10/2026 : « je ne peux pas revenir à la synthèse ») : chaque partie porte, en
+     haut à droite, un lien vers la carte « Ce que je dois retenir » ; la barre de navigation collée en haut ne
+     recouvre plus le titre visé par un lien. Rien de tout cela ne s'imprime. */
+  .retour-carte{float:right;font-size:.82em;margin:1px 0 0 10px;padding:1px 10px;border:1.5px solid var(--border);
+                border-radius:999px;text-decoration:none;white-space:nowrap}
+  .retour-carte:hover,.retour-carte:focus-visible{border-color:var(--hl)}
+  #carte-titre,[id^="partie-"]{scroll-margin-top:64px}
+  @media print{.retour-carte{display:none}}
+</style></head>
+<body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_3e_C4.1-C4.2_energie_station.html">← Séquence</a></nav>
 <div class="page">
-<h1>🔋 Synthèse — L'énergie de la station</h1>
-<p class="pb">Élaborer une chaîne d'énergie autonome et justifier chaque matériau : le travail d'un concepteur.</p>
-<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
+<h1>📌 Synthèse élève — L'énergie de la station&nbsp;: tenir 72&nbsp;heures, résister au cyclone</h1>
+<p class="pb">Concevoir l'énergie de la station, puis choisir de quoi la construire.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
 
-<div class="bloc">
-  <h2 style="margin-top:0">1. Élaborer la chaîne d'énergie (3e_C4.1)</h2>
-  <object class="schema" data="../Images/chaine_energie_a_elaborer.svg" type="image/svg+xml" aria-label="Le schéma-bloc de la chaîne d'énergie de la station">Schéma-bloc de la chaîne</object>
-  <p>En 3e, la chaîne n'est plus fournie : on l'<b>élabore</b>. Schéma-bloc : <b>panneau solaire</b> (capter + convertir : lumineuse → électrique) → <b>batterie 12 V (volts)</b> (stocker : chimique) → <b>régulateur</b> (protéger la batterie, distribuer) → <b>convertisseur 12 V → 5 V</b> (adapter à la carte) — plus le <b>basculement secteur/batterie</b> (utiliser EDF tant qu'il existe, enchaîner sans coupure). Les flèches d'un schéma-bloc = <b>flux d'énergie</b>, avec leur nature annotée.</p>
-</div>
-
-<div class="cols">
-  <div class="bloc">
-    <h2 style="margin-top:0">2. Dimensionner (3e_C4.1)</h2>
-    <dl>
-      <dt>Énergie nécessaire</dt><dd><code>Wh = W × h</code> — station 6 W (watts) × 72 h = <b>432 Wh (wattheures)</b>.</dd>
-      <dt>Capacité batterie</dt><dd><code>Ah = Wh ÷ V</code> — 432 ÷ 12 = <b>36 Ah (ampères-heures)</b> minimum.</dd>
-      <dt>Marge raisonnée</dt><dd>on retient <b>40 Ah</b> : vieillissement + imprévus, SANS surdimensionner (coût, poids, impact).</dd>
-      <dt>Vérification</dt><dd>autonomie (h) = Ah × V ÷ W — à comparer au besoin (72 h).</dd>
-    </dl>
-  </div>
-  <div class="bloc">
-    <h2 style="margin-top:0">3. Les contraintes du site (3e_C4.2)</h2>
-    <dl>
-      <dt>💨 Vent 230 km/h</dt><dd>mât résistant, fixations renforcées.</dd>
-      <dt>🧂 Embruns salins</dt><dd>métaux protégés : galvanisé, inox, alu.</dd>
-      <dt>☀ UV tropicaux</dt><dd>plastiques traités anti-UV.</dd>
-      <dt>🌡 Chaleur + humidité</dt><dd>coffret étanche MAIS ventilé.</dd>
-      <dt>🌱 Environnement</dt><dd>recyclable, durable, réparable.</dd>
-    </dl>
-  </div>
-</div>
-
-<div class="bloc">
-  <h2 style="margin-top:0">4. Matériaux et procédés justifiés (3e_C4.2)</h2>
-  <object class="schema" data="../Images/materiaux_procedes_abaque.svg" type="image/svg+xml" aria-label="Abaque matériaux et procédés">Abaque matériaux/procédés</object>
-  <p><b>Matériau ← contraintes du site · procédé ← forme de la pièce + taille de série.</b> Mât : acier galvanisé (laminage + soudure). Coffret : polycarbonate anti-UV (injection : forme complexe + série). Support : aluminium (extrusion : profilé). Carénage unique : ABS verni (impression 3D : pas de moule). Une justification de 3e croise <b>au moins deux contraintes</b>, dont l'environnement quand c'est pertinent.</p>
-</div>
-
-<div class="cols">
-  <div class="bloc savoir">
-    <h2 style="margin-top:0">✅ Je dois savoir</h2>
+<!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
+<section class="carte" aria-labelledby="carte-titre">
+  <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
+  <p class="question">Comment la station tient-elle 72&nbsp;heures sans réseau, et de quoi la construire pour qu'elle résiste au cyclone&nbsp;?</p>
+  <div class="tete">
+  <div class="programme"><b>Ce que dit le programme</b> (3e, compétence C4)&nbsp;:
     <ul>
-      <li>ce que signifie ÉLABORER (≠ identifier, ≠ compléter) ;</li>
-      <li>l'ordre et le rôle des blocs (dont régulateur et basculement) ;</li>
-      <li>W vs Wh, et les deux formules du dimensionnement ;</li>
-      <li>les 5 contraintes du site et leurs exigences ;</li>
-      <li>la règle procédé ← forme + série (injection / extrusion / 3D / laminage).</li>
+      <li>élaborer, à l'aide d'un schéma bloc, la chaîne d'énergie d'un OST&nbsp;;</li>
+      <li>justifier le choix d'un matériau et de son procédé de mise en forme au regard des contraintes techniques et environnementales.</li>
     </ul>
   </div>
-  <div class="bloc faire">
-    <h2 style="margin-top:0">🛠 Je dois savoir faire</h2>
-    <ul>
-      <li>élaborer un schéma-bloc complet avec natures d'énergie ;</li>
-      <li>dimensionner une batterie avec marge raisonnée ;</li>
-      <li>écarter les blocs intrus d'une palette ;</li>
-      <li>choisir matériau ET procédé pour une pièce donnée ;</li>
-      <li>rédiger une justification croisant 2 contraintes ou plus.</li>
-    </ul>
+    <figure class="objet">
+      <img src="../../3e_C4.3/Images/station_alerte_annotee.svg" alt="La station d'alerte dessinée : un mât avec l'anémomètre en haut, le panneau solaire sur son bras, le boîtier étanche et la sirène.">
+      <figcaption>📍 L'objet&nbsp;: la station d'alerte du collège (dessin).</figcaption>
+    </figure>
   </div>
+  <div class="cartes">
+    <a href="#partie-1"><span class="q">🌀 1. Pourquoi la station a-t-elle besoin de sa propre énergie&nbsp;?</span>
+      <span class="r">Pendant un cyclone, le réseau coupe. Elle doit tenir 72&nbsp;heures seule.</span></a>
+    <a href="#partie-2"><span class="q">🔋 2. Quels blocs, et dans quel ordre&nbsp;?</span>
+      <span class="r">Une fonction dans chaque bloc, le composant dessous, l'énergie sur les flèches.</span></a>
+    <a href="#partie-3"><span class="q">🧮 3. Quelle batterie faut-il&nbsp;?</span>
+      <span class="r">On calcule le besoin, puis on ajoute une marge raisonnée.</span></a>
+    <a href="#partie-4"><span class="q">🌊 4. Qu'impose le bord de mer&nbsp;?</span>
+      <span class="r">Cinq contraintes&nbsp;: chacune exige quelque chose des matériaux.</span></a>
+    <a href="#partie-5"><span class="q">🏗️ 5. Quel matériau, et quel procédé&nbsp;?</span>
+      <span class="r">Les contraintes font choisir le matériau&nbsp;; la forme et la série, le procédé.</span></a>
+    <a href="#partie-6"><span class="q">⚖️ 6. Comment justifier un choix&nbsp;?</span>
+      <span class="r">Avec au moins deux contraintes croisées, dont l'environnement.</span></a>
+  </div>
+</section>
+
+<!-- ══ 1 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-1" style="margin-top:0">1. Pourquoi la station a-t-elle besoin de sa propre énergie&nbsp;?</h2>
+  <p>Pendant un vrai cyclone, le réseau EDF coupe presque toujours. C'est justement le moment où l'alerte sert le plus.</p>
+  <div class="chaine">
+    <div class="ok"><b>Le secteur est là</b>La station utilise le réseau EDF. Sa batterie reste chargée.</div>
+    <div class="ok"><b>Le secteur coupe</b>Le basculement passe sur la batterie, sans coupure.</div>
+    <div><b>🎯 Le besoin</b>Tenir 72&nbsp;heures, réseau coupé et ciel couvert.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une chaîne d'énergie s'élabore à partir du <b>besoin</b>&nbsp;: fonctionner
+  <b>72&nbsp;heures</b> sans réseau. <b>Autonome</b> ne veut pas dire isolée&nbsp;: la station prend le secteur tant qu'il existe.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'une station autonome n'utilise jamais le secteur. Elle bascule
+  sur sa batterie quand il coupe.</p>
 </div>
 
-<div class="bloc pieges">
-  <h2 style="margin-top:0">⚠ Erreurs à éviter</h2>
-  <ul>
-    <li>Placer la batterie avant le panneau (rien ne la recharge) ;</li>
-    <li>confondre W (puissance) et Wh (énergie) ;</li>
-    <li>dimensionner « pile-poil » sans marge — ou surdimensionner « pour être tranquille » ;</li>
-    <li>choisir l'acier brut « moins cher » qui rouille en quelques mois au bord de mer ;</li>
-    <li>l'injection pour une pièce unique (le moule coûte une fortune) ;</li>
-    <li>justifier par le prix ou l'apparence au lieu des contraintes.</li>
-  </ul>
+<!-- ══ 2 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-2" style="margin-top:0">2. Quels blocs, et dans quel ordre&nbsp;?</h2>
+  <p>En 5e, la chaîne était fournie&nbsp;; en 4e, tu la complétais. En 3e, tu l'élabores. Voici celle de la station,
+  du soleil jusqu'à la carte en 5&nbsp;V (volts)&nbsp;:</p>
+  <div class="ce">
+    <span class="fl">lumineuse<i>➜</i></span>
+    <div class="f conv"><b>CONVERTIR</b>Panneau<br>solaire</div>
+    <span class="fl">électrique<i>➜</i></span>
+    <div class="f alim"><b>ALIMENTER</b>Régulateur<br>de charge</div>
+    <span class="fl">électrique<i>➜</i></span>
+    <div class="f dist"><b>DISTRIBUER</b>Basculement<br>des sources</div>
+    <span class="fl">électrique<i>➜</i></span>
+    <div class="f alim"><b>ALIMENTER</b>Convertisseur<br>12&nbsp;V → 5&nbsp;V</div>
+    <span class="fl">électrique<i>➜</i></span>
+    <span class="sortie">Alimenter<br>la station</span>
+  </div>
+  <div class="ce">
+    <div class="f alim"><b>STOCKER</b>Batterie 12&nbsp;V<span class="stock">Énergie chimique stockée</span></div>
+    <span class="fl">⇅ électrique (charge, décharge)<br>avec le régulateur</span>
+    <div class="f alim"><b>ALIMENTER</b>Alimentation<br>secteur isolée</div>
+    <span class="fl">électrique ➜ DISTRIBUER<br>quand le secteur est là</span>
+  </div>
+  <p>L'ampoule et le haut-parleur étaient des intrus&nbsp;: ce sont des récepteurs, ils consomment l'énergie.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: <b>élaborer</b>, c'est choisir les blocs <b>utiles</b> et les ordonner. Dans
+  chaque bloc, on écrit une <b>fonction</b>, et le <b>composant</b> dessous. Sur chaque flèche, on écrit la <b>forme d'énergie</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: mettre la batterie sur la ligne principale, avant le régulateur. C'est une
+  branche&nbsp;: le régulateur la charge et la protège.</p>
 </div>
 
-<div class="bloc">
-  <h2 style="margin-top:0">🇬🇧 Vocabulaire FR / EN</h2>
-  <table class="voc">
-    <tr><td>chaîne d'énergie → <b>energy chain</b></td><td>batterie → <b>battery</b></td><td>dimensionner → <b>to size</b></td></tr>
-    <tr><td>matériau → <b>material</b></td><td>procédé → <b>process</b></td><td>moulage par injection → <b>injection molding</b></td></tr>
-    <tr><td>galvanisé → <b>galvanized</b></td><td>recyclable → <b>recyclable</b></td><td>contrainte → <b>constraint</b></td></tr>
-  </table>
+<!-- ══ 3 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-3" style="margin-top:0">3. Quelle batterie faut-il pour tenir 72&nbsp;heures&nbsp;?</h2>
+  <p>La station consomme 6&nbsp;W (watts) en continu&nbsp;: 6&nbsp;×&nbsp;72&nbsp;=&nbsp;432&nbsp;Wh (wattheures). Sous
+  12&nbsp;V (volts), il faut 432&nbsp;÷&nbsp;12&nbsp;=&nbsp;36&nbsp;Ah (ampères-heures) au minimum.</p>
+  <div class="chaine">
+    <div class="ko"><b>20&nbsp;Ah ✘</b>20&nbsp;×&nbsp;12&nbsp;÷&nbsp;6&nbsp;=&nbsp;40&nbsp;heures&nbsp;: la station s'éteint trop tôt.</div>
+    <div class="ko"><b>36&nbsp;Ah ✘</b>Pile le calcul&nbsp;: trop juste, car la batterie vieillit.</div>
+    <div class="ok"><b>40&nbsp;Ah ✔</b>Le minimum plus une marge&nbsp;: 80&nbsp;heures au simulateur.</div>
+    <div class="ko"><b>100&nbsp;Ah ✘</b>Elle tiendrait, mais coût, poids et impact explosent.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: <b>énergie</b> (Wh) = puissance (W) × durée (h). <b>Capacité</b> (Ah) =
+  énergie (Wh) ÷ tension (V). On choisit ensuite la batterie avec une <b>marge raisonnée</b>, sans la surdimensionner.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: confondre le watt et le wattheure. Le watt mesure une puissance&nbsp;; le
+  wattheure, une quantité d'énergie.</p>
+</div>
+
+<!-- ══ 4 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-4" style="margin-top:0">4. Qu'impose le bord de mer aux matériaux&nbsp;?</h2>
+  <p>Au bord de la mer martiniquaise, cinq contraintes pèsent sur chaque pièce de la station&nbsp;:</p>
+  <div class="chaine cinq">
+    <div><b>💨 Vent à 230&nbsp;km/h</b>Un mât très résistant, des fixations renforcées.</div>
+    <div><b>🧂 Embruns salés</b>Le vent porte l'eau de mer&nbsp;: des métaux protégés.</div>
+    <div><b>☀️ UV tropicaux</b>Des plastiques traités anti-UV.</div>
+    <div><b>🌡️ Chaleur humide</b>Un coffret étanche, mais ventilé.</div>
+    <div><b>🌱 Environnement</b>Des matériaux recyclables, des pièces réparables.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un matériau se choisit d'abord d'après les <b>contraintes du lieu</b>,
+  jamais pour son apparence.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: prendre l'acier brut parce qu'il est moins cher. Au bord de la mer, il rouille
+  en quelques mois.</p>
+</div>
+
+<!-- ══ 5 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-5" style="margin-top:0">5. Quel matériau, et quel procédé pour chaque pièce&nbsp;?</h2>
+  <p>Pour chaque pièce, le bureau d'études choisit deux choses&nbsp;: le matériau, puis le procédé de mise en forme.</p>
+  <div class="chaine">
+    <div><b>🗼 Le mât</b>Acier galvanisé à chaud.<br>Laminage, puis soudure.</div>
+    <div><b>🧰 Le coffret</b>Polycarbonate anti-UV.<br>Injection&nbsp;: forme complexe, en série.</div>
+    <div><b>📐 Le support du panneau</b>Aluminium.<br>Extrusion&nbsp;: un profilé long.</div>
+    <div><b>🌀 Le carénage, pièce unique</b>ABS verni, un plastique.<br>Impression 3D&nbsp;: pas de moule.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on choisit le <b>matériau</b> d'après les contraintes du site, et le
+  <b>procédé</b> d'après la <b>forme</b> de la pièce et la <b>taille de la série</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: mouler une pièce unique par injection. Le moule coûte des milliers d'euros&nbsp;:
+  il ne se rentabilise qu'en série.</p>
+</div>
+
+<!-- ══ 6 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-6" style="margin-top:0">6. Comment justifier un choix en 3e&nbsp;?</h2>
+  <p>Pour le mât en acier galvanisé, la justification attendue croise plusieurs contraintes&nbsp;:</p>
+  <div class="chaine">
+    <div class="ok"><b>✔ Le vent</b>Une contrainte technique&nbsp;: l'acier résiste au vent cyclonique.</div>
+    <div class="ok"><b>✔ Le sel</b>Une deuxième contrainte&nbsp;: le zinc protège l'acier des embruns.</div>
+    <div class="ok"><b>✔ L'environnement</b>L'acier se recycle.</div>
+    <div class="ko"><b>✘ Le prix seul</b>«&nbsp;C'est moins cher&nbsp;» ne justifie rien.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: <b>justifier</b>, c'est argumenter avec <b>au moins deux contraintes
+  croisées</b>, dont l'<b>environnement</b> quand c'est utile (matériau recyclable, pièce réparable).</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: s'arrêter à un seul argument. «&nbsp;Il est solide&nbsp;» vaut aussi pour
+  l'acier brut, qui rouille.</p>
+</div>
+
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>OST <span class="en">— technical object or system</span></dt><dd>un objet ou un système technique, comme la station.</dd></div>
+    <div><dt>chaîne d'énergie <span class="en">— energy chain</span></dt><dd>le trajet de l'énergie, de sa source à son usage.</dd></div>
+    <div><dt>schéma bloc <span class="en">— block diagram</span></dt><dd>des blocs (les fonctions) reliés par des flèches (les énergies).</dd></div>
+    <div><dt>élaborer <span class="en">— to design</span></dt><dd>choisir soi-même les blocs et leur ordre.</dd></div>
+    <div><dt>autonome <span class="en">— self-powered</span></dt><dd>qui fonctionne seul quand le réseau est coupé.</dd></div>
+    <div><dt>basculement <span class="en">— switchover</span></dt><dd>le passage du secteur à la batterie, sans coupure.</dd></div>
+    <div><dt>régulateur de charge <span class="en">— charge controller</span></dt><dd>il charge la batterie sans surcharge ni décharge totale.</dd></div>
+    <div><dt>convertisseur de tension <span class="en">— voltage converter</span></dt><dd>il passe de 12 volts à 5 volts pour la carte.</dd></div>
+    <div><dt>puissance <span class="en">— power</span></dt><dd>ce que l'appareil consomme à chaque instant, en watts.</dd></div>
+    <div><dt>énergie <span class="en">— energy</span></dt><dd>la puissance multipliée par la durée, en wattheures.</dd></div>
+    <div><dt>capacité <span class="en">— capacity</span></dt><dd>ce que contient une batterie, en ampères-heures.</dd></div>
+    <div><dt>dimensionner <span class="en">— to size</span></dt><dd>calculer la taille juste, puis ajouter une marge.</dd></div>
+    <div><dt>contrainte <span class="en">— constraint</span></dt><dd>ce que le lieu impose à une pièce.</dd></div>
+    <div><dt>UV <span class="en">— UV rays</span></dt><dd>les rayons ultraviolets du soleil.</dd></div>
+    <div><dt>carénage <span class="en">— fairing</span></dt><dd>la coque qui protège l'anémomètre.</dd></div>
+    <div><dt>procédé de mise en forme <span class="en">— manufacturing process</span></dt><dd>la façon de donner sa forme à une pièce.</dd></div>
+    <div><dt>galvanisation <span class="en">— galvanizing</span></dt><dd>une couche de zinc qui protège l'acier, même rayé.</dd></div>
+    <div><dt>laminage <span class="en">— rolling</span></dt><dd>la matière passe entre des rouleaux.</dd></div>
+    <div><dt>extrusion <span class="en">— extrusion</span></dt><dd>elle donne un profilé, de même forme sur toute sa longueur.</dd></div>
+    <div><dt>moulage par injection <span class="en">— injection molding</span></dt><dd>la matière remplit un moule&nbsp;; rentable en grande série.</dd></div>
+    <div><dt>impression 3D <span class="en">— 3D printing</span></dt><dd>une pièce faite sans moule, idéale en un seul exemplaire.</dd></div>
+  </dl>
 </div>
 </div>
+
+<!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  /* L'agrandisseur est une COLONNE — bouton, image, légende — : la légende suit l'image dans le
+     flux, l'image reçoit une hauteur maximale calculée (ajuster()), et le fond défile si besoin. */
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:1rem;box-sizing:border-box;overflow:auto;
+    flex-direction:column;align-items:center;gap:.75rem}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  /* centré quand tout tient, sans rien couper quand ça déborde : des marges automatiques,
+     pas justify-content:center (qui rendrait le haut inaccessible au défilement) */
+  .loupe-fond > .loupe-fermer{margin-top:auto}
+  .loupe-fond > .loupe-legende{margin-bottom:auto}
+  .loupe-fond img{display:block;flex:none;max-width:100%;max-height:80vh;width:auto;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:static;flex:none;margin:0;max-width:min(70ch,100%);text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif}
+  .loupe-legende .loupe-aide{display:block;margin-top:.25rem;font-size:.85em;color:#b8bfcc}
+  .loupe-fermer{position:sticky;top:0;align-self:flex-end;flex:none;z-index:1;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+    grande.addEventListener("load", ajuster);
+    window.addEventListener("resize", ajuster);
+  }
+
+  // La légende affichée : la figcaption VISIBLE de la figure si elle existe ; sinon le
+  // texte alternatif, réduit à sa première phrase s'il dépasse deux lignes. L'alt complet
+  // reste sur l'image agrandie, pour les lecteurs d'écran.
+  function poserLegende(el, texteAlt){
+    var fig = el.closest("figure");
+    var cap = fig ? fig.querySelector("figcaption") : null;
+    var visible = cap && cap.getClientRects().length && cap.textContent.trim();
+    legende.textContent = "";
+    var texte = visible ? cap.textContent.replace(/\s+/g, " ").trim() : (texteAlt || "");
+    texte = texte.replace(/\s*\(clique[^()]*agrandir\)/gi, "").trim();   // l'image est déjà agrandie
+    var corps = document.createElement("span");
+    corps.textContent = texte;
+    var aide = document.createElement("span");
+    aide.className = "loupe-aide";
+    aide.textContent = "Échap pour refermer";
+    if (texte) legende.appendChild(corps);
+    legende.appendChild(aide);
+    if (!visible && texte) {
+      var ligne = parseFloat(getComputedStyle(legende).lineHeight) || 20;
+      if (corps.getBoundingClientRect().height > 2 * ligne + 1) {
+        var m = texte.match(/^[\s\S]*?[.!?…](?=\s|$)/);
+        if (m && m[0].length < texte.length) corps.textContent = m[0];
+      }
+    }
+  }
+
+  // L'image reçoit la place qui reste : hauteur du fond, moins le bouton, la légende,
+  // les marges et les espacements — jamais moins de 40 % de l'écran ; au-delà, le fond défile.
+  function ajuster(){
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    var st = getComputedStyle(fond);
+    var ecart = parseFloat(st.rowGap) || 0;
+    var reste = fond.clientHeight - parseFloat(st.paddingTop) - parseFloat(st.paddingBottom)
+              - fond.querySelector(".loupe-fermer").offsetHeight - legende.offsetHeight - 2 * ecart;
+    grande.style.maxHeight = Math.max(reste, 0.4 * window.innerHeight) + "px";
+  }
+
+  function montrer(el, texteAlt){
+    fond.setAttribute("data-ouvert", "oui");
+    fond.scrollTop = 0;
+    poserLegende(el, texteAlt);
+    ajuster();
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.style.background = "";
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    montrer(img, img.alt);
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    grande.style.maxHeight = "";
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
+  // couleurs et leur police viennent de la feuille de style de la PAGE. Sérialisé seul, le
+  // dessin les perdrait (formes noires, police par défaut, texte qui déborde) : on recopie
+  // donc sur la copie les propriétés CALCULÉES de chaque élément, on y ajoute les dégradés
+  // et marqueurs définis ailleurs dans la page, et l'image reçoit le fond du schéma.
+  var PROPRIETES = ["fill", "fill-opacity", "fill-rule", "stroke", "stroke-width", "stroke-opacity",
+    "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit",
+    "opacity", "visibility", "display", "color", "font-family", "font-size", "font-weight", "font-style",
+    "font-variant-numeric", "letter-spacing", "word-spacing", "text-anchor", "dominant-baseline",
+    "baseline-shift", "text-decoration", "white-space", "paint-order", "stop-color", "stop-opacity",
+    "marker-start", "marker-mid", "marker-end", "clip-path", "mask", "filter"];
+  // Une transformation posée par la feuille de style (pas par l'attribut transform, que la
+  // copie garde déjà) : on la recopie avec son origine.
+  var TRANSFORMATION = ["transform", "transform-origin", "transform-box"];
+
+  function figer(source, copie){
+    var a = [source].concat([].slice.call(source.querySelectorAll("*")));
+    var b = [copie].concat([].slice.call(copie.querySelectorAll("*")));
+    for (var i = 0; i < a.length && i < b.length; i++) {
+      var cs = getComputedStyle(a[i]), decl = [], k, v;
+      for (k = 0; k < PROPRIETES.length; k++) {
+        v = cs.getPropertyValue(PROPRIETES[k]);
+        if (v) decl.push(PROPRIETES[k] + ":" + v);
+      }
+      if (i > 0 && !a[i].hasAttribute("transform") && cs.getPropertyValue("transform") &&
+          cs.getPropertyValue("transform") !== "none") {
+        for (k = 0; k < TRANSFORMATION.length; k++) decl.push(TRANSFORMATION[k] + ":" + cs.getPropertyValue(TRANSFORMATION[k]));
+      }
+      var deja = b[i].getAttribute("style");
+      b[i].setAttribute("style", decl.join(";") + (deja ? ";" + deja : ""));
+    }
+  }
+
+  // Un dégradé ou un marqueur appelé par url(#…) mais défini hors du dessin : on le recopie dedans.
+  function rapatrier(copie){
+    var defs = null, faits = {}, tour = 0, trouve = true;
+    while (trouve && tour++ < 4) {
+      trouve = false;
+      var refs = (new XMLSerializer().serializeToString(copie).match(/url\((?:&quot;|["'])?#([^"')&]+)/g) || [])
+        .concat(new XMLSerializer().serializeToString(copie).match(/href="#[^"]+"/g) || []);
+      refs.forEach(function(r){
+        var id = r.replace(/^url\((?:&quot;|["'])?#/, "").replace(/^href="#/, "").replace(/"$/, "");
+        if (faits[id] || copie.querySelector("[id='" + id.replace(/'/g, "") + "']")) return;
+        faits[id] = true;
+        var el = document.getElementById(id);
+        if (!el || !el.closest("svg")) return;
+        if (!defs) { defs = document.createElementNS("http://www.w3.org/2000/svg", "defs"); copie.insertBefore(defs, copie.firstChild); }
+        var c = el.cloneNode(true); figer(el, c); defs.appendChild(c); trouve = true;
+      });
+    }
+  }
+
+  // Le fond sur lequel le schéma est dessiné : le sien, sinon celui du premier parent opaque.
+  function fondDe(el){
+    for (var e = el; e && e.nodeType === 1; e = e.parentElement) {
+      var c = getComputedStyle(e).backgroundColor, m = c.match(/rgba?\(([^)]+)\)/);
+      if (m) { var p = m[1].split(","); if (p.length < 4 || parseFloat(p[3]) > 0) return c; }
+      else if (c && c !== "transparent") return c;
+    }
+    return "#fff";
+  }
+
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    figer(svg, copie);
+    rapatrier(copie);
+    copie.style.background = "transparent";
+    // Une taille propre au dessin (sans elle, une image SVG n'a que 300 × 150 px à offrir) :
+    // celle de la viewBox, agrandie ; le CSS de la loupe la ramène à l'écran.
+    var vb = svg.viewBox && svg.viewBox.baseVal, boite = svg.getBoundingClientRect();
+    var w = vb && vb.width ? vb.width : boite.width, h = vb && vb.height ? vb.height : boite.height;
+    if (!(vb && vb.width) && w && h) copie.setAttribute("viewBox", "0 0 " + w + " " + h);
+    var k = w ? Math.max(1, 1600 / w) : 1;
+    if (w && h) { copie.setAttribute("width", Math.round(w * k)); copie.setAttribute("height", Math.round(h * k)); }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.style.background = fondDe(svg);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    montrer(svg, mot);
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
 </body>
 </html>
