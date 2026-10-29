@@ -87,9 +87,18 @@ son titre et sa description ; il est déclaré dans le `SOURCES_MEDIAS.md` de l'
 (`ateliers-representations/fast/`, ligne `fast_velo_cargo_freinage.svg`). Aucune image n'est ajoutée
 au dossier `Images/` de ce lot.
 
+## Image générée par IA (Canva) pour la synthèse élève
+
+Demande de Pascal du 29/10/2026 : « une capture d'écran ou une illustration permet d'avoir une vision plus synthétique
+de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règles : skill `synthese-vulgarisee`, §4.
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/synthese_frein_patins.png` | Le frein à patins d'une roue avant de vélo, vu de face, dans une cour de collège tropicale. PNG 1 536 × 1 024, 2.3 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic close-up photo of a bicycle front wheel with a rim brake (V-brake): two black rubber brake pads on either side of the aluminium rim, the brake cable visible, bicycle parked in a sunny tropical schoolyard, no people, no text, no logos, no brand markings, the brake pads clearly in focus in the centre » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Synthèse élève, carte « Ce que je dois retenir » |
+
 ## Ce que le lot ne contient pas
 
-- aucune photographie, aucune capture d'écran de logiciel — les modes opératoires tableur sont
+- aucune photographie (l'image du frein de la synthèse élève est générée par IA, ci-dessus), aucune capture d'écran de logiciel — les modes opératoires tableur sont
   **écrits**, pour LibreOffice Calc et Excel ;
 - aucun appel réseau, aucune police distante, aucun script tiers ;
 - aucune marque de fabricant.
