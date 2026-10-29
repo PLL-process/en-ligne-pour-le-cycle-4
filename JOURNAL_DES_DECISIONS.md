@@ -25218,6 +25218,68 @@ commencer » sans rien savoir, et le billet ne l'aiguille plus.
 
 ---
 
+## 28/10/2026 — Règle d'or n°26 : seize billets d'entrée au thème 3 (thème 3)
+
+*Suite de la carte blanche (28/10/2026) : les seize séquences du thème 3 que la n°26 refusait. Branche
+`fable/theme-3-billets-entree`. Même billet qu'aux thèmes 1 et 2 (#530, #531, #532), écrit d'emblée selon la n°144
+(voir #533).*
+
+### Ce que fait cette PR
+
+- **Un billet « 🎫 Billet d'entrée — trois questions, sans note »** par page : une question par ligne du bloc « Avant
+  de commencer », dans le même ordre ; la réponse juste est dans la partie de synthèse que la ligne cite. Trois
+  propositions et « je ne sais pas encore », en boutons radio (n°300). « 🎫 Voir où j'en suis » donne le score sur 3
+  et, pour chaque question manquée, **le lien de rattrapage de la ligne correspondante du bloc** ; « Ce billet n'est
+  pas noté et ne compte pas dans ta progression ».
+- **Placé** sous l'en-tête de la séance 1 quand la page en a un (`3e_C7.3`, `3e_C7.4`, `3e_C7.5`, `3e_C7.8`,
+  `3e_C8.2`), sinon juste avant la première activité (les onze autres) : toujours après l'ouverture de la n°306.
+- **La bonne réponse ne se devine pas à sa longueur** (n°144, n°198) : une première rédaction en avait 29 sur 48
+  « détachées » — la juste portait sa justification, les distracteurs tenaient en trois mots. Réécrites avant cette
+  PR : **0 détachée**, écart moyen **+0,2 caractère**, place de la juste variée ; chaque distracteur est une idée
+  fausse plausible (« une autonomie la plus longue possible » face à « une autonomie d'au moins 3 jours »).
+- **Mémoire** : aux pages C7, les lignes de la n°304 s'élargissent aux boutons du billet ; aux pages C8, la sauvegarde
+  du thème 3 range chaque champ par sa valeur (`e.value = v` au rechargement), ce qui viderait un bouton radio : le
+  billet y a sa propre clé, `o.billet`, rangée et relue à part.
+- **Minutage** : le billet (~3 min) n'entre pas dans les durées d'activité ; il tient dans les 10 minutes de service
+  que la n°23 réserve. CSS et script portés par la page, limités à `#billet`.
+
+| page | les trois questions (ligne du bloc → réponse) |
+|---|---|
+| `3e_C7.3` boîtier | les deux exigences ratées · l'exigence vient du lieu · même grandeur, unité, méthode |
+| `3e_C7.4` énergie | critères avant les candidats · la carte, 24 h sur 24 · « au moins 3 jours » |
+| `3e_C7.5` station à équiper | ACQUÉRIR · 800 mA sur 500 : la source ne suit pas · un relais |
+| `3e_C7.8` deux stations | interfacer : quoi, quand, à qui · identifiant, valeur, unité, heure · IP fixe : toujours joignable |
+| `4e_C7.3` bac du jardin | le cahier des charges décide · chaque exigence se passe ou non · on ajoute un critère écrit |
+| `4e_C7.4` énergie du jardin | chimique → électrique → lumineuse · la pile est un réservoir · matériaux, énergie, informations |
+| `4e_C7.5` jardin incomplet | la carte TRAITE · l'actionneur agit · capteur continu sur A0 à A3 |
+| `4e_C7.7` support du capteur | esquisse 2D sur un plan · STL en millimètres · le PVC est un polymère |
+| `4e_C7.8` jardin publié | le commutateur redistribue · même IP : le réseau ne sait plus · une valeur devient information |
+| `5e_C7.3` banc de la cour | l'aimant : métal · matériaux, énergie, informations · le cahier des charges d'abord |
+| `5e_C7.4` indicateur du hall | la lumière · DEL : électrique → lumineuse · le cahier des charges d'abord |
+| `5e_C7.5` éclairage du préau | couper l'alimentation · le capteur mesure · A0 ≠ A1 : rien ne le signale |
+| `3e_C8.1` mât | au-delà de la limite élastique : déformée · la simulation ne voit pas la fatigue · observé / attendu |
+| `3e_C8.2` mât | l'attendu s'écrit avant · éprouvettes identiques · 8 kg × 5 = 40 kg |
+| `5e_C8.1` patère | des morceaux identiques · la charge de rupture · on ne connaît ni la charge ni la pièce |
+| `5e_C8.2` patère | couper d'abord · seul le vélo change · « 41 kilogrammes » |
+
+### Vérifié
+
+- **`verif_regles_audit.py`** : ✘ **147 → 131**, les 16 n°26 passent au ✔ ; aucune autre règle ne bouge.
+- **Comme un élève** à 390 px, page par page (une juste, un « je ne sais pas encore », une fausse → « 1 / 3 » et les
+  renvois des lignes 2 et 3 du bloc ; « pas noté » ; rechargement : réponses et retour revenus ; « 3 / 3 » sans
+  renvoi ; pas de défilement horizontal ; console vide) : **144 / 144**, rejoué après la réécriture des questions.
+  Le bloc « Avant de commencer » rejoué à côté (cocher, recharger, effacer, rattrapages) : **64 / 64**, deux fois.
+- `controle_longueurs.py` dans sa version de #533 : les 16 billets du thème 3 ne sont pas signalés.
+- **Bancs du thème 3** : les 13 sans argument et les 37 avec leurs arguments donnent les mêmes résultats qu'à `main`.
+- **Contrôles** : identiques à `main` (squelette, impression, impression papier, contraste des liens, hors ligne,
+  verrous, unités, sigles, formulations, boutons vivants, débordement, et le reste de la liste habituelle).
+
+### Ce qui reste
+
+- Plus aucune séquence refusée par la n°26.
+
+---
+
 ## 28/10/2026 — `3e_C9.2` : le générateur des quatre pages redonne les pages publiées (thème 3)
 
 *Suite de la carte blanche (28/10/2026). Reste noté pendant la vague n°304 : `generer_les_quatre_pages.py` ne
