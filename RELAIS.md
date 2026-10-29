@@ -3,22 +3,22 @@
 Mis à jour le 29/10/2026 17:21 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
-- PR #557 ouverte (lot n°310 des trois chaînes faites main : 4e_C9.1 `chaines_jardin_programme.svg`, 4e_C6.2, 5e_C9.1), branche `fable/chaines-energie-faites-main`, worktree $S/wt_ch.
-- Conflit avec main (#556, synthèses du thème 2 en deux pages) résolu : journal (deux entrées, `---`), audit_couverture régénéré ; vérificateur 77/77 après fusion ; poussé (912ff12df). CI en attente.
-- Contrôles : statiques et navigation identiques à main ; bancs 70/70, 54/54, 38/38, 34/34.
-- Ensuite : station 3e_C9.2 (fonction absente écrite en phrase, absent() disponible) ; image de l'objet dans les 7 synthèses d'ateliers ; limites du contrôle des schémas ; lexique 5e_C9.1 refusé (OST).
+- PR #557 (lot n°310, trois chaînes faites main) : CI périmètre ✅, mergeable clean, aucun commentaire. Remise à Pascal avec les trois rendus PNG.
+- Vérification de filet programmée à 22:12Z (trig_0154YAmAu2Fgy357ks4uc5C6).
+- Décision posée : ★ A station 3e_C9.2 (TRANSMETTRE absent dessiné avec absent() + page station 1) ; B image de l'objet dans les 7 synthèses d'ateliers ; C limites du contrôle des schémas.
+- Dette notée : lexique 5e_C9.1 refusé (OST absent de l'ouverture).
 
 _(écrit par Claude le 29/10/2026 17:21)_
 
 ## Branche et PR
 - Branche : `fable/theme-2-regle-304` — dernier commit 5a5ededb4 Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé
-- PR #557 ouverte (`fable/chaines-energie-faites-main`) — Règle n°310 : les trois chaînes d'énergie faites main entrent dans le générateur — CI : in_progress
+- PR #557 ouverte (`fable/chaines-energie-faites-main`) — Règle n°310 : les trois chaînes d'énergie faites main entrent dans le générateur — CI : success
 
 ## Décisions en attente
 _Aucune._
 
 ## Prochaine action
-➡️ Vérifier la CI de #557, puis la remettre à Pascal.
+➡️ Attendre la fusion de #557 ; si fusionnée sans réponse, appliquer ★ A.
 
 ## Décisions prises récemment (messages de Pascal)
 - 29/10/2026 13:15 — « <agent-message from="a35e22d744f71516e"> [Subagent hand-back] The text below is the final report of a subagent this session delegated to. It »
