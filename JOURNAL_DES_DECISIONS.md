@@ -26130,6 +26130,9 @@ chemin.
   `controle_hierarchie`, `controle_unites`, `controle_sigles`, `controle_debordement`, `controle_impression.mjs`,
   `controle_contraste_liens.mjs`, `controle_hors_ligne.mjs` : ✅.
 - **À l'écran**, à 390 et à 1 280 pixels : aucun défilement de côté, aucune erreur.
+
+---
+
 ## 29/10/2026 — n°315, thème 2 : 0 défaut sur 114 schémas
 
 *Choix par défaut ★ (décision posée avec #551, fusionnée sans réponse) : les schémas du thème 2, mesurés par le
