@@ -26130,3 +26130,69 @@ chemin.
   `controle_hierarchie`, `controle_unites`, `controle_sigles`, `controle_debordement`, `controle_impression.mjs`,
   `controle_contraste_liens.mjs`, `controle_hors_ligne.mjs` : ✅.
 - **À l'écran**, à 390 et à 1 280 pixels : aucun défilement de côté, aucune erreur.
+
+---
+
+## 29/10/2026 — n°315, thème 3 : 0 défaut sur 51 schémas
+
+*Choix par défaut ★ (décision posée avec #553, sans réponse) : après le thème 2, les schémas du thème 3. Branche sans
+motif de thème : une correction passe par l'outil partagé `_outils/regenerer_chaines_energie.py`.*
+
+### Le bilan
+
+| | Schémas | ✘ avant | ✘ après |
+|---|---|---|---|
+| Thème 3 | 51 | 125, dans 28 schémas | **0** |
+
+Par séquence (✘ avant) : 3e_C9.2 (37), 4e_C7.1 (24), atelier de planification (19), 3e_C9.1 (16), 4e_C9.1 (10),
+3e_C7.1 (8), 5e_C7.1 (6), 5e_C9.1 (2), atelier CAO, 4e_C8.1 et 5e_C8.1 (1 chacun). Chaque schéma fautif a été
+regardé avant et après sur la planche ; les mots et les faits ne changent pas, sauf les erreurs de fait ci-dessous.
+
+### Ce qui a changé de forme, et pourquoi
+
+- **Les diagrammes de Gantt** de l'atelier de planification (générateur `gantt_premium.py`) : les flèches de
+  dépendance passent à 8 unités au moins de toute barre, et ne traversent plus aucune tâche. Pour cela, les lignes
+  ne sont plus rangées par date de début, mais dans l'ordre où chaque tâche est sous celles qu'elle attend, celui qui
+  donne les flèches les plus simples (`ORDRE = "plus_tot"` rétablit l'ancien ordre). Les bandes grises d'une ligne sur
+  deux sont retirées.
+- **Les planches de blocs** de la station d'alerte (3e_C9.2) : la cascade « si / sinon si / sinon » devient un seul
+  bloc qui contient ses instructions, comme le bloc en C de Vittascience ; les blocs empilés ont 16 unités d'air.
+- **Les « boîtes étiquetées »** des variables (3e_C9.1, 5e_C9.1) : l'étiquette passe dans la boîte, et non plus en
+  onglet sur son bord.
+- **Le pont en H** et la **chaîne de la station** (3e_C9.2) sont corrigés dans leurs générateurs
+  (`_generation/pont_en_h/`, `_outils/regenerer_chaines_energie.py` pour la seule station), puis les pages régénérées.
+- **La coupe de la calotte** (atelier CAO, générateur `5e_C7.2/calotte.py`) : un halo sous « Ø10,54 », la cote
+  verticale s'y interrompt comme en dessin technique.
+- **La patère du hall** (5e_C8.1) : corrigée dans `simulateur.py` et, à l'identique, dans la page.
+
+### Des faits faux dans des schémas, corrigés
+
+- `5e_C7.1/Images/chaine_indicateur_hall.svg` disait « visible à 3 m » ; la séquence, le QCM et le tableau des tests
+  disent **2 m**.
+- `4e_C8.1/Images/protocole_quatre_tests.svg` titrait « Trois sur quatre n'est pas une majorité », faux à la lettre :
+  il dit maintenant « Trois sur quatre ne suffit pas » (le QCM : « la validation n'est pas un vote »).
+- Deux descriptions pour lecteur d'écran (`<desc>`) décrivaient autre chose que le dessin : `demarche_projet_boucle`
+  (un losange « à deux sorties », qui n'en a qu'une) et `algorigramme_alerte_seuil` (des colonnes « attendu /
+  observation » absentes).
+
+### Des faits faux repérés, à trancher (non corrigés)
+
+- **`4e_C9.1/Images/hysteresis_chronogramme.svg`** : le texte dit « six basculements » en haut et « un seul » en bas ;
+  le dessin en montre neuf en haut, et sa courbe du bas ne passe jamais sous 35 % (le seuil d'allumage) alors que la
+  pompe démarre. Le scénario est à redessiner.
+- **`4e_C9.1/Images/chaines_jardin_connecte.svg`** contredit la règle n°310 (l'ordre arrive sur DISTRIBUER) en deux
+  phrases, et justifie TRANSMETTRE par le déplacement de l'eau.
+- **`3e_C9.2/Images/blocs_palier1_lire_vent.svg`** : la flèche « les valeurs MONTENT » pointe vers le haut, vers 0.
+
+### Contrôles
+
+`controle_schemas.mjs` sur le thème 3 : 0 ✘ (57 ⚠ « serré » et « minuscule »). `controle_liens`, `_unites`,
+`_sigles`, `_hierarchie`, `_regles_visibles`, `_debordement`, `_impression_papier`, `_medias`,
+`controle_impression.mjs`, `verifier_chaines_energie.py` (54/54) : ✅. Bancs : 3e_C9.2 167/167, pont en H 37/37,
+3e_C9.1 42/42, 4e_C9.1 70/70, 5e_C9.1 54/54, 4e_C7 47/47, 3e_C7 71/71, 5e_C7 42/42, 4e_C8 48/48, 5e_C8.1 39/39 et
+32/32, 5e_C7.2 31/31, atelier de planification 48/48, atelier CAO 21/21.
+
+### Limites du contrôle, vues en route
+
+`controle_schemas.mjs` prend un fond `rgba(…, 0.08)` pour opaque (il lit `fill-opacity`, pas l'alpha de la couleur),
+et ne voit pas un texte coupé par le bord du dessin.

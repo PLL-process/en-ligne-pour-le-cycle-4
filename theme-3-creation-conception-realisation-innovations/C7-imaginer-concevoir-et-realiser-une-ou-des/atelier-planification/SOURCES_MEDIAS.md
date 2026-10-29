@@ -100,6 +100,14 @@ plus tardive et la marge écrite en clair. La légende énonce les trois lecture
 nommer les couleurs. Palette lisible en niveaux de gris et sûre pour les daltonismes ;
 `<title>` et `<desc>` renseignés, plus un `alt` complet dans la page.
 
+**Règle d'or n°315 (29/10/2026)** : aucune flèche ne traverse plus une barre, une fenêtre
+ou le mot « marge » (19 défauts relevés par `_outils/controle_schemas.mjs`, 0 depuis). Les
+bandes grisées d'une ligne sur deux sont retirées (la grille des séances reste) ; chaque
+flèche cherche, dans le générateur, le tracé le plus simple qui passe à 8 unités au moins
+de tout le reste ; l'ordre des lignes est, parmi ceux où chaque tâche est sous celles
+qu'elle attend, celui qui donne les flèches les plus simples. Les barres, les dates, les
+marges et les mots ne changent pas.
+
 **Pourquoi du SVG et non une capture** : net à l'impression A4, quelques kilo-octets, et
 il se régénère quand une durée change — une capture, elle, mentirait dès la première
 modification du CSV. Les captures de **GanttProject** restent nécessaires ailleurs : elles

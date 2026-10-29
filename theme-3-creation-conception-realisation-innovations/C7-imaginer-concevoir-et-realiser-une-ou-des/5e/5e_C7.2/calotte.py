@@ -257,7 +257,10 @@ def dessin_coupe(chemin=None):
                                  (droite, m["diametre_calotte"], "#1d4e89")):
         A('<line x1="{x1}" y1="{y}" x2="{x2}" y2="{y}" stroke="{co}" stroke-width="1.4"/>'
           .format(x1=X(cx - largeur / 2), x2=X(cx + largeur / 2), y=Y(-1.4), co=couleur))
-        A('<text x="{x}" y="{y}" font-size="15" fill="{co}" text-anchor="middle">'
+        # un halo couleur du fond : la cote verticale du centre de la bille passe sous « Ø10,54 »
+        # et s'y interrompt, comme une ligne coupée par une cote en dessin technique (n°315)
+        A('<text x="{x}" y="{y}" font-size="15" fill="{co}" text-anchor="middle" '
+          'stroke="#f7f9fc" stroke-width="5" stroke-linejoin="round" paint-order="stroke">'
           'Ø{v}</text>'.format(x=X(cx), y=Y(-2.2), co=couleur,
                                v=("%g" % largeur).replace(".", ",")))
     # la profondeur, commune aux deux : une ligne de niveau entre les deux creux
