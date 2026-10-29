@@ -1,23 +1,27 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 28/10/2026 19:55 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 28/10/2026 20:16 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
-- #529 (n°26, déclencheur) fusionnée le 28/10 : verif_regles_audit ✘ 156 sur main ; la n°26 compte 25 ✘ (séquences qui s'appuient sur le niveau précédent sans billet d'entrée).
-- En attente de Pascal : 🔶1 billets d'entrée — ★ a) écrire les 25 (trois questions sans note, une par ligne « Je sais… », rattrapage de la ligne pour aiguillage ; une PR par thème : 1 + 8 + 16, en commençant par le thème 2) ; b) accepter le bloc « Avant de commencer » comme diagnostic.
-- Toujours noté : `generer_les_quatre_pages.py` (3e_C9.2) désynchronisé.
+- n°26 : billets thème 1 (#531) et thème 2 (#530, #532) fusionnés ; **#534** ouverte = 16 billets thème 3 (verif ✘ 147→131, plus aucune n°26 en échec).
+- **#533** ouverte (thème 2 + `_outils/controle_longueurs.py`) : mes billets ratissaient la n°144 (bonne réponse la plus longue, 12/24 détachées) → réécrits, 0 détachée ; le contrôle mesure désormais les billets.
+- #533 et #534 ajoutent chacune une entrée en fin de JOURNAL : conflit à résoudre quand l'une est fusionnée.
+- 1a (figure Shenzhen 5e_C2.1, « pas encore un pieuvre », flèches double sens) : worktree `scratchpad/wt_t1`, branche `fable/theme-1-carte-interacteurs`, non commitée ; bancs du lot 50/50 et 34/34 = main ; contrôles en cours (`scratchpad/t1fig/`). J'ai aussi aligné la correction de l'activité 1 et la synthèse élève partie 2 (elles enseignaient encore « personnes / objets / conditions », règles de la ville comprises).
+- Outils : `scratchpad/n304/billets.py` (+ `--refaire`, refuse une question détachée), `billets_donnees.py` v2.
+- Reste : tâche #29 (resynchroniser `generer_les_quatre_pages.py` 3e_C9.2). Dérive préexistante notée : 5 lignes d'options du QCM 5e_C2 diffèrent de `q.py`.
 
-_(écrit par Claude le 28/10/2026 18:34)_
+_(écrit par Claude le 28/10/2026 20:16)_
 
 ## Branche et PR
 - Branche : `fable/theme-2-regle-304` — dernier commit 5a5ededb4 Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé
-- Aucune PR ouverte.
+- PR #534 ouverte (`fable/theme-3-billets-entree`) — Règle d'or n°26 : seize billets d'entrée au thème 3 — CI : in_progress
+- PR #533 ouverte (`fable/theme-2-billets-longueurs`) — Billets d'entrée (thème 2) : la bonne réponse ne se devine plus à sa longueur — n°144, n°1 — CI : success
 
 ## Décisions en attente
 _Aucune._
 
 ## Prochaine action
-➡️ Réponds « 1a » pour ajouter la phrase « ce n'est pas encore un diagramme pieuvre » et passer les flèches dans les deux sens, ou « 1b » pour laisser la figure telle quelle.
+➡️ Finir la PR thème 1 (figure) dès que les contrôles sont identiques à main, puis la tâche #29.
 
 ## Décisions prises récemment (messages de Pascal)
 - 28/10/2026 19:52 — « 1a »
