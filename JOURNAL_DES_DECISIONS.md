@@ -25571,3 +25571,38 @@ Aucun texte ni aucune image de ces fiches n'est repris : la forme seulement.
 
 - La réécriture des 45 synthèses élève (17 au thème 1, 16 au thème 2, 12 au thème 3), thème par thème, avec la revue
   des schémas (n°315). Le pilote : `5e_C1.1`.
+
+
+---
+
+## 29/10/2026 — n°316, complément : les quatre fiches envoyées par Pascal
+
+*Pascal, 29/10/2026 : « Je t'ai mis en pièce jointe des exemples de synthèse ». Quatre fiches : « Chaîne
+d'information ; chaîne d'énergie » (une page, MSOST 1.3 et 1.4), « Fonctionnement d'un capteur — information et
+signal » (Toulouse, « Ce que je dois retenir », deux pages), « Principaux éléments d'un cahier des charges » (DIC 1.2,
+une page) et une synthèse en cinq fiches tirée d'un manuel (« le cahier des charges fonctionnel »).*
+
+### Ce que ces fiches font toutes
+
+Elles partent de l'objet et finissent par la règle : une phrase d'entrée, un exemple montré (portail coulissant, pont,
+robot aspirateur, voiture), puis un **encadré « à retenir »** en fin de section, mots-clés en gras. Elles montrent un
+outil **vide avec ses questions, puis rempli** ; elles posent **sous chaque bloc d'une chaîne l'objet réel** qui le fait ;
+elles découpent une méthode en **vignettes numérotées** ; elles comparent deux notions **dans un tableau avec une
+colonne exemple** ; elles suivent **un même nombre** de bout en bout (32 °C → 3,2 V → 100 en binaire → 4) ; elles
+tiennent **une couleur par notion**.
+
+### Ce qui change dans le skill `synthese-vulgarisee`
+
+- **L'ordre d'une partie** : titre-question, comme dans la vie, dans notre séquence, les mots, **🧠 À retenir**
+  (encadré de fin, une ou deux phrases, mots-clés en gras), le piège, vérifie-toi. L'ancien « 🎯 En une phrase » en tête
+  de partie disparaît : sa phrase devient l'encadré de fin, et c'est elle que reprend la carte de tête.
+- **Une section « Les procédés des fiches de Pascal »** : les dix procédés ci-dessus, chacun avec ce qu'on en fait
+  chez nous, et ce qu'on n'en prend pas (paragraphes serrés en petits caractères, fautes relevées dans les fiches,
+  mascottes, photos et dessins — n°1).
+- **La carte de tête** porte une ligne « Ce que dit le programme » (les connaissances du programme 2024 de la
+  séquence).
+- **La liste à cocher** : l'ordre nouveau, une couleur par notion, l'outil vide puis rempli, la relecture
+  orthographique. L'exemple avant / après (partie 5 de `5e_C1.1`) suit l'ordre nouveau.
+- Le skill `controle-qualite-lot` décrit l'ordre nouveau.
+
+Aucun texte ni aucune image des quatre fiches n'est repris : la forme seulement.
