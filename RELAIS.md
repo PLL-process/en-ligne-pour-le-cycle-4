@@ -1,26 +1,24 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 29/10/2026 00:06 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 29/10/2026 06:07 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
-- Fusionnées : #537 (q.py ← propositions publiées, 3 QCM thème 1), #538 (carte Shenzhen premium), #539 (règle n°315 + controle_schemas.mjs).
-- Ouvertes : **#540** (complément n°315 : pastille ≠ contact, 128 schémas avec ✘) ; **#541** (règle n°316 « une synthèse se lit par un élève de 6e » + skill `.claude/skills/synthese-vulgarisee/`).
-- Modèles lus (navigateur de Pascal) : Toulouse fiches de synthèse 2024 (1 page « Ce que je dois retenir », carte centrale + blocs) et fiches de connaissances CF-2024 (FC4-1, FC16). Pujades et Bordeaux : sites en panne ce soir. Limoges : pas regardé.
-- Campagne décidée par Pascal : thème par thème EN ENTIER (schémas n°315, et synthèses n°316 proposées avec). Pilote synthèse : 5e_C1.1. Thème 1 : 59 schémas avec ✘, 3/4 dans le générateur `ateliers-representations/_generation/figures.py` (carte_mentale : pas 46→56 ; pieuvre : étiquettes FC au milieu du segment visible).
-- Mesures : `scratchpad/n315/`.
+- #540 et #541 fusionnées (règles n°315 schémas premium, n°316 synthèses vulgarisées + skill).
+- #542 ouverte : le skill `synthese-vulgarisee` apprend des 4 fiches envoyées par Pascal (ordre exemple → règle, encadré « À retenir » en fin de partie, 10 procédés : modèle vide puis rempli, objet réel sous chaque bloc, vignettes, tableau comparatif, nombre suivi, couleur par notion…). Branche fable/regle-316-modeles, worktree $S/wt_315.
+- En cours : schémas du thème 1 (worktree $S/wt_s1, branche fable/theme-1-schemas-premium, rien de commis) — figures.py des ateliers corrigé en partie (PAS_FEUILLE, pieuvre), reste : glissement FP à reconstruire, «satisfy» d'exigences(), croquis gardienne, SVG faits main (3e_C2.1, 3e_C1.1, 5e_C1.2, 4e_C1.1, 5e_C1.3, 5e_C1.1, _reperes).
+- Ensuite : synthèses du thème 1 selon n°316 (pilote 5e_C1.1).
 
-_(écrit par Claude le 29/10/2026 00:03)_
+_(écrit par Claude le 29/10/2026 06:07)_
 
 ## Branche et PR
 - Branche : `fable/theme-2-regle-304` — dernier commit 5a5ededb4 Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé
-- PR #541 ouverte (`fable/regle-316-syntheses-vulgarisees`) — Règle d'or n°316 : une synthèse élève se lit par un élève de 6e — skill synthese-vulgarise — CI : success
-- PR #540 ouverte (`fable/regle-315-pastilles`) — Règle n°315 (complément) : une pastille posée sur un cadre n'est pas un contact — CI : success
+- PR #542 ouverte (`fable/regle-316-modeles`) — Synthèses (n°316) : le skill apprend des quatre fiches envoyées par Pascal — CI : queued
 
 ## Décisions en attente
 _Aucune._
 
 ## Prochaine action
-➡️ Fusionne #540 (complément de la règle sur les schémas) et #541. Ensuite j'attaque le thème 1 : le générateur des ateliers de représentations (les trois quarts des défauts de schémas), puis la synthèse de `5e_C1.1` réécrite en pilote.
+➡️ Reconstruire les ateliers dans wt_s1 et remesurer avec controle_schemas.mjs
 
 ## Décisions prises récemment (messages de Pascal)
 - 28/10/2026 23:09 — « un outil s'il donne un meilleur schéma ou une meilleur representation dans le sens vulgarisée, simple meme pour un 6e, et pédagogique »
