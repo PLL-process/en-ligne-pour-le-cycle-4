@@ -25169,3 +25169,49 @@ sur le niveau précédent sans diagnostic d'entrée. Une PR par thème ; celle-c
   séquence 38/38, QCM 34/34, sur `main` comme ici.
 - **Contrôles** identiques à `main`. `controle_squelette.mjs` a échoué une fois sur `main` sous la charge de quatre
   suites en parallèle et passe seul ; sur cette branche, il passe.
+
+---
+
+## 28/10/2026 — `5e_C2.1` Shenzhen : la carte des interacteurs n'est pas (encore) un diagramme pieuvre (thème 1)
+
+*Pascal, sur une capture de la figure de l'activité 1 : « Est-ce un diagramme pieuvre ? » Réponse : non — et la figure
+ne le disait pas. Décision « 1a » : le dire sur la figure, et passer les flèches dans les deux sens. Branche
+`fable/theme-1-carte-interacteurs`.*
+
+### Pourquoi la question se pose
+
+La figure `interacteurs_de_la_station.svg` met la station au centre et des cadres autour, reliés par des flèches : un
+élève y voit une pieuvre. Il en manque l'essentiel — l'objet dans une ellipse, une bulle par interacteur, **une
+fonction écrite sur chaque trait**. C'est une **liste rangée par familles**. Le vrai diagramme pieuvre vient à
+l'exercice c) (le vélo-cargo, atelier incrusté), qui l'enseigne avec ses règles. Et les flèches ne partaient que de la
+station : une relation d'interacteur va dans les deux sens (la pluie agit sur la station ; la station rend un vélo à
+l'usager).
+
+### Ce que fait cette PR
+
+- **La figure** : une ligne sous le titre, « **Pas encore un diagramme pieuvre** : c'est la liste des interacteurs,
+  rangée par familles — aucune fonction sur les traits » ; des **flèches à double sens** ; les deux encadrés du milieu
+  sur deux lignes (« La couleur du cadre n'en est pas un : c'est une caractéristique de l'objet » — l'ancien « c'est
+  l'objet » allait trop vite). `<desc>`, texte de remplacement de la page, du QCM (`q.py`, trois questions illustrées) et
+  `SOURCES_MEDIAS.md` décrivent la figure telle qu'elle est.
+- **La légende** de la figure dans la page ajoute : « Ce n'est pas encore un diagramme pieuvre : il vient à l'exercice
+  c), avec l'objet dans une ellipse et une fonction écrite sur chaque trait. »
+- **Trois restes d'un ancien découpage, trouvés en relisant le lot** : la correction de l'activité 1 et la partie 2 de
+  la synthèse élève enseignaient encore trois familles — *personnes, objets, conditions* — avec « les règles de la
+  ville » parmi les interacteurs ; l'« À retenir » disait « les **trois** comptent » après avoir nommé quatre familles,
+  et le critère de réussite « couvre les trois natures ». Or la même page enseigne quatre familles (tableau du b),
+  QCM a1_5) et pose « une règle n'est pas un interacteur » (encadré piège, QCM a1_7). Les quatre textes sont alignés :
+  usagers, données, autres objets, éléments de l'environnement ; les règles de la ville sont des **exigences**.
+- ⚠️ Non corrigé, signalé : cinq lignes d'options du QCM `qcm_5e_C2_shenzhen_station_velos.html` diffèrent de `q.py`
+  (raccourcies dans la page, pas dans la source) — dérive antérieure à cette PR ; régénérer le QCM les annulerait.
+
+### Vérifié
+
+- **La figure rendue** (Chromium, 900 × 494) : aucun texte ne déborde de son cadre ; têtes de flèche aux deux bouts.
+- **La correction rendue** à 390 px, après « Vérifier l'activité 1 » : quatre familles, règle = exigence ; pas de
+  défilement horizontal ; console vide.
+- **QCM régénéré en copie** (`build_qcm.py` + `fix_r.js 502`) : les trois textes de remplacement sont ceux de `q.py` ;
+  seules les cinq lignes de la dérive ci-dessus diffèrent, comme sur `main`.
+- **Bancs du lot** : `tests_5e_C2.1-C2.2_shenzhen.py` 50/50, `tests_regle_311_5e_C2.1.mjs` 34/34 — sur `main` comme ici.
+- **Contrôles** : identiques à `main` (médias, liens, impression, contraste, squelette, règles visibles, verif, et le
+  reste de la liste habituelle).

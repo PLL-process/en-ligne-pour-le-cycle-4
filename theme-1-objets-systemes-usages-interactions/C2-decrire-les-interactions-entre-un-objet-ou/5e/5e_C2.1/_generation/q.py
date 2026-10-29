@@ -10,12 +10,18 @@ réponse est fausse. Une réfutation courte (« Aucun rapport. ») est un aveu
 que l'auteur n'a pas cherché ce que l'élève avait en tête.
 """
 
+# Le texte de remplacement décrit la figure telle qu'elle est (28/10/2026) : l'ancien citait « les règles de la
+# ville » parmi les interacteurs — ce que la figure elle-même réfute — et « la borne », qui est la station.
 IMG_INT = {
     "src": "Images/interacteurs_de_la_station.svg",
-    "alt": "Autour de la station de vélos, quatre familles d'interacteurs : des usagers "
-           "(usager, agent de maintenance, riverain), des objets (vélo, borne, trottoir, "
-           "réseau, alimentation électrique) et des conditions (pluie, sel marin, "
-           "température, vandalisme, règles de la ville).",
+    "alt": "Ce qui entre en relation avec la station de vélos : quatre familles d'interacteurs, reliées à la"
+           " station par des flèches à double sens. Les usagers (le cycliste abonné, le touriste de passage,"
+           " l'agent de maintenance) ; les données (l'identifiant de l'abonné, l'état « disponible » du "
+           "vélo, le paiement, le numéro de borne) ; les autres objets (le vélo, le smartphone, le serveur "
+           "de la ville) ; l'environnement (la pluie, le soleil, le sel marin, la température, le trottoir, "
+           "la circulation). Ce n'est pas encore un diagramme pieuvre : c'est la liste, rangée par familles."
+           " Deux rappels : un interacteur est toujours extérieur à l'objet, et une règle de la ville n'en "
+           "est pas un — elle impose une condition.",
 }
 IMG_CHX = {
     "src": "Images/lire_un_choix_de_conception.svg",
