@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 640" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 680" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif">
 <title id="t">Topologie en étoile du réseau de la salle de technologie, telle qu'elle apparaît dans l'espace logique de Cisco Packet Tracer 8.2</title>
 <desc id="d">Sept appareils reconstitués fidèlement d'après le logiciel : au centre, le commutateur Switch0 (modèle 2960-24TT). Trois liaisons filaires en traits pleins le relient à PC0 (adresse 192.168.10.10, en haut à gauche), à PC1 (192.168.10.20, en bas à gauche) et au point d'accès AccessPoint0 (en haut à droite). Trois liaisons sans fil en pointillés relient le point d'accès à Laptop0 (192.168.10.30), à la tablette TabletPC0 (192.168.10.40) et au smartphone Smartphone0 (192.168.10.50). Chaque appareil porte son nom et son adresse. La forme générale dessine une étoile : tout passe par le centre.</desc>
 <!-- fond : espace logique blanc de Packet Tracer -->
-<rect width="1080" height="640" fill="#ffffff"/>
-<rect x="1" y="1" width="1078" height="638" fill="none" stroke="#9aaabc" stroke-width="2"/>
+<rect width="1080" height="680" fill="#ffffff"/>
+<rect x="1" y="1" width="1078" height="678" fill="none" stroke="#9aaabc" stroke-width="2"/>
 <text x="540" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#135588">La salle de technologie vue dans Packet Tracer : une ÉTOILE autour du commutateur</text>
 
 <defs>
@@ -56,11 +56,14 @@
 <line x1="540" y1="330" x2="230" y2="150" stroke="#2f6590" stroke-width="4"/>
 <line x1="540" y1="330" x2="230" y2="520" stroke="#2f6590" stroke-width="4"/>
 <line x1="540" y1="330" x2="850" y2="150" stroke="#2f6590" stroke-width="4"/>
-<!-- étiquettes des liaisons filaires -->
-<g font-size="13" fill="#31475a">
-  <text x="365" y="228" text-anchor="middle" transform="rotate(-30 365 228)">liaison filaire (câble droit)</text>
-  <text x="365" y="450" text-anchor="middle" transform="rotate(30 365 450)">liaison filaire (câble droit)</text>
-  <text x="700" y="228" text-anchor="middle" transform="rotate(30 700 228)">liaison filaire (câble droit)</text>
+<!-- étiquettes des liaisons filaires : à plat, posées sur leur câble, sur un fond blanc qui l'interrompt -->
+<g font-size="13" fill="#31475a" text-anchor="middle">
+  <rect x="282" y="229" width="206" height="22" rx="11" fill="#ffffff" stroke="#c5d3e0"/>
+  <text x="385" y="245">liaison filaire (câble droit)</text>
+  <rect x="282" y="414" width="206" height="22" rx="11" fill="#ffffff" stroke="#c5d3e0"/>
+  <text x="385" y="430">liaison filaire (câble droit)</text>
+  <rect x="577" y="238" width="206" height="22" rx="11" fill="#ffffff" stroke="#c5d3e0"/>
+  <text x="680" y="254">liaison filaire (câble droit)</text>
 </g>
 <!-- liaisons sans fil (pointillés) -->
 <line x1="850" y1="150" x2="850" y2="500" stroke="#5b7bb8" stroke-width="3" stroke-dasharray="4 7"/>
@@ -69,13 +72,14 @@
 <g font-size="13" fill="#5b7bb8">
   <text x="880" y="330" text-anchor="start">liaison sans fil (WiFi)</text>
   <text x="700" y="102" text-anchor="middle">WiFi</text>
-  <text x="710" y="370" text-anchor="middle">WiFi</text>
+  <text x="734" y="370" text-anchor="start">WiFi</text>
 </g>
 
 <!-- appareils + étiquettes nom / adresse (police et couleurs de l'espace logique) -->
 <use href="#switch" x="540" y="330"/>
 <text x="540" y="368" text-anchor="middle" font-size="14" font-weight="bold" fill="#172b3d">Switch0</text>
-<text x="540" y="385" text-anchor="middle" font-size="12" fill="#52697e">commutateur 2960-24TT — le centre de l'étoile</text>
+<text x="540" y="385" text-anchor="middle" font-size="12" fill="#52697e">commutateur 2960-24TT</text>
+<text x="540" y="401" text-anchor="middle" font-size="12" fill="#52697e">— le centre de l'étoile</text>
 
 <use href="#pc" x="230" y="150"/>
 <text x="230" y="200" text-anchor="middle" font-size="14" font-weight="bold" fill="#172b3d">PC0</text>
@@ -86,8 +90,8 @@
 <text x="230" y="587" text-anchor="middle" font-size="12" fill="#52697e">192.168.10.20 · terminal filaire</text>
 
 <use href="#ap" x="850" y="150"/>
-<text x="850" y="196" text-anchor="middle" font-size="14" font-weight="bold" fill="#172b3d">AccessPoint0</text>
-<text x="850" y="213" text-anchor="middle" font-size="12" fill="#52697e">point d'accès · SSID : TECHNO-C4</text>
+<text x="850" y="100" text-anchor="middle" font-size="14" font-weight="bold" fill="#172b3d">AccessPoint0</text>
+<text x="850" y="117" text-anchor="middle" font-size="12" fill="#52697e">point d'accès · SSID : TECHNO-C4</text>
 
 <use href="#laptop" x="850" y="520"/>
 <text x="850" y="560" text-anchor="middle" font-size="14" font-weight="bold" fill="#172b3d">Laptop0</text>
@@ -103,11 +107,11 @@
 
 <!-- légende -->
 <g>
-  <rect x="20" y="600" width="500" height="30" rx="8" fill="#f5f8fc" stroke="#9aaabc"/>
-  <line x1="35" y1="615" x2="80" y2="615" stroke="#2f6590" stroke-width="4"/>
-  <text x="88" y="620" font-size="13" fill="#31475a">liaison filaire</text>
-  <line x1="185" y1="615" x2="230" y2="615" stroke="#5b7bb8" stroke-width="3" stroke-dasharray="4 7"/>
-  <text x="238" y="620" font-size="13" fill="#31475a">liaison sans fil</text>
-  <text x="352" y="620" font-size="13" fill="#31475a">■ terminaux : 5 — commutateur : 1</text>
+  <rect x="250" y="636" width="580" height="30" rx="8" fill="#f5f8fc" stroke="#9aaabc"/>
+  <line x1="266" y1="651" x2="311" y2="651" stroke="#2f6590" stroke-width="4"/>
+  <text x="319" y="656" font-size="13" fill="#31475a">liaison filaire</text>
+  <line x1="418" y1="651" x2="463" y2="651" stroke="#5b7bb8" stroke-width="3" stroke-dasharray="4 7"/>
+  <text x="471" y="656" font-size="13" fill="#31475a">liaison sans fil</text>
+  <text x="590" y="656" font-size="13" fill="#31475a">■ terminaux : 5 — commutateur : 1</text>
 </g>
 </svg>
