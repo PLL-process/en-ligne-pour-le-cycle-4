@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 29/10/2026 10:27 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 29/10/2026 10:30 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - #551 fusionnée (contrôle des schémas : à cheval, trait sur texte, débordement en hauteur, balise HTML ; thème 1 à 0 ✘).
@@ -17,7 +17,7 @@ _(écrit par Claude le 29/10/2026 10:27)_
 _Aucune._
 
 ## Prochaine action
-➡️ Rien à faire pour Pascal : les schémas du thème 2 sont en cours.
+➡️ Rien à faire pour toi pour l'instant.
 
 ## Décisions prises récemment (messages de Pascal)
 - 29/10/2026 08:53 — « <task-notification> <task-id>af946527d87389d7a</task-id> <tool-use-id>toolu_0188d6PXtzDfAqV1vmMvk727</tool-use-id> <output-file>/tmp/claude- »
