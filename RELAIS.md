@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 29/10/2026 13:31 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 29/10/2026 16:05 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - #553 (thème 2 : 0 ✘ / 114) et #554 (thème 3 : 0 ✘ / 51, branche fable/schemas-premium-t3, worktree $S/wt_t3s) ouvertes, CI ✅. Elles ajoutent toutes deux une entrée au journal : la seconde fusionnée demandera de fusionner main dedans.
@@ -12,14 +12,13 @@ _(écrit par Claude le 29/10/2026 13:31)_
 
 ## Branche et PR
 - Branche : `fable/theme-2-regle-304` — dernier commit 5a5ededb4 Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé
-- PR #554 ouverte (`fable/schemas-premium-t3`) — n°315, thème 3 : 0 défaut sur 51 schémas — CI : success
-- PR #553 ouverte (`fable/theme-2-schemas-premium`) — n°315, thème 2 : 0 défaut sur 114 schémas — CI : success
+- Aucune PR ouverte.
 
 ## Décisions en attente
 _Aucune._
 
 ## Prochaine action
-➡️ Pascal : fusionner #553 puis #554.
+➡️ Fusionne #554.
 
 ## Décisions prises récemment (messages de Pascal)
 - 29/10/2026 13:15 — « <agent-message from="a35e22d744f71516e"> [Subagent hand-back] The text below is the final report of a subagent this session delegated to. It »
