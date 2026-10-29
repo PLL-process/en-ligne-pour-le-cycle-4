@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 688.6" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif" data-legende-unites="28.6">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 708.6" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif" data-legende-unites="28.6">
 <title id="t">La preuve que le réseau fonctionne : le test ping dans le terminal, et l'enveloppe du mode Simulation arrêtée sur le commutateur</title>
 <desc id="d">Panneau de gauche : le terminal Command Prompt de PC0, fond noir, avec la transcription réelle du test — la commande ping 192.168.10.20 obtient quatre réponses Reply from en moins d'une milliseconde et zéro pour cent de perte ; en dessous, la commande ping 192.168.10.50 vers le smartphone en WiFi obtient aussi quatre réponses mais en 57 à 260 millisecondes. Panneau de droite : l'espace logique en mode Simulation — l'enveloppe verte du paquet est posée sur le commutateur Switch0, entre PC0 et PC1, et la liste d'événements Event List affiche trois lignes horodatées : 0,001 seconde PC0, 0,002 seconde Switch0, 0,003 seconde PC1. En bas, la conclusion : le message passe toujours par le centre de l'étoile, qui lit l'adresse et choisit la bonne branche. Unités : ms (millisecondes).</desc>
-<rect width="1080" height="688.6" fill="#ffffff" data-legende-unites-fond="660"/>
-<rect x="1" y="1" width="1078" height="658" fill="none" stroke="#9aaabc" stroke-width="2"/>
+<rect width="1080" height="708.6" fill="#ffffff" data-legende-unites-fond="680"/>
+<rect x="1" y="1" width="1078" height="678" fill="none" stroke="#9aaabc" stroke-width="2"/>
 <text x="540" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#135588">Deux preuves : la RÉPONSE du ping, et le TRAJET de l'enveloppe</text>
 
 <!-- ===== terminal ===== -->
-<rect x="30" y="60" width="500" height="440" rx="6" fill="#101820" stroke="#637b8e" stroke-width="2"/>
-<rect x="30" y="60" width="500" height="28" fill="#2b3b47"/>
+<rect x="30" y="60" width="500" height="460" rx="6" fill="#101820" stroke="#637b8e" stroke-width="2"/>
+<path d="M31,88 V66 a5,5 0 0 1 5,-5 h488 a5,5 0 0 1 5,5 V88 Z" fill="#2b3b47"/>
 <text x="46" y="79" font-size="13" fill="#ffffff">PC0 — Desktop → Command Prompt</text>
 <g font-family="Consolas, monospace" font-size="13" fill="#d9f5e7">
   <text x="48" y="112">C:\&gt; ping 192.168.10.20</text>
@@ -17,26 +17,25 @@
   <text x="48" y="210">Reply from 192.168.10.20: bytes=32 time&lt;1ms TTL=128</text>
   <text x="48" y="232">Reply from 192.168.10.20: bytes=32 time&lt;1ms TTL=128</text>
   <text x="48" y="260">Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)</text>
-  <text x="48" y="304" fill="#9fd8f1">C:\&gt; ping 192.168.10.50</text>
-  <text x="48" y="330" fill="#9fd8f1">Reply from 192.168.10.50: bytes=32 time=260ms TTL=128</text>
-  <text x="48" y="352" fill="#9fd8f1">Reply from 192.168.10.50: bytes=32 time=57ms  TTL=128</text>
-  <text x="48" y="374" fill="#9fd8f1">Reply from 192.168.10.50: bytes=32 time=76ms  TTL=128</text>
-  <text x="48" y="396" fill="#9fd8f1">Reply from 192.168.10.50: bytes=32 time=92ms  TTL=128</text>
-  <text x="48" y="424" fill="#9fd8f1">Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)</text>
+  <text x="48" y="318" fill="#9fd8f1">C:\&gt; ping 192.168.10.50</text>
+  <text x="48" y="344" fill="#9fd8f1">Reply from 192.168.10.50: bytes=32 time=260ms TTL=128</text>
+  <text x="48" y="366" fill="#9fd8f1">Reply from 192.168.10.50: bytes=32 time=57ms  TTL=128</text>
+  <text x="48" y="388" fill="#9fd8f1">Reply from 192.168.10.50: bytes=32 time=76ms  TTL=128</text>
+  <text x="48" y="410" fill="#9fd8f1">Reply from 192.168.10.50: bytes=32 time=92ms  TTL=128</text>
+  <text x="48" y="436" fill="#9fd8f1">Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)</text>
 </g>
 <g font-size="12.5">
-  <rect x="330" y="150" width="188" height="46" rx="8" fill="#0f2e1c" stroke="#1e9d55"/>
-  <text x="424" y="169" text-anchor="middle" fill="#81fba1" font-weight="bold">« Reply from » = PC1 répond !</text>
-  <text x="424" y="187" text-anchor="middle" fill="#81fba1">filaire : moins de 1 ms</text>
-  <rect x="330" y="336" width="188" height="46" rx="8" fill="#102737" stroke="#4d8bc2"/>
-  <text x="424" y="355" text-anchor="middle" fill="#9fd8f1" font-weight="bold">le smartphone répond aussi</text>
-  <text x="424" y="373" text-anchor="middle" fill="#9fd8f1">WiFi : 57 à 260 ms — plus lent !</text>
+  <!-- les bulles, SOUS chaque bloc de réponses : elles ne cachent plus aucune ligne du terminal -->
+  <rect x="46" y="270" width="468" height="26" rx="8" fill="#0f2e1c" stroke="#1e9d55"/>
+  <text x="280" y="288" text-anchor="middle" fill="#81fba1"><tspan font-weight="bold">↑ « Reply from » = PC1 répond !</tspan> — filaire : moins de 1 ms</text>
+  <rect x="46" y="448" width="468" height="26" rx="8" fill="#102737" stroke="#4d8bc2"/>
+  <text x="280" y="466" text-anchor="middle" fill="#9fd8f1"><tspan font-weight="bold">↑ le smartphone répond aussi</tspan> — WiFi : 57 à 260 ms, plus lent !</text>
 </g>
-<text x="280" y="478" text-anchor="middle" font-size="12.5" fill="#ffd66b">Compare : la liaison filaire répond plus de 50 fois plus vite que le WiFi.</text>
+<text x="280" y="500" text-anchor="middle" font-size="12.5" fill="#ffd66b">Compare : la liaison filaire répond plus de 50 fois plus vite que le WiFi.</text>
 
 <!-- ===== simulation ===== -->
-<rect x="560" y="60" width="490" height="440" rx="6" fill="#ffffff" stroke="#637b8e" stroke-width="2"/>
-<rect x="560" y="60" width="490" height="28" fill="#c98222"/>
+<rect x="560" y="60" width="490" height="460" rx="6" fill="#ffffff" stroke="#637b8e" stroke-width="2"/>
+<path d="M561,88 V66 a5,5 0 0 1 5,-5 h478 a5,5 0 0 1 5,5 V88 Z" fill="#c98222"/>
 <text x="576" y="79" font-size="13" fill="#ffffff">Mode Simulation ✉ — outil « Add Simple PDU », puis bouton ⏭ Capture/Forward</text>
 <!-- mini topologie -->
 <g>
@@ -70,12 +69,12 @@
   <text x="620" y="440">0.003       Switch0       PC1</text>
 </g>
 <rect x="614" y="408" width="382" height="18" rx="4" fill="none" stroke="#ffd66b" stroke-width="2.5"/>
-<text x="805" y="478" text-anchor="middle" font-size="12.5" fill="#7a4c10">À chaque clic sur ⏭, l'enveloppe avance d'UN pas : PC0 → Switch0 → PC1.</text>
+<text x="805" y="500" text-anchor="middle" font-size="12.5" fill="#7a4c10">À chaque clic sur ⏭, l'enveloppe avance d'UN pas : PC0 → Switch0 → PC1.</text>
 
 <!-- conclusion -->
-<rect x="30" y="520" width="1020" height="120" rx="12" fill="#eef6ff" stroke="#4d8bc2" stroke-width="2"/>
-<text x="540" y="551" text-anchor="middle" font-size="16" font-weight="bold" fill="#12335e">Ce que montrent les deux preuves :</text>
-<text x="540" y="580" text-anchor="middle" font-size="14" fill="#222">① le message passe TOUJOURS par le commutateur, le centre de l'étoile — jamais en ligne droite entre deux PC ;</text>
-<text x="540" y="605" text-anchor="middle" font-size="14" fill="#222">② le commutateur lit l'ADRESSE DE DESTINATION écrite sur l'enveloppe et choisit la bonne branche ;</text>
-<text x="540" y="630" text-anchor="middle" font-size="14" fill="#222">③ si la réponse revient (« Reply from »), c'est la preuve que l'aller ET le retour fonctionnent.</text>
-<text data-legende-unites="ligne" x="540" y="677.7" text-anchor="middle" font-size="13" fill="#172b3d" font-family="Arial, Helvetica, sans-serif">Unités : ms (millisecondes)</text></svg>
+<rect x="30" y="540" width="1020" height="120" rx="12" fill="#eef6ff" stroke="#4d8bc2" stroke-width="2"/>
+<text x="540" y="571" text-anchor="middle" font-size="16" font-weight="bold" fill="#12335e">Ce que montrent les deux preuves :</text>
+<text x="540" y="600" text-anchor="middle" font-size="14" fill="#222">① le message passe TOUJOURS par le commutateur, le centre de l'étoile — jamais en ligne droite entre deux PC ;</text>
+<text x="540" y="625" text-anchor="middle" font-size="14" fill="#222">② le commutateur lit l'ADRESSE DE DESTINATION écrite sur l'enveloppe et choisit la bonne branche ;</text>
+<text x="540" y="650" text-anchor="middle" font-size="14" fill="#222">③ si la réponse revient (« Reply from »), c'est la preuve que l'aller ET le retour fonctionnent.</text>
+<text data-legende-unites="ligne" x="540" y="697.7" text-anchor="middle" font-size="13" fill="#172b3d" font-family="Arial, Helvetica, sans-serif">Unités : ms (millisecondes)</text></svg>
