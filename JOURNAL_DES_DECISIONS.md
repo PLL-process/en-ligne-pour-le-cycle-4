@@ -25412,3 +25412,41 @@ représentations a son propre assembleur, hors de ce balayage.
 
 - L'atelier des représentations (`ateliers-representations/_generation/build_qcm.py`), qui a son propre
   assembleur : même vérification à faire.
+
+---
+
+## 28/10/2026 — `5e_C2.1` Shenzhen : la carte des interacteurs refaite, rien ne s'y touche (thème 1)
+
+*Pascal, après #536, sur une capture de la carte en ligne : « Avec le recul, ce schéma peut troubler les élèves… j'aimerais
+un premium où les entités ne semblent pas se toucher. » Branche `fable/theme-1-carte-interacteurs-premium`.*
+
+### Ce qui troublait
+
+Les deux repères — « Toujours EXTÉRIEUR à l'objet » et « Interacteur ≠ exigence » — étaient posés **au milieu du
+schéma**, entre « les autres objets » et « l'environnement », collés l'un à l'autre, et les flèches du bas passaient
+derrière eux. Un élève y lisait deux interacteurs de plus, reliés à la station. Le repère qui dit « une règle n'est
+pas un interacteur » avait lui-même l'air d'en être un.
+
+### La nouvelle carte
+
+- **Quatre familles et la station, séparées** : 44 px au moins entre deux cadres ; la station au centre, sur un halo.
+- **Une flèche par famille**, à double sens, courbe douce qui part de la carte et arrive sur la station **sans toucher
+  ni traverser aucun cadre** (les pointes s'arrêtent à 7 px des bords).
+- **Les deux repères sous le schéma**, à part, sous le titre « Deux repères pour lire le schéma », dans un style de
+  note (barre de couleur, pas de cadre de famille) et **sans flèche**.
+- Inchangés : le titre, « Quatre familles. Aucune n'est plus technique que les autres », la ligne « Pas encore un
+  diagramme pieuvre », le contenu de chaque famille, la bande « La famille qu'on oublie, c'est celle des données ».
+- Les tailles de texte étaient écrasées par la feuille de style du SVG (une règle `text{font-size}` l'emporte sur
+  l'attribut) : le titre ne ressortait pas. Elles passent en `style`, et le titre fait 19 px.
+- **Le SVG est engendré** par `_generation/carte_interacteurs.py` (on modifie le script, on le relance). Le texte de
+  remplacement de la page dit la nouvelle disposition (« sous le schéma, à part et sans flèche, deux repères ») ;
+  celui du QCM (`q.py`) ne parlait pas de disposition et ne change pas.
+
+### Vérifié
+
+- **Mesuré dans Chromium** (900 × 636) : aucun texte ne déborde de son cadre (12 px de marge au moins), aucun cadre à
+  moins de 16 px d'un autre, aucune flèche dans un cadre ; SVG bien formé.
+- **Rendu regardé** à 900 px.
+- **Bancs du lot** : 50/50 et 34/34. `controle_medias`, `controle_loupe`, `controle_liens` et les contrôles qui lisent le
+  texte des pages : identiques à `main`.
+- C'est le pilote de la règle d'or n°315 (« tout schéma est premium »), décidée par Pascal le même soir.
