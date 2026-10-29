@@ -5,150 +5,589 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Synthèse élève — SOS serre (4e_C4.7 · C4.8 · C4.9)</title>
 <style>
-  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
   *{box-sizing:border-box}
-  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;font-size:.95em;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
   .page{max-width:860px;margin:0 auto}
   h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
   .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
-  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
-  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  @media(max-width:680px){.cols{grid-template-columns:1fr}}
-  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
-  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24}
-  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
-  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
-  code{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
-  .savoir{border-left:4px solid var(--ok)}.faire{border-left:4px solid var(--hl)}.pieges{border-left:4px solid var(--err)}
-  .voc{font-size:.88em}.voc td{padding:2px 8px;border-bottom:1px dashed var(--border)}
+  h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+  h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
+  ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  table{width:100%;border-collapse:collapse;margin:6px 0}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--sub);font-size:.9em}
   .toolbar{text-align:center;margin:10px 0}
   .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
-  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}h1,h2,dt,.pb{color:#111}.toolbar{display:none}.page{max-width:none}code{background:#eee}}
+  a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  /* règle n°304 : un lien de rattrapage arrive sur ce titre ; la barre collante (47 px) ne doit pas le recouvrir */
+  h2[id]{scroll-margin-top:60px}
+  #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
 
+  /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
+  /* Une couleur par notion, la même partout : la donnée en jaune, l'information en vert. */
+  .d{color:var(--warn);font-weight:600}.i{color:var(--ok);font-weight:600}
+  /* La carte « Ce que je dois retenir » */
+  .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
+  .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
+  .question{text-align:center;font-size:1.05em;font-weight:600;margin:0 0 10px}
+  .programme{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);
+             padding:6px 0;margin:0 0 12px}
+  .programme b{color:var(--text)}
+  .programme ul{margin:2px 0;padding-left:18px}.programme li{margin:1px 0}
+  .cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .cartes a{display:block;text-decoration:none;color:var(--text);background:var(--panel);border:1.5px solid var(--border);
+            border-radius:10px;padding:9px 12px}
+  .cartes a:hover{border-color:var(--hl)}
+  .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
+  .cartes .r{display:block;font-size:.92em}
+  /* L'objet en image (Pascal, 29/10/2026 : « une illustration permet d'avoir une vision plus synthétique de l'objet ») :
+     à droite du programme, dans la carte ; dessous sur un téléphone. */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
+  .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
+  .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
+  .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
+  .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  ul.serre li{margin:1px 0}
+  .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
 
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+    h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; un schéma ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    .schema,table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
+    .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
+    .d{color:#8a5a00}.i{color:#1d6b38}.vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
+    .schema{width:60%;display:block;margin:4px auto}
+    h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
   .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
-</style>
-</head>
-<body>
-<style id="navharm-css">
-#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
- padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
- -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
-#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
- border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
- font-size:.92em;text-decoration:none;line-height:1.2}
-#navharm a:hover{border-color:#61dafb;color:#61dafb}
-#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
-@media print{#navharm{display:none}}
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
 
 /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
 @media(max-width:680px){table{display:block;overflow-x:auto}}
-</style>
+
+  /* Revenir à la carte (Pascal, 29/10/2026 : « je ne peux pas revenir à la synthèse ») : chaque partie porte, en
+     haut à droite, un lien vers la carte « Ce que je dois retenir » ; la barre de navigation collée en haut ne
+     recouvre plus le titre visé par un lien. Rien de tout cela ne s'imprime. */
+  .retour-carte{float:right;font-size:.82em;margin:1px 0 0 10px;padding:1px 10px;border:1.5px solid var(--border);
+                border-radius:999px;text-decoration:none;white-space:nowrap}
+  .retour-carte:hover,.retour-carte:focus-visible{border-color:var(--hl)}
+  #carte-titre,[id^="partie-"]{scroll-margin-top:64px}
+  @media print{.retour-carte{display:none}}
+
+  /* ══ Les chaînes (règle d'or n°310) ══ Dans chaque case, la fonction (un verbe) et, dessous, le composant qui la
+     réalise ; sur chaque flèche, ce qui circule (une forme d'énergie, ou une information) ; à la sortie, l'action.
+     Une couleur par fonction, la même partout ; le texte dit tout, la couleur ne fait que le doubler. Une énergie
+     stockée s'écrit sous son composant ; la batterie est une branche, sous le bloc qui la relie (la ligne 2). */
+  :root{--ali:#ffd66b;--dis:#61dafb;--conv:#c68ef2;--tra:#81fba1;--acq:#61dafb;--trt:#c68ef2;--com:#81fba1;--nrj:#ffb454}
+  .fonctions{display:grid;align-items:center;gap:4px 3px;margin:8px 0;break-inside:avoid}
+  .fonctions>*{grid-row:1}
+  .fonctions>.sous{grid-row:2;align-self:start;display:flex;align-items:center;justify-content:center;gap:4px}
+  .fonctions .f{align-self:stretch;border:2px solid var(--border);border-radius:8px;padding:3px 6px;background:var(--panel2);
+                text-align:center;line-height:1.3;font-size:.92em}
+  .fonctions .f b{display:block;letter-spacing:.03em}
+  .fonctions .fl{text-align:center;font-size:.8em;line-height:1.15;color:var(--nrj);padding:0 2px}
+  .fonctions .fl::after{content:"➜";display:block;font-size:1.2em;line-height:1.1}
+  .fonctions.info .fl{color:var(--hl)}
+  .fonctions .fv{font-size:.8em;line-height:1.2;color:var(--nrj);text-align:right;flex:0 0 9em}
+  .fonctions .sous::after{content:"";flex:0 0 7.2em} /* la case STOCKER reste centrée sous son bloc */
+  .fonctions .fin{font-weight:700;font-size:.9em;line-height:1.25}
+  .fonctions .stocke{font-style:normal;color:var(--warn)}
+  .f.ali{border-color:var(--ali)}.f.ali b{color:var(--ali)}
+  .f.dis{border-color:var(--dis)}.f.dis b{color:var(--dis)}
+  .f.conv{border-color:var(--conv)}.f.conv b{color:var(--conv)}
+  .f.tra{border-color:var(--tra)}.f.tra b{color:var(--tra)}
+  .f.acq{border-color:var(--acq)}.f.acq b{color:var(--acq)}
+  .f.trt{border-color:var(--trt)}.f.trt b{color:var(--trt)}
+  .f.com{border-color:var(--com)}.f.com b{color:var(--com)}
+  .ordre{border-left:4px dashed var(--ok);padding:2px 10px;margin:6px 0}
+  @media (max-width:600px){
+    .fonctions{display:flex;flex-direction:column;align-items:stretch}
+    .fonctions .fl::after{content:" ⬇";display:inline}
+    .fonctions .fin{text-align:center}
+    .fonctions .sous::after{display:none}.fonctions .fv{flex:0 1 auto}
+  }
+  /* Une suite de cinq cases tient sur une ligne. */
+  .chaine.cinq div{flex-basis:110px}
+  /* Un schéma de l'objet (pas une photo) se montre entier, sans être rogné. */
+  .objet.schema-objet{flex-basis:30%;justify-content:center}
+  .objet.schema-objet img{flex:none;height:auto;object-fit:contain;background:#fff}
+  @media (max-width:600px){.objet.schema-objet img{aspect-ratio:auto}}
+  @media print{
+    .fonctions .f{background:#fff;color:#111}
+    .f.ali{border-color:#a97800}.f.ali b{color:#7a5100}
+    .f.dis{border-color:#1b7f9e}.f.dis b{color:#0b5f7a}
+    .f.conv{border-color:#7d4fb8}.f.conv b{color:#5e3592}
+    .f.tra{border-color:#2d7a4a}.f.tra b{color:#1d6b38}
+    .f.acq{border-color:#1b7f9e}.f.acq b{color:#0b5f7a}
+    .f.trt{border-color:#7d4fb8}.f.trt b{color:#5e3592}
+    .f.com{border-color:#2d7a4a}.f.com b{color:#1d6b38}
+    .fonctions .fl,.fonctions .fv{color:#8a4300}.fonctions.info .fl{color:#0b5f7a}
+    .fonctions .stocke{color:#7a5100}.ordre{border-left-color:#2d7a4a}
+    .fonctions{gap:2px 2px;margin:4px 0}.fonctions .f{padding:2px 5px}
+    .chaine.cinq div{padding:3px 6px}
+  }
+</style></head>
+<body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_4e_C4.7-C4.9_sos_serre_packet_tracer.html">← Séquence</a></nav>
 <div class="page">
-<h1>📌 Synthèse élève — SOS serre (4e_C4.7 · C4.8 · C4.9)</h1>
+<h1>📌 Synthèse élève — SOS serre&nbsp;: l'objet connecté muet</h1>
 <p class="pb">Comment ajouter un objet connecté à un réseau local — et retrouver, avec méthode, la panne qui l'empêche de communiquer&nbsp;?</p>
-<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
 
-<div class="bloc">
-  <h2 id="partie-1" style="margin-top:0">1. Le plan d'adressage (4e_C4.7)</h2>
-  <object class="schema" data="../Images/plan_adressage_serre.svg" type="image/svg+xml" aria-label="Le plan de la serre : rue 192.168.20, passerelle .1 réservée, PC-Prof .10, Imprimante .30, Capteur .50, Serveur .100">Le plan de la serre</object>
-  <dl>
-    <dt>La recette (AVANT de brancher)</dt><dd>① recenser les habitants → ② choisir la <b>rue</b> commune (<code>192.168.20</code>) → ③ un <b>numéro unique</b> par appareil, le <b>.1 réservé</b> → ④ écrire le <b>masque</b>.</dd>
-    <dt>Passerelle (gateway)</dt><dd>la <b>porte de sortie</b> du réseau vers les autres réseaux — son adresse (<code>192.168.20.1</code>) est réservée et notée dans le carnet de chaque habitant. Dans notre serre, la porte est <b>prévue au plan mais pas encore installée</b>&nbsp;: c'est pour cela que les pings entre voisins marchent quand même.</dd>
-    <dt>Masque</dt><dd><code>255.255.255.0</code> = «&nbsp;les 3 premiers nombres sont la rue, le dernier est la maison&nbsp;» — <b>dans notre réseau, qui utilise ce masque-là</b>. D'autres masques existent&nbsp;; tu les verras plus tard. Le même pour toute la rue.</dd>
-    <dt>Le «&nbsp;.1&nbsp;»</dt><dd>ce n'est pas une loi de l'informatique&nbsp;: c'est une <b>convention</b> très répandue (et la nôtre). On réserve le .1 à la passerelle pour que tout le monde sache où est la porte.</dd>
-  </dl>
-</div>
+<!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
+<section class="carte" aria-labelledby="carte-titre">
+  <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
+  <p class="question">Comment ajouter le capteur de la serre au réseau local, puis trouver avec méthode la panne qui le rend muet&nbsp;?</p>
+  <div class="tete">
+  <div class="programme"><b>Ce que dit le programme</b> (4e, compétence C4)&nbsp;:
+    <ul>
+      <li>paramétrer une adresse IP fixe pour ajouter un objet connecté à un réseau local&nbsp;;</li>
+      <li>résoudre des problèmes pour assurer la communication entre les différents terminaux dans un réseau informatique (simulation ou réseau local déconnecté du réseau pédagogique)&nbsp;;</li>
+      <li>compléter une simulation fournie pour valider le comportement d'un réseau informatique.</li>
+    </ul>
+  </div>
+    <figure class="objet schema-objet">
+      <img src="../Images/serre_topologie_etoile.svg" alt="Le réseau de la serre dans le simulateur : un commutateur au centre, relié par quatre câbles à quatre appareils.">
+      <figcaption>📍 L'objet&nbsp;: le réseau de la serre, en étoile, dans le simulateur.</figcaption>
+    </figure>
+  </div>
+  <div class="cartes">
+    <a href="#partie-1"><span class="q">🗺️ 1. Comment préparer les adresses avant de brancher&nbsp;?</span>
+      <span class="r">Une rue commune, un numéro unique chacun, le .1 réservé.</span></a>
+    <a href="#partie-2"><span class="q">📌 2. Comment donner une adresse fixe au capteur&nbsp;?</span>
+      <span class="r">Static, adresse, masque, passerelle&nbsp;; puis un ping le prouve.</span></a>
+    <a href="#partie-3"><span class="q">🎬 3. Comment valider le réseau par la simulation&nbsp;?</span>
+      <span class="r">Tu ajoutes le test au fichier fourni&nbsp;: «&nbsp;Successful&nbsp;» valide.</span></a>
+    <a href="#partie-4"><span class="q">🩺 4. Comment trouver une panne sans tout débrancher&nbsp;?</span>
+      <span class="r">Symptôme, hypothèse, test, remède… et re-test.</span></a>
+    <a href="#partie-5"><span class="q">🔎 5. Comment reconnaître la famille d'une panne&nbsp;?</span>
+      <span class="r">Liens verts&nbsp;: l'adresse. Triangles rouges&nbsp;: la liaison.</span></a>
+  </div>
+</section>
 
-<div class="cols">
-<div class="bloc">
-  <h2 id="partie-2" style="margin-top:0">2. L'adresse IP fixe (4e_C4.7)</h2>
-  <dl>
-    <dt>Pourquoi FIXE&nbsp;?</dt><dd>un objet connecté qu'on doit <b>joindre à coup sûr</b> (capteur, serveur, imprimante) ne peut pas changer d'adresse au hasard → <b>Static</b>, pas DHCP.</dd>
-    <dt>Les 4 lignes</dt><dd><b>Static</b> coché · <b>IPv4</b> <code>192.168.20.50</code> · <b>masque</b> <code>255.255.255.0</code> · <b>Default Gateway</b> <code>192.168.20.1</code> ⭐ la nouveauté de 4e.</dd>
-    <dt>La preuve qui compte</dt><dd>le ping <b>vers l'objet que tu viens d'adresser</b>&nbsp;: <code>ping 192.168.20.50</code> → <code>Reply from…</code> ×4, <code>0% loss</code>, <code>TTL=128</code>. C'est CE ping qui prouve que TON paramétrage marche — pas un ping au hasard.</dd>
-    <dt>Le premier ping</dt><dd>il arrive souvent qu'il affiche <code>Request timed out</code> tout seul, puis que les suivants répondent&nbsp;: le réseau «&nbsp;se réveille&nbsp;». <b>Ne panique pas</b>, relance une fois avant de conclure à une panne.</dd>
-  </dl>
-</div>
-<div class="bloc">
-  <h2 id="partie-3" style="margin-top:0">3. Valider par la simulation (4e_C4.9)</h2>
-  <dl>
-    <dt>Compléter, pas reconstruire</dt><dd>le fichier .pkt est <b>fourni</b>&nbsp;: on y <b>ajoute le test</b> (Add Simple PDU&nbsp;: clic expéditeur → clic destinataire), puis Play.</dd>
-    <dt>Lire le film</dt><dd>l'<b>Event List</b> horodate chaque étape&nbsp;: <code>0.000 PC-Prof → 0.001 Switch0 → 0.002 Serveur</code>. Tout passe par le commutateur (étoile).</dd>
-    <dt>Le verdict</dt><dd><b>Successful</b> = aller-retour simulé réussi = comportement du réseau <b>validé</b>. On sauvegarde&nbsp;: le test fait partie du fichier.</dd>
-  </dl>
-</div>
-</div>
-
-<div class="bloc">
-  <h2 id="partie-4" style="margin-top:0">4. Dépanner avec méthode (4e_C4.8)</h2>
-  <object class="schema" data="../Images/demarche_diagnostic.svg" type="image/svg+xml" aria-label="La boucle du dépanneur : symptôme, hypothèse, test, remède, re-test">La boucle du dépanneur</object>
-  <dl>
-    <dt>La boucle du dépanneur</dt><dd><b>symptôme → hypothèse → test → remède → RE-test</b>. Jamais de remède sans test, jamais de «&nbsp;réparé&nbsp;» sans re-test.</dd>
-    <dt>Famille «&nbsp;adressage&nbsp;»</dt><dd>liens <b>verts</b> mais <code>Request timed out</code> (100% loss) → vérifier les adresses. Ex. réel&nbsp;: la <b>mauvaise rue</b> <code>192.168.<b>21</b>.50</code> — une unité d'écart, et le capteur «&nbsp;déménage&nbsp;» hors du réseau.</dd>
-    <dt>Famille «&nbsp;liaison&nbsp;»</dt><dd>triangles <b>ROUGES</b> → la route est coupée (port sur Off, câble défait). Ex. réel&nbsp;: le Port Status de l'imprimante décoché. Remède&nbsp;: On → vert → re-ping.</dd>
-    <dt>Famille «&nbsp;masque&nbsp;»</dt><dd>tout a l'air juste, l'adresse est dans la bonne rue… mais le <b>masque</b> est faux (ex. réel&nbsp;: <code>255.255.255.240</code> sur le capteur). Résultat&nbsp;: <code>100% loss</code>. Le masque décide de qui est «&nbsp;dans la rue&nbsp;»&nbsp;: se tromper de masque, c'est déménager sans changer d'adresse.</dd>
-  </dl>
-</div>
-
-<div class="bloc">
-  <h2 style="margin-top:0">5. Ma fiche d'intervention (le geste du pro)</h2>
-  <dl>
-    <dt>Trois fichiers en panne</dt><dd><code>4e_serre_PANNE_A.pkt</code> · <code>4e_serre_PANNE_B.pkt</code> · <code>4e_serre_PANNE_C.pkt</code>&nbsp;: de vraies pannes, préparées puis vérifiées dans Packet Tracer. À toi de les diagnostiquer.</dd>
-    <dt>Les 6 lignes à écrire</dt><dd>① le symptôme observé · ② mon hypothèse · ③ le test que je lance · ④ ce que le test montre · ⑤ le remède appliqué · ⑥ le re-test qui prouve la réparation.</dd>
-    <dt>La règle d'or</dt><dd>on n'écrit jamais «&nbsp;réparé&nbsp;» sans avoir collé la preuve du <b>re-test</b>. Un dépanneur qui ne re-teste pas n'a rien prouvé.</dd>
-    <dt>Le fichier de départ</dt><dd><code>4e_serre_DEPART.pkt</code>&nbsp;: le montage est déjà câblé, les adresses sont <b>vides</b>. La compétence évaluée n'est pas de retrouver le commutateur dans la palette&nbsp;: c'est d'adresser et de prouver.</dd>
-  </dl>
-</div>
-
-<div class="cols">
+<!-- ══ 1 ══ -->
 <div class="bloc savoir">
-  <h2 style="margin-top:0">✅ Je dois savoir</h2>
-  <ul>
-    <li>concevoir un plan&nbsp;: rue commune, numéros uniques, .1 réservé, masque commun&nbsp;;</li>
-    <li>expliquer fixe vs DHCP (joindre ≠ passer)&nbsp;;</li>
-    <li>lire un ping&nbsp;: Reply / timed out / % loss&nbsp;;</li>
-    <li>distinguer les trois familles de pannes&nbsp;: adressage, liaison, masque&nbsp;;</li>
-    <li>dire ce que valide un «&nbsp;Successful&nbsp;» de simulation.</li>
-  </ul>
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-1" style="margin-top:0">1. Comment préparer les adresses avant de brancher&nbsp;?</h2>
+  <p>Pour la serre, M. Firmin impose la rue <code>192.168.20</code>. Le plan d'adressage se prépare en quatre étapes&nbsp;:</p>
+  <div class="chaine etapes">
+    <div><b>1. Recenser</b>Les quatre appareils qui parleront&nbsp;: PC-Prof, serveur, imprimante, capteur.</div>
+    <div><b>2. Choisir la rue</b><code>192.168.20</code>, le début commun à tous les appareils.</div>
+    <div><b>3. Numéroter</b>Un numéro unique chacun&nbsp;: .10, .30, .50, .100. Le .1 reste à la passerelle.</div>
+    <div><b>4. Écrire le masque</b><code>255.255.255.0</code>&nbsp;: trois nombres pour la rue, le dernier pour la maison.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un <b>plan d'adressage</b> se conçoit <b>avant</b> de brancher. Chaque
+  appareil reçoit un <b>numéro unique</b> dans la <b>rue commune</b>&nbsp;; le .1 est réservé à la <b>passerelle</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: donner le .1 à un appareil. C'est l'adresse de la passerelle, la porte de
+  sortie vers les autres réseaux.</p>
 </div>
+
+<!-- ══ 2 ══ -->
 <div class="bloc faire">
-  <h2 style="margin-top:0">🛠 Je dois savoir faire</h2>
-  <ul>
-    <li>paramétrer Static + IPv4 + masque + <b>passerelle</b> dans IP Configuration&nbsp;;</li>
-    <li>prouver un paramétrage au ping&nbsp;;</li>
-    <li>dérouler la boucle du dépanneur sur une panne&nbsp;;</li>
-    <li>ajouter un PDU au fichier fourni et lire l'Event List&nbsp;;</li>
-    <li>rédiger une <b>fiche d'intervention</b> en 6 lignes sur un fichier en panne&nbsp;;</li>
-    <li><b>choisir seul·e</b> le test qui prouve une communication, sans procédure sous les yeux.</li>
-  </ul>
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-2" style="margin-top:0">2. Comment donner une adresse fixe au capteur&nbsp;?</h2>
+  <p>Le serveur vient chercher les mesures du capteur à l'adresse écrite dans le plan&nbsp;: elle ne doit jamais
+  changer. Dans IP Configuration, quatre lignes&nbsp;:</p>
+  <div class="chaine">
+    <div><b>Static</b>coché, et non DHCP.</div>
+    <div><b>IPv4 Address</b><code>192.168.20.50</code></div>
+    <div><b>Subnet Mask</b><code>255.255.255.0</code></div>
+    <div class="ok"><b>Default Gateway</b><code>192.168.20.1</code>, la passerelle.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: l'objet qu'on doit joindre reçoit une <b>adresse fixe</b>, passerelle
+  comprise. Tu prouves le réglage par un <b>ping vers cet objet</b>&nbsp;: «&nbsp;Reply from&nbsp;» veut dire que
+  l'aller-retour a réussi.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: conclure à une panne dès le premier ping raté. Le tout premier peut
+  échouer&nbsp;: relance-le une fois.</p>
+</div>
+
+<!-- ══ 3 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-3" style="margin-top:0">3. Comment valider le réseau par la simulation&nbsp;?</h2>
+  <p>M. Firmin fournit le fichier de la serre réparée. Tu le complètes, sans le reconstruire&nbsp;:</p>
+  <div class="chaine etapes">
+    <div><b>1. Simulation</b>Le bouton en bas à droite&nbsp;: le temps est sous ton contrôle.</div>
+    <div><b>2. L'enveloppe</b>Add Simple PDU&nbsp;: un clic sur PC-Prof, un clic sur Serveur-Serre.</div>
+    <div><b>3. Le film</b>Event List&nbsp;: PC-Prof, puis Switch0, puis Serveur-Serre.</div>
+    <div class="ok"><b>4. Le verdict</b>«&nbsp;Successful&nbsp;»&nbsp;: l'aller-retour simulé a réussi. Tu sauvegardes.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: compléter une simulation, c'est <b>ajouter le test</b> au fichier
+  fourni. «&nbsp;Successful&nbsp;» <b>valide</b> la logique du réseau&nbsp;; le vrai réseau devra être re-testé.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: valider «&nbsp;à l'œil&nbsp;» parce que les liens sont verts. Seul un test,
+  avec son verdict, prouve que le réseau marche.</p>
+</div>
+
+<!-- ══ 4 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-4" style="margin-top:0">4. Comment trouver une panne sans tout débrancher&nbsp;?</h2>
+  <p>Au ping, seul le capteur ne répond plus&nbsp;: «&nbsp;Request timed out&nbsp;», quatre fois. Le dépanneur suit
+  toujours la même boucle&nbsp;:</p>
+  <div class="chaine etapes cinq">
+    <div><b>Symptôme</b>100&nbsp;% de perte vers le capteur.</div>
+    <div><b>Hypothèse</b>Le problème vient du capteur.</div>
+    <div><b>Test</b>Tu relis son adresse&nbsp;: <code>192.168.21.50</code>.</div>
+    <div><b>Remède</b>Tu remets <code>192.168.20.50</code>.</div>
+    <div class="ok"><b>Re-test</b>Nouveau ping&nbsp;: «&nbsp;Reply from&nbsp;».</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: <b>jamais de remède sans test</b>, jamais de «&nbsp;réparé&nbsp;» sans
+  <b>re-test</b>. Ta fiche d'intervention suit la même boucle, et colle la preuve du re-test.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: débrancher et rebrancher au hasard. Si ça remarche, tu ne sauras jamais
+  pourquoi.</p>
+</div>
+
+<!-- ══ 5 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-5" style="margin-top:0">5. Comment reconnaître la famille d'une panne&nbsp;?</h2>
+  <p>Dans la serre, trois pannes réelles ont été provoquées puis vérifiées. Le symptôme dit où chercher&nbsp;:</p>
+  <div class="chaine">
+    <div class="ko"><b>Mauvaise rue</b>Liens verts, mais aucune réponse&nbsp;: le capteur est passé en <code>192.168.21.50</code>.</div>
+    <div class="ko"><b>Mauvais masque</b>L'adresse a l'air juste, mais le masque est <code>255.255.255.240</code>.</div>
+    <div class="ko"><b>Liaison coupée</b>Triangles rouges vers l'imprimante&nbsp;: son port est sur Off.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une panne d'<b>adressage</b> ne se voit pas sur les câbles&nbsp;: les
+  liens restent verts, mais le ping échoue. Une panne de <b>liaison</b> se voit&nbsp;: les triangles passent au rouge.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: accuser le câble quand les triangles sont verts. Il faut alors relire
+  l'adresse et le masque.</p>
+</div>
+
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>plan d'adressage <span class="en">— addressing plan</span></dt><dd>les adresses, écrites avant de brancher.</dd></div>
+    <div><dt>adresse IP <span class="en">— IP address</span></dt><dd>la rue, puis le numéro de l'appareil.</dd></div>
+    <div><dt>rue <span class="en">— network part</span></dt><dd>le début commun, ici <code>192.168.20</code>.</dd></div>
+    <div><dt>masque <span class="en">— subnet mask</span></dt><dd>il dit où finit la rue.</dd></div>
+    <div><dt>passerelle <span class="en">— gateway</span></dt><dd>la porte vers les autres réseaux.</dd></div>
+    <div><dt>adresse fixe <span class="en">— static address</span></dt><dd>réglée à la main, elle ne change pas.</dd></div>
+    <div><dt>DHCP</dt><dd>le service qui donne des adresses automatiques.</dd></div>
+    <div><dt>commutateur <span class="en">— switch</span></dt><dd>le boîtier central de l'étoile.</dd></div>
+    <div><dt>ping <span class="en">— ping</span></dt><dd>un message-test avec accusé de réception.</dd></div>
+    <div><dt>délai dépassé <span class="en">— timed out</span></dt><dd>aucune réponse n'est revenue.</dd></div>
+    <div><dt>perte <span class="en">— loss</span></dt><dd>la part des messages qui ne reviennent pas.</dd></div>
+    <div><dt>simulation <span class="en">— simulation</span></dt><dd>le réseau rejoué au ralenti, sans risque.</dd></div>
+    <div><dt>enveloppe (PDU) <span class="en">— packet</span></dt><dd>le message-test qu'on suit pas à pas.</dd></div>
+    <div><dt>dépanner <span class="en">— to troubleshoot</span></dt><dd>trouver la cause d'une panne, puis réparer.</dd></div>
+    <div><dt>panne <span class="en">— failure</span></dt><dd>ce qui empêche deux appareils de communiquer.</dd></div>
+    <div><dt>fiche d'intervention <span class="en">— service report</span></dt><dd>la boucle du dépanneur, écrite.</dd></div>
+  </dl>
 </div>
 </div>
 
-<div class="bloc pieges">
-  <h2 style="margin-top:0">⚠ Pièges classiques</h2>
-  <ul>
-    <li>donner le <b>.1</b> à un appareil (la porte est réservée)&nbsp;;</li>
-    <li>changer de <b>rue</b> sans s'en rendre compte (21 ≠ 20)&nbsp;;</li>
-    <li>accuser le câble quand les triangles sont <b>verts</b> — ou l'adresse quand ils sont <b>rouges</b>&nbsp;;</li>
-    <li>réparer sans re-tester&nbsp;;</li>
-    <li>oublier le <b>masque</b> quand l'adresse a l'air juste (255.255.255.240 ≠ 255.255.255.0)&nbsp;;</li>
-    <li>conclure «&nbsp;panne&nbsp;» dès le <b>premier</b> ping raté&nbsp;;</li>
-    <li>reconstruire le fichier fourni au lieu de le <b>compléter</b>.</li>
-  </ul>
-</div>
+<!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  /* L'agrandisseur est une COLONNE — bouton, image, légende — : la légende suit l'image dans le
+     flux, l'image reçoit une hauteur maximale calculée (ajuster()), et le fond défile si besoin. */
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:1rem;box-sizing:border-box;overflow:auto;
+    flex-direction:column;align-items:center;gap:.75rem}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  /* centré quand tout tient, sans rien couper quand ça déborde : des marges automatiques,
+     pas justify-content:center (qui rendrait le haut inaccessible au défilement) */
+  .loupe-fond > .loupe-fermer{margin-top:auto}
+  .loupe-fond > .loupe-legende{margin-bottom:auto}
+  .loupe-fond img{display:block;flex:none;max-width:100%;max-height:80vh;width:auto;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:static;flex:none;margin:0;max-width:min(70ch,100%);text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif}
+  .loupe-legende .loupe-aide{display:block;margin-top:.25rem;font-size:.85em;color:#b8bfcc}
+  .loupe-fermer{position:sticky;top:0;align-self:flex-end;flex:none;z-index:1;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
 
-<div class="bloc">
-  <h2 style="margin-top:0">🇬🇧 Vocabulaire</h2>
-  <table class="voc"><tr><td>adresse fixe</td><td><b>static address</b></td><td>passerelle</td><td><b>gateway</b></td></tr>
-  <tr><td>masque</td><td><b>subnet mask</b></td><td>dépanner</td><td><b>to troubleshoot</b></td></tr>
-  <tr><td>panne</td><td><b>failure</b></td><td>délai dépassé</td><td><b>timed out</b></td></tr></table>
-</div>
-</div>
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+    grande.addEventListener("load", ajuster);
+    window.addEventListener("resize", ajuster);
+  }
+
+  // La légende affichée : la figcaption VISIBLE de la figure si elle existe ; sinon le
+  // texte alternatif, réduit à sa première phrase s'il dépasse deux lignes. L'alt complet
+  // reste sur l'image agrandie, pour les lecteurs d'écran.
+  function poserLegende(el, texteAlt){
+    var fig = el.closest("figure");
+    var cap = fig ? fig.querySelector("figcaption") : null;
+    var visible = cap && cap.getClientRects().length && cap.textContent.trim();
+    legende.textContent = "";
+    var texte = visible ? cap.textContent.replace(/\s+/g, " ").trim() : (texteAlt || "");
+    texte = texte.replace(/\s*\(clique[^()]*agrandir\)/gi, "").trim();   // l'image est déjà agrandie
+    var corps = document.createElement("span");
+    corps.textContent = texte;
+    var aide = document.createElement("span");
+    aide.className = "loupe-aide";
+    aide.textContent = "Échap pour refermer";
+    if (texte) legende.appendChild(corps);
+    legende.appendChild(aide);
+    if (!visible && texte) {
+      var ligne = parseFloat(getComputedStyle(legende).lineHeight) || 20;
+      if (corps.getBoundingClientRect().height > 2 * ligne + 1) {
+        var m = texte.match(/^[\s\S]*?[.!?…](?=\s|$)/);
+        if (m && m[0].length < texte.length) corps.textContent = m[0];
+      }
+    }
+  }
+
+  // L'image reçoit la place qui reste : hauteur du fond, moins le bouton, la légende,
+  // les marges et les espacements — jamais moins de 40 % de l'écran ; au-delà, le fond défile.
+  function ajuster(){
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    var st = getComputedStyle(fond);
+    var ecart = parseFloat(st.rowGap) || 0;
+    var reste = fond.clientHeight - parseFloat(st.paddingTop) - parseFloat(st.paddingBottom)
+              - fond.querySelector(".loupe-fermer").offsetHeight - legende.offsetHeight - 2 * ecart;
+    grande.style.maxHeight = Math.max(reste, 0.4 * window.innerHeight) + "px";
+  }
+
+  function montrer(el, texteAlt){
+    fond.setAttribute("data-ouvert", "oui");
+    fond.scrollTop = 0;
+    poserLegende(el, texteAlt);
+    ajuster();
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.style.background = "";
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    montrer(img, img.alt);
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    grande.style.maxHeight = "";
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
+  // couleurs et leur police viennent de la feuille de style de la PAGE. Sérialisé seul, le
+  // dessin les perdrait (formes noires, police par défaut, texte qui déborde) : on recopie
+  // donc sur la copie les propriétés CALCULÉES de chaque élément, on y ajoute les dégradés
+  // et marqueurs définis ailleurs dans la page, et l'image reçoit le fond du schéma.
+  var PROPRIETES = ["fill", "fill-opacity", "fill-rule", "stroke", "stroke-width", "stroke-opacity",
+    "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit",
+    "opacity", "visibility", "display", "color", "font-family", "font-size", "font-weight", "font-style",
+    "font-variant-numeric", "letter-spacing", "word-spacing", "text-anchor", "dominant-baseline",
+    "baseline-shift", "text-decoration", "white-space", "paint-order", "stop-color", "stop-opacity",
+    "marker-start", "marker-mid", "marker-end", "clip-path", "mask", "filter"];
+  // Une transformation posée par la feuille de style (pas par l'attribut transform, que la
+  // copie garde déjà) : on la recopie avec son origine.
+  var TRANSFORMATION = ["transform", "transform-origin", "transform-box"];
+
+  function figer(source, copie){
+    var a = [source].concat([].slice.call(source.querySelectorAll("*")));
+    var b = [copie].concat([].slice.call(copie.querySelectorAll("*")));
+    for (var i = 0; i < a.length && i < b.length; i++) {
+      var cs = getComputedStyle(a[i]), decl = [], k, v;
+      for (k = 0; k < PROPRIETES.length; k++) {
+        v = cs.getPropertyValue(PROPRIETES[k]);
+        if (v) decl.push(PROPRIETES[k] + ":" + v);
+      }
+      if (i > 0 && !a[i].hasAttribute("transform") && cs.getPropertyValue("transform") &&
+          cs.getPropertyValue("transform") !== "none") {
+        for (k = 0; k < TRANSFORMATION.length; k++) decl.push(TRANSFORMATION[k] + ":" + cs.getPropertyValue(TRANSFORMATION[k]));
+      }
+      var deja = b[i].getAttribute("style");
+      b[i].setAttribute("style", decl.join(";") + (deja ? ";" + deja : ""));
+    }
+  }
+
+  // Un dégradé ou un marqueur appelé par url(#…) mais défini hors du dessin : on le recopie dedans.
+  function rapatrier(copie){
+    var defs = null, faits = {}, tour = 0, trouve = true;
+    while (trouve && tour++ < 4) {
+      trouve = false;
+      var refs = (new XMLSerializer().serializeToString(copie).match(/url\((?:&quot;|["'])?#([^"')&]+)/g) || [])
+        .concat(new XMLSerializer().serializeToString(copie).match(/href="#[^"]+"/g) || []);
+      refs.forEach(function(r){
+        var id = r.replace(/^url\((?:&quot;|["'])?#/, "").replace(/^href="#/, "").replace(/"$/, "");
+        if (faits[id] || copie.querySelector("[id='" + id.replace(/'/g, "") + "']")) return;
+        faits[id] = true;
+        var el = document.getElementById(id);
+        if (!el || !el.closest("svg")) return;
+        if (!defs) { defs = document.createElementNS("http://www.w3.org/2000/svg", "defs"); copie.insertBefore(defs, copie.firstChild); }
+        var c = el.cloneNode(true); figer(el, c); defs.appendChild(c); trouve = true;
+      });
+    }
+  }
+
+  // Le fond sur lequel le schéma est dessiné : le sien, sinon celui du premier parent opaque.
+  function fondDe(el){
+    for (var e = el; e && e.nodeType === 1; e = e.parentElement) {
+      var c = getComputedStyle(e).backgroundColor, m = c.match(/rgba?\(([^)]+)\)/);
+      if (m) { var p = m[1].split(","); if (p.length < 4 || parseFloat(p[3]) > 0) return c; }
+      else if (c && c !== "transparent") return c;
+    }
+    return "#fff";
+  }
+
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    figer(svg, copie);
+    rapatrier(copie);
+    copie.style.background = "transparent";
+    // Une taille propre au dessin (sans elle, une image SVG n'a que 300 × 150 px à offrir) :
+    // celle de la viewBox, agrandie ; le CSS de la loupe la ramène à l'écran.
+    var vb = svg.viewBox && svg.viewBox.baseVal, boite = svg.getBoundingClientRect();
+    var w = vb && vb.width ? vb.width : boite.width, h = vb && vb.height ? vb.height : boite.height;
+    if (!(vb && vb.width) && w && h) copie.setAttribute("viewBox", "0 0 " + w + " " + h);
+    var k = w ? Math.max(1, 1600 / w) : 1;
+    if (w && h) { copie.setAttribute("width", Math.round(w * k)); copie.setAttribute("height", Math.round(h * k)); }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.style.background = fondDe(svg);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    montrer(svg, mot);
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
 </body>
 </html>

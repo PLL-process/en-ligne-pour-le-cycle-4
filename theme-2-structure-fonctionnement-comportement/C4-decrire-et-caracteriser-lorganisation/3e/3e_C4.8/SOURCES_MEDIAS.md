@@ -18,7 +18,7 @@ Cisco Systems, Inc., citées à titre descriptif.
 | Fichier | Type | Usage pédagogique (règle v2) | Licence | Poids |
 |---|---|---|---|---|
 | `Images/conception_deux_reseaux_recette.svg` | SVG original (Fable) | image-objet : la recette de conception du schéma à deux réseaux en 4 vignettes (act. 1, règle n°22) | CC0 | ~6 Ko |
-| `Images/schema_deux_reseaux_mq_ny.svg` | SVG original (Fable) | image-objet : le schéma de référence à lire — deux réseaux, rue-pont /30, toutes les adresses (act. 1, QCM C4.7 q2, synthèses) | CC0 | ~7 Ko |
+| `Images/schema_deux_reseaux_mq_ny.svg` | SVG original (Fable) | image-objet : le schéma de référence à lire — deux réseaux, rue-pont /30, toutes les adresses (act. 1, QCM C4.7 q2) ; repris tel quel dans la carte « Ce que je dois retenir » de la synthèse élève, comme image de l'objet (29/10/2026, format deux pages A4 : la synthèse montre le reste en cases HTML) | CC0 | ~7 Ko |
 | `Images/table_routage_donnee.svg` | SVG original (Fable) | image-objet : les tables DONNÉES des deux routeurs réels + procédure du poste-frontière en 3 cas (act. 2 — conformité au libellé, QCM C4.8 q1) | CC0 | ~6 Ko |
 | `Images/pt_config_interface_routeur.svg` | SVG original (Fable) | image-objet : la fenêtre Config G0/0 de R-MQ — Port Status On, 192.168.10.1, journal IOS jusqu'à `changed state to up` (act. 3, QCM C4.8 q14) | CC0 | ~7 Ko |
 | `Images/pt_route_statique.svg` | SVG original (Fable) | image-objet : la fenêtre Static Routes — Network/Mask/Next Hop/Add, la ligne ajoutée, la commande `ip route`, le rappel du miroir (act. 3, QCM C4.8 q5) | CC0 | ~7 Ko |

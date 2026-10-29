@@ -26290,6 +26290,114 @@ bas (0, 31, 95… 231). Elle pointe maintenant vers le bas.
 
 ---
 
+## 29/10/2026 — n°316 révisée, thème 2 : les dix-sept synthèses élève vulgarisées, en deux pages A4 (thème 2)
+
+*Pascal, « Go », pour les synthèses des thèmes 2 et 3 « de la même façon, thème par thème ». Le thème 2 vient
+d'abord. Branche `fable/theme-2-syntheses-deux-pages`.*
+
+### Le point de départ
+
+Les dix-sept synthèses du thème 2 étaient courtes : de 400 à 900 mots, de 2 à 3 pages, avec jusqu'à 34 % de blanc.
+Aucune n'avait la forme vulgarisée de la n°316. Le travail est donc une **réécriture**, pas un raccourcissement.
+
+Chaque synthèse a reçu la forme du thème 1 :
+- la carte « Ce que je dois retenir », avec « Ce que dit le programme » repris mot pour mot de `audit_couverture.csv` ;
+- de 4 à 7 parties, chacune en quatre temps : titre-question, exemple en cases, « À retenir », le piège ;
+- un seul lexique, avec l'anglais ;
+- le lien « ↑ La carte » ;
+- le bouton « Imprimer (2 pages A4) ».
+
+Les chaînes d'énergie et d'information suivent la n°310 : la fonction dans la case, le composant dessous, l'énergie sur
+la flèche, l'ordre qui descend vers DISTRIBUER. Les programmes sont montrés vides puis remplis, ou en vignettes
+numérotées. Aucun bloc n'est dessiné (n°308).
+
+| Synthèse | Pages avant → après | Plus grand blanc après | Mots avant → après |
+|---|---|---|---|
+| 3e_C4.1 (l'énergie de la station) | 2 → 2 | 5 % | 508 → 1 301 |
+| 3e_C4.3 (station d'alerte cyclonique) | 2 → 2 | 4 % | 499 → 1 309 |
+| 3e_C4.7 (Internet jusqu'à Sainte-Luce) | 2 → 2 | 8 % | 409 → 1 240 |
+| 3e_C4.8 (atelier, le pont numérique) | 2 → 2 | 7-8 % | 567 → 1 209 |
+| 4e_C4.1 (le jardin connecté) | 3 (30 % de blanc) → 2 | 6-7 % | 506 → 1 317 |
+| 4e_C4.1 (Book Train) | 2 → 2 | 4-8 % | 809 → 1 039 |
+| 4e_C4.7 (SOS serre) | 3 → 2 | 9 % | 932 → 1 033 |
+| 5e_C4.1 (le lampadaire intelligent) | 2 → 2 | 6-8 % | 602 → 1 321 |
+| 5e_C4.7 (le réseau de la salle) | 2 → 2 | 5 % | 717 → 866 |
+| 3e_C5.1 (SOS station) | 2 (20 % de blanc) → 2 | 4-6 % | 449 → 1 416 |
+| 4e_C5.1 (SOS jardin) | 2 → 2 | 7-8 % | 677 → 1 246 |
+| 5e_C5.1 (dépanner le lampadaire) | 3 (34 % de blanc) → 2 | 7 % | 591 → 1 275 |
+| 3e_C6.1 (programmer l'alerte) | 2 → 2 | 4-6 % | 410 → 1 162 |
+| 3e_C6.2 (l'auto-test de la station) | 3 → 2 | 7 % | 543 → 1 205 |
+| 4e_C6.1 (ajuster le programme du jardin) | 2 → 2 | 11 % | 575 → 1 221 |
+| 4e_C6.2 (lire le capteur du jardin) | 3 → 2 | 6 % | 516 → 1 276 |
+| 5e_C6.1 (le programme du lampadaire) | 2 → 2 | 6 % | 453 → 1 178 |
+
+Les mesures sont faites en Inter et en Liberation Sans, sans aucun titre seul en bas de page. 4e_C6.1 garde 11 % de
+blanc en bas de la page 1 : sa partie 4, six vignettes d'algorigramme, ne tient pas sous l'image. La couper en deux
+pages nuirait plus à la lecture que ce blanc.
+
+Toutes les ancres que d'autres pages visent restent en place : `#chaines`, `#donnee`, `#diagnostic`, `#remplacer`,
+`#inspection`, `#protocole`, `#demarche`, `#analyser`, `#tester`, `#condition`, `#frontiere` et les `#partie-N`.
+
+### Des faits rétablis d'après les séquences
+
+- **Chaînes d'énergie** (3e_C4.1, 4e_C4.1, 5e_C4.1) : le panneau **convertit**, le régulateur **alimente**, et la
+  batterie est une **branche** (STOCKER) reliée au régulateur. Les anciennes versions plaçaient la batterie sur la
+  ligne, avant le régulateur, et rangeaient le régulateur sous « distribuer ». Le relais, l'interrupteur commandé ou
+  le transistor **distribue**.
+- **Book Train** : l'ordre va à DISTRIBUER (le variateur), pas au moteur. Le « 480 V » devient « comme souvent aux
+  États-Unis » : la bibliothèque ne publie pas ce chiffre.
+- **3e_C4.3** : la conversion est 868 + 512 × 0,1466, et non × 0,147.
+- **3e_C4.8** : Internet relie « des centaines de milliers de réseaux », et non « des dizaines de milliers ».
+- **3e_C6.2** : un algorigramme a quatre formes, reliées par des flèches, et non « cinq symboles ».
+
+### L'image de l'objet
+
+- **Quatre images générées avec Canva**, une par objet, reprises dans chaque synthèse qui en parle. L'élève retrouve
+  ainsi le même objet d'une séquence à l'autre :
+  - le jardin connecté (4e_C4.1, 4e_C5.1, 4e_C6.1) ;
+  - la station d'alerte (3e_C5.1, 3e_C6.2) ;
+  - le lampadaire solaire (5e_C5.1, 5e_C6.1) ;
+  - le wagonnet du Book Train.
+
+  Les fichiers sont gardés tels quels, comme au thème 1. Chaque `SOURCES_MEDIAS.md` les décrit.
+- **Des images déjà dans les dossiers** : le dessin de la station (3e_C4.1, 3e_C4.3), les schémas de réseau
+  (3e_C4.7, 3e_C4.8, 4e_C4.7, 5e_C4.7), le lampadaire (5e_C4.1) et une capture réelle de Vittascience (4e_C6.2).
+- **3e_C6.1 reste sans image** : la synthèse montre le programme lui-même.
+- **Une leçon de méthode** : Chrome demande où enregistrer chaque fichier. Changer de page pendant que la fenêtre
+  « Enregistrer sous » attend la ferme. On télécharge donc une image à la fois, et on attend qu'elle arrive.
+
+### Hors des synthèses, relevés en route, à trancher
+
+- **Jardin (4e_C4.1)** :
+  - le menu de l'activité 1 et le lexique disent que le panneau « ALIMENTE », alors que la figure et le QCM disent
+    CONVERTIR ;
+  - la chaîne d'information a 4 verbes dans le QCM, 3 dans la figure et dans la n°310.
+- **Lampadaire (5e_C4.1)** : la séquence et le QCM disent COMMANDER, le schéma et la n°310 disent COMMUNIQUER.
+- **3e_C4.1** : le QCM dit que le régulateur « distribue l'énergie », la séquence le range sous ALIMENTER.
+- **4e_C6.2** : le QCM parle d'un seuil à 40 %, la séquence de 30 %.
+- **3e_C5.1** : le QCM dit « par centaines de milliers », la séquence « par dizaines de milliers ».
+- **Lampadaire** : sa luminosité est en % en 5e et en lux en 4e.
+- **SOS serre** : la panne « masque » est nommée, alors que la séquence ne publie aucun corrigé des fichiers A, B
+  et C.
+- **Liens de rattrapage** : plusieurs séquences y citent les anciens titres des parties. Les ancres marchent, mais
+  les libellés ont changé.
+- **`4e_C6.2/synthese_4e_C6.2.py`** : ce script est périmé. Relancé avec `--forcer`, il écraserait la nouvelle
+  synthèse.
+- **`_outils/controle_blocs_dessines.py`** : la ligne d'attente de 5e_C6.1 est retirée, car le dessin de blocs est
+  sorti de la synthèse.
+
+### Contrôles
+
+- **Python**, tous ✅ : `controle_medias`, `_liens`, `_regles_visibles`, `_hierarchie`, `_unites`, `_sigles`,
+  `_debordement`, `_blocs_dessines`, `_formulations`, `_loupe`.
+- **Node**, tous ✅ : `controle_impression.mjs`, `controle_contraste_liens.mjs`, `controle_hors_ligne.mjs`,
+  `controle_schemas.mjs`.
+- **Bancs** : les 32 bancs du thème 2 passent.
+- **À l'écran**, à 390 et à 1 280 pixels : aucun défilement de côté, aucune case qui déborde, aucune image cassée,
+  aucune erreur JavaScript.
+
+---
+
 ## 29/10/2026 — Règle n°310 : les trois chaînes d'énergie faites main entrent dans le générateur (`_outils`, thèmes 2 et 3)
 
 *Choix par défaut ★ A (décision posée avec #555, fusionnée sans réponse) : le lot n°310 des trois chaînes dessinées à la
