@@ -723,23 +723,23 @@
   <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. « Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1">
       <legend>Dans un réseau qui utilise le masque 255.255.255.0, les machines 192.168.20.12 et 192.168.20.40…</legend>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="sont sur deux réseaux différents"><label for="be_1__1">sont sur deux réseaux différents</label></div>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="sont dans la même « rue » : seul le numéro de machine change"><label for="be_1__2">sont dans la même « rue » : seul le numéro de machine change</label></div>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="ont la même adresse"><label for="be_1__3">ont la même adresse</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="sont sur deux réseaux, car leur fin diffère"><label for="be_1__1">sont sur deux réseaux, car leur fin diffère</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="sont dans la même « rue » : seule la fin change"><label for="be_1__2">sont dans la même « rue » : seule la fin change</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="ont la même adresse, car le début est le même"><label for="be_1__3">ont la même adresse, car le début est le même</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_2">
       <legend>On donne une adresse IP <b>fixe</b> à la station d'alerte parce que…</legend>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="les autres machines doivent la trouver toujours à la même adresse"><label for="be_2__1">les autres machines doivent la trouver toujours à la même adresse</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="une adresse fixe va plus vite"><label for="be_2__2">une adresse fixe va plus vite</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="une adresse fixe la protège des pirates"><label for="be_2__3">une adresse fixe la protège des pirates</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="une adresse fixe rend la connexion plus rapide"><label for="be_2__1">une adresse fixe rend la connexion plus rapide</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="une adresse fixe la protège contre les pirates"><label for="be_2__2">une adresse fixe la protège contre les pirates</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="on doit la trouver toujours à la même adresse"><label for="be_2__3">on doit la trouver toujours à la même adresse</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_3">
       <legend>Devant un réseau en panne, la première étape de la méthode, c'est…</legend>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="changer le câble"><label for="be_3__1">changer le câble</label></div>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="redémarrer toutes les machines"><label for="be_3__2">redémarrer toutes les machines</label></div>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="décrire le symptôme : ce qui ne marche pas, et ce qui marche encore"><label for="be_3__3">décrire le symptôme : ce qui ne marche pas, et ce qui marche encore</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="décrire le symptôme : ce qui marche ou pas"><label for="be_3__1">décrire le symptôme : ce qui marche ou pas</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="changer le câble, souvent le coupable"><label for="be_3__2">changer le câble, souvent le coupable</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="redémarrer toutes les machines pour voir"><label for="be_3__3">redémarrer toutes les machines pour voir</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="je ne sais pas encore"><label for="be_3__4">je ne sais pas encore</label></div>
   </fieldset>
   <button type="button" class="btn" id="btnBillet">🎫 Voir où j'en suis</button>
@@ -749,7 +749,7 @@
 /* Billet d'entrée — sans note, hors progression (règle d'or n°26). Chaque question vérifie une ligne du bloc
    « Avant de commencer » ; une réponse manquée renvoie au rattrapage que cette ligne porte déjà. */
 (function(){
-  var BONNES = ["sont dans la même « rue » : seul le numéro de machine change", "les autres machines doivent la trouver toujours à la même adresse", "décrire le symptôme : ce qui ne marche pas, et ce qui marche encore"];
+  var BONNES = ["sont dans la même « rue » : seule la fin change", "on doit la trouver toujours à la même adresse", "décrire le symptôme : ce qui marche ou pas"];
   function rattrapage(n){
     var c = document.getElementById("ouv_" + n), li = c && c.closest("li");
     return li ? li.querySelector(".rattrapage a") : null;
