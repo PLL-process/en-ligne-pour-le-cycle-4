@@ -47,35 +47,48 @@
   .cartes a:hover{border-color:var(--hl)}
   .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
   .cartes .r{display:block;font-size:.92em}
-  /* Les six temps d'une partie */
-  .comme-vie{background:#132b52;border-radius:8px;padding:8px 12px;margin:4px 0 10px}
-  dl.voc{display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;margin:8px 0;font-size:.93em}
-  dl.voc dt{color:var(--hl);font-weight:600}dl.voc dd{margin:0}
-  @media(max-width:600px){dl.voc{grid-template-columns:1fr;gap:0}dl.voc dd{margin:0 0 6px}}
-  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
   .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
   .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
-  details.verifie{border:1px dashed var(--sub);border-radius:8px;padding:6px 12px;margin:10px 0 2px}
-  details.verifie summary{cursor:pointer;font-weight:600;color:var(--sub)}
-  details.verifie p{margin:6px 0 2px}
-  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
   .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
   .chaine b{display:block}
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  ul.serre li{margin:1px 0}
   .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
 
-  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
     h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
-    .carte{page-break-after:always;break-after:page}
-    .cartes a,.comme-vie,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; un schéma ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    .schema,table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
     .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
     .d{color:#8a5a00}.i{color:#1d6b38}.vert{color:#1d6b38}.rouge{color:#b3261e}
-    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,details.verifie summary,dl.voc dt{color:#222}
-    .bloc{break-inside:auto;padding:6px 10px;margin-bottom:8px}details.verifie{break-inside:avoid}
-    /* papier : les schémas à 60 % de la largeur, des marges serrées — la carte tient sur une page, les parties sur peu */
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
     .schema{width:60%;display:block;margin:4px auto}
     h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
-    .comme-vie,.retenir,.piege,details.verifie{padding:3px 8px;margin:4px 0}
-    table{margin:3px 0}th,td{padding:2px 6px}dl.voc{margin:4px 0;gap:1px 10px}.chaine{gap:6px;margin:4px 0}}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
@@ -102,7 +115,7 @@
 <div class="page">
 <h1>📌 Synthèse élève — Chengdu&nbsp;: une donnée, de la mesure à la publication</h1>
 <p class="pb">Mesurer, nettoyer, ranger, partager, protéger — et savoir ce qu'on publie.</p>
-<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (la carte sur une page, puis les parties)</button></div>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
 
 <!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
 <section class="carte" aria-labelledby="carte-titre">
@@ -139,229 +152,135 @@
 <!-- ══ 1 ══ -->
 <div class="bloc savoir">
   <h2 id="partie-1" style="margin-top:0">1. Un nombre tout seul veut-il dire quelque chose&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme une note sans barème</b>&nbsp;: «&nbsp;14&nbsp;», c'est bien&nbsp;? Sur 20, oui. Sur 50, non.
-  Et si la moyenne de la classe est 16, ton 14 sur 20 se lit autrement. Un nombre ne parle que si on sait
-  <b>sur quoi</b> il porte et <b>à quoi le comparer</b>.</p>
-  <h3>À Chengdu, le même nombre, trois étapes</h3>
   <div class="chaine">
     <div><b class="d">Donnée brute</b>Le capteur de la cour écrit <code>26,4</code>. Tout seul, ce nombre ne dit rien.</div>
-    <div><b class="i">Information</b>«&nbsp;26,4&nbsp;µg/m³ (microgrammes par mètre cube) aujourd'hui, contre 67 les mardis matin.&nbsp;»
-      On connaît l'unité, et on compare.</div>
-    <div><b>Connaissance</b>Ce qu'on retient&nbsp;: «&nbsp;les mardis matin, l'air de la cour est plus chargé en poussières.&nbsp;»</div>
+    <div><b class="i">Information</b>«&nbsp;26,4&nbsp;µg/m³ (microgrammes par mètre cube) ce matin, contre 67 les mardis à 7&nbsp;heures.&nbsp;»</div>
+    <div><b>Connaissance</b>Ce qu'on retient&nbsp;: «&nbsp;le mardi matin, l'air de la cour est plus chargé.&nbsp;»</div>
   </div>
-  <dl class="voc">
-    <dt>donnée <span class="en">— data</span></dt><dd>un nombre ou un mot enregistré, sans explication. Exemple&nbsp;: <code>26,4</code>.</dd>
-    <dt>information <span class="en">— information</span></dt><dd>une donnée qu'on a mise en rapport avec autre chose, et qui renseigne.</dd>
-    <dt>capteur <span class="en">— sensor</span></dt><dd>le composant qui mesure. Ici, il mesure les poussières de l'air.</dd>
-  </dl>
   <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une <span class="d">donnée</span> est un nombre brut. Elle devient une
   <span class="i">information</span> quand on connaît son <b>unité</b> et qu'on la <b>compare</b> à autre chose.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'un nombre parle tout seul. «&nbsp;26,4&nbsp;» pourrait être une
-  température, un prix ou des poussières&nbsp;: sans unité ni comparaison, personne ne peut le lire.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: le capteur écrit 67. Que manque-t-il pour que ce soit une information&nbsp;?</summary>
-    <p>Il manque trois choses. L'unité&nbsp;: des microgrammes par mètre cube. Le lieu et le moment&nbsp;: la cour, le
-    mardi à 7&nbsp;h. Et une comparaison&nbsp;: 67 contre 26 les autres jours. Avec les trois, le nombre renseigne enfin.</p></details>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'un nombre parle tout seul. «&nbsp;26,4&nbsp;» peut être une
+  température, un prix ou des poussières.</p>
 </div>
 
 <!-- ══ 2 ══ -->
 <div class="bloc savoir">
   <h2 id="partie-2" style="margin-top:0">2. Faut-il toujours le même appareil pour mesurer&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme pour aller au collège</b>&nbsp;: le but est le même (arriver à l'heure), mais tu
-  peux marcher, pédaler ou prendre le bus. Le meilleur moyen dépend du jour&nbsp;: sous la pluie, avec un sac lourd, ou
-  en retard. <i>Sauf que</i> en technologie, un principe est un <b>phénomène physique</b>&nbsp;: la lumière, le poids,
-  un rayonnement.</p>
-  <h3>À Chengdu, une fonction, trois principes</h3>
-  <object class="schema" data="../Images/trois_principes_de_mesure.svg" type="image/svg+xml" aria-label="Trois principes de mesure des poussières : observer la lumière (diffusion optique), peser un filtre (gravimétrie), freiner un rayonnement (atténuation bêta), chacun avec son schéma, son délai, sa précision, son prix et ce qu'il exige">Les trois principes de mesure</object>
-  <table>
-    <tr><th>Les trois mots</th><th>La question</th><th>À Chengdu</th></tr>
-    <tr><td><b>Fonction</b></td><td>Qu'est-ce qu'il faut obtenir&nbsp;?</td><td>mesurer la concentration de poussières dans l'air</td></tr>
-    <tr><td><b>Principe</b></td><td>Par quel phénomène&nbsp;?</td><td>la lumière déviée par les grains, la pesée d'un filtre, un rayonnement freiné</td></tr>
-    <tr><td><b>Solution</b></td><td>Avec quel appareil&nbsp;?</td><td>le capteur précis qu'on installe dans la cour</td></tr>
-  </table>
-  <p>Pour choisir, on part de <b>l'usage</b>&nbsp;: on veut décider <b>ce matin</b> s'il faut ouvrir les fenêtres.
-  Le filtre pesé est le plus précis, mais son résultat arrive le lendemain&nbsp;: trop tard. Et certains critères ne se
-  pèsent pas, ils <b>éliminent</b>&nbsp;: une source radioactive est interdite dans un collège, quels que soient ses
-  avantages.</p>
-  <p>Une <b>concentration</b> compare une masse à un volume d'air&nbsp;: 20&nbsp;µg (microgrammes) de poussière dans
-  2&nbsp;m³ (mètres cubes) d'air, cela fait 10&nbsp;µg/m³ (microgrammes par mètre cube). C'est ce qui permet de comparer
-  deux mesures.</p>
-  <dl class="voc">
-    <dt>fonction technique <span class="en">— technical function</span></dt><dd>ce que l'objet doit faire, sans dire avec quoi.</dd>
-    <dt>principe technique <span class="en">— technical principle</span></dt><dd>le phénomène physique utilisé pour y arriver.</dd>
-    <dt>solution technique <span class="en">— technical solution</span></dt><dd>l'appareil précis qu'on choisit.</dd>
-    <dt>critère <span class="en">— criterion</span></dt><dd>ce qui sert à comparer&nbsp;: le délai, la précision, le prix…</dd>
-  </dl>
+  <p>À Chengdu, une <b>fonction</b>&nbsp;: mesurer la poussière pour décider <b>ce matin</b> d'aérer. Trois <b>principes</b>&nbsp;:</p>
+  <div class="chaine">
+    <div class="ok"><b>💡 Observer la lumière ✔</b>Moins précis, mais un résultat en 5&nbsp;secondes, pour 25&nbsp;euros.</div>
+    <div class="ko"><b>⚖️ Peser un filtre ✘</b>Le plus précis, mais un résultat en 24&nbsp;heures&nbsp;: trop tard.</div>
+    <div class="ko"><b>☢️ Freiner un rayonnement ✘</b>Une source radioactive&nbsp;: un contrôle hors de portée d'un collège.</div>
+  </div>
   <p class="retenir">🧠 <b>À retenir</b>&nbsp;: la <b>fonction</b> dit ce qu'il faut obtenir. Plusieurs <b>principes</b> peuvent
   la remplir&nbsp;: on <b>choisit</b> selon l'usage, et on dit ce qu'on <b>perd</b>.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: chercher «&nbsp;le meilleur&nbsp;» dans l'absolu, ou additionner des notes.
-  Le plus précis n'est pas le meilleur s'il arrive trop tard. Et défendre un choix sans dire ce qu'on perd, ce n'est pas
-  choisir&nbsp;: c'est seulement préférer.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: «&nbsp;mesurer les poussières avec un capteur laser&nbsp;» est-il une fonction bien écrite&nbsp;?</summary>
-    <p>Non. «&nbsp;Avec un capteur laser&nbsp;» choisit déjà le moyen. La fonction s'écrit sans appareil&nbsp;:
-    «&nbsp;mesurer la concentration de poussières dans l'air&nbsp;». Le laser, c'est une solution.</p></details>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: chercher «&nbsp;le meilleur&nbsp;» appareil dans l'absolu. Le plus précis ne
+  sert à rien s'il répond trop tard.</p>
 </div>
 
 <!-- ══ 3 ══ -->
 <div class="bloc faire">
   <h2 id="partie-3" style="margin-top:0">3. Faut-il croire toutes les mesures du fichier&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme quand tu comptes ta tirelire</b>&nbsp;: le bouton et le jeton de manège ne sont pas
-  des pièces. Tu ne les comptes pas. Tu ne les jettes pas non plus&nbsp;: tu les poses à part, et tu sais pourquoi.</p>
-  <h3>À Chengdu, sur 90 relevés, quatre ne sont pas des mesures</h3>
-  <table>
-    <tr><th>Relevé</th><th>Ce qui ne va pas</th><th>Ce qu'on fait</th></tr>
-    <tr><td><b>−4,2</b> (mercredi 11&nbsp;h)</td><td>impossible&nbsp;: une quantité de poussière ne peut pas être négative</td><td>on l'écarte du calcul et on signale un défaut de l'appareil</td></tr>
-    <tr><td><b>23,7</b> six fois de suite (vendredi)</td><td>la valeur est normale, mais une vraie mesure bouge presque toujours un peu&nbsp;: le capteur est sans doute figé</td><td>on la met de côté et on va vérifier l'appareil</td></tr>
-    <tr><td><b>case vide</b> (lundi 14&nbsp;h)</td><td>la mesure manque</td><td>on le signale, et on calcule sans elle&nbsp;: on n'invente jamais une mesure</td></tr>
-    <tr><td><b>251,0</b> (dimanche)</td><td>la virgule est mal placée&nbsp;: il fallait lire 25,1</td><td>on le signale et on écrit la correction</td></tr>
-  </table>
-  <p>Le calcul change beaucoup&nbsp;: moyenne <b>avec</b> ces valeurs, <b class="rouge">27,4</b>&nbsp;; <b>sans</b> elles,
-  <b class="vert">25,2</b>. Quatre lignes sur 90 (moins de 5&nbsp;%) déplacent le résultat de près de 9&nbsp;%.</p>
-  <dl class="voc">
-    <dt>relevé <span class="en">— reading, measurement</span></dt><dd>une mesure notée dans le fichier, avec sa date et son heure.</dd>
-    <dt>valeur aberrante <span class="en">— outlier</span></dt><dd>une valeur qui ne peut pas être une vraie mesure. Exemple&nbsp;: −4,2.</dd>
-    <dt>écarter <span class="en">— to set aside</span></dt><dd>retirer du calcul, en gardant la ligne dans le fichier.</dd>
-  </dl>
+  <p>À Chengdu, sur 90 relevés, quatre ne sont pas des mesures. Avec eux, la moyenne fait <b class="rouge">27,4</b>&nbsp;;
+  sans eux, <b class="vert">25,2</b>.</p>
+  <div class="chaine">
+    <div class="ko"><b>−4,2</b>Impossible&nbsp;: une quantité de poussière n'est jamais négative.</div>
+    <div class="ko"><b>23,7 six fois de suite</b>Le capteur est figé&nbsp;: une vraie mesure bouge un peu.</div>
+    <div class="ko"><b>Une case vide</b>La mesure manque&nbsp;: on calcule sans elle.</div>
+    <div class="ko"><b>251,0</b>La virgule est mal placée&nbsp;: il fallait lire 25,1.</div>
+  </div>
   <p class="retenir">🧠 <b>À retenir</b>&nbsp;: avant de calculer, on <b>nettoie</b>. On <b>écarte</b> du calcul ce qui
   n'est pas une mesure, on le <b>garde</b> dans le fichier, et on écrit <b>pourquoi</b>.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: «&nbsp;boucher le trou&nbsp;» avec une valeur inventée, pour faire propre.
-  Une case remplie au jugé ne se voit plus. Autre piège&nbsp;: ne chercher que les valeurs bizarres. Le capteur figé
-  donne une valeur normale&nbsp;; c'est sa <b>répétition</b> qui est suspecte.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: tu as écarté −4,2 du calcul. Faut-il aussi l'effacer du fichier&nbsp;?</summary>
-    <p>Non. On l'écarte du <b>calcul</b>, mais on la garde dans le <b>fichier</b>, avec une note qui explique pourquoi.
-    Ainsi, n'importe qui peut vérifier ton travail, et l'erreur de l'appareil reste visible.</p></details>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: «&nbsp;boucher le trou&nbsp;» avec une valeur inventée. Une case remplie
+  au jugé ne se voit plus.</p>
 </div>
 
 <!-- ══ 4 ══ -->
 <div class="bloc faire">
   <h2 id="partie-4" style="margin-top:0">4. Comment ranger ses fichiers pour les retrouver&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme ton casier</b>&nbsp;: une pochette marquée «&nbsp;TRUCS&nbsp;» ne t'aide pas&nbsp;;
-  une pochette «&nbsp;contrôles de maths&nbsp;» oui. Et si tu gardes deux brouillons presque pareils, tu ne sais plus
-  lequel rendre.</p>
-  <h3>À Chengdu, quatorze fichiers en vrac, puis rangés</h3>
-  <object class="schema" data="../Images/corrige_arborescence.svg" type="image/svg+xml" aria-label="Quatorze entrées mal nommées à gauche, la même chose rangée à droite en un dossier racine et quatre sous-dossiers, avec les quatre règles de nommage">L'arborescence rangée</object>
-  <table>
-    <tr><th>La règle</th><th>Mauvais nom</th><th>Bon nom</th></tr>
-    <tr><td>1. Le nom dit <b>ce que c'est</b>, pas ce qu'on en pense.</td><td><code>PIC ATTENTION</code></td><td><code>releves-air</code></td></tr>
-    <tr><td>2. La date s'écrit <b>année-mois-jour</b>&nbsp;: les fichiers se rangent alors dans l'ordre des dates.</td><td><code>02-04-2026</code></td><td><code>2026-04-02</code></td></tr>
-    <tr><td>3. Ni espace, ni accent, ni majuscule&nbsp;: le nom passe d'un ordinateur à l'autre sans se casser.</td><td><code>Relevé Lundi.csv</code></td><td><code>releve-lundi.csv</code></td></tr>
-    <tr><td>4. <b>Une seule version</b> gardée&nbsp;: la bonne.</td><td><code>finalV2 (copie).csv</code></td><td>un seul fichier</td></tr>
-  </table>
-  <p>Chaque dossier doit <b>trier</b>&nbsp;: en l'ouvrant, tu dois avoir moins de choses à regarder. Un dossier
-  «&nbsp;Nouveau dossier&nbsp;» ne trie rien.</p>
-  <dl class="voc">
-    <dt>arborescence <span class="en">— folder tree</span></dt><dd>les dossiers rangés les uns dans les autres, comme les branches d'un arbre.</dd>
-    <dt>nom de fichier <span class="en">— file name</span></dt><dd>ce qui permet de reconnaître un fichier sans l'ouvrir.</dd>
-    <dt>doublon <span class="en">— duplicate</span></dt><dd>une deuxième copie posée à côté de la première.</dd>
-    <dt>sauvegarde <span class="en">— backup</span></dt><dd>une copie datée, rangée <b>ailleurs</b>, pour réparer en cas de problème.</dd>
-  </dl>
+  <p>À Chengdu, quatorze fichiers en vrac deviennent un dossier <code>station-air-chengdu</code> et quatre sous-dossiers&nbsp;:</p>
+  <div class="chaine">
+    <div><b>Dire ce que c'est</b>✘ <code>PIC ATTENTION</code><br>✔ <code>releves-air</code></div>
+    <div><b>Année-mois-jour</b>✘ <code>02-04-2026</code><br>✔ <code>2026-04-02</code></div>
+    <div><b>Sans espace ni accent</b>✘ <code>Relevé Lundi.csv</code><br>✔ <code>releve-lundi.csv</code></div>
+    <div><b>Une seule version</b>✘ <code>finalV2 (copie).csv</code><br>✔ un seul fichier, le bon</div>
+  </div>
   <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un bon <b>nom</b> dit <b>ce que c'est</b>, avec la date en
   <b>année-mois-jour</b>, sans espace ni accent. Chaque <b>dossier</b> doit réduire la recherche.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: garder un doublon «&nbsp;au cas où&nbsp;». Bientôt, personne ne sait lequel
-  est le bon. Une sauvegarde, ce n'est pas un doublon&nbsp;: elle est datée et rangée ailleurs.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: pourquoi écrire <code>2026-04-02</code> et pas <code>02-04-2026</code>&nbsp;?</summary>
-    <p>Avec l'année d'abord, l'ordre alphabétique des noms est aussi l'ordre des dates. L'ordinateur range alors tes
-    fichiers du plus ancien au plus récent, tout seul.</p></details>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: garder un doublon «&nbsp;au cas où&nbsp;». Une sauvegarde n'est pas un
+  doublon&nbsp;: elle est datée et rangée ailleurs.</p>
 </div>
 
 <!-- ══ 5 ══ -->
 <div class="bloc savoir">
   <h2 id="partie-5" style="margin-top:0">5. Comment une donnée voyage-t-elle, et qui a le droit d'y toucher&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme pour tes notes</b>&nbsp;: le professeur corrige ta copie et recopie la note dans le
-  logiciel. Le logiciel calcule ta moyenne, puis le bulletin part chez toi. Si la note est mal recopiée au début, la
-  moyenne et le bulletin seront faux aussi.</p>
-  <h3>À Chengdu, les quatre étapes</h3>
-  <object class="schema" data="../Images/corrige_systeme_information.svg" type="image/svg+xml" aria-label="Le système d'information en quatre étages — source, stockage, traitement, diffusion — avec pour chacun qui a le droit de faire quoi">Le système d'information</object>
-  <ol>
-    <li><b>La source</b>&nbsp;: le capteur mesure l'air. Il ne choisit rien, il ne corrige rien. Personne n'écrit ici.</li>
-    <li><b>Le stockage</b>&nbsp;: le fichier garde les mesures, sans les vérifier. Seuls le professeur et
-    l'administrateur y déposent. Toute la classe peut lire.</li>
-    <li><b>Le traitement</b>&nbsp;: on trie, on écarte les valeurs impossibles, on calcule. C'est là que la
-    <span class="d">donnée</span> devient une <span class="i">information</span>… donc là qu'on peut se tromper.
-    La classe travaille sur une <b>copie</b>&nbsp;: l'original reste intact pour réparer une erreur.</li>
-    <li><b>La diffusion</b>&nbsp;: le graphique est publié et on décide d'ouvrir ou non les fenêtres. Seul le
-    professeur publie.</li>
-  </ol>
-  <p>Écrire qui a le droit de faire quoi sert surtout quand quelque chose a changé&nbsp;: on sait <b>où chercher</b>.</p>
-  <dl class="voc">
-    <dt>système d'information <span class="en">— information system</span></dt><dd>des personnes, des outils et des
-    règles qui font circuler les données. Exemple&nbsp;: le capteur, le fichier, le tableur, et qui a le droit de faire quoi.</dd>
-    <dt>droits d'accès <span class="en">— access rights</span></dt><dd>ce que chacun a le droit de faire&nbsp;: lire, écrire, publier.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une donnée voyage en <b>quatre étapes</b> — <b>source</b>, <b>stockage</b>,
-  <b>traitement</b>, <b>diffusion</b>. À chaque étape, seules certaines personnes ont <b>le droit</b> de la modifier.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire que l'ordinateur corrige les erreurs tout seul. Un logiciel vérifie
-  seulement ce qu'on lui a demandé de vérifier. Une valeur fausse au départ reste fausse jusqu'au bout, tant qu'une
-  personne ne l'enlève pas.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: ta copie dit 12, ton bulletin dit 2. À quelle étape chercher d'abord&nbsp;?</summary>
-    <p>Au stockage&nbsp;: la note a sans doute été mal recopiée dans le logiciel. Le calcul de la moyenne était juste,
-    mais il est parti d'une valeur fausse.</p></details>
+  <p>À Chengdu, la mesure va du capteur de la cour au graphique publié, en quatre étapes&nbsp;:</p>
+  <div class="chaine etapes">
+    <div><b>1. La source</b>Le capteur mesure, c'est tout.<br>Personne n'écrit ici.</div>
+    <div><b>2. Le stockage</b>Le fichier garde, sans vérifier.<br>Seuls les adultes déposent.</div>
+    <div><b>3. Le traitement</b>Le tableur trie et calcule.<br>La classe écrit sur une copie.</div>
+    <div><b>4. La diffusion</b>Le graphique est publié.<br>Seul le professeur publie.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une donnée voyage en <b>quatre étapes</b>, de la <b>source</b> à la
+  <b>diffusion</b>. À chaque étape, seules certaines personnes ont <b>le droit</b> de la modifier.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire que l'ordinateur corrige les erreurs tout seul. Une valeur fausse
+  au départ reste fausse jusqu'au bout.</p>
 </div>
 
 <!-- ══ 6 ══ -->
 <div class="bloc faire">
   <h2 id="partie-6" style="margin-top:0">6. Comment protéger les données, et respecter les auteurs&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme les clés du collège</b>&nbsp;: le gardien a toutes les clés, toi seulement celle de
-  ton casier. Si tout le monde avait toutes les clés, une porte ouverte ne dirait plus <b>qui</b> l'a ouverte.</p>
-  <h3>À Chengdu, quatre règles</h3>
-  <table>
-    <tr><th>La règle</th><th>Pourquoi</th><th>À Chengdu</th></tr>
-    <tr><td><b>Juste les droits utiles</b></td><td>chaque droit en trop est une occasion d'accident</td><td>la classe lit le fichier des mesures, elle n'y écrit pas</td></tr>
-    <tr><td><b>Un mot de passe à soi</b></td><td>partagé, il ne protège plus et ne dit plus qui a fait quoi</td><td>chacun se connecte avec son propre compte</td></tr>
-    <tr><td><b>Des versions datées</b></td><td>elles ne bloquent personne, mais elles permettent de comparer et de revenir en arrière</td><td>on voit ce qui a changé entre lundi et mardi</td></tr>
-    <tr><td><b>Accessible n'est pas libre</b></td><td>un document en ligne reste protégé par le droit d'auteur</td><td>pour la notice du capteur, on vérifie la licence et on cite la source</td></tr>
-  </table>
-  <p>Après un incident, la première question n'est pas «&nbsp;qui a fait ça&nbsp;?&nbsp;» mais «&nbsp;qui
-  <b>pouvait</b> le faire&nbsp;?&nbsp;». C'est pour cela qu'on écrit les droits à l'avance.</p>
-  <dl class="voc">
-    <dt>mot de passe <span class="en">— password</span></dt><dd>le secret qui prouve que c'est bien toi qui te connectes.</dd>
-    <dt>licence <span class="en">— licence</span></dt><dd>ce que l'auteur autorise&nbsp;: copier, modifier, partager… ou rien.</dd>
-    <dt>droit d'auteur <span class="en">— copyright</span></dt><dd>la protection d'une œuvre par la loi, même quand elle est en ligne.</dd>
-  </dl>
+  <p>À Chengdu, la classe lit le fichier des mesures, mais n'y écrit pas. Avant de reprendre la notice du capteur,
+  on vérifie sa <b>licence</b>.</p>
   <p class="retenir">🧠 <b>À retenir</b>&nbsp;: chacun reçoit <b>seulement les droits</b> dont il a besoin, avec
   <b>son propre</b> mot de passe. Un document trouvé en ligne n'est <b>pas libre</b> pour autant&nbsp;: on vérifie la
   <b>licence</b> et on <b>cite la source</b>.</p>
   <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'une sauvegarde protège. Elle n'empêche personne d'effacer&nbsp;:
-  elle permet de <b>réparer</b> après. Et «&nbsp;accessible&nbsp;», «&nbsp;gratuit&nbsp;» et «&nbsp;libre&nbsp;» sont trois
-  choses différentes.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: toute la classe a le même mot de passe, et un fichier a été effacé. Que peut-on savoir&nbsp;?</summary>
-    <p>On ne peut pas savoir qui l'a effacé&nbsp;: un mot de passe partagé ne prouve plus rien. Et il ne protégeait plus
-    grand-chose, puisque trente personnes le connaissaient. La version datée, elle, permet de récupérer le fichier.</p></details>
+  elle permet de <b>réparer</b> après.</p>
 </div>
 
 <!-- ══ 7 ══ -->
 <div class="bloc pieges">
   <h2 id="partie-7" style="margin-top:0">7. Une mesure vraie peut-elle faire du tort à quelqu'un&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme au CDI</b>&nbsp;: «&nbsp;quelqu'un a oublié son sac&nbsp;» ne désigne personne. «&nbsp;Le
-  seul élève de 5e B qui a un sac rouge&nbsp;» désigne une personne précise, sans dire son nom.</p>
-  <h3>À Chengdu, un fait vrai, trois façons de le publier</h3>
-  <object class="schema" data="../Images/la_donnee_qui_designe.svg" type="image/svg+xml" aria-label="Le même fait vrai publié de trois façons : avec le nom de l'agent, sans dire la cause, ou en nommant l'horaire du nettoyage">Les trois publications</object>
-  <p>Les mardis et jeudis à 7&nbsp;h, l'air monte à 67&nbsp;µg/m³ (microgrammes par mètre cube), contre 26 les autres
-  jours. La cause&nbsp;: le passage de la balayeuse. Et une <b>seule personne</b> la conduit.</p>
-  <table>
-    <tr><th>Publication</th><th>Ce qu'elle dit</th><th>Le jugement</th></tr>
-    <tr><td><b>A</b></td><td>le nom de l'agent</td><td><span class="rouge">exacte, mais inacceptable</span>&nbsp;: une mesure d'air devient une accusation</td></tr>
-    <tr><td><b>B</b></td><td>la hausse, sans la cause</td><td><span class="rouge">acceptable, mais inutile</span>&nbsp;: personne ne peut agir</td></tr>
-    <tr><td><b>C</b></td><td>le nettoyage mécanique, et l'idée de le décaler</td><td><span class="vert">exacte et utile</span>&nbsp;: elle désigne une organisation, pas quelqu'un</td></tr>
-  </table>
-  <dl class="voc">
-    <dt>donnée personnelle <span class="en">— personal data</span></dt><dd>toute donnée qui permet de reconnaître
-    quelqu'un, même sans son nom.</dd>
-    <dt>identifier <span class="en">— to identify</span></dt><dd>reconnaître de qui il s'agit.</dd>
-  </dl>
+  <p>À Chengdu, l'air monte à 67&nbsp;µg/m³ (microgrammes par mètre cube) le mardi à 7&nbsp;h&nbsp;: la balayeuse passe.
+  Une seule personne la conduit.</p>
+  <div class="chaine">
+    <div class="ko"><b>Avec son nom</b>Exact, mais inacceptable&nbsp;: une mesure d'air devient une accusation.</div>
+    <div class="ko"><b>Sans dire pourquoi</b>Acceptable, mais inutile&nbsp;: personne ne peut rien en faire.</div>
+    <div class="ok"><b>Le fait, pas la personne</b>«&nbsp;Le pic vient du nettoyage. Le décaler avant l'arrivée des
+    élèves&nbsp;?&nbsp;» Exact et utile.</div>
+  </div>
   <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une donnée est <b>personnelle</b> dès qu'elle permet de reconnaître
   quelqu'un, <b>même sans son nom</b>. Avant de publier, on se demande&nbsp;: <b>qui cela désigne, et pour quel effet&nbsp;?</b></p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'on a protégé quelqu'un parce qu'on a retiré son nom. Autre piège&nbsp;:
-  s'arrêter à «&nbsp;c'est vrai&nbsp;». Être vrai, c'est la première question, pas la dernière.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: «&nbsp;la personne qui passe la balayeuse le mardi à 7&nbsp;h&nbsp;» : est-ce anonyme&nbsp;?</summary>
-    <p>Non. Une seule personne conduit la balayeuse&nbsp;: tout le collège la reconnaît. On publie plutôt le fait et
-    l'organisation. Par exemple&nbsp;: «&nbsp;Le nettoyage mécanique de 7&nbsp;h soulève la poussière. Peut-on le
-    décaler avant l'arrivée des élèves&nbsp;?&nbsp;»</p></details>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'on protège quelqu'un en retirant son nom. «&nbsp;Celui qui conduit
+  la balayeuse&nbsp;» le désigne aussi.</p>
+</div>
+
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>donnée <span class="en">— data</span></dt><dd>un nombre ou un mot brut, sans explication.</dd></div>
+    <div><dt>information <span class="en">— information</span></dt><dd>une donnée comparée, qui renseigne.</dd></div>
+    <div><dt>capteur <span class="en">— sensor</span></dt><dd>le composant qui mesure.</dd></div>
+    <div><dt>concentration <span class="en">— concentration</span></dt><dd>une masse de poussière dans un volume d'air.</dd></div>
+    <div><dt>fonction technique <span class="en">— technical function</span></dt><dd>ce qu'il faut obtenir.</dd></div>
+    <div><dt>principe technique <span class="en">— technical principle</span></dt><dd>le phénomène physique utilisé.</dd></div>
+    <div><dt>solution technique <span class="en">— technical solution</span></dt><dd>l'appareil précis qu'on choisit.</dd></div>
+    <div><dt>critère <span class="en">— criterion</span></dt><dd>ce qui sert à comparer, comme le délai.</dd></div>
+    <div><dt>relevé <span class="en">— reading</span></dt><dd>une mesure notée avec sa date et son heure.</dd></div>
+    <div><dt>valeur aberrante <span class="en">— outlier</span></dt><dd>une valeur qui n'est pas une vraie mesure.</dd></div>
+    <div><dt>écarter <span class="en">— to set aside</span></dt><dd>retirer du calcul, garder dans le fichier.</dd></div>
+    <div><dt>arborescence <span class="en">— folder tree</span></dt><dd>des dossiers rangés dans des dossiers.</dd></div>
+    <div><dt>doublon <span class="en">— duplicate</span></dt><dd>une copie inutile posée à côté de l'original.</dd></div>
+    <div><dt>sauvegarde <span class="en">— backup</span></dt><dd>une copie datée, rangée ailleurs, pour réparer.</dd></div>
+    <div><dt>système d'information <span class="en">— information system</span></dt><dd>des personnes, des outils et des règles qui font circuler les données.</dd></div>
+    <div><dt>droits d'accès <span class="en">— access rights</span></dt><dd>qui peut lire, écrire ou publier.</dd></div>
+    <div><dt>licence <span class="en">— licence</span></dt><dd>ce que l'auteur permet de faire de son œuvre.</dd></div>
+    <div><dt>droit d'auteur <span class="en">— copyright</span></dt><dd>la protection d'une œuvre, même publiée en ligne.</dd></div>
+    <div><dt>donnée personnelle <span class="en">— personal data</span></dt><dd>une donnée qui permet de reconnaître quelqu'un, même sans son nom.</dd></div>
+  </dl>
 </div>
 </div>
-<script>
-/* À l'impression, les réponses « Vérifie-toi » sont dépliées (règle d'or n°316). */
-window.addEventListener('beforeprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.dataset.etaitOuvert = d.open; d.open = true; }));
-window.addEventListener('afterprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.open = d.dataset.etaitOuvert === 'true'; }));
-</script>
 </body>
 </html>

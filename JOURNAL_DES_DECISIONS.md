@@ -25750,3 +25750,91 @@ Affichage téléphone (360 px) : aucun débordement.
 - Le contrôle des schémas : trois angles morts notés au n°315 (texte à cheval sur un bord, étiquette sur un tracé
   pointillé, balises HTML dans un SVG), dans une branche transversale.
 - Les thèmes 2 et 3 : schémas, puis synthèses.
+
+---
+
+## 29/10/2026 — Règle d'or n°316, révisée : une synthèse élève tient sur deux pages A4 (transversale : thème 1, `_outils`, `.claude/skills`)
+
+*Pascal, 29/10/2026, sur le PDF du pilote `5e_C1.1` imprimé « directement à partir du site » : « Esthétiquement,
+c'est parfait. Pédagogiquement aussi, mais certaines images auraient pu être uniquement pour la synthèse. Ajuster de
+façon à ce qu'il n'y ait pas de blancs et que l'on puisse imprimer moins de pages. » Puis, la page relue : « Je trouve
+que la synthèse est longue ». À la question « Quelle longueur veux-tu pour une synthèse élève (ici Chengdu, puis les
+seize autres) ? », il répond **« 2 pages A4 »** : la carte ; par partie, le titre-question, l'exemple de Chengdu en
+deux lignes, À retenir, le piège en une ligne ; un seul tableau de vocabulaire à la fin ; Vérifie-toi retiré ; environ
+1 100 mots. Branche transversale `fable/synthese-chengdu-impression` (un outil et deux skills changent).*
+
+> **Règle d'or n°316 (révisée le 29/10/2026) — Une synthèse élève se lit par un élève de 6e, et tient sur deux pages
+> A4.** En tête, une **carte « Ce que je dois retenir »** : la question de la séquence, ce que dit le programme, une
+> carte par partie avec sa réponse en une phrase et un lien vers la partie. Chaque partie a pour **titre une
+> question**, puis **l'exemple de la séquence en deux lignes** (en petites cases quand il compare ou enchaîne),
+> l'encadré **À retenir** et **le piège** en une ligne. **Un seul lexique** à la fin : chaque mot technique, son
+> anglais, une définition d'une ligne. Tu, voix active, aucune phrase au-delà de 25 mots, aucune maxime. À
+> l'impression : **deux pages pleines**, sans blanc et sans titre seul en bas de page, mesurées par
+> `_outils/mesurer_impression.py`. On explique mieux, on n'enlève aucune notion : les ancres `#partie-N` restent. Le
+> skill `synthese-vulgarisee` dit comment faire.
+
+Cette révision remplace la forme en six temps de la n°316 du même jour (comme dans la vie, dans notre séquence, les
+mots, À retenir, le piège, vérifie-toi). Le fond ne change pas : vulgariser, c'est partir de ce que l'élève a fait.
+
+### Ce qui sort de la synthèse, et où ça va
+
+- **« Comme dans la vie », les mots de chaque partie, « Vérifie-toi »** : les mots vont au lexique final ; la
+  comparaison familière et la question ont leur place dans la séquence.
+- **Les grands schémas SVG** restent dans la séquence et le QCM. À 60 % de la largeur, chacun prenait un quart de
+  page, en blanc sur fond sombre. La synthèse montre la même chose **en cases HTML**, lisibles à l'écran comme sur
+  papier : les trois principes de mesure, les quatre valeurs écartées, les quatre règles de nom, les quatre étapes du
+  système d'information, les trois façons de publier. Le bord de chaque case dit le verdict (vert : on garde ; rouge :
+  on écarte). C'est la lecture retenue de « certaines images auraient pu être uniquement pour la synthèse » : des
+  images faites pour la synthèse, plutôt que les corrigés de la séquence repris tels quels.
+
+### Le pilote, mesuré
+
+| Version | Mots | Pages A4 | Plus grand blanc | Titre seul en bas de page |
+|---|---|---|---|---|
+| Avant la n°316 (le PDF de Pascal) | 1 145 | 4 | 24 % | 2 |
+| n°316, première forme (#544) | 2 703 | 6 | 41 % | 2 |
+| **n°316 révisée** | 1 360 | **2** | 6 % | **0** |
+
+Mots comptés de la même façon pour les trois versions (tout le texte de la page, navigation exclue : la carte, le
+programme mot pour mot et les dix-neuf mots du lexique y sont). Pages mesurées en Inter (le conteneur) et en
+Liberation Sans (les largeurs d'Arial, proches de Segoe UI, la police de Pascal sous Windows) : deux pages dans les
+deux, remplies à 92-94 %.
+
+### Ce que fait cette PR
+
+- **La synthèse élève de `5e_C1.1`** au format deux pages : carte, sept parties en quatre temps, lexique de dix-neuf
+  mots avec leur anglais, bouton « 🖨 Imprimer (2 pages A4) ». Plus de script `beforeprint` (il dépliait les
+  « Vérifie-toi »). Les sept ancres `#partie-1` à `-7` sont en place.
+- **`_outils/mesurer_impression.py`** (nouveau) : imprime une page comme l'élève (Chromium, A4, marges de 10 mm, sans
+  les arrière-plans), compte les feuilles, le blanc laissé en bas de chacune et les titres restés seuls ;
+  `--police` refait la mesure dans une autre police. C'est une **mesure**, pas un contrôle : il ne refuse rien.
+- **Le skill `synthese-vulgarisee`** : la section « Deux pages A4, pas plus », la partie en quatre temps et ses cases,
+  le lexique, l'impression (corps 8,6 points, interligne 1,32, une rangée de cases ne se coupe pas, lexique en
+  colonnes), la mesure dans deux polices, la liste à cocher et l'exemple de la partie 5. **Le skill
+  `controle-qualite-lot`** cite la forme révisée.
+- `SOURCES_MEDIAS.md` de `5e_C1.1` : la synthèse n'imprime plus le schéma des trois principes (le QCM, si).
+
+### Trouvé en route
+
+- **Un fait déformé en raccourcissant** : une première version écrivait que la source radioactive est « interdite au
+  collège ». La séquence dit « contrôle réglementaire hors de portée d'un collège », et fait de « parce que c'est
+  interdit » un distracteur (question a3_3). Corrigé d'après la séquence ; le skill demande de relire chaque fait
+  dans la séquence, pas de mémoire.
+- **`controle_unites.py` lit chaque partie à part** : « µg/m³ » nommé en toutes lettres dans la partie 1 ne suffisait
+  pas pour la partie 7. Le skill le dit.
+
+### Contrôles
+
+`controle_unites`, `controle_sigles`, `controle_hierarchie`, `controle_regles_visibles`, `controle_debordement`,
+`controle_liens`, `controle_medias`, `controle_formulations` : ✅. `controle_impression.mjs`,
+`controle_contraste_liens.mjs`, `controle_hors_ligne.mjs` sur le dossier Synthèses : ✅. Bancs de `5e_C1.1` : 43/43 et
+50/50 (animation). Aucune case ne déborde ni n'en touche une autre, à 390 px, à 1 280 px et à l'impression ; aucun
+défilement de côté sur un téléphone.
+
+### Ce qui reste
+
+- **Les neuf synthèses du thème 1 réécrites en #545** suivent la première forme (six temps par partie, quatre à six
+  pages) : à ramener à deux pages sur ce modèle, une fois le pilote validé par Pascal.
+- Les sept synthèses des ateliers de représentation, puis les thèmes 2 et 3 : directement au format deux pages.
+- L'impression dans tout le dépôt (le plan proposé à Pascal) : mesurer toutes les pages avec `mesurer_impression.py`,
+  puis une règle d'or sur l'impression et son contrôle, puis des vagues de correction.
