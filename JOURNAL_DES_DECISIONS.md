@@ -25663,3 +25663,40 @@ puis revue visuelle (décision de Pascal). Le thème 1 est le premier.*
   générateur si Pascal le souhaite.
 - Les thèmes 2 et 3, de la même façon. Trois SVG du thème 2 et des ressources communes portent du HTML (exports
   draw.io : à vérifier lors du thème 2).
+
+---
+
+## 29/10/2026 — n°316, le pilote : la synthèse élève de 5e_C1.1 (Chengdu) réécrite
+
+*Décision 1 de Pascal (choix par défaut ★, #543 fusionnée) : les synthèses du thème 1 selon la règle d'or n°316, en
+commençant par la partie que Pascal avait montrée (« je trouve que les synthèses ne sont pas assez vulgarisées »).*
+
+### Ce qui change dans la page
+
+- **En tête, la carte « Ce que je dois retenir »** : la question de la séquence, « Ce que dit le programme » (les six
+  formulations 5e_C1.1 à 5e_C1.6, mot pour mot), et sept cartes cliquables, une par partie, avec sa réponse en une phrase.
+- **Chaque partie** : un titre-question ; « Comme dans la vie » (une note sans barème, le trajet vers le collège, la
+  tirelire, le casier, les notes et le bulletin, les clés du collège, le sac oublié au CDI) ; l'exemple de Chengdu
+  (chaîne donnée → information → connaissance, tableau fonction / principe / solution, tableau des quatre anomalies,
+  tableau mauvais nom / bon nom, les quatre étapes du système d'information, les quatre règles de protection, les trois
+  publications) ; les mots, avec l'anglais ; l'encadré **À retenir** ; **le piège** (celui que vise le QCM) ;
+  **Vérifie-toi**, réponse expliquée.
+- **Une couleur par notion** : la donnée en jaune, l'information en vert, partout.
+- Phrases de 14 mots en moyenne, aucune au-delà de 25 hors tableaux ; plus de maximes (« Il conserve, il ne juge
+  pas » devient « le fichier garde les mesures, sans les vérifier »).
+- **Rien n'est retiré** : chaque notion de la matrice de couverture a sa place ; les mots anglais de l'ancien
+  tableau final sont passés dans les parties. Les ancres `#partie-1`, `-3`, `-5`, `-6` (liées depuis 4e_C1.1, 4e_C1.4,
+  5e_C1.5 et 4e_C7.8) ne bougent pas ; `#partie-2`, `-4`, `-7` sont ajoutées pour la carte.
+- **Impression** : la carte seule en page 1, puis les parties, réponses dépliées, schémas à 60 % : six pages, contre
+  quatre avant. Le skill `synthese-vulgarisee` est corrigé en conséquence (une demi-page à une page par partie), et
+  désigne ce pilote comme modèle.
+
+### Trouvé en route
+
+Cinq séquences du thème 1 (3e_C2.1 Pékin, 4e_C2.1 Hangzhou, 5e_C1.1 Chengdu, 5e_C1.2 Sainte-Luce, 4e_C1.1 Tsinghua)
+portaient la **description de page de Shenzhen** (`<meta name="description">`, celle qu'affichent les moteurs de
+recherche et les aperçus de lien) : chacune a maintenant la sienne.
+
+### Ce qui reste
+
+Les seize autres synthèses élève du thème 1, sur ce modèle, **après validation du pilote par Pascal**.
