@@ -1,14 +1,14 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 29/10/2026 08:42 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 29/10/2026 08:45 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
-- Thème 1, règle d'or n°316 : les 9 synthèses élève des séquences (3e/4e/5e C1, C2, C3) sont réécrites sur le modèle du pilote 5e_C1.1 → PR #545 (branche fable/theme-1-syntheses-lots), CI périmètre ✅. Tous contrôles et bancs verts.
-- Corrigé en route : QCM Pékin 3e_C2.1 « 30 retraits » → « 40 usagers » ; tests C2 adaptés (figures, liens #partie-N).
-- Scripts de fabrication : $S/syn/fabrique.py + s_*.py ; captures dans $S/syn/<nom>/bureau_haut.png et $S/syn/cartes_*.png.
-- Reste : 7 synthèses des ateliers de représentation (générateur ateliers-representations/_generation), angles morts de controle_schemas.mjs (branche transversale), thèmes 2 et 3 (schémas puis synthèses).
+- #545 (9 synthèses des séquences, forme six temps) fusionnée. Puis une AUTRE session a fusionné #546 : n°316 RÉVISÉE, la synthèse élève tient sur 2 pages A4 (pilote 5e_C1.1 refait, `_outils/mesurer_impression.py`, skill révisé).
+- #547 (7 synthèses des ateliers, ancienne forme 7-8 pages) est dépassée : renommée « ⏸ À reprendre ». Décision posée à Pascal (★ A : je la reprends au format 2 pages).
+- En cours (A) : branche fable/syntheses-ateliers-n316 remise sur main (worktree $S/wt_at) ; `syntheses.eleve()` réécrit au format 2 pages (carte, parties en 4 temps, lexique #les-mots) ; besoin v2 fait (2 pages en Inter et Liberation Sans) ; les 6 autres ateliers en cours de conversion ; SCHEMAS_SYNTHESE retiré ; CONSIGNES, gouvernance, README, skill à jour.
+- Reste après : les 9 synthèses de #545 à ramener à 2 pages (après validation du pilote par Pascal) ; angles morts de controle_schemas.mjs ; thèmes 2 et 3.
 
-_(écrit par Claude le 29/10/2026 07:54)_
+_(écrit par Claude le 29/10/2026 08:45)_
 
 ## Branche et PR
 - Branche : `fable/theme-2-regle-304` — dernier commit 5a5ededb4 Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé
@@ -18,7 +18,7 @@ _(écrit par Claude le 29/10/2026 07:54)_
 _Aucune._
 
 ## Prochaine action
-➡️ Sans réponse de ta part, je pars sur A.
+➡️ Pascal : répondre à la décision 1 sur #547 (★ A, je la reprends au format deux pages).
 
 ## Décisions prises récemment (messages de Pascal)
 - 29/10/2026 08:26 — « <task-notification> <task-id>af946527d87389d7a</task-id> <tool-use-id>toolu_014rBaJtFYqLv9jf78b6PENX</tool-use-id> <output-file>/tmp/claude- »
