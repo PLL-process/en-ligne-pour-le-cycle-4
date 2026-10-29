@@ -169,12 +169,17 @@ que trois phrases décrivent.
      réalistes et autres »). La légende dit « Image générée par IA (Canva) », jamais « photo ». Le fichier garde ses
      métadonnées d'origine : les conditions de Canva interdisent de présenter l'image comme faite par un humain et
      d'en retirer les marques de provenance. Aucune personne reconnaissable. Une ligne dans `SOURCES_MEDIAS.md` :
-     image générée par IA, Canva, compte de Pascal, date, texte de la demande. L'espace de travail ne joint pas
-     Canva : Pascal télécharge le fichier depuis le lien et le joint à la conversation ;
+     image générée par IA, Canva, compte de Pascal, date, texte de la demande. **Le fichier n'est pas retouché** :
+     pas de recadrage, pas de compression, son nom seul change (c'est un PNG de 1 536 × 1 024, environ 2 Mo, même
+     s'il arrive nommé `.jpg`) ; c'est l'exception à la limite de 300 Ko. **Pour le récupérer** : l'espace de travail
+     ne joint pas Canva. On ouvre le lien de l'image dans le Chrome de Pascal (connecté à Canva), « ⋯ » puis
+     « Télécharger » ; Chrome demande où enregistrer chaque fichier, Pascal clique « Enregistrer » ; on reprend les
+     fichiers dans son dossier Téléchargements, qu'il ajoute à la conversation (« Ajouter un dossier ») ;
   3. une photo libre vérifiée à la source (skill `licences-medias-education`).
 - **Toujours** : un `alt` court qui dit ce qu'on voit (n°117), une `figcaption` qui nomme l'objet, l'agrandissement au
   clic (n°92 : `python3 theme-3-creation-conception-realisation-innovations/audit/loupe.py <dossier Synthèses>`, puis
-  `python3 _outils/controle_loupe.py`), moins de 300 Ko.
+  `python3 _outils/controle_loupe.py`), moins de 300 Ko (sauf l'image Canva, gardée telle quelle). Si l'image fait
+  tomber un bloc à la page suivante, raccourcir d'abord sa légende.
 
 ### 5. La langue
 

@@ -28,7 +28,9 @@ qu'aucune phrase. Chacune porte son **angle mort**, et l'on voit d'un coup que *
 vérité, qu'aucun ne la dit tout entière**.
 
 Aucune photographie de borne réelle : elle donnerait à voir une solution existante là où l'élève
-doit d'abord observer des usages.
+doit d'abord observer des usages. La synthèse élève, lue après les activités, montre une borne générée par IA
+(section « Image générée par IA (Canva) », ci-dessous) : à ce moment-là, elle aide à se souvenir de l'objet, elle ne
+donne plus de solution à recopier.
 
 ## Les données
 
@@ -62,3 +64,13 @@ opérations** — et cela, seul un algorigramme le montre.
 
 **Aucune police distante** (règle d'or n°40). Séquence, QCM et synthèses utilisent une pile système.
 La page entière fonctionne sans connexion, et aucune donnée n'est envoyée.
+
+## Image générée par IA (Canva) pour la synthèse élève
+
+Demande de Pascal du 29/10/2026 : « une capture d'écran ou une illustration permet d'avoir une vision plus synthétique
+de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règles : skill `synthese-vulgarisee`, §4.
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/synthese_borne_tickets_pekin.png` | Une borne de vente de tickets dans une station de métro : écran tactile, fentes, bac de sortie. PNG 1 536 × 1 024, 2.1 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a self-service metro ticket vending machine in a modern subway station: large touchscreen, coin and banknote slots, ticket tray, clean tiled wall, soft station lighting, no people, no readable text on the screen, no logos, the machine seen from a slight angle and filling the centre of the frame » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Synthèse élève, carte « Ce que je dois retenir » |
+

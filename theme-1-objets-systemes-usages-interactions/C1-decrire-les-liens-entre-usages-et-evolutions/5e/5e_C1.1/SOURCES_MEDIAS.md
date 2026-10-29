@@ -141,9 +141,18 @@ produire si une phrase de la page a changé). Les phrases des étapes ①②③ 
 à 390 px ; `apres-1280-onze-etapes.png` (les onze étapes, à 1280 px, réduites). Captures du navigateur de ce lot (Chromium),
 25/10/2026, quantifiées à 256 couleurs, CC0. Elles ne sont affichées par aucune page élève.
 
+## Image générée par IA (Canva) pour la synthèse élève
+
+Demande de Pascal du 29/10/2026 : « une capture d'écran ou une illustration permet d'avoir une vision plus synthétique
+de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règles : skill `synthese-vulgarisee`, §4.
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/synthese_capteur_cour.png` | Le capteur de particules fines de la cour, un boîtier blanc sur un poteau, devant le collège, dans l'air brumeux du matin. PNG 1 536 × 1 024, 1,9 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photograph of a small white weatherproof outdoor air-quality sensor box (fine particle PM2.5 monitor) with ventilation slots and a short antenna, mounted on a metal pole in an empty concrete school courtyard in Chengdu, China, early morning soft light, slight haze in the air, school building with windows in the background slightly blurred, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Synthèse élève, carte « Ce que je dois retenir » |
+
 ## Ce que le lot ne contient pas
 
-- aucune photographie ;
+- aucune photographie (l'image du capteur est générée par IA, ci-dessus) ;
 - aucun appel réseau, aucune police distante, aucun script tiers ;
 - aucune voix humaine enregistrée (la voix de l'animation est une synthèse, ci-dessus).
 
