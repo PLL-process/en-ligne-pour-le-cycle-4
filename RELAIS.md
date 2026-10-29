@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 28/10/2026 20:16 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 28/10/2026 20:30 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - n°26 : billets thème 1 (#531) et thème 2 (#530, #532) fusionnés ; **#534** ouverte = 16 billets thème 3 (verif ✘ 147→131, plus aucune n°26 en échec).
@@ -14,14 +14,13 @@ _(écrit par Claude le 28/10/2026 20:16)_
 
 ## Branche et PR
 - Branche : `fable/theme-2-regle-304` — dernier commit 5a5ededb4 Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé
-- PR #534 ouverte (`fable/theme-3-billets-entree`) — Règle d'or n°26 : seize billets d'entrée au thème 3 — CI : in_progress
-- PR #533 ouverte (`fable/theme-2-billets-longueurs`) — Billets d'entrée (thème 2) : la bonne réponse ne se devine plus à sa longueur — n°144, n°1 — CI : success
+- Aucune PR ouverte.
 
 ## Décisions en attente
 _Aucune._
 
 ## Prochaine action
-➡️ Finir la PR thème 1 (figure) dès que les contrôles sont identiques à main, puis la tâche #29.
+➡️ Je t'ouvre la PR de la figure dès que les trois derniers contrôles sont finis.
 
 ## Décisions prises récemment (messages de Pascal)
 - 28/10/2026 19:52 — « 1a »
