@@ -687,23 +687,23 @@ select.ko,input.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(
   <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. « Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1">
       <legend>Dans le programme du lampadaire, la <b>luminosité mesurée</b> est…</legend>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="une entrée : le programme l&#x27;utilise"><label for="be_1__1">une entrée : le programme l'utilise</label></div>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="une sortie : le programme la produit"><label for="be_1__2">une sortie : le programme la produit</label></div>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="un bloc de répétition"><label for="be_1__3">un bloc de répétition</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="une sortie : le programme la produit"><label for="be_1__1">une sortie : le programme la produit</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="une entrée : le programme l&#x27;utilise"><label for="be_1__2">une entrée : le programme l'utilise</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="une boucle : le programme la répète"><label for="be_1__3">une boucle : le programme la répète</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_2">
       <legend>« SI nuit ET passage ALORS pleine puissance » : la lampe passe en pleine puissance quand…</legend>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="il fait nuit, même sans passage"><label for="be_2__1">il fait nuit, même sans passage</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="il y a un passage, même de jour"><label for="be_2__2">il y a un passage, même de jour</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="il fait nuit et quelqu&#x27;un passe, les deux à la fois"><label for="be_2__3">il fait nuit et quelqu'un passe, les deux à la fois</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="il fait nuit et quelqu&#x27;un passe en même temps"><label for="be_2__1">il fait nuit et quelqu'un passe en même temps</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="il fait nuit, même si personne ne passe"><label for="be_2__2">il fait nuit, même si personne ne passe</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="quelqu&#x27;un passe, même s&#x27;il fait jour"><label for="be_2__3">quelqu'un passe, même s'il fait jour</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_3">
       <legend>On monte le seuil « nuit » de 30 à 45. La lampe s'allumera…</legend>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="plus tard le soir"><label for="be_3__1">plus tard le soir</label></div>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="plus tôt le soir"><label for="be_3__2">plus tôt le soir</label></div>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="à la même heure"><label for="be_3__3">à la même heure</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="à la même heure"><label for="be_3__2">à la même heure</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="plus tôt le soir"><label for="be_3__3">plus tôt le soir</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="je ne sais pas encore"><label for="be_3__4">je ne sais pas encore</label></div>
   </fieldset>
   <button type="button" class="btn" id="btnBillet">🎫 Voir où j'en suis</button>
@@ -713,7 +713,7 @@ select.ko,input.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(
 /* Billet d'entrée — sans note, hors progression (règle d'or n°26). Chaque question vérifie une ligne du bloc
    « Avant de commencer » ; une réponse manquée renvoie au rattrapage que cette ligne porte déjà. */
 (function(){
-  var BONNES = ["une entrée : le programme l'utilise", "il fait nuit et quelqu'un passe, les deux à la fois", "plus tôt le soir"];
+  var BONNES = ["une entrée : le programme l'utilise", "il fait nuit et quelqu'un passe en même temps", "plus tôt le soir"];
   function rattrapage(n){
     var c = document.getElementById("ouv_" + n), li = c && c.closest("li");
     return li ? li.querySelector(".rattrapage a") : null;
