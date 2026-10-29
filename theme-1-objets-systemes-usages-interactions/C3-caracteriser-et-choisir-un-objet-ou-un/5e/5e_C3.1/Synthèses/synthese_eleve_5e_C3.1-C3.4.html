@@ -5,39 +5,81 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Synthèse élève — Shanghai : quel véhicule pour le dernier kilomètre ? (5e_C3.1 à C3.4)</title>
 <style>
-  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
         --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
   *{box-sizing:border-box}
-  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em;
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;font-size:.95em;
        font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
   .page{max-width:860px;margin:0 auto}
   h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
   .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
-  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
-  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
-  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24}
-  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
-  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
+  h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+  h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
+  ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
   code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
-  a{color:var(--hl)}
-  .savoir{border-left:4px solid var(--ok)}.faire{border-left:4px solid var(--hl)}.pieges{border-left:4px solid var(--err)}
-  .voc{font-size:.88em}.voc td{padding:2px 8px;border-bottom:1px dashed var(--border)}
-  table{width:100%;border-collapse:collapse}
+  table{width:100%;border-collapse:collapse;margin:6px 0}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--sub);font-size:.9em}
   .toolbar{text-align:center;margin:10px 0}
   .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
-  a:focus-visible,.btn:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
   #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
   /* règle n°304 : un lien de rattrapage arrive sur ce titre ; la barre collante (47 px) ne doit pas le recouvrir */
   h2[id]{scroll-margin-top:60px}
   #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
-  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}
-    h1,h2,dt,.pb{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}}
 
+  /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
+  /* Une couleur par notion, la même partout : la donnée en jaune, l'information en vert. */
+  .d{color:var(--warn);font-weight:600}.i{color:var(--ok);font-weight:600}
+  /* La carte « Ce que je dois retenir » */
+  .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
+  .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
+  .question{text-align:center;font-size:1.05em;font-weight:600;margin:0 0 10px}
+  .programme{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);
+             padding:6px 0;margin:0 0 12px}
+  .programme b{color:var(--text)}
+  .programme ul{margin:2px 0;padding-left:18px}.programme li{margin:1px 0}
+  .cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .cartes a{display:block;text-decoration:none;color:var(--text);background:var(--panel);border:1.5px solid var(--border);
+            border-radius:10px;padding:9px 12px}
+  .cartes a:hover{border-color:var(--hl)}
+  .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
+  .cartes .r{display:block;font-size:.92em}
+  /* Les six temps d'une partie */
+  .comme-vie{background:#132b52;border-radius:8px;padding:8px 12px;margin:4px 0 10px}
+  dl.voc{display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;margin:8px 0;font-size:.93em}
+  dl.voc dt{color:var(--hl);font-weight:600}dl.voc dd{margin:0}
+  @media(max-width:600px){dl.voc{grid-template-columns:1fr;gap:0}dl.voc dd{margin:0 0 6px}}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
+  .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
+  details.verifie{border:1px dashed var(--sub);border-radius:8px;padding:6px 12px;margin:10px 0 2px}
+  details.verifie summary{cursor:pointer;font-weight:600;color:var(--sub)}
+  details.verifie p{margin:6px 0 2px}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0}
+  .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
+  .chaine b{display:block}
+  .vert{color:var(--ok)}.rouge{color:var(--err)}
 
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+    h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
+    .carte{page-break-after:always;break-after:page}
+    .cartes a,.comme-vie,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
+    .d{color:#8a5a00}.i{color:#1d6b38}.vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,details.verifie summary,dl.voc dt{color:#222}
+    .bloc{break-inside:auto;padding:6px 10px;margin-bottom:8px}details.verifie{break-inside:avoid}
+    /* papier : les schémas à 60 % de la largeur, des marges serrées — la carte tient sur une page, les parties sur peu */
+    .schema{width:60%;display:block;margin:4px auto}
+    h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
+    .comme-vie,.retenir,.piege,details.verifie{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}dl.voc{margin:4px 0;gap:1px 10px}.chaine{gap:6px;margin:4px 0}}
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  .schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
 
   /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
@@ -54,104 +96,171 @@
 
 /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
 @media(max-width:680px){table{display:block;overflow-x:auto}}
-</style>
-</head>
+</style></head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_5e_C3.1-C3.4_shanghai.html">← Séquence</a></nav>
 <div class="page">
-<h1>📌 Synthèse élève — Shanghai : quel véhicule pour le dernier kilomètre ?</h1>
-<p class="pb">Comment caractériser, tester et comparer plusieurs solutions pour choisir celle qui répond le mieux au besoin&nbsp;?</p>
-<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
+<h1>📌 Synthèse élève — Shanghai&nbsp;: quel véhicule pour le dernier kilomètre&nbsp;?</h1>
+<p class="pb">Caractériser, mesurer, comparer : choisir la solution qui répond au besoin.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (la carte sur une page, puis les parties)</button></div>
 
+<!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
+<section class="carte" aria-labelledby="carte-titre">
+  <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
+  <p class="question">Comment caractériser, tester et comparer plusieurs véhicules, pour choisir celui qui répond le mieux au besoin&nbsp;?</p>
+  <div class="programme"><b>Ce que dit le programme</b> (5e, compétence C3)&nbsp;:
+    <ul>
+      <li>repérer pour un OST les matériaux, les sources et les formes d'énergies, le traitement de l'information&nbsp;;</li>
+      <li>identifier les étapes du cycle de vie d'un OST influencées par les choix de matériaux et d'énergie&nbsp;;</li>
+      <li>choisir un OST parmi plusieurs propositions en vue de répondre à un besoin&nbsp;;</li>
+      <li>mesurer et comparer une performance d'un OST à partir d'un protocole fourni.</li>
+    </ul>
+  </div>
+  <div class="cartes">
+    <a href="#partie-1"><span class="q">🔎 1. Comment décrire un objet technique&nbsp;?</span>
+      <span class="r">Par ses matériaux, son énergie (d'où elle vient, sous quelle forme) et sa façon de traiter l'information.</span></a>
+    <a href="#partie-2"><span class="q">♻️ 2. Que coûte un objet, de sa naissance à sa fin&nbsp;?</span>
+      <span class="r">Cinq étapes, qui bouclent. Sur un véhicule qui roule des années, l'utilisation pèse souvent le plus.</span></a>
+    <a href="#partie-3"><span class="q">📏 3. Comment mesurer pour pouvoir comparer&nbsp;?</span>
+      <span class="r">Avec un protocole&nbsp;: une seule chose change à la fois, et on fait trois essais.</span></a>
+    <a href="#partie-4"><span class="q">✅ 4. Comment choisir le bon véhicule&nbsp;?</span>
+      <span class="r">On écrit d'abord le cahier des charges. Une exigence est remplie ou non&nbsp;: elle ne se moyenne pas.</span></a>
+    <a href="#partie-5"><span class="q">🎯 5. La bonne solution est-elle la même pour tout le monde&nbsp;?</span>
+      <span class="r">Non&nbsp;: une solution est bonne pour un besoin donné. Changez le besoin, la réponse change.</span></a>
+  </div>
+</section>
+
+<!-- ══ 1 ══ -->
 <div class="bloc savoir">
-  <h2 id="partie-1" style="margin-top:0">1. Caractériser un objet technique (5e_C3.1)</h2>
-  <p>On décrit un objet technique par <b>trois entrées</b>&nbsp;:</p>
-  <dl>
-    <dt>Les matériaux</dt><dd>la matière dont il est fait, choisie pour ses <b>propriétés</b>&nbsp;:
-    masse, résistance, tenue à l'eau, coût. Un même objet en combine plusieurs, chacun choisi pour
-    ce qu'on lui demande là où il est.</dd>
-    <dt>L'énergie</dt><dd>la <b>source</b> dit d'où elle vient (batterie, panneau solaire)&nbsp;; la
-    <b>forme</b> dit sous quel aspect elle circule (électrique, mécanique, thermique).</dd>
-    <dt>Le traitement de l'information</dt><dd>un <b>capteur informe</b>, un <b>actionneur agit</b>,
-    un calculateur décide entre les deux. Plus un système doit décider seul, plus il traite
-    d'information.</dd>
+  <h2 id="partie-1" style="margin-top:0">1. Comment décrire un objet technique&nbsp;?</h2>
+  <p class="comme-vie">🏠 <b>Comme une trottinette électrique</b>. Son cadre est en aluminium&nbsp;: le matériau. Une batterie fait tourner un moteur&nbsp;: l'énergie. Un petit écran affiche la vitesse&nbsp;: l'information.</p>
+  <h3>Trois véhicules pour livrer le dernier kilomètre, à Shanghai</h3>
+  <object class="schema" data="../Images/trois_solutions_shanghai.svg" type="image/svg+xml" aria-label="Planche comparative des trois solutions : matériaux, masse, énergie, information, charge utile, autonomie, réparabilité">Les trois solutions</object>
+  <table>
+    <tr><th>Entrée</th><th>La question</th><th>Pour le vélo-cargo</th></tr>
+    <tr><td><b>Matériaux</b></td><td>de quoi est-il fait, et pourquoi&nbsp;?</td><td>aluminium et acier&nbsp;: léger là où il faut, solide là où ça porte</td></tr>
+    <tr><td><b>Énergie</b></td><td>d'où vient-elle (la source)&nbsp;? sous quelle forme circule-t-elle&nbsp;?</td><td>source&nbsp;: la batterie. Forme&nbsp;: électrique, puis mécanique dans la roue</td></tr>
+    <tr><td><b>Information</b></td><td>qui mesure, qui décide, qui agit&nbsp;?</td><td>le contrôleur d'assistance règle l'aide du moteur&nbsp;; l'afficheur informe le cycliste</td></tr>
+  </table>
+  <object class="schema" data="../Images/chaine_energie_velo_cargo.svg" type="image/svg+xml" aria-label="La chaîne d'énergie du vélo-cargo : la batterie sous le porte-bagages, le câble, le moteur dans la roue arrière, et la chaîne écrite en quatre cases sous le dessin">La chaîne d'énergie du vélo-cargo</object>
+  <p>Plus un véhicule doit décider seul, plus il traite d'information&nbsp;: le robot de livraison en traite bien plus
+  que le vélo-cargo. Mais <b>automatisé</b> n'est pas <b>autonome</b>&nbsp;: quelqu'un peut le surveiller et reprendre
+  la main.</p>
+  <dl class="voc">
+    <dt>matériau <span class="en">— material</span></dt><dd>la matière dont une pièce est faite, choisie pour ses propriétés&nbsp;: masse, solidité, prix.</dd>
+    <dt>source d'énergie <span class="en">— power source</span></dt><dd>d'où vient l'énergie&nbsp;: une batterie, un panneau solaire.</dd>
+    <dt>forme d'énergie <span class="en">— form of energy</span></dt><dd>l'aspect sous lequel l'énergie circule&nbsp;: électrique, mécanique, thermique.</dd>
+    <dt>capteur <span class="en">— sensor</span></dt><dd>le composant qui mesure et informe.</dd>
+    <dt>actionneur <span class="en">— actuator</span></dt><dd>le composant qui agit&nbsp;: un moteur, une lampe.</dd>
   </dl>
-  <p><b>Automatisé n'est pas autonome</b>&nbsp;: un système automatisé exécute seul, mais quelqu'un
-  peut le superviser et reprendre la main.</p>
-  <object class="schema" data="../Images/trois_solutions_shanghai.svg" type="image/svg+xml" aria-label="Planche comparative des trois solutions : matériaux, masse, énergie, information, charge utile, autonomie, réparabilité">Les trois solutions comparées</object>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un objet technique se décrit par ses <b>matériaux</b>, son <b>énergie</b> (la <b>source</b> et la <b>forme</b>) et le <b>traitement de l'information</b>. Un capteur informe, un calculateur décide, un actionneur agit.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: confondre la source et la forme. La batterie est une <b>source</b>&nbsp;; «&nbsp;électrique&nbsp;» est une <b>forme</b>.</p>
+  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: «&nbsp;L'énergie du vélo-cargo est électrique.&nbsp;» Est-ce la source ou la forme&nbsp;?</summary>
+    <p>La forme. La source, c'est la batterie&nbsp;: elle stocke l'énergie et la fournit sous forme électrique au moteur, qui la change en énergie mécanique.</p></details>
 </div>
 
+<!-- ══ 2 ══ -->
 <div class="bloc savoir">
-  <h2 style="margin-top:0">2. Le cycle de vie (5e_C3.2)</h2>
-  <object class="schema" data="../Images/cycle_de_vie_ost.svg" type="image/svg+xml" aria-label="Les cinq étapes du cycle de vie et les trois que les choix de matériaux et d'énergie influencent">Le cycle de vie d'un objet technique</object>
-  <p>Cinq étapes, et elles <b>bouclent</b>&nbsp;: extraction → fabrication → distribution →
-  utilisation → fin de vie, puis le recyclage renvoie la matière vers l'extraction.</p>
-  <ul>
-    <li>la <b>matière recyclée</b> agit à l'<b>extraction</b>&nbsp;: chaque kilo recyclé est un kilo
-    qu'on n'extrait pas&nbsp;;</li>
-    <li>l'<b>énergie par kilomètre</b> agit à l'<b>utilisation</b>&nbsp;;</li>
-    <li>la <b>réparabilité</b> agit à la <b>fin de vie</b>&nbsp;— et surtout, elle la repousse.</li>
-  </ul>
-  <p>Sur un objet qui <b>consomme en marchant</b> et dure des années, c'est <b>l'utilisation qui pèse souvent le plus</b> (pas sur un banc, qui ne consomme rien une fois posé)&nbsp;: un petit
-  écart quotidien, multiplié par des milliers de jours, dépasse un coût unique même élevé.</p>
+  <h2 id="partie-2" style="margin-top:0">2. Que coûte un objet, de sa naissance à sa fin&nbsp;?</h2>
+  <p class="comme-vie">🏠 <b>Comme un téléphone</b>&nbsp;: on extrait des métaux, on le fabrique, on le transporte. Tu le recharges pendant des années, puis il est réparé, recyclé ou jeté. Chaque étape compte.</p>
+  <h3>Le cycle de vie d'un véhicule</h3>
+  <object class="schema" data="../Images/cycle_de_vie_ost.svg" type="image/svg+xml" aria-label="Les cinq étapes du cycle de vie et les trois que les choix de matériaux et d'énergie influencent">Le cycle de vie</object>
+  <div class="chaine">
+    <div><b>1. Extraction</b>la matière recyclée y agit&nbsp;: chaque kilo recyclé n'est pas extrait</div>
+    <div><b>2. Fabrication</b>les procédés dépendent du matériau</div>
+    <div><b>3. Distribution</b>la masse pèse sur le transport</div>
+    <div><b>4. Utilisation</b>l'énergie par kilomètre y agit, jour après jour</div>
+    <div><b>5. Fin de vie</b>la réparabilité la <b>repousse</b></div>
+  </div>
+  <p>Sur un véhicule qui consomme en roulant et dure des années, l'utilisation pèse souvent le plus. Un petit écart
+  chaque jour, multiplié par des milliers de jours, dépasse un gros coût unique. Ce n'est pas vrai pour un banc, qui ne
+  consomme rien une fois posé.</p>
+  <dl class="voc">
+    <dt>cycle de vie <span class="en">— life cycle</span></dt><dd>toutes les étapes d'un objet, de l'extraction de sa matière à sa fin de vie.</dd>
+    <dt>réparabilité <span class="en">— repairability</span></dt><dd>la facilité à réparer l'objet, notée sur 10.</dd>
+  </dl>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: le <b>cycle de vie</b> a cinq étapes&nbsp;: <b>extraction</b>, <b>fabrication</b>, <b>distribution</b>, <b>utilisation</b>, <b>fin de vie</b>. L'essentiel se décide dès la <b>conception</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: juger un objet sur son seul prix d'achat. Autre piège&nbsp;: «&nbsp;zéro émission&nbsp;». C'est vrai pendant qu'il roule, pas pour sa fabrication ni sa batterie.</p>
+  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: la fourgonnette électrique est «&nbsp;zéro émission&nbsp;». Est-ce vrai sur tout son cycle de vie&nbsp;?</summary>
+    <p>Non. Elle n'émet rien en roulant, mais il a fallu extraire la matière, la fabriquer et fabriquer sa batterie. «&nbsp;Zéro émission&nbsp;» ne vaut que pour l'étape d'utilisation.</p></details>
 </div>
 
+<!-- ══ 3 ══ -->
 <div class="bloc faire">
-  <h2 id="partie-3" style="margin-top:0">3. Mesurer avec un protocole (5e_C3.4)</h2>
-  <object class="schema" data="../Images/protocole_freinage.svg" type="image/svg+xml" aria-label="Protocole de mesure de la distance de freinage et ses trois conditions identiques">Le protocole de mesure</object>
-  <p>Un protocole sert à une seule chose&nbsp;: faire en sorte que la <b>seule différence</b> entre
-  deux essais soit celle qu'on veut mesurer. D'où les trois conditions identiques&nbsp;: même
-  charge, même revêtement sec, même vitesse de départ.</p>
-  <p>On fait <b>trois essais</b> et on garde la <b>moyenne</b>&nbsp;: une mesure isolée peut être
-  ratée.</p>
-  <p>Les distances de freinage varient <b>dans le même sens</b> que les masses. Ce n'est pas une
-  preuve&nbsp;: les trois véhicules diffèrent aussi par leurs freins et leurs pneus. Deux colonnes
-  qui varient ensemble ne disent pas laquelle explique l'autre.</p>
+  <h2 id="partie-3" style="margin-top:0">3. Comment mesurer pour pouvoir comparer&nbsp;?</h2>
+  <p class="comme-vie">🏠 <b>Comme une course en EPS</b>&nbsp;: tout le monde part au même signal, sur la même piste, la même distance. Sinon, on compare la piste, pas les coureurs.</p>
+  <h3>Mesurer la distance de freinage</h3>
+  <object class="schema" data="../Images/protocole_freinage.svg" type="image/svg+xml" aria-label="Protocole de mesure de la distance de freinage et ses trois conditions identiques">Le protocole de freinage</object>
+  <ol>
+    <li>Garder <b>trois conditions identiques</b>&nbsp;: la même charge, le même sol sec, la même vitesse de départ.</li>
+    <li>Faire <b>trois essais</b> et garder la <b>moyenne</b>&nbsp;: une mesure seule peut être ratée.</li>
+    <li>Écrire le résultat avec son <b>unité</b>&nbsp;: des mètres, pas «&nbsp;12&nbsp;» tout seul.</li>
+  </ol>
+  <p>Les distances de freinage augmentent avec la masse des véhicules. Ce n'est pas une preuve&nbsp;: les trois véhicules
+  ont aussi des freins et des pneus différents. Deux colonnes qui varient ensemble ne disent pas laquelle explique l'autre.</p>
+  <dl class="voc">
+    <dt>protocole <span class="en">— protocol</span></dt><dd>la suite précise des gestes à faire pour mesurer, toujours de la même façon.</dd>
+    <dt>moyenne <span class="en">— average</span></dt><dd>le total des essais divisé par leur nombre.</dd>
+  </dl>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un <b>protocole</b> fait en sorte que <b>la seule différence</b> entre deux essais soit celle qu'on veut mesurer. On répète les essais et on garde la <b>moyenne</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: comparer deux essais faits dans des conditions différentes. Autre piège&nbsp;: croire que deux colonnes qui varient ensemble prouvent une cause.</p>
+  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: le vélo-cargo est testé chargé, le robot à vide. Peut-on comparer leurs distances de freinage&nbsp;?</summary>
+    <p>Non. Deux choses changent à la fois&nbsp;: le véhicule et la charge. On ne saurait pas laquelle explique l'écart. Il faut les tester avec la même charge.</p></details>
 </div>
 
-<div class="bloc faire">
-  <h2 id="partie-4" style="margin-top:0">4. Choisir (5e_C3.3)</h2>
-  <p>Avant de comparer, on écrit le <b>cahier des charges</b>&nbsp;: le besoin transformé en
-  exigences vérifiables. Sans lui, «&nbsp;la meilleure solution&nbsp;» ne veut rien dire.</p>
-  <p>Une exigence est <b>remplie ou non</b>&nbsp;: elle ne se moyenne pas. Une solution excellente
-  partout mais qui rate une seule exigence est écartée.</p>
-  <p>Au tableur, on écrit une <b>formule</b> et non un résultat tapé&nbsp;: elle se recalcule quand
-  une donnée change, et surtout elle <b>montre le raisonnement</b>. Un nombre tapé ne se discute
-  pas&nbsp;: on ne sait pas d'où il vient.</p>
-  <p>Un <b>indicateur</b> qui additionne des grandeurs différentes n'est pas une mesure&nbsp;: c'est
-  un choix. Il n'est honnête que si on dit ce qu'on y a mis.</p>
+<!-- ══ 4 ══ -->
+<div class="bloc savoir">
+  <h2 id="partie-4" style="margin-top:0">4. Comment choisir le bon véhicule&nbsp;?</h2>
+  <p class="comme-vie">🏠 <b>Comme choisir un sac pour le collège</b>&nbsp;: il doit contenir un classeur (exigence). Un sac superbe où le classeur ne rentre pas est éliminé, même s'il est léger et pas cher.</p>
+  <h3>Le cahier des charges du centre logistique</h3>
+  <table>
+    <tr><th>Exigence</th><th>Seuil</th><th>Vélo-cargo</th><th>Fourgon&shy;nette</th><th>Robot</th></tr>
+    <tr><td>charge transportée</td><td>au moins 80&nbsp;kg (kilogrammes)</td><td class="vert">120&nbsp;kg</td><td class="vert">650&nbsp;kg</td><td>80&nbsp;kg, pile sur le seuil</td></tr>
+    <tr><td>tournée sans recharger</td><td>au moins 35&nbsp;km (kilomètres)</td><td class="vert">55&nbsp;km</td><td class="vert">210&nbsp;km</td><td class="vert">38&nbsp;km</td></tr>
+    <tr><td>passer dans les ruelles</td><td>au moins 4 sur 5</td><td class="vert">5 sur 5</td><td class="rouge">2 sur 5</td><td class="vert">5 sur 5</td></tr>
+    <tr><td>rouler sous la pluie</td><td>au moins 3 sur 5</td><td>3 sur 5, pile sur le seuil</td><td class="vert">5 sur 5</td><td class="rouge">2 sur 5</td></tr>
+  </table>
+  <p>La fourgonnette rate les ruelles, le robot rate la pluie&nbsp;: tous deux sont écartés. Reste le vélo-cargo, qui
+  passe de justesse sous la pluie.</p>
+  <p>Au tableur, on écrit une <b>formule</b>, pas un résultat tapé&nbsp;: elle se recalcule et elle montre le
+  raisonnement. Et une note qui additionne des choses différentes n'est pas une mesure&nbsp;: c'est un choix, à expliquer.</p>
+  <dl class="voc">
+    <dt>cahier des charges <span class="en">— specifications</span></dt><dd>la liste des exigences que la solution doit remplir.</dd>
+    <dt>charge utile <span class="en">— payload</span></dt><dd>ce qu'un véhicule peut transporter&nbsp;: ici, les colis.</dd>
+    <dt>autonomie <span class="en">— range</span></dt><dd>la distance qu'un véhicule parcourt sans recharger.</dd>
+  </dl>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on écrit le <b>cahier des charges</b> avant de choisir. Une <b>exigence</b> est remplie ou non&nbsp;: une solution qui en rate <b>une seule</b> est écartée.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: faire la moyenne des exigences. Autre piège&nbsp;: rater le cas qui tombe pile sur le seuil. «&nbsp;Au moins 3&nbsp;» accepte 3.</p>
+  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: le vélo-cargo a 3 sur 5 sous la pluie. Respecte-t-il l'exigence «&nbsp;au moins 3 sur 5&nbsp;»&nbsp;?</summary>
+    <p>Oui&nbsp;: «&nbsp;au moins 3&nbsp;» accepte 3. Si on filtre «&nbsp;plus de 3&nbsp;» par erreur, on l'écarte… et il ne reste plus aucune solution. Le cas qui tombe pile sur le seuil se vérifie toujours.</p></details>
 </div>
 
-<div class="bloc pieges">
-  <h2 style="margin-top:0">5. La phrase à retenir de toute la séquence</h2>
-  <p style="font-size:1.05em"><b>Une solution technique n'est jamais bonne dans l'absolu&nbsp;: elle
-  est bonne pour un besoin donné.</b></p>
-  <p>Changez le besoin — 400&nbsp;kg sur 150&nbsp;km au lieu de 80&nbsp;kg sur 35 — et la bonne
-  réponse change avec lui. Notre première réponse n'était pas fausse&nbsp;: elle répondait à un
-  autre besoin.</p>
-  <p>Et une bonne recommandation <b>nomme sa propre limite</b>. C'est ce qui la rend solide, pas
-  ce qui l'affaiblit.</p>
+<!-- ══ 5 ══ -->
+<div class="bloc savoir">
+  <h2 id="partie-5" style="margin-top:0">5. La bonne solution est-elle la même pour tout le monde&nbsp;?</h2>
+  <p class="comme-vie">🏠 <b>Comme des chaussures</b>&nbsp;: les meilleures pour courir ne sont pas les meilleures pour la plage. Elles ne sont pas «&nbsp;bonnes&nbsp;» en soi&nbsp;: elles sont bonnes pour quelque chose.</p>
+  <h3>Un autre besoin, une autre réponse</h3>
+  <p>Pour <b>80&nbsp;kg sur 35&nbsp;km</b> dans les ruelles, le vélo-cargo gagne. Pour <b>400&nbsp;kg sur
+  150&nbsp;km</b>, il ne suffit plus&nbsp;: la fourgonnette redevient la bonne réponse.</p>
+  <p>Notre première réponse n'était pas fausse&nbsp;: elle répondait à un autre besoin. Pour transposer, on refait
+  l'analyse avec le nouveau besoin.</p>
+  <p>Une bonne recommandation <b>nomme sa propre limite</b>&nbsp;: «&nbsp;le vélo-cargo convient, tant que les colis ne
+  dépassent pas 120&nbsp;kg&nbsp;». C'est ce qui la rend solide.</p>
+  <dl class="voc">
+    <dt>besoin <span class="en">— need</span></dt><dd>ce que l'usager doit pouvoir faire&nbsp;: livrer tant de colis, sur tant de kilomètres.</dd>
+    <dt>recommandation <span class="en">— recommendation</span></dt><dd>la solution qu'on conseille, avec ses raisons et sa limite.</dd>
+  </dl>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une solution n'est jamais bonne <b>dans l'absolu</b>&nbsp;: elle est bonne <b>pour un besoin</b>. Une bonne recommandation dit aussi sa <b>limite</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: chercher «&nbsp;la meilleure solution&nbsp;» avant d'avoir écrit le besoin. Sans besoin, «&nbsp;meilleure&nbsp;» ne veut rien dire.</p>
+  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: un autre centre doit livrer 400&nbsp;kg sur 150&nbsp;km. Peut-on recopier notre choix&nbsp;?</summary>
+    <p>Non. Le vélo-cargo porte 120&nbsp;kg et roule 55&nbsp;km&nbsp;: il ne remplit pas ce besoin. On refait l'analyse&nbsp;: ici, c'est la fourgonnette qui convient.</p></details>
 </div>
 
-<div class="bloc pieges">
-  <h2 style="margin-top:0">6. Les pièges qui coûtent le plus de points</h2>
-  <ul>
-    <li>confondre la <b>source</b> (la batterie) et la <b>forme</b> (électrique)&nbsp;;</li>
-    <li>juger un objet sur son <b>prix d'achat</b> au lieu de son cycle de vie&nbsp;;</li>
-    <li>étendre à tout le cycle un constat vrai sur une seule étape («&nbsp;zéro émission&nbsp;»)&nbsp;;</li>
-    <li>comparer deux essais faits dans des <b>conditions différentes</b>&nbsp;;</li>
-    <li>rater le cas qui tombe <b>pile sur le seuil</b> du cahier des charges&nbsp;;</li>
-    <li>chercher «&nbsp;la meilleure solution&nbsp;» avant d'avoir écrit le besoin.</li>
-  </ul>
 </div>
-
-<div class="bloc">
-  <h2 style="margin-top:0">🇬🇧 Vocabulaire</h2>
-  <table class="voc"><tr><td>matériau</td><td><b>material</b></td><td>cycle de vie</td><td><b>life cycle</b></td></tr>
-  <tr><td>source d'énergie</td><td><b>power source</b></td><td>capteur</td><td><b>sensor</b></td></tr>
-  <tr><td>charge utile</td><td><b>payload</b></td><td>autonomie</td><td><b>range</b></td></tr>
-  <tr><td>cahier des charges</td><td><b>specifications</b></td><td>réparabilité</td><td><b>repairability</b></td></tr></table>
-</div>
-</div>
+<script>
+/* À l'impression, les réponses « Vérifie-toi » sont dépliées (règle d'or n°316). */
+window.addEventListener('beforeprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.dataset.etaitOuvert = d.open; d.open = true; }));
+window.addEventListener('afterprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.open = d.dataset.etaitOuvert === 'true'; }));
+</script>
 </body>
 </html>

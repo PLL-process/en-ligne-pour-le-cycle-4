@@ -25700,3 +25700,53 @@ recherche et les aperçus de lien) : chacune a maintenant la sienne.
 ### Ce qui reste
 
 Les seize autres synthèses élève du thème 1, sur ce modèle, **après validation du pilote par Pascal**.
+
+---
+
+## 29/10/2026 — n°316, les neuf autres synthèses élève des séquences du thème 1
+
+*Décision 3 de Pascal (choix par défaut ★, #544 fusionnée) : les autres synthèses du thème 1 sur le modèle du pilote
+5e_C1.1. Cette PR traite les neuf synthèses écrites à la main ; les sept synthèses des ateliers de représentation
+sortent d'un générateur et feront l'objet d'une PR à part.*
+
+### Les neuf synthèses
+
+| Séquence | Parties | Ce que l'élève y trouve |
+|---|---|---|
+| 3e_C1.1 à C1.4 (Tsinghua, robots et drones face aux feux) | 5 | l'évolution d'un objet, les causes, l'IA qui aide sans décider |
+| 4e_C1.1 à C1.3 (Tsinghua, concevoir avant de connecter) | 6 | lire un chiffre avant de s'en servir ; `#partie-5` et `#partie-6` gardées (liées d'ailleurs) |
+| 5e_C1.2 (Sainte-Luce, le frein des vélos) | 7 | une fonction, trois principes, un contexte |
+| 3e_C2.1 (Pékin, la borne de tickets) | 5 | quatre représentations, pour qui, quel mode, ce qu'on laisse de côté |
+| 4e_C2.1 · C2.2 (Hangzhou, la borne de retrait) | 6 | l'usager devant la borne, les six familles d'exigences ; `#partie-2` à `-4` gardées |
+| 5e_C2.1 · C2.2 (Shenzhen, la station de vélos) | 6 | la station et tout ce qui l'entoure ; `#partie-1`, `-3`, `-4` gardées |
+| 3e_C3.1 à C3.4 (Shenzhen, refroidir un local qui surchauffe) | 5 | les vraies données : 32 °C admis, 41 °C relevés, 600 € contre 5 800 € sur dix ans |
+| 4e_C3.1 à C3.3 (Hangzhou, quelle flotte de vélos) | 4 | le CO₂ par kilomètre (5,6 / 6,3 / 8,3 / 13,1 g) ; `#partie-1` à `-3` gardées |
+| 5e_C3.1 à C3.4 (Shanghai, le véhicule du dernier kilomètre) | 5 | les seuils réels (vélo-cargo, pluie 3 sur 5, pile sur le seuil) ; `#partie-1`, `-3`, `-4` gardées |
+
+Même forme que le pilote : la carte « Ce que je dois retenir » avec « Ce que dit le programme » mot pour mot (codes
+de la matrice de couverture), puis, par partie, un titre-question, « Comme dans la vie », l'exemple de la séquence,
+les mots avec l'anglais, **À retenir**, **le piège**, **Vérifie-toi**. Phrases de 11 à 12,5 mots en moyenne ; les
+rares phrases au-delà de 25 mots sont des énumérations (les six familles d'exigences, les trois descriptions d'un
+objet). Rien n'est retiré : chaque notion des anciennes synthèses a sa place, et toutes les ancres liées depuis
+d'autres pages restent en place.
+
+### Trouvé en route
+
+- **Une erreur dans le QCM de Pékin (3e_C2.1)** : la correction disait « Dans ces 30 retraits, aucun habitué »
+  alors que l'énoncé porte sur **40 usagers**. Corrigé dans `_generation/q.py`, dans le QCM généré et dans le lexique.
+- **Les tests des trois séquences C2** comptaient les figures de l'ancienne synthèse (Pékin 2 → 4, Shenzhen 2 → 6)
+  et prenaient les liens internes de la carte (`#partie-N`) pour des fichiers : ils sont mis à jour.
+
+### Contrôles
+
+`controle_liens`, `controle_unites`, `controle_sigles`, `controle_hierarchie`, `controle_regles_visibles`,
+`controle_debordement`, `controle_impression_papier`, `controle_impression.mjs` : ✅. `controle_schemas.mjs` sur les
+dossiers Synthèses du thème 1 : 0 ✘. Bancs des neuf séquences : tous verts (de 32/32 à 65/65), voix 24/24.
+Affichage téléphone (360 px) : aucun débordement.
+
+### Ce qui reste
+
+- Les sept synthèses des ateliers de représentation (générateur `ateliers-representations/_generation`).
+- Le contrôle des schémas : trois angles morts notés au n°315 (texte à cheval sur un bord, étiquette sur un tracé
+  pointillé, balises HTML dans un SVG), dans une branche transversale.
+- Les thèmes 2 et 3 : schémas, puis synthèses.
