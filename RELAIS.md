@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 29/10/2026 08:29 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 29/10/2026 08:42 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - Thème 1, règle d'or n°316 : les 9 synthèses élève des séquences (3e/4e/5e C1, C2, C3) sont réécrites sur le modèle du pilote 5e_C1.1 → PR #545 (branche fable/theme-1-syntheses-lots), CI périmètre ✅. Tous contrôles et bancs verts.
@@ -12,13 +12,13 @@ _(écrit par Claude le 29/10/2026 07:54)_
 
 ## Branche et PR
 - Branche : `fable/theme-2-regle-304` — dernier commit 5a5ededb4 Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé
-- Aucune PR ouverte.
+- PR #547 ouverte (`fable/syntheses-ateliers-n316`) — ⏸ À reprendre au format deux pages (n°316 révisée) — synthèses élève des ateliers — CI : aucune
 
 ## Décisions en attente
 _Aucune._
 
 ## Prochaine action
-➡️ Rien à faire pour toi pour l'instant.
+➡️ Sans réponse de ta part, je pars sur A.
 
 ## Décisions prises récemment (messages de Pascal)
 - 29/10/2026 08:26 — « <task-notification> <task-id>af946527d87389d7a</task-id> <tool-use-id>toolu_014rBaJtFYqLv9jf78b6PENX</tool-use-id> <output-file>/tmp/claude- »
