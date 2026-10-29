@@ -1,23 +1,25 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 29/10/2026 13:18 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 29/10/2026 13:31 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
-- #553 (thème 2 à 0 ✘ sur 114 schémas) : prête, CI ✅, sans conflit, attend la fusion.
-- Choix par défaut ★ appliqué en attendant : les schémas du thème 3 (125 ✘ dans 28 schémas sur 51). Branche fable/theme-3-schemas-premium, worktree $S/wt_t3s ; deux agents en parallèle : C9 (3e_C9.2, 3e_C9.1, 4e_C9.1, 5e_C9.1) et C7-C8 (4e_C7.1, atelier-planification, 3e_C7.1, 5e_C7.1, atelier-cao, 4e_C8.1, 5e_C8.1). Consignes : $S/brief_t3_A.md et $S/brief_t3_B.md.
-- Reste ensuite : image de l'objet dans la carte des 7 synthèses d'ateliers.
+- #553 (thème 2 : 0 ✘ / 114) et #554 (thème 3 : 0 ✘ / 51, branche fable/schemas-premium-t3, worktree $S/wt_t3s) ouvertes, CI ✅. Elles ajoutent toutes deux une entrée au journal : la seconde fusionnée demandera de fusionner main dedans.
+- Faits corrigés en #554 : « visible à 2 m » (5e_C7.1), « Trois sur quatre ne suffit pas » (4e_C8.1), deux <desc>.
+- À trancher (journal) : chronogramme d'hystérésis 4e_C9.1 (dessin ≠ texte), chaîne du jardin 4e_C9.1 (contredit n°310), flèche « les valeurs MONTENT » 3e_C9.2.
+- Reste : image de l'objet dans la carte des 7 ateliers ; deux limites du contrôle (alpha rgba, texte coupé par le bord du dessin).
 
-_(écrit par Claude le 29/10/2026 12:50)_
+_(écrit par Claude le 29/10/2026 13:31)_
 
 ## Branche et PR
 - Branche : `fable/theme-2-regle-304` — dernier commit 5a5ededb4 Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé
+- PR #554 ouverte (`fable/schemas-premium-t3`) — n°315, thème 3 : 0 défaut sur 51 schémas — CI : success
 - PR #553 ouverte (`fable/theme-2-schemas-premium`) — n°315, thème 2 : 0 défaut sur 114 schémas — CI : success
 
 ## Décisions en attente
 _Aucune._
 
 ## Prochaine action
-➡️ Fusionne #553.
+➡️ Pascal : fusionner #553 puis #554.
 
 ## Décisions prises récemment (messages de Pascal)
 - 29/10/2026 13:15 — « <agent-message from="a35e22d744f71516e"> [Subagent hand-back] The text below is the final report of a subagent this session delegated to. It »
