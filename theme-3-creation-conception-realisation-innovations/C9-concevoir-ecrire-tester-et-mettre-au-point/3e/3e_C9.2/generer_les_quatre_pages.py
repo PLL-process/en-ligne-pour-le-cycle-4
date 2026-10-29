@@ -126,19 +126,27 @@ PAGES = [
     dict(n=1, fichier="sequence_3e_C9.2-C8.3_station_1_besoin-et-algorithme.html",
          titre="Besoin et algorithme", seances=(1, 2),
          but="Comprendre ce que la mairie demande, et écrire l'algorithme AVANT de programmer.",
-         avant=[RAPPEL, BILLET, SITUATION, "TABS", TACHES]),
+         avant=[RAPPEL, BILLET, SITUATION, "TABS", TACHES],
+         ici=('tu élabores l’algorithme des quatre niveaux d’alerte à partir du courrier de la mairie, puis tu le lis sous forme d’algorigramme normalisé.',
+              'tu choisis ta façon de vivre la séquence — Vittascience en ligne avec son simulateur, ou le montage Arduino du labo — selon le matériel dont tu disposes.')),
     dict(n=2, fichier="sequence_3e_C9.2-C8.3_station_2_programmer.html",
          titre="Programmer par paliers", seances=(3, 4),
          but="Traduire l'algorithme en blocs sur Vittascience, palier par palier.",
-         avant=["TABS", TACHES, BANC]),
+         avant=["TABS", TACHES, BANC],
+         ici=('tu programmes la station en blocs dans Vittascience, palier par palier : lire le vent, décider du niveau, alerter, puis vérifier.',
+              'tu ouvres la bonne interface de Vittascience — Arduino, mode blocs —, te connectes au compte de la classe, simules, puis téléverses si tu as la carte.')),
     dict(n=3, fichier="sequence_3e_C9.2-C8.3_station_3_interaction.html",
          titre="L'humain dans la boucle", seances=(5, 6),
          but="Programmer l'acquittement, lire le code généré, diagnostiquer une panne.",
-         avant=["TABS", TACHES, BANC]),
+         avant=["TABS", TACHES, BANC],
+         ici=('tu programmes l’acquittement de l’alarme — un événement, une mémoire —, puis tu retrouves dans le C++ généré les structures construites en blocs.',
+              'tu ouvres le moniteur série pour voir ce que calcule la carte pendant qu’elle tourne, et tu t’en sers pour mettre le programme au point.')),
     dict(n=4, fichier="sequence_3e_C9.2-C8.3_station_4_recette.html",
          titre="Protocole et recette", seances=(7, 8),
          but="Rédiger le protocole de test, l'exécuter, signer le procès-verbal.",
-         avant=["TABS", TACHES, BANC]),
+         avant=["TABS", TACHES, BANC],
+         ici=('tu rédiges le protocole de test du programme — cas nominaux, cas limites, performance, interaction —, puis tu l’exécutes et prononces la recette.',
+              'tu exécutes ta recette au banc d’essai de la page ou dans le simulateur de Vittascience, et tu consignes ce que tu observes.')),
 ]
 assert sorted(s for p in PAGES for s in p["seances"]) == list(range(1, NB_SEANCES + 1)), \
     "chaque séance doit figurer sur une page, et une seule"
@@ -319,6 +327,20 @@ def selecteur_parcours_utile(toolbar, corps_assemble):
     return "\n".join(out)
 
 
+def badges_de(page):
+    """Les badges de la source, avec les deux « Ici : » du badge CRCN propres à la page (règle n°314) : la source
+    décrit toute la séquence, chaque page ne montre que ce que l'élève y fait."""
+    m = re.search(r'<span class="badge crcn" title="([^"]*)"', BADGES)
+    if not m:
+        raise SystemExit("badge CRCN introuvable dans les badges de la source")
+    titre = m.group(1)
+    morceaux = re.split(r"(?<=Ici : )(.*?)(?=&#10;|$)", titre)
+    if len(morceaux) != 5:
+        raise SystemExit("le badge CRCN de la source doit avoir deux « Ici : » (CRCN 3.4 et CRCN 5.2)")
+    morceaux[1], morceaux[3] = page["ici"]
+    return BADGES.replace(titre, "".join(morceaux), 1)
+
+
 # ─────────────────────────────── écriture ───────────────────────────────
 for p in PAGES:
     corps = [tabs(p["n"]) if bloc == "TABS" else bloc for bloc in p["avant"]]
@@ -332,7 +354,7 @@ for p in PAGES:
             f'(2 séances de 55 min) — {p["but"]}</p>')
     page = "\n".join([
         HEAD, "<body>", NAVCSS, CSS_SUP, NAV, h1, sous, REPLI,
-        BADGES, IDENTITE, toolbar, PROGRESS,
+        badges_de(p), IDENTITE, toolbar, PROGRESS,
         corps_assemble,
         suivant(p["n"]),
         FOOTER, js, LOUPE,

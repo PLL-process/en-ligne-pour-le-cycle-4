@@ -227,7 +227,7 @@
   .rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}
   .rappel-spiralaire h2{margin:.1em 0 .5em}
   .rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}
-  .rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}
+  .rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.rappel-spiralaire .verif{list-style:none;margin:.4em 0 .6em;padding:0}.rappel-spiralaire .verif li{margin:.55em 0}.rappel-spiralaire .verif .ligne{display:flex;align-items:flex-start;gap:.6em}.rappel-spiralaire .verif input[type=checkbox]{flex:none;width:18px;height:18px;margin:.2em 0 0;accent-color:#61dafb;cursor:pointer}.rappel-spiralaire .verif label{cursor:pointer}.rappel-spiralaire .verif .code-verif{display:inline-block;font-size:.82em;opacity:.85;white-space:nowrap;margin-left:.3em}.rappel-spiralaire .verif .rattrapage{margin:.2em 0 0 calc(18px + .6em);font-size:.93em}.rappel-spiralaire .verif-consigne{margin:.2em 0 .3em;font-size:.95em}.rappel-spiralaire .rattrapage a,.rappel-spiralaire .rattrapage a:visited{color:var(--hl)}@media print{.rappel-spiralaire .verif-consigne,.rappel-spiralaire .verif label,.rappel-spiralaire .verif .code-verif,.rappel-spiralaire .verif .rattrapage,.rappel-spiralaire .verif .rattrapage a{color:#041a40!important;opacity:1!important}}
   .gestes-outil{border:1px solid var(--border);border-left:4px solid #ffb300;border-radius:10px;padding:1rem 1.15rem;margin:1.1rem 0;background:var(--panel)}
   .gestes-outil h2{margin:0 0 .35rem;font-size:1.05em}
   .gestes-outil .pourquoi{margin:.2rem 0 .8rem;opacity:.85;font-size:.95em}
@@ -720,8 +720,8 @@
 <p class="repli-tout-en-un">📄 Réseau capricieux, ou besoin de tout avoir sous la main ? <a href="sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html">La séquence entière en une seule page</a> — mêmes activités, mêmes réponses enregistrées, aucun chargement entre les séances.</p>
 <div class="badges">
   <span class="badge niveau">Niveau 3e</span>
-  <span class="badge code">3e_C9.2</span>
-  <span class="badge code">3e_C8.3</span>
+  <span class="badge code" title="Programme 2024 — 3e_C9.2 : Réaliser et mettre au point un programme commandant un système réel incluant une interaction entre un humain et une machine.">3e_C9.2</span>
+  <span class="badge code" title="Programme 2024 — 3e_C8.3 : Proposer un protocole de test pour valider le comportement et les performances d’un objet technique.">3e_C8.3</span>
   <span class="badge theme">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span>
   <span class="badge socle" title="Domaines du socle commun travaillés : D1.3 Comprendre, s’exprimer en utilisant les langages mathématiques, scientifiques et informatiques · D2 Les méthodes et outils pour apprendre · D3 La formation de la personne et du citoyen · D4 Les systèmes naturels et les systèmes techniques · D5 Les représentations du monde et l’activité humaine.">Socle : D1.3 · D2 · D3 · D4 · D5</span>
   <span class="badge crcn" title="CRCN 3.4 Programmer.&#10;Le cadre : « Écrire des programmes et des algorithmes pour répondre à un besoin. »&#10;Ici : tu programmes l’acquittement de l’alarme — un événement, une mémoire —, puis tu retrouves dans le C++ généré les structures construites en blocs.&#10;&#10;CRCN 5.2 Évoluer dans un environnement numérique.&#10;Le cadre : « Installer, configurer et enrichir un environnement numérique (matériels, outils, services) pour disposer d’un cadre adapté aux activités menées, à leur contexte d’exercice ou à des valeurs. »&#10;Ici : tu ouvres le moniteur série pour voir ce que calcule la carte pendant qu’elle tourne, et tu t’en sers pour mettre le programme au point.">CRCN : 3.4 Programmer · 5.2 Évoluer dans un environnement numérique</span>
@@ -961,6 +961,8 @@ function collect(){
     o.inputs[el.id] = el.value;
   });
   document.querySelectorAll("input[type=radio]").forEach(r=>{ if(r.checked) o.radios[r.name]=r.value; });
+  // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
+  document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { o.inputs[c.id] = c.checked; });
   return o;
 }
 function save(showNote){
@@ -974,6 +976,8 @@ function restore(){
   try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o = null; }
   if(!o) return;
   Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(el && id!=="simVent" && id!=="simVentNum") el.value=v; });
+  // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
+  document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { const v = (o.inputs || {})[c.id]; if(v !== undefined) c.checked = (v === true); });
   Object.entries(o.radios||{}).forEach(([n,v])=>{ const r=document.querySelector(`input[name="${n}"][value="${v}"]`); if(r) r.checked=true; });
   window.__valid = o.valid || {};
   window.__exp = Object.assign(window.__exp || {}, o.exp || {});

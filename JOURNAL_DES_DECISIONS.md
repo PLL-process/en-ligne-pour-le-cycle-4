@@ -25169,3 +25169,37 @@ sur le niveau précédent sans diagnostic d'entrée. Une PR par thème ; celle-c
   séquence 38/38, QCM 34/34, sur `main` comme ici.
 - **Contrôles** identiques à `main`. `controle_squelette.mjs` a échoué une fois sur `main` sous la charge de quatre
   suites en parallèle et passe seul ; sur cette branche, il passe.
+
+---
+
+## 28/10/2026 — `3e_C9.2` : le générateur des quatre pages redonne les pages publiées (thème 3)
+
+*Suite de la carte blanche (28/10/2026). Reste noté pendant la vague n°304 : `generer_les_quatre_pages.py` ne
+redonnait plus les quatre pages de la station d'alerte. Branche `fable/theme-3-generateur-c9-2`.*
+
+### Le défaut
+
+La règle n°116 fait des quatre pages des pages **engendrées** depuis la page tout-en-un : on ne les retouche jamais à
+la main. Relancé dans une copie, le script aurait **écrasé** une retouche faite à la main : les deux « Ici : » du
+badge CRCN de chaque page (règle n°314 — chaque page dit ce que l'élève y fait : page 1 l'algorithme, page 2 les
+paliers en blocs, page 3 l'acquittement et le moniteur série, page 4 la recette) seraient revenus au texte de toute
+la séquence. Dans l'autre sens, trois choses portées par la source n'avaient jamais atteint les pages 2 à 4 : la
+bulle des badges de code (« Programme 2024 — 3e_C9.2 : … »), et les lignes de la n°304 (CSS du bloc « Avant de
+commencer », mémoire de ses cases).
+
+### Ce que fait cette PR
+
+- **Le générateur connaît les « Ici : » de chaque page** (`ici=` dans `PAGES`, repris mot pour mot des pages
+  publiées) et les pose dans le badge CRCN ; il s'arrête si le badge de la source n'a plus ses deux « Ici : ».
+- **Les quatre pages sont régénérées.** Page 1 : identique à l'octet. Pages 2 à 4 : elles gagnent la bulle des
+  badges de code, comme la page 1 et la source ; les lignes de la n°304 y sont inertes (le bloc n'est que sur la page
+  1), mais elles font que la page est celle du script.
+
+### Vérifié
+
+- **Régénération** : le script relancé sur cette branche ne change plus aucun fichier.
+- **Banc du lot** `tests_3e_C9.2-C8.3.mjs` (union des champs identique à la source, persistance croisée dans les deux
+  sens) : **167 / 167**, comme sur `main`.
+- `verif_regles_audit.py`, `controle_competences.py` (n°314), `controle_formulations.py`, `controle_sigles.py`,
+  `controle_unites.py`, `controle_impression_papier.py`, `controle_debordement.py`, `controle_regles_visibles.py`,
+  `controle_boutons_vivants.py`, `controle_longueurs.py` : identiques à `main`.
