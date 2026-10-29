@@ -20,9 +20,14 @@
  *   ✘ contact     deux cadres dont aucun ne contient l'autre se chevauchent, ou sont à moins de 8 unités.
  *                 (Les cellules d'un tableau — bord contre bord et alignées, ou coin contre coin — ne comptent pas, ni une
  *                 pastille — 32 unités au plus, un repère de 3 caractères au plus — posée sur le coin d'un cadre.)
- *   ✘ débordement un texte ancré dans un cadre (là où il commence, ou son milieu s'il est centré) en dépasse le bord.
+ *   ✘ débordement un texte ancré dans un cadre (là où il commence, ou son milieu s'il est centré) en dépasse le bord,
+ *                 en largeur ou en hauteur.
  *   ✘ superposés  deux textes se recouvrent.
  *   ✘ traversée   une flèche passe dans un cadre qui n'est ni son départ ni son arrivée, ou sur un texte.
+ *   ✘ à cheval    un texte dont une partie est dans un cadre qui n'est pas le sien, et l'autre dehors.
+ *   ✘ trait sur texte  un trait sans pointe (pointillé ou plein) passe sur un texte, sans fond opaque ni halo qui le cache.
+ *   ✘ balise HTML une balise HTML (<b>, <br>, <p>…) dans le code d'un SVG, hors <foreignObject> : la page sort du schéma
+ *                 à cette balise, ou le texte disparaît.
  *   ⚠ serré       un texte à moins de 4 unités du bord de son cadre ; deux cadres entre 8 et 16 unités.
  *   ⚠ écrasée     une taille de police posée en attribut, écrasée par la feuille de style du SVG (le titre
  *                 qu'on croyait grand ne l'est pas).
@@ -79,6 +84,10 @@ const MESURER = (svg) => {
   // le point d'ancrage d'un texte : là où il commence (start), son milieu (middle), là où il finit (end)
   const ancre = (el, b) => { const a = getComputedStyle(el).textAnchor; const y = b.y + b.h / 2;
     return a === 'middle' ? { x: b.x + b.w / 2, y } : a === 'end' ? { x: b.X - 2, y } : { x: b.x + 2, y }; };
+  // le noyau d'un texte : son encre, sans l'interligne au-dessus de la première ligne ni sous la dernière (mesuré en
+  // taille de police, pour qu'un texte de trois lignes ne perde pas trois interlignes)
+  const noyau = t => { const fs = parseFloat(getComputedStyle(t.el).fontSize) * k || t.b.h;
+    return { x: t.b.x + 1, y: t.b.y + Math.min(0.25 * fs, t.b.h * 0.25), X: t.b.X - 1, Y: t.b.Y - Math.min(0.2 * fs, t.b.h * 0.2) }; };
   const textes = [...svg.querySelectorAll('text')].filter(t => dans(t) && vis(t) && t.textContent.trim())
     .map(t => { const b = r(t); return { el: t, b, s: t.textContent, a: ancre(t, b) }; });
   const peint = el => { const c = getComputedStyle(el); return (c.fill && c.fill !== 'none' && !/url\(/.test(c.fill) && +c.fillOpacity > 0.05) || (c.stroke && c.stroke !== 'none' && +c.strokeWidth > 0); };
@@ -147,8 +156,31 @@ const MESURER = (svg) => {
     const H = hotes[0].b;
     const sort = U(Math.max(H.x - t.b.x, t.b.X - H.X, 0));
     if (sort > 1) { dit('✘', 'débordement', `« ${court(t.s)} » dépasse son cadre de ${sort.toFixed(0)} u`); continue; }
+    // en hauteur : l'encre du texte (sans l'interligne) sort par le haut ou par le bas
+    const n = noyau(t), sortV = U(Math.max(H.y - n.y, n.Y - H.Y, 0));
+    if (sortV > 1) { dit('✘', 'débordement', `« ${court(t.s)} » dépasse son cadre de ${sortV.toFixed(0)} u en hauteur`); continue; }
     const marge = U(Math.min(t.b.x - H.x, H.X - t.b.X));
     if (marge < 4 && H.w > t.b.w + 2) dit('⚠', 'serré', `« ${court(t.s)} » à ${Math.max(0, marge).toFixed(0)} u du bord`);
+  }
+  // ✘ à cheval : un texte dont une partie est dans un cadre et l'autre dehors — ce cadre n'est pas le sien (le sien
+  // relève du débordement) : l'élève ne sait pas à quelle entité il appartient. Neuf points de l'encre du texte.
+  for (const t of textes) {
+    const hote = cadres.filter(x => contientPt(x.b, t.a)).sort((a, b) => a.b.w * a.b.h - b.b.w * b.b.h)[0];
+    if (hote && hote.pastille) continue;      // le repère d'une pastille est posé sur le coin d'un cadre, exprès
+    const n = noyau(t);
+    const pts = [];
+    for (const fx of [0.02, 0.5, 0.98]) for (const fy of [0, 0.5, 1]) pts.push({ x: n.x + fx * (n.X - n.x), y: n.y + fy * (n.Y - n.y) });
+    for (const c of cadres) {
+      if (c === hote || c.pastille) continue;
+      // le cadre du texte est lui-même posé à cheval sur c (une étiquette en onglet sur le bord d'une boîte, un fond
+      // d'étiquette sur le bord d'un cadre) : c'est voulu, ou c'est un contact entre cadres, mesuré plus haut
+      if (hote && hote.contour.some(c.dedans) && !hote.contour.every(c.dedans)) continue;
+      const k2 = pts.filter(c.dedans).length;
+      if (k2 > 0 && k2 < pts.length) {
+        const tc = textes.find(x => x !== t && c.dedans(x.a));
+        dit('✘', 'à cheval', `« ${court(t.s)} » à cheval sur le bord du cadre « ${court(tc ? tc.s : '?')} »`);
+      }
+    }
   }
   // ✘ textes superposés
   for (let i = 0; i < textes.length; i++) for (let j = i + 1; j < textes.length; j++) {
@@ -183,6 +215,51 @@ const MESURER = (svg) => {
         if (vus.has(t)) continue;
         const b = { x: t.b.x + 1, y: t.b.y + t.b.h * 0.25, X: t.b.X - 1, Y: t.b.Y - t.b.h * 0.2 };
         if (p.x > b.x && p.x < b.X && p.y > b.y && p.y < b.Y) { vus.add(t); dit('✘', 'traversée', `une flèche passe sur « ${court(t.s)} »`); }
+      }
+    }
+  }
+  // ✘ trait sur un texte : un trait SANS pointe (un pointillé « include », un lien, une courbe) qui passe sur
+  // l'encre d'un texte, sans qu'une forme opaque peinte après lui (le fond de l'étiquette) ne le cache, ni un halo
+  // autour du texte. Les flèches, elles, sont mesurées plus haut.
+  const formesOpaques = [...svg.querySelectorAll('rect,ellipse,circle,polygon,path')].filter(e => {
+    if (!dans(e) || !vis(e)) return false;
+    const c = getComputedStyle(e);
+    return c.fill && c.fill !== 'none' && !/url\(/.test(c.fill) && (+c.fillOpacity) * (+c.opacity) > 0.6;
+  });
+  const cache = (trait, p) => formesOpaques.some(f => {
+    if (f === trait || !(trait.compareDocumentPosition(f) & Node.DOCUMENT_POSITION_FOLLOWING)) return false;
+    const Mi = f.getScreenCTM() && f.getScreenCTM().inverse(); if (!Mi) return false;
+    try { return f.isPointInFill(new DOMPoint(Mi.a * p.x + Mi.c * p.y + Mi.e, Mi.b * p.x + Mi.d * p.y + Mi.f)); } catch (x) { return false; }
+  });
+  const halo = t => { const c = getComputedStyle(t.el); return c.stroke && c.stroke !== 'none' && parseFloat(c.strokeWidth) >= 2; };
+  const traits = [...svg.querySelectorAll('path,line,polyline')].filter(e => {
+    if (!dans(e) || !vis(e) || fleches.includes(e) || cadres.some(c => c.el === e)) return false;
+    // un trait découpé (clip-path, masque) n'est visible qu'en partie : on ne sait pas où, on ne le mesure pas
+    for (let a = e; a && a !== svg.parentElement; a = a.parentElement) {
+      const c = getComputedStyle(a);
+      if ((c.clipPath && c.clipPath !== 'none') || (c.mask && c.mask !== 'none') || a.hasAttribute('clip-path') || a.hasAttribute('mask')) return false;
+    }
+    if (e.tagName === 'path' && /[zZ]\s*$/.test(e.getAttribute('d') || '')) return false;
+    const c = getComputedStyle(e);
+    return c.stroke && c.stroke !== 'none' && parseFloat(c.strokeWidth) > 0 && +c.strokeOpacity > 0.2;
+  });
+  for (const f of traits) {
+    let L; try { L = f.getTotalLength(); } catch (e) { continue; }
+    if (!(L > 0) || U(L) < 15) continue;
+    const M = f.getScreenCTM(); if (!M) continue;
+    const pt = s => { const p = f.getPointAtLength(s); return { x: M.a * p.x + M.c * p.y + M.e, y: M.b * p.x + M.d * p.y + M.f }; };
+    const p0 = pt(0), p1 = pt(L), bout = 4 * k, pas = Math.max(1.5, L / 300);
+    const vus = new Set();
+    for (let s = 0; s <= L; s += pas) {
+      const p = pt(s);
+      if (Math.hypot(p.x - p0.x, p.y - p0.y) < bout || Math.hypot(p.x - p1.x, p.y - p1.y) < bout) continue;
+      for (const t of textes) {
+        if (vus.has(t) || halo(t)) continue;
+        const b = noyau(t);
+        if (p.x > b.x && p.x < b.X && p.y > b.y && p.y < b.Y && !cache(f, p)) {
+          vus.add(t);
+          dit('✘', 'trait sur texte', `un trait${getComputedStyle(f).strokeDasharray !== 'none' ? ' pointillé' : ''} passe sur « ${court(t.s)} »`);
+        }
       }
     }
   }
@@ -270,6 +347,35 @@ async function main(argv) {
     } catch (e) { resultats.push({ schema: path.relative(RACINE, f), erreur: String(e).slice(0, 120), defauts: [] }); }
   }
   await nav.close();
+
+  // ✘ balise HTML dans un SVG : lue dans le CODE, avant tout rendu. Dans une page, l'analyseur HTML sort du SVG à la
+  // première balise <b>, <br>, <p>… : tout ce qui suit (P2, P3…) quitte le schéma, sans erreur visible. Dans un
+  // fichier .svg, la balise est inconnue et son texte disparaît. Le HTML d'un <foreignObject> (exports draw.io) est
+  // permis : il est fait pour ça.
+  const HTML_SORT = /<(b|big|blockquote|body|br|center|code|dd|div|dl|dt|em|embed|h[1-6]|head|hr|i|img|li|listing|menu|meta|nobr|ol|p|pre|ruby|s|small|span|strike|strong|sub|sup|table|tt|u|ul|var)(?=[\s>\/])/g;
+  const balises = (code) => {
+    const net = code.replace(/<!--[\s\S]*?-->/g, '').replace(/<(style|script)[\s\S]*?<\/\1>/g, '')
+      .replace(/<foreignObject[\s\S]*?<\/foreignObject>/g, '');
+    return [...new Set([...net.matchAll(HTML_SORT)].map(m => '<' + m[1] + '>'))];
+  };
+  for (const f of svgs) {
+    const l = balises(fs.readFileSync(f, 'utf8'));
+    if (!l.length) continue;
+    const nom = path.relative(RACINE, f);
+    let r = resultats.find(x => x.schema === nom);
+    if (!r) { r = { schema: nom, defauts: [] }; resultats.push(r); }
+    r.defauts.push({ g: '✘', type: 'balise HTML', detail: `${l.join(', ')} dans le SVG : son texte ne s'affiche pas` });
+  }
+  for (const f of pages) {
+    const code = fs.readFileSync(f, 'utf8').replace(/<script[\s\S]*?<\/script>/g, '');   // un SVG écrit par un script n'est pas lu par l'analyseur de la page
+    const blocs = [...code.matchAll(/<svg[\s>][\s\S]*?<\/svg>/g)];
+    blocs.forEach((m, i) => {
+      const l = balises(m[0]);
+      if (!l.length) return;
+      resultats.push({ schema: `${path.relative(RACINE, f)} › code du svg n°${i + 1}`,
+        defauts: [{ g: '✘', type: 'balise HTML', detail: `${l.join(', ')} dans le SVG : la page sort du schéma à cette balise` }] });
+    });
+  }
 
   for (const r of resultats) {
     r.croix = r.defauts.filter(d => d.g === '✘').length;
