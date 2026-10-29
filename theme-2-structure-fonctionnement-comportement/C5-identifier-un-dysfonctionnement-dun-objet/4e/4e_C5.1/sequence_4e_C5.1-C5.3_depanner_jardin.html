@@ -676,23 +676,23 @@
   <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. « Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1">
       <legend>Repérer visuellement une pièce défectueuse, c'est…</legend>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="démonter l&#x27;objet pour voir l&#x27;intérieur"><label for="be_1__1">démonter l'objet pour voir l'intérieur</label></div>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="examiner l&#x27;objet zone par zone, sans rien démonter"><label for="be_1__2">examiner l'objet zone par zone, sans rien démonter</label></div>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="remplacer les pièces une à une"><label for="be_1__3">remplacer les pièces une à une</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="démonter l&#x27;objet entier pour voir l&#x27;intérieur"><label for="be_1__1">démonter l'objet entier pour voir l'intérieur</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="remplacer les pièces une à une jusqu&#x27;à trouver"><label for="be_1__2">remplacer les pièces une à une jusqu'à trouver</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="l&#x27;examiner zone par zone, sans rien démonter"><label for="be_1__3">l'examiner zone par zone, sans rien démonter</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_2">
       <legend>Dans un protocole de réparation, l'étape n°1, c'est toujours…</legend>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="couper l&#x27;alimentation"><label for="be_2__1">couper l'alimentation</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="retirer la pièce abîmée"><label for="be_2__2">retirer la pièce abîmée</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="tester l&#x27;objet"><label for="be_2__3">tester l'objet</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="retirer la pièce abîmée"><label for="be_2__1">retirer la pièce abîmée</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="couper l&#x27;alimentation"><label for="be_2__2">couper l'alimentation</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="tester l&#x27;objet en marche"><label for="be_2__3">tester l'objet en marche</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_3">
       <legend>Une réparation est terminée quand…</legend>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="la pièce neuve est en place"><label for="be_3__1">la pièce neuve est en place</label></div>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="l&#x27;objet est refermé"><label for="be_3__2">l'objet est refermé</label></div>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="un test prouve que l&#x27;objet remarche"><label for="be_3__3">un test prouve que l'objet remarche</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="un test prouve que l&#x27;objet remarche"><label for="be_3__1">un test prouve que l'objet remarche</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="la pièce neuve est bien en place"><label for="be_3__2">la pièce neuve est bien en place</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="l&#x27;objet est refermé et revissé"><label for="be_3__3">l'objet est refermé et revissé</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="je ne sais pas encore"><label for="be_3__4">je ne sais pas encore</label></div>
   </fieldset>
   <button type="button" class="btn" id="btnBillet">🎫 Voir où j'en suis</button>
@@ -702,7 +702,7 @@
 /* Billet d'entrée — sans note, hors progression (règle d'or n°26). Chaque question vérifie une ligne du bloc
    « Avant de commencer » ; une réponse manquée renvoie au rattrapage que cette ligne porte déjà. */
 (function(){
-  var BONNES = ["examiner l'objet zone par zone, sans rien démonter", "couper l'alimentation", "un test prouve que l'objet remarche"];
+  var BONNES = ["l'examiner zone par zone, sans rien démonter", "couper l'alimentation", "un test prouve que l'objet remarche"];
   function rattrapage(n){
     var c = document.getElementById("ouv_" + n), li = c && c.closest("li");
     return li ? li.querySelector(".rattrapage a") : null;

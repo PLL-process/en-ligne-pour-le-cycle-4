@@ -776,21 +776,21 @@
   <fieldset class="qcm-groupe" id="be_1">
       <legend>Les relevés montrent un comportement différent de celui qu'on attendait. On cherche alors…</legend>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="la règle du programme qui autorise ce comportement"><label for="be_1__1">la règle du programme qui autorise ce comportement</label></div>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="un autre capteur"><label for="be_1__2">un autre capteur</label></div>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="à réécrire tout le programme"><label for="be_1__3">à réécrire tout le programme</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="un capteur défaillant, qu&#x27;il faudra remplacer"><label for="be_1__2">un capteur défaillant, qu'il faudra remplacer</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="à réécrire le programme entier, depuis le début"><label for="be_1__3">à réécrire le programme entier, depuis le début</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_2">
       <legend>« SI vent &gt; 90 ALORS sirène SINON pas de sirène », le vent en kilomètres par heure. Avec un vent de 60 kilomètres par heure, le programme…</legend>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="déclenche la sirène"><label for="be_2__1">déclenche la sirène</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="s&#x27;arrête"><label for="be_2__2">s'arrête</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="ne déclenche pas la sirène : c&#x27;est le SINON qui s&#x27;applique"><label for="be_2__3">ne déclenche pas la sirène : c'est le SINON qui s'applique</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="déclenche la sirène : le vent souffle déjà fort"><label for="be_2__1">déclenche la sirène : le vent souffle déjà fort</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="s&#x27;arrête : aucune des deux branches ne convient"><label for="be_2__2">s'arrête : aucune des deux branches ne convient</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="ne déclenche pas la sirène : le SINON s&#x27;applique"><label for="be_2__3">ne déclenche pas la sirène : le SINON s'applique</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_3">
       <legend>Avant de modifier un programme qui marche, on…</legend>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="efface l&#x27;ancien pour ne pas se tromper"><label for="be_3__1">efface l'ancien pour ne pas se tromper</label></div>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="sauvegarde l&#x27;original, pour pouvoir revenir en arrière"><label for="be_3__2">sauvegarde l'original, pour pouvoir revenir en arrière</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="sauvegarde l&#x27;original pour pouvoir y revenir"><label for="be_3__2">sauvegarde l'original pour pouvoir y revenir</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="le teste directement sur l&#x27;objet réel"><label for="be_3__3">le teste directement sur l'objet réel</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="je ne sais pas encore"><label for="be_3__4">je ne sais pas encore</label></div>
   </fieldset>
@@ -801,7 +801,7 @@
 /* Billet d'entrée — sans note, hors progression (règle d'or n°26). Chaque question vérifie une ligne du bloc
    « Avant de commencer » ; une réponse manquée renvoie au rattrapage que cette ligne porte déjà. */
 (function(){
-  var BONNES = ["la règle du programme qui autorise ce comportement", "ne déclenche pas la sirène : c'est le SINON qui s'applique", "sauvegarde l'original, pour pouvoir revenir en arrière"];
+  var BONNES = ["la règle du programme qui autorise ce comportement", "ne déclenche pas la sirène : le SINON s'applique", "sauvegarde l'original pour pouvoir y revenir"];
   function rattrapage(n){
     var c = document.getElementById("ouv_" + n), li = c && c.closest("li");
     return li ? li.querySelector(".rattrapage a") : null;

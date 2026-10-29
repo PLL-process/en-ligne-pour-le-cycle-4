@@ -25169,3 +25169,49 @@ sur le niveau précédent sans diagnostic d'entrée. Une PR par thème ; celle-c
   séquence 38/38, QCM 34/34, sur `main` comme ici.
 - **Contrôles** identiques à `main`. `controle_squelette.mjs` a échoué une fois sur `main` sous la charge de quatre
   suites en parallèle et passe seul ; sur cette branche, il passe.
+
+---
+
+## 28/10/2026 — Billets d'entrée : la bonne réponse ne se devine plus à sa longueur (thème 2, `_outils/`)
+
+*Suite de la carte blanche (28/10/2026). En préparant les billets du thème 3, j'ai mesuré mes propres billets avec la
+règle des QCM — et ils la ratent. Branche `fable/theme-2-billets-longueurs`.*
+
+### Le défaut
+
+Les règles d'or **n°144** et **n°198** valent pour toute question à choix : la bonne réponse ne doit pas se
+reconnaître sans lire la question. Mes huit billets du thème 2 (#530) avaient le défaut que la n°144 décrit — la
+bonne réponse portait sa justification (« ne déclenche pas la sirène : c'est le SINON qui s'applique »), les
+distracteurs tenaient en trois mots (« s'arrête »). **12 questions sur 24** étaient « détachées » (la juste s'écarte
+de plus de 8 caractères des deux autres) ; la juste était la plus longue **15 fois sur 24**, avec un écart moyen de
+**+15,5 caractères**. Pour un billet, c'est pire qu'un QCM : un élève qui coche la plus longue lit « 3 / 3 — tu peux
+commencer » sans rien savoir, et le billet ne l'aiguille plus.
+
+### Ce que fait cette PR
+
+- **Les 24 questions sont réécrites** : même énoncé, même idée juste, même ligne du bloc ; chaque distracteur est une
+  idée fausse qu'un élève peut avoir, écrite avec le même soin (« déclenche la sirène : le vent souffle déjà fort »,
+  « s'arrête : aucune des deux branches ne convient »). La place de la juste change d'une question à l'autre.
+  Résultat : **0 question détachée**, écart moyen **+1,4 caractère**. Seuls les boutons et la liste `BONNES` changent ;
+  le CSS, le script et la mémoire des pages ne bougent pas.
+- **`_outils/controle_longueurs.py` lit aussi les billets** au gabarit commun (`<section id="billet">` et
+  `var BONNES`) : un billet est court, une seule question détachée suffit à le signaler. Sur `main`, il signale ces
+  sept billets et leurs 12 questions ; sur cette branche, aucun. Les billets plus anciens, écrits comme l'activité 0
+  de leur page avec leur propre moteur, ne sont pas lus.
+- L'outil qui pose les billets refuse désormais une question détachée ; il sait **réécrire** un billet existant (seules
+  les questions changent) — rejoué sur `5e_C1.5` (thème 1), il redonne la page à l'octet près.
+- ⚠️ Une réponse gardée avant ce jour peut désigner une autre proposition (les places ont changé) ; les billets sont en
+  ligne depuis quelques heures, et ils ne sont pas notés.
+
+### Vérifié
+
+- **Comme un élève** à 390 px (une juste, un « je ne sais pas encore », une fausse → « 1 / 3 » et les renvois des
+  lignes 2 et 3 ; rechargement ; « 3 / 3 » ; caché à la séance 2 ; console vide) : **80 / 80**.
+- `controle_longueurs.py` : 9 billets mesurés (26 questions), aucun signalé ; les 72 banques de QCM inchangées.
+- `verif_regles_audit.py`, `controle_formulations.py`, `controle_sigles.py`, `controle_unites.py`,
+  `controle_impression_papier.py`, `controle_debordement.py`, `controle_regles_visibles.py`,
+  `controle_boutons_vivants.py`, `controle_competences.py` : identiques à `main`.
+
+### Ce qui reste
+
+- Les 16 billets du thème 3 partent déjà réécrits (PR du thème 3).
