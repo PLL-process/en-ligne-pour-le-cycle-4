@@ -26069,3 +26069,64 @@ texte (`plan_cote_support_girouette`).
 
 - Les schémas du thème 2 (201 ✘ dans 60 schémas), puis ceux du thème 3 (125 ✘ dans 28).
 - L'image de l'objet dans la carte des synthèses des ateliers (la forme est fixée depuis #550).
+
+---
+
+## 29/10/2026 — Synthèses élève : l'image de l'objet, générée avec Canva (thème 1, `.claude/skills`)
+
+*Suite de #550 et de la consigne de Pascal (« une capture d'écran ou une illustration permet d'avoir une vision plus
+synthétique de l'objet » ; Canva « pour des images réalistes et autres »). Pascal a dit « vas-y » pour que les images
+soient téléchargées depuis son Canva, puis a ajouté son dossier Téléchargements à la conversation.*
+
+### Les sept images
+
+Toutes sont générées avec Canva, sans personne, sans texte, sans logo. Chacune est placée dans la carte de la
+synthèse élève, à droite de « Ce que dit le programme », avec la légende « Image générée par IA (Canva) ».
+
+| Synthèse | L'objet | Fichier |
+|---|---|---|
+| 5e_C1.1 (Chengdu) | le capteur de la cour | `Images/synthese_capteur_cour.png` |
+| 3e_C1.1 (Tsinghua) | un drone de reconnaissance au-dessus d'une forêt | `Images/synthese_drone_foret.png` |
+| 5e_C1.2 (Sainte-Luce) | le frein à patins | `Images/synthese_frein_patins.png` |
+| 3e_C2.1 (Pékin) | la borne de tickets | `Images/synthese_borne_tickets_pekin.png` |
+| 4e_C2.1 (Hangzhou) | la borne de retrait des vélos | `Images/synthese_borne_velos_hangzhou.png` |
+| 3e_C3.1 (Shenzhen) | le local des serveurs | `Images/synthese_local_serveurs.png` |
+| 4e_C3.1 (Hangzhou) | un vélo de la flotte en libre-service | `Images/synthese_velo_libre_service.png` |
+
+`4e_C1.1` reste sans image : la séquence demande de ne choisir aucun composant. `5e_C2.1` et `5e_C3.1` gardent leur
+dessin original (la station, le vélo-cargo).
+
+### Le fichier n'est pas retouché
+
+Les conditions de Canva (AI Product Terms) disent trois choses :
+- l'image appartient à Pascal, et aucune attribution n'est exigée ;
+- il est interdit de la présenter comme faite par un humain ;
+- il est interdit d'en retirer les marques de provenance.
+
+Chaque fichier porte ces marques : un manifeste C2PA et une balise XMP `Canva:AI-generation-source`. Une compression
+les effacerait. Les fichiers sont donc gardés tels quels : des PNG de 1 536 × 1 024 pixels, de 1,9 à 2,8 Mo, arrivés
+nommés `.jpg`, seul le nom change. C'est une exception à la limite de 300 Ko, écrite dans chaque `SOURCES_MEDIAS.md`
+et dans le skill.
+
+### Comment les fichiers sont arrivés
+
+L'espace de travail ne joint pas Canva. Les sept images ont été ouvertes et téléchargées dans le Chrome de Pascal,
+connecté à Canva. Ce Chrome demande où enregistrer chaque fichier : Pascal a cliqué « Enregistrer » à chaque fois.
+Les fichiers ont ensuite été repris dans son dossier Téléchargements. Le skill `synthese-vulgarisee` décrit ce
+chemin.
+
+### Deux notes de `SOURCES_MEDIAS.md` précisées
+
+- **3e_C2.1** : « Aucune photographie de borne réelle » vaut pour la séquence, où l'élève observe d'abord des usages.
+  La synthèse, lue après les activités, montre une borne générée par IA : elle aide à se souvenir de l'objet, sans
+  donner de solution à recopier.
+- **5e_C1.1 et 5e_C1.2** : « aucune photographie » reste vrai, l'image est générée par IA. La note le dit.
+
+### Contrôles
+
+- **Impression** : les huit synthèses à image tiennent en deux pages, en Inter comme en Liberation Sans, sans titre
+  seul en bas de page. En 3e_C3.1, la légende a été raccourcie : l'image faisait tomber la partie 3 en page 2.
+- **Contrôles du dépôt** : `controle_medias`, `controle_liens`, `controle_loupe`, `controle_regles_visibles`,
+  `controle_hierarchie`, `controle_unites`, `controle_sigles`, `controle_debordement`, `controle_impression.mjs`,
+  `controle_contraste_liens.mjs`, `controle_hors_ligne.mjs` : ✅.
+- **À l'écran**, à 390 et à 1 280 pixels : aucun défilement de côté, aucune erreur.

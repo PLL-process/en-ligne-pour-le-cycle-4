@@ -28,3 +28,13 @@ doublon.
 
 **Aucune police distante** (règle d'or n°40). Séquence, QCM et synthèses utilisent une pile
 système. Le lot fonctionne à l'identique derrière un filtrage de collège.
+
+## Image générée par IA (Canva) pour la synthèse élève
+
+Demande de Pascal du 29/10/2026 : « une capture d'écran ou une illustration permet d'avoir une vision plus synthétique
+de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règles : skill `synthese-vulgarisee`, §4.
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/synthese_velo_libre_service.png` | Un vélo en libre-service, cadre robuste, panier à l'avant, garé à sa borne au bord d'un lac. PNG 1 536 × 1 024, 2.5 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a sturdy steel bike-share bicycle with a front basket and a heavy frame lock, parked at its docking station on a lakeside promenade, soft daylight, no people, no text, no logos, no brand markings, the whole bicycle visible in profile » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Synthèse élève, carte « Ce que je dois retenir » |
+

@@ -31,3 +31,13 @@ leur propre liste, et viderait la compétence 3e_C3.1 de son sens.
 ## Polices
 
 **Aucune police distante** (règle d'or n°40). Séquence, QCM et synthèses utilisent une pile système.
+
+## Image générée par IA (Canva) pour la synthèse élève
+
+Demande de Pascal du 29/10/2026 : « une capture d'écran ou une illustration permet d'avoir une vision plus synthétique
+de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règles : skill `synthese-vulgarisee`, §4.
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/synthese_local_serveurs.png` | Un petit local sans fenêtre : deux armoires de serveurs, des câbles, un thermomètre et une bouche d'aération au mur. PNG 1 536 × 1 024, 2.2 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a small windowless server room in a school: two black server racks with small status lights and tidy cables, a wall thermometer, a small wall air vent, warm light, eye-level view, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Synthèse élève, carte « Ce que je dois retenir » |
+
