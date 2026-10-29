@@ -16,7 +16,6 @@
   h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
   h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
   .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
-  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
   ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
   code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
   table{width:100%;border-collapse:collapse;margin:6px 0}
@@ -31,8 +30,6 @@
   #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
 
   /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
-  /* Une couleur par notion, la même partout : la donnée en jaune, l'information en vert. */
-  .d{color:var(--warn);font-weight:600}.i{color:var(--ok);font-weight:600}
   /* La carte « Ce que je dois retenir » */
   .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
   .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
@@ -47,39 +44,60 @@
   .cartes a:hover{border-color:var(--hl)}
   .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
   .cartes .r{display:block;font-size:.92em}
-  /* Les six temps d'une partie */
-  .comme-vie{background:#132b52;border-radius:8px;padding:8px 12px;margin:4px 0 10px}
-  dl.voc{display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;margin:8px 0;font-size:.93em}
-  dl.voc dt{color:var(--hl);font-weight:600}dl.voc dd{margin:0}
-  @media(max-width:600px){dl.voc{grid-template-columns:1fr;gap:0}dl.voc dd{margin:0 0 6px}}
-  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* L'image de l'objet, à droite du programme (dessous sur un téléphone) */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
   .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
   .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
-  details.verifie{border:1px dashed var(--sub);border-radius:8px;padding:6px 12px;margin:10px 0 2px}
-  details.verifie summary{cursor:pointer;font-weight:600;color:var(--sub)}
-  details.verifie p{margin:6px 0 2px}
-  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
   .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
   .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
   .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
 
-  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
     h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
-    .carte{page-break-after:always;break-after:page}
-    .cartes a,.comme-vie,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; une rangée de cases ne se coupe pas entre deux pages. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
     .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
-    .d{color:#8a5a00}.i{color:#1d6b38}.vert{color:#1d6b38}.rouge{color:#b3261e}
-    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,details.verifie summary,dl.voc dt{color:#222}
-    .bloc{break-inside:auto;padding:6px 10px;margin-bottom:8px}details.verifie{break-inside:avoid}
-    /* papier : les schémas à 60 % de la largeur, des marges serrées — la carte tient sur une page, les parties sur peu */
-    .schema{width:60%;display:block;margin:4px auto}
+    .vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
     h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
-    .comme-vie,.retenir,.piege,details.verifie{padding:3px 8px;margin:4px 0}
-    table{margin:3px 0}th,td{padding:2px 6px}dl.voc{margin:4px 0;gap:1px 10px}.chaine{gap:6px;margin:4px 0}}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .bloc code{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
 
   /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
@@ -105,18 +123,20 @@
   .retour-carte:hover,.retour-carte:focus-visible{border-color:var(--hl)}
   #carte-titre,[id^="partie-"]{scroll-margin-top:64px}
   @media print{.retour-carte{display:none}}
-</style></head>
+</style>
+</head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_4e_C1.1-C1.3_tsinghua_feux.html">← Séquence</a></nav>
 <div class="page">
 <h1>📌 Synthèse élève — lire un chiffre avant de s'en servir</h1>
-<p class="pb">Un système n'existe pas parce qu'un capteur existe. Il existe pour un besoin.</p>
-<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (la carte sur une page, puis les parties)</button></div>
+<p class="pb">Avant de construire un système d'alerte, tu lis les chiffres et tu écris le besoin.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
 
 <!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
 <section class="carte" aria-labelledby="carte-titre">
   <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
   <p class="question">Avant de construire un système d'alerte contre les feux, que faut-il comprendre des chiffres et du besoin&nbsp;?</p>
+  <div class="tete">
   <div class="programme"><b>Ce que dit le programme</b> (4e, compétence C1)&nbsp;:
     <ul>
       <li>mettre en relation les OST avec leurs usages&nbsp;;</li>
@@ -124,19 +144,22 @@
       <li>justifier l'évolution d'un OST pour répondre à l'évolution des besoins.</li>
     </ul>
   </div>
+  </div>
   <div class="cartes">
-    <a href="#partie-1"><span class="q">➕ 1. Peut-on additionner tous les chiffres d'un même texte&nbsp;?</span>
-      <span class="r">Non&nbsp;: un cumul, un état du moment et un pourcentage ne s'additionnent pas.</span></a>
-    <a href="#partie-2"><span class="q">🧮 2. A-t-on le droit d'estimer quand on n'a pas le chiffre&nbsp;?</span>
-      <span class="r">Oui, avec un chiffre emprunté, à condition de le dire. Sans son avertissement, l'estimation devient fausse.</span></a>
+    <a href="#partie-1"><span class="q">➕ 1. Peut-on additionner les chiffres d'un même texte&nbsp;?</span>
+      <span class="r">Seulement s'ils ont la même unité et le même sens.</span></a>
+    <a href="#partie-2"><span class="q">🧮 2. A-t-on le droit d'estimer sans le vrai chiffre&nbsp;?</span>
+      <span class="r">Oui, avec un chiffre emprunté et son avertissement.</span></a>
     <a href="#partie-3"><span class="q">🚆 3. Rendre un grand nombre lisible, sans tromper&nbsp;?</span>
-      <span class="r">Avec une équivalence, en recopiant son unité. Et en se demandant pourquoi celle-là.</span></a>
+      <span class="r">Avec une équivalence, en recopiant l'unité du facteur.</span></a>
     <a href="#partie-4"><span class="q">🌡️ 4. Un capteur seul suffit-il pour donner l'alerte&nbsp;?</span>
-      <span class="r">Non&nbsp;: il confond la cause cherchée avec d'autres. Deux indices indépendants se trompent rarement ensemble.</span></a>
+      <span class="r">Non&nbsp;: tu croises deux indices indépendants.</span></a>
     <a href="#partie-5"><span class="q">📋 5. Du besoin à une exigence qu'on peut vérifier&nbsp;?</span>
-      <span class="r">Besoin, information, contrainte, exigence. Une exigence se vérifie et ne nomme aucun composant.</span></a>
-    <a href="#partie-6"><span class="q">🛡️ 6. Quelles limites mettre à une machine qui surveille&nbsp;?</span>
-      <span class="r">Le système propose, un humain décide. Et la caméra ne doit pas surveiller les personnes.</span></a>
+      <span class="r">Une exigence se vérifie et ne nomme aucun composant.</span></a>
+    <a href="#partie-6"><span class="q">🛡️ 6. Que coûte une évolution, et quels garde-fous&nbsp;?</span>
+      <span class="r">Elle a des avantages et des inconvénients. Un opérateur décide.</span></a>
+    <a href="#partie-7"><span class="q">🌱 7. Pourquoi un objet évolue-t-il&nbsp;?</span>
+      <span class="r">Parce que le besoin a changé.</span></a>
   </div>
 </section>
 
@@ -144,166 +167,148 @@
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-1" style="margin-top:0">1. Peut-on additionner tous les chiffres d'un même texte&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme ta cagnotte</b>. «&nbsp;J'ai économisé 80&nbsp;€ cette année&nbsp;»&nbsp;: un cumul. «&nbsp;J'ai 12&nbsp;€ dans ma poche&nbsp;»&nbsp;: le moment présent. «&nbsp;La moitié vient de mes grands-parents&nbsp;»&nbsp;: une part. Additionner 80, 12 et 50 ne veut rien dire.</p>
-  <h3>Trois chiffres du même communiqué sur les feux</h3>
-  <table>
-    <tr><th>Chiffre</th><th>De quelle nature&nbsp;?</th><th>Ce qu'il fait</th></tr>
-    <tr><td><b>50&nbsp;000 ha</b> (hectares)</td><td>un <b>cumul</b> depuis le 1<sup>er</sup> janvier, annoncé comme un minimum</td><td>il grandit toute l'année et ne redescend jamais</td></tr>
-    <tr><td><b>32 feux</b></td><td>un <b>état du moment</b></td><td>il monte, redescend, et peut revenir au même chiffre avec d'autres feux</td></tr>
-    <tr><td><b>50&nbsp;%</b></td><td>une <b>part</b>&nbsp;: les départs de feu dus à une imprudence</td><td>sans savoir «&nbsp;50&nbsp;% de quoi&nbsp;», il ne veut rien dire</td></tr>
-  </table>
-  <p>Le tableur, lui, additionnera n'importe quoi&nbsp;: c'est une machine, il ne sait pas ce que les nombres veulent
-  dire. Deux colonnes t'aident&nbsp;: <b>le statut</b>, qui dit la nature du chiffre, et <b>la source</b>, qui dit d'où
-  il vient.</p>
-  <dl class="voc">
-    <dt>cumul <span class="en">— running total</span></dt><dd>un total qui s'ajoute depuis un départ, et qui ne fait que grandir.</dd>
-    <dt>état du moment <span class="en">— snapshot</span></dt><dd>ce qu'on compte à un instant précis&nbsp;: il peut monter ou baisser.</dd>
-    <dt>proportion <span class="en">— share, proportion</span></dt><dd>une part d'un tout&nbsp;: 50&nbsp;% des départs de feu.</dd>
-    <dt>source <span class="en">— source, reference</span></dt><dd>d'où vient le chiffre&nbsp;: sans elle, personne ne peut le vérifier.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on n'additionne que ce qui a la même <b>unité</b> et le même <b>sens</b>. Un chiffre se garde avec son <b>statut</b> et sa <b>source</b>.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: se fier au fait que le calcul «&nbsp;marche&nbsp;». Autre piège&nbsp;: recopier un pourcentage sans dire de quoi il est la part.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: lundi, 32 feux sont en cours&nbsp;; mardi, 30. Peut-on dire que 62 feux ont brûlé&nbsp;?</summary>
-    <p>Non. Ce sont deux états du moment&nbsp;: beaucoup des 30 feux de mardi sont les mêmes que lundi. Les additionner compterait plusieurs fois les mêmes feux.</p></details>
+  <p>Le ministère de l'Intérieur publie trois chiffres sur les feux de 2026. Chacun est d'une autre nature&nbsp;:</p>
+  <div class="chaine">
+    <div class="ko"><b>50&nbsp;000 ha (hectares)</b>Un cumul depuis le 1<sup>er</sup> janvier, annoncé comme un minimum. Il ne redescend jamais.</div>
+    <div class="ko"><b>32 feux en cours</b>Un état du moment. Le lendemain, ce nombre aura changé.</div>
+    <div class="ko"><b>50&nbsp;%</b>Une part&nbsp;: les départs de feu liés à une imprudence.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: n'additionne que des chiffres de même <b>unité</b> et de même
+  <b>sens</b>. Garde chacun avec son <b>statut</b> et sa <b>source</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'une addition a du sens parce que le tableur la fait. Il ne sait
+  pas ce que les nombres veulent dire.</p>
 </div>
 
 <!-- ══ 2 ══ -->
 <div class="bloc faire">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-2" style="margin-top:0">2. A-t-on le droit d'estimer quand on n'a pas le chiffre&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme deviner le prix d'un repas pour toute la classe</b>&nbsp;: tu prends le prix d'un menu à la cantine et tu multiplies. C'est une estimation honnête si tu dis d'où vient le prix.</p>
-  <h3>Le CO₂ des feux de 2026</h3>
-  <p>On n'a pas le chiffre français. On emprunte celui de l'Union européenne en 2023&nbsp;: c'est un
-  <b>proxy</b>.</p>
-  <ol>
-    <li>20&nbsp;000&nbsp;000&nbsp;t (tonnes) ÷ 504&nbsp;002&nbsp;ha ≈ <b>39,68&nbsp;t de CO₂ par hectare</b>&nbsp;;</li>
-    <li>50&nbsp;000&nbsp;ha × 39,68 ≈ <b>1,98 million de tonnes de CO₂</b>.</li>
-  </ol>
-  <p>L'avertissement fait partie du résultat&nbsp;: «&nbsp;estimation par un chiffre européen de 2023, non officielle
-  pour la France en 2026&nbsp;». Elle ne tient compte ni du type de végétation, ni de l'humidité, ni de la force du feu.</p>
-  <dl class="voc">
-    <dt>estimation <span class="en">— estimate</span></dt><dd>un calcul fait avec des chiffres approchés, pour avoir une idée.</dd>
-    <dt>proxy <span class="en">— proxy</span></dt><dd>un chiffre emprunté à un autre lieu ou une autre année, faute de mieux.</dd>
-    <dt>ordre de grandeur <span class="en">— order of magnitude</span></dt><dd>la taille approximative d'un nombre&nbsp;: des milliers&nbsp;? des millions&nbsp;?</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une <b>estimation</b> n'est ni une mesure, ni un mensonge. Elle voyage toujours avec son <b>avertissement</b>&nbsp;: sans lui, elle devient une affirmation, et c'est là qu'elle devient fausse.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: retirer l'avertissement pour faire un joli graphique. Autre piège&nbsp;: recopier un nombre de l'énoncé au lieu de faire le calcul.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: pourquoi «&nbsp;les feux de 2026 ont émis 1,98 Mt de CO₂&nbsp;» est-il une phrase fausse&nbsp;?</summary>
-    <p>Parce qu'elle présente une estimation comme une mesure. La phrase juste dit&nbsp;: «&nbsp;environ 1,98 Mt, estimé avec un chiffre européen de 2023&nbsp;».</p></details>
+  <p>Tu n'as pas le chiffre du CO₂ des feux français de 2026. Tu empruntes celui de l'Union européenne en 2023&nbsp;:</p>
+  <div class="chaine etapes">
+    <div><b>1. Le ratio</b>20&nbsp;000&nbsp;000&nbsp;t (tonnes) ÷ 504&nbsp;002&nbsp;ha (hectares) ≈ 39,68 tonnes de CO₂ par hectare.</div>
+    <div><b>2. L'estimation</b>50&nbsp;000&nbsp;ha × 39,68 ≈ 1,98 million de tonnes de CO₂.</div>
+    <div><b>3. L'avertissement</b>«&nbsp;Estimation par proxy européen 2023, non officielle pour la France 2026.&nbsp;»
+    L'estimation ignore la végétation, l'humidité, la force du feu.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une <b>estimation</b> n'est ni une mesure, ni un mensonge&nbsp;: c'est
+  un <b>ordre de grandeur</b>. Elle voyage avec son <b>avertissement</b>&nbsp;; sans lui, elle devient fausse.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'un calcul exact sur des chiffres approchés donne un résultat
+  exact. Chaque étape ajoute de l'incertitude.</p>
 </div>
 
 <!-- ══ 3 ══ -->
 <div class="bloc faire">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-3" style="margin-top:0">3. Comment rendre un très grand nombre lisible, sans tromper&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme dire «&nbsp;la cour fait trois terrains de basket&nbsp;»</b>&nbsp;: c'est plus parlant que 1&nbsp;300&nbsp;m². Mais la cour n'est pas un terrain de basket&nbsp;: on traduit une taille, pas une chose.</p>
-  <h3>Quatre équivalences pour 1,98 million de tonnes de CO₂</h3>
-  <object class="schema" data="../Images/corrige_equivalences_et_perimetres.svg" type="image/svg+xml" aria-label="Les quatre équivalences avec leur unité exacte et leur question critique">Les quatre équivalences</object>
-  <ul>
-    <li>≈ 14,0 milliards de km en voiture&nbsp;: <b>par km de véhicule</b>&nbsp;;</li>
-    <li>≈ 677 milliards de km en TGV&nbsp;: <b>par passager</b>, pas par train&nbsp;;</li>
-    <li>≈ 11,9 milliards de km en avion, par passager&nbsp;;</li>
-    <li>≈ 399 millions de repas avec du bœuf.</li>
-  </ul>
-  <p>Oublier le mot «&nbsp;passager&nbsp;» multiplie l'erreur par le nombre de places du train. Le titre du graphique dit
-  «&nbsp;<b>équivalences</b>&nbsp;», jamais «&nbsp;mêmes impacts&nbsp;».</p>
-  <p>Aucune équivalence n'est neutre&nbsp;: 1,98 Mt, c'est 399 millions de repas (énorme), ou 0,5&nbsp;% des émissions
-  françaises (minuscule). Les deux sont exacts.</p>
-  <dl class="voc">
-    <dt>équivalence <span class="en">— equivalence</span></dt><dd>traduire une quantité dans une unité plus parlante. Ce n'est pas dire que c'est pareil.</dd>
-    <dt>passager-km <span class="en">— passenger-km</span></dt><dd>un kilomètre parcouru par un passager&nbsp;: un train plein en compte des centaines.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une <b>équivalence</b> traduit une taille&nbsp;; elle ne rend pas les choses semblables. On recopie toujours <b>l'unité du facteur</b>, et on se demande <b>pourquoi celle-là</b>.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: aligner des chiffres «&nbsp;par véhicule&nbsp;» et «&nbsp;par passager&nbsp;» comme s'ils comptaient la même chose. Autre piège&nbsp;: un titre qui promet plus que le calcul.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: «&nbsp;Les feux ont pollué autant que 399 millions de repas&nbsp;» : qu'est-ce qui cloche&nbsp;?</summary>
-    <p>«&nbsp;Autant que&nbsp;» fait croire à un même impact. Le calcul dit seulement&nbsp;: la même quantité de CO₂. Un repas et un feu de forêt n'ont pas les mêmes effets. On écrit&nbsp;: «&nbsp;équivalent en CO₂ à…&nbsp;».</p></details>
+  <p>Personne ne se représente 1,98 million de tonnes de CO₂. Tu traduis ce nombre en recopiant l'unité du facteur&nbsp;:</p>
+  <div class="chaine">
+    <div><b>🚗 Voiture</b>≈ 14,0 milliards de kilomètres, comptés par véhicule.</div>
+    <div class="ok"><b>🚆 TGV</b>≈ 677 milliards de passager-km&nbsp;: des kilomètres comptés par passager, pas par train.</div>
+    <div><b>✈️ Avion</b>≈ 11,9 milliards de passager-km.</div>
+    <div><b>🍽️ Repas avec du bœuf</b>≈ 399 millions de repas.</div>
+  </div>
+  <p>Le titre de ton graphique dit «&nbsp;équivalences&nbsp;», jamais «&nbsp;mêmes impacts&nbsp;».</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une <b>équivalence</b> traduit une taille&nbsp;; elle ne rend pas les
+  choses semblables. Tu recopies l'<b>unité du facteur</b>, et tu te demandes <b>pourquoi celle-là</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'une équivalence est neutre. «&nbsp;399 millions de repas&nbsp;»
+  paraît énorme, «&nbsp;0,5&nbsp;% des émissions françaises&nbsp;» minuscule.</p>
 </div>
 
 <!-- ══ 4 ══ -->
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-4" style="margin-top:0">4. Un capteur seul suffit-il pour donner l'alerte&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme un détecteur de fumée dans la cuisine</b>&nbsp;: il sonne pour un feu, mais aussi pour des toasts brûlés. Il ne sait pas faire la différence.</p>
-  <h3>La mesure dans la cour du collège</h3>
-  <p>Au même instant, l'écart entre l'ombre et le plein soleil dépasse 10&nbsp;°C (degrés Celsius). Un seuil d'alerte à
-  40&nbsp;°C sonnerait donc tous les jours d'été, sans le moindre feu.</p>
-  <ul>
-    <li>Un capteur seul ne distingue pas la cause qu'on cherche des autres qui produisent le même effet.</li>
-    <li><b>Deux indices indépendants</b>, par exemple la chaleur et la fumée, se trompent rarement ensemble.</li>
-    <li>Le silence d'un capteur n'est pas une preuve&nbsp;: en panne, déchargé ou hors de portée, il ne transmet rien non plus.</li>
-  </ul>
-  <dl class="voc">
-    <dt>fausse alerte <span class="en">— false alarm</span></dt><dd>une alerte donnée alors qu'il n'y a pas de feu.</dd>
-    <dt>indice <span class="en">— clue, indicator</span></dt><dd>un signe mesuré qui fait penser à un feu&nbsp;: la chaleur, la fumée…</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un <b>seuil unique</b> produit des <b>fausses alertes</b>. On croise <b>deux indices indépendants</b>&nbsp;; et l'<b>absence</b> de donnée n'est pas une preuve.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'un capteur plus précis règle le problème. Le défaut n'est pas la précision, c'est la confusion des causes. Autre piège&nbsp;: prendre le silence d'un capteur pour une bonne nouvelle.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: le capteur de la forêt n'envoie plus rien depuis hier. Faut-il en conclure qu'il n'y a pas de feu&nbsp;?</summary>
-    <p>Non. Il peut être en panne, déchargé, ou détruit par le feu lui-même. Un silence est une question à vérifier, pas une réponse.</p></details>
+  <p>Un après-midi d'été, deux mesures sont faites au même instant dans la cour du collège&nbsp;:</p>
+  <div class="chaine">
+    <div><b>Ombre ou soleil</b>29,4&nbsp;°C (degrés Celsius) à l'ombre, 41,8&nbsp;°C au soleil, sans aucun feu.</div>
+    <div class="ko"><b>Un seuil à 40&nbsp;°C ✘</b>Il sonnerait presque tous les jours d'été.</div>
+    <div class="ok"><b>Deux indices ✔</b>La chaleur et la fumée se trompent rarement ensemble.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un <b>seuil unique</b> produit des <b>fausses alertes</b>. Tu croises
+  <b>deux indices indépendants</b>, et l'<b>absence</b> de donnée ne prouve rien.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: prendre le silence d'un capteur pour une bonne nouvelle. Un capteur en
+  panne ne transmet rien non plus.</p>
 </div>
 
 <!-- ══ 5 ══ -->
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-5" style="margin-top:0">5. Comment passer du besoin à une exigence qu'on peut vérifier&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme une liste de courses</b>&nbsp;: «&nbsp;de quoi faire un gâteau pour huit&nbsp;» est un besoin. «&nbsp;500&nbsp;g de farine&nbsp;» se vérifie dans le panier. «&nbsp;De la farine de la marque X&nbsp;», c'est déjà choisir la solution.</p>
-  <h3>La chaîne du raisonnement</h3>
-  <object class="schema" data="../Images/corrige_du_nombre_a_l_exigence.svg" type="image/svg+xml" aria-label="La chaîne du raisonnement de la donnée publique à l'exigence, avec l'incertitude ajoutée à chaque étape">La chaîne du raisonnement</object>
-  <div class="chaine">
-    <div><b>1. Le besoin</b>prévenir les secours d'un départ de feu</div>
-    <div><b>2. L'information</b>savoir qu'un feu démarre, et où</div>
-    <div><b>3. La contrainte</b>pas de fausse alerte tous les jours d'été</div>
-    <div><b>4. L'exigence</b>«&nbsp;alerte en moins de 30&nbsp;s, après confirmation par deux indices indépendants&nbsp;»</div>
+  <p>L'équipe écrit ce que le système d'alerte doit obtenir, sans choisir aucun composant&nbsp;:</p>
+  <div class="chaine etapes">
+    <div><b>1. Le besoin</b>Prévenir les secours d'un départ de feu.</div>
+    <div><b>2. L'information</b>Savoir qu'un feu démarre, et où.</div>
+    <div><b>3. La contrainte</b>Pas de fausse alerte tous les jours d'été.</div>
+    <div><b>4. L'exigence</b>«&nbsp;Alerte en moins de 30 secondes, après deux indices.&nbsp;»</div>
   </div>
-  <p>Une exigence se reconnaît à une question&nbsp;: «&nbsp;<b>comment je la vérifie&nbsp;?</b>&nbsp;» Si tu ne sais pas
-  répondre, c'est un souhait. Si la phrase nomme un composant (une caméra, une liaison radio LoRa), c'est une solution.</p>
-  <table>
-    <tr><th>✅ Exigence</th><th>❌ Souhait</th><th>❌ Solution</th></tr>
-    <tr><td>«&nbsp;Le système doit transmettre une alerte en moins de 30&nbsp;s après confirmation par deux indices.&nbsp;»</td>
-    <td>«&nbsp;Le système doit être performant.&nbsp;»</td><td>«&nbsp;Le système doit utiliser une liaison LoRa.&nbsp;»</td></tr>
-  </table>
-  <p>Les exigences serviront deux fois, au thème 2&nbsp;: pour <b>choisir</b> une solution, puis pour la <b>valider</b>.
-  Et l'incertitude des chiffres s'ajoute à chaque étape&nbsp;: la dernière ligne doit s'en souvenir.</p>
-  <dl class="voc">
-    <dt>exigence <span class="en">— requirement</span></dt><dd>ce que le système doit obtenir, dit de façon qu'on puisse le vérifier.</dd>
-    <dt>besoin <span class="en">— need</span></dt><dd>ce qui manque à quelqu'un, avant de penser à un objet.</dd>
-    <dt>analyse externe <span class="en">— external analysis</span></dt><dd>dire ce qu'il faut obtenir, sans avoir encore choisi avec quoi.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on va du <b>besoin</b> à l'<b>information</b> nécessaire, puis aux <b>contraintes</b>. On écrit alors une <b>exigence vérifiable</b>&nbsp;: un délai mesurable, une condition, <b>aucun composant</b>.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: partir du matériel qu'on connaît et inventer le besoin autour. Une évolution se justifie par un besoin, jamais parce qu'elle est plus moderne.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: «&nbsp;Le système doit être fiable.&nbsp;» Est-ce une exigence&nbsp;?</summary>
-    <p>Non&nbsp;: on ne sait pas comment le vérifier. Une exigence dirait par exemple&nbsp;: «&nbsp;moins d'une fausse alerte par mois&nbsp;». Ce chiffre-là, on peut le contrôler.</p></details>
+  <div class="chaine">
+    <div class="ko"><b>Un souhait ✘</b>«&nbsp;Être fiable&nbsp;»&nbsp;: aucun essai ne le tranche.</div>
+    <div class="ko"><b>Une solution ✘</b>«&nbsp;Une caméra thermique&nbsp;»&nbsp;: le moyen est déjà choisi.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une <b>exigence</b> se <b>vérifie</b> par oui ou par non. Elle dit
+  ce qu'il faut obtenir, et ne nomme <b>aucun composant</b>. Au thème 2, elle servira à <b>choisir</b> une
+  solution, puis à la <b>valider</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: partir du matériel qu'on connaît, et inventer le besoin autour.</p>
 </div>
 
 <!-- ══ 6 ══ -->
 <div class="bloc pieges">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
-  <h2 id="partie-6" style="margin-top:0">6. Quelles limites mettre à une machine qui surveille&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme le GPS d'une voiture</b>&nbsp;: il propose un chemin, mais c'est le conducteur qui décide de tourner. Si le GPS dit de traverser un champ, on ne le suit pas.</p>
-  <h3>Les garde-fous du système d'alerte</h3>
-  <ul>
-    <li>Une alerte automatique doit pouvoir être <b>vérifiée par un opérateur</b>&nbsp;: elle fait partir des camions et
-    des équipages réels.</li>
-    <li>Une caméra tournée vers une forêt ne doit pas devenir un outil pour <b>surveiller des personnes</b>.</li>
-    <li>La technologie ne remplace ni la vigilance de chacun, ni les secours.</li>
-  </ul>
-  <p>Toute évolution technique a un <b>prix</b>. On gagne du temps, mais on paie des fausses alertes, un coût, de
-  l'énergie, et des caméras qui voient plus que la forêt. Nommer ce prix n'est pas refuser l'évolution.</p>
-  <dl class="voc">
-    <dt>garde-fou <span class="en">— safeguard</span></dt><dd>une règle qui empêche un système d'aller trop loin.</dd>
-    <dt>opérateur <span class="en">— operator</span></dt><dd>la personne qui surveille le système et qui décide.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: le système <b>propose</b>, un <b>humain décide</b>&nbsp;: cela s'écrit dans les exigences. Toute évolution technique a un <b>prix</b>, et on le nomme.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: traiter la vérification humaine comme une politesse ajoutée à la fin. C'est une exigence à part entière. Autre piège&nbsp;: ne citer que les bénéfices.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: pourquoi ne pas laisser le système envoyer les pompiers tout seul, puisqu'il va plus vite&nbsp;?</summary>
-    <p>Parce qu'une fausse alerte mobilise des camions et des équipages réels, qui manqueront ailleurs. Un opérateur vérifie en quelques secondes&nbsp;: on perd un peu de temps, on évite beaucoup d'erreurs.</p></details>
+  <h2 id="partie-6" style="margin-top:0">6. Que coûte une évolution, et quels garde-fous lui donner&nbsp;?</h2>
+  <p>La détection automatisée des feux fait gagner du temps. Mais toute évolution technique a un prix&nbsp;:</p>
+  <div class="chaine">
+    <div class="ok"><b>Ce qu'on gagne</b>L'alerte part plus tôt.</div>
+    <div class="ko"><b>Ce qu'on paie</b>Des fausses alertes, un coût, de l'énergie consommée.</div>
+    <div class="ko"><b>Ce qu'on risque</b>Une caméra qui regarde aussi les personnes, pas seulement la forêt.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une évolution a des <b>avantages</b> et des <b>inconvénients</b>&nbsp;:
+  tu nommes les deux. Le <b>garde-fou</b> principal&nbsp;: le système <b>propose</b>, un <b>opérateur</b> décide.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: laisser le système envoyer seul les secours. Une fausse alerte fait partir
+  de vrais camions.</p>
 </div>
 
+<!-- ══ 7 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-7" style="margin-top:0">7. Pourquoi un objet évolue-t-il&nbsp;?</h2>
+  <p>Au jardin du collège, l'arrosoir devient un système d'arrosage connecté. Compare les deux bêtes à cornes&nbsp;:</p>
+  <div class="chaine">
+    <div><b>À qui&nbsp;? Sur quoi&nbsp;?</b>La gardienne, les plantes du jardin&nbsp;: rien ne change.</div>
+    <div><b>Le but, avant</b>Arroser les plantes du jardin.</div>
+    <div class="ok" style="flex-grow:2"><b>Le but, après</b>Arroser les plantes, même en l'absence de la gardienne, sans gaspiller l'eau.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un objet <b>évolue</b> parce que le <b>besoin</b> évolue. La partie
+  de la bête à cornes qui change dit le <b>besoin nouveau</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: justifier l'évolution par la nouveauté ou par une panne. Un arrosoir percé
+  se remplace par un arrosoir.</p>
 </div>
-<script>
-/* À l'impression, les réponses « Vérifie-toi » sont dépliées (règle d'or n°316). */
-window.addEventListener('beforeprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.dataset.etaitOuvert = d.open; d.open = true; }));
-window.addEventListener('afterprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.open = d.dataset.etaitOuvert === 'true'; }));
-</script>
+
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>OST <span class="en">— technical object or system</span></dt><dd>objet ou système technique.</dd></div>
+    <div><dt>cumul <span class="en">— running total</span></dt><dd>un total qui ne fait que grandir.</dd></div>
+    <div><dt>état du moment <span class="en">— snapshot</span></dt><dd>ce qu'on compte à un instant.</dd></div>
+    <div><dt>proportion <span class="en">— share</span></dt><dd>une part d'un tout.</dd></div>
+    <div><dt>estimation <span class="en">— estimate</span></dt><dd>un calcul avec des chiffres approchés.</dd></div>
+    <div><dt>proxy <span class="en">— proxy</span></dt><dd>un chiffre emprunté, faute de mieux.</dd></div>
+    <div><dt>ordre de grandeur <span class="en">— order of magnitude</span></dt><dd>la taille approchée d'un nombre.</dd></div>
+    <div><dt>équivalence <span class="en">— equivalence</span></dt><dd>un chiffre traduit en choses connues.</dd></div>
+    <div><dt>passager-km <span class="en">— passenger-km</span></dt><dd>un kilomètre fait par un passager.</dd></div>
+    <div><dt>fausse alerte <span class="en">— false alarm</span></dt><dd>une alerte sans feu.</dd></div>
+    <div><dt>indice <span class="en">— clue</span></dt><dd>un signe mesuré, comme la fumée.</dd></div>
+    <div><dt>besoin <span class="en">— need</span></dt><dd>ce qui manque à quelqu'un.</dd></div>
+    <div><dt>exigence <span class="en">— requirement</span></dt><dd>un résultat à obtenir, qui se vérifie.</dd></div>
+    <div><dt>analyse externe <span class="en">— external analysis</span></dt><dd>dire quoi obtenir, sans choisir avec quoi.</dd></div>
+    <div><dt>garde-fou <span class="en">— safeguard</span></dt><dd>une règle qui empêche d'aller trop loin.</dd></div>
+    <div><dt>opérateur <span class="en">— operator</span></dt><dd>la personne qui vérifie l'alerte et décide.</dd></div>
+    <div><dt>bête à cornes <span class="en">— needs diagram</span></dt><dd>le schéma du besoin.</dd></div>
+    <div><dt>invention <span class="en">— invention</span></dt><dd>une solution nouvelle, pas forcément utilisée.</dd></div>
+    <div><dt>innovation <span class="en">— innovation</span></dt><dd>une nouveauté mise à la disposition de tous.</dd></div>
+    <div><dt>évolution technologique <span class="en">— improvement</span></dt><dd>mieux faire la même chose.</dd></div>
+  </dl>
+</div>
+</div>
 </body>
 </html>

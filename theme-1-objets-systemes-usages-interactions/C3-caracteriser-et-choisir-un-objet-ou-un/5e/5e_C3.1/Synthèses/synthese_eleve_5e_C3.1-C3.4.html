@@ -6,7 +6,7 @@
 <title>Synthèse élève — Shanghai : quel véhicule pour le dernier kilomètre ? (5e_C3.1 à C3.4)</title>
 <style>
   :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
-        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88;--ene:#ffb454}
   *{box-sizing:border-box}
   body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;font-size:.95em;
        font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
@@ -31,8 +31,9 @@
   #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
 
   /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
-  /* Une couleur par notion, la même partout : la donnée en jaune, l'information en vert. */
-  .d{color:var(--warn);font-weight:600}.i{color:var(--ok);font-weight:600}
+  /* Une couleur par notion, la même partout : les matériaux en violet, l'énergie en orange (la couleur des flux
+     d'énergie du dépôt), l'information en cyan (celle des flux d'information). */
+  .mat{color:var(--head);font-weight:600}.ene{color:var(--ene);font-weight:600}.inf{color:var(--hl);font-weight:600}
   /* La carte « Ce que je dois retenir » */
   .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
   .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
@@ -47,35 +48,66 @@
   .cartes a:hover{border-color:var(--hl)}
   .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
   .cartes .r{display:block;font-size:.92em}
-  /* Les six temps d'une partie */
-  .comme-vie{background:#132b52;border-radius:8px;padding:8px 12px;margin:4px 0 10px}
-  dl.voc{display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;margin:8px 0;font-size:.93em}
-  dl.voc dt{color:var(--hl);font-weight:600}dl.voc dd{margin:0}
-  @media(max-width:600px){dl.voc{grid-template-columns:1fr;gap:0}dl.voc dd{margin:0 0 6px}}
-  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* L'image de l'objet, à droite du programme (n°316, § 4) ; dessous sur un téléphone. */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Ici, l'image est le dessin du vélo-cargo posé au-dessus de sa chaîne d'énergie : la vignette en garde le
+     haut, le vélo ; la loupe montre le dessin entier, chaîne comprise. */
+  .objet.haut{justify-content:center}
+  .objet.haut img{flex:none;aspect-ratio:5/2;object-position:50% 0}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
   .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
   .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
-  details.verifie{border:1px dashed var(--sub);border-radius:8px;padding:6px 12px;margin:10px 0 2px}
-  details.verifie summary{cursor:pointer;font-weight:600;color:var(--sub)}
-  details.verifie p{margin:6px 0 2px}
-  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
   .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
   .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  /* Les cinq étapes du cycle de vie tiennent sur une rangée. */
+  .chaine.cinq div{flex-basis:118px}
+  ul.serre li{margin:1px 0}
+  ul.deux{columns:2 240px;column-gap:18px}ul.deux li{break-inside:avoid}
   .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
 
-  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
     h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
-    .carte{page-break-after:always;break-after:page}
-    .cartes a,.comme-vie,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; un schéma ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    .schema,table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
     .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
-    .d{color:#8a5a00}.i{color:#1d6b38}.vert{color:#1d6b38}.rouge{color:#b3261e}
-    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,details.verifie summary,dl.voc dt{color:#222}
-    .bloc{break-inside:auto;padding:6px 10px;margin-bottom:8px}details.verifie{break-inside:avoid}
-    /* papier : les schémas à 60 % de la largeur, des marges serrées — la carte tient sur une page, les parties sur peu */
+    .mat{color:#6a2c9e}.ene{color:#a34d00}.inf{color:#0b5f7a}.vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
     .schema{width:60%;display:block;margin:4px auto}
     h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
-    .comme-vie,.retenir,.piege,details.verifie{padding:3px 8px;margin:4px 0}
-    table{margin:3px 0}th,td{padding:2px 6px}dl.voc{margin:4px 0;gap:1px 10px}.chaine{gap:6px;margin:4px 0}}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    ul.deux{margin:2px 0}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
@@ -111,12 +143,13 @@
 <div class="page">
 <h1>📌 Synthèse élève — Shanghai&nbsp;: quel véhicule pour le dernier kilomètre&nbsp;?</h1>
 <p class="pb">Caractériser, mesurer, comparer : choisir la solution qui répond au besoin.</p>
-<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (la carte sur une page, puis les parties)</button></div>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
 
 <!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
 <section class="carte" aria-labelledby="carte-titre">
   <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
   <p class="question">Comment caractériser, tester et comparer plusieurs véhicules, pour choisir celui qui répond le mieux au besoin&nbsp;?</p>
+  <div class="tete">
   <div class="programme"><b>Ce que dit le programme</b> (5e, compétence C3)&nbsp;:
     <ul>
       <li>repérer pour un OST les matériaux, les sources et les formes d'énergies, le traitement de l'information&nbsp;;</li>
@@ -125,17 +158,22 @@
       <li>mesurer et comparer une performance d'un OST à partir d'un protocole fourni.</li>
     </ul>
   </div>
+    <figure class="objet haut">
+      <img src="../Images/chaine_energie_velo_cargo.svg" alt="Le vélo-cargo dessiné en volume : un colis dans le bac avant, la batterie à l'arrière, reliée au moteur de la roue arrière.">
+      <figcaption>📍 L'objet&nbsp;: le vélo-cargo S1, sa batterie et son moteur.</figcaption>
+    </figure>
+  </div>
   <div class="cartes">
     <a href="#partie-1"><span class="q">🔎 1. Comment décrire un objet technique&nbsp;?</span>
-      <span class="r">Par ses matériaux, son énergie (d'où elle vient, sous quelle forme) et sa façon de traiter l'information.</span></a>
-    <a href="#partie-2"><span class="q">♻️ 2. Que coûte un objet, de sa naissance à sa fin&nbsp;?</span>
-      <span class="r">Cinq étapes, qui bouclent. Sur un véhicule qui roule des années, l'utilisation pèse souvent le plus.</span></a>
+      <span class="r">Par ses <span class="mat">matériaux</span>, son <span class="ene">énergie</span> et le traitement de l'<span class="inf">information</span>.</span></a>
+    <a href="#partie-2"><span class="q">♻️ 2. Où nos choix pèsent-ils dans la vie d'un véhicule&nbsp;?</span>
+      <span class="r">De l'extraction à la fin de vie. Sur un véhicule qui roule des années, l'utilisation pèse le plus.</span></a>
     <a href="#partie-3"><span class="q">📏 3. Comment mesurer pour pouvoir comparer&nbsp;?</span>
-      <span class="r">Avec un protocole&nbsp;: une seule chose change à la fois, et on fait trois essais.</span></a>
+      <span class="r">Tu fixes les conditions avant de mesurer. Trois essais, puis la moyenne.</span></a>
     <a href="#partie-4"><span class="q">✅ 4. Comment choisir le bon véhicule&nbsp;?</span>
-      <span class="r">On écrit d'abord le cahier des charges. Une exigence est remplie ou non&nbsp;: elle ne se moyenne pas.</span></a>
+      <span class="r">Tu écris d'abord le cahier des charges. Un véhicule qui rate une seule exigence est écarté.</span></a>
     <a href="#partie-5"><span class="q">🎯 5. La bonne solution est-elle la même pour tout le monde&nbsp;?</span>
-      <span class="r">Non&nbsp;: une solution est bonne pour un besoin donné. Changez le besoin, la réponse change.</span></a>
+      <span class="r">Non&nbsp;: elle est bonne pour un besoin. Le besoin change, la réponse change.</span></a>
   </div>
 </section>
 
@@ -143,138 +181,382 @@
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-1" style="margin-top:0">1. Comment décrire un objet technique&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme une trottinette électrique</b>. Son cadre est en aluminium&nbsp;: le matériau. Une batterie fait tourner un moteur&nbsp;: l'énergie. Un petit écran affiche la vitesse&nbsp;: l'information.</p>
-  <h3>Trois véhicules pour livrer le dernier kilomètre, à Shanghai</h3>
-  <object class="schema" data="../Images/trois_solutions_shanghai.svg" type="image/svg+xml" aria-label="Planche comparative des trois solutions : matériaux, masse, énergie, information, charge utile, autonomie, réparabilité">Les trois solutions</object>
-  <table>
-    <tr><th>Entrée</th><th>La question</th><th>Pour le vélo-cargo</th></tr>
-    <tr><td><b>Matériaux</b></td><td>de quoi est-il fait, et pourquoi&nbsp;?</td><td>aluminium et acier&nbsp;: léger là où il faut, solide là où ça porte</td></tr>
-    <tr><td><b>Énergie</b></td><td>d'où vient-elle (la source)&nbsp;? sous quelle forme circule-t-elle&nbsp;?</td><td>source&nbsp;: la batterie. Forme&nbsp;: électrique, puis mécanique dans la roue</td></tr>
-    <tr><td><b>Information</b></td><td>qui mesure, qui décide, qui agit&nbsp;?</td><td>le contrôleur d'assistance règle l'aide du moteur&nbsp;; l'afficheur informe le cycliste</td></tr>
-  </table>
-  <object class="schema" data="../Images/chaine_energie_velo_cargo.svg" type="image/svg+xml" aria-label="La chaîne d'énergie du vélo-cargo : la batterie sous le porte-bagages, le câble, le moteur dans la roue arrière, et la chaîne écrite en quatre cases sous le dessin">La chaîne d'énergie du vélo-cargo</object>
-  <p>Plus un véhicule doit décider seul, plus il traite d'information&nbsp;: le robot de livraison en traite bien plus
-  que le vélo-cargo. Mais <b>automatisé</b> n'est pas <b>autonome</b>&nbsp;: quelqu'un peut le surveiller et reprendre
-  la main.</p>
-  <dl class="voc">
-    <dt>matériau <span class="en">— material</span></dt><dd>la matière dont une pièce est faite, choisie pour ses propriétés&nbsp;: masse, solidité, prix.</dd>
-    <dt>source d'énergie <span class="en">— power source</span></dt><dd>d'où vient l'énergie&nbsp;: une batterie, un panneau solaire.</dd>
-    <dt>forme d'énergie <span class="en">— form of energy</span></dt><dd>l'aspect sous lequel l'énergie circule&nbsp;: électrique, mécanique, thermique.</dd>
-    <dt>capteur <span class="en">— sensor</span></dt><dd>le composant qui mesure et informe.</dd>
-    <dt>actionneur <span class="en">— actuator</span></dt><dd>le composant qui agit&nbsp;: un moteur, une lampe.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un objet technique se décrit par ses <b>matériaux</b>, son <b>énergie</b> (la <b>source</b> et la <b>forme</b>) et le <b>traitement de l'information</b>. Un capteur informe, un calculateur décide, un actionneur agit.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: confondre la source et la forme. La batterie est une <b>source</b>&nbsp;; «&nbsp;électrique&nbsp;» est une <b>forme</b>.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: «&nbsp;L'énergie du vélo-cargo est électrique.&nbsp;» Est-ce la source ou la forme&nbsp;?</summary>
-    <p>La forme. La source, c'est la batterie&nbsp;: elle stocke l'énergie et la fournit sous forme électrique au moteur, qui la change en énergie mécanique.</p></details>
+  <p>À Shanghai, trois véhicules à batterie peuvent livrer les colis. Voici le vélo-cargo S1, entrée par entrée&nbsp;:</p>
+  <div class="chaine">
+    <div><b class="mat">🧱 Matériaux</b>Aluminium et acier. L'aluminium est léger et résistant&nbsp;: moins de masse à déplacer.</div>
+    <div><b class="ene">⚡ Énergie</b>La source&nbsp;: la batterie. La forme&nbsp;: électrique, puis mécanique dans la roue.</div>
+    <div><b class="inf">🧭 Information</b>Le contrôleur dose l'aide du moteur. L'afficheur informe le cycliste.</div>
+  </div>
+  <p>Le plus lourd consomme le plus&nbsp;: 165&nbsp;Wh (wattheures) par kilomètre pour la fourgonnette de 1&nbsp;350&nbsp;kg.
+  Le vélo-cargo de 48&nbsp;kg en consomme 18.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un objet technique se décrit par ses <b class="mat">matériaux</b>, son
+  <b class="ene">énergie</b> et le traitement de l'<b class="inf">information</b>. La <b>source</b> dit d'où vient l'énergie&nbsp;;
+  la <b>forme</b> dit sous quel aspect elle circule.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: répondre «&nbsp;batterie&nbsp;» quand on demande la forme. La batterie est la
+  source&nbsp;; «&nbsp;électrique&nbsp;» est la forme.</p>
 </div>
 
 <!-- ══ 2 ══ -->
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
-  <h2 id="partie-2" style="margin-top:0">2. Que coûte un objet, de sa naissance à sa fin&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme un téléphone</b>&nbsp;: on extrait des métaux, on le fabrique, on le transporte. Tu le recharges pendant des années, puis il est réparé, recyclé ou jeté. Chaque étape compte.</p>
-  <h3>Le cycle de vie d'un véhicule</h3>
-  <object class="schema" data="../Images/cycle_de_vie_ost.svg" type="image/svg+xml" aria-label="Les cinq étapes du cycle de vie et les trois que les choix de matériaux et d'énergie influencent">Le cycle de vie</object>
-  <div class="chaine">
-    <div><b>1. Extraction</b>la matière recyclée y agit&nbsp;: chaque kilo recyclé n'est pas extrait</div>
-    <div><b>2. Fabrication</b>les procédés dépendent du matériau</div>
-    <div><b>3. Distribution</b>la masse pèse sur le transport</div>
-    <div><b>4. Utilisation</b>l'énergie par kilomètre y agit, jour après jour</div>
-    <div><b>5. Fin de vie</b>la réparabilité la <b>repousse</b></div>
+  <h2 id="partie-2" style="margin-top:0">2. Où nos choix pèsent-ils dans la vie d'un véhicule&nbsp;?</h2>
+  <p>Le cycle de vie du vélo-cargo compte cinq étapes. Trois données du tableau en touchent trois, bordées de vert&nbsp;:</p>
+  <div class="chaine etapes cinq">
+    <div class="ok"><b>1. Extraction</b>35&nbsp;% de matière recyclée&nbsp;: autant qu'on n'extrait pas.</div>
+    <div><b>2. Fabrication</b>Les pièces et la batterie sont produites.</div>
+    <div><b>3. Distribution</b>Le véhicule est transporté jusqu'au client.</div>
+    <div class="ok"><b>4. Utilisation</b>18&nbsp;Wh (wattheures) par kilomètre, chaque jour, pendant 8&nbsp;ans.</div>
+    <div class="ok"><b>5. Fin de vie</b>Réparable à 8 sur 10&nbsp;: la fin de vie recule.</div>
   </div>
-  <p>Sur un véhicule qui consomme en roulant et dure des années, l'utilisation pèse souvent le plus. Un petit écart
-  chaque jour, multiplié par des milliers de jours, dépasse un gros coût unique. Ce n'est pas vrai pour un banc, qui ne
-  consomme rien une fois posé.</p>
-  <dl class="voc">
-    <dt>cycle de vie <span class="en">— life cycle</span></dt><dd>toutes les étapes d'un objet, de l'extraction de sa matière à sa fin de vie.</dd>
-    <dt>réparabilité <span class="en">— repairability</span></dt><dd>la facilité à réparer l'objet, notée sur 10.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: le <b>cycle de vie</b> a cinq étapes&nbsp;: <b>extraction</b>, <b>fabrication</b>, <b>distribution</b>, <b>utilisation</b>, <b>fin de vie</b>. L'essentiel se décide dès la <b>conception</b>.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: juger un objet sur son seul prix d'achat. Autre piège&nbsp;: «&nbsp;zéro émission&nbsp;». C'est vrai pendant qu'il roule, pas pour sa fabrication ni sa batterie.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: la fourgonnette électrique est «&nbsp;zéro émission&nbsp;». Est-ce vrai sur tout son cycle de vie&nbsp;?</summary>
-    <p>Non. Elle n'émet rien en roulant, mais il a fallu extraire la matière, la fabriquer et fabriquer sa batterie. «&nbsp;Zéro émission&nbsp;» ne vaut que pour l'étape d'utilisation.</p></details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: le <b>cycle de vie</b> va de l'<b>extraction</b> de la matière à la
+  <b>fin de vie</b>. Sur un véhicule qui roule des années, c'est l'<b>utilisation</b> qui pèse le plus.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire au «&nbsp;zéro émission&nbsp;». Il ne vaut que pendant l'utilisation&nbsp;:
+  extraire la matière et fabriquer la batterie ont un coût.</p>
 </div>
 
 <!-- ══ 3 ══ -->
 <div class="bloc faire">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-3" style="margin-top:0">3. Comment mesurer pour pouvoir comparer&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme une course en EPS</b>&nbsp;: tout le monde part au même signal, sur la même piste, la même distance. Sinon, on compare la piste, pas les coureurs.</p>
-  <h3>Mesurer la distance de freinage</h3>
-  <object class="schema" data="../Images/protocole_freinage.svg" type="image/svg+xml" aria-label="Protocole de mesure de la distance de freinage et ses trois conditions identiques">Le protocole de freinage</object>
-  <ol>
-    <li>Garder <b>trois conditions identiques</b>&nbsp;: la même charge, le même sol sec, la même vitesse de départ.</li>
-    <li>Faire <b>trois essais</b> et garder la <b>moyenne</b>&nbsp;: une mesure seule peut être ratée.</li>
-    <li>Écrire le résultat avec son <b>unité</b>&nbsp;: des mètres, pas «&nbsp;12&nbsp;» tout seul.</li>
-  </ol>
-  <p>Les distances de freinage augmentent avec la masse des véhicules. Ce n'est pas une preuve&nbsp;: les trois véhicules
-  ont aussi des freins et des pneus différents. Deux colonnes qui varient ensemble ne disent pas laquelle explique l'autre.</p>
-  <dl class="voc">
-    <dt>protocole <span class="en">— protocol</span></dt><dd>la suite précise des gestes à faire pour mesurer, toujours de la même façon.</dd>
-    <dt>moyenne <span class="en">— average</span></dt><dd>le total des essais divisé par leur nombre.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un <b>protocole</b> fait en sorte que <b>la seule différence</b> entre deux essais soit celle qu'on veut mesurer. On répète les essais et on garde la <b>moyenne</b>.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: comparer deux essais faits dans des conditions différentes. Autre piège&nbsp;: croire que deux colonnes qui varient ensemble prouvent une cause.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: le vélo-cargo est testé chargé, le robot à vide. Peut-on comparer leurs distances de freinage&nbsp;?</summary>
-    <p>Non. Deux choses changent à la fois&nbsp;: le véhicule et la charge. On ne saurait pas laquelle explique l'écart. Il faut les tester avec la même charge.</p></details>
+  <p>Le protocole fourni mesure la distance de freinage des trois véhicules. Il garde tout identique, sauf le véhicule&nbsp;:</p>
+  <div class="chaine">
+    <div><b>La même charge</b>Changer la charge, c'est changer deux choses à la fois.</div>
+    <div><b>Le même sol sec</b>Sinon, tu compares le sol, pas les véhicules.</div>
+    <div><b>La même vitesse</b>15&nbsp;km/h au départ, pour tous.</div>
+    <div><b>Trois essais</b>Une mesure seule peut être ratée&nbsp;: tu gardes la moyenne.</div>
+  </div>
+  <p>Le robot de 95&nbsp;kg s'arrête en 1,6&nbsp;m&nbsp;; la fourgonnette de 1&nbsp;350&nbsp;kg, en 5,8&nbsp;m.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un <b>protocole</b> fixe les <b>conditions</b> avant de mesurer&nbsp;: entre deux
+  essais, la seule différence est celle que tu mesures. Tu fais <b>trois essais</b> et tu gardes la <b>moyenne</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: dire que la masse explique l'écart. Les freins et les pneus changent aussi&nbsp;:
+  deux colonnes qui varient ensemble ne prouvent pas une cause.</p>
 </div>
 
 <!-- ══ 4 ══ -->
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-4" style="margin-top:0">4. Comment choisir le bon véhicule&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme choisir un sac pour le collège</b>&nbsp;: il doit contenir un classeur (exigence). Un sac superbe où le classeur ne rentre pas est éliminé, même s'il est léger et pas cher.</p>
-  <h3>Le cahier des charges du centre logistique</h3>
-  <table>
-    <tr><th>Exigence</th><th>Seuil</th><th>Vélo-cargo</th><th>Fourgon&shy;nette</th><th>Robot</th></tr>
-    <tr><td>charge transportée</td><td>au moins 80&nbsp;kg (kilogrammes)</td><td class="vert">120&nbsp;kg</td><td class="vert">650&nbsp;kg</td><td>80&nbsp;kg, pile sur le seuil</td></tr>
-    <tr><td>tournée sans recharger</td><td>au moins 35&nbsp;km (kilomètres)</td><td class="vert">55&nbsp;km</td><td class="vert">210&nbsp;km</td><td class="vert">38&nbsp;km</td></tr>
-    <tr><td>passer dans les ruelles</td><td>au moins 4 sur 5</td><td class="vert">5 sur 5</td><td class="rouge">2 sur 5</td><td class="vert">5 sur 5</td></tr>
-    <tr><td>rouler sous la pluie</td><td>au moins 3 sur 5</td><td>3 sur 5, pile sur le seuil</td><td class="vert">5 sur 5</td><td class="rouge">2 sur 5</td></tr>
-  </table>
-  <p>La fourgonnette rate les ruelles, le robot rate la pluie&nbsp;: tous deux sont écartés. Reste le vélo-cargo, qui
-  passe de justesse sous la pluie.</p>
-  <p>Au tableur, on écrit une <b>formule</b>, pas un résultat tapé&nbsp;: elle se recalcule et elle montre le
-  raisonnement. Et une note qui additionne des choses différentes n'est pas une mesure&nbsp;: c'est un choix, à expliquer.</p>
-  <dl class="voc">
-    <dt>cahier des charges <span class="en">— specifications</span></dt><dd>la liste des exigences que la solution doit remplir.</dd>
-    <dt>charge utile <span class="en">— payload</span></dt><dd>ce qu'un véhicule peut transporter&nbsp;: ici, les colis.</dd>
-    <dt>autonomie <span class="en">— range</span></dt><dd>la distance qu'un véhicule parcourt sans recharger.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on écrit le <b>cahier des charges</b> avant de choisir. Une <b>exigence</b> est remplie ou non&nbsp;: une solution qui en rate <b>une seule</b> est écartée.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: faire la moyenne des exigences. Autre piège&nbsp;: rater le cas qui tombe pile sur le seuil. «&nbsp;Au moins 3&nbsp;» accepte 3.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: le vélo-cargo a 3 sur 5 sous la pluie. Respecte-t-il l'exigence «&nbsp;au moins 3 sur 5&nbsp;»&nbsp;?</summary>
-    <p>Oui&nbsp;: «&nbsp;au moins 3&nbsp;» accepte 3. Si on filtre «&nbsp;plus de 3&nbsp;» par erreur, on l'écarte… et il ne reste plus aucune solution. Le cas qui tombe pile sur le seuil se vérifie toujours.</p></details>
+  <p>Le cahier des charges du centre logistique pose quatre exigences&nbsp;:</p>
+  <ul class="serre deux">
+    <li>porter au moins 80&nbsp;kg de colis&nbsp;;</li>
+    <li>rouler 35&nbsp;km sans recharger&nbsp;;</li>
+    <li>passer dans les ruelles&nbsp;: au moins 4 sur 5&nbsp;;</li>
+    <li>rouler sous la pluie&nbsp;: au moins 3 sur 5.</li>
+  </ul>
+  <div class="chaine">
+    <div class="ok"><b>Vélo-cargo ✔</b>Tout passe. Pluie&nbsp;: 3 sur 5, pile sur le seuil.</div>
+    <div class="ko"><b>Fourgonnette ✘</b>Ruelles&nbsp;: 2 sur 5. Elle porte pourtant 650&nbsp;kg.</div>
+    <div class="ko"><b>Robot ✘</b>Pluie&nbsp;: 2 sur 5. Il est pourtant parfait dans les ruelles.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: tu écris le <b>cahier des charges</b> avant de choisir. Une <b>exigence</b>
+  est remplie ou non&nbsp;: un véhicule qui en rate <b>une seule</b> est écarté.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: écarter le cas pile sur le seuil. «&nbsp;Au moins 3&nbsp;» accepte 3&nbsp;: le
+  vélo-cargo passe.</p>
 </div>
 
 <!-- ══ 5 ══ -->
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-5" style="margin-top:0">5. La bonne solution est-elle la même pour tout le monde&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme des chaussures</b>&nbsp;: les meilleures pour courir ne sont pas les meilleures pour la plage. Elles ne sont pas «&nbsp;bonnes&nbsp;» en soi&nbsp;: elles sont bonnes pour quelque chose.</p>
-  <h3>Un autre besoin, une autre réponse</h3>
-  <p>Pour <b>80&nbsp;kg sur 35&nbsp;km</b> dans les ruelles, le vélo-cargo gagne. Pour <b>400&nbsp;kg sur
-  150&nbsp;km</b>, il ne suffit plus&nbsp;: la fourgonnette redevient la bonne réponse.</p>
-  <p>Notre première réponse n'était pas fausse&nbsp;: elle répondait à un autre besoin. Pour transposer, on refait
-  l'analyse avec le nouveau besoin.</p>
-  <p>Une bonne recommandation <b>nomme sa propre limite</b>&nbsp;: «&nbsp;le vélo-cargo convient, tant que les colis ne
-  dépassent pas 120&nbsp;kg&nbsp;». C'est ce qui la rend solide.</p>
-  <dl class="voc">
-    <dt>besoin <span class="en">— need</span></dt><dd>ce que l'usager doit pouvoir faire&nbsp;: livrer tant de colis, sur tant de kilomètres.</dd>
-    <dt>recommandation <span class="en">— recommendation</span></dt><dd>la solution qu'on conseille, avec ses raisons et sa limite.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une solution n'est jamais bonne <b>dans l'absolu</b>&nbsp;: elle est bonne <b>pour un besoin</b>. Une bonne recommandation dit aussi sa <b>limite</b>.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: chercher «&nbsp;la meilleure solution&nbsp;» avant d'avoir écrit le besoin. Sans besoin, «&nbsp;meilleure&nbsp;» ne veut rien dire.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: un autre centre doit livrer 400&nbsp;kg sur 150&nbsp;km. Peut-on recopier notre choix&nbsp;?</summary>
-    <p>Non. Le vélo-cargo porte 120&nbsp;kg et roule 55&nbsp;km&nbsp;: il ne remplit pas ce besoin. On refait l'analyse&nbsp;: ici, c'est la fourgonnette qui convient.</p></details>
+  <p>Le centre change de besoin. La réponse change avec lui&nbsp;:</p>
+  <div class="chaine">
+    <div><b>80&nbsp;kg sur 35&nbsp;km, en ruelles</b>Le vélo-cargo&nbsp;: il passe partout et porte 120&nbsp;kg.</div>
+    <div><b>400&nbsp;kg sur 150&nbsp;km, hors du centre</b>La fourgonnette&nbsp;: elle seule porte 650&nbsp;kg et roule 210&nbsp;km.</div>
+    <div><b>Le même service en Martinique</b>Pluie, sel, relief&nbsp;: tu revois d'abord le cahier des charges.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une solution n'est jamais bonne <b>dans l'absolu</b>&nbsp;: elle est bonne
+  <b>pour un besoin</b>. Une bonne recommandation dit aussi sa <b>limite</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: chercher «&nbsp;la meilleure solution&nbsp;» avant d'avoir écrit le besoin.
+  Sans cahier des charges, «&nbsp;meilleure&nbsp;» ne veut rien dire.</p>
 </div>
 
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>OST <span class="en">— technical object or system</span></dt><dd>un objet fabriqué, ou plusieurs objets qui travaillent ensemble.</dd></div>
+    <div><dt>matériau <span class="en">— material</span></dt><dd>la matière d'une pièce, choisie pour ses propriétés.</dd></div>
+    <div><dt>source d'énergie <span class="en">— power source</span></dt><dd>d'où vient l'énergie&nbsp;: une batterie, un panneau solaire.</dd></div>
+    <div><dt>forme d'énergie <span class="en">— form of energy</span></dt><dd>l'aspect sous lequel elle circule&nbsp;: électrique, mécanique.</dd></div>
+    <div><dt>capteur <span class="en">— sensor</span></dt><dd>le composant qui mesure et informe.</dd></div>
+    <div><dt>calculateur <span class="en">— control unit</span></dt><dd>le composant qui décide.</dd></div>
+    <div><dt>actionneur <span class="en">— actuator</span></dt><dd>le composant qui agit&nbsp;: un moteur, une lampe.</dd></div>
+    <div><dt>automatisé <span class="en">— automated</span></dt><dd>il agit seul, mais une personne le surveille et peut reprendre la main.</dd></div>
+    <div><dt>cycle de vie <span class="en">— life cycle</span></dt><dd>les étapes d'un objet, de l'extraction à la fin de vie.</dd></div>
+    <div><dt>matière recyclée <span class="en">— recycled material</span></dt><dd>une matière réutilisée, qu'on n'extrait pas.</dd></div>
+    <div><dt>réparabilité <span class="en">— repairability</span></dt><dd>la facilité à réparer l'objet, notée sur 10.</dd></div>
+    <div><dt>conception <span class="en">— design</span></dt><dd>le moment où l'on choisit matériaux et énergie, avant de fabriquer.</dd></div>
+    <div><dt>protocole <span class="en">— protocol</span></dt><dd>la suite précise des gestes pour mesurer, toujours de la même façon.</dd></div>
+    <div><dt>moyenne <span class="en">— average</span></dt><dd>le total des essais divisé par leur nombre.</dd></div>
+    <div><dt>distance de freinage <span class="en">— braking distance</span></dt><dd>la distance parcourue entre le début du freinage et l'arrêt.</dd></div>
+    <div><dt>cahier des charges <span class="en">— specifications</span></dt><dd>la liste des exigences que la solution doit remplir.</dd></div>
+    <div><dt>exigence <span class="en">— requirement</span></dt><dd>ce qu'il faut atteindre, avec son seuil&nbsp;: au moins 80&nbsp;kg.</dd></div>
+    <div><dt>seuil <span class="en">— threshold</span></dt><dd>la valeur limite. «&nbsp;Au moins 3&nbsp;» accepte 3.</dd></div>
+    <div><dt>charge utile <span class="en">— payload</span></dt><dd>ce qu'un véhicule peut transporter&nbsp;: ici, les colis.</dd></div>
+    <div><dt>autonomie <span class="en">— range</span></dt><dd>la distance parcourue sans recharger.</dd></div>
+    <div><dt>formule <span class="en">— formula</span></dt><dd>un calcul écrit dans la cellule du tableur&nbsp;: il se recalcule seul.</dd></div>
+    <div><dt>indicateur <span class="en">— indicator</span></dt><dd>une note qui additionne des critères choisis par nous&nbsp;: un choix, pas une mesure.</dd></div>
+    <div><dt>besoin <span class="en">— need</span></dt><dd>ce que l'usager doit pouvoir faire.</dd></div>
+    <div><dt>recommandation <span class="en">— recommendation</span></dt><dd>la solution conseillée, avec ses raisons et sa limite.</dd></div>
+  </dl>
 </div>
+</div>
+
+<!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  /* L'agrandisseur est une COLONNE — bouton, image, légende — : la légende suit l'image dans le
+     flux, l'image reçoit une hauteur maximale calculée (ajuster()), et le fond défile si besoin. */
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:1rem;box-sizing:border-box;overflow:auto;
+    flex-direction:column;align-items:center;gap:.75rem}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  /* centré quand tout tient, sans rien couper quand ça déborde : des marges automatiques,
+     pas justify-content:center (qui rendrait le haut inaccessible au défilement) */
+  .loupe-fond > .loupe-fermer{margin-top:auto}
+  .loupe-fond > .loupe-legende{margin-bottom:auto}
+  .loupe-fond img{display:block;flex:none;max-width:100%;max-height:80vh;width:auto;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:static;flex:none;margin:0;max-width:min(70ch,100%);text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif}
+  .loupe-legende .loupe-aide{display:block;margin-top:.25rem;font-size:.85em;color:#b8bfcc}
+  .loupe-fermer{position:sticky;top:0;align-self:flex-end;flex:none;z-index:1;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
 <script>
-/* À l'impression, les réponses « Vérifie-toi » sont dépliées (règle d'or n°316). */
-window.addEventListener('beforeprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.dataset.etaitOuvert = d.open; d.open = true; }));
-window.addEventListener('afterprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.open = d.dataset.etaitOuvert === 'true'; }));
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+    grande.addEventListener("load", ajuster);
+    window.addEventListener("resize", ajuster);
+  }
+
+  // La légende affichée : la figcaption VISIBLE de la figure si elle existe ; sinon le
+  // texte alternatif, réduit à sa première phrase s'il dépasse deux lignes. L'alt complet
+  // reste sur l'image agrandie, pour les lecteurs d'écran.
+  function poserLegende(el, texteAlt){
+    var fig = el.closest("figure");
+    var cap = fig ? fig.querySelector("figcaption") : null;
+    var visible = cap && cap.getClientRects().length && cap.textContent.trim();
+    legende.textContent = "";
+    var texte = visible ? cap.textContent.replace(/\s+/g, " ").trim() : (texteAlt || "");
+    texte = texte.replace(/\s*\(clique[^()]*agrandir\)/gi, "").trim();   // l'image est déjà agrandie
+    var corps = document.createElement("span");
+    corps.textContent = texte;
+    var aide = document.createElement("span");
+    aide.className = "loupe-aide";
+    aide.textContent = "Échap pour refermer";
+    if (texte) legende.appendChild(corps);
+    legende.appendChild(aide);
+    if (!visible && texte) {
+      var ligne = parseFloat(getComputedStyle(legende).lineHeight) || 20;
+      if (corps.getBoundingClientRect().height > 2 * ligne + 1) {
+        var m = texte.match(/^[\s\S]*?[.!?…](?=\s|$)/);
+        if (m && m[0].length < texte.length) corps.textContent = m[0];
+      }
+    }
+  }
+
+  // L'image reçoit la place qui reste : hauteur du fond, moins le bouton, la légende,
+  // les marges et les espacements — jamais moins de 40 % de l'écran ; au-delà, le fond défile.
+  function ajuster(){
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    var st = getComputedStyle(fond);
+    var ecart = parseFloat(st.rowGap) || 0;
+    var reste = fond.clientHeight - parseFloat(st.paddingTop) - parseFloat(st.paddingBottom)
+              - fond.querySelector(".loupe-fermer").offsetHeight - legende.offsetHeight - 2 * ecart;
+    grande.style.maxHeight = Math.max(reste, 0.4 * window.innerHeight) + "px";
+  }
+
+  function montrer(el, texteAlt){
+    fond.setAttribute("data-ouvert", "oui");
+    fond.scrollTop = 0;
+    poserLegende(el, texteAlt);
+    ajuster();
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.style.background = "";
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    montrer(img, img.alt);
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    grande.style.maxHeight = "";
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
+  // couleurs et leur police viennent de la feuille de style de la PAGE. Sérialisé seul, le
+  // dessin les perdrait (formes noires, police par défaut, texte qui déborde) : on recopie
+  // donc sur la copie les propriétés CALCULÉES de chaque élément, on y ajoute les dégradés
+  // et marqueurs définis ailleurs dans la page, et l'image reçoit le fond du schéma.
+  var PROPRIETES = ["fill", "fill-opacity", "fill-rule", "stroke", "stroke-width", "stroke-opacity",
+    "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit",
+    "opacity", "visibility", "display", "color", "font-family", "font-size", "font-weight", "font-style",
+    "font-variant-numeric", "letter-spacing", "word-spacing", "text-anchor", "dominant-baseline",
+    "baseline-shift", "text-decoration", "white-space", "paint-order", "stop-color", "stop-opacity",
+    "marker-start", "marker-mid", "marker-end", "clip-path", "mask", "filter"];
+  // Une transformation posée par la feuille de style (pas par l'attribut transform, que la
+  // copie garde déjà) : on la recopie avec son origine.
+  var TRANSFORMATION = ["transform", "transform-origin", "transform-box"];
+
+  function figer(source, copie){
+    var a = [source].concat([].slice.call(source.querySelectorAll("*")));
+    var b = [copie].concat([].slice.call(copie.querySelectorAll("*")));
+    for (var i = 0; i < a.length && i < b.length; i++) {
+      var cs = getComputedStyle(a[i]), decl = [], k, v;
+      for (k = 0; k < PROPRIETES.length; k++) {
+        v = cs.getPropertyValue(PROPRIETES[k]);
+        if (v) decl.push(PROPRIETES[k] + ":" + v);
+      }
+      if (i > 0 && !a[i].hasAttribute("transform") && cs.getPropertyValue("transform") &&
+          cs.getPropertyValue("transform") !== "none") {
+        for (k = 0; k < TRANSFORMATION.length; k++) decl.push(TRANSFORMATION[k] + ":" + cs.getPropertyValue(TRANSFORMATION[k]));
+      }
+      var deja = b[i].getAttribute("style");
+      b[i].setAttribute("style", decl.join(";") + (deja ? ";" + deja : ""));
+    }
+  }
+
+  // Un dégradé ou un marqueur appelé par url(#…) mais défini hors du dessin : on le recopie dedans.
+  function rapatrier(copie){
+    var defs = null, faits = {}, tour = 0, trouve = true;
+    while (trouve && tour++ < 4) {
+      trouve = false;
+      var refs = (new XMLSerializer().serializeToString(copie).match(/url\((?:&quot;|["'])?#([^"')&]+)/g) || [])
+        .concat(new XMLSerializer().serializeToString(copie).match(/href="#[^"]+"/g) || []);
+      refs.forEach(function(r){
+        var id = r.replace(/^url\((?:&quot;|["'])?#/, "").replace(/^href="#/, "").replace(/"$/, "");
+        if (faits[id] || copie.querySelector("[id='" + id.replace(/'/g, "") + "']")) return;
+        faits[id] = true;
+        var el = document.getElementById(id);
+        if (!el || !el.closest("svg")) return;
+        if (!defs) { defs = document.createElementNS("http://www.w3.org/2000/svg", "defs"); copie.insertBefore(defs, copie.firstChild); }
+        var c = el.cloneNode(true); figer(el, c); defs.appendChild(c); trouve = true;
+      });
+    }
+  }
+
+  // Le fond sur lequel le schéma est dessiné : le sien, sinon celui du premier parent opaque.
+  function fondDe(el){
+    for (var e = el; e && e.nodeType === 1; e = e.parentElement) {
+      var c = getComputedStyle(e).backgroundColor, m = c.match(/rgba?\(([^)]+)\)/);
+      if (m) { var p = m[1].split(","); if (p.length < 4 || parseFloat(p[3]) > 0) return c; }
+      else if (c && c !== "transparent") return c;
+    }
+    return "#fff";
+  }
+
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    figer(svg, copie);
+    rapatrier(copie);
+    copie.style.background = "transparent";
+    // Une taille propre au dessin (sans elle, une image SVG n'a que 300 × 150 px à offrir) :
+    // celle de la viewBox, agrandie ; le CSS de la loupe la ramène à l'écran.
+    var vb = svg.viewBox && svg.viewBox.baseVal, boite = svg.getBoundingClientRect();
+    var w = vb && vb.width ? vb.width : boite.width, h = vb && vb.height ? vb.height : boite.height;
+    if (!(vb && vb.width) && w && h) copie.setAttribute("viewBox", "0 0 " + w + " " + h);
+    var k = w ? Math.max(1, 1600 / w) : 1;
+    if (w && h) { copie.setAttribute("width", Math.round(w * k)); copie.setAttribute("height", Math.round(h * k)); }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.style.background = fondDe(svg);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    montrer(svg, mot);
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
 </script>
 </body>
 </html>

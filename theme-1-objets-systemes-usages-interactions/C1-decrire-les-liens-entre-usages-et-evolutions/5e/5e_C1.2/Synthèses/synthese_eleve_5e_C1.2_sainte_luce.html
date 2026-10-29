@@ -16,7 +16,6 @@
   h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
   h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
   .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
-  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
   ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
   code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
   table{width:100%;border-collapse:collapse;margin:6px 0}
@@ -31,8 +30,6 @@
   #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
 
   /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
-  /* Une couleur par notion, la même partout : la donnée en jaune, l'information en vert. */
-  .d{color:var(--warn);font-weight:600}.i{color:var(--ok);font-weight:600}
   /* La carte « Ce que je dois retenir » */
   .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
   .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
@@ -47,39 +44,60 @@
   .cartes a:hover{border-color:var(--hl)}
   .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
   .cartes .r{display:block;font-size:.92em}
-  /* Les six temps d'une partie */
-  .comme-vie{background:#132b52;border-radius:8px;padding:8px 12px;margin:4px 0 10px}
-  dl.voc{display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;margin:8px 0;font-size:.93em}
-  dl.voc dt{color:var(--hl);font-weight:600}dl.voc dd{margin:0}
-  @media(max-width:600px){dl.voc{grid-template-columns:1fr;gap:0}dl.voc dd{margin:0 0 6px}}
-  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* L'image de l'objet, à droite du programme (dessous sur un téléphone) */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
   .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
   .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
-  details.verifie{border:1px dashed var(--sub);border-radius:8px;padding:6px 12px;margin:10px 0 2px}
-  details.verifie summary{cursor:pointer;font-weight:600;color:var(--sub)}
-  details.verifie p{margin:6px 0 2px}
-  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
   .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
   .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
   .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
 
-  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
     h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
-    .carte{page-break-after:always;break-after:page}
-    .cartes a,.comme-vie,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; une rangée de cases ne se coupe pas entre deux pages. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
     .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
-    .d{color:#8a5a00}.i{color:#1d6b38}.vert{color:#1d6b38}.rouge{color:#b3261e}
-    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,details.verifie summary,dl.voc dt{color:#222}
-    .bloc{break-inside:auto;padding:6px 10px;margin-bottom:8px}details.verifie{break-inside:avoid}
-    /* papier : les schémas à 60 % de la largeur, des marges serrées — la carte tient sur une page, les parties sur peu */
-    .schema{width:60%;display:block;margin:4px auto}
+    .vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
     h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
-    .comme-vie,.retenir,.piege,details.verifie{padding:3px 8px;margin:4px 0}
-    table{margin:3px 0}th,td{padding:2px 6px}dl.voc{margin:4px 0;gap:1px 10px}.chaine{gap:6px;margin:4px 0}}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .bloc code{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
 
   /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
@@ -105,38 +123,42 @@
   .retour-carte:hover,.retour-carte:focus-visible{border-color:var(--hl)}
   #carte-titre,[id^="partie-"]{scroll-margin-top:64px}
   @media print{.retour-carte{display:none}}
-</style></head>
+</style>
+</head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_5e_C1.2_sainte_luce_freinage.html">← Séquence</a></nav>
 <div class="page">
 <h1>📌 Synthèse élève — une fonction, trois principes, un contexte</h1>
-<p class="pb">Comparer, ce n'est pas compter. Choisir, c'est accepter de perdre quelque chose.</p>
-<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (la carte sur une page, puis les parties)</button></div>
+<p class="pb">Trois freins remplissent la même fonction&nbsp;: tu les compares, puis tu choisis pour Sainte-Luce.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
 
 <!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
 <section class="carte" aria-labelledby="carte-titre">
   <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
   <p class="question">Quel frein choisir pour les vélos du collège de Sainte-Luce, et comment défendre ce choix&nbsp;?</p>
+  <div class="tete">
   <div class="programme"><b>Ce que dit le programme</b> (5e, compétence C1)&nbsp;:
     <ul>
       <li>comparer des principes techniques pour une même fonction technique.</li>
     </ul>
   </div>
+  <!-- figure.objet : l'image de l'objet se place ici, à droite du programme (voir le pilote 5e_C1.1) -->
+  </div>
   <div class="cartes">
     <a href="#partie-1"><span class="q">🎯 1. Fonction, principe, solution&nbsp;: quelle différence&nbsp;?</span>
-      <span class="r">La fonction dit quoi faire, le principe par quel phénomène, la solution avec quel objet.</span></a>
-    <a href="#partie-2"><span class="q">🔁 2. Trois freins, est-ce trois phénomènes différents&nbsp;?</span>
-      <span class="r">Non&nbsp;: les trois frottent. Ce qui change, c'est l'endroit, et donc ce qui y est exposé.</span></a>
+      <span class="r">Quoi faire, par quel phénomène, avec quel objet.</span></a>
+    <a href="#partie-2"><span class="q">🔁 2. Trois freins, est-ce trois phénomènes&nbsp;?</span>
+      <span class="r">Non&nbsp;: les trois frottent, mais pas au même endroit.</span></a>
     <a href="#partie-3"><span class="q">🔥 3. Que montre le vrai vélo, et pas le schéma&nbsp;?</span>
-      <span class="r">Le frottement se fait à deux, il chauffe, et un frein doit aussi savoir ne pas freiner.</span></a>
+      <span class="r">Le frottement se fait à deux, et il chauffe.</span></a>
     <a href="#partie-4"><span class="q">📊 4. Comment lire un tableau de comparaison&nbsp;?</span>
-      <span class="r">Chaque colonne a son sens, et l'écart entre sec et pluie en dit plus que la meilleure valeur.</span></a>
+      <span class="r">Chaque colonne dans son sens, et l'écart d'abord.</span></a>
     <a href="#partie-5"><span class="q">⚖️ 5. Le tableau peut-il choisir à notre place&nbsp;?</span>
-      <span class="r">Non&nbsp;: il donne les faits, pas leur importance. À Sainte-Luce, la pluie et le sel pèsent le plus.</span></a>
+      <span class="r">Non&nbsp;: il donne les faits, pas leur importance.</span></a>
     <a href="#partie-6"><span class="q">🗣️ 6. Comment défendre son choix&nbsp;?</span>
-      <span class="r">Le principe retenu, deux raisons chiffrées, et ce qu'on accepte de perdre.</span></a>
+      <span class="r">Avec des chiffres, et ce qu'on accepte de perdre.</span></a>
     <a href="#partie-7"><span class="q">🚲 7. Un autre usage, le même frein&nbsp;?</span>
-      <span class="r">Non&nbsp;: le vélo-cargo de Léa, lourd et chargé, demande un frein qui tient quand il chauffe.</span></a>
+      <span class="r">Non&nbsp;: l'usage change les critères. Pour Léa, c'est le disque.</span></a>
   </div>
 </section>
 
@@ -144,188 +166,149 @@
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-1" style="margin-top:0">1. Fonction, principe, solution&nbsp;: quelle différence&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme pour éclairer ta chambre</b>&nbsp;: le but, c'est «&nbsp;éclairer&nbsp;» (la fonction). Une bougie brûle, une ampoule chauffe un fil, une lampe LED fait briller un composant (trois principes). La lampe de telle marque, dans ce magasin, c'est la solution.</p>
-  <h3>Sur les vélos du collège</h3>
-  <table>
-    <tr><th>Le mot</th><th>La question</th><th>Pour le frein</th></tr>
-    <tr><td><b>Fonction technique</b></td><td>Que doit faire l'objet&nbsp;? (un verbe, sans le moyen)</td><td>arrêter un vélo en mouvement</td></tr>
-    <tr><td><b>Principe technique</b></td><td>Par quel phénomène, et à quel endroit&nbsp;?</td><td>serrer la jante entre deux patins, par frottement</td></tr>
-    <tr><td><b>Solution technique</b></td><td>Quel objet achète-t-on&nbsp;?</td><td>le frein à patins du fournisseur B, référence 2140</td></tr>
-  </table>
-  <p>On les trouve <b>dans cet ordre</b>&nbsp;: d'abord la fonction, puis les principes possibles, enfin la solution.
-  Une fonction bien écrite <b>laisse ouverts tous les principes</b>. «&nbsp;Freiner avec des patins&nbsp;» a déjà choisi&nbsp;:
-  il n'y a plus rien à comparer.</p>
-  <p>Ne confonds pas avec «&nbsp;à quoi ça sert&nbsp;». Un vélo <b>sert</b> à se déplacer&nbsp;: c'est le service rendu à
-  l'usager. L'une de ses <b>fonctions techniques</b> est d'arrêter le mouvement.</p>
-  <dl class="voc">
-    <dt>fonction technique <span class="en">— technical function</span></dt><dd>ce que l'objet doit faire, dit par un verbe, sans dire avec quoi.</dd>
-    <dt>principe <span class="en">— working principle</span></dt><dd>le phénomène physique utilisé, et l'endroit où on l'applique.</dd>
-    <dt>solution technique <span class="en">— technical solution</span></dt><dd>l'objet concret qu'on achète&nbsp;: une marque, une référence.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: la <b>fonction</b> dit ce qu'il faut faire, le <b>principe</b> par quel phénomène, la <b>solution</b> avec quel objet. Une bonne fonction ne nomme <b>aucun moyen</b>.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: donner un matériau ou une marque comme principe. «&nbsp;En caoutchouc&nbsp;» dit de quoi le patin est fait, pas comment il freine. Autre piège&nbsp;: répondre «&nbsp;à quoi ça sert&nbsp;» quand on demande une fonction technique.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: «&nbsp;Freiner avec des patins&nbsp;» : est-ce une fonction bien écrite&nbsp;?</summary>
-    <p>Non. «&nbsp;Avec des patins&nbsp;» choisit déjà le moyen. La fonction s'écrit «&nbsp;arrêter un vélo en mouvement&nbsp;». Les patins, le disque et le tambour sont trois façons possibles de le faire.</p></details>
+  <p>Un vélo sert à se déplacer&nbsp;: c'est le service rendu, sa fonction d'usage. Pour le frein, tu poses trois
+  questions, dans l'ordre&nbsp;:</p>
+  <div class="chaine etapes">
+    <div><b>1. La fonction</b>Que doit faire l'objet&nbsp;? «&nbsp;Arrêter un vélo en mouvement.&nbsp;»</div>
+    <div><b>2. Le principe</b>Par quel phénomène, et où&nbsp;? «&nbsp;Serrer la jante entre deux patins, par frottement.&nbsp;»</div>
+    <div><b>3. La solution</b>Quel objet achète-t-on&nbsp;? «&nbsp;Le frein à patins du fournisseur B, référence 2140.&nbsp;»</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une bonne <b>fonction</b> ne nomme <b>aucun moyen</b>&nbsp;:
+  «&nbsp;freiner avec des patins&nbsp;» a déjà choisi. Elle laisse ouverts tous les <b>principes</b>, et le choix
+  reste à faire.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: donner un matériau comme principe. «&nbsp;En caoutchouc&nbsp;» dit de quoi
+  le patin est fait, pas comment il freine.</p>
 </div>
 
 <!-- ══ 2 ══ -->
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-2" style="margin-top:0">2. Trois freins, est-ce trois phénomènes différents&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme pour te sécher les mains</b>&nbsp;: une serviette, un torchon ou ton pantalon, c'est toujours frotter. Mais la serviette de la salle de bain reste propre&nbsp;; le pantalon, non.</p>
-  <h3>Les trois freins de la séquence</h3>
-  <object class="schema" data="../Images/corrige_trois_principes_de_freinage.svg" type="image/svg+xml" aria-label="Les trois principes de freinage : patins sur la jante, plaquettes sur un disque au moyeu, mâchoires dans un tambour fermé">Les trois principes de freinage</object>
-  <table>
-    <tr><th>Frein</th><th>Où frotte-t-on&nbsp;?</th><th>Ce qui y est exposé</th></tr>
-    <tr><td><b>à patins</b></td><td>sur <b>la jante</b>, le bord de la roue</td><td>la roue passe dans les flaques&nbsp;: la jante est mouillée</td></tr>
-    <tr><td><b>à disque</b></td><td>sur un disque fixé <b>près du moyeu</b>, le centre de la roue</td><td>plus haut, plus protégé de l'eau</td></tr>
-    <tr><td><b>à tambour</b></td><td>contre la paroi d'un tambour <b>fermé</b></td><td>l'eau et le sel n'entrent pas</td></tr>
-  </table>
-  <p>On peut donc deviner lequel souffrira de la pluie <b>avant de lire le moindre chiffre</b>.</p>
-  <dl class="voc">
-    <dt>frottement <span class="en">— friction</span></dt><dd>deux pièces qui glissent l'une contre l'autre et se freinent.</dd>
-    <dt>jante <span class="en">— rim</span></dt><dd>le cercle de métal au bord de la roue, qui porte le pneu.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: les trois freins utilisent <b>le même phénomène</b>&nbsp;: le <b>frottement</b>. Ce qui change, c'est <b>l'endroit</b> où l'on frotte, et donc ce qui s'y trouve <b>exposé</b>.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire que des freins qui ne se ressemblent pas marchent forcément autrement. Ou expliquer la différence sous la pluie par la «&nbsp;qualité&nbsp;» des pièces&nbsp;: elle vient d'abord de leur <b>emplacement</b>.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: pourquoi le frein à tambour craint-il moins la pluie que le frein à patins&nbsp;?</summary>
-    <p>Parce qu'il frotte à l'intérieur d'un tambour fermé&nbsp;: l'eau n'y entre pas. Le frein à patins frotte sur la jante, la partie de la roue qui roule dans les flaques. C'est une question d'endroit, pas de matière.</p></details>
+  <p>Les trois freins de la séquence frottent tous. Ce qui change, c'est l'endroit où ils frottent&nbsp;:</p>
+  <div class="chaine">
+    <div><b>À patins</b>Sur la jante, au bord de la roue, qui passe dans les flaques.</div>
+    <div><b>À disque</b>Sur un disque près du moyeu, au centre de la roue&nbsp;: plus à l'abri.</div>
+    <div><b>À tambour</b>Dans un tambour fermé&nbsp;: l'eau et le sel n'entrent pas.</div>
+  </div>
+  <p>Tu peux donc prévoir lequel souffrira de la pluie, avant de lire le moindre chiffre.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: les trois freins utilisent <b>le même phénomène</b>, le
+  <b>frottement</b>. Ce qui change, c'est <b>l'endroit</b>&nbsp;: il décide de ce qui est <b>exposé</b> à l'eau et au sel.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: expliquer la différence sous la pluie par la qualité des pièces. Elle
+  vient d'abord de leur emplacement.</p>
 </div>
 
 <!-- ══ 3 ══ -->
 <div class="bloc faire">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-3" style="margin-top:0">3. Que nous apprend le vrai vélo, qu'un schéma ne montre pas&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme quand tu te frottes les mains en hiver</b>&nbsp;: il faut deux mains, et elles chauffent. Le mouvement devient de la chaleur.</p>
-  <h3>En manipulant le frein à patins</h3>
-  <ol>
-    <li><b>Un frottement se fait à deux</b>&nbsp;: la pièce qui serre (le patin) et la pièce serrée (la jante).
-    Nommer seulement le patin, c'est oublier la moitié.</li>
-    <li>Après quelques freinages, <b>la jante est tiède</b>. L'énergie du vélo lancé ne disparaît pas&nbsp;: elle devient
-    de la <b>chaleur</b>, là où ça frotte. Ce n'est pas une panne.</li>
-    <li>Au repos, il reste <b>2&nbsp;mm</b> (millimètres) entre le patin et la jante. Un frein doit aussi savoir
-    <b>ne pas</b> freiner, sinon la roue frotte sans arrêt.</li>
-    <li>Le tambour fermé protège de l'eau, mais il <b>garde aussi la chaleur</b>. Le même choix a deux faces&nbsp;:
-    l'avantage et l'inconvénient sont au même endroit.</li>
-  </ol>
-  <dl class="voc">
-    <dt>énergie <span class="en">— energy</span></dt><dd>ce que possède le vélo lancé, et qui doit aller quelque part pour qu'il s'arrête.</dd>
-    <dt>chaleur <span class="en">— heat</span></dt><dd>ce que devient l'énergie du vélo quand on freine.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: freiner, c'est <b>transformer en chaleur</b> l'énergie du vélo, par frottement entre <b>deux pièces</b>. Un tableau de chiffres ne remplace pas l'objet&nbsp;: il ne dit ni où ça chauffe, ni ce qui frotte.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'un bon réglage, c'est un patin qui touche presque la jante. Il doit rester un petit écart au repos, sinon le vélo freine tout le temps.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: la jante est tiède après la descente. Le frein est-il en panne&nbsp;?</summary>
-    <p>Non, c'est normal. Pour arrêter le vélo, le frein transforme son énergie en chaleur, là où ça frotte. Une jante tiède montre que le frein a bien travaillé.</p></details>
+  <p>En manipulant le frein à patins d'un vrai vélo, tu vois ce qu'un tableau de chiffres ne dit pas&nbsp;:</p>
+  <div class="chaine">
+    <div><b>Un frottement se fait à deux</b>Le patin serre, la jante est serrée.</div>
+    <div><b>La jante est tiède</b>L'énergie du vélo lancé devient de la chaleur, là où ça frotte.</div>
+    <div><b>Environ 2&nbsp;mm (millimètres) au repos</b>Le patin ne touche pas la jante&nbsp;: un frein doit aussi savoir ne pas freiner.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: freiner, c'est <b>transformer en chaleur</b> l'énergie du vélo, par
+  frottement entre <b>deux pièces</b>. L'énergie ne disparaît pas.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'une jante tiède montre une panne. C'est le signe que le frein a
+  travaillé.</p>
 </div>
 
 <!-- ══ 4 ══ -->
 <div class="bloc faire">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-4" style="margin-top:0">4. Comment lire un tableau de comparaison&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme un bulletin</b>&nbsp;: une moyenne de 15 est bonne, mais un retard de 15 minutes, non. Pour chaque ligne, il faut savoir si «&nbsp;plus&nbsp;» veut dire «&nbsp;mieux&nbsp;».</p>
-  <h3>Le tableau des trois freins</h3>
-  <object class="schema" data="../Images/corrige_le_critere_qui_tranche.svg" type="image/svg+xml" aria-label="Le tableau comparatif des trois solutions sur six critères, avec le meilleur et le moins bon de chaque colonne">Le tableau comparatif</object>
-  <ol>
-    <li><b>Chaque colonne se lit dans son sens.</b> Pour une distance, une masse ou un prix, le <b>plus petit</b> gagne.
-    Pour une note sur 5, c'est le plus grand.</li>
-    <li><b>L'écart en dit plus que la valeur.</b> Sous la pluie, la distance d'arrêt grandit de 3,1&nbsp;m (mètres)
-    avec les patins. Elle ne grandit que de 1,0&nbsp;m avec le disque, et de 0,8&nbsp;m avec le tambour.</li>
-    <li><b>Un chiffre n'est pas toujours une mesure.</b> «&nbsp;6,4&nbsp;m&nbsp;» se refait avec un décamètre.
-    «&nbsp;4/5&nbsp;» résume l'avis de quelqu'un.</li>
-    <li><b>Une fiche technique résume des mesures</b>&nbsp;: 5,8&nbsp;m, c'est la moyenne de 5,7 et 5,9 relevés sur le
-    parking. On peut la vérifier.</li>
-    <li><b>Une mesure ne vaut qu'avec ses conditions</b>&nbsp;: même vitesse, même pente, même sol. On ne change
-    qu'une chose à la fois.</li>
-    <li><b>Regarde aussi les colonnes absentes.</b> Ici, rien sur le bruit ni sur l'usure.</li>
-  </ol>
-  <dl class="voc">
-    <dt>distance d'arrêt <span class="en">— stopping distance</span></dt><dd>le chemin parcouru entre le début du freinage et l'arrêt.</dd>
-    <dt>critère <span class="en">— criterion</span></dt><dd>ce sur quoi on compare&nbsp;: la distance, la masse, le prix…</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: chaque colonne se lit <b>dans son sens</b>. L'<b>écart</b> entre sec et pluie compte plus que la meilleure valeur. Et <b>aucune solution ne gagne partout</b>&nbsp;: c'est normal.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: entourer les plus grands nombres de chaque colonne. Pour une distance ou un prix, c'est le plus petit qui gagne. Autre piège&nbsp;: comparer deux distances mesurées sur des pentes différentes.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: le frein à patins s'arrête en 5,8&nbsp;m sur sol sec. Est-ce un bon frein sous la pluie&nbsp;?</summary>
-    <p>On ne peut pas le dire avec ce seul chiffre. Sous la pluie, il lui faut 8,9&nbsp;m&nbsp;: 3,1&nbsp;m de plus. C'est le plus gros écart des trois freins&nbsp;: dès qu'il pleut, il devient le moins bon.</p></details>
+  <p>Sur le parking, le gestionnaire mesure la distance d'arrêt de chaque frein en mètres (m), au sec puis sous la pluie&nbsp;:</p>
+  <div class="chaine">
+    <div class="ko"><b>À patins</b>5,8&nbsp;m → 8,9&nbsp;m&nbsp;: +3,1&nbsp;m.</div>
+    <div><b>À disque</b>5,4&nbsp;m → 6,4&nbsp;m&nbsp;: +1,0&nbsp;m.</div>
+    <div><b>À tambour</b>6,1&nbsp;m → 6,9&nbsp;m&nbsp;: +0,8&nbsp;m.</div>
+  </div>
+  <div class="chaine" style="break-before:auto">
+    <div><b>Une moyenne</b>La fiche dit 5,8&nbsp;m&nbsp;: la moyenne de 5,7 et 5,9&nbsp;m.</div>
+    <div><b>Un avis</b>«&nbsp;Réparabilité 5/5&nbsp;» n'est pas une mesure.</div>
+    <div><b>Les conditions</b>Dans la descente à 8&nbsp;%, les distances grandissent&nbsp;: compare à pente égale.</div>
+    <div><b>Ce qui manque</b>Aucune colonne sur le bruit ni sur l'usure.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: chaque colonne se lit <b>dans son sens</b>&nbsp;: pour une distance ou
+  un prix, le <b>plus petit</b> gagne. L'<b>écart</b> entre sec et pluie en dit plus que la meilleure valeur.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: entourer le plus grand nombre de chaque colonne. Pour une distance, c'est
+  le plus petit qui gagne.</p>
 </div>
 
 <!-- ══ 5 ══ -->
 <div class="bloc pieges">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-5" style="margin-top:0">5. Le tableau peut-il choisir à notre place&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme pour choisir des chaussures</b>&nbsp;: pour la plage, on veut qu'elles sèchent vite&nbsp;; pour la randonnée, qu'elles tiennent la cheville. Les mêmes chaussures, un autre usage, un autre choix.</p>
-  <h3>À Sainte-Luce, au bord de la mer</h3>
-  <p>Deux critères pèsent plus que les autres&nbsp;:</p>
-  <ul>
-    <li><b>la distance d'arrêt sous la pluie</b>&nbsp;: il pleut souvent, et le chemin du collège descend&nbsp;;</li>
-    <li><b>la résistance à la corrosion</b>&nbsp;: le sel de l'air attaque les métaux, toute l'année.</li>
-  </ul>
-  <p>Sur ces deux critères, le frein à patins est <b>le dernier</b>. Pourtant il gagne sur trois autres&nbsp;: la masse,
-  le prix, la réparabilité. Compter les colonnes gagnées le désignerait vainqueur&nbsp;: ce serait le mauvais choix ici.</p>
-  <p>Dans un collège de montagne sèche où l'on répare soi-même, <b>le même tableau</b> désignerait les patins.
-  Aucun chiffre n'aurait changé.</p>
-  <dl class="voc">
-    <dt>corrosion <span class="en">— corrosion, rust</span></dt><dd>le métal abîmé par l'eau et le sel&nbsp;: la rouille.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un tableau donne <b>les faits</b>, pas leur <b>importance</b>. L'importance dépend du <b>lieu</b> et de <b>l'usage</b>&nbsp;: c'est à nous de la décider.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: transformer le choix en addition&nbsp;: «&nbsp;il gagne trois colonnes, donc c'est le meilleur&nbsp;». Une colonne qui compte beaucoup ici pèse plus que trois colonnes secondaires.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: le frein à patins gagne trois colonnes sur six. Pourquoi n'est-il pas le meilleur choix à Sainte-Luce&nbsp;?</summary>
-    <p>Parce que les deux colonnes qui comptent le plus ici, la pluie et la corrosion, sont justement ses deux plus mauvaises. Au bord de la mer, avec une descente, ce sont elles qui décident.</p></details>
+  <p>Aucun frein ne gagne partout. À Sainte-Luce, le chemin descend et il pleut souvent&nbsp;; la mer est à quelques
+  centaines de mètres&nbsp;:</p>
+  <div class="chaine">
+    <div><b>🌧️ La pluie pèse lourd</b>Sous la pluie, les patins s'arrêtent en 8,9&nbsp;m (mètres), le disque en 6,4&nbsp;m.</div>
+    <div><b>🧂 Le sel pèse lourd</b>Contre la corrosion, les patins ont 2/5, le tambour 5/5.</div>
+    <div class="ko"><b>Compter les colonnes ✘</b>Les patins gagnent trois colonnes sur six. Ici, ce serait le mauvais choix.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un tableau donne <b>les faits</b>, pas leur <b>importance</b>.
+  L'importance dépend du <b>lieu</b> et de l'<b>usage</b>&nbsp;: c'est à toi de la décider.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'un tableau désigne partout le même gagnant. En montagne sèche,
+  ce seraient les patins.</p>
 </div>
 
 <!-- ══ 6 ══ -->
 <div class="bloc faire">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-6" style="margin-top:0">6. Comment défendre son choix&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme pour convaincre tes parents</b> d'un téléphone&nbsp;: «&nbsp;il tient deux jours, il coûte 150&nbsp;€, mais l'appareil photo est moins bon&nbsp;». Dire ce qu'on perd rend le reste crédible.</p>
-  <h3>La défense en trois points</h3>
-  <ol>
-    <li><b>Le principe retenu</b>&nbsp;: par exemple, le frein à disque.</li>
-    <li><b>Deux raisons chiffrées</b>, prises dans le tableau&nbsp;: «&nbsp;6,4&nbsp;m sous la pluie, le meilleur&nbsp;; 4/5 contre la corrosion&nbsp;».</li>
-    <li><b>Ce que tu acceptes de perdre</b>&nbsp;: «&nbsp;il coûte 34&nbsp;€ d'entretien par an, contre 18 pour les patins&nbsp;».</li>
-  </ol>
-  <p>Ici, <b>deux réponses</b> se défendent&nbsp;: le disque et le tambour. On ne te note pas sur celle que tu choisis,
-  mais sur ce que tu sais en dire.</p>
-  <dl class="voc">
-    <dt>argument chiffré <span class="en">— figure-based argument</span></dt><dd>une raison qui s'appuie sur un nombre du tableau, pas sur une impression.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un choix se défend avec <b>un principe</b>, <b>deux chiffres</b> et <b>une perte</b>. Un choix qui ne coûte rien n'est pas un choix&nbsp;: c'est une préférence.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: ne citer que les avantages. On croit convaincre&nbsp;; en fait, on montre qu'on n'a pas comparé.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: «&nbsp;Je choisis le tambour : il résiste à la corrosion (5/5) et freine bien sous la pluie (6,9 m).&nbsp;» Que manque-t-il&nbsp;?</summary>
-    <p>Ce qu'on accepte de perdre. Par exemple&nbsp;: «&nbsp;il est le plus lourd (760&nbsp;g) et le moins facile à réparer (3/5)&nbsp;». Avec la perte, la défense devient une vraie comparaison.</p></details>
+  <p>Pour Sainte-Luce, deux freins se défendent&nbsp;: le disque et le tambour. Voici une défense du disque&nbsp;:</p>
+  <div class="chaine etapes">
+    <div><b>1. Le principe</b>Le frein à disque.</div>
+    <div><b>2. Deux raisons chiffrées</b>6,4&nbsp;m (mètres) sous la pluie, le meilleur&nbsp;; 4/5 contre la corrosion.</div>
+    <div><b>3. Ce que tu perds</b>34&nbsp;€ (euros) d'entretien par an, contre 18 pour les patins.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: ta défense dit aussi ce que tu <b>perds</b>&nbsp;: sans la perte, ce
+  n'est pas une comparaison. On juge <b>ce que tu dis</b> de ton choix, pas le frein choisi.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: ne citer que les avantages. Tu crois convaincre&nbsp;; en fait, tu montres
+  que tu n'as pas comparé.</p>
 </div>
 
 <!-- ══ 7 ══ -->
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-7" style="margin-top:0">7. Un autre usage, le même frein&nbsp;?</h2>
-  <p class="comme-vie">🏠 <b>Comme freiner avec un copain sur le porte-bagages</b>&nbsp;: plus il y a de poids, plus il faut serrer fort. Et plus les freins chauffent.</p>
-  <h3>Le vélo-cargo de Léa</h3>
-  <p>Avec ses deux enfants et les courses, le vélo-cargo pèse environ <b>150&nbsp;kg</b> (kilogrammes)&nbsp;:
-  2,5 fois un élève sur un vélo du collège. À la même vitesse, ses freins doivent transformer <b>2,5 fois plus d'énergie
-  en chaleur</b>. Dans une longue descente, ils chauffent sans répit.</p>
-  <ul>
-    <li>Un critère apparaît&nbsp;: <b>tenir quand le frein est chaud</b>. Le tambour garde sa chaleur enfermée et freine
-    moins bien&nbsp;; le disque, à l'air libre, tient.</li>
-    <li>Un critère ne compte presque plus&nbsp;: la <b>masse du frein</b>. 440&nbsp;g (grammes) sur 150&nbsp;kg, cela ne
-    se sent pas.</li>
-    <li>Dans un <b>diagramme FAST</b>, deux principes pour une même fonction s'écrivent dans deux cases reliées par
-    «&nbsp;ou&nbsp;».</li>
-  </ul>
-  <dl class="voc">
-    <dt>diagramme FAST <span class="en">— FAST diagram</span></dt><dd>un schéma qui relie chaque fonction aux solutions qui la réalisent.</dd>
-    <dt>plaquette <span class="en">— brake pad</span></dt><dd>la pièce qui serre le disque, dans un frein à disque.</dd>
-  </dl>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: quand l'<b>usage</b> change, les <b>critères</b> changent, et la réponse aussi. Pour les vélos du collège, deux freins se défendent&nbsp;; pour le vélo-cargo de Léa, un seul&nbsp;: le <b>disque</b>.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: recopier le choix fait pour un autre usage sans relire le tableau. Une bonne réponse en technologie n'est pas vraie partout et pour toujours.</p>
-  <details class="verifie"><summary>✅ Vérifie-toi&nbsp;: pourquoi le tambour, défendable pour le collège, ne convient-il plus au vélo-cargo&nbsp;?</summary>
-    <p>Parce que le vélo-cargo, lourd, fait beaucoup chauffer ses freins dans les descentes. Le tambour, fermé, garde cette chaleur et freine moins bien. Le disque, à l'air libre, refroidit et tient.</p></details>
+  <p>Léa, son chargement et le vélo-cargo pèsent en tout environ 150&nbsp;kg (kilogrammes), contre 60&nbsp;kg pour un élève
+  sur un vélo du collège. À la même vitesse, ses freins transforment 2,5 fois plus d'énergie en chaleur&nbsp;:</p>
+  <div class="chaine">
+    <div class="ok"><b>Disque, à l'air libre ✔</b>Freins chauds, en bas de la grande descente&nbsp;: 7,5&nbsp;m (mètres).</div>
+    <div class="ko"><b>Tambour, fermé ✘</b>Il garde sa chaleur&nbsp;: 10,4&nbsp;m au lieu de 7,9&nbsp;m.</div>
+    <div><b>La masse du frein</b>Le tambour pèse 440&nbsp;g (grammes) de plus que les patins&nbsp;: sur 150&nbsp;kg, presque rien.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: quand l'<b>usage</b> change, les <b>critères</b> changent avec lui&nbsp;:
+  pour le vélo-cargo chargé, en descente, c'est le <b>disque</b>. Dans un <b>diagramme FAST</b>, deux principes pour une
+  même fonction s'écrivent dans deux cases reliées par «&nbsp;ou&nbsp;».</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: recopier le choix fait pour le collège. Le tambour, défendable pour quinze
+  vélos légers, ne l'est plus ici.</p>
 </div>
 
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>fonction d'usage <span class="en">— purpose</span></dt><dd>ce à quoi sert l'objet.</dd></div>
+    <div><dt>fonction technique <span class="en">— technical function</span></dt><dd>ce que l'objet doit faire.</dd></div>
+    <div><dt>principe technique <span class="en">— working principle</span></dt><dd>le phénomène, et l'endroit.</dd></div>
+    <div><dt>solution technique <span class="en">— technical solution</span></dt><dd>l'objet qu'on achète.</dd></div>
+    <div><dt>frottement <span class="en">— friction</span></dt><dd>deux pièces qui glissent en se freinant.</dd></div>
+    <div><dt>jante <span class="en">— rim</span></dt><dd>le cercle de métal qui porte le pneu.</dd></div>
+    <div><dt>moyeu <span class="en">— hub</span></dt><dd>la pièce au centre de la roue.</dd></div>
+    <div><dt>patin <span class="en">— brake block</span></dt><dd>un bloc de caoutchouc serré contre la jante.</dd></div>
+    <div><dt>plaquette <span class="en">— brake pad</span></dt><dd>la pièce qui serre le disque.</dd></div>
+    <div><dt>tambour <span class="en">— brake drum</span></dt><dd>une boîte ronde et fermée.</dd></div>
+    <div><dt>énergie <span class="en">— energy</span></dt><dd>ce que possède le vélo lancé.</dd></div>
+    <div><dt>chaleur <span class="en">— heat</span></dt><dd>ce que devient l'énergie quand on freine.</dd></div>
+    <div><dt>distance d'arrêt <span class="en">— stopping distance</span></dt><dd>le chemin jusqu'à l'arrêt.</dd></div>
+    <div><dt>critère <span class="en">— criterion</span></dt><dd>ce sur quoi on compare.</dd></div>
+    <div><dt>corrosion <span class="en">— corrosion, rust</span></dt><dd>le métal abîmé par l'eau et le sel.</dd></div>
+    <div><dt>argument chiffré <span class="en">— figure-based argument</span></dt><dd>une raison appuyée sur un nombre.</dd></div>
+    <div><dt>diagramme FAST <span class="en">— FAST diagram</span></dt><dd>il relie chaque fonction à ses solutions.</dd></div>
+  </dl>
 </div>
-<script>
-/* À l'impression, les réponses « Vérifie-toi » sont dépliées (règle d'or n°316). */
-window.addEventListener('beforeprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.dataset.etaitOuvert = d.open; d.open = true; }));
-window.addEventListener('afterprint', () => document.querySelectorAll('details.verifie').forEach(d => { d.open = d.dataset.etaitOuvert === 'true'; }));
-</script>
+</div>
 </body>
 </html>

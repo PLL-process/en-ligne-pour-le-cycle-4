@@ -25926,3 +25926,92 @@ identiques.
   branche) : pour un atelier, la représentation remplie de l'exemple, en vignette. À ajouter au générateur une fois la
   forme fixée.
 - Les neuf synthèses de #545, à ramener à deux pages ; puis les thèmes 2 et 3.
+
+---
+
+## 29/10/2026 — n°316 révisée : les neuf synthèses élève des séquences du thème 1, en deux pages A4 ; l'image de l'objet (thème 1, `.claude/skills`)
+
+*Pascal fusionne #546 (« Dès que tu fusionnes #546, je passe les neuf synthèses du thème 1 au format deux pages »),
+puis ajoute : « Dans les synthèses aussi, quand il sera possible et nécessaire surtout. Ne pas hésiter de mettre des
+captures d'écran, des photos, etc. Parfois, une capture d'écran ou une illustration permet d'avoir une vision plus
+synthétique de l'objet » ; « N'hésite pas […] à y utiliser Canva » ; « pour des images réalistes et autres ».*
+
+### Les neuf synthèses
+
+Même forme que le pilote `5e_C1.1`. La carte vient en tête, avec « Ce que dit le programme » recopié mot pour mot.
+Chaque partie suit quatre temps : titre-question, exemple de la séquence en cases, « À retenir », le piège. Un seul
+lexique, avec l'anglais, ferme la page. Les grands schémas restent dans la séquence et le QCM. Mesures en Inter et en
+Liberation Sans (les largeurs d'Arial) :
+
+| Séquence | Pages avant → après | Plus grand blanc avant → après | Mots avant → après |
+|---|---|---|---|
+| 3e_C1.1 à C1.4 (Tsinghua, les feux) | 5 → **2** | 51 % → 5 % | 1 964 → 1 313 |
+| 4e_C1.1 à C1.3 (Tsinghua, concevoir) | 5 → **2** | 51 % → 6-8 % | 2 120 → 1 334 |
+| 5e_C1.2 (Sainte-Luce, le frein) | 5 → **2** | 49 % → 7-8 % | 2 383 → 1 385 |
+| 3e_C2.1 (Pékin, la borne de tickets) | 5 → **2** | 58 % → 7-10 % | 1 591 → 1 231 |
+| 4e_C2.1 · C2.2 (Hangzhou, la borne de retrait) | 5 → **2** | 51 % → 5-6 % | 1 924 → 1 304 |
+| 5e_C2.1 · C2.2 (Shenzhen, la station) | 6 → **2** | 54 % → 6-7 % | 1 731 → 1 231 |
+| 3e_C3.1 à C3.4 (Shenzhen, le local qui surchauffe) | 4 → **2** | 52 % → 5 % | 1 614 → 1 265 |
+| 4e_C3.1 à C3.3 (Hangzhou, la flotte de vélos) | 4 → **2** | 60 % → 6-9 % | 1 510 → 1 196 |
+| 5e_C3.1 à C3.4 (Shanghai, le dernier kilomètre) | 5 → **2** | 51 % → 5-7 % | 1 739 → 1 321 |
+
+Aucun titre ne reste seul en bas de page. Toutes les ancres `#partie-N` liées depuis d'autres pages restent en
+place, et leur sujet aussi. Deux parties ont été ajoutées pour couvrir ce que la séquence et le QCM travaillent :
+- `3e_C1.1` : « Si une machine sait le faire, le métier disparaît-il ? » (`#partie-6`) ;
+- `4e_C1.1` : « Pourquoi un objet évolue-t-il ? » (`#partie-7`, code 4e_C1.3).
+
+### Des faits que l'ancienne version déformait, rétablis d'après la séquence
+
+- **3e_C1.1** : la séquence compte trois régimes de surveillance et deux ruptures (« Trois régimes, deux
+  ruptures ») ; l'ancienne version n'en nommait qu'une.
+- **4e_C1.1** : les trois chiffres du ministère ne viennent pas tous du même communiqué. Le 50 % vient du dossier
+  prévention du 01/07/2026.
+- **5e_C1.2** : environ 150 kg, c'est le poids de Léa, de son chargement et du vélo-cargo ensemble, pas celui du
+  vélo. Le frein à tambour pèse 440 g de plus que les patins, pas 440 g en tout.
+- **3e_C2.1** : l'algorigramme n'est pas le seul mode qui montre un ordre ; le storyboard aussi (activité 4).
+- **4e_C2.1** : il fallait écrire « 9 retraits sur 30 », non « 9 usagers sur 30 ». Le verbatim de Xu est cité tel
+  que le donne le CSV. « Wang s'en plaint, Ma s'en félicite » remplace « personne n'en parle ». L'exemple
+  d'algorithme suit maintenant le corrigé.
+- **5e_C2.1** : le tableau sur l'auvent, absent de la séquence, est retiré. « Changer de lieu, c'est changer
+  d'interacteurs » remplace une maxime.
+- **3e_C3.1** : la combinaison retenue fait 11,5 °C, pour 1 230 € d'installation, pas « ≈ 9 °C ».
+- **4e_C3.1** : l'ancienne version prenait « 17,4 contre 17,5 kg » comme exemple de valeurs qu'on ne peut pas
+  départager. La séquence dit qu'un appareil au dixième départage sans peine 17,4 et 18,9 kg, mais rien de 13,1
+  contre 13,15. Un seuil de 15 kg, absent de la séquence, est retiré.
+- **5e_C3.1** : l'aluminium est retenu « pour son rapport résistance/masse ».
+
+### L'image de l'objet
+
+Le skill `synthese-vulgarisee` a une section nouvelle, « L'image de l'objet ».
+
+- **Où** : dans la carte, à droite de « Ce que dit le programme » (`div.tete`, `figure.objet` à 26 % de la
+  largeur). Le sous-titre se cache à l'impression pour lui laisser la place. L'essai sur le pilote tient en deux
+  pages dans les deux polices.
+- **D'où** : d'abord les images du dossier de la séquence ; ensuite une image réaliste générée avec Canva, dans le
+  compte de Pascal ; enfin une photo libre.
+- **Les conditions de Canva** (AI Product Terms) : l'image appartient à Pascal, sans attribution exigée. Il est
+  interdit de la présenter comme faite par un humain, d'où la légende « Image générée par IA (Canva) », et d'en
+  retirer les métadonnées de provenance.
+- **Posées dans cette PR** : deux dessins originaux déjà dans les dossiers, la station de Shenzhen (`5e_C2.1`) et le
+  vélo-cargo (`5e_C3.1`).
+- **Générées avec Canva, en attente de leur fichier** : le capteur de Chengdu, le drone (`3e_C1.1`), le frein à
+  patins (`5e_C1.2`), la borne de tickets (`3e_C2.1`), la borne de vélos (`4e_C2.1`), le local des serveurs
+  (`3e_C3.1`) et le vélo en libre-service (`4e_C3.1`). L'espace de travail ne joint pas Canva : Pascal les télécharge
+  et les joint. Leur place est marquée dans chaque page.
+- **`4e_C1.1` reste sans image**, et c'est voulu : la séquence demande de ne choisir aucun composant.
+
+### Bancs
+
+`tests_3e_C2.1_pekin.py`, `tests_4e_C2.1-C2.2_hangzhou.py` et `tests_5e_C2.1-C2.2_shenzhen.py` comptaient les
+figures de la synthèse élève (4, 3 et 6) : elles sont maintenant à 0, avec un commentaire n°316. Aucune autre
+assertion n'a changé.
+
+### Ce qui reste
+
+- Les sept images Canva, dès que Pascal joint les fichiers.
+- Deux SVG de `4e_C2.1` disent autre chose que la séquence : `du_verbatim_a_l_algorigramme.svg` donne 41 secondes
+  pour « choisir » (la séquence dit 40) ; `six_familles_d_exigences.svg` dit « un déverrouillage sur cinq » (la
+  séquence dit 9 retraits sur 30). Ils ne sont pas corrigés ici.
+- Une vingtaine de traductions anglaises nouvelles dans les lexiques sont à relire.
+- `MANIFESTE_LOT_3e_C1.1.json` porte une taille et une empreinte périmées pour la synthèse élève, déjà avant cette
+  PR.
