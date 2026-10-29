@@ -14,7 +14,7 @@ qu'elle n'est pas terminée.
 
 Usage :
     python3 build_qcm.py <gabarit.html> <sortie.html>
-puis  node _outils/fix_r.js <sortie.html> 317
+puis  node _outils/fix_r.js <sortie.html> 218     (la graine de GRAINE ci-dessous ; « 317 » ici était faux)
 """
 
 import json

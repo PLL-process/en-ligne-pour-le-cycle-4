@@ -12,6 +12,11 @@ un contexte (7).
 
 Règle tenue pour chaque distracteur : la réfutation EXPLIQUE pourquoi la
 réponse est fausse — elle ne se contente pas de dire qu'elle l'est.
+Règle n°144 (la bonne réponse ne se devine pas à sa longueur) : les propositions
+avaient été rééquilibrées dans la page publiée, pas ici. Reportées ici le
+28/10/2026 (27 questions, 86 propositions) : régénéré depuis ce fichier, le
+QCM redonne la banque de questions publiée à l'identique. On corrige ICI, puis on
+régénère.
 """
 
 IMG_PRINCIPES = {
@@ -46,8 +51,8 @@ C = "C1.2"
 # ═══════════ Fonction, principe, solution (8) ═══════════
 
 q(C, "La fonction technique", "« Arrêter un vélo en mouvement » est…",
-  ["une fonction technique : elle dit ce qu'il faut obtenir, sans dire par quel moyen",
-   "un principe technique : elle nomme un phénomène physique",
+  ["une fonction technique : le quoi, pas le comment",
+   "un principe technique : elle nomme un phénomène",
    "une solution technique : elle désigne un frein précis",
    "une contrainte imposée par la mairie"],
   "Une fonction technique s'énonce par un verbe à l'infinitif et un complément. Elle décrit ce "
@@ -64,10 +69,10 @@ q(C, "La fonction technique", "« Arrêter un vélo en mouvement » est…",
   "Fonction = ce que l'objet doit FAIRE. Le moyen reste ouvert."),
 
 q(C, "Le piège de « à quoi ça sert »", "« À quoi sert un vélo ? — À se déplacer. » Cette phrase énonce…",
-  ["le service rendu à l'usager, ce qu'on appelle la fonction d'usage — pas une fonction technique",
+  ["le service rendu à l'usager",
    "une fonction technique du vélo",
-   "un principe technique",
-   "une solution technique"],
+   "un principe technique employé",
+   "une solution technique retenue"],
   "C'est la confusion la plus fréquente, et elle a la vie dure. « À quoi ça sert » regarde l'objet "
   "du point de vue de celui qui s'en sert. Une fonction technique regarde ce que l'objet, ou l'une "
   "de ses parties, doit FAIRE pour rendre ce service.",
@@ -82,10 +87,10 @@ q(C, "Le piège de « à quoi ça sert »", "« À quoi sert un vélo ? — À s
   "« À quoi ça sert » = le service rendu. « Ce que ça doit faire » = la fonction technique."),
 
 q(C, "Le principe", "« Serrer la jante entre deux patins par frottement » est…",
-  ["un principe : c'est le phénomène physique employé pour remplir la fonction",
-   "une fonction technique",
-   "une solution technique",
-   "un critère de comparaison"],
+  ["un principe : le phénomène employé",
+   "une fonction technique du vélo",
+   "une solution technique concrète",
+   "un critère de comparaison chiffré"],
   "Le principe répond à la question « par quel phénomène ? ». Ici le phénomène est le frottement, "
   "et l'endroit où on l'applique est la jante. Changer de principe, c'est changer de phénomène ou "
   "d'endroit — pas changer de marque.",
@@ -100,9 +105,9 @@ q(C, "Le principe", "« Serrer la jante entre deux patins par frottement » est�
   img=IMG_PRINCIPES),
 
 q(C, "La solution", "« Le frein à patins du fournisseur B, référence 2140 » est…",
-  ["une solution technique : c'est l'objet concret qu'on achète et qu'on monte",
-   "un principe technique",
-   "une fonction technique",
+  ["une solution : l'objet qu'on achète",
+   "un principe technique employé",
+   "une fonction technique du vélo",
    "une exigence du cahier des charges"],
   "La solution est le bout de la chaîne : l'article réel, avec sa référence, son prix et son "
   "fournisseur. Deux solutions différentes peuvent employer exactement le même principe.",
@@ -132,8 +137,8 @@ q(C, "L'ordre des trois", "Dans quel ordre ces trois notions viennent-elles quan
   "Fonction → principe → solution. Prendre l'ordre à l'envers, c'est avoir déjà choisi."),
 
 q(C, "Pourquoi ne pas nommer le moyen", "Pourquoi une fonction bien écrite ne nomme-t-elle aucun moyen ?",
-  ["pour laisser ouverts tous les principes qui pourraient la remplir",
-   "pour rester plus courte à écrire",
+  ["pour laisser ouverts tous les principes possibles",
+   "pour rester plus courte à écrire au tableau",
    "parce que le moyen n'a aucune importance",
    "parce qu'on ne le connaît jamais au départ"],
   "Une fonction est une question posée, pas une réponse. Si elle contient déjà son moyen, il n'y a "
@@ -148,10 +153,10 @@ q(C, "Pourquoi ne pas nommer le moyen", "Pourquoi une fonction bien écrite ne n
   "Une fonction est une question. Si elle contient sa réponse, il n'y a plus rien à comparer."),
 
 q(C, "Le même phénomène, trois fois", "Les trois freins de la séquence emploient…",
-  ["le même phénomène — le frottement — mais à des endroits différents",
+  ["le même phénomène, à des endroits différents",
    "trois phénomènes physiques totalement différents",
    "de l'électronique pour deux d'entre eux",
-   "le même principe et la même solution"],
+   "le même principe et la même solution technique"],
   "C'est ce que la manipulation rend visible : dans les trois cas, deux surfaces glissent l'une "
   "contre l'autre, ralentissent le mouvement et chauffent. Ce qui change est l'ENDROIT — la jante, "
   "un disque au moyeu, l'intérieur d'un tambour — et donc ce qui s'y trouve exposé.",
@@ -166,10 +171,10 @@ q(C, "Le même phénomène, trois fois", "Les trois freins de la séquence emplo
   img=IMG_PRINCIPES),
 
 q(C, "Ni matériau ni marque", "« En aluminium » proposé comme principe technique est…",
-  ["faux : un matériau n'est pas un phénomène, il ne dit pas comment la fonction est remplie",
-   "juste, car le matériau détermine le fonctionnement",
-   "juste, mais incomplet",
-   "un principe seulement si la pièce est métallique"],
+  ["faux : un matériau n'est pas un phénomène",
+   "juste : le matériau détermine le fonctionnement",
+   "juste, mais nettement incomplet",
+   "un principe, si la pièce est métallique"],
   "Un principe décrit une action physique : frotter, aimanter, comprimer, dévier. Un matériau "
   "décrit ce dont la pièce est faite. Les deux sont utiles, ils ne répondent pas à la même "
   "question.",
@@ -186,10 +191,10 @@ q(C, "Ni matériau ni marque", "« En aluminium » proposé comme principe techn
 # ═══════════ Ce que montre la manipulation (7) ═══════════
 
 q(C, "Ce qui se touche", "Sur un frein à patins, les deux pièces qui frottent l'une contre l'autre sont…",
-  ["le patin de caoutchouc et la jante, c'est-à-dire le bord métallique de la roue",
-   "le patin et le pneu",
-   "le câble et le levier",
-   "le patin et le moyeu"],
+  ["le patin et la jante de la roue",
+   "le patin de frein et le pneu",
+   "le câble de frein et le levier",
+   "le patin de frein et le moyeu"],
   "Un frottement se fait toujours à DEUX. Le patin est la pièce qui serre ; la jante est la pièce "
   "qui est serrée. Nommer l'une sans l'autre revient à décrire une main qui applaudit toute seule.",
   "Après quelques freinages, c'est la JANTE qui est tiède : c'est bien là que l'énergie s'est "
@@ -203,10 +208,10 @@ q(C, "Ce qui se touche", "Sur un frein à patins, les deux pièces qui frottent 
   img=IMG_PRINCIPES),
 
 q(C, "Où part l'énergie", "Après plusieurs freinages, la jante est tiède. Cela montre que…",
-  ["l'énergie du vélo en mouvement s'est transformée en chaleur par frottement",
-   "le frein est mal réglé",
+  ["l'énergie du mouvement s'est faite chaleur",
+   "le frein est mal réglé sur la roue",
    "la jante est de mauvaise qualité",
-   "il faisait chaud ce jour-là"],
+   "il faisait particulièrement chaud ce jour-là"],
   "Freiner ne fait pas disparaître l'énergie : cela la transforme. L'énergie du vélo lancé devient "
   "de la chaleur là où les surfaces frottent. C'est vrai des trois principes — et c'est pour cela "
   "que la chaleur devient un problème dans les longues descentes.",
@@ -220,10 +225,10 @@ q(C, "Où part l'énergie", "Après plusieurs freinages, la jante est tiède. Ce
   "L'énergie ne disparaît pas quand on freine : elle devient de la chaleur."),
 
 q(C, "L'écart au repos", "Levier relâché, il reste environ 2 mm entre le patin et la jante. Cet écart…",
-  ["est nécessaire : sans lui, le patin frotterait en permanence et userait la jante",
-   "est un défaut de fabrication",
+  ["est nécessaire : sinon le patin frotte",
+   "est un défaut de fabrication du frein",
    "sert à laisser passer l'eau de pluie",
-   "n'a aucune importance"],
+   "n'a aucune importance pour le freinage"],
   "Un frein doit pouvoir être RELÂCHÉ. L'écart au repos garantit que rien ne frotte quand on ne "
   "freine pas. Trop grand, le levier arrive en butée avant de serrer ; trop petit, ça frotte en "
   "roulant.",
@@ -237,10 +242,10 @@ q(C, "L'écart au repos", "Levier relâché, il reste environ 2 mm entre le pati
   "Un frein doit aussi savoir ne pas freiner."),
 
 q(C, "Le disque au moyeu", "Sur un frein à disque, la surface qui frotte est placée près du moyeu. La conséquence est que…",
-  ["elle est plus haute et plus protégée : elle reçoit moins d'eau et de projections que la jante",
-   "elle freine plus doucement",
-   "elle ne chauffe pas",
-   "elle rend le vélo plus léger"],
+  ["elle est plus haute, donc mieux protégée",
+   "elle freine plus doucement et plus longtemps",
+   "elle ne chauffe pas pendant le freinage",
+   "elle rend le vélo nettement plus léger"],
   "L'endroit décide de l'exposition. La jante est à la périphérie de la roue, au plus près de la "
   "chaussée et des flaques. Un disque au moyeu se trouve plus haut et plus au centre : l'eau et la "
   "boue l'atteignent beaucoup moins.",
@@ -256,10 +261,10 @@ q(C, "Le disque au moyeu", "Sur un frein à disque, la surface qui frotte est pl
   img=IMG_PRINCIPES),
 
 q(C, "Le tambour fermé", "Le frein à tambour résiste le mieux à la corrosion parce que…",
-  ["sa surface de frottement est enfermée : le sel et l'eau ne l'atteignent presque pas",
+  ["sa surface de frottement est enfermée",
    "il est fabriqué dans un métal plus résistant",
-   "il est plus lourd",
-   "il est peint"],
+   "il est plus lourd et donc plus stable",
+   "il est peint contre la corrosion"],
   "Encore l'endroit. Les mâchoires poussent contre la paroi INTÉRIEURE d'un tambour clos. Ce qui "
   "est enfermé est protégé — de l'eau, du sel, du sable. C'est un avantage décisif en bord de mer, "
   "et il ne coûte rien de plus.",
@@ -273,9 +278,9 @@ q(C, "Le tambour fermé", "Le frein à tambour résiste le mieux à la corrosion
   "Ce qui est enfermé est protégé. C'est de la géométrie, pas de la chimie."),
 
 q(C, "Le revers du tambour", "L'inconvénient de cette surface enfermée est que…",
-  ["la chaleur s'en évacue mal : dans une longue descente, le frein chauffe et perd de son efficacité",
-   "elle s'use plus vite",
-   "elle est plus chère à fabriquer",
+  ["la chaleur s'en évacue mal en longue descente",
+   "elle s'use beaucoup plus vite que les autres",
+   "elle est nettement plus chère à fabriquer",
    "elle ne fonctionne pas par temps froid"],
   "Un même choix de conception apporte presque toujours un avantage ET un inconvénient, et ce sont "
   "souvent les deux faces de la même caractéristique. Ici, ce qui protège de l'eau empêche aussi "
@@ -290,10 +295,10 @@ q(C, "Le revers du tambour", "L'inconvénient de cette surface enfermée est que
   "Ce qui protège de l'eau retient aussi la chaleur. Le même choix, ses deux faces."),
 
 q(C, "Ce que le schéma ne montrait pas", "Qu'apprend la manipulation sur un vrai vélo, qu'un tableau de chiffres ne dit pas ?",
-  ["que la surface qui frotte, sur un frein à patins, est la roue elle-même — celle qui roule dans les flaques",
-   "le prix de chaque frein",
-   "la distance d'arrêt exacte",
-   "la durée de vie des patins"],
+  ["que la surface qui frotte est la roue",
+   "le prix exact de chaque type de frein",
+   "la distance d'arrêt exacte sur sol sec",
+   "la durée de vie moyenne des patins"],
   "Les chiffres disent CE QUI se passe ; l'objet dit POURQUOI. Voir de ses yeux que le patin serre "
   "le bord de la roue permet de prévoir sa faiblesse sous la pluie avant d'ouvrir le moindre "
   "tableau — et de comprendre le chiffre au lieu de l'apprendre.",
@@ -309,10 +314,10 @@ q(C, "Ce que le schéma ne montrait pas", "Qu'apprend la manipulation sur un vra
 # ═══════════ Lire et comparer des données (8) ═══════════
 
 q(C, "D'où viennent les chiffres", "Sur le parking, les patins ont donné 5,7 puis 5,9 m sur sol sec. La fiche annonce 5,8 m. C'est…",
-  ["la moyenne des essais : une fiche technique est un résumé de mesures",
-   "une erreur du fournisseur",
+  ["la moyenne des essais : un résumé de mesures",
+   "une erreur commise par le fournisseur",
    "une valeur inventée pour arrondir",
-   "la plus petite des deux mesures"],
+   "la plus petite des deux mesures relevées"],
   "Une fiche technique n'est pas une parole d'autorité : c'est le résumé de mesures que quelqu'un "
   "a faites. Savoir cela change tout — on peut la vérifier, et on doit demander dans quelles "
   "conditions elle a été établie.",
@@ -326,7 +331,7 @@ q(C, "D'où viennent les chiffres", "Sur le parking, les patins ont donné 5,7 p
   "Une fiche technique est un résumé de mesures. On peut donc la vérifier."),
 
 q(C, "L'écart, pas la valeur", "Sous la pluie, l'écart avec le sol sec vaut +3,1 m pour les patins et +1,0 m pour le disque. Cet écart dit…",
-  ["combien chaque principe perd quand la surface qui frotte est mouillée",
+  ["ce que chaque principe perd sur sol mouillé",
    "que le disque est plus lourd que les patins",
    "que les essais sous la pluie ont été mal faits",
    "que la pluie n'a aucun effet sur le tambour"],
@@ -360,9 +365,9 @@ q(C, "Le plus petit gagne", "Pour la colonne « distance d'arrêt », la meilleu
   "Dans chaque colonne, il faut savoir dans quel sens on lit."),
 
 q(C, "Une note n'est pas une mesure", "Le critère « réparabilité 5/5 » est…",
-  ["une appréciation chiffrée : utile pour comparer, mais elle résume un jugement, pas une mesure",
-   "une mesure physique, aussi sûre qu'une distance en mètres",
-   "sans valeur, puisque ce n'est pas une mesure",
+  ["une appréciation chiffrée : un jugement résumé",
+   "une mesure physique, sûre comme une distance",
+   "sans la moindre valeur : ce n'est pas une mesure",
    "le nombre de pièces détachées disponibles"],
   "Toutes les colonnes d'un tableau n'ont pas la même solidité. 6,4 m se mesure avec un décamètre "
   "et se refait ; 4/5 résulte de l'avis de quelqu'un. On garde ces notes — elles sont utiles — "
@@ -379,10 +384,10 @@ q(C, "Une note n'est pas une mesure", "Le critère « réparabilité 5/5 » est�
   img=IMG_TABLEAU),
 
 q(C, "Aucune ne gagne partout", "En lisant les six colonnes, on constate que…",
-  ["chaque solution est première sur au moins un critère et dernière sur au moins un autre",
+  ["chaque solution gagne et perd tour à tour",
    "une solution gagne sur cinq critères sur six",
-   "les trois solutions sont équivalentes",
-   "le tableau est incomplet, puisqu'il ne désigne pas de vainqueur"],
+   "les trois solutions sont strictement équivalentes",
+   "le tableau est incomplet : pas de vainqueur"],
   "C'est la situation normale, pas l'exception. Si une solution gagnait partout, il n'y aurait "
   "rien à décider et le tableau serait inutile. Un comparatif sert précisément quand les avantages "
   "sont répartis.",
@@ -399,10 +404,10 @@ q(C, "Aucune ne gagne partout", "En lisant les six colonnes, on constate que…"
   img=IMG_TABLEAU),
 
 q(C, "Ce que le tableau ne dit pas", "Ce qu'un tableau comparatif ne peut pas donner, c'est…",
-  ["l'importance de chaque critère : il donne les faits, pas leur poids",
-   "les valeurs de chaque solution",
-   "les unités de mesure",
-   "le nombre de critères retenus"],
+  ["l'importance relative de chaque critère",
+   "les valeurs mesurées de chaque solution",
+   "les unités de mesure de chaque colonne",
+   "le nombre de critères finalement retenus"],
   "Le tableau est un état des lieux. Décider que la corrosion pèse plus que la masse est un choix "
   "humain, qui dépend du lieu, de l'usage et des moyens. Aucune colonne ne contient cette "
   "information — et c'est pour cela qu'un tableau ne décide jamais seul.",
@@ -416,9 +421,9 @@ q(C, "Ce que le tableau ne dit pas", "Ce qu'un tableau comparatif ne peut pas do
   "Un tableau donne les faits. Il ne donne pas leur importance — cela, c'est nous."),
 
 q(C, "La pente change tout", "Les essais faits dans la descente à 8 % donnent des distances plus longues pour les trois freins. Cela montre que…",
-  ["le contexte de la mesure fait partie du résultat : une distance d'arrêt n'a de sens qu'avec ses conditions",
-   "les freins étaient usés en fin de série",
-   "l'élève a mal chronométré ces trois essais",
+  ["le contexte de la mesure fait partie du résultat",
+   "les freins étaient usés en fin de série d'essais",
+   "l'élève a mal chronométré ces trois essais-là",
    "il ne faut pas tenir compte de ces trois essais"],
   "Une mesure sans ses conditions ne veut rien dire. « 6,4 m » ne signifie quelque chose que si "
   "l'on précise : à quelle vitesse, sur quelle pente, sur quelle chaussée. C'est pourquoi le "
@@ -453,10 +458,10 @@ q(C, "Comparer, c'est mesurer pareil", "Pour que la comparaison soit valable, il
 # ═══════════ Choisir selon un contexte (7) ═══════════
 
 q(C, "Le sel de l'air", "Le collège est à quelques centaines de mètres de la mer. Cela rend décisif le critère…",
-  ["de résistance à la corrosion : le sel de l'air attaque les métaux toute l'année",
-   "de masse",
-   "de coût d'entretien",
-   "de réparabilité"],
+  ["de résistance à la corrosion",
+   "de masse embarquée sur le vélo",
+   "de coût d'entretien annuel",
+   "de réparabilité en atelier"],
   "Un critère devient décisif quand le contexte le met en jeu en permanence. En bord de mer, le "
   "sel agit tous les jours, sur tous les vélos, qu'on s'en serve ou non. C'est ce caractère "
   "continu qui lui donne son poids.",
@@ -470,10 +475,10 @@ q(C, "Le sel de l'air", "Le collège est à quelques centaines de mètres de la 
   "Un critère devient décisif quand le lieu le met en jeu tous les jours."),
 
 q(C, "La descente et la pluie", "Le trajet comporte une descente et il pleut souvent. Cela rend décisive…",
-  ["la distance d'arrêt sous la pluie, et l'écart entre sec et mouillé",
+  ["la distance sous la pluie, et l'écart avec le sec",
    "la distance d'arrêt sur sol sec uniquement",
-   "la masse du frein",
-   "la couleur des poignées"],
+   "la masse du frein une fois monté",
+   "la couleur des poignées de frein"],
   "Deux conditions se cumulent ici : la pente ajoute de l'énergie à dissiper, l'eau réduit "
   "l'efficacité du frottement. C'est exactement la situation où un frein sensible à l'humidité "
   "devient dangereux — et elle se produit plusieurs fois par semaine.",
@@ -488,10 +493,10 @@ q(C, "La descente et la pluie", "Le trajet comporte une descente et il pleut sou
   "On choisit d'après la situation la plus exigeante, pas la plus facile."),
 
 q(C, "Compter n'est pas comparer", "Le frein à patins gagne sur trois critères. Le choisir pour cette raison serait…",
-  ["une erreur : compter les colonnes gagnées revient à donner à tous les critères la même importance",
-   "juste : trois sur six, c'est la majorité",
-   "impossible à trancher sans essai supplémentaire",
-   "correct, car ce sont les critères les moins coûteux"],
+  ["une erreur : cela donne le même poids à tout",
+   "juste : trois colonnes sur six, c'est la majorité",
+   "impossible à trancher sans un essai de plus",
+   "correct : ce sont les critères les moins coûteux"],
   "C'est le piège central de tout comparatif. Compter les victoires, c'est décider en silence que "
   "la masse pèse autant que la distance d'arrêt sous la pluie — dans une descente, au bord de la "
   "mer. Ce n'est pas un raisonnement, c'est une abstention déguisée en calcul.",
@@ -506,10 +511,10 @@ q(C, "Compter n'est pas comparer", "Le frein à patins gagne sur trois critères
   img=IMG_TABLEAU),
 
 q(C, "Le même tableau, ailleurs", "Dans un collège de montagne sèche, où l'on répare soi-même…",
-  ["le frein à patins deviendrait le meilleur choix : le même tableau, un autre contexte",
-   "le classement resterait identique",
-   "il faudrait refaire tous les essais",
-   "aucun des trois freins ne conviendrait"],
+  ["le frein à patins deviendrait le meilleur choix",
+   "le classement des trois freins resterait identique",
+   "il faudrait refaire la totalité des essais",
+   "aucun des trois freins ne conviendrait alors"],
   "C'est la leçon de toute la séquence. Sans embruns et sans pluie fréquente, la corrosion et "
   "l'écart sous la pluie cessent d'être décisifs ; la masse, le prix et la réparabilité passent "
   "devant. Les chiffres n'ont pas bougé d'un millimètre.",
@@ -523,9 +528,9 @@ q(C, "Le même tableau, ailleurs", "Dans un collège de montagne sèche, où l'o
   "Le même tableau, un autre lieu, un autre gagnant. Et personne ne s'était trompé."),
 
 q(C, "Défendre un choix", "Une défense de choix complète comporte…",
-  ["le principe retenu, deux raisons chiffrées, et ce qu'on accepte de perdre",
+  ["le principe, deux raisons, et le prix payé",
    "le principe retenu et ses trois avantages",
-   "le nom du fournisseur et son prix",
+   "le nom du fournisseur et son prix de vente",
    "l'avis de la majorité de la classe"],
   "Un choix qui ne coûte rien n'est pas un choix : c'est une préférence. Nommer ce qu'on perd "
   "prouve qu'on a comparé, et permet à celui qui lit de vérifier qu'on n'a rien caché.",
@@ -539,10 +544,10 @@ q(C, "Défendre un choix", "Une défense de choix complète comporte…",
   "Nommer ce qu'on perd est ce qui distingue un choix d'une préférence."),
 
 q(C, "Deux réponses justes", "Pour Sainte-Luce, le disque et le tambour sont tous deux défendables. Cela signifie que…",
-  ["l'exercice n'a pas UNE bonne réponse : il a des réponses bien ou mal défendues",
-   "l'énoncé est mal posé",
-   "il manque des données pour trancher",
-   "les deux freins sont identiques"],
+  ["l'exercice n'a pas UNE bonne réponse",
+   "l'énoncé de l'exercice est mal posé",
+   "il manque des données pour pouvoir trancher",
+   "les deux freins sont en réalité identiques"],
   "Beaucoup de questions techniques n'ont pas de réponse unique. Ce qui se juge alors n'est pas le "
   "résultat mais le raisonnement : les critères retenus, les chiffres cités, et les pertes "
   "assumées.",
@@ -556,10 +561,10 @@ q(C, "Deux réponses justes", "Pour Sainte-Luce, le disque et le tambour sont to
   "Certaines questions n'ont pas une réponse, mais des réponses bien ou mal défendues."),
 
 q(C, "Ce qu'on ne mesure pas", "Aucun des six critères ne parle du bruit du frein. Cela signifie…",
-  ["qu'un tableau ne contient que ce qu'on a décidé d'y mettre : il faut aussi regarder ce qui manque",
-   "que le bruit n'a aucune importance",
-   "que les trois freins font le même bruit",
-   "qu'on ne peut pas mesurer un bruit"],
+  ["qu'un tableau ne contient que ce qu'on y met",
+   "que le bruit n'a aucune importance ici",
+   "que les trois freins font exactement le même bruit",
+   "qu'un bruit ne se mesure pas vraiment"],
   "Un tableau comparatif porte les traces de celui qui l'a construit. Les colonnes absentes ne "
   "sont pas des critères sans importance : ce sont des critères auxquels personne n'a pensé, ou "
   "qu'on a jugé trop difficiles à mesurer.",
