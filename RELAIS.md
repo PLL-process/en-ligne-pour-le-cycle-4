@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 28/10/2026 20:31 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 28/10/2026 20:35 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - Fusionnées aujourd'hui : #533 (billets thème 2 réécrits n°144 + controle_longueurs lit les billets), #534 (16 billets thème 3 → plus aucune n°26 en échec), #535 (générateur 3e_C9.2 redonne les pages publiées).
@@ -13,13 +13,13 @@ _(écrit par Claude le 28/10/2026 20:31)_
 
 ## Branche et PR
 - Branche : `fable/theme-2-regle-304` — dernier commit 5a5ededb4 Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé
-- PR #536 ouverte (`fable/theme-1-carte-interacteurs`) — 5e_C2.1 Shenzhen : la carte des interacteurs n'est pas (encore) un diagramme pieuvre — CI : queued
+- PR #536 ouverte (`fable/theme-1-carte-interacteurs`) — 5e_C2.1 Shenzhen : la carte des interacteurs n'est pas (encore) un diagramme pieuvre — CI : success
 
 ## Décisions en attente
 _Aucune._
 
 ## Prochaine action
-➡️ Attendre la fusion de #536 ; demander à Pascal le lot suivant.
+➡️ Fusionne #536, puis dis-moi le lot suivant.
 
 ## Décisions prises récemment (messages de Pascal)
 - 28/10/2026 19:52 — « 1a »
