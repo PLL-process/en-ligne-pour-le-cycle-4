@@ -1,25 +1,24 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 29/10/2026 17:06 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 29/10/2026 17:21 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
-- #555 fusionnée. Choix ★ A en cours : lot n°310 des trois chaînes faites main.
-- Branche `fable/chaines-energie-faites-main` poussée (commit aa713e882), worktree $S/wt_ch : générateur + 3 figures (4e_C9.1 `chaines_jardin_programme.svg`, 4e_C6.2, 5e_C9.1), absent()/panel()/circuit_eau(), vérificateur par chemins (77/77), textes, 2 QCM, lexique 4e_C9.1, skill, journal.
-- Bancs 70/70, 54/54, 38/38, 34/34 ; statiques = main. Contrôles de navigation (main vs branche) en cours dans $S/ch/nav_main et nav_br.
-- PR à ouvrir avec $S/ch/pr_body.md (remplacer __NAV__ par le résultat des contrôles de navigation).
-- Ensuite : station 3e_C9.2 (fonction absente en phrase) ; image de l'objet dans les 7 synthèses d'ateliers ; limites du contrôle des schémas ; lexique 5e_C9.1 refusé (OST).
+- PR #557 ouverte (lot n°310 des trois chaînes faites main : 4e_C9.1 `chaines_jardin_programme.svg`, 4e_C6.2, 5e_C9.1), branche `fable/chaines-energie-faites-main`, worktree $S/wt_ch.
+- Conflit avec main (#556, synthèses du thème 2 en deux pages) résolu : journal (deux entrées, `---`), audit_couverture régénéré ; vérificateur 77/77 après fusion ; poussé (912ff12df). CI en attente.
+- Contrôles : statiques et navigation identiques à main ; bancs 70/70, 54/54, 38/38, 34/34.
+- Ensuite : station 3e_C9.2 (fonction absente écrite en phrase, absent() disponible) ; image de l'objet dans les 7 synthèses d'ateliers ; limites du contrôle des schémas ; lexique 5e_C9.1 refusé (OST).
 
-_(écrit par Claude le 29/10/2026 16:59)_
+_(écrit par Claude le 29/10/2026 17:21)_
 
 ## Branche et PR
 - Branche : `fable/theme-2-regle-304` — dernier commit 5a5ededb4 Règle d'or n°304, vague du thème 2 : douze ouvertures ne disent plus le passé
-- Aucune PR ouverte.
+- PR #557 ouverte (`fable/chaines-energie-faites-main`) — Règle n°310 : les trois chaînes d'énergie faites main entrent dans le générateur — CI : in_progress
 
 ## Décisions en attente
 _Aucune._
 
 ## Prochaine action
-➡️ Rien à faire de ton côté pour l'instant.
+➡️ Vérifier la CI de #557, puis la remettre à Pascal.
 
 ## Décisions prises récemment (messages de Pascal)
 - 29/10/2026 13:15 — « <agent-message from="a35e22d744f71516e"> [Subagent hand-back] The text below is the final report of a subagent this session delegated to. It »
