@@ -25513,3 +25513,60 @@ générateur est un seul endroit à corriger.
   ateliers de représentations ; puis le thème 2, puis le thème 3. Chaque thème : le contrôle à zéro ✘, et chaque schéma
   regardé sur la planche.
 - Les images PNG/JPG (334) : trier, dans chaque thème, les schémas des photos et des captures.
+
+---
+
+## 29/10/2026 — Règle d'or n°316 : une synthèse élève se lit par un élève de 6e — le skill `synthese-vulgarisee` (transversale : thèmes 1, 2 et 3, `.claude/skills`)
+
+*Pascal, 28/10/2026 au soir, sur la partie 5 de la synthèse élève de `5e_C1.1` (Chengdu) : « je trouve que les synthèses
+ne sont pas assez vulgarisées » ; « prends exemple sur les synthèses de Pascal Pujades, de l'académie de Limoges et de
+Bordeaux — surtout Pujades » ; « https://pedagogie.ac-toulouse.fr/sii/CF-2024 un bon exemple » ; « si tu penses qu'un
+skill serait utile… » ; « quand tu auras terminé, fais le skill en fonction de ces synthèses — au pluriel — et autres
+choses profitables du site ». Branche transversale `fable/regle-316-syntheses-vulgarisees`.*
+
+> **Règle d'or n°316 — Une synthèse élève se lit par un élève de 6e.** Elle explique avec ce que l'élève connaît déjà.
+> En tête, une **carte « Ce que je dois retenir »** : une carte par partie, sa réponse en une phrase, un lien vers la
+> partie. Chaque partie a pour **titre une question**, puis **en une phrase**, **comme dans la vie** (une comparaison
+> juste, tirée du collège, de la maison ou de la Martinique), **dans notre séquence** (l'exemple manipulé, avec son
+> schéma premium, n°315), **les mots** (chaque mot technique expliqué, avec son exemple et son anglais), **le piège**
+> (l'erreur réelle des élèves) et **vérifie-toi** (une question, la réponse cachée et expliquée). Tu, voix active,
+> 15 mots par phrase en moyenne, aucune au-delà de 25, aucune maxime. On explique mieux, on n'enlève rien : les notions
+> restent, les ancres `#partie-N` aussi. Le skill `synthese-vulgarisee` dit comment faire.
+
+### Le constat
+
+Les phrases des synthèses sont déjà courtes : la formule de Kandel-Moles classe les 45 synthèses élève « très
+faciles » (médiane 86). Le défaut que Pascal voit n'est pas mesurable ainsi : un style abstrait, elliptique, en maximes
+(« Stockage : le fichier est déposé. Il conserve, il ne juge pas. »), sans exemple de la vie de l'élève.
+
+### Ce qu'on a regardé
+
+- **Toulouse — fiches de synthèse 2024** : une page A4 paysage, « Ce que je dois retenir », titre au centre, quatre à
+  six blocs (titre en pastille, une ou deux phrases, pictogramme, exemple concret, chiffre sourcé). La fiche vient d'un
+  bilan fait en classe après les activités, jamais donnée sans lui. Lues dans le navigateur : « Chaîne d'information »,
+  « Stockage des données ».
+- **Toulouse — fiches de connaissances 2024** : 2 à 3 pages, tableau des connaissances du programme en tête,
+  définitions suivies d'un exemple, comparaisons en deux colonnes, un fil d'exemple unique, capsule audio de 5 minutes.
+  Lues : FC4-1 « Cahier des charges — contraintes et interacteurs », FC16 « Chaîne d'information ». Une erreur relevée
+  dans FC16 (« les 3 fonctions des constituants d'une chaîne d'énergie : acquérir, traiter, communiquer ») : le skill
+  rappelle de vérifier les faits.
+- **Pujades** : les synthèses sont titrées par une question et ponctuent la séquence. Son site n'a pas pu être ouvert
+  (page d'erreur, depuis le navigateur de Pascal aussi) ; il est l'un des auteurs des séquences mutualisées de Toulouse.
+- **Bordeaux** : une fiche par connaissance, donnée après les activités, commentée avant l'évaluation. Le site était
+  indisponible (503) ; vu par ses pages d'index seulement.
+- **Limoges** : pas encore regardé.
+
+Aucun texte ni aucune image de ces fiches n'est repris : la forme seulement.
+
+### Ce que fait cette PR
+
+- **La règle n°316**, ici.
+- **Le skill `.claude/skills/synthese-vulgarisee/`** : ce qui ne va pas, ce qu'on prend à chaque modèle et ce qu'on n'en
+  prend pas, la forme (carte en tête, cinq temps par partie, gabarit HTML), la langue, ce qui ne bouge pas (ancres,
+  notions, impression), la liste à cocher, et l'exemple avant / après de la partie 5 de `5e_C1.1`.
+- Le skill `controle-qualite-lot` cite la règle et le skill.
+
+### Ce qui reste
+
+- La réécriture des 45 synthèses élève (17 au thème 1, 16 au thème 2, 12 au thème 3), thème par thème, avec la revue
+  des schémas (n°315). Le pilote : `5e_C1.1`.
