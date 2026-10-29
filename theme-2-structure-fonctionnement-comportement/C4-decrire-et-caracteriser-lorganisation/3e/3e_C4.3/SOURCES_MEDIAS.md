@@ -19,3 +19,8 @@ Notes de conformité :
 - textes alternatifs fournis dans les pages via `aria-label` + `<title>/<desc>` internes aux SVG ;
 - aucune donnée Météo-France réelle n'est redistribuée (contrainte de licence) : les valeurs
   sont générées et signalées comme telles aux élèves dans la séquence et dans les fichiers.
+
+Synthèse élève (29/10/2026, format deux pages A4) : `Images/station_alerte_annotee.svg` est repris tel quel dans la
+carte « Ce que je dois retenir », comme image de l'objet ; la séquence l'a déjà montré à l'activité 1. La synthèse
+élève de `3e_C4.1` (l'énergie de la même station) le montre aussi dans sa carte. `Images/chaine_information_station.svg`
+n'est plus affiché par la synthèse élève : la chaîne d'information y est montrée en cases HTML.

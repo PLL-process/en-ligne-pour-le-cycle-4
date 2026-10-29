@@ -5,151 +5,601 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Synthèse élève — Un Book Train pour la Schœlcher (4e_C4.1 · C4.2 · C4.4)</title>
 <style>
-  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
   *{box-sizing:border-box}
-  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;font-size:.95em;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
   .page{max-width:860px;margin:0 auto}
   h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
   .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
-  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
-  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  @media(max-width:680px){.cols{grid-template-columns:1fr}}
-  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
-  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24}
-  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
-  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
-  code{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
-  .savoir{border-left:4px solid var(--ok)}.faire{border-left:4px solid var(--hl)}.pieges{border-left:4px solid var(--err)}
-  .voc{font-size:.88em}.voc td{padding:2px 8px;border-bottom:1px dashed var(--border)}
+  h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+  h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
+  ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  table{width:100%;border-collapse:collapse;margin:6px 0}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--sub);font-size:.9em}
   .toolbar{text-align:center;margin:10px 0}
   .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
-  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}h1,h2,dt,.pb{color:#111}.toolbar{display:none}.page{max-width:none}code{background:#eee}}
+  a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  /* règle n°304 : un lien de rattrapage arrive sur ce titre ; la barre collante (47 px) ne doit pas le recouvrir */
+  h2[id]{scroll-margin-top:60px}
+  #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
 
+  /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
+  /* Une couleur par notion, la même partout : la donnée en jaune, l'information en vert. */
+  .d{color:var(--warn);font-weight:600}.i{color:var(--ok);font-weight:600}
+  /* La carte « Ce que je dois retenir » */
+  .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
+  .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
+  .question{text-align:center;font-size:1.05em;font-weight:600;margin:0 0 10px}
+  .programme{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);
+             padding:6px 0;margin:0 0 12px}
+  .programme b{color:var(--text)}
+  .programme ul{margin:2px 0;padding-left:18px}.programme li{margin:1px 0}
+  .cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .cartes a{display:block;text-decoration:none;color:var(--text);background:var(--panel);border:1.5px solid var(--border);
+            border-radius:10px;padding:9px 12px}
+  .cartes a:hover{border-color:var(--hl)}
+  .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
+  .cartes .r{display:block;font-size:.92em}
+  /* L'objet en image (Pascal, 29/10/2026 : « une illustration permet d'avoir une vision plus synthétique de l'objet ») :
+     à droite du programme, dans la carte ; dessous sur un téléphone. */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
+  .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
+  .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
+  .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
+  .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  ul.serre li{margin:1px 0}
+  .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
 
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+    h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; un schéma ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    .schema,table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
+    .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
+    .d{color:#8a5a00}.i{color:#1d6b38}.vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
+    .schema{width:60%;display:block;margin:4px auto}
+    h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  .schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
-</style>
-</head>
-<body>
-<style id="navharm-css">
-#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
- padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
- -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
-#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
- border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
- font-size:.92em;text-decoration:none;line-height:1.2}
-#navharm a:hover{border-color:#61dafb;color:#61dafb}
-#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
-@media print{#navharm{display:none}}
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
 
 /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
 @media(max-width:680px){table{display:block;overflow-x:auto}}
-</style>
+
+  /* Revenir à la carte (Pascal, 29/10/2026 : « je ne peux pas revenir à la synthèse ») : chaque partie porte, en
+     haut à droite, un lien vers la carte « Ce que je dois retenir » ; la barre de navigation collée en haut ne
+     recouvre plus le titre visé par un lien. Rien de tout cela ne s'imprime. */
+  .retour-carte{float:right;font-size:.82em;margin:1px 0 0 10px;padding:1px 10px;border:1.5px solid var(--border);
+                border-radius:999px;text-decoration:none;white-space:nowrap}
+  .retour-carte:hover,.retour-carte:focus-visible{border-color:var(--hl)}
+  #carte-titre,[id^="partie-"]{scroll-margin-top:64px}
+  @media print{.retour-carte{display:none}}
+
+  /* ══ Les chaînes (règle d'or n°310) ══ Dans chaque case, la fonction (un verbe) et, dessous, le composant qui la
+     réalise ; sur chaque flèche, ce qui circule (une forme d'énergie, ou une information) ; à la sortie, l'action.
+     Une couleur par fonction, la même partout ; le texte dit tout, la couleur ne fait que le doubler. Une énergie
+     stockée s'écrit sous son composant ; la batterie est une branche, sous le bloc qui la relie (la ligne 2). */
+  :root{--ali:#ffd66b;--dis:#61dafb;--conv:#c68ef2;--tra:#81fba1;--acq:#61dafb;--trt:#c68ef2;--com:#81fba1;--nrj:#ffb454}
+  .fonctions{display:grid;align-items:center;gap:4px 3px;margin:8px 0;break-inside:avoid}
+  .fonctions>*{grid-row:1}
+  .fonctions>.sous{grid-row:2;align-self:start;display:flex;align-items:center;justify-content:center;gap:4px}
+  .fonctions .f{align-self:stretch;border:2px solid var(--border);border-radius:8px;padding:3px 6px;background:var(--panel2);
+                text-align:center;line-height:1.3;font-size:.92em}
+  .fonctions .f b{display:block;letter-spacing:.03em}
+  .fonctions .fl{text-align:center;font-size:.8em;line-height:1.15;color:var(--nrj);padding:0 2px}
+  .fonctions .fl::after{content:"➜";display:block;font-size:1.2em;line-height:1.1}
+  .fonctions.info .fl{color:var(--hl)}
+  .fonctions .fv{font-size:.8em;line-height:1.2;color:var(--nrj);text-align:right;flex:0 0 9em}
+  .fonctions .sous::after{content:"";flex:0 0 7.2em} /* la case STOCKER reste centrée sous son bloc */
+  .fonctions .fin{font-weight:700;font-size:.9em;line-height:1.25}
+  .fonctions .stocke{font-style:normal;color:var(--warn)}
+  .f.ali{border-color:var(--ali)}.f.ali b{color:var(--ali)}
+  .f.dis{border-color:var(--dis)}.f.dis b{color:var(--dis)}
+  .f.conv{border-color:var(--conv)}.f.conv b{color:var(--conv)}
+  .f.tra{border-color:var(--tra)}.f.tra b{color:var(--tra)}
+  .f.acq{border-color:var(--acq)}.f.acq b{color:var(--acq)}
+  .f.trt{border-color:var(--trt)}.f.trt b{color:var(--trt)}
+  .f.com{border-color:var(--com)}.f.com b{color:var(--com)}
+  .ordre{border-left:4px dashed var(--ok);padding:2px 10px;margin:6px 0}
+  @media (max-width:600px){
+    .fonctions{display:flex;flex-direction:column;align-items:stretch}
+    .fonctions .fl::after{content:" ⬇";display:inline}
+    .fonctions .fin{text-align:center}
+    .fonctions .sous::after{display:none}.fonctions .fv{flex:0 1 auto}
+  }
+  /* Une suite de cinq cases tient sur une ligne. */
+  .chaine.cinq div{flex-basis:110px}
+  /* Un schéma de l'objet (pas une photo) se montre entier, sans être rogné. */
+  .objet.schema-objet{flex-basis:30%;justify-content:center}
+  .objet.schema-objet img{flex:none;height:auto;object-fit:contain;background:#fff}
+  @media (max-width:600px){.objet.schema-objet img{aspect-ratio:auto}}
+  @media print{
+    .fonctions .f{background:#fff;color:#111}
+    .f.ali{border-color:#a97800}.f.ali b{color:#7a5100}
+    .f.dis{border-color:#1b7f9e}.f.dis b{color:#0b5f7a}
+    .f.conv{border-color:#7d4fb8}.f.conv b{color:#5e3592}
+    .f.tra{border-color:#2d7a4a}.f.tra b{color:#1d6b38}
+    .f.acq{border-color:#1b7f9e}.f.acq b{color:#0b5f7a}
+    .f.trt{border-color:#7d4fb8}.f.trt b{color:#5e3592}
+    .f.com{border-color:#2d7a4a}.f.com b{color:#1d6b38}
+    .fonctions .fl,.fonctions .fv{color:#8a4300}.fonctions.info .fl{color:#0b5f7a}
+    .fonctions .stocke{color:#7a5100}.ordre{border-left-color:#2d7a4a}
+    .fonctions{gap:2px 2px;margin:4px 0}.fonctions .f{padding:2px 5px}
+    .chaine.cinq div{padding:3px 6px}
+  }
+</style></head>
+<body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_4e_C4.1-C4.2-C4.4_book-train.html">← Séquence</a></nav>
 <div class="page">
-<h1>📌 Synthèse élève — Un Book Train pour la Schœlcher (4e_C4.1 · C4.2 · C4.4)</h1>
+<h1>📌 Synthèse élève — Un Book Train pour la Schœlcher</h1>
 <p class="pb">Comment un système automatisé achemine-t-il un objet fragile, tout seul, jusqu'au bon endroit&nbsp;?</p>
-<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
 
-<div class="bloc">
-  <h2 id="partie-1" style="margin-top:0">1. Lire l'organisation d'un système (4e_C4.1)</h2>
-  <object class="schema" data="../Images/chaine_information_book-train.svg" type="image/svg+xml" aria-label="Chaîne d'information du Book Train : acquérir, traiter, communiquer">La chaîne d'information</object>
-  <dl>
-    <dt>Le diagramme fonctionnel</dt><dd>le schéma officiel de l'organisation&nbsp;: chaque <b>bloc</b> porte une <b>fonction</b> (un verbe à l'infinitif), chaque <b>flèche</b> porte un <b>flux</b> (une énergie, une donnée).</dd>
-    <dt>Fonction ou solution&nbsp;?</dt><dd>la <b>fonction</b> dit <i>à quoi ça sert</i> («&nbsp;maintenir les livres à plat&nbsp;»), la <b>solution technique</b> dit <i>avec quoi on le fait</i> (la nacelle à cardan).</dd>
-    <dt>📐 La règle d'or du schéma</dt><dd>l'<b>INFORMATION en haut</b>, l'<b>ÉNERGIE en bas</b>, la <b>flèche d'ORDRE qui descend</b> — le cerveau au-dessus des muscles. La disposition EST une leçon&nbsp;: elle montre qui commande, sans un mot.</dd>
-    <dt>Automatisé ≠ autonome</dt><dd>le trajet est automatique, mais le magasinier cherche encore le livre à la main. Un système automatisé garde souvent des étapes humaines.</dd>
-  </dl>
-</div>
+<!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
+<section class="carte" aria-labelledby="carte-titre">
+  <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
+  <p class="question">Comment le Book Train de New York livre-t-il un livre fragile, tout seul, au bon étage&nbsp;?</p>
+  <div class="tete">
+  <div class="programme"><b>Ce que dit le programme</b> (4e, compétence C4)&nbsp;:
+    <ul>
+      <li>identifier les constituants d'une chaîne d'énergie et les associer à leurs fonctions&nbsp;;</li>
+      <li>repérer les transformations d'énergie et les flux d'énergie au sein de l'OST&nbsp;;</li>
+      <li>identifier les constituants de la chaîne d'information d'un objet réel et les associer à leur fonction.</li>
+    </ul>
+    <b>Et pour le numérique</b> (CRCN)&nbsp;: programmer&nbsp;; adapter les documents à leur finalité.
+  </div>
+    <figure class="objet">
+      <img src="../Images/synthese_book_train.png" alt="Un wagonnet rouge monte un rail fixé au mur d'une réserve de livres ; sa nacelle reste à plat.">
+      <figcaption>📍 L'objet&nbsp;: un wagonnet du Book Train. <i>Image générée par IA (Canva).</i></figcaption>
+    </figure>
+  </div>
+  <div class="cartes">
+    <a href="#partie-1"><span class="q">🧭 1. Comment lire l'organisation d'un système&nbsp;?</span>
+      <span class="r">Une fonction par bloc, un flux par flèche.</span></a>
+    <a href="#partie-2"><span class="q">⚡ 2. Comment l'énergie fait-elle avancer le wagonnet&nbsp;?</span>
+      <span class="r">Elle ne change de forme qu'une fois&nbsp;: dans le moteur.</span></a>
+    <a href="#partie-3"><span class="q">🧠 3. Comment le wagonnet sait-il où aller&nbsp;?</span>
+      <span class="r">Le capteur informe, l'automate décide&nbsp;: l'ordre descend.</span></a>
+    <a href="#partie-4"><span class="q">🔷 4. Comment écrire le trajet en algorigramme&nbsp;?</span>
+      <span class="r">Quatre formes, chacune son métier&nbsp;; un test a deux sorties.</span></a>
+    <a href="#partie-5"><span class="q">💾 5. Quel format pour présenter l'algorigramme&nbsp;?</span>
+      <span class="r">Celui qui convient à la destination, et tu dis pourquoi.</span></a>
+  </div>
+</section>
 
-<div class="cols">
-<div class="bloc">
-  <h2 id="partie-2" style="margin-top:0">2. Suivre l'énergie (4e_C4.2)</h2>
-  <dl>
-    <dt>Les 4 fonctions</dt><dd><b>ALIMENTER → DISTRIBUER → CONVERTIR → TRANSMETTRE</b>.</dd>
-    <dt>Dans le Book Train</dt><dd>convertisseur 480&nbsp;V (volts)&nbsp;~ → 24&nbsp;V&nbsp;⎓ · variateur (distribue, sur ordre) · moteur (convertit en rotation) · réducteur + galets (transmettent en translation).</dd>
-    <dt>Forme d'énergie, type de courant</dt><dd><b>~</b> alternatif et <b>⎓</b> continu sont deux <i>types de courant</i> de l'énergie électrique&nbsp;; rotation et translation, deux types de mouvement de l'énergie mécanique. Deux formes d'énergie, quatre visages.</dd>
-    <dt>Où l'énergie change de forme</dt><dd>dans le <b>moteur</b>, et là seulement. Le rail porte et amène l'énergie, il ne la transforme pas.</dd>
-    <dt>Les étiquettes vont sur les flèches</dt><dd>le bloc porte la fonction&nbsp;; l'énergie <b>circule</b>, donc elle s'écrit sur la flèche.</dd>
-  </dl>
-</div>
-<div class="bloc">
-  <h2 id="partie-3" style="margin-top:0">3. Suivre l'information (4e_C4.4)</h2>
-  <dl>
-    <dt>Les 3 fonctions</dt><dd><b>ACQUÉRIR → TRAITER → COMMUNIQUER</b>.</dd>
-    <dt>Dans le Book Train</dt><dd>le terminal et les capteurs de station <b>acquièrent</b>&nbsp;; la destination programmée est <b>traitée</b>&nbsp;; l'ordre est <b>communiqué</b> au moteur.</dd>
-    <dt>Le capteur informe</dt><dd>il ne décide pas, il ne fait rien bouger. C'est le piège classique.</dd>
-    <dt>Qui commande qui</dt><dd>l'<b>ordre descend</b> de l'information vers l'énergie. Ce qui remonte des capteurs, ce n'est pas un ordre&nbsp;: c'est un compte rendu.</dd>
-  </dl>
-</div>
-</div>
-
-<div class="bloc">
-  <h2 style="margin-top:0">4. L'algorigramme&nbsp;: quatre formes, quatre métiers</h2>
-  <dl>
-    <dt>Ovale</dt><dd><b>Début</b> et <b>Fin</b>. Un algorigramme sans bornes est illisible.</dd>
-    <dt>Parallélogramme</dt><dd>une <b>entrée</b> ou une <b>sortie</b> de donnée — la commande saisie au terminal, par exemple. Attention&nbsp;: saisir n'est pas traiter.</dd>
-    <dt>Rectangle</dt><dd>une <b>action</b>, un verbe&nbsp;: «&nbsp;déposer le livre dans le wagonnet&nbsp;».</dd>
-    <dt>Losange</dt><dd>un <b>test</b> à deux issues. Le repère infaillible&nbsp;: la phrase finit par un «&nbsp;?&nbsp;».</dd>
-    <dt>La boucle</dt><dd>une flèche qui revient en arrière = on attend et on re-teste. Aucune branche ne reste dans le vide.</dd>
-    <dt>Deux schémas, deux questions</dt><dd>le diagramme fonctionnel dit <b>comment c'est organisé</b>&nbsp;; l'algorigramme dit <b>dans quel ordre et à quelles conditions</b>.</dd>
-  </dl>
-</div>
-
-<div class="bloc">
-  <h2 style="margin-top:0">5. Choisir le bon format de fichier</h2>
-  <dl>
-    <dt>SVG — vectoriel</dt><dd>le fichier est du <b>texte</b> qui décrit des <b>formes</b>&nbsp;: l'image reste <b>nette à n'importe quel zoom</b> et pèse peu (≈&nbsp;14&nbsp;Ko ici). Idéal pour un algorigramme vidéoprojeté.</dd>
-    <dt>PNG — matriciel</dt><dd>une <b>grille de pixels</b>&nbsp;: ça se pixellise en zoomant et c'est plus lourd (≈&nbsp;420&nbsp;Ko ici), mais c'est <b>compris partout</b>. On en garde un de secours.</dd>
-    <dt>La compétence, c'est la justification</dt><dd>un bon choix <b>sans</b> justification ne vaut rien&nbsp;: on dit toujours <i>pourquoi</i> ce format-là pour <i>cette</i> destination.</dd>
-  </dl>
-</div>
-
-<div class="cols">
+<!-- ══ 1 ══ -->
 <div class="bloc savoir">
-  <h2 style="margin-top:0">✅ Je dois savoir</h2>
-  <ul>
-    <li>distinguer une fonction technique d'une solution technique&nbsp;;</li>
-    <li>nommer les 4 fonctions de la chaîne d'énergie et les 3 de la chaîne d'information&nbsp;;</li>
-    <li>dire où l'énergie change de forme, et pourquoi&nbsp;;</li>
-    <li>reconnaître les 4 symboles normalisés de l'algorigramme&nbsp;;</li>
-    <li>expliquer la différence entre vectoriel et matriciel.</li>
-  </ul>
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-1" style="margin-top:0">1. Comment lire l'organisation d'un système&nbsp;?</h2>
+  <p>Au Book Train, chaque fonction technique a sa solution, choisie par les ingénieurs&nbsp;:</p>
+  <div class="chaine">
+    <div><b>Maintenir les livres à plat</b>La nacelle à cardan, qui pivote.</div>
+    <div><b>Soutenir et guider le wagonnet</b>Le rail et ses galets porteurs.</div>
+    <div><b>Mettre le wagonnet en mouvement</b>Le moteur électrique.</div>
+    <div><b>Détecter la position du wagonnet</b>Les capteurs le long du rail.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: dans un <b>diagramme fonctionnel</b>, chaque bloc porte une
+  <b>fonction</b> (un verbe) et chaque flèche un <b>flux</b>. La fonction dit ce qu'il faut faire&nbsp;; la
+  <b>solution technique</b> dit avec quoi.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire que le Book Train est autonome. Il est <b>automatisé</b>&nbsp;: le
+  magasinier cherche encore le livre à la main.</p>
 </div>
+
+<!-- ══ 2 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-2" style="margin-top:0">2. Comment l'énergie fait-elle avancer le wagonnet&nbsp;?</h2>
+  <p>Le bâtiment fournit du courant alternatif (~), en 480 volts comme souvent aux États-Unis&nbsp;; le wagonnet roule
+  en 24 volts continu (⎓). Dans chaque case, la fonction et son composant&nbsp;; sur chaque flèche, l'énergie&nbsp;:</p>
+  <div class="fonctions" style="grid-template-columns:auto 1fr auto 1fr auto 1fr auto 1fr auto minmax(5.8em,.9fr)">
+    <span class="fl">électrique<br>480&nbsp;V&nbsp;~</span>
+    <div class="f ali"><b>ALIMENTER</b>Convertisseur 480&nbsp;V&nbsp;~ / 24&nbsp;V&nbsp;⎓</div>
+    <span class="fl">électrique<br>24&nbsp;V&nbsp;⎓</span>
+    <div class="f dis"><b>DISTRIBUER</b>Armoire&nbsp;: contacteurs, variateur</div>
+    <span class="fl">électrique<br>dosée</span>
+    <div class="f conv"><b>CONVERTIR</b>Moteur 24&nbsp;V&nbsp;⎓</div>
+    <span class="fl">mécanique<br>rotation</span>
+    <div class="f tra"><b>TRANSMETTRE</b>Réducteur et galets</div>
+    <span class="fl">mécanique<br>translation</span>
+    <span class="fin">Déplacer le wagonnet et sa nacelle</span>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: l'énergie ne change de <b>forme</b> qu'une fois&nbsp;: dans le bloc
+  <b>CONVERTIR</b>, où le moteur change l'électrique en mécanique. Ailleurs, seul le type de courant ou de
+  mouvement change.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire que le convertisseur 480 V / 24 V est le bloc CONVERTIR. L'énergie
+  y reste électrique&nbsp;: c'est ALIMENTER.</p>
+</div>
+
+<!-- ══ 3 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-3" style="margin-top:0">3. Comment le wagonnet sait-il où aller&nbsp;?</h2>
+  <p>Au Book Train, l'automate compare sans cesse la position du wagonnet à sa destination. Sur ces flèches
+  circulent des informations&nbsp;:</p>
+  <div class="fonctions info" style="grid-template-columns:1fr auto 1fr auto 1fr">
+    <div class="f acq"><b>ACQUÉRIR</b>Terminal de commande, capteurs de station, capteur «&nbsp;wagonnet vacant&nbsp;»</div>
+    <span class="fl">signaux</span>
+    <div class="f trt"><b>TRAITER</b>Automate&nbsp;: position mesurée = destination programmée&nbsp;?</div>
+    <span class="fl">décisions</span>
+    <div class="f com"><b>COMMUNIQUER</b>Ordres au variateur, affichage au comptoir</div>
+  </div>
+  <p class="ordre">⬇ <b>L'ordre descend</b> de COMMUNIQUER vers DISTRIBUER (le variateur), dans la chaîne d'énergie.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: le <b>capteur informe</b> et l'<b>automate décide</b>. L'ordre part
+  de COMMUNIQUER et <b>descend</b> vers l'énergie&nbsp;; ce qui remonte des capteurs n'est qu'un compte rendu.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: faire partir la flèche d'ordre d'un capteur. Un capteur ne commande rien.</p>
+</div>
+
+<!-- ══ 4 ══ -->
 <div class="bloc faire">
-  <h2 style="margin-top:0">🛠 Je dois savoir faire</h2>
-  <ul>
-    <li>compléter un diagramme fonctionnel en plaçant fonctions, solutions et flux&nbsp;;</li>
-    <li>étiqueter les énergies sur les flèches, entrée et sortie de chaque bloc&nbsp;;</li>
-    <li>construire un algorigramme normalisé dans draw.io, avec ses tests et sa boucle&nbsp;;</li>
-    <li>exporter au bon format <b>et justifier</b> mon choix.</li>
-  </ul>
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-4" style="margin-top:0">4. Comment écrire le trajet du livre en algorigramme&nbsp;?</h2>
+  <p>Le trajet du livre devient un algorigramme&nbsp;: chaque forme normalisée a son métier.</p>
+  <div class="chaine">
+    <div><b>Ovale</b>Début et Fin&nbsp;: «&nbsp;FIN, le wagonnet est disponible&nbsp;».</div>
+    <div><b>Parallélogramme</b>Une donnée qui entre&nbsp;: «&nbsp;le lecteur saisit sa commande&nbsp;».</div>
+    <div><b>Rectangle</b>Une action&nbsp;: «&nbsp;déposer le livre dans le wagonnet&nbsp;».</div>
+    <div><b>Losange</b>Un test&nbsp;: «&nbsp;un wagonnet vacant est-il disponible&nbsp;?&nbsp;»</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: l'algorigramme dit <b>dans quel ordre</b> et <b>à quelles
+  conditions</b>. Chaque losange a deux sorties, OUI et NON&nbsp;; le NON revient en arrière&nbsp;: c'est une
+  <b>boucle</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: mettre une question dans un rectangle. Une phrase qui finit par
+  «&nbsp;?&nbsp;» va dans un losange.</p>
+</div>
+
+<!-- ══ 5 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-5" style="margin-top:0">5. Quel format choisir pour présenter ton algorigramme&nbsp;?</h2>
+  <p>Le même algorigramme existe en trois fichiers, chacun avec son métier&nbsp;:</p>
+  <div class="chaine">
+    <div><b><code>.drawio</code></b>Ton fichier de travail&nbsp;: il reste modifiable.</div>
+    <div class="ok"><b><code>.svg</code>, vectoriel</b>Des formes décrites en texte&nbsp;: net à tout zoom, environ 14&nbsp;Ko (kilooctets).</div>
+    <div><b><code>.png</code>, matriciel</b>Une grille de pixels&nbsp;: flou au zoom, environ 420&nbsp;Ko, mais lu partout.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: tu choisis le format selon la <b>destination</b> du document, et tu
+  <b>justifies</b> ce choix. Au vidéoprojecteur, le SVG reste net&nbsp;; le PNG sert de secours.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: envoyer le fichier <code>.drawio</code> en croyant envoyer une image. Seul
+  draw.io sait l'ouvrir.</p>
+</div>
+
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>système automatisé <span class="en">— automated system</span></dt><dd>une partie fonctionne seule.</dd></div>
+    <div><dt>autonome <span class="en">— autonomous</span></dt><dd>tout se fait seul, sans aide humaine.</dd></div>
+    <div><dt>diagramme fonctionnel <span class="en">— functional diagram</span></dt><dd>le schéma de l'organisation.</dd></div>
+    <div><dt>fonction technique <span class="en">— technical function</span></dt><dd>ce qu'une partie doit faire.</dd></div>
+    <div><dt>solution technique <span class="en">— technical solution</span></dt><dd>le composant qui le fait.</dd></div>
+    <div><dt>OST <span class="en">— technical system</span></dt><dd>un objet ou système technique.</dd></div>
+    <div><dt>chaîne d'énergie <span class="en">— power chain</span></dt><dd>elle exécute&nbsp;: elle fait bouger.</dd></div>
+    <div><dt>chaîne d'information <span class="en">— information chain</span></dt><dd>elle décide.</dd></div>
+    <div><dt>courant alternatif (~) <span class="en">— AC</span></dt><dd>le courant du bâtiment.</dd></div>
+    <div><dt>courant continu (⎓) <span class="en">— DC</span></dt><dd>le courant du wagonnet.</dd></div>
+    <div><dt>variateur <span class="en">— motor drive</span></dt><dd>il dose l'énergie du moteur, sur ordre.</dd></div>
+    <div><dt>rail <span class="en">— track</span></dt><dd>il porte le wagonnet et lui amène l'énergie.</dd></div>
+    <div><dt>réducteur <span class="en">— gearbox</span></dt><dd>moins de vitesse, plus d'effort.</dd></div>
+    <div><dt>capteur <span class="en">— sensor</span></dt><dd>il informe, il ne décide pas.</dd></div>
+    <div><dt>automate <span class="en">— controller</span></dt><dd>l'ordinateur qui décide.</dd></div>
+    <div><dt>algorigramme <span class="en">— flowchart</span></dt><dd>l'ordre des actions et des tests.</dd></div>
+    <div><dt>boucle <span class="en">— loop</span></dt><dd>une flèche qui revient pour re-tester.</dd></div>
+    <div><dt>vectoriel <span class="en">— vector</span></dt><dd>une image faite de formes.</dd></div>
+    <div><dt>matriciel <span class="en">— raster</span></dt><dd>une image faite de pixels.</dd></div>
+  </dl>
 </div>
 </div>
 
-<div class="bloc pieges">
-  <h2 style="margin-top:0">⚠ Pièges classiques</h2>
-  <ul>
-    <li>«&nbsp;le rail transporte le wagonnet donc c'est de l'information&nbsp;» — non&nbsp;: il porte et alimente, c'est de l'énergie&nbsp;;</li>
-    <li>«&nbsp;le capteur fait bouger le wagonnet&nbsp;» — non&nbsp;: le capteur informe, le moteur bouge&nbsp;;</li>
-    <li>écrire l'énergie dans le bloc au lieu de la flèche&nbsp;;</li>
-    <li>mettre une question dans un rectangle (une question, c'est un losange)&nbsp;;</li>
-    <li>mettre la saisie au terminal dans un rectangle (c'est une entrée&nbsp;: parallélogramme)&nbsp;;</li>
-    <li>oublier la flèche de retour du test&nbsp;: une branche qui ne mène nulle part rend l'algorigramme faux&nbsp;;</li>
-    <li>choisir un format sans savoir dire pourquoi.</li>
-  </ul>
-</div>
+<!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  /* L'agrandisseur est une COLONNE — bouton, image, légende — : la légende suit l'image dans le
+     flux, l'image reçoit une hauteur maximale calculée (ajuster()), et le fond défile si besoin. */
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:1rem;box-sizing:border-box;overflow:auto;
+    flex-direction:column;align-items:center;gap:.75rem}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  /* centré quand tout tient, sans rien couper quand ça déborde : des marges automatiques,
+     pas justify-content:center (qui rendrait le haut inaccessible au défilement) */
+  .loupe-fond > .loupe-fermer{margin-top:auto}
+  .loupe-fond > .loupe-legende{margin-bottom:auto}
+  .loupe-fond img{display:block;flex:none;max-width:100%;max-height:80vh;width:auto;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:static;flex:none;margin:0;max-width:min(70ch,100%);text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif}
+  .loupe-legende .loupe-aide{display:block;margin-top:.25rem;font-size:.85em;color:#b8bfcc}
+  .loupe-fermer{position:sticky;top:0;align-self:flex-end;flex:none;z-index:1;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
 
-<div class="bloc">
-  <h2 style="margin-top:0">🇬🇧 Vocabulaire</h2>
-  <table class="voc"><tr><td>chaîne d'information</td><td><b>information chain</b></td><td>capteur</td><td><b>sensor</b></td></tr>
-  <tr><td>chaîne d'énergie</td><td><b>power chain</b></td><td>actionneur</td><td><b>actuator</b></td></tr>
-  <tr><td>algorigramme</td><td><b>flowchart</b></td><td>test</td><td><b>decision</b></td></tr>
-  <tr><td>vectoriel</td><td><b>vector</b></td><td>matriciel</td><td><b>raster / bitmap</b></td></tr></table>
-</div>
-</div>
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+    grande.addEventListener("load", ajuster);
+    window.addEventListener("resize", ajuster);
+  }
+
+  // La légende affichée : la figcaption VISIBLE de la figure si elle existe ; sinon le
+  // texte alternatif, réduit à sa première phrase s'il dépasse deux lignes. L'alt complet
+  // reste sur l'image agrandie, pour les lecteurs d'écran.
+  function poserLegende(el, texteAlt){
+    var fig = el.closest("figure");
+    var cap = fig ? fig.querySelector("figcaption") : null;
+    var visible = cap && cap.getClientRects().length && cap.textContent.trim();
+    legende.textContent = "";
+    var texte = visible ? cap.textContent.replace(/\s+/g, " ").trim() : (texteAlt || "");
+    texte = texte.replace(/\s*\(clique[^()]*agrandir\)/gi, "").trim();   // l'image est déjà agrandie
+    var corps = document.createElement("span");
+    corps.textContent = texte;
+    var aide = document.createElement("span");
+    aide.className = "loupe-aide";
+    aide.textContent = "Échap pour refermer";
+    if (texte) legende.appendChild(corps);
+    legende.appendChild(aide);
+    if (!visible && texte) {
+      var ligne = parseFloat(getComputedStyle(legende).lineHeight) || 20;
+      if (corps.getBoundingClientRect().height > 2 * ligne + 1) {
+        var m = texte.match(/^[\s\S]*?[.!?…](?=\s|$)/);
+        if (m && m[0].length < texte.length) corps.textContent = m[0];
+      }
+    }
+  }
+
+  // L'image reçoit la place qui reste : hauteur du fond, moins le bouton, la légende,
+  // les marges et les espacements — jamais moins de 40 % de l'écran ; au-delà, le fond défile.
+  function ajuster(){
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    var st = getComputedStyle(fond);
+    var ecart = parseFloat(st.rowGap) || 0;
+    var reste = fond.clientHeight - parseFloat(st.paddingTop) - parseFloat(st.paddingBottom)
+              - fond.querySelector(".loupe-fermer").offsetHeight - legende.offsetHeight - 2 * ecart;
+    grande.style.maxHeight = Math.max(reste, 0.4 * window.innerHeight) + "px";
+  }
+
+  function montrer(el, texteAlt){
+    fond.setAttribute("data-ouvert", "oui");
+    fond.scrollTop = 0;
+    poserLegende(el, texteAlt);
+    ajuster();
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.style.background = "";
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    montrer(img, img.alt);
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    grande.style.maxHeight = "";
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
+  // couleurs et leur police viennent de la feuille de style de la PAGE. Sérialisé seul, le
+  // dessin les perdrait (formes noires, police par défaut, texte qui déborde) : on recopie
+  // donc sur la copie les propriétés CALCULÉES de chaque élément, on y ajoute les dégradés
+  // et marqueurs définis ailleurs dans la page, et l'image reçoit le fond du schéma.
+  var PROPRIETES = ["fill", "fill-opacity", "fill-rule", "stroke", "stroke-width", "stroke-opacity",
+    "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit",
+    "opacity", "visibility", "display", "color", "font-family", "font-size", "font-weight", "font-style",
+    "font-variant-numeric", "letter-spacing", "word-spacing", "text-anchor", "dominant-baseline",
+    "baseline-shift", "text-decoration", "white-space", "paint-order", "stop-color", "stop-opacity",
+    "marker-start", "marker-mid", "marker-end", "clip-path", "mask", "filter"];
+  // Une transformation posée par la feuille de style (pas par l'attribut transform, que la
+  // copie garde déjà) : on la recopie avec son origine.
+  var TRANSFORMATION = ["transform", "transform-origin", "transform-box"];
+
+  function figer(source, copie){
+    var a = [source].concat([].slice.call(source.querySelectorAll("*")));
+    var b = [copie].concat([].slice.call(copie.querySelectorAll("*")));
+    for (var i = 0; i < a.length && i < b.length; i++) {
+      var cs = getComputedStyle(a[i]), decl = [], k, v;
+      for (k = 0; k < PROPRIETES.length; k++) {
+        v = cs.getPropertyValue(PROPRIETES[k]);
+        if (v) decl.push(PROPRIETES[k] + ":" + v);
+      }
+      if (i > 0 && !a[i].hasAttribute("transform") && cs.getPropertyValue("transform") &&
+          cs.getPropertyValue("transform") !== "none") {
+        for (k = 0; k < TRANSFORMATION.length; k++) decl.push(TRANSFORMATION[k] + ":" + cs.getPropertyValue(TRANSFORMATION[k]));
+      }
+      var deja = b[i].getAttribute("style");
+      b[i].setAttribute("style", decl.join(";") + (deja ? ";" + deja : ""));
+    }
+  }
+
+  // Un dégradé ou un marqueur appelé par url(#…) mais défini hors du dessin : on le recopie dedans.
+  function rapatrier(copie){
+    var defs = null, faits = {}, tour = 0, trouve = true;
+    while (trouve && tour++ < 4) {
+      trouve = false;
+      var refs = (new XMLSerializer().serializeToString(copie).match(/url\((?:&quot;|["'])?#([^"')&]+)/g) || [])
+        .concat(new XMLSerializer().serializeToString(copie).match(/href="#[^"]+"/g) || []);
+      refs.forEach(function(r){
+        var id = r.replace(/^url\((?:&quot;|["'])?#/, "").replace(/^href="#/, "").replace(/"$/, "");
+        if (faits[id] || copie.querySelector("[id='" + id.replace(/'/g, "") + "']")) return;
+        faits[id] = true;
+        var el = document.getElementById(id);
+        if (!el || !el.closest("svg")) return;
+        if (!defs) { defs = document.createElementNS("http://www.w3.org/2000/svg", "defs"); copie.insertBefore(defs, copie.firstChild); }
+        var c = el.cloneNode(true); figer(el, c); defs.appendChild(c); trouve = true;
+      });
+    }
+  }
+
+  // Le fond sur lequel le schéma est dessiné : le sien, sinon celui du premier parent opaque.
+  function fondDe(el){
+    for (var e = el; e && e.nodeType === 1; e = e.parentElement) {
+      var c = getComputedStyle(e).backgroundColor, m = c.match(/rgba?\(([^)]+)\)/);
+      if (m) { var p = m[1].split(","); if (p.length < 4 || parseFloat(p[3]) > 0) return c; }
+      else if (c && c !== "transparent") return c;
+    }
+    return "#fff";
+  }
+
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    figer(svg, copie);
+    rapatrier(copie);
+    copie.style.background = "transparent";
+    // Une taille propre au dessin (sans elle, une image SVG n'a que 300 × 150 px à offrir) :
+    // celle de la viewBox, agrandie ; le CSS de la loupe la ramène à l'écran.
+    var vb = svg.viewBox && svg.viewBox.baseVal, boite = svg.getBoundingClientRect();
+    var w = vb && vb.width ? vb.width : boite.width, h = vb && vb.height ? vb.height : boite.height;
+    if (!(vb && vb.width) && w && h) copie.setAttribute("viewBox", "0 0 " + w + " " + h);
+    var k = w ? Math.max(1, 1600 / w) : 1;
+    if (w && h) { copie.setAttribute("width", Math.round(w * k)); copie.setAttribute("height", Math.round(h * k)); }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.style.background = fondDe(svg);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    montrer(svg, mot);
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
 </body>
 </html>

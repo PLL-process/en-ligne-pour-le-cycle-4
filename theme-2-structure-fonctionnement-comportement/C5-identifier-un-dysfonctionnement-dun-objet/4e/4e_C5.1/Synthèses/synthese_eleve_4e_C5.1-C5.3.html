@@ -5,112 +5,566 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Synthèse élève — SOS jardin connecté (4e_C5.1 à C5.3)</title>
 <style>
-  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--ko:#ff7b88}
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
   *{box-sizing:border-box}
-  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:14px 18px 50px;line-height:1.55;font-size:.97em}
-  .page{max-width:940px;margin:0 auto}
-  h1{font-size:1.45em;color:var(--title);text-align:center}
-  .sous{text-align:center;color:var(--sub);margin-top:-8px}
-  h2{font-size:1.08em;color:var(--head);border-bottom:1px solid var(--border);padding-bottom:4px;margin:22px 0 8px}
-  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:12px}
-  table{width:100%;border-collapse:collapse;font-size:.88em;margin:8px 0}
-  th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
-  th{background:#173666;color:var(--hl)}
-  ul{margin:4px 0;padding-left:20px}li{margin:4px 0}
-  .ok{color:var(--ok)}.warn{color:var(--warn)}.ko{color:var(--ko)}
-  .vocab b{color:var(--hl)}
-  figure{margin:10px 0;text-align:center}
-  figcaption{color:var(--sub);font-size:.85em}
-  object{width:100%;max-width:820px}
-  @media print{body{background:#fff;color:#111;font-size:9.5pt}.bloc{background:#fff;border-color:#999}h1,h2,th{color:#111}th{background:#eee}.ok,.warn,.ko{color:#111;font-weight:bold}}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;font-size:.95em;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+  h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
+  ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  table{width:100%;border-collapse:collapse;margin:6px 0}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--sub);font-size:.9em}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  /* règle n°304 : un lien de rattrapage arrive sur ce titre ; la barre collante (47 px) ne doit pas le recouvrir */
+  h2[id]{scroll-margin-top:60px}
+  #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
 
+  /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
+  /* La carte « Ce que je dois retenir » */
+  .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
+  .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
+  .question{text-align:center;font-size:1.05em;font-weight:600;margin:0 0 10px}
+  .programme{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);
+             padding:6px 0;margin:0 0 12px}
+  .programme b{color:var(--text)}
+  .programme ul{margin:2px 0;padding-left:18px}.programme li{margin:1px 0}
+  .cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .cartes a{display:block;text-decoration:none;color:var(--text);background:var(--panel);border:1.5px solid var(--border);
+            border-radius:10px;padding:9px 12px}
+  .cartes a:hover{border-color:var(--hl)}
+  .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
+  .cartes .r{display:block;font-size:.92em}
+  /* L'objet en image (Pascal, 29/10/2026 : « une illustration permet d'avoir une vision plus synthétique de l'objet ») :
+     à droite du programme, dans la carte ; dessous sur un téléphone. */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
+  .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
+  .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
+  .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
+  .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  ul.serre li{margin:1px 0}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
 
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+    h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; un schéma ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    .schema,table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
+    .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
+    .schema{width:60%;display:block;margin:4px auto}
+    h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  .bloc b{color:#047fa0!important}
-  .bloc figcaption,.sous{color:#1a6af8!important}
+  .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
-</style>
-</head>
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
+
+/* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+@media(max-width:680px){table{display:block;overflow-x:auto}}
+
+  /* Revenir à la carte (Pascal, 29/10/2026 : « je ne peux pas revenir à la synthèse ») : chaque partie porte, en
+     haut à droite, un lien vers la carte « Ce que je dois retenir » ; la barre de navigation collée en haut ne
+     recouvre plus le titre visé par un lien. Rien de tout cela ne s'imprime. */
+  .retour-carte{float:right;font-size:.82em;margin:1px 0 0 10px;padding:1px 10px;border:1.5px solid var(--border);
+                border-radius:999px;text-decoration:none;white-space:nowrap}
+  .retour-carte:hover,.retour-carte:focus-visible{border-color:var(--hl)}
+  #carte-titre,[id^="partie-"]{scroll-margin-top:64px}
+  @media print{.retour-carte{display:none}}
+
+  /* Une couleur par notion, la même partout : ce que l'on constate en jaune, la cause en violet. */
+  .sy{color:var(--warn);font-weight:600}.hy{color:var(--head);font-weight:600}
+  /* Une suite de cinq ou six étapes tient sur une rangée (les vignettes numérotées des fiches de Pascal). */
+  .chaine.cinq div{flex-basis:118px}.chaine.six div{flex-basis:98px}
+  /* Les ancres citées par la séquence 3e_C5.1 (« Avant de commencer ») : la barre collée en haut ne les recouvre pas. */
+  #diagnostic,#remplacer{scroll-margin-top:64px}
+  @media print{.sy{color:#8a5a00}.hy{color:#6a2c91}}
+</style></head>
 <body>
-<style id="navharm-css">
-#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
- padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
- -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
-#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
- border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
- font-size:.92em;text-decoration:none;line-height:1.2}
-#navharm a:hover{border-color:#61dafb;color:#61dafb}
-#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
-@media print{#navharm{display:none}}
-</style>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_4e_C5.1-C5.3_depanner_jardin.html">← Séquence</a></nav>
 <div class="page">
-<h1>📄 Synthèse — SOS jardin connecté</h1>
-<p class="sous">4e_C5.1 · 4e_C5.2 · 4e_C5.3 — ce qu'il faut retenir (et savoir refaire)</p>
+<h1>📌 Synthèse élève — SOS jardin connecté</h1>
+<p class="pb">Prouver la cause de la panne, remplacer la pièce sans mode d'emploi, refabriquer ce qui manque.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
 
-<div class="bloc">
-<h2 id="diagnostic" style="margin-top:0">🧭 4e_C5.1 — Proposer un protocole de diagnostic</h2>
-<ul>
-  <li>Le <b>symptôme</b> est ce qu'on constate (tomates flétries) ; la <b>cause</b> est ce qui le provoque. Entre les deux : des <b>tests</b>.</li>
-  <li>Un <b>protocole de diagnostic</b> = une liste <b>ordonnée</b> de tests, du plus <b>rapide</b> au plus engageant — chaque test <b>élimine</b> ou <b>accuse</b> une cause.</li>
-  <li>Un test <b>discriminant</b> départage les suspects : comparer la mesure de l'écran (78 % « humide ») au sol réel (sec, craquelé) a démasqué le capteur en un geste.</li>
-  <li>Une <b>mesure peut mentir</b> : un capteur mesure ce qui touche ses électrodes — encroûté de terre et de calcaire, il mesure sa croûte, pas le sol.</li>
-  <li>La <b>marche forcée</b> de la pompe teste UN sous-système : l'eau coule → pompe et tuyau <b>innocentés</b>, l'enquête remonte vers la mesure.</li>
-  <li>Sécurité : <b>couper l'alimentation</b> avant d'approcher les mains des composants — toujours, même en très basse tension.</li>
-  <li>La <b>conclusion</b> désigne la cause EN CITANT les tests qui la prouvent.</li>
-</ul>
-<figure><object data="../Images/jardin_symptomes.svg" type="image/svg+xml" aria-label="Le jardin connecté en panne : trois faits qui se contredisent"></object>
-<figcaption>Sol sec + réservoir plein + écran « tout va bien » : la contradiction qui lance le protocole.</figcaption></figure>
+<!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
+<section class="carte" aria-labelledby="carte-titre">
+  <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
+  <p class="question">Le jardin affiche «&nbsp;tout va bien&nbsp;» et les tomates sèchent&nbsp;: comment trouver la panne et réparer, preuves à l'appui&nbsp;?</p>
+  <div class="tete">
+  <div class="programme"><b>Ce que dit le programme</b> (4e, compétence C5)&nbsp;:
+    <ul>
+      <li>proposer un protocole permettant de vérifier l'origine d'un dysfonctionnement&nbsp;;</li>
+      <li>remplacer une pièce défectueuse sans protocole fourni (la pièce de remplacement étant fournie)&nbsp;;</li>
+      <li>choisir les procédés de réalisation et les mettre en œuvre.</li>
+    </ul>
+  </div>
+    <figure class="objet">
+      <img src="../Images/synthese_jardin_connecte.png" alt="Le jardin connecté : un bac de culture, une cuve d'eau, un petit panneau solaire et un boîtier gris sur un poteau.">
+      <figcaption>📍 L'objet&nbsp;: le jardin connecté du collège. <i>Image générée par IA (Canva).</i></figcaption>
+    </figure>
+  </div>
+  <div class="cartes">
+    <a href="#partie-1"><span class="q">🧭 1. Comment proposer un protocole de diagnostic&nbsp;?</span>
+      <span class="r">Des tests dans l'ordre, du plus rapide au plus long.</span></a>
+    <a href="#partie-2"><span class="q">🔍 2. Quel test démasque le coupable&nbsp;?</span>
+      <span class="r">Celui qui tranche&nbsp;: la mesure comparée au sol réel.</span></a>
+    <a href="#partie-3"><span class="q">🔧 3. Comment remplacer sans protocole fourni&nbsp;?</span>
+      <span class="r">Couper d'abord, tester à la fin&nbsp;; la photo guide.</span></a>
+    <a href="#partie-4"><span class="q">✅ 4. Quand la réparation est-elle finie&nbsp;?</span>
+      <span class="r">Quand le test final réussit, pas quand c'est remonté.</span></a>
+    <a href="#partie-5"><span class="q">🏭 5. Quel procédé pour refaire le clip&nbsp;?</span>
+      <span class="r">Celui qui convient à la forme et au lieu de vie.</span></a>
+    <a href="#partie-6"><span class="q">📏 6. Comment fabriquer le clip, dans l'ordre&nbsp;?</span>
+      <span class="r">D'abord mesurer&nbsp;; le jeu se prévoit dès le modèle 3D.</span></a>
+  </div>
+</section>
+
+<!-- ══ 1 ══ -->
+<div class="bloc savoir" id="diagnostic">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-1" style="margin-top:0">1. Comment proposer un protocole de diagnostic&nbsp;?</h2>
+  <p>Les tomates flétries sont le <span class="sy">symptôme</span>. Pour prouver la <span class="hy">cause</span>, tu
+  proposes six tests, du plus rapide au plus long&nbsp;:</p>
+  <div class="chaine etapes six">
+    <div><b>1. Observer</b>Les symptômes, sans rien toucher.</div>
+    <div><b>2. Le réservoir</b>Le regarder&nbsp;: 10 secondes.</div>
+    <div><b>3. Écran ou sol&nbsp;?</b>Comparer la mesure au sol réel.</div>
+    <div><b>4. Marche forcée</b>Lancer la pompe par son bouton manuel.</div>
+    <div><b>5. Examiner</b>Alimentation coupée, voir le capteur de près.</div>
+    <div class="ok"><b>6. Conclure</b>Nommer la cause et la pièce à changer.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un <b>protocole de diagnostic</b> est une liste <b>ordonnée</b> de tests,
+  du plus <b>rapide</b> au plus long. Chaque test <b>innocente</b> ou <b>accuse</b> un composant, et la conclusion
+  cite les tests qui la prouvent.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: changer des pièces au hasard «&nbsp;pour voir&nbsp;». Tu paies sans
+  comprendre, et la panne peut revenir.</p>
 </div>
 
-<div class="bloc">
-<h2 id="remplacer" style="margin-top:0">🔧 4e_C5.2 — Remplacer une pièce sans protocole fourni</h2>
-<ul>
-  <li>En 4e, la pièce est fournie… <b>pas la méthode</b> : c'est toi qui construis l'ordre des gestes.</li>
-  <li>La méthode du remplacement autonome : <b>la sécurité OUVRE</b> (couper l'alimentation), <b>la preuve FERME</b> (le test final).</li>
-  <li>La <b>photo du branchement</b>, prise avant de débrancher, remplace le protocole absent : remontage à l'identique garanti.</li>
-  <li><b>Comparer neuf/ancien AVANT le montage</b> (broches, dimensions, repères) : une incompatibilité découverte après coûte un démontage de plus. Pièce incompatible = on <b>s'arrête et on signale</b> — on ne force jamais.</li>
-  <li>Le remontage suit <b>l'ordre inverse</b> du démontage, photo en main.</li>
-  <li>Le <b>test final</b> provoque une vraie variation (verre d'eau au plant témoin) et prouve la chaîne complète : capteur → carte → pompe. <b>Remonté ≠ réparé : réparé = testé.</b></li>
-  <li>⚠ Notre terrain : la <b>très basse tension (12 V (volts))</b>. Le <b>secteur 230 V</b> est un danger mortel — adultes qualifiés uniquement.</li>
-</ul>
+<!-- ══ 2 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-2" style="margin-top:0">2. Quel test démasque le coupable&nbsp;?</h2>
+  <p>Le réservoir est plein, et pourtant le jardin n'arrose plus. Trois tests désignent le coupable&nbsp;:</p>
+  <div class="chaine">
+    <div class="ko"><b>Écran ou sol&nbsp;?</b>L'écran dit 78&nbsp;% «&nbsp;humide&nbsp;», le sol craque&nbsp;: la mesure ment.</div>
+    <div class="ok"><b>La marche forcée</b>L'eau coule&nbsp;: la pompe et le tuyau sont innocentés.</div>
+    <div class="ko"><b>Le capteur, de près</b>Ses électrodes sont prises dans une croûte de terre et de calcaire.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un <b>test discriminant</b> tranche entre plusieurs causes&nbsp;: ici,
+  comparer la mesure au sol réel. Un capteur mesure ce qui touche ses électrodes&nbsp;: encroûté, il <b>mesure sa croûte</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire l'écran sur parole. Une mesure n'est pas la réalité&nbsp;: tu la
+  compares à ce que tu vois.</p>
 </div>
 
-<div class="bloc">
-<h2 style="margin-top:0">🏭 4e_C5.3 — Choisir les procédés de réalisation</h2>
-<ul>
-  <li>Un procédé se choisit en <b>croisant des critères</b> : la <b>forme</b> de la pièce × son <b>environnement</b> × le <b>temps</b> × le <b>matériel</b> disponible.</li>
-  <li>Chaque procédé a son <b>domaine de formes</b> : une plaque pliée ne devient pas un volume à ergots — le clip revient à l'<b>impression 3D</b>.</li>
-  <li>Le <b>matériau suit l'environnement</b> : dehors (soleil, UV, arrosage) → <b>PETG</b> ; à l'intérieur, le PLA suffit.</li>
-  <li>La <b>gamme de fabrication</b> : <b>mesurer</b> (pied à coulisse sur l'ancienne pièce) → <b>modéliser</b> → <b>imprimer</b> → <b>ébavurer/ajuster</b> → <b>monter et tester</b>.</li>
-  <li>Le <b>jeu fonctionnel</b> (≈ 0,2 mm) se prévoit dès la modélisation : assez pour monter sans forcer, pas assez pour ballotter.</li>
-  <li>Atelier : <b>lunettes, cheveux attachés, adulte présent</b> — pour toutes les machines, imprimante 3D comprise.</li>
-  <li><b>Réparer plutôt que jeter</b> : la pièce à l'unité et sur mesure sauve l'objet entier — bon pour le budget ET pour la planète.</li>
-</ul>
+<!-- ══ 3 ══ -->
+<div class="bloc faire" id="remplacer">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-3" style="margin-top:0">3. Comment remplacer une pièce sans protocole fourni&nbsp;?</h2>
+  <p>Le capteur neuf est fourni, pas la méthode&nbsp;: c'est toi qui ordonnes les six gestes.</p>
+  <div class="chaine etapes six">
+    <div><b>1. Couper</b>Puis photographier le branchement.</div>
+    <div><b>2. Extraire</b>Débrancher, sortir l'ancien capteur.</div>
+    <div><b>3. Comparer</b>Broches, longueur, repères. Sinon, tu signales.</div>
+    <div><b>4. Installer</b>Remonter à l'envers du démontage, photo en main.</div>
+    <div><b>5. Réalimenter</b>Remettre l'alimentation.</div>
+    <div class="ok"><b>6. Tester</b>De l'eau au pied du plant témoin.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: sans protocole, ta <b>méthode</b> te guide&nbsp;: tu commences par
+  <b>couper l'alimentation</b> et tu finis par un <b>test</b>. La <b>photo</b> prise avant de débrancher remplace le
+  protocole absent.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: travailler sous tension «&nbsp;parce que c'est rapide&nbsp;». Même en
+  12&nbsp;V (volts), tu coupes d'abord.</p>
 </div>
 
-<div class="bloc vocab">
-<h2 style="margin-top:0">🗣 Vocabulaire (FR — EN)</h2>
-<p><b>panne</b> — failure · <b>symptôme</b> — symptom · <b>cause</b> — root cause · <b>protocole</b> — protocol ·
-<b>test discriminant</b> — discriminating test · <b>capteur</b> — sensor · <b>remplacer</b> — to replace ·
-<b>procédé</b> — process · <b>impression 3D</b> — 3D printing · <b>jeu (fonctionnel)</b> — clearance ·
-<b>gamme de fabrication</b> — process plan · <b>ébavurer</b> — to deburr</p>
+<!-- ══ 4 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-4" style="margin-top:0">4. Quand la réparation est-elle vraiment finie&nbsp;?</h2>
+  <p>Le capteur neuf est monté. Il reste à prouver que toute la chaîne fonctionne&nbsp;:</p>
+  <div class="chaine">
+    <div class="ko"><b>Remonté</b>Le capteur est en place. Rien n'est encore prouvé.</div>
+    <div class="ok"><b>Le test à l'eau</b>Un verre d'eau au plant témoin&nbsp;: la mesure chute de 78&nbsp;% à 35&nbsp;% environ.</div>
+    <div class="ok"><b>La pompe s'amorce</b>Le goutte-à-goutte coule&nbsp;: capteur, carte et pompe marchent ensemble.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: <b>remonté</b> ne veut pas dire <b>réparé</b>. La réparation est finie
+  quand le <b>test final</b> réussit&nbsp;: il provoque une vraie variation et vérifie toute la chaîne.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: trouver suspect un 31&nbsp;% sur un sol sec, parce que l'écran disait 78&nbsp;%.
+  La référence, c'est le sol que tu vois.</p>
 </div>
 
-<div class="bloc">
-<h2 style="margin-top:0">⚠ Erreurs fréquentes</h2>
-<ul>
-  <li class="ko">Croire l'écran sur parole — la mesure se confronte TOUJOURS à la réalité observable.</li>
-  <li class="ko">Démonter en premier, ou changer des pièces au hasard « pour voir ».</li>
-  <li class="ko">Débrancher sans photo ; monter la pièce neuve sans l'avoir comparée ; forcer une pièce incompatible.</li>
-  <li class="ko">Déclarer la réparation finie sans test final.</li>
-  <li class="ko">Imprimer en PLA une pièce d'extérieur ; modéliser sans jeu fonctionnel ; imprimer avant de mesurer.</li>
-</ul>
-<p class="ok" style="margin:8px 0 0">➡ La suite de l'histoire : « Ajuster le programme du jardin » (4e_C6) — quand la panne n'est plus dans les pièces… mais dans les lignes de code.</p>
+<!-- ══ 5 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-5" style="margin-top:0">5. Quel procédé choisir pour refaire le clip&nbsp;?</h2>
+  <p>En sortant le capteur, son clip-support a cassé, et le fabricant ne le vend plus. L'atelier propose trois procédés&nbsp;:</p>
+  <div class="chaine">
+    <div class="ok"><b>🖨 Impression 3D en PETG ✔</b>Un volume à ergots, en une pièce, à l'unité. Le PETG tient au soleil.</div>
+    <div class="ko"><b>✂ Découpe-pliage de PVC ✘</b>Elle plie une plaque&nbsp;: pas de volume à ergots.</div>
+    <div class="ko"><b>🪚 Taille dans le bois ✘</b>Le bois gonfle à l'humidité, et les ergots sont fragiles.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: tu choisis le procédé en <b>croisant des critères</b>, à commencer par la
+  <b>forme</b> de la pièce. Le <b>matériau</b> suit l'environnement&nbsp;: dehors le PETG, à l'intérieur le PLA suffit.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: imprimer en PLA une pièce d'extérieur. Il ramollit vers 55 à 60&nbsp;°C
+  et vieillit aux UV.</p>
 </div>
 
+<!-- ══ 6 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-6" style="margin-top:0">6. Comment fabriquer le clip, dans l'ordre&nbsp;?</h2>
+  <p>La fabrication suit une <b>gamme</b>, en cinq opérations. Refaire le clip coûte 0,30&nbsp;€ de plastique, au lieu de racheter le jardin&nbsp;:</p>
+  <div class="chaine etapes cinq">
+    <div><b>1. Mesurer</b>L'ancien clip, au pied à coulisse.</div>
+    <div><b>2. Modéliser</b>En 3D, avec le jeu&nbsp;: 10,2&nbsp;mm pour 10,0.</div>
+    <div><b>3. Imprimer</b>Lunettes, cheveux attachés, adulte présent.</div>
+    <div><b>4. Ébavurer</b>Ôter les défauts et les arêtes vives.</div>
+    <div class="ok"><b>5. Monter, tester</b>Le capteur s'enclenche sans forcer.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: la <b>gamme</b> commence toujours par <b>mesurer</b>&nbsp;: l'ancien clip
+  est le plan du nouveau. Le <b>jeu fonctionnel</b>, environ 0,2&nbsp;mm, se prévoit dès la modélisation.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: dessiner le trou pile à 10,0&nbsp;mm. Le capteur coince, et tu limes
+  pendant une heure.</p>
 </div>
+
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>panne <span class="en">— failure</span></dt><dd>l'objet ne fait plus son travail.</dd></div>
+    <div><dt>symptôme <span class="en">— symptom</span></dt><dd>ce que tu constates.</dd></div>
+    <div><dt>cause <span class="en">— root cause</span></dt><dd>ce qui provoque le symptôme.</dd></div>
+    <div><dt>protocole <span class="en">— procedure</span></dt><dd>des tests ou des gestes, dans l'ordre.</dd></div>
+    <div><dt>test discriminant <span class="en">— discriminating test</span></dt><dd>il départage les causes.</dd></div>
+    <div><dt>capteur <span class="en">— sensor</span></dt><dd>le composant qui mesure.</dd></div>
+    <div><dt>électrode <span class="en">— electrode</span></dt><dd>la tige du capteur qui touche la terre.</dd></div>
+    <div><dt>marche forcée <span class="en">— manual override</span></dt><dd>la pompe lancée par son bouton manuel.</dd></div>
+    <div><dt>TBT <span class="en">— extra-low voltage</span></dt><dd>très basse tension, ici 12&nbsp;V (volts)&nbsp;; le secteur, 230&nbsp;V, est mortel.</dd></div>
+    <div><dt>compatible <span class="en">— compatible</span></dt><dd>qui prend la place de l'ancienne pièce.</dd></div>
+    <div><dt>test final <span class="en">— final test</span></dt><dd>il prouve que l'objet remarche.</dd></div>
+    <div><dt>procédé <span class="en">— process</span></dt><dd>la manière de fabriquer.</dd></div>
+    <div><dt>impression 3D <span class="en">— 3D printing</span></dt><dd>la pièce monte couche par couche.</dd></div>
+    <div><dt>ergot <span class="en">— snap tab</span></dt><dd>une petite dent qui s'enclenche.</dd></div>
+    <div><dt>PETG <span class="en">— PETG</span></dt><dd>un plastique d'impression 3D qui tient au soleil et à l'eau.</dd></div>
+    <div><dt>PLA <span class="en">— PLA</span></dt><dd>un plastique d'impression 3D, pour l'intérieur.</dd></div>
+    <div><dt>UV <span class="en">— UV rays</span></dt><dd>les rayons du soleil qui abîment les plastiques.</dd></div>
+    <div><dt>gamme de fabrication <span class="en">— process plan</span></dt><dd>les opérations, dans l'ordre.</dd></div>
+    <div><dt>pied à coulisse <span class="en">— caliper</span></dt><dd>l'outil qui mesure une pièce avec précision.</dd></div>
+    <div><dt>jeu fonctionnel <span class="en">— clearance</span></dt><dd>le petit écart qui laisse monter sans forcer.</dd></div>
+    <div><dt>ébavurer <span class="en">— to deburr</span></dt><dd>ôter les défauts d'une pièce neuve.</dd></div>
+  </dl>
+</div>
+</div>
+
+<!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  /* L'agrandisseur est une COLONNE — bouton, image, légende — : la légende suit l'image dans le
+     flux, l'image reçoit une hauteur maximale calculée (ajuster()), et le fond défile si besoin. */
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:1rem;box-sizing:border-box;overflow:auto;
+    flex-direction:column;align-items:center;gap:.75rem}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  /* centré quand tout tient, sans rien couper quand ça déborde : des marges automatiques,
+     pas justify-content:center (qui rendrait le haut inaccessible au défilement) */
+  .loupe-fond > .loupe-fermer{margin-top:auto}
+  .loupe-fond > .loupe-legende{margin-bottom:auto}
+  .loupe-fond img{display:block;flex:none;max-width:100%;max-height:80vh;width:auto;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:static;flex:none;margin:0;max-width:min(70ch,100%);text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif}
+  .loupe-legende .loupe-aide{display:block;margin-top:.25rem;font-size:.85em;color:#b8bfcc}
+  .loupe-fermer{position:sticky;top:0;align-self:flex-end;flex:none;z-index:1;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+    grande.addEventListener("load", ajuster);
+    window.addEventListener("resize", ajuster);
+  }
+
+  // La légende affichée : la figcaption VISIBLE de la figure si elle existe ; sinon le
+  // texte alternatif, réduit à sa première phrase s'il dépasse deux lignes. L'alt complet
+  // reste sur l'image agrandie, pour les lecteurs d'écran.
+  function poserLegende(el, texteAlt){
+    var fig = el.closest("figure");
+    var cap = fig ? fig.querySelector("figcaption") : null;
+    var visible = cap && cap.getClientRects().length && cap.textContent.trim();
+    legende.textContent = "";
+    var texte = visible ? cap.textContent.replace(/\s+/g, " ").trim() : (texteAlt || "");
+    texte = texte.replace(/\s*\(clique[^()]*agrandir\)/gi, "").trim();   // l'image est déjà agrandie
+    var corps = document.createElement("span");
+    corps.textContent = texte;
+    var aide = document.createElement("span");
+    aide.className = "loupe-aide";
+    aide.textContent = "Échap pour refermer";
+    if (texte) legende.appendChild(corps);
+    legende.appendChild(aide);
+    if (!visible && texte) {
+      var ligne = parseFloat(getComputedStyle(legende).lineHeight) || 20;
+      if (corps.getBoundingClientRect().height > 2 * ligne + 1) {
+        var m = texte.match(/^[\s\S]*?[.!?…](?=\s|$)/);
+        if (m && m[0].length < texte.length) corps.textContent = m[0];
+      }
+    }
+  }
+
+  // L'image reçoit la place qui reste : hauteur du fond, moins le bouton, la légende,
+  // les marges et les espacements — jamais moins de 40 % de l'écran ; au-delà, le fond défile.
+  function ajuster(){
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    var st = getComputedStyle(fond);
+    var ecart = parseFloat(st.rowGap) || 0;
+    var reste = fond.clientHeight - parseFloat(st.paddingTop) - parseFloat(st.paddingBottom)
+              - fond.querySelector(".loupe-fermer").offsetHeight - legende.offsetHeight - 2 * ecart;
+    grande.style.maxHeight = Math.max(reste, 0.4 * window.innerHeight) + "px";
+  }
+
+  function montrer(el, texteAlt){
+    fond.setAttribute("data-ouvert", "oui");
+    fond.scrollTop = 0;
+    poserLegende(el, texteAlt);
+    ajuster();
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.style.background = "";
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    montrer(img, img.alt);
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    grande.style.maxHeight = "";
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
+  // couleurs et leur police viennent de la feuille de style de la PAGE. Sérialisé seul, le
+  // dessin les perdrait (formes noires, police par défaut, texte qui déborde) : on recopie
+  // donc sur la copie les propriétés CALCULÉES de chaque élément, on y ajoute les dégradés
+  // et marqueurs définis ailleurs dans la page, et l'image reçoit le fond du schéma.
+  var PROPRIETES = ["fill", "fill-opacity", "fill-rule", "stroke", "stroke-width", "stroke-opacity",
+    "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit",
+    "opacity", "visibility", "display", "color", "font-family", "font-size", "font-weight", "font-style",
+    "font-variant-numeric", "letter-spacing", "word-spacing", "text-anchor", "dominant-baseline",
+    "baseline-shift", "text-decoration", "white-space", "paint-order", "stop-color", "stop-opacity",
+    "marker-start", "marker-mid", "marker-end", "clip-path", "mask", "filter"];
+  // Une transformation posée par la feuille de style (pas par l'attribut transform, que la
+  // copie garde déjà) : on la recopie avec son origine.
+  var TRANSFORMATION = ["transform", "transform-origin", "transform-box"];
+
+  function figer(source, copie){
+    var a = [source].concat([].slice.call(source.querySelectorAll("*")));
+    var b = [copie].concat([].slice.call(copie.querySelectorAll("*")));
+    for (var i = 0; i < a.length && i < b.length; i++) {
+      var cs = getComputedStyle(a[i]), decl = [], k, v;
+      for (k = 0; k < PROPRIETES.length; k++) {
+        v = cs.getPropertyValue(PROPRIETES[k]);
+        if (v) decl.push(PROPRIETES[k] + ":" + v);
+      }
+      if (i > 0 && !a[i].hasAttribute("transform") && cs.getPropertyValue("transform") &&
+          cs.getPropertyValue("transform") !== "none") {
+        for (k = 0; k < TRANSFORMATION.length; k++) decl.push(TRANSFORMATION[k] + ":" + cs.getPropertyValue(TRANSFORMATION[k]));
+      }
+      var deja = b[i].getAttribute("style");
+      b[i].setAttribute("style", decl.join(";") + (deja ? ";" + deja : ""));
+    }
+  }
+
+  // Un dégradé ou un marqueur appelé par url(#…) mais défini hors du dessin : on le recopie dedans.
+  function rapatrier(copie){
+    var defs = null, faits = {}, tour = 0, trouve = true;
+    while (trouve && tour++ < 4) {
+      trouve = false;
+      var refs = (new XMLSerializer().serializeToString(copie).match(/url\((?:&quot;|["'])?#([^"')&]+)/g) || [])
+        .concat(new XMLSerializer().serializeToString(copie).match(/href="#[^"]+"/g) || []);
+      refs.forEach(function(r){
+        var id = r.replace(/^url\((?:&quot;|["'])?#/, "").replace(/^href="#/, "").replace(/"$/, "");
+        if (faits[id] || copie.querySelector("[id='" + id.replace(/'/g, "") + "']")) return;
+        faits[id] = true;
+        var el = document.getElementById(id);
+        if (!el || !el.closest("svg")) return;
+        if (!defs) { defs = document.createElementNS("http://www.w3.org/2000/svg", "defs"); copie.insertBefore(defs, copie.firstChild); }
+        var c = el.cloneNode(true); figer(el, c); defs.appendChild(c); trouve = true;
+      });
+    }
+  }
+
+  // Le fond sur lequel le schéma est dessiné : le sien, sinon celui du premier parent opaque.
+  function fondDe(el){
+    for (var e = el; e && e.nodeType === 1; e = e.parentElement) {
+      var c = getComputedStyle(e).backgroundColor, m = c.match(/rgba?\(([^)]+)\)/);
+      if (m) { var p = m[1].split(","); if (p.length < 4 || parseFloat(p[3]) > 0) return c; }
+      else if (c && c !== "transparent") return c;
+    }
+    return "#fff";
+  }
+
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    figer(svg, copie);
+    rapatrier(copie);
+    copie.style.background = "transparent";
+    // Une taille propre au dessin (sans elle, une image SVG n'a que 300 × 150 px à offrir) :
+    // celle de la viewBox, agrandie ; le CSS de la loupe la ramène à l'écran.
+    var vb = svg.viewBox && svg.viewBox.baseVal, boite = svg.getBoundingClientRect();
+    var w = vb && vb.width ? vb.width : boite.width, h = vb && vb.height ? vb.height : boite.height;
+    if (!(vb && vb.width) && w && h) copie.setAttribute("viewBox", "0 0 " + w + " " + h);
+    var k = w ? Math.max(1, 1600 / w) : 1;
+    if (w && h) { copie.setAttribute("width", Math.round(w * k)); copie.setAttribute("height", Math.round(h * k)); }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.style.background = fondDe(svg);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    montrer(svg, mot);
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
 </body>
 </html>

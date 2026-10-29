@@ -74,3 +74,13 @@ mots « signaux » et « décisions » ne sont plus cachés par les blocs. Les p
 (le perron monumental et ses lions) sortaient du cadre. Le fond du sous-sol est désormais peint en premier, les
 étiquettes sont replacées sous ce qu'elles nomment ; « nacelle horizontale » et « comptoir de distribution » ne
 chevauchent plus le rail ni le comptoir. Rien n'est ajouté au dessin.
+
+## Image générée par IA (Canva) pour la synthèse élève
+
+Demande de Pascal du 29/10/2026 : « une capture d'écran ou une illustration permet d'avoir une vision plus synthétique
+de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règles : skill `synthese-vulgarisee`, §4.
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/synthese_book_train.png` | Un wagonnet rouge sur un rail vertical, dans la réserve souterraine d'une bibliothèque ; sa nacelle reste à plat. PNG 1 536 × 1 024, 2.3 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a small red electric book cart running on a narrow steel monorail track that climbs vertically up a wall inside a library's underground book stacks; the cart's basket hangs on a pivot and stays level, holding a few books; rows of shelves in the background, warm light, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Synthèse élève, carte « Ce que je dois retenir » |
+
