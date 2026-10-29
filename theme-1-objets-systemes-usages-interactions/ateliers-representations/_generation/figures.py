@@ -165,12 +165,48 @@ def pieuvre(ident, objet, bulles, titre, desc, liens_fc=(), liens_fp=(), largeur
         x1, y1, x2, y2 = bouts_fp(i, j)
         qx, qy = controle_fp(x1, y1, x2, y2)
         u = 1 - t
-        return u * u * x1 + 2 * u * t * qx + t * t * x2, u * u * y1 + 2 * u * t * qy + t * t * y2
+        return u * u * x1 + 2 * u * t * qx + t * t * x2, u * u * y1 + 2 * u * t * qy + t * t * y2, t
+
+    CONTOUR = [(math.cos(2 * math.pi * k / 96), math.sin(2 * math.pi * k / 96)) for k in range(96)]
+
+    def air_ellipse(px, py, ecx, ecy, erx, ery):
+        """L'air entre une étiquette (46 × 24, centrée en (px, py)) et le bord d'une ellipse ; négatif si elles se
+        chevauchent (un coin de l'étiquette dans l'ellipse, ou un point du bord dans l'étiquette)."""
+        coins = [(px + sx * 23, py + sy * 12) for sx in (-1, 1) for sy in (-1, 1)] + [(px, py)]
+        if any(((qx - ecx) / erx) ** 2 + ((qy - ecy) / ery) ** 2 <= 1 for (qx, qy) in coins):
+            return -1
+        best = 99
+        for (c, s_) in CONTOUR:
+            qx, qy = ecx + erx * c, ecy + ery * s_
+            dx, dy = max(abs(qx - px) - 23, 0), max(abs(qy - py) - 12, 0)
+            if dx == 0 and dy == 0:
+                return -1
+            best = min(best, math.hypot(dx, dy))
+        return best
 
     def sens_fp(x1, y1, x2, y2):
         ux, uy = (x1 + x2) / 2 - cx, (y1 + y2) / 2 - cy
         d = math.hypot(ux, uy)
         return (ux / d, uy / d) if d > 1 else (0.0, -1.0)
+
+    def sortie(px, py, dx, dy, ecx, ecy, erx, ery):
+        """Le paramètre t où la demi-droite (px, py) + t·(dx, dy) sort de l'ellipse de centre (ecx, ecy)."""
+        dedans = lambda t: ((px + t * dx - ecx) / erx) ** 2 + ((py + t * dy - ecy) / ery) ** 2 <= 1
+        if not dedans(0):
+            return 0.0
+        lo, hi = 0.0, 1.0
+        for _ in range(40):
+            m = (lo + hi) / 2
+            lo, hi = (m, hi) if dedans(m) else (lo, m)
+        return lo
+
+    def milieu_visible(x0, y0, x1, y1, bulle):
+        """Le milieu du segment (x0, y0) → (x1, y1) hors de l'ellipse de l'objet et hors de la bulle d'arrivée."""
+        dx, dy = x1 - x0, y1 - y0
+        t0 = sortie(x0, y0, dx, dy, cx, cy, ORX, ORY)                       # sortie de l'objet
+        t1 = 1 - sortie(x1, y1, -dx, -dy, bulle[0], bulle[1], BRX, bry)    # entrée dans la bulle
+        t = (t0 + t1) / 2 if t1 > t0 else 0.5
+        return x0 + t * dx, y0 + t * dy
 
     corps = [fleche_def(ident + "-pt")]
     # Traits d'abord (sous les bulles)
@@ -184,10 +220,10 @@ def pieuvre(ident, objet, bulles, titre, desc, liens_fc=(), liens_fp=(), largeur
     arrivees_fp = {}
     for (i, j, _l) in liens_fp:
         for k, t in ((j, 0.9), (i, 0.1)):
-            arrivees_fp[k] = point_fp(i, j, t)
+            arrivees_fp[k] = point_fp(i, j, t)[:2]
     for (k, lab) in liens_fc:
         x, y = pos[k]
-        x0, y0, fx = cx, cy, 0.55
+        x0, y0 = cx, cy
         if k in arrivees_fp:
             dx, dy = x - cx, y - cy
             d = math.hypot(dx, dy) or 1
@@ -196,10 +232,11 @@ def pieuvre(ident, objet, bulles, titre, desc, liens_fc=(), liens_fp=(), largeur
             signe = -1 if (ax - x) * px + (ay - y) * py > 0 else 1
             x, y = dans_bulle(x, y, signe * 62 * px, signe * 62 * py)   # l'extrémité reste dans la bulle
             x0, y0 = cx + signe * 26 * px, cy + signe * 26 * py
-            fx = 0.42
         corps.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#b3261e" stroke-width="3.2"/>'
                      % (x, y, x0, y0))
-        mx, my = (x * fx + x0 * (1 - fx)), (y * fx + y0 * (1 - fx))
+        # Règle d'or n°315 : l'étiquette se pose au milieu de la partie VISIBLE du trait — entre le bord de l'ellipse de
+        # l'objet et le bord de la bulle —, pour ne toucher ni l'une ni l'autre.
+        mx, my = milieu_visible(x0, y0, x, y, pos[k])
         etiquettes.append((mx, my, lab, "#b3261e"))
     # L'objet au centre, puis les courbes des FP PAR-DESSUS : on voit le trait entrer dans l'ellipse et en ressortir.
     corps.append('<ellipse cx="%.1f" cy="%.1f" rx="%d" ry="%d" fill="#ffffff" stroke="%s" stroke-width="3"/>'
@@ -209,8 +246,18 @@ def pieuvre(ident, objet, bulles, titre, desc, liens_fc=(), liens_fp=(), largeur
         qx, qy = controle_fp(x1, y1, x2, y2)
         corps.append('<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" fill="none" stroke="#1f5fbf" '
                      'stroke-width="3.2" stroke-linecap="round"/>' % (x1, y1, qx, qy, x2, y2))
-        # étiquette aux quatre cinquièmes de la courbe, côté de la seconde bulle
-        ex_, ey_ = point_fp(i, j, 0.80)
+        # étiquette vers les quatre cinquièmes de la courbe, côté de la seconde bulle — sauf si elle y toucherait
+        # l'étiquette d'une FC, l'ellipse de l'objet ou une bulle (n°315 : 16 unités d'air) : on la fait glisser le long
+        # de la courbe, au plus près de 0,80.
+        def air(px, py):
+            gaps = [max(abs(px - ex) - 46, abs(py - ey) - 24) for (ex, ey, _l, _c) in etiquettes]
+            gaps.append(air_ellipse(px, py, cx, cy, ORX, ORY))
+            gaps += [air_ellipse(px, py, bx, by, BRX, bry) for (bx, by) in pos]
+            return min(gaps)
+        choix = sorted((point_fp(i, j, t / 100) for t in range(50, 97, 2)),
+                       key=lambda q: abs(q[2] - 0.80))
+        ex_, ey_, _t = next((q for q in choix if air(q[0], q[1]) >= 16),
+                            max(choix, key=lambda q: air(q[0], q[1])))
         etiquettes.append((ex_, ey_, lab, "#1f5fbf"))
     # Le nom de l'objet s'écarte un peu du côté où plongent les FP, pour que la courbe ne le touche pas.
     sx = sum(sens_fp(*bouts_fp(i, j))[0] for (i, j, _l) in liens_fp)
@@ -424,14 +471,68 @@ def exigences(ident, blocs, titre, desc, contient=(), relations=(), largeur=820,
         corps.append('<circle cx="%.1f" cy="%.1f" r="9" fill="#ffffff" stroke="%s" stroke-width="2"/>' % (x1, y1 + 9, ENCRE))
         corps.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="2"/>' % (x1 - 6, y1 + 9, x1 + 6, y1 + 9, ENCRE))
         corps.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="2"/>' % (x1, y1 + 3, x1, y1 + 15, ENCRE))
+    # Règle d'or n°315 : les flèches d'une même source partent de points ÉCARTÉS sur son bord (elles ne convergent pas
+    # en un point), et chaque mot «satisfy» / «verify» se pose À CÔTÉ de sa flèche, là où il ne touche ni une autre
+    # flèche, ni un bloc, ni un autre mot.
+    traits = []
     for (s, c, genre) in relations:
         bs, bc = blocs[s], blocs[c]
-        x1, y1 = bs["x"] + bs.get("l", 250) / 2, bs["y"]
         x2, y2 = bc["x"] + bc.get("l", 250) / 2, bc["y"] + bc.get("h", 118)
+        y1 = bs["y"]
         if bs["y"] < bc["y"]:
             y1, y2 = bs["y"] + bs.get("h", 118), bc["y"]
+        traits.append([s, x2, y1, x2, y2, genre])
+    for s in {t[0] for t in traits}:
+        miens = sorted((t for t in traits if t[0] == s), key=lambda t: t[3])
+        bs = blocs[s]
+        for k, t in enumerate(miens):
+            t[1] = bs["x"] + bs.get("l", 250) * (k + 1) / (len(miens) + 1)
+    segments = [(t[1], t[2], t[3], t[4]) for t in traits]
+    for (p, c) in contient:
+        (xa, ya), (xb, yb) = centre_bas(blocs[p]), centre_haut(blocs[c])
+        segments.append((xa, ya, xb, yb))
+    obstacles = [(b["x"], b["y"], b["x"] + b.get("l", 250), b["y"] + b.get("h", 118)) for b in blocs.values()]
+
+    def air_rect(r, q):
+        dx = max(q[0] - r[2], r[0] - q[2], 0)
+        dy = max(q[1] - r[3], r[1] - q[3], 0)
+        return -1 if dx == 0 and dy == 0 else math.hypot(dx, dy)
+
+    def air_segment(r, sg):
+        best = 99
+        for k in range(41):
+            px, py = sg[0] + (sg[2] - sg[0]) * k / 40, sg[1] + (sg[3] - sg[1]) * k / 40
+            dx, dy = max(r[0] - px, px - r[2], 0), max(r[1] - py, py - r[3], 0)
+            if dx == 0 and dy == 0:
+                return -1
+            best = min(best, math.hypot(dx, dy))
+        return best
+
+    for (s, x1, y1, x2, y2, genre) in traits:
         corps.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="2" stroke-dasharray="8 6" marker-end="url(#%s-pt)"/>' % (x1, y1, x2, y2, GRIS, ident))
-        corps.append(texte((x1 + x2) / 2 + 8, (y1 + y2) / 2, "«" + genre + "»", taille=12, couleur=GRIS, ancre="start", car=20))
+        mot = "«" + genre + "»"
+        W, H = len(mot) * 6.8, 16
+        d = math.hypot(x2 - x1, y2 - y1) or 1
+        nx, ny = -(y2 - y1) / d, (x2 - x1) / d
+        ecart = W / 2 * abs(nx) + H / 2 * abs(ny) + 7
+        candidats = []
+        for t in (0.5, 0.45, 0.55, 0.4, 0.6, 0.35, 0.65, 0.3, 0.7, 0.25, 0.75):
+            for cote in (1, -1):
+                mx = x1 + (x2 - x1) * t + cote * ecart * nx
+                my = y1 + (y2 - y1) * t + cote * ecart * ny
+                r = (mx - W / 2, my - H / 2, mx + W / 2, my + H / 2)
+                if r[0] < 4 or r[2] > largeur - 4 or r[1] < 4 or r[3] > hauteur - 4:
+                    continue
+                autres = [sg for sg in segments if sg != (x1, y1, x2, y2)]
+                air = min([air_segment(r, sg) for sg in autres] + [air_rect(r, o) for o in obstacles] + [99])
+                candidats.append((min(air, 16), -abs(t - 0.5), mx, my, r))
+        if candidats:
+            _a, _t, mx, my, r = max(candidats, key=lambda q: (q[0], q[1]))
+        else:
+            mx, my = (x1 + x2) / 2 + 8 + W / 2, (y1 + y2) / 2
+            r = (mx - W / 2, my - H / 2, mx + W / 2, my + H / 2)
+        obstacles.append(r)
+        corps.append(texte(mx, my, mot, taille=12, couleur=GRIS, car=20))
     for b in blocs.values():
         corps.append(exigence_bloc(b["x"], b["y"], b["nom"], b["id"], b["texte"], l=b.get("l", 250), h=b.get("h", 118),
                                    vivants=b.get("vivants"), stereotype=b.get("stereotype", "requirement"),
@@ -500,6 +601,10 @@ def cas_utilisation(ident, systeme, acteurs, cas, liens, titre, desc, largeur=82
 COULEURS_BRANCHES = ["#1f5fbf", "#b35c00", "#16753a", "#7a3fc7", "#b3261e", "#0f7c8c"]
 
 
+# Règle d'or n°315 : deux feuilles d'une branche ne se touchent pas — 38 unités de haut, 18 d'air entre elles.
+PAS_FEUILLE = 56
+
+
 def carte_mentale(ident, centre, branches, titre, desc, largeur=960, hauteur=None, vivants=None):
     """branches : [(nom, [feuilles])], réparties à droite puis à gauche du centre.
     vivants : {(i,'b'): id, (i,j): id, 'centre': id}."""
@@ -508,7 +613,7 @@ def carte_mentale(ident, centre, branches, titre, desc, largeur=960, hauteur=Non
     droite = list(range(0, (n + 1) // 2))
     gauche = list(range((n + 1) // 2, n))
     def hauteur_cote(idx):
-        return sum(max(1, len(branches[i][1])) * 46 + 24 for i in idx)
+        return sum(max(1, len(branches[i][1])) * PAS_FEUILLE + 24 for i in idx)
     hauteur = hauteur or max(420, max(hauteur_cote(droite), hauteur_cote(gauche)) + 60)
     cx, cy = largeur / 2, hauteur / 2
     corps = []
@@ -517,13 +622,13 @@ def carte_mentale(ident, centre, branches, titre, desc, largeur=960, hauteur=Non
         for i in idx:
             nom, feuilles = branches[i]
             coul = COULEURS_BRANCHES[i % len(COULEURS_BRANCHES)]
-            h = max(1, len(feuilles)) * 46 + 24
+            h = max(1, len(feuilles)) * PAS_FEUILLE + 24
             by = y + h / 2 - 12
             bx = cx + cote * 185
             corps.append('<path d="M%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f" fill="none" stroke="%s" stroke-width="7" stroke-linecap="round"/>'
                          % (cx + cote * 80, cy, cx + cote * 140, cy, bx - cote * 120, by, bx - cote * 78, by, coul))
             for j, f in enumerate(feuilles):
-                fy = y + j * 46 + 11
+                fy = y + j * PAS_FEUILLE + 11
                 fx = cx + cote * 375
                 corps.append('<path d="M%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f" fill="none" stroke="%s" stroke-width="2.4"/>'
                              % (bx + cote * 78, by, bx + cote * 100, by, fx - cote * 100, fy, fx - cote * 78, fy, coul))

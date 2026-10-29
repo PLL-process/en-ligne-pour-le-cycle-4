@@ -5,7 +5,7 @@
 | Fichier | Usage | Statut | Poids indicatif |
 |---|---|---|---|
 | `Images/schema_systeme_information_velos.svg` | Comprendre le rôle des acteurs, données, traitements, réseau et stockage | SVG original créé pour le lot ; aucun média externe | < 3 Ko |
-| `Images/arborescence_donnees_velos.svg` | Visualiser l’organisation des dossiers | SVG original créé pour le lot ; aucun média externe | < 2 Ko |
+| `Images/arborescence_donnees_velos.svg` | Visualiser l’organisation des dossiers (dossiers dessinés, redessiné le 29/10/2026, règle d’or n°315) | SVG original créé pour le lot ; aucun média externe | < 3 Ko |
 | `Images/extrait_donnees_velos.svg` | Question illustrée et règle de priorité | SVG original créé pour le lot ; aucun média externe | < 4 Ko |
 
 Les SVG sont locaux, légers, imprimables en niveaux de gris et possèdent un titre, une description ou un texte alternatif dans les pages HTML.
@@ -50,7 +50,7 @@ tableau initial :
 | `Images/arborescence_fichiers.svg` | Arborescence de fichiers | ~3 Ko |
 | `Images/local_serveur_distant.svg` | Stockage local et serveur distant | ~2 Ko |
 | `Images/capacites_stockage.svg` | Comparaison de capacités de stockage | ~2 Ko |
-| `Images/strategie_sauvegarde.svg` | Stratégie de sauvegarde | ~2 Ko |
+| `Images/strategie_sauvegarde.svg` | Stratégie de sauvegarde (copier / restaurer, redessiné le 29/10/2026, règle d’or n°315) | ~3 Ko |
 | `Images/programme_python_annote.svg` | Programme Python annoté | ~2 Ko |
 
 Deux d'entre eux — `arborescence_fichiers.svg` et `local_serveur_distant.svg` — traitent
