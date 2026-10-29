@@ -26130,3 +26130,51 @@ chemin.
   `controle_hierarchie`, `controle_unites`, `controle_sigles`, `controle_debordement`, `controle_impression.mjs`,
   `controle_contraste_liens.mjs`, `controle_hors_ligne.mjs` : ✅.
 - **À l'écran**, à 390 et à 1 280 pixels : aucun défilement de côté, aucune erreur.
+
+---
+
+## 29/10/2026 — n°315, thème 2 : 0 défaut sur 114 schémas
+
+*Choix par défaut ★ (décision posée avec #551, fusionnée sans réponse) : les schémas du thème 2, mesurés par le
+contrôle complété en #551.*
+
+### Le bilan
+
+| | Schémas | ✘ avant | ✘ après | ⚠ « écrasée » |
+|---|---|---|---|---|
+| Thème 2 | 114 | 201, dans 60 schémas | **0** | 3 → 0 |
+
+Par séquence (✘ avant) : 5e_C4.7 (45), 4e_C4.1_book-train (43), 4e_C4.7 (25), 3e_C4.8 (18), 4e_C5.1 (13), 3e_C5.1
+(10), 5e_C6.1 (10), 3e_C4.7 (10), 3e_C6.2 (6), 3e_C4.3 (6), 4e_C6.1 (5), 3e_C6.1 (3), 5e_C5.1 (3), 3e_C4.1 (2),
+4e_C4.1 (1), 4e_C6.2 (1). 53 fichiers corrigés, tous à la main : aucun de ces schémas ne sort d'un générateur.
+
+### Comment
+
+Chaque schéma fautif a été regardé sur la planche avant et après. Le texte et les faits ne changent pas ; seules la
+géométrie et quelques coupures de ligne changent :
+- **des bulles posées sur des lignes** de terminal passent sous leur bloc (`pt_ping_simulation`) ;
+- **des étiquettes penchées** sur leurs câbles sont posées à plat, avec un fond (`reseau_salle_techno_topologie`) ;
+- **des schémas réseau refaits** pour que chaque appareil reste dans sa zone et qu'aucun fil ne passe sur un nom
+  (`schema_deux_reseaux_mq_ny`, `pt_simulation_2routeurs`) ;
+- **des textes qui sortaient de leur cadre**, coupés en deux lignes ou dans un cadre agrandi ;
+- **les captures reconstituées de logiciel** (Book Train, Packet Tracer) gardent leur imitation d'interface, mais
+  menus, onglets et boutons ne se touchent plus ;
+- **une balise `<b>`** qui effaçait son texte (`plan_cote_support_girouette`) devient un `tspan` en gras ; le plan
+  garde ses conventions de dessin technique ;
+- **le mini-simulateur** de `3e_C4.8` (SVG écrit dans la page) affiche la route sur deux lignes, même sens, essayé
+  avec et sans la route.
+
+Deux défauts que le contrôle ne voit pas ont été corrigés en passant (« BAT » sous « arrosage perdu » dans
+`releves_jardin`, « transmission radio » sur le cercle 4 de `station_alerte_annotee`).
+
+### Contrôles
+
+`controle_schemas.mjs` sur le thème 2 : 0 ✘ (318 ⚠ « serré » et « minuscule », sans défaut de lecture).
+`controle_liens`, `_unites`, `_sigles`, `_hierarchie`, `_regles_visibles`, `_debordement`, `_impression_papier`,
+`_medias`, `controle_impression.mjs` : ✅. Bancs : 3e_C4.7-C4.8 35/35, Book Train 39/39, 4e_C4.1 39/39,
+3e_C6.2 22/22 et 21/21, règle 311 de 3e_C4.7, 3e_C4.8, 5e_C4.7, 4e_C4.1 et 4e_C4.7 : 34/34 chacun.
+
+### Ce qui reste
+
+- Le thème 3 : 125 ✘ dans 28 schémas sur 51.
+- L'image de l'objet dans la carte des synthèses des ateliers.
