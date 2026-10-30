@@ -388,15 +388,17 @@ E4 = dict(
         ("justifier", "donner la raison, preuve à l'appui."),
         ("système d'arrosage connecté", "un système qui arrose seul les plantes, à l'heure choisie, et envoie des nouvelles sur "
          "un téléphone."),
-        ("carême", "en Martinique, la saison sèche du début de l'année&nbsp;: il pleut peu, l'eau est précieuse."),
+        ("canicule", "une longue période de très forte chaleur&nbsp;: à New York, c'est au moins trois jours de suite "
+         "à 32&nbsp;°C ou plus."),
         ("cuve", "un grand réservoir qui recueille l'eau de pluie du toit."),
         ("gaspiller", "utiliser plus qu'il ne faut, et perdre le reste.")],
     documents=[dict(svg=BAC_ARROSOIR, legende="Avant&nbsp;: la bête à cornes de l'arrosoir.",
                     description="<ul><li><b>À qui&nbsp;?</b> La gardienne du jardin.</li><li><b>Sur quoi&nbsp;?</b> Les plantes du jardin.</li>"
                                 "<li><b>Au centre&nbsp;:</b> l'arrosoir.</li><li><b>Dans quel but&nbsp;?</b> Arroser les plantes du jardin.</li></ul>")],
-    intro="<p>Au jardin partagé du collège, Mme Joseph, la gardienne, arrosait chaque matin avec un <b>arrosoir</b>. Deux "
-          "choses ont changé&nbsp;: pendant les <b>vacances</b>, plus personne ne vient au jardin&nbsp;; et en <b>carême</b>, la "
-          "saison sèche, l'eau de la cuve devient rare. Le jardin s'équipe donc d'un <b>système d'arrosage connecté</b>. "
+    intro="<p>Le collège a un jardin partagé à <b>Brooklyn</b>, un quartier de New York. Mme Joseph, la gardienne, y arrosait "
+          "chaque matin avec un <b>arrosoir</b>. Deux choses ont changé&nbsp;: pendant les <b>grandes vacances</b>, plus "
+          "personne ne vient au jardin&nbsp;; et en juillet, quand la chaleur dure plusieurs jours (une <b>canicule</b>), l'eau "
+          "de la cuve devient rare. Le jardin s'équipe donc d'un <b>système d'arrosage connecté</b>. "
           "Ci-dessus, la bête à cornes de l'arrosoir&nbsp;; plus bas, celle du nouveau système, qui n'a pas encore de but.</p>",
     consigne="<p>Pour <b>justifier</b> l'évolution d'un objet, on compare ce qu'on lui demande avant et après. <b>Compare les "
              "deux bêtes à cornes partie par partie</b>, puis <b>écris le nouveau but</b>&nbsp;: un verbe à l'infinitif, "
@@ -413,7 +415,7 @@ E4 = dict(
                   items=[("La case « à qui&nbsp;? »", "pareil", "Compare les deux cases du haut, à gauche : qui se sert de l'objet, avant et après ?"),
                          ("La case « sur quoi&nbsp;? »", "pareil", "Compare les deux cases du haut, à droite."),
                          ("Le produit, au centre", "change", "Au centre : un arrosoir, puis… ?"),
-                         ("La case « dans quel but&nbsp;? »", "change", "Relis l'histoire : les vacances et le carême demandent-ils le même but qu'avant ?")]),
+                         ("La case « dans quel but&nbsp;? »", "change", "Relis l'histoire : les vacances et la canicule demandent-elles le même but qu'avant ?")]),
              dict(type="texte", name="but", lignes=3, miroir="bc-a-but",
                   label="Écris le nouveau but (il s'écrit aussi dans le second schéma).",
                   criteres=[dict(label="ton but commence par un verbe à l'infinitif (arroser…)", motifs=[VERBE],
@@ -427,7 +429,7 @@ E4 = dict(
                             dict(label="il dit que l'eau ne doit pas être gaspillée",
                                  motifs=[r"gaspill|econom|juste (ce qu|la bonne|assez)|ce qu'il faut|la bonne quantite|"
                                          r"sans (trop|perdre)|moins d'eau|peu d'eau|necessaire|besoin|pas trop|ne pas perdre|preserv"],
-                                 manque="Dis que l'eau ne doit pas être gaspillée : en carême, elle est rare.")],
+                                 manque="Dis que l'eau ne doit pas être gaspillée : pendant la canicule, elle est rare.")],
                   interdits=[dict(motifs=[SOL_ARROSAGE],
                                   message="Ton but nomme une solution (un capteur, une pompe, le smartphone, un programme, « connecté »…). "
                                           "Le but dit ce qu'il faut obtenir ; le système connecté est la solution choisie pour y arriver.")],
@@ -436,14 +438,14 @@ E4 = dict(
                            "Arroser … pendant les vacances, en n'utilisant que …"]),
              dict(type="choix", name="pourquoi",
                   legende="Pourquoi le jardin est-il passé de l'arrosoir au système d'arrosage connecté&nbsp;?",
-                  options=[("besoin", "Parce que le besoin a changé&nbsp;: arroser pendant les vacances, et économiser l'eau en carême."),
+                  options=[("besoin", "Parce que le besoin a changé&nbsp;: arroser pendant les vacances, et économiser l'eau pendant la canicule."),
                            ("casse", "Parce que l'arrosoir était percé, et qu'il fallait bien le remplacer par autre chose."),
                            ("mode", "Parce que les objets connectés sont plus modernes que l'arrosoir."),
                            ("plantes", "Parce que les plantes du jardin ne sont plus les mêmes qu'avant.")],
                   bonne="besoin",
                   retours={"besoin": "Oui : à qui et sur quoi n'ont pas bougé ; c'est le but qui s'est enrichi. L'objet a évolué pour répondre à ce nouveau but.",
                            "casse": "Un arrosoir percé se remplace par un autre arrosoir : la panne d'un objet ne change pas le besoin.",
-                           "mode": "Être moderne ne suffit pas à justifier un changement : sans les vacances et le carême, l'arrosoir répondrait encore au besoin.",
+                           "mode": "Être moderne ne suffit pas à justifier un changement : sans les vacances et la canicule, l'arrosoir répondrait encore au besoin.",
                            "plantes": "La case « sur quoi ? » est la même dans les deux schémas : ce sont toujours les plantes du jardin."})],
     aides=["<p>Compare les deux schémas case par case, comme dans un jeu des sept différences. Puis relis l'histoire&nbsp;: "
            "qu'est-ce que l'arrosoir ne permet plus de faire&nbsp;?</p>",
@@ -451,7 +453,7 @@ E4 = dict(
            "Sur quoi&nbsp;? → les plantes du jardin, dans les deux → pareil.<br>"
            "Le but de l'arrosoir → « arroser les plantes » → il demande que quelqu'un soit là.<br>"
            "Les vacances → personne au jardin → le but doit dire&nbsp;: <b>même en l'absence de la gardienne</b>.<br>"
-           "Le carême → l'eau est rare → le but doit dire&nbsp;: <b>sans gaspiller l'eau</b>.<br>"
+           "La canicule → l'eau est rare → le but doit dire&nbsp;: <b>sans gaspiller l'eau</b>.<br>"
            "Nouveau but = verbe + les plantes + l'absence + l'eau, sans aucune solution.</p>"],
     jumeau=dict(consigne="Un élève portait ses affaires dans un cartable. Ses livres sont devenus trop lourds pour son dos&nbsp;: il "
                          "utilise maintenant un sac à roulettes. Quelle branche du besoin a changé, et quel est le nouveau but&nbsp;?",
@@ -466,7 +468,7 @@ E4 = dict(
         "<b>Le produit</b> → l'arrosoir devient le système d'arrosage connecté → <b>change</b>",
         "<b>Le but</b> → « arroser les plantes du jardin » ne suffit plus → <b>change</b>",
         "<b>Un nouveau but attendu&nbsp;:</b> « Arroser les plantes du jardin, même en l'absence de la gardienne, sans gaspiller l'eau. »",
-        "« même en l'absence de la gardienne » → vient des vacances&nbsp;; « sans gaspiller l'eau » → vient du carême et de la cuve",
+        "« même en l'absence de la gardienne » → vient des vacances&nbsp;; « sans gaspiller l'eau » → vient de la canicule et de la cuve",
         "<b>Refusé&nbsp;:</b> « Arroser grâce à un capteur et à une pompe » → deux solutions dans le but",
         "<b>Pourquoi l'objet a évolué</b> → parce que le besoin a changé. Un arrosoir percé se remplacerait par un arrosoir&nbsp;; "
         "la mode ne suffit pas&nbsp;; les plantes sont les mêmes.",
