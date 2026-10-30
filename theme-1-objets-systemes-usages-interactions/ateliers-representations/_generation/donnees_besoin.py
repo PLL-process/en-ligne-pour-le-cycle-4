@@ -1034,8 +1034,8 @@ IMAGES = {
     "bete_a_cornes_alerte_mal_formulee.svg": BAC_MAL,
 }
 VOCAB_EN = [("besoin", "need"), ("bête à cornes", "need diagram"), ("rendre service", "to serve, to help"),
-            ("but", "purpose"), ("fonction d'usage", "main function, use function"), ("usager", "user"),
-            ("solution technique", "technical solution"), ("caractéristique", "feature, characteristic"),
+            ("but", "purpose"), ("fonction d'usage", "use function"), ("usager", "user"),
+            ("solution technique", "technical solution"), ("caractéristique", "characteristic"),
             ("autonomie", "autonomy, running time"), ("évolution", "evolution, development")]
 VERBES = {"5e": "<b>reconnaître</b> le besoin&nbsp;: lire et compléter une bête à cornes, écrire un but sans solution, puis "
                 "<b>choisir</b> l'objet qui remplit les trois branches (5e_C3.3)",

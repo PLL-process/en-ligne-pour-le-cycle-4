@@ -133,7 +133,7 @@ PARTIES = [
 
 LEXIQUE = [
     ("diagramme FAST", "FAST diagram", "relie le but aux pièces."),
-    ("fonction d'usage", "function of use", "ce à quoi sert l'objet."),
+    ("fonction d'usage", "use function", "ce à quoi sert l'objet."),
     ("fonction technique", "technical function", "ce que l'objet doit faire."),
     ("solution technique", "technical solution", "la pièce qui le fait."),
     ("LED", "LED", "diode électroluminescente&nbsp;: une petite lampe."),
