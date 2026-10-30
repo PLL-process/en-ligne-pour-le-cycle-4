@@ -43,7 +43,7 @@ du choix ne se trompe pas. Le REFAIRE ferme la démonstration : le même objet, 
 |---|---|---|---|---|
 | Carte Arduino UNO | 45 mA | 10 h | 2,250 Wh | 78,9 % |
 | DEL indicatrice | 10 mA | 10 h | 0,500 Wh | 17,5 % |
-| Capteur d'humidité du sol | 2 mA | 10 h | 0,100 Wh | 3,5 % |
+| Capteur de présence du sac | 2 mA | 10 h | 0,100 Wh | 3,5 % |
 | **Total** | | | **2,85 Wh** | 100 % |
 
 ## 4. Ce que les sources donnent

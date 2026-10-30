@@ -109,7 +109,7 @@ Consommation du montage : **5,87 Wh par jour**.
    Pompe immergée 5 V              300 mA × 0.0167 h =  0.025 Wh  ( 0.4 %)
    Module relais                    70 mA × 0.0167 h =  0.006 Wh  ( 0.1 %)
    autonomies :
-      Pile 9 V alcaline                  0.48 jour(s) = 12 h
+      Pile 9 V alcaline                  0.48 jour(s) = 11 h
       4 piles AA alcalines               2.13 jour(s) = 51 h
       Accu Li-ion 18650 rechargeable     1.60 jour(s) = 38 h
       Secteur — adaptateur USB scellé    illimitée tant qu'il y a du réseau

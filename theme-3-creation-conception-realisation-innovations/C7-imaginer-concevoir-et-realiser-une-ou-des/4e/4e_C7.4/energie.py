@@ -28,6 +28,7 @@ Conventions
 CONSOS = {
     "Carte Arduino UNO":            (45, "la carte elle-même, DEL d'alimentation et régulateur compris"),
     "Capteur d'humidité du sol":    (2,  "capteur analogique Grove, alimenté en permanence"),
+    "Capteur de présence du sac":   (2,  "le capteur qui sent le sac dans la case, module Grove alimenté en permanence"),
     "Écran LCD RGB":                (40, "rétroéclairage allumé ; éteint, il ne consomme presque rien"),
     "Module relais":                (70, "seulement quand la bobine est excitée"),
     "Pompe immergée 5 V":           (300, "seulement quand elle tourne"),
@@ -87,8 +88,12 @@ SOURCES = [
     Source("Panneau solaire 1 W crête + accu", 5.0, None, 0.70,
            "Un petit panneau et l'accu qu'il recharge. Ce n'est pas un réservoir : "
            "c'est un robinet, qui donne une certaine énergie CHAQUE JOUR.",
-           15.00, "un panneau qui dure 20 ans, un accu à remplacer"),
+           None, "un panneau qui dure 20 ans, un accu à remplacer"),
 ]
+
+#: € — le panneau 2 W crête que recommande la correction de l'activité 3 (4e).
+#: Le prix du 1 W du banc n'est donné nulle part : les 15 € sont ceux du 2 W.
+PRIX_PANNEAU_2W = 15.00
 
 #: Martinique — moyenne annuelle, en heures équivalent plein soleil par jour
 ENSOLEILLEMENT = 5.3
@@ -105,7 +110,7 @@ def solaire(watt_crete):
 #: niveau → [(consommateur, heures de fonctionnement par jour)]
 MONTAGES = {
     "5e": [("Carte Arduino UNO", 10.0),
-           ("Capteur d'humidité du sol", 10.0),
+           ("Capteur de présence du sac", 10.0),
            ("DEL indicatrice", 10.0)],
     "4e": [("Carte Arduino UNO", 24.0),
            ("Capteur d'humidité du sol", 24.0),
@@ -150,7 +155,7 @@ if __name__ == "__main__":
     print("\nPanneau 1 W crête en Martinique : %.1f Wh/jour "
           "(%.1f h équivalent plein soleil × %.0f %%)"
           % (solaire(1), ENSOLEILLEMENT, RENDEMENT_SOLAIRE * 100))
-    print("Panneau 2 W crête : %.1f Wh/jour" % solaire(2))
+    print("Panneau 2 W crête : %.1f Wh/jour, %.0f €" % (solaire(2), PRIX_PANNEAU_2W))
 
     for niv, m in MONTAGES.items():
         tot, det = energie_jour(m)
@@ -168,5 +173,7 @@ if __name__ == "__main__":
             elif a == 0.0:
                 txt = "NE SUFFIT PAS (%.1f Wh récoltés pour %.2f consommés)" % (solaire(1), tot)
             else:
-                txt = "%.2f jour(s) = %.0f h" % (a, a * 24)
+                # les heures se calculent sur le rapport exact, pas sur les jours arrondis :
+                # 2,8 ÷ 5,87 × 24 = 11,4 h (0,48 × 24 donnerait 12)
+                txt = "%.2f jour(s) = %.0f h" % (a, s.utile / tot * 24)
             print("      %-34s %s" % (s.nom, txt))

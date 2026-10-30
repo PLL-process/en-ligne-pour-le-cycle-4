@@ -79,7 +79,7 @@ Act. 2 (35 min) : algorithme en langage naturel puis algorigramme des 4 niveaux
 Échauffement : les cinq gestes de Vittascience (ouvrir, catégories, nommer,
 simuler, sortir).
 Act. 3, première partie (35 min) : TP par **paliers** façon « dé de 5e » —
-1. lire (A1, calibrer), 2. décider (SI/SINON, seuil haut d'abord) ; chaque palier :
+1. lire (A1, convertir), 2. décider (SI/SINON, seuil haut d'abord) ; chaque palier :
 geste → image du résultat attendu → rituel d'enregistrement. Fin de partie :
 programme du palier 2 enregistré et rangé dans le dossier de la classe.
 
@@ -112,7 +112,7 @@ positionnement), renvoi au QCM.
 
 | Version | Dispositif |
 |---|---|
-| 🅰 Matériel réel | **Séances 3-4 (maquette)** : UNO + shield Grove 5 V, capteur rotatif A0, voyants D2 vert / D3 orange / D4 rouge, buzzer D5 — programme construit sur **Vittascience** (interface Arduino, mode BLOCS) et téléversé. **Séances 5 à 8 (station du labo)** : potentiomètre A1, bouton D2, DEL D3, buzzer D5, LCD I2C. TBT uniquement. |
+| 🅰 Matériel réel | **Un seul montage, des séances 3 à 8** : UNO + shield Grove 5 V, potentiomètre A1 (anémomètre simulé, 0-250 km/h), bouton D2, voyants D6 vert / D7 jaune / D3 orange / D4 rouge, buzzer D5, LCD RGB I2C — programme construit sur **Vittascience** (interface Arduino, mode BLOCS) et téléversé. TBT uniquement. |
 | 🅱 Simulation | Banc d'essai intégré à la page : mêmes seuils, même logique (boucle 200 ms), verrous expérientiels `window.__exp`. |
 | 🅲 Sans matériel | Banc intégré + traces d'exécution fournies (act. 5 et 7). Parcours complet, y compris à la maison. |
 

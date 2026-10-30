@@ -45,6 +45,8 @@ devront être prises sur l'interface **française** du poste du collège (règle
 modèle construit pour ce dépôt — cube de 50 mm, 21 creux Ø 10 profondeur 5, congés 3 mm.
 Ce ne sont **pas** des captures d'écran du logiciel : aucune interface, aucun élément
 d'habillage Onshape n'y figure. 1600×1200, fond aplati sur blanc.
+*Le `tp5e_R7_de_colore.png` décrit ici a été retiré le 12/08/2026 : le fichier qui porte ce nom
+aujourd'hui est une autre image, décrite à la section « Le dé coloré du TP 5e — 18/08/2026 ».*
 
 **Licence** : géométrie et rendus créés pour ce dépôt, réutilisables sous la licence du
 dépôt. Le modèle de référence reste ouvert dans le compte Onshape Éducateur de l'auteur.
@@ -65,7 +67,8 @@ d'Onshape **en français** (règle d'or n°70).
 
 **Origine** : rendus ombrés produits par l'**API Onshape** (`/shadedviews`) à partir de modèles
 construits pour ce dépôt. Ce ne sont **pas** des captures d'écran du logiciel : aucune interface,
-aucun élément d'habillage Onshape n'y figure. Fond aplati sur blanc.
+aucun élément d'habillage Onshape n'y figure. Fond aplati sur blanc. *(Le `tp5e_R7_de_colore.png` de
+ce jour-là a été retiré le 12/08/2026 : voir la section du 18/08/2026.)*
 
 **Licence** : géométrie et rendus créés pour ce dépôt, réutilisables sous sa licence.
 
@@ -100,6 +103,25 @@ traçable sur les quatre côtés, mais à l'échelle du couvercle entier elle re
 **Non produites par l'API, et non simulées** : `tp5e_R1_carre.png` (une esquisse sans matière ne
 se rend pas ombrée) et les neuf captures d'interface `tp5e_01` à `tp5e_09`, qui doivent montrer
 les panneaux d'Onshape **en français** (règle d'or n°70).
+
+## Le dé coloré du TP 5e — 18/08/2026
+
+`Images/tp5e_R7_de_colore.png` — image de résultat du palier « 🎁 Ton dé, et pas celui du voisin ».
+
+**Ce qu'est le fichier, mesuré le 30/10/2026** : PNG de **1 095 × 957 pixels**, opaque, sur un **fond gris
+sombre uni** (#333333). Il montre le dé seul, en perspective : corps vert-gris sombre, points dorés, arêtes et
+bords des points adoucis. Aucun élément d'interface, aucune donnée personnelle.
+
+**Ce que ce n'est pas** : ni le rendu de l'API du 10 août, ni celui du 11 août (tous deux 1 600 × 1 200 sur fond
+blanc, vérifié dans l'historique). Ils ont été retirés le 12/08/2026, quand les points sont passés de 5 mm à
+1,5 mm de profondeur.
+
+**Origine connue** : le fichier est entré le 18/08/2026, avec ce message de livraison : « le dé doré de Pascal
+devient l'image finale (R7) », et une mesure relevée sur poste réel (aire du fond d'un point, 50,265 mm²).
+**Origine inconnue** : rien n'écrit s'il s'agit d'une **capture** de la vue 3D d'Onshape, recadrée, ou d'un
+**rendu** de l'API. Le fond sombre et la taille irrégulière font penser à une capture, mais ce n'est qu'un
+indice. **À confirmer par Pascal**, et la licence avec : capture, elle relève de la voie 1 tranchée le
+24/10/2026 (plus bas) ; rendu, du même régime que les rendus du 10 août.
 
 
 ## Le dessin de coupe du TP « Le dé, en mieux » (30 août 2026)
@@ -428,9 +450,9 @@ des synthèses élève. Aucune n'est copiée ni retouchée : chaque page pointe 
 - `Images/tp3e_R7_boitier_fini.png` — le boîtier, couvercle soulevé : `3e/3e_C7.6/Synthèses/synthese_eleve_3e_C7.6.html`.
 
 Les légendes disent « Capture d'écran » pour `dsp_R9` (capture d'interface, 27-28/09/2026) et « Image
-Onshape » pour `tp5e_R7` et `tp3e_R7`, décrits plus haut comme des rendus de l'API.
+Onshape » pour `tp5e_R7` (origine à confirmer, section du 18/08/2026) et `tp3e_R7` (rendu de l'API,
+11/08/2026). « Image Onshape » reste juste dans les deux cas.
 
-**À vérifier** : le fichier `tp5e_R7_de_colore.png` mesure aujourd'hui 1 095 × 957 pixels, sur fond gris
-sombre, alors que la section du 10 août 2026 décrit des rendus de 1 600 × 1 200 sur fond blanc. Il a
-donc été remplacé sans que sa ligne suive : sa provenance exacte (rendu de l'API ou capture) reste à
-écrire.
+**Vérifié le 30/10/2026** : le fichier `tp5e_R7_de_colore.png` mesure bien 1 095 × 957 pixels, sur fond gris
+sombre. Il avait été remplacé le 18/08/2026 sans que sa ligne suive ; elle est désormais écrite (section
+« Le dé coloré du TP 5e — 18/08/2026 »). Reste une question pour Pascal : capture ou rendu.
