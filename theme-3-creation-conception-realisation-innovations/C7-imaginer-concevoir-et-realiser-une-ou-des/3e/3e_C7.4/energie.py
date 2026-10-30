@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 """Les données du banc d'énergie — calculées, pas choisies.
 
-TOUT ce que les trois pages affichent sort d'ici. Aucune valeur n'est saisie à
-la main dans le HTML : le générateur lit ce module et écrit les nombres.
+TOUT ce que les trois pages affichent se calcule ici. Mais aucun générateur ne
+lit ce module : les pages, leurs corrections, leurs QCM, leurs synthèses, leurs
+fiches, leurs rapports et leurs bancs RECOPIENT ces nombres. Tout changement ici
+se reporte donc à la main dans chacun d'eux — et dans les trois copies de ce
+fichier (3e_C7.4, 4e_C7.4, 5e_C7.4), qui restent identiques.
 
 Conventions
 -----------
@@ -21,14 +24,21 @@ Conventions
   moyenne annuelle, soit 5,3 heures équivalent plein soleil. Le rendement de
   chaîne (orientation fixe, salissure, régulateur de charge, températures
   tropicales) est pris à **70 %**, valeur basse et volontairement prudente.
+
+* Un total s'affiche arrondi au centième **« demi vers le haut »**, comme au
+  collège : 2,775 Wh s'écrit 2,78 (un arrondi machine écrirait 2,77, parce que
+  2,775 est rangé en mémoire comme 2,77499…). Les parts et les autonomies se
+  calculent sur le total EXACT, jamais sur le total arrondi.
 """
+
+from decimal import Decimal, ROUND_HALF_UP
 
 # ── Les consommateurs ─────────────────────────────────────────────────────
 #: nom → (courant moyen sous 5 V en mA, ce que c'est)
 CONSOS = {
     "Carte Arduino UNO":            (45, "la carte elle-même, DEL d'alimentation et régulateur compris"),
     "Capteur d'humidité du sol":    (2,  "capteur analogique Grove, alimenté en permanence"),
-    "Capteur de présence du sac":   (2,  "le capteur qui sent le sac dans la case, module Grove alimenté en permanence"),
+    "Capteur de présence du sac":   (0.5, "un contact que le sac enfonce (bouton Grove) : 5 V à travers 10 kΩ, soit 0,5 mA quand il est appuyé"),
     "Écran LCD RGB":                (40, "rétroéclairage allumé ; éteint, il ne consomme presque rien"),
     "Module relais":                (70, "seulement quand la bobine est excitée"),
     "Pompe immergée 5 V":           (300, "seulement quand elle tourne"),
@@ -126,13 +136,19 @@ MONTAGES = {
 
 
 def energie_jour(montage):
-    """Wh consommés par jour, et le détail par consommateur."""
+    """Wh consommés par jour (total EXACT, à afficher avec `wh_txt`), et le détail."""
     detail = []
     for nom, heures in montage:
         ma = CONSOS[nom][0]
         wh = ma / 1000 * TENSION * heures
         detail.append((nom, ma, heures, round(wh, 3)))
-    return round(sum(d[3] for d in detail), 2), detail
+    return sum(d[3] for d in detail), detail
+
+
+def wh_txt(wh, dec=2):
+    """Arrondi « demi vers le haut » pour l'affichage seulement : 2,775 → « 2.78 »."""
+    exact = Decimal(repr(round(wh, 6)))      # efface le bruit de la virgule flottante
+    return str(exact.quantize(Decimal(1).scaleb(-dec), rounding=ROUND_HALF_UP))
 
 
 def autonomie(source, wh_jour, watt_crete=1.0):
@@ -159,19 +175,20 @@ if __name__ == "__main__":
 
     for niv, m in MONTAGES.items():
         tot, det = energie_jour(m)
-        print("\n── %s ── %.2f Wh/jour" % (niv, tot))
+        print("\n── %s ── %s Wh/jour" % (niv, wh_txt(tot)))
         for nom, ma, h, wh in sorted(det, key=lambda d: -d[3]):
-            print("   %-30s %4d mA × %6s h = %6.3f Wh  (%4.1f %%)"
-                  % (nom, ma, ("%.4f" % h).rstrip("0").rstrip("."), wh, 100 * wh / tot))
+            # %g et non %d : un courant de 0,5 mA s'écrirait « 0 mA » ; 45 reste « 45 »
+            print("   %-30s %4s mA × %6s h = %6.3f Wh  (%4.1f %%)"
+                  % (nom, "%g" % ma, ("%.4f" % h).rstrip("0").rstrip("."), wh, 100 * wh / tot))
         print("   autonomies :")
         for s in SOURCES:
             a = autonomie(s, tot)
             if a is None:
                 txt = "illimitée tant qu'il y a du réseau"
             elif a == float("inf"):
-                txt = "suffit chaque jour (%.1f Wh récoltés pour %.2f consommés)" % (solaire(1), tot)
+                txt = "suffit chaque jour (%.1f Wh récoltés pour %s consommés)" % (solaire(1), wh_txt(tot))
             elif a == 0.0:
-                txt = "NE SUFFIT PAS (%.1f Wh récoltés pour %.2f consommés)" % (solaire(1), tot)
+                txt = "NE SUFFIT PAS (%.1f Wh récoltés pour %s consommés)" % (solaire(1), wh_txt(tot))
             else:
                 # les heures se calculent sur le rapport exact, pas sur les jours arrondis :
                 # 2,8 ÷ 5,87 × 24 = 11,4 h (0,48 × 24 donnerait 12)

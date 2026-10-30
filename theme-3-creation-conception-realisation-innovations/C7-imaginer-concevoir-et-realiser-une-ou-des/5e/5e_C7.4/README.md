@@ -12,7 +12,7 @@ installation ni compte.
 
 Le verbe du code est **choisir parmi plusieurs sources proposées**. Le piège que
 la séquence installe est le meilleur outil pour l'évaluer : **le panneau solaire suffit sur le
-papier** — 3,7 Wh récoltés pour 2,85 consommés — **et ne marche pas**, parce qu'il n'y a pas
+papier** — 3,7 Wh récoltés pour 2,78 consommés — **et ne marche pas**, parce qu'il n'y a pas
 de soleil dans un hall.
 
 L'élève qui décide au seul vu du banc se trompe. L'élève qui a compris que le lieu fait partie
@@ -34,7 +34,7 @@ Original, écrit pour ces trois lots, en HTML et JavaScript, sans dépendance et
 Il fait, sous les yeux de l'élève, les deux multiplications et la division qu'un technicien fait
 sur un coin de table — et il permet d'**éteindre** un consommateur pour voir ce qu'il pesait.
 
-Ce montage consomme **2,85 Wh par jour**. Toutes les valeurs sont calculées par
+Ce montage consomme **2,78 Wh par jour**. Toutes les valeurs sont calculées par
 [`energie.py`](energie.py) : courants constructeur usuels, capacités réelles du commerce,
 rendement d'un régulateur linéaire = V<sub>sortie</sub> ÷ V<sub>entrée</sub>, ensoleillement de
 la Martinique à 5,3 heures équivalent plein soleil par jour avec 30 % de pertes de chaîne.

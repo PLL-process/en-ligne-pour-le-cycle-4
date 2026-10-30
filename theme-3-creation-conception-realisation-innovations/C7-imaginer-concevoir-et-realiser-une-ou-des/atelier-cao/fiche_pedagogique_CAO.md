@@ -124,10 +124,11 @@ un troisième matériau et justifier son choix.
 élève en retard peut sauter à l'image, se comparer, et reprendre au palier
 suivant sans avoir tout refait.
 
-**Pour qui n'était pas là** : chaque TP de 4e et de 3e s'ouvre par un rappel de
-ce qui a été produit les années précédentes, rédigé pour être **auto-suffisant**
-(règle d'or n°87). En 4e, un dé tout prêt est fourni au palier 5 pour ceux qui
-n'ont pas le leur.
+**Pour qui n'a pas fait les TP d'avant** (un élève arrivé d'un autre collège, ou toute la
+classe) : chaque TP de 4e et de 3e s'ouvre sur ce qui devrait être en place, chaque
+point avec un lien pour le reprendre, rédigé pour être **auto-suffisant** (règles d'or
+n°87 et n°304). En 4e, le dé est fourni tout fini à toute la classe au palier 6
+(`de_55_calottes.step`).
 
 ## Matériel et contraintes
 

@@ -1,8 +1,10 @@
 /*
   STATION D'ALERTE CYCLONIQUE — 3e_C9.2 (dossier principal) & 3e_C8.3
   Carte : Arduino UNO (arduino:avr:uno) + shield Grove
-  Élèves : programme réalisé en blocs ArduBlock Éducation 1.7 ;
-           ce fichier est le C++ de référence, commenté ligne par ligne.
+  Élèves : programme réalisé en blocs sur Vittascience (séances 3 et 4,
+           interface Arduino en mode blocs, fr.vittascience.com/arduino) ;
+           ArduBlock Éducation 1.7 n'est qu'un bonus facultatif de la séance 4.
+           Ce fichier est le C++ de référence, commenté ligne par ligne.
 
   IHM (interaction humain-machine, cœur de 3e_C9.2) :
     - Afficheur LCD RGB Grove (I2C)  : niveau d'alerte + vitesse du vent

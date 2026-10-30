@@ -5,8 +5,9 @@ compile pour la carte annoncée » (`arduino:avr:uno`) — de façon reproductib
 sans rien installer d'autre que Docker Desktop.
 
 ⚠️ Réservé à l'enseignant : Docker Desktop exige un compte (adresse mail).
-Les élèves n'en ont pas besoin : ils utilisent ArduBlock Éducation 1.7,
-qui embarque sa propre chaîne de téléversement.
+Les élèves n'en ont pas besoin : ils programment en blocs sur Vittascience,
+qui compile et téléverse depuis le navigateur (ArduBlock Éducation 1.7 n'est
+qu'un bonus facultatif de la séance 4).
 
 ## Utilisation (Docker Desktop 4.87.0, Windows)
 

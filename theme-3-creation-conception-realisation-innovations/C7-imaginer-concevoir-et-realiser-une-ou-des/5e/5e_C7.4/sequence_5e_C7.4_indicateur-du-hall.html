@@ -659,7 +659,7 @@ table.releve td input{padding:4px 8px}
     <table class="conso">
       <tr><th></th><th>Ce qui consomme</th><th>Courant (en milliampères)</th><th>Par jour</th><th>Énergie</th></tr>
       <tr id="tr0"><td class="ck"><input type="checkbox" id="ck0" checked></td><td>Carte Arduino UNO</td><td class="n">45 mA</td><td class="n">10 h</td><td class="n" id="wh0">2,250 Wh (wattheures)</td></tr>
-      <tr id="tr1"><td class="ck"><input type="checkbox" id="ck1" checked></td><td>Capteur de présence du sac</td><td class="n">2 mA</td><td class="n">10 h</td><td class="n" id="wh1">0,100 Wh</td></tr>
+      <tr id="tr1"><td class="ck"><input type="checkbox" id="ck1" checked></td><td>Capteur de présence du sac</td><td class="n">0,5 mA</td><td class="n">10 h</td><td class="n" id="wh1">0,025 Wh</td></tr>
       <tr id="tr2"><td class="ck"><input type="checkbox" id="ck2" checked></td><td>DEL indicatrice</td><td class="n">10 mA</td><td class="n">10 h</td><td class="n" id="wh2">0,500 Wh</td></tr>
       <tr class="tot"><td class="ck"></td><td colspan="3">Consommation du montage, par jour</td>
           <td class="n" id="etot">—</td></tr>
@@ -865,7 +865,7 @@ table.releve td input{padding:4px 8px}
   <div class="exo">
 
     <p><b>Question 1.</b> Le banc dit que le panneau solaire récolte 3,7 Wh (wattheures) par jour pour
-    2,85 consommés : il suffit. Pourquoi n'est-il pourtant pas le bon choix ici&nbsp;?</p>
+    2,78 consommés : il suffit. Pourquoi n'est-il pourtant pas le bon choix ici&nbsp;?</p>
     <select id="a3q1">
       <option value="">— je choisis —</option>
       <option>parce qu'il n'y a pas de soleil dans un hall</option>
@@ -902,7 +902,7 @@ table.releve td input{padding:4px 8px}
       panneau récolte quelques pour cent de cela. <b>Un nombre exact peut répondre à une
       question qu'on ne s'est pas posée</b> — c'est l'erreur la plus fréquente en technologie,
       et tu la retrouveras en 3<sup>e</sup>.</p>
-      <p><b>2 — tous les quatre jours.</b> Les quatre piles AA tiennent 4,4 jours, c'est la
+      <p><b>2 — tous les quatre jours.</b> Les quatre piles AA tiennent 4,5 jours, c'est la
       meilleure des trois. Quatre piles neuves par semaine, trente-six semaines : cent
       quarante-quatre piles à l'année pour un voyant. La contrainte « personne ne veut changer
       une pile chaque matin » les élimine — et le sac de piles usagées aussi.</p>
@@ -979,7 +979,7 @@ table.releve td input{padding:4px 8px}
   <button class="btn check" data-check="5" type="button">✅ Vérifier le réinvestissement</button>
   <div class="feedback" id="fb5"></div>
   <details class="correction"><summary>📖 Correction</summary><div>
-    <p><b>Le panneau solaire.</b> Il récolte 3,7 Wh (wattheures) par jour pour 2,85 consommés — les mêmes
+    <p><b>Le panneau solaire.</b> Il récolte 3,7 Wh (wattheures) par jour pour 2,78 consommés — les mêmes
     chiffres qu'à l'activité 3, exactement les mêmes — et cette fois il y a du soleil.</p>
     <p><b>Rien n'a changé dans l'objet. Tout a changé dans la situation.</b> C'est pour cela que
     la compétence dit « choisir une source d'énergie » et pas « connaître la meilleure source » :
@@ -1084,11 +1084,14 @@ function lignes(id, n, mini){ const e = $(id);
   qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
 
 /* ── banc d'énergie ─────────────────────────────────────────────────────── */
-const CONSOS = [{"nom": "Carte Arduino UNO", "ma": 45, "h": 10.0}, {"nom": "Capteur de présence du sac", "ma": 2, "h": 10.0}, {"nom": "DEL indicatrice", "ma": 10, "h": 10.0}];      /* [{nom, ma, h}] */
+const CONSOS = [{"nom": "Carte Arduino UNO", "ma": 45, "h": 10.0}, {"nom": "Capteur de présence du sac", "ma": 0.5, "h": 10.0}, {"nom": "DEL indicatrice", "ma": 10, "h": 10.0}];      /* [{nom, ma, h}] */
 const SOURCES = {"Pile 9 V alcaline": {"type": "stock", "brute": 4.95, "rend": 0.5555555555555556, "utile": 2.8, "jour": null, "detail": "Une pile plate à deux boutons-pression. Régulateur linéaire 9 → 5 V : il dissipe 4 V sur 9 en chaleur, soit 44 % de l'énergie perdue avant d'alimenter quoi que ce soit."}, "4 piles AA alcalines": {"type": "stock", "brute": 15.0, "rend": 0.8333333333333334, "utile": 12.5, "jour": null, "detail": "Quatre piles bâton en série. Régulateur linéaire 6 → 5 V : il ne dissipe qu'un volt sur six, donc il perd beaucoup moins."}, "Accu Li-ion 18650 rechargeable": {"type": "stock", "brute": 11.100000000000001, "rend": 0.85, "utile": 9.4, "jour": null, "detail": "Un accumulateur rechargeable et un convertisseur ÉLÉVATEUR 3,7 → 5 V, donné à 85 % par son constructeur. Il se recharge environ 500 fois."}, "Secteur — adaptateur USB scellé": {"type": "secteur", "brute": null, "rend": 1.0, "utile": null, "jour": null, "detail": "Un bloc secteur fermé, jamais ouvert ni modifié par un élève : côté élève, il n'y a que du 5 V. Illimité — tant qu'il y a du réseau."}, "Panneau solaire 1 W crête + accu": {"type": "solaire", "brute": null, "rend": 0.7, "utile": null, "jour": 3.7, "detail": "Un petit panneau et l'accu qu'il recharge. Ce n'est pas un réservoir : c'est un robinet, qui donne une certaine énergie CHAQUE JOUR."}};    /* {nom: {brute, rend, utile, jour, detail}} */
 const TENSION = 5;
 
-function fmt(v, dec){ return v.toFixed(dec).replace(".", ","); }
+/* Arrondi « demi vers le haut », comme au collège : 2,775 → 2,78. toFixed seul écrirait
+   2,77, parce que 2,775 est rangé en mémoire comme 2,77499… (même règle qu'energie.py). */
+function fmt(v, dec){ const k = Math.pow(10, dec);
+  return (Math.round(+(v * k).toFixed(6)) / k).toFixed(dec).replace(".", ","); }
 function duree(h){
   if(h >= 1) return fmt(h, 0) + " h";
   const s = Math.round(h * 3600);

@@ -828,7 +828,7 @@ OVERLAY = {
                 "95 min d'activites, BANC D'ENERGIE original integre a la page (cinq sources, "
                 "consommation calculee ligne par ligne, autonomie). Le pivot de la seance est un "
                 "piege verifiable : le panneau solaire suffit SUR LE PAPIER (3,7 Wh recoltes pour "
-                "2,85 consommes) et ne marche pas, parce qu'il n'y a pas de soleil dans un hall ; "
+                "2,78 consommes) et ne marche pas, parce qu'il n'y a pas de soleil dans un hall ; "
                 "le REFAIRE deplace le meme objet sur le portail a velos et le panneau redevient "
                 "le bon choix, sans qu'un seul chiffre change. Verrou experientiel sur les cinq "
                 "sources, cinq releves compares aux vraies valeurs du banc. QCM 30 q / 90 "

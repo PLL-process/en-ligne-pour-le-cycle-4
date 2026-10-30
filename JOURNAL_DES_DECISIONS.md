@@ -26790,3 +26790,57 @@ des synthèses, corrigés ».*
   - le masque est un cas de panne d'adressage, pas une troisième famille. Il y a deux familles partout : adressage et
     liaison ;
   - le masque fait partie du réglage d'adressage de l'appareil, mais ce n'est pas l'adresse.
+
+---
+
+## 30/10/2026 — Les points laissés à Pascal : ses choix, appliqués (thèmes 1, 2 et 3)
+
+*Pascal a demandé ce que je proposais « de plus pédagogique et judicieux » pour les points laissés ouverts par
+l'entrée « Les écarts relevés pendant la réécriture des synthèses, corrigés ». Il a tout validé (« Tout lancer »).
+Thème 1 : #564 ; thème 2 : #565 ; thème 3 : cette PR.*
+
+**Un principe, posé par Pascal** : il change de collège chaque année, et ses élèves n'ont donc jamais fait ses
+séquences de l'année d'avant. **Aucune page élève ne suppose qu'un élève a fait le niveau précédent.** Un rappel du
+niveau d'avant reste permis s'il ne suppose rien : « Tu l'as peut-être déjà vu en 5e ; sinon, le voici : … », et le
+texte qui suit suffit seul. Les phrases qui décrivent la progression du programme (« en 5e on met en œuvre une
+procédure, en 4e on modifie une forme ») et les renvois à une séquence de la même année restent.
+
+### Thème 1
+- **L'anglais** : « fonction d'usage » se dit *use function* (le terme de l'analyse de la valeur) ; « caractéristique »
+  se dit *characteristic* (en CAO, *feature* désigne une opération). Corrigé dans les sources des ateliers.
+- **`MANIFESTE_LOT_3e_C1.1.json`** : les deux fichiers de l'ancienne version, archivée le 09/08, sont retirés ; cinq
+  fichiers du lot qui manquaient sont ajoutés.
+
+### Thème 2
+- **QCM de 5e_C4.1** : la bonne réponse devient « capteurs → carte → sortie de commande ». « capteurs → carte → bloc
+  LED » devient le piège expliqué : la LED convertit, elle est dans la chaîne d'énergie (n°310).
+
+### Thème 3
+- **3e_C7.7** : « la station doit servir dix ans ; le boîtier en PETG tient cinq ans au soleil, et on a accepté de le
+  réimprimer une fois, au milieu des dix ans ». C'est la sortie C de 3e_C7.3, dite pour qu'un élève qui ne l'a pas
+  faite comprenne.
+- **5e_C7.4, le capteur de présence** : 0,5 mA au lieu de 2 mA. C'est un contact que le sac enfonce (bouton Grove,
+  5 V à travers 10 kΩ). Le constat du banc ne change pas : la pile 9 V tient 24 h, le panneau suffit. Le total passe à
+  2,775 Wh, **affiché 2,78** : on arrondit au centième « demi vers le haut », comme au collège, et non comme
+  l'ordinateur (qui écrivait 2,77). Les parts se calculent sur le total exact : carte 81,1 %, DEL 18,0 %, capteur
+  0,9 %. Les trois copies d'`energie.py` restent identiques ; leur docstring dit maintenant qu'aucun générateur
+  n'existe : tout changement se reporte à la main dans les pages et les bancs.
+- **Le carton à la canicule (4e_C7.1)** : la case du banc météo reste verte et dit « tient au sec — mais dehors, qui
+  garantit le sec ? », comme la séquence.
+- **Le jardin de 4e** : 4e_C8 s'ouvre sur une phrase-pont : le jardin poussait au fond de la cour, le collège l'a monté
+  sur le toit-terrasse de l'annexe. La synthèse élève et le QCM suivent.
+- **La CAO** : les TP de 3e et de 4e, leurs QCM, la synthèse CAO et les documents du professeur ne supposent plus que
+  l'élève a fait l'année d'avant. 3e_C7.4 non plus (la patère de 5e, le jardin de 4e). Le palier 7 du TP 3e garde son
+  aide détaillée : l'assemblage peut être tout neuf.
+- **Les images `tp5e_R5`, `R6` et `R7`** sont des captures de Pascal (confirmé le 30/10/2026) : elles relèvent de la
+  voie 1. Sur R5, la fenêtre complète d'Onshape, le nom de compte et l'avatar sont masqués d'un aplat, à sa demande.
+- **3e_C9.2** : l'en-tête du `.ino` dit Vittascience (ArduBlock 1.7 en bonus de la séance 4) ; sur le chronogramme,
+  la ligne « affichage » est haute dès la veille (voyant vert fixe, « VEILLE » sur l'écran).
+- **RESTITUER** : on garde les trois verbes de la chaîne d'information (acquérir, traiter, communiquer). C'était déjà
+  en place ; la réserve est levée.
+
+### Laissé à Pascal
+- **4e_C7.4**, correction du « Refaire » : « sur un toit-terrasse en Martinique, il y a le soleil, mais aussi le sel… »,
+  alors que le jardin est à Brooklyn. Transfert voulu vers la Martinique, ou glissement à corriger ?
+- **4e_C8**, la scène animée : sa première phrase, lue par la voix enregistrée, dit « Sur le toit d'une école de New
+  York ». Elle ne contredit pas la phrase-pont ; la changer demanderait une nouvelle voix.
