@@ -20,15 +20,27 @@ Conventions
   Le rendement d'un **convertisseur élévateur** (3,7 V → 5 V) est donné par le
   constructeur : 85 %.
 
-* L'ensoleillement retenu pour la Martinique est de **5,3 kWh/m²/jour** en
-  moyenne annuelle, soit 5,3 heures équivalent plein soleil. Le rendement de
-  chaîne (orientation fixe, salissure, régulateur de charge, températures
-  tropicales) est pris à **70 %**, valeur basse et volontairement prudente.
+* L'ensoleillement dépend du **lieu de l'objet**, et chaque niveau prend celui
+  du sien (`LIEUX`, plus bas) :
+    - **Martinique** — le hall de 5e et la station de 3e : **5,3 kWh/m²/jour**
+      en moyenne annuelle, soit 5,3 heures équivalent plein soleil ;
+    - **New York** — le jardin de 4e, à Brooklyn : **4,5 heures** équivalent
+      plein soleil par jour en moyenne annuelle, pour un panneau fixe incliné
+      de 20° plein sud ; environ **2,4 heures en décembre**. Source : NREL,
+      PVWatts v8 (base NSRDB), pour 40,71° N, 74,01° O, relevé par
+      thegreenwatt.com (https://www.thegreenwatt.com/new-york-peak-sun-hours/).
+      Recoupement à plat (rayonnement global horizontal) : 3,93 kWh/m²/jour en
+      moyenne, 1,75 en décembre (NREL, via
+      https://solarscope.io/solar-data/new-york/new-york-city).
+  Le rendement de chaîne (orientation fixe, salissure, régulateur de charge,
+  températures) est pris à **70 %** pour les deux lieux, valeur basse et
+  volontairement prudente.
 
 * Un total s'affiche arrondi au centième **« demi vers le haut »**, comme au
   collège : 2,775 Wh s'écrit 2,78 (un arrondi machine écrirait 2,77, parce que
   2,775 est rangé en mémoire comme 2,77499…). Les parts et les autonomies se
-  calculent sur le total EXACT, jamais sur le total arrondi.
+  calculent sur le total EXACT, jamais sur le total arrondi. La récolte d'un
+  panneau suit la même règle, au dixième : 4,5 × 0,7 = 3,15 Wh s'écrit 3,2.
 """
 
 from decimal import Decimal, ROUND_HALF_UP
@@ -105,15 +117,26 @@ SOURCES = [
 #: Le prix du 1 W du banc n'est donné nulle part : les 15 € sont ceux du 2 W.
 PRIX_PANNEAU_2W = 15.00
 
-#: Martinique — moyenne annuelle, en heures équivalent plein soleil par jour
-ENSOLEILLEMENT = 5.3
+#: lieu → moyenne annuelle, en heures équivalent plein soleil par jour
+ENSOLEILLEMENT = {
+    "Martinique": 5.3,
+    #: NREL, PVWatts v8 (base NSRDB), panneau fixe incliné de 20° plein sud ;
+    #: décembre : environ 2,4 h (voir l'en-tête de ce fichier)
+    "New York": 4.5,
+}
+#: lieu → comment l'écrire après « Panneau 1 W crête »
+EN_LIEU = {"Martinique": "en Martinique", "New York": "à New York"}
+#: niveau → lieu de son objet
+LIEUX = {"5e": "Martinique", "4e": "New York", "3e": "Martinique"}
 #: pertes de chaîne : orientation fixe, salissure, régulateur, température
 RENDEMENT_SOLAIRE = 0.70
 
 
-def solaire(watt_crete):
-    """énergie réellement récoltée par jour, en Wh/jour"""
-    return round(watt_crete * ENSOLEILLEMENT * RENDEMENT_SOLAIRE, 1)
+def solaire(watt_crete, lieu):
+    """énergie réellement récoltée par jour, en Wh/jour, arrondie au dixième
+    « demi vers le haut » : 4,5 × 0,7 = 3,15 donne 3,2 (round() donnerait 3,1,
+    parce que 3,15 est rangé en mémoire comme 3,1499…)."""
+    return float(wh_txt(watt_crete * ENSOLEILLEMENT[lieu] * RENDEMENT_SOLAIRE, 1))
 
 
 # ── Les trois montages, un par niveau ─────────────────────────────────────
@@ -151,12 +174,12 @@ def wh_txt(wh, dec=2):
     return str(exact.quantize(Decimal(1).scaleb(-dec), rounding=ROUND_HALF_UP))
 
 
-def autonomie(source, wh_jour, watt_crete=1.0):
+def autonomie(source, wh_jour, lieu, watt_crete=1.0):
     """En jours. None = illimité (secteur). 0 = la source ne suffit même pas au jour."""
     if source.capacite is None and source.nom.startswith("Secteur"):
         return None
     if source.capacite is None:                      # solaire : un robinet
-        recolte = solaire(watt_crete)
+        recolte = solaire(watt_crete, lieu)
         return float("inf") if recolte >= wh_jour else 0.0
     return round(source.utile / wh_jour, 2)
 
@@ -168,12 +191,16 @@ if __name__ == "__main__":
         b = "%.2f Wh" % s.brute if s.brute else "—"
         u = "%.1f Wh" % s.utile if s.utile else "—"
         print("%-34s %8s %7.0f %% %9s" % (s.nom, b, s.conversion * 100, u))
-    print("\nPanneau 1 W crête en Martinique : %.1f Wh/jour "
-          "(%.1f h équivalent plein soleil × %.0f %%)"
-          % (solaire(1), ENSOLEILLEMENT, RENDEMENT_SOLAIRE * 100))
-    print("Panneau 2 W crête : %.1f Wh/jour, %.0f €" % (solaire(2), PRIX_PANNEAU_2W))
+    print()
+    for lieu in ENSOLEILLEMENT:
+        print("Panneau 1 W crête %s : %.1f Wh/jour "
+              "(%.1f h équivalent plein soleil × %.0f %%)"
+              % (EN_LIEU[lieu], solaire(1, lieu), ENSOLEILLEMENT[lieu], RENDEMENT_SOLAIRE * 100))
+    print("Panneau 2 W crête %s : %.1f Wh/jour, %.0f €"
+          % (EN_LIEU[LIEUX["4e"]], solaire(2, LIEUX["4e"]), PRIX_PANNEAU_2W))
 
     for niv, m in MONTAGES.items():
+        lieu = LIEUX[niv]
         tot, det = energie_jour(m)
         print("\n── %s ── %s Wh/jour" % (niv, wh_txt(tot)))
         for nom, ma, h, wh in sorted(det, key=lambda d: -d[3]):
@@ -182,13 +209,13 @@ if __name__ == "__main__":
                   % (nom, "%g" % ma, ("%.4f" % h).rstrip("0").rstrip("."), wh, 100 * wh / tot))
         print("   autonomies :")
         for s in SOURCES:
-            a = autonomie(s, tot)
+            a = autonomie(s, tot, lieu)
             if a is None:
                 txt = "illimitée tant qu'il y a du réseau"
             elif a == float("inf"):
-                txt = "suffit chaque jour (%.1f Wh récoltés pour %s consommés)" % (solaire(1), wh_txt(tot))
+                txt = "suffit chaque jour (%.1f Wh récoltés pour %s consommés)" % (solaire(1, lieu), wh_txt(tot))
             elif a == 0.0:
-                txt = "NE SUFFIT PAS (%.1f Wh récoltés pour %s consommés)" % (solaire(1), wh_txt(tot))
+                txt = "NE SUFFIT PAS (%.1f Wh récoltés pour %s consommés)" % (solaire(1, lieu), wh_txt(tot))
             else:
                 # les heures se calculent sur le rapport exact, pas sur les jours arrondis :
                 # 2,8 ÷ 5,87 × 24 = 11,4 h (0,48 × 24 donnerait 12)

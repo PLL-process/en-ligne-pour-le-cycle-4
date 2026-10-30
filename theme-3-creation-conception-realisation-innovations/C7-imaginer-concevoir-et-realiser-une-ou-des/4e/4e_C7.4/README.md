@@ -40,7 +40,9 @@ sur un coin de table — et il permet d'**éteindre** un consommateur pour voir 
 Ce montage consomme **5,87 Wh par jour**. Toutes les valeurs sont calculées par
 [`energie.py`](energie.py) : courants constructeur usuels, capacités réelles du commerce,
 rendement d'un régulateur linéaire = V<sub>sortie</sub> ÷ V<sub>entrée</sub>, ensoleillement de
-la Martinique à 5,3 heures équivalent plein soleil par jour avec 30 % de pertes de chaîne.
+New York (le jardin est à Brooklyn) à 4,5 heures équivalent plein soleil par jour en moyenne
+annuelle, panneau fixe incliné de 20° plein sud, avec 30 % de pertes de chaîne — source : NREL,
+PVWatts v8, base NSRDB, relevé par [thegreenwatt.com](https://www.thegreenwatt.com/new-york-peak-sun-hours/).
 
 ## Sécurité
 

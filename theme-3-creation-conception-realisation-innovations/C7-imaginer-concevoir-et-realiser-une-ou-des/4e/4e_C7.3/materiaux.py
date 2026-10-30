@@ -12,8 +12,10 @@ fiche technique fournisseur. Ils viennent de plages courantes en construction et
 en aménagement, et ils sont choisis pour que les comparaisons soient justes entre
 elles — c'est le classement qui doit être vrai, pas la troisième décimale.
 
-Deux d'entre eux sont propres au climat de la Martinique, et ils sont le cœur du
-lot : **la tenue au rayonnement solaire** et **la tenue au brouillard salin**.
+Deux d'entre eux sont propres à un objet installé dehors, près de la mer — le banc
+de 5e et la station de 3e en Martinique, le jardin de 4e à Brooklyn —, et ils sont
+le cœur du lot : **la tenue au rayonnement solaire** et **la tenue au brouillard
+salin**.
 Un tableau générique retiendrait des matériaux que ces deux colonnes éliminent.
 
 Usage : python3 materiaux.py    (affiche toutes les tables des trois lots)
@@ -111,7 +113,7 @@ OBJETS = {
         pourquoi=dict(
             sigma="la terre humide pousse sur les parois : 1,5 kN sur le grand côté",
             uv="dehors toute l'année, sans abri — cinq ans, c'est un cycle de collégiens",
-            sel="900 m de la mer, alizés permanents",
+            sel="900 m de la mer : le vent du large porte le sel",
             eau="la terre reste humide en permanence, c'est le principe d'un jardin arrosé",
             recyc="le collège s'est engagé à ne pas installer ce qu'il ne saura pas jeter",
             masse_max="il doit pouvoir être déplacé plein par quatre élèves et un adulte")),

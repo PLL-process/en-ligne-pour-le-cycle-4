@@ -45,8 +45,9 @@ Toutes les valeurs affichées — masses, coûts, épaisseurs, verdicts — sont
 `materiaux.py`, livré dans ce dossier. **Aucun nombre n'est recopié à la main dans une page.**
 Ce sont des **ordres de grandeur d'usage pédagogique**, tirés de plages courantes en construction
 et en aménagement : c'est le *classement* qui doit être juste, pas la troisième décimale. Deux
-colonnes sont propres au climat de la Martinique et font le cœur du lot — la **tenue au
-rayonnement solaire** et la **tenue au brouillard salin**. Un tableau générique retiendrait des
+colonnes sont propres à un objet installé dehors, près de la mer — ici le bac du jardin, à 900 m
+de la mer à Brooklyn — et font le cœur du lot : la **tenue au rayonnement solaire** et la
+**tenue au brouillard salin**. Un tableau générique retiendrait des
 matériaux que ces deux colonnes éliminent.
 
 Pour rejouer les tables des trois niveaux :
