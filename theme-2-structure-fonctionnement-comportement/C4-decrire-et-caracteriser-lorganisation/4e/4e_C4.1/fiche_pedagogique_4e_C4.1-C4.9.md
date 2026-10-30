@@ -17,7 +17,7 @@
 | Référentiel | BO n°9 du 29/02/2024 · codes arbitrés par `_outils/data_competences.py` (règle n°21) |
 | Domaines du socle | D1.3, D2, D3, D4, D5 (déclarés en tête de séquence) |
 | CRCN | 1.3 (traiter des données : table structurée, filtres) · 3.4 (programmer — amorce, par le comportement de la carte) · 5.1 (résoudre un problème technique : les trois pannes réseau) |
-| Objet-fil | Le jardin pédagogique du collège, Sainte-Luce. Suite du lampadaire intelligent de 5ᵉ, préparation de la station d'alerte de 3ᵉ |
+| Objet-fil | Le jardin pédagogique du collège, à Brooklyn (New York). Suite du lampadaire intelligent de 5ᵉ, préparation de la station d'alerte de 3ᵉ |
 | Durée annoncée | 4 séances de 55 min (220 min) · **189 min d'activités** — mesure `_outils/mesurer_temps_seances.py` |
 | Version | 🅰 réel / 🅱 simulation intégrée / 🅲 documents imprimés — déclarées en tête |
 

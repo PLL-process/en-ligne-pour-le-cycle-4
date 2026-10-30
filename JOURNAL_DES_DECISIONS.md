@@ -26873,3 +26873,27 @@ possible ».*
 - **Ce qui reste en Martinique, et pourquoi** : le jardin connecté du **thème 2** (4e_C4.1, 4e_C5.1, 4e_C6.1) est un
   autre atelier, annoncé « Thème 2 · Martinique » ; il garde son jardin et sa photo martiniquais. Les colonnes « tenue au
   soleil » de `materiaux.py` restent calibrées pour un soleil tropical : ce sont des valeurs prudentes pour New York.
+
+---
+
+## 30/10/2026 — Le jardin connecté du thème 2, à New York lui aussi
+
+*Pascal, le 30/10/2026, à la question « le jardin connecté du thème 2 reste-t-il en Martinique ? » : « le passer à New
+York ». Le jardin de 4e est donc à Brooklyn dans les deux thèmes (thème 3 : #567).*
+
+- **Les lots du jardin** (4e_C4.1 et son atelier Pix, 4e_C5.1, 4e_C6.1, 4e_C6.2) : le bandeau dit « Thème 2 · New
+  York — 4e ». Le carême devient l'été ou la canicule de juillet ; le soleil des Antilles, celui d'un été new-yorkais ;
+  le bananier, des tomates ou des concombres ; la fiche situe le jardin à Brooklyn. Aucun nombre ne change : les
+  relevés du jardin (34 à 71 % d'humidité, en mai) sont plausibles à New York.
+- **La photo** des synthèses élève de 4e_C4.1, 4e_C5.1 et 4e_C6.1 est celle de Brooklyn, la même qu'au thème 3.
+- **La serre de « SOS serre » (4e_C4.7) reste à Sainte-Luce.** C'est le réseau de la classe, celui que l'atelier de 3e
+  (3e_C4.8) relie au partenaire de New York : « votre serre en est la preuve ». Elle devient donc « la serre du
+  collège », et non plus « la serre du jardin connecté ». L'atelier reste le complément « réseaux » du jardin ; son défi
+  parle de la carte d'un jardin connecté que la serre accueillerait. En 3e, le réseau de la Martinique est « celui de
+  la serre et de la station ».
+- **`_outils/banks_a.py`**, la banque figée de l'ancien générateur `build_qcms.py` (jamais relancé), suit le QCM de
+  4e_C6.2 pour ses deux lignes martiniquaises.
+- **Le jardin du thème 1** (atelier « bête à cornes » de 4e, repris dans 4e_C1.1) passe aussi à Brooklyn : Pascal a
+  donné carte blanche. Le carême devient la canicule de juillet (« à New York, au moins trois jours de suite à 32 °C ou
+  plus », la définition de la vague de chaleur à New York). Les deux raisons qui font évoluer le besoin restent :
+  personne au jardin pendant les grandes vacances, l'eau rare quand la chaleur dure. Fait dans la PR du thème 1.

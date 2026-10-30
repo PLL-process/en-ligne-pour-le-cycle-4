@@ -49,4 +49,4 @@ Le premier **garde le chemin du fichier d'origine** : tous les liens du site
 continuent de fonctionner, et mènent désormais à un vrai QCM plutôt qu'à un
 fourre-tout.
 
-*Atelier réseau 4e — Thème 2 · objet-fil « Le jardin connecté » (la serre du jardin).*
+*Atelier réseau 4e — Thème 2 · la serre du collège, complément réseau du « jardin connecté ».*

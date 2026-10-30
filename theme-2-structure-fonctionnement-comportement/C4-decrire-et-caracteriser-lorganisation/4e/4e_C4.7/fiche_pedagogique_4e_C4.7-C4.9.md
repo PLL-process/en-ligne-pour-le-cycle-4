@@ -41,7 +41,7 @@ Internet (3e, « Internet jusqu'à Sainte-Luce » + atelier routage MQ→NY).
 
 ## Situation déclenchante et problématique
 
-- **Situation** : la serre du jardin connecté du collège, à Sainte-Luce. Un capteur d'ambiance neuf,
+- **Situation** : la serre du collège, à Sainte-Luce. Un capteur d'ambiance neuf,
   correctement branché, n'envoie aucune mesure — et l'imprimante à étiquettes est muette. M. Firmin
   missionne la classe : concevoir le plan d'adressage, paramétrer l'adresse fixe (passerelle comprise),
   et dépanner avec méthode — dans le simulateur, jamais sur le réseau pédagogique.
