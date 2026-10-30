@@ -26913,3 +26913,36 @@ York ». Le jardin de 4e est donc à Brooklyn dans les deux thèmes (thème 3 : 
 - **3e_C9.2** : la fiche dit quelles séances se font sur Vittascience (3 et 4 ; la 5 au choix, Vittascience ou banc
   d'essai ; 6 à 8 sans l'éditeur).
 - **Reste à faire, sur le poste de Pascal** : deux paliers du TP CAO de 3e n'ont pas d'image de résultat (n°77).
+
+---
+
+## 30/10/2026 — Deux animations pilotes : la chaîne du lampadaire (5e_C4.1) et la pompe qui s'affole (4e_C9.1)
+
+*Pascal, le 30/10/2026 : « Il y aurait-il d'autres images à changer en animation pour réduire les efforts cognitifs de
+l'élève et accroître sa motivation et sa compréhension ? » Inventaire : 226 schémas fixes, 4 animations. Les schémas
+qui montrent un changement dans le temps gagnent à bouger : les chaînes (9), les algorigrammes exécutés (8), les seuils
+et chronogrammes (5), le réseau (environ 8). Ceux qui montrent une structure (bêtes à cornes, cartes mentales, cas
+d'utilisation, exigences, croquis, tableaux, corrigés, captures) restent fixes. Deux pilotes proposés ; « Tu as carte
+blanche ».*
+
+**Les principes, ceux du lecteur commun** : l'animation montre ce qui change, et rien d'autre ; l'élève avance à son
+rythme, rien ne démarre ni ne parle sans son geste ; une étape, une idée, une seule chose qui bouge ; une prédiction
+avant de voir ; une dernière étape « À toi » qui renvoie à l'activité ; mouvement réduit = une image fixe par étape ;
+le schéma fixe reste, replié sous l'animation, et c'est lui qui s'imprime et qui sert au QCM et à la synthèse (n°119).
+
+- **4e_C9.1, la pompe qui s'affole** (#571, fusionnée) : un jeton porte chaque mesure d'humidité dans l'algorigramme
+  pendant que le chronogramme se dessine. Un seuil (40) : six basculements en 70 secondes, et les six mesures qui
+  font basculer sont entourées (le capteur tremble). Deux seuils (35 et 45) : la prédiction, puis les mêmes mesures
+  passent par « on ne change rien » ; quand le sol sèche vraiment, un seul basculement. Moteur :
+  `4e_C9.1/_generation/moteur_algorigramme/`.
+- **5e_C4.1, la chaîne du lampadaire** : neuf étapes, de jour à nuit, en lux (sous 30 lux, c'est la nuit, comme
+  5e_C6.1) : le panneau convertit, le régulateur alimente, la batterie stocke ; le capteur et le détecteur acquièrent ;
+  prédiction « que va faire la carte ? » ; la carte traite, communique, et l'ordre descend vers l'interrupteur, qui
+  distribue ; le bloc de LED convertit, et la phrase dit qu'il obéit : il est dans la chaîne d'énergie. Moteur :
+  `5e_C4.1/_generation/chaine_pas_a_pas/`. Au passage, un exemple du QCM disait que « le régulateur laisse passer
+  l'énergie vers les LED » : c'est l'interrupteur commandé.
+- **Les voix** : Piper, SIWIS medium, mêmes réglages que les autres animations ; 9 + 9 prises, **produites, non
+  écoutées** (`voix.json` de chaque lot).
+- **Pour la suite** : les deux moteurs devraient vivre dans `_outils/` avec leur contrôle, sur le modèle du lecteur
+  commun. Le lecteur gagnerait une étape « à mériter » que le banc sache franchir (aujourd'hui, la prédiction n'arrête
+  que « Regarder »), et un « Regarder » qui attende la fin du mouvement autant que celle de la voix.
