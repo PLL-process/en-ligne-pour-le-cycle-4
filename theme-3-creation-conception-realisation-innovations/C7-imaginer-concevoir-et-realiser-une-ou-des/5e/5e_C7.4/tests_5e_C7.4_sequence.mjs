@@ -20,7 +20,7 @@ const SRC = ['Pile 9 V alcaline', '4 piles AA alcalines', 'Accu Li-ion 18650 rec
   'Secteur — adaptateur USB scellé', 'Panneau solaire 1 W crête + accu'];
 
 const ATT = {
-  '5e': { tot: '2,85', pile: '24 heures', part0: 78.9, nCons: 3, solOk: true },
+  '5e': { tot: '2,78', pile: '24 heures', part0: 81.1, nCons: 3, solOk: true },
   '4e': { tot: '5,87', pile: '11 heures', part0: 92.0, nCons: 5, solOk: false },
   '3e': { tot: '6,04', pile: '11 heures', part0: 89.4, nCons: 5, solOk: false },
 }[niveau];

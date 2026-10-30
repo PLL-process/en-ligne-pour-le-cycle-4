@@ -9,7 +9,7 @@ Toutes les images vont dans `Images/`, avec **exactement** le nom indiqué.
 
 | Nom du fichier | Nature | Moment | Ce qu'il faut voir |
 |---|---|---|---|
-| `tp3e_R1_bloc.png` | résultat du palier | palier 2 — La boîte pleine — un rappel de 5e | Un pavé plein de 80 sur 60 sur 35 millimètres, vu en perspective. |
+| `tp3e_R1_bloc.png` | résultat du palier | palier 2 — La boîte pleine — le geste de base | Un pavé plein de 80 sur 60 sur 35 millimètres, vu en perspective. |
 | `tp3e_R2_coque.png` | résultat du palier | palier 3 — La coque — évider sans creuser | Le boîtier évidé, ouvert vers le haut, parois de 2 millimètres, vu en perspective légèrement de dessus. |
 | `tp3e_R3_rainure.png` | résultat du palier | palier 4 — La rainure du joint — là où l'eau s'arrête | Le bord supérieur du boîtier, vu de dessus en gros plan : une gorge continue court tout autour, à mi-largeur du bord. |
 | `tp3e_R4_passage_cable.png` | résultat du palier | palier 5 — Le passage du câble — le vrai point faible | Le boîtier vu de trois quarts : un trou de 12 millimètres traverse une paroi latérale en partie basse, son bord extérieur adouci. |

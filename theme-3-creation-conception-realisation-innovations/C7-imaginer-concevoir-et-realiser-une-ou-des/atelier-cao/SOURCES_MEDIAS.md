@@ -47,6 +47,10 @@ Ce ne sont **pas** des captures d'écran du logiciel : aucune interface, aucun �
 d'habillage Onshape n'y figure. 1600×1200, fond aplati sur blanc.
 *Le `tp5e_R7_de_colore.png` décrit ici a été retiré le 12/08/2026 : le fichier qui porte ce nom
 aujourd'hui est une autre image, décrite à la section « Le dé coloré du TP 5e — 18/08/2026 ».*
+*Il en va de même pour `tp5e_R5_de_complet.png` et `tp5e_R6_conges.png`, retirés avec lui : les fichiers
+qui portent ces noms aujourd'hui sont des **captures de Pascal**, entrées le 18/08/2026 (confirmé par
+Pascal le 30/10/2026). Voir leur ligne dans l'inventaire nom par nom, sous « Tranché le 24/10/2026 par
+Pascal : voie 1 ».*
 
 **Licence** : géométrie et rendus créés pour ce dépôt, réutilisables sous la licence du
 dépôt. Le modèle de référence reste ouvert dans le compte Onshape Éducateur de l'auteur.
@@ -68,7 +72,9 @@ d'Onshape **en français** (règle d'or n°70).
 **Origine** : rendus ombrés produits par l'**API Onshape** (`/shadedviews`) à partir de modèles
 construits pour ce dépôt. Ce ne sont **pas** des captures d'écran du logiciel : aucune interface,
 aucun élément d'habillage Onshape n'y figure. Fond aplati sur blanc. *(Le `tp5e_R7_de_colore.png` de
-ce jour-là a été retiré le 12/08/2026 : voir la section du 18/08/2026.)*
+ce jour-là a été retiré le 12/08/2026 : voir la section du 18/08/2026. Le `tp5e_R6_conges.png` de ce
+jour-là aussi : le fichier qui porte ce nom aujourd'hui est une **capture de Pascal**, voir sa ligne dans
+l'inventaire nom par nom, sous « Tranché le 24/10/2026 par Pascal : voie 1 ».)*
 
 **Licence** : géométrie et rendus créés pour ce dépôt, réutilisables sous sa licence.
 
@@ -118,10 +124,9 @@ blanc, vérifié dans l'historique). Ils ont été retirés le 12/08/2026, quand
 
 **Origine connue** : le fichier est entré le 18/08/2026, avec ce message de livraison : « le dé doré de Pascal
 devient l'image finale (R7) », et une mesure relevée sur poste réel (aire du fond d'un point, 50,265 mm²).
-**Origine inconnue** : rien n'écrit s'il s'agit d'une **capture** de la vue 3D d'Onshape, recadrée, ou d'un
-**rendu** de l'API. Le fond sombre et la taille irrégulière font penser à une capture, mais ce n'est qu'un
-indice. **À confirmer par Pascal**, et la licence avec : capture, elle relève de la voie 1 tranchée le
-24/10/2026 (plus bas) ; rendu, du même régime que les rendus du 10 août.
+**Origine confirmée par Pascal le 30/10/2026** : c'est **sa capture** de la vue 3D d'Onshape, recadrée sur
+la pièce — pas un rendu de l'API. Elle relève donc de la voie 1 tranchée le 24/10/2026 : sa ligne est dans
+l'inventaire nom par nom, plus bas.
 
 
 ## Le dessin de coupe du TP « Le dé, en mieux » (30 août 2026)
@@ -275,6 +280,24 @@ contrôle. Toutes ont la même origine et la même réserve que ci-dessus.
 - `Images/tp5e_12_export_stl.png`
 - `Images/tp5e_13_retrouver.png`
 - `Images/tp5e_15_bibliotheque_materiaux.png`
+
+**TP 5e « Le dé », images de résultat des paliers 6, 7 et 9 (préfixe tp5e_R)** — 3 fichiers, 1284 Ko.
+Captures de Pascal, entrées le 18/08/2026 ; longtemps décrites comme des rendus de l'API (sections du 10/08
+et du 11/08) ou d'origine inconnue (R7), elles sont confirmées comme ses captures le 30/10/2026. Elles ne
+font pas partie des 74 comptées le 31/08/2026.
+- `Images/tp5e_R5_de_complet.png` — logiciel : Onshape ; version : celle en ligne en août 2026 (Onshape,
+  logiciel en ligne, n'affiche pas de numéro) ; langue : français ; écran : fenêtre complète d'Onshape,
+  thème sombre, 3 864 × 1 655 px ; fichier ouvert : document « de-5e-PRENOM-NOM », Part Studio 1, liste
+  des fonctions (19), dé de 50 mm percé de ses points, vue isométrique. Le nom de compte et l'avatar, en
+  haut à droite, sont masqués d'un aplat le 30/10/2026, à la demande de Pascal ; rien d'autre n'est retouché.
+- `Images/tp5e_R6_conges.png` — logiciel : Onshape ; version : la même ; langue : sans objet, aucun texte
+  d'interface ; écran : vue 3D seule, recadrée sur la pièce, fond gris #333333, 1 660 × 1 480 px ; fichier
+  ouvert : une copie de l'espace de travail du dé de Pascal (message de livraison du 18/08/2026) — le dé
+  gris, arêtes et points adoucis par les congés. Non retouchée.
+- `Images/tp5e_R7_de_colore.png` — logiciel : Onshape ; version : la même ; langue : sans objet, aucun
+  texte d'interface ; écran : vue 3D seule, recadrée sur la pièce, fond gris #333333, 1 095 × 957 px ;
+  fichier ouvert : le dé de Pascal, coloré — corps vert-gris sombre, points dorés (section « Le dé coloré du
+  TP 5e — 18/08/2026 »). Non retouchée.
 
 ## Le TP 4e « Le dé sur son socle » déroulé dans Onshape — 26/09/2026
 
@@ -450,9 +473,10 @@ des synthèses élève. Aucune n'est copiée ni retouchée : chaque page pointe 
 - `Images/tp3e_R7_boitier_fini.png` — le boîtier, couvercle soulevé : `3e/3e_C7.6/Synthèses/synthese_eleve_3e_C7.6.html`.
 
 Les légendes disent « Capture d'écran » pour `dsp_R9` (capture d'interface, 27-28/09/2026) et « Image
-Onshape » pour `tp5e_R7` (origine à confirmer, section du 18/08/2026) et `tp3e_R7` (rendu de l'API,
+Onshape » pour `tp5e_R7` (capture de Pascal, confirmée le 30/10/2026 ; section du 18/08/2026) et `tp3e_R7` (rendu de l'API,
 11/08/2026). « Image Onshape » reste juste dans les deux cas.
 
 **Vérifié le 30/10/2026** : le fichier `tp5e_R7_de_colore.png` mesure bien 1 095 × 957 pixels, sur fond gris
 sombre. Il avait été remplacé le 18/08/2026 sans que sa ligne suive ; elle est désormais écrite (section
-« Le dé coloré du TP 5e — 18/08/2026 »). Reste une question pour Pascal : capture ou rendu.
+« Le dé coloré du TP 5e — 18/08/2026 »). La question « capture ou rendu » est tranchée le 30/10/2026 : capture
+de Pascal.

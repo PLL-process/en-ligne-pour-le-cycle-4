@@ -12,8 +12,16 @@ sortie de la dernière exécution, recopiée telle quelle.
 > l'initialisation, et elle enregistrait ce qu'elle affichait. Le verrou « les cinq sources » n'en réclamait donc plus que quatre. La fonction ne trace plus que
 > sur un geste ; vérifié après correction : `__exp` est **vide** à l'ouverture, et le verrou
 > s'ouvre normalement dès les manipulations réelles (règles d'or n°226 et n°265).
+
+> **Correction du 30/10/2026 — le capteur de présence du sac tire 0,5 mA, pas 2 mA.** C'est un
+> contact que le sac enfonce (bouton Grove) : 5 V à travers 10 kΩ. `energie.py` (ses trois copies,
+> restées identiques) et toutes les pages du lot sont alignés : **2,78 Wh par jour** au lieu de
+> 2,85 — le total exact, 2,775, arrondi au centième « demi vers le haut » comme au collège :
+> `energie.py` et le banc appliquent désormais cette règle, là où un arrondi machine écrivait
+> 2,77. La pile 9 V tient toujours 24 h, les quatre piles AA 108 h, l'accu 81 h ; le panneau
+> suffit toujours (3,7 Wh pour 2,78). Les deux suites ci-dessous ont été rejouées ce jour-là.
 ```bash
-node tests_5e_C7.4_sequence.mjs "$PWD/sequence_5e_C7.4_indicateur-du-hall.html" 5e reponses_5e.json
+node tests_5e_C7.4_sequence.mjs "$PWD/sequence_5e_C7.4_indicateur-du-hall.html" 5e "$PWD/reponses_5e_C7.4.json"
 node tests_5e_C7.4_qcm.mjs      "$PWD/qcm_5e_C7.4_indicateur-du-hall.html" 5e_C7.4 5e_C3.1 sequence_5e_C7.4_indicateur-du-hall.html
 python3 energie.py          # recalcule toutes les valeurs du banc
 ```
@@ -26,20 +34,20 @@ python3 energie.py          # recalcule toutes les valeurs du banc
 ✅ charge sans erreur JS
 ✅ aucune requête échouée
 ✅ aucune boîte modale
-✅ le total du jour est juste — 2,85 Wh
+✅ le total du jour est juste — 2,78 Wh
 ✅ autant de lignes que de consommateurs — 5
 ✅ pile 9 V : énergie stockée 4,95 Wh — 4,95 Wh
 ✅ pile 9 V : rendement 56 % (5 V ÷ 9 V) — 56 %
 ✅ pile 9 V : énergie utile 2,8 Wh — 2,8 Wh
-✅ pile 9 V : autonomie annoncée — 🔋 Autonomie : 24 heures  (2,8 Wh utiles ÷ 2,85 Wh par jour)
+✅ pile 9 V : autonomie annoncée — 🔋 Autonomie : 24 heures  (2,8 Wh utiles ÷ 2,78 Wh par jour)
 ✅ 4 AA : rendement 83 % (5 V ÷ 6 V) — 83 %
 ✅ accu : énergie utile 9,4 Wh — 9,4 Wh
 ✅ secteur : autonomie illimitée — ⚡ Autonomie illimitée — tant qu'il y a du réseau.
 ✅ panneau : le verdict raisonne en Wh PAR JOUR — 3,7 Wh PAR JOUR
-✅ panneau : il suffit à ce montage — ☀ Il récolte 3,7 Wh par jour pour 2,85 consommés : il suffit, avec 30 % de marge.
-✅ éteindre la carte fait chuter le total — 2,85 Wh → 0,60 Wh
+✅ panneau : il suffit à ce montage — ☀ Il récolte 3,7 Wh par jour pour 2,78 consommés : il suffit, avec 33 % de marge.
+✅ éteindre la carte fait chuter le total — 2,78 Wh → 0,53 Wh
 ✅ la ligne éteinte est barrée
-✅ la barre donne la part exacte de la carte — 78.9474
+✅ la barre donne la part exacte de la carte — 81.0811
 ✅ verrou des cinq sources ouvert
 ✅ verrou « un consommateur éteint » ouvert
 ✅ bandeau de durée présent — ⏱ 2 séances de 55 min
@@ -76,7 +84,7 @@ python3 energie.py          # recalcule toutes les valeurs du banc
 ✅ les deux codes dépassent le seuil de 5 questions
 ✅ bonnes réponses réparties sur les 4 positions — 8/7/7/8
 ✅ aucune bonne réponse détachée par sa longueur — 0
-✅ écart moyen de longueur sous 5 caractères — 1.0
+✅ écart moyen de longueur sous 5 caractères — 0.9
 ✅ une bonne réponse est déclarée correcte
 ✅ la correction déplie les trois réfutations
 ✅ la correction porte un « À retenir »
@@ -98,19 +106,19 @@ python3 energie.py          # recalcule toutes les valeurs du banc
 
 ## 3. Les valeurs du banc — recalculées, pas recopiées
 
-Consommation du montage : **2,85 Wh par jour**.
+Consommation du montage : **2,78 Wh par jour**.
 
 ```
-2.85 Wh/jour
-   Carte Arduino UNO                45 mA ×     10 h =  2.250 Wh  (78.9 %)
-   DEL indicatrice                  10 mA ×     10 h =  0.500 Wh  (17.5 %)
-   Capteur de présence du sac        2 mA ×     10 h =  0.100 Wh  ( 3.5 %)
+2.78 Wh/jour
+   Carte Arduino UNO                45 mA ×     10 h =  2.250 Wh  (81.1 %)
+   DEL indicatrice                  10 mA ×     10 h =  0.500 Wh  (18.0 %)
+   Capteur de présence du sac      0.5 mA ×     10 h =  0.025 Wh  ( 0.9 %)
    autonomies :
-      Pile 9 V alcaline                  0.98 jour(s) = 24 h
-      4 piles AA alcalines               4.39 jour(s) = 105 h
-      Accu Li-ion 18650 rechargeable     3.30 jour(s) = 79 h
+      Pile 9 V alcaline                  1.01 jour(s) = 24 h
+      4 piles AA alcalines               4.50 jour(s) = 108 h
+      Accu Li-ion 18650 rechargeable     3.39 jour(s) = 81 h
       Secteur — adaptateur USB scellé    illimitée tant qu'il y a du réseau
-      Panneau solaire 1 W crête + accu   suffit chaque jour (3.7 Wh récoltés pour 2.85 consommés)
+      Panneau solaire 1 W crête + accu   suffit chaque jour (3.7 Wh récoltés pour 2.78 consommés)
 ```
 
 Le rendement d'un régulateur linéaire vaut V<sub>sortie</sub> ÷ V<sub>entrée</sub> : 56 % pour

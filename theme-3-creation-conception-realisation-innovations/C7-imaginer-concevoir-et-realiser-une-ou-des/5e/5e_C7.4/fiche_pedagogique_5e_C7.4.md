@@ -18,7 +18,7 @@
 
 Le verbe du code est **choisir parmi plusieurs sources proposées**. Le piège que
 la séquence installe est le meilleur outil pour l'évaluer : **le panneau solaire suffit sur le
-papier** — 3,7 Wh récoltés pour 2,85 consommés — **et ne marche pas**, parce qu'il n'y a pas
+papier** — 3,7 Wh récoltés pour 2,78 consommés — **et ne marche pas**, parce qu'il n'y a pas
 de soleil dans un hall.
 
 L'élève qui décide au seul vu du banc se trompe. L'élève qui a compris que le lieu fait partie
@@ -41,20 +41,20 @@ du choix ne se trompe pas. Le REFAIRE ferme la démonstration : le même objet, 
 
 | Ce qui consomme | Courant | Par jour | Énergie | Part |
 |---|---|---|---|---|
-| Carte Arduino UNO | 45 mA | 10 h | 2,250 Wh | 78,9 % |
-| DEL indicatrice | 10 mA | 10 h | 0,500 Wh | 17,5 % |
-| Capteur de présence du sac | 2 mA | 10 h | 0,100 Wh | 3,5 % |
-| **Total** | | | **2,85 Wh** | 100 % |
+| Carte Arduino UNO | 45 mA | 10 h | 2,250 Wh | 81,1 % |
+| DEL indicatrice | 10 mA | 10 h | 0,500 Wh | 18,0 % |
+| Capteur de présence du sac | 0,5 mA | 10 h | 0,025 Wh | 0,9 % |
+| **Total** | | | **2,78 Wh** | 100 % |
 
 ## 4. Ce que les sources donnent
 
-| Source | Énergie disponible | Face à 2,85 Wh/jour |
+| Source | Énergie disponible | Face à 2,78 Wh/jour |
 |---|---|---|
 | Pile 9 V alcaline | 2,8 Wh | 24 heures |
-| 4 piles AA alcalines | 12,5 Wh | 4,4 jours |
-| Accu Li-ion 18650 rechargeable | 9,4 Wh | 3,3 jours |
+| 4 piles AA alcalines | 12,5 Wh | 4,5 jours |
+| Accu Li-ion 18650 rechargeable | 9,4 Wh | 3,4 jours |
 | Secteur — adaptateur USB scellé | illimitée | tant qu'il y a du réseau |
-| Panneau solaire 1 W crête + accu | 3,7 Wh/jour | suffit (30 % de marge) |
+| Panneau solaire 1 W crête + accu | 3,7 Wh/jour | suffit (un tiers de marge) |
 
 Tout est recalculé par [`energie.py`](energie.py), livré dans le dossier. Le rendement d'un
 régulateur linéaire y vaut V<sub>sortie</sub> ÷ V<sub>entrée</sub> — c'est de la physique, pas

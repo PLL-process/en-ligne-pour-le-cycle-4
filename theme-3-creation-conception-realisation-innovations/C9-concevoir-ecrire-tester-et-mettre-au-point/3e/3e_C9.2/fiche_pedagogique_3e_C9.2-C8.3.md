@@ -136,7 +136,7 @@ n°94). Ce bonus a une vraie valeur pédagogique : il montre le **même
 raisonnement** dans deux logiciels et à deux échelles, ce qui prépare la question
 « ce qu'un algorigramme ne dit pas » (act. 2 c).
 
-Les planches des séances 3 et 4 sont des **reconstitutions schématiques** de l'écran
+Les planches des séances 3 à 5 sont des **reconstitutions schématiques** de l'écran
 Vittascience, étiquetées comme telles (pas des captures) : à remplacer par des
 captures du poste réel dès que les programmes de la classe existent
 (règles n°70/73/94).

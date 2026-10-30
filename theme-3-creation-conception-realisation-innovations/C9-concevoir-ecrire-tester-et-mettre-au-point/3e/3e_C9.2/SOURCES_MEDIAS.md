@@ -2,8 +2,8 @@
 
 Tous les médias de ce lot sont des **créations originales** réalisées pour le projet
 (SVG écrits à la main). Aucune image extraite d'un manuel, de Google Images ou d'un
-site tiers. Aucun hotlinking. Les planches de la séance 2 sont des **reconstitutions
-schématiques** du programme en blocs Vittascience, étiquetées comme telles dans
+site tiers. Aucun hotlinking. Les planches des séances 3 à 5 (paliers 1 et 2, palier 3, palier 4)
+sont des **reconstitutions schématiques** du programme en blocs Vittascience, étiquetées comme telles dans
 l'image ET dans son texte alternatif (règles n°70/73/75 : pas de faux noms de
 boutons, valeurs déclarées comme exemples).
 
@@ -12,7 +12,7 @@ conformément à la **règle d'or n°94** — une capture d'écran vient du vrai
 exécuté sur un poste, jamais d'une reconstitution présentée comme une capture, jamais
 d'une image trouvée en ligne :
 
-* **deux captures d'ArduBlock Éducation 1.7** (bonus facultatif de la séance 2), prises
+* **deux captures d'ArduBlock Éducation 1.7** (bonus facultatif de la séance 4), prises
   sur le poste du laboratoire de technologie le 20/08/2026 ;
 * **treize captures de Vittascience** (`Images/vittascience/`), prises le 25/08/2026
   pendant la construction et l'exécution du programme de référence à quatre niveaux :
@@ -36,7 +36,7 @@ en toutes lettres** sur l'écran (règle d'or n°119).
 | `Images/montage_station_grove.svg` | SVG original (redessiné le 25/10/2026, voir la note sous le tableau) | Création Fable pour ce projet | CC0 (domaine public) | Image-objet : câblage à lire — potentiomètre A1, bouton D2, écran LCD I2C, buzzer D5, voyants vert D6 · jaune D7 · orange D3 · rouge D4 —, utilisée en act. 3 (fiche 🅰) et au QCM (q. illustrée) | ~12 Ko |
 | `Images/chaine_info_energie_station.svg` | SVG original | Création Fable pour ce projet | CC0 | Image-objet : les deux chaînes selon la règle n°6 (info en haut, énergie en bas, ordre qui descend), act. 1 | ~7 Ko |
 | `Images/algorigramme_alerte.svg` | SVG original | Création Fable pour ce projet | CC0 | Image-objet : algorigramme normalisé (pont DNB) à lire en act. 2 et au QCM (q. illustrée) | ~7 Ko |
-| `Images/ihm_acquittement_chronogramme.svg` | SVG original | Création Fable pour ce projet | CC0 | Image-objet : chronogramme de l'acquittement à lire en act. 4 et au QCM (q. illustrée) ; retiré de la synthèse élève le 29/10/2026 (deux pages A4, n°316 : l'acquittement y est en cases) | ~6 Ko |
+| `Images/ihm_acquittement_chronogramme.svg` | SVG original | Création Fable pour ce projet | CC0 | Image-objet : chronogramme de l'acquittement à lire en act. 4 et au QCM (q. illustrée) ; retiré de la synthèse élève le 29/10/2026 (deux pages A4, n°316 : l'acquittement y est en cases) ; le 30/10/2026, la ligne « affichage » est haute dès le début — « VEILLE » et voyant vert fixe, puis le niveau —, comme dans le programme | ~7 Ko |
 | `Images/protocole_recette_anatomie.svg` | SVG original | Création Fable pour ce projet | CC0 | Image-objet : anatomie du protocole (frontières, tableau, performance) en act. 6 et au QCM (q. illustrée) ; retiré de la synthèse élève le 29/10/2026 (deux pages A4, n°316 : le protocole y est en cases) | ~7 Ko |
 | `Images/blocs_palier1_lire_vent.svg` | SVG original (reconstitution schématique, PAS une capture) | Création Fable pour ce projet | CC0 | Image-explication : résultat attendu du palier 1 (règle n°77) | ~4 Ko |
 | `Images/blocs_palier2_decider.svg` | SVG original (reconstitution schématique) | Création Fable pour ce projet | CC0 | Image-explication : résultat attendu du palier 2 | ~5 Ko |
