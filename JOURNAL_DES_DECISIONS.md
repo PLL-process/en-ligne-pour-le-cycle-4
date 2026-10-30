@@ -26643,3 +26643,127 @@ explique le rôle de la pompe ».
 - **Une leçon** : `loupe.py` pose l'agrandisseur dans toutes les pages du dossier qu'on lui donne. Lancé sur un dossier
   où la synthèse voisine avec la séquence, il a aussi touché trois séquences (3e_C8.2, 4e_C7.1, 5e_C8.2). Elles sont
   revenues à leur état d'avant, car ce n'était pas l'objet du lot.
+
+---
+
+## 30/10/2026 — Les écarts relevés pendant la réécriture des synthèses, corrigés (thèmes 1, 2 et 3)
+
+*Pascal, « Oui stp », pour corriger les écarts relevés en route, thème par thème. Il y a une branche par thème (garde
+de périmètre) : `fable/theme-3-ecarts` porte cette entrée, `fable/theme-2-ecarts` et `fable/theme-1-ecarts` la
+renvoient ici.*
+
+### La règle suivie
+
+Pour chaque écart, on décide qui a raison, dans cet ordre :
+1. les données et le script du lot (`materiaux.py`, `moyens.py`, `energie.py`, `patere.py`, `_corrige_calcule.json`) ;
+2. sinon la séquence (énoncé et correction) ;
+3. sinon le programme 2024 et les règles d'or, en particulier la n°310 pour les chaînes.
+
+On corrige le minimum, et toute la chaîne quand un nombre faux servait ailleurs. Quand deux versions se défendent, ou
+que le changement touche la pédagogie, rien ne bouge : la question part à Pascal (voir la dernière section).
+
+Les pages et QCM fabriqués par un script sont corrigés à la source, puis régénérés : `build_tp.py` de la CAO,
+`build_atelier.py` de la planification, `q.py` + `build_qcm.py` de Hangzhou, `build.py` des ateliers des
+représentations, `generer_les_quatre_pages.py` de la station, `generer_lexique.py`.
+
+### Thème 3
+
+- **3e_C7.7** :
+  - « onze heures de machine » devient « plus de sept heures » : ce sont les onze boîtiers lancés après la première
+    pièce, 11 × 40 min (`moyens.py`). Les 8 h 15 sont celles du lot entier ;
+  - « la station doit toujours tenir dix ans » devient « le boîtier doit toujours tenir cinq ans de soleil » : c'est
+    le PETG retenu en 3e_C7.3.
+- **3e_C7.4** : changer les accus « tous les trois à quatre ans », soit de 2 361 à 3 148 piles évitées. Corrigé dans
+  le QCM et dans la séquence.
+- **3e_C9.2** :
+  - « bloc calibrer » devient le bloc « transformer la valeur … de [0 à 1023] vers [0 à 250] » ;
+  - « la DEL » devient « le voyant », car la station en a quatre, D6, D7, D3 et D4. Le changement porte sur le QCM,
+    la séquence, le `.ino` et la fiche, dont la version A décrivait encore l'ancien montage ;
+  - les numéros d'essais du QCM sont alignés sur les 13 essais de la recette.
+- **4e_C7.1** : « Mme Ortiz » dans le QCM, comme dans la séquence.
+- **4e_C7.4** : `energie.py` met les 15 € sur le panneau de 2 W et donne 11 h pour la pile 9 V. Les heures se
+  calculent désormais sur le rapport exact. Les trois copies du script (3e, 4e et 5e) sont maintenant identiques.
+- **4e_C7.6** : « Conserver les outils », dans le QCM, le lexique et la synthèse professeur. Le sous-titre et un
+  distracteur du QCM ne parlent plus d'assemblage, que la 4e ne fait pas.
+- **4e_C9** :
+  - six basculements « en 70 secondes » ;
+  - le chronogramme est celui « des activités 2 et 3 », et la pompe s'allume quand l'humidité « repasse sous 40 pour
+    de bon ».
+- **4e_C7.1** : sur `banc_meteo_materiaux.svg`, le carton au gel « part en lambeaux ».
+- **Atelier de planification** : le jalon I tombe « à la fin de la séance 9 ». Le générateur ajoutait une séance aux
+  jalons.
+- **5e_C7.3** : l'acier est « le plus résistant des six et passe trois exigences sur cinq », et il est deuxième sur
+  la durée. Corrigé dans la séquence et le QCM.
+- **5e_C7.1** : le test se fait à 3 m, comme le demande le besoin. Corrigé dans la séquence, la synthèse, le QCM et
+  deux SVG.
+- **5e_C7.4** : le banc compte un « capteur de présence du sac », et non un capteur d'humidité du sol.
+- **5e_C7.5** : la question « Chaîne d'information et chaîne d'énergie » est réécrite selon la n°310. L'ordre arrive
+  sur DISTRIBUER, la sortie D5, et non sur la DEL « par le fil de signal ».
+- **5e_C7.6** : le dé ne se règle pas en une cote. Chaque cote se change à sa source : le carré, la hauteur, les
+  points. Corrigé dans le QCM et la synthèse.
+- **5e_C8.1** : 41 kg font « plus de trois fois » un sac de 12 kg (41 ÷ 12 = 3,4).
+- **Atelier CAO** :
+  - TP 3e, palier 5 : le trou se perce « en partie basse » d'une paroi, jamais dans le fond ;
+  - l'assemblage n'est plus présenté comme « vu en 4e » ;
+  - le TP 3e ajoute l'étape « Fixer », qu'Onshape ne fait pas tout seul ;
+  - `SOURCES_MEDIAS.md` décrit `tp5e_R7_de_colore.png` tel qu'il est.
+- **Les libellés des liens de rattrapage**, dans les séquences et dans `build_atelier.py`, citaient les anciens titres
+  des parties des synthèses : 76 liens. Ils citent maintenant le titre-question actuel.
+
+### Thème 2
+
+- **Jardin, 4e_C4.1** :
+  - le panneau CONVERTIT, dans le menu de l'activité 1, la correction, le lexique et la synthèse professeur ;
+  - la chaîne d'information a trois verbes (ACQUÉRIR, TRAITER, COMMUNIQUER). RESTITUER disparaît.
+- **Lampadaire, 5e_C4.1** :
+  - COMMUNIQUER au lieu de COMMANDER ;
+  - la chaîne de l'activité 2 est remise dans l'ordre de la n°310.
+- **3e_C4.1** : le régulateur ALIMENTE, dans le QCM et le lexique.
+- **4e_C6.2** :
+  - le seuil est à 30 %, comme dans la séquence et la capture ;
+  - « l'organe qui communique » remplace « l'organe qui restitue ».
+- **3e_C5.1** :
+  - « par dizaines de milliers » de supports de girouette ;
+  - « le moule coûte cher une fois, la pièce peu », au lieu de « puis rien ».
+- **`4e_C6.2/synthese_4e_C6.2.py`** refuse maintenant de s'exécuter : il écraserait les deux synthèses.
+- **Les libellés de rattrapage** : 29 liens.
+
+### Thème 1
+
+- **4e_C2.1 (Hangzhou)** :
+  - 40 secondes pour « choisir », et non 41 ; corrigé dans le SVG et dans le QCM, à la source ;
+  - « 9 déverrouillages sur 30 » ;
+  - les barres du graphique ne recouvrent plus le sous-titre.
+- **Les traductions anglaises ajoutées le 29/10** sont toutes relues, et 22 sont corrigées. En voici quelques-unes :
+  - degraded mode ;
+  - external functional analysis ;
+  - use function ;
+  - to trade off ;
+  - characteristic.
+- **`MANIFESTE_LOT_3e_C1.1.json`** : les 12 empreintes périmées sont mises à jour.
+- **Les libellés de rattrapage** : 18 liens.
+
+### Laissé à Pascal
+
+- **5e_C8.1 et 5e_C8.2** : le même sac trempé pèse 12 kg dans un lot, 8 kg dans l'autre. Aligner l'un des deux
+  ferait perdre sa pédagogie à l'autre. Piste : « pesé cette fois au secrétariat : 12 kg, pas les 8 kg estimés ».
+- **4e_C6.1** : la séquence prête au « lampadaire de 5e » un seuil de 30 lux. Or ce lampadaire est réglé en %. Piste :
+  écrire « un lampadaire de parking ».
+- **SOS serre, 4e_C4.7** :
+  - la séquence enseigne deux familles de pannes, les documents professeur en comptent trois (avec « masque ») ;
+  - la synthèse élève donne les causes des fichiers A, B et C, qui servent d'évaluation ;
+  - la séquence dit que le masque « fait partie de l'adresse », le QCM dit le contraire.
+- **QCM de 5e_C4.1** : la bonne réponse reste « capteurs → carte → LED », alors que la LED convertit.
+- **3e_C7.7** : « dix ans » peut se lire « la station dix ans, le boîtier refait une fois ».
+- **5e_C7.4** : 2 mA, c'est beaucoup pour un capteur de présence. Le baisser changerait le constat du banc.
+- **Carton à la canicule** : « ne craint rien », ou « au sec, il tient, mais qui garantit le sec ? »
+- **CAO** :
+  - le palier 7 du TP 3e passe en aide détaillée ;
+  - `tp5e_R5`, `R6` et `R7` : on ne sait pas si ce sont des captures ou des rendus, et la licence en dépend ;
+  - les TP disent « comme l'an dernier », alors que les élèves n'ont pas forcément fait l'année précédente.
+- **3e_C9.2** :
+  - le `.ino` annonce « ArduBlock 1.7 » ;
+  - sur le chronogramme, la ligne « affichage » est basse pendant la veille.
+- **Anglais** : « fonction d'usage » se dit *function of use* dans l'atelier FAST, *use function* ailleurs ;
+  « caractéristique » se dit *feature* dans la bête à cornes, *characteristic* ailleurs.
+- **`MANIFESTE_LOT_3e_C1.1.json`** liste deux fichiers qui n'existent plus.

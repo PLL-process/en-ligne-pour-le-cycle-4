@@ -7,7 +7,7 @@
   IHM (interaction humain-machine, cœur de 3e_C9.2) :
     - Afficheur LCD RGB Grove (I2C)  : niveau d'alerte + vitesse du vent
     - Bouton Grove (D2)              : ACQUITTER l'alarme sonore
-    - DEL rouge Grove (D3)           : signal visuel d'alerte
+    - 4 voyants Grove D6/D7/D3/D4    : signal visuel, un seul allumé
     - Buzzer Grove (D5)              : alarme sonore (acquittable)
   Capteur :
     - Potentiomètre Grove (A1)       : simule l'anémomètre (vitesse du vent)

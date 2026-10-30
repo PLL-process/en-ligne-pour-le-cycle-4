@@ -104,7 +104,7 @@ Consommation du montage : **2,85 Wh par jour**.
 2.85 Wh/jour
    Carte Arduino UNO                45 mA ×     10 h =  2.250 Wh  (78.9 %)
    DEL indicatrice                  10 mA ×     10 h =  0.500 Wh  (17.5 %)
-   Capteur d'humidité du sol         2 mA ×     10 h =  0.100 Wh  ( 3.5 %)
+   Capteur de présence du sac        2 mA ×     10 h =  0.100 Wh  ( 3.5 %)
    autonomies :
       Pile 9 V alcaline                  0.98 jour(s) = 24 h
       4 piles AA alcalines               4.39 jour(s) = 105 h

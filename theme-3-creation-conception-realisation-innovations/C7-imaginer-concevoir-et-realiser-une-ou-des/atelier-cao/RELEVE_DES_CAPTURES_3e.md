@@ -14,7 +14,7 @@ Toutes les images vont dans `Images/`, avec **exactement** le nom indiqué.
 | `tp3e_R3_rainure.png` | résultat du palier | palier 4 — La rainure du joint — là où l'eau s'arrête | Le bord supérieur du boîtier, vu de dessus en gros plan : une gorge continue court tout autour, à mi-largeur du bord. |
 | `tp3e_R4_passage_cable.png` | résultat du palier | palier 5 — Le passage du câble — le vrai point faible | Le boîtier vu de trois quarts : un trou de 12 millimètres traverse une paroi latérale en partie basse, son bord extérieur adouci. |
 | `tp3e_R5_couvercle.png` | résultat du palier | palier 6 — Le couvercle — une pièce qui en épouse une autre | Le couvercle vu de dessous : une plaque de 80 sur 60 avec une nervure continue de 1 millimètre qui en fait le tour. |
-| `tp3e_R6_assemblage_coupe.png` | résultat du palier | palier 7 — L'assemblage — un rappel de 4e | Vue en coupe de l'assemblage : le couvercle posé sur le boîtier, sa nervure engagée dans la gorge, un espace visible entre les deux pour le joint. |
+| `tp3e_R6_assemblage_coupe.png` | résultat du palier | palier 7 — L'assemblage — là où les deux pièces se rencontrent | Vue en coupe de l'assemblage : le couvercle posé sur le boîtier, sa nervure engagée dans la gorge, un espace visible entre les deux pour le joint. |
 | `tp3e_R7_boitier_fini.png` | résultat du palier | palier 8 — 🎁 Ton boîtier, dehors pour de bon | Le boîtier terminé, coloré, couvercle légèrement soulevé pour montrer la gorge et l'intérieur. |
 
 ## Comment cadrer

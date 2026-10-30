@@ -74,7 +74,7 @@ faire son travail toute seule.
 | **5e** | Le dé | esquisser, coter, extruder, enlever, adoucir | On fabrique **une pièce**. |
 | **5e bis** | Le dé, en mieux | le plan décalé, la **primitive** en mode Retirer | On **améliore** une pièce qui existe — et on décide si ça vaut le coup. |
 | **4e** | Le dé sur sa pointe | les **variables** et le nombre d'or, la **révolution**, puis **déplacer un solide** et creuser une forme dans une autre | On **modifie une pièce en changeant un nombre** — et une pièce peut creuser la place d'une autre. |
-| **3e** | Le boîtier étanche | la **coque**, la rainure, le passage de câble, la vue en coupe | L'objet doit **résister à quelque chose de réel**. |
+| **3e** | Le boîtier étanche | la **coque**, la rainure, le passage de câble, l'**assemblage** et la vue en coupe | L'objet doit **résister à quelque chose de réel**. |
 
 Le fil n'est pas la difficulté des outils, c'est **l'enjeu**. En 5e une pièce
 ratée reste jolie à l'écran. En 4e elle ne s'assemble pas, et ça se voit tout

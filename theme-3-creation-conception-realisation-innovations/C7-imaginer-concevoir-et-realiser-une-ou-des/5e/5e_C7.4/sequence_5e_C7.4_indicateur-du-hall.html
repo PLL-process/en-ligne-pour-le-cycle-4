@@ -506,11 +506,11 @@ table.releve td input{padding:4px 8px}
   <ul class="verif">
     <li>
       <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais dire d'où vient l'énergie d'un objet : une pile, le secteur, le soleil. <span class="code-verif">cycle 3</span></label></div>
-      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../../../theme-1-objets-systemes-usages-interactions/C3-caracteriser-et-choisir-un-objet-ou-un/5e/5e_C3.1/Synthèses/synthese_eleve_5e_C3.1-C3.4.html#partie-1">relis la partie 1 de la synthèse 5e_C3.1 à C3.4, « Caractériser un objet technique »</a> — c'est la séquence 5e_C3.1 qui la travaille, si tu l'as suivie</p>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../../../theme-1-objets-systemes-usages-interactions/C3-caracteriser-et-choisir-un-objet-ou-un/5e/5e_C3.1/Synthèses/synthese_eleve_5e_C3.1-C3.4.html#partie-1">relis la partie 1 de la synthèse 5e_C3.1 à C3.4, « Comment décrire un objet technique ? »</a> — c'est la séquence 5e_C3.1 qui la travaille, si tu l'as suivie</p>
     </li>
     <li>
       <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais nommer quelques formes d'énergie — électrique, lumineuse, chimique — et dire où l'énergie change de forme dans un objet. <span class="code-verif">cycle 3</span></label></div>
-      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../../../theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation/5e/5e_C4.1/Synthèses/synthese_eleve_5e_C4.1-C4.8.html#partie-2">relis la partie 2 de la synthèse 5e_C4.1 à C4.8, « Les DEUX chaînes de l'objet »</a> — c'est la séquence 5e_C4.1 qui la travaille, si tu l'as suivie</p>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="../../../../theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation/5e/5e_C4.1/Synthèses/synthese_eleve_5e_C4.1-C4.8.html#partie-2">relis la partie 2 de la synthèse 5e_C4.1 à C4.8, « Quelles sont les deux chaînes du lampadaire ? »</a> — c'est la séquence 5e_C4.1 qui la travaille, si tu l'as suivie</p>
     </li>
     <li>
       <div class="ligne"><input type="checkbox" id="ouv_3"><label for="ouv_3">Je sais qu'avant de choisir, on écrit le besoin sous forme d'exigences qu'on peut vérifier. <span class="code-verif">cycle 3</span></label></div>
@@ -659,7 +659,7 @@ table.releve td input{padding:4px 8px}
     <table class="conso">
       <tr><th></th><th>Ce qui consomme</th><th>Courant (en milliampères)</th><th>Par jour</th><th>Énergie</th></tr>
       <tr id="tr0"><td class="ck"><input type="checkbox" id="ck0" checked></td><td>Carte Arduino UNO</td><td class="n">45 mA</td><td class="n">10 h</td><td class="n" id="wh0">2,250 Wh (wattheures)</td></tr>
-      <tr id="tr1"><td class="ck"><input type="checkbox" id="ck1" checked></td><td>Capteur d'humidité du sol</td><td class="n">2 mA</td><td class="n">10 h</td><td class="n" id="wh1">0,100 Wh</td></tr>
+      <tr id="tr1"><td class="ck"><input type="checkbox" id="ck1" checked></td><td>Capteur de présence du sac</td><td class="n">2 mA</td><td class="n">10 h</td><td class="n" id="wh1">0,100 Wh</td></tr>
       <tr id="tr2"><td class="ck"><input type="checkbox" id="ck2" checked></td><td>DEL indicatrice</td><td class="n">10 mA</td><td class="n">10 h</td><td class="n" id="wh2">0,500 Wh</td></tr>
       <tr class="tot"><td class="ck"></td><td colspan="3">Consommation du montage, par jour</td>
           <td class="n" id="etot">—</td></tr>
@@ -671,7 +671,7 @@ table.releve td input{padding:4px 8px}
     </div>
     <div class="parts-leg">
         <span><i style="background:#61dafb"></i>Carte Arduino UNO</span>
-        <span><i style="background:#ffb454"></i>Capteur d'humidité du sol</span>
+        <span><i style="background:#ffb454"></i>Capteur de présence du sac</span>
         <span><i style="background:#81fba1"></i>DEL indicatrice</span>
     </div>
 
@@ -1084,7 +1084,7 @@ function lignes(id, n, mini){ const e = $(id);
   qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
 
 /* ── banc d'énergie ─────────────────────────────────────────────────────── */
-const CONSOS = [{"nom": "Carte Arduino UNO", "ma": 45, "h": 10.0}, {"nom": "Capteur d'humidité du sol", "ma": 2, "h": 10.0}, {"nom": "DEL indicatrice", "ma": 10, "h": 10.0}];      /* [{nom, ma, h}] */
+const CONSOS = [{"nom": "Carte Arduino UNO", "ma": 45, "h": 10.0}, {"nom": "Capteur de présence du sac", "ma": 2, "h": 10.0}, {"nom": "DEL indicatrice", "ma": 10, "h": 10.0}];      /* [{nom, ma, h}] */
 const SOURCES = {"Pile 9 V alcaline": {"type": "stock", "brute": 4.95, "rend": 0.5555555555555556, "utile": 2.8, "jour": null, "detail": "Une pile plate à deux boutons-pression. Régulateur linéaire 9 → 5 V : il dissipe 4 V sur 9 en chaleur, soit 44 % de l'énergie perdue avant d'alimenter quoi que ce soit."}, "4 piles AA alcalines": {"type": "stock", "brute": 15.0, "rend": 0.8333333333333334, "utile": 12.5, "jour": null, "detail": "Quatre piles bâton en série. Régulateur linéaire 6 → 5 V : il ne dissipe qu'un volt sur six, donc il perd beaucoup moins."}, "Accu Li-ion 18650 rechargeable": {"type": "stock", "brute": 11.100000000000001, "rend": 0.85, "utile": 9.4, "jour": null, "detail": "Un accumulateur rechargeable et un convertisseur ÉLÉVATEUR 3,7 → 5 V, donné à 85 % par son constructeur. Il se recharge environ 500 fois."}, "Secteur — adaptateur USB scellé": {"type": "secteur", "brute": null, "rend": 1.0, "utile": null, "jour": null, "detail": "Un bloc secteur fermé, jamais ouvert ni modifié par un élève : côté élève, il n'y a que du 5 V. Illimité — tant qu'il y a du réseau."}, "Panneau solaire 1 W crête + accu": {"type": "solaire", "brute": null, "rend": 0.7, "utile": null, "jour": 3.7, "detail": "Un petit panneau et l'accu qu'il recharge. Ce n'est pas un réservoir : c'est un robinet, qui donne une certaine énergie CHAQUE JOUR."}};    /* {nom: {brute, rend, utile, jour, detail}} */
 const TENSION = 5;
 

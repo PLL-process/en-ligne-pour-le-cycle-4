@@ -602,7 +602,11 @@ def champs_dates(p, prefixe, sans=("A",)):
     return "".join(out)
 
 
-_dates4 = ", ".join("<b>%s</b> en séance %d" % (i, P4["debut_au_plus_tot"][i] + 1)
+# Un jalon ne dure pas : il tombe À LA FIN de la séance qui le précède, pas « en
+# séance n + 1 » (la correction disait « I en séance 10 » pour un projet de 9).
+_dates4 = ", ".join(("<b>%s</b> à la fin de la séance %d" % (i, P4["fin_au_plus_tot"][i])
+                     if P4["nature"][i] == "jalon" else
+                     "<b>%s</b> en séance %d" % (i, P4["debut_au_plus_tot"][i] + 1))
                     for i in sorted(P4["libelle"]))
 P4_HTML = P4_HTML % {
     "table": tableau_taches(P4),
@@ -1275,11 +1279,11 @@ RAPPEL = {
   <ul class="verif">
     <li>
       <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais dire, d'une étape d'une fiche de fabrication, si elle est terminée ou non. <span class="code-verif">cycle 3</span></label></div>
-      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#les-mots">relis « Une tâche » dans la synthèse de l'atelier</a></p>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#les-mots">relis « Quels sont les trois mots du programme ? » dans la synthèse de l'atelier</a></p>
     </li>
     <li>
       <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais dire, de deux étapes, laquelle doit être finie avant que l'autre commence. <span class="code-verif">cycle 3</span></label></div>
-      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#les-mots">relis « Une contrainte entre tâches » dans la synthèse de l'atelier</a></p>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#les-mots">relis « Quels sont les trois mots du programme ? » dans la synthèse de l'atelier</a></p>
     </li>
   </ul>
   <p class="change"><b>Dans cet atelier&nbsp;:</b> on regarde la liste d'étapes elle-même. Pas pour fabriquer&nbsp;: pour comprendre <b>pourquoi</b> certaines doivent attendre, et pourquoi d'autres peuvent avancer en même temps.</p>
@@ -1293,11 +1297,11 @@ RAPPEL = {
   <ul class="verif">
     <li>
       <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais ce que sont une tâche, une durée et une contrainte entre tâches. <span class="code-verif">5e_C7.1</span></label></div>
-      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#les-mots">relis « Les trois mots du programme » dans la synthèse de l'atelier</a></p>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#les-mots">relis « Quels sont les trois mots du programme ? » dans la synthèse de l'atelier</a></p>
     </li>
     <li>
       <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais repérer la tâche du jour sur un planning, et dire ce qu'un retard décale. <span class="code-verif">5e_C7.1</span></label></div>
-      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#marge">relis « La marge » dans la synthèse de l'atelier</a></p>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#marge">relis « Qu'est-ce qu'une marge, et que décale un retard ? » dans la synthèse de l'atelier</a></p>
     </li>
   </ul>
   <p class="change"><b>Dans cet atelier&nbsp;:</b> personne ne te donne le planning. Tu reçois la <b>liste des tâches</b>, en vrac, et c'est <b>toi</b> qui décides laquelle vient avant laquelle. Le logiciel te dit ensuite si ton ordre tient debout.</p>
@@ -1311,11 +1315,11 @@ RAPPEL = {
   <ul class="verif">
     <li>
       <div class="ligne"><input type="checkbox" id="ouv_1"><label for="ouv_1">Je sais ranger des tâches données dans l'ordre et tracer les flèches qui disent qui attend qui. <span class="code-verif">4e_C7.1</span></label></div>
-      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#methode">relis « La méthode, en cinq gestes » dans la synthèse de l'atelier</a></p>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#methode">relis « Comment construire le planning, geste après geste ? » dans la synthèse de l'atelier</a></p>
     </li>
     <li>
       <div class="ligne"><input type="checkbox" id="ouv_2"><label for="ouv_2">Je sais trouver les tâches qui peuvent avancer en même temps. <span class="code-verif">4e_C7.1</span></label></div>
-      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#en-meme-temps">relis « Le résultat qui surprend tout le monde » dans la synthèse de l'atelier</a></p>
+      <p class="rattrapage">→ pas encore sûr·e ? <a href="Synthèses/synthese_eleve_C7.1_planification.html#en-meme-temps">relis « Pourquoi un projet dure-t-il moins que la somme de ses tâches ? » dans la synthèse de l'atelier</a></p>
     </li>
   </ul>
   <p class="change"><b>Dans cet atelier&nbsp;:</b> la liste n'existe pas. C'est toi qui <b>découpes</b> le projet en tâches, qui <b>estimes</b> chaque durée, et qui réponds à la seule question qui compte pour un client&nbsp;: <b>ce sera prêt quand&nbsp;?</b></p>
