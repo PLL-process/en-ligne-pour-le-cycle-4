@@ -3,95 +3,580 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Synthèse eleve — 5e_C7.2 Le dé, en mieux</title>
-<style>body{font-family:system-ui,sans-serif;max-width:720px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
-h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
-.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
-.attention{background:#fff6e0;border-left:4px solid #b8860b}
-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.94em}
-th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
-figure{margin:14px 0}figure img{width:100%;border:1px solid #b9cbe4;border-radius:8px}
-figcaption{font-size:.88em;color:#555;margin-top:4px}
-ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
-#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}
+<title>Synthèse élève — Le dé, en mieux (5e_C7.2)</title>
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;font-size:.95em;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+  h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
+  ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  table{width:100%;border-collapse:collapse;margin:6px 0}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--sub);font-size:.9em}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;flex-wrap:wrap;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  /* règle n°304 : un lien de rattrapage arrive sur ce titre ; la barre collante (47 px) ne doit pas le recouvrir */
+  h2[id]{scroll-margin-top:60px}
+  #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
+
+  /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
+  /* Une couleur par notion, la même partout, celle du dessin de coupe : l'ancien creux à fond plat en bleu, la calotte en or. */
+  .v1{color:#81aaff;font-weight:600}.v2{color:var(--warn);font-weight:600}
+  /* La coupe des deux creux, en vignette à côté des étapes du calcul ; dessous sur un téléphone. */
+  .duo{display:flex;gap:12px;align-items:center;margin:8px 0;break-inside:avoid}
+  .duo .chaine{flex:1;flex-direction:column;margin:0}.duo .chaine div{flex:none}
+  .vignette{flex:0 0 34%;margin:0}.vignette img{display:block;width:100%;border-radius:8px;border:1px solid var(--border)}
+  .vignette figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.duo{flex-direction:column;align-items:stretch}}
+  table.billes td,table.billes th{text-align:center}table.billes tr.ok td{color:var(--warn);font-weight:600}
+  @media (max-width:600px){table.billes td,table.billes th{padding:4px 3px}} /* les quatre colonnes tiennent à 390 px */
+  /* La carte « Ce que je dois retenir » */
+  .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
+  .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
+  .question{text-align:center;font-size:1.05em;font-weight:600;margin:0 0 10px}
+  .programme{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);
+             padding:6px 0;margin:0 0 12px}
+  .programme b{color:var(--text)}
+  .programme ul{margin:2px 0;padding-left:18px}.programme li{margin:1px 0}
+  .cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .cartes a{display:block;text-decoration:none;color:var(--text);background:var(--panel);border:1.5px solid var(--border);
+            border-radius:10px;padding:9px 12px}
+  .cartes a:hover{border-color:var(--hl)}
+  .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
+  .cartes .r{display:block;font-size:.92em}
+  /* L'objet en image (Pascal, 29/10/2026 : « une illustration permet d'avoir une vision plus synthétique de l'objet ») :
+     à droite du programme, dans la carte ; dessous sur un téléphone. */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  /* L'image du modèle Onshape (1 095 × 957) : elle garde sa forme, rien n'est rogné. Le programme n'a qu'une
+     ligne : la question de la séquence monte à côté de l'image, au lieu de la surmonter. */
+  .objet{flex-basis:24%}.tete .question{margin:0 0 8px;font-size:1.15em;color:var(--text)}@media print{.tete .question{color:#111}}.objet img{aspect-ratio:1095/957;flex:none;height:auto;object-fit:contain}.tete .programme{align-self:center}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
+  .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
+  .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
+  .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
+  .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  ul.serre li{margin:1px 0}
+  .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
+
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+    h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; un schéma ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    .schema,table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
+    .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
+    .v1{color:#1d4e89}.v2{color:#8a5a00}.vignette figcaption{color:#222}.duo{margin:4px 0;gap:8px}table.billes tr.ok td{color:#8a5a00}.vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
+    .schema{width:60%;display:block;margin:4px auto}
+    h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
+
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  .box,th{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
 
 /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
 @media(max-width:680px){table{display:block;overflow-x:auto}}
-</style>
-</head>
+
+  /* Revenir à la carte (Pascal, 29/10/2026 : « je ne peux pas revenir à la synthèse ») : chaque partie porte, en
+     haut à droite, un lien vers la carte « Ce que je dois retenir » ; la barre de navigation collée en haut ne
+     recouvre plus le titre visé par un lien. Rien de tout cela ne s'imprime. */
+  .retour-carte{float:right;font-size:.82em;margin:1px 0 0 10px;padding:1px 10px;border:1.5px solid var(--border);
+                border-radius:999px;text-decoration:none;white-space:nowrap}
+  .retour-carte:hover,.retour-carte:focus-visible{border-color:var(--hl)}
+  #carte-titre,[id^="partie-"]{scroll-margin-top:64px}
+  @media print{.retour-carte{display:none}}
+</style></head>
 <body>
-<nav id="navharm"><a href="../../../../../index.html">⌂ Accueil</a><a href="../../../atelier-cao/tp_5e_de_calottes.html">🧪 Le TP</a><a href="../qcm_5e_C7.2_le-de-ameliore.html">🧠 Le QCM</a><a href="../lexique_5e_C7.2.html">📖 Lexique</a><a href="synthese_professeur_5e_C7.2.html">🧑‍🏫 Synthèse professeur</a></nav>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../../../atelier-cao/tp_5e_de_calottes.html">🧪 Le TP</a><a href="../qcm_5e_C7.2_le-de-ameliore.html">🧠 Le QCM</a><a href="../lexique_5e_C7.2.html">📖 Lexique</a><a href="synthese_professeur_5e_C7.2.html">🧑‍🏫 Synthèse professeur</a></nav>
+<div class="page">
+<h1>📌 Synthèse élève — Le dé, en mieux</h1>
+<p class="pb">Reprendre son dé, lui changer une seule chose, puis décider si l'amélioration vaut la peine.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
 
-<h1>🥄 Synthèse élève — Le dé, en mieux</h1>
-<p><em>5e_C7.2 — Fabriquer une solution pour améliorer un OST existant.</em></p>
+<!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
+<section class="carte" aria-labelledby="carte-titre">
+  <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
+  <div class="tete">
+  <div class="programme"><p class="question">Comment améliorer un objet qui existe déjà, et prouver que c'est vraiment mieux&nbsp;?</p>
+    <b>Ce que dit le programme</b> (5e, compétence C7)&nbsp;:
+    <ul>
+      <li>fabriquer une solution pour améliorer un OST existant.</li>
+    </ul>
+  </div>
+    <figure class="objet">
+      <img src="../../../atelier-cao/Images/tp5e_R7_de_colore.png" alt="Le dé du premier TP dans Onshape : un cube aux arêtes arrondies, ses points creusés à fond plat et colorés en doré.">
+      <figcaption>📍 L'objet&nbsp;: ton dé du TP nº1, avant l'amélioration. <i>Image Onshape.</i></figcaption>
+    </figure>
+  </div>
+  <div class="cartes">
+    <a href="#partie-1"><span class="q">🔧 1. Qu'est-ce qu'améliorer un objet&nbsp;?</span>
+      <span class="r">L'objet existe déjà&nbsp;: tu lui changes une seule chose.</span></a>
+    <a href="#partie-2"><span class="q">🔍 2. Quel est le défaut, exactement&nbsp;?</span>
+      <span class="r">Un fond plat et une arête vive, constatés en comparant à l'usage.</span></a>
+    <a href="#partie-3"><span class="q">🛟 3. Comment essayer sans rien casser&nbsp;?</span>
+      <span class="r">Un témoin intact, et l'ancien creux mis de côté, pas effacé.</span></a>
+    <a href="#partie-4"><span class="q">🎯 4. Où placer le centre de la bille&nbsp;?</span>
+      <span class="r">Rayon moins enfoncement&nbsp;: 8,5&nbsp;mm au-dessus de la face, sur un plan décalé.</span></a>
+    <a href="#partie-5"><span class="q">📏 5. Qu'a-t-on gagné, mesure à l'appui&nbsp;?</span>
+      <span class="r">Un creux au fond rond, à peine plus large&nbsp;: 10,54&nbsp;mm au lieu de 10.</span></a>
+    <a href="#partie-6"><span class="q">⚖️ 6. Faut-il améliorer les 21 points&nbsp;?</span>
+      <span class="r">On essaie sur un point, on chiffre le reste, puis on tranche.</span></a>
+    <a href="#partie-7"><span class="q">✋ 7. Comment savoir si c'est vraiment mieux&nbsp;?</span>
+      <span class="r">En imprimant les deux versions et en les comparant en main.</span></a>
+  </div>
+</section>
 
-<h2>Améliorer, ce n'est pas recommencer</h2>
-<p>Ton dé existait déjà : il tourne, il se lit, il s'imprime. On ne l'a pas refait, on ne l'a
-pas remplacé — on lui a changé <b>une seule chose</b>, et tout le reste est resté
-reconnaissable. C'est cela, améliorer un objet technique existant.</p>
-<div class="box">
-  <p><b>La règle des trois versions du cycle.</b> En 5e on <em>améliore</em> un objet qui
-  existe. En 4e on lui <em>ajoute une fonction</em> qu'il n'avait pas. En 3e on <em>produit</em>
-  un objet entièrement nouveau. Le verbe change à chaque niveau, et c'est le verbe qui dit ce
-  qu'on attend de toi.</p>
+<!-- ══ 1 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-1" style="margin-top:0">1. Qu'est-ce qu'améliorer un objet&nbsp;?</h2>
+  <p>Ton dé du TP nº1 existe déjà, et il marche. Tu changes un creux, rien d'autre. Le verbe change à chaque niveau&nbsp;:</p>
+  <div class="chaine">
+    <div class="ok"><b>5e&nbsp;: améliorer</b>L'objet existe. Tu lui changes une qualité.</div>
+    <div><b>4e&nbsp;: ajouter une fonction</b>L'objet existe. Il gagne une fonction nouvelle.</div>
+    <div><b>3e&nbsp;: produire du neuf</b>L'objet n'existait pas&nbsp;: tu l'inventes.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: <b>améliorer</b>, c'est agir sur un objet qui <b>existe déjà</b> et ne
+  changer <b>qu'une qualité</b>. Le reste doit rester <b>reconnaissable</b>&nbsp;; sinon, tu remplaces l'objet.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'améliorer, c'est changer beaucoup. Plus le changement est ciblé,
+  mieux il se démontre.</p>
 </div>
 
-<h2>Le défaut, en deux mots</h2>
-<p>Avant de corriger, il a fallu <b>nommer</b>. Le creux du dé a un <b>fond plat</b> et une
-<b>arête vive</b> : c'est la forme que laisse forcément un enlèvement de matière par extrusion.
-Sur un dé du commerce, le creux est une <b>calotte</b> — la trace qu'une bille laisserait en
-s'enfonçant un peu.</p>
-<div class="box attention">
-  <p><b>Personne n'a décrété que c'était un défaut.</b> On l'a constaté en comparant à l'usage :
-  le doigt sent l'arête chez l'un, et rien chez l'autre. Un défaut se compare, il ne se
-  décrète pas.</p>
+<!-- ══ 2 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-2" style="margin-top:0">2. Quel est le défaut, exactement&nbsp;?</h2>
+  <p>Tu zoomes sur le creux du 1, de profil. Puis tu passes le doigt dans le point d'un dé du commerce&nbsp;:</p>
+  <div class="chaine">
+    <div class="ko"><b>Ton creux&nbsp;: <span class="v1">fond plat</span></b>Son bord est une arête vive, un angle net. Le doigt la sent.</div>
+    <div class="ok"><b>Le dé du commerce&nbsp;: une <span class="v2">calotte</span></b>Un creux rond, comme une cuillère. Rien n'accroche.</div>
+    <div><b>D'où vient l'écart&nbsp;?</b>Le TP nº1 avait simplifié exprès&nbsp;: un cylindre est plus simple.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on corrige bien ce qu'on a su <b>nommer</b>&nbsp;: ici, un <b>fond plat</b>
+  et une <b>arête vive</b>. Un défaut se <b>constate</b> en comparant à l'usage&nbsp;; personne ne le décrète.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: dire que le creux est «&nbsp;mal fait&nbsp;». Il est bien fait&nbsp;: une
+  extrusion donne toujours un fond plat.</p>
 </div>
 
-<h2>La bille, et où se place son centre</h2>
-<figure><img src="../../../atelier-cao/Images/coupe_calotte_5e.svg" alt="Coupe de la face du dé : à gauche le creux cylindrique à fond plat, à droite la calotte creusée par une bille de Ø20 dont le centre est à 8,5 mm au-dessus de la face. Même profondeur de 1,5 mm ; la calotte fait Ø10,54."><figcaption>La coupe est engendrée par <code>calotte.py</code> : ses cotes ne sont pas dessinées à la main.</figcaption></figure>
-<div class="box"><ul>
-  <li>La bille fait <b>Ø20</b>, donc <b>10</b> de rayon.</li>
-  <li>On veut qu'elle s'enfonce de <b>1,5 mm</b> dans la matière.</li>
-  <li>Son centre est donc à 10 − 1,5 = <b>8,5 mm</b> au-dessus de la face —
-  dans le vide, d'où le <b>plan décalé</b> qu'il a fallu créer pour l'y poser.</li>
-</ul></div>
-<p>Une bille ne laisse pas son diamètre : elle laisse la <b>trace de sa tranche</b> à la hauteur
-de la surface. Ici <b>Ø10,54</b> — soit 0,54 mm de plus que l'ancien creux, ce qui ne
-se voit pas de face.</p>
-
-<h2>Ce qu'on a mesuré</h2>
-<table>
-  <tr><th>Bille</th><th>Centre au-dessus de la face</th><th>Creux obtenu</th><th>Matière retirée</th></tr>
-  <tr><td>Ø10</td><td>3,5 mm</td><td>Ø7,14</td><td>31,8 mm³</td></tr>
-  <tr><td>Ø20</td><td>8,5 mm</td><td>Ø10,54</td><td>67,2 mm³</td></tr>
-  <tr><td>Ø30</td><td>13,5 mm</td><td>Ø13,08</td><td>102,5 mm³</td></tr>
-</table>
-<p>À <b>enfoncement égal</b>, une bille plus grosse laisse un creux <b>plus large</b> — et plus
-doux. La profondeur, elle, ne dépend que de la hauteur du centre.</p>
-<div class="box">
-  <p><b>Et la matière ?</b> La calotte se referme vers le bas : elle retire
-  <b>67,2 mm³</b> quand le cylindre en retire <b>117,8</b>, soit <b>43 % de
-  moins</b>. Un creux plus large en surface peut donc enlever moins de matière : c'est la forme
-  entière qui compte, pas son ouverture.</p>
-</div>
-<p><b>Pourquoi il a fallu retirer l'ancien creux d'abord ?</b> Parce que la calotte est large en
-haut et se referme en descendant : dès <b>0,16 mm</b> sous la face, le cylindre Ø10
-est déjà plus large qu'elle. Posée par-dessus, la bille n'aurait mordu que le bord.</p>
-
-<h2>Essayer, puis décider</h2>
-<p>On n'a amélioré <b>qu'un</b> point sur vingt et un. Ce n'est pas de la paresse : c'est la
-démarche. On dépense peu, on regarde, et on décide ensuite — avec le prix sous les yeux :
-<b>6 plans, 6 esquisses, 21 billes</b>.</p>
-<div class="box attention">
-  <p><b>Le vrai critère n'est pas à l'écran.</b> Le défaut se sentait au doigt : c'est au doigt
-  qu'il se juge. Les deux fichiers STL, v1 et v2, sont là pour être imprimés et comparés en
-  main. Tant qu'on n'a pas tenu les deux dés, on a une opinion, pas une démonstration.</p>
+<!-- ══ 3 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-3" style="margin-top:0">3. Comment essayer sans rien casser&nbsp;?</h2>
+  <p>Avant de toucher au dé, tu prépares le chemin du retour&nbsp;:</p>
+  <div class="chaine etapes">
+    <div><b>1. Dupliquer</b>Un nouvel onglet, «&nbsp;Dé v2&nbsp;». L'original reste intact&nbsp;: c'est ton témoin.</div>
+    <div><b>2. Mettre de côté</b>«&nbsp;Supprimer la fonction&nbsp;»&nbsp;: le creux du 1 disparaît, sa ligne reste grisée.</div>
+    <div><b>3. Vérifier</b>Les vingt autres creux n'ont pas bougé.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un <b>témoin</b> est la version qu'on laisse <b>exprès</b> telle quelle&nbsp;:
+  sans lui, rien ne se démontre. <b>Supprimer la fonction</b> met de côté sans effacer.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: poser la calotte par-dessus l'ancien creux. Sous la face, le cylindre est
+  plus large qu'elle&nbsp;: le fond resterait plat.</p>
 </div>
 
-<footer>Lot « Le dé, en mieux » — atelier CAO du cycle 4. Cette page fonctionne hors ligne, sans compte, et s'imprime en noir et blanc.</footer>
+<!-- ══ 4 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-4" style="margin-top:0">4. Où placer le centre de la bille&nbsp;?</h2>
+  <p>La bille fait 20&nbsp;mm de diamètre, donc 10&nbsp;mm de rayon. Elle doit s'enfoncer de 1,5&nbsp;mm dans la face du 1.</p>
+  <div class="duo">
+    <div class="chaine">
+      <div><b>1. Calculer</b>10 − 1,5 = 8,5&nbsp;: le centre est à 8,5&nbsp;mm au-dessus de la face, dans le vide.</div>
+      <div><b>2. Poser un repère</b>Un plan décalé de 8,5&nbsp;mm, puis un point coté à 25&nbsp;mm de deux bords.</div>
+      <div class="ok"><b>3. Creuser</b>Primitive Sphère, diamètre 20, mode Retirer&nbsp;: la bille laisse son empreinte.</div>
+    </div>
+    <figure class="vignette">
+      <img src="../../../atelier-cao/Images/coupe_calotte_5e.svg" alt="Coupe de la face du dé : à gauche le creux à fond plat, à droite la calotte creusée par une bille dont le centre est à 8,5 millimètres au-dessus de la face.">
+      <figcaption>La coupe&nbsp;: à gauche le <span class="v1">fond plat</span>, à droite la <span class="v2">calotte</span>.</figcaption>
+    </figure>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: hauteur du centre = <b>rayon − enfoncement</b>. Ce centre est <b>dans le
+  vide</b>&nbsp;: un <b>plan décalé</b> lui sert de support. Une <b>primitive</b> est une forme toute faite, posée sans esquisse.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: confondre rayon et diamètre. Avec 20 au lieu de 10, le centre est trop
+  haut et la bille ne touche plus rien.</p>
+</div>
+
+<!-- ══ 5 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-5" style="margin-top:0">5. Qu'a-t-on gagné, mesure à l'appui&nbsp;?</h2>
+  <p>Onshape mesure le nouveau creux&nbsp;: 10,54&nbsp;mm de diamètre, contre 10&nbsp;mm avant. Trois billes, même enfoncement&nbsp;:</p>
+  <table class="billes">
+    <tr><th>Bille (diamètre)</th><th>Centre au-dessus de la face</th><th>Creux obtenu (diamètre)</th><th>Matière retirée (en mm³, millimètres cubes)</th></tr>
+    <tr><td>10&nbsp;mm</td><td>3,5&nbsp;mm</td><td>7,14&nbsp;mm</td><td>31,8</td></tr>
+    <tr class="ok"><td>20&nbsp;mm ✔</td><td>8,5&nbsp;mm</td><td>10,54&nbsp;mm</td><td>67,2</td></tr>
+    <tr><td>30&nbsp;mm</td><td>13,5&nbsp;mm</td><td>13,08&nbsp;mm</td><td>102,5</td></tr>
+  </table>
+  <p>L'ancien cylindre retirait 117,8&nbsp;mm³&nbsp;: la <span class="v2">calotte</span> en retire 43&nbsp;% de moins, car elle se referme vers le bas.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une bille laisse la <b>trace de sa tranche</b>, pas son diamètre. À
+  enfoncement égal, une bille <b>plus grosse</b> laisse un creux <b>plus large</b>, et plus doux.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: déduire la matière retirée de la largeur du creux. C'est la forme entière
+  qui compte, pas son ouverture.</p>
+</div>
+
+<!-- ══ 6 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-6" style="margin-top:0">6. Faut-il améliorer les 21 points&nbsp;?</h2>
+  <p>Tu n'as amélioré qu'un point sur vingt et un. Avant d'aller plus loin, tu chiffres le reste&nbsp;:</p>
+  <div class="chaine">
+    <div><b>Le prix</b>6 plans, 6 esquisses, 21 billes&nbsp;: surtout du temps.</div>
+    <div class="ok"><b>Généraliser</b>Pour un dé qu'on offre, tu vas jusqu'au bout.</div>
+    <div class="ok"><b>S'arrêter là</b>Pour un dé de démonstration, un point suffit.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on <b>essaie sur un exemplaire</b> avant de généraliser&nbsp;: on dépense
+  peu, puis on <b>décide</b>. Les deux choix se défendent si tu écris pourquoi&nbsp;; ne pas trancher, non.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: tout changer d'un coup. Si le résultat déplaît, il ne reste plus rien à quoi
+  comparer.</p>
+</div>
+
+<!-- ══ 7 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-7" style="margin-top:0">7. Comment savoir si c'est vraiment mieux&nbsp;?</h2>
+  <p>Le défaut se sentait au doigt&nbsp;: c'est donc au doigt qu'il se juge.</p>
+  <div class="chaine etapes">
+    <div><b>1. Exporter</b>Deux fichiers STL, v1 et v2, en millimètres, aux noms distincts.</div>
+    <div><b>2. Imprimer</b>Impression faite ailleurs&nbsp;? Les deux dés partent ensemble.</div>
+    <div class="ok"><b>3. Toucher</b>Passe le doigt dans les deux creux, puis compare.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une amélioration se <b>juge à l'usage</b>, pas à l'écran. Imprime les
+  <b>deux versions</b> et compare-les <b>en main</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: écrire «&nbsp;c'est mieux&nbsp;» sans avoir tenu les deux dés. C'est une
+  opinion, pas une démonstration.</p>
+</div>
+
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>OST <span class="en">— technical object or system</span></dt><dd>un objet technique, ici ton dé.</dd></div>
+    <div><dt>améliorer <span class="en">— to improve</span></dt><dd>changer une qualité d'un objet qui existe.</dd></div>
+    <div><dt>arête vive <span class="en">— sharp edge</span></dt><dd>un angle net, qui accroche le doigt.</dd></div>
+    <div><dt>calotte <span class="en">— spherical cap</span></dt><dd>le creux rond que laisse une bille.</dd></div>
+    <div><dt>témoin <span class="en">— control</span></dt><dd>la version laissée exprès telle quelle.</dd></div>
+    <div><dt>dupliquer <span class="en">— to duplicate</span></dt><dd>faire une copie identique.</dd></div>
+    <div><dt>supprimer la fonction <span class="en">— suppress</span></dt><dd>mettre un geste de côté.</dd></div>
+    <div><dt>plan décalé <span class="en">— offset plane</span></dt><dd>un plan posé à distance d'une face.</dd></div>
+    <div><dt>primitive <span class="en">— primitive</span></dt><dd>une forme toute faite&nbsp;: un centre, une taille.</dd></div>
+    <div><dt>mode Retirer <span class="en">— remove</span></dt><dd>la forme creuse la pièce.</dd></div>
+    <div><dt>généraliser <span class="en">— to roll out</span></dt><dd>appliquer partout un essai réussi.</dd></div>
+    <div><dt>STL <span class="en">— STL file</span></dt><dd>le fichier que lit l'imprimante 3D.</dd></div>
+  </dl>
+</div>
+</div>
+
+
+<!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  /* L'agrandisseur est une COLONNE — bouton, image, légende — : la légende suit l'image dans le
+     flux, l'image reçoit une hauteur maximale calculée (ajuster()), et le fond défile si besoin. */
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:1rem;box-sizing:border-box;overflow:auto;
+    flex-direction:column;align-items:center;gap:.75rem}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  /* centré quand tout tient, sans rien couper quand ça déborde : des marges automatiques,
+     pas justify-content:center (qui rendrait le haut inaccessible au défilement) */
+  .loupe-fond > .loupe-fermer{margin-top:auto}
+  .loupe-fond > .loupe-legende{margin-bottom:auto}
+  .loupe-fond img{display:block;flex:none;max-width:100%;max-height:80vh;width:auto;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:static;flex:none;margin:0;max-width:min(70ch,100%);text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif}
+  .loupe-legende .loupe-aide{display:block;margin-top:.25rem;font-size:.85em;color:#b8bfcc}
+  .loupe-fermer{position:sticky;top:0;align-self:flex-end;flex:none;z-index:1;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+    grande.addEventListener("load", ajuster);
+    window.addEventListener("resize", ajuster);
+  }
+
+  // La légende affichée : la figcaption VISIBLE de la figure si elle existe ; sinon le
+  // texte alternatif, réduit à sa première phrase s'il dépasse deux lignes. L'alt complet
+  // reste sur l'image agrandie, pour les lecteurs d'écran.
+  function poserLegende(el, texteAlt){
+    var fig = el.closest("figure");
+    var cap = fig ? fig.querySelector("figcaption") : null;
+    var visible = cap && cap.getClientRects().length && cap.textContent.trim();
+    legende.textContent = "";
+    var texte = visible ? cap.textContent.replace(/\s+/g, " ").trim() : (texteAlt || "");
+    texte = texte.replace(/\s*\(clique[^()]*agrandir\)/gi, "").trim();   // l'image est déjà agrandie
+    var corps = document.createElement("span");
+    corps.textContent = texte;
+    var aide = document.createElement("span");
+    aide.className = "loupe-aide";
+    aide.textContent = "Échap pour refermer";
+    if (texte) legende.appendChild(corps);
+    legende.appendChild(aide);
+    if (!visible && texte) {
+      var ligne = parseFloat(getComputedStyle(legende).lineHeight) || 20;
+      if (corps.getBoundingClientRect().height > 2 * ligne + 1) {
+        var m = texte.match(/^[\s\S]*?[.!?…](?=\s|$)/);
+        if (m && m[0].length < texte.length) corps.textContent = m[0];
+      }
+    }
+  }
+
+  // L'image reçoit la place qui reste : hauteur du fond, moins le bouton, la légende,
+  // les marges et les espacements — jamais moins de 40 % de l'écran ; au-delà, le fond défile.
+  function ajuster(){
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    var st = getComputedStyle(fond);
+    var ecart = parseFloat(st.rowGap) || 0;
+    var reste = fond.clientHeight - parseFloat(st.paddingTop) - parseFloat(st.paddingBottom)
+              - fond.querySelector(".loupe-fermer").offsetHeight - legende.offsetHeight - 2 * ecart;
+    grande.style.maxHeight = Math.max(reste, 0.4 * window.innerHeight) + "px";
+  }
+
+  function montrer(el, texteAlt){
+    fond.setAttribute("data-ouvert", "oui");
+    fond.scrollTop = 0;
+    poserLegende(el, texteAlt);
+    ajuster();
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.style.background = "";
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    montrer(img, img.alt);
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    grande.style.maxHeight = "";
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
+  // couleurs et leur police viennent de la feuille de style de la PAGE. Sérialisé seul, le
+  // dessin les perdrait (formes noires, police par défaut, texte qui déborde) : on recopie
+  // donc sur la copie les propriétés CALCULÉES de chaque élément, on y ajoute les dégradés
+  // et marqueurs définis ailleurs dans la page, et l'image reçoit le fond du schéma.
+  var PROPRIETES = ["fill", "fill-opacity", "fill-rule", "stroke", "stroke-width", "stroke-opacity",
+    "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit",
+    "opacity", "visibility", "display", "color", "font-family", "font-size", "font-weight", "font-style",
+    "font-variant-numeric", "letter-spacing", "word-spacing", "text-anchor", "dominant-baseline",
+    "baseline-shift", "text-decoration", "white-space", "paint-order", "stop-color", "stop-opacity",
+    "marker-start", "marker-mid", "marker-end", "clip-path", "mask", "filter"];
+  // Une transformation posée par la feuille de style (pas par l'attribut transform, que la
+  // copie garde déjà) : on la recopie avec son origine.
+  var TRANSFORMATION = ["transform", "transform-origin", "transform-box"];
+
+  function figer(source, copie){
+    var a = [source].concat([].slice.call(source.querySelectorAll("*")));
+    var b = [copie].concat([].slice.call(copie.querySelectorAll("*")));
+    for (var i = 0; i < a.length && i < b.length; i++) {
+      var cs = getComputedStyle(a[i]), decl = [], k, v;
+      for (k = 0; k < PROPRIETES.length; k++) {
+        v = cs.getPropertyValue(PROPRIETES[k]);
+        if (v) decl.push(PROPRIETES[k] + ":" + v);
+      }
+      if (i > 0 && !a[i].hasAttribute("transform") && cs.getPropertyValue("transform") &&
+          cs.getPropertyValue("transform") !== "none") {
+        for (k = 0; k < TRANSFORMATION.length; k++) decl.push(TRANSFORMATION[k] + ":" + cs.getPropertyValue(TRANSFORMATION[k]));
+      }
+      var deja = b[i].getAttribute("style");
+      b[i].setAttribute("style", decl.join(";") + (deja ? ";" + deja : ""));
+    }
+  }
+
+  // Un dégradé ou un marqueur appelé par url(#…) mais défini hors du dessin : on le recopie dedans.
+  function rapatrier(copie){
+    var defs = null, faits = {}, tour = 0, trouve = true;
+    while (trouve && tour++ < 4) {
+      trouve = false;
+      var refs = (new XMLSerializer().serializeToString(copie).match(/url\((?:&quot;|["'])?#([^"')&]+)/g) || [])
+        .concat(new XMLSerializer().serializeToString(copie).match(/href="#[^"]+"/g) || []);
+      refs.forEach(function(r){
+        var id = r.replace(/^url\((?:&quot;|["'])?#/, "").replace(/^href="#/, "").replace(/"$/, "");
+        if (faits[id] || copie.querySelector("[id='" + id.replace(/'/g, "") + "']")) return;
+        faits[id] = true;
+        var el = document.getElementById(id);
+        if (!el || !el.closest("svg")) return;
+        if (!defs) { defs = document.createElementNS("http://www.w3.org/2000/svg", "defs"); copie.insertBefore(defs, copie.firstChild); }
+        var c = el.cloneNode(true); figer(el, c); defs.appendChild(c); trouve = true;
+      });
+    }
+  }
+
+  // Le fond sur lequel le schéma est dessiné : le sien, sinon celui du premier parent opaque.
+  function fondDe(el){
+    for (var e = el; e && e.nodeType === 1; e = e.parentElement) {
+      var c = getComputedStyle(e).backgroundColor, m = c.match(/rgba?\(([^)]+)\)/);
+      if (m) { var p = m[1].split(","); if (p.length < 4 || parseFloat(p[3]) > 0) return c; }
+      else if (c && c !== "transparent") return c;
+    }
+    return "#fff";
+  }
+
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    figer(svg, copie);
+    rapatrier(copie);
+    copie.style.background = "transparent";
+    // Une taille propre au dessin (sans elle, une image SVG n'a que 300 × 150 px à offrir) :
+    // celle de la viewBox, agrandie ; le CSS de la loupe la ramène à l'écran.
+    var vb = svg.viewBox && svg.viewBox.baseVal, boite = svg.getBoundingClientRect();
+    var w = vb && vb.width ? vb.width : boite.width, h = vb && vb.height ? vb.height : boite.height;
+    if (!(vb && vb.width) && w && h) copie.setAttribute("viewBox", "0 0 " + w + " " + h);
+    var k = w ? Math.max(1, 1600 / w) : 1;
+    if (w && h) { copie.setAttribute("width", Math.round(w * k)); copie.setAttribute("height", Math.round(h * k)); }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.style.background = fondDe(svg);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    montrer(svg, mot);
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
 </body>
 </html>

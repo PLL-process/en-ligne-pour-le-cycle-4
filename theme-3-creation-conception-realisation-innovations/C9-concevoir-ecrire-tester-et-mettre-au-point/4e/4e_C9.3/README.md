@@ -8,7 +8,7 @@
 
 ➡ **[Séquence 4e — Le jardin connecté se programme](../4e_C9.1/sequence_4e_C9_jardin-programme.html)**
 
-Trois activités lui sont consacrées : le jeu d'essais, le clignotement corrigé par hystérésis, et le réinvestissement sans modèle. Le QCM du lot y consacre 10 de ses 30 questions.
+Trois activités lui sont consacrées : le jeu d'essais, la pompe qui s'affole, calmée par hystérésis, et le réinvestissement sans modèle. Le QCM du lot y consacre 10 de ses 30 questions.
 
 **Ce code y est évalué.** La banque de la ressource porte 10 questions étiquetées `4e_C9.3` (`qcm_4e_C9_jardin-programme.html`) : le score se reporte.
 

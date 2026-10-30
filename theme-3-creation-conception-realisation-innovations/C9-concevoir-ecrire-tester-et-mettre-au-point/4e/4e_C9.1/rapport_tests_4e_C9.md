@@ -25,8 +25,8 @@ un élève la fera**, avec le même tremblement de mesure dans les deux modes.
 
 | Test | Résultat |
 |---|---|
-| Banc : en **UN seuil**, la mesure qui tremble fait clignoter la pompe | ✅ 8 basculements |
-| Banc : en **DEUX seuils**, le **même** tremblement ne fait plus clignoter | ✅ 0 basculement |
+| Banc : en **UN seuil**, la mesure qui tremble affole la pompe | ✅ 8 basculements |
+| Banc : en **DEUX seuils**, le **même** tremblement n'affole plus la pompe | ✅ 0 basculement |
 | La démonstration est probante (au moins 4 basculements évités) | ✅ 8 → 0 |
 
 > Le tremblement est une suite de valeurs **figée dans le code**

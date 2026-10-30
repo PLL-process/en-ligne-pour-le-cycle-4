@@ -1,26 +1,565 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Synthèse élève 3e capteur</title>
-<style>body{font-family:system-ui,sans-serif;max-width:700px;margin:20px auto;padding:0 14px;line-height:1.5}.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:10px;margin:10px 0}.crcn{background:#e8f8f3;border-left:4px solid #2a6b5a;padding:10px;margin:10px 0}#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — Le capteur de confort, New York (3e_C7.1 · 3e_C7.2)</title>
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;font-size:.95em;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+  h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
+  ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  table{width:100%;border-collapse:collapse;margin:6px 0}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--sub);font-size:.9em}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  /* règle n°304 : un lien de rattrapage arrive sur ce titre ; la barre collante (47 px) ne doit pas le recouvrir */
+  h2[id]{scroll-margin-top:60px}
+  #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
+
+  /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
+  /* Une couleur par notion, la même partout : la donnée en jaune, l'information en vert. */
+  .d{color:var(--warn);font-weight:600}.i{color:var(--ok);font-weight:600}
+  /* La carte « Ce que je dois retenir » */
+  .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
+  .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
+  .question{text-align:center;font-size:1.05em;font-weight:600;margin:0 0 10px}
+  .programme{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);
+             padding:6px 0;margin:0 0 12px}
+  .programme b{color:var(--text)}
+  .programme ul{margin:2px 0;padding-left:18px}.programme li{margin:1px 0}
+  .cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .cartes a{display:block;text-decoration:none;color:var(--text);background:var(--panel);border:1.5px solid var(--border);
+            border-radius:10px;padding:9px 12px}
+  .cartes a:hover{border-color:var(--hl)}
+  .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
+  .cartes .r{display:block;font-size:.92em}
+  /* L'objet en image (Pascal, 29/10/2026 : « une illustration permet d'avoir une vision plus synthétique de l'objet ») :
+     à droite du programme, dans la carte ; dessous sur un téléphone. */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
+  .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
+  .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
+  .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
+  .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  ul.serre li{margin:1px 0}
+  .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
+
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+    h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; un schéma ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    .schema,table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
+    .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
+    .d{color:#8a5a00}.i{color:#1d6b38}.vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
+    .schema{width:60%;display:block;margin:4px auto}
+    h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
+
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  .box,.crcn{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
+
+/* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+@media(max-width:680px){table{display:block;overflow-x:auto}}
+
+  /* Revenir à la carte (Pascal, 29/10/2026 : « je ne peux pas revenir à la synthèse ») : chaque partie porte, en
+     haut à droite, un lien vers la carte « Ce que je dois retenir » ; la barre de navigation collée en haut ne
+     recouvre plus le titre visé par un lien. Rien de tout cela ne s'imprime. */
+  .retour-carte{float:right;font-size:.82em;margin:1px 0 0 10px;padding:1px 10px;border:1.5px solid var(--border);
+                border-radius:999px;text-decoration:none;white-space:nowrap}
+  .retour-carte:hover,.retour-carte:focus-visible{border-color:var(--hl)}
+  #carte-titre,[id^="partie-"]{scroll-margin-top:64px}
+  @media print{.retour-carte{display:none}}
+
+  /* Une suite de cinq cases tient sur une ligne. */
+  .chaine.cinq div{flex-basis:110px}
+  @media print{.chaine.cinq div{padding:3px 6px}}
 </style></head>
 <body>
-<nav id="navharm" aria-label="Navigation du site">
-  <a href="../../../../index.html">&#8962; Accueil</a>
-  <a href="sequence_3e_C7_capteur-confort-ny.html">&#8592; La séquence</a>
-  <a href="qcm_3e_C7_capteur-confort-ny.html">&#129504; Le QCM</a>
-</nav>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C7_capteur-confort-ny.html">← La séquence</a><a href="qcm_3e_C7_capteur-confort-ny.html">🧠 Le QCM</a></nav>
+<div class="page">
+<h1>📌 Synthèse élève — Le capteur de confort&nbsp;: concevoir, prouver, représenter</h1>
+<p class="pb">Une salle trop chaude à New York, un voyant vert ou rouge, et des essais pour le prouver.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
 
-<h1>Synthèse élève — Capteur de confort (New York)</h1>
-<p><b>3e · Thème 3 · C7 · C8</b></p>
-<div class="box"><b>C7</b> Concevoir : besoin → 2 solutions → choix.</div>
-<div class="box"><b>C8</b> Valider : protocole (attendu / observé) → décision.</div>
-<div class="box"><b>C7.2</b> Représenter avant de fabriquer (séance 3) : contrôler le FAST (un verbe, un « comment ? », un « pourquoi ? »), proposer plusieurs solutions par des croquis rapides, choisir la représentation — croquis, schéma, graphique, algorithme, modélisation 3D.</div>
-<div class="crcn"><b>CRCN 3.4 Programmer</b> Programme simple + mise au point (trace : pseudo-code + tests).</div>
-<div class="crcn"><b>CRCN 1.3 Traiter des données</b> Tableau de mesures (trace : 4 scénarios).</div>
-<div class="crcn"><b>CRCN 5.1 Résoudre des problèmes techniques</b> Diagnostic d’un écart (trace : cause + test).</div>
-<p>New York : îlot de chaleur → seuil de confort en salle.</p>
-</body></html>
+<!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
+<section class="carte" aria-labelledby="carte-titre">
+  <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
+  <p class="question">Comment concevoir un objet qui signale une salle trop chaude, puis prouver qu'il alerte au bon moment&nbsp;?</p>
+  <div class="tete">
+  <div class="programme"><b>Ce que dit le programme</b> (3e, compétences C7 et C8)&nbsp;:
+    <ul>
+      <li>élaborer un processus de conception et de réalisation dans une durée, avec des tâches identifiées&nbsp;;</li>
+      <li>proposer et fabriquer un ensemble de solutions pour produire un nouvel OST (croquis, schéma, graphique, algorithme, modélisation)&nbsp;;</li>
+      <li>mettre en œuvre une simulation pour valider la tenue mécanique d'un matériau <i>(ici, la simulation valide le comportement de l'alerte)</i>.</li>
+    </ul>
+  </div>
+    <figure class="objet">
+      <img src="Images/synthese_capteur_confort.png" alt="Un petit boîtier blanc fixé au mur d'une salle de classe, près de la porte, son voyant allumé en rouge.">
+      <figcaption>📍 L'objet&nbsp;: le capteur de confort, son voyant visible depuis la porte. <i>Image générée par IA (Canva).</i></figcaption>
+    </figure>
+  </div>
+  <div class="cartes">
+    <a href="#partie-1"><span class="q">🧭 1. Que veut dire «&nbsp;élaborer&nbsp;» un projet&nbsp;?</span>
+      <span class="r">Tu écris toi-même les tâches, du besoin au planning.</span></a>
+    <a href="#partie-2"><span class="q">🌡️ 2. Comment trouver le seuil sans rien fabriquer&nbsp;?</span>
+      <span class="r">Au simulateur&nbsp;: le seuil sépare deux comportements.</span></a>
+    <a href="#partie-3"><span class="q">🧪 3. Comment prouver que l'alerte marche&nbsp;?</span>
+      <span class="r">L'attendu s'écrit avant&nbsp;; le cas frontière se teste.</span></a>
+    <a href="#partie-4"><span class="q">🔷 4. Comment écrire la règle pour la carte&nbsp;?</span>
+      <span class="r">L'algorigramme et le code disent la même chose.</span></a>
+    <a href="#partie-5"><span class="q">🔧 5. Que faire quand l'alerte se trompe&nbsp;?</span>
+      <span class="r">Un test qui départage les causes, puis un nouvel essai.</span></a>
+    <a href="#partie-6"><span class="q">🌳 6. Comment contrôler un FAST&nbsp;?</span>
+      <span class="r">Un verbe par fonction&nbsp;; chaque branche sert l'usage.</span></a>
+    <a href="#partie-7"><span class="q">✏️ 7. Quelle représentation choisir&nbsp;?</span>
+      <span class="r">Le croquis pour chercher, la 3D pour fabriquer.</span></a>
+  </div>
+</section>
+
+<!-- ══ 1 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-1" style="margin-top:0">1. Que veut dire «&nbsp;élaborer&nbsp;» un projet, quand personne ne donne la réponse&nbsp;?</h2>
+  <p>À New York, en juin, le couloir de la salle 214 affiche 32 degrés Celsius (°C). L'infirmière n'a aucun chiffre.</p>
+  <div class="chaine etapes">
+    <div><b>1. Le besoin</b>Alerter quand la salle dépasse 28&nbsp;°C, avec un voyant vu depuis la porte.</div>
+    <div><b>2. Deux solutions</b>A&nbsp;: une carte, un capteur et une LED.<br>B&nbsp;: un thermomètre à alcool et une pastille.</div>
+    <div class="ok"><b>3. Le choix&nbsp;: A</b>Deux critères nommés&nbsp;: une lecture fiable, une alerte vue sans surveiller.</div>
+    <div><b>4. Les tâches</b>Tu les découpes, tu estimes leur durée, tu trouves celles qui fixent la date de fin.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: en 3e, tu <b>élabores</b> le processus&nbsp;: personne ne te donne les tâches. Tu proposes <b>plusieurs solutions</b>, puis tu choisis avec <b>deux critères nommés</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: choisir avec un seul critère. Le thermomètre à alcool gagne sur le prix, mais personne ne le surveille.</p>
+</div>
+
+<!-- ══ 2 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-2" style="margin-top:0">2. Comment trouver le seuil d'alerte sans rien fabriquer&nbsp;?</h2>
+  <p>Au simulateur, tu fais monter la température de la salle, en degrés Celsius (°C). Au-dessus de 28&nbsp;°C,
+  la LED s'allume. Quand tu redescends sous 28&nbsp;°C, elle s'éteint aussitôt.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un <b>seuil</b> est la valeur qui sépare <b>deux comportements</b> de l'objet. La <b>simulation</b> te fait essayer <b>sans fabriquer</b>, pour écarter vite les mauvaises pistes.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire que la simulation remplace les essais réels. Elle élimine des pistes&nbsp;; l'essai réel permet de conclure.</p>
+</div>
+
+<!-- ══ 3 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-3" style="margin-top:0">3. Comment prouver que l'alerte s'allume au bon moment&nbsp;?</h2>
+  <p>Quatre scénarios, en degrés Celsius (°C). Pour chacun, tu prédis d'abord, puis tu observes au simulateur&nbsp;:</p>
+  <div class="chaine">
+    <div class="ok"><b>22&nbsp;°C · salle fraîche</b>Attendu&nbsp;: éteinte.<br>Observé&nbsp;: éteinte ✔</div>
+    <div class="ok"><b>28&nbsp;°C · seuil exact</b>Attendu&nbsp;: éteinte, car 28 n'est pas plus grand que 28 ✔</div>
+    <div class="ok"><b>32&nbsp;°C · surchauffe</b>Attendu&nbsp;: allumée.<br>Observé&nbsp;: allumée ✔</div>
+    <div class="ok"><b>24&nbsp;°C · retour au frais</b>Attendu&nbsp;: éteinte. L'alerte sait aussi s'éteindre ✔</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: tu écris le <b>résultat attendu avant</b> l'essai, puis tu le compares à l'<b>observé</b>. Le scénario le plus précieux est le <b>cas frontière</b>&nbsp;: la valeur exacte du seuil.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'à 28&nbsp;°C pile l'alerte s'allume. La règle dit «&nbsp;strictement supérieur&nbsp;»&nbsp;: à 28, pas d'alerte.</p>
+</div>
+
+<!-- ══ 4 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-4" style="margin-top:0">4. Comment écrire la règle pour que la carte la suive seule&nbsp;?</h2>
+  <p>L'algorigramme de l'alerte, en cinq blocs. La flèche du bout remonte à la mesure&nbsp;:</p>
+  <div class="chaine etapes cinq">
+    <div><b>1. DÉBUT</b>Un ovale&nbsp;: le capteur démarre.</div>
+    <div><b>2. Mesurer T</b>Un rectangle&nbsp;: la mesure entre.</div>
+    <div><b>3. T &gt; 28&nbsp;?</b>Un losange&nbsp;: deux sorties, OUI et NON.</div>
+    <div><b>4. OUI</b>Allumer la LED.</div>
+    <div><b>5. NON</b>Éteindre la LED, puis mesurer à nouveau.</div>
+  </div>
+  <p>En Python, le losange devient <code>if T &gt; seuil:</code>. Pour l'humidité des archives, seuls la grandeur et le seuil changent.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: l'<b>algorigramme</b> et le <b>code</b> disent la même chose en deux langages. La flèche qui remonte fait la <b>boucle</b>&nbsp;: le capteur surveille sans arrêt.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: poser la question «&nbsp;T &gt; 28&nbsp;?&nbsp;» avant de mesurer. On ne compare jamais une valeur qu'on n'a pas lue.</p>
+</div>
+
+<!-- ══ 5 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-5" style="margin-top:0">5. Que faire quand l'alerte se comporte mal&nbsp;?</h2>
+  <p>Deux défauts au banc d'essai, en degrés Celsius (°C). Pour chacun, une cause probable et le test qui la vérifie&nbsp;:</p>
+  <div class="chaine">
+    <div class="ko"><b>Elle clignote près de 28&nbsp;°C</b>La mesure hésite&nbsp;: 27,9, puis 28,1. Remède&nbsp;: allumer au-dessus de 29, n'éteindre que sous 27.</div>
+    <div class="ko"><b>Elle reste éteinte à 33&nbsp;°C</b>Tu affiches T. «&nbsp;−127&nbsp;»&nbsp;: le capteur est débranché. «&nbsp;33&nbsp;»&nbsp;: la condition est mal écrite.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: deux seuils séparés, l'<b>hystérésis</b>, arrêtent le clignotement. Un <b>test discriminant</b> donne un résultat différent selon la cause&nbsp;; après la correction, tu <b>refais le test</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: changer plusieurs choses à la fois. La panne disparaît parfois, mais tu ne sais pas pourquoi.</p>
+</div>
+
+<!-- ══ 6 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-6" style="margin-top:0">6. Comment contrôler un FAST avant de fabriquer&nbsp;?</h2>
+  <p>Tu t'es entraîné sur le FAST de la station d'alerte cyclonique. Celui de ton capteur se contrôle avec les mêmes trois questions&nbsp;:</p>
+  <div class="chaine">
+    <div><b>Un verbe&nbsp;?</b>«&nbsp;Mesurer la température&nbsp;», pas «&nbsp;le capteur&nbsp;», qui est une solution.</div>
+    <div><b>Comment&nbsp;?</b>Comparer la mesure au seuil&nbsp;? La carte programmable et son programme.</div>
+    <div><b>Pourquoi&nbsp;?</b>Chaque branche ramène à «&nbsp;signaler la surchauffe d'une salle&nbsp;».</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une case de fonction commence par un <b>verbe</b>, et sa solution répond au «&nbsp;<b>comment&nbsp;?</b>&nbsp;». Chaque branche ramène, par «&nbsp;<b>pourquoi&nbsp;?</b>&nbsp;», à la <b>fonction d'usage</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire fausse une branche à solutions reliées par «&nbsp;ou&nbsp;». C'est une alternative, permise.</p>
+</div>
+
+<!-- ══ 7 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-7" style="margin-top:0">7. Comment proposer des solutions, puis choisir la bonne représentation&nbsp;?</h2>
+  <p>Pour ton capteur, chaque représentation répond à une question différente&nbsp;:</p>
+  <div class="chaine cinq">
+    <div><b>Croquis</b>Où tenir le boîtier&nbsp;? Vite, à main levée.</div>
+    <div><b>Schéma</b>Comment brancher le capteur et le voyant&nbsp;?</div>
+    <div><b>Graphique</b>À quelle heure la salle dépasse le seuil&nbsp;?</div>
+    <div><b>Algorithme</b>Dans quel ordre agit la carte&nbsp;?</div>
+    <div><b>Modélisation 3D</b>Quelle forme exacte imprimer&nbsp;?</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: tu proposes <b>plusieurs croquis rapides</b>, de <b>principes vraiment différents</b>, puis tu choisis. Le croquis sert à chercher une idée&nbsp;; la <b>modélisation 3D</b> sert à fabriquer.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: dessiner trois fois la même solution avec un détail en plus. Ce sont des <b>variantes</b>, pas trois solutions.</p>
+</div>
+
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>capteur de confort thermique <span class="en">— thermal comfort sensor</span></dt><dd>il signale une salle trop chaude.</dd></div>
+    <div><dt>îlot de chaleur urbain <span class="en">— urban heat island</span></dt><dd>un quartier plus chaud que la campagne.</dd></div>
+    <div><dt>OST <span class="en">— technical object or system</span></dt><dd>un objet ou système technique.</dd></div>
+    <div><dt>élaborer <span class="en">— to work out</span></dt><dd>écrire soi-même les tâches et leur durée.</dd></div>
+    <div><dt>critère <span class="en">— criterion</span></dt><dd>ce qui sert à comparer des solutions.</dd></div>
+    <div><dt>seuil <span class="en">— threshold</span></dt><dd>la valeur qui sépare deux comportements.</dd></div>
+    <div><dt>simulation <span class="en">— simulation</span></dt><dd>faire marcher un modèle dans un logiciel.</dd></div>
+    <div><dt>résultat attendu <span class="en">— expected result</span></dt><dd>ce qu'on doit voir, écrit avant l'essai.</dd></div>
+    <div><dt>cas frontière <span class="en">— edge case</span></dt><dd>l'essai fait à la valeur exacte du seuil.</dd></div>
+    <div><dt>algorigramme <span class="en">— flowchart</span></dt><dd>l'algorithme dessiné en formes.</dd></div>
+    <div><dt>boucle <span class="en">— loop</span></dt><dd>la flèche qui fait recommencer la mesure.</dd></div>
+    <div><dt>hystérésis <span class="en">— hysteresis</span></dt><dd>deux seuils écartés, contre le clignotement.</dd></div>
+    <div><dt>test discriminant <span class="en">— decisive test</span></dt><dd>son résultat change selon la cause.</dd></div>
+    <div><dt>mettre au point <span class="en">— to debug</span></dt><dd>corriger, puis réessayer.</dd></div>
+    <div><dt>FAST <span class="en">— Function Analysis System Technique</span></dt><dd>des fonctions aux solutions.</dd></div>
+    <div><dt>fonction d'usage <span class="en">— main function</span></dt><dd>le service que rend l'objet.</dd></div>
+    <div><dt>fonction technique <span class="en">— technical function</span></dt><dd>ce que l'objet doit faire.</dd></div>
+    <div><dt>alternative <span class="en">— alternative</span></dt><dd>plusieurs solutions reliées par «&nbsp;ou&nbsp;».</dd></div>
+    <div><dt>variante <span class="en">— variant</span></dt><dd>la même solution, avec un détail changé.</dd></div>
+    <div><dt>modélisation 3D <span class="en">— 3D modelling</span></dt><dd>la forme exacte en volume, dans un logiciel.</dd></div>
+    <div><dt>LED <span class="en">— light-emitting diode</span></dt><dd>une petite lampe qui consomme peu.</dd></div>
+  </dl>
+</div>
+</div>
+
+<!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  /* L'agrandisseur est une COLONNE — bouton, image, légende — : la légende suit l'image dans le
+     flux, l'image reçoit une hauteur maximale calculée (ajuster()), et le fond défile si besoin. */
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:1rem;box-sizing:border-box;overflow:auto;
+    flex-direction:column;align-items:center;gap:.75rem}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  /* centré quand tout tient, sans rien couper quand ça déborde : des marges automatiques,
+     pas justify-content:center (qui rendrait le haut inaccessible au défilement) */
+  .loupe-fond > .loupe-fermer{margin-top:auto}
+  .loupe-fond > .loupe-legende{margin-bottom:auto}
+  .loupe-fond img{display:block;flex:none;max-width:100%;max-height:80vh;width:auto;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:static;flex:none;margin:0;max-width:min(70ch,100%);text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif}
+  .loupe-legende .loupe-aide{display:block;margin-top:.25rem;font-size:.85em;color:#b8bfcc}
+  .loupe-fermer{position:sticky;top:0;align-self:flex-end;flex:none;z-index:1;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+    grande.addEventListener("load", ajuster);
+    window.addEventListener("resize", ajuster);
+  }
+
+  // La légende affichée : la figcaption VISIBLE de la figure si elle existe ; sinon le
+  // texte alternatif, réduit à sa première phrase s'il dépasse deux lignes. L'alt complet
+  // reste sur l'image agrandie, pour les lecteurs d'écran.
+  function poserLegende(el, texteAlt){
+    var fig = el.closest("figure");
+    var cap = fig ? fig.querySelector("figcaption") : null;
+    var visible = cap && cap.getClientRects().length && cap.textContent.trim();
+    legende.textContent = "";
+    var texte = visible ? cap.textContent.replace(/\s+/g, " ").trim() : (texteAlt || "");
+    texte = texte.replace(/\s*\(clique[^()]*agrandir\)/gi, "").trim();   // l'image est déjà agrandie
+    var corps = document.createElement("span");
+    corps.textContent = texte;
+    var aide = document.createElement("span");
+    aide.className = "loupe-aide";
+    aide.textContent = "Échap pour refermer";
+    if (texte) legende.appendChild(corps);
+    legende.appendChild(aide);
+    if (!visible && texte) {
+      var ligne = parseFloat(getComputedStyle(legende).lineHeight) || 20;
+      if (corps.getBoundingClientRect().height > 2 * ligne + 1) {
+        var m = texte.match(/^[\s\S]*?[.!?…](?=\s|$)/);
+        if (m && m[0].length < texte.length) corps.textContent = m[0];
+      }
+    }
+  }
+
+  // L'image reçoit la place qui reste : hauteur du fond, moins le bouton, la légende,
+  // les marges et les espacements — jamais moins de 40 % de l'écran ; au-delà, le fond défile.
+  function ajuster(){
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    var st = getComputedStyle(fond);
+    var ecart = parseFloat(st.rowGap) || 0;
+    var reste = fond.clientHeight - parseFloat(st.paddingTop) - parseFloat(st.paddingBottom)
+              - fond.querySelector(".loupe-fermer").offsetHeight - legende.offsetHeight - 2 * ecart;
+    grande.style.maxHeight = Math.max(reste, 0.4 * window.innerHeight) + "px";
+  }
+
+  function montrer(el, texteAlt){
+    fond.setAttribute("data-ouvert", "oui");
+    fond.scrollTop = 0;
+    poserLegende(el, texteAlt);
+    ajuster();
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.style.background = "";
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    montrer(img, img.alt);
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    grande.style.maxHeight = "";
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
+  // couleurs et leur police viennent de la feuille de style de la PAGE. Sérialisé seul, le
+  // dessin les perdrait (formes noires, police par défaut, texte qui déborde) : on recopie
+  // donc sur la copie les propriétés CALCULÉES de chaque élément, on y ajoute les dégradés
+  // et marqueurs définis ailleurs dans la page, et l'image reçoit le fond du schéma.
+  var PROPRIETES = ["fill", "fill-opacity", "fill-rule", "stroke", "stroke-width", "stroke-opacity",
+    "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit",
+    "opacity", "visibility", "display", "color", "font-family", "font-size", "font-weight", "font-style",
+    "font-variant-numeric", "letter-spacing", "word-spacing", "text-anchor", "dominant-baseline",
+    "baseline-shift", "text-decoration", "white-space", "paint-order", "stop-color", "stop-opacity",
+    "marker-start", "marker-mid", "marker-end", "clip-path", "mask", "filter"];
+  // Une transformation posée par la feuille de style (pas par l'attribut transform, que la
+  // copie garde déjà) : on la recopie avec son origine.
+  var TRANSFORMATION = ["transform", "transform-origin", "transform-box"];
+
+  function figer(source, copie){
+    var a = [source].concat([].slice.call(source.querySelectorAll("*")));
+    var b = [copie].concat([].slice.call(copie.querySelectorAll("*")));
+    for (var i = 0; i < a.length && i < b.length; i++) {
+      var cs = getComputedStyle(a[i]), decl = [], k, v;
+      for (k = 0; k < PROPRIETES.length; k++) {
+        v = cs.getPropertyValue(PROPRIETES[k]);
+        if (v) decl.push(PROPRIETES[k] + ":" + v);
+      }
+      if (i > 0 && !a[i].hasAttribute("transform") && cs.getPropertyValue("transform") &&
+          cs.getPropertyValue("transform") !== "none") {
+        for (k = 0; k < TRANSFORMATION.length; k++) decl.push(TRANSFORMATION[k] + ":" + cs.getPropertyValue(TRANSFORMATION[k]));
+      }
+      var deja = b[i].getAttribute("style");
+      b[i].setAttribute("style", decl.join(";") + (deja ? ";" + deja : ""));
+    }
+  }
+
+  // Un dégradé ou un marqueur appelé par url(#…) mais défini hors du dessin : on le recopie dedans.
+  function rapatrier(copie){
+    var defs = null, faits = {}, tour = 0, trouve = true;
+    while (trouve && tour++ < 4) {
+      trouve = false;
+      var refs = (new XMLSerializer().serializeToString(copie).match(/url\((?:&quot;|["'])?#([^"')&]+)/g) || [])
+        .concat(new XMLSerializer().serializeToString(copie).match(/href="#[^"]+"/g) || []);
+      refs.forEach(function(r){
+        var id = r.replace(/^url\((?:&quot;|["'])?#/, "").replace(/^href="#/, "").replace(/"$/, "");
+        if (faits[id] || copie.querySelector("[id='" + id.replace(/'/g, "") + "']")) return;
+        faits[id] = true;
+        var el = document.getElementById(id);
+        if (!el || !el.closest("svg")) return;
+        if (!defs) { defs = document.createElementNS("http://www.w3.org/2000/svg", "defs"); copie.insertBefore(defs, copie.firstChild); }
+        var c = el.cloneNode(true); figer(el, c); defs.appendChild(c); trouve = true;
+      });
+    }
+  }
+
+  // Le fond sur lequel le schéma est dessiné : le sien, sinon celui du premier parent opaque.
+  function fondDe(el){
+    for (var e = el; e && e.nodeType === 1; e = e.parentElement) {
+      var c = getComputedStyle(e).backgroundColor, m = c.match(/rgba?\(([^)]+)\)/);
+      if (m) { var p = m[1].split(","); if (p.length < 4 || parseFloat(p[3]) > 0) return c; }
+      else if (c && c !== "transparent") return c;
+    }
+    return "#fff";
+  }
+
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    figer(svg, copie);
+    rapatrier(copie);
+    copie.style.background = "transparent";
+    // Une taille propre au dessin (sans elle, une image SVG n'a que 300 × 150 px à offrir) :
+    // celle de la viewBox, agrandie ; le CSS de la loupe la ramène à l'écran.
+    var vb = svg.viewBox && svg.viewBox.baseVal, boite = svg.getBoundingClientRect();
+    var w = vb && vb.width ? vb.width : boite.width, h = vb && vb.height ? vb.height : boite.height;
+    if (!(vb && vb.width) && w && h) copie.setAttribute("viewBox", "0 0 " + w + " " + h);
+    var k = w ? Math.max(1, 1600 / w) : 1;
+    if (w && h) { copie.setAttribute("width", Math.round(w * k)); copie.setAttribute("height", Math.round(h * k)); }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.style.background = fondDe(svg);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    montrer(svg, mot);
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
+</body>
+</html>

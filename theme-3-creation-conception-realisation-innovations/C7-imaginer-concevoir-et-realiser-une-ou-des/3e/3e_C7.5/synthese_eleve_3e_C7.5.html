@@ -5,66 +5,572 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Synthèse élève — La station qu'il faut équiper (3e_C7.5)</title>
 <style>
-body{font-family:system-ui,sans-serif;max-width:740px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
-h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
-.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
-.attention{background:#fff6e0;border-left:4px solid #b8860b}
-.limite{background:#fdeff1;border-left:4px solid #b0344b}
-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.93em}
-th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
-code{background:#eef3fa;padding:1px 5px;border-radius:4px;font-size:.92em}
-ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
-#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;font-size:.95em;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+  h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
+  ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  table{width:100%;border-collapse:collapse;margin:6px 0}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--sub);font-size:.9em}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  /* règle n°304 : un lien de rattrapage arrive sur ce titre ; la barre collante (47 px) ne doit pas le recouvrir */
+  h2[id]{scroll-margin-top:60px}
+  #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
+
+  /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
+  /* Une couleur par notion, la même partout : l'exigence en jaune, ce qui circule dans la chaîne en violet. */
+  .ex{color:var(--warn);font-weight:600}.ci{color:var(--head);font-weight:600}
+  /* La carte « Ce que je dois retenir » */
+  .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
+  .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
+  .question{text-align:center;font-size:1.05em;font-weight:600;margin:0 0 10px}
+  .programme{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);
+             padding:6px 0;margin:0 0 12px}
+  .programme b{color:var(--text)}
+  .programme ul{margin:2px 0;padding-left:18px}.programme li{margin:1px 0}
+  .cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .cartes a{display:block;text-decoration:none;color:var(--text);background:var(--panel);border:1.5px solid var(--border);
+            border-radius:10px;padding:9px 12px}
+  .cartes a:hover{border-color:var(--hl)}
+  .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
+  .cartes .r{display:block;font-size:.92em}
+  /* L'objet en image (Pascal, 29/10/2026 : « une illustration permet d'avoir une vision plus synthétique de l'objet ») :
+     à droite du programme, dans la carte ; dessous sur un téléphone. */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
+  .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
+  .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
+  .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
+  .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  ul.serre li{margin:1px 0}
+  /* Cinq cases sur une seule rangée (les quatre fonctions, puis ce qui est hors d'elles) ; deux par rangée sur un téléphone. */
+  .chaine.cinq div{flex:1 1 112px}
+  @media (max-width:600px){.chaine.cinq div{flex-basis:40%}}
+  .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
+
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+    h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; un schéma ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    .schema,table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
+    .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
+    .ex{color:#8a5a00}.ci{color:#5e3592}.vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
+    .schema{width:60%;display:block;margin:4px auto}
+    h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
+
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  .box{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
+
+/* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+@media(max-width:680px){table{display:block;overflow-x:auto}}
+
+  /* Revenir à la carte (Pascal, 29/10/2026 : « je ne peux pas revenir à la synthèse ») : chaque partie porte, en
+     haut à droite, un lien vers la carte « Ce que je dois retenir » ; la barre de navigation collée en haut ne
+     recouvre plus le titre visé par un lien. Rien de tout cela ne s'imprime. */
+  .retour-carte{float:right;font-size:.82em;margin:1px 0 0 10px;padding:1px 10px;border:1.5px solid var(--border);
+                border-radius:999px;text-decoration:none;white-space:nowrap}
+  .retour-carte:hover,.retour-carte:focus-visible{border-color:var(--hl)}
+  #carte-titre,[id^="partie-"]{scroll-margin-top:64px}
+  @media print{.retour-carte{display:none}}
 </style>
 </head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C7.5_station-a-equiper.html">← Séquence</a><a href="qcm_3e_C7.5_station-a-equiper.html">🧠 QCM</a><a href="lexique_3e_C7.5.html">📖 Lexique</a></nav>
-<h1>🌀 La station qu'il faut équiper — ce qu'il faut retenir</h1>
-<p style="color:#555">Thème 3 · 3<sup>e</sup> — 3e_C7.5. Imprimable en noir et blanc, lisible hors ligne.</p>
-<h2>Du besoin au constituant</h2>
-<div class="box"><p>Un cahier des charges ne nomme aucun module : il dit ce que
-     l'objet doit faire. <b>On part des exigences, une par une</b>, et ce qui reste dans le
-     carton n'est pas mauvais — il répond à un autre besoin.</p></div>
-<h2>Fonction et usage</h2>
-<div class="box"><p>L'écran LCD et le bandeau « affichent » tous les deux, et un seul se
-     voit depuis la cour. Une <b>fonction</b> se lit dans la chaîne ; un <b>usage</b> se juge
-     depuis l'endroit où l'on est.</p></div>
-<h2>Le constituant hors fonctions</h2>
-<div class="box"><p>La carte SD ne mesure, ne décide, n'agit ni n'alimente —
-     et sans elle la station ne prouve rien. <b>Un cahier des charges peut exiger un constituant
-     hors des quatre fonctions.</b></p></div>
-<h2>Les exigences se propagent</h2>
-<div class="box"><p>« Visible depuis la cour » → le bandeau → 480 mA (milliampères) → 580 mA
-     au total → l'USB ne suffit plus → la batterie → l'autonomie de 72 heures redevient
-     difficile. <b>Les exigences ne s'additionnent pas côte à côte : elles se propagent.</b></p></div>
-<h2>Le budget de courant</h2>
-<div class="box"><p>Les courants s'additionnent, et c'est la <b>pointe</b> qui décide
-     de la source. 580 mA (milliampères) demandés à une source qui en donne 500 ne produisent pas une panne
-     franche mais des redémarrages en boucle.</p></div>
-<h2>Branchement et programme</h2>
-<div class="box"><p>Aucun port numérique n'est meilleur qu'un autre pour piloter
-     un bandeau. Le seul argument valable est que le programme écrit sur D6 — et qu'on ne le
-     modifie pas ici.</p></div>
-<h2>Ce que coûte chaque retrait</h2>
-<div class="box"><p>Quatre retraits, quatre refus de <b>quatre natures</b> :
-     une grandeur, un usage, une preuve, une quantité d'énergie. C'est ce qui prouve qu'aucun
-     des quatre choix n'était décoratif.</p></div>
-<h2>Défendre un choix</h2>
-<div class="box"><p>Un choix juste qu'on ne sait pas défendre ne tient pas devant une
-     commission. Justifier, c'est <b>relier l'exigence au constituant</b> et écarter
-     explicitement les autres.</p></div>
-<h2>Deux constituants, une fonction</h2>
-<div class="box"><p>Ajouter un buzzer au bandeau, ce n'est pas le
-     remplacer : c'est ajouter un <b>canal de perception</b>. Une alerte accessible n'enlève
-     rien.</p></div>
-<h2>Ce qu'un prototype ne prouve pas</h2>
-<div class="box"><p>Un essai d'établi montre que le montage tient. Il ne
-     dit rien de sa <b>tenue dans le temps</b> : 580 mA (milliampères) sous 5 V (volts), c'est près de 3 W (watts), et
-     72 heures à ce régime sont un autre problème.</p></div>
-<footer>Synthèse élève — 3e_C7.5. Programme 2024, Thème 3.</footer>
+<div class="page">
+<h1>📌 Synthèse élève — La station qu'il faut équiper</h1>
+<p class="pb">Un carton trop plein, quatre exigences&nbsp;: choisir, assembler, défendre.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
+
+<!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
+<section class="carte" aria-labelledby="carte-titre">
+  <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
+  <p class="question">Le carton contient plus de constituants qu'il n'en faut&nbsp;: comment le cahier des charges décide-t-il lesquels on garde&nbsp;?</p>
+  <div class="tete">
+  <div class="programme"><b>Ce que dit le programme</b> (3e, compétences C7 et C4)&nbsp;:
+    <ul>
+      <li>choisir les constituants et assembler un prototype&nbsp;;</li>
+      <li>décrire un OST en caractérisant sa chaîne d'information.</li>
+    </ul>
+  </div>
+    <figure class="objet">
+      <img src="Images/synthese_station_alerte.png" alt="La station d'alerte sur le toit du collège : un mât avec anémomètre, girouette, panneau solaire, sirène et gyrophare, face à la mer.">
+      <figcaption>📍 L'objet&nbsp;: la station d'alerte, sur son mât. <i>Image générée par IA (Canva).</i></figcaption>
+    </figure>
+  </div>
+  <div class="cartes">
+    <a href="#partie-1"><span class="q">📋 1. Qui décide des constituants&nbsp;?</span>
+      <span class="r">Le cahier des charges, <span class="ex">exigence</span> par exigence.</span></a>
+    <a href="#partie-2"><span class="q">🔍 2. Un bon constituant peut-il rester au carton&nbsp;?</span>
+      <span class="r">Oui, s'il ne tient pas l'<span class="ex">exigence</span>.</span></a>
+    <a href="#partie-3"><span class="q">💾 3. Tout constituant a-t-il une fonction&nbsp;?</span>
+      <span class="r">Non&nbsp;: la carte SD est exigée, hors des quatre.</span></a>
+    <a href="#partie-4"><span class="q">🔗 4. Que circule dans la chaîne d'information&nbsp;?</span>
+      <span class="r">Une <span class="ci">mesure</span>, puis une <span class="ci">décision</span>.</span></a>
+    <a href="#partie-5"><span class="q">⚡ 5. Pourquoi le bandeau impose-t-il la batterie&nbsp;?</span>
+      <span class="r">Les exigences se propagent&nbsp;: 580 contre 500.</span></a>
+    <a href="#partie-6"><span class="q">➖ 6. Que coûte chaque retrait&nbsp;?</span>
+      <span class="r">Quatre refus de quatre natures.</span></a>
+    <a href="#partie-7"><span class="q">♿ 7. Que coûte une exigence ajoutée&nbsp;?</span>
+      <span class="r">Du courant en plus&nbsp;: on refait l'autonomie.</span></a>
+  </div>
+</section>
+
+<!-- ══ 1 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-1" style="margin-top:0">1. Qui décide des constituants&nbsp;: le catalogue ou le cahier des charges&nbsp;?</h2>
+  <p>Le carton du fournisseur contient dix constituants. La commission de sécurité a écrit quatre exigences&nbsp;:</p>
+  <div class="chaine">
+    <div><b class="ex">Alerter au-delà de 90&nbsp;km/h</b>➜ l'anémomètre&nbsp;: seul il mesure le vent.</div>
+    <div><b class="ex">Visible depuis la cour</b>➜ le bandeau de 8&nbsp;DEL&nbsp;: un petit écran ne se lit pas à 30&nbsp;mètres.</div>
+    <div><b class="ex">Tenir 72&nbsp;heures</b>➜ la batterie et le panneau&nbsp;: l'USB veut un ordinateur allumé.</div>
+    <div><b class="ex">Un historique</b>➜ la carte SD, qui garde chaque mesure et son heure.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on part des <b>exigences</b>, une par une, et on traduit chacune en
+  <b>constituant</b>. Ce qui reste dans le carton n'est pas mauvais&nbsp;: il répond à un autre besoin.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: partir du catalogue et garder ce qui semble utile. Le fournisseur ne connaît
+  pas ton cahier des charges.</p>
+</div>
+
+<!-- ══ 2 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-2" style="margin-top:0">2. Un constituant qui marche bien peut-il rester dans le carton&nbsp;?</h2>
+  <p>Le capteur de pluie et l'écran LCD fonctionnent parfaitement. Ce n'est pas leur qualité qui est en cause&nbsp;:</p>
+  <div class="chaine">
+    <div class="ko"><b>Capteur de pluie&nbsp;✘</b>Il répond «&nbsp;mouillé&nbsp;», pas 90&nbsp;km/h. Une averse sans vent déclencherait l'alerte.</div>
+    <div class="ko"><b>Écran LCD&nbsp;✘</b>Valeur exacte, 20&nbsp;mA (milliampères) au lieu de 480… mais il se lit à trente centimètres.</div>
+    <div class="ok"><b>Bandeau de DEL&nbsp;✔</b>Il se voit depuis la cour, en plein jour.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un seuil qui nomme une <b>grandeur</b> impose le capteur de cette grandeur.
+  Une <b>exigence d'usage</b> se juge depuis l'endroit où l'on est. <b>Justifier</b>, c'est relier l'exigence au
+  constituant, et dire pourquoi on écarte les autres.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: prendre la pluie pour le vent, parce qu'ils vont souvent ensemble. La pluie
+  accompagne le vent, elle ne le mesure pas.</p>
+</div>
+
+<!-- ══ 3 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-3" style="margin-top:0">3. Chaque constituant a-t-il l'une des quatre fonctions&nbsp;?</h2>
+  <p>Sur l'établi, chaque constituant de la station se range sous une fonction. Presque chacun&nbsp;:</p>
+  <div class="chaine cinq">
+    <div><b>Acquérir</b>L'anémomètre prend la mesure.</div>
+    <div><b>Traiter</b>La carte Arduino décide.</div>
+    <div><b>Agir</b>Le bandeau produit l'alerte.</div>
+    <div><b>Alimenter</b>La batterie et le panneau.</div>
+    <div class="ok"><b>Hors des quatre</b>La carte SD et le Base Shield.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: les quatre fonctions décrivent ce qui fait <b>marcher</b> l'objet. Un cahier
+  des charges peut exiger un constituant <b>hors</b> de ces fonctions&nbsp;: la <b>carte SD</b> garde la preuve.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire la carte SD facultative. Sans elle, la station alerte, mais ne prouve
+  rien après le cyclone.</p>
+</div>
+
+<!-- ══ 4 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-4" style="margin-top:0">4. Que circule entre les constituants de la chaîne d'information&nbsp;?</h2>
+  <p>Le programme de la station lit l'anémomètre sur A0 et écrit sur D6. Suis l'information&nbsp;:</p>
+  <div class="chaine etapes">
+    <div><b>1. L'anémomètre</b>Une <span class="ci">tension</span>, image de la vitesse du vent.</div>
+    <div><b>2. La carte</b>Elle compare à 90&nbsp;km/h&nbsp;: ce seuil est écrit dans le programme.</div>
+    <div><b>3. Le bandeau, sur D6</b>Un <span class="ci">ordre tout ou rien</span>&nbsp;: rouge ou vert.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: <b>caractériser</b> une chaîne d'information, c'est nommer <b>ce qui
+  circule</b> entre les maillons. Le <b>seuil</b> appartient au traitement, donc au <b>programme</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire que D6 est choisi pour son courant. Aucun port ne «&nbsp;supporte&nbsp;»
+  480&nbsp;mA (milliampères)&nbsp;: le bandeau est sur D6 parce que le programme y écrit.</p>
+</div>
+
+<!-- ══ 5 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-5" style="margin-top:0">5. Pourquoi le bandeau a-t-il imposé la batterie&nbsp;?</h2>
+  <p>Le bon choix d'afficheur a créé le problème suivant. Suis la chaîne des conséquences&nbsp;:</p>
+  <div class="chaine etapes">
+    <div><b class="ex">1. Visible de la cour</b>Seul le bandeau tient cette exigence.</div>
+    <div><b>2. 480&nbsp;mA (milliampères)</b>Vingt-quatre fois le courant de l'écran LCD.</div>
+    <div class="ko"><b>3. 580&nbsp;mA au total</b>Le câble USB n'en donne que 500.</div>
+    <div class="ok"><b>4. La batterie</b>5&nbsp;V (volts) et 2&nbsp;000&nbsp;mA, avec son panneau.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: les exigences <b>se propagent</b>&nbsp;: une exigence d'usage a décidé de la
+  <b>source d'énergie</b>. Les courants <b>s'additionnent</b>, et c'est la <b>pointe</b> qui choisit la source.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: attendre une panne franche. Avec 580&nbsp;mA demandés pour 500, la carte
+  redémarre en boucle.</p>
+</div>
+
+<!-- ══ 6 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-6" style="margin-top:0">6. Que perd la station quand on lui retire un constituant&nbsp;?</h2>
+  <p>Sur l'établi, tu retires un constituant, tu re-testes, puis tu le remets. Chaque refus est différent&nbsp;:</p>
+  <div class="chaine">
+    <div class="ko"><b>L'anémomètre</b>Une <strong>grandeur</strong>&nbsp;: plus de mesure du vent.</div>
+    <div class="ko"><b>Le bandeau</b>Un <strong>usage</strong>&nbsp;: l'alerte existe, personne ne la voit.</div>
+    <div class="ko"><b>La carte SD</b>Une <strong>preuve</strong>&nbsp;: rien à montrer après l'événement.</div>
+    <div class="ko"><b>La batterie</b>Une <strong>énergie</strong>&nbsp;: l'USB ne suffit plus.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: quatre exigences donnent quatre refus de <b>quatre natures</b>. C'est la
+  preuve qu'aucun choix n'était <b>décoratif</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'une alerte invisible n'est pas déclenchée. L'ordre part bien sur
+  D6, mais personne ne le voit.</p>
+</div>
+
+<!-- ══ 7 ══ -->
+<div class="bloc pieges">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-7" style="margin-top:0">7. Que coûte une exigence ajoutée en cours de route&nbsp;?</h2>
+  <p>La commission ajoute&nbsp;: «&nbsp;l'alerte doit être perçue par une personne malvoyante&nbsp;».</p>
+  <div class="chaine">
+    <div class="ok"><b>Le buzzer</b>Un second canal, sonore, sur un port numérique libre.</div>
+    <div><b>610&nbsp;mA (milliampères)</b>30 de plus&nbsp;: toujours sous les 2&nbsp;000 de la batterie.</div>
+    <div class="ko"><b class="ex">Les 72&nbsp;heures</b>Le calcul d'autonomie est à refaire.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une alerte accessible <b>ajoute un canal</b>, elle n'en remplace aucun.
+  Une exigence ajoutée entre dans le <b>même budget</b>&nbsp;: on l'écrit au début, pas à la fin.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: conclure d'un essai réussi que tout est tenu. L'établi prouve que le montage
+  marche, pas qu'il tient 72&nbsp;heures.</p>
+</div>
+
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>constituant <span class="en">— component</span></dt><dd>une pièce du montage, comme un capteur ou la batterie.</dd></div>
+    <div><dt>cahier des charges <span class="en">— specifications</span></dt><dd>ce que l'objet doit faire, exigence par exigence.</dd></div>
+    <div><dt>exigence d'usage <span class="en">— usage requirement</span></dt><dd>ce que l'utilisateur doit percevoir, là où il est.</dd></div>
+    <div><dt>prototype <span class="en">— prototype</span></dt><dd>un premier montage, pour vérifier qu'il marche.</dd></div>
+    <div><dt>anémomètre <span class="en">— anemometer</span></dt><dd>le capteur qui mesure la vitesse du vent.</dd></div>
+    <div><dt>DEL <span class="en">— LED</span></dt><dd>une diode électroluminescente&nbsp;; le bandeau en porte huit, puissantes.</dd></div>
+    <div><dt>carte SD <span class="en">— SD card</span></dt><dd>une mémoire qui garde les mesures et leur heure.</dd></div>
+    <div><dt>port <span class="en">— port</span></dt><dd>la prise où l'on branche un module (A0, D6…).</dd></div>
+    <div><dt>chaîne d'information <span class="en">— information chain</span></dt><dd>le trajet de l'information, de la mesure à l'ordre.</dd></div>
+    <div><dt>seuil <span class="en">— threshold</span></dt><dd>la valeur qui déclenche l'alerte&nbsp;: ici 90&nbsp;km/h.</dd></div>
+    <div><dt>tout ou rien <span class="en">— on/off</span></dt><dd>un ordre à deux valeurs seulement.</dd></div>
+    <div><dt>budget de courant <span class="en">— current budget</span></dt><dd>la somme des courants, comparée à ce que donne la source.</dd></div>
+    <div><dt>pointe <span class="en">— peak current</span></dt><dd>le courant le plus fort demandé, tout allumé.</dd></div>
+    <div><dt>accessible <span class="en">— accessible</span></dt><dd>que chacun peut percevoir, même avec un handicap.</dd></div>
+    <div><dt>TBT <span class="en">— extra-low voltage</span></dt><dd>très basse tension&nbsp;: ici 5&nbsp;volts. Le bandeau chauffe quand même.</dd></div>
+  </dl>
+</div>
+</div>
+
+<!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  /* L'agrandisseur est une COLONNE — bouton, image, légende — : la légende suit l'image dans le
+     flux, l'image reçoit une hauteur maximale calculée (ajuster()), et le fond défile si besoin. */
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:1rem;box-sizing:border-box;overflow:auto;
+    flex-direction:column;align-items:center;gap:.75rem}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  /* centré quand tout tient, sans rien couper quand ça déborde : des marges automatiques,
+     pas justify-content:center (qui rendrait le haut inaccessible au défilement) */
+  .loupe-fond > .loupe-fermer{margin-top:auto}
+  .loupe-fond > .loupe-legende{margin-bottom:auto}
+  .loupe-fond img{display:block;flex:none;max-width:100%;max-height:80vh;width:auto;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:static;flex:none;margin:0;max-width:min(70ch,100%);text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif}
+  .loupe-legende .loupe-aide{display:block;margin-top:.25rem;font-size:.85em;color:#b8bfcc}
+  .loupe-fermer{position:sticky;top:0;align-self:flex-end;flex:none;z-index:1;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+    grande.addEventListener("load", ajuster);
+    window.addEventListener("resize", ajuster);
+  }
+
+  // La légende affichée : la figcaption VISIBLE de la figure si elle existe ; sinon le
+  // texte alternatif, réduit à sa première phrase s'il dépasse deux lignes. L'alt complet
+  // reste sur l'image agrandie, pour les lecteurs d'écran.
+  function poserLegende(el, texteAlt){
+    var fig = el.closest("figure");
+    var cap = fig ? fig.querySelector("figcaption") : null;
+    var visible = cap && cap.getClientRects().length && cap.textContent.trim();
+    legende.textContent = "";
+    var texte = visible ? cap.textContent.replace(/\s+/g, " ").trim() : (texteAlt || "");
+    texte = texte.replace(/\s*\(clique[^()]*agrandir\)/gi, "").trim();   // l'image est déjà agrandie
+    var corps = document.createElement("span");
+    corps.textContent = texte;
+    var aide = document.createElement("span");
+    aide.className = "loupe-aide";
+    aide.textContent = "Échap pour refermer";
+    if (texte) legende.appendChild(corps);
+    legende.appendChild(aide);
+    if (!visible && texte) {
+      var ligne = parseFloat(getComputedStyle(legende).lineHeight) || 20;
+      if (corps.getBoundingClientRect().height > 2 * ligne + 1) {
+        var m = texte.match(/^[\s\S]*?[.!?…](?=\s|$)/);
+        if (m && m[0].length < texte.length) corps.textContent = m[0];
+      }
+    }
+  }
+
+  // L'image reçoit la place qui reste : hauteur du fond, moins le bouton, la légende,
+  // les marges et les espacements — jamais moins de 40 % de l'écran ; au-delà, le fond défile.
+  function ajuster(){
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    var st = getComputedStyle(fond);
+    var ecart = parseFloat(st.rowGap) || 0;
+    var reste = fond.clientHeight - parseFloat(st.paddingTop) - parseFloat(st.paddingBottom)
+              - fond.querySelector(".loupe-fermer").offsetHeight - legende.offsetHeight - 2 * ecart;
+    grande.style.maxHeight = Math.max(reste, 0.4 * window.innerHeight) + "px";
+  }
+
+  function montrer(el, texteAlt){
+    fond.setAttribute("data-ouvert", "oui");
+    fond.scrollTop = 0;
+    poserLegende(el, texteAlt);
+    ajuster();
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.style.background = "";
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    montrer(img, img.alt);
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    grande.style.maxHeight = "";
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
+  // couleurs et leur police viennent de la feuille de style de la PAGE. Sérialisé seul, le
+  // dessin les perdrait (formes noires, police par défaut, texte qui déborde) : on recopie
+  // donc sur la copie les propriétés CALCULÉES de chaque élément, on y ajoute les dégradés
+  // et marqueurs définis ailleurs dans la page, et l'image reçoit le fond du schéma.
+  var PROPRIETES = ["fill", "fill-opacity", "fill-rule", "stroke", "stroke-width", "stroke-opacity",
+    "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit",
+    "opacity", "visibility", "display", "color", "font-family", "font-size", "font-weight", "font-style",
+    "font-variant-numeric", "letter-spacing", "word-spacing", "text-anchor", "dominant-baseline",
+    "baseline-shift", "text-decoration", "white-space", "paint-order", "stop-color", "stop-opacity",
+    "marker-start", "marker-mid", "marker-end", "clip-path", "mask", "filter"];
+  // Une transformation posée par la feuille de style (pas par l'attribut transform, que la
+  // copie garde déjà) : on la recopie avec son origine.
+  var TRANSFORMATION = ["transform", "transform-origin", "transform-box"];
+
+  function figer(source, copie){
+    var a = [source].concat([].slice.call(source.querySelectorAll("*")));
+    var b = [copie].concat([].slice.call(copie.querySelectorAll("*")));
+    for (var i = 0; i < a.length && i < b.length; i++) {
+      var cs = getComputedStyle(a[i]), decl = [], k, v;
+      for (k = 0; k < PROPRIETES.length; k++) {
+        v = cs.getPropertyValue(PROPRIETES[k]);
+        if (v) decl.push(PROPRIETES[k] + ":" + v);
+      }
+      if (i > 0 && !a[i].hasAttribute("transform") && cs.getPropertyValue("transform") &&
+          cs.getPropertyValue("transform") !== "none") {
+        for (k = 0; k < TRANSFORMATION.length; k++) decl.push(TRANSFORMATION[k] + ":" + cs.getPropertyValue(TRANSFORMATION[k]));
+      }
+      var deja = b[i].getAttribute("style");
+      b[i].setAttribute("style", decl.join(";") + (deja ? ";" + deja : ""));
+    }
+  }
+
+  // Un dégradé ou un marqueur appelé par url(#…) mais défini hors du dessin : on le recopie dedans.
+  function rapatrier(copie){
+    var defs = null, faits = {}, tour = 0, trouve = true;
+    while (trouve && tour++ < 4) {
+      trouve = false;
+      var refs = (new XMLSerializer().serializeToString(copie).match(/url\((?:&quot;|["'])?#([^"')&]+)/g) || [])
+        .concat(new XMLSerializer().serializeToString(copie).match(/href="#[^"]+"/g) || []);
+      refs.forEach(function(r){
+        var id = r.replace(/^url\((?:&quot;|["'])?#/, "").replace(/^href="#/, "").replace(/"$/, "");
+        if (faits[id] || copie.querySelector("[id='" + id.replace(/'/g, "") + "']")) return;
+        faits[id] = true;
+        var el = document.getElementById(id);
+        if (!el || !el.closest("svg")) return;
+        if (!defs) { defs = document.createElementNS("http://www.w3.org/2000/svg", "defs"); copie.insertBefore(defs, copie.firstChild); }
+        var c = el.cloneNode(true); figer(el, c); defs.appendChild(c); trouve = true;
+      });
+    }
+  }
+
+  // Le fond sur lequel le schéma est dessiné : le sien, sinon celui du premier parent opaque.
+  function fondDe(el){
+    for (var e = el; e && e.nodeType === 1; e = e.parentElement) {
+      var c = getComputedStyle(e).backgroundColor, m = c.match(/rgba?\(([^)]+)\)/);
+      if (m) { var p = m[1].split(","); if (p.length < 4 || parseFloat(p[3]) > 0) return c; }
+      else if (c && c !== "transparent") return c;
+    }
+    return "#fff";
+  }
+
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    figer(svg, copie);
+    rapatrier(copie);
+    copie.style.background = "transparent";
+    // Une taille propre au dessin (sans elle, une image SVG n'a que 300 × 150 px à offrir) :
+    // celle de la viewBox, agrandie ; le CSS de la loupe la ramène à l'écran.
+    var vb = svg.viewBox && svg.viewBox.baseVal, boite = svg.getBoundingClientRect();
+    var w = vb && vb.width ? vb.width : boite.width, h = vb && vb.height ? vb.height : boite.height;
+    if (!(vb && vb.width) && w && h) copie.setAttribute("viewBox", "0 0 " + w + " " + h);
+    var k = w ? Math.max(1, 1600 / w) : 1;
+    if (w && h) { copie.setAttribute("width", Math.round(w * k)); copie.setAttribute("height", Math.round(h * k)); }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.style.background = fondDe(svg);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    montrer(svg, mot);
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
 </body>
 </html>

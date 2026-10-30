@@ -36,3 +36,13 @@ seules**, sans nom de compte Windows, sans autre fichier (`PROTOCOLE_CAPTURES_GE
 | `Images/geste_vitta_4c_sortir_nouveau_dossier.png` | **Capture d'écran réelle** (règle n°94) | **Reprise octet pour octet** de `3e_C9.1/Images/geste_vitta_4c_sortir_nouveau_dossier.png` (Explorateur de fichiers, fenêtre seule, rétrécie à une ligne, poste de Pascal) : aucun nom de fichier ni de classe visible | CC0 | Geste 4 — Sortir : Documents, nouveau dossier à renommer | 51 Ko |
 | `Images/geste_vitta_4d_sortir_nom_de_classe.png` | **Capture d'écran réelle** (règle n°94) | **Reprise octet pour octet** de `3e_C9.1/Images/geste_vitta_4d_sortir_nom_de_classe.png` (même fenêtre) : le nom de classe 3E1 saisi | CC0 | Geste 4 — Sortir : le nom 3E1 saisi | 49 Ko |
 | `Images/geste_vitta_4e_sortir_resultat.png` | **Capture d'écran réelle** (règle n°94) | Explorateur de fichiers Windows (fenêtre seule, rétrécie à une ligne), poste de Pascal, 05/10/2026 — recadrée de 8 px sur chaque bord (bord transparent de la fenêtre) ; le fil d'Ariane se replie en « Documents › 3E1 » ; fenêtre posée sur la partie de l'écran que la barre de langue flottante de Windows ne recouvre pas | CC0 | Geste 4 — Sortir : Documents › 3E1 contient le fichier | 52 Ko |
+
+## Image générée par IA (Canva) pour la synthèse élève
+
+Demande de Pascal du 29/10/2026 : « une capture d'écran ou une illustration permet d'avoir une vision plus synthétique
+de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règles : skill `synthese-vulgarisee`, §4.
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/synthese_capteur_confort.png` | Un petit boîtier blanc fixé au mur d'une salle de classe new-yorkaise, près de la porte, son voyant rouge allumé ; tables vides et tours par les fenêtres. PNG 1 536 × 1 024, 2.4 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a small white plastic sensor box mounted on the wall of a sunny top-floor classroom in a New York school, next to the door, one round LED on its front glowing red; afternoon sunlight through tall windows, empty desks, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Synthèse élève, carte « Ce que je dois retenir » |
+

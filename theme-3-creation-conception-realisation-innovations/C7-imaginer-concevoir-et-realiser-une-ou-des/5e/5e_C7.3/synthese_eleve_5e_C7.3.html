@@ -5,73 +5,575 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Synthèse élève — Le banc de la cour (5e_C7.3)</title>
 <style>
-body{font-family:system-ui,sans-serif;max-width:740px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
-h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
-.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
-.attention{background:#fff6e0;border-left:4px solid #b8860b}
-.limite{background:#fdeff1;border-left:4px solid #b0344b}
-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.93em}
-th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
-td.n{text-align:right;font-variant-numeric:tabular-nums}
-code{background:#eef3fa;padding:1px 5px;border-radius:4px;font-size:.92em}
-ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
-#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;font-size:.95em;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+  h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
+  ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  table{width:100%;border-collapse:collapse;margin:6px 0}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--sub);font-size:.9em}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;flex-wrap:wrap;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  /* règle n°304 : un lien de rattrapage arrive sur ce titre ; la barre collante (47 px) ne doit pas le recouvrir */
+  h2[id]{scroll-margin-top:60px}
+  #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
+
+  /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
+  /* Une couleur par notion, la même partout : la donnée en jaune, l'information en vert. */
+  .d{color:var(--warn);font-weight:600}.i{color:var(--ok);font-weight:600}
+  /* La carte « Ce que je dois retenir » */
+  .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
+  .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
+  .question{text-align:center;font-size:1.05em;font-weight:600;margin:0 0 10px}
+  .programme{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);
+             padding:6px 0;margin:0 0 12px}
+  .programme b{color:var(--text)}
+  .programme ul{margin:2px 0;padding-left:18px}.programme li{margin:1px 0}
+  .cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .cartes a{display:block;text-decoration:none;color:var(--text);background:var(--panel);border:1.5px solid var(--border);
+            border-radius:10px;padding:9px 12px}
+  .cartes a:hover{border-color:var(--hl)}
+  .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
+  .cartes .r{display:block;font-size:.92em}
+  /* L'objet en image (Pascal, 29/10/2026 : « une illustration permet d'avoir une vision plus synthétique de l'objet ») :
+     à droite du programme, dans la carte ; dessous sur un téléphone. */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
+  .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
+  .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
+  .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
+  .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  ul.serre li{margin:1px 0}
+  .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
+
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+    h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; un schéma ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    .schema,table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
+    .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
+    .d{color:#8a5a00}.i{color:#1d6b38}.vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
+    .schema{width:60%;display:block;margin:4px auto}
+    h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
+
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  .box{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
-</style>
-</head>
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
+
+/* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+@media(max-width:680px){table{display:block;overflow-x:auto}}
+
+  /* Revenir à la carte (Pascal, 29/10/2026 : « je ne peux pas revenir à la synthèse ») : chaque partie porte, en
+     haut à droite, un lien vers la carte « Ce que je dois retenir » ; la barre de navigation collée en haut ne
+     recouvre plus le titre visé par un lien. Rien de tout cela ne s'imprime. */
+  .retour-carte{float:right;font-size:.82em;margin:1px 0 0 10px;padding:1px 10px;border:1.5px solid var(--border);
+                border-radius:999px;text-decoration:none;white-space:nowrap}
+  .retour-carte:hover,.retour-carte:focus-visible{border-color:var(--hl)}
+  #carte-titre,[id^="partie-"]{scroll-margin-top:64px}
+  @media print{.retour-carte{display:none}}
+
+  /* Une rangée de cinq cases tient sur une ligne. */
+  .chaine.cinq div{flex-basis:110px}
+  @media print{.chaine.cinq div{padding:3px 6px}}
+  /* Les anciennes ancres, visées par d'autres séquences : la barre collée en haut ne recouvre pas la partie. */
+  #ni-bon,#seuil,#plusieurs-passent,#familles{scroll-margin-top:64px}
+</style></head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_5e_C7.3_banc-de-la-cour.html">← Séquence</a><a href="qcm_5e_C7.3_banc-de-la-cour.html">🧠 QCM</a><a href="lexique_5e_C7.3.html">📖 Lexique</a></nav>
-<h1>🪵 Le banc de la cour — ce qu'il faut retenir</h1>
-<p style="color:#555">Thème 3 · 5<sup>e</sup> — 5e_C7.3. Imprimable en noir et blanc, lisible hors ligne.</p>
-<h2 id="ni-bon">Un matériau n'est ni bon ni mauvais</h2>
-<div class="box"><p>Il a des <b>caractéristiques mesurées</b>, et c'est
-     le cahier des charges qui décide lesquelles comptent. Le béton est écarté du banc et parfait
-     en dalle de sol. <b>Le meilleur matériau n'existe pas</b> ; le meilleur pour cet objet-là,
-     dans cet endroit-là, existe.</p></div>
-<h2>Chaque caractéristique répond à une question</h2>
-<div class="box"><p>La masse volumique dit combien pèsera la
-     pièce, une fois son volume connu. La résistance dit quelle charge elle supporte. La tenue au
-     soleil dit combien d'années elle reste utilisable dehors. <b>Le prix au kilogramme, lui, ne
-     dit rien tant qu'on ne sait pas combien de kilos il en faut.</b></p></div>
-<h2 id="seuil">Un seuil n'est pas une note</h2>
-<div class="box"><p>On ne fait pas la moyenne des critères : chaque exigence se
-     passe ou ne se passe pas. L'acier galvanisé est premier sur la résistance et sur la durée, et
-     il est recalé quand même — <b>68 °C au soleil et 176 kg d'assise</b>. Cinq réussites ne
-     rattrapent pas deux échecs, et c'est vrai en dehors de la technologie aussi.</p></div>
-<h2>Un prix au kilo n'est pas un prix</h2>
-<div class="box"><p>1,90 €/kg d'acier donnent une assise à <b>334 €</b> ;
-     14 €/kg de teck en donnent une à <b>204 €</b>. Parce qu'il en faut 176 kg d'un côté et 15 kg
-     de l'autre. Le prix d'une pièce se calcule : masse volumique × volume × prix au kilo.</p></div>
-<h2>Retirer une exigence fait entrer quelqu'un</h2>
-<div class="box"><p>C'est pour cela que c'est tentant, et c'est
-     pour cela qu'il faut se demander à chaque fois <b>ce que l'exigence protégeait</b>. « Température
-     au soleil » protégeait l'usage même de l'objet : un banc sur lequel on ne peut pas s'asseoir
-     entre 11 h et 15 h n'est pas un banc moins bon, c'est un banc qui ne sert pas.</p></div>
-<h2>Le climat fait partie du cahier des charges</h2>
-<div class="box"><p>Le soleil et le <b>brouillard salin</b> de
-     la Martinique éliminent des matériaux qu'un catalogue générique retiendrait. Les durées de vie
-     annoncées « en usage extérieur » sont calculées sous un autre ciel — et les catalogues ne le
-     disent presque jamais.</p></div>
-<h2>Le moins cher à l'achat n'est pas le moins cher</h2>
-<div class="box"><p>Sans « tenue au soleil » ni « tenue au
-     sel », le pin nu entre à <b>25,63 €</b>, le moins cher de tous. Il grisera en un an et sera
-     pourri en trois. Il faut compter les remplacements, et donc connaître la durée de vie.</p></div>
-<h2 id="plusieurs-passent">Quand plusieurs passent, on ajoute un critère</h2>
-<div class="box"><p>Et on l'<b>écrit</b> : prix, durée,
-     provenance, facilité de réparation. Un choix qui ne s'explique pas ne se défend pas. Faire une
-     moyenne n'a pas de sens — on ne fait pas la moyenne d'une durée et d'un prix.</p></div>
-<h2>Reconnaître un matériau, et le choisir</h2>
-<div class="box"><p>Reconnaître, c'est lire un objet qui existe.
-     Choisir, c'est décider pour un objet qui n'existe pas encore — et il faut alors des exigences.
-     <b>Nommer un matériau et le choisir ne sont pas le même travail.</b></p></div>
-<h2 id="familles">Les familles de matériaux</h2>
-<div class="box"><p>Métaux, polymères (les plastiques), céramiques, composites,
-     matériaux organiques naturels. Le PVC est un polymère, le béton un composite, le teck un
-     matériau organique naturel. <b>Un seul indice ne conclut jamais</b> : on croise l'aspect, la
-     masse, l'aimant et le son avant de nommer.</p></div>
-<footer>Synthèse élève — 5e_C7.3. Programme 2024, Thème 3.</footer>
+<div class="page">
+<h1>📌 Synthèse élève — Le banc de la cour&nbsp;: choisir un matériau</h1>
+<p class="pb">Six matériaux, aucun mauvais&nbsp;: c'est le cahier des charges du banc qui choisit.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
+
+<!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
+<section class="carte" aria-labelledby="carte-titre">
+  <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
+  <p class="question">Six matériaux, aucun mauvais&nbsp;: comment le cahier des charges du banc en écarte-t-il quatre&nbsp;?</p>
+  <div class="tete">
+  <div class="programme"><b>Ce que dit le programme</b> (5e, compétences C7 et C4)&nbsp;:
+    <ul>
+      <li>choisir un matériau parmi plusieurs proposés en fonction de leurs caractéristiques&nbsp;;</li>
+      <li>identifier les principaux matériaux constitutifs d'un OST.</li>
+    </ul>
+  </div>
+    <figure class="objet">
+      <img src="Images/synthese_banc_cour.png" alt="Un banc à assise en planches de bois sur un pied en métal, dans la cour ensoleillée du collège, avec des arbres tropicaux au fond.">
+      <figcaption>📍 L'objet&nbsp;: un banc de la cour, en bois. <i>Image générée par IA (Canva).</i></figcaption>
+    </figure>
+  </div>
+  <div class="cartes">
+    <a href="#partie-1"><span class="q">🪵 1. Existe-t-il un mauvais matériau&nbsp;?</span>
+      <span class="r">Non. C'est le cahier des charges de l'objet qui décide.</span></a>
+    <a href="#partie-2"><span class="q">📏 2. À quoi sert chaque caractéristique&nbsp;?</span>
+      <span class="r">Chacune répond à une question. Le prix d'une pièce se calcule.</span></a>
+    <a href="#partie-3"><span class="q">🚧 3. Un matériau solide peut-il être écarté&nbsp;?</span>
+      <span class="r">Oui. Chaque exigence est un seuil&nbsp;: un seul échec suffit.</span></a>
+    <a href="#partie-4"><span class="q">➖ 4. Retirer une exigence gênante&nbsp;?</span>
+      <span class="r">Demande-toi d'abord ce qu'elle protégeait.</span></a>
+    <a href="#partie-5"><span class="q">🌴 5. Le climat change-t-il le choix&nbsp;?</span>
+      <span class="r">Oui. Le soleil et le sel écartent des matériaux.</span></a>
+    <a href="#partie-6"><span class="q">⚖️ 6. Deux matériaux passent&nbsp;: comment choisir&nbsp;?</span>
+      <span class="r">On ajoute un critère, et on l'écrit avec le choix.</span></a>
+    <a href="#partie-7"><span class="q">🔍 7. De quoi un objet est-il fait&nbsp;?</span>
+      <span class="r">On croise plusieurs indices pour nommer sa famille.</span></a>
+  </div>
+</section>
+
+<!-- ══ 1 ══ (ancre « ni-bon » : visée par d'autres séquences) -->
+<div class="bloc savoir" id="ni-bon">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-1" style="margin-top:0">1. Existe-t-il un bon et un mauvais matériau&nbsp;?</h2>
+  <p>Le fournisseur propose six matériaux pour le banc. Le béton est écarté du banc, mais il convient très bien en dalle de sol&nbsp;:</p>
+  <div class="chaine">
+    <div class="ko"><b>Pour l'assise du banc ✘</b>Il résiste mal en flexion&nbsp;: 5&nbsp;MPa (mégapascals) pour 25 exigés. Et il chauffe à 61&nbsp;°C.</div>
+    <div class="ok"><b>Pour une dalle de sol ✔</b>Posée sur le sol, elle ne risque pas de plier. Elle tient 30&nbsp;ans au soleil.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un matériau n'est <b>ni bon ni mauvais</b>&nbsp;: il a des <b>caractéristiques</b>
+  mesurées. Le <b>cahier des charges</b> de l'objet, dans son lieu, dit lesquelles comptent.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'un tableau classe les matériaux du meilleur au pire. Le même béton
+  est écarté ici et parfait ailleurs.</p>
+</div>
+
+<!-- ══ 2 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-2" style="margin-top:0">2. À quoi sert chaque caractéristique d'un matériau&nbsp;?</h2>
+  <p>Au banc, chaque caractéristique répond à une seule question&nbsp;:</p>
+  <div class="chaine cinq">
+    <div><b>Masse volumique</b>Combien pèsera la pièce&nbsp;?</div>
+    <div><b>Résistance</b>Quelle charge tient-elle sans casser&nbsp;?</div>
+    <div><b>Tenue au soleil</b>Combien d'années dehors&nbsp;?</div>
+    <div><b>Tenue au sel</b>L'air marin l'attaque-t-il&nbsp;?</div>
+    <div><b>Prix au kilo</b>Rien, sans la masse.</div>
+  </div>
+  <p>L'acier coûte 1,90&nbsp;€ le kilo, le teck 14&nbsp;€. Mais l'assise en acier pèse 176&nbsp;kg et coûte 334&nbsp;€&nbsp;;
+  celle en teck pèse 15&nbsp;kg et coûte 204&nbsp;€.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: chaque <b>caractéristique</b> répond à une question précise. Le <b>prix de
+  la pièce</b> se calcule&nbsp;: masse volumique × volume de la pièce × prix au kilo.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: comparer les prix au kilo. L'acier, bien moins cher au kilo que le teck,
+  donne l'assise la plus chère des six.</p>
+</div>
+
+<!-- ══ 3 ══ (ancre « seuil » : visée par d'autres séquences) -->
+<div class="bloc savoir" id="seuil">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-3" style="margin-top:0">3. Un matériau excellent peut-il être écarté quand même&nbsp;?</h2>
+  <p>L'acier galvanisé est le plus résistant des six&nbsp;: 235&nbsp;MPa (mégapascals), contre 38 pour le pin traité.
+  Le banc l'écarte pourtant&nbsp;:</p>
+  <div class="chaine">
+    <div class="ok"><b>Résistance, soleil, sel ✔</b>Trois exigences passées, et largement.</div>
+    <div class="ko"><b>Chaleur ✘</b>68&nbsp;°C au soleil, pour 55 au plus&nbsp;: on s'y brûle.</div>
+    <div class="ko"><b>Masse ✘</b>176&nbsp;kg, pour 35 au plus&nbsp;: deux agents ne la déplacent pas.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: chaque exigence est un <b>seuil</b>&nbsp;: on passe, ou on ne passe pas.
+  On ne fait <b>pas de moyenne</b>&nbsp;: trois réussites ne rattrapent pas deux échecs.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: faire la moyenne des critères, comme pour des notes. Un banc où l'on se brûle
+  ne sert à rien, même très solide.</p>
+</div>
+
+<!-- ══ 4 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-4" style="margin-top:0">4. Retirer une exigence gênante, est-ce une bonne idée&nbsp;?</h2>
+  <p>Au départ, le pin traité (46,82&nbsp;€ l'assise) et le teck passent. On retire des exigences&nbsp;:</p>
+  <div class="chaine">
+    <div class="ko"><b>Sans «&nbsp;température au soleil&nbsp;»</b>Le PVC entre, à 109,76&nbsp;€. Le moins cher reste le pin traité&nbsp;: rien de gagné.</div>
+    <div class="ko"><b>Sans «&nbsp;soleil&nbsp;» ni «&nbsp;sel&nbsp;»</b>Le pin nu entre, à 25,63&nbsp;€. Mais il sera pourri en trois ans&nbsp;: tout serait à refaire.</div>
+    <div class="ko"><b>En retirant presque tout</b>Le béton finit par entrer. Mais le cahier des charges n'exige plus rien.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: retirer une exigence fait toujours <b>entrer</b> un matériau, mais pas
+  toujours <b>baisser</b> le prix. Demande-toi d'abord ce que l'exigence <b>protégeait</b>&nbsp;: ici, l'usage même du banc.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: garder le moins cher à l'achat. Racheter tous les trois ans coûte plus cher.</p>
+</div>
+
+<!-- ══ 5 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-5" style="margin-top:0">5. Le climat de la Martinique change-t-il le choix&nbsp;?</h2>
+  <p>Le collège est à 900&nbsp;m de la mer, sous le soleil des tropiques. Deux exigences viennent du climat&nbsp;:</p>
+  <div class="chaine">
+    <div><b>☀️ Le soleil</b>Une surface sombre monte à 60&nbsp;°C et plus. Le pin nu se dégrade en 2&nbsp;ans.</div>
+    <div><b>🌊 Le sel</b>Les alizés portent le sel loin dans les terres. Des vis en acier ordinaire y rouillent en une saison.</div>
+    <div><b>🛡️ Le traitement</b>Traité en profondeur, le pin tient 8&nbsp;ans au soleil. Mais il ne se recycle plus avec le bois ordinaire.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: le <b>climat</b> fait partie du cahier des charges. Le <b>soleil</b> et le
+  <b>brouillard salin</b> écartent des matériaux qu'un catalogue garderait.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire un catalogue «&nbsp;usage extérieur&nbsp;». Il mesure sous un climat plus doux.</p>
+</div>
+
+<!-- ══ 6 ══ (ancre « plusieurs-passent » : visée par d'autres séquences) -->
+<div class="bloc faire" id="plusieurs-passent">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-6" style="margin-top:0">6. Deux matériaux passent&nbsp;: comment choisir entre eux&nbsp;?</h2>
+  <p>Le pin traité tient 8&nbsp;ans, le teck 15&nbsp;ans&nbsp;: les deux passent tout. Le banc ne tranche plus&nbsp;:</p>
+  <div class="chaine">
+    <div><b>💶 Le prix</b>L'assise en pin traité coûte plus de quatre fois moins cher que celle en teck.</div>
+    <div><b>⏳ La durée</b>Sur 16&nbsp;ans, deux assises en pin&nbsp;: 93,64&nbsp;€. Une seule en teck&nbsp;: 203,84&nbsp;€.</div>
+    <div><b>🌳 La provenance</b>D'où vient le teck, et à quel prix pour la forêt&nbsp;? Le tableau ne le dit pas.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: quand plusieurs matériaux passent, on <b>ajoute un critère</b> et on
+  l'<b>écrit</b>. Sans raison écrite, personne ne peut vérifier ton choix.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: faire une moyenne des critères pour trancher. On ne fait pas la moyenne
+  d'une durée et d'un prix.</p>
+</div>
+
+<!-- ══ 7 ══ (ancre « familles » : visée par d'autres séquences) -->
+<div class="bloc savoir" id="familles">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-7" style="margin-top:0">7. Comment reconnaître de quoi un objet est fait&nbsp;?</h2>
+  <p>Reconnaître, c'est lire un objet qui existe&nbsp;; choisir, c'est décider pour un objet à faire. Un même banc mêle
+  souvent deux matériaux&nbsp;: une assise en bois sur un pied en acier. Chaque matériau a sa famille&nbsp;:</p>
+  <div class="chaine cinq">
+    <div><b>Métaux</b>L'acier, l'aluminium. L'aimant attire l'acier.</div>
+    <div><b>Polymères</b>Les plastiques&nbsp;: le PVC, le PLA.</div>
+    <div><b>Céramiques</b>Le verre.</div>
+    <div><b>Composites</b>Le béton&nbsp;: du ciment, du sable et du gravier associés.</div>
+    <div><b>Organiques naturels</b>Le bois&nbsp;: le pin, le teck.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: tout matériau appartient à l'une des <b>cinq familles</b>. Pour le
+  <b>reconnaître</b>, on croise <b>plusieurs indices</b>, comme sa masse et l'effet d'un aimant.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: conclure sur un seul indice. Le béton et l'acier se ressemblent&nbsp;; l'aimant
+  les sépare aussitôt.</p>
+</div>
+
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>matériau <span class="en">— material</span></dt><dd>la matière d'une pièce.</dd></div>
+    <div><dt>caractéristique <span class="en">— property</span></dt><dd>ce qu'on mesure d'un matériau.</dd></div>
+    <div><dt>masse volumique <span class="en">— density</span></dt><dd>la masse d'un mètre cube de matière.</dd></div>
+    <div><dt>résistance <span class="en">— strength</span></dt><dd>l'effort supporté sans casser.</dd></div>
+    <div><dt>mégapascal <span class="en">— megapascal</span></dt><dd>l'unité de la résistance (MPa).</dd></div>
+    <div><dt>flexion <span class="en">— bending</span></dt><dd>l'effort qui courbe une planche chargée.</dd></div>
+    <div><dt>cahier des charges <span class="en">— specifications</span></dt><dd>les exigences que l'objet doit tenir.</dd></div>
+    <div><dt>exigence <span class="en">— requirement</span></dt><dd>une condition à tenir, avec son seuil.</dd></div>
+    <div><dt>seuil <span class="en">— threshold</span></dt><dd>la valeur limite d'une exigence.</dd></div>
+    <div><dt>critère <span class="en">— criterion</span></dt><dd>ce qui sert à comparer, comme le prix.</dd></div>
+    <div><dt>brouillard salin <span class="en">— salt spray</span></dt><dd>l'air chargé de sel marin.</dd></div>
+    <div><dt>galvanisé <span class="en">— galvanized</span></dt><dd>couvert de zinc pour moins rouiller.</dd></div>
+    <div><dt>traitement autoclave <span class="en">— pressure treatment</span></dt><dd>un produit poussé au cœur du bois.</dd></div>
+    <div><dt>famille de matériaux <span class="en">— material family</span></dt><dd>des matériaux de même nature.</dd></div>
+    <div><dt>polymère <span class="en">— polymer</span></dt><dd>le nom savant des plastiques.</dd></div>
+    <div><dt>composite <span class="en">— composite</span></dt><dd>plusieurs matières associées.</dd></div>
+    <div><dt>OST <span class="en">— technical object</span></dt><dd>objet ou système technique.</dd></div>
+  </dl>
+</div>
+</div>
+
+<!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  /* L'agrandisseur est une COLONNE — bouton, image, légende — : la légende suit l'image dans le
+     flux, l'image reçoit une hauteur maximale calculée (ajuster()), et le fond défile si besoin. */
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:1rem;box-sizing:border-box;overflow:auto;
+    flex-direction:column;align-items:center;gap:.75rem}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  /* centré quand tout tient, sans rien couper quand ça déborde : des marges automatiques,
+     pas justify-content:center (qui rendrait le haut inaccessible au défilement) */
+  .loupe-fond > .loupe-fermer{margin-top:auto}
+  .loupe-fond > .loupe-legende{margin-bottom:auto}
+  .loupe-fond img{display:block;flex:none;max-width:100%;max-height:80vh;width:auto;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:static;flex:none;margin:0;max-width:min(70ch,100%);text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif}
+  .loupe-legende .loupe-aide{display:block;margin-top:.25rem;font-size:.85em;color:#b8bfcc}
+  .loupe-fermer{position:sticky;top:0;align-self:flex-end;flex:none;z-index:1;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+    grande.addEventListener("load", ajuster);
+    window.addEventListener("resize", ajuster);
+  }
+
+  // La légende affichée : la figcaption VISIBLE de la figure si elle existe ; sinon le
+  // texte alternatif, réduit à sa première phrase s'il dépasse deux lignes. L'alt complet
+  // reste sur l'image agrandie, pour les lecteurs d'écran.
+  function poserLegende(el, texteAlt){
+    var fig = el.closest("figure");
+    var cap = fig ? fig.querySelector("figcaption") : null;
+    var visible = cap && cap.getClientRects().length && cap.textContent.trim();
+    legende.textContent = "";
+    var texte = visible ? cap.textContent.replace(/\s+/g, " ").trim() : (texteAlt || "");
+    texte = texte.replace(/\s*\(clique[^()]*agrandir\)/gi, "").trim();   // l'image est déjà agrandie
+    var corps = document.createElement("span");
+    corps.textContent = texte;
+    var aide = document.createElement("span");
+    aide.className = "loupe-aide";
+    aide.textContent = "Échap pour refermer";
+    if (texte) legende.appendChild(corps);
+    legende.appendChild(aide);
+    if (!visible && texte) {
+      var ligne = parseFloat(getComputedStyle(legende).lineHeight) || 20;
+      if (corps.getBoundingClientRect().height > 2 * ligne + 1) {
+        var m = texte.match(/^[\s\S]*?[.!?…](?=\s|$)/);
+        if (m && m[0].length < texte.length) corps.textContent = m[0];
+      }
+    }
+  }
+
+  // L'image reçoit la place qui reste : hauteur du fond, moins le bouton, la légende,
+  // les marges et les espacements — jamais moins de 40 % de l'écran ; au-delà, le fond défile.
+  function ajuster(){
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    var st = getComputedStyle(fond);
+    var ecart = parseFloat(st.rowGap) || 0;
+    var reste = fond.clientHeight - parseFloat(st.paddingTop) - parseFloat(st.paddingBottom)
+              - fond.querySelector(".loupe-fermer").offsetHeight - legende.offsetHeight - 2 * ecart;
+    grande.style.maxHeight = Math.max(reste, 0.4 * window.innerHeight) + "px";
+  }
+
+  function montrer(el, texteAlt){
+    fond.setAttribute("data-ouvert", "oui");
+    fond.scrollTop = 0;
+    poserLegende(el, texteAlt);
+    ajuster();
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.style.background = "";
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    montrer(img, img.alt);
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    grande.style.maxHeight = "";
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
+  // couleurs et leur police viennent de la feuille de style de la PAGE. Sérialisé seul, le
+  // dessin les perdrait (formes noires, police par défaut, texte qui déborde) : on recopie
+  // donc sur la copie les propriétés CALCULÉES de chaque élément, on y ajoute les dégradés
+  // et marqueurs définis ailleurs dans la page, et l'image reçoit le fond du schéma.
+  var PROPRIETES = ["fill", "fill-opacity", "fill-rule", "stroke", "stroke-width", "stroke-opacity",
+    "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit",
+    "opacity", "visibility", "display", "color", "font-family", "font-size", "font-weight", "font-style",
+    "font-variant-numeric", "letter-spacing", "word-spacing", "text-anchor", "dominant-baseline",
+    "baseline-shift", "text-decoration", "white-space", "paint-order", "stop-color", "stop-opacity",
+    "marker-start", "marker-mid", "marker-end", "clip-path", "mask", "filter"];
+  // Une transformation posée par la feuille de style (pas par l'attribut transform, que la
+  // copie garde déjà) : on la recopie avec son origine.
+  var TRANSFORMATION = ["transform", "transform-origin", "transform-box"];
+
+  function figer(source, copie){
+    var a = [source].concat([].slice.call(source.querySelectorAll("*")));
+    var b = [copie].concat([].slice.call(copie.querySelectorAll("*")));
+    for (var i = 0; i < a.length && i < b.length; i++) {
+      var cs = getComputedStyle(a[i]), decl = [], k, v;
+      for (k = 0; k < PROPRIETES.length; k++) {
+        v = cs.getPropertyValue(PROPRIETES[k]);
+        if (v) decl.push(PROPRIETES[k] + ":" + v);
+      }
+      if (i > 0 && !a[i].hasAttribute("transform") && cs.getPropertyValue("transform") &&
+          cs.getPropertyValue("transform") !== "none") {
+        for (k = 0; k < TRANSFORMATION.length; k++) decl.push(TRANSFORMATION[k] + ":" + cs.getPropertyValue(TRANSFORMATION[k]));
+      }
+      var deja = b[i].getAttribute("style");
+      b[i].setAttribute("style", decl.join(";") + (deja ? ";" + deja : ""));
+    }
+  }
+
+  // Un dégradé ou un marqueur appelé par url(#…) mais défini hors du dessin : on le recopie dedans.
+  function rapatrier(copie){
+    var defs = null, faits = {}, tour = 0, trouve = true;
+    while (trouve && tour++ < 4) {
+      trouve = false;
+      var refs = (new XMLSerializer().serializeToString(copie).match(/url\((?:&quot;|["'])?#([^"')&]+)/g) || [])
+        .concat(new XMLSerializer().serializeToString(copie).match(/href="#[^"]+"/g) || []);
+      refs.forEach(function(r){
+        var id = r.replace(/^url\((?:&quot;|["'])?#/, "").replace(/^href="#/, "").replace(/"$/, "");
+        if (faits[id] || copie.querySelector("[id='" + id.replace(/'/g, "") + "']")) return;
+        faits[id] = true;
+        var el = document.getElementById(id);
+        if (!el || !el.closest("svg")) return;
+        if (!defs) { defs = document.createElementNS("http://www.w3.org/2000/svg", "defs"); copie.insertBefore(defs, copie.firstChild); }
+        var c = el.cloneNode(true); figer(el, c); defs.appendChild(c); trouve = true;
+      });
+    }
+  }
+
+  // Le fond sur lequel le schéma est dessiné : le sien, sinon celui du premier parent opaque.
+  function fondDe(el){
+    for (var e = el; e && e.nodeType === 1; e = e.parentElement) {
+      var c = getComputedStyle(e).backgroundColor, m = c.match(/rgba?\(([^)]+)\)/);
+      if (m) { var p = m[1].split(","); if (p.length < 4 || parseFloat(p[3]) > 0) return c; }
+      else if (c && c !== "transparent") return c;
+    }
+    return "#fff";
+  }
+
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    figer(svg, copie);
+    rapatrier(copie);
+    copie.style.background = "transparent";
+    // Une taille propre au dessin (sans elle, une image SVG n'a que 300 × 150 px à offrir) :
+    // celle de la viewBox, agrandie ; le CSS de la loupe la ramène à l'écran.
+    var vb = svg.viewBox && svg.viewBox.baseVal, boite = svg.getBoundingClientRect();
+    var w = vb && vb.width ? vb.width : boite.width, h = vb && vb.height ? vb.height : boite.height;
+    if (!(vb && vb.width) && w && h) copie.setAttribute("viewBox", "0 0 " + w + " " + h);
+    var k = w ? Math.max(1, 1600 / w) : 1;
+    if (w && h) { copie.setAttribute("width", Math.round(w * k)); copie.setAttribute("height", Math.round(h * k)); }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.style.background = fondDe(svg);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    montrer(svg, mot);
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
 </body>
 </html>

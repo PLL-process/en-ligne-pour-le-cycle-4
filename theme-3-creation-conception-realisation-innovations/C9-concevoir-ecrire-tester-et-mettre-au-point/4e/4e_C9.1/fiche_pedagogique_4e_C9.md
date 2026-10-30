@@ -35,7 +35,7 @@ Faire vivre les quatre gestes — concevoir, écrire, tester, mettre au point �
 un objet dont l'élève connaît déjà le support, et faire découvrir que **le plus
 long n'est pas d'écrire**.
 
-Le pivot de la séquence est l'activité 5 : la pompe clignote, et **il n'y a aucun
+Le pivot de la séquence est l'activité 5 : la pompe s'affole (elle s'allume et s'éteint sans arrêt), et **il n'y a aucun
 bug**. Chaque décision du programme est juste ; c'est la règle qui est mal
 choisie. Cette idée — *un programme peut être juste et inutilisable* — est ce qui
 reste quand tout le reste est oublié.
@@ -50,7 +50,7 @@ reste quand tout le reste est oublié.
 | | 2. De la règle à l'algorigramme | 25 min | Ordre des 5 blocs + pseudo-code **modifié** |
 | **2** — Écrire et tester | 3. Écrire et exécuter | 30 min | Programme enregistré + journal chiffré |
 | | 4. Le jeu d'essais | 25 min | Tableau à 6 essais, ATTENDU rempli **avant** |
-| **3** — Mettre au point | 5. Le clignotement | 30 min | Diagnostic + programme à trois cas + démonstration au banc |
+| **3** — Mettre au point | 5. La pompe qui s'affole | 30 min | Diagnostic + programme à trois cas + démonstration au banc |
 | | 6. Le lampadaire | 25 min | Programme écrit **sans squelette** + justification chiffrée |
 
 ---
@@ -71,7 +71,7 @@ changé.
 > l'autre.
 
 **Cinq verrous expérientiels** : humidité variée · essai hors plage horaire ·
-frontières 39 et 40 · clignotement provoqué · clignotement supprimé. Les activités
+frontières 39 et 40 · pompe affolée · pompe calmée. Les activités
 3, 4 et 5 **refusent** de se valider sans eux.
 
 ---

@@ -414,3 +414,23 @@ Captures de gestes :
 - `Images/dsp_16_booleen_empreinte.png`
 - `Images/dsp_17_empreinte_vue.png`
 - `Images/dsp_18_apparence_socle.png`
+
+## Réemploi dans les synthèses élève (n°316) — 29/10/2026
+
+Quatre images déjà documentées plus haut montrent l'objet dans la carte « Ce que je dois retenir »
+des synthèses élève. Aucune n'est copiée ni retouchée : chaque page pointe vers ce dossier.
+
+- `Images/tp5e_R7_de_colore.png` — le dé coloré : `5e/5e_C7.6/Synthèses/synthese_eleve_5e_C7.6.html` et
+  `5e/5e_C7.2/Synthèses/synthese_eleve_5e_C7.2.html` (la même image pour le même dé).
+- `Images/coupe_calotte_5e.svg` — en vignette, partie 4 de `5e/5e_C7.2/Synthèses/synthese_eleve_5e_C7.2.html`.
+- `Images/dsp_R9_presse_papier.png` — le dé sur son socle : `4e/4e_C7.6/Synthèses/synthese_eleve_4e_C7.6.html` et
+  `atelier-cao/Synthèses/synthese_eleve_CAO.html`.
+- `Images/tp3e_R7_boitier_fini.png` — le boîtier, couvercle soulevé : `3e/3e_C7.6/Synthèses/synthese_eleve_3e_C7.6.html`.
+
+Les légendes disent « Capture d'écran » pour `dsp_R9` (capture d'interface, 27-28/09/2026) et « Image
+Onshape » pour `tp5e_R7` et `tp3e_R7`, décrits plus haut comme des rendus de l'API.
+
+**À vérifier** : le fichier `tp5e_R7_de_colore.png` mesure aujourd'hui 1 095 × 957 pixels, sur fond gris
+sombre, alors que la section du 10 août 2026 décrit des rendus de 1 600 × 1 200 sur fond blanc. Il a
+donc été remplacé sans que sa ligne suive : sa provenance exacte (rendu de l'API ou capture) reste à
+écrire.

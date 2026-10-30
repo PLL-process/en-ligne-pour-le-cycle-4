@@ -49,3 +49,13 @@ Aucune image externe. Aucun hotlinking. Aucun scan de manuel.
 - **Prises validées à l'oreille par Pascal le 25/10/2026.** L'étape 3 a été refaite : « canyon » y était francisé (« canion ») ;
   de deux nouvelles versions, Pascal a choisi la prononciation automatique (« ka-nyonne »). Trace dans `voix.json` (clé `prises`).
   Reproductibilité à l'octet : non (Piper tire du bruit à chaque prise).
+
+## Image générée par IA (Canva) pour la synthèse élève
+
+Demande de Pascal du 29/10/2026 : « une capture d'écran ou une illustration permet d'avoir une vision plus synthétique
+de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règles : skill `synthese-vulgarisee`, §4.
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/synthese_jardin_new_york.png` | Le jardin connecté d'une école de Brooklyn : un bac en bois avec des plants de tomates, la sonde d'humidité reliée à un boîtier gris sur un piquet, une petite cuve avec sa pompe et son goutte-à-goutte ; immeubles de briques et tours au fond. PNG 1 536 × 1 024, 2.8 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a small connected school vegetable garden in a Brooklyn, New York school courtyard: a raised wooden planter box with young tomato plants, a soil moisture sensor probe pushed into the soil with a thin cable running to a small grey weatherproof control box with one small LED on a short post, a small water tank with a small pump and a drip irrigation line, red brick school building and city towers behind, overcast daylight, no people, no text, no logos, the whole planter visible » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Synthèse élève, carte « Ce que je dois retenir » |
+

@@ -218,14 +218,14 @@ const run = async () => {
   await page.click("#btnRAZ");
   await page.click("#btnTrembler"); await page.waitForTimeout(3800);
   const nUn = parseInt(await page.textContent("#bCompteur"), 10);
-  ok("banc : en UN seuil, la mesure qui tremble fait clignoter la pompe", nUn >= 4, nUn + " basculements");
+  ok("banc : en UN seuil, la mesure qui tremble affole la pompe", nUn >= 4, nUn + " basculements");
   await shot(page, "banc_clignotement", "#bancCard");
 
   await page.check('input[name="bMode"][value="deux"]');
   await page.click("#btnRAZ");
   await page.click("#btnTrembler"); await page.waitForTimeout(3800);
   const nDeux = parseInt(await page.textContent("#bCompteur"), 10);
-  ok("banc : en DEUX seuils, le MÊME tremblement ne fait plus clignoter", nDeux <= 1, nDeux + " basculement(s)");
+  ok("banc : en DEUX seuils, le MÊME tremblement n'affole plus la pompe", nDeux <= 1, nDeux + " basculement(s)");
   ok("banc : la démonstration est probante (au moins 4 basculements évités)", nUn - nDeux >= 4, nUn + " → " + nDeux);
   await shot(page, "banc_hysteresis", "#bancCard");
 
