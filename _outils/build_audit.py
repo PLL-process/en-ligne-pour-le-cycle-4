@@ -562,7 +562,7 @@ OVERLAY = {
                 "essentiel, conception du plan d'adressage par l'élève (règle n°22), "
                 "adresse fixe passerelle comprise prouvée par le ping vers l'objet "
                 "ajouté, clinique du réseau et intervention réelle sur TROIS fichiers "
-                ".pkt en panne (adressage, liaison, masque) réellement fabriqués et "
+                ".pkt en panne (adressage, dont un masque, et liaison) réellement fabriqués et "
                 "vérifiés au ping, validation par simulation, défi sans tutoriel ; "
                 "QCM 30 q (10/10/10), 14 SVG CC0 reconstitués de sessions Packet "
                 "Tracer 8.2 réelles, 5 fichiers .pkt fournis (départ, maître, "

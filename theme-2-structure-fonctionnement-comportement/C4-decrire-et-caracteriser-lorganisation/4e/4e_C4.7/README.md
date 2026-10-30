@@ -21,7 +21,7 @@ allège la page pour les élèves qui en ont besoin.
 | [`4e_serre_TECHNO-C4.pkt`](4e_serre_TECHNO-C4.pkt) | montage **maître** tout adressé, pings validés (contrat 4e_C4.9) |
 | [`4e_serre_PANNE_A.pkt`](4e_serre_PANNE_A.pkt) | panne **adressage** : capteur en 192.168.21.50 (100% loss vérifié) |
 | [`4e_serre_PANNE_B.pkt`](4e_serre_PANNE_B.pkt) | panne **liaison** : Port Status de l'imprimante sur Off (triangle rouge) |
-| [`4e_serre_PANNE_C.pkt`](4e_serre_PANNE_C.pkt) | panne **masque** : capteur en 255.255.255.240 (100% loss vérifié) |
+| [`4e_serre_PANNE_C.pkt`](4e_serre_PANNE_C.pkt) | panne **adressage (masque)** : capteur en 255.255.255.240 (100% loss vérifié) |
 
 Les trois pannes sont documentées, avec leur remède, dans la **synthèse professeur** uniquement.
 

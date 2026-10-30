@@ -88,5 +88,5 @@ Chargement sans erreur JS des deux synthèses ; les schémas embarqués (`<objec
   d'adresse IP ». L'interface de Packet Tracer 8.2 refuse la saisie d'une adresse déjà
   utilisée sur le réseau (« This address is already used in the network. ») et vide le
   champ ; le doublon est donc traité à l'oral et en bonus, pas en fichier. La panne
-  « masque » l'a remplacée.
+  « adressage (masque) » l'a remplacée.
 - Script de test : suite Playwright du lot (54 vérifications), rejouable.

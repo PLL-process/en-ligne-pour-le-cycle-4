@@ -826,7 +826,8 @@
         <div>
           <label for="simJour"><b>☀ Lumière du jour :</b></label>
           <input type="range" id="simJour" min="0" max="100" value="80" aria-describedby="simJourVal">
-          <p id="simJourVal" style="text-align:center">Luminosité ambiante : <b id="simLum">80</b> % <span id="simJN" style="color:var(--warn)">(jour)</span></p>
+          <p id="simJourVal" style="text-align:center">Luminosité ambiante : <b id="simLum">80</b> lux <span id="simJN" style="color:var(--warn)">(jour)</span></p>
+          <p style="font-size:.85em;color:var(--sub)">Le lux mesure la lumière reçue par le capteur. Le curseur montre le crépuscule&nbsp;: 0 lux, nuit noire&nbsp;; 100 lux, début de journée.</p>
           <button class="btn small" id="btnPassage" type="button">🚶 Simuler un passage</button>
           <p style="font-size:.85em;color:var(--sub)">Le passage dure 5 secondes, comme devant un vrai détecteur PIR.</p>
         </div>
@@ -836,12 +837,12 @@
           <div id="simLedTxt" class="etiquette">éteint</div>
         </div>
       </div>
-      <div class="assoc"><label for="e3_e1">Expérience 1 — plein jour (80 %), sans passage : la LED est…</label><select id="e3_e1"><option value="">— choisir —</option><option>éteinte</option><option>en veille (faible)</option><option>à pleine puissance</option></select></div>
-      <div class="assoc"><label for="e3_e2">Expérience 2 — nuit (10 %), sans passage : la LED est…</label><select id="e3_e2"><option value="">— choisir —</option><option>éteinte</option><option>en veille (faible)</option><option>à pleine puissance</option></select></div>
-      <div class="assoc"><label for="e3_e3">Expérience 3 — nuit (10 %) + passage : la LED est…</label><select id="e3_e3"><option value="">— choisir —</option><option>éteinte</option><option>en veille (faible)</option><option>à pleine puissance</option></select></div>
-      <div class="assoc"><label for="e3_e4">Expérience 4 — plein jour (80 %) + passage : la LED est…</label><select id="e3_e4"><option value="">— choisir —</option><option>éteinte</option><option>en veille (faible)</option><option>à pleine puissance</option></select></div>
+      <div class="assoc"><label for="e3_e1">Expérience 1 — jour (80 lux), sans passage : la LED est…</label><select id="e3_e1"><option value="">— choisir —</option><option>éteinte</option><option>en veille (faible)</option><option>à pleine puissance</option></select></div>
+      <div class="assoc"><label for="e3_e2">Expérience 2 — nuit (10 lux), sans passage : la LED est…</label><select id="e3_e2"><option value="">— choisir —</option><option>éteinte</option><option>en veille (faible)</option><option>à pleine puissance</option></select></div>
+      <div class="assoc"><label for="e3_e3">Expérience 3 — nuit (10 lux) + passage : la LED est…</label><select id="e3_e3"><option value="">— choisir —</option><option>éteinte</option><option>en veille (faible)</option><option>à pleine puissance</option></select></div>
+      <div class="assoc"><label for="e3_e4">Expérience 4 — jour (80 lux) + passage : la LED est…</label><select id="e3_e4"><option value="">— choisir —</option><option>éteinte</option><option>en veille (faible)</option><option>à pleine puissance</option></select></div>
       <h4>c) La règle de décision</h4>
-      <p>SI il fait <select id="e3_r1" style="width:auto;display:inline-block" aria-label="Expérience 4 — plein jour (80 %) + passage : la LED est…"><option value="">…</option><option>nuit</option><option>jour</option></select> ET que quelqu'un <select id="e3_r2" style="width:auto;display:inline-block" aria-label="Expérience 4 — plein jour (80 %) + passage : la LED est…"><option value="">…</option><option>passe</option><option>dort</option></select> ALORS pleine puissance ; SI nuit sans passage ALORS <select id="e3_r3" style="width:auto;display:inline-block" aria-label="Expérience 4 — plein jour (80 %) + passage : la LED est…"><option value="">…</option><option>veille</option><option>pleine puissance</option><option>éteint</option></select>.</p>
+      <p>SI il fait <select id="e3_r1" style="width:auto;display:inline-block" aria-label="Expérience 4 — jour (80 lux) + passage : la LED est…"><option value="">…</option><option>nuit</option><option>jour</option></select> ET que quelqu'un <select id="e3_r2" style="width:auto;display:inline-block" aria-label="Expérience 4 — jour (80 lux) + passage : la LED est…"><option value="">…</option><option>passe</option><option>dort</option></select> ALORS pleine puissance ; SI nuit sans passage ALORS <select id="e3_r3" style="width:auto;display:inline-block" aria-label="Expérience 4 — jour (80 lux) + passage : la LED est…"><option value="">…</option><option>veille</option><option>pleine puissance</option><option>éteint</option></select>.</p>
       <button class="btn small" data-check="3" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb3" role="status"></div>
     </div>

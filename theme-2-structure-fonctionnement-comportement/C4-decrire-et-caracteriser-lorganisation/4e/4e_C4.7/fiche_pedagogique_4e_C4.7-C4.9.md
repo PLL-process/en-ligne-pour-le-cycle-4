@@ -32,8 +32,8 @@ reprend en version courte les gestes de construction.
 ## Garde-fou de progressivité (4e = paramétrer et dépanner)
 
 Vocabulaire INTRODUIT : adresse fixe (statique) vs DHCP (et réservation DHCP, en approfondissement),
-passerelle (gateway), masque de sous-réseau (lecture 255.255.255.0), plan d'adressage, familles de pannes
-(adressage / liaison / masque), démarche de diagnostic, fiche d'intervention, PDU/scénario de simulation,
+passerelle (gateway), masque de sous-réseau (lecture 255.255.255.0), plan d'adressage, deux familles de pannes
+(adressage, dont le cas adressage (masque), et liaison), démarche de diagnostic, fiche d'intervention, PDU/scénario de simulation,
 verdict Successful.
 Vocabulaire EXCLU (réservé 3e) : routeur, table de routage, protocole de routage, adresse publique/privée.
 Progressivité du dépôt : décrire (5e) → **paramétrer une IP fixe et dépanner (4e, ce lot)** → routage
@@ -111,6 +111,6 @@ Add Simple PDU, mode Simulation (Event List). **Aucune capture d'écran proprié
 Cinq fichiers Packet Tracer accompagnent le lot, tous construits ET vérifiés au ping sur le poste
 enseignant : `4e_serre_DEPART.pkt` (câblé, adresses vides), `4e_serre_TECHNO-C4.pkt` (maître, 5 équipements
 adressés, pings validés), `4e_serre_PANNE_A.pkt` (mauvaise rue, 100% loss vérifié),
-`4e_serre_PANNE_B.pkt` (Port Status Off, triangle rouge), `4e_serre_PANNE_C.pkt` (masque 255.255.255.240,
+`4e_serre_PANNE_B.pkt` (Port Status Off, triangle rouge), `4e_serre_PANNE_C.pkt` (adressage (masque) : 255.255.255.240,
 100% loss vérifié). La panne « doublon d'adresse » n'a pas pu être fabriquée : Packet Tracer refuse la
 saisie d'une IP déjà utilisée — elle reste traitée à l'oral.

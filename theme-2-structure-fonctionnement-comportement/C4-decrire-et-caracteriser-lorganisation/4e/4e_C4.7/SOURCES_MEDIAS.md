@@ -34,7 +34,7 @@ de Cisco Systems, Inc., citées à titre descriptif.
 | `4e_serre_TECHNO-C4.pkt` | Fichier Packet Tracer (Fable, sur poste Pascal) | montage maître FOURNI (contrat 4e_C4.9) : 5 équipements, plan .10→.100 appliqué, pings validés — support de l'act. 5 et corrigé enseignant | CC0 (contenu du montage) | ~55 Ko |
 | `4e_serre_PANNE_A.pkt` | Fichier Packet Tracer (Fable, sur poste Pascal) | panne « adressage » RÉELLE : capteur en 192.168.21.50, ping vers .50 → 100% loss **vérifié en session** (intervention réelle, S3) | CC0 (contenu du montage) | ~55 Ko |
 | `4e_serre_PANNE_B.pkt` | Fichier Packet Tracer (Fable, sur poste Pascal) | panne « liaison » RÉELLE : Port Status de l'imprimante sur Off, triangle rouge visible (intervention réelle, S3) | CC0 (contenu du montage) | ~55 Ko |
-| `4e_serre_PANNE_C.pkt` | Fichier Packet Tracer (Fable, sur poste Pascal) | panne « masque » RÉELLE : capteur en 255.255.255.240, ping vers .50 → 100% loss **vérifié en session** — la panne la plus formatrice (intervention réelle, S3) | CC0 (contenu du montage) | ~55 Ko |
+| `4e_serre_PANNE_C.pkt` | Fichier Packet Tracer (Fable, sur poste Pascal) | panne « adressage (masque) » RÉELLE : capteur en 255.255.255.240, ping vers .50 → 100% loss **vérifié en session** — la panne la plus formatrice (intervention réelle, S3) | CC0 (contenu du montage) | ~55 Ko |
 
 Le mini-simulateur « la clinique du réseau » (act. 4) est un SVG interactif embarqué dans
 la page, création originale du lot. Alt/desc présents dans chaque SVG (title + desc,
