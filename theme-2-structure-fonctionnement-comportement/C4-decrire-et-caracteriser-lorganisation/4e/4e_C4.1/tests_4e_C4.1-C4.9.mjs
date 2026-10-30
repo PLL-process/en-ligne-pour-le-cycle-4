@@ -134,7 +134,7 @@ ok('6 · activité 1 validée 9 / 9 (chaîne d\'énergie : alimenter, stocker, d
    /9 \/ 9/.test(await retour(1)) && await valide(1), (await retour(1)).slice(0, 60));
 
 await remplir(2); await valider(2);
-ok('7 · activité 2 validée 4 / 4 (chaîne d\'information : acquérir, traiter, communiquer, restituer)',
+ok('7 · activité 2 validée 4 / 4 (chaîne d\'information : acquérir, traiter, communiquer)',
    /4 \/ 4/.test(await retour(2)) && await valide(2), (await retour(2)).slice(0, 60));
 
 /* ── VERROU 1 : l'explorateur de table ───────────────────────────────────── */

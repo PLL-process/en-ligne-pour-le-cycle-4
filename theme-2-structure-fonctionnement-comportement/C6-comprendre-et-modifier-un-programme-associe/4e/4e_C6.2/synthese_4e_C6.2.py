@@ -19,9 +19,24 @@ blanc à l'impression, éditeur Vittascience ouvert dans un onglet à part), pui
 reçu le référentiel de la page élève (règle d'or n°298). Ce script ne connaît rien de tout cela : le
 relancer DÉFAIT ces changements (c'est arrivé le 26/10, rattrapé avant la fusion). Il ne s'exécute plus
 qu'avec `--forcer`. Les synthèses se corrigent désormais directement dans leur page.
+
+⛔ GARDÉ (30/10/2026). La synthèse élève a été réécrite le 29/10/2026 au format de la règle d'or n°316. Ce
+script en referait l'ancienne version à douze encadrés : il refuse désormais de s'exécuter, même avec
+`--forcer`. Il reste dans le dossier comme archive du texte d'origine.
 """
 import pathlib
 import sys
+
+# ── GARDE (30/10/2026) : ce script n'écrase plus la synthèse élève, même avec --forcer. ──────────────
+# main() écrit d'abord synthese_eleve_4e_C6.2.html, sans condition, puis synthese_professeur_4e_C6.2.html.
+# La page élève suit maintenant la règle d'or n°316 (deux pages A4, carte « Ce que je dois retenir »,
+# exemple, À retenir et piège par partie, lexique français-anglais) ; la page professeur porte le
+# référentiel (n°298) et le fond blanc à l'impression. Ce script ne connaît ni l'une ni l'autre.
+if __name__ == "__main__":
+    sys.exit("synthese_4e_C6.2.py refuse d'écraser synthese_eleve_4e_C6.2.html : la synthèse élève a été "
+             "réécrite le 29/10/2026 au format de la règle d'or n°316, et ce script en referait l'ancienne "
+             "version à douze encadrés. Il écraserait aussi la synthèse professeur, qui porte le référentiel "
+             "(n°298). Les deux synthèses se corrigent dans leur page ; --forcer ne lève pas cette garde.")
 
 DOS = pathlib.Path(__file__).parent
 CODE = "4e_C6.2"
