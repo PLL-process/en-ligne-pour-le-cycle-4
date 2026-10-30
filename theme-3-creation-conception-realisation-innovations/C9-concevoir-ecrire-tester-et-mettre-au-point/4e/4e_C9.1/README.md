@@ -22,6 +22,13 @@ le programme qui décide d'arroser — et qu'il faudra mettre au point.
   **Banc d'essai du jardin intégré** (humidité, heure, règle à un ou deux seuils,
   compteur de basculements) avec verrous expérientiels : les activités 3, 4 et 5
   exigent des manipulations réellement faites.
+* **L'animation « la pompe qui s'affole »** (activité 5 b, bloc `#pompe-pas-a-pas`, 30/10/2026) — neuf étapes : la
+  trace de l'activité 5 rejouée tour de boucle par tour de boucle, un jeton qui porte chaque mesure dans l'algorigramme
+  pendant que le chronogramme se dessine ; puis les deux seuils, une **prédiction** (« Regarder » s'arrête tant que
+  l'élève n'a pas répondu), le même tremblement sans basculement, et le sol qui sèche. Voix SIWIS (`Audio/pompe_etape…`,
+  générateur `_generation/voix_pompe/`, prises **non écoutées**). Le chronogramme fixe reste dans un volet sous
+  l'animation, et c'est lui qui s'imprime. Le dessin est fait par le **moteur** `_generation/moteur_algorigramme/`
+  (`moteur.js`, `moteur.css`, `poser.py` : la page déclare ses blocs, ses flèches, ses règles et sa série).
 * **`qcm_4e_C9_jardin-programme.html`** — QCM 30 questions (10 par code,
   4 illustrées), corrections détaillées avec **réfutation de chaque distracteur**,
   bilan par compétence.
@@ -31,7 +38,7 @@ le programme qui décide d'arroser — et qu'il faudra mettre au point.
   chronogramme de l'hystérésis est la figure centrale du lot.
 * **`fiche_pedagogique_4e_C9.md`**, **`matrice_couverture_4e_C9.csv`**,
   **`SOURCES_MEDIAS.md`**, **`rapport_tests_4e_C9.md`**, **`CRCN_regle7.md`**.
-* **`tests_4e_C9.mjs`** — la suite de tests (58 tests, Playwright) :
+* **`tests_4e_C9.mjs`** — la suite de tests (77 tests, Playwright, le 30/10/2026) :
   `node tests_4e_C9.mjs .`
 
 ## Le banc d'essai — pourquoi il est au centre

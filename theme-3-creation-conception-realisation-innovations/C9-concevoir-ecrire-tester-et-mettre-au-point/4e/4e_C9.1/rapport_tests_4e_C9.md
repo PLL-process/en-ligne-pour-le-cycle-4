@@ -185,3 +185,28 @@ c'est exactement ce qui supprime le clignotement ») → le contrôle de longueu
 
 Non rejoué ici : le lexique régénéré (48 mots par séance) est vérifié par `generer_lexique.py` lui-même (formes présentes dans leur
 panneau, sources présentes, aucun conflit avec un « à retenir ») et par le banc de l'outil, dans le dossier des outils du dépôt (28 / 28).
+
+## 9. Rejouée le 30/10/2026 (l'animation « la pompe qui s'affole »)
+
+L'activité 5 b) porte une animation pas à pas (bloc `#pompe-pas-a-pas`, neuf étapes) à la place du chronogramme fixe, qui reste
+dans un volet replié dessous et s'imprime à sa place. **Résultat : 77 / 77** (70 avant) : `node tests_4e_C9.mjs . <dossier_captures>`.
+Les sept contrôles ajoutés, préfixés « animation » :
+
+| Test | Résultat |
+|---|---|
+| 9 étapes, et ses 18 fichiers de voix (`Audio/pompe_etape1…9`, .ogg et .mp3) | ✅ |
+| « Regarder » s'arrête à la prédiction (étape 6) tant que l'élève n'a pas répondu (voix remplacée par un fichier qui finit tout de suite) | ✅ |
+| La réponse mène à l'étape 7, qui rappelle la prédiction | ✅ |
+| Un seul seuil : 6 basculements, et la console finit sur « 10:32:12  H=41  POMPE OFF », la dernière ligne de la trace (étape 3) | ✅ |
+| Deux seuils : 0 basculement sur la même trace (étape 7), puis 1 quand le sol passe sous 35, console « 10:32:42  H=34  POMPE ON » (étape 8) | ✅ |
+| À l'impression, l'animation se retire et le chronogramme fixe s'imprime (son volet s'ouvre) | ✅ |
+| Zéro erreur JavaScript | ✅ |
+
+**Mutation, elle mord** : sur une copie du lot où la prédiction n'arrête plus « Regarder », le contrôle de la prédiction échoue
+(« Étape 9 / 9 » au lieu de « Étape 6 / 9 »).
+
+**Le reste n'est pas propre à ce lot** et tourne ailleurs : le banc commun `_outils/lecteur_pas_a_pas/banc_lecteur.py` parcourt
+l'animation à 1280 et 390 px et sous « mouvement réduit », vérifie la voix sur le disque, l'impression et le lien direct
+`#pompe-pas-a-pas` (vert, 5 animations) ; `_outils/controle_lecteur_pas_a_pas.py` vérifie que le lecteur posé est celui de la source.
+**Non vérifié** : l'écoute des neuf prises (à faire par Pascal) ; Safari, iPad, téléphone réel.
+

@@ -368,6 +368,86 @@ const run = async () => {
   ok("loupe : Échap referme", !(await page.isVisible(".loupe-fond[data-ouvert]")));
   ok("séquence : zéro erreur JS sur tout le parcours", erreursJS.length === 0, erreursJS.join(" | "));
 
+  /* ════════ L'ANIMATION « la pompe qui s'affole » (act. 5 b, 30/10/2026) ════════
+     Le banc commun (_outils/lecteur_pas_a_pas/banc_lecteur.py) la parcourt à 1280 / 390 px, en mouvement réduit, à
+     l'impression et par son lien. Ici : ce qui lui est propre — la prédiction, et les nombres de la trace. */
+  {
+    const ANIM = "#pompe-pas-a-pas";
+    const compte = async (p) => (await p.textContent(ANIM + ' [data-lpp="compte"]')).trim();
+    const errAnim = [];
+
+    /* 1. « Regarder » s'arrête à la prédiction. La voix est remplacée par un fichier qui finit tout de suite. */
+    const ctxR = await navigateur.newContext({ viewport: { width: 1280, height: 900 } });
+    await ctxR.addInitScript(() => {
+      HTMLMediaElement.prototype.play = function () { setTimeout(() => this.dispatchEvent(new Event("ended")), 60); return Promise.resolve(); };
+    });
+    const pr = await ctxR.newPage();
+    pr.on("pageerror", e => errAnim.push(String(e)));
+    await pr.goto(url(SEQ)); await pr.waitForTimeout(400);
+    await pr.click("#tab-s3"); await pr.locator(ANIM).scrollIntoViewIfNeeded();
+    const total = await compte(pr);
+    const voixManquantes = [];
+    for (let k = 1; k <= 9; k++) for (const e of [".ogg", ".mp3"])
+      if (!fs.existsSync(path.join(LOT, "Audio", "pompe_etape" + k + e))) voixManquantes.push(k + e);
+    ok("animation de la pompe : 9 étapes, et ses 18 fichiers de voix (.ogg et .mp3)",
+       total === "Étape 1 / 9" && voixManquantes.length === 0, total + (voixManquantes.length ? " · manquent " + voixManquantes.join(", ") : ""));
+    for (let k = 2; k <= 5; k++) { await pr.click(ANIM + ' [data-lpp="suiv"]'); await pr.waitForTimeout(80); }
+    await pr.click(ANIM + ' [data-lpp="regarder"]');
+    await pr.waitForTimeout(6500);
+    const arret = await compte(pr);
+    const regarder = (await pr.textContent(ANIM + ' [data-lpp="regarder"]')).trim();
+    const predVisible = await pr.isVisible("#ppaPrediction");
+    ok("animation : « Regarder » s'arrête à la prédiction (étape 6) tant que l'élève n'a pas répondu",
+       arret === "Étape 6 / 9" && regarder === "▶ Regarder" && predVisible, arret + " · bouton « " + regarder + " »");
+    await shot(pr, "animation_prediction", ANIM);
+    await pr.locator("#ppaPrediction [data-pred]").nth(1).click();
+    await pr.waitForTimeout(300);
+    const apres = await compte(pr);
+    const rappel = await pr.isVisible("#ppaRappel") ? (await pr.textContent("#ppaRappel")) : "";
+    ok("animation : la réponse mène à l'étape 7, qui rappelle la prédiction",
+       apres === "Étape 7 / 9" && rappel.includes("garde son état"), apres + " · « " + rappel.slice(0, 60) + " »");
+    await ctxR.close();
+
+    /* 2. Les nombres, image finale de chaque étape (mouvement réduit) : ceux de la trace et du banc. */
+    const ctxF = await navigateur.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: "reduce" });
+    const pf = await ctxF.newPage();
+    pf.on("pageerror", e => errAnim.push(String(e)));
+    await pf.goto(url(SEQ)); await pf.waitForTimeout(400);
+    await pf.click("#tab-s3"); await pf.locator(ANIM).scrollIntoViewIfNeeded();
+    const lire = () => pf.evaluate(() => ({
+      un: document.querySelector('#ppaChrono [data-voie="un"] .ma-compte').textContent,
+      deux: document.querySelector('#ppaChrono [data-voie="deux"] .ma-compte').textContent,
+      console: document.querySelector("#ppaAlgo .ma-console-ligne").textContent
+    }));
+    const aller = async (n) => { while (await compte(pf) !== "Étape " + n + " / 9") { await pf.click(ANIM + ' [data-lpp="suiv"]'); await pf.waitForTimeout(60); } };
+    await aller(3);
+    const e3 = await lire();
+    ok("animation : un seul seuil, 6 basculements, et la console finit sur la dernière ligne de la trace (étape 3)",
+       e3.un === "6 basculements" && e3.console === "10:32:12  H=41  POMPE OFF", e3.un + " · « " + e3.console + " »");
+    await aller(7);
+    const e7 = await lire();
+    await aller(8);
+    const e8 = await lire();
+    ok("animation : deux seuils, 0 basculement sur la même trace (étape 7), puis 1 quand le sol sèche sous 35 (étape 8)",
+       e7.deux === "0 basculement" && e8.deux === "1 basculement" && e8.console === "10:32:42  H=34  POMPE ON",
+       e7.deux + " → " + e8.deux + " · « " + e8.console + " »");
+    await shot(pf, "animation_deux_seuils", ANIM);
+    /* 3. À l'impression : l'animation se retire, le chronogramme fixe s'imprime (son volet s'ouvre). */
+    await pf.evaluate(() => window.dispatchEvent(new Event("beforeprint")));
+    await pf.emulateMedia({ media: "print" });
+    const impr = await pf.evaluate(() => ({
+      anim: getComputedStyle(document.getElementById("pompe-pas-a-pas")).display,
+      volet: document.getElementById("ppaFixe").open,
+      img: !!document.querySelector('#ppaFixe img[src="Images/hysteresis_chronogramme.svg"]')
+    }));
+    await pf.emulateMedia({ media: "screen" });
+    await pf.evaluate(() => window.dispatchEvent(new Event("afterprint")));
+    ok("animation : à l'impression, elle se retire et le chronogramme fixe s'imprime à sa place",
+       impr.anim === "none" && impr.volet && impr.img, JSON.stringify(impr));
+    await ctxF.close();
+    ok("animation : zéro erreur JS", errAnim.length === 0, errAnim.join(" | "));
+  }
+
   /* ════════ QCM ════════ */
   const QCM = "qcm_4e_C9_jardin-programme.html";
   await page.goto(url(QCM)); await page.waitForTimeout(500);

@@ -42,6 +42,39 @@ Autres fichiers non graphiques du lot :
   agronomiques : la séquence le précise, et l'activité 6 demande justement de
   justifier un choix de seuils plutôt que de le recopier (règle n°111).
 
+## L'animation « la pompe qui s'affole » et sa voix — 30/10/2026
+
+L'animation de l'activité 5 b) (bloc `#pompe-pas-a-pas`) n'est pas une image : son algorigramme et son chronogramme sont
+**dessinés dans la page** par le moteur du lot (`_generation/moteur_algorigramme/`, création originale, CC0) d'après les
+déclarations de la séquence. Ses valeurs : la trace de l'activité 5 (données simulées, voir plus haut), puis trois mesures
+**ajoutées pour l'animation** (38, 36, 34 %, de 10:32:22 à 10:32:42), simulées de la même façon, qui montrent le sol qui sèche
+vraiment. `Images/hysteresis_chronogramme.svg` reste en place : dans un volet sous l'animation (c'est lui qui s'imprime) et au QCM.
+
+| Fichier | Ce que c'est |
+|---|---|
+| `Audio/pompe_etape1.ogg` · `.mp3` | Étape 1 : voix de synthèse, Opus mono 32 kb/s (39.4 Ko) et MP3 mono 48 kb/s de secours (57.6 Ko) |
+| `Audio/pompe_etape2.ogg` · `.mp3` | Étape 2 : voix de synthèse, Opus mono 32 kb/s (44.8 Ko) et MP3 mono 48 kb/s de secours (66.7 Ko) |
+| `Audio/pompe_etape3.ogg` · `.mp3` | Étape 3 : voix de synthèse, Opus mono 32 kb/s (40.6 Ko) et MP3 mono 48 kb/s de secours (59.4 Ko) |
+| `Audio/pompe_etape4.ogg` · `.mp3` | Étape 4 : voix de synthèse, Opus mono 32 kb/s (48.5 Ko) et MP3 mono 48 kb/s de secours (71.0 Ko) |
+| `Audio/pompe_etape5.ogg` · `.mp3` | Étape 5 : voix de synthèse, Opus mono 32 kb/s (46.3 Ko) et MP3 mono 48 kb/s de secours (68.3 Ko) |
+| `Audio/pompe_etape6.ogg` · `.mp3` | Étape 6 : voix de synthèse, Opus mono 32 kb/s (30.5 Ko) et MP3 mono 48 kb/s de secours (44.2 Ko) |
+| `Audio/pompe_etape7.ogg` · `.mp3` | Étape 7 : voix de synthèse, Opus mono 32 kb/s (34.7 Ko) et MP3 mono 48 kb/s de secours (50.7 Ko) |
+| `Audio/pompe_etape8.ogg` · `.mp3` | Étape 8 : voix de synthèse, Opus mono 32 kb/s (25.3 Ko) et MP3 mono 48 kb/s de secours (36.6 Ko) |
+| `Audio/pompe_etape9.ogg` · `.mp3` | Étape 9 : voix de synthèse, Opus mono 32 kb/s (27.1 Ko) et MP3 mono 48 kb/s de secours (39.3 Ko) |
+
+- **Moteur** : Piper (`piper-tts` 1.8.0), sous GPL-3. Il n'est pas dans le dépôt, et un fichier audio qu'il produit n'est pas une œuvre dérivée du moteur.
+- **Modèle** : `fr_FR-siwis-medium`, la voix des quatre autres animations (vélo-cargo, trois principes, jardin de 4e_C8.1), entraînée sur la
+  base **SIWIS** de l'Université d'Édimbourg (datashare.is.ed.ac.uk/handle/10283/2353) ; même fichier de modèle, empreinte vérifiée par
+  le générateur (`_generation/voix_pompe/voix.json`).
+- **Licence** : **CC BY 4.0**. **Attribution exigée** : « Voix de synthèse Piper « fr_FR-siwis-medium », entraînée sur la base SIWIS
+  (Université d'Édimbourg), CC BY 4.0. » Elle figure ici, dans `voix.json` et, en version courte (« Voix de synthèse : SIWIS (CC BY 4.0) »),
+  sous l'animation.
+- **Chaîne audio** : celle des autres animations (silences coupés à −45 dB, −16 LUFS, crête −1,5 dB, mono).
+- **Texte envoyé à la voix** : celui de la page, sauf les signes =, < et >, que la phonétisation automatique saute : ils sont dits
+  « égale », « inférieur à », « supérieur à » (étapes 2, 4 et 5). Détail dans `_generation/voix_pompe/phrases.json`.
+- **Prises produites le 30/10/2026, NON écoutées** : seule l'écoute de Pascal les validera (`voix.json`, clé `prises`).
+  Reproductibilité à l'octet : non (Piper tire du bruit à chaque prise).
+
 ## Captures d'écran des gestes de Vittascience (05/10/2026)
 
 L'encart « Avant de commencer (échauffement) » porte douze captures. **Il se fait sans compte, et l'éditeur reste en mode mixte** : la

@@ -1,0 +1,49 @@
+/* Moteur des algorigrammes et chronogrammes animés — source unique : 4e_C9.1/_generation/moteur_algorigramme/moteur.css
+   (posée par poser.py). Les couleurs sont celles de l'algorigramme d'arrosage (Images/algorigramme_arrosage.svg) :
+   terminal vert, traitement bleu, losange violet, OUI vert, NON orange, boucle jaune ; la mesure en cyan, comme la courbe
+   d'humidité du chronogramme. La page peut les changer par ses propres classes (n°120 : une couleur par notion). */
+.ma-algo,.ma-chrono{display:block;width:100%;height:auto}
+.ma-variante{opacity:0;visibility:hidden;transition:opacity .6s ease,visibility 0s linear .6s}
+.ma-variante.ma-montre{opacity:1;visibility:visible;transition:opacity .6s ease,visibility 0s}
+.ma-forme{stroke-width:2.5;transition:stroke-width .1s}
+.ma-bloc,.ma-fleche,.ma-etiquette{transition:opacity .1s}
+.ma-terminal .ma-forme{fill:#123322;stroke:#81fba1}
+.ma-traitement .ma-forme,.ma-action .ma-forme{fill:#173666;stroke:#61dafb}
+.ma-decision .ma-forme{fill:#2a1b45;stroke:#c68ef2}
+.ma-texte{fill:#e4eaf5;font-weight:700}
+.ma-terminal .ma-texte{fill:#81fba1}
+.ma-valeur{fill:#61dafb}
+.ma-fleche{fill:none;stroke:#9bbefc;stroke-width:2.5;stroke-linejoin:round}
+.ma-fleche.ma-oui{stroke:#81fba1}.ma-fleche.ma-non{stroke:#ffb454}.ma-fleche.ma-boucle{stroke:#ffd66b}
+.ma-pointe{fill:#9bbefc}.ma-pointe-oui{fill:#81fba1}.ma-pointe-non{fill:#ffb454}.ma-pointe-boucle{fill:#ffd66b}
+.ma-etiquette{fill:#9bbefc;font-weight:700}.ma-etiquette.ma-oui{fill:#81fba1}.ma-etiquette.ma-non{fill:#ffb454}
+/* en course : ce que touche le jeton est en valeur, le reste en retrait */
+.ma-en-course .ma-bloc,.ma-en-course .ma-fleche,.ma-en-course .ma-etiquette{opacity:.45}
+.ma-algo .ma-bloc.ma-actif,.ma-algo .ma-fleche.ma-actif,.ma-algo .ma-etiquette.ma-actif{opacity:1}
+.ma-bloc.ma-actif .ma-forme{stroke-width:4.5;filter:drop-shadow(0 0 5px rgba(228,234,245,.55))}
+.ma-fleche.ma-actif{stroke-width:4}
+/* focus : des blocs désignés par la page, les autres en retrait */
+.ma-focus .ma-bloc:not(.ma-cible),.ma-focus .ma-fleche,.ma-focus .ma-etiquette{opacity:.45}
+.ma-bloc.ma-cible .ma-forme{stroke-width:4.5;filter:drop-shadow(0 0 5px rgba(228,234,245,.55))}
+.ma-jeton circle{fill:#61dafb;stroke:#e4eaf5;stroke-width:1.5}
+.ma-jeton text{fill:#04223a;font-weight:800}
+.ma-console rect{fill:#08132c;stroke:#2e5d9f;stroke-width:1.5}
+.ma-console-titre{fill:#9bbefc}
+.ma-console-ligne{fill:#cfe0ff;font-family:ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace;white-space:pre}
+/* le chronogramme */
+.ma-axe{stroke:#9bbefc;stroke-width:1.5}
+.ma-graduation{fill:#9bbefc}
+.ma-titre-valeur{fill:#61dafb;font-weight:700}
+.ma-courbe{fill:none;stroke:#61dafb;stroke-width:2.5;stroke-linejoin:round}
+.ma-point{fill:#61dafb}
+.ma-mesure{fill:none;stroke:#e4eaf5;stroke-width:2}
+.ma-seuil{stroke:#ffd66b;stroke-width:2;stroke-dasharray:7 5;transition:opacity .4s}
+.ma-bande rect{fill:rgba(155,190,252,.14);stroke:#9bbefc;stroke-width:1.2;stroke-dasharray:4 4}
+.ma-bande text{fill:#c9d6ee;font-weight:700}
+.ma-guide{stroke:#3a5ea8;stroke-width:1}
+.ma-guide-on{stroke-dasharray:3 4}
+.ma-etat{fill:none;stroke:#e4eaf5;stroke-width:3;stroke-linejoin:round}
+.ma-titre-voie,.ma-compte{fill:#e4eaf5;font-weight:700}
+.ma-marque circle{fill:none;stroke:#ffd66b;stroke-width:2.2}
+.ma-marque line{stroke:#ffd66b;stroke-width:1.6;stroke-dasharray:3 3}
+@media (prefers-reduced-motion: reduce){.ma-variante,.ma-variante.ma-montre,.ma-forme,.ma-bloc,.ma-fleche,.ma-etiquette,.ma-seuil{transition:none!important}}
