@@ -26897,3 +26897,19 @@ York ». Le jardin de 4e est donc à Brooklyn dans les deux thèmes (thème 3 : 
   donné carte blanche. Le carême devient la canicule de juillet (« à New York, au moins trois jours de suite à 32 °C ou
   plus », la définition de la vague de chaleur à New York). Les deux raisons qui font évoluer le besoin restent :
   personne au jardin pendant les grandes vacances, l'eau rare quand la chaleur dure. Fait dans la PR du thème 1.
+
+---
+
+## 30/10/2026 — Trois petits écarts du thème 3, alignés
+
+*Relevés en route le 30/10/2026, antérieurs aux changements du jour ; Pascal : « Continue ».*
+
+- **4e_C7.3** : le rapport de tests recopie les sorties réelles des deux bancs (l'écart moyen de longueur du QCM est
+  1.3, et non 1.5).
+- **4e_C8** : la colonne « questions du QCM » de la matrice de couverture renvoyait à un autre QCM. Elle est refaite
+  sur les 30 questions actuelles, et deux lignes s'ajoutent (le verbe « paramétrer une simulation fournie », Q1 ;
+  l'hypothèse de départ, Q27). « Sécurité très basse tension » et « versions A/B/C » ne sont évaluées par aucune
+  question : elles relèvent de la séquence et de la fiche. Le README dit 30 questions avec réfutations et 48 tests.
+- **3e_C9.2** : la fiche dit quelles séances se font sur Vittascience (3 et 4 ; la 5 au choix, Vittascience ou banc
+  d'essai ; 6 à 8 sans l'éditeur).
+- **Reste à faire, sur le poste de Pascal** : deux paliers du TP CAO de 3e n'ont pas d'image de résultat (n°77).

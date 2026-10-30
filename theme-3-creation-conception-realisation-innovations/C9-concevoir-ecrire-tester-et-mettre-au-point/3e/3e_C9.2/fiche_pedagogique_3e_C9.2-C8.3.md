@@ -118,7 +118,13 @@ positionnement), renvoi au QCM.
 
 **Point de vigilance outil (refonte v2)** : les séances 3 et 4 se font sur
 **Vittascience**, interface Arduino en mode **BLOCS**
-(`fr.vittascience.com/arduino`). Motif : Vittascience **simule**, ArduBlock non —
+(`fr.vittascience.com/arduino`). En séance 5, l'élève ajoute le palier 4 à ce même
+programme — donc sur Vittascience — **ou** le reproduit au banc d'essai intégré, au
+choix : la page de la séance 5 ne nomme pas Vittascience et ne demande pas Internet.
+Les séances 6 à 8 n'ouvrent pas l'éditeur : C++ lu dans la page (la bascule BLOCS /
+CODE n'y est citée qu'en illustration), protocole, puis banc d'essai ou carte réelle ;
+les captures du simulateur Vittascience n'y servent que de preuves (vérifié le
+30/10/2026 dans la page tout-en-un et les pages 1 à 4). Motif : Vittascience **simule**, ArduBlock non —
 or les tests aux **six valeurs frontières** (62/63, 117/118, 177/178), cœur de la compétence
 C8.3, exigent de pouvoir rejouer une valeur exacte à volonté, sans carte et sans
 attendre son tour. Conséquence à anticiper : Vittascience demande une
