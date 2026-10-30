@@ -152,7 +152,7 @@ LEXIQUE = [
     ("évolution", "evolution", "un objet nouveau pour un besoin nouveau."),
     ("innovation", "innovation", "une invention entrée dans la vie courante."),
     ("développement durable", "sustainable development", "ne pas gâcher ce qu'il faudra demain."),
-    ("caractéristique", "feature", "ce qui décrit un modèle et se compare."),
+    ("caractéristique", "characteristic", "ce qui décrit un modèle et se compare."),
     ("autonomie", "running time", "le temps où un système marche seul."),
     ("consommation", "consumption", "ce que le système utilise."),
     ("OST", "technical object or system", "un objet ou système technique."),

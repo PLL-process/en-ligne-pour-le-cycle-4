@@ -1115,7 +1115,7 @@ IMAGES = {
     "fast_station_alerte.svg": STATION,
     "fast_station_alerte_erreurs.svg": STATION_ERREURS,
 }
-VOCAB_EN = [("fonction d'usage", "function of use (service function)"), ("fonction technique", "technical function"),
+VOCAB_EN = [("fonction d'usage", "use function"), ("fonction technique", "technical function"),
             ("solution technique", "technical solution"), ("principe technique", "technical principle"),
             ("diagramme FAST", "FAST diagram (Function Analysis System Technique)"), ("comment ?", "how?"),
             ("pourquoi ?", "why?"), ("constituant", "component"), ("capteur", "sensor"),
