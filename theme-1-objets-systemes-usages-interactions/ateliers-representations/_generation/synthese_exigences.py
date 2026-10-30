@@ -151,6 +151,6 @@ LEXIQUE = [
     ("satisfaire («&nbsp;satisfy&nbsp;»)", "satisfy", "la flèche de la solution vers l'exigence."),
     ("indice de protection (IP)", "ingress protection", "la poussière, puis l'eau."),
     ("indice de réparabilité", "repairability index", "une note sur 10."),
-    ("arbitrer", "to arbitrate", "choisir en disant ce qu'on perd."),
+    ("arbitrer", "to trade off", "choisir en disant ce qu'on perd."),
     ("fiabilité", "reliability", "fonctionner longtemps sans panne."),
 ]

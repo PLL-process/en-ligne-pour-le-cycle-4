@@ -139,16 +139,16 @@ PARTIES = [
 ]
 
 LEXIQUE = [
-    ("interacteur extérieur", "interactor", "dehors, et en relation avec l'objet."),
-    ("diagramme pieuvre", "interactors diagram", "l'objet au centre, le reste autour."),
+    ("interacteur extérieur", "external interactor", "dehors, et en relation avec l'objet."),
+    ("diagramme pieuvre", "interactor diagram", "l'objet au centre, le reste autour."),
     ("usager", "user", "une personne qui se sert de l'objet."),
     ("donnée", "data", "une information, qu'on ne touche pas."),
     ("environnement", "environment", "le lieu, la nature, la météo."),
     ("fonction principale (FP)", "main function", "le service rendu."),
-    ("fonction contrainte (FC)", "constraint", "une condition à respecter."),
+    ("fonction contrainte (FC)", "constraint function", "une condition à respecter."),
     ("choix de conception", "design choice", "une décision du concepteur."),
     ("ergonomie", "ergonomics", "le confort, avec moins d'effort."),
-    ("développement durable", "sustainability", "faire durer, réparer, économiser."),
+    ("développement durable", "sustainable development", "faire durer, réparer, économiser."),
     ("fiabilité", "reliability", "fonctionner longtemps sans panne."),
     ("incidences environnementales", "environmental impact", "les effets sur la planète."),
     ("exigence", "requirement", "une contrainte qu'on peut vérifier."),

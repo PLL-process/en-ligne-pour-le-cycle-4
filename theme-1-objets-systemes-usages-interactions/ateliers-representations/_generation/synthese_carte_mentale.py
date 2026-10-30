@@ -123,7 +123,7 @@ LEXIQUE = [
     ("branche", "branch", "une famille d'idées, avec son mot."),
     ("feuille", "leaf", "le bout d'une branche&nbsp;: quelques mots."),
     ("mot-clé", "keyword", "quelques mots qui rappellent l'idée."),
-    ("recenser", "to take stock", "faire la liste de tout, sans trier."),
+    ("recenser", "to list", "faire la liste de tout, sans trier."),
     ("donnée", "data", "ce qui s'enregistre dans un fichier."),
     ("fichier", "file", "ce que l'ordinateur garde sous un nom."),
     ("dossier", "folder", "ce qui range des fichiers."),
@@ -135,6 +135,6 @@ LEXIQUE = [
     ("inconvénient", "drawback", "ce qu'elle coûte ou rend fragile."),
     ("incidence sur la société", "impact on society", "un effet sur les gens."),
     ("argumentaire", "argument", "un texte court qui défend un avis."),
-    ("connecteur d'opposition", "contrast word", "mais, cependant."),
+    ("connecteur d'opposition", "contrast connector", "mais, cependant."),
     ("algorigramme", "flowchart", "l'ordre des opérations, dessiné."),
 ]

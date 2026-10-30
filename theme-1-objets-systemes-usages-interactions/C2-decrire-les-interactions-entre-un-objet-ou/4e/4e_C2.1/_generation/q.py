@@ -207,7 +207,7 @@ q("C2.1", "Ressenti contre mesure", "Le graphique des durées, comparé aux verb
    "les contredit : il faut donc choisir"],
   "Les deux se croisent sans se remplacer. C'est même l'intérêt de les avoir tous les deux : "
   "l'écart entre eux est une information.",
-  "Le graphique ignore la colère de Chen ; Chen ignore les 41 s de « choisir ».",
+  "Le graphique ignore la colère de Chen ; Chen ignore les 40 s de « choisir ».",
   "Croire qu'une mesure rend le témoignage superflu.",
   ["",
    "Sans les verbatims, on corrigerait l'étape la plus longue — « choisir » — dont personne ne se plaint : la mesure seule conduit ici à la mauvaise décision.",
