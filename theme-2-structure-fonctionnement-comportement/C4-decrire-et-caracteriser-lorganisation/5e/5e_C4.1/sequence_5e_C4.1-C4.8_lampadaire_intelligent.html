@@ -183,6 +183,34 @@
     .toolbar{gap:6px;margin:8px auto 12px}
     .toolbar .btn{flex:1 1 40%;min-width:0;min-height:44px;padding:6px;font-size:.8rem;line-height:1.2}
   }
+  /* Les deux chaînes du lampadaire, animées pas à pas (séance 2, 30/10/2026) */
+  .chl{margin:12px 0 6px;border:1px solid var(--border);border-radius:12px;background:#050f24;padding:10px 12px 12px;scroll-margin-top:72px}
+  .chl-intro{margin:2px 2px 8px;font-size:.92em;color:var(--sub)}
+  .chl .chx-boite{border-radius:10px;background:#050f24}
+  .chl-titre{margin:10px 2px 2px;font-weight:700;color:var(--title)}
+  .chl-texte{min-height:3.2em;margin:0 2px;line-height:1.5}
+  .chl-texte p{margin:4px 0}
+  .chl-prediction{margin:8px 2px;padding:10px 12px;border:1.5px dashed var(--warn);border-radius:10px;background:rgba(255,214,102,.06)}
+  .chl-prediction p{margin:0 0 8px;font-weight:600;color:var(--warn)}
+  .chl-choix{display:flex;flex-direction:column;gap:8px}
+  .chl-choix .btn{text-align:left;min-height:44px;white-space:normal;line-height:1.35}
+  .chl-retour{margin:8px 2px 2px;padding:8px 12px;border-radius:8px;font-size:.93em}
+  .chl-retour.juste{background:rgba(129,251,161,.12);color:var(--ok)}
+  .chl-retour.faux{background:rgba(255,214,102,.1);color:var(--warn)}
+  .chl-tache{margin:8px 2px 2px}
+  .chl-nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin-top:8px}
+  .chl-nav .btn{min-height:44px}
+  .chl-compte{font-weight:600;color:var(--sub);min-width:7em;text-align:center}
+  .chl-sansvoix{margin:8px 2px 0;font-size:.88em;color:var(--warn)}
+  .chl-credit{color:var(--sub);font-size:.75em;text-align:right;margin:8px 4px 0}
+  .chl-bandeau svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto 2px}
+  .chl-fixe{margin:10px 0}
+  .chl-fixe>.btn{min-height:44px;white-space:normal;text-align:left;line-height:1.35}
+  .chl-fixe-corps{height:0;overflow:hidden;visibility:hidden}
+  .chl-fixe.ouvert .chl-fixe-corps{height:auto;overflow:visible;visibility:visible}
+  @media print{.chl-fixe-corps{height:auto!important;overflow:visible!important;visibility:visible!important}}
+  @media (max-width:480px){.chl{margin-left:-16px;margin-right:-16px;padding:8px 6px 10px}
+    .chl-nav{gap:6px}.chl-nav .btn{padding:9px 12px}.chl-compte{min-width:0}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -518,6 +546,596 @@
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<!-- chaine-pas-a-pas v1 : début — moteur des chaînes animées ; source unique : 5e_C4.1/_generation/chaine_pas_a_pas/ (poser.py). Ne pas le modifier dans la page. -->
+<style>
+/* Chaîne pas à pas — source : 5e_C4.1/_generation/chaine_pas_a_pas/moteur_chaine.css (posée par poser.py). */
+.chx-boite{position:relative}
+.chx-boite>svg{display:block;width:100%;height:auto;margin:0 auto}
+.chx-boite.chx-etroite{max-height:max(320px,54vh);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.chx-boite.chx-etroite>svg{max-width:var(--chx-max,520px)}
+svg .chx-el{transition:opacity .45s ease}
+svg .chx-retrait{opacity:.36}
+svg .chx-cache{display:none}
+svg .chx-halo{opacity:0;transition:opacity .45s ease}
+svg .chx-actif .chx-halo{opacity:.3}
+svg .chx-actif .chx-trait{stroke-width:5}
+svg[data-dispo="etroit"] .chx-actif .chx-trait{stroke-width:3.6}
+svg .chx-jeton{pointer-events:none}
+@media (prefers-reduced-motion: reduce){svg .chx-el,svg .chx-halo{transition:none!important}}
+</style>
+<script>
+/* Chaîne pas à pas — moteur des chaînes d'énergie et d'information animées (pilote du 30/10/2026, 5e_C4.1).
+   Source : 5e_C4.1/_generation/chaine_pas_a_pas/moteur_chaine.js, posé dans la page par poser.py (même dossier) :
+   ne pas le modifier dans une page.
+
+   La page DÉCLARE, le moteur DESSINE et ANIME. Le lecteur commun (LecteurPasAPas) garde le reste : étapes, voix,
+   « Regarder », mouvement réduit, impression, lien direct. Rien ne bouge sans un geste : le moteur n'a pas de boucle,
+   c'est le lecteur qui l'appelle (entrer, maj, fixe).
+
+   DÉCLARATION (un objet JavaScript dans la page)
+     { seuil: 820,                         // largeur du dessin (px) sous laquelle on passe à la disposition étroite
+       large:  {vue: [x, y, l, h], tailles: {...}, bloc: {...}, particule: {...}, jeton: {...}},
+       etroit: {vue: [...], ...},          // la même chose, en colonne (règle n°310, piège 8)
+       elements: [ ... ],                  // une seule liste : les MOTS sont écrits une fois, pour les deux dispositions
+       etapes: [ ... ] }                   // le tableau SCENES du lecteur, enrichi de ce que montre chaque étape
+   Éléments (chacun : id, type, puis sa géométrie dans `large` et dans `etroit` ; absent d'une disposition = pas dessiné) :
+     section  {texte, couleur}                              géométrie {x, y}
+     bloc     {fonction, composant, stock?, couleur}        géométrie {x, y, l}        (le composant SOUS le bloc)
+     absent   {fonction, raison}                            géométrie {x, y, l}        (pointillés grisés, n°131)
+     fleche   {nature, texte?, double?, pointilles?}        géométrie {points, ex, ey, ancre?, taille?, jeton?: [dx, dy]}
+              nature : energie (orange), information (cyan), ordre (vert), stock (jaune), matiere (bleu)
+     texte    {texte, couleur?, gras?, taille?}             géométrie {x, y, ancre?}
+   Une géométrie peut redonner `texte`, `composant` ou `stock` pour couper les lignes autrement (\n) : les mots doivent
+   rester les mêmes, le moteur le vérifie (sinon il garde ceux de l'élément et le dit dans la console).
+   Options d'élément : de / a (étapes où il se voit), garde (jamais en retrait).
+   Étapes : actifs [ids] (mis en valeur ; les autres en retrait), tous (rien en retrait), flux [ids ; « -id » à rebours]
+   (des grains d'énergie circulent), jetons [{texte (ou fonction du temps), chemin [ids de flèches], periode, fixe}]
+   (un message porté le long des flèches ; entre deux flèches, il traverse le bloc ; fixe : sa place dans l'image fixe,
+   une fraction du trajet ou [x, y] à côté de la flèche, ou {large: …, etroit: …}), vise [ids] (la zone à montrer
+   dans la boîte qui défile, en disposition étroite ; par défaut les actifs).
+
+   API : ChainePasAPas(svg, declaration, {boite, decor, apres}) → {entrer(n), maj(dt, n, t), fixe(n), dispo(), rendre()}
+     boite : l'élément qui contient le dessin (sa largeur choisit la disposition ; il défile en disposition étroite) ;
+     decor(calque, dispo) : la page dessine ce qui lui est propre (le ciel, le parking…) dans un calque sous la chaîne ;
+     apres(n) : appelé quand la disposition change (le dessin a été refait), pour remettre le décor à l'étape n.
+   Le texte d'un élément « texte » peut avoir une taille par disposition : taille: {large: 52, etroit: 30}.
+   Couleurs (n°120, les mêmes que les schémas fixes) : CONVERTIR #c68ef2, ALIMENTER/STOCKER #ffd66b, DISTRIBUER #61dafb ;
+   flux d'énergie #ffb454, d'information #61dafb, ordre #81fba1 en pointillés. */
+(function(){
+  "use strict";
+  if (window.ChainePasAPas) return;
+  var NS = "http://www.w3.org/2000/svg";
+  var calme = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : {matches: false};
+  var NATURE = {energie: "#ffb454", information: "#61dafb", ordre: "#81fba1", stock: "#ffd66b", matiere: "#7cc4ff"};
+  var BLANC = "#e4eaf5", FOND = "#0d2347", PAPIER = "#050f24", GRIS = "#9aa5b8";
+  var DEFAUT = {
+    large:  {tailles: {section: 23, fonction: 23, composant: 21, stock: 20, fleche: 20, texte: 22, jeton: 20},
+             bloc: {h: 76, rx: 12, trait: 3, ecart: 14, interligne: 7, halo: 16},
+             particule: {r: 6, pas: 64, v: 150}, jeton: {h: 30, marge: 14}},
+    etroit: {tailles: {section: 14, fonction: 16, composant: 14, stock: 13, fleche: 13, texte: 15, jeton: 13},
+             bloc: {h: 40, rx: 8, trait: 2.4, ecart: 6, interligne: 4, halo: 10},
+             particule: {r: 3.4, pas: 28, v: 62}, jeton: {h: 21, marge: 9}}
+  };
+
+  function cree(nom, attrs, parent){
+    var e = document.createElementNS(NS, nom);
+    for (var k in attrs) if (attrs[k] !== null && attrs[k] !== undefined) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function mots(t){ return String(t || "").replace(/\s+/g, " ").trim(); }
+  function fusion(a, b){ var r = {}, k; for (k in a) r[k] = a[k]; for (k in (b || {})) r[k] = b[k]; return r; }
+  function n1(v){ return Math.round(v * 10) / 10; }
+
+  // ── Une ligne brisée : longueur, point à une distance donnée ──
+  function troncons(pts){
+    var t = [], tot = 0;
+    for (var i = 1; i < pts.length; i++) {
+      var dx = pts[i][0] - pts[i - 1][0], dy = pts[i][1] - pts[i - 1][1], l = Math.sqrt(dx * dx + dy * dy);
+      t.push({a: pts[i - 1], dx: dx, dy: dy, l: l, d: tot}); tot += l;
+    }
+    return {t: t, L: tot};
+  }
+  function pointA(c, s){
+    s = Math.max(0, Math.min(c.L, s));
+    for (var i = 0; i < c.t.length; i++) {
+      var u = c.t[i];
+      if (s <= u.d + u.l || i === c.t.length - 1) { var f = u.l ? (s - u.d) / u.l : 0; return [u.a[0] + u.dx * f, u.a[1] + u.dy * f]; }
+    }
+    return [0, 0];
+  }
+
+  function ChainePasAPas(svg, decl, opts){
+    if (!svg || !decl) return null;
+    opts = opts || {};
+    var boite = opts.boite || svg.parentNode;
+    var prefixe = (svg.id || "chx") + "-";
+    var ELEMENTS = decl.elements || [], ETAPES = decl.etapes || [];
+    var dispo = null, etape = 1, P = null, groupes = {}, geos = {}, chemins = {};
+    var calqueGrains = null, calqueJetons = null, calqueDecor = null;
+    var grains = [], jetons = [];
+
+    function choisir(){
+      var w = boite ? boite.clientWidth : 0;
+      if (!w) return dispo || "large";                    // caché (séance fermée) : on garde la disposition
+      return w < (decl.seuil || 820) ? "etroit" : "large";
+    }
+    function texteDe(def, geo, cle){                       // mêmes mots dans les deux dispositions, coupés autrement
+      var base = def[cle];
+      if (geo && geo[cle] !== undefined) {
+        if (mots(geo[cle]) === mots(base)) return geo[cle];
+        if (window.console) console.error("ChainePasAPas : « " + mots(geo[cle]) + " » n'a pas les mots de « " + mots(base) + " »");
+      }
+      return base;
+    }
+    function lignes(parent, x, y, texte, attrs, taille, interligne){
+      var ls = String(texte).split("\n");
+      ls.forEach(function(l, i){
+        var t = cree("text", fusion({x: x, y: n1(y + i * (taille + interligne)), "font-size": taille}, attrs), parent);
+        t.textContent = l;
+      });
+      return ls.length;
+    }
+    function largeurTexte(t, taille, gras){ return t.length * taille * (gras ? .6 : .54); }
+
+    // ── Dessiner, pour la disposition choisie ──
+    function rendre(){
+      dispo = choisir();
+      var D = decl[dispo] || {};
+      P = {
+        tailles: fusion(DEFAUT[dispo].tailles, D.tailles), bloc: fusion(DEFAUT[dispo].bloc, D.bloc),
+        particule: fusion(DEFAUT[dispo].particule, D.particule), jeton: fusion(DEFAUT[dispo].jeton, D.jeton)
+      };
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      svg.setAttribute("viewBox", D.vue.join(" "));
+      svg.setAttribute("data-dispo", dispo);
+      if (boite) { boite.classList.toggle("chx-etroite", dispo === "etroit"); if (D.max) boite.style.setProperty("--chx-max", D.max + "px"); }
+      var defs = cree("defs", {}, svg);
+      Object.keys(NATURE).forEach(function(n){
+        var m = cree("marker", {id: prefixe + n, viewBox: "0 0 10 10", refX: 9, refY: 5, markerWidth: dispo === "etroit" ? 8 : 12,
+                                markerHeight: dispo === "etroit" ? 8 : 12, orient: "auto-start-reverse", markerUnits: "userSpaceOnUse"}, defs);
+        cree("path", {d: "M0 0L10 5L0 10Z", fill: NATURE[n]}, m);
+      });
+      cree("rect", {"class": "chx-papier", x: D.vue[0], y: D.vue[1], width: D.vue[2], height: D.vue[3], fill: PAPIER}, svg);
+      calqueDecor = cree("g", {"class": "chx-decor"}, svg);
+      var calqueEl = cree("g", {"class": "chx-elements"}, svg);
+      calqueGrains = cree("g", {"class": "chx-grains"}, svg);
+      calqueJetons = cree("g", {"class": "chx-jetons"}, svg);
+      groupes = {}; geos = {}; chemins = {};
+      ELEMENTS.forEach(function(def){
+        var geo = def[dispo];
+        if (!geo) return;
+        var g = cree("g", {"class": "chx-el chx-" + def.type, "data-id": def.id}, calqueEl);
+        groupes[def.id] = g; geos[def.id] = geo;
+        dessiner(def, geo, g);
+      });
+      if (opts.decor) opts.decor(calqueDecor, dispo);
+      appliquer(etape, true);
+    }
+
+    function dessiner(def, geo, g){
+      var T = P.tailles, B = P.bloc;
+      if (def.type === "section") {
+        lignes(g, geo.x, geo.y, texteDe(def, geo, "texte"), {fill: def.couleur || BLANC, "font-weight": 700}, T.section, 5);
+      } else if (def.type === "bloc" || def.type === "absent") {
+        var l = geo.l, h = B.h, cx = geo.x + l / 2, abs = def.type === "absent", c = abs ? GRIS : def.couleur;
+        if (!abs) cree("rect", {"class": "chx-halo", x: geo.x, y: geo.y, width: l, height: h, rx: B.rx, fill: "none", stroke: c, "stroke-width": B.halo}, g);
+        cree("rect", {"class": "chx-cadre", x: geo.x, y: geo.y, width: l, height: h, rx: B.rx, fill: abs ? "none" : FOND, stroke: c,
+                      "stroke-width": B.trait, "stroke-dasharray": abs ? (dispo === "etroit" ? "5 4" : "8 6") : null}, g);
+        var f = texteDe(def, geo, "fonction"), nf = String(f).split("\n").length;
+        lignes(g, cx, geo.y + h / 2 + T.fonction * .36 - (nf - 1) * (T.fonction + 2) / 2, f,
+               {fill: c, "font-weight": 700, "text-anchor": "middle", "letter-spacing": dispo === "etroit" ? ".02em" : null}, T.fonction, 2);
+        var y = geo.y + h + B.ecart + T.composant;
+        var sous = texteDe(def, geo, abs ? "raison" : "composant");
+        if (sous) {
+          var n = lignes(g, cx, y, sous, {fill: abs ? GRIS : BLANC, "text-anchor": "middle", "font-style": abs ? "italic" : null}, T.composant, B.interligne);
+          y += n * (T.composant + B.interligne);
+        }
+        if (def.stock) lignes(g, cx, y, texteDe(def, geo, "stock"), {fill: NATURE.stock, "text-anchor": "middle"}, T.stock, B.interligne);
+      } else if (def.type === "fleche") {
+        var coul = NATURE[def.nature] || NATURE.energie, pts = geo.points;
+        chemins[def.id] = troncons(pts);
+        cree("path", {"class": "chx-trait", d: "M" + pts.map(function(p){ return p[0] + " " + p[1]; }).join(" L"), fill: "none",
+                      stroke: coul, "stroke-width": B.trait, "stroke-linejoin": "round",
+                      "stroke-dasharray": def.pointilles ? (dispo === "etroit" ? "6 4" : "8 6") : null,
+                      "marker-end": "url(#" + prefixe + (def.nature || "energie") + ")",
+                      "marker-start": def.double ? "url(#" + prefixe + (def.nature || "energie") + ")" : null}, g);
+        if (def.texte) lignes(g, geo.ex, geo.ey, texteDe(def, geo, "texte"), {fill: coul, "text-anchor": geo.ancre || "middle"}, geo.taille || T.fleche, 5);
+      } else if (def.type === "texte") {
+        var tl = def.taille ? def.taille[dispo] || T.texte : T.texte;
+        lignes(g, geo.x, geo.y, texteDe(def, geo, "texte"), {fill: def.couleur || BLANC, "font-weight": def.gras ? 700 : 400,
+               "text-anchor": geo.ancre || "middle"}, tl, 6);
+      }
+    }
+
+    // ── Une étape : ce qui est en valeur, ce qui circule ──
+    function appliquer(n, sansDefiler){
+      etape = n;
+      var s = ETAPES[n - 1] || {}, actifs = {};
+      (s.actifs || []).forEach(function(id){ actifs[id] = true; });
+      ELEMENTS.forEach(function(def){
+        var g = groupes[def.id];
+        if (!g) return;
+        var vu = !((def.de && n < def.de) || (def.a && n > def.a));
+        g.classList.toggle("chx-cache", !vu);
+        g.classList.toggle("chx-actif", !s.tous && !!actifs[def.id]);
+        g.classList.toggle("chx-retrait", !s.tous && !actifs[def.id] && !def.garde);
+      });
+      // les grains d'énergie
+      while (calqueGrains.firstChild) calqueGrains.removeChild(calqueGrains.firstChild);
+      grains = [];
+      (s.flux || []).forEach(function(f){
+        var rebours = f.charAt(0) === "-", id = rebours ? f.slice(1) : f, c = chemins[id];
+        if (!c) return;
+        var def = ELEMENTS.filter(function(e){ return e.id === id; })[0] || {};
+        var pts = geos[id].points.slice(); if (rebours) pts.reverse();
+        var ch = rebours ? troncons(pts) : c, nb = Math.max(2, Math.round(ch.L / P.particule.pas));
+        for (var i = 0; i < nb; i++) grains.push({c: ch, s: (i + .5) * ch.L / nb,
+          e: cree("circle", {r: P.particule.r, fill: NATURE[def.nature] || NATURE.energie, "class": "chx-grain"}, calqueGrains)});
+      });
+      // les jetons : un message porté le long des flèches
+      while (calqueJetons.firstChild) calqueJetons.removeChild(calqueJetons.firstChild);
+      jetons = [];
+      (s.jetons || []).forEach(function(j){
+        var ids = (j.chemin || []).filter(function(id){ return chemins[id]; });
+        var segs = ids.map(function(id){ return chemins[id]; });
+        if (!segs.length) return;
+        var def = ELEMENTS.filter(function(e){ return e.id === j.chemin[0]; })[0] || {};
+        var coul = j.couleur || NATURE[def.nature] || NATURE.information;
+        var g = cree("g", {"class": "chx-jeton"}, calqueJetons);
+        var r = cree("rect", {rx: P.jeton.h / 2, height: P.jeton.h, fill: FOND, stroke: coul, "stroke-width": dispo === "etroit" ? 1.6 : 2.4}, g);
+        var t = cree("text", {"text-anchor": "middle", fill: coul, "font-weight": 700, "font-size": P.tailles.jeton}, g);
+        var J = {def: j, ids: ids, segs: segs, g: g, r: r, t: t, w: 0, lance: -1};
+        texteJeton(J, 0);                                  // sa largeur sert à ses bornes
+        jetons.push(J);
+      });
+      if (!sansDefiler) viser(s);
+    }
+    // Sur chaque flèche, le jeton laisse libres les deux bouts : la pastille ne touche ni le bloc qu'elle quitte ni
+    // celui qu'elle rejoint (n°315). Une flèche trop courte la garde au milieu.
+    function bornes(J, i){
+      var c = J.segs[i], t0 = c.t[0], t1 = c.t[c.t.length - 1];
+      function ext(t){ var l = t.l || 1; return Math.abs(t.dx) / l * J.w / 2 + Math.abs(t.dy) / l * P.jeton.h / 2 + 4; }
+      var a = ext(t0), b = c.L - ext(t1);
+      return a < b ? [a, b] : [c.L / 2, c.L / 2];
+    }
+    function placer(J, i, d){                              // le jeton sur la flèche i, à la distance d de sa première
+      var bo = bornes(J, i), p = pointA(J.segs[i], bo[0] + d);              // borne ; une flèche peut le décaler
+      var o = (geos[J.ids[i]] || {}).jeton || [0, 0];                       // (jeton: [dx, dy])
+      J.g.setAttribute("transform", "translate(" + n1(p[0] + o[0]) + " " + n1(p[1] + o[1]) + ")");
+      J.g.style.opacity = 1;
+    }
+    function utile(J, i){ var bo = bornes(J, i); return bo[1] - bo[0]; }
+    var VJ = function(){ return P.particule.v * .9; }, PAUSE = .45;
+    function poserJeton(J, tps){                          // tps : temps depuis le départ du jeton (s)
+      var reste = tps, i;
+      for (i = 0; i < J.segs.length; i++) {
+        var duree = utile(J, i) / VJ();
+        if (reste <= duree) break;
+        reste -= duree;
+        if (i < J.segs.length - 1) { if (reste <= PAUSE) { J.g.style.opacity = 0; return false; } reste -= PAUSE; }
+      }
+      if (i >= J.segs.length) { i = J.segs.length - 1; reste = utile(J, i) / VJ(); }
+      placer(J, i, reste * VJ());
+      return true;
+    }
+    function texteJeton(J, t){
+      var txt = String(typeof J.def.texte === "function" ? J.def.texte(t) : J.def.texte);
+      if (J.t.textContent !== txt) {
+        J.t.textContent = txt;
+        J.w = largeurTexte(txt, P.tailles.jeton, true) + 2 * P.jeton.marge;
+        J.r.setAttribute("width", n1(J.w)); J.r.setAttribute("x", n1(-J.w / 2)); J.r.setAttribute("y", n1(-P.jeton.h / 2));
+        J.t.setAttribute("y", n1(P.tailles.jeton * .36));
+      }
+    }
+    function dureeChemin(J){
+      var d = 0;
+      J.segs.forEach(function(c, i){ d += utile(J, i) / VJ() + (i ? PAUSE : 0); });
+      return d;
+    }
+
+    // ── Le temps : appelé par le lecteur, seulement à l'écran et si le mouvement est permis ──
+    function maj(dt, n, t){
+      grains.forEach(function(g){
+        g.s = (g.s + P.particule.v * dt) % g.c.L;
+        var p = pointA(g.c, g.s), bord = Math.min(g.s, g.c.L - g.s) / (P.particule.pas * .6);
+        g.e.setAttribute("cx", n1(p[0])); g.e.setAttribute("cy", n1(p[1]));
+        g.e.setAttribute("opacity", n1(Math.max(0, Math.min(1, bord))));
+      });
+      jetons.forEach(function(J){
+        var periode = J.def.periode || dureeChemin(J) + 1.2, tps = t % periode, depart = t - tps;
+        if (depart !== J.lance) { J.lance = depart; texteJeton(J, t); }
+        if (tps > dureeChemin(J) + .6) J.g.style.opacity = 0; else poserJeton(J, tps);
+      });
+    }
+    // ── Mouvement réduit, impression : une image fixe par étape ──
+    function fixe(n){
+      grains.forEach(function(g){
+        var p = pointA(g.c, g.s);
+        g.e.setAttribute("cx", n1(p[0])); g.e.setAttribute("cy", n1(p[1])); g.e.setAttribute("opacity", 1);
+      });
+      jetons.forEach(function(J){
+        texteJeton(J, 1e6);
+        var f = J.def.fixe !== undefined ? J.def.fixe : .8, total = 0, k;
+        if (f && typeof f === "object" && !Array.isArray(f)) f = f[dispo] !== undefined ? f[dispo] : .8;
+        if (Array.isArray(f)) {                           // une place choisie à la main, à côté de la flèche
+          J.g.setAttribute("transform", "translate(" + f[0] + " " + f[1] + ")"); J.g.style.opacity = 1; return;
+        }
+        J.segs.forEach(function(c, i){ total += utile(J, i); });
+        var d = f * total;
+        for (k = 0; k < J.segs.length - 1 && d > utile(J, k); k++) d -= utile(J, k);
+        placer(J, k, d);
+      });
+    }
+
+    // ── Disposition étroite : la boîte défile jusqu'à ce qui se passe ──
+    function viser(s){
+      if (dispo !== "etroit" || !boite || boite.scrollHeight <= boite.clientHeight + 2) return;
+      var ids = s.vise || (s.tous ? [] : s.actifs || []), haut = Infinity, bas = -Infinity;
+      ids.forEach(function(id){
+        var g = groupes[id];
+        if (!g || g.classList.contains("chx-cache")) return;
+        try { var b = g.getBBox(); haut = Math.min(haut, b.y); bas = Math.max(bas, b.y + b.height); } catch (e) {}
+      });
+      var vue = decl[dispo].vue, rs = svg.getBoundingClientRect(), k = rs.width / vue[2];
+      var haut0 = rs.top - boite.getBoundingClientRect().top + boite.scrollTop;   // le haut du dessin, dans la boîte
+      var cible = haut === Infinity ? 0 : haut0 + ((haut + bas) / 2 - vue[1]) * k - boite.clientHeight / 2;
+      cible = Math.max(0, Math.min(boite.scrollHeight - boite.clientHeight, cible));
+      if (boite.scrollTo) boite.scrollTo({top: cible, behavior: calme.matches ? "auto" : "smooth"}); else boite.scrollTop = cible;
+    }
+
+    if (window.ResizeObserver && boite) new ResizeObserver(function(){
+      if (choisir() === dispo) { viser(ETAPES[etape - 1] || {}); return; }   // la boîte s'ouvre ou change de taille
+      // la disposition change : on redessine
+      rendre();                                           // la page redessine son décor (opts.decor), puis l'état
+      if (opts.apres) opts.apres(etape);                  // de l'étape en cours : image fixe ou premier instant
+      if (calme.matches) fixe(etape); else maj(0, etape, 0);
+    }).observe(boite);
+    rendre();
+
+    return {
+      entrer: function(n){ appliquer(n); },
+      maj: maj,
+      fixe: fixe,
+      dispo: function(){ return dispo; },
+      rendre: rendre,
+      groupe: function(id){ return groupes[id] || null; }
+    };
+  }
+  window.ChainePasAPas = ChainePasAPas;
+})();
+</script>
+<!-- chaine-pas-a-pas v1 : fin -->
+<!-- lecteur-pas-a-pas v1 : début — lecteur commun des animations pas à pas ; source unique : _outils/lecteur_pas_a_pas/ (poser.py). Ne pas le modifier dans la page. -->
+<style>
+/* Lecteur pas à pas commun — source unique : _outils/lecteur_pas_a_pas/lecteur.css (posée par poser.py). */
+[data-lpp-racine] [data-de],[data-lpp-racine] [data-a],[data-lpp-racine] [data-des],[data-lpp-racine] [data-seul]{transition:opacity .35s ease calc(var(--i,0) * .12s),visibility 0s linear 0s}
+[data-lpp-racine] .lpp-cache{opacity:0!important;visibility:hidden;transition:opacity .2s ease,visibility 0s linear .2s}
+[data-lpp-racine] [data-aller][aria-current]{outline:2px solid currentColor;outline-offset:2px}
+.lpp-imprime{display:none}
+@media (prefers-reduced-motion: reduce){
+  [data-lpp-racine] [data-de],[data-lpp-racine] [data-a],[data-lpp-racine] [data-des],[data-lpp-racine] [data-seul],[data-lpp-racine] .lpp-cache{transition:none!important}
+}
+@media print{
+  [data-lpp-racine].lpp-sans-impression{display:none!important}
+  [data-lpp-racine] [data-lpp="controles"],[data-lpp-racine] [data-lpp="chapitres"],
+  [data-lpp-racine] [data-lpp="texte"],[data-lpp-racine] [data-lpp="sansvoix"],[data-lpp-racine] [data-lpp="ouvrir"]{display:none!important}
+  [data-lpp-racine] [data-lpp="panneau"]{display:block!important}
+  [data-lpp-racine] .lpp-imprime{display:block;margin:8px 0 0 1.2em;padding:0;color:#000}
+  [data-lpp-racine] .lpp-imprime li{margin:2px 0;break-inside:avoid}
+}
+</style>
+<script>
+/* Lecteur pas à pas commun (règles d'or n°119 et n°305). Source unique : _outils/lecteur_pas_a_pas/lecteur.js,
+   posé dans chaque page par _outils/lecteur_pas_a_pas/poser.py — ne pas le modifier dans une page.
+   La page garde son dessin et ses scènes ; le lecteur fait le reste : étapes, chapitres, voix, déroulé,
+   mouvement réduit, impression, lien direct. Rien ne démarre ni ne parle sans un geste de l'élève. */
+(function(){
+  "use strict";
+  if (window.LecteurPasAPas) return;
+  var calme = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : {matches: false};
+  var lecteurs = [];                                     // un seul lecteur de la page parle à la fois
+
+  function LecteurPasAPas(bloc, o){
+    if (!bloc) return null;
+    o = o || {};
+    bloc.setAttribute("data-lpp-racine", "");
+    if (o.voix) bloc.setAttribute("data-lpp-voix", o.voix);     // lu par le banc : chaque étape a son fichier
+    var S = o.scenes || [], N = S.length, scene = 1, tScene = 0, MOT = o.mot || "Étape";
+    function q(nom){ return bloc.querySelector('[data-lpp="' + nom + '"]'); }
+    var dessin = q("dessin"), titre = q("titre"), texte = q("texte"), compte = q("compte");
+    var prec = q("prec"), suiv = q("suiv"), zero = q("zero");
+    var bRegarder = q("regarder"), bEcouter = q("ecouter"), sansVoix = q("sansvoix");
+    var bOuvrir = q("ouvrir"), panneau = q("panneau");
+    var chapitres = [].slice.call(bloc.querySelectorAll("[data-aller]"));
+    var moi = {};
+
+    // ── L'impression : la liste des étapes (rien n'est porté par le seul mouvement) ──
+    if (o.imprimer !== false) {
+      var liste = document.createElement("ol");
+      liste.className = "lpp-imprime";
+      S.forEach(function(s){
+        var li = document.createElement("li");
+        li.innerHTML = (s.t ? "<b>" + s.t + "</b> — " : "") + s.p;
+        liste.appendChild(li);
+      });
+      bloc.appendChild(liste);
+    } else bloc.classList.add("lpp-sans-impression");
+
+    // ── La boucle : elle ne tourne que si le bloc est à l'écran, l'onglet visible, et le mouvement permis ──
+    var raf = 0, avantT = 0, visible = true;
+    function ouvert(){ return !panneau || !panneau.hidden; }
+    function doitTourner(){
+      if (!o.maj || !visible || document.hidden || !ouvert()) return false;
+      return !calme.matches || !!(o.tourne && o.tourne(scene));
+    }
+    function boucle(ts){
+      raf = 0;
+      if (!doitTourner()) { avantT = 0; return; }
+      var dt = avantT ? Math.min(.05, (ts - avantT) / 1000) : 0;
+      avantT = ts; tScene += dt; o.maj(dt, scene, tScene);
+      raf = requestAnimationFrame(boucle);
+    }
+    function relancer(){ if (!raf && doitTourner()) { avantT = 0; raf = requestAnimationFrame(boucle); } }
+    function imageFixe(){ if (o.fixe) o.fixe(scene); else if (o.maj) o.maj(0, scene, tScene); }
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function(e){ visible = e[e.length - 1].isIntersecting; relancer(); }).observe(bloc);
+    }
+    document.addEventListener("visibilitychange", relancer);
+    if (calme.addEventListener) calme.addEventListener("change", function(){ if (calme.matches) imageFixe(); relancer(); });
+
+    // ── Changer d'étape ──
+    // auto : l'étape vient du déroulé (« Regarder »), pas d'un clic de l'élève.
+    function montrer(n, auto){
+      var cible = Math.max(1, Math.min(N, n)), ancienne = scene;
+      if (o.avant && cible > ancienne && o.avant(ancienne, cible, !!auto) === false) return false;   // étape à mériter
+      scene = cible; tScene = 0;
+      bloc.setAttribute("data-scene", String(scene));
+      // data-de / data-a : de l'étape n à l'étape m ; data-des et data-seul : les noms écrits par les générateurs
+      // des premières animations (vélo-cargo), lus tels quels.
+      bloc.querySelectorAll("[data-de],[data-a],[data-des],[data-seul]").forEach(function(el){
+        var de = +(el.getAttribute("data-de") || el.getAttribute("data-des") || el.getAttribute("data-seul") || 1);
+        var a = +(el.getAttribute("data-a") || el.getAttribute("data-seul") || N);
+        el.classList.toggle("lpp-cache", scene < de || scene > a);
+      });
+      var s = S[scene - 1] || {};
+      if (dessin && s.d) dessin.setAttribute("aria-label", s.d);
+      if (titre) titre.textContent = MOT + " " + scene + (s.t ? " — " + s.t : "");
+      if (texte) texte.innerHTML = "<p>" + (s.p || "") + "</p>";
+      if (compte) compte.textContent = MOT + " " + scene + " / " + N;
+      if (prec) prec.disabled = scene === 1;
+      if (suiv) suiv.disabled = scene === N;
+      var courant = null;
+      chapitres.forEach(function(b){ if (+b.getAttribute("data-aller") <= scene) courant = b; });
+      chapitres.forEach(function(b){ if (b === courant) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current"); });
+      if (o.entrer) o.entrer(scene, ancienne, !!auto);
+      if (calme.matches) imageFixe(); else if (o.maj) o.maj(0, scene, tScene);
+      relancer();
+      return true;
+    }
+
+    // ── La voix : les fichiers de la séance (synthèse neuronale hors ligne, jamais le réseau) ; en secours, ──
+    // ── une voix française LOCALE du système (jamais une voix en ligne). ──
+    var regarde = false, minuterie = null, jeton = 0, lecteur = null, ext = "";
+    if (o.voix) {
+      lecteur = new Audio();
+      try { ext = lecteur.canPlayType('audio/ogg; codecs="opus"') ? "ogg" : (lecteur.canPlayType("audio/mpeg") ? "mp3" : ""); }
+      catch (e) { ext = ""; }
+    }
+    var son = !!ext, synth = (bEcouter || bRegarder) ? (window.speechSynthesis || null) : null, voix = null;
+    function choisirVoix(){
+      var fr = (synth ? synth.getVoices() : []).filter(function(v){ return /^fr/i.test(v.lang) && v.localService; });
+      voix = fr.filter(function(v){ return /^fr-FR/i.test(v.lang); })[0] || fr[0] || null;
+      if (bEcouter) bEcouter.hidden = !(son || voix);
+      if (sansVoix) sansVoix.hidden = !!(son || voix);
+    }
+    if (synth && "onvoiceschanged" in synth) synth.addEventListener("voiceschanged", choisirVoix);
+    function brut(i){ var d = document.createElement("div"); d.innerHTML = S[i - 1].p; return d.textContent; }
+    function duree(i){ return Math.max(3500, brut(i).split(/\s+/).length * (o.msParMot || 400)) + 1000; }
+    function parlerSynth(i, finir){
+      var j = ++jeton;
+      if (!voix) { if (finir) minuterie = setTimeout(function(){ if (j === jeton) finir(); }, duree(i)); return; }
+      synth.cancel();
+      var u = new SpeechSynthesisUtterance(brut(i)), fait = false, secours;
+      u.voice = voix; u.lang = voix.lang; u.rate = .95;
+      function f(){ if (fait || j !== jeton) return; fait = true; clearTimeout(secours); if (finir) finir(); }
+      u.onend = f; u.onerror = f;
+      secours = setTimeout(f, duree(i) * 2 + 2000);
+      synth.speak(u);
+    }
+    function parler(i, finir){
+      lecteurs.forEach(function(l){ if (l !== moi) l.arreter(); });
+      if (!son) { parlerSynth(i, finir); return; }
+      var j = ++jeton, fait = false, secours;
+      if (synth) synth.cancel();
+      function f(){ if (fait || j !== jeton) return; fait = true; clearTimeout(secours); if (finir) finir(); }
+      function bascule(){
+        if (fait || j !== jeton) return;
+        fait = true; clearTimeout(secours); lecteur.pause();
+        if (!voix) { if (bEcouter) bEcouter.hidden = true; if (sansVoix) sansVoix.hidden = false; }
+        parlerSynth(i, finir);
+      }
+      lecteur.onended = f; lecteur.onerror = bascule;
+      secours = setTimeout(f, duree(i) * 2 + 2000);
+      lecteur.src = o.voix + i + "." + ext;
+      var essai = lecteur.play();
+      if (essai && essai.catch) essai.catch(bascule);
+    }
+    function arreter(){
+      regarde = false; jeton++; clearTimeout(minuterie);
+      if (lecteur) lecteur.pause();
+      if (synth) synth.cancel();
+      if (bRegarder) bRegarder.textContent = "▶ Regarder";
+    }
+    function derouler(){
+      if (!regarde) return;
+      parler(scene, function(){
+        minuterie = setTimeout(function(){
+          if (!regarde) return;
+          if (scene < N && montrer(scene + 1, true)) derouler(); else arreter();
+        }, 1200);
+      });
+    }
+    function demarrer(){
+      if (scene === N) montrer(1);
+      regarde = true; if (bRegarder) bRegarder.textContent = "⏸ Pause"; derouler();
+    }
+    if (prec) prec.addEventListener("click", function(){ arreter(); montrer(scene - 1); });
+    if (suiv) suiv.addEventListener("click", function(){ arreter(); montrer(scene + 1); });
+    if (zero) zero.addEventListener("click", function(){ arreter(); montrer(1); if (suiv) suiv.focus(); });
+    if (bRegarder) bRegarder.addEventListener("click", function(){ if (regarde) arreter(); else demarrer(); });
+    if (bEcouter) bEcouter.addEventListener("click", function(){ arreter(); parler(scene); });
+    chapitres.forEach(function(b){ b.addEventListener("click", function(){ arreter(); montrer(+b.getAttribute("data-aller")); }); });
+    if (bOuvrir && panneau) bOuvrir.addEventListener("click", function(){
+      var ouvrir = panneau.hidden;
+      panneau.hidden = !ouvrir;
+      bOuvrir.setAttribute("aria-expanded", String(ouvrir));
+      if (o.ouvrir) o.ouvrir(ouvrir);
+      if (!ouvrir) arreter();
+      relancer();
+    });
+    document.addEventListener("click", function(e){ if (e.target.closest && e.target.closest("[role=tab]")) arreter(); });
+    document.addEventListener("visibilitychange", function(){ if (document.hidden) arreter(); });
+    window.addEventListener("pagehide", arreter);
+
+    // ── Impression : l'étape choisie (la dernière par défaut) le temps d'imprimer ──
+    var avantImpression = null;
+    window.addEventListener("beforeprint", function(){
+      if (o.imprimer === false) return;
+      arreter(); avantImpression = scene;
+      montrer(typeof o.imprimer === "number" ? o.imprimer : N); imageFixe();
+    });
+    window.addEventListener("afterprint", function(){
+      if (avantImpression !== null) { montrer(avantImpression); avantImpression = null; }
+    });
+
+    // ── Lien direct (cahier de textes) : #id du bloc ouvre la séance qui le porte, puis le bloc ──
+    function allerAuLien(){
+      if (!bloc.id || location.hash !== "#" + bloc.id) return;
+      var onglet = o.onglet ? document.getElementById(o.onglet) : null;
+      if (onglet && !onglet.classList.contains("active")) onglet.click();
+      if (bOuvrir && panneau && panneau.hidden) bOuvrir.click();
+      setTimeout(function(){ bloc.scrollIntoView({block: "start"}); }, 450);
+    }
+    window.addEventListener("hashchange", allerAuLien);
+    if (document.readyState === "complete") allerAuLien();
+    else window.addEventListener("load", allerAuLien);
+
+    moi.montrer = montrer;
+    moi.arreter = arreter;
+    moi.regarder = function(){ if (!regarde) demarrer(); };
+    moi.relancer = relancer;
+    moi.scene = function(){ return scene; };
+    moi.calme = function(){ return calme.matches; };
+    lecteurs.push(moi);
+    choisirVoix();
+    montrer(o.depart || 1);
+    return moi;
+  }
+  window.LecteurPasAPas = LecteurPasAPas;
+})();
+</script>
+<!-- lecteur-pas-a-pas v1 : fin -->
 </head>
 <body>
 <style id="navharm-css">
@@ -671,12 +1289,12 @@
 </div>
 
 <div class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
-  <button class="seance-tab active" data-panel="s1" role="tab" aria-selected="true">Séance 1<br><small>Qui fait quoi ? En quoi ?</small><span class="done" id="done-s1"></span></button>
-  <button class="seance-tab" data-panel="s2" role="tab" aria-selected="false">Séance 2<br><small>Le chemin de l'énergie</small><span class="done" id="done-s2"></span></button>
-  <button class="seance-tab" data-panel="s3" role="tab" aria-selected="false">Séance 3<br><small>Le lampadaire décide</small><span class="done" id="done-s3"></span></button>
-  <button class="seance-tab" data-panel="s4" role="tab" aria-selected="false">Séance 4<br><small>Ranger les infos du parc</small><span class="done" id="done-s4"></span></button>
-  <button class="seance-tab" data-panel="s5" role="tab" aria-selected="false">Séance 5<br><small>Tous en réseau</small><span class="done" id="done-s5"></span></button>
-  <button class="seance-tab" data-panel="s6" role="tab" aria-selected="false">Séance 6<br><small>Défi final et bilan</small><span class="done" id="done-s6"></span></button>
+  <button class="seance-tab active" data-panel="s1" aria-controls="s1" role="tab" aria-selected="true">Séance 1<br><small>Qui fait quoi ? En quoi ?</small><span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" data-panel="s2" aria-controls="s2" role="tab" aria-selected="false">Séance 2<br><small>Le chemin de l'énergie</small><span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" data-panel="s3" aria-controls="s3" role="tab" aria-selected="false">Séance 3<br><small>Le lampadaire décide</small><span class="done" id="done-s3"></span></button>
+  <button class="seance-tab" data-panel="s4" aria-controls="s4" role="tab" aria-selected="false">Séance 4<br><small>Ranger les infos du parc</small><span class="done" id="done-s4"></span></button>
+  <button class="seance-tab" data-panel="s5" aria-controls="s5" role="tab" aria-selected="false">Séance 5<br><small>Tous en réseau</small><span class="done" id="done-s5"></span></button>
+  <button class="seance-tab" data-panel="s6" aria-controls="s6" role="tab" aria-selected="false">Séance 6<br><small>Défi final et bilan</small><span class="done" id="done-s6"></span></button>
 </div>
 <div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
 
@@ -746,7 +1364,50 @@
 <section class="card">
   <h2>⚡ Séance 2 — Le chemin de l'énergie</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : comment l'énergie du soleil de midi devient-elle la lumière de minuit ?</p>
-  <object class="figure" data="Images/chaines_energie_information_lampadaire.svg" type="image/svg+xml" aria-label="Les deux chaînes du lampadaire : en haut, la chaîne d'information (acquérir, traiter, communiquer) ; en bas, la chaîne d'énergie (convertir, alimenter, stocker, distribuer, convertir) ; l'ordre descend">Les deux chaînes du lampadaire (SVG)</object>
+  <!-- chaines_lampadaire_pas_a_pas : début — les deux chaînes animées pas à pas (30/10/2026). L'animation remplace le
+       schéma fixe à l'écran : sa dernière étape EST ce schéma, à la même place ; le schéma fixe reste dans son volet
+       (agrandir, imprimer), dans la synthèse et dans le QCM. Moteur : _generation/chaine_pas_a_pas/ ; lecteur commun :
+       _outils/lecteur_pas_a_pas/ ; voix : _generation/voix_chaines/ (Piper, « fr_FR-siwis-medium », CC BY 4.0). -->
+  <div class="chl" id="chaines-lampadaire-pas-a-pas" data-lpp-racine>
+    <p class="chl-intro">🎬 <b>Le lampadaire, du jour à la nuit.</b> Avance avec «&nbsp;Suivant&nbsp;▶&nbsp;», ou laisse les deux chaînes se dérouler avec «&nbsp;▶&nbsp;Regarder&nbsp;». À l'étape 4, une question t'attend.</p>
+    <div class="chl-bandeau" id="chlBandeau" hidden><svg viewBox="0 0 384 76" aria-hidden="true" focusable="false" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif"></svg></div>
+    <div class="chx-boite" id="chlBoite">
+      <svg class="chl-dessin" id="chlDessin" data-lpp="dessin" viewBox="0 58 1600 776" role="img" aria-label="Les deux chaînes du lampadaire : en haut, la chaîne d'information ; en bas, la chaîne d'énergie" data-loupe="non" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif"></svg>
+    </div>
+    <p class="chl-titre" data-lpp="titre"></p>
+    <div class="chl-texte" data-lpp="texte" aria-live="polite"></div>
+    <div class="chl-prediction" id="chlPrediction" hidden>
+      <p>Ma prédiction&nbsp;:</p>
+      <div class="chl-choix">
+        <button type="button" class="btn ghost" data-choix="veille">Elle laisse la LED en veille (faible)&nbsp;: c'est la nuit.</button>
+        <button type="button" class="btn ghost" data-choix="pleine">Elle allume la LED à pleine puissance.</button>
+        <button type="button" class="btn ghost" data-choix="detecteur">Rien&nbsp;: c'est le détecteur qui allume la LED.</button>
+      </div>
+    </div>
+    <p class="chl-retour" id="chlRetour" aria-live="polite" hidden></p>
+    <p class="chl-tache" id="chlTache" hidden><a class="btn" href="#act2" id="chlVersAct2">✍ Aller à l'activité 2</a></p>
+    <div class="chl-nav" data-lpp="controles">
+      <button type="button" class="btn ghost" data-lpp="prec">◀ Précédent</button>
+      <span class="chl-compte" data-lpp="compte">Étape 1 / 9</span>
+      <button type="button" class="btn" data-lpp="suiv">Suivant ▶</button>
+    </div>
+    <div class="chl-nav" data-lpp="controles">
+      <button type="button" class="btn" data-lpp="regarder">▶ Regarder</button>
+      <button type="button" class="btn ghost" data-lpp="ecouter" hidden>🔊 Écouter</button>
+      <button type="button" class="btn ghost" data-lpp="zero">↺ Recommencer</button>
+    </div>
+    <p class="chl-sansvoix" data-lpp="sansvoix" hidden>Pas de voix française installée sur cet ordinateur&nbsp;: lis les phrases. «&nbsp;▶&nbsp;Regarder&nbsp;» les enchaîne au rythme de la lecture.</p>
+    <p class="chl-credit">Voix de synthèse&nbsp;: SIWIS (CC BY 4.0)</p>
+  </div>
+  <div class="chl-fixe" id="chlFixe">
+    <!-- Replié, le schéma fixe garde sa place dans la mise en page (hauteur nulle) : son objet se charge, s'agrandit et
+         s'imprime ; à l'impression, il s'affiche toujours (la page imprime le schéma, pas l'animation). -->
+    <button type="button" class="btn ghost" id="chlFixeBouton" aria-expanded="false" aria-controls="chlFixeCorps">🔎 Voir le schéma fixe des deux chaînes (à agrandir, à imprimer)</button>
+    <div class="chl-fixe-corps" id="chlFixeCorps">
+      <object class="figure" data="Images/chaines_energie_information_lampadaire.svg" type="image/svg+xml" aria-label="Les deux chaînes du lampadaire : en haut, la chaîne d'information (acquérir, traiter, communiquer) ; en bas, la chaîne d'énergie (convertir, alimenter, stocker, distribuer, convertir) ; l'ordre descend">Les deux chaînes du lampadaire (SVG)</object>
+    </div>
+  </div>
+  <!-- chaines_lampadaire_pas_a_pas : fin -->
 
   <div class="activite" id="act2">
     <header><span class="num">Activité 2</span><h3>Remonter la chaîne d'énergie</h3><span class="duree">⏱ 40 min</span></header>
@@ -2197,5 +2858,270 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
 })();
 </script>
 <!-- /ateliers-representations:moteur -->
+<!-- chaines_lampadaire_pas_a_pas (script) : début — les deux chaînes du lampadaire, animées pas à pas (30/10/2026) -->
+<script>
+(function(){
+  "use strict";
+  // La phrase affichée est la phrase dite : _generation/voix_chaines/generer.py la compare, mot pour mot.
+  // Les mots et les nombres sont ceux de la séquence : 80 lux le jour, 10 lux la nuit (simulateur de l'activité 3),
+  // la nuit sous 30 lux (le seuil du simulateur, celui de 5e_C6.1), « si nuit et passage : allumer », interrupteur
+  // commandé, bloc de LED. La LED obéit : elle est dans la chaîne d'énergie (l'erreur la plus fréquente).
+  var lux = function(t){ return Math.round(80 - 70 * Math.min(1, t / 3.5)); };
+  var SCENES = [
+    {t: "Le jour", p: "Le jour, le panneau solaire <b>convertit</b> l'énergie lumineuse en énergie électrique. Le régulateur de charge <b>alimente</b> la batterie, qui <b>stocke</b> l'énergie pour la nuit, sous forme chimique.",
+     d: "Le jour, le soleil brille sur le parking. En bas, dans la chaîne d'énergie, l'énergie lumineuse entre dans le bloc CONVERTIR, le panneau solaire ; l'énergie électrique va au bloc ALIMENTER, le régulateur de charge, puis au bloc STOCKER, la batterie, où l'énergie chimique est stockée.",
+     actifs: ["entree", "convertir-panneau", "conv-alim", "alimenter", "charge", "stocker"], flux: ["entree", "conv-alim", "charge"]},
+    {t: "Le soir", p: "Le soir, la lumière baisse. Le capteur de luminosité <b>acquiert</b> la luminosité : il la mesure, de 80 lux à 10 lux, et envoie sa mesure à la carte.",
+     d: "Le ciel s'assombrit ; la luminosité passe de 80 lux à 10 lux. En haut, dans la chaîne d'information, le bloc ACQUÉRIR, le capteur de luminosité, envoie sa mesure par la flèche Mesures vers le bloc TRAITER.",
+     actifs: ["acquerir", "mesures"], jetons: [{texte: function(t){ return lux(t) + " lux"; }, chemin: ["mesures"], periode: 1.9, fixe: {large: [475, 194], etroit: .6}}]},
+    {t: "Un passant", p: "Quelqu'un passe sur le parking. Le détecteur de mouvement <b>acquiert</b> ce passage et l'envoie, lui aussi, à la carte.",
+     d: "Un piéton entre sur le parking, sous le lampadaire. Le bloc ACQUÉRIR, le détecteur de mouvement, envoie l'information « passage » par la flèche Mesures vers le bloc TRAITER.",
+     actifs: ["acquerir", "mesures"], jetons: [{texte: "passage", chemin: ["mesures"], periode: 2.2, fixe: {large: [475, 194], etroit: .6}}]},
+    {t: "À ton avis ?", p: "Il fait nuit, et quelqu'un passe. <b>Que va faire la carte ?</b> Choisis ta réponse avant de continuer.",
+     d: "Sous le bloc TRAITER, la carte électronique, un grand point d'interrogation : que va-t-elle décider ?",
+     actifs: ["traiter", "question"]},
+    {t: "La carte traite", p: "La carte électronique <b>traite</b> les deux mesures avec sa règle : <b>si nuit et passage : allumer</b>. Moins de 30 lux, c'est la nuit ; quelqu'un passe : elle décide d'allumer à pleine puissance.",
+     d: "Le bloc TRAITER, la carte électronique, applique sa règle : si nuit et passage, allumer. Sous le bloc : nuit, coché ; passage, coché ; donc allumer.",
+     actifs: ["traiter", "verdict"]},
+    {t: "L'ordre descend", p: "La carte <b>communique</b> sa décision : l'ordre d'allumage sort par sa sortie de commande et <b>descend</b> vers l'interrupteur commandé.",
+     d: "Un message « allumer » part du bloc TRAITER par la flèche Décision, traverse le bloc COMMUNIQUER, la sortie de commande de la carte, puis descend par la flèche verte en pointillés, l'ordre d'allumage, jusqu'au bloc DISTRIBUER, en bas.",
+     actifs: ["decision", "communiquer", "ordre", "distribuer"], jetons: [{texte: "allumer", chemin: ["decision", "ordre"], couleur: "#81fba1", fixe: {large: [879, 340], etroit: .03}}]},
+    {t: "L'interrupteur distribue", p: "L'interrupteur commandé reçoit l'ordre : il <b>distribue</b> l'énergie électrique de la batterie vers le bloc de LED.",
+     d: "La nuit, le panneau ne reçoit plus de lumière. L'énergie électrique sort de la batterie, bloc STOCKER, passe par le régulateur, bloc ALIMENTER, puis par le bloc DISTRIBUER, l'interrupteur commandé, et va vers le bloc de LED.",
+     actifs: ["stocker", "charge", "alimenter", "alim-dist", "distribuer", "dist-conv"], flux: ["-charge", "alim-dist", "dist-conv"]},
+    {t: "La LED éclaire", p: "Le bloc de LED <b>convertit</b> l'énergie électrique en énergie lumineuse : la zone est éclairée. La LED obéit à l'ordre : elle est dans la chaîne d'énergie, pas dans la chaîne d'information.",
+     d: "Le bloc CONVERTIR, le bloc de LED, envoie de l'énergie lumineuse : éclairer la zone. Sur le parking, le piéton est dans la lumière du lampadaire.",
+     actifs: ["dist-conv", "convertir-led", "sortie", "eclairer"], flux: ["-charge", "alim-dist", "dist-conv", "sortie"]},
+    {t: "À toi", p: "Voilà les deux chaînes : l'information, en haut, décide ; l'énergie, en bas, obéit. À toi, dans l'activité 2 : associe les constituants à leurs fonctions, puis indique la nature de l'énergie à chaque étape.",
+     d: "Les deux chaînes entières, sans rien en retrait. En haut, ACQUÉRIR, TRAITER, COMMUNIQUER ; la flèche d'ordre qui descend ; en bas, CONVERTIR, ALIMENTER avec STOCKER en branche, DISTRIBUER, CONVERTIR, puis éclairer la zone.",
+     tous: true, flux: ["-charge", "alim-dist", "dist-conv", "sortie"], vise: ["titre-energie", "eclairer"]}
+  ];
+  var N = SCENES.length;
+  var CYAN = "#61dafb", VIOLET = "#c68ef2", JAUNE = "#ffd66b", VERT = "#81fba1", ORANGE = "#ffb454";
+  // Les deux dispositions : « large » reprend le schéma fixe (Images/chaines_energie_information_lampadaire.svg) ;
+  // « etroit » le range en colonne, l'information en haut, l'énergie en bas, l'ordre qui descend.
+  var CHAINE = {
+    seuil: 820,
+    large: {vue: [0, 58, 1600, 776]},
+    etroit: {vue: [0, 78, 384, 998], max: 520},
+    etapes: SCENES,
+    elements: [
+      {id: "titre-info", type: "section", garde: true, texte: "CHAÎNE D’INFORMATION — en haut (elle décide)", couleur: CYAN,
+       large: {x: 35, y: 95}, etroit: {x: 16, y: 96, texte: "CHAÎNE D’INFORMATION —\nen haut (elle décide)"}},
+      {id: "acquerir", type: "bloc", fonction: "ACQUÉRIR", composant: "Capteur de luminosité\nDétecteur de mouvement", couleur: CYAN,
+       large: {x: 160, y: 125, l: 210}, etroit: {x: 106, y: 128, l: 140}},
+      {id: "traiter", type: "bloc", fonction: "TRAITER", composant: "Carte électronique\nSi nuit et passage : allumer", couleur: VIOLET,
+       large: {x: 590, y: 125, l: 250}, etroit: {x: 106, y: 272, l: 140}},
+      {id: "communiquer", type: "bloc", fonction: "COMMUNIQUER", composant: "Sortie de commande\nde la carte", couleur: VERT,
+       large: {x: 1060, y: 125, l: 240}, etroit: {x: 101, y: 416, l: 150, composant: "Sortie de commande de la carte"}},
+      {id: "mesures", type: "fleche", nature: "information", texte: "Mesures",
+       large: {points: [[370, 163], [580, 163]], ex: 475, ey: 134},
+       etroit: {points: [[176, 216], [176, 268]], ex: 166, ey: 246, ancre: "end", jeton: [42, 0]}},
+      {id: "decision", type: "fleche", nature: "information", texte: "Décision",
+       large: {points: [[840, 163], [1050, 163]], ex: 945, ey: 134},
+       etroit: {points: [[176, 360], [176, 412]], ex: 166, ey: 390, ancre: "end", jeton: [42, 0]}},
+      {id: "question", type: "texte", texte: "?", couleur: JAUNE, gras: true, taille: {large: 52, etroit: 30}, de: 4, a: 4,
+       large: {x: 715, y: 324}, etroit: {x: 284, y: 306}},
+      {id: "verdict", type: "texte", texte: "nuit ✓ · passage ✓ → allumer", couleur: VIOLET, gras: true, de: 5, a: 5,
+       large: {x: 715, y: 306}, etroit: {x: 190, y: 380, ancre: "start", texte: "nuit ✓ · passage ✓\n→ allumer"}},
+      {id: "ordre", type: "fleche", nature: "ordre", pointilles: true, texte: "Ordre d’allumage : l’ordre descend",
+       large: {points: [[1180, 278], [1180, 315], [945, 315], [945, 398]], ex: 1195, ey: 303, ancre: "start"},
+       etroit: {points: [[101, 436], [40, 436], [40, 844], [103, 844]], ex: 52, ey: 508, ancre: "start"}},
+      {id: "titre-energie", type: "section", garde: true, texte: "CHAÎNE D’ÉNERGIE — en bas (elle obéit)", couleur: ORANGE,
+       large: {x: 35, y: 352}, etroit: {x: 52, y: 534, texte: "CHAÎNE D’ÉNERGIE —\nen bas (elle obéit)"}},
+      {id: "entree", type: "fleche", nature: "energie", texte: "Énergie lumineuse",
+       large: {points: [[15, 448], [145, 448]], ex: 76, ey: 388, texte: "Énergie\nlumineuse"},
+       etroit: {points: [[176, 564], [176, 600]], ex: 166, ey: 578, ancre: "end", texte: "Énergie\nlumineuse"}},
+      {id: "convertir-panneau", type: "bloc", fonction: "CONVERTIR", composant: "Panneau solaire", couleur: VIOLET,
+       large: {x: 155, y: 410, l: 210}, etroit: {x: 106, y: 604, l: 140}},
+      {id: "conv-alim", type: "fleche", nature: "energie", texte: "Énergie électrique",
+       large: {points: [[365, 448], [500, 448]], ex: 432.5, ey: 388, texte: "Énergie\nélectrique"},
+       etroit: {points: [[176, 674], [176, 710]], ex: 166, ey: 688, ancre: "end", texte: "Énergie\nélectrique"}},
+      {id: "alimenter", type: "bloc", fonction: "ALIMENTER", composant: "Régulateur de charge", couleur: JAUNE,
+       large: {x: 510, y: 410, l: 210}, etroit: {x: 106, y: 714, l: 140}},
+      {id: "charge", type: "fleche", nature: "stock", double: true, texte: "Énergie électrique\nCharge / décharge",
+       large: {points: [[720, 470], [780, 470], [780, 688], [720, 688]], ex: 795, ey: 600, ancre: "start"},
+       etroit: {points: [[247, 734], [334, 734], [334, 784]], ex: 256, ey: 706, ancre: "start", taille: 12.5}},
+      {id: "stocker", type: "bloc", fonction: "STOCKER", composant: "Batterie", stock: "Énergie chimique stockée", couleur: JAUNE,
+       large: {x: 510, y: 650, l: 210, stock: "Énergie chimique\nstockée"}, etroit: {x: 288, y: 788, l: 92, stock: "Énergie\nchimique\nstockée"}},
+      {id: "alim-dist", type: "fleche", nature: "energie", texte: "Énergie électrique",
+       large: {points: [[720, 448], [830, 448]], ex: 775, ey: 388, texte: "Énergie\nélectrique"},
+       etroit: {points: [[176, 784], [176, 820]], ex: 166, ey: 798, ancre: "end", texte: "Énergie\nélectrique"}},
+      {id: "distribuer", type: "bloc", fonction: "DISTRIBUER", composant: "Interrupteur commandé", couleur: CYAN,
+       large: {x: 840, y: 410, l: 210}, etroit: {x: 106, y: 824, l: 140}},
+      {id: "dist-conv", type: "fleche", nature: "energie", texte: "Énergie électrique",
+       large: {points: [[1050, 448], [1185, 448]], ex: 1117.5, ey: 388, texte: "Énergie\nélectrique"},
+       etroit: {points: [[176, 894], [176, 930]], ex: 166, ey: 908, ancre: "end", texte: "Énergie\nélectrique"}},
+      {id: "convertir-led", type: "bloc", fonction: "CONVERTIR", composant: "Bloc de LED", couleur: VIOLET,
+       large: {x: 1195, y: 410, l: 210}, etroit: {x: 106, y: 934, l: 140}},
+      {id: "sortie", type: "fleche", nature: "energie", texte: "Énergie lumineuse",
+       large: {points: [[1405, 448], [1555, 448]], ex: 1480, ey: 388, texte: "Énergie\nlumineuse"},
+       etroit: {points: [[176, 1004], [176, 1040]], ex: 166, ey: 1018, ancre: "end", texte: "Énergie\nlumineuse"}},
+      {id: "eclairer", type: "texte", texte: "Éclairer la zone", gras: true,
+       large: {x: 1480, y: 500, texte: "Éclairer\nla zone"}, etroit: {x: 176, y: 1062}}
+    ]
+  };
+
+  var bloc = document.getElementById("chaines-lampadaire-pas-a-pas");
+  if (!bloc || !window.LecteurPasAPas || !window.ChainePasAPas) return;
+  var NS = "http://www.w3.org/2000/svg";
+  function $l(id){ return document.getElementById(id); }
+  function cree(nom, attrs, parent){
+    var e = document.createElementNS(NS, nom);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function pose(e, a, v){ e.setAttribute(a, typeof v === "number" ? (Math.round(v * 100) / 100) : v); }
+  function melange(a, b, f){                             // deux couleurs « #rrggbb », mélangées
+    var x = parseInt(a.slice(1), 16), y = parseInt(b.slice(1), 16), r = 0;
+    [16, 8, 0].forEach(function(s){ r |= Math.round(((x >> s) & 255) * (1 - f) + ((y >> s) & 255) * f) << s; });
+    return "#" + (r | 1 << 24).toString(16).slice(1);
+  }
+
+  // ── Le dehors : le parking, son ciel, le lampadaire et le passant. Une fenêtre à part, sans flèche : ce que les
+  // capteurs mesurent (la lumière, le passage) et ce que la chaîne produit (la zone éclairée). ──
+  var DEHORS = {
+    large: {x: 1324, y: 66, l: 264, h: 200, rx: 14, sol: 236, soleil: [1350, 98, 14], lux: [1384, 78, 116, 62, 20, 28],
+            mat: [1562, 126, 6], bras: 1528, tete: [1514, 128, 26, 9], panneau: "1546,122 1580,110 1584,117 1550,129",
+            cone: "1518,140 1536,140 1574,236 1480,236", passant: [1352, 1512, 1], etoiles: [[1338, 150], [1400, 166], [1452, 154], [1520, 84], [1578, 78], [1466, 190]]},
+    etroit: {x: 6, y: 6, l: 372, h: 64, rx: 10, sol: 58, soleil: [30, 30, 10], lux: [54, 13, 86, 44, 12.5, 17],
+             mat: [350, 22, 3.5], bras: 330, tete: [320, 22, 15, 5], panneau: "343,20 365,13 367,17 345,24",
+             cone: "322,29 334,29 358,58 296,58", passant: [168, 318, .6], etoiles: [[160, 18], [200, 30], [244, 16], [286, 34], [370, 32]]}
+  };
+  var V = {}, bandeau = $l("chlBandeau"), bandeauSvg = bandeau.querySelector("svg");
+  function decor(g, dispo){
+    // En colonne, le dehors est un bandeau au-dessus de la boîte qui défile : il reste sous les yeux.
+    bandeau.hidden = dispo !== "etroit";
+    while (bandeauSvg.firstChild) bandeauSvg.removeChild(bandeauSvg.firstChild);
+    if (dispo === "etroit") g = bandeauSvg;
+    var Q = DEHORS[dispo], id = "chlDehors" + dispo;
+    V = {dispo: dispo, Q: Q};
+    var defs = cree("defs", {}, g);
+    var grad = cree("linearGradient", {id: id + "Ciel", x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+    V.c1 = cree("stop", {offset: 0, "stop-color": "#2a6fc4"}, grad);
+    V.c2 = cree("stop", {offset: 1, "stop-color": "#8ec1ee"}, grad);
+    var clip = cree("clipPath", {id: id + "Cadre"}, defs);
+    cree("rect", {x: Q.x, y: Q.y, width: Q.l, height: Q.h, rx: Q.rx}, clip);
+    cree("rect", {x: Q.x, y: Q.y, width: Q.l, height: Q.h, rx: Q.rx, fill: "url(#" + id + "Ciel)", stroke: "#274a8a", "stroke-width": dispo === "etroit" ? 1.5 : 2}, g);
+    var dedans = cree("g", {"clip-path": "url(#" + id + "Cadre)"}, g);
+    V.etoiles = cree("g", {fill: "#ffffff"}, dedans);
+    Q.etoiles.forEach(function(e, i){ cree("circle", {cx: e[0], cy: e[1], r: (dispo === "etroit" ? 1.1 : 2) + (i % 2) * .6}, V.etoiles); });
+    var s = Q.soleil;
+    V.soleil = cree("g", {}, dedans);
+    V.rayons = cree("g", {stroke: "#ffd66b", "stroke-width": s[2] / 5, "stroke-linecap": "round"}, V.soleil);
+    for (var i = 0; i < 8; i++) cree("path", {d: "M" + s[0] + " " + (s[1] - s[2] * 1.35) + " V" + (s[1] - s[2] * 1.75), transform: "rotate(" + i * 45 + " " + s[0] + " " + s[1] + ")"}, V.rayons);
+    cree("circle", {cx: s[0], cy: s[1], r: s[2], fill: "#ffd66b"}, V.soleil);
+    V.lune = cree("path", {d: "M" + (s[0] - s[2] * .2) + " " + (s[1] - s[2]) + " a" + s[2] + " " + s[2] + " 0 1 0 " + s[2] * 1.1 + " " + s[2] * 1.7 +
+                          " a" + s[2] * .8 + " " + s[2] * .8 + " 0 1 1 " + (-s[2] * 1.1) + " " + (-s[2] * 1.7) + "Z", fill: "#e8eefc"}, dedans);
+    cree("rect", {x: Q.x, y: Q.sol, width: Q.l, height: Q.y + Q.h - Q.sol, fill: "#1f2a3d"}, dedans);
+    V.cone = cree("polygon", {points: Q.cone, fill: "#ffd66b", opacity: 0}, dedans);
+    var m = Q.mat;
+    cree("rect", {x: m[0], y: m[1], width: m[2], height: Q.sol - m[1], fill: "#9aa5b8"}, dedans);
+    cree("path", {d: "M" + (m[0] + m[2] / 2) + " " + (Q.tete[1] + 2) + " H" + Q.bras, stroke: "#9aa5b8", "stroke-width": m[2] * .7, fill: "none"}, dedans);
+    cree("rect", {x: Q.tete[0], y: Q.tete[1], width: Q.tete[2], height: Q.tete[3], rx: Q.tete[3] / 3, fill: "#c9d6ee"}, dedans);
+    V.led = cree("rect", {x: Q.tete[0] + 2, y: Q.tete[1] + Q.tete[3], width: Q.tete[2] - 4, height: Q.tete[3] / 3, fill: "#ffd66b", opacity: .3}, dedans);
+    cree("polygon", {points: Q.panneau, fill: "#1f5fbf", stroke: "#9bbefc", "stroke-width": dispo === "etroit" ? .8 : 1.5}, dedans);
+    // le passant
+    var k = Q.passant[2];
+    V.passant = cree("g", {stroke: "#e4eaf5", "stroke-width": 4.5 * k, "stroke-linecap": "round", fill: "none", opacity: 0}, dedans);
+    cree("circle", {cx: 0, cy: -38 * k, r: 7 * k, fill: "#e4eaf5", stroke: "none"}, V.passant);
+    cree("path", {d: "M0 " + (-30 * k) + " V" + (-13 * k) + " M0 " + (-26 * k) + " l" + (-9 * k) + " " + 10 * k + " M0 " + (-26 * k) + " l" + 9 * k + " " + 10 * k}, V.passant);
+    V.jambe1 = cree("path", {d: "M0 " + (-13 * k) + " l0 " + 13 * k}, V.passant);
+    V.jambe2 = cree("path", {d: "M0 " + (-13 * k) + " l0 " + 13 * k}, V.passant);
+    // la luminosité, en lux : ce que le capteur va mesurer
+    var L = Q.lux;
+    cree("rect", {x: L[0], y: L[1], width: L[2], height: L[3], rx: L[3] / 6, fill: "#050f24", "fill-opacity": .82}, g);
+    var tl = cree("text", {x: L[0] + L[2] / 2, y: L[1] + L[3] * .38, "text-anchor": "middle", fill: "#c9d6ee", "font-size": L[4]}, g);
+    tl.textContent = "Luminosité";
+    V.lux = cree("text", {x: L[0] + L[2] / 2, y: L[1] + L[3] * .84, "text-anchor": "middle", fill: "#ffffff", "font-size": L[5], "font-weight": 700}, g);
+    V.lux.textContent = "80 lux";
+  }
+  function dehors(n, t, fige){
+    if (!V.Q) return;
+    var Q = V.Q, s = Q.soleil;
+    var nuit = n === 1 ? 0 : n === 2 ? (fige ? 1 : Math.min(1, t / 3.5)) : 1;
+    pose(V.c1, "stop-color", melange("#2a6fc4", "#050b1c", nuit));
+    pose(V.c2, "stop-color", melange("#8ec1ee", "#1a2e5a", nuit));
+    pose(V.soleil, "transform", "translate(0 " + (nuit * (Q.sol - s[1] + s[2] * 2)) + ")" + (n === 1 && !fige ? " rotate(" + (t * 12 % 360) + " " + s[0] + " " + s[1] + ")" : ""));
+    pose(V.soleil, "opacity", 1 - nuit * .6);
+    pose(V.lune, "opacity", nuit);
+    pose(V.etoiles, "opacity", nuit * .85);
+    V.lux.textContent = lux(n === 1 ? 0 : n === 2 && !fige ? t : 99) + " lux";
+    // le passant entre à l'étape 3 et s'arrête sous le lampadaire
+    var p = Q.passant, avance = n < 3 ? 0 : n === 3 && !fige ? Math.min(1, t / 3.2) : 1, k = p[2];
+    pose(V.passant, "opacity", n < 3 ? 0 : 1);
+    pose(V.passant, "transform", "translate(" + (p[0] + (p[1] - p[0]) * avance) + " " + Q.sol + ")");
+    var pas = n === 3 && avance < 1 ? Math.sin(t * 9) * 8 * k : 0;
+    pose(V.jambe1, "d", "M0 " + (-13 * k) + " l" + pas + " " + 13 * k);
+    pose(V.jambe2, "d", "M0 " + (-13 * k) + " l" + (-pas) + " " + 13 * k);
+    // la lumière : éteint le jour, veille faible la nuit, pleine puissance quand la LED convertit (étapes 8 et 9)
+    var lumiere = n === 1 ? 0 : n < 8 ? .13 * nuit : (n === 8 && !fige ? .13 + .42 * Math.min(1, t / .9) : .55);
+    pose(V.cone, "opacity", lumiere);
+    pose(V.led, "opacity", .3 + lumiere * 1.2);
+  }
+
+  // ── La prédiction (étape 4) : l'élève choisit avant de voir ; « Regarder » s'y arrête ──
+  var pred = $l("chlPrediction"), retour = $l("chlRetour"), tache = $l("chlTache");
+  var reponse = null, attente = false, lpp = null;
+  var RETOURS = {
+    veille: [false, "Tu avais prédit la veille. La veille, c'est la nuit <b>sans</b> passage ; ici, quelqu'un passe : la carte allume à pleine puissance."],
+    pleine: [true, "Tu avais prédit juste : il fait nuit et quelqu'un passe, la carte allume à pleine puissance."],
+    detecteur: [false, "Tu avais prédit que le détecteur allume la LED. Le détecteur mesure seulement : c'est la carte qui décide."]
+  };
+  var calme = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : {matches: false};
+  var chaine = ChainePasAPas($l("chlDessin"), CHAINE, {boite: $l("chlBoite"), decor: decor,
+    apres: function(n){ dehors(n, 0, calme.matches); }});
+  function entrer(n, ancienne, auto){
+    if (!auto) attente = false;
+    if (n === 1) reponse = null;                          // on recommence : on prédit de nouveau
+    chaine.entrer(n);
+    pred.hidden = n !== 4;
+    var r = n === 5 && reponse ? RETOURS[reponse] : null;
+    retour.hidden = !r;
+    if (r) { retour.className = "chl-retour " + (r[0] ? "juste" : "faux"); retour.innerHTML = (r[0] ? "✔ " : "✘ ") + r[1]; }
+    tache.hidden = n !== N;
+  }
+  pred.querySelectorAll("[data-choix]").forEach(function(b){
+    b.addEventListener("click", function(){
+      reponse = b.getAttribute("data-choix");
+      var reprendre = attente;
+      lpp.arreter(); lpp.montrer(5);
+      if (reprendre) lpp.regarder(); else { var s = bloc.querySelector('[data-lpp="suiv"]'); if (s) s.focus(); }
+    });
+  });
+  $l("chlVersAct2").addEventListener("click", function(e){
+    var act = document.getElementById("act2"), champ = document.getElementById("e2_o1");
+    if (!act) return;
+    e.preventDefault();
+    act.scrollIntoView({block: "start"});
+    if (champ) { try { champ.focus({preventScroll: true}); } catch (x) { champ.focus(); } }
+  });
+  // Le lecteur commun (_outils/lecteur_pas_a_pas/) : étapes, voix (Audio/chaines_lampadaire_etape…), « Regarder »,
+  // mouvement réduit, lien direct #chaines-lampadaire-pas-a-pas. À l'impression : le schéma fixe, dans son volet.
+  lpp = LecteurPasAPas(bloc, {
+    scenes: SCENES, voix: "Audio/chaines_lampadaire_etape", imprimer: false,
+    avant: function(ancienne, cible, auto){
+      if (auto && ancienne === 4 && !reponse) {
+        attente = true;
+        setTimeout(function(){ var b = pred.querySelector("[data-choix]"); if (b) b.focus(); }, 0);
+        return false;
+      }
+    },
+    entrer: entrer,
+    maj: function(dt, n, t){ chaine.maj(dt, n, t); dehors(n, t, false); },
+    fixe: function(n){ chaine.fixe(n); dehors(n, 0, true); }
+  });
+  // Le schéma fixe : replié à l'écran (l'animation le montre déjà, à sa dernière étape), imprimé toujours (CSS).
+  var fixeVolet = $l("chlFixe"), fixeBouton = $l("chlFixeBouton");
+  fixeBouton.addEventListener("click", function(){
+    var ouvrir = !fixeVolet.classList.contains("ouvert");
+    fixeVolet.classList.toggle("ouvert", ouvrir);
+    fixeBouton.setAttribute("aria-expanded", String(ouvrir));
+    fixeBouton.textContent = ouvrir ? "▼ Le schéma fixe des deux chaînes" : "🔎 Voir le schéma fixe des deux chaînes (à agrandir, à imprimer)";
+  });
+})();
+</script>
+<!-- chaines_lampadaire_pas_a_pas (script) : fin -->
 </body>
 </html>

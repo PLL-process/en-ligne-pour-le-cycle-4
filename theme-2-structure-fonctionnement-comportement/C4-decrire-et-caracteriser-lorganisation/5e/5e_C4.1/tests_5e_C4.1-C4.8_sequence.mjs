@@ -387,6 +387,81 @@ const posApres = await p.evaluate(() => ['c41', 'c42', 'c43', 'c44', 'c45', 'c46
 ok('39 · le positionnement et les champs du Bonus survivent au rechargement',
    posApres.join() === 'insuffisante,fragile,satisfaisante,tres-bonne,insuffisante,fragile,satisfaisante,tres-bonne'
    && (await p.inputValue('#bonusFilius')).startsWith('Essai'), posApres.join(' '));
+/* ── séance 2 : les deux chaînes animées, pas à pas (30/10/2026) ─────────────
+   L'animation remplace le schéma fixe à l'écran ; le schéma fixe reste dans un volet replié (agrandir), et s'imprime.
+   « Suivant » n'est pas bloqué à la prédiction (le banc commun du lecteur doit pouvoir parcourir toutes les étapes) ;
+   c'est « Regarder » qui s'y arrête, et choisir une réponse mène à l'étape 5 avec son retour. */
+await ouvrirSeance(2);
+const SEL = '#chaines-lampadaire-pas-a-pas';
+const cpt = () => p.$eval(`${SEL} [data-lpp="compte"]`, e => e.textContent.trim());
+const anim = await p.evaluate(sel => {
+  const b = document.querySelector(sel), s2 = document.getElementById('s2'), vol = document.getElementById('chlFixe');
+  const voix = [];
+  for (let k = 1; k <= 9; k++) voix.push('Audio/chaines_lampadaire_etape' + k);
+  return { dansS2: !!b && s2.contains(b), avantAct2: !!b && !!(b.compareDocumentPosition(document.getElementById('act2')) & Node.DOCUMENT_POSITION_FOLLOWING),
+    dispo: document.getElementById('chlDessin').getAttribute('data-dispo'), blocs: document.querySelectorAll('#chlDessin .chx-bloc').length,
+    volet: !!vol && !vol.classList.contains('ouvert') && document.getElementById('chlFixeCorps').getBoundingClientRect().height === 0
+      && !!vol.querySelector('object[data="Images/chaines_energie_information_lampadaire.svg"]'),
+    objetHorsVolet: [...document.querySelectorAll('object[data="Images/chaines_energie_information_lampadaire.svg"]')].filter(o => !o.closest('#chlFixe')).length,
+    large: document.documentElement.scrollWidth > innerWidth + 1, voix: b.getAttribute('data-lpp-voix') };
+}, SEL);
+const voixManquantes = [];
+for (let k = 1; k <= 9; k++) for (const e of ['.ogg', '.mp3'])
+  if (!fs.existsSync(path.join(ICI, 'Audio', 'chaines_lampadaire_etape' + k + e))) voixManquantes.push(k + e);
+ok('41 · séance 2 : les deux chaînes animées, avant l\'activité 2, « Étape 1 / 9 », huit blocs ; à 390 px, en colonne, sans défilement de côté ; le schéma fixe dans un volet replié ; neuf prises de voix',
+   anim.dansS2 && anim.avantAct2 && (await cpt()) === 'Étape 1 / 9' && anim.blocs === 8 && anim.dispo === 'etroit' && !anim.large
+   && anim.volet && anim.objetHorsVolet === 0 && voixManquantes.length === 0,
+   JSON.stringify(anim) + (voixManquantes.length ? ' · voix absentes : ' + voixManquantes.join(' ') : ''));
+for (let k = 1; k < 4; k++) { await p.click(`${SEL} [data-lpp="suiv"]`); await p.waitForTimeout(80); }
+const etape4 = await p.evaluate(() => ({ pred: !document.getElementById('chlPrediction').hidden,
+  choix: document.querySelectorAll('#chlPrediction [data-choix]').length,
+  question: getComputedStyle(document.querySelector('#chlDessin [data-id="question"]')).display !== 'none' }));
+await p.click('#chlPrediction [data-choix="veille"]');
+await p.waitForTimeout(120);
+const apresVeille = { compte: await cpt(), retour: await p.evaluate(() => { const r = document.getElementById('chlRetour'); return r.hidden ? '' : r.className + ' | ' + r.textContent; }) };
+await p.click(`${SEL} [data-lpp="prec"]`); await p.waitForTimeout(80);
+await p.click('#chlPrediction [data-choix="pleine"]'); await p.waitForTimeout(120);
+const apresPleine = await p.evaluate(() => document.getElementById('chlRetour').className);
+ok('42 · étape 4 : la prédiction propose trois réponses ; en choisir une mène à l\'étape 5, avec son retour (la veille : « sans passage » ; pleine puissance : juste)',
+   etape4.pred && etape4.choix === 3 && etape4.question && apresVeille.compte === 'Étape 5 / 9'
+   && /faux/.test(apresVeille.retour) && /sans/.test(apresVeille.retour) && /juste/.test(apresPleine),
+   JSON.stringify({ etape4, apresVeille, apresPleine }).slice(0, 220));
+/* « Regarder » depuis l'étape 3 : la voix de l'étape 3, puis celle de l'étape 4… et le déroulé attend la réponse. */
+await p.click(`${SEL} [data-lpp="zero"]`); await p.waitForTimeout(80);
+for (let k = 1; k < 3; k++) { await p.click(`${SEL} [data-lpp="suiv"]`); await p.waitForTimeout(80); }
+await p.click(`${SEL} [data-lpp="regarder"]`);
+let attendu = '';
+for (let t = 0; t < 60 && !attendu; t++) {
+  await p.waitForTimeout(500);
+  const e = await p.evaluate(sel => ({ c: document.querySelector(sel + ' [data-lpp="compte"]').textContent.trim(),
+    b: document.querySelector(sel + ' [data-lpp="regarder"]').textContent.trim(), f: document.activeElement && document.activeElement.getAttribute('data-choix') }), SEL);
+  if (e.c === 'Étape 4 / 9' && /Regarder/.test(e.b) && e.f) attendu = JSON.stringify(e);
+  if (e.c === 'Étape 5 / 9') { attendu = 'PASSÉ : ' + JSON.stringify(e); break; }
+}
+await p.waitForTimeout(1500);
+const toujours = await cpt();
+await p.click('#chlPrediction [data-choix="pleine"]'); await p.waitForTimeout(200);
+const reprend = { compte: await cpt(), bouton: await p.$eval(`${SEL} [data-lpp="regarder"]`, e => e.textContent.trim()) };
+await p.click(`${SEL} [data-lpp="regarder"]`);           // pause
+ok('43 · « Regarder » s\'arrête à l\'étape 4 tant que l\'élève n\'a pas répondu, met le premier choix sous le doigt, puis reprend à l\'étape 5',
+   attendu && !attendu.startsWith('PASSÉ') && toujours === 'Étape 4 / 9' && reprend.compte === 'Étape 5 / 9' && /Pause/.test(reprend.bouton),
+   (attendu || 'jamais arrêté à l\'étape 4') + ' · ' + JSON.stringify(reprend));
+for (let k = 5; k < 9; k++) { await p.click(`${SEL} [data-lpp="suiv"]`); await p.waitForTimeout(80); }
+const fin = await p.evaluate(() => {
+  const t = document.getElementById('chlTache'), a = document.getElementById('chlVersAct2');
+  return { tache: !t.hidden, cible: a.getAttribute('href') };
+});
+await p.click('#chlFixeBouton'); await p.waitForTimeout(80);
+fin.ouvert = await p.evaluate(() => document.getElementById('chlFixeCorps').getBoundingClientRect().height > 100);
+await p.click('#chlFixeBouton'); await p.waitForTimeout(80);
+await p.evaluate(() => window.dispatchEvent(new Event('beforeprint')));   // comme une vraie impression : la fiche papier marque la séance
+await p.emulateMedia({ media: 'print' });
+fin.imprime = await p.evaluate(() => ({ schema: document.getElementById('chlFixeCorps').getBoundingClientRect().height > 100,
+  anim: getComputedStyle(document.getElementById('chaines-lampadaire-pas-a-pas')).display === 'none' }));
+await p.emulateMedia({ media: 'screen' });
+await p.evaluate(() => window.dispatchEvent(new Event('afterprint')));
+ok('44 · étape 9 « À toi » : le bouton mène à l\'activité 2 ; le schéma fixe s\'ouvre à la demande ; à l\'impression, le schéma fixe, pas l\'animation',
+   (await cpt()) === 'Étape 9 / 9' && fin.tache && fin.cible === '#act2' && fin.ouvert && fin.imprime.schema && fin.imprime.anim, JSON.stringify(fin));
 ok('40 · aucune erreur JS jusqu\'à la fin', err.length === 0, err.slice(0, 2).join(' | '));
 
 const n = T.filter(t => t.ok).length;
