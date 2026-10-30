@@ -3,87 +3,565 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Synthèse élève — 4e_C7.8 Le jardin publie sa mesure</title>
+<title>Synthèse élève — Le jardin publie sa mesure (4e_C7.8)</title>
 <style>
-body{font-family:system-ui,sans-serif;max-width:740px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
-h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
-.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
-.attention{background:#fff6e0;border-left:4px solid #b8860b}
-.limite{background:#fdeff1;border-left:4px solid #b0344b}
-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.93em}
-th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
-code{background:#eef3fa;padding:1px 5px;border-radius:4px;font-size:.92em}
-ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
-#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;font-size:.95em;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+  h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
+  ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  table{width:100%;border-collapse:collapse;margin:6px 0}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--sub);font-size:.9em}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  /* règle n°304 : un lien de rattrapage arrive sur ce titre ; la barre collante (47 px) ne doit pas le recouvrir */
+  h2[id]{scroll-margin-top:60px}
+  #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
+
+  /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
+  /* Une couleur par notion : pas de couleur propre à cette synthèse (les cases portent le verdict). */
+  /* La carte « Ce que je dois retenir » */
+  .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
+  .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
+  .question{text-align:center;font-size:1.05em;font-weight:600;margin:0 0 10px}
+  .programme{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);
+             padding:6px 0;margin:0 0 12px}
+  .programme b{color:var(--text)}
+  .programme ul{margin:2px 0;padding-left:18px}.programme li{margin:1px 0}
+  .cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .cartes a{display:block;text-decoration:none;color:var(--text);background:var(--panel);border:1.5px solid var(--border);
+            border-radius:10px;padding:9px 12px}
+  .cartes a:hover{border-color:var(--hl)}
+  .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
+  .cartes .r{display:block;font-size:.92em}
+  /* L'objet en image (Pascal, 29/10/2026 : « une illustration permet d'avoir une vision plus synthétique de l'objet ») :
+     à droite du programme, dans la carte ; dessous sur un téléphone. */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
+  .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
+  .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
+  .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
+  .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  ul.serre li{margin:1px 0}
+  .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
+
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+    h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; un schéma ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    .schema,table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
+    .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
+    .vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
+    .schema{width:60%;display:block;margin:4px auto}
+    h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
+
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  .box,.box code,code,th{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
 
 /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
 @media(max-width:680px){table{display:block;overflow-x:auto}}
-</style>
-</head>
+
+  /* Revenir à la carte (Pascal, 29/10/2026 : « je ne peux pas revenir à la synthèse ») : chaque partie porte, en
+     haut à droite, un lien vers la carte « Ce que je dois retenir » ; la barre de navigation collée en haut ne
+     recouvre plus le titre visé par un lien. Rien de tout cela ne s'imprime. */
+  .retour-carte{float:right;font-size:.82em;margin:1px 0 0 10px;padding:1px 10px;border:1.5px solid var(--border);
+                border-radius:999px;text-decoration:none;white-space:nowrap}
+  .retour-carte:hover,.retour-carte:focus-visible{border-color:var(--hl)}
+  #carte-titre,[id^="partie-"]{scroll-margin-top:64px}
+  @media print{.retour-carte{display:none}}
+
+  /* Cinq cases (cinq étapes, ou cinq candidats) : sur une seule rangée à l'écran et sur papier. */
+  .chaine.cinq div{flex-basis:110px}
+  @media print{.chaine.cinq div{padding:3px 6px}}
+
+  /* Le programme tient en deux lignes : la question de la séquence monte à côté de l'image, au lieu de la
+     surmonter, et l'image (1 536 × 1 024) garde sa forme, sans être rognée. */
+  .tete .question{margin:6px 0 8px;text-align:left}
+  .tete .programme{align-self:center}
+  .objet img{aspect-ratio:3/2;flex:none;height:auto}
+
+  /* Deux anciennes ancres, visées par la séquence 3e_C7.8 : la barre collée en haut ne recouvre pas la partie.
+     Le message du jardin, écrit d'un seul tenant, se coupe à la ligne sur un téléphone plutôt que de déborder. */
+  #neuf-points,#message{scroll-margin-top:64px}
+  .bloc p code{overflow-wrap:anywhere}
+</style></head>
 <body>
-<nav id="navharm"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_4e_C7.8_le-jardin-publie.html">📘 La séquence</a><a href="lexique_4e_C7.8.html">📖 Lexique</a></nav>
-<h1>📡 Synthèse élève — Le jardin publie sa mesure</h1>
-<p><em>4e_C7.8 — Interfacer un objet technique avec un réseau.</em></p>
-<h2 id="neuf-points">Les neuf points</h2>
-<div class="box">
-  <ul>
-    <li><b>Interfacer</b> — décider ce qu'un objet envoie, quand, à qui, et ce qu'il fait quand
-      plus personne n'écoute. Ce n'est pas le brancher : ça, c'est l'adressage.</li>
-    <li><b>Message suffisant</b> — celui dont le destinataire peut se servir sans rien deviner :
-      qui parle, quelle valeur, quelle unité, quand, et l'état utile.</li>
-    <li><b>Identifiant</b> — inutile tant qu'il n'y a qu'un objet, indispensable au deuxième.
-      On l'écrit dès le premier, parce qu'ajouter un champ après coup oblige à changer les deux
-      côtés.</li>
-    <li><b>Unité</b> — un nombre sans unité n'est pas une grandeur. Le récepteur ne devine pas,
-      et il ne doit pas deviner.</li>
-    <li><b>Horodatage</b> — l'heure de la <em>mesure</em>, pas celle de la réception. Dès qu'il y
-      a une file d'attente, les deux diffèrent.</li>
-    <li><b>Qui prend l'initiative</b> — l'objet pousse, ou le serveur demande. Le premier remplit
-      l'historique même la nuit ; le second n'enregistre que lorsqu'on regarde.</li>
-    <li><b>Un silence est une ambiguïté</b> — « rien reçu » peut vouloir dire « rien à dire » ou
-      « je suis mort ». Un message périodique lève l'ambiguïté.</li>
-    <li><b>Dégradé, pas éteint</b> — quand le lien tombe, un objet bien interfacé continue son
-      travail, garde ce qu'il peut, et le raconte au retour.</li>
-    <li><b>Ce qu'on n'envoie pas</b> — aucune donnée personnelle, aucun secret, et rien dont le
-      destinataire n'a l'usage.</li>
-  </ul>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_4e_C7.8_le-jardin-publie.html">📘 La séquence</a><a href="lexique_4e_C7.8.html">📖 Lexique</a></nav>
+<div class="page">
+<h1>📌 Synthèse élève — Le jardin publie sa mesure</h1>
+<p class="pb">Le jardin est sur le réseau, il a son adresse, et il ne dit rien&nbsp;: reste à l'interfacer.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
+
+<!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
+<section class="carte" aria-labelledby="carte-titre">
+  <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
+  <div class="tete">
+  <div class="programme"><p class="question">Qu'est-ce qu'un objet doit envoyer pour que quelqu'un, à l'autre bout, puisse en faire quelque chose&nbsp;?</p>
+    <b>Ce que dit le programme</b> (4e, compétence C7, et C1 en appui)&nbsp;:
+    <ul>
+      <li>interfacer un objet technique avec un réseau&nbsp;;</li>
+      <li>identifier et appliquer les règles pour un usage raisonné des objets communicants et des environnements numériques (propriété intellectuelle, identité numérique, témoins de connexion, géolocalisation).</li>
+    </ul>
+  </div>
+    <figure class="objet">
+      <img src="Images/synthese_jardin_connecte.png" alt="Le jardin connecté : un bac de culture avec sa sonde d'humidité, une cuve d'eau, un panneau solaire et un boîtier gris de commande.">
+      <figcaption>📍 L'objet&nbsp;: le jardin connecté, qui envoie sa mesure. <i>Image générée par IA (Canva).</i></figcaption>
+    </figure>
+  </div>
+  <div class="cartes">
+    <a href="#partie-1"><span class="q">🔌 1. Un objet branché communique-t-il&nbsp;?</span>
+      <span class="r">Non. Interfacer, c'est décider ce qu'il envoie, quand et à qui.</span></a>
+    <a href="#partie-2"><span class="q">✉️ 2. Que doit contenir le message&nbsp;?</span>
+      <span class="r">Qui parle, quelle valeur, quelle unité, quand, et l'état utile.</span></a>
+    <a href="#partie-3"><span class="q">🏷️ 3. Pourquoi l'identifiant et l'heure, dès le premier jour&nbsp;?</span>
+      <span class="r">Pour le deuxième jardin, et pour les mesures gardées en file.</span></a>
+    <a href="#partie-4"><span class="q">🔁 4. Qui parle en premier, et à quel rythme&nbsp;?</span>
+      <span class="r">L'objet, si la valeur change, et au moins une fois par heure.</span></a>
+    <a href="#partie-5"><span class="q">✂️ 5. Que fait le jardin quand le lien tombe&nbsp;?</span>
+      <span class="r">Il continue d'arroser, garde ses mesures et les envoie au retour.</span></a>
+    <a href="#partie-6"><span class="q">🔒 6. Que ne doit-on jamais envoyer&nbsp;?</span>
+      <span class="r">Ni donnée personnelle, ni secret, ni ce qui ne sert à personne.</span></a>
+  </div>
+</section>
+
+<!-- ══ 1 ══ (ancre « neuf-points » : visée par la séquence 3e_C7.8, « brancher ou interfacer ») -->
+<div class="bloc savoir" id="neuf-points">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-1" style="margin-top:0">1. Un objet branché sur le réseau communique-t-il&nbsp;?</h2>
+  <p>Le jardin a une adresse fixe sur le réseau du collège. Pourtant, le gestionnaire traverse la cour pour lire son écran&nbsp;:</p>
+  <div class="chaine etapes">
+    <div class="ok"><b>Brancher&nbsp;: c'est fait</b>Le jardin a son adresse, il est joignable.</div>
+    <div class="ko"><b>Interfacer&nbsp;: tout reste à décider</b>Ce qu'il envoie, quand, à qui.</div>
+    <div class="ko"><b>Et si personne n'écoute&nbsp;?</b>Ce qu'il fait quand le lien tombe.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: <b>interfacer</b>, ce n'est pas <b>brancher</b>&nbsp;: c'est décider de
+  <b>ce que l'objet dit</b>, et de ce qu'il fait quand <b>personne n'écoute</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'une adresse IP fixe suffit. Le jardin est joignable, et il n'a
+  rien à dire.</p>
 </div>
-<h2 id="message">Le message retenu</h2>
-<table>
-<tr><th>Champ</th><th>Ce que c'est</th><th></th></tr>
-<tr><td><code>id</code></td><td>l'identifiant de l'objet qui parle</td><td>✅ à envoyer</td></tr>
-<tr><td><code>h</code></td><td>la valeur lue par le capteur d'humidité</td><td>✅ à envoyer</td></tr>
-<tr><td><code>u</code></td><td>l'unité de cette valeur</td><td>✅ à envoyer</td></tr>
-<tr><td><code>t</code></td><td>l'heure à laquelle la mesure a été prise</td><td>✅ à envoyer</td></tr>
-<tr><td><code>pompe</code></td><td>l'état de la pompe au moment de la mesure</td><td>✅ à envoyer</td></tr>
-<tr><td><code>etat</code></td><td>les 127 variables internes de la carte</td><td>❌ à ne pas envoyer</td></tr>
-<tr><td><code>eleve</code></td><td>le prénom de l'élève qui a programmé la carte</td><td>❌ à ne pas envoyer</td></tr>
-</table>
-<h2>Ce que le destinataire peut faire, champ par champ</h2>
-<table>
-<tr><th>Champs présents</th><th>Ce que le destinataire peut alors faire</th></tr>
-<tr><td><code>id</code></td><td>savoir QUI envoie : c'est le jardin de la cour</td></tr>
-<tr><td><code>h</code></td><td>afficher une valeur</td></tr>
-<tr><td><code>h + u</code></td><td>savoir que 38 est un pourcentage d'humidité</td></tr>
-<tr><td><code>t</code></td><td>savoir quand la mesure a été prise</td></tr>
-<tr><td><code>pompe</code></td><td>savoir si le jardin a arrosé</td></tr>
-<tr><td><code>id + h + u + t</code></td><td>ranger la mesure dans un historique exploitable</td></tr>
-</table>
-<h2>Ce qu'on n'envoie pas</h2>
-<div class="box attention"><ul><li><code>etat</code> — 127 variables de trop : ça coûte de l'énergie, ça remplit l'historique, et personne n'en a l'usage.</li><li><code>eleve</code> — donnée personnelle : un prénom n'a rien à faire dans une mesure d'humidité.</li></ul></div>
-<h2>Dégradé, pas éteint</h2>
-<table>
-<tr><th>Comportement</th><th>Ce que le banc en dit</th></tr>
-<tr><td>perd la mesure et passe à la suivante</td><td>✘ PERDUE  la mesure n'existe plus nulle part</td></tr>
-<tr><td>garde les mesures en file et les envoie au retour du lien</td><td>⚠ en file (N en attente) — elles partiront au retour</td></tr>
-<tr><td>cesse d'arroser jusqu'au retour du lien</td><td>✘ l'objet s'est ARRÊTÉ — et le réseau n'y était pour rien</td></tr>
-</table>
-<h2>Je serai capable de…</h2>
-<ul><li>distinguer raccorder un objet et l'interfacer</li><li>composer un message suffisant, et justifier chaque champ</li><li>expliquer pourquoi l'identifiant s'écrit dès le premier objet</li><li>choisir qui prend l'initiative, et à quel rythme</li><li>expliquer pourquoi un silence est une ambiguïté</li><li>décider ce que l'objet fait quand le lien tombe</li><li>dire ce qui ne doit jamais figurer dans un message</li></ul>
-<footer>Synthèse élève — 4e_C7.8 « Le jardin publie sa mesure » · Thème 3 · banc de liaison original (CC0), à imprimer en noir et blanc sans rien perdre.</footer>
+
+<!-- ══ 2 ══ (ancre « message » : visée par la séquence 3e_C7.8, « composer un message suffisant ») -->
+<div class="bloc savoir" id="message">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-2" style="margin-top:0">2. Que doit contenir le message du jardin&nbsp;?</h2>
+  <p>Au banc, le message qui suffit tient en cinq champs&nbsp;: <code>{"id":"jardin-cour", "h":38, "u":"%", "t":"14:07", "pompe":false}</code></p>
+  <div class="chaine cinq">
+    <div><b><code>id</code></b>Qui parle&nbsp;: le jardin de la cour.</div>
+    <div><b><code>h</code></b>La valeur lue par le capteur&nbsp;: 38.</div>
+    <div><b><code>u</code></b>L'unité. Sans elle, 38&nbsp;% ou 38&nbsp;°C&nbsp;?</div>
+    <div><b><code>t</code></b>L'heure de la mesure.</div>
+    <div><b><code>pompe</code></b>A-t-elle tourné&nbsp;? Utile si la terre reste sèche.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un message <b>suffisant</b> se lit <b>sans rien deviner</b>. Un nombre
+  <b>sans unité</b> n'est pas une grandeur.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: envoyer seulement <code>{"h":38}</code>. Le récepteur affiche un nombre, et
+  ne peut rien en faire d'autre.</p>
+</div>
+
+<!-- ══ 3 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-3" style="margin-top:0">3. Pourquoi écrire l'identifiant et l'heure dès le premier jour&nbsp;?</h2>
+  <p>Aujourd'hui, un seul jardin envoie. L'an prochain, il y en aura trois sur le même écran&nbsp;:</p>
+  <div class="chaine">
+    <div><b>L'identifiant</b>Inutile avec un seul jardin, indispensable au deuxième.</div>
+    <div><b>L'heure de la mesure</b>Après une coupure, douze mesures arrivent à 15&nbsp;h&nbsp;12. Sans <code>t</code>, toutes seraient datées de 15&nbsp;h&nbsp;12.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: tu écris l'<b>identifiant</b> dès le premier objet&nbsp;: l'ajouter plus
+  tard oblige à changer <b>les deux côtés</b>. Tu dates la <b>mesure</b>, pas sa réception.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: se fier à l'heure de réception. Après une coupure, l'historique mentirait sans
+  prévenir.</p>
+</div>
+
+<!-- ══ 4 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-4" style="margin-top:0">4. Qui parle en premier, et à quel rythme&nbsp;?</h2>
+  <p>Le gestionnaire veut un historique complet, avec peu de messages. Trois règles sont possibles&nbsp;:</p>
+  <div class="chaine">
+    <div class="ko"><b>✘ Le serveur demande</b>La nuit, personne n'ouvre la page&nbsp;: l'historique a un trou.</div>
+    <div class="ko"><b>✘ Toutes les cinq minutes</b>288 fois par jour la même valeur, pour rien.</div>
+    <div class="ok"><b>✔ Si la valeur change</b>Et au moins une fois par heure, pour prouver que l'objet est vivant.</div>
+  </div>
+  <p>Pas d'arrosage depuis deux jours&nbsp;? S'il a plu, la pompe n'avait rien à faire. Les champs <code>pompe</code> et
+  <code>h</code>, lus ensemble, distinguent «&nbsp;en panne&nbsp;» de «&nbsp;rien à arroser&nbsp;».</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un <b>silence</b> est ambigu&nbsp;: «&nbsp;rien à dire&nbsp;» ou «&nbsp;en
+  panne&nbsp;»&nbsp;? Avec un message <b>au moins une fois par heure</b>, deux heures sans nouvelles valent <b>alerte</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire que «&nbsp;rien reçu&nbsp;» veut dire «&nbsp;tout va bien&nbsp;». Un jardin
+  en panne et un jardin dont l'humidité ne bouge pas se taisent de la même façon.</p>
+</div>
+
+<!-- ══ 5 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-5" style="margin-top:0">5. Que fait le jardin quand le lien tombe&nbsp;?</h2>
+  <p>Au banc, tu coupes le lien et tu essaies trois comportements&nbsp;:</p>
+  <div class="chaine">
+    <div class="ko"><b>✘ Perdre la mesure</b>Une heure de coupure, une heure de trou&nbsp;: les mesures n'existent plus.</div>
+    <div class="ok"><b>✔ Garder en file</b>Au retour du lien, tout part, avec l'heure d'origine.</div>
+    <div class="ko"><b>✘ Cesser d'arroser</b>Défaut grave&nbsp;: la plante ne sait pas que le Wi-Fi est tombé.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: quand le lien tombe, l'objet bien interfacé <b>continue son travail</b>.
+  Il <b>garde</b> ses mesures en file et les envoie au retour&nbsp;: c'est le <b>mode dégradé</b>, pas l'arrêt.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: faire dépendre l'arrosage du réseau. Le réseau sert à rendre compte, pas à
+  autoriser l'arrosage.</p>
+</div>
+
+<!-- ══ 6 ══ -->
+<div class="bloc pieges">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-6" style="margin-top:0">6. Que ne doit-on jamais envoyer, et pourquoi&nbsp;?</h2>
+  <p>Tout ce qui part sur le réseau est lisible par qui se trouve sur le chemin. Quatre choses tentent la classe&nbsp;:</p>
+  <div class="chaine">
+    <div class="ko"><b>✘ La clé du Wi-Fi</b>Un secret ne circule jamais&nbsp;: transmis, il est perdu.</div>
+    <div class="ko"><b>✘ Un prénom, une photo</b>Des données personnelles&nbsp;: elles n'ont rien à faire dans une mesure.</div>
+    <div class="ko"><b>✘ Les 127 variables</b>De l'énergie et de la place, pour des valeurs que personne n'utilise.</div>
+    <div class="ok"><b>✔ L'humidité</b>Avec son unité et son heure&nbsp;: le destinataire en a besoin.</div>
+  </div>
+  <p>L'identifiant <code>jardin-cour</code> suit l'objet sans suivre personne. Un objet fixe n'a pas à répéter sa position.
+  L'ouvrir vers Internet demande l'accord de l'administrateur du réseau.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: tu ne <b>collectes que ce qui sert</b>. Ce que l'objet envoie, c'est
+  <b>celui qui le programme</b> qui le décide. Une donnée envoyée par erreur <b>reste dans l'historique</b>, souvent des années.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: tout envoyer «&nbsp;au cas où&nbsp;». Chaque champ en trop coûte, et parfois
+  bien plus que de la place.</p>
+</div>
+
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>interfacer <span class="en">— to interface</span></dt><dd>décider ce qu'un objet envoie, quand et à qui.</dd></div>
+    <div><dt>adresse IP <span class="en">— IP address</span></dt><dd>le numéro d'un appareil sur le réseau.</dd></div>
+    <div><dt>message <span class="en">— message</span></dt><dd>ce que l'objet envoie, champ par champ.</dd></div>
+    <div><dt>champ <span class="en">— field</span></dt><dd>une case du message, avec son nom et sa valeur.</dd></div>
+    <div><dt>identifiant <span class="en">— identifier</span></dt><dd>le nom qui dit quel objet parle.</dd></div>
+    <div><dt>horodatage <span class="en">— timestamp</span></dt><dd>l'heure de la mesure, écrite dans le message.</dd></div>
+    <div><dt>récepteur <span class="en">— receiver</span></dt><dd>l'appareil qui reçoit le message, ici l'écran du bureau.</dd></div>
+    <div><dt>historique <span class="en">— log</span></dt><dd>toutes les mesures reçues, rangées dans l'ordre.</dd></div>
+    <div><dt>file d'attente <span class="en">— queue</span></dt><dd>les mesures gardées pendant une coupure.</dd></div>
+    <div><dt>mode dégradé <span class="en">— degraded mode</span></dt><dd>l'objet continue son travail sans le réseau.</dd></div>
+    <div><dt>JSON <span class="en">— JSON</span></dt><dd>une façon d'écrire un message, champ par champ.</dd></div>
+    <div><dt>donnée personnelle <span class="en">— personal data</span></dt><dd>une donnée qui désigne quelqu'un.</dd></div>
+    <div><dt>identité numérique <span class="en">— digital identity</span></dt><dd>ce que les données disent de quelqu'un.</dd></div>
+    <div><dt>géolocalisation <span class="en">— geolocation</span></dt><dd>la position d'un appareil, envoyée sur le réseau.</dd></div>
+  </dl>
+</div>
+</div>
+
+<!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  /* L'agrandisseur est une COLONNE — bouton, image, légende — : la légende suit l'image dans le
+     flux, l'image reçoit une hauteur maximale calculée (ajuster()), et le fond défile si besoin. */
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:1rem;box-sizing:border-box;overflow:auto;
+    flex-direction:column;align-items:center;gap:.75rem}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  /* centré quand tout tient, sans rien couper quand ça déborde : des marges automatiques,
+     pas justify-content:center (qui rendrait le haut inaccessible au défilement) */
+  .loupe-fond > .loupe-fermer{margin-top:auto}
+  .loupe-fond > .loupe-legende{margin-bottom:auto}
+  .loupe-fond img{display:block;flex:none;max-width:100%;max-height:80vh;width:auto;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:static;flex:none;margin:0;max-width:min(70ch,100%);text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif}
+  .loupe-legende .loupe-aide{display:block;margin-top:.25rem;font-size:.85em;color:#b8bfcc}
+  .loupe-fermer{position:sticky;top:0;align-self:flex-end;flex:none;z-index:1;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+    grande.addEventListener("load", ajuster);
+    window.addEventListener("resize", ajuster);
+  }
+
+  // La légende affichée : la figcaption VISIBLE de la figure si elle existe ; sinon le
+  // texte alternatif, réduit à sa première phrase s'il dépasse deux lignes. L'alt complet
+  // reste sur l'image agrandie, pour les lecteurs d'écran.
+  function poserLegende(el, texteAlt){
+    var fig = el.closest("figure");
+    var cap = fig ? fig.querySelector("figcaption") : null;
+    var visible = cap && cap.getClientRects().length && cap.textContent.trim();
+    legende.textContent = "";
+    var texte = visible ? cap.textContent.replace(/\s+/g, " ").trim() : (texteAlt || "");
+    texte = texte.replace(/\s*\(clique[^()]*agrandir\)/gi, "").trim();   // l'image est déjà agrandie
+    var corps = document.createElement("span");
+    corps.textContent = texte;
+    var aide = document.createElement("span");
+    aide.className = "loupe-aide";
+    aide.textContent = "Échap pour refermer";
+    if (texte) legende.appendChild(corps);
+    legende.appendChild(aide);
+    if (!visible && texte) {
+      var ligne = parseFloat(getComputedStyle(legende).lineHeight) || 20;
+      if (corps.getBoundingClientRect().height > 2 * ligne + 1) {
+        var m = texte.match(/^[\s\S]*?[.!?…](?=\s|$)/);
+        if (m && m[0].length < texte.length) corps.textContent = m[0];
+      }
+    }
+  }
+
+  // L'image reçoit la place qui reste : hauteur du fond, moins le bouton, la légende,
+  // les marges et les espacements — jamais moins de 40 % de l'écran ; au-delà, le fond défile.
+  function ajuster(){
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    var st = getComputedStyle(fond);
+    var ecart = parseFloat(st.rowGap) || 0;
+    var reste = fond.clientHeight - parseFloat(st.paddingTop) - parseFloat(st.paddingBottom)
+              - fond.querySelector(".loupe-fermer").offsetHeight - legende.offsetHeight - 2 * ecart;
+    grande.style.maxHeight = Math.max(reste, 0.4 * window.innerHeight) + "px";
+  }
+
+  function montrer(el, texteAlt){
+    fond.setAttribute("data-ouvert", "oui");
+    fond.scrollTop = 0;
+    poserLegende(el, texteAlt);
+    ajuster();
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.style.background = "";
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    montrer(img, img.alt);
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    grande.style.maxHeight = "";
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
+  // couleurs et leur police viennent de la feuille de style de la PAGE. Sérialisé seul, le
+  // dessin les perdrait (formes noires, police par défaut, texte qui déborde) : on recopie
+  // donc sur la copie les propriétés CALCULÉES de chaque élément, on y ajoute les dégradés
+  // et marqueurs définis ailleurs dans la page, et l'image reçoit le fond du schéma.
+  var PROPRIETES = ["fill", "fill-opacity", "fill-rule", "stroke", "stroke-width", "stroke-opacity",
+    "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit",
+    "opacity", "visibility", "display", "color", "font-family", "font-size", "font-weight", "font-style",
+    "font-variant-numeric", "letter-spacing", "word-spacing", "text-anchor", "dominant-baseline",
+    "baseline-shift", "text-decoration", "white-space", "paint-order", "stop-color", "stop-opacity",
+    "marker-start", "marker-mid", "marker-end", "clip-path", "mask", "filter"];
+  // Une transformation posée par la feuille de style (pas par l'attribut transform, que la
+  // copie garde déjà) : on la recopie avec son origine.
+  var TRANSFORMATION = ["transform", "transform-origin", "transform-box"];
+
+  function figer(source, copie){
+    var a = [source].concat([].slice.call(source.querySelectorAll("*")));
+    var b = [copie].concat([].slice.call(copie.querySelectorAll("*")));
+    for (var i = 0; i < a.length && i < b.length; i++) {
+      var cs = getComputedStyle(a[i]), decl = [], k, v;
+      for (k = 0; k < PROPRIETES.length; k++) {
+        v = cs.getPropertyValue(PROPRIETES[k]);
+        if (v) decl.push(PROPRIETES[k] + ":" + v);
+      }
+      if (i > 0 && !a[i].hasAttribute("transform") && cs.getPropertyValue("transform") &&
+          cs.getPropertyValue("transform") !== "none") {
+        for (k = 0; k < TRANSFORMATION.length; k++) decl.push(TRANSFORMATION[k] + ":" + cs.getPropertyValue(TRANSFORMATION[k]));
+      }
+      var deja = b[i].getAttribute("style");
+      b[i].setAttribute("style", decl.join(";") + (deja ? ";" + deja : ""));
+    }
+  }
+
+  // Un dégradé ou un marqueur appelé par url(#…) mais défini hors du dessin : on le recopie dedans.
+  function rapatrier(copie){
+    var defs = null, faits = {}, tour = 0, trouve = true;
+    while (trouve && tour++ < 4) {
+      trouve = false;
+      var refs = (new XMLSerializer().serializeToString(copie).match(/url\((?:&quot;|["'])?#([^"')&]+)/g) || [])
+        .concat(new XMLSerializer().serializeToString(copie).match(/href="#[^"]+"/g) || []);
+      refs.forEach(function(r){
+        var id = r.replace(/^url\((?:&quot;|["'])?#/, "").replace(/^href="#/, "").replace(/"$/, "");
+        if (faits[id] || copie.querySelector("[id='" + id.replace(/'/g, "") + "']")) return;
+        faits[id] = true;
+        var el = document.getElementById(id);
+        if (!el || !el.closest("svg")) return;
+        if (!defs) { defs = document.createElementNS("http://www.w3.org/2000/svg", "defs"); copie.insertBefore(defs, copie.firstChild); }
+        var c = el.cloneNode(true); figer(el, c); defs.appendChild(c); trouve = true;
+      });
+    }
+  }
+
+  // Le fond sur lequel le schéma est dessiné : le sien, sinon celui du premier parent opaque.
+  function fondDe(el){
+    for (var e = el; e && e.nodeType === 1; e = e.parentElement) {
+      var c = getComputedStyle(e).backgroundColor, m = c.match(/rgba?\(([^)]+)\)/);
+      if (m) { var p = m[1].split(","); if (p.length < 4 || parseFloat(p[3]) > 0) return c; }
+      else if (c && c !== "transparent") return c;
+    }
+    return "#fff";
+  }
+
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    figer(svg, copie);
+    rapatrier(copie);
+    copie.style.background = "transparent";
+    // Une taille propre au dessin (sans elle, une image SVG n'a que 300 × 150 px à offrir) :
+    // celle de la viewBox, agrandie ; le CSS de la loupe la ramène à l'écran.
+    var vb = svg.viewBox && svg.viewBox.baseVal, boite = svg.getBoundingClientRect();
+    var w = vb && vb.width ? vb.width : boite.width, h = vb && vb.height ? vb.height : boite.height;
+    if (!(vb && vb.width) && w && h) copie.setAttribute("viewBox", "0 0 " + w + " " + h);
+    var k = w ? Math.max(1, 1600 / w) : 1;
+    if (w && h) { copie.setAttribute("width", Math.round(w * k)); copie.setAttribute("height", Math.round(h * k)); }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.style.background = fondDe(svg);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    montrer(svg, mot);
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
 </body>
 </html>

@@ -3,93 +3,556 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Synthèse élève — 5e_C8.2 Éprouver un matériau</title>
+<title>Synthèse élève — La patère du hall, éprouver un matériau (5e_C8.2)</title>
 <style>
-body{font-family:system-ui,sans-serif;max-width:720px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
-h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
-.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
-.attention{background:#fff6e0;border-left:4px solid #b8860b}
-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.94em}
-th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
-ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
-#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;font-size:.95em;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+  h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
+  ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  table{width:100%;border-collapse:collapse;margin:6px 0}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--sub);font-size:.9em}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;flex-wrap:wrap;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  /* règle n°304 : un lien de rattrapage arrive sur ce titre ; la barre collante (47 px) ne doit pas le recouvrir */
+  h2[id]{scroll-margin-top:60px}
+  #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
+
+  /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
+  /* Une couleur par notion, la même partout : la donnée en jaune, l'information en vert. */
+  .d{color:var(--warn);font-weight:600}.i{color:var(--ok);font-weight:600}
+  /* La carte « Ce que je dois retenir » */
+  .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
+  .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
+  .question{text-align:center;font-size:1.05em;font-weight:600;margin:0 0 10px}
+  .programme{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);
+             padding:6px 0;margin:0 0 12px}
+  .programme b{color:var(--text)}
+  .programme ul{margin:2px 0;padding-left:18px}.programme li{margin:1px 0}
+  .cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .cartes a{display:block;text-decoration:none;color:var(--text);background:var(--panel);border:1.5px solid var(--border);
+            border-radius:10px;padding:9px 12px}
+  .cartes a:hover{border-color:var(--hl)}
+  .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
+  .cartes .r{display:block;font-size:.92em}
+  /* L'objet en image (Pascal, 29/10/2026 : « une illustration permet d'avoir une vision plus synthétique de l'objet ») :
+     à droite du programme, dans la carte ; dessous sur un téléphone. */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
+  .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
+  .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
+  .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
+  .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  ul.serre li{margin:1px 0}
+  .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
+
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+    h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; un schéma ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    .schema,table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
+    .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
+    .d{color:#8a5a00}.i{color:#1d6b38}.vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
+    .schema{width:60%;display:block;margin:4px auto}
+    h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
+
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  .box,th{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
 
 /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
 @media(max-width:680px){table{display:block;overflow-x:auto}}
-</style>
-</head>
+
+  /* Revenir à la carte (Pascal, 29/10/2026 : « je ne peux pas revenir à la synthèse ») : chaque partie porte, en
+     haut à droite, un lien vers la carte « Ce que je dois retenir » ; la barre de navigation collée en haut ne
+     recouvre plus le titre visé par un lien. Rien de tout cela ne s'imprime. */
+  .retour-carte{float:right;font-size:.82em;margin:1px 0 0 10px;padding:1px 10px;border:1.5px solid var(--border);
+                border-radius:999px;text-decoration:none;white-space:nowrap}
+  .retour-carte:hover,.retour-carte:focus-visible{border-color:var(--hl)}
+  #carte-titre,[id^="partie-"]{scroll-margin-top:64px}
+  @media print{.retour-carte{display:none}}
+
+  /* Une rangée de cinq ou six cases tient sur une ligne. */
+  .chaine.cinq div{flex-basis:100px}
+  @media print{.chaine.cinq div{padding:3px 6px}}
+  /* Les anciennes ancres, visées par d'autres séquences : la barre collée en haut ne recouvre pas la partie. */
+  #mots,#protocole,#decider,#phrase{scroll-margin-top:64px}
+</style></head>
 <body>
-<nav id="navharm"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_5e_C8.2_patere-du-hall.html">📘 La séquence</a></nav>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_5e_C8.2_patere-du-hall.html">📘 La séquence</a></nav>
+<div class="page">
+<h1>📌 Synthèse élève — La patère du hall&nbsp;: éprouver un matériau</h1>
+<p class="pb">Suivre un protocole fourni, relever au bon moment, puis décider avec un chiffre.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
 
-<h1>🪝 Synthèse élève — Éprouver un matériau</h1>
-<p><em>5e_C8.2 — mettre en œuvre un protocole de test fourni pour valider la tenue mécanique d'un matériau.</em></p>
+<!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
+<section class="carte" aria-labelledby="carte-titre">
+  <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
+  <p class="question">Comment savoir, avant de fabriquer, si un matériau tiendra la charge&nbsp;?</p>
+  <div class="tete">
+  <div class="programme"><b>Ce que dit le programme</b> (5e, compétences C8 et C3)&nbsp;:
+    <ul>
+      <li>mettre en œuvre un protocole de test fourni pour valider la tenue mécanique d'un matériau&nbsp;;</li>
+      <li>repérer pour un OST les matériaux, les sources et les formes d'énergies, le traitement de l'information.</li>
+    </ul>
+  </div>
+    <figure class="objet">
+      <img src="Images/synthese_patere_hall.png" alt="Une rangée de patères en métal vissées au mur d'un hall de collège ; un sac à dos mouillé pend à l'une d'elles.">
+      <figcaption>📍 L'objet&nbsp;: les patères du hall, sous la charge d'un sac. <i>Image générée par IA (Canva).</i></figcaption>
+    </figure>
+  </div>
+  <div class="cartes">
+    <a href="#partie-1"><span class="q">🧪 1. Que mesure-t-on en cassant une éprouvette&nbsp;?</span>
+      <span class="r">La charge de rupture, en traction.</span></a>
+    <a href="#partie-2"><span class="q">📋 2. Comment suivre un protocole fourni&nbsp;?</span>
+      <span class="r">Ligne par ligne&nbsp;: ce qui ne doit pas varier ne varie pas.</span></a>
+    <a href="#partie-3"><span class="q">📊 3. Que donnent les cinq relevés&nbsp;?</span>
+      <span class="r">De 41 à 408&nbsp;kg, en traction seulement.</span></a>
+    <a href="#partie-4"><span class="q">⚖️ 4. Le matériau tient-il la charge exigée&nbsp;?</span>
+      <span class="r">Charge prévue × coefficient de sécurité&nbsp;: 40&nbsp;kg.</span></a>
+    <a href="#partie-5"><span class="q">🕳️ 5. Qu'est-ce qu'un essai ne dit pas&nbsp;?</span>
+      <span class="r">Tout ce qu'on ne lui a pas demandé.</span></a>
+    <a href="#partie-6"><span class="q">📚 6. Le même essai vaut-il pour une étagère&nbsp;?</span>
+      <span class="r">Non&nbsp;: elle plie, il faut un essai de flexion.</span></a>
+  </div>
+</section>
 
-<h2 id="mots">Les six mots à savoir</h2>
-<div class="box">
-<ul>
-  <li><b>Éprouvette</b> — un morceau de matière, de forme et de taille imposées, fait pour être cassé. On ne compare deux matériaux qu'à éprouvettes identiques.</li>
-  <li><b>Charge de rupture</b> — la charge à partir de laquelle l'éprouvette casse. C'est un point précis, pas une plage : on le note au moment exact.</li>
-  <li><b>Traction</b> — tirer dans l'axe. Ce n'est qu'une façon de casser : il y a aussi la flexion, la compression et le choc.</li>
-  <li><b>Protocole</b> — la suite d'essais décidée <em>avant</em>. Il dit ce qu'on fait, ce qu'on note, et surtout ce qui ne doit pas varier.</li>
-  <li><b>Coefficient de sécurité</b> — le nombre par lequel on multiplie la charge prévue, parce qu'on ne connaît ni la vraie charge, ni la vraie pièce.</li>
-  <li><b>Fluage</b> — la déformation lente d'un matériau sous une charge permanente, bien en dessous de sa rupture.</li>
-</ul>
+<!-- ══ 1 ══ (ancre « mots » : visée par d'autres séquences) -->
+<div class="bloc savoir" id="mots">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-1" style="margin-top:0">1. Que mesure-t-on en cassant une éprouvette&nbsp;?</h2>
+  <p>Trois patères du hall ont cédé. Le gestionnaire veut un chiffre. Au banc d'essai, on ne casse pas la vraie patère&nbsp;:</p>
+  <div class="chaine">
+    <div><b>L'éprouvette</b>Un morceau de matière de forme imposée, fait pour casser. Toujours la même section&nbsp;: 2 × 5&nbsp;mm.</div>
+    <div><b>La traction</b>On tire dans l'axe, de plus en plus fort, jusqu'à la rupture.</div>
+    <div><b>La charge de rupture</b>La charge à laquelle l'éprouvette casse&nbsp;: un point précis, pas une plage.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: le banc mesure la <b>charge de rupture</b>&nbsp;: la charge à laquelle
+  l'éprouvette casse, en <b>traction</b>. On ne compare des matériaux qu'à <b>éprouvettes identiques</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: noter quand l'éprouvette commence à s'allonger. Un matériau s'allonge bien
+  avant de casser.</p>
 </div>
 
-<h2 id="protocole">Le protocole, en six lignes</h2>
-<table>
-  <tr><th>#</th><th>Ce que je fais</th><th>Pourquoi</th></tr>
-  <tr><td>1</td><td>Je prends une éprouvette <b>neuve</b></td><td>une pièce déjà tirée est abîmée sans que ça se voie</td></tr>
-  <tr><td>2</td><td>Je la fixe entre les mors</td><td>pour que la traction soit bien dans l'axe</td></tr>
-  <tr><td>3</td><td>J'augmente par <b>paliers</b></td><td>la taille du palier fixe la précision du relevé</td></tr>
-  <tr><td>4</td><td>Je note au <b>moment de la rupture</b></td><td>avant on ne sait pas, après c'est perdu</td></tr>
-  <tr><td>5</td><td>Je recommence avec le matériau suivant</td><td>même éprouvette, même banc</td></tr>
-  <tr><td>6</td><td>Je ne compare que le comparable</td><td>c'est le mot que tout le protocole protège</td></tr>
-</table>
-
-<h2>Les cinq relevés du banc</h2>
-<table>
-  <tr><th>Matériau</th><th>Charge de rupture</th><th>Ce que l'essai n'a pas vu</th></tr>
-  <tr><td>Bois (pin)</td><td>41 kg</td><td>un nœud, et la pièce casse bien plus tôt</td></tr>
-  <tr><td>PLA imprimé en 3D</td><td>51 kg</td><td>en travers des couches, moins de la moitié</td></tr>
-  <tr><td>PVC rigide</td><td>53 kg</td><td>il flue : il se déforme lentement sous charge</td></tr>
-  <tr><td>Aluminium</td><td>194 kg</td><td>il se raye et se plie définitivement</td></tr>
-  <tr><td>Acier doux</td><td>408 kg</td><td>en bord de mer, il rouille</td></tr>
-</table>
-<p><em>Valeurs simulées, cohérentes avec les résistances usuelles, pour une éprouvette de 2 × 5 mm.</em></p>
-
-<h2 id="decider">Décider</h2>
-<div class="box">
-<p>Sac trempé <b>8 kg</b> × coefficient de sécurité <b>5</b> = <b>40 kg</b> à tenir.</p>
-<p>Les cinq matériaux passent cette barre. <b>C'est justement le problème :</b> quand un critère
-ne départage plus, il en faut un autre — durée, corrosion, fabrication, coût.</p>
-</div>
-<div class="box attention">
-<p><b>Le bois passe à 41 kg pour 40 exigés.</b> C'est 2,5 % de marge, sur une éprouvette
-<em>sans défaut</em>. La vraie planche aura un nœud. Un essai réussi de justesse est un essai
-qu'on n'a pas eu le temps de rater.</p>
+<!-- ══ 2 ══ (ancre « protocole » : visée par d'autres séquences) -->
+<div class="bloc faire" id="protocole">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-2" style="margin-top:0">2. Comment suivre un protocole fourni&nbsp;?</h2>
+  <p>Le laboratoire fournit le protocole en six lignes. Ton travail&nbsp;: le suivre sans en sauter une.</p>
+  <div class="chaine etapes cinq">
+    <div><b>1. Neuve</b>Une éprouvette jamais tirée, du matériau à tester.</div>
+    <div><b>2. Les mors</b>On la fixe entre eux, pour tirer dans l'axe.</div>
+    <div><b>3. Paliers</b>On charge sans à-coup, pour voir la rupture arriver.</div>
+    <div><b>4. Noter</b>Au moment exact de la rupture&nbsp;: après, c'est perdu.</div>
+    <div><b>5. Suivant</b>Même éprouvette, même banc, autre matériau.</div>
+    <div><b>6. Comparer</b>Seulement des essais faits dans les mêmes conditions.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un <b>protocole</b> est la suite d'essais décidée <b>avant</b>. Il fixe
+  surtout ce qui <b>ne doit pas varier</b>, pour que les relevés soient <b>comparables</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: réutiliser une éprouvette déjà tirée. Elle garde des fissures invisibles
+  et cassera plus tôt.</p>
 </div>
 
-<h2 id="phrase">La phrase à retenir</h2>
-<div class="box">
-<p><b>Un essai répond à la question qu'on lui a posée, et à elle seule.</b> « Ça tient 51 kg »
-ne veut pas dire « c'est le bon matériau » : ça veut dire « ça tient 51 kg, en traction, dans
-les conditions de l'essai ». Tout le reste est encore à vérifier.</p>
+<!-- ══ 3 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-3" style="margin-top:0">3. Que donnent les cinq relevés du banc&nbsp;?</h2>
+  <p>Les valeurs sont simulées, mais cohérentes avec les résistances usuelles de ces matériaux&nbsp;:</p>
+  <div class="chaine cinq">
+    <div><b>Bois (pin)</b>41&nbsp;kg</div>
+    <div><b>PLA imprimé</b>51&nbsp;kg</div>
+    <div><b>PVC rigide</b>53&nbsp;kg</div>
+    <div><b>Aluminium</b>194&nbsp;kg</div>
+    <div><b>Acier doux</b>408&nbsp;kg</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un relevé se note <b>avec son unité</b>, au moment où on le lit. Un relevé
+  qu'on n'a <b>pas fait</b> soi-même ne prouve rien.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire l'acier «&nbsp;dix fois plus solide&nbsp;» partout. Tu as mesuré la
+  traction&nbsp;; en flexion ou au choc, le classement peut changer.</p>
 </div>
 
-<h2>Je serai capable de…</h2>
-<ul>
-  <li>appliquer un protocole fourni sans en sauter une ligne ;</li>
-  <li>dire à quel instant on relève, et pourquoi à celui-là ;</li>
-  <li>calculer la charge exigée à partir de la charge prévue et du coefficient ;</li>
-  <li>confronter mes cinq relevés à cette exigence ;</li>
-  <li>nommer au moins une chose que mon essai n'a pas mesurée.</li>
-</ul>
+<!-- ══ 4 ══ (ancre « decider » : visée par d'autres séquences) -->
+<div class="bloc savoir" id="decider">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-4" style="margin-top:0">4. Le matériau tient-il la charge exigée&nbsp;?</h2>
+  <p>Le gestionnaire fixe la charge à tenir. On ne la devine pas&nbsp;: on la calcule.</p>
+  <div class="chaine etapes">
+    <div><b>1. La charge prévue</b>Un sac de cours trempé&nbsp;: 8&nbsp;kg.</div>
+    <div><b>2. Le coefficient</b>5&nbsp;: un élève s'y suspend un jour ou l'autre.</div>
+    <div><b>3. La charge exigée</b>8 × 5 = 40&nbsp;kg à tenir.</div>
+  </div>
+  <p>Les cinq matériaux passent. Le bois passe de justesse&nbsp;: 41&nbsp;kg pour 40, soit 2,5&nbsp;% de marge, sur une
+  éprouvette sans défaut. La vraie planche aura un nœud.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: <b>charge exigée</b> = charge prévue × <b>coefficient de sécurité</b>.
+  Quand tous les matériaux passent, il faut <b>un autre critère</b> pour trancher.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: additionner au lieu de multiplier. 8 + 5 = 13&nbsp;kg, alors qu'il faut tenir 40&nbsp;kg.</p>
+</div>
 
-<footer>Synthèse élève · séquence 5e_C8.2 « La patère du hall » · Thème 3.</footer>
+<!-- ══ 5 ══ (ancre « phrase » : visée par d'autres séquences) -->
+<div class="bloc pieges" id="phrase">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-5" style="margin-top:0">5. Qu'est-ce qu'un essai de traction ne dit pas&nbsp;?</h2>
+  <p>Les cinq matériaux passent la barre. Pourtant, chacun cache une faiblesse que l'essai n'a pas vue&nbsp;:</p>
+  <div class="chaine cinq">
+    <div><b>Bois</b>Un nœud, et la pièce casse bien plus tôt.</div>
+    <div><b>PLA</b>En travers des couches, il tient moins de la moitié.</div>
+    <div><b>PVC</b>Il flue&nbsp;: sous une charge permanente, il se déforme lentement.</div>
+    <div><b>Aluminium</b>Il se raye, et se plie pour de bon avant de casser.</div>
+    <div><b>Acier</b>En bord de mer, sans protection, il rouille.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un essai répond à <b>la question qu'on lui a posée</b>, et à elle seule.
+  «&nbsp;Ça tient 51&nbsp;kg&nbsp;» veut dire&nbsp;: en traction, dans les conditions de l'essai.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: choisir sur ce seul chiffre. Il faut d'autres critères, comme la tenue à
+  l'air salé ou le coût.</p>
+</div>
+
+<!-- ══ 6 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-6" style="margin-top:0">6. Le même essai vaut-il pour une étagère du CDI&nbsp;?</h2>
+  <p>Le CDI veut une étagère pour 25&nbsp;kg de manuels, avec le même coefficient de sécurité&nbsp;:</p>
+  <div class="chaine">
+    <div class="ok"><b>Le calcul ✔</b>Il se fait pareil&nbsp;: 25 × 5 = 125&nbsp;kg à tenir.</div>
+    <div class="ko"><b>L'essai ✘</b>Une étagère plie, elle ne s'étire pas&nbsp;: il faut un essai de flexion.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: chaque essai répond à une <b>sollicitation</b>&nbsp;: la traction n'est pas
+  la flexion. Avant d'essayer, vérifie que l'essai répond à <b>ta question</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: réutiliser un protocole qui marche, pour une question à laquelle il ne
+  répond pas.</p>
+</div>
+
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>éprouvette <span class="en">— test specimen</span></dt><dd>un morceau de matière fait pour être cassé.</dd></div>
+    <div><dt>traction <span class="en">— tension</span></dt><dd>tirer sur une pièce dans son axe.</dd></div>
+    <div><dt>flexion <span class="en">— bending</span></dt><dd>l'effort qui courbe une pièce.</dd></div>
+    <div><dt>charge de rupture <span class="en">— breaking load</span></dt><dd>la charge à laquelle la pièce casse.</dd></div>
+    <div><dt>protocole <span class="en">— test procedure</span></dt><dd>la suite d'essais décidée avant.</dd></div>
+    <div><dt>mors <span class="en">— grips</span></dt><dd>les deux mâchoires qui tiennent l'éprouvette.</dd></div>
+    <div><dt>palier <span class="en">— step</span></dt><dd>une petite hausse de charge, l'une après l'autre.</dd></div>
+    <div><dt>coefficient de sécurité <span class="en">— safety factor</span></dt><dd>le nombre qui multiplie la charge prévue.</dd></div>
+    <div><dt>charge exigée <span class="en">— required load</span></dt><dd>ce que la pièce doit tenir&nbsp;: 40&nbsp;kg ici.</dd></div>
+    <div><dt>sollicitation <span class="en">— load type</span></dt><dd>la façon de charger une pièce, comme tirer ou plier.</dd></div>
+    <div><dt>fluage <span class="en">— creep</span></dt><dd>une déformation lente sous une charge qui dure.</dd></div>
+    <div><dt>OST <span class="en">— technical object</span></dt><dd>objet ou système technique.</dd></div>
+  </dl>
+</div>
+</div>
+
+<!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  /* L'agrandisseur est une COLONNE — bouton, image, légende — : la légende suit l'image dans le
+     flux, l'image reçoit une hauteur maximale calculée (ajuster()), et le fond défile si besoin. */
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:1rem;box-sizing:border-box;overflow:auto;
+    flex-direction:column;align-items:center;gap:.75rem}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  /* centré quand tout tient, sans rien couper quand ça déborde : des marges automatiques,
+     pas justify-content:center (qui rendrait le haut inaccessible au défilement) */
+  .loupe-fond > .loupe-fermer{margin-top:auto}
+  .loupe-fond > .loupe-legende{margin-bottom:auto}
+  .loupe-fond img{display:block;flex:none;max-width:100%;max-height:80vh;width:auto;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:static;flex:none;margin:0;max-width:min(70ch,100%);text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif}
+  .loupe-legende .loupe-aide{display:block;margin-top:.25rem;font-size:.85em;color:#b8bfcc}
+  .loupe-fermer{position:sticky;top:0;align-self:flex-end;flex:none;z-index:1;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+    grande.addEventListener("load", ajuster);
+    window.addEventListener("resize", ajuster);
+  }
+
+  // La légende affichée : la figcaption VISIBLE de la figure si elle existe ; sinon le
+  // texte alternatif, réduit à sa première phrase s'il dépasse deux lignes. L'alt complet
+  // reste sur l'image agrandie, pour les lecteurs d'écran.
+  function poserLegende(el, texteAlt){
+    var fig = el.closest("figure");
+    var cap = fig ? fig.querySelector("figcaption") : null;
+    var visible = cap && cap.getClientRects().length && cap.textContent.trim();
+    legende.textContent = "";
+    var texte = visible ? cap.textContent.replace(/\s+/g, " ").trim() : (texteAlt || "");
+    texte = texte.replace(/\s*\(clique[^()]*agrandir\)/gi, "").trim();   // l'image est déjà agrandie
+    var corps = document.createElement("span");
+    corps.textContent = texte;
+    var aide = document.createElement("span");
+    aide.className = "loupe-aide";
+    aide.textContent = "Échap pour refermer";
+    if (texte) legende.appendChild(corps);
+    legende.appendChild(aide);
+    if (!visible && texte) {
+      var ligne = parseFloat(getComputedStyle(legende).lineHeight) || 20;
+      if (corps.getBoundingClientRect().height > 2 * ligne + 1) {
+        var m = texte.match(/^[\s\S]*?[.!?…](?=\s|$)/);
+        if (m && m[0].length < texte.length) corps.textContent = m[0];
+      }
+    }
+  }
+
+  // L'image reçoit la place qui reste : hauteur du fond, moins le bouton, la légende,
+  // les marges et les espacements — jamais moins de 40 % de l'écran ; au-delà, le fond défile.
+  function ajuster(){
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    var st = getComputedStyle(fond);
+    var ecart = parseFloat(st.rowGap) || 0;
+    var reste = fond.clientHeight - parseFloat(st.paddingTop) - parseFloat(st.paddingBottom)
+              - fond.querySelector(".loupe-fermer").offsetHeight - legende.offsetHeight - 2 * ecart;
+    grande.style.maxHeight = Math.max(reste, 0.4 * window.innerHeight) + "px";
+  }
+
+  function montrer(el, texteAlt){
+    fond.setAttribute("data-ouvert", "oui");
+    fond.scrollTop = 0;
+    poserLegende(el, texteAlt);
+    ajuster();
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.style.background = "";
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    montrer(img, img.alt);
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    grande.style.maxHeight = "";
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
+  // couleurs et leur police viennent de la feuille de style de la PAGE. Sérialisé seul, le
+  // dessin les perdrait (formes noires, police par défaut, texte qui déborde) : on recopie
+  // donc sur la copie les propriétés CALCULÉES de chaque élément, on y ajoute les dégradés
+  // et marqueurs définis ailleurs dans la page, et l'image reçoit le fond du schéma.
+  var PROPRIETES = ["fill", "fill-opacity", "fill-rule", "stroke", "stroke-width", "stroke-opacity",
+    "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit",
+    "opacity", "visibility", "display", "color", "font-family", "font-size", "font-weight", "font-style",
+    "font-variant-numeric", "letter-spacing", "word-spacing", "text-anchor", "dominant-baseline",
+    "baseline-shift", "text-decoration", "white-space", "paint-order", "stop-color", "stop-opacity",
+    "marker-start", "marker-mid", "marker-end", "clip-path", "mask", "filter"];
+  // Une transformation posée par la feuille de style (pas par l'attribut transform, que la
+  // copie garde déjà) : on la recopie avec son origine.
+  var TRANSFORMATION = ["transform", "transform-origin", "transform-box"];
+
+  function figer(source, copie){
+    var a = [source].concat([].slice.call(source.querySelectorAll("*")));
+    var b = [copie].concat([].slice.call(copie.querySelectorAll("*")));
+    for (var i = 0; i < a.length && i < b.length; i++) {
+      var cs = getComputedStyle(a[i]), decl = [], k, v;
+      for (k = 0; k < PROPRIETES.length; k++) {
+        v = cs.getPropertyValue(PROPRIETES[k]);
+        if (v) decl.push(PROPRIETES[k] + ":" + v);
+      }
+      if (i > 0 && !a[i].hasAttribute("transform") && cs.getPropertyValue("transform") &&
+          cs.getPropertyValue("transform") !== "none") {
+        for (k = 0; k < TRANSFORMATION.length; k++) decl.push(TRANSFORMATION[k] + ":" + cs.getPropertyValue(TRANSFORMATION[k]));
+      }
+      var deja = b[i].getAttribute("style");
+      b[i].setAttribute("style", decl.join(";") + (deja ? ";" + deja : ""));
+    }
+  }
+
+  // Un dégradé ou un marqueur appelé par url(#…) mais défini hors du dessin : on le recopie dedans.
+  function rapatrier(copie){
+    var defs = null, faits = {}, tour = 0, trouve = true;
+    while (trouve && tour++ < 4) {
+      trouve = false;
+      var refs = (new XMLSerializer().serializeToString(copie).match(/url\((?:&quot;|["'])?#([^"')&]+)/g) || [])
+        .concat(new XMLSerializer().serializeToString(copie).match(/href="#[^"]+"/g) || []);
+      refs.forEach(function(r){
+        var id = r.replace(/^url\((?:&quot;|["'])?#/, "").replace(/^href="#/, "").replace(/"$/, "");
+        if (faits[id] || copie.querySelector("[id='" + id.replace(/'/g, "") + "']")) return;
+        faits[id] = true;
+        var el = document.getElementById(id);
+        if (!el || !el.closest("svg")) return;
+        if (!defs) { defs = document.createElementNS("http://www.w3.org/2000/svg", "defs"); copie.insertBefore(defs, copie.firstChild); }
+        var c = el.cloneNode(true); figer(el, c); defs.appendChild(c); trouve = true;
+      });
+    }
+  }
+
+  // Le fond sur lequel le schéma est dessiné : le sien, sinon celui du premier parent opaque.
+  function fondDe(el){
+    for (var e = el; e && e.nodeType === 1; e = e.parentElement) {
+      var c = getComputedStyle(e).backgroundColor, m = c.match(/rgba?\(([^)]+)\)/);
+      if (m) { var p = m[1].split(","); if (p.length < 4 || parseFloat(p[3]) > 0) return c; }
+      else if (c && c !== "transparent") return c;
+    }
+    return "#fff";
+  }
+
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    figer(svg, copie);
+    rapatrier(copie);
+    copie.style.background = "transparent";
+    // Une taille propre au dessin (sans elle, une image SVG n'a que 300 × 150 px à offrir) :
+    // celle de la viewBox, agrandie ; le CSS de la loupe la ramène à l'écran.
+    var vb = svg.viewBox && svg.viewBox.baseVal, boite = svg.getBoundingClientRect();
+    var w = vb && vb.width ? vb.width : boite.width, h = vb && vb.height ? vb.height : boite.height;
+    if (!(vb && vb.width) && w && h) copie.setAttribute("viewBox", "0 0 " + w + " " + h);
+    var k = w ? Math.max(1, 1600 / w) : 1;
+    if (w && h) { copie.setAttribute("width", Math.round(w * k)); copie.setAttribute("height", Math.round(h * k)); }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.style.background = fondDe(svg);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    montrer(svg, mot);
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
 </body>
 </html>

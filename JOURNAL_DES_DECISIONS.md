@@ -26493,3 +26493,153 @@ que `main` (`controle_regle4.py` en échec des deux côtés, comme avant) ; `con
 - Le **lexique de 5e_C9.1** est refusé par son générateur (« OST » n'est plus dans l'ouverture) : non touché ici.
 - Les figures générées ont des textes de 18 à 23 unités dans 1 600 : à 800 px, `controle_schemas.mjs` les dit
   « minuscules » (⚠), comme les six figures d'avant.
+
+---
+
+## 30/10/2026 — n°316 révisée, thème 3 : les trente et une synthèses élève vulgarisées, en deux pages A4 (thème 3)
+
+*Pascal, « Go », pour les synthèses des thèmes 2 et 3 « de la même façon, thème par thème ». Le thème 2 est fusionné
+(#556). Branche `fable/theme-3-syntheses-deux-pages`.*
+
+### Le point de départ
+
+Le thème 3 compte trente et une synthèses élève : les lots C7, C8 et C9, plus deux ateliers, la CAO et la
+planification. Aucune n'avait la forme de la n°316. Elles pesaient **81 pages A4** en tout :
+- vingt d'entre elles en faisaient trois, et 4e_C9 quatre ;
+- quatre étaient presque vides : le capteur de confort en 3e (126 mots), l'espace vert en 4e (219), la validation du
+  jardin en 4e (184) et le mini-projet en 5e (54).
+
+Elles sont **réécrites**, avec la forme du thème 1 et du thème 2 :
+- la carte et « Ce que dit le programme » mot pour mot ;
+- de 6 à 7 parties en quatre temps ;
+- un seul lexique ;
+- le lien « ↑ La carte ».
+
+Les quatre synthèses presque vides sont écrites à partir de quatre sources : la séquence, le QCM, la synthèse
+professeur et la fiche.
+
+**Les 31 tiennent en 2 pages, soit 62 pages au lieu de 81.** Mesures en Inter et en Liberation Sans, image posée :
+- plus grand blanc de 4 à 9 % ;
+- page 1 remplie à 91 % au moins ;
+- aucun titre seul en bas de page.
+
+Elles comptent de 1 115 à 1 520 mots chacune.
+
+Toutes les ancres que d'autres pages visent sont gardées, celles des générateurs comprises (`build_atelier.py` vise
+`#les-mots`, `#marge`, `#methode` et `#en-meme-temps`).
+
+### Les images de l'objet
+
+- **Images Canva générées pour le thème 3**, gardées telles quelles, chacune décrite dans le `SOURCES_MEDIAS.md` de
+  son lot (créé quand le lot n'en avait pas) :
+
+  | Image | Synthèses |
+  |---|---|
+  | le jardin d'une école de Brooklyn | 4e_C7.1, 4e_C8.1, 4e_C9.1 |
+  | les trois bacs | 4e_C7.3 |
+  | le support de la sonde | 4e_C7.7 |
+  | le capteur de confort | 3e_C7.1 |
+  | le banc de la cour | 5e_C7.3 |
+  | l'indicateur du hall | 5e_C7.1, 5e_C7.4 |
+  | le prototype du préau | 5e_C7.5 |
+  | les patères | 5e_C8.1, 5e_C8.2 |
+  | le quai du grand-huit | 5e_C9.1 |
+  | le boîtier de la station | 3e_C7.3, 3e_C7.7 |
+  | la station sur un mât en aluminium | 3e_C8.1, 3e_C8.2 |
+
+- **Réutilisées du thème 2** :
+  - le jardin de Martinique : 4e_C7.4, 4e_C7.5, 4e_C7.8 ;
+  - la station : 3e_C7.4, 3e_C7.5, 3e_C7.8.
+- **Deux images ont été regénérées pour coller à la séquence** :
+  - le jardin du thème 2 montre des palmiers, alors que 4e_C7, 4e_C8 et 4e_C9 se passent à New York ;
+  - la station du thème 2 a un mât en acier galvanisé, alors que 3e_C8 retient un tube d'aluminium.
+- **De vraies images du dossier** :
+  - Onshape pour la CAO, 3e_C7.6, 4e_C7.6, 5e_C7.2 et 5e_C7.6 ;
+  - GanttProject pour la planification ;
+  - Vittascience et le simulateur pour 3e_C9.1 et 3e_C9.2.
+- **Le téléchargement** : Chrome enregistre maintenant les fichiers sans demander où. Les dix images sont arrivées
+  d'affilée dans Téléchargements.
+
+### « La pompe qui s'affole » (Pascal, 30/10/2026)
+
+Pascal a relevé, dans le billet d'entrée de 3e_C9.1 : « Pourquoi clignoter une pompe et pas une led puis on
+explique le rôle de la pompe ».
+
+- **D'où venait le mot** : du lot 4e_C9, qui appelait « le clignotement » la pompe qui se met en marche et s'arrête
+  sans cesse. C'est un mot de DEL.
+- **Le billet de 3e** dit maintenant ce que fait la pompe : « une pompe arrose la terre quand elle est trop sèche.
+  Son premier programme la mettait en marche et l'arrêtait sans cesse ».
+- **Dans le lot 4e_C9**, au choix de Pascal, le mot devient « la pompe qui s'affole ». Il est défini une fois, dans
+  l'objectif de l'activité 5. Le changement porte sur la séquence, le QCM, le lexique et son JSON, les deux
+  synthèses, le titre du chronogramme, la fiche, le manifeste, la règle n°7 et le libellé des tests.
+- **« Clignoter » reste** pour le lampadaire et les DEL, où il est juste. Les noms internes du code (`e.clignote`,
+  `v-clign`) ne changent pas.
+
+### Des faits rétablis d'après les séquences
+
+- **3e_C7.3** : « attaque les voies respiratoires » ; le PVC et le PP rejoignent le tableau des six matériaux.
+- **3e_C7.4** : changer les trois accus « tous les trois à quatre ans », comme le dit l'activité 4.
+- **3e_C7.7** : douze boîtiers, c'est **8 h 15** de machine, et non « onze heures » (`moyens.py`).
+- **3e_C9.2** : la conversion est « × 250 ÷ 1 023 » ; il y a quatre voyants ; la décision se prend sur 13/13, et un
+  seul échec met la station en réserve.
+- **4e_C7.4** : les 15 € sont ceux du panneau de 2 W.
+- **4e_C7.5** : l'ordre de vérification est celui de l'établi.
+- **4e_C9** : six basculements en 70 secondes, et non « six fois par minute ».
+- **5e_C7.3** : l'acier galvanisé passe trois exigences sur cinq, et non cinq (`materiaux.py`).
+- **5e_C7.5** : l'ordre arrive sur DISTRIBUER (n°310).
+- **5e_C9** : l'ordre est envoyé à la commande du moteur (n°310, comme #557).
+- **CAO** :
+  - l'assemblage se fait en 3e ;
+  - sous 2 mm, une paroi est « translucide et cassante » ;
+  - l'export STL se fait en millimètres ;
+  - le bouton s'appelle « Conserver les outils ».
+
+### Hors des synthèses, relevés en route, à trancher
+
+- **Les QCM** :
+  - 3e_C7.4 dit encore « tous les trois ans » ;
+  - 3e_C9.2 parle d'un « bloc calibrer » et de « la DEL » ;
+  - 4e_C7.6 dit « Garder les outils », comme son lexique ;
+  - 4e_C9 dit « six fois en une minute » ;
+  - 5e_C7.6 affirme que les points « suivent » quand le dé passe de 50 à 40 mm, or ils sont cotés en valeurs fixes ;
+  - 4e_C7 écrit « M. Ortiz » là où la séquence écrit « Mme Ortiz » ;
+  - 5e_C4.5 fait arriver l'ordre « par le fil de signal ».
+- **Les séquences** :
+  - 3e_C7.7 dit « onze heures » au lieu de 8 h 15, et « dix ans en tête de mât » alors que 3e_C7.3 retient un PETG de
+    cinq ans ;
+  - 5e_C7.3 dit « cinq réussites » et « premier sur la durée » ;
+  - 5e_C8.1 prend un sac de 12 kg et un coefficient 3, 5e_C8.2 un sac de 8 kg et un coefficient 5 ;
+  - en 5e_C7.1, le besoin dit « à trois mètres » et le test « à 2 m » ;
+  - en 4e, le jardin est dans la cour en C7 et sur un toit en C8 ;
+  - le TP 3e de la CAO, au palier 5, met le trou « vers le bas » puis dit de ne pas le placer en bas ;
+  - les scénarios de `build_tp.py` présentent encore l'assemblage comme vu en 4e.
+- **Les schémas et données** :
+  - `barriere_cyclone_condition.svg` (5e_C9) teste 24 places, alors que la séquence en teste 32 ;
+  - `banc_meteo_materiaux.svg` dit que le carton « tient s'il reste sec » au gel ;
+  - `energie.py` (4e_C7.4) met 15 € pour le panneau de 1 W et compte 12 h pour la pile 9 V, contre 11 h dans la
+    séquence ;
+  - le banc de 5e_C7.4 compte un capteur d'humidité du sol ;
+  - le corrigé de l'atelier de planification 4e met le jalon I en séance 10 pour un projet de 9.
+- **Les libellés de rattrapage** : plusieurs séquences et `build_atelier.py` citent encore les anciens titres des
+  parties. Les ancres marchent, mais les libellés sont périmés.
+- **Une image** : `tp5e_R7_de_colore.png` a été remplacée sans que sa ligne de `SOURCES_MEDIAS.md` suive.
+
+### Contrôles
+
+- **Python**, tous ✅ :
+  - `controle_medias`, `_liens` (1 195 ancres, 0 introuvable), `_regles_visibles`, `_hierarchie` ;
+  - `_unites`, `_sigles`, `_debordement`, `_blocs_dessines`, `_formulations`, `_loupe`.
+- **Node**, tous ✅ sur le thème 3 : `controle_impression.mjs`, `_contraste_liens.mjs`, `_hors_ligne.mjs`, et
+  `_schemas.mjs` (51 schémas, 0 ✘).
+- **Bancs** : les 49 bancs des lots touchés passent, relancés après la pose des images. Parmi eux : 3e_C9.2 (167/167),
+  3e_C7.7 (77/77), 4e_C9 (70/70) et 3e_C9.1 (42/42). Plusieurs bancs C7 et C8 attendent leurs arguments (fichier,
+  codes, page liée) : on les trouve dans le `rapport_tests` de chaque lot. Ceux de C8.1 veulent des chemins absolus.
+- **À l'écran**, à 390 et 1 280 pixels :
+  - 0 défaut sur 31 pages ;
+  - aucun défilement de côté ;
+  - aucune case qui déborde ;
+  - aucune image cassée ;
+  - aucune erreur JavaScript.
+- **Une leçon** : `loupe.py` pose l'agrandisseur dans toutes les pages du dossier qu'on lui donne. Lancé sur un dossier
+  où la synthèse voisine avec la séquence, il a aussi touché trois séquences (3e_C8.2, 4e_C7.1, 5e_C8.2). Elles sont
+  revenues à leur état d'avant, car ce n'était pas l'objet du lot.

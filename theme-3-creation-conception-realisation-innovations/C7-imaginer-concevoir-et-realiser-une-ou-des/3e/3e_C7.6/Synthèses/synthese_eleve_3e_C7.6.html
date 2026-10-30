@@ -3,103 +3,569 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Synthèse eleve — 3e_C7.6 Le boîtier étanche</title>
-<style>body{font-family:system-ui,sans-serif;max-width:720px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
-h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
-.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
-.attention{background:#fff6e0;border-left:4px solid #b8860b}
-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.94em}
-th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
-ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
-#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}
+<title>Synthèse élève — Le boîtier, et ce qui le rend étanche (3e_C7.6, 3e_C7.2)</title>
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;font-size:.95em;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+  h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
+  ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  table{width:100%;border-collapse:collapse;margin:6px 0}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--sub);font-size:.9em}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;flex-wrap:wrap;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  /* règle n°304 : un lien de rattrapage arrive sur ce titre ; la barre collante (47 px) ne doit pas le recouvrir */
+  h2[id]{scroll-margin-top:60px}
+  #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
+
+  /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
+  /* La carte « Ce que je dois retenir » */
+  .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
+  .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
+  .question{text-align:center;font-size:1.05em;font-weight:600;margin:0 0 10px}
+  .programme{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);
+             padding:6px 0;margin:0 0 12px}
+  .programme b{color:var(--text)}
+  .programme ul{margin:2px 0;padding-left:18px}.programme li{margin:1px 0}
+  .cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .cartes a{display:block;text-decoration:none;color:var(--text);background:var(--panel);border:1.5px solid var(--border);
+            border-radius:10px;padding:9px 12px}
+  .cartes a:hover{border-color:var(--hl)}
+  .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
+  .cartes .r{display:block;font-size:.92em}
+  /* L'objet en image (Pascal, 29/10/2026 : « une illustration permet d'avoir une vision plus synthétique de l'objet ») :
+     à droite du programme, dans la carte ; dessous sur un téléphone. */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  /* L'image du modèle Onshape (1 600 × 1 200) : elle garde sa forme, rien n'est rogné. La question de la séquence
+     monte à côté de l'image, au-dessus du programme. */
+  .objet{flex-basis:24%}.tete .question{margin:0 0 8px;font-size:1.15em;color:var(--text)}@media print{.tete .question{color:#111}}.objet img{aspect-ratio:4/3;flex:none;height:auto;object-fit:contain}.tete .programme{align-self:center}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
+  .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
+  .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
+  .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
+  .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  ul.serre li{margin:1px 0}
+  .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
+
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+    h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; un schéma ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    .schema,table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
+    .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
+    .vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
+    .schema{width:60%;display:block;margin:4px auto}
+    h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
+
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  .box{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
-</style>
-</head>
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
+
+/* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+@media(max-width:680px){table{display:block;overflow-x:auto}}
+
+  /* Revenir à la carte (Pascal, 29/10/2026 : « je ne peux pas revenir à la synthèse ») : chaque partie porte, en
+     haut à droite, un lien vers la carte « Ce que je dois retenir » ; la barre de navigation collée en haut ne
+     recouvre plus le titre visé par un lien. Rien de tout cela ne s'imprime. */
+  .retour-carte{float:right;font-size:.82em;margin:1px 0 0 10px;padding:1px 10px;border:1.5px solid var(--border);
+                border-radius:999px;text-decoration:none;white-space:nowrap}
+  .retour-carte:hover,.retour-carte:focus-visible{border-color:var(--hl)}
+  #carte-titre,[id^="partie-"]{scroll-margin-top:64px}
+  @media print{.retour-carte{display:none}}
+</style></head>
 <body>
-<nav id="navharm"><a href="../../../../../index.html">⌂ Accueil</a><a href="../../../atelier-cao/tp_3e_boitier_etanche.html">🧪 Le TP</a><a href="../qcm_3e_C7.6_le-boitier.html">🧠 Le QCM</a><a href="../lexique_3e_C7.6.html">📖 Lexique</a><a href="synthese_professeur_3e_C7.6.html">🧑‍🏫 Synthèse professeur</a></nav>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../../../atelier-cao/tp_3e_boitier_etanche.html">🧪 Le TP</a><a href="../qcm_3e_C7.6_le-boitier.html">🧠 Le QCM</a><a href="../lexique_3e_C7.6.html">📖 Lexique</a><a href="synthese_professeur_3e_C7.6.html">🧑‍🏫 Synthèse professeur</a></nav>
+<div class="page">
+<h1>📌 Synthèse élève — Le boîtier, et ce qui le rend étanche</h1>
+<p class="pb">Partir d'un besoin, sans marche à suivre, et dessiner une boîte qui protège le capteur de la pluie.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
 
-<h1>🌧️ Synthèse élève — Le boîtier, et ce qui le rend étanche</h1>
-<p><em>3e_C7.6 — Modéliser une forme voulue.</em><br>
-<em>3e_C7.2 — Proposer et fabriquer un ensemble de solutions pour produire un nouvel OST
-(croquis, schéma, graphique, algorithme, modélisation).</em></p>
+<!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
+<section class="carte" aria-labelledby="carte-titre">
+  <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
+  <div class="tete">
+  <div class="programme"><p class="question">Comment dessiner, sans procédure, une boîte qui garde le capteur au sec&nbsp;?</p>
+    <b>Ce que dit le programme</b> (3e, compétence C7)&nbsp;:
+    <ul>
+      <li>modéliser une forme voulue&nbsp;;</li>
+      <li>proposer et fabriquer un ensemble de solutions pour produire un nouvel OST (croquis, schéma, graphique, algorithme, modélisation).</li>
+    </ul>
+  </div>
+    <figure class="objet">
+      <img src="../../../atelier-cao/Images/tp3e_R7_boitier_fini.png" alt="Le boîtier dans Onshape : une boîte grise percée d'un trou rond sur le côté, son couvercle orange soulevé au-dessus.">
+      <figcaption>📍 L'objet&nbsp;: le boîtier, couvercle soulevé. <i>Image Onshape.</i></figcaption>
+    </figure>
+  </div>
+  <div class="cartes">
+    <a href="#partie-1"><span class="q">📋 1. Par quoi commence une forme voulue&nbsp;?</span>
+      <span class="r">Par la liste de ce qu'elle doit faire, avant d'ouvrir le logiciel.</span></a>
+    <a href="#partie-2"><span class="q">📦 2. Comment évider une boîte&nbsp;?</span>
+      <span class="r">La coque retire une face et garde partout la même épaisseur.</span></a>
+    <a href="#partie-3"><span class="q">💧 3. Pourquoi une boîte fermée n'est-elle pas étanche&nbsp;?</span>
+      <span class="r">Il reste un jeu&nbsp;: un joint l'occupe, dans une rainure.</span></a>
+    <a href="#partie-4"><span class="q">🔌 4. Par où l'eau entre-t-elle&nbsp;?</span>
+      <span class="r">Par les trous faits exprès&nbsp;: le passage du câble se soigne.</span></a>
+    <a href="#partie-5"><span class="q">🔎 5. Comment vérifier ce qu'on ne voit pas&nbsp;?</span>
+      <span class="r">On assemble les pièces, puis on regarde en coupe.</span></a>
+    <a href="#partie-6"><span class="q">🧩 6. Pourquoi un ensemble de solutions&nbsp;?</span>
+      <span class="r">Aucune pièce ne protège seule&nbsp;; un critère technique tranche entre les idées.</span></a>
+    <a href="#partie-7"><span class="q">🚿 7. Quand le boîtier est-il vraiment étanche&nbsp;?</span>
+      <span class="r">Quand un essai le prouve&nbsp;: on l'imprime, on l'arrose.</span></a>
+  </div>
+</section>
 
-<h2>Du besoin à la forme</h2>
-<p>En 5e tu <em>suivais</em> une procédure ; en 4e tu <em>modifiais</em> une forme. En 3e on te
-donne un <b>besoin</b> — « le capteur doit rester dehors » — et rien d'autre. Modéliser commence
-donc <b>hors du logiciel</b> : d'abord la liste de ce que la forme doit faire, ensuite seulement
-les opérations qui l'obtiennent.</p>
-<div class="box">
-  <p>Et cette liste sert deux fois : elle guide la modélisation, puis elle <b>vérifie</b> le
-  résultat. Une forme voulue se contrôle exigence par exigence, pas à l'œil.</p>
+<!-- ══ 1 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-1" style="margin-top:0">1. Par quoi commence une forme voulue&nbsp;?</h2>
+  <p>En 5e tu suivais une procédure, en 4e tu modifiais une forme. En 3e, tu reçois un besoin&nbsp;: «&nbsp;le capteur doit rester dehors&nbsp;». Il devient une liste&nbsp;:</p>
+  <div class="chaine">
+    <div><b>Contenir</b>La carte et la pile du capteur.</div>
+    <div><b>S'ouvrir</b>Pour changer la pile&nbsp;: le couvercle est une pièce à part.</div>
+    <div><b>Rester sec</b>Fermé, sous la pluie.</div>
+    <div><b>Laisser passer un câble</b>Sans laisser entrer l'eau.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: <b>modéliser</b> commence <b>hors du logiciel</b>&nbsp;: d'abord la liste des
+  <b>exigences</b>, ensuite les gestes. La même liste sert à <b>vérifier</b> la pièce, exigence par exigence.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: ouvrir le logiciel pour réfléchir. Les grandes décisions se prennent sur un
+  croquis, où changer d'avis ne coûte rien.</p>
 </div>
 
-<h2>Les quatre gestes du boîtier</h2>
-<div class="box"><ul>
-  <li><b>La coque</b> — elle évide une pièce pleine en laissant une paroi d'épaisseur constante,
-  et ouvre la face qu'on lui désigne. Attention : on désigne la face à <em>retirer</em>, pas
-  celle qu'on garde.</li>
-  <li><b>L'épaisseur de paroi</b> — un compromis, jamais un hasard : trop fine, la paroi casse ou
-  ne s'imprime pas ; trop épaisse, elle mange le volume intérieur dont le capteur a besoin.</li>
-  <li><b>La rainure du joint</b> — deux décalages symétriques de 0,5 mm sur un bord de 2 mm
-  laissent un anneau de 1 mm, placé au milieu <em>sans avoir rien à mesurer</em>. Encore
-  faut-il décaler dans le bon sens : l'aperçu montre une flèche, et comment l'inverser.</li>
-  <li><b>Le passage de câble</b> — un perçage Ø12 en partie basse d'une face <b>verticale</b>,
-  arête cassée par un chanfrein. Un câble qui frotte sur une arête vive finit coupé.</li>
-</ul></div>
-<div class="box attention">
-  <p><b>Le vrai point faible d'un boîtier, c'est ce qu'on y a ouvert exprès.</b> L'eau n'entre
-  pas par la matière : elle entre par les traversées. Un boîtier se juge à ses trous, pas à ses
-  parois.</p>
-</div>
-<p>Le <b>couvercle</b>, enfin, ne s'invente pas : il tire ses cotes du boîtier (80 × 60), et sa
-nervure de 1 mm entre dans une gorge de 1,5 mm. Le demi-millimètre qui reste n'est pas une
-erreur : c'est le <b>jeu</b> où le joint s'écrase. Un jeu se dessine ; il ne se rattrape pas au
-montage.</p>
-
-<h2>Vérifier ce qu'on ne voit pas</h2>
-<p>La rainure, l'épaisseur de paroi, le fond du perçage : tout ce qui compte est
-<em>à l'intérieur</em>. La <b>vue en coupe</b> est le seul affichage où l'on voit la matière
-plutôt que la surface. C'est là qu'on vérifie, pas en tournant la pièce.</p>
-<p>L'ordre des opérations change la pièce : évider puis percer ne donne pas la même chose que
-percer puis évider. Et chaque pièce vit dans <b>son</b> onglet, avec son propre historique — c'est
-ce qui permet de modifier l'une sans casser l'autre.</p>
-<div class="box attention">
-  <p><b>Un modèle décrit l'instant zéro.</b> Ton boîtier est étanche à l'écran ; il ne dit rien
-  de ce qu'il sera après six mois de soleil, de pluie et d'ouvertures répétées. Le temps ne
-  figure jamais dans un modèle.</p>
+<!-- ══ 2 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-2" style="margin-top:0">2. Comment évider une boîte&nbsp;?</h2>
+  <p>Tu pars d'un pavé plein de 80 × 60 × 35&nbsp;mm, comme le cube du dé. Puis l'outil Coque&nbsp;:</p>
+  <div class="chaine">
+    <div class="ok"><b>Face à retirer&nbsp;: le dessus</b>Elle disparaît&nbsp;: la boîte s'ouvre par le haut.</div>
+    <div class="ok"><b>Épaisseur&nbsp;: 2&nbsp;mm</b>Quatre parois et un fond, de la même épaisseur partout.</div>
+    <div class="ko"><b>Moins de 2&nbsp;mm ✘</b>À l'impression, la paroi devient translucide et cassante.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: la <b>coque</b> évide une pièce pleine en gardant une <b>épaisseur
+  constante</b>. L'épaisseur est un <b>compromis</b>&nbsp;: assez pour tenir, assez peu pour laisser la place à la carte.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: désigner la face qu'on garde. La coque attend la face à <b>retirer</b>.</p>
 </div>
 
-<h2>Proposer et fabriquer</h2>
-<p>Le boîtier n'améliore pas un objet existant : il <b>n'existait pas</b>. La station avait
-besoin d'une protection — c'est un objet nouveau, et c'est ce que demande 3e_C7.2.</p>
-<p>Et la compétence parle d'un <b>ensemble</b> de solutions : la fonction « protéger de l'eau »
-n'est tenue par aucune pièce seule. Il faut le boîtier, la rainure, le joint, le couvercle et le
-presse-étoupe — chacun tient une part. Une exigence contradictoire (rester fermé à l'eau
-<em>et</em> laisser passer un câble) se résout par une solution technique, jamais en abandonnant
-l'une des deux.</p>
-<div class="box"><ul>
-  <li><b>Proposer avant de choisir</b> — une seule solution ne se juge pas. Il en faut deux pour
-  que les critères apparaissent, et le croquis se fait sur papier, où changer d'avis ne coûte
-  rien.</li>
-  <li><b>Fabriquer fait partie du geste</b> — un modèle est une <em>hypothèse</em>. Ce qui
-  s'imprime mal, s'assemble mal ou ne ferme pas ne se voit qu'à l'essai.</li>
-  <li><b>Avant d'imprimer</b>, on tranche ce qui ne se rattrape plus : l'orientation de chaque
-  pièce, les jeux, l'ordre d'assemblage. Une pièce creuse se pose ouverture vers le haut.</li>
-  <li><b>Une seule itération</b> — si l'impression est sous-traitée, tu n'auras qu'un essai. La
-  vérification passe alors du banc au modèle : elle se fait <em>avant</em> l'envoi.</li>
-</ul></div>
-<p>Enfin, l'étanchéité se <b>constate</b> : on referme, on arrose, on regarde. Elle ne se déduit
-pas d'un dessin.</p>
-
-<div class="box attention">
-  <p><b>Ce TP a besoin d'Internet.</b> Le logiciel de CAO fonctionne dans le navigateur et
-  <em>uniquement</em> en ligne : sans connexion, la séance ne peut pas avoir lieu. Cette page, le
-  QCM et le lexique, eux, fonctionnent hors ligne et s'impriment.</p>
+<!-- ══ 3 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-3" style="margin-top:0">3. Pourquoi une boîte fermée n'est-elle pas étanche&nbsp;?</h2>
+  <p>Entre le boîtier et son couvercle reste un jeu, où l'eau s'engouffre. Un joint l'occupe&nbsp;: tu lui prépares sa place.</p>
+  <div class="chaine etapes">
+    <div><b>1. La rainure</b>Sur le bord de 2&nbsp;mm, deux décalages de 0,5&nbsp;mm&nbsp;: un anneau de 1&nbsp;mm, pile au milieu.</div>
+    <div><b>2. La gorge</b>L'anneau est creusé de 1,5&nbsp;mm, tout autour du bord.</div>
+    <div><b>3. La nervure</b>Sous le couvercle de 80 × 60&nbsp;mm, un anneau de 1&nbsp;mm de haut.</div>
+    <div class="ok"><b>4. Le jeu</b>1,5 − 1 = 0,5&nbsp;mm&nbsp;: la place où le joint s'écrase.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: deux pièces posées l'une sur l'autre laissent toujours un <b>jeu</b>. Le
+  <b>joint</b> le comble, logé dans une <b>rainure</b>. Le <b>couvercle</b> tire ses cotes du <b>boîtier</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: donner à la nervure la profondeur de la gorge. Elle toucherait le fond, et le
+  joint ne s'écraserait pas.</p>
 </div>
 
-<footer>Lot « Le boîtier étanche » — atelier CAO du cycle 4. Cette page fonctionne hors ligne, sans compte, et s'imprime en noir et blanc.</footer>
+<!-- ══ 4 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-4" style="margin-top:0">4. Par où l'eau entre-t-elle&nbsp;?</h2>
+  <p>On soigne les parois, puis l'eau entre par le trou du câble, percé exprès. Ce passage se dessine avec soin&nbsp;:</p>
+  <div class="chaine">
+    <div><b>Où&nbsp;?</b>En partie basse d'une face verticale, jamais sous la boîte.</div>
+    <div><b>Quelle taille&nbsp;?</b>Un trou de 12&nbsp;mm de diamètre, celui d'un presse-étoupe du commerce.</div>
+    <div><b>Quel bord&nbsp;?</b>Un chanfrein ou un petit congé&nbsp;: une arête vive finit par couper le câble.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un boîtier se juge à ses <b>ouvertures</b>, pas à ses parois. Le
+  <b>presse-étoupe</b> serre le câble et ferme le passage&nbsp;: c'est lui qui rend le trou <b>étanche</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: percer sous la boîte pour l'abriter de la pluie. L'eau qui coule s'accumule au
+  point le plus bas.</p>
+</div>
+
+<!-- ══ 5 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-5" style="margin-top:0">5. Comment vérifier ce qu'on ne voit pas&nbsp;?</h2>
+  <p>Le couvercle a son propre onglet, avec son historique. Un assemblage réunit les deux pièces&nbsp;:</p>
+  <div class="chaine etapes">
+    <div><b>1. Poser</b>Une liaison Fixe met la nervure dans la gorge, sans viser à l'œil.</div>
+    <div><b>2. Couper</b>La vue en coupe montre la nervure, le jeu du joint et la place de la carte.</div>
+    <div class="ko"><b>3. Corriger</b>Couvercle de travers&nbsp;? Le décalage est faux&nbsp;: reprends-le dans son onglet.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une pièce seule ne prouve rien&nbsp;: l'<b>assemblage</b> révèle les erreurs
+  de dessin. Ce qui est <b>caché</b> se vérifie <b>en coupe</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: percer le passage du câble avant la coque. L'ordre change la pièce&nbsp;: la
+  coque évide aussi autour du trou.</p>
+</div>
+
+<!-- ══ 6 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-6" style="margin-top:0">6. Pourquoi faut-il un ensemble de solutions&nbsp;?</h2>
+  <p>Le boîtier n'existait pas&nbsp;: la station avait besoin d'une protection. C'est un objet nouveau.</p>
+  <div class="chaine">
+    <div><b>Un ensemble</b>Boîtier, couvercle, rainure, joint, presse-étoupe. Sans le joint, le reste ne protège plus.</div>
+    <div><b>Plusieurs idées</b>Pour fermer&nbsp;: des clips, des vis, ou une charnière et un loquet. Il en faut deux pour comparer.</div>
+    <div class="ok"><b>Un critère technique</b>Les vis se rouvrent cent fois&nbsp;: c'est utile pour changer la pile.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: aucune pièce ne tient seule la fonction «&nbsp;protéger de l'eau&nbsp;»&nbsp;:
+  il faut un <b>ensemble de solutions</b>. On <b>propose</b> plusieurs idées, puis un <b>critère technique</b> tranche.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: abandonner une exigence qui en gêne une autre. Le presse-étoupe garde le boîtier
+  étanche et laisse passer le câble.</p>
+</div>
+
+<!-- ══ 7 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-7" style="margin-top:0">7. Quand le boîtier est-il vraiment étanche&nbsp;?</h2>
+  <p>Le modèle reste une hypothèse. Avant d'imprimer, tu décides ce qui ne se rattrape plus&nbsp;:</p>
+  <div class="chaine etapes">
+    <div><b>1. Orienter</b>Le boîtier, ouverture vers le haut&nbsp;: aucun support dans la cuve.</div>
+    <div><b>2. Exporter</b>STL en millimètres pour l'imprimante, STEP pour qui modifiera la pièce.</div>
+    <div class="ok"><b>3. Arroser</b>Un quart d'heure sous l'arrosoir, un papier absorbant à l'intérieur.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: l'<b>étanchéité</b> se <b>constate</b> par un essai&nbsp;; un dessin ne la
+  prouve pas. Si l'impression se fait ailleurs, tu n'as qu'<b>un essai</b>&nbsp;: tout se vérifie <b>avant</b> l'envoi.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'un boîtier étanche à l'écran le restera. Des mois de soleil et de
+  pluie l'usent, et le modèle n'en dit rien.</p>
+</div>
+
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>OST <span class="en">— technical object or system</span></dt><dd>un objet technique, ici le boîtier.</dd></div>
+    <div><dt>modéliser <span class="en">— to model</span></dt><dd>dessiner une forme à partir d'un besoin.</dd></div>
+    <div><dt>exigence <span class="en">— requirement</span></dt><dd>ce que l'objet doit faire ou supporter.</dd></div>
+    <div><dt>croquis <span class="en">— sketch</span></dt><dd>un dessin rapide, sur papier.</dd></div>
+    <div><dt>coque <span class="en">— shell</span></dt><dd>évider une pièce en gardant une épaisseur constante.</dd></div>
+    <div><dt>étanche <span class="en">— watertight</span></dt><dd>qui ne laisse pas entrer l'eau.</dd></div>
+    <div><dt>jeu <span class="en">— clearance</span></dt><dd>le petit espace laissé entre deux pièces.</dd></div>
+    <div><dt>joint <span class="en">— seal</span></dt><dd>un cordon souple, écrasé en fermant.</dd></div>
+    <div><dt>rainure, gorge <span class="en">— groove</span></dt><dd>le creux étroit où loge le joint.</dd></div>
+    <div><dt>nervure <span class="en">— rib</span></dt><dd>le relief du couvercle qui entre dans la gorge.</dd></div>
+    <div><dt>décalage <span class="en">— offset</span></dt><dd>recopier un contour à une distance donnée.</dd></div>
+    <div><dt>presse-étoupe <span class="en">— cable gland</span></dt><dd>la pièce qui serre le câble et bloque l'eau.</dd></div>
+    <div><dt>chanfrein <span class="en">— chamfer</span></dt><dd>une arête remplacée par une facette plate.</dd></div>
+    <div><dt>assemblage <span class="en">— assembly</span></dt><dd>plusieurs pièces réunies et liées.</dd></div>
+    <div><dt>liaison <span class="en">— mate</span></dt><dd>ce qui fixe une pièce par rapport à une autre.</dd></div>
+    <div><dt>vue en coupe <span class="en">— section view</span></dt><dd>la pièce tranchée, pour voir l'intérieur.</dd></div>
+    <div><dt>STL, STEP <span class="en">— STL, STEP files</span></dt><dd>le fichier pour imprimer, celui pour modifier.</dd></div>
+  </dl>
+</div>
+</div>
+
+
+<!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  /* L'agrandisseur est une COLONNE — bouton, image, légende — : la légende suit l'image dans le
+     flux, l'image reçoit une hauteur maximale calculée (ajuster()), et le fond défile si besoin. */
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:1rem;box-sizing:border-box;overflow:auto;
+    flex-direction:column;align-items:center;gap:.75rem}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  /* centré quand tout tient, sans rien couper quand ça déborde : des marges automatiques,
+     pas justify-content:center (qui rendrait le haut inaccessible au défilement) */
+  .loupe-fond > .loupe-fermer{margin-top:auto}
+  .loupe-fond > .loupe-legende{margin-bottom:auto}
+  .loupe-fond img{display:block;flex:none;max-width:100%;max-height:80vh;width:auto;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:static;flex:none;margin:0;max-width:min(70ch,100%);text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif}
+  .loupe-legende .loupe-aide{display:block;margin-top:.25rem;font-size:.85em;color:#b8bfcc}
+  .loupe-fermer{position:sticky;top:0;align-self:flex-end;flex:none;z-index:1;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+    grande.addEventListener("load", ajuster);
+    window.addEventListener("resize", ajuster);
+  }
+
+  // La légende affichée : la figcaption VISIBLE de la figure si elle existe ; sinon le
+  // texte alternatif, réduit à sa première phrase s'il dépasse deux lignes. L'alt complet
+  // reste sur l'image agrandie, pour les lecteurs d'écran.
+  function poserLegende(el, texteAlt){
+    var fig = el.closest("figure");
+    var cap = fig ? fig.querySelector("figcaption") : null;
+    var visible = cap && cap.getClientRects().length && cap.textContent.trim();
+    legende.textContent = "";
+    var texte = visible ? cap.textContent.replace(/\s+/g, " ").trim() : (texteAlt || "");
+    texte = texte.replace(/\s*\(clique[^()]*agrandir\)/gi, "").trim();   // l'image est déjà agrandie
+    var corps = document.createElement("span");
+    corps.textContent = texte;
+    var aide = document.createElement("span");
+    aide.className = "loupe-aide";
+    aide.textContent = "Échap pour refermer";
+    if (texte) legende.appendChild(corps);
+    legende.appendChild(aide);
+    if (!visible && texte) {
+      var ligne = parseFloat(getComputedStyle(legende).lineHeight) || 20;
+      if (corps.getBoundingClientRect().height > 2 * ligne + 1) {
+        var m = texte.match(/^[\s\S]*?[.!?…](?=\s|$)/);
+        if (m && m[0].length < texte.length) corps.textContent = m[0];
+      }
+    }
+  }
+
+  // L'image reçoit la place qui reste : hauteur du fond, moins le bouton, la légende,
+  // les marges et les espacements — jamais moins de 40 % de l'écran ; au-delà, le fond défile.
+  function ajuster(){
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    var st = getComputedStyle(fond);
+    var ecart = parseFloat(st.rowGap) || 0;
+    var reste = fond.clientHeight - parseFloat(st.paddingTop) - parseFloat(st.paddingBottom)
+              - fond.querySelector(".loupe-fermer").offsetHeight - legende.offsetHeight - 2 * ecart;
+    grande.style.maxHeight = Math.max(reste, 0.4 * window.innerHeight) + "px";
+  }
+
+  function montrer(el, texteAlt){
+    fond.setAttribute("data-ouvert", "oui");
+    fond.scrollTop = 0;
+    poserLegende(el, texteAlt);
+    ajuster();
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.style.background = "";
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    montrer(img, img.alt);
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    grande.style.maxHeight = "";
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
+  // couleurs et leur police viennent de la feuille de style de la PAGE. Sérialisé seul, le
+  // dessin les perdrait (formes noires, police par défaut, texte qui déborde) : on recopie
+  // donc sur la copie les propriétés CALCULÉES de chaque élément, on y ajoute les dégradés
+  // et marqueurs définis ailleurs dans la page, et l'image reçoit le fond du schéma.
+  var PROPRIETES = ["fill", "fill-opacity", "fill-rule", "stroke", "stroke-width", "stroke-opacity",
+    "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit",
+    "opacity", "visibility", "display", "color", "font-family", "font-size", "font-weight", "font-style",
+    "font-variant-numeric", "letter-spacing", "word-spacing", "text-anchor", "dominant-baseline",
+    "baseline-shift", "text-decoration", "white-space", "paint-order", "stop-color", "stop-opacity",
+    "marker-start", "marker-mid", "marker-end", "clip-path", "mask", "filter"];
+  // Une transformation posée par la feuille de style (pas par l'attribut transform, que la
+  // copie garde déjà) : on la recopie avec son origine.
+  var TRANSFORMATION = ["transform", "transform-origin", "transform-box"];
+
+  function figer(source, copie){
+    var a = [source].concat([].slice.call(source.querySelectorAll("*")));
+    var b = [copie].concat([].slice.call(copie.querySelectorAll("*")));
+    for (var i = 0; i < a.length && i < b.length; i++) {
+      var cs = getComputedStyle(a[i]), decl = [], k, v;
+      for (k = 0; k < PROPRIETES.length; k++) {
+        v = cs.getPropertyValue(PROPRIETES[k]);
+        if (v) decl.push(PROPRIETES[k] + ":" + v);
+      }
+      if (i > 0 && !a[i].hasAttribute("transform") && cs.getPropertyValue("transform") &&
+          cs.getPropertyValue("transform") !== "none") {
+        for (k = 0; k < TRANSFORMATION.length; k++) decl.push(TRANSFORMATION[k] + ":" + cs.getPropertyValue(TRANSFORMATION[k]));
+      }
+      var deja = b[i].getAttribute("style");
+      b[i].setAttribute("style", decl.join(";") + (deja ? ";" + deja : ""));
+    }
+  }
+
+  // Un dégradé ou un marqueur appelé par url(#…) mais défini hors du dessin : on le recopie dedans.
+  function rapatrier(copie){
+    var defs = null, faits = {}, tour = 0, trouve = true;
+    while (trouve && tour++ < 4) {
+      trouve = false;
+      var refs = (new XMLSerializer().serializeToString(copie).match(/url\((?:&quot;|["'])?#([^"')&]+)/g) || [])
+        .concat(new XMLSerializer().serializeToString(copie).match(/href="#[^"]+"/g) || []);
+      refs.forEach(function(r){
+        var id = r.replace(/^url\((?:&quot;|["'])?#/, "").replace(/^href="#/, "").replace(/"$/, "");
+        if (faits[id] || copie.querySelector("[id='" + id.replace(/'/g, "") + "']")) return;
+        faits[id] = true;
+        var el = document.getElementById(id);
+        if (!el || !el.closest("svg")) return;
+        if (!defs) { defs = document.createElementNS("http://www.w3.org/2000/svg", "defs"); copie.insertBefore(defs, copie.firstChild); }
+        var c = el.cloneNode(true); figer(el, c); defs.appendChild(c); trouve = true;
+      });
+    }
+  }
+
+  // Le fond sur lequel le schéma est dessiné : le sien, sinon celui du premier parent opaque.
+  function fondDe(el){
+    for (var e = el; e && e.nodeType === 1; e = e.parentElement) {
+      var c = getComputedStyle(e).backgroundColor, m = c.match(/rgba?\(([^)]+)\)/);
+      if (m) { var p = m[1].split(","); if (p.length < 4 || parseFloat(p[3]) > 0) return c; }
+      else if (c && c !== "transparent") return c;
+    }
+    return "#fff";
+  }
+
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    figer(svg, copie);
+    rapatrier(copie);
+    copie.style.background = "transparent";
+    // Une taille propre au dessin (sans elle, une image SVG n'a que 300 × 150 px à offrir) :
+    // celle de la viewBox, agrandie ; le CSS de la loupe la ramène à l'écran.
+    var vb = svg.viewBox && svg.viewBox.baseVal, boite = svg.getBoundingClientRect();
+    var w = vb && vb.width ? vb.width : boite.width, h = vb && vb.height ? vb.height : boite.height;
+    if (!(vb && vb.width) && w && h) copie.setAttribute("viewBox", "0 0 " + w + " " + h);
+    var k = w ? Math.max(1, 1600 / w) : 1;
+    if (w && h) { copie.setAttribute("width", Math.round(w * k)); copie.setAttribute("height", Math.round(h * k)); }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.style.background = fondDe(svg);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    montrer(svg, mot);
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
 </body>
 </html>

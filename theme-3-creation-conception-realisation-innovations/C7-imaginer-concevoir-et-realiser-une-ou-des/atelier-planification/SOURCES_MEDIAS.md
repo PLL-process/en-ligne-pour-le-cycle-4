@@ -10,6 +10,9 @@
 | `Images/ganttproject_4_les_barres_et_les_dates.png` | **Capture d'écran réelle** | idem — diagramme, chemin critique masqué |
 | `Images/ganttproject_5_afficher_le_chemin_critique.png` | **Capture d'écran réelle** | idem — après clic sur *Afficher le chemin critique* |
 
+La capture 5 sert aussi d'image de l'objet dans la carte « Ce que je dois retenir » de la synthèse élève
+(`Synthèses/synthese_eleve_C7.1_planification.html`, 29/10/2026) : le même fichier, sans retouche.
+
 ### Ce que ces images sont, exactement
 
 Ce sont de **vraies captures**, prises sur le logiciel réellement installé, et non des schémas

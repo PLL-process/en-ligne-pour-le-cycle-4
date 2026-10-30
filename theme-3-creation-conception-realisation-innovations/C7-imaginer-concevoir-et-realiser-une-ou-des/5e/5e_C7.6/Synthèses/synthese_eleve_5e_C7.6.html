@@ -3,97 +3,572 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Synthèse eleve — 5e_C7.6 Le dé</title>
-<style>body{font-family:system-ui,sans-serif;max-width:720px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
-h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
-.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
-.attention{background:#fff6e0;border-left:4px solid #b8860b}
-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.94em}
-th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
-ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
-#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}
+<title>Synthèse élève — Le dé, et les gestes qui le font (5e_C7.6)</title>
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;font-size:.95em;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+  h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
+  ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  table{width:100%;border-collapse:collapse;margin:6px 0}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--sub);font-size:.9em}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;flex-wrap:wrap;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  /* règle n°304 : un lien de rattrapage arrive sur ce titre ; la barre collante (47 px) ne doit pas le recouvrir */
+  h2[id]{scroll-margin-top:60px}
+  #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
+
+  /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
+  /* Une couleur par notion, la même partout, celle de l'écran d'Onshape : le trait encore libre en bleu, le trait fixé
+     par ses cotes en clair et en gras. */
+  .libre{color:#6fa8ff;font-weight:600}.fixe{color:#fff;font-weight:700}
+  /* La carte « Ce que je dois retenir » */
+  .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
+  .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
+  .question{text-align:center;font-size:1.05em;font-weight:600;margin:0 0 10px}
+  .programme{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);
+             padding:6px 0;margin:0 0 12px}
+  .programme b{color:var(--text)}
+  .programme ul{margin:2px 0;padding-left:18px}.programme li{margin:1px 0}
+  .cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .cartes a{display:block;text-decoration:none;color:var(--text);background:var(--panel);border:1.5px solid var(--border);
+            border-radius:10px;padding:9px 12px}
+  .cartes a:hover{border-color:var(--hl)}
+  .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
+  .cartes .r{display:block;font-size:.92em}
+  /* L'objet en image (Pascal, 29/10/2026 : « une illustration permet d'avoir une vision plus synthétique de l'objet ») :
+     à droite du programme, dans la carte ; dessous sur un téléphone. */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  /* L'image du modèle Onshape (1 095 × 957) : elle garde sa forme, rien n'est rogné. Le programme n'a qu'une
+     ligne : la question de la séquence monte à côté de l'image, au lieu de la surmonter. */
+  .objet{flex-basis:24%}.tete .question{margin:0 0 8px;font-size:1.15em;color:var(--text)}@media print{.tete .question{color:#111}}.objet img{aspect-ratio:1095/957;flex:none;height:auto;object-fit:contain}.tete .programme{align-self:center}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
+  .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
+  .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
+  .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
+  .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  ul.serre li{margin:1px 0}
+  .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
+
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+    h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; un schéma ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    .schema,table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
+    .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
+    .libre{color:#1d4e89}.fixe{color:#111}.vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
+    .schema{width:60%;display:block;margin:4px auto}
+    h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
+
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  .box{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
-</style>
-</head>
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
+
+/* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+@media(max-width:680px){table{display:block;overflow-x:auto}}
+
+  /* Revenir à la carte (Pascal, 29/10/2026 : « je ne peux pas revenir à la synthèse ») : chaque partie porte, en
+     haut à droite, un lien vers la carte « Ce que je dois retenir » ; la barre de navigation collée en haut ne
+     recouvre plus le titre visé par un lien. Rien de tout cela ne s'imprime. */
+  .retour-carte{float:right;font-size:.82em;margin:1px 0 0 10px;padding:1px 10px;border:1.5px solid var(--border);
+                border-radius:999px;text-decoration:none;white-space:nowrap}
+  .retour-carte:hover,.retour-carte:focus-visible{border-color:var(--hl)}
+  #carte-titre,[id^="partie-"],#gestes,#exporter{scroll-margin-top:64px}
+  @media print{.retour-carte{display:none}}
+</style></head>
 <body>
-<nav id="navharm"><a href="../../../../../index.html">⌂ Accueil</a><a href="../../../atelier-cao/tp_5e_de_onshape.html">🧪 Le TP</a><a href="../qcm_5e_C7.6_le-de.html">🧠 Le QCM</a><a href="../lexique_5e_C7.6.html">📖 Lexique</a><a href="synthese_professeur_5e_C7.6.html">🧑‍🏫 Synthèse professeur</a></nav>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../../../atelier-cao/tp_5e_de_onshape.html">🧪 Le TP</a><a href="../qcm_5e_C7.6_le-de.html">🧠 Le QCM</a><a href="../lexique_5e_C7.6.html">📖 Lexique</a><a href="synthese_professeur_5e_C7.6.html">🧑‍🏫 Synthèse professeur</a></nav>
+<div class="page">
+<h1>📌 Synthèse élève — Le dé, et les gestes qui le font</h1>
+<p class="pb">Suivre une procédure, geste après geste, pour construire un dé de 50&nbsp;mm prêt à imprimer.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
 
-<h1>🎲 Synthèse élève — Le dé, et les gestes qui le font</h1>
-<p><em>5e_C7.6 — Mettre en œuvre les moyens pour réaliser une forme selon une procédure fournie.</em></p>
+<!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
+<section class="carte" aria-labelledby="carte-titre">
+  <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
+  <div class="tete">
+  <div class="programme"><p class="question">Comment construire un dé dans un logiciel de CAO, en suivant une procédure, jusqu'au fichier que l'imprimante attend&nbsp;?</p>
+    <b>Ce que dit le programme</b> (5e, compétence C7)&nbsp;:
+    <ul>
+      <li>mettre en œuvre les moyens pour réaliser une forme selon une procédure fournie.</li>
+    </ul>
+  </div>
+    <figure class="objet">
+      <img src="../../../atelier-cao/Images/tp5e_R7_de_colore.png" alt="Le dé terminé dans Onshape : un cube aux arêtes arrondies, ses points creusés et colorés en doré.">
+      <figcaption>📍 L'objet&nbsp;: ton dé, terminé. <i>Image Onshape.</i></figcaption>
+    </figure>
+  </div>
+  <div class="cartes">
+    <a href="#partie-1"><span class="q">📝 1. Que demande une procédure fournie&nbsp;?</span>
+      <span class="r">Faire chaque étape dans l'ordre, et vérifier ce que tu dois voir.</span></a>
+    <a href="#partie-2"><span class="q">✏️ 2. Par quoi commence une pièce en 3D&nbsp;?</span>
+      <span class="r">Une esquisse posée sur un plan, puis des cotes qui la fixent.</span></a>
+    <a href="#partie-3"><span class="q">🧊 3. Comment le dessin devient-il un volume&nbsp;?</span>
+      <span class="r">L'extrusion pousse un contour fermé&nbsp;; le même outil enlève de la matière.</span></a>
+    <a href="#partie-4"><span class="q">🎲 4. Comment adoucir les arêtes du dé&nbsp;?</span>
+      <span class="r">Le congé arrondit, le chanfrein coupe en biais&nbsp;; le rayon a une limite.</span></a>
+    <a href="#partie-5"><span class="q">🌳 5. Comment corriger une pièce déjà finie&nbsp;?</span>
+      <span class="r">Tu changes la cote à la source&nbsp;: la suite se recalcule.</span></a>
+    <a href="#partie-6"><span class="q">🎨 6. La couleur change-t-elle la pièce&nbsp;?</span>
+      <span class="r">Non. L'apparence habille la pièce&nbsp;; le matériau change sa masse.</span></a>
+    <a href="#partie-7"><span class="q">📤 7. Comment emporter ton dé jusqu'à l'imprimante&nbsp;?</span>
+      <span class="r">Un document bien nommé, puis un fichier STL en millimètres.</span></a>
+  </div>
+</section>
 
-<h2 id="gestes">Les gestes du dé</h2>
-<div class="box"><ul>
-  <li><b>Esquisse</b> — un dessin en 2D, posé sur un <b>plan</b>. Toute pièce 3D commence là.
-  Le plan choisi décide de l'orientation de la pièce entière : ce n'est pas un détail.</li>
-  <li><b>Cote</b> — un nombre qui <em>interdit</em> au trait de bouger. Un dessin sans cotes
-  glisse encore ; un dessin coté est fixé. C'est pour cela qu'on cote avant d'extruder.</li>
-  <li><b>Extrusion</b> — pousser un contour <b>fermé</b> en ligne droite pour faire du volume.
-  Si le logiciel refuse, le contour n'est pas fermé : on zoome sur les coins.</li>
-  <li><b>Enlèvement de matière</b> — le <em>même</em> outil que l'extrusion, avec un autre
-  réglage. Ajouter et retirer sont deux directions d'un seul geste.</li>
-  <li><b>Congé</b> — l'arête devient un arrondi. Le <b>chanfrein</b>, lui, la remplace par une
-  petite facette plate. Même menu, deux résultats.</li>
-  <li><b>Arbre des fonctions</b> — la liste, dans l'ordre, de tout ce que tu as fait. Elle garde
-  ton travail modifiable : on corrige à la source, jamais sur le résultat.</li>
-</ul></div>
-
-<h2>Ce que tu dois voir</h2>
-<p>Chaque étape du TP se termine par une phrase en italique coloré : <em>ce que tu dois voir se
-produire à l'écran</em>. Ce n'est pas une décoration. Tant que tu ne le vois pas, tu ne continues
-pas — sinon tu construis dix étapes sur une erreur.</p>
-<div class="box">
-  <p><b>Trois signes valent mieux qu'un.</b> Quand l'extrusion a marché, tu vois <em>en même
-  temps</em> un volume gris à l'écran, une ligne de plus dans l'arbre des fonctions, et
-  l'esquisse qui disparaît sous la matière. Un seul de ces signes peut tromper ; leur accord,
-  non.</p>
-</div>
-<div class="box attention">
-  <p><b>Le logiciel ne parle pas toujours ta langue.</b> Certains boutons restent en anglais :
-  le plan <em>Haut</em> peut s'appeler <em>Top</em>, la <em>face</em> peut être un <em>face</em>.
-  Une interface à moitié traduite reste parfaitement utilisable — il faut seulement le savoir
-  d'avance, et survoler le bouton pour lire son infobulle.</p>
-</div>
-
-<h2>L'arbre des fonctions</h2>
-<p><b>La liste, dans l'ordre.</b> Tout ce que tu fais s'inscrit dans une liste, à gauche, <b>dans l'ordre</b>. Cette liste est
-ce qui distingue une pièce dessinée d'une pièce <b>paramétrique</b> : tu peux revenir sur la cote
-du carré, la passer de 50 à 60, et tout ce qui suit se recalcule.</p>
-<p><b>Une opération en rouge.</b> Parfois une opération devient <b>rouge</b> : elle ne tient plus dans la nouvelle forme. Ce
-n'est pas une panne du logiciel, c'est une conséquence de ta modification — un congé de 5 mm ne
-tient pas sur une arête devenue courte.</p>
-<p>La couleur et la matière, elles, ne changent <b>rien</b> à la forme : l'apparence habille la
-pièce, elle ne la modifie pas. Une pièce rouge et une pièce grise sortent identiques de
-l'imprimante.</p>
-
-<h2 id="exporter">Emporter son travail</h2>
-<div class="box"><ul>
-  <li>Il n'y a <b>pas de bouton Enregistrer</b> : le travail est sauvegardé en continu. Ce qui se
-  perd n'est pas le fichier, c'est le <em>chemin</em> pour le retrouver — d'où le rangement du
-  début.</li>
-  <li>Ton document vit <b>dans le compte</b>, pas sur le poste. Tu le retrouveras d'un autre
-  ordinateur ; tu ne le retrouveras pas dans les documents de la machine.</li>
-  <li>Pour l'imprimante 3D : format <b>STL</b>, unité <b>millimètres</b>. Le format
-  <em>et</em> l'unité — un dé exporté en pouces sort vingt-cinq fois trop grand.</li>
-</ul></div>
-
-<h2>Ce que la procédure ne dit pas</h2>
-<p>Ce TP te donne la marche à suivre, pas à pas. <b>Suivre une procédure fidèlement est une
-compétence</b>, et c'est celle qui est évaluée ici : réaliser la forme demandée, avec les moyens
-indiqués.</p>
-<p>Mais une procédure donne la forme, pas toutes les qualités de l'objet. Elle ne dit pas si le
-dé sera agréable en main, s'il s'imprimera vite, s'il roulera droit. En 4e tu <em>modifieras</em>
-une forme ; en 3e tu partiras d'un <b>besoin</b> sans marche à suivre. L'aide diminue exprès : le
-premier geste de chaque famille est écrit au clic près, les suivants tiennent en une ligne.</p>
-
-<div class="box attention">
-  <p><b>Ce TP a besoin d'Internet.</b> Le logiciel de CAO fonctionne dans le navigateur et
-  <em>uniquement</em> en ligne : sans connexion, la séance ne peut pas avoir lieu. Cette page, le
-  QCM et le lexique, eux, fonctionnent hors ligne et s'impriment.</p>
+<!-- ══ 1 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-1" style="margin-top:0">1. Que demande une procédure fournie&nbsp;?</h2>
+  <p>Le TP «&nbsp;Le dé&nbsp;» te donne la marche à suivre, palier par palier. Chaque étape se lit en deux temps&nbsp;:</p>
+  <div class="chaine">
+    <div><b>Ce que tu fais</b>Écrit en clair&nbsp;: «&nbsp;Clique sur Esquisse.&nbsp;» L'aide raccourcit quand le geste revient.</div>
+    <div class="ok"><b>Ce que tu dois voir</b>En italique coloré, souvent trois signes&nbsp;: un seul peut tromper. Pas de signe&nbsp;? Reprends l'étape.</div>
+    <div><b>Ce qu'elle ne dit pas</b>Si le dé est équilibré&nbsp;: la face du 6 perd plus de matière que celle du 1.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: suivre une <b>procédure fournie</b>, c'est faire <b>chaque étape dans
+  l'ordre</b> et vérifier le <b>signe attendu</b> avant de continuer. La procédure donne la forme, pas toutes les qualités de l'objet.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: enchaîner les clics sans regarder l'écran. Tu construirais dix étapes sur
+  une erreur.</p>
 </div>
 
-<footer>Lot « Le dé » — atelier CAO du cycle 4. Cette page fonctionne hors ligne, sans compte, et s'imprime en noir et blanc.</footer>
+<!-- ══ 2 ══ -->
+<div class="bloc savoir" id="gestes">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-2" style="margin-top:0">2. Par quoi commence une pièce en 3D&nbsp;?</h2>
+  <p>Le dé commence par un carré dessiné à plat. Quatre gestes, dans cet ordre&nbsp;:</p>
+  <div class="chaine etapes">
+    <div><b>1. Choisir le plan</b>Haut, le plan horizontal&nbsp;: le dé sera posé à plat. L'écran l'appelle parfois Top.</div>
+    <div><b>2. Se mettre en face</b>La touche N met le plan à plat devant toi.</div>
+    <div><b>3. Dessiner</b>Rectangle à partir du centre&nbsp;: le carré est centré sur l'origine.</div>
+    <div><b>4. Coter</b>50 et 50. Le tracé passe du <span class="libre">bleu</span> au <span class="fixe">noir</span>.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une pièce 3D commence par une <b>esquisse</b>, un dessin en 2D posé sur
+  un <b>plan</b>. Une <b>cote</b> fixe une dimension&nbsp;: un trait <span class="libre">bleu</span> peut encore bouger,
+  un trait <span class="fixe">noir</span> est fixé.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: dessiner «&nbsp;à peu près&nbsp;» sans coter. Le carré a l'air juste, mais
+  un coup de souris peut encore le déformer.</p>
+</div>
+
+<!-- ══ 3 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-3" style="margin-top:0">3. Comment le dessin devient-il un volume&nbsp;?</h2>
+  <p>L'outil Extrudeur fait monter le carré, puis creuse les points. Chaque point est un cercle esquissé sur une face du cube&nbsp;:</p>
+  <div class="chaine">
+    <div class="ok"><b>Ajouter de la matière</b>Onglet Nouveau&nbsp;: le carré monte de 50&nbsp;mm. Le cube apparaît.</div>
+    <div class="ok"><b>Enlever de la matière</b>Onglet Retraite (ou Retirer)&nbsp;: un cercle de 10&nbsp;mm creuse 1,5&nbsp;mm. Un point apparaît.</div>
+    <div class="ko"><b>Un contour ouvert ✘</b>Le logiciel refuse d'extruder. Zoome sur les coins pour trouver l'écart.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: l'<b>extrusion</b> pousse un <b>contour fermé</b> en ligne droite pour
+  créer du volume. Le <b>même outil</b> enlève de la matière&nbsp;: c'est un réglage, pas un autre outil.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: taper 1,5 avec une virgule. Le champ passe au rouge&nbsp;: Onshape attend un
+  point, 1.5.</p>
+</div>
+
+<!-- ══ 4 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-4" style="margin-top:0">4. Comment adoucir les arêtes du dé&nbsp;?</h2>
+  <p>Une arête vive blesse la main et s'écaille au premier choc. Le TP arrondit les arêtes du dé&nbsp;:</p>
+  <div class="chaine">
+    <div class="ok"><b>Congé de 3&nbsp;mm</b>Sur les 12 arêtes du cube&nbsp;: le cube devient un dé.</div>
+    <div class="ok"><b>Congé de 1&nbsp;mm</b>Sur le bord des 21 points. Au-delà de 1,5&nbsp;mm, il mange le point.</div>
+    <div><b>Le chanfrein</b>Même menu, autre résultat&nbsp;: une petite facette plate au lieu d'un arrondi.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un <b>congé</b> arrondit une arête&nbsp;; un <b>chanfrein</b> la remplace
+  par une facette plate. Le congé prend de la matière autour de l'arête&nbsp;: son <b>rayon a une limite</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: te fier à l'œil. Un reflet clair ressemble à un congé&nbsp;; seule la
+  mesure prouve qu'il existe.</p>
+</div>
+
+<!-- ══ 5 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-5" style="margin-top:0">5. Comment corriger une pièce déjà finie&nbsp;?</h2>
+  <p>Ton dé est fini, et tu veux le passer de 50 à 40&nbsp;mm. Deux façons de faire&nbsp;:</p>
+  <div class="chaine">
+    <div class="ok"><b>Corriger à la source ✔</b>Double-clic sur Esquisse 1, la cote passe à 40. Les fonctions qui suivent se recalculent.</div>
+    <div class="ko"><b>Tout refaire ✘</b>Recommencer la pièce, ou réduire le fichier exporté&nbsp;: du temps perdu.</div>
+    <div><b>Une fonction en rouge</b>Un congé ne tient plus sur une arête devenue courte&nbsp;: réduis son rayon.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: l'<b>arbre des fonctions</b> garde tes gestes <b>dans l'ordre</b>. La
+  pièce est <b>paramétrique</b>&nbsp;: tu la corriges <b>à la source</b>, et la suite se recalcule seule.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'une fonction en rouge est une panne. C'est ta modification qui ne
+  tient plus&nbsp;: lis laquelle.</p>
+</div>
+
+<!-- ══ 6 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-6" style="margin-top:0">6. La couleur change-t-elle la pièce&nbsp;?</h2>
+  <p>Au dernier palier, ton dé devient bronze, avec des points dorés. Puis tu lui donnes un matériau&nbsp;:</p>
+  <div class="chaine">
+    <div><b>L'apparence</b>La couleur, l'aspect brillant. La forme et les cotes ne bougent pas.</div>
+    <div><b>Le matériau</b>Bronze, puis ABS, un plastique d'impression 3D. La masse calculée est divisée par près de huit.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: l'<b>apparence</b>, c'est ce que l'objet <b>a l'air</b> d'être&nbsp;:
+  elle ne change pas la forme. Le <b>matériau</b>, c'est ce dont il <b>est fait</b>&nbsp;: il change la <b>masse</b>
+  calculée.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'un dé doré à l'écran sortira doré. C'est le plastique de
+  l'imprimante qui sortira.</p>
+</div>
+
+<!-- ══ 7 ══ -->
+<div class="bloc faire" id="exporter">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-7" style="margin-top:0">7. Comment emporter ton dé jusqu'à l'imprimante&nbsp;?</h2>
+  <p>Pas de bouton Enregistrer&nbsp;: Onshape garde chaque geste en ligne, dans le compte de la classe. Sans Internet, pas de séance.</p>
+  <div class="chaine etapes">
+    <div><b>1. Nommer</b>Dès le début, un nom avec le tien&nbsp;: tu le retrouves parmi ceux de la classe.</div>
+    <div><b>2. Vérifier</b>Compte les points&nbsp;: deux faces opposées font toujours 7.</div>
+    <div><b>3. Exporter</b>Format STL, unité Millimètre. Le fichier reste rangé dans un onglet du document.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: ton document vit <b>dans le compte</b>, pas sur le poste&nbsp;: un
+  <b>nom</b> clair te le fait retrouver. Pour l'imprimante 3D, il faut un fichier <b>STL</b>, en <b>millimètres</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: laisser l'unité sur Mètre, le réglage de départ. Le dé de 50&nbsp;mm sortirait
+  mille fois trop petit.</p>
+</div>
+
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>CAO <span class="en">— CAD</span></dt><dd>conception assistée par ordinateur&nbsp;: dessiner un objet pour qu'une machine le fabrique.</dd></div>
+    <div><dt>esquisse <span class="en">— sketch</span></dt><dd>un dessin en 2D posé sur un plan.</dd></div>
+    <div><dt>plan <span class="en">— plane</span></dt><dd>la surface plate où l'on dessine&nbsp;; une face suffit.</dd></div>
+    <div><dt>cote <span class="en">— dimension</span></dt><dd>un nombre qui fixe une longueur.</dd></div>
+    <div><dt>extrusion <span class="en">— extrude</span></dt><dd>pousser un contour fermé pour créer du volume.</dd></div>
+    <div><dt>enlèvement de matière <span class="en">— cut</span></dt><dd>la même extrusion, réglée pour creuser.</dd></div>
+    <div><dt>congé <span class="en">— fillet</span></dt><dd>une arête remplacée par un arrondi.</dd></div>
+    <div><dt>chanfrein <span class="en">— chamfer</span></dt><dd>une arête remplacée par une facette plate.</dd></div>
+    <div><dt>arbre des fonctions <span class="en">— feature tree</span></dt><dd>la liste de tes gestes, dans l'ordre.</dd></div>
+    <div><dt>paramétrique <span class="en">— parametric</span></dt><dd>une pièce qui se recalcule quand une cote change.</dd></div>
+    <div><dt>apparence <span class="en">— appearance</span></dt><dd>la couleur et l'aspect d'une pièce.</dd></div>
+    <div><dt>matériau <span class="en">— material</span></dt><dd>ce dont la pièce est faite&nbsp;; il donne la masse.</dd></div>
+    <div><dt>exporter <span class="en">— to export</span></dt><dd>traduire la pièce pour une machine.</dd></div>
+    <div><dt>STL <span class="en">— STL file</span></dt><dd>la surface en triangles, pour l'imprimante 3D.</dd></div>
+    <div><dt>STEP <span class="en">— STEP file</span></dt><dd>la forme exacte, pour un autre logiciel de CAO.</dd></div>
+    <div><dt>infobulle <span class="en">— tooltip</span></dt><dd>le nom du bouton, quand la souris le survole.</dd></div>
+    <div><dt>révolution <span class="en">— revolve</span></dt><dd>faire tourner un contour autour d'un axe (en 4e).</dd></div>
+  </dl>
+</div>
+</div>
+
+
+<!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  /* L'agrandisseur est une COLONNE — bouton, image, légende — : la légende suit l'image dans le
+     flux, l'image reçoit une hauteur maximale calculée (ajuster()), et le fond défile si besoin. */
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:1rem;box-sizing:border-box;overflow:auto;
+    flex-direction:column;align-items:center;gap:.75rem}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  /* centré quand tout tient, sans rien couper quand ça déborde : des marges automatiques,
+     pas justify-content:center (qui rendrait le haut inaccessible au défilement) */
+  .loupe-fond > .loupe-fermer{margin-top:auto}
+  .loupe-fond > .loupe-legende{margin-bottom:auto}
+  .loupe-fond img{display:block;flex:none;max-width:100%;max-height:80vh;width:auto;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:static;flex:none;margin:0;max-width:min(70ch,100%);text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif}
+  .loupe-legende .loupe-aide{display:block;margin-top:.25rem;font-size:.85em;color:#b8bfcc}
+  .loupe-fermer{position:sticky;top:0;align-self:flex-end;flex:none;z-index:1;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+    grande.addEventListener("load", ajuster);
+    window.addEventListener("resize", ajuster);
+  }
+
+  // La légende affichée : la figcaption VISIBLE de la figure si elle existe ; sinon le
+  // texte alternatif, réduit à sa première phrase s'il dépasse deux lignes. L'alt complet
+  // reste sur l'image agrandie, pour les lecteurs d'écran.
+  function poserLegende(el, texteAlt){
+    var fig = el.closest("figure");
+    var cap = fig ? fig.querySelector("figcaption") : null;
+    var visible = cap && cap.getClientRects().length && cap.textContent.trim();
+    legende.textContent = "";
+    var texte = visible ? cap.textContent.replace(/\s+/g, " ").trim() : (texteAlt || "");
+    texte = texte.replace(/\s*\(clique[^()]*agrandir\)/gi, "").trim();   // l'image est déjà agrandie
+    var corps = document.createElement("span");
+    corps.textContent = texte;
+    var aide = document.createElement("span");
+    aide.className = "loupe-aide";
+    aide.textContent = "Échap pour refermer";
+    if (texte) legende.appendChild(corps);
+    legende.appendChild(aide);
+    if (!visible && texte) {
+      var ligne = parseFloat(getComputedStyle(legende).lineHeight) || 20;
+      if (corps.getBoundingClientRect().height > 2 * ligne + 1) {
+        var m = texte.match(/^[\s\S]*?[.!?…](?=\s|$)/);
+        if (m && m[0].length < texte.length) corps.textContent = m[0];
+      }
+    }
+  }
+
+  // L'image reçoit la place qui reste : hauteur du fond, moins le bouton, la légende,
+  // les marges et les espacements — jamais moins de 40 % de l'écran ; au-delà, le fond défile.
+  function ajuster(){
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    var st = getComputedStyle(fond);
+    var ecart = parseFloat(st.rowGap) || 0;
+    var reste = fond.clientHeight - parseFloat(st.paddingTop) - parseFloat(st.paddingBottom)
+              - fond.querySelector(".loupe-fermer").offsetHeight - legende.offsetHeight - 2 * ecart;
+    grande.style.maxHeight = Math.max(reste, 0.4 * window.innerHeight) + "px";
+  }
+
+  function montrer(el, texteAlt){
+    fond.setAttribute("data-ouvert", "oui");
+    fond.scrollTop = 0;
+    poserLegende(el, texteAlt);
+    ajuster();
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.style.background = "";
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    montrer(img, img.alt);
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    grande.style.maxHeight = "";
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
+  // couleurs et leur police viennent de la feuille de style de la PAGE. Sérialisé seul, le
+  // dessin les perdrait (formes noires, police par défaut, texte qui déborde) : on recopie
+  // donc sur la copie les propriétés CALCULÉES de chaque élément, on y ajoute les dégradés
+  // et marqueurs définis ailleurs dans la page, et l'image reçoit le fond du schéma.
+  var PROPRIETES = ["fill", "fill-opacity", "fill-rule", "stroke", "stroke-width", "stroke-opacity",
+    "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit",
+    "opacity", "visibility", "display", "color", "font-family", "font-size", "font-weight", "font-style",
+    "font-variant-numeric", "letter-spacing", "word-spacing", "text-anchor", "dominant-baseline",
+    "baseline-shift", "text-decoration", "white-space", "paint-order", "stop-color", "stop-opacity",
+    "marker-start", "marker-mid", "marker-end", "clip-path", "mask", "filter"];
+  // Une transformation posée par la feuille de style (pas par l'attribut transform, que la
+  // copie garde déjà) : on la recopie avec son origine.
+  var TRANSFORMATION = ["transform", "transform-origin", "transform-box"];
+
+  function figer(source, copie){
+    var a = [source].concat([].slice.call(source.querySelectorAll("*")));
+    var b = [copie].concat([].slice.call(copie.querySelectorAll("*")));
+    for (var i = 0; i < a.length && i < b.length; i++) {
+      var cs = getComputedStyle(a[i]), decl = [], k, v;
+      for (k = 0; k < PROPRIETES.length; k++) {
+        v = cs.getPropertyValue(PROPRIETES[k]);
+        if (v) decl.push(PROPRIETES[k] + ":" + v);
+      }
+      if (i > 0 && !a[i].hasAttribute("transform") && cs.getPropertyValue("transform") &&
+          cs.getPropertyValue("transform") !== "none") {
+        for (k = 0; k < TRANSFORMATION.length; k++) decl.push(TRANSFORMATION[k] + ":" + cs.getPropertyValue(TRANSFORMATION[k]));
+      }
+      var deja = b[i].getAttribute("style");
+      b[i].setAttribute("style", decl.join(";") + (deja ? ";" + deja : ""));
+    }
+  }
+
+  // Un dégradé ou un marqueur appelé par url(#…) mais défini hors du dessin : on le recopie dedans.
+  function rapatrier(copie){
+    var defs = null, faits = {}, tour = 0, trouve = true;
+    while (trouve && tour++ < 4) {
+      trouve = false;
+      var refs = (new XMLSerializer().serializeToString(copie).match(/url\((?:&quot;|["'])?#([^"')&]+)/g) || [])
+        .concat(new XMLSerializer().serializeToString(copie).match(/href="#[^"]+"/g) || []);
+      refs.forEach(function(r){
+        var id = r.replace(/^url\((?:&quot;|["'])?#/, "").replace(/^href="#/, "").replace(/"$/, "");
+        if (faits[id] || copie.querySelector("[id='" + id.replace(/'/g, "") + "']")) return;
+        faits[id] = true;
+        var el = document.getElementById(id);
+        if (!el || !el.closest("svg")) return;
+        if (!defs) { defs = document.createElementNS("http://www.w3.org/2000/svg", "defs"); copie.insertBefore(defs, copie.firstChild); }
+        var c = el.cloneNode(true); figer(el, c); defs.appendChild(c); trouve = true;
+      });
+    }
+  }
+
+  // Le fond sur lequel le schéma est dessiné : le sien, sinon celui du premier parent opaque.
+  function fondDe(el){
+    for (var e = el; e && e.nodeType === 1; e = e.parentElement) {
+      var c = getComputedStyle(e).backgroundColor, m = c.match(/rgba?\(([^)]+)\)/);
+      if (m) { var p = m[1].split(","); if (p.length < 4 || parseFloat(p[3]) > 0) return c; }
+      else if (c && c !== "transparent") return c;
+    }
+    return "#fff";
+  }
+
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    figer(svg, copie);
+    rapatrier(copie);
+    copie.style.background = "transparent";
+    // Une taille propre au dessin (sans elle, une image SVG n'a que 300 × 150 px à offrir) :
+    // celle de la viewBox, agrandie ; le CSS de la loupe la ramène à l'écran.
+    var vb = svg.viewBox && svg.viewBox.baseVal, boite = svg.getBoundingClientRect();
+    var w = vb && vb.width ? vb.width : boite.width, h = vb && vb.height ? vb.height : boite.height;
+    if (!(vb && vb.width) && w && h) copie.setAttribute("viewBox", "0 0 " + w + " " + h);
+    var k = w ? Math.max(1, 1600 / w) : 1;
+    if (w && h) { copie.setAttribute("width", Math.round(w * k)); copie.setAttribute("height", Math.round(h * k)); }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.style.background = fondDe(svg);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    montrer(svg, mot);
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
 </body>
 </html>

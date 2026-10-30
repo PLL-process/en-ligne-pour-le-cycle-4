@@ -5,87 +5,575 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Synthèse élève — Le bac du jardin (4e_C7.3)</title>
 <style>
-body{font-family:system-ui,sans-serif;max-width:740px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
-h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
-.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
-.attention{background:#fff6e0;border-left:4px solid #b8860b}
-.limite{background:#fdeff1;border-left:4px solid #b0344b}
-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.93em}
-th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
-td.n{text-align:right;font-variant-numeric:tabular-nums}
-code{background:#eef3fa;padding:1px 5px;border-radius:4px;font-size:.92em}
-ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
-#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;font-size:.95em;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+  h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
+  ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  table{width:100%;border-collapse:collapse;margin:6px 0}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--sub);font-size:.9em}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  /* règle n°304 : un lien de rattrapage arrive sur ce titre ; la barre collante (47 px) ne doit pas le recouvrir */
+  h2[id]{scroll-margin-top:60px}
+  #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
+
+  /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
+  /* Une couleur par notion, la même partout : le prix d'achat (un instant) en jaune, le coût sur une durée en vert. */
+  .px{color:var(--warn);font-weight:600}.ct{color:var(--ok);font-weight:600}
+  /* La carte « Ce que je dois retenir » */
+  .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
+  .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
+  .question{text-align:center;font-size:1.05em;font-weight:600;margin:0 0 10px}
+  .programme{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);
+             padding:6px 0;margin:0 0 12px}
+  .programme b{color:var(--text)}
+  .programme ul{margin:2px 0;padding-left:18px}.programme li{margin:1px 0}
+  .cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .cartes a{display:block;text-decoration:none;color:var(--text);background:var(--panel);border:1.5px solid var(--border);
+            border-radius:10px;padding:9px 12px}
+  .cartes a:hover{border-color:var(--hl)}
+  .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
+  .cartes .r{display:block;font-size:.92em}
+  /* L'objet en image (Pascal, 29/10/2026 : « une illustration permet d'avoir une vision plus synthétique de l'objet ») :
+     à droite du programme, dans la carte ; dessous sur un téléphone. */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
+  .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
+  .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
+  .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
+  .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  ul.serre li{margin:1px 0}
+  .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
+
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+    h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; un schéma ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    .schema,table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
+    .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
+    .px{color:#8a5a00}.ct{color:#1d6b38}.vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
+    .schema{width:60%;display:block;margin:4px auto}
+    h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
+
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  .box{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
-</style>
-</head>
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
+
+/* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+@media(max-width:680px){table{display:block;overflow-x:auto}}
+
+  /* Revenir à la carte (Pascal, 29/10/2026 : « je ne peux pas revenir à la synthèse ») : chaque partie porte, en
+     haut à droite, un lien vers la carte « Ce que je dois retenir » ; la barre de navigation collée en haut ne
+     recouvre plus le titre visé par un lien. Rien de tout cela ne s'imprime. */
+  .retour-carte{float:right;font-size:.82em;margin:1px 0 0 10px;padding:1px 10px;border:1.5px solid var(--border);
+                border-radius:999px;text-decoration:none;white-space:nowrap}
+  .retour-carte:hover,.retour-carte:focus-visible{border-color:var(--hl)}
+  #carte-titre,[id^="partie-"]{scroll-margin-top:64px}
+  @media print{.retour-carte{display:none}}
+
+  /* Cinq cases (cinq étapes, ou cinq candidats) : sur une seule rangée à l'écran et sur papier. */
+  .chaine.cinq div{flex-basis:110px}
+  @media print{.chaine.cinq div{padding:3px 6px}}
+
+  /* Le programme tient en deux lignes : la question de la séquence monte à côté de l'image, au lieu de la
+     surmonter, et l'image (1 536 × 1 024) garde sa forme, sans être rognée. */
+  .tete .question{margin:6px 0 8px;text-align:left}
+  .tete .programme{align-self:center}
+  .objet img{aspect-ratio:3/2;flex:none;height:auto}
+
+  /* Trois anciennes ancres, visées par la séquence 3e_C7.3 : la barre collée en haut ne recouvre pas la partie. */
+  #plusieurs-seuils,#site-ou-objet,#comparer{scroll-margin-top:64px}
+</style></head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_4e_C7.3_bac-du-jardin.html">← Séquence</a><a href="qcm_4e_C7.3_bac-du-jardin.html">🧠 QCM</a><a href="lexique_4e_C7.3.html">📖 Lexique</a></nav>
-<h1>🪴 Le bac du jardin — ce qu'il faut retenir</h1>
-<p style="color:#555">Thème 3 · 4<sup>e</sup> — 4e_C7.3. Imprimable en noir et blanc, lisible hors ligne.</p>
-<h2>Un prix d'achat n'est pas un coût</h2>
-<div class="box"><p>Un prix est un instant ; un <b>coût a une durée
-     attachée</b>. « Le PVC coûte 167 € » est vrai à l'achat et faux sur quinze ans, où il en coûte
-     333. Le nombre d'exemplaires s'obtient par arrondi à l'entier supérieur : un bac qui dure
-     6 ans demande <b>3 achats</b> pour couvrir 15 ans, pas 2,5.</p></div>
-<h2>Le classement appartient à la durée</h2>
-<div class="box"><p>À l'achat : PP 90 € · PVC 167 € · teck 309 €.
-     Sur 15 ans : PP 271 € · <b>teck 309 € · PVC 333 €</b>. Sur 20 ans : PP 362 € · PVC 500 € ·
-     teck 619 €. <b>Le classement se retourne deux fois</b>, et rien n'a changé dans les
-     matériaux : seule la question a changé.</p></div>
-<h2>Durer trop longtemps coûte aussi</h2>
-<div class="box"><p>Deux tecks de 15 ans pour couvrir 20 ans, ce sont
-     <b>30 années achetées pour 20 utilisées</b>. Le second part à la benne avec dix ans devant
-     lui. C'est le défaut symétrique de « ne pas durer assez », et il coûte tout autant.</p></div>
-<h2>La durée de comparaison s'écrit</h2>
-<div class="box"><p>Elle n'est pas une donnée : c'est une <b>décision</b>,
-     prise par celui qui conçoit avec celui qui commande. Sans elle en haut du dossier, personne
-     ne peut refaire le calcul ni le contester. « Nous comparons sur quinze ans, durée
-     d'amortissement du collège. »</p></div>
-<h2 id="comparer">Comparer n'est pas préférer</h2>
-<div class="box"><p>Comparer suppose la <b>même grandeur, la même unité et la
-     même méthode</b>. Un prix en euros et une durée en années ne se comparent pas : il faut les
-     ramener l'un à l'autre. Et l'on compare des objets qui rendent <b>le même service</b>, pas
-     des objets de même masse.</p></div>
-<h2>Le même service rendu</h2>
-<div class="box"><p>Les six candidats sont comparés pour un même bac de
-     1,00 × 0,50 × 0,40 m, pendant la même durée. C'est cette base commune qu'on appelle
-     l'<b>unité fonctionnelle</b>, et c'est la première ligne d'une comparaison honnête.</p></div>
-<h2>Le revers arrive à la fin de vie</h2>
-<div class="box"><p>Le pin traité autoclave tient l'eau, le sel et le
-     soleil, et il est recalé sur la seule recyclabilité : <b>20 % contre 40 % exigés</b>. Le
-     traitement qui le rend durable est justement ce qui ferme sa filière. La qualité qu'on va
-     chercher a souvent un revers, et il arrive quand plus personne ne regarde.</p></div>
-<h2>Une exigence peut venir d'un engagement</h2>
-<div class="box"><p>« Le collège n'installe pas ce qu'il ne saura
-     pas jeter » : rien ne casse si on l'ignore. C'est une <b>décision votée</b>, pas une
-     contrainte physique — et elle tient exactement tant qu'on la fait tenir.</p></div>
-<h2 id="plusieurs-seuils">Un candidat peut manquer plusieurs seuils</h2>
-<div class="box"><p>L'acier galvanisé rate la tenue à l'eau
-     (3 sur 5) <em>et</em> la masse (267 kg pour 60 admis). On les nomme tous les deux : ne
-     retenir que le premier motif, c'est laisser croire qu'un seul obstacle sépare le candidat
-     du but.</p></div>
-<h2 id="site-ou-objet">Du site, ou de l'objet</h2>
-<div class="box"><p>Déplacer le bac à 12 km de la mer et sous les arbres lève la
-     tenue au sel et allège le soleil. Mais <b>la terre du bac reste humide</b> : cette exigence
-     vient de l'objet, pas du site, et elle ne bouge pas. Le classement sur 15 ans reste
-     identique — encore fallait-il refaire le calcul pour le savoir.</p></div>
-<h2>Un prix ne compte que la matière</h2>
-<div class="box"><p>Trois bacs sur quinze ans, ce sont trois fabrications
-     et trois transports. Le prix n'en compte aucun. <b>Un matériau très recyclable qu'on remplace
-     souvent n'est pas automatiquement le moins lourd pour l'environnement</b> : c'est une
-     comparaison à faire, pas une évidence.</p></div>
-<h2>Les cinq étapes du cycle de vie</h2>
-<div class="box"><p>Extraction, fabrication, distribution, utilisation, fin
-     de vie. Chaque remplacement les rejoue <b>toutes</b>. Un bilan carbone additionne les émissions
-     de ces cinq étapes — et pour un bac de jardin, l'usage n'est pas la plus lourde.</p></div>
-<h2>Une comparaison dit ce qu'elle ne mesure pas</h2>
-<div class="box"><p>Le banc ignore l'énergie de fabrication,
-     les kilomètres et l'origine du bois. Un dossier honnête <b>écrit son périmètre</b> : ce qui
-     n'est pas mesuré ne disparaît pas, il devient invisible — ce qui est bien plus dangereux.</p></div>
-<footer>Synthèse élève — 4e_C7.3. Programme 2024, Thème 3.</footer>
+<div class="page">
+<h1>📌 Synthèse élève — Le bac du jardin&nbsp;: choisir son matériau</h1>
+<p class="pb">Six matériaux, six exigences, et une durée à choisir avant de nommer le gagnant.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
+
+<!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
+<section class="carte" aria-labelledby="carte-titre">
+  <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
+  <div class="tete">
+  <div class="programme"><p class="question">Trois matériaux passent toutes les exigences du bac. Sur quoi les classer, quand le moins cher à l'achat n'est pas le moins cher&nbsp;?</p>
+    <b>Ce que dit le programme</b> (4e, compétence C7, et C3 en appui)&nbsp;:
+    <ul>
+      <li>comparer différents matériaux pour choisir le plus adapté&nbsp;;</li>
+      <li>comparer qualitativement et/ou quantitativement (incidences environnementales, bilan carbone, efficacité énergétique) plusieurs OST répondant au même besoin et arrêter un choix.</li>
+    </ul>
+  </div>
+    <figure class="objet">
+      <img src="Images/synthese_bac_jardin.png" alt="Trois bacs de culture de même taille, côte à côte au jardin du collège : un en plastique recyclé gris, un en PVC blanc, un en teck.">
+      <figcaption>📍 L'objet&nbsp;: le même bac, en plastique recyclé, en PVC et en teck. <i>Image générée par IA (Canva).</i></figcaption>
+    </figure>
+  </div>
+  <div class="cartes">
+    <a href="#partie-1"><span class="q">🎯 1. Un matériau peut-il être «&nbsp;le plus adapté&nbsp;» tout seul&nbsp;?</span>
+      <span class="r">Non. Il passe ou rate chaque seuil écrit, et tu nommes tous ses motifs.</span></a>
+    <a href="#partie-2"><span class="q">🧭 2. D'où viennent les exigences du bac&nbsp;?</span>
+      <span class="r">Du site, de l'objet ou d'un vote. Déplacer le bac ne change que les premières.</span></a>
+    <a href="#partie-3"><span class="q">⚖️ 3. Comment comparer honnêtement un prix et une durée de vie&nbsp;?</span>
+      <span class="r">Tu les ramènes au <span class="ct">coût</span> du même bac, sur une même durée.</span></a>
+    <a href="#partie-4"><span class="q">📅 4. Pourquoi le classement change-t-il avec la durée&nbsp;?</span>
+      <span class="r">Il dépend de la durée choisie. Cette durée est une décision, et elle s'écrit.</span></a>
+    <a href="#partie-5"><span class="q">🌍 5. Que ne dit pas le prix d'un bac&nbsp;?</span>
+      <span class="r">Les cinq étapes de son cycle de vie, rejouées à chaque remplacement.</span></a>
+    <a href="#partie-6"><span class="q">✍️ 6. Comment arrêter son choix, et l'écrire&nbsp;?</span>
+      <span class="r">Tranche, dis sur quel critère, et écris ce que tu n'as pas mesuré.</span></a>
+  </div>
+</section>
+
+<!-- ══ 1 ══ (ancre « plusieurs-seuils » : visée par la séquence 3e_C7.3) -->
+<div class="bloc savoir" id="plusieurs-seuils">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-1" style="margin-top:0">1. Un matériau peut-il être «&nbsp;le plus adapté&nbsp;» tout seul&nbsp;?</h2>
+  <p>Au jardin, le bac a six exigences, comme «&nbsp;résistance d'au moins 20&nbsp;MPa (mégapascals)&nbsp;». Six matériaux passent devant&nbsp;:</p>
+  <div class="chaine">
+    <div class="ko"><b>Pin non traité ✘</b>Il rate trois seuils&nbsp;: le soleil, le sel et l'eau.</div>
+    <div class="ko"><b>Pin traité autoclave ✘</b>Il tient tout, sauf le recyclage&nbsp;: 20&nbsp;% pour 40&nbsp;% exigés.</div>
+    <div class="ko"><b>Acier galvanisé ✘</b>Deux motifs&nbsp;: l'eau (3 sur 5) et la masse (267&nbsp;kg pour 60 admis).</div>
+    <div class="ok"><b>Polypropylène (PP) recyclé, PVC, teck ✔</b>Ils passent les six seuils. Il faut encore les classer.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un matériau n'est pas adapté tout seul. Il l'est à des <b>exigences écrites</b>,
+  et chacune est un <b>seuil</b>&nbsp;: il passe ou il échoue. Pour un matériau recalé, tu nommes <b>tous</b> ses motifs.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'une très bonne valeur rattrape un seuil manqué. L'acier est le plus
+  résistant des six, et il reste recalé.</p>
+</div>
+
+<!-- ══ 2 ══ (ancre « site-ou-objet » : visée par la séquence 3e_C7.3) -->
+<div class="bloc savoir" id="site-ou-objet">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-2" style="margin-top:0">2. D'où viennent les exigences du bac&nbsp;?</h2>
+  <p>Au jardin, chaque seuil protège quelque chose. Les exigences ont trois origines&nbsp;:</p>
+  <div class="chaine">
+    <div><b>Du site</b>À 900&nbsp;m de la mer, le sel ronge. Dehors toute l'année, le soleil abîme.</div>
+    <div><b>De l'objet</b>La terre du bac reste humide&nbsp;: c'est le principe d'un jardin arrosé.</div>
+    <div><b>D'un engagement</b>Le collège a voté&nbsp;: «&nbsp;il n'installe pas ce qu'il ne saura pas jeter&nbsp;».</div>
+  </div>
+  <p>À Morne-Rouge, à 12&nbsp;km de la mer et à l'ombre, le sel et le soleil comptent moins. La terre reste humide&nbsp;:
+  le pin nu reste recalé, et le classement sur 15 ans ne change pas.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: déplacer le bac change seulement les exigences du <b>site</b>. Celles qui
+  viennent de l'<b>objet</b> restent. Un <b>engagement</b> voté s'écrit au cahier des charges, comme une contrainte physique.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'un engagement compte moins parce que rien ne casse si on l'oublie.
+  Il oblige le collège qui l'a voté.</p>
+</div>
+
+<!-- ══ 3 ══ (ancre « comparer » : visée par la séquence 3e_C7.3) -->
+<div class="bloc savoir" id="comparer">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-3" style="margin-top:0">3. Comment comparer honnêtement un prix et une durée de vie&nbsp;?</h2>
+  <p>Au jardin, les six matériaux font le même bac de 1,00 × 0,50 × 0,40&nbsp;m&nbsp;: le même service rendu, ou
+  <b>unité fonctionnelle</b>. Le <span class="px">prix</span> départage les trois retenus. Pour 15 ans de bac&nbsp;:</p>
+  <div class="chaine">
+    <div><b>PP recyclé</b>Il dure 6 ans&nbsp;: 3 achats.<br>3 × 90,44&nbsp;€ ≈ <span class="ct">271&nbsp;€</span></div>
+    <div><b>PVC</b>Il dure 8 ans&nbsp;: 2 achats.<br>2 × 166,60&nbsp;€ ≈ <span class="ct">333&nbsp;€</span></div>
+    <div><b>Teck</b>Il dure 15 ans&nbsp;: 1 achat.<br>1 × 309,40&nbsp;€ ≈ <span class="ct">309&nbsp;€</span></div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: pour comparer un prix et une durée, tu les ramènes à <b>une seule grandeur</b>&nbsp;:
+  le <span class="ct">coût</span> du même bac sur la même durée. Le nombre de bacs s'arrondit à l'entier <b>supérieur</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: diviser 15 par 6 et commander 2,5 bacs. Tu n'achètes pas un demi-bac&nbsp;: il en faut 3.</p>
+</div>
+
+<!-- ══ 4 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-4" style="margin-top:0">4. Pourquoi le classement change-t-il avec la durée&nbsp;?</h2>
+  <p>Au banc, tu changes la durée de comparaison. L'ordre des trois retenus se retourne deux fois&nbsp;:</p>
+  <div class="chaine etapes">
+    <div><b>Sur 4 ans</b>PP 90&nbsp;€, PVC 167&nbsp;€, teck 309&nbsp;€.<br>C'est l'ordre des <span class="px">prix d'achat</span>.</div>
+    <div><b>Sur 15 ans</b>PP 271&nbsp;€, teck 309&nbsp;€, PVC 333&nbsp;€.<br>Le PVC est acheté deux fois.</div>
+    <div><b>Sur 20 ans</b>PP 362&nbsp;€, PVC 500&nbsp;€, teck 619&nbsp;€.<br>Il faut un second teck.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un classement de <span class="ct">coûts</span> dépend de la <b>durée</b> choisie.
+  Cette durée est une <b>décision</b>&nbsp;: tu l'écris avant de nommer le gagnant, par exemple «&nbsp;sur 15 ans,
+  durée d'amortissement du collège&nbsp;».</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire que durer longtemps est toujours un avantage. Pour 20 ans, deux tecks font
+  30 années payées pour 20 utilisées.</p>
+</div>
+
+<!-- ══ 5 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-5" style="margin-top:0">5. Que ne dit pas le prix d'un bac&nbsp;?</h2>
+  <p>Le <span class="px">prix</span> ne compte que la matière achetée. Chaque bac parcourt pourtant les cinq étapes de son
+  cycle de vie&nbsp;:</p>
+  <div class="chaine etapes cinq">
+    <div><b>1. Extraction</b>Le teck vient d'une forêt tropicale, souvent à 10&nbsp;000&nbsp;km.</div>
+    <div><b>2. Fabrication</b>3 bacs en PP sur 15 ans&nbsp;: 3 fabrications.</div>
+    <div><b>3. Distribution</b>Et 3 transports, contre un seul pour le teck.</div>
+    <div><b>4. Utilisation</b>Un bac ne consomme rien&nbsp;: cette étape pèse peu.</div>
+    <div><b>5. Fin de vie</b>Le pin traité autoclave n'est recyclable qu'à 20&nbsp;%.</div>
+  </div>
+  <p>Un bac <b>réparable</b> évite des fabrications&nbsp;: changer une paroi coûte bien moins qu'un bac entier, en
+  euros et en matière.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: chaque remplacement rejoue les <b>cinq étapes</b> du cycle de vie. Un
+  <b>bilan carbone</b> additionne les gaz à effet de serre de <b>toutes</b> ces étapes, pas seulement de l'usage.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire qu'un matériau très recyclable est forcément le meilleur pour
+  l'environnement. Trois bacs recyclables, ce sont trois fabrications&nbsp;: le calcul reste à faire.</p>
+</div>
+
+<!-- ══ 6 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-6" style="margin-top:0">6. Comment arrêter son choix, et l'écrire&nbsp;?</h2>
+  <p>Au jardin, l'intendance attend une note. Par exemple&nbsp;: «&nbsp;Sur 15 ans, durée d'amortissement du collège,
+  nous retenons le polypropylène recyclé&nbsp;: 271&nbsp;€.&nbsp;» Une bonne note contient&nbsp;:</p>
+  <div class="chaine">
+    <div class="ok"><b>La durée retenue</b>Sans elle, personne ne peut refaire le calcul.</div>
+    <div class="ok"><b>Le gagnant et son critère</b>Ici, c'est le <span class="ct">coût</span> sur 15 ans qui tranche.</div>
+    <div class="ok"><b>Ce qui n'est pas compté</b>Ni le transport, ni l'énergie de fabrication, ni l'origine du bois.</div>
+    <div class="ok"><b>D'où viennent les nombres</b>Les durées de vie sortent d'essais&nbsp;: sous quel climat&nbsp;?</div>
+  </div>
+  <p>«&nbsp;271&nbsp;€ contre 309&nbsp;€&nbsp;» est <b>quantitatif</b>&nbsp;: des nombres. «&nbsp;Le teck vieillit joliment&nbsp;»
+  est <b>qualitatif</b>&nbsp;: un constat. Les deux se disent, chacun sous son nom. Le cahier des charges porte
+  deux piliers du <b>développement durable</b>, l'environnement et l'économie. Le troisième, le social, n'y figure pas.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: arrêter un choix, c'est <b>trancher</b> et dire <b>sur quel critère</b>. Un
+  dossier honnête écrit aussi ce qu'il <b>ne mesure pas</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: rendre le tableau des six matériaux en guise de conclusion. Un tableau ne
+  tranche pas&nbsp;: c'est à toi de le faire.</p>
+</div>
+
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>cahier des charges <span class="en">— specifications</span></dt><dd>la liste écrite de ce que l'objet doit tenir.</dd></div>
+    <div><dt>exigence <span class="en">— requirement</span></dt><dd>une ligne du cahier des charges, avec son seuil.</dd></div>
+    <div><dt>seuil <span class="en">— threshold</span></dt><dd>la valeur à atteindre&nbsp;: l'objet la passe ou non.</dd></div>
+    <div><dt>critère <span class="en">— criterion</span></dt><dd>ce qui sert à comparer, comme le coût sur 15 ans.</dd></div>
+    <div><dt>PP <span class="en">— polypropylene</span></dt><dd>le polypropylène, un plastique&nbsp;; ici, recyclé.</dd></div>
+    <div><dt>PVC <span class="en">— PVC</span></dt><dd>un plastique rigide, le polychlorure de vinyle.</dd></div>
+    <div><dt>recyclabilité <span class="en">— recyclability</span></dt><dd>la part de matière qu'une filière sait recycler.</dd></div>
+    <div><dt>traitement autoclave <span class="en">— pressure treatment</span></dt><dd>un produit qui protège le bois de la terre humide.</dd></div>
+    <div><dt>prix d'achat <span class="en">— purchase price</span></dt><dd>la somme payée une fois, à l'achat.</dd></div>
+    <div><dt>coût global <span class="en">— life-cycle cost</span></dt><dd>tous les achats sur la durée choisie.</dd></div>
+    <div><dt>durée de vie <span class="en">— service life</span></dt><dd>le temps qu'un bac tient avant d'être remplacé.</dd></div>
+    <div><dt>amortissement <span class="en">— depreciation</span></dt><dd>la durée sur laquelle le collège répartit une dépense.</dd></div>
+    <div><dt>unité fonctionnelle <span class="en">— functional unit</span></dt><dd>le même service rendu, pendant la même durée.</dd></div>
+    <div><dt>cycle de vie <span class="en">— life cycle</span></dt><dd>les cinq étapes, de l'extraction à la fin de vie.</dd></div>
+    <div><dt>bilan carbone <span class="en">— carbon footprint</span></dt><dd>les gaz à effet de serre de toutes ces étapes.</dd></div>
+    <div><dt>quantitatif <span class="en">— quantitative</span></dt><dd>appuyé sur des nombres mesurés.</dd></div>
+    <div><dt>qualitatif <span class="en">— qualitative</span></dt><dd>appuyé sur des constats décrits, sans nombre.</dd></div>
+    <div><dt>réparable <span class="en">— repairable</span></dt><dd>qui se répare en changeant une pièce, pas l'objet entier.</dd></div>
+    <div><dt>développement durable <span class="en">— sustainable development</span></dt><dd>trois piliers&nbsp;: environnement, économie, social.</dd></div>
+  </dl>
+</div>
+</div>
+
+<!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  /* L'agrandisseur est une COLONNE — bouton, image, légende — : la légende suit l'image dans le
+     flux, l'image reçoit une hauteur maximale calculée (ajuster()), et le fond défile si besoin. */
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:1rem;box-sizing:border-box;overflow:auto;
+    flex-direction:column;align-items:center;gap:.75rem}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  /* centré quand tout tient, sans rien couper quand ça déborde : des marges automatiques,
+     pas justify-content:center (qui rendrait le haut inaccessible au défilement) */
+  .loupe-fond > .loupe-fermer{margin-top:auto}
+  .loupe-fond > .loupe-legende{margin-bottom:auto}
+  .loupe-fond img{display:block;flex:none;max-width:100%;max-height:80vh;width:auto;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:static;flex:none;margin:0;max-width:min(70ch,100%);text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif}
+  .loupe-legende .loupe-aide{display:block;margin-top:.25rem;font-size:.85em;color:#b8bfcc}
+  .loupe-fermer{position:sticky;top:0;align-self:flex-end;flex:none;z-index:1;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+    grande.addEventListener("load", ajuster);
+    window.addEventListener("resize", ajuster);
+  }
+
+  // La légende affichée : la figcaption VISIBLE de la figure si elle existe ; sinon le
+  // texte alternatif, réduit à sa première phrase s'il dépasse deux lignes. L'alt complet
+  // reste sur l'image agrandie, pour les lecteurs d'écran.
+  function poserLegende(el, texteAlt){
+    var fig = el.closest("figure");
+    var cap = fig ? fig.querySelector("figcaption") : null;
+    var visible = cap && cap.getClientRects().length && cap.textContent.trim();
+    legende.textContent = "";
+    var texte = visible ? cap.textContent.replace(/\s+/g, " ").trim() : (texteAlt || "");
+    texte = texte.replace(/\s*\(clique[^()]*agrandir\)/gi, "").trim();   // l'image est déjà agrandie
+    var corps = document.createElement("span");
+    corps.textContent = texte;
+    var aide = document.createElement("span");
+    aide.className = "loupe-aide";
+    aide.textContent = "Échap pour refermer";
+    if (texte) legende.appendChild(corps);
+    legende.appendChild(aide);
+    if (!visible && texte) {
+      var ligne = parseFloat(getComputedStyle(legende).lineHeight) || 20;
+      if (corps.getBoundingClientRect().height > 2 * ligne + 1) {
+        var m = texte.match(/^[\s\S]*?[.!?…](?=\s|$)/);
+        if (m && m[0].length < texte.length) corps.textContent = m[0];
+      }
+    }
+  }
+
+  // L'image reçoit la place qui reste : hauteur du fond, moins le bouton, la légende,
+  // les marges et les espacements — jamais moins de 40 % de l'écran ; au-delà, le fond défile.
+  function ajuster(){
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    var st = getComputedStyle(fond);
+    var ecart = parseFloat(st.rowGap) || 0;
+    var reste = fond.clientHeight - parseFloat(st.paddingTop) - parseFloat(st.paddingBottom)
+              - fond.querySelector(".loupe-fermer").offsetHeight - legende.offsetHeight - 2 * ecart;
+    grande.style.maxHeight = Math.max(reste, 0.4 * window.innerHeight) + "px";
+  }
+
+  function montrer(el, texteAlt){
+    fond.setAttribute("data-ouvert", "oui");
+    fond.scrollTop = 0;
+    poserLegende(el, texteAlt);
+    ajuster();
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.style.background = "";
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    montrer(img, img.alt);
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    grande.style.maxHeight = "";
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
+  // couleurs et leur police viennent de la feuille de style de la PAGE. Sérialisé seul, le
+  // dessin les perdrait (formes noires, police par défaut, texte qui déborde) : on recopie
+  // donc sur la copie les propriétés CALCULÉES de chaque élément, on y ajoute les dégradés
+  // et marqueurs définis ailleurs dans la page, et l'image reçoit le fond du schéma.
+  var PROPRIETES = ["fill", "fill-opacity", "fill-rule", "stroke", "stroke-width", "stroke-opacity",
+    "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit",
+    "opacity", "visibility", "display", "color", "font-family", "font-size", "font-weight", "font-style",
+    "font-variant-numeric", "letter-spacing", "word-spacing", "text-anchor", "dominant-baseline",
+    "baseline-shift", "text-decoration", "white-space", "paint-order", "stop-color", "stop-opacity",
+    "marker-start", "marker-mid", "marker-end", "clip-path", "mask", "filter"];
+  // Une transformation posée par la feuille de style (pas par l'attribut transform, que la
+  // copie garde déjà) : on la recopie avec son origine.
+  var TRANSFORMATION = ["transform", "transform-origin", "transform-box"];
+
+  function figer(source, copie){
+    var a = [source].concat([].slice.call(source.querySelectorAll("*")));
+    var b = [copie].concat([].slice.call(copie.querySelectorAll("*")));
+    for (var i = 0; i < a.length && i < b.length; i++) {
+      var cs = getComputedStyle(a[i]), decl = [], k, v;
+      for (k = 0; k < PROPRIETES.length; k++) {
+        v = cs.getPropertyValue(PROPRIETES[k]);
+        if (v) decl.push(PROPRIETES[k] + ":" + v);
+      }
+      if (i > 0 && !a[i].hasAttribute("transform") && cs.getPropertyValue("transform") &&
+          cs.getPropertyValue("transform") !== "none") {
+        for (k = 0; k < TRANSFORMATION.length; k++) decl.push(TRANSFORMATION[k] + ":" + cs.getPropertyValue(TRANSFORMATION[k]));
+      }
+      var deja = b[i].getAttribute("style");
+      b[i].setAttribute("style", decl.join(";") + (deja ? ";" + deja : ""));
+    }
+  }
+
+  // Un dégradé ou un marqueur appelé par url(#…) mais défini hors du dessin : on le recopie dedans.
+  function rapatrier(copie){
+    var defs = null, faits = {}, tour = 0, trouve = true;
+    while (trouve && tour++ < 4) {
+      trouve = false;
+      var refs = (new XMLSerializer().serializeToString(copie).match(/url\((?:&quot;|["'])?#([^"')&]+)/g) || [])
+        .concat(new XMLSerializer().serializeToString(copie).match(/href="#[^"]+"/g) || []);
+      refs.forEach(function(r){
+        var id = r.replace(/^url\((?:&quot;|["'])?#/, "").replace(/^href="#/, "").replace(/"$/, "");
+        if (faits[id] || copie.querySelector("[id='" + id.replace(/'/g, "") + "']")) return;
+        faits[id] = true;
+        var el = document.getElementById(id);
+        if (!el || !el.closest("svg")) return;
+        if (!defs) { defs = document.createElementNS("http://www.w3.org/2000/svg", "defs"); copie.insertBefore(defs, copie.firstChild); }
+        var c = el.cloneNode(true); figer(el, c); defs.appendChild(c); trouve = true;
+      });
+    }
+  }
+
+  // Le fond sur lequel le schéma est dessiné : le sien, sinon celui du premier parent opaque.
+  function fondDe(el){
+    for (var e = el; e && e.nodeType === 1; e = e.parentElement) {
+      var c = getComputedStyle(e).backgroundColor, m = c.match(/rgba?\(([^)]+)\)/);
+      if (m) { var p = m[1].split(","); if (p.length < 4 || parseFloat(p[3]) > 0) return c; }
+      else if (c && c !== "transparent") return c;
+    }
+    return "#fff";
+  }
+
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    figer(svg, copie);
+    rapatrier(copie);
+    copie.style.background = "transparent";
+    // Une taille propre au dessin (sans elle, une image SVG n'a que 300 × 150 px à offrir) :
+    // celle de la viewBox, agrandie ; le CSS de la loupe la ramène à l'écran.
+    var vb = svg.viewBox && svg.viewBox.baseVal, boite = svg.getBoundingClientRect();
+    var w = vb && vb.width ? vb.width : boite.width, h = vb && vb.height ? vb.height : boite.height;
+    if (!(vb && vb.width) && w && h) copie.setAttribute("viewBox", "0 0 " + w + " " + h);
+    var k = w ? Math.max(1, 1600 / w) : 1;
+    if (w && h) { copie.setAttribute("width", Math.round(w * k)); copie.setAttribute("height", Math.round(h * k)); }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.style.background = fondDe(svg);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    montrer(svg, mot);
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
 </body>
 </html>

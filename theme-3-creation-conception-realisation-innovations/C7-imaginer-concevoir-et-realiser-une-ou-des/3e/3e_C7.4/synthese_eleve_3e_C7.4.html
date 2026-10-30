@@ -5,82 +5,558 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Synthèse élève — 3e_C7.4 La station doit tenir 72 heures sans secteur</title>
 <style>
-body{font-family:system-ui,sans-serif;max-width:740px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
-h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
-.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
-.attention{background:#fff6e0;border-left:4px solid #b8860b}
-.limite{background:#fdeff1;border-left:4px solid #b0344b}
-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.93em}
-th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
-code{background:#eef3fa;padding:1px 5px;border-radius:4px;font-size:.92em}
-ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
-#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;font-size:.95em;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1.05em;color:var(--head);margin:14px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+  h3{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24;margin:6px 0}
+  ul,ol{margin:4px 0;padding-left:22px}li{margin:4px 0}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  table{width:100%;border-collapse:collapse;margin:6px 0}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--sub);font-size:.9em}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  /* règle n°304 : un lien de rattrapage arrive sur ce titre ; la barre collante (47 px) ne doit pas le recouvrir */
+  h2[id]{scroll-margin-top:60px}
+  #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
+
+  /* ══ Règle d'or n°316 — la synthèse se lit seule, par un élève de 6e ══ */
+  /* Une couleur par notion, la même partout : ce qui tient (la réserve) en jaune, ce qui recharge en violet. */
+  .ti{color:var(--warn);font-weight:600}.rc{color:var(--head);font-weight:600}
+  /* La carte « Ce que je dois retenir » */
+  .carte{border:2px solid var(--warn);border-radius:14px;padding:14px 16px;margin:0 0 18px;background:var(--panel2)}
+  .carte h2{border:none;color:var(--warn);text-align:center;margin:0 0 4px;font-size:1.15em}
+  .question{text-align:center;font-size:1.05em;font-weight:600;margin:0 0 10px}
+  .programme{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);
+             padding:6px 0;margin:0 0 12px}
+  .programme b{color:var(--text)}
+  .programme ul{margin:2px 0;padding-left:18px}.programme li{margin:1px 0}
+  .cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .cartes a{display:block;text-decoration:none;color:var(--text);background:var(--panel);border:1.5px solid var(--border);
+            border-radius:10px;padding:9px 12px}
+  .cartes a:hover{border-color:var(--hl)}
+  .cartes .q{display:block;color:var(--hl);font-weight:600;margin-bottom:3px}
+  .cartes .r{display:block;font-size:.92em}
+  /* L'objet en image (Pascal, 29/10/2026 : « une illustration permet d'avoir une vision plus synthétique de l'objet ») :
+     à droite du programme, dans la carte ; dessous sur un téléphone. */
+  .tete{display:flex;gap:14px;align-items:stretch;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:0 0 12px}
+  .tete .programme{flex:1;border:none;margin:0}
+  .objet{flex:0 0 26%;margin:6px 0;display:flex;flex-direction:column}
+  .objet img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+  .objet figcaption{font-size:.78em;color:var(--sub);margin-top:2px;line-height:1.25}
+  @media (max-width:600px){.tete{flex-direction:column}.objet{flex-basis:auto}.objet img{aspect-ratio:3/2;flex:none}}
+  /* Une partie (format 2 pages A4, décision de Pascal du 29/10/2026) : la question, l'exemple de la séquence en
+     deux lignes, l'encadré « À retenir », le piège en une ligne ; tous les mots dans un seul lexique, à la fin. */
+  .retenir{border:2px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0;background:#0d3320}
+  .piege{border-left:4px solid var(--err);padding:4px 12px;margin:10px 0;background:#2a1220;border-radius:0 8px 8px 0}
+  .chaine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:8px 0;break-inside:avoid}
+  .chaine div{flex:1 1 170px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--panel2)}
+  .chaine b{display:block}
+  .chaine code{white-space:nowrap} /* un nom de fichier ne se coupe pas : la case passe à la ligne entière */
+  /* Les petits schémas en cases : une case par principe, par valeur, par règle ou par étape ; le bord dit le verdict. */
+  .chaine div.ok{border-color:var(--ok)}.chaine div.ko{border-color:var(--err)}
+  .chaine.etapes div{position:relative}
+  .chaine.etapes div+div::before{content:"➜";position:absolute;left:-10px;top:38%;font-size:10px;color:var(--sub)}
+  @media (max-width:600px){.chaine.etapes div+div::before{display:none}}
+  ul.serre li{margin:1px 0}
+  /* Six cases (les sources face au besoin) : trois par rangée, deux par rangée sur un téléphone. */
+  .chaine.six div{flex:1 1 28%}
+  @media (max-width:600px){.chaine.six div{flex-basis:40%}}
+  .vert{color:var(--ok)}.rouge{color:var(--err)}
+  .en{color:var(--sub);font-style:italic;font-weight:400}
+  /* Le lexique en colonnes (et non en grille) : une définition longue ne laisse pas de trou à côté d'elle. */
+  dl.lexique{columns:2 300px;column-gap:18px;margin:6px 0}
+  dl.lexique div{break-inside:avoid;margin-bottom:5px}
+  dl.lexique dt{color:var(--hl);font-weight:600;display:inline}
+  dl.lexique dd{display:inline;margin:0}
+  dl.lexique dd::before{content:" : "}
+
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;line-height:1.32;padding:0}.bloc,.carte{background:#fff;border-color:#999}
+    h1,h2,h3,.pb,.cartes .q{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
+    /* Impression sans blanc (29/10/2026, demande de Pascal) : pas de saut de page forcé ; un titre reste collé à ce qui
+       le suit ; un schéma ne laisse pas son titre en bas de page. */
+    h1,h2,h3,.pb,.question{break-after:avoid;page-break-after:avoid}
+    .schema,table,.chaine{break-before:avoid;page-break-before:avoid}
+    p,li,dd{orphans:3;widows:3}
+    .cartes a,.retenir,.piege,.chaine div{background:#fff;color:#111}
+    .chaine div.ok{border-color:#2d7a4a}.chaine div.ko{border-color:#b3261e}
+    .retenir{border-color:#2d7a4a}.piege{border-left-color:#b3261e}
+    .ti{color:#8a5a00}.rc{color:#5e3592}.vert{color:#1d6b38}.rouge{color:#b3261e}
+    .carte h2{color:#8a5a00}.programme,.programme b,.en,th,dl.lexique dt{color:#222}
+    .bloc{break-inside:auto;padding:5px 10px;margin-bottom:6px}
+    .schema{width:60%;display:block;margin:4px auto}
+    h2{margin:6px 0 4px}h3{margin:6px 0 2px}p{margin:4px 0}
+    .retenir,.piege{padding:3px 8px;margin:4px 0}
+    table{margin:3px 0}th,td{padding:2px 6px}.chaine{gap:6px;margin:4px 0}.chaine div{padding:3px 8px}
+    .carte{padding:8px 12px;margin-bottom:8px}.programme{margin-bottom:6px;padding:3px 0}.cartes{gap:6px}.cartes a{padding:4px 9px}
+    .cartes .q{margin-bottom:1px}
+    .pb{display:none}h1{margin:0 0 4px}
+    .tete{margin-bottom:6px}.tete .programme{padding:3px 0}.objet{margin:3px 0}.objet figcaption{color:#222}
+    dl.lexique{columns:2;column-gap:14px;font-size:.95em}dl.lexique div{margin-bottom:1px}}
+
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  .box,th{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .bloc code,.schema{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
 
 /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
 @media(max-width:680px){table{display:block;overflow-x:auto}}
+
+  /* Revenir à la carte (Pascal, 29/10/2026 : « je ne peux pas revenir à la synthèse ») : chaque partie porte, en
+     haut à droite, un lien vers la carte « Ce que je dois retenir » ; la barre de navigation collée en haut ne
+     recouvre plus le titre visé par un lien. Rien de tout cela ne s'imprime. */
+  .retour-carte{float:right;font-size:.82em;margin:1px 0 0 10px;padding:1px 10px;border:1.5px solid var(--border);
+                border-radius:999px;text-decoration:none;white-space:nowrap}
+  .retour-carte:hover,.retour-carte:focus-visible{border-color:var(--hl)}
+  #carte-titre,[id^="partie-"]{scroll-margin-top:64px}
+  @media print{.retour-carte{display:none}}
 </style>
 </head>
 <body>
-<nav id="navharm"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C7.4_energie-de-la-station.html">📘 La séquence</a><a href="lexique_3e_C7.4.html">📖 Lexique</a></nav>
-<h1>🌀 Synthèse élève — La station doit tenir 72 heures sans secteur</h1>
-<p><em>3e_C7.4 — Choisir une source d'énergie pour un OST.</em></p>
-<h2>Les mots à savoir</h2>
-<div class="box">
-  <ul>
-    <li><b>Dimensionner sur le pire cas</b> — une réserve calculée sur la moyenne est vide le
-      jour où elle sert. Ici, le pire cas est le jour d'alerte : 6,04 Wh (wattheures).</li>
-    <li><b>Le besoin sur une durée</b> — 6,04 Wh/jour × 3 jours = 18,12 Wh pour tenir 72 heures.
-      Une autonomie ne s'exprime pas sans la durée exigée.</li>
-    <li><b>Tout juste n'est pas assez</b> — deux accus donnent 18,8 Wh pour 18,12 exigés, soit
-      3,8 % de marge, quand un accu vieilli en perd 20 %. Même règle que la patère de 5<sup>e</sup>
-      et le mât de 3<sup>e</sup>.</li>
-    <li><b>Recharger n'est pas tenir</b> — un panneau est un robinet, une batterie un réservoir.
-      Sous un cyclone, le robinet est fermé et c'est le réservoir qui travaille.</li>
-    <li><b>« Autonome » ne veut rien dire seul</b> — il faut dire pendant combien de temps et
-      dans quelles conditions.</li>
-    <li><b>Le cycle de vie se raisonne par usage</b> — 787 piles par an pour une station, contre
-      trois accus tous les trois ans. Le débat sur le lithium se tient après ce nombre.</li>
-    <li><b>Une architecture, pas une source</b> — qui alimente d'habitude, qui prend le relais,
-      qui recharge. Et ce que l'ensemble coûtera en entretien.</li>
-    <li><b>Regarder la charge</b> — plus le site est difficile d'accès, plus il est rentable de
-      consommer moins plutôt que de produire plus.</li>
-  </ul>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C7.4_energie-de-la-station.html">📘 La séquence</a><a href="lexique_3e_C7.4.html">📖 Lexique</a></nav>
+<div class="page">
+<h1>📌 Synthèse élève — La station doit tenir 72&nbsp;heures sans secteur</h1>
+<p class="pb">Choisir l'énergie d'un objet qui doit marcher quand tout s'arrête.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (2 pages A4)</button></div>
+
+<!-- ══ La carte « Ce que je dois retenir » (règle d'or n°316) ══ -->
+<section class="carte" aria-labelledby="carte-titre">
+  <h2 id="carte-titre">🧠 Ce que je dois retenir</h2>
+  <p class="question">Comment alimenter un objet dont le rôle est de fonctionner quand tout le reste s'arrête&nbsp;?</p>
+  <div class="tete">
+  <div class="programme"><b>Ce que dit le programme</b> (3e, compétences C7 et C3)&nbsp;:
+    <ul>
+      <li>choisir une source d'énergie pour un OST&nbsp;;</li>
+      <li>choisir un OST et argumenter ce choix en prenant en compte son cycle de vie et les trois piliers du développement durable.</li>
+    </ul>
+  </div>
+    <figure class="objet">
+      <img src="Images/synthese_station_alerte.png" alt="La station d'alerte sur le toit du collège : un mât avec anémomètre, girouette, panneau solaire, sirène et gyrophare, face à la mer.">
+      <figcaption>📍 L'objet&nbsp;: la station d'alerte, sur son mât. <i>Image générée par IA (Canva).</i></figcaption>
+    </figure>
+  </div>
+  <div class="cartes">
+    <a href="#partie-1"><span class="q">📅 1. Sur quel jour calculer la réserve&nbsp;?</span>
+      <span class="r">Sur le pire&nbsp;: le jour d'alerte, réseau coupé.</span></a>
+    <a href="#partie-2"><span class="q">🔋 2. Combien d'accus pour tenir 72&nbsp;heures&nbsp;?</span>
+      <span class="r">Trois&nbsp;: 112&nbsp;heures, avec une marge.</span></a>
+    <a href="#partie-3"><span class="q">☀️ 3. Un panneau solaire rend-il autonome&nbsp;?</span>
+      <span class="r">Non&nbsp;: il <span class="rc">recharge</span>, les accus <span class="ti">tiennent</span>.</span></a>
+    <a href="#partie-4"><span class="q">♻️ 4. Comment comparer les sources&nbsp;?</span>
+      <span class="r">Sur toute leur vie, à service égal.</span></a>
+    <a href="#partie-5"><span class="q">✍️ 5. Que propose-t-on à la mairie&nbsp;?</span>
+      <span class="r">Plusieurs sources, chacune avec son rôle.</span></a>
+    <a href="#partie-6"><span class="q">🏝️ 6. Et sur un îlet sans secteur&nbsp;?</span>
+      <span class="r">D'abord consommer moins, puis produire.</span></a>
+  </div>
+</section>
+
+<!-- ══ 1 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-1" style="margin-top:0">1. Sur quel jour faut-il calculer la réserve&nbsp;?</h2>
+  <p>Pendant un cyclone, le réseau électrique tombe, et c'est là que l'alerte sert. Le courant revient en 24 à
+  72&nbsp;heures.</p>
+  <div class="chaine">
+    <div class="ko"><b>Jour calme&nbsp;✘</b>5,64&nbsp;Wh (wattheures)&nbsp;: la carte et les capteurs tournent 24&nbsp;heures.</div>
+    <div class="ok"><b>Jour d'alerte&nbsp;✔</b>6,04&nbsp;Wh&nbsp;: le buzzer et la DEL s'y ajoutent deux heures.</div>
+    <div><b>L'exigence</b>Tenir 72&nbsp;heures sans secteur, en alerte.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: la station sert <b>au moment même</b> où le réseau tombe. On calcule sa
+  réserve sur le <b>pire cas</b>, le jour d'alerte&nbsp;: calculée sur la moyenne, elle serait <b>vide le jour où elle sert</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: prendre le jour calme, parce qu'il est le plus fréquent. L'écart n'est que de
+  7&nbsp;%, mais c'est le jour d'alerte qui compte.</p>
 </div>
-<h2>L'architecture retenue</h2>
-<table>
-<tr><th>Élément</th><th>Rôle</th><th>Dimensionnement</th></tr>
-<tr><td>Secteur (adaptateur scellé)</td><td>source normale, 360 jours par an</td><td>illimitée tant qu'il y a du réseau</td></tr>
-<tr><td><b>3 accus 18650</b></td><td><b>tenir quand le réseau tombe</b></td><td><b>28,2 Wh (wattheures) pour 18,12 exigés — 112 h</b></td></tr>
-<tr><td>Panneau 2 W (watts) crête</td><td>recharger la réserve, soulager le secteur</td><td>7,4 Wh/jour pour 6,04 consommés</td></tr>
-</table>
-<div class="box attention"><p><b>Et ce que ce choix coûte, qu'il faut écrire :</b> trois accus à
-remplacer tous les trois à quatre ans, un panneau à fixer, orienter et nettoyer, un boîtier
-étanche qui vieillit au sel, et une bascule secteur/accu à tester — un secours jamais testé n'est
-pas un secours.</p></div>
-<h2>Ce que le banc a montré</h2>
-<table>
-<tr><th>Ce qui consomme</th><th>Courant (en milliampères)</th><th>Par jour</th><th>Énergie (en wattheures)</th><th>Part</th></tr>
-<tr><td>Carte Arduino UNO</td><td>45 mA</td><td>24 h</td><td>5,400 Wh</td><td>89,4 %</td></tr>
-<tr><td>Buzzer d'alerte</td><td>30 mA</td><td>2 h</td><td>0,300 Wh</td><td>5,0 %</td></tr>
-<tr><td>Anémomètre à impulsions</td><td>1 mA</td><td>24 h</td><td>0,120 Wh</td><td>2,0 %</td></tr>
-<tr><td>Girouette</td><td>1 mA</td><td>24 h</td><td>0,120 Wh</td><td>2,0 %</td></tr>
-<tr><td>DEL indicatrice</td><td>10 mA</td><td>2 h</td><td>0,100 Wh</td><td>1,7 %</td></tr>
-<tr><th>Total</th><th></th><th></th><th>6,04 Wh</th><th>100 %</th></tr>
-</table>
-<table>
-<tr><th>Source</th><th>Énergie disponible</th><th>Face à 6,04 Wh/jour</th></tr>
-<tr><td>Pile 9 V (volts) alcaline</td><td>2,8 Wh (wattheures)</td><td>11 heures</td></tr>
-<tr><td>4 piles AA alcalines</td><td>12,5 Wh</td><td>2,1 jours</td></tr>
-<tr><td>Accu Li-ion 18650 rechargeable</td><td>9,4 Wh</td><td>37 heures</td></tr>
-<tr><td>Secteur — adaptateur USB scellé</td><td>illimitée</td><td>tient tant qu'il y a du réseau</td></tr>
-<tr><td>Panneau solaire 1 W (watts) crête + accu</td><td>3,7 Wh <b>par jour</b></td><td><b>ne suffit pas</b> : il manque 2,34 Wh/jour</td></tr>
-</table>
-<h2>Je serai capable de…</h2>
-<ul><li>dimensionner sur le pire cas, et dire pourquoi ce n'est pas la moyenne</li><li>convertir une durée exigée en énergie nécessaire (72 h → 18,12 Wh, en wattheures)</li><li>calculer une marge et juger si elle suffit</li><li>distinguer une source qui recharge d'une réserve qui tient</li><li>répartir les rôles entre plusieurs sources</li><li>argumenter avec le cycle de vie, pas avec le matériau</li><li>annoncer l'entretien que l'installation demandera</li></ul>
-<footer>Synthèse élève — 3e_C7.4 « La station doit tenir 72 heures sans secteur » · Thème 3 · valeurs calculées par energie.py, à imprimer en noir et blanc sans rien perdre.</footer>
+
+<!-- ══ 2 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-2" style="margin-top:0">2. Combien de réserve faut-il pour tenir 72&nbsp;heures&nbsp;?</h2>
+  <p>Le besoin&nbsp;: 6,04&nbsp;Wh (wattheures) par jour × 3&nbsp;jours = <b>18,12&nbsp;Wh</b>. Un accu 18650 en donne
+  9,4 sous 5&nbsp;V (volts). Ce que tient chaque source&nbsp;:</p>
+  <div class="chaine six">
+    <div class="ko"><b>Le secteur&nbsp;✘</b>Illimité tant qu'il y a du réseau&nbsp;: rien le jour du cyclone.</div>
+    <div class="ko"><b>Une pile 9&nbsp;V&nbsp;✘</b>Elle tient 11&nbsp;heures.</div>
+    <div class="ko"><b>Quatre piles AA&nbsp;✘</b>Elles tiennent 50&nbsp;heures.</div>
+    <div class="ko"><b>Un accu&nbsp;✘</b>Il tient 37&nbsp;heures.</div>
+    <div class="ko"><b>Deux accus&nbsp;✘</b>18,8&nbsp;Wh pour 18,12&nbsp;: 3,8&nbsp;% de marge, trop juste.</div>
+    <div class="ok"><b class="ti">Trois accus&nbsp;✔</b>28,2&nbsp;Wh&nbsp;: 112&nbsp;heures, soit 4,7&nbsp;jours.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: <b>besoin</b> = consommation d'un jour × nombre de jours à tenir. Garde
+  une <b>marge</b>&nbsp;: un accu vieilli perd environ <b>20&nbsp;%</b> de sa capacité, et une réserve tout juste
+  suffisante lâchera.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: multiplier par 72 au lieu de 3. La consommation est donnée par jour, et
+  72&nbsp;heures font trois jours.</p>
+</div>
+
+<!-- ══ 3 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-3" style="margin-top:0">3. Un panneau solaire rend-il la station autonome&nbsp;?</h2>
+  <p>Un panneau de 1&nbsp;W (watt) crête récolte 3,7&nbsp;Wh (wattheures) un jour normal. Pendant le cyclone, tout change&nbsp;:</p>
+  <div class="chaine">
+    <div class="ko"><b>☁️ Sous les nuages</b>Quelques dixièmes de Wh, pour 6,04 consommés.</div>
+    <div class="ko"><b>💨 Dans le vent</b>Une plaque plate à 180&nbsp;km/h s'arrache, ou arrache son support.</div>
+    <div class="ok"><b class="rc">🚰 Son vrai rôle</b>Recharger la réserve entre deux cyclones.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un panneau est un <b>robinet</b>&nbsp;: il <b class="rc">recharge</b> un peu
+  chaque jour. Les accus sont un <b>réservoir</b>&nbsp;: ils <b class="ti">tiennent</b> pendant le cyclone.
+  «&nbsp;Autonome&nbsp;» se dit toujours avec <b>une durée</b> et <b>des conditions</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: «&nbsp;un panneau solaire, c'est autonome&nbsp;». C'est vrai les jours de
+  soleil, et faux le jour où la station sert.</p>
+</div>
+
+<!-- ══ 4 ══ -->
+<div class="bloc savoir">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-4" style="margin-top:0">4. Comment comparer les sources sur toute leur vie&nbsp;?</h2>
+  <p>Avec des piles 9&nbsp;V (volts), la station en userait 787 par an&nbsp;: 6,04 × 365 ÷ 2,8. Trois accus durent
+  trois à quatre ans. Le choix des accus pèse les trois piliers&nbsp;:</p>
+  <div class="chaine">
+    <div class="ok"><b>🌱 L'environnement</b>Moins de déchets&nbsp;: pas 787 piles extraites puis collectées chaque année.</div>
+    <div class="ok"><b>💶 L'économie</b>Moins de renouvellement à payer.</div>
+    <div class="ok"><b>🤝 Le social</b>Une station qui alerte vraiment le jour du cyclone.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: le <b>cycle de vie</b> va de la <b>fabrication</b> à la <b>fin de vie</b>.
+  On compare les sources <b>par usage</b>, à service rendu égal, jamais matériau contre matériau.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: dire «&nbsp;le lithium, c'est mauvais&nbsp;» sans compter. Un accu de
+  500 cycles remplace des centaines de piles jetables.</p>
+</div>
+
+<!-- ══ 5 ══ -->
+<div class="bloc faire">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-5" style="margin-top:0">5. Que propose-t-on à la mairie&nbsp;?</h2>
+  <p>La réponse n'est pas une source&nbsp;: c'est une <b>architecture</b>, avec un rôle pour chaque élément.</p>
+  <div class="chaine">
+    <div><b>🔌 Le secteur, d'habitude</b>La source normale, 360 jours par an.</div>
+    <div class="ok"><b class="ti">🔋 Trois accus, le relais</b>28,2&nbsp;Wh (wattheures) pour 18,12 exigés&nbsp;: 112&nbsp;heures.</div>
+    <div><b class="rc">☀️ Un panneau de 2&nbsp;W (watts), la recharge</b>7,4&nbsp;Wh par jour&nbsp;: il soulage le secteur, encore surtout thermique ici.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: choisir une source pour un OST, c'est souvent <b>répartir des rôles</b>
+  entre plusieurs sources. L'avis annonce aussi l'<b>entretien</b>&nbsp;: les accus se remplacent tous les trois à
+  quatre ans, et la bascule vers eux se <b>teste</b>.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: chercher LA source unique. Quand le service doit être garanti, une seule
+  source ne suffit presque jamais.</p>
+</div>
+
+<!-- ══ 6 ══ -->
+<div class="bloc pieges">
+  <a class="retour-carte" href="#carte-titre">↑ La carte</a>
+  <h2 id="partie-6" style="margin-top:0">6. Et sur un îlet sans secteur&nbsp;?</h2>
+  <p>Sur un îlet de la baie du Robert, pas de secteur, et personne n'y va plus d'une fois par mois. Or la carte
+  pèse 89&nbsp;% de la consommation&nbsp;:</p>
+  <div class="chaine">
+    <div class="ko"><b>Produire plus</b>Un panneau de 5&nbsp;W (watts) au moins, et cinq accus pour une semaine sans soleil.</div>
+    <div class="ok"><b>Consommer moins&nbsp;✔</b>Une carte sobre, à 5&nbsp;mA (milliampères)&nbsp;: 1,2&nbsp;Wh (wattheures) par jour. Un panneau de 2&nbsp;W et deux accus suffisent.</div>
+  </div>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: avant d'agrandir le panneau et la réserve, <b>regarde la charge</b>. Plus le
+  site est <b>difficile d'accès</b>, plus il vaut mieux <b>consommer moins</b> que produire plus.</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire que le buzzer, qui fait le plus de bruit, consomme le plus. Il pèse
+  5&nbsp;%&nbsp;; la carte, allumée jour et nuit, 89&nbsp;%.</p>
+</div>
+
+<!-- ══ Les mots ══ -->
+<div class="bloc mots">
+  <h2 id="les-mots" style="margin-top:0">📖 Les mots de la séquence</h2>
+  <dl class="lexique">
+    <div><dt>OST <span class="en">— technical object or system</span></dt><dd>un objet ou un système technique, comme la station.</dd></div>
+    <div><dt>source d'énergie <span class="en">— energy source</span></dt><dd>ce qui fournit l'énergie à l'objet.</dd></div>
+    <div><dt>secteur <span class="en">— mains</span></dt><dd>le réseau électrique du bâtiment.</dd></div>
+    <div><dt>accu <span class="en">— rechargeable battery</span></dt><dd>une réserve qui se recharge, environ 500 fois. Ce n'est pas une pile.</dd></div>
+    <div><dt>wattheure (Wh) <span class="en">— watt-hour</span></dt><dd>une quantité d'énergie&nbsp;: la puissance multipliée par la durée.</dd></div>
+    <div><dt>dimensionner <span class="en">— to size</span></dt><dd>calculer la taille juste, puis ajouter une marge.</dd></div>
+    <div><dt>pire cas <span class="en">— worst case</span></dt><dd>le jour où l'on consomme le plus, sans secours.</dd></div>
+    <div><dt>marge <span class="en">— margin</span></dt><dd>ce qu'on a en plus du besoin, en pourcentage.</dd></div>
+    <div><dt>autonome <span class="en">— self-powered</span></dt><dd>qui tient seul, pendant une durée et dans des conditions dites.</dd></div>
+    <div><dt>watt crête <span class="en">— peak watt</span></dt><dd>la puissance d'un panneau en plein soleil.</dd></div>
+    <div><dt>cycle de vie <span class="en">— life cycle</span></dt><dd>la vie d'un objet, de l'extraction de sa matière à son déchet.</dd></div>
+    <div><dt>piliers du développement durable <span class="en">— pillars of sustainability</span></dt><dd>les trois points de vue qu'un choix durable pèse ensemble (partie 4).</dd></div>
+    <div><dt>architecture <span class="en">— power architecture</span></dt><dd>plusieurs sources, chacune avec son rôle.</dd></div>
+    <div><dt>bascule <span class="en">— switchover</span></dt><dd>le passage du secteur aux accus, sans coupure.</dd></div>
+    <div><dt>charge <span class="en">— load</span></dt><dd>ce que l'objet consomme.</dd></div>
+    <div><dt>DEL <span class="en">— LED</span></dt><dd>une diode électroluminescente&nbsp;: un petit voyant qui consomme peu.</dd></div>
+  </dl>
+</div>
+</div>
+
+<!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  /* L'agrandisseur est une COLONNE — bouton, image, légende — : la légende suit l'image dans le
+     flux, l'image reçoit une hauteur maximale calculée (ajuster()), et le fond défile si besoin. */
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:1rem;box-sizing:border-box;overflow:auto;
+    flex-direction:column;align-items:center;gap:.75rem}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  /* centré quand tout tient, sans rien couper quand ça déborde : des marges automatiques,
+     pas justify-content:center (qui rendrait le haut inaccessible au défilement) */
+  .loupe-fond > .loupe-fermer{margin-top:auto}
+  .loupe-fond > .loupe-legende{margin-bottom:auto}
+  .loupe-fond img{display:block;flex:none;max-width:100%;max-height:80vh;width:auto;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:static;flex:none;margin:0;max-width:min(70ch,100%);text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif}
+  .loupe-legende .loupe-aide{display:block;margin-top:.25rem;font-size:.85em;color:#b8bfcc}
+  .loupe-fermer{position:sticky;top:0;align-self:flex-end;flex:none;z-index:1;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+    grande.addEventListener("load", ajuster);
+    window.addEventListener("resize", ajuster);
+  }
+
+  // La légende affichée : la figcaption VISIBLE de la figure si elle existe ; sinon le
+  // texte alternatif, réduit à sa première phrase s'il dépasse deux lignes. L'alt complet
+  // reste sur l'image agrandie, pour les lecteurs d'écran.
+  function poserLegende(el, texteAlt){
+    var fig = el.closest("figure");
+    var cap = fig ? fig.querySelector("figcaption") : null;
+    var visible = cap && cap.getClientRects().length && cap.textContent.trim();
+    legende.textContent = "";
+    var texte = visible ? cap.textContent.replace(/\s+/g, " ").trim() : (texteAlt || "");
+    texte = texte.replace(/\s*\(clique[^()]*agrandir\)/gi, "").trim();   // l'image est déjà agrandie
+    var corps = document.createElement("span");
+    corps.textContent = texte;
+    var aide = document.createElement("span");
+    aide.className = "loupe-aide";
+    aide.textContent = "Échap pour refermer";
+    if (texte) legende.appendChild(corps);
+    legende.appendChild(aide);
+    if (!visible && texte) {
+      var ligne = parseFloat(getComputedStyle(legende).lineHeight) || 20;
+      if (corps.getBoundingClientRect().height > 2 * ligne + 1) {
+        var m = texte.match(/^[\s\S]*?[.!?…](?=\s|$)/);
+        if (m && m[0].length < texte.length) corps.textContent = m[0];
+      }
+    }
+  }
+
+  // L'image reçoit la place qui reste : hauteur du fond, moins le bouton, la légende,
+  // les marges et les espacements — jamais moins de 40 % de l'écran ; au-delà, le fond défile.
+  function ajuster(){
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    var st = getComputedStyle(fond);
+    var ecart = parseFloat(st.rowGap) || 0;
+    var reste = fond.clientHeight - parseFloat(st.paddingTop) - parseFloat(st.paddingBottom)
+              - fond.querySelector(".loupe-fermer").offsetHeight - legende.offsetHeight - 2 * ecart;
+    grande.style.maxHeight = Math.max(reste, 0.4 * window.innerHeight) + "px";
+  }
+
+  function montrer(el, texteAlt){
+    fond.setAttribute("data-ouvert", "oui");
+    fond.scrollTop = 0;
+    poserLegende(el, texteAlt);
+    ajuster();
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.style.background = "";
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    montrer(img, img.alt);
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    grande.style.maxHeight = "";
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
+  // couleurs et leur police viennent de la feuille de style de la PAGE. Sérialisé seul, le
+  // dessin les perdrait (formes noires, police par défaut, texte qui déborde) : on recopie
+  // donc sur la copie les propriétés CALCULÉES de chaque élément, on y ajoute les dégradés
+  // et marqueurs définis ailleurs dans la page, et l'image reçoit le fond du schéma.
+  var PROPRIETES = ["fill", "fill-opacity", "fill-rule", "stroke", "stroke-width", "stroke-opacity",
+    "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit",
+    "opacity", "visibility", "display", "color", "font-family", "font-size", "font-weight", "font-style",
+    "font-variant-numeric", "letter-spacing", "word-spacing", "text-anchor", "dominant-baseline",
+    "baseline-shift", "text-decoration", "white-space", "paint-order", "stop-color", "stop-opacity",
+    "marker-start", "marker-mid", "marker-end", "clip-path", "mask", "filter"];
+  // Une transformation posée par la feuille de style (pas par l'attribut transform, que la
+  // copie garde déjà) : on la recopie avec son origine.
+  var TRANSFORMATION = ["transform", "transform-origin", "transform-box"];
+
+  function figer(source, copie){
+    var a = [source].concat([].slice.call(source.querySelectorAll("*")));
+    var b = [copie].concat([].slice.call(copie.querySelectorAll("*")));
+    for (var i = 0; i < a.length && i < b.length; i++) {
+      var cs = getComputedStyle(a[i]), decl = [], k, v;
+      for (k = 0; k < PROPRIETES.length; k++) {
+        v = cs.getPropertyValue(PROPRIETES[k]);
+        if (v) decl.push(PROPRIETES[k] + ":" + v);
+      }
+      if (i > 0 && !a[i].hasAttribute("transform") && cs.getPropertyValue("transform") &&
+          cs.getPropertyValue("transform") !== "none") {
+        for (k = 0; k < TRANSFORMATION.length; k++) decl.push(TRANSFORMATION[k] + ":" + cs.getPropertyValue(TRANSFORMATION[k]));
+      }
+      var deja = b[i].getAttribute("style");
+      b[i].setAttribute("style", decl.join(";") + (deja ? ";" + deja : ""));
+    }
+  }
+
+  // Un dégradé ou un marqueur appelé par url(#…) mais défini hors du dessin : on le recopie dedans.
+  function rapatrier(copie){
+    var defs = null, faits = {}, tour = 0, trouve = true;
+    while (trouve && tour++ < 4) {
+      trouve = false;
+      var refs = (new XMLSerializer().serializeToString(copie).match(/url\((?:&quot;|["'])?#([^"')&]+)/g) || [])
+        .concat(new XMLSerializer().serializeToString(copie).match(/href="#[^"]+"/g) || []);
+      refs.forEach(function(r){
+        var id = r.replace(/^url\((?:&quot;|["'])?#/, "").replace(/^href="#/, "").replace(/"$/, "");
+        if (faits[id] || copie.querySelector("[id='" + id.replace(/'/g, "") + "']")) return;
+        faits[id] = true;
+        var el = document.getElementById(id);
+        if (!el || !el.closest("svg")) return;
+        if (!defs) { defs = document.createElementNS("http://www.w3.org/2000/svg", "defs"); copie.insertBefore(defs, copie.firstChild); }
+        var c = el.cloneNode(true); figer(el, c); defs.appendChild(c); trouve = true;
+      });
+    }
+  }
+
+  // Le fond sur lequel le schéma est dessiné : le sien, sinon celui du premier parent opaque.
+  function fondDe(el){
+    for (var e = el; e && e.nodeType === 1; e = e.parentElement) {
+      var c = getComputedStyle(e).backgroundColor, m = c.match(/rgba?\(([^)]+)\)/);
+      if (m) { var p = m[1].split(","); if (p.length < 4 || parseFloat(p[3]) > 0) return c; }
+      else if (c && c !== "transparent") return c;
+    }
+    return "#fff";
+  }
+
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    figer(svg, copie);
+    rapatrier(copie);
+    copie.style.background = "transparent";
+    // Une taille propre au dessin (sans elle, une image SVG n'a que 300 × 150 px à offrir) :
+    // celle de la viewBox, agrandie ; le CSS de la loupe la ramène à l'écran.
+    var vb = svg.viewBox && svg.viewBox.baseVal, boite = svg.getBoundingClientRect();
+    var w = vb && vb.width ? vb.width : boite.width, h = vb && vb.height ? vb.height : boite.height;
+    if (!(vb && vb.width) && w && h) copie.setAttribute("viewBox", "0 0 " + w + " " + h);
+    var k = w ? Math.max(1, 1600 / w) : 1;
+    if (w && h) { copie.setAttribute("width", Math.round(w * k)); copie.setAttribute("height", Math.round(h * k)); }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.style.background = fondDe(svg);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    montrer(svg, mot);
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
 </body>
 </html>

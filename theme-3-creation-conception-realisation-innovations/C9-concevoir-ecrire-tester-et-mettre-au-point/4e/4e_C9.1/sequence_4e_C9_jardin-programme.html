@@ -812,7 +812,7 @@
           <li id="v-varie">☐ J'ai fait varier l'humidité et observé la pompe</li>
           <li id="v-plage">☐ J'ai vérifié qu'à sol sec mais HORS plage horaire, la pompe reste éteinte</li>
           <li id="v-front">☐ J'ai testé les deux frontières : 39 % et 40 %</li>
-          <li id="v-clign">☐ J'ai provoqué le clignotement (mode UN seuil, mesure qui tremble)</li>
+          <li id="v-clign">☐ J'ai fait s'affoler la pompe (mode UN seuil, mesure qui tremble)</li>
           <li id="v-hyst">☐ J'ai vérifié que les DEUX seuils l'arrêtent, sur la même mesure</li>
         </ul>
       </div>
@@ -1219,7 +1219,7 @@ heure = <span class="num">8</span>
   <p style="color:var(--hl);font-weight:600">Question directrice : que faire d'un programme qui respecte la règle… et qui est pourtant inutilisable ?</p>
 
   <div class="activite" id="act5">
-    <header><span class="num">Activité 5</span><h3>Le clignotement — diagnostiquer, corriger, re-tester</h3>
+    <header><span class="num">Activité 5</span><h3>La pompe qui s'affole — diagnostiquer, corriger, re-tester</h3>
 <!-- roles: 4e_C9-1 -->
 <section class="roles" id="roles-4e_C9-1" aria-label="Répartition des rôles dans le groupe">
   <p class="roles-etiq">👥 Qui fait quoi — et quand on échange</p>
@@ -1252,9 +1252,9 @@ heure = <span class="num">8</span>
 </section>
 <!-- /roles: 4e_C9-1 --><span class="duree">⏱ ~30 min</span></header>
     <div class="meta-grid">
-      <div><b>Objectif :</b> identifier l'écart entre le comportement observé et le comportement acceptable, en trouver la cause, corriger par l'hystérésis, puis re-tester.</div>
+      <div><b>Objectif :</b> identifier l'écart entre le comportement observé (la pompe s'affole : elle s'allume et s'éteint sans arrêt) et le comportement acceptable, en trouver la cause, corriger par l'hystérésis, puis re-tester.</div>
       <div><b>Compétence :</b> <b>4e_C9.3</b> — <i>mettre au point</i> · et <b>4e_C9.1</b> — <i>modifier</i> l'algorithme pour corriger.</div>
-      <div><b>Production attendue :</b> le diagnostic écrit + le programme à deux seuils + la preuve au banc que le clignotement a cessé.</div>
+      <div><b>Production attendue :</b> le diagnostic écrit + le programme à deux seuils + la preuve au banc que la pompe ne s'affole plus.</div>
       <div><b>Ressources :</b> la trace d'exécution ci-dessous, le chronogramme, et le banc d'essai.</div>
     </div>
 
@@ -1343,16 +1343,16 @@ SINON SI H &gt; SEUIL_HAUT ALORS
     éteindre pompe       <span class="cmt"># vraiment humide : on arrête</span>
 <span class="cmt"># entre 35 et 45 : AUCUNE instruction — la pompe garde son état</span>
 FIN SI</div>
-      <p><b>Q4 :</b> entre les deux seuils, on ne fait <b>rien</b> — et c'est précisément ce « rien » qui supprime le clignotement. </p>
+      <p><b>Q4 :</b> entre les deux seuils, on ne fait <b>rien</b> — et c'est précisément ce « rien » qui calme la pompe. </p>
       <p><b>Q5 :</b> pour garder un état, il faut une <b>mémoire</b> : une variable qui retient si la pompe est allumée. Sans elle, le programme repartirait de zéro à chaque tour et ne saurait pas quoi « garder ».</p>
       <p><b>d) Au banc :</b> le même tremblement donne <b>plusieurs</b> basculements avec un seuil, <b>zéro ou un</b> avec deux. La mesure n'a pas changé d'un point — c'est la règle de décision qui a changé.</p>
-      <p><b>Et le prix à payer ?</b> Regarde bien le banc en mode DEUX seuils : à 39 % d'humidité, la pompe <b>ne s'allume pas</b>. Elle attendra que la terre descende sous 35. Autrement dit, l'hystérésis a supprimé le clignotement en acceptant de <b>réagir plus tard</b>. C'est un échange, pas un progrès gratuit : on gagne en stabilité ce qu'on perd en réactivité. Tout l'art est de choisir la largeur de bande qui rend cet échange acceptable — et cela dépend de la plante, pas du programme.</p>
+      <p><b>Et le prix à payer ?</b> Regarde bien le banc en mode DEUX seuils : à 39 % d'humidité, la pompe <b>ne s'allume pas</b>. Elle attendra que la terre descende sous 35. Autrement dit, l'hystérésis a calmé la pompe en acceptant de <b>réagir plus tard</b>. C'est un échange, pas un progrès gratuit : on gagne en stabilité ce qu'on perd en réactivité. Tout l'art est de choisir la largeur de bande qui rend cet échange acceptable — et cela dépend de la plante, pas du programme.</p>
       <p><b>Méthode :</b> mettre au point, c'est une boucle en quatre temps : <b>observer</b> l'écart (la trace), <b>expliquer</b> sa cause (le tremblement près du seuil), <b>corriger</b> (la bande morte), <b>re-tester dans les mêmes conditions</b>. Le dernier temps est celui qu'on saute le plus souvent — et sans lui, on ne sait pas si on a corrigé ou si on a eu de la chance.</p>
-      <p><b>Limite :</b> l'hystérésis règle le clignotement, pas tout. Si le capteur se met à renvoyer n'importe quoi, la bande morte n'y peut rien : elle lisse une mesure qui tremble, elle ne répare pas une mesure fausse.</p>
+      <p><b>Limite :</b> l'hystérésis calme la pompe, mais ne règle pas tout. Si le capteur se met à renvoyer n'importe quoi, la bande morte n'y peut rien : elle lisse une mesure qui tremble, elle ne répare pas une mesure fausse.</p>
     </details>
-    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> chercher un bug dans le code alors qu'il n'y en a pas ; écrire <code>SINON éteindre</code> à la place du troisième cas, ce qui supprime la bande morte et ramène le clignotement ; inverser les seuils (allumer à 45, éteindre à 35) — le système devient alors instable au lieu de se calmer ; corriger sans re-tester.</div>
-    <div class="retenir"><b>📌 À retenir :</b> <b>mettre au point</b> = observer l'écart, en trouver la cause, corriger, <b>re-tester dans les mêmes conditions</b>. Un programme peut être <b>juste et inutilisable</b> : le clignotement n'est pas un bug, c'est une règle mal choisie. L'<b>hystérésis</b> (deux seuils et une bande morte) stabilise une décision près d'une frontière — au prix d'une mémoire de l'état.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> 5 réponses justes sur 5, un diagnostic qui nomme au moins deux conséquences concrètes, un programme à trois cas dont le cas « ne rien faire », et la démonstration au banc : ✔ clignotement provoqué, ✔ clignotement supprimé.</div>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> chercher un bug dans le code alors qu'il n'y en a pas ; écrire <code>SINON éteindre</code> à la place du troisième cas, ce qui supprime la bande morte, et la pompe s'affole de nouveau ; inverser les seuils (allumer à 45, éteindre à 35) — le système devient alors instable au lieu de se calmer ; corriger sans re-tester.</div>
+    <div class="retenir"><b>📌 À retenir :</b> <b>mettre au point</b> = observer l'écart, en trouver la cause, corriger, <b>re-tester dans les mêmes conditions</b>. Un programme peut être <b>juste et inutilisable</b> : la pompe qui s'affole n'est pas un bug, c'est une règle mal choisie. L'<b>hystérésis</b> (deux seuils et une bande morte) stabilise une décision près d'une frontière — au prix d'une mémoire de l'état.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 5 réponses justes sur 5, un diagnostic qui nomme au moins deux conséquences concrètes, un programme à trois cas dont le cas « ne rien faire », et la démonstration au banc : ✔ pompe affolée, ✔ pompe calmée.</div>
   </div>
 
   <div class="activite" id="act6">
@@ -1410,7 +1410,7 @@ FIN SI</div>
   <p><b>Concevoir</b>, c'est traduire une règle en variables, conditions et actions — et le faire d'abord <b>en dessin</b> : l'algorigramme dit la même chose que le code, en montrant la structure au lieu de l'écrire. Trois formes suffisent : le terminal commence, le rectangle fait, le losange demande.</p>
   <p><b>Écrire</b>, c'est poser les <b>réglages</b> en haut (les constantes), lire les <b>entrées</b> — qui ne viennent pas toutes d'un capteur : l'heure en est une —, puis décider. Un <code>and</code> exige que tout soit vrai ; un <code>or</code> se contente d'une seule condition, et la confusion des deux ne fait pas planter le programme : elle le fait <b>mentir</b>.</p>
   <p><b>Tester</b>, c'est écrire le résultat <b>attendu avant</b> l'exécution, puis comparer. Quatre familles d'essais : nominaux, <b>frontières</b>, exclusions, <b>absurdes</b>. Les frontières sont les seules à distinguer <code>&lt;</code> de <code>&lt;=</code>.</p>
-  <p><b>Mettre au point</b>, c'est observer un écart, en trouver la cause, corriger, <b>re-tester dans les mêmes conditions</b>. Et c'est là qu'on apprend la chose la plus utile de l'année : <b>un programme peut être parfaitement juste et parfaitement inutilisable</b>. Le clignotement de la pompe n'était pas un bug — c'était une règle mal choisie. L'<b>hystérésis</b> la répare : deux seuils, une bande morte, et une mémoire de l'état.</p>
+  <p><b>Mettre au point</b>, c'est observer un écart, en trouver la cause, corriger, <b>re-tester dans les mêmes conditions</b>. Et c'est là qu'on apprend la chose la plus utile de l'année : <b>un programme peut être parfaitement juste et parfaitement inutilisable</b>. La pompe qui s'affolait n'était pas un bug — c'était une règle mal choisie. L'<b>hystérésis</b> la répare : deux seuils, une bande morte, et une mémoire de l'état.</p>
   <p>Enfin, la structure « deux seuils + bande morte » ne s'arrête pas au jardin. Tu viens de la réemployer sur un lampadaire ; tu la retrouveras dans un thermostat, un régulateur, un chargeur de batterie. <b>Ce que tu as appris n'est pas un programme, c'est une forme.</b></p>
 </section>
 
@@ -1652,7 +1652,7 @@ function majVerrous(){
     "v-varie":  [!!e.varie,   "J'ai fait varier l'humidité et observé la pompe"],
     "v-plage":  [!!e.plage,   "J'ai vérifié qu'à sol sec mais HORS plage horaire, la pompe reste éteinte"],
     "v-front":  [!!(e.front39 && e.front40), "J'ai testé les deux frontières : 39 % et 40 %"],
-    "v-clign":  [!!e.clignote, "J'ai provoqué le clignotement (mode UN seuil, mesure qui tremble)"],
+    "v-clign":  [!!e.clignote, "J'ai fait s'affoler la pompe (mode UN seuil, mesure qui tremble)"],
     "v-hyst":   [!!e.hysteres, "J'ai vérifié que les DEUX seuils l'arrêtent, sur la même mesure"]
   };
   Object.entries(L).forEach(([id,[fait,lib]])=>{
@@ -1781,7 +1781,7 @@ const CHECKS = {
     if(!diagOk)   extra += " Rédige ton diagnostic : quelles conséquences CONCRÈTES, pour le relais, la pompe et la plante ?";
     if(!progOk)   extra += " Ton programme doit contenir les DEUX seuils (35 et 45) et un SINON SI — pas un simple SINON.";
     if(!mesureOk) extra += " Relève les deux compteurs au banc : plusieurs basculements avec un seuil, au plus un avec deux.";
-    if(!bancOk)   extra += " Fais la démonstration au banc : provoque le clignotement en mode UN seuil, puis rejoue le MÊME tremblement en mode DEUX seuils.";
+    if(!bancOk)   extra += " Fais la démonstration au banc : fais s'affoler la pompe en mode UN seuil, puis rejoue le MÊME tremblement en mode DEUX seuils.";
     return {score:ok, total:5, extra, valide: ok === 5 && diagOk && progOk && mesureOk && bancOk};
   },
   6: function(){
