@@ -12,6 +12,13 @@ sortie de la dernière exécution, recopiée telle quelle.
 > l'initialisation, et elle enregistrait ce qu'elle affichait. Le verrou « les cinq sources » n'en réclamait donc plus que quatre. La fonction ne trace plus que
 > sur un geste ; vérifié après correction : `__exp` est **vide** à l'ouverture, et le verrou
 > s'ouvre normalement dès les manipulations réelles (règles d'or n°226 et n°265).
+
+> **Mise à jour du 30/10/2026 — le jardin est à New York.** Le banc comptait l'ensoleillement de
+> la Martinique (5,3 heures équivalent plein soleil par jour) ; il compte désormais celui de New
+> York, **4,5 heures** en moyenne annuelle pour un panneau fixe incliné de 20° plein sud (NREL,
+> PVWatts v8). Le panneau 1 W récolte **3,2 Wh** par jour au lieu de 3,7 et il manque
+> **2,67 Wh** chaque jour au lieu de 2,17 ; le panneau 2 W en récolte 6,3 et tient les 5,87 Wh, de
+> peu. Les deux suites ont été rejouées : les sorties ci-dessous sont celles du 30/10/2026.
 ```bash
 node tests_4e_C7.4_sequence.mjs "$PWD/sequence_4e_C7.4_energie-du-jardin.html" 4e reponses_4e_C7.4.json
 node tests_4e_C7.4_qcm.mjs      "$PWD/qcm_4e_C7.4_energie-du-jardin.html" 4e_C7.4 4e_C3.1 sequence_4e_C7.4_energie-du-jardin.html
@@ -35,8 +42,8 @@ python3 energie.py          # recalcule toutes les valeurs du banc
 ✅ 4 AA : rendement 83 % (5 V ÷ 6 V) — 83 %
 ✅ accu : énergie utile 9,4 Wh — 9,4 Wh
 ✅ secteur : autonomie illimitée — ⚡ Autonomie illimitée — tant qu'il y a du réseau.
-✅ panneau : le verdict raisonne en Wh PAR JOUR — 3,7 Wh PAR JOUR
-✅ panneau 1 W : il ne suffit pas — ☁ Il récolte 3,7 Wh par jour pour 5,87 consommés : il NE SUFFIT PAS. Il en manque 2,17 Wh chaqu
+✅ panneau : le verdict raisonne en Wh PAR JOUR — 3,2 Wh PAR JOUR
+✅ panneau 1 W : il ne suffit pas — ☁ Il récolte 3,2 Wh par jour pour 5,87 consommés : il NE SUFFIT PAS. Il en manque 2,67 Wh chaqu
 ✅ éteindre la carte fait chuter le total — 5,87 Wh → 0,47 Wh
 ✅ la ligne éteinte est barrée
 ✅ la barre donne la part exacte de la carte — 91.9801
@@ -77,7 +84,7 @@ python3 energie.py          # recalcule toutes les valeurs du banc
 ✅ les deux codes dépassent le seuil de 5 questions
 ✅ bonnes réponses réparties sur les 4 positions — 8/7/7/8
 ✅ aucune bonne réponse détachée par sa longueur — 0
-✅ écart moyen de longueur sous 5 caractères — 1.8
+✅ écart moyen de longueur sous 5 caractères — 1.9
 ✅ une bonne réponse est déclarée correcte
 ✅ la correction déplie les trois réfutations
 ✅ la correction porte un « À retenir »
@@ -113,7 +120,7 @@ Consommation du montage : **5,87 Wh par jour**.
       4 piles AA alcalines               2.13 jour(s) = 51 h
       Accu Li-ion 18650 rechargeable     1.60 jour(s) = 38 h
       Secteur — adaptateur USB scellé    illimitée tant qu'il y a du réseau
-      Panneau solaire 1 W crête + accu   NE SUFFIT PAS (3.7 Wh récoltés pour 5.87 consommés)
+      Panneau solaire 1 W crête + accu   NE SUFFIT PAS (3.2 Wh récoltés pour 5.87 consommés)
 ```
 
 Le rendement d'un régulateur linéaire vaut V<sub>sortie</sub> ÷ V<sub>entrée</sub> : 56 % pour

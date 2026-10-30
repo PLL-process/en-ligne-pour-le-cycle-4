@@ -26844,3 +26844,32 @@ procédure, en 4e on modifie une forme ») et les renvois à une séquence de la
   alors que le jardin est à Brooklyn. Transfert voulu vers la Martinique, ou glissement à corriger ?
 - **4e_C8**, la scène animée : sa première phrase, lue par la voix enregistrée, dit « Sur le toit d'une école de New
   York ». Elle ne contredit pas la phrase-pont ; la changer demanderait une nouvelle voix.
+
+---
+
+## 30/10/2026 — Le jardin de 4e, tout à New York (thème 3)
+
+*Réponse de Pascal aux deux questions laissées par l'entrée précédente : « Tu as carte blanche », puis « Tout à NY si
+possible ».*
+
+- **La voix de la scène animée de 4e_C8** reste : « Sur le toit d'une école de New York » dit déjà New York.
+- **L'ensoleillement de 4e_C7.4** : le banc comptait celui de la Martinique, 5,3 heures équivalent plein soleil par
+  jour. La 4e prend celui de **New York : 4,5 heures** en moyenne annuelle, pour un panneau fixe incliné de 20° plein
+  sud (NREL, PVWatts v8, base NSRDB, relevé par thegreenwatt.com ; recoupé avec NREL à plat, 3,93 kWh/m²/jour). En
+  décembre : environ 2,4 heures. `energie.py` (trois copies identiques) a maintenant un ensoleillement par lieu : la 5e
+  et la 3e restent en Martinique, leurs sorties n'ont pas changé d'un caractère.
+  - Le panneau de 1 W crête récolte 3,2 Wh par jour (et non 3,7) : il ne suffit toujours pas au jardin (5,87 Wh). Le
+    panneau de 2 W crête en récolte 6,3 : il suffit, de peu. La leçon du lot ne change pas.
+  - Le défi « saison des pluies en Martinique » devient un **défi hiver** (décembre à New York) ; son corrigé est dans
+    la fiche.
+  - Le piège du « Refaire » devient celui d'un toit new-yorkais : le gel, la neige et le vent ; les piles alcalines
+    perdent une bonne part de leur capacité quand il gèle, et un accu Li-ion ne se charge pas sous 0 °C.
+- **Le bac de 4e_C7.3** : « alizés permanents » devient « le vent du large porte le sel » ; le collège de l'intérieur
+  du « Refaire » n'est plus à Morne-Rouge mais à **Albany**, la capitale de l'État de New York, à 200 km de la mer.
+  `materiaux.py` (trois copies identiques) ne change aucun nombre.
+- **La photo du jardin** des synthèses élève de 4e_C7.4, 4e_C7.5 et 4e_C7.8 montrait des palmiers. Elle est remplacée
+  par une image Canva générée le 30/10/2026 : la cour d'une école de Brooklyn, avec le bac, le panneau solaire, le
+  boîtier et la cuve. L'ancienne est retirée de ces trois lots.
+- **Ce qui reste en Martinique, et pourquoi** : le jardin connecté du **thème 2** (4e_C4.1, 4e_C5.1, 4e_C6.1) est un
+  autre atelier, annoncé « Thème 2 · Martinique » ; il garde son jardin et sa photo martiniquais. Les colonnes « tenue au
+  soleil » de `materiaux.py` restent calibrées pour un soleil tropical : ce sont des valeurs prudentes pour New York.

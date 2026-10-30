@@ -59,12 +59,17 @@ problème.
 | 4 piles AA alcalines | 12,5 Wh | 2,1 jours |
 | Accu Li-ion 18650 rechargeable | 9,4 Wh | 38 heures |
 | Secteur — adaptateur USB scellé | illimitée | tant qu'il y a du réseau |
-| Panneau solaire 1 W crête + accu | 3,7 Wh/jour | **ne suffit pas** (−2,17 Wh/jour) |
+| Panneau solaire 1 W crête + accu | 3,2 Wh/jour | **ne suffit pas** (−2,67 Wh/jour) |
 
 Tout est recalculé par [`energie.py`](energie.py), livré dans le dossier. Le rendement d'un
 régulateur linéaire y vaut V<sub>sortie</sub> ÷ V<sub>entrée</sub> — c'est de la physique, pas
-un réglage : il dissipe la différence en chaleur. Ensoleillement retenu pour la Martinique :
-5,3 heures équivalent plein soleil par jour, avec 30 % de pertes de chaîne.
+un réglage : il dissipe la différence en chaleur. Ensoleillement retenu pour New York (le jardin
+est à Brooklyn) : 4,5 heures équivalent plein soleil par jour en moyenne annuelle, panneau fixe
+incliné de 20° plein sud, avec 30 % de pertes de chaîne. Le panneau 2 W de la correction récolte
+donc 6,3 Wh par jour : il tient les 5,87 Wh, de peu. Source : NREL, PVWatts v8 (base NSRDB), pour
+40,71° N, 74,01° O, relevé par [thegreenwatt.com](https://www.thegreenwatt.com/new-york-peak-sun-hours/) ;
+recoupement à plat, 3,93 kWh/m²/jour en moyenne (NREL, via
+[solarscope.io](https://solarscope.io/solar-data/new-york/new-york-city)).
 
 ## 5. Sécurité
 
@@ -96,9 +101,15 @@ en fin de vie.
   accu à 8 € tous les trois ans). À partir de quel mois le panneau devient-il moins cher ?
   **🔍 Défi mesure :** avec un multimètre en série, mesure le courant réel de ta carte au
   repos. Est-il de 45 mA ? Écris l'écart, et une raison possible.
-  **🌧 Défi saison des pluies :** le banc compte 5,3 heures d'équivalent plein soleil en
-  moyenne annuelle. Cherche ce que devient ce chiffre en septembre en Martinique, et dis de
-  combien il faudrait grossir l'accu pour passer une semaine grise.
+  **❄ Défi hiver :** le banc compte 4,5 heures d'équivalent plein soleil en moyenne
+  annuelle. Cherche ce que devient ce chiffre en décembre à New York, et dis de combien il
+  faudrait grossir l'accu ou le panneau pour passer une semaine de décembre.
+  *Corrigé, pour le professeur :* en décembre, environ **2,4 heures** sur un panneau incliné,
+  **1,75** à plat (kWh/m²/jour) : deux fois et demie moins qu'en juillet sur le panneau incliné
+  (6,15 heures), plus de trois fois moins à plat (5,85). Le
+  panneau 2 W ne récolte plus que 2 × 2,4 × 0,7 ≈ 3,4 Wh par jour pour 5,87 : il manque
+  environ 2,5 Wh chaque jour, soit 17,6 Wh sur la semaine — deux accus 18650 de plus
+  (9,4 Wh utiles chacun). Ou un panneau d'au moins 5,87 ÷ (2,4 × 0,7) ≈ 3,5 W crête.
 
 
 ## 9. La skill `arduino-grove-college`, et ce qui est sans objet ici

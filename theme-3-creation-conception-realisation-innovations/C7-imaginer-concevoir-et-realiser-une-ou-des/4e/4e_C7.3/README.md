@@ -53,8 +53,9 @@ Toutes les valeurs viennent de `materiaux.py` : masses, coûts, épaisseurs et v
 
 Les deux colonnes qui font le cœur du lot — **tenue au rayonnement solaire** et **tenue au
 brouillard salin** — ne figurent dans aucun catalogue générique. Elles éliminent pourtant des
-matériaux qu'un tableau écrit sous un climat tempéré retiendrait. C'est la contrainte réelle
-d'ici, et elle s'écrit au cahier des charges comme les autres.
+matériaux qu'un tableau écrit pour un objet d'intérieur retiendrait. Un bac dehors toute l'année,
+à 900 m de la mer à Brooklyn : c'est la contrainte réelle du jardin, et elle s'écrit au cahier
+des charges comme les autres.
 
 ## Sécurité
 
