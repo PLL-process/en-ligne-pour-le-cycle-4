@@ -48,7 +48,7 @@ les options réelles du menu déroulant, jamais écrite ici (règle d'or n°268)
 | 5 | Billet d'entrée : réclame d'abord les réponses manquantes, puis rend 3 / 3 | ✅ |
 | 5 bis | **Le billet ne compte pas comme une activité** : la progression reste 0 / 5 | ✅ |
 | 6 | Activité 1 validée **9 / 9** (alimenter, stocker, distribuer, convertir) | ✅ |
-| 7 | Activité 2 validée **4 / 4** (acquérir, traiter, communiquer, restituer) | ✅ |
+| 7 | Activité 2 validée **4 / 4** (acquérir, traiter, communiquer) | ✅ |
 | 8 | **Activité 3 REFUSÉE malgré 6 réponses justes** — les bacs ne sont pas explorés | ✅ |
 | 9 | Un bac filtré affiche sa requête et ses mesures ; compteur 1 / 3, verrou toujours fermé | ✅ |
 | 10 | Les 3 bacs explorés → compteur 3 / 3 et `__exp.table` posé | ✅ |
