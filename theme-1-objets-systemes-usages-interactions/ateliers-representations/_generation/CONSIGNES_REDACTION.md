@@ -93,7 +93,7 @@ seul. Phrases de 25 mots au plus ; unités en toutes lettres dans chaque partie 
 - **Fiction déclarée** : `MENTION_FICTION` dit ce qui est imaginé. Un chiffre réel se source.
 - **Très basse tension** seulement ; le 230 V n'apparaît que comme danger.
 - **Contextes** : Martinique (Sainte-Luce, cyclones, eau, soleil), collège, objets-fils —
-  5e : vélo-cargo, lampadaire intelligent ; 4e : jardin connecté (système d'arrosage) ;
+  5e : vélo-cargo, lampadaire intelligent ; 4e : jardin connecté (système d'arrosage), dans une école de Brooklyn, à New York ;
   3e : station d'alerte cyclonique.
 - **Jamais la couleur seule** dans un schéma : chaque couleur est doublée d'un mot.
 - **Décisions du professeur du 24/10/2026** : le diagramme pieuvre montre ses fonctions dès la 5e — la fonction

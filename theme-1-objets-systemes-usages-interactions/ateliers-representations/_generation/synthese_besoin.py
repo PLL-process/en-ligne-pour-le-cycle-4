@@ -71,8 +71,8 @@ PARTIES = [
         titre_court="Pourquoi un objet change-t-il&nbsp;?",
         carte="Parce que le besoin change&nbsp;; on le montre en comparant les bêtes à cornes d'avant et d'après.",
         exemple=(
-            "<p>Au jardin du collège, personne ne vient en vacances et l'eau manque en carême&nbsp;: l'arrosoir devient "
-            "un système connecté.</p>"
+            "<p>Au jardin du collège, à Brooklyn, personne ne vient en vacances et l'eau manque pendant la canicule&nbsp;: "
+            "l'arrosoir devient un système connecté.</p>"
             '<div class="chaine">'
             "<div><b>Pareil</b>À qui&nbsp;? La gardienne. Sur quoi&nbsp;? Les plantes du jardin.</div>"
             "<div><b>Avant&nbsp;: le but</b>«&nbsp;Arroser les plantes du jardin.&nbsp;»</div>"
@@ -152,6 +152,7 @@ LEXIQUE = [
     ("évolution", "evolution", "un objet nouveau pour un besoin nouveau."),
     ("innovation", "innovation", "une invention entrée dans la vie courante."),
     ("développement durable", "sustainable development", "ne pas gâcher ce qu'il faudra demain."),
+    ("canicule", "heat wave", "une longue période de très forte chaleur."),
     ("caractéristique", "characteristic", "ce qui décrit un modèle et se compare."),
     ("autonomie", "running time", "le temps où un système marche seul."),
     ("consommation", "consumption", "ce que le système utilise."),
