@@ -12,10 +12,10 @@ Suite directe de 4e_C7, et amont direct de 4e_C9 (le programme). Trois séances 
 ## Fichiers du lot
 
 - `sequence_4e_C8_jardin-validation.html` — la séquence (6 activités, banc de tests virtuel)
-- `qcm_4e_C8_jardin-validation.html` — QCM 28 questions
+- `qcm_4e_C8_jardin-validation.html` — QCM 30 questions, chacune avec ses réfutations
 - `Synthèses/`, `synthese_eleve_4e_C8.html`, `synthese_professeur_4e_C8.html`
 - `fiche_pedagogique_4e_C8.md`, `matrice_couverture_4e_C8.csv`, `SOURCES_MEDIAS.md`, `CRCN_regle7.md`
-- **`tests_4e_C8.mjs`** — la suite du lot, rejouable : `node tests_4e_C8.mjs .` (41 tests)
+- **`tests_4e_C8.mjs`** — la suite du lot, rejouable : `node tests_4e_C8.mjs .` (48 tests au 30/10/2026)
 
 ## Harmonisation du 26 août 2026
 
@@ -27,4 +27,5 @@ Comme son jumeau 4e_C7, le QCM avait ses **28 bonnes réponses en position B** �
 deuxième proposition partout donnait 28/28. Elles sont redistribuées 7 par position
 (outil `repartir_qcm.mjs`, dans le dossier 4e_C7.1). Le QCM reste de la génération ancienne
 (28 questions, sans réfutation par distracteur) : la mise à niveau n'est pas faite, et
-c'est dit.
+c'est dit. *Elle l'a été depuis : le QCM compte aujourd'hui 30 questions, toutes avec réfutations (banc du
+30/10/2026).*

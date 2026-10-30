@@ -4,6 +4,13 @@ Tests **réels**, joués dans un navigateur Chromium par Playwright, sur les fic
 qu'ils sont livrés. Cette page est la sortie de la dernière exécution, recopiée telle quelle —
 les scripts et le jeu de réponses sont dans ce dossier, on peut tout rejouer.
 
+> **Mise à jour du 30/10/2026 — les deux suites rejouées.** Le rapport affichait encore
+> « écart moyen de longueur sous 5 caractères — 1.5 », sortie d'une exécution antérieure : la
+> page du QCM a été retouchée depuis. Les deux suites ont été rejouées le 30/10/2026 avec les
+> arguments ci-dessous. La séquence redonne **44 / 44**, ligne pour ligne la sortie déjà
+> recopiée. Le QCM redonne **32 / 32** ; une seule ligne change, l'écart moyen de longueur, qui
+> vaut **1.3**. Les sorties ci-dessous sont celles du 30/10/2026.
+
 ```bash
 node tests_4e_C7.3_sequence.mjs "$PWD/sequence_4e_C7.3_bac-du-jardin.html" 4e reponses_4e_C7.3.json
 node tests_4e_C7.3_qcm.mjs      "$PWD/qcm_4e_C7.3_bac-du-jardin.html" 4e_C7.3 4e_C3.2 sequence_4e_C7.3_bac-du-jardin.html
@@ -77,7 +84,7 @@ node tests_4e_C7.3_qcm.mjs      "$PWD/qcm_4e_C7.3_bac-du-jardin.html" 4e_C7.3 4e
 ✅ les deux codes dépassent le seuil de 5 questions
 ✅ bonnes réponses réparties sur les 4 positions — 8/7/7/8
 ✅ aucune bonne réponse détachée par sa longueur — 0
-✅ écart moyen de longueur sous 5 caractères — 1.5
+✅ écart moyen de longueur sous 5 caractères — 1.3
 ✅ une bonne réponse est déclarée correcte
 ✅ la correction déplie les trois réfutations
 ✅ la correction porte un « À retenir »
