@@ -174,10 +174,10 @@ async function regler(lum) {
   await p.waitForTimeout(60);
 }
 await regler(80);
-ok('11 · plein jour (80 %) : la LED est éteinte',
+ok('11 · jour (80 lux) : la LED est éteinte',
    (await p.textContent('#simLedTxt')).includes('éteint'), await p.textContent('#simLedTxt'));
 await regler(10);
-ok('12 · nuit (10 %) sans passage : veille',
+ok('12 · nuit (10 lux) sans passage : veille',
    (await p.textContent('#simLedTxt')).includes('veille'), await p.textContent('#simLedTxt'));
 await p.click('#btnPassage');
 await p.waitForTimeout(80);

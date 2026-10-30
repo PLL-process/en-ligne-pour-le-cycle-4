@@ -11,7 +11,7 @@ Aucune image de manuel, de Google Images ou de site tiers ; aucun hotlinking.
 Le programme par blocs est une création originale du lot (style visuel inspiré
 des environnements par blocs, dessiné en SVG — aucune capture d'écran de
 logiciel tiers). Alt/desc complets (title + desc, role="img") ; palette charte.
-- `Images/lampadaire_seuil_jour_nuit.svg` — schéma original (LOT 12) : jauge de luminosité et SEUIL_NUIT=30. Auteur : Claude/Fable. Licence : CC0. 25/07/2026.
+- `Images/lampadaire_seuil_jour_nuit.svg` — schéma original (LOT 12) : jauge de luminosité de 0 lux (nuit noire) à 100 lux (début de journée) et SEUIL_NUIT = 30 lux. Auteur : Claude/Fable. Licence : CC0. 25/07/2026.
 
 ## Image générée par IA (Canva) pour la synthèse élève
 

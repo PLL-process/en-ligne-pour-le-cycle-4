@@ -130,9 +130,9 @@
     <ul>
       <li><b>Fragiles&nbsp;:</b> copilote d'abord&nbsp;; act. 2 avec le schéma sous les yeux&nbsp;; version 🅲 (clinique intégrée) suffit pour C4.8&nbsp;; QCM mode «&nbsp;10 questions&nbsp;».</li>
       <li><b>Rapides&nbsp;:</b> Bonus «&nbsp;clinique XXL&nbsp;» (inventer une 3ᵉ panne pour le binôme voisin — doublon, masque, câble)&nbsp;; défi jardin (transfert rue 192.168.10).</li>
-      <li><b>Positionnement&nbsp;:</b> auto-positionnement par code (3 familles) + bilan par compétence du QCM (report LSU direct C4.7/C4.8/C4.9).</li>
+      <li><b>Positionnement&nbsp;:</b> auto-positionnement par code (3 codes) + bilan par compétence du QCM (report LSU direct C4.7/C4.8/C4.9).</li>
       <li><b>Évaluation pratique proposée (10 min, séance 4)&nbsp;:</b> «&nbsp;Serre de Rivière-Salée — intervention n°47&nbsp;»&nbsp;: l'élève reçoit UN des trois fichiers PANNE, diagnostique, répare, et rend la fiche d'intervention en 6 lignes avec la preuve du re-test. Grille ci-dessous. <b>Aucun corrigé n'est publié dans le dépôt</b>&nbsp;: les trois pannes sont documentées dans la présente synthèse professeur, qui reste le document de l'enseignant.</li>
-      <li><b>Grille (3 niveaux)&nbsp;:</b> <i>fragile</i> — décrit le symptôme, propose un remède sans test&nbsp;; <i>satisfaisante</i> — hypothèse + test + remède + re-test, sur la bonne famille de panne&nbsp;; <i>très bonne</i> — idem + justifie POURQUOI ce test-là prouve la réparation, et nomme la famille de panne.</li>
+      <li><b>Grille (3 niveaux)&nbsp;:</b> <i>fragile</i> — décrit le symptôme, propose un remède sans test&nbsp;; <i>satisfaisante</i> — hypothèse + test + remède + re-test, sur la bonne famille de panne&nbsp;; <i>très bonne</i> — idem + justifie POURQUOI ce test-là prouve la réparation, et nomme la famille de panne (attendu&nbsp;: A → adressage&nbsp;; B → liaison&nbsp;; C → adressage (masque)).</li>
       <li><b>Sommative écrite&nbsp;:</b> à construire par l'enseignant (objet transféré — ex. ajouter une caméra au réseau du CDI)&nbsp;; AUCUN corrigé sommatif dans le dépôt public.</li>
     </ul>
   </div>
@@ -145,7 +145,7 @@
   <dl>
     <dt><code>4e_serre_PANNE_A.pkt</code> — famille «&nbsp;adressage&nbsp;»</dt><dd>le capteur est en <code>192.168.<b>21</b>.50</code> (mauvaise rue). Triangles verts, <code>ping 192.168.20.50</code> → <b>100% loss</b> vérifié. Remède&nbsp;: remettre <code>192.168.20.50</code>.</dd>
     <dt><code>4e_serre_PANNE_B.pkt</code> — famille «&nbsp;liaison&nbsp;»</dt><dd>Port Status de l'imprimante décoché (Off). <b>Triangle rouge</b> visible sur la liaison. Remède&nbsp;: recocher On, attendre le vert, re-ping.</dd>
-    <dt><code>4e_serre_PANNE_C.pkt</code> — famille «&nbsp;masque&nbsp;»</dt><dd>le capteur porte la bonne adresse mais le masque <code>255.255.255.240</code>. Tout paraît juste&nbsp;; <code>ping 192.168.20.50</code> → <b>100% loss</b> vérifié (la réponse vers .10 sort du /28 du capteur et part vers une passerelle inexistante). C'est la panne la plus formatrice&nbsp;: elle oblige à lire le masque. Remède&nbsp;: <code>255.255.255.0</code>.</dd>
+    <dt><code>4e_serre_PANNE_C.pkt</code> — famille «&nbsp;adressage (masque)&nbsp;»</dt><dd>le capteur porte la bonne adresse mais le masque <code>255.255.255.240</code>. Tout paraît juste&nbsp;; <code>ping 192.168.20.50</code> → <b>100% loss</b> vérifié (la réponse vers .10 sort du /28 du capteur et part vers une passerelle inexistante). C'est la panne la plus formatrice&nbsp;: elle oblige à lire le masque. Remède&nbsp;: <code>255.255.255.0</code>.</dd>
   </dl>
   <p><b>Note d'honnêteté technique&nbsp;:</b> la panne «&nbsp;doublon d'adresse&nbsp;» n'a pas pu être fabriquée&nbsp;:
   l'interface de Packet Tracer refuse la saisie d'une IP déjà utilisée («&nbsp;This address is already used in
@@ -156,8 +156,8 @@
   <h2 style="margin-top:0">Articulation dans le dépôt</h2>
   <p>Cet atelier est le <b>complément dédié «&nbsp;réseaux&nbsp;»</b> de la séquence-îlot «&nbsp;SOS jardin connecté&nbsp;»
   (4e_C4.1→C4.9), qui reste la porte d'entrée de C4 en 4e — sa séance 3 traite les mêmes codes en version courte&nbsp;;
-  le présent atelier les traite en profondeur (4 séances, conception du plan, trois familles de pannes avec
-  fichiers réels, validation par simulation, défi sans procédure). En amont&nbsp;: 5e «&nbsp;Le réseau de la salle techno&nbsp;» (5e_C4.7-C4.8). En aval&nbsp;: 3e
+  le présent atelier les traite en profondeur (4 séances, conception du plan, deux familles de pannes et trois
+  fichiers réels en panne, validation par simulation, défi sans procédure). En amont&nbsp;: 5e «&nbsp;Le réseau de la salle techno&nbsp;» (5e_C4.7-C4.8). En aval&nbsp;: 3e
   «&nbsp;Internet jusqu'à Sainte-Luce&nbsp;» et l'atelier routage Martinique→New York (3e_C4.8) — la passerelle
   introduite ici y prend tout son sens. Les figures sont des reconstitutions SVG originales CC0 d'après nos sessions
   réelles Packet Tracer 8.2 (règles n°1 et n°20) — aucune capture propriétaire&nbsp;; cinq fichiers Packet Tracer construits et validés en conditions réelles accompagnent le lot&nbsp;:

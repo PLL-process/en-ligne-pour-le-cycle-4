@@ -664,17 +664,21 @@ select.ko,input.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(
       <object data="Images/programme_blocs_lampadaire.svg" type="image/svg+xml" aria-label="Le programme par blocs du lampadaire avec ses paramètres" style="width:100%"></object>
       <figcaption>Le vrai programme de ton lampadaire de la séquence précédente — les paramètres sont encadrés en jaune.</figcaption>
     </figure>
+    <div style="background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;font-size:.92em;margin:10px 0">
+    <p style="margin:0 0 6px"><b style="color:var(--hl)">📏 La lumière se mesure en lux&nbsp;:</b> le lampadaire du parking, comme celui du simulateur, a un <b>capteur étalonné</b>. Il mesure l'<b>éclairement</b>, la lumière qu'il reçoit, en <b>lux</b>. Le capteur de lumière Grove de la classe, une photorésistance, donne seulement une <b>valeur relative</b>, sans unité.</p>
+    <p style="margin:0">Quelques repères&nbsp;: une nuit de pleine lune, moins de 1 lux&nbsp;; le crépuscule, 10 à 50 lux&nbsp;; une salle de classe, 300 à 500 lux&nbsp;; le plein soleil, environ 100&nbsp;000 lux.</p>
+    </div>
     <div class="consigne"><b>Consigne :</b> a) classe chaque donnée (utilisée, produite, ou paramètre réglable) ; b) réponds aux deux questions de lecture fine.</div>
     <div class="exo">
       <h4>a) Je classe les données</h4>
       <div class="assoc"><label for="e1_1">La luminosité mesurée par le capteur :</label><select id="e1_1"><option value="">— choisir —</option><option>donnée UTILISÉE (entrée)</option><option>donnée PRODUITE (sortie)</option><option>paramètre réglable</option></select></div>
       <div class="assoc"><label for="e1_2">Le passage détecté (PIR) :</label><select id="e1_2"><option value="">— choisir —</option><option>donnée UTILISÉE (entrée)</option><option>donnée PRODUITE (sortie)</option><option>paramètre réglable</option></select></div>
-      <div class="assoc"><label for="e1_3">SEUIL_NUIT (= 30) :</label><select id="e1_3"><option value="">— choisir —</option><option>paramètre réglable</option><option>donnée PRODUITE (sortie)</option><option>donnée UTILISÉE (entrée)</option></select></div>
+      <div class="assoc"><label for="e1_3">SEUIL_NUIT (= 30 lux) :</label><select id="e1_3"><option value="">— choisir —</option><option>paramètre réglable</option><option>donnée PRODUITE (sortie)</option><option>donnée UTILISÉE (entrée)</option></select></div>
       <div class="assoc"><label for="e1_4">DURÉE (= 5 s) :</label><select id="e1_4"><option value="">— choisir —</option><option>paramètre réglable</option><option>donnée PRODUITE (sortie)</option><option>donnée UTILISÉE (entrée)</option></select></div>
       <div class="assoc"><label for="e1_5">L'état de la lampe (éteinte / veille / 100 %) :</label><select id="e1_5"><option value="">— choisir —</option><option>donnée PRODUITE (sortie)</option><option>donnée UTILISÉE (entrée)</option><option>paramètre réglable</option></select></div>
       <div class="assoc"><label for="e1_6">Le voyant d'état du coffret :</label><select id="e1_6"><option value="">— choisir —</option><option>donnée PRODUITE (sortie)</option><option>donnée UTILISÉE (entrée)</option><option>paramètre réglable</option></select></div>
       <h4>b) Lecture fine</h4>
-      <div class="assoc"><label for="e1_7">Quelle valeur le programme compare-t-il à la luminosité pour décider qu'il fait nuit ?</label><input type="number" id="e1_7" min="0" max="100" step="1" inputmode="numeric"></div>
+      <div class="assoc"><label for="e1_7">Quelle valeur, en lux, le programme compare-t-il à la luminosité pour décider qu'il fait nuit ?</label><input type="number" id="e1_7" min="0" max="100" step="1" inputmode="numeric"></div>
       <div class="assoc"><label for="e1_8">Combien d'états différents la lampe peut-elle prendre ?</label><select id="e1_8"><option value="">— choisir —</option><option>3 (éteinte, veille, pleine puissance)</option><option>2 (allumée, éteinte)</option><option>1 (toujours allumée)</option><option>une infinité</option></select></div>
     </div>
     <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Une donnée UTILISÉE entre dans le programme (capteurs, réglages) ; une donnée PRODUITE en sort (ce que le programme décide). Les PARAMÈTRES sont les valeurs encadrées en jaune : on peut les régler sans changer le programme.</p></details>
@@ -684,7 +688,7 @@ select.ko,input.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(
     <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
       <p>Luminosité et passage : <b>données UTILISÉES</b> (elles viennent des capteurs). SEUIL_NUIT et DURÉE :
       <b>paramètres réglables</b> (encadrés en jaune — techniquement des entrées, mais réglables par l'humain).
-      État de la lampe et voyant : <b>données PRODUITES</b> (les décisions du programme). Le seuil vaut <b>30</b> ;
+      État de la lampe et voyant : <b>données PRODUITES</b> (les décisions du programme). Le seuil vaut <b>30 lux</b> ;
       la lampe a <b>3 états</b>. Tu viens d'établir la « carte d'identité » du programme — c'est exactement 5e_C6.1.</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> un programme UTILISE des données (capteurs + paramètres) et en PRODUIT (ordres aux actionneurs). Les paramètres sont les réglages encadrés que l'on peut modifier sans réécrire le programme.</div>
@@ -714,19 +718,19 @@ select.ko,input.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(
       <h4>d) Chaque étape a sa forme — l'algorigramme du lampadaire</h4>
       <p>Un algorithme se DESSINE aussi. Dans un algorigramme, chaque famille d'étapes a sa forme&nbsp;: associe.</p>
       <div class="assoc"><label for="ag1">« Mesurer la luminosité ambiante » se dessine avec…</label><select id="ag1"><option value="">— choisir —</option><option>▭ un rectangle (traitement : entrée de la donnée)</option><option>◇ un losange (décision)</option><option>⬭ une ellipse (début/fin)</option></select></div>
-      <div class="assoc"><label for="ag2">« SI la luminosité est inférieure à 30… » se dessine avec…</label><select id="ag2"><option value="">— choisir —</option><option>◇ un losange (décision : une question, deux sorties OUI/NON)</option><option>▭ un rectangle (traitement)</option><option>⬭ une ellipse (début/fin)</option></select></div>
+      <div class="assoc"><label for="ag2">« SI la luminosité est inférieure à 30 lux… » se dessine avec…</label><select id="ag2"><option value="">— choisir —</option><option>◇ un losange (décision : une question, deux sorties OUI/NON)</option><option>▭ un rectangle (traitement)</option><option>⬭ une ellipse (début/fin)</option></select></div>
       <div class="assoc"><label for="ag3">« Allumer la lampe en veille » se dessine avec…</label><select id="ag3"><option value="">— choisir —</option><option>▭ un rectangle (action commandée à l'actionneur)</option><option>◇ un losange (décision)</option><option>⬭ une ellipse (début/fin)</option></select></div>
       <div class="assoc"><label for="ag4">« Recommencer depuis la mesure » se dessine avec…</label><select id="ag4"><option value="">— choisir —</option><option>↺ une flèche qui REMONTE vers la mesure (la boucle)</option><option>⬭ une ellipse FIN (le programme s'arrête)</option><option>◇ un losange de plus</option></select></div>
       <button class="btn small" data-check="5" type="button">✅ Vérifier les formes</button>
       <p class="feedback" id="fb5" role="status"></p>
       <details class="correction"><summary>📖 Correction bloc par bloc</summary>
-        <p><b>Mesurer</b> → ▭ rectangle&nbsp;: c'est l'ENTRÉE de l'information dans le programme. <b>SI luminosité &lt; 30</b> → ◇ losange&nbsp;: une décision a toujours DEUX sorties (OUI/NON) — jamais une seule. <b>Allumer la veille</b> → ▭ rectangle&nbsp;: la SORTIE, l'ordre donné à l'actionneur. <b>Recommencer</b> → ↺ la flèche qui remonte&nbsp;: un lampadaire ne s'arrête jamais, son algorigramme n'a pas d'ellipse FIN — c'est la boucle qui surveille en continu. Le programme par blocs de l'activité 1 et cet algorigramme disent LA MÊME CHOSE en deux langages.</p>
+        <p><b>Mesurer</b> → ▭ rectangle&nbsp;: c'est l'ENTRÉE de l'information dans le programme. <b>SI luminosité &lt; 30 lux</b> → ◇ losange&nbsp;: une décision a toujours DEUX sorties (OUI/NON) — jamais une seule. <b>Allumer la veille</b> → ▭ rectangle&nbsp;: la SORTIE, l'ordre donné à l'actionneur. <b>Recommencer</b> → ↺ la flèche qui remonte&nbsp;: un lampadaire ne s'arrête jamais, son algorigramme n'a pas d'ellipse FIN — c'est la boucle qui surveille en continu. Le programme par blocs de l'activité 1 et cet algorigramme disent LA MÊME CHOSE en deux langages.</p>
       </details>
     </div>
     <div class="exo">
       <h4>a) Je remets l'algorithme dans l'ordre</h4>
       <div class="assoc"><label for="o2_a">« Mesurer la luminosité ambiante » — étape n°</label><select id="o2_a"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="o2_b">« Si la luminosité est inférieure à 30, considérer qu'il fait nuit » — étape n°</label><select id="o2_b"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="o2_b">« Si la luminosité est inférieure à 30 lux, considérer qu'il fait nuit » — étape n°</label><select id="o2_b"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
       <div class="assoc"><label for="o2_c">« Si nuit ET passage détecté : pleine puissance pendant 5 secondes » — étape n°</label><select id="o2_c"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
       <div class="assoc"><label for="o2_d">« Sinon, s'il fait nuit : mettre en veille à 30 % » — étape n°</label><select id="o2_d"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
       <div class="assoc"><label for="o2_e">« Sinon : éteindre la lampe » — étape n°</label><select id="o2_e"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
@@ -771,17 +775,18 @@ select.ko,input.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(
       <object data="Images/parametres_et_effets.svg" type="image/svg+xml" aria-label="Effets de la modification des paramètres seuil et durée" style="width:100%"></object>
       <figcaption>Chaque paramètre est un compromis : service rendu contre énergie consommée.</figcaption>
     </figure>
-    <div class="consigne"><b>Consigne :</b> a) au simulateur, observe D'ABORD le comportement avec les réglages d'origine (seuil 30) ; b) MISSION MAIRIE : le soir nuageux, la luminosité vaut 45 % et le parking doit déjà être éclairé — règle SEUIL_NUIT pour y parvenir et vérifie avec la luminosité à 45 ; c) réponds aux prédictions.</div>
+    <div class="consigne"><b>Consigne :</b> a) au simulateur, observe D'ABORD le comportement avec les réglages d'origine (seuil 30 lux) ; b) MISSION MAIRIE : le soir nuageux, la luminosité vaut 45 lux et le parking doit déjà être éclairé — règle SEUIL_NUIT pour y parvenir et vérifie avec la luminosité à 45 lux ; c) réponds aux prédictions.</div>
     <div class="exo">
       <h4>a) et b) Le simulateur paramétrable</h4>
       <div class="simu" style="margin:10px 0">
         <div>
-          <label for="pSeuil"><b>🎛 SEUIL_NUIT :</b> <b id="pSeuilVal">30</b> %</label>
+          <label for="pSeuil"><b>🎛 SEUIL_NUIT :</b> <b id="pSeuilVal">30</b> lux</label>
           <input type="range" id="pSeuil" min="10" max="60" step="1" value="30">
           <label for="pDuree"><b>⏲ DURÉE pleine puissance :</b> <b id="pDureeVal">5</b> s</label>
           <input type="range" id="pDuree" min="2" max="10" step="1" value="5">
-          <label for="simLum"><b>☀ Luminosité ambiante :</b> <b id="simLumVal">80</b> %</label>
+          <label for="simLum"><b>☀ Luminosité ambiante :</b> <b id="simLumVal">80</b> lux</label>
           <input type="range" id="simLum" min="0" max="100" step="1" value="80">
+          <p style="font-size:.85em;color:var(--sub);margin:2px 0 8px">Le curseur montre le crépuscule&nbsp;: 0 lux, nuit noire&nbsp;; 100 lux, début de journée.</p>
           <button class="btn small" id="btnPassage" type="button">🚶 Simuler un passage</button>
           <p style="font-size:.85em;color:var(--sub)">Le passage dure le temps du paramètre DURÉE — observe le compte à rebours.</p>
         </div>
@@ -793,16 +798,16 @@ select.ko,input.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(
         </div>
       </div>
       <h4>c) Mes prédictions de concepteur</h4>
-      <div class="assoc"><label for="q3_1">Si on AUGMENTE SEUIL_NUIT (30 → 45), le lampadaire…</label><select id="q3_1"><option value="">— choisir —</option><option>considère qu'il fait nuit plus tôt : il s'allume plus tôt le soir, mais consomme plus</option><option>s'allume plus tard le soir</option><option>ne change rien du tout</option><option>s'éteint définitivement</option></select></div>
+      <div class="assoc"><label for="q3_1">Si on AUGMENTE SEUIL_NUIT (30 → 45 lux), le lampadaire…</label><select id="q3_1"><option value="">— choisir —</option><option>considère qu'il fait nuit plus tôt : il s'allume plus tôt le soir, mais consomme plus</option><option>s'allume plus tard le soir</option><option>ne change rien du tout</option><option>s'éteint définitivement</option></select></div>
       <div class="assoc"><label for="q3_2">Si on AUGMENTE la DURÉE (5 s → 10 s), chaque passage…</label><select id="q3_2"><option value="">— choisir —</option><option>éclaire plus longtemps mais consomme environ deux fois plus d'énergie</option><option>consomme moins d'énergie</option><option>rend le lampadaire plus lumineux</option><option>casse le détecteur</option></select></div>
       <div class="assoc"><label for="q3_3">Modifier un paramètre…</label><select id="q3_3"><option value="">— choisir —</option><option>ne change pas la structure du programme, mais change son comportement</option><option>réécrit tout le programme</option><option>supprime le programme</option><option>n'a jamais aucun effet</option></select></div>
     </div>
-    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Pour la mission : à 45 % de luminosité, le lampadaire doit dire « nuit ». Or il dit « nuit » quand luminosité &lt; SEUIL_NUIT. Quel seuil choisir pour que 45 soit « en dessous » ?</p></details>
-    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Il faut SEUIL_NUIT &gt; 45 (par exemple 46 ou plus). Vérifie ensuite en réglant la luminosité sur 45 : l'écran doit passer en veille. N'oublie pas de tester AUSSI le réglage d'origine (30) avant : on compare toujours « avant / après ».</p></details>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Pour la mission : à 45 lux, le lampadaire doit dire « nuit ». Or il dit « nuit » quand luminosité &lt; SEUIL_NUIT. Quel seuil choisir pour que 45 lux soit « en dessous » ?</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Il faut SEUIL_NUIT &gt; 45 lux (par exemple 46 lux ou plus). Vérifie ensuite en réglant la luminosité sur 45 lux : l'écran doit passer en veille. N'oublie pas de tester AUSSI le réglage d'origine (30 lux) avant : on compare toujours « avant / après ».</p></details>
     <button class="btn small" data-check="3" type="button">✅ Vérifier mes réponses</button>
     <p class="feedback" id="fb3" role="status"></p>
     <details class="correction"><summary>📖 Correction complète</summary>
-      <p>Mission : SEUIL_NUIT ≥ 46 → à 45 % de luminosité, le lampadaire passe en veille : le parking est éclairé dès le
+      <p>Mission : SEUIL_NUIT ≥ 46 lux → à 45 lux, le lampadaire passe en veille : le parking est éclairé dès le
       soir nuageux. Prédictions : seuil ⬆ = allumage plus tôt + consommation en hausse ; durée ⬆ = confort en hausse mais
       ≈ 2× plus d'énergie par passage ; un paramètre modifié change le COMPORTEMENT, pas la STRUCTURE. Et la règle d'or :
       on PRÉDIT, on MODIFIE, on VÉRIFIE — jamais de réglage au hasard (5e_C6.3).</p>
@@ -950,10 +955,10 @@ function majSim(tracer){
   if(tracer && seuil===30){ window.__exp["defaut"] = true; }
   if(tracer && seuil>45 && lum===45 && nuit){
     window.__exp["mission"] = seuil;
-    $("simMission").textContent = "Mission mairie : ✅ vérifiée (seuil " + seuil + ", éclairé à 45 %)";
+    $("simMission").textContent = "Mission mairie : ✅ vérifiée (seuil " + seuil + " lux, éclairé à 45 lux)";
     $("simMission").style.color = "#81fba1";
   } else if(!window.__exp["mission"]){
-    $("simMission").textContent = "Mission mairie : non vérifiée (seuil > 45 puis luminosité à 45)";
+    $("simMission").textContent = "Mission mairie : non vérifiée (seuil > 45 lux, puis luminosité à 45 lux)";
   }
   save(false);
 }
@@ -993,7 +998,7 @@ const CHECKS = {
     Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
     const e=window.__exp||{};
     const expOk = e["defaut"] && e["mission"];
-    return {score:ok,total:3,extra:expOk?"":" Fais VRAIMENT la mission au simulateur : teste le réglage d'origine (seuil 30), puis règle le seuil au-dessus de 45 et vérifie avec la luminosité à 45.",valide:ok===3&&expOk};
+    return {score:ok,total:3,extra:expOk?"":" Fais VRAIMENT la mission au simulateur : teste le réglage d'origine (seuil 30 lux), puis règle le seuil au-dessus de 45 lux et vérifie avec la luminosité à 45 lux.",valide:ok===3&&expOk};
   },
   4: function(){
     let ok=0;

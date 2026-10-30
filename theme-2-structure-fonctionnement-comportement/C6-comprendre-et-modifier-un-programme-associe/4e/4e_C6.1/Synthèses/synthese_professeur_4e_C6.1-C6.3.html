@@ -54,7 +54,7 @@
 <ul>
   <li><b>Périmètre du lot</b> : 4e_C6.1 (analyser les données → déduire les modifications) et 4e_C6.3 (tester/valider). <b>4e_C6.2 n'est pas traité ici</b> : il est couvert par la séquence modèle existante « Jardin connecté — arrosage automatique » (compléter un programme), référencée au bilan et non modifiée.</li>
   <li><b>Objet-fil bouclé</b> : structure (C4, LOT 09) → programme (C6.2) → dépannage matériel (C5, LOT 10) → ajustement par les données (ce lot). La panne du LOT 10 (« capteur qui ment ») a innocenté le matériel : les anomalies restantes sont logicielles — la frontière matériel/logiciel devient explicite.</li>
-  <li><b>Progressivité C6 dans le cycle</b> : 5e = lire et écrire le programme du lampadaire (LOT 07) ; 4e = le corriger À PARTIR DES DONNÉES avec méthode de validation ; 3e = programmer l'alerte multi-conditions (LOT 04). L'hystérésis introduite ici est réinvestie au transfert (lampadaire) et préfigure les régulations de 3e.</li>
+  <li><b>Progressivité C6 dans le cycle</b> : 5e = lire et écrire le programme du lampadaire (LOT 07) ; 4e = le corriger À PARTIR DES DONNÉES avec méthode de validation ; 3e = programmer l'alerte multi-conditions (LOT 04). L'hystérésis introduite ici est réinvestie au transfert (un lampadaire de parking) et préfigure les régulations de 3e.</li>
   <li><b>Verrou expérientiel</b> : le vérificateur de l'activité 3 exige les 4 scénarios joués au banc (`__exp.scen`) — la validation s'ÉPROUVE.</li>
 </ul>
 </div>
@@ -65,7 +65,7 @@
   <li><b>Act. 1</b> — anomalies : battement (47 démarrages, cause : seuil unique + mesure qui vibre) et arrosage 13 h (cause : aucune condition horaire) ; jeudi 22 h = NORMAL (référence).</li>
   <li><b>Act. 2</b> — algorithme corrigé : SI humidité &lt; 35 % ET (heure &lt; 8 h OU heure &gt; 17 h) ALORS pompe ON · SI humidité &gt; 45 % ALORS pompe OFF · entre les deux : état conservé. Écart 35/45 &gt; vibration (±1-2 %) ; condition horaire sur le démarrage SEULEMENT. 30 % à 13 h → attendre 17 h.</li>
   <li><b>Act. 3</b> — verdicts : S1 DÉMARRE · S2 RESTE ON (hystérésis) · S3 S'ARRÊTE · S4 RESTE OFF (plage). Sauvegarde = retour arrière possible ; non-régression = les scénarios 1 et 3 rejouent l'existant.</li>
-  <li><b>Act. 4</b> (transfert lampadaire) — seuil unique → clignotement ; hystérésis 20/40 lux ; sauvegarde + scénarios 19/30/41 lux ; validation = crépuscule réel stable + non-régression.</li>
+  <li><b>Act. 4</b> (transfert à un lampadaire de parking, réglé en lux comme celui de 5e : capteur étalonné, alors que le capteur Grove de la classe donne une valeur relative ; encadré dans l'activité) — seuil unique → clignotement ; hystérésis 20/40 lux ; sauvegarde + scénarios 19/30/41 lux ; validation = crépuscule réel stable + non-régression.</li>
 </ul>
 </div>
 

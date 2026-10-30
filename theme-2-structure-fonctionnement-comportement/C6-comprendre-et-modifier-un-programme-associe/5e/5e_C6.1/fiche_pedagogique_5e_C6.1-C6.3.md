@@ -32,7 +32,7 @@
 
 ## Déroulé
 
-S1 : carte d'identité du programme par blocs (données utilisées / produites / paramètres, lecture fine). S2 : traduction en algorithme en langage naturel (6 étapes à ordonner, mots-clés SI/ET/SINON, recopie au cahier). S3 : simulateur paramétrable (SEUIL_NUIT, DURÉE, luminosité) — mission mairie (seuil > 45 vérifié à 45 % de luminosité, verrou expérientiel exigeant AUSSI le test du réglage d'origine) + prédictions d'effets + réinvestissement (arrosage) + bilan + QCM.
+S1 : carte d'identité du programme par blocs (données utilisées / produites / paramètres, lecture fine). S2 : traduction en algorithme en langage naturel (6 étapes à ordonner, mots-clés SI/ET/SINON, recopie au cahier). S3 : simulateur paramétrable (SEUIL_NUIT, DURÉE, luminosité en lux, de 0 à 100 lux : le crépuscule) — mission mairie (seuil > 45 lux vérifié à 45 lux, verrou expérientiel exigeant AUSSI le test du réglage d'origine) + prédictions d'effets + réinvestissement (arrosage) + bilan + QCM.
 
 ## Outils, versions, sécurité
 

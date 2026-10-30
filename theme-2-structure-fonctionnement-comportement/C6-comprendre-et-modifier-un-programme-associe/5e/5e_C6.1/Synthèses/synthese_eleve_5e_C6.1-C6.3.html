@@ -179,8 +179,8 @@
   <h2 id="partie-1" style="margin-top:0">1. Quelle est la carte d'identité du programme&nbsp;?</h2>
   <p>Avant de toucher au programme du lampadaire, tu le lis. Trois questions suffisent à dresser sa carte d'identité&nbsp;:</p>
   <div class="chaine">
-    <div><b class="e">Que lit-il&nbsp;? → les entrées</b>La <strong>luminosité</strong>, mesurée par le capteur de lumière.<br>Le <strong>passage</strong>, repéré par le détecteur.</div>
-    <div><b class="p">Que règle-t-on&nbsp;? → les paramètres</b><code>SEUIL_NUIT = 30</code><br><code>DURÉE = 5 s</code> (5 secondes de pleine lumière)</div>
+    <div><b class="e">Que lit-il&nbsp;? → les entrées</b>La <strong>luminosité</strong>, mesurée en lux par le capteur de lumière.<br>Le <strong>passage</strong>, repéré par le détecteur.</div>
+    <div><b class="p">Que règle-t-on&nbsp;? → les paramètres</b><code>SEUIL_NUIT = 30</code> (30 lux)<br><code>DURÉE = 5 s</code> (5 secondes de pleine lumière)</div>
     <div><b class="s">Que décide-t-il&nbsp;? → les sorties</b>L'<strong>état de la lampe</strong>&nbsp;: éteinte, en veille ou à pleine puissance.<br>Le <strong>voyant</strong> du coffret.</div>
   </div>
   <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un programme <b class="e">utilise</b> des données&nbsp;: celles des capteurs et
@@ -197,7 +197,7 @@
   <p>Pour la mairie, tu traduis les blocs en phrases, de haut en bas. Chaque étape a aussi sa forme d'algorigramme&nbsp;:</p>
   <div class="chaine etapes six">
     <div><b>1. ▭ Mesurer</b>Mesurer la luminosité.</div>
-    <div><b>2. ◇ SI</b>SI la luminosité est inférieure à 30, il fait nuit.</div>
+    <div><b>2. ◇ SI</b>SI la luminosité est inférieure à 30 lux, il fait nuit.</div>
     <div><b>3. ◇ SI nuit ET passage</b>Pleine puissance pendant 5 secondes.</div>
     <div><b>4. ◇ SINON, SI nuit</b>Veille à 30&nbsp;% de la puissance.</div>
     <div><b>5. ▭ SINON</b>Éteindre la lampe.</div>
@@ -216,8 +216,8 @@
   <h2 id="partie-3" style="margin-top:0">3. Que change un paramètre qu'on règle&nbsp;?</h2>
   <p>Le soir, le parking reste sombre trop longtemps, et le gardien veut une pleine puissance plus longue. Tu règles des nombres&nbsp;:</p>
   <div class="chaine">
-    <div><b class="p">SEUIL_NUIT&nbsp;: 30 → 45</b>Le programme voit la nuit plus tôt&nbsp;: la lampe s'allume plus tôt, et consomme plus.</div>
-    <div><b class="p">SEUIL_NUIT&nbsp;: 30 → 15</b>On économise de l'énergie, mais le parking reste sombre plus longtemps.</div>
+    <div><b class="p">SEUIL_NUIT&nbsp;: 30 → 45 lux</b>Le programme voit la nuit plus tôt&nbsp;: la lampe s'allume plus tôt, et consomme plus.</div>
+    <div><b class="p">SEUIL_NUIT&nbsp;: 30 → 15 lux</b>On économise de l'énergie, mais le parking reste sombre plus longtemps.</div>
     <div><b class="p">DURÉE&nbsp;: 5 → 10 s</b>Chaque passage reste éclairé 10 secondes, pour environ deux fois plus d'énergie.</div>
   </div>
   <p class="retenir">🧠 <b>À retenir</b>&nbsp;: modifier un <b class="p">paramètre</b> change le <b>comportement</b> du
@@ -231,12 +231,12 @@
 <div class="bloc faire">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-4" style="margin-top:0">4. Comment savoir si un réglage est le bon&nbsp;?</h2>
-  <p>La mission de la mairie&nbsp;: un soir nuageux, la luminosité vaut 45&nbsp;%, et le parking doit déjà être éclairé.</p>
+  <p>La mission de la mairie&nbsp;: un soir nuageux, la luminosité vaut 45 lux, et le parking doit déjà être éclairé.</p>
   <div class="chaine etapes">
-    <div><b>1. Tester l'origine</b>Seuil à 30, luminosité à 45&nbsp;%&nbsp;: la lampe reste éteinte.</div>
-    <div><b>2. Prédire</b>Il fait «&nbsp;nuit&nbsp;» sous le seuil&nbsp;: il faut un seuil au-dessus de 45.</div>
+    <div><b>1. Tester l'origine</b>Seuil à 30 lux, luminosité à 45 lux&nbsp;: la lampe reste éteinte.</div>
+    <div><b>2. Prédire</b>Il fait «&nbsp;nuit&nbsp;» sous le seuil&nbsp;: il faut un seuil au-dessus de 45 lux.</div>
     <div><b>3. Modifier</b><code>SEUIL_NUIT = 46</code>, ou plus.</div>
-    <div><b>4. Vérifier</b>Au simulateur, à 45&nbsp;%, la lampe passe en veille.</div>
+    <div><b>4. Vérifier</b>Au simulateur, à 45 lux, la lampe passe en veille.</div>
   </div>
   <p class="retenir">🧠 <b>À retenir</b>&nbsp;: avant de régler, tu <b>prédis</b> l'effet. Après, tu le <b>vérifies</b>, en
   comparant avec le réglage d'origine. Un paramètre se remet à sa <b>valeur d'avant</b> si le réglage déplaît.</p>
@@ -273,6 +273,7 @@
     <div><dt>actionneur <span class="en">— actuator</span></dt><dd>le composant qui agit, comme la lampe.</dd></div>
     <div><dt>paramètre <span class="en">— parameter, setting</span></dt><dd>une valeur qu'on règle sans réécrire le programme.</dd></div>
     <div><dt>seuil <span class="en">— threshold</span></dt><dd>la valeur à laquelle on compare une mesure pour décider.</dd></div>
+    <div><dt>lux <span class="en">— lux</span></dt><dd>l'unité de l'éclairement, la lumière reçue&nbsp;: 10 à 50 lux au crépuscule.</dd></div>
     <div><dt>algorithme <span class="en">— algorithm</span></dt><dd>les étapes d'un programme, dans l'ordre.</dd></div>
     <div><dt>langage naturel <span class="en">— natural language</span></dt><dd>le français de tous les jours, sans blocs ni code.</dd></div>
     <div><dt>algorigramme <span class="en">— flowchart</span></dt><dd>l'algorithme dessiné&nbsp;: un losange pour une question, un rectangle pour une action.</dd></div>
