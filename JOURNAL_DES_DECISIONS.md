@@ -26767,3 +26767,26 @@ représentations, `generer_les_quatre_pages.py` de la station, `generer_lexique.
 - **Anglais** : « fonction d'usage » se dit *function of use* dans l'atelier FAST, *use function* ailleurs ;
   « caractéristique » se dit *feature* dans la bête à cornes, *characteristic* ailleurs.
 - **`MANIFESTE_LOT_3e_C1.1.json`** liste deux fichiers qui n'existent plus.
+
+---
+
+## 30/10/2026 — Écarts relevés : ce que Pascal a tranché (thèmes 2 et 3)
+
+*Réponses de Pascal du 30/10/2026 aux questions laissées par l'entrée « Les écarts relevés pendant la réécriture
+des synthèses, corrigés ».*
+
+- **La patère (5e_C8.1 et 5e_C8.2)** : Pascal choisit la « phrase-pont ». 5e_C8.1 dit maintenant que le sac est
+  « pesé cette fois au secrétariat : 12 kg, et non les 8 kg estimés en 5e_C8.2 ». Chaque séquence garde ses nombres et
+  son piège : les cinq matériaux passent en 5e_C8.2, le banc et la simulation se contredisent en 5e_C8.1.
+- **Le lampadaire (5e et 4e)** : la 5e travaillait en %, la 4e en lux, et la 4e prêtait 30 lux au « lampadaire de 5e ».
+  Pascal tranche : **les lux partout**. En 5e, le simulateur joue un **capteur étalonné** qui mesure l'éclairement en
+  lux (seuil 30 lux, mission 45 lux), et son échelle est honnête : elle couvre le crépuscule, pas le plein soleil. Un
+  encadré dit, en 5e comme en 4e, que le capteur Grove de la classe (une photorésistance) donne seulement une valeur
+  relative, sans unité. La 4e dit « un lampadaire de parking ». J'avais proposé de garder les % en 5e, puisque le
+  capteur de la classe ne mesure pas des lux ; c'est l'encadré qui le dit maintenant.
+- **SOS serre (4e_C4.7)** :
+  - la synthèse élève ne garde que les symptômes de chaque famille de panne. Les causes des fichiers A, B et C, qui
+    servent d'évaluation, en sont retirées ;
+  - le masque est un cas de panne d'adressage, pas une troisième famille. Il y a deux familles partout : adressage et
+    liaison ;
+  - le masque fait partie du réglage d'adressage de l'appareil, mais ce n'est pas l'adresse.
