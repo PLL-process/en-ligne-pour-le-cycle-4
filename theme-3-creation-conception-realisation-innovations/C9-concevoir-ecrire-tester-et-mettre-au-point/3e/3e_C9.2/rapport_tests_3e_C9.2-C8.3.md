@@ -256,3 +256,18 @@ des tests écrits avant la livraison :
    Réécrite pour porter un diagnostic exact et vérifiable (58 → 186, niveau bloqué
    à 0 sur toute la plage 63-117, niveaux 2 et 3 corrects), ce qui isole le défaut
    sur le seul test « ≥ 63 ».
+
+## Reprise du 31/10/2026 — le lien vers les quatre pages replié dans le volet « Rappel » (règle d'or n°311)
+
+Sur la page tout-en-un, le bloc « 📚 Cette page contient la séquence entière … les quatre pages » restait visible sous le titre à
+toutes les séances. Il fait désormais partie de l'ouverture : dans le volet `details.rappel-ouverture`, visible à la séance 1,
+replié dès la séance 2, jamais supprimé ; il ne s'imprime pas. Sur les pages 2 à 4, le lien miroir « 📄 La séquence entière en une
+seule page » se replie dans un `details` fermé (la page 1 le garde visible) : `generer_les_quatre_pages.py`, pages régénérées.
+
+- `node tests_regle_311_3e_C9.2.mjs` : **34 / 34** (`#vers-quatre-pages` n'est plus déclaré parmi les outils hors volet).
+- `node tests_3e_C9.2-C8.3.mjs` : **167 / 167** (le compte des quatre liens tient, visibles ou repliés).
+- `controle_squelette.mjs` sur les cinq pages : 0 refus, D6 à 0. `controle_impression.mjs` : 0 page refusée ; `controle_impression_papier.py` à jour.
+- Contrôles Python verts : liens, hiérarchie, règles visibles, unités, sigles, compétences, navigation des séances.
+- Regardé dans Chromium : séance 1 (bloc visible dans le volet ouvert), séance 2 et 8 (replié), page 2 à 390 px.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
