@@ -113,3 +113,23 @@ Regardé à l'œil, captures dans `_generation/captures_animations/` : les sept 
 les quatre postes du banc pendant puis à la fin du test. Aucune étape de la situation ne montre le résultat d'un test.
 
 **Non exécuté** : l'écoute des sept prises (Pascal) ; Safari, iPad, téléphone réel.
+
+## Reprise du 31/10/2026 — la séquence passe à onglets (pilote des 23 séquences sans onglets)
+
+La page était d'un seul tenant : tout visible, pas de volet possible. Elle a maintenant trois séances à onglets (squelette
+n°306) et le volet « 📖 Rappel » dès la séance 2 (n°311) : séance 1 = ouverture + activités 0 et 1 ; séance 2 = activité 2 ;
+séance 3 = activité 3, réinvestissement, synthèse, Bonus, bilan, QCM. Chaque séance a sa question directrice et son bouton
+vers la suivante (n°101) ; l'onglet en cours est mémorisé. La clôture est complétée : un corrigé replié par défi du Bonus
+(n°86), le retour à l'hypothèse, « Comment j'ai travaillé » et « Je me positionne » sur 4e_C8.1 à C8.3 aux quatre niveaux
+du livret (n°301). Le sélecteur de parcours tient sur deux lignes à 390 px.
+
+- `node tests_regle_311_4e_C8.1.mjs` (relais du thème 3 → banc commun) : **34 / 34** — captures jointes à la PR.
+- `node tests_4e_C8.mjs` : **53 / 53**, deux pas adaptés (les durées se lisent dans toute la page, pas seulement à l'écran ;
+  l'activité 2 s'ouvre par son onglet).
+- `controle_squelette.mjs` : 0 défaut (D1 à D6), aucun « à rédiger », aucun signalement.
+- `verif_regles_audit.py` : 1 ✘ déjà présent avant (n°300 : 25 questions par liste déroulante) — hors périmètre de ce pilote.
+- Verts : `controle_impression_papier` (3 fiches, 9 pages, une séance par fiche), `controle_impression` (0 page refusée),
+  navigation des séances, hiérarchie, règles visibles, unités, sigles, compétences, liens, mode essentiel, verrous, hors ligne.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle. Non fait : le lexique par séance (le lexique du lot
+n'a pas d'ancres `#seance-sN`) ; la conversion des listes déroulantes en boutons radio (n°300).

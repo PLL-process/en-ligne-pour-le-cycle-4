@@ -84,6 +84,36 @@ details.correction>div{padding:0 14px 12px}
   .progress-bar{height:10px;border-radius:6px;background:var(--panel2,#102a55);
     border:1px solid var(--border);overflow:hidden;margin-top:6px}
   .progress-bar>div{height:100%;width:0;background:var(--ok);transition:width .3s}
+  /* ── séances à onglets (squelette n°306) ── */
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit;line-height:1.3}
+  .seance-tab small{display:block;font-weight:400;font-size:.9em;color:var(--sub)}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab.active small{color:#e4eaf5}
+  .seance-tab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .seance-tete h2{margin-top:0}
+  .question-directrice{color:var(--hl);font-weight:600;margin:.4em 0}
+  .page-suivante{max-width:940px;margin:22px auto 8px;text-align:right}
+  @media print{.page-suivante{display:none}}
+  /* ── règle d'or n°311 : le volet « Rappel » n'est pas une carte details ; son bouton n'apparaît qu'à partir de la séance 2 ── */
+  .rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}
+  .rappel-ouverture>summary{display:none}
+  .rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+  .rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+  @media print{.rappel-ouverture>summary{display:none!important}}
+  @media (max-width:480px){   /* n°311 : à 390 px, le sélecteur tient sur deux lignes de boutons, sous son intitulé */
+    .choix-parcours-boutons .parcours-label{flex:1 1 100%;text-align:center}
+    .choix-parcours-boutons{align-items:flex-start}
+    .choix-parcours-boutons .parcours-btn{flex:1 1 42%;box-sizing:border-box;min-height:42px;display:flex;align-items:center;justify-content:center;padding:6px;font-size:.84em;white-space:nowrap}
+  }
+  .positionnement{margin:8px 0;border:1px solid var(--border);border-radius:10px;padding:8px 12px}
+  .positionnement legend{font-size:.9em;color:var(--sub);padding:0 6px}
+  .positionnement label{display:inline-block;margin-right:14px}
+  .positionnement input[type=radio]{width:auto}
+  .rappel-hyp{margin:8px 0 12px;padding:10px 12px;border-left:4px solid var(--hl);background:rgba(97,218,251,.06);border-radius:0 8px 8px 0}
   @media print{ .choix-parcours-boutons,.toolbar{display:none} }
 
 
@@ -750,6 +780,39 @@ details.correction>div{padding:0 14px 12px}
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="qcm_4e_C8_jardin-validation.html">🧠 QCM</a><a href="lexique_4e_C8.1.html">📖 Lexique</a></nav>
 
 <h1>🧪 Jardin connecté — Valider une solution</h1>
+<div class="subtitle">🎯 Ta mission : prouver, protocole de test à l'appui, que le support du capteur mérite d'être généralisé aux jardins de New York — ou dire ce qu'il faut améliorer d'abord.</div>
+
+<div class="identite" id="identite">
+<label>Nom&nbsp;: <input id="eleveNom" aria-label="Nom" autocomplete="family-name"></label>
+<label>Prénom&nbsp;: <input id="elevePrenom" aria-label="Prénom" autocomplete="given-name"></label>
+<label>Classe&nbsp;: <input id="eleveClasse" aria-label="Classe"></label>
+<span class="saved-note" id="savedNote"></span>
+</div>
+
+<div class="toolbar">
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+  <button class="btn ghost" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+</div>
+
+<div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
+  <span class="parcours-label">🔀 Mon parcours :</span>
+  <button class="btn ghost parcours-btn" data-choix="a" aria-pressed="false">🅰 Avec le prototype</button>
+  <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 Au banc virtuel</button>
+  <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sur papier</button>
+  <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
+</div>
+
+<p class="saved-note" id="parcoursNote" role="status" aria-live="polite" style="text-align:center">Parcours affiché : <b>tous</b>.</p>
+
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque les corrections et les compléments : il ne reste que les consignes et les exercices.</p>
+
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
+
+<div class="badges"><span class="badge">4e</span><span class="badge">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span><span class="badge" title="Programme 2024 — 4e_C8.1 : Paramétrer une simulation fournie pour valider la tenue mécanique d'un matériau.&#10;4e_C8.2 : Proposer un protocole de test pour valider la tenue mécanique d'un matériau.&#10;4e_C8.3 : Proposer un protocole de test pour valider le comportement et les performances d'un objet technique.">4e_C8.1 · C8.2 · C8.3</span><span class="badge" title="Domaines du socle commun travaillés : D2 Les méthodes et outils pour apprendre · D3 La formation de la personne et du citoyen · D4 Les systèmes naturels et les systèmes techniques · D5 Les représentations du monde et l’activité humaine.">Socle : D2 · D3 · D4 · D5</span><span class="badge" title="Ancrage : New York — school garden / rooftop.">New York</span><span class="badge" title="CRCN 1.3 Traiter des données — niveaux 2 à 3.&#10;Le cadre : « Appliquer des traitements à des données pour les analyser et les interpréter. »&#10;Ici : tu ranges les résultats de tes tests dans un tableau — attendu, observé, conforme — et tu en tires une décision : validée, à améliorer ou rejetée.&#10;&#10;CRCN 5.1 Résoudre des problèmes techniques — niveau 2.&#10;Le cadre : « Résoudre des problèmes techniques pour garantir et rétablir le bon fonctionnement d’un environnement informatique. »&#10;Ici : l’attache a cassé au gel : tu proposes une cause probable et le test qui la départage d’une autre.">🎯 CRCN 1.3 Traiter des données (Niv. 2-3) · 5.1 Résoudre des problèmes techniques (Niv. 2)</span><span class="badge" title="Durée : 3 séances de 55 min.">⏱ 3 séances de 55 min</span></div>
+
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
   <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
   <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
@@ -769,75 +832,6 @@ details.correction>div{padding:0 14px 12px}
   </ul>
   <p class="change"><b>Dans cette séquence&nbsp;:</b> « ça a l'air de marcher » ne suffit pas. Tu vas <b>écrire un protocole</b> avant d'essayer, <b>mesurer</b> plutôt que constater, et accepter que le résultat contredise ce que tu espérais. C'est la différence entre vérifier et se rassurer.</p>
   <p class="filet">Un mot à garder en tête : valider, c'est chercher à prouver qu'on s'est trompé, et ne pas y parvenir.</p>
-</section>
-
-<div class="subtitle">Protocole de tests avant de généraliser — New York</div>
-<div class="badges"><span class="badge">4e</span><span class="badge">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span><span class="badge" title="Programme 2024 — 4e_C8.1 : Paramétrer une simulation fournie pour valider la tenue mécanique d'un matériau.&#10;4e_C8.2 : Proposer un protocole de test pour valider la tenue mécanique d'un matériau.&#10;4e_C8.3 : Proposer un protocole de test pour valider le comportement et les performances d'un objet technique.">4e_C8.1 · C8.2 · C8.3</span><span class="badge" title="Domaines du socle commun travaillés : D2 Les méthodes et outils pour apprendre · D3 La formation de la personne et du citoyen · D4 Les systèmes naturels et les systèmes techniques · D5 Les représentations du monde et l’activité humaine.">Socle : D2 · D3 · D4 · D5</span><span class="badge" title="Ancrage : New York — school garden / rooftop.">New York</span><span class="badge" title="CRCN 1.3 Traiter des données — niveaux 2 à 3.&#10;Le cadre : « Appliquer des traitements à des données pour les analyser et les interpréter. »&#10;Ici : tu ranges les résultats de tes tests dans un tableau — attendu, observé, conforme — et tu en tires une décision : validée, à améliorer ou rejetée.&#10;&#10;CRCN 5.1 Résoudre des problèmes techniques — niveau 2.&#10;Le cadre : « Résoudre des problèmes techniques pour garantir et rétablir le bon fonctionnement d’un environnement informatique. »&#10;Ici : l’attache a cassé au gel : tu proposes une cause probable et le test qui la départage d’une autre.">🎯 CRCN 1.3 Traiter des données (Niv. 2-3) · 5.1 Résoudre des problèmes techniques (Niv. 2)</span><span class="badge" title="Durée : 3 séances de 55 min.">⏱ 3 séances de 55 min</span></div>
-<div class="identite" id="identite">
-<label>Nom&nbsp;: <input id="eleveNom" aria-label="Nom" autocomplete="family-name"></label>
-<label>Prénom&nbsp;: <input id="elevePrenom" aria-label="Prénom" autocomplete="given-name"></label>
-<label>Classe&nbsp;: <input id="eleveClasse" aria-label="Classe"></label>
-<span class="saved-note" id="savedNote"></span>
-</div>
-<div class="toolbar">
-  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
-  <button class="btn ghost" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
-</div>
-<div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
-  <span class="parcours-label">🔀 Mon parcours :</span>
-  <button class="btn ghost parcours-btn" data-choix="a" aria-pressed="false">🅰 Avec le prototype</button>
-  <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 Au banc virtuel</button>
-  <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sur papier</button>
-  <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
-</div>
-<p class="saved-note" id="parcoursNote" role="status" aria-live="polite" style="text-align:center">Parcours affiché : <b>tous</b>.</p>
-<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque les corrections et les compléments : il ne reste que les consignes et les exercices.</p>
-<div class="progress-wrap">
-  <span class="progress-label">Ma progression : <b id="progTxt">0 / 6 activités validées</b></span>
-  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
-</div>
-
-<section class="card" id="billet">
-<h2>🎫 Billet d'entrée — trois questions, sans note</h2>
-<p>Cette séquence prolonge la conception du support (4e_C7). Trois questions pour savoir, toi comme le
-professeur, sur quoi on peut s'appuyer. <b>Elles ne comptent pas dans ta progression et ne sont pas
-notées</b> — « je ne sais pas encore » est une réponse utile.</p>
-<div class="exo">
-  <p><label for="be_1">1. Un prototype, c'est…
-  <select id="be_1"><option value="">— choisir —</option><option>un premier exemplaire fabriqué pour être mis à l'épreuve</option><option>le produit fini, prêt à vendre</option><option>un dessin de l'objet</option><option>je ne sais pas encore</option></select></label></p>
-  <p><label for="be_2">2. En 4e_C7, tu as choisi un matériau. Sur quoi t'es-tu appuyé ?
-  <select id="be_2"><option value="">— choisir —</option><option>des critères nommés, éprouvés au banc météo</option><option>l'aspect du matériau</option><option>ce que le professeur avait choisi</option><option>je ne sais pas encore</option></select></label></p>
-  <p><label for="be_3">3. Pour savoir si un essai est réussi, il faut…
-  <select id="be_3"><option value="">— choisir —</option><option>avoir écrit le résultat attendu AVANT de lancer l'essai</option><option>regarder si ça a l'air de marcher</option><option>refaire l'essai plusieurs fois</option><option>je ne sais pas encore</option></select></label></p>
-  <button class="btn small" id="btnBillet" type="button">Voir où j'en suis</button>
-  <p class="feedback" id="fbBillet" role="status"></p>
-</div>
-</section>
-
-<section class="card" id="taches">
-<h2>🗺 Où j'en suis — les 6 activités de cette séquence</h2>
-<p>Chaque activité validée se colore ici. Rien ne se perd si tu t'arrêtes en route.</p>
-<div class="taches-bandeau" id="tachesBandeau"></div>
-</section>
-
-<section class="card">
-<h2>🔁 Le contrat de la séquence</h2>
-<div class="contrat18">
-<p style="margin:0 0 6px"><b>FAIRE pour comprendre&nbsp;:</b> tu commences par LANCER les tests du banc virtuel (activité 0) — avant toute définition du mot «&nbsp;protocole&nbsp;».</p>
-<p style="margin:0 0 6px"><b>COMPRENDRE&nbsp;:</b> les «&nbsp;À retenir&nbsp;» nomment les concepts&nbsp;: protocole, résultat attendu, conformité, diagnostic.</p>
-<p style="margin:0"><b>REFAIRE pour comprendre encore&nbsp;:</b> tu réinvestis le protocole sur un NOUVEAU critère 100&nbsp;% new-yorkais (gel, vent de canyon…).</p>
-</div>
-</section>
-
-<section class="card">
-<h2>🔀 Trois façons de vivre la séquence</h2>
-<div class="exo">
-<p data-parcours="a">🅰 <b>Avec le prototype</b> : le support construit en 4e_C7 passe réellement à l'épreuve — secousses, arrosoir, congélateur du labo. Les observés du tableau sont <b>les tiens</b>.</p>
-<p data-parcours="b">🅱 <b>Au banc virtuel</b> : le banc de l'activité 0 lance les quatre tests dans la page, sans matériel. C'est le parcours principal, et il fonctionne hors connexion.</p>
-<p data-parcours="c">🅲 <b>Sur papier</b> : protocole rédigé et résultats fournis — <b>mêmes questions, mêmes validations</b>. Ce qui est évalué ici, c'est le protocole, pas la manipulation.</p>
-</div>
-<div class="retenir"><b>Aucun parcours ne retire de question.</b> Le sélecteur en haut de page masque seulement
-ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le monde.</div>
 </section>
 
 <section class="card">
@@ -960,7 +954,6 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 <p class="problematique">Comment vérifier par des tests simples qu'une solution répond au besoin et aux contraintes avant de la généraliser&nbsp;?</p>
 </section>
 
-
 <section class="card">
 <h2>💡 Hypothèse</h2>
 <label for="hypothese">✍ Mon hypothèse : d'après toi, lequel des quatre tests le support va-t-il rater — et pourquoi ?</label>
@@ -978,7 +971,72 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 <p class="saved-note">💾 Sauvegarde automatique dans la page, à chaque modification.</p>
 </section>
 
+<section class="card" id="billet">
+<h2>🎫 Billet d'entrée — trois questions, sans note</h2>
+<p>Cette séquence prolonge la conception du support (4e_C7). Trois questions pour savoir, toi comme le
+professeur, sur quoi on peut s'appuyer. <b>Elles ne comptent pas dans ta progression et ne sont pas
+notées</b> — « je ne sais pas encore » est une réponse utile.</p>
+<div class="exo">
+  <p><label for="be_1">1. Un prototype, c'est…
+  <select id="be_1"><option value="">— choisir —</option><option>un premier exemplaire fabriqué pour être mis à l'épreuve</option><option>le produit fini, prêt à vendre</option><option>un dessin de l'objet</option><option>je ne sais pas encore</option></select></label></p>
+  <p><label for="be_2">2. En 4e_C7, tu as choisi un matériau. Sur quoi t'es-tu appuyé ?
+  <select id="be_2"><option value="">— choisir —</option><option>des critères nommés, éprouvés au banc météo</option><option>l'aspect du matériau</option><option>ce que le professeur avait choisi</option><option>je ne sais pas encore</option></select></label></p>
+  <p><label for="be_3">3. Pour savoir si un essai est réussi, il faut…
+  <select id="be_3"><option value="">— choisir —</option><option>avoir écrit le résultat attendu AVANT de lancer l'essai</option><option>regarder si ça a l'air de marcher</option><option>refaire l'essai plusieurs fois</option><option>je ne sais pas encore</option></select></label></p>
+  <button class="btn small" id="btnBillet" type="button">Voir où j'en suis</button>
+  <p class="feedback" id="fbBillet" role="status"></p>
+</div>
+</section>
+
 <section class="card">
+<h2>🔁 Le contrat de la séquence</h2>
+<div class="contrat18">
+<p style="margin:0 0 6px"><b>FAIRE pour comprendre&nbsp;:</b> tu commences par LANCER les tests du banc virtuel (activité 0) — avant toute définition du mot «&nbsp;protocole&nbsp;».</p>
+<p style="margin:0 0 6px"><b>COMPRENDRE&nbsp;:</b> les «&nbsp;À retenir&nbsp;» nomment les concepts&nbsp;: protocole, résultat attendu, conformité, diagnostic.</p>
+<p style="margin:0"><b>REFAIRE pour comprendre encore&nbsp;:</b> tu réinvestis le protocole sur un NOUVEAU critère 100&nbsp;% new-yorkais (gel, vent de canyon…).</p>
+</div>
+</section>
+
+<section class="card">
+<h2>🔀 Trois façons de vivre la séquence</h2>
+<div class="exo">
+<p data-parcours="a">🅰 <b>Avec le prototype</b> : le support construit en 4e_C7 passe réellement à l'épreuve — secousses, arrosoir, congélateur du labo. Les observés du tableau sont <b>les tiens</b>.</p>
+<p data-parcours="b">🅱 <b>Au banc virtuel</b> : le banc de l'activité 0 lance les quatre tests dans la page, sans matériel. C'est le parcours principal, et il fonctionne hors connexion.</p>
+<p data-parcours="c">🅲 <b>Sur papier</b> : protocole rédigé et résultats fournis — <b>mêmes questions, mêmes validations</b>. Ce qui est évalué ici, c'est le protocole, pas la manipulation.</p>
+</div>
+<div class="retenir"><b>Aucun parcours ne retire de question.</b> Le sélecteur en haut de page masque seulement
+ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le monde.</div>
+</section>
+
+</details><!-- /rappel-ouverture -->
+
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression : <b id="progTxt">0 / 6 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card" id="taches">
+<h2>🗺 Où j'en suis — les 6 activités de cette séquence</h2>
+<p>Chaque activité validée se colore ici. Rien ne se perd si tu t'arrêtes en route.</p>
+<div class="taches-bandeau" id="tachesBandeau"></div>
+</section>
+
+<nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" id="tab-s1" data-panel="s1" role="tab" aria-controls="s1" aria-selected="true">Séance 1<br><small>Faire, puis écrire le protocole</small><span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false">Séance 2<br><small>Analyser les résultats</small><span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" id="tab-s3" data-panel="s3" role="tab" aria-controls="s3" aria-selected="false">Séance 3<br><small>Améliorer, refaire, conclure</small><span class="done" id="done-s3"></span></button>
+</nav>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+
+<section class="card seance-tete">
+<h2>🧭 Séance 1 — Faire d'abord, puis écrire le protocole</h2>
+<p class="question-directrice">Question directrice : comment prouver qu'un prototype répond au besoin, sans se contenter d'un avis ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : le banc de tests virtuel (activité 0, environ 10 min), puis le raisonnement de validation en diagramme et le protocole en tableau (activité 1, environ 20 min). Avec l'ouverture, la séance tient dans 55 min.</p>
+</section>
+
+<section class="card" id="act0">
 <h2>🖐️ Activité 0 — FAIRE d'abord&nbsp;: le banc de tests virtuel <span class="chrono">⏱ ~10 min</span></h2>
 <div class="exo">
 <p><strong>Consigne&nbsp;:</strong> AVANT de parler «&nbsp;protocole&nbsp;», lance les tests un par un sur le prototype virtuel et OBSERVE. Lance au moins <b>trois</b> tests différents.</p>
@@ -1083,6 +1141,19 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 </div>
 </section>
 
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Analyser les résultats ›</button></p>
+
+</div>
+
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+
+<section class="card seance-tete">
+<h2>🧭 Séance 2 — Analyser les résultats, ligne par ligne</h2>
+<p class="question-directrice">Question directrice : que disent les résultats du banc, exigence par exigence — conforme, non conforme, et pourquoi ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : relier chaque exigence à son test, juger la conformité et poser un diagnostic (activité 2, environ 35 min, exercice du diagramme des exigences compris).</p>
+</section>
+
 <section class="card">
 <h2>📊 Activité 2 — Analyser les résultats (C8.2) <span class="chrono">⏱ ~35 min</span></h2>
 <div class="exo">
@@ -1132,7 +1203,20 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 </div>
 </section>
 
-<section class="card">
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Améliorer, refaire, conclure ›</button></p>
+
+</div>
+
+<!-- ══════════════════ SÉANCE 3 ══════════════════ -->
+<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
+
+<section class="card seance-tete">
+<h2>🧭 Séance 3 — Améliorer, refaire, conclure</h2>
+<p class="question-directrice">Question directrice : et si un critère change ? Améliorer la solution, refaire un protocole sur un nouvel objet, puis revenir à l'hypothèse.</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : deux améliorations appuyées sur des essais (activité 3, environ 15 min), le réinvestissement (environ 15 min), puis la synthèse, le Bonus, le bilan et le renvoi vers le QCM.</p>
+</section>
+
+<section class="card" id="act3">
 <h2>✏️ Activité 3 — Améliorations (C8.3) <span class="chrono">⏱ ~15 min</span></h2>
 <div class="exo">
 <label for="a3amel">✍ Deux améliorations, chacune rattachée à <b>un résultat de test précis</b> :</label>
@@ -1184,16 +1268,30 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 <div class="bonus">
 <p><b>Citoyen&nbsp;:</b> Rends ton protocole réutilisable par d'autres écoles de New York — qu'est-ce qui doit être précisé pour qu'une autre classe l'exécute sans toi&nbsp;?</p>
 <textarea rows="2" id="defi1" placeholder="Tes précisions — sauvegardées dans la page" aria-label="Défi 1 — mes précisions"></textarea>
+<details class="correction"><summary>✅ Corrigé du défi citoyen</summary><p>Un protocole réutilisable dit, pour chaque test, <b>ce qu'on fait</b> (l'action, avec sa durée ou sa force : « secouer 10 s »), <b>avec quoi</b> (l'arrosoir, le congélateur, la règle graduée), <b>dans quelles conditions</b> (plein soleil de midi, à 3 m), et <b>le résultat attendu, chiffré</b> (« moins de 1 cm », « 0 goutte »). Sans ces quatre précisions, une autre classe ferait un autre test — et ses résultats ne seraient pas comparables aux tiens.</p></details>
 <p style="margin-top:10px"><b>Technique&nbsp;:</b> Ajoute le critère «&nbsp;montage par un élève de 6e&nbsp;» (étape + attendu observable)&nbsp;:</p>
 <textarea rows="2" id="defi2" placeholder="Ton critère — sauvegardé dans la page" aria-label="Défi 2 — mon critère"></textarea>
+<details class="correction"><summary>✅ Corrigé du défi technique</summary><p>Une étape concrète et un attendu observable, par exemple : « un élève de 6e qui découvre le support l'assemble avec la notice, sans aide ; attendu : montage terminé en moins de 5 min, sans outil, aucune pièce à l'envers ». Ce qu'on mesure, c'est le temps et le nombre d'erreurs — pas « c'est facile », qui n'est qu'un avis.</p></details>
 <p style="margin-top:10px"><b>New York&nbsp;:</b> Quels aléas (gel, canyon, pollution, saisons) intégrer à un protocole rooftop&nbsp;?</p>
 <textarea rows="2" id="defi3" placeholder="Tes aléas — sauvegardés dans la page" aria-label="Défi 3 — mes aléas"></textarea>
+<details class="correction"><summary>✅ Corrigé de l'ancrage New York</summary><p>Sur un toit de Manhattan, quatre aléas au moins : le <b>gel</b> d'hiver (−8 °C, déjà au banc) ; le <b>vent de canyon</b> entre les tours, qui rafale bien plus fort qu'au sol (un test de secousses plus long, ou une vraie charge latérale) ; la <b>pollution</b> et les particules qui encrassent le capteur (un test après une semaine dehors) ; les <b>saisons</b>, de la canicule d'août à la neige (le même test à chaud et à froid). Chaque aléa donne une ligne de plus au protocole : une action, un attendu.</p></details>
 </div>
 </section>
 
 <section class="card">
 <h2>🙋 Bilan personnel</h2>
+<div id="rappelHyp" class="rappel-hyp" style="display:none"></div>
+<p><b>Retour à mon hypothèse :</b> le test que je pensais le plus difficile était-il le bon ? <input id="bilanHyp" aria-label="Retour à mon hypothèse" placeholder="Oui / non, et ce que le banc m'a appris"></p>
+<p><b>Comment j'ai travaillé :</b> où ai-je hésité, et qu'est-ce qui m'a surpris dans les résultats du banc ? <input id="bilanMeta" aria-label="Comment j'ai travaillé" placeholder="J'ai hésité sur… / ce qui m'a surpris…"></p>
 <p>J'ai appris&nbsp;: <input id="bilan1" aria-label="Auto-positionnement 1"></p><p>Je sais faire&nbsp;: <input id="bilan2" aria-label="Auto-positionnement 2"></p><p>À revoir&nbsp;: <input id="bilan3" aria-label="Auto-positionnement 3"></p>
+<h3>📍 Je me positionne</h3>
+<p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : 1 maîtrise insuffisante · 2 maîtrise fragile · 3 maîtrise satisfaisante · 4 très bonne maîtrise.</p>
+<fieldset class="positionnement"><legend>4e_C8.1 — paramétrer et exécuter un protocole de test</legend>
+<label><input type="radio" name="pos_c81" value="1"> 1</label> <label><input type="radio" name="pos_c81" value="2"> 2</label> <label><input type="radio" name="pos_c81" value="3"> 3</label> <label><input type="radio" name="pos_c81" value="4"> 4</label></fieldset>
+<fieldset class="positionnement"><legend>4e_C8.2 — analyser les résultats et juger la conformité</legend>
+<label><input type="radio" name="pos_c82" value="1"> 1</label> <label><input type="radio" name="pos_c82" value="2"> 2</label> <label><input type="radio" name="pos_c82" value="3"> 3</label> <label><input type="radio" name="pos_c82" value="4"> 4</label></fieldset>
+<fieldset class="positionnement"><legend>4e_C8.3 — proposer un protocole de test</legend>
+<label><input type="radio" name="pos_c83" value="1"> 1</label> <label><input type="radio" name="pos_c83" value="2"> 2</label> <label><input type="radio" name="pos_c83" value="3"> 3</label> <label><input type="radio" name="pos_c83" value="4"> 4</label></fieldset>
 <p>Confiance CRCN 1.3 Traiter des données (1-4)&nbsp;: <select id="bilan4" style="width:auto" aria-label="Auto-positionnement 4"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
 </section>
 
@@ -1202,6 +1300,8 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 <p>30 questions — paramétrer, proposer un protocole, juger comportement et performances. <b>3 questions illustrées</b> ; chaque proposition fausse est réfutée.</p>
 <a class="btn" href="qcm_4e_C8_jardin-validation.html">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
+
+</div>
 
 <footer>TechnoQuest · Thème 3 · 4e_C8 · Jardin connecté · New York. Sauvegarde locale uniquement — aucune donnée envoyée.</footer>
 
@@ -1292,6 +1392,7 @@ function save(){
   document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id && !e.closest(".atelier-incruste")) o.inputs[e.id] = e.value; });
   // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
   document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { o.inputs[c.id] = c.checked; });
+  o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
   const sn = $("savedNote"); if(sn){ sn.textContent = "💾 Sauvegardé (" + new Date().toLocaleTimeString() + ")"; }
 }
@@ -1301,11 +1402,62 @@ function restore(){
   Object.entries(o.inputs || {}).forEach(([id, v]) => { const e = $(id); if(e) e.value = v; });
   // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
   document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { const v = (o.inputs || {})[c.id]; if(v !== undefined) c.checked = (v === true); });
+  Object.entries(o.radios || {}).forEach(([name, v]) => { const r = document.querySelector('.positionnement input[name="' + name + '"][value="' + v + '"]'); if(r) r.checked = true; });
   window.__exp = Object.assign(window.__exp || {}, o.exp || {});
   (o.par && o.par.s || []).forEach(x => { if(!par.s.includes(x)) par.s.push(x); });
-  updateProg();
+  updateProg(); majHyp();
+  if(!location.hash && window.__exp.onglet && $(window.__exp.onglet)) montrerSeance(window.__exp.onglet, false);
 }
 document.addEventListener("change", e => { if(e.target.matches("input, select, textarea")) save(); });
+/* retour à l'hypothèse (n°301) : le bilan relit ce que l'élève a écrit au début */
+function majHyp(){
+  const el = $("rappelHyp"), h = ($("hypothese") || {}).value || ""; if(!el) return;
+  if(h.trim()){ el.style.display = "block"; el.innerHTML = "<b>🔎 Au début de la séquence, tu avais écrit :</b><br><i>« " + h.replace(/&/g,"&amp;").replace(/</g,"&lt;") + " »</i>"; }
+  else { el.style.display = "none"; }
+}
+if($("hypothese")) $("hypothese").addEventListener("input", majHyp);
+
+/* ══ Séances à onglets (squelette n°306) ══ */
+const SEANCES = {s1:["0","1","2"], s2:["3"], s3:["4","5"]};   // les contrôles (data-check) de chaque séance
+function montrerSeance(id, memoriser){
+  document.querySelectorAll(".seance-tab").forEach(x=>{ const on = x.dataset.panel === id; x.classList.toggle("active", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
+  document.querySelectorAll(".seance-panel").forEach(p=>p.classList.toggle("active", p.id === id));
+  appliqueSeance(id);
+  if(memoriser !== false){ window.__exp.onglet = id; save(); }
+}
+document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => montrerSeance(t.dataset.panel)));
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte.
+   Avant la fin du chargement, le volet ne se ferme pas encore : un dessin <object> de l'ouverture ne se charge pas dans
+   un volet fermé, et la page attendrait sans fin son « load ». Il se ferme au « load » (marque data-fermer-au-chargement). */
+function appliqueSeance(idPanneau){
+  const v = $("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", ()=>{ const v=$("ouverture"); if(v){ voletAvantImpression=v.open; v.open=true; } });
+  window.addEventListener("afterprint", ()=>{ const v=$("ouverture"); if(v && voletAvantImpression!==null){ v.open=voletAvantImpression; voletAvantImpression=null; } });
+  const cibleDuLien = ()=>{ const id = decodeURIComponent(location.hash.slice(1)); return id ? $(id) : null; };
+  const ouvrirSeanceDeLAncre = ()=>{
+    const cible = cibleDuLien(); const pan = cible && cible.closest(".seance-panel");
+    if(!pan || pan.classList.contains("active")) return;
+    montrerSeance(pan.id);
+    setTimeout(()=>cible.scrollIntoView({block:"start"}), 60);
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", ()=>{
+    const v = $("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active")||{}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
+/* Règle d'or n°101 — chaque séance mène explicitement à la suivante */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => { montrerSeance(b.dataset.vers); window.scrollTo({top:0, behavior:"smooth"}); }));
 
 /* ══ Règle d'or n°30 — le tableau de bord des tâches, et la progression ══ */
 const TACHES = [
@@ -1329,6 +1481,7 @@ function updateProg(){
   if($("progTxt")) $("progTxt").textContent = n + " / 6 activités validées";
   if($("progFill")) $("progFill").style.width = Math.round(n * 100 / 6) + "%";
   if($("progBar")) $("progBar").setAttribute("aria-valuenow", n);
+  Object.entries(SEANCES).forEach(([id, acts]) => { const d = $("done-" + id); if(d) d.textContent = acts.every(a => par.s.includes(a)) ? " ✔" : ""; });
   majTaches();
 }
 
