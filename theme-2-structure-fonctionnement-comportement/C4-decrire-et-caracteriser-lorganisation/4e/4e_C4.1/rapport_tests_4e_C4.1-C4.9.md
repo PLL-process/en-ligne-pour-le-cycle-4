@@ -113,3 +113,21 @@ embarqué —, ils sont maintenant documentés. La dette du dépôt passe de 88 
 - La version 🅰 (jardin réel) relève de l'enseignant : elle n'est pas simulable ici.
 - Google Fonts inaccessible en sandbox : polices de repli, sans incidence — la suite ne
   compte pas ces requêtes comme des ressources distantes de la page (règle n°40).
+
+## Reprise du 31/10/2026 — le plan du réseau du jardin, dessiné comme dans Packet Tracer
+
+`Images/reseau_jardin_ip.svg` est redessiné dans le langage visuel des figures de SOS serre (4e_C4.7) : fond blanc, appareils
+tels que le simulateur les montre (Home Router, Server-PT, AccessPoint-PT, SBC-PT, Tablet PC-PT), câbles droits avec le triangle
+vert à chaque bout et le nom des ports (Ethernet 1, Ethernet 2, Fa0, Port 0), liaisons sans fil en pointillés. Les adresses ne
+changent pas (box 192.168.1.1, serveur .10, carte .50 fixe, tablette .23 en DHCP) ; les encadrés « pour communiquer » et « les
+trois pannes » restent ; le serveur est maintenant câblé à la box (il l'était en wifi). L'activité 4 et le QCM sont inchangés.
+
+- `node _outils/controle_schemas.mjs` (n°315) sur le fichier : **0 ✘, 0 ⚠** (l'ancien dessin donnait 1 ⚠ : 28 textes sous 10 px
+  à 800 px de large ; ici tous les textes sont à 14 px ou plus).
+- `node tests_4e_C4.1-C4.9.mjs` : **41 / 41**. `node tests_regle_311_4e_C4.1.mjs` : 34 / 34.
+- `controle_medias.py`, `controle_liens.py`, `controle_unites.py`, `controle_sigles.py` : verts. `SOURCES_MEDIAS.md` à jour
+  (dessin original d'après le simulateur, aucune capture, marques citées).
+- Regardé dans Chromium : la figure dans la séance 3 à 1280 et 390 px, aucune erreur JS.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle ; le fichier `.pkt` du jardin (à construire dans
+Packet Tracer, sur le poste de Pascal).

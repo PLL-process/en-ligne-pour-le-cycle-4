@@ -8,7 +8,7 @@ de Google Images ou de site tiers ; aucun hotlinking.
 |---|---|---|---|---|
 | `Images/chaines_jardin_connecte.svg` | SVG original (Fable) | image-objet : deux chaînes et trois flux à lire (act. 1-2, QCM q1) | CC0 | ~7 Ko |
 | `Images/table_donnees_jardin.svg` | SVG original (Fable) | image-objet : trajet de la donnée + table à analyser (act. 3, QCM) | CC0 | ~6 Ko |
-| `Images/reseau_jardin_ip.svg` | SVG original (Fable) | image-objet : plan du réseau et adresses à exploiter (act. 4, QCM) | CC0 | ~6 Ko |
+| `Images/reseau_jardin_ip.svg` | SVG original (Fable), dessin d'après le simulateur Cisco Packet Tracer 8 — les appareils, câbles et liaisons sans fil tels que le simulateur les montre, aucune capture de l'interface ; Cisco et Packet Tracer sont des marques de Cisco | image-objet : plan du réseau et adresses à exploiter (act. 4, QCM) ; même langage visuel que les figures de SOS serre (4e_C4.7) | CC0 | ~10 Ko |
 
 La synthèse élève, réécrite en deux pages le 29/10/2026, n'affiche plus ces trois schémas : elle montre les
 chaînes en cases (fonction et composant dans la case, forme d'énergie sur la flèche), la donnée en quatre étapes et
