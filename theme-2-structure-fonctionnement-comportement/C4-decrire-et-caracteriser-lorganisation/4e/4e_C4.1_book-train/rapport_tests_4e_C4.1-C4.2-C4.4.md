@@ -222,3 +222,22 @@ Captures avant / après à 390 px, même position de défilement (METHODE.md, pi
 - Lecteur d'écran réel (NVDA, VoiceOver) sur les groupes : non fait ; le nom accessible vient de la légende,
   visible ou masquée dans les cases de tableau.
 - Impression papier réelle : seul le rendu `media: print` est mesuré (`controle_impression.mjs`).
+
+## Reprise du 31/10/2026 — le volet « 📖 Rappel » (règle d'or n°311)
+
+Le Book Train était la seule séquence à onglets sans volet : « 🔄 Avant de commencer », les badges et la note Pix restaient
+visibles à toutes les séances. Ils sont maintenant dans `details.rappel-ouverture` : ouverture complète à l'onglet Départ (le
+premier écran, qui porte la situation, le billet d'entrée et l'hypothèse) ; dès qu'une séance s'ouvre, le volet se replie, jamais
+supprimé. Titre, mission, barre d'outils, progression et rail des gares restent visibles. L'impression ouvre le volet le temps
+d'imprimer.
+
+- `node tests_regle_311_4e_C4.1_book-train.mjs` (banc propre à la page, écrit sur le modèle du banc commun) : **38 / 38** —
+  Départ complet, séances 1, 2 et 4 repliées, clavier (Entrée, Espace), case d'ouverture conservée au repli et au rechargement,
+  lien direct, sans JavaScript, impression, aucune erreur JS, aucun défilement horizontal à 390 px.
+- `node tests_4e_C4.1-C4.2-C4.4_book-train.mjs` : **39 / 39** — deux pas adaptés : le lien de rattrapage se suit depuis le volet
+  ouvert (contrôle 4), la case d'ouverture se coche depuis le Départ (contrôle 16).
+- `controle_squelette.mjs` sur la page : D6 à 0 (la page passait de « sans volet » à « volet replié dès la séance 2 »).
+- `controle_impression.mjs` : 0 page refusée. Contrôles Python verts : liens, hiérarchie, règles visibles, débordement, unités,
+  sigles, compétences, mode essentiel.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

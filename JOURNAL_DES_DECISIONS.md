@@ -27222,3 +27222,21 @@ Non testé : un vrai téléphone, Safari, Firefox, une impression réelle.
 
 **Ensuite, si Pascal le veut** : le même atelier en secours de Vittascience à l'activité 3, et pour le lampadaire de
 l'activité 6 (qui demande aujourd'hui un programme « sans modèle » : l'atelier y partirait d'un plan vide).
+
+---
+
+## 31/10/2026 — Règle d'or n°311 au Book Train (4e_C4.1-C4.2-C4.4) : le volet « 📖 Rappel » dès qu'une séance s'ouvre
+
+*Suite de l'audit du 31/10/2026 (entrée « le lien "vers les autres pages" de 3e_C9.2 ») : le Book Train était la seule séquence à
+onglets sans volet.*
+
+Le Book Train a un onglet de plus que les autres séquences : « Départ · Hypothèse », qui porte toute l'ouverture (situation, billet
+d'entrée, hypothèse, capsule « Je révise la 5e »), puis quatre séances. Ce qui restait visible à toutes les séances, hors onglets :
+« 🔄 Avant de commencer », les badges et la note Pix. Ils entrent dans `details.rappel-ouverture` : ouverture complète au Départ,
+le premier écran ; dès qu'une séance s'ouvre, le volet se replie — jamais supprimé, ouvert au clavier, ouvert le temps d'imprimer.
+Titre, mission, barre d'outils, identité, progression et rail des gares restent visibles. Le banc commun du thème 1 ne lit pas
+cette page (ni `data-panel`, ni `.subtitle`, ni `.seance-panel`) : un banc propre, `tests_regle_311_4e_C4.1_book-train.mjs`,
+rejoue ses contrôles avec les repères de la page, 38 / 38 ; le banc du lot passe 39 / 39 après deux pas adaptés (le lien de
+rattrapage se suit depuis le volet ouvert, la case d'ouverture se coche depuis le Départ). `controle_squelette` : D6 à 0.
+
+**Reste** : les 23 séquences sans onglets (thème 3 C7 et C8, 5e_C1.3, 5e_C1.5), sans volet par construction.

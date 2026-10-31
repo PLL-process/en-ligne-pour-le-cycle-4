@@ -89,6 +89,7 @@ ok('3 · l\'ouverture dit ce qui devrait être en place (n°304)',
    /Avant de commencer : ce que je vérifie/.test(ouverture) && !/l'an dernier|tu as (tracé|dit|fait)|en 5e,/i.test(ouverture),
    ouverture.slice(0, 120));
 await p.click('#tab-s2');
+await p.click('#ouverture > summary');   // n°311 : dès la séance 2, l'ouverture est repliée dans le volet « Rappel » — on l'ouvre d'abord
 await p.click('section.rappel-spiralaire a[href="#capsule-5e"] >> nth=0');
 await p.waitForTimeout(250);
 ok('4 · le lien de rattrapage ouvre l\'onglet Départ et la capsule',
@@ -158,6 +159,7 @@ await p.fill('#bonus_d6c', 'Le trajet fait 114 m sur 290 m, parce que le rail a 
 await p.dispatchEvent('#bonus_d6a', 'change');
 
 /* ── 6. Sauvegarde : tout revient après rechargement ──────────────────────── */
+await p.click('#tab-s0');   // n°311 : la case d'ouverture se coche depuis le Départ (depuis une séance ≥ 2, elle est repliée dans le volet)
 await p.check('#ouv_1');
 const sauvegarde = await p.evaluate(() => Object.fromEntries(Object.entries(localStorage)));
 await ctx.close();
