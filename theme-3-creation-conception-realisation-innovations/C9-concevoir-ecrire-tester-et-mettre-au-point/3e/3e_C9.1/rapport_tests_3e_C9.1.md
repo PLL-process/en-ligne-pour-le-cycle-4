@@ -5,6 +5,17 @@ Agent : Fable · Environnement : Chromium headless (Playwright 1.55),
 viewport 1280×900 + émulation téléphone 390×844 · Suite : `tests_3e_C9.1.mjs`
 (**committée dans ce dossier**, rejouable : `node tests_3e_C9.1.mjs .`).
 
+> **Mise à jour du 31/10/2026 — règle d'or n°311 : à partir de la séance 2, l'élève voit sa séance, pas le décor.**
+> À partir de la séance 2 : titre, mission, barre d'outils, sélecteur de parcours, puis le volet replié « 📖 Rappel : la situation
+> et ton hypothèse » (« Avant de commencer », étiquettes, identité, note du mode essentiel, billet d'entrée, situation et lecture du
+> plan, problématique et hypothèse, façons de vivre l'atelier). Restent dehors, outils de chaque séance : la progression et
+> « 🗺 Où en suis-je ? ». Deux corrections au passage : le volet ne se replie qu'au chargement complet de la page (le plan de la
+> ligne Q est un `<object>` : replié plus tôt, il ne se chargeait pas et la page n'achevait jamais son chargement — vu sur le lien
+> direct `#act5`) ; à 390 px, les blocs de code des séances 3 et 4 faisaient défiler la page en largeur (109 et 32 px, déjà le cas
+> avant) : ils défilent désormais dans leur cadre.
+> Banc `tests_regle_311_3e_C9.1.mjs` (relais du thème 3, puis banc commun du thème 1) : **9 / 9 + 34 / 34**.
+> Suite du lot rejouée après le volet : `node tests_3e_C9.1.mjs .` → **42 / 42**, comme avant.
+
 > **Ce qui a changé le 26 août, et qu'il faut dire.** La campagne du 30 juillet
 > annonçait 30/30. Elle avait bien eu lieu — mais **aucune suite n'était
 > committée** : personne, pas même moi, ne pouvait la rejouer pour vérifier que

@@ -5,6 +5,13 @@ Agent : Fable · Environnement : Chromium headless (Playwright 1.55),
 viewport 1280×900 + émulation téléphone 390×844 · Suite : `tests_5e_C9.1-C9.3.mjs`
 (**committée dans ce dossier**, rejouable : `node tests_5e_C9.1-C9.3.mjs .`).
 
+> **Mise à jour du 31/10/2026 — règle d'or n°311 : à partir de la séance 2, l'élève voit sa séance, pas le décor.**
+> À partir de la séance 2 : titre, mission, barre d'outils, sélecteur de parcours, puis le volet replié « 📖 Rappel : la situation
+> et ton hypothèse » (étiquettes, identité, note du mode essentiel, billet d'entrée, situation, problématique et hypothèse, « Où tu en
+> es dans le cycle », façons de vivre l'atelier). Restent dehors, outils de chaque séance : la progression et « 🗺 Où j'en suis ».
+> Banc `tests_regle_311_5e_C9.1.mjs` (relais du thème 3, puis banc commun du thème 1) : **9 / 9 + 34 / 34**.
+> Suite du lot rejouée après le volet : `node tests_5e_C9.1-C9.3.mjs .` → **54 / 54**, comme avant.
+
 > Comme pour le lot 3e_C9.1, la campagne du 30 juillet avait bien eu lieu (27/27) mais
 > **aucune suite n'était committée** : rien n'était rejouable, et le lot pouvait dériver
 > sans que personne ne le voie. Ce fichier ferme ce trou. Chaque dispositif est vérifié

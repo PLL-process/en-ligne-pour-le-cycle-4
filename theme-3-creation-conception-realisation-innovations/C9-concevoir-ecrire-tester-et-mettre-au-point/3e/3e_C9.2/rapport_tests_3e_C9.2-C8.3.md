@@ -5,6 +5,16 @@ Agent : Fable · Environnement : Chromium headless (Playwright 1.55),
 viewport 1280×900 + émulation téléphone 390×844 · Suite : `tests_3e_C9.2-C8.3.mjs`
 (committée dans ce dossier, rejouable : `node tests_3e_C9.2-C8.3.mjs .`).
 
+> **Mise à jour du 31/10/2026 — règle d'or n°311, page tout-en-un : à partir de la séance 2, l'élève voit sa séance, pas le décor.**
+> À partir de la séance 2 : titre, mission, le lien vers les quatre pages (navigation), barre d'outils, sélecteur de parcours, puis le
+> volet replié « 📖 Rappel : la situation et ton hypothèse » (« Avant de commencer », billet d'entrée, étiquettes, identité, note du
+> mode essentiel, situation et courrier de la mairie, problématique, hypothèses, choix de l'outil, façons de vivre la séquence).
+> Restent dehors, outils des séances 3 à 8 : la progression, « 🌀 Le banc d'essai de la station » et le bandeau des tâches.
+> Les quatre pages restent hors de la règle (pas d'onglets) : `generer_les_quatre_pages.py` a été adapté au nouvel ordre de la
+> source et les redonne **à l'octet près** (vérifié avant et après, dans une copie).
+> Banc `tests_regle_311_3e_C9.2.mjs` (relais du thème 3, puis banc commun du thème 1) : **9 / 9 + 34 / 34**.
+> Suites du lot rejouées après le volet : `node tests_3e_C9.2-C8.3.mjs .` → **167 / 167** et `node tests_pont_en_h.mjs` → **37 / 37**, comme avant.
+
 La suite **simule la séquence comme un élève** (méthode du « dé de 5e ») et prend
 une **capture d'écran à chaque action** (35 captures : accueil, billet, chaque
 activité validée, chaque état du banc — les quatre niveaux, les six frontières,

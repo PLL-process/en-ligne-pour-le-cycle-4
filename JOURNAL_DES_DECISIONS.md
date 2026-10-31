@@ -26987,3 +26987,67 @@ activité 4 et 4e_C3.1 c) : rédaction libre de quatre exigences. Hors thème 1,
 4e_C4.1 (réincrustation de l'exercice 6), la séquence 4e_C6.2 (le tableau « fonction | critère | ton verdict », déjà
 en menus mais sans nom, sans retour, la bonne option toujours en premier), et la grille de 4e_C8.1 (un retour par
 option).
+
+---
+
+## 31/10/2026 — Règle d'or n°311, vague du thème 3 : 4 séquences à onglets passent au volet « 📖 Rappel » dès la séance 2
+
+*Pascal, le 31/10/2026, sur 4e_C9.1 : « Je passe à la séance 2 et je vois le billet d'entrée, Avant de commencer, ce
+que je vérifie, la situation déclenchante, la problématique, les deux façons de vivre la séquence. Or entre les
+séances, je ne devrais pas voir ces parties. » C'est la règle n°311 : la vague du thème 3 n'avait jamais été faite
+(« le thème 3 n'a pas de banc 311 », vague du thème 2).*
+
+**Le relevé, vérifié dans Chromium.** Le thème 3 n'a que **4 séquences à onglets**, et aucune n'avait le volet :
+4e_C9.1 (le jardin se programme, 3 séances), 5e_C9.1 (la boîte étiquetée, 3 séances), 3e_C9.1 (variables et types,
+4 onglets) et la page tout-en-un de la station 3e_C9.2 (8 séances). Les 21 autres pages n'ont pas d'onglets, dont les
+quatre pages découpées de la station. 3e_C7.1, 4e_C7.1 et 4e_C8.1 contiennent la chaîne `rappel-ouverture` : elle
+vient du script commun des ateliers de représentations, recopié dans ces pages, et n'y sert à rien (ni onglet, ni
+volet, ni erreur JS) ; elles ne sont pas concernées.
+
+**À partir de la séance 2**, l'élève voit : le titre, la mission, la barre d'outils, le sélecteur de parcours et ses
+deux zones `role=status`, le volet replié, les outils, puis la séance. À la séance 1, tout reste ouvert ; seules la
+barre d'outils (remontée sous la mission, comme le pilote 5e_C3.1) et la progression (juste après l'ouverture)
+changent de place.
+
+| Page | Dans le volet | Reste dehors (outil des séances) |
+|---|---|---|
+| 4e_C9.1 | étiquettes, « Avant de commencer », billet, identité, note du mode essentiel, situation, problématique, hypothèse, « Deux façons » | progression, « 🗺 Où en suis-je ? », « 🧪 Le banc d'essai du jardin » |
+| 5e_C9.1 | étiquettes, identité, note, billet, situation, problématique et hypothèse, « Où tu en es dans le cycle », « Deux façons » | progression, « 🗺 Où j'en suis » |
+| 3e_C9.1 | « Avant de commencer », étiquettes, identité, note, billet, situation et lecture du plan, problématique, « Deux façons » | progression, « 🗺 Où en suis-je ? » |
+| 3e_C9.2 | « Avant de commencer », billet, étiquettes, identité, note, situation et courrier, problématique, hypothèses, choix de l'outil, façons de vivre | lien « quatre pages », progression, « 🌀 Le banc d'essai de la station », bandeau des tâches |
+
+- **Un outil n'est pas du décor.** Les deux bancs d'essai servent et sont tracés aux séances suivantes (la station
+  dit « le banc d'essai (en haut de page) » aux séances 3 et 8) ; « Où en suis-je ? » est le tableau de bord de la
+  règle n°30 ; le bandeau des tâches de 3e_C9.2 situe la séance, comme celui de 3e_C6.2 au thème 2.
+- **Le lien « quatre pages » de 3e_C9.2 reste dehors** : c'est de la navigation entre les deux formes de la
+  séquence, et les quatre pages montrent toujours leur lien retour. **À trancher par Pascal** s'il préfère le replier.
+- **Le sélecteur de parcours et le volet fonctionnent ensemble**, pour la première fois dans le dépôt : le banc le
+  vérifie depuis la séance 2. La phrase du skill `sequence-pedagogique-engageante` qui dit le contraire (« aucune page
+  ne porte à la fois le sélecteur et le volet ») est à corriger dans un lot qui a le droit d'y toucher.
+
+**Trois corrections au passage.**
+1. **Le volet ne se replie qu'une fois la page chargée** (les 4 pages). Dans 3e_C9.1, la situation contient le plan
+   de la ligne Q, un dessin `<object>` : replié trop tôt, par un lien direct vers `#act5` par exemple, il ne se
+   chargeait jamais et la page ne finissait pas de charger. Aucun volet des thèmes 1 et 2 ne contient de tel dessin.
+2. **3e_C9.1 à 390 px** : les blocs de code des séances 3 et 4 faisaient défiler la page en largeur (109 et 32 px),
+   déjà sur `main`. `pre.code` défile maintenant dans son cadre.
+3. **3e_C9.2** : `generer_les_quatre_pages.py` suit le nouvel ordre de la page tout-en-un. Relancé sur l'ancienne puis
+   sur la nouvelle page, il redonne les quatre pages identiques à l'octet près.
+
+**Bancs.** Un banc par page, `tests_regle_311_<code>.mjs`, qui passe par le relais
+`theme-3-…/banc_regle_311_theme3.mjs` (les outils hors du volet, un lien direct qui amène la cible à l'écran) puis
+par le banc commun du thème 1, sans modifier ni lui ni le relais du thème 2 : **4 / 4 pages, relais 9 / 9, banc
+commun 34 / 34.** Les suites des lots, avant et après : 4e_C9.1 77/77, 5e_C9.1 54/54, 3e_C9.1 42/42, 3e_C9.2 167/167,
+pont en H 37/37 ; aucune ne saisissait un champ de l'ouverture depuis une séance ≥ 2. L'animation de la pompe
+(`#pompe-pas-a-pas`, séance 3) : `banc_lecteur.py` vert.
+
+**Contrôles.** Sorties identiques avant et après : `controle_squelette` (0 refus, D1 à D6 à 0, le signal « n°311 non
+appliquée » a disparu des 4 pages), `controle_impression`, `controle_impression_papier`, `controle_verrous`,
+`controle_hors_ligne`, `controle_contraste_liens`, `controle_regles_visibles`, `controle_hierarchie`,
+`controle_navigation_seances`, `controle_liens` (aucun lien mort). Verts aussi : `banc_papier.py` sur C9 (mêmes pages,
+mêmes mots par fiche), `controle_mode_essentiel`, `controle_competences`, `controle_boutons_vivants`,
+`controle_atteignabilite`, `controle_sigles`, `controle_unites`. Le bouton du volet mesure 44 px et s'atteint au
+clavier. Le script de la vague reste hors du dépôt, comme aux thèmes 1 et 2.
+
+**Reste** : `C1.3-C1.4_SI`, puis D6 obligatoire. Non testé : un vrai téléphone, Firefox, Safari, une impression
+réelle.

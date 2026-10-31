@@ -5,6 +5,15 @@ Agent : Fable · Environnement : Chromium headless (Playwright 1.55),
 viewport 1280×900 + émulation téléphone 390×844 · Suite : `tests_4e_C9.mjs`
 (committée dans ce dossier, rejouable : `node tests_4e_C9.mjs .`).
 
+> **Mise à jour du 31/10/2026 — règle d'or n°311 : à partir de la séance 2, l'élève voit sa séance, pas le décor.**
+> À la séance 1, l'ouverture est complète (la barre d'outils passe juste sous la mission, la progression juste après l'ouverture).
+> À partir de la séance 2 : titre, mission, barre d'outils, sélecteur de parcours, puis le volet replié « 📖 Rappel : la situation
+> et ton hypothèse » (étiquettes, « Avant de commencer », billet d'entrée, identité, note du mode essentiel, situation, problématique,
+> hypothèse, façons de vivre la séquence). Restent dehors, parce que ce sont des outils des séances 2 et 3 : la progression,
+> « 🗺 Où en suis-je ? » et « 🧪 Le banc d'essai du jardin ». Le lien direct `#pompe-pas-a-pas` ouvre toujours la séance 3.
+> Banc `tests_regle_311_4e_C9.1.mjs` (relais du thème 3, puis banc commun du thème 1) : **9 / 9 + 34 / 34**.
+> Suite du lot rejouée après le volet : `node tests_4e_C9.mjs .` → **77 / 77**, comme avant.
+
 
 > **Correction du 31/08/2026 — le verrou expérientiel s'ouvrait en partie au chargement.**
 > `_outils/controle_verrous.mjs`, écrit ce jour-là, ouvre chaque séquence du dépôt dans un

@@ -33,6 +33,17 @@ passé AVANT le bilan (règle n°301) et la clôture comme l'échauffement
 Vittascience vivent DANS leur panneau de séance — on prend donc les panneaux
 entiers, sans recoller ces blocs une seconde fois ; la situation s'arrête avant
 le banc d'essai, qui n'est pas sur la page 1.
+
+Règle d'or n°311 (31/10/2026, vague du thème 3) : dans la page tout-en-un, la barre
+d'outils remonte sous la mission et l'ouverture se replie, à partir de la séance 2,
+dans le volet `<details class="rappel-ouverture">` (fermé par la ligne marquée
+`<!-- /rappel-ouverture -->`) ; la progression vient après le volet. Les quatre pages
+restent hors de la règle (pas d'onglets) : on y recolle les MÊMES blocs qu'avant. La barre
+d'outils se reconstitue donc ligne à ligne (la note du mode essentiel est dans le volet),
+la situation s'arrête avant la fermeture du volet, et tout ce qui est propre au volet (sa
+feuille de style, posée hors de la première `<style>`, et son script, posé DANS le bloc
+« Onglets séances » que `corriger_script` remplace) n'atteint pas les quatre pages :
+relancé, le script les redonne à l'octet près.
 """
 import io, re, sys, json, pathlib
 
@@ -89,8 +100,14 @@ _s        = {n: ligne(f'id="s{n}" role="tabpanel"') for n in range(1, NB_SEANCES
 _footer   = ligne("<footer>")
 _script   = ligne("<script>", _footer)
 _loupe    = ligne("loupe-images-v2") - 1
+# n°311 : les lignes de la barre d'outils, et la fin du volet « Rappel » (la situation s'arrête juste avant)
+_pnote    = ligne('id="parcoursNote"', _toolbar)
+_savednote = ligne('id="savedNote"', _toolbar)
+_essentiel = ligne('Le <b>mode essentiel</b> masque')
+_volet_fin = next((i + 1 for i, l in enumerate(L) if "<!-- /rappel-ouverture -->" in l), None)
 
 assert _situ < _banc < _tabs, "la situation, le banc puis les onglets : l'ordre de la source a changé"
+assert _volet_fin is None or _situ < _volet_fin < _banc, "le volet « Rappel » doit se fermer après la situation, avant le banc"
 
 HEAD        = seg(1, _style1)
 NAVCSS      = seg(_navcss, ferme(_navcss, "</style>"))
@@ -100,9 +117,11 @@ RAPPEL      = seg(_rappel, ferme(_rappel, "</section>"))
 BILLET      = seg(_billet - 1, ferme(_billet, "</section>"))
 BADGES      = seg(_badges, ferme(_badges, "</div>"))
 IDENTITE    = seg(_identite, ferme(_identite, "</div>"))
-TOOLBAR     = seg(_toolbar, _progress - 2)
+# la barre d'outils des quatre pages : barre, sélecteur de parcours, ses deux notes et celle du mode essentiel
+# (dans la source, cette dernière est repliée dans le volet n°311 : on la reprend à sa place)
+TOOLBAR     = "\n".join([seg(_toolbar, _pnote), seg(_essentiel, _essentiel), seg(_savednote, _savednote)])
 PROGRESS    = seg(_progress, ferme(_progress, "</div>"))
-SITUATION   = seg(_situ, _banc - 1)          # le banc a sa place à part (pages 2 à 4)
+SITUATION   = seg(_situ, (_volet_fin or _banc) - 1)   # le banc a sa place à part (pages 2 à 4) ; le volet n°311 se ferme avant
 TACHES      = seg(_taches, _taches)
 BANC        = seg(_banc, ferme(_banc, "</section>"))
 # Le panneau entier : l'échauffement Vittascience est dans s3, la clôture
