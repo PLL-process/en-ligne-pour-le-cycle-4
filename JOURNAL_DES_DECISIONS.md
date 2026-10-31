@@ -27246,6 +27246,9 @@ devient un `details` fermé d'un clic ; la page 1 (premier écran) le garde visi
 D6 à 0 sur les cinq pages, impression et fiche papier inchangées.
 
 **Reste** : le Book Train (thème 2, PR suivante) ; les séquences sans onglets.
+
+---
+
 ## 31/10/2026 — Règle d'or n°311 au Book Train (4e_C4.1-C4.2-C4.4) : le volet « 📖 Rappel » dès qu'une séance s'ouvre
 
 *Suite de l'audit du 31/10/2026 (entrée « le lien "vers les autres pages" de 3e_C9.2 ») : le Book Train était la seule séquence à
