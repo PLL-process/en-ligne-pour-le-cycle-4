@@ -27264,3 +27264,27 @@ rejoue ses contrôles avec les repères de la page, 38 / 38 ; le banc du lot pas
 rattrapage se suit depuis le volet ouvert, la case d'ouverture se coche depuis le Départ). `controle_squelette` : D6 à 0.
 
 **Reste** : les 23 séquences sans onglets (thème 3 C7 et C8, 5e_C1.3, 5e_C1.5), sans volet par construction.
+
+---
+
+## 31/10/2026 — 4e_C4.1 : le plan du réseau du jardin, dessiné comme dans Packet Tracer
+
+*Pascal, le 31/10/2026, devant le schéma « Le réseau du jardin — chaque appareil a son adresse, comme une maison » : « Ce schéma,
+s'il était fait avec Packet Tracer, qu'en penses-tu ? » Puis carte blanche.*
+
+En 4e_C4.7 (SOS serre), les élèves travaillent dans Packet Tracer et ses figures sont des reconstitutions originales d'après nos
+sessions réelles. Le plan du réseau du jardin (4e_C4.1, séance 3, activité 4) parlait une autre langue : des boîtes à emojis sur
+fond sombre. Il est redessiné dans le même langage visuel que SOS serre, pour que l'élève reconnaisse le simulateur quand il y
+arrive : fond blanc, les appareils tels que le simulateur les montre et nomme (Home Router « Box-Collège », Server-PT, AccessPoint-PT
+« Borne-Cour », SBC-PT « Carte-Jardin », Tablet PC-PT « Tablette-Classe »), les câbles droits avec le triangle vert à chaque bout
+et le nom des ports, les liaisons sans fil en pointillés. **Rien ne change dans ce qu'il enseigne** : mêmes adresses (la box
+192.168.1.1 passerelle, le serveur .10 fixe, la carte .50 fixe réglée à la main, la tablette .23 en DHCP), la rue 192.168.1 dans
+le titre, les encadrés « pour communiquer, un appareil doit… » et « les 3 pannes classiques ». Un seul détail corrigé au passage :
+le serveur est câblé à la box, comme un serveur l'est. L'activité 4, la simulation de pannes et le QCM sont inchangés.
+
+Le dessin est un original CC0 d'après le simulateur, pas une capture de l'interface ; Cisco et Packet Tracer sont des marques,
+dites sous la figure et dans `SOURCES_MEDIAS.md`. Tous les textes sont à 14 px ou plus : `controle_schemas` donne 0 ✘ et 0 ⚠
+(l'ancien dessin avait 28 textes trop petits). Bancs 41 / 41 et 34 / 34.
+
+**Reste**, dans un second temps : le fichier `.pkt` du jardin, à construire dans Packet Tracer sur le poste de Pascal comme
+ceux de la serre, pour que l'élève ouvre le réseau et fasse lui-même un ping vers la carte 192.168.1.50.

@@ -1,98 +1,128 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 580" font-family="Verdana, Arial, sans-serif" role="img" aria-labelledby="t d">
-  <title id="t">Le réseau local du jardin connecté, avec ses adresses IP</title>
-  <desc id="d">Schéma du réseau local du collège pour le jardin connecté. Au centre, la box routeur, d'adresse 192.168.1.1, qui est la passerelle du réseau. Elle est reliée par câble à la borne wifi de la cour, qui étend la couverture jusqu'au jardin. Trois appareils sont connectés : la carte du jardin, en adresse IP FIXE 192.168.1.50, pour être toujours joignable à la même adresse ; la tablette de la classe, en adresse automatique DHCP 192.168.1.23, qui peut changer d'un jour à l'autre ; et le serveur du collège, en adresse fixe 192.168.1.10, qui héberge la table de données. Un encart rappelle les trois conditions d'une bonne communication : être dans la portée du wifi, avoir une adresse IP unique sur le réseau, et connaître la bonne passerelle. Trois pannes classiques sont listées : deux appareils avec la même adresse IP entrent en conflit ; une mauvaise passerelle isole l'appareil ; hors de portée du wifi, plus aucun signal.</desc>
-  <rect width="940" height="580" fill="#050f24"/>
-  <text x="470" y="30" fill="#81aaff" font-size="19" font-weight="bold" text-anchor="middle">Le réseau du jardin — chaque appareil a son adresse, comme une maison</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 790" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif">
+<title id="t">Le réseau local du jardin connecté, dessiné comme dans Packet Tracer, avec ses adresses IP</title>
+<desc id="d">Le réseau du collège pour le jardin connecté, dessiné d'après le simulateur Packet Tracer. En haut à gauche, la box-routeur du collège, adresse 192.168.1.1, la passerelle du réseau. Un câble la relie, par son port Ethernet 1, au serveur du collège en haut à droite, adresse fixe 192.168.1.10, qui héberge la table de données mesures_jardin. Un second câble part du port Ethernet 2 de la box vers la borne wifi de la cour, au centre, qui étend la couverture jusqu'au jardin. Deux appareils sont reliés à la borne sans fil, en traits pointillés : en bas à gauche, la carte programmable du jardin, en adresse IP fixe 192.168.1.50, réglée à la main pour être toujours joignable au même numéro ; en bas à droite, la tablette de la classe, en adresse automatique DHCP 192.168.1.23, qui peut changer d'un jour à l'autre. Chaque câble porte un petit triangle vert à ses deux bouts : la liaison est prête. En bas, deux encadrés : pour communiquer, un appareil doit être dans la portée du wifi ou câblé, avoir une adresse IP unique sur le réseau, et connaître la bonne passerelle 192.168.1.1 ; les trois pannes classiques sont la même adresse IP sur deux appareils, qui provoque un conflit, une mauvaise passerelle, qui isole l'appareil, et la sortie de la portée du wifi, où plus aucun signal ne passe.</desc>
+<rect width="1100" height="790" fill="#ffffff"/>
+<rect x="1" y="1" width="1098" height="788" fill="none" stroke="#9aaabc" stroke-width="2"/>
+<text x="550" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#135588">Le réseau du jardin — chaque appareil a son adresse, comme une maison dans la rue 192.168.1</text>
 
-  <!-- box routeur -->
-  <g font-size="11">
-    <rect x="380" y="60" width="180" height="76" rx="10" fill="#0d2347" stroke="#ffd66b" stroke-width="2.5"/>
-    <text x="470" y="84" fill="#ffd66b" font-weight="bold" text-anchor="middle">📦 BOX / ROUTEUR</text>
-    <text x="470" y="104" fill="#e4eaf5" text-anchor="middle" font-family="monospace">192.168.1.1</text>
-    <text x="470" y="122" fill="#9bbefc" text-anchor="middle" font-size="10">la PASSERELLE du réseau</text>
+<defs>
+  <!-- le triangle vert de Packet Tracer : la liaison est prête, des deux côtés -->
+  <marker id="pret" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+    <path d="M1,1 L11,6 L1,11 z" fill="#2e9e4f"/>
+  </marker>
+</defs>
 
-    <!-- borne wifi -->
-    <rect x="390" y="196" width="160" height="64" rx="10" fill="#0d2347" stroke="#61dafb" stroke-width="2"/>
-    <text x="470" y="220" fill="#61dafb" font-weight="bold" text-anchor="middle">📶 BORNE WIFI (cour)</text>
-    <text x="470" y="240" fill="#9bbefc" text-anchor="middle" font-size="10">étend la couverture</text>
-    <text x="470" y="252" fill="#9bbefc" text-anchor="middle" font-size="10">jusqu'au jardin</text>
-    <line x1="470" y1="136" x2="470" y2="196" stroke="#5b7bb8" stroke-width="3"/>
-    <text x="482" y="170" fill="#5b7bb8" font-size="9.5">câble</text>
+<!-- ───── les câbles (Copper Straight-Through), tracés avant les appareils ───── -->
+<!-- box → serveur -->
+<line x1="322" y1="120" x2="823" y2="120" stroke="#31475a" stroke-width="3" marker-start="url(#pret)" marker-end="url(#pret)"/>
+<text x="340" y="110" font-size="14" fill="#5d6b7a" font-family="Consolas, monospace">Ethernet 1</text>
+<text x="805" y="110" text-anchor="end" font-size="14" fill="#5d6b7a" font-family="Consolas, monospace">Fa0</text>
+<!-- box → borne wifi -->
+<line x1="322" y1="132" x2="493" y2="308" stroke="#31475a" stroke-width="3" marker-start="url(#pret)" marker-end="url(#pret)"/>
+<text x="352" y="152" font-size="14" fill="#5d6b7a" font-family="Consolas, monospace">Ethernet 2</text>
+<text x="462" y="298" text-anchor="end" font-size="14" fill="#5d6b7a" font-family="Consolas, monospace">Port 0</text>
 
-    <!-- carte jardin -->
-    <rect x="60" y="330" width="230" height="96" rx="10" fill="#0e2e18" stroke="#81fba1" stroke-width="2.5"/>
-    <text x="175" y="354" fill="#81fba1" font-weight="bold" text-anchor="middle">🌱 CARTE DU JARDIN</text>
-    <text x="175" y="376" fill="#e4eaf5" text-anchor="middle" font-family="monospace">192.168.1.50</text>
-    <text x="175" y="396" fill="#ffd66b" text-anchor="middle" font-size="10.5" font-weight="bold">IP FIXE (paramétrée à la main)</text>
-    <text x="175" y="414" fill="#9bbefc" text-anchor="middle" font-size="10">toujours joignable à la même adresse</text>
+<!-- ───── les liaisons sans fil (pointillés, comme dans le simulateur) ───── -->
+<line x1="493" y1="334" x2="272" y2="438" stroke="#2a7fb8" stroke-width="2.5" stroke-dasharray="9 7"/>
+<text x="356" y="372" text-anchor="middle" font-size="14" fill="#2a7fb8">wifi</text>
+<line x1="607" y1="334" x2="843" y2="430" stroke="#2a7fb8" stroke-width="2.5" stroke-dasharray="9 7"/>
+<text x="748" y="368" text-anchor="middle" font-size="14" fill="#2a7fb8">wifi</text>
 
-    <!-- tablette -->
-    <rect x="360" y="330" width="220" height="96" rx="10" fill="#0d2347" stroke="#c68ef2" stroke-width="2"/>
-    <text x="470" y="354" fill="#c68ef2" font-weight="bold" text-anchor="middle">📱 TABLETTE DE LA CLASSE</text>
-    <text x="470" y="376" fill="#e4eaf5" text-anchor="middle" font-family="monospace">192.168.1.23</text>
-    <text x="470" y="396" fill="#61dafb" text-anchor="middle" font-size="10.5">IP AUTOMATIQUE (DHCP)</text>
-    <text x="470" y="414" fill="#9bbefc" text-anchor="middle" font-size="10">peut changer d'un jour à l'autre</text>
+<!-- ───── la box-routeur (Home Router), en haut à gauche ───── -->
+<g>
+  <line x1="190" y1="98" x2="178" y2="62" stroke="#31475a" stroke-width="3"/>
+  <circle cx="178" cy="60" r="4" fill="#31475a"/>
+  <line x1="290" y1="98" x2="302" y2="62" stroke="#31475a" stroke-width="3"/>
+  <circle cx="302" cy="60" r="4" fill="#31475a"/>
+  <rect x="160" y="98" width="160" height="44" rx="8" fill="#455d72" stroke="#31475a" stroke-width="2"/>
+  <rect x="160" y="98" width="160" height="12" rx="8" fill="#31475a"/>
+  <rect x="178" y="118" width="10" height="8" rx="1" fill="#2e9e4f"/>
+  <rect x="194" y="118" width="10" height="8" rx="1" fill="#2e9e4f"/>
+  <rect x="210" y="118" width="10" height="8" rx="1" fill="#2e9e4f"/>
+  <rect x="226" y="118" width="10" height="8" rx="1" fill="#2e9e4f"/>
+  <rect x="242" y="118" width="10" height="8" rx="1" fill="#c8cfd6"/>
+  <rect x="258" y="118" width="10" height="8" rx="1" fill="#c8cfd6"/>
+  <text x="240" y="168" text-anchor="middle" font-size="14" fill="#5d6b7a">Home Router</text>
+  <text x="240" y="186" text-anchor="middle" font-size="15" font-weight="bold" fill="#1d4e89">Box-Collège</text>
+  <rect x="170" y="194" width="140" height="24" rx="12" fill="#8a6d1d"/>
+  <text x="240" y="211" text-anchor="middle" font-size="15" fill="#ffffff" font-family="Consolas, monospace" font-weight="bold">192.168.1.1</text>
+  <text x="240" y="238" text-anchor="middle" font-size="14" font-weight="bold" fill="#8a6d1d">la PASSERELLE du réseau</text>
+</g>
 
-    <!-- serveur -->
-    <rect x="650" y="330" width="230" height="96" rx="10" fill="#0d2347" stroke="#61dafb" stroke-width="2.5"/>
-    <text x="765" y="354" fill="#61dafb" font-weight="bold" text-anchor="middle">🗄 SERVEUR DU COLLÈGE</text>
-    <text x="765" y="376" fill="#e4eaf5" text-anchor="middle" font-family="monospace">192.168.1.10</text>
-    <text x="765" y="396" fill="#ffd66b" text-anchor="middle" font-size="10.5" font-weight="bold">IP FIXE</text>
-    <text x="765" y="414" fill="#9bbefc" text-anchor="middle" font-size="10">héberge la table « mesures_jardin »</text>
+<!-- ───── le serveur du collège (Server-PT), en haut à droite ───── -->
+<g>
+  <rect x="825" y="66" width="70" height="112" rx="4" fill="#31475a"/>
+  <rect x="833" y="76" width="54" height="22" rx="2" fill="#5d7489"/>
+  <rect x="833" y="106" width="54" height="22" rx="2" fill="#5d7489"/>
+  <rect x="833" y="136" width="54" height="22" rx="2" fill="#5d7489"/>
+  <circle cx="879" cy="87" r="3" fill="#2e9e4f"/>
+  <circle cx="879" cy="117" r="3" fill="#2e9e4f"/>
+  <circle cx="879" cy="147" r="3" fill="#2e9e4f"/>
+  <text x="860" y="204" text-anchor="middle" font-size="14" fill="#5d6b7a">Server-PT</text>
+  <text x="860" y="222" text-anchor="middle" font-size="15" font-weight="bold" fill="#1d4e89">Serveur-Collège</text>
+  <rect x="788" y="230" width="144" height="24" rx="12" fill="#1d4e89"/>
+  <text x="860" y="247" text-anchor="middle" font-size="15" fill="#ffffff" font-family="Consolas, monospace" font-weight="bold">192.168.1.10</text>
+  <text x="860" y="274" text-anchor="middle" font-size="14" font-weight="bold" fill="#8a6d1d">IP FIXE</text>
+  <text x="860" y="291" text-anchor="middle" font-size="14" fill="#5d6b7a">héberge la table « mesures_jardin »</text>
+</g>
 
-    <!-- ondes wifi -->
-    <g stroke="#61dafb" stroke-width="2" fill="none" opacity="0.75">
-      <path d="M416 262 q-140 30 -226 68"/>
-      <path d="M470 262 q0 34 0 66"/>
-      <path d="M524 262 q140 30 226 68"/>
-    </g>
-    <text x="300" y="314" fill="#61dafb" font-size="9.5">wifi</text>
-    <text x="478" y="300" fill="#61dafb" font-size="9.5">wifi</text>
-    <text x="622" y="314" fill="#61dafb" font-size="9.5">wifi</text>
-  </g>
+<!-- ───── la borne wifi de la cour (AccessPoint-PT), au centre ───── -->
+<g>
+  <line x1="590" y1="310" x2="590" y2="282" stroke="#31475a" stroke-width="3"/>
+  <circle cx="590" cy="280" r="4" fill="#31475a"/>
+  <path d="M576 268 a20 20 0 0 1 28 0" fill="none" stroke="#2a7fb8" stroke-width="2.5"/>
+  <path d="M568 258 a31 31 0 0 1 44 0" fill="none" stroke="#2a7fb8" stroke-width="2.5"/>
+  <rect x="495" y="310" width="112" height="44" rx="8" fill="#455d72" stroke="#31475a" stroke-width="2"/>
+  <rect x="495" y="310" width="112" height="10" rx="8" fill="#31475a"/>
+  <rect x="512" y="330" width="10" height="8" rx="1" fill="#2e9e4f"/>
+  <rect x="528" y="330" width="10" height="8" rx="1" fill="#2e9e4f"/>
+  <text x="551" y="380" text-anchor="middle" font-size="14" fill="#5d6b7a">AccessPoint-PT</text>
+  <text x="551" y="398" text-anchor="middle" font-size="15" font-weight="bold" fill="#1d4e89">Borne-Cour</text>
+  <text x="551" y="415" text-anchor="middle" font-size="14" fill="#5d6b7a">étend la couverture jusqu'au jardin</text>
+</g>
 
-  <!-- règles -->
-  <g font-size="11">
-    <rect x="40" y="452" width="430 " height="108" rx="12" fill="#173666" stroke="#274a8a"/>
-    <text x="58" y="478" fill="#81fba1" font-weight="bold" font-size="12.5">✅ Pour communiquer, un appareil doit :</text>
-    <text x="58" y="500" fill="#e4eaf5">1. être DANS LA PORTÉE du wifi (ou câblé)</text>
-    <text x="58" y="520" fill="#e4eaf5">2. avoir une adresse IP UNIQUE sur le réseau</text>
-    <text x="58" y="540" fill="#e4eaf5">3. connaître la bonne PASSERELLE (192.168.1.1)</text>
+<!-- ───── la carte programmable du jardin (SBC-PT), en bas à gauche ───── -->
+<g>
+  <rect x="150" y="440" width="120" height="80" rx="4" fill="#2f6b3a" stroke="#1d4e35" stroke-width="2"/>
+  <rect x="166" y="456" width="34" height="34" rx="2" fill="#1d2b33"/>
+  <rect x="214" y="458" width="40" height="8" fill="#c8cfd6"/>
+  <rect x="214" y="472" width="40" height="8" fill="#c8cfd6"/>
+  <rect x="214" y="486" width="40" height="8" fill="#c8cfd6"/>
+  <rect x="166" y="500" width="88" height="10" fill="#e3b341"/>
+  <text x="210" y="546" text-anchor="middle" font-size="14" fill="#5d6b7a">SBC-PT (carte programmable)</text>
+  <text x="210" y="564" text-anchor="middle" font-size="15" font-weight="bold" fill="#2f6b3a">Carte-Jardin</text>
+  <rect x="138" y="572" width="144" height="24" rx="12" fill="#2f6b3a"/>
+  <text x="210" y="589" text-anchor="middle" font-size="15" fill="#ffffff" font-family="Consolas, monospace" font-weight="bold">192.168.1.50</text>
+  <text x="210" y="616" text-anchor="middle" font-size="14" font-weight="bold" fill="#8a6d1d">IP FIXE, réglée à la main</text>
+  <text x="210" y="633" text-anchor="middle" font-size="14" fill="#5d6b7a">toujours joignable au même numéro</text>
+</g>
 
-    <rect x="490" y="452" width="420" height="108" rx="12" fill="#3d0f18" stroke="#ff7b88" stroke-width="2"/>
-    <text x="508" y="478" fill="#ff7b88" font-weight="bold" font-size="12.5">⚠ Les 3 pannes classiques :</text>
-    <text x="508" y="500" fill="#ffd9dd">• même IP sur 2 appareils → CONFLIT d'adresses</text>
-    <text x="508" y="520" fill="#ffd9dd">• mauvaise passerelle → l'appareil est ISOLÉ</text>
-    <text x="508" y="540" fill="#ffd9dd">• hors de portée wifi → plus AUCUN signal</text>
-  </g>
-<style><![CDATA[
-/* — impression : fond blanc, couleurs conservées (décision de Pascal, 02/09/2026) —
-   Un objet embarqué applique le media print de la page qui l'appelle : ce
-   bloc ne change RIEN à l'écran, et blanchit le fond du schéma sur le papier
-   en fonçant ses couleurs claires, teinte gardée. Mesuré le 02/09 : une image
-   appelée par la balise img ne le fait pas — ces schémas-là ne sont pas ici. */
-@media print{
-  *:not(text):not(tspan)[fill="#050f24"]{fill:#ffffff}
-  *:not(text):not(tspan)[fill="#0d2347"]{fill:#ffffff}
-  *:not(text):not(tspan)[fill="#0e2e18"]{fill:#ffffff}
-  *:not(text):not(tspan)[fill="#173666"]{fill:#ffffff}
-  *:not(text):not(tspan)[fill="#3d0f18"]{fill:#ffffff}
-  *:not(text):not(tspan)[fill="#5b7bb8"]{fill:#ffffff}
-  text[fill="#5b7bb8"],tspan[fill="#5b7bb8"]{fill:#5475b5}
-  text[fill="#61dafb"],tspan[fill="#61dafb"],[fill="#61dafb"] text,[fill="#61dafb"] tspan{fill:#047fa0}
-  [stroke="#61dafb"]{stroke:#047fa0}
-  text[fill="#81aaff"],tspan[fill="#81aaff"],[fill="#81aaff"] text,[fill="#81aaff"] tspan{fill:#2069ff}
-  text[fill="#81fba1"],tspan[fill="#81fba1"],[fill="#81fba1"] text,[fill="#81fba1"] tspan{fill:#048827}
-  [stroke="#81fba1"]{stroke:#048827}
-  text[fill="#9bbefc"],tspan[fill="#9bbefc"],[fill="#9bbefc"] text,[fill="#9bbefc"] tspan{fill:#1a6af8}
-  text[fill="#c68ef2"],tspan[fill="#c68ef2"],[fill="#c68ef2"] text,[fill="#c68ef2"] tspan{fill:#a145ea}
-  [stroke="#c68ef2"]{stroke:#a145ea}
-  text[fill="#e4eaf5"],tspan[fill="#e4eaf5"],[fill="#e4eaf5"] text,[fill="#e4eaf5"] tspan{fill:#4b73bc}
-  text[fill="#ff7b88"],tspan[fill="#ff7b88"],[fill="#ff7b88"] text,[fill="#ff7b88"] tspan{fill:#eb0017}
-  [stroke="#ff7b88"]{stroke:#eb0017}
-  text[fill="#ffd66b"],tspan[fill="#ffd66b"],[fill="#ffd66b"] text,[fill="#ffd66b"] tspan{fill:#996f00}
-  [stroke="#ffd66b"]{stroke:#996f00}
-  text[fill="#ffd9dd"],tspan[fill="#ffd9dd"],[fill="#ffd9dd"] text,[fill="#ffd9dd"] tspan{fill:#e80018}
-}
-]]></style>
+<!-- ───── la tablette de la classe (Tablet PC-PT), en bas à droite ───── -->
+<g>
+  <rect x="845" y="420" width="90" height="120" rx="10" fill="#31475a"/>
+  <rect x="853" y="432" width="74" height="92" rx="3" fill="#e6f1fb"/>
+  <circle cx="890" cy="532" r="3.5" fill="#c8cfd6"/>
+  <text x="890" y="566" text-anchor="middle" font-size="14" fill="#5d6b7a">Tablet PC-PT</text>
+  <text x="890" y="584" text-anchor="middle" font-size="15" font-weight="bold" fill="#1d4e89">Tablette-Classe</text>
+  <rect x="818" y="592" width="144" height="24" rx="12" fill="#1d4e89"/>
+  <text x="890" y="609" text-anchor="middle" font-size="15" fill="#ffffff" font-family="Consolas, monospace" font-weight="bold">192.168.1.23</text>
+  <text x="890" y="636" text-anchor="middle" font-size="14" font-weight="bold" fill="#2a7fb8">IP AUTOMATIQUE (DHCP)</text>
+  <text x="890" y="653" text-anchor="middle" font-size="14" fill="#5d6b7a">peut changer d'un jour à l'autre</text>
+</g>
+
+<!-- ───── les deux encadrés : les conditions, les pannes ───── -->
+<g>
+  <rect x="60" y="672" width="470" height="90" rx="10" fill="#eef8f0" stroke="#2f855a" stroke-width="2"/>
+  <text x="80" y="694" font-size="14" font-weight="bold" fill="#1f6b43">Pour communiquer, un appareil doit :</text>
+  <text x="80" y="714" font-size="14" fill="#22313f">1. être DANS LA PORTÉE du wifi (ou câblé)</text>
+  <text x="80" y="733" font-size="14" fill="#22313f">2. avoir une adresse IP UNIQUE sur le réseau</text>
+  <text x="80" y="752" font-size="14" fill="#22313f">3. connaître la bonne PASSERELLE : 192.168.1.1</text>
+
+  <rect x="570" y="672" width="470" height="90" rx="10" fill="#fdf0f1" stroke="#b33a3a" stroke-width="2"/>
+  <text x="590" y="694" font-size="14" font-weight="bold" fill="#9c2b2b">Les 3 pannes classiques :</text>
+  <text x="590" y="714" font-size="14" fill="#22313f">même IP sur 2 appareils → CONFLIT d'adresses</text>
+  <text x="590" y="733" font-size="14" fill="#22313f">mauvaise passerelle → l'appareil est ISOLÉ</text>
+  <text x="590" y="752" font-size="14" fill="#22313f">hors de portée du wifi → plus AUCUN signal</text>
+</g>
+<text x="550" y="780" text-anchor="middle" font-size="14" fill="#7b8794">Dessin original d'après le simulateur Cisco Packet Tracer 8 (noms des modèles tels qu'il les affiche). Cisco et Packet Tracer sont des marques de Cisco.</text>
 </svg>
