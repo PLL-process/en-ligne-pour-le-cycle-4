@@ -214,15 +214,6 @@ EX_STATION_B = figures.exigences(
 # ─────────────────────────────────────────────────────────────────────────────
 # Les tableaux répétés (chaque exercice se suffit à lui-même : il peut être posé seul dans une séquence)
 # ─────────────────────────────────────────────────────────────────────────────
-TABLE_VALEURS = ('<div class="defile"><table><caption>Les deux boîtiers proposés : valeurs déclarées par leurs fabricants '
-                 '(inventées pour l\'exercice)</caption>'
-                 '<tr><th>Exigence</th><th>Niveau demandé</th><th>Boîtier A</th><th>Boîtier B</th></tr>'
-                 '<tr><td>1.1 Étanchéité — indice de protection</td><td>IP65 au moins</td><td>IP66</td><td>IP54</td></tr>'
-                 '<tr><td>1.2 Autonomie sur batterie</td><td>72&nbsp;h au moins</td><td>80&nbsp;h</td><td>72&nbsp;h</td></tr>'
-                 '<tr><td>1.3 Distance où l\'alerte s\'entend</td><td>100&nbsp;m au moins</td><td>110&nbsp;m</td><td>150&nbsp;m</td></tr>'
-                 '<tr><td>1.4 Indice de réparabilité</td><td>6/10 au moins</td><td>5/10</td><td>9/10</td></tr>'
-                 '<tr><td>1.5 Coût du boîtier</td><td>300&nbsp;€ au plus</td><td>290&nbsp;€</td><td>240&nbsp;€</td></tr>'
-                 '</table></div>')
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 4e
@@ -470,14 +461,46 @@ E2 = dict(
           "<b>comment</b>, pas une exigence.",
 )
 
-TABLE_EXIGENCES_E3 = (
-    '<div class="defile"><table><caption>Extrait du cahier des charges : les quatre exigences du diagramme du jardin</caption>'
-    "<tr><th>Id</th><th>Exigence</th><th>Niveau</th><th>Flexibilité (classe et marge chiffrée)</th></tr>"
-    "<tr><td>1.1</td><td>Étanchéité</td><td>IPX4 au moins&nbsp;: aucune eau dans le boîtier sous des projections</td><td>F1</td></tr>"
-    "<tr><td>1.2</td><td>Sobriété</td><td>au plus 10&nbsp;L d'eau par jour</td><td>F2&nbsp;: de 9 à 11&nbsp;L acceptés</td></tr>"
-    "<tr><td>1.3</td><td>Réglage</td><td>sans outil, en 2&nbsp;min au plus</td><td>F3&nbsp;: jusqu'à 5&nbsp;min acceptées, toujours sans outil</td></tr>"
-    "<tr><td>1.4</td><td>Sécurité électrique</td><td>très basse tension&nbsp;: 12&nbsp;V (volts)</td><td>F0&nbsp;: aucun écart</td></tr>"
-    "</table></div>")
+# Le cahier des charges et sa validation, dans le même tableau : le test et le verdict se choisissent dans les cases
+# (demande du professeur, 31/10/2026 : « directement à l'intérieur du cahier des charges, à l'aide de menus déroulants »).
+TESTS_E3 = [("t1", "T1 — Relevé du compteur"), ("t2", "T2 — Mesure au multimètre"), ("t3", "T3 — Essai à l'arroseur"),
+            ("t4", "T4 — Réglage chronométré"), ("t5", "T5 — Avis")]
+VERDICTS_E3 = [("atteint", "validée : le résultat atteint le niveau"), ("marge", "validée : l'écart reste dans la marge acceptée"),
+               ("hors", "non validée : l'écart dépasse la marge acceptée"), ("f0", "non validée : F0, aucun écart accepté")]
+T5_RIEN = "T5 ne mesure rien : un avis n'est pas un test, il ne vérifie aucune exigence."
+TABLEAU_E3 = dict(
+    type="tableau", name="valid",
+    legende="Extrait du cahier des charges du jardin, et sa validation sur le prototype — à compléter",
+    colonnes=["Exigence", "Niveau", "Flexibilité (classe et marge chiffrée)", "Le test qui la vérifie", "Résultat sur le prototype",
+              "Verdict"],
+    largeurs=[12, 15, 17, 19, 15, 22],
+    menus={"test": TESTS_E3, "verdict": VERDICTS_E3},
+    lignes=[
+        dict(nom="Exigence 1.1, étanchéité", cases=[
+            "1.1 Étanchéité", "IPX4 au moins&nbsp;: aucune eau dans le boîtier sous des projections", "F1",
+            dict(menu="test", bonne="t3", indice="On cherche à savoir si l'eau entre dans le boîtier. Quel test l'arrose ?",
+                 retours={"t5": T5_RIEN}),
+            "aucune goutte dans le boîtier",
+            dict(menu="verdict", bonne="atteint", indice="Aucune goutte : c'est exactement ce qui était demandé. Y a-t-il un écart ?")]),
+        dict(nom="Exigence 1.2, sobriété", cases=[
+            "1.2 Sobriété", "au plus 10&nbsp;L d'eau par jour", "F2&nbsp;: de 9 à 11&nbsp;L acceptés",
+            dict(menu="test", bonne="t1", indice="On mesure un volume d'eau sur une journée. Quel test le fait ?",
+                 retours={"t5": T5_RIEN}),
+            "11,5&nbsp;L en 24&nbsp;h",
+            dict(menu="verdict", bonne="hors", indice="La marge F2 va jusqu'à 11 L. 11,5 L est-il dedans, même de peu ?")]),
+        dict(nom="Exigence 1.3, réglage", cases=[
+            "1.3 Réglage", "sans outil, en 2&nbsp;min au plus", "F3&nbsp;: jusqu'à 5&nbsp;min acceptées, toujours sans outil",
+            dict(menu="test", bonne="t4", indice="On mesure une durée et on regarde les outils. Quel test le fait ?",
+                 retours={"t5": T5_RIEN}),
+            "4&nbsp;min, sans outil",
+            dict(menu="verdict", bonne="marge", indice="4 min dépasse 2 min, mais la marge F3 va jusqu'à 5 min, sans outil.")]),
+        dict(nom="Exigence 1.4, sécurité électrique", cases=[
+            "1.4 Sécurité électrique", "très basse tension&nbsp;: 12&nbsp;V (volts)", "F0&nbsp;: aucun écart",
+            dict(menu="test", bonne="t2", indice="On mesure une tension, en volts. Quel instrument mesure des volts ?",
+                 retours={"t5": T5_RIEN}),
+            "24&nbsp;V (une alimentation de 24&nbsp;V a été branchée par erreur)",
+            dict(menu="verdict", bonne="f0", indice="Quelle est la classe de flexibilité de la tension ? Quel écart accepte-t-elle ?")]),
+    ])
 
 TABLE_TESTS_E3 = (
     '<div class="defile"><table><caption>Cinq tests proposés par le club</caption>'
@@ -508,37 +531,15 @@ E3 = dict(
     intro="<p>Le club a fabriqué un prototype du système d'arrosage. Avant de l'installer, on <b>vérifie</b> chaque exigence "
           "par un test. Dans le diagramme des exigences, chaque test a son bloc «&nbsp;testCase&nbsp;», relié à l'exigence "
           "par une flèche en tirets «&nbsp;verify&nbsp;»&nbsp;: «&nbsp;ce test vérifie cette exigence&nbsp;».</p>"
-          + TABLE_EXIGENCES_E3 + TABLE_TESTS_E3,
+          + TABLE_TESTS_E3,
     consigne="<p>Un <b>protocole de test</b> dit ce qu'on mesure, avec quel instrument, comment, et le seuil à atteindre. "
              "La <b>flexibilité</b> dit l'écart que le client accepte autour du niveau&nbsp;: un écart dans la marge se "
              "valide, un écart hors de la marge ne se valide pas, et en <b>F0</b> aucun écart n'est accepté.</p>"
-             "<p><b>Relie chaque exigence au test qui la vérifie</b> (un des cinq tests ne vérifie rien). <b>Juge</b> ensuite "
-             "chaque résultat obtenu sur le prototype. <b>Écris</b> enfin le protocole de test d'une nouvelle exigence.</p>",
+             "<p><b>Dans le tableau du cahier des charges, choisis pour chaque exigence le test qui la vérifie</b> (un des "
+             "cinq tests ne vérifie rien). <b>Juge</b> ensuite, dans la colonne Verdict, le résultat obtenu sur le prototype. "
+             "<b>Écris</b> enfin le protocole de test d'une nouvelle exigence.</p>",
     critere="huit réponses justes, et un protocole qui dit ce que tu mesures, avec quel instrument, et le seuil à atteindre.",
-    widgets=[dict(type="classer", name="lien",
-                  categories=[("t1", "T1 — Relevé du compteur"), ("t2", "T2 — Mesure au multimètre"),
-                              ("t3", "T3 — Essai à l'arroseur"), ("t4", "T4 — Réglage chronométré"), ("t5", "T5 — Avis")],
-                  items=[("1.1 Étanchéité — IPX4 au moins&nbsp;: quel test la vérifie&nbsp;?", "t3",
-                          "1.1 : on cherche à savoir si l'eau entre dans le boîtier. Quel test l'arrose ?"),
-                         ("1.2 Sobriété — au plus 10&nbsp;L par jour&nbsp;: quel test&nbsp;?", "t1",
-                          "1.2 : on mesure un volume d'eau sur une journée. Quel test le fait ?"),
-                         ("1.3 Réglage — sans outil, 2&nbsp;min au plus&nbsp;: quel test&nbsp;?", "t4",
-                          "1.3 : on mesure une durée et on regarde les outils. Quel test le fait ?"),
-                         ("1.4 Sécurité électrique — 12&nbsp;V&nbsp;: quel test&nbsp;?", "t2",
-                          "1.4 : on mesure une tension, en volts. Quel instrument mesure des volts ?")]),
-             dict(type="classer", name="verdict",
-                  categories=[("atteint", "validée&nbsp;: le résultat atteint le niveau"),
-                              ("marge", "validée&nbsp;: l'écart reste dans la marge acceptée"),
-                              ("hors", "non validée&nbsp;: l'écart dépasse la marge acceptée"),
-                              ("f0", "non validée&nbsp;: flexibilité F0, aucun écart accepté")],
-                  items=[("1.1 — résultat de l'essai à l'arroseur&nbsp;: aucune goutte dans le boîtier", "atteint",
-                          "1.1 : aucune goutte, c'est exactement ce qui était demandé. Y a-t-il un écart ?"),
-                         ("1.2 — résultat du relevé&nbsp;: 11,5&nbsp;L en 24&nbsp;h", "hors",
-                          "1.2 : la marge F2 va jusqu'à 11 L. 11,5 L est-il dedans, même de peu ?"),
-                         ("1.3 — résultat du réglage chronométré&nbsp;: 4&nbsp;min, sans outil", "marge",
-                          "1.3 : 4 min dépasse 2 min, mais la marge F3 va jusqu'à 5 min, sans outil."),
-                         ("1.4 — résultat au multimètre&nbsp;: 24&nbsp;V (une alimentation de 24&nbsp;V a été branchée par erreur)", "f0",
-                          "1.4 : quelle est la classe de flexibilité de la tension ? Quel écart accepte-t-elle ?")]),
+    widgets=[TABLEAU_E3,
              dict(type="texte", name="proto", lignes=4,
                   label="Nouvelle exigence 2.1&nbsp;: «&nbsp;Le compte rendu doit arriver sur le smartphone 5&nbsp;min au "
                         "plus après chaque arrosage.&nbsp;» Écris son protocole de test.",
@@ -634,40 +635,47 @@ E4 = dict(
           "et la pression, et fait sonner une sirène pour prévenir les habitants, même quand le courant et Internet sont "
           "coupés. Ses exigences sont dessinées dans un <b>diagramme des exigences</b> — on dit souvent <b>diagramme des "
           "exigences SysML</b>, du nom de ce langage de schémas (<i>Systems Modeling Language</i>, « langage de modélisation "
-          "des systèmes »). Deux fabricants proposent un boîtier.</p>" + TABLE_VALEURS,
+          "des systèmes »). Deux fabricants proposent un boîtier.</p>",
     consigne="<p>Une solution <b>satisfait</b> une exigence quand sa valeur atteint le niveau&nbsp;: «&nbsp;au moins&nbsp;» "
              "veut dire cette valeur <b>ou plus</b>, «&nbsp;au plus&nbsp;» cette valeur <b>ou moins</b>&nbsp;; l'égalité "
              "suffit. Pour l'indice de protection IP, chacun des deux chiffres (poussière, puis eau) doit être au moins égal. "
              "Dans le diagramme, on le montre par une flèche «&nbsp;satisfy&nbsp;» (satisfaire), de la solution vers "
              "l'exigence.</p>"
-             "<p><b>Pour chaque exigence, dis si le boîtier A la satisfait, puis si le boîtier B la satisfait.</b> Dis enfin "
-             "ce qu'on peut conclure du décompte.</p>",
+             "<p><b>Dans le tableau, sous chaque valeur déclarée, dis si le boîtier satisfait l'exigence</b>&nbsp;: le "
+             "boîtier A, puis le boîtier B. Dis enfin ce qu'on peut conclure du décompte.</p>",
     critere="onze réponses justes&nbsp;; tu sais expliquer pourquoi IP66 satisfait «&nbsp;IP65 au moins&nbsp;» et pourquoi "
             "72&nbsp;h satisfait «&nbsp;72&nbsp;h au moins&nbsp;».",
-    widgets=[dict(type="classer", name="a",
-                  categories=[("oui", "satisfaite"), ("non", "non satisfaite")],
-                  items=[("Boîtier A — 1.1 Étanchéité&nbsp;: IP66 pour «&nbsp;IP65 au moins&nbsp;»", "oui",
-                          "A, 1.1 : compare chiffre par chiffre. 6 pour la poussière, 6 pour l'eau : est-ce au moins 6 et 5 ?"),
-                         ("Boîtier A — 1.2 Autonomie&nbsp;: 80&nbsp;h pour «&nbsp;72&nbsp;h au moins&nbsp;»", "oui",
-                          "A, 1.2 : 80 h, est-ce 72 h ou plus ?"),
-                         ("Boîtier A — 1.3 Alerte audible&nbsp;: 110&nbsp;m pour «&nbsp;100&nbsp;m au moins&nbsp;»", "oui",
-                          "A, 1.3 : 110 m, est-ce 100 m ou plus ?"),
-                         ("Boîtier A — 1.4 Réparabilité&nbsp;: 5/10 pour «&nbsp;6/10 au moins&nbsp;»", "non",
-                          "A, 1.4 : 5, est-ce 6 ou plus ?"),
-                         ("Boîtier A — 1.5 Coût&nbsp;: 290&nbsp;€ pour «&nbsp;300&nbsp;€ au plus&nbsp;»", "oui",
-                          "A, 1.5 : « au plus » : 290 €, est-ce 300 € ou moins ?")]),
-             dict(type="classer", name="b",
-                  categories=[("oui", "satisfaite"), ("non", "non satisfaite")],
-                  items=[("Boîtier B — 1.1 Étanchéité&nbsp;: IP54 pour «&nbsp;IP65 au moins&nbsp;»", "non",
-                          "B, 1.1 : 5 pour la poussière (6 demandé), 4 pour l'eau (5 demandé)."),
-                         ("Boîtier B — 1.2 Autonomie&nbsp;: 72&nbsp;h pour «&nbsp;72&nbsp;h au moins&nbsp;»", "oui",
-                          "B, 1.2 : « au moins 72 h » : 72 h exactement, est-ce assez ? L'égalité suffit."),
-                         ("Boîtier B — 1.3 Alerte audible&nbsp;: 150&nbsp;m pour «&nbsp;100&nbsp;m au moins&nbsp;»", "oui",
-                          "B, 1.3 : 150 m, est-ce 100 m ou plus ?"),
-                         ("Boîtier B — 1.4 Réparabilité&nbsp;: 9/10 pour «&nbsp;6/10 au moins&nbsp;»", "oui",
-                          "B, 1.4 : 9, est-ce 6 ou plus ?"),
-                         ("Boîtier B — 1.5 Coût&nbsp;: 240&nbsp;€ pour «&nbsp;300&nbsp;€ au plus&nbsp;»", "oui",
-                          "B, 1.5 : « au plus » : 240 €, est-ce 300 € ou moins ?")]),
+    widgets=[dict(type="tableau", name="eval",
+                  legende="Les deux boîtiers proposés&nbsp;: valeurs déclarées par leurs fabricants (inventées pour "
+                          "l'exercice) — sous chaque valeur, ton verdict",
+                  colonnes=["Exigence", "Niveau demandé", "Boîtier A", "Boîtier B"],
+                  largeurs=[28, 22, 25, 25],
+                  menus={"verdict": [("oui", "satisfaite"), ("non", "non satisfaite")]},
+                  lignes=[
+                      dict(nom="Exigence 1.1, étanchéité", cases=[
+                          "1.1 Étanchéité — indice de protection", "IP65 au moins",
+                          dict(menu="verdict", bonne="oui", avant="IP66",
+                               indice="Compare chiffre par chiffre. 6 pour la poussière, 6 pour l'eau : est-ce au moins 6 et 5 ?"),
+                          dict(menu="verdict", bonne="non", avant="IP54",
+                               indice="5 pour la poussière (6 demandé), 4 pour l'eau (5 demandé).")]),
+                      dict(nom="Exigence 1.2, autonomie", cases=[
+                          "1.2 Autonomie sur batterie", "72&nbsp;h au moins",
+                          dict(menu="verdict", bonne="oui", avant="80&nbsp;h", indice="80 h, est-ce 72 h ou plus ?"),
+                          dict(menu="verdict", bonne="oui", avant="72&nbsp;h",
+                               indice="« Au moins 72 h » : 72 h exactement, est-ce assez ? L'égalité suffit.")]),
+                      dict(nom="Exigence 1.3, alerte audible", cases=[
+                          "1.3 Distance où l'alerte s'entend", "100&nbsp;m au moins",
+                          dict(menu="verdict", bonne="oui", avant="110&nbsp;m", indice="110 m, est-ce 100 m ou plus ?"),
+                          dict(menu="verdict", bonne="oui", avant="150&nbsp;m", indice="150 m, est-ce 100 m ou plus ?")]),
+                      dict(nom="Exigence 1.4, réparabilité", cases=[
+                          "1.4 Indice de réparabilité", "6/10 au moins",
+                          dict(menu="verdict", bonne="non", avant="5/10", indice="5, est-ce 6 ou plus ?"),
+                          dict(menu="verdict", bonne="oui", avant="9/10", indice="9, est-ce 6 ou plus ?")]),
+                      dict(nom="Exigence 1.5, coût", cases=[
+                          "1.5 Coût du boîtier", "300&nbsp;€ au plus",
+                          dict(menu="verdict", bonne="oui", avant="290&nbsp;€", indice="« Au plus » : 290 €, est-ce 300 € ou moins ?"),
+                          dict(menu="verdict", bonne="oui", avant="240&nbsp;€", indice="« Au plus » : 240 €, est-ce 300 € ou moins ?")]),
+                  ]),
              dict(type="choix", name="bilan", legende="Chaque boîtier satisfait quatre exigences sur cinq. Que peut-on en conclure&nbsp;?",
                   options=[("rien", "Rien encore&nbsp;: il faut voir quelle exigence manque à chacun, et si cet écart est acceptable."),
                            ("egal", "Qu'ils se valent&nbsp;: on prend le moins cher, le boîtier B."),
@@ -726,8 +734,18 @@ E5 = dict(
            "«&nbsp;± 1&nbsp;L&nbsp;», «&nbsp;au moins&nbsp;», «&nbsp;au plus&nbsp;»)."),
           ("comité de quartier", "l'association des habitants qui commande la station&nbsp;: c'est le client.")],
     intro="<p>Le cahier des charges de la station porte, pour chaque exigence, une <b>flexibilité</b>&nbsp;: l'écart que le "
-          "client accepte autour du niveau. Mme Augustin, présidente du comité de quartier, a répondu à la question «&nbsp;Et "
-          "si on n'atteint pas tout à fait ce niveau&nbsp;?&nbsp;»&nbsp;:</p><ul>"
+          "client accepte autour du niveau. Le client, ici, c'est le comité de quartier.</p>",
+    consigne="<p>La flexibilité se note par une <b>classe</b>&nbsp;: <b>F0</b>, flexibilité nulle — aucun écart, le niveau "
+             "est impératif&nbsp;; <b>F1</b>, faible — un écart accepté seulement à une condition précise&nbsp;; <b>F2</b>, "
+             "moyenne — un petit écart accepté sans condition&nbsp;; <b>F3</b>, forte — un écart large accepté. On peut "
+             "aussi l'écrire en chiffres, comme une <b>tolérance</b>.</p>"
+             "<p><b>Complète la colonne Flexibilité du cahier des charges</b>, d'après chaque réponse de Mme Augustin, puis "
+             "<b>choisis</b> la bonne écriture chiffrée de la marge de l'exigence 1.4.</p>",
+    critere="six réponses justes&nbsp;; tu sais dire que la classe dépend de l'écart que le client accepte, pas de "
+            "l'importance de l'exigence.",
+    widgets=[dict(type="tableau", name="cdcf",
+                  intro="<p><b>Ce que répond Mme Augustin</b>, présidente du comité de quartier, à la question «&nbsp;Et si on "
+                        "n'atteint pas tout à fait ce niveau&nbsp;?&nbsp;»&nbsp;:</p><ul>"
           "<li><b>1.1 Étanchéité, IP65 au moins</b> — «&nbsp;Pas question de descendre&nbsp;: pendant un cyclone, si l'eau "
           "entre, plus d'alerte.&nbsp;»</li>"
           "<li><b>1.2 Autonomie, 72&nbsp;h au moins</b> — «&nbsp;60&nbsp;heures, à la rigueur, si la station m'envoie un "
@@ -736,27 +754,26 @@ E5 = dict(
           "pas un mètre de moins.&nbsp;»</li>"
           "<li><b>1.4 Réparabilité, 6/10 au moins</b> — «&nbsp;5 sur 10, ça ira aussi.&nbsp;»</li>"
           "<li><b>1.5 Coût, 300&nbsp;€ au plus</b> — «&nbsp;Même 400&nbsp;€, on trouvera l'argent.&nbsp;»</li></ul>",
-    consigne="<p>La flexibilité se note par une <b>classe</b>&nbsp;: <b>F0</b>, flexibilité nulle — aucun écart, le niveau "
-             "est impératif&nbsp;; <b>F1</b>, faible — un écart accepté seulement à une condition précise&nbsp;; <b>F2</b>, "
-             "moyenne — un petit écart accepté sans condition&nbsp;; <b>F3</b>, forte — un écart large accepté. On peut "
-             "aussi l'écrire en chiffres, comme une <b>tolérance</b>.</p>"
-             "<p><b>Range chaque réponse de Mme Augustin dans sa classe</b>, puis <b>choisis</b> la bonne écriture chiffrée "
-             "de la marge de l'exigence 1.4.</p>",
-    critere="six réponses justes&nbsp;; tu sais dire que la classe dépend de l'écart que le client accepte, pas de "
-            "l'importance de l'exigence.",
-    widgets=[dict(type="classer", name="flex",
-                  categories=[("f0", "F0 — flexibilité nulle&nbsp;: impératif"), ("f1", "F1 — faible&nbsp;: peu négociable"),
-                              ("f2", "F2 — moyenne&nbsp;: négociable"), ("f3", "F3 — forte&nbsp;: très négociable")],
-                  items=[("1.1 Étanchéité — «&nbsp;Pas question de descendre…&nbsp;»", "f0",
-                          "1.1 : « pas question » : quel écart est accepté ?"),
-                         ("1.2 Autonomie — «&nbsp;60 heures, à la rigueur, si la station m'envoie un message…&nbsp;»", "f1",
-                          "1.2 : un écart est accepté, mais seulement à une condition : laquelle des classes le dit ?"),
-                         ("1.3 Alerte audible — «&nbsp;… pas un mètre de moins.&nbsp;»", "f0",
-                          "1.3 : « pas un mètre de moins » : quel écart est accepté ?"),
-                         ("1.4 Réparabilité — «&nbsp;5 sur 10, ça ira aussi.&nbsp;»", "f2",
-                          "1.4 : un petit écart (un point), accepté sans condition."),
-                         ("1.5 Coût — «&nbsp;Même 400&nbsp;€, on trouvera l'argent.&nbsp;»", "f3",
-                          "1.5 : 100 € de plus, sans condition : l'écart accepté est-il petit ou large ?")]),
+                  legende="Le cahier des charges de la station — la colonne Flexibilité est à compléter",
+                  colonnes=["Exigence", "Niveau", "Flexibilité"],
+                  largeurs=[38, 28, 34],
+                  menus={"flex": [("f0", "F0 — impératif"), ("f1", "F1 — peu négociable"), ("f2", "F2 — négociable"), ("f3", "F3 — très négociable")]},
+                  lignes=[
+                      dict(nom="Exigence 1.1, étanchéité", cases=["1.1 Étanchéité", "IP65 au moins", dict(
+                          menu="flex", bonne="f0", indice="« Pas question de descendre » : aucun écart n'est accepté, le niveau est impératif.",
+                          retours={"f1": "« Pas question de descendre » : aucun écart, même à une condition."})]),
+                      dict(nom="Exigence 1.2, autonomie", cases=["1.2 Autonomie", "72&nbsp;h au moins", dict(
+                          menu="flex", bonne="f1", indice="Un écart est accepté, mais seulement à une condition : le message de batterie faible.",
+                          retours={"f0": "Mme Augustin accepte 60 heures : un écart est possible, ce n'est pas impératif."})]),
+                      dict(nom="Exigence 1.3, alerte audible", cases=["1.3 Alerte audible", "100&nbsp;m au moins", dict(
+                          menu="flex", bonne="f0", indice="« Pas un mètre de moins » : aucun écart n'est accepté, le niveau est impératif.")]),
+                      dict(nom="Exigence 1.4, réparabilité", cases=["1.4 Réparabilité", "6/10 au moins", dict(
+                          menu="flex", bonne="f2", indice="Un petit écart, un point, accepté sans condition : c'est négociable.",
+                          retours={"f0": "« 5 sur 10, ça ira aussi » : un écart est accepté, ce n'est pas impératif."})]),
+                      dict(nom="Exigence 1.5, coût", cases=["1.5 Coût", "300&nbsp;€ au plus", dict(
+                          menu="flex", bonne="f3", indice="100 € de plus, sans condition : l'écart accepté est large, c'est très négociable.",
+                          retours={"f0": "« Même 400 €, on trouvera l'argent » : un écart est accepté, ce n'est pas impératif."})]),
+                  ]),
              dict(type="choix", name="chiffre", legende="La marge de l'exigence 1.4 (6/10 au moins, classe F2), écrite en chiffres&nbsp;:",
                   options=[("bon", "6/10 demandé&nbsp;; 5/10 accepté."),
                            ("pm", "6/10 ± 5, donc de 1/10 à 11/10."),

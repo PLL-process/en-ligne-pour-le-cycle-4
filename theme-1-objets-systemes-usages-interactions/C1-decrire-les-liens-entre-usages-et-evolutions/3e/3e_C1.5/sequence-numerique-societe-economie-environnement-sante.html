@@ -2882,6 +2882,28 @@ document.querySelectorAll(".vers-seance").forEach(function(b){
 .atelier-incruste table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.9em}
 .atelier-incruste th,.atelier-incruste td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
 .atelier-incruste th{background:var(--panel2);color:var(--sub)}
+.atelier-incruste .tableau-menus table.cdcf{table-layout:fixed;font-size:.92em}
+.atelier-incruste .tableau-menus table.cdcf caption{caption-side:top;text-align:left;color:var(--sub);font-size:.95em;padding:0 0 6px}
+.atelier-incruste .tableau-menus table.cdcf th{vertical-align:bottom}
+.atelier-incruste .tableau-menus table.cdcf td{overflow-wrap:break-word}
+.atelier-incruste .tableau-menus select{width:100%;max-width:100%;background:var(--input-bg);color:var(--text);border:1px solid var(--input-bd);
+  border-radius:8px;padding:7px 9px;font-family:inherit;font-size:1em;min-height:40px}
+.atelier-incruste .tableau-menus .menu-vu,.atelier-incruste .tableau-menus .menu-fleche{display:none}
+.atelier-incruste .tableau-menus.menus-js .menu-case{position:relative;display:flex;align-items:flex-start;gap:6px;width:100%;min-height:40px;
+  padding:7px 9px;border:1.5px solid var(--hl);border-radius:8px;background:var(--input-bg);cursor:pointer}
+.atelier-incruste .tableau-menus.menus-js .menu-case select{position:absolute;top:0;left:0;width:100%;height:100%;min-height:0;margin:0;padding:0;
+  opacity:0;cursor:pointer;font-size:16px}
+.atelier-incruste .tableau-menus.menus-js .menu-vu{display:block;flex:1 1 auto;min-width:0;white-space:normal;line-height:1.35;color:#fff}
+.atelier-incruste .tableau-menus.menus-js .menu-vu:empty::before{content:"choisir";color:var(--sub);font-style:italic}
+.atelier-incruste .tableau-menus.menus-js .menu-fleche{display:block;flex:0 0 auto;color:var(--hl);line-height:1.35}
+.atelier-incruste .tableau-menus.menus-js .menu-case:focus-within{outline:3px solid var(--hl);outline-offset:2px}
+.atelier-incruste .tableau-menus.menus-js .menu-case.choisi{border-color:var(--input-bd)}
+.atelier-incruste .tableau-menus td.case-menu.faux .menu-case{border-color:var(--err)}
+.atelier-incruste .tableau-menus td.case-menu.juste .menu-case{border-color:var(--ok)}
+.atelier-incruste .tableau-menus td.case-menu .encoche{margin:4px 0 0 6px}
+.atelier-incruste .tableau-menus td.case-menu .encoche:empty{display:none}
+.atelier-incruste .retour-case{display:none}
+.atelier-incruste .retour-case.visible{display:block;font-size:.86em;margin:4px 0 0;color:#ffc2c8;line-height:1.35}
 .atelier-incruste .croquis-zone{background:#fff;border:2px dashed #7d9bd6;border-radius:10px;touch-action:none;display:block;width:100%;max-width:760px;margin:6px auto;cursor:crosshair}
 .atelier-incruste .croquis-outils{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:6px 0}
 .atelier-incruste .croquis-outils .btn{padding:7px 12px;min-height:40px}
@@ -2896,8 +2918,9 @@ document.querySelectorAll(".vers-seance").forEach(function(b){
 body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incruste .approfondir,body.essentiel .atelier-incruste details.description{display:none}
 @media (max-width:600px){.atelier-incruste .figure{overflow-x:auto;-webkit-overflow-scrolling:touch}.atelier-incruste .figure svg.schema,.atelier-incruste .figure img{min-width:560px}}
 @media (max-width:600px){.atelier-incruste .figure svg.schema.etroit{min-width:0}}
+@media (max-width:640px){.atelier-incruste .tableau-menus table.cdcf,.atelier-incruste .tableau-menus table.cdcf tbody,.atelier-incruste .tableau-menus table.cdcf tr,.atelier-incruste .tableau-menus table.cdcf td,.atelier-incruste .tableau-menus table.cdcf caption{display:block;width:100%}.atelier-incruste .tableau-menus table.cdcf thead{display:none}.atelier-incruste .tableau-menus table.cdcf tr{border:1px solid var(--input-bd);border-radius:10px;margin:0 0 10px;padding:2px 12px 8px;background:rgba(11,27,57,.55)}.atelier-incruste .tableau-menus table.cdcf td{border:none;padding:7px 0 3px}.atelier-incruste .tableau-menus table.cdcf td+td{border-top:1px dashed var(--input-bd)}.atelier-incruste .tableau-menus table.cdcf td::before{content:attr(data-col);display:block;font-size:.82em;font-weight:700;color:var(--sub);margin:0 0 3px}}
 @media (max-width:600px){.atelier-incruste .card{padding:12px 12px}}
-@media print{.atelier-incruste .btn,.atelier-incruste .croquis-outils{display:none!important}.atelier-incruste .card{background:#fff;border-color:#999;break-inside:avoid-page}.atelier-incruste a,.atelier-incruste a:visited{color:#00309e!important}.atelier-incruste textarea,.atelier-incruste input[type=text]{background:#fff;color:#111;border-color:#999}.atelier-incruste fieldset.qcm-groupe legend,.atelier-incruste .consigne b{color:#111}.atelier-incruste .meta,.atelier-incruste .demo .ligne,.atelier-incruste details,.atelier-incruste .verif-liste li{background:#fff!important;color:#111}.atelier-incruste .retenir,.atelier-incruste .piege,.atelier-incruste .critere{background:#fff!important}.atelier-incruste .retenir b{color:#176b2c}.atelier-incruste .piege b{color:#a1122a}.atelier-incruste .critere b{color:#7a5a00}.atelier-incruste .retour{background:#fff!important;color:#111!important}.atelier-incruste .note,.atelier-incruste details summary,.atelier-incruste .retour-option,.atelier-incruste .meta b{color:#1a3a7a!important}.atelier-incruste details.cours summary{color:#111!important}}
+@media print{.atelier-incruste .btn,.atelier-incruste .croquis-outils{display:none!important}.atelier-incruste .card{background:#fff;border-color:#999;break-inside:avoid-page}.atelier-incruste a,.atelier-incruste a:visited{color:#00309e!important}.atelier-incruste textarea,.atelier-incruste input[type=text]{background:#fff;color:#111;border-color:#999}.atelier-incruste fieldset.qcm-groupe legend,.atelier-incruste .consigne b{color:#111}.atelier-incruste .meta,.atelier-incruste .demo .ligne,.atelier-incruste details,.atelier-incruste .verif-liste li{background:#fff!important;color:#111}.atelier-incruste .retenir,.atelier-incruste .piege,.atelier-incruste .critere{background:#fff!important}.atelier-incruste .retenir b{color:#176b2c}.atelier-incruste .piege b{color:#a1122a}.atelier-incruste .critere b{color:#7a5a00}.atelier-incruste .retour{background:#fff!important;color:#111!important}.atelier-incruste .note,.atelier-incruste details summary,.atelier-incruste .retour-option,.atelier-incruste .meta b{color:#1a3a7a!important}.atelier-incruste details.cours summary{color:#111!important}.atelier-incruste .tableau-menus table.cdcf th{background:#fff!important;color:#111}.atelier-incruste .tableau-menus table.cdcf th,.atelier-incruste .tableau-menus table.cdcf td{border-color:#999}.atelier-incruste .tableau-menus table.cdcf tr{break-inside:avoid}.atelier-incruste .tableau-menus table.cdcf caption{color:#1a3a7a}.atelier-incruste .tableau-menus.menus-js .menu-case select,.atelier-incruste .tableau-menus .menu-fleche{display:none!important}.atelier-incruste .tableau-menus.menus-js .menu-case{border:none;padding:0;min-height:0;background:#fff!important}.atelier-incruste .tableau-menus.menus-js .menu-vu{color:#111}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty{min-width:7em;height:1.5em;border-bottom:1px solid #555}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty::before{content:""}.atelier-incruste .retour-case.visible{color:#a1122a}.atelier-incruste .encoche.juste{color:#176b2c}.atelier-incruste .encoche.faux{color:#a1122a}.atelier-incruste .encoche.vide{color:#7a5a00}}
 .atelier-incruste{border-left:5px solid var(--head);}
 .atelier-incruste .card.exercice{background:rgba(10,27,61,.6)}
 .atelier-incruste>h3,.atelier-incruste>h4{color:var(--head);font-size:1.08em;margin:4px 0 8px}
@@ -2940,7 +2963,7 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
 
   /* ── Valeurs des champs d'un conteneur ────────────────────────────── */
   function valeurs(boite){
-    var v = {}, champs = boite.querySelectorAll("input[name], textarea[name]");
+    var v = {}, champs = boite.querySelectorAll("input[name], textarea[name], select[name]");
     for (var i = 0; i < champs.length; i++){
       var c = champs[i];
       if (c.closest("[data-cle]") !== boite) continue;
@@ -2954,7 +2977,7 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
   }
   function restaurer(boite, v){
     if (!v) return;
-    var champs = boite.querySelectorAll("input[name], textarea[name]");
+    var champs = boite.querySelectorAll("input[name], textarea[name], select[name]");
     for (var i = 0; i < champs.length; i++){
       var c = champs[i];
       if (c.closest("[data-cle]") !== boite) continue;
@@ -3011,6 +3034,19 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
       if (r.checked) groupes[r.name].coche = true;
     }
     for (var n in groupes){ if (!groupes[n].coche) ecrireSvg(document.getElementById(groupes[n].cible), ""); }
+    menusVus(boite);
+  }
+  /* Tableau à menus : le choix s'écrit en entier dans la case (il passe à la ligne, il s'imprime) ;
+     sans choix, la case reste vide — à l'impression, une ligne à remplir. */
+  function menusVus(boite){
+    var sels = boite.querySelectorAll(".menu-case select");
+    for (var i = 0; i < sels.length; i++){
+      var s = sels[i], vu = s.parentNode.querySelector(".menu-vu");
+      if (!vu) continue;
+      var o = s.options[s.selectedIndex];
+      vu.textContent = (o && o.value) ? o.text : "";
+      s.parentNode.classList.toggle("choisi", !!(o && o.value));
+    }
   }
 
   /* ── Encoches ─────────────────────────────────────────────────────── */
@@ -3027,6 +3063,18 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
     for (i = 0; i < els.length; i++){ els[i].className = "encoche"; els[i].textContent = ""; }
     var rs = boite.querySelectorAll(".retour-option");
     for (i = 0; i < rs.length; i++) rs[i].remove();
+    var rc = boite.querySelectorAll(".retour-case");
+    for (i = 0; i < rc.length; i++){ rc[i].textContent = ""; rc[i].classList.remove("visible"); }
+    var cm = boite.querySelectorAll("td.case-menu");
+    for (i = 0; i < cm.length; i++) cm[i].classList.remove("juste", "faux", "vide");
+  }
+  function retourCase(boite, name, etat, texte){
+    var el = boite.querySelector('.retour-case[data-pour="' + name + '"]');
+    var td = el ? el.closest("td") : null;
+    if (td) td.classList.add(etat);
+    if (!el || !texte) return;
+    el.textContent = texte;
+    el.classList.add("visible");
   }
   function retourOption(boite, name, valeur, texte){
     var c = boite.querySelector('input[name="' + name + '"][value="' + CSS.escape(valeur) + '"]');
@@ -3142,6 +3190,22 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
       }
       if (vides) msgs.unshift(vides + (vides > 1 ? " cases du schéma sont" : " case du schéma est") + " encore vide" + (vides > 1 ? "s" : "") + ".");
       return {justes: justes, total: w.slots.length, messages: msgs};
+    },
+    tableau: function(w, v, boite){
+      var justes = 0, vides = 0, faux = 0, msgs = [];
+      for (var i = 0; i < w.cases.length; i++){
+        var c = w.cases[i], r = v[c.name];
+        if (!r){ vides++; encoche(boite, c.name, "vide"); retourCase(boite, c.name, "vide"); continue; }
+        var ok = (r === c.bonne);
+        if (ok) justes++; else faux++;
+        encoche(boite, c.name, ok ? "juste" : "faux");
+        retourCase(boite, c.name, ok ? "juste" : "faux",
+                   ok ? "" : "✘ " + ((c.retours || {})[r] || c.indice || "Relis la ligne et la colonne : cette case attend autre chose."));
+      }
+      if (vides === w.cases.length) msgs.push(w.vide || "Le tableau est encore vide : choisis une réponse dans chaque menu.");
+      else if (vides) msgs.push(vides + (vides > 1 ? " cases du tableau sont encore vides" : " case du tableau est encore vide") + " : chaque menu attend une réponse.");
+      if (faux) msgs.push(faux + (faux > 1 ? " cases du tableau sont à revoir" : " case du tableau est à revoir") + " : le retour est écrit sous chaque case marquée ✘.");
+      return {justes: justes, total: w.cases.length, messages: msgs};
     },
     croquis: function(w, v, boite){
       var etat = lire(w.cle + "__croquis") || {}, traits = etat.traits || 0, msgs = [];
@@ -3310,6 +3374,7 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
     }
   }
   racine.querySelectorAll("canvas.croquis-zone").forEach(croquis);
+  racine.querySelectorAll(".tableau-menus").forEach(function(t){ t.classList.add("menus-js"); });
 
   /* ── Branchements ─────────────────────────────────────────────────── */
   var boites = racine.querySelectorAll("[data-cle]");

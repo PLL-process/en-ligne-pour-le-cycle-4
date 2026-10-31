@@ -219,6 +219,74 @@ class Rendu:
         self.defs.append({"type": "slots", "slots": defs})
         return "".join(h)
 
+    def tableau(self, w):
+        """Un tableau (cahier des charges, tableau de critères) qui se complète dans ses cases.
+
+        Chaque case est soit un texte donné (une chaîne), soit un menu déroulant (un dict) :
+          options   [(valeur, libellé)] — ou `menu` : le nom d'une liste de `w["menus"]`, partagée par plusieurs cases ;
+          bonne     la valeur juste ;
+          retours   {valeur fausse : pourquoi elle ne va pas} — affiché sous la case après « Vérifier » ;
+          indice    le retour d'une valeur fausse qui n'a pas le sien (facultatif) ;
+          avant / apres  un texte posé dans la case, avant ou après le menu (« (la cuve) »).
+        Une ligne : {"nom": "Ligne 3, la cuve", "cases": [...]}. Le nom de chaque menu, pour le lecteur
+        d'écran, est « <nom de la ligne> — <colonne> ». Facultatifs : `intro` et `note` (au-dessus et
+        au-dessous du tableau), `legende` (la légende du tableau), `largeurs` (une par colonne, en %),
+        `vide` (le message quand rien n'est choisi).
+        Un menu par case à faire réfléchir : une case qui ne demande rien reste un texte."""
+        menus = w.get("menus", {})
+        cols = w["colonnes"]
+        cases = []
+        h = ['<div class="tableau-menus">']
+        if w.get("intro"):
+            h.append("<div>%s</div>" % w["intro"])
+        h.append('<div class="defile"><table class="cdcf">')
+        if w.get("legende"):
+            h.append("<caption>%s</caption>" % w["legende"])
+        if w.get("largeurs"):          # en %, une par colonne : le tableau ne bouge pas quand l'élève choisit
+            if len(w["largeurs"]) != len(cols):
+                raise SystemExit("Tableau %s : %d largeurs pour %d colonnes" % (w["name"], len(w["largeurs"]), len(cols)))
+            h.append("<colgroup>%s</colgroup>" % "".join('<col style="width:%s%%">' % x for x in w["largeurs"]))
+        h.append("<thead><tr>%s</tr></thead><tbody>" % "".join('<th scope="col">%s</th>' % c for c in cols))
+        for i, ligne in enumerate(w["lignes"]):
+            if len(ligne["cases"]) != len(cols):
+                raise SystemExit("Tableau %s, ligne %d : %d cases pour %d colonnes" % (w["name"], i + 1, len(ligne["cases"]), len(cols)))
+            h.append("<tr>")
+            for j, (col, c) in enumerate(zip(cols, ligne["cases"])):
+                col_txt = html.unescape(re.sub(r"<[^>]+>", "", col)).strip()
+                if isinstance(c, str):
+                    h.append('<td data-col="%s">%s</td>' % (e(col_txt), c))
+                    continue
+                name = self.nom("%s_%d_%d" % (w["name"], i, j))
+                opts = menus[c["menu"]] if "menu" in c else c["options"]
+                valeurs_ok = [v for v, _ in opts]
+                if c["bonne"] not in valeurs_ok:
+                    raise SystemExit("Tableau %s, ligne %d, colonne %s : la bonne réponse %r n'est pas une option"
+                                     % (w["name"], i + 1, col_txt, c["bonne"]))
+                inconnus = set(c.get("retours", {})) - set(valeurs_ok)
+                if inconnus:
+                    raise SystemExit("Tableau %s, ligne %d, colonne %s : retours pour des options absentes %s"
+                                     % (w["name"], i + 1, col_txt, sorted(inconnus)))
+                cases.append({"name": name, "bonne": c["bonne"], "indice": insecables(c.get("indice")),
+                              "retours": {k: insecables(v) for k, v in c.get("retours", {}).items()}})
+                nom_lu = "%s — %s" % (html.unescape(re.sub(r"<[^>]+>", "", ligne["nom"])), col_txt)
+                sel = ['<select id="%s" name="%s" aria-label="%s" aria-describedby="%s-retour">' % (name, name, e(nom_lu), name),
+                       '<option value="">— choisir —</option>']
+                for v, lib in opts:
+                    sel.append('<option value="%s">%s</option>' % (e(v), e(html.unescape(re.sub(r"<[^>]+>", "", lib)))))
+                sel.append("</select>")
+                h.append('<td data-col="%s" class="case-menu">%s<span class="menu-case">%s<span class="menu-vu" aria-hidden="true"></span>'
+                         '<span class="menu-fleche" aria-hidden="true">▾</span></span>%s<span class="encoche" data-pour="%s"></span>'
+                         '<span class="retour-case" id="%s-retour" data-pour="%s"></span></td>'
+                         % (e(col_txt), ('<span class="case-texte">%s</span> ' % c["avant"]) if c.get("avant") else "", "".join(sel),
+                            (' <span class="case-texte">%s</span>' % c["apres"]) if c.get("apres") else "", name, name, name))
+            h.append("</tr>")
+        h.append("</tbody></table></div>")
+        if w.get("note"):
+            h.append("<div>%s</div>" % w["note"])
+        h.append("</div>")
+        self.defs.append({"type": "tableau", "name": self.nom(w["name"]), "cases": cases, "vide": w.get("vide")})
+        return "".join(h)
+
     def croquis(self, w, cle):
         name = self.nom(w["name"])
         self.defs.append({"type": "croquis", "name": name, "cle": cle, "minTraits": w.get("minTraits", 4),
@@ -251,6 +319,14 @@ class Rendu:
     def etayage(self, amorces):
         return ('<details class="etayage"><summary>🪜 Version étayée : des débuts de phrase pour t\'aider</summary><ul>%s</ul></details>'
                 % "".join("<li>%s</li>" % a for a in amorces))
+
+
+def insecables(t):
+    """Un retour affiché dans une case étroite : les guillemets et les signes doubles ne restent pas seuls en bout de ligne."""
+    if not t:
+        return t
+    t = t.replace("« ", "« ").replace(" »", " »")
+    return re.sub(r" ([:;?!])", " \\1", t)
 
 
 def figure(doc, base_rel=""):

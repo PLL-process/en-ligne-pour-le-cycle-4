@@ -33,7 +33,7 @@
 
   /* ── Valeurs des champs d'un conteneur ────────────────────────────── */
   function valeurs(boite){
-    var v = {}, champs = boite.querySelectorAll("input[name], textarea[name]");
+    var v = {}, champs = boite.querySelectorAll("input[name], textarea[name], select[name]");
     for (var i = 0; i < champs.length; i++){
       var c = champs[i];
       if (c.closest("[data-cle]") !== boite) continue;
@@ -47,7 +47,7 @@
   }
   function restaurer(boite, v){
     if (!v) return;
-    var champs = boite.querySelectorAll("input[name], textarea[name]");
+    var champs = boite.querySelectorAll("input[name], textarea[name], select[name]");
     for (var i = 0; i < champs.length; i++){
       var c = champs[i];
       if (c.closest("[data-cle]") !== boite) continue;
@@ -104,6 +104,19 @@
       if (r.checked) groupes[r.name].coche = true;
     }
     for (var n in groupes){ if (!groupes[n].coche) ecrireSvg(document.getElementById(groupes[n].cible), ""); }
+    menusVus(boite);
+  }
+  /* Tableau à menus : le choix s'écrit en entier dans la case (il passe à la ligne, il s'imprime) ;
+     sans choix, la case reste vide — à l'impression, une ligne à remplir. */
+  function menusVus(boite){
+    var sels = boite.querySelectorAll(".menu-case select");
+    for (var i = 0; i < sels.length; i++){
+      var s = sels[i], vu = s.parentNode.querySelector(".menu-vu");
+      if (!vu) continue;
+      var o = s.options[s.selectedIndex];
+      vu.textContent = (o && o.value) ? o.text : "";
+      s.parentNode.classList.toggle("choisi", !!(o && o.value));
+    }
   }
 
   /* ── Encoches ─────────────────────────────────────────────────────── */
@@ -120,6 +133,18 @@
     for (i = 0; i < els.length; i++){ els[i].className = "encoche"; els[i].textContent = ""; }
     var rs = boite.querySelectorAll(".retour-option");
     for (i = 0; i < rs.length; i++) rs[i].remove();
+    var rc = boite.querySelectorAll(".retour-case");
+    for (i = 0; i < rc.length; i++){ rc[i].textContent = ""; rc[i].classList.remove("visible"); }
+    var cm = boite.querySelectorAll("td.case-menu");
+    for (i = 0; i < cm.length; i++) cm[i].classList.remove("juste", "faux", "vide");
+  }
+  function retourCase(boite, name, etat, texte){
+    var el = boite.querySelector('.retour-case[data-pour="' + name + '"]');
+    var td = el ? el.closest("td") : null;
+    if (td) td.classList.add(etat);
+    if (!el || !texte) return;
+    el.textContent = texte;
+    el.classList.add("visible");
   }
   function retourOption(boite, name, valeur, texte){
     var c = boite.querySelector('input[name="' + name + '"][value="' + CSS.escape(valeur) + '"]');
@@ -235,6 +260,22 @@
       }
       if (vides) msgs.unshift(vides + (vides > 1 ? " cases du schéma sont" : " case du schéma est") + " encore vide" + (vides > 1 ? "s" : "") + ".");
       return {justes: justes, total: w.slots.length, messages: msgs};
+    },
+    tableau: function(w, v, boite){
+      var justes = 0, vides = 0, faux = 0, msgs = [];
+      for (var i = 0; i < w.cases.length; i++){
+        var c = w.cases[i], r = v[c.name];
+        if (!r){ vides++; encoche(boite, c.name, "vide"); retourCase(boite, c.name, "vide"); continue; }
+        var ok = (r === c.bonne);
+        if (ok) justes++; else faux++;
+        encoche(boite, c.name, ok ? "juste" : "faux");
+        retourCase(boite, c.name, ok ? "juste" : "faux",
+                   ok ? "" : "✘ " + ((c.retours || {})[r] || c.indice || "Relis la ligne et la colonne : cette case attend autre chose."));
+      }
+      if (vides === w.cases.length) msgs.push(w.vide || "Le tableau est encore vide : choisis une réponse dans chaque menu.");
+      else if (vides) msgs.push(vides + (vides > 1 ? " cases du tableau sont encore vides" : " case du tableau est encore vide") + " : chaque menu attend une réponse.");
+      if (faux) msgs.push(faux + (faux > 1 ? " cases du tableau sont à revoir" : " case du tableau est à revoir") + " : le retour est écrit sous chaque case marquée ✘.");
+      return {justes: justes, total: w.cases.length, messages: msgs};
     },
     croquis: function(w, v, boite){
       var etat = lire(w.cle + "__croquis") || {}, traits = etat.traits || 0, msgs = [];
@@ -403,6 +444,7 @@
     }
   }
   racine.querySelectorAll("canvas.croquis-zone").forEach(croquis);
+  racine.querySelectorAll(".tableau-menus").forEach(function(t){ t.classList.add("menus-js"); });
 
   /* ── Branchements ─────────────────────────────────────────────────── */
   var boites = racine.querySelectorAll("[data-cle]");

@@ -765,29 +765,36 @@ E7 = dict(
                                 "panneau solaire.</p>")],
     intro="<p>L'équipe doit maintenant <b>choisir</b> comment diffuser l'alerte. Les trois solutions du FAST, branchées sur la station, "
           "sont toutes alimentées en <b>très basse tension</b> (12 volts) par la batterie et le panneau solaire&nbsp;: une sirène 12 V, un "
-          "petit module qui envoie un message sur les téléphones du quartier, un panneau lumineux à LED.</p>"
-          '<div class="defile"><table><caption>Le tableau de comparaison, à compléter</caption>'
-          "<tr><th>Critère</th><th>La sirène</th><th>Le message sur les téléphones</th><th>Le panneau lumineux</th></tr>"
-          "<tr><td>A — Elle marche encore si le réseau téléphonique tombe</td><td>?</td><td>?</td><td>?</td></tr>"
-          "<tr><td>B — Elle prévient des habitants qui dorment, la nuit</td><td>?</td><td>?</td><td>?</td></tr>"
-          "<tr><td>C — Elle atteint une personne sourde ou malentendante</td><td>?</td><td>?</td><td>?</td></tr>"
-          "<tr><td>D — Elle peut être alimentée en très basse tension par la batterie de la station</td><td>oui</td><td>oui</td><td>oui</td></tr>"
-          "</table></div>",
+          "petit module qui envoie un message sur les téléphones du quartier, un panneau lumineux à LED.</p>",
     consigne="<p>Un <b>critère</b> est ce que l'on regarde pour comparer. <b>Complète le tableau</b>&nbsp;: pour chaque solution et chaque "
-             "critère, oui, en partie ou non. Puis dis à quoi sert le critère D, que toutes les solutions remplissent. Enfin, "
+             "critère, choisis dans la case oui, en partie ou non. Puis dis à quoi sert le critère D, que toutes les solutions remplissent. Enfin, "
              "<b>argumente</b>&nbsp;: quelle solution — ou quelle <b>combinaison</b> de deux solutions — l'équipe doit-elle fabriquer&nbsp;?</p>",
     critere="neuf cases justes, le bon rôle du critère D, et un argumentaire qui nomme ton choix, s'appuie sur au moins deux critères et "
             "dit une limite.",
-    widgets=[dict(type="classer", name="tab", categories=OUI_NON,
-                  items=[("A — La sirène, si le réseau téléphonique tombe", "oui", "A, sirène : a-t-elle besoin des antennes de téléphone ?"),
-                         ("A — Le message sur les téléphones, si le réseau tombe", "non", "A, message : comment arrive-t-il sur le téléphone ?"),
-                         ("A — Le panneau lumineux, si le réseau tombe", "oui", "A, panneau : est-il relié aux antennes de téléphone ?"),
-                         ("B — La sirène, pour des habitants qui dorment", "oui", "B, sirène : un son fort réveille-t-il ?"),
-                         ("B — Le message, pour des habitants qui dorment", "partie", "B, message : et si le téléphone est en silencieux, ou éteint ?"),
-                         ("B — Le panneau lumineux, pour des habitants qui dorment", "non", "B, panneau : qui le regarde quand il dort, volets fermés ?"),
-                         ("C — La sirène, pour une personne sourde", "non", "C, sirène : que perçoit une personne qui n'entend pas ?"),
-                         ("C — Le message, pour une personne sourde", "oui", "C, message : un texte et une vibration demandent-ils d'entendre ?"),
-                         ("C — Le panneau lumineux, pour une personne sourde", "oui", "C, panneau : un texte lumineux demande-t-il d'entendre ?")]),
+    widgets=[dict(type="tableau", name="tab",
+                  legende="Le tableau de comparaison, à compléter",
+                  colonnes=["Critère", "La sirène", "Le message sur les téléphones", "Le panneau lumineux"],
+                  largeurs=[37, 21, 21, 21],
+                  menus={"oui_non": OUI_NON},
+                  lignes=[
+                      dict(nom="Critère A, si le réseau téléphonique tombe", cases=[
+                          "A — Elle marche encore si le réseau téléphonique tombe",
+                          dict(menu="oui_non", bonne="oui", indice="La sirène a-t-elle besoin des antennes de téléphone ?"),
+                          dict(menu="oui_non", bonne="non", indice="Le message : comment arrive-t-il sur le téléphone ?"),
+                          dict(menu="oui_non", bonne="oui", indice="Le panneau est-il relié aux antennes de téléphone ?")]),
+                      dict(nom="Critère B, pour des habitants qui dorment", cases=[
+                          "B — Elle prévient des habitants qui dorment, la nuit",
+                          dict(menu="oui_non", bonne="oui", indice="Un son fort réveille-t-il ?"),
+                          dict(menu="oui_non", bonne="partie", indice="Et si le téléphone est en silencieux, ou éteint ?"),
+                          dict(menu="oui_non", bonne="non", indice="Qui regarde le panneau quand il dort, volets fermés ?")]),
+                      dict(nom="Critère C, pour une personne sourde", cases=[
+                          "C — Elle atteint une personne sourde ou malentendante",
+                          dict(menu="oui_non", bonne="non", indice="Que perçoit d'une sirène une personne qui n'entend pas ?"),
+                          dict(menu="oui_non", bonne="oui", indice="Un texte et une vibration demandent-ils d'entendre ?"),
+                          dict(menu="oui_non", bonne="oui", indice="Un texte lumineux demande-t-il d'entendre ?")]),
+                      dict(nom="Critère D, très basse tension", cases=[
+                          "D — Elle peut être alimentée en très basse tension par la batterie de la station", "oui", "oui", "oui"]),
+                  ]),
              dict(type="choix", name="tbt", legende="Le critère D est rempli par les trois solutions. À quoi sert-il quand même&nbsp;?",
                   options=[("elimine", "Il élimine toute solution qui demanderait plus que la très basse tension&nbsp;: c'est une exigence impérative, pas un critère pour départager."),
                            ("inutile", "À rien&nbsp;: un critère que tout le monde remplit peut être effacé du cahier des charges."),

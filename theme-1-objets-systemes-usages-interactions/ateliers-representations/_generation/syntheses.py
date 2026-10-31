@@ -79,7 +79,8 @@ def professeur(at, page_niveau, chemins_fn, chemin):
             for w in ex["widgets"]:
                 verifs.append({"choix": "une question à choix", "cases": "des cases à cocher", "classer": "un classement ligne par ligne",
                                "liste": "une liste (refus motivé des pièces et des actions)", "texte": "un texte (critères affichés)",
-                               "slots": "les cases du schéma", "croquis": "un croquis et sa relecture"}[w["type"]])
+                               "slots": "les cases du schéma", "croquis": "un croquis et sa relecture",
+                               "tableau": "un tableau à compléter case par case (menus déroulants)"}[w["type"]])
             h.append("<tr><td>%d. %s</td><td>%s</td><td>%d min</td><td>%s</td><td>%s</td></tr>"
                      % (i + 1, ex["titre"], e(ex["code"]), ex["duree"], ex["production"], " ; ".join(verifs)))
         h.append("</tbody></table></div>")

@@ -65,8 +65,19 @@ seul. Phrases de 25 mots au plus ; unités en toutes lettres dans chaque partie 
   (facultatif), `consigne`, `critere`, `widgets`, `aides` (deux), `jumeau` (après l'aide 2),
   `correction` (lignes de démonstration, la dernière en `("conclusion", …)`), `retenir`, `piege`.
 - Types de questions (`widgets`) : `choix`, `cases`, `classer`, `liste`, `texte`, `slots`
-  (cases d'un schéma vivant), `croquis` (dessin à l'écran, avec relecture). Les options d'un choix
-  s'écrivent une par ligne : le moteur les met en colonne.
+  (cases d'un schéma vivant), `croquis` (dessin à l'écran, avec relecture), `tableau` (un tableau qui
+  se complète dans ses cases, par menus déroulants). Les options d'un choix s'écrivent une par ligne :
+  le moteur les met en colonne.
+- **Un cahier des charges, ou un tableau de critères, que l'élève complète se fait avec `tableau`**
+  (demande du professeur, 31/10/2026) : jamais un tableau déjà rempli suivi de questions séparées. Chaque
+  case est un texte donné (une chaîne) ou un menu `dict(options=[(valeur, libellé)…] ou menu="<liste de
+  menus>", bonne=…, retours={valeur fausse: pourquoi}, indice=…, avant=…, apres=…)` ; une ligne,
+  `dict(nom="Ligne 3, la cuve", cases=[…])` — le menu se lit « Ligne 3, la cuve — Critère ». Champs du
+  widget : `colonnes`, `lignes`, `menus` (listes partagées), `largeurs` (en %), `legende`, `intro` (au-dessus
+  du tableau : ce qui décide des réponses, par exemple les paroles du client pour la flexibilité), `note`.
+  Un menu seulement là où la case fait réfléchir ; les pièges sont des formes que les élèves écrivent
+  vraiment (une désignation qui est un nom, une phrase avec un sujet, une solution). Modèle : exercice 6
+  de `donnees_interacteurs.py`.
 - Une page de niveau totalise 30 à 40 minutes d'exercices.
 - **Pour le banc de tests automatique** : chaque widget `texte` porte un champ `exemple` — une réponse juste qui
   satisfait tous ses critères et aucun interdit (le moteur l'ignore, le banc la saisit). Un widget `liste` dont les
