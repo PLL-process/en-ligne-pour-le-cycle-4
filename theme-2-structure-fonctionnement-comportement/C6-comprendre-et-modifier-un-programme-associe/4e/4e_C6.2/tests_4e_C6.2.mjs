@@ -228,10 +228,72 @@ ok('17 · activité 6 validée une fois le banc au vert',
    /activité validée/.test(await retour(6)) && await estValidee(6),
    (await retour(6)).slice(0, 55));
 
+/* ── activité 7 : le cahier des charges à menus (règle d'or n°317) ───────────
+   Les bonnes valeurs sont celles des appels sv() de CHECKS[7] ; les options fausses
+   sont lues dans les menus de la page. Rien n'est recopié ici. */
+const IDS7 = Object.keys(PLAN[7]);
+await ouvrirPour(IDS7[0]);
+const menus7 = await p.evaluate(ids => ids.map(id => {
+  const s = document.getElementById(id);
+  return { id, label: s.getAttribute('aria-label') || '', decrit: s.getAttribute('aria-describedby'),
+           dansCase: !!s.closest('td.case-menu'), valeurs: [...s.options].map(o => o.value).filter(Boolean),
+           textes: [...s.options].filter(o => o.value).map(o => o.text) };
+}), IDS7);
+const rangs = menus7.map(m => m.valeurs.indexOf(PLAN[7][m.id].v));
+ok('18 a · activité 7 : 4 menus DANS le tableau, chacun nommé « Ligne n, … — ton verdict » et relié à sa case de retour',
+   menus7.length === 4 && menus7.every((m, i) => m.dansCase && new RegExp('^Ligne ' + (i + 1) + ', .+ — ton verdict').test(m.label)
+     && m.decrit === m.id + '-retour'),
+   menus7.map(m => m.label.slice(0, 32)).join(' | '));
+const longueurs = menus7.map(m => m.textes.map(t => t.length));
+ok(`18 b · options mélangées (la bonne au rang ${rangs.map(r => r + 1).join(', ')}) et de même longueur `
+   + '(écart ≤ 12 caractères avec chaque fausse)',
+   rangs.every(r => r >= 0) && new Set(rangs).size > 1 && menus7.every(m => m.valeurs.length === 4)
+   && longueurs.every((l, i) => l.every(x => Math.abs(x - l[rangs[i]]) <= 12)),
+   longueurs.map(l => l.join('/')).join(' · '));
+
+await valider(7);
+const vides7 = await p.$$eval('.cdcf-verdict .retour-case.visible', l => l.map(r => r.textContent));
+ok('18 c · activité 7 vérifiée à vide : chaque case dit « ○ Sans réponse », en texte',
+   vides7.length === 4 && vides7.every(t => /^○ Sans réponse/.test(t)), vides7[0] || '');
+
+/* chaque option fausse, une à une : son retour à elle s'écrit sous sa case */
+const retours7 = [];
+for (const m of menus7) {
+  for (const v of m.valeurs.filter(x => x !== PLAN[7][m.id].v)) {
+    await p.selectOption('#' + m.id, v); await valider(7);
+    retours7.push(await p.evaluate(id => {
+      const r = document.getElementById(id + '-retour'), td = r.closest('td');
+      return { id, texte: r.textContent, visible: r.offsetHeight > 0, faux: td.classList.contains('faux'),
+               marque: (td.querySelector('.qmark') || {}).textContent };
+    }, m.id));
+  }
+}
+const textes7 = retours7.map(r => r.texte);
+ok(`18 d · les ${retours7.length} options fausses ont chacune SON retour, écrit sous la case après « Vérifier » `
+   + '(✘ et pourquoi), jamais la couleur seule',
+   retours7.length === 12 && retours7.every(r => r.visible && r.faux && r.marque === '✘'
+     && /^✘ .{40,}/.test(r.texte) && !/Relis le critère de la ligne : cette proposition/.test(r.texte))
+   && new Set(textes7).size === 12,
+   textes7[0].slice(0, 60));
+
+/* le choix s'écrit en entier dans la case, et la case tient à 390 px */
+const vu7 = await p.evaluate(id => {
+  const s = document.getElementById(id), vu = s.parentNode.querySelector('.menu-vu');
+  const d = s.closest('.defile');
+  return { egal: vu.textContent === s.options[s.selectedIndex].text, deborde: d.scrollWidth - d.clientWidth,
+           page: document.documentElement.scrollWidth - document.documentElement.clientWidth };
+}, IDS7[0]);
+ok('18 e · le choix s\'écrit en entier dans sa case, et le tableau tient à 390 px (aucun défilement)',
+   vu7.egal && vu7.deborde <= 1 && vu7.page <= 1, JSON.stringify(vu7));
+
 await remplir(7); await valider(7);
 ok('18 · activité 7 validée 4 / 4 (chaque exigence du besoin et SA preuve)',
    /4\/4/.test(await retour(7)) && await estValidee(7),
    (await retour(7)).slice(0, 55));
+ok('18 f · tout juste : plus aucun retour sous les cases, et chaque case porte ✔',
+   (await p.$$eval('.cdcf-verdict .retour-case.visible', l => l.length)) === 0
+   && (await p.$$eval('.cdcf-verdict td.case-menu', l => l.filter(td => td.classList.contains('juste')
+        && (td.querySelector('.qmark') || {}).textContent === '✔').length)) === 4);
 await remplir(8); await valider(8);
 ok('19 · activité 8 validée 2 / 2 (le bénéfice, et la phrase de l\'élève)',
    /2\/2/.test(await retour(8)) && await estValidee(8),
@@ -264,6 +326,29 @@ ok('23 · rechargement : réponses, progression 8 / 8 et les trois verrous sont 
    && (await p.textContent('#progTxt')).includes('8 / 8')
    && await p.evaluate(() => !!(window.__exp.vs1 && window.__exp.vs2 && window.__exp.tests)),
    await p.textContent('#progTxt'));
+
+/* l'activité 7 sur le papier : le choix s'imprime en texte, une case vide donne une ligne,
+   ni la liste des options ni les retours ne s'impriment */
+{
+  await ouvrirPour('a7q1');
+  const ecran = await p.evaluate(() => [...document.querySelectorAll('.cdcf-verdict .menu-vu')].map(v => v.textContent));
+  await p.selectOption('#a7q2', '');
+  await p.evaluate(() => window.dispatchEvent(new Event('beforeprint')));
+  await p.emulateMedia({ media: 'print' }); await p.waitForTimeout(120);
+  const papier = await p.evaluate(() => {
+    const vis = e => e && getComputedStyle(e).display !== 'none' && e.offsetHeight > 0;
+    const z = document.querySelector('.cdcf-verdict');
+    const v1 = document.getElementById('a7q1').parentNode.querySelector('.menu-vu');
+    const v2 = document.getElementById('a7q2').parentNode.querySelector('.menu-vu');
+    return { texte: vis(v1) ? v1.textContent : '', ligne: vis(v2) && v2.textContent === ''
+               && getComputedStyle(v2).borderBottomStyle === 'solid',
+             choix: [...z.querySelectorAll('.pp-choix, select, .retour-case, .menu-fleche')].filter(vis).length };
+  });
+  await p.emulateMedia({ media: 'screen' });
+  ok('23 bis · activité 7 imprimée : le choix en texte (« ' + papier.texte.slice(0, 30) + '… »), une ligne pour la case vide, '
+     + 'ni options ni retours',
+     papier.texte && papier.texte === ecran[0] && papier.ligne && papier.choix === 0, JSON.stringify(papier).slice(0, 90));
+}
 
 const liens = await p.$$eval('a[href]', a => a.map(x => x.getAttribute('href')));
 const casses = liens.filter(h => h && !/^(https?:|mailto:|#|javascript:)/.test(h))

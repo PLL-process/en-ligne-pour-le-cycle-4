@@ -27051,3 +27051,50 @@ clavier. Le script de la vague reste hors du dépôt, comme aux thèmes 1 et 2.
 
 **Reste** : `C1.3-C1.4_SI`, puis D6 obligatoire. Non testé : un vrai téléphone, Firefox, Safari, une impression
 réelle.
+
+---
+
+## 31/10/2026 — Règle d'or n°317, suite au thème 2 : 4e_C4.1 et 4e_C6.2
+
+*La règle n°317 (« le cahier des charges se complète dans le tableau, par des menus déroulants, sous forme de QCM »)
+a été posée au thème 1 par la PR #573. Pascal la veut « dans d'autres séances » aussi : voici le thème 2.*
+
+**4e_C4.1, le jardin connecté.** La séquence reprend l'exercice 6 de l'atelier « interacteurs — pieuvre » : il est
+ré-incrusté (`incrustations.py --seq theme-2-`), avec ses 22 menus dans le tableau (FP ou FC, la désignation et ses
+pièges, le critère, le niveau, la flexibilité). 5e_C4.1 ne change que par le kit des ateliers recopié.
+- **À l'impression**, la fiche papier ajoutait sous chaque menu du tableau la liste de toutes ses options : 22 listes
+  qui débordaient des cases. Une règle d'impression de la page les retire ; le tableau imprimé passe de 886 à 486 px
+  de haut. Le même défaut est dans `kit.css` du générateur (`.pp-choix` sous un `.tableau-menus`) et touche aussi
+  3e_C3.1 Shenzhen : à corriger au thème 1.
+- **Le banc** (`tests_4e_C4.1-C4.9.mjs`) sait remplir un tableau incrusté ; le test « 18 ter » attend le bouton radio
+  et les 22 menus ; deux tests s'ajoutent (un retour écrit sous une case fausse, les choix imprimés en texte) :
+  **41/41** (39/39 avant).
+
+**4e_C6.2, l'arrosage automatique, activité 7** : « fonction | critère | ton verdict, et sa preuve ». Le tableau était
+déjà en menus, mais la bonne option venait toujours en premier, et c'était la seule qui citait une preuve.
+- **Chaque menu** a un nom lisible (« Ligne 1, détecter un sol sec — ton verdict et sa preuve ») et propose quatre
+  verdicts de même forme et de même longueur (59 à 67 caractères), mélangés : la bonne est au rang 2, 4, 1 puis 3.
+- **Les pièges**, ceux des élèves : une solution prise pour une preuve (le capteur branché sur A0) ; un jugement
+  sans mesure (la plante est verte) ; la conversion oubliée (« 0 à 1 023 ») ; le niveau pris pour une preuve (« le
+  seuil est à 30 % ») ; la moitié d'une preuve (T1 seul) ; T2 à la place de T3 pour la frontière ; « 30 < 30 est
+  vrai » ; « attendre la pluie » ; une autre fonction prise pour la sécurité ; « un danger ne se mesure pas » ; le
+  secteur 230 volts.
+- **Les retours** : après « Vérifier », chaque option fausse écrit le sien sous la case (✘ et pourquoi), une case vide
+  dit « ○ Sans réponse ». La correction réfute chaque piège, ligne par ligne. Les preuves des activités 3 et 6 sont
+  rappelées au-dessus du tableau.
+- **À 390 px et sur papier**, chaque ligne devient une carte ; le choix s'imprime en texte, une case vide donne une
+  ligne. Les identifiants `a7q1` à `a7q4` ne changent pas (le banc n°311 s'en sert), mais les valeurs des options ont
+  changé : une réponse sauvegardée avec l'ancienne version de l'activité 7 ne revient pas.
+- **Le banc** (`tests_4e_C6.2.mjs`) : **45/45** (38/38 avant), avec 7 tests nouveaux (les noms, le mélange et les
+  longueurs, la case vide, les 12 retours, 390 px, tout juste, l'impression).
+- `controle_hierarchie` compte les mots de toutes les options d'un menu (50 au plus par case) : les options de la
+  ligne 3 ont été raccourcies ; la ligne 2 est à 50, juste à la limite.
+
+**Laissés.** Dans 4e_C4.1 Book Train, les tableaux « fonction technique → solution » et la comparaison SVG / PNG ne
+sont pas des cahiers des charges, et ils sont déjà en menus dans leurs cases. Le thème 2 n'a pas d'autre cahier des
+charges à compléter.
+
+**Contrôles.** Bancs n°311 : 4e_C4.1, 4e_C6.2 et 5e_C4.1 à 34/34 ; suite de 5e_C4.1 : 55/55. Verts :
+`controle_unites`, `controle_sigles`, `controle_liens`, `controle_hierarchie`, `controle_regles_visibles`,
+`controle_medias`, `controle_longueurs`, `controle_impression`, `controle_squelette`, `controle_verrous`. Non testé :
+un vrai téléphone, Firefox, Safari, une impression réelle.
