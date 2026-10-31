@@ -27288,3 +27288,35 @@ dites sous la figure et dans `SOURCES_MEDIAS.md`. Tous les textes sont à 14 px 
 
 **Reste**, dans un second temps : le fichier `.pkt` du jardin, à construire dans Packet Tracer sur le poste de Pascal comme
 ceux de la serre, pour que l'élève ouvre le réseau et fasse lui-même un ping vers la carte 192.168.1.50.
+
+---
+
+## 31/10/2026 — Pilote : 4e_C8.1 passe à onglets, avec le volet « 📖 Rappel » — pour les 23 séquences qui n'en ont pas
+
+*Pascal, le 31/10/2026, à la question posée par l'audit de la n°311 (23 séquences sans onglets, donc sans volet par
+construction : thème 3 C7 et C8, 5e_C1.3, 5e_C1.5) : « Oui, je les veux. » Un pilote d'abord, qu'il valide avant les vagues.*
+
+**Le pilote : 4e_C8.1, le jardin connecté — valider une solution.** La page était d'un seul tenant. Elle a maintenant trois
+séances à onglets, bâties sur le squelette n°306 et vérifiées par `controle_squelette` : séance 1 « Faire d'abord, puis
+écrire le protocole » (ouverture, banc virtuel, protocole) ; séance 2 « Analyser les résultats, ligne par ligne »
+(activité 2) ; séance 3 « Améliorer, refaire, conclure » (activité 3, réinvestissement, synthèse, Bonus, bilan, QCM). Chaque
+séance a sa question directrice, son programme avec ses durées, et son bouton vers la suivante ; l'onglet en cours est
+mémorisé. L'ouverture (étiquettes, « Avant de commencer », situation, problématique, hypothèse, billet, contrat, trois
+façons) est complète à la séance 1 et repliée dans le volet dès la séance 2, jamais supprimée. Restent hors du volet, parce
+qu'ils servent à chaque séance : la mission, l'identité, la barre d'outils, le sélecteur de parcours, la progression et
+« 🗺 Où j'en suis ».
+
+**La clôture, complétée au passage** (le contrôle du squelette la trouvait « à rédiger ») : un corrigé replié par défi du
+Bonus ; dans le bilan, le retour à l'hypothèse (le texte écrit au début se relit), « Comment j'ai travaillé » et
+« Je me positionne » sur 4e_C8.1, C8.2 et C8.3, aux quatre niveaux du livret scolaire (l'échelle de référence choisie le
+23/10/2026).
+
+**Ce que le pilote fixe pour les vagues.** Le découpage suit les durées déjà écrites sur les activités (≈ 55 min par séance,
+ouverture comprise à la séance 1) ; les blocs sont déplacés, jamais réécrits ; la clôture entière va dans le dernier panneau ;
+le sélecteur de parcours tient sur deux lignes de boutons à 390 px ; le banc n°311 de la page passe par le relais du thème 3 ;
+le banc du lot est adapté là où une activité n'est plus à l'écran au chargement. Bancs : n°311 34 / 34, lot 53 / 53 ;
+`controle_squelette` 0 défaut, aucun « à rédiger » ; fiche papier 3 fiches, une séance par fiche. Hors périmètre, à part :
+les listes déroulantes de la page (n°300, déjà relevées), le lexique par séance.
+
+**Reste** : la validation de Pascal sur ce pilote, puis les vagues — thème 3 C7 (14 pages), C8 (4 pages restantes), 5e_C1.3 et
+5e_C1.5.
