@@ -15,5 +15,5 @@ await lancerBanc311Theme3({
   ancreS1: 'pont-en-h',
   ancreSN: 'act7',
   panneauSN: 's8',
-  outils: ['#vers-quatre-pages', '.choix-parcours-boutons', '#parcoursNote', '#savedNote', '.progress-wrap', '#bancCard', '#tachesBandeau'],
+  outils: ['.choix-parcours-boutons', '#parcoursNote', '#savedNote', '.progress-wrap', '#bancCard', '#tachesBandeau'],
 });

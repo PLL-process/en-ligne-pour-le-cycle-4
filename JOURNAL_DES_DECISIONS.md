@@ -27225,6 +27225,27 @@ l'activité 6 (qui demande aujourd'hui un programme « sans modèle » : l'ateli
 
 ---
 
+## 31/10/2026 — Règle d'or n°311 : le lien « vers les autres pages » de 3e_C9.2 rejoint l'ouverture, replié dès la séance 2
+
+*Pascal, le 31/10/2026 : « à partir de la séance 2, le lien vers les "autres pages" reste visible. Il faut le replier dans le volet
+"Rappel" pour tous les thèmes, donc un audit général complet sera nécessaire. »*
+
+**L'audit**, sur les 60 séquences de `main`, à la séance 2, à 1280 et 390 px : `controle_squelette.mjs` (D1 à D6) ne refuse rien
+sur les 33 séquences à onglets ; un balayage de tout ce qui reste visible hors des panneaux et hors du volet (barre ⌂ Accueil ·
+📖 Lexique, titre, boutons, onglets, progression et bandeau des tâches mis à part) ne trouve qu'un lien « vers les autres pages »
+dans le dépôt : celui de la page tout-en-un de 3e_C9.2, qui renvoie aux quatre pages de la séquence, et son miroir sur chacune
+des quatre pages. Hors de lui restent, à dessein, les outils des séances : sélecteur de parcours, banc d'essai de la station,
+éditeur CodeLab (3e_C6.1), carte « 🗺 Où j'en suis » (sept pages). Deux autres constats : le Book Train (4e_C4.1) est la seule
+séquence à onglets sans volet (PR à part, thème 2) ; 23 séquences sans onglets (thème 3 C7 et C8, 5e_C1.3, 5e_C1.5) n'ont pas de
+volet par construction — décision à part.
+
+**La correction.** Le bloc « 📚 Cette page contient la séquence entière … » entre dans le volet `details.rappel-ouverture`, juste
+après son titre : visible à la séance 1, replié ensuite, jamais supprimé, et il ne s'imprime pas. Le banc n°311 de la page ne le
+compte plus parmi les outils hors volet. Sur les pages 2 à 4 engendrées par `generer_les_quatre_pages.py`, le lien miroir « 📄 »
+devient un `details` fermé d'un clic ; la page 1 (premier écran) le garde visible. Bancs 34 / 34 et 167 / 167, `controle_squelette`
+D6 à 0 sur les cinq pages, impression et fiche papier inchangées.
+
+**Reste** : le Book Train (thème 2, PR suivante) ; les séquences sans onglets.
 ## 31/10/2026 — Règle d'or n°311 au Book Train (4e_C4.1-C4.2-C4.4) : le volet « 📖 Rappel » dès qu'une séance s'ouvre
 
 *Suite de l'audit du 31/10/2026 (entrée « le lien "vers les autres pages" de 3e_C9.2 ») : le Book Train était la seule séquence à
