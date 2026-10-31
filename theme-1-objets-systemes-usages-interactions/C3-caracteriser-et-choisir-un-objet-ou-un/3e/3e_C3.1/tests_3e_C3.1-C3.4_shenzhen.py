@@ -20,6 +20,8 @@ REMPLIR = """([uid, textes]) => {
     else if (w.type === 'cases') box.querySelectorAll(`input[name="${w.name}"]`).forEach(i => { i.checked = w.bonnes.includes(i.value); });
     else if (w.type === 'classer') w.items.forEach(it => coche(it.name, it.bonne));
     else if (w.type === 'slots') w.slots.forEach(s => coche(s.name, s.bonnes[0]));
+    else if (w.type === 'tableau') w.cases.forEach(c => { const m = box.querySelector(`select[name="${c.name}"]`);
+      if (!m) throw new Error('menu absent : ' + c.name); m.value = c.bonne; m.dispatchEvent(new Event('change', {bubbles: true})); });
     else { const z = box.querySelector(`textarea[name="${w.name}"]`); z.value = textes[w.name.split('__')[1]]; z.dispatchEvent(new Event('input', {bubbles: true})); }
   }
 }"""

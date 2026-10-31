@@ -10,6 +10,9 @@ Pour chaque page de niveau, à 390 px :
   - chaque exercice : « Vérifier » à vide donne un retour 🔴 ; rempli juste (réponses tirées des définitions de la
     page, `exemple` des widgets texte/liste lu dans le module de données), il donne « Tout est juste » ;
   - la sauvegarde locale revient après un rechargement.
+Pour chaque tableau à menus (widget « tableau ») : un menu par case à remplir, chacun nommé « ligne — colonne » ;
+faux partout puis juste partout (marque et retour écrit dans la case) ; choix retrouvés au rechargement ; Tab et
+flèche au clavier ; cartes sans débordement à 390 px ; à l'impression, le choix en texte et une ligne vide sans choix.
 Puis le QCM (30 questions), les deux synthèses et les cahiers de niveau : chargement sans erreur, sans débordement.
 
 Code de sortie : 0 tout passe · 1 au moins un échec · 2 rien n'a été vérifié (règle d'or n°299).
@@ -81,6 +84,9 @@ def remplir(pg, uid, d, exs):
                 pg.fill("#" + w["name"], exs[w["name"]])
             else:
                 rate.append(w["name"])
+        elif ty == "tableau":
+            for c in w["cases"]:
+                pg.select_option(sel + 'select[name="%s"]' % c["name"], value=c["bonne"])
         elif ty == "croquis":
             pg.fill("#%s_desc" % w["name"], "Au centre de mon croquis, on voit l'objet en entier ; les légendes nomment chaque "
                                               "partie, et une flèche rouge montre le geste demandé.")
@@ -137,6 +143,119 @@ def page_niveau(b, at, niv):
     ctx.close()
 
 
+def tableaux(b, at, niv):
+    """Le widget « tableau » (cahier des charges à menus) : rendu, vérification fausse puis juste, sauvegarde,
+    390 px, clavier, impression. Rien à faire si le niveau n'en a pas."""
+    chemin = build.page_niveau(at, niv)
+    exos = [e for e in at.NIVEAUX[niv]["exercices"] if any(w["type"] == "tableau" for w in e["widgets"])]
+    if not exos:
+        return
+    for e in exos:
+        uid = "%s_%s_%s" % (at.COURT, niv, e["id"])
+        nom = "%s %s · %s (tableau à menus)" % (at.SLUG, niv, e["id"])
+        for largeur in (1280, 390):
+            ctx = b.new_context(viewport={"width": largeur, "height": 900})
+            pg = ctx.new_page()
+            err = []
+            pg.on("pageerror", lambda x: err.append(str(x)))
+            pg.goto(chemin.as_uri())
+            pg.evaluate("localStorage.clear()")
+            pg.goto(chemin.as_uri())
+            pg.wait_for_timeout(200)
+            idx = pg.evaluate("u => [...document.querySelectorAll('[role=tab]')].findIndex(t => "
+                              "document.getElementById(t.getAttribute('aria-controls')).contains(document.getElementById(u)))", uid)
+            pg.locator('[role="tab"]').nth(idx).click()
+            pg.wait_for_timeout(60)
+            d = defs_page(pg)[uid]
+            tw = [w for w in d["widgets"] if w["type"] == "tableau"]
+            cases = [c for w in tw for c in w["cases"]]
+            sel = "#%s .tableau-menus" % uid
+            if largeur == 390:
+                t(nom + " (390 px) : aucun défilement horizontal de la page",
+                  not pg.evaluate("document.documentElement.scrollWidth > innerWidth"))
+                cartes = pg.evaluate("s => [...document.querySelectorAll(s + ' table.cdcf')].every(t => "
+                                     "getComputedStyle(t.querySelector('tr')).display === 'block' && "
+                                     "getComputedStyle(t.querySelector('thead')).display === 'none')", sel)
+                deb = pg.evaluate("s => [...document.querySelectorAll(s + ' .defile')].some(f => f.scrollWidth > f.clientWidth + 1)", sel)
+                t(nom + " (390 px) : chaque ligne devient une carte, rien ne déborde du cadre", cartes and not deb)
+                noms_col = pg.evaluate("s => [...document.querySelectorAll(s + ' td')].every(td => "
+                                       "getComputedStyle(td, '::before').content.replace(/\"/g, '') === td.dataset.col)", sel)
+                t(nom + " (390 px) : chaque case de carte porte le nom de sa colonne", noms_col)
+                t(nom + " (390 px) : aucune erreur JavaScript", not err, err)
+                ctx.close()
+                continue
+            # ── rendu
+            n_sel = pg.locator(sel + " select").count()
+            t(nom + " : un menu par case à remplir (%d), et pas plus" % len(cases), n_sel == len(cases), n_sel)
+            lus = pg.evaluate("s => [...document.querySelectorAll(s + ' select')].map(x => [x.getAttribute('aria-label') || '', "
+                              "x.options[0].value, x.getAttribute('aria-describedby') || ''])", sel)
+            t(nom + " : chaque menu a un nom lisible « ligne — colonne » et commence vide",
+              all(" — " in a and v == "" and r.endswith("-retour") for a, v, r in lus), lus[:2])
+            donnees = pg.evaluate("s => [...document.querySelectorAll(s + ' td:not(.case-menu)')].filter(td => td.textContent.trim()).length", sel)
+            t(nom + " : les cases données restent du texte (%d)" % donnees, donnees > 0)
+            # ── vérification fausse : chaque case reçoit une mauvaise option
+            for c in cases:
+                opts = pg.eval_on_selector_all('#%s select[name="%s"] option' % (uid, c["name"]), "l => l.map(o => o.value).filter(Boolean)")
+                pg.select_option('#%s select[name="%s"]' % (uid, c["name"]), value=next(o for o in opts if o != c["bonne"]))
+            pg.click("#%s button.verifier" % uid)
+            pg.wait_for_timeout(80)
+            etat = pg.evaluate("""s => [...document.querySelectorAll(s + ' select')].map(x => {
+                const td = x.closest('td'), r = td.querySelector('.retour-case'), en = td.querySelector('.encoche');
+                return [td.classList.contains('faux'), !!r && r.classList.contains('visible') && r.textContent.trim().startsWith('✘')
+                        && r.textContent.trim().length > 12, !!en && en.textContent.includes('à revoir')]; })""", sel)
+            t(nom + " : faux partout, chaque case dit « ✘ à revoir » et son retour écrit, dans la case",
+              etat and all(a and r and en for a, r, en in etat), [x for x in etat if not all(x)][:2])
+            t(nom + " : faux partout, le retour général demande de reprendre", "🔴" in pg.inner_text("#%s .retour" % uid))
+            # ── juste
+            for c in cases:
+                pg.select_option('#%s select[name="%s"]' % (uid, c["name"]), value=c["bonne"])
+            pg.click("#%s button.verifier" % uid)
+            pg.wait_for_timeout(80)
+            justes = pg.evaluate("s => [...document.querySelectorAll(s + ' td.case-menu')].every(td => td.classList.contains('juste') "
+                                 "&& !td.querySelector('.retour-case.visible') && td.querySelector('.encoche').textContent.includes('juste'))", sel)
+            t(nom + " : juste partout, chaque case est marquée « ✔ juste », sans retour d'erreur", justes)
+            # ── sauvegarde et rechargement
+            pg.reload()
+            pg.wait_for_timeout(250)
+            pg.locator('[role="tab"]').nth(idx).click()
+            revenus = pg.evaluate("""s => [...document.querySelectorAll(s + ' select')].map(x => [x.name, x.value,
+                x.parentNode.querySelector('.menu-vu').textContent === x.options[x.selectedIndex].text])""", sel)
+            bonnes = {c["name"]: c["bonne"] for c in cases}
+            t(nom + " : après rechargement, chaque menu retrouve son choix, écrit en entier dans la case",
+              all(v == bonnes[n] and vu for n, v, vu in revenus), [x for x in revenus if x[1] != bonnes[x[0]] or not x[2]][:2])
+            # ── clavier : Tab mène au menu suivant, la flèche change le choix, le cadre montre le focus
+            premier, second = cases[0]["name"], cases[1]["name"]
+            pg.focus('#%s select[name="%s"]' % (uid, premier))
+            pg.keyboard.press("Tab")
+            focus = pg.evaluate("() => document.activeElement && document.activeElement.name")
+            t(nom + " : au clavier, Tab passe d'un menu au suivant", focus == second, focus)
+            avant = pg.input_value('#%s select[name="%s"]' % (uid, second))
+            pg.keyboard.press("ArrowDown" if pg.evaluate("n => document.getElementsByName(n)[0].selectedIndex", second) <
+                              pg.evaluate("n => document.getElementsByName(n)[0].options.length - 1", second) else "ArrowUp")
+            pg.wait_for_timeout(60)
+            apres = pg.input_value('#%s select[name="%s"]' % (uid, second))
+            vu = pg.evaluate("n => { const x = document.getElementsByName(n)[0]; return x.parentNode.querySelector('.menu-vu').textContent "
+                             "=== (x.value ? x.options[x.selectedIndex].text : ''); }", second)
+            contour = pg.evaluate("n => getComputedStyle(document.getElementsByName(n)[0].parentNode).outlineStyle", second)
+            t(nom + " : au clavier, la flèche change le choix, la case l'écrit, et le cadre montre le focus",
+              avant != apres and vu and contour not in ("none", ""), (avant, apres, vu, contour))
+            # ── impression : le choix s'imprime ; sans réponse, une ligne vide
+            pg.select_option('#%s select[name="%s"]' % (uid, second), value="")
+            pg.emulate_media(media="print")
+            imp = pg.evaluate("""([s, n1, n2]) => {
+                const a = document.getElementsByName(n1)[0], b = document.getElementsByName(n2)[0];
+                const va = a.parentNode.querySelector('.menu-vu'), vb = b.parentNode.querySelector('.menu-vu');
+                const cs = getComputedStyle(vb);
+                return [getComputedStyle(a).display, va.textContent === a.options[a.selectedIndex].text && va.getBoundingClientRect().height > 0,
+                        vb.textContent === '' && parseFloat(cs.borderBottomWidth) > 0 && vb.getBoundingClientRect().width > 40,
+                        getComputedStyle(va, '::before').content]; }""", [sel, premier, second])
+            pg.emulate_media(media="screen")
+            t(nom + " : à l'impression, le menu disparaît, le choix s'imprime en texte, une case vide donne une ligne à remplir",
+              imp[0] == "none" and imp[1] and imp[2], imp)
+            t(nom + " : aucune erreur JavaScript", not err, err)
+            ctx.close()
+
+
 def page_simple(b, chemin, nom, attendu_q=None):
     if not chemin.exists():
         t(nom + " : la page existe", False, chemin)
@@ -174,6 +293,7 @@ def main(modules, cahiers=False, sortie_json=None):
         for at in construits:
             for niv in at.NIVEAUX:
                 page_niveau(b, at, niv)
+                tableaux(b, at, niv)
             page_simple(b, build.qcm(at), at.SLUG + " QCM", attendu_q=30)
             page_simple(b, build.synthese_eleve(at), at.SLUG + " synthèse élève")
             page_simple(b, build.synthese_prof(at), at.SLUG + " synthèse professeur")

@@ -26946,3 +26946,44 @@ le schéma fixe reste, replié sous l'animation, et c'est lui qui s'imprime et q
 - **Pour la suite** : les deux moteurs devraient vivre dans `_outils/` avec leur contrôle, sur le modèle du lecteur
   commun. Le lecteur gagnerait une étape « à mériter » que le banc sache franchir (aujourd'hui, la prédiction n'arrête
   que « Regarder »), et un « Regarder » qui attende la fin du mouvement autant que celle de la voix.
+
+---
+
+## 31/10/2026 — Règle d'or n°317 : un cahier des charges à compléter se complète dans le tableau, par des menus déroulants (thème 1, ateliers)
+
+*Pascal, le 31/10/2026, devant le tableau du cahier des charges de l'arrosage (atelier « interacteurs — pieuvre »,
+4e, exercice 6) : « Il serait judicieux, et ça ferait certainement un gain de place, d'avoir des menus déroulants afin
+de faire un QCM directement sur le cahier des charges. Il y aura des pièges, puisque toutes les désignations des
+fonctions doivent commencer par un verbe à l'infinitif. » Puis : « Et si, dans d'autres séances, il y a d'autres
+cahiers des charges à remplir, j'aimerais que ce soit sur cette forme. »*
+
+> **Règle d'or n°317 — Un cahier des charges que l'élève complète se complète dans le tableau lui-même, par des menus
+> déroulants, sous forme de QCM.** Un menu par case à faire réfléchir (une case donnée reste un texte) ; un retour
+> écrit sous chaque case fausse, qui dit pourquoi ; des pièges réels. **La désignation d'une fonction commence par un
+> verbe à l'infinitif** : ses mauvaises options sont un nom (« Résistance à la pluie »), une phrase avec un sujet
+> (« Le boîtier résiste… », « Le système doit… ») ou une solution technique (« Boîtier étanche en plastique »).
+> Ce qui décide d'une case (les paroles du client pour la flexibilité, par exemple) reste visible à côté du tableau.
+> Une rédaction libre (écrire une exigence) reste une rédaction : la règle ne remplace pas l'écriture par des menus.
+
+**Le widget `tableau`** du moteur des ateliers (`_generation/moteur.py`, `kit.js`, `kit.css`) : chaque case est un
+texte donné ou un menu (`options` ou `menu` partagé, `bonne`, un `retour` par mauvaise option, `indice`) ; même bouton
+« Vérifier », même sauvegarde et mêmes marques (✔ juste, ✘ à revoir, ○ sans réponse, écrites) que les autres widgets ;
+chaque menu porte un nom lisible (« Ligne 3, la cuve d'eau de pluie — Critère ») ; le choix s'écrit en entier dans la
+case ; sous 640 px, chaque ligne devient une carte et chaque case porte le nom de sa colonne ; à l'impression, le choix
+s'imprime en texte, une case vide donne une ligne. Le moteur refuse une bonne réponse absente des options et une ligne
+qui n'a pas le nombre de colonnes. La forme est décrite dans `CONSIGNES_REDACTION.md`, avec l'exercice 6 comme modèle.
+
+**Convertis.** Atelier interacteurs, 4e, exercice 6 : un seul tableau à 22 menus (fonction FP/FC, désignation à
+pièges, critère avec le leurre « couleur du boîtier », deux niveaux avec leur unité, flexibilité F0 à F3 devant les
+paroles de la gardienne) remplace le tableau fixe et les deux listes à classer ; « IPX4 vient d'une norme » et
+l'exigence écrite du smartphone restent. À 1280 px, la partie à faire perd 34 % de hauteur, et l'exercice demande deux
+fois plus de décisions. Atelier exigences : 3e exercice 5 (la flexibilité du cahier des charges de la station), 4e
+exercice 3 (le cahier des charges et sa validation dans le même tableau), 3e exercice 4 (satisfaite ou non, sous les
+valeurs des boîtiers A et B) ; atelier FAST, 3e exercice 7 (le tableau de comparaison à « ? »). Les séquences du
+thème 1 qui les reprennent sont réincrustées.
+
+**Non convertis, et pourquoi.** Atelier exigences 4e, exercice 2 : l'élève ne remplit pas ce tableau. 4e_C2.1
+activité 4 et 4e_C3.1 c) : rédaction libre de quatre exigences. Hors thème 1, à faire dans leur PR : la séquence
+4e_C4.1 (réincrustation de l'exercice 6), la séquence 4e_C6.2 (le tableau « fonction | critère | ton verdict », déjà
+en menus mais sans nom, sans retour, la bonne option toujours en premier), et la grille de 4e_C8.1 (un retour par
+option).

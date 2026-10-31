@@ -64,7 +64,7 @@ def niveau_cognitif(ex):
         return "créer — dessin libre, relu avec une liste"
     if "texte" in types or "liste" in types:
         return "produire — l'élève formule seul (texte ou liste libre)"
-    if "slots" in types or "classer" in types:
+    if "slots" in types or "classer" in types or "tableau" in types:
         return "appliquer — compléter, classer"
     return "comprendre — choisir et justifier"
 

@@ -527,13 +527,162 @@ E5 = dict(
           "écrire «&nbsp;le système doit…&nbsp;» au lieu de commencer la fonction par son verbe à l'infinitif.",
 )
 
+# Le cahier des charges de l'exercice 6 : il se complète dans ses cases (demande du professeur, 31/10/2026).
+CDCF_MENUS = {
+    "fonction": [("fp", "FP"), ("fc", "FC")],
+    "critere": [("ip", "Indice de protection contre l'eau (IP)"),
+                ("volume", "Volume d'eau utilisé par jour, en litres"),
+                ("temps", "Temps pour changer l'heure d'arrosage, en minutes"),
+                ("tension", "Tension d'alimentation, en volts"),
+                ("couleur", "Couleur du boîtier")],
+    "flex": [("f0", "F0 — impératif"), ("f1", "F1 — peu négociable"), ("f2", "F2 — négociable"), ("f3", "F3 — très négociable")],
+}
+FC_SEUL = "Un seul interacteur, %s : c'est une FC, une condition à respecter."
+FC_GARDIENNE = "Ici, la gardienne est seule au bout du trait : c'est une FC. Elle est aussi dans la FP : c'est permis."
+
+CDCF_LIGNES = [
+    dict(nom="Ligne 1, de la gardienne aux plantes", cases=[
+        dict(menu="fonction", bonne="fp", apres="(la gardienne → les plantes)",
+             retours={"fc": "Deux interacteurs, reliés en passant par le système : c'est la FP, le service rendu."}),
+        dict(options=[("nom", "Arrosage automatique des plantes"),
+                      ("bon", "Permettre à la gardienne d'arroser les plantes sans être là"),
+                      ("sujet", "Le système arrose les plantes à la place de la gardienne"),
+                      ("solution", "Programmateur et tuyau d'arrosage")], bonne="bon",
+             retours={"nom": "« Arrosage » est un nom : une fonction commence par un verbe à l'infinitif (permettre, arroser…).",
+                      "sujet": "Cette phrase a un sujet, « le système », et un verbe conjugué : une fonction commence "
+                               "directement par un verbe à l'infinitif.",
+                      "solution": "C'est une solution, pas une fonction : elle dit avec quoi on arrose, pas le service rendu."}),
+        "Jours d'arrosage sans la gardienne", "7 jours sur 7, vacances comprises", "F0&nbsp;: aucun jour oublié"]),
+    dict(nom="Ligne 2, la pluie et le soleil", cases=[
+        dict(menu="fonction", bonne="fc", apres="(la pluie et le soleil)", retours={"fp": FC_SEUL % "la pluie et le soleil"}),
+        dict(options=[("solution", "Boîtier étanche en plastique"), ("sujet", "Le boîtier résiste à la pluie"),
+                      ("bon", "Résister à la pluie et au soleil"), ("nom", "Résistance à la pluie et au soleil")], bonne="bon",
+             retours={"nom": "« Résistance » est un nom : la fonction commence par le verbe à l'infinitif, « résister ».",
+                      "sujet": "Cette phrase a un sujet, « le boîtier » : une fonction commence directement par son verbe à l'infinitif.",
+                      "solution": "C'est une solution, pas une fonction : un boîtier en plastique est le moyen choisi pour résister à la pluie."}),
+        dict(menu="critere", bonne="ip",
+             retours={"volume": "Le volume d'eau dit si l'on gaspille ; il ne dit pas si la pluie entre dans le boîtier.",
+                      "temps": "Le temps de réglage parle de la gardienne, pas de la pluie.",
+                      "tension": "La tension dit si l'on risque l'électrocution ; contre la pluie, on contrôle l'eau qui peut "
+                                 "entrer : l'indice de protection.",
+                      "couleur": "La couleur ne dit rien de l'eau qui entre : ce sont les joints et la forme du boîtier qui comptent."}),
+        "IPX4 au moins",
+        dict(menu="flex", bonne="f1",
+             retours={"f0": "La gardienne accepte un écart, IPX3 sous l'abri : ce n'est pas « aucun écart ».",
+                      "f2": "L'écart n'est accepté qu'à une condition précise, la preuve que la pluie n'entre pas : c'est peu négociable.",
+                      "f3": "Elle n'accepte qu'un petit écart, et à une condition : ce n'est pas « très négociable »."})]),
+    dict(nom="Ligne 3, la cuve d'eau de pluie", cases=[
+        dict(menu="fonction", bonne="fc", apres="(la cuve)", retours={"fp": FC_SEUL % "la cuve"}),
+        dict(options=[("bon", "Prendre seulement l'eau dont les plantes ont besoin"),
+                      ("solution", "Goutte-à-goutte au pied des plantes"),
+                      ("nom", "Économie d'eau de la cuve"),
+                      ("sujet", "Le système doit prendre peu d'eau dans la cuve")], bonne="bon",
+             retours={"nom": "« Économie » est un nom : une fonction commence par un verbe à l'infinitif (prendre, économiser…).",
+                      "sujet": "« Le système doit… » est la forme d'une exigence, avec un sujet : la fonction commence "
+                               "directement par son verbe, « prendre ».",
+                      "solution": "Le goutte-à-goutte est une solution, pas une fonction : c'est un moyen de ne pas gaspiller l'eau."}),
+        dict(menu="critere", bonne="volume",
+             retours={"ip": "L'indice de protection dit si l'eau entre dans le boîtier ; ici, on veut savoir combien d'eau "
+                            "on prend dans la cuve.",
+                      "temps": "Le temps de réglage ne dit rien de l'eau prise dans la cuve : on mesure une quantité d'eau.",
+                      "tension": "La tension électrique ne mesure pas une quantité d'eau.",
+                      "couleur": "La couleur ne se mesure pas pour cette contrainte : elle ne dit rien de l'eau gaspillée."}),
+        dict(options=[("unite", "10 par jour"), ("min", "10 min par jour"), ("bon", "10 L par jour"), ("vague", "Pas trop d'eau")],
+             bonne="bon",
+             retours={"unite": "Un nombre sans unité n'est pas un niveau : 10 quoi ? Des litres, des seaux, des minutes ?",
+                      "min": "Des minutes mesurent un temps ; le critère est un volume d'eau : son unité est le litre (L).",
+                      "vague": "« Pas trop » ne se mesure pas : un niveau, c'est un nombre et son unité."}),
+        dict(menu="flex", bonne="f2",
+             retours={"f0": "La gardienne accepte 9 ou 11 litres : un écart est possible, ce n'est pas impératif.",
+                      "f1": "Elle accepte l'écart sans poser de condition : c'est négociable, pas « peu négociable ».",
+                      "f3": "L'écart accepté est petit, un litre de plus ou de moins : ce n'est pas « très négociable »."})]),
+    dict(nom="Ligne 4, le smartphone", cases=[
+        dict(menu="fonction", bonne="fc", apres="(le smartphone)", retours={"fp": FC_SEUL % "le smartphone"}),
+        dict(options=[("nom", "Envoi de messages au smartphone"), ("bon", "Envoyer l'état de l'arrosage au smartphone"),
+                      ("solution", "Module Wi-Fi dans le boîtier"), ("sujet", "Le smartphone reçoit l'état de l'arrosage")],
+             bonne="bon",
+             retours={"nom": "« Envoi » est un nom : la fonction commence par le verbe à l'infinitif, « envoyer ».",
+                      "solution": "C'est une solution, pas une fonction : le module Wi-Fi est le moyen d'envoyer le message.",
+                      "sujet": "Cette phrase a un sujet, « le smartphone » : une fonction commence directement par son verbe à l'infinitif."}),
+        "<i>à écrire (dernière question)</i>", "<i>à écrire</i>", "—"]),
+    dict(nom="Ligne 5, la gardienne", cases=[
+        dict(menu="fonction", bonne="fc", apres="(la gardienne)", retours={"fp": FC_GARDIENNE}),
+        dict(options=[("sujet", "La gardienne ne doit pas s'électrocuter"), ("nom", "Sécurité de la gardienne"),
+                      ("solution", "Batterie de 12 volts au lieu du 230 volts"), ("bon", "Être sans danger pour la gardienne")],
+             bonne="bon",
+             retours={"sujet": "Cette phrase a un sujet, « la gardienne » : la fonction commence par son verbe à l'infinitif, « être ».",
+                      "nom": "« Sécurité » est un nom : une fonction commence par un verbe à l'infinitif (être, protéger…).",
+                      "solution": "C'est une solution, pas une fonction : la batterie de 12 volts est le moyen d'être sans danger."}),
+        dict(menu="critere", bonne="tension",
+             retours={"ip": "L'indice de protection parle de l'eau qui entre ; le danger, ici, vient du courant électrique : "
+                            "on contrôle la tension.",
+                      "volume": "Le volume d'eau ne dit rien du danger électrique.",
+                      "temps": "Le temps de réglage parle de la facilité, pas du danger.",
+                      "couleur": "La couleur du boîtier ne protège de rien : on contrôle la tension qui l'alimente."}),
+        "12&nbsp;V (volts)",
+        dict(menu="flex", bonne="f0",
+             retours={"f1": "« Pas question » : aucun écart n'est accepté, même à une condition. Le 230 V serait un danger mortel.",
+                      "f2": "« Pas question » : aucun écart n'est accepté, ce n'est pas négociable du tout.",
+                      "f3": "« Pas question » : la gardienne n'accepte aucun écart, le niveau est impératif."})]),
+    dict(nom="Ligne 6, encore la gardienne", cases=[
+        dict(menu="fonction", bonne="fc", apres="(la gardienne)", retours={"fp": FC_GARDIENNE}),
+        dict(options=[("bon", "Être facile à régler par la gardienne"), ("sujet", "La gardienne règle l'heure facilement"),
+                      ("solution", "Écran tactile à gros boutons"), ("nom", "Facilité de réglage")], bonne="bon",
+             retours={"sujet": "Cette phrase a un sujet, « la gardienne », et un verbe conjugué : la fonction commence par "
+                               "« être », à l'infinitif.",
+                      "solution": "C'est une solution, pas une fonction : l'écran tactile est un moyen de rendre le réglage facile.",
+                      "nom": "« Facilité » est un nom : la fonction commence par un verbe à l'infinitif, « être facile… »."}),
+        dict(menu="critere", bonne="temps",
+             retours={"ip": "L'indice de protection parle de l'eau qui entre, pas de la facilité du réglage.",
+                      "volume": "Le volume d'eau ne dit pas si le réglage est facile.",
+                      "tension": "La tension dit si l'on est en sécurité, pas si le réglage est facile.",
+                      "couleur": "Une couleur ne rend pas un réglage plus rapide : on mesure le temps qu'il prend."}),
+        dict(options=[("bon", "2 min au plus"), ("unite", "2 au plus"), ("litres", "2 L au plus"), ("vague", "Rapidement")],
+             bonne="bon",
+             retours={"unite": "Un nombre sans unité n'est pas un niveau : 2 quoi ? Des minutes, des heures ?",
+                      "litres": "Le litre mesure un volume ; le critère est un temps : son unité est la minute (min).",
+                      "vague": "« Rapidement » ne se mesure pas : un niveau, c'est un nombre et son unité."}),
+        dict(menu="flex", bonne="f3",
+             retours={"f0": "La gardienne accepte même 5 minutes : un écart est possible, ce n'est pas impératif.",
+                      "f1": "Elle accepte l'écart sans condition : ce n'est pas « peu négociable ».",
+                      "f2": "L'écart accepté est large, plus du double, et sans condition : c'est très négociable."})]),
+]
+
+CDCF_CORRIGE = (
+    '<div class="defile"><table><caption>Le cahier des charges complété</caption>'
+    "<tr><th>Fonction</th><th>Désignation</th><th>Critère</th><th>Niveau</th><th>Flexibilité</th></tr>"
+    "<tr><td>FP (la gardienne → les plantes)</td><td>Permettre à la gardienne d'arroser les plantes sans être là</td>"
+    "<td>Jours d'arrosage sans la gardienne</td><td>7 jours sur 7</td><td>F0</td></tr>"
+    "<tr><td>FC (la pluie et le soleil)</td><td>Résister à la pluie et au soleil</td><td>Indice de protection (IP)</td>"
+    "<td>IPX4 au moins</td><td>F1</td></tr>"
+    "<tr><td>FC (la cuve)</td><td>Prendre seulement l'eau dont les plantes ont besoin</td><td>Volume d'eau par jour</td>"
+    "<td>10&nbsp;L par jour</td><td>F2</td></tr>"
+    "<tr><td>FC (le smartphone)</td><td>Envoyer l'état de l'arrosage au smartphone</td><td>Nombre de messages par jour</td>"
+    "<td>1 fois par jour au moins</td><td>—</td></tr>"
+    "<tr><td>FC (la gardienne)</td><td>Être sans danger pour la gardienne</td><td>Tension d'alimentation</td>"
+    "<td>12&nbsp;V (volts)</td><td>F0</td></tr>"
+    "<tr><td>FC (la gardienne)</td><td>Être facile à régler par la gardienne</td><td>Temps pour changer l'heure</td>"
+    "<td>2&nbsp;min au plus</td><td>F3</td></tr>"
+    "</table></div>")
+
 E6 = dict(
     id="e6", titre="Le cahier des charges : critère, niveau, flexibilité", code="4e_C2.2", duree=15,
-    objectif="donner à une contrainte un critère, un niveau et une flexibilité, et dire d'où vient ce niveau.",
-    production="trois critères choisis, l'origine d'un niveau, quatre classes de flexibilité, et une exigence écrite avec "
-               "critère et niveau.",
-    mots=[("critère", "ce que l'on mesure ou contrôle pour savoir si la contrainte est respectée."),
-          ("niveau", "la valeur à atteindre pour ce critère (au moins…, au plus…)."),
+    objectif="compléter le cahier des charges&nbsp;: la fonction, sa désignation (un verbe à l'infinitif), son critère, son "
+             "niveau et sa flexibilité, puis dire d'où vient un niveau.",
+    production="le tableau du cahier des charges complété (vingt-deux cases), l'origine d'un niveau, et une exigence écrite "
+               "avec critère et niveau.",
+    mots=[("fonction principale (FP) et fonction contrainte (FC)", "la FP relie deux interacteurs en passant par l'objet&nbsp;: "
+           "c'est le service rendu. Une FC relie l'objet à un seul interacteur&nbsp;: c'est une condition à respecter."),
+          ("désignation", "dans le cahier des charges, la phrase de la fonction&nbsp;: elle commence par un verbe à l'infinitif "
+           "(«&nbsp;résister à la pluie&nbsp;»)."),
+          ("verbe à l'infinitif", "la forme du verbe qu'on trouve dans le dictionnaire, sans conjugaison&nbsp;: résister, prendre, "
+           "envoyer, être."),
+          ("solution technique", "le moyen concret choisi pour remplir une fonction (un boîtier en plastique, un goutte-à-goutte)&nbsp;: "
+           "elle dit <b>avec quoi</b>&nbsp;; la fonction dit <b>ce que</b> l'objet doit faire."),
+          ("critère", "ce que l'on mesure ou contrôle pour savoir si la contrainte est respectée."),
+          ("niveau", "la valeur à atteindre pour ce critère (au moins…, au plus…), avec son unité."),
+          ("tension d'alimentation", "la tension électrique qui fait fonctionner le système, en volts (V). 12&nbsp;V est une très "
+           "basse tension, sans danger au toucher."),
           ("norme", "un texte officiel qui fixe la même règle pour tous les fabricants, dans tout un pays ou dans le monde."),
           ("indice de protection (IP)", "un code fixé par une norme internationale&nbsp;; le chiffre après IPX dit à quelle eau "
            "l'appareil résiste (IPX4&nbsp;: projections d'eau de tous côtés)."),
@@ -546,40 +695,41 @@ E6 = dict(
     intro="<p>« Résister à la pluie »&nbsp;: c'est une bonne contrainte, mais <b>qui décide</b> si c'est réussi&nbsp;? Pour qu'on "
           "puisse la vérifier, on lui ajoute un <b>critère</b> (ce qu'on mesure ou contrôle) et un <b>niveau</b> (la valeur à "
           "atteindre). On obtient une <b>exigence</b>.</p>"
-          "<p>Le <b>cahier des charges fonctionnel</b> (CdCF) range ces exigences dans un tableau. La dernière colonne, la "
-          "<b>flexibilité</b>, dit de combien on peut s'écarter du niveau. On la note par une <b>classe</b>&nbsp;:</p>"
+          "<p>Le <b>cahier des charges fonctionnel</b> (CdCF) range ces exigences dans un tableau. Chaque ligne a cinq cases&nbsp;: "
+          "la <b>fonction</b> (FP ou FC, avec entre parenthèses l'interacteur qu'elle concerne), sa <b>désignation</b> — la phrase "
+          "de la fonction, qui commence par un verbe à l'infinitif —, son <b>critère</b>, son <b>niveau</b> et sa "
+          "<b>flexibilité</b>. La flexibilité dit de combien on peut s'écarter du niveau. On la note par une <b>classe</b>&nbsp;:</p>"
           "<ul><li><b>F0</b>&nbsp;: flexibilité nulle — le niveau est impératif&nbsp;;</li>"
           "<li><b>F1</b>&nbsp;: flexibilité faible — le niveau est peu négociable&nbsp;;</li>"
           "<li><b>F2</b>&nbsp;: flexibilité moyenne — le niveau est négociable&nbsp;;</li>"
-          "<li><b>F3</b>&nbsp;: flexibilité forte — le niveau est très négociable.</li></ul>"
-          '<div class="defile"><table><caption>Extrait du cahier des charges du système d\'arrosage (entre parenthèses&nbsp;: '
-          "l'interacteur que la fonction concerne)</caption>"
-          "<tr><th>Fonction</th><th>Désignation</th><th>Critère</th><th>Niveau</th><th>Flexibilité</th></tr>"
-          "<tr><td>FP (la gardienne → les plantes)</td><td>Permettre à la gardienne d'arroser les plantes sans être là</td>"
-          "<td>Jours d'arrosage sans la gardienne</td><td>7 jours sur 7, vacances comprises</td><td>F0&nbsp;: aucun jour oublié</td></tr>"
-          "<tr><td>FC (la pluie et le soleil)</td><td>Résister à la pluie et au soleil</td><td>Indice de protection</td><td>IPX4 au moins</td>"
-          "<td>à trouver</td></tr>"
-          "<tr><td>FC (la cuve)</td><td>Prendre seulement l'eau dont les plantes ont besoin</td><td>Volume d'eau par jour</td>"
-          "<td>10&nbsp;L</td><td>à trouver</td></tr>"
-          "<tr><td>FC (le smartphone)</td><td>Envoyer l'état de l'arrosage au smartphone</td><td>à écrire (dernière question)</td>"
-          "<td>à écrire</td><td>—</td></tr>"
-          "<tr><td>FC (la gardienne)</td><td>Être sans danger pour la gardienne</td><td>Tension d'alimentation</td><td>12&nbsp;V (volts)</td>"
-          "<td>à trouver</td></tr>"
-          "<tr><td>FC (la gardienne)</td><td>Être facile à régler par la gardienne</td><td>Temps pour changer l'heure d'arrosage</td><td>2&nbsp;min au plus</td>"
-          "<td>à trouver</td></tr>"
-          "</table></div>"
-          "<p>La gardienne a deux lignes&nbsp;: un même interacteur peut imposer plusieurs contraintes.</p>",
-    consigne="<p><b>Pour chaque contrainte, choisis le critère qui permet de la vérifier.</b> Puis dis d'où vient le niveau "
-             "« IPX4 ». <b>Classe</b> ensuite chaque réponse de la gardienne dans sa classe de flexibilité (F0 à F3), et "
-             "<b>écris l'exigence complète</b> de la contrainte du smartphone.</p>",
-    critere="trois critères justes, la bonne origine pour IPX4, quatre classes de flexibilité justes, et une exigence qui "
-            "contient un nombre et son unité.",
-    widgets=[dict(type="classer", name="crit",
-                  categories=[("ip", "l'indice de protection contre l'eau (IP)"), ("litres", "le volume d'eau utilisé par jour, en litres"),
-                              ("temps", "le temps pour changer l'heure d'arrosage, en minutes"), ("couleur", "la couleur du boîtier")],
-                  items=[("« Résister à la pluie et au soleil »", "ip", "Résister à la pluie : ce qu'on contrôle, c'est l'eau qui peut entrer."),
-                         ("« Prendre seulement l'eau dont les plantes ont besoin »", "litres", "Ne pas gaspiller : ce qu'on mesure, c'est une quantité d'eau."),
-                         ("« Être facile à régler par la gardienne »", "temps", "Facile : ce qu'on mesure, c'est le temps que prend le réglage.")]),
+          "<li><b>F3</b>&nbsp;: flexibilité forte — le niveau est très négociable.</li></ul>",
+    consigne="<p><b>Complète le cahier des charges du système d'arrosage, directement dans le tableau</b>&nbsp;: chaque case à "
+             "menu attend une réponse.</p>"
+             "<ul><li><b>Fonction</b>&nbsp;: FP ou FC&nbsp;? Compte les interacteurs écrits dans la case.</li>"
+             "<li><b>Désignation</b>&nbsp;: la phrase de la fonction. Attention aux pièges&nbsp;: elle commence par un <b>verbe à "
+             "l'infinitif</b>. Ce n'est ni un nom, ni une phrase avec un sujet, ni une solution.</li>"
+             "<li><b>Critère</b>&nbsp;: ce qu'on mesure pour vérifier la fonction.</li>"
+             "<li><b>Niveau</b>&nbsp;: la valeur à atteindre, avec l'unité de son critère.</li>"
+             "<li><b>Flexibilité</b>&nbsp;: la classe, de F0 à F3, d'après ce que dit la gardienne, juste au-dessus du tableau.</li></ul>"
+             "<p>Dis ensuite d'où vient le niveau «&nbsp;IPX4&nbsp;», puis <b>écris l'exigence complète</b> de la ligne du "
+             "smartphone.</p>",
+    critere="les vingt-deux cases du tableau justes, la bonne origine pour IPX4, et une exigence qui contient un nombre et son "
+            "unité.",
+    widgets=[dict(type="tableau", name="cdcf",
+                  intro="<p><b>Ce que dit la gardienne</b> quand on lui demande&nbsp;: «&nbsp;Et si on n'atteint pas tout à fait "
+                        "ce niveau&nbsp;?&nbsp;»</p><ul class=\"paroles\">"
+                        "<li><b>Résister à la pluie</b> (IPX4)&nbsp;: «&nbsp;IPX3 sous l'abri, à la rigueur, si on me prouve que "
+                        "la pluie n'y entre pas.&nbsp;»</li>"
+                        "<li><b>L'eau prise dans la cuve</b>&nbsp;: «&nbsp;9 ou 11 litres, ça ira aussi.&nbsp;»</li>"
+                        "<li><b>Être sans danger</b> (12&nbsp;V, en volts)&nbsp;: «&nbsp;Pas question d'amener le 230&nbsp;V au "
+                        "jardin.&nbsp;»</li>"
+                        "<li><b>Le réglage</b>&nbsp;: «&nbsp;Même 5 minutes, ça m'ira&nbsp;: je ne le fais qu'une fois par "
+                        "mois.&nbsp;»</li></ul>",
+                  legende="Le cahier des charges du système d'arrosage, à compléter (entre parenthèses&nbsp;: l'interacteur "
+                          "que la fonction concerne)",
+                  colonnes=["Fonction", "Désignation", "Critère", "Niveau", "Flexibilité"],
+                  largeurs=[15, 29, 22, 18, 16],
+                  menus=CDCF_MENUS, lignes=CDCF_LIGNES),
              dict(type="choix", name="ipx4", legende="Le niveau « IPX4 au moins » vient…",
                   options=[("gardienne", "…de l'avis de la gardienne, qui préfère cette valeur."),
                            ("norme", "…d'une norme&nbsp;: un texte officiel qui fixe les mêmes codes IP pour tous les fabricants."),
@@ -590,21 +740,9 @@ E6 = dict(
                            "label": "Un label garantit une qualité (économiser l'eau, par exemple) ; il ne définit pas les codes de résistance à l'eau.",
                            "couleur": "La couleur ne dit rien de l'étanchéité : ce sont les joints et la forme du boîtier qui comptent.",
                            "norme": "Oui : les codes IP sont fixés par une norme internationale. IPX4 veut dire : résiste aux projections d'eau de tous côtés."}),
-             dict(type="classer", name="flex",
-                  categories=[("f0", "F0 — flexibilité nulle&nbsp;: le niveau est impératif"),
-                              ("f1", "F1 — flexibilité faible&nbsp;: peu négociable"),
-                              ("f2", "F2 — flexibilité moyenne&nbsp;: négociable"),
-                              ("f3", "F3 — flexibilité forte&nbsp;: très négociable")],
-                  items=[("Sans danger, 12&nbsp;V (volts). La gardienne&nbsp;: « Pas question d'amener le 230&nbsp;V au jardin. »", "f0",
-                          "« Pas question » : aucun écart n'est accepté, et le 230 V est un danger."),
-                         ("Résister à la pluie, IPX4. La gardienne&nbsp;: « IPX3 sous l'abri, à la rigueur, si on me prouve que la pluie n'y entre pas. »", "f1",
-                          "Un écart est possible, mais seulement à une condition précise : c'est peu négociable."),
-                         ("L'eau nécessaire, 10&nbsp;L par jour. La gardienne&nbsp;: « 9 ou 11 litres, ça ira aussi. »", "f2",
-                          "Un écart d'un litre est accepté sans condition : c'est négociable."),
-                         ("Se régler en 2&nbsp;min au plus. La gardienne&nbsp;: « Même 5 minutes, ça m'ira&nbsp;: je ne le fais qu'une fois par mois. »", "f3",
-                          "Un écart très large est accepté, sans condition : c'est très négociable.")]),
              dict(type="texte", name="exig", exemple="Le système doit envoyer l'état de l'arrosage au smartphone au moins 1 fois par jour.", lignes=3,
-                  label="Écris l'exigence complète de la contrainte « envoyer l'état de l'arrosage au smartphone » : avec un critère et un niveau.",
+                  label="Écris l'exigence complète de la ligne 4, «&nbsp;envoyer l'état de l'arrosage au smartphone&nbsp;»&nbsp;: "
+                        "avec un critère et un niveau.",
                   criteres=[dict(label="ton exigence parle bien du smartphone ou du message envoyé",
                                  motifs=["smartphone", "telephone", "portable", "message", "notification", "envoi", "envoy"],
                                  manque="Ton exigence doit parler de ce qu'on envoie au smartphone."),
@@ -615,25 +753,60 @@ E6 = dict(
                                  manque="Un nombre sans unité n'est pas un niveau : écris « minutes », « fois par jour »…")],
                   etayage=["Le système doit envoyer … au smartphone au moins … fois par …",
                            "Le message doit arriver sur le smartphone en moins de … (unité) après …"])],
-    aides=["<p>Pour trouver le critère, demande-toi&nbsp;: <b>qu'est-ce que je mesurerais ou compterais</b> pour savoir si c'est "
-           "réussi&nbsp;? Une couleur ne se mesure pas pour ces contraintes-là.</p>",
-           "<p>Exigence = contrainte + critère + niveau.<br>"
-           "« Résister à la pluie » → critère&nbsp;: l'indice de protection → niveau&nbsp;: IPX4 au moins.<br>"
-           "« Envoyer l'état au smartphone » → critère&nbsp;: le nombre de messages, ou le temps avant qu'il arrive → niveau&nbsp;: "
-           "un nombre avec son unité.<br>"
-           "Flexibilité → écoute ce que la gardienne accepte&nbsp;: aucun écart → F0&nbsp;; un écart à une condition → F1&nbsp;; "
-           "un petit écart sans condition → F2&nbsp;; tout lui va → F3.</p>"],
-    jumeau=dict(consigne="« La pompe ne doit pas gêner les voisins. » Donne un critère et un niveau.",
-                correction="Critère&nbsp;: le <b>niveau sonore</b>, en décibels (dB), mesuré à un mètre. Niveau&nbsp;: <b>au plus 35&nbsp;dB</b> "
-                           "la nuit. (Autre réponse juste&nbsp;: critère « heures de fonctionnement », niveau « jamais entre 22&nbsp;h et 7&nbsp;h ».)"),
+    aides=["<p>Remplis le tableau <b>colonne par colonne</b>.</p><ul>"
+           "<li><b>Fonction</b>&nbsp;: compte les interacteurs écrits dans la case — deux → FP, un seul → FC.</li>"
+           "<li><b>Désignation</b>&nbsp;: cherche la phrase qui commence par un <b>verbe à l'infinitif</b> (résister, prendre, être…).</li>"
+           "<li><b>Critère</b>&nbsp;: demande-toi <b>qu'est-ce que je mesurerais</b> pour savoir si c'est réussi. Une couleur ne se "
+           "mesure pas pour ces contraintes-là.</li>"
+           "<li><b>Flexibilité</b>&nbsp;: relis ce que dit la gardienne, au-dessus du tableau.</li></ul>",
+           "<ul><li><b>Fonction.</b> Ligne 1 → la gardienne et les plantes → <b>deux</b> interacteurs → FP. Les cinq autres "
+           "lignes → un seul → FC.</li>"
+           "<li><b>Désignation.</b> «&nbsp;Résister à la pluie et au soleil&nbsp;» commence par un verbe à l'infinitif → "
+           "c'est la fonction. «&nbsp;Résistance…&nbsp;» est un nom&nbsp;; «&nbsp;Le boîtier résiste…&nbsp;» a un sujet&nbsp;; "
+           "«&nbsp;Boîtier étanche…&nbsp;» est une solution.</li>"
+           "<li><b>Critère.</b> «&nbsp;Résister à la pluie&nbsp;» → ce qu'on contrôle, c'est l'eau qui peut entrer → "
+           "l'indice de protection.</li>"
+           "<li><b>Niveau.</b> Un nombre <b>et</b> l'unité de son critère&nbsp;: un volume → des litres&nbsp;; un temps → "
+           "des minutes.</li>"
+           "<li><b>Exigence</b> = contrainte + critère + niveau. «&nbsp;Envoyer l'état au smartphone&nbsp;» → critère&nbsp;: "
+           "le nombre de messages, ou le temps avant qu'il arrive → niveau&nbsp;: un nombre avec son unité.</li>"
+           "<li><b>Flexibilité.</b> Écoute ce que la gardienne accepte&nbsp;: aucun écart → F0&nbsp;; un écart à une "
+           "condition → F1&nbsp;; un petit écart sans condition → F2&nbsp;; un écart large → F3.</li></ul>"],
+    jumeau=dict(consigne="Une ligne s'ajoute au tableau&nbsp;: FC (la voisine), parce que la pompe fait du bruit la nuit. Pour la "
+                         "désignation, quelqu'un propose «&nbsp;La pompe ne gêne pas les voisins&nbsp;». Corrige cette désignation, "
+                         "puis donne un critère et un niveau.",
+                correction="La proposition a un sujet («&nbsp;la pompe&nbsp;») et un verbe conjugué → désignation corrigée, avec un "
+                           "verbe à l'infinitif&nbsp;: <b>«&nbsp;ne pas gêner la voisine par son bruit&nbsp;»</b>. Critère&nbsp;: le "
+                           "<b>niveau sonore</b>, en décibels (dB), mesuré à un mètre. Niveau&nbsp;: <b>au plus 35&nbsp;dB</b> la nuit. "
+                           "(Autre réponse juste&nbsp;: critère «&nbsp;heures de fonctionnement&nbsp;», niveau «&nbsp;jamais entre "
+                           "22&nbsp;h et 7&nbsp;h&nbsp;».)"),
     correction=[
-        "<b>« Résister à la pluie et au soleil »</b> → critère&nbsp;: <b>l'indice de protection (IP)</b> → niveau&nbsp;: IPX4 au moins",
-        "<b>« Prendre seulement l'eau nécessaire »</b> → critère&nbsp;: <b>le volume d'eau par jour</b> → niveau&nbsp;: par exemple au plus 10&nbsp;L, "
-        "fixé dans le cahier des charges du jardin",
-        "<b>« Être facile à régler par la gardienne »</b> → critère&nbsp;: <b>le temps pour changer l'heure</b> → niveau&nbsp;: 2&nbsp;min au plus",
-        "La couleur du boîtier ne vérifie aucune des trois contraintes.",
+        CDCF_CORRIGE,
+        "<b>Fonction</b> → la ligne 1 relie <b>deux</b> interacteurs, la gardienne et les plantes, en passant par le système → "
+        "<b>FP</b>&nbsp;; les cinq autres ne touchent qu'<b>un</b> interacteur → <b>FC</b>",
+        "La gardienne a deux lignes FC, et elle est aussi dans la FP&nbsp;: un même interacteur peut imposer plusieurs contraintes.",
+        "<b>Désignation</b> → toujours un <b>verbe à l'infinitif</b>&nbsp;: permettre, résister, prendre, envoyer, être",
+        "Piège 1, <b>un nom</b>&nbsp;: «&nbsp;Résistance à la pluie et au soleil&nbsp;», «&nbsp;Économie d'eau de la cuve&nbsp;», "
+        "«&nbsp;Sécurité de la gardienne&nbsp;» → pas de verbe → ce n'est pas une fonction",
+        "Piège 2, <b>une phrase avec un sujet</b>&nbsp;: «&nbsp;Le boîtier résiste à la pluie&nbsp;», «&nbsp;Le système doit "
+        "prendre peu d'eau…&nbsp;» → un sujet et un verbe conjugué → «&nbsp;Le système doit…&nbsp;» est la forme d'une exigence",
+        "Piège 3, <b>une solution</b>&nbsp;: «&nbsp;Boîtier étanche en plastique&nbsp;», «&nbsp;Goutte-à-goutte&nbsp;», "
+        "«&nbsp;Module Wi-Fi&nbsp;» → elle dit <b>avec quoi</b>, pas <b>ce que</b> le système doit faire",
+        "<b>Ligne 2</b> «&nbsp;Résister à la pluie et au soleil&nbsp;» → critère&nbsp;: <b>l'indice de protection (IP)</b> → "
+        "niveau&nbsp;: IPX4 au moins",
+        "<b>Ligne 3</b> «&nbsp;Prendre seulement l'eau nécessaire&nbsp;» → critère&nbsp;: <b>le volume d'eau par jour</b> → "
+        "niveau&nbsp;: <b>10&nbsp;L par jour</b>, fixé dans le cahier des charges du jardin",
+        "<b>Ligne 5</b> «&nbsp;Être sans danger pour la gardienne&nbsp;» → critère&nbsp;: <b>la tension d'alimentation</b> → "
+        "niveau&nbsp;: 12&nbsp;V (volts), une très basse tension",
+        "<b>Ligne 6</b> «&nbsp;Être facile à régler&nbsp;» → critère&nbsp;: <b>le temps pour changer l'heure</b> → niveau&nbsp;: "
+        "<b>2&nbsp;min au plus</b>",
+        "Les niveaux refusés&nbsp;: «&nbsp;10 par jour&nbsp;», «&nbsp;2 au plus&nbsp;» → sans unité&nbsp;; «&nbsp;10&nbsp;min par "
+        "jour&nbsp;», «&nbsp;2&nbsp;L au plus&nbsp;» → l'unité d'un autre critère&nbsp;; «&nbsp;Pas trop d'eau&nbsp;», "
+        "«&nbsp;Rapidement&nbsp;» → ne se mesurent pas",
+        "La couleur du boîtier ne vérifie aucune des quatre contraintes&nbsp;: elle ne se mesure pas pour elles.",
         "<b>IPX4</b> → vient d'une <b>norme</b> internationale&nbsp;: elle fixe les codes IP pour tous les fabricants.",
-        "<b>12&nbsp;V</b> → « pas question » d'autre chose → aucun écart → <b>F0</b> (le 230&nbsp;V serait un danger mortel au jardin)",
+        "<b>12&nbsp;V</b> → «&nbsp;pas question&nbsp;» d'autre chose → aucun écart → <b>F0</b> (le 230&nbsp;V serait un danger "
+        "mortel au jardin)",
         "<b>IPX4</b> → IPX3 accepté à une seule condition (sous l'abri, preuve à l'appui) → <b>F1</b>",
         "<b>10&nbsp;L par jour</b> → 9 ou 11&nbsp;L acceptés sans condition → <b>F2</b>",
         "<b>Réglage en 2&nbsp;min</b> → même 5&nbsp;min acceptées, sans condition → écart très large → <b>F3</b>",
@@ -641,16 +814,20 @@ E6 = dict(
         "<b>accepte</b> comme écart&nbsp;: la gardienne tient beaucoup à ses plantes, et pourtant le volume d'eau est en F2.",
         "<b>Une exigence attendue&nbsp;:</b> « Le système doit envoyer l'état de l'arrosage au smartphone <b>au moins 1 fois par jour</b>. » "
         "ou « …le message doit arriver <b>en moins de 5 minutes</b> après l'arrosage. »",
-        ("conclusion", "Exigence = <b>contrainte + critère + niveau</b>, et la <b>flexibilité</b> dit de combien le niveau peut "
-                       "bouger (F0 impératif → F3 très négociable). Le niveau vient d'une norme, d'un cahier des charges, d'un "
-                       "label ou d'une certification."),
+        ("conclusion", "Chaque ligne du cahier des charges a sa <b>fonction</b> (FP ou FC), sa <b>désignation</b> (un verbe à "
+                       "l'infinitif), son <b>critère</b> (ce qu'on mesure), son <b>niveau</b> (un nombre et son unité) et sa "
+                       "<b>flexibilité</b> (F0 impératif → F3 très négociable). Le niveau vient d'une norme, d'un cahier des "
+                       "charges, d'un label ou d'une certification."),
     ],
-    retenir="dans le cahier des charges, chaque fonction reçoit un <b>critère</b> (ce qu'on mesure), un <b>niveau</b> (la valeur à "
-            "atteindre) et une <b>flexibilité</b> (l'écart accepté), notée de <b>F0</b> (impératif) à <b>F3</b> (très négociable)&nbsp;; "
-            "le niveau vient d'une <b>norme</b>, d'un <b>cahier des charges</b>, d'un <b>label</b> ou d'une <b>certification</b>.",
-    piege="écrire un niveau sans unité (« au moins 1 »), un critère qui ne se mesure pas (« bien », « joli »), ou choisir la "
-          "flexibilité d'après l'importance de la fonction au lieu de l'écart que le client accepte.",
+    retenir="dans le cahier des charges, chaque fonction a une <b>désignation</b> qui commence par un <b>verbe à l'infinitif</b>, "
+            "un <b>critère</b> (ce qu'on mesure), un <b>niveau</b> (la valeur à atteindre, avec son unité) et une <b>flexibilité</b> "
+            "(l'écart accepté), notée de <b>F0</b> (impératif) à <b>F3</b> (très négociable)&nbsp;; le niveau vient d'une "
+            "<b>norme</b>, d'un <b>cahier des charges</b>, d'un <b>label</b> ou d'une <b>certification</b>.",
+    piege="écrire une désignation avec un nom («&nbsp;Économie d'eau&nbsp;») ou une solution («&nbsp;Goutte-à-goutte&nbsp;») au "
+          "lieu d'un verbe à l'infinitif, écrire un niveau sans unité («&nbsp;au moins 1&nbsp;»), ou choisir la flexibilité "
+          "d'après l'importance de la fonction au lieu de l'écart que le client accepte.",
 )
+
 
 E7 = dict(
     id="e7", titre="Ce que le concepteur a oublié", code="4e_C2.2", duree=12,
@@ -940,6 +1117,10 @@ NOTES_PROF = ("<ul><li>Le cours (encadré « 📘 Le cours ») et deux mécaniqu
               "passe par l'objet entre deux éléments, chaque fonction contrainte (FC) relie l'objet à un seul élément — et le cahier "
               "des charges de 4e porte la flexibilité, par classes F0 à F3. En 5e, l'élève LIT et complète les fonctions&nbsp;; "
               "en 4e, il les FORMULE avec critère, niveau et flexibilité.</li>"
+              "<li>Demande de Pascal (31/10/2026)&nbsp;: le cahier des charges de l'exercice 6 se complète <b>dans le tableau</b>, "
+              "par menus déroulants (widget «&nbsp;tableau&nbsp;» du moteur)&nbsp;; la colonne Désignation porte les pièges "
+              "— un nom, une phrase avec un sujet, une solution technique — face à la bonne forme, un verbe à l'infinitif. "
+              "Les paroles de la gardienne, qui décident de la flexibilité, sont juste au-dessus du tableau.</li>"
               "<li>Le programme ne nomme ni « pieuvre » ni « fonction contrainte »&nbsp;: il dit <i>interacteurs, contraintes, "
               "exigences, cahier des charges</i>. Le diagramme est donc toujours nommé deux fois&nbsp;: d'abord par le mot du "
               "programme, puis par son nom courant.</li>"

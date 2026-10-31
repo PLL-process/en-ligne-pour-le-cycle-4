@@ -127,6 +127,41 @@ details.cours summary{cursor:pointer;font-weight:700;color:#9bd8ff}
 table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.9em}
 th,td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
 th{background:var(--panel2);color:var(--sub)}
+/* Tableau à menus : le cahier des charges se complète dans ses cases (widget « tableau »).
+   Avec le script, le choix s'écrit en entier dans la case (il passe à la ligne et s'imprime) et le menu natif,
+   transparent, reste dessus : clavier, lecteur d'écran et liste du téléphone sont ceux du navigateur.
+   Sous 640 px, chaque ligne devient une carte, chaque case porte le nom de sa colonne. */
+.tableau-menus table.cdcf{table-layout:fixed;font-size:.92em}
+.tableau-menus table.cdcf caption{caption-side:top;text-align:left;color:var(--sub);font-size:.95em;padding:0 0 6px}
+.tableau-menus table.cdcf th{vertical-align:bottom}
+.tableau-menus table.cdcf td{overflow-wrap:break-word}
+.tableau-menus select{width:100%;max-width:100%;background:var(--input-bg);color:var(--text);border:1px solid var(--input-bd);
+  border-radius:8px;padding:7px 9px;font-family:inherit;font-size:1em;min-height:40px}
+.tableau-menus .menu-vu,.tableau-menus .menu-fleche{display:none}
+.tableau-menus.menus-js .menu-case{position:relative;display:flex;align-items:flex-start;gap:6px;width:100%;min-height:40px;
+  padding:7px 9px;border:1.5px solid var(--hl);border-radius:8px;background:var(--input-bg);cursor:pointer}
+.tableau-menus.menus-js .menu-case select{position:absolute;top:0;left:0;width:100%;height:100%;min-height:0;margin:0;padding:0;
+  opacity:0;cursor:pointer;font-size:16px}
+.tableau-menus.menus-js .menu-vu{display:block;flex:1 1 auto;min-width:0;white-space:normal;line-height:1.35;color:#fff}
+.tableau-menus.menus-js .menu-vu:empty::before{content:"choisir";color:var(--sub);font-style:italic}
+.tableau-menus.menus-js .menu-fleche{display:block;flex:0 0 auto;color:var(--hl);line-height:1.35}
+.tableau-menus.menus-js .menu-case:focus-within{outline:3px solid var(--hl);outline-offset:2px}
+.tableau-menus.menus-js .menu-case.choisi{border-color:var(--input-bd)}
+.tableau-menus td.case-menu.faux .menu-case{border-color:var(--err)}
+.tableau-menus td.case-menu.juste .menu-case{border-color:var(--ok)}
+.tableau-menus td.case-menu .encoche{margin:4px 0 0 6px}
+.tableau-menus td.case-menu .encoche:empty{display:none}
+.retour-case{display:none}
+.retour-case.visible{display:block;font-size:.86em;margin:4px 0 0;color:#ffc2c8;line-height:1.35}
+@media (max-width:640px){
+  .tableau-menus table.cdcf,.tableau-menus table.cdcf tbody,.tableau-menus table.cdcf tr,.tableau-menus table.cdcf td,
+  .tableau-menus table.cdcf caption{display:block;width:100%}
+  .tableau-menus table.cdcf thead{display:none}
+  .tableau-menus table.cdcf tr{border:1px solid var(--input-bd);border-radius:10px;margin:0 0 10px;padding:2px 12px 8px;background:rgba(11,27,57,.55)}
+  .tableau-menus table.cdcf td{border:none;padding:7px 0 3px}
+  .tableau-menus table.cdcf td+td{border-top:1px dashed var(--input-bd)}
+  .tableau-menus table.cdcf td::before{content:attr(data-col);display:block;font-size:.82em;font-weight:700;color:var(--sub);margin:0 0 3px}
+}
 /* Croquis */
 .croquis-zone{background:#fff;border:2px dashed #7d9bd6;border-radius:10px;touch-action:none;display:block;width:100%;max-width:760px;margin:6px auto;cursor:crosshair}
 .croquis-outils{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:6px 0}
@@ -163,4 +198,15 @@ body.essentiel details.correction,body.essentiel .approfondir,body.essentiel det
   .mission,.note,.situation-fictive,details summary,.retour-option,.meta b{color:#1a3a7a!important}
   .rappel-ouverture>summary{display:none!important}
   .cours-corps h3,details.cours summary{color:#111!important}
+  .tableau-menus table.cdcf th{background:#fff!important;color:#111}
+  .tableau-menus table.cdcf th,.tableau-menus table.cdcf td{border-color:#999}
+  .tableau-menus table.cdcf tr{break-inside:avoid}
+  .tableau-menus table.cdcf caption{color:#1a3a7a}
+  .tableau-menus.menus-js .menu-case select,.tableau-menus .menu-fleche{display:none!important}
+  .tableau-menus.menus-js .menu-case{border:none;padding:0;min-height:0;background:#fff!important}
+  .tableau-menus.menus-js .menu-vu{color:#111}
+  .tableau-menus.menus-js .menu-vu:empty{min-width:7em;height:1.5em;border-bottom:1px solid #555}
+  .tableau-menus.menus-js .menu-vu:empty::before{content:""}
+  .retour-case.visible{color:#a1122a}
+  .encoche.juste{color:#176b2c}.encoche.faux{color:#a1122a}.encoche.vide{color:#7a5a00}
 }
