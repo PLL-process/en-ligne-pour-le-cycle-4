@@ -6,6 +6,15 @@
 
 > **Mise à jour du 24/10/2026.** L'exercice « Le cahier des charges : critère, niveau, flexibilité » (atelier du diagramme pieuvre, 4e) est inséré en tête de l'activité 5, qui passe à 55 min et exige sa réussite. La suite compte désormais **39 contrôles, 39 / 39** : l'activité 5 refusée sans l'exercice, l'exercice vérifié à vide puis rempli juste (classes F0 à F3 comprises), et ses réponses retrouvées au rechargement.
 
+> **Mise à jour du 31/10/2026 — règle d'or n°317.** L'exercice 6 incrusté se complète maintenant dans le tableau du
+> cahier des charges, par 22 menus déroulants (`pv_4e_e6__cdcf_<ligne>_<colonne>`), réincrusté depuis l'atelier. La
+> suite le remplit par ses menus (bonnes options lues dans la définition JSON) et compte **41 contrôles, 41 / 41** :
+> **15 ter bis** une case fausse exprès, son retour écrit sous la case (✘ et pourquoi) et relié au menu ;
+> **18 ter** au rechargement, 1 choix radio, les 22 menus justes et affichés en texte, l'exigence écrite ;
+> **18 quater** à l'impression, les 22 choix en texte, ni menu ni liste d'options. Banc n°311 : 34 / 34.
+> La page retire à l'impression la liste d'options que la fiche papier ajoute sous chaque menu, et resserre à 390 px
+> les marges des deux cadres de l'exercice (le tableau passe de 170 à 210 px de large).
+
 ```
 cd theme-2-.../C4-.../4e/4e_C4.1 && node tests_4e_C4.1-C4.9.mjs
 ```

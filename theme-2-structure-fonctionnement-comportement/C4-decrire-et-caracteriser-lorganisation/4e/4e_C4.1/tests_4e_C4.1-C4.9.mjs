@@ -220,6 +220,12 @@ async function remplirIncruste(uid, textes = {}) {
       else if (w.type === 'classer') w.items.forEach(it => coche(it.name, it.bonne));
       else if (w.type === 'slots') w.slots.forEach(s => coche(s.name, s.bonnes[0]));
       else if (w.type === 'cases') w.bonnes.forEach(v => coche(w.name, v));
+      /* le cahier des charges à menus (règle d'or n°317) : chaque case reçoit sa bonne
+         option, lue dans la définition, comme le ferait l'élève (événement change) */
+      else if (w.type === 'tableau') w.cases.forEach(c => {
+        const s = document.getElementsByName(c.name)[0];
+        s.value = c.bonne; s.dispatchEvent(new Event('change', { bubbles: true }));
+      });
       else if (w.type === 'texte') {
         const t = document.getElementById(w.name);
         t.value = textes[w.name]; t.dispatchEvent(new Event('input', { bubbles: true }));
@@ -235,6 +241,29 @@ await p.click('#pv_4e_e6 button.verifier'); await p.waitForTimeout(80);
 ok('15 ter · l\'exercice du cahier des charges inséré se vérifie à vide (retour à reprendre)',
    (await p.textContent('#pv_4e_e6 .retour')).includes('🔴'),
    (await p.textContent('#pv_4e_e6 .retour')).slice(0, 70));
+/* Une case fausse exprès : la première option qui a son propre retour, lue dans la définition.
+   Son retour s'écrit SOUS la case, en texte (✘ + pourquoi), pas seulement en couleur (n°119, n°317). */
+{
+  const faux = await p.evaluate(() => {
+    const sec = document.getElementById('pv_4e_e6').closest('.atelier-incruste');
+    const D = JSON.parse(sec.querySelector('script[type="application/json"]').textContent).exercices.pv_4e_e6;
+    const c = D.widgets.find(w => w.type === 'tableau').cases.find(x => Object.keys(x.retours || {}).length);
+    const v = Object.keys(c.retours)[0];
+    const s = document.getElementsByName(c.name)[0];
+    s.value = v; s.dispatchEvent(new Event('change', { bubbles: true }));
+    return { name: c.name, attendu: c.retours[v] };
+  });
+  await p.click('#pv_4e_e6 button.verifier'); await p.waitForTimeout(80);
+  const ecrit = await p.evaluate(n => {
+    const r = document.getElementById(n + '-retour'), td = r.closest('td');
+    return { texte: r.textContent, visible: r.offsetHeight > 0, encoche: td.querySelector('.encoche').textContent,
+             lie: document.getElementById(n).getAttribute('aria-describedby') === n + '-retour' };
+  }, faux.name);
+  ok('15 ter bis · une case fausse du tableau : son retour est écrit sous la case (✘ et pourquoi), relié au menu',
+     ecrit.visible && ecrit.texte.startsWith('✘') && ecrit.texte.includes(faux.attendu.slice(0, 30))
+     && /à revoir/.test(ecrit.encoche) && ecrit.lie,
+     ecrit.texte.slice(0, 70));
+}
 await remplirIncruste('pv_4e_e6', {
   pv_4e_e6__exig: "Le système doit envoyer l'état de l'arrosage au smartphone au moins 1 fois par jour." });
 await p.click('#pv_4e_e6 button.verifier'); await p.waitForTimeout(80);
@@ -260,10 +289,45 @@ ok('18 · rechargement : réponses, validations ET les deux verrous sont restaur
    && await p.evaluate(() => !!window.__exp.table && !!window.__exp.reseau),
    await p.textContent('#progTxt'));
 {
-  const coches = await p.$$eval('#pv_4e_e6 input[type=radio]:checked', l => l.length);
+  /* Depuis la règle d'or n°317, le cahier des charges se complète dans le tableau : 22 menus
+     `pv_4e_e6__cdcf_<ligne>_<colonne>`, plus le choix « IPX4 vient… » (1 bouton radio). Chaque
+     menu doit retrouver sa bonne option, et l'afficher en texte dans sa case. */
+  const etat = await p.evaluate(() => {
+    const sec = document.getElementById('pv_4e_e6').closest('.atelier-incruste');
+    const D = JSON.parse(sec.querySelector('script[type="application/json"]').textContent).exercices.pv_4e_e6;
+    const t = D.widgets.find(w => w.type === 'tableau');
+    const sels = [...document.querySelectorAll('#pv_4e_e6 select[name^="pv_4e_e6__cdcf_"]')];
+    return {
+      radios: document.querySelectorAll('#pv_4e_e6 input[type=radio]:checked').length,
+      menus: sels.length,
+      justes: t.cases.filter(c => document.getElementsByName(c.name)[0].value === c.bonne).length,
+      vus: sels.filter(s => s.parentNode.querySelector('.menu-vu').textContent.trim()
+                            === s.options[s.selectedIndex].text.trim() && s.value).length,
+      noms: sels.every(s => /^pv_4e_e6__cdcf_\d+_\d+$/.test(s.name)),
+    };
+  });
   const exig = await p.inputValue('#pv_4e_e6__exig');
-  ok('18 ter · l\'exercice du cahier des charges retrouve ses 8 choix et son exigence au rechargement',
-     coches === 8 && /smartphone/.test(exig), coches + ' choix · ' + exig.slice(0, 40));
+  ok('18 ter · l\'exercice du cahier des charges retrouve au rechargement ses 22 menus (affichés en texte), son choix et son exigence',
+     etat.radios === 1 && etat.menus === 22 && etat.justes === 22 && etat.vus === 22 && etat.noms
+     && /smartphone/.test(exig),
+     `${etat.radios} choix · ${etat.justes}/${etat.menus} menus justes · ${etat.vus} affichés · ` + exig.slice(0, 30));
+}
+{
+  /* Sur le papier : les 22 choix s'impriment en texte, sans la liste des options que la fiche papier
+     ajoute sous chaque menu (retirée par la page tant que le kit des ateliers ne le fait pas). */
+  await p.click('.seance-tab[data-panel="s4"]'); await p.waitForTimeout(100);
+  await p.evaluate(() => window.dispatchEvent(new Event('beforeprint')));
+  await p.emulateMedia({ media: 'print' }); await p.waitForTimeout(120);
+  const papier = await p.evaluate(() => {
+    const vis = e => getComputedStyle(e).display !== 'none' && e.offsetHeight > 0;
+    const t = document.querySelector('#pv_4e_e6 .tableau-menus');
+    return { listes: [...t.querySelectorAll('.pp-choix')].filter(vis).length,
+             menus: [...t.querySelectorAll('select')].filter(vis).length,
+             textes: [...t.querySelectorAll('.menu-vu')].filter(v => vis(v) && v.textContent.trim()).length };
+  });
+  await p.emulateMedia({ media: 'screen' });
+  ok('18 quater · le cahier des charges imprimé : les 22 choix en texte, ni menu ni liste d\'options',
+     papier.listes === 0 && papier.menus === 0 && papier.textes === 22, JSON.stringify(papier));
 }
 ok('18 bis · les compteurs des deux simulateurs repartent à 3 / 3 après rechargement',
    (await p.textContent('#bacCompteur')).includes('3 / 3')

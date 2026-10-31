@@ -2,11 +2,23 @@
 
 **Suite** : `tests_4e_C6.2.mjs`, livrée dans ce dossier · **Outil** : Playwright
 (Chromium headless), viewport mobile 390 × 844 · **Rejouée le 31/08/2026, puis le 04/10/2026**
-(trois contrôles ajoutés, n°36 à 38, bureau 1280 × 900) · **Verdict : 38 / 38 ✅**
+(trois contrôles ajoutés, n°36 à 38, bureau 1280 × 900), puis le 31/10/2026 (sept contrôles
+ajoutés pour l'activité 7) · **Verdict : 45 / 45 ✅**
 
 ```
 cd theme-2-.../C6-.../4e/4e_C6.2 && node tests_4e_C6.2.mjs
 ```
+
+> **Mise à jour du 31/10/2026 — l'activité 7 passe à la règle d'or n°317.** Le tableau « fonction | critère | ton
+> verdict » se complète dans ses cases, par des menus nommés (« Ligne 1, détecter un sol sec — ton verdict et sa
+> preuve ») ; chaque menu offre quatre verdicts de même forme et de même longueur, mélangés, dont trois pièges
+> (une solution technique, un niveau, une impression, la moitié d'une preuve, un test qui ne vise pas la frontière,
+> le secteur 230 volts) ; après « Vérifier », un retour écrit sous chaque case fausse ou vide. Contrôles ajoutés :
+> **18 a** quatre menus dans le tableau, nommés et reliés à leur case de retour ; **18 b** la bonne réponse change de
+> rang et les longueurs restent proches ; **18 c** à vide, « ○ Sans réponse » sous chaque case ; **18 d** les douze
+> options fausses, une à une, ont chacune leur retour (✘ et pourquoi), toutes différentes ; **18 e** le choix s'écrit
+> en entier dans la case, sans défilement à 390 px ; **18 f** tout juste, plus aucun retour ; **23 bis** à
+> l'impression, le choix en texte, une ligne pour une case vide, ni options ni retours. Banc n°311 : 34 / 34.
 
 > **Ce que ce rapport disait avant le 31/08/2026.** Il portait 16 coches et les attribuait
 > à `tests.mjs`, jamais commité ; le rapport voisin `rapport_tests_jardin_v2.md` annonçait

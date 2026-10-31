@@ -156,6 +156,51 @@
 /* règle d'or n°305 — une activité qui demande Internet le dit à son début */
 .activite-en-ligne{border-left:4px solid #ffd66b;background:rgba(255,214,107,.12);padding:.55em .85em;border-radius:0 8px 8px 0;margin:.6em 0 .8em;font-size:.95em;line-height:1.45}
 @media print{.activite-en-ligne,.activite-en-ligne b{color:#1a1a1a!important}.activite-en-ligne{background:#fff8e1!important;border-left-color:#8a6400!important}}
+/* Règle d'or n°317 — le cahier des charges de l'activité 7 se complète dans le tableau, par des menus (forme du widget
+   « tableau » des ateliers). Avec le script, le choix s'écrit en entier dans la case et le menu natif, transparent, reste
+   dessus (clavier, lecteur d'écran, liste du téléphone) ; sans script, le menu natif s'affiche. Sous 640 px, chaque ligne
+   devient une carte. Après « Vérifier », un retour écrit sous chaque case fausse ou vide (jamais la couleur seule). */
+.cdcf-verdict .preuves{margin:4px 0 10px;padding-left:1.2em;font-size:.92em}
+.cdcf-verdict .preuves li{margin:3px 0}
+.cdcf-verdict .defile{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.cdcf-verdict table.cdcf{table-layout:fixed}
+.cdcf-verdict table.cdcf caption{caption-side:top;text-align:left;color:var(--sub);font-size:.95em;padding:0 0 6px}
+.cdcf-verdict table.cdcf td{overflow-wrap:break-word}
+.cdcf-verdict select{width:100%;min-height:40px}
+.cdcf-verdict .menu-vu,.cdcf-verdict .menu-fleche{display:none}
+.cdcf-verdict.menus-js .menu-case{position:relative;display:flex;align-items:flex-start;gap:6px;width:100%;min-height:40px;
+  padding:7px 9px;border:1.5px solid var(--hl);border-radius:8px;background:var(--input-bg);cursor:pointer}
+.cdcf-verdict.menus-js .menu-case select{position:absolute;top:0;left:0;width:100%;height:100%;min-height:0;margin:0;padding:0;
+  opacity:0;cursor:pointer;font-size:16px}
+.cdcf-verdict.menus-js .menu-vu{display:block;flex:1 1 auto;min-width:0;white-space:normal;line-height:1.35;color:#fff}
+.cdcf-verdict.menus-js .menu-vu:empty::before{content:"choisir";color:var(--sub);font-style:italic}
+.cdcf-verdict.menus-js .menu-fleche{display:block;flex:0 0 auto;color:var(--hl);line-height:1.35}
+.cdcf-verdict.menus-js .menu-case:focus-within{outline:3px solid var(--hl);outline-offset:2px}
+.cdcf-verdict.menus-js .menu-case.choisi{border-color:var(--input-bd)}
+.cdcf-verdict .menu-case .qmark{margin:0;flex:0 0 auto;line-height:1.35}
+.cdcf-verdict td.case-menu.faux .menu-case{border-color:var(--err)}
+.cdcf-verdict td.case-menu.juste .menu-case{border-color:var(--ok)}
+.cdcf-verdict .retour-case{display:none}
+.cdcf-verdict .retour-case.visible{display:block;font-size:.88em;margin:5px 0 0;color:#ffc2c8;line-height:1.4}
+.cdcf-verdict .retour-case.visible.vide{color:var(--warn)}
+@media (max-width:640px){
+  .cdcf-verdict table.cdcf,.cdcf-verdict table.cdcf tbody,.cdcf-verdict table.cdcf tr,.cdcf-verdict table.cdcf td,
+  .cdcf-verdict table.cdcf caption{display:block;width:100%}
+  .cdcf-verdict table.cdcf colgroup,.cdcf-verdict table.cdcf thead{display:none}
+  .cdcf-verdict table.cdcf tr{border:1px solid var(--input-bd);border-radius:10px;margin:0 0 10px;padding:2px 12px 8px;background:rgba(11,27,57,.55)}
+  .cdcf-verdict table.cdcf td{border:none;padding:7px 0 3px}
+  .cdcf-verdict table.cdcf td+td{border-top:1px dashed var(--input-bd)}
+  .cdcf-verdict table.cdcf td::before{content:attr(data-col);display:block;font-size:.82em;font-weight:700;color:var(--sub);margin:0 0 3px}
+}
+/* à l'impression : le choix s'imprime en texte ; sans réponse, une ligne à remplir (ni la liste des options, ni les retours) */
+@media print{
+  .cdcf-verdict.menus-js .menu-case select,.cdcf-verdict .menu-fleche,.cdcf-verdict .pp-choix,.cdcf-verdict .retour-case{display:none!important}
+  .cdcf-verdict.menus-js .menu-case{border:none!important;padding:0!important;min-height:0!important;background:#fff!important}
+  .cdcf-verdict.menus-js .menu-vu{color:#111827!important}
+  .cdcf-verdict.menus-js .menu-vu:empty{min-width:7em;height:1.5em;border-bottom:1px solid #555}
+  .cdcf-verdict.menus-js .menu-vu:empty::before{content:""}
+  .cdcf-verdict table.cdcf tr{break-inside:avoid}
+}
   /* Règle d'or n°311 — à partir de la séance 2, l'élève voit sa séance, pas le décor.
      Sans JavaScript le volet reste ouvert et sans titre : tout s'affiche, comme avant. */
   .rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}   /* le gabarit habille tout details en carte : pas le volet */
@@ -991,19 +1036,52 @@ n'est écrit qu'à UN endroit (la variable <code>seuil</code>) — pour changer 
 
   <div class="act">
     <header><span class="num">Activité 7</span><h3>Le verdict — cahier des charges ligne par ligne</h3><span class="duree">⏱ 20 min</span></header>
-    <div class="consigne"><b>Consigne :</b> pour chaque exigence du cahier des charges, rends ton verdict — et appuie-toi sur une PREUVE (une activité, un test).</div>
-    <table class="refs">
-      <tr><th>Fonction / contrainte</th><th>Critère</th><th>Ton verdict</th></tr>
-      <tr><td>Détecter un sol sec</td><td>Valeur d'humidité mesurée et convertie</td><td><select id="a7q1"><option value="">— ?</option><option>respecté — prouvé par le programme de mesure (act. 3)</option><option>non respecté</option><option>impossible à vérifier</option></select></td></tr>
-      <tr><td>Arroser uniquement si nécessaire</td><td>Déclenchement sous le seuil seulement</td><td><select id="a7q2"><option value="">— ?</option><option>respecté — prouvé par le banc T1/T2/T3 (act. 6)</option><option>non respecté</option><option>impossible à vérifier</option></select></td></tr>
-      <tr><td>Économiser l'eau</td><td>Pas d'arrosage à la frontière ni au-dessus</td><td><select id="a7q3"><option value="">— ?</option><option>respecté — prouvé par T3 (30 pile → arrêt)</option><option>non respecté</option><option>impossible à vérifier</option></select></td></tr>
-      <tr><td>Fonctionner en sécurité</td><td>Alimentation du prototype</td><td><select id="a7q4"><option value="">— ?</option><option>respecté — très basse tension (pile ou USB), jamais le secteur</option><option value="respecté — branché au secteur 230 V">respecté — branché au secteur 230 volts</option><option>impossible à vérifier</option></select></td></tr>
-    </table>
-    <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><div><p>Un verdict sans preuve ne vaut rien : associe chaque ligne à l'activité qui l'a démontrée.</p></div></details>
-    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><div><p>C'est la démarche de VALIDATION : besoin → critère → test → verdict. La sécurité électrique n'est pas négociable : un prototype de collège fonctionne en très basse tension, toujours.</p></div></details>
+    <div class="consigne"><b>Consigne :</b> complète la dernière colonne du cahier des charges, <b>directement dans le tableau</b>&nbsp;: pour chaque ligne, choisis dans le menu ton <b>verdict</b> (respecté ou non) et sa <b>preuve</b>. Le <b>critère</b>, c'est ce qu'on mesure ou contrôle pour savoir si la fonction est remplie&nbsp;; une <b>preuve</b>, c'est un test ou une mesure qui vérifie CE critère. Attention aux pièges&nbsp;: un composant branché (une solution technique), une valeur écrite dans le programme (un niveau) ou une impression («&nbsp;ça a l'air&nbsp;») ne prouvent rien.</div>
+    <div class="cdcf-verdict">
+    <p><b>Tes preuves, rappelées</b>&nbsp;:</p>
+    <ul class="preuves">
+      <li><b>Activité 3</b>&nbsp;: le programme lit la valeur brute du capteur (de 0 à 1&nbsp;023), la convertit en pourcentage, puis affiche «&nbsp;Humidité du sol&nbsp;: …&nbsp;%&nbsp;».</li>
+      <li><b>Activité 6, le banc de tests</b>, avec un seuil de 30&nbsp;%&nbsp;: T1, humidité 10 → pompe en marche&nbsp;; T2, humidité 80 → pompe à l'arrêt&nbsp;; T3, humidité 30 pile, la frontière → pompe à l'arrêt.</li>
+      <li><b>Le matériel</b> (version 🅰)&nbsp;: une carte alimentée par une pile ou un câble USB, une pompe de 5&nbsp;volts.</li>
+    </ul>
+    <div class="defile"><table class="refs cdcf">
+      <caption>Le cahier des charges de l'arrosage automatique, à valider ligne par ligne</caption>
+      <colgroup><col style="width:24%"><col style="width:26%"><col style="width:50%"></colgroup>
+      <thead><tr><th scope="col">Fonction / contrainte</th><th scope="col">Critère</th><th scope="col">Ton verdict, et sa preuve</th></tr></thead>
+      <tbody>
+      <tr><td data-col="Fonction / contrainte">Détecter un sol sec</td><td data-col="Critère">Valeur d'humidité mesurée et convertie</td><td data-col="Ton verdict, et sa preuve" class="case-menu"><span class="menu-case"><select id="a7q1" aria-label="Ligne 1, détecter un sol sec — ton verdict et sa preuve" aria-describedby="a7q1-retour"><option value="">— choisir —</option><option value="capteur">Respecté — le capteur est bien branché sur A0, comme à l'activité 1</option><option value="mesure">Respecté — l'activité 3 affiche l'humidité mesurée, en pourcentage</option><option value="aspect">Respecté — la plante a l'air bien arrosée, ses feuilles sont vertes</option><option value="brute">Non respecté — le capteur donne de 0 à 1 023, pas un pourcentage</option></select><span class="menu-vu" aria-hidden="true"></span><span class="menu-fleche" aria-hidden="true">▾</span></span><span class="retour-case" id="a7q1-retour"></span></td></tr>
+      <tr><td data-col="Fonction / contrainte">Arroser uniquement si nécessaire</td><td data-col="Critère">Déclenchement sous le seuil seulement</td><td data-col="Ton verdict, et sa preuve" class="case-menu"><span class="menu-case"><select id="a7q2" aria-label="Ligne 2, arroser uniquement si nécessaire — ton verdict et sa preuve" aria-describedby="a7q2-retour"><option value="">— choisir —</option><option value="niveau">Respecté — le seuil est bien réglé à 30 % dans le programme</option><option value="t1">Respecté — T1 : à 10, sol sec, la pompe démarre bien (act. 6)</option><option value="pluie">Impossible à vérifier — il faudrait attendre un jour de pluie</option><option value="t1t2">Respecté — T1 démarre la pompe, T2 la laisse à l'arrêt (act. 6)</option></select><span class="menu-vu" aria-hidden="true"></span><span class="menu-fleche" aria-hidden="true">▾</span></span><span class="retour-case" id="a7q2-retour"></span></td></tr>
+      <tr><td data-col="Fonction / contrainte">Économiser l'eau</td><td data-col="Critère">Pas d'arrosage à la frontière ni au-dessus</td><td data-col="Ton verdict, et sa preuve" class="case-menu"><span class="menu-case"><select id="a7q3" aria-label="Ligne 3, économiser l'eau — ton verdict et sa preuve" aria-describedby="a7q3-retour"><option value="">— choisir —</option><option value="t3">Respecté — T3, à 30 pile, la pompe reste à l'arrêt (act. 6)</option><option value="t2">Respecté — T2, à 80, la pompe reste bien à l'arrêt (act. 6)</option><option value="inferieur">Non respecté — 30 &lt; 30 est vrai, donc la pompe arrose à 30</option><option value="impression">Respecté — il arrose moins souvent qu'un arrosage à heure fixe</option></select><span class="menu-vu" aria-hidden="true"></span><span class="menu-fleche" aria-hidden="true">▾</span></span><span class="retour-case" id="a7q3-retour"></span></td></tr>
+      <tr><td data-col="Fonction / contrainte">Fonctionner en sécurité</td><td data-col="Critère">Alimentation du prototype</td><td data-col="Ton verdict, et sa preuve" class="case-menu"><span class="menu-case"><select id="a7q4" aria-label="Ligne 4, fonctionner en sécurité — ton verdict et sa preuve" aria-describedby="a7q4-retour"><option value="">— choisir —</option><option value="autre">Respecté — la pompe s'arrête dès que le sol est assez humide</option><option value="impossible">Impossible à vérifier — un danger électrique ne se mesure pas</option><option value="tbt">Respecté — pile ou USB : très basse tension, jamais le secteur</option><option value="secteur">Respecté — branché sur le secteur 230 volts, comme une lampe</option></select><span class="menu-vu" aria-hidden="true"></span><span class="menu-fleche" aria-hidden="true">▾</span></span><span class="retour-case" id="a7q4-retour"></span></td></tr>
+      </tbody>
+    </table></div>
+    </div>
+    <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><div><p>Lis le <b>critère</b> de la ligne, puis cherche dans «&nbsp;Tes preuves, rappelées&nbsp;» le test ou la mesure qui vérifie <b>exactement</b> ce critère — pas un autre, et pas seulement la moitié.</p></div></details>
+    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><div><p>C'est la démarche de VALIDATION&nbsp;: besoin → critère → test → verdict. Pour chaque proposition du menu, pose-toi trois questions&nbsp;: Est-ce un test ou une mesure, et pas un composant ni une valeur recopiée du programme&nbsp;? Vérifie-t-il le critère de CETTE ligne&nbsp;? Le vérifie-t-il en entier (la frontière, les deux cas)&nbsp;? La sécurité électrique n'est pas négociable&nbsp;: un prototype de collège fonctionne en très basse tension, toujours.</p></div></details>
     <button class="btn check" data-check="7" type="button">✅ Vérifier l'activité 7</button>
     <p class="feedback" id="fb7" role="status"></p>
-    <details class="correction"><summary>📖 Correction complète</summary><div><p>Les 4 exigences sont respectées, et chacune a sa preuve : mesure (act. 3), banc complet (act. 6), frontière T3 (act. 6), très basse tension (🅰). Valider, c'est relier chaque ligne du cahier des charges à un test qui la prouve.</p></div></details>
+    <details class="correction"><summary>📖 Correction complète</summary><div>
+      <p><b>Les quatre lignes sont respectées</b>, et chacune a SA preuve. Valider, c'est relier chaque ligne du cahier des charges au test qui vérifie son critère&nbsp;: besoin → critère → test → verdict.</p>
+      <ul class="demo">
+        <li><b>Ligne 1, détecter un sol sec</b> → critère&nbsp;: une valeur mesurée et convertie → preuve&nbsp;: <b>l'activité 3</b>, dont le programme lit la valeur brute, la convertit et affiche l'humidité en pourcentage → <b>respecté</b>.
+          <br>Piège «&nbsp;le capteur est branché sur A0&nbsp;» → c'est la solution technique, pas une preuve&nbsp;: un capteur branché ne dit pas encore ce qu'il mesure.
+          <br>Piège «&nbsp;la plante a l'air bien arrosée&nbsp;» → c'est juger à l'œil, sans mesure.
+          <br>Piège «&nbsp;de 0 à 1&nbsp;023, pas un pourcentage&nbsp;» → c'est la valeur brute&nbsp;; le programme la convertit (activité 2&nbsp;: 1&nbsp;023 → 100&nbsp;%).</li>
+        <li><b>Ligne 2, arroser uniquement si nécessaire</b> → critère&nbsp;: la pompe se déclenche sous le seuil, et seulement là → preuve&nbsp;: <b>T1 et T2</b> (10 → marche&nbsp;; 80 → arrêt) → <b>respecté</b>.
+          <br>Piège «&nbsp;le seuil est réglé à 30&nbsp;%&nbsp;» → 30&nbsp;% est le <b>niveau</b> écrit dans le programme, pas un test&nbsp;: il ne montre pas que la pompe lui obéit.
+          <br>Piège «&nbsp;T1 seul&nbsp;» → la moitié de la preuve&nbsp;: T1 montre que la pompe arrose un sol sec, pas qu'elle laisse tranquille un sol humide.
+          <br>Piège «&nbsp;attendre un jour de pluie&nbsp;» → inutile&nbsp;: le banc simule le sol humide (T2).</li>
+        <li><b>Ligne 3, économiser l'eau</b> → critère&nbsp;: pas d'arrosage à la frontière ni au-dessus → preuve&nbsp;: <b>T3</b>, à 30 pile, 30 &lt; 30 est FAUX → pompe à l'arrêt → <b>respecté</b>.
+          <br>Piège «&nbsp;T2&nbsp;» → T2 vérifie «&nbsp;au-dessus&nbsp;» (80), pas «&nbsp;à la frontière&nbsp;»&nbsp;: c'est à 30 pile que se cache l'erreur de symbole (&lt; ou &lt;=).
+          <br>Piège «&nbsp;30 &lt; 30 est vrai&nbsp;» → faux&nbsp;: 30 n'est pas plus petit que 30 (activité 4).
+          <br>Piège «&nbsp;il arrose moins qu'à heure fixe&nbsp;» → c'est l'effet espéré (activité 8), pas un test du critère&nbsp;: rien n'a été mesuré.</li>
+        <li><b>Ligne 4, fonctionner en sécurité</b> → critère&nbsp;: l'alimentation du prototype → preuve&nbsp;: une <b>pile ou un câble USB</b>, une très basse tension → <b>respecté</b>.
+          <br>Piège «&nbsp;branché sur le secteur 230 volts&nbsp;» → <b>DANGER</b>&nbsp;: le secteur peut tuer&nbsp;; au collège, un prototype fonctionne toujours en très basse tension.
+          <br>Piège «&nbsp;la pompe s'arrête quand le sol est humide&nbsp;» → c'est la fonction de la ligne 2, pas la sécurité.
+          <br>Piège «&nbsp;un danger ne se mesure pas&nbsp;» → le critère se contrôle&nbsp;: on regarde ce qui alimente la carte.</li>
+      </ul>
+      <p><b>Conclusion</b>&nbsp;: un verdict ne vaut que par sa preuve, et la preuve doit vérifier le critère de SA ligne, en entier. Un composant, un niveau recopié ou une impression ne sont pas des preuves.</p>
+    </div></details>
   </div>
 
   <div class="act">
@@ -1202,6 +1280,54 @@ document.querySelectorAll(".bench-run").forEach(b => b.addEventListener("click",
 /* ── suivi ouverture éditeurs ── */
 ["vs1","vs2","vs3"].forEach(id => { const d = $(id); const a = d && d.querySelector(".vs-lien"); if(a) a.addEventListener("click", () => { window.__exp[id] = true; save(); }); });
 
+/* ── activité 7 : le cahier des charges à menus (règle d'or n°317) ──
+   Un retour par option fausse, écrit sous sa case après « Vérifier » : il dit pourquoi ce n'est pas une preuve du
+   critère de la ligne. Les options sont mélangées dans le HTML ; aucune ne se devine à sa longueur ni à sa forme. */
+const RETOURS7 = {
+  a7q1: {
+    capteur: "Le capteur branché, c'est la solution technique, pas une preuve : tant qu'aucune valeur n'est lue, convertie et affichée, rien ne montre que le sol sec est détecté.",
+    aspect: "C'est juger à l'œil, sans mesure : une plante peut rester verte sur un sol déjà sec. Le critère demande une valeur mesurée — relis l'activité 3.",
+    brute: "De 0 à 1 023, c'est la valeur BRUTE : le programme la convertit en pourcentage (activité 2 : 1 023 → 100 %). Le critère dit « mesurée et convertie » : c'est fait."
+  },
+  a7q2: {
+    niveau: "30 %, c'est le NIVEAU écrit dans le programme, pas un test : il ne montre pas que la pompe obéit à ce seuil. Cherche les tests du banc qui le montrent.",
+    t1: "T1 n'est que la moitié de la preuve : il montre que la pompe arrose un sol sec. « Uniquement si nécessaire » demande aussi qu'elle n'arrose pas un sol humide.",
+    pluie: "Pas besoin d'attendre la pluie : le banc de l'activité 6 SIMULE un sol humide (T2, humidité 80). Un test reproduit la situation quand on veut."
+  },
+  a7q3: {
+    t2: "T2 vérifie « au-dessus » (humidité 80), pas « à la frontière ». C'est à 30 pile que se cache l'erreur de symbole (< ou <=) : quel test essaie 30 pile ?",
+    inferieur: "30 < 30 est FAUX : 30 n'est pas plus petit que 30 (activité 4). À la frontière, la pompe reste à l'arrêt, et le banc l'a montré.",
+    impression: "C'est l'effet espéré (activité 8), pas un test du critère : ici, rien n'a été mesuré. Le critère parle de la frontière : quel test la vérifie ?"
+  },
+  a7q4: {
+    autre: "Ça, c'est la fonction de la ligne 2 (arroser si nécessaire). La sécurité se juge sur SON critère : ce qui alimente le prototype.",
+    impossible: "Le critère se contrôle : on regarde ce qui alimente la carte. Une pile ou un câble USB donnent une très basse tension, sans danger au toucher.",
+    secteur: "DANGER : le secteur (230 volts) peut tuer. Au collège, un prototype fonctionne toujours en très basse tension (pile, USB) : c'est une règle, pas un choix."
+  }
+};
+/* le choix s'écrit en entier dans la case (il passe à la ligne et s'imprime) ; sans choix, la case reste vide */
+function verdictsVus(){
+  document.querySelectorAll(".cdcf-verdict .menu-case select").forEach(s => {
+    const vu = s.parentNode.querySelector(".menu-vu"), o = s.options[s.selectedIndex];
+    if(vu) vu.textContent = (o && o.value) ? o.text : "";
+    s.parentNode.classList.toggle("choisi", !!(o && o.value));
+  });
+}
+function retours7(){
+  Object.keys(RETOURS7).forEach(id => {
+    const s = $(id), r = $(id + "-retour"), td = s.closest("td"), v = s.value;
+    const bon = s.classList.contains("ok");
+    td.classList.remove("juste", "faux", "vide");
+    td.classList.add(!v ? "vide" : (bon ? "juste" : "faux"));
+    r.className = "retour-case";
+    r.textContent = !v ? "○ Sans réponse : choisis dans le menu un verdict et sa preuve."
+                  : (bon ? "" : "✘ " + (RETOURS7[id][v] || "Relis le critère de la ligne : cette proposition ne le prouve pas."));
+    if(r.textContent) r.classList.add("visible", v ? "faux" : "vide");
+  });
+}
+{ const z = document.querySelector(".cdcf-verdict"); if(z){ z.classList.add("menus-js");
+  z.addEventListener("change", e => { if(e.target.matches("select")) verdictsVus(); }); } }
+
 /* ── vérificateurs (encoches question par question) ── */
 function qmark(e, state){ let m = e.previousElementSibling; if(!(m && m.classList && m.classList.contains("qmark"))){ m = document.createElement("span"); m.className = "qmark"; e.insertAdjacentElement("beforebegin", m); } if(state === null){ m.textContent = ""; m.className = "qmark"; } else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); } }
 function sv(id, ok){ const e = $(id); if(!e) return false; const good = e.value === ok; e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value); qmark(e, e.value ? good : null); return good; }
@@ -1235,10 +1361,11 @@ const CHECKS = {
     return {score: s, total: 1, exp, expMsg: "Exécute les 3 tests du banc (▶) — le cas frontière T3 compris."};
   },
   7(){ let s = 0;
-    s += sv("a7q1","respecté — prouvé par le programme de mesure (act. 3)");
-    s += sv("a7q2","respecté — prouvé par le banc T1/T2/T3 (act. 6)");
-    s += sv("a7q3","respecté — prouvé par T3 (30 pile → arrêt)");
-    s += sv("a7q4","respecté — très basse tension (pile ou USB), jamais le secteur");
+    s += sv("a7q1","mesure");
+    s += sv("a7q2","t1t2");
+    s += sv("a7q3","t3");
+    s += sv("a7q4","tbt");
+    retours7();
     return {score: s, total: 4, exp: true};
   },
   8(){ let s = 0;
@@ -1345,6 +1472,7 @@ $("btnPrint").addEventListener("click", () => window.print());
 $("btnReset").addEventListener("click", () => { if(demande("effacer-ta-sauvegarde-locale","Effacer ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); } });
 document.addEventListener("change", e => { if(e.target.matches("input, select, textarea")) save(); });
 restore();
+verdictsVus();   // l'activité 7 : les choix retrouvés s'écrivent dans leurs cases
 })();
 </script>
 
