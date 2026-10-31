@@ -150,6 +150,14 @@ details>summary::before{content:"▸ ";color:var(--wagon)}
 details[open]>summary::before{content:"▾ "}
 details>summary:focus-visible{outline:3px solid var(--laiton);outline-offset:2px}
 details .contenu{padding:.2rem 1rem 1rem}
+/* Règle d'or n°311 : le volet « Rappel » n'est pas une carte details ; son bouton n'apparaît qu'à partir de la séance 2 */
+.rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}
+.rappel-ouverture>summary{display:none}
+.rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;margin:10px 0;
+  border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+.rappel-ouverture.volet>summary::before{content:""}
+.rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media print{.rappel-ouverture>summary{display:none!important}}
 details.aide1>summary{background:var(--aide-fond)}
 details.aide2>summary{background:#f3ead2}
 details.correction{border-color:var(--ok)}
@@ -888,6 +896,9 @@ button.vers-seance:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
   <div class="interieur">
     <h1 id="haut">🚃 Un Book Train pour la bibliothèque Schœlcher</h1>
     <p class="sous-titre-mission">Ta mission : la bibliothèque Schœlcher de Fort-de-France veut moderniser l'acheminement de ses livres, et des mécènes financent l'étude. La Collectivité Territoriale de Martinique te confie l'analyse du système de référence mondial — le Book Train de la New York Public Library — à expliquer, algorigramme normalisé à l'appui, dans un diaporama professionnel.</p>
+<!-- Règle d'or n°311 : l'ouverture, complète à l'onglet Départ (le premier écran), se replie dans ce volet dès qu'une séance s'ouvre (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : ce que je vérifie, et les compétences de la séquence</summary>
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
   <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
   <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
@@ -923,6 +934,7 @@ button.vers-seance:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
       <span class="badge duree">⏱ 4 séances de 55 min</span>
     </div>
     <p style="font-size:.9rem;margin:.4rem 0 0;color:#d9d2c0">Ces deux gestes — construire un algorigramme et choisir le bon format de fichier — se retrouvent dans ta certification Pix de 3e.</p>
+</details><!-- /rappel-ouverture -->
   </div>
 <div class="identite">
   <input type="text" id="identite-nom" data-save placeholder="Nom" aria-label="Nom">
@@ -2883,8 +2895,14 @@ button.vers-seance:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
       p.classList.toggle("actif", i===indice);
     });
     placerWagonnet(indice);
+    /* n°311 : l'onglet Départ (0) = ouverture complète ; dès qu'une séance s'ouvre (1 et suivantes) = volet « Rappel » replié */
+    var volet = document.getElementById("ouverture");
+    if(volet){ volet.classList.toggle("volet", indice >= 1); volet.open = indice < 1; }
     etat.__onglet = indice; ecrireEtat(etat);
   }
+  var voletAvantImpression = null;
+  window.addEventListener("beforeprint", function(){ var v = document.getElementById("ouverture"); if(v){ voletAvantImpression = v.open; v.open = true; } });
+  window.addEventListener("afterprint", function(){ var v = document.getElementById("ouverture"); if(v && voletAvantImpression !== null){ v.open = voletAvantImpression; voletAvantImpression = null; } });
   onglets.forEach(function(t,i){
     t.addEventListener("click", function(){ activer(i); });
     t.addEventListener("keydown", function(ev){
