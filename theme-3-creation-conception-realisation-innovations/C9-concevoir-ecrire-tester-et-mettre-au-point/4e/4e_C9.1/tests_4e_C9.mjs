@@ -37,6 +37,50 @@ async function shot(page, nom, selecteur) {
 }
 const url = f => "file://" + path.join(LOT, f);
 
+/* ── l'atelier du programme (activité 5), conduit AU CLAVIER : focus, flèches, chiffres, Entrée ── */
+async function choisirAuClavier(p, id, texte) {
+  await p.focus("#" + id);
+  const opts = await p.$$eval("#" + id + " option", os => os.map(o => o.textContent.trim()));
+  const cible = opts.indexOf(texte);
+  if (cible < 0) throw new Error(id + " : pas d'option « " + texte + " » (" + opts.join(" / ") + ")");
+  let cur = await p.$eval("#" + id, s => s.selectedIndex);
+  while (cur !== cible) {
+    await p.keyboard.press(cur < cible ? "ArrowDown" : "ArrowUp");
+    const n = await p.$eval("#" + id, s => s.selectedIndex);
+    if (n === cur) throw new Error(id + " : les flèches ne changent plus le choix");
+    cur = n;
+  }
+}
+async function nombreAuClavier(p, id, v) { await p.focus("#" + id); await p.keyboard.press("Control+A"); await p.keyboard.type(String(v)); }
+async function boutonAuClavier(p, sel) { await p.focus(sel); await p.keyboard.press("Enter"); await p.waitForTimeout(40); }
+const PROGRAMMES = {
+  sinonEteint: { sb: 35, sh: 45, b: [["<", "SEUIL_BAS", "allumer la pompe"], [">", "SEUIL_HAUT", "éteindre la pompe"]], sinon: "éteindre la pompe" },
+  inverses:    { sb: 35, sh: 45, b: [[">", "SEUIL_BAS", "allumer la pompe"], ["<", "SEUIL_HAUT", "éteindre la pompe"]], sinon: "ne rien changer" },
+  croisees:    { sb: 35, sh: 45, b: [["<", "SEUIL_HAUT", "allumer la pompe"], [">", "SEUIL_BAS", "éteindre la pompe"]], sinon: "ne rien changer" },
+  bon:         { sb: 35, sh: 45, b: [["<", "SEUIL_BAS", "allumer la pompe"], [">", "SEUIL_HAUT", "éteindre la pompe"]], sinon: "ne rien changer" },
+};
+async function construireAuClavier(p, P) {
+  await boutonAuClavier(p, "#atDepart");                        // le programme de départ : SI … SINON
+  await choisirAuClavier(p, "at_n", "deux seuils");
+  await nombreAuClavier(p, "at_sb", P.sb);
+  await nombreAuClavier(p, "at_sh", P.sh);
+  for (let k = 1; k <= P.b.length; k++) {
+    if (k > 1) await boutonAuClavier(p, "#atPlusSinonSi");
+    const [cmp, ref, act] = P.b[k - 1];
+    await choisirAuClavier(p, "at_b" + k + "_cmp", cmp);
+    await choisirAuClavier(p, "at_b" + k + "_ref", ref);
+    await choisirAuClavier(p, "at_b" + k + "_act", act);
+  }
+  await choisirAuClavier(p, "at_sinon_act", P.sinon);
+}
+async function essaiAtelier(p, essai) {
+  await boutonAuClavier(p, '.at-essai[data-essai="' + essai + '"]');
+  await boutonAuClavier(p, "#atFin");                           // ⏩ jusqu'à la fin
+  return { n: parseInt(await p.textContent("#atCompteur"), 10), bilan: (await p.textContent("#atBilan")).trim(),
+           lignes: await p.$$eval("#atConsole > div", d => d.map(x => x.textContent.replace(/\u00a0/g, " "))) };
+}
+const hDe = l => parseInt((l.match(/H = (\d+)/) || [])[1], 10);
+
 /* ── liens locaux ── */
 function verifLiens() {
   const htmls = [];
@@ -206,13 +250,14 @@ const run = async () => {
      (await page.textContent("#fb4")).includes("8 / 8"), await page.textContent("#fb4"));
   await shot(page, "act4_validee");
 
-  /* ════════ ACTIVITÉ 5 — la démonstration de l'hystérésis ════════ */
+  /* ════════ ACTIVITÉ 5 — la démonstration de l'hystérésis, dans l'atelier du programme (31/10/2026) ════════ */
   await page.click('.seance-tab[data-panel="s3"]');
   for (const id of ["a5_q1","a5_q2","a5_q3","a5_q4","a5_q5"]) await bonne(id);
   await page.fill("#a5_diag", "La pompe change d'état 6 fois en 70 secondes alors que l'humidité n'a varié que de 2 points. Le relais s'use à chaque manœuvre, la pompe démarre sans cesse, et l'eau arrive par à-coups qui ne descendent jamais aux racines.");
-  await page.fill("#prog3", "SEUIL_BAS = 35\nSEUIL_HAUT = 45\nlire humidite -> H\nSI H < SEUIL_BAS ALORS\n    allumer pompe\nSINON SI H > SEUIL_HAUT ALORS\n    eteindre pompe\nFIN SI");
+  ok("atelier · prog3 n'est plus une zone où écrire : cachée, en lecture seule, elle porte le Python écrit par les blocs",
+     await page.evaluate(() => { const t = document.getElementById("prog3"); return t.hidden && t.readOnly && !t.checkVisibility() && t.value.includes("while True:") && t.value.includes("if H < SEUIL:"); }));
 
-  /* le cœur de la séquence : la MÊME mesure, deux règles, deux comportements */
+  /* le banc du haut garde son rôle (activités 3 et 4) : sa démonstration un seuil / deux seuils reste vraie */
   await page.click('.seance-tab[data-panel="s2"]');
   await page.check('input[name="bMode"][value="un"]');
   await page.click("#btnRAZ");
@@ -228,15 +273,38 @@ const run = async () => {
   ok("banc : en DEUX seuils, le MÊME tremblement n'affole plus la pompe", nDeux <= 1, nDeux + " basculement(s)");
   ok("banc : la démonstration est probante (au moins 4 basculements évités)", nUn - nDeux >= 4, nUn + " → " + nDeux);
   await shot(page, "banc_hysteresis", "#bancCard");
+  const expBanc = await page.evaluate(() => JSON.stringify(window.__exp));
+  ok("atelier · le tremblement du banc ne coche plus les verrous de l'activité 5 (ils se cochent dans l'atelier, qui exécute le programme de l'élève)",
+     !/"clignote"|"hysteres"/.test(expBanc), expBanc);
 
   await page.click('.seance-tab[data-panel="s3"]');
-  await page.fill("#a5_n1", String(nUn));
-  await page.fill("#a5_n2", String(nDeux));
+  /* d) 1. le programme de départ, sur le tremblement */
+  const dep = await essaiAtelier(page, "tremblement");
+  ok("atelier · le programme de départ (SEUIL = 40, SI H < SEUIL ALORS allumer SINON éteindre), sur le tremblement : la pompe s'affole, et le verrou « pompe affolée » se coche",
+     dep.n >= 4 && dep.bilan.includes("s'affole") && (await page.textContent("#v-clign")).startsWith("✔"), dep.n + " basculements · « " + dep.bilan.slice(0, 70) + " »");
+  /* c) un programme faux qui CONTIENT « 35 », « 45 » et « elif » : l'ancien vérificateur l'aurait accepté */
+  await construireAuClavier(page, PROGRAMMES.sinonEteint);
+  const faux = await essaiAtelier(page, "tremblement");
+  await page.fill("#a5_n1", String(dep.n));
+  await page.fill("#a5_n2", String(faux.n));
   await page.click('[data-check="5"]');
-  ok("activité 5 validée (5/5 + diagnostic + programme à trois cas + démonstration)",
-     (await page.textContent("#fb5")).includes("5 / 5") && !(await page.textContent("#fb5")).includes("démonstration au banc"),
+  const fbFaux = await page.textContent("#fb5"), pyFaux = await page.inputValue("#prog3");
+  ok("atelier · CHECKS[5] juge le programme par son exécution : « SINON éteindre » (35, 45 et elif dans le Python) est refusé, et la vraie matinée est nommée",
+     pyFaux.includes("35") && pyFaux.includes("45") && pyFaux.includes("elif") && !fbFaux.includes("Excellent") && /vraie matinée, la pompe bascule \d+ fois/.test(fbFaux),
+     fbFaux.slice(fbFaux.indexOf("Ton programme"), fbFaux.indexOf("Ton programme") + 120));
+  /* c) le bon programme, au clavier, puis d) 2. le même tremblement */
+  await construireAuClavier(page, PROGRAMMES.bon);
+  const bonT = await essaiAtelier(page, "tremblement");
+  ok("atelier · ton programme à deux seuils, sur le même tremblement : au plus un basculement, et le verrou « pompe calmée » se coche",
+     bonT.n <= 1 && (await page.textContent("#v-hyst")).startsWith("✔"), bonT.n + " basculement(s)");
+  await page.fill("#a5_n1", String(dep.n));
+  await page.fill("#a5_n2", String(bonT.n));
+  await page.click('[data-check="5"]');
+  ok("activité 5 validée (5/5 + diagnostic + programme qui passe les deux essais de l'atelier + démonstration)",
+     (await page.textContent("#fb5")).includes("5 / 5") && !(await page.textContent("#fb5")).includes("Fais la démonstration") && !(await page.textContent("#fb5")).includes("Ton programme, exécuté"),
      await page.textContent("#fb5"));
-  await shot(page, "act5_validee");
+  const pyBon = await page.inputValue("#prog3");
+  await shot(page, "act5_validee", "#atelier");
 
   /* ════════ ACTIVITÉ 6 — réinvestissement sans squelette ════════ */
   await bonne("a6_q1");
@@ -269,6 +337,11 @@ const run = async () => {
      (await page.inputValue("#prog3")).includes("35") && (await page.inputValue("#prog3")).includes("45"));
   ok("persistance : verrous du banc restaurés (frontières cochées)",
      (await page.textContent("#v-front")).startsWith("✔"));
+  ok("atelier · persistance : le programme revient tel quel après rechargement (blocs, Python, verrous de l'atelier)",
+     (await page.inputValue("#prog3")) === pyBon && (await page.inputValue("#at_n")) === "2" && (await page.inputValue("#at_sb")) === "35" &&
+     (await page.inputValue("#at_b2_ref")) === "SEUIL_HAUT" && (await page.inputValue("#at_sinon_act")) === "rien" &&
+     (await page.evaluate(() => document.getElementById("atPy").textContent.includes("pass   # rien : la pompe garde son état"))) &&
+     (await page.textContent("#v-clign")).startsWith("✔") && (await page.textContent("#v-hyst")).startsWith("✔"));
   await shot(page, "persistance");
 
   /* ════════ règles d'or vérifiables à l'écran ════════ */
@@ -446,6 +519,181 @@ const run = async () => {
        impr.anim === "none" && impr.volet && impr.img, JSON.stringify(impr));
     await ctxF.close();
     ok("animation : zéro erreur JS", errAnim.length === 0, errAnim.join(" | "));
+  }
+
+  /* ════════ L'ATELIER DU PROGRAMME (act. 5 c et d, 31/10/2026) ════════
+     Les cinq programmes du cahier des charges, construits au clavier ; ce que l'atelier affiche pour chacun, sur le
+     tremblement et sur la vraie matinée ; le clavier ; 390 px ; le pas à pas et le mouvement réduit ; l'impression et
+     la page sans JavaScript ; la place (sous l'animation, dans la séance 3, hors du volet « Rappel ») ; aucun réseau. */
+  {
+    const errAt = [], reseau = [];
+    const ctxA = await navigateur.newContext({ viewport: { width: 1280, height: 900 } });
+    const pa = await ctxA.newPage();
+    pa.on("pageerror", e => errAt.push(String(e)));
+    pa.on("request", r => { if (!r.url().startsWith("file:") && !r.url().startsWith("data:")) reseau.push(r.url()); });
+    await pa.goto(url(SEQ)); await pa.waitForTimeout(400);
+    ok("atelier · au chargement, aucun verrou ouvert (window.__exp vide)", (await pa.evaluate(() => JSON.stringify(window.__exp))) === "{}");
+    await pa.click("#tab-s3"); await pa.waitForTimeout(150);
+    const place = await pa.evaluate(() => {
+      const at = document.getElementById("atelier"), anim = document.getElementById("pompe-pas-a-pas"), q4 = document.getElementById("a5_q4");
+      const apres = (a, b) => !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
+      return { s3: !!at.closest("#s3"), volet: !!at.closest("#ouverture"), sousAnim: apres(anim, at) && apres(at, q4),
+               entre: [...document.querySelectorAll("#act5 h4")].map(h => h.textContent.trim().slice(0, 2)).join(" ") };
+    });
+    ok("atelier · juste sous l'animation, à la place de c) et d), dans la séance 3 — rien de lui dans le volet « Rappel »",
+       place.s3 && !place.volet && place.sousAnim, JSON.stringify(place));
+    const dep0 = await pa.evaluate(() => document.getElementById("prog3").value);
+    ok("atelier · état de départ : le programme à un seul seuil de a), et son Python (SEUIL = 40, if H < SEUIL, else, commander_relais)",
+       (await pa.textContent("#atQuel")).includes("programme de départ") &&
+       ["SEUIL = 40", "pompe_allumee = False", "while True:", "    H = lire_humidite()", "    if H < SEUIL:", "        pompe_allumee = True", "    else:",
+        "        pompe_allumee = False", "    commander_relais(pompe_allumee)"].every(l => dep0.split("\n").includes(l)), dep0.replace(/\n/g, " ⏎ "));
+
+    /* les cinq programmes */
+    const R = {};
+    R.depart = { t: await essaiAtelier(pa, "tremblement"), m: await essaiAtelier(pa, "matinee") };
+    await shot(pa, "atelier_depart_matinee", "#atelier");
+    for (const nom of ["sinonEteint", "inverses", "croisees", "bon"]) {
+      await construireAuClavier(pa, PROGRAMMES[nom]);
+      R[nom] = { t: await essaiAtelier(pa, "tremblement"), m: await essaiAtelier(pa, "matinee"), py: await pa.inputValue("#prog3") };
+      if (nom === "bon") await shot(pa, "atelier_bon_matinee", "#atelier");
+    }
+    const resume = n => n + " : " + R[n].t.n + " / " + R[n].m.n;
+    ok("atelier · un seul seuil (départ) : le tremblement fait basculer la pompe au moins 4 fois (et la matinée aussi)",
+       R.depart.t.n >= 4 && R.depart.m.n >= 4, resume("depart"));
+    const se = R.sinonEteint.m, k1 = se.lignes.findIndex(l => /POMPE ON/.test(l));
+    const maxApres = Math.max(...se.lignes.slice(k1).map(hDe));
+    ok("atelier · deux seuils mais SINON éteindre : le tremblement passe, la vraie matinée montre la pompe qui bat et le sol qui n'atteint jamais le seuil haut",
+       R.sinonEteint.t.n <= 1 && se.n >= 4 && k1 >= 0 && maxApres < 45 && se.bilan.includes("jamais remonté au-dessus de " + maxApres + " %"),
+       resume("sinonEteint") + " · sol au plus " + maxApres + " % après le premier arrosage");
+    const inv = R.inverses;
+    ok("atelier · seuils inversés (SI H > SEUIL_BAS ALORS allumer) : la pompe arrose un sol mouillé — allumée dès 41 %, jamais éteinte, le sol monte au-dessus de 55 %",
+       /^t = 0 s\s+H = 41 → if H > SEUIL_BAS \? oui → allumer → POMPE ON/.test(inv.t.lignes[0]) && inv.m.lignes.every(l => /POMPE ON/.test(l)) &&
+       Math.max(...inv.m.lignes.map(hDe)) >= 55 && inv.m.bilan.includes("ne s'éteint plus"), resume("inverses") + " · « " + inv.t.lignes[0].trim() + " »");
+    const cr = R.croisees;
+    ok("atelier · bornes croisées (SI H < 45 allumer, SINON SI H > 35 éteindre) : allumée dans la bande dès la 1re mesure, et la matinée la fait battre autour de 45",
+       /H = 41 → if H < SEUIL_HAUT \? oui → allumer → POMPE ON/.test(cr.t.lignes[0]) && cr.m.n >= 4, resume("croisees"));
+    const bon = R.bon.m;
+    ok("atelier · le bon programme (35 / 45, ne rien changer au milieu) : au plus 1 basculement sur le tremblement ; sur la matinée, allumée sous 35, allumée dans toute la bande, éteinte au-dessus de 45",
+       R.bon.t.n <= 1 && bon.n === 2 && /H = 33 → if H < SEUIL_BAS \? oui → allumer → POMPE ON\s+⇄ basculement n°1/.test(bon.lignes[10]) &&
+       /H = 48 → .*elif H > SEUIL_HAUT \? oui → éteindre → POMPE OFF\s+⇄ basculement n°2/.test(bon.lignes[23]) &&
+       bon.lignes.slice(10, 23).every(l => /POMPE ON/.test(l)) && bon.lignes.slice(11, 23).some(l => hDe(l) < 35 || (hDe(l) >= 35 && hDe(l) <= 45)),
+       resume("bon") + " · « " + bon.bilan + " »");
+    ok("atelier · le Python du bon programme dit exactement ce que disent les blocs (elif, else : pass, la mémoire avant la boucle)",
+       ["SEUIL_BAS = 35", "SEUIL_HAUT = 45", "# la mémoire : la pompe est-elle allumée ?", "pompe_allumee = False", "    if H < SEUIL_BAS:", "        pompe_allumee = True",
+        "    elif H > SEUIL_HAUT:", "        pompe_allumee = False", "    else:", "        pass   # rien : la pompe garde son état"].every(l => R.bon.py.split("\n").includes(l)),
+       R.bon.py.replace(/\n/g, " ⏎ "));
+    ok("atelier · la fin d'un essai se dit en texte : le nombre de basculements et ce qu'il signifie",
+       /^8 basculements en deux minutes : le relais claque, l'eau n'atteint pas les racines/.test(R.depart.t.bilan) &&
+       /^2 basculements en 2 h 30\. La pompe s'allume pour la première fois à la mesure 11 \(H = 33 %\)/.test(bon.bilan), R.depart.t.bilan);
+
+    /* le clavier : l'ordre de tabulation suit les blocs, chaque champ a un nom lisible */
+    await boutonAuClavier(pa, "#atStructure");
+    const structure = await pa.evaluate(() => ({ n: document.getElementById("at_n").value, sb: document.getElementById("at_sb").value,
+      b1: ["cmp", "ref", "act"].map(c => document.getElementById("at_b1_" + c).value).join(""), b2: document.getElementById("at_b2_on").value,
+      sinon: document.getElementById("at_sinon_on").value + document.getElementById("at_sinon_act").value, annuler: !document.getElementById("atAnnuler").hidden }));
+    ok("atelier · version étayée : « 🪜 Me donner la structure » pose les trois branches vides (SI, SINON SI, SINON), sans valeurs ni actions — et l'on peut remettre son programme",
+       structure.n === "2" && structure.sb === "" && structure.b1 === "" && structure.b2 === "1" && structure.sinon === "1" && structure.annuler, JSON.stringify(structure));
+    await boutonAuClavier(pa, "#atAnnuler");
+    ok("atelier · « ↶ Remettre mon programme » rend le programme d'avant", (await pa.inputValue("#prog3")) === R.bon.py);
+    await pa.focus("#atDepart");
+    const ordre = [];
+    for (let i = 0; i < 20; i++) {
+      ordre.push(await pa.evaluate(() => { const e = document.activeElement; return e.getAttribute("aria-label") || e.textContent.trim(); }));
+      await pa.keyboard.press("Tab");
+    }
+    const attendu = ["Réglages — combien de seuils", "Réglage — valeur de SEUIL_BAS", "Réglage — valeur de SEUIL_HAUT", "Branche 1 (SI) — comparaison",
+      "Branche 1 (SI) — comparé à", "Branche 1 (SI) — action", "Branche 2 (SINON SI) — comparaison", "Branche 2 (SINON SI) — comparé à",
+      "Branche 2 (SINON SI) — action", "SINON — action", "▶ Exécuter sur la vraie matinée"];
+    let pos = -1;
+    const enOrdre = attendu.every(a => { const k = ordre.indexOf(a, pos + 1); if (k < 0) return false; pos = k; return true; });
+    const sansNom = await pa.evaluate(() => [...document.querySelectorAll("#atelier select, #atelier input:not([type=hidden]), #atelier button")]
+      .filter(e => e.checkVisibility() && !(e.getAttribute("aria-label") || e.textContent.trim())).length);
+    ok("atelier · au clavier : Tab parcourt les blocs dans l'ordre, chaque champ a un nom lisible (« Branche 2 (SINON SI) — comparaison »)",
+       enOrdre && sansNom === 0, ordre.slice(0, 14).join(" | "));
+    const etiquettes = await pa.$$eval("#atelier .at-bloc > .at-cat", l => l.map(x => x.textContent.trim()).join(","));
+    ok("atelier · pas de couleur seule : chaque bloc porte sa catégorie écrite (Variables, Logique, Action)",
+       etiquettes === "Variables,Variables,Logique" && (await pa.locator("#atelier .at-action .at-cat").first().textContent()).trim() === "Action", etiquettes);
+
+    /* l'impression : la fiche, remplie */
+    await pa.evaluate(() => window.dispatchEvent(new Event("beforeprint")));
+    await pa.emulateMedia({ media: "print" });
+    const fiche = await pa.evaluate(() => ({ ecran: getComputedStyle(document.getElementById("atEcran")).display,
+      fiche: getComputedStyle(document.getElementById("atFiche")).display, texte: document.getElementById("atFiche").innerText }));
+    await pa.emulateMedia({ media: "screen" });
+    await pa.evaluate(() => window.dispatchEvent(new Event("afterprint")));
+    ok("atelier · à l'impression : les blocs écrits avec leurs valeurs, le Python, le dernier compteur — l'atelier interactif se retire",
+       fiche.ecran === "none" && fiche.fiche !== "none" && fiche.texte.includes("Réglages : SEUIL_BAS = 35 ; SEUIL_HAUT = 45") &&
+       fiche.texte.includes("SINON SI H > SEUIL_HAUT ALORS éteindre la pompe") && fiche.texte.includes("commander_relais(pompe_allumee)") &&
+       fiche.texte.includes("la vraie matinée — 2 basculements"), fiche.texte.replace(/\s+/g, " ").slice(0, 200));
+    ok("atelier · aucun appel au réseau, zéro erreur JavaScript", reseau.length === 0 && errAt.length === 0, reseau.concat(errAt).join(" | "));
+
+    /* « À toi » : l'étape 9 dit où travailler, et son bouton mène à l'atelier, focus compris */
+    await pa.goto(url(SEQ)); await pa.waitForTimeout(300); await pa.click("#tab-s3");
+    while ((await pa.textContent('#pompe-pas-a-pas [data-lpp="compte"]')).trim() !== "Étape 9 / 9") await pa.click('#pompe-pas-a-pas [data-lpp="suiv"]');
+    const phrase9 = (await pa.textContent('#pompe-pas-a-pas [data-lpp="texte"]')).trim();
+    await pa.click("#ppaVersProg"); await pa.waitForTimeout(250);
+    const focus9 = await pa.evaluate(() => { const r = document.getElementById("atelier").getBoundingClientRect();
+      return { id: document.activeElement.id, vu: r.top < innerHeight && r.bottom > 0 }; });
+    ok("atelier · l'étape 9 dit « juste en dessous, dans l'atelier » et son bouton mène à l'atelier, qui reçoit le focus",
+       phrase9.includes("juste en dessous, dans l'atelier") && focus9.id === "atelier" && focus9.vu, phrase9 + " · " + JSON.stringify(focus9));
+    await ctxA.close();
+
+    /* 390 px : blocs, puis Python, puis console ; aucun débordement ; cibles de 44 px */
+    const ctxM = await navigateur.newContext({ viewport: { width: 390, height: 844 } });
+    const pm3 = await ctxM.newPage();
+    await pm3.goto(url(SEQ)); await pm3.waitForTimeout(300); await pm3.click("#tab-s3");
+    await construireAuClavier(pm3, PROGRAMMES.bon);
+    await essaiAtelier(pm3, "matinee");
+    const m390 = await pm3.evaluate(() => {
+      const top = s => document.querySelector(s).getBoundingClientRect().top;
+      return { debord: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+               ordre: top("#atelier .at-blocs") < top("#atPy") && top("#atPy") < top("#atConsole"),
+               petits: [...document.querySelectorAll("#atelier button, #atelier select, #atelier input:not([type=hidden])")]
+                 .filter(e => e.checkVisibility() && e.getBoundingClientRect().height < 44).map(e => e.id || e.textContent.trim()) };
+    });
+    ok("atelier · 390 px : blocs, puis Python, puis console, en colonne ; aucun débordement de la page ; cibles de 44 px",
+       m390.debord <= 1 && m390.ordre && m390.petits.length === 0, JSON.stringify(m390));
+    await shot(pm3, "atelier_390_matinee", "#atChrono");
+    await ctxM.close();
+
+    /* le pas à pas, et le mouvement réduit (une mesure par clic) */
+    const ctxP = await navigateur.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: "reduce" });
+    const pp = await ctxP.newPage();
+    await pp.goto(url(SEQ)); await pp.waitForTimeout(300); await pp.click("#tab-s3");
+    await boutonAuClavier(pp, "#atPas"); await boutonAuClavier(pp, "#atPas");
+    const pas = { mesure: (await pp.textContent("#atMesure")).trim(), lignes: await pp.locator("#atConsole > div").count(),
+                  actif: await pp.locator("#atPy .at-l.at-actif").count(), teste: await pp.getAttribute("#atPy .at-l.at-teste", "data-res") };
+    ok("atelier · « ⏭ Pas à pas » : une mesure par clic, la ligne Python exécutée s'éclaire, la console écrit une ligne",
+       pas.mesure.startsWith("Mesure 2 / 12") && pas.lignes === 2 && pas.actif >= 1 && pas.teste === "oui", JSON.stringify(pas));
+    await boutonAuClavier(pp, "#atLancer");
+    const calme = { mesure: (await pp.textContent("#atMesure")).trim(), note: await pp.isVisible("#atCalme") };
+    await pp.waitForTimeout(900);
+    ok("atelier · sous « mouvement réduit », ▶ avance d'une mesure par clic, et la page le dit",
+       calme.mesure.startsWith("Mesure 3 / 12") && calme.note && (await pp.textContent("#atMesure")).trim().startsWith("Mesure 3 / 12"), JSON.stringify(calme));
+    await ctxP.close();
+
+    /* ▶ Exécuter, en mouvement : la course se joue toute seule, puis le verrou se coche (sur le geste) */
+    const ctxR = await navigateur.newContext({ viewport: { width: 1280, height: 900 } });
+    const pr2 = await ctxR.newPage();
+    await pr2.goto(url(SEQ)); await pr2.waitForTimeout(300); await pr2.click("#tab-s3");
+    await boutonAuClavier(pr2, "#atLancer"); await pr2.waitForTimeout(1500);
+    const enCours = { bouton: (await pr2.textContent("#atLancer")).trim(), mesure: (await pr2.textContent("#atMesure")).trim() };
+    await pr2.waitForTimeout(5200);
+    ok("atelier · « ▶ Exécuter sur le tremblement » joue les 12 mesures, puis coche « pompe affolée »",
+       enCours.bouton === "⏸ Pause" && /^Mesure [1-9] \/ 12/.test(enCours.mesure) && (await pr2.textContent("#atCompteur")) === "8" &&
+       (await pr2.textContent("#v-clign")).startsWith("✔"), JSON.stringify(enCours));
+    await ctxR.close();
+
+    /* sans JavaScript : l'atelier se lit comme une fiche, avec des lignes à remplir */
+    const ctxN = await navigateur.newContext({ viewport: { width: 1280, height: 900 }, javaScriptEnabled: false });
+    const pn = await ctxN.newPage();
+    await pn.goto(url(SEQ)); await pn.waitForTimeout(300);
+    const nojs = await pn.evaluate(() => ({ ecran: getComputedStyle(document.getElementById("atEcran")).display,
+      fiche: getComputedStyle(document.getElementById("atFiche")).display, texte: document.getElementById("atFiche").textContent.replace(/\s+/g, " "),
+      lignes: document.querySelectorAll("#atFiche .at-blanc").length }));
+    ok("atelier · sans JavaScript : la fiche « Mon programme à deux seuils », avec ses lignes à remplir",
+       nojs.ecran === "none" && nojs.fiche !== "none" && nojs.texte.includes("Mon programme à deux seuils") && nojs.lignes >= 8, JSON.stringify(nojs).slice(0, 160));
+    await ctxN.close();
   }
 
   /* ════════ QCM ════════ */

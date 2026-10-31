@@ -26,9 +26,19 @@ le programme qui décide d'arroser — et qu'il faudra mettre au point.
   trace de l'activité 5 rejouée tour de boucle par tour de boucle, un jeton qui porte chaque mesure dans l'algorigramme
   pendant que le chronogramme se dessine ; puis les deux seuils, une **prédiction** (« Regarder » s'arrête tant que
   l'élève n'a pas répondu), le même tremblement sans basculement, et le sol qui sèche. Voix SIWIS (`Audio/pompe_etape…`,
-  générateur `_generation/voix_pompe/`, prises **non écoutées**). Le chronogramme fixe reste dans un volet sous
+  générateur `_generation/voix_pompe/`) : étapes 1 à 8 **écoutées et validées par Pascal le 31/10/2026** ; étape 9 **nouvelle
+  prise du 31/10/2026, à réécouter** (sa phrase renvoie maintenant à l'atelier). Le chronogramme fixe reste dans un volet sous
   l'animation, et c'est lui qui s'imprime. Le dessin est fait par le **moteur** `_generation/moteur_algorigramme/`
   (`moteur.js`, `moteur.css`, `poser.py` : la page déclare ses blocs, ses flèches, ses règles et sa série).
+* **L'atelier du programme** (activité 5 c et d, bloc `#atelier`, 31/10/2026) — juste sous l'animation, à la place de
+  l'ancienne zone de texte : un petit éditeur **dans la page**, à la manière du mode mixte de Vittascience. Des blocs
+  (Variables : les réglages, à un ou deux seuils, et la mesure ; Logique : SI / + SINON SI / + SINON, avec leurs actions),
+  le Python qu'ils écrivent tout seuls (`lire_humidite()`, la mémoire `pompe_allumee`, `pass`, `commander_relais(…)`),
+  et l'exécution : ▶, ⏭ pas à pas, ⏩ jusqu'à la fin, sur **le tremblement du banc** (la même suite `TREMBLEMENT`) et sur
+  **une vraie matinée** figée (le sol répond à la pompe). Console, ligne Python éclairée, chronogramme, compteur, et une
+  phrase à la fin de chaque essai : l'atelier ne corrige pas, il montre. Le programme est sauvegardé (champs `at_*`) et
+  son Python écrit dans `prog3` ; `CHECKS[5]` juge le programme **par son exécution** sur les deux essais. Les verrous
+  « pompe affolée » et « pompe calmée » se cochent dans l'atelier. Sans JavaScript et à l'impression : une fiche.
 * **`qcm_4e_C9_jardin-programme.html`** — QCM 30 questions (10 par code,
   4 illustrées), corrections détaillées avec **réfutation de chaque distracteur**,
   bilan par compétence.
@@ -38,8 +48,8 @@ le programme qui décide d'arroser — et qu'il faudra mettre au point.
   chronogramme de l'hystérésis est la figure centrale du lot.
 * **`fiche_pedagogique_4e_C9.md`**, **`matrice_couverture_4e_C9.csv`**,
   **`SOURCES_MEDIAS.md`**, **`rapport_tests_4e_C9.md`**, **`CRCN_regle7.md`**.
-* **`tests_4e_C9.mjs`** — la suite de tests (77 tests, Playwright, le 30/10/2026) :
-  `node tests_4e_C9.mjs .`
+* **`tests_4e_C9.mjs`** — la suite de tests (105 tests, Playwright, le 31/10/2026, dont 28 pour l'atelier) :
+  `node tests_4e_C9.mjs . [dossier_captures]`
 
 ## Le banc d'essai — pourquoi il est au centre
 
@@ -49,6 +59,9 @@ ou huit. Mode **DEUX seuils**, on remet à zéro, **même tremblement** : zéro 
 
 La mesure n'a pas changé d'un point — c'est la **règle** qui a changé. Trente
 secondes, et l'idée est acquise.
+
+> Depuis le 31/10/2026, la **preuve** de l'activité 5 se fait dans l'atelier du programme : il exécute le programme que
+> l'élève a construit, sur la même suite que ce banc. Le banc garde son rôle pour les activités 3 et 4.
 
 > Le tremblement est une suite de valeurs **figée dans le code**, pas un tirage au
 > hasard : sans cela, la comparaison entre les deux règles ne prouverait rien.

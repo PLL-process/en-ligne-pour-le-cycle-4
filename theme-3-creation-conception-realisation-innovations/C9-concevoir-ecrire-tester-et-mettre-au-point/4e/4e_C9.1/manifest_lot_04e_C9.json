@@ -64,9 +64,17 @@
       "varie (humidité traversant le seuil dans les deux sens)",
       "plage (sol sec HORS plage horaire : la pompe reste éteinte)",
       "front39 / front40 (les deux frontières exécutées)",
-      "clignote (pompe affolée en mode UN seuil)",
-      "hysteres (même tremblement, mode DEUX seuils : la pompe est calmée)"
+      "clignote (le programme de départ exécuté dans l'atelier du programme sur le tremblement : la pompe s'affole — depuis le 31/10/2026, plus au banc)",
+      "hysteres (le programme de l'élève exécuté dans l'atelier sur le même tremblement : au plus un basculement — depuis le 31/10/2026, plus au banc)"
     ],
+    "atelier_programme": {
+      "ou": "activité 5 c et d, bloc #atelier, juste sous l'animation #pompe-pas-a-pas (31/10/2026)",
+      "blocs": "réglages (un seuil : SEUIL ; deux seuils : SEUIL_BAS, SEUIL_HAUT), la mesure H, SI / + SINON SI (2 au plus) / + SINON, actions allumer, éteindre, ne rien changer",
+      "python": "écrit par les blocs, en lecture seule ; aussi dans prog3, lu par CHECKS[5]",
+      "essais": "le tremblement (la suite TREMBLEMENT du banc, une seule source) et une vraie matinée figée (sol 44 %, -1 par mesure, +2 quand la pompe arrose, 60 % au plus, tremblement figé de -2 à +2)",
+      "verification": "CHECKS[5] juge le programme par son exécution sur les deux essais",
+      "hors_ligne": true
+    },
     "banc_essai": {
       "hors_ligne": true,
       "tremblement": "suite de valeurs FIGÉE dans le code (41,39,41,40,39,40,39,41,40,39,41,40) — non aléatoire, pour que la comparaison entre les deux règles soit reproductible d'un poste à l'autre",
