@@ -50,7 +50,7 @@ reste quand tout le reste est oublié.
 | | 2. De la règle à l'algorigramme | 25 min | Ordre des 5 blocs + pseudo-code **modifié** |
 | **2** — Écrire et tester | 3. Écrire et exécuter | 30 min | Programme enregistré + journal chiffré |
 | | 4. Le jeu d'essais | 25 min | Tableau à 6 essais, ATTENDU rempli **avant** |
-| **3** — Mettre au point | 5. La pompe qui s'affole | 30 min | Diagnostic + programme à trois cas + démonstration au banc |
+| **3** — Mettre au point | 5. La pompe qui s'affole | 30 min | Diagnostic + programme à trois cas, construit et exécuté dans l'atelier du programme + démonstration sur le même tremblement |
 | | 6. Le lampadaire | 25 min | Programme écrit **sans squelette** + justification chiffrée |
 
 ---
@@ -72,7 +72,10 @@ changé.
 
 **Cinq verrous expérientiels** : humidité variée · essai hors plage horaire ·
 frontières 39 et 40 · pompe affolée · pompe calmée. Les activités
-3, 4 et 5 **refusent** de se valider sans eux.
+3, 4 et 5 **refusent** de se valider sans eux. Depuis le 31/10/2026, les deux derniers
+se cochent dans **l'atelier du programme** de l'activité 5 (sous l'animation) : il exécute
+le programme que l'élève a construit en blocs, sur le même tremblement que le banc, puis sur
+une « vraie matinée » figée — et le vérificateur juge le programme par cette exécution.
 
 ---
 

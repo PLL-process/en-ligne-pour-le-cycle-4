@@ -27145,3 +27145,80 @@ retour que pour T5 ; dans une colonne étroite, un menu coupe un mot en deux («
 **Contrôles.** Verts : `controle_unites`, `controle_sigles`, `controle_liens`, `controle_hierarchie`,
 `controle_regles_visibles`, `controle_medias`, `controle_longueurs`, `controle_impression`, `controle_squelette`,
 `controle_verrous`. Non testé : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+---
+
+## 31/10/2026 — 4e_C9.1 : l'atelier du programme, intégré à la page (activité 5 c et d)
+
+*Pascal, le 31/10/2026, sur l'étape 9 de l'animation de la pompe (« À toi : écris le programme à deux seuils, puis
+prouve au banc… ») : « L'élève ne sait pas s'il doit le faire sur papier, parce qu'il n'y a aucun écran intégré,
+aucun compilateur intelligible — exemple, celui de Vittascience. Il n'y a pas d'espace pour sa réponse. » C'était
+vrai : c) était une zone de texte que rien n'exécutait, et d) renvoyait au banc du haut de page, qui n'applique que
+deux règles préréglées. L'élève écrivait une chose et en prouvait une autre.*
+
+**L'atelier** (`#atelier`, séance 3, juste sous l'animation) remplace c) et d). C'est l'espace de réponse, à la
+manière du mode mixte de Vittascience :
+- **Les blocs** (HTML, sans glisser-déposer, couleurs des catégories de Vittascience et catégorie écrite sur chaque
+  bloc, n°119) : les réglages (un seuil ou deux, champs numériques), la mesure H, puis `SI H [< > ≤ ≥] [seuil | un
+  nombre] ALORS [allumer | éteindre | ne rien changer]`, « + SINON SI » (deux au plus), « + SINON » (un au plus).
+  L'élève part du programme à **un seul seuil**, celui qui s'affole. « 🪜 Me donner la structure » est la version
+  étayée (les trois branches vides) ; « ↺ Revenir au programme de départ ». Tout se fait au clavier.
+- **Le Python** s'écrit tout seul, en lecture seule. Les noms viennent de la séquence : `lire_humidite()` (« lire
+  humidité → H »), `commander_relais()` (correction de l'activité 3), `pompe_allumee` (la mémoire, comme au QCM).
+  « Ne rien changer » donne `pass  # rien : la pompe garde son état`.
+- **Exécuter** : ▶ (pause, reprise), ⏭ pas à pas (et ▶ avance d'une mesure par clic sous mouvement réduit), ⏩ jusqu'à
+  la fin. À chaque mesure, la ligne Python exécutée s'éclaire avec « oui / non » sur chaque condition, la console écrit
+  ce que fait le programme, la pompe, le compteur et le chronogramme suivent (seuils en pointillés, bande morte
+  grisée). À la fin, une phrase dit ce qui s'est passé, jamais « juste » ou « faux » : l'atelier montre, il ne note pas.
+
+**Deux essais.** **Le tremblement** : la même constante `TREMBLEMENT` que le banc, une seule source. **Une vraie
+matinée** : 30 mesures, une toutes les 5 minutes ; le sol perd 1 point par mesure, en gagne 2 quand la pompe arrose,
+et le capteur tremble selon une suite figée. **Le sol y répond à la pompe** : c'est voulu, sinon un « SINON éteindre »
+passerait. Ce que montre chaque programme (basculements, tremblement / matinée) :
+
+| Programme | Tremblement | Matinée | Ce qu'on voit |
+|---|---|---|---|
+| un seul seuil (le départ) | 8 | 20 | la pompe s'affole |
+| deux seuils, mais SINON éteindre | 0 | 16 | il passe le tremblement ; la pompe bat, le sol ne dépasse jamais 37 % |
+| seuils inversés | 1 | 1 | allumée dès 41 %, jamais éteinte : elle arrose un sol mouillé |
+| bornes croisées | 1 | 24 | allumée dans la bande, la pompe bat autour de 45 |
+| le bon programme (35 / 45) | 0 | 2 | allumée à 33 %, allumée dans toute la bande, éteinte à 48 % |
+
+**Ce qui change autour.**
+- `prog3` reçoit le Python généré (caché, sauvegardé) ; le programme revient tel quel par ses champs `at_*` ; un texte
+  écrit à la main dans l'ancienne zone est gardé et affiché.
+- **d)** se fait dans l'atelier : le programme de départ, puis celui de l'élève, sur le même tremblement ; l'élève
+  relève lui-même `a5_n1` et `a5_n2`. Les verrous `clignote` et `hysteres` se cochent à la fin d'un essai lancé par un
+  clic (n°226, n°265). Le banc du haut garde ses deux modes pour les activités 3 et 4, et renvoie à l'atelier.
+- **`CHECKS[5]` juge par l'exécution** : au plus 1 basculement sur le tremblement ; sur la matinée, la pompe s'allume
+  puis s'éteint, en 3 basculements au plus. Le « SINON éteindre », qui contient pourtant 35, 45 et `elif`, est refusé.
+- Les aides, la correction (exhaustive : le bon programme en blocs et en Python, les deux essais, pourquoi chaque
+  programme faux échoue), « à retenir » et le critère de réussite parlent de l'atelier. L'activité 3 le signale dans
+  son repli « Pas de connexion ? ».
+- **Sans JavaScript et à l'impression**, l'atelier devient une fiche : les blocs écrits avec leurs valeurs, le Python,
+  les derniers compteurs ; sans programme, des lignes à remplir.
+- **L'étape 9** dit où travailler : « À toi : juste en dessous, dans l'atelier, construis le programme à deux seuils,
+  puis exécute-le sur le même tremblement : la pompe ne doit plus s'affoler. » ; son bouton mène à l'atelier.
+  **Sa voix** est refaite (`generer.py --scene 9`, même modèle et mêmes réglages). Dans `voix.json`, les étapes 1 à 8
+  sont **validées par Pascal le 31/10/2026** (« la bande sonore est bonne ») ; l'étape 9 est **à réécouter**.
+
+**Pas de Blockly** : des blocs HTML à menus suffisent, marchent au clavier et hors ligne ; Blockly aurait coûté une
+lourde bibliothèque et un clavier moins sûr.
+
+**Les menus déroulants et la règle n°300.** La n°300 (20/09/2026) veut qu'une question à choix soit posée par des
+boutons radio, dans le flux, jamais par une liste qui se déroule par-dessus la page. Deux exceptions désormais :
+**les cahiers des charges** (n°317 : Pascal a demandé des menus déroulants dans le tableau, le 31/10/2026) et **les
+blocs de l'atelier** (ce ne sont pas des questions : ce sont les champs d'un programme, comme dans Vittascience).
+`verif_regles_audit.py` compte ces 11 menus avec les autres (43 → 54 sur la page).
+
+**Bancs.** `tests_4e_C9.mjs` : **105 / 105** (77 avant ; les 77 passent, dont l'activité 5 validée par l'atelier ; 28
+tests nouveaux : les cinq programmes construits au clavier, sauvegarde, clavier, 390 px, impression, sans JavaScript,
+pas à pas, mouvement réduit, `CHECKS[5]`, verrous, étape 9, aucun réseau). Deux mutations sont détectées (l'ancien
+`CHECKS[5]` ; une matinée qui ne répond plus à la pompe). `tests_regle_311_4e_C9.1.mjs` 34 / 34 ; `banc_lecteur.py`
+vert ; `controle_lecteur_pas_a_pas`, `controle_squelette`, `controle_impression`, `controle_verrous`,
+`controle_hors_ligne`, `controle_contraste_liens`, `controle_regles_visibles`, `controle_liens`, `controle_hierarchie`,
+`controle_unites`, `controle_sigles`, `controle_medias` : mêmes sorties qu'avant ; `controle_schemas` : 0 ✘, 0 ⚠.
+Non testé : un vrai téléphone, Safari, Firefox, une impression réelle.
+
+**Ensuite, si Pascal le veut** : le même atelier en secours de Vittascience à l'activité 3, et pour le lampadaire de
+l'activité 6 (qui demande aujourd'hui un programme « sans modèle » : l'atelier y partirait d'un plan vide).

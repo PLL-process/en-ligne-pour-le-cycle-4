@@ -5,6 +5,10 @@ Agent : Fable · Environnement : Chromium headless (Playwright 1.55),
 viewport 1280×900 + émulation téléphone 390×844 · Suite : `tests_4e_C9.mjs`
 (committée dans ce dossier, rejouable : `node tests_4e_C9.mjs .`).
 
+> **Mise à jour du 31/10/2026 (2) — l'atelier du programme, activité 5 c et d.** Sous l'animation, l'élève construit son
+> programme en blocs, lit son Python et l'exécute sur le même tremblement que le banc, puis sur une vraie matinée ; la page
+> le juge par cette exécution. Suite du lot : **105 / 105** (77 avant). Détail au §10.
+
 > **Mise à jour du 31/10/2026 — règle d'or n°311 : à partir de la séance 2, l'élève voit sa séance, pas le décor.**
 > À la séance 1, l'ouverture est complète (la barre d'outils passe juste sous la mission, la progression juste après l'ouverture).
 > À partir de la séance 2 : titre, mission, barre d'outils, sélecteur de parcours, puis le volet replié « 📖 Rappel : la situation
@@ -219,3 +223,53 @@ l'animation à 1280 et 390 px et sous « mouvement réduit », vérifie la voix 
 `#pompe-pas-a-pas` (vert, 5 animations) ; `_outils/controle_lecteur_pas_a_pas.py` vérifie que le lecteur posé est celui de la source.
 **Non vérifié** : l'écoute des neuf prises (à faire par Pascal) ; Safari, iPad, téléphone réel.
 
+## 10. Rejouée le 31/10/2026 (l'atelier du programme, activité 5 c et d)
+
+*Pascal, le 31/10/2026, sur l'étape 9 de l'animation (« écris le programme à deux seuils, puis prouve au banc ») :
+« L'élève ne sait pas s'il doit le faire sur papier, parce qu'il n'y a aucun écran intégré, aucun compilateur
+intelligible — exemple, celui de Vittascience. Il n'y a pas d'espace pour sa réponse. »* La zone `prog3` était un texte
+libre que rien n'exécutait, et d) renvoyait au banc du haut, qui n'applique que deux règles préréglées.
+
+**Ce qui change.** Sous l'animation, à la place de c) et d), **l'atelier du programme** (`#atelier`) : des blocs
+(réglages à un ou deux seuils, la mesure, SI / + SINON SI / + SINON et leurs actions), le Python qu'ils écrivent tout
+seuls, et l'exécution sur **le tremblement** (la suite `TREMBLEMENT` du banc, une seule source) et sur **une vraie
+matinée** figée, où le sol répond à la pompe. `prog3` est caché, en lecture seule, et porte le Python ; `CHECKS[5]` juge le
+programme par son exécution ; les verrous `clignote` et `hysteres` se cochent dans l'atelier (plus au banc) ; l'étape 9
+dit « juste en dessous, dans l'atelier » (nouvelle prise de voix, à réécouter).
+
+**Résultat : 105 / 105** (77 avant) : `node tests_4e_C9.mjs . <dossier_captures>`. Les 77 tests d'avant passent tous ;
+celui de l'activité 5 valide désormais par l'atelier (« programme qui passe les deux essais de l'atelier »), et les trois
+tests du banc un seuil / deux seuils sont gardés tels quels (le banc garde son rôle). Les 28 contrôles ajoutés, préfixés
+« atelier », dont :
+
+| Programme construit au clavier | Le tremblement | La vraie matinée | Ce que vérifie le banc |
+|---|---|---|---|
+| Départ : un seul seuil, 40 | 8 basculements | 20 | au moins 4 sur le tremblement ; « s'affole » |
+| Deux seuils, mais SINON éteindre | 0 | 16 | le tremblement passe ; la matinée bat, et le sol ne dépasse jamais 37 % après le premier arrosage |
+| Seuils inversés (SI H > SEUIL_BAS allumer) | 1 | 1 | allumée dès 41 %, jamais éteinte, le sol monte au-dessus de 55 % |
+| Bornes croisées (SI H < 45 allumer, SINON SI H > 35 éteindre) | 1 | 24 | allumée dans la bande dès la 1re mesure ; la matinée bat autour de 45 |
+| Le bon programme (35 / 45, ne rien changer) | 0 | 2 | allumée à la mesure 11 (33 %), allumée de la 11 à la 23, éteinte à la 24 (48 %) |
+
+Et aussi : `prog3` n'est plus une zone d'écriture ; `CHECKS[5]` refuse « SINON éteindre » (qui contient 35, 45 et `elif`)
+en nommant la vraie matinée ; la sauvegarde rend le programme tel quel (blocs, Python, verrous) ; l'ordre de tabulation
+suit les blocs et chaque champ a un nom lisible ; chaque bloc porte sa catégorie écrite ; « 🪜 Me donner la structure »
+pose les trois branches vides, « ↶ » rend le programme d'avant ; « ⏭ » avance d'une mesure et éclaire la ligne Python ;
+sous « mouvement réduit », ▶ avance d'une mesure par clic ; ▶ joue les 12 mesures et coche « pompe affolée » ; 390 px sans
+débordement, blocs puis Python puis console, cibles de 44 px ; impression (la fiche remplie, l'atelier retiré) ; sans
+JavaScript (la fiche à lignes) ; l'étape 9 et son bouton, qui donne le focus à l'atelier ; aucun appel réseau, zéro erreur JS.
+
+**Mutations, elles mordent** (sur des copies du lot) : `CHECKS[5]` remis au jugement par les chaînes « 35 », « 45 », « elif »
+→ le contrôle « CHECKS[5] juge le programme par son exécution » échoue ; une matinée qui ne répond plus à la pompe (la
+suite toute faite du bon programme) → trois contrôles échouent, dont « SINON éteindre » (le sol y montait à 48 %).
+
+**Le reste, rejoué avant et après, mêmes résultats** : `tests_regle_311_4e_C9.1.mjs` **34 / 34** (relais 9 / 9 compris) ;
+`banc_lecteur.py` vert (6 animations, dont la pompe, 9 étapes) ; `controle_lecteur_pas_a_pas.py` sortie 0 ;
+`controle_squelette`, `controle_impression` (0 page refusée), `controle_verrous`, `controle_hors_ligne`,
+`controle_contraste_liens`, `controle_regles_visibles`, `controle_liens`, `controle_hierarchie`, `controle_unites`,
+`controle_sigles`, `controle_medias`, `controle_impression_papier` : sortie 0. `controle_schemas` sur la page : 3 schémas
+(le chronogramme de l'atelier en plus), 0 ✘, 0 ⚠. `generer.py --verifier` : les 9 phrases sont celles de la page. Le lexique,
+régénéré sur une copie : identique. `verif_regles_audit.py` : le ✘ n°300 d'avant (listes déroulantes) reste, de 43 à 54 :
+les onze menus des blocs, qui ne sont pas des questions mais les champs d'un éditeur, comme dans Vittascience.
+
+**Non vérifié** : l'écoute de la nouvelle prise de l'étape 9 (à faire par Pascal) ; un vrai téléphone, Safari, Firefox ;
+une impression sur papier.

@@ -295,6 +295,87 @@
   .py .cmt{color:#5b7bb8;font-style:italic}.py .str{color:#81fba1}
   @media print{ .choix-parcours-boutons,.banc-jardin button{display:none} }
 </style>
+<style id="atelier-css">
+/* L'atelier du programme (activité 5 c et d, 31/10/2026) : des blocs, le Python écrit par les blocs, une console et un
+   chronogramme ; tout dans la page, rien sur le réseau. Couleurs des catégories de Vittascience (Variables corail,
+   Logique orange, actions jaune comme « afficher »), assombries pour un texte blanc lisible ; chaque bloc porte aussi
+   son nom écrit (n°119). Mesure H en cyan, seuils en jaune pointillé, bande morte grise : celles de l'animation (n°120). */
+#atelier [hidden]{display:none!important}
+.atelier{margin:12px 0 10px;border:2px solid var(--hl);border-radius:14px;background:#08132c;padding:14px;scroll-margin-top:72px}
+.atelier:focus{outline:3px solid var(--hl);outline-offset:3px}
+.at-titre{margin:0 0 6px;font-weight:700;color:var(--title);font-size:1.05em}
+.at-intro{margin:0 0 8px;font-size:.92em;color:var(--sub)}
+.at-quel{margin:0 0 10px;font-size:.9em}
+.at-quel b{color:var(--warn)}
+.at-haut{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:14px;align-items:start}
+@media (max-width:820px){.at-haut{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:520px){.atelier{margin-left:-36px;margin-right:-36px;padding:10px 8px}}
+.at-etiq{margin:0 0 6px;font-weight:700;color:var(--hl);font-size:.92em}
+.at-outils,.at-ajouts,.at-cmd,.at-essais{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.atelier .btn{min-height:44px}
+.at-bloc{border-radius:10px;padding:8px 10px 10px;margin:0 0 10px;color:#fff;box-shadow:0 2px 0 rgba(0,0,0,.35)}
+.at-var{background:#a8383a;border-left:8px solid #e8706a}
+.at-log{background:#a35200;border-left:8px solid #ff9a3c}
+.at-cat{display:inline-block;font-size:.72em;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:rgba(0,0,0,.32);color:#fff;border-radius:6px;padding:2px 8px;margin:0 0 6px}
+.at-ligne{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:4px 0}
+.at-mot{font-weight:700;font-family:ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace}
+.at-kw{letter-spacing:.04em}
+.at-pilule{display:inline-flex;align-items:center;min-height:36px;padding:2px 12px;border-radius:999px;font-weight:700;font-family:ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace}
+.at-pv{background:#7d2326;color:#fff;border:2px solid #f0a09b}
+.atelier select.at-champ,.atelier input.at-champ{width:auto;min-height:44px;background:#fff;color:#14171f;border:2px solid rgba(0,0,0,.35);border-radius:999px;padding:4px 12px;font-weight:700;font-size:.95em;font-family:ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace;max-width:100%}
+.atelier input.at-nombre{width:5.6em;text-align:center}
+.atelier .at-champ:focus{outline:3px solid #61dafb;outline-offset:2px}
+.atelier .at-champ.at-vide{border-color:#ffd66b;box-shadow:0 0 0 2px #ffd66b inset}
+.at-branche{border:1px dashed rgba(255,255,255,.45);border-radius:8px;padding:6px 8px;margin:6px 0;background:rgba(0,0,0,.14)}
+.at-action{padding:4px 6px;border-radius:8px;background:#f2a71b;color:#231400}
+.at-action .at-cat{background:rgba(0,0,0,.18);color:#231400;margin:0}
+.at-retirer{margin-top:4px}
+.at-ajouts .btn{background:#5c2e00;border:1px solid #ffb062}
+.at-manque{margin:2px 0 0;font-size:.9em;color:var(--warn);min-height:1.2em}
+.at-ancien{margin:8px 0 0;font-size:.9em}
+.at-ancien pre{white-space:pre-wrap;margin:6px 0 0;background:#0a1b3d;border:1px solid var(--border);border-radius:8px;padding:8px}
+.at-py{margin:0;padding:10px 0;font-size:.86em;line-height:1.55;max-height:none}
+.at-py .at-l{display:block;padding:0 12px 0 0;border-left:4px solid transparent}
+.at-py .at-n{display:inline-block;width:2.6em;padding-right:.8em;text-align:right;color:#5b7bb8;user-select:none}
+.at-py .at-trou{color:#ffd66b;border-bottom:2px dotted #ffd66b}
+.at-py .at-l.at-teste{background:rgba(155,190,252,.12)}
+.at-py .at-l[data-res]::after{content:"   ← " attr(data-res);color:#ffd66b;font-style:italic}
+.at-py .at-l.at-actif{background:rgba(129,251,161,.2);border-left-color:#81fba1}
+.at-py .at-l.at-lue{background:rgba(97,218,251,.12);border-left-color:#61dafb}
+.at-bas{margin-top:12px;border-top:1px dashed var(--border);padding-top:10px}
+.at-essai[aria-pressed="true"]{background:var(--btn);box-shadow:0 0 0 3px var(--hl) inset}
+.at-essai-dit{margin:0 0 10px;font-size:.9em;color:var(--sub)}
+.at-calme{margin:0 0 8px;font-size:.88em;color:var(--warn)}
+.at-etat{display:flex;flex-wrap:wrap;align-items:center;gap:8px 22px;margin:4px 0 8px;font-size:.95em}
+.at-etat .compteur-bascule{font-size:1.25em}
+.at-chrono{display:block;width:100%;height:auto;background:#0a1b3d;border:1px solid var(--border);border-radius:10px}
+.at-legende{margin:6px 0 10px;font-size:.86em;color:var(--sub)}
+.at-console{font-family:ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace;font-size:.82em;line-height:1.5;background:#050f24;border:1px solid #2e5d9f;border-radius:8px;padding:8px 10px;min-height:5em;max-height:15em;overflow-y:auto;white-space:pre-wrap;color:#cfe0ff}
+.at-console .at-c-bascule{color:#ffd66b}
+.at-console .at-c-vide{color:#9bbefc;font-style:italic}
+.at-bilan{margin:10px 0 0;padding:8px 12px;border-left:4px solid var(--warn);background:rgba(255,214,102,.08);border-radius:0 8px 8px 0;min-height:1.4em}
+.at-bilan:empty{display:none}
+.at-sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;padding:0}
+.atelier .verrous-banc{margin-top:10px}
+/* sans JavaScript : la fiche ; avec : l'atelier à l'écran, la fiche (remplie) à l'impression */
+.atelier-fiche{border:1px dashed var(--border);border-radius:10px;padding:10px 12px;margin:8px 0 0}
+.at-js .atelier-fiche{display:none}
+.at-f-note{margin:0 0 8px;font-size:.92em}
+.at-f-ligne{margin:6px 0;line-height:2}
+.at-blanc{display:inline-block;min-width:7em;border-bottom:1px solid currentColor;vertical-align:baseline}
+.at-blanc.court{min-width:3.2em}
+.at-blanc.long{min-width:12em}
+.at-f-blocs{margin:4px 0 8px 1.2em;padding:0}
+.at-f-py{margin:6px 0}
+@media print{
+  .at-js .atelier-fiche{display:block!important}
+  .atelier{border:0!important;padding:0!important;margin:2mm 0!important;background:#fff!important}
+  .atelier-fiche{border:.6pt solid #cbd5e1!important;break-inside:avoid;page-break-inside:avoid}
+  .at-titre{color:#111827!important}
+  .at-f-py{white-space:pre!important;font-size:8.5pt!important}
+  .at-trou{color:#92400e!important;border-bottom-color:#92400e!important}
+}
+</style>
 <style>
 /* pompe_pas_a_pas (style) : début — la trace de l'activité 5 rejouée pas à pas (30/10/2026).
    Couleurs constantes (n°120), celles des deux figures du lot : mesure H en cyan #61dafb ; losange violet ; OUI et
@@ -1538,9 +1619,8 @@ details.ppa-fixe{margin:10px 0}
           <li id="v-varie">☐ J'ai fait varier l'humidité et observé la pompe</li>
           <li id="v-plage">☐ J'ai vérifié qu'à sol sec mais HORS plage horaire, la pompe reste éteinte</li>
           <li id="v-front">☐ J'ai testé les deux frontières : 39 % et 40 %</li>
-          <li id="v-clign">☐ J'ai fait s'affoler la pompe (mode UN seuil, mesure qui tremble)</li>
-          <li id="v-hyst">☐ J'ai vérifié que les DEUX seuils l'arrêtent, sur la même mesure</li>
         </ul>
+        <p style="font-size:.85em;color:var(--sub);margin:6px 0 0">À la séance 3, la preuve par la mesure qui tremble se fait dans l'atelier du programme de l'activité 5 : il exécute <b>ton</b> programme.</p>
       </div>
     </div>
   </div>
@@ -1814,6 +1894,7 @@ FIN SI</div>
             <li><b>Plan B — sans connexion du tout :</b> écris ton programme <b>sur le cahier</b> (la logique est ce qui compte, la saisie se fera plus tard), et utilise le <b>banc d'essai</b> en haut de cette page pour voir la pompe réagir. Tu peux répondre à TOUTES les questions et valider l'activité.</li>
           </ol>
           <p style="margin-bottom:0;font-size:.9em;color:var(--sub)">L'éditeur Vittascience est le seul élément de cette séquence qui demande Internet. Le banc d'essai, lui, fonctionne hors ligne.</p>
+          <p style="margin:6px 0 0;font-size:.9em;color:var(--sub)">À la séance 3, l'activité 5 a son propre <b>atelier du programme</b>, intégré à la page et sans connexion : des blocs, leur Python et une exécution sur la mesure qui tremble.</p>
         </div>
       </details>
     </div>
@@ -1980,11 +2061,11 @@ heure = <span class="num">8</span>
     <div class="meta-grid">
       <div><b>Objectif :</b> identifier l'écart entre le comportement observé (la pompe s'affole : elle s'allume et s'éteint sans arrêt) et le comportement acceptable, en trouver la cause, corriger par l'hystérésis, puis re-tester.</div>
       <div><b>Compétence :</b> <b>4e_C9.3</b> — <i>mettre au point</i> · et <b>4e_C9.1</b> — <i>modifier</i> l'algorithme pour corriger.</div>
-      <div><b>Production attendue :</b> le diagnostic écrit + le programme à deux seuils + la preuve au banc que la pompe ne s'affole plus.</div>
-      <div><b>Ressources :</b> la trace d'exécution ci-dessous, le chronogramme, et le banc d'essai.</div>
+      <div><b>Production attendue :</b> le diagnostic écrit + le programme à deux seuils, construit dans l'atelier + la preuve, dans l'atelier, que la pompe ne s'affole plus.</div>
+      <div><b>Ressources :</b> la trace d'exécution ci-dessous, le chronogramme, et l'atelier du programme, juste sous l'animation.</div>
     </div>
 
-    <div class="consigne"><b>Consigne :</b> a) lis la trace et dis ce qui cloche ; b) comprends pourquoi avec le chronogramme ; c) écris la correction ; d) <b>prouve au banc</b> qu'elle fonctionne, sur la même mesure.</div>
+    <div class="consigne"><b>Consigne :</b> a) lis la trace et dis ce qui cloche ; b) comprends pourquoi avec le chronogramme ; c) construis la correction <b>dans l'atelier</b>, sous l'animation ; d) <b>prouve-le</b> : exécute le programme de départ, puis le tien, sur la même mesure qui tremble.</div>
     <div class="exo">
       <h4>a) La trace — que raconte-t-elle ?</h4>
       <p>Un binôme a laissé tourner son programme dix minutes près d'un plant. Voici ce que la console a écrit <i>(trace enregistrée)</i> :</p>
@@ -2036,7 +2117,7 @@ heure = <span class="num">8</span>
           </div>
         </div>
         <p class="ppa-rappel" id="ppaRappel" hidden></p>
-        <p class="ppa-tache" id="ppaTache" hidden><a class="btn" href="#prog3" id="ppaVersProg">✍ Écrire mon programme à deux seuils</a></p>
+        <p class="ppa-tache" id="ppaTache" hidden><a class="btn" href="#atelier" id="ppaVersProg">🖥 Aller à l'atelier, juste en dessous</a></p>
         <div class="ppa-nav" data-lpp="controles">
           <button type="button" class="btn ghost" data-lpp="prec">◀ Précédent</button>
           <span class="ppa-compte" data-lpp="compte">Étape 1 / 9</span>
@@ -2063,63 +2144,228 @@ heure = <span class="num">8</span>
       </details>
       </details>
 
-      <h4>c) Corriger</h4>
-      <label for="prog3" style="display:block">Écris le programme à <b>deux seuils</b>. Attention au cas du milieu : entre 35 et 45, que doit-il se passer ?</label>
-      <textarea id="prog3" style="min-height:120px" placeholder="SEUIL_BAS = 35&#10;SEUIL_HAUT = 45&#10;SI …"></textarea>
+      <h4>c) Corriger — dans l'atelier, juste en dessous</h4>
+      <p>L'atelier <b>est</b> ta zone de réponse : tu y construis le programme à <b>deux seuils</b> avec des blocs, tu lis son Python, et tu l'exécutes sur la mesure qui tremble. <b>Attention au cas du milieu</b> : entre les deux seuils, que doit-il se passer ?</p>
+      <!-- atelier du programme : début — activité 5 c et d (31/10/2026). Les blocs (Variables, Logique, actions) écrivent
+           le Python ; le programme s'exécute sur la même suite que le banc (TREMBLEMENT, une seule source) et sur une
+           matinée figée (MATINEE). Le programme est sauvegardé par les champs at_* (mécanisme save de la page) ; le Python
+           est la valeur de prog3, que lisent CHECKS[5] et les bancs. Sans JavaScript et à l'impression : la fiche. -->
+      <div class="atelier" id="atelier" role="region" aria-labelledby="atTitre" tabindex="-1">
+        <p class="at-titre" id="atTitre">🖥 L'atelier du programme — ici même, sans rien installer</p>
+        <div class="atelier-ecran pp-ecran" id="atEcran" hidden>
+          <p class="at-intro">Comme dans Vittascience, en mode mixte : les <b>blocs</b> à gauche, le <b>Python</b> à droite, la <b>console</b> en bas. Tout se fait au clavier : Tab pour passer d'un champ à l'autre, les flèches pour choisir. Rien n'est envoyé sur le réseau.</p>
+          <p class="at-quel" id="atQuel">Programme affiché : <b>le programme de départ</b>, celui de la trace.</p>
+          <div class="at-haut">
+            <div class="at-blocs" role="group" aria-labelledby="atBlocsTitre">
+              <p class="at-etiq" id="atBlocsTitre">🧩 Les blocs</p>
+              <div class="at-outils">
+                <button type="button" class="btn small ghost" id="atDepart">↺ Revenir au programme de départ</button>
+                <button type="button" class="btn small ghost" id="atStructure">🪜 Me donner la structure</button>
+                <button type="button" class="btn small ghost" id="atAnnuler" hidden>↶ Remettre mon programme</button>
+              </div>
+              <div class="at-bloc at-var" role="group" aria-label="Bloc Variables : les réglages">
+                <span class="at-cat">Variables</span>
+                <div class="at-ligne">
+                  <span class="at-mot">réglages :</span>
+                  <select id="at_n" class="at-champ" aria-label="Réglages — combien de seuils">
+                    <option value="1" selected>un seul seuil</option>
+                    <option value="2">deux seuils</option>
+                  </select>
+                </div>
+                <div class="at-ligne" id="atR1"><span class="at-pilule at-pv">SEUIL</span> <span class="at-mot">=</span> <input type="number" id="at_s" class="at-champ at-nombre" min="0" max="100" step="1" value="40" aria-label="Réglage — valeur de SEUIL"></div>
+                <div class="at-ligne" id="atR2" hidden><span class="at-pilule at-pv">SEUIL_BAS</span> <span class="at-mot">=</span> <input type="number" id="at_sb" class="at-champ at-nombre" min="0" max="100" step="1" value="" aria-label="Réglage — valeur de SEUIL_BAS"></div>
+                <div class="at-ligne" id="atR3" hidden><span class="at-pilule at-pv">SEUIL_HAUT</span> <span class="at-mot">=</span> <input type="number" id="at_sh" class="at-champ at-nombre" min="0" max="100" step="1" value="" aria-label="Réglage — valeur de SEUIL_HAUT"></div>
+              </div>
+              <div class="at-bloc at-var" role="group" aria-label="Bloc Variables : la mesure (donné)">
+                <span class="at-cat">Variables</span>
+                <div class="at-ligne"><span class="at-mot">lire l'humidité du sol</span> <span class="at-mot" aria-hidden="true">→</span> <span class="at-pilule at-pv">H</span> <span style="font-size:.85em;opacity:.9">(donné)</span></div>
+              </div>
+              <div class="at-bloc at-log" role="group" aria-label="Bloc Logique : la décision">
+                <span class="at-cat">Logique</span>
+                <div class="at-branche" id="atB1">
+                  <div class="at-ligne">
+                    <span class="at-mot at-kw">SI</span> <span class="at-pilule at-pv">H</span>
+                    <select id="at_b1_cmp" class="at-champ" aria-label="Branche 1 (SI) — comparaison"><option value="">—</option><option value="&lt;" selected>&lt;</option><option value="&gt;">&gt;</option><option value="&lt;=">≤</option><option value="&gt;=">≥</option></select>
+                    <select id="at_b1_ref" class="at-champ" aria-label="Branche 1 (SI) — comparé à"><option value="">— choisir —</option><option value="SEUIL" selected>SEUIL</option><option value="SEUIL_BAS">SEUIL_BAS</option><option value="SEUIL_HAUT">SEUIL_HAUT</option><option value="nombre">un nombre</option></select>
+                    <input type="number" id="at_b1_num" class="at-champ at-nombre" min="0" max="100" step="1" value="" aria-label="Branche 1 (SI) — le nombre" hidden>
+                    <span class="at-mot at-kw">ALORS</span>
+                  </div>
+                  <div class="at-ligne at-action"><span class="at-cat">Action</span>
+                    <select id="at_b1_act" class="at-champ" aria-label="Branche 1 (SI) — action"><option value="">— choisir —</option><option value="on" selected>allumer la pompe</option><option value="off">éteindre la pompe</option><option value="rien">ne rien changer</option></select>
+                  </div>
+                </div>
+                <div class="at-branche" id="atB2" hidden>
+                  <div class="at-ligne">
+                    <span class="at-mot at-kw">SINON SI</span> <span class="at-pilule at-pv">H</span>
+                    <select id="at_b2_cmp" class="at-champ" aria-label="Branche 2 (SINON SI) — comparaison"><option value="" selected>—</option><option value="&lt;">&lt;</option><option value="&gt;">&gt;</option><option value="&lt;=">≤</option><option value="&gt;=">≥</option></select>
+                    <select id="at_b2_ref" class="at-champ" aria-label="Branche 2 (SINON SI) — comparé à"><option value="" selected>— choisir —</option><option value="SEUIL">SEUIL</option><option value="SEUIL_BAS">SEUIL_BAS</option><option value="SEUIL_HAUT">SEUIL_HAUT</option><option value="nombre">un nombre</option></select>
+                    <input type="number" id="at_b2_num" class="at-champ at-nombre" min="0" max="100" step="1" value="" aria-label="Branche 2 (SINON SI) — le nombre" hidden>
+                    <span class="at-mot at-kw">ALORS</span>
+                  </div>
+                  <div class="at-ligne at-action"><span class="at-cat">Action</span>
+                    <select id="at_b2_act" class="at-champ" aria-label="Branche 2 (SINON SI) — action"><option value="" selected>— choisir —</option><option value="on">allumer la pompe</option><option value="off">éteindre la pompe</option><option value="rien">ne rien changer</option></select>
+                  </div>
+                  <button type="button" class="btn small ghost at-retirer" data-retirer="2" aria-label="Retirer la branche 2 (SINON SI)">✕ retirer ce SINON SI</button>
+                </div>
+                <div class="at-branche" id="atB3" hidden>
+                  <div class="at-ligne">
+                    <span class="at-mot at-kw">SINON SI</span> <span class="at-pilule at-pv">H</span>
+                    <select id="at_b3_cmp" class="at-champ" aria-label="Branche 3 (SINON SI) — comparaison"><option value="" selected>—</option><option value="&lt;">&lt;</option><option value="&gt;">&gt;</option><option value="&lt;=">≤</option><option value="&gt;=">≥</option></select>
+                    <select id="at_b3_ref" class="at-champ" aria-label="Branche 3 (SINON SI) — comparé à"><option value="" selected>— choisir —</option><option value="SEUIL">SEUIL</option><option value="SEUIL_BAS">SEUIL_BAS</option><option value="SEUIL_HAUT">SEUIL_HAUT</option><option value="nombre">un nombre</option></select>
+                    <input type="number" id="at_b3_num" class="at-champ at-nombre" min="0" max="100" step="1" value="" aria-label="Branche 3 (SINON SI) — le nombre" hidden>
+                    <span class="at-mot at-kw">ALORS</span>
+                  </div>
+                  <div class="at-ligne at-action"><span class="at-cat">Action</span>
+                    <select id="at_b3_act" class="at-champ" aria-label="Branche 3 (SINON SI) — action"><option value="" selected>— choisir —</option><option value="on">allumer la pompe</option><option value="off">éteindre la pompe</option><option value="rien">ne rien changer</option></select>
+                  </div>
+                  <button type="button" class="btn small ghost at-retirer" data-retirer="3" aria-label="Retirer la branche 3 (SINON SI)">✕ retirer ce SINON SI</button>
+                </div>
+                <div class="at-branche" id="atSinon">
+                  <div class="at-ligne"><span class="at-mot at-kw">SINON</span></div>
+                  <div class="at-ligne at-action"><span class="at-cat">Action</span>
+                    <select id="at_sinon_act" class="at-champ" aria-label="SINON — action"><option value="">— choisir —</option><option value="on">allumer la pompe</option><option value="off" selected>éteindre la pompe</option><option value="rien">ne rien changer</option></select>
+                  </div>
+                  <button type="button" class="btn small ghost at-retirer" data-retirer="sinon" aria-label="Retirer la branche SINON">✕ retirer le SINON</button>
+                </div>
+                <div class="at-ajouts">
+                  <button type="button" class="btn small" id="atPlusSinonSi">+ SINON SI</button>
+                  <button type="button" class="btn small" id="atPlusSinon">+ SINON</button>
+                </div>
+              </div>
+              <p class="at-manque" id="atManque" aria-live="polite"></p>
+            </div>
+            <div class="at-python">
+              <p class="at-etiq" id="atPyTitre">🐍 Le Python — il s'écrit tout seul, à chaque bloc changé (lecture seule)</p>
+              <div class="py at-py" id="atPy" role="region" aria-labelledby="atPyTitre" tabindex="0"></div>
+            </div>
+          </div>
+          <div class="at-bas">
+            <p class="at-etiq">▶ Exécuter — la console et le chronogramme</p>
+            <div class="at-essais" role="group" aria-label="Choisir l'essai">
+              <button type="button" class="btn ghost at-essai" data-essai="tremblement" aria-pressed="true">🌫 Le tremblement</button>
+              <button type="button" class="btn ghost at-essai" data-essai="matinee" aria-pressed="false">🌱 Une vraie matinée</button>
+            </div>
+            <p class="at-essai-dit" id="atEssaiDit"></p>
+            <div class="at-cmd">
+              <button type="button" class="btn" id="atLancer">▶ Exécuter sur le tremblement</button>
+              <button type="button" class="btn ghost" id="atPas">⏭ Pas à pas</button>
+              <button type="button" class="btn ghost" id="atFin">⏩ Jusqu'à la fin</button>
+            </div>
+            <p class="at-calme" id="atCalme" hidden>Mouvement réduit : la page avance d'une mesure à chaque clic.</p>
+            <div class="at-etat">
+              <span><span class="pompe-sim" id="atPompe"></span> <b id="atPompeTxt">POMPE OFF</b></span>
+              <span id="atMesure">Mesure — / 12</span>
+              <span>Basculements : <b class="compteur-bascule" id="atCompteur">0</b></span>
+            </div>
+            <svg class="at-chrono" id="atChrono" aria-hidden="true" focusable="false" data-loupe="non" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif"></svg>
+            <p class="at-legende" id="atLegende">En haut, l'humidité mesurée H, point par point ; en pointillés jaunes, les seuils de ton programme ; en gris, la bande morte entre SEUIL_BAS et SEUIL_HAUT. En bas, la pompe : ON ou OFF.</p>
+            <p class="at-etiq" id="atConsoleTitre">Console — ce que le programme fait, mesure après mesure</p>
+            <div class="at-console" id="atConsole" role="log" aria-live="off" aria-labelledby="atConsoleTitre" tabindex="0"><span class="at-c-vide">Choisis un essai, puis ▶ Exécuter.</span></div>
+            <p class="at-bilan" id="atBilan" role="status" aria-live="polite"></p>
+            <p class="at-sr" id="atAnnonce" role="status" aria-live="polite"></p>
+          </div>
+          <ul class="verrous-banc" aria-label="Ce que l'atelier a tracé">
+            <li id="v-clign">☐ J'ai exécuté le programme de départ sur le tremblement : la pompe s'affole</li>
+            <li id="v-hyst">☐ J'ai exécuté mon programme sur le même tremblement : elle ne s'affole plus</li>
+          </ul>
+          <div class="at-ancien" id="atAncien" hidden><b>Ce que tu avais écrit à la main, avant l'atelier :</b><pre id="atAncienTxt"></pre>Reconstruis-le avec les blocs : c'est le programme des blocs que la page exécute et vérifie.</div>
+          <textarea id="prog3" hidden readonly aria-label="Le programme en Python, écrit par l'atelier"></textarea>
+          <input type="hidden" id="at_b2_on" value="">
+          <input type="hidden" id="at_b3_on" value="">
+          <input type="hidden" id="at_sinon_on" value="1">
+          <input type="hidden" id="at_res_t" value="">
+          <input type="hidden" id="at_res_m" value="">
+          <input type="hidden" id="at_ancien" value="">
+          <input type="hidden" id="at_res_sig" value="">
+        </div>
+        <div class="atelier-fiche" id="atFiche">
+          <p class="at-f-note" id="atFicheNote">🖥 À l'écran, l'atelier construit le programme en blocs et l'exécute sur la mesure qui tremble. Sur papier, ou si l'atelier ne s'affiche pas, écris ton programme ici.</p>
+          <div id="atFicheProg">
+            <p class="at-f-ligne"><b>Mon programme à deux seuils</b></p>
+            <p class="at-f-ligne">Réglages : SEUIL_BAS = <span class="at-blanc court"></span> ; SEUIL_HAUT = <span class="at-blanc court"></span></p>
+            <p class="at-f-ligne">lire l'humidité du sol → H</p>
+            <p class="at-f-ligne">SI H <span class="at-blanc court"></span> <span class="at-blanc"></span> ALORS <span class="at-blanc long"></span></p>
+            <p class="at-f-ligne">SINON SI H <span class="at-blanc court"></span> <span class="at-blanc"></span> ALORS <span class="at-blanc long"></span></p>
+            <p class="at-f-ligne">SINON <span class="at-blanc long"></span></p>
+          </div>
+        </div>
+      </div>
+      <!-- atelier du programme : fin -->
       <details class="etayage">
-        <summary>🪜 Version étayée — un squelette à compléter</summary>
-        <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre.</p>
-        <div class="py">SEUIL_BAS = ____
-SEUIL_HAUT = ____
-lire humidité → H
-SI H &lt; SEUIL_BAS ALORS
-    ____ la pompe
-SINON SI H &gt; SEUIL_HAUT ALORS
-    ____ la pompe
-<span class="cmt"># et entre les deux ? ____________________</span>
-FIN SI</div>
+        <summary>🪜 Version étayée — la structure posée pour toi</summary>
+        <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre. Dans l'atelier, le bouton <b>🪜 Me donner la structure</b> pose les trois branches vides : SI, SINON SI, SINON. Il ne met <b>ni les valeurs, ni les comparaisons, ni les actions</b> : c'est à toi de les choisir.</p>
       </details>
       <div class="assoc"><label for="a5_q4">Entre 35 et 45, que doit faire le programme ?</label><select id="a5_q4"><option value="">— choisir —</option><option>éteindre la pompe, par sécurité</option><option>allumer la pompe, car on est sous 45</option><option>RIEN : la pompe garde son état</option><option>alterner : allumer une fois sur deux</option></select></div>
       <div class="assoc"><label for="a5_q5">Que faut-il au programme pour « garder l'état précédent » ?</label><select id="a5_q5"><option value="">— choisir —</option><option>un troisième seuil, au milieu de la bande</option><option>une mémoire : une variable qui retient l'état</option><option>un capteur supplémentaire, dans la terre</option><option>rien de plus : cela se fait tout seul</option></select></div>
 
-      <h4>d) Prouver au banc</h4>
-      <p>Le banc d'essai, en haut de page, applique la règle que tu choisis. Fais la démonstration en deux temps, et note ce que tu obtiens.</p>
+      <h4>d) Prouver — le même tremblement, deux programmes</h4>
+      <p>Dans l'atelier, avec l'essai <b>🌫 Le tremblement</b> (les 12 mesures du banc d'essai, à 8 h) : fais la démonstration en deux temps, et note toi-même ce que tu obtiens.</p>
       <ol style="font-size:.95em">
-        <li>Mode <b>UN seuil</b> → clique sur <b>🌫 Faire trembler la mesure autour de 40</b> → relève le compteur de basculements.</li>
-        <li>Mode <b>DEUX seuils</b> → remets le compteur à zéro → <b>le même</b> tremblement → relève le compteur.</li>
+        <li>Le <b>programme de départ</b> (bouton ↺ s'il le faut) → <b>▶ Exécuter sur le tremblement</b> → relève le compteur de basculements.</li>
+        <li><b>Ton</b> programme à deux seuils → <b>le même</b> tremblement → relève le compteur. Puis, pour voir ce que le tremblement ne montre pas, exécute-le sur <b>🌱 Une vraie matinée</b>.</li>
       </ol>
-      <div class="assoc" style="max-width:420px"><label for="a5_n1">Basculements avec UN seuil :</label><input type="number" id="a5_n1" min="0" max="99" placeholder="nombre"></div>
-      <div class="assoc" style="max-width:420px"><label for="a5_n2">Basculements avec DEUX seuils, même mesure :</label><input type="number" id="a5_n2" min="0" max="99" placeholder="nombre"></div>
+      <div class="assoc" style="max-width:460px"><label for="a5_n1">Basculements du programme de départ, sur le tremblement :</label><input type="number" id="a5_n1" min="0" max="99" placeholder="nombre"></div>
+      <div class="assoc" style="max-width:460px"><label for="a5_n2">Basculements de ton programme, sur le même tremblement :</label><input type="number" id="a5_n2" min="0" max="99" placeholder="nombre"></div>
       <button class="btn small" data-check="5" style="margin-top:8px">✔ Vérifier ma mise au point (et ma démonstration au banc)</button>
       <div class="feedback" id="fb5" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Regarde la trace colonne par colonne : l'heure avance de 10 s, H oscille de 39 à 41, et la pompe suit. Demande-toi ce qu'un relais mécanique subit à ce rythme-là. Pour c) : la structure a <b>trois</b> cas, pas deux — et le troisième est celui où l'on ne fait rien.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Un relais est un contact <b>mécanique</b> : il claque. Six claquements par minute, c'est plusieurs milliers par jour — et un relais a une durée de vie qui se compte en nombre de manœuvres, pas en années. Côté plante, l'eau arrive par à-coups de deux secondes : elle mouille la surface et ne descend jamais aux racines. Pour le code : <code>si H &lt; 35 → ON</code> ; <code>sinon si H &gt; 45 → OFF</code> ; <code>sinon → on ne touche à rien</code>. Ce « rien » n'est possible que si le programme <b>se souvient</b> de l'état de la pompe.</p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Regarde la trace colonne par colonne : l'heure avance de 10 s, H oscille de 39 à 41, et la pompe suit. Demande-toi ce qu'un relais mécanique subit à ce rythme-là. Pour c) : dans l'atelier, exécute d'abord le programme de départ et suis le chronogramme — à quelles mesures la pompe bascule-t-elle ? Puis passe les réglages à <b>deux seuils</b> : la structure a <b>trois</b> cas, pas deux, et le troisième est celui où l'on ne fait rien.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Un relais est un contact <b>mécanique</b> : il claque. Six claquements par minute, c'est plusieurs milliers par jour — et un relais a une durée de vie qui se compte en nombre de manœuvres, pas en années. Côté plante, l'eau arrive par à-coups de deux secondes : elle mouille la surface et ne descend jamais aux racines.</p>
+      <p><b>Dans l'atelier :</b> <code>SI H &lt; SEUIL_BAS ALORS allumer la pompe</code> ; « + SINON SI » : <code>H &gt; SEUIL_HAUT ALORS éteindre la pompe</code> ; et pour le reste, <code>ne rien changer</code> (ou pas de SINON du tout). Ce « rien » n'est possible que si le programme <b>se souvient</b> de l'état de la pompe : regarde, dans le Python, la ligne <code>pompe_allumee = False</code> écrite avant la boucle. Puis la vraie matinée : la pompe doit s'allumer une fois, rester allumée pendant que le sol remonte dans la bande grise, et s'éteindre une fois.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
       <p><b>a) Q1 :</b> <b>6 basculements</b> pour 2 points d'humidité. </p>
       <p><b>Q2 :</b> le programme est <b>parfaitement juste</b> — chaque ligne applique exactement la règle. C'est la <b>règle</b> qui est mal choisie. C'est le point le plus important de la séance : <i>un programme peut être juste et inutilisable</i>. </p>
       <p><b>Q3 :</b> le tremblement vient du <b>capteur réel</b> : aucune mesure physique n'est parfaitement stable, et près d'un seuil ce tremblement suffit à faire changer la décision.</p>
       <p><b>Diagnostic attendu :</b> le relais est un contact mécanique qui s'use à chaque manœuvre ; à ce rythme il rendra l'âme en quelques semaines. La pompe démarre et s'arrête sans cesse, ce qui la fatigue et consomme des pointes de courant. Et la plante reçoit l'eau par à-coups de deux secondes : la surface est mouillée, les racines ne voient rien. <b>Trois problèmes concrets, aucun n'est un bug.</b></p>
-      <p><b>c) Correction attendue :</b></p>
+      <p><b>c) Correction attendue, en blocs :</b></p>
+      <ul>
+        <li><b>Variables</b> — réglages : deux seuils, <code>SEUIL_BAS = 35</code> et <code>SEUIL_HAUT = 45</code>.</li>
+        <li><b>Variables</b> — lire l'humidité du sol → <code>H</code>.</li>
+        <li><b>Logique</b> — <code>SI H &lt; SEUIL_BAS ALORS</code> allumer la pompe <span class="cmt">(vraiment sec : on arrose)</span>.</li>
+        <li><b>Logique</b> — <code>SINON SI H &gt; SEUIL_HAUT ALORS</code> éteindre la pompe <span class="cmt">(vraiment humide : on arrête)</span>.</li>
+        <li><b>Logique</b> — <code>SINON</code> ne rien changer. Sans SINON du tout, c'est le même programme : entre 35 et 45, aucune instruction ne touche à la pompe.</li>
+      </ul>
+      <p><b>Et le Python que l'atelier en écrit :</b></p>
       <div class="py">SEUIL_BAS = <span class="num">35</span>
 SEUIL_HAUT = <span class="num">45</span>
-lire humidité → H
-SI H &lt; SEUIL_BAS ALORS
-    allumer pompe        <span class="cmt"># vraiment sec : on arrose</span>
-SINON SI H &gt; SEUIL_HAUT ALORS
-    éteindre pompe       <span class="cmt"># vraiment humide : on arrête</span>
-<span class="cmt"># entre 35 et 45 : AUCUNE instruction — la pompe garde son état</span>
-FIN SI</div>
-      <p><b>Q4 :</b> entre les deux seuils, on ne fait <b>rien</b> — et c'est précisément ce « rien » qui calme la pompe. </p>
-      <p><b>Q5 :</b> pour garder un état, il faut une <b>mémoire</b> : une variable qui retient si la pompe est allumée. Sans elle, le programme repartirait de zéro à chaque tour et ne saurait pas quoi « garder ».</p>
-      <p><b>d) Au banc :</b> le même tremblement donne <b>plusieurs</b> basculements avec un seuil, <b>zéro ou un</b> avec deux. La mesure n'a pas changé d'un point — c'est la règle de décision qui a changé.</p>
-      <p><b>Et le prix à payer ?</b> Regarde bien le banc en mode DEUX seuils : à 39 % d'humidité, la pompe <b>ne s'allume pas</b>. Elle attendra que la terre descende sous 35. Autrement dit, l'hystérésis a calmé la pompe en acceptant de <b>réagir plus tard</b>. C'est un échange, pas un progrès gratuit : on gagne en stabilité ce qu'on perd en réactivité. Tout l'art est de choisir la largeur de bande qui rend cet échange acceptable — et cela dépend de la plante, pas du programme.</p>
-      <p><b>Méthode :</b> mettre au point, c'est une boucle en quatre temps : <b>observer</b> l'écart (la trace), <b>expliquer</b> sa cause (le tremblement près du seuil), <b>corriger</b> (la bande morte), <b>re-tester dans les mêmes conditions</b>. Le dernier temps est celui qu'on saute le plus souvent — et sans lui, on ne sait pas si on a corrigé ou si on a eu de la chance.</p>
-      <p><b>Limite :</b> l'hystérésis calme la pompe, mais ne règle pas tout. Si le capteur se met à renvoyer n'importe quoi, la bande morte n'y peut rien : elle lisse une mesure qui tremble, elle ne répare pas une mesure fausse.</p>
+<span class="cmt"># la mémoire : la pompe est-elle allumée ?</span>
+pompe_allumee = <span class="kw">False</span>
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    H = <span class="fn">lire_humidite</span>()
+    <span class="kw">if</span> H &lt; SEUIL_BAS:
+        pompe_allumee = <span class="kw">True</span>
+    <span class="kw">elif</span> H &gt; SEUIL_HAUT:
+        pompe_allumee = <span class="kw">False</span>
+    <span class="kw">else</span>:
+        <span class="kw">pass</span>   <span class="cmt"># rien : la pompe garde son état</span>
+    <span class="fn">commander_relais</span>(pompe_allumee)</div>
+      <p><b>Q4 :</b> entre les deux seuils, on ne fait <b>rien</b> — et c'est précisément ce « rien » qui calme la pompe. Dans le Python, c'est le <code>pass</code>. </p>
+      <p><b>Q5 :</b> pour garder un état, il faut une <b>mémoire</b> : une variable qui retient si la pompe est allumée. Ici, c'est <code>pompe_allumee</code>, posée à <code>False</code> une seule fois, avant la boucle : à chaque tour, le <code>pass</code> la laisse telle qu'elle était. Sans elle, le programme repartirait de zéro à chaque tour et ne saurait pas quoi « garder ».</p>
+      <p><b>d) Ce que montre l'atelier, sur les deux essais :</b></p>
+      <table>
+        <thead><tr><th>Programme</th><th>🌫 Le tremblement (12 mesures, 2 min)</th><th>🌱 La vraie matinée (30 mesures, 2 h 30)</th></tr></thead>
+        <tbody>
+          <tr><td>Programme de départ : un seul seuil, 40</td><td><b>8 basculements</b> : la pompe s'affole.</td><td><b>20 basculements</b> : la pompe bat autour de 40.</td></tr>
+          <tr><td>Ton programme : 35 et 45, « ne rien changer » au milieu</td><td><b>0 basculement</b> : toutes les mesures sont dans la bande morte, la pompe reste éteinte.</td><td><b>2 basculements</b> : allumée à la mesure 11 (H = 33 %), éteinte à la mesure 24 (H = 48 %).</td></tr>
+        </tbody>
+      </table>
+      <p><b>La mesure n'a pas changé d'un point</b> entre les deux programmes : c'est la règle de décision qui a changé. Sur la matinée, regarde ce que fait le bon programme une fois la pompe allumée : la mesure remonte <b>en tremblant</b> (35, 34, 38, 37, 41, 40…) et la pompe reste allumée ; à 45 pile, trois fois de suite, elle reste allumée — <code>45 &gt; 45</code> est faux ; elle s'éteint à 48.</p>
+      <p><b>Pourquoi chacun des programmes faux échoue :</b></p>
+      <ul>
+        <li><b>Un seul seuil</b> (le programme de départ) : chaque tremblement autour de 40 change la décision. 8 basculements sur le tremblement, 20 sur la matinée.</li>
+        <li><b>Deux seuils, mais « SINON éteindre »</b> : il passe le tremblement (0 basculement : la pompe est éteinte et y reste). La matinée montre le défaut : allumée sous 35, la pompe s'éteint dès que la mesure rentre dans la bande. Le sol ne remonte jamais au-dessus de 37 %, il n'atteint jamais 45, et la pompe bat : 16 basculements. Le « SINON éteindre » a supprimé la bande morte : c'est un seuil unique à 35.</li>
+        <li><b>Les seuils inversés</b> (<code>SI H &gt; SEUIL_BAS ALORS allumer</code>, <code>SINON SI H &lt; SEUIL_HAUT ALORS éteindre</code>) : 1 seul basculement sur le tremblement, mais c'est la pompe qui s'allume dès la première mesure, à 41 %, et ne s'arrête plus. Sur la matinée, elle tourne du début à la fin sur un sol à 44 %, puis 50, puis 60 : elle arrose un sol mouillé, jusqu'à ce qu'il ne puisse plus boire.</li>
+        <li><b>Les bornes croisées</b> (<code>SI H &lt; SEUIL_HAUT ALORS allumer</code>, <code>SINON SI H &gt; SEUIL_BAS ALORS éteindre</code>) : 1 basculement sur le tremblement (allumée dès 41 %, au milieu de la bande). Sur la matinée, c'est un seuil unique à 45 : la pompe bat autour de 45, 24 basculements. La branche SINON SI ne décide jamais rien d'autre : quand H n'est pas sous 45, il est forcément au-dessus de 35.</li>
+      </ul>
+      <p><b>La leçon de ces quatre essais :</b> trois programmes faux sur quatre passent le tremblement — 0 ou 1 basculement. Un essai qui ne montre qu'une situation peut passer au vert sur un programme faux, exactement comme le jeu d'essais sans frontière de l'activité 4. C'est pour cela qu'on re-teste aussi sur une situation complète.</p>
+      <p><b>Et le prix à payer ?</b> Regarde la vraie matinée avec le bon programme : aux mesures 6 à 10, l'humidité est à 38, 39, 37, 35 puis 36 % — sous l'ancien seuil de 40 — et la pompe <b>ne s'allume pas</b>. Elle attend 33 %. Autrement dit, l'hystérésis a calmé la pompe en acceptant de <b>réagir plus tard</b>. C'est un échange, pas un progrès gratuit : on gagne en stabilité ce qu'on perd en réactivité. Tout l'art est de choisir la largeur de bande qui rend cet échange acceptable — et cela dépend de la plante, pas du programme.</p>
+      <p><b>Méthode :</b> mettre au point, c'est une boucle en quatre temps : <b>observer</b> l'écart (la trace), <b>expliquer</b> sa cause (le tremblement près du seuil), <b>corriger</b> (la bande morte), <b>re-tester dans les mêmes conditions</b> — ici, le même tremblement, puis une matinée complète. Le dernier temps est celui qu'on saute le plus souvent — et sans lui, on ne sait pas si on a corrigé ou si on a eu de la chance.</p>
+      <p><b>Limite :</b> l'hystérésis calme la pompe, mais ne règle pas tout. Si le capteur se met à renvoyer n'importe quoi, la bande morte n'y peut rien : elle lisse une mesure qui tremble, elle ne répare pas une mesure fausse. Et la matinée de l'atelier est une simulation : un vrai sol sèche plus ou moins vite selon le soleil et le vent.</p>
     </details>
-    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> chercher un bug dans le code alors qu'il n'y en a pas ; écrire <code>SINON éteindre</code> à la place du troisième cas, ce qui supprime la bande morte, et la pompe s'affole de nouveau ; inverser les seuils (allumer à 45, éteindre à 35) — le système devient alors instable au lieu de se calmer ; corriger sans re-tester.</div>
-    <div class="retenir"><b>📌 À retenir :</b> <b>mettre au point</b> = observer l'écart, en trouver la cause, corriger, <b>re-tester dans les mêmes conditions</b>. Un programme peut être <b>juste et inutilisable</b> : la pompe qui s'affole n'est pas un bug, c'est une règle mal choisie. L'<b>hystérésis</b> (deux seuils et une bande morte) stabilise une décision près d'une frontière — au prix d'une mémoire de l'état.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> 5 réponses justes sur 5, un diagnostic qui nomme au moins deux conséquences concrètes, un programme à trois cas dont le cas « ne rien faire », et la démonstration au banc : ✔ pompe affolée, ✔ pompe calmée.</div>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> chercher un bug dans le code alors qu'il n'y en a pas ; écrire <code>SINON éteindre</code> à la place du troisième cas, ce qui supprime la bande morte — le tremblement ne le montre pas, la vraie matinée si ; inverser les seuils (allumer à 45, éteindre à 35) — le système devient alors instable au lieu de se calmer ; croire le programme juste parce qu'il passe le tremblement ; corriger sans re-tester.</div>
+    <div class="retenir"><b>📌 À retenir :</b> <b>mettre au point</b> = observer l'écart, en trouver la cause, corriger, <b>re-tester dans les mêmes conditions</b> — on exécute l'ancien et le nouveau programme sur la même mesure. Un programme peut être <b>juste et inutilisable</b> : la pompe qui s'affole n'est pas un bug, c'est une règle mal choisie. L'<b>hystérésis</b> (deux seuils et une bande morte) stabilise une décision près d'une frontière — au prix d'une mémoire de l'état.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 5 réponses justes sur 5, un diagnostic qui nomme au moins deux conséquences concrètes, un programme construit dans l'atelier qui passe ses <b>deux essais</b> (au plus un basculement sur le tremblement ; sur la vraie matinée, la pompe s'allume quand le sol sèche, reste allumée dans la bande et s'éteint une fois le sol humide), les deux compteurs relevés, et la démonstration dans l'atelier : ✔ programme de départ affolé, ✔ ton programme calme, sur le même tremblement.</div>
   </div>
 
   <div class="activite" id="act6">
@@ -2419,8 +2665,8 @@ function majVerrous(){
     "v-varie":  [!!e.varie,   "J'ai fait varier l'humidité et observé la pompe"],
     "v-plage":  [!!e.plage,   "J'ai vérifié qu'à sol sec mais HORS plage horaire, la pompe reste éteinte"],
     "v-front":  [!!(e.front39 && e.front40), "J'ai testé les deux frontières : 39 % et 40 %"],
-    "v-clign":  [!!e.clignote, "J'ai fait s'affoler la pompe (mode UN seuil, mesure qui tremble)"],
-    "v-hyst":   [!!e.hysteres, "J'ai vérifié que les DEUX seuils l'arrêtent, sur la même mesure"]
+    "v-clign":  [!!e.clignote, "J'ai exécuté le programme de départ sur le tremblement : la pompe s'affole"],
+    "v-hyst":   [!!e.hysteres, "J'ai exécuté mon programme sur le même tremblement : elle ne s'affole plus"]
   };
   Object.entries(L).forEach(([id,[fait,lib]])=>{
     const li = $(id); if(!li) return;
@@ -2443,19 +2689,19 @@ if($("btnRAZ")) $("btnRAZ").addEventListener("click", ()=>{
 });
 
 /* Le tremblement : la MÊME suite de valeurs dans les deux modes — c'est ce qui
-   rend la comparaison honnête. On la fige donc au lieu de la tirer au hasard. */
+   rend la comparaison honnête. On la fige donc au lieu de la tirer au hasard.
+   C'est aussi la suite sur laquelle l'atelier de l'activité 5 exécute le programme
+   de l'élève : une seule source pour les deux. Depuis le 31/10/2026, les verrous
+   « pompe affolée » et « pompe calmée » (clignote, hysteres) se cochent dans
+   l'atelier, qui exécute le programme de l'élève, et plus ici. */
 const TREMBLEMENT = [41,39,41,40,39,40,39,41,40,39,41,40];
 if($("btnTrembler")) $("btnTrembler").addEventListener("click", ()=>{
   if(BANC.tremblement) return;
   $("bHeure").value = 8;
   let i = 0;
-  const modeAuDepart = bancMode();
   BANC.tremblement = setInterval(()=>{
     if(i >= TREMBLEMENT.length){
       clearInterval(BANC.tremblement); BANC.tremblement = null;
-      const e = window.__exp;
-      if(modeAuDepart === "un"   && BANC.bascules >= 4) e.clignote = true;
-      if(modeAuDepart === "deux" && BANC.bascules <= 1) e.hysteres = true;
       majVerrous(); save(false);
       return;
     }
@@ -2463,6 +2709,525 @@ if($("btnTrembler")) $("btnTrembler").addEventListener("click", ()=>{
     bancMaj(true);
   }, 220);
 });
+
+/* ══════ L'ATELIER DU PROGRAMME (activité 5 c et d, 31/10/2026) ══════
+   Les blocs (des champs at_*) → un programme P → son Python (affiché, et écrit dans prog3) → son exécution sur deux
+   essais : la console, le chronogramme, et une phrase à la fin de chaque essai. L'atelier ne corrige pas : il montre.
+   Rien ne part sur le réseau ; rien ne se coche au chargement (n°226, n°265) : les verrous clignote et hysteres ne se
+   posent qu'à la fin d'un essai lancé par un clic. */
+
+/* Le second essai : une vraie matinée, écrite une fois, figée (jamais tirée au hasard).
+   Le sol réel part de 44 % ; à chaque mesure, il perd 1 point (le soleil) et en gagne 2 quand la pompe arrose (+1 net) ;
+   il ne dépasse pas 60 % (gorgé d'eau, il ne boit plus : l'eau ruisselle). Le capteur lit ce sol plus un petit
+   tremblement, figé lui aussi, de −2 à +2 points (un vrai capteur tremble un peu plus quand il fait chaud).
+   Une mesure toutes les 5 minutes : 30 mesures, 2 h 30. Le sol répond à la pompe : c'est ce qui montre qu'un
+   « SINON éteindre » ne laisse jamais le sol atteindre le seuil haut — une suite qui ne répondrait pas le cacherait. */
+const MATINEE = {
+  depart: 44, seche: 1, arrose: 2, sature: 60, minutes: 5,
+  bruit: [ 0, 1,-1, 1, 0,-1, 1, 0,-1, 1,     // mesures 1 à 10 : le sol sèche, de 44 vers 35
+          -1, 0,-2, 1,-1, 2, 0,-1, 1,-2,     // 11 à 20 : il passe sous 35 ; arrosé, il remonte en tremblant dans la bande
+           1, 0,-1, 1, 0,-1, 1, 0,-1, 0]     // 21 à 30 : il dépasse 45, puis sèche de nouveau
+};
+const ESSAIS = {
+  tremblement: {nom: "le tremblement", N: TREMBLEMENT.length, pas: 10, tmax: 120, vmin: 30, vmax: 50, vitesse: 450,
+    dit: "🌫 Le tremblement : les 12 mesures du banc d'essai (à 8 h, entre 39 et 41 %), une toutes les 10 secondes — la même suite que le banc."},
+  matinee: {nom: "la vraie matinée", N: MATINEE.bruit.length, pas: MATINEE.minutes, tmax: 150, vmin: 25, vmax: 65, vitesse: 260,
+    dit: "🌱 Une vraie matinée : 30 mesures, une toutes les 5 minutes (2 h 30). Le sol sèche au soleil ; quand la pompe arrose, il remonte. Le capteur tremble un peu."}
+};
+const AT_CHAMPS = ["at_n","at_s","at_sb","at_sh",
+  "at_b1_cmp","at_b1_ref","at_b1_num","at_b1_act",
+  "at_b2_on","at_b2_cmp","at_b2_ref","at_b2_num","at_b2_act",
+  "at_b3_on","at_b3_cmp","at_b3_ref","at_b3_num","at_b3_act",
+  "at_sinon_on","at_sinon_act"];
+const AT_DEPART = {at_n:"1", at_s:"40", at_sb:"", at_sh:"",
+  at_b1_cmp:"<", at_b1_ref:"SEUIL", at_b1_num:"", at_b1_act:"on",
+  at_b2_on:"", at_b2_cmp:"", at_b2_ref:"", at_b2_num:"", at_b2_act:"",
+  at_b3_on:"", at_b3_cmp:"", at_b3_ref:"", at_b3_num:"", at_b3_act:"",
+  at_sinon_on:"1", at_sinon_act:"off"};
+/* « Me donner la structure » : les trois branches, vides — ni valeurs, ni comparaisons, ni actions */
+const AT_STRUCTURE = Object.assign({}, AT_DEPART, {at_n:"2", at_s:"", at_b1_cmp:"", at_b1_ref:"", at_b1_act:"",
+  at_b2_on:"1", at_sinon_on:"1", at_sinon_act:""});
+const AT_OPS = {"<": (a, b) => a < b, ">": (a, b) => a > b, "<=": (a, b) => a <= b, ">=": (a, b) => a >= b};
+const AT_SIGNE = {"<": "<", ">": ">", "<=": "≤", ">=": "≥"};
+const AT_ACT = {on: "allumer la pompe", off: "éteindre la pompe", rien: "ne rien changer"};
+const AT_ACT_CONSOLE = {on: "allumer", off: "éteindre", rien: "rien"};
+const AT = {essai: "tremblement", run: null, i: 0, timer: null, sig: "", P: null, cliche: null};
+const atCalme = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : {matches: false};
+
+function atEsc(s){ return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+function atVal(id){ return $(id) ? $(id).value : ""; }
+function atNombre(id){ const s = atVal(id).trim(); if(s === "") return null; const x = Number(s); return isFinite(x) ? x : NaN; }
+function atValide(x){ return typeof x === "number" && isFinite(x) && x >= 0 && x <= 100; }
+function atFmt(x){ return String(x); }
+function atNomBranche(i){ return "branche " + (i + 1) + (i === 0 ? " (SI)" : " (SINON SI)"); }
+
+/* Le programme tel que le disent les blocs */
+function atLire(){
+  const P = {n: atVal("at_n") === "2" ? 2 : 1, s: atNombre("at_s"), sb: atNombre("at_sb"), sh: atNombre("at_sh"), br: [], sinon: null};
+  for(let k = 1; k <= 3; k++){
+    if(k > 1 && atVal("at_b" + k + "_on") !== "1") break;
+    P.br.push({cmp: atVal("at_b" + k + "_cmp"), ref: atVal("at_b" + k + "_ref"), num: atNombre("at_b" + k + "_num"), act: atVal("at_b" + k + "_act")});
+  }
+  if(atVal("at_sinon_on") === "1") P.sinon = atVal("at_sinon_act");
+  return P;
+}
+function atSignature(P){
+  return JSON.stringify([P.n, P.n === 1 ? [P.s] : [P.sb, P.sh],
+    P.br.map(b => [b.cmp, b.ref, b.ref === "nombre" ? b.num : null, b.act]), P.sinon]);
+}
+const AT_SIG_DEPART = JSON.stringify([1, [40], [["<", "SEUIL", null, "on"]], "off"]);
+function atValeur(P, ref, num){
+  return ref === "SEUIL" ? P.s : ref === "SEUIL_BAS" ? P.sb : ref === "SEUIL_HAUT" ? P.sh : ref === "nombre" ? num : null;
+}
+/* Ce qui manque pour que le programme puisse s'exécuter (et les champs à montrer) */
+function atManques(P){
+  const m = [], champs = [];
+  const reg = P.n === 1 ? [["SEUIL", P.s, "at_s"]] : [["SEUIL_BAS", P.sb, "at_sb"], ["SEUIL_HAUT", P.sh, "at_sh"]];
+  reg.forEach(([nom, x, id]) => { if(!atValide(x)){ m.push("donne à " + nom + " un nombre de 0 à 100"); champs.push(id); } });
+  P.br.forEach((b, i) => {
+    const k = i + 1, nom = atNomBranche(i);
+    if(!AT_OPS[b.cmp]){ m.push(nom + " : choisis la comparaison"); champs.push("at_b" + k + "_cmp"); }
+    if(!b.ref){ m.push(nom + " : choisis à quoi H est comparé"); champs.push("at_b" + k + "_ref"); }
+    else if(b.ref === "nombre" && !atValide(b.num)){ m.push(nom + " : écris le nombre, de 0 à 100"); champs.push("at_b" + k + "_num"); }
+    if(!AT_ACT[b.act]){ m.push(nom + " : choisis l'action"); champs.push("at_b" + k + "_act"); }
+  });
+  if(P.sinon !== null && !AT_ACT[P.sinon]){ m.push("SINON : choisis l'action"); champs.push("at_sinon_act"); }
+  return {textes: m, champs};
+}
+
+/* Une mesure : le chemin suivi dans le programme, et l'état qui en sort (l'état d'avant, si rien ne le change) */
+function atDecider(P, H, etat){
+  const chemin = [];
+  for(let i = 0; i < P.br.length; i++){
+    const b = P.br[i], oui = AT_OPS[b.cmp](H, atValeur(P, b.ref, b.num));
+    chemin.push({cle: "c" + i, res: oui});
+    if(oui){ chemin.push({cle: "a" + i}); return {etat: b.act === "rien" ? etat : b.act === "on", chemin, act: b.act, ou: i}; }
+  }
+  if(P.sinon !== null){ chemin.push({cle: "ce"}, {cle: "ae"}); return {etat: P.sinon === "rien" ? etat : P.sinon === "on", chemin, act: P.sinon, ou: "sinon"}; }
+  return {etat, chemin, act: null, ou: null};
+}
+/* Un essai entier : la pompe part éteinte (pompe_allumee = False) */
+function atExecuter(P, essai){
+  const E = ESSAIS[essai], hist = [];
+  let etat = false, n = 0, S = MATINEE.depart;
+  for(let i = 0; i < E.N; i++){
+    const H = essai === "tremblement" ? TREMBLEMENT[i] : Math.max(0, Math.min(100, Math.round(S + MATINEE.bruit[i])));
+    const d = atDecider(P, H, etat), bascule = d.etat !== etat;
+    if(bascule) n++;
+    hist.push({i, t: i * E.pas, H, avant: etat, etat: d.etat, bascule, n, chemin: d.chemin, act: d.act, ou: d.ou,
+               sature: essai === "matinee" && S >= MATINEE.sature});
+    etat = d.etat;
+    if(essai === "matinee") S = Math.min(MATINEE.sature, S - MATINEE.seche + (etat ? MATINEE.arrose : 0));
+  }
+  return {essai, hist, n};
+}
+function atAnalyse(r){
+  const h = r.hist, k1 = h.findIndex(x => x.etat && !x.avant);
+  const kOff = k1 < 0 ? -1 : h.findIndex((x, i) => i > k1 && !x.etat && x.avant);
+  const apres = k1 < 0 ? [] : h.slice(k1);
+  return {n: r.n, h, k1, kOff, kb: h.findIndex(x => x.bascule), fin: h[h.length - 1],
+          minH: Math.min.apply(null, h.map(x => x.H)), maxH: Math.max.apply(null, h.map(x => x.H)),
+          maxApres: apres.length ? Math.max.apply(null, apres.map(x => x.H)) : null, sature: h.some(x => x.sature && x.etat)};
+}
+/* Ce que dit l'atelier à la fin d'un essai : ce qu'on a vu, et ce que cela signifie — jamais « juste » ou « faux » */
+function atBilanTexte(essai, a){
+  const pl = n => n + " basculement" + (n > 1 ? "s" : ""), h = a.h, f = a.fin;
+  if(essai === "tremblement"){
+    if(a.n >= 4) return pl(a.n) + " en deux minutes : le relais claque, l'eau n'atteint pas les racines. La pompe s'affole.";
+    if(a.n >= 2) return pl(a.n) + " en deux minutes : la pompe hésite encore à chaque tremblement.";
+    if(a.n === 1) return "1 basculement en deux minutes : la pompe a changé d'état une fois, à la mesure " + (a.kb + 1) + " (H = " + h[a.kb].H +
+      " %), puis n'a plus bougé. À la fin, elle est " + (f.etat ? "allumée, sur une mesure à " + f.H + " %." : "éteinte.");
+    return "0 basculement en deux minutes : la pompe est restée " + (f.etat ? "allumée" : "éteinte") + " du début à la fin ; le tremblement ne la fait pas changer d'état.";
+  }
+  let t = pl(a.n) + " en 2 h 30.";
+  if(a.k1 < 0) return t + " La pompe ne s'est jamais allumée : le sol est descendu jusqu'à " + a.minH + " %.";
+  t += " La pompe s'allume pour la première fois à la mesure " + (a.k1 + 1) + " (H = " + h[a.k1].H + " %).";
+  if(a.n >= 4) return t + " Ensuite, elle bat : éteinte, allumée, éteinte… le relais claque et l'eau arrive par à-coups. Après ce premier arrosage, le sol n'est jamais remonté au-dessus de " + a.maxApres + " %.";
+  if(a.kOff < 0) return t + " Elle ne s'éteint plus : le sol monte jusqu'à " + a.maxH + " %" + (a.sature ? ", gorgé d'eau : il ne peut plus boire, l'eau ruisselle." : ".");
+  return t + " Elle reste allumée " + (a.kOff - a.k1) + " mesures pendant que le sol remonte, puis s'éteint à la mesure " + (a.kOff + 1) +
+    " (H = " + h[a.kOff].H + " %)" + (a.n > 2 ? ", et repart ensuite." : ".");
+}
+/* Le vérificateur de l'activité 5 juge le programme par son exécution, sur les deux essais */
+function atelierJuger(){
+  const P = atLire(), m = atManques(P);
+  if(m.textes.length) return {ok: false, pourquoi: "il n'est pas complet — il manque : " + m.textes.join(" ; ") + "."};
+  const t = atAnalyse(atExecuter(P, "tremblement")), a = atAnalyse(atExecuter(P, "matinee")), r = [];
+  if(t.n > 1) r.push("sur le tremblement, la pompe bascule " + t.n + " fois");
+  if(a.k1 < 0) r.push("sur la vraie matinée, la pompe ne s'allume jamais (le sol descend jusqu'à " + a.minH + " %)");
+  else if(a.kOff < 0) r.push("sur la vraie matinée, une fois allumée, la pompe ne s'éteint plus (le sol monte jusqu'à " + a.maxH + " %)");
+  if(a.n > 3) r.push("sur la vraie matinée, la pompe bascule " + a.n + " fois");
+  return {ok: !r.length, pourquoi: r.join(" ; ") + ".", t, a};
+}
+
+/* ── Le Python, écrit par les blocs ── */
+const AT_TROU = '<span class="at-trou">___</span>';
+function atPython(P){
+  const L = [], kw = w => '<span class="kw">' + w + '</span>';
+  const add = (h, t, cle) => L.push({h, t, cle: cle || ""});
+  const nb = x => atValide(x) ? {h: '<span class="num">' + atFmt(x) + '</span>', t: atFmt(x)} : {h: AT_TROU, t: "___"};
+  const regl = P.n === 1 ? [["SEUIL", P.s]] : [["SEUIL_BAS", P.sb], ["SEUIL_HAUT", P.sh]];
+  regl.forEach(([nom, x]) => { const v = nb(x); add(nom + " = " + v.h, nom + " = " + v.t, "r"); });
+  add('<span class="cmt"># la mémoire : la pompe est-elle allumée ?</span>', "# la mémoire : la pompe est-elle allumée ?", "mc");
+  add("pompe_allumee = " + kw("False"), "pompe_allumee = False", "m");
+  add("", "", "");
+  add(kw("while") + " " + kw("True") + ":", "while True:", "w");
+  add("    H = " + '<span class="fn">lire_humidite</span>()', "    H = lire_humidite()", "mesure");
+  const action = (a, cle) => {
+    if(a === "on") add("        pompe_allumee = " + kw("True"), "        pompe_allumee = True", cle);
+    else if(a === "off") add("        pompe_allumee = " + kw("False"), "        pompe_allumee = False", cle);
+    else if(a === "rien") add("        " + kw("pass") + '   <span class="cmt"># rien : la pompe garde son état</span>',
+                              "        pass   # rien : la pompe garde son état", cle);
+    else add("        " + AT_TROU, "        ___", cle);
+  };
+  P.br.forEach((b, i) => {
+    const mot = i === 0 ? "if" : "elif";
+    const op = AT_OPS[b.cmp] ? {h: atEsc(b.cmp), t: b.cmp} : {h: AT_TROU, t: "___"};
+    const ref = b.ref === "nombre" ? nb(b.num) : b.ref ? {h: b.ref, t: b.ref} : {h: AT_TROU, t: "___"};
+    add("    " + kw(mot) + " H " + op.h + " " + ref.h + ":", "    " + mot + " H " + op.t + " " + ref.t + ":", "c" + i);
+    action(b.act, "a" + i);
+  });
+  if(P.sinon !== null){ add("    " + kw("else") + ":", "    else:", "ce"); action(P.sinon, "ae"); }
+  add("    " + '<span class="fn">commander_relais</span>(pompe_allumee)', "    commander_relais(pompe_allumee)", "relais");
+  return L;
+}
+function atBlocsTexte(P){
+  const v = x => atValide(x) ? atFmt(x) : "____";
+  const L = [P.n === 1 ? "Réglages : SEUIL = " + v(P.s) : "Réglages : SEUIL_BAS = " + v(P.sb) + " ; SEUIL_HAUT = " + v(P.sh),
+             "lire l'humidité du sol → H"];
+  P.br.forEach((b, i) => L.push((i === 0 ? "SI" : "SINON SI") + " H " + (AT_SIGNE[b.cmp] || "____") + " " +
+    (b.ref === "nombre" ? v(b.num) : b.ref || "____") + " ALORS " + (AT_ACT[b.act] || "____")));
+  if(P.sinon !== null) L.push("SINON " + (AT_ACT[P.sinon] || "____"));
+  return L;
+}
+
+/* ── L'affichage des blocs ── */
+function atOptionsRef(){
+  const n = atVal("at_n") === "2" ? 2 : 1, refs = n === 1 ? ["SEUIL"] : ["SEUIL_BAS", "SEUIL_HAUT"];
+  for(let k = 1; k <= 3; k++){
+    const s = $("at_b" + k + "_ref"); if(!s) continue;
+    const garde = s.value, liste = [["", "— choisir —"]].concat(refs.map(r => [r, r]), [["nombre", "un nombre"]]);
+    const actuelle = [].map.call(s.options, o => o.value).join("|");
+    if(actuelle !== liste.map(x => x[0]).join("|")){
+      s.innerHTML = liste.map(([v, t]) => '<option value="' + v + '">' + t + '</option>').join("");
+    }
+    s.value = liste.some(x => x[0] === garde) ? garde : "";
+  }
+}
+function atMaj(){
+  const P = atLire(), n = P.n;
+  $("atR1").hidden = n !== 1; $("atR2").hidden = n !== 2; $("atR3").hidden = n !== 2;
+  $("atB2").hidden = atVal("at_b2_on") !== "1";
+  $("atB3").hidden = atVal("at_b3_on") !== "1";
+  $("atSinon").hidden = atVal("at_sinon_on") !== "1";
+  for(let k = 1; k <= 3; k++) $("at_b" + k + "_num").hidden = atVal("at_b" + k + "_ref") !== "nombre";
+  $("atPlusSinonSi").disabled = atVal("at_b3_on") === "1";
+  $("atPlusSinon").disabled = atVal("at_sinon_on") === "1";
+  const m = atManques(P);
+  AT_CHAMPS.forEach(id => { const e = $(id); if(e && e.classList) e.classList.toggle("at-vide", m.champs.indexOf(id) >= 0); });
+  const texte = m.textes.length ? "Pour pouvoir exécuter, il manque : " + m.textes.join(" ; ") + "." : "";
+  if($("atManque").textContent !== texte) $("atManque").textContent = texte;
+  const L = atPython(P);
+  $("atPy").innerHTML = L.map((l, k) => '<span class="at-l" data-cle="' + l.cle + '"><span class="at-n" aria-hidden="true">' + (k + 1) +
+    '</span>' + (l.h || " ") + '</span>').join("");
+  $("prog3").value = L.map(l => l.t).join("\n");
+  const dep = atSignature(P) === AT_SIG_DEPART;
+  $("atQuel").innerHTML = dep ? "Programme affiché : <b>le programme de départ</b>, celui de la trace (un seul seuil)."
+                              : "Programme affiché : <b>le tien</b>.";
+  atDessiner(); atMajFiche();
+}
+function atMajFiche(){
+  const P = atLire(), sig = atSignature(P), dep = sig === AT_SIG_DEPART;
+  // les derniers compteurs ne valent que pour le programme qui les a donnés
+  const meme = atVal("at_res_sig") === sig, rt = meme ? atVal("at_res_t") : "", rm = meme ? atVal("at_res_m") : "";
+  const pl = n => n + " basculement" + (+n > 1 ? "s" : "");
+  let h = '<p class="at-f-ligne"><b>' + (dep ? "Le programme de départ (celui qui s'affole), dans l'atelier :" : "Mon programme, construit dans l'atelier :") + '</b></p>';
+  h += '<ul class="at-f-blocs">' + atBlocsTexte(P).map(b => "<li>" + atEsc(b) + "</li>").join("") + "</ul>";
+  h += '<div class="py at-f-py">' + atPython(P).map(l => l.h).join("\n") + "</div>";
+  if(rt !== "" || rm !== "") h += '<p class="at-f-ligne"><b>Dernier essai dans l\'atelier :</b> ' +
+    [rt !== "" ? "le tremblement — " + pl(rt) : "", rm !== "" ? "la vraie matinée — " + pl(rm) : ""].filter(Boolean).join(" ; ") + ".</p>";
+  if(dep) h += '<p class="at-f-ligne"><b>Mon programme à deux seuils</b></p>' +
+    '<p class="at-f-ligne">Réglages : SEUIL_BAS = <span class="at-blanc court"></span> ; SEUIL_HAUT = <span class="at-blanc court"></span></p>' +
+    '<p class="at-f-ligne">SI H <span class="at-blanc court"></span> <span class="at-blanc"></span> ALORS <span class="at-blanc long"></span></p>' +
+    '<p class="at-f-ligne">SINON SI H <span class="at-blanc court"></span> <span class="at-blanc"></span> ALORS <span class="at-blanc long"></span></p>' +
+    '<p class="at-f-ligne">SINON <span class="at-blanc long"></span></p>';
+  $("atFicheProg").innerHTML = h;
+  $("atFicheNote").textContent = dep ? "🖥 À l'écran, l'atelier construit le programme en blocs et l'exécute. Voici le programme de départ ; écris le tien dessous."
+                                     : "🖥 Ce programme a été construit dans l'atelier, à l'écran : en blocs, puis en Python.";
+}
+
+/* ── Le chronogramme : l'humidité en haut (seuils, bande morte), la pompe dessous ── */
+function atDessiner(){
+  const svg = $("atChrono"); if(!svg || $("atEcran").hidden) return;
+  const E = ESSAIS[AT.essai], P = atLire();
+  const W = Math.max(280, Math.min(760, Math.round(svg.getBoundingClientRect().width || 600)));
+  // la matinée couvre 40 points d'humidité, le tremblement 20 : un cadre plus haut pour qu'on lise la bande morte
+  const x0 = 46, x1 = W - 14, y0 = 26, y1 = y0 + (AT.essai === "matinee" ? 180 : 130), yOn = y1 + 24, yOff = yOn + 24, yAxe = yOff + 12, HT = yAxe + 30;
+  const X = t => +(x0 + t / E.tmax * (x1 - x0)).toFixed(1);
+  const Y = v => +(y0 + (E.vmax - Math.max(E.vmin, Math.min(E.vmax, v))) / (E.vmax - E.vmin) * (y1 - y0)).toFixed(1);
+  const dans = v => atValide(v) && v >= E.vmin && v <= E.vmax;
+  const o = [];
+  o.push('<text x="4" y="15" font-size="12.5" fill="#61dafb" font-weight="700">Humidité H (%)</text>');
+  // la bande morte : entre les deux réglages, quand il y en a deux
+  if(P.n === 2 && atValide(P.sb) && atValide(P.sh) && P.sb !== P.sh){
+    const a = Y(Math.max(P.sb, P.sh)), b = Y(Math.min(P.sb, P.sh));
+    if(b - a > 0.5) o.push('<rect x="' + x0 + '" y="' + a + '" width="' + (x1 - x0) + '" height="' + (b - a).toFixed(1) +
+      '" fill="rgba(155,190,252,.16)" stroke="#9bbefc" stroke-width="1" stroke-dasharray="4 4"/>');
+  }
+  // les seuils : les réglages, et les nombres écrits dans les comparaisons
+  const seuils = [];
+  (P.n === 1 ? [P.s] : [P.sb, P.sh]).concat(P.br.filter(b => b.ref === "nombre").map(b => b.num))
+    .forEach(v => { if(dans(v) && seuils.indexOf(v) < 0) seuils.push(v); });
+  seuils.forEach(v => o.push('<line x1="' + x0 + '" y1="' + Y(v) + '" x2="' + x1 + '" y2="' + Y(v) + '" stroke="#ffd66b" stroke-width="2" stroke-dasharray="7 5"/>'));
+  // graduations de l'humidité : les seuils (en jaune), puis les dizaines qui ne les gênent pas
+  const grads = seuils.map(v => ({v, s: true}));
+  for(let v = Math.ceil(E.vmin / 10) * 10; v <= E.vmax; v += 10)
+    if(!grads.some(g => Math.abs(Y(g.v) - Y(v)) < 14)) grads.push({v, s: false});
+  grads.sort((a, b) => b.v - a.v);
+  let prec = -99;
+  grads.forEach(g => {
+    const y = Y(g.v), ty = Math.max(prec + 14, y + 4.5);
+    prec = ty;
+    o.push('<line x1="' + (x0 - 4) + '" y1="' + y + '" x2="' + x0 + '" y2="' + y + '" stroke="#9bbefc" stroke-width="1.5"/>');
+    o.push('<text x="' + (x0 - 7) + '" y="' + ty.toFixed(1) + '" text-anchor="end" font-size="12.5" fill="' + (g.s ? "#ffd66b" : "#9bbefc") +
+      '"' + (g.s ? ' font-weight="700"' : "") + '>' + atFmt(g.v) + '</text>');
+  });
+  // les axes et la voie de la pompe
+  o.push('<line x1="' + x0 + '" y1="' + (y0 - 4) + '" x2="' + x0 + '" y2="' + y1 + '" stroke="#9bbefc" stroke-width="1.5"/>');
+  o.push('<line x1="' + x0 + '" y1="' + y1 + '" x2="' + x1 + '" y2="' + y1 + '" stroke="#9bbefc" stroke-width="1.5"/>');
+  o.push('<line x1="' + x0 + '" y1="' + yOn + '" x2="' + x1 + '" y2="' + yOn + '" stroke="#3a5ea8" stroke-width="1" stroke-dasharray="3 4"/>');
+  o.push('<line x1="' + x0 + '" y1="' + yOff + '" x2="' + x1 + '" y2="' + yOff + '" stroke="#3a5ea8" stroke-width="1"/>');
+  o.push('<text x="' + (x0 - 7) + '" y="' + (yOn + 4.5) + '" text-anchor="end" font-size="12.5" fill="#81fba1" font-weight="700">ON</text>');
+  o.push('<text x="' + (x0 - 7) + '" y="' + (yOff + 4.5) + '" text-anchor="end" font-size="12.5" fill="#9bbefc" font-weight="700">OFF</text>');
+  o.push('<line x1="' + x0 + '" y1="' + yAxe + '" x2="' + x1 + '" y2="' + yAxe + '" stroke="#9bbefc" stroke-width="1.5"/>');
+  const ticks = AT.essai === "tremblement" ? [[0, "0 s"], [30, "30 s"], [60, "60 s"], [90, "90 s"], [120, "120 s"]]
+                                           : [[0, "0"], [30, "30 min"], [60, "1 h"], [90, "1 h 30"], [120, "2 h"], [150, "2 h 30"]];
+  // une étiquette qui toucherait sa voisine (écran étroit) est sautée : le trait de graduation reste
+  let fin = -99;
+  ticks.forEach(([t, lab], k) => {
+    o.push('<line x1="' + X(t) + '" y1="' + yAxe + '" x2="' + X(t) + '" y2="' + (yAxe + 4) + '" stroke="#9bbefc" stroke-width="1.5"/>');
+    const l = lab.length * 7, ancre = k === 0 ? "start" : k === ticks.length - 1 ? "end" : "middle";
+    const g = ancre === "start" ? X(t) : ancre === "end" ? X(t) - l : X(t) - l / 2;
+    if(g < fin + 8) return;
+    fin = g + l;
+    o.push('<text x="' + X(t) + '" y="' + (yAxe + 20) + '" text-anchor="' + ancre + '" font-size="12.5" fill="#9bbefc">' + lab + '</text>');
+  });
+  // ce qui a déjà été exécuté
+  const r = AT.run, vus = r ? r.hist.slice(0, AT.i) : [];
+  if(vus.length){
+    vus.forEach(h => { if(h.etat) o.push('<rect x="' + X(h.t) + '" y="' + yOn + '" width="' + (X(h.t + E.pas) - X(h.t)).toFixed(1) +
+      '" height="' + (yOff - yOn) + '" fill="rgba(129,251,161,.2)"/>'); });
+    let d = "M" + X(0) + " " + (vus[0].etat ? yOn : yOff);
+    vus.forEach((h, k) => { if(k && h.etat !== vus[k - 1].etat) d += " V" + (h.etat ? yOn : yOff); d += " H" + X(h.t + E.pas); });
+    o.push('<path d="' + d + '" fill="none" stroke="#e4eaf5" stroke-width="3" stroke-linejoin="round"/>');
+    const cur = vus[vus.length - 1];
+    o.push('<line x1="' + X(cur.t) + '" y1="' + y0 + '" x2="' + X(cur.t) + '" y2="' + yOff + '" stroke="#9bbefc" stroke-width="1" stroke-dasharray="2 3"/>');
+    o.push('<polyline points="' + vus.map(h => X(h.t) + "," + Y(h.H)).join(" ") + '" fill="none" stroke="#61dafb" stroke-width="2.5" stroke-linejoin="round"/>');
+    vus.forEach(h => o.push('<circle cx="' + X(h.t) + '" cy="' + Y(h.H) + '" r="3.2" fill="#61dafb"/>'));
+    o.push('<circle cx="' + X(cur.t) + '" cy="' + Y(cur.H) + '" r="7" fill="none" stroke="#e4eaf5" stroke-width="2"/>');
+  }
+  svg.setAttribute("viewBox", "0 0 " + W + " " + HT);
+  svg.innerHTML = o.join("");
+  const hors = (P.n === 1 ? [["SEUIL", P.s]] : [["SEUIL_BAS", P.sb], ["SEUIL_HAUT", P.sh]]).filter(([, v]) => atValide(v) && !dans(v));
+  $("atLegende").textContent = "En haut, l'humidité mesurée H, point par point ; en pointillés jaunes, les seuils de ton programme" +
+    (P.n === 2 ? " ; en gris, la bande morte entre SEUIL_BAS et SEUIL_HAUT" : "") + ". En bas, la pompe : ON ou OFF." +
+    (hors.length ? " Hors du cadre : " + hors.map(([nom, v]) => nom + " = " + atFmt(v)).join(", ") + "." : "");
+}
+
+/* ── L'exécution : ▶ (pause, reprise), ⏭ une mesure par clic, ⏩ jusqu'à la fin ── */
+function atTemps(t){
+  if(AT.essai === "tremblement") return ("t = " + t + " s").padEnd(11);
+  const h = Math.floor(t / 60), m = t % 60;
+  return ("t = " + (h ? h + " h " + String(m).padStart(2, "0") : m + " min")).padEnd(11);
+}
+function atLigneConsole(P, h){
+  const p = ["H = " + h.H];
+  h.chemin.forEach(c => {
+    if(c.res === undefined) return;
+    const i = +c.cle.slice(1), b = P.br[i];
+    p.push((i === 0 ? "if" : "elif") + " H " + b.cmp + " " + (b.ref === "nombre" ? atFmt(b.num) : b.ref) + " ? " + (c.res ? "oui" : "non"));
+  });
+  if(h.ou === "sinon") p.push("else : " + AT_ACT_CONSOLE[h.act]);
+  else if(h.ou !== null) p.push(AT_ACT_CONSOLE[h.act]);
+  else p.push("aucune branche : rien");
+  p.push("POMPE\u00a0" + (h.etat ? "ON" : "OFF"));
+  return atTemps(h.t) + " " + p.join(" → ");
+}
+function atConsoleAjoute(h){
+  const c = $("atConsole"), l = document.createElement("div");
+  l.textContent = atLigneConsole(AT.P, h);
+  if(h.bascule){ const b = document.createElement("span"); b.className = "at-c-bascule"; b.textContent = "   ⇄\u00a0basculement\u00a0n°" + h.n; l.appendChild(b); }
+  c.appendChild(l); c.scrollTop = c.scrollHeight;
+  return l.textContent;
+}
+function atConsoleVide(txt){ $("atConsole").innerHTML = '<span class="at-c-vide">' + atEsc(txt) + '</span>'; }
+function atSurligner(h){
+  const py = $("atPy");
+  py.querySelectorAll(".at-l").forEach(l => { l.classList.remove("at-actif", "at-teste", "at-lue"); l.removeAttribute("data-res"); });
+  if(!h) return;
+  const ligne = cle => py.querySelector('.at-l[data-cle="' + cle + '"]');
+  if(ligne("mesure")) ligne("mesure").classList.add("at-lue");
+  h.chemin.forEach(c => {
+    const l = ligne(c.cle); if(!l) return;
+    if(c.res === undefined) l.classList.add("at-actif");
+    else { l.classList.add("at-teste"); l.setAttribute("data-res", c.res ? "oui" : "non"); }
+  });
+}
+function atEtat(){
+  const E = ESSAIS[AT.essai], r = AT.run, h = r && AT.i > 0 ? r.hist[AT.i - 1] : null;
+  $("atPompe").className = "pompe-sim" + (h && h.etat ? " on" : "");
+  $("atPompeTxt").textContent = h && h.etat ? "POMPE ON" : "POMPE OFF";
+  $("atMesure").textContent = h ? "Mesure " + AT.i + " / " + E.N + " · " + atTemps(h.t).trim() + " · H = " + h.H + " %" : "Mesure — / " + E.N;
+  $("atCompteur").textContent = h ? String(h.n) : "0";
+  atSurligner(h); atDessiner(); atBoutons();
+}
+function atBoutons(){
+  const E = ESSAIS[AT.essai], enCours = AT.run && AT.i > 0 && AT.i < E.N;
+  $("atLancer").textContent = AT.timer ? "⏸ Pause" : (enCours && !atCalme.matches) ? "▶ Reprendre" : "▶ Exécuter sur " + E.nom;
+  $("atCalme").hidden = !atCalme.matches;
+}
+function atDemarrer(){
+  const P = atLire(), m = atManques(P);
+  if(m.textes.length){
+    $("atBilan").textContent = "Ton programme n'est pas complet : il ne peut pas encore s'exécuter. Il manque : " + m.textes.join(" ; ") + ".";
+    const e = $(m.champs[0]); if(e && !e.hidden) e.focus();
+    return false;
+  }
+  AT.P = P; AT.sig = atSignature(P); AT.run = atExecuter(P, AT.essai); AT.i = 0;
+  $("atConsole").innerHTML = ""; $("atBilan").textContent = "";
+  return true;
+}
+function atPas(annoncer){
+  if(!AT.run || AT.i >= AT.run.hist.length){ if(!atDemarrer()) return; }
+  const h = AT.run.hist[AT.i++], ligne = atConsoleAjoute(h);
+  if(annoncer) $("atAnnonce").textContent = "Mesure " + AT.i + " : " + ligne.replace(/\s+/g, " ");
+  atEtat();
+  if(AT.i >= AT.run.hist.length) atTerminer();
+}
+function atPause(){ if(AT.timer){ clearInterval(AT.timer); AT.timer = null; } atBoutons(); }
+function atLancer(){
+  if(atCalme.matches){ atPause(); atPas(true); return; }      // mouvement réduit : une mesure par clic
+  if(AT.timer){ atPause(); return; }
+  if(!AT.run || AT.i >= AT.run.hist.length){ if(!atDemarrer()) return; atEtat(); }
+  AT.timer = setInterval(() => { atPas(false); if(!AT.run || AT.i >= AT.run.hist.length) atPause(); }, ESSAIS[AT.essai].vitesse);
+  atBoutons();
+}
+function atFin(){
+  atPause();
+  if(!AT.run || AT.i >= AT.run.hist.length){ if(!atDemarrer()) return; }
+  while(AT.i < AT.run.hist.length) atConsoleAjoute(AT.run.hist[AT.i++]);
+  atEtat(); atTerminer();
+}
+function atTerminer(){
+  const r = AT.run, a = atAnalyse(r);
+  $("atBilan").textContent = atBilanTexte(r.essai, a);
+  // la trace : on n'arrive ici que par un clic (▶, ⏭ ou ⏩) — jamais au chargement (n°226, n°265)
+  if(r.essai === "tremblement"){
+    const e = window.__exp;
+    if(AT.sig === AT_SIG_DEPART && r.n >= 4) e.clignote = true;
+    if(r.n <= 1) e.hysteres = true;
+    majVerrous();
+  }
+  if(atVal("at_res_sig") !== AT.sig){ $("at_res_t").value = ""; $("at_res_m").value = ""; $("at_res_sig").value = AT.sig; }
+  $(r.essai === "tremblement" ? "at_res_t" : "at_res_m").value = String(r.n);
+  atMajFiche(); atBoutons(); save(false);
+}
+function atRemettreAZero(message){
+  atPause(); AT.run = null; AT.i = 0;
+  if(message) atConsoleVide(message);
+  $("atBilan").textContent = ""; $("atAnnonce").textContent = "";
+  atEtat();
+}
+function atChoisirEssai(nom){
+  AT.essai = ESSAIS[nom] ? nom : "tremblement";
+  document.querySelectorAll("#atelier .at-essai").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.essai === AT.essai)));
+  $("atEssaiDit").textContent = ESSAIS[AT.essai].dit;
+  atRemettreAZero("Choisis un essai, puis ▶ Exécuter.");
+}
+
+/* ── Les gestes sur les blocs ── */
+function atCliche(){ const c = {}; AT_CHAMPS.forEach(id => { c[id] = atVal(id); }); return c; }
+function atPoser(c){ atOptionsTout(); AT_CHAMPS.forEach(id => { if($(id) && c[id] !== undefined) $(id).value = c[id]; }); atOptionsRef(); }
+function atOptionsTout(){   // toutes les options, le temps de poser des valeurs (« SEUIL » comme « SEUIL_BAS »)
+  for(let k = 1; k <= 3; k++){
+    const s = $("at_b" + k + "_ref");
+    if(s && s.options.length < 5) s.innerHTML = '<option value="">— choisir —</option><option value="SEUIL">SEUIL</option><option value="SEUIL_BAS">SEUIL_BAS</option><option value="SEUIL_HAUT">SEUIL_HAUT</option><option value="nombre">un nombre</option>';
+  }
+}
+function atApresGeste(message){
+  if(AT.run || AT.timer) atRemettreAZero(message || "Le programme a changé : relance l'essai.");
+  atMaj(); save(false);
+}
+function atRemplacer(c, libelle){
+  AT.cliche = atCliche(); atPoser(c);
+  $("atAnnuler").hidden = false; $("atAnnuler").textContent = "↶ Remettre mon programme";
+  atApresGeste(libelle);
+}
+function atViderBranche(k){ ["cmp", "ref", "num", "act"].forEach(c => { $("at_b" + k + "_" + c).value = ""; }); }
+
+function atelierInit(){
+  const at = $("atelier"); if(!at) return;
+  at.classList.add("at-js"); $("atEcran").hidden = false;
+  // une réponse écrite à la main dans l'ancienne zone de texte (avant l'atelier) : gardée, montrée, jamais perdue
+  try{
+    const d = JSON.parse(localStorage.getItem(KEY) || "null"), ins = (d && d.inputs) || {};
+    if(!atVal("at_ancien") && !("at_n" in ins) && typeof ins.prog3 === "string" && ins.prog3.trim()) $("at_ancien").value = ins.prog3;
+  }catch(e){}
+  if(atVal("at_ancien").trim()){ $("atAncienTxt").textContent = atVal("at_ancien"); $("atAncien").hidden = false; }
+  atOptionsRef(); atMaj(); atChoisirEssai("tremblement");
+
+  at.addEventListener("input", e => { if(e.target.closest(".at-blocs")) atModifie(e); });
+  at.addEventListener("change", e => { if(e.target.closest(".at-blocs")) atModifie(e); });
+  function atModifie(e){
+    if(e.target.id === "at_n") atOptionsRef();
+    $("atAnnuler").hidden = true; AT.cliche = null;
+    if(AT.run || AT.timer) atRemettreAZero("Le programme a changé : relance l'essai.");
+    atMaj();
+  }
+  $("atDepart").addEventListener("click", () => atRemplacer(AT_DEPART, "Programme de départ remis : relance l'essai."));
+  $("atStructure").addEventListener("click", () => {
+    atRemplacer(AT_STRUCTURE, "Structure posée : choisis les valeurs, les comparaisons et les actions.");
+    $("at_sb").focus();
+  });
+  $("atAnnuler").addEventListener("click", () => {
+    if(!AT.cliche) return;
+    const c = AT.cliche; AT.cliche = null; atPoser(c);
+    $("atAnnuler").hidden = true; atApresGeste("Ton programme est revenu : relance l'essai.");
+    $("atDepart").focus();
+  });
+  $("atPlusSinonSi").addEventListener("click", () => {
+    const k = atVal("at_b2_on") !== "1" ? 2 : atVal("at_b3_on") !== "1" ? 3 : 0;
+    if(!k) return;
+    atViderBranche(k); $("at_b" + k + "_on").value = "1";
+    $("atAnnuler").hidden = true; atApresGeste();
+    $("at_b" + k + "_cmp").focus();
+  });
+  $("atPlusSinon").addEventListener("click", () => {
+    if(atVal("at_sinon_on") === "1") return;
+    $("at_sinon_on").value = "1"; $("at_sinon_act").value = "";
+    $("atAnnuler").hidden = true; atApresGeste();
+    $("at_sinon_act").focus();
+  });
+  at.querySelectorAll("[data-retirer]").forEach(b => b.addEventListener("click", () => {
+    const quoi = b.dataset.retirer;
+    if(quoi === "sinon") $("at_sinon_on").value = "";
+    else if(quoi === "3") { $("at_b3_on").value = ""; atViderBranche(3); }
+    else if(atVal("at_b3_on") === "1"){   // la branche 3 prend la place de la 2
+      ["cmp", "ref", "num", "act"].forEach(c => { $("at_b2_" + c).value = atVal("at_b3_" + c); });
+      $("at_b3_on").value = ""; atViderBranche(3);
+    } else { $("at_b2_on").value = ""; atViderBranche(2); }
+    $("atAnnuler").hidden = true; atApresGeste();
+    $(quoi === "sinon" ? "atPlusSinon" : "atPlusSinonSi").focus();
+  }));
+  at.querySelectorAll(".at-essai").forEach(b => b.addEventListener("click", () => atChoisirEssai(b.dataset.essai)));
+  $("atLancer").addEventListener("click", atLancer);
+  $("atPas").addEventListener("click", () => { atPause(); atPas(true); });
+  $("atFin").addEventListener("click", atFin);
+  if(atCalme.addEventListener) atCalme.addEventListener("change", () => { atPause(); atBoutons(); });
+  let tRedim = null;
+  window.addEventListener("resize", () => { clearTimeout(tRedim); tRedim = setTimeout(atDessiner, 150); });
+  // à l'ouverture de la séance 3, le chronogramme prend la largeur de son cadre
+  document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => setTimeout(atDessiner, 0)));
+}
 
 /* ══════ Vérificateurs ══════ */
 const CHECKS = {
@@ -2537,19 +3302,19 @@ const CHECKS = {
     if($("a5_q5").value.startsWith("une mémoire")) ok++;
     const d = txt("a5_diag");
     const diagOk = d.length >= 70;
-    const p = txt("prog3").toLowerCase();
-    const progOk = p.length >= 60 && p.includes("35") && p.includes("45") &&
-                   (p.includes("sinon si") || p.includes("elif"));
+    /* Le programme est jugé par son EXÉCUTION, sur les deux essais de l'atelier (31/10/2026) — plus par la
+       présence de « 35 », « 45 » et « elif » dans son texte : un « SINON éteindre » les contient aussi. */
+    const j = atelierJuger();
     const n1 = num("a5_n1"), n2 = num("a5_n2");
     const mesureOk = !isNaN(n1) && !isNaN(n2) && n1 >= 4 && n2 <= 1;
     const e = window.__exp;
     const bancOk = !!(e.clignote && e.hysteres);
     let extra = "";
     if(!diagOk)   extra += " Rédige ton diagnostic : quelles conséquences CONCRÈTES, pour le relais, la pompe et la plante ?";
-    if(!progOk)   extra += " Ton programme doit contenir les DEUX seuils (35 et 45) et un SINON SI — pas un simple SINON.";
-    if(!mesureOk) extra += " Relève les deux compteurs au banc : plusieurs basculements avec un seuil, au plus un avec deux.";
-    if(!bancOk)   extra += " Fais la démonstration au banc : fais s'affoler la pompe en mode UN seuil, puis rejoue le MÊME tremblement en mode DEUX seuils.";
-    return {score:ok, total:5, extra, valide: ok === 5 && diagOk && progOk && mesureOk && bancOk};
+    if(!j.ok)     extra += " Ton programme, exécuté dans l'atelier : " + j.pourquoi;
+    if(!mesureOk) extra += " Relève les deux compteurs de l'atelier : le programme de départ sur le tremblement (plusieurs basculements), puis le tien sur le même tremblement (au plus un).";
+    if(!bancOk)   extra += " Fais la démonstration dans l'atelier : exécute le programme de départ sur le tremblement, jusqu'au bout, puis ton programme sur le même tremblement.";
+    return {score:ok, total:5, extra, valide: ok === 5 && diagOk && j.ok && mesureOk && bancOk};
   },
   6: function(){
     let ok = 0;
@@ -2733,6 +3498,7 @@ if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", ()=>{
 
 /* ══════ Démarrage ══════ */
 restore();
+atelierInit();
 if(window.__exp && window.__exp.essentiel) document.body.classList.add("essentiel");
 majEssentiel(); majParcours(); majProgress(); majTaches(); majHyp(); majVerrous(); bancMaj(false);
 })();
@@ -2763,7 +3529,7 @@ majEssentiel(); majParcours(); majProgress(); majTaches(); majHyp(); majVerrous(
      d: "Le jeton refait les huit tours avec les mêmes mesures. À chaque fois : moins de 35 ? non ; plus de 45 ? non ; il prend la flèche « on ne change rien ». La console écrit POMPE OFF à chaque ligne. Sur le chronogramme, la ligne verte de la pompe à deux seuils reste à OFF de 0 à 70 secondes : 0 basculement, contre 6 pour la ligne rouge."},
     {t: "Le sol sèche", p: "Puis le sol sèche vraiment. Quand l'humidité passe sous 35, la pompe s'allume : <b>un seul basculement</b>, le bon.",
      d: "Trois nouvelles mesures : 38, puis 36, encore dans la bande, et la pompe reste éteinte ; puis 34, sous 35 : le jeton prend la sortie OUI du premier losange et allume la pompe. La courbe descend sous la bande ; la ligne verte monte à ON à 100 secondes : 1 basculement. La console écrit 10:32:42 H=34 POMPE ON."},
-    {t: "À toi", p: "À toi : écris le programme à deux seuils, puis prouve au banc, avec le même tremblement, que la pompe ne s'affole plus.",
+    {t: "À toi", p: "À toi : juste en dessous, dans l'atelier, construis le programme à deux seuils, puis exécute-le sur le même tremblement : la pompe ne doit plus s'affoler.",
      d: "Le chronogramme complet : la même humidité ; la pompe à un seuil, en rouge, bascule six fois en 70 secondes ; la pompe à deux seuils, en vert, une seule fois, quand l'humidité passe sous 35. À gauche, l'algorigramme à deux seuils."}
   ];
   var bloc = document.getElementById("pompe-pas-a-pas");
@@ -2881,12 +3647,14 @@ majEssentiel(); majParcours(); majProgress(); majTaches(); majHyp(); majVerrous(
       if (reprendre) lpp.regarder(); else bloc.querySelector('[data-lpp="suiv"]').focus();
     });
   });
+  // « À toi » mène à l'atelier du programme, juste sous l'animation, et y place le focus.
   $p("ppaVersProg").addEventListener("click", function(e){
-    var champ = $p("prog3");
-    if (!champ) return;
+    var atelier = $p("atelier");
+    if (!atelier) return;
     e.preventDefault();
-    champ.scrollIntoView({block: "center"});
-    try { champ.focus({preventScroll: true}); } catch (x) { champ.focus(); }
+    lpp.arreter();
+    atelier.scrollIntoView({block: "start"});
+    try { atelier.focus({preventScroll: true}); } catch (x) { atelier.focus(); }
   });
 
   // À l'impression : le chronogramme fixe, dont le volet s'ouvre le temps d'imprimer.

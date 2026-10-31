@@ -60,7 +60,7 @@ vraiment. `Images/hysteresis_chronogramme.svg` reste en place : dans un volet so
 | `Audio/pompe_etape6.ogg` · `.mp3` | Étape 6 : voix de synthèse, Opus mono 32 kb/s (30.5 Ko) et MP3 mono 48 kb/s de secours (44.2 Ko) |
 | `Audio/pompe_etape7.ogg` · `.mp3` | Étape 7 : voix de synthèse, Opus mono 32 kb/s (34.7 Ko) et MP3 mono 48 kb/s de secours (50.7 Ko) |
 | `Audio/pompe_etape8.ogg` · `.mp3` | Étape 8 : voix de synthèse, Opus mono 32 kb/s (25.3 Ko) et MP3 mono 48 kb/s de secours (36.6 Ko) |
-| `Audio/pompe_etape9.ogg` · `.mp3` | Étape 9 : voix de synthèse, Opus mono 32 kb/s (27.1 Ko) et MP3 mono 48 kb/s de secours (39.3 Ko) |
+| `Audio/pompe_etape9.ogg` · `.mp3` | Étape 9 : voix de synthèse, Opus mono 32 kb/s (34.4 Ko) et MP3 mono 48 kb/s de secours (49.9 Ko) — nouvelle prise du 31/10/2026 : la phrase renvoie à l'atelier du programme |
 
 - **Moteur** : Piper (`piper-tts` 1.8.0), sous GPL-3. Il n'est pas dans le dépôt, et un fichier audio qu'il produit n'est pas une œuvre dérivée du moteur.
 - **Modèle** : `fr_FR-siwis-medium`, la voix des quatre autres animations (vélo-cargo, trois principes, jardin de 4e_C8.1), entraînée sur la
@@ -72,7 +72,18 @@ vraiment. `Images/hysteresis_chronogramme.svg` reste en place : dans un volet so
 - **Chaîne audio** : celle des autres animations (silences coupés à −45 dB, −16 LUFS, crête −1,5 dB, mono).
 - **Texte envoyé à la voix** : celui de la page, sauf les signes =, < et >, que la phonétisation automatique saute : ils sont dits
   « égale », « inférieur à », « supérieur à » (étapes 2, 4 et 5). Détail dans `_generation/voix_pompe/phrases.json`.
-- **Prises produites le 30/10/2026, NON écoutées** : seule l'écoute de Pascal les validera (`voix.json`, clé `prises`).
+- **Étapes 1 à 8 : écoutées et validées par Pascal le 31/10/2026** (« la bande sonore est bonne »). **Étape 9 : nouvelle prise du 31/10/2026**
+  (même voix, mêmes réglages, `generer.py --scene 9`), **NON écoutée** : à réécouter (`voix.json`, clé `prises`).
+
+## L'atelier du programme (activité 5 c et d) — 31/10/2026
+
+Ni image ni son : les blocs, le Python, la console et le chronogramme de l'atelier sont **écrits et dessinés dans la page**
+par son script (création originale, CC0), d'après le programme que l'élève construit. Les blocs reprennent les **couleurs des
+catégories** de l'éditeur Vittascience (Variables, Logique, et le jaune des blocs « afficher » pour les actions) : une couleur
+n'est pas une œuvre, et aucune capture ni aucun élément graphique de Vittascience n'est recopié. Ses deux essais :
+**le tremblement**, la suite figée du banc d'essai (une seule source dans le code), et **une vraie matinée**, simulée et figée
+(sol de départ 44 %, −1 point par mesure, +2 quand la pompe arrose, 60 % au plus, tremblement figé de −2 à +2 points) :
+des données **simulées**, comme la trace de l'activité 5, dites telles dans le code.
   Reproductibilité à l'octet : non (Piper tire du bruit à chaque prise).
 
 ## Captures d'écran des gestes de Vittascience (05/10/2026)
