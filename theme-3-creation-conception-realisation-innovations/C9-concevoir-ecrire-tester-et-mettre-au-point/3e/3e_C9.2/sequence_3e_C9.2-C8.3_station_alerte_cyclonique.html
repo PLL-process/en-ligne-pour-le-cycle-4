@@ -345,6 +345,21 @@
 .activite-en-ligne{border-left:4px solid #ffd66b;background:rgba(255,214,107,.12);padding:.55em .85em;border-radius:0 8px 8px 0;margin:.6em 0 .8em;font-size:.95em;line-height:1.45}
 @media print{.activite-en-ligne,.activite-en-ligne b{color:#1a1a1a!important}.activite-en-ligne{background:#fff8e1!important;border-left-color:#8a6400!important}}
 </style>
+<style id="regle-311">
+  /* Règle d'or n°311 — à partir de la séance 2, l'élève voit sa séance, pas le décor.
+     Sans JavaScript le volet reste ouvert et sans titre : tout s'affiche, comme avant. */
+  .rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}   /* le gabarit habille tout details en carte : pas le volet */
+  .rappel-ouverture>summary{display:none}
+  .rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;
+    max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+  .rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+  @media print{.rappel-ouverture>summary{display:none!important}}
+  @media (max-width:480px){   /* n°311 : à 390 px, la barre d'outils tient sur deux lignes au plus */
+    .toolbar{gap:6px;margin:8px auto 12px}
+    .toolbar .btn{flex:1 1 40%;min-width:0;min-height:44px;padding:6px;font-size:.8rem;line-height:1.2}
+    .choix-parcours-boutons .parcours-label{flex:1 1 100%;text-align:center}
+  }
+</style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
 /* Fiche papier — source unique : _outils/impression_papier/papier.css (posée par poser.py ; ne pas modifier dans la page).
@@ -704,12 +719,32 @@
 <a class="skip-link" href="#seances">Aller directement aux activités</a>
 <h1>Thème 3 · Martinique — 3e : La station d'alerte cyclonique se programme</h1>
 <p class="subtitle">🎯 Ta mission : programmer la station commandée par la mairie — puis PROUVER qu'elle marche, protocole de test à l'appui, avant sa mise en service dans la cour.</p>
+
 <p class="repli-tout-en-un" id="vers-quatre-pages">📚 <b>Cette page contient la séquence entière</b> — pratique quand le réseau est capricieux, ou pour tout avoir sous la main. Tu préfères des pages plus courtes ? Les <b>quatre pages</b>, une par grande étape de deux séances, partagent exactement les mêmes réponses enregistrées :
 <a href="sequence_3e_C9.2-C8.3_station_1_besoin-et-algorithme.html">1 · Besoin et algorithme — séances 1 et 2</a> ·
 <a href="sequence_3e_C9.2-C8.3_station_2_programmer.html">2 · Programmer par paliers — séances 3 et 4</a> ·
 <a href="sequence_3e_C9.2-C8.3_station_3_interaction.html">3 · L'humain dans la boucle — séances 5 et 6</a> ·
 <a href="sequence_3e_C9.2-C8.3_station_4_recette.html">4 · Protocole et recette — séances 7 et 8</a>.</p>
 
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+</div>
+<div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
+  <span class="parcours-label">🔀 Mon parcours :</span>
+  <button class="btn ghost parcours-btn" data-choix="a" aria-pressed="false">🅰 J'ai le matériel</button>
+  <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 Je simule</button>
+  <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sans matériel</button>
+  <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
+</div>
+<p class="saved-note" id="parcoursNote" role="status" aria-live="polite" style="text-align:center">Parcours affiché : <b>tous</b>.</p>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
   <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
   <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
@@ -747,7 +782,6 @@
   </details>
 </section>
 
-
 <div class="badges">
   <span class="badge niveau">Niveau 3e</span>
   <span class="badge code" title="Programme 2024 — 3e_C9.2 : Réaliser et mettre au point un programme commandant un système réel incluant une interaction entre un humain et une machine.">3e_C9.2</span>
@@ -764,27 +798,7 @@
   <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="3e…"></div>
   <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
 </div>
-<div class="toolbar">
-  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
-  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
-  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
-  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
-</div>
-<div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
-  <span class="parcours-label">🔀 Mon parcours :</span>
-  <button class="btn ghost parcours-btn" data-choix="a" aria-pressed="false">🅰 J'ai le matériel</button>
-  <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 Je simule</button>
-  <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sans matériel</button>
-  <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
-</div>
-<p class="saved-note" id="parcoursNote" role="status" aria-live="polite" style="text-align:center">Parcours affiché : <b>tous</b>.</p>
 <p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque les corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. À activer si la page te paraît trop chargée.</p>
-<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
-
-<div class="progress-wrap">
-  <span class="progress-label">Ma progression dans la séquence : <b id="progTxt">0 / 7 activités validées</b></span>
-  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
-</div>
 
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
@@ -995,6 +1009,13 @@
   </div>
   <p style="font-size:.85em;color:var(--sub)">Tu peux changer d'avis à tout moment : ce choix est enregistré avec ton travail, et « Tout afficher » remet tout en place.</p>
 </section>
+</details><!-- /rappel-ouverture -->
+
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression dans la séquence : <b id="progTxt">0 / 7 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
 <section class="card" id="bancCard" aria-labelledby="banc-titre">
   <h2 id="banc-titre">🌀 Le banc d'essai de la station (version 🅱 — toujours disponible)</h2>
   <p style="font-size:.9em;color:var(--sub)">C'est la station, simulée fidèlement : le curseur joue le rôle du potentiomètre-anémomètre (A1) ; l'écran, les quatre voyants (vert D6, jaune D7, orange D3, rouge D4), le buzzer (D5) et le bouton (D2) réagissent comme sur la vraie carte — y compris la boucle du programme, exécutée environ 5 fois par seconde. <b>Tes expériences ici sont tracées</b> : elles servent à valider les activités et à exécuter ta recette de la séance 8.</p>
@@ -2268,10 +2289,43 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
     document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
     document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
     tab.classList.add("active"); tab.setAttribute("aria-selected","true");
-    $(tab.dataset.panel).classList.add("active");
+    $(tab.dataset.panel).classList.add("active"); appliqueSeance(tab.dataset.panel);
     window.scrollTo({top: $("seances").offsetTop - 8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
   });
 });
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte.
+   Avant la fin du chargement, le volet ne se ferme pas encore : un dessin <object> de l'ouverture ne se charge pas dans
+   un volet fermé, et la page attendrait sans fin son « load ». Il se ferme au « load » (marque data-fermer-au-chargement). */
+function appliqueSeance(idPanneau){
+  const v = document.getElementById("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", ()=>{ const v=document.getElementById("ouverture"); if(v){ voletAvantImpression=v.open; v.open=true; } });
+  window.addEventListener("afterprint", ()=>{ const v=document.getElementById("ouverture"); if(v && voletAvantImpression!==null){ v.open=voletAvantImpression; voletAvantImpression=null; } });
+  const cibleDuLien = ()=>{ const id = decodeURIComponent(location.hash.slice(1)); return id ? document.getElementById(id) : null; };
+  const ouvrirSeanceDeLAncre = ()=>{
+    const cible = cibleDuLien(); const pan = cible && cible.closest(".seance-panel");
+    if(!pan || pan.classList.contains("active")) return;
+    const onglet = document.querySelector('.seance-tab[data-panel="' + pan.id + '"]');
+    if(onglet) onglet.click();
+    setTimeout(()=>cible.scrollIntoView({block:"start"}), 60);
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", ()=>{
+    const v = document.getElementById("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active")||{}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  appliqueSeance((document.querySelector(".seance-panel.active")||{}).id);
+  // après le reste du script (les autres écouteurs des onglets sont alors branchés)
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
 
 /* ══════ Le banc d'essai de la station ══════
    Fidèle au programme de référence : boucle exécutée toutes les 200 ms,

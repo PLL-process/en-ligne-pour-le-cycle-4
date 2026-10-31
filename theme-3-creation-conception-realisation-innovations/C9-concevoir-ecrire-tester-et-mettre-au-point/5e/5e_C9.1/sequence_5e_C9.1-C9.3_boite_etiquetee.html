@@ -247,6 +247,21 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
 @media print{.activite-en-ligne,.activite-en-ligne b{color:#1a1a1a!important}.activite-en-ligne{background:#fff8e1!important;border-left-color:#8a6400!important}}
 .mots-seance{margin:0 0 10px;font-size:.92em}
 </style>
+<style id="regle-311">
+  /* Règle d'or n°311 — à partir de la séance 2, l'élève voit sa séance, pas le décor.
+     Sans JavaScript le volet reste ouvert et sans titre : tout s'affiche, comme avant. */
+  .rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}   /* le gabarit habille tout details en carte : pas le volet */
+  .rappel-ouverture>summary{display:none}
+  .rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;
+    max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+  .rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+  @media print{.rappel-ouverture>summary{display:none!important}}
+  @media (max-width:480px){   /* n°311 : à 390 px, la barre d'outils tient sur deux lignes au plus */
+    .toolbar{gap:6px;margin:8px auto 12px}
+    .toolbar .btn{flex:1 1 40%;min-width:0;min-height:44px;padding:6px;font-size:.8rem;line-height:1.2}
+    .choix-parcours-boutons .parcours-label{flex:1 1 100%;text-align:center}
+  }
+</style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
 /* Fiche papier — source unique : _outils/impression_papier/papier.css (posée par poser.py ; ne pas modifier dans la page).
@@ -598,13 +613,6 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
 <a class="skip-link" href="#seances">Aller directement aux activités</a>
 <h1>Thème 3 · New York — 5e · Atelier : La boîte étiquetée</h1>
 <p class="subtitle">Le compteur du Cyclone, le grand-huit centenaire de Coney Island, affiche n'importe quoi — apprends à lire un programme comme un technicien</p>
-<div class="badges">
-  <span class="badge niveau">Niveau 5e</span>
-  <span class="badge code" title="Programme 2024 — 5e_C9.1 : Analyser un programme simple fourni et tester s'il répond au besoin ou au problème posé.&#10;5e_C9.2 : Modifier un programme fourni pour répondre au besoin ou à un problème posé.&#10;5e_C9.3 : Réaliser et mettre au point un programme simple commandant un OST (objet ou système technique).">5e_C9.1 → C9.3</span>
-  <span class="badge theme">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span>
-  <span class="badge socle" title="Domaines du socle commun travaillés : D1.3 Comprendre, s’exprimer en utilisant les langages mathématiques, scientifiques et informatiques · D2 Les méthodes et outils pour apprendre · D4 Les systèmes naturels et les systèmes techniques.">Socle : D1.3, D2, D4</span> <span class="badge socle" title="CRCN 3.4 Programmer — niveaux 1 à 2.&#10;Le cadre : « Écrire des programmes et des algorithmes pour répondre à un besoin. »&#10;Ici : tu suis un programme avec une table de variables, l’exécutes et le testes dans l’éditeur Python, puis modifies le programme fourni et mets au point celui de la barrière.">CRCN 3.4 Programmer (Niv. 1-2)</span>
-  <span class="badge duree">⏱ 3 séances de 55 min</span>
-</div>
 
 <style>
   .gestes-outil{border:1px solid var(--border,#2a3550);border-left:4px solid #ffb300;
@@ -622,12 +630,6 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
   @media print{.gestes-outil figure.geste-capture{break-inside:avoid;page-break-inside:avoid}}
 </style>
 
-<div class="identite" id="identite">
-  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
-  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
-  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="5e…"></div>
-  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
-</div>
 <div class="toolbar">
   <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
   <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
@@ -641,12 +643,26 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
   <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
 </div>
 <p class="saved-note" id="parcoursNote" role="status" aria-live="polite" style="text-align:center">Parcours affiché : <b>tous</b>.</p>
-<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque les corrections et les compléments : il ne reste que les consignes et les exercices.</p>
 <p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
-<div class="progress-wrap">
-  <span class="progress-label">Ma progression : <b id="progTxt">0 / 5 activités validées</b></span>
-  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
+<div class="badges">
+  <span class="badge niveau">Niveau 5e</span>
+  <span class="badge code" title="Programme 2024 — 5e_C9.1 : Analyser un programme simple fourni et tester s'il répond au besoin ou au problème posé.&#10;5e_C9.2 : Modifier un programme fourni pour répondre au besoin ou à un problème posé.&#10;5e_C9.3 : Réaliser et mettre au point un programme simple commandant un OST (objet ou système technique).">5e_C9.1 → C9.3</span>
+  <span class="badge theme">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span>
+  <span class="badge socle" title="Domaines du socle commun travaillés : D1.3 Comprendre, s’exprimer en utilisant les langages mathématiques, scientifiques et informatiques · D2 Les méthodes et outils pour apprendre · D4 Les systèmes naturels et les systèmes techniques.">Socle : D1.3, D2, D4</span> <span class="badge socle" title="CRCN 3.4 Programmer — niveaux 1 à 2.&#10;Le cadre : « Écrire des programmes et des algorithmes pour répondre à un besoin. »&#10;Ici : tu suis un programme avec une table de variables, l’exécutes et le testes dans l’éditeur Python, puis modifies le programme fourni et mets au point celui de la barrière.">CRCN 3.4 Programmer (Niv. 1-2)</span>
+  <span class="badge duree">⏱ 3 séances de 55 min</span>
 </div>
+
+<div class="identite" id="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="5e…"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque les corrections et les compléments : il ne reste que les consignes et les exercices.</p>
 
 <section class="card" id="billet">
   <h2>🎫 Billet d'entrée — trois questions, sans note</h2>
@@ -735,6 +751,12 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
   (sans ordinateur), tu TESTES ensuite, tu REPORTES ce que tu as vu. Se tromper en prédisant
   n'enlève rien : c'est là qu'on apprend le plus.</div>
 </section>
+</details><!-- /rappel-ouverture -->
+
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression : <b id="progTxt">0 / 5 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
 
 <section class="card" id="taches">
   <h2>🗺 Où j'en suis — les 5 activités de l'atelier</h2>
@@ -1219,8 +1241,42 @@ document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click"
   document.querySelectorAll(".seance-panel").forEach(x => x.classList.remove("active"));
   t.classList.add("active"); t.setAttribute("aria-selected","true");
   document.getElementById(t.dataset.panel).classList.add("active");
+  appliqueSeance(t.dataset.panel);
   window.scrollTo({top: document.getElementById("seances").offsetTop - 60, behavior: "smooth"});
 }));
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte.
+   Avant la fin du chargement, le volet ne se ferme pas encore : un dessin <object> de l'ouverture ne se charge pas dans
+   un volet fermé, et la page attendrait sans fin son « load ». Il se ferme au « load » (marque data-fermer-au-chargement). */
+function appliqueSeance(idPanneau){
+  const v = document.getElementById("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", ()=>{ const v=document.getElementById("ouverture"); if(v){ voletAvantImpression=v.open; v.open=true; } });
+  window.addEventListener("afterprint", ()=>{ const v=document.getElementById("ouverture"); if(v && voletAvantImpression!==null){ v.open=voletAvantImpression; voletAvantImpression=null; } });
+  const cibleDuLien = ()=>{ const id = decodeURIComponent(location.hash.slice(1)); return id ? document.getElementById(id) : null; };
+  const ouvrirSeanceDeLAncre = ()=>{
+    const cible = cibleDuLien(); const pan = cible && cible.closest(".seance-panel");
+    if(!pan || pan.classList.contains("active")) return;
+    const onglet = document.querySelector('.seance-tab[data-panel="' + pan.id + '"]');
+    if(onglet) onglet.click();
+    setTimeout(()=>cible.scrollIntoView({block:"start"}), 60);
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", ()=>{
+    const v = document.getElementById("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active")||{}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  appliqueSeance((document.querySelector(".seance-panel.active")||{}).id);
+  // après le reste du script (les autres écouteurs des onglets sont alors branchés)
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
 document.querySelectorAll(".ae-btns").forEach(w => {
   ["🔴","🟡","🟢","⭐"].forEach(e => {
     const b = document.createElement("button"); b.type="button"; b.textContent=e; b.className="ae-b";

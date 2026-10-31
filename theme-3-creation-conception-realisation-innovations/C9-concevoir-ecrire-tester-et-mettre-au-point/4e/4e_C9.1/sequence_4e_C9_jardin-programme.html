@@ -251,6 +251,21 @@
 @media print{.activite-en-ligne,.activite-en-ligne b{color:#1a1a1a!important}.activite-en-ligne{background:#fff8e1!important;border-left-color:#8a6400!important}}
 .mots-seance{margin:0 0 10px;font-size:.92em}
 </style>
+<style id="regle-311">
+  /* Règle d'or n°311 — à partir de la séance 2, l'élève voit sa séance, pas le décor.
+     Sans JavaScript le volet reste ouvert et sans titre : tout s'affiche, comme avant. */
+  .rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}   /* le gabarit habille tout details en carte : pas le volet */
+  .rappel-ouverture>summary{display:none}
+  .rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;
+    max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+  .rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+  @media print{.rappel-ouverture>summary{display:none!important}}
+  @media (max-width:480px){   /* n°311 : à 390 px, la barre d'outils tient sur deux lignes au plus */
+    .toolbar{gap:6px;margin:8px auto 12px}
+    .toolbar .btn{flex:1 1 40%;min-width:0;min-height:44px;padding:6px;font-size:.8rem;line-height:1.2}
+    .choix-parcours-boutons .parcours-label{flex:1 1 100%;text-align:center}
+  }
+</style>
 <style id="jardin-css">
   /* Banc d'essai du jardin — mêmes conventions de couleur que le lot 3e (règle n°120) */
   .banc-jardin{border:2px solid var(--hl);border-radius:14px;padding:16px;background:#08132c;margin:14px 0}
@@ -1356,6 +1371,25 @@ details.ppa-fixe{margin:10px 0}
 
 <h1>🌱 Le jardin connecté se programme — 4e</h1>
 <p class="subtitle">🎯 Ta mission : écrire le programme qui décide d'arroser — puis découvrir que le plus long n'est pas de l'écrire, c'est de le mettre au point.</p>
+
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+</div>
+<div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
+  <span class="parcours-label">🔀 Mon parcours :</span>
+  <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 Je simule</button>
+  <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sans matériel</button>
+  <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
+</div>
+<p class="saved-note" id="parcoursNote" role="status" aria-live="polite" style="text-align:center">Parcours affiché : <b>tous</b>.</p>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
 <div class="badges">
   <span class="badge niveau">Niveau 4e</span>
   <span class="badge code" title="Programme 2024 — 4e_C9.1 : Modifier un algorithme permettant de répondre au besoin ou au problème posé.">4e_C9.1</span>
@@ -1406,26 +1440,7 @@ details.ppa-fixe{margin:10px 0}
   <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="4e…"></div>
   <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
 </div>
-<div class="toolbar">
-  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
-  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
-  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
-  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
-</div>
-<div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
-  <span class="parcours-label">🔀 Mon parcours :</span>
-  <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 Je simule</button>
-  <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sans matériel</button>
-  <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
-</div>
-<p class="saved-note" id="parcoursNote" role="status" aria-live="polite" style="text-align:center">Parcours affiché : <b>tous</b>.</p>
 <p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque les corrections et les compléments : il ne reste que les consignes et les exercices. À activer si la page te paraît trop chargée.</p>
-<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
-
-<div class="progress-wrap">
-  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-labelledby="progTxt"><div id="progFill"></div></div>
-  <p class="saved-note" id="progTxt">0 / 6 activités validées</p>
-</div>
 
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
@@ -1468,6 +1483,12 @@ details.ppa-fixe{margin:10px 0}
       <p>Tout est dans la page : le banc d'essai, les figures à lire, et les <b>traces d'exécution</b> fournies à l'activité 5. Tu peux tout faire, y compris à la maison, et être validé sur les mêmes critères.</p></div>
   </div>
 </section>
+</details><!-- /rappel-ouverture -->
+
+<div class="progress-wrap">
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-labelledby="progTxt"><div id="progFill"></div></div>
+  <p class="saved-note" id="progTxt">0 / 6 activités validées</p>
+</div>
 
 <!-- ════════ TABLEAU DE BORD — règle d'or n°30 ════════ -->
 <section class="card" id="taches">
@@ -2630,8 +2651,42 @@ document.querySelectorAll(".seance-tab").forEach(t=>{
     document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
     t.classList.add("active"); t.setAttribute("aria-selected","true");
     const p = $(t.dataset.panel); if(p) p.classList.add("active");
+    appliqueSeance(t.dataset.panel);
   });
 });
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte.
+   Avant la fin du chargement, le volet ne se ferme pas encore : un dessin <object> de l'ouverture ne se charge pas dans
+   un volet fermé, et la page attendrait sans fin son « load ». Il se ferme au « load » (marque data-fermer-au-chargement). */
+function appliqueSeance(idPanneau){
+  const v = document.getElementById("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", ()=>{ const v=document.getElementById("ouverture"); if(v){ voletAvantImpression=v.open; v.open=true; } });
+  window.addEventListener("afterprint", ()=>{ const v=document.getElementById("ouverture"); if(v && voletAvantImpression!==null){ v.open=voletAvantImpression; voletAvantImpression=null; } });
+  const cibleDuLien = ()=>{ const id = decodeURIComponent(location.hash.slice(1)); return id ? document.getElementById(id) : null; };
+  const ouvrirSeanceDeLAncre = ()=>{
+    const cible = cibleDuLien(); const pan = cible && cible.closest(".seance-panel");
+    if(!pan || pan.classList.contains("active")) return;
+    const onglet = document.querySelector('.seance-tab[data-panel="' + pan.id + '"]');
+    if(onglet) onglet.click();
+    setTimeout(()=>cible.scrollIntoView({block:"start"}), 60);
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", ()=>{
+    const v = document.getElementById("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active")||{}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  appliqueSeance((document.querySelector(".seance-panel.active")||{}).id);
+  // après le reste du script (les autres écouteurs des onglets sont alors branchés)
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
 /* Règle d'or n°101 — chaque séance mène explicitement à la suivante */
 document.querySelectorAll(".vers-seance").forEach(b=>{
   b.addEventListener("click", ()=>{
