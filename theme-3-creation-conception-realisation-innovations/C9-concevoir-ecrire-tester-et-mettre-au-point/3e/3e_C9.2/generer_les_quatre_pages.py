@@ -193,6 +193,12 @@ REPLI = (
     '<p class="repli-tout-en-un">📄 Réseau capricieux, ou besoin de tout avoir sous la main ? '
     f'<a href="{TOUT_EN_UN}">La séquence entière en une seule page</a> — '
     'mêmes activités, mêmes réponses enregistrées, aucun chargement entre les séances.</p>')
+# n°311 (31/10/2026) : à partir de la page 2, le lien vers l'autre page n'est plus du décor visible, il se replie
+REPLI_PLIE = (
+    '<details class="repli-tout-en-un repli-volet"><summary>📄 La séquence entière en une seule page</summary>'
+    '<p>Réseau capricieux, ou besoin de tout avoir sous la main ? '
+    f'<a href="{TOUT_EN_UN}">La séquence entière en une seule page</a> — '
+    'mêmes activités, mêmes réponses enregistrées, aucun chargement entre les séances.</p></details>')
 
 BOUTON = re.compile(r'<button class="btn vers-seance" data-vers="s(\d+)">(.*?)</button>')
 
@@ -237,6 +243,13 @@ CSS_SUP = """
 .repli-tout-en-un{max-width:940px;margin:0 auto 14px;padding:8px 12px;border-left:3px solid var(--sub);
   background:rgba(155,190,252,.06);border-radius:0 8px 8px 0;font-size:.9em;color:var(--sub)}
 .repli-tout-en-un a{color:var(--hl)}
+details.repli-volet{padding:0}
+details.repli-volet>summary{cursor:pointer;min-height:44px;display:flex;align-items:center;padding:8px 12px;color:var(--hl);font-weight:600;list-style:none}
+details.repli-volet>summary::before{content:"▸ ";margin-right:6px}
+details.repli-volet[open]>summary::before{content:"▾ "}
+details.repli-volet>summary:focus-visible{outline:3px solid #ffb300;outline-offset:2px}
+details.repli-volet>p{margin:0;padding:0 12px 10px}
+@media print{details.repli-volet{display:none}}
 .page-suivante{max-width:940px;margin:22px auto 8px;text-align:right}
 .page-suivante .btn{text-decoration:none;display:inline-block}
 .seance-bloc{scroll-margin-top:56px}
@@ -372,7 +385,7 @@ for p in PAGES:
     sous = (f'<p class="subtitle">🎯 Page {p["n"]} sur {len(PAGES)} · {les_seances(p)} '
             f'(2 séances de 55 min) — {p["but"]}</p>')
     page = "\n".join([
-        HEAD, "<body>", NAVCSS, CSS_SUP, NAV, h1, sous, REPLI,
+        HEAD, "<body>", NAVCSS, CSS_SUP, NAV, h1, sous, REPLI if p["n"] == 1 else REPLI_PLIE,
         badges_de(p), IDENTITE, toolbar, PROGRESS,
         corps_assemble,
         suivant(p["n"]),
