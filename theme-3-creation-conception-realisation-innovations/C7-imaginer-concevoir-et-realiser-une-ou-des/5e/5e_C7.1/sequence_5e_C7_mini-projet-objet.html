@@ -112,6 +112,29 @@ details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
   .chrono,.etayage summary{color:#946b00!important}
   .py-num{color:#ab6000!important}
 }
+/* Règle d'or n°317 — la grille de validation de l'activité 2 se complète dans le tableau, par des menus nommés
+   (« Ligne 1, … ») ; après « Vérifier », un retour écrit sous chaque case fausse ou vide, jamais la couleur seule. La
+   décision globale est la dernière ligne de la grille. Sous 680 px, chaque ligne devient une carte. */
+.grille-conforme table.grille caption{caption-side:top;text-align:left;color:var(--sub);font-size:.95em;padding:0 0 6px}
+.grille-conforme table.grille td,.grille-conforme table.grille th{vertical-align:top}
+.grille-conforme table.grille tfoot th{text-align:right;color:var(--text);background:#102a55}
+.grille-conforme td.case-menu select{min-height:40px}
+.grille-conforme td.case-menu .qmark{margin:0 6px 0 0}
+.grille-conforme .retour-case{display:none}
+.grille-conforme .retour-case.visible{display:block;font-size:.92em;margin:5px 0 0;color:#ffc2c8;line-height:1.4}
+.grille-conforme .retour-case.visible.vide{color:var(--warn)}
+@media(max-width:680px){
+  .grille-conforme table.grille,.grille-conforme table.grille tbody,.grille-conforme table.grille tfoot,.grille-conforme table.grille tr,
+  .grille-conforme table.grille td,.grille-conforme table.grille th,.grille-conforme table.grille caption{display:block;width:100%;overflow:visible}
+  .grille-conforme table.grille thead{display:none}
+  .grille-conforme table.grille tr{border:1px solid var(--border);border-radius:10px;margin:0 0 10px;padding:2px 12px 8px;background:rgba(11,27,57,.55)}
+  .grille-conforme table.grille td,.grille-conforme table.grille th{border:none;padding:7px 0 3px;background:none;text-align:left}
+  .grille-conforme table.grille td+td{border-top:1px dashed var(--border)}
+  .grille-conforme table.grille td::before{content:attr(data-col);display:block;font-size:.82em;font-weight:700;color:var(--sub);margin:0 0 3px}
+  .grille-conforme table.grille tfoot th{background:none;text-align:left;font-size:1em}
+  .grille-conforme table.grille tfoot td::before{content:none}
+}
+@media print{.grille-conforme .retour-case{display:none!important}.grille-conforme table.grille tr{break-inside:avoid}.grille-conforme table.grille tfoot th{background:#f1f5f9!important;color:#111827!important}}
 
 /* règle d'or n°305 — une activité qui demande Internet le dit à son début */
 .activite-en-ligne{border-left:4px solid #ffd66b;background:rgba(255,214,107,.12);padding:.55em .85em;border-radius:0 8px 8px 0;margin:.6em 0 .8em;font-size:.95em;line-height:1.45}
@@ -616,15 +639,30 @@ modification.</p>
 <section class="card">
 <h2>🧪 Activité 2 — Valider <span style="font-size:.72em;opacity:.85">(5e_C8.3)</span> <span class="chrono">⏱ ~25 min</span></h2>
 <div class="exo">
-<p>PRÉDIS chaque résultat, puis VÉRIFIE-le au simulateur de l'activité 0 (pose / enlève le sac) et compare&nbsp;:</p>
-<table class="refs"><tr><th>Test</th><th>Attendu</th><th>Le simulateur confirme-t-il&nbsp;?</th></tr>
-<tr><td>Poser le sac</td><td><select id="a2a1" aria-label="Essai 1 — résultat attendu"><option value="">— je prédis —</option><option>LED rouge</option><option>LED verte</option></select></td><td><select id="a2c1" aria-label="Essai 1 — conforme ?"><option value="">—</option><option>Oui</option><option>Non</option></select></td></tr>
-<tr><td>Enlever le sac</td><td><select id="a2a2" aria-label="Essai 2 — résultat attendu"><option value="">— je prédis —</option><option>LED rouge</option><option>LED verte</option></select></td><td><select id="a2c2" aria-label="Essai 2 — conforme ?"><option value="">—</option><option>Oui</option><option>Non</option></select></td></tr>
-<tr><td>Visible à 3 m</td><td>Oui (LED assez brillante)</td><td><select id="a2c3" aria-label="Essai 3 — conforme ?"><option value="">—</option><option>Oui</option><option>Non</option></select></td></tr></table>
-<p style="margin-top:8px">Décision&nbsp;: <select id="a2dec" style="width:auto" aria-label="Décision globale"><option value="">—</option><option>Validée</option><option>À améliorer</option><option>Rejetée</option></select></p>
+<p>PRÉDIS chaque résultat, puis VÉRIFIE-le au simulateur de l'activité 0 (pose / enlève le sac) et compare, <b>directement dans la grille</b>&nbsp;: écris d'abord l'attendu, puis dis si le simulateur le confirme (<b>conforme</b>&nbsp;: ce que tu observes est ce que tu attendais). Prends enfin la décision globale, sur la dernière ligne.</p>
+<div class="grille-conforme"><div class="defile"><table class="refs grille">
+<caption>La grille de validation de la place de rangement, à compléter</caption>
+<thead><tr><th scope="col">Test</th><th scope="col">Attendu</th><th scope="col">Le simulateur confirme-t-il&nbsp;?</th></tr></thead>
+<tbody>
+<tr><td data-col="Test">Poser le sac</td><td data-col="Attendu" class="case-menu"><select id="a2a1" aria-label="Ligne 1, poser le sac — résultat attendu" aria-describedby="a2a1-retour"><option value="">— je prédis —</option><option>LED rouge</option><option>LED verte</option></select><span class="retour-case" id="a2a1-retour"></span></td><td data-col="Le simulateur confirme-t-il ?" class="case-menu"><select id="a2c1" aria-label="Ligne 1, poser le sac — le simulateur confirme-t-il ?" aria-describedby="a2c1-retour"><option value="">—</option><option>Oui</option><option>Non</option></select><span class="retour-case" id="a2c1-retour"></span></td></tr>
+<tr><td data-col="Test">Enlever le sac</td><td data-col="Attendu" class="case-menu"><select id="a2a2" aria-label="Ligne 2, enlever le sac — résultat attendu" aria-describedby="a2a2-retour"><option value="">— je prédis —</option><option>LED rouge</option><option>LED verte</option></select><span class="retour-case" id="a2a2-retour"></span></td><td data-col="Le simulateur confirme-t-il ?" class="case-menu"><select id="a2c2" aria-label="Ligne 2, enlever le sac — le simulateur confirme-t-il ?" aria-describedby="a2c2-retour"><option value="">—</option><option>Oui</option><option>Non</option></select><span class="retour-case" id="a2c2-retour"></span></td></tr>
+<tr><td data-col="Test">Visible à 3 m</td><td data-col="Attendu">Oui (LED assez brillante)</td><td data-col="Le simulateur confirme-t-il ?" class="case-menu"><select id="a2c3" aria-label="Ligne 3, visible à 3 mètres — le simulateur confirme-t-il ?" aria-describedby="a2c3-retour"><option value="">—</option><option>Oui</option><option>Non</option></select><span class="retour-case" id="a2c3-retour"></span></td></tr>
+</tbody>
+<tfoot><tr><th scope="row" colspan="2">Décision globale sur la place de rangement</th><td data-col="Décision globale" class="case-menu"><select id="a2dec" aria-label="Ligne 4, décision globale sur la place de rangement" aria-describedby="a2dec-retour"><option value="">—</option><option>Validée</option><option>À améliorer</option><option>Rejetée</option></select><span class="retour-case" id="a2dec-retour"></span></td></tr></tfoot>
+</table></div></div>
 <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
 <p class="feedback" id="fb2" role="status"></p>
-<details class="correction"><summary>📖 Correction complète</summary><div><p>Poser → LED <b>rouge</b> · Enlever → LED <b>verte</b> · Visible → Oui. Tout est conforme → décision <b>Validée</b>. On valide seulement si les tests importants réussissent — et chaque test a son résultat attendu ÉCRIT AVANT d'essayer.</p></div></details>
+<details class="correction"><summary>📖 Correction complète</summary><div>
+<p><b>La grille, ligne par ligne</b>&nbsp;: LED rouge · LED verte · Oui · Oui · Oui, puis <b>Validée</b>. Chaque test a son résultat attendu ÉCRIT AVANT d'essayer.</p>
+<ul>
+<li><b>Poser le sac</b> → la place devient occupée → attendu&nbsp;: <b>LED rouge</b> (rouge&nbsp;: la place est prise) → le simulateur montre rouge → <b>Oui</b>, conforme.<br>Piège «&nbsp;LED verte&nbsp;» → le vert dit «&nbsp;libre, tu peux poser ton sac&nbsp;»&nbsp;: c'est l'inverse d'une place occupée.</li>
+<li><b>Enlever le sac</b> → la place redevient libre → attendu&nbsp;: <b>LED verte</b> → le simulateur montre vert → <b>Oui</b>.<br>Piège «&nbsp;LED rouge&nbsp;» → une fois le sac enlevé, plus rien n'appuie sur le capteur&nbsp;: la place est libre.</li>
+<li><b>Visible à 3 m</b> → attendu&nbsp;: la LED se voit depuis le hall → elle est assez brillante → <b>Oui</b>.</li>
+<li>Piège «&nbsp;Non&nbsp;», sur une ligne où l'observé est l'attendu → «&nbsp;conforme&nbsp;» veut dire&nbsp;: ce que j'observe est ce que j'attendais. Si ta prédiction était fausse, c'est elle qu'on corrige, pas le simulateur.</li>
+<li><b>Décision globale</b> → les trois tests sont conformes → <b>Validée</b>.<br>Piège «&nbsp;À améliorer&nbsp;» → aucun test n'a échoué&nbsp;: il n'y a rien à corriger pour l'instant.<br>Piège «&nbsp;Rejetée&nbsp;» → on rejette un objet qui échoue à un test important&nbsp;; ici, tout passe.</li>
+</ul>
+<p><b>Conclusion</b>&nbsp;: on valide si les tests importants réussissent — attendu d'abord, observé ensuite.</p>
+</div></details>
 <div class="retenir"><strong>À retenir&nbsp;:</strong> on valide si les tests importants réussissent — attendu d'abord, observé ensuite.</div>
 </div>
 </section>
@@ -866,6 +904,26 @@ $("simBtn").addEventListener("click", () => {
 function qmark(e, state){ let m = e.previousElementSibling; if(!(m && m.classList && m.classList.contains("qmark"))){ m = document.createElement("span"); m.className = "qmark"; e.insertAdjacentElement("beforebegin", m); } if(state === null){ m.textContent = ""; m.className = "qmark"; } else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); } }
 function sv(id, ok){ const e = $(id); if(!e) return 0; const good = Array.isArray(ok) ? ok.includes(e.value) : e.value === ok; e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value); qmark(e, e.value ? good : null); return good ? 1 : 0; }
 function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15); e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim()); qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+/* la grille de validation (règle d'or n°317) : un retour par option fausse, écrit sous sa case après « Vérifier » */
+const RETOURS_GRILLE = {
+  a2a1: {"LED verte": "Un sac posé occupe la place. Le vert dit « libre, tu peux poser ton sac » : c'est l'inverse. Relis la règle du simulateur."},
+  a2a2: {"LED rouge": "Une fois le sac enlevé, plus rien n'appuie sur le capteur : la place redevient libre. Quelle couleur dit « libre » ?"},
+  a2c1: {Non: "Pose le sac au simulateur : la LED devient bien rouge, comme attendu. Ce que tu observes est ce que tu attendais : c'est conforme."},
+  a2c2: {Non: "Enlève le sac au simulateur : la LED redevient bien verte, comme attendu. L'observé égale l'attendu : c'est conforme."},
+  a2c3: {Non: "L'attendu le dit : la LED est assez brillante pour se voir depuis le hall, à 3 mètres. Rien ne la contredit : c'est conforme."},
+  a2dec: {"À améliorer": "Aucun test n'a échoué : il n'y a rien à corriger pour l'instant. On améliore quand un test important rate.",
+          "Rejetée": "On rejette un objet qui échoue à un test important. Ici, les trois tests sont conformes."}
+};
+function retoursGrille(){
+  Object.keys(RETOURS_GRILLE).forEach(id => {
+    const s = $(id), r = $(id + "-retour"); if(!s || !r) return;
+    const v = s.value, bon = s.classList.contains("ok");
+    r.className = "retour-case";
+    r.textContent = !v ? "○ Sans réponse : choisis dans le menu."
+                  : (bon ? "" : "✘ " + (RETOURS_GRILLE[id][v] || "Compare ce que tu observes à ce que tu attendais."));
+    if(r.textContent) r.classList.add("visible", v ? "faux" : "vide");
+  });
+}
 const par = {s: []};
 const CHECKS = {
   0(){ let s = 0; s += sv("a0q1","rouge"); s += sv("a0q2","Le bouton qu'on presse");
@@ -873,6 +931,7 @@ const CHECKS = {
   1(){ let s = 0; s += pres("a1t1", 5); s += pres("a1t2", 5); s += pres("a1t3", 5); s += pres("a1t4", 5); s += pres("a1sol", 30);
     return {score: s, total: 5, exp: true}; },
   2(){ let s = 0; s += sv("a2a1","LED rouge"); s += sv("a2a2","LED verte"); s += sv("a2c1","Oui"); s += sv("a2c2","Oui"); s += sv("a2c3","Oui"); s += sv("a2dec","Validée");
+    retoursGrille();
     return {score: s, total: 6, exp: true}; },
   3(){ let s = 0; s += sv("a3o1","1"); s += sv("a3o2","2"); s += sv("a3o3","3"); s += sv("a3o4","4"); s += sv("a3o5","5");
     return {score: s, total: 5, exp: true}; },

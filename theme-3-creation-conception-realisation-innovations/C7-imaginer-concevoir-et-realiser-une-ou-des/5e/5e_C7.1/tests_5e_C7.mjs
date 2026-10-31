@@ -327,6 +327,49 @@ if (!CFG.essaisBanc) {
      (await page.locator("#tachesBandeau .tache").count()) === 6);
 }
 
+/* — act. 2 : la grille de validation (règle d'or n°317) — des menus DANS la grille, nommés, la décision globale
+     sur sa dernière ligne, et un retour écrit sous chaque case fausse ou vide après « Vérifier ». Les options
+     fausses sont lues dans les menus de la page ; seules les bonnes réponses sont écrites ici. — */
+{
+  const BONNES = [["#a2a1", "LED rouge"], ["#a2c1", "Oui"], ["#a2a2", "LED verte"], ["#a2c2", "Oui"], ["#a2c3", "Oui"], ["#a2dec", "Validée"]];
+  const grille = await page.evaluate(ids => ids.map(id => {
+    const s = document.querySelector(id);
+    return { id, label: s.getAttribute("aria-label") || "", decrit: s.getAttribute("aria-describedby"),
+             dansGrille: !!s.closest(".grille-conforme table td.case-menu"),
+             valeurs: [...s.options].map(o => o.value).filter(Boolean) };
+  }), BONNES.map(b => b[0]));
+  ok("act. 2 : les 6 menus de la grille sont dans ses cases (décision globale comprise), nommés « Ligne n, … » "
+     + "et reliés à leur case de retour",
+     grille.every(g => g.dansGrille && /^Ligne [1-4], .+/.test(g.label) && g.decrit === g.id.slice(1) + "-retour"),
+     grille.map(g => g.label.slice(0, 24)).join(" | "));
+  await page.click('.btn.check[data-check="2"]');
+  await page.waitForTimeout(120);
+  const vides = await page.$$eval(".grille-conforme .retour-case.visible", l => l.map(r => r.textContent));
+  ok("act. 2 : la grille vérifiée à vide dit « ○ Sans réponse » sous chacune de ses 6 cases",
+     vides.length === 6 && vides.every(x => /^○ Sans réponse/.test(x)), vides[0] || "");
+  const retours = [];
+  for (const [id, bonne] of BONNES) {
+    for (const v of grille.find(g => g.id === id).valeurs.filter(x => x !== bonne)) {
+      await page.selectOption(id, v);
+      await page.click('.btn.check[data-check="2"]');
+      await page.waitForTimeout(80);
+      retours.push(await page.evaluate(i => {
+        const r = document.getElementById(i.slice(1) + "-retour"), td = r.closest("td");
+        return { texte: r.textContent, visible: r.offsetHeight > 0, marque: (td.querySelector(".qmark") || {}).textContent };
+      }, id));
+    }
+  }
+  ok(`act. 2 : les ${retours.length} options fausses de la grille ont chacune SON retour, écrit sous la case (✘ et pourquoi)`,
+     retours.length === 7 && retours.every(r => r.visible && r.marque === "✘" && /^✘ .{40,}/.test(r.texte))
+     && new Set(retours.map(r => r.texte)).size === 7, (retours[0] || {}).texte?.slice(0, 60));
+  for (const [id, v] of BONNES) await page.selectOption(id, v);
+  await page.click('.btn.check[data-check="2"]');
+  await page.waitForTimeout(120);
+  ok("act. 2 : remplie juste, validée 6/6, et plus aucun retour sous les cases",
+     /activité validée/.test(await page.locator("#fb2").textContent()) && /6\/6/.test(await page.locator("#fb2").textContent())
+     && (await page.locator(".grille-conforme .retour-case.visible").count()) === 0);
+}
+
 /* — aucun envoi réseau — */
 {
   const sorties = [];

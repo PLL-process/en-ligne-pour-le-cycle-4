@@ -27098,3 +27098,50 @@ charges à compléter.
 `controle_unites`, `controle_sigles`, `controle_liens`, `controle_hierarchie`, `controle_regles_visibles`,
 `controle_medias`, `controle_longueurs`, `controle_impression`, `controle_squelette`, `controle_verrous`. Non testé :
 un vrai téléphone, Firefox, Safari, une impression réelle.
+
+---
+
+## 31/10/2026 — Règle d'or n°317, suite au thème 3 : 4e_C8.1 et 5e_C7.1
+
+*Suite de la règle n°317 (« le cahier des charges se complète dans le tableau, par des menus déroulants, sous forme
+de QCM ») : après le thème 1 (#573) et le thème 2, le thème 3.*
+
+**La réincrustation** (`incrustations.py --seq theme-3-`). 3e_C7.1 et 4e_C7.1 ne changent que par le kit des ateliers
+recopié (bancs 71/71 et 47/47). Dans **4e_C8.1**, l'exercice 3 de l'atelier des exigences arrive avec ses **8 menus
+dans le tableau** : le test qui vérifie chaque exigence, puis le verdict. Le banc remplissait encore les anciens
+boutons radio : il remplit maintenant les 8 menus d'après la définition de l'exercice. La règle d'impression de
+4e_C4.1 (les listes d'options sous les menus du tableau retirées) est posée ici aussi.
+
+**La grille « Conforme ? » de 4e_C8.1** (test, attendu, observé au banc, conforme ?).
+- Chaque menu a un nom lisible (« Ligne n, … — conforme ? ») ; la décision globale, qui était sous le tableau, devient
+  sa dernière ligne.
+- Chaque option fausse écrit son retour sous la case (10 retours), une case vide dit « ○ Sans réponse ». Par
+  exemple : « Partiel » pour 0,5 cm quand l'attendu est « bouge de moins de 1 cm » (« l'observé respecte l'attendu,
+  ou non ») ; « Oui » pour une attache fissurée ; « Validée » alors qu'un test échoue sur une contrainte réelle, le gel
+  d'un hiver à New York.
+- La correction réfute « Partiel » ligne par ligne, puis « Validée » et « Rejetée ».
+- L'ordre Oui / Non / Partiel est gardé : la bonne réponse n'est pas toujours au même rang, et une échelle mélangée se
+  lirait mal.
+- À 390 px, chaque ligne devient une carte (avant, le tableau défilait de côté) ; sur papier, les options
+  s'impriment en cases à cocher, comme avant.
+- Banc : **53/53** (48/48 avant). Ses deux attentes après rechargement guettent maintenant la restauration au lieu
+  d'un délai fixe de 400 ms, qui ne suffisait pas toujours quand le banc tournait juste après d'autres.
+
+**5e_C7.1, activité 2** : la même grille de validation, avec sa décision sous le tableau, a reçu le même traitement
+(7 retours, correction exhaustive). Banc : **46/46** (42/42 avant).
+
+**Laissés, et pourquoi.** Le banc des matériaux de 3e, 4e et 5e_C7.3 est un simulateur où l'élève tape ses seuils ;
+les cotes de 3e_C7.7, les champs de 3e_C7.8 et les lectures de 5e_C7.3 ne sont pas des choix ; le protocole 1b de
+4e_C8.1 est une rédaction. Les tableaux de recette de 3e_C9.2 sont déjà en menus dans leurs cases, mais sans retour
+par option : à reprendre avec la page tout-en-un et ses quatre pages générées. 4e_C9.1 n'a pas été touché (l'atelier
+de programmation y est en cours).
+
+**À corriger dans le générateur du thème 1** (une PR du thème 1) : `kit.css` ne retire pas à l'impression la liste
+d'options `.pp-choix` sous les menus d'un `.tableau-menus` (contourné dans 4e_C4.1 et 4e_C8.1, présent dans 3e_C3.1
+Shenzhen) ; dans `donnees_exigences.py`, exercice 3, les menus du verdict n'ont qu'un indice et ceux du test n'ont de
+retour que pour T5 ; dans une colonne étroite, un menu coupe un mot en deux (« négociab-le », colonne Flexibilité de
+4e_C4.1).
+
+**Contrôles.** Verts : `controle_unites`, `controle_sigles`, `controle_liens`, `controle_hierarchie`,
+`controle_regles_visibles`, `controle_medias`, `controle_longueurs`, `controle_impression`, `controle_squelette`,
+`controle_verrous`. Non testé : un vrai téléphone, Firefox, Safari, une impression réelle.

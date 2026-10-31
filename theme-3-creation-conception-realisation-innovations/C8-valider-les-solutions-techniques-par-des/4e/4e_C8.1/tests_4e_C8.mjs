@@ -292,7 +292,10 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   const cle = await page.evaluate(k => localStorage.getItem(k), CFG.cle);
   ok("sauvegarde : la clé localStorage attendue est écrite", !!cle && cle.length > 50, CFG.cle);
   await page.reload();
-  await page.waitForTimeout(400);
+  /* On attend que la restauration ait eu lieu, au lieu d'un délai fixe : lancé juste après
+     d'autres bancs, 400 ms ne suffisaient pas toujours (31/10/2026). */
+  await page.waitForFunction(() => /^[12] \/ 6/.test((document.getElementById("progTxt") || {}).textContent?.trim() || ""),
+                             null, {timeout: 5000}).catch(() => {});
   ok("restauration : la progression survit au rechargement",
      /^[12] \/ 6/.test((await page.locator("#progTxt").textContent()).trim()));
   ok("restauration : le tableau de bord retrouve ses coches",
@@ -302,7 +305,42 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
 /* — activité 2 : l'exercice inséré depuis l'atelier des représentations (diagramme des exigences,
      4e, exercice 3) est exigé par le vérificateur de l'activité (24/10/2026) — */
 {
-  for (const [id, v] of [["#a2c1", "Oui"], ["#a2c2", "Oui"], ["#a2c3", "Oui"], ["#a2c4", "Non"], ["#a2dec", "À améliorer"]])
+  /* — la grille « Conforme ? » (règle d'or n°317) : des menus DANS la grille, nommés, et un retour écrit
+       sous chaque case fausse ou vide après « Vérifier ». Les options fausses sont lues dans les menus. — */
+  const BONNES = [["#a2c1", "Oui"], ["#a2c2", "Oui"], ["#a2c3", "Oui"], ["#a2c4", "Non"], ["#a2dec", "À améliorer"]];
+  const grille = await page.evaluate(ids => ids.map(id => {
+    const s = document.querySelector(id);
+    return { id, label: s.getAttribute("aria-label") || "", decrit: s.getAttribute("aria-describedby"),
+             dansGrille: !!s.closest(".grille-conforme table td.case-menu"),
+             valeurs: [...s.options].map(o => o.value).filter(Boolean) };
+  }), BONNES.map(b => b[0]));
+  ok("act. 2 : la grille « Conforme ? » porte ses 5 menus dans ses cases (décision globale comprise), "
+     + "chacun nommé « Ligne n, … » et relié à sa case de retour",
+     grille.length === 5 && grille.every((g, i) => g.dansGrille && new RegExp("^Ligne " + (i + 1) + ", ").test(g.label)
+       && g.decrit === g.id.slice(1) + "-retour"),
+     grille.map(g => g.label.slice(0, 28)).join(" | "));
+  await page.click('.btn.check[data-check="3"]');
+  await page.waitForTimeout(120);
+  const vides = await page.$$eval(".grille-conforme .retour-case.visible", l => l.map(r => r.textContent));
+  ok("act. 2 : la grille vérifiée à vide dit « ○ Sans réponse » sous chacune de ses 5 cases",
+     vides.length === 5 && vides.every(x => /^○ Sans réponse/.test(x)), vides[0] || "");
+  const retoursGrille = [];
+  for (const [id, bonne] of BONNES) {
+    for (const v of grille.find(g => g.id === id).valeurs.filter(x => x !== bonne)) {
+      await page.selectOption(id, v);
+      await page.click('.btn.check[data-check="3"]');
+      await page.waitForTimeout(80);
+      retoursGrille.push(await page.evaluate(i => {
+        const r = document.getElementById(i.slice(1) + "-retour"), td = r.closest("td");
+        return { texte: r.textContent, visible: r.offsetHeight > 0, marque: (td.querySelector(".qmark") || {}).textContent };
+      }, id));
+    }
+  }
+  ok(`act. 2 : les ${retoursGrille.length} options fausses de la grille ont chacune SON retour, écrit sous la case (✘ et pourquoi)`,
+     retoursGrille.length === 10 && retoursGrille.every(r => r.visible && r.marque === "✘" && /^✘ .{40,}/.test(r.texte))
+     && new Set(retoursGrille.map(r => r.texte)).size === 10,
+     (retoursGrille[0] || {}).texte?.slice(0, 60));
+  for (const [id, v] of BONNES)
     await page.selectOption(id, v);
   await page.fill("#a2diag", "Le plastique devient cassant au froid. Test : refaire la nuit de gel avec une attache en inox.");
   await page.click('.btn.check[data-check="3"]');
@@ -315,10 +353,33 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   await page.waitForTimeout(100);
   ok("act. 2 : l'exercice inséré se vérifie à vide (retour à reprendre)",
      /🔴/.test(await page.locator("#ex_4e_e3 .retour").innerText()));
-  for (const [i, v] of ["t3", "t1", "t4", "t2"].entries())
-    await page.check(`input[name="ex_4e_e3__lien_${i}"][value="${v}"]`);
-  for (const [i, v] of ["atteint", "hors", "marge", "f0"].entries())
-    await page.check(`input[name="ex_4e_e3__verdict_${i}"][value="${v}"]`);
+  /* Depuis la règle d'or n°317, l'exercice se complète dans le tableau du cahier des charges : 8 menus
+     `ex_4e_e3__valid_<ligne>_3` (le test) et `_5` (le verdict). Les bonnes options sont LUES dans la définition
+     JSON de la section ; une option fausse exprès (le test qui ne mesure rien) doit écrire son retour sous sa case. */
+  const remplirTableau = (faux) => page.evaluate(faux => {
+    const sec = document.getElementById("ex_4e_e3").closest(".atelier-incruste");
+    const D = JSON.parse(sec.querySelector('script[type="application/json"]').textContent).exercices.ex_4e_e3;
+    const t = D.widgets.find(w => w.type === "tableau");
+    let piege = null;
+    t.cases.forEach(c => {
+      const s = document.getElementsByName(c.name)[0];
+      const mauvaise = faux && !piege && Object.keys(c.retours || {})[0];
+      s.value = mauvaise || c.bonne; s.dispatchEvent(new Event("change", { bubbles: true }));
+      if (mauvaise) piege = { name: c.name, attendu: c.retours[mauvaise] };
+    });
+    return { menus: t.cases.length, noms: t.cases.every(c => /^ex_4e_e3__valid_\d_[35]$/.test(c.name)), piege };
+  }, faux);
+  const essai = await remplirTableau(true);
+  await page.click("#ex_4e_e3 button.verifier");
+  await page.waitForTimeout(100);
+  const sous = await page.evaluate(n => {
+    const r = document.getElementById(n + "-retour");
+    return { texte: r.textContent, visible: r.offsetHeight > 0, lie: document.getElementById(n).getAttribute("aria-describedby") === n + "-retour" };
+  }, essai.piege.name);
+  ok("act. 2 : l'exercice inséré a ses 8 menus dans le tableau ; un test faux exprès écrit son retour sous sa case",
+     essai.menus === 8 && essai.noms && sous.visible && sous.lie && sous.texte.startsWith("✘")
+     && sous.texte.includes(essai.piege.attendu.slice(0, 25)), sous.texte.slice(0, 70));
+  await remplirTableau(false);
   await page.fill("#ex_4e_e3__proto", "Je lance un arrosage. Dès qu'il s'arrête, je démarre un chronomètre et je mesure le temps " +
                   "jusqu'à l'arrivée du compte rendu sur le smartphone. L'exigence est validée si le message arrive en 5 min au plus.");
   await page.click("#ex_4e_e3 button.verifier");
@@ -339,9 +400,20 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   ok("sauvegarde : les champs de l'exercice inséré restent hors de la clé de la séquence",
      !Object.keys(memo.inputs || {}).some(id => id.startsWith("ex_4e_e3")));
   await page.reload();
-  await page.waitForTimeout(400);
+  await page.waitForFunction(() => /chronomètre/.test((document.getElementById("ex_4e_e3__proto") || {}).value || ""),
+                             null, {timeout: 5000}).catch(() => {});
+  await page.waitForTimeout(150);
   ok("restauration : la réponse de l'exercice inséré survit au rechargement (clé de l'atelier)",
      /chronomètre/.test(await page.inputValue("#ex_4e_e3__proto")));
+  const retrouves = await page.evaluate(() => {
+    const sec = document.getElementById("ex_4e_e3").closest(".atelier-incruste");
+    const D = JSON.parse(sec.querySelector('script[type="application/json"]').textContent).exercices.ex_4e_e3;
+    const t = D.widgets.find(w => w.type === "tableau");
+    return t.cases.filter(c => { const s = document.getElementsByName(c.name)[0];
+      return s.value === c.bonne && s.parentNode.querySelector(".menu-vu").textContent === s.options[s.selectedIndex].text; }).length;
+  });
+  ok("restauration : les 8 menus du tableau de l'exercice inséré retrouvent leur choix, écrit en texte dans la case",
+     retrouves === 8, retrouves + " / 8");
 }
 
 /* — aucun envoi réseau — */
