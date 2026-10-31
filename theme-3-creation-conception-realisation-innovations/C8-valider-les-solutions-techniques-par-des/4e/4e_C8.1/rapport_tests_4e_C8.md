@@ -8,6 +8,16 @@ viewport 1280×900 + émulation téléphone 390×844 · Suite : `tests_4e_C8.mjs
 > Règle d'or n°136 : chaque dispositif est vérifié par la **mesure de son effet** — un
 > nombre —, jamais par la présence de ses commandes.
 
+> **Mise à jour du 31/10/2026 — règle d'or n°317.** L'exercice incrusté de l'activité 2 (atelier des exigences, 4e,
+> exercice 3) se complète maintenant dans le tableau du cahier des charges : 8 menus `ex_4e_e3__valid_<ligne>_3`
+> (le test) et `_5` (le verdict), réincrusté depuis l'atelier. La grille « Conforme ? » de la page reçoit des menus
+> nommés (« Ligne 1, … — conforme ? »), la décision globale sur sa dernière ligne, un retour écrit sous chaque case
+> fausse ou vide après « Vérifier », et une correction ligne par ligne qui réfute chaque piège. La suite compte
+> **53 / 53** (48 avant) : cinq contrôles ajoutés (les 5 menus de la grille dans leurs cases et nommés ; « ○ Sans
+> réponse » à vide ; les 10 options fausses, chacune son retour ; les 8 menus de l'exercice et le retour d'un test
+> faux exprès ; les 8 menus retrouvés au rechargement). À l'impression, la page retire la liste d'options que la
+> fiche papier ajoute sous chaque menu du tableau incrusté.
+
 ## 1. Tests automatisés exécutés — 41/41 réussis
 
 ### Les dispositifs installés à l'harmonisation

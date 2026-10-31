@@ -8,6 +8,13 @@ rejouable : `node tests_5e_C7.mjs .`).
 > Règle d'or n°136 : chaque dispositif est vérifié par la **mesure de son effet** —
 > un nombre —, jamais par la présence de ses commandes.
 
+> **Mise à jour du 31/10/2026 — règle d'or n°317.** La grille de validation de l'activité 2 se complète dans le
+> tableau : menus nommés (« Ligne 1, poser le sac — résultat attendu »), décision globale sur sa dernière ligne (elle
+> était sous le tableau), un retour écrit sous chaque case fausse ou vide après « Vérifier », et une correction
+> ligne par ligne qui réfute chaque piège. La suite compte **46 / 46** (42 avant) : les 6 menus dans leurs cases et
+> nommés ; « ○ Sans réponse » à vide ; les 7 options fausses, chacune son retour ; la grille juste validée 6/6, sans
+> retour restant.
+
 ## 1. Tests automatisés exécutés — 37/37 réussis
 
 ### Les dispositifs installés à l'harmonisation
