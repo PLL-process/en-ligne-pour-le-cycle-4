@@ -466,6 +466,131 @@
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<style id="bac-css">
+/* ══ Séance 1 — la bête à cornes, dessinée dans la page ══
+   Les cases sont des boîtes HTML (un menu ou un texte y tient à toutes les largeurs) ; la corne est le bord d'un
+   demi-ovale, attaché au milieu du bas des deux cases du haut ; le produit est dans la corne, la flèche descend vers
+   le but. Rien ne se touche : la corne entoure le produit sans le toucher, la flèche s'arrête au-dessus du but. */
+.mots-seance{margin:0 0 6px;font-size:.92em}
+.question-seance{margin:4px 0 10px;color:var(--warn);font-weight:600}
+.duree-temps{color:var(--sub);font-weight:400;font-size:.9em}
+.cahier{border-left:3px solid var(--head);padding-left:11px}
+.bac{--g:22px;--encre:#1b2438;--gris:#3d4b66;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:var(--g);
+  max-width:780px;margin:10px auto 8px;padding:16px 16px 18px;background:#fbfcff;color:var(--encre);
+  border:1px solid var(--border);border-radius:12px}
+.bac .bac-q{margin:0 0 6px;text-align:center;font-style:italic;font-size:14px;line-height:1.3;color:var(--gris);align-self:end}
+.bac .bac-q.bas{grid-column:1/-1;margin:10px 0 6px}
+.bac .bac-case{position:relative;display:flex;flex-direction:column;justify-content:center;gap:6px;min-height:68px;padding:8px 10px;
+  background:#fff;border:2.4px solid var(--encre);border-radius:12px;text-align:center;font-weight:700;font-size:15px;line-height:1.3;
+  overflow-wrap:break-word;hyphens:manual}
+.bac .bac-case.bas{grid-column:1/-1;background:#fff8e6;border-color:#a06a00}
+.bac-vide .bac-case.bas{margin-top:12px}
+.bac .bac-bol{grid-column:1/-1;justify-self:start;box-sizing:border-box;margin-left:calc((100% - var(--g)) / 4 - 2.5px);
+  width:calc((100% + var(--g)) / 2 + 5px);min-height:118px;padding:14px 8px 34px;border:5px solid var(--encre);border-top:0;
+  border-radius:0 0 50% 50% / 0 0 100% 100%;display:flex;justify-content:center;align-items:flex-start}
+.bac .bac-produit{max-width:74%;min-width:min(44%,230px);padding:13px 22px;background:#eef4ff;border:3px solid var(--encre);border-radius:50%;
+  font-weight:700;font-size:16px;line-height:1.25;text-align:center;overflow-wrap:break-word}
+.bac .bac-fleche{grid-column:1/-1;justify-self:center;position:relative;width:3px;height:26px;margin-bottom:12px;background:var(--encre)}
+.bac .bac-fleche::after{content:"";position:absolute;left:50%;bottom:-11px;transform:translateX(-50%);
+  border-left:8px solid transparent;border-right:8px solid transparent;border-top:12px solid var(--encre)}
+.bac-vide .bac-fleche{margin-bottom:0}
+/* le menu posé dans la case : sans script, le menu natif ; avec, le choix s'écrit en entier dans la case */
+.bac .menu-case{position:relative;display:flex;align-items:center;gap:6px;width:100%;min-height:44px;padding:6px 8px;
+  border:1.5px dashed #1f5fbf;border-radius:8px;background:#f3f7ff;text-align:left;font-weight:700;cursor:pointer}
+.bac .menu-case select{width:100%;font-size:15px}
+.bac .menu-vu,.bac .menu-fleche{display:none}
+.bac.menus-js .menu-case select{position:absolute;inset:0;width:100%;height:100%;min-height:0;margin:0;padding:0;border:0;
+  opacity:0;cursor:pointer;font-size:16px}
+.bac.menus-js .menu-vu{display:block;flex:1 1 auto;min-width:0;line-height:1.3;color:var(--encre)}
+.bac.menus-js .menu-vu:empty::before{content:"choisir";color:var(--gris);font-style:italic;font-weight:400}
+.bac.menus-js .menu-fleche{display:block;flex:0 0 auto;color:#1f5fbf}
+.bac .menu-case:focus-within{outline:3px solid #0369a1;outline-offset:2px}
+.bac .menu-case.choisi{border-style:solid;background:#fff}
+.bac .bac-case.juste .menu-case{border:2.4px solid #166534}
+.bac .bac-case.faux .menu-case{border:2.4px solid #b91c1c}
+.bac .bac-verdict{display:none;font-size:14px;font-weight:600;line-height:1.35;text-align:left}
+.bac .bac-verdict.visible{display:block}
+.bac .bac-verdict.juste{color:#166534}.bac .bac-verdict.faux{color:#b91c1c}.bac .bac-verdict.vide{color:#7a4a00}
+.bac .bac-ecrit{display:block;white-space:pre-wrap}
+.bac .bac-ecrit.vide{color:var(--gris);font-weight:400;font-style:italic}
+.bac-champs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 16px;margin:8px 0}
+.bac-champs .assoc{margin:4px 0}
+.bac-champs .bac-champ-but,.bac-champs .bac-champ-objet{grid-column:1/-1}
+.bac-champs input[type=text]{min-height:44px}
+.bac-criteres ul{margin:4px 0;padding-left:22px}
+.bac-marque{font-weight:700;margin-left:4px}
+.bac-marque.juste{color:var(--ok)}.bac-marque.faux{color:var(--err)}
+.bac-coche{display:flex;align-items:center;gap:10px;min-height:44px;margin:8px 0}
+.bac-coche input{width:22px;height:22px;flex:0 0 auto;accent-color:var(--hl)}
+.bac-coche label{cursor:pointer;font-weight:600}
+@media (max-width:520px){
+  .bac{--g:14px;padding:12px 10px 14px}
+  .bac .bac-case{font-size:14.5px;padding:7px 7px;min-height:60px}
+  .bac .bac-produit{max-width:80%;padding:9px 12px;font-size:15px}
+  .bac .bac-bol{min-height:104px;padding:12px 6px 30px}
+  .bac-champs{grid-template-columns:minmax(0,1fr)}
+}
+
+/* ══ Séance 2 — « Entoure » à l'écran : chaque nom de la figure devient un bouton ══
+   Large (le dessin fait au moins 760 px) : le bouton est posé à la place du nom, et l'entourer dessine une ellipse
+   autour de lui. Étroit (un téléphone) : à 390 px, le dessin réduit à 358 px rendrait ses noms illisibles (7 px) et
+   des boutons de 44 px s'y chevaucheraient ; les noms deviennent une rangée de puces sous la figure, et l'ellipse se
+   dessine sur la figure, autour du nom entouré. */
+.ent-dessin{position:relative;container-type:inline-size;max-width:820px}
+.ent-dessin img{margin:0}
+.ent-traits{position:absolute;top:0;left:0;width:100%;height:auto;aspect-ratio:720/460;pointer-events:none;overflow:visible}
+.ent-traits ellipse{fill:none;stroke:#ffd66b;stroke-width:3.5;display:none}
+.ent-traits ellipse.on{display:inline}
+.ent-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 2px}
+.ent-btn{position:relative;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-height:44px;
+  min-width:80px;padding:3px 22px;background:#0b1b39;color:var(--text);border:2px dashed var(--hl);border-radius:999px;
+  font-family:inherit;font-size:15px;line-height:1.1;cursor:pointer}
+.ent-btn .ent-nom{font-weight:600;white-space:nowrap}
+.ent-btn .ent-etat{display:none;font-size:13px;font-weight:700;color:#ffd66b;margin-top:2px}
+.ent-btn[aria-pressed="true"]{border:3.5px solid #ffd66b;border-radius:50%;padding:2px 20px}
+.ent-btn[aria-pressed="true"] .ent-etat{display:block}
+.ent-btn:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.ent-btn .ent-marque{position:absolute;top:-9px;right:-9px;min-width:22px;height:22px;padding:0 4px;border-radius:11px;
+  font-size:13px;font-weight:700;line-height:22px;text-align:center;color:#050f24}
+.ent-btn .ent-marque.juste{background:var(--ok)}.ent-btn .ent-marque.faux{background:var(--err)}
+.ent-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.ent-compte{color:var(--sub);font-size:.9em}
+#ent_retour ul{margin:6px 0 2px;padding-left:20px;color:var(--text)}
+#ent_retour li{margin:3px 0}
+@container (min-width:760px){
+  .ent-boutons{position:absolute;inset:0;margin:0;display:block;pointer-events:none}
+  .ent-btn{position:absolute;top:calc(var(--y) / 460 * 100%);transform:translateY(-50%);width:var(--w);min-width:0;padding:2px 6px;
+    pointer-events:auto}
+  .ent-btn[aria-pressed="true"]{padding:1px 4px}
+  .ent-btn[data-cote="d"]{right:calc((720 - var(--x)) / 720 * 100%)}
+  .ent-btn[data-cote="g"]{left:calc(var(--x) / 720 * 100%)}
+  .ent-traits{display:none}
+}
+@media print{
+  .ent-traits,.ent-boutons,.ent-actions{display:none!important}
+  /* la bête à cornes sur le papier : le dessin, des lignes pour écrire, les propositions en cases */
+  .bac{background:#fff!important;border:0!important;padding:2mm 0!important;max-width:none!important;break-inside:avoid}
+  .bac .bac-case{background:#fff!important;min-height:16mm}
+  .bac .bac-case.bas{background:#fff!important}
+  .bac .bac-produit{background:#fff!important}
+  .bac .menu-case{display:block!important;border:0!important;background:none!important;padding:0!important;min-height:0!important}
+  .bac .menu-fleche,.bac .bac-verdict{display:none!important}
+  .bac.menus-js .menu-vu{display:block}
+  .bac-vide .pp-choix{display:none!important}
+  .bac-vide.menus-js .menu-vu:empty{min-height:9mm;border-bottom:.6pt solid #94a3b8}
+  .bac-vide.menus-js .menu-vu:empty::before{content:""}
+  .bac:not(.bac-vide) .menu-vu{display:none!important}
+  .bac:not(.bac-vide) .pp-choix{display:block!important;text-align:left;font-weight:400;font-size:9pt;line-height:1.5}
+  .bac .pp-choix .pp-case{display:block;white-space:normal}
+  .bac-liste{font-size:9.5pt}
+  .bac-cadre{display:block;min-height:56mm;margin:2mm 0;padding:2mm 3mm;border:.8pt dashed #334155;border-radius:3mm;break-inside:avoid}
+  /* moins de feuilles : le dessin du vélo-cargo (b) à la largeur d'une demi-page, le lien vers le lexique ne s'imprime pas */
+  #incruste-bc-5e-shenzhen-c2 .figure svg,#incruste-bc-5e-shenzhen-c2 .figure img{max-width:120mm!important;margin:0 auto!important}
+  .consigne-bac,#activite-bac h4{break-after:avoid;page-break-after:avoid}
+  .mots-seance{display:none!important}
+  .bac-cadre p{margin:0!important;font-size:9.5pt}
+}
+</style>
 </head>
 <body>
 <style id="navharm-css">
@@ -492,7 +617,7 @@
   <span class="badge niveau">5e</span>
   <span class="badge code" title="Programme 2024 — 5e_C2.1 : Faire la liste des interacteurs extérieurs d'un objet ou système technique.">5e_C2.1</span><span class="badge code" title="Programme 2024 — 5e_C2.2 : Repérer et expliquer les choix de conception dans les domaines de l' ergonomie et de la sécurité , ou en lien avec des objectifs de développement durable .">5e_C2.2</span>
   <span class="badge theme" title="Domaines du socle commun travaillés : D1.3 Comprendre, s’exprimer en utilisant les langages mathématiques, scientifiques et informatiques · D2 Les méthodes et outils pour apprendre · D4 Les systèmes naturels et les systèmes techniques · D5 Les représentations du monde et l’activité humaine.">D1.3 · D2 · D4 · D5</span>
-  <span class="badge theme">3 séances de 55 min</span>
+  <span class="badge theme">4 séances de 55 min</span>
 </div>
 <p class="saved-note">Tes réponses sont enregistrées <b>dans ce navigateur uniquement</b>. Le
 <b>mode essentiel</b> masque les corrections et les compléments.</p>
@@ -536,18 +661,21 @@
 </div>
 
 <div class="progress-wrap">
-  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0"><div id="progFill"></div></div>
-  <p id="progTxt">0 / 3 activités validées</p>
+  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><div id="progFill"></div></div>
+  <p id="progTxt">0 / 4 activités validées</p>
 </div>
 
 <div class="seance-tabs" role="tablist" id="seances" aria-label="Séances de la séquence">
-  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1<br>Recenser<span class="done" id="done-s1"></span></button>
-  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2<br>Lire les formes<span class="done" id="done-s2"></span></button>
-  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3<br>Comparer et transférer<span class="done" id="done-s3"></span></button>
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1<br>Le besoin&nbsp;: la bête à cornes<span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2<br>Recenser<span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3<br>Lire les formes<span class="done" id="done-s3"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s4" id="tab-s4">Séance 4<br>Comparer et transférer<span class="done" id="done-s4"></span></button>
 </div>
 <div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
 <main class="page" id="contenu">
 <div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<p class="mots-seance"><a href="lexique_5e_C2.1.html#seance-s1">📖 Les mots de cette séance</a></p>
+<p class="question-seance">❓ La question de la séance&nbsp;: à qui la station rend-elle service, et dans quel but&nbsp;?</p>
 <section class="card">
   <h2>🎫 Billet d'entrée — je vérifie mes outils (4 min, <b>sans note</b>)</h2>
   <p>Trois questions. <b>Aucune note</b>&nbsp;: c'est un aiguillage.</p>
@@ -566,8 +694,8 @@
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="le nom de la marque de l'objet"><label for="be_2__4">le nom de la marque de l'objet</label></div>
 </fieldset>
   <p class="meta">⚠️ Les deux premières réponses se ressemblent&nbsp;: c'est exprès. «&nbsp;À quoi
-  l'objet sert&nbsp;» décrit le <b>service rendu à l'usager</b>&nbsp;; ce n'est pas la fonction
-  technique. La fonction technique dit ce que l'objet doit <b>faire</b> pour rendre ce service —
+  l'objet sert&nbsp;» décrit le <b>service rendu à l'usager</b>&nbsp;: c'est la <b>fonction d'usage</b>
+  <span class="en">(EN&nbsp;: <i>use function</i>)</span>. Ce n'est pas la fonction technique. La fonction technique dit ce que l'objet doit <b>faire</b> pour rendre ce service —
   «&nbsp;maintenir le vélo verrouillé&nbsp;», «&nbsp;reconnaître un abonné&nbsp;» — et elle laisse
   entièrement ouvert le <b>moyen</b> employé. C'est ce moyen qu'on appelle le <b>principe
   technique</b>.</p>
@@ -583,8 +711,12 @@
   <details class="aide" id="capsule"><summary>🎒 Je révise en 3 minutes</summary>
     <p>Un <b>objet technique</b> est fabriqué pour répondre à un <b>besoin</b>. Une <b>fonction
     technique</b> dit <b>ce que l'objet doit faire</b> pour rendre ce service&nbsp;: elle commence
-    par un verbe à l'infinitif, et elle ne dit pas <i>par quel moyen</i>. «&nbsp;À quoi ça
-    sert&nbsp;», c'est autre chose&nbsp;: c'est le service rendu à l'usager.</p>
+    par un verbe à l'infinitif, et elle ne dit pas <i>par quel moyen</i>. «&nbsp;À quoi l'objet
+    sert&nbsp;», c'est autre chose&nbsp;: il décrit le service rendu à l'usager&nbsp;: c'est la <b>fonction
+    d'usage</b> <span class="en">(EN&nbsp;: <i>use function</i>)</span>. Ce n'est pas la fonction technique.</p>
+    <p><b>Fonction d'usage</b>&nbsp;: ce à quoi sert l'objet, pour la personne qui l'utilise. Elle s'écrit avec un
+    verbe à l'infinitif. Pour un parapluie&nbsp;: «&nbsp;protéger quelqu'un de la pluie&nbsp;». Dans la bête à cornes,
+    c'est la réponse à «&nbsp;Dans quel but&nbsp;?&nbsp;».</p>
     <p>L'<b>environnement</b> d'un objet, en technologie, ne veut pas dire «&nbsp;la nature&nbsp;».
     C'est <b>tout ce qui l'entoure</b> et entre en relation avec lui. Le programme en nomme
     <b>quatre familles</b>&nbsp;: les <b>usagers</b>, les <b>données</b>, les <b>autres objets</b>
@@ -595,8 +727,261 @@
   </details>
 </section>
 
+<section class="card" id="activite-bac">
+  <h2>🐂 Activité 1 — La bête à cornes&nbsp;: à qui, sur quoi, dans quel but&nbsp;? <span style="color:var(--sub);font-size:.8em">(~40 min)</span></h2>
+  <div class="meta"><b>Objectif</b> exprimer le besoin auquel répond un objet · <b>Pour la suite</b> la bête à cornes
+  prépare le diagramme pieuvre de la séance 2 (5e_C2.1) · <b>Production</b> la bête à cornes de la station, puis celle
+  d'un objet du collège, dessinée sur ton cahier</div>
+
+  <p><b>Le besoin d'abord.</b> Avant de chercher tout ce qui entoure la station, une question plus simple&nbsp;: à quoi
+  sert-elle, et pour qui&nbsp;? C'est son <b>besoin</b>&nbsp;: ce qui manque à quelqu'un, et que l'objet lui apporte. On
+  l'exprime en <b>trois questions</b>, et on range les réponses dans un schéma qui fait penser à une tête de
+  taureau&nbsp;: la <b>bête à cornes</b>.</p>
+  <p><b>Pour la séance 2.</b> Tu y dessineras le diagramme pieuvre du vélo-cargo de Léa, celui que tu lis en b). Sa
+  fonction principale, la FP1, suivra exactement la corne de sa bête à cornes&nbsp;: de Léa, par le vélo-cargo, jusqu'à
+  ses enfants.</p>
+  <p class="meta"><b>Quatre temps</b>, dans l'ordre&nbsp;: se rappeler les trois questions, 5 min&nbsp;; lire une bête à
+  cornes, 6 min&nbsp;; remplir celle de la station, 12 min&nbsp;; puis la tienne, à l'écran et sur ton cahier, 15 min.</p>
+  <p class="cahier">📓 <b>Sur ton cahier</b>&nbsp;: la bête à cornes de ton objet, dessinée à main levée (partie d).</p>
+
+  <!-- ══ a) ══ -->
+  <h4 id="bac-a">a) Se rappeler les trois questions <span class="duree-temps">— 5 min</span></h4>
+  <p class="consigne-bac pp-ecran">✏️ <b>Dans chaque case du schéma, choisis la question qui va à cette place.</b> Le menu
+  propose aussi des questions qu'on confond souvent avec elles&nbsp;: quatre d'entre elles ne vont dans aucune case.</p>
+  <p class="consigne-bac pp-papier">✏️ <b>Dans chaque case du schéma, écris la question qui va à cette place.</b> Choisis
+  parmi les sept questions sous le schéma&nbsp;: quatre d'entre elles ne vont dans aucune case.</p>
+  <div class="bac bac-vide" id="bac_a" role="group" aria-label="La bête à cornes vide : choisis une question dans chaque case">
+    <div class="bac-case hg">
+      <span class="menu-case"><select id="bac_a_hg" class="bac-champ" aria-label="Case en haut à gauche de la bête à cornes : quelle question ?" aria-describedby="bac_a_hg_verdict">
+        <option value="">— choisir —</option>
+        <option value="comment">Comment fonctionne-t-il ?</option>
+        <option value="a_qui">À qui le produit rend-il service ?</option>
+        <option value="matiere">De quoi est-il fait ?</option>
+        <option value="but">Dans quel but ?</option>
+        <option value="fabrique">Qui l'a fabriqué ?</option>
+        <option value="sur_quoi">Sur quoi le produit agit-il ?</option>
+        <option value="prix">Combien coûte-t-il ?</option>
+      </select><span class="menu-vu" aria-hidden="true"></span><span class="menu-fleche" aria-hidden="true">▾</span></span>
+      <span class="bac-verdict" id="bac_a_hg_verdict"></span>
+    </div>
+    <div class="bac-case hd">
+      <span class="menu-case"><select id="bac_a_hd" class="bac-champ" aria-label="Case en haut à droite de la bête à cornes : quelle question ?" aria-describedby="bac_a_hd_verdict">
+        <option value="">— choisir —</option>
+        <option value="comment">Comment fonctionne-t-il ?</option>
+        <option value="a_qui">À qui le produit rend-il service ?</option>
+        <option value="matiere">De quoi est-il fait ?</option>
+        <option value="but">Dans quel but ?</option>
+        <option value="fabrique">Qui l'a fabriqué ?</option>
+        <option value="sur_quoi">Sur quoi le produit agit-il ?</option>
+        <option value="prix">Combien coûte-t-il ?</option>
+      </select><span class="menu-vu" aria-hidden="true"></span><span class="menu-fleche" aria-hidden="true">▾</span></span>
+      <span class="bac-verdict" id="bac_a_hd_verdict"></span>
+    </div>
+    <div class="bac-bol"><div class="bac-produit">Le produit</div></div>
+    <div class="bac-fleche" aria-hidden="true"></div>
+    <div class="bac-case bas">
+      <span class="menu-case"><select id="bac_a_bas" class="bac-champ" aria-label="Case du bas de la bête à cornes, au bout de la flèche : quelle question ?" aria-describedby="bac_a_bas_verdict">
+        <option value="">— choisir —</option>
+        <option value="comment">Comment fonctionne-t-il ?</option>
+        <option value="a_qui">À qui le produit rend-il service ?</option>
+        <option value="matiere">De quoi est-il fait ?</option>
+        <option value="but">Dans quel but ?</option>
+        <option value="fabrique">Qui l'a fabriqué ?</option>
+        <option value="sur_quoi">Sur quoi le produit agit-il ?</option>
+        <option value="prix">Combien coûte-t-il ?</option>
+      </select><span class="menu-vu" aria-hidden="true"></span><span class="menu-fleche" aria-hidden="true">▾</span></span>
+      <span class="bac-verdict" id="bac_a_bas_verdict"></span>
+    </div>
+  </div>
+  <p class="pp-papier bac-liste"><b>Les sept questions</b>&nbsp;: Comment fonctionne-t-il&nbsp;? · À qui le produit rend-il
+  service&nbsp;? · De quoi est-il fait&nbsp;? · Dans quel but&nbsp;? · Qui l'a fabriqué&nbsp;? · Sur quoi le produit
+  agit-il&nbsp;? · Combien coûte-t-il&nbsp;?</p>
+  <p><button class="btn small bac-verifier" data-bac="a" type="button">✔ Vérifier mes trois cases</button></p>
+  <p class="feedback" id="bac_a_retour" role="status"></p>
+
+  <!-- ══ b) : l'exercice du vélo-cargo, incrusté depuis l'atelier « Le besoin » (incrustations.py) ══ -->
+
+<!-- ateliers-representations:debut bc-5e-shenzhen-c2 -->
+<section class="card atelier-incruste" id="incruste-bc-5e-shenzhen-c2" aria-labelledby="incruste-bc-5e-shenzhen-c2-titre"><h4 id="incruste-bc-5e-shenzhen-c2-titre">b) Lire la bête à cornes du vélo-cargo <span class="duree-temps">— 6 min</span></h4><p>Avant la station, un autre objet&nbsp;: le <b>vélo-cargo</b> de Léa, qui emmène ses deux enfants et ses courses en ville. Ce n'est pas un hasard&nbsp;: c'est lui que tu retrouveras en séance 2, quand tu dessineras son <b>diagramme pieuvre</b>. Sa fonction principale, la FP1, suivra la corne que tu lis ici&nbsp;: de Léa, par le vélo-cargo, jusqu'à ses enfants. Un exercice, environ six minutes&nbsp;; il se vérifie tout seul et a sa correction complète.</p><details class="cours"><summary>📘 Le cours — ce qu'il faut savoir</summary><div class="cours-corps"><h3>Le besoin</h3><ul><li>Un <b>besoin</b>, c'est ce qui manque à quelqu'un, ou ce qui lui est nécessaire. Un objet technique existe parce que quelqu'un en a besoin.</li><li>Avant de choisir ou de fabriquer un objet, on <b>exprime le besoin</b>. Le schéma le plus courant pour le faire s'appelle la <b>bête à cornes</b>.</li></ul><h3>Trois questions, trois cases</h3><div class="defile"><table><caption>La bête à cornes du vélo-cargo de Léa</caption><tr><th>Question</th><th>Ce qu'on y écrit</th><th>Pour le vélo-cargo</th></tr><tr><td>À qui le produit rend-il service&nbsp;?</td><td>la personne que l'objet aide, celle qui s'en sert</td><td>Léa</td></tr><tr><td>Sur quoi le produit agit-il&nbsp;?</td><td>la personne ou la chose que l'objet déplace, touche ou transforme</td><td>ses deux enfants et ses courses</td></tr><tr><td>Dans quel but&nbsp;?</td><td>pourquoi l'objet existe, avec un verbe à l'infinitif</td><td>transporter ses enfants et ses courses en ville</td></tr></table></div><h3>Lire une bête à cornes</h3><ul><li>Elle se lit comme une phrase&nbsp;: « Le vélo-cargo rend service <b>à</b> Léa, en agissant <b>sur</b> ses enfants et ses courses, <b>pour</b> les transporter en ville. »</li><li>Le produit est au milieu. Il peut rester un point d'interrogation&nbsp;: on exprime le besoin <b>avant</b> de connaître l'objet.</li></ul><h3>Écrire le but</h3><ul><li>Un <b>verbe à l'infinitif</b>&nbsp;: transporter, éclairer, arroser, prévenir…</li><li><b>Aucune solution</b>&nbsp;: le but dit <i>pourquoi</i> l'objet existe, pas <i>comment</i> il est fait. « Éclairer la rue du parking la nuit », pas « allumer une ampoule ».</li></ul><h3>Trois pièges</h3><ul><li>Celui qui <b>paie</b> ou commande l'objet (la mairie) n'est pas forcément celui à qui il <b>rend service</b> (les piétons).</li><li>La case « sur quoi&nbsp;? » nomme une personne ou une chose, pas une idée&nbsp;: « la rue », pas « la sécurité ».</li><li>La bête à cornes ne liste pas ce que l'objet doit respecter (résister à la pluie…)&nbsp;: c'est le rôle du diagramme des interacteurs extérieurs, souvent appelé diagramme pieuvre.</li></ul><h3>Ensuite&nbsp;: la bête à cornes devient la fonction principale du diagramme pieuvre</h3><ul><li>La corne relie «&nbsp;à qui&nbsp;?&nbsp;» et «&nbsp;sur quoi&nbsp;?&nbsp;» en passant par le produit. Dans le diagramme pieuvre, la même liaison s'appelle la <b>fonction principale</b> FP1&nbsp;: elle part de Léa, passe par le vélo-cargo et arrive aux enfants.</li><li>Sa phrase dit le but&nbsp;: «&nbsp;permettre à Léa de transporter ses enfants&nbsp;». La FP1 décrit donc la <b>fonction d'usage</b>.</li><li>Au bout de la FP1, les enfants imposent aussi une condition&nbsp;: c'est souvent la FC1 (les protéger pendant le trajet).</li></ul><figure class="figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" width="900" height="420" class="schema" id="bc-bp" role="img" aria-labelledby="bc-bp-t bc-bp-d" font-family="'Segoe UI',system-ui,Arial,sans-serif"><title id="bc-bp-t">De la bête à cornes au diagramme pieuvre</title><desc id="bc-bp-d">À gauche, la bête à cornes du vélo-cargo : repère 1, à qui rend-il service ? Léa ; repère 2, sur quoi agit-il ? ses enfants ; la corne bleue relie les deux en passant sous le vélo-cargo ; repère 3, dans quel but ? transporter ses enfants en ville. Une flèche marquée « devient » mène à droite, au diagramme pieuvre : la bulle Léa (repère 1) et la bulle ses enfants (repère 2) sont en haut ; la courbe bleue FP1 part de Léa, descend passer par le vélo-cargo et remonte aux enfants, comme la corne. Un trait rouge FC1 relie le vélo-cargo aux enfants. En dessous, repère 3 : FP1, permettre à Léa de transporter ses enfants ; FC1, protéger les enfants pendant le trajet. Légende : le repère 1 est la bulle d&#x27;où part la FP1, le repère 2 la bulle où elle arrive, le repère 3 la phrase de la FP1.</desc><rect x="0" y="0" width="900" height="420" fill="#fbfcff"/><defs><marker id="bc-bp-pt" viewBox="0 0 12 10" refX="11" refY="5" markerWidth="12" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L12,5 L0,10 z" fill="#1b2438"/></marker></defs><defs><marker id="bc-bp-pg" viewBox="0 0 12 10" refX="11" refY="5" markerWidth="12" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L12,5 L0,10 z" fill="#5b6b86"/></marker></defs><text x="210.0" y="22.0" font-size="15" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="210.0" dy="-0.00em">La bête à cornes</tspan></text><text x="110.0" y="44.0" font-size="12.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="110.0" dy="-0.00em">À qui rend-il service ?</tspan></text><text x="310.0" y="44.0" font-size="12.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="310.0" dy="-0.00em">Sur quoi agit-il ?</tspan></text><rect x="30" y="56" width="160" height="48" rx="10" fill="#ffffff" stroke="#1b2438" stroke-width="2.2"/><text x="110.0" y="80.0" font-size="14.5" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="110.0" dy="-0.00em">Léa</tspan></text><rect x="230" y="56" width="160" height="48" rx="10" fill="#ffffff" stroke="#1b2438" stroke-width="2.2"/><text x="310.0" y="80.0" font-size="14.5" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="310.0" dy="-0.00em">ses enfants</tspan></text><path d="M110,104 C110,250 310,250 310,104" fill="none" stroke="#1f5fbf" stroke-width="5" stroke-linecap="round"/><ellipse cx="210" cy="170" rx="92" ry="30" fill="#eef4ff" stroke="#1b2438" stroke-width="2.6"/><text x="210.0" y="170.0" font-size="15" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="210.0" dy="-0.00em">le vélo-cargo</tspan></text><line x1="210" y1="215" x2="210" y2="252" stroke="#1b2438" stroke-width="2.6" marker-end="url(#bc-bp-pt)"/><text x="210.0" y="266.0" font-size="12.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="210.0" dy="-0.00em">Dans quel but ?</tspan></text><rect x="40" y="280" width="340" height="48" rx="10" fill="#fff8e6" stroke="#a06a00" stroke-width="2.2"/><text x="210.0" y="304.0" font-size="14.5" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="210.0" dy="-0.00em">transporter ses enfants en ville</tspan></text><circle cx="30" cy="56" r="13" fill="#6d3fb5"/><text x="30.0" y="56.0" font-size="14" fill="#ffffff" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="30.0" dy="-0.00em">1</tspan></text><circle cx="230" cy="56" r="13" fill="#6d3fb5"/><text x="230.0" y="56.0" font-size="14" fill="#ffffff" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="230.0" dy="-0.00em">2</tspan></text><circle cx="40" cy="280" r="13" fill="#6d3fb5"/><text x="40.0" y="280.0" font-size="14" fill="#ffffff" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="40.0" dy="-0.00em">3</tspan></text><line x1="418" y1="176" x2="474" y2="176" stroke="#5b6b86" stroke-width="3" marker-end="url(#bc-bp-pg)"/><text x="446.0" y="158.0" font-size="12.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="446.0" dy="-0.00em">devient</tspan></text><text x="690.0" y="22.0" font-size="15" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="690.0" dy="-0.00em">Le diagramme pieuvre</tspan></text><line x1="752" y1="186" x2="848" y2="100" stroke="#b3261e" stroke-width="3.4"/><ellipse cx="690" cy="200" rx="96" ry="40" fill="#ffffff" stroke="#1b2438" stroke-width="2.6"/><path d="M565,80 Q690.0,260.8 815,80" fill="none" stroke="#1f5fbf" stroke-width="5" stroke-linecap="round"/><text x="690.0" y="208.0" font-size="15" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="690.0" dy="-0.00em">le vélo-cargo</tspan></text><ellipse cx="565" cy="80" rx="80" ry="27" fill="#e8f0ff" stroke="#1f5fbf" stroke-width="2.2"/><text x="565.0" y="80.0" font-size="14.5" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="565.0" dy="-0.00em">Léa</tspan></text><ellipse cx="815" cy="80" rx="80" ry="27" fill="#e8f0ff" stroke="#1f5fbf" stroke-width="2.2"/><text x="815.0" y="80.0" font-size="14.5" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="815.0" dy="-0.00em">ses enfants</tspan></text><rect x="726" y="129" width="44" height="22" rx="6" fill="#ffffff" stroke="#1f5fbf"/><text x="748.0" y="140.0" font-size="12.5" fill="#1f5fbf" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="748.0" dy="-0.00em">FP1</tspan></text><rect x="816" y="135" width="44" height="22" rx="6" fill="#ffffff" stroke="#b3261e"/><text x="838.0" y="146.0" font-size="12.5" fill="#b3261e" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="838.0" dy="-0.00em">FC1</tspan></text><rect x="500" y="262" width="380" height="48" rx="10" fill="#e8f0ff" stroke="#1f5fbf" stroke-width="2.2"/><text x="690.0" y="286.0" font-size="14" fill="#1f5fbf" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="690.0" dy="-0.57em">FP1 : permettre à Léa de transporter ses</tspan><tspan x="690.0" dy="1.15em">enfants</tspan></text><rect x="500" y="320" width="380" height="40" rx="10" fill="#fdeceb" stroke="#b3261e" stroke-width="2"/><text x="690.0" y="340.0" font-size="13" fill="#b3261e" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="690.0" dy="-0.00em">FC1 : protéger les enfants pendant le trajet</tspan></text><text x="690.0" y="384.0" font-size="12.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="690.0" dy="-0.00em">Au bout de la FP1, le même élément porte souvent aussi la FC1.</tspan></text><circle cx="508" cy="61" r="13" fill="#6d3fb5"/><text x="508.0" y="61.0" font-size="14" fill="#ffffff" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="508.0" dy="-0.00em">1</tspan></text><circle cx="758" cy="61" r="13" fill="#6d3fb5"/><text x="758.0" y="61.0" font-size="14" fill="#ffffff" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="758.0" dy="-0.00em">2</tspan></text><circle cx="500" cy="262" r="13" fill="#6d3fb5"/><text x="500.0" y="262.0" font-size="14" fill="#ffffff" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="500.0" dy="-0.00em">3</tspan></text><text x="30.0" y="352.0" font-size="13" fill="#1b2438" text-anchor="start" dominant-baseline="middle"><tspan x="30.0" dy="-0.00em">① « à qui ? » → la bulle d&#x27;où part la FP1</tspan></text><text x="30.0" y="374.0" font-size="13" fill="#1b2438" text-anchor="start" dominant-baseline="middle"><tspan x="30.0" dy="-0.00em">② « sur quoi ? » → la bulle où arrive la FP1</tspan></text><text x="30.0" y="396.0" font-size="13" fill="#1b2438" text-anchor="start" dominant-baseline="middle"><tspan x="30.0" dy="-0.00em">③ « dans quel but ? » → la phrase de la FP1</tspan></text></svg><figcaption>La même liaison, deux fois&nbsp;: la corne de la bête à cornes devient la fonction principale FP1. Les repères ①②③ se répondent d'un schéma à l'autre.</figcaption></figure><h3>Choisir un objet</h3><ul><li>Un objet répond au besoin s'il remplit <b>les trois branches</b> à la fois&nbsp;; une seule branche qui échoue suffit à l'écarter.</li><li>Le but devient la <b>fonction d'usage</b> de l'objet choisi&nbsp;: ce à quoi il sert.</li></ul></div><p class="note">Le cours complet, avec les schémas et les mots&nbsp;: <a href="../../../ateliers-representations/besoin-bete-a-cornes/Synthèses/synthese_eleve_besoin-bete-a-cornes.html">la synthèse</a>.</p></details><section class="card exercice" id="bc_5e_e1" data-exo="bc_5e_e1" data-cle="rep_besoin-bete-a-cornes_5e_e1" aria-labelledby="bc_5e_e1-titre"><h5 id="bc_5e_e1-titre">Exercice 1 — Lire la bête à cornes du vélo-cargo</h5><div class="meta"><b>🎯 Objectif&nbsp;:</b> lire, dans une bête à cornes, à qui l'objet rend service, sur quoi il agit et dans quel but il existe.<br><b>🧩 Compétence&nbsp;:</b> <span title="Choisir un OST parmi plusieurs propositions en vue de répondre à un besoin." aria-label="5e_C3.3 : Choisir un OST parmi plusieurs propositions en vue de répondre à un besoin.">5e_C3.3</span><br><b>✍ Ce que tu produis&nbsp;:</b> trois réponses, une par question de la bête à cornes.<br><b>Durée&nbsp;:</b> environ 6 minutes, comptées dans celle de l'activité.</div><details class="mots"><summary>📖 Les mots de cet exercice</summary><dl><dt>besoin</dt><dd>ce qui manque à quelqu'un, ou ce qui lui est nécessaire. C'est le point de départ de tout objet technique&nbsp;: on fabrique ou on choisit un objet parce que quelqu'un en a besoin.</dd><dt>bête à cornes</dt><dd>le nom courant du schéma qui exprime le besoin&nbsp;: deux cases en haut (à qui&nbsp;? sur quoi&nbsp;?), le produit au milieu, le but en bas. Sa grande courbe fait penser aux cornes d'un taureau.</dd><dt>rendre service</dt><dd>aider quelqu'un, lui être utile. L'objet rend service à la personne qui s'en sert.</dd><dt>agir sur</dt><dd>déplacer, toucher, transformer ou changer quelque chose. Le vélo-cargo agit sur ce qu'il transporte&nbsp;: il le fait changer de place.</dd><dt>but</dt><dd>ce pour quoi l'objet existe. Il s'écrit avec un verbe à l'infinitif&nbsp;: transporter, éclairer, arroser…</dd><dt>solution</dt><dd>une pièce ou un moyen qui dit <b>comment</b> l'objet fait son travail (le grand bac, les vitesses). Le but, lui, dit <b>pourquoi</b> l'objet existe.</dd></dl></details><figure class="figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 470" width="780" height="470" class="schema" id="bc-velo" role="img" aria-labelledby="bc-velo-t bc-velo-d" font-family="'Segoe UI',system-ui,Arial,sans-serif"><title id="bc-velo-t">La bête à cornes du vélo-cargo de Léa</title><desc id="bc-velo-d">En haut à gauche, sous la question « À qui le produit rend-il service ? », la case dit : Léa. En haut à droite, sous la question « Sur quoi le produit agit-il ? », la case dit : ses deux enfants et ses courses. Une grande courbe part des deux cases et passe sous le vélo-cargo, écrit au centre. Une flèche descend vers la case « Dans quel but ? » : transporter ses deux enfants et ses courses en ville.</desc><rect x="0" y="0" width="780" height="470" fill="#fbfcff"/><defs><marker id="bc-velo-pt" viewBox="0 0 12 10" refX="11" refY="5" markerWidth="12" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L12,5 L0,10 z" fill="#1b2438"/></marker></defs><text x="175.0" y="34.0" font-size="13.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="175.0" dy="-0.00em">À qui le produit rend-il service ?</tspan></text><text x="605.0" y="34.0" font-size="13.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="605.0" dy="-0.00em">Sur quoi le produit agit-il ?</tspan></text><rect x="40" y="52" width="270" height="74" rx="12" fill="#ffffff" stroke="#1b2438" stroke-width="2.4"/><text x="175.0" y="89.0" font-size="16" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="175.0" dy="-0.00em">Léa</tspan></text><rect x="470" y="52" width="270" height="74" rx="12" fill="#ffffff" stroke="#1b2438" stroke-width="2.4"/><text x="605.0" y="89.0" font-size="16" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="605.0" dy="-0.57em">ses deux enfants et ses</tspan><tspan x="605.0" dy="1.15em">courses</tspan></text><path d="M175,126 C175,330 605,330 605,126" fill="none" stroke="#1b2438" stroke-width="5" stroke-linecap="round"/><ellipse cx="390" cy="200" rx="130" ry="40" fill="#eef4ff" stroke="#1b2438" stroke-width="3"/><text x="390.0" y="200.0" font-size="18" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="390.0" dy="-0.00em">Le vélo-cargo</tspan></text><line x1="390" y1="279" x2="390" y2="340" stroke="#1b2438" stroke-width="3" marker-end="url(#bc-velo-pt)"/><text x="390.0" y="356.0" font-size="13.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="390.0" dy="-0.00em">Dans quel but ?</tspan></text><rect x="120" y="372" width="540" height="80" rx="12" fill="#fff8e6" stroke="#a06a00" stroke-width="2.4"/><text x="390.0" y="412.0" font-size="16" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="390.0" dy="-0.00em">transporter ses deux enfants et ses courses en ville</tspan></text></svg><figcaption>La bête à cornes du vélo-cargo de Léa. <span class="note">(clique sur l'image pour l'agrandir)</span></figcaption></figure><details class="description"><summary>📝 Ce que montre le schéma, en mots</summary><ul><li><b>À qui le produit rend-il service&nbsp;?</b> Léa.</li><li><b>Sur quoi le produit agit-il&nbsp;?</b> Ses deux enfants et ses courses.</li><li><b>Au centre&nbsp;:</b> le vélo-cargo.</li><li><b>Dans quel but&nbsp;?</b> Transporter ses deux enfants et ses courses en ville.</li></ul></details><div><p>Léa vit en ville et n'a pas de voiture. Chaque jour, elle emmène ses deux enfants et rapporte ses courses avec son <b>vélo-cargo</b> — un vélo avec un grand bac devant. Pour dire le <b>besoin</b> auquel répond cet objet, on pose trois questions. Le schéma qui rassemble les réponses s'appelle souvent la <b>bête à cornes</b>.</p></div><div class="consigne"><p>La bête à cornes répond à trois questions&nbsp;: <b>à qui</b> l'objet rend-il service (qui s'en sert)&nbsp;? <b>sur quoi</b> agit-il (ce qu'il déplace, touche ou transforme)&nbsp;? <b>dans quel but</b> existe-t-il&nbsp;? <b>Lis le schéma, puis choisis, pour chaque question, la phrase qui l'explique.</b></p></div><p class="critere"><b>✅ Tu as réussi si…</b> trois réponses justes, et tu sais dire pourquoi les enfants sont dans la case « sur quoi&nbsp;? » et pas dans la case « à qui&nbsp;? ».</p><fieldset class="qcm-groupe"><legend>① <b>À qui&nbsp;?</b> Le schéma dit&nbsp;: Léa. Pourquoi Léa&nbsp;? <span class="encoche" data-pour="bc_5e_e1__qui"></span></legend><div class="options"><label class="option" for="bc_5e_e1__qui-0"><input type="radio" id="bc_5e_e1__qui-0" name="bc_5e_e1__qui" value="sert"><span>Parce que c'est elle qui se sert du vélo-cargo&nbsp;: il l'aide à faire ses trajets.</span></label><label class="option" for="bc_5e_e1__qui-1"><input type="radio" id="bc_5e_e1__qui-1" name="bc_5e_e1__qui" value="paie"><span>Parce que c'est elle qui l'a acheté au magasin.</span></label><label class="option" for="bc_5e_e1__qui-2"><input type="radio" id="bc_5e_e1__qui-2" name="bc_5e_e1__qui" value="forte"><span>Parce qu'elle est la plus grande et la plus forte de la famille.</span></label><label class="option" for="bc_5e_e1__qui-3"><input type="radio" id="bc_5e_e1__qui-3" name="bc_5e_e1__qui" value="piece"><span>Parce qu'elle pédale&nbsp;: elle fait partie du vélo-cargo.</span></label></div></fieldset><fieldset class="qcm-groupe"><legend>② <b>Sur quoi&nbsp;?</b> Le schéma dit&nbsp;: ses deux enfants et ses courses. Pourquoi eux, et pas la route&nbsp;? <span class="encoche" data-pour="bc_5e_e1__quoi"></span></legend><div class="options"><label class="option" for="bc_5e_e1__quoi-0"><input type="radio" id="bc_5e_e1__quoi-0" name="bc_5e_e1__quoi" value="deplace"><span>Parce que ce sont eux que le vélo-cargo fait changer de place.</span></label><label class="option" for="bc_5e_e1__quoi-1"><input type="radio" id="bc_5e_e1__quoi-1" name="bc_5e_e1__quoi" value="bac"><span>Parce qu'ils sont assis ou posés dans le grand bac, juste devant Léa.</span></label><label class="option" for="bc_5e_e1__quoi-2"><input type="radio" id="bc_5e_e1__quoi-2" name="bc_5e_e1__quoi" value="importants"><span>Parce qu'ils comptent plus pour Léa que la route.</span></label><label class="option" for="bc_5e_e1__quoi-3"><input type="radio" id="bc_5e_e1__quoi-3" name="bc_5e_e1__quoi" value="touche"><span>Parce que la route ne touche jamais le vélo-cargo.</span></label></div></fieldset><fieldset class="qcm-groupe"><legend>③ <b>Dans quel but&nbsp;?</b> Laquelle de ces phrases pourrait aussi aller dans la case du bas&nbsp;? <span class="encoche" data-pour="bc_5e_e1__but"></span></legend><div class="options"><label class="option" for="bc_5e_e1__but-0"><input type="radio" id="bc_5e_e1__but-0" name="bc_5e_e1__but" value="but"><span>Déplacer ses enfants et ses courses d'un bout à l'autre de la ville.</span></label><label class="option" for="bc_5e_e1__but-1"><input type="radio" id="bc_5e_e1__but-1" name="bc_5e_e1__but" value="solution"><span>Avoir un grand bac devant le guidon et huit vitesses.</span></label><label class="option" for="bc_5e_e1__but-2"><input type="radio" id="bc_5e_e1__but-2" name="bc_5e_e1__but" value="nom"><span>Le vélo-cargo de Léa, avec ses deux roues et son bac.</span></label><label class="option" for="bc_5e_e1__but-3"><input type="radio" id="bc_5e_e1__but-3" name="bc_5e_e1__but" value="contrainte"><span>Résister à la pluie et monter les côtes sans trop d'effort.</span></label></div></fieldset><p><button type="button" class="btn verifier">✔ Vérifier mes réponses</button></p><div class="retour" data-retour aria-live="polite"></div><details class="aide"><summary>💡 Aide 1 — pour démarrer</summary><p>Lis le schéma comme une phrase&nbsp;: « Le vélo-cargo rend service <b>à</b> …, en agissant <b>sur</b> …, <b>pour</b> … ». Puis, pour chaque case, pose-toi une question simple&nbsp;: qui s'en sert&nbsp;? qu'est-ce qui change de place&nbsp;? pourquoi l'objet existe-t-il&nbsp;?</p></details><details class="aide"><summary>💡 Aide 2 — le raisonnement pas à pas</summary><p>À qui&nbsp;? → qui pédale et décide du trajet&nbsp;? → Léa → elle se sert de l'objet.<br>Sur quoi&nbsp;? → qu'est-ce qui change de place&nbsp;? → les enfants et les courses → la route, elle, ne bouge pas.<br>Dans quel but&nbsp;? → un verbe à l'infinitif → « déplacer », « transporter » → pas de solution (ni bac, ni vitesses).</p><div class="critere"><b>🔁 Exercice jumeau, à faire seul ensuite&nbsp;:</b> Un cartable&nbsp;: à qui rend-il service, sur quoi agit-il, dans quel but existe-t-il&nbsp;?</div><label class="champ" for="bc_5e_e1__jumeau">Ma réponse à l'exercice jumeau</label><textarea id="bc_5e_e1__jumeau" name="bc_5e_e1__jumeau" rows="2"></textarea><details class="etayage"><summary>🪜 Version étayée : des débuts de phrase pour t'aider</summary><ul><li>Dans cette nouvelle situation, je pose la même question que dans l'aide 2 : …</li><li>Ma réponse : … parce que …</li></ul></details><details class="correction"><summary>🔍 Correction de l'exercice jumeau</summary>À qui&nbsp;? → <b>l'élève</b>, qui le porte. Sur quoi&nbsp;? → <b>ses livres et ses cahiers</b>, que le cartable déplace. But&nbsp;: <b>transporter ses affaires de classe entre la maison et le collège</b> — un verbe, et aucune solution (ni bretelles, ni poches).</details></details><details class="correction"><summary>🔍 La correction complète, et pourquoi</summary><div class="demo"><div class="ligne"><b>La phrase du schéma&nbsp;:</b> le vélo-cargo rend service <b>à Léa</b>, en agissant <b>sur ses deux enfants et ses courses</b>, <b>pour</b> les transporter en ville.</div><div class="ligne"><b>① À qui&nbsp;?</b> → Léa → c'est elle qui se sert du vélo-cargo</div><div class="ligne">Refusés&nbsp;: « elle l'a acheté » → celui qui paie n'est pas toujours celui à qui l'objet rend service&nbsp;; « la plus forte » → la force ne décide de rien&nbsp;; « une pièce du vélo » → Léa reste en dehors de l'objet.</div><div class="ligne"><b>② Sur quoi&nbsp;?</b> → les enfants et les courses → le vélo-cargo les fait changer de place</div><div class="ligne">Refusés&nbsp;: « ils sont dans le bac » → vrai, mais un bac à l'arrière ne changerait rien&nbsp;; « plus importants » → l'importance ne décide pas&nbsp;; « la route ne touche pas » → faux, elle touche les roues, mais elle ne bouge pas.</div><div class="ligne"><b>③ Dans quel but&nbsp;?</b> → « déplacer ses enfants et ses courses d'un bout à l'autre de la ville » → un verbe à l'infinitif, aucune solution</div><div class="ligne">Refusés&nbsp;: le bac et les vitesses → des solutions (comment)&nbsp;; « le vélo-cargo de Léa » → le nom de l'objet&nbsp;; « résister à la pluie » → une contrainte, pas le but.</div><div class="ligne conclusion">La bête à cornes se lit comme une phrase&nbsp;: <b>à qui</b> → <b>sur quoi</b> → <b>pour quoi</b>.</div></div></details><p class="retenir"><b>📌 À retenir&nbsp;:</b> la bête à cornes se lit comme une phrase&nbsp;: l'objet rend service <b>à quelqu'un</b>, en agissant <b>sur quelque chose</b>, <b>pour</b> un but écrit avec un verbe à l'infinitif.</p><p class="piege"><b>⚠ Le piège classique&nbsp;:</b> mettre dans la case « à qui&nbsp;? » tout ce que l'objet transporte&nbsp;: les enfants sont dans le bac, mais c'est Léa que le vélo-cargo aide — les enfants sont ce sur quoi il agit.</p></section><p class="note">🐂 Ces exercices viennent de <a href="../../../ateliers-representations/besoin-bete-a-cornes/atelier_5e_besoin-bete-a-cornes.html">l'atelier de 5e « Le besoin »</a>&nbsp;: ce que tu fais ici s'y retrouve, avec un exercice pour compléter la bête à cornes d'un lampadaire, un autre pour choisir l'objet qui répond au besoin de Léa, et le QCM de l'atelier.</p><script type="application/json">{"exercices": {"bc_5e_e1": {"cle": "rep_besoin-bete-a-cornes_5e_e1", "widgets": [{"type": "choix", "name": "bc_5e_e1__qui", "bonne": "sert", "retours": {"sert": "Oui : la case « à qui ? » nomme la personne que l'objet aide, celle qui s'en sert.", "paie": "Elle l'a peut-être acheté, mais ce n'est pas la raison : un parent qui offre un vélo à son enfant le paie, et c'est pourtant à l'enfant qu'il rend service.", "forte": "La taille et la force ne décident de rien : la case « à qui ? » nomme la personne que l'objet aide.", "piece": "Léa pédale, mais elle n'est pas une pièce du vélo : elle reste en dehors de l'objet, c'est la personne qu'il aide."}, "indice": null}, {"type": "choix", "name": "bc_5e_e1__quoi", "bonne": "deplace", "retours": {"deplace": "Oui : le vélo-cargo agit sur ce qu'il déplace. La route, elle, reste à sa place.", "bac": "C'est vrai, ils sont dans le bac, mais ce n'est pas la raison : avec un bac à l'arrière, le vélo-cargo agirait sur eux de la même façon. Ce qui compte, c'est qu'il les fait changer de place.", "importants": "L'importance ne décide pas de la case : on cherche ce que l'objet déplace ou transforme.", "touche": "La route touche les roues ! Mais le vélo-cargo ne la change pas : elle reste où elle est."}, "indice": null}, {"type": "choix", "name": "bc_5e_e1__but", "bonne": "but", "retours": {"but": "Oui : un verbe à l'infinitif (déplacer), et aucune solution. C'est le même but, dit autrement.", "solution": "Le grand bac et les vitesses disent COMMENT le vélo-cargo fait son travail : ce sont des solutions. Le but dit POURQUOI il existe.", "nom": "C'est le nom de l'objet, déjà écrit au centre du schéma. Le but commence par un verbe à l'infinitif.", "contrainte": "Ce sont des conditions que le vélo-cargo doit respecter : elles viendront avec le diagramme des interacteurs. Le but dit pourquoi l'objet existe."}, "indice": null}]}}}</script></section>
+<!-- ateliers-representations:fin bc-5e-shenzhen-c2 -->
+  <!-- ══ c) ══ -->
+  <h4 id="bac-c">c) Remplir la bête à cornes de la station <span class="duree-temps">— 12 min</span></h4>
+  <p class="consigne-bac">✏️ <b>Dans chaque case de la bête à cornes de la station, choisis la bonne réponse.</b>
+  Chaque menu cache des pièges. Pour le but, cherche le <b>service rendu à l'usager</b>, pas ce que la station fait
+  pour le rendre.</p>
+  <div class="bac" id="bac_c" role="group" aria-label="La bête à cornes de la station de Shenzhen, à compléter">
+    <p class="bac-q hg">À qui le produit rend-il service&nbsp;?</p>
+    <p class="bac-q hd">Sur quoi le produit agit-il&nbsp;?</p>
+    <div class="bac-case hg">
+      <span class="menu-case"><select id="bac_c_qui" class="bac-champ" aria-label="Bête à cornes de la station — À qui le produit rend-il service ?" aria-describedby="bac_c_qui_verdict">
+        <option value="">— choisir —</option>
+        <option value="ville">la ville de Shenzhen, qui l'a payée</option>
+        <option value="usager">l'usager, cycliste abonné ou touriste</option>
+        <option value="fabricant">l'entreprise qui fabrique la borne</option>
+        <option value="velo">le vélo qu'on emprunte à la borne</option>
+      </select><span class="menu-vu" aria-hidden="true"></span><span class="menu-fleche" aria-hidden="true">▾</span></span>
+      <span class="bac-verdict" id="bac_c_qui_verdict"></span>
+    </div>
+    <div class="bac-case hd">
+      <span class="menu-case"><select id="bac_c_quoi" class="bac-champ" aria-label="Bête à cornes de la station — Sur quoi le produit agit-il ?" aria-describedby="bac_c_quoi_verdict">
+        <option value="">— choisir —</option>
+        <option value="usager">l'usager qui vient chercher un vélo</option>
+        <option value="trottoir">le trottoir où la borne est fixée</option>
+        <option value="velo">le vélo qu'on emprunte et qu'on rend</option>
+        <option value="pluie">la pluie qui tombe sur la borne</option>
+      </select><span class="menu-vu" aria-hidden="true"></span><span class="menu-fleche" aria-hidden="true">▾</span></span>
+      <span class="bac-verdict" id="bac_c_quoi_verdict"></span>
+    </div>
+    <div class="bac-bol"><div class="bac-produit">La station de vélos</div></div>
+    <div class="bac-fleche" aria-hidden="true"></div>
+    <p class="bac-q bas">Dans quel but&nbsp;?</p>
+    <div class="bac-case bas">
+      <span class="menu-case"><select id="bac_c_but" class="bac-champ" aria-label="Bête à cornes de la station — Dans quel but ?" aria-describedby="bac_c_but_verdict">
+        <option value="">— choisir —</option>
+        <option value="verrouiller">Verrouiller le vélo au point d'ancrage, puis le libérer quand on le demande</option>
+        <option value="solution">Une borne inclinée, avec un écran-lecteur et un point d'ancrage</option>
+        <option value="service">Permettre à l'usager de prendre un vélo et de le rendre en ville, à toute heure</option>
+        <option value="sujet">Le vélo est rangé dans la station, et l'usager le reprend quand il veut</option>
+        <option value="contrainte">Résister à la pluie, au soleil et aux chocs, en toute saison</option>
+      </select><span class="menu-vu" aria-hidden="true"></span><span class="menu-fleche" aria-hidden="true">▾</span></span>
+      <span class="bac-verdict" id="bac_c_but_verdict"></span>
+    </div>
+  </div>
+  <p><button class="btn small bac-verifier" data-bac="c" type="button">✔ Vérifier la bête à cornes de la station</button></p>
+  <p class="feedback" id="bac_c_retour" role="status"></p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: la réponse à «&nbsp;Dans quel but&nbsp;?&nbsp;», écrite avec un verbe à
+  l'infinitif et sans solution, est la <b>fonction d'usage</b> de l'objet&nbsp;: le service qu'il rend à l'usager.</p>
+
+  <!-- ══ d) ══ -->
+  <h4 id="bac-d">d) Ta bête à cornes&nbsp;: la remplir, puis la dessiner <span class="duree-temps">— 15 min</span></h4>
+  <div class="pp-ecran">
+  <p class="consigne-bac">✏️ <b>Choisis un objet du collège que tu utilises</b>&nbsp;: la calculatrice, le casier, le
+  cartable, le badge de cantine… <b>Écris son nom, puis remplis les trois cases.</b> Ce que tu tapes s'écrit dans le
+  schéma.</p>
+  <div class="bac-champs">
+    <div class="assoc bac-champ-objet"><label for="bac_d_objet">Mon objet (il va au centre)</label>
+      <input type="text" id="bac_d_objet" class="bac-champ" maxlength="40" autocomplete="off" placeholder="la calculatrice, le casier…"></div>
+    <div class="assoc"><label for="bac_d_qui">À qui rend-il service&nbsp;?</label>
+      <input type="text" id="bac_d_qui" class="bac-champ" maxlength="60" autocomplete="off"></div>
+    <div class="assoc"><label for="bac_d_quoi">Sur quoi agit-il&nbsp;?</label>
+      <input type="text" id="bac_d_quoi" class="bac-champ" maxlength="60" autocomplete="off"></div>
+    <div class="assoc bac-champ-but"><label for="bac_d_but">Dans quel but&nbsp;? (un verbe à l'infinitif, aucune solution)</label>
+      <textarea id="bac_d_but" class="bac-champ" rows="2" maxlength="160" spellcheck="true"></textarea></div>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>«&nbsp;Permettre à ____ de ____.&nbsp;»</li>
+      <li>«&nbsp;Ranger ____ pour que ____.&nbsp;»</li>
+      <li>«&nbsp;Garder ____ à l'abri, toute la journée de classe.&nbsp;»</li>
+    </ul></details>
+  <div class="bac bac-miroir" id="bac_d" aria-hidden="true">
+    <p class="bac-q hg">À qui le produit rend-il service&nbsp;?</p>
+    <p class="bac-q hd">Sur quoi le produit agit-il&nbsp;?</p>
+    <div class="bac-case hg"><span class="bac-ecrit" data-source="bac_d_qui" data-vide="…"></span></div>
+    <div class="bac-case hd"><span class="bac-ecrit" data-source="bac_d_quoi" data-vide="…"></span></div>
+    <div class="bac-bol"><div class="bac-produit"><span class="bac-ecrit" data-source="bac_d_objet" data-vide="ton objet"></span></div></div>
+    <div class="bac-fleche"></div>
+    <p class="bac-q bas">Dans quel but&nbsp;?</p>
+    <div class="bac-case bas"><span class="bac-ecrit" data-source="bac_d_but" data-vide="…"></span></div>
+  </div>
+  <div class="note bac-criteres">Ce que je regarde dans ta bête à cornes&nbsp;:
+    <ul>
+      <li>le nom de ton objet et les deux cases du haut sont remplis <span class="bac-marque" data-critere="0"></span></li>
+      <li>ton but commence par un verbe à l'infinitif (permettre, ranger, calculer…) <span class="bac-marque" data-critere="1"></span></li>
+      <li>ton but ne nomme aucune solution&nbsp;: ni pièce, ni matière, ni le nom de l'objet <span class="bac-marque" data-critere="2"></span></li>
+    </ul>
+  </div>
+  <p><button class="btn small bac-verifier" data-bac="d" type="button">✔ Vérifier ma bête à cornes</button></p>
+  <p class="feedback" id="bac_d_retour" role="status"></p>
+  <p class="cahier">📓 <b>Puis, sur le papier.</b> Dessine-la à main levée sur ton cahier&nbsp;: les deux cornes en
+  haut, le produit au centre, la flèche du but en bas. Dessiner sert à retenir la forme&nbsp;: la prochaine fois, tu la
+  referas de mémoire.</p>
+  <p class="bac-coche"><input type="checkbox" id="bac_d_cahier" class="bac-champ"><label for="bac_d_cahier">✅ Je l'ai
+  dessinée sur mon cahier</label></p>
+  </div>
+  <div class="pp-papier bac-cadre">
+    <p>✏️ <b>Choisis un objet du collège que tu utilises</b> (la calculatrice, le casier, le cartable, le badge de
+    cantine…). <b>Dessine sa bête à cornes à main levée dans ce cadre</b>&nbsp;: les deux cornes en haut, le produit au
+    centre, la flèche du but en bas. Puis remplis ses trois cases&nbsp;: le but commence par un verbe à l'infinitif et ne
+    nomme aucune solution.</p>
+  </div>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Lis la bête à cornes comme une phrase&nbsp;: «&nbsp;Le produit rend service <b>à</b> …, en agissant <b>sur</b> …,
+    <b>dans le but de</b> …&nbsp;». La corne relie les deux cases du haut en passant sous le produit&nbsp;; la flèche
+    descend vers le but. Aucune des trois questions ne parle de l'objet lui-même&nbsp;: ni de sa matière, ni de son prix,
+    ni de sa fabrication.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p><b>Pour a)</b>&nbsp;: en haut à gauche → la personne que l'objet aide → «&nbsp;À qui…&nbsp;?&nbsp;». En haut à droite →
+    ce que l'objet change → «&nbsp;Sur quoi…&nbsp;?&nbsp;». En bas, au bout de la flèche → la raison d'exister de l'objet →
+    «&nbsp;Dans quel but&nbsp;?&nbsp;».</p>
+    <p><b>Pour c)</b>&nbsp;: qui prend un vélo&nbsp;? → l'usager, et non la ville qui paie. Qu'est-ce que la station garde et
+    libère&nbsp;? → le vélo. Le but → un verbe à l'infinitif, le service rendu à l'usager, aucune pièce.</p>
+    <p><b>Pour d)</b>&nbsp;: termine la phrase «&nbsp;Mon objet existe pour…&nbsp;», puis garde le verbe et enlève les
+    pièces.</p></details>
+
+  <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+  <p class="feedback" id="fb1" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <h4>a) Les trois questions, à leur place</h4>
+    <p><b>En haut à gauche</b> → «&nbsp;À qui le produit rend-il service&nbsp;?&nbsp;» → la personne que l'objet aide, celle
+    qui s'en sert.</p>
+    <p><b>En haut à droite</b> → «&nbsp;Sur quoi le produit agit-il&nbsp;?&nbsp;» → ce que l'objet déplace, touche ou
+    transforme. La corne va de l'une à l'autre en passant sous le produit.</p>
+    <p><b>En bas</b> → «&nbsp;Dans quel but&nbsp;?&nbsp;» → pourquoi l'objet existe&nbsp;; la flèche y descend depuis le
+    produit.</p>
+    <p><b>Les quatre intrus</b> → «&nbsp;Comment fonctionne-t-il&nbsp;?&nbsp;» ouvre l'objet pour chercher ses solutions&nbsp;;
+    «&nbsp;Qui l'a fabriqué&nbsp;?&nbsp;» nomme quelqu'un qui ne s'en sert pas&nbsp;; «&nbsp;De quoi est-il fait&nbsp;?&nbsp;»
+    donne sa matière, une solution&nbsp;; «&nbsp;Combien coûte-t-il&nbsp;?&nbsp;» sert à acheter, pas à dire le besoin.</p>
+    <h4>b) Le vélo-cargo de Léa</h4>
+    <p><b>Sa correction</b> est dans l'exercice, juste au-dessus&nbsp;: Léa → ses deux enfants et ses courses → les
+    transporter en ville.</p>
+    <h4>c) La station de Shenzhen</h4>
+    <p><b>À qui&nbsp;?</b> → <b>l'usager</b>, cycliste abonné ou touriste de passage → c'est lui qui prend et rend un vélo.
+    Refusés&nbsp;: la ville → elle commande et paie, mais celui qui paie n'est pas toujours celui à qui l'objet rend
+    service&nbsp;; l'entreprise qui fabrique la borne → elle ne s'en sert pas&nbsp;; le vélo → c'est ce sur quoi la station
+    agit.</p>
+    <p><b>Sur quoi&nbsp;?</b> → <b>le vélo</b> → la station le garde, le verrouille, le libère. Refusés&nbsp;: l'usager → le
+    piège «&nbsp;à qui&nbsp;?&nbsp;» / «&nbsp;sur quoi&nbsp;?&nbsp;», sa place est en haut à gauche&nbsp;; le trottoir → la
+    station y est fixée, mais elle ne le change pas&nbsp;; la pluie → elle agit sur la station, pas l'inverse.</p>
+    <p><b>Dans quel but&nbsp;?</b> → «&nbsp;<b>Permettre à l'usager de prendre un vélo et de le rendre en ville, à toute
+    heure</b>&nbsp;» → un verbe à l'infinitif, le service rendu, aucune pièce&nbsp;: c'est la <b>fonction d'usage</b> de la
+    station.</p>
+    <p><b>Les quatre pièges du but</b> → «&nbsp;Verrouiller le vélo…&nbsp;» est une <b>fonction technique</b>&nbsp;: ce que
+    la station doit faire, pas le service rendu (c'était la question 2 du billet d'entrée)&nbsp;; «&nbsp;Une borne
+    inclinée…&nbsp;» est la solution, avec le nom de l'objet&nbsp;; «&nbsp;Le vélo est rangé…&nbsp;» a un sujet, ce n'est
+    pas un verbe à l'infinitif&nbsp;; «&nbsp;Résister à la pluie…&nbsp;» est une contrainte, qui viendra avec le diagramme
+    pieuvre.</p>
+    <h4>d) Ta bête à cornes</h4>
+    <p><b>Un exemple attendu</b>, le cartable → à qui&nbsp;? l'élève qui le porte → sur quoi&nbsp;? ses livres et ses
+    cahiers → but&nbsp;: «&nbsp;Transporter ses affaires de classe entre la maison et le collège&nbsp;».</p>
+    <p><b>Un autre</b>, le casier → à qui&nbsp;? l'élève → sur quoi&nbsp;? ses affaires → but&nbsp;: «&nbsp;Garder les affaires
+    de l'élève à l'abri pendant la journée&nbsp;».</p>
+    <p><b>Refusés</b>&nbsp;: «&nbsp;Un cartable avec deux bretelles&nbsp;» → la solution et le nom de l'objet&nbsp;; «&nbsp;Le
+    cartable porte les livres&nbsp;» → une phrase avec un sujet&nbsp;; «&nbsp;Fermer avec une fermeture éclair&nbsp;» → ce
+    que l'objet fait, avec sa pièce.</p>
+    <p class="retenir"><b>Conclusion</b>&nbsp;: la bête à cornes se lit comme une phrase — le produit rend service
+    <b>à</b> quelqu'un, en agissant <b>sur</b> quelque chose, <b>pour</b> un but. Ce but est sa fonction d'usage.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: la bête à cornes exprime le <b>besoin</b> en trois questions&nbsp;: <b>à
+  qui</b> le produit rend-il service&nbsp;? <b>sur quoi</b> agit-il&nbsp;? <b>dans quel but</b>&nbsp;? Elle regarde l'objet
+  de l'extérieur, et son but est sa <b>fonction d'usage</b>.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: écrire comme but ce que l'objet doit faire («&nbsp;verrouiller le
+  vélo&nbsp;») au lieu du service qu'il rend à l'usager. Le premier est une fonction technique, le second la fonction
+  d'usage.</p>
+  <p><b>Critère de réussite</b>&nbsp;: les trois questions sont à leur place, les trois cases de la station sont justes,
+  l'exercice du vélo-cargo est réussi, et ta bête à cornes a un but qui commence par un verbe, sans solution — dessinée
+  sur ton cahier.</p>
+</section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Recenser ›</button></p>
+</div>
+
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<p class="mots-seance"><a href="lexique_5e_C2.1.html#seance-s2">📖 Les mots de cette séance</a></p>
+<p class="question-seance">❓ La question de la séance&nbsp;: qu'est-ce qui entre en relation avec la station&nbsp;?</p>
 <section class="card">
-  <h2>🔎 Activité 1 — Recenser les interacteurs <span style="color:var(--sub);font-size:.8em">(~47 min)</span></h2>
+  <h2>🔎 Activité 2 — Recenser les interacteurs <span style="color:var(--sub);font-size:.8em">(~47 min)</span></h2>
   <div class="meta"><b>Objectif</b> faire la liste des interacteurs extérieurs · <b>Compétence</b>
   5e_C2.1 · <b>Production</b> une liste d'au moins six interacteurs de quatre familles différentes</div>
 
@@ -605,11 +990,53 @@
   <b>tourne autour de l'objet</b> et on se demande, à chaque fois&nbsp;: qui ou quoi est en relation
   avec lui&nbsp;?</p>
 
-  <figure class="fig">
+  <figure class="fig entourer" id="entourer">
+    <div class="ent-dessin">
     <img src="Images/la_station_et_sa_limite.svg"
          alt="Schéma d'une station de vélos simulée, vue de côté. Une borne est fixée sur le trottoir : un poteau surmonté d'une tête inclinée qui porte l'écran-lecteur, avec un boîtier fermé par une vis à mi-hauteur et un bras terminé par un point d'ancrage. Un vélo est accroché à ce point d'ancrage par sa roue avant. Un câble d'alimentation sort du pied du poteau, traverse le trottoir et part dans le sol. Chaque élément porte seulement son nom — écran-lecteur, borne, boîtier, point d'ancrage, vélo, trottoir, câble d'alimentation, sol — sans dire ce qui fait partie de la station. Il n'y a ni pluie, ni personne, ni flèche.">
-    <figcaption>✏️ <b>Entoure uniquement ce qui appartient à la station.</b></figcaption>
+    <svg class="ent-traits pp-ecran" viewBox="0 0 720 460" aria-hidden="true" focusable="false" data-loupe="non">
+      <ellipse data-pour="ecran" cx="84" cy="101.5" rx="60" ry="17"/>
+      <ellipse data-pour="ancrage" cx="461.5" cy="149.5" rx="68" ry="17"/>
+      <ellipse data-pour="borne" cx="117" cy="169.5" rx="30" ry="17"/>
+      <ellipse data-pour="velo" cx="644.5" cy="179.5" rx="27" ry="17"/>
+      <ellipse data-pour="boitier" cx="106.5" cy="219.5" rx="35" ry="17"/>
+      <ellipse data-pour="trottoir" cx="47.5" cy="358.5" rx="36" ry="15"/>
+      <ellipse data-pour="sol" cx="34.5" cy="438.5" rx="24" ry="16"/>
+      <ellipse data-pour="cable" cx="481.5" cy="438.5" rx="84" ry="16"/>
+    </svg>
+    <div class="ent-boutons pp-ecran" role="group" aria-label="Les huit éléments nommés sur la figure : touche ceux qui appartiennent à la station pour les entourer">
+      <button type="button" class="ent-btn" data-el="ecran" data-cote="d" style="--x:146;--y:101.5;--w:150px" aria-pressed="false"><span class="ent-nom">écran-lecteur</span><span class="ent-etat">entouré</span></button>
+      <button type="button" class="ent-btn" data-el="ancrage" data-cote="g" style="--x:404;--y:149.5;--w:155px" aria-pressed="false"><span class="ent-nom">point d'ancrage</span><span class="ent-etat">entouré</span></button>
+      <button type="button" class="ent-btn" data-el="borne" data-cote="d" style="--x:146;--y:169.5;--w:92px" aria-pressed="false"><span class="ent-nom">borne</span><span class="ent-etat">entourée</span></button>
+      <button type="button" class="ent-btn" data-el="velo" data-cote="g" style="--x:626;--y:179.5;--w:80px" aria-pressed="false"><span class="ent-nom">vélo</span><span class="ent-etat">entouré</span></button>
+      <button type="button" class="ent-btn" data-el="boitier" data-cote="d" style="--x:146;--y:219.5;--w:89px" aria-pressed="false"><span class="ent-nom">boîtier</span><span class="ent-etat">entouré</span></button>
+      <button type="button" class="ent-btn" data-el="trottoir" data-cote="g" style="--x:18;--y:358.5;--w:91px" aria-pressed="false"><span class="ent-nom">trottoir</span><span class="ent-etat">entouré</span></button>
+      <button type="button" class="ent-btn" data-el="sol" data-cote="g" style="--x:18;--y:438.5;--w:80px" aria-pressed="false"><span class="ent-nom">sol</span><span class="ent-etat">entouré</span></button>
+      <button type="button" class="ent-btn" data-el="cable" data-cote="g" style="--x:404;--y:438.5;--w:187px" aria-pressed="false"><span class="ent-nom">câble d'alimentation</span><span class="ent-etat">entouré</span></button>
+    </div>
+    </div>
+    <figcaption><span class="pp-ecran">✏️ <b>Touche chaque élément qui appartient à la station pour l'entourer.</b>
+    Touche-le une seconde fois pour retirer le trait, puis vérifie.</span><span class="pp-papier">✏️ <b>Entoure uniquement
+    ce qui appartient à la station.</b></span></figcaption>
   </figure>
+  <p class="pp-ecran ent-actions"><button class="btn small" id="ent_verifier" type="button">✅ Vérifier ce que j'ai entouré</button>
+  <span class="ent-compte" id="ent_compte" aria-live="polite">Aucun élément entouré.</span></p>
+  <div class="feedback" id="ent_retour" role="status"></div>
+  <details class="correction" id="ent_correction"><summary>📖 Correction complète — ce qui appartient à la station</summary>
+    <p><b>À entourer</b> → la borne, l'écran-lecteur, le boîtier, le point d'ancrage et le câble d'alimentation&nbsp;: ce
+    sont les parties de la station.</p>
+    <p><b>La borne</b> → c'est le corps de la station&nbsp;: le poteau et sa tête inclinée. <b>L'écran-lecteur</b> → par
+    lui, la borne reconnaît l'abonné. <b>Le boîtier</b> → il protège ce qu'il y a dans la borne. <b>Le point
+    d'ancrage</b> → c'est là que la station garde et verrouille le vélo.</p>
+    <p><b>Le câble d'alimentation</b> → il fait partie de la station&nbsp;: il lui apporte l'énergie&nbsp;; ce qui est au
+    bout, le réseau électrique de la ville, est un autre objet, un interacteur.</p>
+    <p><b>Le vélo</b> → à ne pas entourer&nbsp;: c'est un autre objet, en relation avec la station&nbsp;: un interacteur, pas
+    une de ses pièces.</p>
+    <p><b>Le trottoir et le sol</b> → à ne pas entourer&nbsp;: ce sont des éléments de l'environnement&nbsp;; la station y
+    est fixée, ils ne font pas partie d'elle.</p>
+    <p class="retenir"><b>Conclusion</b>&nbsp;: ce que tu n'as pas entouré, c'est ce qui entoure la station&nbsp;: tu viens
+    de tracer sa limite. Tout ce qui est dehors et en relation avec elle est un interacteur.</p>
+  </details>
 
   <figure class="fig">
     <img src="Images/interacteurs_de_la_station.svg"
@@ -669,7 +1096,7 @@
     <p><b>Attention&nbsp;: une règle n'est pas un interacteur.</b> Les règles de la ville, une norme
     de sécurité, une obligation d'accessibilité n'échangent rien avec la station&nbsp;: elles
     <b>imposent</b> quelque chose à celui qui la conçoit. Ce sont des <b>exigences</b> — on les
-    travaillera à l'activité 2, et bien davantage en 4e.</p>
+    travaillera à l'activité 3, et bien davantage en 4e.</p>
   </div>
   <fieldset class="qcm-groupe" id="a1_5">
   <legend>Une liste complète comporte des interacteurs de quatre familles&nbsp;:</legend>
@@ -708,8 +1135,8 @@
     personne — et c'est bien le problème. Les règles de la ville, elles, ne sont pas dans la liste&nbsp;:
     ce sont des exigences.</p></details>
 
-  <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
-  <p class="feedback" id="fb1" role="status"></p>
+  <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+  <p class="feedback" id="fb2" role="status"></p>
 
   <details class="correction"><summary>📖 Correction complète</summary>
     <p>La <b>couleur du cadre</b> n'est pas un interacteur&nbsp;: c'est une caractéristique de
@@ -733,12 +1160,14 @@
   <p><b>Critère de réussite</b>&nbsp;: ta liste compte au moins six interacteurs et couvre les quatre
   familles.</p>
 </section>
-<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Lire les formes ›</button></p>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Lire les formes ›</button></p>
 </div>
 
-<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
+<p class="mots-seance"><a href="lexique_5e_C2.1.html#seance-s3">📖 Les mots de cette séance</a></p>
+<p class="question-seance">❓ La question de la séance&nbsp;: pourquoi la station a-t-elle cette forme&nbsp;?</p>
 <section class="card">
-  <h2>🔧 Activité 2 — Lire une décision dans une forme <span style="color:var(--sub);font-size:.8em">(~50 min)</span></h2>
+  <h2>🔧 Activité 3 — Lire une décision dans une forme <span style="color:var(--sub);font-size:.8em">(~50 min)</span></h2>
   <div class="meta"><b>Objectif</b> repérer et expliquer des choix de conception · <b>Compétence</b>
   5e_C2.2 · <b>Production</b> quatre choix expliqués, chacun rattaché à un interacteur</div>
 
@@ -844,8 +1273,8 @@
     <p>L'<b>esthétique</b> est une vraie question de conception, mais elle n'est pas l'un des trois
     domaines de ce code. Cite-la si elle explique un choix, sans la compter comme un domaine.</p></details>
 
-  <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
-  <p class="feedback" id="fb2" role="status"></p>
+  <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+  <p class="feedback" id="fb3" role="status"></p>
 
   <details class="correction"><summary>📖 Correction complète</summary>
     <p>La <b>borne inclinée</b> répond à la pluie&nbsp;: l'eau s'écoule au lieu de stagner sur le
@@ -870,12 +1299,14 @@
   <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: dire «&nbsp;c'est pour faire joli&nbsp;» devant
   un choix qui protège d'un accident ou facilite un geste.</p>
 </section>
-<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Comparer et transférer ›</button></p>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s4" type="button">Séance 4 — Comparer et transférer ›</button></p>
 </div>
 
-<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
+<div class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4">
+<p class="mots-seance"><a href="lexique_5e_C2.1.html#seance-s4">📖 Les mots de cette séance</a></p>
+<p class="question-seance">❓ La question de la séance&nbsp;: un autre choix était-il possible, et la station marcherait-elle ailleurs&nbsp;?</p>
 <section class="card">
-  <h2>🔁 Activité 3 — Comparer deux stations <span style="color:var(--sub);font-size:.8em">(~35 min)</span></h2>
+  <h2>🔁 Activité 4 — Comparer deux stations <span style="color:var(--sub);font-size:.8em">(~35 min)</span></h2>
   <div class="meta"><b>Objectif</b> expliquer des choix différents pour un même besoin ·
   <b>Compétence</b> 5e_C2.2 · <b>Production</b> une comparaison argumentée</div>
 
@@ -937,8 +1368,8 @@
     <b>cyclone</b>, qui n'est pas une pluie forte mais un interacteur à part entière — il faut
     pouvoir démonter ou protéger.</p></details>
 
-  <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
-  <p class="feedback" id="fb3" role="status"></p>
+  <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
+  <p class="feedback" id="fb4" role="status"></p>
 
   <details class="correction"><summary>📖 Correction complète</summary>
     <p>Auvent et borne inclinée répondent au <b>même interacteur</b>&nbsp;: la pluie. Deux réponses
@@ -965,7 +1396,7 @@
   distributeur, un portail, un casier. Combien en trouves-tu qui ne sont pas des personnes&nbsp;?</p>
   <p><b>2.</b> Choisis un détail de cet objet et réponds à «&nbsp;pourquoi pas autrement&nbsp;?&nbsp;».
   Quel interacteur ce choix sert-il&nbsp;?</p>
-  <p><b>3.</b> Dessine la station telle qu'il faudrait la concevoir à Sainte-Luce. Annote chaque
+  <p><b>3.</b> Dessine sur ton cahier la station telle qu'il faudrait la concevoir à Sainte-Luce. Annote chaque
   modification avec l'interacteur qui la justifie.</p>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
@@ -990,7 +1421,8 @@
   <div class="assoc"><label for="bilan1">Ce que j'ai appris&nbsp;:</label>
     <textarea id="bilan1" aria-label="Ce que j'ai appris"></textarea></div>
   <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
-    <ul><li>«&nbsp;J'ai appris qu'un interacteur est ____.&nbsp;»</li>
+    <ul><li>«&nbsp;J'ai appris que le but d'un objet, sa fonction d'usage, ____.&nbsp;»</li>
+    <li>«&nbsp;J'ai appris qu'un interacteur est ____.&nbsp;»</li>
     <li>«&nbsp;J'ai appris que chaque forme d'un objet est ____.&nbsp;»</li>
     <li>«&nbsp;J'ai appris qu'un choix technique ____.&nbsp;»</li></ul></details>
   <div class="assoc"><label for="bilan2">Ce que je dois encore revoir&nbsp;:</label>
@@ -1017,7 +1449,7 @@
 
 <section class="card">
   <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
-  <p>Le QCM de la séquence t'attend&nbsp;: <b>30 questions</b>, dont <b>5 illustrées</b>, et chaque réponse fausse expliquée.</p>
+  <p>Le QCM de la séquence t'attend&nbsp;: <b>33 questions</b>, dont <b>5 illustrées</b>, et chaque réponse fausse expliquée.</p>
   <p style="text-align:center"><a class="btn qcm" href="qcm_5e_C2_shenzhen_station_velos.html">🚲 Lancer le QCM de la séquence</a></p>
 </section>
 </div>
@@ -1108,10 +1540,188 @@ const val=id=>{
 window.__valid = window.__valid || {};
 window.__exp = window.__exp || {};
 
+/* ══════ Séance 1 — la bête à cornes (activité 1) ══════
+   a) et c) : un menu dans chaque case du schéma ; chaque réponse fausse a son retour, écrit dans la case.
+   d) : ce que l'élève tape s'écrit dans le schéma ; on vérifie trois critères, pas une seule bonne réponse. */
+const BAC_LEURRES = {
+  comment:"Cette question ouvre l'objet pour chercher comment il marche, ses solutions. La bête à cornes regarde l'objet de l'extérieur : elle ne dit jamais comment il fonctionne.",
+  fabrique:"Celui qui fabrique l'objet ne s'en sert pas une fois qu'il est fini. La bête à cornes demande à qui l'objet rend service, pas qui l'a fait.",
+  matiere:"La matière dit comment l'objet est fait : c'est une solution. La bête à cornes dit à quoi il sert, pas de quoi il est fait.",
+  prix:"Le prix compte pour acheter, mais il ne dit ni qui l'objet aide, ni ce qu'il change, ni pourquoi il existe."
+};
+const BAC = {
+  a: {
+    bac_a_hg: {bonne:"a_qui", ok:"en haut à gauche, la personne que l'objet aide.",
+      retours:{sur_quoi:"C'est bien l'une des trois questions, mais pas à cette place : la corne part de la personne aidée, en haut à gauche, et arrive en haut à droite, à ce que l'objet change.",
+               but:"« Dans quel but ? » est la case du bas : la flèche part du produit et y descend. En haut à gauche, on nomme la personne que l'objet aide."}},
+    bac_a_hd: {bonne:"sur_quoi", ok:"en haut à droite, ce que l'objet déplace, touche ou transforme.",
+      retours:{a_qui:"C'est bien l'une des trois questions, mais pas à cette place : « à qui ? » est en haut à gauche, d'où part la corne. En haut à droite, au bout de la corne, on nomme ce que l'objet change.",
+               but:"« Dans quel but ? » est la case du bas, au bout de la flèche. En haut à droite, on nomme ce sur quoi l'objet agit."}},
+    bac_a_bas: {bonne:"but", ok:"en bas, au bout de la flèche, la raison d'exister de l'objet.",
+      retours:{a_qui:"Cette question va en haut, sur la corne. La case du bas, au bout de la flèche qui part du produit, dit pourquoi l'objet existe.",
+               sur_quoi:"Cette question va en haut, sur la corne. La case du bas, au bout de la flèche qui part du produit, dit pourquoi l'objet existe."}}
+  },
+  c: {
+    bac_c_qui: {bonne:"usager", ok:"c'est l'usager que la station aide : le cycliste abonné ou le touriste de passage.",
+      retours:{ville:"La ville commande et paie la station, mais elle n'emprunte pas de vélo : celui qui paie n'est pas toujours celui à qui l'objet rend service.",
+               fabricant:"L'entreprise a fabriqué la borne, mais elle ne s'en sert pas une fois la station installée. La case « à qui ? » nomme la personne que l'objet aide.",
+               velo:"Le vélo, c'est ce sur quoi la station agit : elle le garde, le verrouille, le libère. Sa place est dans la case « sur quoi ? », en haut à droite."}},
+    bac_c_quoi: {bonne:"velo", ok:"la station agit sur le vélo : elle le garde, le verrouille, le libère.",
+      retours:{usager:"L'usager est celui à qui la station rend service : sa place est en haut à gauche. Le piège : « à qui ? » nomme la personne aidée, « sur quoi ? » ce que l'objet change.",
+               trottoir:"La station est fixée sur le trottoir, mais elle ne le change pas : il reste où il est. La case « sur quoi ? » nomme ce que l'objet déplace, touche ou transforme.",
+               pluie:"C'est la pluie qui agit sur la station, pas l'inverse : la station ne change rien à la pluie."}},
+    bac_c_but: {bonne:"service", ok:"un verbe à l'infinitif (permettre), le service rendu à l'usager, et aucune pièce. C'est la fonction d'usage de la station.",
+      retours:{verrouiller:"C'est une fonction technique : ce que la station doit FAIRE pour rendre le service. Le but dit le service rendu à l'usager : c'est la fonction d'usage, comme au billet d'entrée.",
+               solution:"C'est la solution : les pièces de la station et son nom. Le but dit pourquoi elle existe, pas comment elle est faite.",
+               sujet:"Cette phrase a un sujet (« le vélo est rangé… ») : ce n'est pas un but. Le but commence par un verbe à l'infinitif.",
+               contrainte:"C'est une contrainte : une condition que la station doit respecter. Elle viendra avec le diagramme pieuvre, en séance 2. Le but dit pourquoi la station existe."}}
+  }
+};
+function bacEffacerCase(id){
+  const s=$(id); if(!s) return;
+  const cas=s.closest(".bac-case"), vd=$(id+"_verdict");
+  if(cas) cas.classList.remove("juste","faux","vide");
+  if(vd){ vd.textContent=""; vd.className="bac-verdict"; }
+}
+function bacCorriger(p){
+  let justes=0, vides=0;
+  Object.entries(BAC[p]).forEach(([id,c])=>{
+    const s=$(id), v=s.value, cas=s.closest(".bac-case"), vd=$(id+"_verdict");
+    let etat, txt;
+    if(!v){ etat="vide"; txt="○ sans réponse : choisis dans le menu."; vides++; }
+    else if(v===c.bonne){ etat="juste"; txt="✔ juste : "+c.ok; justes++; }
+    else { etat="faux"; txt="✘ à revoir : "+(((c.retours||{})[v]) || BAC_LEURRES[v] || "relis la question de cette case."); }
+    cas.classList.remove("juste","faux","vide"); cas.classList.add(etat);
+    vd.textContent=txt; vd.className="bac-verdict visible "+etat;
+  });
+  return {justes:justes, total:3, vides:vides};
+}
+/* d) — les critères, ceux de la bête à cornes du lampadaire dans l'atelier « Le besoin » */
+function bacNorm(s){
+  return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"")
+    .replace(/[’`]/g,"'").replace(/œ/g,"oe").replace(/æ/g,"ae").replace(/\s+/g," ").trim();
+}
+const BAC_VERBE = /^\W*(pour |il doit |il sert a |sert a |le but est de |le but est d'|son but est de |son but est d')?(?!lumiere\b|derriere\b|premiere\b|riviere\b|entre\b|notre\b|votre\b|autre\b|leur\b)[a-z]+(er|ir|re)\b/;
+const BAC_SOLUTIONS = /\becrans?\b|\btouches?\b|\bboutons?\b|\bpiles?\b|batterie|\bpuces?\b|code.?barres?|lecteur|capteur|moteur|\bleds?\b|plastique|metal|tissu|\btoile\b|\bcuir\b|\bbois\b|aluminium|acier|\bverre\b|serrure|cadenas|\bcles?\b|\bclefs?\b|fermeture|\bzip\b|bretelles?|\bpoches?\b|roulettes?|aimant|electroni|processeur|circuit|\bcables?\b|panneau solaire|\bvis\b|charniere/;
+const BAC_MANQUES = [
+  "Écris le nom de ton objet, puis remplis les deux cases du haut : à qui rend-il service ? sur quoi agit-il ?",
+  "Commence ton but par un verbe à l'infinitif : « Permettre… », « Ranger… », « Garder… ». Une phrase qui commence par « le », « la » ou « une » a un sujet : ce n'est pas un but.",
+  "Ton but nomme une solution (une pièce, une matière) ou le nom de l'objet lui-même. Le but dit POURQUOI l'objet existe, pas COMMENT il est fait : enlève-la."
+];
+function bacCriteresD(){
+  const objet=val("bac_d_objet").trim(), but=bacNorm(val("bac_d_but"));
+  const nom=bacNorm(objet).replace(/^(le |la |les |l'|un |une |des |mon |ma |mes )/,"").trim();
+  const c0 = !!objet && !!val("bac_d_qui").trim() && !!val("bac_d_quoi").trim();
+  const c1 = but.length>3 && BAC_VERBE.test(but);
+  const c2 = but.length>3 && !BAC_SOLUTIONS.test(but) && !(nom.length>=3 && but.indexOf(nom)>=0);
+  return [c0,c1,c2];
+}
+function bacCorrigerD(){
+  const c=bacCriteresD();
+  document.querySelectorAll(".bac-criteres .bac-marque").forEach(m=>{
+    const ok=c[+m.dataset.critere]; m.className="bac-marque "+(ok?"juste":"faux"); m.textContent= ok ? "✔ fait" : "✘ à revoir";
+  });
+  return {justes:c.filter(Boolean).length, total:3, manques:c.map((ok,i)=>ok?"":BAC_MANQUES[i]).filter(Boolean)};
+}
+function bacEcrire(){
+  document.querySelectorAll(".bac-ecrit").forEach(e=>{
+    const t=val(e.dataset.source).trim();
+    e.textContent = t || e.dataset.vide; e.classList.toggle("vide", !t);
+  });
+}
+function bacMenusVus(){
+  document.querySelectorAll(".bac .menu-case select").forEach(s=>{
+    const vu=s.parentNode.querySelector(".menu-vu"), o=s.options[s.selectedIndex];
+    if(vu) vu.textContent = (o && o.value) ? o.text : "";
+    s.parentNode.classList.toggle("choisi", !!(o && o.value));
+  });
+}
+function bacE1Reussi(){
+  try { return !!(JSON.parse(localStorage.getItem("rep_besoin-bete-a-cornes_5e_e1")||"{}").reussi); } catch(err){ return false; }
+}
+function bacResume(p, r){
+  const fb=$("bac_"+p+"_retour"); if(!fb) return;
+  let msg, cls;
+  if(p==="d"){
+    if(r.justes===3){ cls="ok"; msg="✔ 3 critères sur 3 : ta bête à cornes est complète, et son but est un vrai but. Dessine-la maintenant sur ton cahier."; }
+    else { cls = r.justes>=2 ? "mixte" : "err"; msg=(r.justes ? "◐ " : "✘ ")+r.justes+" critère"+(r.justes>1?"s":"")+" sur 3 : "+r.manques.join(" "); }
+  } else {
+    if(r.justes===3){ cls="ok"; msg = p==="a" ? "✔ 3 / 3 : les trois questions sont à leur place." : "✔ 3 / 3 : la bête à cornes de la station est juste. Son but est sa fonction d'usage."; }
+    else if(r.vides===3){ cls="err"; msg="Choisis d'abord une réponse dans chaque case du schéma."; }
+    else { cls = r.justes>=2 ? "mixte" : "err"; msg=r.justes+" / 3. Corrige les cases marquées ✘ : leur retour est écrit dans la case, puis vérifie à nouveau."; }
+  }
+  fb.className="feedback show "+cls; fb.textContent=msg;
+}
+document.querySelectorAll(".bac").forEach(b=>b.classList.add("menus-js"));
+document.querySelectorAll(".bac .menu-case select").forEach(s=>s.addEventListener("change", ()=>{ bacMenusVus(); bacEffacerCase(s.id); }));
+document.querySelectorAll("#bac_d_objet,#bac_d_qui,#bac_d_quoi,#bac_d_but").forEach(c=>c.addEventListener("input", ()=>{
+  bacEcrire(); document.querySelectorAll(".bac-criteres .bac-marque").forEach(m=>{ m.className="bac-marque"; m.textContent=""; });
+}));
+document.querySelectorAll(".bac-verifier").forEach(b=>b.addEventListener("click", ()=>{
+  const p=b.dataset.bac; bacResume(p, p==="d" ? bacCorrigerD() : bacCorriger(p));
+}));
+
+/* ══════ Séance 2 — « Entoure » à l'écran ══════
+   Un clic (ou Entrée, ou Espace) entoure l'élément ; un second clic retire le trait. « Vérifier » dit, élément par
+   élément, ce qui est juste, et pourquoi. L'état est enregistré avec la page. */
+const ENTOURER = {
+  ecran:   {nom:"l'écran-lecteur", f:false, dedans:true,  pourquoi:"il fait partie de la station : c'est par lui que la borne reconnaît l'abonné."},
+  ancrage: {nom:"le point d'ancrage", f:false, dedans:true, pourquoi:"il fait partie de la station : c'est là qu'elle garde et verrouille le vélo."},
+  borne:   {nom:"la borne", f:true, dedans:true, pourquoi:"c'est le corps de la station : le poteau et sa tête inclinée."},
+  velo:    {nom:"le vélo", f:false, dedans:false, pourquoi:"un autre objet, en relation avec la station : un interacteur, pas une de ses pièces."},
+  boitier: {nom:"le boîtier", f:false, dedans:true, pourquoi:"il fait partie de la station : il protège ce qu'il y a dans la borne."},
+  trottoir:{nom:"le trottoir", f:false, dedans:false, pourquoi:"un élément de l'environnement : la station y est fixée, il ne fait pas partie d'elle."},
+  sol:     {nom:"le sol", f:false, dedans:false, pourquoi:"un élément de l'environnement : la station y est fixée, il ne fait pas partie d'elle."},
+  cable:   {nom:"le câble d'alimentation", f:false, dedans:true, pourquoi:"il fait partie de la station : il lui apporte l'énergie ; ce qui est au bout, le réseau électrique de la ville, est un autre objet, un interacteur."}
+};
+window.__entoure = window.__entoure || {};
+let entVerifie = false;
+function entMaj(){
+  let n=0;
+  document.querySelectorAll(".ent-btn").forEach(b=>{
+    const on=!!window.__entoure[b.dataset.el]; if(on) n++;
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+    const e=document.querySelector('.ent-traits ellipse[data-pour="'+b.dataset.el+'"]'); if(e) e.classList.toggle("on", on);
+  });
+  const c=$("ent_compte"); if(c) c.textContent = n ? n+" élément"+(n>1?"s":"")+" entouré"+(n>1?"s":"")+"." : "Aucun élément entouré.";
+}
+function entEffacerVerdict(){
+  document.querySelectorAll(".ent-btn .ent-marque").forEach(m=>m.remove());
+  const r=$("ent_retour"); if(r){ r.className="feedback"; r.innerHTML=""; }
+}
+function entVerifier(){
+  entEffacerVerdict();
+  let justes=0; const lignes=[];
+  Object.entries(ENTOURER).forEach(([k,d])=>{
+    const on=!!window.__entoure[k], ok=(on===d.dedans); if(ok) justes++;
+    const etat = on ? (d.f ? "entourée" : "entouré") : (d.f ? "pas entourée" : "pas entouré");
+    const verdict = ok ? "juste" : (on ? "à retirer" : "à entourer");
+    lignes.push("<li>"+(ok?"✔ ":"✘ ")+"<b>"+d.nom+"</b> — "+etat+" : "+verdict+". "+(d.pourquoi.charAt(0).toUpperCase()+d.pourquoi.slice(1))+"</li>");
+    const b=document.querySelector('.ent-btn[data-el="'+k+'"]');
+    if(b){ const m=document.createElement("span"); m.className="ent-marque "+(ok?"juste":"faux"); m.setAttribute("aria-hidden","true"); m.textContent= ok ? "✔" : "✘"; b.appendChild(m); }
+  });
+  const r=$("ent_retour"), tout=(justes===8);
+  r.className="feedback show "+(tout ? "ok" : (justes>=6 ? "mixte" : "err"));
+  r.innerHTML = "<b>"+justes+" / 8 éléments justes.</b>"
+    + (tout ? " Ce que tu n'as pas entouré, c'est ce qui entoure la station : tu viens de tracer sa limite. Tout ce qui est dehors et en relation avec elle est un interacteur."
+            : " Corrige les éléments marqués ✘, puis vérifie à nouveau.")
+    + "<ul>"+lignes.join("")+"</ul>";
+  entVerifie=true;
+}
+document.querySelectorAll(".ent-btn").forEach(b=>b.addEventListener("click", ()=>{
+  const k=b.dataset.el; window.__entoure[k] = !window.__entoure[k];
+  if(!window.__entoure[k]) delete window.__entoure[k];
+  entVerifie=false; entEffacerVerdict(); entMaj(); save();
+}));
+$("ent_verifier").addEventListener("click", ()=>{ entVerifier(); save(); });
+
+
 /* ══════ Sauvegarde locale ══════ */
 function collect(){
-  const o={inputs:{}, valid:window.__valid, exp:window.__exp};
+  /* version 2 (04/11/2026) : quatre activités, la bête à cornes en tête ; l'entourage de la séance 2 */
+  const o={version:2, inputs:{}, valid:window.__valid, exp:window.__exp, entoure:window.__entoure, entoureVerifie:entVerifie};
   document.querySelectorAll("textarea,fieldset.qcm-groupe").forEach(e=>{ if(e.id) o.inputs[e.id]=val(e.id); });
+  document.querySelectorAll(".bac-champ").forEach(e=>{ if(e.id) o.inputs[e.id] = e.type==="checkbox" ? (e.checked ? "1" : "") : e.value; });
   return o;
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){} }
@@ -1122,12 +1732,22 @@ function restore(){
     const e=$(id); if(!e) return;
     if(e.tagName==="FIELDSET"){
       e.querySelectorAll("input[type=radio]").forEach(r=>{ r.checked = (r.value===v); });
-    } else e.value=v;
+    } else if(e.type==="checkbox") e.checked = (v==="1");
+    else e.value=v;
   });
-  window.__valid=o.valid||{}; window.__exp=o.exp||{};
+  let valid=o.valid||{};
+  /* Une sauvegarde d'avant le 04/11/2026 (sans « version ») comptait trois activités, numérotées 1 à 3 : la bête à
+     cornes est venue devant elles. Ses validations passent aux activités 2, 3 et 4, sans rien perdre. */
+  if(!o.version){
+    const v={}; if(valid[0]!==undefined) v[0]=valid[0];
+    [1,2,3].forEach(k=>{ if(valid[k]!==undefined) v[k+1]=valid[k]; });
+    valid=v;
+  }
+  window.__valid=valid; window.__exp=o.exp||{};
+  window.__entoure=o.entoure||{}; entVerifie=!!o.entoureVerifie;
 }
-document.addEventListener("change", ev=>{ if(/INPUT|TEXTAREA/.test(ev.target.tagName)) save(); });
-document.addEventListener("input", ev=>{ if(ev.target.tagName==="TEXTAREA") save(); });
+document.addEventListener("change", ev=>{ if(/INPUT|TEXTAREA|SELECT/.test(ev.target.tagName)) save(); });
+document.addEventListener("input", ev=>{ if(ev.target.tagName==="TEXTAREA" || (ev.target.tagName==="INPUT" && ev.target.type==="text")) save(); });
 
 $("btnPrint").addEventListener("click", ()=>window.print());
 $("btnReset").addEventListener("click", ()=>{
@@ -1189,9 +1809,26 @@ const CHECKS = {
     if(vides) extra=" Réponds d'abord aux "+vides+" question(s) restante(s) — aucune note n'est prise.";
     else if(ok===3) extra=" 🎫 Tes outils sont là : file à l'activité 1.";
     else extra=" Rien de grave, et aucune note n'est prise : ouvre la capsule de révision, puis refais le billet.";
+    /* la question 2 : « à quoi l'objet SERT pour son usager », c'est la fonction d'usage — on le dit en toutes lettres */
+    if(val("be_2")==="un verbe à l'infinitif : elle dit à quoi l'objet SERT pour son usager")
+      extra+=" Question 2 : « à quoi l'objet sert pour son usager », c'est la fonction d'usage, pas la fonction technique. La fonction technique dit ce que l'objet doit faire.";
     return {score:ok,total:3,extra:extra,valide:!vides};
   },
   1: function(){
+    /* La bête à cornes : a) et c) se corrigent case par case, d) sur trois critères ; l'exercice du vélo-cargo (b),
+       incrusté depuis l'atelier « Le besoin », garde son état sous sa propre clé ; le dessin du cahier se déclare. */
+    const a=bacCorriger("a"), c=bacCorriger("c"), d=bacCorrigerD(), e1=bacE1Reussi(), cahier=!!($("bac_d_cahier")||{}).checked;
+    bacResume("a",a); bacResume("c",c); bacResume("d",d);
+    const manque=[];
+    if(a.justes<3) manque.push("la partie a), les trois questions à leur place");
+    if(!e1) manque.push("l'exercice du vélo-cargo (partie b) : clique sur « Vérifier mes réponses » sous l'exercice");
+    if(c.justes<3) manque.push("la partie c), la bête à cornes de la station");
+    if(d.justes<3) manque.push("la partie d), les trois critères de ta bête à cornes");
+    if(!cahier) manque.push("la case « Je l'ai dessinée sur mon cahier », une fois ta bête à cornes dessinée");
+    return {score:a.justes+c.justes+d.justes+(e1?1:0)+(cahier?1:0), total:11, valide:!manque.length,
+            extra: manque.length ? " Il reste : "+manque.join(" ; ")+"." : ""};
+  },
+  2: function(){
     const att={a1_1:"la couleur du cadre des vélos",
                a1_2:"elle agit sur la station : elle mouille les bornes et peut les bloquer",
                a1_3:"oui : la station y est fixée, et sa largeur limite l'espace disponible",
@@ -1202,7 +1839,7 @@ const CHECKS = {
     let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
     /* c) Les trois exercices du vélo-cargo (diagramme pieuvre) sont incrustés depuis
        l'atelier des représentations : ils se vérifient eux-mêmes et gardent leur état
-       sous leur propre clé. L'activité 1 n'est validée que s'ils sont réussis tous les trois. */
+       sous leur propre clé. L'activité 2 n'est validée que s'ils sont réussis tous les deux. */
     const exos = ["e1","e3"];
     const reussis = exos.filter(e => {
       try { const x = JSON.parse(localStorage.getItem("rep_interacteurs-pieuvre_5e_" + e) || "{}"); return !!x.reussi; }
@@ -1211,10 +1848,10 @@ const CHECKS = {
     const assez = reussis === exos.length;
     let manque = "";
     if(!assez)
-      manque = " Il reste " + (exos.length - reussis) + " exercice(s) du vélo-cargo (partie c) à réussir : clique sur « Vérifier mes réponses » sous chacun, corrige ce qui est marqué ✘, puis reviens vérifier l'activité 1.";
+      manque = " Il reste " + (exos.length - reussis) + " exercice(s) du vélo-cargo (partie c) à réussir : clique sur « Vérifier mes réponses » sous chacun, corrige ce qui est marqué ✘, puis reviens vérifier l'activité 2.";
     return {score:ok,total:7,valide: ok>=6 && assez, extra: manque};
   },
-  2: function(){
+  3: function(){
     const att={a2_1:"la pluie : l'eau s'écoule au lieu de stagner sur le lecteur",
                a2_2:"l'ergonomie : c'est la hauteur où l'on pousse sans se baisser",
                a2_3:"la sécurité : on se blesse moins en heurtant un angle arrondi",
@@ -1233,7 +1870,7 @@ const CHECKS = {
     return {score:ok,total:8,valide: ok>=7 && complet,
       extra: complet ? "" : " Il faut QUATRE choix, un par ligne, et pour chacun l'interacteur concerné puis le domaine (ergonomie, sécurité ou développement durable) — dont AU MOINS UN qui relève du développement durable."};
   },
-  3: function(){
+  4: function(){
     const att={a3_1:"la pluie",
                a3_2:"un même problème admet plusieurs réponses techniques, chacune avec ses conséquences",
                a3_3:"occupe moins de place mais oblige l'usager à se baisser : un gain d'encombrement payé en ergonomie",
@@ -1269,24 +1906,26 @@ document.querySelectorAll("[data-check]").forEach(btn=>{
 /* ══════ Progression ══════ */
 function majProgress(){
   const v=window.__valid||{};
-  const n=[1,2,3].filter(k=>v[k]).length;
-  $("progTxt").textContent = n + " / 3 activités validées";
-  $("progFill").style.width = (n/3*100)+"%";
+  const n=[1,2,3,4].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 4 activités validées";
+  $("progFill").style.width = (n/4*100)+"%";
   $("progBar").setAttribute("aria-valuenow", n);
-  const par={s1:[1], s2:[2], s3:[3]};
+  const par={s1:[1], s2:[2], s3:[3], s4:[4]};
   Object.entries(par).forEach(([s,acts])=>{ const d=$("done-"+s); if(d) d.textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
   majTaches();
 }
 
 /* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
 const TACHES = {
-  s1:{titre:"Séance 1 — Recenser les interacteurs", taches:[
+  s1:{titre:"Séance 1 — Le besoin : la bête à cornes", taches:[
     {n:0, libelle:"Billet d'entrée : vérifier ses outils (sans note)"},
-    {n:1, libelle:"Recenser au moins six interacteurs couvrant les quatre familles"}]},
-  s2:{titre:"Séance 2 — Lire une décision dans une forme", taches:[
-    {n:2, libelle:"Expliquer quatre choix de conception, interacteur et domaine à l'appui"}]},
-  s3:{titre:"Séance 3 — Comparer et transférer", taches:[
-    {n:3, libelle:"Comparer deux stations, puis transposer la station à Sainte-Luce"}]}
+    {n:1, libelle:"Bête à cornes : retrouver les trois questions, remplir celle de la station, puis dessiner la sienne"}]},
+  s2:{titre:"Séance 2 — Recenser les interacteurs", taches:[
+    {n:2, libelle:"Recenser au moins six interacteurs couvrant les quatre familles"}]},
+  s3:{titre:"Séance 3 — Lire une décision dans une forme", taches:[
+    {n:3, libelle:"Expliquer quatre choix de conception, interacteur et domaine à l'appui"}]},
+  s4:{titre:"Séance 4 — Comparer et transférer", taches:[
+    {n:4, libelle:"Comparer deux stations, puis transposer la station à Sainte-Luce"}]}
 };
 
 function majTaches(){
@@ -1326,6 +1965,7 @@ $("btnEssentiel").addEventListener("click", ()=>{
 restore();
 if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
 majEssentiel(); majProgress(); majHyp();
+bacMenusVus(); bacEcrire(); entMaj(); if(entVerifie) entVerifier();
 </script>
 
 <!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun

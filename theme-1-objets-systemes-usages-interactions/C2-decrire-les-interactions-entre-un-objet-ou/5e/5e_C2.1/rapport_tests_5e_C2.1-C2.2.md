@@ -1,5 +1,46 @@
 # Rapport de tests — lot Shenzhen 5e_C2.1 · C2.2
 
+## 04/11/2026 — quatre séances : la bête à cornes en séance 1, « Entoure » à l'écran
+
+**Suite** `python3 tests_5e_C2.1-C2.2_shenzhen.py` (depuis le dossier du lot, sans argument) : **122 / 122**
+(50 / 50 avant ; les 50 passent, adaptés aux quatre séances : boutons `data-check` 2 à 4, onglets `s2` à `s4`,
+« / 4 activités », QCM à 33 questions). **Banc n°311** `node tests_regle_311_5e_C2.1.mjs` : **34 / 34** (le lien
+direct `#a3_1__1` ouvre maintenant `s4`).
+
+| Les 72 tests nouveaux vérifient | |
+|---|---|
+| Les quatre séances : quatre onglets et panneaux, la question et le lien « 📖 Les mots de cette séance » de chacune, le bouton vers la suivante, la clôture en séance 4, les titres « Activité 1 » à « Activité 4 », le billet en tête de la séance 1, le bandeau des tâches | ✔ |
+| Aucun identifiant de champ ancien n'a changé (`be_*`, `hyp1`, `a1_*`, `a2_*`, `a3_*`, bilan, positionnement, bonus) | ✔ |
+| Point 1 : la note du billet et la capsule nomment la fonction d'usage (EN : *use function*), avec la définition des ateliers mot pour mot ; `CHECKS[0]` la nomme quand l'élève choisit « à quoi l'objet SERT » | ✔ |
+| a) un menu nommé dans chaque case du schéma ; **chacune des 21 réponses possibles** (3 cases × 7 questions) donne son retour propre, écrit dans la case ; le choix s'écrit en entier ; changer de réponse efface le retour périmé ; 2 / 3 puis 3 / 3 | ✔ |
+| b) l'exercice « Lire la bête à cornes du vélo-cargo » incrusté entre a) et c), son introduction (le même vélo-cargo, son pieuvre en séance 2), sa vérification « Tout est juste » | ✔ |
+| c) **chacune des 13 options** de la station donne son retour (la ville qui paie, le fabricant, le vélo ; l'usager, le trottoir, la pluie ; fonction technique, solution, phrase à sujet, contrainte) ; « verrouiller le vélo » est refusé comme fonction technique et renvoyé à la fonction d'usage ; l'encadré « À retenir » mot pour mot | ✔ |
+| d) le miroir (le produit, la case « à qui ? », le but) ; les critères sur six buts : case vide, « Un cartable avec deux bretelles », « Le cartable porte les livres », « Fermer avec une fermeture éclair », le nom de l'objet dans le but, puis un but juste ; la consigne « Dessine-la à main levée sur ton cahier » | ✔ |
+| `CHECKS[1]` : refusé sans le vélo-cargo ni le dessin déclaré ; 11 / 11 quand tout est fait ; la progression passe à 1 / 4 avec la coche de la séance 1 | ✔ |
+| L'entourage : huit boutons « non entourés », de 44 px au moins ; à 1280 px posés sur le dessin, sans chevauchement ; un clic entoure (`aria-pressed`, le mot « entourée » écrit, l'ellipse), un second le retire ; Espace et Entrée au clavier ; « Vérifier » : huit retours, le vélo refusé, le câble demandé, le trottoir et le sol justes, une marque ✔ ou ✘ sur chaque bouton ; tout juste : 8 / 8 et la phrase « tu viens de tracer sa limite » ; la correction repliée | ✔ |
+| Sauvegarde : l'entourage et son retour, les menus, le miroir et la case du cahier reviennent après un rechargement ; une sauvegarde d'avant le 04/11/2026 (trois activités, sans version) voit ses validations passer aux activités 2 à 4 | ✔ |
+| 390 px : aucun défilement de côté en séances 1 et 2 ; la bête à cornes garde sa forme ; les noms deviennent une rangée de puces de 44 px sous la figure, et l'ellipse se dessine sur la figure | ✔ |
+| Impression : en séance 2, « Entoure uniquement ce qui appartient à la station » et la figure sans boutons ni traits ; en séance 1, le cadre vide du dessin, la liste des sept questions et une ligne dans chaque case de a), les 13 propositions de c) en cases à cocher | ✔ |
+| Le lexique : une section par séance jusqu'à `#seance-s4` ; en séance 1, besoin, bête à cornes, fonction d'usage, en français et en anglais ; la définition des ateliers | ✔ |
+| Le QCM : en tête, les trois questions de la bête à cornes, chacune avec ses trois réfutations ; la bonne réponse « fonction d'usage » ; la dernière question reste la frontière avec la 4e ; l'en-tête annonce 33 ; la nouvelle clé de sauvegarde | ✔ |
+| La synthèse élève : la partie « Pour commencer » (`#partie-0`) et sa carte ; les ancres `#partie-1` à `#partie-6` intactes, sur les mêmes titres | ✔ |
+
+**Contrôles du dépôt sur le lot** : `controle_squelette` (0 défaut D1 à D6), `controle_impression`, `controle_verrous`,
+`controle_hors_ligne`, `controle_contraste_liens`, `controle_unites`, `controle_sigles`, `controle_liens`,
+`controle_hierarchie`, `controle_regles_visibles`, `controle_medias`, `controle_longueurs` (1 question détachée sur 33),
+`controle_impression_papier`, `controle_entete_qcm`, `controle_banque_qcm`, `controle_effectifs_qcm` : verts, comme
+avant. `controle_schemas` : 0 ✘ ; 12 ⚠ « serré » au lieu de 10, les deux de plus viennent du dessin « de la bête à
+cornes au diagramme pieuvre » du cours de l'atelier « Le besoin », incrusté (même ⚠ que son jumeau de l'atelier
+pieuvre, déjà présent). `mesurer_impression.py` sur la synthèse élève : **2 pages** en Inter (95 % et 91 %) et en
+Liberation Sans (95 % et 86 %), aucun titre seul. La séance 1 imprimée tient en 4 pages A4, aucun titre seul en bas de
+page. `verif_regles_audit.py` : **un ✘ nouveau, voulu** — la n°300 compte les six menus de la bête à cornes (a et c),
+posés dans le schéma à la demande de Pascal, dans l'esprit de la n°317 (exception à écrire au journal). La n°23 reste
+verte : 191 min annoncées pour 220.
+
+**Non testé** : un vrai téléphone, Safari, Firefox, un lecteur d'écran, une impression réelle (les PDF de Chromium ont
+été regardés).
+
+
 **Date** 8 août 2026 · **Suite** `tests_5e_C2.1-C2.2_shenzhen.py` (Playwright, Chromium 1280×900)
 **Résultat** **45 / 45 tests passés** (v1.1)
 

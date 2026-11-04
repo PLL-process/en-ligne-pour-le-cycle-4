@@ -147,7 +147,7 @@
 <div class="badges">
   <span class="badge niveau">5e</span>
   <span class="badge code">5e_C2.1</span><span class="badge code">5e_C2.2</span>
-  <span class="badge theme">30 questions · 5 illustrées · chaque distracteur réfuté</span>
+  <span class="badge theme">33 questions · 5 illustrées · chaque distracteur réfuté</span>
 </div>
 <p style="text-align:center"><a href="sequence_5e_C2_shenzhen_station_velos.html">⬅ Revenir à la séquence</a></p>
 
@@ -166,7 +166,7 @@
     <div>Répondu<b id="dRep" class="v-hl">0</b></div>
     <div>Correctes<b id="dOk" class="v-ok">0</b></div>
     <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
-    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">33</b></div>
     <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
     <div>Score<b id="dScore" class="v-hl">0 %</b></div>
     <div>Note<b id="dNote" class="v-warn">— /20</b></div>
@@ -183,7 +183,7 @@
 <section class="card">
   <h2>🎛 Mode de travail</h2>
   <div class="modes">
-    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (33)</button>
     <button class="btn" data-mode="dix">10 questions</button>
     <button class="btn" data-mode="cible">Révision ciblée</button>
     <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
@@ -214,7 +214,7 @@
 <section class="card ecran actif" id="ecranQuestion">
   <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
     <span class="q-comp" id="qComp">—</span>
-    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">33</b></span>
     <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
   </div>
   <p class="q-texte" id="qTexte">—</p>
@@ -234,7 +234,7 @@
   <h2>🏁 Résultat final</h2>
   <div class="note20" id="rNote">— /20</div>
   <div class="res-grid">
-    <div>Questions<b id="rTot">30</b></div>
+    <div>Questions<b id="rTot">33</b></div>
     <div>Répondues<b id="rRep" class="v-hl">0</b></div>
     <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
     <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
@@ -265,16 +265,37 @@
 
 <script>
 "use strict";
-/* Banque de questions — Shenzhen 5e : 30 questions (5e_C2.1 : 15 · 5e_C2.2 : 15), dont 5 illustrées */
+/* Banque de questions — Shenzhen 5e : 33 questions (5e_C2.1 : 18 · 5e_C2.2 : 15), dont 5 illustrées */
 const QUESTIONS = [
 /* ═══ C2.1 ═══ */
+{c:"C2.1",n:"Les trois questions de la bête à cornes",q:"La bête à cornes exprime le besoin auquel répond un objet. Quelles sont ses trois questions ?",
+ o:["à qui rend-il service ? comment marche-t-il ? que coûte-t-il ?","comment fonctionne-t-il ? de quoi est-il fait ? combien coûte-t-il ?","qui l'a fabriqué ? où le vend-on ? à quoi ressemble-t-il ?","à qui rend-il service ? sur quoi agit-il ? dans quel but ?"],r:3,
+ expl:"La bête à cornes regarde l'objet de l'EXTÉRIEUR : la personne qu'il aide, ce qu'il change, et la raison pour laquelle il existe. Elle ne dit rien de ce qu'il y a dedans.",
+ ex:"Pour la station : à qui ? l'usager ; sur quoi ? le vélo ; dans quel but ? permettre à l'usager de prendre un vélo et de le rendre en ville.",
+ err:"Mêler aux trois questions une question sur la matière, le prix ou le fonctionnement de l'objet.",
+ d:["La première question est juste, mais « comment marche-t-il ? » cherche les solutions et le prix sert à acheter : ni l'une ni l'autre n'exprime le besoin.","Ces trois questions ouvrent l'objet ou le mettent en vente : son fonctionnement, sa matière et son prix ne disent ni qui il aide, ni ce qu'il change.","Le fabricant, le magasin et l'aspect ne disent pas à quoi sert l'objet : une fois fini, le fabricant ne s'en sert pas.",""],
+ ret:"À qui ? Sur quoi ? Dans quel but ? : les trois questions du besoin."},
+{c:"C2.1",n:"À qui ou sur quoi",q:"Dans la bête à cornes de la station de vélos, dans quelle case va le vélo ?",
+ o:["« À qui rend-il service ? » : c'est lui que la station accueille chaque jour","« Sur quoi agit-il ? » : elle le garde, le verrouille, le libère","« Dans quel but ? » : la station existe pour ranger les vélos","aucune : le vélo est une des pièces de la station"],r:1,
+ expl:"La case « à qui ? » nomme la personne que l'objet aide : l'usager. La case « sur quoi ? » nomme ce que l'objet déplace, touche ou transforme : pour la station, c'est le vélo.",
+ ex:"Pour le vélo-cargo de Léa : à qui ? Léa ; sur quoi ? ses enfants et ses courses, qu'il transporte.",
+ err:"Mettre dans « à qui ? » ce que l'objet accueille ou transporte.",
+ d:["La station accueille le vélo, mais elle ne lui rend pas service : elle rend service à l'usager, qui prend et rend ce vélo. Le vélo est ce sur quoi elle agit.","","« Ranger les vélos » est une phrase sur ce que fait la station, et le vélo n'est pas un but : la case du bas dit le service rendu à l'usager.","Le vélo n'est pas une pièce de la station : il part avec l'usager. C'est un autre objet, en relation avec elle, et il a bien sa case."],
+ ret:"« À qui ? » nomme la personne aidée ; « sur quoi ? », ce que l'objet change."},
+{c:"C2.1",n:"Fonction d'usage ou fonction technique",q:"« Permettre à l'usager de prendre un vélo et de le rendre en ville, à toute heure. » Pour la station, cette phrase est…",
+ o:["son principe technique : le moyen qu'elle emploie","une fonction technique : ce que la station doit faire pour rendre ce service","sa fonction d'usage : le service qu'elle rend à l'usager","une contrainte : une condition qu'elle doit respecter"],r:2,
+ expl:"La fonction d'usage, c'est ce à quoi sert l'objet, pour la personne qui l'utilise. Elle s'écrit avec un verbe à l'infinitif et ne nomme aucune solution : c'est la réponse à « Dans quel but ? ».",
+ ex:"Fonction technique de la même station : « verrouiller le vélo au point d'ancrage ». Principe technique : un verrou électrique commandé par la borne.",
+ err:"Écrire comme fonction d'usage ce que l'objet doit faire (« verrouiller le vélo »).",
+ d:["Le principe technique est le moyen : un verrou électrique, un lecteur de carte. La phrase n'en nomme aucun, et c'est voulu.","Une fonction technique dit ce que la station doit faire pour rendre ce service : verrouiller le vélo, reconnaître un abonné. La phrase dit le service lui-même, pour l'usager.","","Une contrainte, comme résister à la pluie, viendra avec le diagramme pieuvre. La phrase dit pourquoi la station existe, pas ce qu'elle doit supporter."],
+ ret:"Le but de la bête à cornes est la fonction d'usage : le service rendu à l'usager."},
 {c:"C2.1",n:"Définition",q:"Un interacteur d'un objet technique, c'est…",
  img:{src:"Images/interacteurs_de_la_station.svg",alt:"Ce qui entre en relation avec la station de vélos : quatre familles d'interacteurs, reliées à la station par des flèches à double sens. Les usagers (le cycliste abonné, le touriste de passage, l'agent de maintenance) ; les données (l'identifiant de l'abonné, l'état « disponible » du vélo, le paiement, le numéro de borne) ; les autres objets (le vélo, le smartphone, le serveur de la ville) ; l'environnement (la pluie, le soleil, le sel marin, la température, le trottoir, la circulation). Ce n'est pas encore un diagramme pieuvre : c'est la liste, rangée par familles. Deux rappels : un interacteur est toujours extérieur à l'objet, et une règle de la ville n'en est pas un — elle impose une condition."},
- o:["la personne qui a conçu l'objet technique","chacune des pièces qui composent l'objet","tout ce qui, à l'extérieur, entre en relation","le lieu précis où l'objet est installé"],r:2,
+ o:["chacune des pièces qui composent l'objet","tout ce qui, à l'extérieur, entre en relation","la personne qui a conçu l'objet technique","le lieu précis où l'objet est installé"],r:1,
  expl:"Le mot le dit : ce qui inter-agit. La condition décisive est d'être EXTÉRIEUR à l'objet — sinon on décrit l'objet lui-même, pas ses relations.",
  ex:"Pour une station de vélos : l'usager, la pluie, le trottoir, le réseau informatique.",
  err:"Citer une pièce de l'objet (la borne, l'écran) comme si c'était un interacteur.",
- d:["Le concepteur est en relation avec le projet, pas avec l'objet en service. Ce sont les utilisateurs, la pluie ou le réseau qui agissent sur lui une fois installé.","Une pièce est à l'intérieur de l'objet : elle en fait partie. Un interacteur est extérieur, et c'est ce qui le définit.","","Le lieu est un seul interacteur parmi d'autres, et il n'en épuise pas la liste : le réseau ou l'usager ne sont pas des lieux."],
+ d:["Une pièce est à l'intérieur de l'objet : elle en fait partie. Un interacteur est extérieur, et c'est ce qui le définit.","","Le concepteur est en relation avec le projet, pas avec l'objet en service. Ce sont les utilisateurs, la pluie ou le réseau qui agissent sur lui une fois installé.","Le lieu est un seul interacteur parmi d'autres, et il n'en épuise pas la liste : le réseau ou l'usager ne sont pas des lieux."],
  ret:"Un interacteur est toujours EXTÉRIEUR à l'objet."},
 {c:"C2.1",n:"Les quatre familles",q:"Une liste complète d'interacteurs comporte…",
  img:{src:"Images/interacteurs_de_la_station.svg",alt:"Ce qui entre en relation avec la station de vélos : quatre familles d'interacteurs, reliées à la station par des flèches à double sens. Les usagers (le cycliste abonné, le touriste de passage, l'agent de maintenance) ; les données (l'identifiant de l'abonné, l'état « disponible » du vélo, le paiement, le numéro de borne) ; les autres objets (le vélo, le smartphone, le serveur de la ville) ; l'environnement (la pluie, le soleil, le sel marin, la température, le trottoir, la circulation). Ce n'est pas encore un diagramme pieuvre : c'est la liste, rangée par familles. Deux rappels : un interacteur est toujours extérieur à l'objet, et une règle de la ville n'en est pas un — elle impose une condition."},
@@ -286,18 +307,18 @@ const QUESTIONS = [
  ret:"Usagers, données, autres objets, environnement : les quatre comptent."},
 {c:"C2.1",n:"La famille invisible",q:"L'identifiant de ton abonnement, que la borne lit pour te reconnaître, est…",
  img:{src:"Images/interacteurs_de_la_station.svg",alt:"Ce qui entre en relation avec la station de vélos : quatre familles d'interacteurs, reliées à la station par des flèches à double sens. Les usagers (le cycliste abonné, le touriste de passage, l'agent de maintenance) ; les données (l'identifiant de l'abonné, l'état « disponible » du vélo, le paiement, le numéro de borne) ; les autres objets (le vélo, le smartphone, le serveur de la ville) ; l'environnement (la pluie, le soleil, le sel marin, la température, le trottoir, la circulation). Ce n'est pas encore un diagramme pieuvre : c'est la liste, rangée par familles. Deux rappels : un interacteur est toujours extérieur à l'objet, et une règle de la ville n'en est pas un — elle impose une condition."},
- o:["une pièce interne de la borne de retrait","un interacteur de la famille « données »","un interacteur de la famille « autres objets »","un détail sans influence sur le fonctionnement"],r:1,
+ o:["un détail sans influence sur le fonctionnement","une pièce interne de la borne de retrait","un interacteur de la famille « autres objets »","un interacteur de la famille « données »"],r:3,
  expl:"Un interacteur n'a pas besoin d'être visible ni matériel. Une information venue de l'extérieur — identifiant, état « disponible » d'un vélo, confirmation de paiement — entre dans la station, y déclenche quelque chose, et en ressort modifiée. C'est la définition même d'un interacteur.",
  ex:"Sans l'identifiant, la borne affiche « abonnement non reconnu » et le vélo reste verrouillé : tout le reste peut fonctionner, le service n'est pas rendu.",
  err:"Ne compter que ce qui se voit et se touche — et manquer la famille des données.",
- d:["L'identifiant n'appartient pas à la borne : il vient de ta carte ou de ton téléphone, donc de l'extérieur. Une pièce interne, elle, fait partie de l'objet.","","Une donnée n'est pas un objet : le téléphone est l'objet, l'identifiant qu'il transmet est la donnée. Les deux sont des interacteurs, de familles différentes.","Son influence est décisive et immédiate : c'est elle qui décide si le vélo se déverrouille ou non."],
+ d:["Son influence est décisive et immédiate : c'est elle qui décide si le vélo se déverrouille ou non.","L'identifiant n'appartient pas à la borne : il vient de ta carte ou de ton téléphone, donc de l'extérieur. Une pièce interne, elle, fait partie de l'objet.","Une donnée n'est pas un objet : le téléphone est l'objet, l'identifiant qu'il transmet est la donnée. Les deux sont des interacteurs, de familles différentes.",""],
  ret:"Les données sont des interacteurs. C'est la famille qu'on oublie le plus."},
 {c:"C2.1",n:"Ce qui n'en est pas un",q:"Parmi ces propositions, laquelle n'est PAS un interacteur de la station ?",
- o:["le trottoir sur lequel la station est fixée","l'agent de maintenance","la pluie","la couleur du cadre des vélos"],r:3,
+ o:["l'agent de maintenance","la couleur du cadre des vélos","la pluie","le trottoir sur lequel la station est fixée"],r:1,
  expl:"La couleur du cadre est une caractéristique de l'objet lui-même. Elle est dedans, pas dehors : elle ne peut donc pas être en relation avec lui.",
  ex:"Comparer : la pluie mouille la borne (relation), la couleur du cadre EST le vélo (pas de relation).",
  err:"Confondre une caractéristique de l'objet avec un interacteur.",
- d:["La station est fixée au trottoir, et la largeur de ce trottoir limite l'espace disponible : le trottoir la porte et la contraint.","L'agent de maintenance ouvre le boîtier et sort les vélos bloqués : il agit sur la station, il est donc bien un interacteur.","La pluie mouille les bornes et peut les bloquer — c'est précisément la panne relevée par le service technique. Elle agit sur l'objet.",""],
+ d:["L'agent de maintenance ouvre le boîtier et sort les vélos bloqués : il agit sur la station, il est donc bien un interacteur.","","La pluie mouille les bornes et peut les bloquer — c'est précisément la panne relevée par le service technique. Elle agit sur l'objet.","La station est fixée au trottoir, et la largeur de ce trottoir limite l'espace disponible : le trottoir la porte et la contraint."],
  ret:"Une caractéristique de l'objet n'est pas un interacteur."},
 {c:"C2.1",n:"Un interacteur non vivant",q:"La pluie est un interacteur de la station parce que…",
  o:["elle agit sur elle : elle mouille et peut bloquer","elle est citée dans le relevé du service technique","tout ce qui vient du ciel compte comme interacteur","elle empêche les usagers de venir jusqu'à la station"],r:0,
@@ -314,46 +335,46 @@ const QUESTIONS = [
  d:["Le réseau existe en dehors de la station et sert bien d'autres usages en ville : il n'est pas une pièce de la station, il est ce avec quoi elle dialogue.","La visibilité n'est pas un critère : l'électricité non plus ne se voit pas, et personne ne doute qu'elle soit indispensable à la borne.","","Il agit en permanence, y compris quand tout va bien — c'est justement parce qu'il fonctionne que la borne rend son service le reste du temps."],
  ret:"Un interacteur peut être invisible."},
 {c:"C2.1",n:"Le réflexe coûteux",q:"Le réflexe qui fait manquer la moitié de la liste, c'est…",
- o:["citer beaucoup trop d'objets différents","ne citer que ce qu'on voit : personnes et objets","commencer la liste par la pluie et le vent","faire une liste beaucoup trop longue à relire"],r:1,
+ o:["ne citer que ce qu'on voit : personnes et objets","citer beaucoup trop d'objets différents","commencer la liste par la pluie et le vent","faire une liste beaucoup trop longue à relire"],r:0,
  expl:"Presque tous les élèves commencent par les humains, puis ajoutent ce qui se touche. Le remède est mécanique : passer les quatre familles en revue une par une, et se forcer à trouver deux entrées dans chacune — surtout dans celle des données, qui ne se voit pas.",
  ex:"Une première liste typique : « l'usager, le technicien, le vélo, le trottoir ». Deux usagers, deux objets, zéro donnée, zéro élément de l'environnement.",
  err:"Rendre une liste où toutes les entrées sont visibles et matérielles.",
- d:["Il n'y a pas d'excès à craindre de ce côté : les autres objets sont l'une des quatre familles attendues, et ils sont plutôt sous-représentés dans les listes d'élèves.","","L'ordre est sans importance : commencer par la pluie est même un bon moyen d'échapper au réflexe des personnes.","Une liste longue n'est pas un défaut si elle est variée ; le défaut serait une liste longue qui répète dix fois la même famille."],
+ d:["","Il n'y a pas d'excès à craindre de ce côté : les autres objets sont l'une des quatre familles attendues, et ils sont plutôt sous-représentés dans les listes d'élèves.","L'ordre est sans importance : commencer par la pluie est même un bon moyen d'échapper au réflexe des personnes.","Une liste longue n'est pas un défaut si elle est variée ; le défaut serait une liste longue qui répète dix fois la même famille."],
  ret:"Une liste qui ne contient que du visible est une liste au quart faite."},
 {c:"C2.1",n:"Ce qui alimente",q:"Parmi ces interacteurs, lequel ALIMENTE la station ?",
- o:["le riverain qui passe devant la station","le vandalisme et les dégradations","la largeur du trottoir disponible","l'alimentation électrique du mobilier"],r:3,
+ o:["l'alimentation électrique du mobilier","le vandalisme et les dégradations","la largeur du trottoir disponible","le riverain qui passe devant la station"],r:0,
  expl:"Trois questions font sortir les interacteurs oubliés : qu'est-ce qui alimente l'objet, qu'est-ce qui le menace, qu'est-ce qui le contraint ?",
  ex:"Sans courant, ni écran, ni lecteur, ni verrou électrique.",
  err:"Oublier l'énergie et le réseau, parce qu'ils ne se voient pas.",
- d:["Le riverain subit la présence de la station et peut s'en plaindre ; il ne lui fournit ni énergie ni information.","Le vandalisme menace la station, il ne lui apporte rien : c'est un interacteur, mais de la deuxième question, pas de la première.","La largeur du trottoir contraint l'implantation : elle limite ce qu'on peut installer, sans rien fournir à la station.",""],
+ d:["","Le vandalisme menace la station, il ne lui apporte rien : c'est un interacteur, mais de la deuxième question, pas de la première.","La largeur du trottoir contraint l'implantation : elle limite ce qu'on peut installer, sans rien fournir à la station.","Le riverain subit la présence de la station et peut s'en plaindre ; il ne lui fournit ni énergie ni information."],
  ret:"Trois questions à se poser : qu'est-ce qui alimente, menace, contraint ?"},
 {c:"C2.1",n:"Ce qui contraint",q:"La règle municipale qui impose de laisser 1,40 m de passage sur le trottoir…",
- o:["est un interacteur : elle limite l'emprise au sol","n'est pas un interacteur mais une EXIGENCE","concerne la mairie, et non pas la station","ne compte que si un piéton vient se plaindre"],r:1,
+ o:["concerne la mairie, et non pas la station","est un interacteur : elle limite l'emprise au sol","n'est pas un interacteur mais une EXIGENCE","ne compte que si un piéton vient se plaindre"],r:2,
  expl:"Un interacteur ÉCHANGE quelque chose avec l'objet : de la matière, de l'énergie, de l'information. La pluie mouille, l'usager appuie, le réseau transmet. Une règle, une norme, un label n'échangent rien : ils IMPOSENT une condition à respecter. On les appelle des exigences, et le programme les fait venir des normes, d'un cahier des charges, des labels et des certifications. Elles sont décisives — mais elles ne sont pas de la même nature.",
  ex:"Trottoir de 2 m, passage obligatoire de 1,40 m : il reste 60 cm pour la station. La règle a bien changé la station, sans jamais rien lui échanger.",
  err:"Ranger les règles et les normes parmi les interacteurs parce qu'elles « agissent » au sens courant du mot. Agir sur le CONCEPTEUR n'est pas interagir avec l'OBJET.",
- d:["Elle a bien un effet — mais par l'intermédiaire du concepteur, qui la lit et en tient compte. Le trottoir, lui, est un interacteur : la station y est fixée et échange avec lui un appui.","","La mairie l'écrit, et c'est la station qui en porte la trace : le concepteur a dû dimensionner son mobilier pour la respecter. Elle la concerne donc directement, comme exigence.","Elle s'applique en permanence, plainte ou pas — c'est même son intérêt : elle protège le passage avant qu'un conflit n'apparaisse."],
+ d:["La mairie l'écrit, et c'est la station qui en porte la trace : le concepteur a dû dimensionner son mobilier pour la respecter. Elle la concerne donc directement, comme exigence.","Elle a bien un effet — mais par l'intermédiaire du concepteur, qui la lit et en tient compte. Le trottoir, lui, est un interacteur : la station y est fixée et échange avec lui un appui.","","Elle s'applique en permanence, plainte ou pas — c'est même son intérêt : elle protège le passage avant qu'un conflit n'apparaisse."],
  ret:"Un interacteur échange. Une exigence impose. Les deux comptent, ce ne sont pas les mêmes."},
 {c:"C2.1",n:"Extérieur ou intérieur",q:"La batterie interne qui garde l'heure de la borne est…",
- o:["un interacteur, car on peut la changer","un interacteur, car elle fournit de l'énergie","un composant de la station, donc pas un interacteur","ni l'un ni l'autre : elle est trop petite pour compter"],r:2,
+ o:["un interacteur, car elle fournit de l'énergie","un composant de la station, donc pas un interacteur","un interacteur, car on peut la changer","ni l'un ni l'autre : elle est trop petite pour compter"],r:1,
  expl:"Le critère ne change jamais : dedans ou dehors ? La batterie interne est livrée avec la borne, elle en fait partie. Le réseau électrique de la ville, lui, est dehors.",
  ex:"Batterie interne : composant. Prise d'alimentation de la ville : interacteur.",
  err:"Croire que tout ce qui fournit de l'énergie est un interacteur.",
- d:["Presque toutes les pièces d'un objet sont remplaçables ; la démontabilité ne fait pas passer un composant à l'extérieur.","Fournir de l'énergie ne suffit pas : encore faut-il venir de l'extérieur. Le moteur d'une voiture fournit l'énergie et n'est pas un interacteur de la voiture.","","La taille n'entre jamais dans le critère : une puce minuscule reliée au réseau serait, elle, en relation avec l'extérieur."],
+ d:["Fournir de l'énergie ne suffit pas : encore faut-il venir de l'extérieur. Le moteur d'une voiture fournit l'énergie et n'est pas un interacteur de la voiture.","","Presque toutes les pièces d'un objet sont remplaçables ; la démontabilité ne fait pas passer un composant à l'extérieur.","La taille n'entre jamais dans le critère : une puce minuscule reliée au réseau serait, elle, en relation avec l'extérieur."],
  ret:"Le seul critère : dedans ou dehors ?"},
 {c:"C2.1",n:"Changer de lieu",q:"Installer la même station en Martinique plutôt qu'à Shenzhen…",
- o:["change la liste : certains vont, d'autres viennent","ne change rien du tout : c'est le même objet","ne change que le nombre d'usagers concernés","supprime les interacteurs de type condition"],r:0,
+ o:["ne change que le nombre d'usagers concernés","ne change rien du tout : c'est le même objet","change la liste : certains vont, d'autres viennent","supprime les interacteurs de type condition"],r:2,
  expl:"L'objet est le même, mais l'environnement ne l'est pas — et c'est l'environnement qui fait la liste. C'est pourquoi un objet bien conçu ici peut échouer ailleurs.",
  ex:"En Martinique apparaissent l'air salin, les pluies intenses et le cyclone.",
  err:"Recopier une liste d'interacteurs d'un lieu à l'autre.",
- d:["","L'objet est identique, mais un interacteur n'appartient pas à l'objet : il appartient à la relation, et la relation change avec le lieu.","Ce serait ne voir que la nature « personnes ». Le climat, l'air marin et les règles locales changent tout autant, souvent davantage.","C'est l'inverse : le changement de lieu ajoute des conditions nouvelles, comme le sel marin et le cyclone, qui n'existaient pas là-bas."],
+ d:["Ce serait ne voir que la nature « personnes ». Le climat, l'air marin et les règles locales changent tout autant, souvent davantage.","L'objet est identique, mais un interacteur n'appartient pas à l'objet : il appartient à la relation, et la relation change avec le lieu.","","C'est l'inverse : le changement de lieu ajoute des conditions nouvelles, comme le sel marin et le cyclone, qui n'existaient pas là-bas."],
  ret:"Changer de lieu, c'est changer d'interacteurs."},
 {c:"C2.1",n:"Un interacteur martiniquais",q:"Le cyclone, pour une station installée à Sainte-Luce, est…",
- o:["exactement la même chose qu'une pluie intense","un interacteur à part entière, distinct de la pluie","un événement bien trop rare pour être recensé","un interacteur pour les bâtiments seulement"],r:1,
+ o:["un événement bien trop rare pour être recensé","exactement la même chose qu'une pluie intense","un interacteur à part entière, distinct de la pluie","un interacteur pour les bâtiments seulement"],r:2,
  expl:"Un cyclone ajoute le vent violent et les projectiles : ce n'est pas une pluie en plus fort. Il impose des réponses techniques propres — arrimer, démonter, protéger.",
  ex:"Une borne qui résiste à l'averse peut être arrachée par une rafale.",
  err:"Traiter le cyclone comme un cas extrême de pluie.",
- d:["L'eau n'est qu'une partie du phénomène : le vent et les objets qu'il transporte causent des dégâts qu'aucune inclinaison de borne ne prévient.","","La rareté n'est pas un critère de recensement : un interacteur rare mais destructeur est justement celui qu'il faut prévoir dès la conception.","Tout mobilier urbain est concerné : abribus, panneaux et stations sont précisément ce que le vent emporte en premier."],
+ d:["La rareté n'est pas un critère de recensement : un interacteur rare mais destructeur est justement celui qu'il faut prévoir dès la conception.","L'eau n'est qu'une partie du phénomène : le vent et les objets qu'il transporte causent des dégâts qu'aucune inclinaison de borne ne prévient.","","Tout mobilier urbain est concerné : abribus, panneaux et stations sont précisément ce que le vent emporte en premier."],
  ret:"Le cyclone n'est pas une pluie forte : c'est un interacteur à part."},
 {c:"C2.1",n:"Le sel marin",q:"En bord de mer, l'air salin est un interacteur parce qu'il…",
  o:["attaque les métaux de la station et accélère la corrosion","rend l'air plus lourd à respirer pour les usagers","modifie la couleur des vélos avec le temps","n'agit que sur les bateaux"],r:0,
@@ -363,11 +384,11 @@ const QUESTIONS = [
  d:["","L'effet sur les personnes ne concerne pas la relation avec la station : ce qui compte ici, c'est ce que le sel fait au métal de la borne.","Le ternissement existe, mais il est superficiel ; le vrai problème est la corrosion, qui fait céder des pièces porteuses et des fixations.","Le sel voyage dans l'air jusqu'à plusieurs centaines de mètres à l'intérieur des terres : tout mobilier littoral est concerné."],
  ret:"L'air salin transforme l'objet sans que personne n'y touche."},
 {c:"C2.1",n:"Le geste de recensement",q:"Pour ne rien oublier en recensant, la bonne méthode est…",
- o:["de recopier la liste d'un objet voisin","de citer ce qui vient spontanément à l'esprit","de tourner autour de l'objet, famille par famille","de commencer par ce qui coûte le plus cher"],r:2,
+ o:["de citer ce qui vient spontanément à l'esprit","de tourner autour de l'objet, famille par famille","de recopier la liste d'un objet voisin","de commencer par ce qui coûte le plus cher"],r:1,
  expl:"Le recensement est un balayage méthodique, pas un souvenir. Passer les quatre familles en revue évite l'angle mort du visible : les usagers et les objets viennent seuls, les données et l'environnement se cherchent.",
  ex:"Qui s'en sert ? Quelles informations entrent et sortent ? Avec quels autres objets ? Et que lui fait le lieu où elle est posée ?",
  err:"Se fier à sa mémoire plutôt qu'à une méthode.",
- d:["Deux objets voisins n'ont pas les mêmes relations : un abribus et une station de vélos partagent le trottoir et la pluie, mais pas le réseau d'identification.","Ce qui vient spontanément, ce sont les personnes : c'est exactement la source de l'oubli qu'on cherche à corriger.","","Le coût est un critère d'évaluation, qui vient plus tard ; pendant le recensement, un interacteur gratuit comme la pluie peut être le plus décisif."],
+ d:["Ce qui vient spontanément, ce sont les personnes : c'est exactement la source de l'oubli qu'on cherche à corriger.","","Deux objets voisins n'ont pas les mêmes relations : un abribus et une station de vélos partagent le trottoir et la pluie, mais pas le réseau d'identification.","Le coût est un critère d'évaluation, qui vient plus tard ; pendant le recensement, un interacteur gratuit comme la pluie peut être le plus décisif."],
  ret:"Le recensement est un balayage, pas un souvenir."},
 {c:"C2.1",n:"À quoi ça sert",q:"Recenser les interacteurs sert d'abord à…",
  o:["estimer le prix de fabrication de l'objet","compter combien de personnes utilisent l'objet","comprendre sa forme, et ce qui peut le mettre en défaut","décider quelle marque il faudra acheter"],r:2,
@@ -400,11 +421,11 @@ const QUESTIONS = [
  d:["","L'esthétique est une vraie question de conception — l'apparence et l'intégration dans le lieu comptent — mais elle n'est pas l'un des trois domaines que le programme nomme pour ce code : c'est le développement durable qui y figure.","Ce sont des familles de technologies, c'est-à-dire des MOYENS ; les trois domaines désignent au contraire les raisons pour lesquelles on emploie ces moyens.","Ce sont des étapes du cycle de vie de l'objet, qui décrivent quand les choix produisent leurs effets, non ce sur quoi ils portent."],
  ret:"Ergonomie, sécurité, développement durable."},
 {c:"C2.2",n:"L'ergonomie",q:"L'ergonomie concerne…",
- o:["la protection contre les accidents d'usage","l'adaptation de l'objet au corps et aux gestes","l'apparence et l'intégration dans le lieu","la durée de vie de l'objet une fois installé"],r:1,
+ o:["la durée de vie de l'objet une fois installé","la protection contre les accidents d'usage","l'apparence et l'intégration dans le lieu","l'adaptation de l'objet au corps et aux gestes"],r:3,
  expl:"L'ergonomie part du corps humain : hauteurs, efforts, portées, positions. Un objet ergonomique se manipule sans se contorsionner ni forcer.",
  ex:"L'ancrage à 90 cm est la hauteur où l'on pousse un vélo sans se baisser.",
  err:"Confondre ergonomie et confort décoratif.",
- d:["C'est la définition de la sécurité. Les deux se rejoignent parfois — un geste plus naturel est aussi moins risqué — mais protéger d'un accident n'est pas s'adapter au corps.","","C'est la définition de l'esthétique. Une poignée peut être très élégante et rester épuisante à manœuvrer.","La durée de vie relève de la solidité des matériaux et de l'entretien ; un objet peut durer trente ans et rester pénible à utiliser."],
+ d:["La durée de vie relève de la solidité des matériaux et de l'entretien ; un objet peut durer trente ans et rester pénible à utiliser.","C'est la définition de la sécurité. Les deux se rejoignent parfois — un geste plus naturel est aussi moins risqué — mais protéger d'un accident n'est pas s'adapter au corps.","C'est la définition de l'esthétique. Une poignée peut être très élégante et rester épuisante à manœuvrer.",""],
  ret:"L'ergonomie part du corps et des gestes."},
 {c:"C2.2",n:"La sécurité",q:"Les arêtes arrondies de la station relèvent surtout de…",
  o:["la résistance au vent et aux intempéries","l'ergonomie du poste de retrait","l'économie de matière à la fabrication","la sécurité : on se blesse moins"],r:3,
@@ -415,11 +436,11 @@ const QUESTIONS = [
  ret:"Le domaine se lit à ce que le choix évite."},
 {c:"C2.2",n:"Retrouver l'interacteur",q:"La borne est inclinée vers le bas plutôt que plate. Ce choix répond à…",
  img:{src:"Images/lire_un_choix_de_conception.svg",alt:"Tableau à quatre colonnes : ce que j'observe, pourquoi pas autrement, l'interacteur concerné, le domaine de conception, avec cinq exemples pris sur la station de vélos — dont les pièces remplaçables une par une, qui relèvent du développement durable."},
- o:["l'esthétique : la borne est plus jolie ainsi","l'usager, qui voit nettement mieux l'écran","l'agent de maintenance, qui ouvre plus facilement","la pluie : l'eau s'écoule au lieu de stagner"],r:3,
+ o:["l'usager, qui voit nettement mieux l'écran","la pluie : l'eau s'écoule au lieu de stagner","l'agent de maintenance, qui ouvre plus facilement","l'esthétique : la borne est plus jolie ainsi"],r:1,
  expl:"Derrière chaque choix, on peut nommer l'interacteur visé. Ici, une condition — et c'est précisément l'interacteur qui a été mal anticipé dans le relevé de panne.",
  ex:"Bornes bloquées par la pluie : l'inclinaison existait, elle était insuffisante.",
  err:"Chercher un humain derrière chaque choix.",
- d:["L'apparence n'explique pas une pente orientée vers le sol : c'est le sens de l'écoulement de l'eau qui la commande.","La lisibilité est un effet secondaire agréable, mais une inclinaison choisie pour la lecture serait orientée vers le visage, donc vers le haut, pas vers le bas.","L'ouverture du boîtier dépend de la visserie et de l'accès, pas de la pente de la face avant.",""],
+ d:["La lisibilité est un effet secondaire agréable, mais une inclinaison choisie pour la lecture serait orientée vers le visage, donc vers le haut, pas vers le bas.","","L'ouverture du boîtier dépend de la visserie et de l'accès, pas de la pente de la face avant.","L'apparence n'explique pas une pente orientée vers le sol : c'est le sens de l'écoulement de l'eau qui la commande."],
  ret:"Derrière un choix, on peut toujours nommer l'interacteur visé."},
 {c:"C2.2",n:"Un choix pour la maintenance",q:"Le boîtier qui s'ouvre avec une vis unique répond à…",
  o:["l'esthétique générale du boîtier","l'usager, qui peut réparer lui-même la borne","la pluie, qui entre beaucoup moins","l'agent de maintenance, qui intervient vite"],r:3,
@@ -482,7 +503,7 @@ const QUESTIONS = [
  expl:"Repérer un choix visible dans la forme et décrire un vécu ne sont pas la même chose. Cette année, on lit l'objet ; l'an prochain, on écoutera celui qui s'en sert.",
  ex:"« L'angle est arrondi » (5e) et « l'usager hésite devant la borne » (4e).",
  err:"Croire qu'on doit déjà raconter ce que ressent l'utilisateur.",
- d:["Le recensement des interacteurs est au contraire le cœur du programme de 5e : c'est exactement ce que fait la première séance de cette séquence.","","La mesure précise relève d'une autre compétence, travaillée ailleurs dans le cycle, et non de la description des interactions.","La fabrication concerne la réalisation d'un prototype, qui est un autre moment du programme et ne remplace pas la description de l'expérience utilisateur."],
+ d:["Le recensement des interacteurs est au contraire le cœur du programme de 5e : c'est exactement ce que fait la séance 2 de cette séquence.","","La mesure précise relève d'une autre compétence, travaillée ailleurs dans le cycle, et non de la description des interactions.","La fabrication concerne la réalisation d'un prototype, qui est un autre moment du programme et ne remplace pas la description de l'expérience utilisateur."],
  ret:"En 5e on lit l'objet ; en 4e on décrira le vécu de l'utilisateur."}
 ];
 
@@ -491,7 +512,7 @@ const QUESTIONS = [
 <script>
 "use strict";
 /* ═══════════ Moteur du QCM ═══════════ */
-const KEY="qcm_5e_C2_shenzhen";
+const KEY="qcm_5e_C2_shenzhen_33q";
 const $=id=>document.getElementById(id);
 /* `demande` remplace une boîte de confirmation : le premier clic annonce, le
    second dans les six secondes exécute. On ne supprime jamais une confirmation

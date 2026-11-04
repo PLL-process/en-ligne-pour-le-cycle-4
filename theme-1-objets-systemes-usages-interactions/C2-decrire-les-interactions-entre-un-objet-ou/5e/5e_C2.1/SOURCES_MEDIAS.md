@@ -36,6 +36,14 @@ la question demande à l'élève de citer lui-même trois interacteurs qui chang
 donne. Pour la même raison, les schémas 3 et 4 ne portent aucune flèche vers un interacteur : ce
 sont les questions des activités 2 a) et 3 qui les demandent.
 
+## La séance 1 « Le besoin : la bête à cornes » et l'entourage à l'écran (04/11/2026)
+
+| Média | Nature | Auteur | Licence | Rôle pédagogique |
+|---|---|---|---|---|
+| Les trois bêtes à cornes de l'activité 1 (a, c, d) | Schémas originaux **écrits dans la page en HTML et CSS** (cases, produit en ovale, corne en demi-ovale, flèche) ; aucun fichier image | Claude (Opus 5.5), pour ce dépôt | CC0 1.0 | a) la bête à cornes vide, une question à choisir dans chaque case ; c) celle de la station, une réponse à choisir dans chaque case ; d) celle de l'élève, où s'écrit ce qu'il tape. Des boîtes HTML plutôt qu'un SVG : un menu ou une phrase y tient à toutes les largeurs, et le texte reste à 14 px au moins, même à 390 px. Couleurs des bêtes à cornes des ateliers (cases blanches à bord encre, produit bleu pâle, but sur fond crème) ; rien ne se touche : la corne entoure le produit sans le toucher, la flèche s'arrête au-dessus du but |
+| La bête à cornes du vélo-cargo (b) | SVG original de l'atelier « Le besoin » (`figures.bete_a_cornes`, identifiant `bc-velo`), posé par `ateliers-representations/_generation/incrustations.py` | voir `ateliers-representations/besoin-bete-a-cornes/SOURCES_MEDIAS.md` | CC0 1.0 | L'exercice 1 de l'atelier, repris sans modification (le dessin n'est pas refait ici) |
+| Les ellipses de l'entourage (activité 2) | SVG original écrit dans la page, posé sur `Images/la_station_et_sa_limite.svg` (huit ellipses, aucun texte), et boutons HTML posés à la place des noms de la figure | Claude (Opus 5.5), pour ce dépôt | CC0 1.0 | « Touche chaque élément qui appartient à la station pour l'entourer » : le trait d'ellipse se dessine autour du nom touché ; la figure elle-même n'est pas modifiée, et elle s'imprime sans marques avec la consigne « Entoure » |
+
 ## Les données
 
 La station, ses cotes (ancrage à 90 cm, arêtes arrondies, boîtier à vis unique) et le relevé du

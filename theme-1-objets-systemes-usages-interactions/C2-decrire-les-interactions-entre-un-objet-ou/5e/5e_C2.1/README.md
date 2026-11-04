@@ -3,22 +3,28 @@
 Premier lot du **C2**. Il achève une séquence qui n'existait qu'à l'état de plan rédigé en HTML, et
 répare au passage un lien cassé du Thème 1 : la page pointait depuis des mois vers un QCM absent.
 
-➡ **[Séquence complète](sequence_5e_C2_shenzhen_station_velos.html)** — 3 séances de 55 min. Une
+➡ **[Séquence complète](sequence_5e_C2_shenzhen_station_velos.html)** — 4 séances de 55 min. Une
 station de vélos fonctionne mal alors que **rien n'est cassé** : les bornes s'allument, les vélos
 roulent, le réseau répond. Le problème n'est pas dans l'objet, il est dans ce qui l'entoure.
 
-➡ **[QCM d'entraînement](qcm_5e_C2_shenzhen_station_velos.html)** — 30 questions, dont 5 illustrées,
-chaque distracteur réfuté par une explication.
+Les quatre séances : **1. Le besoin : la bête à cornes** (à qui, sur quoi, dans quel but — la fonction
+d'usage ; ajoutée le 04/11/2026, à la demande de Pascal, pour exercer la bête à cornes avant les
+interacteurs) · **2. Recenser** les interacteurs, jusqu'au diagramme pieuvre du vélo-cargo · **3. Lire les
+formes** · **4. Comparer et transférer**, avec le bilan.
+
+➡ **[QCM d'entraînement](qcm_5e_C2_shenzhen_station_velos.html)** — 33 questions, dont 5 illustrées,
+chaque distracteur réfuté par une explication (les trois premières : la bête à cornes et la fonction d'usage).
 
 ➡ Synthèses : [élève](Synthèses/synthese_eleve_5e_C2.1-C2.2.html) ·
 [professeur](Synthèses/synthese_professeur_5e_C2.1-C2.2.html)
 
 ➡ [Fiche pédagogique](fiche_pedagogique_5e_C2.1-C2.2.md) ·
 [Matrice](matrice_couverture_5e_C2.1-C2.2.csv) · [Rapport de tests](rapport_tests_5e_C2.1-C2.2.md) ·
+[Lexique par séance](lexique_5e_C2.1.html) (source : `vocabulaire_5e_C2.1.json`) ·
 [Sources des médias](SOURCES_MEDIAS.md) · [Plan initial du lot](PLAN_LOT_SHENZHEN.md) ·
 [Plan de reprise](PLAN_LOT_C2_5e.md)
 
-➡ [`_generation/`](_generation/) — les 30 questions du QCM (`q.py`) et le générateur qui les injecte
+➡ [`_generation/`](_generation/) — les 33 questions du QCM (`q.py`) et le générateur qui les injecte
 dans le gabarit maison (`build_qcm.py`). Une seule source de vérité, un seul générateur.
 
 ## ⚠️ À lire avant d'utiliser le lot en classe
@@ -26,7 +32,7 @@ dans le gabarit maison (`build_qcm.py`). Une seule source de vérité, un seul g
 **« Décrire l'expérience de l'utilisateur » est au programme de 4e, pas de 5e.** Ici, l'élève
 *recense* ce qui entoure l'objet et *repère* des choix visibles dans sa forme. La carte du
 référentiel le dit à l'élève en toutes lettres, et le QCM y consacre sa dernière question. Si vous
-prolongez l'activité 2, gardez la consigne du côté observable : *quel interacteur, quel domaine* —
+prolongez l'activité 3, gardez la consigne du côté observable : *quel interacteur, quel domaine* —
 et non *que ressent l'usager*.
 
 **Codes de classement.** `5e_C2.1` et `5e_C2.2` sont des codes **internes à ce dépôt**. La référence
@@ -34,6 +40,8 @@ normative est le programme de technologie du cycle 4, BO n°9 du 29 février 202
 
 ## Ce que l'élève doit savoir dire à la fin
 
+Que la bête à cornes dit le besoin en trois questions — **à qui ? sur quoi ? dans quel but ?** — et que son
+but, écrit avec un verbe à l'infinitif et sans solution, est la **fonction d'usage** de l'objet.
 Qu'un interacteur est toujours **extérieur** à l'objet, et qu'il n'est pas forcément quelqu'un.
 Qu'une liste qui ne contient que des personnes est **une liste à moitié faite**. Que chaque forme
 est une décision, et que la question qui l'ouvre est « **pourquoi pas autrement ?** ». Qu'un choix
@@ -42,7 +50,7 @@ changer d'interacteurs — un cyclone n'est pas une pluie forte.
 
 ## Les codes voisins
 
-- **5e_C2.2** est couvert par cette même séquence (séances 2 et 3) — voir le README pointeur du
+- **5e_C2.2** est couvert par cette même séquence (séances 3 et 4) — voir le README pointeur du
   dossier `5e_C2.2`.
 - **4e_C2** (décrire l'expérience de l'utilisateur, repérer les contraintes) et **3e_C2** restent à
   créer : cette séquence en pose l'objet-fil et la frontière.
