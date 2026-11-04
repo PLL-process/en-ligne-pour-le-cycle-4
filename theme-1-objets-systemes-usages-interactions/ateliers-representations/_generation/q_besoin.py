@@ -170,7 +170,7 @@ q(C, "Reconnaître le schéma",
    "le diagramme de Gantt",
    "la chaîne d'énergie"],
   "Ce schéma exprime le besoin ; on l'appelle souvent la bête à cornes, à cause de la courbe qui part des deux cases et passe "
-  "sous l'objet, comme des cornes.",
+  "sur le haut de l'objet, comme des cornes.",
   "Le diagramme pieuvre, lui, met l'objet au centre et tous ses interacteurs autour.",
   "Confondre les représentations parce qu'elles placent toutes l'objet quelque part.",
   ["",

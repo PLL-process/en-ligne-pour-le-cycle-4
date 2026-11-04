@@ -27387,3 +27387,42 @@ diagramme même. `verif_regles_audit.py` les compte.
 `controle_squelette` 0 défaut ; impression, verrous, hors ligne, contraste, unités, sigles, liens, hiérarchie, règles
 visibles, médias, longueurs, impression papier : verts ; `controle_schemas` 0 ✘. Séance 1 imprimée en 4 pages, synthèse en
 2. Non testé : un vrai téléphone, Safari, Firefox, un lecteur d'écran, une impression réelle.
+
+---
+
+## 04/11/2026 — Règle d'or n°318 : la bête à cornes a une seule forme, celle du modèle de Pascal (thème 1)
+
+*Pascal, le 04/11/2026, après avoir vu les bêtes à cornes de la nouvelle séance 1 de 5e_C2.1 : « Voici comment j'aimerais
+la bête à cornes », avec un modèle (le diagramme « classique » : deux ellipses en haut, le produit sous la corne, une
+flèche vers le but).*
+
+> **Règle d'or n°318 — la bête à cornes a une seule forme dans le dépôt.** En haut à gauche, « À qui le produit rend-il
+> service ? » écrit **au-dessus** d'une **ellipse** ; en haut à droite, « Sur quoi le produit agit-il ? » au-dessus d'une
+> **ellipse** ; au centre, plus bas, une **ellipse** avec le nom du produit. **La corne** part du bas de l'ellipse de
+> gauche, passe **sur le haut de l'ellipse du produit** (le produit est sous la corne) et remonte au bas de l'ellipse de
+> droite. **La flèche** part de la corne, à droite, là où elle rejoint l'ellipse de droite, et descend au **rectangle** du
+> but, sous « Dans quel but ? ». Une case à remplir porte une ligne pointillée. Toute nouvelle bête à cornes, dessin ou
+> exercice, prend cette forme.
+
+**Ce qui a changé** (avant : deux rectangles en haut et une courbe en « U » dessous, le produit dans le « U ») :
+- **Le générateur des ateliers** : une fonction de dessin commune, `dessin_bac()` (`_generation/figures.py`), sert à
+  `bete_a_cornes()` et à la moitié gauche de `bete_vers_pieuvre()`. Trait simple bleu foncé ; une réponse longue passe
+  sur deux lignes et l'ellipse s'élargit ; la ligne pointillée d'une case vivante s'efface dès que la page y écrit.
+  Régénérés : vélo-cargo, lampadaire (à compléter, vivant, corrigé), besoin de Léa, arrosoir, arrosage (vivant, corrigé),
+  alerte, but mal formulé — dans les trois ateliers « Le besoin », les trois cahiers, les huit
+  `besoin-bete-a-cornes/Images/*.svg`, le QCM de l'atelier, et les séquences qui les incrustent (5e_C2.1, 5e_C3.1,
+  4e_C3.1, 3e_C3.1, 4e_C1.1).
+- **La figure « De la bête à cornes au diagramme pieuvre »** : sa moitié bête à cornes prend la forme ; les repères
+  ①②③ sont sur les ellipses et le rectangle ; la corne garde le bleu de FP1, pour que l'œil relie les deux schémas.
+- **5e_C2.1, séance 1** : une seule implémentation (grille CSS, corne en SVG étiré, flèche en CSS) pour a), c), d) et le
+  cadre imprimé. En a), les menus sont à la place des questions ; en c), dans les ellipses et le rectangle ; en d), le
+  miroir de ce que l'élève tape. À 390 px, les deux ellipses restent côte à côte ; le retour d'une ellipse du haut
+  s'écrit sous sa question quand l'écran fait 860 px ou moins.
+- Les descriptions des dessins (« passe sur le haut de… ») et les quelques phrases qui décrivaient l'ancienne forme.
+- Les autres lieux (pages de liens, carte des représentations, synthèses en petites cases, lexiques) ne dessinaient
+  pas de bête à cornes : inchangés.
+
+**Contrôles.** `controle_schemas` sur le thème 1 : 0 ✘ (179 → 171 ⚠) ; `banc_ateliers.py` 378 / 378 ; Shenzhen 5e
+122 / 122, Shanghai 35 / 35, Tsinghua 63 / 63, Shenzhen 3e 37 / 37, Hangzhou 32 / 32, et leurs bancs n°311 ;
+impression, squelette, verrous, liens, hiérarchie, règles visibles, médias, unités, sigles : verts. Séance 1 de 5e_C2.1
+toujours en 4 pages. Non testé : un vrai téléphone, Safari, Firefox, un lecteur d'écran, une impression réelle.

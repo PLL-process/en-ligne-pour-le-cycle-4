@@ -41,17 +41,19 @@ BAC_VELO = bac(
     "bc-velo", "Léa", "ses deux enfants et ses courses", "Le vélo-cargo",
     "transporter ses deux enfants et ses courses en ville",
     "La bête à cornes du vélo-cargo de Léa",
-    "En haut à gauche, sous la question « À qui le produit rend-il service ? », la case dit : Léa. En haut à droite, "
-    "sous la question « Sur quoi le produit agit-il ? », la case dit : ses deux enfants et ses courses. Une grande courbe "
-    "part des deux cases et passe sous le vélo-cargo, écrit au centre. Une flèche descend vers la case « Dans quel but ? » : "
+    "En haut à gauche, sous la question « À qui le produit rend-il service ? », l'ellipse dit : Léa. En haut à droite, "
+    "sous la question « Sur quoi le produit agit-il ? », l'ellipse dit : ses deux enfants et ses courses. Une grande courbe, "
+    "la corne, part du bas de l'ellipse de gauche, passe sur le haut de l'ellipse du vélo-cargo, plus bas au centre, et "
+    "remonte à l'ellipse de droite. De là, une flèche descend vers le rectangle « Dans quel but ? » : "
     "transporter ses deux enfants et ses courses en ville.")
 
 VIVANTS_LAMPE = {"a_qui": "bc-l-qui", "sur_quoi": "bc-l-quoi", "but": "bc-l-but"}
 BAC_LAMPE = bac(
     "bc-lampe", "", "", "Le lampadaire intelligent", "",
     "La bête à cornes du lampadaire intelligent, à compléter",
-    "Au centre, le lampadaire intelligent. Les trois cases sont vides et en pointillés : en haut à gauche, « À qui le "
-    "produit rend-il service ? » ; en haut à droite, « Sur quoi le produit agit-il ? » ; en bas, « Dans quel but ? ».",
+    "Au centre, sous la corne, le lampadaire intelligent. Les trois cases sont vides, avec une ligne pointillée : en haut "
+    "à gauche, l'ellipse « À qui le produit rend-il service ? » ; en haut à droite, l'ellipse « Sur quoi le produit "
+    "agit-il ? » ; en bas, au bout de la flèche, le rectangle « Dans quel but ? ».",
     vivants=VIVANTS_LAMPE)
 
 BAC_LAMPE_C = bac(
@@ -79,7 +81,8 @@ BAC_ARROSAGE = bac(
     "bc-arrosage", "la gardienne du jardin", "les plantes du jardin", "Le système d'arrosage connecté", "",
     "Après : la bête à cornes du système d'arrosage connecté, sans son but",
     "À qui le produit rend-il service : la gardienne du jardin. Sur quoi agit-il : les plantes du jardin. Au centre, "
-    "le système d'arrosage connecté. La case « Dans quel but ? » est vide et en pointillés : c'est à toi de l'écrire.",
+    "le système d'arrosage connecté. Le rectangle « Dans quel but ? » est vide, avec une ligne pointillée : c'est à toi "
+    "de l'écrire.",
     vivants={"but": "bc-a-but"})
 
 BUT_ARROSAGE = "arroser les plantes du jardin, même en l'absence de la gardienne, sans gaspiller l'eau"
@@ -240,8 +243,8 @@ E2 = dict(
     critere="les deux cases portent les bons mots, et ton but commence par un verbe, dit où, quand et pour qui, sans nommer "
             "de solution.",
     widgets=[dict(type="slots", intro='<figure class="figure schema-vivant">' + BAC_LAMPE +
-                  '<figcaption>La bête à cornes du lampadaire intelligent. Tes choix et ton but s\'écrivent dans les cases en '
-                  'pointillés.</figcaption></figure>',
+                  '<figcaption>La bête à cornes du lampadaire intelligent. Tes choix et ton but s\'écrivent sur les lignes '
+                  'pointillées.</figcaption></figure>',
                   slots=[dict(name="qui", cible="bc-l-qui", legende="Case « À qui le produit rend-il service&nbsp;? »",
                               options=BANQUE_LAMPE, bonnes=["les piétons"],
                               indice="Case « à qui ? » : la personne que le lampadaire aide quand il s'allume, pas celle qui l'a commandé."),
@@ -408,8 +411,8 @@ E4 = dict(
             "solution, et la bonne raison de l'évolution.",
     widgets=[dict(type="classer", name="compare",
                   intro='<figure class="figure schema-vivant">' + BAC_ARROSAGE +
-                        '<figcaption>Après&nbsp;: la bête à cornes du système d\'arrosage connecté. Ton but s\'écrit dans la case '
-                        'en pointillés.</figcaption></figure>',
+                        '<figcaption>Après&nbsp;: la bête à cornes du système d\'arrosage connecté. Ton but s\'écrit sur la ligne '
+                        'pointillée.</figcaption></figure>',
                   categories=[("pareil", "elle est la même dans les deux schémas"),
                               ("change", "elle change d'un schéma à l'autre")],
                   items=[("La case « à qui&nbsp;? »", "pareil", "Compare les deux cases du haut, à gauche : qui se sert de l'objet, avant et après ?"),
@@ -772,7 +775,7 @@ BETE_VERS_PIEUVRE = figures.bete_vers_pieuvre(
     "permettre à Léa de transporter ses enfants", "protéger les enfants pendant le trajet",
     "De la bête à cornes au diagramme pieuvre",
     "À gauche, la bête à cornes du vélo-cargo : repère 1, à qui rend-il service ? Léa ; repère 2, sur quoi agit-il ? ses "
-    "enfants ; la corne bleue relie les deux en passant sous le vélo-cargo ; repère 3, dans quel but ? transporter ses "
+    "enfants ; la corne bleue relie les deux en passant sur le haut du vélo-cargo ; repère 3, dans quel but ? transporter ses "
     "enfants en ville. Une flèche marquée « devient » mène à droite, au diagramme pieuvre : la bulle Léa (repère 1) et la "
     "bulle ses enfants (repère 2) sont en haut ; la courbe bleue FP1 part de Léa, descend passer par le vélo-cargo et "
     "remonte aux enfants, comme la corne. Un trait rouge FC1 relie le vélo-cargo aux enfants. En dessous, repère 3 : FP1, "
@@ -1088,7 +1091,7 @@ NOTES_PROF = (
     "d'alerte cyclonique de Sainte-Luce (3e), ici prise avant sa conception, au moment où l'on écrit le besoin.</li></ul>")
 DEUX_NOMS = ("Le programme de technologie parle d'<b>exprimer le besoin</b>&nbsp;: dire à qui l'objet rend service, sur quoi il "
              "agit, et dans quel but. Le schéma qui le montre s'appelle, dans beaucoup de livres et de classes, la <b>bête à "
-             "cornes</b>&nbsp;: ses deux cases du haut et la grande courbe qui passe sous l'objet font penser à la tête d'un "
+             "cornes</b>&nbsp;: ses deux cases du haut et la grande courbe qui passe sur le haut de l'objet font penser à la tête d'un "
              "taureau. Si tu rencontres l'un des deux noms, tu sauras que c'est la même idée.")
 QCM_SOUS_TITRE = ("Lire et compléter la bête à cornes, choisir l'objet qui répond au besoin (5e) ; justifier une évolution, "
                   "tirer du besoin les caractéristiques (4e) ; établir une liste d'objets ou de systèmes techniques possibles "
