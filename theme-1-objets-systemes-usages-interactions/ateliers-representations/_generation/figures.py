@@ -294,69 +294,171 @@ def pieuvre(ident, objet, bulles, titre, desc, liens_fc=(), liens_fp=(), largeur
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Le besoin (bête à cornes)
+# Le besoin (bête à cornes) — la forme classique, celle du modèle de Pascal (04/11/2026)
 # ─────────────────────────────────────────────────────────────────────────────
-def bete_a_cornes(ident, a_qui, sur_quoi, objet, but, titre, desc, vivants=None, largeur=780, hauteur=470):
-    """vivants : dict {"a_qui": id, "sur_quoi": id, "objet": id, "but": id} pour les cases à remplir."""
+# En haut, deux ELLIPSES, chacune sous sa question : « À qui… ? » à gauche, « Sur quoi… ? » à droite. Plus bas, au
+# centre, l'ellipse du produit. LA CORNE part du bas de l'ellipse de gauche (un peu à droite de son milieu), descend,
+# effleure le HAUT de l'ellipse du produit — le produit est sous la corne — et remonte au bas de l'ellipse de droite (un
+# peu à gauche de son milieu). LA FLÈCHE part de la corne, à droite, là où elle rejoint l'ellipse de droite, et descend
+# verticalement jusqu'au rectangle du but, la pointe sur son bord. « Dans quel but ? » s'écrit au-dessus du rectangle,
+# à gauche. Un trait simple, bleu foncé. Une case à remplir porte une ligne pointillée (elle s'efface quand la page y
+# écrit la réponse).
+# Le contact entre la corne et le haut du produit est voulu (c'est le sens du dessin) : la règle n°315 ne compte pas une
+# courbe ouverte comme un cadre, et ce contact est la seule exception à « rien ne se touche ».
+TRAIT_BAC = "#1e3a6e"
+QUESTIONS_BAC = ("À qui le produit rend-il service ?", "Sur quoi le produit agit-il ?", "Dans quel but ?")
+#: là où la corne rejoint une ellipse du haut : à 22 % du demi-grand axe, côté intérieur (le modèle)
+DECALAGE_CORNE = 0.22
+
+
+def _ellipse_autour(lignes, taille, rx_min, ry_min, gras=True):
+    """Les demi-axes d'une ellipse qui contient un bloc de texte, coins compris, avec de l'air (n°315)."""
+    lw = max([len(l) for l in lignes] + [0]) * taille * (0.55 if gras else 0.5)   # mesuré : 0,46 à 0,53 em
+    lh = max(1, len(lignes)) * taille * 1.15
+    ry = max(ry_min, lh / 2 + 13)
+    k = (lh / 2 + 2) / ry
+    rx = max(rx_min, (lw / 2 + 9) / math.sqrt(max(0.15, 1 - k * k)))
+    return rx, ry
+
+
+def _ajuster(val, car, lignes_max, taille, rx_min, ry_min, rx_max):
+    """Coupe le texte en lignes de plus en plus courtes jusqu'à ce que son ellipse tienne dans rx_max :
+    une réponse longue passe sur deux lignes, et l'ellipse s'élargit sans jamais déborder."""
+    for c in range(car, 7, -1):
+        lignes = couper(val, c)[:lignes_max] if str(val).strip() else [""]
+        rx, ry = _ellipse_autour(lignes, taille, rx_min, ry_min)
+        if rx <= rx_max:
+            return c, rx, ry
+    return c, rx_max, ry
+
+
+def _pointilles(x1, x2, y):
+    """La ligne pointillée d'une case à remplir (comme sur la fiche papier)."""
+    return ('<line class="bac-pointilles" x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="1.8" '
+            'stroke-dasharray="0.1 5.2" stroke-linecap="round"/>' % (x1, y, x2, y, TRAIT_BAC))
+
+
+def dessin_bac(ident, x0, largeur, y_q, a_qui, sur_quoi, objet, but, vivants=None, questions=QUESTIONS_BAC,
+               tq=15, tv=16, tp=17, tb=16, rx_min=140, ry_min=42, rxp_min=104, ryp_min=36, creux=60,
+               car=20, carp=20, carb=52, hb_min=64, corne=TRAIT_BAC, ecart_but=0, air_fleche=20):
+    """Le dessin d'une bête à cornes dans la bande [x0, x0 + largeur], ses questions centrées sur y_q.
+    Rend (corps, géométrie) ; la géométrie sert aux repères (bete_vers_pieuvre) et à la hauteur du SVG.
+    vivants : {"a_qui": id, "sur_quoi": id, "objet": id, "but": id} — une case à remplir : texte vide (la page y
+    écrit), ligne pointillée qui s'efface dès qu'il y a une réponse."""
     v = vivants or {}
-    corps = [fleche_def(ident + "-pt")]
-    q = dict(couleur=GRIS, taille=13.5, italique=True, car=40)
-    # Questions au-dessus des cases
-    corps.append(texte(175, 34, "À qui le produit rend-il service ?", **q))
-    corps.append(texte(605, 34, "Sur quoi le produit agit-il ?", **q))
-    for (x0, cle, val) in ((40, "a_qui", a_qui), (470, "sur_quoi", sur_quoi)):
-        tirets = ' stroke-dasharray="7 5"' if cle in v else ""
-        corps.append('<rect x="%d" y="52" width="270" height="74" rx="12" fill="#ffffff" stroke="%s" '
-                     'stroke-width="2.4"%s/>' % (x0, ENCRE, tirets))
-        corps.append(texte(x0 + 135, 89, val, car=26, taille=16, gras=True, ident=v.get(cle), lignes_max=3))
-    # La corne : un U qui part des deux cases et passe sous le produit
-    corps.append('<path d="M175,126 C175,330 605,330 605,126" fill="none" stroke="%s" stroke-width="5" '
-                 'stroke-linecap="round"/>' % ENCRE)
-    # Le produit
-    tirets = ' stroke-dasharray="7 5"' if "objet" in v else ""
-    corps.append('<ellipse cx="390" cy="200" rx="130" ry="40" fill="#eef4ff" stroke="%s" stroke-width="3"%s/>'
-                 % (ENCRE, tirets))
-    corps.append(texte(390, 200, objet, car=20, taille=18, gras=True, ident=v.get("objet"), lignes_max=2))
-    # Flèche vers le but
-    corps.append('<line x1="390" y1="279" x2="390" y2="340" stroke="%s" stroke-width="3" marker-end="url(#%s-pt)"/>'
-                 % (ENCRE, ident))
-    corps.append(texte(390, 356, "Dans quel but ?", **q))
-    tirets = ' stroke-dasharray="7 5"' if "but" in v else ""
-    corps.append('<rect x="120" y="372" width="540" height="80" rx="12" fill="#fff8e6" stroke="%s" '
-                 'stroke-width="2.4"%s/>' % ("#a06a00", tirets))
-    corps.append(texte(390, 412, but, car=52, taille=16, gras=True, ident=v.get("but"), lignes_max=3))
-    return svg(largeur, hauteur, titre, desc, "".join(corps), ident=ident)
+    c = []
+    W = largeur
+    cxg, cxd, cxp = x0 + W * 0.25, x0 + W * 0.75, x0 + W / 2
+    rx_max = W / 4 - 12                                   # deux ellipses du haut : 24 unités d'air au moins
+    # ── Les deux ellipses du haut, de la même taille (comme le modèle) ──
+    hauts = []
+    for cle, val in (("a_qui", a_qui), ("sur_quoi", sur_quoi)):
+        if cle in v:
+            hauts.append((car, rx_min, ry_min))           # la place d'une réponse de deux lignes (car caractères)
+        else:
+            hauts.append(_ajuster(val, car, 3, tv, rx_min, ry_min, rx_max))
+    rx = min(max(h[1] for h in hauts), rx_max)
+    ry = max(h[2] for h in hauts)
+    cy = y_q + tq / 2 + 16 + ry
+    for (cx, q, cle, val, (cr, _a, _b)) in ((cxg, questions[0], "a_qui", a_qui, hauts[0]),
+                                           (cxd, questions[1], "sur_quoi", sur_quoi, hauts[1])):
+        c.append(texte(cx, y_q, q, couleur=GRIS, taille=tq, italique=True, car=80, lignes_max=1))
+        c.append('<ellipse cx="%.1f" cy="%.1f" rx="%.1f" ry="%.1f" fill="#ffffff" stroke="%s" stroke-width="2.4"/>'
+                 % (cx, cy, rx, ry, TRAIT_BAC))
+        if cle in v:
+            c.append(texte(cx, cy, "", car=cr, taille=tv, gras=True, ident=v[cle], lignes_max=2, vide=" "))
+            c.append(_pointilles(cx - 0.74 * rx, cx + 0.74 * rx, cy + 3))
+        else:
+            c.append(texte(cx, cy, val, car=cr, taille=tv, gras=True, lignes_max=3))
+    # ── La corne et le produit ──
+    xg, xd = cxg + DECALAGE_CORNE * rx, cxd - DECALAGE_CORNE * rx
+    yb = cy + ry * math.sqrt(1 - DECALAGE_CORNE ** 2)    # sur le bord bas des deux ellipses
+    rxp_max = xd - cxp - air_fleche                       # le produit laisse de l'air à la flèche
+    vide_p = "objet" in v
+    if vide_p:
+        crp, rxp, ryp = carp, min(max(rxp_min, rxp_max * 0.9), rxp_max), ryp_min
+    else:
+        crp, rxp, ryp = _ajuster(objet or "Nom du produit", carp, 3, tp, rxp_min, ryp_min, rxp_max)
+    y_haut = yb + creux                                   # le haut du produit : le point le plus bas de la corne
+    cyp = y_haut + ryp
+    c.append('<ellipse cx="%.1f" cy="%.1f" rx="%.1f" ry="%.1f" fill="#eef4ff" stroke="%s" stroke-width="2.6"/>'
+             % (cxp, cyp, rxp, ryp, TRAIT_BAC))
+    if vide_p:
+        c.append(texte(cxp, cyp, "", car=crp, taille=tp, gras=True, ident=v["objet"], lignes_max=2, vide=" "))
+        c.append(_pointilles(cxp - 0.72 * rxp, cxp + 0.72 * rxp, cyp + 3))
+    else:
+        c.append(texte(cxp, cyp, objet or "Nom du produit", car=crp, taille=tp, gras=True, lignes_max=3))
+    # Une courbe de Bézier symétrique : à t = 0,5 elle passe par (cxp, y_haut), tangente horizontale — elle effleure le
+    # haut de l'ellipse du produit sans y entrer (les deux courbures sont opposées).
+    c.append('<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" fill="none" stroke="%s" stroke-width="3" stroke-linecap="round"/>'
+             % (xg, yb, cxp, 2 * y_haut - yb, xd, yb, corne))
+    # ── Le but ──
+    rect_x, rect_w = x0 + W * 0.14, W * 0.72
+    if "but" in v:
+        crb, nb = carb, 3
+    else:
+        crb, nb = carb, len(couper(but, carb)[:3]) if str(but).strip() else 1
+    rect_h = max(hb_min, nb * tb * 1.15 + 28)
+    rect_y = cyp + ryp + 16 + tq + 12
+    y_label = rect_y - 6 - tq / 2 - 4
+    c.append(texte(rect_x + 2 + ecart_but, y_label, questions[2], couleur=GRIS, taille=tq, italique=True, car=40,
+                   ancre="start", lignes_max=1))
+    c.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="10" fill="#fff8e6" stroke="%s" stroke-width="2.4"/>'
+             % (rect_x, rect_y, rect_w, rect_h, TRAIT_BAC))
+    if "but" in v:
+        c.append(texte(cxp, rect_y + rect_h / 2, "", car=crb, taille=tb, gras=True, ident=v["but"], lignes_max=3, vide=" "))
+        c.append(_pointilles(rect_x + 18, rect_x + rect_w - 18, rect_y + rect_h / 2 + 3))
+    else:
+        c.append(texte(cxp, rect_y + rect_h / 2, but, car=crb, taille=tb, gras=True, lignes_max=3))
+    # ── La flèche : de la corne, là où elle rejoint l'ellipse de droite, droit vers le rectangle ──
+    c.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="2.6" marker-end="url(#%s-pb)"/>'
+             % (xd, yb, xd, rect_y, TRAIT_BAC, ident))
+    geo = dict(g=(cxg, cy, rx, ry), d=(cxd, cy, rx, ry), p=(cxp, cyp, rxp, ryp), r=(rect_x, rect_y, rect_w, rect_h),
+               bas=rect_y + rect_h)
+    return c, geo
+
+
+def _style_vivant(ident):
+    """La ligne pointillée s'efface quand la page écrit la réponse (kit.js pose la classe « rempli » sur le texte)."""
+    return '<style>#%s text.rempli+.bac-pointilles{display:none}</style>' % ident
+
+
+def bete_a_cornes(ident, a_qui, sur_quoi, objet, but, titre, desc, vivants=None, largeur=780, hauteur=None):
+    """vivants : dict {"a_qui": id, "sur_quoi": id, "objet": id, "but": id} pour les cases à remplir.
+    La hauteur suit le dessin (une réponse longue agrandit l'ellipse ou le rectangle) ; `hauteur` est ignoré."""
+    corps, geo = dessin_bac(ident, 0, largeur, 26, a_qui, sur_quoi, objet, but, vivants=vivants)
+    tete = [fleche_def(ident + "-pb", TRAIT_BAC)]
+    if vivants:
+        tete.append(_style_vivant(ident))
+    return svg(largeur, int(math.ceil(geo["bas"] + 18)), titre, desc, "".join(tete + corps), ident=ident)
 
 
 def bete_vers_pieuvre(ident, a_qui, sur_quoi, objet, but, fp, fc, titre, desc, largeur=900, hauteur=420):
     """La même liaison, deux fois : la corne de la bête à cornes (à qui → par l'objet → sur quoi) devient la
-    fonction principale FP1 du diagramme pieuvre. Repères ①②③ sur les deux schémas, légende en mots."""
+    fonction principale FP1 du diagramme pieuvre. Repères ①②③ sur les deux schémas, légende en mots.
+    La moitié gauche est le dessin commun (dessin_bac) ; sa corne a la couleur de la FP1, pour que l'œil les relie."""
     BLEU, ROUGE, VIO = "#1f5fbf", "#b3261e", "#6d3fb5"
-    corps = [fleche_def(ident + "-pt"), fleche_def(ident + "-pg", GRIS)]
+    corps = [fleche_def(ident + "-pb", TRAIT_BAC), fleche_def(ident + "-pg", GRIS)]
 
     def badge(x, y, n):
-        corps.append('<circle cx="%d" cy="%d" r="13" fill="%s"/>' % (x, y, VIO))
+        corps.append('<circle cx="%.1f" cy="%.1f" r="13" fill="%s"/>' % (x, y, VIO))
         corps.append(texte(x, y, n, taille=14, gras=True, couleur="#ffffff", car=3))
 
-    q = dict(couleur=GRIS, taille=12.5, italique=True, car=30)
     # ── À gauche : la bête à cornes ──
     corps.append(texte(210, 22, "La bête à cornes", taille=15, gras=True, car=30))
-    corps.append(texte(110, 44, "À qui rend-il service ?", **q))
-    corps.append(texte(310, 44, "Sur quoi agit-il ?", **q))
-    for (x0, val) in ((30, a_qui), (230, sur_quoi)):
-        corps.append('<rect x="%d" y="56" width="160" height="48" rx="10" fill="#ffffff" stroke="%s" stroke-width="2.2"/>' % (x0, ENCRE))
-        corps.append(texte(x0 + 80, 80, val, car=18, taille=14.5, gras=True, lignes_max=2))
-    corps.append('<path d="M110,104 C110,250 310,250 310,104" fill="none" stroke="%s" stroke-width="5" stroke-linecap="round"/>' % BLEU)
-    corps.append('<ellipse cx="210" cy="170" rx="92" ry="30" fill="#eef4ff" stroke="%s" stroke-width="2.6"/>' % ENCRE)
-    corps.append(texte(210, 170, objet, car=18, taille=15, gras=True, lignes_max=2))
-    corps.append('<line x1="210" y1="215" x2="210" y2="252" stroke="%s" stroke-width="2.6" marker-end="url(#%s-pt)"/>' % (ENCRE, ident))
-    corps.append(texte(210, 266, "Dans quel but ?", **q))
-    corps.append('<rect x="40" y="280" width="340" height="48" rx="10" fill="#fff8e6" stroke="#a06a00" stroke-width="2.2"/>')
-    corps.append(texte(210, 304, but, car=40, taille=14.5, gras=True, lignes_max=2))
-    badge(30, 56, "1"); badge(230, 56, "2"); badge(40, 280, "3")
+    dessin, geo = dessin_bac(ident, 0, 420, 50, a_qui, sur_quoi, objet, but,
+                             questions=("À qui rend-il service ?", "Sur quoi agit-il ?", "Dans quel but ?"),
+                             tq=14, tv=15, tp=15, tb=15, rx_min=72, ry_min=25, rxp_min=60, ryp_min=26, creux=38,
+                             car=16, carp=14, carb=38, hb_min=46, corne=BLEU, ecart_but=20, air_fleche=18)
+    corps += dessin
+    (gx, gy, grx, gry), (dx_, dy_, drx, dry) = geo["g"], geo["d"]
+    # sur le bord haut-gauche de l'ellipse, un peu en dehors : le repère ne touche pas la réponse
+    badge(gx - 0.82 * grx, gy - 0.72 * gry, "1")
+    badge(dx_ - 0.82 * drx, dy_ - 0.72 * dry, "2")
+    badge(geo["r"][0], geo["r"][1], "3")
     # ── Au milieu : « devient » ──
     corps.append('<line x1="418" y1="176" x2="474" y2="176" stroke="%s" stroke-width="3" marker-end="url(#%s-pg)"/>' % (GRIS, ident))
-    corps.append(texte(446, 158, "devient", taille=12.5, italique=True, couleur=GRIS, car=10))
+    corps.append(texte(446, 156, "devient", taille=14, italique=True, couleur=GRIS, car=10))
     # ── À droite : le diagramme pieuvre ──
     corps.append(texte(690, 22, "Le diagramme pieuvre", taille=15, gras=True, car=30))
     (x1, y1), (x2, y2), (cx, cy) = (565, 80), (815, 80), (690, 200)
@@ -374,22 +476,22 @@ def bete_vers_pieuvre(ident, a_qui, sur_quoi, objet, but, fp, fc, titre, desc, l
     for (bx, by, val) in ((x1, y1, a_qui), (x2, y2, sur_quoi)):   # les interacteurs : des ellipses
         corps.append('<ellipse cx="%d" cy="%d" rx="80" ry="27" fill="#e8f0ff" stroke="%s" stroke-width="2.2"/>' % (bx, by, BLEU))
         corps.append(texte(bx, by, val, car=17, taille=14.5, gras=True, lignes_max=2))
-    for (ex, ey, lab, coul) in ((748, 140, "FP1", BLEU), (838, 146, "FC1", ROUGE)):
-        corps.append('<rect x="%d" y="%d" width="44" height="22" rx="6" fill="#ffffff" stroke="%s"/>' % (ex - 22, ey - 11, coul))
-        corps.append(texte(ex, ey, lab, taille=12.5, gras=True, couleur=coul, car=6))
+    for (ex, ey, lab, coul) in ((748, 136, "FP1", BLEU), (838, 146, "FC1", ROUGE)):
+        corps.append('<rect x="%d" y="%d" width="50" height="26" rx="6" fill="#ffffff" stroke="%s"/>' % (ex - 25, ey - 13, coul))
+        corps.append(texte(ex, ey, lab, taille=14, gras=True, couleur=coul, car=6))
     corps.append('<rect x="500" y="262" width="380" height="48" rx="10" fill="#e8f0ff" stroke="%s" stroke-width="2.2"/>' % BLEU)
     corps.append(texte(690, 286, "FP1 : " + fp, car=46, taille=14, gras=True, couleur=BLEU, lignes_max=2))
-    corps.append('<rect x="500" y="320" width="380" height="40" rx="10" fill="#fdeceb" stroke="%s" stroke-width="2"/>' % ROUGE)
-    corps.append(texte(690, 340, "FC1 : " + fc, car=50, taille=13, gras=True, couleur=ROUGE, lignes_max=2))
-    corps.append(texte(690, 384, "Au bout de la FP1, le même élément porte souvent aussi la FC1.", taille=12.5, italique=True,
+    corps.append('<rect x="500" y="330" width="380" height="40" rx="10" fill="#fdeceb" stroke="%s" stroke-width="2"/>' % ROUGE)
+    corps.append(texte(690, 350, "FC1 : " + fc, car=50, taille=14, gras=True, couleur=ROUGE, lignes_max=2))
+    corps.append(texte(690, 394, "Au bout de la FP1, le même élément porte souvent aussi la FC1.", taille=14, italique=True,
                        couleur=GRIS, car=70, lignes_max=1))
     badge(x1 - 57, y1 - 19, "1"); badge(x2 - 57, y2 - 19, "2"); badge(500, 262, "3")
-    # ── Légende, en mots ──
+    # ── Légende, en mots, sous la bête à cornes ──
     for k, ligne in enumerate(["① « à qui ? » → la bulle d'où part la FP1",
                                "② « sur quoi ? » → la bulle où arrive la FP1",
                                "③ « dans quel but ? » → la phrase de la FP1"]):
-        corps.append(texte(30, 352 + 22 * k, ligne, ancre="start", taille=13, car=60, couleur=ENCRE, lignes_max=1))
-    return svg(largeur, hauteur, titre, desc, "".join(corps), ident=ident)
+        corps.append(texte(30, geo["bas"] + 28 + 24 * k, ligne, ancre="start", taille=14, car=60, couleur=ENCRE, lignes_max=1))
+    return svg(largeur, max(hauteur, int(math.ceil(geo["bas"] + 28 + 48 + 22))), titre, desc, "".join(corps), ident=ident)
 
 
 # ─────────────────────────────────────────────────────────────────────────────

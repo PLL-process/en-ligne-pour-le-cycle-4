@@ -6,7 +6,7 @@
 
 ## Deux noms
 
-Le programme de technologie parle d'exprimer le besoin : dire à qui l'objet rend service, sur quoi il agit, et dans quel but. Le schéma qui le montre s'appelle, dans beaucoup de livres et de classes, la bête à cornes : ses deux cases du haut et la grande courbe qui passe sous l'objet font penser à la tête d'un taureau. Si tu rencontres l'un des deux noms, tu sauras que c'est la même idée.
+Le programme de technologie parle d'exprimer le besoin : dire à qui l'objet rend service, sur quoi il agit, et dans quel but. Le schéma qui le montre s'appelle, dans beaucoup de livres et de classes, la bête à cornes : ses deux cases du haut et la grande courbe qui passe sur le haut de l'objet font penser à la tête d'un taureau. Si tu rencontres l'un des deux noms, tu sauras que c'est la même idée.
 
 ## Les codes, en toutes lettres
 
