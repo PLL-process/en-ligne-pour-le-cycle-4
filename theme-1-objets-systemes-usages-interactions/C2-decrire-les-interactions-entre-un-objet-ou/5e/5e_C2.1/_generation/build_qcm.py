@@ -45,7 +45,7 @@ def construire(gabarit: str, sortie: str) -> None:
     lignes = ["const QUESTIONS = [",
               "/* ═══ 5e_C2.1 — recenser les interacteurs extérieurs ═══ */"]
     for i, o in enumerate(banque.Q):
-        if i == 15:
+        if o["c"] == "C2.2" and (i == 0 or banque.Q[i - 1]["c"] != "C2.2"):
             lignes.append("/* ═══ 5e_C2.2 — repérer et expliquer les choix de conception ═══ */")
         lignes.append(bloc_question(o) + ("," if i < len(banque.Q) - 1 else ""))
     lignes.append("];")
@@ -55,12 +55,19 @@ def construire(gabarit: str, sortie: str) -> None:
         raise SystemExit("Bloc QUESTIONS introuvable dans le gabarit.")
     s = s[:ancien.start()] + "\n".join(lignes) + s[ancien.end():]
 
+    n = len(banque.Q)
+    n21 = sum(1 for x in banque.Q if x["c"] == "C2.1")
+    n22 = sum(1 for x in banque.Q if x["c"] == "C2.2")
+    nimg = sum(1 for x in banque.Q if "img" in x)
     remplacements = [
         ("/* Banque de questions — Shenzhen 3e : 30 questions "
          "(C3.1 : 8 · C3.3 : 8 · C3.4 : 7 · C3.2 : 7) */",
-         "/* Banque de questions — Shenzhen 5e : 30 questions "
-         "(5e_C2.1 : 15 · 5e_C2.2 : 15), dont 5 illustrées */"),
-        ('const KEY="qcm_3e_C3.1-C3.4_shenzhen";', 'const KEY="qcm_5e_C2_shenzhen";'),
+         "/* Banque de questions — Shenzhen 5e : %d questions "
+         "(5e_C2.1 : %d · 5e_C2.2 : %d), dont %d illustrées */" % (n, n21, n22, nimg)),
+        # La clé de sauvegarde change avec la banque (30 → 33 questions, 04/11/2026) : l'état d'un élève est rangé
+        # par numéro de question, et fix_r.js redistribue toutes les bonnes réponses quand le nombre change. Une
+        # ancienne sauvegarde, relue avec la nouvelle banque, marquerait juste ce qui ne l'est plus.
+        ('const KEY="qcm_3e_C3.1-C3.4_shenzhen";', 'const KEY="qcm_5e_C2_shenzhen_%dq";' % n),
         ("""const COMP_LABELS={
   "C3.1":"3e_C3.1 — Établir une liste d'objets ou systèmes techniques possibles",
   "C3.3":"3e_C3.3 — Évaluer les solutions selon des exigences ou critères identifiés",
@@ -88,7 +95,7 @@ def construire(gabarit: str, sortie: str) -> None:
          '<span class="badge code">3e_C3.3</span><span class="badge code">3e_C3.4</span>',
          '<span class="badge code">5e_C2.1</span><span class="badge code">5e_C2.2</span>'),
         ("30 questions · 1 illustrée · chaque distracteur réfuté",
-         "30 questions · 5 illustrées · chaque distracteur réfuté"),
+         "%d questions · %d illustrées · chaque distracteur réfuté" % (n, nimg)),
         ("""      <option value="C3.1">3e_C3.1 — Établir une liste de solutions possibles</option>
       <option value="C3.3">3e_C3.3 — Évaluer selon des exigences identifiées</option>
       <option value="C3.4">3e_C3.4 — Définir et mettre en œuvre un protocole</option>
@@ -97,6 +104,12 @@ def construire(gabarit: str, sortie: str) -> None:
       <option value="C2.2">5e_C2.2 — Repérer et expliquer les choix de conception (ergonomie, sécurité, développement durable)</option>"""),
         ("QCM d’entraînement 3e_C3.1 à C3.4 · Thème 1",
          "QCM d’entraînement 5e_C2.1 · C2.2 · Thème 1"),
+        # les compteurs écrits dans la page avant que le script ne les remplisse (le bouton du parcours complet,
+        # lui, n'est jamais réécrit) : le gabarit en a 30, comme la banque de 3e
+        ('data-mode="complet">Parcours complet (30)</button>', 'data-mode="complet">Parcours complet (%d)</button>' % n),
+        ('<b id="dRest" class="v-warn">30</b>', '<b id="dRest" class="v-warn">%d</b>' % n),
+        ('<b id="qTot">30</b>', '<b id="qTot">%d</b>' % n),
+        ('<b id="rTot">30</b>', '<b id="rTot">%d</b>' % n),
     ]
     for avant, apres in remplacements:
         if s.count(avant) != 1:

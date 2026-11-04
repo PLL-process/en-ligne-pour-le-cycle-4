@@ -10,5 +10,5 @@ await lancerBanc311({
   texte: 'Mon hypothèse : essai du banc 311.',
   ancreS1: 'be_1__1',
   ancreSN: 'a3_1__1',
-  panneauSN: 's3',
+  panneauSN: 's4',   // quatre séances depuis le 04/11/2026 : l'activité 4 (a3_*) est dans le panneau s4
 });

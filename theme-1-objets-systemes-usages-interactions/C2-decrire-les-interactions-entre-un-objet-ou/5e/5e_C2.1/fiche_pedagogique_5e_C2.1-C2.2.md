@@ -1,6 +1,9 @@
 # Fiche pédagogique — 5e_C2.1 · C2.2 « Shenzhen : la station de vélos et tout ce qui l'entoure »
 
-**Niveau** 5e · **Thème 1** · **Durée** 3 séances de 55 min (149 min annoncés pour 165 — l'activité 2 est à ~50 min dans la page comme ici ; elle y était annoncée 55, un créneau entier sans lancement ; audit du 08/09)
+**Niveau** 5e · **Thème 1** · **Durée** 4 séances de 55 min (depuis le 04/11/2026 ; 197 min annoncées pour 220 :
+séance 1 ≈ 50 min, ouverture et billet compris ; séance 2 ≈ 47 min ; séance 3 ≈ 50 min ; séance 4 ≈ 50 min, bilan compris)
+**Préalable travaillé en séance 1** exprimer le besoin avec la bête à cornes (`5e_C3.3`, atelier « Le besoin ») : il prépare
+la fonction principale du diagramme pieuvre ; il n'est ni dans les étiquettes, ni dans « Je me positionne », ni dans la matrice
 **Matériel** aucun — page autonome, hors ligne, aucune donnée envoyée
 
 ## Ce que la séquence installe
@@ -9,8 +12,9 @@ Un seul geste, pris dans les deux sens : **regarder à l'extérieur de l'objet**
 
 | | Ce que l'élève fait | Compétence |
 |---|---|---|
-| Séance 1 | il **recense** ce qui entoure la station | 5e_C2.1 |
-| Séances 2 et 3 | il **remonte** des formes aux décisions prises pour ces interacteurs | 5e_C2.2 |
+| Séance 1 | il **exprime le besoin** de la station (bête à cornes) : à qui, sur quoi, dans quel but — la fonction d'usage | préalable (5e_C3.3) |
+| Séance 2 | il **recense** ce qui entoure la station | 5e_C2.1 |
+| Séances 3 et 4 | il **remonte** des formes aux décisions prises pour ces interacteurs | 5e_C2.2 |
 
 ## La situation déclenchante
 
@@ -25,15 +29,41 @@ l'objet, il est dans ce qui l'entoure.**
 
 ## Déroulé
 
+**Séance 1 — Le besoin : la bête à cornes** (≈ 50 min, ouverture et billet compris)
+
 0. **Billet d'entrée** (4 min, **sans note**) — objet technique, fonction technique, environnement.
-   Il oriente vers une capsule de révision de trois minutes ; il ne compte pas dans la progression.
-1. **Recenser les interacteurs** (5e_C2.1, ~45 min) — tri de propositions, les quatre familles, puis
-   la liste de l'élève : au moins six interacteurs, les quatre familles nommées.
-2. **Lire une décision dans une forme** (5e_C2.2, ~50 min) — quatre choix de la station rattachés
+   Il oriente vers une capsule de révision de trois minutes ; il ne compte pas dans la progression. La note
+   sous la question 2 nomme la **fonction d'usage** (« à quoi l'objet sert », le service rendu à l'usager).
+1. **La bête à cornes : à qui, sur quoi, dans quel but ?** (~40 min), en quatre temps :
+   - a) **se rappeler les trois questions** (~5 min) : une bête à cornes vide, un menu dans chaque case ;
+     les leurres « Comment fonctionne-t-il ? », « Qui l'a fabriqué ? », « De quoi est-il fait ? »,
+     « Combien coûte-t-il ? » ont chacun leur retour ;
+   - b) **lire la bête à cornes du vélo-cargo** (~6 min) : l'exercice 1 de l'atelier « Le besoin », incrusté
+     (le même vélo-cargo que le diagramme pieuvre de la séance 2) ;
+   - c) **remplir la bête à cornes de la station** (~12 min) : à qui ? l'usager (pièges : la ville qui paie,
+     le fabricant, le vélo) ; sur quoi ? le vélo (pièges : l'usager, le trottoir, la pluie) ; le but
+     (pièges : « verrouiller le vélo », fonction technique — le piège central ; la solution ; une phrase
+     avec un sujet ; une contrainte) ;
+   - d) **sa bête à cornes, à l'écran puis sur le cahier** (~15 min) : un objet du collège ; le but est
+     vérifié sur trois critères (cases du haut remplies, verbe à l'infinitif, aucune solution), puis
+     l'élève la dessine à main levée sur son cahier et le déclare. La fiche imprimée donne un cadre vide.
+
+**Séance 2 — Recenser** (≈ 47 min)
+
+2. **Recenser les interacteurs** (5e_C2.1) — « Entoure ce qui appartient à la station » se fait à l'écran
+   (huit boutons posés sur le dessin, une puce par nom sur un téléphone, un retour par élément), tri de
+   propositions, les quatre familles, puis le diagramme pieuvre du vélo-cargo (atelier incrusté).
+
+**Séance 3 — Lire les formes** (≈ 50 min)
+
+3. **Lire une décision dans une forme** (5e_C2.2) — quatre choix de la station rattachés
    chacun à un interacteur et à un domaine, puis le relevé écrit de l'élève.
-3. **Comparer et transférer** (5e_C2.2, ~35 min) — une seconde station qui a fait d'autres choix,
+
+**Séance 4 — Comparer et transférer** (≈ 50 min)
+
+4. **Comparer et transférer** (5e_C2.2, ~35 min) — une seconde station qui a fait d'autres choix,
    puis la transposition à Sainte-Luce.
-4. **Bilan** (~15 min) — retour sur l'hypothèse, auto-positionnement par code.
+5. **Bilan** (~15 min) — retour sur l'hypothèse, auto-positionnement par code (5e_C2.1 et 5e_C2.2).
 
 ## La frontière à tenir avec la 4e
 
@@ -42,11 +72,14 @@ Le risque de cette séquence n'est pas la difficulté : c'est le **glissement de
 **repère** ; on ne lui demande pas encore de raconter un vécu.
 
 La carte du référentiel le dit à l'élève en toutes lettres (« ce que tu feras en 4e, et pas encore
-ici ») et le QCM y consacre sa dernière question. Si vous prolongez l'activité 2, gardez la consigne
+ici ») et le QCM y consacre sa dernière question. Si vous prolongez l'activité 3, gardez la consigne
 du côté observable : *quel interacteur, quel domaine* — et non *que ressent l'usager*.
 
-## Les trois obstacles
+## Les obstacles
 
+0. **Écrire comme but ce que l'objet fait** (séance 1). « Verrouiller le vélo » est une fonction
+   technique ; le but de la bête à cornes est le service rendu à l'usager, la **fonction d'usage**. Le
+   menu du but de la station en fait son piège central, et le billet d'entrée le prépare.
 1. **Ne citer que des personnes.** Prévisible et massif. C'est pourquoi l'hypothèse de départ est
    demandée avant tout apport et **recomptée au bilan** : c'est l'élève qui constate son angle mort,
    pas le professeur qui l'annonce. Relance en cas de blocage : qu'est-ce qui **alimente** la
@@ -65,7 +98,7 @@ du côté observable : *quel interacteur, quel domaine* — et non *que ressent 
 
 ## Le moment clé
 
-Séance 3 : deux stations répondent au **même interacteur** — la pluie — par deux solutions
+Séance 4 : deux stations répondent au **même interacteur** — la pluie — par deux solutions
 différentes, l'auvent et l'inclinaison. Aucune des deux n'est une erreur.
 
 C'est là que se dit la phrase qui porte la fin de la séquence : **un choix technique n'est jamais
@@ -84,9 +117,9 @@ réellement la conception d'un mobilier urbain.
 
 ## Évaluer
 
-**Deux preuves en situation** (règle n°28), une par code : la **liste** de l'activité 1 (au moins
-six interacteurs, les quatre familles) et le **relevé de choix** de l'activité 2 (quatre choix, chacun
-rattaché à un interacteur et à un domaine). Le transfert de l'activité 3 sert de troisième preuve
+**Deux preuves en situation** (règle n°28), une par code : la **liste** de l'activité 2 (au moins
+six interacteurs, les quatre familles) et le **relevé de choix** de l'activité 3 (quatre choix, chacun
+rattaché à un interacteur et à un domaine). Le transfert de l'activité 4 sert de troisième preuve
 pour les élèves qui vont plus loin. **Le QCM entraîne ; il n'évalue pas.**
 
 Les vérificateurs de la page exigent ces productions : un élève ne peut pas valider une activité en
@@ -97,8 +130,9 @@ dans un environnement numérique, et le conserve d'une séance à l'autre.
 
 ## Différenciation
 
-Mode essentiel (n°29) · versions étayées pour les **7 productions écrites** (n°31), qui donnent la
-structure de la phrase sans baisser l'exigence · bandeau de tâches par séance (n°30) · billet
+Mode essentiel (n°29) · versions étayées pour les **8 productions écrites** (n°31), qui donnent la
+structure de la phrase sans baisser l'exigence · bête à cornes à menus posés dans le schéma, et à dessiner
+sur le cahier (séance 1) · « Entoure » faisable à l'écran, au clavier et au doigt · bandeau de tâches par séance (n°30) · billet
 d'entrée sans note (n°26) · hors ligne intégral (n°40) · exercices en listes déroulantes (DYS).
 
 ## Honnêteté sur les données

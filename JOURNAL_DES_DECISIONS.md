@@ -27320,3 +27320,70 @@ les listes déroulantes de la page (n°300, déjà relevées), le lexique par s�
 
 **Reste** : la validation de Pascal sur ce pilote, puis les vagues — thème 3 C7 (14 pages), C8 (4 pages restantes), 5e_C1.3 et
 5e_C1.5.
+
+---
+
+## 04/11/2026 — 5e_C2.1 Shenzhen : une séance pour la bête à cornes, la fonction d'usage nommée, « Entoure » faisable à l'écran
+
+*Pascal, le 04/11/2026, sur la séquence 5e_C2.1 : (1) la note du billet d'entrée « décrit la fonction d'usage, mais à aucun
+moment ne cite que c'est une fonction d'usage. Il faut le mettre » ; (2) « avant d'aborder les interacteurs et le diagramme
+pieuvre, il faudrait plus d'exercices sur la bête à cornes. Plus tard, on la cite, mais on ne la représente jamais, et on
+n'exerce pas les élèves à se rappeler les questions, ni à dessiner et à remplir ce diagramme » ; (3) « Entoure uniquement ce
+qui appartient à la station » : « on est sur une page HTML, et ce n'est pas possible ». Pour (2), les trois séances étant
+pleines, Pascal a choisi d'ajouter une séance.*
+
+**La fonction d'usage est nommée.** La note du billet et la capsule « 🎒 Je révise » : « « À quoi l'objet sert » décrit le
+service rendu à l'usager : c'est la **fonction d'usage** (EN : *use function*). Ce n'est pas la fonction technique… », avec
+la définition des ateliers (« ce à quoi sert l'objet, pour la personne qui l'utilise ; elle s'écrit avec un verbe à
+l'infinitif »). Le retour du billet, le lexique et la synthèse disent la même chose.
+
+**La séquence passe à 4 séances.** Une nouvelle séance 1 « Le besoin : la bête à cornes » (≈ 50 min, billet d'entrée
+compris) ; puis « Recenser » (les interacteurs et la pieuvre), « Lire les formes », « Comparer et transférer » (bilan et
+clôture). Les activités sont renumérotées de 1 à 4 ; **aucun identifiant de champ n'a changé** (les nouveaux commencent par
+`bac_`), et une ancienne sauvegarde voit ses validations passer aux activités 2 à 4.
+
+**L'activité 1, « La bête à cornes : à qui, sur quoi, dans quel but ? »** (≈ 40 min), en quatre temps :
+- **a) Les trois questions** : une bête à cornes vide, un menu dans chaque case, quatre leurres (« Comment fonctionne-t-il ? »,
+  « Qui l'a fabriqué ? », « De quoi est-il fait ? », « Combien coûte-t-il ? »), un retour par réponse, écrit dans la case.
+- **b) Le vélo-cargo** : l'exercice `E1` de l'atelier « Le besoin » (5e), incrusté tel quel
+  (`incrustations_lots/shenzhen_5e_c2_bete_a_cornes.py`) ; c'est le vélo-cargo dont l'élève dessine la pieuvre en séance 2.
+- **c) La station** : à qui ? (l'usager ; leurres : la ville qui paie, le fabricant, le vélo), sur quoi ? (le vélo ; leurres :
+  l'usager, le trottoir, la pluie), dans quel but ? Le piège central est « Verrouiller le vélo au point d'ancrage… » :
+  une **fonction technique**, renvoyée au billet. À retenir : la réponse à « Dans quel but ? », avec un verbe à l'infinitif
+  et sans solution, est la **fonction d'usage**.
+- **d) Ta bête à cornes** : un objet du collège ; ce que l'élève tape s'écrit dans le schéma, trois critères (cases
+  remplies, verbe à l'infinitif, ni solution ni nom de l'objet dans le but) ; puis « Dessine-la à main levée sur ton
+  cahier », avec une case « ✅ Je l'ai dessinée » ; la fiche imprimée donne un cadre vide.
+Correction exhaustive (chaque leurre réfuté), deux aides, le piège, le critère. La bête à cornes est un **préalable** de la
+pieuvre (5e_C3.3 dans l'atelier) : ni badge ni ligne de couverture en plus.
+
+**« Entoure » se fait en touchant** (activité 2, séance 2). Les huit noms de la figure deviennent des boutons posés sur le
+dessin (sous 760 px de figure, une rangée de puces sous le dessin, l'ellipse restant tracée sur la figure) : un clic entoure
+(ellipse, mot « entouré » écrit, `aria-pressed`), un second retire. « Vérifier » donne un retour par élément : la borne,
+l'écran-lecteur, le boîtier, le point d'ancrage et le **câble d'alimentation** appartiennent à la station (« ce qui est au
+bout, le réseau électrique de la ville, est un autre objet, un interacteur ») ; le vélo (un interacteur, pas une pièce), le
+trottoir et le sol (l'environnement) non. Puis : « tu viens de tracer sa limite ». La consigne n'avait aucune correction :
+elle en a une, repliée. À l'impression : « Entoure… », et la figure sans marques.
+
+**Les consignes « papier » du dépôt** (inventaire du 04/11/2026) : 176 consignes dans 86 pages ont déjà un outil à
+l'écran ; 14 dans 11 pages disent clairement le papier ; 7 dans 6 pages demandaient un geste impossible. Corrigées au
+thème 1 : 5e_C1.2 (« entoure » → « repère », deux aides), 3e_C2.1 (« barre » → « écarte »), le Bonus de 5e_C2.1 (« sur ton
+cahier »). Restent : le Bonus de l'atelier 4e carte mentale (générateur), 4e_C4.1 « Trace la courbe ! » et 5e_C4.1
+« dessine sa chaîne d'énergie » (thème 2). Les « souligne les verbes… » de l'atelier 3e des cas d'utilisation sont une
+méthode de cours, pas une consigne d'exercice : laissés.
+
+**Ailleurs.** Lexique par séance (`#seance-s1` à `#seance-s4`, 19 mots FR + EN, généré depuis `vocabulaire_5e_C2.1.json`) ;
+synthèse élève : une partie « Pour commencer : à qui la station rend-elle service, et dans quel but ? », ancre
+`#partie-0` (4e Hangzhou renvoie aux parties 1, 3 et 4 par leur numéro), toujours sur deux pages ; synthèse professeur,
+fiche, README, manifeste, `SOURCES_MEDIAS.md`, matrice (deux erreurs anciennes corrigées au passage). **QCM** : 3 questions
+en tête (les trois questions ; « à qui » ou « sur quoi » ; fonction d'usage ou technique), 33 questions ; la clé de
+sauvegarde change (`qcm_5e_C2_shenzhen_33q`), un QCM commencé reprend à zéro.
+
+**Les menus dans le schéma et la règle n°300.** Comme les cahiers des charges (n°317) et les blocs de l'atelier de 4e_C9.1,
+les six menus posés dans les cases de la bête à cornes sont une **exception voulue** à la n°300 : le choix se fait dans le
+diagramme même. `verif_regles_audit.py` les compte.
+
+**Bancs.** `tests_5e_C2.1-C2.2_shenzhen.py` **122 / 122** (50 / 50 avant) ; `tests_regle_311_5e_C2.1.mjs` 34 / 34 ;
+`controle_squelette` 0 défaut ; impression, verrous, hors ligne, contraste, unités, sigles, liens, hiérarchie, règles
+visibles, médias, longueurs, impression papier : verts ; `controle_schemas` 0 ✘. Séance 1 imprimée en 4 pages, synthèse en
+2. Non testé : un vrai téléphone, Safari, Firefox, un lecteur d'écran, une impression réelle.

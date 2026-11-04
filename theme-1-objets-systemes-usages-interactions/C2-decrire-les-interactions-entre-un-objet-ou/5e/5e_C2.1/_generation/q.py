@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Les 30 questions du QCM 5e_C2.1 · C2.2 — Shenzhen, la station de vélos.
+"""Les 33 questions du QCM 5e_C2.1 · C2.2 — Shenzhen, la station de vélos.
 
 Écrites à la main. Toutes les bonnes réponses sont en position 0 ici :
 la répartition sur A/B/C/D est faite ensuite par `_outils/fix_r.js`,
@@ -14,6 +14,12 @@ avaient été rééquilibrées dans la page publiée, pas ici — régénéré d
 fichier, le QCM revenait à 24 questions sur 30 « détachées ». Reportées ici le
 28/10/2026 (24 questions, 68 propositions) : la page régénérée est maintenant
 identique à l'octet à la page publiée. On corrige ICI, puis on régénère.
+
+Le 04/11/2026, la séquence passe à quatre séances : la séance 1 travaille la bête à
+cornes et la fonction d'usage, préalables du diagramme pieuvre. Trois questions
+s'ajoutent EN TÊTE (elles suivent l'ordre des séances), rangées sous 5e_C2.1 — la
+bête à cornes y prépare la fonction principale du diagramme pieuvre ; elle n'est pas
+un code évalué de la séquence : 30 → 33 questions, 15 → 18 pour 5e_C2.1.
 """
 
 # Le texte de remplacement décrit la figure telle qu'elle est (28/10/2026) : l'ancien citait « les règles de la
@@ -54,6 +60,55 @@ def q(c, n, question, options, expl, ex, err, refs, ret, img=None):
 
 
 # ═══════════════════════ C2.1 — recenser les interacteurs (15) ═══════════════════════
+
+# ── Séance 1 : la bête à cornes et la fonction d'usage, préalables du diagramme pieuvre (04/11/2026) ──
+
+q("C2.1", "Les trois questions de la bête à cornes", "La bête à cornes exprime le besoin auquel répond un objet. Quelles sont ses trois questions ?",
+  ["à qui rend-il service ? sur quoi agit-il ? dans quel but ?",
+   "comment fonctionne-t-il ? de quoi est-il fait ? combien coûte-t-il ?",
+   "qui l'a fabriqué ? où le vend-on ? à quoi ressemble-t-il ?",
+   "à qui rend-il service ? comment marche-t-il ? que coûte-t-il ?"],
+  "La bête à cornes regarde l'objet de l'EXTÉRIEUR : la personne qu'il aide, ce qu'il change, "
+  "et la raison pour laquelle il existe. Elle ne dit rien de ce qu'il y a dedans.",
+  "Pour la station : à qui ? l'usager ; sur quoi ? le vélo ; dans quel but ? permettre à l'usager "
+  "de prendre un vélo et de le rendre en ville.",
+  "Mêler aux trois questions une question sur la matière, le prix ou le fonctionnement de l'objet.",
+  ["",
+   "Ces trois questions ouvrent l'objet ou le mettent en vente : son fonctionnement, sa matière et son prix ne disent ni qui il aide, ni ce qu'il change.",
+   "Le fabricant, le magasin et l'aspect ne disent pas à quoi sert l'objet : une fois fini, le fabricant ne s'en sert pas.",
+   "La première question est juste, mais « comment marche-t-il ? » cherche les solutions et le prix sert à acheter : ni l'une ni l'autre n'exprime le besoin."],
+  "À qui ? Sur quoi ? Dans quel but ? : les trois questions du besoin.")
+
+q("C2.1", "À qui ou sur quoi", "Dans la bête à cornes de la station de vélos, dans quelle case va le vélo ?",
+  ["« Sur quoi agit-il ? » : elle le garde, le verrouille, le libère",
+   "« À qui rend-il service ? » : c'est lui que la station accueille chaque jour",
+   "« Dans quel but ? » : la station existe pour ranger les vélos",
+   "aucune : le vélo est une des pièces de la station"],
+  "La case « à qui ? » nomme la personne que l'objet aide : l'usager. La case « sur quoi ? » nomme "
+  "ce que l'objet déplace, touche ou transforme : pour la station, c'est le vélo.",
+  "Pour le vélo-cargo de Léa : à qui ? Léa ; sur quoi ? ses enfants et ses courses, qu'il transporte.",
+  "Mettre dans « à qui ? » ce que l'objet accueille ou transporte.",
+  ["",
+   "La station accueille le vélo, mais elle ne lui rend pas service : elle rend service à l'usager, qui prend et rend ce vélo. Le vélo est ce sur quoi elle agit.",
+   "« Ranger les vélos » est une phrase sur ce que fait la station, et le vélo n'est pas un but : la case du bas dit le service rendu à l'usager.",
+   "Le vélo n'est pas une pièce de la station : il part avec l'usager. C'est un autre objet, en relation avec elle, et il a bien sa case."],
+  "« À qui ? » nomme la personne aidée ; « sur quoi ? », ce que l'objet change.")
+
+q("C2.1", "Fonction d'usage ou fonction technique", "« Permettre à l'usager de prendre un vélo et de le rendre en ville, à toute heure. » Pour la station, cette phrase est…",
+  ["sa fonction d'usage : le service qu'elle rend à l'usager",
+   "une fonction technique : ce que la station doit faire pour rendre ce service",
+   "son principe technique : le moyen qu'elle emploie",
+   "une contrainte : une condition qu'elle doit respecter"],
+  "La fonction d'usage, c'est ce à quoi sert l'objet, pour la personne qui l'utilise. Elle s'écrit "
+  "avec un verbe à l'infinitif et ne nomme aucune solution : c'est la réponse à « Dans quel but ? ».",
+  "Fonction technique de la même station : « verrouiller le vélo au point d'ancrage ». Principe "
+  "technique : un verrou électrique commandé par la borne.",
+  "Écrire comme fonction d'usage ce que l'objet doit faire (« verrouiller le vélo »).",
+  ["",
+   "Une fonction technique dit ce que la station doit faire pour rendre ce service : verrouiller le vélo, reconnaître un abonné. La phrase dit le service lui-même, pour l'usager.",
+   "Le principe technique est le moyen : un verrou électrique, un lecteur de carte. La phrase n'en nomme aucun, et c'est voulu.",
+   "Une contrainte, comme résister à la pluie, viendra avec le diagramme pieuvre. La phrase dit pourquoi la station existe, pas ce qu'elle doit supporter."],
+  "Le but de la bête à cornes est la fonction d'usage : le service rendu à l'usager.")
 
 q("C2.1", "Définition", "Un interacteur d'un objet technique, c'est…",
   ["tout ce qui, à l'extérieur, entre en relation",
@@ -517,11 +572,11 @@ q("C2.2", "Ce qu'on fera l'an prochain", "Cette année, en 5e, on repère les ch
   "« L'angle est arrondi » (5e) et « l'usager hésite devant la borne » (4e).",
   "Croire qu'on doit déjà raconter ce que ressent l'utilisateur.",
   ["",
-   "Le recensement des interacteurs est au contraire le cœur du programme de 5e : c'est exactement ce que fait la première séance de cette séquence.",
+   "Le recensement des interacteurs est au contraire le cœur du programme de 5e : c'est exactement ce que fait la séance 2 de cette séquence.",
    "La mesure précise relève d'une autre compétence, travaillée ailleurs dans le cycle, et non de la description des interactions.",
    "La fabrication concerne la réalisation d'un prototype, qui est un autre moment du programme et ne remplace pas la description de l'expérience utilisateur."],
   "En 5e on lit l'objet ; en 4e on décrira le vécu de l'utilisateur.")
 
-assert len(Q) == 30, len(Q)
-assert sum(1 for x in Q if x["c"] == "C2.1") == 15
+assert len(Q) == 33, len(Q)
+assert sum(1 for x in Q if x["c"] == "C2.1") == 18
 assert sum(1 for x in Q if "img" in x) == 5
