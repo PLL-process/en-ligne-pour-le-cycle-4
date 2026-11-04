@@ -117,7 +117,7 @@ BETE_VERS_PIEUVRE = figures.bete_vers_pieuvre(
     "pv-bp", "Léa", "ses enfants", "le vélo-cargo", "transporter ses enfants en ville",
     "permettre à Léa de transporter ses enfants", "protéger les enfants pendant le trajet",
     "De la bête à cornes au diagramme pieuvre",
-    "À gauche, la bête à cornes du vélo-cargo : repère 1, à qui rend-il service ? Léa ; repère 2, sur quoi agit-il ? ses "
+    "À gauche, la bête à cornes du vélo-cargo : repère 1, à qui le produit rend-il service ? Léa ; repère 2, sur quoi agit-il ? ses "
     "enfants ; la corne bleue relie les deux en passant sur le haut du vélo-cargo ; repère 3, dans quel but ? transporter ses "
     "enfants en ville. Une flèche marquée « devient » mène à droite, au diagramme pieuvre : la bulle Léa (repère 1) et la "
     "bulle ses enfants (repère 2) sont en haut ; la courbe bleue FP1 part de Léa, descend passer par le vélo-cargo et "

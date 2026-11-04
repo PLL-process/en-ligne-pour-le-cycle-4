@@ -16,7 +16,7 @@ IMG_VELO = {"src": "Images/bete_a_cornes_velo_cargo.svg",
                    "et ses courses. Dans quel but ? transporter ses deux enfants et ses courses en ville."}
 IMG_LAMPE = {"src": "Images/bete_a_cornes_lampadaire_a_completer.svg",
              "alt": "Bête à cornes du lampadaire intelligent, à compléter : les cases « À qui le produit rend-il service ? », "
-                    "« Sur quoi le produit agit-il ? » et « Dans quel but ? » sont vides."}
+                    "« Sur quoi agit-il ? » et « Dans quel but ? » sont vides."}
 IMG_BESOIN = {"src": "Images/bete_a_cornes_besoin_de_lea.svg",
               "alt": "Bête à cornes du besoin de Léa : à qui ? Léa. Sur quoi ? ses deux enfants et ses courses. Au centre : quel "
                      "objet ? Dans quel but ? transporter ses deux enfants et ses courses en ville, sans voiture."}
@@ -99,7 +99,7 @@ q(C, "Celui qui paie",
   "Celui qui paie n'est pas toujours celui à qui l'objet rend service.")
 
 q(C, "La case « sur quoi ? » du lampadaire",
-  "Sur cette bête à cornes à compléter, quel mot va dans la case « Sur quoi le produit agit-il ? » ?",
+  "Sur cette bête à cornes à compléter, quel mot va dans la case « Sur quoi agit-il ? » ?",
   ["la rue du parking",
    "la nuit, quand il fait noir",
    "l'ampoule du lampadaire",
