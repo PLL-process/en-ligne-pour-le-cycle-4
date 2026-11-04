@@ -27426,3 +27426,36 @@ flèche vers le but).*
 122 / 122, Shanghai 35 / 35, Tsinghua 63 / 63, Shenzhen 3e 37 / 37, Hangzhou 32 / 32, et leurs bancs n°311 ;
 impression, squelette, verrous, liens, hiérarchie, règles visibles, médias, unités, sigles : verts. Séance 1 de 5e_C2.1
 toujours en 4 pages. Non testé : un vrai téléphone, Safari, Firefox, un lecteur d'écran, une impression réelle.
+
+---
+
+## 04/11/2026 — 4e_C4.1 : le réseau du jardin, construit dans Packet Tracer sur le poste de Pascal
+
+*Pascal, le 04/11/2026, sur le plan du réseau du jardin (4e_C4.1) : « Packet Tracer : prends le contrôle de mon
+ordinateur. » C'était le « reste » de l'entrée du 31/10/2026 (« le plan du réseau du jardin, dessiné comme dans Packet
+Tracer ») : le fichier `.pkt`, pour que l'élève ouvre le réseau et fasse lui-même un ping vers la carte.*
+
+**Le fichier `4e_jardin_TECHNO-C4.pkt`** (Packet Tracer 8.2.0, construit par Claude sur le poste de Pascal, en prenant
+la main), le réseau du plan, appareil par appareil :
+- Home Router (HomeRouter-PT-AC) « **Box-Collège** », 192.168.1.1 / 255.255.255.0, serveur DHCP de 192.168.1.23 à
+  192.168.1.72 ; **son propre Wi-Fi est coupé** (2,4 GHz et les deux 5 GHz), pour que la tablette et la carte passent
+  par la borne de la cour, comme sur le plan ;
+- Server-PT « **Serveur-Collège** », 192.168.1.10 fixe, passerelle 192.168.1.1, câblé sur **GigabitEthernet 1** ;
+- AccessPoint-PT « **Borne-Cour** », câblée sur **GigabitEthernet 2** (son Port 0), réseau Wi-Fi « Default » sans
+  chiffrement ;
+- SBC-PT « **Carte-Jardin** », en Wi-Fi, **192.168.1.50 fixe**, passerelle 192.168.1.1 ;
+- Tablet PC-PT « **Tablette-Classe** », en Wi-Fi et en **DHCP** : elle reçoit **192.168.1.23**, l'adresse du plan.
+
+**Vérifié dans le simulateur** : depuis la tablette, `ping 192.168.1.50` (la carte) et `ping 192.168.1.10` (le serveur),
+4 réponses sur 4 chacun ; les deux câbles ont leurs triangles verts.
+
+**Dans la séquence** (séance 3, activité 4), sous le plan : un encadré « 🖧 Le même réseau, dans Packet Tracer », le
+lien de téléchargement et trois gestes (ouvrir ; Tablette-Classe → Desktop → Command Prompt → `ping 192.168.1.50` ;
+`ping 192.168.1.10` et lire l'adresse DHCP dans Config → Wireless0). Sans le logiciel, la simulation de la page suffit.
+
+**Le plan corrigé au passage** : les ports de la box s'appellent, dans Packet Tracer 8.2, **GigabitEthernet 1** et
+**GigabitEthernet 2** (le plan disait « Ethernet 1 » et « Ethernet 2 ») ; le dessin et sa description le disent
+maintenant. `controle_schemas` : 0 ✘.
+
+**Bancs** : `tests_4e_C4.1-C4.9.mjs` 41 / 41, `tests_regle_311_4e_C4.1.mjs` 34 / 34 ; `controle_liens`,
+`controle_medias`, `controle_regles_visibles` : verts. Le fichier est documenté dans `SOURCES_MEDIAS.md`.
