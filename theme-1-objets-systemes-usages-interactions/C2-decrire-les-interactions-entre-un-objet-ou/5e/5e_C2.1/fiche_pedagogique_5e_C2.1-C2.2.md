@@ -35,7 +35,7 @@ l'objet, il est dans ce qui l'entoure.**
    Il oriente vers une capsule de révision de trois minutes ; il ne compte pas dans la progression. La note
    sous la question 2 nomme la **fonction d'usage** (« à quoi l'objet sert », le service rendu à l'usager).
 1. **La bête à cornes : à qui, sur quoi, dans quel but ?** (~40 min), en quatre temps :
-   - a) **se rappeler les trois questions** (~5 min) : une bête à cornes vide, un menu dans chaque case ;
+   - a) **se rappeler les trois questions** (~5 min) : une bête à cornes sans ses questions, un menu à la place de chacune ;
      les leurres « Comment fonctionne-t-il ? », « Qui l'a fabriqué ? », « De quoi est-il fait ? »,
      « Combien coûte-t-il ? » ont chacun leur retour ;
    - b) **lire la bête à cornes du vélo-cargo** (~6 min) : l'exercice 1 de l'atelier « Le besoin », incrusté

@@ -1,5 +1,24 @@
 # Rapport de tests — lot Shenzhen 5e_C2.1 · C2.2
 
+## 04/11/2026 (soir) — la bête à cornes, exactement le modèle de Pascal
+
+**Suite** `python3 tests_5e_C2.1-C2.2_shenzhen.py` : **141 / 141** (122 / 122 avant ; les tests de la séance 1 suivent la
+nouvelle forme : contrôles posés sur le gabarit, retours sous le dessin, miroir). **Banc n°311** : **34 / 34**.
+
+| Les tests nouveaux ou refaits vérifient | |
+|---|---|
+| Les quatre bêtes à cornes de la séance 1 (a, c, d, le cadre imprimé) sont le gabarit : cadre `50 150 960 570`, les trois ellipses et le rectangle au dixième près, fonds blancs, contours `#1f3864`, corne et flèche `#2e75b6`, la corne tracée après le produit | ✔ |
+| a) la question de droite est « Sur quoi agit-il ? » ; à 1280 px, chaque menu est posé à la place de sa question ; le choix s'écrit aussi, en miroir, à cette place dans le dessin | ✔ |
+| a) et c) les retours s'écrivent sous le dessin, chacun avec son repère (« ② En haut à droite — ✘ à revoir… », « ① À qui le produit rend-il service ? — … ») ; la case fausse a un contour rouge et une marque ✘ écrite sur le menu, la juste un contour vert et ✔ | ✔ |
+| 1280 px : les menus de c) et les champs de d) sont posés dans leurs formes (les quatre coins dans l'ellipse ou le rectangle), en cibles de 44 px ; d) un texte long rapetisse (deux lignes au plus), la forme ne bouge pas | ✔ |
+| 390 px : le gabarit entier dans l'écran ; les menus et les champs sous le dessin, chacun avec sa question ; le choix écrit dans sa forme ; aucun défilement de côté | ✔ |
+| Impression : a) une ligne pointillée à la place de chaque question et la liste des sept questions ; c) les 13 propositions en cases à cocher, à côté du dessin ; le gabarit en noir (corne et flèche gris foncé), jamais coupé | ✔ |
+
+Le seuil : sous **800 px de dessin**, les contrôles passent sous le dessin (mesuré de 700 à 910 px, chaque choix de chaque
+menu, avec sa marque : de 800 px à 910 px, tous tiennent dans leur forme ; à 790 px, « le vélo qu'on emprunte et qu'on
+rend » demande trois lignes). La séance 1 s'imprime en **3 pages A4** (4 avant). `controle_schemas` : 0 ✘ sur la page.
+**Non testé** : un vrai téléphone, Safari, Firefox, un lecteur d'écran, une impression réelle.
+
 ## 04/11/2026 — quatre séances : la bête à cornes en séance 1, « Entoure » à l'écran
 
 **Suite** `python3 tests_5e_C2.1-C2.2_shenzhen.py` (depuis le dossier du lot, sans argument) : **122 / 122**

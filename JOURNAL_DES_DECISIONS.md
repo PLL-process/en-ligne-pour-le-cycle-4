@@ -27459,3 +27459,64 @@ maintenant. `controle_schemas` : 0 ✘.
 
 **Bancs** : `tests_4e_C4.1-C4.9.mjs` 41 / 41, `tests_regle_311_4e_C4.1.mjs` 34 / 34 ; `controle_liens`,
 `controle_medias`, `controle_regles_visibles` : verts. Le fichier est documenté dans `SOURCES_MEDIAS.md`.
+
+
+---
+
+## 04/11/2026 — Règle d'or n°318 (amendée) : la bête à cornes, exactement comme le modèle de Pascal
+
+*Pascal, le 04/11/2026, après la PR #584 : « La bête à cornes doit être exactement comme mon modèle. » La #584 lui
+avait donné la forme du modèle, mais seulement à peu près : ellipses plus larges, produit rempli de bleu clair,
+rectangle aux coins arrondis sur fond crème, flèche droite, retours écrits dans les ellipses, qui les déformaient.
+Pascal a accepté deux écarts : la typographie corrigée (« rend-il », « agit-il », l'espace avant « ? ») et pas de titre
+« Diagramme Bête à Cornes » dans le dessin (c'est le titre de sa diapositive ; la page a déjà le sien).*
+
+> **Règle d'or n°318 (amendée) — toute bête à cornes du dépôt est le gabarit mesuré sur le modèle de Pascal, à
+> n'importe quelle taille, et rien ne le déforme.** Cadre `viewBox="50 150 960 570"` :
+> - **les formes ne bougent jamais**, quel que soit le texte : ellipses du haut centrées en (350 ; 284,5) et
+>   (825,5 ; 284,5), rayons 134 × 59,5 ; produit en (583 ; 476), rayons 122 × 73 ; rectangle (250 ; 573), 732 × 132,
+>   **coins droits** ;
+> - **contours bleu foncé `#1f3864`, fonds blancs** ;
+> - **la corne**, bleu `#2e75b6`, est tracée **après** le produit : elle **croise le haut du produit**, comme sur le
+>   modèle (exception voulue à la n°315) ;
+> - **la flèche**, même bleu, part de la corne à droite, **s'incurve**, puis descend droite jusqu'au bord haut du
+>   rectangle ;
+> - **les questions en italique**, gris très foncé, à la taille du modèle (38 unités) : « À qui le produit rend-il
+>   service ? » et « Sur quoi agit-il ? » au-dessus des ellipses, « Dans quel but ? » au-dessus du rectangle, à
+>   gauche. **« Sur quoi agit-il ? »** est la formulation du modèle : elle remplace « Sur quoi le produit agit-il ? »
+>   partout où le dépôt cite la question du diagramme ;
+> - **une case vide** porte sa ligne pointillée ; le produit vide dit « Nom du / produit », en italique, sur deux
+>   lignes ;
+> - **une case remplie** : le texte remplace les pointillés, centré, sur deux lignes au plus ; s'il est long, **c'est
+>   la taille du texte qui baisse** (de 31 à 16 unités), jamais la forme. Le nom du produit reste en italique ;
+> - **pas de titre dans le dessin.**
+
+**Ce qui est refait.**
+- **Le générateur des ateliers** (`figures.py`, `dessin_bac()`) produit le gabarit avec ses textes variables. Les
+  versions vivantes gardent leurs cibles et leur classe `rempli`. Dans la figure « De la bête à cornes au diagramme
+  pieuvre », la moitié gauche est le gabarit à l'échelle 0,39 ; les repères ①②③ sont posés **à côté** des questions ;
+  la corne et la FP1 ont le même bleu `#2e75b6`. Régénérés : ateliers, cahiers, `besoin-bete-a-cornes/Images/*.svg`,
+  le QCM de l'atelier, et les séquences qui les incrustent (5e_C2.1, 5e_C3.1, 4e_C3.1, 3e_C3.1, 4e_C1.1).
+- **5e_C2.1, séance 1** : a), c), d) et le cadre imprimé sont le gabarit en SVG ; les menus et les champs se posent
+  par-dessus, en positions relatives au cadre (en %). En a), les menus prennent la place des questions.
+  - **Les retours de « Vérifier » ne s'écrivent plus dans les formes** : ils vont sous le dessin, chacun avec son
+    repère (« ① En haut à gauche — ✘ à revoir : … »), et le contrôle faux garde son contour rouge et sa marque ✘.
+  - **Sous 800 px de largeur de dessin**, le dessin reste le gabarit, intact ; les menus et les champs passent dessous,
+    chacun avec sa question, et ce que l'élève choisit ou tape s'écrit dans la forme, en miroir. Cibles de 44 px,
+    aucun défilement de côté à 390 px.
+  - En a), la bonne réponse de la case de droite devient « Sur quoi agit-il ? » (vérification, retours, correction,
+    banc).
+  - **À l'impression**, contours noirs, corne et flèche gris foncé `#404040`, pointillés là où l'élève écrit ; aucune
+    bête à cornes coupée. La séance 1 s'imprime en 3 pages.
+
+**Preuve d'exactitude.** Le dessin vide du générateur et celui de 5e_C2.1 a), superposés à 50 % au modèle recadré :
+les formes tombent l'une sur l'autre ; seule la typographie corrigée diffère.
+
+**Limite connue.** À 390 px, le dessin est réduit au tiers : les réponses longues y deviennent petites. Le texte lisible
+est alors celui des champs, sous le dessin.
+
+**Contrôles.** `banc_ateliers.py` 378 / 378 ; Shenzhen 5e 141 / 141, Shanghai 35 / 35, Hangzhou 32 / 32, Shenzhen 3e
+37 / 37, Tsinghua 63 / 63, et leurs bancs n°311 inchangés ; `controle_schemas` sur le thème 1 : 0 ✘, 179 ⚠ (8 de plus
+que la #584, des espacements « serrés » dans les copies de la figure bête à cornes → pieuvre, réduite à 0,39) ;
+impression, squelette, verrous, liens, hiérarchie, règles visibles, médias, unités, sigles : verts. Non testé : un vrai
+téléphone, Safari, Firefox, un lecteur d'écran, une impression réelle.

@@ -16,6 +16,26 @@ SYP = pathlib.Path("Synthèses/synthese_professeur_5e_C2.1-C2.2.html").resolve()
 
 res = []
 
+# La bête à cornes de la séance 1 : le gabarit de Pascal (04/11/2026), cadre 50 150 960 570. Les formes, au dixième près.
+GABARIT = {"ellipse": [("350", "284.5", "134", "59.5"), ("825.5", "284.5", "133.5", "59.5"), ("583", "476", "122", "73")],
+           "rect": [("250", "573", "732", "132")]}
+JS_GABARIT = '''(id)=>{const s=document.querySelector('#'+id+' .bac-svg'); if(!s) return null;
+  return {vb:s.getAttribute('viewBox'),
+          e:[...s.querySelectorAll('ellipse')].map(x=>['cx','cy','rx','ry'].map(a=>x.getAttribute(a))),
+          r:[...s.querySelectorAll('rect.bac-contour')].map(x=>['x','y','width','height'].map(a=>x.getAttribute(a))),
+          corneApresProduit: (()=>{const tr=[...s.querySelectorAll('path.bac-trait')], el=[...s.querySelectorAll('ellipse')];
+            return tr.length===2 && !!(el[2].compareDocumentPosition(tr[0]) & 4);})(),
+          bleu:[...s.querySelectorAll('path.bac-trait')].map(x=>x.getAttribute('stroke')),
+          contour:[...s.querySelectorAll('.bac-contour')].every(x=>x.getAttribute('stroke')==='#1f3864' && x.getAttribute('fill')==='#fff')};}'''
+# Un contrôle posé dans sa forme : ses quatre coins dans l'ellipse (ou le rectangle), en unités du gabarit.
+JS_DANS_FORME = '''(id)=>{const bac=document.getElementById(id), svg=bac.querySelector('.bac-svg').getBoundingClientRect(), k=svg.width/960;
+  const F={hg:['e',350,284.5,134,59.5],hd:['e',825.5,284.5,133.5,59.5],objet:['e',583,476,122,73],bas:['r',250,573,732,132]};
+  return [...bac.querySelectorAll('.bac-ctrl')].map(c=>{const r=c.querySelector('.menu-case,input,textarea').getBoundingClientRect();
+    const f=F[['hg','hd','objet','bas'].find(x=>c.classList.contains(x))];
+    const P=[[r.left,r.top],[r.right,r.top],[r.left,r.bottom],[r.right,r.bottom]].map(([x,y])=>[50+(x-svg.left)/k,150+(y-svg.top)/k]);
+    return f[0]==='e' ? P.every(([x,y])=>((x-f[1])/f[3])**2+((y-f[2])/f[4])**2<=1) : P.every(([x,y])=>x>f[1]&&x<f[1]+f[3]&&y>f[2]&&y<f[2]+f[4]);});}'''
+JS_MIROIR = "(p)=>{const e=document.querySelector('.bac-miroir[data-pour=\"'+p+'\"]'); return e ? [...e.querySelectorAll('tspan')].map(t=>t.textContent).join(' ') : null;}"
+
 
 def t(n, ok, d=""):
     res.append((n, bool(ok)))
@@ -265,9 +285,23 @@ with sync_playwright() as p:
       "c'est la fonction d'usage, pas la fonction technique" in pg.inner_text("#fb0"), pg.inner_text("#fb0")[-90:])
 
     # — a) les trois questions, un menu dans chaque case du schéma —
-    menus_a = pg.eval_on_selector_all("#bac_a .bac-case select", "l=>l.map(s=>[s.id,s.options.length,s.getAttribute('aria-label')])")
-    t("a) un menu dans chaque case du schéma (trois cases, sept questions et « choisir »), chacun nommé",
+    menus_a = pg.eval_on_selector_all("#bac_a .bac-ctrl select", "l=>l.map(s=>[s.id,s.options.length,s.getAttribute('aria-label')])")
+    t("a) un menu à la place de chaque question du schéma (trois places, sept questions et « choisir »), chacun nommé",
       len(menus_a) == 3 and all(n == 8 and lab for _, n, lab in menus_a), str(menus_a))
+    t("a) la question de droite a la formulation du modèle : « Sur quoi agit-il ? »",
+      pg.evaluate("[...document.querySelectorAll('#bac_a_hd option')].some(o=>o.value==='sur_quoi'&&o.text==='Sur quoi agit-il ?')"))
+    for ident in ("bac_a", "bac_c", "bac_d", "bac_p"):
+        g = pg.evaluate(JS_GABARIT, ident) if ident != "bac_p" else pg.evaluate(JS_GABARIT.replace("'#'+id+' .bac-svg'", "'.bac-papier .bac-svg'"), ident)
+        t("gabarit %s : le cadre 50 150 960 570, les trois ellipses et le rectangle du modèle, fonds blancs, contours #1f3864" % ident,
+          g and g["vb"] == "50 150 960 570" and [tuple(x) for x in g["e"]] == GABARIT["ellipse"]
+          and [tuple(x) for x in g["r"]] == GABARIT["rect"] and g["contour"], str(g)[:160])
+        t("gabarit %s : la corne et la flèche en #2e75b6, la corne tracée après le produit (elle passe sur son haut)" % ident,
+          g and g["bleu"] == ["#2e75b6", "#2e75b6"] and g["corneApresProduit"])
+    t("1280 px, a) : chaque menu est posé à la place de sa question, au-dessus de sa case",
+      pg.evaluate('''(()=>{const svg=document.querySelector('#bac_a .bac-svg').getBoundingClientRect(), k=svg.width/960;
+        const B={hg:[60,150,560,225],hd:[640,150,1010,225],bas:[60,345,470,572]};
+        return [...document.querySelectorAll('#bac_a .bac-ctrl')].every(c=>{const r=c.querySelector('.menu-case').getBoundingClientRect(), b=B[['hg','hd','bas'].find(x=>c.classList.contains(x))];
+          return getComputedStyle(c).position==='absolute' && r.height>=44 && 50+(r.left-svg.left)/k>=b[0] && 50+(r.right-svg.left)/k<=b[2] && 150+(r.top-svg.top)/k>=b[1] && 150+(r.bottom-svg.top)/k<=b[3];});})()'''))
     BAC = pg.evaluate("BAC")
     LEURRES = pg.evaluate("BAC_LEURRES")
     ok_retours = True
@@ -280,13 +314,22 @@ with sync_playwright() as p:
             if attendu[:40] not in vd or (("✔" in vd) != (v == c["bonne"])):
                 ok_retours = False
                 print("   a)", cid, v, "→", vd[:80])
-    t("a) chaque question fausse a son propre retour, écrit dans la case ; la bonne est marquée ✔ juste", ok_retours)
+    t("a) chaque question fausse a son propre retour, écrit sous le dessin avec son repère ; la bonne est marquée ✔ juste", ok_retours)
     pg.select_option("#bac_a_hg", "a_qui"); pg.select_option("#bac_a_hd", "prix"); pg.select_option("#bac_a_bas", "but")
-    t("a) le choix s'écrit en entier dans la case du schéma",
-      pg.inner_text("#bac_a .hg .menu-vu") == "À qui le produit rend-il service ?")
+    t("a) le choix s'écrit en entier dans le menu, et, en miroir, à la place de la question dans le dessin",
+      pg.inner_text("#bac_a .hg .menu-vu") == "À qui le produit rend-il service ?"
+      and pg.evaluate(JS_MIROIR, "bac_a_hg") == "À qui le produit rend-il service ?")
     pg.click('[data-bac="a"]')
     t("a) le bilan compte les cases : 2 / 3, la case fausse marquée ✘ avec le mot « à revoir »",
       pg.inner_text("#bac_a_retour").startswith("2 / 3") and "✘ à revoir" in pg.inner_text("#bac_a_hd_verdict"))
+    t("a) le retour s'écrit sous le dessin, avec son repère : « ② En haut à droite — ✘ à revoir… »",
+      pg.inner_text("#bac_a_hd_verdict").startswith("② En haut à droite — ✘ à revoir")
+      and pg.evaluate("document.getElementById('bac_a_hd_verdict').getBoundingClientRect().top >= document.querySelector('#bac_a .bac-svg').getBoundingClientRect().bottom"))
+    t("a) la case fausse : contour rouge et marque ✘ écrite, sur le menu ; la juste : contour vert et ✔",
+      pg.evaluate("getComputedStyle(document.querySelector('#bac_a .hd .menu-case')).borderTopColor") == "rgb(185, 28, 28)"
+      and pg.inner_text("#bac_a .hd .bac-marque-case") == "✘"
+      and pg.evaluate("getComputedStyle(document.querySelector('#bac_a .hg .menu-case')).borderTopColor") == "rgb(22, 101, 52)"
+      and pg.inner_text("#bac_a .hg .bac-marque-case") == "✔")
     pg.select_option("#bac_a_hd", "sur_quoi")
     t("a) changer de réponse efface le retour périmé de la case",
       pg.inner_text("#bac_a_hd_verdict") == "")
@@ -313,6 +356,13 @@ with sync_playwright() as p:
                 print("   c)", cid, v, "→", vd[:80])
     t("c) chaque leurre a son retour (la ville qui paie, le fabricant, le vélo ; l'usager, le trottoir, la pluie ; "
       "fonction technique, solution, sujet, contrainte)", ok_retours)
+    t("1280 px, c) : les trois menus sont posés dans leurs formes (les coins dans l'ellipse, dans le rectangle), 44 px au moins",
+      all(pg.evaluate(JS_DANS_FORME, "bac_c")) and pg.evaluate("[...document.querySelectorAll('#bac_c .menu-case')].every(m=>m.getBoundingClientRect().height>=44)"))
+    t("c) les retours sont sous le dessin, chacun avec son repère, et le dessin reste le gabarit",
+      pg.inner_text("#bac_c_qui_verdict").startswith("① À qui le produit rend-il service ?")
+      and pg.inner_text("#bac_c_quoi_verdict").startswith("② Sur quoi agit-il ?")
+      and pg.inner_text("#bac_c_but_verdict").startswith("③ Dans quel but ?")
+      and [tuple(x) for x in pg.evaluate(JS_GABARIT, "bac_c")["e"]] == GABARIT["ellipse"])
     pg.select_option("#bac_c_but", "verrouiller")
     pg.click('[data-bac="c"]')
     t("c) le piège central : « verrouiller le vélo » est refusé comme fonction technique, renvoyé à la fonction d'usage",
@@ -327,8 +377,11 @@ with sync_playwright() as p:
     # — d) ta bête à cornes : le miroir, les critères, le cahier —
     pg.fill("#bac_d_objet", "le cartable")
     pg.fill("#bac_d_qui", "l'élève qui le porte")
-    t("d) ce que l'élève tape s'écrit dans le schéma (le produit, la case « à qui ? »)",
-      pg.inner_text("#bac_d .bac-produit") == "le cartable" and pg.inner_text("#bac_d .bac-case.hg") == "l'élève qui le porte")
+    t("d) ce que l'élève tape s'écrit dans le schéma (le produit, en italique, à la place de « Nom du produit » ; la case « à qui ? »)",
+      pg.evaluate(JS_MIROIR, "bac_d_objet") == "le cartable" and pg.evaluate(JS_MIROIR, "bac_d_qui") == "l'élève qui le porte"
+      and pg.get_attribute('#bac_d .bac-miroir[data-pour="bac_d_objet"]', "font-style") == "italic")
+    t("1280 px, d) : les quatre champs sont posés dans leurs formes (les coins dedans), 44 px au moins",
+      all(pg.evaluate(JS_DANS_FORME, "bac_d")) and pg.evaluate("[...document.querySelectorAll('#bac_d .bac-ctrl input,#bac_d .bac-ctrl textarea')].every(m=>m.getBoundingClientRect().height>=44)"))
     def criteres(but):
         pg.fill("#bac_d_but", but)
         pg.click('[data-bac="d"]')
@@ -345,7 +398,13 @@ with sync_playwright() as p:
       criteres("Transporter ses affaires de classe entre la maison et le collège") == [True, True, True]
       and pg.inner_text("#bac_d_retour").startswith("✔ 3 critères"))
     t("d) le but tapé s'écrit dans la case du bas du schéma",
-      "Transporter ses affaires" in pg.inner_text("#bac_d .bac-case.bas"))
+      "Transporter ses affaires" in (pg.evaluate(JS_MIROIR, "bac_d_but") or ""))
+    pg.fill("#bac_d_quoi", "ses livres, ses cahiers, sa trousse, son agenda et sa gourde de la journée")
+    t("d) un texte long : c'est la taille du texte qui baisse (deux lignes au plus), jamais la forme",
+      pg.evaluate("document.querySelectorAll('#bac_d .bac-miroir[data-pour=\"bac_d_quoi\"] tspan').length") <= 2
+      and float(pg.get_attribute('#bac_d .bac-miroir[data-pour="bac_d_quoi"]', "font-size")) < 30
+      and [tuple(x) for x in pg.evaluate(JS_GABARIT, "bac_d")["e"]] == GABARIT["ellipse"])
+    pg.fill("#bac_d_quoi", "ses livres et ses cahiers")
     t("d) la consigne dit où dessiner : « Dessine-la à main levée sur ton cahier »",
       "Dessine-la à main levée sur ton cahier" in pg.inner_text("#activite-bac"))
     pg.click('[data-check="1"]')
@@ -411,7 +470,7 @@ with sync_playwright() as p:
       pg.get_attribute('.ent-btn[data-el="velo"]', "aria-pressed") == "true" and pg.inner_text("#ent_retour").startswith("4 / 8"))
     t("après rechargement : les menus, le miroir et la case du cahier de la séance 1 sont restaurés",
       pg.input_value("#bac_c_but") == "service" and pg.is_checked("#bac_d_cahier")
-      and pg.inner_text("#bac_d .bac-produit") == "le cartable")
+      and pg.evaluate(JS_MIROIR, "bac_d_objet") == "le cartable")
     for k in ("velo",):
         pg.click('.ent-btn[data-el="%s"]' % k)
     for k in ("borne", "boitier", "cable"):
@@ -436,10 +495,19 @@ with sync_playwright() as p:
     ptl = b.new_page(viewport={"width": 390, "height": 844})
     ptl.goto(SEQ); ptl.evaluate("localStorage.clear()"); ptl.reload(); ptl.wait_for_timeout(300)
     t("390 px, séance 1 : aucun défilement de côté", ptl.evaluate("document.documentElement.scrollWidth - innerWidth") <= 0)
-    t("390 px : la bête à cornes garde sa forme (deux cases côte à côte en haut, la corne, le but en bas)",
-      ptl.evaluate("(()=>{const g=document.querySelector('#bac_c .bac-case.hg').getBoundingClientRect(), d=document.querySelector('#bac_c .bac-case.hd').getBoundingClientRect(),"
-                   "p=document.querySelector('#bac_c .bac-produit').getBoundingClientRect(), b=document.querySelector('#bac_c .bac-case.bas').getBoundingClientRect();"
-                   "return Math.abs(g.top-d.top)<2 && g.right<d.left && p.top>g.bottom && b.top>p.bottom;})()"))
+    t("390 px : la bête à cornes reste le gabarit, entier, dans l'écran (a, c, d)",
+      ptl.evaluate("['bac_a','bac_c','bac_d'].every(id=>{const r=document.querySelector('#'+id+' .bac-svg').getBoundingClientRect();"
+                   "return r.left>=0 && r.right<=innerWidth && Math.abs(r.width/r.height-960/570)<0.02;})"))
+    t("390 px : les menus et les champs passent sous le dessin, chacun avec sa question visible, en cibles de 44 px",
+      ptl.evaluate("['bac_a','bac_c','bac_d'].every(id=>{const s=document.querySelector('#'+id+' .bac-svg').getBoundingClientRect();"
+                   "return [...document.querySelectorAll('#'+id+' .bac-ctrl')].every(c=>{const r=c.getBoundingClientRect(), e=c.querySelector('.bac-etiquette'),"
+                   "m=c.querySelector('.menu-case,input,textarea').getBoundingClientRect();"
+                   "return r.top>=s.bottom-1 && e.getBoundingClientRect().width>40 && m.height>=44 && m.right<=innerWidth;});})"))
+    ptl.select_option("#bac_c_qui", "usager")
+    t("390 px : le choix s'écrit dans sa forme, en miroir",
+      ptl.evaluate(JS_MIROIR, "bac_c_qui") == "l'usager, cycliste abonné ou touriste"
+      and ptl.evaluate("getComputedStyle(document.querySelector('.bac-miroir[data-pour=\"bac_c_qui\"]')).display") != "none")
+    ptl.select_option("#bac_c_qui", "")
     ptl.click("#tab-s2"); ptl.wait_for_timeout(150)
     t("390 px, séance 2 : aucun défilement de côté", ptl.evaluate("document.documentElement.scrollWidth - innerWidth") <= 0)
     rang = ptl.evaluate("(()=>{const r=document.querySelector('#entourer img').getBoundingClientRect();"
@@ -461,10 +529,16 @@ with sync_playwright() as p:
     ptl.emulate_media(media="print")
     t("impression de la séance 1 : un cadre vide pour dessiner sa bête à cornes, sans les champs de l'écran",
       ptl.is_visible(".bac-cadre") and not ptl.is_visible("#bac_d_objet") and not ptl.is_visible("#bac_d"))
-    t("impression de la séance 1 : a) donne la liste des sept questions, et une ligne à écrire dans chaque case",
-      ptl.is_visible(".bac-liste") and not ptl.is_visible("#bac_a .pp-choix") and ptl.is_visible("#bac_a .hg .menu-vu"))
-    t("impression de la séance 1 : c) imprime ses propositions en cases à cocher, dans les cases du schéma",
-      ptl.eval_on_selector_all("#bac_c .pp-choix .pp-case", "l=>l.filter(e=>e.offsetParent).length") == 13)
+    t("impression de la séance 1 : a) donne la liste des sept questions, et une ligne pointillée à la place de chaque question",
+      ptl.is_visible(".bac-liste") and not ptl.is_visible("#bac_a .bac-ctrl")
+      and ptl.evaluate("[...document.querySelectorAll('#bac_a .bac-pointilles')].filter(l=>getComputedStyle(l).display!=='none').length") == 6)
+    t("impression de la séance 1 : c) imprime ses propositions en cases à cocher, à côté du dessin, sous leur question",
+      ptl.eval_on_selector_all("#bac_c .pp-choix .pp-case", "l=>l.filter(e=>e.offsetParent).length") == 13
+      and ptl.evaluate("document.querySelector('#bac_c .bac-ctrl').getBoundingClientRect().left >= document.querySelector('#bac_c .bac-svg').getBoundingClientRect().right"))
+    t("impression de la séance 1 : le gabarit en noir sur blanc (contours noirs, corne et flèche gris foncé), jamais coupé",
+      ptl.evaluate("getComputedStyle(document.querySelector('#bac_c .bac-contour')).stroke") == "rgb(0, 0, 0)"
+      and ptl.evaluate("getComputedStyle(document.querySelector('#bac_c .bac-trait')).stroke") == "rgb(64, 64, 64)"
+      and ptl.evaluate("[...document.querySelectorAll('.bac')].every(b=>getComputedStyle(b).breakInside==='avoid')"))
     ptl.close()
 
     # — le lexique : une section par séance ; la bête à cornes, le besoin, la fonction d'usage en séance 1 —

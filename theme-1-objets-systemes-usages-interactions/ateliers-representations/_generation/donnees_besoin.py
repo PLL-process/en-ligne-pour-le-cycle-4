@@ -42,7 +42,7 @@ BAC_VELO = bac(
     "transporter ses deux enfants et ses courses en ville",
     "La bête à cornes du vélo-cargo de Léa",
     "En haut à gauche, sous la question « À qui le produit rend-il service ? », l'ellipse dit : Léa. En haut à droite, "
-    "sous la question « Sur quoi le produit agit-il ? », l'ellipse dit : ses deux enfants et ses courses. Une grande courbe, "
+    "sous la question « Sur quoi agit-il ? », l'ellipse dit : ses deux enfants et ses courses. Une grande courbe, "
     "la corne, part du bas de l'ellipse de gauche, passe sur le haut de l'ellipse du vélo-cargo, plus bas au centre, et "
     "remonte à l'ellipse de droite. De là, une flèche descend vers le rectangle « Dans quel but ? » : "
     "transporter ses deux enfants et ses courses en ville.")
@@ -52,7 +52,7 @@ BAC_LAMPE = bac(
     "bc-lampe", "", "", "Le lampadaire intelligent", "",
     "La bête à cornes du lampadaire intelligent, à compléter",
     "Au centre, sous la corne, le lampadaire intelligent. Les trois cases sont vides, avec une ligne pointillée : en haut "
-    "à gauche, l'ellipse « À qui le produit rend-il service ? » ; en haut à droite, l'ellipse « Sur quoi le produit "
+    "à gauche, l'ellipse « À qui le produit rend-il service ? » ; en haut à droite, l'ellipse « Sur quoi "
     "agit-il ? » ; en bas, au bout de la flèche, le rectangle « Dans quel but ? ».",
     vivants=VIVANTS_LAMPE)
 
@@ -146,7 +146,7 @@ E1 = dict(
          "Le but, lui, dit <b>pourquoi</b> l'objet existe.")],
     documents=[dict(svg=BAC_VELO, legende="La bête à cornes du vélo-cargo de Léa.",
                     description="<ul><li><b>À qui le produit rend-il service&nbsp;?</b> Léa.</li>"
-                                "<li><b>Sur quoi le produit agit-il&nbsp;?</b> Ses deux enfants et ses courses.</li>"
+                                "<li><b>Sur quoi agit-il&nbsp;?</b> Ses deux enfants et ses courses.</li>"
                                 "<li><b>Au centre&nbsp;:</b> le vélo-cargo.</li>"
                                 "<li><b>Dans quel but&nbsp;?</b> Transporter ses deux enfants et ses courses en ville.</li></ul>")],
     intro="<p>Léa vit en ville et n'a pas de voiture. Chaque jour, elle emmène ses deux enfants et rapporte ses courses avec "
@@ -248,7 +248,7 @@ E2 = dict(
                   slots=[dict(name="qui", cible="bc-l-qui", legende="Case « À qui le produit rend-il service&nbsp;? »",
                               options=BANQUE_LAMPE, bonnes=["les piétons"],
                               indice="Case « à qui ? » : la personne que le lampadaire aide quand il s'allume, pas celle qui l'a commandé."),
-                         dict(name="quoi", cible="bc-l-quoi", legende="Case « Sur quoi le produit agit-il&nbsp;? »",
+                         dict(name="quoi", cible="bc-l-quoi", legende="Case « Sur quoi agit-il&nbsp;? »",
                               options=BANQUE_LAMPE, bonnes=["la rue du parking"],
                               indice="Case « sur quoi ? » : ce que la lumière touche et rend visible.")]),
              dict(type="texte", name="but", lignes=3, miroir="bc-l-but",
@@ -774,7 +774,7 @@ BETE_VERS_PIEUVRE = figures.bete_vers_pieuvre(
     "bc-bp", "Léa", "ses enfants", "le vélo-cargo", "transporter ses enfants en ville",
     "permettre à Léa de transporter ses enfants", "protéger les enfants pendant le trajet",
     "De la bête à cornes au diagramme pieuvre",
-    "À gauche, la bête à cornes du vélo-cargo : repère 1, à qui rend-il service ? Léa ; repère 2, sur quoi agit-il ? ses "
+    "À gauche, la bête à cornes du vélo-cargo : repère 1, à qui le produit rend-il service ? Léa ; repère 2, sur quoi agit-il ? ses "
     "enfants ; la corne bleue relie les deux en passant sur le haut du vélo-cargo ; repère 3, dans quel but ? transporter ses "
     "enfants en ville. Une flèche marquée « devient » mène à droite, au diagramme pieuvre : la bulle Léa (repère 1) et la "
     "bulle ses enfants (repère 2) sont en haut ; la courbe bleue FP1 part de Léa, descend passer par le vélo-cargo et "
@@ -792,7 +792,7 @@ COURS = {
            '<div class="defile"><table><caption>La bête à cornes du vélo-cargo de Léa</caption>'
            "<tr><th>Question</th><th>Ce qu'on y écrit</th><th>Pour le vélo-cargo</th></tr>"
            "<tr><td>À qui le produit rend-il service&nbsp;?</td><td>la personne que l'objet aide, celle qui s'en sert</td><td>Léa</td></tr>"
-           "<tr><td>Sur quoi le produit agit-il&nbsp;?</td><td>la personne ou la chose que l'objet déplace, touche ou transforme</td>"
+           "<tr><td>Sur quoi agit-il&nbsp;?</td><td>la personne ou la chose que l'objet déplace, touche ou transforme</td>"
            "<td>ses deux enfants et ses courses</td></tr>"
            "<tr><td>Dans quel but&nbsp;?</td><td>pourquoi l'objet existe, avec un verbe à l'infinitif</td>"
            "<td>transporter ses enfants et ses courses en ville</td></tr></table></div>"
