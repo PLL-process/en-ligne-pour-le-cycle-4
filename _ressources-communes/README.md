@@ -29,6 +29,13 @@ les outils d'évaluation et les images mutualisés dans le dépôt.
 - [Programme 2024](Outils%20d%E2%80%99%C3%A9valuation/Programme%202024/)
   - [Tableau d'évaluation des compétences numériques](Outils%20d%E2%80%99%C3%A9valuation/Programme%202024/tableau-evaluation-competences-numeriques.pdf)
 
+### Éditeur Python intégré
+
+- [Éditeur Python](editeur-python/LISEZMOI.md) : le composant partagé (un JS, un CSS) qui pose dans
+  une activité la zone de code, ▶ Exécuter et la console, hors ligne, avec le moteur
+  [Skulpt 1.2.0](editeur-python/skulpt/LICENSE.txt) (licence MIT). Utilisé depuis le 04/11/2026 par
+  les séquences qui envoyaient l'élève écrire du Python dans Vittascience.
+
 ### Images
 
 - [Ressources transversales](Images/Ressources%20transversales/) :

@@ -1,0 +1,101 @@
+# L'éditeur Python intégré à la page
+
+Pascal, le 04/11/2026, sur `3e_C9.1` : « Dans cette séquence on demande d'aller sur l'interface Vittascience et
+l'interface n'est pas jointe à l'exercice. » Vittascience refuse d'être affiché dans une autre page : l'éditeur
+vient donc **dans la page**, comme le mode code de Vittascience — la zone de code, ▶ Exécuter, la console.
+Vittascience reste un lien facultatif, écrit dans chaque bloc.
+
+## Les fichiers
+
+| Fichier | Rôle |
+|---|---|
+| `editeur-python.js` | le composant : monte chaque `.editeur-py` de la page, charge Skulpt au premier ▶ Exécuter |
+| `editeur-python.css` | son habit (couleurs de la page, 390 px, cibles de 44 px, impression) |
+| `skulpt/skulpt.min.js`, `skulpt/skulpt-stdlib.js` | le moteur Python 3 (Skulpt 1.2.0), déposé tel quel |
+| `skulpt/LICENSE.txt` | la licence de Skulpt, copiée du paquet |
+| `banc_editeur_python.mjs` | le banc du composant (page d'essai fabriquée hors du dépôt) |
+| `eprouver_exercices.mjs` | un test par exercice outillé, pour les bancs des séquences |
+| `captures_gestes.mjs` | les captures de l'encart des gestes, page par page |
+
+## Le bloc à poser dans un exercice
+
+```html
+<link rel="stylesheet" href="../../../../_ressources-communes/editeur-python/editeur-python.css">   <!-- dans <head> -->
+
+<div class="editeur-py" id="vs1" data-fichier="3e-VARIABLES-act3-TON NOM" [data-simulation="id-du-script"]>
+  <label for="py_a3">🐍 L'éditeur Python de la page — …</label>
+  <textarea id="py_a3" class="editeur-py-code" rows="5" wrap="off" spellcheck="false">CODE DE DÉPART</textarea>
+  <p class="editeur-py-vitta">Avec Vittascience (facultatif) : <a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a></p>
+  <p class="editeur-py-sansjs">Sans JavaScript : écris ton programme dans la zone, puis exécute-le dans Vittascience.</p>
+</div>
+
+<script src="../../../../_ressources-communes/editeur-python/editeur-python.js" defer></script>   <!-- avant </body> -->
+```
+
+- **Le code de départ** est le texte du `<textarea>` ; ↺ le remet (en deux clics, avec ↶ pour revenir).
+- **La sauvegarde** est celle de la page : le programme est la valeur du `<textarea>` (son identifiant ne change
+  pas), le nom du fichier celle de `<id>_nom`. Le composant envoie un `change` après chaque frappe (une demi-seconde
+  plus tard) et suit la restauration de la page, qui écrit `.value`.
+- **`data-simulation`** nomme un `<script type="text/x-python" id="…">` de la page : des fonctions simulées
+  (capteur, pompe…) exécutées AVANT le programme de l'élève, sans décaler ses numéros de ligne. La consigne les
+  nomme et les décrit (exemple : l'encadré 🔌 de `4e_C6.2`).
+- **Sans JavaScript**, la zone et le lien restent : la consigne se fait encore.
+
+## Ce que fait l'éditeur
+
+Zone numérotée à chasse fixe (Tab = 4 espaces, Maj + Tab retire, Entrée garde le décalage et l'ajoute après « : »,
+Échap puis Tab pour sortir de la zone) ; ▶ Exécuter, ⏹ Arrêter ; la console (`role="log"`, `aria-live`) ; `input()`
+**dans la console** — un champ et ↵ Valider, jamais `prompt` ni `alert` ; les erreurs **expliquées en français**,
+avec leur ligne marquée dans la marge et le message de Python dessous ; une boucle qui calcule sans pause arrêtée
+après **5 s** (« Boucle sans fin ? »), un programme qui attend (`time.sleep`, `attendre`) arrêté après **60 s**,
+une console arrêtée après **1 000 lignes** ; ⬇ Télécharger mon .py (rappelle d'abord de remplacer « TON NOM ») ;
+📂 Ouvrir mon .py (sélecteur de fichier ; l'en-tête d'un fichier de Vittascience est retiré) ; à l'impression, le
+programme écrit et la dernière sortie, ou des lignes vides.
+
+Pour une page qui **juge en exécutant** :
+
+- `window.EditeurPython.executer(code, {simulation, entrees})` → `Promise<{sortie, erreur, arret}>`, sans rien
+  afficher (3 s de calcul, 10 s en tout) — exemple : la barrière de `5e_C9.1`, exécutée avec 10, 32 puis 0 places ;
+- l'événement `editeur-py:fin` (bulle depuis le bloc) après chaque ▶ : `detail = {bloc, champ, code, sortie, erreur,
+  arret}` — exemple : les verrous des activités, ouverts par une exécution menée au bout.
+
+## Le moteur : Skulpt 1.2.0
+
+| | |
+|---|---|
+| Fichiers | `skulpt.min.js` (547 Ko) et `skulpt-stdlib.js` (398 Ko), **non modifiés**, chargés au premier ▶ Exécuter seulement (≈ 950 Ko, ≈ 250 Ko compressés par le serveur) |
+| Source | paquet npm `skulpt@1.2.0`, https://registry.npmjs.org/skulpt/-/skulpt-1.2.0.tgz (intégrité `sha512-T0cv0sdSOXLlIJTuyXSeYJ3TFdWYSZfX2PcBLpRKrKZ3dTbVQXRMiYudSuko2xzcyMif47DS2ShatCwjCbsSsA==`) ; projet : https://github.com/skulpt/skulpt — consulté le 04/11/2026 |
+| Empreintes SHA-256 | `skulpt.min.js` 1a319d8eedf314dba5af2444313e3cf2ac072a335df0f5100277e8f49b64eae9 · `skulpt-stdlib.js` e3ecccbc17c6164d19ed3c5561aaaeb752c38c8efa2d88b62b5fb7a7e1b086a7 |
+| Licence | **MIT** (© 2009-2016 Scott Graham et les contributeurs de Skulpt) ; les parties traduites de CPython et de PyPy relèvent de la licence de la Python Software Foundation. Texte complet : `skulpt/LICENSE.txt`. Redistribution permise, la notice de licence jointe. |
+| Attribution | « Moteur Python : Skulpt (MIT), https://skulpt.org » — dite dans ce fichier ; la page ne l'affiche pas à l'élève |
+
+**Pourquoi Skulpt.** Il fait tourner du Python 3 dans la page, sans réseau, et c'est le seul des candidats qui
+**suspend** le programme : `input()` attend la réponse dans la console, ⏹ arrête même pendant une attente, et une
+boucle sans fin s'arrête au bout d'un temps donné sans figer la page. Brython (BSD, plus fidèle sur le détail)
+traduit le programme en JavaScript qui s'exécute d'un bloc : `input()` y passe par une fenêtre `prompt`, et un
+`while True` fige l'onglet. Pyodide (CPython complet) pèse une dizaine de mégaoctets et se charge par morceaux.
+Ce que les élèves écrivent — `print`, variables, types, `int()`, `str()`, `float()`, `input()`, `if`/`elif`/`else`,
+`while`, `for … in range`, fonctions, f-strings, `import time` / `random` / `math` — s'exécute comme en Python 3
+(mesuré au banc : `5 / 2` → 2.5, `7 // 2` → 3, `round(2.567, 1)` → 2.6, `print` sépare par des espaces).
+
+**Ce qui diffère de Python 3, et ce que l'éditeur en fait.**
+
+- Les messages d'erreur de Skulpt ne sont pas ceux de CPython : l'éditeur écrit l'explication en français et
+  ramène le message à celui de Python 3 quand il le connaît (`can only concatenate str (not "int") to str`,
+  `division by zero`, `invalid syntax`).
+- Une erreur d'écriture est souvent un vague « bad input » : l'éditeur la diagnostique lui-même sur la ligne
+  (deux-points, décalage, `=` dans un test, guillemet, parenthèse, trou `___`, accent dans un nom).
+- Un nom de variable accentué (`humidité`) est refusé : l'éditeur le dit (les cartes programmables le refusent aussi).
+- Un nombre à virgule s'affiche avec 16 chiffres au plus : `(98 - 32) / 1.8` donne `36.66666666666666`, là où
+  CPython écrit `36.666666666666664`. Aucun exercice outillé n'en dépend.
+- Un mélange de tabulations et d'espaces n'est pas refusé (CPython lèverait `TabError`) ; Tab écrit 4 espaces.
+
+## Les bancs
+
+```
+node _ressources-communes/editeur-python/banc_editeur_python.mjs [--captures <dossier>]
+node _ressources-communes/editeur-python/captures_gestes.mjs [3e_C9.1 …]
+```
+
+Le banc fabrique sa page d'essai dans un dossier temporaire : aucune page n'est ajoutée au dépôt. Chaque séquence
+outillée éprouve ses exercices dans sa propre suite, par `eprouver_exercices.mjs`.

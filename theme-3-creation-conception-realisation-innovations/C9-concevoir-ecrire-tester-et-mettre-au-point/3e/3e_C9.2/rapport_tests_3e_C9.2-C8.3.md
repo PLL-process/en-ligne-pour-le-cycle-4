@@ -5,6 +5,8 @@ Agent : Fable · Environnement : Chromium headless (Playwright 1.55),
 viewport 1280×900 + émulation téléphone 390×844 · Suite : `tests_3e_C9.2-C8.3.mjs`
 (committée dans ce dossier, rejouable : `node tests_3e_C9.2-C8.3.mjs .`).
 
+> **Mise à jour du 05/11/2026 — le « fossé » entre ranger et rouvrir, comblé.** La reprise de la séance 4 disait « ouvre ton programme : son fichier est dans le dossier de ta classe » sans dire comment. Elle dit désormais le chemin, en trois gestes (Ouvrir → Depuis votre appareil → Ouvrir… ; Documents › ta classe, le même dossier qu'au geste 5 ; le fichier .ino, puis Oui) — le retour en blocs d'un .ino par ce chemin avait été vérifié le 04/10/2026 (journal) ; et la dernière capture du geste 5 rappelle de retenir ce chemin. Modifié dans la page tout-en-un, puis `python3 generer_les_quatre_pages.py`. `node tests_3e_C9.2-C8.3.mjs .` → **167 / 167** et `node tests_regle_311_3e_C9.2.mjs` → **34 / 34**, comme avant. Vittascience Arduino reste nécessaire ici (une vraie carte) : pas d'éditeur intégré.
+
 > **Mise à jour du 31/10/2026 — règle d'or n°311, page tout-en-un : à partir de la séance 2, l'élève voit sa séance, pas le décor.**
 > À partir de la séance 2 : titre, mission, le lien vers les quatre pages (navigation), barre d'outils, sélecteur de parcours, puis le
 > volet replié « 📖 Rappel : la situation et ton hypothèse » (« Avant de commencer », billet d'entrée, étiquettes, identité, note du

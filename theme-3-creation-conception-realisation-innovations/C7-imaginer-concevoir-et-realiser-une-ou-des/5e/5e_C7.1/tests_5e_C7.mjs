@@ -13,6 +13,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
 import { execSync } from "node:child_process";
+import { eprouverEditeurs, eprouverPose, executerBloc } from "../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs";
 
 let chromium;
 try { ({ chromium } = await import("playwright")); }
@@ -222,15 +223,15 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
     const texte = await page.evaluate(() => document.body.textContent);
     ok("gestes · plus de version 🅰 : ni bouton, ni carte, ni « Avec le matériel »",
        choix === "b,c,tous" && !/🅰/.test(texte) && !/Avec le matériel/i.test(texte), "boutons : " + choix);
-    const note = await page.locator("#vs1 .vs-note").first().textContent();
-    ok("gestes · l'activité 3 limite le volet Python et demande de nommer puis télécharger (geste 4)",
+    const note = await page.locator("#vs1 .editeur-py-note").first().textContent();   // l'éditeur Python intégré (04/11/2026)
+    ok("gestes · l'activité 3 limite le volet Python (Vittascience, facultatif) et demande de nommer puis télécharger (geste 3 de l'éditeur intégré)",
        note.includes("Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs.")
-       && note.includes("Nomme ton projet 5e-HALL-TON NOM, puis télécharge-le (geste 4)."), note.trim().slice(0, 120));
+       && note.includes("Nomme ton fichier 5e-HALL-TON NOM, puis télécharge-le (geste 3)."), note.trim().slice(0, 120));
     await page.evaluate(() => document.querySelectorAll(".gestes-outil img").forEach(i => { i.loading = "eager"; }));
     await page.waitForTimeout(800);
     const imgs = await page.$$eval(".gestes-outil img", l => l.map(i => ({ charge: i.complete && i.naturalWidth > 0, alt: (i.getAttribute("alt") || "").trim().length })));
     ok("gestes · les " + imgs.length + " captures de l'encart se chargent, toutes avec un texte alternatif",
-       imgs.length === 11 && imgs.every(i => i.charge && i.alt > 20),
+       imgs.length === 8 && imgs.every(i => i.charge && i.alt > 20),
        imgs.filter(i => !i.charge).length + " cassée(s), " + imgs.filter(i => i.alt <= 20).length + " sans texte alternatif");
     /* un élève qui avait choisi 🅰 avant le retrait : sa sauvegarde dit « a » — dans un contexte à part */
     const ctxA = await nav.newContext({ viewport: { width: 390, height: 844 } });
@@ -393,6 +394,25 @@ if (!CFG.essaisBanc) {
   ok("act. 2 : remplie juste, validée 6/6, et plus aucun retour sous les cases",
      /activité validée/.test(await page.locator("#fb2").textContent()) && /6\/6/.test(await page.locator("#fb2").textContent())
      && (await page.locator(".grille-conforme .retour-case.visible").count()) === 0);
+}
+
+/* — l'éditeur Python intégré (04/11/2026) : il remplace l'onglet Vittascience. Le code de départ s'exécute (rien à
+     afficher : la décision est à écrire) ; le programme de la correction affiche ce que dit la correction ; une
+     exécution qui affiche quelque chose ouvre le verrou de l'activité 3b. — */
+{
+  const ctxE = await nav.newContext({ viewport: { width: 1280, height: 900 } });
+  const reseau = [];
+  ctxE.on("request", r => { if (/^https?:/.test(r.url())) reseau.push(r.url()); });
+  const { page: pe, erreurs: ee } = await ouvrir(ctxE, CFG.seq);
+  await eprouverPose(pe, ["vs1"], ok);
+  await eprouverEditeurs(pe, [
+    { bloc: "vs1", nom: "activité 3b", onglet: "#tab-s2", depart: { sortie: "" },
+      corrige: { quoi: "ROUGE", sortie: "ROUGE\n",
+        code: 'occupee = True\nif occupee:\n    print("ROUGE")\nelse:\n    print("VERT")\n' } },
+  ], ok);
+  ok("act. 3b : une exécution qui affiche quelque chose ouvre le verrou de l'éditeur (vs1)", await pe.evaluate(() => !!(window.__exp && window.__exp.vs1)));
+  ok("éditeur Python · aucune requête réseau, zéro erreur JavaScript", reseau.length === 0 && ee.length === 0, reseau.concat(ee).slice(0, 3).join(" | "));
+  await pe.close(); await ctxE.close();
 }
 
 /* — aucun envoi réseau — */

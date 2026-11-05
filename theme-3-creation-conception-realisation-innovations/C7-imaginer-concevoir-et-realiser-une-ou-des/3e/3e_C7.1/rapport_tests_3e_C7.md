@@ -1,5 +1,8 @@
 # Rapport de tests — 3e_C7.1 « Capteur de confort — New York » (3e_C7.1 · 3e_C8.1)
 
+> **Mise à jour du 05/11/2026 — l'éditeur Python intégré.** L'onglet Vittascience est remplacé par l'**éditeur Python intégré** (`_ressources-communes/editeur-python/`, moteur Skulpt chargé au premier ▶ Exécuter, hors ligne) ; Vittascience reste un lien facultatif sous chaque éditeur. L'encart des gestes devient « les quatre gestes de l'éditeur Python » (écrire et exécuter, nommer, sortir, retrouver — « Documents › ta classe » écrit aux gestes 3 et 4), avec cinq captures réelles de la page (`captures_gestes.mjs`) et les captures de l'Explorateur reprises. Deux éditeurs (activité 3b, Bonus). Le passage blocs ↔ Python reste proposé dans Vittascience (facultatif, mode mixte). Huit contrôles ajoutés (ALERTE, PRÉ-ALERTE pour T = 27, verrou ouvert par une exécution). Le contrôle de la note lit `.editeur-py-note` et « geste 3 » ; l'encart a 9 captures (12 avant).
+> Suite du lot : `node tests_3e_C7.mjs .` → **79 / 79** (71 avant ; les 71 passent) ; banc n°311 : **34 / 34**, comme avant. Banc du composant : `node _ressources-communes/editeur-python/banc_editeur_python.mjs` → **54 / 54**. Non testé : un vrai téléphone, Safari, Firefox, une impression réelle, la fenêtre « Ouvrir » de Windows.
+
 Date : 2026-08-26 (**harmonisation du lot**) · Agent : Fable ·
 Environnement : Chromium headless (Playwright 1.55), viewport 1280×900 +
 émulation téléphone 390×844 · Suite : `tests_3e_C7.mjs` (**committée dans ce dossier**,

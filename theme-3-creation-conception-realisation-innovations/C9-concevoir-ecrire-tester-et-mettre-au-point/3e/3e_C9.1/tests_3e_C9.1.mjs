@@ -15,6 +15,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
 import { execSync } from "node:child_process";
+import { eprouverEditeurs, eprouverPose, executerBloc } from "../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs";
 
 let chromium;
 try { ({ chromium } = await import("playwright")); }
@@ -336,6 +337,43 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   const a1 = await page.locator("#a1q1").inputValue();
   ok("restauration : la progression survit au rechargement", /^1 \/ 5/.test(prog.trim()), prog.trim());
   ok("restauration : les réponses saisies sont restituées", a1 === "3", a1);
+}
+
+/* — l'éditeur Python intégré (04/11/2026) : il remplace l'onglet Vittascience dans les quatre exercices —
+     Un test par exercice : son code de départ s'exécute (bouton ▶, comme un élève) et donne la sortie attendue
+     (ou l'erreur expliquée attendue), et le programme de la correction donne la sortie de la correction. */
+{
+  const ctxE = await nav.newContext({ viewport: { width: 1280, height: 900 }, acceptDownloads: true });
+  const reseau = [];
+  ctxE.on("request", r => { if (/^https?:/.test(r.url())) reseau.push(r.url()); });
+  const { page: pe, erreurs: ee } = await ouvrir(ctxE, SEQ);
+  await eprouverPose(pe, ["vs1", "vs2", "vs3", "vs4"], ok);
+  /* le verrou de l'activité 3 : refusé avant toute exécution, ouvert par une exécution menée au bout */
+  await pe.click("#tab-s2"); await pe.waitForTimeout(200);
+  for (const [id, v] of [["a3p1", "7"], ["a3p2", "34"], ["a3p3", "Train Q 3 min"], ["a3r1", "7"], ["a3r2", "34"], ["a3r3", "Train Q 3 min"],
+                         ["a3r4", "il les COLLE bout à bout (concaténation)"], ["a3r5", "41 min"]]) await pe.selectOption("#" + id, v);
+  await pe.click('.btn.check[data-check="3"]'); await pe.waitForTimeout(150);
+  const fbAvant = await pe.locator("#fb3").textContent();
+  await executerBloc(pe, "vs1");
+  await pe.click('.btn.check[data-check="3"]'); await pe.waitForTimeout(150);
+  const fbApres = await pe.locator("#fb3").textContent();
+  ok("act. 3 : le verrou demande l'éditeur Python, et une exécution menée au bout l'ouvre (8/8)",
+     /🔒[\s\S]*éditeur Python/.test(fbAvant) && /activité validée/.test(fbApres) && /8\/8/.test(fbApres), fbAvant.slice(0, 50) + " → " + fbApres.slice(0, 40));
+  await eprouverEditeurs(pe, [
+    { bloc: "vs1", nom: "activité 3", onglet: "#tab-s2", depart: { sortie: "7\n34\nTrain Q 3 min\n" } },
+    { bloc: "vs2", nom: "activité 4", onglet: "#tab-s3", depart: { erreur: "TypeError", ligne: 7, explication: /on ne soustrait pas/ },
+      corrige: { quoi: "« Q - 96 St 2 min | 25.0 C »", sortie: "Q - 96 St 2 min | 25.0 C\n",
+        code: 'train = "Q"\nquai = "96 St"\nminutes = 2 + 1\ntemperature_f = 77\ntemperature_c = (temperature_f - 32) / 1.8\nmessage = train + " - " + quai\nminutes = minutes - 1\nprint(message, minutes, "min |", temperature_c, "C")\n' } },
+    { bloc: "vs3", nom: "activité 5", onglet: "#tab-s4", depart: { sortie: "0\n0\n0\n0\n" },
+      corrige: { quoi: "3, 2, 1, 3 (le cas limite tranché)", sortie: "3\n2\n1\n3\n",
+        code: "def vitesse_ventilation(air, train_arrive):\n    if air >= 100:\n        return 3\n    elif train_arrive:\n        return 2\n    else:\n        return 1\n\nprint(vitesse_ventilation(150, False))\nprint(vitesse_ventilation(60, True))\nprint(vitesse_ventilation(40, False))\nprint(vitesse_ventilation(100, False))\n" } },
+    { bloc: "vs4", nom: "Bonus", depart: { sortie: "Marathon : 0 km\nCanicule : 0 °C\n" },
+      corrige: { quoi: "le marathon (42,15 km) et la canicule (36,7 °C)", sortie: /^Marathon : 42\.15\d* km\nCanicule : 36\.6\d* °C\n$/,
+        code: 'def miles_vers_km(d):\n    return d * 1.609\n\ndef fahrenheit_vers_celsius(t):\n    return (t - 32) / 1.8\n\nprint("Marathon :", miles_vers_km(26.2), "km")\nprint("Canicule :", fahrenheit_vers_celsius(98), "°C")\n' } },
+  ], ok);
+  ok("éditeur Python · aucune requête réseau, zéro erreur JavaScript", reseau.length === 0 && ee.length === 0, reseau.concat(ee).slice(0, 3).join(" | "));
+  await shot(pe, "editeur_python_bonus", "#vs4");
+  await pe.close(); await ctxE.close();
 }
 
 /* — aucun envoi réseau hors iframe Vittascience — */

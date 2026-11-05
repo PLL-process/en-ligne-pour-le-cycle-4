@@ -47,6 +47,7 @@ import { chromium } from 'playwright';
 import path from 'node:path';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { eprouverEditeurs, eprouverPose, executerBloc } from '../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs';
 
 // fileURLToPath, pas .pathname : sous Windows, .pathname donne « /C:/… » et path.join en fait « C:\C:\… »
 const ICI = path.dirname(fileURLToPath(import.meta.url));
@@ -154,10 +155,10 @@ ok('6 · activité 2 validée 4 / 4 (de la mesure brute au pourcentage)',
 /* ── LE VERROU DE L'ÉDITEUR, RÉSEAU COUPÉ ────────────────────────────────── */
 await remplir(3); await valider(3);
 ok('7 · activité 3 REFUSÉE malgré les 5 étapes remises dans l\'ordre — l\'éditeur n\'a pas servi',
-   /🔒/.test(await retour(3)) && /Ouvre l'éditeur/.test(await retour(3))
+   /🔒/.test(await retour(3)) && /éditeur Python/.test(await retour(3))
    && !(await estValidee(3)), (await retour(3)).slice(0, 70));
 
-const editeurs = await p.$$eval('details.vs', l => l.map(e => e.id));
+const editeurs = await p.$$eval('.editeur-py', l => l.map(e => e.id));   // l'éditeur Python intégré (04/11/2026)
 await ouvrirPour('vs1');
 await p.click('#vs1 .vs-lien'); await p.waitForTimeout(200);
 ok(`8 · cliquer le lien-bouton de l'éditeur pose le verrou vs1 — le GESTE suffit, `
@@ -310,10 +311,10 @@ const hotes = [...new Set(bloquees.map(u => new URL(u).host))];
 ok(`21 · ${bloquees.length} requête(s) distante(s) refusées pendant toute la séance, `
    + `vers ${hotes.length} hôte(s) : ${hotes.join(', ')}`,
    hotes.length > 0 && hotes.every(h => /vittascience|fonts\.g/.test(h)), hotes.join(', '));
-ok(`22 · les ${editeurs.length} éditeurs distants sont TOUS un lien-bouton vers fr.vittascience.com `
-   + 'ouvert dans un nouvel onglet, et plus aucun cadre : rien ne part avant un geste',
+ok(`22 · les ${editeurs.length} éditeurs Python sont DANS la page (04/11/2026), chacun avec un lien-bouton facultatif vers `
+   + 'fr.vittascience.com ouvert dans un nouvel onglet, et plus aucun cadre : rien ne part avant un geste',
    editeurs.length === 3
-   && (await p.$$eval('details.vs',
+   && (await p.$$eval('.editeur-py',
         l => l.every(e => !e.querySelector('iframe') && e.querySelector('a.vs-lien')
              && /^https:\/\/fr\.vittascience\.com\//.test(e.querySelector('a.vs-lien').href)
              && e.querySelector('a.vs-lien').target === '_blank'))),
@@ -477,8 +478,45 @@ ok('37 · les trois liens-boutons ouvrent l\'éditeur en ?mode=code (et plus en 
 const tout = await p.evaluate(() => document.body.textContent);
 ok('38 · plus de « blocs capteurs » ni de « blocs à gauche, Python à droite » ; la consigne nomme « Arrêter » dans chaque barre',
    !/blocs\s*«\s*capteurs/i.test(tout) && !/blocs à gauche/i.test(tout) && !/mode=mixed/.test(await p.content())
-   && (await p.$$eval('details.vs', l => l.every(d => /Arrêter/.test(d.textContent)))),
+   && (await p.$$eval('.editeur-py', l => l.length === 3 && l.every(d => /Arrêter/.test(d.textContent)))),
    '');
+await ctx.close();
+}
+
+/* ════════════════ L'ÉDITEUR PYTHON INTÉGRÉ ET SES FONCTIONS SIMULÉES (04/11/2026) ════════════════
+ * Les trois éditeurs remplacent l'onglet Vittascience ; la carte (capteur, pompe, attente) est simulée par la page.
+ * Un test par exercice : son code de départ s'exécute et donne ce qu'il doit (les lignes en désordre et les trous ___
+ * donnent une erreur EXPLIQUÉE, à la bonne ligne) ; le programme de la correction donne les lignes de la carte
+ * simulée ; le verrou de l'activité 3 s'ouvre sur ce que l'exécution AFFICHE. Réseau coupé ici aussi. */
+{
+const ctx = await b.newContext({ viewport: { width: 1280, height: 900 } });
+const reseau = [];
+await ctx.route('**/*', route => { const u = route.request().url(); if (/^https?:/i.test(u)) { reseau.push(u); return route.abort(); } return route.continue(); });
+const p = await ctx.newPage();
+const err = []; p.on('pageerror', e => err.push(e.message));
+await p.goto('file://' + SEQ, { waitUntil: 'load' }); await p.waitForTimeout(300);
+await eprouverPose(p, ['vs1', 'vs2', 'vs3'], ok);
+ok('éditeur Python · l\'encadré 🔌 nomme les cinq fonctions simulées, et le script de la carte les définit toutes',
+   await p.evaluate(() => { const e = document.getElementById('fonctions-simulees'), s = document.getElementById('carte-simulee-arrosage');
+     return !!e && !!s && ['lire_capteur(A0)', 'lire_capteur_pourcent(A0)', 'demarrer_pompe()', 'arreter_pompe()', 'attendre(1)'].every(f => e.textContent.includes(f))
+       && ['def lire_capteur(', 'def lire_capteur_pourcent(', 'def demarrer_pompe(', 'def arreter_pompe(', 'def attendre('].every(f => s.textContent.includes(f)); }));
+await p.evaluate(() => { const v = document.getElementById('vs1'); v.scrollIntoView(); });
+await executerBloc(p, 'vs1');   // le code de départ : des lignes en désordre, une erreur, rien ne s'ouvre
+const avant = await p.evaluate(() => !!window.__exp.vs1);
+await eprouverEditeurs(p, [
+  { bloc: 'vs1', nom: 'activité 3', depart: { erreur: 'SyntaxError', ligne: 4, explication: /décalage/ },
+    corrige: { quoi: 'la valeur brute du capteur simulé, puis « Humidité du sol : 54.9… % », une fois par seconde, jusqu\'à ⏹',
+      arreterApres: 2600, arret: 'bouton', sortie: /^\[capteur\] valeur brute 562\nHumidité du sol : 54\.93\d* %\n\[capteur\] valeur brute 409\nHumidité du sol : 39\.98\d* %\n/,
+      code: 'while True:\n    valeur_brute = lire_capteur(A0)\n    humidite = valeur_brute * 100 / 1023\n    print("Humidité du sol :", humidite, "%")\n    attendre(1)\n' } },
+  { bloc: 'vs2', nom: 'activité 5', onglet: '[data-panel="s2"]', depart: { erreur: 'SyntaxError', ligne: 4, explication: /trou/ },
+    corrige: { quoi: 'arrêt à 55 et 40 %, MARCHE à 25 et 12 %', arreterApres: 3600, arret: 'bouton',
+      sortie: /^\[capteur\] 55 %\n\[pompe\] arrêt\n\[capteur\] 40 %\n\[pompe\] arrêt\n\[capteur\] 25 %\n\[pompe\] MARCHE\n\[capteur\] 12 %\n\[pompe\] MARCHE\n/,
+      code: 'seuil = 30\nwhile True:\n    humidite = lire_capteur_pourcent(A0)\n    if humidite < seuil:\n        demarrer_pompe()\n    else:\n        arreter_pompe()\n    attendre(1)\n' } },
+  { bloc: 'vs3', nom: 'Bonus', onglet: '[data-panel="s3"]', depart: { sortie: '[capteur] 55 %\n[pompe] arrêt\n' } },
+], ok);
+ok('act. 3 : le verrou reste fermé après une exécution en erreur, et s\'ouvre quand la console affiche « Humidité du sol » (même arrêtée par ⏹)',
+   !avant && await p.evaluate(() => !!window.__exp.vs1 && !!window.__exp.vs2));
+ok('éditeur Python · réseau coupé : aucune requête tentée, zéro erreur JavaScript', reseau.length === 0 && err.length === 0, reseau.concat(err).slice(0, 3).join(' | '));
 await ctx.close();
 }
 

@@ -13,7 +13,7 @@ Première marche de l'**arc variables** du cycle (5e → 4e → 3e).
 
 * **`sequence_5e_C9.1-C9.3_boite_etiquetee.html`** — l'atelier complet (3 séances, 5 activités) :
   simulateur de mémoire pas à pas, motif **prédire → tester → reporter** dans l'éditeur Python
-  Vittascience (nouvel onglet), banc de tests du programme **fourni** (le bug des descendus), modification
+  intégré à la page (hors ligne ; Vittascience en lien facultatif, depuis le 04/11/2026), banc de tests du programme **fourni** (le bug des descendus), modification
   ciblée puis barrière commandée avec son **cas frontière** (zéro place pile), et depuis le 19/10/2026
   le **programme de la barrière écrit par l'élève** (`if` / `else`, partie ③ de l'activité 5).
   Sauvegarde locale, DYS, verrous expérientiels.

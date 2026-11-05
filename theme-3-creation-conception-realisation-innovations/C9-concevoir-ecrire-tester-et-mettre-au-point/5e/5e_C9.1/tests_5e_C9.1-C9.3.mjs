@@ -18,6 +18,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
 import { execSync } from "node:child_process";
+import { eprouverEditeurs, eprouverPose, executerBloc } from "../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs";
 
 let chromium;
 try { ({ chromium } = await import("playwright")); }
@@ -148,7 +149,8 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
 /* — n°31 : versions étayées — */
 {
   const e = await page.locator("details.etayage").count();
-  const z = await page.locator("textarea").count();
+  // les zones de CODE de l'éditeur Python (04/11/2026) ne sont pas des zones de rédaction ; progBarr, devenu éditeur, en reste une
+  const z = await page.locator("textarea:not(.editeur-py-code), textarea#progBarr").count();
   ok("n°31 : une version étayée pour chaque zone de rédaction", e >= z && z >= 2,
      e + " étayages pour " + z + " zones");
 }
@@ -243,8 +245,8 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   await page.evaluate(() => document.querySelectorAll(".gestes-outil img").forEach(i => { i.loading = "eager"; }));
   await page.waitForTimeout(800);
   const imgs = await page.$$eval(".gestes-outil img", l => l.map(i => ({ charge: i.complete && i.naturalWidth > 0, alt: (i.getAttribute("alt") || "").trim().length })));
-  ok("gestes · les " + imgs.length + " captures de l'encart se chargent, toutes avec un texte alternatif",
-     imgs.length === 11 && imgs.every(i => i.charge && i.alt > 20),
+  ok("gestes · les " + imgs.length + " captures de l'encart (éditeur intégré, depuis le 04/11/2026 : 5 de l'éditeur + 3 de Windows) se chargent, toutes avec un texte alternatif",
+     imgs.length === 8 && imgs.every(i => i.charge && i.alt > 20),
      imgs.filter(i => !i.charge).length + " cassée(s), " + imgs.filter(i => i.alt <= 20).length + " sans texte alternatif");
 }
 
@@ -395,19 +397,59 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
     await page.selectOption("#" + id, v);
   await page.click('.btn.check[data-check="5"]');
   await page.waitForTimeout(150);
+  await page.waitForFunction(() => !/^⏳/.test(document.querySelector("#fb5").textContent), null, { timeout: 15000 });
   ok("act. 5 : sans programme de barrière, 5/6 et pas de validation",
      /5\/6/.test(await page.locator("#fb5").textContent()) && !/activité validée/.test(await page.locator("#fb5").textContent()));
   await page.fill("#progBarr", "places = 0\nif places > 0 :\n    print(\"OUVERTE\")\nelse:\n    print(\"FERMÉE\")");
   await page.click('.btn.check[data-check="5"]');
   await page.waitForTimeout(150);
+  await page.waitForFunction(() => !/^⏳/.test(document.querySelector("#fb5").textContent), null, { timeout: 15000 });
   ok("act. 5 : validée 6/6 avec le programme if / else de la barrière",
      /activité validée/.test(await page.locator("#fb5").textContent()) && /6\/6/.test(await page.locator("#fb5").textContent()));
   await page.fill("#progBarr", "places = 0\nif places >= 0:\n    print(\"OUVERTE\")\nelse:\n    print(\"FERMÉE\")");
   await page.click('.btn.check[data-check="5"]');
   await page.waitForTimeout(150);
+  await page.waitForFunction(() => !/^⏳/.test(document.querySelector("#fb5").textContent), null, { timeout: 15000 });
   ok("act. 5 : « places >= 0 » (frontière fausse) n'est pas accepté",
      !/6\/6/.test(await page.locator("#fb5").textContent()));
+  await page.fill("#progBarr", "places = 0\nif places > 0:\n    print(\"FERMÉE\")\nelse:\n    print(\"OUVERTE\")");
+  await page.click('.btn.check[data-check="5"]');
+  await page.waitForTimeout(150);
+  await page.waitForFunction(() => !/^⏳/.test(document.querySelector("#fb5").textContent), null, { timeout: 15000 });
+  ok("act. 5 : jugé en l'exécutant — les bons mots, mais OUVERTE et FERMÉE inversés : refusé",
+     !/6\/6/.test(await page.locator("#fb5").textContent()));
   await shot(page, "act5_programme_barriere", "#fb5");
+}
+
+/* — l'éditeur Python intégré (04/11/2026) : il remplace l'onglet Vittascience (activités 3 et 5, Bonus) —
+     Un test par exercice : le code de départ s'exécute (bouton ▶, comme un élève) et donne la sortie attendue ;
+     le programme de la correction donne celle de la correction. */
+{
+  const ctxE = await nav.newContext({ viewport: { width: 1280, height: 900 } });
+  const reseau = [];
+  ctxE.on("request", r => { if (/^https?:/.test(r.url())) reseau.push(r.url()); });
+  const { page: pe, erreurs: ee } = await ouvrir(ctxE, SEQ);
+  await eprouverPose(pe, ["vs1", "vs2", "vs3"], ok);
+  await pe.click("#tab-s2"); await pe.waitForTimeout(200);
+  for (const [id, v] of [["a3p1", "24"], ["a3p2", "204"], ["a3r1", "24"], ["a3r2", "204"], ["a3r3", "du TEXTE que le + COLLE bout à bout"],
+                         ["a3r4", "des guillemets autour des nombres"]]) await pe.selectOption("#" + id, v);
+  await pe.click('.btn.check[data-check="3"]'); await pe.waitForTimeout(150);
+  const fbAvant = await pe.locator("#fb3").textContent();
+  await executerBloc(pe, "vs1");
+  await pe.click('.btn.check[data-check="3"]'); await pe.waitForTimeout(150);
+  const fbApres = await pe.locator("#fb3").textContent();
+  ok("act. 3 : le verrou demande l'éditeur Python, et une exécution menée au bout l'ouvre (6/6)",
+     /🔒[\s\S]*éditeur Python/.test(fbAvant) && /activité validée/.test(fbApres) && /6\/6/.test(fbApres), fbAvant.slice(0, 50) + " → " + fbApres.slice(0, 40));
+  await eprouverEditeurs(pe, [
+    { bloc: "vs1", nom: "activité 3", depart: { sortie: "24\n204\n" } },
+    { bloc: "vs2", nom: "activité 5, la barrière", onglet: "#tab-s3", depart: { sortie: "" },
+      corrige: { quoi: "FERMÉE pour places = 0", sortie: "FERMÉE\n",
+        code: 'places = 0\nif places > 0:\n    print("OUVERTE")\nelse:\n    print("FERMÉE")\n' } },
+    { bloc: "vs3", nom: "Bonus", depart: { sortie: "" },
+      corrige: { quoi: "l'âge du Cyclone (99 ans en 2026)", sortie: "Le Cyclone a 99 ans\n", code: 'annee = 2026\nprint("Le Cyclone a", annee - 1927, "ans")\n' } },
+  ], ok);
+  ok("éditeur Python · aucune requête réseau, zéro erreur JavaScript", reseau.length === 0 && ee.length === 0, reseau.concat(ee).slice(0, 3).join(" | "));
+  await pe.close(); await ctxE.close();
 }
 
 /* — réseau — */
