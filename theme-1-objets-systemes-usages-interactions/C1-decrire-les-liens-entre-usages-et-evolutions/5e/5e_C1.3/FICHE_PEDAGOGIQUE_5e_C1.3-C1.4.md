@@ -78,3 +78,25 @@ Une équipe scolaire fictive prépare un service de vélos partagés. Les fichie
 - `synthese_eleve_5e_C1.3-C1.4.html`
 - `synthese_professeur_5e_C1.3-C1.4.html`
 - `donnees_velos_hangzhou_simulees.csv`
+
+## Découpage en séances à onglets (04/11/2026, vague des séquences sans onglets)
+
+La page était d'un seul tenant, déjà écrite en trois cartes « Séance 1 / 2 / 3 ». Ces cartes sont devenues trois séances à
+onglets ; les blocs ont été déplacés, pas réécrits. Chaque séance a reçu sa question directrice et son programme, en tête
+de sa carte, et son bouton vers la suivante ; l'onglet en cours est mémorisé.
+
+| Séance | Question directrice | Contenu | Temps |
+|---|---|---|---|
+| 1 — Comprendre un système d'information | Qu'est-ce qu'un système d'information, et qui y fait quoi dans le service de vélos partagés ? | Ouverture (situation et problématique, hypothèse, compétences et schéma, CRCN), activité 1 avec l'exercice incrusté de la carte mentale | ~5 + 50 min (dont ~15 pour la carte mentale) |
+| 2 — Classer, nommer et retrouver des fichiers | Comment ranger et nommer des fichiers pour que n'importe qui les retrouve, et sache lequel est le bon ? | Activité 2 | ~40 min |
+| 3 — Trier et filtrer pour décider | Comment trier et filtrer des données pour prendre une décision qu'on peut justifier ? | Activité 3, transfert à la Martinique, Bonus, bilan (retour à l'hypothèse, « Comment j'ai travaillé », « Je me positionne » sur 5e_C1.3 et 5e_C1.4), renvoi au QCM | ~40 min + transfert et clôture |
+
+Dès la séance 2, l'ouverture est repliée dans le volet « 📖 Rappel : la situation et ton hypothèse » (règle d'or n°311),
+jamais supprimée. Restent dehors : le titre, la mission, la barre d'outils (« 🖨 Imprimer / PDF » ajouté au mode
+essentiel) et la carte « 💾 Sauvegarde locale » (le bouton qui efface, la zone qui dit « enregistré »), qui suit la
+séance ouverte et se place à sa fin. Sans JavaScript, la page reste d'un seul tenant, comme avant.
+
+**Ce qui a été écrit** (la page n'en avait pas, `controle_squelette` le signalait « à rédiger ») : une **hypothèse de
+départ** dans l'ouverture (champ enregistré, version étayée), que le bilan relit ; dans le bilan, le **retour à
+l'hypothèse**, « **Comment j'ai travaillé** » et « **Je me positionne** » sur 5e_C1.3 et 5e_C1.4 aux quatre niveaux du
+livret scolaire. L'exercice incrusté des ateliers garde ses marques : `incrustations.py --verifier` le dit « à jour ».

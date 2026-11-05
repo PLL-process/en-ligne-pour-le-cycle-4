@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Thème 3 · 5e — Le compte du club (5e_C1.5)</title>
+<title>Thème 1 · 5e — Le compte du club (5e_C1.5)</title>
 <style>
 :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
 *{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
@@ -158,6 +158,32 @@ table.releve td input{padding:4px 8px}
 
 /* Billet d'entrée (règle d'or n°26) : sans note ; il renvoie aux rattrapages du bloc « Avant de commencer ». */
 #billet .billet-intro{margin:.2em 0 .6em}#billet .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;border-left:3px solid var(--input-bd,var(--border,#274a8a));border-radius:0;background:none}#billet .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600;color:var(--text)}#billet .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;padding:7px 9px;background:var(--input-bg,rgba(127,127,127,.10));border:2px solid transparent;border-radius:9px}#billet .qcm-option:hover,#billet .qcm-option:focus-within{border-color:var(--hl)}#billet .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}#billet .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;font-weight:400}#billet .billet-retour{margin:.7em 0 0;padding:.55em .8em;border-radius:8px;border-left:4px solid var(--hl);background:rgba(127,127,127,.10)}#billet .billet-retour:empty{display:none}#billet .billet-retour.ok{border-left-color:var(--ok)}#billet .billet-retour.warn{border-left-color:var(--warn)}#billet .billet-retour.ko{border-left-color:var(--err)}#billet .billet-retour p{margin:.2em 0}#billet .billet-retour ul{margin:.3em 0 .2em 1.2em;padding:0}#billet .billet-retour li{margin:.25em 0}#billet .billet-retour a,#billet .billet-retour a:visited{color:var(--hl)}#billet .billet-note{font-size:.9em;opacity:.85}@media print{#billet .billet-retour,#billet .billet-retour a{color:#041a40!important;opacity:1!important}}
+
+/* ── Séances à onglets (squelette n°306) et volet « 📖 Rappel » (règle d'or n°311) — vague du 04/11/2026, sur le modèle
+   du pilote 4e_C8.1. Sans JavaScript (pas de classe js-onglets), la page reste d'un seul tenant : toutes les séances à la
+   suite, ni onglets ni boutons de séance, le volet ouvert et sans bouton. ── */
+.seance-tabs{display:none;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+.js-onglets .seance-tabs{display:flex}
+.seance-tab{flex:1;min-width:150px;min-height:44px;padding:11px 8px;border-radius:10px;background:var(--panel2);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit;line-height:1.3}
+.seance-tab small{display:block;font-weight:400;font-size:.9em;color:var(--sub)}
+.seance-tab.active{background:#1d4e89;color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+.seance-tab.active small{color:#e4eaf5}
+.seance-tab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.js-onglets .seance-panel{display:none}
+.js-onglets .seance-panel.active{display:block}
+.seance-tete h2{margin-top:0}
+.question-directrice{color:var(--hl);font-weight:600;margin:.4em 0}
+.page-suivante{display:none;max-width:940px;margin:22px auto 8px;text-align:right}
+.js-onglets .page-suivante{display:block}
+@media print{.page-suivante{display:none!important}}
+.rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}
+.rappel-ouverture>summary{display:none}
+.rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+.rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media print{.rappel-ouverture>summary{display:none!important}}
+/* le banc de publication hors de l'activité 0 (séances 2 et 3) : son propre cadre, la largeur des cartes, et le filet mobile des tableaux */
+.seance-panel>#etabli{max-width:940px;margin:0 auto 18px}
+@media(max-width:680px){.seance-panel>#etabli table{display:block;overflow-x:auto;max-width:100%}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -493,13 +519,24 @@ table.releve td input{padding:4px 8px}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
 
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_5e_C1.5.html">📖 Lexique</a></nav>
 
 <h1>📣 Le compte du club</h1>
-<p class="subtitle">Thème 1 · 5<sup>e</sup> — Usages, interactions et responsabilité</p>
+<p class="subtitle sous">🎯 Ta mission : avant que le club appuie sur «&nbsp;publier&nbsp;», dire ce que sa photo révèle en plus, ce qu'il faut retirer ou demander, et qui devient responsable de ce qui est publié.</p>
+<p class="subtitle" style="font-size:.85em;margin-top:0">Thème 1 · 5<sup>e</sup> — Usages, interactions et responsabilité</p>
+
+<div class="toolbar">
+  <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+</div>
+
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
 <div class="badges">
   <span class="badge niveau">Niveau 5e</span>
   <span class="badge code" title="Programme 2024 — 5e_C1.5 : Identifier des règles permettant de sécuriser un environnement numérique (bases de la cybersécurité) et des règles de respect de la propriété intellectuelle.">5e_C1.5</span>
@@ -653,7 +690,24 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
   });
 })();
 </script>
-<section class="card">
+
+</details><!-- /rappel-ouverture -->
+
+<nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" id="tab-s1" data-panel="s1" role="tab" aria-controls="s1" aria-selected="true" type="button">Séance 1<br><small>Regarder, puis retirer</small></button>
+  <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>L'image et le compte</small></button>
+  <button class="seance-tab" id="tab-s3" data-panel="s3" role="tab" aria-controls="s3" aria-selected="false" type="button">Séance 3<br><small>Responsabilité, refaire, conclure</small></button>
+</nav>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card seance-tete">
+<h2>🧭 Séance 1 — Regarder ce que ça révèle, puis retirer</h2>
+<p class="question-directrice">Question directrice : qu'est-ce qu'une photo publiée révèle, en plus de ce qu'on a voulu montrer — et que faut-il retirer pour que plus personne ne soit reconnaissable ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : l'ouverture, puis regarder ce que révèle la publication préparée par le club (activité 0, environ 20 min) et retirer des éléments un par un en comptant les indices (activité 1, environ 30 min). Avec l'ouverture, la séance est pleine : l'activité 1 peut se terminer à la maison.</p>
+</section>
+
+<section class="card" id="act0">
   <h2>👁 Activité 0 — FAIRE d'abord : regarder ce que ça révèle ⏱ ~20 min</h2>
   <p>Avant toute explication. Clique sur <b>📋 Charger la publication préparée par le
   club</b>, puis sur <b>🔍 Regarder ce que ça révèle</b>. Lis la liste : elle ne juge pas, elle
@@ -756,7 +810,7 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="act1">
   <h2>➖ Activité 1 — Retirer, et compter ⏱ ~30 min</h2><p class="pastille-maison" style="display:inline-block;margin:.35rem 0 .2rem;padding:.15rem .7rem;border:1px solid currentColor;border-radius:10px;font-size:.9rem;font-weight:600;line-height:1.4">🏠 Peut se faire à la maison (sans matériel, sur téléphone)</p>
   <p>La publication chargée compte <b>sept indices</b>. Décoche des éléments, un par
   un, et regarde le compteur. Ton but : garder la photo du jardin connecté — c'est le sujet, on
@@ -815,7 +869,18 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
   </div>
 </section>
 
-<section class="card">
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — L'image et le compte ›</button></p>
+</div>
+
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<section class="card seance-tete">
+<h2>🧭 Séance 2 — À qui est l'image, et qui a publié ?</h2>
+<p class="question-directrice">Question directrice : a-t-on le droit de reprendre une image trouvée en ligne, et que devient la responsabilité quand six élèves partagent un seul compte ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : l'image d'illustration et ses licences, sur le banc (activité 2, environ 25 min), puis le compte partagé à six (activité 3, environ 25 min).</p>
+</section>
+
+<section class="card" id="act2">
   <h2>🖼 Activité 2 — L'image d'illustration : à qui appartient-elle ? ⏱ ~25 min</h2><p class="pastille-maison" style="display:inline-block;margin:.35rem 0 .2rem;padding:.15rem .7rem;border:1px solid currentColor;border-radius:10px;font-size:.9rem;font-weight:600;line-height:1.4">🏠 Peut se faire à la maison (sans matériel, sur téléphone)</p>
   <p>L'image de tournesol a été trouvée en ligne en trois secondes. Elle est belle,
   elle est gratuite à télécharger — <b>et gratuite ne veut pas dire libre</b>. Sur le banc,
@@ -901,7 +966,7 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="act3">
   <h2>🔑 Activité 3 — Un compte pour six : qui a publié ? ⏱ ~25 min</h2>
   <p>Le club a un compte, et six personnes le mot de passe. C'était pratique. On va
   regarder ce que ça coûte — et le coût le plus important n'est pas celui auquel on pense.</p>
@@ -981,7 +1046,18 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
   </div>
 </section>
 
-<section class="card">
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Responsabilité, refaire, conclure ›</button></p>
+</div>
+
+<!-- ══════════════════ SÉANCE 3 ══════════════════ -->
+<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
+<section class="card seance-tete">
+<h2>🧭 Séance 3 — Qui est responsable de quoi ? Refaire, conclure</h2>
+<p class="question-directrice">Question directrice : devant un commentaire qui blesse, qu'engage chacun — et que doit faire le club avant sa prochaine publication ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : le commentaire qui blesse (activité 4, environ 25 min), le réinvestissement (environ 15 min), puis la synthèse, le Bonus, le bilan et le renvoi vers le QCM.</p>
+</section>
+
+<section class="card" id="act4">
   <h2>💬 Activité 4 — Le commentaire qui blesse ⏱ ~25 min</h2><p class="pastille-maison" style="display:inline-block;margin:.35rem 0 .2rem;padding:.15rem .7rem;border:1px solid currentColor;border-radius:10px;font-size:.9rem;font-weight:600;line-height:1.4">🏠 Peut se faire à la maison (sans matériel, sur téléphone)</p>
   <p>La publication est en ligne depuis une heure. Sous la photo, un commentaire se
   moque de Maël. Trois autres personnes ont mis un « j'aime ». Quelqu'un en a fait une capture
@@ -1129,22 +1205,14 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
 
 </section>
 
-<section class="card bonus">
+<section class="card bonus" id="bonus">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
   <p>Sur le banc, trouve une publication qui a <b>zéro règle enfreinte</b> et <b>trois indices
   ou plus</b>. Puis une autre qui a <b>zéro indice</b> et <b>une règle enfreinte</b>.</p>
   <label for="bonus1" style="display:block;font-weight:600;margin:10px 0 4px">Les deux publications que j'ai composées, élément par élément :</label>
   <textarea id="bonus1" style="min-height:80px"></textarea>
-
-  <p>Les deux existent, et c'est tout l'intérêt : <b>être en règle et être discret sont deux
-  choses différentes</b>. Écris ensuite laquelle des deux publications tu accepterais de voir
-  te concerner — et pourquoi.</p>
-  <label for="bonus2" style="display:block;font-weight:600;margin:10px 0 4px">Celle des deux que j'accepterais de voir me concerner, et pourquoi :</label>
-  <textarea id="bonus2" style="min-height:80px"></textarea>
-
-
   <details class="correction">
-    <summary>✅ Corrigé du Bonus — à ouvrir après avoir cherché sur le banc</summary>
+    <summary>✅ Corrigé du défi 1 — les deux publications (à ouvrir après avoir cherché sur le banc)</summary>
 
     <p>Les deux publications existent. Voici ce que le banc affiche pour chacune —
     recompose-les si tu veux vérifier&nbsp;: ces chiffres sont ceux de ses compteurs.</p>
@@ -1177,6 +1245,38 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
     l'un compte ce que la publication <b>révèle</b>, l'autre ce qu'elle
     <b>enfreint</b>.</p>
 
+    <p><b>Attendus.</b> Pour chacune des deux publications : la liste des éléments cochés, la provenance de l'image et
+    l'autorisation choisies dans les deux menus, puis les deux chiffres que le banc affiche (indices, règles enfreintes).
+    Toute publication qui affiche <b>0 règle et 3 indices ou plus</b> convient pour la première : la plus simple ci-dessus
+    avec la géolocalisation en plus en affiche <b>5</b>. Pour la seconde, la photo du jardin doit rester : décocher aussi
+    le jardin laisse les compteurs à 0 et 1, mais il n'y a plus de publication — le banc répond « Il n'y a rien à
+    publier ».</p>
+
+    <p class="note"><b>Erreurs fréquentes.</b> Croire qu'une autorisation rend
+    anonyme&nbsp;: le banc le montre littéralement, le compteur d'indices ne bouge pas d'un
+    seul quand l'accord est donné. Et croire qu'un compteur à zéro suffit&nbsp;: zéro
+    indice avec une règle enfreinte reste une publication qu'on ne peut pas publier.</p>
+    <ul>
+      <li><b>Oublier la géolocalisation.</b> Elle ne se voit pas sur la photo, mais elle compte : la photo du jardin
+      avec la géolocalisation, c'est <b>1 indice</b>, pas zéro.</li>
+      <li><b>Laisser un menu sur « — je choisis — ».</b> Le banc ne compte pas une décision qui manque comme une règle
+      enfreinte : avec la photo du jardin seule et l'image non choisie, il affiche <b>0 règle</b> et refuse de publier
+      tant que la provenance de l'image n'est pas décidée. Pour obtenir la règle enfreinte, il faut choisir l'image
+      sans licence.</li>
+      <li><b>Prendre l'accord oral pour l'accord écrit.</b> Avec tout coché et « Maël est d'accord, il l'a dit à
+      l'oral », le banc affiche <b>7 indices et 2 règles</b> : un accord oral ne se prouve pas, et pour un mineur ce
+      sont ses responsables légaux qui autorisent.</li>
+    </ul>
+  </details>
+
+  <p>Les deux existent, et c'est tout l'intérêt : <b>être en règle et être discret sont deux
+  choses différentes</b>. Écris ensuite laquelle des deux publications tu accepterais de voir
+  te concerner — et pourquoi.</p>
+  <label for="bonus2" style="display:block;font-weight:600;margin:10px 0 4px">Celle des deux que j'accepterais de voir me concerner, et pourquoi :</label>
+  <textarea id="bonus2" style="min-height:80px"></textarea>
+  <details class="correction">
+    <summary>✅ Corrigé du défi 2 — celle que j'accepterais de voir me concerner</summary>
+
     <p><b>La dernière question — celle qui n'a pas de bonne réponse.</b>
     «&nbsp;Laquelle accepterais-tu de voir te concerner&nbsp;?&nbsp;» n'attend pas un
     camp. Une réponse solide dit <b>sur quoi elle s'appuie</b>&nbsp;:</p>
@@ -1193,14 +1293,20 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
       Ajoute alors que l'infraction, ici, ne te vise pas&nbsp;: elle vise
       l'auteur de l'image, qui n'a rien demandé.</li>
     </ul>
+    <p><b>Attendus.</b> Un choix entre les deux publications, et la raison du choix : ce sur quoi tu t'appuies (le
+    droit, ou ce qu'on peut déduire de toi), puis ce que ton choix ne règle pas.</p>
     <p>Ce qu'une bonne réponse ne fait pas&nbsp;: trancher sans dire <b>au nom de
     quoi</b>. «&nbsp;Je préfère la deuxième&nbsp;» n'est pas une réponse&nbsp;;
     «&nbsp;je préfère la deuxième parce que je donne plus de poids à ce qu'on peut
     déduire de moi qu'à la régularité de la publication&nbsp;» en est une.</p>
-    <p class="note"><b>Erreurs fréquentes.</b> Croire qu'une autorisation rend
-    anonyme&nbsp;: le banc le montre littéralement, le compteur d'indices ne bouge pas d'un
-    seul quand l'accord est donné. Et croire qu'un compteur à zéro suffit&nbsp;: zéro
-    indice avec une règle enfreinte reste une publication qu'on ne peut pas publier.</p>
+    <p class="note"><b>Erreurs fréquentes.</b></p>
+    <ul>
+      <li>Trancher sans dire au nom de quoi : «&nbsp;je préfère la deuxième&nbsp;», sans raison.</li>
+      <li>Croire que la publication licite ne pose plus de question parce que l'accord est donné : l'accord rend
+      licite, il ne retire aucun indice.</li>
+      <li>Croire que la publication anonyme ne fait de tort à personne : l'image sans licence fait tort à son auteur,
+      qui n'a rien demandé.</li>
+    </ul>
   </details>
 </section>
 
@@ -1212,6 +1318,11 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
   élément à retirer, ou de la combinaison de plusieurs ?</p>
 
   <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">où as-tu hésité sur le banc ou
+  dans les activités, et qu'est-ce qui t'a surpris — par exemple quand le compteur d'indices n'est pas tombé à zéro en
+  retirant le visage ?</label></p>
+  <textarea id="bilanMeta" rows="2" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><ul><li>J'ai hésité sur ____ , parce que ____ .</li><li>Ce qui m'a surpris, c'est ____ .</li></ul></details>
   <p style="margin-top:12px"><b>Je me positionne sur 5e_C1.5 :</b></p>
   <select id="pos">
     <option value="">— je me positionne —</option>
@@ -1228,7 +1339,7 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
   <a class="btn" href="qcm_5e_C1.5-C1.6_le-compte-du-club.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
 
-
+</div>
 
 <footer>Séquence 5e_C1.5 + 5e_C1.6 — « Le compte du club ». Banc de publication original (CC0), aucune donnée réelle, aucune connexion, fonctionne hors ligne. Programme 2024, Thème 1.</footer>
 
@@ -1236,6 +1347,7 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
 (function(){
 "use strict";
 const KEY = "seq_5e_C1_5_C1_6";
+let ongletActif = null;   // la séance affichée (vague n°311, 04/11/2026)
 const $ = id => document.getElementById(id);
 window.__exp = window.__exp || {};
 
@@ -1469,23 +1581,86 @@ function save(){
   document.querySelectorAll("input, select, textarea").forEach(e => {
     if(!e.id) return;
     if(e.type === "checkbox" || (e.type === "radio" && e.closest("#billet"))) o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  o.onglet = ongletActif;   // l'onglet en cours, à part des verrous
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
 }
 function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
   if(!o) return;
+  ongletActif = o.onglet || null;
   Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
   Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
   window.__exp = o.exp || {};
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r && h.value.trim()) r.textContent = h.value;
+  // l'onglet en cours : un lien direct vers une ancre l'emporte sur lui
+  if(!location.hash && ongletActif && $(ongletActif)) montrerSeance(ongletActif, false);
 }
 document.addEventListener("input", () => {
   save();
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r) r.textContent = h.value.trim() || "—";
 });
+/* ══ Séances à onglets (squelette n°306) — vague du 04/11/2026, sur le modèle du pilote 4e_C8.1 ══
+   L'onglet en cours est mémorisé avec le travail (o.onglet), à part des verrous (__exp). */
+/* Un outil n'est pas du décor (n°311) : le banc de publication sert aux trois séances (activités 0, 1 et 2, puis le
+   Bonus). C'est un seul nœud ; le déplacer garde ce qui est coché et le journal du banc. À la séance 1, il reste à sa
+   place, dans l'activité 0, sous la consigne qui dit sur quoi cliquer ; à la séance 2, il vient juste après l'en-tête
+   de la séance, avant l'activité 2 qui s'en sert ; à la séance 3, juste avant le Bonus, le seul à s'en servir.
+   Sans JavaScript, il reste dans l'activité 0. */
+const BANC = $("etabli"), MAISON = BANC ? { parent: BANC.parentNode, suivant: BANC.nextSibling } : null;
+const BANC_AVANT = { s2: "act2", s3: "bonus" };
+function placerOutil(id){
+  const pan = $(id); if(!BANC || !pan) return;
+  const cible = $(BANC_AVANT[id] || "");
+  if(cible && cible.closest(".seance-panel") === pan){ if(cible.previousElementSibling !== BANC) cible.before(BANC); return; }
+  if(BANC.parentNode !== MAISON.parent) MAISON.parent.insertBefore(BANC, MAISON.suivant && MAISON.suivant.parentNode === MAISON.parent ? MAISON.suivant : null);
+}
+function montrerSeance(id, memoriser){
+  if(!$(id)) return;
+  document.querySelectorAll(".seance-tab").forEach(x => { const on = x.dataset.panel === id; x.classList.toggle("active", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
+  document.querySelectorAll(".seance-panel").forEach(p => p.classList.toggle("active", p.id === id));
+  placerOutil(id);
+  appliqueSeance(id);
+  ongletActif = id;
+  if(memoriser !== false) save();
+}
+document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => montrerSeance(t.dataset.panel)));
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte.
+   Comme au pilote, le volet ne se replie qu'une fois la page chargée (marque data-fermer-au-chargement). */
+function appliqueSeance(idPanneau){
+  const v = $("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", () => { const v = $("ouverture"); if(v){ voletAvantImpression = v.open; v.open = true; } });
+  window.addEventListener("afterprint", () => { const v = $("ouverture"); if(v && voletAvantImpression !== null){ v.open = voletAvantImpression; voletAvantImpression = null; } });
+  const cibleDuLien = () => { let id = ""; try{ id = decodeURIComponent(location.hash.slice(1)); }catch(e){} return id ? $(id) : null; };
+  const ouvrirSeanceDeLAncre = () => {
+    const cible = cibleDuLien(); const pan = cible && cible.closest(".seance-panel");
+    if(!pan || pan.classList.contains("active")) return;
+    montrerSeance(pan.id);
+    setTimeout(() => cible.scrollIntoView({block:"start"}), 60);
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", () => {
+    const v = $("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active") || {}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
+/* Règle d'or n°101 — chaque séance mène explicitement à la suivante */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => { montrerSeance(b.dataset.vers); window.scrollTo({top:0, behavior:"smooth"}); }));
+if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
+
 restore(); majPubli(false); regarder(false);
+placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // le banc rejoint la séance affichée
 })();
 </script>
 
