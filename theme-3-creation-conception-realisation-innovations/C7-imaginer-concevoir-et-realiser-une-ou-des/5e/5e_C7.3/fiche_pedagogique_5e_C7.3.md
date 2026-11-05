@@ -58,3 +58,14 @@ python3 materiaux.py
 
 Ce qui se passe en classe. Un test vert dit que la page fait ce qu'elle annonce, pas qu'un élève
 apprend. La grille LSU de la synthèse professeur est là pour observer, pas pour noter une page.
+
+## Découpage en séances à onglets (04/11/2026, vague n°311, sur le modèle du pilote 4e_C8.1)
+
+| Séance | Question directrice | Contenu | Temps |
+|---|---|---|---|
+| 1 — Lire, puis éliminer | Que dit chaque caractéristique d'un matériau, et comment le banc en élimine-t-il quatre sur six ? | Ouverture (avant de commencer, situation, problématique et idée de départ, climat, trois façons, billet), activités 0 et 1 | ouverture + 15 + 25 min |
+| 2 — Retirer, choisir, refaire | Que se passe-t-il quand on retire une exigence, et comment trancher entre les deux matériaux qui restent ? | Activités 2 et 3, réinvestissement, synthèse, Bonus (corrigé replié), bilan (idée de départ, « Comment j'ai travaillé », « Je me positionne » sur 5e_C7.3 et 5e_C4.4 aux quatre niveaux du livret), renvoi au QCM | 25 + 15 + 15 min + clôture |
+
+Dès la séance 2, l'ouverture est repliée dans le volet « 📖 Rappel » (règle d'or n°311). Le banc des matériaux sert aux deux
+séances : un seul exemplaire, que la page range dans la séance ouverte, sous son en-tête. Une barre d'outils (« 🖨 Imprimer /
+PDF ») a été posée. Sans JavaScript, les deux séances s'affichent à la suite.

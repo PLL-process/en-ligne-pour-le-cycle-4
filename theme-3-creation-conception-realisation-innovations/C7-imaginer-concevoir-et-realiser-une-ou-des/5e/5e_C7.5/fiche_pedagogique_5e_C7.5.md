@@ -65,3 +65,14 @@ Plutôt que d'ignorer la skill en silence, voici le relevé, écrit pour être c
 
 Ce qui se passe en classe. Un test vert dit que la page fait ce qu'elle annonce, pas qu'un élève
 apprend. La grille LSU de la synthèse professeur est là pour observer, pas pour noter une page.
+
+## Découpage en séances à onglets (04/11/2026, vague n°311, sur le modèle du pilote 4e_C8.1)
+
+| Séance | Question directrice | Contenu | Temps |
+|---|---|---|---|
+| 1 — Nommer, puis monter | Quelle fonction tient chaque constituant, et sur quel port le brancher pour que le prototype marche ? | Ouverture (avant de commencer, situation, problématique et idée de départ, sécurité, trois façons, billet), activités 0 et 1 | ouverture + 15 + 25 min |
+| 2 — Retirer, ordonner, refaire | Que casse chaque constituant quand on le retire, et dans quel ordre monter le prototype réel ? | Activités 2 et 3, réinvestissement, synthèse, Bonus (corrigé replié), bilan (idée de départ, « Comment j'ai travaillé », « Je me positionne » sur 5e_C7.5 et 5e_C4.5 aux quatre niveaux du livret), renvoi au QCM | 20 + 20 + 15 min + clôture |
+
+Dès la séance 2, l'ouverture — dont l'encadré Sécurité — est repliée dans le volet « 📖 Rappel » ; l'en-tête de la séance 2
+rappelle qu'en 🅰 on retire et on rebranche un module hors tension. L'établi sert aux deux séances : un seul exemplaire, rangé
+dans la séance ouverte, sous son en-tête.

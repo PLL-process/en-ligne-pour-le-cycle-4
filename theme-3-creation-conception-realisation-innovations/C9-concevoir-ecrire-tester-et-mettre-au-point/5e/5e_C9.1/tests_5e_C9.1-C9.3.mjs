@@ -359,6 +359,19 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   ok("progression : 1 / 5 après la seule activité 1", /^1 \/ 5/.test(prog.trim()), prog.trim());
   ok("tableau de bord : la tâche 1 est cochée",
      (await page.locator("#tachesBandeau .tache.fait").count()) === 1);
+  /* « 🗺 Où j'en suis » (04/11/2026) : ouvert à la séance 1, replié dès la séance 2 derrière une ligne qui dit le même compte */
+  {
+    const avant = await page.evaluate(() => document.querySelector(".seance-panel.active").id);
+    await page.click("#tab-s1"); await page.waitForTimeout(80);
+    const s1 = await page.evaluate(() => document.getElementById("tachesVolet").open);
+    await page.click("#tab-s2"); await page.waitForTimeout(80);
+    const s2 = await page.evaluate(() => { const d = document.getElementById("tachesVolet"), s = d.querySelector("summary");
+      return { open: d.open, ligne: s.checkVisibility() && s.getBoundingClientRect().height >= 44, txt: document.getElementById("tachesResume").textContent }; });
+    const prog = (await page.locator("#progTxt").textContent()).trim();
+    ok("« Où j'en suis » : ouvert à la séance 1, replié à la séance 2 derrière une ligne de 44 px qui dit le même compte que la progression",
+       s1 && !s2.open && s2.ligne && s2.txt.split(" ")[0] === prog.split(" ")[0] && s2.txt.split(" ")[2] === prog.split(" ")[2], s2.txt + " · " + prog);
+    await page.click("#tab-" + avant); await page.waitForTimeout(80);
+  }
   await page.click("#btnSave");
   await page.waitForTimeout(150);
   const cle = await page.evaluate(() => localStorage.getItem("seq_5e_C9.1-C9.3_boite_etiquetee"));

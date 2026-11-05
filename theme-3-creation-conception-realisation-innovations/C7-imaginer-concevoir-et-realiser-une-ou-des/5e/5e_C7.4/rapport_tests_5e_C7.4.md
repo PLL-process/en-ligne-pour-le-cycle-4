@@ -132,3 +132,25 @@ la pile 9 V, 83 % pour les quatre piles AA. Ce n'est pas un réglage, c'est de l
   des caractères et des lignes. C'est écrit dans la page, à l'élève.
 * Ils ne prouvent rien sur ce qui se passe **en classe**. Un test vert dit que la page fait ce
   qu'elle annonce, pas qu'un élève apprend.
+
+## 5. Reprise du 04/11/2026 — la séquence passe à onglets (vague n°311, sur le modèle du pilote 4e_C8.1)
+
+Deux séances à onglets : séance 1 = ouverture + activités 0 et 1 ; séance 2 = activités 2, 3 et 4, réinvestissement, synthèse,
+Bonus, bilan, QCM. L'ouverture, dont l'encadré Sécurité, est repliée dans le volet « 📖 Rappel » dès la séance 2 ; l'en-tête de
+la séance 2 rappelle la très basse tension. Le banc d'énergie sert aux deux séances : un seul nœud, rangé dans la séance
+ouverte, sous son en-tête ; « (volts) » est rendu à la question 1 de l'activité 0, que le banc emportait (n°312). Une barre
+d'outils (« 🖨 Imprimer / PDF ») est posée. La clôture est complétée : un corrigé replié par défi du Bonus (pile : 180 jours ×
+3,50 € = 630 € ; Martinique : le panneau suffit tant qu'il reste environ 4 h d'équivalent plein soleil ; dynamo), et
+« Je me positionne » sur 5e_C3.1 (appui).
+
+- `node tests_regle_311_5e_C7.4.mjs` (relais du thème 3 → banc commun) : **34 / 34**.
+- `node tests_5e_C7.4_sequence.mjs …` : **35 / 35** (34 avant) — les activités de la séance 2 s'ouvrent par leur onglet ; un
+  test ajouté (deux séances, le volet). `node tests_5e_C7.4_qcm.mjs …` : **32 / 32** (inchangé).
+- `controle_squelette.mjs` : 0 défaut (D1 à D6), aucun « à rédiger », aucun signalement.
+- Verts : `controle_impression.mjs`, `controle_verrous.mjs`, `controle_hors_ligne.mjs`, `controle_contraste_liens.mjs`,
+  `controle_impression_papier.py`, `controle_regles_visibles.py`, `controle_liens.py`, `controle_hierarchie.py`,
+  `controle_unites.py`, `controle_sigles.py`, `controle_navigation_seances.py`, `controle_mode_essentiel.py`,
+  `controle_competences.py`. Fiche papier (`banc_papier.py`) : une fiche par séance, sans champ d'écran ni texte pâle.
+- `verif_regles_audit.py` : les mêmes ✘ qu'avant la reprise (vérifié sur `main`), hors périmètre de cette vague.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

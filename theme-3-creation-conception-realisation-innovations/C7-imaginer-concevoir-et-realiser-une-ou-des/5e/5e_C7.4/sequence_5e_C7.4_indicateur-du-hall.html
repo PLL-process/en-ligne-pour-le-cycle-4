@@ -149,6 +149,39 @@ table.releve td input{padding:4px 8px}
 
 /* Billet d'entrée (règle d'or n°26) : sans note ; il renvoie aux rattrapages du bloc « Avant de commencer ». */
 #billet .billet-intro{margin:.2em 0 .6em}#billet .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;border-left:3px solid var(--input-bd,var(--border,#274a8a));border-radius:0;background:none}#billet .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600;color:var(--text)}#billet .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;padding:7px 9px;background:var(--input-bg,rgba(127,127,127,.10));border:2px solid transparent;border-radius:9px}#billet .qcm-option:hover,#billet .qcm-option:focus-within{border-color:var(--hl)}#billet .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}#billet .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;font-weight:400}#billet .billet-retour{margin:.7em 0 0;padding:.55em .8em;border-radius:8px;border-left:4px solid var(--hl);background:rgba(127,127,127,.10)}#billet .billet-retour:empty{display:none}#billet .billet-retour.ok{border-left-color:var(--ok)}#billet .billet-retour.warn{border-left-color:var(--warn)}#billet .billet-retour.ko{border-left-color:var(--err)}#billet .billet-retour p{margin:.2em 0}#billet .billet-retour ul{margin:.3em 0 .2em 1.2em;padding:0}#billet .billet-retour li{margin:.25em 0}#billet .billet-retour a,#billet .billet-retour a:visited{color:var(--hl)}#billet .billet-note{font-size:.9em;opacity:.85}@media print{#billet .billet-retour,#billet .billet-retour a{color:#041a40!important;opacity:1!important}}
+
+/* ── Séances à onglets (squelette n°306) et volet « 📖 Rappel » (règle d'or n°311) — vague du 04/11/2026, sur le modèle
+   du pilote 4e_C8.1. Sans JavaScript (pas de classe js-onglets), la page reste d'un seul tenant : toutes les séances à la
+   suite, ni onglets ni boutons de séance, le volet ouvert et sans bouton. ── */
+.seance-tabs{display:none;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+.js-onglets .seance-tabs{display:flex}
+.seance-tab{flex:1;min-width:150px;min-height:44px;padding:11px 8px;border-radius:10px;background:var(--panel2);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit;line-height:1.3}
+.seance-tab small{display:block;font-weight:400;font-size:.9em;color:var(--sub)}
+.seance-tab.active{background:#1d4e89;color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+.seance-tab.active small{color:#e4eaf5}
+.seance-tab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.seance-tab .done{color:var(--ok)}
+.js-onglets .seance-panel{display:none}
+.js-onglets .seance-panel.active{display:block}
+.seance-tete h2{margin-top:0}
+.question-directrice{color:var(--hl);font-weight:600;margin:.4em 0}
+.page-suivante{display:none;max-width:940px;margin:22px auto 8px;text-align:right}
+.js-onglets .page-suivante{display:block}
+@media print{.page-suivante{display:none!important}}
+.rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}
+.rappel-ouverture>summary{display:none}
+.rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+.rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media print{.rappel-ouverture>summary{display:none!important}}
+.positionnement{margin:8px 0;border:1px solid var(--border);border-radius:10px;padding:8px 12px}
+.positionnement legend{font-size:.9em;color:var(--sub);padding:0 6px}
+.positionnement label{display:inline-block;margin-right:14px}
+.positionnement input[type=radio]{width:auto}
+a.lien-outil,a.lien-outil:visited{color:var(--hl)}   /* règle d'or n°303 : un lien se lit, cliqué ou non */
+/* Un outil n'est pas du décor (n°311) : l'outil qui sert à plusieurs séances est un seul nœud, que le script range
+   dans la séance ouverte, juste sous son en-tête. Hors d'une carte, il garde la largeur des cartes et leur filet mobile. */
+.outil-commun{max-width:940px;margin:0 auto 18px}
+@media(max-width:680px){.outil-commun table{display:block;overflow-x:auto;max-width:100%}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -484,13 +517,24 @@ table.releve td input{padding:4px 8px}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
 
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_5e_C7.4.html">📖 Lexique</a></nav>
 
 <h1>🔌 L'indicateur du hall — de quoi va-t-il vivre&nbsp;?</h1>
-<p class="subtitle">Thème 3 · 5<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<p class="subtitle">🎯 Ta mission : choisir, parmi cinq sources proposées, celle qui fera vivre l'indicateur du hall — et dire sur quel chiffre et sur quelle contrainte tu t'appuies.</p>
+
+<div class="toolbar">
+  <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+</div>
+
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
+
 <div class="badges">
   <span class="badge niveau">Niveau 5e</span>
   <span class="badge code" title="Programme 2024 — 5e_C7.4 : Choisir une source d'énergie parmi plusieurs proposées et une forme d'énergie possible.">5e_C7.4</span>
@@ -650,11 +694,25 @@ table.releve td input{padding:4px 8px}
   });
 })();
 </script>
-<section class="card">
-  <h2>🖐️ Activité 0 — FAIRE d'abord : brancher les cinq sources ⏱ ~15 min</h2>
-  <p>Avant toute explication. Le banc ci-dessous compte ce que ton indicateur consomme,
-  puis regarde ce que la source peut donner. <b>Passe les cinq sources en revue</b> et observe
-  ce que devient la ligne du bas.</p>
+
+</details><!-- /rappel-ouverture -->
+
+<nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" id="tab-s1" data-panel="s1" role="tab" aria-controls="s1" aria-selected="true" type="button">Séance 1<br><small>Brancher, puis nommer</small></button>
+  <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>Relever, choisir, refaire</small></button>
+</nav>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card seance-tete">
+<h2>🧭 Séance 1 — Brancher, puis nommer</h2>
+<p class="question-directrice">Question directrice : que donne chacune des cinq sources à l'indicateur, et sous quelle forme l'énergie y entre-t-elle ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : brancher les cinq sources au banc (activité 0, environ 15 min), puis la forme d'énergie de chaque source (activité 1, environ 20 min). Avec l'ouverture, la séance tient dans 55 min.</p>
+</section>
+
+<!-- Un outil n'est pas du décor (n°311) : le banc d'énergie sert aux deux séances (activités 0 et 2, le verrou des cinq
+     sources). Un seul nœud : le script le range dans la séance ouverte, juste sous son en-tête. -->
+<section class="outil-commun" id="outilBanc" aria-label="Le banc d'énergie">
   <div class="banc">
     <table class="conso">
       <tr><th></th><th>Ce qui consomme</th><th>Courant (en milliampères)</th><th>Par jour</th><th>Énergie</th></tr>
@@ -694,11 +752,18 @@ table.releve td input{padding:4px 8px}
     <p class="detail-src" id="sDetail"></p>
     <p class="detail-src">Courants moyens sous 5 V, valeurs constructeur usuelles. Le rendement d'un régulateur linéaire vaut Vsortie ÷ Ventrée — ce n'est pas un réglage, c'est de la physique : il dissipe la différence en chaleur. Ensoleillement retenu pour la Martinique : 5,3 heures équivalent plein soleil par jour, avec 30 % de pertes de chaîne.</p>
   </div>
+</section>
+
+<section class="card" id="act0">
+  <h2>🖐️ Activité 0 — FAIRE d'abord : brancher les cinq sources ⏱ ~15 min</h2>
+  <p>Avant toute explication. Le banc, juste au-dessus, compte ce que ton indicateur consomme,
+  puis regarde ce que la source peut donner. <b>Passe les cinq sources en revue</b> et observe
+  ce que devient la ligne du bas.</p>
 
   <div class="exo">
 
     <h4>Après avoir essayé les cinq</h4>
-    <p><b>1.</b> Avec la pile 9 V, l'indicateur tient…</p>
+    <p><b>1.</b> Avec la pile 9 V (volts), l'indicateur tient…</p>
     <select id="a0q1">
       <option value="">— je choisis —</option>
       <option>environ une journée</option>
@@ -731,7 +796,7 @@ table.releve td input{padding:4px 8px}
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="act1">
   <h2>🔁 Activité 1 — D'où vient l'énergie, et sous quelle forme ⏱ ~20 min</h2>
   <p><b>Objectif :</b> nommer la forme d'énergie au départ de chaque source.
   <b>Compétence :</b> 5e_C3.1. <b>Production attendue :</b> 5 associations + 1 réponse.</p>
@@ -811,11 +876,23 @@ table.releve td input{padding:4px 8px}
   </div>
 </section>
 
-<section class="card">
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Relever, choisir, refaire ›</button></p>
+
+</div>
+
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<section class="card seance-tete">
+<h2>🧭 Séance 2 — Relever, choisir, refaire</h2>
+<p class="question-directrice">Question directrice : quelle source choisir pour le hall, chiffre à l'appui, et qu'est-ce que le banc ne compte pas ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : relever ce que chaque source donne vraiment (activité 2, environ 20 min), choisir et le dire (activité 3, environ 20 min), ce que le banc ne compte pas (activité 4, environ 10 min), le réinvestissement (environ 10 min), puis la synthèse, le Bonus, le bilan et le renvoi vers le QCM. Avec le matériel (🅰), on ne branche que la très basse tension de l'adaptateur fermé : l'encadré Sécurité est dans le rappel, en haut de page.</p>
+</section>
+
+<section class="card" id="act2">
   <h2>📋 Activité 2 — Relever ce que chaque source donne vraiment ⏱ ~20 min</h2>
   <p><b>Objectif :</b> lire au banc, et écrire ce qu'on a lu. <b>Compétence :</b>
   5e_C7.4. <b>Production attendue :</b> 5 relevés.</p>
-  <p>Remonte au banc. Pour chaque source, relève ce que la ligne <b>« Énergie réellement
+  <p><a class="lien-outil" href="#outilBanc">Remonte au banc</a>. Pour chaque source, relève ce que la ligne <b>« Énergie réellement
   disponible »</b> affiche. Attention : pour le panneau, ce n'est pas la même chose —
   c'est une énergie <b>par jour</b>.</p>
   <div class="exo">
@@ -849,7 +926,7 @@ table.releve td input{padding:4px 8px}
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="act3">
   <h2>⚖️ Activité 3 — Choisir, et le dire ⏱ ~20 min</h2>
   <p><b>Objectif :</b> transformer cinq relevés en une décision. <b>Compétence :</b>
   5e_C7.4. <b>Production attendue :</b> 3 réponses + une justification.</p>
@@ -915,7 +992,7 @@ table.releve td input{padding:4px 8px}
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="act4">
   <h2>🕳️ Activité 4 — Ce que le banc ne compte pas ⏱ ~10 min</h2>
   <p><b>Objectif :</b> savoir ce qu'une mesure ne mesure pas. <b>Compétence :</b>
   5e_C3.1. <b>Production attendue :</b> 4 associations.</p>
@@ -968,7 +1045,7 @@ table.releve td input{padding:4px 8px}
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="reinvestissement">
   <h2>🔄 REFAIRE — Réinvestissement ⏱ ~10 min</h2>
 <p>Le collège veut le <b>même indicateur</b> sur le portail de l'abri à vélos, dans
   la cour. Même boîtier, même DEL, même consommation — <b>mais il n'y a pas de prise
@@ -1023,6 +1100,48 @@ table.releve td input{padding:4px 8px}
 
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+  <details class="correction"><summary>✅ Corrigé du défi pile</summary><div>
+    <p><b>Environ 630 € pour une année scolaire.</b> La pile tient 24 h, une journée d'indicateur : il en faut une par jour
+    d'ouverture. Une année scolaire compte 36 semaines ; à 5 jours d'ouverture par semaine, du lundi au vendredi, cela fait
+    180 jours, donc 180 piles × 3,50 € = <b>630 €</b>.</p>
+    <p><b>L'adaptateur, lui, s'achète une fois</b> : quelques euros à une quinzaine d'euros selon le modèle — regarde le prix
+    de celui du collège. L'électricité qu'il fait passer pèse presque rien : 2,78 Wh (wattheures) par jour, soit environ
+    500 Wh sur l'année, quelques centimes.</p>
+    <p><b>Attendus :</b> le nombre de jours (180, ou 36 semaines × 5 jours) ; le calcul 180 × 3,50 ; la comparaison avec un
+    achat unique ; et le déchet : 180 piles au bac de collecte.</p>
+    <p><b>Erreurs typiques :</b> compter une seule pile pour l'année ; comparer le prix d'une pile à celui de l'adaptateur sans
+    multiplier par le nombre de jours ; compter 365 jours, alors que l'indicateur ne sert que les jours d'ouverture.</p>
+  </div></details>
+  <details class="correction"><summary>✅ Corrigé du défi Martinique</summary><div>
+    <p><b>Le chiffre se cherche, il ne s'invente pas</b> : dans un relevé d'ensoleillement de la Martinique, mois par mois,
+    on lit les heures d'équivalent plein soleil de la saison des pluies, l'hivernage. Note la source et le mois.</p>
+    <p><b>Ce qu'on peut calculer sans lui.</b> La récolte du panneau suit les heures d'équivalent plein soleil : à 5,3 heures,
+    il récolte 3,7 Wh (wattheures) par jour, et l'indicateur en consomme 2,78. Le panneau suffit donc tant qu'il reste au
+    moins 5,3 × 2,78 ÷ 3,7 ≈ <b>4 heures</b> d'équivalent plein soleil par jour. En dessous, il manque de l'énergie chaque
+    jour, et l'accu se vide.</p>
+    <p><b>Ce que ça change pour le portail :</b> le banc compte une moyenne sur l'année, et une semaine de pluie fait des
+    journées bien plus sombres que la moyenne. Le panneau qui suffit avec un tiers de marge peut ne plus suffire en
+    hivernage : il faut alors un panneau plus grand, ou un accu qui tient plusieurs jours sans soleil.</p>
+    <p><b>Attendus :</b> une valeur trouvée, avec sa source ; la comparaison avec le seuil d'environ 4 heures ; une
+    conséquence pour le portail (la marge, l'accu, le panneau).</p>
+    <p><b>Erreurs typiques :</b> confondre les heures de jour (environ 12 h aux Antilles, toute l'année) et les heures
+    d'équivalent plein soleil ; croire qu'une moyenne sur l'année vaut pour chaque jour ; oublier la nuit, pendant laquelle
+    l'accu seul alimente l'indicateur.</p>
+  </div></details>
+  <details class="correction"><summary>✅ Corrigé du défi dynamo</summary><div>
+    <p><b>Là où quelque chose bouge, au moment où l'indicateur doit marcher.</b> Une dynamo transforme une énergie mécanique
+    (un mouvement) en énergie électrique : la chaîne devient mécanique → électrique → lumineuse.</p>
+    <p><b>Exemples qui conviennent :</b> sur un vélo — c'est l'éclairage à dynamo : la roue tourne quand on roule, justement
+    quand il faut de la lumière ; sur un tourniquet ou un portillon qu'on pousse à chaque passage ; sur une lampe à manivelle
+    qu'on tourne avant de s'en servir.</p>
+    <p><b>Pourquoi pas dans le hall :</b> l'indicateur doit dire « libre » ou « occupé » toute la journée, même quand rien ne
+    bouge. Une dynamo ne donne rien à l'arrêt : il faudrait un accu pour garder l'énergie entre deux mouvements.</p>
+    <p><b>Attendus :</b> la forme d'énergie au départ (mécanique) ; un lieu où le mouvement existe au moment du besoin ; la
+    limite : rien quand rien ne bouge.</p>
+    <p><b>Erreurs typiques :</b> « dans le hall, parce qu'il y a du passage » — marcher devant un objet ne fait pas tourner sa
+    dynamo ; « la dynamo fabrique de l'énergie » — elle la transforme ; confondre la dynamo et la pile, qui stocke une
+    énergie chimique.</p>
+  </div></details>
 </section>
 
 <section class="card">
@@ -1033,13 +1152,16 @@ table.releve td input{padding:4px 8px}
   <em>contrainte</em> du lieu&nbsp;?</p>
   <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
   <p style="margin-top:12px"><b>Je me positionne sur 5e_C7.4 :</b></p>
-  <select id="pos">
+<p style="font-size:.9em;color:var(--sub);margin:6px 0">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
+  <select id="pos" aria-label="Je me positionne sur 5e_C7.4">
     <option value="">— je me positionne —</option>
     <option>🔴 Maîtrise insuffisante — je ne sais pas encore lire ce que donne une source</option>
     <option>🟠 Maîtrise fragile — je lis le banc, mais je choisis au feeling</option>
     <option>🟢 Maîtrise satisfaisante — je choisis une source et je cite le chiffre qui l'appuie</option>
     <option>⭐ Très bonne maîtrise — et je nomme la forme d'énergie et la contrainte qui a tranché</option>
   </select>
+  <fieldset class="positionnement"><legend>5e_C3.1 (appui) — repérer, pour un objet technique, les sources et les formes d'énergie</legend>
+<label><input type="radio" name="pos_c31" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c31" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c31" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c31" value="4"> ⭐ très bonne</label></fieldset>
 </section>
 
 <section class="card" style="text-align:center">
@@ -1047,6 +1169,8 @@ table.releve td input{padding:4px 8px}
   <p>30 questions — chaque mauvaise réponse est réfutée une par une — sur les sources, les formes d'énergie, le watt-heure, l'autonomie et ce qu'un banc ne compte pas.</p>
   <a class="btn" href="qcm_5e_C7.4_indicateur-du-hall.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
+
+</div>
 
 <footer>Séquence 5e_C7.4 — <em>L'indicateur du hall</em> · Thème 3 · banc d'énergie original (CC0), valeurs calculées à partir des courants constructeur et des capacités réelles.</footer>
 
@@ -1056,6 +1180,7 @@ table.releve td input{padding:4px 8px}
 const KEY = "seq_5e_C7_4";
 const $ = id => document.getElementById(id);
 window.__exp = window.__exp || {};
+let ongletActif = null;   // la séance affichée (vague n°311, 04/11/2026)
 
 function qmark(e, state){
   let m = e.previousElementSibling;
@@ -1208,22 +1333,82 @@ function save(){
   document.querySelectorAll("input, select, textarea").forEach(e => {
     if(!e.id) return;
     if(e.type === "checkbox" || (e.type === "radio" && e.closest("#billet"))) o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
+  o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
+  o.onglet = ongletActif;
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
 }
 function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
   if(!o) return;
+  ongletActif = o.onglet || null;   // lu avant tout save() (majBanc enregistre)
   Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
   Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  Object.entries(o.radios || {}).forEach(([name, v]) => { const r = document.querySelector('.positionnement input[name="' + name + '"][value="' + v + '"]'); if(r) r.checked = true; });
   window.__exp = o.exp || {};
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r && h.value.trim()) r.textContent = h.value;
+  // l'onglet en cours : un lien direct vers une ancre l'emporte sur lui
+  if(!location.hash && ongletActif && $(ongletActif)) montrerSeance(ongletActif, false);
 }
 document.addEventListener("input", () => {
   save();
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r) r.textContent = h.value.trim() || "—";
 });
+/* Un outil n'est pas du décor (n°311) : le banc d'énergie sert à plusieurs séances. Un seul nœud dans la page, rangé dans la
+   séance ouverte, juste sous son en-tête (question directrice et programme) ; sans JavaScript, il reste à sa place de la séance 1. */
+const OUTIL = $("outilBanc"), SEANCES_OUTIL = ["s1", "s2"];
+function placerOutil(id){
+  if(!OUTIL || !SEANCES_OUTIL.includes(id)) return;
+  const tete = $(id) && $(id).querySelector(".seance-tete");
+  if(tete && tete.nextElementSibling !== OUTIL) tete.insertAdjacentElement("afterend", OUTIL);
+}
+/* ══ Séances à onglets (squelette n°306) — vague du 04/11/2026, sur le modèle du pilote 4e_C8.1 ══
+   L'onglet en cours est mémorisé avec le travail (o.onglet), à part des verrous (__exp). */
+function montrerSeance(id, memoriser){
+  if(!$(id)) return;
+  document.querySelectorAll(".seance-tab").forEach(x => { const on = x.dataset.panel === id; x.classList.toggle("active", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
+  document.querySelectorAll(".seance-panel").forEach(p => p.classList.toggle("active", p.id === id));
+  placerOutil(id);
+  appliqueSeance(id);
+  ongletActif = id;
+  if(memoriser !== false) save();
+}
+document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => montrerSeance(t.dataset.panel)));
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte.
+   Comme au pilote, le volet ne se replie qu'une fois la page chargée (marque data-fermer-au-chargement). */
+function appliqueSeance(idPanneau){
+  const v = $("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", () => { const v = $("ouverture"); if(v){ voletAvantImpression = v.open; v.open = true; } });
+  window.addEventListener("afterprint", () => { const v = $("ouverture"); if(v && voletAvantImpression !== null){ v.open = voletAvantImpression; voletAvantImpression = null; } });
+  const cibleDuLien = () => { let id = ""; try{ id = decodeURIComponent(location.hash.slice(1)); }catch(e){} return id ? $(id) : null; };
+  const ouvrirSeanceDeLAncre = () => {
+    const cible = cibleDuLien(); const pan = cible && cible.closest(".seance-panel");
+    if(!pan || pan.classList.contains("active")) return;
+    montrerSeance(pan.id);
+    setTimeout(() => cible.scrollIntoView({block:"start"}), 60);
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", () => {
+    const v = $("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active") || {}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
+/* Règle d'or n°101 — chaque séance mène explicitement à la suivante */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => { montrerSeance(b.dataset.vers); window.scrollTo({top:0, behavior:"smooth"}); }));
+if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
+
 restore(); majBanc(false);
 })();
 </script>

@@ -115,3 +115,24 @@ lecture du code.
   caractères. C'est écrit dans la page, à l'élève.
 * Ils ne prouvent rien sur ce qui se passe **en classe**. Un test vert dit que la page fait ce
   qu'elle annonce, pas qu'un élève apprend.
+
+## 5. Reprise du 04/11/2026 — la séquence passe à onglets (vague n°311, sur le modèle du pilote 4e_C8.1)
+
+Deux séances à onglets : séance 1 = ouverture + activités 0 et 1 ; séance 2 = activités 2 et 3, réinvestissement, synthèse,
+Bonus, bilan, QCM. L'ouverture, dont l'encadré Sécurité, est repliée dans le volet « 📖 Rappel » dès la séance 2 ; l'en-tête de
+la séance 2 rappelle qu'en 🅰 on rebranche hors tension. L'établi sert aux deux séances : un seul nœud (`#etabli`), rangé dans
+la séance ouverte, sous son en-tête. Une barre d'outils (« 🖨 Imprimer / PDF ») est posée. La clôture est complétée : le corrigé
+replié du Bonus (la phrase exacte de l'établi pour le capteur sur A1, relue sur la page), « Comment j'ai travaillé », et
+« Je me positionne » aux quatre niveaux du livret sur 5e_C7.5 et 5e_C4.5.
+
+- `node tests_regle_311_5e_C7.5.mjs` (relais du thème 3 → banc commun) : **34 / 34**.
+- `node tests_5e_C7.5_sequence.mjs …` : **40 / 40** (39 avant) — les activités de la séance 2 s'ouvrent par leur onglet ; un
+  test ajouté (deux séances, le volet). `node tests_5e_C7.5_qcm.mjs …` : **32 / 32** (inchangé).
+- `controle_squelette.mjs` : 0 défaut (D1 à D6), aucun « à rédiger », aucun signalement.
+- Verts : `controle_impression.mjs`, `controle_verrous.mjs`, `controle_hors_ligne.mjs`, `controle_contraste_liens.mjs`,
+  `controle_impression_papier.py`, `controle_regles_visibles.py`, `controle_liens.py`, `controle_hierarchie.py`,
+  `controle_unites.py`, `controle_sigles.py`, `controle_navigation_seances.py`, `controle_mode_essentiel.py`,
+  `controle_competences.py`. Fiche papier (`banc_papier.py`) : une fiche par séance, sans champ d'écran ni texte pâle.
+- `verif_regles_audit.py` : les mêmes ✘ qu'avant la reprise (vérifié sur `main`), hors périmètre de cette vague.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

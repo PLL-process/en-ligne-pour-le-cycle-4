@@ -47,7 +47,7 @@ Toutes les valeurs viennent de `materiaux.py` : masses, coûts, épaisseurs et v
 | [`rapport_tests_5e_C7.3.md`](rapport_tests_5e_C7.3.md) | la sortie des deux suites, telle quelle |
 | `materiaux.py` · `banc_mat.py` · `tests_5e_C7.3_sequence.mjs` · `tests_5e_C7.3_qcm.mjs` · `reponses_5e_C7.3.json` | de quoi tout rejouer |
 
-**Tests réels : 41/41 sur la séquence, 32/32 sur le QCM.**
+**Tests réels : 42/42 sur la séquence, 32/32 sur le QCM, 34/34 au banc de la règle d'or n°311.**
 
 ## Ancrage
 

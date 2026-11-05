@@ -37,7 +37,7 @@ geste, et pas un tableau, qui montre à quoi servait la fonction manquante.
 | [`rapport_tests_5e_C7.5.md`](rapport_tests_5e_C7.5.md) | la sortie des deux suites, telle quelle |
 | `tests_5e_C7.5_sequence.mjs` · `tests_5e_C7.5_qcm.mjs` · `reponses_5e_C7.5.json` · `etabli.py` | de quoi tout rejouer |
 
-**Tests réels : 39/39 sur la séquence, 32/32 sur le QCM.**
+**Tests réels : 40/40 sur la séquence, 32/32 sur le QCM, 34/34 au banc de la règle d'or n°311.**
 
 ## Sécurité
 

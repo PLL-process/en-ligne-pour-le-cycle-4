@@ -27714,3 +27714,50 @@ impression papier (une fiche par séance), verrous, hors ligne, contraste des li
 unités, sigles, rapports de tests, formulations. Non testé : un vrai téléphone, Firefox, Safari, une impression réelle.
 
 **À valider par Pascal** : l'hypothèse de départ de 5e_C1.3 et la mission de 5e_C1.5, écrites pour cette vague.
+
+
+---
+
+## 04/11/2026 — Vague 5e C7 : 5e_C7.1, 5e_C7.3, 5e_C7.4, 5e_C7.5 passent à onglets, avec le volet « 📖 Rappel » ; « Où j'en suis » se replie dès la séance 2 (thème 3)
+
+*Suite des vagues du pilote 4e_C8.1, avec ce que la vague C8 (#587) a fixé : l'outil commun suit la séance ; sans
+JavaScript, toutes les séances à la suite ; une barre d'outils sur chaque page.*
+
+**Les quatre pages.**
+
+| Page | Séances | L'outil qui suit la séance |
+|---|---|---|
+| 5e_C7.1, mini-projet du hall | S1 : ouverture, activités 0 et 1 · S2 : activité 2, gestes Vittascience, activité 3 · S3 : réinvestissement, clôture (synthèse, Bonus, bilan, TP « Le dé », atelier de planification, QCM) | le simulateur de place |
+| 5e_C7.3, banc de la cour | S1 : ouverture, activités 0 et 1 · S2 : activités 2 et 3, réinvestissement, clôture | le banc des matériaux |
+| 5e_C7.4, indicateur du hall | S1 : ouverture, activités 0 et 1 · S2 : activités 2, 3 et 4, réinvestissement, clôture (chargée : 60 min d'activités) | le banc d'énergie |
+| 5e_C7.5, éclairage du préau | S1 : ouverture, activités 0 et 1 · S2 : activités 2 et 3, réinvestissement, clôture | l'établi Grove |
+
+- Une mission en une phrase remplace le sous-titre « Thème 3 · 5e » des trois pages à deux séances ; dans 5e_C7.1, la
+  mission, l'identité, la barre d'outils, le sélecteur de parcours, la progression et « Où j'en suis » restent hors du
+  volet, comme au pilote.
+- 5e_C7.4 et 5e_C7.5 : l'encadré Sécurité est dans le volet ; l'en-tête de la séance 2 rappelle en une ligne la très basse
+  tension (module débranché, câble USB retiré) et renvoie au volet.
+- 5e_C7.1 : le billet d'entrée passe après l'idée de départ, l'ordre de l'ouverture (n°306). 5e_C7.4 : « (volts) » revient
+  dans la question 1 de l'activité 0, qu'il avait quittée avec le banc (n°312).
+- **La clôture, complétée** : un corrigé par défi du Bonus, chiffres relus sur les bancs de la page (5e_C7.3 : le béton
+  devient le moins cher à 19 € ; 5e_C7.4 : la pile coûte 180 jours × 3,50 € = 630 € par an ; 5e_C7.5 : le courant de
+  68 mA) ; « Comment j'ai travaillé » ; « Je me positionne » aux quatre niveaux du livret (une réponse enregistrée sur
+  l'ancienne échelle se relit au niveau voisin), avec les codes d'appui 5e_C4.4, 5e_C3.1 et 5e_C4.5.
+
+**« 🗺 Où j'en suis » se replie dès la séance 2** (5e_C7.1, et aussi 4e_C8.1, le pilote, et 5e_C9.1, qui ont le même bloc ;
+3e_C7.1 et 4e_C7.1 le reçoivent dans leurs vagues). À la séance 2, la liste des activités poussait les onglets au bas du
+premier écran. Elle est ouverte à la séance 1 ; dès la séance 2, elle se replie derrière une ligne de 44 px, « 🗺 Où j'en
+suis — 2 / 6 activités validées », tenue à jour comme la liste ; un clic la rouvre pour la séance. Sans JavaScript,
+ouverte. La barre de progression ne change pas. À la séance 2, à 1280 px, les onglets passent de 836 à 513 px du haut
+(5e_C7.1), de 884 à 538 (4e_C8.1), de 824 à 541 (5e_C9.1) : ils sont dans le premier écran, avec le titre de la séance.
+À 390 px, ils arrivent juste sous le premier écran (titre, mission, identité, barre d'outils et sélecteur de parcours
+occupent déjà 800 px).
+
+**Contrôles.** Bancs des lots, avant → après : 5e_C7.1 46 → 48, 5e_C7.3 41 → 42, 5e_C7.4 34 → 35, 5e_C7.5 39 → 40,
+4e_C8.1 53 → 54, 5e_C9.1 54 → 55 ; QCM 32 / 32 ; bancs n°311 34 / 34 sur chaque page. `controle_squelette` : 0 défaut et
+plus aucun « à rédiger » sur les quatre pages de la vague. Verts : impression, impression papier (une fiche par séance :
+9 fiches, 28 pages, contre une fiche de 23 pages), verrous, hors ligne, contraste des liens, règles visibles, liens,
+hiérarchie, unités, sigles, navigation entre séances, mode essentiel, compétences, rapports de tests. Non testé : un vrai
+téléphone, Firefox, Safari, une impression réelle.
+
+**À valider par Pascal** : les quatre missions, écrites pour cette vague.

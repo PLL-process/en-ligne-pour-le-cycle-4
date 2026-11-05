@@ -102,6 +102,21 @@ details.correction>div{padding:0 14px 12px}
   .rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}
   .rappel-ouverture>summary{display:none}
   .rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+
+  /* « 🗺 Où j'en suis » (n°30) : ouvert à la séance 1 ; à partir de la séance 2, replié derrière une ligne qui garde le compte
+     des activités validées — un clic le rouvre, et il reste ouvert pendant la séance (04/11/2026). Sans JavaScript, ouvert. */
+  .ou-jen-suis>details>summary{display:none}
+  .ou-jen-suis>details{border:0;border-radius:0;padding:0;margin:0;background:none;box-shadow:none}
+  .ou-jen-suis.replie{padding:0}
+  .ou-jen-suis.replie>details>summary{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 18px;color:var(--head);font-weight:700;border-radius:inherit}
+  .ou-jen-suis.replie>details>summary::after{content:"▾ le détail";margin-left:auto;font-size:.85em;font-weight:600;color:var(--sub)}
+  .ou-jen-suis.replie>details[open]>summary::after{content:"▴ replier"}
+  .ou-jen-suis.replie>details>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+  .ou-jen-suis.replie>details>h2{display:none}
+  .ou-jen-suis.replie>details[open]{padding:0 18px 14px}
+  .ou-jen-suis.replie>details[open]>summary{padding-left:0;padding-right:0}
+  /* à 390 px, la ligne tient sur une seule rangée */
+  @media(max-width:480px){.ou-jen-suis.replie>details>summary{font-size:.9em;padding:8px 12px;gap:4px}.ou-jen-suis.replie>details>summary::after{content:"▾"}.ou-jen-suis.replie>details[open]>summary::after{content:"▴"}}
   .rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
   @media print{.rappel-ouverture>summary{display:none!important}}
   @media (max-width:480px){   /* n°311 : à 390 px, le sélecteur tient sur deux lignes de boutons, sous son intitulé */
@@ -1015,10 +1030,14 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
   <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
 </div>
 
-<section class="card" id="taches">
+<!-- « 🗺 Où j'en suis » (n°30) : ouvert à la séance 1, replié derrière sa ligne de compte à partir de la séance 2 (04/11/2026). -->
+<section class="card ou-jen-suis pp-ecran" id="taches">
+<details id="tachesVolet" open>
+<summary>🗺 Où j'en suis — <span id="tachesResume">0 / 6 activités validées</span></summary>
 <h2>🗺 Où j'en suis — les 6 activités de cette séquence</h2>
 <p>Chaque activité validée se colore ici. Rien ne se perd si tu t'arrêtes en route.</p>
 <div class="taches-bandeau" id="tachesBandeau"></div>
+</details>
 </section>
 
 <nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
@@ -1497,6 +1516,10 @@ document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click"
 function appliqueSeance(idPanneau){
   const v = $("ouverture"); if(!v) return;
   const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  // « 🗺 Où j'en suis » : ouvert à la séance 1, replié dès la séance 2 — à chaque changement de séance seulement, pour qu'un
+  // élève qui l'a rouvert le garde ouvert pendant sa séance (04/11/2026)
+  const oj = document.getElementById("taches"), ojv = document.getElementById("tachesVolet");
+  if(oj && ojv && oj.dataset.seance !== String(idPanneau)){ oj.dataset.seance = String(idPanneau); oj.classList.toggle("replie", n >= 2); ojv.open = n < 2; }
   v.classList.toggle("volet", n >= 2);
   v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
   if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
@@ -1533,6 +1556,8 @@ const TACHES = [
   {n:"5", libelle:"REFAIRE — un protocole sur un nouvel objet"}
 ];
 function majTaches(){
+  const rs = $("tachesResume");   // la ligne du volet replié : le même compte que la liste
+  if(rs) rs.textContent = TACHES.filter(t => par.s.includes(t.n)).length + " / " + TACHES.length + " activités validées";
   const c = $("tachesBandeau"); if(!c) return;
   c.innerHTML = TACHES.map(t => {
     const fait = par.s.includes(t.n);

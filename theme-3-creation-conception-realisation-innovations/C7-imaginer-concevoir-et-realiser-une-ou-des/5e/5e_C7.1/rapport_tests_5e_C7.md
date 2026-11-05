@@ -101,3 +101,40 @@ en `?mode=mixed` ; plus de version 🅰 (ni bouton, ni carte, ni « Avec le mat�
 (34 / 37), ne viennent pas de ce lot, et sont traités dans un lot « bancs » dédié. Ce que la fiche de remise annonçait (« 37 / 37 ») n'était donc plus exact avant ce lot.
 
 Le contenu de Vittascience (blocs, Python, réouverture du fichier) a été mesuré à la main avec les programmes exacts de l'activité 3b et n'est pas rejoué ici : service externe.
+
+## 7. Reprise du 04/11/2026 — la séquence passe à onglets (vague n°311, sur le modèle du pilote 4e_C8.1)
+
+La page était d'un seul tenant. Elle a maintenant trois séances à onglets (squelette n°306) et le volet « 📖 Rappel » dès la
+séance 2 (n°311) : séance 1 = ouverture + activités 0 et 1 ; séance 2 = activité 2, les gestes de Vittascience, activité 3 ;
+séance 3 = réinvestissement, synthèse, Bonus, bilan, TP « Le dé », atelier de planification, QCM. Le billet d'entrée rejoint
+sa place du squelette (après l'idée de départ). Le simulateur de place sert aux séances 1 et 2 : un seul nœud, rangé dans la
+séance ouverte, sous son en-tête. La clôture est complétée : un corrigé replié par défi du Bonus, le retour à l'idée de départ,
+« Comment j'ai travaillé » et « Je me positionne » sur 5e_C7.1, C8.3 et C9.3 aux quatre niveaux du livret. La page ne portait
+ni la chaîne `rappel-ouverture` ni d'exercice incrusté des ateliers.
+
+- `node tests_regle_311_5e_C7.1.mjs` (relais du thème 3 → banc commun) : **34 / 34**.
+- `node tests_5e_C7.mjs .` : **47 / 47** (46 avant) — les durées se lisent dans toute la page, pas seulement à l'écran ;
+  l'activité 3 et la grille s'ouvrent par l'onglet de la séance 2 ; un test ajouté (trois séances, le volet, le simulateur
+  dans la séance ouverte).
+- `controle_squelette.mjs` : 0 défaut (D1 à D6), aucun « à rédiger », aucun signalement.
+- Verts : `controle_impression.mjs`, `controle_verrous.mjs`, `controle_hors_ligne.mjs`, `controle_contraste_liens.mjs`,
+  `controle_impression_papier.py`, `controle_regles_visibles.py`, `controle_liens.py`, `controle_hierarchie.py`,
+  `controle_unites.py`, `controle_sigles.py`, `controle_navigation_seances.py`, `controle_mode_essentiel.py`,
+  `controle_competences.py`. Fiche papier (`banc_papier.py`) : une fiche par séance, sans champ d'écran ni texte pâle.
+- `verif_regles_audit.py` : les mêmes ✘ qu'avant la reprise (vérifié sur `main`), hors périmètre de cette vague.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## Reprise du 04/11/2026 — « 🗺 Où j'en suis » se replie à partir de la séance 2
+
+La liste des activités poussait les onglets hors du premier écran dès la séance 2. Le bloc est maintenant un `<details>` :
+ouvert à la séance 1 (rien ne change), replié dès la séance 2 derrière une ligne de 44 px qui garde le compte
+(« 🗺 Où j'en suis — 2 / 6 activités validées », mis à jour avec la liste). Un clic ou le clavier le rouvre ; il reste ouvert
+pendant la séance et se replie au changement de séance. Sans JavaScript, il est ouvert. La barre de progression ne change pas.
+À la séance 2, en haut de page : onglets à 513 px et titre de la séance à 604 px à 1280 px (écran de 900 px) ; à 390 px,
+les onglets commencent à 866 px pour un écran de 844 px (avant : 1377 px).
+
+- `node tests_regle_311_5e_C7.1.mjs` : **34 / 34** ; `node tests_5e_C7.mjs .` : **48 / 48** (47 / 47 avant, un test ajouté : ouvert à la séance 1, replié
+  à la séance 2, même compte que la progression).
+- `controle_squelette` : 0 défaut, aucun « à rédiger ». Verts : `controle_impression`, `controle_verrous`, `controle_impression_papier`, fiche papier
+  (`banc_papier.py`), `controle_hors_ligne`, `controle_contraste_liens`, `controle_unites`, `controle_hierarchie`, `controle_sigles`.
