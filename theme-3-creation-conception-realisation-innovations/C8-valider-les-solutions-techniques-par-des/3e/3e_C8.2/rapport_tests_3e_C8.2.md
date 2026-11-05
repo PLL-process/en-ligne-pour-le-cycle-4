@@ -221,3 +221,25 @@ la barre pleine acier est 1<sup>re</sup> en traction et 4<sup>e</sup> en flexion
   de relecture croisée en binôme existe.
 * Ils ne prouvent rien sur ce qui se passe **en classe**. Un test vert dit que la page fait
   ce qu'elle annonce, pas qu'un élève apprend.
+
+## Reprise du 04/11/2026 — les quatre séances passent à onglets (vague de la règle d'or n°311)
+
+Le découpage du 25/10/2026 est gardé ; chaque en-tête « 🗓 Séance N » devient la tête de son onglet, chaque bouton de fin
+de séance ouvre la suivante (et mène toujours à son en-tête). L'ouverture est repliée dans le volet « 📖 Rappel » dès la
+séance 2. Le banc d'essai, qui sert aux séances 1 et 3, sort de l'activité 0 ; le script des onglets le place dans la séance
+ouverte, juste après son en-tête ; le
+protocole rédigé à la séance 2 est recopié sous l'en-tête de la séance 3. Clôture complétée : un corrigé par défi du
+Bonus, « Comment j'ai travaillé », « Je me positionne » sur 3e_C3.4.
+
+- `node tests_regle_311_3e_C8.2.mjs` : l'outil suit la séance 12 / 12, puis relais 8 / 8 et banc commun **34 / 34**.
+- `node tests_3e_C8.2_sequence.mjs "$PWD/sequence_3e_C8.2_mat-de-la-station.html"` : **44 / 44**, comme avant ; le banc
+  ouvre l'onglet de la séance avant d'y agir (activités 2 à 5, boutons de fin de séance). `tests_3e_C8.2_qcm.mjs` : 32 / 32.
+
+Contrôles du dépôt, sur ce dossier ou sur tout le dépôt : `controle_squelette` 0 défaut (D1 à D6), aucun « à rédiger »,
+aucun signalement ; `controle_impression` (0 page refusée), `controle_verrous`, `controle_hors_ligne`,
+`controle_contraste_liens`, `controle_regles_visibles`, `controle_liens`, `controle_navigation_seances`,
+`controle_hierarchie`, `controle_unites`, `controle_sigles`, `controle_impression_papier` : verts. `banc_papier.py` :
+4 fiches, 10 pages, une séance par fiche, 0 texte pâle, 0 champ d'écran imprimé. `verif_regles_audit.py` : les mêmes ✘ qu'avant
+(n°29, 30, 31, 34, 300), hors périmètre de cette vague.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

@@ -27569,3 +27569,55 @@ longueurs : verts. Non testé : un vrai téléphone, Firefox, Safari, une impres
 
 **Reste**, hors de ce lot : les tableaux 3e des exigences (exercices 4 et 5) et le FAST n'ont qu'un indice par case,
 pas un retour par option.
+
+
+---
+
+## 04/11/2026 — Vague C8 : 3e_C8.1, 3e_C8.2, 5e_C8.1, 5e_C8.2 passent à onglets, avec le volet « 📖 Rappel » (thème 3)
+
+*Pascal, le 04/11/2026 : « Oui continue, tu as carte blanche » — pris comme la validation du pilote 4e_C8.1 (entrée du
+31/10/2026), qui attendait son avis avant les vagues. Première vague, sur la famille du pilote.*
+
+**Les quatre pages** sont découpées en séances à onglets sur le modèle du pilote : les blocs sont déplacés, jamais
+réécrits (un script compare les lignes avant et après) ; l'ouverture (badges, « Avant de commencer », situation,
+problématique, hypothèse, cahier des charges, trois façons, billet d'entrée) est complète à la séance 1 et repliée dans
+le volet dès la séance 2 ; la clôture entière est dans le dernier panneau.
+
+| Page | Séances |
+|---|---|
+| 3e_C8.1 | S1 : ouverture + activité 1 · S2 : activités 2 et 3 (environ 60 min) · S3 : activité 4, réinvestissement, clôture |
+| 3e_C8.2 | les quatre séances déjà écrites le 25/10 (40, 35, 50, 35 min) ; le protocole de la séance 2 est recopié en tête de la séance 3, qui l'exécute |
+| 5e_C8.1 | S1 : ouverture + activités 1 et 2 · S2 : activités 3 et 4, réinvestissement, clôture |
+| 5e_C8.2 | S1 : ouverture + activités 0, 1 et 2 (environ 60 min) · S2 : activités 3 et 4, réinvestissement, clôture |
+
+**Ce que la vague ajoute au modèle du pilote** (et que les vagues C7 reprennent) :
+- **L'outil suit la séance.** Le simulateur (3e_C8.1, 5e_C8.1) ou le banc d'essai (3e_C8.2), qui sert à plusieurs
+  séances, reste un seul nœud ; le script des onglets le place dans le panneau de la séance ouverte, juste après son
+  en-tête. À la séance 2 : titre, mission, barre d'outils, volet replié, onglets, en-tête de la séance, l'outil, puis les
+  activités ; à 1280 px, onglets et en-tête tiennent dans le premier écran. L'état de l'outil est gardé au déplacement.
+- **Sans JavaScript**, toutes les séances s'affichent à la suite, l'outil à sa place : rien n'est caché (le pilote ne
+  montrait que la séance 1).
+- **Une barre d'outils** (« 🖨 Imprimer / PDF ») sur chaque page : aucune n'en avait, et le banc n°311 l'exige.
+- Sur 3e_C8.2 et 5e_C8.2, le sous-titre « Thème 3 · … » devient une phrase de mission, comme au pilote.
+
+**La clôture, complétée** : un corrigé replié par défi du Bonus (12 corrigés), avec le calcul quand il aide l'élève
+(platine : 2 000 × tan 0,5° ≈ 17 mm ; hauban ≈ 70 N·m au point d'attache contre 204 N·m au pied ; crochet : 5,65 MPa,
+coefficient du bois ≈ 4,4…), chaque valeur recalculée à partir des données de la page et du code du simulateur ou du
+banc ; aucun corrigé n'affirme ce que montrerait une application extérieure. « Comment j'ai travaillé » et « Je me
+positionne » aux quatre niveaux du livret scolaire, sur les codes de la séquence et ses codes d'appui (3e_C3.4,
+5e_C3.1).
+
+**À savoir.** Deux séances sont un peu pleines : la séance 2 de 3e_C8.1 (60 min d'activités pour 55) et la séance 1 de
+5e_C8.2 (50 min plus l'ouverture) ; on ne pouvait faire mieux sans couper une activité ou ajouter une séance.
+
+**4e_C8.1** est réincrustée avec le kit des ateliers corrigé le même jour (PR #586) : banc du lot 53 / 53, banc n°311
+34 / 34.
+
+**Contrôles.** Bancs des lots, avant = après : 3e_C8.1 62 / 62, 3e_C8.2 44 / 44, 5e_C8.1 39 / 39, 5e_C8.2 24 / 24, QCM
+32 / 32 chacun (les bancs ouvrent la séance qui porte chaque champ, comme l'élève). Bancs n°311 : 34 / 34 au banc
+commun et 8 / 8 au relais pour chaque page, plus 12 / 12 « l'outil suit la séance » sur trois pages. `controle_squelette`
+: 0 défaut, aucun « à rédiger ». Verts : impression, impression papier (une séance par fiche), verrous, hors ligne,
+contraste des liens, règles visibles, liens, navigation entre séances, formulations, unités, hiérarchie, sigles. Non
+testé : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+**Reste** : les vagues C7 (14 pages), puis 5e_C1.3 et 5e_C1.5 au thème 1, puis D6 obligatoire.

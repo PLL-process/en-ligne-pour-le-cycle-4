@@ -164,6 +164,38 @@ table.releve td.num{width:34%}
 
 /* Billet d'entrée (règle d'or n°26) : sans note ; il renvoie aux rattrapages du bloc « Avant de commencer ». */
 #billet .billet-intro{margin:.2em 0 .6em}#billet .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;border-left:3px solid var(--input-bd,var(--border,#274a8a));border-radius:0;background:none}#billet .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600;color:var(--text)}#billet .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;padding:7px 9px;background:var(--input-bg,rgba(127,127,127,.10));border:2px solid transparent;border-radius:9px}#billet .qcm-option:hover,#billet .qcm-option:focus-within{border-color:var(--hl)}#billet .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}#billet .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;font-weight:400}#billet .billet-retour{margin:.7em 0 0;padding:.55em .8em;border-radius:8px;border-left:4px solid var(--hl);background:rgba(127,127,127,.10)}#billet .billet-retour:empty{display:none}#billet .billet-retour.ok{border-left-color:var(--ok)}#billet .billet-retour.warn{border-left-color:var(--warn)}#billet .billet-retour.ko{border-left-color:var(--err)}#billet .billet-retour p{margin:.2em 0}#billet .billet-retour ul{margin:.3em 0 .2em 1.2em;padding:0}#billet .billet-retour li{margin:.25em 0}#billet .billet-retour a,#billet .billet-retour a:visited{color:var(--hl)}#billet .billet-note{font-size:.9em;opacity:.85}@media print{#billet .billet-retour,#billet .billet-retour a{color:#041a40!important;opacity:1!important}}
+
+/* ── Séances à onglets (squelette n°306) et volet « 📖 Rappel » (règle d'or n°311) — vague du 04/11/2026, sur le modèle
+   du pilote 4e_C8.1. Sans JavaScript (pas de classe js-onglets), la page reste d'un seul tenant : toutes les séances à la
+   suite, ni onglets ni boutons de séance, le volet ouvert et sans bouton. ── */
+.seance-tabs{display:none;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+.js-onglets .seance-tabs{display:flex}
+.seance-tab{flex:1;min-width:150px;min-height:44px;padding:11px 8px;border-radius:10px;background:var(--panel2);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit;line-height:1.3}
+.seance-tab small{display:block;font-weight:400;font-size:.9em;color:var(--sub)}
+.seance-tab.active{background:#1d4e89;color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+.seance-tab.active small{color:#e4eaf5}
+.seance-tab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.js-onglets .seance-panel{display:none}
+.js-onglets .seance-panel.active{display:block}
+.seance-tete h2{margin-top:0}
+.question-directrice{color:var(--hl);font-weight:600;margin:.4em 0}
+.page-suivante{display:none;max-width:940px;margin:22px auto 8px;text-align:right}
+.js-onglets .page-suivante{display:block}
+@media print{.page-suivante{display:none!important}}
+.rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}
+.rappel-ouverture>summary{display:none}
+.rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+.rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media print{.rappel-ouverture>summary{display:none!important}}
+.positionnement{margin:8px 0;border:1px solid var(--border);border-radius:10px;padding:8px 12px}
+.positionnement legend{font-size:.9em;color:var(--sub);padding:0 6px}
+.positionnement label{display:inline-block;margin-right:14px}
+.positionnement input[type=radio]{width:auto}
+.simu-carte{max-width:940px;margin:0 auto 18px}   /* l'outil hors des séances : le simulateur garde son propre cadre */
+@media(max-width:680px){.simu-carte table{display:block;overflow-x:auto;max-width:100%}}   /* comme les tableaux des cartes (filet mobile) */
+@media print{#s2 #bancCard,#s4 #bancCard{display:none!important}}   /* le banc ne sert pas aux séances 2 et 4 : pas sur leur fiche */
+.rappel-proto{margin:8px 0 0;padding:10px 12px;border-left:4px solid var(--hl);background:rgba(97,218,251,.06);border-radius:0 8px 8px 0}
+.rappel-proto pre{white-space:pre-wrap;margin:6px 0 0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88em}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -499,13 +531,24 @@ table.releve td.num{width:34%}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
 
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_3e_C8.2.html">📖 Lexique</a></nav>
 
 <h1>🗼 Le mât de la station — proposer un protocole</h1>
-<p class="subtitle">Thème 3 · 3<sup>e</sup> — Valider les solutions techniques par des essais</p>
+<p class="subtitle">Ta mission : écrire toi-même le protocole qui dira de quoi faire le mât de la station, l'exécuter au banc, et signer l'avis pour la mairie.</p>
+
+<div class="toolbar">
+  <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+</div>
+
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
+
 <div class="badges">
   <span class="badge niveau">Niveau 3e</span>
   <span class="badge code" title="Programme 2024 — 3e_C8.2 : Proposer un protocole de test pour valider la tenue mécanique d'un matériau.">3e_C8.2</span>
@@ -596,12 +639,6 @@ table.releve td.num{width:34%}
   </ul>
 </section>
 
-<section class="card seance-entete" id="seance-1" aria-labelledby="seance-1-titre">
-  <h2 id="seance-1-titre">🗓 Séance 1 — Le protocole de 5<sup>e</sup> ne suffit pas</h2>
-  <p class="seance-duree">Durée&nbsp;: 55 minutes · la situation, ton idée de départ, puis les activités 0 et 1.</p>
-  <p><b>La question de la séance&nbsp;:</b> l'essai de traction de 5<sup>e</sup>, appliqué sans erreur, désigne-t-il le mât qu'il faut à la mairie&nbsp;?</p>
-</section>
-
 <!-- Billet d'entrée (n°26) : en tête de la séance 1, comme le pilote 3e_C1.1. Une question par ligne du bloc
      « Avant de commencer » ; « Voir où j'en suis » renvoie aux rattrapages de ces lignes. -->
 <section class="card" id="billet" aria-labelledby="billet-t">
@@ -675,12 +712,15 @@ table.releve td.num{width:34%}
   });
 })();
 </script>
-<section class="card">
-  <h2>🖐️ Activité 0 — FAIRE d'abord : casser trois mâts ⏱ ~15 min</h2>
-  <p>Avant toute explication. Le banc tient un mât par le pied et pousse en tête, comme le
-  vent. Choisis un profilé, augmente la poussée, regarde <em>où</em> et <em>quand</em> il cède.
-  <b>Casse au moins trois profilés différents</b> avant de continuer.</p>
 
+</details><!-- /rappel-ouverture -->
+
+<!-- Un outil n'est pas du décor (n°311) : le banc d'essai sert aux séances 1 (activités 0 et 1) et 3 (activité 3).
+     Il quitte l'activité 0. Sans JavaScript, il reste ici, au-dessus des séances ; avec, le script des onglets le place
+     dans la séance ouverte, juste après son en-tête. À l'impression, il ne sort qu'avec les séances 1 et 3. -->
+<section class="card" id="bancCard" aria-labelledby="banc-t">
+  <h2 id="banc-t">🧪 Le banc d'essai du mât — il sert aux séances 1 et 3</h2>
+  <p style="font-size:.88em;color:var(--sub);margin:0 0 8px">La charge s'y lit en N (newtons) en flexion, en kN (kilonewtons) en traction.</p>
   <div class="banc" id="banc">
     <div>
       <svg viewBox="0 0 220 260" role="img" aria-labelledby="bancTitre bancDesc">
@@ -748,6 +788,30 @@ table.releve td.num{width:34%}
         plie de 90 cm sur 2 m est hors de question, inutile de discuter le chiffre.</p>
     </div>
   </div>
+</section>
+
+<nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" id="tab-s1" data-panel="s1" role="tab" aria-controls="s1" aria-selected="true" type="button">Séance 1<br><small>Le protocole de 5<sup>e</sup> ne suffit pas</small></button>
+  <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>Proposer ton protocole</small></button>
+  <button class="seance-tab" id="tab-s3" data-panel="s3" role="tab" aria-controls="s3" aria-selected="false" type="button">Séance 3<br><small>L'exécuter, voir ce qu'il ne voit pas</small></button>
+  <button class="seance-tab" id="tab-s4" data-panel="s4" role="tab" aria-controls="s4" aria-selected="false" type="button">Séance 4<br><small>Décider, et signer l'avis</small></button>
+</nav>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card seance-entete" id="seance-1" aria-labelledby="seance-1-titre">
+  <h2 id="seance-1-titre">🗓 Séance 1 — Le protocole de 5<sup>e</sup> ne suffit pas</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · la situation, ton idée de départ, puis les activités 0 et 1.</p>
+  <p><b>La question de la séance&nbsp;:</b> l'essai de traction de 5<sup>e</sup>, appliqué sans erreur, désigne-t-il le mât qu'il faut à la mairie&nbsp;?</p>
+</section>
+
+<section class="card" id="act0">
+  <h2>🖐️ Activité 0 — FAIRE d'abord : casser trois mâts ⏱ ~15 min</h2>
+  <p>Avant toute explication. Le banc tient un mât par le pied et pousse en tête, comme le
+  vent. Choisis un profilé, augmente la poussée, regarde <em>où</em> et <em>quand</em> il cède.
+  <b>Casse au moins trois profilés différents</b> avant de continuer.</p>
+
+  <p>Le banc est <a href="#banc">plus haut</a> ; il resservira à la séance 3.</p>
 
   <div class="exo">
     <h4>Après avoir cassé trois profilés</h4>
@@ -874,9 +938,12 @@ table.releve td.num{width:34%}
 
 <nav class="fin-seance" aria-label="Fin de la séance 1">
   <p>Fin de la séance 1. La suite, la prochaine fois&nbsp;:</p>
-  <a class="btn vers-seance" href="#seance-2">➡ Séance 2 — Proposer ton protocole</a>
+  <a class="btn vers-seance" href="#seance-2" data-vers="s2">➡ Séance 2 — Proposer ton protocole</a>
 </nav>
+</div>
 
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
 <section class="card seance-entete" id="seance-2" aria-labelledby="seance-2-titre">
   <h2 id="seance-2-titre">🗓 Séance 2 — Proposer ton protocole</h2>
   <p class="seance-duree">Durée&nbsp;: 55 minutes · activité 2.</p>
@@ -992,14 +1059,18 @@ table.releve td.num{width:34%}
 
 <nav class="fin-seance" aria-label="Fin de la séance 2">
   <p>Fin de la séance 2. La suite, la prochaine fois&nbsp;:</p>
-  <a class="btn vers-seance" href="#seance-3">➡ Séance 3 — L'exécuter, et voir ce qu'il ne voit pas</a>
+  <a class="btn vers-seance" href="#seance-3" data-vers="s3">➡ Séance 3 — L'exécuter, et voir ce qu'il ne voit pas</a>
 </nav>
+</div>
 
+<!-- ══════════════════ SÉANCE 3 ══════════════════ -->
+<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
 <section class="card seance-entete" id="seance-3" aria-labelledby="seance-3-titre">
   <h2 id="seance-3-titre">🗓 Séance 3 — L'exécuter, et voir ce qu'il ne voit pas</h2>
   <p class="seance-duree">Durée&nbsp;: 55 minutes · activités 3 et 4.</p>
   <p><b>La question de la séance&nbsp;:</b> ton protocole, exécuté ligne par ligne, désigne-t-il un mât qui tient les deux critères — et que ne pourra-t-il jamais voir&nbsp;?</p>
-  <p>Garde sous les yeux <a href="#a2proto">ton protocole rédigé</a> (activité 2)&nbsp;; le banc d'essai est dans l'activité 0, <a href="#banc">plus haut</a>.</p>
+  <p>Garde sous les yeux <a href="#a2proto">ton protocole rédigé</a> (activité 2, séance 2 — il est recopié ci-dessous dès que tu l'as écrit)&nbsp;; le <a href="#banc">banc d'essai</a> t'attend, en mode ⟂ flexion.</p>
+  <div class="rappel-proto" id="rappelProto" hidden></div>
 </section>
 
 <section class="card">
@@ -1112,14 +1183,17 @@ table.releve td.num{width:34%}
 
 <nav class="fin-seance" aria-label="Fin de la séance 3">
   <p>Fin de la séance 3. La suite, la prochaine fois&nbsp;:</p>
-  <a class="btn vers-seance" href="#seance-4">➡ Séance 4 — Décider, et signer l'avis</a>
+  <a class="btn vers-seance" href="#seance-4" data-vers="s4">➡ Séance 4 — Décider, et signer l'avis</a>
 </nav>
+</div>
 
+<!-- ══════════════════ SÉANCE 4 ══════════════════ -->
+<div class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4">
 <section class="card seance-entete" id="seance-4" aria-labelledby="seance-4-titre">
   <h2 id="seance-4-titre">🗓 Séance 4 — Décider, et signer l'avis</h2>
   <p class="seance-duree">Durée&nbsp;: 55 minutes · activité 5 et REFAIRE, puis le bilan de la séquence.</p>
   <p><b>La question de la séance&nbsp;:</b> quel avis peut-on signer devant la mairie, et que faut-il y écrire de ce que l'essai n'a pas vérifié&nbsp;?</p>
-  <p>L'avis s'appuie sur tes dix relevés de l'activité 3, plus haut. S'ils ont disparu (autre ordinateur, sauvegarde effacée), la correction de l'activité 3 les donne.</p>
+  <p>L'avis s'appuie sur tes dix relevés de l'activité 3, à la séance 3. S'ils ont disparu (autre ordinateur, sauvegarde effacée), la correction de l'activité 3 les donne.</p>
 </section>
 
 <section class="card">
@@ -1239,6 +1313,24 @@ table.releve td.num{width:34%}
   écris ce que cela t'apprend sur le choix d'un instrument.</p>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+  <details class="correction"><summary>✅ Corrigé du défi forme — deux tubes de même forme</summary><div>
+    <p><b>Ce que la comparaison mesure : la raideur de la matière, et elle seule.</b> Même forme, même hauteur, même charge de 100 N (newtons) : dans la formule de la flèche, f = F·L³/(3·E·I), seul E change — le module d'élasticité, la raideur de la matière. Le calcul : 723,8 mm ÷ 31,0 mm ≈ 23,3 ; l'aluminium est environ 23 fois plus raide que le PVC. C'est bien le rapport des modules que le banc utilise : 70 000 MPa (mégapascals) ÷ 3 000 MPa ≈ 23,3.</p>
+    <p><b>Pourquoi c'est le seul couple :</b> pour tous les autres couples, la forme <em>et</em> la matière changent en même temps. Deux choses varient : on ne peut pas dire laquelle cause l'écart. Ici, une seule chose change.</p>
+    <p><b>Attendus :</b> « même forme, donc seule la matière change » ; « l'écart des flèches mesure la raideur de la matière » ; la règle « une seule chose change entre deux essais ».</p>
+    <p><b>Erreurs typiques :</b> dire que la comparaison mesure « la solidité » — la rupture (467 N contre 128 N) dépend de la résistance de la matière, pas de sa raideur ; choisir la barre pleine et le tube galvanisé « parce que c'est le même acier » — ce couple-là, au contraire, garde la matière et change la forme : il mesure l'effet de la forme. Et 723,8 mm sur 2 m sort du domaine élastique : le nombre est un ordre de grandeur, le rapport reste juste.</p>
+  </div></details>
+  <details class="correction"><summary>✅ Corrigé du défi Martinique — la tenue à l'air salé</summary><div>
+    <p><b>Un classement attendu, justifié :</b> le tube PVC (ne rouille pas ; c'est le soleil qui le vieillit, pas le sel) ; le tube aluminium (sa couche d'oxyde le protège, même si l'air marin peut le piquer) ; le tube acier galvanisé (protégé tant que le zinc n'est pas percé — les trous de fixation rouillent en premier) ; la poutre bois (elle ne rouille pas, mais l'humidité la fait gonfler et pourrir si elle n'est pas traitée) ; la barre acier nue, dernière : elle rouille vite. Un autre ordre est accepté s'il est justifié.</p>
+    <p><b>Le protocole de cet essai-là :</b> des éprouvettes identiques des cinq matériaux, plus une de chaque gardée au sec (le témoin) ; une exposition décidée d'avance, la même pour toutes — par exemple, une pulvérisation d'eau salée à 35 g de sel par litre, comme l'eau de mer, matin et soir, pendant 4 semaines. On mesure chaque semaine : l'aspect (photo, surface rouillée), la masse sur la même balance ; à la fin, on refait l'essai de flexion pour voir si la tenue a baissé.</p>
+    <p><b>Comment sait-on qu'on a fini :</b> la durée est écrite avant de commencer — on ne s'arrête pas quand le résultat plaît. L'industrie fait cet essai dans une enceinte à brouillard salin, avec une durée fixée d'avance.</p>
+    <p><b>Erreurs typiques :</b> pas d'éprouvette témoin ; une durée changée en cours d'essai ; juger « à l'œil » sans critère écrit ; un essai d'un jour ; oublier de refaire l'essai mécanique après l'exposition — ce qui compte pour le mât, c'est qu'il tienne encore.</p>
+  </div></details>
+  <details class="correction"><summary>✅ Corrigé du défi laboratoire — l'instrument propose-t-il la flexion ?</summary><div>
+    <p><b>Ce que dit la page :</b> l'encadré « Trois façons de vivre la séquence » indique que le laboratoire des matériaux fait la traction et la compression, pas la flexion. Le corrigé ne peut pas dire ce que montrera ta version : c'est toi qui le constates.</p>
+    <p><b>La démarche attendue :</b> installer l'application, chercher la liste de ses essais, et noter ce que tu as vu — le nom de l'essai de flexion s'il existe, ou son absence. Puis une phrase : on choisit l'instrument d'après la question, et la question de la mairie est le vent qui pousse le mât en tête, donc la flexion. Un instrument qui ne reproduit pas cette sollicitation ne peut pas valider le mât, même s'il mesure juste.</p>
+    <p><b>S'il propose la flexion :</b> écris dans quelles conditions (forme de l'éprouvette, point d'appui, charge) et dis si elles ressemblent à celles du mât ; sinon, ses chiffres ne se comparent pas à ceux du banc de cette page.</p>
+    <p><b>Erreurs typiques :</b> utiliser quand même la traction parce qu'elle est disponible — c'est exactement l'erreur de l'activité 1 ; recopier une réponse sans avoir ouvert l'application ; conclure que l'instrument est « mauvais » : il répond juste, à d'autres questions.</p>
+  </div></details>
 </section>
 
 <section class="card">
@@ -1248,6 +1340,9 @@ table.releve td.num{width:34%}
   désignait le mauvais mât. Qu'est-ce qui, dans ton protocole d'aujourd'hui, empêche cette
   erreur&nbsp;?</p>
   <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">où as-tu hésité en écrivant ton protocole, et qu'est-ce qui t'a surpris quand tu l'as exécuté au banc ?</label></p>
+  <textarea id="bilanMeta" rows="2" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…"></textarea>
+  <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
   <p style="margin-top:12px"><b>Je me positionne sur 3e_C8.2 — proposer un protocole de test :</b></p>
   <select id="pos">
     <option value="">— je me positionne —</option>
@@ -1256,6 +1351,8 @@ table.releve td.num{width:34%}
     <option>🟢 Maîtrise satisfaisante — je choisis la sollicitation, les seuils et la règle de décision</option>
     <option>⭐ Très bonne maîtrise — et je sais dire ce que mon protocole ne prouve pas</option>
   </select>
+  <fieldset class="positionnement"><legend>Je me positionne sur 3e_C3.4 (appui) — définir et mettre en œuvre un protocole pour mesurer une caractéristique, une performance d’un objet ou d’un système technique</legend>
+<label><input type="radio" name="pos_c34" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c34" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c34" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c34" value="4"> ⭐ très bonne</label></fieldset>
 </section>
 
 <section class="card" style="text-align:center">
@@ -1265,6 +1362,8 @@ table.releve td.num{width:34%}
   <a class="btn" href="qcm_3e_C8.2_mat-de-la-station.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
 
+</div>
+
 <footer>Séquence 3e_C8.2 — <em>Le mât de la station</em> · Thème 3 · banc d'essai original (CC0),
 valeurs calculées avec les formules de la poutre encastrée.</footer>
 
@@ -1272,6 +1371,7 @@ valeurs calculées avec les formules de la poutre encastrée.</footer>
 (function(){
 "use strict";
 const KEY = "seq_3e_C8_2_mat_station";
+let ongletActif = null;   // la séance affichée (vague n°311, 04/11/2026)
 const $ = id => document.getElementById(id);
 window.__exp = window.__exp || {};
 const PROF = {"Tube aluminium Ø50 × 3": {flex: 467, trac: 84.2, kf: 0.31019, ka: 0.06450}, "Barre pleine acier Ø20": {flex: 157, trac: 125.7, kf: 1.61681, ka: 0.03032}, "Tube PVC Ø50 × 3": {flex: 128, trac: 23.0, kf: 7.23781, ka: 1.50501}, "Poutre bois 40 × 40": {flex: 213, trac: 64.0, kf: 1.13636, ka: 0.11364}, "Tube acier galvanisé Ø33,7 × 2,6": {flex: 367, trac: 101.6, kf: 0.41059, ka: 0.03749}};
@@ -1451,27 +1551,101 @@ function save(){
   document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { o.inputs[c.id] = c.checked; });
   // les réponses du billet d'entrée (n°26) : à part, pour que restore() ne réécrive pas leur valeur
   o.billet = {}; document.querySelectorAll("#billet input[type=radio]").forEach(c => { o.billet[c.id] = c.checked; });
+  // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
+  o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
+  o.onglet = ongletActif;
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
 }
 function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
   if(!o) return;
+  ongletActif = o.onglet || null;
   Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
   // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
   document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { const v = (o.inputs || {})[c.id]; if(v !== undefined) c.checked = (v === true); });
   Object.entries(o.billet || {}).forEach(([k, v]) => { const c = document.getElementById(k); if(c) c.checked = (v === true); });
+  Object.entries(o.radios || {}).forEach(([name, v]) => { const r = document.querySelector('.positionnement input[name="' + name + '"][value="' + v + '"]'); if(r) r.checked = true; });
   window.__exp = o.exp || {};
   (o.flex || []).forEach(x => rompus.flex.add(x));
   (o.trac || []).forEach(x => rompus.trac.add(x));
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r && h.value.trim()) r.textContent = h.value;
+  majProto();
+  // l'onglet en cours : un lien direct vers une ancre l'emporte sur lui
+  if(!location.hash && ongletActif && $(ongletActif)) montrerSeance(ongletActif, false);
 }
 document.addEventListener("input", () => {
   save();
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r) r.textContent = h.value.trim() || "—";
 });
+/* ══ Séances à onglets (squelette n°306) — vague du 04/11/2026, sur le modèle du pilote 4e_C8.1 ══
+   L'onglet en cours est mémorisé avec le travail (o.onglet), à part des verrous (__exp). */
+/* Un outil n'est pas du décor (n°311) : l'outil sert à plusieurs séances. C'est un seul nœud ; il suit la séance ouverte,
+   juste après son en-tête (question directrice et programme). Le déplacer garde son état (réglages, résultats). Sans
+   JavaScript, il reste à sa place, au-dessus des séances affichées à la suite. */
+function placerOutil(id){
+  const outil = $("bancCard"), pan = $(id); if(!outil || !pan) return;
+  const tete = pan.querySelector(".seance-tete, .seance-entete");
+  if(tete){ if(tete.nextElementSibling !== outil) tete.after(outil); }
+  else if(pan.firstElementChild !== outil) pan.prepend(outil);
+}
+function montrerSeance(id, memoriser){
+  if(!$(id)) return;
+  document.querySelectorAll(".seance-tab").forEach(x => { const on = x.dataset.panel === id; x.classList.toggle("active", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
+  document.querySelectorAll(".seance-panel").forEach(p => p.classList.toggle("active", p.id === id));
+  placerOutil(id);
+  appliqueSeance(id);
+  ongletActif = id;
+  if(memoriser !== false) save();
+}
+document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => montrerSeance(t.dataset.panel)));
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte.
+   Comme au pilote, le volet ne se replie qu'une fois la page chargée (marque data-fermer-au-chargement). */
+function appliqueSeance(idPanneau){
+  const v = $("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", () => { const v = $("ouverture"); if(v){ voletAvantImpression = v.open; v.open = true; } });
+  window.addEventListener("afterprint", () => { const v = $("ouverture"); if(v && voletAvantImpression !== null){ v.open = voletAvantImpression; voletAvantImpression = null; } });
+  const cibleDuLien = () => { let id = ""; try{ id = decodeURIComponent(location.hash.slice(1)); }catch(e){} return id ? $(id) : null; };
+  const ouvrirSeanceDeLAncre = () => {
+    const cible = cibleDuLien(); const pan = cible && cible.closest(".seance-panel");
+    if(!pan || pan.classList.contains("active")) return;
+    montrerSeance(pan.id);
+    setTimeout(() => cible.scrollIntoView({block:"start"}), 60);
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", () => {
+    const v = $("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active") || {}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
+/* Règle d'or n°101 — chaque séance mène explicitement à la suivante. Le bouton est un lien vers l'en-tête de la
+   séance suivante : on ouvre son onglet, puis le lien amène à son en-tête (sans JavaScript, il y mène tout seul). */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => montrerSeance(b.dataset.vers)));
+if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
+
+/* La séance 3 exécute le protocole écrit à la séance 2 : avec les onglets, il n'est plus à l'écran ; il est recopié sous
+   l'en-tête de la séance 3, à chaque frappe (vague n°311, 04/11/2026). */
+function majProto(){
+  const el = $("rappelProto"), t = (($("a2proto") || {}).value || "").trim(); if(!el) return;
+  el.hidden = !t; el.textContent = "";
+  if(t){ const b = document.createElement("b"); b.textContent = "📝 Ton protocole, tel que tu l'as écrit à la séance 2 :";
+         const pre = document.createElement("pre"); pre.textContent = t; el.append(b, pre); }
+}
+if($("a2proto")) $("a2proto").addEventListener("input", majProto);
+
 restore(); bascule("flex");
+placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // l'outil rejoint la séance affichée
 })();
 </script>
 

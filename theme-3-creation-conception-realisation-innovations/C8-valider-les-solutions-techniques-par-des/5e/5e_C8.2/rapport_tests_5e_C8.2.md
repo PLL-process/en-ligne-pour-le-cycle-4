@@ -125,3 +125,23 @@ quelque chose pourrait se passer. Sinon il mesure son propre silence.*
 
 *La séquence de ce lot n'a toujours pas de script rejouable ; son tableau de 14 tests reste une
 liste écrite à la main. C'est écrit ici pour que ce soit repris, pas pour que ce soit oublié.*
+
+## Reprise du 04/11/2026 — la séquence passe à onglets (vague de la règle d'or n°311)
+
+Deux séances à onglets, sur le modèle du pilote 4e_C8.1 : séance 1 = ouverture + activités 0, 1 et 2 ; séance 2 =
+activités 3 et 4, réinvestissement, synthèse, Bonus, bilan, QCM. L'ouverture est repliée dans le volet « 📖 Rappel » dès
+la séance 2. Le banc d'essai ne sert qu'à la séance 1 : il reste dans l'activité 0. Clôture complétée : un corrigé par
+défi du Bonus, « Comment j'ai travaillé », « Je me positionne » sur 5e_C3.1.
+
+- `node tests_regle_311_5e_C8.2.mjs` : relais 8 / 8, **34 / 34**.
+- `node tests_5e_C8.2_sequence.mjs sequence_5e_C8.2_patere-du-hall.html` : **24 / 24**, comme avant ; le banc ouvre la
+  séance 2 pour l'activité 3 et la séance 1 pour l'hypothèse. `tests_5e_C8.2_qcm.mjs` : 32 / 32.
+
+Contrôles du dépôt, sur ce dossier ou sur tout le dépôt : `controle_squelette` 0 défaut (D1 à D6), aucun « à rédiger »,
+aucun signalement ; `controle_impression` (0 page refusée), `controle_verrous`, `controle_hors_ligne`,
+`controle_contraste_liens`, `controle_regles_visibles`, `controle_liens`, `controle_navigation_seances`,
+`controle_hierarchie`, `controle_unites`, `controle_sigles`, `controle_impression_papier` : verts. `banc_papier.py` :
+2 fiches, 7 pages, une séance par fiche, 0 texte pâle, 0 champ d'écran imprimé. `verif_regles_audit.py` : les mêmes ✘ qu'avant
+(n°29, 30, 31, 34, 300), hors périmètre de cette vague.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

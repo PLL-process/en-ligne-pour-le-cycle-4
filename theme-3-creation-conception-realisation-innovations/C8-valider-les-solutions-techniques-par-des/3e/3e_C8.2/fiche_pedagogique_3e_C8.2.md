@@ -162,3 +162,18 @@ Les dix relevés sont en outre comparés aux **vraies** valeurs du banc, à 0,05
 ├── rapport_tests_3e_C8.2.md                  44/44 sur la séquence, 32/32 sur le QCM
 └── README.md
 ```
+
+## 11. Les quatre séances passent à onglets (04/11/2026, vague de la règle d'or n°311)
+
+Le découpage du 25/10/2026 ne change pas (activités 0 et 1 | 2 | 3 et 4 | 5 et REFAIRE, puis la clôture) : chaque en-tête
+« 🗓 Séance N » devient la tête de son onglet, avec sa question et sa durée ; chaque bouton de fin de séance ouvre la
+suivante. L'ouverture (étiquettes, liens « Aller à », « Avant de commencer », situation, problématique et hypothèse,
+cahier des charges, trois façons, billet d'entrée) est complète à la séance 1, repliée dans le volet « 📖 Rappel » dès la
+séance 2.
+
+Restent visibles à chaque séance : le titre, la mission (elle remplace le sous-titre « Thème 3 · 3e — … », comme au
+pilote), la barre d'outils (🖨 Imprimer / PDF) et **le banc d'essai**, sorti de l'activité 0 parce qu'il sert aux
+séances 1 et 3 : un seul bloc, placé par le script des onglets dans la séance ouverte, juste après son en-tête (sans
+JavaScript, il reste au-dessus des séances ; à l'impression, il ne sort qu'avec les fiches des séances 1 et 3). Le protocole rédigé à la séance 2 est recopié sous l'en-tête de la séance 3, qui
+l'exécute. La clôture reçoit un corrigé par défi du Bonus et, au bilan, « Comment j'ai travaillé » et « Je me positionne »
+sur `3e_C3.4`, aux quatre niveaux du livret (le menu existant sur `3e_C8.2` les portait déjà).
