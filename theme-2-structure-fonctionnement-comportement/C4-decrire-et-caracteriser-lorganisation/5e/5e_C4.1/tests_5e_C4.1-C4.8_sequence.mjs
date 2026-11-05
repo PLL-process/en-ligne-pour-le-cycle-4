@@ -462,6 +462,158 @@ await p.emulateMedia({ media: 'screen' });
 await p.evaluate(() => window.dispatchEvent(new Event('afterprint')));
 ok('44 · étape 9 « À toi » : le bouton mène à l\'activité 2 ; le schéma fixe s\'ouvre à la demande ; à l\'impression, le schéma fixe, pas l\'animation',
    (await cpt()) === 'Étape 9 / 9' && fin.tache && fin.cible === '#act2' && fin.ouvert && fin.imprime.schema && fin.imprime.anim, JSON.stringify(fin));
+/* ── Bonus, défi maison : le constructeur de chaîne d'énergie (04/11/2026) ─────────────────────────────────────────
+   « Dessine sa chaîne d'énergie » demandait un geste que la page ne permettait pas : la réponse était une ligne de
+   texte. Le défi a maintenant un constructeur : l'élève choisit chaque bloc (fonctions et leurres), écrit le composant,
+   choisit la forme d'énergie de chaque flèche, écrit l'entrée et l'action finale ; la chaîne se dessine à mesure, par le
+   moteur des chaînes de la séance 2 (règle n°310 : fonctions dans les blocs, composants dessous, énergies sur les
+   flèches). « Vérifier » juge la forme, pas l'objet. La zone de texte, sa version étayée et le corrigé restent. */
+{
+const ctx2 = await b.newContext({ viewport: { width: 1280, height: 900 } });
+const q = await ctx2.newPage();
+const err2 = [];
+q.on('pageerror', e => err2.push(e.message));
+q.on('console', m => { if (m.type() === 'error') err2.push('console: ' + m.text()); });
+await q.goto('file://' + PAGE, { waitUntil: 'load' }); await q.waitForTimeout(350);
+await q.click('.seance-tab[data-panel="s6"]'); await q.waitForTimeout(200);
+const VENT = { bmObjet: 'mon ventilateur', bmNb: '4', bmE0: 'Énergie électrique', bmSource: 'la prise',
+  bmF1: 'ALIMENTER', bmC1: 'La prise et le câble', bmE1: 'Énergie électrique', bmF2: 'DISTRIBUER', bmC2: 'Interrupteur et sélecteur',
+  bmE2: 'Énergie électrique', bmF3: 'CONVERTIR', bmC3: 'Moteur électrique', bmE3: 'Énergie mécanique',
+  bmF4: 'TRANSMETTRE', bmC4: "L'axe et l'hélice", bmE4: 'Énergie mécanique', bmAction: "Brasser l'air" };
+const remplir2 = async R => { for (const [id, v] of Object.entries(R)) {
+  if ((await q.$eval('#' + id, e => e.tagName)) === 'SELECT') await q.selectOption('#' + id, v); else await q.fill('#' + id, v); } await q.waitForTimeout(150); };
+/* ce que le dessin montre : les blocs (fonction, composant, sous le bloc ?), les flèches et leur étiquette, l'action */
+const chaine = () => q.evaluate(() => {
+  const s = document.getElementById('bmDessin'), vb = s.viewBox.baseVal, k = s.getBoundingClientRect().width / vb.width;
+  const blocs = [...s.querySelectorAll('.chx-bloc')].map(g => {
+    const r = g.querySelector('.chx-cadre').getBBox(), t = [...g.querySelectorAll('text')];
+    const f = t.filter(x => x.getAttribute('font-weight') === '700'), c = t.filter(x => x.getAttribute('font-weight') !== '700');
+    return { f: f.map(x => x.textContent).join(' '), c: c.map(x => x.textContent).join(' '), x: r.x, dessous: c.every(x => +x.getAttribute('y') > r.y + r.height) };
+  });
+  const fleches = [...s.querySelectorAll('.chx-fleche')].map(g => [...g.querySelectorAll('text')].map(x => x.textContent).join(' '));
+  const absent = [...s.querySelectorAll('.chx-absent')].map(g => ({ f: g.querySelector('text').textContent, tirets: g.querySelector('.chx-cadre').getAttribute('stroke-dasharray'),
+    raison: [...g.querySelectorAll('text')].slice(1).map(x => x.textContent).join(' ') }));
+  const action = [...s.querySelectorAll('.chx-texte text')].map(x => x.textContent).join(' ');
+  const tailles = [...s.querySelectorAll('text')].map(x => parseFloat(getComputedStyle(x).fontSize) * k);
+  const lignes = new Set(blocs.map(b => Math.round([...s.querySelectorAll('.chx-bloc .chx-cadre')][blocs.indexOf(b)].getBBox().y))).size;
+  return { blocs, fleches, absent, action, min: Math.min(...tailles), dispo: s.getAttribute('data-dispo'), lignes, trous: s.querySelectorAll('.cb-trou').length,
+           label: s.getAttribute('aria-label') };
+});
+const debut = await q.evaluate(() => {
+  const opts = id => [...document.getElementById(id).options].map(o => o.value).filter(Boolean);
+  const d = document.getElementById('bonus-maison'), champ = d.querySelector('textarea[id]');
+  return { fonctions: opts('bmF1'), energies: opts('bmE1'), entree: opts('bmE0'), absent: opts('bmAbsent'),
+           texte: champ && champ.id, etaye: !!(champ && champ.nextElementSibling && champ.nextElementSibling.matches('details.etayage')),
+           corrige: !!d.querySelector('details.corrige-bonus'), exp: Object.keys(window.__exp || {}).length, valid: Object.keys(window.__valid || {}).length,
+           consigne: /dessine <b>sa<\/b>/.test(d.innerHTML) };
+});
+const vide2 = await chaine();
+const VOCAB = ['ALIMENTER', 'STOCKER', 'DISTRIBUER', 'CONVERTIR', 'TRANSMETTRE'];
+ok('45 · défi maison : le constructeur — un menu par bloc (les cinq fonctions et des leurres), un menu par flèche (les formes d\'énergie et des leurres), l\'entrée, l\'action finale, la fonction absente ; la zone de texte, sa version étayée et le corrigé restent ; au départ, 3 blocs « FONCTION ? » dessinés, rien d\'enregistré',
+   VOCAB.every(f => debut.fonctions.includes(f)) && debut.fonctions.length >= 9 && debut.energies.filter(e => /^Énergie /.test(e)).length >= 5
+   && ['Eau', 'Information'].every(e => debut.energies.includes(e)) && debut.entree.includes('aucune') && debut.absent.includes('TRANSMETTRE')
+   && debut.texte === 'bonusMaison' && debut.etaye && debut.corrige && debut.exp === 0 && debut.valid === 0 && !debut.consigne
+   && vide2.blocs.length === 3 && vide2.blocs.every(b => b.f === 'FONCTION ?') && vide2.trous >= 8,
+   JSON.stringify({ f: debut.fonctions.length, e: debut.energies.length, blocs: vide2.blocs.length, trous: vide2.trous }));
+
+await remplir2({ bmObjet: 'mon ventilateur', bmF1: 'ALIMENTER' });
+const pas1 = await chaine();
+await remplir2(VENT);
+const vent = await chaine();
+ok('46 · la chaîne se dessine à mesure : un choix, et le bloc 1 dit ALIMENTER ; le ventilateur complet, 4 blocs sur une ligne de gauche à droite, chaque composant SOUS son bloc, l\'entrée et chaque flèche portent leur forme d\'énergie, l\'action finale après la sortie ; à 1 280 px, aucun texte sous 14 px',
+   pas1.blocs[0].f === 'ALIMENTER' && pas1.blocs[1].f === 'FONCTION ?'
+   && vent.dispo === 'large' && vent.blocs.map(b => b.f).join() === 'ALIMENTER,DISTRIBUER,CONVERTIR,TRANSMETTRE' && vent.lignes === 1
+   && vent.blocs.every((b, k) => b.dessous && (!k || b.x > vent.blocs[k - 1].x)) && /Moteur électrique/.test(vent.blocs[2].c)
+   && vent.fleches.length === 5 && /Énergie électrique \(la prise\)/.test(vent.fleches[0]) && vent.fleches.every(f => /^Énergie /.test(f))
+   && vent.action === "Brasser l'air" && vent.trous === 0 && vent.min >= 14 && /TRANSMETTRE/.test(vent.label),
+   JSON.stringify({ f: vent.blocs.map(b => b.f), fl: vent.fleches, min: vent.min.toFixed(1), lignes: vent.lignes }).slice(0, 240));
+
+await q.click('#bmVerifier'); await q.waitForTimeout(80);
+const ventOk = await q.evaluate(() => ({ c: document.getElementById('bmRetour').className, t: document.getElementById('bmRetour').textContent }));
+/* le réveil du corrigé : pas d'entrée (des piles), STOCKER, et TRANSMETTRE absent ; puis le lampadaire à 5 blocs, sur deux lignes */
+await remplir2({ bmObjet: 'mon réveil', bmNb: '3', bmE0: 'aucune', bmSource: '', bmF1: 'STOCKER', bmC1: 'Deux piles', bmE1: 'Énergie électrique',
+  bmF2: 'DISTRIBUER', bmC2: 'Le circuit électronique', bmE2: 'Énergie électrique', bmF3: 'CONVERTIR', bmC3: 'Haut-parleur', bmE3: 'Énergie sonore',
+  bmAction: 'Réveiller', bmAbsent: 'TRANSMETTRE', bmRaison: 'rien ne se déplace' });
+const reveil = await chaine();
+await q.click('#bmVerifier'); await q.waitForTimeout(80);
+const reveilOk = await q.evaluate(() => document.getElementById('bmRetour').className);
+await remplir2({ bmNb: '5', bmF4: 'DISTRIBUER', bmC4: 'Interrupteur commandé', bmE4: 'Énergie électrique', bmF5: 'CONVERTIR', bmC5: 'LED', bmE5: 'Énergie lumineuse' });
+const cinq = await chaine();
+ok('47 · le corrigé se construit : le ventilateur est jugé complet ; le réveil sans entrée (des piles), STOCKER avec « Énergie chimique stockée » sous la pile, TRANSMETTRE absent en pointillés, grisé, sa raison dessous ; à 5 blocs, la chaîne passe sur deux lignes',
+   /ok/.test(ventOk.c) && /✔/.test(ventOk.t) && /ok/.test(reveilOk)
+   && reveil.fleches.length === 3 && /Énergie chimique stockée/.test(reveil.blocs[0].c) && reveil.absent.length === 1 && reveil.absent[0].f === 'TRANSMETTRE'
+   && !!reveil.absent[0].tirets && /Absente : rien ne se déplace/.test(reveil.absent[0].raison) && cinq.blocs.length === 5 && cinq.lignes === 2 && cinq.min >= 14,
+   JSON.stringify({ ventOk: ventOk.t.slice(0, 30), reveil: reveil.absent, lignes: cinq.lignes }).slice(0, 220));
+
+/* « Vérifier » : à vide, un retour par manque ; avec les pièges, le retour qui explique ; chacun mène à son champ */
+await q.evaluate(() => localStorage.clear()); await q.reload({ waitUntil: 'load' }); await q.waitForTimeout(350);
+await q.click('.seance-tab[data-panel="s6"]'); await q.waitForTimeout(200);
+await q.click('#bmVerifier'); await q.waitForTimeout(80);
+const aVide = await q.evaluate(() => [...document.querySelectorAll('#bmRetour li a')].map(a => a.getAttribute('data-champ')));
+await remplir2({ ...VENT, bmF3: 'MOTEUR', bmE2: 'Eau', bmC4: 'électrique', bmAction: 'le vent', bmE0: 'Information' });
+await q.click('#bmVerifier'); await q.waitForTimeout(80);
+const pieges = await q.evaluate(() => ({ items: [...document.querySelectorAll('#bmRetour li a')].map(a => ({ c: a.getAttribute('data-champ'), t: a.textContent })),
+  marques: [...document.querySelectorAll('#bmChaine [aria-invalid="true"]')].map(e => e.id) }));
+await q.click('#bmRetour a[data-champ="bmF3"]'); await q.waitForTimeout(40);
+const focus2 = await q.evaluate(() => document.activeElement.id);
+const p3 = (c, re) => pieges.items.some(i => i.c === c && re.test(i.t));
+ok('48 · « Vérifier » ne juge pas l\'objet mais la forme : à vide, un retour par manque (objet, entrée, chaque fonction, chaque composant, chaque flèche, action) ; avec les pièges (MOTEUR dans un bloc, de l\'eau sur une flèche, « électrique » sous un bloc, une information en entrée, « le vent »), le retour qui explique ; chacun mène à son champ, marqué',
+   ['bmObjet', 'bmE0', 'bmF1', 'bmF2', 'bmF3', 'bmC1', 'bmC2', 'bmC3', 'bmE1', 'bmE2', 'bmE3', 'bmAction'].every(c => aVide.includes(c))
+   && p3('bmF3', /composant/) && p3('bmE2', /matière/) && p3('bmC4', /forme d'énergie/) && p3('bmE0', /chaîne d'information/) && p3('bmAction', /infinitif/)
+   && pieges.items.length === 5 && focus2 === 'bmF3' && ['bmF3', 'bmE2', 'bmC4', 'bmE0', 'bmAction'].every(c => pieges.marques.includes(c)),
+   JSON.stringify({ aVide: aVide.length, pieges: pieges.items.map(i => i.c) }));
+
+await remplir2(VENT);
+const avant = await chaine();
+await q.waitForTimeout(800);                                    // la sauvegarde de la page part 600 ms après la dernière saisie
+await q.reload({ waitUntil: 'load' }); await q.waitForTimeout(350);
+await q.click('.seance-tab[data-panel="s6"]'); await q.waitForTimeout(200);
+const apres = await chaine();
+ok('49 · sauvegarde : au rechargement, les choix reviennent et la chaîne se redessine à l\'identique',
+   (await q.inputValue('#bmF4')) === 'TRANSMETTRE' && (await q.inputValue('#bmNb')) === '4' && (await q.inputValue('#bmC3')) === 'Moteur électrique'
+   && JSON.stringify(apres.blocs) === JSON.stringify(avant.blocs) && JSON.stringify(apres.fleches) === JSON.stringify(avant.fleches) && apres.action === avant.action,
+   apres.blocs.map(b => b.f + '/' + b.c).join(' · ').slice(0, 160));
+
+/* Sur le papier : les réglages disparaissent, le cadre de la chaîne s'imprime, fond blanc, encre foncée ; la ligne de texte reste. */
+await q.evaluate(() => window.dispatchEvent(new Event('beforeprint')));
+await q.emulateMedia({ media: 'print' }); await q.waitForTimeout(150);
+const papier = await q.evaluate(() => {
+  const vis = e => !!e && getComputedStyle(e).display !== 'none' && e.getBoundingClientRect().height > 0, s = document.getElementById('bmDessin');
+  return { reglages: vis(document.querySelector('.cb-reglages')), cadre: vis(document.getElementById('bmBoite')), bouton: vis(document.getElementById('bmVerifier')),
+           fond: getComputedStyle(s.querySelector('.chx-papier')).fill, bloc: getComputedStyle(s.querySelector('.chx-bloc .chx-cadre')).fill,
+           encre: [...s.querySelectorAll('text')].every(t => { const m = getComputedStyle(t).fill.match(/\d+/g); return m && (0.2126 * m[0] + 0.7152 * m[1] + 0.0722 * m[2]) < 140; }),
+           texte: vis(document.getElementById('bonusMaison')), consigne: vis(document.querySelector('#bmChaine .pp-papier')) };
+});
+await q.emulateMedia({ media: 'screen' }); await q.evaluate(() => window.dispatchEvent(new Event('afterprint')));
+ok('50 · à l\'impression : les menus disparaissent, le cadre de la chaîne s\'imprime (fond blanc, blocs blancs, textes foncés), avec sa consigne papier ; la ligne de texte reste',
+   !papier.reglages && papier.cadre && !papier.bouton && papier.fond === 'rgb(255, 255, 255)' && papier.bloc === 'rgb(255, 255, 255)' && papier.encre && papier.texte && papier.consigne,
+   JSON.stringify(papier));
+
+/* À 390 px : la colonne, sans défilement de côté ; le dessin reste sous les yeux pendant qu'on remplit, et défile jusqu'à la pièce touchée. */
+await q.setViewportSize({ width: 390, height: 844 }); await q.waitForTimeout(300);
+await q.focus('#bmC4'); await q.waitForTimeout(700);
+const etroit2 = await q.evaluate(() => {
+  const bo = document.getElementById('bmBoite'), s = document.getElementById('bmDessin'), k = s.getBoundingClientRect().width / s.viewBox.baseVal.width;
+  const h = sel => [...document.querySelectorAll(sel)].filter(e => e.offsetParent).map(e => Math.round(e.getBoundingClientRect().height));
+  const b4 = s.querySelector('[data-id="b4-E"] .chx-cadre').getBoundingClientRect(), rb = bo.getBoundingClientRect();
+  return { dispo: s.getAttribute('data-dispo'), large: document.documentElement.scrollWidth > innerWidth + 1, colle: getComputedStyle(bo).position === 'sticky',
+           vise: b4.top >= rb.top - 1 && b4.bottom <= rb.bottom + 1, defile: bo.scrollTop > 0,
+           min: Math.min(...[...s.querySelectorAll('text')].map(t => parseFloat(getComputedStyle(t).fontSize) * k)),
+           cibles: Math.min(...h('#bmChaine input'), ...h('#bmChaine select'), ...h('#bmVerifier')) };
+});
+ok('51 · à 390 px : la chaîne en colonne, sans défilement de côté, textes ≥ 12 px ; le dessin reste collé sous les yeux et défile jusqu\'au bloc qu\'on remplit ; cases et bouton de 44 px',
+   etroit2.dispo === 'etroit' && !etroit2.large && etroit2.colle && etroit2.vise && etroit2.defile && etroit2.min >= 12 && etroit2.cibles >= 44, JSON.stringify(etroit2));
+/* au clavier : chaque menu et chaque champ a son étiquette ; Tab suit l'ordre de la chaîne */
+const clavier = await q.evaluate(() => [...document.querySelectorAll('#bmChaine .cb-reglages :is(input,select)')].filter(e => e.offsetParent)
+  .map(e => ({ id: e.id, lab: !!document.querySelector(`label[for="${e.id}"]`) })));
+await q.focus('#bmObjet');
+const tabs = ['bmObjet'];
+for (let k = 0; k < 6; k++) { await q.keyboard.press('Tab'); tabs.push(await q.evaluate(() => document.activeElement.id)); }
+ok('52 · au clavier : chaque menu et chaque champ du constructeur a son étiquette, et Tab suit l\'ordre de la chaîne (objet, blocs, entrée, bloc 1…)',
+   clavier.length >= 17 && clavier.every(c => c.lab) && tabs.join(' ') === 'bmObjet bmNb bmE0 bmSource bmF1 bmC1 bmE1', tabs.join(' '));
+ok('53 · aucune erreur JS dans le constructeur', err2.length === 0, err2.slice(0, 2).join(' | '));
+await ctx2.close();
+}
 ok('40 · aucune erreur JS jusqu\'à la fin', err.length === 0, err.slice(0, 2).join(' | '));
 
 const n = T.filter(t => t.ok).length;

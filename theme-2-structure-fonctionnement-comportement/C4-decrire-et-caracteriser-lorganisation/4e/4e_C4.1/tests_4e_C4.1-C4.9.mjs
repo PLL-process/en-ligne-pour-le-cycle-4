@@ -444,6 +444,167 @@ ok('32 · aucune erreur JS sur le QCM', err.length === 0, err.slice(0, 2).join('
 await ctx.close();
 }
 
+/* ════════════════ BONUS, DÉFI DONNÉES : LA TABLE ET SA COURBE (04/11/2026, 10 contrôles) ════════════════
+   « Trace la courbe ! » demandait un geste que la page ne permettait pas : la réponse était une zone de texte. Le défi
+   a maintenant une vraie table (6 lignes : horodatage, lieu, valeur ; la grandeur et son unité en tête) et la courbe qui
+   se trace dès deux mesures. La suite remplit la table comme un élève : dans le désordre du temps, avec une valeur
+   impossible, une unité qui ne va pas ; puis elle recharge, passe à 390 px, imprime. */
+{
+const ctx = await b.newContext({ viewport: { width: 1280, height: 900 }, locale: 'fr-FR' });
+const p = await ctx.newPage();
+const err = [];
+p.on('pageerror', e => err.push(e.message));
+p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()); });
+await p.goto('file://' + SEQ, { waitUntil: 'load' }); await p.waitForTimeout(300);
+await p.click('.seance-tab[data-panel="s4"]'); await p.waitForTimeout(150);
+const courbe = () => p.evaluate(() => {
+  const s = document.getElementById('ddCourbe'), vb = s.viewBox.baseVal;
+  const tr = [...s.querySelectorAll('path.rl-courbe')].map(c => (c.getAttribute('d').match(/-?[\d.]+ -?[\d.]+/g) || []).map(q => q.split(' ').map(Number)));
+  const pts = [...s.querySelectorAll('circle, rect:not(.rl-fond):not(.rl-bulle), polygon:not(.rl-axe-pointe)')].filter(e => e.querySelector('title'));
+  const txt = [...s.querySelectorAll('text')].filter(t => getComputedStyle(t).display !== 'none').map(t => t.textContent);
+  const jours = [...s.querySelectorAll('path.rl-jour')].map(j => +j.getAttribute('d').split(' ')[0].slice(1));
+  return { traces: tr, points: pts.length, textes: txt, jours, dispo: s.getAttribute('data-dispo'), vb: [vb.width, vb.height],
+           th: document.getElementById('ddUniteTh').textContent, titre: document.getElementById('ddTitre').textContent };
+});
+const ligne = async (i, d, h, l, v) => { await p.fill('#ddD' + i, d); await p.fill('#ddH' + i, h); await p.fill('#ddL' + i, l); await p.fill('#ddV' + i, v); };
+const depart = await p.evaluate(() => {
+  const t = document.getElementById('ddTable');
+  return { lignes: t.querySelectorAll('tbody tr').length,
+           cols: [...t.querySelectorAll('thead th')].map(th => th.textContent.replace(/\s+/g, ' ').trim()),
+           champs: [...t.querySelectorAll('tbody tr')].every(tr => tr.querySelector('input[type=date]') && tr.querySelector('input[type=time]')
+             && tr.querySelectorAll('input[type=text]').length === 2),
+           tete: !!document.querySelector('#defiDonnees select#ddGrandeur') && !!document.querySelector('#defiDonnees select#ddUnite'),
+           exp: Object.keys(window.__exp || {}).filter(k => k !== 'mode_essentiel').length, valid: Object.keys(window.__valid || {}).length,
+           consigne: /Trace la courbe/.test(document.getElementById('defiDonnees').closest('section').textContent) };
+});
+const vide = await courbe();
+ok('33 · défi données : une vraie table (6 lignes : horodatage date et heure, lieu, valeur), la grandeur et son unité en tête ; au départ, pas de courbe, le cadre dit quand elle se trace ; rien d\'enregistré',
+   depart.lignes === 6 && depart.champs && depart.tete && /Horodatage/.test(depart.cols[0]) && depart.cols[1] === 'Lieu' && /^Valeur/.test(depart.cols[2])
+   && vide.traces.length === 0 && vide.points === 0 && vide.textes.some(t => /deux mesures/.test(t)) && depart.exp === 0 && depart.valid === 0 && !depart.consigne,
+   JSON.stringify(depart).slice(0, 160));
+
+await p.selectOption('#ddGrandeur', "Température de l'air"); await p.selectOption('#ddUnite', '°C');
+await ligne(1, '2026-11-04', '18:00', 'balcon', '28');
+await p.waitForTimeout(80);
+const une = await courbe();
+await ligne(2, '2026-11-04', '07:00', 'balcon', '24,5');   // saisie APRÈS la mesure de 18 h : l'ordre du temps n'est pas celui des lignes
+await p.waitForTimeout(80);
+const deux = await courbe();
+const tr2 = deux.traces[0] || [];
+ok('34 · une mesure : pas de courbe ; deux (la seconde plus ancienne) : une courbe de 2 points reliés dans l\'ordre du temps ; « Valeur (°C) » en tête de colonne, « Température (°C) » sur l\'axe, la date en abscisse',
+   une.traces.length === 0 && une.points === 0 && deux.traces.length === 1 && tr2.length === 2 && tr2[0][0] < tr2[1][0] && tr2[0][1] > tr2[1][1]
+   && deux.th === '(°C)' && deux.textes.includes('Température (°C)') && deux.textes.some(t => /4\/11/.test(t)) && /Température de l'air/.test(deux.titre),
+   JSON.stringify({ tr2, th: deux.th }).slice(0, 140));
+await ligne(3, '2026-11-05', '07:00', 'balcon', '25'); await ligne(4, '2026-11-05', '18:00', 'balcon', '29,5');
+await ligne(5, '2026-11-06', '07:00', 'balcon', '24'); await ligne(6, '2026-11-06', '18:00', 'balcon', '27,5');
+await p.waitForTimeout(80);
+const six = await courbe();
+const t6 = six.traces[0] || [], ecarts = six.jours.slice(1).map((x, k) => +(x - six.jours[k]).toFixed(1));
+ok('35 · six mesures : six points, une courbe qui suit le temps (abscisses croissantes) ; l\'abscisse est graduée régulièrement (quatre minuits également espacés)',
+   six.points === 6 && t6.length === 6 && t6.every((q, k) => !k || q[0] > t6[k - 1][0]) && six.jours.length === 4
+   && ecarts.every(e => Math.abs(e - ecarts[0]) < 1), JSON.stringify({ jours: six.jours, ecarts }));
+
+await p.fill('#ddV5', 'chaud'); await p.waitForTimeout(80);
+const chaud = await p.evaluate(() => ({ msg: document.getElementById('ddVMsg5').textContent, vu: document.getElementById('ddVMsg5').offsetHeight > 0,
+  inv: document.getElementById('ddV5').getAttribute('aria-invalid'), lie: document.getElementById('ddV5').getAttribute('aria-describedby') }));
+const apresChaud = await courbe();
+await p.fill('#ddV5', '24 °C'); await p.waitForTimeout(80);
+const avecU = await p.textContent('#ddVMsg5');
+await p.selectOption('#ddGrandeur', 'Hygrométrie (humidité de l\'air)'); await p.selectOption('#ddUnite', '%');
+await p.fill('#ddV5', '140'); await p.waitForTimeout(80);
+const cent = await p.textContent('#ddVMsg5');
+ok('36 · une valeur impossible est signalée sous sa case, reliée au champ, sans bloquer le reste : « chaud » (pas un nombre), « 24 °C » (l\'unité est dans l\'en-tête), 140 % (impossible) ; la courbe garde ses cinq autres points',
+   /✘/.test(chaud.msg) && /pas un nombre/.test(chaud.msg) && chaud.vu && chaud.inv === 'true' && chaud.lie === 'ddVMsg5'
+   && apresChaud.points === 5 && apresChaud.traces[0].length === 5 && /nombre seul/.test(avecU) && /impossible/.test(cent) && /100/.test(cent),
+   [chaud.msg, avecU, cent].join(' | ').slice(0, 200));
+await p.selectOption('#ddGrandeur', "Température de l'air"); await p.selectOption('#ddUnite', '%');
+await p.fill('#ddV5', '24'); await p.waitForTimeout(80);
+const mU = await p.evaluate(() => ({ t: document.getElementById('ddUniteMsg').textContent, inv: document.getElementById('ddUnite').getAttribute('aria-invalid') }));
+ok('37 · une unité qui ne va pas avec la grandeur est signalée sous son menu (une température se mesure en °C)',
+   /°C/.test(mU.t) && /pas en %/.test(mU.t) && mU.inv === 'true', mU.t);
+
+/* « Vérifier » : le lieu manquant, la valeur impossible, l'unité, l'ordre du temps (lignes 1 et 2 inversées), puis tout juste */
+await p.fill('#ddL6', ''); await p.fill('#ddV3', 'trente');
+await p.click('#ddVerifier'); await p.waitForTimeout(80);
+const ret = await p.evaluate(() => { const r = document.getElementById('ddRetour');
+  return { cls: r.className, items: [...r.querySelectorAll('li a')].map(a => ({ t: a.textContent, h: a.getAttribute('href') })), lieu: document.getElementById('ddLMsg6').textContent }; });
+await p.click(`#ddRetour a[href="#ddL6"]`); await p.waitForTimeout(40);
+const focus = await p.evaluate(() => document.activeElement.id);
+const dit = re => ret.items.some(i => re.test(i.t));
+await p.selectOption('#ddUnite', '°C'); await p.fill('#ddL6', 'balcon'); await p.fill('#ddV3', '25');
+await ligne(1, '2026-11-04', '07:00', 'balcon', '24,5'); await ligne(2, '2026-11-04', '18:00', 'balcon', '28');
+await p.click('#ddVerifier'); await p.waitForTimeout(80);
+const juste = await p.evaluate(() => ({ cls: document.getElementById('ddRetour').className, t: document.getElementById('ddRetour').textContent }));
+ok('38 · « Vérifier » donne un retour par manque — l\'unité, le lieu de la ligne 6 (écrit aussi sous sa case), la valeur « trente », l\'ordre du temps — et chacun mène à sa case ; corrigée, la table est jugée juste',
+   /err|mixte/.test(ret.cls) && dit(/se mesure en °C/) && dit(/Ligne 6 : Il manque le lieu/) && dit(/Ligne 3 .*pas un nombre/) && dit(/ordre du temps/)
+   && /manque le lieu/.test(ret.lieu) && focus === 'ddL6' && /ok/.test(juste.cls) && /✔/.test(juste.t),
+   ret.items.map(i => i.t.slice(0, 40)).join(' | ').slice(0, 240) + ' → ' + juste.t.slice(0, 40));
+
+await p.waitForTimeout(800);                                   // la sauvegarde de la page part 600 ms après la dernière saisie
+await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(300);
+await p.click('.seance-tab[data-panel="s4"]'); await p.waitForTimeout(150);
+const relu = await courbe();
+const valeurs = await p.evaluate(() => [1, 2, 3, 4, 5, 6].map(i => ['D', 'H', 'L', 'V'].map(c => document.getElementById('dd' + c + i).value).join(' ')));
+ok('39 · sauvegarde : au rechargement, la grandeur, l\'unité et les six lignes reviennent, et la courbe se retrace (6 points)',
+   (await p.inputValue('#ddGrandeur')) === "Température de l'air" && (await p.inputValue('#ddUnite')) === '°C'
+   && valeurs[0] === '2026-11-04 07:00 balcon 24,5' && valeurs[5] === '2026-11-06 18:00 balcon 27,5' && relu.points === 6 && relu.traces[0].length === 6,
+   valeurs.join(' | ').slice(0, 120));
+const tailles = async () => p.evaluate(() => { const s = document.getElementById('ddCourbe'), k = s.getBoundingClientRect().width / s.viewBox.baseVal.width;
+  return Math.min(...[...s.querySelectorAll('text')].filter(t => getComputedStyle(t).display !== 'none').map(t => parseFloat(getComputedStyle(t).fontSize) * k)); });
+const t1280 = await tailles();
+await p.setViewportSize({ width: 390, height: 844 }); await p.waitForTimeout(250);
+const etroit = await p.evaluate(() => {
+  const h = sel => [...document.querySelectorAll(sel)].filter(e => e.offsetParent).map(e => Math.round(e.getBoundingClientRect().height));
+  const t = document.getElementById('ddTable');
+  return { large: document.documentElement.scrollWidth > innerWidth + 1, table: t.scrollWidth <= t.parentElement.clientWidth + 1,
+           dispo: document.getElementById('ddCourbe').getAttribute('data-dispo'),
+           cibles: Math.min(...h('#defiDonnees input'), ...h('#defiDonnees select'), ...h('#ddVerifier')) };
+});
+const t390 = await tailles();
+ok('40 · à 390 px, aucun défilement de côté : la table tient dans sa largeur, la courbe passe en disposition étroite (textes ≥ 12 px), cases et bouton de 44 px ; à 1 280 px, aucun texte de la courbe sous 14 px',
+   !etroit.large && etroit.table && etroit.dispo === 'etroit' && t390 >= 12 && etroit.cibles >= 44 && t1280 >= 14,
+   JSON.stringify(etroit) + ` · ${t1280.toFixed(1)} px / ${t390.toFixed(1)} px`);
+await p.setViewportSize({ width: 1280, height: 900 }); await p.waitForTimeout(250);
+
+/* Sur le papier : la table (les champs deviennent des lignes, ce qui est écrit s'imprime), le cadre de la courbe sur
+   fond blanc, l'encre foncée ; ni bouton, ni message d'écran. */
+await p.evaluate(() => window.dispatchEvent(new Event('beforeprint')));
+await p.emulateMedia({ media: 'print' }); await p.waitForTimeout(150);
+const papier = await p.evaluate(() => {
+  const vis = e => !!e && getComputedStyle(e).display !== 'none' && e.getBoundingClientRect().height > 0;
+  const s = document.getElementById('ddCourbe');
+  return { table: vis(document.getElementById('ddTable')), champs: [...document.querySelectorAll('#ddTable input')].filter(vis).length,
+           fond: getComputedStyle(s.querySelector('.rl-fond')).fill, encre: getComputedStyle(s.querySelector('.rl-t')).fill,
+           courbe: vis(document.getElementById('ddBoite')), bouton: vis(document.getElementById('ddVerifier')), msg: [...document.querySelectorAll('.rl-msg')].some(vis) };
+});
+await p.emulateMedia({ media: 'screen' }); await p.evaluate(() => window.dispatchEvent(new Event('afterprint')));
+ok('41 · à l\'impression : la table (24 champs en lignes d\'écriture) et le cadre de la courbe, fond blanc et encre foncée ; ni bouton, ni message d\'écran',
+   papier.table && papier.champs === 24 && papier.courbe && papier.fond === 'rgb(255, 255, 255)' && /rgb\(17, 24, 39\)/.test(papier.encre) && !papier.bouton && !papier.msg,
+   JSON.stringify(papier));
+await ctx.close();
+
+/* Une fiche imprimée avant toute mesure : la table vide et le cadre de la courbe, quadrillé, qui dit quoi tracer. */
+const ctx2 = await b.newContext({ viewport: { width: 1280, height: 900 }, locale: 'fr-FR' });
+const q = await ctx2.newPage();
+await q.goto('file://' + SEQ, { waitUntil: 'load' }); await q.waitForTimeout(300);
+await q.click('.seance-tab[data-panel="s4"]'); await q.waitForTimeout(150);
+await q.focus('#ddGrandeur');
+const ordre = [];                                              // un champ date ou heure a ses segments : on garde chaque champ une fois
+for (let k = 0; k < 16 && ordre.length < 6; k++) { await q.keyboard.press('Tab'); const id = await q.evaluate(() => document.activeElement.id); if (id !== ordre[ordre.length - 1]) ordre.push(id); }
+await q.evaluate(() => window.dispatchEvent(new Event('beforeprint')));
+await q.emulateMedia({ media: 'print' }); await q.waitForTimeout(150);
+const cadre = await q.evaluate(() => {
+  const s = document.getElementById('ddCourbe'), vis = t => getComputedStyle(t).display !== 'none';
+  return { textes: [...s.querySelectorAll('text')].filter(vis).map(t => t.textContent).join(' '), grille: s.querySelectorAll('path.rl-grille').length,
+           vides: [...document.querySelectorAll('#ddTable input')].every(i => !i.value) };
+});
+ok('42 · sans mesure, la fiche imprimée garde une consigne faisable : la table vide, le cadre quadrillé qui dit « Trace ici ta courbe » ; au clavier, Tab passe de la grandeur à l\'unité, puis date, heure, lieu, valeur',
+   cadre.vides && cadre.grille >= 10 && /Trace ici ta courbe/.test(cadre.textes) && !/dès que tu as deux mesures/.test(cadre.textes)
+   && ordre.join(' ') === 'ddUnite ddD1 ddH1 ddL1 ddV1 ddD2', ordre.join(' ') + ' · ' + cadre.textes.slice(0, 80));
+ok('43 · aucune erreur JS dans le défi données', err.length === 0, err.slice(0, 2).join(' | '));
+await ctx2.close();
+}
+
 const n = T.filter(t => t.ok).length;
 console.log(T.map(t => `${t.ok ? '✅' : '❌'} ${t.n}${t.d ? ' — ' + t.d : ''}`).join('\n'));
 console.log(`\n${n} / ${T.length}`);
