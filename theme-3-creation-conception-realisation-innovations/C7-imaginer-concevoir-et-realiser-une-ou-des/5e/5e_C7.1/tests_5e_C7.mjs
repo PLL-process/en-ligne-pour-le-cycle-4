@@ -97,7 +97,9 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
 
 /* — n°23 : le cadre horaire est reconnaissable, et il tient — */
 {
-  const txt = await page.locator("body").innerText();
+  /* depuis le passage à onglets (vague n°311, 04/11/2026), les durées vivent dans trois panneaux dont deux sont repliés :
+     on lit le texte entier de la page, pas seulement ce qui est à l'écran (comme le pilote 4e_C8.1) */
+  const txt = await page.evaluate(() => document.body.textContent);
   const cadre = txt.match(/(\d+)\s*séances?\s+de\s+(\d+)\s*min/i);
   const parts = [...txt.matchAll(/~\s*(\d+)\s*min/g)].map(m => parseInt(m[1], 10));
   const total = parts.reduce((a, b) => a + b, 0);
@@ -299,8 +301,17 @@ if (!CFG.essaisBanc) {
      (await page.locator("#tachesBandeau .tache.fait").count()) === 0);
 }
 
+/* — trois séances à onglets, l'ouverture dans le volet « Rappel » (vague n°311, 04/11/2026) — */
+{
+  const n = await page.locator(".seance-panel").count();
+  ok("onglets : trois séances, l'ouverture dans le volet « Rappel », le simulateur dans la séance ouverte",
+     n === 3 && (await page.locator("details.rappel-ouverture#ouverture").count()) === 1
+     && (await page.evaluate(() => !!document.querySelector(".seance-panel.active #outilSimu"))), n + " panneaux");
+}
+
 /* — l'ordre des étapes : la validation exige le bon ordre — */
 {
+  await page.click("#tab-s2");   // l'activité 3 est dans la séance 2 (onglets, 04/11/2026)
   for (let i = 1; i <= 5; i++) await page.selectOption("#a3o" + i, String(i));
   await page.click('.btn.check[data-check="3"]');
   await page.waitForTimeout(150);
@@ -312,6 +323,19 @@ if (!CFG.essaisBanc) {
   const fb = await page.locator("#fb3").textContent();
   ok("act. 3 : un ordre faux est refusé (4/5)", /4\/5/.test(fb), fb.slice(0, 45));
   await page.selectOption("#a3o2", "2");
+  /* « 🗺 Où j'en suis » (04/11/2026) : ouvert à la séance 1, replié dès la séance 2 derrière une ligne qui dit le même compte */
+  {
+    const avant = await page.evaluate(() => document.querySelector(".seance-panel.active").id);
+    await page.click("#tab-s1"); await page.waitForTimeout(80);
+    const s1 = await page.evaluate(() => document.getElementById("tachesVolet").open);
+    await page.click("#tab-s2"); await page.waitForTimeout(80);
+    const s2 = await page.evaluate(() => { const d = document.getElementById("tachesVolet"), s = d.querySelector("summary");
+      return { open: d.open, ligne: s.checkVisibility() && s.getBoundingClientRect().height >= 44, txt: document.getElementById("tachesResume").textContent }; });
+    const prog = (await page.locator("#progTxt").textContent()).trim();
+    ok("« Où j'en suis » : ouvert à la séance 1, replié à la séance 2 derrière une ligne de 44 px qui dit le même compte que la progression",
+       s1 && !s2.open && s2.ligne && s2.txt.split(" ")[0] === prog.split(" ")[0] && s2.txt.split(" ")[2] === prog.split(" ")[2], s2.txt + " · " + prog);
+    await page.click("#tab-" + avant); await page.waitForTimeout(80);
+  }
 }
 
 /* — sauvegarde / restauration — */
@@ -331,6 +355,7 @@ if (!CFG.essaisBanc) {
      sur sa dernière ligne, et un retour écrit sous chaque case fausse ou vide après « Vérifier ». Les options
      fausses sont lues dans les menus de la page ; seules les bonnes réponses sont écrites ici. — */
 {
+  await page.click("#tab-s2");   // la grille est dans la séance 2 (onglets, 04/11/2026)
   const BONNES = [["#a2a1", "LED rouge"], ["#a2c1", "Oui"], ["#a2a2", "LED verte"], ["#a2c2", "Oui"], ["#a2c3", "Oui"], ["#a2dec", "Validée"]];
   const grille = await page.evaluate(ids => ids.map(id => {
     const s = document.querySelector(id);

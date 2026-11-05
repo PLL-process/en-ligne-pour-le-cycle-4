@@ -137,3 +137,15 @@ sujet.
 ├── tests_5e_C7.4_sequence.mjs · tests_5e_C7.4_qcm.mjs · reponses_5e_C7.4.json
 └── energie.py
 ```
+
+## 11. Découpage en séances à onglets (04/11/2026, vague n°311, sur le modèle du pilote 4e_C8.1)
+
+| Séance | Question directrice | Contenu | Temps |
+|---|---|---|---|
+| 1 — Brancher, puis nommer | Que donne chacune des cinq sources à l'indicateur, et sous quelle forme l'énergie y entre-t-elle ? | Ouverture (avant de commencer, situation, problématique et idée de départ, sécurité, trois façons, billet), activités 0 et 1 | ouverture + 15 + 20 min |
+| 2 — Relever, choisir, refaire | Quelle source choisir pour le hall, chiffre à l'appui, et qu'est-ce que le banc ne compte pas ? | Activités 2, 3 et 4, réinvestissement, synthèse, Bonus (un corrigé replié par défi), bilan (« Je me positionne » sur 5e_C7.4 et 5e_C3.1), renvoi au QCM | 20 + 20 + 10 + 10 min + clôture |
+
+La séance 2 est la plus chargée (60 min d'activités annoncées, plus la clôture) : c'est le découpage que donnent les durées
+écrites sur les activités ; l'activité 2 ne tient pas dans la séance 1 avec l'ouverture. Dès la séance 2, l'ouverture — dont
+l'encadré Sécurité — est repliée dans le volet « 📖 Rappel » ; l'en-tête de la séance 2 rappelle la très basse tension et renvoie
+au volet. Le banc d'énergie sert aux deux séances : un seul exemplaire, rangé dans la séance ouverte, sous son en-tête.

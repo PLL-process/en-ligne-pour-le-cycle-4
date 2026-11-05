@@ -133,3 +133,17 @@ du livret (n°301). Le sélecteur de parcours tient sur deux lignes à 390 px.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle. Non fait : le lexique par séance (le lexique du lot
 n'a pas d'ancres `#seance-sN`) ; la conversion des listes déroulantes en boutons radio (n°300).
+
+## Reprise du 04/11/2026 — « 🗺 Où j'en suis » se replie à partir de la séance 2
+
+La liste des activités poussait les onglets hors du premier écran dès la séance 2. Le bloc est maintenant un `<details>` :
+ouvert à la séance 1 (rien ne change), replié dès la séance 2 derrière une ligne de 44 px qui garde le compte
+(« 🗺 Où j'en suis — 2 / 6 activités validées », mis à jour avec la liste). Un clic ou le clavier le rouvre ; il reste ouvert
+pendant la séance et se replie au changement de séance. Sans JavaScript, il est ouvert. La barre de progression ne change pas.
+À la séance 2, en haut de page : onglets à 538 px et titre de la séance à 627 px à 1280 px (écran de 900 px) ; à 390 px,
+les onglets commencent à 866 px pour un écran de 844 px (avant : 1400 px).
+
+- `node tests_regle_311_4e_C8.1.mjs` : **34 / 34** ; `node tests_4e_C8.mjs .` : **54 / 54** (53 / 53 avant, un test ajouté : ouvert à la séance 1, replié
+  à la séance 2, même compte que la progression).
+- `controle_squelette` : 0 défaut, aucun « à rédiger ». Verts : `controle_impression`, `controle_verrous`, `controle_impression_papier`, fiche papier
+  (`banc_papier.py`), `controle_hors_ligne`, `controle_contraste_liens`, `controle_unites`, `controle_hierarchie`, `controle_sigles`.

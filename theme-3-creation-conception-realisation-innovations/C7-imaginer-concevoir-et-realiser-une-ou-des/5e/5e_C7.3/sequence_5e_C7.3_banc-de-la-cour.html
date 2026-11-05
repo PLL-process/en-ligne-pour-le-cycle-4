@@ -167,6 +167,39 @@ table.releve td input{padding:4px 8px}
 
 /* Billet d'entrée (règle d'or n°26) : sans note ; il renvoie aux rattrapages du bloc « Avant de commencer ». */
 #billet .billet-intro{margin:.2em 0 .6em}#billet .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;border-left:3px solid var(--input-bd,var(--border,#274a8a));border-radius:0;background:none}#billet .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600;color:var(--text)}#billet .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;padding:7px 9px;background:var(--input-bg,rgba(127,127,127,.10));border:2px solid transparent;border-radius:9px}#billet .qcm-option:hover,#billet .qcm-option:focus-within{border-color:var(--hl)}#billet .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}#billet .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;font-weight:400}#billet .billet-retour{margin:.7em 0 0;padding:.55em .8em;border-radius:8px;border-left:4px solid var(--hl);background:rgba(127,127,127,.10)}#billet .billet-retour:empty{display:none}#billet .billet-retour.ok{border-left-color:var(--ok)}#billet .billet-retour.warn{border-left-color:var(--warn)}#billet .billet-retour.ko{border-left-color:var(--err)}#billet .billet-retour p{margin:.2em 0}#billet .billet-retour ul{margin:.3em 0 .2em 1.2em;padding:0}#billet .billet-retour li{margin:.25em 0}#billet .billet-retour a,#billet .billet-retour a:visited{color:var(--hl)}#billet .billet-note{font-size:.9em;opacity:.85}@media print{#billet .billet-retour,#billet .billet-retour a{color:#041a40!important;opacity:1!important}}
+
+/* ── Séances à onglets (squelette n°306) et volet « 📖 Rappel » (règle d'or n°311) — vague du 04/11/2026, sur le modèle
+   du pilote 4e_C8.1. Sans JavaScript (pas de classe js-onglets), la page reste d'un seul tenant : toutes les séances à la
+   suite, ni onglets ni boutons de séance, le volet ouvert et sans bouton. ── */
+.seance-tabs{display:none;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+.js-onglets .seance-tabs{display:flex}
+.seance-tab{flex:1;min-width:150px;min-height:44px;padding:11px 8px;border-radius:10px;background:var(--panel2);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit;line-height:1.3}
+.seance-tab small{display:block;font-weight:400;font-size:.9em;color:var(--sub)}
+.seance-tab.active{background:#1d4e89;color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+.seance-tab.active small{color:#e4eaf5}
+.seance-tab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.seance-tab .done{color:var(--ok)}
+.js-onglets .seance-panel{display:none}
+.js-onglets .seance-panel.active{display:block}
+.seance-tete h2{margin-top:0}
+.question-directrice{color:var(--hl);font-weight:600;margin:.4em 0}
+.page-suivante{display:none;max-width:940px;margin:22px auto 8px;text-align:right}
+.js-onglets .page-suivante{display:block}
+@media print{.page-suivante{display:none!important}}
+.rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}
+.rappel-ouverture>summary{display:none}
+.rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+.rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media print{.rappel-ouverture>summary{display:none!important}}
+.positionnement{margin:8px 0;border:1px solid var(--border);border-radius:10px;padding:8px 12px}
+.positionnement legend{font-size:.9em;color:var(--sub);padding:0 6px}
+.positionnement label{display:inline-block;margin-right:14px}
+.positionnement input[type=radio]{width:auto}
+a.lien-outil,a.lien-outil:visited{color:var(--hl)}   /* règle d'or n°303 : un lien se lit, cliqué ou non */
+/* Un outil n'est pas du décor (n°311) : l'outil qui sert à plusieurs séances est un seul nœud, que le script range
+   dans la séance ouverte, juste sous son en-tête. Hors d'une carte, il garde la largeur des cartes et leur filet mobile. */
+.outil-commun{max-width:940px;margin:0 auto 18px}
+@media(max-width:680px){.outil-commun table{display:block;overflow-x:auto;max-width:100%}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -502,13 +535,24 @@ table.releve td input{padding:4px 8px}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
 
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_5e_C7.3.html">📖 Lexique</a></nav>
 
 <h1>🪵 Le banc de la cour</h1>
-<p class="subtitle">Thème 3 · 5<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<p class="subtitle">🎯 Ta mission : choisir, parmi six matériaux proposés, celui des quatre nouveaux bancs de la cour — et dire, exigence par exigence, pourquoi les autres sont écartés.</p>
+
+<div class="toolbar">
+  <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+</div>
+
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
+
 <div class="badges">
   <span class="badge niveau">Niveau 5e</span>
   <span class="badge code" title="Programme 2024 — 5e_C7.3 : Choisir un matériau parmi plusieurs proposés en fonction de leurs caractéristiques.">5e_C7.3</span>
@@ -664,7 +708,60 @@ vie collégienne en a demandé quatre de plus, et l'intendance a débloqué le b
   });
 })();
 </script>
-<section class="card">
+
+</details><!-- /rappel-ouverture -->
+
+<nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" id="tab-s1" data-panel="s1" role="tab" aria-controls="s1" aria-selected="true" type="button">Séance 1<br><small>Lire, puis éliminer</small></button>
+  <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>Retirer, choisir, refaire</small></button>
+</nav>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card seance-tete">
+<h2>🧭 Séance 1 — Lire, puis éliminer</h2>
+<p class="question-directrice">Question directrice : que dit chaque caractéristique d'un matériau, et comment le banc en élimine-t-il quatre sur six ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : ce que chaque caractéristique dit (activité 0, environ 15 min), puis le banc qui élimine et dit pourquoi (activité 1, environ 25 min). Avec l'ouverture, la séance tient dans 55 min.</p>
+</section>
+
+<!-- Un outil n'est pas du décor (n°311) : le banc des matériaux sert aux deux séances (activités 1, 2 et 3, le Bonus).
+     Un seul nœud : le script le range dans la séance ouverte, juste sous son en-tête. -->
+<section class="outil-commun" id="outilBanc" aria-label="Le banc des matériaux">
+<div id="etabli">
+  <div class="bancm">
+    <p style="font-size:.92em;color:var(--sub);margin:0 0 8px"><b>Le banc des matériaux : six candidats, cinq exigences. Le banc n'attribue aucune note — il élimine, et il dit sur quel critère.</b></p>
+
+    <p style="font-size:.9em;color:var(--sub);margin:8px 0 2px">Les exigences du cahier des
+    charges. Décoche pour <b>retirer</b> un critère, ou change un seuil.</p>
+    <table class="exig">
+      <tr><th></th><th>Critère</th><th>Sens</th><th>Seuil</th><th>Pourquoi ce seuil</th></tr>
+      <tr id="ex_sigma"><td class="ck"><input type="checkbox" id="on_sigma" checked></td><td>Résistance</td><td>au moins</td><td class="sv"><input type="text" inputmode="decimal" id="sv_sigma" value="25" aria-label="Seuil de Résistance"></td><td class="pq">trois élèves assis au milieu, soit 2 000 N (newtons) sur 1,60 m</td></tr>
+      <tr id="ex_uv"><td class="ck"><input type="checkbox" id="on_uv" checked></td><td>Tenue au soleil</td><td>au moins</td><td class="sv"><input type="text" inputmode="decimal" id="sv_uv" value="8" aria-label="Seuil de Tenue au soleil"></td><td class="pq">la cour est en plein soleil ; on ne remplace pas un banc tous les deux ans</td></tr>
+      <tr id="ex_sel"><td class="ck"><input type="checkbox" id="on_sel" checked></td><td>Tenue au sel</td><td>au moins</td><td class="sv"><input type="text" inputmode="decimal" id="sv_sel" value="3" aria-label="Seuil de Tenue au sel"></td><td class="pq">le collège est à 900 m de la mer : l'air porte du sel toute l'année</td></tr>
+      <tr id="ex_chaud"><td class="ck"><input type="checkbox" id="on_chaud" checked></td><td>Température au soleil</td><td>au plus</td><td class="sv"><input type="text" inputmode="decimal" id="sv_chaud" value="55" aria-label="Seuil de Température au soleil"></td><td class="pq">au-delà de 55 °C, on ne peut pas s'asseoir à midi sans se brûler</td></tr>
+      <tr id="ex_masse_max"><td class="ck"><input type="checkbox" id="on_masse_max" checked></td><td>Masse de la pièce</td><td>au plus</td><td class="sv"><input type="text" inputmode="decimal" id="sv_masse_max" value="35" aria-label="Seuil de Masse de la pièce"></td><td class="pq">deux agents doivent pouvoir le déplacer à deux pour laver le sol</td></tr>
+    </table>
+
+    <div class="compteur">
+      <div class="jauge" id="jRet"><b id="nRet">—</b><span>matériau(x) retenu(s)</span></div>
+      <div class="jauge" id="jMoins"><b id="nMoins">—</b><span>le moins cher des retenus</span></div>
+    </div>
+
+    <table class="mat" id="tab">
+      <tr><th>Matériau</th><th>Résistance<br><small>MPa</small></th><th>Tenue au soleil<br><small>ans</small></th><th>Tenue au sel<br><small>/5</small></th><th>Température au soleil<br><small>°C</small></th><th>Masse de la pièce<br><small>kg</small></th><th>Coût<br><small>€</small></th><th>Verdict</th></tr>
+    </table>
+
+    <div class="bancm-cmd">
+      <button class="btn" id="evaluer" type="button">⚖ Évaluer les candidats</button>
+      <button class="btn" id="reinit" type="button">↺ Remettre le cahier des charges</button>
+    </div>
+    <div class="verdict" id="verdict"><div>Aucun essai. Règle les exigences, puis évalue.</div></div>
+
+  </div>
+</div>
+</section>
+
+<section class="card" id="act0">
   <h2>📋 Activité 0 — Ce que chaque caractéristique dit ⏱ ~15 min</h2>
   <p>Un matériau n'est pas « bon » ou « mauvais » : il a des <b>caractéristiques</b>,
   et chacune répond à une question précise. Avant de choisir, il faut savoir quelle question
@@ -736,42 +833,11 @@ vie collégienne en a demandé quatre de plus, et l'intendance a débloqué le b
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="act1">
   <h2>⚖ Activité 1 — Le banc élimine, et il dit pourquoi ⏱ ~25 min</h2>
-  <p>Voici le banc. Les cinq exigences du cahier des charges y sont écrites, avec la
+  <p>Le banc est plus haut, en tête de la séance (<a class="lien-outil" href="#etabli">↑ remonte au banc</a>). Les cinq exigences du cahier des charges y sont écrites, avec la
   raison de chaque seuil. Clique sur <b>⚖ Évaluer les candidats</b> et lis le tableau : les
-  valeurs en rouge sont celles qui font échouer.</p><div id="etabli">
-  <div class="bancm">
-    <p style="font-size:.92em;color:var(--sub);margin:0 0 8px"><b>Le banc des matériaux : six candidats, cinq exigences. Le banc n'attribue aucune note — il élimine, et il dit sur quel critère.</b></p>
-
-    <p style="font-size:.9em;color:var(--sub);margin:8px 0 2px">Les exigences du cahier des
-    charges. Décoche pour <b>retirer</b> un critère, ou change un seuil.</p>
-    <table class="exig">
-      <tr><th></th><th>Critère</th><th>Sens</th><th>Seuil</th><th>Pourquoi ce seuil</th></tr>
-      <tr id="ex_sigma"><td class="ck"><input type="checkbox" id="on_sigma" checked></td><td>Résistance</td><td>au moins</td><td class="sv"><input type="text" inputmode="decimal" id="sv_sigma" value="25" aria-label="Seuil de Résistance"></td><td class="pq">trois élèves assis au milieu, soit 2 000 N (newtons) sur 1,60 m</td></tr>
-      <tr id="ex_uv"><td class="ck"><input type="checkbox" id="on_uv" checked></td><td>Tenue au soleil</td><td>au moins</td><td class="sv"><input type="text" inputmode="decimal" id="sv_uv" value="8" aria-label="Seuil de Tenue au soleil"></td><td class="pq">la cour est en plein soleil ; on ne remplace pas un banc tous les deux ans</td></tr>
-      <tr id="ex_sel"><td class="ck"><input type="checkbox" id="on_sel" checked></td><td>Tenue au sel</td><td>au moins</td><td class="sv"><input type="text" inputmode="decimal" id="sv_sel" value="3" aria-label="Seuil de Tenue au sel"></td><td class="pq">le collège est à 900 m de la mer : l'air porte du sel toute l'année</td></tr>
-      <tr id="ex_chaud"><td class="ck"><input type="checkbox" id="on_chaud" checked></td><td>Température au soleil</td><td>au plus</td><td class="sv"><input type="text" inputmode="decimal" id="sv_chaud" value="55" aria-label="Seuil de Température au soleil"></td><td class="pq">au-delà de 55 °C, on ne peut pas s'asseoir à midi sans se brûler</td></tr>
-      <tr id="ex_masse_max"><td class="ck"><input type="checkbox" id="on_masse_max" checked></td><td>Masse de la pièce</td><td>au plus</td><td class="sv"><input type="text" inputmode="decimal" id="sv_masse_max" value="35" aria-label="Seuil de Masse de la pièce"></td><td class="pq">deux agents doivent pouvoir le déplacer à deux pour laver le sol</td></tr>
-    </table>
-
-    <div class="compteur">
-      <div class="jauge" id="jRet"><b id="nRet">—</b><span>matériau(x) retenu(s)</span></div>
-      <div class="jauge" id="jMoins"><b id="nMoins">—</b><span>le moins cher des retenus</span></div>
-    </div>
-
-    <table class="mat" id="tab">
-      <tr><th>Matériau</th><th>Résistance<br><small>MPa</small></th><th>Tenue au soleil<br><small>ans</small></th><th>Tenue au sel<br><small>/5</small></th><th>Température au soleil<br><small>°C</small></th><th>Masse de la pièce<br><small>kg</small></th><th>Coût<br><small>€</small></th><th>Verdict</th></tr>
-    </table>
-
-    <div class="bancm-cmd">
-      <button class="btn" id="evaluer" type="button">⚖ Évaluer les candidats</button>
-      <button class="btn" id="reinit" type="button">↺ Remettre le cahier des charges</button>
-    </div>
-    <div class="verdict" id="verdict"><div>Aucun essai. Règle les exigences, puis évalue.</div></div>
-
-  </div>
-</div>
+  valeurs en rouge sont celles qui font échouer.</p>
   <div class="exo">
 
     <h4>Après l'évaluation</h4>
@@ -837,7 +903,19 @@ vie collégienne en a demandé quatre de plus, et l'intendance a débloqué le b
   </div>
 </section>
 
-<section class="card">
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Retirer, choisir, refaire ›</button></p>
+
+</div>
+
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<section class="card seance-tete">
+<h2>🧭 Séance 2 — Retirer, choisir, refaire</h2>
+<p class="question-directrice">Question directrice : que se passe-t-il quand on retire une exigence, et comment trancher entre les deux matériaux qui restent ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : retirer une exigence (activité 2, environ 25 min), choisir entre les deux qui restent (activité 3, environ 15 min), le réinvestissement (environ 15 min), puis la synthèse, le Bonus, le bilan et le renvoi vers le QCM.</p>
+</section>
+
+<section class="card" id="act2">
   <h2>➖ Activité 2 — Retirer une exigence, et voir ce qui entre ⏱ ~25 min</h2>
   <p>Sur le banc, chaque exigence a une case à cocher. <b>Décoche-la</b> : elle cesse
   de compter, et le tri recommence. Fais les deux essais du tableau, dans l'ordre, en remettant
@@ -912,7 +990,7 @@ vie collégienne en a demandé quatre de plus, et l'intendance a débloqué le b
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="act3">
   <h2>✅ Activité 3 — Choisir, entre les deux qui restent ⏱ ~15 min</h2>
   <p>Deux matériaux tiennent le cahier des charges : le <b>pin traité autoclave</b>
   (46,82 € l'assise) et le <b>teck</b> (203,84 €). Les deux passent toutes les exigences. Il faut
@@ -960,7 +1038,7 @@ vie collégienne en a demandé quatre de plus, et l'intendance a débloqué le b
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="reinvestissement">
   <h2>🔄 REFAIRE — Réinvestissement ⏱ ~15 min</h2>
 <p>Le même collège veut maintenant <b>une table de pique-nique</b> pour le même
   endroit. Mêmes six matériaux, même cour, même climat. Deux exigences changent : le plateau
@@ -1026,6 +1104,23 @@ vie collégienne en a demandé quatre de plus, et l'intendance a débloqué le b
 
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+  <details class="correction"><summary>✅ Corrigé du Bonus — faire retenir le béton</summary><div>
+    <p><b>Il faut toucher à trois exigences sur cinq.</b> Le béton passe déjà la tenue au soleil (30 ans pour 8 demandés) et la
+    tenue au sel (4 sur 5 pour 3 demandés). Il échoue sur les trois autres : sa résistance est de 5 MPa (mégapascals) pour 25
+    demandés, il monte à 61 °C au soleil pour 55 au plus, et l'assise pèse 53,8 kg pour 35 au plus.</p>
+    <p><b>Deux façons d'y arriver.</b> En décochant ces trois exigences, il ne reste que la tenue au soleil et la tenue au sel :
+    le banc retient alors <b>cinq matériaux sur six</b>. En les assouplissant jusqu'à la valeur du béton (résistance à 5,
+    température à 61, masse à 54), il en retient quatre — l'acier reste recalé, à 68 °C et 175,8 kg. Dans les deux cas, le béton
+    devient « le moins cher des retenus », à 19 € l'assise.</p>
+    <p><b>Ce qu'il reste du cahier des charges : plus rien de ce qui protégeait l'usage.</b> Une assise à 5 MPa casse sous trois
+    élèves (2 000 N (newtons) sur 1,60 m) ; à 61 °C, on se brûle à midi ; à 54 kg, deux agents ne la déplacent plus pour laver
+    le sol. Les raisons de la colonne « Pourquoi ce seuil » n'ont pas changé : ce sont les seuils qu'on a déplacés.</p>
+    <p><b>La phrase attendue, par exemple :</b> « On a assoupli le cahier des charges pour un matériau quand on a choisi le
+    matériau d'abord, puis réglé chaque seuil juste à sa valeur — et que la raison écrite à côté du seuil n'est plus vraie. »</p>
+    <p><b>Erreurs typiques :</b> « il suffit d'en retirer une » — le béton échoue sur trois ; retirer la tenue au soleil ou la
+    tenue au sel — il les passe déjà, cela ne change rien pour lui ; croire que le béton devient un bon choix parce qu'il est le
+    moins cher : il est le moins cher d'un cahier des charges qui ne protège plus rien.</p>
+  </div></details>
 </section>
 
 <section class="card">
@@ -1036,14 +1131,19 @@ vie collégienne en a demandé quatre de plus, et l'intendance a débloqué le b
   matériau, ou de ce que l'objet doit supporter ?</p>
 
   <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">où as-tu hésité en lisant le tableau du banc, et qu'est-ce qui t'a surpris quand tu as retiré une exigence ?</label></p>
+  <input id="bilanMeta" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…">
   <p style="margin-top:12px"><b>Je me positionne sur 5e_C7.3 :</b></p>
-  <select id="pos">
+<p style="font-size:.9em;color:var(--sub);margin:6px 0">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
+  <select id="pos" aria-label="Je me positionne sur 5e_C7.3">
     <option value="">— je me positionne —</option>
-    <option>Je sais confronter des caractéristiques à des exigences, et dire pourquoi un matériau est écarté</option>
-    <option>Je sais le faire si on m'aide à relire les exigences une par une</option>
-    <option>Je lis le tableau, mais je choisis encore d'après le prix ou l'habitude</option>
-    <option>Je ne sais pas encore quelles caractéristiques regarder</option>
+    <option>🔴 Maîtrise insuffisante — je ne sais pas encore quelles caractéristiques regarder</option>
+    <option>🟠 Maîtrise fragile — je lis le tableau, mais je choisis encore d'après le prix ou l'habitude, ou seulement si on m'aide à relire les exigences une par une</option>
+    <option>🟢 Maîtrise satisfaisante — je confronte seul·e les caractéristiques aux exigences, et je dis pourquoi un matériau est écarté</option>
+    <option>⭐ Très bonne maîtrise — et je dis ce que chaque exigence protège, et ce qui entre si on la retire</option>
   </select>
+  <fieldset class="positionnement"><legend>5e_C4.4 (appui) — identifier les principaux matériaux qui constituent un objet technique</legend>
+<label><input type="radio" name="pos_c44" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c44" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c44" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c44" value="4"> ⭐ très bonne</label></fieldset>
 </section>
 
 <section class="card" style="text-align:center">
@@ -1051,6 +1151,8 @@ vie collégienne en a demandé quatre de plus, et l'intendance a débloqué le b
   <p>30 questions sur les caractéristiques, les seuils et ce qu'ils protègent. 20 portent sur le choix d'un matériau, 10 sur les matériaux d'un objet que tu sais déjà reconnaître.</p>
   <a class="btn" href="qcm_5e_C7.3_banc-de-la-cour.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
+
+</div>
 
 <footer>Séquence 5e_C7.3 — « Le banc de la cour ». Banc des matériaux original (CC0), toutes les valeurs calculées par <a href="materiaux.py" download title="Télécharger materiaux.py">📥&nbsp;materiaux.py</a>, aucune dépendance externe. Programme 2024, Thème 3.</footer>
 
@@ -1060,6 +1162,7 @@ vie collégienne en a demandé quatre de plus, et l'intendance a débloqué le b
 const KEY = "seq_5e_C7_3";
 const $ = id => document.getElementById(id);
 window.__exp = window.__exp || {};
+let ongletActif = null;   // la séance affichée (vague n°311, 04/11/2026)
 
 function qmark(e, state){
   let m = e.previousElementSibling;
@@ -1253,22 +1356,89 @@ function save(){
   document.querySelectorAll("input, select, textarea").forEach(e => {
     if(!e.id) return;
     if(e.type === "checkbox" || (e.type === "radio" && e.closest("#billet"))) o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
+  o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
+  o.onglet = ongletActif;
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
 }
 function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
   if(!o) return;
+  ongletActif = o.onglet || null;   // lu avant tout save() (majBanc enregistre)
   Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
   Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  Object.entries(o.radios || {}).forEach(([name, v]) => { const r = document.querySelector('.positionnement input[name="' + name + '"][value="' + v + '"]'); if(r) r.checked = true; });
+  // « pos » est passé le 04/11/2026 aux quatre niveaux du livret : une réponse sur l'ancienne échelle se relit au niveau qui lui correspond
+  const ps = $("pos"), vp = (o.inputs || {}).pos, ANCIENNE = {
+    "Je ne sais pas encore quelles caractéristiques regarder": 1,
+    "Je lis le tableau, mais je choisis encore d'après le prix ou l'habitude": 2,
+    "Je sais le faire si on m'aide à relire les exigences une par une": 2,
+    "Je sais confronter des caractéristiques à des exigences, et dire pourquoi un matériau est écarté": 3 };
+  if(ps && vp && !ps.value && ANCIENNE[vp]) ps.selectedIndex = ANCIENNE[vp];
   window.__exp = o.exp || {};
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r && h.value.trim()) r.textContent = h.value;
+  // l'onglet en cours : un lien direct vers une ancre l'emporte sur lui
+  if(!location.hash && ongletActif && $(ongletActif)) montrerSeance(ongletActif, false);
 }
 document.addEventListener("input", () => {
   save();
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r) r.textContent = h.value.trim() || "—";
 });
+/* Un outil n'est pas du décor (n°311) : le banc des matériaux sert à plusieurs séances. Un seul nœud dans la page, rangé dans la
+   séance ouverte, juste sous son en-tête (question directrice et programme) ; sans JavaScript, il reste à sa place de la séance 1. */
+const OUTIL = $("outilBanc"), SEANCES_OUTIL = ["s1", "s2"];
+function placerOutil(id){
+  if(!OUTIL || !SEANCES_OUTIL.includes(id)) return;
+  const tete = $(id) && $(id).querySelector(".seance-tete");
+  if(tete && tete.nextElementSibling !== OUTIL) tete.insertAdjacentElement("afterend", OUTIL);
+}
+/* ══ Séances à onglets (squelette n°306) — vague du 04/11/2026, sur le modèle du pilote 4e_C8.1 ══
+   L'onglet en cours est mémorisé avec le travail (o.onglet), à part des verrous (__exp). */
+function montrerSeance(id, memoriser){
+  if(!$(id)) return;
+  document.querySelectorAll(".seance-tab").forEach(x => { const on = x.dataset.panel === id; x.classList.toggle("active", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
+  document.querySelectorAll(".seance-panel").forEach(p => p.classList.toggle("active", p.id === id));
+  placerOutil(id);
+  appliqueSeance(id);
+  ongletActif = id;
+  if(memoriser !== false) save();
+}
+document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => montrerSeance(t.dataset.panel)));
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte.
+   Comme au pilote, le volet ne se replie qu'une fois la page chargée (marque data-fermer-au-chargement). */
+function appliqueSeance(idPanneau){
+  const v = $("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", () => { const v = $("ouverture"); if(v){ voletAvantImpression = v.open; v.open = true; } });
+  window.addEventListener("afterprint", () => { const v = $("ouverture"); if(v && voletAvantImpression !== null){ v.open = voletAvantImpression; voletAvantImpression = null; } });
+  const cibleDuLien = () => { let id = ""; try{ id = decodeURIComponent(location.hash.slice(1)); }catch(e){} return id ? $(id) : null; };
+  const ouvrirSeanceDeLAncre = () => {
+    const cible = cibleDuLien(); const pan = cible && cible.closest(".seance-panel");
+    if(!pan || pan.classList.contains("active")) return;
+    montrerSeance(pan.id);
+    setTimeout(() => cible.scrollIntoView({block:"start"}), 60);
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", () => {
+    const v = $("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active") || {}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
+/* Règle d'or n°101 — chaque séance mène explicitement à la suivante */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => { montrerSeance(b.dataset.vers); window.scrollTo({top:0, behavior:"smooth"}); }));
+if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
+
 restore(); majBanc();
 })();
 </script>

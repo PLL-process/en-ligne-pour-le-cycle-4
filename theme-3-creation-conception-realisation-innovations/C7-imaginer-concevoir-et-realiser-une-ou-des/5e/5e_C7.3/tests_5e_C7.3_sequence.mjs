@@ -106,12 +106,21 @@ ok('la formulation officielle est recopiée', src.includes(REP.formulation),
   REP.formulation.slice(0, 40));
 
 // ── les activités ────────────────────────────────────────────────────────
+// Depuis le passage à onglets (vague n°311, 04/11/2026), une activité de la séance 2 n'est à l'écran qu'une fois son
+// onglet ouvert : le banc l'ouvre, comme l'élève. Le banc des matériaux, lui, suit la séance ouverte.
+const montrer = id => p.evaluate(id => {
+  const e = document.getElementById(id), pan = e && e.closest('.seance-panel');
+  if (pan && !pan.classList.contains('active')) document.querySelector('[data-panel="' + pan.id + '"]').click();
+}, id);
+ok('deux séances à onglets, l’ouverture dans le volet « Rappel »',
+  (await p.$$eval('.seance-panel', n => n.length)) === 2 && !!(await p.$('details.rappel-ouverture#ouverture')));
 for (const [n, champs] of Object.entries(REP.activites)) {
   if (REP.avant && REP.avant[n]) { await p.click('#reinit'); await p.waitForTimeout(100);
     await regler(REP.avant[n]); await p.click('#evaluer'); await p.waitForTimeout(120); }
   for (const [id, val] of Object.entries(champs)) {
     const el = await p.$('#' + id);
     if (!el) { ok('champ ' + id + ' présent', false); continue; }
+    await montrer(id);
     const tag = await el.evaluate(e => e.tagName);
     if (tag === 'SELECT') await p.selectOption('#' + id, val); else await p.fill('#' + id, val);
   }
@@ -131,6 +140,7 @@ if (REP.verrou) {
 
 // ── une réponse fausse est refusée ───────────────────────────────────────
 if (REP.refus) {
+  await montrer(REP.refus.id);
   await p.selectOption('#' + REP.refus.id, REP.refus.faux);
   await p.evaluate(n => document.querySelector('[data-check="' + n + '"]').click(), REP.refus.act);
   ok('une réponse fausse est refusée',

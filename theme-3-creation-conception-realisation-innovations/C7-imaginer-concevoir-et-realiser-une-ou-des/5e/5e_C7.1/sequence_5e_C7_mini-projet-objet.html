@@ -139,6 +139,60 @@ details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
 /* règle d'or n°305 — une activité qui demande Internet le dit à son début */
 .activite-en-ligne{border-left:4px solid #ffd66b;background:rgba(255,214,107,.12);padding:.55em .85em;border-radius:0 8px 8px 0;margin:.6em 0 .8em;font-size:.95em;line-height:1.45}
 @media print{.activite-en-ligne,.activite-en-ligne b{color:#1a1a1a!important}.activite-en-ligne{background:#fff8e1!important;border-left-color:#8a6400!important}}
+
+/* ── Séances à onglets (squelette n°306) et volet « 📖 Rappel » (règle d'or n°311) — vague du 04/11/2026, sur le modèle
+   du pilote 4e_C8.1. Sans JavaScript (pas de classe js-onglets), la page reste d'un seul tenant : toutes les séances à la
+   suite, ni onglets ni boutons de séance, le volet ouvert et sans bouton. ── */
+.seance-tabs{display:none;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+.js-onglets .seance-tabs{display:flex}
+.seance-tab{flex:1;min-width:150px;min-height:44px;padding:11px 8px;border-radius:10px;background:var(--panel2);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit;line-height:1.3}
+.seance-tab small{display:block;font-weight:400;font-size:.9em;color:var(--sub)}
+.seance-tab.active{background:#1d4e89;color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+.seance-tab.active small{color:#e4eaf5}
+.seance-tab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.seance-tab .done{color:var(--ok)}
+.js-onglets .seance-panel{display:none}
+.js-onglets .seance-panel.active{display:block}
+.seance-tete h2{margin-top:0}
+.question-directrice{color:var(--hl);font-weight:600;margin:.4em 0}
+.page-suivante{display:none;max-width:940px;margin:22px auto 8px;text-align:right}
+.js-onglets .page-suivante{display:block}
+@media print{.page-suivante{display:none!important}}
+.rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}
+.rappel-ouverture>summary{display:none}
+.rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+
+  /* « 🗺 Où j'en suis » (n°30) : ouvert à la séance 1 ; à partir de la séance 2, replié derrière une ligne qui garde le compte
+     des activités validées — un clic le rouvre, et il reste ouvert pendant la séance (04/11/2026). Sans JavaScript, ouvert. */
+  .ou-jen-suis>details>summary{display:none}
+  .ou-jen-suis>details{border:0;border-radius:0;padding:0;margin:0;background:none;box-shadow:none}
+  .ou-jen-suis.replie{padding:0}
+  .ou-jen-suis.replie>details>summary{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 18px;color:var(--head);font-weight:700;border-radius:inherit}
+  .ou-jen-suis.replie>details>summary::after{content:"▾ le détail";margin-left:auto;font-size:.85em;font-weight:600;color:var(--sub)}
+  .ou-jen-suis.replie>details[open]>summary::after{content:"▴ replier"}
+  .ou-jen-suis.replie>details>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+  .ou-jen-suis.replie>details>h2{display:none}
+  .ou-jen-suis.replie>details[open]{padding:0 18px 14px}
+  .ou-jen-suis.replie>details[open]>summary{padding-left:0;padding-right:0}
+  /* à 390 px, la ligne tient sur une seule rangée */
+  @media(max-width:480px){.ou-jen-suis.replie>details>summary{font-size:.9em;padding:8px 12px;gap:4px}.ou-jen-suis.replie>details>summary::after{content:"▾"}.ou-jen-suis.replie>details[open]>summary::after{content:"▴"}}
+.rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media print{.rappel-ouverture>summary{display:none!important}}
+.positionnement{margin:8px 0;border:1px solid var(--border);border-radius:10px;padding:8px 12px}
+.positionnement legend{font-size:.9em;color:var(--sub);padding:0 6px}
+.positionnement label{display:inline-block;margin-right:14px}
+.positionnement input[type=radio]{width:auto}
+a.lien-outil,a.lien-outil:visited{color:var(--hl)}   /* règle d'or n°303 : un lien se lit, cliqué ou non */
+/* Un outil n'est pas du décor (n°311) : l'outil qui sert à plusieurs séances est un seul nœud, que le script range
+   dans la séance ouverte, juste sous son en-tête. Hors d'une carte, il garde la largeur des cartes et leur filet mobile. */
+.outil-commun{max-width:940px;margin:0 auto 18px}
+@media(max-width:680px){.outil-commun table{display:block;overflow-x:auto;max-width:100%}}
+@media (max-width:480px){   /* n°311 : à 390 px, le sélecteur tient sur deux lignes de boutons, sous son intitulé (pilote 4e_C8.1) */
+  .choix-parcours-boutons .parcours-label{flex:1 1 100%;text-align:center}
+  .choix-parcours-boutons{align-items:flex-start}
+  .choix-parcours-boutons .parcours-btn{flex:1 1 42%;box-sizing:border-box;min-height:42px;display:flex;align-items:center;justify-content:center;padding:6px;font-size:.84em;white-space:nowrap}
+}
+.rappel-hyp{margin:8px 0 12px;padding:10px 12px;border-left:4px solid var(--hl);background:rgba(97,218,251,.06);border-radius:0 8px 8px 0}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -474,13 +528,14 @@ details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="qcm_5e_C7_mini-projet.html">🧠 QCM</a><a href="lexique_5e_C7.1.html">📖 Lexique</a></nav>
 
 <h1>🎒 Mini-projet — l'indicateur de rangement du hall</h1>
-<div class="subtitle">Imaginer, valider par des tests, puis écrire une règle de programme simple — New York</div>
-<div class="badges"><span class="badge">5e</span><span class="badge">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span><span class="badge" title="Suivre un processus de conception et de réalisation dans une durée, avec des tâches identifiées.">5e_C7.1</span><span class="badge" title="Vérifier le comportement et les performances d'un objet technique en suivant un protocole fourni.">5e_C8.3</span><span class="badge" title="Réaliser et mettre au point un programme simple commandant un OST.">5e_C9.3</span><span class="badge" title="Domaines du socle commun travaillés : D2 Les méthodes et outils pour apprendre · D3 La formation de la personne et du citoyen · D4 Les systèmes naturels et les systèmes techniques · D5 Les représentations du monde et l’activité humaine.">Socle : D2 · D3 · D4 · D5</span><span class="badge" title="Ancrage : New York — hall d'une middle school.">New York</span><span class="badge" title="Durée : 3 séances de 55 min sur cette page — 110 min d'activités annoncées (le mini-projet complet se déroule sur 6 séances, atelier et réalisation compris).">⏱ 3 séances de 55 min</span></div>
+<div class="subtitle">🎯 Ta mission : imaginer le voyant d'une case du hall de la Brooklyn Middle School, le valider par des tests, puis écrire la règle SI qui l'allume en rouge ou en vert.</div>
 <div class="identite" id="identite">
 <label>Nom&nbsp;: <input id="eleveNom" aria-label="Nom" autocomplete="family-name"></label>
 <label>Prénom&nbsp;: <input id="elevePrenom" aria-label="Prénom" autocomplete="given-name"></label>
@@ -499,50 +554,12 @@ details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
 </div>
 <p class="saved-note" id="parcoursNote" role="status" aria-live="polite" style="text-align:center">Parcours affiché : <b>tous</b>.</p>
 <p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque les corrections et les compléments : il ne reste que les consignes et les exercices.</p>
-<div class="progress-wrap">
-  <span class="progress-label">Ma progression : <b id="progTxt">0 / 6 activités validées</b></span>
-  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
-</div>
 
-<section class="card" id="billet">
-<h2>🎫 Billet d'entrée — trois questions, sans note</h2>
-<p>Cette séquence s'appuie sur ce que tu as fait en 6e et à l'école. <b>Elles ne comptent pas dans ta progression et ne sont pas notées</b> — « je ne sais pas encore » est une réponse utile.</p>
-<div class="exo">
-  <p><label for="be_1">1. Un objet technique répond d'abord à…
-  <select id="be_1"><option value="">— choisir —</option><option>un besoin : quelqu'un a un problème à résoudre</option><option>une envie de faire joli</option><option>une mode</option><option>je ne sais pas encore</option></select></label></p>
-  <p><label for="be_2">2. Pour savoir si un objet fonctionne, on…
-  <select id="be_2"><option value="">— choisir —</option><option>l'essaie en suivant un protocole écrit</option><option>le regarde et on devine</option><option>demande au professeur</option><option>je ne sais pas encore</option></select></label></p>
-  <p><label for="be_3">3. « SI la case est occupée ALORS voyant rouge » : cette phrase est…
-  <select id="be_3"><option value="">— choisir —</option><option>une condition — elle décide entre deux cas</option><option>un calcul</option><option>le nom d'un composant</option><option>je ne sais pas encore</option></select></label></p>
-  <button class="btn small" id="btnBillet" type="button">Voir où j'en suis</button>
-  <p class="feedback" id="fbBillet" role="status"></p>
-</div>
-</section>
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
 
-<section class="card">
-<h2>🔀 Deux façons de vivre la séquence</h2>
-<div class="exo">
-<p data-parcours="b">🅱 <b>En simulation</b> : le simulateur de place de l'activité 0 fonctionne dans la page, sans rien installer, et l'éditeur Vittascience, dans son onglet, prend le relais pour le programme. C'est le parcours principal.</p>
-<p data-parcours="c">🅲 <b>Sur papier</b> : croquis et tableau de tests à compléter au cahier — <b>mêmes questions, mêmes validations</b>. Le simulateur reste utilisable pour observer.</p>
-</div>
-<div class="retenir"><b>Aucun parcours ne retire de question.</b> Le sélecteur en haut de page masque seulement
-ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le monde.</div>
-</section>
-
-<section class="card" id="taches">
-<h2>🗺 Où j'en suis — les 6 activités de cette séquence</h2>
-<p>Chaque activité validée se colore ici. Rien ne se perd si tu t'arrêtes en route.</p>
-<div class="taches-bandeau" id="tachesBandeau"></div>
-</section>
-
-<section class="card">
-<h2>🔁 Le contrat de la séquence</h2>
-<div class="contrat18">
-<p style="margin:0 0 6px"><b>FAIRE pour comprendre&nbsp;:</b> tu commences par APPUYER sur le bouton du simulateur (activité 0) et regarder la LED changer — avant toute règle écrite.</p>
-<p style="margin:0 0 6px"><b>COMPRENDRE&nbsp;:</b> les «&nbsp;À retenir&nbsp;» nomment les concepts&nbsp;: capteur, état, règle SI.</p>
-<p style="margin:0"><b>REFAIRE pour comprendre encore&nbsp;:</b> tu réinvestis la même règle SI sur un NOUVEAU cas (le casier de bibliothèque) — même squelette, autre habit.</p>
-</div>
-</section>
+<div class="badges"><span class="badge">5e</span><span class="badge">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span><span class="badge" title="Suivre un processus de conception et de réalisation dans une durée, avec des tâches identifiées.">5e_C7.1</span><span class="badge" title="Vérifier le comportement et les performances d'un objet technique en suivant un protocole fourni.">5e_C8.3</span><span class="badge" title="Réaliser et mettre au point un programme simple commandant un OST.">5e_C9.3</span><span class="badge" title="Domaines du socle commun travaillés : D2 Les méthodes et outils pour apprendre · D3 La formation de la personne et du citoyen · D4 Les systèmes naturels et les systèmes techniques · D5 Les représentations du monde et l’activité humaine.">Socle : D2 · D3 · D4 · D5</span><span class="badge" title="Ancrage : New York — hall d'une middle school.">New York</span><span class="badge" title="Durée : 3 séances de 55 min sur cette page — 110 min d'activités annoncées (le mini-projet complet se déroule sur 6 séances, atelier et réalisation compris).">⏱ 3 séances de 55 min</span></div>
 
 <section class="card">
 <h2>📖 Situation déclenchante</h2>
@@ -586,15 +603,86 @@ verras le chemin parcouru.</p>
 modification.</p>
 </section>
 
-<section class="card">
-<h2>🖐️ Activité 0 — FAIRE d'abord&nbsp;: le simulateur de place <span class="chrono">⏱ ~10 min</span></h2>
+<section class="card" id="billet">
+<h2>🎫 Billet d'entrée — trois questions, sans note</h2>
+<p>Cette séquence s'appuie sur ce que tu as fait en 6e et à l'école. <b>Elles ne comptent pas dans ta progression et ne sont pas notées</b> — « je ne sais pas encore » est une réponse utile.</p>
 <div class="exo">
-<p><strong>Consigne&nbsp;:</strong> AVANT toute règle écrite, pose et enlève un sac plusieurs fois. Observe la LED.</p>
+  <p><label for="be_1">1. Un objet technique répond d'abord à…
+  <select id="be_1"><option value="">— choisir —</option><option>un besoin : quelqu'un a un problème à résoudre</option><option>une envie de faire joli</option><option>une mode</option><option>je ne sais pas encore</option></select></label></p>
+  <p><label for="be_2">2. Pour savoir si un objet fonctionne, on…
+  <select id="be_2"><option value="">— choisir —</option><option>l'essaie en suivant un protocole écrit</option><option>le regarde et on devine</option><option>demande au professeur</option><option>je ne sais pas encore</option></select></label></p>
+  <p><label for="be_3">3. « SI la case est occupée ALORS voyant rouge » : cette phrase est…
+  <select id="be_3"><option value="">— choisir —</option><option>une condition — elle décide entre deux cas</option><option>un calcul</option><option>le nom d'un composant</option><option>je ne sais pas encore</option></select></label></p>
+  <button class="btn small" id="btnBillet" type="button">Voir où j'en suis</button>
+  <p class="feedback" id="fbBillet" role="status"></p>
+</div>
+</section>
+
+<section class="card">
+<h2>🔁 Le contrat de la séquence</h2>
+<div class="contrat18">
+<p style="margin:0 0 6px"><b>FAIRE pour comprendre&nbsp;:</b> tu commences par APPUYER sur le bouton du simulateur (activité 0) et regarder la LED changer — avant toute règle écrite.</p>
+<p style="margin:0 0 6px"><b>COMPRENDRE&nbsp;:</b> les «&nbsp;À retenir&nbsp;» nomment les concepts&nbsp;: capteur, état, règle SI.</p>
+<p style="margin:0"><b>REFAIRE pour comprendre encore&nbsp;:</b> tu réinvestis la même règle SI sur un NOUVEAU cas (le casier de bibliothèque) — même squelette, autre habit.</p>
+</div>
+</section>
+
+<section class="card">
+<h2>🔀 Deux façons de vivre la séquence</h2>
+<div class="exo">
+<p data-parcours="b">🅱 <b>En simulation</b> : le simulateur de place de l'activité 0 fonctionne dans la page, sans rien installer, et l'éditeur Vittascience, dans son onglet, prend le relais pour le programme. C'est le parcours principal.</p>
+<p data-parcours="c">🅲 <b>Sur papier</b> : croquis et tableau de tests à compléter au cahier — <b>mêmes questions, mêmes validations</b>. Le simulateur reste utilisable pour observer.</p>
+</div>
+<div class="retenir"><b>Aucun parcours ne retire de question.</b> Le sélecteur en haut de page masque seulement
+ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le monde.</div>
+</section>
+
+</details><!-- /rappel-ouverture -->
+
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression : <b id="progTxt">0 / 6 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+
+<!-- « 🗺 Où j'en suis » (n°30) : ouvert à la séance 1, replié derrière sa ligne de compte à partir de la séance 2 (04/11/2026). -->
+<section class="card ou-jen-suis pp-ecran" id="taches">
+<details id="tachesVolet" open>
+<summary>🗺 Où j'en suis — <span id="tachesResume">0 / 6 activités validées</span></summary>
+<h2>🗺 Où j'en suis — les 6 activités de cette séquence</h2>
+<p>Chaque activité validée se colore ici. Rien ne se perd si tu t'arrêtes en route.</p>
+<div class="taches-bandeau" id="tachesBandeau"></div>
+</details>
+</section>
+
+<nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" id="tab-s1" data-panel="s1" role="tab" aria-controls="s1" aria-selected="true" type="button">Séance 1<br><small>Faire, puis imaginer</small><span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>Valider, puis programmer</small><span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" id="tab-s3" data-panel="s3" role="tab" aria-controls="s3" aria-selected="false" type="button">Séance 3<br><small>Refaire, conclure</small><span class="done" id="done-s3"></span></button>
+</nav>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card seance-tete">
+<h2>🧭 Séance 1 — Faire, puis imaginer</h2>
+<p class="question-directrice">Question directrice : comment un voyant peut-il savoir qu'une case est occupée, et quelles solutions imaginer pour le construire ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : le simulateur de place (activité 0, environ 10 min), puis deux solutions imaginées et un choix argumenté (activité 1, environ 30 min). Avec l'ouverture, la séance tient dans 55 min.</p>
+</section>
+
+<!-- Un outil n'est pas du décor (n°311) : le simulateur de place sert aux séances 1 et 2 (activités 0 et 2, le verrou
+     de l'activité 0). Un seul nœud : le script le range dans la séance ouverte, juste sous son en-tête. -->
+<section class="outil-commun" id="outilSimu" aria-label="Le simulateur de place">
 <div class="simu">
 <p><button class="btn" id="simBtn" type="button">🎒 Poser / enlever le sac</button></p>
 <p style="margin:10px 0 4px">Place&nbsp;: <b id="simPlace">libre</b> &nbsp;·&nbsp; LED&nbsp;: <span class="led verte" id="simLed" role="img" aria-label="LED d'état de la place"></span></p>
 <p style="font-size:.82em;color:var(--sub)">Fais au moins deux allers-retours (poser PUIS enlever, deux fois).</p>
 </div>
+</section>
+
+<section class="card" id="act0">
+<h2>🖐️ Activité 0 — FAIRE d'abord&nbsp;: le simulateur de place <span class="chrono">⏱ ~10 min</span></h2>
+<div class="exo">
+<p><strong>Consigne&nbsp;:</strong> AVANT toute règle écrite, pose et enlève un sac plusieurs fois, au simulateur juste au-dessus. Observe la LED.</p>
 <p style="margin-top:10px">Q1 — Quand la place est OCCUPÉE, la LED est…
 <select id="a0q1" style="width:auto" aria-label="Q1 de l'activité 0"><option value="">— je choisis —</option><option>rouge</option><option>verte</option><option>éteinte</option></select></p>
 <p>Q2 — Qu'est-ce qui JOUE LE RÔLE du capteur dans ce simulateur&nbsp;?
@@ -607,7 +695,7 @@ modification.</p>
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="act1">
 <h2>🔧 Activité 1 — Imaginer <span style="font-size:.72em;opacity:.85">(5e_C7.1)</span> <span class="chrono">⏱ ~30 min</span></h2>
 <div class="exo">
 <h4>1a — Ton planning</h4>
@@ -636,10 +724,22 @@ modification.</p>
 </div>
 </section>
 
-<section class="card">
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Valider, puis programmer ›</button></p>
+
+</div>
+
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<section class="card seance-tete">
+<h2>🧭 Séance 2 — Valider, puis programmer</h2>
+<p class="question-directrice">Question directrice : le voyant fait-il ce qu'on attend, et comment écrire la règle qui le commande ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : la grille de validation, au simulateur (activité 2, environ 25 min), les quatre gestes de Vittascience, puis la règle SI en algorigramme et en programme (activité 3, environ 30 min).</p>
+</section>
+
+<section class="card" id="act2">
 <h2>🧪 Activité 2 — Valider <span style="font-size:.72em;opacity:.85">(5e_C8.3)</span> <span class="chrono">⏱ ~25 min</span></h2>
 <div class="exo">
-<p>PRÉDIS chaque résultat, puis VÉRIFIE-le au simulateur de l'activité 0 (pose / enlève le sac) et compare, <b>directement dans la grille</b>&nbsp;: écris d'abord l'attendu, puis dis si le simulateur le confirme (<b>conforme</b>&nbsp;: ce que tu observes est ce que tu attendais). Prends enfin la décision globale, sur la dernière ligne.</p>
+<p>PRÉDIS chaque résultat, puis VÉRIFIE-le au simulateur de place (<a class="lien-outil" href="#outilSimu">en tête de la séance</a> : pose / enlève le sac) et compare, <b>directement dans la grille</b>&nbsp;: écris d'abord l'attendu, puis dis si le simulateur le confirme (<b>conforme</b>&nbsp;: ce que tu observes est ce que tu attendais). Prends enfin la décision globale, sur la dernière ligne.</p>
 <div class="grille-conforme"><div class="defile"><table class="refs grille">
 <caption>La grille de validation de la place de rangement, à compléter</caption>
 <thead><tr><th scope="col">Test</th><th scope="col">Attendu</th><th scope="col">Le simulateur confirme-t-il&nbsp;?</th></tr></thead>
@@ -738,7 +838,7 @@ modification.</p>
   </ol>
 </section>
 
-<section class="card">
+<section class="card" id="act3">
 <h2>💻 Activité 3 — La règle SI en schéma, puis en programme <span style="font-size:.72em;opacity:.85">(5e_C9.3)</span> <span class="chrono">⏱ ~30 min</span></h2>
 <p class="activite-en-ligne">🌐 <b>Cette activité demande une connexion Internet</b> — l'éditeur Vittascience est en ligne. <b>Sans connexion&nbsp;:</b> écris ton programme sur le cahier : la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
 <div class="exo">
@@ -776,7 +876,19 @@ else:
 </div>
 </section>
 
-<section class="card">
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Refaire, conclure ›</button></p>
+
+</div>
+
+<!-- ══════════════════ SÉANCE 3 ══════════════════ -->
+<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
+<section class="card seance-tete">
+<h2>🧭 Séance 3 — Refaire, conclure</h2>
+<p class="question-directrice">Question directrice : la même règle SI marche-t-elle sur un autre objet ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : le réinvestissement sur le casier de bibliothèque (environ 15 min), puis la synthèse, le Bonus et le bilan ; le TP « Le dé » et l'atelier de planification lancent ensuite la fabrication du support, et le QCM t'attend pour t'entraîner.</p>
+</section>
+
+<section class="card" id="reinvestissement">
 <h2>🔄 REFAIRE — Réinvestissement <span class="chrono">⏱ ~15 min</span></h2>
 <div class="exo">
 <p>Même logique pour un <b>casier de bibliothèque</b> (livre présent / absent). Écris la règle SI (4 lignes)&nbsp;:</p>
@@ -816,16 +928,57 @@ FIN SI</pre>
 <div class="bonus">
 <p><b>Citoyen&nbsp;:</b> Quel autre objet du collège améliorer, et pour quel besoin&nbsp;?</p>
 <textarea rows="2" id="defi1" placeholder="Tes idées — sauvegardées dans la page" aria-label="Défi 1"></textarea>
+<details class="correction"><summary>✅ Corrigé du défi citoyen</summary><div>
+<p><b>Exemples qui conviennent :</b> un voyant « salle occupée » sur la porte d'une salle de réunion, pour ne pas ouvrir en
+plein cours ; un témoin « poubelle pleine » sur le bac de tri, pour que l'agent sache quand passer ; un rappel lumineux sur le
+distributeur de savon vide des toilettes.</p>
+<p><b>Attendus :</b> un objet réel du collège ; le besoin dit avec QUI il gêne et QUOI (« les élèves ne voient pas si… ») ; une
+amélioration qu'on pourra tester, c'est-à-dire dont on saura dire si elle marche.</p>
+<p><b>Erreurs typiques :</b> donner une solution sans dire le besoin (« mettre une LED ») ; un besoin qui n'en est pas un
+(« faire plus joli ») ; un objet sans lien avec le collège.</p>
+</div></details>
 <p style="margin-top:10px"><b>Technique&nbsp;:</b> Ajoute un test «&nbsp;tenue si on secoue le support&nbsp;» (étape + résultat attendu)&nbsp;:</p>
 <textarea rows="2" id="defi2" placeholder="Ton test — sauvegardé dans la page" aria-label="Défi 2"></textarea>
+<details class="correction"><summary>✅ Corrigé du défi technique</summary><div>
+<p><b>Un test complet, par exemple :</b> étape — sac posé, secouer le support à la main pendant 10 secondes, puis recommencer
+sans sac ; résultat attendu, écrit avant l'essai — le support reste fixé, aucune pièce ne tombe, et le voyant garde sa couleur
+(rouge avec le sac, vert sans) sans clignoter.</p>
+<p><b>Attendus :</b> une action précise (quoi, pendant combien de temps ou combien de fois) ; les conditions (avec et sans sac) ;
+un résultat attendu qu'on observe par oui ou par non, écrit AVANT d'essayer ; une ligne de plus dans la grille de l'activité 2,
+comme les trois autres tests.</p>
+<p><b>Erreurs typiques :</b> « ça doit tenir » — ce n'est pas observable ; oublier de regarder le voyant, alors qu'un faux contact
+fait clignoter la LED ; ne pas dire combien de temps on secoue : deux élèves feraient deux tests différents.</p>
+</div></details>
 <p style="margin-top:10px"><b>New York&nbsp;:</b> Pourquoi un indicateur visible est-il utile dans un hall très fréquenté&nbsp;?</p>
 <textarea rows="2" id="defi3" placeholder="Ton explication — sauvegardée dans la page" aria-label="Défi 3"></textarea>
+<details class="correction"><summary>✅ Corrigé de l'ancrage New York</summary><div>
+<p><b>Parce qu'on choisit sans s'arrêter.</b> Deux cents élèves entrent en huit minutes : celui qui se penche sur chaque case
+bloque ceux qui le suivent, et finit par poser son sac par terre. Un voyant qu'on lit à trois mètres dit tout de suite où
+aller.</p>
+<p><b>Ce que ça change :</b> plus de sacs devant les cases, donc moins de chutes — M. Alvarez en a compté trois en un mois ; un
+passage plus fluide ; et ni porte ni serrure à acheter.</p>
+<p><b>Attendus :</b> le lien avec la situation (le nombre d'élèves, le temps, les chutes) ; la distance de lecture (depuis
+l'entrée, sans s'approcher) ; au moins une conséquence : la sécurité ou la fluidité.</p>
+<p><b>Erreurs typiques :</b> « c'est plus joli » ou « c'est moderne » — ce ne sont pas des besoins ; oublier la distance : un
+voyant qu'il faut regarder de près ne sert à rien dans la foule.</p>
+</div></details>
 </div>
 </section>
 
 <section class="card">
 <h2>🙋 Bilan personnel</h2>
+<div id="rappelHyp" class="rappel-hyp" style="display:none"></div>
+<p><b>Retour à mon hypothèse :</b> ma première idée pour savoir qu'un sac est posé dans la case était-elle la bonne ? <input id="bilanHyp" aria-label="Retour à mon hypothèse" placeholder="Oui / non, et ce que le simulateur et les tests m'ont appris"></p>
+<p><b>Comment j'ai travaillé :</b> où ai-je hésité, et qu'est-ce qui m'a surpris en passant de l'algorigramme au programme ? <input id="bilanMeta" aria-label="Comment j'ai travaillé" placeholder="J'ai hésité sur… / ce qui m'a surpris…"></p>
 <p>J'ai appris&nbsp;: <input id="bilan1" aria-label="Ce que j'ai appris"></p><p>Je sais faire&nbsp;: <input id="bilan2" aria-label="Ce que je sais faire"></p><p>À revoir&nbsp;: <input id="bilan3" aria-label="Ce qui est à revoir"></p>
+<h3>📍 Je me positionne</h3>
+<p style="font-size:.9em;color:var(--sub);margin:6px 0">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
+<fieldset class="positionnement"><legend>5e_C7.1 — suivre un processus de conception et de réalisation, avec des tâches identifiées</legend>
+<label><input type="radio" name="pos_c71" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c71" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c71" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c71" value="4"> ⭐ très bonne</label></fieldset>
+<fieldset class="positionnement"><legend>5e_C8.3 — vérifier le comportement d'un objet technique en suivant un protocole fourni</legend>
+<label><input type="radio" name="pos_c83" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c83" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c83" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c83" value="4"> ⭐ très bonne</label></fieldset>
+<fieldset class="positionnement"><legend>5e_C9.3 — réaliser et mettre au point un programme simple</legend>
+<label><input type="radio" name="pos_c93" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c93" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c93" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c93" value="4"> ⭐ très bonne</label></fieldset>
 <p>Confiance (1-4)&nbsp;: <select id="bilan4" style="width:auto" aria-label="Ma confiance"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
 </section>
 
@@ -855,6 +1008,8 @@ ailleurs.</p>
 <a class="btn" href="qcm_5e_C7_mini-projet.html">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
 
+</div>
+
 <footer>TechnoQuest · Thème 3 · 5e C7-C8-C9 · New York. Sauvegarde locale uniquement — aucune donnée envoyée.</footer>
 
 <script>
@@ -863,6 +1018,7 @@ ailleurs.</p>
 const KEY = "seq_5e_C7_mini_projet";
 const $ = id => document.getElementById(id);
 window.__exp = window.__exp || {};
+let ongletActif = null;   // la séance affichée (vague n°311, 04/11/2026)
 
 /* règle n°13 : coloration des listings */
 function pyc(src){
@@ -952,16 +1108,23 @@ document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("cli
 function save(){
   const o = {inputs: {}, exp: window.__exp || {}, par};
   document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
+  // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
+  o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
+  o.onglet = ongletActif;
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
   const sn = $("savedNote"); if(sn){ sn.textContent = "💾 Sauvegardé (" + new Date().toLocaleTimeString() + ")"; }
 }
 function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
   if(!o) return;
+  ongletActif = o.onglet || null;
   Object.entries(o.inputs || {}).forEach(([id, v]) => { const e = $(id); if(e) e.value = v; });
+  Object.entries(o.radios || {}).forEach(([name, v]) => { const r = document.querySelector('.positionnement input[name="' + name + '"][value="' + v + '"]'); if(r) r.checked = true; });
   window.__exp = Object.assign(window.__exp || {}, o.exp || {});
   (o.par && o.par.s || []).forEach(x => { if(!par.s.includes(x)) par.s.push(x); });
-  updateProg();
+  updateProg(); majHyp();
+  // l'onglet en cours : un lien direct vers une ancre l'emporte sur lui
+  if(!location.hash && ongletActif && $(ongletActif)) montrerSeance(ongletActif, false);
 }
 document.addEventListener("change", e => { if(e.target.matches("input, select, textarea")) save(); });
 /* ══ Règle d'or n°30 — le tableau de bord des tâches, et la progression ══ */
@@ -974,6 +1137,8 @@ const TACHES = [
   {n:"5", libelle:"REFAIRE — la même règle sur un autre objet"}
 ];
 function majTaches(){
+  const rs = $("tachesResume");   // la ligne du volet replié : le même compte que la liste
+  if(rs) rs.textContent = TACHES.filter(t => par.s.includes(t.n)).length + " / " + TACHES.length + " activités validées";
   const c = $("tachesBandeau"); if(!c) return;
   c.innerHTML = TACHES.map(t => {
     const fait = par.s.includes(t.n);
@@ -986,6 +1151,7 @@ function updateProg(){
   if($("progTxt")) $("progTxt").textContent = n + " / 6 activités validées";
   if($("progFill")) $("progFill").style.width = Math.round(n * 100 / 6) + "%";
   if($("progBar")) $("progBar").setAttribute("aria-valuenow", n);
+  Object.entries(SEANCES).forEach(([id, acts]) => { const d = $("done-" + id); if(d) d.textContent = acts.every(a => par.s.includes(a)) ? " ✔" : ""; });
   majTaches();
 }
 
@@ -1043,6 +1209,74 @@ document.querySelectorAll(".parcours-btn").forEach(b => b.addEventListener("clic
   window.__exp.parcours = b.dataset.choix;
   majParcours(); save();
 }));
+
+/* retour à l'hypothèse (n°301) : le bilan relit l'idée écrite au début */
+function majHyp(){
+  const el = $("rappelHyp"), t = ($("idee0") || {}).value || ""; if(!el) return;
+  el.textContent = "";
+  if(!t.trim()){ el.style.display = "none"; return; }
+  const b = document.createElement("b"), i = document.createElement("i");
+  b.textContent = "🔎 Au début de la séquence, tu avais écrit :"; i.textContent = "« " + t.trim() + " »";
+  el.appendChild(b); el.appendChild(document.createElement("br")); el.appendChild(i);
+  el.style.display = "block";
+}
+if($("idee0")) $("idee0").addEventListener("input", majHyp);
+const SEANCES = {s1:["0","1"], s2:["2","3","4"], s3:["5"]};   // les vérificateurs (data-check) de chaque séance
+/* Un outil n'est pas du décor (n°311) : le simulateur de place sert à plusieurs séances. Un seul nœud dans la page, rangé dans la
+   séance ouverte, juste sous son en-tête (question directrice et programme) ; sans JavaScript, il reste à sa place de la séance 1. */
+const OUTIL = $("outilSimu"), SEANCES_OUTIL = ["s1", "s2"];
+function placerOutil(id){
+  if(!OUTIL || !SEANCES_OUTIL.includes(id)) return;
+  const tete = $(id) && $(id).querySelector(".seance-tete");
+  if(tete && tete.nextElementSibling !== OUTIL) tete.insertAdjacentElement("afterend", OUTIL);
+}
+/* ══ Séances à onglets (squelette n°306) — vague du 04/11/2026, sur le modèle du pilote 4e_C8.1 ══
+   L'onglet en cours est mémorisé avec le travail (o.onglet), à part des verrous (__exp). */
+function montrerSeance(id, memoriser){
+  if(!$(id)) return;
+  document.querySelectorAll(".seance-tab").forEach(x => { const on = x.dataset.panel === id; x.classList.toggle("active", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
+  document.querySelectorAll(".seance-panel").forEach(p => p.classList.toggle("active", p.id === id));
+  placerOutil(id);
+  appliqueSeance(id);
+  ongletActif = id;
+  if(memoriser !== false) save();
+}
+document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => montrerSeance(t.dataset.panel)));
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte.
+   Comme au pilote, le volet ne se replie qu'une fois la page chargée (marque data-fermer-au-chargement). */
+function appliqueSeance(idPanneau){
+  const v = $("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  // « 🗺 Où j'en suis » : ouvert à la séance 1, replié dès la séance 2 — à chaque changement de séance seulement, pour qu'un
+  // élève qui l'a rouvert le garde ouvert pendant sa séance (04/11/2026)
+  const oj = document.getElementById("taches"), ojv = document.getElementById("tachesVolet");
+  if(oj && ojv && oj.dataset.seance !== String(idPanneau)){ oj.dataset.seance = String(idPanneau); oj.classList.toggle("replie", n >= 2); ojv.open = n < 2; }
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", () => { const v = $("ouverture"); if(v){ voletAvantImpression = v.open; v.open = true; } });
+  window.addEventListener("afterprint", () => { const v = $("ouverture"); if(v && voletAvantImpression !== null){ v.open = voletAvantImpression; voletAvantImpression = null; } });
+  const cibleDuLien = () => { let id = ""; try{ id = decodeURIComponent(location.hash.slice(1)); }catch(e){} return id ? $(id) : null; };
+  const ouvrirSeanceDeLAncre = () => {
+    const cible = cibleDuLien(); const pan = cible && cible.closest(".seance-panel");
+    if(!pan || pan.classList.contains("active")) return;
+    montrerSeance(pan.id);
+    setTimeout(() => cible.scrollIntoView({block:"start"}), 60);
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", () => {
+    const v = $("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active") || {}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
+/* Règle d'or n°101 — chaque séance mène explicitement à la suivante */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => { montrerSeance(b.dataset.vers); window.scrollTo({top:0, behavior:"smooth"}); }));
 
 restore();
 if(window.__exp && window.__exp.essentiel) document.body.classList.add("essentiel");

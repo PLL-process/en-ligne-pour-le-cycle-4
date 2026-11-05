@@ -159,6 +159,39 @@ table.releve td input{padding:4px 8px}
 
 /* Billet d'entrée (règle d'or n°26) : sans note ; il renvoie aux rattrapages du bloc « Avant de commencer ». */
 #billet .billet-intro{margin:.2em 0 .6em}#billet .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;border-left:3px solid var(--input-bd,var(--border,#274a8a));border-radius:0;background:none}#billet .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600;color:var(--text)}#billet .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;padding:7px 9px;background:var(--input-bg,rgba(127,127,127,.10));border:2px solid transparent;border-radius:9px}#billet .qcm-option:hover,#billet .qcm-option:focus-within{border-color:var(--hl)}#billet .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}#billet .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;font-weight:400}#billet .billet-retour{margin:.7em 0 0;padding:.55em .8em;border-radius:8px;border-left:4px solid var(--hl);background:rgba(127,127,127,.10)}#billet .billet-retour:empty{display:none}#billet .billet-retour.ok{border-left-color:var(--ok)}#billet .billet-retour.warn{border-left-color:var(--warn)}#billet .billet-retour.ko{border-left-color:var(--err)}#billet .billet-retour p{margin:.2em 0}#billet .billet-retour ul{margin:.3em 0 .2em 1.2em;padding:0}#billet .billet-retour li{margin:.25em 0}#billet .billet-retour a,#billet .billet-retour a:visited{color:var(--hl)}#billet .billet-note{font-size:.9em;opacity:.85}@media print{#billet .billet-retour,#billet .billet-retour a{color:#041a40!important;opacity:1!important}}
+
+/* ── Séances à onglets (squelette n°306) et volet « 📖 Rappel » (règle d'or n°311) — vague du 04/11/2026, sur le modèle
+   du pilote 4e_C8.1. Sans JavaScript (pas de classe js-onglets), la page reste d'un seul tenant : toutes les séances à la
+   suite, ni onglets ni boutons de séance, le volet ouvert et sans bouton. ── */
+.seance-tabs{display:none;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+.js-onglets .seance-tabs{display:flex}
+.seance-tab{flex:1;min-width:150px;min-height:44px;padding:11px 8px;border-radius:10px;background:var(--panel2);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit;line-height:1.3}
+.seance-tab small{display:block;font-weight:400;font-size:.9em;color:var(--sub)}
+.seance-tab.active{background:#1d4e89;color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+.seance-tab.active small{color:#e4eaf5}
+.seance-tab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.seance-tab .done{color:var(--ok)}
+.js-onglets .seance-panel{display:none}
+.js-onglets .seance-panel.active{display:block}
+.seance-tete h2{margin-top:0}
+.question-directrice{color:var(--hl);font-weight:600;margin:.4em 0}
+.page-suivante{display:none;max-width:940px;margin:22px auto 8px;text-align:right}
+.js-onglets .page-suivante{display:block}
+@media print{.page-suivante{display:none!important}}
+.rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}
+.rappel-ouverture>summary{display:none}
+.rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+.rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media print{.rappel-ouverture>summary{display:none!important}}
+.positionnement{margin:8px 0;border:1px solid var(--border);border-radius:10px;padding:8px 12px}
+.positionnement legend{font-size:.9em;color:var(--sub);padding:0 6px}
+.positionnement label{display:inline-block;margin-right:14px}
+.positionnement input[type=radio]{width:auto}
+a.lien-outil,a.lien-outil:visited{color:var(--hl)}   /* règle d'or n°303 : un lien se lit, cliqué ou non */
+/* Un outil n'est pas du décor (n°311) : l'outil qui sert à plusieurs séances est un seul nœud, que le script range
+   dans la séance ouverte, juste sous son en-tête. Hors d'une carte, il garde la largeur des cartes et leur filet mobile. */
+.outil-commun{max-width:940px;margin:0 auto 18px}
+@media(max-width:680px){.outil-commun table{display:block;overflow-x:auto;max-width:100%}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -494,13 +527,24 @@ table.releve td input{padding:4px 8px}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
 
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_5e_C7.5.html">📖 Lexique</a></nav>
 
 <h1>🔌 L'éclairage du préau</h1>
-<p class="subtitle">Thème 3 · 5<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<p class="subtitle">🎯 Ta mission : assembler les constituants fournis pour que le préau s'éclaire quand il fait sombre — chacun à sa place, sur le bon port.</p>
+
+<div class="toolbar">
+  <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+</div>
+
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
+
 <div class="badges">
   <span class="badge niveau">Niveau 5e</span>
   <span class="badge code" title="Programme 2024 — 5e_C7.5 : Assembler les constituants fournis pour réaliser un prototype.">5e_C7.5</span>
@@ -654,7 +698,63 @@ Il attend son capteur sur une entrée précise, et sa DEL sur une sortie précis
   });
 })();
 </script>
-<section class="card">
+
+</details><!-- /rappel-ouverture -->
+
+<nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" id="tab-s1" data-panel="s1" role="tab" aria-controls="s1" aria-selected="true" type="button">Séance 1<br><small>Nommer, puis monter</small></button>
+  <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>Retirer, ordonner, refaire</small></button>
+</nav>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card seance-tete">
+<h2>🧭 Séance 1 — Nommer, puis monter</h2>
+<p class="question-directrice">Question directrice : quelle fonction tient chaque constituant, et sur quel port le brancher pour que le prototype marche ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : quatre fonctions, pas cinq (activité 0, environ 15 min), puis monter le prototype sur l'établi (activité 1, environ 25 min). Avec l'ouverture, la séance tient dans 55 min.</p>
+</section>
+
+<!-- Un outil n'est pas du décor (n°311) : l'établi sert aux deux séances (activités 1 et 2, le Bonus). Un seul nœud :
+     le script le range dans la séance ouverte, juste sous son en-tête. -->
+<section class="outil-commun" id="outilEtabli" aria-label="L'établi Grove">
+<div id="etabli">
+  <div class="etabli">
+    <p style="font-size:.92em;color:var(--sub);margin:0 0 8px"><b>L'établi : place chaque constituant sur un port, puis teste. L'établi ne dit jamais « ça ne marche pas » — il dit pourquoi.</b></p>
+
+    <div class="chaine">
+      <div class="fct" id="f_acquerir"><b>Acquérir</b><span>prendre la mesure</span></div>
+      <div class="fct" id="f_traiter"><b>Traiter</b><span>décider quoi faire</span></div>
+      <div class="fct" id="f_agir"><b>Agir</b><span>produire l'effet</span></div>
+      <div class="fct" id="f_alimenter"><b>Alimenter</b><span>fournir l'énergie</span></div>
+    </div>
+
+    <table class="cat">
+      <tr><th>Constituant</th><th>Ce qu'il fait</th><th>mA</th><th>Port</th></tr>
+      <tr id="tr_carte"><td><b>Carte Arduino UNO</b></td><td>elle exécute le programme</td><td class="ma" id="ma_carte">—</td><td class="pt"><select id="pt_carte" aria-label="Port de Carte Arduino UNO"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_shield"><td><b>Base Shield V2</b></td><td>il donne des ports Grove à la carte</td><td class="ma" id="ma_shield">—</td><td class="pt"><select id="pt_shield" aria-label="Port de Base Shield V2"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_lum"><td><b>Capteur de luminosité Grove</b></td><td>il mesure la lumière du préau</td><td class="ma" id="ma_lum">—</td><td class="pt"><select id="pt_lum" aria-label="Port de Capteur de luminosité Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_del"><td><b>Module DEL Grove</b></td><td>il éclaire le préau</td><td class="ma" id="ma_del">—</td><td class="pt"><select id="pt_del" aria-label="Port de Module DEL Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_usb"><td><b>Câble USB 5 V (volts), 500 mA (milliampères)</b></td><td>il apporte l'énergie</td><td class="ma" id="ma_usb">—</td><td class="pt"><select id="pt_usb" aria-label="Port de Câble USB 5 V (500 mA)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+    </table>
+    <p class="budget" id="budget">—</p>
+    <p style="font-size:.9em;color:var(--sub);margin:10px 0 2px">Le programme téléversé dans la carte (on ne le modifie pas) :</p>
+    <div class="prog">lumiere = analogRead(A0)      <span class="cm">// on lit le capteur sur A0</span>
+si lumiere &lt; 300 alors      <span class="cm">// en dessous de 300, il fait sombre</span>
+    digitalWrite(5, HAUT)     <span class="cm">// on allume la DEL branchée sur D5</span>
+sinon
+    digitalWrite(5, BAS)      <span class="cm">// sinon on l'éteint</span></div>
+
+    <div class="etabli-cmd">
+      <button class="btn" id="tester" type="button">⚡ Tester le prototype</button>
+      <button class="btn" id="demonter" type="button">↺ Tout démonter</button>
+    </div>
+    <div class="verdict" id="verdict"><div>Aucun essai. Monte les constituants, puis teste.</div></div>
+
+  </div>
+</div>
+</section>
+
+<section class="card" id="act0">
   <h2>🧩 Activité 0 — Quatre fonctions, pas cinq ⏱ ~15 min</h2>
   <p>Un prototype qui fonctionne tient <b>quatre fonctions</b> en même temps :
   acquérir, traiter, agir, alimenter. Le kit contient cinq objets. L'un d'eux ne tient
@@ -724,47 +824,13 @@ Il attend son capteur sur une entrée précise, et sa DEL sur une sortie précis
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="act1">
   <h2>🔧 Activité 1 — Monter le prototype ⏱ ~25 min</h2>
-  <p>Voici l'établi. Choisis un port pour chacun des cinq constituants, puis
+  <p>L'établi est plus haut, en tête de la séance (<a class="lien-outil" href="#etabli">↑ remonte à l'établi</a>). Choisis un port pour chacun des cinq constituants, puis
   clique sur <b>⚡ Tester le prototype</b>. Lis le programme sous le tableau : il te dit
   exactement où il va chercher la mesure et où il envoie l'ordre.</p>
   <p style="color:var(--sub);font-size:.92em">Si l'établi refuse, il te dit pourquoi. Ce n'est
-  pas une punition : c'est un diagnostic, et il se lit du plus grossier au plus fin.</p><div id="etabli">
-  <div class="etabli">
-    <p style="font-size:.92em;color:var(--sub);margin:0 0 8px"><b>L'établi : place chaque constituant sur un port, puis teste. L'établi ne dit jamais « ça ne marche pas » — il dit pourquoi.</b></p>
-
-    <div class="chaine">
-      <div class="fct" id="f_acquerir"><b>Acquérir</b><span>prendre la mesure</span></div>
-      <div class="fct" id="f_traiter"><b>Traiter</b><span>décider quoi faire</span></div>
-      <div class="fct" id="f_agir"><b>Agir</b><span>produire l'effet</span></div>
-      <div class="fct" id="f_alimenter"><b>Alimenter</b><span>fournir l'énergie</span></div>
-    </div>
-
-    <table class="cat">
-      <tr><th>Constituant</th><th>Ce qu'il fait</th><th>mA</th><th>Port</th></tr>
-      <tr id="tr_carte"><td><b>Carte Arduino UNO</b></td><td>elle exécute le programme</td><td class="ma" id="ma_carte">—</td><td class="pt"><select id="pt_carte" aria-label="Port de Carte Arduino UNO"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_shield"><td><b>Base Shield V2</b></td><td>il donne des ports Grove à la carte</td><td class="ma" id="ma_shield">—</td><td class="pt"><select id="pt_shield" aria-label="Port de Base Shield V2"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_lum"><td><b>Capteur de luminosité Grove</b></td><td>il mesure la lumière du préau</td><td class="ma" id="ma_lum">—</td><td class="pt"><select id="pt_lum" aria-label="Port de Capteur de luminosité Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_del"><td><b>Module DEL Grove</b></td><td>il éclaire le préau</td><td class="ma" id="ma_del">—</td><td class="pt"><select id="pt_del" aria-label="Port de Module DEL Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_usb"><td><b>Câble USB 5 V (volts), 500 mA (milliampères)</b></td><td>il apporte l'énergie</td><td class="ma" id="ma_usb">—</td><td class="pt"><select id="pt_usb" aria-label="Port de Câble USB 5 V (500 mA)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-    </table>
-    <p class="budget" id="budget">—</p>
-    <p style="font-size:.9em;color:var(--sub);margin:10px 0 2px">Le programme téléversé dans la carte (on ne le modifie pas) :</p>
-    <div class="prog">lumiere = analogRead(A0)      <span class="cm">// on lit le capteur sur A0</span>
-si lumiere &lt; 300 alors      <span class="cm">// en dessous de 300, il fait sombre</span>
-    digitalWrite(5, HAUT)     <span class="cm">// on allume la DEL branchée sur D5</span>
-sinon
-    digitalWrite(5, BAS)      <span class="cm">// sinon on l'éteint</span></div>
-
-    <div class="etabli-cmd">
-      <button class="btn" id="tester" type="button">⚡ Tester le prototype</button>
-      <button class="btn" id="demonter" type="button">↺ Tout démonter</button>
-    </div>
-    <div class="verdict" id="verdict"><div>Aucun essai. Monte les constituants, puis teste.</div></div>
-
-  </div>
-</div>
+  pas une punition : c'est un diagnostic, et il se lit du plus grossier au plus fin.</p>
   <div class="exo">
 
     <h4>Une fois que l'établi affiche ✔</h4>
@@ -797,7 +863,19 @@ sinon
   </div>
 </section>
 
-<section class="card">
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Retirer, ordonner, refaire ›</button></p>
+
+</div>
+
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<section class="card seance-tete">
+<h2>🧭 Séance 2 — Retirer, ordonner, refaire</h2>
+<p class="question-directrice">Question directrice : que casse chaque constituant quand on le retire, et dans quel ordre monter le prototype réel ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : retirer, pour voir (activité 2, environ 20 min), l'ordre du montage (activité 3, environ 20 min), le réinvestissement (environ 15 min), puis la synthèse, le Bonus, le bilan et le renvoi vers le QCM. Avec le matériel (🅰), on retire et on rebranche un module hors tension, le câble USB débranché : l'encadré Sécurité est dans le rappel, en haut de page.</p>
+</section>
+
+<section class="card" id="act2">
   <h2>➖ Activité 2 — Retirer, pour voir ⏱ ~20 min</h2>
   <p>Ton prototype marche. Maintenant on l'abîme, exprès. Remets un constituant sur
   « — non monté — », re-teste, lis ce que l'établi répond, puis remonte-le et recommence avec
@@ -859,7 +937,7 @@ sinon
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="act3">
   <h2>🔒 Activité 3 — L'ordre du montage ⏱ ~20 min</h2>
   <p>Sur l'établi, l'ordre n'a pas d'importance : rien ne chauffe et rien ne casse.
   <b>Sur la table, si.</b> Voici les cinq gestes du montage réel : remets-les dans l'ordre.</p>
@@ -938,7 +1016,7 @@ sinon
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="reinvestissement">
   <h2>🔄 REFAIRE — Réinvestissement ⏱ ~15 min</h2>
 <p>Le principal est content, et il en veut plus : <b>l'éclairage doit aussi
   s'allumer la nuit quand quelqu'un passe</b>, même si le capteur de luminosité n'y suffit pas.
@@ -993,6 +1071,23 @@ sinon
 
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+  <details class="correction"><summary>✅ Corrigé du Bonus — le capteur sur A1</summary><div>
+    <p><b>La phrase exacte de l'établi :</b> « ✘ Le programme lit A0, et Capteur de luminosité Grove est sur A1 : l'ordre et la
+    mesure se croisent sans se rencontrer. Le branchement et le programme doivent dire la même chose. »</p>
+    <p><b>Pourquoi elle est traître :</b> A1 est bien une entrée analogique, le bon type de port ; les quatre fonctions sont
+    tenues ; le courant demandé, 68 mA (milliampères) sur 500, reste dans le budget. Tout ce qui se voit est juste. Ce qui est
+    faux ne se voit qu'en lisant le programme : il lit A0, où rien n'est branché.</p>
+    <p><b>La méthode du dépanneur, en deux lignes, par exemple :</b> 1. relire le programme et noter chaque port qu'il lit ou
+    qu'il commande (ici A0 et D5) ; 2. vérifier, port par port, que le bon module y est branché — puis masquer le capteur avec
+    la main : si la DEL ne réagit pas alors que tout est en place, la mesure n'arrive pas là où le programme la cherche.</p>
+    <p><b>Attendus :</b> comparer le programme ET le branchement, pas l'un ou l'autre ; un geste qui le prouve (masquer le
+    capteur) ; garder l'ordre du diagnostic — l'alimentation et la carte d'abord, le capteur et l'actionneur ensuite.</p>
+    <p><b>Erreurs typiques :</b> changer les pièces, alors qu'elles sont toutes bonnes ; attendre un message d'erreur — il n'y
+    en a pas ; modifier le programme, alors qu'ici on ne le modifie pas : c'est le câble qu'on déplace ; croire que A0 et A1,
+    « c'est pareil » parce que ce sont deux entrées analogiques.</p>
+    <p style="color:var(--sub)">En 4e, en dépannage, tu feras la même chose avec une méthode écrite : une hypothèse de panne,
+    puis un test qui la confirme ou l'écarte.</p>
+  </div></details>
 </section>
 
 <section class="card">
@@ -1003,14 +1098,19 @@ sinon
   d'une pièce manquante, ou d'un port qui n'est pas du bon type ?</p>
 
   <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">où as-tu hésité en choisissant un port, et quel diagnostic de l'établi t'a le plus surpris ?</label></p>
+  <input id="bilanMeta" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…">
   <p style="margin-top:12px"><b>Je me positionne sur 5e_C7.5 :</b></p>
-  <select id="pos">
+<p style="font-size:.9em;color:var(--sub);margin:6px 0">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
+  <select id="pos" aria-label="Je me positionne sur 5e_C7.5">
     <option value="">— je me positionne —</option>
-    <option>Je sais placer chaque constituant fourni sur un port du bon type, et vérifier que le prototype fonctionne</option>
-    <option>Je sais le faire si on me rappelle où le programme va chercher la mesure</option>
-    <option>Je sais nommer les quatre fonctions, mais le choix du port me résiste encore</option>
-    <option>Je ne sais pas encore dire à quoi sert chaque constituant</option>
+    <option>🔴 Maîtrise insuffisante — je ne sais pas encore dire à quoi sert chaque constituant</option>
+    <option>🟠 Maîtrise fragile — je nomme les quatre fonctions, mais le choix du port me résiste encore, ou je ne le fais que si on me rappelle où le programme lit la mesure</option>
+    <option>🟢 Maîtrise satisfaisante — je place seul·e chaque constituant fourni sur un port du bon type, et je vérifie que le prototype fonctionne</option>
+    <option>⭐ Très bonne maîtrise — et je sais dire, d'après le symptôme, quelle fonction manque ou quel port est faux</option>
   </select>
+  <fieldset class="positionnement"><legend>5e_C4.5 (appui) — identifier les constituants de la chaîne d'information d'un objet technique</legend>
+<label><input type="radio" name="pos_c45" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c45" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c45" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c45" value="4"> ⭐ très bonne</label></fieldset>
 </section>
 
 <section class="card" style="text-align:center">
@@ -1018,6 +1118,8 @@ sinon
   <p>30 questions pour vérifier que tu sais placer un constituant, reconnaître la fonction qui manque et lire un diagnostic. 20 portent sur l'assemblage, 10 sur la chaîne d'information que tu connais déjà.</p>
   <a class="btn" href="qcm_5e_C7.5_eclairage-du-preau.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
+
+</div>
 
 <footer>Séquence 5e_C7.5 — « L'éclairage du préau ». Établi Grove original (CC0), aucune dépendance externe, fonctionne hors ligne. Programme 2024, Thème 3.</footer>
 
@@ -1027,6 +1129,7 @@ sinon
 const KEY = "seq_5e_C7_5";
 const $ = id => document.getElementById(id);
 window.__exp = window.__exp || {};
+let ongletActif = null;   // la séance affichée (vague n°311, 04/11/2026)
 
 function qmark(e, state){
   let m = e.previousElementSibling;
@@ -1220,22 +1323,89 @@ function save(){
   document.querySelectorAll("input, select, textarea").forEach(e => {
     if(!e.id) return;
     if(e.type === "checkbox" || (e.type === "radio" && e.closest("#billet"))) o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
+  o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
+  o.onglet = ongletActif;
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
 }
 function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
   if(!o) return;
+  ongletActif = o.onglet || null;   // lu avant tout save() (majEtabli enregistre)
   Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
   Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  Object.entries(o.radios || {}).forEach(([name, v]) => { const r = document.querySelector('.positionnement input[name="' + name + '"][value="' + v + '"]'); if(r) r.checked = true; });
+  // « pos » est passé le 04/11/2026 aux quatre niveaux du livret : une réponse sur l'ancienne échelle se relit au niveau qui lui correspond
+  const ps = $("pos"), vp = (o.inputs || {}).pos, ANCIENNE = {
+    "Je ne sais pas encore dire à quoi sert chaque constituant": 1,
+    "Je sais nommer les quatre fonctions, mais le choix du port me résiste encore": 2,
+    "Je sais le faire si on me rappelle où le programme va chercher la mesure": 2,
+    "Je sais placer chaque constituant fourni sur un port du bon type, et vérifier que le prototype fonctionne": 3 };
+  if(ps && vp && !ps.value && ANCIENNE[vp]) ps.selectedIndex = ANCIENNE[vp];
   window.__exp = o.exp || {};
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r && h.value.trim()) r.textContent = h.value;
+  // l'onglet en cours : un lien direct vers une ancre l'emporte sur lui
+  if(!location.hash && ongletActif && $(ongletActif)) montrerSeance(ongletActif, false);
 }
 document.addEventListener("input", () => {
   save();
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r) r.textContent = h.value.trim() || "—";
 });
+/* Un outil n'est pas du décor (n°311) : l'établi sert à plusieurs séances. Un seul nœud dans la page, rangé dans la
+   séance ouverte, juste sous son en-tête (question directrice et programme) ; sans JavaScript, il reste à sa place de la séance 1. */
+const OUTIL = $("outilEtabli"), SEANCES_OUTIL = ["s1", "s2"];
+function placerOutil(id){
+  if(!OUTIL || !SEANCES_OUTIL.includes(id)) return;
+  const tete = $(id) && $(id).querySelector(".seance-tete");
+  if(tete && tete.nextElementSibling !== OUTIL) tete.insertAdjacentElement("afterend", OUTIL);
+}
+/* ══ Séances à onglets (squelette n°306) — vague du 04/11/2026, sur le modèle du pilote 4e_C8.1 ══
+   L'onglet en cours est mémorisé avec le travail (o.onglet), à part des verrous (__exp). */
+function montrerSeance(id, memoriser){
+  if(!$(id)) return;
+  document.querySelectorAll(".seance-tab").forEach(x => { const on = x.dataset.panel === id; x.classList.toggle("active", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
+  document.querySelectorAll(".seance-panel").forEach(p => p.classList.toggle("active", p.id === id));
+  placerOutil(id);
+  appliqueSeance(id);
+  ongletActif = id;
+  if(memoriser !== false) save();
+}
+document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => montrerSeance(t.dataset.panel)));
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte.
+   Comme au pilote, le volet ne se replie qu'une fois la page chargée (marque data-fermer-au-chargement). */
+function appliqueSeance(idPanneau){
+  const v = $("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", () => { const v = $("ouverture"); if(v){ voletAvantImpression = v.open; v.open = true; } });
+  window.addEventListener("afterprint", () => { const v = $("ouverture"); if(v && voletAvantImpression !== null){ v.open = voletAvantImpression; voletAvantImpression = null; } });
+  const cibleDuLien = () => { let id = ""; try{ id = decodeURIComponent(location.hash.slice(1)); }catch(e){} return id ? $(id) : null; };
+  const ouvrirSeanceDeLAncre = () => {
+    const cible = cibleDuLien(); const pan = cible && cible.closest(".seance-panel");
+    if(!pan || pan.classList.contains("active")) return;
+    montrerSeance(pan.id);
+    setTimeout(() => cible.scrollIntoView({block:"start"}), 60);
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", () => {
+    const v = $("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active") || {}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
+/* Règle d'or n°101 — chaque séance mène explicitement à la suivante */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => { montrerSeance(b.dataset.vers); window.scrollTo({top:0, behavior:"smooth"}); }));
+if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
+
 restore(); majEtabli();
 })();
 </script>
