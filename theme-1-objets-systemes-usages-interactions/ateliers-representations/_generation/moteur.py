@@ -274,11 +274,18 @@ class Rendu:
                 for v, lib in opts:
                     sel.append('<option value="%s">%s</option>' % (e(v), e(html.unescape(re.sub(r"<[^>]+>", "", lib)))))
                 sel.append("</select>")
+                # les plus longs mots des options (dans le cadre du menu) et des retours (à leur taille, sous le menu)
+                # (les retours, comme dans la case : avec leurs espaces insécables)
+                retours_possibles = [insecables(x) for x in list(c.get("retours", {}).values()) + [c.get("indice") or ""]]
                 h.append('<td data-col="%s" class="case-menu">%s<span class="menu-case">%s<span class="menu-vu" aria-hidden="true"></span>'
+                         '<span class="menu-mesure" aria-hidden="true">%s</span>'
                          '<span class="menu-fleche" aria-hidden="true">▾</span></span>%s<span class="encoche" data-pour="%s"></span>'
-                         '<span class="retour-case" id="%s-retour" data-pour="%s"></span></td>'
+                         '<span class="retour-case" id="%s-retour" data-pour="%s"></span>'
+                         '<span class="retour-mesure" aria-hidden="true">%s</span></td>'
                          % (e(col_txt), ('<span class="case-texte">%s</span> ' % c["avant"]) if c.get("avant") else "", "".join(sel),
-                            (' <span class="case-texte">%s</span>' % c["apres"]) if c.get("apres") else "", name, name, name))
+                            e("\n".join(mots_longs([lib for _, lib in opts]))),
+                            (' <span class="case-texte">%s</span>' % c["apres"]) if c.get("apres") else "", name, name, name,
+                            e("\n".join(mots_longs(retours_possibles)))))
             h.append("</tr>")
         h.append("</tbody></table></div>")
         if w.get("note"):
@@ -319,6 +326,20 @@ class Rendu:
     def etayage(self, amorces):
         return ('<details class="etayage"><summary>🪜 Version étayée : des débuts de phrase pour t\'aider</summary><ul>%s</ul></details>'
                 % "".join("<li>%s</li>" % a for a in amorces))
+
+
+def mots_longs(textes, n=5):
+    """Les n plus longs mots (ce qui ne se coupe pas : entre deux espaces) des options, ou des retours, d'un menu.
+    Posés, cachés, dans la case (.menu-mesure, .retour-mesure), un par ligne, ils lui donnent dès le départ la largeur du
+    plus long : le navigateur mesure chacun avec la vraie police, la colonne s'élargit s'il le faut, et le tableau ne
+    bouge plus ensuite."""
+    vus = []
+    for t in textes:
+        brut = html.unescape(re.sub(r"<[^>]+>", " ", t or ""))
+        for m in re.split(r"[ \t\r\n]+", brut):
+            if m and m not in vus:
+                vus.append(m)
+    return sorted(vus, key=len, reverse=True)[:n]
 
 
 def insecables(t):
@@ -424,7 +445,9 @@ def exercice(ex, numero, uid, cle, base_img="", balise="h2", duree_au_titre=True
 def entete(titre_onglet, description, css_extra=""):
     return ('<!DOCTYPE html>\n<html lang="fr">\n<head>\n<meta charset="UTF-8">\n'
             '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
-            '<meta name="description" content="%s">\n<title>%s</title>\n<style>\n%s%s</style>\n</head>\n'
+            '<meta name="description" content="%s">\n<title>%s</title>\n<style>\n%s%s</style>\n'
+            # sans JavaScript, les onglets ne s'ouvrent pas : tous les panneaux restent lisibles, l'un sous l'autre
+            '<noscript><style>.panneau[hidden]{display:block}.onglets{display:none}</style></noscript>\n</head>\n'
             % (e(description), e(titre_onglet), KIT_CSS, css_extra))
 
 
@@ -550,6 +573,41 @@ def navigation(chemins, niv):
     return '<nav id="navharm" aria-label="Navigation du site">%s</nav>\n' % "".join(liens)
 
 
+def bonus_vivant(pid, i, b):
+    """Un défi Bonus qui se fait à l'écran : des champs courts (`champs`) qui s'écrivent, à mesure, dans un schéma
+    vivant (`schema`, ses cases nommées par `cible` ; le moteur des miroirs, comme pour les widgets `texte`).
+    Les champs sont sauvegardés avec le Bonus. `ecran` dit le geste à l'écran ; `papier`, ce qui reste faisable sans
+    JavaScript et sur la feuille imprimée (le schéma s'imprime, avec ce que l'élève a écrit)."""
+    h = ['<div class="bonus-vivant">',
+         '<div class="consigne-ecran">%s</div>' % b["ecran"],
+         '<div class="consigne-papier">%s</div>' % b["papier"],
+         '<figure class="figure schema-vivant">%s<figcaption>%s</figcaption></figure>' % (b["schema"], b["legende"]),
+         '<div class="bonus-champs">']
+    # un champ sans `groupe` (le centre) prend toute la largeur ; ceux d'un même `groupe` (une branche) vont dans un
+    # cadre à son nom, et les cadres se rangent côte à côte, dans l'ordre des branches du schéma
+    groupe, ouverts = None, False
+    for c in b["champs"]:
+        if c.get("groupe") != groupe:
+            if groupe:
+                h.append("</fieldset>")
+            groupe = c.get("groupe")
+            if groupe and not ouverts:
+                h.append('<div class="bonus-branches">')
+                ouverts = True
+            if groupe:
+                h.append('<fieldset class="bonus-branche"><legend>%s</legend>' % groupe)
+        ident = "%s__bonus%d_%s" % (pid, i, c["name"])
+        h.append('<div class="bonus-champ%s"><label class="champ" for="%s">%s</label>'
+                 '<input type="text" id="%s" name="bonus%d_%s" data-miroir="%s" autocomplete="off" spellcheck="true"></div>'
+                 % ("" if groupe else " large", ident, c["label"], ident, i, c["name"], c["cible"]))
+    if groupe:
+        h.append("</fieldset>")
+    if ouverts:
+        h.append("</div>")
+    h.append("</div></div>")
+    return "".join(h)
+
+
 def cloture(at, niv, chemins):
     N = at.NIVEAUX[niv]
     pid = "rep_%s_%s" % (at.SLUG, niv)
@@ -563,8 +621,11 @@ def cloture(at, niv, chemins):
     h.append('<section class="card bonus" data-cle="%s__bonus"><h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>' % pid)
     for i, b in enumerate(N["bonus"]):
         h.append('<h3>Défi %d — %s</h3><div>%s</div>' % (i + 1, b["titre"], b["consigne"]))
-        h.append('<label class="champ" for="%s__bonus%d">Ma réponse</label><textarea id="%s__bonus%d" name="bonus%d" rows="3"></textarea>'
-                 % (pid, i, pid, i, i))
+        if b.get("champs"):
+            h.append(bonus_vivant(pid, i, b))
+        else:
+            h.append('<label class="champ" for="%s__bonus%d">Ma réponse</label><textarea id="%s__bonus%d" name="bonus%d" rows="3"></textarea>'
+                     % (pid, i, pid, i, i))
         h.append(Rendu("x").etayage(b.get("amorces", ["Je relis la question du défi : on me demande …", "Ma réponse : … parce que …"])))
         h.append('<details class="corrige-bonus"><summary>🔍 Voir la correction du défi %d</summary>%s</details>'
                  % (i + 1, correction_demo(b["correction"])))

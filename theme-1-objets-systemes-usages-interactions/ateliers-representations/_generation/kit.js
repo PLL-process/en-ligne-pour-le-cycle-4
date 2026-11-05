@@ -444,7 +444,26 @@
     }
   }
   racine.querySelectorAll("canvas.croquis-zone").forEach(croquis);
-  racine.querySelectorAll(".tableau-menus").forEach(function(t){ t.classList.add("menus-js"); });
+  /* Un tableau à menus ne coupe jamais un mot : une colonne trop étroite s'élargit. Si le tableau ne tient plus alors
+     dans son cadre, il passe en cartes, comme sur un téléphone. Mesuré quand sa largeur change (fenêtre, onglet ouvert). */
+  function cartesSiTrop(t){
+    var f = t.querySelector(".defile");
+    if (!f || !t.offsetWidth) return;
+    t.classList.remove("en-cartes");
+    if (f.scrollWidth > f.clientWidth + 1) t.classList.add("en-cartes");
+  }
+  racine.querySelectorAll(".tableau-menus").forEach(function(t){
+    t.classList.add("menus-js");
+    if (window.ResizeObserver){
+      var largeur = -1;
+      new ResizeObserver(function(l){
+        var w = Math.round(l[0].contentRect.width);
+        if (w !== largeur){ largeur = w; cartesSiTrop(t); }
+      }).observe(t);
+    } else cartesSiTrop(t);
+  });
+  // Un Bonus vivant : avec le script, ses champs écrivent dans le schéma ; sans lui, sa consigne « papier » reste.
+  racine.querySelectorAll(".bonus-vivant").forEach(function(t){ t.classList.add("vivant-js"); });
 
   /* ── Branchements ─────────────────────────────────────────────────── */
   var boites = racine.querySelectorAll("[data-cle]");

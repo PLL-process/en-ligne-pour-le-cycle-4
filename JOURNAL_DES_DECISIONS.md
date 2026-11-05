@@ -27520,3 +27520,52 @@ est alors celui des champs, sous le dessin.
 que la #584, des espacements « serrés » dans les copies de la figure bête à cornes → pieuvre, réduite à 0,39) ;
 impression, squelette, verrous, liens, hiérarchie, règles visibles, médias, unités, sigles : verts. Non testé : un vrai
 téléphone, Safari, Firefox, un lecteur d'écran, une impression réelle.
+
+
+---
+
+## 04/11/2026 — Générateur des ateliers : trois défauts corrigés, le Bonus de la carte mentale de 4e se fait à l'écran (thème 1)
+
+*Pascal, le 04/11/2026 : « Oui continue, tu as carte blanche », sur ce qui restait à faire. Ces trois défauts du
+générateur étaient relevés le 31/10/2026 (entrée « Règle d'or n°317, suite au thème 3 ») ; le Bonus venait de
+l'inventaire des consignes « papier » (entrée « 5e_C2.1 Shenzhen », 04/11/2026).*
+
+**1. Les tableaux de menus s'impriment sans leurs listes d'options.** `kit.css` retire à l'impression la liste
+`.pp-choix` sous les menus d'un `.tableau-menus` : le choix fait s'imprime en texte, une case vide donne une ligne.
+C'est la règle que 4e_C4.1 et 4e_C8.1 avaient posée à la main ; elle est maintenant dans le kit. Dans 3e_C3.1 Shenzhen,
+le tableau imprimé passe de 557 à 188 px de haut.
+
+**2. L'exercice 3 des exigences a un retour par option fausse** (`donnees_exigences.py`) : 28 retours (16 pour les
+menus du test, 12 pour ceux du verdict), avec ✘ et pourquoi, en une ou deux phrases. La correction réfute chaque piège :
+les quatre tests qui ne vont pas, puis les verdicts faux ligne par ligne. Identifiants et bonnes réponses inchangés.
+
+**3. Un mot ne se coupe plus dans un tableau de menus.** La cause : `overflow-wrap:break-word` sur des cases d'un tableau
+à `table-layout:fixed` ; la colonne ne pouvait pas s'élargir, le navigateur coupait le mot (« négociab|le »). Le
+tableau passe en mise en page automatique ; chaque menu porte, cachés, les plus longs mots de ses options et de ses
+retours, si bien que la colonne a d'emblée la largeur du plus long mot et ne bouge ni au choix ni à « Vérifier » ; si
+le tableau ne tient plus dans son cadre, il passe en cartes, comme sur un téléphone. Vérifié de 1280 à 320 px.
+
+**4. Le Bonus de l'atelier 4e carte mentale se fait à l'écran.** « Dessine la carte mentale » ne disait pas où. L'élève
+écrit maintenant le centre, deux avantages et deux inconvénients dans cinq champs, et la carte se dessine à mesure (une
+carte en hauteur, qui tient entière à 390 px). Les réponses sont sauvegardées ; la correction ne change pas. Sans
+JavaScript et à l'impression : « Sur ta feuille : dessine cette carte en plus grand… ». Le moteur a pour cela une
+nouvelle forme de Bonus (`champs`, `schema`, `ecran`, `papier`), décrite dans `CONSIGNES_REDACTION.md`. Les autres
+Bonus de l'atelier sont déjà faisables (« sur ton cahier », ou une réponse écrite) : laissés. Une réponse déjà tapée
+dans l'ancienne zone de texte du défi 1 ne revient pas.
+
+**Au passage.** Les pages d'atelier et les cahiers, sans JavaScript, ne montraient que le premier onglet : un
+`<noscript>` déplie tous les panneaux. Le test « après rechargement » du banc attend que la page ait remis les choix au
+lieu de 250 ms fixes.
+
+**Régénéré** : ateliers, synthèses, cahiers, et les dix séquences du thème 1 qui incrustent le kit (5e_C2.1, 4e_C2.1,
+3e_C2.1, 3e_C1.5, 5e_C1.2, 5e_C1.3, 5e_C3.1, 4e_C3.1, 3e_C3.1, 4e_C1.1). Les thèmes 2 et 3 seront réincrustés dans
+leurs propres PR (`incrustations.py --verifier` les signale « à mettre à jour »).
+
+**Contrôles.** `banc_ateliers.py` **428 / 428** (378 / 378 avant ; 50 tests ajoutés : les retours option par option,
+aucun mot coupé à 1280, 720 et 390 px, le tableau qui ne bouge pas, l'impression, le Bonus). Bancs des séquences
+réincrustées et leurs bancs n°311 : mêmes résultats qu'avant. `controle_schemas` sur le thème 1 : 0 ✘, 179 ⚠ avant et
+après. Squelette, impression, impression papier, verrous, liens, hiérarchie, règles visibles, médias, unités, sigles,
+longueurs : verts. Non testé : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+**Reste**, hors de ce lot : les tableaux 3e des exigences (exercices 4 et 5) et le FAST n'ont qu'un indice par case,
+pas un retour par option.
