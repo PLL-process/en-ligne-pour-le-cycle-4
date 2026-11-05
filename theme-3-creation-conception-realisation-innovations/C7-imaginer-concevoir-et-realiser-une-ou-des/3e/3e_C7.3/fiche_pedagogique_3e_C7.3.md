@@ -70,3 +70,13 @@ python3 materiaux.py
 
 Ce qui se passe en classe. Un test vert dit que la page fait ce qu'elle annonce, pas qu'un élève
 apprend. La grille LSU de la synthèse professeur est là pour observer, pas pour noter une page.
+
+## Les séances passent à onglets (04/11/2026, vague de la règle d'or n°311)
+
+Le découpage en séances de 55 min ne change pas (activité 0 et activité 1a | activité 1b et activité 2 | activité 3 | REFAIRE, puis la clôture) : chaque en-tête « 🗓 Séance N » devient la tête de son onglet, chaque bouton de fin de séance ouvre la suivante, et l'onglet en cours est mémorisé. L'ouverture (étiquettes, liens « Aller à ma séance », « Avant de commencer », situation, problématique et hypothèse, ce que les six matériaux imposent à l'atelier, « Trois façons », billet d'entrée) est complète à la séance 1 et repliée dans le volet « 📖 Rappel » dès la séance 2, jamais supprimée. Sans JavaScript, la page reste d'un seul tenant.
+
+Restent visibles à chaque séance : le titre, la mission (elle remplace le sous-titre « Thème 3 · 3e — … »), la barre d'outils (🖨 Imprimer / PDF) et le banc des matériaux, qui sert aux séances 1 à 3 : un seul bloc, qui reste dans l'activité 1a à la séance 1 et vient juste après l'en-tête des séances 2 et 3 ; à la séance 4, il n'est ni à l'écran ni sur la fiche papier. Le renvoi de l'activité 1b dit « activité 1a, séance 1 » au lieu de « plus haut ».
+
+Clôture : un corrigé du Bonus (d'où vient « 10 ans » : durée de vie ou bon fonctionnement le jour du cyclone, et la question au commanditaire), « Comment j'ai travaillé », « Je me positionne » sur 3e_C7.3 aux niveaux du livret : chaque phrase d'origine est rangée au niveau de son sens (« si on m'aide », « si on me rappelle » : fragile ; « seul » : satisfaisante), une phrase neuve dit la très bonne maîtrise (l'expliquer à un camarade ou le refaire ailleurs), et une réponse donnée avant se relit avec sa phrase et sur 3e_C4.2.
+
+Sécurité visible (retouche du 04/11/2026) : l'encadré reste dans le volet, mais l'en-tête de la séance 3, où l'on manipule (voie 🅰), en rappelle la consigne en une ligne — les consignes de l'atelier (PVC, impression ventilée, perçage avec lunettes) — avec un lien qui ouvre le volet sur l'encadré.

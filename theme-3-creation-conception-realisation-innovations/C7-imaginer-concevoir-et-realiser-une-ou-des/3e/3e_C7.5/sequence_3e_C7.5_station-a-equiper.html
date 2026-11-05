@@ -173,6 +173,34 @@ table.releve td input{padding:4px 8px}
 
 /* Billet d'entrée (règle d'or n°26) : sans note ; il renvoie aux rattrapages du bloc « Avant de commencer ». */
 #billet .billet-intro{margin:.2em 0 .6em}#billet .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;border-left:3px solid var(--input-bd,var(--border,#274a8a));border-radius:0;background:none}#billet .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600;color:var(--text)}#billet .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;padding:7px 9px;background:var(--input-bg,rgba(127,127,127,.10));border:2px solid transparent;border-radius:9px}#billet .qcm-option:hover,#billet .qcm-option:focus-within{border-color:var(--hl)}#billet .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}#billet .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;font-weight:400}#billet .billet-retour{margin:.7em 0 0;padding:.55em .8em;border-radius:8px;border-left:4px solid var(--hl);background:rgba(127,127,127,.10)}#billet .billet-retour:empty{display:none}#billet .billet-retour.ok{border-left-color:var(--ok)}#billet .billet-retour.warn{border-left-color:var(--warn)}#billet .billet-retour.ko{border-left-color:var(--err)}#billet .billet-retour p{margin:.2em 0}#billet .billet-retour ul{margin:.3em 0 .2em 1.2em;padding:0}#billet .billet-retour li{margin:.25em 0}#billet .billet-retour a,#billet .billet-retour a:visited{color:var(--hl)}#billet .billet-note{font-size:.9em;opacity:.85}@media print{#billet .billet-retour,#billet .billet-retour a{color:#041a40!important;opacity:1!important}}
+
+/* ── Séances à onglets (squelette n°306) et volet « 📖 Rappel » (règle d'or n°311) — vague du 04/11/2026, sur le modèle
+   du pilote 4e_C8.1. Sans JavaScript (pas de classe js-onglets), la page reste d'un seul tenant : toutes les séances à la
+   suite, sans onglets, le volet ouvert et sans bouton. ── */
+.seance-tabs{display:none;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+.js-onglets .seance-tabs{display:flex}
+.seance-tab{flex:1;min-width:150px;min-height:44px;padding:11px 8px;border-radius:10px;background:var(--panel2);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit;line-height:1.3}
+.seance-tab small{display:block;font-weight:400;font-size:.9em;color:var(--sub)}
+.seance-tab.active{background:#1d4e89;color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+.seance-tab.active small{color:#e4eaf5}
+.seance-tab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.js-onglets .seance-panel{display:none}
+.js-onglets .seance-panel.active{display:block}
+.rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}
+.rappel-ouverture>summary{display:none}
+.rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+.rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media print{.rappel-ouverture>summary{display:none!important}}
+.positionnement{margin:8px 0;border:1px solid var(--border);border-radius:10px;padding:8px 12px}
+.positionnement legend{font-size:.9em;color:var(--sub);padding:0 6px}
+.positionnement label{display:inline-block;margin-right:14px}
+.positionnement input[type=radio]{width:auto}
+/* L'outil des séances (n°311 : un outil n'est pas du décor) : un seul nœud, qui suit les séances qui s'en servent. Hors de
+   son activité, il garde le cadre d'une carte et son titre ; ses tableaux défilent dans leur cadre à 390 px. */
+.outil-seance>.outil-titre{display:none}
+.seance-panel>.outil-seance{max-width:940px;margin:0 auto 18px}
+.seance-panel>.outil-seance>.outil-titre{display:block;margin:0 0 6px;color:var(--hl);font-weight:700}
+@media(max-width:680px){.outil-seance table{display:block;overflow-x:auto;max-width:100%}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -508,13 +536,24 @@ table.releve td input{padding:4px 8px}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
 
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_3e_C7.5.html">📖 Lexique</a></nav>
 
 <h1>🌀 La station qu'il faut équiper</h1>
-<p class="subtitle">Thème 3 · 3<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<p class="subtitle">Ta mission : choisir, dans un carton trop fourni, les constituants qu'impose le cahier des charges de la commission, monter le prototype sur l'établi, et prouver qu'aucun de tes choix n'est décoratif.</p>
+
+<div class="toolbar">
+  <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+</div>
+
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
+
 <div class="badges">
   <span class="badge niveau">Niveau 3e</span>
   <span class="badge code" title="Programme 2024 — 3e_C7.5 : Choisir les constituants et assembler un prototype.">3e_C7.5</span>
@@ -607,12 +646,6 @@ cahier des charges de <em>votre</em> collège.</p>
 </section>
 
 
-<section class="card seance-entete" id="seance-1" aria-labelledby="seance-1-titre">
-  <h2 id="seance-1-titre">🗓 Séance 1 — Ce que chaque exigence impose</h2>
-  <p class="seance-duree">Durée&nbsp;: 55 minutes · la situation, ton idée de départ, puis l'activité 0.</p>
-  <p><b>La question de la séance&nbsp;:</b> chacune des quatre exigences de la commission, quel constituant impose-t-elle&nbsp;?</p>
-</section>
-
 <!-- Billet d'entrée (n°26) : en tête de la séance 1, comme le pilote 3e_C1.1. Une question par ligne du bloc
      « Avant de commencer » ; « Voir où j'en suis » renvoie aux rattrapages de ces lignes. -->
 <section class="card" id="billet" aria-labelledby="billet-t">
@@ -686,6 +719,24 @@ cahier des charges de <em>votre</em> collège.</p>
   });
 })();
 </script>
+
+</details><!-- /rappel-ouverture -->
+
+<nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" id="tab-s1" data-panel="s1" role="tab" aria-controls="s1" aria-selected="true" type="button">Séance 1<br><small>Ce que chaque exigence impose</small></button>
+  <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>Choisir, et l'écrire</small></button>
+  <button class="seance-tab" id="tab-s3" data-panel="s3" role="tab" aria-controls="s3" aria-selected="false" type="button">Séance 3<br><small>Assembler, puis retirer</small></button>
+  <button class="seance-tab" id="tab-s4" data-panel="s4" role="tab" aria-controls="s4" aria-selected="false" type="button">Séance 4<br><small>Le choix qui coûte</small></button>
+</nav>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card seance-entete" id="seance-1" aria-labelledby="seance-1-titre">
+  <h2 id="seance-1-titre">🗓 Séance 1 — Ce que chaque exigence impose</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · la situation, ton idée de départ, puis l'activité 0.</p>
+  <p><b>La question de la séance&nbsp;:</b> chacune des quatre exigences de la commission, quel constituant impose-t-elle&nbsp;?</p>
+</section>
+
 <section class="card">
   <h2>📋 Activité 0 — Ce que chaque exigence impose ⏱ ~25 min</h2>
   <p>Un cahier des charges ne dit pas quels constituants acheter : il dit ce que
@@ -756,9 +807,12 @@ cahier des charges de <em>votre</em> collège.</p>
 
 <nav class="fin-seance" aria-label="Fin de la séance 1">
   <p>Fin de la séance 1. La suite, la prochaine fois&nbsp;:</p>
-  <a class="btn vers-seance" href="#seance-2">➡ Séance 2 — Choisir, et l'écrire</a>
+  <a class="btn vers-seance" href="#seance-2" data-vers="s2">➡ Séance 2 — Choisir, et l'écrire</a>
 </nav>
+</div>
 
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
 <section class="card seance-entete" id="seance-2" aria-labelledby="seance-2-titre">
   <h2 id="seance-2-titre">🗓 Séance 2 — Choisir, et l'écrire</h2>
   <p class="seance-duree">Durée&nbsp;: 55 minutes · activité 1.</p>
@@ -835,9 +889,12 @@ cahier des charges de <em>votre</em> collège.</p>
 
 <nav class="fin-seance" aria-label="Fin de la séance 2">
   <p>Fin de la séance 2. La suite, la prochaine fois&nbsp;:</p>
-  <a class="btn vers-seance" href="#seance-3">➡ Séance 3 — Assembler, puis retirer</a>
+  <a class="btn vers-seance" href="#seance-3" data-vers="s3">➡ Séance 3 — Assembler, puis retirer</a>
 </nav>
+</div>
 
+<!-- ══════════════════ SÉANCE 3 ══════════════════ -->
+<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
 <section class="card seance-entete" id="seance-3" aria-labelledby="seance-3-titre">
   <h2 id="seance-3-titre">🗓 Séance 3 — Assembler, puis retirer</h2>
   <p class="seance-duree">Durée&nbsp;: 55 minutes · activités 2 et 3.</p>
@@ -845,11 +902,15 @@ cahier des charges de <em>votre</em> collège.</p>
   <p>⚡ <b>Avant de câbler&nbsp;:</b> <a href="#securite">relis l'encadré Sécurité</a> — très basse tension uniquement, le bandeau de DEL chauffe, et le mât reste au sol.</p>
 </section>
 
-<section class="card">
+<section class="card" id="activite-2">
   <h2>🔧 Activité 2 — Assembler et prouver ⏱ ~30 min</h2>
   <p>Monte ta station sur l'établi. Le programme sous le tableau te dit où il lit
   et où il écrit. L'établi refusera tant qu'une exigence n'est pas tenue — et il te dira
-  <b>laquelle</b>, pas « erreur ».</p><div id="etabli">
+  <b>laquelle</b>, pas « erreur ».</p>
+  <!-- Un outil n'est pas du décor (n°311) : l'établi sert aux séances 3 et 4 (activités 2 à 4, REFAIRE et Bonus). Un seul nœud : à la séance qui porte son activité, il y reste ; aux autres séances qui s'en servent, le script des onglets le place juste après l'en-tête de la séance ; sans JavaScript, il ne bouge pas. -->
+  <div class="outil-seance" id="outilEtabli" data-seances="s3 s4">
+  <p class="outil-titre">🔧 L'établi de l'activité 2 — le même, avec ton montage</p>
+<div id="etabli">
   <div class="etabli">
     <p style="font-size:.92em;color:var(--sub);margin:0 0 8px"><b>L'établi : le catalogue contient plus de constituants qu'il n'en faut. Choisis, monte, teste — et lis ce que le refus t'apprend sur ton choix.</b></p>
 
@@ -890,6 +951,7 @@ sinon
 
   </div>
 </div>
+  </div><!-- /outil-seance -->
   <div class="exo">
 
     <h4>Une fois que l'établi affiche ✔</h4>
@@ -981,14 +1043,18 @@ sinon
 
 <nav class="fin-seance" aria-label="Fin de la séance 3">
   <p>Fin de la séance 3. La suite, la prochaine fois&nbsp;:</p>
-  <a class="btn vers-seance" href="#seance-4">➡ Séance 4 — Le choix qui coûte</a>
+  <a class="btn vers-seance" href="#seance-4" data-vers="s4">➡ Séance 4 — Le choix qui coûte</a>
 </nav>
+</div>
 
+<!-- ══════════════════ SÉANCE 4 ══════════════════ -->
+<div class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4">
 <section class="card seance-entete" id="seance-4" aria-labelledby="seance-4-titre">
   <h2 id="seance-4-titre">🗓 Séance 4 — Le choix qui coûte</h2>
   <p class="seance-duree">Durée&nbsp;: 55 minutes · activité 4 et REFAIRE, puis le bilan de la séquence.</p>
   <p><b>La question de la séance&nbsp;:</b> le seul afficheur qui tienne l'exigence 2 a-t-il créé un problème ailleurs dans le montage&nbsp;?</p>
-  <p>L'établi est dans l'activité 2, <a href="#etabli">plus haut</a>. S'il est vide (autre ordinateur, sauvegarde effacée), remonte d'abord la station complète&nbsp;: la correction de l'activité 2 donne le port de chaque constituant.</p>
+  <p>⚡ <b>Avant de démonter et de re-tester&nbsp;:</b> <a href="#securite">relis l'encadré Sécurité</a> — très basse tension uniquement, le bandeau de DEL chauffe, et le mât reste au sol.</p>
+  <p>L'établi de l'activité 2 te suit, <a href="#etabli">avec ton montage</a>. S'il est vide (autre ordinateur, sauvegarde effacée), remonte d'abord la station complète&nbsp;: la correction de l'activité 2 donne le port de chaque constituant.</p>
 </section>
 
 <section class="card">
@@ -1102,6 +1168,15 @@ sinon
 
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+  <details class="correction"><summary>✅ Corrigé du Bonus — la station du collège voisin</summary><div>
+    <p><b>Ce qui ne change pas.</b> Les exigences 1, 3 et 4 restent : l'anémomètre (déclencher au-delà de 90 km/h), la batterie et son panneau (72 heures sans intervention : l'USB supposerait un ordinateur allumé en permanence), la carte SD (l'historique). Seule l'exigence 2 change : prévenir la vie scolaire à l'intérieur, sans rien montrer dans la cour.</p>
+    <p><b>Un seul constituant change.</b> Le bandeau de DEL, fait pour se voir depuis toute la cour, retourne dans le carton. À sa place, l'écran LCD, posé dans le bureau de la vie scolaire : il se lit à trente centimètres, et c'est justement ce qu'on veut. Il se branche sur un port I2C au lieu de D6.</p>
+    <p><b>Le budget de courant.</b> L'établi affiche 580 mA (milliampères) pour ta station et 120 mA pour celle-là : 580 − 120 = <b>460 mA de moins</b>, les 480 mA du bandeau remplacés par les 20 mA de l'écran. Presque cinq fois moins de courant : sous 5 V (volts), 0,6 W (watts) au lieu de 2,9 W, et tenir 72 heures devient bien plus facile.</p>
+    <p><b>Ce que dit l'établi.</b> Il refuse ce montage : « l'alerte n'est pas visible depuis la cour ». C'est normal, il juge avec le cahier des charges de <em>ton</em> collège. Le même carton, deux cahiers des charges, deux stations : c'est le cahier des charges qui choisit. Et le programme devra changer : il écrit sur D6, où il n'y a plus rien.</p>
+    <p><b>Variante acceptée :</b> le buzzer dans le bureau à la place de l'écran (130 mA, soit 450 mA de moins), à condition de dire qu'on ne doit pas l'entendre depuis la cour — sinon il affolerait les élèves autant qu'un bandeau.</p>
+    <p><b>Attendus :</b> le nombre de constituants qui changent (un : le bandeau remplacé par l'écran LCD) ; les deux budgets lus à l'établi (580 et 120 mA) et la baisse (460 mA) ; la raison (seule l'exigence 2 a changé).</p>
+    <p><b>Erreurs typiques :</b> retirer aussi la batterie « puisque l'USB suffit maintenant » — l'exigence 3 n'a pas changé ; garder le bandeau en pensant l'éteindre ; croire que l'établi se trompe quand il refuse.</p>
+  </div></details>
 </section>
 
 <section class="card">
@@ -1112,14 +1187,20 @@ sinon
   catalogue, ou le cahier des charges ?</p>
 
   <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">où as-tu hésité en choisissant les constituants, et qu'est-ce qui t'a surpris dans les refus de l'établi ?</label></p>
+  <textarea id="bilanMeta" rows="2" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…"></textarea>
+  <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
   <p style="margin-top:12px"><b>Je me positionne sur 3e_C7.5 :</b></p>
   <select id="pos">
     <option value="">— je me positionne —</option>
-    <option>Je sais traduire chaque exigence en constituant, assembler, et défendre un choix écarté</option>
-    <option>Je sais choisir quand on m'aide à relire le cahier des charges exigence par exigence</option>
-    <option>Je sais assembler correctement, mais je choisis encore d'après ce qui est disponible</option>
-    <option>Je ne sais pas encore par où prendre un catalogue plus large que le besoin</option>
+    <option>🔴 Maîtrise insuffisante — je ne sais pas encore par où prendre un catalogue plus large que le besoin</option>
+    <option>🟠 Maîtrise fragile — je sais assembler correctement, mais je choisis encore d'après ce qui est disponible</option>
+    <option>🟠 Maîtrise fragile — je sais choisir quand on m'aide à relire le cahier des charges exigence par exigence</option>
+    <option>🟢 Maîtrise satisfaisante — je sais traduire chaque exigence en constituant, assembler, et défendre un choix écarté</option>
+    <option>⭐ Très bonne maîtrise — je sais traduire chaque exigence en constituant et défendre un choix écarté, et je sais l'expliquer à un camarade ou le refaire pour un autre cahier des charges</option>
   </select>
+  <fieldset class="positionnement"><legend>Je me positionne sur 3e_C4.3 (appui) — décrire un OST en caractérisant sa chaîne d'information</legend>
+<label><input type="radio" name="pos_c43" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c43" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c43" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c43" value="4"> ⭐ très bonne</label></fieldset>
 </section>
 
 <section class="card" style="text-align:center">
@@ -1127,6 +1208,8 @@ sinon
   <p>30 questions sur le choix des constituants, les exigences qui se propagent et le budget de courant. 20 portent sur l'assemblage et le choix, 10 sur la chaîne d'information que tu sais déjà caractériser.</p>
   <a class="btn" href="qcm_3e_C7.5_station-a-equiper.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
+
+</div>
 
 <footer>Séquence 3e_C7.5 — « La station qu'il faut équiper ». Établi Grove original (CC0), aucune dépendance externe, fonctionne hors ligne. Programme 2024, Thème 3.</footer>
 
@@ -1136,6 +1219,7 @@ sinon
 const KEY = "seq_3e_C7_5";
 const $ = id => document.getElementById(id);
 window.__exp = window.__exp || {};
+let ongletActif = null;   // la séance affichée (vague n°311, 04/11/2026), rangée à part des verrous
 
 function qmark(e, state){
   let m = e.previousElementSibling;
@@ -1333,23 +1417,102 @@ function save(){
   document.querySelectorAll("input, select, textarea").forEach(e => {
     if(!e.id) return;
     if(e.type === "checkbox" || (e.type === "radio" && e.closest("#billet"))) o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
+  o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
+  o.onglet = ongletActif;
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
 }
 function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
   if(!o) return;
+  ongletActif = o.onglet || null;   // lu d'abord : majEtabli(), plus bas, enregistre
   Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
   Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  Object.entries(o.radios || {}).forEach(([name, v]) => { const r = document.querySelector('.positionnement input[name="' + name + '"][value="' + v + '"]'); if(r) r.checked = true; });
+  // #pos est passé le 04/11/2026 aux niveaux du livret : chaque phrase d'origine est rangée au niveau de son sens
+  // (« si on m'aide » : fragile ; « seul » : satisfaisante) ; une réponse donnée sur l'ancienne liste se relit avec sa phrase
+  const p = $("pos"), vp = (o.inputs || {}).pos, ANCIEN_POS = {"Je ne sais pas encore par où prendre un catalogue plus large que le besoin": 1, "Je sais assembler correctement, mais je choisis encore d'après ce qui est disponible": 2, "Je sais choisir quand on m'aide à relire le cahier des charges exigence par exigence": 3, "Je sais traduire chaque exigence en constituant, assembler, et défendre un choix écarté": 4};
+  if(p && vp && !p.value && ANCIEN_POS[vp]) p.selectedIndex = ANCIEN_POS[vp];
   window.__exp = o.exp || {};
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r && h.value.trim()) r.textContent = h.value;
+  // l'onglet en cours : un lien direct vers une ancre l'emporte sur lui
+  if(!location.hash && ongletActif && $(ongletActif)) montrerSeance(ongletActif, false);
 }
 document.addEventListener("input", () => {
   save();
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r) r.textContent = h.value.trim() || "—";
 });
+
+/* ══ Séances à onglets (squelette n°306) — vague du 04/11/2026, sur le modèle du pilote 4e_C8.1 ══ */
+/* Un outil n'est pas du décor (n°311) : l'établi sert aux séances que nomme son data-seances. C'est un seul nœud. À la
+   séance qui porte son activité, il y reste ; à une autre séance qui s'en sert, il vient juste après l'en-tête de la
+   séance ; aux autres, il retourne à sa place (dans une séance repliée). Le déplacer garde son état (ports choisis, verdicts).
+   Sans JavaScript, il ne bouge pas. */
+const OUTIL = $("outilEtabli"), MAISON = OUTIL ? document.createComment(" place de l'outil ") : null;
+if(OUTIL) OUTIL.before(MAISON);
+function placerOutil(id){
+  if(!OUTIL) return;
+  const pan = $(id), chez = MAISON.parentNode.closest(".seance-panel");
+  const sert = (OUTIL.dataset.seances || "").split(/\s+/).includes(id);
+  if(pan && sert && pan !== chez){
+    const tete = pan.querySelector(".seance-entete");
+    if(tete){ if(tete.nextElementSibling !== OUTIL) tete.after(OUTIL); }
+    else if(pan.firstElementChild !== OUTIL) pan.prepend(OUTIL);
+  } else if(MAISON.nextSibling !== OUTIL) MAISON.after(OUTIL);
+  OUTIL.removeAttribute("data-pp-hors");   // la fiche papier le suit avec sa séance
+}
+function montrerSeance(id, memoriser){
+  if(!$(id)) return;
+  document.querySelectorAll(".seance-tab").forEach(x => { const on = x.dataset.panel === id; x.classList.toggle("active", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
+  document.querySelectorAll(".seance-panel").forEach(p => p.classList.toggle("active", p.id === id));
+  placerOutil(id);
+  appliqueSeance(id);
+  ongletActif = id;
+  if(memoriser !== false) save();
+}
+/* Un clic sur un onglet oublie l'ancre de l'adresse : au rechargement, c'est la séance mémorisée qui revient. */
+document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => {
+  montrerSeance(t.dataset.panel);
+  if(location.hash) try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){}
+}));
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte (ou le
+   volet, si l'ancre est dans l'ouverture). Comme au pilote, le volet ne se replie qu'une fois la page chargée. */
+function appliqueSeance(idPanneau){
+  const v = $("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", () => { const v = $("ouverture"); if(v){ voletAvantImpression = v.open; v.open = true; } });
+  window.addEventListener("afterprint", () => { const v = $("ouverture"); if(v && voletAvantImpression !== null){ v.open = voletAvantImpression; voletAvantImpression = null; } });
+  const cibleDuLien = () => { let id = ""; try{ id = decodeURIComponent(location.hash.slice(1)); }catch(e){} return id ? $(id) : null; };
+  const ouvrirSeanceDeLAncre = () => {
+    const cible = cibleDuLien(); if(!cible) return;
+    const pan = cible.closest(".seance-panel"), v = $("ouverture");
+    if(pan && !pan.classList.contains("active")){ montrerSeance(pan.id); setTimeout(() => cible.scrollIntoView({block:"start"}), 60); }
+    else if(!pan && v && !v.open && v.contains(cible)){ v.open = true; setTimeout(() => cible.scrollIntoView({block:"start"}), 60); }
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", () => {
+    const v = $("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active") || {}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
+/* Règle d'or n°101 — chaque séance mène explicitement à la suivante. Le bouton est un lien vers l'en-tête de la séance
+   suivante : on ouvre son onglet, puis le lien amène à son en-tête (sans JavaScript, il y mène tout seul). */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => montrerSeance(b.dataset.vers)));
+if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
+
 restore(); majEtabli();
+placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // l'outil rejoint la séance affichée
 })();
 </script>
 

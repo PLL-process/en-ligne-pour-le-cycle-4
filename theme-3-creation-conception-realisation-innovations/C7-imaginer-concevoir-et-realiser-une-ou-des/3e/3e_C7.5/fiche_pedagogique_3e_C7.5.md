@@ -79,3 +79,13 @@ Plutôt que d'ignorer la skill en silence, voici le relevé, écrit pour être c
 
 Ce qui se passe en classe. Un test vert dit que la page fait ce qu'elle annonce, pas qu'un élève
 apprend. La grille LSU de la synthèse professeur est là pour observer, pas pour noter une page.
+
+## Les séances passent à onglets (04/11/2026, vague de la règle d'or n°311)
+
+Le découpage en séances de 55 min ne change pas (activité 0 | activité 1 | activités 2 et 3 | activité 4 et REFAIRE, puis la clôture) : chaque en-tête « 🗓 Séance N » devient la tête de son onglet, chaque bouton de fin de séance ouvre la suivante, et l'onglet en cours est mémorisé. L'ouverture (étiquettes, liens « Aller à », « Avant de commencer », situation, problématique et hypothèse, sécurité, « Trois façons », billet d'entrée) est complète à la séance 1 et repliée dans le volet « 📖 Rappel » dès la séance 2, jamais supprimée. Sans JavaScript, la page reste d'un seul tenant.
+
+Restent visibles à chaque séance : le titre, la mission, la barre d'outils et la navigation du site. L'établi sert aux séances 3 et 4 : dans l'activité 2 à la séance 3, juste après l'en-tête à la séance 4 ; aux séances 1 et 2, où l'on choisit avant de monter, il n'est pas à l'écran. L'encadré Sécurité reste dans l'ouverture : le lien « relis l'encadré Sécurité » de la séance 3 ouvre le volet et l'amène à l'écran. L'en-tête de la séance 4 dit « L'établi de l'activité 2 te suit » au lieu de « plus haut ».
+
+Clôture : un corrigé du Bonus (le collège voisin : un seul constituant change, l'écran LCD remplace le bandeau, 580 → 120 mA lus à l'établi, et l'établi refuse parce qu'il juge avec le cahier des charges du collège), « Comment j'ai travaillé », « Je me positionne » sur 3e_C7.5 aux niveaux du livret : chaque phrase d'origine est rangée au niveau de son sens (« si on m'aide », « si on me rappelle » : fragile ; « seul » : satisfaisante), une phrase neuve dit la très bonne maîtrise (l'expliquer à un camarade ou le refaire ailleurs), et une réponse donnée avant se relit avec sa phrase et sur 3e_C4.3.
+
+Sécurité visible (retouche du 04/11/2026) : l'en-tête de la séance 4 (retirer la batterie, re-tester) reçoit la même ligne que la séance 3 — « relis l'encadré Sécurité », très basse tension, bandeau qui chauffe, mât au sol —, dont le lien ouvre le volet.

@@ -166,6 +166,38 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
 
 /* Billet d'entrée (règle d'or n°26) : sans note ; il renvoie aux rattrapages du bloc « Avant de commencer ». */
 #billet .billet-intro{margin:.2em 0 .6em}#billet .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;border-left:3px solid var(--input-bd,var(--border,#274a8a));border-radius:0;background:none}#billet .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600;color:var(--text)}#billet .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;padding:7px 9px;background:var(--input-bg,rgba(127,127,127,.10));border:2px solid transparent;border-radius:9px}#billet .qcm-option:hover,#billet .qcm-option:focus-within{border-color:var(--hl)}#billet .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}#billet .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;font-weight:400}#billet .billet-retour{margin:.7em 0 0;padding:.55em .8em;border-radius:8px;border-left:4px solid var(--hl);background:rgba(127,127,127,.10)}#billet .billet-retour:empty{display:none}#billet .billet-retour.ok{border-left-color:var(--ok)}#billet .billet-retour.warn{border-left-color:var(--warn)}#billet .billet-retour.ko{border-left-color:var(--err)}#billet .billet-retour p{margin:.2em 0}#billet .billet-retour ul{margin:.3em 0 .2em 1.2em;padding:0}#billet .billet-retour li{margin:.25em 0}#billet .billet-retour a,#billet .billet-retour a:visited{color:var(--hl)}#billet .billet-note{font-size:.9em;opacity:.85}@media print{#billet .billet-retour,#billet .billet-retour a{color:#041a40!important;opacity:1!important}}
+
+/* ── Séances à onglets (squelette n°306) et volet « 📖 Rappel » (règle d'or n°311) — vague du 04/11/2026, sur le modèle
+   du pilote 4e_C8.1. Sans JavaScript (pas de classe js-onglets), la page reste d'un seul tenant : toutes les séances à la
+   suite, sans onglets, le volet ouvert et sans bouton. ── */
+.seance-tabs{display:none;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+.js-onglets .seance-tabs{display:flex}
+.seance-tab{flex:1;min-width:150px;min-height:44px;padding:11px 8px;border-radius:10px;background:var(--panel2);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit;line-height:1.3}
+.seance-tab small{display:block;font-weight:400;font-size:.9em;color:var(--sub)}
+.seance-tab.active{background:#1d4e89;color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+.seance-tab.active small{color:#e4eaf5}
+.seance-tab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.js-onglets .seance-panel{display:none}
+.js-onglets .seance-panel.active{display:block}
+.rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}
+.rappel-ouverture>summary{display:none}
+.rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+.rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media print{.rappel-ouverture>summary{display:none!important}}
+.positionnement{margin:8px 0;border:1px solid var(--border);border-radius:10px;padding:8px 12px}
+.positionnement legend{font-size:.9em;color:var(--sub);padding:0 6px}
+.positionnement label{display:inline-block;margin-right:14px}
+.positionnement input[type=radio]{width:auto}
+/* L'outil des séances (n°311 : un outil n'est pas du décor) : un seul nœud, qui suit les séances qui s'en servent. Hors de
+   son activité, il garde le cadre d'une carte et son titre ; ses tableaux défilent dans leur cadre à 390 px. */
+.outil-seance>.outil-titre{display:none}
+.seance-panel>.outil-seance{max-width:940px;margin:0 auto 18px}
+.seance-panel>.outil-seance>.outil-titre{display:block;margin:0 0 6px;color:var(--hl);font-weight:700}
+@media(max-width:680px){.outil-seance table{display:block;overflow-x:auto;max-width:100%}}
+/* La consigne de sécurité de la page, rappelée en une ligne dans l'en-tête des séances où l'on manipule (l'encadré complet
+   est dans le volet « Rappel » ; son lien l'ouvre). Comme aux vagues 5e et 4e. */
+.rappel-securite{margin:.6em 0 0;padding:6px 10px;border-left:4px solid var(--warn);background:rgba(255,214,102,.08);border-radius:0 8px 8px 0;font-size:.92em}
+.rappel-securite a,.rappel-securite a:visited{color:var(--hl)}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -501,13 +533,24 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
 
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_3e_C7.8.html">📖 Lexique</a></nav>
 
 <h1>🛰️ Deux stations qui se parlent</h1>
-<p class="subtitle">Thème 3 · 3<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<p class="subtitle">Ta mission : faire se parler les stations du Robert et de Sainte-Anne — décider ce qu'elles s'envoient, quand l'alerte part, et ce que fait chacune quand l'autre se tait —, puis écrire les essais qui le prouvent.</p>
+
+<div class="toolbar">
+  <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+</div>
+
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
+
 <div class="badges">
   <span class="badge niveau">Niveau 3e</span>
   <span class="badge code" title="Programme 2024 — 3e_C7.8 : Interfacer deux objets techniques communicants.">3e_C7.8</span>
@@ -572,7 +615,7 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="securite">
   <h2>⚠️ Deux objets qui communiquent — ce qui ne sort jamais</h2>
   <div class="declencheur">
     <ul>
@@ -603,12 +646,6 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
       fait le message, et le professeur intercepte. Le travail reste le même : décider ce qu'on
       envoie, et ce qu'on fait quand plus rien n'arrive.</li>
   </ul>
-</section>
-
-<section class="card seance-entete" id="seance-1" aria-labelledby="seance-1-titre">
-  <h2 id="seance-1-titre">🗓 Séance 1 — Ce que deux machines s'échangent</h2>
-  <p class="seance-duree">Durée&nbsp;: 55 minutes · la situation et ton idée de départ, puis les activités 0 et 1, soit 45 minutes d'activités.</p>
-  <p><b>La question de la séance&nbsp;:</b> que doit contenir un message pour qu'une machine, à l'autre bout, puisse s'en servir sans rien deviner&nbsp;?</p>
 </section>
 
 <!-- Billet d'entrée (n°26) : en tête de la séance 1, comme le pilote 3e_C1.1. Une question par ligne du bloc
@@ -684,12 +721,34 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
   });
 })();
 </script>
-<section class="card">
+
+</details><!-- /rappel-ouverture -->
+
+<nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" id="tab-s1" data-panel="s1" role="tab" aria-controls="s1" aria-selected="true" type="button">Séance 1<br><small>Ce que deux machines s'échangent</small></button>
+  <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>Se mettre d'accord, et quand l'autre se tait</small></button>
+  <button class="seance-tab" id="tab-s3" data-panel="s3" role="tab" aria-controls="s3" aria-selected="false" type="button">Séance 3<br><small>Prouver que la liaison tient, puis passer à trois</small></button>
+</nav>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card seance-entete" id="seance-1" aria-labelledby="seance-1-titre">
+  <h2 id="seance-1-titre">🗓 Séance 1 — Ce que deux machines s'échangent</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · la situation et ton idée de départ, puis les activités 0 et 1, soit 45 minutes d'activités.</p>
+  <p><b>La question de la séance&nbsp;:</b> que doit contenir un message pour qu'une machine, à l'autre bout, puisse s'en servir sans rien deviner&nbsp;?</p>
+</section>
+
+<section class="card" id="act0">
   <h2>🖐️ Activité 0 — FAIRE d'abord : faire parler les deux stations ⏱ ~20 min</h2>
   <p>Avant toute explication. Le banc met les deux stations face à face. À gauche,
   celle du Robert compose son message ; à droite, celle de Sainte-Anne le reçoit — et
   <b>c'est une machine</b>, pas quelqu'un. <b>Coche des champs et lis ce qu'elle peut en
   faire.</b></p>
+  <!-- Un outil n'est pas du décor (n°311) : le banc sert aux séances 1 et 2 (activités 0, 1 et 3). Un seul nœud : à la
+       séance 1, il reste ici ; à la séance 2, le script des onglets le place juste après l'en-tête de la séance ; sans
+       JavaScript, il ne bouge pas. -->
+  <div class="outil-seance" id="outilBanc" data-seances="s1 s2">
+  <p class="outil-titre">🛰️ Le banc de liaison de l'activité 0 — le même, avec ton message</p>
   <div class="lien" id="banc">
     <div class="lien-schema">
       <div class="boite"><b>Station du Robert</b><span>il mesure et il envoie</span></div>
@@ -733,6 +792,7 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
     <div class="journal" id="journal"><div>Journal vide — compose un message, puis envoie.</div></div>
 
   </div>
+  </div><!-- /outil-seance -->
 
   <div class="exo">
 
@@ -862,14 +922,18 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
 
 <nav class="fin-seance" aria-label="Fin de la séance 1">
   <p>Fin de la séance 1. La suite, la prochaine fois&nbsp;:</p>
-  <a class="btn vers-seance" href="#seance-2">➡ Séance 2 — Se mettre d'accord, et quand l'autre se tait</a>
+  <a class="btn vers-seance" href="#seance-2" data-vers="s2">➡ Séance 2 — Se mettre d'accord, et quand l'autre se tait</a>
 </nav>
+</div>
 
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
 <section class="card seance-entete" id="seance-2" aria-labelledby="seance-2-titre">
   <h2 id="seance-2-titre">🗓 Séance 2 — Se mettre d'accord, et quand l'autre se tait</h2>
   <p class="seance-duree">Durée&nbsp;: 55 minutes · activités 2 et 3, soit 55 minutes d'activités.</p>
-  <p><b>Ce dont tu repars&nbsp;:</b> le message utile tient en six champs — identifiant, vitesse, unité, heure, niveau calculé, numéro d'ordre — et ne transporte jamais de secret (activité 1). <a href="#banc">Le banc</a> est en haut de la page, à l'activité 0&nbsp;: l'activité 3 en a besoin.</p>
+  <p><b>Ce dont tu repars&nbsp;:</b> le message utile tient en six champs — identifiant, vitesse, unité, heure, niveau calculé, numéro d'ordre — et ne transporte jamais de secret (activité 1). <a href="#banc">Le banc</a> de l'activité 0 te suit, avec ton message&nbsp;: l'activité 3 en a besoin.</p>
   <p><b>La question de la séance&nbsp;:</b> comment deux machines se mettent-elles d'accord — et que fait chacune quand l'autre se tait&nbsp;?</p>
+  <p class="rappel-securite">⚠️ Avec le matériel : aucun secret dans un message — ni clé de réseau, ni mot de passe, ni jeton —, aucune donnée personnelle, et le montage reste en très basse tension, 5 V (volts). <i><a href="#securite">L'encadré complet</a> est dans le rappel, en haut de page.</i></p>
 </section>
 
 <section class="card">
@@ -1014,9 +1078,12 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
 
 <nav class="fin-seance" aria-label="Fin de la séance 2">
   <p>Fin de la séance 2. La suite, la prochaine fois&nbsp;:</p>
-  <a class="btn vers-seance" href="#seance-3">➡ Séance 3 — Prouver que la liaison tient, puis passer à trois</a>
+  <a class="btn vers-seance" href="#seance-3" data-vers="s3">➡ Séance 3 — Prouver que la liaison tient, puis passer à trois</a>
 </nav>
+</div>
 
+<!-- ══════════════════ SÉANCE 3 ══════════════════ -->
+<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
 <section class="card seance-entete" id="seance-3" aria-labelledby="seance-3-titre">
   <h2 id="seance-3-titre">🗓 Séance 3 — Prouver que la liaison tient, puis passer à trois</h2>
   <p class="seance-duree">Durée&nbsp;: 55 minutes · l'activité 4 et le REFAIRE, soit 50 minutes d'activités, puis la synthèse, le bilan et le renvoi au QCM.</p>
@@ -1178,6 +1245,26 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
 
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+  <details class="correction"><summary>✅ Corrigé du défi horloges — une horloge qui retarde de dix minutes</summary><div>
+    <p><b>Ce qui se passe.</b> Ta règle n'accepte que des messages de moins de 15 minutes, et chaque station juge l'âge d'un message d'après l'heure <code>t</code> qu'il porte. Si l'horloge de Sainte-Anne retarde de 10 minutes, ses messages paraissent au Robert plus vieux de 10 minutes : une mesure faite il y a 6 minutes semble en avoir 16, et l'accord est refusé alors que les deux stations voient le même grain. Dans l'autre sens, c'est pire : Sainte-Anne croit plus jeunes les messages du Robert, et accepte un message vieux de 20 minutes comme s'il en avait 10 — un accord périmé passe pour un accord.</p>
+    <p><b>Comment deux machines se mettent à l'heure.</b> Par le réseau, avec le protocole NTP (de l'anglais <i lang="en">Network Time Protocol</i>) : à intervalles réguliers, chaque station demande l'heure à un serveur de temps et corrige son horloge. Une station sans réseau peut aussi prendre l'heure d'un récepteur GPS.</p>
+    <p><b>Ce que ça change à ta règle.</b> L'heure devient une exigence : les deux horloges sont synchronisées, et un écart trop grand est signalé comme une panne. On peut aussi juger la fraîcheur à l'heure d'<em>arrivée</em> du message, lue sur l'horloge de celui qui reçoit : l'écart entre les horloges ne compte plus. Et un essai de plus au protocole : décaler une horloge de 10 minutes, puis vérifier ce que fait la règle.</p>
+    <p><b>Attendus :</b> l'effet du retard sur la règle de fraîcheur (un accord refusé, ou un accord périmé accepté) ; un moyen de synchroniser nommé (NTP ou GPS) ; une modification de la règle ou un essai ajouté.</p>
+    <p><b>Erreurs typiques :</b> « dix minutes, ce n'est rien » — la fenêtre de fraîcheur ne fait que 15 minutes ; ne voir qu'un seul des deux sens ; « on remet l'heure à la main une fois » — une horloge dérive de nouveau, il faut la recaler sans cesse.</p>
+  </div></details>
+  <details class="correction"><summary>✅ Corrigé du défi accusé de réception — savoir que l'autre a reçu</summary><div>
+    <p><b>Le mécanisme.</b> À chaque message reçu, Sainte-Anne renvoie un court accusé de réception qui porte <b>le numéro d'ordre</b> du message : « reçu 417 ». Le Robert attend cet accusé pendant un délai fixé d'avance ; s'il ne vient pas, il renvoie le même message, avec le même numéro.</p>
+    <p><b>Si c'est l'accusé qui se perd.</b> Le Robert renvoie le message, et Sainte-Anne le reçoit deux fois. Elle le reconnaît à son numéro d'ordre (elle a déjà le 417) : elle ignore le doublon et renvoie l'accusé. C'est l'essai du doublon de l'activité 4. Et on limite le nombre de renvois : après trois essais sans réponse, l'autre est déclarée muette et le comportement de secours de l'activité 3 s'applique.</p>
+    <p><b>Attendus :</b> un accusé qui nomme le message (son numéro d'ordre) ; un délai d'attente puis un renvoi ; le doublon reconnu grâce au numéro ; une limite au nombre de renvois.</p>
+    <p><b>Erreurs typiques :</b> un accusé « OK » sans numéro — le Robert ne sait pas quel message il confirme ; renvoyer sans fin ; demander un accusé de l'accusé — on ne s'arrêterait jamais ; croire qu'un accusé perdu ne change rien.</p>
+  </div></details>
+  <details class="correction"><summary>✅ Corrigé du défi trois capteurs — pourquoi trois sondes et non deux</summary><div>
+    <p><b>Ce que tu peux trouver.</b> Les avions de ligne mesurent leur vitesse avec trois sondes (les sondes Pitot). Avec deux sondes, un désaccord dit seulement que l'une se trompe, pas laquelle : on ne sait pas qui croire. Avec trois, on vote : les deux qui s'accordent l'emportent, et la troisième est signalée en panne, sans être effacée.</p>
+    <p><b>Le lien avec le Marin.</b> C'est le REFAIRE : à deux stations, un désaccord était indécidable ; avec la troisième, au Marin, la règle devient « deux sur trois ». La panne d'une seule station ne bloque plus l'alerte, une fausse alerte isolée ne déclenche toujours rien, et la station qui dit autre chose devient une information à afficher.</p>
+    <p><b>Une limite à écrire :</b> le vote ne protège pas d'une cause commune. Trois sondes qui givrent en même temps, ou trois stations privées de courant par le même cyclone, se trompent ensemble.</p>
+    <p><b>Attendus :</b> à deux, impossible de départager ; à trois, un vote à la majorité ; la station en désaccord signalée ; le lien avec la règle « deux sur trois » du Marin.</p>
+    <p><b>Erreurs typiques :</b> « trois, c'est pour faire une moyenne plus précise » — le but est de savoir qui se trompe ; « si une sonde tombe en panne, il en reste deux » — et un nouveau désaccord entre ces deux-là redevient indécidable ; « à trois, plus besoin de comportement de secours ».</p>
+  </div></details>
 </section>
 
 <section class="card">
@@ -1188,6 +1275,9 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
   ajoute, c'est qu'on ne choisit pas entre supprimer les fausses alertes et garder les vraies :
   <em>on déclenche, et on dit qu'on était seul</em>.</p>
   <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">où as-tu hésité en écrivant la règle d'accord, et qu'est-ce qui t'a surpris quand tu as coupé le lien au banc ?</label></p>
+  <textarea id="bilanMeta" rows="2" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…"></textarea>
+  <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
   <p style="margin-top:12px"><b>Je me positionne sur 3e_C7.8 :</b></p>
   <select id="pos">
     <option value="">— je me positionne —</option>
@@ -1196,6 +1286,8 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
     <option>🟢 Maîtrise satisfaisante — j'écris le message, la règle d'accord et son délai de fraîcheur</option>
     <option>⭐ Très bonne maîtrise — et je décide du comportement en cas de silence, et je l'assortis d'essais</option>
   </select>
+  <fieldset class="positionnement"><legend>Je me positionne sur 3e_C8.3 (appui) — proposer un protocole de test pour valider le comportement et les performances d'un objet technique</legend>
+<label><input type="radio" name="pos_c83" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c83" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c83" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c83" value="4"> ⭐ très bonne</label></fieldset>
 </section>
 
 <section class="card" style="text-align:center">
@@ -1203,6 +1295,8 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
   <p>30 questions — chaque mauvaise réponse est réfutée une par une — sur le message entre machines, le numéro d'ordre, la règle d'accord, le délai de fraîcheur, le silence de l'autre et les essais qui prouvent tout cela.</p>
   <a class="btn" href="qcm_3e_C7.8_deux-stations.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
+
+</div>
 
 <footer>Séquence 3e_C7.8 — <em>Deux stations qui se parlent</em> · Thème 3 · banc de liaison original (CC0), hors ligne, sans dépendance.</footer>
 
@@ -1219,11 +1313,14 @@ const ANCIENNE_CLE = "seq_3e_C7_4";
 try{
   if(localStorage.getItem(KEY) === null){
     const v = localStorage.getItem(ANCIENNE_CLE);
-    if(v !== null) localStorage.setItem(KEY, v);
+    // la séance mémorisée par 3e_C7.4 (vague n°311, 04/11/2026) ne vaut pas pour cette page-ci : on ne la recopie pas
+    let o = null; try{ o = JSON.parse(v); if(o && typeof o === "object") delete o.onglet; }catch(e){ o = null; }
+    if(v !== null) localStorage.setItem(KEY, o && typeof o === "object" ? JSON.stringify(o) : v);
   }
 }catch(e){}
 const $ = id => document.getElementById(id);
 window.__exp = window.__exp || {};
+let ongletActif = null;   // la séance affichée (vague n°311, 04/11/2026), rangée à part des verrous
 
 function qmark(e, state){
   let m = e.previousElementSibling;
@@ -1390,23 +1487,98 @@ function save(){
   document.querySelectorAll("input, select, textarea").forEach(e => {
     if(!e.id) return;
     if(e.type === "checkbox" || (e.type === "radio" && e.closest("#billet"))) o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
+  o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
+  o.onglet = ongletActif;
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
 }
 function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
   if(!o) return;
+  ongletActif = o.onglet || null;   // lu d'abord : majLien(), plus bas, enregistre
   Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
   Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  Object.entries(o.radios || {}).forEach(([name, v]) => { const r = document.querySelector('.positionnement input[name="' + name + '"][value="' + v + '"]'); if(r) r.checked = true; });
   window.__exp = o.exp || {};
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r && h.value.trim()) r.textContent = h.value;
+  // l'onglet en cours : un lien direct vers une ancre l'emporte sur lui
+  if(!location.hash && ongletActif && $(ongletActif)) montrerSeance(ongletActif, false);
 }
 document.addEventListener("input", () => {
   save();
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r) r.textContent = h.value.trim() || "—";
 });
+
+/* ══ Séances à onglets (squelette n°306) — vague du 04/11/2026, sur le modèle du pilote 4e_C8.1 ══ */
+/* Un outil n'est pas du décor (n°311) : le banc de liaison sert aux séances que nomme son data-seances. C'est un seul nœud. À la
+   séance qui porte son activité, il y reste ; à une autre séance qui s'en sert, il vient juste après l'en-tête de la
+   séance ; aux autres, il retourne à sa place (dans une séance repliée). Le déplacer garde son état (champs cochés, comportement, journal).
+   Sans JavaScript, il ne bouge pas. */
+const OUTIL = $("outilBanc"), MAISON = OUTIL ? document.createComment(" place du banc ") : null;
+if(OUTIL) OUTIL.before(MAISON);
+function placerOutil(id){
+  if(!OUTIL) return;
+  const pan = $(id), chez = MAISON.parentNode.closest(".seance-panel");
+  const sert = (OUTIL.dataset.seances || "").split(/\s+/).includes(id);
+  if(pan && sert && pan !== chez){
+    const tete = pan.querySelector(".seance-entete");
+    if(tete){ if(tete.nextElementSibling !== OUTIL) tete.after(OUTIL); }
+    else if(pan.firstElementChild !== OUTIL) pan.prepend(OUTIL);
+  } else if(MAISON.nextSibling !== OUTIL) MAISON.after(OUTIL);
+  OUTIL.removeAttribute("data-pp-hors");   // la fiche papier le suit avec sa séance
+}
+function montrerSeance(id, memoriser){
+  if(!$(id)) return;
+  document.querySelectorAll(".seance-tab").forEach(x => { const on = x.dataset.panel === id; x.classList.toggle("active", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
+  document.querySelectorAll(".seance-panel").forEach(p => p.classList.toggle("active", p.id === id));
+  placerOutil(id);
+  appliqueSeance(id);
+  ongletActif = id;
+  if(memoriser !== false) save();
+}
+/* Un clic sur un onglet oublie l'ancre de l'adresse : au rechargement, c'est la séance mémorisée qui revient. */
+document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => {
+  montrerSeance(t.dataset.panel);
+  if(location.hash) try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){}
+}));
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte (ou le
+   volet, si l'ancre est dans l'ouverture). Comme au pilote, le volet ne se replie qu'une fois la page chargée. */
+function appliqueSeance(idPanneau){
+  const v = $("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", () => { const v = $("ouverture"); if(v){ voletAvantImpression = v.open; v.open = true; } });
+  window.addEventListener("afterprint", () => { const v = $("ouverture"); if(v && voletAvantImpression !== null){ v.open = voletAvantImpression; voletAvantImpression = null; } });
+  const cibleDuLien = () => { let id = ""; try{ id = decodeURIComponent(location.hash.slice(1)); }catch(e){} return id ? $(id) : null; };
+  const ouvrirSeanceDeLAncre = () => {
+    const cible = cibleDuLien(); if(!cible) return;
+    const pan = cible.closest(".seance-panel"), v = $("ouverture");
+    if(pan && !pan.classList.contains("active")){ montrerSeance(pan.id); setTimeout(() => cible.scrollIntoView({block:"start"}), 60); }
+    else if(!pan && v && !v.open && v.contains(cible)){ v.open = true; setTimeout(() => cible.scrollIntoView({block:"start"}), 60); }
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", () => {
+    const v = $("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active") || {}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
+/* Règle d'or n°101 — chaque séance mène explicitement à la suivante. Le bouton est un lien vers l'en-tête de la séance
+   suivante : on ouvre son onglet, puis le lien amène à son en-tête (sans JavaScript, il y mène tout seul). */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => montrerSeance(b.dataset.vers)));
+if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
+
 restore(); majLien();
+placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // l'outil rejoint la séance affichée
 })();
 </script>
 

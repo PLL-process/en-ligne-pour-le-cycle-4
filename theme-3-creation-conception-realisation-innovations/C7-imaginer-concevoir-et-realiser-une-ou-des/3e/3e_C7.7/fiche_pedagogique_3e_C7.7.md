@@ -75,3 +75,13 @@ python3 moyens.py
 
 Ce qui se passe en classe. Un test vert dit que la page fait ce qu'elle annonce, pas qu'un élève
 apprend. La grille LSU de la synthèse professeur est là pour observer, pas pour noter une page.
+
+## Les séances passent à onglets (04/11/2026, vague de la règle d'or n°311)
+
+Le découpage en séances de 55 min ne change pas (activité 0 et activité 1a | activité 1b et activité 2 | activité 3 | REFAIRE, puis la clôture) : chaque en-tête « 🗓 Séance N » devient la tête de son onglet, chaque bouton de fin de séance ouvre la suivante, et l'onglet en cours est mémorisé. L'ouverture (étiquettes, liens « Aller à ma séance », « Ce que tu sais déjà faire », situation, problématique et hypothèse, ce que l'impression impose, « Trois façons ») est complète à la séance 1 et repliée dans le volet « 📖 Rappel » dès la séance 2, jamais supprimée. Sans JavaScript, la page reste d'un seul tenant.
+
+Restent visibles à chaque séance : le titre, la mission, la barre d'outils et l'atelier des moyens, qui sert aux quatre séances (le Bonus de la séance 4 s'en sert aussi) : dans l'activité 1a à la séance 1, juste après l'en-tête aux séances 2 à 4. Le renvoi de l'activité 1b dit « activité 1a, séance 1 ».
+
+Clôture : un corrigé du Bonus (0 moyen capable après une ou deux cotes corrigées, 1 après les trois, vérifié sur l'atelier de la page ; un dessin de fabrication passe en entier ou pas), « Comment j'ai travaillé », « Je me positionne » sur 3e_C7.7 aux niveaux du livret : chaque phrase d'origine est rangée au niveau de son sens (« si on m'aide », « si on me rappelle » : fragile ; « seul » : satisfaisante), une phrase neuve dit la très bonne maîtrise (l'expliquer à un camarade ou le refaire ailleurs), et une réponse donnée avant se relit avec sa phrase et sur 3e_C8.1.
+
+Sécurité visible (retouche du 04/11/2026) : l'encadré reste dans le volet, mais l'en-tête de la séance 2, où l'on manipule (voie 🅰), en rappelle la consigne en une ligne — l'impression ventilée, capot fermé, la pièce décollée plateau refroidi, les lunettes — avec un lien qui ouvre le volet sur l'encadré.

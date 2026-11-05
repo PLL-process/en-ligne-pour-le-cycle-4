@@ -9,6 +9,21 @@ p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()
 p.on('requestfailed', r => fail.push(r.url()));
 p.on('dialog', async d => { dlg.push(d.message()); await d.dismiss(); });
 const T = []; const ok = (n, c, d = '') => T.push({ n, ok: !!c, d });
+/* Séances à onglets (vague de la règle d'or n°311, 04/11/2026) : une activité n'est plus à l'écran au chargement. Avant d'agir
+ * sur un champ, on ouvre, comme l'élève, l'onglet de la séance qui le porte ; un champ de l'ouverture se trouve à la séance 1
+ * (dès la séance 2, il est replié dans le volet « Rappel »). L'établi sert aux séances 3 et 4 : on le monte à la séance 3. */
+async function ouvrirSeanceDe(sel) {
+  const id = await p.evaluate(s => {
+    const e = document.querySelector(s); if (!e) return null;
+    const pan = e.closest('.seance-panel');
+    if (pan) return pan.classList.contains('active') ? null : pan.id;
+    const v = e.closest('#ouverture');
+    return v && !v.open ? document.querySelector('.seance-tab').dataset.panel : null;
+  }, sel);
+  if (id) { await p.click('.seance-tab[data-panel="' + id + '"]'); await p.waitForTimeout(80); }
+}
+const seance = async (id) => { if (!(await p.evaluate(i => document.getElementById(i).classList.contains('active'), id))) {
+  await p.click('.seance-tab[data-panel="' + id + '"]'); await p.waitForTimeout(80); } };
 const src = readFileSync(f, 'utf8');
 const REP = JSON.parse(readFileSync(process.argv[4], 'utf8'));
 await p.goto('file://' + f, { waitUntil: 'load' }); await p.waitForTimeout(500);
@@ -25,6 +40,7 @@ const dernier = () => p.evaluate(() => {
 });
 
 // ── l'établi part vide, et il le dit ─────────────────────────────────────
+await seance('s3');   // l'établi est à la séance 3, dans l'activité 2
 ok('aucun constituant monté au départ',
    (await p.$$eval('#pt_carte', n => n.map(x => x.value))).every(v => v === ''));
 ok('aucune fonction tenue au départ',
@@ -114,6 +130,7 @@ ok('chaque séance (sauf la dernière) mène explicitement à la suivante',
 const nav = await p.$$eval('nav.seances-nav a', a => a.map(x => x.getAttribute('href')));
 ok('le haut de page mène à chacune des séances',
    nav.join(',') === '#seance-1,#seance-2,#seance-3,#seance-4', nav.join(', '));
+await seance('s1');   // chaque bouton de fin de séance est dans sa séance : on part de la première, comme l'élève
 for (const cible of ['#seance-2', '#seance-3', '#seance-4']) {
   await p.click('nav.fin-seance a[href="' + cible + '"]'); await p.waitForTimeout(250);
   const top = await p.evaluate(s => document.querySelector(s).getBoundingClientRect().top, cible);
@@ -136,6 +153,7 @@ for (const [n, champs] of Object.entries(REP.activites)) {
   for (const [id, val] of Object.entries(champs)) {
     const el = await p.$('#' + id);
     if (!el) { ok('champ ' + id + ' présent', false); continue; }
+    await ouvrirSeanceDe('#' + id);
     const tag = await el.evaluate(e => e.tagName);
     if (tag === 'SELECT') await p.selectOption('#' + id, val); else await p.fill('#' + id, val);
   }
@@ -146,6 +164,7 @@ for (const [n, champs] of Object.entries(REP.activites)) {
 
 // ── une réponse fausse est refusée ───────────────────────────────────────
 if (REP.refus) {
+  await ouvrirSeanceDe('#' + REP.refus.id);
   await p.selectOption('#' + REP.refus.id, REP.refus.faux);
   await p.evaluate(n => document.querySelector('[data-check="' + n + '"]').click(), REP.refus.act);
   ok('une réponse fausse est refusée',

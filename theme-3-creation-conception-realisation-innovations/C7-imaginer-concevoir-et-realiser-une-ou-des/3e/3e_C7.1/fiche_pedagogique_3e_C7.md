@@ -58,3 +58,11 @@ proposition à chaque question donnait 26/26 sans rien savoir. Elles sont redist
 les quatre positions (outil `repartir_qcm.mjs`, dans `4e/4e_C7.1/`). Le QCM reste de la
 génération ancienne — 26 questions, sans réfutation par distracteur : la mise à niveau au
 standard des lots C9 n'est pas faite, et c'est dit plutôt que sous-entendu.
+
+## Les séances passent à onglets (04/11/2026, vague de la règle d'or n°311)
+
+Le découpage en séances de 55 min ne change pas (activités 0, 1 et 2 | gestes de Vittascience, activité 3 et REFAIRE | activités 6 et 7, puis la clôture) : chaque en-tête « 🗓 Séance N » devient la tête de son onglet, chaque bouton de fin de séance ouvre la suivante, et l'onglet en cours est mémorisé. L'ouverture (étiquettes, « Avant de commencer », situation, problématique, hypothèse, billet d'entrée, contrat, « Deux façons ») est complète à la séance 1 et repliée dans le volet « 📖 Rappel » dès la séance 2, jamais supprimée. Sans JavaScript, la page reste d'un seul tenant.
+
+Restent visibles à chaque séance : le titre, la mission (le sous-titre devient « 🎯 Ta mission : … », comme au pilote), l'identité, la barre d'outils, le sélecteur de parcours et ses deux notes, la progression et « 🗺 Où j'en suis ». Celui-ci est ouvert à la séance 1 et replié dès la séance 2 derrière une ligne qui garde le compte (« 2 / 8 activités validées ») ; un clic le rouvre. Le simulateur thermique ne sert qu'à la séance 1 : il reste dans son activité. L'enveloppe de carte qui réunissait barre d'outils, billet et tableau de bord est dissoute ; le billet, le contrat et « Deux façons » suivent l'hypothèse, dans l'ordre du squelette.
+
+Clôture : rien à rédiger (Bonus corrigé, bilan complet) ; le bilan relit désormais l'hypothèse écrite au début, comme au pilote. « Je me positionne » garde son échelle (« Je ne sais pas encore le faire » … « Je sais l'expliquer à quelqu'un »), qui n'est pas celle du livret.

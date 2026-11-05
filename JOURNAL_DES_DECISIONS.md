@@ -27808,3 +27808,55 @@ vrai téléphone, Firefox, Safari, une impression réelle.
 
 **À valider par Pascal** : les six missions ; l'ordre de l'atelier de planification et du TP dans le projet de 4e_C7.1 ;
 des séances pleines (95 à 100 min d'activités pour 2 × 55 min sur quatre pages).
+
+
+---
+
+## 04/11/2026 — Vague 3e C7 : les six séquences de la station passent à onglets, avec le volet « 📖 Rappel » (thème 3) — fin des vagues
+
+*Dernière vague du pilote 4e_C8.1. Après elle, toutes les séquences d'un seul tenant du dépôt sont à onglets ; seules
+restent sans onglets les quatre pages de la station 3e_C9.2 découpées de la page tout-en-un.*
+
+**Les six pages** gardent le découpage en séances du 25/10/2026 : chaque en-tête « 🗓 Séance N » devient la tête de son
+onglet, avec sa question et sa durée.
+
+| Page | Séances (min) | L'outil qui suit la séance |
+|---|---|---|
+| 3e_C7.1, capteur de confort | 55 / 45 / 45 | — (le simulateur ne sert qu'à la séance 1 ; hors du volet : identité, barre d'outils, sélecteur de parcours, progression, « Où j'en suis ») |
+| 3e_C7.3, boîtier de la station | 50 / 50 / 35 / 25 | banc des matériaux, séances 1 à 3 |
+| 3e_C7.4, énergie de la station | 45 / 55 / 50 | banc d'énergie, séances 1 et 2 |
+| 3e_C7.5, station à équiper | 25 / 35 / 55 / 35 | établi, séances 3 et 4 |
+| 3e_C7.7, produire le boîtier | 50 / 50 / 35 / 25 | atelier des moyens, séances 1 à 4 |
+| 3e_C7.8, deux stations | 45 / 55 / 50 | banc de liaison, séances 1 et 2 |
+
+- **La règle de l'outil** (la même qu'en 4e) : il reste dans l'activité qui le présente ; aux autres séances qui s'en
+  servent, il vient après l'en-tête ; aux séances qui ne s'en servent pas, il n'est pas à l'écran (3e_C7.5 : on ne monte
+  pas l'établi avant d'avoir choisi les constituants). Il ne s'imprime que sur les fiches des séances qui s'en servent.
+- **La sécurité reste visible** : les encadrés Sécurité sont dans le volet ; l'en-tête des séances où l'on manipule
+  rappelle la consigne de la page en une ligne, avec un lien qui ouvre le volet sur l'encadré (3e_C7.3, séance 3 : PVC
+  jamais au laser, impression ventilée, perçage avec lunettes et pièce bridée…).
+- **3e_C7.1** : « Où j'en suis » se replie dès la séance 2 ; le billet, le contrat et « Deux façons » suivent l'hypothèse
+  (ordre n°306) ; le rappel de l'hypothèse entre dans le bilan. Réincrustée avec le kit des ateliers corrigé (#586).
+- **La mission** remplace le sous-titre « Thème 3 · 3e — … » ; une barre d'outils « 🖨 Imprimer / PDF » est ajoutée.
+- **La clôture, complétée** (cinq pages de la station) : un corrigé par défi du Bonus, vérifiés sur les outils de la page
+  (3e_C7.5 : 580 → 120 mA ; 3e_C7.7 : 0, 0, puis 1 moyen capable) ; le chiffre martiniquais de 3e_C7.4 (« un quart de
+  renouvelable en 2024 ») cite sa source, le bilan d'EDF Martinique publié le 26 mars 2025, notée dans la fiche du lot ;
+  les températures des accus sont des ordres de grandeur. « Comment j'ai travaillé » ; « Je me positionne » aux quatre
+  niveaux du livret, avec le code d'appui.
+- **Les échelles de positionnement** de 3e_C7.3, 3e_C7.5 et 3e_C7.7 sont rangées au niveau de leur **sens**, la même règle
+  sur les trois pages : « je ne sais pas encore » → insuffisante ; la réussite partielle et « si on me rappelle… » →
+  fragile ; « seul » → satisfaisante ; « je sais l'expliquer ou le refaire ailleurs » → très bonne maîtrise (une phrase
+  écrite, dans le même style, là où elle manquait). Une ancienne réponse se relit avec sa phrase.
+- Les phrases de navigation devenues fausses avec les onglets sont retouchées (« activité 1a, plus haut » → « séance 1 »,
+  « en haut de la page » → « te suit »).
+
+**Contrôles.** Bancs n°311 : banc commun 34 / 34 et relais 8 / 8 (9 / 9 pour 3e_C7.1) sur chaque page, plus « l'outil suit
+la séance » (14 à 22 vérifications), « Où j'en suis » 18 / 18 et la ligne de sécurité. Bancs des lots, avant = après :
+3e_C7.1 71 / 71, 3e_C7.3 68 / 68, 3e_C7.4 54 / 54, 3e_C7.5 54 / 54, 3e_C7.7 77 / 77, 3e_C7.8 58 / 58 ; QCM 32 / 32.
+`controle_squelette` : 0 défaut, aucun « à rédiger », aucun signalement. Verts : impression, impression papier (21 fiches,
+une par séance, 0 texte pâle), verrous, hors ligne, contraste des liens, règles visibles, liens, hiérarchie, unités, sigles,
+navigation entre séances, rapports de tests. Non testé : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+**À valider par Pascal** : les six missions et les phrases de positionnement écrites pour « très bonne maîtrise ».
+
+**Reste** : rendre D6 obligatoire dans `controle_squelette`.

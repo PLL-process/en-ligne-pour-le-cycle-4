@@ -9,6 +9,19 @@ p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()
 p.on('requestfailed', r => fail.push(r.url()));
 p.on('dialog', async d => { dlg.push(d.message()); await d.dismiss(); });
 const T = []; const ok = (n, c, d = '') => T.push({ n, ok: !!c, d });
+/* Séances à onglets (vague de la règle d'or n°311, 04/11/2026) : une activité n'est plus à l'écran au chargement. Avant d'agir
+ * sur un champ, on ouvre, comme l'élève, l'onglet de la séance qui le porte ; un champ de l'ouverture se trouve à la séance 1
+ * (dès la séance 2, il est replié dans le volet « Rappel »). Le banc suit les séances 1 et 2 ; à la séance 3, il est rangé. */
+async function ouvrirSeanceDe(sel) {
+  const id = await p.evaluate(s => {
+    const e = document.querySelector(s); if (!e) return null;
+    const pan = e.closest('.seance-panel');
+    if (pan) return pan.classList.contains('active') ? null : pan.id;
+    const v = e.closest('#ouverture');
+    return v && !v.open ? document.querySelector('.seance-tab').dataset.panel : null;
+  }, sel);
+  if (id) { await p.click('.seance-tab[data-panel="' + id + '"]'); await p.waitForTimeout(80); }
+}
 const src = readFileSync(f, 'utf8');
 const REP = JSON.parse(readFileSync(process.argv[4], 'utf8'));
 await p.goto('file://' + f, { waitUntil: 'load' }); await p.waitForTimeout(500);
@@ -132,6 +145,7 @@ for (const [n, champs] of Object.entries(REP.activites)) {
   for (const [id, val] of Object.entries(champs)) {
     const el = await p.$('#' + id);
     if (!el) { ok('champ ' + id + ' présent', false); continue; }
+    await ouvrirSeanceDe('#' + id);
     const tag = await el.evaluate(e => e.tagName);
     if (tag === 'SELECT') await p.selectOption('#' + id, val); else await p.fill('#' + id, val);
   }
@@ -142,6 +156,7 @@ for (const [n, champs] of Object.entries(REP.activites)) {
 
 // ── une réponse fausse est refusée ───────────────────────────────────────
 if (REP.refus) {
+  await ouvrirSeanceDe('#' + REP.refus.id);
   await p.selectOption('#' + REP.refus.id, REP.refus.faux);
   await p.evaluate(n => document.querySelector('[data-check="' + n + '"]').click(), REP.refus.act);
   ok('une réponse fausse est refusée',
