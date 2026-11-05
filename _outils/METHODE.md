@@ -316,17 +316,22 @@ restent 100 % hors ligne) :
 | chaînes `"…"` | `.py-str` | vert `var(--ok)` |
 | nombres | `.py-num` | orange `var(--energie)` |
 | mots-clés (`print`, `def`, `if`…) | `.py-kw` | violet `var(--head)`, gras |
-| `=` et opérateurs | `.py-op` | jaune `var(--warn)`, gras |
+| `=`, `←` et opérateurs | `.py-op` | jaune `var(--warn)`, gras |
 | commentaires `#` | `.py-com` | gris bleu, italique |
 | numéros de ligne pédagogiques | `.py-lno` | bleu discret |
 
-Le colorisateur est la petite fonction `pyc()` embarquée dans la page (elle
-tokenise : chaînes → commentaires → nombres → identifiants → opérateurs) et
-s'applique au chargement à `pre.code` et `#memCode > div`. Une légende 🎨
-accompagne le PREMIER listing de la page. Le `<code>` en ligne dans la prose
-reste monochrome (la couleur est réservée aux listings, pour garder sa force).
-Référence : règle d'or n°13 au journal (entrée du 30/07/2026, PR de la
-branche `fable/theme-3/code-colore-ide`).
+Le colorisateur était d'abord la petite fonction `pyc()` embarquée dans la page
+(elle tokenise : chaînes → commentaires → nombres → identifiants → opérateurs),
+appliquée au chargement à `pre.code` et `#memCode > div`. Depuis le 05/11/2026,
+**un colorisateur commun** sert tout le site : `_ressources-communes/code-colore/`
+(`code-colore.js` + `.css`, trois langages : `python`, `arduino`, `algo` pour le
+pseudo-code en français). Un listing le demande par `data-code-colore="…"` ;
+**l'éditeur Python intégré** (règle n°320) s'en sert pour colorer sa zone de saisie,
+comme un IDE (Pascal, le 05/11/2026 : « sa zone de code est monochrome. À l'avenir,
+il faudrait changer ceci »). Une légende 🎨 accompagne le PREMIER listing de la page.
+Le `<code>` en ligne dans la prose reste monochrome (la couleur est réservée aux
+listings, pour garder sa force). **Contrôle** : `node _outils/controle_code_colore.mjs`.
+Référence : règle d'or n°13 au journal (entrées du 30/07/2026 et du 05/11/2026).
 
 ## L'exercice vivant (règles d'or n°14, 15, 17)
 

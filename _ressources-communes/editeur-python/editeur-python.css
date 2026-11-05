@@ -36,6 +36,21 @@
 .editeur-py .editeur-py-btn:focus-visible,.editeur-py textarea:focus-visible,.editeur-py input:focus-visible,.editeur-py-console:focus-visible{outline:3px solid var(--ep-alerte);outline-offset:2px}
 .editeur-py-zone{display:flex;align-items:stretch;min-width:0;border:1px solid var(--ep-bord);border-radius:8px;background:var(--ep-code);overflow:hidden}
 .editeur-py-zone textarea.editeur-py-code{flex:1 1 auto;min-width:0;border:0;border-radius:0;padding:8px 10px 8px 8px;background:transparent}
+/* le code en couleurs (règle d'or n°13) : un <pre> sous la zone de saisie, aux mêmes mesures ; la palette est dans
+   _ressources-communes/code-colore/code-colore.css */
+.editeur-py-saisie{position:relative;flex:1 1 auto;min-width:0;display:flex}
+.editeur-py-saisie textarea.editeur-py-code{position:relative;z-index:1}
+.editeur-py-couleurs{display:none;position:absolute;inset:0;z-index:0;margin:0;padding:8px 10px 8px 8px;border:0;background:transparent;
+  font-family:var(--ep-mono);font-size:15px;line-height:1.5;tab-size:4;-moz-tab-size:4;white-space:pre;overflow:hidden;
+  pointer-events:none;color:var(--ep-texte);text-align:left}
+.editeur-py-zone--couleurs .editeur-py-couleurs{display:block}
+.editeur-py-zone--couleurs textarea.editeur-py-code{color:transparent;-webkit-text-fill-color:transparent;caret-color:var(--ep-texte)}
+.editeur-py-zone--couleurs textarea.editeur-py-code::selection{background:rgba(97,218,251,.32)}
+.editeur-py-zone--couleurs textarea.editeur-py-code::placeholder{-webkit-text-fill-color:var(--ep-marge);color:var(--ep-marge)}
+@media (forced-colors:active){
+  .editeur-py-zone--couleurs textarea.editeur-py-code{color:CanvasText;-webkit-text-fill-color:CanvasText}
+  .editeur-py-zone--couleurs .editeur-py-couleurs{display:none}
+}
 .editeur-py-marge{flex:0 0 auto;overflow:hidden;padding:8px 6px 8px 8px;border-right:1px solid var(--ep-bord);background:rgba(0,0,0,.18);
   font-family:var(--ep-mono);font-size:15px;line-height:1.5;color:var(--ep-marge);text-align:right;user-select:none;min-width:2.6em}
 .editeur-py-marge-int{white-space:pre;will-change:transform}
@@ -92,7 +107,7 @@ details.gestes-fenetres>summary{cursor:pointer;min-height:44px;display:flex;alig
 @media (max-width:480px){
   .editeur-py{padding:10px 10px}
   .editeur-py .editeur-py-btn{flex:1 1 auto}
-  .editeur-py textarea.editeur-py-code,.editeur-py-marge{font-size:14px}
+  .editeur-py textarea.editeur-py-code,.editeur-py-marge,.editeur-py-couleurs{font-size:14px}
 }
 /* ── à l'impression : le programme et la dernière sortie, en clair ── */
 @media print{

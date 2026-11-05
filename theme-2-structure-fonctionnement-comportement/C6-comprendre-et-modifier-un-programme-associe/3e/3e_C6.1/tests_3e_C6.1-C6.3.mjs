@@ -79,7 +79,8 @@ ok(`2 · programme d'origine chargé dans l'éditeur, ${lignesV1} lignes annonc�
 const teintes = await p.$$eval('#clHl span', l => [...new Set(l.map(e => e.className))]
   .filter(Boolean));
 ok(`3 · coloration syntaxique active : ${teintes.length} familles de jetons colorées`,
-   ['k', 'n', 'f', 'c', 's'].filter(c => teintes.includes(c)).length >= 4, teintes.join(','));
+   // la palette du site (règle d'or n°13, code-colore.js, 05/11/2026) : mots-clés, nombres, variables, commentaires, textes, opérateurs
+   ['py-kw', 'py-num', 'py-var', 'py-com', 'py-str', 'py-op'].filter(c => teintes.includes(c)).length >= 5, teintes.join(','));
 
 /* Le surlignage est piloté par les consignes : on prend un bouton de la page. */
 const hl = await p.$eval('[data-hl]', e => e.dataset.hl);

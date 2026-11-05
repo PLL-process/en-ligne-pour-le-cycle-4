@@ -22,6 +22,8 @@ import { chromium } from "playwright";
 const ICI = path.dirname(fileURLToPath(import.meta.url));
 const JS = pathToFileURL(path.join(ICI, "editeur-python.js")).href;
 const CSS = pathToFileURL(path.join(ICI, "editeur-python.css")).href;
+const CC_JS = pathToFileURL(path.join(ICI, "..", "code-colore", "code-colore.js")).href;
+const CC_CSS = pathToFileURL(path.join(ICI, "..", "code-colore", "code-colore.css")).href;
 const iCap = process.argv.indexOf("--captures");
 const CAP = iCap > 0 ? path.resolve(process.argv[iCap + 1]) : null;
 if (CAP) fs.mkdirSync(CAP, { recursive: true });
@@ -32,6 +34,8 @@ fs.writeFileSync(PAGE, `<!DOCTYPE html>
 <html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Banc de l'éditeur Python</title>
 <link rel="stylesheet" href="${CSS}">
+<link rel="stylesheet" href="${CC_CSS}">
+<script src="${CC_JS}"></script>
 <style>
   :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--text:#e4eaf5;--input-bg:#173666;--input-bd:#2e5d9f;
     --btn:#1d4e89;--btn-h:#2966b1;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
@@ -401,6 +405,56 @@ ok("sans JavaScript : la zone de code (code de départ) et le lien Vittascience 
    (await ps.inputValue("#py_essai")) === 'print(3 + 4)\nprint("3" + "4")' && (await ps.locator("#vs1 a.vs-lien").isVisible()) &&
    (await ps.locator("#vs1 .editeur-py-sansjs").isVisible()));
 await ctxs.close();
+
+/* 18. le code en couleurs (règle d'or n°13, 05/11/2026) : sous la zone de saisie, aux mêmes mesures */
+{
+  const c = await contexte();
+  const p = await c.newPage(); p.erreurs = []; p.on("pageerror", (e) => p.erreurs.push(e.message));
+  await p.goto(URL_PAGE);
+  const d = await p.evaluate(() => {
+    const z = document.querySelector("#vs1 .editeur-py-zone"), ta = document.querySelector("#py_essai"), pre = z.querySelector(".editeur-py-couleurs");
+    const a = getComputedStyle(ta), b = getComputedStyle(pre), ra = ta.getBoundingClientRect(), rb = pre.getBoundingClientRect();
+    const mesures = ["fontFamily", "fontSize", "lineHeight", "paddingTop", "paddingLeft", "tabSize", "whiteSpace"].filter((k) => a[k] !== b[k]);
+    return { actif: z.classList.contains("editeur-py-zone--couleurs"), texte: pre.textContent === ta.value + "\n",
+      kw: [...pre.querySelectorAll(".py-kw")].map((e) => e.textContent), str: [...pre.querySelectorAll(".py-str")].map((e) => e.textContent),
+      num: [...pre.querySelectorAll(".py-num")].map((e) => e.textContent), encre: a.color, curseur: a.caretColor, ecarts: mesures,
+      place: Math.abs(ra.left - rb.left) < 1 && Math.abs(ra.top - rb.top) < 1 && Math.abs(ra.width - rb.width) < 1,
+      legendes: document.querySelectorAll(".py-legende").length, cache: pre.getAttribute("aria-hidden") };
+  });
+  ok("couleurs : le code de la zone est coloré dessous (print en mot-clé, \"3\" en texte, 3 et 4 en nombres)",
+     d.actif && d.texte && d.kw.join() === "print,print" && d.str.join() === '"3","4"' && d.num.join() === "3,4", JSON.stringify(d).slice(0, 200));
+  ok("couleurs : le texte de la zone est transparent, le curseur reste visible", d.encre === "rgba(0, 0, 0, 0)" && d.curseur !== "rgba(0, 0, 0, 0)", d.encre + " / " + d.curseur);
+  ok("couleurs : même police, même interligne, mêmes marges, même place que la zone (le curseur tombe sur sa lettre)", d.place && d.ecarts.length === 0, d.ecarts.join(", "));
+  ok("couleurs : la couche colorée est muette pour un lecteur d'écran ; une seule légende 🎨 dans la page", d.cache === "true" && d.legendes === 1, d.cache + " · " + d.legendes);
+  await ecrireCode(p, "vs1", 'seuil = 28\nif seuil > 20:  # chaud\n    print("Rouge")');
+  const e = await p.evaluate(() => { const pre = document.querySelector("#vs1 .editeur-py-couleurs");
+    return { v: [...pre.querySelectorAll(".py-var")].map((x) => x.textContent).join(), c: pre.querySelector(".py-com") && pre.querySelector(".py-com").textContent,
+      o: [...pre.querySelectorAll(".py-op")].map((x) => x.textContent).join(), couleur: getComputedStyle(pre.querySelector(".py-kw")).color }; });
+  ok("couleurs : à chaque frappe, les variables (cyan), les opérateurs, le commentaire suivent", e.v === "seuil,seuil" && e.o === "=,>" && e.c === "# chaud" && e.couleur === "rgb(198, 142, 242)", JSON.stringify(e));
+  await ecrireCode(p, "vs1", Array.from({ length: 40 }, (_, i) => "x" + i + " = " + i).join("\n") + "\n" + "y = " + "1 + ".repeat(60) + "1");
+  const sc = await p.evaluate(() => { const ta = document.querySelector("#py_essai"), pre = document.querySelector("#vs1 .editeur-py-couleurs");
+    ta.scrollTop = 200; ta.scrollLeft = 150; ta.dispatchEvent(new Event("scroll")); return [ta.scrollTop, pre.scrollTop, ta.scrollLeft, pre.scrollLeft]; });
+  // la zone grandit avec le programme (elle ne défile pas en hauteur) ; une longue ligne, elle, la fait défiler de côté
+  ok("couleurs : quand une longue ligne fait défiler la zone de côté, le code coloré défile avec elle", sc[0] === sc[1] && sc[2] > 0 && sc[2] === sc[3], sc.join(" · "));
+  await ecrireCode(p, "vs1", 'print("Train", 3)');
+  await p.emulateMedia({ media: "print" });
+  const im = await p.evaluate(() => { const k = document.querySelector("#vs1 .editeur-py-imp-code .py-kw"); return k ? getComputedStyle(k).color : null; });
+  ok("couleurs : à l'impression, le programme garde ses couleurs, en teintes foncées pour le papier", im === "rgb(106, 27, 154)", String(im));
+  await p.emulateMedia({ media: "screen", forcedColors: "active" });
+  const fc = await p.evaluate(() => ({ pre: getComputedStyle(document.querySelector("#vs1 .editeur-py-couleurs")).display, ta: getComputedStyle(document.querySelector("#py_essai")).color }));
+  ok("couleurs : en mode « couleurs forcées » (contraste élevé), la zone redevient du texte ordinaire", fc.pre === "none" && fc.ta !== "rgba(0, 0, 0, 0)", JSON.stringify(fc));
+  await p.emulateMedia({ media: "screen", forcedColors: "none" });
+  ok("couleurs : zéro erreur JavaScript", p.erreurs.length === 0, p.erreurs.join(" | "));
+  await c.close();
+  // sans le fichier des couleurs : l'éditeur reste monochrome, et lisible
+  const SANS = path.join(TMP, "page_sans_couleurs.html");
+  fs.writeFileSync(SANS, fs.readFileSync(PAGE, "utf8").replace(/<script src="[^"]*code-colore\.js"><\/script>/, ""));
+  const c2 = await contexte(); const p2 = await c2.newPage(); await p2.goto(pathToFileURL(SANS).href);
+  const m = await p2.evaluate(() => ({ actif: document.querySelector("#vs1 .editeur-py-zone").classList.contains("editeur-py-zone--couleurs"),
+    encre: getComputedStyle(document.querySelector("#py_essai")).color, pre: getComputedStyle(document.querySelector("#vs1 .editeur-py-couleurs")).display }));
+  ok("sans code-colore.js : l'éditeur reste en une couleur, lisible (rien de transparent)", !m.actif && m.encre !== "rgba(0, 0, 0, 0)" && m.pre === "none", JSON.stringify(m));
+  await c2.close();
+}
 
 /* 17. hors ligne : aucune requête distante pendant tout le banc */
 ok("hors ligne : aucune requête vers le réseau pendant tout le banc", reseau.length === 0, reseau.slice(0, 3).join(" | "));
