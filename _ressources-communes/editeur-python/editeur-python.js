@@ -590,6 +590,7 @@
       document.body.appendChild(a); a.click();
       setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
       etat.textContent = "⬇ « " + n + ".py » part dans ton dossier Téléchargements. Range-le maintenant dans Documents › ta classe (geste 3).";
+      bloc.dispatchEvent(new CustomEvent("editeur-py:telecharge", { bubbles: true, detail: { bloc: bloc.id || null, champ: id, fichier: n + ".py" } }));
     });
     nom.addEventListener("input", function () { rappelNom = false; });
 
@@ -608,6 +609,7 @@
         var base = f.name.replace(/\.py$/i, "");
         if (base) { nom.value = base; nom.dispatchEvent(new Event("change", { bubbles: true })); }
         etat.textContent = "📂 « " + f.name + " » est ouvert : ton programme est revenu dans l'éditeur" + (retire ? " (l'en-tête de Vittascience a été retiré)." : ".");
+        bloc.dispatchEvent(new CustomEvent("editeur-py:ouvert", { bubbles: true, detail: { bloc: bloc.id || null, champ: id, fichier: f.name } }));
       };
       lecteur.onerror = function () { etat.textContent = "⚠ Ce fichier n'a pas pu être lu."; };
       lecteur.readAsText(f, "utf-8");
@@ -626,7 +628,71 @@
     };
   }
 
-  function monterTout() { [].forEach.call(document.querySelectorAll(".editeur-py"), monter); }
+  /* ───────── l'échauffement : les quatre gestes, cochés quand ils sont réussis ─────────
+   * Pascal, le 05/11/2026 : « que l'élève, dans l'échauffement, puisse pratiquer ». L'encart des gestes a son
+   * propre éditeur, un vrai, sur un programme d'essai ; la liste
+   *   <ol class="gestes-pratique" data-editeur="ID_DU_TEXTAREA" data-bilan="ID_DU_P_STATUS">
+   *     <li data-geste="1|2|3|4" [data-si-inchange="…"]><span class="geste-coche">☐</span> …</li>
+   * se coche d'elle-même : 1 ▶ mené au bout sur un programme changé · 2 un nom sans « TON NOM » · 3 ⬇ fait ·
+   * 4 📂 fait. Les coches sont gardées sur cet ordinateur (localStorage, s'il répond) ; sans JavaScript, la liste
+   * reste une liste à cocher à la main. */
+  function suivreGestes(liste) {
+    if (liste.classList.contains("gestes-pratique--actif")) return;
+    var id = liste.getAttribute("data-editeur"), inst = instances[id];
+    if (!inst) return;
+    liste.classList.add("gestes-pratique--actif");
+    var bloc = inst.bloc, nom = document.getElementById(id + "_nom");
+    var bilan = document.getElementById(liste.getAttribute("data-bilan") || "");
+    var cle = "editeur-py-gestes:" + location.pathname + ":" + id, faits = {};
+    try { faits = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (x) { faits = {}; }
+    function li(k) { return liste.querySelector('[data-geste="' + k + '"]'); }
+    function dire(t) { if (bilan) bilan.textContent = t; }
+    function peindre() {
+      var n = 0;
+      [1, 2, 3, 4].forEach(function (k) {
+        var e = li(k); if (!e) return;
+        var ok = !!faits[k]; if (ok) n++;
+        e.classList.toggle("geste-fait", ok);
+        var c = e.querySelector(".geste-coche"); if (c) c.textContent = ok ? "✅" : "☐";
+      });
+      return n;
+    }
+    function cocher(k, texte) {
+      if (faits[k]) return;
+      faits[k] = true;
+      try { localStorage.setItem(cle, JSON.stringify(faits)); } catch (x) {}
+      var n = peindre();
+      dire(n === 4 ? "🎉 Les quatre gestes sont faits : tu sais écrire, exécuter, ranger et retrouver un programme. Tu feras les mêmes dans l'activité, avec ton vrai programme."
+                   : "✅ Geste " + k + " réussi : " + texte + ". (" + n + " sur 4)");
+    }
+    bloc.addEventListener("editeur-py:fin", function (e) {
+      var d = e.detail || {};
+      if (d.champ !== id || d.erreur || d.arret) return;
+      if (String(d.code || "").trim() === String(inst.depart || "").trim()) {
+        if (!faits[1]) dire(li(1) && li(1).getAttribute("data-si-inchange") || "▶ a marché. Pour cocher le geste 1, change d'abord le programme, puis ▶ encore.");
+        return;
+      }
+      cocher(1, "ton programme s'est exécuté jusqu'au bout");
+    });
+    function verifNom() {
+      var v = (nom && nom.value || "").trim();
+      if (v && !/TON NOM/i.test(v) && v !== bloc.getAttribute("data-fichier")) cocher(2, "ton fichier porte ton nom");
+    }
+    if (nom) { nom.addEventListener("input", verifNom); nom.addEventListener("change", verifNom); }
+    bloc.addEventListener("editeur-py:telecharge", function (e) {
+      if (e.detail && e.detail.champ === id) cocher(3, "ton fichier part dans Téléchargements ; range-le maintenant dans Documents › ta classe");
+    });
+    bloc.addEventListener("editeur-py:ouvert", function (e) {
+      if (e.detail && e.detail.champ === id) cocher(4, "ton programme est revenu, depuis ton fichier");
+    });
+    var n0 = peindre();
+    if (n0) dire(n0 === 4 ? "Les quatre gestes sont déjà faits sur cet ordinateur." : n0 + " geste" + (n0 > 1 ? "s" : "") + " sur 4 déjà fait" + (n0 > 1 ? "s" : "") + " sur cet ordinateur.");
+  }
+
+  function monterTout() {
+    [].forEach.call(document.querySelectorAll(".editeur-py"), monter);
+    [].forEach.call(document.querySelectorAll("ol.gestes-pratique[data-editeur]"), suivreGestes);
+  }
 
   window.EditeurPython = {
     executer: executer,

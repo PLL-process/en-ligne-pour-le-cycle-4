@@ -10,6 +10,10 @@
  * Les fenêtres de Windows (Explorateur, « Ouvrir ») ne se fabriquent pas ici : l'encart reprend celles qui
  * existent, et décrit en mots celle qui manque.
  *
+ * Depuis le 05/11/2026, l'encart a son propre éditeur d'essai (voir LISEZMOI.md, « L'échauffement ») : ces captures
+ * ne sont plus affichées dans les pages. Le script reste, pour refaire une capture de l'éditeur si une fiche papier
+ * ou une synthèse en a besoin.
+ *
  * Usage : node _ressources-communes/editeur-python/captures_gestes.mjs [code_de_page …]   (toutes par défaut)
  */
 import fs from "node:fs";

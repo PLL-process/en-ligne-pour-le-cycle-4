@@ -28114,3 +28114,84 @@ Les contrôles sont tous verts :
 
 Le banc de 3e_C8.2 a été regardé à 1280 et à 390 px : à vide, à 410 N et cassé, sans erreur de script. Le simulateur de
 3e_C8.1 a été regardé avec ses deux cas de charge. Le lien a été regardé à 390 px, sans défilement de côté.
+
+## 05/11/2026 — L'échauffement de l'éditeur Python : un vrai éditeur d'essai, et les quatre gestes qui se cochent ; le rappel de l'algorigramme dans l'exercice suivant (transversal)
+
+**Ce que Pascal a vu**, sur l'échauffement de 5e_C7.1 (« les quatre gestes de l'éditeur Python ») : deux captures de l'éditeur,
+l'une sous l'autre, qui ressemblent à des éditeurs mais qu'on ne peut pas cliquer. Il écrit : « Je te laisse carte blanche afin
+que l'élève, dans l'échauffement, puisse ergonomiquement pratiquer », puis « Dans l'exercice suivant rappeler la définition de
+l'algorigramme ».
+
+**L'échauffement a son propre éditeur, un vrai**, dans les six séquences outillées : 5e_C7.1, 5e_C9.1, 4e_C9.1, 4e_C6.2,
+3e_C7.1 et 3e_C9.1. Les cinq captures de l'éditeur laissent place à l'éditeur d'essai, qui tourne sur un programme de trois
+lignes : `nom = "Camille"`, puis deux `print`. L'élève y fait les quatre gestes pour de vrai :
+1. il remplace Camille par son prénom, puis ▶ ;
+2. il nomme le fichier `<niveau>-<SÉQUENCE>-essai-SON NOM` ;
+3. il le télécharge, puis le range dans Documents › sa classe ;
+4. il remet le code de départ (son prénom disparaît) et rouvre son fichier (son prénom revient).
+
+**Chaque geste réussi se coche tout seul**, avec un bilan qui le dit (« ✅ Geste 2 réussi… (2 sur 4) », puis « 🎉 Les quatre
+gestes sont faits »). Ce qui coche chaque geste :
+- 1 : un ▶ mené au bout sur un programme **changé**. Sur le programme de départ, le bilan dit de mettre son prénom d'abord.
+- 2 : un nom sans « TON NOM ».
+- 3 : un ⬇.
+- 4 : un 📂.
+
+Une erreur ne coche rien. Les coches restent sur cet ordinateur. Sans JavaScript, c'est une liste à cocher à la main.
+
+**La mise en page.** À partir de 1000 px, les gestes sont à gauche et l'éditeur à droite, collé en haut quand on descend : la
+consigne et l'outil restent en vue ensemble. Sur un téléphone, l'éditeur passe sous les gestes.
+
+**Ce qui reste.** Les captures de l'Explorateur de Windows (ce que la page ne peut pas montrer) restent, dans « 🪟 Le geste 3
+pas à pas », ouvert par défaut. Le paragraphe « Avec Vittascience » reste aussi.
+
+**Les captures de l'éditeur.** Les fichiers `geste_editeur_*.png` restent dans les dossiers `Images/`, comme les anciennes
+captures de Vittascience gardées à la demande de Pascal (04/11/2026). Ils ne sont plus affichés, et `controle_medias` les
+compte parmi les orphelines.
+
+**Le composant** (`_ressources-communes/editeur-python/`) :
+- deux événements nouveaux, `editeur-py:telecharge` et `editeur-py:ouvert` ;
+- le suivi d'une liste `ol.gestes-pratique[data-editeur]` ;
+- leur habit, à l'écran et sur le papier ;
+- `LISEZMOI.md` documente le bloc de l'échauffement ;
+- le banc passe de 54 à 65 vérifications.
+
+**Le rappel de l'algorigramme**, posé au début de l'exercice qui suit l'échauffement. Trois pages sont concernées :
+- 5e_C7.1 et 3e_C7.1 : « 3a — Remets l'algorigramme en ordre » ;
+- 4e_C9.1 : « retrouver dans le code chaque élément de l'algorigramme ».
+
+Les trois autres pages enchaînent sur un exercice sans algorigramme. Le rappel, « 📌 Rappel — l'algorigramme (en anglais :
+*flowchart*) », tient en trois parties :
+- **La définition**, celle du lexique de 4e_C9.1, d'après le Grand dictionnaire terminologique de l'OQLF : un dessin qui montre
+  l'ordre des étapes d'un algorithme, avec des formes et des flèches, qu'on lit de haut en bas.
+- **Les quatre formes**, chacune dessinée et avec son sens :
+  - l'ovale, ou terminal, commence ;
+  - le rectangle fait ;
+  - le losange pose une question, avec deux sorties, OUI et NON ;
+  - la flèche donne le sens de lecture, et une flèche qui remonte fait une boucle.
+- **Les trois mots distingués** : l'algorithme est la suite d'étapes, l'algorigramme son dessin, le programme sa traduction.
+
+Ses exemples (« Mesurer, allumer une lampe », « Fait-il nuit ? ») ne donnent pas l'ordre que l'exercice 3a fait retrouver.
+
+Le mot « algorigramme » manquait aux lexiques de 5e_C7.1 et de 3e_C7.1. Il y entre par `vocabulaire_<lot>.json`, avec la même
+source, et `generer_lexique.py` a refait les deux lexiques. Dans celui de 5e_C7.1, le « (volts) » ajouté à la main est remis.
+
+**Contrôles.** Le banc de l'éditeur passe à 65 / 65 (54 avant). Chaque banc de séquence a un test de plus pour l'éditeur d'essai :
+3e_C9.1 55 / 55, 5e_C9.1 66 / 66, 4e_C9.1 114 / 114, 4e_C6.2 56 / 56, 3e_C7.1 80 / 80 et 5e_C7.1 55 / 55. Les bancs n°311
+donnent 34 / 34 sur les six pages.
+
+Quelques tests sont adaptés :
+- ceux qui comptaient les 8 ou 9 captures de l'encart (5e_C9.1, 4e_C9.1, 3e_C7.1, 5e_C7.1) comptent maintenant les 3 ou 4
+  captures de Windows ;
+- ceux de 4e_C6.2 ne comptent plus que les éditeurs des activités.
+
+Les contrôles sont verts : `controle_squelette`, `controle_hors_ligne`, `controle_verrous`, `controle_impression`,
+`controle_contraste_liens` (sur les six dossiers), `controle_gestes_outil`, `controle_liens`, `controle_hierarchie`,
+`controle_regles_visibles`, `controle_unites`, `controle_sigles`, `controle_fichiers_telechargeables`, `controle_medias`.
+`controle_schemas` ne trouve aucun ✘, et autant de ⚠ que sur `main`.
+
+Le parcours de l'élève a été mené dans un vrai navigateur sur les six pages, à 1280 et à 390 px :
+- les quatre cases se cochent ;
+- le fichier téléchargé se rouvre ;
+- les coches et le programme restent après un rechargement ;
+- aucune erreur de script, aucun défilement de côté.

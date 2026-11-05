@@ -193,6 +193,18 @@ a.lien-outil,a.lien-outil:visited{color:var(--hl)}   /* règle d'or n°303 : un 
   .choix-parcours-boutons .parcours-btn{flex:1 1 42%;box-sizing:border-box;min-height:42px;display:flex;align-items:center;justify-content:center;padding:6px;font-size:.84em;white-space:nowrap}
 }
 .rappel-hyp{margin:8px 0 12px;padding:10px 12px;border-left:4px solid var(--hl);background:rgba(97,218,251,.06);border-radius:0 8px 8px 0}
+
+/* Le rappel de l'algorigramme (05/11/2026) : quatre formes, chacune avec son sens. */
+.rappel-algo{margin:.5rem 0 1rem;padding:.75rem 1rem;border:1px solid var(--border);border-left:4px solid var(--hl);border-radius:10px;background:rgba(97,218,251,.06)}
+.rappel-algo p{margin:.3rem 0}
+.rappel-algo-titre{font-weight:700;color:var(--hl)}
+.rappel-algo-en{font-weight:400;font-size:.9em;opacity:.9}
+.rappel-algo-formes{list-style:none;margin:.55rem 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (min-width:1000px){.rappel-algo-formes{grid-template-columns:repeat(4,minmax(0,1fr))}.rappel-algo-formes li{flex-direction:column;align-items:flex-start;gap:6px}}
+@media (max-width:520px){.rappel-algo-formes{grid-template-columns:1fr}}
+.rappel-algo-formes li{display:flex;gap:10px;align-items:center;margin:0;padding:7px 9px;border-radius:8px;background:rgba(127,127,127,.08);line-height:1.4;min-width:0}
+.rappel-algo-formes svg{flex:0 0 64px;color:var(--hl)}
+@media print{.rappel-algo{background:#fff!important;color:#111!important;border-color:#555!important;break-inside:avoid}.rappel-algo-titre{color:#111!important}.rappel-algo-formes li{background:#fff!important;border:1px solid #bbb}.rappel-algo-formes svg{color:#111!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -768,67 +780,71 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 </div>
 </section>
 
-<!-- gestes-outil-v2 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau ; n°297 : à la porte de l'outil.
-     Depuis le 04/11/2026 l'outil est l'éditeur Python INTÉGRÉ à la page (Vittascience devient facultatif). -->
+<!-- gestes-outil-v3 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau ; n°297 : à la porte de l'outil.
+     Depuis le 04/11/2026 l'outil est l'éditeur Python INTÉGRÉ à la page (Vittascience devient facultatif).
+     Depuis le 05/11/2026 (Pascal : « que l'élève, dans l'échauffement, puisse pratiquer »), l'échauffement a son propre
+     éditeur, un vrai : l'élève fait les quatre gestes sur un programme d'essai, et chaque geste réussi se coche. -->
 <section class="card gestes-outil" aria-labelledby="gestes-editeur-python">
   <h2 id="gestes-editeur-python">🧰 Avant de commencer (échauffement) — les quatre gestes de l'éditeur Python</h2>
-  <p class="pourquoi">L'éditeur Python est <b>dans la page</b>, à chaque activité qui fait écrire un programme&nbsp;: rien à ouvrir, rien à installer, et il marche sans Internet. Quatre gestes, dans l'ordre où tu les fais, et ton programme ne se perdra pas — ni pendant la séance, ni la semaine suivante.</p>
-  <ol>
-    <li><b>Écrire et exécuter.</b> Clique dans la zone de code de l'activité&nbsp;3&nbsp;: le programme de départ y est déjà. Écris ou modifie-le (<b>Tab</b> décale de 4 espaces), puis <b>▶&nbsp;Exécuter</b>&nbsp;: ce qu'il affiche s'écrit dans la <b>console</b>, dessous, et une erreur y est expliquée, avec sa ligne. <b>⏹&nbsp;Arrêter</b> interrompt un programme qui tourne sans fin. Ton programme est gardé tout seul dans la page, sur cet ordinateur.
-      <figure class="geste-capture">
-        <img src="Images/geste_editeur_1_ecrire.png" width="868" height="604" loading="lazy"
-             alt="L'éditeur Python de la page, en thème sombre, de l'activité&nbsp;3. En haut, le champ « Nom du fichier » ; dessous, la zone de code aux lignes numérotées, avec un petit programme d'essai de deux lignes : occupee = True, puis un print qui l'affiche ; puis les boutons verts et rouges « Exécuter » et « Arrêter », et « Remettre le code de départ » ; en bas, la console, vide.">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> la zone de code aux lignes numérotées, avec ici un petit programme d'essai (celui de l'activité est à écrire), les boutons <b>▶&nbsp;Exécuter</b>, <b>⏹&nbsp;Arrêter</b> et <b>↺&nbsp;Remettre le code de départ</b>, puis la console. <b>Puis&nbsp;:</b> clique <b>▶&nbsp;Exécuter</b>.</figcaption>
-      </figure>
-      <figure class="geste-capture">
-        <img src="Images/geste_editeur_1b_executer.png" width="868" height="608" loading="lazy"
-             alt="Le même éditeur après un clic sur « Exécuter » : la console affiche La case est occupée : True, puis « Terminé ».">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> la console affiche ce que ton programme écrit, puis «&nbsp;✔&nbsp;Terminé&nbsp;». <i>La première fois, Python met une seconde à se préparer.</i></figcaption>
-      </figure>
-    </li>
-    <li><b>Nommer.</b> Dans <b>📄&nbsp;Nom du fichier</b>, au-dessus de la zone, remplace <code>TON&nbsp;NOM</code> par ton nom&nbsp;: <code>5e-HALL-DUPONT</code>. Un fichier sans nom est introuvable la semaine suivante.
-      <figure class="geste-capture">
-        <img src="Images/geste_editeur_2_nommer.png" width="835" height="45" loading="lazy"
-             alt="Le haut de l'éditeur : le champ « Nom du fichier » contient 5e-HALL-DUPONT, suivi de « .py », puis les boutons « Télécharger mon .py » et « Ouvrir mon .py ».">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> ton nom dans le champ, juste avant «&nbsp;.py&nbsp;». <i>DUPONT est un exemple&nbsp;: mets ton nom.</i></figcaption>
-      </figure>
-    </li>
-    <li><b>Sortir.</b> La page garde ton programme sur <b>cet</b> ordinateur seulement&nbsp;: pour l'emporter, clique <b>⬇&nbsp;Télécharger mon .py</b>. Ton fichier arrive dans <b>Téléchargements</b>, au nom que tu lui as donné (<code>5e-HALL-DUPONT</code>, suivi de «&nbsp;.py&nbsp;») — le navigateur l'y range sans rien demander.<br>Ouvre l'<b>Explorateur de fichiers</b> (le dossier jaune de la barre des tâches, ou les touches <b>Windows&nbsp;+&nbsp;E</b>), clique <b>Téléchargements</b>, clique ton fichier une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b>. Va dans <b>Documents</b>, entre dans <b>le dossier de ta classe (exemple&nbsp;: 5E2)</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>.<br>Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans Documents, <b>Nouveau → Dossier</b>, tape le nom de ta classe, puis Entrée.
-      <figure class="geste-capture">
-        <img src="Images/geste_editeur_3_telecharger.png" width="868" height="630" loading="lazy"
-             alt="L'éditeur après un clic sur « Télécharger mon .py » : sous les boutons, la phrase « 5e-HALL-DUPONT.py part dans ton dossier Téléchargements. Range-le maintenant dans Documents › ta classe (geste 3). »">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> sous les boutons, la phrase qui dit que ton fichier (<code>5e-HALL-DUPONT</code>) part dans ton dossier Téléchargements. <b>Puis&nbsp;:</b> ouvre l'Explorateur de fichiers, sur Téléchargements.</figcaption>
-      </figure>
-      <figure class="geste-capture">
-        <img src="Images/geste_vitta_4b_sortir_telechargements.png" width="1400" height="523" loading="lazy"
-             alt="Fenêtre de l'Explorateur de fichiers de Windows, en thème sombre, ouverte sur « Téléchargements » et rétrécie : sous « Aujourd'hui », le fichier « 5e-HALL-DUPONT_202695_52028.py » est sélectionné ; en bas, la taille du fichier.">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> ton fichier <code>.py</code> dans <b>Téléchargements</b>. Clique-le une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b> pour le couper. <i>Sur cette capture, le fichier vient de Vittascience, qui ajoute des chiffres à la fin du nom&nbsp;; celui de la page porte simplement le nom que tu as tapé (<code>5e-HALL-DUPONT</code>). La fenêtre est rétrécie pour ne montrer que ce fichier.</i></figcaption>
-      </figure>
-      <figure class="geste-capture">
-        <img src="Images/geste_vitta_4c_sortir_nouveau_dossier.png" width="1400" height="457" loading="lazy"
-             alt="Fenêtre de l'Explorateur de fichiers, ouverte sur « Documents » (c'est le chemin affiché en haut) et rétrécie à une seule ligne. Un nouveau dossier jaune vient d'être créé : son nom, « Nouveau dossier », est surligné en bleu dans un cadre, prêt à être remplacé.">
-        <figcaption><b>Si le dossier de ta classe n'existe pas encore&nbsp;:</b> dans <b>Documents</b>, clique <b>Nouveau</b> puis <b>Dossier</b>. Un dossier apparaît, son nom surligné&nbsp;: tu peux taper le tien. <i>La fenêtre est rétrécie&nbsp;: tes autres dossiers ne sont pas montrés.</i></figcaption>
-      </figure>
-      <figure class="geste-capture">
-        <img src="Images/geste_vitta_4e_sortir_resultat.png" width="1400" height="538" loading="lazy"
-             alt="Fenêtre de l'Explorateur ouverte sur « Documents › 5E2 » : un seul fichier, « 5e-HALL-DUPONT_202695_52028.py », de type Python.File, sélectionné.">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> en haut, <b>Documents › 5E2</b>&nbsp;; dans la liste, ton fichier <code>.py</code>. Il n'est plus dans Téléchargements&nbsp;: il est rangé. <b>Retiens ce chemin&nbsp;: c'est là que tu le chercheras au geste 4.</b> <i>Sur la capture, le nom porte les chiffres de Vittascience.</i></figcaption>
-      </figure>
-    </li>
-    <li><b>Retrouver.</b> La semaine suivante, ton fichier est là où tu l'as rangé au geste 3&nbsp;: <b>Documents › ta classe</b>. C'est <b>là</b> que tu vas le chercher. Dans l'éditeur de l'activité, clique <b>📂&nbsp;Ouvrir mon .py</b>&nbsp;: la fenêtre «&nbsp;Ouvrir&nbsp;» de Windows apparaît. Dans sa colonne de gauche, clique <b>Documents</b>, puis double-clique <b>le dossier de ta classe</b> — le même qu'au geste 3 —, clique ton fichier (<code>5e-HALL-DUPONT</code>), puis le bouton <b>Ouvrir</b>. Ton programme revient dans l'éditeur, et son nom dans 📄&nbsp;Nom du fichier.
-      <figure class="geste-capture">
-        <img src="Images/geste_editeur_4_retrouver.png" width="868" height="606" loading="lazy"
-             alt="L'éditeur après « Ouvrir mon .py » : le champ « Nom du fichier » contient 5e-HALL-DUPONT, la zone de code contient le programme, et sous les boutons, la phrase « 5e-HALL-DUPONT.py est ouvert : ton programme est revenu dans l'éditeur ».">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> sous les boutons, la phrase «&nbsp;📂 … est ouvert&nbsp;: ton programme est revenu dans l'éditeur&nbsp;», et ton programme dans la zone. <i>La fenêtre «&nbsp;Ouvrir&nbsp;» de Windows n'est pas montrée&nbsp;: c'est celle de ton poste, avec Documents dans sa colonne de gauche.</i></figcaption>
-      </figure>
-    </li>
+  <p class="pourquoi">L'éditeur Python est <b>dans la page</b>, à chaque activité qui fait écrire un programme&nbsp;: rien à ouvrir, rien à installer, et il marche sans Internet. <b>Entraîne-toi d'abord ici</b>, sur un petit programme d'essai&nbsp;: l'éditeur d'essai, à côté des gestes (dessous, sur un petit écran), est un vrai, le même que dans l'activité&nbsp;3. Fais les quatre gestes dans l'ordre&nbsp;: chacun se coche quand il est réussi. Ensuite, dans l'activité&nbsp;3, tu referas les mêmes avec ton vrai programme, et il ne se perdra pas — ni pendant la séance, ni la semaine suivante.</p>
+  <div class="gestes-pratique-atelier">
+  <ol class="gestes-pratique" data-editeur="py_echauffement" data-bilan="gestes-bilan" aria-label="Les quatre gestes, à faire dans l'éditeur d'essai">
+    <li data-geste="1" data-si-inchange="▶ a marché. Pour cocher le geste 1, remplace d'abord Camille par ton prénom, puis ▶ Exécuter encore."><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>1. Écrire et exécuter.</b> Dans la zone de code, remplace <code>Camille</code> par ton prénom (garde les guillemets), puis clique <b>▶&nbsp;Exécuter</b>. <b>Tab</b> décale de 4 espaces. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> dans la console, «&nbsp;Bonjour&nbsp;», ton prénom, puis «&nbsp;2 + 3 = 5&nbsp;», puis «&nbsp;✔&nbsp;Terminé&nbsp;». <i>La première fois, Python met une seconde à se préparer.</i></span><span class="geste-plus"><b>Et si tu te trompes&nbsp;?</b> Efface un guillemet, puis ▶&nbsp;: la console explique l'erreur, et sa ligne est marquée dans la marge. Remets le guillemet. <b>⏹&nbsp;Arrêter</b> interrompt un programme qui tourne sans fin.</span></span></li>
+    <li data-geste="2"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>2. Nommer.</b> Dans <b>📄&nbsp;Nom du fichier</b>, au-dessus de la zone, remplace <code>TON&nbsp;NOM</code> par ton nom&nbsp;: <code>5e-HALL-essai-DUPONT</code>. Un fichier sans nom est introuvable la semaine suivante. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> ton nom dans le champ, juste avant «&nbsp;.py&nbsp;». <i>DUPONT est un exemple&nbsp;: mets ton nom.</i></span></span></li>
+    <li data-geste="3"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>3. Sortir.</b> La page garde ton programme sur <b>cet</b> ordinateur seulement&nbsp;: pour l'emporter, clique <b>⬇&nbsp;Télécharger mon .py</b>. Ton fichier arrive dans <b>Téléchargements</b>, au nom que tu lui as donné — le navigateur l'y range sans rien demander. Range-le tout de suite dans <b>Documents › ta classe</b>, avec l'Explorateur de fichiers&nbsp;: c'est expliqué pas à pas, avec les captures, plus bas, sous l'éditeur. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> sous les boutons, la phrase «&nbsp;⬇ … part dans ton dossier Téléchargements&nbsp;», puis, dans l'Explorateur, ton fichier dans <b>Documents › 5E2</b> (ta classe).</span></span></li>
+    <li data-geste="4"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>4. Retrouver.</b> Fais comme si c'était la semaine suivante&nbsp;: clique <b>↺&nbsp;Remettre le code de départ</b>, deux fois — ton prénom disparaît. Puis clique <b>📂&nbsp;Ouvrir mon .py</b>&nbsp;: dans la fenêtre «&nbsp;Ouvrir&nbsp;» de Windows, clique <b>Documents</b> dans la colonne de gauche, double-clique <b>le dossier de ta classe</b> — celui où tu l'as rangé au geste&nbsp;3 —, clique ton fichier, puis <b>Ouvrir</b>. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> ton prénom revient dans le programme, et sous les boutons, «&nbsp;📂 … est ouvert&nbsp;: ton programme est revenu dans l'éditeur&nbsp;». Tu l'as cherché <b>là où tu l'avais rangé</b>&nbsp;: c'est tout le secret.</span></span></li>
   </ol>
+  <div class="gestes-pratique-poste">
+  <p class="gestes-pratique-bilan" id="gestes-bilan" role="status"></p>
+  <div class="editeur-py editeur-py-essai" id="vsEssai" data-fichier="5e-HALL-essai-TON NOM">
+    <label for="py_echauffement">🐍 L'éditeur d'essai — entraîne-toi ici (il ne compte pas dans ta progression)</label>
+    <textarea id="py_echauffement" class="editeur-py-code" rows="4" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off">nom = "Camille"
+print("Bonjour", nom, "!")
+print("2 + 3 =", 2 + 3)
+</textarea>
+    <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Lis les quatre gestes&nbsp;: tu les feras dans l'activité&nbsp;3, avec le lien Vittascience.</p>
+  </div>
+  </div>
+  </div>
+  <details class="gestes-fenetres" open>
+    <summary>🪟 Le geste 3 pas à pas&nbsp;: ranger ton fichier avec l'Explorateur de Windows</summary>
+    <p>Ouvre l'<b>Explorateur de fichiers</b> (le dossier jaune de la barre des tâches, ou les touches <b>Windows&nbsp;+&nbsp;E</b>), clique <b>Téléchargements</b>, clique ton fichier une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b>. Va dans <b>Documents</b>, entre dans <b>le dossier de ta classe (exemple&nbsp;: 5E2)</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>.<br>Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans Documents, <b>Nouveau → Dossier</b>, tape le nom de ta classe, puis Entrée.</p>
+    <figure class="geste-capture">
+      <img src="Images/geste_vitta_4b_sortir_telechargements.png" width="1400" height="523" loading="lazy"
+           alt="Fenêtre de l'Explorateur de fichiers de Windows, en thème sombre, ouverte sur « Téléchargements » et rétrécie : sous « Aujourd'hui », le fichier « 5e-HALL-DUPONT_202695_52028.py » est sélectionné ; en bas, la taille du fichier.">
+      <figcaption><b>Ce que tu dois voir&nbsp;:</b> ton fichier <code>.py</code> dans <b>Téléchargements</b>. Clique-le une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b> pour le couper. <i>Sur cette capture, le fichier vient de Vittascience, qui ajoute des chiffres à la fin du nom&nbsp;; celui de la page porte simplement le nom que tu as tapé (<code>5e-HALL-DUPONT</code>). La fenêtre est rétrécie pour ne montrer que ce fichier.</i></figcaption>
+    </figure>
+    <figure class="geste-capture">
+      <img src="Images/geste_vitta_4c_sortir_nouveau_dossier.png" width="1400" height="457" loading="lazy"
+           alt="Fenêtre de l'Explorateur de fichiers, ouverte sur « Documents » (c'est le chemin affiché en haut) et rétrécie à une seule ligne. Un nouveau dossier jaune vient d'être créé : son nom, « Nouveau dossier », est surligné en bleu dans un cadre, prêt à être remplacé.">
+      <figcaption><b>Si le dossier de ta classe n'existe pas encore&nbsp;:</b> dans <b>Documents</b>, clique <b>Nouveau</b> puis <b>Dossier</b>. Un dossier apparaît, son nom surligné&nbsp;: tu peux taper le tien. <i>La fenêtre est rétrécie&nbsp;: tes autres dossiers ne sont pas montrés.</i></figcaption>
+    </figure>
+    <figure class="geste-capture">
+      <img src="Images/geste_vitta_4e_sortir_resultat.png" width="1400" height="538" loading="lazy"
+           alt="Fenêtre de l'Explorateur ouverte sur « Documents › 5E2 » : un seul fichier, « 5e-HALL-DUPONT_202695_52028.py », de type Python.File, sélectionné.">
+      <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> en haut, <b>Documents › 5E2</b>&nbsp;; dans la liste, ton fichier <code>.py</code>. Il n'est plus dans Téléchargements&nbsp;: il est rangé. <b>Retiens ce chemin&nbsp;: c'est là que tu le chercheras au geste 4.</b> <i>Sur la capture, le nom porte les chiffres de Vittascience.</i></figcaption>
+    </figure>
+    <p><b>Au geste 4</b>, la fenêtre «&nbsp;Ouvrir&nbsp;» est celle de ton poste&nbsp;: <b>Documents</b> est dans sa colonne de gauche, et le dossier de ta classe dedans — le même chemin qu'ici.</p>
+  </details>
   <p class="gestes-vitta"><b>Avec Vittascience (facultatif, Internet nécessaire).</b> Le lien «&nbsp;Vittascience, si tu préfères&nbsp;» ouvre son éditeur en <b>mode mixte</b> (blocs et Python)&nbsp;: construis, <b>Exécuter</b> → le <b>crayon</b>, <code>5e-HALL-TON&nbsp;NOM</code> → la <b>disquette</b>, <b>Télécharger</b> → Téléchargements → Documents › ta classe. Pour reprendre&nbsp;: le <b>dossier</b> (Ouvrir) → <b>Depuis votre appareil</b> → <b>Ouvrir…</b> → Documents › ta classe → ton fichier → <b>Oui</b>&nbsp;: les blocs et le Python reviennent.</p>
 </section>
 
 <section class="card" id="act3">
 <h2>💻 Activité 3 — La règle SI en schéma, puis en programme <span style="font-size:.72em;opacity:.85">(5e_C9.3)</span> <span class="chrono">⏱ ~30 min</span></h2>
 <p class="activite-en-ligne">🌐 <b>Sans connexion, tout se fait dans la page</b>&nbsp;: l'éditeur Python est intégré à l'activité. Seul le lien «&nbsp;Vittascience, si tu préfères&nbsp;» demande Internet.</p>
+<!-- Rappel de l'algorigramme (Pascal, 05/11/2026 : « dans l'exercice suivant, rappeler la définition de l'algorigramme »).
+     Définition : celle du lexique de 4e_C9.1 (Grand dictionnaire terminologique, OQLF, « algorigramme »). -->
+<aside class="rappel-algo" aria-labelledby="rappel-algo-t">
+  <p class="rappel-algo-titre" id="rappel-algo-t">📌 Rappel — l'algorigramme <span class="rappel-algo-en">(en anglais&nbsp;: <i lang="en">flowchart</i>)</span></p>
+  <p>Un <b>algorigramme</b> est un <b>dessin qui montre l'ordre des étapes d'un algorithme</b>, avec des formes et des flèches. On le lit de haut en bas, en suivant les flèches. Chaque forme a un sens&nbsp;:</p>
+  <ul class="rappel-algo-formes">
+    <li><svg viewBox="0 0 64 34" width="64" height="34" aria-hidden="true" focusable="false"><rect x="3" y="5" width="58" height="24" rx="12" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>L'ovale, ou terminal</b>&nbsp;: il commence (ou finit). <i>DÉBUT</i>.</span></li>
+    <li><svg viewBox="0 0 64 34" width="64" height="34" aria-hidden="true" focusable="false"><rect x="5" y="5" width="54" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>Le rectangle</b>&nbsp;: il fait une action, puis on passe à la suite. <i>Mesurer, allumer une lampe.</i></span></li>
+    <li><svg viewBox="0 0 64 34" width="64" height="34" aria-hidden="true" focusable="false"><polygon points="32,2 61,17 32,32 3,17" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span><b>Le losange</b>&nbsp;: il pose une question, et il a toujours <b>deux sorties</b>, OUI et NON. <i>Fait-il nuit&nbsp;?</i></span></li>
+    <li><svg viewBox="0 0 64 34" width="64" height="34" aria-hidden="true" focusable="false"><path d="M32 3 V24" stroke="currentColor" stroke-width="2.5"/><polygon points="25,21 32,32 39,21" fill="currentColor"/></svg><span><b>La flèche</b>&nbsp;: le sens de lecture. Une flèche qui remonte fait recommencer&nbsp;: c'est une <b>boucle</b>.</span></li>
+  </ul>
+  <p class="rappel-algo-mots">L'<b>algorithme</b> est la suite des étapes&nbsp;; l'<b>algorigramme</b>, son dessin&nbsp;; le <b>programme</b>, sa traduction dans un langage que la machine comprend, comme Python.</p>
+</aside>
 <div class="exo">
 <h4>3a — Remets l'algorigramme en ordre (représentation schématique)</h4>
 <p>Ce que le simulateur FAIT se dessine. Numérote les blocs de 1 à 5&nbsp;:</p>
