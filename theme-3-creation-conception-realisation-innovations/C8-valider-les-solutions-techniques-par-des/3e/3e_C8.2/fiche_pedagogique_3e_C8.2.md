@@ -120,7 +120,7 @@ Les dix relevés sont en outre comparés aux **vraies** valeurs du banc, à 0,05
 
 ## 7. Différenciation
 
-* **🅰 avec le vrai laboratoire** — le « laboratoire des matériaux » du Réseau National
+* **🅰 avec le vrai laboratoire** — le [« laboratoire des matériaux »](https://sti.eduscol.education.fr/technologie-college/ressources_pedagogiques/le-laboratoire-des-materiaux) du Réseau National
   Technologie Collège (gratuit, sans compte). Il fait la traction et la compression,
   **pas la flexion** : cette limite est traitée comme un objet d'étude, pas contournée.
 * **🅱 avec le banc de la page** — hors ligne, sans installation. Voie par défaut.

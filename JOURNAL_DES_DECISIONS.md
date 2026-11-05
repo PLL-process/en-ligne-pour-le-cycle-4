@@ -28063,3 +28063,54 @@ les 56 séquences à onglets du site, chacune ouverte par une ancre de sa séanc
 68 / 68, 3e_C7.5 54 / 54, 3e_C7.7 77 / 77, 4e_C7.1 47 / 47, 4e_C7.3 44 / 44, 4e_C7.5 41 / 41, 4e_C8.1 54 / 54, 3e_C8.1 62 / 62,
 3e_C8.2 44 / 44, 3e_C9.2 167 / 167 et pont en H 37 / 37. `banc_rappels_cdc.py` 302 / 302. Bancs n°311 : 34 / 34 sur les 14 pages
 et les 12 pages du thème 1 (27 / 27 pour 5e_C3.1). `controle_squelette` : 60 séquences, 0 refus.
+
+## 05/11/2026 — Le mât plie dans le sens du vent (3e_C8.2, 3e_C8.1) ; le « laboratoire des matériaux » devient un lien (thème 3)
+
+**Le sens de la flexion** (Pascal, sur le banc d'essai de 3e_C8.2 : « La flexion devrait être dans l'autre sens non ? »). Oui :
+la flèche « vent » était à droite du mât et poussait vers la gauche, mais le script courbait le mât vers la droite, et le mât
+cassé tombait à droite. **Un mât plie dans le sens où on le pousse.** Le vent vient maintenant de la gauche et pousse la tête
+vers la droite. La flèche suit la tête quand le mât se courbe (avant, la tête du mât finissait par passer sur la flèche). Le
+mât cassé tombe à droite, du côté où le vent l'a poussé. La description du dessin pour les lecteurs d'écran le dit.
+
+**Cherché partout.** Seuls deux autres dessins chargent une pièce : le simulateur de 3e_C8.1 et la patère de 5e_C8.1.
+- **3e_C8.1** : le sens était juste (les flèches viennent de la gauche et le mât plie à droite). Deux défauts sont corrigés :
+  - les flèches restaient à leur place quand le mât se courbait, et finissaient par flotter à côté ; chacune touche
+    maintenant le mât là où il est ;
+  - la pointe de la flèche du haut était cachée par le boîtier : la poussée du banc ressemblait à un trait sans pointe. Elle
+    s'arrête maintenant au bord du boîtier.
+- **5e_C8.1** : le bras ne se déforme pas, il change de couleur. Rien à corriger.
+- **5e_C8.2** : un essai de traction, pas de flexion. Rien à corriger.
+
+**Le « laboratoire des matériaux », en lien** (Pascal, sur 5e_C8.2 : « Ce serait pratique que « laboratoire des matériaux »
+soit un lien hypertexte vers le logiciel à télécharger »). Le lien mène à la page éduscol STI du Réseau National Technologie
+Collège, `https://sti.eduscol.education.fr/technologie-college/ressources_pedagogiques/le-laboratoire-des-materiaux`. Cette
+page date du 26/01/2018 et a été mise à jour le 17/03/2020. Elle propose les deux applications, traction et compression, chacune
+pour Windows et pour Mac. Le lien va vers cette page, pas vers un des quatre fichiers : l'élève choisit le sien. Le README de
+5e_C8.2 citait déjà cette adresse, mais les pages élèves ne l'avaient pas. Le lien est posé à chaque mention :
+- 5e_C8.2 (« Trois façons de vivre la séquence » et le défi du Bonus) ;
+- 5e_C8.1 (la version 🅰) ;
+- 3e_C8.2 (la version 🅰 et le défi du Bonus) ;
+- les synthèses professeur de 5e_C8.2 et de 3e_C8.2 ;
+- les fiches pédagogiques de 5e_C8.2 et de 3e_C8.2, et le README de 3e_C8.2.
+
+Sur le fond bleu nuit, le lien sortait dans le bleu par défaut du navigateur : il était illisible, comme dans le Bonus de
+4e_C1.4. Les pages n'avaient pas de couleur pour les liens dans le texte. Il prend maintenant la classe `lien-ext` : cyan
+souligné à l'écran (comme les liens de 3e_C9.2), bleu foncé sur le papier.
+
+**À voir par Pascal.** 5e_C8.1 appelle sa version 🅰 « Avec le banc réel du laboratoire ». Elle renvoie pourtant au même
+logiciel, et donne une consigne de sécurité pour une charge suspendue. Si le collège a un vrai banc de traction, la consigne
+est juste et c'est le nom du logiciel qui trompe. Sinon, c'est la consigne qui est en trop. Rien n'est changé avant sa
+réponse.
+
+**Contrôles.** Les bancs donnent les mêmes résultats qu'avant :
+- séquences : 3e_C8.1 62 / 62, 3e_C8.2 44 / 44, 5e_C8.1 39 / 39, 5e_C8.2 24 / 24 ;
+- bancs n°311 : 34 / 34 sur les quatre pages.
+
+Les contrôles sont tous verts :
+- sur les quatre dossiers : `controle_schemas` (0 ✘, 0 ⚠), `controle_squelette`, `controle_contraste_liens` (écran, lien
+  visité, papier), `controle_hors_ligne` ;
+- sur le site : `controle_liens`, `controle_hierarchie`, `controle_regles_visibles`, `controle_sigles`, `controle_unites`,
+  `controle_impression`.
+
+Le banc de 3e_C8.2 a été regardé à 1280 et à 390 px : à vide, à 410 N et cassé, sans erreur de script. Le simulateur de
+3e_C8.1 a été regardé avec ses deux cas de charge. Le lien a été regardé à 390 px, sans défilement de côté.

@@ -101,7 +101,7 @@ hors ligne. Zéro erreur JavaScript, zéro boîte modale, aucune requête échou
 1. **Aucun essai physique.** Le banc est une simulation et la page l'écrit noir sur blanc
    (question 18 du QCM porte précisément là-dessus). Un essai réel, même rudimentaire — élastique,
    dynamomètre, éprouvettes de balsa — reste un ajout de valeur que ce lot ne fournit pas.
-2. **La version 🅰 renvoie à une application à installer** : le « laboratoire des matériaux » du
+2. **La version 🅰 renvoie à une application à installer** : le [« laboratoire des matériaux »](https://sti.eduscol.education.fr/technologie-college/ressources_pedagogiques/le-laboratoire-des-materiaux) du
    Réseau National Technologie Collège (éduscol STI), gratuit, sans compte, CC BY-NC-SA 3.0,
    versions PC et Mac. Elle n'est **pas** un prérequis : une séquence qui exige un téléchargement
    de plus est une séquence qui ne se fait pas.

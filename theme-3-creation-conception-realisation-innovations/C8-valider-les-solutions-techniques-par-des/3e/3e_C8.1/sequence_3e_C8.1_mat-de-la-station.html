@@ -1115,8 +1115,15 @@ function dessiner(h, cas, fMax){
     + (110 + fMax) + " " + yTete);
   $("boitier").setAttribute("x", 94 + fMax);
   $("boitier").setAttribute("y", yTete - 22);
-  const fl = (y, l) => '<path d="M' + (60 - l) + ' ' + y + ' L104 ' + y
-    + ' l-7 -4 m7 4 l-7 4" stroke="#ffd66b" stroke-width="2" fill="none"/>';
+  // Chaque flèche touche le mât là où il est, courbé : sur la courbe, x = 110 + fMax × t, avec
+  // t = 0 au pied et t = 1 en tête (la courbe est une parabole dont le point de contrôle est à mi-hauteur).
+  // En tête, la flèche s'arrête au bord du boîtier, sinon il cache sa pointe.
+  const fl = (y, l) => {
+    const t = (252 - y) / (252 - yTete);
+    const x = y <= yTete + 2 ? 92 + fMax : 104 + fMax * t;
+    return '<path d="M' + (x - 44 - l).toFixed(1) + ' ' + y + ' L' + x.toFixed(1) + ' ' + y
+      + ' l-7 -4 m7 4 l-7 4" stroke="#ffd66b" stroke-width="2" fill="none"/>';
+  };
   if(cas === "banc"){ g.innerHTML = fl(yTete, 34); }
   else {
     let s = "";
