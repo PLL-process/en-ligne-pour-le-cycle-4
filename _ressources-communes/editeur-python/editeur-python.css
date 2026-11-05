@@ -69,6 +69,26 @@
 .editeur-py details.vs-vitta>summary{cursor:pointer;padding:12px 0;font-weight:600}
 .editeur-py details.vs-vitta pre{overflow:auto;max-width:100%}
 .editeur-py-imp{display:none}
+/* ── l'échauffement (05/11/2026) : l'éditeur d'essai et les quatre gestes, qui se cochent ── */
+.editeur-py.editeur-py-essai{border-style:dashed;border-left-style:solid}
+.gestes-pratique-atelier{display:block}
+@media (min-width:1000px){
+  /* sur un grand écran, les gestes à gauche et l'éditeur à droite, qui reste en vue quand on descend */
+  .gestes-pratique-atelier{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:16px;align-items:start}
+  .gestes-pratique-poste{position:sticky;top:64px}
+  .gestes-pratique-poste .editeur-py{margin-top:0}
+}
+ol.gestes-pratique,.gestes-outil ol.gestes-pratique{list-style:none;margin:10px 0 6px;padding:0;display:grid;gap:8px}
+.gestes-pratique>li,.gestes-outil .gestes-pratique>li{display:flex;gap:10px;align-items:flex-start;margin:0;padding:9px 12px;border:1px solid var(--border,#274a8a);
+  border-radius:10px;background:rgba(127,127,127,.06);min-width:0}
+.gestes-pratique .geste-coche{flex:0 0 1.5em;font-size:1.2em;line-height:1.35;text-align:center}
+.gestes-pratique .geste-texte{flex:1 1 auto;min-width:0;line-height:1.5}
+.gestes-pratique .geste-voir,.gestes-pratique .geste-plus{display:block;margin-top:3px;font-size:.92em;opacity:.95}
+.gestes-pratique>li.geste-fait{border-color:var(--ok,#81fba1);background:rgba(129,251,161,.08)}
+.gestes-pratique-bilan{margin:4px 0 0;min-height:1.5em;font-weight:600;color:var(--ok,#81fba1)}
+.gestes-pratique-bilan:empty{min-height:0;margin:0}
+details.gestes-fenetres{margin:12px 0 0;padding:0 12px 4px;border:1px solid var(--border,#274a8a);border-radius:10px}
+details.gestes-fenetres>summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600}
 @media (max-width:480px){
   .editeur-py{padding:10px 10px}
   .editeur-py .editeur-py-btn{flex:1 1 auto}
@@ -89,4 +109,9 @@
   .editeur-py textarea.editeur-py-code{background:#fff !important;color:#111 !important;border:1px solid #888 !important}
   .editeur-py details.vs-vitta{display:none !important}
   .carte-simulee{background:#fff !important;color:#111 !important;border-color:#555 !important}
+  .gestes-pratique>li{background:#fff !important;color:#111 !important;border-color:#888 !important;break-inside:avoid}
+  .gestes-pratique-bilan{display:none}
+  .gestes-pratique-atelier{display:block !important}
+  .gestes-pratique-poste{position:static !important}
+  details.gestes-fenetres{border-color:#888}
 }

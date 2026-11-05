@@ -41,6 +41,36 @@ Vittascience reste un lien facultatif, écrit dans chaque bloc.
   nomme et les décrit (exemple : l'encadré 🔌 de `4e_C6.2`).
 - **Sans JavaScript**, la zone et le lien restent : la consigne se fait encore.
 
+## L'échauffement : un éditeur d'essai, et les quatre gestes qui se cochent
+
+Pascal, le 05/11/2026, sur `5e_C7.1` : « que l'élève, dans l'échauffement, puisse pratiquer ». L'encart « les quatre
+gestes de l'éditeur Python » des six séquences outillées n'est plus fait de captures de l'éditeur (une image qu'on ne
+peut pas cliquer) : il a **son propre éditeur, un vrai**, sur un programme d'essai (`nom = "Camille"` …), et la liste
+des gestes se coche d'elle-même.
+
+```html
+<div class="gestes-pratique-atelier">                      <!-- ≥ 1000 px : les gestes à gauche, l'éditeur à droite, collé -->
+  <ol class="gestes-pratique" data-editeur="py_echauffement" data-bilan="gestes-bilan">
+    <li data-geste="1" data-si-inchange="…"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte">…</span></li>
+    … (2, 3, 4)
+  </ol>
+  <div class="gestes-pratique-poste">
+    <p class="gestes-pratique-bilan" id="gestes-bilan" role="status"></p>
+    <div class="editeur-py editeur-py-essai" id="vsEssai" data-fichier="5e-HALL-essai-TON NOM"> … </div>
+  </div>
+</div>
+```
+
+- **Les coches** : 1 — un ▶ mené au bout sur un programme **changé** (sur le programme de départ, le bilan dit
+  `data-si-inchange`) ; 2 — un nom de fichier sans « TON NOM » ; 3 — un ⬇ fait ; 4 — un 📂 fait. Une erreur ne coche
+  rien. Elles sont gardées sur cet ordinateur (`localStorage`, s'il répond) ; sans JavaScript, la liste reste une liste
+  à cocher à la main. L'éditeur d'essai ne compte pas dans la progression.
+- **Les événements**, pour toute page : `editeur-py:telecharge` après un ⬇ réussi et `editeur-py:ouvert` après un 📂
+  réussi (`detail = {bloc, champ, fichier}`), en plus de `editeur-py:fin`.
+- Les captures de l'Explorateur de Windows restent dans l'encart (ce que la page ne peut pas montrer), dans
+  `<details class="gestes-fenetres" open>`. Les captures de l'éditeur (`geste_editeur_*.png`, faites par
+  `captures_gestes.mjs`) ne sont plus affichées depuis le 05/11/2026 : elles restent dans les dossiers `Images/`.
+
 ## Ce que fait l'éditeur
 
 Zone numérotée à chasse fixe (Tab = 4 espaces, Maj + Tab retire, Entrée garde le décalage et l'ajoute après « : »,

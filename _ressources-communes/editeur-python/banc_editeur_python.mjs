@@ -55,6 +55,18 @@ print("3" + "4")</textarea>
 print("mesure", h)
 print(h + "%")</textarea>
 </div>
+<ol class="gestes-pratique" data-editeur="py_echauf" data-bilan="bilan-echauf">
+  <li data-geste="1" data-si-inchange="Change d'abord Camille."><span class="geste-coche">☐</span><span class="geste-texte">1. Écrire et exécuter</span></li>
+  <li data-geste="2"><span class="geste-coche">☐</span><span class="geste-texte">2. Nommer</span></li>
+  <li data-geste="3"><span class="geste-coche">☐</span><span class="geste-texte">3. Sortir</span></li>
+  <li data-geste="4"><span class="geste-coche">☐</span><span class="geste-texte">4. Retrouver</span></li>
+</ol>
+<p class="gestes-pratique-bilan" id="bilan-echauf" role="status"></p>
+<div class="editeur-py editeur-py-essai" id="vsE" data-fichier="5e-HALL-essai-TON NOM">
+  <label for="py_echauf">🐍 L'éditeur d'essai</label>
+  <textarea id="py_echauf" class="editeur-py-code" rows="3" wrap="off" spellcheck="false">nom = "Camille"
+print("Bonjour", nom, "!")</textarea>
+</div>
 <script type="text/x-python" id="carte-simulee">
 mesures = [55, 40, 25]
 rang = [0]
@@ -290,6 +302,42 @@ ok("📂 : un fichier téléchargé de Vittascience s'ouvre, son en-tête retir�
 await p.waitForTimeout(700);
 await p.reload(); await p.waitForSelector("#vs1.editeur-py--actif");
 ok("📂 : le programme ouvert est sauvegardé dans la page", (await p.inputValue("#py_essai")) === "print(3 + 4)\n");
+
+/* 12 bis. l'échauffement : ⬇ et 📂 se signalent, et les quatre gestes se cochent quand ils sont réussis */
+const coches = () => p.$$eval("ol.gestes-pratique li", (ls) => ls.map((l) => (l.classList.contains("geste-fait") ? "1" : "0")).join(""));
+const bilanE = () => p.locator("#bilan-echauf").innerText();
+ok("échauffement : au départ, aucun geste coché, les cases sont ☐", (await coches()) === "0000" &&
+   (await p.$$eval("ol.gestes-pratique .geste-coche", (cs) => cs.every((c) => c.textContent === "☐"))));
+await executer(p, "vsE");
+ok("échauffement : ▶ sur le programme de départ ne coche pas le geste 1, et le dit", (await coches()) === "0000" && /Change d'abord Camille/.test(await bilanE()));
+await ecrireCode(p, "vsE", 'nom = "Léa"\nprint("Bonjour", nom, "!")');
+await executer(p, "vsE");
+ok("échauffement : ▶ sur le programme changé, mené au bout, coche le geste 1", (await coches()) === "1000" && /Geste 1 réussi/.test(await bilanE()));
+await ecrireCode(p, "vsE", 'print("Bonjour"');
+await executer(p, "vsE");
+ok("échauffement : une erreur ne décoche rien et ne coche rien", (await coches()) === "1000");
+await ecrireCode(p, "vsE", 'nom = "Léa"\nprint("Bonjour", nom, "!")');
+await p.fill("#py_echauf_nom", "5e-HALL-essai-DUPONT");
+ok("échauffement : un nom sans « TON NOM » coche le geste 2", (await coches()) === "1100");
+const signaux = await p.evaluate(() => { window.__sig = []; ["editeur-py:telecharge", "editeur-py:ouvert"].forEach((t) => document.addEventListener(t, (e) => window.__sig.push(t + " " + e.detail.champ + " " + e.detail.fichier))); return true; });
+const [dlE] = await Promise.all([p.waitForEvent("download"), p.click("#vsE .editeur-py-telecharger")]);
+const fichierE = path.join(TMP, dlE.suggestedFilename());
+await dlE.saveAs(fichierE);
+ok("échauffement : ⬇ envoie editeur-py:telecharge (champ, fichier) et coche le geste 3",
+   signaux && (await coches()) === "1110" && (await p.evaluate(() => window.__sig.join("|"))) === "editeur-py:telecharge py_echauf 5e-HALL-essai-DUPONT.py");
+await p.click("#vsE .editeur-py-depart"); await p.click("#vsE .editeur-py-depart");
+ok("échauffement : ↺ (deux clics) remet Camille", /Camille/.test(await p.inputValue("#py_echauf")));
+await p.setInputFiles("#vsE .editeur-py-choix", fichierE);
+await p.waitForFunction(() => /Léa/.test(document.getElementById("py_echauf").value), null, { timeout: 3000 }).catch(() => {});
+ok("échauffement : 📂 envoie editeur-py:ouvert, Léa revient, le geste 4 est coché, et le bilan dit les quatre",
+   (await coches()) === "1111" && /Léa/.test(await p.inputValue("#py_echauf")) && /quatre gestes sont faits/.test(await bilanE()) &&
+   /editeur-py:ouvert py_echauf 5e-HALL-essai-DUPONT\.py/.test(await p.evaluate(() => window.__sig.join("|"))));
+ok("échauffement : les cases cochées passent à ✅", await p.$$eval("ol.gestes-pratique .geste-coche", (cs) => cs.every((c) => c.textContent === "✅")));
+await p.waitForTimeout(700);
+await p.reload(); await p.waitForSelector("#vs1.editeur-py--actif");
+ok("échauffement : après rechargement, les coches restent, et le bilan le dit", (await coches()) === "1111" && /déjà faits/.test(await bilanE()));
+ok("les autres éditeurs ne cochent rien : la liste ne suit que son éditeur (data-editeur)",
+   await p.evaluate(() => document.querySelectorAll("ol.gestes-pratique--actif").length === 1));
 
 /* 13. accessibilité : console aria-live, cibles de 44 px, champs étiquetés */
 const a11y = await p.evaluate(() => {

@@ -48,6 +48,8 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { eprouverEditeurs, eprouverPose, executerBloc } from '../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs';
+// les éditeurs des activités (l'éditeur d'essai de l'échauffement, 05/11/2026, n'en est pas un)
+const ACT_PY = '.editeur-py:not(.editeur-py-essai)';
 
 // fileURLToPath, pas .pathname : sous Windows, .pathname donne « /C:/… » et path.join en fait « C:\C:\… »
 const ICI = path.dirname(fileURLToPath(import.meta.url));
@@ -158,7 +160,8 @@ ok('7 · activité 3 REFUSÉE malgré les 5 étapes remises dans l\'ordre — l\
    /🔒/.test(await retour(3)) && /éditeur Python/.test(await retour(3))
    && !(await estValidee(3)), (await retour(3)).slice(0, 70));
 
-const editeurs = await p.$$eval('.editeur-py', l => l.map(e => e.id));   // l'éditeur Python intégré (04/11/2026)
+// l'éditeur Python intégré (04/11/2026) ; l'éditeur d'essai de l'échauffement (05/11/2026) n'est pas un éditeur d'activité
+const editeurs = await p.$$eval(ACT_PY, l => l.map(e => e.id));
 await ouvrirPour('vs1');
 await p.click('#vs1 .vs-lien'); await p.waitForTimeout(200);
 ok(`8 · cliquer le lien-bouton de l'éditeur pose le verrou vs1 — le GESTE suffit, `
@@ -314,7 +317,7 @@ ok(`21 · ${bloquees.length} requête(s) distante(s) refusées pendant toute la 
 ok(`22 · les ${editeurs.length} éditeurs Python sont DANS la page (04/11/2026), chacun avec un lien-bouton facultatif vers `
    + 'fr.vittascience.com ouvert dans un nouvel onglet, et plus aucun cadre : rien ne part avant un geste',
    editeurs.length === 3
-   && (await p.$$eval('.editeur-py',
+   && (await p.$$eval(ACT_PY,
         l => l.every(e => !e.querySelector('iframe') && e.querySelector('a.vs-lien')
              && /^https:\/\/fr\.vittascience\.com\//.test(e.querySelector('a.vs-lien').href)
              && e.querySelector('a.vs-lien').target === '_blank'))),
@@ -478,8 +481,16 @@ ok('37 · les trois liens-boutons ouvrent l\'éditeur en ?mode=code (et plus en 
 const tout = await p.evaluate(() => document.body.textContent);
 ok('38 · plus de « blocs capteurs » ni de « blocs à gauche, Python à droite » ; la consigne nomme « Arrêter » dans chaque barre',
    !/blocs\s*«\s*capteurs/i.test(tout) && !/blocs à gauche/i.test(tout) && !/mode=mixed/.test(await p.content())
-   && (await p.$$eval('.editeur-py', l => l.length === 3 && l.every(d => /Arrêter/.test(d.textContent)))),
+   && (await p.$$eval(ACT_PY, l => l.length === 3 && l.every(d => /Arrêter/.test(d.textContent)))),
    '');
+const essai = await p.evaluate(async () => {
+  const bloc = document.querySelector('.gestes-outil .editeur-py-essai');
+  const r = bloc && window.EditeurPython ? await window.EditeurPython.executer(document.getElementById('py_echauffement').value) : null;
+  return { actif: !!bloc && bloc.classList.contains('editeur-py--actif'), gestes: document.querySelectorAll('.gestes-outil ol.gestes-pratique > li[data-geste]').length,
+           suivi: !!document.querySelector('.gestes-outil ol.gestes-pratique--actif'), sortie: r && r.sortie, erreur: r && r.erreur };
+});
+ok('38 bis · l\'échauffement a son éditeur d\'essai, monté, et ses quatre gestes suivis ; le programme d\'essai s\'exécute : « Bonjour Camille ! » puis « 2 + 3 = 5 » (05/11/2026)',
+   essai.actif && essai.gestes === 4 && essai.suivi && essai.sortie === 'Bonjour Camille !\n2 + 3 = 5\n' && !essai.erreur, JSON.stringify(essai));
 await ctx.close();
 }
 

@@ -344,9 +344,17 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
     await page.evaluate(() => document.querySelectorAll(".gestes-outil img").forEach(i => { i.loading = "eager"; }));
     await page.waitForTimeout(800);
     const imgs = await page.$$eval(".gestes-outil img", l => l.map(i => ({ charge: i.complete && i.naturalWidth > 0, alt: (i.getAttribute("alt") || "").trim().length })));
-    ok("gestes · les " + imgs.length + " captures de l'encart se chargent, toutes avec un texte alternatif",
-       imgs.length === 9 && imgs.every(i => i.charge && i.alt > 20),
+    ok("gestes · les " + imgs.length + " captures de Windows de l'encart se chargent, toutes avec un texte alternatif (depuis le 05/11/2026, l'éditeur n'y est plus en image : il y est en vrai)",
+       imgs.length === 4 && imgs.every(i => i.charge && i.alt > 20),
        imgs.filter(i => !i.charge).length + " cassée(s), " + imgs.filter(i => i.alt <= 20).length + " sans texte alternatif");
+    const essai = await page.evaluate(async () => {
+      const bloc = document.querySelector(".gestes-outil .editeur-py-essai");
+      const r = bloc && window.EditeurPython ? await window.EditeurPython.executer(document.getElementById("py_echauffement").value) : null;
+      return { actif: !!bloc && bloc.classList.contains("editeur-py--actif"), gestes: document.querySelectorAll(".gestes-outil ol.gestes-pratique > li[data-geste]").length,
+               suivi: !!document.querySelector(".gestes-outil ol.gestes-pratique--actif"), sortie: r && r.sortie, erreur: r && r.erreur };
+    });
+    ok("gestes · l'échauffement a son éditeur d'essai, monté, et ses quatre gestes suivis ; le programme d'essai s'exécute : « Bonjour Camille ! » puis « 2 + 3 = 5 » (05/11/2026)",
+       essai.actif && essai.gestes === 4 && essai.suivi && essai.sortie === "Bonjour Camille !\n2 + 3 = 5\n" && !essai.erreur, JSON.stringify(essai));
     /* un élève qui avait choisi 🅰 avant le retrait : sa sauvegarde dit « a » — dans un contexte à part */
     const ctxA = await nav.newContext({ viewport: { width: 390, height: 844 } });
     await ctxA.addInitScript(() => localStorage.setItem("seq_3e_C7_capteur_confort", JSON.stringify({ inputs: {}, exp: { parcours: "a" } })));

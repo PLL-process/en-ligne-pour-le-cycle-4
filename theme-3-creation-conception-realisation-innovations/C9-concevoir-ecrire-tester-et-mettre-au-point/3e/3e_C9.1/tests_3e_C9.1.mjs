@@ -376,6 +376,21 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   await pe.close(); await ctxE.close();
 }
 
+/* — l'échauffement (05/11/2026) : son éditeur d'essai, monté, et ses quatre gestes suivis — */
+{
+  const essai = await page.evaluate(async () => {
+    const bloc = document.querySelector(".gestes-outil .editeur-py-essai");
+    const r = bloc && window.EditeurPython ? await window.EditeurPython.executer(document.getElementById("py_echauffement").value) : null;
+    return { actif: !!bloc && bloc.classList.contains("editeur-py--actif"), gestes: document.querySelectorAll(".gestes-outil ol.gestes-pratique > li[data-geste]").length,
+             suivi: !!document.querySelector(".gestes-outil ol.gestes-pratique--actif"), sortie: r && r.sortie, erreur: r && r.erreur,
+             images: [...document.querySelectorAll(".gestes-outil img")].map(i => i.getAttribute("src")) };
+  });
+  ok("gestes · l'échauffement a son éditeur d'essai, monté, et ses quatre gestes suivis ; le programme d'essai s'exécute : « Bonjour Camille ! » puis « 2 + 3 = 5 »",
+     essai.actif && essai.gestes === 4 && essai.suivi && essai.sortie === "Bonjour Camille !\n2 + 3 = 5\n" && !essai.erreur, JSON.stringify(essai).slice(0, 200));
+  ok("gestes · l'encart ne montre plus l'éditeur en image : il ne garde que les fenêtres de Windows",
+     essai.images.length > 0 && essai.images.every(s => /geste_vitta_4/.test(s)), essai.images.join(", "));
+}
+
 /* — aucun envoi réseau hors iframe Vittascience — */
 {
   const sorties = [];
