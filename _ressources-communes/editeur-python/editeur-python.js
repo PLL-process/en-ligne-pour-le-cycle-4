@@ -139,6 +139,9 @@
           return { sortie: sortie, erreur: null, arret: deborde ? "lignes" : null };
         }, function (e) {
           if (e && e.arret) return { sortie: sortie, erreur: null, arret: e.arret };
+          // « raise SystemExit » termine le programme sans erreur, comme Python 3 : une simulation s'en sert pour finir
+          // son essai (la nuit du lampadaire, 4e_C9.1, 05/11/2026) ; Skulpt n'a pas sys.exit().
+          if (nomType(e) === "SystemExit") return { sortie: sortie, erreur: null, arret: deborde ? "lignes" : null };
           return { sortie: sortie, erreur: decrire(e, code, decalage), arret: null };
         });
       });

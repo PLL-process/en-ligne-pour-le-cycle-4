@@ -307,16 +307,55 @@ const run = async () => {
   const pyBon = await page.inputValue("#prog3");
   await shot(page, "act5_validee", "#atelier");
 
-  /* ════════ ACTIVITÉ 6 — réinvestissement sans squelette ════════ */
+  /* ════════ ACTIVITÉ 6 — réinvestissement sans squelette, dans l'éditeur Python (05/11/2026) ════════ */
+  const depart6 = await page.evaluate(() => { const i = window.EditeurPython && window.EditeurPython.instance("reinv"); return i ? i.depart : null; });
+  ok("act. 6 · l'éditeur Python est monté, avec la carte simulée du lampadaire, et sans squelette (le code de départ n'est que des commentaires)",
+     await page.evaluate(() => document.querySelector("#edpy-a6").classList.contains("editeur-py--actif") && document.querySelector("#edpy-a6").dataset.simulation === "carte-lampadaire")
+     && depart6 !== null && depart6.split("\n").every(l => !l.trim() || l.trim().startsWith("#")), JSON.stringify(depart6).slice(0, 80));
   await bonne("a6_q1");
-  await page.click('[data-check="6"]');
-  ok("verrou : act. 6 refusée sans programme complet", (await page.textContent("#fb6")).includes("seuils"));
-  await page.fill("#reinv", "SEUIL_BAS = 20\nSEUIL_HAUT = 60\nlire luminosite -> L\nSI L < SEUIL_BAS ALORS\n    allumer lampadaire\nSINON SI L > SEUIL_HAUT ALORS\n    eteindre lampadaire\nFIN SI");
   await page.fill("#a6_just", "J'allume à 20 et j'éteins à 60, soit une bande de 40 points, parce que la luminosité varie beaucoup au crépuscule : nuages, phares, reflets.");
   await page.click('[data-check="6"]');
-  ok("activité 6 validée (programme sans squelette + justification chiffrée)",
-     (await page.textContent("#fb6")).includes("1 / 1") && !(await page.textContent("#fb6")).includes("Justifie"),
-     await page.textContent("#fb6"));
+  ok("act. 6 · refusée tant que le programme n'a pas été exécuté (la page juge ce qu'il fait)", (await page.textContent("#fb6")).includes("exécute-le d'abord"));
+  await page.evaluate(() => document.addEventListener("editeur-py:fin", e => { if (e.detail.champ === "reinv") window.__n6 = (window.__n6 || 0) + 1; }));
+  const execA6 = async (code) => {
+    await page.fill("#reinv", code);
+    const n0 = await page.evaluate(() => window.__n6 || 0);
+    await page.click("#edpy-a6 .editeur-py-executer");
+    await page.waitForFunction(k => (window.__n6 || 0) > k, n0, { timeout: 30000 });
+    await page.click('[data-check="6"]');
+    return { fb: await page.textContent("#fb6"), console: await page.locator("#edpy-a6 .editeur-py-console").innerText() };
+  };
+  const L6 = (c) => "while True:\n    L = lire_luminosite()\n" + c;
+  const essais6 = [
+    ["le pseudo-code d'avant (SI … ALORS) s'arrête sur une erreur expliquée", "SEUIL_BAS = 20\nSI L < SEUIL_BAS ALORS\n    allumer lampadaire\n", /s'arrête sur une erreur/],
+    ["un seul seuil (if / else) s'affole et le retour le dit", L6("    if L < 30:\n        allumer_lampadaire()\n    else:\n        eteindre_lampadaire()\n"), /7 basculement\(s\) le soir[\s\S]*Avec un seul seuil/],
+    ["deux seuils mais un « else » qui éteint : refusé, le else nommé", L6("    if L < 20:\n        allumer_lampadaire()\n    elif L > 60:\n        eteindre_lampadaire()\n    else:\n        eteindre_lampadaire()\n"), /15 basculement\(s\) le soir[\s\S]*Ton « else »/],
+    ["seuils inversés : éteint à la nuit noire, allumé en plein jour", L6("    if L > 60:\n        allumer_lampadaire()\n    elif L < 20:\n        eteindre_lampadaire()\n"), /nuit noire, le lampadaire était éteint[\s\S]*en plein jour, il était encore allumé/],
+    ["seuils croisés (60 / 20) : il s'affole, seuils « trop proches, ou croisés »", "SEUIL_BAS = 60\nSEUIL_HAUT = 20\n" + L6("    if L < SEUIL_BAS:\n        allumer_lampadaire()\n    elif L > SEUIL_HAUT:\n        eteindre_lampadaire()\n"), /9 le matin[\s\S]*trop proches, ou croisés/],
+    ["le 35-45 de la pompe : bande trop étroite, refusé", L6("    if L < 35:\n        allumer_lampadaire()\n    elif L > 45:\n        eteindre_lampadaire()\n"), /3 basculement\(s\) le soir/],
+    ["sans boucle : il ne lit la lumière qu'une fois, le retour demande une boucle", "L = lire_luminosite()\nif L < 20:\n    allumer_lampadaire()\nelif L > 60:\n    eteindre_lampadaire()\n", /il lui faut une boucle/],
+  ];
+  for (const [nom, code, attendu] of essais6) {
+    const r = await execA6(code);
+    ok("act. 6 · " + nom, !r.fb.includes("Bravo") && !r.fb.includes("Excellent") && !r.fb.includes("Très bien") && attendu.test(r.fb), r.fb.slice(r.fb.indexOf("Ton programme"), r.fb.indexOf("Ton programme") + 160));
+  }
+  const BON6 = "SEUIL_BAS = 20\nSEUIL_HAUT = 60\n" + L6("    if L < SEUIL_BAS:\n        allumer_lampadaire()\n    elif L > SEUIL_HAUT:\n        eteindre_lampadaire()\n");
+  const rBon = await execA6(BON6);
+  ok("act. 6 · le bon programme passe la nuit : un basculement le soir (19 h 10), un le matin (6 h 09), allumé la nuit, éteint le jour",
+     /19 h 10 — L = 18 → 💡/.test(rBon.console) && /6 h 09 — L = 61 → 🌙/.test(rBon.console)
+     && /le soir[^:]*: 1 basculement[\s\S]*nuit noire, le lampadaire était allumé[\s\S]*le matin[^:]*: 1 basculement[\s\S]*en plein jour, il était éteint/.test(rBon.console),
+     rBon.console.split("\n").slice(0, 2).join(" | "));
+  ok("activité 6 validée (programme sans squelette, exécuté sur la nuit simulée + justification chiffrée)",
+     rBon.fb.includes("1 / 1") && !rBon.fb.includes("Justifie") && !rBon.fb.includes("Ton programme"), rBon.fb);
+  await page.fill("#reinv", BON6 + "# une ligne de plus\n");
+  await page.click('[data-check="6"]');
+  ok("act. 6 · un programme changé après son exécution doit être exécuté encore avant d'être vérifié",
+     (await page.textContent("#fb6")).includes("exécute-le encore"));
+  await page.fill("#reinv", BON6);
+  const n6 = await page.evaluate(() => window.__n6 || 0);
+  await page.click("#edpy-a6 .editeur-py-executer");
+  await page.waitForFunction(k => (window.__n6 || 0) > k, n6, { timeout: 30000 });
+  await page.click('[data-check="6"]');
   await shot(page, "act6_validee");
 
   /* ════════ progression, persistance ════════ */

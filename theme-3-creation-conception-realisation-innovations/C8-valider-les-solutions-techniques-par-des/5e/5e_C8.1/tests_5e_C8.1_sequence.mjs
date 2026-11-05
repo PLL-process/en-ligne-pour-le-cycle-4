@@ -88,7 +88,10 @@ ok('la formulation officielle est recopiée (synthèse professeur, n°298)', dit
 ok('le code d’appui est cité (synthèse professeur, n°298)', ditSynthese(REP.appui), REP.appui);
 ok('la formulation officielle du code d’appui est recopiée exactement (synthèse professeur, n°298)',
   ditSynthese(REP.formulationAppui), REP.formulationAppui.slice(0, 46));
-ok('consigne de sécurité présente', dit(REP.securite), REP.securite.slice(0, 40));
+/* 05/11/2026 : la version 🅰 est le logiciel du RNTC, pas un banc réel (décision de Pascal) : aucune charge réelle n'est
+ * manipulée, et la consigne sur la charge suspendue est retirée. La page doit le dire, et l'ancienne consigne ne pas revenir. */
+ok('sécurité : la version 🅰 dit qu\'aucune charge réelle n\'est manipulée, et la consigne sur la charge suspendue a disparu',
+   dit(REP.securite) && !dit('ne jamais placer une main ni la tête sous une charge suspendue'), REP.securite.slice(0, 40));
 ok('le secteur est explicitement écarté', /secteur/i.test(src));
 ok('les trois versions A/B/C sont annoncées', ['🅰', '🅱', '🅲'].every(x => src.includes(x)));
 ok('aucun marqueur de gabarit non remplacé', !/__[A-Z_0-9]+__/.test(src),

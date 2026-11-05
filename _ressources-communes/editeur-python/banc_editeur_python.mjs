@@ -232,6 +232,8 @@ ok("fonctions simulées : la mesure 55 s'affiche, et l'erreur est bien à la lig
 /* 8. l'API sans écran : une vérification qui juge en exécutant */
 r = await p.evaluate(() => window.EditeurPython.executer('places = 0\nif places > 0:\n    print("OUVERTE")\nelse:\n    print("FERMÉE")'));
 ok("EditeurPython.executer(code) rend la sortie sans toucher à l'écran", r.sortie === "FERMÉE\n" && !r.erreur);
+r = await p.evaluate(() => window.EditeurPython.executer("n = 0\nwhile True:\n    n = n + 1\n    if n == 3:\n        print(n)\n        raise SystemExit\nprint('jamais')"));
+ok("raise SystemExit arrête un while True sans erreur, comme Python 3 (fin d'une simulation)", r.sortie === "3\n" && !r.erreur && !r.arret, JSON.stringify(r));
 r = await p.evaluate(() => window.EditeurPython.executer('a = input()\nprint(a * 2)', { entrees: ["ab"] }));
 ok("EditeurPython.executer(code, {entrees}) répond aux input()", r.sortie === "abab\n", JSON.stringify(r.sortie));
 
