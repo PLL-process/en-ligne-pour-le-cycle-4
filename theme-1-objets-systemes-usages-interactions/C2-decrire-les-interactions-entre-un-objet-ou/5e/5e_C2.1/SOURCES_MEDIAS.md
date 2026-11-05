@@ -60,3 +60,11 @@ ressource facultative pour un prolongement, ou comme passerelle vers le lot C3 d
 
 **Aucune police distante** (règle d'or n°40). Séquence, QCM et synthèses utilisent une pile système.
 La page entière fonctionne sans connexion, et aucune donnée n'est envoyée.
+
+## Image reprise d'un lot voisin pour la situation déclenchante (05/11/2026)
+
+Copie, octet pour octet, de `theme-1-objets-systemes-usages-interactions/C2-decrire-les-interactions-entre-un-objet-ou/4e/4e_C2.1/Images/synthese_borne_velos_hangzhou.png` (même provenance, mêmes droits) : elle montre le même objet, sans donner la réponse de la séquence. Demande de Pascal du 05/11/2026 : « il manque aussi des images réalistes ».
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/synthese_borne_velos_hangzhou.png` | Une borne de vélos en libre-service sur un trottoir après la pluie, une rangée de vélos accrochés à côté. PNG 1 536 × 1 024, 2.8 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a bike-sharing docking station on a wet city sidewalk after rain: a slim kiosk post with a small tilted screen and a card reader in the foreground, a row of identical shared bicycles locked into docks beside it, no people, no readable text, no logos, no brand colours » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |

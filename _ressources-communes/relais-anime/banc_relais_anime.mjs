@@ -15,6 +15,7 @@ const PAGES = [
   T3 + "C7-imaginer-concevoir-et-realiser-une-ou-des/4e/4e_C7.4/sequence_4e_C7.4_energie-du-jardin.html",
   T3 + "C7-imaginer-concevoir-et-realiser-une-ou-des/4e/4e_C7.5/sequence_4e_C7.5_jardin-incomplet.html",
   T3 + "C9-concevoir-ecrire-tester-et-mettre-au-point/4e/4e_C9.1/sequence_4e_C9_jardin-programme.html",
+  "theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.1/sequence_4e_C6.1-C6.3_ajuster_programme_jardin.html",
 ];
 let nOk = 0, nKo = 0;
 function ok(nom, cond, detail = "") {
