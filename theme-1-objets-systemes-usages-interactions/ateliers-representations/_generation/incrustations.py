@@ -78,6 +78,11 @@ def bloc_moteur():
 
 
 def section(inc):
+    if inc.get("rappel"):
+        # la piqûre de rappel du cahier des charges : un exercice hors série, décrit dans donnees_rappel_cdc.py
+        import donnees_rappel_cdc as rc
+        r = next(x for x in rc.RAPPELS if x["id"] == inc["rappel"])
+        return moteur.rappel_cdc(r, (DEPOT / inc["sequence"]).parent, inc["balise"], inc["balise_exo"])
     at = importlib.import_module("donnees_" + inc["module"])
     niv = inc["niveau"]
     N = at.NIVEAUX[niv]
