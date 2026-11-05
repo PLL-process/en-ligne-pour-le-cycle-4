@@ -707,26 +707,36 @@ E4 = dict(
                       dict(nom="Exigence 1.1, étanchéité", cases=[
                           "1.1 Étanchéité — indice de protection", "IP65 au moins",
                           dict(menu="verdict", bonne="oui", avant="IP66",
-                               indice="Compare chiffre par chiffre. 6 pour la poussière, 6 pour l'eau : est-ce au moins 6 et 5 ?"),
+                               indice="Compare chiffre par chiffre. 6 pour la poussière, 6 pour l'eau : est-ce au moins 6 et 5 ?",
+                               retours={"non": "IP66 : 6 pour la poussière (6 demandés), 6 pour l'eau (5 demandés). Chaque chiffre est au moins égal : l'exigence est satisfaite."}),
                           dict(menu="verdict", bonne="non", avant="IP54",
-                               indice="5 pour la poussière (6 demandé), 4 pour l'eau (5 demandé).")]),
+                               indice="5 pour la poussière (6 demandé), 4 pour l'eau (5 demandé).",
+                               retours={"oui": "IP54 : 5 pour la poussière (6 demandés), 4 pour l'eau (5 demandés). Les deux chiffres sont trop bas : l'exigence n'est pas satisfaite."})]),
                       dict(nom="Exigence 1.2, autonomie", cases=[
                           "1.2 Autonomie sur batterie", "72&nbsp;h au moins",
-                          dict(menu="verdict", bonne="oui", avant="80&nbsp;h", indice="80 h, est-ce 72 h ou plus ?"),
+                          dict(menu="verdict", bonne="oui", avant="80&nbsp;h", indice="80 h, est-ce 72 h ou plus ?",
+                               retours={"non": "80 h, c'est plus que 72 h : « au moins 72 h » est satisfait."}),
                           dict(menu="verdict", bonne="oui", avant="72&nbsp;h",
-                               indice="« Au moins 72 h » : 72 h exactement, est-ce assez ? L'égalité suffit.")]),
+                               indice="« Au moins 72 h » : 72 h exactement, est-ce assez ? L'égalité suffit.",
+                               retours={"non": "« Au moins 72 h » veut dire 72 h ou plus : 72 h exactement suffit, l'égalité satisfait l'exigence."})]),
                       dict(nom="Exigence 1.3, alerte audible", cases=[
                           "1.3 Distance où l'alerte s'entend", "100&nbsp;m au moins",
-                          dict(menu="verdict", bonne="oui", avant="110&nbsp;m", indice="110 m, est-ce 100 m ou plus ?"),
-                          dict(menu="verdict", bonne="oui", avant="150&nbsp;m", indice="150 m, est-ce 100 m ou plus ?")]),
+                          dict(menu="verdict", bonne="oui", avant="110&nbsp;m", indice="110 m, est-ce 100 m ou plus ?",
+                               retours={"non": "110 m, c'est plus que 100 m : l'alerte s'entend assez loin, l'exigence est satisfaite."}),
+                          dict(menu="verdict", bonne="oui", avant="150&nbsp;m", indice="150 m, est-ce 100 m ou plus ?",
+                               retours={"non": "150 m, c'est plus que 100 m : l'exigence est satisfaite, et largement."})]),
                       dict(nom="Exigence 1.4, réparabilité", cases=[
                           "1.4 Indice de réparabilité", "6/10 au moins",
-                          dict(menu="verdict", bonne="non", avant="5/10", indice="5, est-ce 6 ou plus ?"),
-                          dict(menu="verdict", bonne="oui", avant="9/10", indice="9, est-ce 6 ou plus ?")]),
+                          dict(menu="verdict", bonne="non", avant="5/10", indice="5, est-ce 6 ou plus ?",
+                               retours={"oui": "5 sur 10, c'est moins que 6 sur 10 : « au moins 6/10 » n'est pas atteint, l'exigence n'est pas satisfaite."}),
+                          dict(menu="verdict", bonne="oui", avant="9/10", indice="9, est-ce 6 ou plus ?",
+                               retours={"non": "9 sur 10, c'est plus que 6 sur 10 : l'exigence est satisfaite."})]),
                       dict(nom="Exigence 1.5, coût", cases=[
                           "1.5 Coût du boîtier", "300&nbsp;€ au plus",
-                          dict(menu="verdict", bonne="oui", avant="290&nbsp;€", indice="« Au plus » : 290 €, est-ce 300 € ou moins ?"),
-                          dict(menu="verdict", bonne="oui", avant="240&nbsp;€", indice="« Au plus » : 240 €, est-ce 300 € ou moins ?")]),
+                          dict(menu="verdict", bonne="oui", avant="290&nbsp;€", indice="« Au plus » : 290 €, est-ce 300 € ou moins ?",
+                               retours={"non": "« Au plus 300 € » veut dire 300 € ou moins : 290 € est en dessous, l'exigence est satisfaite."}),
+                          dict(menu="verdict", bonne="oui", avant="240&nbsp;€", indice="« Au plus » : 240 €, est-ce 300 € ou moins ?",
+                               retours={"non": "« Au plus 300 € » : 240 € est en dessous, l'exigence est satisfaite. Ici, moins cher ne fait jamais échouer."})]),
                   ]),
              dict(type="choix", name="bilan", legende="Chaque boîtier satisfait quatre exigences sur cinq. Que peut-on en conclure&nbsp;?",
                   options=[("rien", "Rien encore&nbsp;: il faut voir quelle exigence manque à chacun, et si cet écart est acceptable."),
@@ -764,6 +774,11 @@ E4 = dict(
         "<b>B, 1.2</b> → 72&nbsp;h pour «&nbsp;72&nbsp;h au moins&nbsp;» → l'égalité suffit → <b>satisfaite</b>",
         "<b>B, 1.3</b> → 150&nbsp;m ≥ 100&nbsp;m → <b>satisfaite</b>&nbsp;; <b>B, 1.4</b> → 9/10 ≥ 6/10 → <b>satisfaite</b>&nbsp;; "
         "<b>B, 1.5</b> → 240&nbsp;€ ≤ 300&nbsp;€ → <b>satisfaite</b>",
+        "<b>Les verdicts faux, un par un</b> → A, 1.1 «&nbsp;non satisfaite&nbsp;» → 6 ≥ 6 et 6 ≥ 5&nbsp;; B, 1.1 «&nbsp;satisfaite&nbsp;» "
+        "→ 5 &lt; 6 et 4 &lt; 5&nbsp;; A et B, 1.2 «&nbsp;non satisfaite&nbsp;» → 80&nbsp;h et 72&nbsp;h sont au moins 72&nbsp;h, l'égalité "
+        "suffit&nbsp;; A et B, 1.3 «&nbsp;non satisfaite&nbsp;» → 110&nbsp;m et 150&nbsp;m dépassent 100&nbsp;m&nbsp;; A, 1.4 "
+        "«&nbsp;satisfaite&nbsp;» → 5 &lt; 6&nbsp;; B, 1.4 «&nbsp;non satisfaite&nbsp;» → 9 ≥ 6&nbsp;; A et B, 1.5 «&nbsp;non satisfaite&nbsp;» "
+        "→ «&nbsp;au plus 300&nbsp;€&nbsp;» veut dire 300&nbsp;€ ou moins, et 290&nbsp;€ comme 240&nbsp;€ sont en dessous",
         "<b>Le décompte</b> → 4 sur 5 chacun → mais A manque la <b>réparabilité</b>, B manque l'<b>étanchéité</b> → on "
         "ne peut pas encore choisir. Prendre le moins cher, chercher un troisième boîtier ou compter les niveaux "
         "dépassés ne répond pas à la vraie question&nbsp;: <b>quel écart le client accepte-t-il&nbsp;?</b>",
@@ -813,18 +828,29 @@ E5 = dict(
                   lignes=[
                       dict(nom="Exigence 1.1, étanchéité", cases=["1.1 Étanchéité", "IP65 au moins", dict(
                           menu="flex", bonne="f0", indice="« Pas question de descendre » : aucun écart n'est accepté, le niveau est impératif.",
-                          retours={"f1": "« Pas question de descendre » : aucun écart, même à une condition."})]),
+                          retours={"f1": "« Pas question de descendre » : aucun écart, même à une condition.",
+                                   "f2": "« Pas question de descendre » : aucun écart n'est accepté ; « négociable » voudrait dire un petit écart sans condition.",
+                                   "f3": "« Pas question de descendre » : pendant un cyclone, l'étanchéité ne se négocie pas ; F3 voudrait dire « n'importe quelle valeur me va »."})]),
                       dict(nom="Exigence 1.2, autonomie", cases=["1.2 Autonomie", "72&nbsp;h au moins", dict(
                           menu="flex", bonne="f1", indice="Un écart est accepté, mais seulement à une condition : le message de batterie faible.",
-                          retours={"f0": "Mme Augustin accepte 60 heures : un écart est possible, ce n'est pas impératif."})]),
+                          retours={"f0": "Mme Augustin accepte 60 heures : un écart est possible, ce n'est pas impératif.",
+                                   "f2": "L'écart (60 h au lieu de 72) n'est accepté qu'à une condition, le message de batterie faible : c'est peu négociable, F1.",
+                                   "f3": "Un écart accepté à une seule condition n'est pas « très négociable » : F3 voudrait dire n'importe quelle autonomie."})]),
                       dict(nom="Exigence 1.3, alerte audible", cases=["1.3 Alerte audible", "100&nbsp;m au moins", dict(
-                          menu="flex", bonne="f0", indice="« Pas un mètre de moins » : aucun écart n'est accepté, le niveau est impératif.")]),
+                          menu="flex", bonne="f0", indice="« Pas un mètre de moins » : aucun écart n'est accepté, le niveau est impératif.",
+                          retours={"f1": "« Pas un mètre de moins » : aucun écart, même à une condition. Le niveau est impératif : F0.",
+                                   "f2": "« Pas un mètre de moins » : aucun écart n'est accepté ; « négociable » voudrait dire un petit écart sans condition.",
+                                   "f3": "« Pas un mètre de moins » : la dernière maison doit entendre l'alerte, rien ne se négocie ici."})]),
                       dict(nom="Exigence 1.4, réparabilité", cases=["1.4 Réparabilité", "6/10 au moins", dict(
                           menu="flex", bonne="f2", indice="Un petit écart, un point, accepté sans condition : c'est négociable.",
-                          retours={"f0": "« 5 sur 10, ça ira aussi » : un écart est accepté, ce n'est pas impératif."})]),
+                          retours={"f0": "« 5 sur 10, ça ira aussi » : un écart est accepté, ce n'est pas impératif.",
+                                   "f1": "« 5 sur 10, ça ira aussi » : l'écart est accepté sans condition ; c'est négociable, F2, pas « peu négociable ».",
+                                   "f3": "L'écart accepté est petit, un point sur dix : ce n'est pas « très négociable »."})]),
                       dict(nom="Exigence 1.5, coût", cases=["1.5 Coût", "300&nbsp;€ au plus", dict(
                           menu="flex", bonne="f3", indice="100 € de plus, sans condition : l'écart accepté est large, c'est très négociable.",
-                          retours={"f0": "« Même 400 €, on trouvera l'argent » : un écart est accepté, ce n'est pas impératif."})]),
+                          retours={"f0": "« Même 400 €, on trouvera l'argent » : un écart est accepté, ce n'est pas impératif.",
+                                   "f1": "« Même 400 €, on trouvera l'argent » : l'écart est accepté sans condition, ce n'est pas « peu négociable ».",
+                                   "f2": "100 € de plus sur 300 €, accepté sans condition : l'écart est large, c'est très négociable, F3."})]),
                   ]),
              dict(type="choix", name="chiffre", legende="La marge de l'exigence 1.4 (6/10 au moins, classe F2), écrite en chiffres&nbsp;:",
                   options=[("bon", "6/10 demandé&nbsp;; 5/10 accepté."),
@@ -856,6 +882,10 @@ E5 = dict(
         "<b>1.5 Coût</b> → 400&nbsp;€ au lieu de 300&nbsp;€, sans condition → écart large → <b>F3</b>",
         "<b>En chiffres, 1.4</b> → «&nbsp;6/10 demandé&nbsp;; 5/10 accepté&nbsp;». «&nbsp;± 5&nbsp;» accepterait 1/10&nbsp;; "
         "«&nbsp;au plus&nbsp;» refuserait une meilleure note&nbsp;; «&nbsp;exactement&nbsp;» serait du F0.",
+        "<b>Les classes fausses, une par une</b> → 1.1 et 1.3&nbsp;: ni F1, ni F2, ni F3, puisqu'aucun écart n'est accepté&nbsp;; "
+        "1.2&nbsp;: pas F0 (60&nbsp;h acceptées), ni F2 ni F3 (l'écart demande une condition)&nbsp;; 1.4&nbsp;: pas F0 (5/10 "
+        "accepté), pas F1 (sans condition), pas F3 (un point seulement)&nbsp;; 1.5&nbsp;: pas F0 (400&nbsp;€ acceptés), pas F1 "
+        "(sans condition), pas F2 (100&nbsp;€ de plus, un écart large)",
         "Le piège&nbsp;: croire que la classe dit l'<b>importance</b>. Le comité n'est pas riche, et pourtant le coût est en "
         "F3&nbsp;; la réparabilité compte pour faire durer la station, et elle est en F2. La classe dit seulement "
         "<b>l'écart accepté</b>.",

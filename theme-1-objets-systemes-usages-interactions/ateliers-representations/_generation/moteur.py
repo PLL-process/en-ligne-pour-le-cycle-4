@@ -397,9 +397,11 @@ def exercice(ex, numero, uid, cle, base_img="", balise="h2", duree_au_titre=True
         else:
             corps.append(getattr(r, t)(w))
     code = ex["code"]
+    # numero=None : un exercice hors série (la piqûre de rappel du cahier des charges), titré sans « Exercice N — »
+    titre_ex = ("Exercice %d — %s" % (numero, ex["titre"])) if numero else ex["titre"]
     h = ['<section class="card exercice" id="%s" data-exo="%s" data-cle="%s" aria-labelledby="%s-titre">' % (uid, uid, cle, uid),
-         ('<%s id="%s-titre">Exercice %d — %s <span class="note">(≈ %d min)</span></%s>' % (balise, uid, numero, ex["titre"], ex["duree"], balise))
-         if duree_au_titre else ('<%s id="%s-titre">Exercice %d — %s</%s>' % (balise, uid, numero, ex["titre"], balise)),
+         ('<%s id="%s-titre">%s <span class="note">(≈ %d min)</span></%s>' % (balise, uid, titre_ex, ex["duree"], balise))
+         if duree_au_titre else ('<%s id="%s-titre">%s</%s>' % (balise, uid, titre_ex, balise)),
          '<div class="meta"><b>🎯 Objectif&nbsp;:</b> %s<br><b>🧩 Compétence&nbsp;:</b> <span title="%s" aria-label="%s : %s">%s</span>'
          '<br><b>✍ Ce que tu produis&nbsp;:</b> %s%s</div>'
          % (ex["objectif"], e(formulation(code)), e(code), e(formulation(code)), e(code), ex["production"],
@@ -492,6 +494,38 @@ def bloc_cours(at, niv, lien=None, ouvert=False):
             % (" open" if ouvert else "", cours, suite))
 
 
+def rappel_de_l_atelier(slug, niv):
+    """La piqûre de rappel du cahier des charges posée en tête d'une page d'atelier, s'il y en a une."""
+    import donnees_rappel_cdc as rc
+    return next((r for r in rc.RAPPELS if r.get("atelier") == (slug, niv)), None)
+
+
+def rappel_cdc(r, depuis_dossier, balise="h3", balise_exo="h4"):
+    """La piqûre de rappel du cahier des charges (règle n°317 : le tableau se complète par menus) : une section
+    `.atelier-incruste`, avec ses propres données, que le kit lance comme un exercice incrusté — dans une séquence
+    (incrustations.py) comme dans une page d'atelier. Les textes sont dans donnees_rappel_cdc.py."""
+    import donnees_rappel_cdc as rc
+    ex = rc.exercice(r)
+    uid = "%s_%s" % (rc.COURT, r["id"].replace("-", "_"))
+    cle = "rep_%s_%s" % (rc.SLUG, r["id"])
+    sid = "incruste-%s-%s" % (rc.COURT, r["id"])
+    carte, df = exercice(ex, None, uid, cle, balise=balise_exo, duree_au_titre=False)
+    lecon = rel(depuis_dossier, RACINE_ATELIERS / rc.LECON[0]) + rc.LECON[1]
+    h = ['<section class="card atelier-incruste rappel-cdc" id="%s" aria-labelledby="%s-titre">' % (sid, sid),
+         '<%s id="%s-titre">%s %s</%s>' % (balise, sid, rc.EMOJI, rc.TITRE, balise),
+         '<p>%s</p>' % r["pourquoi"],
+         '<p><b>Ce que dit un cahier des charges, en trois mots&nbsp;:</b> pour chaque fonction, un <b>critère</b>, un '
+         '<b>niveau</b> et une <b>flexibilité</b>. Les mots de référence&nbsp;:</p>',
+         # une liste, pas un tableau : elle se lit aussi bien au fond d'une activité, sur un téléphone
+         '<ul class="mots-reference">%s</ul>' % "".join("<li><b>%s</b>&nbsp;: %s</li>" % m for m in rc.MOTS_REFERENCE),
+         '<p class="note">%s La leçon complète, avec un cahier des charges entier à compléter&nbsp;: <a href="%s">%s</a>.</p>'
+         % (rc.LECON[2], e(lecon), rc.LECON[3]),
+         carte,
+         '<script type="application/json">%s</script>' % json.dumps({"exercices": {uid: df}}, ensure_ascii=False).replace("</", "<\\/"),
+         "</section>"]
+    return "".join(h)
+
+
 def page_atelier(at, niv, chemins):
     """at : module de données ; niv : '5e' ; chemins : dict des liens calculés."""
     N = at.NIVEAUX[niv]
@@ -509,6 +543,10 @@ def page_atelier(at, niv, chemins):
         suivant_lib = ("Exercice %d" % (i + 2)) if i + 1 < len(N["exercices"]) else "Pour finir"
         panneaux.append((h + '<p><button type="button" class="btn suivant" data-vers="%d">%s ›</button></p>'
                          % (i + 1, suivant_lib), "p-" + uid))
+    # La piqûre de rappel du cahier des charges (donnees_rappel_cdc.py), en tête du premier onglet, avant l'exercice 1
+    r = rappel_de_l_atelier(at.SLUG, niv)
+    if r and panneaux:
+        panneaux[0] = (rappel_cdc(r, RACINE_ATELIERS / slug, "h2", "h3") + panneaux[0][0], panneaux[0][1])
     # La clôture : à retenir → Bonus → Bilan → QCM
     fin = [cloture(at, niv, chemins)]
     onglets.append(('🏁 Pour finir<span class="etat">retenir, bonus, bilan</span>', "p-fin"))

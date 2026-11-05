@@ -27888,3 +27888,53 @@ après régénération.
 parcours et le volet (« cohabitation pas éprouvée ») est remplacée par ce qui est vrai depuis le 31/10/2026 ; il décrit ce que
 les vagues ont fixé (toute séquence à onglets, ce qui reste hors du volet, « Où j'en suis » replié dès la séance 2, l'outil
 commun qui suit la séance, la sécurité visible en une ligne, la page sans JavaScript d'un seul tenant) et D6 obligatoire.
+
+
+---
+
+## 05/11/2026 — Le cahier des charges : une piqûre de rappel, en exercice intégré, dans les séquences de 4e et de 3e qui s'en servent (transversal)
+
+*Pascal, le 04/11/2026 : « Revoit-on le CDC en 4e et en 3e ? » — il est enseigné en 4e (atelier « Interacteurs et diagramme
+pieuvre » 4e, exercice 6 et son cours), puis utilisé sans jamais être rappelé. « C'est dans toutes ces séquences que l'on
+devrait faire cette piqûre de rappel », « sous forme d'exercices intégrés aussi ».*
+
+> **Règle d'or n°319 — une notion enseignée une année et utilisée plus tard est rappelée là où elle revient, par un exercice
+> intégré court, avec l'objet de la séquence.** Le cahier des charges est la première ; la bête à cornes suit.
+
+**Le rappel du cahier des charges.** « 🔁 Piqûre de rappel : le cahier des charges » : les mots de référence de la leçon de 4e
+(fonction principale FP, fonction contrainte FC, désignation, critère d'appréciation, niveau, flexibilité de F0 impératif à F3
+très négociable), un lien vers la leçon, puis **une ou deux lignes du cahier des charges de la séquence**, à compléter dans le
+tableau par menus (règle n°317), avec la parole du client qui donne la flexibilité. Pièges : FP et FC inversées ; une
+désignation qui est un nom, une phrase avec un sujet ou une solution ; un niveau pris pour le critère ; un niveau sans unité,
+avec l'unité d'une autre grandeur ou vague ; F3 sur une sécurité. Chaque option fausse a son retour ; la correction reprend
+chaque attendu et réfute chaque piège ; la réponse est sauvegardée, la ligne passe en carte à 390 px, le choix s'imprime en
+texte. Aucune phrase ne dit « tu as fait » : l'élève a pu ne pas suivre l'atelier.
+
+**Une seule source** : `donnees_rappel_cdc.py` (une entrée par page, avec son objet) ; `moteur.py` le dessine (`rappel_cdc()`,
+et un exercice peut être titré sans « Exercice N ») ; `incrustations_lots/rappel_cahier_des_charges.py` le pose dans les
+séquences ; `kit.css` et `kit.js` ne changent pas.
+
+**Les 15 pages** : ateliers « Exigences » 4e (l'arrosage de Mme Joseph) et 3e (la station de Mme Augustin) ; 4e_C2.1 (la borne de
+Hangzhou), 4e_C6.2 (l'arrosage, la ligne de sécurité), 4e_C7.1, 4e_C7.3, 4e_C7.5, 4e_C8.1 ; 3e_C3.1 (le local des serveurs de
+Shenzhen), 3e_C7.3, 3e_C7.5, 3e_C7.7, 3e_C8.1, 3e_C8.2, 3e_C9.2 (posé dans la page tout-en-un, les quatre pages engendrées). Là
+où la page a déjà un cahier des charges à compléter (4e_C6.2, 4e_C8.1, 3e_C3.1), le rappel tient en une ligne, juste avant.
+**Sans rappel** : 4e_C4.1 (l'exercice incrusté y est la leçon elle-même) ; 4e_C7.7, 4e_C9.1, 3e_C1.1, 3e_C7.1 (le cahier des
+charges n'y est que cité) ; 4e_C8.3 (un renvoi vers l'atelier « Exigences » 4e, qui a son rappel). **En 5e**, pas de rappel (la
+notion n'est pas encore enseignée) : une phrase l'explique là où le mot apparaît (5e_C3.1, 5e_C7.3, 5e_C8.1, 5e_C8.2).
+
+**Au passage, 39 retours par option** : atelier « Exigences » 3e, exercice 4 (10) et exercice 5 (11 : 15 sur 15) ; FAST 3e,
+exercice 7 (18). Leurs corrections réfutent chaque option fausse ; identifiants et bonnes réponses inchangés.
+
+**Contrôles.** `banc_ateliers.py` **434 / 434** (428 avant) ; nouveau `banc_rappels_cdc.py` **302 / 302** (menus, chaque retour,
+case vide, correction, sauvegarde, 390 px, impression). Bancs des séquences et bancs n°311, avant = après : 4e_C2.1 65 / 65,
+3e_C3.1 37 / 37, 4e_C6.2 45 / 45, 4e_C7.1 47 / 47, 4e_C7.3 44 / 44, 4e_C7.5 41 / 41, 4e_C8.1 54 / 54, 3e_C7.3 68 / 68,
+3e_C7.5 54 / 54, 3e_C7.7 77 / 77, 3e_C8.1 62 / 62, 3e_C8.2 44 / 44, 3e_C9.2 167 / 167, 5e_C3.1 35 / 35, 5e_C7.3 42 / 42,
+5e_C8.1 39 / 39, 5e_C8.2 24 / 24 ; n°311 34 / 34 partout (27 / 27 pour 5e_C3.1). `incrustations.py --verifier` : 24 pages à
+jour. `controle_squelette` : 0 refus. Verts : schémas, impression, verrous, hors ligne, liens, règles visibles, unités, sigles,
+longueurs. Non testé : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+**À valider par Pascal** : les paroles des clients écrites pour la flexibilité (service des vélos, intendance, commission,
+mairie…) et le niveau de 18 MPa toléré pour le bac de 4e_C7.3.
+
+**Vu en passant, déjà sur `main`** : 4e_C2.1 lève une erreur JavaScript (« Cannot access 'TACHES' before initialization »)
+quand on l'ouvre par un lien vers une ancre.

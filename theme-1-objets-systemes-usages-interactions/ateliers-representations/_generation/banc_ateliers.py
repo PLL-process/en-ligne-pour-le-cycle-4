@@ -150,7 +150,8 @@ def page_niveau(b, at, niv):
 
 #: Les tableaux qui donnent un retour écrit à CHAQUE option fausse de chaque menu (règle d'or n°317) : le banc le vérifie
 #: dans les données, puis au navigateur, option par option.
-RETOURS_PAR_OPTION = {("interacteurs-pieuvre", "4e", "e6"), ("exigences-sysml", "4e", "e3")}
+RETOURS_PAR_OPTION = {("interacteurs-pieuvre", "4e", "e6"), ("exigences-sysml", "4e", "e3"),
+                      ("exigences-sysml", "3e", "e4"), ("exigences-sysml", "3e", "e5"), ("fast", "3e", "e7")}
 
 #: Un mot coupé au milieu : ses lettres tombent sur deux lignes. Chaque menu passe par toutes ses options, puis
 #: « Vérifier » écrit les retours ; rend les mots coupés, et le nombre de mises en page des colonnes rencontrées.

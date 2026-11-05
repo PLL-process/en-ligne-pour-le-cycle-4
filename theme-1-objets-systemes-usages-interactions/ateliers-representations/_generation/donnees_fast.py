@@ -779,19 +779,28 @@ E7 = dict(
                   lignes=[
                       dict(nom="Critère A, si le réseau téléphonique tombe", cases=[
                           "A — Elle marche encore si le réseau téléphonique tombe",
-                          dict(menu="oui_non", bonne="oui", indice="La sirène a-t-elle besoin des antennes de téléphone ?"),
-                          dict(menu="oui_non", bonne="non", indice="Le message : comment arrive-t-il sur le téléphone ?"),
-                          dict(menu="oui_non", bonne="oui", indice="Le panneau est-il relié aux antennes de téléphone ?")]),
+                          dict(menu="oui_non", bonne="oui", indice="La sirène a-t-elle besoin des antennes de téléphone ?",
+                               retours={"partie": "La sirène est reliée à la station, pas aux antennes : quand le réseau tombe, elle marche entièrement, pas « en partie ».", "non": "La sirène n'a pas besoin des antennes de téléphone : elle est branchée sur la station, et marche quand le réseau tombe."}),
+                          dict(menu="oui_non", bonne="non", indice="Le message : comment arrive-t-il sur le téléphone ?",
+                               retours={"oui": "Le message arrive par les antennes du réseau téléphonique : si le réseau tombe, il n'arrive plus.", "partie": "Sans réseau, aucun message ne part : ce n'est pas « en partie », c'est non."}),
+                          dict(menu="oui_non", bonne="oui", indice="Le panneau est-il relié aux antennes de téléphone ?",
+                               retours={"partie": "Le panneau est relié à la station, pas aux antennes : il marche entièrement quand le réseau tombe.", "non": "Le panneau n'a pas besoin des antennes de téléphone : il est branché sur la station."})]),
                       dict(nom="Critère B, pour des habitants qui dorment", cases=[
                           "B — Elle prévient des habitants qui dorment, la nuit",
-                          dict(menu="oui_non", bonne="oui", indice="Un son fort réveille-t-il ?"),
-                          dict(menu="oui_non", bonne="partie", indice="Et si le téléphone est en silencieux, ou éteint ?"),
-                          dict(menu="oui_non", bonne="non", indice="Qui regarde le panneau quand il dort, volets fermés ?")]),
+                          dict(menu="oui_non", bonne="oui", indice="Un son fort réveille-t-il ?",
+                               retours={"partie": "Un son fort réveille même un habitant qui dort profondément : la sirène prévient la nuit, pas seulement « en partie ».", "non": "Un son fort réveille : c'est justement le point fort de la sirène, la nuit."}),
+                          dict(menu="oui_non", bonne="partie", indice="Et si le téléphone est en silencieux, ou éteint ?",
+                               retours={"oui": "Un téléphone en silencieux ou éteint ne réveille personne : le message ne prévient qu'une partie des habitants.", "non": "Un téléphone qui sonne réveille son propriétaire : le message prévient une partie des habitants, pas aucun."}),
+                          dict(menu="oui_non", bonne="non", indice="Qui regarde le panneau quand il dort, volets fermés ?",
+                               retours={"oui": "Personne ne regarde un panneau en dormant, volets fermés : il ne prévient pas la nuit.", "partie": "Un habitant qui dort ne voit rien : le panneau ne prévient personne la nuit, pas même en partie."})]),
                       dict(nom="Critère C, pour une personne sourde", cases=[
                           "C — Elle atteint une personne sourde ou malentendante",
-                          dict(menu="oui_non", bonne="non", indice="Que perçoit d'une sirène une personne qui n'entend pas ?"),
-                          dict(menu="oui_non", bonne="oui", indice="Un texte et une vibration demandent-ils d'entendre ?"),
-                          dict(menu="oui_non", bonne="oui", indice="Un texte lumineux demande-t-il d'entendre ?")]),
+                          dict(menu="oui_non", bonne="non", indice="Que perçoit d'une sirène une personne qui n'entend pas ?",
+                               retours={"oui": "Une personne sourde n'entend pas la sirène : elle n'est pas prévenue.", "partie": "Une personne sourde n'entend rien de la sirène : ce n'est pas « en partie »."}),
+                          dict(menu="oui_non", bonne="oui", indice="Un texte et une vibration demandent-ils d'entendre ?",
+                               retours={"partie": "Un texte et une vibration ne demandent pas d'entendre : le message atteint pleinement une personne sourde.", "non": "Un message se lit, et le téléphone vibre : une personne sourde le reçoit."}),
+                          dict(menu="oui_non", bonne="oui", indice="Un texte lumineux demande-t-il d'entendre ?",
+                               retours={"partie": "Un texte lumineux se lit sans entendre : le panneau atteint pleinement une personne sourde.", "non": "Le panneau se lit : une personne sourde est prévenue, sans rien entendre."})]),
                       dict(nom="Critère D, très basse tension", cases=[
                           "D — Elle peut être alimentée en très basse tension par la batterie de la station", "oui", "oui", "oui"]),
                   ]),
@@ -850,6 +859,12 @@ E7 = dict(
         "<b>C, personne sourde</b> → sirène <b>non</b> · message <b>oui</b> (un texte, une vibration) · panneau <b>oui</b> (un texte lumineux)",
         "<b>D, très basse tension</b> → oui partout → il ne départage pas&nbsp;: c'est une <b>exigence impérative</b> (F0) qui <b>élimine</b> "
         "toute solution sur le 230 volts",
+        "<b>Les cases fausses, une par une</b> → A&nbsp;: sirène et panneau ne sont ni «&nbsp;en partie&nbsp;» ni «&nbsp;non&nbsp;» "
+        "(ils ne passent pas par les antennes)&nbsp;; message ni «&nbsp;oui&nbsp;» ni «&nbsp;en partie&nbsp;» (sans réseau, rien ne "
+        "part) · B&nbsp;: sirène pleinement «&nbsp;oui&nbsp;» (un son fort réveille)&nbsp;; message ni «&nbsp;oui&nbsp;» (un "
+        "téléphone en silencieux ne réveille personne) ni «&nbsp;non&nbsp;» (un téléphone qui sonne réveille)&nbsp;; panneau ni "
+        "«&nbsp;oui&nbsp;» ni «&nbsp;en partie&nbsp;» (on ne voit rien en dormant) · C&nbsp;: sirène ni «&nbsp;oui&nbsp;» ni «&nbsp;en "
+        "partie&nbsp;» (rien ne s'entend)&nbsp;; message et panneau pleinement «&nbsp;oui&nbsp;» (ils se lisent)",
         "Les autres réponses pour D ne tiennent pas&nbsp;: on ne l'efface pas (il protège contre une solution dangereuse proposée plus "
         "tard)&nbsp;; il ne classe pas les consommations&nbsp;; il ne met pas la sirène à part.",
         "<b>Lire le tableau</b> → aucune solution n'a trois «&nbsp;oui&nbsp;» → la sirène manque seulement C → le panneau couvre C → "
