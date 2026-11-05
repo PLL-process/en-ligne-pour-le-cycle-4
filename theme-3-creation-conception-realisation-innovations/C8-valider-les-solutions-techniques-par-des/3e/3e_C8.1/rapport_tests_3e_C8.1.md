@@ -53,3 +53,25 @@ trois réfutations et porte un « à retenir », les deux confirmations sans bo�
 - Les lecteurs d'écran n'ont pas été essayés : l'accessibilité repose sur les `label`, les
   `title`/`desc` des SVG et le signalement non chromatique, contrôlés à la lecture.
 - Aucun essai avec des élèves n'a encore eu lieu.
+
+## Reprise du 04/11/2026 — la séquence passe à onglets (vague de la règle d'or n°311)
+
+Trois séances à onglets (squelette n°306), sur le modèle du pilote 4e_C8.1 : séance 1 = ouverture + activité 1 ;
+séance 2 = activités 2 et 3 ; séance 3 = activité 4, réinvestissement, synthèse, Bonus, bilan, QCM. L'ouverture est
+repliée dans le volet « 📖 Rappel » dès la séance 2. Le simulateur, qui sert aux activités 1 à 4, sort de l'activité 1 ;
+le script des onglets le place dans la séance ouverte, juste après son en-tête. Clôture complétée : un corrigé par défi du Bonus, « Comment j'ai travaillé », « Je me
+positionne » sur 3e_C8.1 (quatre niveaux du livret) et 3e_C3.4.
+
+- `node tests_regle_311_3e_C8.1.mjs` : l'outil suit la séance 12 / 12 (un seul nœud, après l'en-tête, état gardé,
+  onglets et en-tête dans le premier écran, sans JavaScript à sa place), puis relais 8 / 8 et banc commun **34 / 34**.
+- `node tests_3e_C8.1_sequence.mjs … attendus_3e.json 3e` : **62 / 62**, comme avant ; le banc ouvre la séance qui porte
+  chaque champ, comme l'élève (`ouvrirSeanceDe`). `tests_3e_C8.1_qcm.mjs` : 32 / 32, comme avant.
+
+Contrôles du dépôt, sur ce dossier ou sur tout le dépôt : `controle_squelette` 0 défaut (D1 à D6), aucun « à rédiger »,
+aucun signalement ; `controle_impression` (0 page refusée), `controle_verrous`, `controle_hors_ligne`,
+`controle_contraste_liens`, `controle_regles_visibles`, `controle_liens`, `controle_navigation_seances`,
+`controle_hierarchie`, `controle_unites`, `controle_sigles`, `controle_impression_papier` : verts. `banc_papier.py` :
+3 fiches, 6 pages, une séance par fiche, 0 texte pâle, 0 champ d'écran imprimé. `verif_regles_audit.py` : les mêmes ✘ qu'avant
+(n°29, 30, 31, 34, 300), hors périmètre de cette vague.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

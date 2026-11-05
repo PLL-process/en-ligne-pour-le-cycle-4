@@ -109,3 +109,21 @@ hors ligne. Zéro erreur JavaScript, zéro boîte modale, aucune requête échou
    `Images/` rempli — ce qui est un choix, pas un oubli.
 4. **Pas de bloc de rôles de groupe** : aucune activité n'est écrite comme un travail à plusieurs,
    et on ne pose pas un dispositif là où il ne sert pas (règle n°186).
+
+## Découpage en séances à onglets (04/11/2026, vague de la règle d'or n°311)
+
+La page était d'un seul tenant ; elle a maintenant deux séances à onglets, sur le modèle du pilote 4e_C8.1.
+
+| Séance | Question directrice | Contenu | Temps annoncé |
+|---|---|---|---|
+| 1 — Casser, lire, relever | Que mesure le protocole fourni, et que donne-t-il pour les cinq matériaux ? | Ouverture (situation, problématique et hypothèse, trois façons, billet), activités 0, 1 et 2 | ouverture + 10 + 15 + 25 min |
+| 2 — Décider, puis refaire | Quel matériau recommander, chiffre à l'appui, et que l'essai n'a-t-il pas vérifié ? | Activités 3 et 4, réinvestissement, synthèse, Bonus (corrigé par défi), bilan, QCM | 20 + 15 + 15 min + clôture |
+
+**À trancher par Pascal :** la séance 1 porte l'ouverture et 50 min d'activités (environ 60 min en tout). Deux séances
+ne peuvent pas faire mieux sans couper l'activité 2 (100 min d'activités pour 110).
+
+Dès la séance 2, l'ouverture est repliée dans le volet « 📖 Rappel ». Le banc d'essai reste dans l'activité 0 : il ne sert
+qu'à la séance 1 (activités 0 et 2). Restent visibles à chaque séance : le titre, la mission (elle remplace le sous-titre
+« Thème 3 · 5e — … », comme au pilote) et la barre d'outils (🖨 Imprimer / PDF). Le bilan reçoit « Comment j'ai
+travaillé » et « Je me positionne » sur `5e_C3.1`, aux quatre niveaux du livret (le menu existant sur `5e_C8.2` les
+portait déjà).

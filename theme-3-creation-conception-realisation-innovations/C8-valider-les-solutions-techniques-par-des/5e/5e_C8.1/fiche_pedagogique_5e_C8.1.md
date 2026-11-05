@@ -76,4 +76,21 @@ Aucune manipulation électrique : ni très basse tension, ni secteur.
 
 Les 20 questions `5e_C8.1` du QCM sont au-dessus du seuil d'évaluabilité (5). Le code d'appui
 `5e_C3.1` porte 10 questions et se reporte lui aussi. Le bilan de la séquence propose un
-auto-positionnement sur `5e_C8.1`.
+auto-positionnement sur `5e_C8.1` et `5e_C3.1`, aux quatre niveaux du livret scolaire.
+
+## Découpage en séances à onglets (04/11/2026, vague de la règle d'or n°311)
+
+La page était d'un seul tenant ; elle a maintenant deux séances à onglets, sur le modèle du pilote 4e_C8.1, selon le
+déroulé ci-dessus.
+
+| Séance | Question directrice | Contenu | Temps annoncé |
+|---|---|---|---|
+| 1 — Prendre le simulateur en main | Que calcule le simulateur, et qu'est-ce qui change d'un matériau à l'autre ? | Ouverture (situation, problématique, hypothèse, cahier des charges, billet), activités 1 et 2 | ouverture + 15 + 20 min |
+| 2 — Comparer, choisir, refaire | Pourquoi le banc et la simulation ne classent-ils pas pareil, et quel matériau choisir ? | Activités 3 et 4, réinvestissement, synthèse, Bonus (corrigé par défi), bilan, QCM | 20 + 20 + 10 min + clôture |
+
+Dès la séance 2, l'ouverture est repliée dans le volet « 📖 Rappel ». Restent visibles à chaque séance : le titre, la
+mission, la barre d'outils (🖨 Imprimer / PDF) et **le simulateur**, sorti de l'activité 1 parce qu'il sert aux deux
+séances (le verrou de l'activité 3, le réinvestissement) : un seul bloc, placé par le script des onglets dans la séance
+ouverte, juste après son en-tête (sans JavaScript, il reste au-dessus des séances). Le bilan reçoit « Comment j'ai
+travaillé » et « Je me positionne » sur `5e_C8.1` (le menu existant passe aux quatre niveaux du livret ; une réponse sur
+l'ancienne échelle se relit) et `5e_C3.1`.

@@ -8,6 +8,10 @@ p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()
 p.on('requestfailed', r => fail.push(r.url()));
 p.on('dialog', async d => { dlg.push(d.message()); await d.dismiss(); });
 const T = []; const ok = (n, c, d = '') => T.push({ n, ok: !!c, d });
+/* Séances à onglets (vague de la règle d'or n°311, 04/11/2026) : les activités 2 à 5 ne sont plus à l'écran au chargement.
+ * Avant d'agir sur un champ, on ouvre, comme l'élève, l'onglet de la séance qui le porte. Le banc suit la séance ouverte. */
+const seance = async (id) => { if (!(await p.evaluate(i => document.getElementById(i).classList.contains('active'), id))) {
+  await p.click('.seance-tab[data-panel="' + id + '"]'); await p.waitForTimeout(80); } };
 await p.goto('file://' + f, { waitUntil: 'load' }); await p.waitForTimeout(600);
 
 ok('charge sans erreur JS', err.length === 0, err.slice(0, 2).join(' | '));
@@ -81,6 +85,7 @@ ok('un relevé de traction approximatif (84 au lieu de 84,2) est refusé',
 await p.fill('#trac0', '84,2');
 
 // ── activité 2 ─────────────────────────────────────────────────────────────
+await seance('s2');
 await p.selectOption('#a2q1', 'le pousser en tête, perpendiculairement, comme le vent');
 await p.selectOption('#a2q2', "la flèche en tête sous une charge d'essai commune");
 await p.selectOption('#a2q3', 'la hauteur, la fixation au pied et le point d’application de la charge')
@@ -107,6 +112,7 @@ ok('un seuil faux (500 au lieu de 300) est refusé',
 await p.fill('#a2q4', '300');
 
 // ── activité 3 ─────────────────────────────────────────────────────────────
+await seance('s3');
 for (let i = 0; i < 5; i++) { await p.fill('#fle' + i, FLECHE[i]); await p.fill('#rup' + i, String(FLEX[i])); }
 await p.evaluate(() => document.querySelector('[data-check="3"]').click());
 ok('activité 3 validée 10/10', (await p.textContent('#fb3')).includes('10/10'),
@@ -184,6 +190,7 @@ ok('le haut de page mène à chacune des séances',
 ok('la séance 3 renvoie au protocole rédigé et au banc',
    await p.$eval('#seance-3', e => !!e.querySelector('a[href="#a2proto"]') && !!e.querySelector('a[href="#banc"]'))
    && !!(await p.$('#banc')));
+await seance('s1');   // chaque bouton de fin de séance est dans sa séance : on part de la première, comme l'élève
 for (const cible of ['#seance-2', '#seance-3', '#seance-4']) {
   await p.click('nav.fin-seance a[href="' + cible + '"]'); await p.waitForTimeout(250);
   const top = await p.evaluate(s => document.querySelector(s).getBoundingClientRect().top, cible);
@@ -207,6 +214,7 @@ const d2 = await p.getAttribute('#mat', 'd');
 ok('le tracé se rompt au pied (deux tronçons)', (d2.match(/M/g) || []).length === 2, d2);
 ok('le point de rupture est marqué', Number(await p.getAttribute('#rupt', 'r')) > 0);
 // activité 4 : les cinq angles morts
+await seance('s3');
 const A4 = ["Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.",
   "Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.",
   "Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.",
@@ -218,6 +226,7 @@ ok('activité 4 validée 5/5', (await p.textContent('#fb4')).includes('5/5'),
    (await p.textContent('#fb4')).slice(0, 60));
 
 // ── activité 5 et REFAIRE ──────────────────────────────────────────────────
+await seance('s4');
 await p.selectOption('#a5q1', 'deux');
 await p.selectOption('#a5q2', 'un seul');
 await p.selectOption('#a5q3', "on le refuse en l'état, et mon protocole aurait dû annoncer son incertitude");

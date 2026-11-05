@@ -45,6 +45,19 @@ p.on('dialog', async d => { dlg.push(d.message()); await d.dismiss(); });
 
 const T = []; const ok = (n, c, d = '') => T.push({ n, ok: !!c, d });
 const $ = s => p.textContent(s);
+/* Séances à onglets (vague de la règle d'or n°311, 04/11/2026) : une activité n'est plus à l'écran au chargement. Avant d'agir
+ * sur un champ ou un bouton, on ouvre, comme l'élève, l'onglet de la séance qui le porte ; un champ de l'ouverture se trouve à
+ * la séance 1 (dès la séance 2, il est replié dans le volet « Rappel »). Le simulateur suit la séance ouverte : il est toujours à l'écran. */
+async function ouvrirSeanceDe(sel) {
+  const id = await p.evaluate(s => {
+    const e = document.querySelector(s); if (!e) return null;
+    const pan = e.closest('.seance-panel');
+    if (pan) return pan.classList.contains('active') ? null : pan.id;
+    const v = e.closest('#ouverture');
+    return v && !v.open ? document.querySelector('.seance-tab').dataset.panel : null;
+  }, sel);
+  if (id) { await p.click('.seance-tab[data-panel="' + id + '"]'); await p.waitForTimeout(80); }
+}
 
 await p.goto('file://' + f, { waitUntil: 'load' });
 await p.waitForTimeout(400);
@@ -84,6 +97,7 @@ ok('bloc bonus présent', src.includes('🎁 Bonus'));
 
 /* ── un verrou fermé refuse, et il le dit ────────────────────────────────── */
 for (const [n, cle] of Object.entries(REP.verrous)) {
+  await ouvrirSeanceDe('[data-check="' + n + '"]');
   await p.click('[data-check="' + n + '"]');
   await p.waitForTimeout(60);
   const fb = await $('#fb' + n);
@@ -167,8 +181,10 @@ for (const [n, champs] of Object.entries(REP.activites)) {
   for (const [id, val] of Object.entries(champs)) {
     const el = await p.$('#' + id);
     if (!el) { ok('champ ' + id + ' présent', false); continue; }
+    await ouvrirSeanceDe('#' + id);
     await p.selectOption('#' + id, val);
   }
+  await ouvrirSeanceDe('[data-check="' + n + '"]');
   await p.click('[data-check="' + n + '"]');
   await p.waitForTimeout(60);
   const fb = await $('#fb' + n);
@@ -181,6 +197,7 @@ for (const [n, champs] of Object.entries(REP.activites)) {
 const [premierId, bonne] = Object.entries(REP.activites['1'])[0];
 const options = await p.$$eval('#' + premierId + ' option', n => n.map(e => e.value));
 const fausse = options.filter(o => o && o !== bonne)[0];
+await ouvrirSeanceDe('#' + premierId);
 await p.selectOption('#' + premierId, fausse);
 await p.click('[data-check="1"]');
 await p.waitForTimeout(60);
@@ -192,6 +209,7 @@ await p.waitForTimeout(60);
 
 /* ── la mémoire ──────────────────────────────────────────────────────────── */
 const [idH, valH] = Object.entries(REP.persistance)[0];
+await ouvrirSeanceDe('#' + idH);
 await p.fill('#' + idH, valH);
 await p.waitForTimeout(120);
 await p.reload({ waitUntil: 'load' });

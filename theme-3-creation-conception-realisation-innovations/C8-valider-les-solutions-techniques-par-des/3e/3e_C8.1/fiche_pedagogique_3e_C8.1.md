@@ -54,9 +54,9 @@ reproduira pas.*
 | Séance | Activité | Durée | Verrou exigé | Production |
 |---|---|---|---|---|
 | 1 | 1 — Refaire dire au calcul ce que le banc a dit | 25 min | `regle` | 2 réponses |
-| 1 | 2 — Le vent ne pousse pas comme le banc | 35 min | `vent` | 3 réponses |
+| 2 | 2 — Le vent ne pousse pas comme le banc | 35 min | `vent` | 3 réponses |
 | 2 | 3 — À quelle limite compares-tu ? | 25 min | `bonreglage` | 2 nombres + 1 réponse |
-| 2 | 4 — Le bon réglage, et ce qu'il ne voit pas | 30 min | `bonreglage` | 1 profilé + 1 réserve |
+| 3 | 4 — Le bon réglage, et ce qu'il ne voit pas | 30 min | `bonreglage` | 1 profilé + 1 réserve |
 | 3 | 5 — Réinvestissement (le quai du port, 180 km/h) | 20 min | — | 2 réponses |
 
 ## 5. Les trois versions
@@ -79,4 +79,26 @@ Aucune manipulation électrique : ni très basse tension, ni secteur.
 ## 7. Évaluation
 
 Les 20 questions `3e_C8.1` et les 10 questions `3e_C3.4` sont toutes au-dessus du seuil
-d'évaluabilité. Le bilan propose un auto-positionnement sur `3e_C8.1`.
+d'évaluabilité. Le bilan propose un auto-positionnement sur `3e_C8.1` et `3e_C3.4`, aux quatre niveaux du livret scolaire.
+
+## 8. Découpage en séances à onglets (04/11/2026, vague de la règle d'or n°311)
+
+La page était d'un seul tenant ; elle a maintenant trois séances à onglets, sur le modèle du pilote 4e_C8.1. Le déroulé
+ci-dessus est mis à jour : l'activité 2 passe à la séance 2, l'activité 4 à la séance 3 — la séance 1 aurait sinon porté
+l'ouverture et 60 min d'activités.
+
+| Séance | Question directrice | Contenu | Temps annoncé |
+|---|---|---|---|
+| 1 — Vérifier l'instrument | Réglée comme le banc, la simulation retrouve-t-elle son verdict ? | Ouverture (situation, problématique, hypothèse, cahier des charges, billet), activité 1 | ouverture + 25 min |
+| 2 — Un réglage à la fois | Que change au verdict le cas de charge, puis la limite ? | Activités 2 et 3 | 35 + 25 = 60 min |
+| 3 — Décider, refaire, conclure | Quel réglage répond au cahier des charges, et que ne voit-il pas ? | Activité 4, réinvestissement, synthèse, Bonus (corrigé par défi), bilan, QCM | 30 + 20 min + clôture |
+
+**À trancher par Pascal :** la séance 2 annonce 60 min d'activités pour 55. Trois séances ne peuvent pas faire mieux sans
+couper une activité (135 min d'activités, plus l'ouverture et la clôture, pour 165) ; si la séance déborde, l'activité 3
+se termine au début de la séance 3, qui en a la place.
+
+Dès la séance 2, l'ouverture est repliée dans le volet « 📖 Rappel ». Restent visibles à chaque séance : le titre, la
+mission, la barre d'outils (🖨 Imprimer / PDF) et **le simulateur**, sorti de l'activité 1 parce qu'il sert aux activités
+1 à 4 : c'est un seul bloc, que le script des onglets place dans la séance ouverte, juste après son en-tête (sans
+JavaScript, il reste au-dessus des séances). Le bilan reçoit « Comment j'ai travaillé » et « Je me positionne » sur
+`3e_C8.1` (le menu existant passe aux quatre niveaux du livret ; une réponse sur l'ancienne échelle se relit) et `3e_C3.4`.

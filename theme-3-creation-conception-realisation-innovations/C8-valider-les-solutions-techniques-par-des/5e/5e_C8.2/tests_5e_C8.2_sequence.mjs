@@ -55,6 +55,10 @@ p.on('requestfailed', r => fail.push(r.url()));
 p.on('dialog', async d => { dlg.push(d.message()); await d.dismiss(); });
 
 const T = []; const ok = (n, c, d = '') => T.push({ n, ok: !!c, d });
+/* Séances à onglets (vague de la règle d'or n°311, 04/11/2026) : l'activité 3 est à la séance 2, l'hypothèse dans l'ouverture
+ * (repliée dès la séance 2). Avant d'agir sur un champ, on ouvre, comme l'élève, l'onglet de la séance qui le porte. */
+const seance = async (id) => { if (!(await p.evaluate(i => document.getElementById(i).classList.contains('active'), id))) {
+  await p.click('.seance-tab[data-panel="' + id + '"]'); await p.waitForTimeout(80); } };
 
 await p.goto('file://' + f, { waitUntil: 'load' });
 await p.waitForTimeout(400);
@@ -132,6 +136,7 @@ ok('13 · un relevé faux (40 au lieu de 41) est refusé (4/5)',
 await p.fill('#rel0', '41');
 
 // ── activité 3 ─────────────────────────────────────────────────────────────
+await seance('s2');
 await p.selectOption('#a3q1', '40 kg');
 await p.selectOption('#a3q2', 'les cinq');
 // l'apostrophe de la page est droite : on sélectionne par l'option réellement
@@ -172,6 +177,7 @@ ok('20 · aucun identifiant HTML en double',
    }));
 
 // ── la persistance ─────────────────────────────────────────────────────────
+await seance('s1');   // l'hypothèse est dans l'ouverture, complète à la séance 1
 await p.fill('#hyp', 'Je pense que l’acier tiendra le plus.');
 await p.waitForTimeout(150);
 await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(400);

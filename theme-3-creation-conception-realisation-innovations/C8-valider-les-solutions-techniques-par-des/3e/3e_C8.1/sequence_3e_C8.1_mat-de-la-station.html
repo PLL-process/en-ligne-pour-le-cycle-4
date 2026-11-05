@@ -92,6 +92,37 @@ table.releve tr.ko td{background:rgba(255,123,136,.08)}
 
 /* Billet d'entrée (règle d'or n°26) : sans note ; il renvoie aux rattrapages du bloc « Avant de commencer ». */
 #billet .billet-intro{margin:.2em 0 .6em}#billet .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;border-left:3px solid var(--input-bd,var(--border,#274a8a));border-radius:0;background:none}#billet .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600;color:var(--text)}#billet .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;padding:7px 9px;background:var(--input-bg,rgba(127,127,127,.10));border:2px solid transparent;border-radius:9px}#billet .qcm-option:hover,#billet .qcm-option:focus-within{border-color:var(--hl)}#billet .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}#billet .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;font-weight:400}#billet .billet-retour{margin:.7em 0 0;padding:.55em .8em;border-radius:8px;border-left:4px solid var(--hl);background:rgba(127,127,127,.10)}#billet .billet-retour:empty{display:none}#billet .billet-retour.ok{border-left-color:var(--ok)}#billet .billet-retour.warn{border-left-color:var(--warn)}#billet .billet-retour.ko{border-left-color:var(--err)}#billet .billet-retour p{margin:.2em 0}#billet .billet-retour ul{margin:.3em 0 .2em 1.2em;padding:0}#billet .billet-retour li{margin:.25em 0}#billet .billet-retour a,#billet .billet-retour a:visited{color:var(--hl)}#billet .billet-note{font-size:.9em;opacity:.85}@media print{#billet .billet-retour,#billet .billet-retour a{color:#041a40!important;opacity:1!important}}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;max-width:940px;justify-content:center}
+
+/* ── Séances à onglets (squelette n°306) et volet « 📖 Rappel » (règle d'or n°311) — vague du 04/11/2026, sur le modèle
+   du pilote 4e_C8.1. Sans JavaScript (pas de classe js-onglets), la page reste d'un seul tenant : toutes les séances à la
+   suite, ni onglets ni boutons de séance, le volet ouvert et sans bouton. ── */
+.seance-tabs{display:none;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+.js-onglets .seance-tabs{display:flex}
+.seance-tab{flex:1;min-width:150px;min-height:44px;padding:11px 8px;border-radius:10px;background:var(--panel2);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit;line-height:1.3}
+.seance-tab small{display:block;font-weight:400;font-size:.9em;color:var(--sub)}
+.seance-tab.active{background:#1d4e89;color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+.seance-tab.active small{color:#e4eaf5}
+.seance-tab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.js-onglets .seance-panel{display:none}
+.js-onglets .seance-panel.active{display:block}
+.seance-tete h2{margin-top:0}
+.question-directrice{color:var(--hl);font-weight:600;margin:.4em 0}
+.page-suivante{display:none;max-width:940px;margin:22px auto 8px;text-align:right}
+.js-onglets .page-suivante{display:block}
+@media print{.page-suivante{display:none!important}}
+.rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}
+.rappel-ouverture>summary{display:none}
+.rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+.rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media print{.rappel-ouverture>summary{display:none!important}}
+.positionnement{margin:8px 0;border:1px solid var(--border);border-radius:10px;padding:8px 12px}
+.positionnement legend{font-size:.9em;color:var(--sub);padding:0 6px}
+.positionnement label{display:inline-block;margin-right:14px}
+.positionnement input[type=radio]{width:auto}
+a.lien-outil,a.lien-outil:visited{color:var(--hl)}   /* règle d'or n°303 : un lien se lit, cliqué ou non */
+.simu-carte{max-width:940px;margin:0 auto 18px}   /* l'outil hors des séances : le simulateur garde son propre cadre */
+@media(max-width:680px){.simu-carte table{display:block;overflow-x:auto;max-width:100%}}   /* comme les tableaux des cartes (filet mobile) */
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -427,6 +458,8 @@ table.releve tr.ko td{background:rgba(255,123,136,.08)}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
 
@@ -435,6 +468,15 @@ table.releve tr.ko td{background:rgba(255,123,136,.08)}
 <h1>📡 Le mât de la station — la simulation avant le banc</h1>
 <p class="subtitle">Ta mission : mettre en œuvre une simulation, et découvrir qu'elle ne répond
 qu'à la question que tu lui as posée.</p>
+
+<div class="toolbar">
+  <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+</div>
+
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
+
 <div class="badges">
   <span class="badge">3e</span><span class="badge" title="Programme 2024 — 3e_C8.1 : Mettre en œuvre une simulation pour valider la tenue mécanique d’un matériau.">3e_C8.1</span>
   <span class="badge">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span>
@@ -595,11 +637,13 @@ qu'à la question que tu lui as posée.</p>
   });
 })();
 </script>
-<section class="card">
-  <h2>🖐️ Activité 1 — Refaire dire au calcul ce que le banc a dit <span class="chrono">⏱ ~25 min</span></h2>
-  <p><b>Objectif :</b> vérifier que la simulation est digne de confiance. <b>Production :</b>
-  deux réponses justes. <b>Ressource :</b> le simulateur ci-dessous et tes relevés de 3e_C8.2.</p>
-  
+
+</details><!-- /rappel-ouverture -->
+
+<!-- Un outil n'est pas du décor (n°311) : le simulateur sert aux activités 1 à 4, donc aux trois séances. Il quitte
+     l'activité 1. Sans JavaScript, il reste ici, au-dessus des séances ; avec, le script des onglets le place dans la
+     séance ouverte, juste après son en-tête. -->
+<section class="simu-carte" id="simuCard" aria-label="Le simulateur du mât">
 <div class="simu">
   <h4>🖥️ Le simulateur — c'est toi qui le règles</h4>
   <p style="font-size:.9em;color:var(--sub);margin:0 0 10px">
@@ -649,6 +693,27 @@ qu'à la question que tu lui as posée.</p>
     </div>
   </div>
 </div>
+</section>
+
+<nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" id="tab-s1" data-panel="s1" role="tab" aria-controls="s1" aria-selected="true" type="button">Séance 1<br><small>Vérifier l'instrument</small></button>
+  <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>Un réglage à la fois</small></button>
+  <button class="seance-tab" id="tab-s3" data-panel="s3" role="tab" aria-controls="s3" aria-selected="false" type="button">Séance 3<br><small>Décider, refaire, conclure</small></button>
+</nav>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card seance-tete">
+<h2>🧭 Séance 1 — Vérifier l'instrument avant de s'en servir</h2>
+<p class="question-directrice">Question directrice : réglée comme le banc, la simulation retrouve-t-elle son verdict — et peut-on alors lui faire confiance ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : l'ouverture, puis refaire dire au calcul ce que le banc a dit (activité 1, environ 25 min). Avec l'ouverture, la séance tient dans 55 min.</p>
+</section>
+
+<section class="card" id="act1">
+  <h2>🖐️ Activité 1 — Refaire dire au calcul ce que le banc a dit <span class="chrono">⏱ ~25 min</span></h2>
+  <p><b>Objectif :</b> vérifier que la simulation est digne de confiance. <b>Production :</b>
+  deux réponses justes. <b>Ressource :</b> le simulateur, <a class="lien-outil" href="#simuCard">plus haut</a>, et tes relevés de 3e_C8.2.</p>
+  
 
   <div class="exo">
     <h4>Règle, lance, réponds</h4>
@@ -679,6 +744,17 @@ qu'à la question que tu lui as posée.</p>
     <div class="retenir">Avant d'utiliser un instrument sur une question nouvelle, on le règle
     sur une question dont on connaît déjà la réponse.</div>
   </div>
+</section>
+
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Un réglage à la fois ›</button></p>
+</div>
+
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<section class="card seance-tete">
+<h2>🧭 Séance 2 — Changer un réglage à la fois</h2>
+<p class="question-directrice">Question directrice : que change au verdict le cas de charge — la poussée du banc ou le vent —, puis la limite à laquelle on compare ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : le vent ne pousse pas comme le banc (activité 2, environ 35 min), puis à quelle limite compares-tu ? (activité 3, environ 25 min).</p>
 </section>
 
 <section class="card">
@@ -780,7 +856,18 @@ qu'à la question que tu lui as posée.</p>
   </div>
 </section>
 
-<section class="card">
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Décider, refaire, conclure ›</button></p>
+</div>
+
+<!-- ══════════════════ SÉANCE 3 ══════════════════ -->
+<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
+<section class="card seance-tete">
+<h2>🧭 Séance 3 — Décider, refaire, conclure</h2>
+<p class="question-directrice">Question directrice : quel réglage répond au cahier des charges, quel profilé retient-il — et qu'est-ce qu'aucun des deux instruments ne voit ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : le bon réglage et ce qu'il ne voit pas (activité 4, environ 30 min), le réinvestissement sur le quai du port (environ 20 min), puis la synthèse, le Bonus, le bilan et le renvoi vers le QCM.</p>
+</section>
+
+<section class="card" id="act4">
   <h2>⚖️ Activité 4 — Le bon réglage, et ce qu'il ne voit pas <span class="chrono">⏱ ~30 min</span></h2>
   <p><b>Objectif :</b> conclure, et nommer l'angle mort. <b>Production :</b> un profilé retenu et
   une réserve écrite. <b>Ressource :</b> le simulateur et le tableau ci-dessous.</p>
@@ -891,6 +978,25 @@ qu'à la question que tu lui as posée.</p>
   </ul>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+  <details class="correction"><summary>✅ Corrigé du défi 1 — la platine boulonnée dans un béton qui travaille</summary><div>
+    <p><b>La flèche augmenterait.</b> L'encastrement parfait du simulateur empêche le pied du mât de tourner. Une platine boulonnée dans un béton qui travaille un peu le laisse tourner d'un petit angle, et ce petit angle se multiplie par toute la hauteur. Le calcul : 0,5° au pied déplace la tête de 2 000 mm × tan 0,5° ≈ 2 000 × 0,0087 ≈ 17 mm, qui s'ajoutent à la flèche du tube.</p>
+    <p><b>Ce qui ne change pas :</b> le moment au pied. Le vent pousse pareil, donc la contrainte dans le tube reste la même. C'est le critère de flèche qui se dégrade : au bon réglage (2 000 mm, vent, limite élastique), le simulateur donne 27 mm au tube aluminium ; avec la platine, 27 + 17 ≈ 44 mm, au-dessus des 40 mm admis.</p>
+    <p><b>Attendus :</b> le sens (la flèche augmente) ; la raison (le pied tourne, et la rotation se multiplie par la hauteur) ; la conséquence pour la décision (c'est le critère de flèche qui est menacé, pas celui de rupture).</p>
+    <p><b>Erreurs typiques :</b> « elle diminue, le béton amortit » — un appui qui cède ne retient pas mieux ; « le moment change » — il dépend du vent et de la hauteur, pas de la fixation ; oublier d'écrire dans l'avis que le simulateur suppose un encastrement parfait.</p>
+  </div></details>
+  <details class="correction"><summary>✅ Corrigé du défi 2 — le hauban à mi-hauteur</summary><div>
+    <p><b>Le moment maximal monte au point d'attache du hauban, à mi-hauteur.</b> Le hauban retient le mât à 1 000 mm. Au-dessus, la moitié haute travaille comme un petit mât de 1 m, poussée par le vent et par le boîtier : c'est à son pied, au point d'attache, que le moment est le plus grand.</p>
+    <p><b>Et il est bien plus petit.</b> Les nombres du simulateur, pour le tube aluminium : la pression du vent vaut 1 063 Pa (pascals) ; le vent pousse le tube de 1 063 × 1,2 × 0,05 m ≈ 63,8 N (newtons) par mètre, et le boîtier de 1 063 × 1,2 × 0,03 m² ≈ 38,3 N.</p>
+    <p><b>Au point d'attache</b>, la moitié haute fait 1 m : 63,8 × 1 × 0,5 ≈ 32 N·m (newtons-mètres) pour le tube, plus 38,3 × 1 ≈ 38 N·m pour le boîtier, soit environ 70 N·m. <b>Sans hauban</b>, au pied du mât de 2 m : 63,8 × 2 × 1 + 38,3 × 2 ≈ 204 N·m, le moment que le simulateur affiche. Environ trois fois moins, donc ; et le pied, lui, ne reçoit plus qu'un petit moment.</p>
+    <p><b>Attendus :</b> l'endroit (au point d'attache du hauban) ; la raison (le bras de levier n'est plus que la moitié haute du mât) ; l'effet (le moment maximal diminue nettement).</p>
+    <p><b>Erreurs typiques :</b> « il reste au pied » — le hauban a coupé le bras de levier en deux ; « il n'y a plus de moment du tout » — la moitié haute plie toujours ; oublier que le hauban tire en biais : il comprime le mât, et son ancrage sur le toit devient une pièce de plus à vérifier.</p>
+  </div></details>
+  <details class="correction"><summary>✅ Corrigé du défi 3 — l'essai qui manque : la pesée</summary><div>
+    <p><b>L'essai qui manque, c'est peser.</b> Ni le banc ni la simulation ne pèsent le mât, alors qu'il faut le hisser sur le toit et le fixer en haut d'une échelle. Une ligne de protocole suffit : « peser chaque profilé retenu, coupé à la même longueur de 2 000 mm, sur la même balance, en kilogrammes ; à tenue égale, retenir le plus léger ».</p>
+    <p><b>Exemple :</b> au vent et sur la rupture, deux profilés passent, le tube aluminium et le tube acier galvanisé. Pesés à 2 000 mm, le premier fait 2,39 kg et le second 3,99 kg (les masses de la correction de l'activité 1 de 3e_C8.2) : la pesée tranche pour l'aluminium.</p>
+    <p><b>Attendus :</b> ce qu'on mesure (la masse, en kilogrammes) ; ce qui ne varie pas (la même longueur, la même balance) ; la règle de décision, écrite avant de peser.</p>
+    <p><b>Erreurs typiques :</b> « refaire le même essai, plus fort » — les deux passent déjà, il ne les départage pas ; peser des morceaux de longueurs différentes ; « le plus lourd est le plus solide » ; écrire la règle de décision après avoir vu les masses.</p>
+  </div></details>
 </section>
 
 <section class="card">
@@ -898,10 +1004,18 @@ qu'à la question que tu lui as posée.</p>
   <p><b>Ton hypothèse du début :</b> <i id="rappelHyp">—</i></p>
   <p>La réponse est écrite dans la correction de l'activité 2. L'avais-tu vue ?</p>
   <textarea id="bilan" rows="2" placeholder="Maintenant, je dirais que…"></textarea>
+  <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">où as-tu hésité en réglant le simulateur, et qu'est-ce qui t'a surpris dans ses verdicts ?</label></p>
+  <textarea id="bilanMeta" rows="2" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…"></textarea>
+  <h3>📍 Je me positionne</h3>
+  <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
   <p style="margin-top:12px"><label for="auto1">3e_C8.1 — mettre en œuvre une simulation pour valider la tenue mécanique d’un matériau :</label>
   <select id="auto1"><option value="">— choisis —</option>
-    <option>je sais le faire seul·e</option><option>je sais le faire avec de l'aide</option>
-    <option>je ne sais pas encore</option></select></p>
+    <option>🔴 Maîtrise insuffisante — je lance la simulation, mais je ne sais pas encore quoi régler</option>
+    <option>🟠 Maîtrise fragile — je la règle si l'on me dit quel cas de charge et quelle limite prendre</option>
+    <option>🟢 Maîtrise satisfaisante — je choisis seul·e la hauteur, le cas de charge et la limite qui répondent au cahier des charges</option>
+    <option>⭐ Très bonne maîtrise — et je sais dire ce que la simulation ne voit pas</option></select></p>
+  <fieldset class="positionnement"><legend>3e_C3.4 (appui) — définir et mettre en œuvre un protocole pour mesurer une caractéristique, une performance d’un objet ou d’un système technique</legend>
+<label><input type="radio" name="pos_c34" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c34" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c34" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c34" value="4"> ⭐ très bonne</label></fieldset>
 </section>
 
 <section class="card" style="text-align:center">
@@ -911,12 +1025,15 @@ qu'à la question que tu lui as posée.</p>
   <a class="btn" href="qcm_3e_C8.1_mat-de-la-station.html">▶ Ouvrir le QCM (30 questions)</a>
 </section>
 
+</div>
+
 <footer>Séquence 3e_C8.1 — hors ligne, sans compte, aucune donnée envoyée.
 Tes réponses restent dans ce navigateur.</footer>
 
 <script>
 (function(){
 const KEY = "seq_3e_C81_mat";
+let ongletActif = null;   // la séance affichée (vague n°311, 04/11/2026)
 
 /* ── le simulateur mis en œuvre par l'élève ──────────────────────────────
    Les cinq profilés viennent du modèle Python (mat_station.py). */
@@ -1053,27 +1170,92 @@ function save(){
   document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { o.inputs[c.id] = c.checked; });
   // les réponses du billet d'entrée (n°26) : à part, pour que restore() ne réécrive pas leur valeur
   o.billet = {}; document.querySelectorAll("#billet input[type=radio]").forEach(c => { o.billet[c.id] = c.checked; });
+  // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
+  o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
+  o.onglet = ongletActif;
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
 }
 function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
   if(!o) return;
+  ongletActif = o.onglet || null;
   Object.entries(o.inputs || {}).forEach(([k, v]) => {
     const e = document.getElementById(k); if(e) e.value = v; });
   // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
   document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { const v = (o.inputs || {})[c.id]; if(v !== undefined) c.checked = (v === true); });
   Object.entries(o.billet || {}).forEach(([k, v]) => { const c = document.getElementById(k); if(c) c.checked = (v === true); });
+  Object.entries(o.radios || {}).forEach(([name, v]) => { const r = document.querySelector('.positionnement input[name="' + name + '"][value="' + v + '"]'); if(r) r.checked = true; });
+  // auto1 est passé le 04/11/2026 aux quatre niveaux du livret : une réponse sur l'ancienne échelle se relit au niveau voisin
+  const a1 = $("auto1"), v1 = (o.inputs || {}).auto1, ANCIENNE = ["je ne sais pas encore", "je sais le faire avec de l'aide", "je sais le faire seul·e"];
+  if(a1 && v1 && !a1.value && ANCIENNE.includes(v1)) a1.selectedIndex = ANCIENNE.indexOf(v1) + 1;
   window.__exp = o.exp || {};
   if(o.dernier) simuler();
   const h = document.getElementById("hyp"), r = document.getElementById("rappelHyp");
   if(h && r && h.value.trim()) r.textContent = h.value;
+  // l'onglet en cours : un lien direct vers une ancre l'emporte sur lui
+  if(!location.hash && ongletActif && $(ongletActif)) montrerSeance(ongletActif, false);
 }
 document.addEventListener("input", () => {
   save();
   const h = document.getElementById("hyp"), r = document.getElementById("rappelHyp");
   if(h && r) r.textContent = h.value.trim() || "—";
 });
+/* ══ Séances à onglets (squelette n°306) — vague du 04/11/2026, sur le modèle du pilote 4e_C8.1 ══
+   L'onglet en cours est mémorisé avec le travail (o.onglet), à part des verrous (__exp). */
+/* Un outil n'est pas du décor (n°311) : l'outil sert à plusieurs séances. C'est un seul nœud ; il suit la séance ouverte,
+   juste après son en-tête (question directrice et programme). Le déplacer garde son état (réglages, résultats). Sans
+   JavaScript, il reste à sa place, au-dessus des séances affichées à la suite. */
+function placerOutil(id){
+  const outil = $("simuCard"), pan = $(id); if(!outil || !pan) return;
+  const tete = pan.querySelector(".seance-tete, .seance-entete");
+  if(tete){ if(tete.nextElementSibling !== outil) tete.after(outil); }
+  else if(pan.firstElementChild !== outil) pan.prepend(outil);
+}
+function montrerSeance(id, memoriser){
+  if(!$(id)) return;
+  document.querySelectorAll(".seance-tab").forEach(x => { const on = x.dataset.panel === id; x.classList.toggle("active", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
+  document.querySelectorAll(".seance-panel").forEach(p => p.classList.toggle("active", p.id === id));
+  placerOutil(id);
+  appliqueSeance(id);
+  ongletActif = id;
+  if(memoriser !== false) save();
+}
+document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => montrerSeance(t.dataset.panel)));
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte.
+   Comme au pilote, le volet ne se replie qu'une fois la page chargée (marque data-fermer-au-chargement). */
+function appliqueSeance(idPanneau){
+  const v = $("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", () => { const v = $("ouverture"); if(v){ voletAvantImpression = v.open; v.open = true; } });
+  window.addEventListener("afterprint", () => { const v = $("ouverture"); if(v && voletAvantImpression !== null){ v.open = voletAvantImpression; voletAvantImpression = null; } });
+  const cibleDuLien = () => { let id = ""; try{ id = decodeURIComponent(location.hash.slice(1)); }catch(e){} return id ? $(id) : null; };
+  const ouvrirSeanceDeLAncre = () => {
+    const cible = cibleDuLien(); const pan = cible && cible.closest(".seance-panel");
+    if(!pan || pan.classList.contains("active")) return;
+    montrerSeance(pan.id);
+    setTimeout(() => cible.scrollIntoView({block:"start"}), 60);
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", () => {
+    const v = $("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active") || {}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
+/* Règle d'or n°101 — chaque séance mène explicitement à la suivante */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => { montrerSeance(b.dataset.vers); window.scrollTo({top:0, behavior:"smooth"}); }));
+if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
+
 restore();
+placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // l'outil rejoint la séance affichée
 })();
 </script>
 
