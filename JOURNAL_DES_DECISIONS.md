@@ -27860,3 +27860,31 @@ navigation entre séances, rapports de tests. Non testé : un vrai téléphone, 
 **À valider par Pascal** : les six missions et les phrases de positionnement écrites pour « très bonne maîtrise ».
 
 **Reste** : rendre D6 obligatoire dans `controle_squelette`.
+
+
+---
+
+## 04/11/2026 — Règle d'or n°311 : D6 devient obligatoire dans `controle_squelette` ; le skill de séquence mis à jour (transversal)
+
+*Le journal le prévoyait depuis le 22/10/2026 : « À faire à la fin (après la dernière vague et `C1.3-C1.4_SI`) : rendre D6
+obligatoire dans `controle_squelette` ». Les vagues sont finies (#587, #589 à #592) : toutes les séquences du dépôt sont à
+onglets, avec le volet « 📖 Rappel ».*
+
+**Ce que `controle_squelette` refuse maintenant (D6)**, en plus de ce qu'il refusait déjà sur les pages qui portent le volet :
+- une page **à onglets sans volet** dont l'ouverture reste visible à la séance 2 (elle était seulement signalée, le temps des
+  vagues) ;
+- une page **sans onglets** : la n°311 ne peut pas s'y appliquer. Une page qui doit rester d'un seul tenant le déclare et
+  dit pourquoi : `<meta name="sequence-sans-onglets" content="la raison">`. Seules les quatre pages de la station 3e_C9.2
+  le font : elles sont engendrées depuis la page tout-en-un (qui a ses onglets et son volet) par
+  `generer_les_quatre_pages.py`, qui pose maintenant la déclaration. Relancé, le script ajoute aussi aux quatre pages la règle
+  d'impression du lien « vers les quatre pages » (`.repli-tout-en-un`), qu'elles n'avaient pas encore reçue.
+
+**Résultat sur le dépôt** : 60 séquences, 56 à onglets, 4 déclarées sans onglets, 0 refusée ; D1 à D6 à 0. Le banc du
+contrôle passe à **33 / 33** : la page à onglets sans volet est refusée ; une page sans onglets non déclarée est refusée ;
+déclarée, elle passe ; les pages fabriquées des autres cas reçoivent un volet qui se replie. Station 3e_C9.2 : 167 / 167
+après régénération.
+
+**Le skill `sequence-pedagogique-engageante`** : la ligne qui disait qu'aucune page ne portait à la fois le sélecteur de
+parcours et le volet (« cohabitation pas éprouvée ») est remplacée par ce qui est vrai depuis le 31/10/2026 ; il décrit ce que
+les vagues ont fixé (toute séquence à onglets, ce qui reste hors du volet, « Où j'en suis » replié dès la séance 2, l'outil
+commun qui suit la séance, la sécurité visible en une ligne, la page sans JavaScript d'un seul tenant) et D6 obligatoire.

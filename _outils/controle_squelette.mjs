@@ -65,8 +65,12 @@
  *       problématique, hypothèse, référentiel…) est VISIBLE à la séance 1 — volet ouvert, sans
  *       bouton — puis REPLIÉE dans le volet à partir de la séance 2 : repliée, jamais supprimée,
  *       et le volet garde un bouton visible. La visibilité se juge avec checkVisibility() : le
- *       contenu d'un <details> fermé garde ses rectangles dans Chromium. Une page sans volet est
- *       seulement SIGNALÉE tant que les vagues de la n°311 ne l'ont pas atteinte.
+ *       contenu d'un <details> fermé garde ses rectangles dans Chromium.
+ *       OBLIGATOIRE depuis le 04/11/2026 (fin des vagues) : une page à onglets SANS volet, dont
+ *       l'ouverture reste visible à la séance 2, est REFUSÉE ; une page SANS onglets est refusée
+ *       aussi (la n°311 ne peut pas s'y appliquer), sauf si elle le déclare et dit pourquoi :
+ *       <meta name="sequence-sans-onglets" content="la raison">, par exemple une page d'une
+ *       séquence éclatée en plusieurs fichiers (la station 3e_C9.2, pages 1 à 4).
  * SIGNALÉ, non refusé (« à rédiger », pour la révision) : Bonus sans champ ou sans
  * corrigé, bilan sans retour à l'hypothèse, sans métacognition, sans
  * positionnement ; ordre des blocs d'ouverture différent du squelette.
@@ -234,6 +238,7 @@ export async function juger(ctx, fichier) {
   const onglets = await p.$$eval('button.seance-tab, [role="tab"]:not(a), button[data-panel]', (l) => [...new Set(l)].map((t, i) => ({
     i, libelle: (t.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 40), hors: t.classList.contains('hors') || /hors parcours/i.test(t.textContent || '') })));
   const initial = await p.evaluate(releverBlocs);
+  const sansOnglets = await p.evaluate(() => { const m = document.querySelector('meta[name="sequence-sans-onglets"]'); return m ? (m.getAttribute('content') || '').trim() || '(sans raison)' : null; });
   const etats = [];
   if (onglets.length) {
     const handles = await p.$$('button.seance-tab, [role="tab"]:not(a), button[data-panel]');
@@ -275,7 +280,8 @@ export async function juger(ctx, fichier) {
     const ouvCachee = initial.blocs.filter((b) => b.famille === 'ouverture' && !b.visible);
     if (ouvCachee.length) defauts.push({ code: 'D4', dit: `ouverture absente du premier écran : ${types(ouvCachee).join(', ')}` });
     // D6 (n°311) : à partir de la séance 2, l'ouverture est repliée dans le volet « Rappel », pas supprimée.
-    // Jugé sur les pages qui portent le volet ; les autres sont signalées, le temps des vagues.
+    // Obligatoire depuis le 04/11/2026 : une page à onglets sans volet est refusée si l'ouverture
+    // reste visible à la séance 2 (jusque-là, elle était seulement signalée, le temps des vagues).
     const aVolet = !!initial.volet;
     const suite = seances.slice(1);
     if (aVolet) {
@@ -284,8 +290,9 @@ export async function juger(ctx, fichier) {
       const sansBouton = suite.filter((e) => !e.releve.volet || !e.releve.volet.bouton);
       if (sansBouton.length) defauts.push({ code: 'D6', dit: `onglet « ${sansBouton[0].onglet.libelle} » : le volet « Rappel » n'a pas de bouton visible, l'ouverture est inaccessible` });
       if (!initial.volet.ouvert || initial.volet.bouton) defauts.push({ code: 'D6', dit: 'séance 1 : le volet doit être ouvert et sans bouton (ouverture complète)' });
-    } else if (suite.length && suite.some((e) => e.releve.blocs.some((b) => b.famille === 'ouverture' && b.visible))) {
-      signales.push('n°311 non appliquée : l\'ouverture reste visible aux séances 2 et suivantes');
+    } else {
+      const vue = suite.find((e) => e.releve.blocs.some((b) => b.famille === 'ouverture' && b.visible));
+      if (vue) defauts.push({ code: 'D6', dit: `pas de volet « 📖 Rappel » : à l'onglet « ${vue.onglet.libelle} », l'ouverture (${types(vue.releve.blocs.filter((b) => b.famille === 'ouverture' && b.visible)).join(', ')}) est encore visible` });
     }
     // D5 : visible hors de tout panneau, dans l'un au moins des états (page ouverte, chaque onglet)
     const tous = [initial, ...etats.map((e) => e.releve)].map((r) => r.fuites).filter((f) => f.n);
@@ -300,7 +307,11 @@ export async function juger(ctx, fichier) {
     if (faute) defauts.push({ code: 'D3', dit: `ordre à l'écran : ${types(ordre).join(' → ')}` });
     const ouvCachee = initial.blocs.filter((b) => b.famille === 'ouverture' && !b.visible);
     if (ouvCachee.length) defauts.push({ code: 'D4', dit: `ouverture invisible au chargement : ${types(ouvCachee).join(', ')}` });
-    methodeB.push('sans onglets');
+    if (sansOnglets) methodeB.push(`sans onglets, déclaré : « ${sansOnglets.slice(0, 80)} »`);
+    else {
+      methodeB.push('sans onglets');
+      defauts.push({ code: 'D6', dit: 'séquence d\'un seul tenant : la n°311 veut des séances à onglets, l\'ouverture repliée dans le volet « 📖 Rappel » dès la séance 2 (ou <meta name="sequence-sans-onglets" content="la raison">)' });
+    }
   }
   const ouv = initial.blocs.filter((b) => b.famille === 'ouverture' && b.visible).sort((a, b) => a.y - b.y).map((b) => b.type);
   const attendu = ORDRE_OUV.filter((t) => ouv.includes(t));
@@ -340,7 +351,7 @@ export async function main(argv = []) {
   console.log(`${rapports.length} séquence(s) ouvertes onglet par onglet · ${aOnglets} à onglets · ${rapports.length - aOnglets} sans · ${refusees.length} refusée(s)`);
   for (const code of ['D1', 'D2', 'D3', 'D4', 'D5', 'D6']) {
     const n = rapports.filter((r) => r.defauts.some((d) => d.code === code)).length;
-    console.log(`     ${code} ${{ D1: 'clôture visible avant la dernière séance', D2: 'clôture invisible à la dernière séance', D3: 'ordre de clôture à l\'écran', D4: 'ouverture absente du premier écran', D5: 'visible hors de tout panneau de séance', D6: 'ouverture non repliée dans le volet « Rappel » dès la séance 2' }[code]} : ${n}`);
+    console.log(`     ${code} ${{ D1: 'clôture visible avant la dernière séance', D2: 'clôture invisible à la dernière séance', D3: 'ordre de clôture à l\'écran', D4: 'ouverture absente du premier écran', D5: 'visible hors de tout panneau de séance', D6: 'ouverture non repliée dans le volet « Rappel » dès la séance 2, ou page sans onglets' }[code]} : ${n}`);
   }
   for (const r of refusees) {
     console.log(`\n  ✘ ${r.rel}`);
