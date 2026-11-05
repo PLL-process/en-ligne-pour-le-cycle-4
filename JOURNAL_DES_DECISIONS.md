@@ -28040,3 +28040,26 @@ touchées tiennent en 2 pages. Non testé : un vrai téléphone, Safari, Firefox
 **À faire ensuite** : réincruster le kit des ateliers dans 14 pages des thèmes 2 et 3 (`incrustations.py --verifier` les liste).
 Le lexique de 4e_C1.1 ne se régénère pas (`generer_lexique.py` refusait déjà la version committée : « OST » absent de
 l'ouverture) ; ses trois mots ont été posés dans la forme du générateur.
+
+
+---
+
+## 05/11/2026 — Le kit des ateliers réincrusté dans 14 pages des thèmes 2 et 3 ; un lien direct vers une séance ne casse plus 10 pages du thème 1 (transversal)
+
+**Réincrustation.** Les lots #594 (rappel du cahier des charges) et #596 (bête à cornes) ont changé le kit des ateliers (menus
+dans les cases, exercices à étiquette, titre seul des rappels). `incrustations.py --seq theme-2-` puis `--seq theme-3-`
+réécrivent les 14 pages qui l'incrustent : 5e_C4.1, 4e_C4.1, 4e_C6.2 ; 3e_C7.1, 3e_C7.3, 3e_C7.5, 3e_C7.7, 4e_C7.1, 4e_C7.3,
+4e_C7.5, 4e_C8.1, 3e_C8.1, 3e_C8.2, 3e_C9.2 (et les quatre pages engendrées de la station). `incrustations.py --verifier` : tout
+« à jour ».
+
+**Un défaut ancien, corrigé dans 10 pages du thème 1** (vu pendant le lot #594 sur 4e_C2.1, puis cherché partout) : ouvertes par
+un lien vers une ancre d'une séance ≥ 2, 3e_C1.1, 4e_C1.1, 5e_C1.1, 5e_C1.2, 3e_C2.1, 4e_C2.1, 5e_C2.1, 3e_C3.1, 4e_C3.1 et
+5e_C3.1 levaient « Cannot access 'TACHES' before initialization », et **la suite du script ne s'exécutait plus** (tableau des
+tâches, renvoi au QCM). La cause : `ouvrirSeanceDeLAncre()` était appelée au milieu du script ; elle clique l'onglet, qui appelle
+`majTaches()`, qui lit `TACHES`, déclaré plus bas. L'appel attend maintenant la fin du script (`setTimeout(…, 0)`). Vérifié sur
+les 56 séquences à onglets du site, chacune ouverte par une ancre de sa séance 2 : 0 erreur.
+
+**Contrôles.** Thème 2 : 4e_C4.1 52 / 52, 5e_C4.1 64 / 64 et QCM 25 / 25, 4e_C6.2 55 / 55. Thème 3 : 3e_C7.1 79 / 79, 3e_C7.3
+68 / 68, 3e_C7.5 54 / 54, 3e_C7.7 77 / 77, 4e_C7.1 47 / 47, 4e_C7.3 44 / 44, 4e_C7.5 41 / 41, 4e_C8.1 54 / 54, 3e_C8.1 62 / 62,
+3e_C8.2 44 / 44, 3e_C9.2 167 / 167 et pont en H 37 / 37. `banc_rappels_cdc.py` 302 / 302. Bancs n°311 : 34 / 34 sur les 14 pages
+et les 12 pages du thème 1 (27 / 27 pour 5e_C3.1). `controle_squelette` : 60 séquences, 0 refus.
