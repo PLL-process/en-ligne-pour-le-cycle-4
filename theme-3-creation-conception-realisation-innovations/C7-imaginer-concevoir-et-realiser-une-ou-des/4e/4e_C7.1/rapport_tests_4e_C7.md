@@ -103,3 +103,17 @@ le QCM concentré en position B (corrigé, §3), trois champs de bilan sans éti
 (corrigés), et deux critères de la suite elle-même mal calibrés — elle attendait
 six durées là où l'activité 1 en porte deux vérificateurs sous une seule durée annoncée,
 et elle exigeait un tableau `QUESTIONS` alors que ces QCM le nomment `questions`.
+
+## Reprise du 04/11/2026 — la séquence passe à deux séances à onglets (vague C7 de la règle d'or n°311)
+
+Découpage, volet « 📖 Rappel » et clôture complétée : voir la fiche pédagogique.
+
+- `node tests_regle_311_4e_C7.1.mjs` : 15 / 15 « Où j'en suis » (ouvert à la séance 1, replié dès la séance 2 en une ligne qui garde le compte, 44 px, clavier, sans JavaScript ouvert ; à la séance 2, onglets et en-tête de la séance dans le premier écran à 1280 px, onglets dans le premier écran à 390 px : bas à 830 px pour 844), relais 9 / 9, banc commun **34 / 34**.
+- `node tests_4e_C7.mjs .` : **47 / 47**, avant comme après ; deux pas adaptés (les durées se lisent dans toute la page, pas seulement à l'écran ; le réinvestissement s'ouvre par son onglet).
+- `controle_squelette.mjs` : 0 défaut (D1 à D6), aucun « à rédiger », aucun signalement.
+- `banc_papier.py` : une fiche par séance (deux fiches), aucun texte pâle, aucun champ d'écran imprimé.
+- Sorties inchangées : `controle_impression`, `controle_impression_papier`, `controle_verrous`, `controle_hors_ligne`,
+  `controle_contraste_liens`, `controle_regles_visibles`, `controle_liens`, `controle_hierarchie`, `controle_unites`,
+  `controle_sigles`, `controle_navigation_seances` ; `verif_regles_audit.py` : autant de ✘ qu'avant, aucun nouveau.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle. Non fait : le lexique par séance.

@@ -60,3 +60,18 @@ python3 materiaux.py
 
 Ce qui se passe en classe. Un test vert dit que la page fait ce qu'elle annonce, pas qu'un élève
 apprend. La grille LSU de la synthèse professeur est là pour observer, pas pour noter une page.
+
+## Découpage en séances à onglets (04/11/2026, vague de la règle d'or n°311)
+
+La page était d'un seul tenant ; elle a maintenant deux séances à onglets, sur le modèle du pilote 4e_C8.1 et de la vague C8. Les blocs sont déplacés, pas réécrits ; le nombre de séances annoncé (2 × 55 min) ne change pas.
+
+| Séance | Question directrice | Contenu | Temps annoncé |
+|---|---|---|---|
+| 1 — Adapté à quoi ? Le banc trie | « Le plus adapté », c'est adapté à quoi — et pourquoi trois matériaux sur six tombent-ils ? | Ouverture, activités 0 et 1 | ouverture + 15 + 25 min |
+| 2 — Comparer sur une durée, puis conclure | Sur combien d'années compare-t-on, et lequel retenir ? | Activités 2 et 3, réinvestissement, synthèse, Bonus (corrigé), bilan, QCM | 25 + 15 + 15 min + clôture |
+
+**À trancher par Pascal :** la séance 2 porte 55 min d'activités, plus la clôture.
+
+Dès la séance 2, l'ouverture (étiquettes, « Avant de commencer », situation, problématique et idée de départ, ce que les matériaux imposent à l'atelier, trois façons, billet d'entrée) est repliée dans le volet « 📖 Rappel » ; elle est complète à la séance 1. L'en-tête de la séance 2 rappelle en une ligne la consigne de sécurité de la carte, et renvoie au volet. Restent visibles à chaque séance : le titre, la mission (elle remplace le sous-titre « Thème 3 · 4e — … », comme au pilote), la barre d'outils (🖨 Imprimer / PDF, que la page n'avait pas) et **le banc des matériaux**, qui sert aux deux séances : un seul bloc ; à la séance 1, il reste à sa place, dans l'activité 1 (au-dessus de l'activité 0, sa colonne « Pourquoi ce seuil » en donnerait les réponses) ; dès la séance 2, le script des onglets le place juste après l'en-tête de la séance ouverte. Sans JavaScript, toutes les séances s'affichent à la suite, l'outil à sa place.
+
+La clôture reçoit un corrigé replié du défi (les bascules à 9 et 16 ans, calcul à l'appui ; d'où viennent les durées de vie) ; au bilan, « Comment j'ai travaillé » et « Je me positionne » aux quatre niveaux du livret scolaire, sur `4e_C7.3` et `4e_C3.2` (appui) (le menu existant passe aux quatre niveaux ; une réponse sur l'ancienne échelle se relit au niveau voisin).

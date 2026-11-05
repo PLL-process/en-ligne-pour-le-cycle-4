@@ -106,5 +106,20 @@ l'administre.
 ├── synthese_eleve_4e_C7.8.html · synthese_professeur_4e_C7.8.html
 ├── fiche_pedagogique_4e_C7.8.md · matrice_couverture_4e_C7.8.csv
 ├── rapport_tests_4e_C7.8.md
-└── tests_4e_C7.8_sequence.mjs · tests_4e_C7.8_qcm.mjs · reponses_4e_C7.8.json
+└── tests_4e_C7.8_sequence.mjs · tests_4e_C7.8_qcm.mjs · reponses_4e_C7.8.json · tests_regle_311_4e_C7.8.mjs
 ```
+
+## Découpage en séances à onglets (04/11/2026, vague de la règle d'or n°311)
+
+La page était d'un seul tenant ; elle a maintenant deux séances à onglets, sur le modèle du pilote 4e_C8.1 et de la vague C8. Les blocs sont déplacés, pas réécrits ; le nombre de séances annoncé (2 × 55 min) ne change pas.
+
+| Séance | Question directrice | Contenu | Temps annoncé |
+|---|---|---|---|
+| 1 — Composer le message qui suffit | Qu'est-ce que le jardin doit envoyer pour qu'on en fasse quelque chose, à l'autre bout ? | Ouverture, activités 0 et 1 | ouverture + 20 + 20 min |
+| 2 — Rythme, coupure, ce qu'on n'envoie pas | Qui prend l'initiative, à quel rythme — et que fait l'objet quand le lien tombe ? | Activités 2, 3 et 4, réinvestissement, synthèse, Bonus (corrigé par défi), bilan, QCM | 15 + 20 + 10 + 10 min + clôture |
+
+**À trancher par Pascal :** la séance 2 porte 55 min d'activités, plus la clôture.
+
+Dès la séance 2, l'ouverture (étiquettes, « Avant de commencer », situation, problématique et idée de départ, ce qui ne sort pas du collège, trois façons, billet d'entrée) est repliée dans le volet « 📖 Rappel » ; elle est complète à la séance 1. L'en-tête de la séance 2 rappelle en une ligne la consigne de sécurité de la carte, et renvoie au volet. Restent visibles à chaque séance : le titre, la mission (elle remplace le sous-titre « Thème 3 · 4e — … », comme au pilote), la barre d'outils (🖨 Imprimer / PDF, que la page n'avait pas) et **le banc de liaison**, qui sert aux deux séances : un seul bloc ; à la séance 1, il reste à sa place, dans l'activité 0 ; dès la séance 2, le script des onglets le place juste après l'en-tête de la séance ouverte. Sans JavaScript, toutes les séances s'affichent à la suite, l'outil à sa place.
+
+La clôture reçoit un corrigé replié par défi (format : le CSV en 28 caractères, ce qu'on gagne et perd ; taille : 61 contre 90 caractères, 8 352 d'écart sur 288 envois ; défi réel) ; au bilan, « Comment j'ai travaillé » et « Je me positionne » aux quatre niveaux du livret scolaire, sur `4e_C7.8` et `4e_C1.4` (appui).

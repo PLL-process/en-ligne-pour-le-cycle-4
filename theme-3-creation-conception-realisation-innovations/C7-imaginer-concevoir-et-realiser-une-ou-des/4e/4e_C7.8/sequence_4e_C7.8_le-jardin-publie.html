@@ -151,6 +151,40 @@ table.releve td input{padding:4px 8px}
 
 /* Billet d'entrée (règle d'or n°26) : sans note ; il renvoie aux rattrapages du bloc « Avant de commencer ». */
 #billet .billet-intro{margin:.2em 0 .6em}#billet .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;border-left:3px solid var(--input-bd,var(--border,#274a8a));border-radius:0;background:none}#billet .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600;color:var(--text)}#billet .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;padding:7px 9px;background:var(--input-bg,rgba(127,127,127,.10));border:2px solid transparent;border-radius:9px}#billet .qcm-option:hover,#billet .qcm-option:focus-within{border-color:var(--hl)}#billet .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}#billet .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;font-weight:400}#billet .billet-retour{margin:.7em 0 0;padding:.55em .8em;border-radius:8px;border-left:4px solid var(--hl);background:rgba(127,127,127,.10)}#billet .billet-retour:empty{display:none}#billet .billet-retour.ok{border-left-color:var(--ok)}#billet .billet-retour.warn{border-left-color:var(--warn)}#billet .billet-retour.ko{border-left-color:var(--err)}#billet .billet-retour p{margin:.2em 0}#billet .billet-retour ul{margin:.3em 0 .2em 1.2em;padding:0}#billet .billet-retour li{margin:.25em 0}#billet .billet-retour a,#billet .billet-retour a:visited{color:var(--hl)}#billet .billet-note{font-size:.9em;opacity:.85}@media print{#billet .billet-retour,#billet .billet-retour a{color:#041a40!important;opacity:1!important}}
+
+/* ── Séances à onglets (squelette n°306) et volet « 📖 Rappel » (règle d'or n°311) — vague C7 du 04/11/2026, sur le modèle
+   du pilote 4e_C8.1 et de la vague C8. Sans JavaScript (pas de classe js-onglets), la page reste d'un seul tenant : toutes
+   les séances à la suite, ni onglets ni boutons de séance, le volet ouvert et sans bouton. ── */
+.seance-tabs{display:none;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+.js-onglets .seance-tabs{display:flex}
+.seance-tab{flex:1;min-width:150px;min-height:44px;padding:11px 8px;border-radius:10px;background:var(--panel2);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit;line-height:1.3}
+.seance-tab small{display:block;font-weight:400;font-size:.9em;color:var(--sub)}
+.seance-tab.active{background:#1d4e89;color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+.seance-tab.active small{color:#e4eaf5}
+.seance-tab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.seance-tab .done{color:var(--ok)}
+.js-onglets .seance-panel{display:none}
+.js-onglets .seance-panel.active{display:block}
+.seance-tete h2{margin-top:0}
+.question-directrice{color:var(--hl);font-weight:600;margin:.4em 0}
+.page-suivante{display:none;max-width:940px;margin:22px auto 8px;text-align:right}
+.js-onglets .page-suivante{display:block}
+@media print{.page-suivante{display:none!important}}
+.rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}
+.rappel-ouverture>summary{display:none}
+.rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+.rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media print{.rappel-ouverture>summary{display:none!important}}
+.positionnement{margin:8px 0;border:1px solid var(--border);border-radius:10px;padding:8px 12px}
+.positionnement legend{font-size:.9em;color:var(--sub);padding:0 6px}
+.positionnement label{display:inline-block;margin-right:14px}
+.positionnement input[type=radio]{width:auto}
+/* La consigne de sécurité de la page, rappelée en une ligne à la séance 2 (l'encadré complet est dans le volet « Rappel »). */
+.rappel-securite{margin:.6em 0 0;padding:6px 10px;border-left:4px solid var(--warn);background:rgba(255,214,102,.08);border-radius:0 8px 8px 0;font-size:.92em}
+/* L'outil qui suit la séance (règle d'or n°311 : un outil n'est pas du décor) : hors de sa carte, il garde son cadre et,
+   sur téléphone, ses tableaux défilent dans leur cadre comme ceux des cartes (filet mobile). */
+.outil-seance{max-width:940px;margin:0 auto 18px}
+@media(max-width:680px){.outil-seance table{display:block;overflow-x:auto;max-width:100%}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -486,13 +520,24 @@ table.releve td input{padding:4px 8px}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
 
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_4e_C7.8.html">📖 Lexique</a></nav>
 
 <h1>📡 Le jardin publie sa mesure</h1>
-<p class="subtitle">Thème 3 · 4<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<p class="subtitle">🎯 Ta mission : décider ce que le jardin envoie au bureau du gestionnaire, à quel rythme, et ce qu'il fait quand le lien tombe.</p>
+
+<div class="toolbar">
+  <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+</div>
+
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
+
 <div class="badges">
   <span class="badge niveau">Niveau 4e</span>
   <span class="badge code" title="Programme 2024 — 4e_C7.8 : Interfacer un objet technique avec un réseau.">4e_C7.8</span>
@@ -658,12 +703,27 @@ table.releve td input{padding:4px 8px}
   });
 })();
 </script>
-<section class="card">
+</details><!-- /rappel-ouverture -->
+
+<nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" id="tab-s1" data-panel="s1" role="tab" aria-controls="s1" aria-selected="true" type="button">Séance 1<br><small>Composer le message qui suffit</small><span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>Rythme, coupure, ce qu'on n'envoie pas</small><span class="done" id="done-s2"></span></button>
+</nav>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card seance-tete">
+<h2>🧭 Séance 1 — Composer le message qui suffit</h2>
+<p class="question-directrice">Question directrice : qu'est-ce que le jardin doit envoyer pour qu'on puisse en faire quelque chose, à l'autre bout ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : l'ouverture, puis composer un premier message au banc (activité 0, environ 20 min), et composer le message qui suffit (activité 1, environ 20 min).</p>
+</section>
+
+<section class="card" id="act0">
   <h2>🖐️ Activité 0 — FAIRE d'abord : composer un message ⏱ ~20 min</h2>
   <p>Avant toute explication. Le banc ci-dessous met l'objet et le récepteur face à
   face. <b>Coche des champs, regarde le message qui se forme</b>, et surtout la liste
   « ce que le récepteur peut en faire ». Essaie d'abord de n'envoyer <em>que la valeur</em>.</p>
-  <div class="lien">
+  <div class="lien" id="banc">
     <div class="lien-schema">
       <div class="boite"><b>Le jardin connecté</b><span>il mesure et il envoie</span></div>
       <div class="canal" id="canal">──▶<small id="canalTxt">lien établi</small></div>
@@ -752,7 +812,7 @@ table.releve td input{padding:4px 8px}
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="act1">
   <h2>📋 Activité 1 — Composer le message qui suffit ⏱ ~20 min</h2>
   <p><b>Objectif :</b> décider ce que l'objet envoie. <b>Compétence :</b> 4e_C7.8.
   <b>Production attendue :</b> un message valide + 4 réponses.</p>
@@ -828,7 +888,19 @@ table.releve td input{padding:4px 8px}
   </div>
 </section>
 
-<section class="card">
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Rythme, coupure ›</button></p>
+</div>
+
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<section class="card seance-tete">
+<h2>🧭 Séance 2 — Rythme, coupure, ce qu'on n'envoie pas</h2>
+<p class="question-directrice">Question directrice : qui prend l'initiative, à quel rythme — et que fait l'objet quand le lien tombe ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : qui prend l'initiative, et à quel rythme (activité 2, environ 15 min), couper le lien (activité 3, environ 20 min), ce qu'on n'envoie pas (activité 4, environ 10 min), le réinvestissement à trois jardins (environ 10 min), puis la synthèse, le Bonus, le bilan et le renvoi vers le QCM.</p>
+<p class="rappel-securite">⚠️ Avant d'envoyer : aucune donnée personnelle, aucun mot de passe ni clé Wi-Fi dans un message, et rien ne s'ouvre vers l'extérieur sans l'accord de la personne qui administre le réseau. <i>L'encadré complet est dans le rappel, en haut de page.</i></p>
+</section>
+
+<section class="card" id="act2">
   <h2>🔁 Activité 2 — Qui prend l'initiative, et à quel rythme ⏱ ~15 min</h2>
   <p><b>Objectif :</b> décider qui parle en premier. <b>Compétences :</b> 4e_C7.8 et
   4e_C4.7. <b>Production attendue :</b> 3 réponses.</p>
@@ -890,7 +962,7 @@ table.releve td input{padding:4px 8px}
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="act3">
   <h2>✂ Activité 3 — Couper le lien, et voir ce que l'objet devient ⏱ ~20 min</h2>
   <p><b>Objectif :</b> décider du comportement hors ligne. <b>Compétence :</b>
   4e_C7.8. <b>Production attendue :</b> 3 réponses + une phrase.</p>
@@ -947,7 +1019,7 @@ table.releve td input{padding:4px 8px}
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="act4">
   <h2>🕳️ Activité 4 — Ce qu'on n'envoie pas, et pourquoi ⏱ ~10 min</h2>
   <p><b>Objectif :</b> savoir ce qui ne doit pas circuler. <b>Compétence :</b>
   4e_C7.8. <b>Production attendue :</b> 4 associations.</p>
@@ -999,7 +1071,7 @@ table.releve td input{padding:4px 8px}
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="refaire">
   <h2>🔄 REFAIRE — Réinvestissement ⏱ ~10 min</h2>
 <p>L'an prochain, <b>trois jardins</b> envoient sur le même écran, et le gestionnaire
   veut en plus être <b>prévenu</b> quand un jardin n'a pas arrosé depuis deux jours.</p>
@@ -1062,6 +1134,27 @@ table.releve td input{padding:4px 8px}
 
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+  <details class="correction"><summary>✅ Corrigé du défi format — le même message en CSV</summary><div>
+    <p><b>Le même message en CSV.</b> Une première ligne donne les noms des colonnes, une fois pour toutes : <code>id,h,u,t,pompe</code>. Chaque mesure n'envoie ensuite que ses valeurs, séparées par des virgules, dans le même ordre : <code>jardin-cour,38,%,14:07,false</code> — 28 caractères au lieu des 61 du message JSON.</p>
+    <p><b>Ce qu'on gagne :</b> un message plus court, puisque les noms ne voyagent plus avec chaque mesure ; un historique qui s'ouvre directement dans un tableur, une colonne par champ.</p>
+    <p><b>Ce qu'on perd :</b> une valeur ne dit plus ce qu'elle est — seule sa place dans la ligne le dit, et l'objet comme le récepteur doivent connaître l'ordre des colonnes. Ajouter un champ décale les colonnes : un récepteur qui n'a pas été prévenu lirait l'heure à la place de l'état de la pompe. Et une valeur qui contient une virgule casse la ligne. En JSON, chaque valeur porte son nom : l'ordre ne compte pas, et un champ ajouté ne gêne pas un ancien récepteur.</p>
+    <p><b>Attendus :</b> un CSV juste (la ligne des noms, puis celle des valeurs, dans le même ordre) ; au moins un gain et une perte, chacun expliqué.</p>
+    <p><b>Erreurs typiques :</b> oublier la ligne des noms ; mettre les valeurs dans un autre ordre que les noms ; croire qu'en changeant de format on change l'information — c'est la même mesure, écrite autrement ; conclure que le CSV est toujours mieux parce qu'il est plus court.</p>
+  </div></details>
+  <details class="correction"><summary>✅ Corrigé du défi taille — les noms courts contre les noms entiers</summary><div>
+    <p><b>Les deux comptes.</b> Le message complet du banc, <code>{"id":"jardin-cour","h":38,"u":"%","t":"14:07","pompe":false}</code>, fait 61 caractères : le banc l'affiche. Avec les noms en entier — par exemple <code>identifiant</code>, <code>humidite</code>, <code>unite</code> et <code>horodatage</code> ; <code>pompe</code> l'est déjà —, il devient <code>{"identifiant":"jardin-cour","humidite":38,"unite":"%","horodatage":"14:07","pompe":false}</code> : 90 caractères. Écart : <b>29 caractères par message</b>.</p>
+    <p><b>Sur une journée :</b> 288 × 29 = <b>8 352 caractères</b> d'écart, environ 8 ko (kilooctets) par jour.</p>
+    <p><b>Est-ce que ça vaut la perte de lisibilité ?</b> Sur le réseau du collège, non : 8 ko par jour ne pèsent presque rien, et un message qu'on lit sans dictionnaire évite des erreurs le jour où quelqu'un d'autre reprend le jardin. Les noms courts se défendent quand chaque caractère coûte : un objet sur pile qui émet par radio, ou des milliers d'objets qui parlent au même serveur. Les deux avis se défendent, à condition de dire pour quel objet et sur quel réseau.</p>
+    <p><b>Attendus :</b> les deux longueurs, comptées sur le même message ; l'écart par message, puis multiplié par 288 ; un avis argumenté.</p>
+    <p><b>Erreurs typiques :</b> compter sans les guillemets, les deux-points ou les virgules — ils voyagent aussi ; oublier de multiplier par le nombre d'envois ; répondre « ça ne change rien » sans le chiffre, ou « il faut toujours le plus court » sans dire pour quel réseau.</p>
+  </div></details>
+  <details class="correction"><summary>✅ Corrigé du défi réel — une mesure sur l'écran d'un autre poste</summary><div>
+    <p><b>Ce qui est attendu :</b> une seule mesure, envoyée par ta carte, affichée sur le moniteur série d'un autre poste du réseau du collège, et la liste de ce qui a été plus difficile que dans le banc. Personne ne peut écrire cette liste à ta place : elle vient de ton essai.</p>
+    <p><b>Ce qui coince le plus souvent :</b> le lien n'est pas « établi » d'avance comme dans le banc — il faut connaître l'adresse du poste qui reçoit, et la régler des deux côtés ; les deux côtés doivent attendre le même message, au même format ; la carte n'a pas d'horloge à l'heure : sans module d'horloge, le champ <code>t</code> ne peut pas donner « 14:07 » ; et le réseau du collège ne laisse pas tout passer — rien ne s'ouvre sans l'accord de la personne qui l'administre.</p>
+    <p><b>Les règles de la carte « Avant de faire parler un objet » tiennent toujours :</b> aucun mot de passe ni clé Wi-Fi dans le message, même pour tester ; aucune donnée personnelle ; le montage reste en 5 V (volts).</p>
+    <p><b>Attendus :</b> la mesure affichée ailleurs que sur la carte (une capture d'écran, ou la ligne recopiée) ; au moins deux difficultés réelles, chacune comparée à ce que le banc faisait à ta place.</p>
+    <p><b>Erreurs typiques :</b> mettre le mot de passe du Wi-Fi dans le message « pour que ça marche » ; ouvrir l'objet vers l'extérieur du collège sans accord ; conclure que « ça ne marche pas » sans avoir vérifié l'adresse du poste qui reçoit.</p>
+  </div></details>
 </section>
 
 <section class="card">
@@ -1071,7 +1164,11 @@ table.releve td input{padding:4px 8px}
   retenus. Ce qui compte n'est pas d'avoir eu la bonne liste : c'est de savoir maintenant
   <em>d'où</em> vient chaque champ — d'un besoin du destinataire, pas d'une habitude.</p>
   <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
-  <p style="margin-top:12px"><b>Je me positionne sur 4e_C7.8 :</b></p>
+  <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">où as-tu hésité en composant le message, et qu'est-ce qui t'a surpris quand tu as coupé le lien ?</label></p>
+  <textarea id="bilanMeta" rows="2" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…"></textarea>
+  <h3>📍 Je me positionne</h3>
+  <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
+  <p style="margin-top:12px"><label for="pos"><b>4e_C7.8 — interfacer un objet technique avec un réseau :</b></label></p>
   <select id="pos">
     <option value="">— je me positionne —</option>
     <option>🔴 Maîtrise insuffisante — je confonds brancher un objet et l'interfacer</option>
@@ -1079,6 +1176,8 @@ table.releve td input{padding:4px 8px}
     <option>🟢 Maîtrise satisfaisante — je décide le contenu, le rythme et l'initiative, et je les justifie</option>
     <option>⭐ Très bonne maîtrise — et je décide ce que l'objet fait quand le lien tombe</option>
   </select>
+  <fieldset class="positionnement"><legend>4e_C1.4 (appui) — identifier et appliquer les règles pour un usage raisonné des objets communicants et des environnements numériques (propriété intellectuelle, identité numérique, témoins de connexion, géolocalisation)</legend>
+<label><input type="radio" name="pos_c14" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c14" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c14" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c14" value="4"> ⭐ très bonne</label></fieldset>
 </section>
 
 <section class="card" style="text-align:center">
@@ -1087,12 +1186,15 @@ table.releve td input{padding:4px 8px}
   <a class="btn" href="qcm_4e_C7.8_le-jardin-publie.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
 
+</div>
+
 <footer>Séquence 4e_C7.8 — <em>Le jardin publie sa mesure</em> · Thème 3 · banc de liaison original (CC0), hors ligne, sans dépendance.</footer>
 
 <script>
 (function(){
 "use strict";
 const KEY = "seq_4e_C7_8";
+let ongletActif = null;   // la séance affichée (vague n°311, 04/11/2026)
 /* Jusqu'au 25/10/2026, cette page enregistrait sous la clé de 4e_C7.4 (« seq_4e_C7_4 ») :
    les deux séquences mélangeaient le travail de l'élève. Migration UNE SEULE FOIS : si la
    clé propre n'existe pas encore et que l'ancienne existe, on la COPIE (sans l'effacer :
@@ -1270,23 +1372,92 @@ function save(){
   document.querySelectorAll("input, select, textarea").forEach(e => {
     if(!e.id) return;
     if(e.type === "checkbox" || (e.type === "radio" && e.closest("#billet"))) o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
+  o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
+  o.onglet = ongletActif;
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
 }
 function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
   if(!o) return;
+  ongletActif = o.onglet || null;
   Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
   Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  Object.entries(o.radios || {}).forEach(([name, v]) => { const r = document.querySelector('.positionnement input[name="' + name + '"][value="' + v + '"]'); if(r) r.checked = true; });
   window.__exp = o.exp || {};
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r && h.value.trim()) r.textContent = h.value;
+  // l'onglet en cours : un lien direct vers une ancre l'emporte sur lui
+  if(!location.hash && ongletActif && $(ongletActif)) montrerSeance(ongletActif, false);
 }
 document.addEventListener("input", () => {
   save();
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r) r.textContent = h.value.trim() || "—";
 });
+/* Un outil n'est pas du décor (n°311) : le banc de liaison sert aux deux séances (activités 0 et 1, puis la coupure de
+   l'activité 3). C'est un seul nœud. À la séance 1, il reste à sa place, dans l'activité 0 ; à partir de la séance 2, le script
+   des onglets le place dans la séance ouverte, juste après son en-tête (question directrice et programme). Le déplacer garde
+   son état (champs cochés, lien coupé ou non, journal). Sans JavaScript, il reste à sa place. */
+const OUTIL = $("banc"), PLACE_OUTIL = document.createComment(" place de l'outil à la séance 1 ");
+if(OUTIL) OUTIL.before(PLACE_OUTIL);
+function placerOutil(id){
+  const pan = $(id); if(!OUTIL || !pan) return;
+  // l'encadré que la fiche papier pose derrière un simulateur (« cette partie se fait en ligne ») suit l'outil
+  const suiv = OUTIL.nextElementSibling, fiche = suiv && suiv.classList.contains("pp-enligne") ? suiv : null;
+  const chezLui = pan.contains(PLACE_OUTIL);
+  if(chezLui){ if(PLACE_OUTIL.nextSibling !== OUTIL) PLACE_OUTIL.after(OUTIL); }
+  else { const tete = pan.querySelector(".seance-tete"); if(tete && tete.nextElementSibling !== OUTIL) tete.after(OUTIL); }
+  if(fiche && OUTIL.nextElementSibling !== fiche) OUTIL.after(fiche);
+  OUTIL.classList.toggle("outil-seance", !chezLui);
+}
+/* ══ Séances à onglets (squelette n°306) — vague C7 du 04/11/2026, sur le modèle du pilote 4e_C8.1 et de la vague C8 ══
+   L'onglet en cours est mémorisé avec le travail (o.onglet), à part des verrous (__exp). */
+function montrerSeance(id, memoriser){
+  if(!$(id)) return;
+  document.querySelectorAll(".seance-tab").forEach(x => { const on = x.dataset.panel === id; x.classList.toggle("active", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
+  document.querySelectorAll(".seance-panel").forEach(p => p.classList.toggle("active", p.id === id));
+  placerOutil(id);
+  appliqueSeance(id);
+  ongletActif = id;
+  if(memoriser !== false) save();
+}
+document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => montrerSeance(t.dataset.panel)));
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte.
+   Comme au pilote, le volet ne se replie qu'une fois la page chargée (marque data-fermer-au-chargement). */
+function appliqueSeance(idPanneau){
+  const v = $("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", () => { const v = $("ouverture"); if(v){ voletAvantImpression = v.open; v.open = true; } });
+  window.addEventListener("afterprint", () => { const v = $("ouverture"); if(v && voletAvantImpression !== null){ v.open = voletAvantImpression; voletAvantImpression = null; } });
+  const cibleDuLien = () => { let id = ""; try{ id = decodeURIComponent(location.hash.slice(1)); }catch(e){} return id ? $(id) : null; };
+  const ouvrirSeanceDeLAncre = () => {
+    const cible = cibleDuLien(); const pan = cible && cible.closest(".seance-panel");
+    if(!pan || pan.classList.contains("active")) return;
+    montrerSeance(pan.id);
+    setTimeout(() => cible.scrollIntoView({block:"start"}), 60);
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", () => {
+    const v = $("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active") || {}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
+/* Règle d'or n°101 — chaque séance mène explicitement à la suivante */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => { montrerSeance(b.dataset.vers); window.scrollTo({top:0, behavior:"smooth"}); }));
+if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
+
 restore(); majLien();
+placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // l'outil rejoint la séance affichée
 })();
 </script>
 

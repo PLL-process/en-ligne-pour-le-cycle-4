@@ -167,6 +167,40 @@ table.releve td input{padding:4px 8px}
 
 /* Billet d'entrée (règle d'or n°26) : sans note ; il renvoie aux rattrapages du bloc « Avant de commencer ». */
 #billet .billet-intro{margin:.2em 0 .6em}#billet .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;border-left:3px solid var(--input-bd,var(--border,#274a8a));border-radius:0;background:none}#billet .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600;color:var(--text)}#billet .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;padding:7px 9px;background:var(--input-bg,rgba(127,127,127,.10));border:2px solid transparent;border-radius:9px}#billet .qcm-option:hover,#billet .qcm-option:focus-within{border-color:var(--hl)}#billet .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}#billet .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;font-weight:400}#billet .billet-retour{margin:.7em 0 0;padding:.55em .8em;border-radius:8px;border-left:4px solid var(--hl);background:rgba(127,127,127,.10)}#billet .billet-retour:empty{display:none}#billet .billet-retour.ok{border-left-color:var(--ok)}#billet .billet-retour.warn{border-left-color:var(--warn)}#billet .billet-retour.ko{border-left-color:var(--err)}#billet .billet-retour p{margin:.2em 0}#billet .billet-retour ul{margin:.3em 0 .2em 1.2em;padding:0}#billet .billet-retour li{margin:.25em 0}#billet .billet-retour a,#billet .billet-retour a:visited{color:var(--hl)}#billet .billet-note{font-size:.9em;opacity:.85}@media print{#billet .billet-retour,#billet .billet-retour a{color:#041a40!important;opacity:1!important}}
+
+/* ── Séances à onglets (squelette n°306) et volet « 📖 Rappel » (règle d'or n°311) — vague C7 du 04/11/2026, sur le modèle
+   du pilote 4e_C8.1 et de la vague C8. Sans JavaScript (pas de classe js-onglets), la page reste d'un seul tenant : toutes
+   les séances à la suite, ni onglets ni boutons de séance, le volet ouvert et sans bouton. ── */
+.seance-tabs{display:none;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+.js-onglets .seance-tabs{display:flex}
+.seance-tab{flex:1;min-width:150px;min-height:44px;padding:11px 8px;border-radius:10px;background:var(--panel2);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit;line-height:1.3}
+.seance-tab small{display:block;font-weight:400;font-size:.9em;color:var(--sub)}
+.seance-tab.active{background:#1d4e89;color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+.seance-tab.active small{color:#e4eaf5}
+.seance-tab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.seance-tab .done{color:var(--ok)}
+.js-onglets .seance-panel{display:none}
+.js-onglets .seance-panel.active{display:block}
+.seance-tete h2{margin-top:0}
+.question-directrice{color:var(--hl);font-weight:600;margin:.4em 0}
+.page-suivante{display:none;max-width:940px;margin:22px auto 8px;text-align:right}
+.js-onglets .page-suivante{display:block}
+@media print{.page-suivante{display:none!important}}
+.rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}
+.rappel-ouverture>summary{display:none}
+.rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+.rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media print{.rappel-ouverture>summary{display:none!important}}
+.positionnement{margin:8px 0;border:1px solid var(--border);border-radius:10px;padding:8px 12px}
+.positionnement legend{font-size:.9em;color:var(--sub);padding:0 6px}
+.positionnement label{display:inline-block;margin-right:14px}
+.positionnement input[type=radio]{width:auto}
+/* La consigne de sécurité de la page, rappelée en une ligne à la séance 2 (l'encadré complet est dans le volet « Rappel »). */
+.rappel-securite{margin:.6em 0 0;padding:6px 10px;border-left:4px solid var(--warn);background:rgba(255,214,102,.08);border-radius:0 8px 8px 0;font-size:.92em}
+/* L'outil qui suit la séance (règle d'or n°311 : un outil n'est pas du décor) : hors de sa carte, il garde son cadre et,
+   sur téléphone, ses tableaux défilent dans leur cadre comme ceux des cartes (filet mobile). */
+.outil-seance{max-width:940px;margin:0 auto 18px}
+@media(max-width:680px){.outil-seance table{display:block;overflow-x:auto;max-width:100%}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -502,13 +536,24 @@ table.releve td input{padding:4px 8px}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
 
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_4e_C7.3.html">📖 Lexique</a></nav>
 
 <h1>🪴 Le bac du jardin</h1>
-<p class="subtitle">Thème 3 · 4<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<p class="subtitle">🎯 Ta mission : choisir, chiffres à l'appui, le matériau des huit bacs du jardin parmi les trois qui tiennent tout le cahier des charges — et dire sur combien d'années tu compares.</p>
+
+<div class="toolbar">
+  <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+</div>
+
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
+
 <div class="badges">
   <span class="badge niveau">Niveau 4e</span>
   <span class="badge code" title="Programme 2024 — 4e_C7.3 : Comparer différents matériaux pour choisir le plus adapté.">4e_C7.3</span>
@@ -669,7 +714,22 @@ lequel prendre — et attend une réponse chiffrée.</p></div>
   });
 })();
 </script>
-<section class="card">
+</details><!-- /rappel-ouverture -->
+
+<nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" id="tab-s1" data-panel="s1" role="tab" aria-controls="s1" aria-selected="true" type="button">Séance 1<br><small>Adapté à quoi ? Le banc trie</small><span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>Comparer sur une durée, conclure</small><span class="done" id="done-s2"></span></button>
+</nav>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card seance-tete">
+<h2>🧭 Séance 1 — Adapté à quoi ? Le banc trie</h2>
+<p class="question-directrice">Question directrice : « le plus adapté », c'est adapté à quoi — et pourquoi trois matériaux sur six tombent-ils ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : l'ouverture, puis relier chaque exigence à la contrainte qui l'a fait écrire (activité 0, environ 15 min), et faire trier les six candidats par le banc des matériaux (activité 1, environ 25 min).</p>
+</section>
+
+<section class="card" id="act0">
   <h2>📋 Activité 0 — « Le plus adapté » : adapté à quoi ? ⏱ ~15 min</h2>
   <p>Le programme demande de choisir « le plus adapté ». Cette expression ne veut
   rien dire toute seule : un matériau est adapté <em>à une exigence</em>, et chaque exigence
@@ -729,7 +789,7 @@ lequel prendre — et attend une réponse chiffrée.</p></div>
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="act1">
   <h2>⚖ Activité 1 — Trois recalés, trois motifs qui n'ont rien à voir ⏱ ~25 min</h2>
   <p>Voici le banc, avec les six exigences du bac. Clique sur <b>⚖ Évaluer les
   candidats</b> : trois matériaux tiennent, trois tombent. Lis les valeurs en rouge — ce sont
@@ -830,7 +890,19 @@ lequel prendre — et attend une réponse chiffrée.</p></div>
   </div>
 </section>
 
-<section class="card">
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Comparer sur une durée ›</button></p>
+</div>
+
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<section class="card seance-tete">
+<h2>🧭 Séance 2 — Comparer sur une durée, puis conclure</h2>
+<p class="question-directrice">Question directrice : trois matériaux tiennent toutes les exigences : sur combien d'années les compare-t-on, et lequel retenir ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : le classement qui se retourne (activité 2, environ 25 min), choisir la durée avant le matériau (activité 3, environ 15 min), le réinvestissement à Albany (environ 15 min), puis la synthèse, le Bonus, le bilan et le renvoi vers le QCM.</p>
+<p class="rappel-securite">⚠️ À l'atelier : le PVC ne se découpe jamais au laser — sciage et perçage seulement, avec aspiration — et la sciure de pin traité autoclave ne se respire pas. <i>L'encadré complet est dans le rappel, en haut de page.</i></p>
+</section>
+
+<section class="card" id="act2">
   <h2>📉 Activité 2 — Le classement se retourne ⏱ ~25 min</h2>
   <p>Trois matériaux tiennent : <b>PP recyclé</b>, <b>PVC</b> et <b>teck</b>. Regarde
   la colonne « Coût » à l'achat, puis fais glisser le menu <b>Comparer les coûts sur</b> jusqu'à
@@ -882,7 +954,7 @@ lequel prendre — et attend une réponse chiffrée.</p></div>
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="act3">
   <h2>🎯 Activité 3 — Choisir la durée avant de choisir le matériau ⏱ ~15 min</h2>
   <p>Le menu du banc propose cinq durées. Essaie-les toutes, et surveille l'ordre des
   trois retenus. Il ne bouge pas une fois : il bouge <b>deux</b> fois.</p>    <p style="font-size:.92em;color:var(--sub);margin:8px 0"><a href="#etabli">↑ Remonte au banc</a> — c'est le même, et il a gardé tes exigences. Une page ne porte qu'un seul banc : deux exemplaires, ce seraient deux instruments qui répondent au même nom.</p>
@@ -935,7 +1007,7 @@ lequel prendre — et attend une réponse chiffrée.</p></div>
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="refaire">
   <h2>🔄 REFAIRE — Réinvestissement ⏱ ~15 min</h2>
 <p>Un collège d'Albany, la capitale de l'État de New York — <b>à 200 km de la mer et sous
   les arbres</b> — veut les mêmes bacs. Deux choses changent : l'air ne porte plus de sel, et les
@@ -995,6 +1067,21 @@ lequel prendre — et attend une réponse chiffrée.</p></div>
 
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+  <details class="correction"><summary>✅ Corrigé du Bonus — les deux années où le classement bascule, et d'où viennent les durées</summary><div>
+    <p><b>On compte les achats.</b> Sur une durée donnée, on rachète un bac chaque fois que le précédent arrive au bout de sa vie. Le PVC (8 ans) s'achète une fois jusqu'à 8 ans, deux fois de 9 à 16 ans, trois fois de 17 à 24 ans. Le teck (15 ans) s'achète une fois jusqu'à 15 ans, deux fois de 16 à 30 ans.</p>
+    <table class="refs">
+      <tr><th>Durée de comparaison</th><th>PVC</th><th>Teck</th><th>Le moins cher des deux</th></tr>
+      <tr><td>jusqu'à 8 ans</td><td>1 × 166,60 = 166,60 €</td><td>1 × 309,40 = 309,40 €</td><td>le PVC</td></tr>
+      <tr><td>de 9 à 15 ans</td><td>2 × 166,60 = 333,20 €</td><td>1 × 309,40 = 309,40 €</td><td><b>le teck</b></td></tr>
+      <tr><td>16 ans</td><td>2 × 166,60 = 333,20 €</td><td>2 × 309,40 = 618,80 €</td><td><b>le PVC</b></td></tr>
+      <tr><td>de 17 à 24 ans</td><td>3 × 166,60 = 499,80 €</td><td>2 × 309,40 = 618,80 €</td><td>le PVC</td></tr>
+    </table>
+    <p><b>Les deux bascules : 9 ans et 16 ans.</b> À 9 ans, il faut un deuxième PVC alors qu'un seul teck suffit encore : le teck passe devant. À 16 ans, il faut un deuxième teck alors que deux PVC suffisent encore : le teck repasse derrière. C'est pour cela que le menu du banc montre le teck devant le PVC à 10 et à 15 ans, et derrière lui à 20 ans. (Le PP recyclé, lui, reste le moins cher des trois sur toutes ces durées.)</p>
+    <p><b>D'où viennent les durées ?</b> Dans le banc, ce sont les années de la colonne « Tenue au soleil ». Dans la réalité, une durée de vie est annoncée par le fabricant ou le fournisseur, d'après ses propres essais : un vieillissement en laboratoire, ou un climat qui n'est pas forcément celui de la cour, à 900 m de la mer, au soleil et au sel.</p>
+    <p><b>Pour vérifier ici,</b> une phrase suffit, par exemple : « je demande au fournisseur dans quelles conditions il a mesuré cette durée, et ce que couvre sa garantie », ou « je pose un échantillon de chaque matériau dans la cour et je note, saison après saison, quand il commence à se dégrader », ou encore « je cherche un bac du même matériau installé près de la mer depuis plusieurs années ».</p>
+    <p><b>Attendus :</b> les deux années, 9 ans et 16 ans ; le calcul qui les justifie (le nombre d'achats multiplié par le prix d'un bac) ; qui annonce une durée de vie (le fabricant, le fournisseur) ; un moyen concret de la vérifier sur place.</p>
+    <p><b>Erreurs typiques :</b> répondre « 8 ans et 15 ans » — à 8 ans un seul PVC suffit encore, on ne rachète qu'à partir de la neuvième année ; diviser chaque prix par sa durée (environ 20,83 € par an pour le PVC, 20,63 € pour le teck) — on n'achète pas un bac à l'année, on l'achète entier ; croire qu'une durée de vie est une propriété fixe du matériau, valable sous tous les climats.</p>
+  </div></details>
 </section>
 
 <section class="card">
@@ -1005,14 +1092,20 @@ lequel prendre — et attend une réponse chiffrée.</p></div>
   durée ?</p>
 
   <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
-  <p style="margin-top:12px"><b>Je me positionne sur 4e_C7.3 :</b></p>
+  <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">où as-tu hésité en lisant le banc, et qu'est-ce qui t'a surpris quand le classement s'est retourné ?</label></p>
+  <textarea id="bilanMeta" rows="2" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…"></textarea>
+  <h3>📍 Je me positionne</h3>
+  <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
+  <p style="margin-top:12px"><label for="pos"><b>4e_C7.3 — comparer différents matériaux pour choisir le plus adapté :</b></label></p>
   <select id="pos">
     <option value="">— je me positionne —</option>
-    <option>Je sais comparer des matériaux en coût global, et dire sur quelle durée je compare</option>
-    <option>Je sais le faire si on me rappelle de compter les remplacements</option>
-    <option>Je compare encore les prix d'achat entre eux, sans regarder les durées de vie</option>
-    <option>Je ne sais pas encore ce qu'il faut comparer</option>
+    <option>🔴 Maîtrise insuffisante — je compare encore les prix d'achat, ou je ne sais pas encore quoi comparer</option>
+    <option>🟠 Maîtrise fragile — je compare en coût global si l'on me rappelle de compter les remplacements</option>
+    <option>🟢 Maîtrise satisfaisante — je compare des matériaux en coût global, et je dis sur quelle durée je compare</option>
+    <option>⭐ Très bonne maîtrise — et je dis aussi ce que ma comparaison ne mesure pas : fabrication, transport, fin de vie</option>
   </select>
+  <fieldset class="positionnement"><legend>4e_C3.2 (appui) — comparer qualitativement et/ou quantitativement (incidences environnementales, bilan carbone, efficacité énergétique) plusieurs OST répondant au même besoin et arrêter un choix</legend>
+<label><input type="radio" name="pos_c32" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c32" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c32" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c32" value="4"> ⭐ très bonne</label></fieldset>
 </section>
 
 <section class="card" style="text-align:center">
@@ -1021,12 +1114,15 @@ lequel prendre — et attend une réponse chiffrée.</p></div>
   <a class="btn" href="qcm_4e_C7.3_bac-du-jardin.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
 
+</div>
+
 <footer>Séquence 4e_C7.3 — « Le bac du jardin ». Banc des matériaux original (CC0), toutes les valeurs calculées par <a href="materiaux.py" download title="Télécharger materiaux.py">📥&nbsp;materiaux.py</a>, aucune dépendance externe. Programme 2024, Thème 3.</footer>
 
 <script>
 (function(){
 "use strict";
 const KEY = "seq_4e_C7_3";
+let ongletActif = null;   // la séance affichée (vague n°311, 04/11/2026)
 const $ = id => document.getElementById(id);
 window.__exp = window.__exp || {};
 
@@ -1222,23 +1318,96 @@ function save(){
   document.querySelectorAll("input, select, textarea").forEach(e => {
     if(!e.id) return;
     if(e.type === "checkbox" || (e.type === "radio" && e.closest("#billet"))) o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
+  o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
+  o.onglet = ongletActif;
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
 }
 function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
   if(!o) return;
+  ongletActif = o.onglet || null;
   Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
   Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  Object.entries(o.radios || {}).forEach(([name, v]) => { const r = document.querySelector('.positionnement input[name="' + name + '"][value="' + v + '"]'); if(r) r.checked = true; });
+  // le menu « Je me positionne » est passé le 04/11/2026 aux quatre niveaux du livret : une réponse sur l'ancienne échelle se relit au niveau voisin
+  const pos = $("pos"), vPos = (o.inputs || {}).pos, ANCIENNE = {"Je sais comparer des matériaux en coût global, et dire sur quelle durée je compare": 3, "Je sais le faire si on me rappelle de compter les remplacements": 2, "Je compare encore les prix d'achat entre eux, sans regarder les durées de vie": 1, "Je ne sais pas encore ce qu'il faut comparer": 1};
+  if(pos && vPos && !pos.value && ANCIENNE[vPos]) pos.selectedIndex = ANCIENNE[vPos];
   window.__exp = o.exp || {};
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r && h.value.trim()) r.textContent = h.value;
+  // l'onglet en cours : un lien direct vers une ancre l'emporte sur lui
+  if(!location.hash && ongletActif && $(ongletActif)) montrerSeance(ongletActif, false);
 }
 document.addEventListener("input", () => {
   save();
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r) r.textContent = h.value.trim() || "—";
 });
+/* Un outil n'est pas du décor (n°311) : le banc des matériaux sert aux deux séances (activités 1, 2 et 3). C'est un seul nœud.
+   À la séance 1, il reste à sa place, dans l'activité 1 : remonté au-dessus de l'activité 0, il en donnerait les réponses
+   (sa colonne « Pourquoi ce seuil »). À partir de la séance 2, le script des onglets le place dans la séance ouverte, juste
+   après son en-tête (question directrice et programme). Le déplacer garde son état (exigences, durée, tableau, verdicts).
+   Sans JavaScript, il reste à sa place, dans l'activité 1. */
+const OUTIL = $("etabli"), PLACE_OUTIL = document.createComment(" place de l'outil à la séance 1 ");
+if(OUTIL) OUTIL.before(PLACE_OUTIL);
+function placerOutil(id){
+  const pan = $(id); if(!OUTIL || !pan) return;
+  // l'encadré que la fiche papier pose derrière un simulateur (« cette partie se fait en ligne ») suit l'outil
+  const suiv = OUTIL.nextElementSibling, fiche = suiv && suiv.classList.contains("pp-enligne") ? suiv : null;
+  const chezLui = pan.contains(PLACE_OUTIL);
+  if(chezLui){ if(PLACE_OUTIL.nextSibling !== OUTIL) PLACE_OUTIL.after(OUTIL); }
+  else { const tete = pan.querySelector(".seance-tete"); if(tete && tete.nextElementSibling !== OUTIL) tete.after(OUTIL); }
+  if(fiche && OUTIL.nextElementSibling !== fiche) OUTIL.after(fiche);
+  OUTIL.classList.toggle("outil-seance", !chezLui);
+}
+/* ══ Séances à onglets (squelette n°306) — vague C7 du 04/11/2026, sur le modèle du pilote 4e_C8.1 et de la vague C8 ══
+   L'onglet en cours est mémorisé avec le travail (o.onglet), à part des verrous (__exp). */
+function montrerSeance(id, memoriser){
+  if(!$(id)) return;
+  document.querySelectorAll(".seance-tab").forEach(x => { const on = x.dataset.panel === id; x.classList.toggle("active", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
+  document.querySelectorAll(".seance-panel").forEach(p => p.classList.toggle("active", p.id === id));
+  placerOutil(id);
+  appliqueSeance(id);
+  ongletActif = id;
+  if(memoriser !== false) save();
+}
+document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => montrerSeance(t.dataset.panel)));
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte.
+   Comme au pilote, le volet ne se replie qu'une fois la page chargée (marque data-fermer-au-chargement). */
+function appliqueSeance(idPanneau){
+  const v = $("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", () => { const v = $("ouverture"); if(v){ voletAvantImpression = v.open; v.open = true; } });
+  window.addEventListener("afterprint", () => { const v = $("ouverture"); if(v && voletAvantImpression !== null){ v.open = voletAvantImpression; voletAvantImpression = null; } });
+  const cibleDuLien = () => { let id = ""; try{ id = decodeURIComponent(location.hash.slice(1)); }catch(e){} return id ? $(id) : null; };
+  const ouvrirSeanceDeLAncre = () => {
+    const cible = cibleDuLien(); const pan = cible && cible.closest(".seance-panel");
+    if(!pan || pan.classList.contains("active")) return;
+    montrerSeance(pan.id);
+    setTimeout(() => cible.scrollIntoView({block:"start"}), 60);
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", () => {
+    const v = $("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active") || {}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
+/* Règle d'or n°101 — chaque séance mène explicitement à la suivante */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => { montrerSeance(b.dataset.vers); window.scrollTo({top:0, behavior:"smooth"}); }));
+if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
+
 restore(); majBanc();
+placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // l'outil rejoint la séance affichée
 })();
 </script>
 
