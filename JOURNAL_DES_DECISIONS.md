@@ -28258,3 +28258,50 @@ Les contrôles sont verts : `controle_squelette`, `controle_hors_ligne`, `contro
 trouve aucun ✘ ; ses ⚠ sont ceux de `main`.
 
 Les dix programmes ont été exécutés dans la page, à 1280 et à 390 px, sans erreur de script ni défilement de côté.
+
+## 05/11/2026 — « Le relais claque » : expliqué, montré en coupe et animé ; une image réaliste du jardin dans la situation de 4e_C7.4 (transversal)
+
+**Ce que Pascal a vu**, dans la situation déclenchante de 4e_C7.4 (« le capteur lit l'humidité, la carte décide, le relais
+claque, la pompe arrose ») : « le relais claque, il faudrait vulgariser ou expliquer ce terme ; il manque aussi des images
+réalistes ou des schémas ou une animation ».
+
+**Le relais qui claque, vu en coupe** : un composant partagé, `_ressources-communes/relais-anime/`.
+- **En mots** : un relais est un interrupteur que la carte actionne toute seule. Le petit courant de la carte passe dans une
+  bobine, qui devient un aimant. L'aimant attire une lame, la lame touche un contact, et le circuit de la pompe se ferme : «
+  clac ». Quand l'ordre est coupé, un ressort relève la lame : « clac » encore.
+- **En schéma** : le chemin de l'ordre (le capteur mesure, la carte décide, le relais distribue, la pompe arrose), ① le
+  circuit de la carte (un tout petit courant), l'intérieur du relais, et ② le circuit de la pompe (un courant fort). Les
+  mots sont ceux des lexiques (« un interrupteur commandé ») et de la chaîne d'énergie (le relais distribue).
+- **En animation** :
+  - « La carte envoie l'ordre » et « La carte coupe l'ordre » font basculer la lame, et le courant circule ou s'arrête ;
+  - « Faire battre 6 fois » montre la pompe qui s'affole : douze clacs ;
+  - le son est coupé par défaut.
+
+  Un statut dit ce qui vient de se passer et compte les clacs. La légende rappelle qu'un relais s'use au nombre de fois
+  qu'il bascule.
+- **Sans JavaScript et sur le papier**, le schéma au repos et son explication restent. Le mouvement est réduit si l'élève
+  l'a demandé à son navigateur.
+- La figure est écrite dans les pages par `relais_figure.py`, une seule source pour trois pages. Le dessin est original
+  (règle d'or n°1). Aucune durée de vie chiffrée n'est donnée : les fiches consultées ne la donnaient pas.
+
+**Où se trouve la figure :**
+- **4e_C7.4**, dans la situation déclenchante. La phrase dit aussi « on l'entend basculer, « clac », quand il ferme le
+  circuit de la pompe ».
+- **4e_C7.5**, sous la consigne de sécurité (« le relais doit claquer », avec la même glose).
+- **4e_C9.1**, dans l'aide de niveau 2 de l'activité 5, où la pompe s'affole.
+
+**L'image réaliste.** La situation de 4e_C7.4 montre le jardin au fond de la cour, avec son boîtier gris (la carte et le
+relais), sa cuve et sa pompe. C'est l'image Canva des synthèses de 4e, copiée dans le lot. Elle ne montre **aucune source
+d'énergie** : l'autre image du lot, avec un panneau solaire, aurait donné la réponse de la séquence ; elle reste dans la
+synthèse. La légende pose la question de la séquence : « d'où viendra l'énergie ? ». `SOURCES_MEDIAS.md` en dit la
+provenance.
+
+**Contrôles.**
+- Banc du composant : 24 / 24 (la figure à jour dans les trois pages, l'animation, le son, 44 px, 390 px, l'impression,
+  sans JavaScript, hors ligne).
+- Bancs des séquences, sans changement : 4e_C7.4 35 / 35, 4e_C7.5 41 / 41, 4e_C9.1 124 / 124.
+- Bancs n°311 : 34 / 34 sur les trois pages.
+- `controle_schemas` : la nouvelle figure n'ajoute aucun ✘ ni ⚠.
+- Contrôles verts : `controle_squelette`, `controle_hors_ligne`, `controle_verrous`, `controle_impression`,
+  `controle_contraste_liens`, `controle_liens`, `controle_hierarchie`, `controle_regles_visibles`, `controle_unites`,
+  `controle_sigles`, `controle_medias`, `controle_fichiers_telechargeables`, `controle_gestes_outil`.

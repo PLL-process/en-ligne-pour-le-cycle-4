@@ -1,0 +1,73 @@
+/* relais-anime.css — le relais qui claque, vu en coupe (05/11/2026). Couleurs : celles de la page (--hl, --ok, --text…). */
+.relais-anime{
+  --ra-trait:var(--text,#e4eaf5); --ra-doux:var(--sub,#9bbefc); --ra-vif:var(--hl,#61dafb); --ra-ok:var(--ok,#81fba1);
+  --ra-fort:#ffb454; --ra-fond:var(--panel2,rgba(0,0,0,.18)); --ra-bord:var(--border,#274a8a);
+  margin:14px 0;padding:12px 14px;border:1px solid var(--ra-bord);border-left:4px solid var(--ra-vif);border-radius:12px;
+  background:rgba(97,218,251,.05);max-width:100%;box-sizing:border-box
+}
+.relais-anime .ra-titre{margin:0 0 6px;font-weight:700;color:var(--ra-vif)}
+.relais-anime .ra-explique{margin:0 0 8px;line-height:1.55}
+.relais-anime .ra-svg{display:block;width:100%;max-width:760px;height:auto;margin:6px auto;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
+.relais-anime .ra-svg text{fill:var(--ra-trait);font-size:12px;text-anchor:middle}
+.relais-anime .ra-svg .ra-etiquette{fill:var(--ra-doux);font-size:11.5px}
+.relais-anime .ra-svg .ra-etiquette-gauche,.relais-anime .ra-svg .ra-titre-circuit,.relais-anime .ra-svg .ra-sous-titre{text-anchor:start}
+.relais-anime .ra-svg .ra-titre-circuit{font-weight:700;font-size:12px;fill:var(--ra-trait)}
+.relais-anime .ra-svg .ra-titre-coupe{fill:var(--ra-doux);font-style:italic;font-size:11.5px}
+.relais-anime .ra-pastille{fill:var(--ra-fond);stroke:var(--ra-bord);stroke-width:1.5}
+.relais-anime .ra-pastille-relais{stroke:var(--ra-vif);stroke-width:2}
+.relais-anime .ra-fleche-chaine{fill:none;stroke:var(--ra-doux);stroke-width:1.8}
+.relais-anime .ra-boitier{fill:rgba(127,127,127,.06);stroke:var(--ra-doux);stroke-width:1.5;stroke-dasharray:6 5}
+.relais-anime .ra-fil{fill:none;stroke:var(--ra-doux);stroke-width:2.5;stroke-linejoin:round}
+.relais-anime .ra-courant{fill:none;stroke-width:3.5;stroke-dasharray:6 14;opacity:0;stroke-linejoin:round}
+.relais-anime .ra-courant-pompe{stroke:var(--ra-fort)}
+.relais-anime .ra-courant-carte{stroke:var(--ra-vif);stroke-width:2.5}
+.relais-anime .ra-pile line{stroke:var(--ra-trait);stroke-width:2.5}
+.relais-anime .ra-pompe{fill:var(--ra-fond);stroke:var(--ra-trait);stroke-width:2.5}
+.relais-anime .ra-rotor{transform-box:view-box;transform-origin:670px 150px}
+.relais-anime .ra-rotor path{fill:none;stroke:var(--ra-trait);stroke-width:3;stroke-linecap:round}
+.relais-anime .ra-rotor circle{fill:var(--ra-trait)}
+.relais-anime .ra-carte{fill:#0b3d2e;stroke:#3fb68b;stroke-width:2}
+.relais-anime .ra-svg .ra-carte-texte{fill:#e6fff4;font-weight:700}
+.relais-anime .ra-svg .ra-ordre{fill:#bff3dd;font-size:11.5px}
+.relais-anime .ra-bobine{fill:#7a4a1c;stroke:#e0a060;stroke-width:2}
+.relais-anime .ra-spires{fill:none;stroke:#e0a060;stroke-width:1.5}
+.relais-anime .ra-champ path{fill:none;stroke:var(--ra-vif);stroke-width:2;stroke-dasharray:4 4;opacity:0}
+.relais-anime .ra-contact{fill:#d9b44a;stroke:#8a6d1a;stroke-width:1}
+.relais-anime .ra-ressort{fill:none;stroke:var(--ra-trait);stroke-width:2;stroke-linejoin:round}
+.relais-anime .ra-ressort-groupe{transform-box:view-box;transform-origin:430px 96px;transform:scaleY(1)}
+.relais-anime .ra-lame-groupe{transform-box:view-box;transform-origin:300px 190px;transform:rotate(-9deg);transition:transform .12s ease-in}
+.relais-anime .ra-lame{stroke:#c9d6ef;stroke-width:8;stroke-linecap:round}
+.relais-anime .ra-plot{fill:#d9b44a}
+.relais-anime .ra-axe{fill:var(--ra-fond);stroke:var(--ra-trait);stroke-width:2}
+.relais-anime .ra-svg .ra-clac{fill:var(--ra-fort);font-weight:800;font-size:17px;text-anchor:start;opacity:0}
+/* l'ordre envoyé : la bobine aimantée, la lame baissée, le circuit de la pompe fermé */
+.relais-anime.ra-ferme .ra-lame-groupe{transform:rotate(0deg)}
+.relais-anime.ra-ferme .ra-ressort-groupe{transform:scaleY(1.27)}
+.relais-anime .ra-ressort-groupe{transition:transform .12s ease-in}
+.relais-anime.ra-ferme .ra-champ path{opacity:1}
+.relais-anime.ra-ferme .ra-courant{opacity:1;animation:ra-courant .9s linear infinite}
+.relais-anime.ra-ferme .ra-rotor{animation:ra-tourne .6s linear infinite}
+.relais-anime.ra-ferme .ra-pastille-pompe{stroke:var(--ra-fort);stroke-width:2}
+.relais-anime.ra-ferme .ra-bobine{fill:#9a5a20}
+.relais-anime .ra-clac.ra-clac-vu{animation:ra-clac .7s ease-out}
+@keyframes ra-courant{to{stroke-dashoffset:-40}}
+@keyframes ra-tourne{to{transform:rotate(360deg)}}
+@keyframes ra-clac{0%{opacity:1}70%{opacity:1}100%{opacity:0}}
+.relais-anime .ra-commandes{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
+.relais-anime .ra-btn{min-height:44px}
+.relais-anime .ra-etat{margin:4px 0 6px;min-height:1.4em;font-weight:600;color:var(--ra-ok)}
+.relais-anime .ra-legende{margin:6px 0 0;font-size:.92em;line-height:1.5;opacity:.95}
+@media (prefers-reduced-motion:reduce){
+  .relais-anime .ra-lame-groupe,.relais-anime .ra-ressort-groupe{transition:none}
+  .relais-anime.ra-ferme .ra-courant,.relais-anime.ra-ferme .ra-rotor{animation:none}
+  .relais-anime.ra-ferme .ra-courant{stroke-dasharray:none}
+}
+@media (max-width:480px){.relais-anime{padding:10px}.relais-anime .ra-btn{flex:1 1 100%}}
+@media print{
+  .relais-anime{background:#fff!important;border-color:#555!important;break-inside:avoid}
+  .relais-anime .ra-commandes,.relais-anime .ra-etat{display:none!important}
+  .relais-anime .ra-titre{color:#111!important}
+  .relais-anime{--ra-trait:#111;--ra-doux:#444;--ra-vif:#0b4f8a;--ra-fort:#9a3412;--ra-fond:#fff;--ra-bord:#888}
+  .relais-anime .ra-carte{fill:#fff}.relais-anime .ra-svg .ra-carte-texte,.relais-anime .ra-svg .ra-ordre{fill:#111}
+  .relais-anime .ra-bobine{fill:#fff;stroke:#7a4a1c}.relais-anime .ra-spires{stroke:#7a4a1c}
+}
