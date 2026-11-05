@@ -102,7 +102,9 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
 
 /* — n°23 : le cadre horaire est reconnaissable, et il tient — */
 {
-  const txt = await page.locator("body").innerText();
+  /* depuis le passage à onglets (04/11/2026), les durées vivent dans deux panneaux dont un est replié :
+     on lit le texte entier de la page, pas seulement ce qui est à l'écran (comme au pilote 4e_C8.1) */
+  const txt = await page.evaluate(() => document.body.textContent);
   const cadre = txt.match(/(\d+)\s*séances?\s+de\s+(\d+)\s*min/i);
   const parts = [...txt.matchAll(/~\s*(\d+)\s*min/g)].map(m => parseInt(m[1], 10));
   const total = parts.reduce((a, b) => a + b, 0);
@@ -289,6 +291,7 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
      Ses bonnes réponses sont LUES dans la définition JSON de sa section ; seule la fonction
      écrite vient d'ici (le champ `exemple` de sa définition d'atelier). — */
 {
+  await page.click("#tab-s2");   // le réinvestissement est dans la séance 2 (onglets, 04/11/2026)
   await page.fill("#reinv", "Besoin : cultiver malgré le vent. Idée A suspendue, idée B lestée. Je choisis B. Plastique.");
   await page.click('.btn.check[data-check="5"]');
   await page.waitForTimeout(150);

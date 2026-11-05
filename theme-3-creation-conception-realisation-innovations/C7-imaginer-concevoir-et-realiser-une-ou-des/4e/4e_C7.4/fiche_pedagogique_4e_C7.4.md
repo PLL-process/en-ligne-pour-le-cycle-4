@@ -151,6 +151,21 @@ sujet.
 ├── fiche_pedagogique_4e_C7.4.md
 ├── matrice_couverture_4e_C7.4.csv
 ├── rapport_tests_4e_C7.4.md
-├── tests_4e_C7.4_sequence.mjs · tests_4e_C7.4_qcm.mjs · reponses_4e_C7.4.json
+├── tests_4e_C7.4_sequence.mjs · tests_4e_C7.4_qcm.mjs · reponses_4e_C7.4.json · tests_regle_311_4e_C7.4.mjs
 └── energie.py
 ```
+
+## Découpage en séances à onglets (04/11/2026, vague de la règle d'or n°311)
+
+La page était d'un seul tenant ; elle a maintenant deux séances à onglets, sur le modèle du pilote 4e_C8.1 et de la vague C8. Les blocs sont déplacés, pas réécrits ; le nombre de séances annoncé (2 × 55 min) ne change pas.
+
+| Séance | Question directrice | Contenu | Temps annoncé |
+|---|---|---|---|
+| 1 — Mesurer, écrire les critères, comparer | Qu'est-ce qui vide vraiment la source, et comment comparer cinq sources avec les mêmes critères ? | Ouverture, activités 0, 1 et 2 | ouverture + 15 + 20 + 20 min |
+| 2 — Trancher, changer la charge, conclure | Laquelle choisir — et faut-il changer la source, ou la charge ? | Activités 3 et 4, réinvestissement, synthèse, Bonus (corrigé par défi), bilan, QCM | 20 + 15 + 10 min + clôture |
+
+**À trancher par Pascal :** la séance 1 porte l'ouverture et 55 min d'activités (l'autre coupe, après l'activité 1, laissait 65 min à la séance 2).
+
+Dès la séance 2, l'ouverture (étiquettes, « Avant de commencer », situation, problématique et idée de départ, sécurité, trois façons, billet d'entrée) est repliée dans le volet « 📖 Rappel » ; elle est complète à la séance 1. L'en-tête de la séance 2 rappelle en une ligne la consigne de sécurité de la carte, et renvoie au volet. Restent visibles à chaque séance : le titre, la mission (elle remplace le sous-titre « Thème 3 · 4e — … », comme au pilote), la barre d'outils (🖨 Imprimer / PDF, que la page n'avait pas) et **le banc d'énergie**, qui sert aux deux séances : un seul bloc ; à la séance 1, il reste à sa place, dans l'activité 0 ; dès la séance 2, le script des onglets le place juste après l'en-tête de la séance ouverte. Sans JavaScript, toutes les séances s'affichent à la suite, l'outil à sa place.
+
+La clôture reçoit un corrigé replié par défi (coût réel sur quatre ans : 2 784 € de piles contre 31 €, le panneau moins cher dès le onzième jour ; défi mesure ; défi hiver : 2,4 h en décembre, 17,6 Wh manquants sur une semaine, deux accus ou un panneau de 3,5 W) ; au bilan, « Comment j'ai travaillé » et « Je me positionne » aux quatre niveaux du livret scolaire, sur `4e_C7.4` et `4e_C3.1` (appui).

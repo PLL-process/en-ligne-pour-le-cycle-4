@@ -27761,3 +27761,50 @@ hiérarchie, unités, sigles, navigation entre séances, mode essentiel, compét
 téléphone, Firefox, Safari, une impression réelle.
 
 **À valider par Pascal** : les quatre missions, écrites pour cette vague.
+
+---
+
+## 04/11/2026 — Vague 4e C7 : six séquences du jardin passent à onglets, avec le volet « 📖 Rappel » (thème 3)
+
+*Suite des vagues du pilote 4e_C8.1, avec les leçons de la vague C8 (#587) et le repli de « Où j'en suis » (vague 5e C7).*
+
+**Les six pages** gardent leurs 2 × 55 min annoncées.
+
+| Page | Séance 1 (avec l'ouverture) | Séance 2 (avec la clôture) | Hors du volet |
+|---|---|---|---|
+| 4e_C7.1 | activités 0, 1, 2 | activité 3 et « Refaire » (FAST incrusté), puis le TP et l'atelier liés | mission, identité, barre d'outils, sélecteur de parcours, progression, « Où j'en suis » |
+| 4e_C7.3 | activités 0, 1 | activités 2, 3, « Refaire » | barre d'outils, banc des matériaux |
+| 4e_C7.4 | activités 0, 1, 2 | activités 3, 4, « Refaire » | barre d'outils, banc d'énergie |
+| 4e_C7.5 | activités 0, 1 | activités 2, 3, « Refaire » | barre d'outils, établi |
+| 4e_C7.7 | activités 0, 1 | activités 2, 3, « Refaire » | barre d'outils, atelier des moyens |
+| 4e_C7.8 | activités 0, 1 | activités 2, 3, 4, « Refaire » | barre d'outils, banc de liaison |
+
+- **La règle de l'outil, précisée** (vagues 4e et 3e) : l'outil reste dans l'activité qui le présente (au-dessus de
+  l'activité 0, il en donnerait les réponses : 4e_C7.3, 4e_C7.5, 4e_C7.7) ; aux autres séances qui s'en servent, il vient
+  juste après l'en-tête de séance ; un seul nœud, qui garde son état. Sans JavaScript, il reste à sa place.
+- **La sécurité reste visible** : les cartes « Sécurité » de 4e_C7.3 à 4e_C7.8 sont dans le volet, et l'en-tête de la
+  séance 2 rappelle en une ligne encadrée la consigne de la page (par exemple, 4e_C7.7 : jamais de PVC au laser, capot
+  fermé ; à la fraiseuse, pièce bridée, lunettes, cheveux attachés, aucun gant), avec un renvoi au volet.
+- **4e_C7.1** : la mission est raccourcie, la note du mode essentiel entre dans le volet, « Où j'en suis » se replie dès la
+  séance 2 ; à la séance 2, les onglets sont dans le premier écran à 1280 px et à 390 px. Le billet d'entrée passe après
+  l'hypothèse (ordre n°306). **La durée** : la page, la fiche (« 4 × 55 min ») et l'activité 1 (« pendant 4 séances »)
+  ne disaient pas la même chose ; les mentions de la fiche et de l'activité dataient d'août 2026, quand le TP et l'atelier
+  comptaient une séance chacun. Le projet compte six séances : les deux de cette page, l'atelier de planification (une)
+  et le TP « Le dé sur sa pointe » (trois). L'activité 1, l'en-tête de la séance 2 et la fiche le disent maintenant.
+- **4e_C7.5, l'établi corrigé** : un montage sans pompe recevait ✔ et affichait « la pompe tourne ». La pompe rejoint les
+  pièces requises : l'établi dit ce qui manque (« Rien ne pousse l'eau dans le bac : la pompe immergée manque… »).
+- **La clôture, complétée** : un corrigé par défi du Bonus (12 corrigés, calculs refaits à partir des données de la page :
+  4e_C7.4, 2 784 € de piles contre 31 € sur quatre ans ; 4e_C7.7, à partir de 13 supports, 25 + 12 × 13 = 181 min…) ;
+  « Comment j'ai travaillé » et « Je me positionne » aux quatre niveaux du livret, avec les codes d'appui ; en 4e_C7.1, le
+  retour à l'hypothèse. Les menus de positionnement de 4e_C7.3, 4e_C7.5 et 4e_C7.7 passent aux niveaux du livret.
+- **4e_C7.1 réincrustée** avec le kit des ateliers corrigé (#586).
+
+**Contrôles.** Bancs n°311 : 58 / 58 sur chaque page (banc commun 34 / 34, relais, « l'outil suit la séance »,
+« Où j'en suis » pour 4e_C7.1). Bancs des lots, avant = après : 4e_C7.1 47 / 47, 4e_C7.3 44 / 44, 4e_C7.4 35 / 35,
+4e_C7.5 39 → 41 (l'établi sans pompe), 4e_C7.7 38 / 38, 4e_C7.8 46 / 46 ; QCM 32 / 32. `controle_squelette` : 0 défaut,
+aucun « à rédiger », aucun signalement. Verts : impression, impression papier (12 fiches, une par séance), verrous, hors
+ligne, contraste des liens, règles visibles, liens, hiérarchie, unités, sigles, navigation entre séances. Non testé : un
+vrai téléphone, Firefox, Safari, une impression réelle.
+
+**À valider par Pascal** : les six missions ; l'ordre de l'atelier de planification et du TP dans le projet de 4e_C7.1 ;
+des séances pleines (95 à 100 min d'activités pour 2 × 55 min sur quatre pages).

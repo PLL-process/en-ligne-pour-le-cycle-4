@@ -104,6 +104,52 @@ details.correction>div{padding:0 14px 12px}
   .saved-note,.saved-note b{color:#5475b5!important}
   .chrono,.etayage summary{color:#946b00!important}
 }
+
+/* ── Séances à onglets (squelette n°306) et volet « 📖 Rappel » (règle d'or n°311) — vague C7 du 04/11/2026, sur le modèle
+   du pilote 4e_C8.1 et de la vague C8. Sans JavaScript (pas de classe js-onglets), la page reste d'un seul tenant : toutes
+   les séances à la suite, ni onglets ni boutons de séance, le volet ouvert et sans bouton. ── */
+.seance-tabs{display:none;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+.js-onglets .seance-tabs{display:flex}
+.seance-tab{flex:1;min-width:150px;min-height:44px;padding:11px 8px;border-radius:10px;background:var(--panel2);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit;line-height:1.3}
+.seance-tab small{display:block;font-weight:400;font-size:.9em;color:var(--sub)}
+.seance-tab.active{background:#1d4e89;color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+.seance-tab.active small{color:#e4eaf5}
+.seance-tab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.seance-tab .done{color:var(--ok)}
+.js-onglets .seance-panel{display:none}
+.js-onglets .seance-panel.active{display:block}
+.seance-tete h2{margin-top:0}
+.question-directrice{color:var(--hl);font-weight:600;margin:.4em 0}
+.page-suivante{display:none;max-width:940px;margin:22px auto 8px;text-align:right}
+.js-onglets .page-suivante{display:block}
+@media print{.page-suivante{display:none!important}}
+.rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}
+.rappel-ouverture>summary{display:none}
+.rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+.rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media print{.rappel-ouverture>summary{display:none!important}}
+.positionnement{margin:8px 0;border:1px solid var(--border);border-radius:10px;padding:8px 12px}
+.positionnement legend{font-size:.9em;color:var(--sub);padding:0 6px}
+.positionnement label{display:inline-block;margin-right:14px}
+.positionnement input[type=radio]{width:auto}
+/* À 390 px, le sélecteur de parcours tient sur deux lignes de boutons, sous son intitulé (comme au pilote 4e_C8.1). */
+@media (max-width:480px){
+  .choix-parcours-boutons .parcours-label{flex:1 1 100%;text-align:center}
+  .choix-parcours-boutons{align-items:flex-start}
+  .choix-parcours-boutons .parcours-btn{flex:1 1 42%;box-sizing:border-box;min-height:42px;display:flex;align-items:center;justify-content:center;padding:6px;font-size:.84em;white-space:nowrap}
+}
+/* « 🗺 Où j'en suis » : ouvert à la séance 1, replié dès la séance 2 (un clic le rouvre) ; son résumé garde le compte. */
+#taches{padding-top:6px;padding-bottom:6px;margin-bottom:12px}
+/* à 390 px, à la séance 2, les onglets tiennent dans le premier écran : le volet et « Où j'en suis » serrent leurs marges */
+@media (max-width:480px){.rappel-ouverture.volet>summary{margin-bottom:12px}#taches{padding-left:12px;padding-right:12px}.taches-volet>summary h2{font-size:.92em}}
+.taches-volet>summary{display:flex;align-items:center;gap:8px;min-height:44px;cursor:pointer;list-style:none}
+.taches-volet>summary::-webkit-details-marker{display:none}
+.taches-volet>summary::before{content:"▸";color:var(--hl);font-size:1.1em}
+.taches-volet[open]>summary::before{content:"▾"}
+.taches-volet>summary h2{margin:0}
+.taches-volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px;border-radius:8px}
+.taches-volet[open]>summary{margin-bottom:8px}
+.rappel-hyp{margin:8px 0 12px;padding:10px 12px;border-left:4px solid var(--hl);background:rgba(97,218,251,.06);border-radius:0 8px 8px 0}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -439,11 +485,41 @@ details.correction>div{padding:0 14px 12px}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="qcm_4e_C7_jardin-conception.html">🧠 QCM</a><a href="lexique_4e_C7.1.html">📖 Lexique</a></nav>
 
 <h1>🛠️ Jardin connecté — Concevoir et réaliser</h1>
+
+<div class="subtitle">🎯 Ta mission : concevoir le boîtier qui protège la sonde du jardin — solution et matériau choisis avec des critères nommés.</div>
+<div class="identite" id="identite">
+<label>Nom&nbsp;: <input id="eleveNom" aria-label="Nom" autocomplete="family-name"></label>
+<label>Prénom&nbsp;: <input id="elevePrenom" aria-label="Prénom" autocomplete="given-name"></label>
+<label>Classe&nbsp;: <input id="eleveClasse" aria-label="Classe"></label>
+<span class="saved-note" id="savedNote"></span>
+</div>
+<div class="toolbar">
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+  <button class="btn ghost" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+</div>
+<div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
+  <span class="parcours-label">🔀 Mon parcours :</span>
+  <button class="btn ghost parcours-btn" data-choix="a" aria-pressed="false">🅰 Avec maquette</button>
+  <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 En simulation</button>
+  <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sur papier</button>
+  <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
+</div>
+<p class="saved-note" id="parcoursNote" role="status" aria-live="polite" style="text-align:center">Parcours affiché : <b>tous</b>.</p>
+
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
+
+<div class="badges"><span class="badge">4e</span><span class="badge">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span><span class="badge" title="Programme 2024 — 4e_C7.1 : Organiser un processus de conception et de réalisation dans une durée, avec des tâches identifiées.&#10;4e_C7.2 : Proposer et fabriquer une solution pour ajouter une nouvelle fonction à un OST (croquis, schéma, graphique, algorithme, modélisation).&#10;4e_C7.3 : Comparer différents matériaux pour choisir le plus adapté.">4e_C7.1 · C7.2 · C7.3</span><span class="badge" title="Domaines du socle commun travaillés : D2 Les méthodes et outils pour apprendre · D3 La formation de la personne et du citoyen · D4 Les systèmes naturels et les systèmes techniques · D5 Les représentations du monde et l’activité humaine.">Socle : D2 · D3 · D4 · D5</span><span class="badge" title="Ancrage : New York — school garden / rooftop.">New York</span><span class="badge" title="CRCN 3.1 Développer des documents textuels — niveau 2.&#10;Le cadre : « Produire des documents à contenu majoritairement textuel pour communiquer des idées, rendre compte et valoriser ses travaux. »&#10;Ici : tu rédiges le planning du projet — tâches et durées —, puis un paragraphe qui justifie ton choix entre deux solutions.&#10;&#10;CRCN 1.2 Gérer des données — niveaux 1 à 2.&#10;Le cadre : « Stocker et organiser des données pour les retrouver, les conserver et en faciliter l’accès et la gestion. »&#10;Ici : tu enregistres ton identité et ton hypothèse dans la page, et tu les retrouves à la séance suivante pour reprendre ton travail.">🎯 CRCN 3.1 Développer des documents textuels (Niv. 2) · 1.2 Gérer des données (Niv. 1-2)</span><span class="badge" title="Durée : 2 séances de 55 min sur cette page (+ 3 séances sur le TP « Le dé sur sa pointe » et 1 sur l'atelier de planification, liés en bas de page) — soit 6 au total pour le lot.">⏱ 2 séances de 55 min</span></div>
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque les corrections et les compléments : il ne reste que les consignes et les exercices.</p>
+
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
   <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
   <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
@@ -463,76 +539,6 @@ details.correction>div{padding:0 14px 12px}
   </ul>
   <p class="change"><b>Dans cette séquence&nbsp;:</b> on te donne un <b>problème</b>, pas un objet. Six bacs sont morts dans la cour, et c'est à toi de décider ce qu'il faut construire — puis d'<b>organiser</b> le travail pour y arriver, en écrivant toi-même le planning.</p>
   <p class="filet">Un mot à garder en tête : une tâche, c'est une chose dont on peut dire, à un instant donné, si elle est terminée ou non.</p>
-</section>
-
-
-<div class="subtitle">Solution technique pour un espace vert scolaire à New York</div>
-<div class="badges"><span class="badge">4e</span><span class="badge">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span><span class="badge" title="Programme 2024 — 4e_C7.1 : Organiser un processus de conception et de réalisation dans une durée, avec des tâches identifiées.&#10;4e_C7.2 : Proposer et fabriquer une solution pour ajouter une nouvelle fonction à un OST (croquis, schéma, graphique, algorithme, modélisation).&#10;4e_C7.3 : Comparer différents matériaux pour choisir le plus adapté.">4e_C7.1 · C7.2 · C7.3</span><span class="badge" title="Domaines du socle commun travaillés : D2 Les méthodes et outils pour apprendre · D3 La formation de la personne et du citoyen · D4 Les systèmes naturels et les systèmes techniques · D5 Les représentations du monde et l’activité humaine.">Socle : D2 · D3 · D4 · D5</span><span class="badge" title="Ancrage : New York — school garden / rooftop.">New York</span><span class="badge" title="CRCN 3.1 Développer des documents textuels — niveau 2.&#10;Le cadre : « Produire des documents à contenu majoritairement textuel pour communiquer des idées, rendre compte et valoriser ses travaux. »&#10;Ici : tu rédiges le planning du projet — tâches et durées —, puis un paragraphe qui justifie ton choix entre deux solutions.&#10;&#10;CRCN 1.2 Gérer des données — niveaux 1 à 2.&#10;Le cadre : « Stocker et organiser des données pour les retrouver, les conserver et en faciliter l’accès et la gestion. »&#10;Ici : tu enregistres ton identité et ton hypothèse dans la page, et tu les retrouves à la séance suivante pour reprendre ton travail.">🎯 CRCN 3.1 Développer des documents textuels (Niv. 2) · 1.2 Gérer des données (Niv. 1-2)</span><span class="badge" title="Durée : 2 séances de 55 min sur cette page (+ 3 séances sur le TP « Le dé sur sa pointe » et 1 sur l'atelier de planification, liés en bas de page) — soit 6 au total pour le lot.">⏱ 2 séances de 55 min</span></div>
-<div class="identite" id="identite">
-<label>Nom&nbsp;: <input id="eleveNom" aria-label="Nom" autocomplete="family-name"></label>
-<label>Prénom&nbsp;: <input id="elevePrenom" aria-label="Prénom" autocomplete="given-name"></label>
-<label>Classe&nbsp;: <input id="eleveClasse" aria-label="Classe"></label>
-<span class="saved-note" id="savedNote"></span>
-</div>
-<div class="toolbar">
-  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
-  <button class="btn ghost" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
-</div>
-<div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
-  <span class="parcours-label">🔀 Mon parcours :</span>
-  <button class="btn ghost parcours-btn" data-choix="a" aria-pressed="false">🅰 Avec maquette</button>
-  <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 En simulation</button>
-  <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sur papier</button>
-  <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
-</div>
-<p class="saved-note" id="parcoursNote" role="status" aria-live="polite" style="text-align:center">Parcours affiché : <b>tous</b>.</p>
-<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque les corrections et les compléments : il ne reste que les consignes et les exercices.</p>
-<div class="progress-wrap">
-  <span class="progress-label">Ma progression : <b id="progTxt">0 / 6 activités validées</b></span>
-  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
-</div>
-
-<section class="card" id="billet">
-<h2>🎫 Billet d'entrée — trois questions, sans note</h2>
-<p>Cette séquence s'appuie sur le mini-projet de 5e. Trois questions pour savoir, toi comme le
-professeur, sur quoi on peut s'appuyer. <b>Elles ne comptent pas dans ta progression et ne sont pas
-notées</b> — « je ne sais pas encore » est une réponse utile.</p>
-<div class="exo">
-  <p><label for="be_1">1. En 5e, avant de fabriquer quoi que ce soit, on commençait par…
-  <select id="be_1"><option value="">— choisir —</option><option>identifier le besoin : à quoi ça sert, et pour qui</option><option>choisir le matériau</option><option>dessiner l'objet fini</option><option>je ne sais pas encore</option></select></label></p>
-  <p><label for="be_2">2. Pour choisir entre deux solutions, il faut…
-  <select id="be_2"><option value="">— choisir —</option><option>des critères nommés à l'avance</option><option>demander laquelle est la plus jolie</option><option>prendre la première qui marche</option><option>je ne sais pas encore</option></select></label></p>
-  <p><label for="be_3">3. Un matériau « le meilleur »…
-  <select id="be_3"><option value="">— choisir —</option><option>ça n'existe pas dans l'absolu : ça dépend des contraintes du lieu</option><option>c'est le plus solide, toujours</option><option>c'est le moins cher, toujours</option><option>je ne sais pas encore</option></select></label></p>
-  <button class="btn small" id="btnBillet" type="button">Voir où j'en suis</button>
-  <p class="feedback" id="fbBillet" role="status"></p>
-</div>
-</section>
-
-<section class="card" id="taches">
-<h2>🗺 Où j'en suis — les 6 activités de cette page</h2>
-<p>Chaque activité validée se colore ici. Rien ne se perd si tu t'arrêtes en route.</p>
-<div class="taches-bandeau" id="tachesBandeau"></div>
-</section>
-
-<section class="card">
-<h2>🔁 Le contrat de la séquence</h2>
-<div class="contrat18">
-<p style="margin:0 0 6px"><b>FAIRE pour comprendre&nbsp;:</b> tu commences par SOUMETTRE des matériaux à la météo new-yorkaise (banc météo, activité 0) — avant tout tableau de critères.</p>
-<p style="margin:0 0 6px"><b>COMPRENDRE&nbsp;:</b> les «&nbsp;À retenir&nbsp;» nomment les concepts&nbsp;: contrainte, critère, démarche de projet.</p>
-<p style="margin:0"><b>REFAIRE pour comprendre encore&nbsp;:</b> tu réinvestis la démarche complète sur un NOUVEAU besoin (une jardinière de balcon) — même squelette, autre habit.</p>
-</div>
-</section>
-
-<section class="card">
-<h2>🔀 Trois façons de vivre la séquence</h2>
-<div class="exo">
-<p data-parcours="a">🅰 <b>Avec maquette</b> : tu construis réellement le boîtier en atelier (carton-plume, bois de récupération), et tu le soumets à l'arrosoir et au congélateur du labo. Les critères du tableau se vérifient <b>à la main</b>.</p>
-<p data-parcours="b">🅱 <b>En simulation</b> : le banc météo de l'activité 0 remplace l'atelier, et la modélisation du boîtier se fait dans Onshape (TP « Le dé sur sa pointe », lié en bas de page). C'est le parcours principal.</p>
-<p data-parcours="c">🅲 <b>Sur papier</b> : croquis coté à la main et tableau de comparaison — <b>mêmes questions, mêmes validations</b>. Le banc météo fonctionne dans la page, sans rien installer.</p>
-</div>
-<div class="retenir"><b>Aucun parcours ne retire de question.</b> Le sélecteur en haut de page masque seulement
-ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le monde.</div>
 </section>
 
 <section class="card">
@@ -568,7 +574,6 @@ pour la poussière, un pour l'eau. Tu croiseras ce mot sur les lampadaires et le
 <p class="problematique">Comment imaginer, choisir et réaliser une solution technique simple pour un espace vert scolaire à New York&nbsp;?</p>
 </section>
 
-
 <section class="card">
 <h2>💡 Hypothèse</h2>
 <label for="hypothese">✍ Mon hypothèse : d'après toi, qu'est-ce qui a tué les six bacs — et que faudrait-il construire pour que ça ne recommence pas ?</label>
@@ -586,7 +591,72 @@ pour la poussière, un pour l'eau. Tu croiseras ce mot sur les lampadaires et le
 <p class="saved-note">💾 Sauvegarde automatique dans la page, à chaque modification.</p>
 </section>
 
+<section class="card" id="billet">
+<h2>🎫 Billet d'entrée — trois questions, sans note</h2>
+<p>Cette séquence s'appuie sur le mini-projet de 5e. Trois questions pour savoir, toi comme le
+professeur, sur quoi on peut s'appuyer. <b>Elles ne comptent pas dans ta progression et ne sont pas
+notées</b> — « je ne sais pas encore » est une réponse utile.</p>
+<div class="exo">
+  <p><label for="be_1">1. En 5e, avant de fabriquer quoi que ce soit, on commençait par…
+  <select id="be_1"><option value="">— choisir —</option><option>identifier le besoin : à quoi ça sert, et pour qui</option><option>choisir le matériau</option><option>dessiner l'objet fini</option><option>je ne sais pas encore</option></select></label></p>
+  <p><label for="be_2">2. Pour choisir entre deux solutions, il faut…
+  <select id="be_2"><option value="">— choisir —</option><option>des critères nommés à l'avance</option><option>demander laquelle est la plus jolie</option><option>prendre la première qui marche</option><option>je ne sais pas encore</option></select></label></p>
+  <p><label for="be_3">3. Un matériau « le meilleur »…
+  <select id="be_3"><option value="">— choisir —</option><option>ça n'existe pas dans l'absolu : ça dépend des contraintes du lieu</option><option>c'est le plus solide, toujours</option><option>c'est le moins cher, toujours</option><option>je ne sais pas encore</option></select></label></p>
+  <button class="btn small" id="btnBillet" type="button">Voir où j'en suis</button>
+  <p class="feedback" id="fbBillet" role="status"></p>
+</div>
+</section>
+
 <section class="card">
+<h2>🔁 Le contrat de la séquence</h2>
+<div class="contrat18">
+<p style="margin:0 0 6px"><b>FAIRE pour comprendre&nbsp;:</b> tu commences par SOUMETTRE des matériaux à la météo new-yorkaise (banc météo, activité 0) — avant tout tableau de critères.</p>
+<p style="margin:0 0 6px"><b>COMPRENDRE&nbsp;:</b> les «&nbsp;À retenir&nbsp;» nomment les concepts&nbsp;: contrainte, critère, démarche de projet.</p>
+<p style="margin:0"><b>REFAIRE pour comprendre encore&nbsp;:</b> tu réinvestis la démarche complète sur un NOUVEAU besoin (une jardinière de balcon) — même squelette, autre habit.</p>
+</div>
+</section>
+
+<section class="card">
+<h2>🔀 Trois façons de vivre la séquence</h2>
+<div class="exo">
+<p data-parcours="a">🅰 <b>Avec maquette</b> : tu construis réellement le boîtier en atelier (carton-plume, bois de récupération), et tu le soumets à l'arrosoir et au congélateur du labo. Les critères du tableau se vérifient <b>à la main</b>.</p>
+<p data-parcours="b">🅱 <b>En simulation</b> : le banc météo de l'activité 0 remplace l'atelier, et la modélisation du boîtier se fait dans Onshape (TP « Le dé sur sa pointe », lié en bas de page). C'est le parcours principal.</p>
+<p data-parcours="c">🅲 <b>Sur papier</b> : croquis coté à la main et tableau de comparaison — <b>mêmes questions, mêmes validations</b>. Le banc météo fonctionne dans la page, sans rien installer.</p>
+</div>
+<div class="retenir"><b>Aucun parcours ne retire de question.</b> Le sélecteur en haut de page masque seulement
+ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le monde.</div>
+</section>
+
+</details><!-- /rappel-ouverture -->
+
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression : <b id="progTxt">0 / 6 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card pp-ecran" id="taches">
+<details class="taches-volet" id="tachesVolet" open>
+<summary><h2>🗺 Où j'en suis — <span id="tachesResume">0 / 6 activités validées</span></h2></summary>
+<p>Chaque activité validée se colore ici. Rien ne se perd si tu t'arrêtes en route.</p>
+<div class="taches-bandeau" id="tachesBandeau"></div>
+</details>
+</section>
+
+<nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" id="tab-s1" data-panel="s1" role="tab" aria-controls="s1" aria-selected="true" type="button">Séance 1<br><small>Éprouver, dessiner la démarche, choisir</small><span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>Comparer les matériaux, refaire, conclure</small><span class="done" id="done-s2"></span></button>
+</nav>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card seance-tete">
+<h2>🧭 Séance 1 — Éprouver, dessiner la démarche, choisir</h2>
+<p class="question-directrice">Question directrice : qu'est-ce qui a tué les six bacs, et comment passe-t-on d'un problème à une solution choisie avec des critères ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : l'ouverture, puis le banc météo new-yorkais (activité 0, environ 10 min), la démarche de projet en diagramme et le planning (activité 1, environ 15 min), imaginer deux solutions et en choisir une (activité 2, environ 25 min).</p>
+</section>
+
+<section class="card" id="act0">
 <h2>🖐️ Activité 0 — FAIRE d'abord&nbsp;: le banc météo new-yorkais <span class="chrono">⏱ ~10 min</span></h2>
 <div class="exo">
 <p><strong>Consigne&nbsp;:</strong> AVANT tout tableau, choisis un matériau et une météo, et OBSERVE ce qui se passe. Essaie au moins <b>trois</b> combinaisons différentes.</p>
@@ -611,11 +681,11 @@ pour la poussière, un pour l'eau. Tu croiseras ce mot sur les lampadaires et le
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="act1">
 <h2>📐 Activité 1 — La démarche de projet en diagramme de flux (C7.1) · trace CRCN 3.1 Développer des documents textuels <span class="chrono">⏱ ~15 min</span></h2>
 <div class="exo">
 <h4>1a — Remets la démarche en ordre (représentation schématique)</h4>
-<p>La démarche que tu vas suivre pendant 4 séances se DESSINE. Numérote les étapes de 1 à 5&nbsp;:</p>
+<p>La démarche que tu vas suivre pendant les six séances du projet — les deux de cette page, puis l'atelier de planification et le TP « Le dé sur sa pointe » — se DESSINE. Numérote les étapes de 1 à 5&nbsp;:</p>
 <div class="algostep"><span class="algoshape">⬭ début</span><select id="a1o1" aria-label="Rang de l'étape « Identifier le BESOIN »"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Identifier le BESOIN (à quoi ça sert, pour qui)</span></div>
 <div class="algostep"><span class="algoshape">▭ traitement</span><select id="a1o2" aria-label="Rang de l'étape « Imaginer PLUSIEURS solutions »"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Imaginer PLUSIEURS solutions (A, B…)</span></div>
 <div class="algostep"><span class="algoshape">◇ décision</span><select id="a1o3" aria-label="Rang de l'étape « CHOISIR avec des critères »"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>CHOISIR avec des critères (la solution passe-t-elle&nbsp;?)</span></div>
@@ -638,7 +708,7 @@ pour la poussière, un pour l'eau. Tu croiseras ce mot sur les lampadaires et le
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="act2">
 <h2>✏️ Activité 2 — Imaginer et choisir (C7.2) <span class="chrono">⏱ ~25 min</span></h2>
 <div class="exo">
 <label for="a2sol">✍ Deux solutions vraiment différentes, puis ton choix justifié par <b>deux critères nommés</b> :</label>
@@ -659,7 +729,19 @@ pour la poussière, un pour l'eau. Tu croiseras ce mot sur les lampadaires et le
 </div>
 </section>
 
-<section class="card">
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Comparer les matériaux, refaire ›</button></p>
+</div>
+
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<section class="card seance-tete">
+<h2>🧭 Séance 2 — Comparer les matériaux, refaire, conclure</h2>
+<p class="question-directrice">Question directrice : quel matériau pour le boîtier — et la même démarche marche-t-elle sur un autre objet ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : comparer les matériaux (activité 3, environ 20 min), le réinvestissement : ajouter une fonction au diagramme FAST d'un jardin, puis la jardinière de balcon (environ 30 min) ; ensuite la synthèse, le Bonus, le bilan et le renvoi vers le QCM.</p>
+<p style="font-size:.92em;color:var(--sub)"><b>Et après cette page :</b> les séances 3 à 6 du projet se font sur les deux pages liées en bas de cette séance — l'atelier de planification (une séance, au lancement de la réalisation) et le TP « Le dé sur sa pointe » (trois séances, avant de dessiner le boîtier).</p>
+</section>
+
+<section class="card" id="act3">
 <h2>🧱 Activité 3 — Comparer les matériaux (C7.3) <span class="chrono">⏱ ~20 min</span></h2>
 <div class="exo">
 <p>Reporte ce que le banc météo t'a APPRIS (activité 0) dans le tableau — c'est le passage du geste au formalisme&nbsp;:</p>
@@ -674,7 +756,7 @@ pour la poussière, un pour l'eau. Tu croiseras ce mot sur les lampadaires et le
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="refaire">
 <h2>🔄 REFAIRE — Réinvestissement <span class="chrono">⏱ ~30 min</span></h2>
 <!-- ateliers-representations:debut fa-4e-jardin-conception -->
 <section class="card atelier-incruste" id="incruste-fa-4e-jardin-conception" aria-labelledby="incruste-fa-4e-jardin-conception-titre"><h3 id="incruste-fa-4e-jardin-conception-titre">Refaire sur un système qui existe&nbsp;: lui ajouter une fonction</h3><p>La sonde que protège ton boîtier sert à arroser tout seul quand la terre est sèche. Voici un système d'arrosage de ce genre, déjà construit, dans le jardin partagé d'un autre quartier&nbsp;: sa gardienne lui demande une <b>nouvelle fonction</b>. Tu complètes son <b>diagramme FAST</b> — la fonction qui manque, sa solution, et ce qui change ailleurs —, puis tu déroules la démarche sur la jardinière de balcon. Un exercice d'environ un quart d'heure&nbsp;; il se vérifie tout seul et a sa correction complète.</p><details class="cours"><summary>📘 Le cours — ce qu'il faut savoir</summary><div class="cours-corps"><h3>Le FAST, entre le «&nbsp;pourquoi&nbsp;» et le «&nbsp;comment&nbsp;»</h3><ul><li>Le diagramme pieuvre et le cahier des charges regardent l'objet <b>du dehors</b>&nbsp;: à quoi il sert, ce qu'il doit respecter. Le <b>diagramme FAST</b> (de l'anglais <i lang="en">Function Analysis System Technique</i>, «&nbsp;technique d'analyse fonctionnelle&nbsp;») <b>ouvre</b> l'objet&nbsp;: il part de la fonction d'usage et descend jusqu'à ses constituants.</li><li>Chaque <b>constituant</b> est une <b>solution technique</b>&nbsp;; sur sa ligne, à gauche, on lit la <b>fonction technique</b> qu'il réalise (un verbe à l'infinitif).</li><li>Vers la droite&nbsp;: «&nbsp;comment&nbsp;?&nbsp;»&nbsp;; vers la gauche&nbsp;: «&nbsp;pourquoi&nbsp;?&nbsp;».</li></ul><h3>La chaîne d'information&nbsp;: trois fonctions</h3><ul><li><b>Acquérir</b>&nbsp;: prendre une information sur le monde → un <b>capteur</b> (de luminosité, de présence, de distance…).</li><li><b>Traiter</b>&nbsp;: comparer, calculer, décider → la <b>carte programmable</b>, avec son programme.</li><li><b>Communiquer</b>&nbsp;: envoyer l'information à une personne ou à un autre appareil → un module sans fil, un afficheur, un voyant.</li><li>Ce qui <b>agit</b> sur le monde (un moteur, une lampe, une vanne) est dans la <b>chaîne d'énergie</b>&nbsp;: la carte lui donne l'ordre, mais il ne traite aucune information.</li></ul><div class="defile"><table><caption>Un exemple&nbsp;: la barrière du parking des professeurs</caption><tr><th>Constituant</th><th>Fonction technique</th><th>Chaîne</th></tr><tr><td>le lecteur de badge</td><td>lire le badge présenté</td><td>information — acquérir</td></tr><tr><td>la carte programmable</td><td>décider d'ouvrir ou non</td><td>information — traiter</td></tr><tr><td>l'afficheur de l'entrée</td><td>indiquer le nombre de places libres</td><td>information — communiquer</td></tr><tr><td>le moteur</td><td>lever la barrière</td><td>énergie — convertir</td></tr></table></div><h3>Ajouter une fonction&nbsp;: quatre étapes</h3><ol><li>Écrire ce que l'objet doit faire en plus.</li><li>Chercher la <b>fonction technique qui manque</b>&nbsp;: celle qu'aucune branche ne réalise encore. L'écrire avec un verbe.</li><li>Lui associer une <b>solution</b>&nbsp;; <b>réutiliser</b> ce qui existe déjà quand c'est possible.</li><li>Relire la nouvelle branche par «&nbsp;pourquoi&nbsp;?&nbsp;», et dire ce qui change ailleurs — souvent le <b>programme</b> de la carte.</li></ol></div><p class="note">Le cours complet, avec les schémas et les mots&nbsp;: <a href="../../../../theme-1-objets-systemes-usages-interactions/ateliers-representations/fast/Synthèses/synthese_eleve_fast.html">la synthèse</a>.</p></details><section class="card exercice" id="fa_4e_e5" data-exo="fa_4e_e5" data-cle="rep_fast_4e_e5" aria-labelledby="fa_4e_e5-titre"><h4 id="fa_4e_e5-titre">Exercice 1 — Ajouter une fonction au jardin</h4><div class="meta"><b>🎯 Objectif&nbsp;:</b> ajouter au FAST la branche d'une nouvelle fonction&nbsp;: écrire la fonction technique qui manque, lui choisir une solution, et réutiliser ce qui existe déjà.<br><b>🧩 Compétence&nbsp;:</b> <span title="Proposer et fabriquer une solution pour ajouter une nouvelle fonction à un OST (croquis, schéma, graphique, algorithme, modélisation)." aria-label="4e_C7.2 : Proposer et fabriquer une solution pour ajouter une nouvelle fonction à un OST (croquis, schéma, graphique, algorithme, modélisation).">4e_C7.2</span><br><b>✍ Ce que tu produis&nbsp;:</b> la nouvelle fonction technique écrite dans le FAST, sa solution, et ce qui change dans les branches déjà là.<br><b>Durée&nbsp;:</b> environ 15 minutes, comptées dans celle de l'activité.</div><details class="mots"><summary>📖 Les mots de cet exercice</summary><dl><dt>fonction technique</dt><dd>une action que l'objet doit réaliser pour rendre son service. Elle commence par un <b>verbe à l'infinitif</b>&nbsp;: détecter, stocker, mesurer…</dd><dt>branche</dt><dd>une ligne du FAST&nbsp;: une fonction technique et sa (ou ses) solution(s).</dd><dt>capteur de niveau d'eau</dt><dd>un capteur placé dans la cuve&nbsp;: un flotteur monte et descend avec l'eau et dit à la carte combien il en reste.</dd><dt>réutiliser</dt><dd>confier une nouvelle fonction à une solution déjà présente, au lieu d'ajouter une pièce.</dd><dt>programme</dt><dd>la suite d'instructions que suit la carte programmable&nbsp;: c'est lui qui compare et décide.</dd></dl></details><div><p>Pendant les vacances, la cuve s'est vidée sans que personne le sache, et les plantes ont souffert. La gardienne, Mme Joseph, demande une <b>nouvelle fonction</b>&nbsp;: <b>«&nbsp;prévenir la gardienne quand la cuve est presque vide&nbsp;»</b>.</p><p>Pour la prévenir, le système doit d'abord <b>savoir</b> combien d'eau reste dans la cuve&nbsp;: aucune branche du FAST ne le fait encore. La branche du bas est vide&nbsp;: c'est à toi de la construire. Ce que tu écris s'affiche dans le schéma.</p></div><div class="consigne"><p>Une <b>fonction technique</b> dit ce que le système doit <b>faire</b>, avec un verbe à l'infinitif&nbsp;; la <b>solution</b> est l'élément qui le fait.</p><ol><li><b>Écris la fonction technique qui manque</b> (ce qu'il faut faire, pas l'objet qui le fait).</li><li><b>Choisis sa solution technique.</b></li><li><b>Trouve</b> la solution déjà présente qui enverra l'alerte, et <b>ce qui doit changer</b> dans une branche déjà là.</li></ol></div><p class="critere"><b>✅ Tu as réussi si…</b> ta fonction commence par un verbe et parle de l'eau de la cuve, sans nommer d'objet&nbsp;; la solution est juste&nbsp;; tu réutilises le module Wi-Fi et tu vois que le programme de la carte change.</p><label class="champ" for="fa_4e_e5__ft">La fonction technique qui manque (elle s'écrit dans la case en pointillés du FAST) <span class="encoche" data-pour="fa_4e_e5__ft"></span></label><textarea id="fa_4e_e5__ft" name="fa_4e_e5__ft" rows="2" spellcheck="true" data-miroir="fa-e5-ft"></textarea><div class="note">Ce que je regarde dans ta réponse&nbsp;:<ul><li>elle commence par un verbe à l'infinitif (mesurer, surveiller, détecter…) <span class="encoche" data-pour="fa_4e_e5__ft::0"></span></li><li>elle dit sur quoi porte l'action (l'eau de la cuve, son niveau) <span class="encoche" data-pour="fa_4e_e5__ft::1"></span></li></ul></div><details class="etayage"><summary>🪜 Version étayée : des débuts de phrase pour t'aider</summary><ul><li>Pour prévenir la gardienne, le système doit d'abord … le … d'eau de la cuve.</li><li>mesurer … / surveiller … / détecter …</li></ul></details><div><figure class="figure schema-vivant"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 614" width="820" height="614" class="schema" id="fa-jard3" role="img" aria-labelledby="fa-jard3-t fa-jard3-d" font-family="'Segoe UI',system-ui,Arial,sans-serif"><title id="fa-jard3-t">Diagramme FAST du système d&#x27;arrosage, avec une nouvelle branche à construire</title><desc id="fa-jard3-d">Diagramme FAST en trois colonnes, avec les flèches « Pourquoi ? » vers la gauche et « Comment ? » vers la droite. Fonction d&#x27;usage : arroser les plantes quand la terre est sèche. Six fonctions techniques, de haut en bas : mesurer l&#x27;humidité du sol ; décider quand arroser ; envoyer l&#x27;état au smartphone ; laisser passer l&#x27;eau ou la bloquer ; faire circuler l&#x27;eau jusqu&#x27;aux bacs ; stocker l&#x27;eau de pluie. Chacune a sa solution : le capteur d&#x27;humidité du sol ; la carte programmable ; le module Wi-Fi ; l&#x27;électrovanne ; la pompe et les tuyaux ; la cuve. Une septième branche, en bas, est vide : sa case de fonction et sa case de solution ont un bord en pointillés.</desc><rect x="0" y="0" width="820" height="614" fill="#fbfcff"/><defs><marker id="fa-jard3-pt" viewBox="0 0 12 10" refX="11" refY="5" markerWidth="12" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L12,5 L0,10 z" fill="#1b2438"/></marker></defs><line x1="300" y1="30" x2="40" y2="30" stroke="#5b6b86" stroke-width="2.2" marker-end="url(#fa-jard3-pt)"/><text x="170.0" y="48.0" font-size="13" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="170.0" dy="-0.00em">POURQUOI ?</tspan></text><line x1="520" y1="30" x2="780" y2="30" stroke="#5b6b86" stroke-width="2.2" marker-end="url(#fa-jard3-pt)"/><text x="650.0" y="48.0" font-size="13" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="650.0" dy="-0.00em">COMMENT ?</tspan></text><text x="115.0" y="78.0" font-size="12.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="115.0" dy="-0.00em">Fonction d&#x27;usage</tspan></text><text x="400.0" y="78.0" font-size="12.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="400.0" dy="-0.00em">Fonctions techniques</tspan></text><text x="690.0" y="78.0" font-size="12.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="690.0" dy="-0.00em">Solutions techniques</tspan></text><rect x="20" y="320.0" width="190" height="64" rx="8" fill="#fff8e6" stroke="#a06a00" stroke-width="2.6"/><text x="115.0" y="352.0" font-size="14.5" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="115.0" dy="-1.15em">Arroser les plantes</tspan><tspan x="115.0" dy="1.15em">quand la terre est</tspan><tspan x="115.0" dy="1.15em">sèche</tspan></text><line x1="210" y1="352.0" x2="240" y2="352.0" stroke="#1b2438" stroke-width="2.2"/><line x1="240" y1="136.0" x2="240" y2="568.0" stroke="#1b2438" stroke-width="2.2"/><line x1="240" y1="136.0" x2="270" y2="136.0" stroke="#1b2438" stroke-width="2.2"/><rect x="270" y="109.0" width="260" height="54" rx="6" fill="#eef4ff" stroke="#1f5fbf" stroke-width="2.4"/><text x="400.0" y="136.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="400.0" dy="-0.00em">mesurer l&#x27;humidité du sol</tspan></text><path d="M530,136.0 H555 V136.0 H585" fill="none" stroke="#1b2438" stroke-width="2.2"/><rect x="585" y="109.0" width="220" height="54" rx="6" fill="#e3f6e9" stroke="#16753a" stroke-width="2.4"/><text x="695.0" y="136.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="695.0" dy="-0.57em">le capteur d&#x27;humidité du</tspan><tspan x="695.0" dy="1.15em">sol</tspan></text><line x1="240" y1="208.0" x2="270" y2="208.0" stroke="#1b2438" stroke-width="2.2"/><rect x="270" y="181.0" width="260" height="54" rx="6" fill="#eef4ff" stroke="#1f5fbf" stroke-width="2.4"/><text x="400.0" y="208.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="400.0" dy="-0.00em">décider quand arroser</tspan></text><path d="M530,208.0 H555 V208.0 H585" fill="none" stroke="#1b2438" stroke-width="2.2"/><rect x="585" y="181.0" width="220" height="54" rx="6" fill="#e3f6e9" stroke="#16753a" stroke-width="2.4"/><text x="695.0" y="208.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="695.0" dy="-0.00em">la carte programmable</tspan></text><line x1="240" y1="280.0" x2="270" y2="280.0" stroke="#1b2438" stroke-width="2.2"/><rect x="270" y="253.0" width="260" height="54" rx="6" fill="#eef4ff" stroke="#1f5fbf" stroke-width="2.4"/><text x="400.0" y="280.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="400.0" dy="-0.00em">envoyer l&#x27;état au smartphone</tspan></text><path d="M530,280.0 H555 V280.0 H585" fill="none" stroke="#1b2438" stroke-width="2.2"/><rect x="585" y="253.0" width="220" height="54" rx="6" fill="#e3f6e9" stroke="#16753a" stroke-width="2.4"/><text x="695.0" y="280.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="695.0" dy="-0.00em">le module Wi-Fi</tspan></text><line x1="240" y1="352.0" x2="270" y2="352.0" stroke="#1b2438" stroke-width="2.2"/><rect x="270" y="325.0" width="260" height="54" rx="6" fill="#eef4ff" stroke="#1f5fbf" stroke-width="2.4"/><text x="400.0" y="352.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="400.0" dy="-0.57em">laisser passer l&#x27;eau ou la</tspan><tspan x="400.0" dy="1.15em">bloquer</tspan></text><path d="M530,352.0 H555 V352.0 H585" fill="none" stroke="#1b2438" stroke-width="2.2"/><rect x="585" y="325.0" width="220" height="54" rx="6" fill="#e3f6e9" stroke="#16753a" stroke-width="2.4"/><text x="695.0" y="352.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="695.0" dy="-0.00em">l&#x27;électrovanne</tspan></text><line x1="240" y1="424.0" x2="270" y2="424.0" stroke="#1b2438" stroke-width="2.2"/><rect x="270" y="397.0" width="260" height="54" rx="6" fill="#eef4ff" stroke="#1f5fbf" stroke-width="2.4"/><text x="400.0" y="424.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="400.0" dy="-0.57em">faire circuler l&#x27;eau jusqu&#x27;aux</tspan><tspan x="400.0" dy="1.15em">bacs</tspan></text><path d="M530,424.0 H555 V424.0 H585" fill="none" stroke="#1b2438" stroke-width="2.2"/><rect x="585" y="397.0" width="220" height="54" rx="6" fill="#e3f6e9" stroke="#16753a" stroke-width="2.4"/><text x="695.0" y="424.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="695.0" dy="-0.00em">la pompe et les tuyaux</tspan></text><line x1="240" y1="496.0" x2="270" y2="496.0" stroke="#1b2438" stroke-width="2.2"/><rect x="270" y="469.0" width="260" height="54" rx="6" fill="#eef4ff" stroke="#1f5fbf" stroke-width="2.4"/><text x="400.0" y="496.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="400.0" dy="-0.00em">stocker l&#x27;eau de pluie</tspan></text><path d="M530,496.0 H555 V496.0 H585" fill="none" stroke="#1b2438" stroke-width="2.2"/><rect x="585" y="469.0" width="220" height="54" rx="6" fill="#e3f6e9" stroke="#16753a" stroke-width="2.4"/><text x="695.0" y="496.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="695.0" dy="-0.00em">la cuve</tspan></text><line x1="240" y1="568.0" x2="270" y2="568.0" stroke="#1b2438" stroke-width="2.2"/><rect x="270" y="541.0" width="260" height="54" rx="6" fill="#eef4ff" stroke="#1f5fbf" stroke-width="2.4" stroke-dasharray="7 5"/><text x="400.0" y="568.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700" id="fa-e5-ft" data-car="30" data-lignes="2" data-vide="…" data-interligne="1.15"><tspan x="400.0" dy="-0.00em">…</tspan></text><path d="M530,568.0 H555 V568.0 H585" fill="none" stroke="#1b2438" stroke-width="2.2"/><rect x="585" y="541.0" width="220" height="54" rx="6" fill="#e3f6e9" stroke="#16753a" stroke-width="2.4" stroke-dasharray="7 5"/><text x="695.0" y="568.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700" id="fa-e5-st" data-car="25" data-lignes="2" data-vide="…" data-interligne="1.15"><tspan x="695.0" dy="-0.00em">…</tspan></text></svg><figcaption>Le FAST du système d'arrosage, avec la nouvelle branche en bas. Ta fonction et ta solution s'y écrivent.</figcaption></figure></div><fieldset class="qcm-groupe"><legend>La solution de la nouvelle branche <span class="encoche" data-pour="fa_4e_e5__st"></span></legend><div class="options"><label class="option" for="fa_4e_e5__st-0"><input type="radio" id="fa_4e_e5__st-0" name="fa_4e_e5__st" value="le capteur de niveau d&#x27;eau" data-miroir="fa-e5-st" data-texte="le capteur de niveau d&#x27;eau"><span>le capteur de niveau d'eau</span></label><label class="option" for="fa_4e_e5__st-1"><input type="radio" id="fa_4e_e5__st-1" name="fa_4e_e5__st" value="le capteur d&#x27;humidité du sol" data-miroir="fa-e5-st" data-texte="le capteur d&#x27;humidité du sol"><span>le capteur d'humidité du sol</span></label><label class="option" for="fa_4e_e5__st-2"><input type="radio" id="fa_4e_e5__st-2" name="fa_4e_e5__st" value="une deuxième électrovanne" data-miroir="fa-e5-st" data-texte="une deuxième électrovanne"><span>une deuxième électrovanne</span></label><label class="option" for="fa_4e_e5__st-3"><input type="radio" id="fa_4e_e5__st-3" name="fa_4e_e5__st" value="un second module Wi-Fi" data-miroir="fa-e5-st" data-texte="un second module Wi-Fi"><span>un second module Wi-Fi</span></label></div></fieldset><fieldset class="qcm-groupe"><legend>Quelle solution, <b>déjà dans le FAST</b>, enverra l'alerte au smartphone&nbsp;? <span class="encoche" data-pour="fa_4e_e5__envoi"></span></legend><div class="options"><label class="option" for="fa_4e_e5__envoi-0"><input type="radio" id="fa_4e_e5__envoi-0" name="fa_4e_e5__envoi" value="wifi"><span>Le module Wi-Fi&nbsp;: il envoie déjà l'état du jardin au smartphone.</span></label><label class="option" for="fa_4e_e5__envoi-1"><input type="radio" id="fa_4e_e5__envoi-1" name="fa_4e_e5__envoi" value="carte"><span>La carte programmable&nbsp;: elle envoie elle-même les messages.</span></label><label class="option" for="fa_4e_e5__envoi-2"><input type="radio" id="fa_4e_e5__envoi-2" name="fa_4e_e5__envoi" value="vanne"><span>L'électrovanne&nbsp;: elle se ferme quand la cuve est vide.</span></label><label class="option" for="fa_4e_e5__envoi-3"><input type="radio" id="fa_4e_e5__envoi-3" name="fa_4e_e5__envoi" value="aucune"><span>Aucune&nbsp;: il faut ajouter un téléphone au jardin.</span></label></div></fieldset><fieldset class="qcm-groupe"><legend>Pour que l'alerte parte, que faut-il changer dans une branche <b>déjà là</b>&nbsp;? <span class="encoche" data-pour="fa_4e_e5__change"></span></legend><div class="options"><label class="option" for="fa_4e_e5__change-0"><input type="radio" id="fa_4e_e5__change-0" name="fa_4e_e5__change" value="programme"><span>Le programme de la carte&nbsp;: il doit comparer le niveau d'eau à un seuil et déclencher le message.</span></label><label class="option" for="fa_4e_e5__change-1"><input type="radio" id="fa_4e_e5__change-1" name="fa_4e_e5__change" value="pompe"><span>La pompe&nbsp;: elle doit pomper moins fort quand la cuve se vide.</span></label><label class="option" for="fa_4e_e5__change-2"><input type="radio" id="fa_4e_e5__change-2" name="fa_4e_e5__change" value="rien"><span>Rien&nbsp;: le capteur de niveau envoie l'alerte tout seul au smartphone.</span></label><label class="option" for="fa_4e_e5__change-3"><input type="radio" id="fa_4e_e5__change-3" name="fa_4e_e5__change" value="cuve"><span>La cuve&nbsp;: il faut la remplacer par une cuve plus grande.</span></label></div></fieldset><p><button type="button" class="btn verifier">✔ Vérifier mes réponses</button></p><div class="retour" data-retour aria-live="polite"></div><details class="aide"><summary>💡 Aide 1 — pour démarrer</summary><p>Lis la demande de Mme Joseph et demande-toi&nbsp;: <b>que doit savoir le système</b> pour pouvoir la prévenir&nbsp;? C'est la fonction qui manque. Puis cherche, dans les branches déjà là, ce qui sait déjà <b>envoyer</b> au smartphone.</p></details><details class="aide"><summary>💡 Aide 2 — le raisonnement pas à pas</summary><p>Prévenir quand la cuve est presque vide → il faut connaître l'eau qui reste → aucune branche ne la mesure.<br>→ Fonction&nbsp;: «&nbsp;<b>mesurer le niveau d'eau de la cuve</b>&nbsp;» (un verbe, puis sur quoi il porte).<br>→ Solution&nbsp;: <b>le capteur de niveau d'eau</b> (le capteur d'humidité mesure la terre, pas la cuve).<br>→ Envoyer&nbsp;: le <b>module Wi-Fi</b> le fait déjà → on le réutilise.<br>→ Décider&nbsp;: la carte doit comparer le niveau à un seuil → son <b>programme</b> change.</p><div class="critere"><b>🔁 Exercice jumeau, à faire seul ensuite&nbsp;:</b> La mairie veut que le lampadaire intelligent «&nbsp;prévienne les services techniques quand sa batterie est presque vide&nbsp;». Quelle fonction technique manque&nbsp;? Le lampadaire sait-il déjà envoyer un message&nbsp;?</div><label class="champ" for="fa_4e_e5__jumeau">Ma réponse à l'exercice jumeau</label><textarea id="fa_4e_e5__jumeau" name="fa_4e_e5__jumeau" rows="2"></textarea><details class="etayage"><summary>🪜 Version étayée : des débuts de phrase pour t'aider</summary><ul><li>Dans cette nouvelle situation, je pose la même question que dans l'aide 2 : …</li><li>Ma réponse : … parce que …</li></ul></details><details class="correction"><summary>🔍 Correction de l'exercice jumeau</summary>Il manque «&nbsp;<b>mesurer la charge de la batterie</b>&nbsp;» → une solution qui mesure sa tension. Mais ici, aucune branche ne sait envoyer de message&nbsp;: il faut <b>une deuxième branche</b>, «&nbsp;envoyer l'alerte aux services techniques&nbsp;», avec un module de communication sans fil. Et le programme de la carte change.</details></details><details class="correction"><summary>🔍 La correction complète, et pourquoi</summary><div class="demo"><div class="ligne"><figure class="figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 614" width="820" height="614" class="schema" id="fa-jard4" role="img" aria-labelledby="fa-jard4-t fa-jard4-d" font-family="'Segoe UI',system-ui,Arial,sans-serif"><title id="fa-jard4-t">Diagramme FAST du système d&#x27;arrosage, avec la nouvelle branche</title><desc id="fa-jard4-d">Diagramme FAST en trois colonnes, avec les flèches « Pourquoi ? » vers la gauche et « Comment ? » vers la droite. Fonction d&#x27;usage : arroser les plantes quand la terre est sèche. Six fonctions techniques, de haut en bas : mesurer l&#x27;humidité du sol ; décider quand arroser ; envoyer l&#x27;état au smartphone ; laisser passer l&#x27;eau ou la bloquer ; faire circuler l&#x27;eau jusqu&#x27;aux bacs ; stocker l&#x27;eau de pluie. Chacune a sa solution : le capteur d&#x27;humidité du sol ; la carte programmable ; le module Wi-Fi ; l&#x27;électrovanne ; la pompe et les tuyaux ; la cuve. Une septième branche, la nouvelle, en bas : mesurer le niveau d&#x27;eau de la cuve, réalisée par le capteur de niveau d&#x27;eau.</desc><rect x="0" y="0" width="820" height="614" fill="#fbfcff"/><defs><marker id="fa-jard4-pt" viewBox="0 0 12 10" refX="11" refY="5" markerWidth="12" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L12,5 L0,10 z" fill="#1b2438"/></marker></defs><line x1="300" y1="30" x2="40" y2="30" stroke="#5b6b86" stroke-width="2.2" marker-end="url(#fa-jard4-pt)"/><text x="170.0" y="48.0" font-size="13" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="170.0" dy="-0.00em">POURQUOI ?</tspan></text><line x1="520" y1="30" x2="780" y2="30" stroke="#5b6b86" stroke-width="2.2" marker-end="url(#fa-jard4-pt)"/><text x="650.0" y="48.0" font-size="13" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="650.0" dy="-0.00em">COMMENT ?</tspan></text><text x="115.0" y="78.0" font-size="12.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="115.0" dy="-0.00em">Fonction d&#x27;usage</tspan></text><text x="400.0" y="78.0" font-size="12.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="400.0" dy="-0.00em">Fonctions techniques</tspan></text><text x="690.0" y="78.0" font-size="12.5" fill="#5b6b86" text-anchor="middle" dominant-baseline="middle" font-style="italic"><tspan x="690.0" dy="-0.00em">Solutions techniques</tspan></text><rect x="20" y="320.0" width="190" height="64" rx="8" fill="#fff8e6" stroke="#a06a00" stroke-width="2.6"/><text x="115.0" y="352.0" font-size="14.5" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="115.0" dy="-1.15em">Arroser les plantes</tspan><tspan x="115.0" dy="1.15em">quand la terre est</tspan><tspan x="115.0" dy="1.15em">sèche</tspan></text><line x1="210" y1="352.0" x2="240" y2="352.0" stroke="#1b2438" stroke-width="2.2"/><line x1="240" y1="136.0" x2="240" y2="568.0" stroke="#1b2438" stroke-width="2.2"/><line x1="240" y1="136.0" x2="270" y2="136.0" stroke="#1b2438" stroke-width="2.2"/><rect x="270" y="109.0" width="260" height="54" rx="6" fill="#eef4ff" stroke="#1f5fbf" stroke-width="2.4"/><text x="400.0" y="136.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="400.0" dy="-0.00em">mesurer l&#x27;humidité du sol</tspan></text><path d="M530,136.0 H555 V136.0 H585" fill="none" stroke="#1b2438" stroke-width="2.2"/><rect x="585" y="109.0" width="220" height="54" rx="6" fill="#e3f6e9" stroke="#16753a" stroke-width="2.4"/><text x="695.0" y="136.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="695.0" dy="-0.57em">le capteur d&#x27;humidité du</tspan><tspan x="695.0" dy="1.15em">sol</tspan></text><line x1="240" y1="208.0" x2="270" y2="208.0" stroke="#1b2438" stroke-width="2.2"/><rect x="270" y="181.0" width="260" height="54" rx="6" fill="#eef4ff" stroke="#1f5fbf" stroke-width="2.4"/><text x="400.0" y="208.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="400.0" dy="-0.00em">décider quand arroser</tspan></text><path d="M530,208.0 H555 V208.0 H585" fill="none" stroke="#1b2438" stroke-width="2.2"/><rect x="585" y="181.0" width="220" height="54" rx="6" fill="#e3f6e9" stroke="#16753a" stroke-width="2.4"/><text x="695.0" y="208.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="695.0" dy="-0.00em">la carte programmable</tspan></text><line x1="240" y1="280.0" x2="270" y2="280.0" stroke="#1b2438" stroke-width="2.2"/><rect x="270" y="253.0" width="260" height="54" rx="6" fill="#eef4ff" stroke="#1f5fbf" stroke-width="2.4"/><text x="400.0" y="280.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="400.0" dy="-0.00em">envoyer l&#x27;état au smartphone</tspan></text><path d="M530,280.0 H555 V280.0 H585" fill="none" stroke="#1b2438" stroke-width="2.2"/><rect x="585" y="253.0" width="220" height="54" rx="6" fill="#e3f6e9" stroke="#16753a" stroke-width="2.4"/><text x="695.0" y="280.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="695.0" dy="-0.00em">le module Wi-Fi</tspan></text><line x1="240" y1="352.0" x2="270" y2="352.0" stroke="#1b2438" stroke-width="2.2"/><rect x="270" y="325.0" width="260" height="54" rx="6" fill="#eef4ff" stroke="#1f5fbf" stroke-width="2.4"/><text x="400.0" y="352.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="400.0" dy="-0.57em">laisser passer l&#x27;eau ou la</tspan><tspan x="400.0" dy="1.15em">bloquer</tspan></text><path d="M530,352.0 H555 V352.0 H585" fill="none" stroke="#1b2438" stroke-width="2.2"/><rect x="585" y="325.0" width="220" height="54" rx="6" fill="#e3f6e9" stroke="#16753a" stroke-width="2.4"/><text x="695.0" y="352.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="695.0" dy="-0.00em">l&#x27;électrovanne</tspan></text><line x1="240" y1="424.0" x2="270" y2="424.0" stroke="#1b2438" stroke-width="2.2"/><rect x="270" y="397.0" width="260" height="54" rx="6" fill="#eef4ff" stroke="#1f5fbf" stroke-width="2.4"/><text x="400.0" y="424.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="400.0" dy="-0.57em">faire circuler l&#x27;eau jusqu&#x27;aux</tspan><tspan x="400.0" dy="1.15em">bacs</tspan></text><path d="M530,424.0 H555 V424.0 H585" fill="none" stroke="#1b2438" stroke-width="2.2"/><rect x="585" y="397.0" width="220" height="54" rx="6" fill="#e3f6e9" stroke="#16753a" stroke-width="2.4"/><text x="695.0" y="424.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="695.0" dy="-0.00em">la pompe et les tuyaux</tspan></text><line x1="240" y1="496.0" x2="270" y2="496.0" stroke="#1b2438" stroke-width="2.2"/><rect x="270" y="469.0" width="260" height="54" rx="6" fill="#eef4ff" stroke="#1f5fbf" stroke-width="2.4"/><text x="400.0" y="496.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="400.0" dy="-0.00em">stocker l&#x27;eau de pluie</tspan></text><path d="M530,496.0 H555 V496.0 H585" fill="none" stroke="#1b2438" stroke-width="2.2"/><rect x="585" y="469.0" width="220" height="54" rx="6" fill="#e3f6e9" stroke="#16753a" stroke-width="2.4"/><text x="695.0" y="496.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="695.0" dy="-0.00em">la cuve</tspan></text><line x1="240" y1="568.0" x2="270" y2="568.0" stroke="#1b2438" stroke-width="2.2"/><rect x="270" y="541.0" width="260" height="54" rx="6" fill="#eef4ff" stroke="#1f5fbf" stroke-width="2.4"/><text x="400.0" y="568.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="400.0" dy="-0.57em">mesurer le niveau d&#x27;eau de la</tspan><tspan x="400.0" dy="1.15em">cuve</tspan></text><path d="M530,568.0 H555 V568.0 H585" fill="none" stroke="#1b2438" stroke-width="2.2"/><rect x="585" y="541.0" width="220" height="54" rx="6" fill="#e3f6e9" stroke="#16753a" stroke-width="2.4"/><text x="695.0" y="568.0" font-size="14" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="695.0" dy="-0.57em">le capteur de niveau</tspan><tspan x="695.0" dy="1.15em">d&#x27;eau</tspan></text></svg><figcaption>Le FAST du système d'arrosage, avec la nouvelle branche (en bas).</figcaption></figure></div><div class="ligne"><b>Ce qui manque</b> → pour prévenir, il faut savoir combien d'eau reste → aucune branche ne le mesure</div><div class="ligne"><b>La fonction</b> → «&nbsp;<b>mesurer le niveau d'eau de la cuve</b>&nbsp;» → un verbe à l'infinitif, puis sur quoi il porte («&nbsp;surveiller le niveau de la cuve&nbsp;» convient aussi)</div><div class="ligne">Refusé&nbsp;: «&nbsp;un capteur de niveau&nbsp;» dans la case de fonction → c'est un objet, il va à droite</div><div class="ligne"><b>La solution</b> → <b>le capteur de niveau d'eau</b> → un flotteur suit l'eau de la cuve</div><div class="ligne">Pas le capteur d'humidité du sol → il mesure la terre. Pas une deuxième électrovanne → elle agit sur l'eau, elle ne mesure rien. Pas un second module Wi-Fi → on n'a pas besoin d'envoyer, mais de mesurer.</div><div class="ligne"><b>Envoyer l'alerte</b> → le <b>module Wi-Fi</b>, déjà là → une solution peut servir deux fonctions</div><div class="ligne"><b>Ce qui change</b> → le <b>programme</b> de la carte&nbsp;: «&nbsp;si le niveau est sous le seuil, alors envoyer un message à la gardienne&nbsp;»</div><div class="ligne conclusion">Ajouter une fonction, c'est ajouter une <b>branche</b> au FAST&nbsp;: la fonction qui manque, sa solution — et réutiliser ce qui existe (le module Wi-Fi, la carte et son programme).</div></div></details><p class="retenir"><b>📌 À retenir&nbsp;:</b> pour ajouter une fonction, on écrit d'abord la <b>fonction technique</b> qui manque (un verbe), puis on lui choisit une <b>solution</b>&nbsp;; on réutilise ce qui existe déjà, et on dit ce qui change ailleurs (souvent le programme).</p><p class="piege"><b>⚠ Le piège classique&nbsp;:</b> écrire le nom d'un objet («&nbsp;un capteur de niveau&nbsp;») dans la case de fonction&nbsp;: la fonction dit ce qu'il faut faire, la solution dit avec quoi.</p></section><p class="note">🌳 Ces exercices viennent de <a href="../../../../theme-1-objets-systemes-usages-interactions/ateliers-representations/fast/atelier_4e_fast.html">l'atelier de 4e « Des fonctions aux solutions techniques »</a>&nbsp;: ce que tu fais ici s'y retrouve, avec l'exercice qui relie chaque constituant de ce système à sa fonction, et le QCM de l'atelier.</p><script type="application/json">{"exercices": {"fa_4e_e5": {"cle": "rep_fast_4e_e5", "widgets": [{"type": "texte", "name": "fa_4e_e5__ft", "criteres": [{"motifs": ["^\\w+(er|ir|re)\\b"], "min": 1, "manque": "Commence par un verbe à l'infinitif : « mesurer… », « surveiller… », « détecter… »."}, {"motifs": ["niveau", "cuve", "\\beau\\b", "reste", "reserve", "quantite", "volume", "remplissage"], "min": 1, "manque": "Dis sur quoi porte la fonction : l'eau qui reste dans la cuve."}], "minCar": 10, "interdits": [{"motifs": ["capteur", "flotteur", "module", "\\bcarte\\b", "sonde", "electrovanne"], "message": "Tu as écrit le nom d'un objet : il ira dans la case de droite. La case de fonction dit seulement ce qu'il faut faire."}, {"motifs": ["^(prevenir|alerter|avertir|envoyer|informer)\\b"], "message": "Prévenir la gardienne, c'est la demande de Mme Joseph, et le module Wi-Fi saura envoyer le message. Ce qui manque, c'est ce que le système doit SAVOIR avant de prévenir."}], "vide": null}, {"type": "slots", "slots": [{"name": "fa_4e_e5__st", "bonnes": ["le capteur de niveau d'eau"], "groupe": null, "indice": "La solution : quel capteur mesure l'eau DANS la cuve, et non dans la terre ?"}]}, {"type": "choix", "name": "fa_4e_e5__envoi", "bonne": "wifi", "retours": {"wifi": "Oui : une même solution peut servir deux fonctions. Le module Wi-Fi envoie déjà des messages ; il en enverra un de plus.", "carte": "La carte décidera qu'il faut prévenir, mais elle n'a pas de liaison sans fil : c'est le module Wi-Fi qui envoie.", "vanne": "L'électrovanne agit sur l'eau : elle ne prévient personne.", "aucune": "Le module Wi-Fi sait déjà envoyer au smartphone : inutile d'ajouter un appareil."}, "indice": null}, {"type": "choix", "name": "fa_4e_e5__change", "bonne": "programme", "retours": {"programme": "Oui : la carte traite la nouvelle mesure. Son programme reçoit une nouvelle condition : « si le niveau est sous le seuil, alors envoyer un message ».", "pompe": "Pomper moins fort ne prévient personne : la demande est d'alerter la gardienne.", "rien": "Un capteur acquiert une mesure, il ne décide pas et n'envoie rien : il faut la carte et le module Wi-Fi.", "cuve": "Une cuve plus grande se viderait plus tard, mais sans prévenir personne : ce n'est pas la fonction demandée."}, "indice": null}]}}}</script></section>
@@ -710,16 +792,48 @@ pour la poussière, un pour l'eau. Tu croiseras ce mot sur les lampadaires et le
 <div class="bonus">
 <p><b>Citoyen&nbsp;:</b> une solution 100&nbsp;% réemploi de quartier new-yorkais — d'où viendraient tes matériaux&nbsp;?</p>
 <textarea rows="2" id="defi1" placeholder="Tes pistes — sauvegardées dans la page" aria-label="Défi 1 — mes pistes"></textarea>
+<details class="correction"><summary>✅ Corrigé du défi citoyen — un boîtier 100 % réemploi</summary><div>
+<p><b>Des matériaux qui ont déjà servi, trouvés dans le quartier, et qui passent le banc météo.</b> Par exemple : un bidon ou une boîte alimentaire en plastique épais, récupéré auprès d'une épicerie ou d'une cantine, pour la boîte elle-même — le plastique récupéré ignore la pluie ; des lattes de palette, récupérées auprès d'un commerce ou d'un chantier, pour le piquet ou le support ; une chambre à air de vélo usée, chez un réparateur, découpée en joint autour du couvercle ; des vis de récupération.</p>
+<p><b>Ce qu'on vérifie avant de prendre :</b> que le matériau tient les contraintes du lieu — le banc météo a montré que le carton, même renforcé, se délite à la pluie : il est exclu dehors ; qu'il est sain — une palette marquée « HT » a été traitée par la chaleur, mais une palette marquée « MB » a été traitée avec un produit toxique : elle ne se réemploie pas ; et qu'on a demandé avant de récupérer.</p>
+<p><b>Attendus :</b> au moins deux matériaux, chacun avec sa source précise dans le quartier et la contrainte qu'il tient (pluie, gel, vent).</p>
+<p><b>Erreurs typiques :</b> proposer du carton — le banc l'a éliminé ; « acheter des matériaux recyclés » — ce n'est plus du réemploi de quartier ; oublier de vérifier ce que le matériau a contenu ou subi avant.</p>
+</div></details>
 <p style="margin-top:10px"><b>Technique&nbsp;:</b> invente un critère de test «&nbsp;résistance au gel&nbsp;» ou «&nbsp;vent de canyon&nbsp;» (étape + résultat attendu chiffré)&nbsp;:</p>
 <textarea rows="2" id="defi2" placeholder="Mon critère de test — sauvegardé dans la page" aria-label="Défi 2 — mon critère de test"></textarea>
+<details class="correction"><summary>✅ Corrigé du défi technique — un critère de test chiffré</summary><div>
+<p><b>Un test, c'est une étape qu'on peut refaire et un résultat attendu qu'on peut mesurer.</b> Deux exemples :</p>
+<ul>
+<li><b>Gel :</b> remplir le boîtier de terre humide autour de la sonde, le laisser 24 h au congélateur du labo (environ −18 °C), puis 24 h à température ambiante ; recommencer trois fois. <b>Attendu :</b> aucune fissure, le couvercle s'ouvre et se referme, et la sonde affiche la même humidité qu'avant l'essai, à 5 points près.</li>
+<li><b>Vent de canyon :</b> le boîtier fixé sur son piquet, le tirer de côté avec un dynamomètre jusqu'à 10 N (newtons), puis le secouer 30 secondes. <b>Attendu :</b> il ne bouge pas de plus de 1 cm, rien ne se détache, aucune goutte d'eau n'entre ensuite à l'arrosoir.</li>
+</ul>
+<p><b>Attendus :</b> une étape concrète (avec quoi, combien de temps, dans quelles conditions) ; un résultat attendu chiffré, écrit avant l'essai ; un critère qui vise une contrainte du lieu.</p>
+<p><b>Erreurs typiques :</b> « le boîtier doit résister au gel » — c'est un souhait, pas un test ; un attendu sans chiffre (« ça tient ») ; tester le gel à vide — c'est l'eau de la terre qui gonfle en gelant ; changer deux choses à la fois, et ne plus savoir laquelle a joué.</p>
+</div></details>
 <p style="margin-top:10px"><b>New York&nbsp;:</b> quels rooftops / community gardens de la ville pourraient accueillir un suivi d'humidité&nbsp;?</p>
 <textarea rows="2" id="defi3" placeholder="Tes idées — sauvegardées dans la page" aria-label="Défi 3 — mes idées"></textarea>
+<details class="correction"><summary>✅ Corrigé de l'ancrage New York — où suivre l'humidité</summary><div>
+<p><b>Un bon lieu, c'est un jardin où l'on cultive, où personne n'arrose certains jours, et où l'on peut protéger et relever la mesure.</b> À New York, par exemple : les jardins partagés de quartier (<i>community gardens</i>) — la ville en compte plusieurs centaines, dont beaucoup sont suivis par son programme GreenThumb ; les fermes installées sur les toits (<i>rooftop farms</i>), à Brooklyn ou dans le Queens ; les jardins d'école, comme celui de la Brooklyn Middle School de la situation.</p>
+<p><b>Chaque lieu change le cahier des charges :</b> sur un toit, le vent et le plein soleil (le boîtier doit être lesté, et sa sonde protégée de la chaleur) ; dans un jardin ouvert au public, les gestes des passants (le boîtier doit se fermer et se fixer) ; dans une cour d'école, les vacances, où personne ne lit la mesure.</p>
+<p><b>Attendus :</b> au moins deux lieux ou deux sortes de lieux ; pour chacun, pourquoi un suivi d'humidité y sert, et une contrainte propre au lieu.</p>
+<p><b>Erreurs typiques :</b> citer un parc où l'on ne cultive rien (une pelouse déjà arrosée par la ville) ; oublier que le lieu change les contraintes du boîtier ; choisir un lieu où personne ne lira jamais la mesure.</p>
+</div></details>
 </div>
 </section>
 
 <section class="card">
 <h2>🙋 Bilan personnel</h2>
+<div id="rappelHyp" class="rappel-hyp" style="display:none"></div>
+<p><b>Retour à mon hypothèse :</b> ce que tu imaginais construire au début est-il le boîtier que tu as conçu, et qu'est-ce que le banc météo t'a fait changer ? <input id="bilanHyp" aria-label="Retour à mon hypothèse" placeholder="Oui / non, et ce que j'ai changé en route"></p>
+<p><b>Comment j'ai travaillé :</b> où as-tu hésité, et qu'est-ce qui t'a surpris au banc météo ou en comparant les matériaux ? <input id="bilanMeta" aria-label="Comment j'ai travaillé" placeholder="J'ai hésité sur… / ce qui m'a surpris…"></p>
 <p>J'ai appris&nbsp;: <input id="bilan1" aria-label="Ce que j'ai appris"></p><p>Je sais faire&nbsp;: <input id="bilan2" aria-label="Ce que je sais faire"></p><p>À revoir&nbsp;: <input id="bilan3" aria-label="Ce qui est à revoir"></p>
+<h3>📍 Je me positionne</h3>
+<p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
+<fieldset class="positionnement"><legend>4e_C7.1 — organiser un processus de conception et de réalisation dans une durée, avec des tâches identifiées</legend>
+<label><input type="radio" name="pos_c71" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c71" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c71" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c71" value="4"> ⭐ très bonne</label></fieldset>
+<fieldset class="positionnement"><legend>4e_C7.2 — proposer et fabriquer une solution pour ajouter une nouvelle fonction à un OST (croquis, schéma, graphique, algorithme, modélisation)</legend>
+<label><input type="radio" name="pos_c72" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c72" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c72" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c72" value="4"> ⭐ très bonne</label></fieldset>
+<fieldset class="positionnement"><legend>4e_C7.3 — comparer différents matériaux pour choisir le plus adapté</legend>
+<label><input type="radio" name="pos_c73" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c73" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c73" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c73" value="4"> ⭐ très bonne</label></fieldset>
 <p>Confiance CRCN 3.1 Développer des documents textuels (1-4)&nbsp;: <select id="bilan4" style="width:auto" aria-label="Ma confiance en CRCN 3.1 Développer des documents textuels, de 1 à 4"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
 </section>
 
@@ -743,12 +857,15 @@ pour la poussière, un pour l'eau. Tu croiseras ce mot sur les lampadaires et le
 <a class="btn" href="qcm_4e_C7_jardin-conception.html">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
 
+</div>
+
 <footer>TechnoQuest · Thème 3 · 4e_C7 · Jardin connecté · New York. Sauvegarde locale uniquement — aucune donnée envoyée.</footer>
 
 <script>
 (function(){
 "use strict";
 const KEY = "seq_4e_C7_jardin_conception";
+let ongletActif = null;   // la séance affichée (vague n°311, 04/11/2026)
 const $ = id => document.getElementById(id);
 window.__exp = window.__exp || {};
 
@@ -807,20 +924,83 @@ function save(){
   document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
   // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
   document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { o.inputs[c.id] = c.checked; });
+  // le positionnement (boutons radio, sans identifiant) et l'onglet en cours, à part des verrous (vague n°311, 04/11/2026)
+  o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
+  o.onglet = ongletActif;
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
   const sn = $("savedNote"); if(sn){ sn.textContent = "💾 Sauvegardé (" + new Date().toLocaleTimeString() + ")"; }
 }
 function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
   if(!o) return;
+  ongletActif = o.onglet || null;
   Object.entries(o.inputs || {}).forEach(([id, v]) => { const e = $(id); if(e) e.value = v; });
   // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
   document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { const v = (o.inputs || {})[c.id]; if(v !== undefined) c.checked = (v === true); });
   window.__exp = Object.assign(window.__exp || {}, o.exp || {});
   (o.par && o.par.s || []).forEach(x => { if(!par.s.includes(x)) par.s.push(x); });
-  updateProg();
+  Object.entries(o.radios || {}).forEach(([name, v]) => { const r = document.querySelector('.positionnement input[name="' + name + '"][value="' + v + '"]'); if(r) r.checked = true; });
+  updateProg(); majHyp();
+  // l'onglet en cours : un lien direct vers une ancre l'emporte sur lui
+  if(!location.hash && ongletActif && $(ongletActif)) montrerSeance(ongletActif, false);
 }
 document.addEventListener("change", e => { if(e.target.matches("input, select, textarea")) save(); });
+/* retour à l'hypothèse : le bilan relit ce que l'élève a écrit au début */
+function majHyp(){
+  const el = $("rappelHyp"), h = ($("hypothese") || {}).value || ""; if(!el) return;
+  if(h.trim()){ el.style.display = "block"; el.innerHTML = "<b>🔎 Au début de la séquence, tu avais écrit :</b><br><i>« " + h.replace(/&/g,"&amp;").replace(/</g,"&lt;") + " »</i>"; }
+  else { el.style.display = "none"; }
+}
+if($("hypothese")) $("hypothese").addEventListener("input", majHyp);
+/* « 🗺 Où j'en suis » : ouvert à la séance 1, replié dès la séance 2 (un clic le rouvre) ; son résumé garde le compte.
+   Le banc météo ne sert qu'à la séance 1 (activité 0) : il reste dans son activité. */
+function placerOutil(id){
+  const tv = $("tachesVolet"); if(tv) tv.open = (parseInt(String(id).replace(/[^0-9]/g,""),10) || 1) < 2;
+}
+const SEANCES = {s1:["0","1","2","3"], s2:["4","5"]};   // les vérificateurs (data-check) de chaque séance
+/* ══ Séances à onglets (squelette n°306) — vague C7 du 04/11/2026, sur le modèle du pilote 4e_C8.1 et de la vague C8 ══
+   L'onglet en cours est mémorisé avec le travail (o.onglet), à part des verrous (__exp). */
+function montrerSeance(id, memoriser){
+  if(!$(id)) return;
+  document.querySelectorAll(".seance-tab").forEach(x => { const on = x.dataset.panel === id; x.classList.toggle("active", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
+  document.querySelectorAll(".seance-panel").forEach(p => p.classList.toggle("active", p.id === id));
+  placerOutil(id);
+  appliqueSeance(id);
+  ongletActif = id;
+  if(memoriser !== false) save();
+}
+document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => montrerSeance(t.dataset.panel)));
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte.
+   Comme au pilote, le volet ne se replie qu'une fois la page chargée (marque data-fermer-au-chargement). */
+function appliqueSeance(idPanneau){
+  const v = $("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", () => { const v = $("ouverture"); if(v){ voletAvantImpression = v.open; v.open = true; } });
+  window.addEventListener("afterprint", () => { const v = $("ouverture"); if(v && voletAvantImpression !== null){ v.open = voletAvantImpression; voletAvantImpression = null; } });
+  const cibleDuLien = () => { let id = ""; try{ id = decodeURIComponent(location.hash.slice(1)); }catch(e){} return id ? $(id) : null; };
+  const ouvrirSeanceDeLAncre = () => {
+    const cible = cibleDuLien(); const pan = cible && cible.closest(".seance-panel");
+    if(!pan || pan.classList.contains("active")) return;
+    montrerSeance(pan.id);
+    setTimeout(() => cible.scrollIntoView({block:"start"}), 60);
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", () => {
+    const v = $("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active") || {}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
+/* Règle d'or n°101 — chaque séance mène explicitement à la suivante */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => { montrerSeance(b.dataset.vers); window.scrollTo({top:0, behavior:"smooth"}); }));
 
 /* ══ Règle d'or n°30 — le tableau de bord des tâches, et la progression ══ */
 const TACHES = [
@@ -844,6 +1024,8 @@ function updateProg(){
   if($("progTxt")) $("progTxt").textContent = n + " / 6 activités validées";
   if($("progFill")) $("progFill").style.width = Math.round(n * 100 / 6) + "%";
   if($("progBar")) $("progBar").setAttribute("aria-valuenow", n);
+  if($("tachesResume")) $("tachesResume").textContent = n + " / 6 activités validées";
+  Object.entries(SEANCES).forEach(([id, acts]) => { const d = $("done-" + id); if(d) d.textContent = acts.every(a => par.s.includes(a)) ? " ✔" : ""; });
   majTaches();
 }
 
@@ -904,6 +1086,7 @@ document.querySelectorAll(".parcours-btn").forEach(b => b.addEventListener("clic
 restore();
 if(window.__exp && window.__exp.essentiel) document.body.classList.add("essentiel");
 majEssentiel(); majParcours(); updateProg();
+placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // « Où j'en suis » suit la séance affichée
 })();
 </script>
 <!-- ateliers-representations:moteur -->
@@ -983,20 +1166,23 @@ majEssentiel(); majParcours(); updateProg();
 .atelier-incruste table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.9em}
 .atelier-incruste th,.atelier-incruste td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
 .atelier-incruste th{background:var(--panel2);color:var(--sub)}
-.atelier-incruste .tableau-menus table.cdcf{table-layout:fixed;font-size:.92em}
+.atelier-incruste .tableau-menus table.cdcf{table-layout:auto;font-size:.92em}
 .atelier-incruste .tableau-menus table.cdcf caption{caption-side:top;text-align:left;color:var(--sub);font-size:.95em;padding:0 0 6px}
 .atelier-incruste .tableau-menus table.cdcf th{vertical-align:bottom}
-.atelier-incruste .tableau-menus table.cdcf td{overflow-wrap:break-word}
+.atelier-incruste .tableau-menus table.cdcf th,.atelier-incruste .tableau-menus table.cdcf td{overflow-wrap:normal;word-break:normal;-webkit-hyphens:manual;hyphens:manual}
 .atelier-incruste .tableau-menus select{width:100%;max-width:100%;background:var(--input-bg);color:var(--text);border:1px solid var(--input-bd);
   border-radius:8px;padding:7px 9px;font-family:inherit;font-size:1em;min-height:40px}
 .atelier-incruste .tableau-menus .menu-vu,.atelier-incruste .tableau-menus .menu-fleche{display:none}
-.atelier-incruste .tableau-menus.menus-js .menu-case{position:relative;display:flex;align-items:flex-start;gap:6px;width:100%;min-height:40px;
-  padding:7px 9px;border:1.5px solid var(--hl);border-radius:8px;background:var(--input-bg);cursor:pointer}
+.atelier-incruste .tableau-menus .menu-mesure,.atelier-incruste .tableau-menus .retour-mesure{display:block;height:0;overflow:hidden;overflow:clip;visibility:hidden;white-space:pre-line}
+.atelier-incruste .tableau-menus .retour-mesure{font-size:.86em;line-height:1.35}
+.atelier-incruste .tableau-menus.menus-js .menu-case{position:relative;display:grid;grid-template-columns:1fr auto;column-gap:6px;align-items:start;
+  width:100%;min-height:40px;padding:7px 9px;border:1.5px solid var(--hl);border-radius:8px;background:var(--input-bg);cursor:pointer}
 .atelier-incruste .tableau-menus.menus-js .menu-case select{position:absolute;top:0;left:0;width:100%;height:100%;min-height:0;margin:0;padding:0;
   opacity:0;cursor:pointer;font-size:16px}
-.atelier-incruste .tableau-menus.menus-js .menu-vu{display:block;flex:1 1 auto;min-width:0;white-space:normal;line-height:1.35;color:#fff}
+.atelier-incruste .tableau-menus.menus-js .menu-vu{display:block;grid-column:1;grid-row:1;white-space:normal;line-height:1.35;color:#fff}
+.atelier-incruste .tableau-menus.menus-js .menu-mesure{grid-column:1;grid-row:1;line-height:1.35}
 .atelier-incruste .tableau-menus.menus-js .menu-vu:empty::before{content:"choisir";color:var(--sub);font-style:italic}
-.atelier-incruste .tableau-menus.menus-js .menu-fleche{display:block;flex:0 0 auto;color:var(--hl);line-height:1.35}
+.atelier-incruste .tableau-menus.menus-js .menu-fleche{display:block;grid-column:2;grid-row:1;color:var(--hl);line-height:1.35}
 .atelier-incruste .tableau-menus.menus-js .menu-case:focus-within{outline:3px solid var(--hl);outline-offset:2px}
 .atelier-incruste .tableau-menus.menus-js .menu-case.choisi{border-color:var(--input-bd)}
 .atelier-incruste .tableau-menus td.case-menu.faux .menu-case{border-color:var(--err)}
@@ -1020,8 +1206,9 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
 @media (max-width:600px){.atelier-incruste .figure{overflow-x:auto;-webkit-overflow-scrolling:touch}.atelier-incruste .figure svg.schema,.atelier-incruste .figure img{min-width:560px}}
 @media (max-width:600px){.atelier-incruste .figure svg.schema.etroit{min-width:0}}
 @media (max-width:640px){.atelier-incruste .tableau-menus table.cdcf,.atelier-incruste .tableau-menus table.cdcf tbody,.atelier-incruste .tableau-menus table.cdcf tr,.atelier-incruste .tableau-menus table.cdcf td,.atelier-incruste .tableau-menus table.cdcf caption{display:block;width:100%}.atelier-incruste .tableau-menus table.cdcf thead{display:none}.atelier-incruste .tableau-menus table.cdcf tr{border:1px solid var(--input-bd);border-radius:10px;margin:0 0 10px;padding:2px 12px 8px;background:rgba(11,27,57,.55)}.atelier-incruste .tableau-menus table.cdcf td{border:none;padding:7px 0 3px}.atelier-incruste .tableau-menus table.cdcf td+td{border-top:1px dashed var(--input-bd)}.atelier-incruste .tableau-menus table.cdcf td::before{content:attr(data-col);display:block;font-size:.82em;font-weight:700;color:var(--sub);margin:0 0 3px}}
+@media screen{.atelier-incruste .tableau-menus.en-cartes table.cdcf,.atelier-incruste .tableau-menus.en-cartes table.cdcf tbody,.atelier-incruste .tableau-menus.en-cartes table.cdcf tr,.atelier-incruste .tableau-menus.en-cartes table.cdcf td,.atelier-incruste .tableau-menus.en-cartes table.cdcf caption{display:block;width:100%}.atelier-incruste .tableau-menus.en-cartes table.cdcf thead{display:none}.atelier-incruste .tableau-menus.en-cartes table.cdcf tr{border:1px solid var(--input-bd);border-radius:10px;margin:0 0 10px;padding:2px 12px 8px;background:rgba(11,27,57,.55)}.atelier-incruste .tableau-menus.en-cartes table.cdcf td{border:none;padding:7px 0 3px}.atelier-incruste .tableau-menus.en-cartes table.cdcf td+td{border-top:1px dashed var(--input-bd)}.atelier-incruste .tableau-menus.en-cartes table.cdcf td::before{content:attr(data-col);display:block;font-size:.82em;font-weight:700;color:var(--sub);margin:0 0 3px}}
 @media (max-width:600px){.atelier-incruste .card{padding:12px 12px}}
-@media print{.atelier-incruste .btn,.atelier-incruste .croquis-outils{display:none!important}.atelier-incruste .card{background:#fff;border-color:#999;break-inside:avoid-page}.atelier-incruste a,.atelier-incruste a:visited{color:#00309e!important}.atelier-incruste textarea,.atelier-incruste input[type=text]{background:#fff;color:#111;border-color:#999}.atelier-incruste fieldset.qcm-groupe legend,.atelier-incruste .consigne b{color:#111}.atelier-incruste .meta,.atelier-incruste .demo .ligne,.atelier-incruste details,.atelier-incruste .verif-liste li{background:#fff!important;color:#111}.atelier-incruste .retenir,.atelier-incruste .piege,.atelier-incruste .critere{background:#fff!important}.atelier-incruste .retenir b{color:#176b2c}.atelier-incruste .piege b{color:#a1122a}.atelier-incruste .critere b{color:#7a5a00}.atelier-incruste .retour{background:#fff!important;color:#111!important}.atelier-incruste .note,.atelier-incruste details summary,.atelier-incruste .retour-option,.atelier-incruste .meta b{color:#1a3a7a!important}.atelier-incruste details.cours summary{color:#111!important}.atelier-incruste .tableau-menus table.cdcf th{background:#fff!important;color:#111}.atelier-incruste .tableau-menus table.cdcf th,.atelier-incruste .tableau-menus table.cdcf td{border-color:#999}.atelier-incruste .tableau-menus table.cdcf tr{break-inside:avoid}.atelier-incruste .tableau-menus table.cdcf caption{color:#1a3a7a}.atelier-incruste .tableau-menus.menus-js .menu-case select,.atelier-incruste .tableau-menus .menu-fleche{display:none!important}.atelier-incruste .tableau-menus.menus-js .menu-case{border:none;padding:0;min-height:0;background:#fff!important}.atelier-incruste .tableau-menus.menus-js .menu-vu{color:#111}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty{min-width:7em;height:1.5em;border-bottom:1px solid #555}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty::before{content:""}.atelier-incruste .retour-case.visible{color:#a1122a}.atelier-incruste .encoche.juste{color:#176b2c}.atelier-incruste .encoche.faux{color:#a1122a}.atelier-incruste .encoche.vide{color:#7a5a00}}
+@media print{.atelier-incruste .btn,.atelier-incruste .croquis-outils{display:none!important}.atelier-incruste .card{background:#fff;border-color:#999;break-inside:avoid-page}.atelier-incruste a,.atelier-incruste a:visited{color:#00309e!important}.atelier-incruste textarea,.atelier-incruste input[type=text]{background:#fff;color:#111;border-color:#999}.atelier-incruste fieldset.qcm-groupe legend,.atelier-incruste .consigne b{color:#111}.atelier-incruste .meta,.atelier-incruste .demo .ligne,.atelier-incruste details,.atelier-incruste .verif-liste li{background:#fff!important;color:#111}.atelier-incruste .retenir,.atelier-incruste .piege,.atelier-incruste .critere{background:#fff!important}.atelier-incruste .retenir b{color:#176b2c}.atelier-incruste .piege b{color:#a1122a}.atelier-incruste .critere b{color:#7a5a00}.atelier-incruste .retour{background:#fff!important;color:#111!important}.atelier-incruste .note,.atelier-incruste details summary,.atelier-incruste .retour-option,.atelier-incruste .meta b{color:#1a3a7a!important}.atelier-incruste details.cours summary{color:#111!important}.atelier-incruste .tableau-menus table.cdcf th{background:#fff!important;color:#111}.atelier-incruste .tableau-menus table.cdcf th,.atelier-incruste .tableau-menus table.cdcf td{border-color:#999}.atelier-incruste .tableau-menus table.cdcf tr{break-inside:avoid}.atelier-incruste .tableau-menus table.cdcf caption{color:#1a3a7a}.atelier-incruste .tableau-menus.menus-js .menu-case select,.atelier-incruste .tableau-menus .menu-fleche{display:none!important}.atelier-incruste .tableau-menus.menus-js .menu-case{border:none;padding:0;min-height:0;background:#fff!important}.atelier-incruste .tableau-menus.menus-js .menu-vu{color:#111}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty{min-width:7em;height:1.5em;border-bottom:1px solid #555}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty::before{content:""}.atelier-incruste .tableau-menus .pp-choix{display:none!important}.atelier-incruste .retour-case.visible{color:#a1122a}.atelier-incruste .encoche.juste{color:#176b2c}.atelier-incruste .encoche.faux{color:#a1122a}.atelier-incruste .encoche.vide{color:#7a5a00}}
 .atelier-incruste{border-left:5px solid var(--head);}
 .atelier-incruste .card.exercice{background:rgba(10,27,61,.6)}
 .atelier-incruste>h3,.atelier-incruste>h4{color:var(--head);font-size:1.08em;margin:4px 0 8px}
@@ -1475,7 +1662,26 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
     }
   }
   racine.querySelectorAll("canvas.croquis-zone").forEach(croquis);
-  racine.querySelectorAll(".tableau-menus").forEach(function(t){ t.classList.add("menus-js"); });
+  /* Un tableau à menus ne coupe jamais un mot : une colonne trop étroite s'élargit. Si le tableau ne tient plus alors
+     dans son cadre, il passe en cartes, comme sur un téléphone. Mesuré quand sa largeur change (fenêtre, onglet ouvert). */
+  function cartesSiTrop(t){
+    var f = t.querySelector(".defile");
+    if (!f || !t.offsetWidth) return;
+    t.classList.remove("en-cartes");
+    if (f.scrollWidth > f.clientWidth + 1) t.classList.add("en-cartes");
+  }
+  racine.querySelectorAll(".tableau-menus").forEach(function(t){
+    t.classList.add("menus-js");
+    if (window.ResizeObserver){
+      var largeur = -1;
+      new ResizeObserver(function(l){
+        var w = Math.round(l[0].contentRect.width);
+        if (w !== largeur){ largeur = w; cartesSiTrop(t); }
+      }).observe(t);
+    } else cartesSiTrop(t);
+  });
+  // Un Bonus vivant : avec le script, ses champs écrivent dans le schéma ; sans lui, sa consigne « papier » reste.
+  racine.querySelectorAll(".bonus-vivant").forEach(function(t){ t.classList.add("vivant-js"); });
 
   /* ── Branchements ─────────────────────────────────────────────────── */
   var boites = racine.querySelectorAll("[data-cle]");

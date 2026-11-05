@@ -171,6 +171,40 @@ table.releve td input{padding:4px 8px}
 
 /* Billet d'entrée (règle d'or n°26) : sans note ; il renvoie aux rattrapages du bloc « Avant de commencer ». */
 #billet .billet-intro{margin:.2em 0 .6em}#billet .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;border-left:3px solid var(--input-bd,var(--border,#274a8a));border-radius:0;background:none}#billet .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600;color:var(--text)}#billet .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;padding:7px 9px;background:var(--input-bg,rgba(127,127,127,.10));border:2px solid transparent;border-radius:9px}#billet .qcm-option:hover,#billet .qcm-option:focus-within{border-color:var(--hl)}#billet .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}#billet .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;font-weight:400}#billet .billet-retour{margin:.7em 0 0;padding:.55em .8em;border-radius:8px;border-left:4px solid var(--hl);background:rgba(127,127,127,.10)}#billet .billet-retour:empty{display:none}#billet .billet-retour.ok{border-left-color:var(--ok)}#billet .billet-retour.warn{border-left-color:var(--warn)}#billet .billet-retour.ko{border-left-color:var(--err)}#billet .billet-retour p{margin:.2em 0}#billet .billet-retour ul{margin:.3em 0 .2em 1.2em;padding:0}#billet .billet-retour li{margin:.25em 0}#billet .billet-retour a,#billet .billet-retour a:visited{color:var(--hl)}#billet .billet-note{font-size:.9em;opacity:.85}@media print{#billet .billet-retour,#billet .billet-retour a{color:#041a40!important;opacity:1!important}}
+
+/* ── Séances à onglets (squelette n°306) et volet « 📖 Rappel » (règle d'or n°311) — vague C7 du 04/11/2026, sur le modèle
+   du pilote 4e_C8.1 et de la vague C8. Sans JavaScript (pas de classe js-onglets), la page reste d'un seul tenant : toutes
+   les séances à la suite, ni onglets ni boutons de séance, le volet ouvert et sans bouton. ── */
+.seance-tabs{display:none;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+.js-onglets .seance-tabs{display:flex}
+.seance-tab{flex:1;min-width:150px;min-height:44px;padding:11px 8px;border-radius:10px;background:var(--panel2);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit;line-height:1.3}
+.seance-tab small{display:block;font-weight:400;font-size:.9em;color:var(--sub)}
+.seance-tab.active{background:#1d4e89;color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+.seance-tab.active small{color:#e4eaf5}
+.seance-tab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.seance-tab .done{color:var(--ok)}
+.js-onglets .seance-panel{display:none}
+.js-onglets .seance-panel.active{display:block}
+.seance-tete h2{margin-top:0}
+.question-directrice{color:var(--hl);font-weight:600;margin:.4em 0}
+.page-suivante{display:none;max-width:940px;margin:22px auto 8px;text-align:right}
+.js-onglets .page-suivante{display:block}
+@media print{.page-suivante{display:none!important}}
+.rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}
+.rappel-ouverture>summary{display:none}
+.rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+.rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media print{.rappel-ouverture>summary{display:none!important}}
+.positionnement{margin:8px 0;border:1px solid var(--border);border-radius:10px;padding:8px 12px}
+.positionnement legend{font-size:.9em;color:var(--sub);padding:0 6px}
+.positionnement label{display:inline-block;margin-right:14px}
+.positionnement input[type=radio]{width:auto}
+/* La consigne de sécurité de la page, rappelée en une ligne à la séance 2 (l'encadré complet est dans le volet « Rappel »). */
+.rappel-securite{margin:.6em 0 0;padding:6px 10px;border-left:4px solid var(--warn);background:rgba(255,214,102,.08);border-radius:0 8px 8px 0;font-size:.92em}
+/* L'outil qui suit la séance (règle d'or n°311 : un outil n'est pas du décor) : hors de sa carte, il garde son cadre et,
+   sur téléphone, ses tableaux défilent dans leur cadre comme ceux des cartes (filet mobile). */
+.outil-seance{max-width:940px;margin:0 auto 18px}
+@media(max-width:680px){.outil-seance table{display:block;overflow-x:auto;max-width:100%}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -506,13 +540,24 @@ table.releve td input{padding:4px 8px}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
 
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_4e_C7.7.html">📖 Lexique</a></nav>
 
 <h1>🏭 Le support du capteur</h1>
-<p class="subtitle">Thème 3 · 4<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<p class="subtitle">🎯 Ta mission : choisir, parmi les cinq moyens de l'atelier, celui qui fabriquera le support de la sonde tel qu'il est dessiné — pour les 4 bacs comme pour 30 supports.</p>
+
+<div class="toolbar">
+  <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+</div>
+
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
+
 <div class="badges">
   <span class="badge niveau">Niveau 4e</span>
   <span class="badge code" title="Programme 2024 — 4e_C7.7 : Choisir les moyens et produire la forme voulue.">4e_C7.7</span>
@@ -674,7 +719,22 @@ cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la prod
   });
 })();
 </script>
-<section class="card">
+</details><!-- /rappel-ouverture -->
+
+<nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" id="tab-s1" data-panel="s1" role="tab" aria-controls="s1" aria-selected="true" type="button">Séance 1<br><small>Le domaine de chaque moyen</small><span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>Deux pièces, deux quantités, conclure</small><span class="done" id="done-s2"></span></button>
+</nav>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card seance-tete">
+<h2>🧭 Séance 1 — Le domaine de chaque moyen</h2>
+<p class="question-directrice">Question directrice : avant de lancer une machine, comment savoir si elle sait produire la pièce qu'on a dessinée ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : l'ouverture, puis ce que chaque moyen ne sait pas faire (activité 0, environ 15 min), et l'atelier qui trie et dit pourquoi (activité 1, environ 25 min).</p>
+</section>
+
+<section class="card" id="act0">
   <h2>📋 Activité 0 — Ce que chaque moyen ne sait pas faire ⏱ ~15 min</h2>
   <p>Un moyen de fabrication n'a pas de <em>qualité</em> : il a un <b>domaine</b>.
   Hors de son domaine, il ne fait pas « moins bien » — il ne fait pas, ou il fait autre chose.
@@ -734,7 +794,7 @@ cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la prod
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="act1">
   <h2>🏭 Activité 1 — L'atelier trie, et il dit pourquoi ⏱ ~25 min</h2>
   <p>Voici l'atelier, chargé du dessin du support : 3 mm de paroi, une tolérance de
   0,3 mm sur la fente, deux perçages traversants, et du <b>PMMA</b>. Clique sur
@@ -840,7 +900,19 @@ cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la prod
   </div>
 </section>
 
-<section class="card">
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Deux pièces, deux quantités ›</button></p>
+</div>
+
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<section class="card seance-tete">
+<h2>🧭 Séance 2 — Deux pièces, deux quantités, puis conclure</h2>
+<p class="question-directrice">Question directrice : deux moyens savent produire le support : rendent-ils la même pièce, et à temps ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : le même dessin, deux pièces différentes (activité 2, environ 25 min), quatre pièces ou trente (activité 3, environ 15 min), le réinvestissement pour le collège voisin (environ 15 min), puis la synthèse, le Bonus, le bilan et le renvoi vers le QCM.</p>
+<p class="rappel-securite">⚠️ À l'atelier : jamais de PVC à la découpe laser, capot fermé ; à la fraiseuse, pièce bridée, lunettes, cheveux attachés, aucun gant. <i>L'encadré complet est dans le rappel, en haut de page.</i></p>
+</section>
+
+<section class="card" id="act2">
   <h2>🔍 Activité 2 — Le même dessin, deux pièces différentes ⏱ ~25 min</h2>
   <p>Deux moyens savent produire le support. On pourrait croire qu'ils donnent la
   même pièce : c'est le même fichier. <b>Ils ne donnent pas la même pièce.</b></p>
@@ -911,7 +983,7 @@ cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la prod
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="act3">
   <h2>⏱ Activité 3 — Quatre pièces, ou trente ⏱ ~15 min</h2>
   <p>Les deux moyens savent produire le support. Reste une question que le dessin ne
   pose pas : <b>combien en faut-il ?</b> L'atelier du collège dispose de <b>3 h de machine</b>
@@ -966,7 +1038,7 @@ cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la prod
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="refaire">
   <h2>🔄 REFAIRE — Réinvestissement ⏱ ~15 min</h2>
 <p>Le collège voisin veut les mêmes supports pour son jardin. Il n'a <b>pas de
   découpeuse laser</b> : son atelier compte une fraiseuse numérique et une imprimante 3D, rien
@@ -1035,6 +1107,12 @@ cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la prod
 
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+  <details class="correction"><summary>✅ Corrigé du Bonus — à partir de combien de supports, et d'où viennent les 3 h</summary><div>
+    <p><b>Le calcul.</b> La fraiseuse tient le délai tant que 25 + 12 × n ≤ 180, c'est-à-dire tant que 12 × n ≤ 155, soit n ≤ 12,9. Pour 12 supports : 25 + 12 × 12 = 169 min, soit 2 h 49 — elle tient. Pour 13 supports : 25 + 12 × 13 = 181 min, soit 3 h 01 — elle dépasse d'une minute. <b>À partir de 13 supports, la découpe laser devient indispensable</b> ; pour ces 13 pièces, elle demande 10 + 2 × 13 = 36 min.</p>
+    <p><b>D'où viennent les 3 h ?</b> D'un emploi du temps : les machines de l'atelier servent aussi à d'autres classes, et quelqu'un a réservé ce temps pour le projet, avant une date. Ce n'est pas une loi de la physique : on peut demander un créneau de plus, ou une date plus tardive. Une phrase qui convient : « j'irais demander au professeur qui tient le planning des machines de l'atelier s'il reste un créneau — et, si c'est la date qui coince, à la personne qui l'a fixée ».</p>
+    <p><b>Attendus :</b> l'inégalité résolue (n ≤ 12,9) ; la première quantité qui dépasse, 13 ; la vérification à 12 et à 13 supports ; une personne désignée par ce qu'elle décide, et ce qu'on lui demande.</p>
+    <p><b>Erreurs typiques :</b> répondre 12 — c'est la dernière quantité qui tient, pas la première qui dépasse ; oublier la préparation de la fraiseuse et calculer 180 ÷ 12 = 15 ; arrondir 12,9 à 13 sans vérifier ; croire qu'un temps machine ne se discute jamais.</p>
+  </div></details>
 </section>
 
 <section class="card">
@@ -1045,14 +1123,20 @@ cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la prod
   que la machine ferait du dessin ?</p>
 
   <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
-  <p style="margin-top:12px"><b>Je me positionne sur 4e_C7.7 :</b></p>
+  <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">où as-tu hésité en lisant les verdicts de l'atelier, et qu'est-ce qui t'a surpris quand la quantité a changé la réponse ?</label></p>
+  <textarea id="bilanMeta" rows="2" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…"></textarea>
+  <h3>📍 Je me positionne</h3>
+  <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
+  <p style="margin-top:12px"><label for="pos"><b>4e_C7.7 — choisir les moyens et produire la forme voulue :</b></label></p>
   <select id="pos">
     <option value="">— je me positionne —</option>
-    <option>Je sais confronter un dessin aux moyens de l'atelier et dire ce que chacun en fera</option>
-    <option>Je sais le faire si on m'aide à relire le domaine de chaque moyen</option>
-    <option>Je lis le tableau, mais je choisis encore le moyen le plus précis ou le plus rapide</option>
-    <option>Je ne sais pas encore ce qu'il faut regarder pour choisir une machine</option>
+    <option>🔴 Maîtrise insuffisante — je lis le tableau, mais je choisis encore le moyen le plus précis ou le plus rapide</option>
+    <option>🟠 Maîtrise fragile — je confronte le dessin aux moyens si l'on m'aide à relire le domaine de chacun</option>
+    <option>🟢 Maîtrise satisfaisante — je confronte un dessin aux moyens de l'atelier et je dis ce que chacun en fera</option>
+    <option>⭐ Très bonne maîtrise — et je tiens compte de la quantité, ou je change le dessin pour qu'un moyen sache le produire</option>
   </select>
+  <fieldset class="positionnement"><legend>4e_C4.3 (appui) — mettre en relation la forme d’une pièce avec le procédé de réalisation</legend>
+<label><input type="radio" name="pos_c43" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c43" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c43" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c43" value="4"> ⭐ très bonne</label></fieldset>
 </section>
 
 <section class="card" style="text-align:center">
@@ -1061,12 +1145,15 @@ cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la prod
   <a class="btn" href="qcm_4e_C7.7_support-du-capteur.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
 
+</div>
+
 <footer>Séquence 4e_C7.7 — « Le support du capteur ». Atelier des moyens original (CC0), temps et domaines calculés par <a href="moyens.py" download title="Télécharger moyens.py">📥&nbsp;moyens.py</a>, aucune dépendance externe. Programme 2024, Thème 3.</footer>
 
 <script>
 (function(){
 "use strict";
 const KEY = "seq_4e_C7_7";
+let ongletActif = null;   // la séance affichée (vague n°311, 04/11/2026)
 const $ = id => document.getElementById(id);
 window.__exp = window.__exp || {};
 
@@ -1304,23 +1391,96 @@ function save(){
   document.querySelectorAll("input, select, textarea").forEach(e => {
     if(!e.id) return;
     if(e.type === "checkbox" || (e.type === "radio" && e.closest("#billet"))) o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
+  o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
+  o.onglet = ongletActif;
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
 }
 function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
   if(!o) return;
+  ongletActif = o.onglet || null;
   Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
   Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  Object.entries(o.radios || {}).forEach(([name, v]) => { const r = document.querySelector('.positionnement input[name="' + name + '"][value="' + v + '"]'); if(r) r.checked = true; });
+  // le menu « Je me positionne » est passé le 04/11/2026 aux quatre niveaux du livret : une réponse sur l'ancienne échelle se relit au niveau voisin
+  const pos = $("pos"), vPos = (o.inputs || {}).pos, ANCIENNE = {"Je sais confronter un dessin aux moyens de l'atelier et dire ce que chacun en fera": 3, "Je sais le faire si on m'aide à relire le domaine de chaque moyen": 2, "Je lis le tableau, mais je choisis encore le moyen le plus précis ou le plus rapide": 1, "Je ne sais pas encore ce qu'il faut regarder pour choisir une machine": 1};
+  if(pos && vPos && !pos.value && ANCIENNE[vPos]) pos.selectedIndex = ANCIENNE[vPos];
   window.__exp = o.exp || {};
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r && h.value.trim()) r.textContent = h.value;
+  // l'onglet en cours : un lien direct vers une ancre l'emporte sur lui
+  if(!location.hash && ongletActif && $(ongletActif)) montrerSeance(ongletActif, false);
 }
 document.addEventListener("input", () => {
   save();
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r) r.textContent = h.value.trim() || "—";
 });
+/* Un outil n'est pas du décor (n°311) : l'atelier des moyens sert aux deux séances (activités 1, 2 et 3). C'est un seul
+   nœud. À la séance 1, il reste à sa place, dans l'activité 1 : remonté au-dessus de l'activité 0, il en donnerait les
+   réponses (sa colonne « Ce qu'il fera de ton dessin »). À partir de la séance 2, le script des onglets le place dans la
+   séance ouverte, juste après son en-tête (question directrice et programme). Le déplacer garde son état (dessin,
+   quantité, verdicts). Sans JavaScript, il reste à sa place, dans l'activité 1. */
+const OUTIL = $("etabli"), PLACE_OUTIL = document.createComment(" place de l'outil à la séance 1 ");
+if(OUTIL) OUTIL.before(PLACE_OUTIL);
+function placerOutil(id){
+  const pan = $(id); if(!OUTIL || !pan) return;
+  // l'encadré que la fiche papier pose derrière un simulateur (« cette partie se fait en ligne ») suit l'outil
+  const suiv = OUTIL.nextElementSibling, fiche = suiv && suiv.classList.contains("pp-enligne") ? suiv : null;
+  const chezLui = pan.contains(PLACE_OUTIL);
+  if(chezLui){ if(PLACE_OUTIL.nextSibling !== OUTIL) PLACE_OUTIL.after(OUTIL); }
+  else { const tete = pan.querySelector(".seance-tete"); if(tete && tete.nextElementSibling !== OUTIL) tete.after(OUTIL); }
+  if(fiche && OUTIL.nextElementSibling !== fiche) OUTIL.after(fiche);
+  OUTIL.classList.toggle("outil-seance", !chezLui);
+}
+/* ══ Séances à onglets (squelette n°306) — vague C7 du 04/11/2026, sur le modèle du pilote 4e_C8.1 et de la vague C8 ══
+   L'onglet en cours est mémorisé avec le travail (o.onglet), à part des verrous (__exp). */
+function montrerSeance(id, memoriser){
+  if(!$(id)) return;
+  document.querySelectorAll(".seance-tab").forEach(x => { const on = x.dataset.panel === id; x.classList.toggle("active", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
+  document.querySelectorAll(".seance-panel").forEach(p => p.classList.toggle("active", p.id === id));
+  placerOutil(id);
+  appliqueSeance(id);
+  ongletActif = id;
+  if(memoriser !== false) save();
+}
+document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => montrerSeance(t.dataset.panel)));
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte.
+   Comme au pilote, le volet ne se replie qu'une fois la page chargée (marque data-fermer-au-chargement). */
+function appliqueSeance(idPanneau){
+  const v = $("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", () => { const v = $("ouverture"); if(v){ voletAvantImpression = v.open; v.open = true; } });
+  window.addEventListener("afterprint", () => { const v = $("ouverture"); if(v && voletAvantImpression !== null){ v.open = voletAvantImpression; voletAvantImpression = null; } });
+  const cibleDuLien = () => { let id = ""; try{ id = decodeURIComponent(location.hash.slice(1)); }catch(e){} return id ? $(id) : null; };
+  const ouvrirSeanceDeLAncre = () => {
+    const cible = cibleDuLien(); const pan = cible && cible.closest(".seance-panel");
+    if(!pan || pan.classList.contains("active")) return;
+    montrerSeance(pan.id);
+    setTimeout(() => cible.scrollIntoView({block:"start"}), 60);
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", () => {
+    const v = $("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active") || {}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
+/* Règle d'or n°101 — chaque séance mène explicitement à la suivante */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => { montrerSeance(b.dataset.vers); window.scrollTo({top:0, behavior:"smooth"}); }));
+if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
+
 restore(); majAtelier();
+placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // l'outil rejoint la séance affichée
 })();
 </script>
 

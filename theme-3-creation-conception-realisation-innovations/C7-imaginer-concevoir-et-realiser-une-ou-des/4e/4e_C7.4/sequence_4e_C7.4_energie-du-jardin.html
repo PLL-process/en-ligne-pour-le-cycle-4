@@ -149,6 +149,40 @@ table.releve td input{padding:4px 8px}
 
 /* Billet d'entrée (règle d'or n°26) : sans note ; il renvoie aux rattrapages du bloc « Avant de commencer ». */
 #billet .billet-intro{margin:.2em 0 .6em}#billet .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;border-left:3px solid var(--input-bd,var(--border,#274a8a));border-radius:0;background:none}#billet .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600;color:var(--text)}#billet .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;padding:7px 9px;background:var(--input-bg,rgba(127,127,127,.10));border:2px solid transparent;border-radius:9px}#billet .qcm-option:hover,#billet .qcm-option:focus-within{border-color:var(--hl)}#billet .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}#billet .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;font-weight:400}#billet .billet-retour{margin:.7em 0 0;padding:.55em .8em;border-radius:8px;border-left:4px solid var(--hl);background:rgba(127,127,127,.10)}#billet .billet-retour:empty{display:none}#billet .billet-retour.ok{border-left-color:var(--ok)}#billet .billet-retour.warn{border-left-color:var(--warn)}#billet .billet-retour.ko{border-left-color:var(--err)}#billet .billet-retour p{margin:.2em 0}#billet .billet-retour ul{margin:.3em 0 .2em 1.2em;padding:0}#billet .billet-retour li{margin:.25em 0}#billet .billet-retour a,#billet .billet-retour a:visited{color:var(--hl)}#billet .billet-note{font-size:.9em;opacity:.85}@media print{#billet .billet-retour,#billet .billet-retour a{color:#041a40!important;opacity:1!important}}
+
+/* ── Séances à onglets (squelette n°306) et volet « 📖 Rappel » (règle d'or n°311) — vague C7 du 04/11/2026, sur le modèle
+   du pilote 4e_C8.1 et de la vague C8. Sans JavaScript (pas de classe js-onglets), la page reste d'un seul tenant : toutes
+   les séances à la suite, ni onglets ni boutons de séance, le volet ouvert et sans bouton. ── */
+.seance-tabs{display:none;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+.js-onglets .seance-tabs{display:flex}
+.seance-tab{flex:1;min-width:150px;min-height:44px;padding:11px 8px;border-radius:10px;background:var(--panel2);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit;line-height:1.3}
+.seance-tab small{display:block;font-weight:400;font-size:.9em;color:var(--sub)}
+.seance-tab.active{background:#1d4e89;color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+.seance-tab.active small{color:#e4eaf5}
+.seance-tab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.seance-tab .done{color:var(--ok)}
+.js-onglets .seance-panel{display:none}
+.js-onglets .seance-panel.active{display:block}
+.seance-tete h2{margin-top:0}
+.question-directrice{color:var(--hl);font-weight:600;margin:.4em 0}
+.page-suivante{display:none;max-width:940px;margin:22px auto 8px;text-align:right}
+.js-onglets .page-suivante{display:block}
+@media print{.page-suivante{display:none!important}}
+.rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}
+.rappel-ouverture>summary{display:none}
+.rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+.rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media print{.rappel-ouverture>summary{display:none!important}}
+.positionnement{margin:8px 0;border:1px solid var(--border);border-radius:10px;padding:8px 12px}
+.positionnement legend{font-size:.9em;color:var(--sub);padding:0 6px}
+.positionnement label{display:inline-block;margin-right:14px}
+.positionnement input[type=radio]{width:auto}
+/* La consigne de sécurité de la page, rappelée en une ligne à la séance 2 (l'encadré complet est dans le volet « Rappel »). */
+.rappel-securite{margin:.6em 0 0;padding:6px 10px;border-left:4px solid var(--warn);background:rgba(255,214,102,.08);border-radius:0 8px 8px 0;font-size:.92em}
+/* L'outil qui suit la séance (règle d'or n°311 : un outil n'est pas du décor) : hors de sa carte, il garde son cadre et,
+   sur téléphone, ses tableaux défilent dans leur cadre comme ceux des cartes (filet mobile). */
+.outil-seance{max-width:940px;margin:0 auto 18px}
+@media(max-width:680px){.outil-seance table{display:block;overflow-x:auto;max-width:100%}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -484,13 +518,24 @@ table.releve td input{padding:4px 8px}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
 
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_4e_C7.4.html">📖 Lexique</a></nav>
 
 <h1>🌱 De quoi vit le jardin connecté&nbsp;?</h1>
-<p class="subtitle">Thème 3 · 4<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<p class="subtitle">🎯 Ta mission : choisir la source d'énergie qui fera vivre seul le jardin du fond de la cour, vacances d'été comprises — grille de critères à l'appui, en disant ce que ce choix coûte.</p>
+
+<div class="toolbar">
+  <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+</div>
+
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
+
 <div class="badges">
   <span class="badge niveau">Niveau 4e</span>
   <span class="badge code" title="Programme 2024 — 4e_C7.4 : Comparer différentes sources d'énergie pour choisir la plus adaptée.">4e_C7.4</span>
@@ -653,12 +698,27 @@ table.releve td input{padding:4px 8px}
   });
 })();
 </script>
-<section class="card">
+</details><!-- /rappel-ouverture -->
+
+<nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" id="tab-s1" data-panel="s1" role="tab" aria-controls="s1" aria-selected="true" type="button">Séance 1<br><small>Mesurer, écrire les critères, comparer</small><span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>Trancher, changer la charge, conclure</small><span class="done" id="done-s2"></span></button>
+</nav>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card seance-tete">
+<h2>🧭 Séance 1 — Mesurer, écrire les critères, comparer</h2>
+<p class="question-directrice">Question directrice : qu'est-ce qui vide vraiment la source, et comment comparer cinq sources avec les mêmes critères ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : l'ouverture, puis qui vide vraiment la source (activité 0, environ 15 min), écrire les critères avant de comparer (activité 1, environ 20 min) et remplir la grille de comparaison au banc (activité 2, environ 20 min).</p>
+</section>
+
+<section class="card" id="act0">
   <h2>🖐️ Activité 0 — FAIRE d'abord : qui vide vraiment la source ⏱ ~15 min</h2>
   <p>Avant toute explication. Le banc compte l'énergie que le jardin consomme en une
   journée. Chaque ligne peut être <b>éteinte</b> : décoche-la, et regarde ce que devient le
   total. <b>Éteins la pompe. Puis rallume-la et éteins la carte.</b></p>
-  <div class="banc">
+  <div class="banc" id="banc">
     <table class="conso">
       <tr><th></th><th>Ce qui consomme</th><th>Courant (en milliampères)</th><th>Par jour</th><th>Énergie</th></tr>
       <tr id="tr0"><td class="ck"><input type="checkbox" id="ck0" checked></td><td>Carte Arduino UNO</td><td class="n">45 mA</td><td class="n">24 h</td><td class="n" id="wh0">5,400 Wh (wattheures)</td></tr>
@@ -757,7 +817,7 @@ table.releve td input{padding:4px 8px}
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="act1">
   <h2>📋 Activité 1 — Écrire les critères AVANT de comparer ⏱ ~20 min</h2>
   <p><b>Objectif :</b> distinguer un critère d'une remarque. <b>Compétence :</b>
   4e_C3.1. <b>Production attendue :</b> 8 décisions + une phrase.</p>
@@ -836,7 +896,7 @@ table.releve td input{padding:4px 8px}
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="act2">
   <h2>📊 Activité 2 — Remplir la grille de comparaison ⏱ ~20 min</h2>
   <p><b>Objectif :</b> appliquer les mêmes critères à toutes les sources.
   <b>Compétence :</b> 4e_C7.4. <b>Production attendue :</b> 5 verdicts + 1 calcul.</p>
@@ -910,7 +970,19 @@ table.releve td input{padding:4px 8px}
   </div>
 </section>
 
-<section class="card">
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Trancher, changer la charge ›</button></p>
+</div>
+
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<section class="card seance-tete">
+<h2>🧭 Séance 2 — Trancher, changer la charge, conclure</h2>
+<p class="question-directrice">Question directrice : aucune source ne gagne sur tous les critères : laquelle choisir — et faut-il changer la source, ou la charge ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : trancher, et assumer ce qu'on écarte (activité 3, environ 20 min), changer la charge plutôt que la source (activité 4, environ 15 min), le réinvestissement sur le toit-terrasse (environ 10 min), puis la synthèse, le Bonus, le bilan et le renvoi vers le QCM.</p>
+<p class="rappel-securite">⚠️ Avec le matériel : côté élève, il n'y a que du 5 V (volts) — le « secteur », c'est l'adaptateur USB fermé, qu'on n'ouvre pas — et une pile ou un accu ne se met jamais en court-circuit. <i>L'encadré complet est dans le rappel, en haut de page.</i></p>
+</section>
+
+<section class="card" id="act3">
   <h2>⚖️ Activité 3 — Trancher, et assumer ce qu'on écarte ⏱ ~20 min</h2>
   <p><b>Objectif :</b> choisir avec une grille sous les yeux. <b>Compétence :</b>
   4e_C7.4. <b>Production attendue :</b> 3 réponses + une justification.</p>
@@ -977,7 +1049,7 @@ table.releve td input{padding:4px 8px}
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="act4">
   <h2>💡 Activité 4 — Et si on changeait la charge plutôt que la source ⏱ ~15 min</h2>
   <p><b>Objectif :</b> découvrir que comparer les sources finit par obliger à
   regarder la charge. <b>Compétence :</b> 4e_C7.4. <b>Production attendue :</b> 1 calcul +
@@ -1024,7 +1096,7 @@ table.releve td input{padding:4px 8px}
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="refaire">
   <h2>🔄 REFAIRE — Réinvestissement ⏱ ~10 min</h2>
 <p>Le collège déplace le jardin <b>sur le toit-terrasse de l'annexe</b> : plein
   soleil toute la journée, et une prise à deux mètres. Le montage ne change pas.</p>
@@ -1084,6 +1156,29 @@ table.releve td input{padding:4px 8px}
 
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+  <details class="correction"><summary>✅ Corrigé du défi coût réel — les piles contre le panneau, sur quatre ans</summary><div>
+    <p><b>On compte les achats.</b> Le jardin tourne toute l'année, été compris : quatre années, c'est 4 × 365 = 1 460 jours. Un jeu de quatre piles AA dure 2,1 jours : il en faut 1 460 ÷ 2,1 ≈ 695,2, donc <b>696 jeux</b>, soit 696 × 4,00 = <b>2 784 €</b>. Le panneau 2 W (watts) coûte 15 €, plus un accu à 8 € au départ et un autre au bout de trois ans : 15 + 8 + 8 = <b>31 €</b>.</p>
+    <p><b>Le panneau devient moins cher dès le premier mois.</b> Au départ, le panneau et son accu coûtent 23 €, un jeu de piles 4 €. Mais on rachète des piles tous les 2,1 jours : le sixième jeu, acheté le onzième jour, porte la dépense à 24 €. Dès ce jour-là, le panneau a coûté moins cher ; à la fin du premier mois, les piles en sont à 15 jeux, soit 60 €.</p>
+    <p><b>Ce que ce calcul ne dit pas.</b> Il suppose que le panneau suffit chaque jour : c'est vrai en moyenne sur l'année (6,3 Wh, des wattheures, récoltés pour 5,87 Wh consommés), pas en décembre — c'est le défi hiver. Et 696 jeux, ce sont 2 784 piles à rapporter au bac de collecte.</p>
+    <p><b>Attendus :</b> le nombre de jours ; le nombre de jeux, arrondi au jeu supérieur ; les deux totaux ; le moment où le panneau passe devant ; une limite du calcul.</p>
+    <p><b>Erreurs typiques :</b> comparer 4 € et 15 €, des prix d'achat ; oublier l'accu, ou ne le compter qu'une fois ; ne compter que les jours de classe, alors que le jardin vit aussi l'été ; arrondir 695,2 à 695 jeux — le dernier jour, le jardin resterait sans piles.</p>
+  </div></details>
+  <details class="correction"><summary>✅ Corrigé du défi mesure — le courant réel de la carte au repos</summary><div>
+    <p><b>Comment mesurer.</b> Le multimètre se règle en ampèremètre, sur le calibre des milliampères, et se branche <b>en série</b> : on ouvre le fil + qui alimente la carte et le courant traverse l'appareil. Jamais en parallèle sur l'alimentation : l'ampèremètre ferait un court-circuit et son fusible fondrait. On ne mesure que du côté 5 V (volts), en très basse tension.</p>
+    <p><b>Ce qu'on peut trouver.</b> Personne ne peut écrire ta valeur à ta place : c'est ta mesure qui fait foi. Le banc compte 45 mA (milliampères), une valeur constructeur usuelle pour une carte UNO, DEL d'alimentation et régulateur compris. Un écart de quelques milliampères, dans un sens ou dans l'autre, est normal. Écris-le ainsi : « j'ai mesuré … mA, soit … mA de plus (ou de moins) que les 45 mA du banc ».</p>
+    <p><b>Raisons possibles d'un écart :</b> ce qui est branché en même temps (l'écran et son rétroéclairage, le capteur) ; la façon d'alimenter la carte (par l'USB, ou par une pile à travers le régulateur, qui consomme lui aussi) ; le modèle exact de la carte (une copie n'a pas toujours les mêmes composants) ; le programme qui tourne (une DEL qui clignote) ; la précision du multimètre sur ce calibre.</p>
+    <p><b>Attendus :</b> le branchement en série ; la valeur mesurée, avec son unité ; l'écart chiffré par rapport aux 45 mA ; une raison qui s'appuie sur ce qui était branché pendant la mesure.</p>
+    <p><b>Erreurs typiques :</b> brancher l'ampèremètre en parallèle ; rester sur le calibre des ampères (l'appareil affiche 0,04 et l'on croit qu'il n'y a rien) ; mesurer pendant que la pompe tourne — ce n'est plus « au repos » ; confondre le milliampère, un courant, et le milliampère-heure, une capacité.</p>
+  </div></details>
+  <details class="correction"><summary>✅ Corrigé du défi hiver — une semaine de décembre à New York</summary><div>
+    <p><b>Le chiffre de décembre.</b> À New York, en décembre, un panneau fixe incliné ne reçoit plus qu'environ <b>2,4 heures équivalent plein soleil</b> par jour, au lieu de 4,5 en moyenne sur l'année : presque deux fois moins. C'est la valeur que donnent les données d'ensoleillement utilisées par le banc.</p>
+    <p><b>Le calcul, avec le panneau 2 W (watts) de la recommandation.</b> Récolte : 2 × 2,4 × 70 % ≈ 3,4 Wh (wattheures) par jour. Besoin : 5,87 Wh par jour. Il manque environ 2,5 Wh chaque jour, soit 7 × 2,51 ≈ <b>17,6 Wh sur une semaine</b>.</p>
+    <p><b>Grossir l'accu :</b> il doit donner, à lui seul, les 17,6 Wh qui manquent. Un accu 18650 rend 9,4 Wh : il en faut deux (18,8 Wh) — l'accu double. Mais il ne fait que repousser la panne : en décembre, le panneau ne le recharge jamais complètement, et la semaine suivante repart à vide.</p>
+    <p><b>Grossir le panneau :</b> pour récolter 5,87 Wh par jour avec 2,4 h et 70 %, il faut 5,87 ÷ (2,4 × 0,7) = 5,87 ÷ 1,68 ≈ <b>3,5 W crête</b>, un panneau environ 1,75 fois plus grand que le 2 W (et 3,5 fois le 1 W du banc). C'est la solution qui tient tout l'hiver.</p>
+    <p><b>Et l'activité 4 ?</b> Avec la carte à faible consommation, le jardin ne demande plus que 1,07 Wh par jour : même le panneau 1 W du banc en récolte 1 × 2,4 × 0,7 ≈ 1,7 Wh en décembre. Changer la charge règle aussi l'hiver.</p>
+    <p><b>Attendus :</b> le chiffre de décembre, environ 2,4 h ; la récolte recalculée avec le même rendement de 70 % ; le manque par jour, puis sur sept jours ; une taille d'accu ou de panneau, chiffrée ; la différence entre repousser la panne (l'accu) et la supprimer (le panneau, ou la charge).</p>
+    <p><b>Erreurs typiques :</b> garder 4,5 h en décembre ; oublier le rendement de 70 % ; confondre les watts, une puissance, et les wattheures, une énergie ; croire qu'un plus gros accu suffit pour tout l'hiver ; oublier qu'un accu Li-ion ne se charge pas sous 0 °C — encore un critère que le banc ne compte pas.</p>
+  </div></details>
 </section>
 
 <section class="card">
@@ -1093,7 +1188,11 @@ table.releve td input{padding:4px 8px}
   clics. Ce qui compte n'est pas d'avoir eu raison : c'est de savoir <em>pourquoi</em> l'intuition
   se trompait — et de pouvoir refaire le raisonnement sur un autre objet.</p>
   <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
-  <p style="margin-top:12px"><b>Je me positionne sur 4e_C7.4 :</b></p>
+  <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">où as-tu hésité en remplissant la grille, et qu'est-ce qui t'a surpris quand tu as éteint la pompe, puis la carte ?</label></p>
+  <textarea id="bilanMeta" rows="2" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…"></textarea>
+  <h3>📍 Je me positionne</h3>
+  <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
+  <p style="margin-top:12px"><label for="pos"><b>4e_C7.4 — comparer différentes sources d'énergie pour choisir la plus adaptée :</b></label></p>
   <select id="pos">
     <option value="">— je me positionne —</option>
     <option>🔴 Maîtrise insuffisante — je choisis une source sans grille de comparaison</option>
@@ -1101,6 +1200,8 @@ table.releve td input{padding:4px 8px}
     <option>🟢 Maîtrise satisfaisante — j'écris mes critères, je les applique à toutes les sources et je tranche</option>
     <option>⭐ Très bonne maîtrise — et je dis ce que mon choix coûte, et quand il faut changer la charge plutôt que la source</option>
   </select>
+  <fieldset class="positionnement"><legend>4e_C3.1 (appui) — identifier les caractéristiques à prendre en compte dans le choix d'un OST en vue de répondre à un besoin</legend>
+<label><input type="radio" name="pos_c31" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c31" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c31" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c31" value="4"> ⭐ très bonne</label></fieldset>
 </section>
 
 <section class="card" style="text-align:center">
@@ -1109,12 +1210,15 @@ table.releve td input{padding:4px 8px}
   <a class="btn" href="qcm_4e_C7.4_energie-du-jardin.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
 
+</div>
+
 <footer>Séquence 4e_C7.4 — <em>De quoi vit le jardin connecté</em> · Thème 3 · banc d'énergie original (CC0), valeurs calculées à partir des courants constructeur et des capacités réelles.</footer>
 
 <script>
 (function(){
 "use strict";
 const KEY = "seq_4e_C7_4";
+let ongletActif = null;   // la séance affichée (vague n°311, 04/11/2026)
 const $ = id => document.getElementById(id);
 window.__exp = window.__exp || {};
 
@@ -1274,23 +1378,92 @@ function save(){
   document.querySelectorAll("input, select, textarea").forEach(e => {
     if(!e.id) return;
     if(e.type === "checkbox" || (e.type === "radio" && e.closest("#billet"))) o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
+  o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
+  o.onglet = ongletActif;
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
 }
 function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
   if(!o) return;
+  ongletActif = o.onglet || null;
   Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
   Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  Object.entries(o.radios || {}).forEach(([name, v]) => { const r = document.querySelector('.positionnement input[name="' + name + '"][value="' + v + '"]'); if(r) r.checked = true; });
   window.__exp = o.exp || {};
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r && h.value.trim()) r.textContent = h.value;
+  // l'onglet en cours : un lien direct vers une ancre l'emporte sur lui
+  if(!location.hash && ongletActif && $(ongletActif)) montrerSeance(ongletActif, false);
 }
 document.addEventListener("input", () => {
   save();
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r) r.textContent = h.value.trim() || "—";
 });
+/* Un outil n'est pas du décor (n°311) : le banc d'énergie sert aux deux séances (activités 0 et 2, puis le calcul de
+   l'activité 4). C'est un seul nœud. À la séance 1, il reste à sa place, dans l'activité 0 ; à partir de la séance 2, le
+   script des onglets le place dans la séance ouverte, juste après son en-tête (question directrice et programme). Le déplacer
+   garde son état (lignes allumées ou éteintes, source choisie, verdict). Sans JavaScript, il reste à sa place. */
+const OUTIL = $("banc"), PLACE_OUTIL = document.createComment(" place de l'outil à la séance 1 ");
+if(OUTIL) OUTIL.before(PLACE_OUTIL);
+function placerOutil(id){
+  const pan = $(id); if(!OUTIL || !pan) return;
+  // l'encadré que la fiche papier pose derrière un simulateur (« cette partie se fait en ligne ») suit l'outil
+  const suiv = OUTIL.nextElementSibling, fiche = suiv && suiv.classList.contains("pp-enligne") ? suiv : null;
+  const chezLui = pan.contains(PLACE_OUTIL);
+  if(chezLui){ if(PLACE_OUTIL.nextSibling !== OUTIL) PLACE_OUTIL.after(OUTIL); }
+  else { const tete = pan.querySelector(".seance-tete"); if(tete && tete.nextElementSibling !== OUTIL) tete.after(OUTIL); }
+  if(fiche && OUTIL.nextElementSibling !== fiche) OUTIL.after(fiche);
+  OUTIL.classList.toggle("outil-seance", !chezLui);
+}
+/* ══ Séances à onglets (squelette n°306) — vague C7 du 04/11/2026, sur le modèle du pilote 4e_C8.1 et de la vague C8 ══
+   L'onglet en cours est mémorisé avec le travail (o.onglet), à part des verrous (__exp). */
+function montrerSeance(id, memoriser){
+  if(!$(id)) return;
+  document.querySelectorAll(".seance-tab").forEach(x => { const on = x.dataset.panel === id; x.classList.toggle("active", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
+  document.querySelectorAll(".seance-panel").forEach(p => p.classList.toggle("active", p.id === id));
+  placerOutil(id);
+  appliqueSeance(id);
+  ongletActif = id;
+  if(memoriser !== false) save();
+}
+document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => montrerSeance(t.dataset.panel)));
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte.
+   Comme au pilote, le volet ne se replie qu'une fois la page chargée (marque data-fermer-au-chargement). */
+function appliqueSeance(idPanneau){
+  const v = $("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", () => { const v = $("ouverture"); if(v){ voletAvantImpression = v.open; v.open = true; } });
+  window.addEventListener("afterprint", () => { const v = $("ouverture"); if(v && voletAvantImpression !== null){ v.open = voletAvantImpression; voletAvantImpression = null; } });
+  const cibleDuLien = () => { let id = ""; try{ id = decodeURIComponent(location.hash.slice(1)); }catch(e){} return id ? $(id) : null; };
+  const ouvrirSeanceDeLAncre = () => {
+    const cible = cibleDuLien(); const pan = cible && cible.closest(".seance-panel");
+    if(!pan || pan.classList.contains("active")) return;
+    montrerSeance(pan.id);
+    setTimeout(() => cible.scrollIntoView({block:"start"}), 60);
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", () => {
+    const v = $("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active") || {}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
+/* Règle d'or n°101 — chaque séance mène explicitement à la suivante */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => { montrerSeance(b.dataset.vers); window.scrollTo({top:0, behavior:"smooth"}); }));
+if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
+
 restore(); majBanc(false);
+placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // l'outil rejoint la séance affichée
 })();
 </script>
 

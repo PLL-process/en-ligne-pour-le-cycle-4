@@ -115,3 +115,17 @@ lecture du code.
   caractères. C'est écrit dans la page, à l'élève.
 * Ils ne prouvent rien sur ce qui se passe **en classe**. Un test vert dit que la page fait ce
   qu'elle annonce, pas qu'un élève apprend.
+
+## Reprise du 04/11/2026 — la séquence passe à deux séances à onglets (vague C7 de la règle d'or n°311)
+
+Découpage, volet « 📖 Rappel » et clôture complétée : voir la fiche pédagogique.
+
+- `node tests_regle_311_4e_C7.5.mjs` : 16 / 16 « l'outil suit la séance » (un seul nœud ; à sa place à la séance 1 ; juste après l'en-tête à la séance 2, état gardé ; onglets et en-tête dans le premier écran à 1280 px ; retour à sa place ; rechargement ; sans JavaScript, à sa place), relais 8 / 8, banc commun **34 / 34**.
+- `tests_4e_C7.5_sequence.mjs` : **41 / 41** (39 / 39 avant ; le banc ouvre la séance qui porte chaque champ, comme l'élève). Deux pas ajoutés : un montage sans pompe ne reçoit pas ✔ et l'établi dit que la pompe manque — joués sur la page d'avant la correction, ils échouent tous les deux. `tests_4e_C7.5_qcm.mjs` : **32 / 32**.
+- `controle_squelette.mjs` : 0 défaut (D1 à D6), aucun « à rédiger », aucun signalement.
+- `banc_papier.py` : une fiche par séance (deux fiches), aucun texte pâle, aucun champ d'écran imprimé.
+- Sorties inchangées : `controle_impression`, `controle_impression_papier`, `controle_verrous`, `controle_hors_ligne`,
+  `controle_contraste_liens`, `controle_regles_visibles`, `controle_liens`, `controle_hierarchie`, `controle_unites`,
+  `controle_sigles`, `controle_navigation_seances` ; `verif_regles_audit.py` : autant de ✘ qu'avant, aucun nouveau.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle. Non fait : le lexique par séance.
