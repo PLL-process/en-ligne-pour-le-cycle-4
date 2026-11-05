@@ -56,3 +56,11 @@ synthèse et de l'impression.
   et passage, allumer ». Détail dans `_generation/voix_chaines/phrases.json` ; `generer.py --verifier` compare les phrases à la page.
 - **Prises produites le 30/10/2026, NON ÉCOUTÉES** : à faire écouter à Pascal (`voix.json`, clé `prises`). Reproductibilité à l'octet : non
   (Piper tire du bruit à chaque prise).
+
+## Image reprise d'un lot voisin pour la situation déclenchante (05/11/2026)
+
+Copie, octet pour octet, de `theme-2-structure-fonctionnement-comportement/C5-identifier-un-dysfonctionnement-dun-objet/5e/5e_C5.1/Images/synthese_lampadaire_solaire.png` (même provenance, mêmes droits) : elle montre le même objet, sans donner la réponse de la séquence. Demande de Pascal du 05/11/2026 : « il manque aussi des images réalistes ».
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/synthese_lampadaire_solaire.png` | Un lampadaire solaire de parking au crépuscule : panneau solaire en haut du mât, tête à LED allumée, boîtier gris. PNG 1 536 × 1 024, 2.3 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a solar-powered LED street lamp in a small school car park in Martinique at dusk, seen from a few meters away so the lamp head and its solar panel are large and clearly visible in the frame: a small solar panel mounted on top of the pole, an LED lamp head glowing softly, a small light sensor and a small motion detector on the lamp head, a grey technical box on the pole, tropical vegetation behind, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |

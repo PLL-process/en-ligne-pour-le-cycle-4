@@ -26,6 +26,8 @@ PAGES = {
         "🔎 « Le relais claque » : ce qui se passe dans le boîtier",
     T3 + "C7-imaginer-concevoir-et-realiser-une-ou-des/4e/4e_C7.5/sequence_4e_C7.5_jardin-incomplet.html":
         "🔎 « Le relais doit claquer » : ce qui se passe dans le boîtier",
+    "theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.1/sequence_4e_C6.1-C6.3_ajuster_programme_jardin.html":
+        "🔎 « On l'entend claquer » : ce que fait le relais à chaque démarrage de la pompe",
     T3 + "C9-concevoir-ecrire-tester-et-mettre-au-point/4e/4e_C9.1/sequence_4e_C9_jardin-programme.html":
         "🔎 « Le relais claque » : ce que la pompe qui s'affole fait au relais",
 }

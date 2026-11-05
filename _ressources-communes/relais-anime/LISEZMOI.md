@@ -47,5 +47,6 @@ Sans JavaScript et sur le papier, le schéma reste, au repos, avec son explicati
   visible, puisque c'est la question de la séquence.
 - **`4e_C7.5`** : sous la consigne de sécurité (« le relais doit claquer »).
 - **`4e_C9.1`** : dans l'aide de niveau 2 de l'activité 5, la pompe qui s'affole.
+- **`4e_C6.1`** : dans la situation déclenchante (« on l'entend claquer depuis la classe » : la pompe qui a démarré 47 fois).
 
 Le dessin est original (règle d'or n°1), sous la licence du dépôt.

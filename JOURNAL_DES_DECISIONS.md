@@ -28305,3 +28305,65 @@ provenance.
 - Contrôles verts : `controle_squelette`, `controle_hors_ligne`, `controle_verrous`, `controle_impression`,
   `controle_contraste_liens`, `controle_liens`, `controle_hierarchie`, `controle_regles_visibles`, `controle_unites`,
   `controle_sigles`, `controle_medias`, `controle_fichiers_telechargeables`, `controle_gestes_outil`.
+
+## 05/11/2026 — Les situations déclenchantes illustrées, vague 1 : une image réaliste dans 24 séquences, les mots techniques expliqués, le relais qui claque aussi en 4e_C6.1 (transversal)
+
+**Ce que Pascal a demandé.** Sur 4e_C7.4, il a écrit : « le relais claque, il faudrait vulgariser ou expliquer ce terme ;
+il manque aussi des images réalistes ou des schémas ou une animation ». Puis, une fois #601 fusionnée : « Ok continu ».
+On applique donc la même chose à tout le site : une image réaliste dans la situation déclenchante, et une glose pour
+chaque mot technique que la situation ne disait pas.
+
+**Le relevé.** Sur les 60 séquences, 55 ont une section de situation, et 50 n'avaient aucun visuel. La règle de choix est
+la suivante : **une image n'entre que si elle ne donne pas la réponse de la séquence**. Les images refusées pour cette
+raison :
+- un panneau solaire, quand la séquence cherche l'alimentation autonome (3e_C4.1, 3e_C7.4, 3e_C7.5) ;
+- le boîtier fini (3e_C7.3, 3e_C7.7, 4e_C7.1), l'indicateur (5e_C7.1, 5e_C7.4), le kit monté (5e_C7.5) ;
+- le jardin complet (4e_C7.5), les trois bacs qui sont les trois matériaux qui passent (4e_C7.3), le support découpé
+  (4e_C7.7), le banc (5e_C7.3), le frein (5e_C1.2) ;
+- le mât dit « en aluminium » (3e_C8.1, 3e_C8.2), la station du toit au lieu du prototype de la cour (3e_C9.2), le drone
+  qui oriente vers une solution (4e_C1.1), le capteur d'une salle (3e_C7.1).
+
+**Vague 1, sans image nouvelle : 24 séquences.** On reprend les images Canva déjà dans le dépôt, celles des synthèses.
+- **18 séquences ont l'image dans leur propre lot** : 3e_C1.1, 5e_C1.1, 3e_C2.1, 4e_C2.1, 3e_C3.1, 4e_C3.1, 4e_C4.1,
+  3e_C5.1, 4e_C5.1, 5e_C5.1, 3e_C6.2, 4e_C6.1, 5e_C6.1, 3e_C7.8, 4e_C7.8, 5e_C8.1, 5e_C8.2, 4e_C9.1.
+- **6 séquences reçoivent une copie d'un lot voisin**, à l'octet près : 3e_C4.3, 3e_C4.7 et 3e_C6.1 (la station),
+  4e_C6.2 (le jardin de New York), 5e_C2.1 (la borne de vélos), 5e_C4.1 (le lampadaire). Le `SOURCES_MEDIAS.md` du lot
+  qui reçoit la copie dit d'où elle vient (section « Image reprise d'un lot voisin »).
+- **La figure** : `figure.situation-photo`, à la fin de la situation. Elle a un texte de remplacement qui décrit l'image,
+  et une légende qui pose la question de la séquence, sans y répondre (« Aucune n'a cassé : elles ont plié. À partir de
+  quelle charge ? »). La légende finit par « Image générée par IA (Canva) ». L'image fait au plus 640 px de large à
+  l'écran et 60 % de la largeur à l'impression. Elle se charge en différé.
+
+**Les mots expliqués**, dans la phrase même :
+- 3e_C1.1 : aéronefs ; 5e_C1.1 : particules fines ; 3e_C2.1 : la régie du métro ;
+- 3e_C3.1 : les serveurs, plein ouest ; 4e_C4.1 : l'électrovanne ; 3e_C5.1 : la girouette ; 3e_C6.2 : les organes ;
+- 3e_C7.8 : le couloir de vent, l'anémomètre, le grain ; 4e_C7.8 : l'adresse fixe ; 5e_C8.1 : la simulation ;
+- 3e_C4.3 : la vigilance jaune, l'onde tropicale, la liaison radio ; 3e_C6.1 : l'épisode orange ;
+- 5e_C2.1 : le point d'ancrage ; 5e_C4.1 : les tranchées, la veille ;
+- 4e_C6.1 : « claquer ».
+
+**Le relais qui claque, aussi en 4e_C6.1.** La situation dit « on l'entend claquer depuis la classe » : la pompe a démarré
+47 fois en trois heures. La figure du relais y est posée, par `relais_figure.py` ; la page entre dans la liste `PAGES` du
+générateur et dans celle du banc. Le `LISEZMOI` du composant compte désormais quatre pages.
+
+**Vague 2, à venir.** 27 situations attendent une image nouvelle : les 19 aux images refusées, 6 sans image du tout
+(5e_C1.3, 5e_C1.5, 5e_C3.1, 4e_C4.7, 5e_C4.7, 3e_C4.8), et les deux séquences de C1 sur le numérique (4e_C1.4, 3e_C1.5),
+dont la situation n'est pas sous un titre « Situation déclenchante ». Les images sont générées dans le Canva de Pascal :
+chacune montre le problème, jamais la solution. Pascal les télécharge depuis son Chrome. Leurs mots techniques seront
+expliqués en même temps.
+
+**Contrôles.**
+- Le banc du relais : 29 / 29, avec les quatre pages.
+- Bancs des séquences, inchangés et verts :
+  - 3e_C4.3 23 / 23, 3e_C4.7 35 / 35, 4e_C4.1 52 / 52, 5e_C4.1 64 / 64 ;
+  - 3e_C5.1 34 / 34, 4e_C5.1 26 / 26, 5e_C5.1 26 / 26 ;
+  - 3e_C6.1 35 / 35, 4e_C6.1 29 / 29, 4e_C6.2 56 / 56, 5e_C6.1 32 / 32 ;
+  - 3e_C7.8 58 / 58, 4e_C7.8 46 / 46, 5e_C8.1 39 / 39, 5e_C8.2 24 / 24, 4e_C9.1 124 / 124.
+- Bancs n°311 : 34 / 34 sur chacune des huit pages qui en ont un.
+- À 390 et à 1 280 px, aucun défilement de côté et aucune erreur JavaScript (captures de 3e_C3.1, 3e_C7.8, 5e_C4.1).
+- `controle_schemas` sur les 24 dossiers : aucun ✘, et les ⚠ sont les mêmes que sur `main`.
+- `controle_hierarchie` a vu un « mur sans repère » en 3e_C7.8 : avec les deux gloses, les deux premiers paragraphes
+  font 117 mots sans un seul repère. Le premier s'ouvre désormais sur « **Trois fois pour rien.** ».
+- Contrôles du site, tous verts : `controle_squelette`, `controle_hors_ligne`, `controle_verrous`, `controle_impression`,
+  `controle_liens`, `controle_hierarchie`, `controle_regles_visibles`, `controle_unites`, `controle_sigles`,
+  `controle_medias`, `controle_fichiers_telechargeables`, `controle_longueurs`.
