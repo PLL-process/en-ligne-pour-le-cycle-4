@@ -468,6 +468,42 @@ TESTS_E3 = [("t1", "T1 — Relevé du compteur"), ("t2", "T2 — Mesure au multi
 VERDICTS_E3 = [("atteint", "validée : le résultat atteint le niveau"), ("marge", "validée : l'écart reste dans la marge acceptée"),
                ("hors", "non validée : l'écart dépasse la marge acceptée"), ("f0", "non validée : F0, aucun écart accepté")]
 T5_RIEN = "T5 ne mesure rien : un avis n'est pas un test, il ne vérifie aucune exigence."
+# Un retour pour chaque option fausse de chaque menu (règle d'or n°317) : le test choisi mesure autre chose que le
+# critère de la ligne ; le verdict choisi oublie l'écart, la marge ou la classe de flexibilité.
+RETOURS_TESTS_E3 = {
+    "1.1": {"t1": "T1 compte les litres d'eau utilisés en une journée : il ne dit pas si l'eau entre dans le boîtier.",
+            "t2": "T2 mesure une tension, en volts : il ne cherche pas d'eau dans le boîtier.",
+            "t4": "T4 mesure le temps d'un réglage et les outils pris : il ne projette pas d'eau sur le boîtier.",
+            "t5": T5_RIEN},
+    "1.2": {"t2": "T2 mesure des volts, pas des litres : il ne dit pas combien d'eau part en une journée.",
+            "t3": "T3 cherche des gouttes dans le boîtier : il ne mesure pas le volume d'eau utilisé chaque jour.",
+            "t4": "T4 chronomètre un réglage : des minutes ne disent pas combien de litres sont partis en 24\u00a0h.",
+            "t5": T5_RIEN},
+    "1.3": {"t1": "T1 compte des litres d'eau : il ne dit ni combien de temps prend le réglage, ni s'il faut un outil.",
+            "t2": "T2 mesure une tension : un réglage se vérifie avec un chronomètre, en notant les outils pris.",
+            "t3": "T3 vérifie l'étanchéité : arroser le boîtier ne dit pas si on le règle vite et sans outil.",
+            "t5": T5_RIEN},
+    "1.4": {"t1": "T1 mesure de l'eau, en litres : une tension se mesure en volts, avec un multimètre.",
+            "t3": "T3 cherche des gouttes dans le boîtier : il ne mesure pas la tension qui l'alimente.",
+            "t4": "T4 mesure une durée : les volts de l'alimentation se lisent au multimètre.",
+            "t5": T5_RIEN},
+}
+RETOURS_VERDICTS_E3 = {
+    "1.1": {"marge": "Aucune goutte : il n'y a aucun écart. La marge ne sert que lorsqu'il y a un écart à juger.",
+            "hors": "Aucune goutte n'est entrée : il n'y a aucun écart, donc rien ne dépasse la marge.",
+            "f0": "L'étanchéité est en F1, pas en F0. Et sans aucun écart, il n'y a rien à refuser."},
+    "1.2": {"atteint": "11,5\u00a0L, c'est plus que 10\u00a0L : le niveau « au plus 10\u00a0L » n'est pas atteint.",
+            "marge": "La marge F2 s'arrête à 11\u00a0L. 11,5\u00a0L la dépasse de 0,5\u00a0L : même de peu, c'est hors de la marge.",
+            "f0": "La sobriété est en F2 (de 9 à 11\u00a0L acceptés), pas en F0 : non validée, oui, mais parce que l'écart dépasse "
+                  "la marge."},
+    "1.3": {"atteint": "4\u00a0min, c'est plus que 2\u00a0min : le niveau n'est pas atteint. Regarde si la marge accepte cet écart.",
+            "hors": "La marge F3 va jusqu'à 5\u00a0min, sans outil : 4\u00a0min sans outil reste dans la marge.",
+            "f0": "Le réglage est en F3 (jusqu'à 5\u00a0min acceptées), pas en F0 : ici, un écart est accepté."},
+    "1.4": {"atteint": "24\u00a0V au lieu de 12\u00a0V : le niveau n'est pas atteint, il y a un écart de 12\u00a0V.",
+            "marge": "La sécurité électrique est en F0 : aucun écart accepté, donc pas de marge. 24\u00a0V au lieu de 12\u00a0V se refuse.",
+            "hors": "Non validée, oui, mais pas pour une marge dépassée : en F0, il n'y a aucune marge, aucun écart n'est "
+                    "accepté."},
+}
 TABLEAU_E3 = dict(
     type="tableau", name="valid",
     legende="Extrait du cahier des charges du jardin, et sa validation sur le prototype — à compléter",
@@ -479,27 +515,31 @@ TABLEAU_E3 = dict(
         dict(nom="Exigence 1.1, étanchéité", cases=[
             "1.1 Étanchéité", "IPX4 au moins&nbsp;: aucune eau dans le boîtier sous des projections", "F1",
             dict(menu="test", bonne="t3", indice="On cherche à savoir si l'eau entre dans le boîtier. Quel test l'arrose ?",
-                 retours={"t5": T5_RIEN}),
+                 retours=RETOURS_TESTS_E3["1.1"]),
             "aucune goutte dans le boîtier",
-            dict(menu="verdict", bonne="atteint", indice="Aucune goutte : c'est exactement ce qui était demandé. Y a-t-il un écart ?")]),
+            dict(menu="verdict", bonne="atteint", indice="Aucune goutte : c'est exactement ce qui était demandé. Y a-t-il un écart ?",
+                 retours=RETOURS_VERDICTS_E3["1.1"])]),
         dict(nom="Exigence 1.2, sobriété", cases=[
             "1.2 Sobriété", "au plus 10&nbsp;L d'eau par jour", "F2&nbsp;: de 9 à 11&nbsp;L acceptés",
             dict(menu="test", bonne="t1", indice="On mesure un volume d'eau sur une journée. Quel test le fait ?",
-                 retours={"t5": T5_RIEN}),
+                 retours=RETOURS_TESTS_E3["1.2"]),
             "11,5&nbsp;L en 24&nbsp;h",
-            dict(menu="verdict", bonne="hors", indice="La marge F2 va jusqu'à 11 L. 11,5 L est-il dedans, même de peu ?")]),
+            dict(menu="verdict", bonne="hors", indice="La marge F2 va jusqu'à 11 L. 11,5 L est-il dedans, même de peu ?",
+                 retours=RETOURS_VERDICTS_E3["1.2"])]),
         dict(nom="Exigence 1.3, réglage", cases=[
             "1.3 Réglage", "sans outil, en 2&nbsp;min au plus", "F3&nbsp;: jusqu'à 5&nbsp;min acceptées, toujours sans outil",
             dict(menu="test", bonne="t4", indice="On mesure une durée et on regarde les outils. Quel test le fait ?",
-                 retours={"t5": T5_RIEN}),
+                 retours=RETOURS_TESTS_E3["1.3"]),
             "4&nbsp;min, sans outil",
-            dict(menu="verdict", bonne="marge", indice="4 min dépasse 2 min, mais la marge F3 va jusqu'à 5 min, sans outil.")]),
+            dict(menu="verdict", bonne="marge", indice="4 min dépasse 2 min, mais la marge F3 va jusqu'à 5 min, sans outil.",
+                 retours=RETOURS_VERDICTS_E3["1.3"])]),
         dict(nom="Exigence 1.4, sécurité électrique", cases=[
             "1.4 Sécurité électrique", "très basse tension&nbsp;: 12&nbsp;V (volts)", "F0&nbsp;: aucun écart",
             dict(menu="test", bonne="t2", indice="On mesure une tension, en volts. Quel instrument mesure des volts ?",
-                 retours={"t5": T5_RIEN}),
+                 retours=RETOURS_TESTS_E3["1.4"]),
             "24&nbsp;V (une alimentation de 24&nbsp;V a été branchée par erreur)",
-            dict(menu="verdict", bonne="f0", indice="Quelle est la classe de flexibilité de la tension ? Quel écart accepte-t-elle ?")]),
+            dict(menu="verdict", bonne="f0", indice="Quelle est la classe de flexibilité de la tension ? Quel écart accepte-t-elle ?",
+                 retours=RETOURS_VERDICTS_E3["1.4"])]),
     ])
 
 TABLE_TESTS_E3 = (
@@ -582,13 +622,25 @@ E3 = dict(
         "<b>1.3 Réglage</b> → une durée et des outils → <b>T4, réglage chronométré</b>, par une personne qui découvre le boîtier",
         "<b>1.4 Sécurité électrique</b> → une tension en volts → <b>T2, mesure au multimètre</b>",
         "<b>T5, l'avis de la gardienne</b> → rien n'est mesuré, aucun seuil → ce n'est pas un test&nbsp;: il ne vérifie aucune exigence",
-        "<b>1.1</b> → aucune goutte → écart nul → <b>validée</b>&nbsp;: le résultat atteint le niveau",
+        "<b>Les autres tests, à chaque ligne</b> → chacun mesure autre chose&nbsp;: T1 des litres, T2 des volts, T3 des gouttes, "
+        "T4 une durée et des outils → un test ne vérifie que l'exigence dont il mesure le critère&nbsp;: T1 ne dit rien de "
+        "l'eau qui entre, T3 rien des volts, T2 rien d'une durée",
+        "<b>1.1</b> → aucune goutte → écart nul → <b>validée</b>&nbsp;: le résultat atteint le niveau → pas «&nbsp;dans la "
+        "marge&nbsp;» ni «&nbsp;hors de la marge&nbsp;»&nbsp;: sans écart, la marge ne sert pas&nbsp;; pas «&nbsp;F0&nbsp;» non "
+        "plus&nbsp;: 1.1 est en F1",
         "<b>1.2</b> → 11,5&nbsp;L − 10&nbsp;L = écart de +1,5&nbsp;L → la marge F2 s'arrête à 11&nbsp;L → <b>non validée</b>, "
-        "même si c'est presque → réglage possible&nbsp;: raccourcir la durée d'arrosage, puis refaire le test",
-        "<b>1.3</b> → 4&nbsp;min − 2&nbsp;min = +2&nbsp;min → la marge F3 va jusqu'à 5&nbsp;min, sans outil → <b>validée</b> dans la marge",
+        "même si c'est presque → pas «&nbsp;atteint&nbsp;» (11,5&nbsp;L, c'est plus que 10&nbsp;L), pas «&nbsp;dans la "
+        "marge&nbsp;» (elle s'arrête à 11&nbsp;L), pas «&nbsp;F0&nbsp;» (1.2 est en F2) → réglage possible&nbsp;: raccourcir "
+        "la durée d'arrosage, puis refaire le test",
+        "<b>1.3</b> → 4&nbsp;min − 2&nbsp;min = +2&nbsp;min → la marge F3 va jusqu'à 5&nbsp;min, sans outil → <b>validée</b> dans "
+        "la marge → pas «&nbsp;atteint&nbsp;» (4&nbsp;min, c'est plus que 2&nbsp;min), pas «&nbsp;hors de la marge&nbsp;» "
+        "(4&nbsp;min sans outil, c'est moins que 5&nbsp;min), pas «&nbsp;F0&nbsp;» (1.3 est en F3)",
         "<b>1.4</b> → 24&nbsp;V au lieu de 12&nbsp;V → flexibilité <b>F0</b> → aucun écart accepté → <b>non validée</b>. "
         "24&nbsp;V reste une très basse tension, sans danger au toucher&nbsp;: ce n'est pas la question. Le niveau est "
         "impératif, et la pompe prévue pour 12&nbsp;V pourrait griller → réglage&nbsp;: brancher l'alimentation de 12&nbsp;V prévue.",
+        "<b>1.4, les autres verdicts</b> → pas «&nbsp;atteint&nbsp;» (24&nbsp;V n'est pas 12&nbsp;V), pas «&nbsp;dans la "
+        "marge&nbsp;» (en F0, il n'y a pas de marge) → «&nbsp;hors de la marge&nbsp;» dit bien «&nbsp;non validée&nbsp;», mais "
+        "pour une mauvaise raison&nbsp;: il n'y a pas de marge à dépasser, aucun écart n'est accepté",
         "<b>Un protocole attendu pour 2.1&nbsp;:</b> «&nbsp;Je lance un arrosage. Dès qu'il s'arrête, je démarre un "
         "<b>chronomètre</b> et je mesure <b>le temps</b> jusqu'à l'arrivée du compte rendu sur le smartphone. L'exigence est "
         "validée si le message arrive en <b>5&nbsp;min au plus</b>.&nbsp;» On peut le refaire sur plusieurs arrosages&nbsp;: "

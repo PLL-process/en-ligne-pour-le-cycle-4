@@ -12,7 +12,12 @@ Pour chaque page de niveau, à 390 px :
   - la sauvegarde locale revient après un rechargement.
 Pour chaque tableau à menus (widget « tableau ») : un menu par case à remplir, chacun nommé « ligne — colonne » ;
 faux partout puis juste partout (marque et retour écrit dans la case) ; choix retrouvés au rechargement ; Tab et
-flèche au clavier ; cartes sans débordement à 390 px ; à l'impression, le choix en texte et une ligne vide sans choix.
+flèche au clavier ; cartes sans débordement à 390 px ; à l'impression, le choix en texte, une ligne vide sans choix, et
+pas la liste d'options de la fiche papier ; à 1280, 720 et 390 px, aucun mot coupé au milieu (chaque menu passe par
+toutes ses options, puis les retours), un tableau qui tient dans son cadre et ne bouge pas ; pour les tableaux de
+RETOURS_PAR_OPTION, un retour écrit et affiché pour chaque option fausse de chaque menu.
+Pour un défi Bonus fait à l'écran (`champs`) : la carte se dessine à mesure, se sauvegarde, tient à 390 px ; sans
+JavaScript et à l'impression, la consigne « sur ta feuille ».
 Puis le QCM (30 questions), les deux synthèses et les cahiers de niveau : chargement sans erreur, sans débordement.
 
 Code de sortie : 0 tout passe · 1 au moins un échec · 2 rien n'a été vérifié (règle d'or n°299).
@@ -143,6 +148,44 @@ def page_niveau(b, at, niv):
     ctx.close()
 
 
+#: Les tableaux qui donnent un retour écrit à CHAQUE option fausse de chaque menu (règle d'or n°317) : le banc le vérifie
+#: dans les données, puis au navigateur, option par option.
+RETOURS_PAR_OPTION = {("interacteurs-pieuvre", "4e", "e6"), ("exigences-sysml", "4e", "e3")}
+
+#: Un mot coupé au milieu : ses lettres tombent sur deux lignes. Chaque menu passe par toutes ses options, puis
+#: « Vérifier » écrit les retours ; rend les mots coupés, et le nombre de mises en page des colonnes rencontrées.
+JS_MOTS_COUPES = r"""s => {
+  const t = document.querySelector(s);
+  const coupe = () => {
+    const out = [];
+    const w = document.createTreeWalker(t, NodeFilter.SHOW_TEXT);
+    let n;
+    while ((n = w.nextNode())) {
+      const el = n.parentElement;
+      if (!el || el.closest('.menu-mesure, .retour-mesure, select, option') || !el.getClientRects().length) continue;
+      const re = /[\p{L}\p{N}’']+/gu; let m;
+      while ((m = re.exec(n.textContent))) {
+        if (m[0].length < 3) continue;
+        const r = document.createRange(); r.setStart(n, m.index); r.setEnd(n, m.index + m[0].length);
+        if (new Set([...r.getClientRects()].filter(x => x.width > 0).map(x => Math.round(x.top))).size > 1) out.push(m[0]);
+      }
+    }
+    return out;
+  };
+  const cols = () => [...t.querySelectorAll('tbody tr:first-child td')].map(td => Math.round(td.getBoundingClientRect().width)).join(',');
+  const sels = [...t.querySelectorAll('select')], coupes = new Set(), mises = new Set([cols()]);
+  const max = Math.max(1, ...sels.map(x => x.options.length));
+  for (let k = 1; k < max; k++) {
+    sels.forEach(x => { x.selectedIndex = Math.min(k, x.options.length - 1); x.dispatchEvent(new Event('change', {bubbles: true})); });
+    coupe().forEach(x => coupes.add(x)); mises.add(cols());
+  }
+  t.closest('[data-exo]').querySelector('button.verifier').click();
+  coupe().forEach(x => coupes.add(x + ' (retour)')); mises.add(cols());
+  const f = t.querySelector('.defile');
+  return [[...coupes], mises.size, f.scrollWidth - f.clientWidth];
+}"""
+
+
 def tableaux(b, at, niv):
     """Le widget « tableau » (cahier des charges à menus) : rendu, vérification fausse puis juste, sauvegarde,
     390 px, clavier, impression. Rien à faire si le niveau n'en a pas."""
@@ -153,7 +196,7 @@ def tableaux(b, at, niv):
     for e in exos:
         uid = "%s_%s_%s" % (at.COURT, niv, e["id"])
         nom = "%s %s · %s (tableau à menus)" % (at.SLUG, niv, e["id"])
-        for largeur in (1280, 390):
+        for largeur in (1280, 720, 390):
             ctx = b.new_context(viewport={"width": largeur, "height": 900})
             pg = ctx.new_page()
             err = []
@@ -170,6 +213,15 @@ def tableaux(b, at, niv):
             tw = [w for w in d["widgets"] if w["type"] == "tableau"]
             cases = [c for w in tw for c in w["cases"]]
             sel = "#%s .tableau-menus" % uid
+            if largeur == 720:
+                coupes, mises, deb = pg.evaluate(JS_MOTS_COUPES, sel)
+                t(nom + " (720 px) : aucun mot coupé au milieu, chaque menu passant par toutes ses options, puis les retours",
+                  not coupes, coupes[:6])
+                t(nom + " (720 px) : le tableau tient dans son cadre — en cartes s'il ne tiendrait pas sans couper un mot",
+                  deb <= 1, "%d px de trop" % deb)
+                t(nom + " (720 px) : aucune erreur JavaScript", not err, err)
+                ctx.close()
+                continue
             if largeur == 390:
                 t(nom + " (390 px) : aucun défilement horizontal de la page",
                   not pg.evaluate("document.documentElement.scrollWidth > innerWidth"))
@@ -181,6 +233,9 @@ def tableaux(b, at, niv):
                 noms_col = pg.evaluate("s => [...document.querySelectorAll(s + ' td')].every(td => "
                                        "getComputedStyle(td, '::before').content.replace(/\"/g, '') === td.dataset.col)", sel)
                 t(nom + " (390 px) : chaque case de carte porte le nom de sa colonne", noms_col)
+                coupes, mises, deb = pg.evaluate(JS_MOTS_COUPES, sel)
+                t(nom + " (390 px) : aucun mot coupé au milieu, chaque menu passant par toutes ses options, puis les retours",
+                  not coupes, coupes[:6])
                 t(nom + " (390 px) : aucune erreur JavaScript", not err, err)
                 ctx.close()
                 continue
@@ -214,9 +269,14 @@ def tableaux(b, at, niv):
             justes = pg.evaluate("s => [...document.querySelectorAll(s + ' td.case-menu')].every(td => td.classList.contains('juste') "
                                  "&& !td.querySelector('.retour-case.visible') && td.querySelector('.encoche').textContent.includes('juste'))", sel)
             t(nom + " : juste partout, chaque case est marquée « ✔ juste », sans retour d'erreur", justes)
-            # ── sauvegarde et rechargement
+            # ── sauvegarde et rechargement (on guette la restauration du dernier menu au lieu d'un délai fixe, trop court
+            #    quand la machine est chargée)
             pg.reload()
-            pg.wait_for_timeout(250)
+            try:
+                pg.wait_for_function("([n, v]) => { const x = document.getElementsByName(n)[0]; return x && x.value === v; }",
+                                     arg=[cases[-1]["name"], cases[-1]["bonne"]], timeout=5000)
+            except Exception:
+                pass
             pg.locator('[role="tab"]').nth(idx).click()
             revenus = pg.evaluate("""s => [...document.querySelectorAll(s + ' select')].map(x => [x.name, x.value,
                 x.parentNode.querySelector('.menu-vu').textContent === x.options[x.selectedIndex].text])""", sel)
@@ -241,7 +301,11 @@ def tableaux(b, at, niv):
               avant != apres and vu and contour not in ("none", ""), (avant, apres, vu, contour))
             # ── impression : le choix s'imprime ; sans réponse, une ligne vide
             pg.select_option('#%s select[name="%s"]' % (uid, second), value="")
+            pg.evaluate("""n => { const x = document.getElementsByName(n)[0], c = document.createElement('span');
+                c.className = 'pp-papier pp-choix'; c.innerHTML = '<span class="pp-case">F0</span> <span class="pp-case">F1</span>';
+                x.insertAdjacentElement('afterend', c); }""", premier)
             pg.emulate_media(media="print")
+            pp = pg.evaluate("n => getComputedStyle(document.getElementsByName(n)[0].parentNode.querySelector('.pp-choix')).display", premier)
             imp = pg.evaluate("""([s, n1, n2]) => {
                 const a = document.getElementsByName(n1)[0], b = document.getElementsByName(n2)[0];
                 const va = a.parentNode.querySelector('.menu-vu'), vb = b.parentNode.querySelector('.menu-vu');
@@ -252,8 +316,111 @@ def tableaux(b, at, niv):
             pg.emulate_media(media="screen")
             t(nom + " : à l'impression, le menu disparaît, le choix s'imprime en texte, une case vide donne une ligne à remplir",
               imp[0] == "none" and imp[1] and imp[2], imp)
+            t(nom + " : à l'impression, la liste des options que la fiche papier pose sous un menu (.pp-choix) ne s'imprime pas",
+              pp == "none", pp)
+            pg.evaluate("() => document.querySelectorAll('.pp-choix').forEach(x => x.remove())")
+            if (at.SLUG, niv, e["id"]) in RETOURS_PAR_OPTION:
+                manque, total = [], 0
+                for c in cases:
+                    opts = pg.eval_on_selector_all('#%s select[name="%s"] option' % (uid, c["name"]), "l => l.map(o => o.value).filter(Boolean)")
+                    for o in opts:
+                        if o != c["bonne"]:
+                            total += 1
+                            if not (c.get("retours") or {}).get(o):
+                                manque.append("%s=%s" % (c["name"].split("__")[-1], o))
+                t(nom + " : un retour écrit pour chaque option fausse de chaque menu (%d / %d)" % (total - len(manque), total),
+                  total and not manque, manque[:4])
+                essais, rates = pg.evaluate("""([s, defs]) => {
+                    const t = document.querySelector(s), btn = t.closest('[data-exo]').querySelector('button.verifier');
+                    const sels = [...t.querySelectorAll('select')];
+                    const faux = sels.map(x => [...x.options].map(o => o.value).filter(v => v && v !== defs[x.name].bonne));
+                    let n = 0; const rates = [];
+                    for (let k = 0; k < Math.max(...faux.map(f => f.length)); k++) {
+                      sels.forEach((x, i) => { x.value = faux[i][Math.min(k, faux[i].length - 1)]; x.dispatchEvent(new Event('change', {bubbles: true})); });
+                      btn.click();
+                      sels.forEach((x, i) => { if (k >= faux[i].length) return; n++;
+                        const r = x.closest('td').querySelector('.retour-case');
+                        if (!r.classList.contains('visible') || r.textContent !== '✘ ' + (defs[x.name].retours || {})[x.value]) rates.push(x.name.split('__').pop() + '=' + x.value); });
+                    }
+                    return [n, rates]; }""", [sel, {c["name"]: c for c in cases}])
+                t(nom + " : chaque option fausse, choisie puis vérifiée, écrit son propre retour sous sa case (%d essais)" % essais,
+                  essais == total and not rates, rates[:4])
+            coupes, mises, deb = pg.evaluate(JS_MOTS_COUPES, sel)
+            t(nom + " : aucun mot coupé au milieu, chaque menu passant par toutes ses options, puis les retours",
+              not coupes, coupes[:6])
+            t(nom + " : le tableau tient dans son cadre, et ses colonnes ne bougent ni quand on choisit ni quand on vérifie",
+              deb <= 1 and mises == 1, "débordement %d px, %d mises en page" % (deb, mises))
             t(nom + " : aucune erreur JavaScript", not err, err)
             ctx.close()
+
+
+def bonus_vivants(b, at, niv):
+    """Un défi Bonus fait à l'écran (`champs` dans les données) : ce que l'élève écrit se dessine dans le schéma, se
+    sauvegarde ; sans JavaScript et sur le papier, la consigne « papier » reste, les champs disparaissent."""
+    defis = [(i, d) for i, d in enumerate(at.NIVEAUX[niv].get("bonus", [])) if d.get("champs")]
+    if not defis:
+        return
+    chemin = build.page_niveau(at, niv)
+    pid = "rep_%s_%s" % (at.SLUG, niv)
+    for i, d in defis:
+        nom = "%s %s · Bonus, défi %d (la carte se dessine)" % (at.SLUG, niv, i + 1)
+        ids = [["%s__bonus%d_%s" % (pid, i, c["name"]), c["cible"], c["exemple"]] for c in d["champs"]]
+        for largeur in (1280, 390):
+            ctx = b.new_context(viewport={"width": largeur, "height": 900})
+            pg = ctx.new_page()
+            err = []
+            pg.on("pageerror", lambda x: err.append(str(x)))
+            pg.goto(chemin.as_uri())
+            pg.evaluate("localStorage.clear()")
+            pg.goto(chemin.as_uri())
+            pg.wait_for_timeout(200)
+            pg.locator('[role="tab"]').last.click()
+            pg.wait_for_timeout(60)
+            vide = pg.evaluate("""ids => ids.map(([f, c]) => [!!document.querySelector('label[for="' + f + '"]'),
+                document.getElementById(f).getAttribute('data-miroir') === c, document.getElementById(c).textContent.trim()])""", ids)
+            t(nom + " (%d px) : un champ nommé pour chaque case de la carte (%d), et la carte vide attend" % (largeur, len(ids)),
+              all(a and m and txt for a, m, txt in vide) and pg.is_visible(".bonus-vivant .consigne-ecran")
+              and not pg.is_visible(".bonus-vivant .consigne-papier"), vide)
+            for f, c, ex in ids:
+                pg.fill("#" + f, ex)
+            pg.wait_for_timeout(60)
+            dessin = pg.evaluate("ids => ids.map(([f, c, ex]) => [document.getElementById(c).textContent.replace(/\\s+/g, ''), "
+                                 "ex.replace(/\\s+/g, '')])", ids)
+            t(nom + " (%d px) : ce que l'élève écrit se dessine dans la carte, case par case, à mesure" % largeur,
+              all(a == x for a, x in dessin), dessin)
+            if largeur == 390:
+                tient = pg.evaluate("() => { const f = document.querySelector('.bonus-vivant figure'), s = f.querySelector('svg'); "
+                                    "return f.scrollWidth <= f.clientWidth + 1 && s.getBoundingClientRect().width <= f.clientWidth + 1; }")
+                t(nom + " (390 px) : la carte entière tient à l'écran, sans défiler, et la page ne défile pas de côté",
+                  tient and not pg.evaluate("document.documentElement.scrollWidth > innerWidth"))
+            pg.reload()
+            try:
+                pg.wait_for_function("([f, v]) => { const x = document.getElementById(f); return x && x.value === v; }",
+                                     arg=[ids[-1][0], ids[-1][2]], timeout=5000)
+            except Exception:
+                pass
+            pg.locator('[role="tab"]').last.click()
+            revenu = pg.evaluate("ids => ids.map(([f, c, ex]) => document.getElementById(f).value === ex && "
+                                 "document.getElementById(c).textContent.replace(/\\s+/g, '') === ex.replace(/\\s+/g, ''))", ids)
+            t(nom + " (%d px) : après rechargement, chaque réponse revient, et la carte se redessine" % largeur, all(revenu), revenu)
+            if largeur == 1280:
+                pg.emulate_media(media="print")
+                imp = [pg.is_visible(".bonus-vivant .consigne-papier"), not pg.is_visible(".bonus-vivant .consigne-ecran"),
+                       not pg.is_visible(".bonus-vivant .bonus-champs"), pg.is_visible(".bonus-vivant figure svg")]
+                pg.emulate_media(media="screen")
+                t(nom + " : à l'impression, la consigne « sur ta feuille » et la carte (avec ce qui est écrit), sans les champs",
+                  all(imp), imp)
+            t(nom + " (%d px) : aucune erreur JavaScript" % largeur, not err, err)
+            ctx.close()
+        ctx = b.new_context(java_script_enabled=False, viewport={"width": 1280, "height": 900})
+        pg = ctx.new_page()
+        pg.goto(chemin.as_uri())
+        sans = [pg.is_visible(".bonus-vivant .consigne-papier"), not pg.is_visible(".bonus-vivant .consigne-ecran"),
+                not pg.is_visible(".bonus-vivant .bonus-champs"), pg.is_visible(".bonus-vivant figure svg"),
+                pg.is_visible(".card.bonus details.corrige-bonus")]
+        t(nom + " : sans JavaScript, le Bonus se lit (onglets dépliés), la consigne dit « sur ta feuille », la carte et la "
+          "correction restent", all(sans) and "sur ta feuille" in pg.inner_text(".bonus-vivant .consigne-papier").lower(), sans)
+        ctx.close()
 
 
 def page_simple(b, chemin, nom, attendu_q=None):
@@ -294,6 +461,7 @@ def main(modules, cahiers=False, sortie_json=None):
             for niv in at.NIVEAUX:
                 page_niveau(b, at, niv)
                 tableaux(b, at, niv)
+                bonus_vivants(b, at, niv)
             page_simple(b, build.qcm(at), at.SLUG + " QCM", attendu_q=30)
             page_simple(b, build.synthese_eleve(at), at.SLUG + " synthèse élève")
             page_simple(b, build.synthese_prof(at), at.SLUG + " synthèse professeur")

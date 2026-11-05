@@ -76,8 +76,20 @@ seul. Phrases de 25 mots au plus ; unités en toutes lettres dans chaque partie 
   widget : `colonnes`, `lignes`, `menus` (listes partagées), `largeurs` (en %), `legende`, `intro` (au-dessus
   du tableau : ce qui décide des réponses, par exemple les paroles du client pour la flexibilité), `note`.
   Un menu seulement là où la case fait réfléchir ; les pièges sont des formes que les élèves écrivent
-  vraiment (une désignation qui est un nom, une phrase avec un sujet, une solution). Modèle : exercice 6
-  de `donnees_interacteurs.py`.
+  vraiment (une désignation qui est un nom, une phrase avec un sujet, une solution). **Un retour dans
+  `retours` pour chaque option fausse de chaque menu** (✘ et pourquoi, une ou deux phrases) : `indice`
+  n'est qu'un filet. Modèles : exercice 6 de `donnees_interacteurs.py`, exercice 3 de
+  `donnees_exigences.py` (le banc les vérifie option par option : `RETOURS_PAR_OPTION`).
+  Le moteur ne coupe jamais un mot : une colonne trop étroite pour le plus long mot de ses options
+  s'élargit, et un tableau qui ne tient plus dans son cadre passe en cartes ; `largeurs` reste une
+  proportion, pas une contrainte. À l'impression, le choix s'écrit en texte (la liste d'options de la
+  fiche papier est retirée).
+- **Un défi Bonus se fait à l'écran, ou il dit « sur ta feuille »** : jamais « dessine » sans dire où. Un
+  Bonus qui construit un schéma porte `champs` (`name`, `label`, `cible` : l'identifiant d'une case vivante
+  du schéma, `groupe` : le nom d'une branche, `exemple` pour le banc), `schema` (le SVG, ses cases vivantes
+  en pointillés), `legende`, `ecran` (le geste à l'écran) et `papier` (la consigne sans JavaScript et sur la
+  feuille imprimée, « Sur ta feuille : … ») : ce que l'élève écrit se dessine dans le schéma, à mesure, et se
+  sauvegarde. Modèle : Bonus 4e de `donnees_carte_mentale.py` (le badge de la salle de technologie).
 - Une page de niveau totalise 30 à 40 minutes d'exercices.
 - **Pour le banc de tests automatique** : chaque widget `texte` porte un champ `exemple` — une réponse juste qui
   satisfait tous ses critères et aucun interdit (le moteur l'ignore, le banc la saisit). Un widget `liste` dont les

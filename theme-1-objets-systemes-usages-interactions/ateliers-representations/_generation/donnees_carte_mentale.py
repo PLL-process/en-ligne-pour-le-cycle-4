@@ -198,6 +198,38 @@ CM_FAUTIVE_CORRIGEE = figures.carte_mentale(
     "facture d'électricité ». Le matériel : « la pompe », « le capteur d'humidité », « la cuve d'eau de pluie », « le réseau "
     "wifi ». La branche Divers a disparu, et « le jardin créé en 2019 » a été retiré : il est hors sujet.")
 
+# 4e, Bonus — le badge de la salle de technologie : une carte vide, qui se remplit pendant que l'élève écrit.
+# Dessin en hauteur (464 de large) : il tient sur un téléphone sans défiler, ses textes restent lisibles ; les deux
+# branches sont dans le même ordre que les champs sous la carte (Avantages à gauche, Inconvénients à droite).
+def carte_badge(ident="cm-badge"):
+    E = figures.ENCRE
+    cx, cy = 232, 48
+    c = ['<ellipse cx="%d" cy="%d" rx="120" ry="36" fill="#fff8e6" stroke="#a06a00" stroke-width="3" stroke-dasharray="7 5"/>'
+         % (cx, cy),
+         figures.texte(cx, cy, "", taille=18, gras=True, car=20, lignes_max=2, ident="cm-bx-c", vide="l'évolution ?")]
+    for bx, depart, nom, coul, tige, ids in ((110, 170, "Avantages", "#1f5fbf", 28, ("cm-bx-a1", "cm-bx-a2")),
+                                              (354, 294, "Inconvénients", "#b35c00", 272, ("cm-bx-i1", "cm-bx-i2"))):
+        # du centre à la branche : une courbe épaisse, de la couleur de la branche
+        c.append('<path d="M%d,79 C%d,98 %d,92 %d,111" fill="none" stroke="%s" stroke-width="6" stroke-linecap="round"/>'
+                 % (depart, depart - (depart - bx) // 6, bx, bx, coul))
+        c.append('<rect x="%d" y="112" width="180" height="42" rx="10" fill="#ffffff" stroke="%s" stroke-width="2.6"/>' % (bx - 90, coul))
+        c.append(figures.texte(bx, 133, nom, taille=16, gras=True, couleur=coul, car=16, lignes_max=1))
+        # deux feuilles l'une sous l'autre, reliées à la branche par une tige à gauche
+        for fy, fid in zip((200, 264), ids):
+            c.append('<path d="M%d,155 V%d Q%d,%d %d,%d H%d" fill="none" stroke="%s" stroke-width="2.4"/>'
+                     % (tige, fy - 12, tige, fy, tige + 12, fy, tige + 18, coul))
+            c.append('<rect x="%d" y="%d" width="160" height="48" rx="20" fill="#ffffff" stroke="%s" stroke-width="1.8" '
+                     'stroke-dasharray="6 4"/>' % (tige + 18, fy - 24, coul))
+            c.append(figures.texte(tige + 98, fy, "", taille=15, car=18, lignes_max=2, ident=fid, couleur=E))
+    return figures.svg(464, 304, "Carte mentale du badge de la salle de technologie, à construire",
+                       "Carte mentale à construire. En haut, au centre, une ellipse en pointillés : l'évolution, à écrire. "
+                       "En dessous, deux branches : à gauche Avantages, à droite Inconvénients ; sous chacune, deux "
+                       "feuilles vides en pointillés. Ce que tu écris dans les cases sous la carte s'inscrit dans le "
+                       "centre et dans les feuilles.", "".join(c), ident=ident)
+
+
+CM_BADGE_A_FAIRE = carte_badge()
+
 # 3e — la station d'alerte cyclonique et la société
 CM_STATION = figures.carte_mentale(
     "cm-station", "La station d'alerte cyclonique",
@@ -1055,9 +1087,28 @@ NIVEAUX = {
                   "<li>Elle n'a ni flèches ni ordre&nbsp;: elle organise des idées, elle ne montre pas comment l'objet "
                   "fonctionne.</li></ul>",
         bonus=[dict(titre="Le badge de la salle de technologie",
-                    consigne="<p>Le collège remplace les clés de la salle de technologie par un badge. Dessine la carte mentale "
-                             "de cette évolution&nbsp;: au centre l'évolution, <b>deux avantages</b> et <b>deux "
+                    consigne="<p>Le collège remplace les clés de la salle de technologie par un badge. Construis la carte "
+                             "mentale de cette évolution&nbsp;: au centre l'évolution, <b>deux avantages</b> et <b>deux "
                              "inconvénients</b>, en mots-clés.</p>",
+                    # fait à l'écran : les cinq champs s'écrivent dans la carte, à mesure (sauvegardés avec le Bonus)
+                    ecran="<p>Écris dans les cases sous la carte&nbsp;: <b>la carte se dessine à mesure</b>. Trois ou quatre "
+                          "mots par case suffisent.</p>",
+                    papier="<p><b>Sur ta feuille</b>&nbsp;: dessine cette carte en plus grand, puis écris l'évolution au "
+                           "centre, deux avantages et deux inconvénients dans les feuilles.</p>",
+                    schema=CM_BADGE_A_FAIRE,
+                    legende="Ta carte mentale du badge&nbsp;: ce que tu écris s'inscrit dans les cases en pointillés.",
+                    champs=[dict(name="centre", label="Au centre&nbsp;: l'évolution", cible="cm-bx-c",
+                                 exemple="Des clés au badge"),
+                            dict(name="av1", label="Avantage 1", cible="cm-bx-a1", groupe="Branche «&nbsp;Avantages&nbsp;»",
+                                 exemple="badge perdu désactivé"),
+                            dict(name="av2", label="Avantage 2", cible="cm-bx-a2", groupe="Branche «&nbsp;Avantages&nbsp;»",
+                                 exemple="on sait qui est entré"),
+                            dict(name="inc1", label="Inconvénient 1", cible="cm-bx-i1",
+                                 groupe="Branche «&nbsp;Inconvénients&nbsp;»", exemple="bloqué si panne de courant"),
+                            dict(name="inc2", label="Inconvénient 2", cible="cm-bx-i2",
+                                 groupe="Branche «&nbsp;Inconvénients&nbsp;»", exemple="des données sur les entrées")],
+                    amorces=["Un avantage&nbsp;: ce que le badge fait mieux que la clé — pour le collège, pour les élèves…",
+                             "Un inconvénient&nbsp;: ce dont le badge a besoin pour marcher, ou ce qu'il garde en mémoire…"],
                     correction=["<b>Centre</b> → « Des clés au badge »",
                                 "<b>Avantages</b> → « badge perdu désactivé », « on sait qui est entré »",
                                 "<b>Inconvénients</b> → « bloqué si panne de courant », « des données sur les entrées »",
