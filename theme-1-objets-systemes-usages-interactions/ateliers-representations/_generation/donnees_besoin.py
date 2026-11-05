@@ -15,6 +15,8 @@ La carte des représentations le fixe : dix minutes pour formuler le besoin, pas
 sur le formalisme, jamais un objectif évalué. Les exercices sont donc courts, et aucun ne
 demande de dessiner le gabarit.
 """
+import html
+
 import figures
 
 SLUG = "besoin-bete-a-cornes"
@@ -103,6 +105,425 @@ BAC_ALERTE = bac("bc-alerte", "les habitants du quartier", "les habitants du qua
 BAC_ALERTE_C = bac("bc-alerte-c", "les habitants du quartier", "les habitants du quartier", "Quel objet ?", BUT_ALERTE,
                    "La bête à cornes de l'autre équipe, corrigée", DESC_ALERTE)
 
+# ─────────────────────────────────────────────────────────────────────────────
+# Les mots de référence (Pascal, 04/11/2026 : « Les mots de cette représentation devront être utilisés plusieurs
+# fois, ce sont des références. ») : utilisateur, matière d'œuvre, produit, fonction (la fonction d'usage), et la
+# méthode APTE d'où vient la bête à cornes. On n'a pris de son image que les mots : le dessin reste le gabarit (n°318).
+# Un seul dessin de référence (figures.bete_a_cornes_reference), montré là où l'outil est présenté ; les mots
+# reviennent dans les consignes, les retours, les corrections, les aides et les lexiques.
+# ─────────────────────────────────────────────────────────────────────────────
+#: APTE, développé à sa première apparition dans une page (n°313)
+APTE = "méthode APTE (<i>APplication aux Techniques d'Entreprise</i>)"
+
+
+def fig_reference(ident, apte=True, legende=None):
+    return figures.figure_reference_bac(ident, legende=legende, apte=apte)
+
+
+#: le dessin de référence là où l'outil est présenté : la situation de 5e, la carte des représentations, les séquences
+FIG_REFERENCE_APTE = fig_reference("bc-ref")
+#: dans la séance 1 de 5e_C2.1 : son a) a déjà fait placer les questions, puis les mots ; le dessin les reprend
+FIG_REFERENCE_SHENZHEN = fig_reference(
+    "bc-ref-s", legende="Le dessin de référence, à retenir&nbsp;: l'<b>utilisateur</b> (à qui le produit rend service), la "
+                        "<b>matière d'œuvre</b> (ce sur quoi il agit), le <b>produit</b>, et la <b>fonction</b> (la fonction "
+                        "d'usage&nbsp;: dans quel but il existe). Ces quatre mots servent pour tous les objets.")
+#: la carte des représentations (document du professeur), dans une carte de la page
+FIG_REFERENCE_CARTE = '<div class="card">%s</div>' % fig_reference(
+    "bc-ref", legende="Le gabarit de la bête à cornes, rempli avec les quatre mots de référence que les élèves "
+                      "retrouvent dans les ateliers, les séquences et les QCM&nbsp;: <b>utilisateur</b>, <b>matière d'œuvre</b>, "
+                      "<b>produit</b>, <b>fonction</b> (la fonction d'usage). On n'en a repris que les mots.")
+
+#: le cahier de 5e, avant ses exercices (le premier contact)
+PRESENTATION = {"5e": fig_reference("bc-ref-c5")}
+
+#: Les mots de cet exercice, pour les exercices de mots
+MOTS_REFERENCE = [
+    ("mots de référence", "les noms des cases de la bête à cornes, les mêmes pour tous les objets&nbsp;: utilisateur, matière "
+     "d'œuvre, produit, fonction."),
+    ("méthode APTE", "APTE veut dire <i>APplication aux Techniques d'Entreprise</i>&nbsp;: la méthode d'où viennent la bête à "
+     "cornes et ses mots de référence."),
+    ("utilisateur", "la personne à qui le produit rend service, celle qui s'en sert (case «&nbsp;à qui&nbsp;?&nbsp;»)."),
+    ("matière d'œuvre", "ce sur quoi le produit agit — ce qu'il déplace, touche, transforme ou garde, une chose ou une "
+     "personne (case «&nbsp;sur quoi&nbsp;?&nbsp;»). Ce n'est pas la matière dont il est fait&nbsp;: ça, c'est son matériau."),
+    ("fonction (la fonction d'usage)", "le service que le produit rend à l'utilisateur, écrit avec un verbe à l'infinitif "
+     "(case «&nbsp;dans quel but&nbsp;?&nbsp;»). Une fonction technique, elle, dit ce que le produit fait pour rendre ce service."),
+    ("acheteur", "celui qui paie le produit&nbsp;: ce n'est pas toujours celui qui s'en sert."),
+]
+
+#: Les menus du dessin vide : les quatre mots de référence et trois pièges, dans l'ordre alphabétique (l'ordre ne
+#: souffle rien)
+OPTIONS_MOTS = [("ach", "Acheteur"), ("fonc", "Fonction"), ("ft", "Fonction technique"), ("mat", "Matériau"),
+                ("mo", "Matière d'œuvre"), ("prod", "Produit"), ("util", "Utilisateur")]
+#: case du gabarit → (repère, nom de la case, bon mot, centre et largeur du menu en unités du dessin, ce qu'elle nomme)
+CASES_MOTS = [
+    ("a_qui", "①", "En haut à gauche, sous «&nbsp;À qui le produit rend-il service&nbsp;?&nbsp;»", "util", (350, 284.5, 232),
+     "c'est l'utilisateur&nbsp;: la personne à qui le produit rend service, celle qui s'en sert."),
+    ("sur_quoi", "②", "En haut à droite, sous «&nbsp;Sur quoi agit-il&nbsp;?&nbsp;»", "mo", (825.5, 284.5, 232),
+     "c'est la matière d'œuvre&nbsp;: ce sur quoi le produit agit — ce qu'il déplace, touche, transforme ou garde."),
+    ("objet", "③", "Au centre, l'ellipse sous la corne", "prod", (583, 476, 212),
+     "c'est le produit&nbsp;: l'objet lui-même, dont on dit le besoin."),
+    ("but", "④", "En bas, sous «&nbsp;Dans quel but&nbsp;?&nbsp;», au bout de la flèche", "fonc", (616, 639, 300),
+     "c'est la fonction — la fonction d'usage&nbsp;: le service rendu, écrit avec un verbe à l'infinitif."),
+]
+#: où va chaque mot de référence posé dans une autre case
+PLACE_MOT = {
+    "util": "«&nbsp;Utilisateur&nbsp;» nomme la personne à qui le produit rend service&nbsp;: sa place est en haut à gauche, "
+            "sous «&nbsp;À qui le produit rend-il service&nbsp;?&nbsp;».",
+    "mo": "«&nbsp;Matière d'œuvre&nbsp;» nomme ce sur quoi le produit agit&nbsp;: sa place est en haut à droite, sous «&nbsp;Sur "
+          "quoi agit-il&nbsp;?&nbsp;».",
+    "prod": "«&nbsp;Produit&nbsp;» nomme l'objet lui-même&nbsp;: sa place est au centre, dans l'ellipse sous la corne.",
+    "fonc": "«&nbsp;Fonction&nbsp;» nomme le service rendu, la fonction d'usage&nbsp;: sa place est en bas, au bout de la "
+            "flèche, sous «&nbsp;Dans quel but&nbsp;?&nbsp;».",
+}
+#: pourquoi un piège n'est pas un mot de la bête à cornes
+PIEGE_MOT = {
+    # « %s » : l'exemple, pris sur l'objet de l'exercice (un exemple d'un autre objet trouble, sur une autre page)
+    "ach": "L'acheteur paie le produit, mais ce n'est pas toujours lui qui s'en sert%s&nbsp;: ce n'est pas un mot de la "
+           "bête à cornes.",
+    "mat": "Le matériau, c'est ce dont le produit est fait&nbsp;: une solution. Ne le confonds pas avec la matière d'œuvre, ce "
+           "sur quoi le produit agit.",
+    "ft": "Une fonction technique dit ce que le produit fait pour rendre le service&nbsp;; la bête à cornes demande le "
+          "service lui-même&nbsp;: la fonction d'usage.",
+}
+#: ce que demande la case, pour finir le retour d'un piège
+QUESTION_CASE = {"a_qui": " Ici, la question est «&nbsp;À qui le produit rend-il service&nbsp;?&nbsp;».",
+                 "sur_quoi": " Ici, la question est «&nbsp;Sur quoi agit-il&nbsp;?&nbsp;».",
+                 "objet": " Ici, c'est l'ellipse du centre, sous la corne&nbsp;: l'objet lui-même.",
+                 "but": " Ici, la question est «&nbsp;Dans quel but&nbsp;?&nbsp;»."}
+
+
+def bac_mots(ident):
+    """Le gabarit vide, ses quatre cases vivantes : le mot choisi dans chaque menu s'y écrit."""
+    return bac(ident, "", "", "", "", "La bête à cornes vide, pour y placer ses mots de référence",
+               "Le gabarit vide de la bête à cornes : en haut à gauche, sous « À qui le produit rend-il service ? », une "
+               "ellipse vide ; en haut à droite, sous « Sur quoi agit-il ? », une ellipse vide ; au centre, sous la corne, "
+               "l'ellipse « Nom du produit » ; en bas, au bout de la flèche, sous « Dans quel but ? », un rectangle vide. "
+               "Chaque case reçoit le mot que tu choisis dans son menu.",
+               vivants={k: "%s-%s" % (ident, k.replace("_", "")) for k in ("a_qui", "sur_quoi", "objet", "but")})
+
+
+def menus_mots(ident, acheteur=""):
+    """Le widget : un menu dans chaque case du gabarit vide, un retour par mot faux. `acheteur` : l'exemple du retour
+    « Acheteur », pris sur l'objet de l'exercice (« (la ville paie la flotte ; les habitants empruntent les vélos) ») ;
+    vide, le retour n'en donne pas."""
+    cases = []
+    for cle, repere, nom, bon, (x, y, l), ok in CASES_MOTS:
+        retours = {}
+        for v, _ in OPTIONS_MOTS:
+            if v == bon:
+                continue
+            piege = PIEGE_MOT[v] % acheteur if v == "ach" else PIEGE_MOT.get(v)
+            retours[v] = PLACE_MOT[v] if v in PLACE_MOT else piege + QUESTION_CASE[cle]
+        # les retours s'écrivent en texte (kit.js) : les entités deviennent des caractères
+        cases.append(dict(name=cle.replace("_", ""), cible="%s-%s" % (ident, cle.replace("_", "")), x=x, y=y, l=l,
+                          repere=repere, legende=nom, options=OPTIONS_MOTS, bonne=bon, ok=html.unescape(ok),
+                          retours={k: html.unescape(v) for k, v in retours.items()}))
+    return dict(type="menus", name="mots", schema=bac_mots(ident), cadre=figures.BAC_VIEWBOX, cases=cases,
+                vide="Le dessin est encore vide : choisis un mot dans le menu de chaque case.",
+                papier="Sur ta feuille&nbsp;: écris dans chaque case du dessin le mot qui la nomme — Utilisateur, Matière "
+                       "d'œuvre, Produit ou Fonction.")
+
+
+CORRECTION_MOTS = [
+    "<b>Utilisateur</b> → en haut à gauche, sous «&nbsp;À qui le produit rend-il service&nbsp;?&nbsp;» → la personne à qui le "
+    "produit rend service",
+    "<b>Matière d'œuvre</b> → en haut à droite, sous «&nbsp;Sur quoi agit-il&nbsp;?&nbsp;» → ce sur quoi le produit agit",
+    "<b>Produit</b> → au centre, dans l'ellipse sous la corne → l'objet lui-même",
+    "<b>Fonction</b> → en bas, sous «&nbsp;Dans quel but&nbsp;?&nbsp;» → la fonction d'usage, le service rendu",
+    "Refusés&nbsp;: <b>Acheteur</b> → il paie, il ne se sert pas forcément du produit&nbsp;; <b>Matériau</b> → ce dont le "
+    "produit est fait, une solution — pas la matière d'œuvre&nbsp;; <b>Fonction technique</b> → ce que le produit fait pour "
+    "rendre le service, pas le service lui-même.",
+]
+
+
+def exercice_mots(ident, id, code, titre, etiquette, objet, objectif_objet, consigne_objet, choix, correction_objet,
+                  jumeau, aide2_objet, retenir, piege, duree=3, intro=None, mots_objet=(), acheteur=""):
+    """Un exercice court sur les mots de référence : les placer dans le gabarit vide (menus dans les cases), puis les
+    reconnaître sur un objet — celui de l'atelier, ou celui de la séquence (piqûre de rappel de 4e et de 3e)."""
+    return dict(
+        id=id, etiquette=etiquette, titre=titre, code=code, duree=duree,
+        objectif="placer les quatre mots de référence de la bête à cornes dans ses cases, puis les reconnaître sur %s."
+                 % objectif_objet,
+        production="les quatre mots placés dans le dessin, et %s sur %s."
+                   % ("une réponse" if len(choix) == 1 else "deux réponses", objectif_objet),
+        mots=MOTS_REFERENCE + list(mots_objet),
+        intro=intro,
+        consigne="<p>Les cases de la bête à cornes ont des noms, les mêmes pour tous les objets&nbsp;: ce sont ses <b>mots de "
+                 "référence</b>, qui viennent de la méthode APTE. <b>Dans chaque case du dessin vide, choisis le mot qui la "
+                 "nomme</b>&nbsp;: Utilisateur, Matière d'œuvre, Produit ou Fonction. Trois autres mots du menu sont des "
+                 "pièges. Puis <b>%s</b>.</p>" % consigne_objet,
+        critere="les quatre cases nommées sans erreur, et tu sais dire pourquoi l'acheteur n'est pas l'utilisateur, ni le "
+                "matériau la matière d'œuvre.",
+        widgets=[menus_mots(ident, acheteur)] + choix,
+        aides=["<p>Lis la question écrite au-dessus de chaque case&nbsp;: elle dit ce que nomme le mot. «&nbsp;À qui…&nbsp;?&nbsp;» "
+               "→ une personne&nbsp;; «&nbsp;Sur quoi…&nbsp;?&nbsp;» → ce que le produit change&nbsp;; au centre → l'objet "
+               "lui-même&nbsp;; «&nbsp;Dans quel but&nbsp;?&nbsp;» → le service rendu.</p>",
+               "<p>À qui le produit rend-il service&nbsp;? → une personne → <b>Utilisateur</b> (celui qui paie, l'acheteur, "
+               "n'est pas toujours celui qui s'en sert).<br>Sur quoi agit-il&nbsp;? → ce qu'il déplace, touche ou garde → "
+               "<b>Matière d'œuvre</b> (pas le matériau, ce dont il est fait).<br>Au centre → <b>Produit</b>.<br>Dans quel "
+               "but&nbsp;? → <b>Fonction</b>, la fonction d'usage (pas une fonction technique).<br>%s</p>" % aide2_objet],
+        jumeau=jumeau,
+        correction=[fig_reference(ident + "-c", apte=False,
+                                  legende="Le dessin de référence&nbsp;: les quatre mots à leur place.")]
+                   + CORRECTION_MOTS + correction_objet,
+        retenir=retenir, piege=piege)
+
+
+def choix_objet(name, legende, options, bonne, retours):
+    return dict(type="choix", name=name, legende=legende, options=options, bonne=bonne, retours=retours)
+
+
+# 5e — le premier contact, en tête de l'atelier : les mots, puis le vélo-cargo de Léa
+E_MOTS = exercice_mots(
+    "bc-m5", "mots", "5e_C3.3", "Les mots de référence de la bête à cornes", "Pour commencer",
+    "le vélo-cargo", "le vélo-cargo de Léa",
+    "dis quelle est la matière d'œuvre du vélo-cargo de Léa, qui emmène ses deux enfants et ses courses en ville",
+    [choix_objet("mo", "Le vélo-cargo de Léa emmène ses deux enfants et ses courses en ville. Sa <b>matière d'œuvre</b>, c'est…",
+                 [("enfants", "ses deux enfants et ses courses, que le vélo-cargo déplace"),
+                  ("lea", "Léa, qui pédale et décide du trajet"),
+                  ("acier", "l'acier et l'aluminium dont le vélo-cargo est fait"),
+                  ("transporter", "transporter ses enfants et ses courses en ville")],
+                 "enfants",
+                 {"enfants": "Oui : c'est la matière d'œuvre, ce sur quoi le vélo-cargo agit — il les fait changer de place.",
+                  "lea": "Léa est l'utilisatrice : c'est à elle que le vélo-cargo rend service. La matière d'œuvre, c'est ce qu'il déplace.",
+                  "acier": "C'est le matériau du cadre, ce dont le vélo-cargo est fait : une solution. La matière d'œuvre est ce sur quoi il agit.",
+                  "transporter": "C'est la fonction, la fonction d'usage : la case du bas. La matière d'œuvre est une chose ou une personne, pas un verbe."})],
+    ["<b>La matière d'œuvre du vélo-cargo</b> → ses deux enfants et ses courses → il les fait changer de place",
+     "Refusés&nbsp;: Léa → l'utilisatrice&nbsp;; l'acier et l'aluminium → le matériau, une solution&nbsp;; «&nbsp;transporter…&nbsp;» "
+     "→ la fonction, un verbe",
+     ("conclusion", "Quatre mots pour tous les objets&nbsp;: <b>utilisateur</b> → <b>matière d'œuvre</b> → <b>produit</b> → "
+                    "<b>fonction</b>. Ils reviennent dans toute la suite de l'atelier.")],
+    dict(consigne="Un cartable&nbsp;: qui est son utilisateur, quelle est sa matière d'œuvre, et sa fonction&nbsp;?",
+         correction="Utilisateur → <b>l'élève</b>, qui le porte. Matière d'œuvre → <b>ses livres et ses cahiers</b>, que le "
+                    "cartable déplace (pas le tissu dont il est fait&nbsp;: c'est son matériau). Fonction → <b>transporter ses "
+                    "affaires de classe</b>."),
+    "Le vélo-cargo → il déplace les enfants et les courses → ce sont eux, sa matière d'œuvre&nbsp;; Léa est l'utilisatrice.",
+    "les quatre cases de la bête à cornes ont des <b>mots de référence</b>&nbsp;: <b>utilisateur</b> (à qui&nbsp;?), <b>matière "
+    "d'œuvre</b> (sur quoi&nbsp;?), <b>produit</b> (au centre), <b>fonction</b> (dans quel but&nbsp;? la fonction d'usage).",
+    "prendre l'<b>acheteur</b> pour l'utilisateur, ou le <b>matériau</b> (ce dont l'objet est fait) pour la matière d'œuvre "
+    "(ce sur quoi il agit).",
+    intro="<p>Avant de lire des bêtes à cornes, retiens les noms de ses cases. Ils sont dans le dessin de référence, plus "
+          "haut&nbsp;; ici, tu les places toi-même.</p>",
+    acheteur=" (un parent qui offre un vélo-cargo le paie&nbsp;; c'est celui qui pédale qui s'en sert)")
+
+# 4e — la piqûre de rappel, en tête de l'atelier : le système d'arrosage du jardin
+CONSIGNE_RAPPEL = "reconnais-les sur %s"
+R_JARDIN = exercice_mots(
+    "bc-m4", "rappel", "4e_C1.3", "Les mots de référence, sur le système d'arrosage du jardin", "🧠 Rappel",
+    "le système d'arrosage", "le système d'arrosage connecté du jardin",
+    CONSIGNE_RAPPEL % "le système d'arrosage connecté du jardin partagé",
+    [choix_objet("mo", "Pour le système d'arrosage connecté du jardin, quelle case est la <b>matière d'œuvre</b>&nbsp;?",
+                 [("plantes", "les plantes du jardin"), ("gardienne", "la gardienne du jardin"),
+                  ("systeme", "le système d'arrosage connecté"), ("arroser", "arroser les plantes du jardin")],
+                 "plantes",
+                 {"plantes": "Oui : c'est sur les plantes que le système agit — il les arrose.",
+                  "gardienne": "La gardienne est l'utilisatrice : c'est à elle que le système rend service. La matière d'œuvre est ce sur quoi il agit.",
+                  "systeme": "C'est le produit, au centre. La matière d'œuvre est en dehors du produit : ce sur quoi il agit.",
+                  "arroser": "C'est la fonction, la fonction d'usage. La matière d'œuvre n'est pas un verbe : c'est une chose ou une personne."}),
+     choix_objet("fonc", "Et sa <b>fonction</b> — sa fonction d'usage&nbsp;?",
+                 [("usage", "Arroser les plantes du jardin, même en l'absence de la gardienne, sans gaspiller l'eau"),
+                  ("tech", "Ouvrir l'électrovanne quand la sonde mesure un sol trop sec"),
+                  ("solution", "Une sonde, une électrovanne et une application sur le téléphone"),
+                  ("util", "La gardienne du jardin, qui règle le système")],
+                 "usage",
+                 {"usage": "Oui : un verbe à l'infinitif, le service rendu, et aucune solution.",
+                  "tech": "C'est une fonction technique : ce que le système fait pour rendre le service. La fonction d'usage dit le service lui-même.",
+                  "solution": "Ce sont des solutions, des pièces : elles disent comment, pas pourquoi. La fonction commence par un verbe à l'infinitif.",
+                  "util": "C'est l'utilisatrice, la case en haut à gauche. La fonction dit dans quel but le système existe."})],
+    ["<b>Le système d'arrosage</b> → utilisatrice&nbsp;: la gardienne → matière d'œuvre&nbsp;: <b>les plantes du jardin</b> → "
+     "produit&nbsp;: le système d'arrosage connecté → fonction&nbsp;: <b>arroser les plantes du jardin, même en l'absence de la "
+     "gardienne, sans gaspiller l'eau</b>",
+     "Refusés&nbsp;: «&nbsp;ouvrir l'électrovanne quand la sonde mesure un sol sec&nbsp;» → une fonction technique&nbsp;; la sonde "
+     "et l'application → des solutions&nbsp;; la gardienne → l'utilisatrice, pas la fonction.",
+     ("conclusion", "Les quatre mots servent pour tous les objets&nbsp;: tu les retrouves sur chaque bête à cornes de "
+                    "l'atelier.")],
+    dict(consigne="Une lampe solaire de secours&nbsp;: son utilisateur, sa matière d'œuvre, sa fonction&nbsp;?",
+         correction="Utilisateur → <b>la famille</b>. Matière d'œuvre → <b>la pièce de la maison</b>, qu'elle éclaire. "
+                    "Fonction → <b>éclairer la pièce pendant une coupure de courant</b> (pas «&nbsp;charger sa batterie au "
+                    "soleil&nbsp;»&nbsp;: une fonction technique)."),
+    "Le jardin → l'utilisatrice, la gardienne&nbsp;; la matière d'œuvre, les plantes&nbsp;; la fonction, arroser — sans "
+    "nommer ni sonde ni électrovanne.",
+    "<b>utilisateur</b>, <b>matière d'œuvre</b>, <b>produit</b>, <b>fonction</b>&nbsp;: les mêmes quatre mots pour toutes les "
+    "bêtes à cornes. La fonction est la <b>fonction d'usage</b>, pas une fonction technique.",
+    "écrire en fonction ce que le système fait (ouvrir l'électrovanne)&nbsp;: c'est une fonction technique.",
+    intro="<p>Les quatre mots de la bête à cornes, vus en 5e, servent dans toute la suite. Deux à trois minutes pour les "
+          "retrouver&nbsp;; le dessin de référence est dans la correction, et dans le cours.</p>",
+    acheteur=" (le collège paie le système d'arrosage&nbsp;; c'est la gardienne qui s'en sert)")
+
+# 3e — la piqûre de rappel, en tête de l'atelier : l'alerte cyclonique
+R_ALERTE = exercice_mots(
+    "bc-m3", "rappel", "3e_C3.1", "Les mots de référence, sur l'alerte cyclonique", "🧠 Rappel",
+    "l'alerte", "le projet d'alerte cyclonique",
+    CONSIGNE_RAPPEL % "le projet d'alerte cyclonique de Sainte-Luce",
+    [choix_objet("mo", "Pour l'alerte cyclonique, les habitants du quartier sont dans les deux cases du haut. Ils sont donc…",
+                 [("deux", "à la fois l'utilisateur et la matière d'œuvre&nbsp;: l'alerte les sert en agissant sur eux"),
+                  ("util", "seulement l'utilisateur&nbsp;: une personne ne peut pas être une matière d'œuvre"),
+                  ("mo", "seulement la matière d'œuvre&nbsp;: l'utilisateur, c'est la commune qui paie"),
+                  ("produit", "le produit&nbsp;: ce sont eux qui donnent l'alerte")],
+                 "deux",
+                 {"deux": "Oui : l'alerte rend service aux habitants en agissant sur eux — elle les prévient.",
+                  "util": "Une personne peut être une matière d'œuvre : un réveil agit sur l'élève qu'il réveille. Ici, l'alerte agit sur les habitants : elle les prévient.",
+                  "mo": "La commune commande et paie : c'est l'acheteur, pas l'utilisateur. L'alerte rend service aux habitants.",
+                  "produit": "Le produit est au centre, encore à trouver (une sirène ? un message ?). Les habitants restent en dehors du produit."}),
+     choix_objet("fonc", "Laquelle de ces phrases peut aller dans la case <b>Fonction</b> (la fonction d'usage)&nbsp;?",
+                 [("usage", "Prévenir les habitants du quartier de l'arrivée d'un cyclone"),
+                  ("solution", "Envoyer un SMS à chaque habitant du quartier"),
+                  ("tech", "Déclencher la sirène quand le vent dépasse un seuil"),
+                  ("produit", "La station d'alerte cyclonique du quartier")],
+                 "usage",
+                 {"usage": "Oui : un verbe à l'infinitif, le service rendu, aucune solution.",
+                  "solution": "Le SMS est une solution : écrit dans la fonction, il ferme la liste des objets possibles.",
+                  "tech": "C'est une fonction technique, avec déjà une solution (la sirène) : ce que le système fait. La fonction d'usage dit le service rendu.",
+                  "produit": "C'est un produit, la case du centre. La fonction commence par un verbe à l'infinitif."})],
+    ["<b>L'alerte cyclonique</b> → utilisateur et matière d'œuvre&nbsp;: <b>les habitants du quartier</b> → produit&nbsp;: encore "
+     "à trouver → fonction&nbsp;: <b>prévenir les habitants du quartier de l'arrivée d'un cyclone</b>",
+     "Refusés&nbsp;: la commune → l'acheteur, elle paie&nbsp;; «&nbsp;envoyer un SMS&nbsp;» → une solution&nbsp;; «&nbsp;déclencher "
+     "la sirène…&nbsp;» → une fonction technique&nbsp;; la station → un produit.",
+     ("conclusion", "Une fonction écrite sans solution garde la liste des objets possibles ouverte&nbsp;: c'est tout le "
+                    "travail de l'atelier.")],
+    dict(consigne="Un réveil&nbsp;: son utilisateur, sa matière d'œuvre, sa fonction&nbsp;?",
+         correction="Utilisateur et matière d'œuvre → <b>l'élève</b>&nbsp;: le réveil lui rend service en agissant sur lui. "
+                    "Fonction → <b>réveiller l'élève à l'heure choisie</b>."),
+    "L'alerte → les habitants, utilisateur et matière d'œuvre à la fois&nbsp;; la commune paie&nbsp;: l'acheteur&nbsp;; la "
+    "fonction, sans solution&nbsp;: prévenir.",
+    "<b>utilisateur</b>, <b>matière d'œuvre</b>, <b>produit</b>, <b>fonction</b>&nbsp;: les mêmes quatre mots partout. La même "
+    "personne peut être utilisateur et matière d'œuvre.",
+    "croire qu'une personne ne peut pas être une matière d'œuvre, ou écrire une solution dans la fonction.",
+    intro="<p>Les quatre mots de la bête à cornes, vus en 5e et en 4e, servent encore ici. Deux à trois minutes pour les "
+          "retrouver&nbsp;; le dessin de référence est dans la correction, et dans le cours.</p>",
+    acheteur=" (la commune paie l'alerte&nbsp;; ce sont les habitants qu'elle sert)")
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Les piqûres de rappel des séquences de 4e et de 3e, sur l'objet de la séquence (Pascal, 04/11/2026 : « rien ne nous
+# empêche de faire une piqûre de rappel en 4e et 3e » ; « sous forme d'exercices intégrés aussi »). Ce ne sont pas des
+# onglets de l'atelier : incrustations.py et les panneaux des codes les trouvent ici.
+# ─────────────────────────────────────────────────────────────────────────────
+R_FEUX = exercice_mots(
+    "bc-mf", "rappel-feux", "4e_C1.3", "Les mots de référence, sur le système de détection des feux", "🧠 Rappel",
+    "le système de détection", "le système de détection des feux de Tsinghua",
+    CONSIGNE_RAPPEL % "le système de détection des départs de feu de Tsinghua",
+    [choix_objet("mo", "Pour le système de détection des départs de feu, quelle case est la <b>matière d'œuvre</b>&nbsp;?",
+                 [("foret", "la forêt surveillée, où un feu peut partir"), ("pompiers", "les pompiers, qui reçoivent l'alerte"),
+                  ("systeme", "le système de détection des départs de feu"), ("prevenir", "prévenir les pompiers d'un départ de feu")],
+                 "foret",
+                 {"foret": "Oui : c'est la forêt que le système surveille ; c'est sur elle qu'il agit.",
+                  "pompiers": "Les pompiers sont les utilisateurs : c'est à eux que le système rend service. La matière d'œuvre est ce sur quoi il agit.",
+                  "systeme": "C'est le produit, au centre. La matière d'œuvre est en dehors du produit.",
+                  "prevenir": "C'est la fonction, la fonction d'usage : un verbe. La matière d'œuvre est une chose ou une personne."}),
+     choix_objet("fonc", "Laquelle de ces phrases est sa <b>fonction</b> — sa fonction d'usage&nbsp;?",
+                 [("usage", "Prévenir les pompiers d'un départ de feu dans la forêt, le plus tôt possible"),
+                  ("tech", "Comparer la température mesurée à un seuil, puis envoyer une alerte"),
+                  ("solution", "Une caméra thermique et un capteur de fumée sur un mât"),
+                  ("util", "Les pompiers, qui reçoivent l'alerte et décident")],
+                 "usage",
+                 {"usage": "Oui : le service rendu aux pompiers, sans solution.",
+                  "tech": "C'est une fonction technique : ce que le système fait pour rendre le service — celle qui a évolué en séance 4. La fonction d'usage dit le service lui-même.",
+                  "solution": "Ce sont des solutions, des pièces : elles disent comment. La fonction commence par un verbe à l'infinitif.",
+                  "util": "Ce sont les utilisateurs, la case en haut à gauche. La fonction dit dans quel but le système existe."})],
+    ["<b>Le système de détection</b> → utilisateurs&nbsp;: les pompiers → matière d'œuvre&nbsp;: <b>la forêt surveillée</b> → "
+     "produit&nbsp;: le système de détection des départs de feu → fonction&nbsp;: <b>prévenir les pompiers d'un départ de feu "
+     "dans la forêt, le plus tôt possible</b>",
+     "Refusés&nbsp;: «&nbsp;comparer la température à un seuil…&nbsp;» → une fonction technique (c'est elle qui a changé en "
+     "séance 4, pas la fonction d'usage)&nbsp;; la caméra et le capteur → des solutions&nbsp;; les pompiers → les utilisateurs.",
+     ("conclusion", "Le besoin du système n'a pas bougé&nbsp;; ce sont ses fonctions techniques qui ont évolué. Les quatre mots "
+                    "le disent vite.")],
+    dict(consigne="Un détecteur de fumée dans une chambre&nbsp;: son utilisateur, sa matière d'œuvre, sa fonction&nbsp;?",
+         correction="Utilisateur → <b>la famille qui dort</b>. Matière d'œuvre → <b>l'air de la chambre</b>, qu'il surveille. "
+                    "Fonction → <b>prévenir la famille d'un début d'incendie</b> (pas «&nbsp;mesurer la fumée&nbsp;»&nbsp;: une "
+                    "fonction technique)."),
+    "Les feux → utilisateurs, les pompiers&nbsp;; matière d'œuvre, la forêt&nbsp;; fonction, prévenir — sans caméra ni seuil.",
+    "les quatre mots de référence se posent sur tout objet&nbsp;: <b>utilisateur</b>, <b>matière d'œuvre</b>, <b>produit</b>, "
+    "<b>fonction</b> (la fonction d'usage).",
+    "prendre une fonction technique (comparer à un seuil) pour la fonction d'usage.",
+    intro="<p>La bête à cornes revient ici, sur un autre objet. Avant, retrouve ses quatre mots sur <b>ton</b> système, celui "
+          "des séances 1 à 4&nbsp;: deux à trois minutes.</p>",
+    acheteur=" (la collectivité qui achète le système de détection ne reçoit pas l'alerte&nbsp;: ce sont les pompiers "
+             "qui s'en servent)")
+
+R_VELOS = exercice_mots(
+    "bc-mv", "rappel-velos", "4e_C3.1", "Les mots de référence, sur la flotte de vélos de Hangzhou", "🧠 Rappel",
+    "la flotte de vélos", "la flotte de vélos de Hangzhou",
+    CONSIGNE_RAPPEL % "la flotte de vélos en libre-service de Hangzhou",
+    [choix_objet("util", "Pour la flotte de vélos en libre-service de Hangzhou, qui est l'<b>utilisateur</b>&nbsp;?",
+                 [("habitants", "les habitants qui empruntent les vélos"), ("ville", "la ville de Hangzhou, qui achète la flotte"),
+                  ("velos", "les vélos de la flotte"), ("deplacer", "se déplacer en ville sans voiture")],
+                 "habitants",
+                 {"habitants": "Oui : c'est l'utilisateur, la personne qui emprunte le vélo.",
+                  "ville": "La ville paie la flotte, mais ce n'est pas l'utilisatrice : elle n'emprunte pas de vélo. C'est l'acheteur.",
+                  "velos": "Les vélos sont le produit, au centre.",
+                  "deplacer": "C'est la fonction, la fonction d'usage : la case du bas. L'utilisateur est une personne."}),
+     choix_objet("mo", "Et sa <b>matière d'œuvre</b>&nbsp;?",
+                 [("habitants", "les habitants eux-mêmes, que le vélo déplace"), ("acier", "l'acier et l'aluminium des cadres"),
+                  ("rues", "les rues de la ville, où roulent les vélos"), ("maire", "le maire, qui a dit le besoin")],
+                 "habitants",
+                 {"habitants": "Oui : le vélo déplace la personne qui pédale. Elle est à la fois l'utilisatrice et la matière d'œuvre, et ce n'est pas une erreur.",
+                  "acier": "C'est le matériau des vélos, ce dont ils sont faits : une solution. La matière d'œuvre est ce sur quoi le vélo agit.",
+                  "rues": "Le vélo roule sur les rues, mais il ne les change pas : elles restent où elles sont. Il déplace la personne qui pédale.",
+                  "maire": "Le maire a dit le besoin, au nom de la ville qui paie : le vélo n'agit pas sur lui."})],
+    ["<b>La flotte de Hangzhou</b> → utilisateur et matière d'œuvre&nbsp;: <b>les habitants</b> qui empruntent les vélos (le "
+     "vélo les déplace) → produit&nbsp;: la flotte de vélos → fonction&nbsp;: <b>permettre aux habitants de se déplacer en ville "
+     "sans voiture</b>",
+     "Refusés&nbsp;: la ville → l'acheteur, elle paie mais n'emprunte pas&nbsp;; l'acier et l'aluminium → le matériau&nbsp;; les "
+     "rues → le vélo ne les change pas&nbsp;; le maire → il dit le besoin, le vélo n'agit pas sur lui.",
+     ("conclusion", "Les mots du maire disent ce que la ville veut&nbsp;; la bête à cornes dit à qui, et sur quoi, la flotte "
+                    "rend service. Chaque partie appellera une caractéristique.")],
+    dict(consigne="Une trottinette en libre-service&nbsp;: son utilisateur, sa matière d'œuvre, son acheteur&nbsp;?",
+         correction="Utilisateur et matière d'œuvre → <b>la personne qui roule</b> (la trottinette la déplace). Acheteur → "
+                    "<b>l'entreprise qui loue les trottinettes</b>, ou la ville&nbsp;: ni l'une ni l'autre ne roule."),
+    "La flotte → les habitants, utilisateurs et matière d'œuvre&nbsp;; la ville paie&nbsp;: l'acheteur&nbsp;; l'acier est le "
+    "matériau.",
+    "<b>utilisateur</b>, <b>matière d'œuvre</b>, <b>produit</b>, <b>fonction</b>&nbsp;: les mêmes quatre mots partout. Celui qui "
+    "paie (l'acheteur) n'est pas toujours l'utilisateur.",
+    "prendre la ville, qui paie, pour l'utilisatrice.",
+    intro="<p>La bête à cornes revient ici. Avant, retrouve ses quatre mots sur <b>ton</b> objet, la flotte de Hangzhou&nbsp;: "
+          "deux à trois minutes.</p>",
+    acheteur=" (la ville de Hangzhou paie la flotte&nbsp;; ce sont les habitants qui empruntent les vélos)")
+
+R_LOCAL = exercice_mots(
+    "bc-ml", "rappel-local", "3e_C3.1", "Les mots de référence, sur le local des serveurs de Shenzhen", "🧠 Rappel",
+    "le local des serveurs", "le local des serveurs de Shenzhen",
+    CONSIGNE_RAPPEL % "le local des serveurs du collège de Shenzhen, qu'il faut refroidir",
+    [choix_objet("mo", "Pour le local des serveurs de Shenzhen, quelle case est la <b>matière d'œuvre</b>&nbsp;?",
+                 [("air", "l'air du local des serveurs, trop chaud"), ("college", "le collège, qui a besoin de ses serveurs"),
+                  ("produit", "le système de refroidissement, encore à choisir"), ("refroidir", "refroidir le local des serveurs")],
+                 "air",
+                 {"air": "Oui : c'est l'air du local que le système refroidit ; c'est sur lui qu'il agit.",
+                  "college": "Le collège est l'utilisateur : c'est à lui que le système rendra service. La matière d'œuvre est ce sur quoi il agit.",
+                  "produit": "C'est le produit, au centre : encore un point d'interrogation, puisqu'on n'a pas choisi. La matière d'œuvre est en dehors du produit.",
+                  "refroidir": "C'est la fonction, la fonction d'usage : un verbe à l'infinitif. La matière d'œuvre est une chose : l'air du local."}),
+     choix_objet("fonc", "Laquelle de ces phrases peut aller dans la case <b>Fonction</b>, sans fermer la liste des possibles&nbsp;?",
+                 [("usage", "Refroidir le local des serveurs, pour qu'aucune machine ne s'arrête"),
+                  ("solution", "Installer un climatiseur dans le local des serveurs"),
+                  ("tech", "Faire tourner un ventilateur dès que la sonde dépasse 30 degrés Celsius"),
+                  ("college", "Le collège de Shenzhen, qui a besoin de ses serveurs")],
+                 "usage",
+                 {"usage": "Oui : un verbe, le service rendu, et aucune solution — la liste reste ouverte.",
+                  "solution": "Le climatiseur est une solution : écrit dans la fonction, il ferme la liste avant de l'établir.",
+                  "tech": "C'est une fonction technique, avec déjà une solution (le ventilateur) : ce que le système fait. La fonction d'usage dit le service rendu.",
+                  "college": "C'est l'utilisateur, la case en haut à gauche. La fonction commence par un verbe à l'infinitif."})],
+    ["<b>Le local de Shenzhen</b> → utilisateur&nbsp;: le collège → matière d'œuvre&nbsp;: <b>l'air du local des serveurs</b> → "
+     "produit&nbsp;: encore à choisir → fonction&nbsp;: <b>refroidir le local des serveurs, pour qu'aucune machine ne s'arrête</b>",
+     "Refusés&nbsp;: «&nbsp;installer un climatiseur&nbsp;» → une solution, qui ferme la liste&nbsp;; «&nbsp;faire tourner un "
+     "ventilateur dès 30 degrés Celsius&nbsp;» → une fonction technique&nbsp;; le collège → l'utilisateur.",
+     ("conclusion", "Une fonction sans solution laisse la liste ouverte&nbsp;: climatiseur, ventilation, store, isolant, moins "
+                    "de chaleur produite… C'est la suite de l'activité.")],
+    dict(consigne="Une glacière pour le pique-nique&nbsp;: son utilisateur, sa matière d'œuvre, sa fonction&nbsp;?",
+         correction="Utilisateur → <b>la famille</b>. Matière d'œuvre → <b>les boissons et le repas</b>, qu'elle garde. Fonction → "
+                    "<b>garder le pique-nique au frais toute la journée</b> (pas «&nbsp;isoler avec du polystyrène&nbsp;»&nbsp;: "
+                    "une solution)."),
+    "Le local → l'utilisateur, le collège&nbsp;; la matière d'œuvre, l'air du local&nbsp;; la fonction, refroidir — sans "
+    "climatiseur ni ventilateur.",
+    "<b>utilisateur</b>, <b>matière d'œuvre</b>, <b>produit</b>, <b>fonction</b>&nbsp;: les mêmes quatre mots partout. Une fonction "
+    "sans solution garde la liste ouverte.",
+    "écrire une solution (un climatiseur) dans la fonction&nbsp;: la liste se ferme avant d'exister.",
+    intro="<p>La bête à cornes revient ici. Avant, retrouve ses quatre mots sur <b>ton</b> problème, le local des serveurs&nbsp;: "
+          "deux à trois minutes.</p>")
+
+#: les exercices propres à une séquence (pas des onglets de l'atelier)
+RAPPELS = [R_FEUX, R_VELOS, R_LOCAL]
+#: la piqûre de rappel de chaque panneau de code, sur l'objet de la séquence du code
+RAPPEL_PANNEAU = {"4e_C1.3": "rappel-feux", "4e_C3.1": "rappel-velos", "3e_C3.1": "rappel-local"}
+
 BAC_MAL = bac(
     "bc-mal", "les habitants du quartier", "la sécurité du quartier", "Quel objet ?", "envoyer un SMS aux habitants",
     "La bête à cornes d'une autre équipe, à vérifier",
@@ -128,6 +549,12 @@ MOTS_BESOIN = [
      "on fabrique ou on choisit un objet parce que quelqu'un en a besoin."),
     ("bête à cornes", "le nom courant du schéma qui exprime le besoin&nbsp;: deux cases en haut (à qui&nbsp;? sur quoi&nbsp;?), "
      "le produit au milieu, le but en bas. Sa grande courbe fait penser aux cornes d'un taureau."),
+    ("utilisateur", "le mot de référence de la case «&nbsp;à qui&nbsp;?&nbsp;»&nbsp;: la personne à qui le produit rend service, "
+     "celle qui s'en sert."),
+    ("matière d'œuvre", "le mot de référence de la case «&nbsp;sur quoi&nbsp;?&nbsp;»&nbsp;: ce sur quoi le produit agit — ce qu'il "
+     "déplace, touche, transforme ou garde, une chose ou une personne. Ce n'est pas la matière dont il est fait."),
+    ("fonction d'usage", "le mot de référence de la case «&nbsp;dans quel but&nbsp;?&nbsp;» (on écrit souvent «&nbsp;fonction&nbsp;»)&nbsp;: "
+     "le service que le produit rend à l'utilisateur, avec un verbe à l'infinitif."),
 ]
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -152,49 +579,51 @@ E1 = dict(
     intro="<p>Léa vit en ville et n'a pas de voiture. Chaque jour, elle emmène ses deux enfants et rapporte ses courses avec "
           "son <b>vélo-cargo</b> — un vélo avec un grand bac devant. Pour dire le <b>besoin</b> auquel répond cet objet, on "
           "pose trois questions. Le schéma qui rassemble les réponses s'appelle souvent la <b>bête à cornes</b>.</p>",
-    consigne="<p>La bête à cornes répond à trois questions&nbsp;: <b>à qui</b> l'objet rend-il service (qui s'en sert)&nbsp;? "
-             "<b>sur quoi</b> agit-il (ce qu'il déplace, touche ou transforme)&nbsp;? <b>dans quel but</b> existe-t-il&nbsp;? "
+    consigne="<p>La bête à cornes répond à trois questions&nbsp;: <b>à qui</b> l'objet rend-il service (son <b>utilisateur</b>)&nbsp;? "
+             "<b>sur quoi</b> agit-il (sa <b>matière d'œuvre</b>&nbsp;: ce qu'il déplace, touche ou transforme)&nbsp;? <b>dans "
+             "quel but</b> existe-t-il (sa <b>fonction</b>)&nbsp;? "
              "<b>Lis le schéma, puis choisis, pour chaque question, la phrase qui l'explique.</b></p>",
-    critere="trois réponses justes, et tu sais dire pourquoi les enfants sont dans la case « sur quoi&nbsp;? » et pas dans "
-            "la case « à qui&nbsp;? ».",
+    critere="trois réponses justes, et tu sais dire pourquoi les enfants sont la matière d'œuvre (case « sur quoi&nbsp;? ») "
+            "et pas l'utilisateur (case « à qui&nbsp;? »).",
     widgets=[dict(type="choix", name="qui",
-                  legende="① <b>À qui&nbsp;?</b> Le schéma dit&nbsp;: Léa. Pourquoi Léa&nbsp;?",
+                  legende="① <b>À qui&nbsp;?</b> Le schéma dit&nbsp;: Léa. Pourquoi Léa est-elle l'<b>utilisatrice</b>&nbsp;?",
                   options=[("sert", "Parce que c'est elle qui se sert du vélo-cargo&nbsp;: il l'aide à faire ses trajets."),
                            ("paie", "Parce que c'est elle qui l'a acheté au magasin."),
                            ("forte", "Parce qu'elle est la plus grande et la plus forte de la famille."),
                            ("piece", "Parce qu'elle pédale&nbsp;: elle fait partie du vélo-cargo.")],
                   bonne="sert",
-                  retours={"sert": "Oui : la case « à qui ? » nomme la personne que l'objet aide, celle qui s'en sert.",
-                           "paie": "Elle l'a peut-être acheté, mais ce n'est pas la raison : un parent qui offre un vélo à son enfant le paie, et c'est pourtant à l'enfant qu'il rend service.",
+                  retours={"sert": "Oui : c'est l'utilisatrice — la case « à qui ? » nomme la personne que l'objet aide, celle qui s'en sert.",
+                           "paie": "Elle l'a peut-être acheté, mais ce n'est pas la raison : un parent qui offre un vélo à son enfant le paie, et c'est pourtant l'enfant, l'utilisateur.",
                            "forte": "La taille et la force ne décident de rien : la case « à qui ? » nomme la personne que l'objet aide.",
-                           "piece": "Léa pédale, mais elle n'est pas une pièce du vélo : elle reste en dehors de l'objet, c'est la personne qu'il aide."}),
+                           "piece": "Léa pédale, mais elle n'est pas une pièce du vélo : elle reste en dehors de l'objet, c'est l'utilisatrice, la personne qu'il aide."}),
              dict(type="choix", name="quoi",
-                  legende="② <b>Sur quoi&nbsp;?</b> Le schéma dit&nbsp;: ses deux enfants et ses courses. Pourquoi eux, et pas la route&nbsp;?",
+                  legende="② <b>Sur quoi&nbsp;?</b> Le schéma dit&nbsp;: ses deux enfants et ses courses. Pourquoi sont-ils la <b>matière d'œuvre</b>, et pas la route&nbsp;?",
                   options=[("deplace", "Parce que ce sont eux que le vélo-cargo fait changer de place."),
                            ("bac", "Parce qu'ils sont assis ou posés dans le grand bac, juste devant Léa."),
                            ("importants", "Parce qu'ils comptent plus pour Léa que la route."),
                            ("touche", "Parce que la route ne touche jamais le vélo-cargo.")],
                   bonne="deplace",
-                  retours={"deplace": "Oui : le vélo-cargo agit sur ce qu'il déplace. La route, elle, reste à sa place.",
+                  retours={"deplace": "Oui : c'est la matière d'œuvre, ce que le vélo-cargo déplace. La route, elle, reste à sa place.",
                            "bac": "C'est vrai, ils sont dans le bac, mais ce n'est pas la raison : avec un bac à l'arrière, le vélo-cargo agirait sur eux de la même façon. Ce qui compte, c'est qu'il les fait changer de place.",
                            "importants": "L'importance ne décide pas de la case : on cherche ce que l'objet déplace ou transforme.",
                            "touche": "La route touche les roues ! Mais le vélo-cargo ne la change pas : elle reste où elle est."}),
              dict(type="choix", name="but",
-                  legende="③ <b>Dans quel but&nbsp;?</b> Laquelle de ces phrases pourrait aussi aller dans la case du bas&nbsp;?",
+                  legende="③ <b>Dans quel but&nbsp;?</b> Laquelle de ces phrases pourrait aussi aller dans la case du bas, la <b>fonction</b>&nbsp;?",
                   options=[("but", "Déplacer ses enfants et ses courses d'un bout à l'autre de la ville."),
                            ("solution", "Avoir un grand bac devant le guidon et huit vitesses."),
                            ("nom", "Le vélo-cargo de Léa, avec ses deux roues et son bac."),
                            ("contrainte", "Résister à la pluie et monter les côtes sans trop d'effort.")],
                   bonne="but",
-                  retours={"but": "Oui : un verbe à l'infinitif (déplacer), et aucune solution. C'est le même but, dit autrement.",
+                  retours={"but": "Oui : un verbe à l'infinitif (déplacer), et aucune solution. C'est la même fonction d'usage, dite autrement.",
                            "solution": "Le grand bac et les vitesses disent COMMENT le vélo-cargo fait son travail : ce sont des solutions. Le but dit POURQUOI il existe.",
                            "nom": "C'est le nom de l'objet, déjà écrit au centre du schéma. Le but commence par un verbe à l'infinitif.",
                            "contrainte": "Ce sont des conditions que le vélo-cargo doit respecter : elles viendront avec le diagramme des interacteurs. Le but dit pourquoi l'objet existe."})],
     aides=["<p>Lis le schéma comme une phrase&nbsp;: « Le vélo-cargo rend service <b>à</b> …, en agissant <b>sur</b> …, "
            "<b>pour</b> … ». Puis, pour chaque case, pose-toi une question simple&nbsp;: qui s'en sert&nbsp;? qu'est-ce qui "
            "change de place&nbsp;? pourquoi l'objet existe-t-il&nbsp;?</p>",
-           "<p>À qui&nbsp;? → qui pédale et décide du trajet&nbsp;? → Léa → elle se sert de l'objet.<br>"
-           "Sur quoi&nbsp;? → qu'est-ce qui change de place&nbsp;? → les enfants et les courses → la route, elle, ne bouge pas.<br>"
+           "<p>À qui&nbsp;? → qui pédale et décide du trajet&nbsp;? → Léa → elle se sert de l'objet&nbsp;: l'utilisatrice.<br>"
+           "Sur quoi&nbsp;? → qu'est-ce qui change de place&nbsp;? → les enfants et les courses → la matière d'œuvre&nbsp;; la "
+           "route, elle, ne bouge pas.<br>"
            "Dans quel but&nbsp;? → un verbe à l'infinitif → « déplacer », « transporter » → pas de solution (ni bac, ni vitesses).</p>"],
     jumeau=dict(consigne="Un cartable&nbsp;: à qui rend-il service, sur quoi agit-il, dans quel but existe-t-il&nbsp;?",
                 correction="À qui&nbsp;? → <b>l'élève</b>, qui le porte. Sur quoi&nbsp;? → <b>ses livres et ses cahiers</b>, que le "
@@ -203,22 +632,25 @@ E1 = dict(
     correction=[
         "<b>La phrase du schéma&nbsp;:</b> le vélo-cargo rend service <b>à Léa</b>, en agissant <b>sur ses deux enfants et ses "
         "courses</b>, <b>pour</b> les transporter en ville.",
-        "<b>① À qui&nbsp;?</b> → Léa → c'est elle qui se sert du vélo-cargo",
+        "<b>① À qui&nbsp;?</b> → Léa → c'est elle qui se sert du vélo-cargo&nbsp;: l'<b>utilisatrice</b>",
         "Refusés&nbsp;: « elle l'a acheté » → celui qui paie n'est pas toujours celui à qui l'objet rend service&nbsp;; « la plus "
         "forte » → la force ne décide de rien&nbsp;; « une pièce du vélo » → Léa reste en dehors de l'objet.",
-        "<b>② Sur quoi&nbsp;?</b> → les enfants et les courses → le vélo-cargo les fait changer de place",
+        "<b>② Sur quoi&nbsp;?</b> → les enfants et les courses → le vélo-cargo les fait changer de place&nbsp;: la <b>matière "
+        "d'œuvre</b>",
         "Refusés&nbsp;: « ils sont dans le bac » → vrai, mais un bac à l'arrière ne changerait rien&nbsp;; « plus importants » → "
         "l'importance ne décide pas&nbsp;; « la route ne touche pas » → faux, elle touche les roues, mais elle ne bouge pas.",
         "<b>③ Dans quel but&nbsp;?</b> → « déplacer ses enfants et ses courses d'un bout à l'autre de la ville » → un verbe à "
-        "l'infinitif, aucune solution",
+        "l'infinitif, aucune solution&nbsp;: la <b>fonction</b> d'usage",
         "Refusés&nbsp;: le bac et les vitesses → des solutions (comment)&nbsp;; « le vélo-cargo de Léa » → le nom de l'objet&nbsp;; "
         "« résister à la pluie » → une contrainte, pas le but.",
-        ("conclusion", "La bête à cornes se lit comme une phrase&nbsp;: <b>à qui</b> → <b>sur quoi</b> → <b>pour quoi</b>."),
+        ("conclusion", "La bête à cornes se lit comme une phrase&nbsp;: <b>à qui</b> (l'utilisateur) → <b>sur quoi</b> (la "
+                       "matière d'œuvre) → <b>pour quoi</b> (la fonction)."),
     ],
-    retenir="la bête à cornes se lit comme une phrase&nbsp;: l'objet rend service <b>à quelqu'un</b>, en agissant <b>sur "
-            "quelque chose</b>, <b>pour</b> un but écrit avec un verbe à l'infinitif.",
+    retenir="la bête à cornes se lit comme une phrase&nbsp;: l'objet rend service <b>à quelqu'un</b> (l'utilisateur), en "
+            "agissant <b>sur quelque chose</b> (la matière d'œuvre), <b>pour</b> un but écrit avec un verbe à l'infinitif (la "
+            "fonction).",
     piege="mettre dans la case « à qui&nbsp;? » tout ce que l'objet transporte&nbsp;: les enfants sont dans le bac, mais c'est "
-          "Léa que le vélo-cargo aide — les enfants sont ce sur quoi il agit.",
+          "Léa, l'utilisatrice, que le vélo-cargo aide — les enfants sont la matière d'œuvre.",
 )
 
 BANQUE_LAMPE = ["les piétons", "la rue du parking", "la mairie", "l'ampoule", "la nuit"]
@@ -235,9 +667,9 @@ E2 = dict(
           ("intrus", "un mot qui n'a pas sa place dans la liste.")],
     intro="<p>Sur un parking de Sainte-Luce, la mairie a fait installer un <b>lampadaire intelligent</b>&nbsp;: la nuit, il "
           "s'allume quand un piéton passe, et il reste éteint le reste du temps.</p>",
-    consigne="<p><b>Complète les deux cases du haut</b> avec les mots de la banque&nbsp;: <i>les piétons · la rue du parking · "
+    consigne="<p><b>Complète les deux cases du haut</b> — l'utilisateur et la matière d'œuvre — avec les mots de la banque&nbsp;: <i>les piétons · la rue du parking · "
              "la mairie · l'ampoule · la nuit</i>. Tes choix s'écrivent dans le schéma. Trois mots de la banque sont des "
-             "<b>intrus</b>. Puis <b>écris le but</b> du lampadaire&nbsp;: une phrase qui commence par un <b>verbe à "
+             "<b>intrus</b>. Puis <b>écris le but</b> du lampadaire, sa fonction d'usage&nbsp;: une phrase qui commence par un <b>verbe à "
              "l'infinitif</b> (éclairer, permettre…) et qui ne nomme <b>aucune solution technique</b> — ni ampoule, ni "
              "capteur, ni panneau solaire. Une solution dit <i>comment</i>&nbsp;; le but dit <i>pourquoi</i>.</p>",
     critere="les deux cases portent les bons mots, et ton but commence par un verbe, dit où, quand et pour qui, sans nommer "
@@ -245,12 +677,12 @@ E2 = dict(
     widgets=[dict(type="slots", intro='<figure class="figure schema-vivant">' + BAC_LAMPE +
                   '<figcaption>La bête à cornes du lampadaire intelligent. Tes choix et ton but s\'écrivent sur les lignes '
                   'pointillées.</figcaption></figure>',
-                  slots=[dict(name="qui", cible="bc-l-qui", legende="Case « À qui le produit rend-il service&nbsp;? »",
+                  slots=[dict(name="qui", cible="bc-l-qui", legende="Case « À qui le produit rend-il service&nbsp;? » (l'utilisateur)",
                               options=BANQUE_LAMPE, bonnes=["les piétons"],
-                              indice="Case « à qui ? » : la personne que le lampadaire aide quand il s'allume, pas celle qui l'a commandé."),
-                         dict(name="quoi", cible="bc-l-quoi", legende="Case « Sur quoi agit-il&nbsp;? »",
+                              indice="Case « à qui ? », l'utilisateur : la personne que le lampadaire aide quand il s'allume, pas celle qui l'a commandé."),
+                         dict(name="quoi", cible="bc-l-quoi", legende="Case « Sur quoi agit-il&nbsp;? » (la matière d'œuvre)",
                               options=BANQUE_LAMPE, bonnes=["la rue du parking"],
-                              indice="Case « sur quoi ? » : ce que la lumière touche et rend visible.")]),
+                              indice="Case « sur quoi ? », la matière d'œuvre : ce que la lumière touche et rend visible.")]),
              dict(type="texte", name="but", lignes=3, miroir="bc-l-but",
                   label="Écris le but du lampadaire intelligent (il s'écrit aussi dans le schéma).",
                   criteres=[dict(label="ton but commence par un verbe à l'infinitif (éclairer, permettre…)",
@@ -271,9 +703,10 @@ E2 = dict(
     aides=["<p>Pour la case « à qui&nbsp;? », cherche la personne qui profite du lampadaire au moment où il s'allume. Pour la "
            "case « sur quoi&nbsp;? », cherche ce que la lumière touche. Pour le but, termine la phrase&nbsp;: « Le lampadaire "
            "existe pour… ».</p>",
-           "<p>La mairie → elle décide et elle paie, mais elle ne marche pas sur le parking la nuit → pas dans « à qui&nbsp;? ».<br>"
-           "Les piétons → c'est eux que la lumière aide → <b>« à qui&nbsp;? »</b>.<br>"
-           "La rue du parking → c'est elle que la lumière éclaire → <b>« sur quoi&nbsp;? »</b>.<br>"
+           "<p>La mairie → elle décide et elle paie, mais elle ne marche pas sur le parking la nuit → l'acheteur, pas "
+           "l'utilisateur.<br>"
+           "Les piétons → c'est eux que la lumière aide → les utilisateurs, <b>« à qui&nbsp;? »</b>.<br>"
+           "La rue du parking → c'est elle que la lumière éclaire → la matière d'œuvre, <b>« sur quoi&nbsp;? »</b>.<br>"
            "La nuit → le moment où le lampadaire travaille, pas ce sur quoi il agit.<br>"
            "L'ampoule → une pièce du lampadaire, une solution → aucune case.<br>"
            "Le but → un verbe (éclairer) + où (la rue du parking) + quand (la nuit) + pour qui (les piétons).</p>"],
@@ -283,21 +716,21 @@ E2 = dict(
                            "solution (ni clochette, ni ressort)."),
     correction=[
         '<figure class="figure">' + BAC_LAMPE_C + '<figcaption>La bête à cornes du lampadaire, corrigée.</figcaption></figure>',
-        "<b>À qui&nbsp;?</b> → <b>les piétons</b> → c'est eux que la lumière aide à voir où ils marchent",
-        "<b>Sur quoi&nbsp;?</b> → <b>la rue du parking</b> → c'est elle que la lumière éclaire",
-        "<b>La mairie</b> → elle commande et paie le lampadaire, mais elle n'est pas sur le parking la nuit → celui qui paie "
-        "n'est pas forcément celui à qui l'objet rend service",
+        "<b>À qui&nbsp;?</b> → <b>les piétons</b>, les utilisateurs → c'est eux que la lumière aide à voir où ils marchent",
+        "<b>Sur quoi&nbsp;?</b> → <b>la rue du parking</b>, la matière d'œuvre → c'est elle que la lumière éclaire",
+        "<b>La mairie</b> → elle commande et paie le lampadaire, mais elle n'est pas sur le parking la nuit → l'acheteur n'est "
+        "pas forcément l'utilisateur",
         "<b>La nuit</b> → le moment où le lampadaire travaille&nbsp;; la lumière ne la change pas → ni « à qui&nbsp;? », ni « sur quoi&nbsp;? »",
         "<b>L'ampoule</b> → une pièce du lampadaire&nbsp;: une solution technique → aucune case",
         "<b>Un but attendu&nbsp;:</b> « Éclairer la rue du parking la nuit, pour que les piétons y marchent en sécurité. » → un "
         "verbe à l'infinitif, le lieu, le moment, les personnes",
         "<b>Refusé&nbsp;:</b> « Allumer une ampoule quand le capteur voit quelqu'un » → c'est <i>comment</i> le lampadaire "
         "marche, avec deux solutions (l'ampoule, le capteur)",
-        ("conclusion", "Le but dit <b>pourquoi</b> l'objet existe&nbsp;; les solutions disent <b>comment</b>. Et celui qui "
-                       "<b>paie</b> n'est pas toujours celui à qui l'objet <b>rend service</b>."),
+        ("conclusion", "Le but — la fonction d'usage — dit <b>pourquoi</b> l'objet existe&nbsp;; les solutions disent "
+                       "<b>comment</b>. Et celui qui <b>paie</b> n'est pas toujours l'<b>utilisateur</b>."),
     ],
     retenir="le but s'écrit avec un <b>verbe à l'infinitif</b> et ne nomme <b>aucune solution</b>&nbsp;; la case « à qui&nbsp;? » "
-            "nomme la personne que l'objet aide, pas celle qui l'a commandé.",
+            "nomme l'<b>utilisateur</b>, la personne que l'objet aide, pas celle qui l'a commandé.",
     piege="mettre la mairie dans la case « à qui&nbsp;? », ou écrire dans le but comment l'objet fonctionne (« allumer une "
           "ampoule grâce à un capteur »).",
 )
@@ -310,7 +743,8 @@ E3 = dict(
     objectif="choisir, parmi plusieurs objets, celui qui remplit les trois branches d'un besoin, et dire pourquoi les autres "
              "ne conviennent pas.",
     production="l'objet choisi, et la branche qui fait échouer chacun des cinq autres.",
-    mots=[("branche", "une des trois parties de la bête à cornes&nbsp;: « à qui&nbsp;? », « sur quoi&nbsp;? », « dans quel but&nbsp;? »."),
+    mots=[("branche", "une des trois parties de la bête à cornes&nbsp;: « à qui&nbsp;? » (l'utilisateur), « sur quoi&nbsp;? » (la "
+           "matière d'œuvre), « dans quel but&nbsp;? » (la fonction)."),
           ("répondre au besoin", "remplir les trois branches à la fois&nbsp;: servir la bonne personne, agir sur la bonne chose, "
            "atteindre tout le but."),
           ("draisienne", "un petit vélo sans pédales, pour qu'un jeune enfant apprenne à garder l'équilibre."),
@@ -338,8 +772,8 @@ E3 = dict(
                            "siege": "Un siège enfant ne porte qu'un enfant, et il ne reste pas de place pour les courses.",
                            "drais": "Une draisienne sert à un jeune enfant qui apprend l'équilibre : elle n'est pas faite pour Léa."}),
              dict(type="classer", name="branche",
-                  categories=[("qui", "« à qui&nbsp;? » échoue&nbsp;: il n'est pas fait pour Léa"),
-                              ("quoi", "« sur quoi&nbsp;? » échoue&nbsp;: il ne peut pas porter deux enfants et des courses"),
+                  categories=[("qui", "« à qui&nbsp;? » échoue&nbsp;: il n'est pas fait pour Léa, l'utilisatrice"),
+                              ("quoi", "« sur quoi&nbsp;? » échoue&nbsp;: il ne peut pas porter la matière d'œuvre, deux enfants et des courses"),
                               ("but", "« dans quel but&nbsp;? » échoue&nbsp;: il ne respecte pas tout le but")],
                   items=[("La voiture familiale", "but", "La voiture porte bien tout le monde : relis le but jusqu'au bout."),
                          ("Le sac à dos", "quoi", "Le sac à dos porte les courses… et les deux enfants ?"),
@@ -359,8 +793,8 @@ E3 = dict(
                            "fraîche et se renverse dans le sac → <b>« dans quel but&nbsp;? »</b> échoue. Le réfrigérateur → il sert à toute "
                            "la famille et reste à la maison → <b>« à qui&nbsp;? »</b> échoue déjà (et le but aussi&nbsp;: pas en classe)."),
     correction=[
-        "<b>Le vélo-cargo</b> → à qui&nbsp;? Léa ✔ → sur quoi&nbsp;? deux enfants et des courses, dans le bac ✔ → but&nbsp;: en ville, "
-        "sans voiture ✔ → <b>il répond au besoin</b>",
+        "<b>Le vélo-cargo</b> → utilisatrice&nbsp;: Léa ✔ → matière d'œuvre&nbsp;: deux enfants et des courses, dans le bac ✔ → "
+        "fonction&nbsp;: en ville, sans voiture ✔ → <b>il répond au besoin</b>",
         "<b>La draisienne</b> → à qui&nbsp;? elle sert à un jeune enfant qui apprend l'équilibre, pas à Léa ✘ → <b>« à qui&nbsp;? »</b>",
         "<b>La trottinette</b> → à qui&nbsp;? Léa ✔ → sur quoi&nbsp;? elle ne porte que la personne debout dessus ✘ → <b>« sur quoi&nbsp;? »</b>",
         "<b>Le sac à dos</b> → à qui&nbsp;? Léa ✔ → sur quoi&nbsp;? les courses oui, les deux enfants non ✘ → <b>« sur quoi&nbsp;? »</b>",
@@ -404,7 +838,8 @@ E4 = dict(
           "de la cuve devient rare. Le jardin s'équipe donc d'un <b>système d'arrosage connecté</b>. "
           "Ci-dessus, la bête à cornes de l'arrosoir&nbsp;; plus bas, celle du nouveau système, qui n'a pas encore de but.</p>",
     consigne="<p>Pour <b>justifier</b> l'évolution d'un objet, on compare ce qu'on lui demande avant et après. <b>Compare les "
-             "deux bêtes à cornes partie par partie</b>, puis <b>écris le nouveau but</b>&nbsp;: un verbe à l'infinitif, "
+             "deux bêtes à cornes partie par partie</b> — utilisateur, matière d'œuvre, produit, fonction —, puis <b>écris le "
+             "nouveau but</b>, la nouvelle fonction d'usage&nbsp;: un verbe à l'infinitif, "
              "<b>sans nommer de solution</b> (ni capteur, ni pompe, ni smartphone). Enfin, <b>dis pourquoi</b> le jardin a "
              "changé d'objet.</p>",
     critere="quatre comparaisons justes, un but qui dit « même sans la gardienne » et « sans gaspiller l'eau » sans nommer de "
@@ -415,10 +850,10 @@ E4 = dict(
                         'pointillée.</figcaption></figure>',
                   categories=[("pareil", "elle est la même dans les deux schémas"),
                               ("change", "elle change d'un schéma à l'autre")],
-                  items=[("La case « à qui&nbsp;? »", "pareil", "Compare les deux cases du haut, à gauche : qui se sert de l'objet, avant et après ?"),
-                         ("La case « sur quoi&nbsp;? »", "pareil", "Compare les deux cases du haut, à droite."),
+                  items=[("La case « à qui&nbsp;? » (l'utilisatrice)", "pareil", "Compare les deux cases du haut, à gauche : qui se sert de l'objet, avant et après ?"),
+                         ("La case « sur quoi&nbsp;? » (la matière d'œuvre)", "pareil", "Compare les deux cases du haut, à droite : sur quoi l'objet agit-il, avant et après ?"),
                          ("Le produit, au centre", "change", "Au centre : un arrosoir, puis… ?"),
-                         ("La case « dans quel but&nbsp;? »", "change", "Relis l'histoire : les vacances et la canicule demandent-elles le même but qu'avant ?")]),
+                         ("La case « dans quel but&nbsp;? » (la fonction)", "change", "Relis l'histoire : les vacances et la canicule demandent-elles le même but qu'avant ?")]),
              dict(type="texte", name="but", lignes=3, miroir="bc-a-but",
                   label="Écris le nouveau but (il s'écrit aussi dans le second schéma).",
                   criteres=[dict(label="ton but commence par un verbe à l'infinitif (arroser…)", motifs=[VERBE],
@@ -449,11 +884,11 @@ E4 = dict(
                   retours={"besoin": "Oui : à qui et sur quoi n'ont pas bougé ; c'est le but qui s'est enrichi. L'objet a évolué pour répondre à ce nouveau but.",
                            "casse": "Un arrosoir percé se remplace par un autre arrosoir : la panne d'un objet ne change pas le besoin.",
                            "mode": "Être moderne ne suffit pas à justifier un changement : sans les vacances et la canicule, l'arrosoir répondrait encore au besoin.",
-                           "plantes": "La case « sur quoi ? » est la même dans les deux schémas : ce sont toujours les plantes du jardin."})],
+                           "plantes": "La matière d'œuvre, la case « sur quoi ? », est la même dans les deux schémas : ce sont toujours les plantes du jardin."})],
     aides=["<p>Compare les deux schémas case par case, comme dans un jeu des sept différences. Puis relis l'histoire&nbsp;: "
            "qu'est-ce que l'arrosoir ne permet plus de faire&nbsp;?</p>",
-           "<p>À qui&nbsp;? → la gardienne, dans les deux → pareil.<br>"
-           "Sur quoi&nbsp;? → les plantes du jardin, dans les deux → pareil.<br>"
+           "<p>À qui&nbsp;? → l'utilisatrice, la gardienne, dans les deux → pareil.<br>"
+           "Sur quoi&nbsp;? → la matière d'œuvre, les plantes du jardin, dans les deux → pareil.<br>"
            "Le but de l'arrosoir → « arroser les plantes » → il demande que quelqu'un soit là.<br>"
            "Les vacances → personne au jardin → le but doit dire&nbsp;: <b>même en l'absence de la gardienne</b>.<br>"
            "La canicule → l'eau est rare → le but doit dire&nbsp;: <b>sans gaspiller l'eau</b>.<br>"
@@ -466,17 +901,17 @@ E4 = dict(
     correction=[
         '<figure class="figure">' + BAC_ARROSAGE_C + '<figcaption>Après&nbsp;: la bête à cornes du système d\'arrosage, avec son '
         'nouveau but.</figcaption></figure>',
-        "<b>À qui&nbsp;?</b> → la gardienne, dans les deux schémas → <b>pareil</b>",
-        "<b>Sur quoi&nbsp;?</b> → les plantes du jardin, dans les deux → <b>pareil</b>",
-        "<b>Le produit</b> → l'arrosoir devient le système d'arrosage connecté → <b>change</b>",
-        "<b>Le but</b> → « arroser les plantes du jardin » ne suffit plus → <b>change</b>",
+        "<b>Utilisatrice</b> (à qui&nbsp;?) → la gardienne, dans les deux schémas → <b>pareil</b>",
+        "<b>Matière d'œuvre</b> (sur quoi&nbsp;?) → les plantes du jardin, dans les deux → <b>pareil</b>",
+        "<b>Produit</b> → l'arrosoir devient le système d'arrosage connecté → <b>change</b>",
+        "<b>Fonction</b> (le but) → « arroser les plantes du jardin » ne suffit plus → <b>change</b>",
         "<b>Un nouveau but attendu&nbsp;:</b> « Arroser les plantes du jardin, même en l'absence de la gardienne, sans gaspiller l'eau. »",
         "« même en l'absence de la gardienne » → vient des vacances&nbsp;; « sans gaspiller l'eau » → vient de la canicule et de la cuve",
         "<b>Refusé&nbsp;:</b> « Arroser grâce à un capteur et à une pompe » → deux solutions dans le but",
         "<b>Pourquoi l'objet a évolué</b> → parce que le besoin a changé. Un arrosoir percé se remplacerait par un arrosoir&nbsp;; "
         "la mode ne suffit pas&nbsp;; les plantes sont les mêmes.",
-        ("conclusion", "Un objet évolue parce que le <b>besoin</b> évolue&nbsp;: ici, c'est le <b>but</b> qui s'est enrichi, pas la "
-                       "personne servie ni ce sur quoi on agit."),
+        ("conclusion", "Un objet évolue parce que le <b>besoin</b> évolue&nbsp;: ici, c'est la <b>fonction</b> (le but) qui s'est "
+                       "enrichie, pas l'utilisatrice ni la matière d'œuvre."),
     ],
     retenir="pour justifier l'évolution d'un objet, on compare les bêtes à cornes d'avant et d'après&nbsp;: la partie qui change "
             "dit quel besoin nouveau l'objet doit satisfaire.",
@@ -520,13 +955,13 @@ E5 = dict(
                            "eau": "Oui : « sans gaspiller l'eau » se mesure en litres par jour.",
                            "cuve": "Oui : pendant les vacances, la cuve doit contenir assez d'eau pour tous les jours d'absence.",
                            "pluie": "Oui : un système en panne après une averse n'arrose plus rien — et personne n'est là pour le voir.",
-                           "reglage": "Oui : c'est la gardienne qui règle le système (la branche « à qui ? »).",
+                           "reglage": "Oui : c'est la gardienne, l'utilisatrice, qui règle le système (la branche « à qui ? »).",
                            "couleur": "La couleur ne change ni l'arrosage, ni l'eau, ni l'absence : elle ne sert pas ce besoin.",
                            "marque": "Une marque connue ne dit rien de ce que fait le système : ce sont ses caractéristiques qui comptent.",
                            "boutons": "Des boutons décoratifs n'aident ni à arroser, ni à économiser l'eau."},
                   indice="Pour chaque ligne, demande-toi : si cette caractéristique changeait, le système répondrait-il mieux ou moins bien au besoin ?"),
              dict(type="classer", name="lien",
-                  categories=[("qui", "« à qui&nbsp;? »&nbsp;: la gardienne, qui règle le système"),
+                  categories=[("qui", "« à qui&nbsp;? »&nbsp;: la gardienne, l'utilisatrice, qui règle le système"),
                               ("absence", "le but&nbsp;: « même en l'absence de la gardienne »"),
                               ("eau", "le but&nbsp;: « sans gaspiller l'eau »")],
                   items=[("L'autonomie, en jours", "absence", "L'autonomie dit combien de temps le système tient sans personne."),
@@ -556,7 +991,7 @@ E5 = dict(
         "<b>La couleur, la marque, les boutons décoratifs</b> → si on les change, l'arrosage, l'eau et l'absence restent les mêmes "
         "→ <b>à écarter</b>",
         "<b>Les liens</b> → l'autonomie → « même en l'absence »&nbsp;; la consommation d'eau → « sans gaspiller l'eau »&nbsp;; la "
-        "facilité de réglage → « à qui&nbsp;? », la gardienne",
+        "facilité de réglage → « à qui&nbsp;? », l'utilisatrice, la gardienne",
         ("conclusion", "Chaque partie du besoin appelle une <b>caractéristique</b> que l'on peut comparer. Ce qui ne sert pas le "
                        "besoin ne doit pas peser dans le choix."),
     ],
@@ -589,8 +1024,9 @@ E6 = dict(
                                 "<li><b>Dans quel but&nbsp;?</b> Prévenir les habitants du quartier de l'arrivée d'un cyclone.</li></ul>")],
     intro="<p>À Sainte-Luce, la commune veut mieux protéger un quartier proche de la mer. Avant de construire quoi que ce soit, "
           "l'équipe du projet écrit le <b>besoin</b>&nbsp;: prévenir les habitants du quartier de l'arrivée d'un cyclone. La "
-          "commune commande et paie&nbsp;; mais c'est aux <b>habitants</b> que l'objet rendra service. Ici, les mêmes personnes "
-          "sont dans les deux cases du haut&nbsp;: l'objet rend service aux habitants en agissant sur eux — il les prévient.</p>",
+          "commune commande et paie&nbsp;; mais c'est aux <b>habitants</b> que l'objet rendra service. Ici, les habitants sont à "
+          "la fois l'<b>utilisateur</b> et la <b>matière d'œuvre</b>&nbsp;: l'objet leur rend service en agissant sur eux — il "
+          "les prévient.</p>",
     consigne="<p>Un <b>OST</b> — un <b>objet ou système technique</b> — est un objet fabriqué, ou plusieurs objets qui "
              "travaillent ensemble. <b>Établis la liste des OST qui pourraient répondre à ce besoin</b>&nbsp;: au moins quatre, un "
              "par ligne, de familles différentes (un son, une lumière ou une image, un téléphone, la voix d'une personne…). Ne "
@@ -697,8 +1133,9 @@ E7 = dict(
                                 "<li><b>Dans quel but&nbsp;?</b> Envoyer un SMS aux habitants.</li></ul>")],
     intro="<p>Une autre équipe a commencé le même projet d'alerte. Voici sa bête à cornes. Résultat&nbsp;: sa liste d'OST ne "
           "contient qu'une ligne — « un SMS ».</p>",
-    consigne="<p>Dans une bête à cornes, la case « sur quoi&nbsp;? » nomme <b>une personne ou une chose</b> sur laquelle l'objet "
-             "agit, et le but s'écrit avec un verbe à l'infinitif <b>sans nommer de solution</b>. <b>Juge chaque case</b>&nbsp;: "
+    consigne="<p>Dans une bête à cornes, la case « sur quoi&nbsp;? » — la <b>matière d'œuvre</b> — nomme <b>une personne ou une "
+             "chose</b> sur laquelle l'objet agit, et le but — la <b>fonction</b> d'usage — s'écrit avec un verbe à l'infinitif "
+             "<b>sans nommer de solution</b>. <b>Juge chaque case</b>&nbsp;: "
              "juste, ou à corriger&nbsp;? Puis <b>dis pourquoi</b> ce but a fermé la liste, et <b>réécris-le</b>.</p>",
     critere="trois cases bien jugées, la bonne raison, et un but réécrit qui dit qui prévenir et de quel danger, sans aucune solution.",
     widgets=[dict(type="classer", name="cases",
@@ -735,9 +1172,9 @@ E7 = dict(
                   etayage=["Prévenir … de …, pour qu'ils …", "Avertir les habitants du quartier que …"])],
     aides=["<p>Pour la case « sur quoi&nbsp;? », demande-toi&nbsp;: peut-on toucher, déplacer ou prévenir ce qui est écrit&nbsp;? Pour "
            "le but, demande-toi&nbsp;: est-ce ce qu'on veut obtenir, ou un moyen d'y arriver&nbsp;?</p>",
-           "<p>« Les habitants du quartier » → c'est eux que l'objet aidera → juste.<br>"
-           "« La sécurité du quartier » → une idée, qu'on ne touche pas → c'est ce qu'on veut obtenir&nbsp;; dans la case, on met "
-           "<b>les habitants</b>, que l'objet prévient.<br>"
+           "<p>« Les habitants du quartier » → l'utilisateur&nbsp;: c'est eux que l'objet aidera → juste.<br>"
+           "« La sécurité du quartier » → une idée, qu'on ne touche pas → c'est ce qu'on veut obtenir&nbsp;; comme matière "
+           "d'œuvre, on met <b>les habitants</b>, que l'objet prévient.<br>"
            "« Envoyer un SMS » → un moyen, une solution → la liste ne contiendra que lui.<br>"
            "Réécrire → un verbe (prévenir) + qui (les habitants) + de quoi (le cyclone), et aucun objet.</p>"],
     jumeau=dict(consigne="Pour la cantine, une bête à cornes dit&nbsp;: à qui&nbsp;? les élèves&nbsp;; sur quoi&nbsp;? les élèves&nbsp;; "
@@ -748,10 +1185,11 @@ E7 = dict(
     correction=[
         '<figure class="figure">' + BAC_ALERTE_C + '<figcaption>La bête à cornes corrigée&nbsp;: les habitants dans les deux '
         'cases du haut, et un but sans solution.</figcaption></figure>',
-        "<b>« À qui&nbsp;? » — les habitants du quartier</b> → c'est eux que l'objet aidera → <b>juste</b>",
-        "<b>« Sur quoi&nbsp;? » — la sécurité du quartier</b> → une idée, qu'on ne peut ni toucher ni prévenir → c'est ce qu'on "
-        "veut obtenir → <b>à corriger</b>&nbsp;: l'objet agit sur <b>les habitants</b>, il les prévient",
-        "<b>« Dans quel but&nbsp;? » — envoyer un SMS</b> → un moyen, une solution → <b>à corriger</b>",
+        "<b>Utilisateur, « à qui&nbsp;? » — les habitants du quartier</b> → c'est eux que l'objet aidera → <b>juste</b>",
+        "<b>Matière d'œuvre, « sur quoi&nbsp;? » — la sécurité du quartier</b> → une idée, qu'on ne peut ni toucher ni prévenir → "
+        "c'est ce qu'on veut obtenir → <b>à corriger</b>&nbsp;: l'objet agit sur <b>les habitants</b>, il les prévient",
+        "<b>Fonction, « dans quel but&nbsp;? » — envoyer un SMS</b> → un moyen, une solution, pas une fonction d'usage → <b>à "
+        "corriger</b>",
         "<b>Pourquoi la liste s'est fermée</b> → le but donnait déjà la réponse&nbsp;: seul le SMS pouvait y entrer. Les habitants "
         "sans téléphone, ou privés de réseau quand le cyclone frappe, étaient oubliés.",
         "Refusés&nbsp;: « le SMS est mauvais » → non, il reste une bonne idée, à sa place dans la liste&nbsp;; « un but doit être "
@@ -788,14 +1226,18 @@ COURS = {
            "que quelqu'un en a besoin.</li>"
            "<li>Avant de choisir ou de fabriquer un objet, on <b>exprime le besoin</b>. Le schéma le plus courant pour le faire "
            "s'appelle la <b>bête à cornes</b>.</li></ul>"
-           "<h3>Trois questions, trois cases</h3>"
+           "<h3>Trois questions, quatre mots de référence</h3>"
            '<div class="defile"><table><caption>La bête à cornes du vélo-cargo de Léa</caption>'
-           "<tr><th>Question</th><th>Ce qu'on y écrit</th><th>Pour le vélo-cargo</th></tr>"
-           "<tr><td>À qui le produit rend-il service&nbsp;?</td><td>la personne que l'objet aide, celle qui s'en sert</td><td>Léa</td></tr>"
-           "<tr><td>Sur quoi agit-il&nbsp;?</td><td>la personne ou la chose que l'objet déplace, touche ou transforme</td>"
-           "<td>ses deux enfants et ses courses</td></tr>"
-           "<tr><td>Dans quel but&nbsp;?</td><td>pourquoi l'objet existe, avec un verbe à l'infinitif</td>"
-           "<td>transporter ses enfants et ses courses en ville</td></tr></table></div>"
+           "<tr><th>Question</th><th>Le mot de référence</th><th>Ce qu'on y écrit</th><th>Pour le vélo-cargo</th></tr>"
+           "<tr><td>À qui le produit rend-il service&nbsp;?</td><td>l'<b>utilisateur</b></td><td>la personne que l'objet aide, "
+           "celle qui s'en sert</td><td>Léa</td></tr>"
+           "<tr><td>Sur quoi agit-il&nbsp;?</td><td>la <b>matière d'œuvre</b></td><td>la personne ou la chose que l'objet "
+           "déplace, touche ou transforme</td><td>ses deux enfants et ses courses</td></tr>"
+           "<tr><td>(au centre)</td><td>le <b>produit</b></td><td>l'objet lui-même</td><td>le vélo-cargo</td></tr>"
+           "<tr><td>Dans quel but&nbsp;?</td><td>la <b>fonction</b> (la fonction d'usage)</td><td>pourquoi l'objet existe, avec "
+           "un verbe à l'infinitif</td><td>transporter ses enfants et ses courses en ville</td></tr></table></div>"
+           "<ul><li>Ces mots viennent de la <b>méthode APTE</b> (<i>APplication aux Techniques d'Entreprise</i>), d'où vient la "
+           "bête à cornes&nbsp;: les mêmes pour tous les objets.</li></ul>"
            "<h3>Lire une bête à cornes</h3><ul>"
            "<li>Elle se lit comme une phrase&nbsp;: « Le vélo-cargo rend service <b>à</b> Léa, en agissant <b>sur</b> ses enfants et "
            "ses courses, <b>pour</b> les transporter en ville. »</li>"
@@ -806,9 +1248,10 @@ COURS = {
            "<li><b>Aucune solution</b>&nbsp;: le but dit <i>pourquoi</i> l'objet existe, pas <i>comment</i> il est fait. « Éclairer "
            "la rue du parking la nuit », pas « allumer une ampoule ».</li></ul>"
            "<h3>Trois pièges</h3><ul>"
-           "<li>Celui qui <b>paie</b> ou commande l'objet (la mairie) n'est pas forcément celui à qui il <b>rend service</b> (les "
+           "<li>Celui qui <b>paie</b> ou commande l'objet (la mairie, l'acheteur) n'est pas forcément l'<b>utilisateur</b> (les "
            "piétons).</li>"
-           "<li>La case « sur quoi&nbsp;? » nomme une personne ou une chose, pas une idée&nbsp;: « la rue », pas « la sécurité ».</li>"
+           "<li>La <b>matière d'œuvre</b> nomme une personne ou une chose, pas une idée&nbsp;: « la rue », pas « la sécurité ». "
+           "Ce n'est pas non plus le matériau dont l'objet est fait.</li>"
            "<li>La bête à cornes ne liste pas ce que l'objet doit respecter (résister à la pluie…)&nbsp;: c'est le rôle du "
            "diagramme des interacteurs extérieurs, souvent appelé diagramme pieuvre.</li></ul>"
            "<h3>Ensuite&nbsp;: la bête à cornes devient la fonction principale du diagramme pieuvre</h3>"
@@ -825,8 +1268,9 @@ COURS = {
            "<li>Un objet répond au besoin s'il remplit <b>les trois branches</b> à la fois&nbsp;; une seule branche qui échoue "
            "suffit à l'écarter.</li>"
            "<li>Le but devient la <b>fonction d'usage</b> de l'objet choisi&nbsp;: ce à quoi il sert.</li></ul>"),
-    "4e": ("<h3>Rappel&nbsp;: la bête à cornes</h3><ul>"
-           "<li>Trois questions&nbsp;: à qui le produit rend-il service&nbsp;? sur quoi agit-il&nbsp;? dans quel but&nbsp;?</li>"
+    "4e": ("<h3>Rappel&nbsp;: la bête à cornes et ses mots de référence</h3>" + fig_reference("bc-ref-k4") + "<ul>"
+           "<li>Trois questions&nbsp;: à qui le produit rend-il service (l'<b>utilisateur</b>)&nbsp;? sur quoi agit-il (la "
+           "<b>matière d'œuvre</b>)&nbsp;? dans quel but (la <b>fonction</b>)&nbsp;? Au centre, le <b>produit</b>.</li>"
            "<li>Le but, écrit avec un verbe à l'infinitif et sans solution, est la <b>fonction d'usage</b> de l'objet.</li></ul>"
            "<h3>Quand le besoin évolue, l'objet évolue</h3><ul>"
            "<li>Un besoin évolue avec la façon de vivre (les vacances, le travail loin de chez soi), avec une <b>invention</b> ou "
@@ -850,12 +1294,14 @@ COURS = {
            "l'<b>efficacité énergétique</b>, la <b>durabilité</b>, la <b>recyclabilité</b>.</li>"
            "<li>On écarte ce qui ne sert pas le besoin (la couleur, la marque, un bouton décoratif)&nbsp;: si on le change, l'objet "
            "répond tout aussi bien.</li></ul>"),
-    "3e": ("<h3>Rappel&nbsp;: un besoin bien écrit</h3><ul>"
-           "<li>À qui&nbsp;? sur quoi&nbsp;? dans quel but&nbsp;? Le but commence par un verbe à l'infinitif et ne nomme <b>aucune "
+    "3e": ("<h3>Rappel&nbsp;: un besoin bien écrit</h3>" + fig_reference("bc-ref-k3") + "<ul>"
+           "<li>À qui&nbsp;? (l'<b>utilisateur</b>) sur quoi&nbsp;? (la <b>matière d'œuvre</b>) dans quel but&nbsp;? (la "
+           "<b>fonction</b>, la fonction d'usage) Le but commence par un verbe à l'infinitif et ne nomme <b>aucune "
            "solution</b>.</li>"
-           "<li>Les mêmes personnes peuvent être dans les deux cases du haut&nbsp;: un réveil rend service à l'élève et agit sur "
-           "l'élève — il le réveille&nbsp;; la station d'alerte rend service aux habitants et agit sur eux — elle les prévient.</li>"
-           "<li>Celui qui commande et paie (la commune) n'est pas forcément celui à qui l'objet rend service (les habitants).</li></ul>"
+           "<li>La même personne peut être l'utilisateur et la matière d'œuvre&nbsp;: un réveil rend service à l'élève et agit "
+           "sur l'élève — il le réveille&nbsp;; la station d'alerte rend service aux habitants et agit sur eux — elle les "
+           "prévient.</li>"
+           "<li>Celui qui commande et paie (la commune, l'acheteur) n'est pas forcément l'utilisateur (les habitants).</li></ul>"
            "<h3>Établir une liste d'OST possibles</h3><ul>"
            "<li>Un <b>OST</b> est un <b>objet ou système technique</b>&nbsp;: un objet fabriqué, ou plusieurs objets qui travaillent "
            "ensemble.</li>"
@@ -889,15 +1335,17 @@ NIVEAUX = {
                   "<ul><li><b>à qui</b> l'objet rend-il service&nbsp;?</li><li><b>sur quoi</b> agit-il&nbsp;?</li>"
                   "<li><b>dans quel but</b> existe-t-il&nbsp;?</li></ul>"
                   "<p>Le schéma qui rassemble les trois réponses s'appelle souvent la <b>bête à cornes</b>&nbsp;: avec ses deux "
-                  "cases en haut et sa grande courbe, il fait penser à une tête de taureau.</p>"
-                  "<p>Dans cet atelier, tu lis la bête à cornes du <b>vélo-cargo</b> de Léa, tu complètes celle du <b>lampadaire "
+                  "cases en haut et sa grande courbe, il fait penser à une tête de taureau. Ses cases ont des noms, les mêmes "
+                  "pour tous les objets&nbsp;: ses <b>mots de référence</b>.</p>" + FIG_REFERENCE_APTE +
+                  "<p>Dans cet atelier, tu places d'abord ces quatre mots, puis tu lis la bête à cornes du <b>vélo-cargo</b> de Léa, tu complètes celle du <b>lampadaire "
                   "intelligent</b> d'un parking de Sainte-Luce, puis tu t'en sers pour <b>choisir</b> un objet.</p>",
         question="Comment dire, en peu de mots, ce qu'un objet doit faire — avant même de savoir quel objet choisir&nbsp;?",
         hypothese_amorces=["Je pense qu'il faut d'abord savoir pour qui…", "Pour dire à quoi sert un objet, j'écrirais…",
                            "Avant de choisir un objet, je regarderais…"],
-        exercices=[E1, E2, E3],
-        a_retenir="<ul><li>Le <b>besoin</b> s'exprime avec trois questions&nbsp;: <b>à qui</b> le produit rend-il service&nbsp;? "
-                  "<b>sur quoi</b> agit-il&nbsp;? <b>dans quel but</b>&nbsp;? Le schéma qui les rassemble s'appelle souvent la "
+        exercices=[E_MOTS, E1, E2, E3],
+        a_retenir="<ul><li>Le <b>besoin</b> s'exprime avec trois questions&nbsp;: <b>à qui</b> le produit rend-il service "
+                  "(l'<b>utilisateur</b>)&nbsp;? <b>sur quoi</b> agit-il (la <b>matière d'œuvre</b>)&nbsp;? <b>dans quel but</b> "
+                  "(la <b>fonction</b>)&nbsp;? Le schéma qui les rassemble autour du <b>produit</b> s'appelle souvent la "
                   "<b>bête à cornes</b>.</li>"
                   "<li>Le <b>but</b> s'écrit avec un verbe à l'infinitif et ne nomme <b>aucune solution</b>&nbsp;: il dit pourquoi, "
                   "pas comment. Il devient la <b>fonction d'usage</b> de l'objet.</li>"
@@ -934,11 +1382,13 @@ NIVEAUX = {
                   "appelle cela <b>exprimer le besoin</b>, et le schéma qui le montre s'appelle souvent la <b>bête à "
                   "cornes</b>. En 4e, on s'en sert pour deux choses&nbsp;: <b>expliquer</b> pourquoi un objet a changé — parce "
                   "que le besoin a changé — et <b>savoir quoi comparer</b> avant de choisir un objet.</p>"
-                  "<p>Dans cet atelier, l'objet est le <b>système d'arrosage connecté</b> du jardin partagé du collège.</p>",
+                  "<p>Dans cet atelier, l'objet est le <b>système d'arrosage connecté</b> du jardin partagé du collège. Tu "
+                  "commences par un rappel de ses quatre mots de référence&nbsp;: utilisateur, matière d'œuvre, produit, "
+                  "fonction.</p>",
         question="Pourquoi un objet change-t-il au fil du temps, et comment savoir ce qu'il faut regarder pour en choisir un&nbsp;?",
         hypothese_amorces=["Je pense qu'un objet change quand…", "Pour choisir entre deux modèles, je comparerais…",
                            "Ce qui ne compte pas pour choisir, c'est…"],
-        exercices=[E4, E5],
+        exercices=[R_JARDIN, E4, E5],
         a_retenir="<ul><li>Un objet <b>évolue</b> parce que le <b>besoin</b> évolue&nbsp;: nouvelles façons de vivre, inventions et "
                   "innovations, développement durable.</li>"
                   "<li>Pour <b>justifier</b> une évolution, on compare les bêtes à cornes d'avant et d'après&nbsp;: la partie qui "
@@ -981,11 +1431,13 @@ NIVEAUX = {
                   "agira, dans quel but. C'est ce que le programme appelle <b>exprimer le besoin</b>&nbsp;; le schéma qui le "
                   "montre s'appelle souvent la <b>bête à cornes</b>. En 3e, on s'en sert pour <b>établir une liste</b> "
                   "d'objets ou de systèmes techniques possibles — avant de choisir.</p>"
-                  "<p>Dans cet atelier, le projet est celui d'une <b>alerte cyclonique</b> pour un quartier de Sainte-Luce.</p>",
+                  "<p>Dans cet atelier, le projet est celui d'une <b>alerte cyclonique</b> pour un quartier de Sainte-Luce. Tu "
+                  "commences par un rappel des quatre mots de référence de la bête à cornes&nbsp;: utilisateur, matière "
+                  "d'œuvre, produit, fonction.</p>",
         question="Comment trouver toutes les solutions possibles à un besoin, sans s'enfermer dans la première idée&nbsp;?",
         hypothese_amorces=["Je pense qu'il faut d'abord écrire…", "Pour ne pas m'enfermer dans une idée, je…",
                            "Une liste de solutions est utile parce que…"],
-        exercices=[E6, E7],
+        exercices=[R_ALERTE, E6, E7],
         a_retenir="<ul><li>Pour <b>établir une liste d'OST possibles</b> (objets ou systèmes techniques), on part d'un besoin "
                   "dont le but ne nomme <b>aucune solution</b>.</li>"
                   "<li>On cherche dans des <b>familles différentes</b>&nbsp;; une personne, une action ou le danger lui-même ne "
@@ -1020,13 +1472,14 @@ MODULE = "besoin"
 NOM_PANNEAU = "bete_a_cornes"
 PANNEAU_TEXTE = {
     "5e": "Le <b>besoin</b> — souvent représenté par la <b>bête à cornes</b> — sur un vélo-cargo et un lampadaire de "
-          "Sainte-Luce&nbsp;: tu lis les trois questions (à qui&nbsp;? sur quoi&nbsp;? dans quel but&nbsp;?), tu en complètes une, "
-          "puis tu choisis l'objet qui répond au besoin.",
-    "4e": "Le <b>besoin</b> — souvent représenté par la <b>bête à cornes</b> — sur le système d'arrosage du jardin&nbsp;: tu "
-          "compares deux besoins pour justifier l'évolution de l'objet, puis tu tires du besoin les caractéristiques qui "
+          "Sainte-Luce&nbsp;: tu places ses quatre mots de référence (utilisateur, matière d'œuvre, produit, fonction), tu lis "
+          "les trois questions (à qui&nbsp;? sur quoi&nbsp;? dans quel but&nbsp;?), tu en complètes une, puis tu choisis l'objet "
+          "qui répond au besoin.",
+    "4e": "Le <b>besoin</b> — souvent représenté par la <b>bête à cornes</b> — sur le système d'arrosage du jardin&nbsp;: un "
+          "rappel de ses quatre mots de référence, puis tu compares deux besoins pour justifier l'évolution de l'objet, puis tu tires du besoin les caractéristiques qui "
           "comptent pour choisir.",
-    "3e": "Le <b>besoin</b> — souvent représenté par la <b>bête à cornes</b> — sur un projet d'alerte cyclonique&nbsp;: tu "
-          "établis une liste d'objets ou de systèmes techniques possibles, puis tu vois comment un besoin mal écrit la ferme.",
+    "3e": "Le <b>besoin</b> — souvent représenté par la <b>bête à cornes</b> — sur un projet d'alerte cyclonique&nbsp;: un "
+          "rappel de ses quatre mots de référence, puis tu établis une liste d'objets ou de systèmes techniques possibles, puis tu vois comment un besoin mal écrit la ferme.",
 }
 IMAGES = {
     "bete_a_cornes_velo_cargo.svg": BAC_VELO,
@@ -1039,7 +1492,8 @@ IMAGES = {
     "bete_a_cornes_alerte_mal_formulee.svg": BAC_MAL,
 }
 VOCAB_EN = [("besoin", "need"), ("bête à cornes", "need diagram"), ("rendre service", "to serve, to help"),
-            ("but", "purpose"), ("fonction d'usage", "use function"), ("usager", "user"),
+            ("but", "purpose"), ("fonction d'usage", "use function"), ("utilisateur", "user"),
+            ("matière d'œuvre", "object acted upon"), ("méthode APTE", "APTE method"),
             ("solution technique", "technical solution"), ("caractéristique", "characteristic"),
             ("autonomie", "autonomy, running time"), ("évolution", "evolution, development")]
 VERBES = {"5e": "<b>reconnaître</b> le besoin&nbsp;: lire et compléter une bête à cornes, écrire un but sans solution, puis "
@@ -1086,6 +1540,16 @@ NOTES_PROF = (
     "et l'abri sont refusés comme « vrais mais hors sujet »&nbsp;: des objets qui protègent, sans prévenir.</li>"
     "<li>En 4e et en 3e, l'élève n'a pas forcément fait l'atelier du niveau précédent&nbsp;: l'ouverture renvoie aux exercices "
     "de 5e, puis de 4e, pour rattraper en une dizaine de minutes.</li>"
+    "<li><b>Les mots de référence</b> (demande du professeur, 04/11/2026&nbsp;: «&nbsp;ce sont des références&nbsp;»)&nbsp;: "
+    "utilisateur, matière d'œuvre, produit, fonction (la fonction d'usage), de la méthode APTE (<i>APplication aux Techniques "
+    "d'Entreprise</i>). Un seul dessin de référence, le "
+    "gabarit rempli de ces mots, dans la situation de 5e, le cours de 4e et de 3e, le cahier de 5e, la carte des "
+    "représentations et les séquences&nbsp;; on n'a repris de la diapositive d'origine que les mots. Ils remplacent les "
+    "périphrases dans les consignes, retours et corrections. Exercices&nbsp;: «&nbsp;Pour commencer&nbsp;» en 5e (les placer "
+    "dans le gabarit vide, un menu par case, un retour par mot faux), «&nbsp;🧠 Rappel&nbsp;» en tête de la 4e et de la 3e, et "
+    "un rappel sur l'objet de chaque séquence de 4e et de 3e qui se sert de la bête à cornes (feux de Tsinghua, flotte de "
+    "Hangzhou, local de Shenzhen). En anglais, <i>matière d'œuvre</i> est rendue par <i>object acted upon</i>&nbsp;: la "
+    "matière d'œuvre peut être une personne (les enfants de Léa), et <i>material</i> ferait croire au matériau.</li>"
     "<li>Les objets sont les objets-fils des séquences&nbsp;: le lampadaire qui s'allume la nuit au passage d'un piéton (5e), le "
     "système d'arrosage du jardin partagé et sa gardienne (4e, comme dans l'atelier du diagramme des interacteurs), la station "
     "d'alerte cyclonique de Sainte-Luce (3e), ici prise avant sa conception, au moment où l'on écrit le besoin.</li></ul>")

@@ -9,6 +9,9 @@ Répartition : 5e_C2.1 (10) · 5e_C2.2 (10) · 4e_C2.2 (10). Quatre questions il
 from qbanque import Banque
 
 B = Banque()
+#: la clé de sauvegarde : elle change avec les questions (04/11/2026 : « La bête à cornes dans la pieuvre » emploie les
+#: mots de référence de la bête à cornes)
+CLE = "interacteurs-pieuvre_mots"
 q = B.q
 
 IMG_SCENE = {"src": "Images/velo_cargo_la_scene.svg",
@@ -77,20 +80,21 @@ q(C, "Un objet ou une donnée",
   "Ce qu'on touche : un objet. Ce qu'on lit : une donnée.")
 
 q(C, "La bête à cornes dans la pieuvre",
-  "La bête à cornes du vélo-cargo dit : à qui ? Léa ; sur quoi ? ses enfants ; dans quel but ? les transporter. Dans le diagramme pieuvre, que devient-elle ?",
-  ["la fonction principale FP1, de Léa aux enfants en passant par l'objet",
+  "La bête à cornes du vélo-cargo dit : utilisatrice, Léa ; matière d'œuvre, ses enfants ; fonction, les transporter. Dans le diagramme pieuvre, que devient-elle ?",
+  ["la fonction principale FP1, de l'utilisatrice à la matière d'œuvre",
    "une fonction contrainte FC1, du vélo-cargo vers Léa et elle seule",
    "une bulle de plus, posée au centre à côté du vélo-cargo lui-même",
    "rien : la bête à cornes et la pieuvre parlent de choses sans lien"],
-  "La FP1 part de « à qui ? » (Léa), passe par l'objet, arrive à « sur quoi ? » (les enfants), et sa phrase dit le but : "
-  "« permettre à Léa de transporter ses enfants ». Elle décrit la <b>fonction d'usage</b>.",
+  "La FP1 part de l'<b>utilisateur</b> (« à qui ? », Léa), passe par l'objet, arrive à la <b>matière d'œuvre</b> (« sur "
+  "quoi ? », les enfants), et sa phrase dit la <b>fonction</b> : « permettre à Léa de transporter ses enfants ». Elle décrit la "
+  "<b>fonction d'usage</b>.",
   "Lampadaire : à qui ? les piétons ; sur quoi ? la rue ; but : l'éclairer la nuit → FP1 : permettre aux piétons de voir la rue la nuit.",
   "Croire que la bête à cornes et la pieuvre sont deux exercices sans rapport.",
   ["",
-   "Une FC ne touche qu'un élément ; or la bête à cornes en relie deux, Léa et ses enfants.",
+   "Une FC ne touche qu'un élément ; or la bête à cornes en relie deux, l'utilisatrice et la matière d'œuvre, Léa et ses enfants.",
    "Le centre est réservé à l'objet : la bête à cornes ne devient pas une bulle, elle devient un trait.",
    "Elles parlent du même service : la bête à cornes l'annonce, la FP1 le place entre les deux éléments."],
-  "À qui + sur quoi + but = la FP1.")
+  "Utilisateur + matière d'œuvre + fonction = la FP1.")
 
 q(C, "Les familles sur un dessin",
   "Sur ce dessin, combien de familles différentes d'interacteurs extérieurs peut-on trouver ?",

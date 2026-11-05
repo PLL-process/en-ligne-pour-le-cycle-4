@@ -94,6 +94,7 @@
       if (!cible) continue;
       if (c.type === "radio"){ if (c.checked) ecrireSvg(cible, c.getAttribute("data-texte") || c.value); }
       else if (c.tagName === "TEXTAREA" || c.type === "text") ecrireSvg(cible, c.value);
+      else if (c.tagName === "SELECT") ecrireSvg(cible, c.value ? c.options[c.selectedIndex].text : "");
     }
     // Un groupe de boutons sans choix laisse la bulle vide.
     var groupes = {};
@@ -134,8 +135,8 @@
     var rs = boite.querySelectorAll(".retour-option");
     for (i = 0; i < rs.length; i++) rs[i].remove();
     var rc = boite.querySelectorAll(".retour-case");
-    for (i = 0; i < rc.length; i++){ rc[i].textContent = ""; rc[i].classList.remove("visible"); }
-    var cm = boite.querySelectorAll("td.case-menu");
+    for (i = 0; i < rc.length; i++){ rc[i].textContent = ""; rc[i].classList.remove("visible", "juste", "faux", "vide"); }
+    var cm = boite.querySelectorAll("td.case-menu, .ms-case");
     for (i = 0; i < cm.length; i++) cm[i].classList.remove("juste", "faux", "vide");
   }
   function retourCase(boite, name, etat, texte){
@@ -275,6 +276,27 @@
       if (vides === w.cases.length) msgs.push(w.vide || "Le tableau est encore vide : choisis une réponse dans chaque menu.");
       else if (vides) msgs.push(vides + (vides > 1 ? " cases du tableau sont encore vides" : " case du tableau est encore vide") + " : chaque menu attend une réponse.");
       if (faux) msgs.push(faux + (faux > 1 ? " cases du tableau sont à revoir" : " case du tableau est à revoir") + " : le retour est écrit sous chaque case marquée ✘.");
+      return {justes: justes, total: w.cases.length, messages: msgs};
+    },
+    /* Des menus posés dans les cases d'un schéma : chaque case reçoit, sous le dessin et avec son repère, ✔ et pourquoi,
+       ou ✘ et le retour propre au mot choisi. */
+    menus: function(w, v, boite){
+      var justes = 0, vides = 0, faux = 0, msgs = [];
+      for (var i = 0; i < w.cases.length; i++){
+        var c = w.cases[i], r = v[c.name], etat = !r ? "vide" : (r === c.bonne ? "juste" : "faux");
+        if (etat === "juste") justes++; else if (etat === "vide") vides++; else faux++;
+        var ca = boite.querySelector('.ms-case[data-pour="' + c.name + '"]');
+        if (ca) ca.classList.add(etat);
+        encoche(boite, c.name, etat);
+        var el = boite.querySelector('.retour-case[data-pour="' + c.name + '"]');
+        if (!el) continue;
+        el.textContent = etat === "vide" ? "○ sans réponse : choisis un mot dans le menu de cette case."
+          : (etat === "juste" ? "✔ " + (c.ok || "juste.") : "✘ " + ((c.retours || {})[r] || c.indice || "Relis la question de cette case."));
+        el.className = "retour-case visible " + etat;
+      }
+      if (vides === w.cases.length) msgs.push(w.vide || "Le dessin est encore vide : choisis un mot dans chaque case.");
+      else if (vides) msgs.push(vides + (vides > 1 ? " cases du dessin sont encore vides." : " case du dessin est encore vide."));
+      if (faux) msgs.push(faux + (faux > 1 ? " cases sont à revoir" : " case est à revoir") + " : le retour est écrit sous le dessin, avec son repère.");
       return {justes: justes, total: w.cases.length, messages: msgs};
     },
     croquis: function(w, v, boite){

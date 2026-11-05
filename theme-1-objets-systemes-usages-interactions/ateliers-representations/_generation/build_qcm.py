@@ -104,7 +104,8 @@ def construire(module):
         (r"/\* Banque de questions — .*? \*/",
          "/* Banque de questions — Atelier : %s. %d questions (%s), dont %d illustrées. Source : _generation/q_%s.py */"
          % (at.TITRE_COURT, len(Q), repartition, nb_img, module)),
-        (r'const KEY="[^"]*";', 'const KEY="qcm_%s";' % at.SLUG),
+        # `CLE` (facultatif) dans la banque : quand ses questions changent, la clé de sauvegarde change aussi
+        (r'const KEY="[^"]*";', 'const KEY="qcm_%s";' % getattr(banque, "CLE", at.SLUG)),
         (r"const COMP_LABELS=\{.*?\};", "const COMP_LABELS={\n  %s };" % comp),
         (r"<title>.*?</title>", "<title>%s</title>" % moteur.e("Thème 1 · %s — QCM : %s (%s)" % (
             "-".join(niveaux), at.TITRE_COURT, " · ".join(codes)))),

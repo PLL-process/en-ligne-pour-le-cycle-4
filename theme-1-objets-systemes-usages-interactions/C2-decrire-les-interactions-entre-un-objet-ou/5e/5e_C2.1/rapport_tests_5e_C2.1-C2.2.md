@@ -1,5 +1,23 @@
 # Rapport de tests — lot Shenzhen 5e_C2.1 · C2.2
 
+## 04/11/2026 (nuit) — les mots de référence de la bête à cornes
+
+**Suite** `python3 tests_5e_C2.1-C2.2_shenzhen.py` : **151 / 151** (141 / 141 avant ; 10 tests ajoutés, 3 adaptés).
+**Banc n°311** `node tests_regle_311_5e_C2.1.mjs` : **34 / 34**.
+
+| Les tests nouveaux ou adaptés vérifient | |
+|---|---|
+| a), second temps : un menu dans chacune des quatre cases du gabarit vide (sept mots), posé dans sa forme à 1280 px ; le gabarit au dixième près | ✔ |
+| chacun des 24 mots faux a son retour propre à sa case, chaque bon mot le sien (les textes de l'atelier « Le besoin ») ; l'acheteur, le matériau, la fonction technique réfutés ; le miroir ; 4 / 4 | ✔ |
+| le dessin de référence (généré par l'atelier) à la fin de a), avant b) : le gabarit, ses quatre mots, « La bête à cornes (méthode APTE) », APTE développé | ✔ |
+| l'activité 1 se valide à 15 / 15 (11 / 11 avant : les quatre mots s'ajoutent) | ✔ |
+| le QCM : 34 questions (19 pour 5e_C2.1), « Les mots de référence » en quatrième (leurres utilisateur, matériau, fonction, réfutés), nouvelle clé `qcm_5e_C2_shenzhen_34q` | ✔ |
+
+Les retours de c) emploient les mots (« ✔ c'est l'utilisateur : la personne qui emprunte le vélo » ; « ✘ La ville paie
+la station, mais ce n'est pas l'utilisatrice : elle n'emprunte pas de vélo ») : le test existant, qui compare chaque
+retour affiché à `BAC`, les couvre. **Non testé** : un vrai téléphone, Safari, Firefox, un lecteur d'écran, une
+impression réelle.
+
 ## 04/11/2026 (soir) — la bête à cornes, exactement le modèle de Pascal
 
 **Suite** `python3 tests_5e_C2.1-C2.2_shenzhen.py` : **141 / 141** (122 / 122 avant ; les tests de la séance 1 suivent la

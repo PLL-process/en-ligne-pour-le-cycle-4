@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Les 33 questions du QCM 5e_C2.1 · C2.2 — Shenzhen, la station de vélos.
+"""Les 34 questions du QCM 5e_C2.1 · C2.2 — Shenzhen, la station de vélos.
 
 Écrites à la main. Toutes les bonnes réponses sont en position 0 ici :
 la répartition sur A/B/C/D est faite ensuite par `_outils/fix_r.js`,
@@ -20,6 +20,9 @@ cornes et la fonction d'usage, préalables du diagramme pieuvre. Trois questions
 s'ajoutent EN TÊTE (elles suivent l'ordre des séances), rangées sous 5e_C2.1 — la
 bête à cornes y prépare la fonction principale du diagramme pieuvre ; elle n'est pas
 un code évalué de la séquence : 30 → 33 questions, 15 → 18 pour 5e_C2.1.
+
+Le 04/11/2026 au soir, les mots de référence de la bête à cornes (« ce sont des références ») : une question de plus,
+« Les mots de référence », après « Fonction d'usage ou fonction technique » : 33 → 34 questions, 18 → 19 pour 5e_C2.1.
 """
 
 # Le texte de remplacement décrit la figure telle qu'elle est (28/10/2026) : l'ancien citait « les règles de la
@@ -109,6 +112,22 @@ q("C2.1", "Fonction d'usage ou fonction technique", "« Permettre à l'usager de
    "Le principe technique est le moyen : un verrou électrique, un lecteur de carte. La phrase n'en nomme aucun, et c'est voulu.",
    "Une contrainte, comme résister à la pluie, viendra avec le diagramme pieuvre. La phrase dit pourquoi la station existe, pas ce qu'elle doit supporter."],
   "Le but de la bête à cornes est la fonction d'usage : le service rendu à l'usager.")
+
+q("C2.1", "Les mots de référence", "Dans la bête à cornes de la station de vélos, l'usager est l'utilisateur. Et le vélo, c'est…",
+  ["la matière d'œuvre : ce sur quoi la station agit",
+   "un second utilisateur : la station l'accueille aussi",
+   "le matériau : ce dont la station est faite",
+   "la fonction : le service que rend la station"],
+  "La bête à cornes a quatre mots de référence, les mêmes pour tous les objets — ils viennent de la méthode APTE "
+  "(APplication aux Techniques d'Entreprise) : l'utilisateur (à qui ?), la matière d'œuvre (sur quoi ?), le produit (au "
+  "centre) et la fonction (dans quel but ?). La station garde, verrouille et libère le vélo : c'est sa matière d'œuvre.",
+  "Pour le vélo-cargo de Léa : utilisatrice, Léa ; matière d'œuvre, ses enfants et ses courses ; fonction, les transporter.",
+  "Prendre la matière d'œuvre pour un second utilisateur, ou pour le matériau dont l'objet est fait.",
+  ["",
+   "La station ne rend pas service au vélo : elle rend service à l'usager, son utilisateur. Le vélo est ce sur quoi elle agit.",
+   "Le matériau, c'est ce dont la station est faite (le métal de la borne) : une solution. Le vélo n'en fait pas partie, il part avec l'usager.",
+   "La fonction est une phrase avec un verbe : « permettre à l'usager de prendre un vélo ». Le vélo est une chose."],
+  "Utilisateur → l'usager ; matière d'œuvre → le vélo ; fonction → la fonction d'usage.")
 
 q("C2.1", "Définition", "Un interacteur d'un objet technique, c'est…",
   ["tout ce qui, à l'extérieur, entre en relation",
@@ -577,6 +596,6 @@ q("C2.2", "Ce qu'on fera l'an prochain", "Cette année, en 5e, on repère les ch
    "La fabrication concerne la réalisation d'un prototype, qui est un autre moment du programme et ne remplace pas la description de l'expérience utilisateur."],
   "En 5e on lit l'objet ; en 4e on décrira le vécu de l'utilisateur.")
 
-assert len(Q) == 33, len(Q)
-assert sum(1 for x in Q if x["c"] == "C2.1") == 18
+assert len(Q) == 34, len(Q)
+assert sum(1 for x in Q if x["c"] == "C2.1") == 19
 assert sum(1 for x in Q if "img" in x) == 5

@@ -74,15 +74,17 @@ def professeur(at, page_niveau, chemins_fn, chemin):
         h.append('<section class="card"><h2>🧭 %s — déroulé (≈ %d min d\'exercices, une séance de 55 min avec l\'ouverture et le bilan)</h2>'
                  '<div class="defile"><table><thead><tr><th scope="col">Exercice</th><th scope="col">Code</th><th scope="col">Durée</th>'
                  '<th scope="col">Production de l\'élève</th><th scope="col">Ce que vérifie la page</th></tr></thead><tbody>' % (niv, total))
+        noms = moteur.libelles(N["exercices"])
         for i, ex in enumerate(N["exercices"]):
             verifs = []
             for w in ex["widgets"]:
                 verifs.append({"choix": "une question à choix", "cases": "des cases à cocher", "classer": "un classement ligne par ligne",
                                "liste": "une liste (refus motivé des pièces et des actions)", "texte": "un texte (critères affichés)",
                                "slots": "les cases du schéma", "croquis": "un croquis et sa relecture",
-                               "tableau": "un tableau à compléter case par case (menus déroulants)"}[w["type"]])
-            h.append("<tr><td>%d. %s</td><td>%s</td><td>%d min</td><td>%s</td><td>%s</td></tr>"
-                     % (i + 1, ex["titre"], e(ex["code"]), ex["duree"], ex["production"], " ; ".join(verifs)))
+                               "tableau": "un tableau à compléter case par case (menus déroulants)",
+                               "menus": "des menus posés dans les cases du schéma, un retour par mot faux"}[w["type"]])
+            h.append("<tr><td>%s — %s</td><td>%s</td><td>%d min</td><td>%s</td><td>%s</td></tr>"
+                     % (noms[i], ex["titre"], e(ex["code"]), ex["duree"], ex["production"], " ; ".join(verifs)))
         h.append("</tbody></table></div>")
         h.append("<h3>Corrigés, en bref</h3><ol>")
         for ex in N["exercices"]:

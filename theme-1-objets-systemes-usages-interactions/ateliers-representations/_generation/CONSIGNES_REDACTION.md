@@ -90,6 +90,17 @@ seul. Phrases de 25 mots au plus ; unités en toutes lettres dans chaque partie 
   en pointillés), `legende`, `ecran` (le geste à l'écran) et `papier` (la consigne sans JavaScript et sur la
   feuille imprimée, « Sur ta feuille : … ») : ce que l'élève écrit se dessine dans le schéma, à mesure, et se
   sauvegarde. Modèle : Bonus 4e de `donnees_carte_mentale.py` (le badge de la salle de technologie).
+- **Des menus posés dans les cases d'un schéma** (`menus`, demande du professeur du 04/11/2026, sur le modèle de 5e_C2.1
+  a) : `schema` (le SVG et ses cases vivantes), `cadre` (le viewBox), `cases` [dict(`name`, `cible`, `x`, `y`, `l` — centre
+  et largeur du menu en unités du dessin —, `repere`, `legende`, `options`, `bonne`, `ok`, `retours`)], `papier` (« Sur ta
+  feuille : … »). Quand le dessin a la place, chaque menu est dans sa case ; sinon il passe dessous et le mot choisi
+  s'écrit dans la case. **Un retour par option fausse de chaque menu**, exigé par le moteur ; ils s'écrivent sous le
+  dessin, avec le repère de la case. Modèle : `menus_mots()` de `donnees_besoin.py` (les mots de référence de la bête à
+  cornes).
+- **Un exercice à `etiquette`** (« Pour commencer », « 🧠 Rappel ») garde ce nom dans son onglet et son titre et ne prend
+  pas de numéro : les autres gardent « Exercice 1 », « Exercice 2 »… que les ouvertures et les séquences citent. Un
+  exercice propre à une séquence (une piqûre de rappel sur son objet) va dans `RAPPELS` du module, pas dans les onglets ;
+  `incrustations.py` et les panneaux (`RAPPEL_PANNEAU`) le trouvent là.
 - Une page de niveau totalise 30 à 40 minutes d'exercices.
 - **Pour le banc de tests automatique** : chaque widget `texte` porte un champ `exemple` — une réponse juste qui
   satisfait tous ses critères et aucun interdit (le moteur l'ignore, le banc la saisit). Un widget `liste` dont les

@@ -12,7 +12,7 @@ d'usage ; ajoutée le 04/11/2026, à la demande de Pascal, pour exercer la bête
 interacteurs) · **2. Recenser** les interacteurs, jusqu'au diagramme pieuvre du vélo-cargo · **3. Lire les
 formes** · **4. Comparer et transférer**, avec le bilan.
 
-➡ **[QCM d'entraînement](qcm_5e_C2_shenzhen_station_velos.html)** — 33 questions, dont 5 illustrées,
+➡ **[QCM d'entraînement](qcm_5e_C2_shenzhen_station_velos.html)** — 34 questions, dont 5 illustrées,
 chaque distracteur réfuté par une explication (les trois premières : la bête à cornes et la fonction d'usage).
 
 ➡ Synthèses : [élève](Synthèses/synthese_eleve_5e_C2.1-C2.2.html) ·
@@ -24,7 +24,7 @@ chaque distracteur réfuté par une explication (les trois premières : la bête
 [Sources des médias](SOURCES_MEDIAS.md) · [Plan initial du lot](PLAN_LOT_SHENZHEN.md) ·
 [Plan de reprise](PLAN_LOT_C2_5e.md)
 
-➡ [`_generation/`](_generation/) — les 33 questions du QCM (`q.py`) et le générateur qui les injecte
+➡ [`_generation/`](_generation/) — les 34 questions du QCM (`q.py`) et le générateur qui les injecte
 dans le gabarit maison (`build_qcm.py`). Une seule source de vérité, un seul générateur.
 
 ## ⚠️ À lire avant d'utiliser le lot en classe

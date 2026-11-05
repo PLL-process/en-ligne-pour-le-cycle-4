@@ -290,7 +290,7 @@ with sync_playwright() as p:
       len(menus_a) == 3 and all(n == 8 and lab for _, n, lab in menus_a), str(menus_a))
     t("a) la question de droite a la formulation du modèle : « Sur quoi agit-il ? »",
       pg.evaluate("[...document.querySelectorAll('#bac_a_hd option')].some(o=>o.value==='sur_quoi'&&o.text==='Sur quoi agit-il ?')"))
-    for ident in ("bac_a", "bac_c", "bac_d", "bac_p"):
+    for ident in ("bac_a", "bac_m", "bac_c", "bac_d", "bac_p"):
         g = pg.evaluate(JS_GABARIT, ident) if ident != "bac_p" else pg.evaluate(JS_GABARIT.replace("'#'+id+' .bac-svg'", "'.bac-papier .bac-svg'"), ident)
         t("gabarit %s : le cadre 50 150 960 570, les trois ellipses et le rectangle du modèle, fonds blancs, contours #1f3864" % ident,
           g and g["vb"] == "50 150 960 570" and [tuple(x) for x in g["e"]] == GABARIT["ellipse"]
@@ -335,6 +335,45 @@ with sync_playwright() as p:
       pg.inner_text("#bac_a_hd_verdict") == "")
     pg.click('[data-bac="a"]')
     t("a) les trois questions à leur place : 3 / 3", pg.inner_text("#bac_a_retour").startswith("✔ 3 / 3"))
+
+    # — a), second temps (04/11/2026, soir) : les quatre mots de référence, un menu dans chaque case —
+    menus_m = pg.eval_on_selector_all("#bac_m .bac-ctrl select", "l=>l.map(s=>[s.id,s.options.length,s.getAttribute('aria-label')])")
+    t("a) second temps : un menu dans chacune des quatre cases (sept mots et « choisir »), chacun nommé",
+      len(menus_m) == 4 and all(n == 8 and lab for _, n, lab in menus_m), str(menus_m))
+    t("1280 px, a) second temps : les quatre menus sont posés dans leurs formes (les coins dedans), 44 px au moins",
+      all(pg.evaluate(JS_DANS_FORME, "bac_m")) and pg.evaluate("[...document.querySelectorAll('#bac_m .menu-case')].every(m=>m.getBoundingClientRect().height>=44)"))
+    ok_m, n_m = True, 0
+    for cid, c in BAC["m"].items():
+        for v in pg.eval_on_selector_all("#%s option" % cid, "l=>l.map(o=>o.value).filter(Boolean)"):
+            pg.select_option("#" + cid, v)
+            pg.click('[data-bac="m"]')
+            vd = pg.inner_text("#%s_verdict" % cid)
+            attendu = c["ok"] if v == c["bonne"] else c["retours"][v]
+            n_m += v != c["bonne"]
+            if attendu[:40] not in vd or (("✔" in vd) != (v == c["bonne"])):
+                ok_m = False
+                print("   m)", cid, v, "→", vd[:80])
+    t("a) second temps : chaque mot faux a son retour propre à sa case (%d retours), chaque bon mot le sien" % n_m, ok_m and n_m == 24)
+    pg.select_option("#bac_m_qui", "ach"); pg.select_option("#bac_m_quoi", "mat"); pg.select_option("#bac_m_objet", "prod"); pg.select_option("#bac_m_but", "ft")
+    pg.click('[data-bac="m"]')
+    t("a) second temps : les pièges sont réfutés — l'acheteur n'est pas l'utilisateur, le matériau n'est pas la matière d'œuvre, "
+      "la fonction technique n'est pas la fonction d'usage",
+      "acheteur" in pg.inner_text("#bac_m_qui_verdict").lower() and "matière d'œuvre" in pg.inner_text("#bac_m_quoi_verdict")
+      and "fonction d'usage" in pg.inner_text("#bac_m_but_verdict") and pg.inner_text("#bac_m_retour").startswith("1 / 4"))
+    pg.select_option("#bac_m_qui", "util"); pg.select_option("#bac_m_quoi", "mo"); pg.select_option("#bac_m_but", "fonc")
+    t("a) second temps : le mot choisi s'écrit aussi dans sa case (miroir), le produit en italique",
+      pg.evaluate(JS_MIROIR, "bac_m_quoi") == "Matière d'œuvre" and pg.evaluate(JS_MIROIR, "bac_m_objet") == "Produit")
+    pg.click('[data-bac="m"]')
+    t("a) second temps : les quatre mots à leur place : 4 / 4", pg.inner_text("#bac_m_retour").startswith("✔ 4 / 4"))
+    ref = pg.evaluate("""(()=>{const f=document.getElementById('bc-ref-s'), m=document.getElementById('bac_m'), e=document.getElementById('bc_5e_e1');
+      if(!f) return null; const fig=f.closest('figure');
+      return {mots:[...f.querySelectorAll('text')].map(x=>x.textContent).join('|'), titre:fig.querySelector('figcaption').textContent,
+              apres:!!(m.compareDocumentPosition(fig)&4), avant:!!(fig.compareDocumentPosition(e)&4), vb:f.getAttribute('viewBox')};})()""")
+    t("a) le dessin de référence, généré par l'atelier, à la fin de a) et avant b) : le gabarit, ses quatre mots, "
+      "son titre « La bête à cornes (méthode APTE) », APTE développé",
+      ref and all(m in ref["mots"] for m in ("Utilisateur", "Matière", "d'œuvre", "Produit", "Fonction")) and ref["vb"] == "50 150 960 570"
+      and "La bête à cornes (méthode APTE" in ref["titre"] and "APplication aux Techniques d'Entreprise" in ref["titre"]
+      and ref["apres"] and ref["avant"], str(ref)[:200])
 
     # — b) l'exercice du vélo-cargo, incrusté depuis l'atelier « Le besoin » —
     t("b) l'exercice « Lire la bête à cornes du vélo-cargo » est incrusté entre a) et c)",
@@ -419,8 +458,8 @@ with sync_playwright() as p:
     pg.check("#bac_d_cahier")
     pg.click('[data-check="1"]')
     pg.wait_for_timeout(100)
-    t("activité 1 : validée (11 / 11) quand a), b), c), d) sont justes et le dessin déclaré",
-      pg.inner_text("#fb1").startswith("11 / 11") and pg.evaluate("!!window.__valid[1]"), pg.inner_text("#fb1")[:40])
+    t("activité 1 : validée (15 / 15) quand a) (questions et mots), b), c), d) sont justes et le dessin déclaré",
+      pg.inner_text("#fb1").startswith("15 / 15") and pg.evaluate("!!window.__valid[1]"), pg.inner_text("#fb1")[:40])
     t("progression : 1 / 4, et la coche de la séance 1", "1 / 4" in pg.inner_text("#progTxt") and "✔" in pg.inner_text("#done-s1"))
 
     # — « Entoure » à l'écran —
@@ -564,8 +603,13 @@ with sync_playwright() as p:
     t("QCM : la bonne réponse de « Fonction d'usage ou fonction technique » est la fonction d'usage",
       nouv[2][3].startswith("sa fonction d'usage"))
     t("QCM : la dernière question reste la frontière avec la 4e", pg.evaluate("QUESTIONS[QUESTIONS.length-1].n") == "Ce qu'on fera l'an prochain")
-    t("QCM : l'en-tête annonce 33 questions", "33 questions" in pg.inner_text(".badges") and "(33)" in pg.inner_text('[data-mode="complet"]'))
-    t("QCM : nouvelle clé de sauvegarde (la banque a changé)", pg.evaluate("KEY") == "qcm_5e_C2_shenzhen_33q")
+    t("QCM : l'en-tête annonce 34 questions", "34 questions" in pg.inner_text(".badges") and "(34)" in pg.inner_text('[data-mode="complet"]'))
+    t("QCM : nouvelle clé de sauvegarde (la banque a changé)", pg.evaluate("KEY") == "qcm_5e_C2_shenzhen_34q")
+    q4 = pg.evaluate("[QUESTIONS[3].n, QUESTIONS[3].o[QUESTIONS[3].r], QUESTIONS[3].d.filter((x,j)=>j!==QUESTIONS[3].r).join(' | '), QUESTIONS[3].expl]")
+    t("QCM : « Les mots de référence » (quatrième question) — la matière d'œuvre, avec les leurres utilisateur, matériau, "
+      "fonction, chacun réfuté, et APTE développé",
+      q4[0] == "Les mots de référence" and q4[1].startswith("la matière d'œuvre") and "utilisateur" in q4[2]
+      and "matériau" in q4[2] and "APplication aux Techniques d'Entreprise" in q4[3], str(q4)[:160])
     # — la synthèse élève : la partie « Pour commencer », sans casser les ancres —
     pg.goto(SYE)
     t("synthèse élève : la partie sur la bête à cornes et la fonction d'usage (#partie-0), dans la carte de tête",
@@ -589,8 +633,8 @@ with sync_playwright() as p:
         c22: QUESTIONS.filter(q=>q.c==="C2.2").length,
         complets: QUESTIONS.every(q=>q.expl&&q.ex&&q.err&&q.ret&&q.o.length===4&&q.d.length===4)
     })""")
-    t("QCM : 33 questions", info["n"] == 33, str(info["n"]))
-    t("QCM : 18 pour 5e_C2.1 (dont 3 sur la bête à cornes), 15 pour 5e_C2.2", info["c21"] == 18 and info["c22"] == 15,
+    t("QCM : 34 questions", info["n"] == 34, str(info["n"]))
+    t("QCM : 19 pour 5e_C2.1 (dont 4 sur la bête à cornes), 15 pour 5e_C2.2", info["c21"] == 19 and info["c22"] == 15,
       f"{info['c21']} / {info['c22']}")
     t("QCM : bonnes réponses réparties sur A/B/C/D", max(info["rep"]) - min(info["rep"]) <= 1,
       str(info["rep"]))
@@ -615,8 +659,8 @@ with sync_playwright() as p:
     pg.click("#btnTerminer")
     pg.wait_for_timeout(300)
     bilan = pg.inner_text("body")
-    t("QCM : parcours complet, 33 bonnes réponses acceptées",
-      pg.evaluate("etat.reponses.filter((x,i)=>x===QUESTIONS[i].r).length") == 33)
+    t("QCM : parcours complet, 34 bonnes réponses acceptées",
+      pg.evaluate("etat.reponses.filter((x,i)=>x===QUESTIONS[i].r).length") == 34)
     # Règle n°42 : la formulation d'une compétence se recopie. « esthétique » était
     # une substitution de ma main, corrigée dans la séquence en juillet et restée
     # dans le QCM jusqu'au 8 août — le contrôle mécanisé ne regardait que la carte
@@ -631,7 +675,7 @@ with sync_playwright() as p:
     pg.reload()
     pg.wait_for_timeout(300)
     t("QCM : sauvegarde restaurée après rechargement",
-      pg.evaluate("etat.validees.filter(Boolean).length") == 33)
+      pg.evaluate("etat.validees.filter(Boolean).length") == 34)
 
     # une mauvaise réponse affiche bien la réfutation du distracteur choisi
     pg.evaluate("localStorage.clear()")

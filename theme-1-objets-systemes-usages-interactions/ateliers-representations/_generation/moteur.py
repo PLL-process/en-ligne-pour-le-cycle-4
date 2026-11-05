@@ -294,6 +294,45 @@ class Rendu:
         self.defs.append({"type": "tableau", "name": self.nom(w["name"]), "cases": cases, "vide": w.get("vide")})
         return "".join(h)
 
+    def menus(self, w):
+        """Des menus posés dans les cases d'un schéma (la bête à cornes vide) : quand le dessin est assez large, chaque
+        menu est dans sa case ; sinon, les menus passent sous le dessin et le choix s'écrit dans la case (miroir, kit.js).
+        « Vérifier » écrit sous le dessin, avec le repère de la case, ✔ et pourquoi, ou ✘ et le retour propre à l'option
+        choisie : un retour par option fausse de chaque menu, exigé ici. Champs : `schema` (le SVG et ses cases vivantes),
+        `cadre` (le viewBox : x0, y0, largeur, hauteur), `cases` [dict(name, cible, x, y, l — centre et largeur du menu,
+        en unités du dessin —, repere, legende, options [(valeur, libellé)], bonne, ok, retours {valeur fausse : pourquoi})],
+        `papier` (la consigne sur la feuille imprimée), `intro`, `vide`."""
+        x0, y0, larg, haut = w["cadre"]
+        cases, ctrl, retours = [], [], []
+        for c in w["cases"]:
+            name = self.nom(c["name"])
+            valeurs_ok = [v for v, _ in c["options"]]
+            if c["bonne"] not in valeurs_ok:
+                raise SystemExit("Menus %s, case %s : la bonne réponse n'est pas une option" % (w["name"], c["name"]))
+            sans = [v for v in valeurs_ok if v != c["bonne"] and v not in c.get("retours", {})]
+            if sans:
+                raise SystemExit("Menus %s, case %s : options fausses sans retour %s" % (w["name"], c["name"], sans))
+            cases.append({"name": name, "bonne": c["bonne"], "ok": insecables(c.get("ok")), "indice": c.get("indice"),
+                          "retours": {k: insecables(v) for k, v in c.get("retours", {}).items()}})
+            opts = '<option value="">— choisir —</option>' + "".join(
+                '<option value="%s">%s</option>' % (e(v), e(lib)) for v, lib in c["options"])
+            ctrl.append('<div class="ms-case" data-pour="%s" style="--x:%.2f%%;--y:%.2f%%;--l:%.2f%%">'
+                        '<label class="ms-etiquette" for="%s">%s %s</label><span class="ms-menu">'
+                        '<select id="%s" name="%s" data-miroir="%s" aria-describedby="%s-retour">%s</select>'
+                        '<span class="encoche" data-pour="%s"></span></span></div>'
+                        % (name, (c["x"] - x0) / larg * 100, (c["y"] - y0) / haut * 100, c["l"] / larg * 100,
+                           name, c["repere"], c["legende"], name, name, c["cible"], name, opts, name))
+            retours.append('<li><b>%s</b> <span class="retour-case" id="%s-retour" data-pour="%s"></span></li>'
+                           % (c["repere"], name, name))
+        self.defs.append({"type": "menus", "cases": cases, "vide": w.get("vide")})
+        h = ["<div>%s</div>" % w["intro"]] if w.get("intro") else []
+        h.append('<div class="menus-schema"><div class="ms-dessin">%s%s</div>' % (w["schema"], "".join(ctrl)))
+        h.append('<ol class="ms-retours" aria-live="polite">%s</ol>' % "".join(retours))
+        if w.get("papier"):
+            h.append('<p class="ms-papier">%s</p>' % w["papier"])
+        h.append("</div>")
+        return "".join(h)
+
     def croquis(self, w, cle):
         name = self.nom(w["name"])
         self.defs.append({"type": "croquis", "name": name, "cle": cle, "minTraits": w.get("minTraits", 4),
@@ -384,6 +423,20 @@ def mots(liste):
             % "".join("<dt>%s</dt><dd>%s</dd>" % (m, d) for m, d in liste))
 
 
+def libelles(exercices, premier=1):
+    """Le nom de chaque exercice, dans l'ordre : « Exercice 1 », « Exercice 2 »… ; un exercice qui porte une
+    `etiquette` (« 🧠 Rappel », « Pour commencer ») garde la sienne et ne prend pas de numéro — les autres gardent ceux
+    que les ouvertures et les séquences citent."""
+    n, out = premier, []
+    for ex in exercices:
+        if ex.get("etiquette"):
+            out.append(ex["etiquette"])
+        else:
+            out.append("Exercice %d" % n)
+            n += 1
+    return out
+
+
 def exercice(ex, numero, uid, cle, base_img="", balise="h2", duree_au_titre=True):
     """Rend la carte d'un exercice ; renvoie (html, def_json).
     `balise` : le niveau du titre (h2 dans une page d'atelier, plus bas quand l'exercice est
@@ -397,8 +450,13 @@ def exercice(ex, numero, uid, cle, base_img="", balise="h2", duree_au_titre=True
         else:
             corps.append(getattr(r, t)(w))
     code = ex["code"]
-    # numero=None : un exercice hors série (la piqûre de rappel du cahier des charges), titré sans « Exercice N — »
-    titre_ex = ("Exercice %d — %s" % (numero, ex["titre"])) if numero else ex["titre"]
+    # numero=None : un exercice hors série (la piqûre de rappel du cahier des charges), titré sans « Exercice N — » ;
+    # numero texte, ou une « etiquette » dans l'exercice (« Pour commencer », « 🧠 Rappel ») : elle remplace « Exercice N ».
+    if numero is None and not ex.get("etiquette"):
+        titre_ex = ex["titre"]
+    else:
+        nom_ex = numero if isinstance(numero, str) else (ex.get("etiquette") or "Exercice %d" % numero)
+        titre_ex = "%s — %s" % (nom_ex, ex["titre"])
     h = ['<section class="card exercice" id="%s" data-exo="%s" data-cle="%s" aria-labelledby="%s-titre">' % (uid, uid, cle, uid),
          ('<%s id="%s-titre">%s <span class="note">(≈ %d min)</span></%s>' % (balise, uid, titre_ex, ex["duree"], balise))
          if duree_au_titre else ('<%s id="%s-titre">%s</%s>' % (balise, uid, titre_ex, balise)),
@@ -534,13 +592,14 @@ def page_atelier(at, niv, chemins):
     codes = N["codes"]
     exos_html, defs, onglets, panneaux = [], {}, [], []
     total_min = sum(x["duree"] for x in N["exercices"])
+    noms = libelles(N["exercices"])
     for i, ex in enumerate(N["exercices"]):
         uid = "%s_%s_%s" % (at.COURT, niv, ex["id"])
         cle = "rep_%s_%s_%s" % (slug, niv, ex["id"])
-        h, d = exercice(ex, i + 1, uid, cle)
+        h, d = exercice(ex, noms[i], uid, cle)
         defs[uid] = d
-        onglets.append(('Exercice %d<span class="etat" id="onglet-etat-%s">à faire</span>' % (i + 1, uid), "p-" + uid))
-        suivant_lib = ("Exercice %d" % (i + 2)) if i + 1 < len(N["exercices"]) else "Pour finir"
+        onglets.append(('%s<span class="etat" id="onglet-etat-%s">à faire</span>' % (noms[i], uid), "p-" + uid))
+        suivant_lib = noms[i + 1] if i + 1 < len(N["exercices"]) else "Pour finir"
         panneaux.append((h + '<p><button type="button" class="btn suivant" data-vers="%d">%s ›</button></p>'
                          % (i + 1, suivant_lib), "p-" + uid))
     # La piqûre de rappel du cahier des charges (donnees_rappel_cdc.py), en tête du premier onglet, avant l'exercice 1

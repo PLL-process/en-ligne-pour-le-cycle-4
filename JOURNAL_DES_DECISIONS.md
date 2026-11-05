@@ -27989,3 +27989,54 @@ testé : un vrai téléphone, Safari, Firefox, une impression réelle.
 
 **À trancher par Pascal** : les anciennes captures de Vittascience et du Bloc-notes ne sont plus affichées (gardées sur le
 disque) ; 4e_C9.1, activité 6 (le lampadaire), n'est pas outillée (elle n'envoyait pas sur Vittascience).
+
+---
+
+## 05/11/2026 — La bête à cornes : ses mots de référence (méthode APTE), utilisés partout ; l'exercice des mots en 5e, une piqûre de rappel intégrée en 4e et en 3e (thème 1)
+
+*Pascal, le 04/11/2026, en envoyant un « Diagramme « Bête à cornes » — méthode APTE » aux cases nommées : « Les mots de cette
+représentation devront être utilisés plusieurs fois, ce sont des références. » Puis : « rien ne nous empêche de faire une
+piqûre de rappel en 4e et 3e », « sous forme d'exercices intégrés aussi » (règle d'or n°319). De l'image (un site extérieur),
+seuls les mots sont pris ; la forme reste celle du modèle de Pascal (n°318).*
+
+**Les mots de référence** : **Utilisateur** (« À qui le produit rend-il service ? »), **Matière d'œuvre** (« Sur quoi agit-il ? »),
+**Produit**, **Fonction** (la fonction d'usage : « Dans quel but ? »), et la **méthode APTE** (APplication aux Techniques
+d'Entreprise, développé à sa première apparition dans les 21 pages où il figure). En anglais : *user*, *object acted upon* (la
+matière d'œuvre peut être une personne ; *material* ferait croire au matériau, le piège visé), *product*, *use function*,
+*APTE method*.
+
+**Le dessin de référence** : le gabarit de la n°318, sans rien changer, rempli avec les quatre mots, sous « La bête à cornes
+(méthode APTE) », généré par `figures.py`. Il se montre avant l'exemple : atelier 5e (dans la situation), ateliers 4e et 3e (dans
+le cours), cahier de 5e, carte des représentations (sous « Analyse externe »), 5e_C2.1 (fin de a), 5e_C3.1 (avant le
+vélo-cargo), et dans la correction de chaque exercice de mots.
+
+**L'exercice des mots (5e)** : dans l'atelier 5e, un onglet « Pour commencer » (3 minutes) : un menu dans chaque case du dessin
+vide, les quatre mots et trois pièges (Acheteur, Matériau, Fonction technique), puis « la matière d'œuvre du vélo-cargo ». Dans
+5e_C2.1, a) gagne un second temps, « … puis les quatre mots de référence ». Un retour par mot faux, propre à l'objet de chaque
+page (l'acheteur n'est pas l'utilisateur : « la collectivité qui achète le système de détection ne reçoit pas l'alerte, ce sont
+les pompiers qui s'en servent »).
+
+**Les piqûres de rappel (4e et 3e)**, 2 à 3 minutes, intégrées : placer les quatre mots, puis deux questions sur l'objet de la
+séquence ; retours, correction complète, sauvegarde. Un onglet « 🧠 Rappel » en tête des ateliers « Le besoin » 4e (le jardin)
+et 3e (l'alerte cyclonique) ; dans 4e_C1.1 Tsinghua (séance 5, la détection des feux), 4e_C3.1 Hangzhou (séance 1, la flotte de
+vélos), 3e_C3.1 Shenzhen (séance 1, le local des serveurs), et dans les `atelier_bete_a_cornes.html` de 4e_C1.3, 4e_C3.1 et
+3e_C3.1 (même clé de sauvegarde que leur séquence). Ces activités annoncent 3 minutes de plus.
+
+**Les mots partout** : consignes, retours, corrections, aides, lexiques (atelier, 5e_C2.1, 4e_C1.1), synthèses (« Le besoin »,
+5e_C2.1, 4e_C1.1), l'atelier « pieuvre » (un exercice, le cours, la synthèse). **QCM** : « Le besoin », 3 questions dont « la
+matière d'œuvre » (clé `qcm_besoin-bete-a-cornes_mots`) ; « pieuvre », 1 question réécrite (clé `qcm_interacteurs-pieuvre_mots`) ;
+5e_C2.1, 1 question nouvelle (34 questions, clé `_34q`). Un QCM commencé reprend à zéro.
+
+**Le générateur** : un widget « menus » posé dans les cases du dessin (à l'écran étroit, les menus passent sous le dessin et le
+mot choisi s'écrit dans sa case) ; des exercices à étiquette (« Pour commencer », « 🧠 Rappel ») qui ne décalent pas la
+numérotation ; `exercice()` garde aussi les titres seuls des rappels du cahier des charges (#594).
+
+**Contrôles.** `banc_ateliers.py` **517 / 517** (434 + 83) ; `banc_rappels_cdc.py` 302 / 302 ; 5e_C2.1 151 / 151 (141 avant),
+4e_C1.1 65 / 65 (63), 4e_C3.1 32 / 32, 3e_C3.1 37 / 37, 5e_C3.1 35 / 35, 4e_C2.1 65 / 65, 5e_C1.3 24 / 24, 3e_C1.5 45 / 45,
+5e_C1.2 50 / 50, 3e_C2.1 58 / 58 ; bancs n°311 verts. `controle_schemas` sur le thème 1 : 0 ✘, 179 ⚠ (305 schémas lus).
+Squelette, impression, verrous, liens, hiérarchie, règles visibles, médias, unités, sigles, longueurs : verts. Les synthèses
+touchées tiennent en 2 pages. Non testé : un vrai téléphone, Safari, Firefox, un lecteur d'écran, une impression réelle.
+
+**À faire ensuite** : réincruster le kit des ateliers dans 14 pages des thèmes 2 et 3 (`incrustations.py --verifier` les liste).
+Le lexique de 4e_C1.1 ne se régénère pas (`generer_lexique.py` refusait déjà la version committée : « OST » absent de
+l'ouverture) ; ses trois mots ont été posés dans la forme du générateur.
