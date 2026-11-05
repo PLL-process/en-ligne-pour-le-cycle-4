@@ -196,6 +196,11 @@ table.releve td.num{width:34%}
 @media print{#s2 #bancCard,#s4 #bancCard{display:none!important}}   /* le banc ne sert pas aux séances 2 et 4 : pas sur leur fiche */
 .rappel-proto{margin:8px 0 0;padding:10px 12px;border-left:4px solid var(--hl);background:rgba(97,218,251,.06);border-radius:0 8px 8px 0}
 .rappel-proto pre{white-space:pre-wrap;margin:6px 0 0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88em}
+
+/* Un lien vers une ressource extérieure se lit sur le fond bleu nuit, et sur le papier (controle_contraste_liens). */
+a.lien-ext,a.lien-ext:visited{color:var(--hl);text-decoration:underline;text-underline-offset:2px;overflow-wrap:anywhere}
+a.lien-ext:hover,a.lien-ext:focus-visible{color:#fff}
+@media print{a.lien-ext,a.lien-ext:visited{color:#00309e!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -627,7 +632,7 @@ table.releve td.num{width:34%}
 <section class="card">
   <h2>🔀 Trois façons de vivre la séquence</h2>
   <ul>
-    <li><b>🅰 Avec le vrai laboratoire</b> — le « laboratoire des matériaux » du Réseau
+    <li><b>🅰 Avec le vrai laboratoire</b> — le « <a class="lien-ext" href="https://sti.eduscol.education.fr/technologie-college/ressources_pedagogiques/le-laboratoire-des-materiaux" target="_blank" rel="noopener" title="Page éduscol STI : les deux applications, traction et compression, pour Windows et pour Mac">laboratoire des matériaux</a> » du Réseau
       National Technologie Collège (gratuit, sans compte) fait la traction et la
       compression. Il ne fait pas la flexion : c'est déjà une information sur les limites
       d'un instrument.</li>
@@ -725,9 +730,9 @@ table.releve td.num{width:34%}
     <div>
       <svg viewBox="0 0 220 260" role="img" aria-labelledby="bancTitre bancDesc">
         <title id="bancTitre">Banc d'essai de mât : flexion ou traction</title>
-        <desc id="bancDesc">Un mât est encastré dans un socle. En mode flexion, une poussée
-        horizontale s'applique en tête : le mât se courbe, et il finit par casser au ras du
-        socle, là où l'effort de pliage est le plus grand. En mode traction, la même
+        <desc id="bancDesc">Un mât est encastré dans un socle. En mode flexion, le vent pousse
+        la tête du mât de gauche à droite : le mât se courbe vers la droite, dans le sens de la
+        poussée, et il finit par casser au ras du socle, là où l'effort de pliage est le plus grand. En mode traction, la même
         éprouvette est tirée vers le haut dans son axe : elle s'allonge à peine, puis casse
         en pleine longueur, à une charge des centaines de fois plus élevée.</desc>
         <rect x="0" y="0" width="220" height="260" fill="#081b3a"/>
@@ -737,10 +742,12 @@ table.releve td.num{width:34%}
         <path id="mat" d="M80,230 C80,175 80,110 80,45" stroke="#c9d6ef" stroke-width="9"
               fill="none" stroke-linecap="round"/>
         <circle id="rupt" cx="80" cy="228" r="0" fill="#ff7b88"/>
+        <!-- Le vent vient de la gauche et pousse la tête vers la droite : le mât plie dans le sens
+             de la poussée, et la flèche suit sa tête (remarque de Pascal, 05/11/2026). -->
         <g id="flechFlex">
-          <line x1="112" y1="45" x2="150" y2="45" stroke="#ffb454" stroke-width="3"/>
-          <polygon points="112,45 126,39 126,51" fill="#ffb454"/>
-          <text x="152" y="42" fill="#ffb454" font-size="10">vent</text>
+          <line x1="26" y1="45" x2="60" y2="45" stroke="#ffb454" stroke-width="3"/>
+          <polygon points="72,45 58,39 58,51" fill="#ffb454"/>
+          <text x="26" y="37" fill="#ffb454" font-size="10">vent</text>
         </g>
         <g id="flechTrac" style="display:none">
           <line x1="80" y1="34" x2="80" y2="8" stroke="#ffb454" stroke-width="3"/>
@@ -1348,7 +1355,7 @@ impératif :
   <p><b>🌊 Défi Martinique :</b> reprends les cinq candidats et classe-les non plus par
   tenue mécanique, mais par tenue à l'air salé. Écris le protocole de <em>cet</em> essai-là :
   que mesure-t-on, sur combien de temps, et comment sait-on qu'on a fini&nbsp;?</p>
-  <p><b>🔬 Défi laboratoire :</b> installe le « laboratoire des matériaux » du Réseau National
+  <p><b>🔬 Défi laboratoire :</b> installe le « <a class="lien-ext" href="https://sti.eduscol.education.fr/technologie-college/ressources_pedagogiques/le-laboratoire-des-materiaux" target="_blank" rel="noopener" title="Page éduscol STI : les deux applications, traction et compression, pour Windows et pour Mac">laboratoire des matériaux</a> » du Réseau National
   Technologie Collège et cherche s'il propose un essai de flexion. S'il ne le propose pas,
   écris ce que cela t'apprend sur le choix d'un instrument.</p>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
@@ -1449,10 +1456,13 @@ function dessine(){
     if(casse){
       $("mat").setAttribute("d", "M80,230 L80,208 M91,213 L198,229");
       $("rupt").setAttribute("cx", 80); $("rupt").setAttribute("cy", 226);
+      $("flechFlex").setAttribute("transform", "translate(0,0)");
     } else {
+      // La tête part vers la droite, dans le sens où le vent la pousse ; la flèche la suit.
       const dx = Math.min(48, charge * c.k * 0.30);
       $("mat").setAttribute("d", "M80,230 C80,178 " + (80 + dx * 0.28).toFixed(1)
         + ",112 " + (80 + dx).toFixed(1) + ",45");
+      $("flechFlex").setAttribute("transform", "translate(" + dx.toFixed(1) + ",0)");
       $("rupt").setAttribute("cx", 80); $("rupt").setAttribute("cy", 228);
     }
   } else {

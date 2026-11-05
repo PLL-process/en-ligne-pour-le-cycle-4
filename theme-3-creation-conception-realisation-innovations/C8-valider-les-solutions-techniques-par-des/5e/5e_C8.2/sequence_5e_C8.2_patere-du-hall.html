@@ -160,6 +160,11 @@ table.releve td input{padding:4px 8px}
 .positionnement input[type=radio]{width:auto}
 .simu-carte{max-width:940px;margin:0 auto 18px}   /* l'outil hors des séances : le simulateur garde son propre cadre */
 @media(max-width:680px){.simu-carte table{display:block;overflow-x:auto;max-width:100%}}   /* comme les tableaux des cartes (filet mobile) */
+
+/* Un lien vers une ressource extérieure se lit sur le fond bleu nuit, et sur le papier (controle_contraste_liens). */
+a.lien-ext,a.lien-ext:visited{color:var(--hl);text-decoration:underline;text-underline-offset:2px;overflow-wrap:anywhere}
+a.lien-ext:hover,a.lien-ext:focus-visible{color:#fff}
+@media print{a.lien-ext,a.lien-ext:visited{color:#00309e!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -568,7 +573,7 @@ table.releve td input{padding:4px 8px}
 <section class="card">
   <h2>🔀 Trois façons de vivre la séquence</h2>
   <ul>
-    <li><b>🅰 Avec le vrai laboratoire</b> — le « laboratoire des matériaux » du Réseau National
+    <li><b>🅰 Avec le vrai laboratoire</b> — le « <a class="lien-ext" href="https://sti.eduscol.education.fr/technologie-college/ressources_pedagogiques/le-laboratoire-des-materiaux" target="_blank" rel="noopener" title="Page éduscol STI : les deux applications, traction et compression, pour Windows et pour Mac">laboratoire des matériaux</a> » du Réseau National
       Technologie Collège (application gratuite à installer, essais de traction et de compression
       sur cinq éprouvettes). Le protocole ci-dessous s'y applique tel quel.</li>
     <li><b>🅱 Avec le banc de cette page</b> — le banc d'essai ci-dessous fonctionne hors ligne,
@@ -1028,7 +1033,7 @@ table.releve td input{padding:4px 8px}
 
 <section class="card bonus">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-  <p><b>🔬 Défi laboratoire :</b> installe le « laboratoire des matériaux » du Réseau National
+  <p><b>🔬 Défi laboratoire :</b> installe le « <a class="lien-ext" href="https://sti.eduscol.education.fr/technologie-college/ressources_pedagogiques/le-laboratoire-des-materiaux" target="_blank" rel="noopener" title="Page éduscol STI : les deux applications, traction et compression, pour Windows et pour Mac">laboratoire des matériaux</a> » du Réseau National
   Technologie Collège (gratuit, sans compte) et refais le protocole en <em>compression</em>.
   Le classement des cinq matériaux est-il le même qu'en traction ?</p>
   <p><b>📏 Défi section :</b> le banc utilise une éprouvette de 2 × 5 mm. Si on doublait la

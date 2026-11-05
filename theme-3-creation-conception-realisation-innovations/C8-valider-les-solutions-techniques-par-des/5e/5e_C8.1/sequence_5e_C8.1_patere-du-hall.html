@@ -127,6 +127,11 @@ table.releve tr.ko td{background:rgba(255,123,136,.10)}
 a.lien-outil,a.lien-outil:visited{color:var(--hl)}   /* règle d'or n°303 : un lien se lit, cliqué ou non */
 .simu-carte{max-width:940px;margin:0 auto 18px}   /* l'outil hors des séances : le simulateur garde son propre cadre */
 @media(max-width:680px){.simu-carte table{display:block;overflow-x:auto;max-width:100%}}   /* comme les tableaux des cartes (filet mobile) */
+
+/* Un lien vers une ressource extérieure se lit sur le fond bleu nuit, et sur le papier (controle_contraste_liens). */
+a.lien-ext,a.lien-ext:visited{color:var(--hl);text-decoration:underline;text-underline-offset:2px;overflow-wrap:anywhere}
+a.lien-ext:hover,a.lien-ext:focus-visible{color:#fff}
+@media print{a.lien-ext,a.lien-ext:visited{color:#00309e!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -561,7 +566,7 @@ a.lien-outil,a.lien-outil:visited{color:var(--hl)}   /* règle d'or n°303 : un 
 <section class="card">
   <h2>🔀 Trois façons de vivre la séquence</h2>
   <ul>
-    <li><b>🅰 Avec le banc réel du laboratoire</b> — le « laboratoire des matériaux » du Réseau
+    <li><b>🅰 Avec le banc réel du laboratoire</b> — le « <a class="lien-ext" href="https://sti.eduscol.education.fr/technologie-college/ressources_pedagogiques/le-laboratoire-des-materiaux" target="_blank" rel="noopener" title="Page éduscol STI : les deux applications, traction et compression, pour Windows et pour Mac">laboratoire des matériaux</a> » du Réseau
     National Technologie Collège, comme en 5e_C8.2. On compare ses relevés à ceux de la
     simulation. <b>Consigne de sécurité :</b> ne jamais placer une main ni la tête sous une
     charge suspendue, charger par paliers, lunettes obligatoires à la rupture.</li>

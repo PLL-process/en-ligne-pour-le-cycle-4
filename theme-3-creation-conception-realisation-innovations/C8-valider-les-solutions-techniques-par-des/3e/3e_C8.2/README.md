@@ -96,7 +96,7 @@ mise en œuvre, pas la capacité à retrouver un ordre de grandeur.
 * **Le modèle a un domaine** : la flèche de 723,8 mm annoncée pour le PVC est hors du domaine
   des petits déplacements. La page l'écrit et en tire une leçon plutôt qu'un chiffre.
 * **Un seul essai par candidat** : une question de QCM (3e_C3.4) porte précisément sur ce manque.
-* **Aucun essai physique.** Le laboratoire des matériaux du Réseau National Technologie Collège
+* **Aucun essai physique.** Le [laboratoire des matériaux](https://sti.eduscol.education.fr/technologie-college/ressources_pedagogiques/le-laboratoire-des-materiaux) du Réseau National Technologie Collège
   reste la version 🅰 — et il ne fait pas la flexion, ce que la séquence traite comme un objet
   d'étude plutôt que comme un obstacle.
 
