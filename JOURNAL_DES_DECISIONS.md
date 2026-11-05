@@ -28195,3 +28195,66 @@ Le parcours de l'élève a été mené dans un vrai navigateur sur les six pages
 - le fichier téléchargé se rouvre ;
 - les coches et le programme restent après un rechargement ;
 - aucune erreur de script, aucun défilement de côté.
+
+## 05/11/2026 — 4e_C9.1, le lampadaire : l'éditeur Python, une nuit simulée, et une vérification qui exécute ; 5e_C8.1 : la version 🅰 est un logiciel (transversal)
+
+**Le lampadaire de 4e_C9.1 (activité 6, « Réinvestir — le même squelette, un autre objet »).** Pascal l'avait accepté le
+04/11/2026 (règle d'or n°320) : l'élève y écrivait le programme du lampadaire « sans squelette », sans pouvoir l'exécuter.
+Il le confirme le 05/11/2026 : « Oui, équipe-la ».
+
+- **L'éditeur Python intégré** remplace la zone de texte. Il garde son identifiant (`reinv`) : un programme déjà sauvegardé
+  revient. Le code de départ n'a que des commentaires, qui nomment les fonctions simulées : aucun squelette, c'est l'objet de
+  l'activité. Le fichier se nomme `4e-LAMPADAIRE-TON NOM`.
+- **La carte du lampadaire, simulée**, est annoncée dans un encadré 🔌, comme celle de 4e_C6.2 :
+  - `lire_luminosite()` rend L, de 0 à 100 ;
+  - `allumer_lampadaire()` et `eteindre_lampadaire()` commandent le lampadaire.
+- **▶ Exécuter joue une nuit entière, de 18 h 30 à 6 h 45**, toujours la même :
+  - le soir, la lumière baisse de 70 à 4 en tremblant de ± 8 (des nuages), puis les phares d'une voiture la remontent à 24 ;
+  - en pleine nuit, une mesure toutes les 30 minutes ;
+  - le matin, la lumière remonte de 3 à 85, en tremblant, avec deux nuages.
+
+  La console écrit l'heure et la lumière à chaque basculement, puis le bilan de la nuit, sans dire « juste » ni « faux » ;
+  le programme s'arrête alors tout seul.
+- **« Vérifier » juge ce que le programme a fait pendant sa dernière exécution.** Le programme est validé s'il est allumé à la
+  nuit noire, éteint en plein jour, et s'il bascule **au plus une fois le soir et une fois le matin**. C'est le seuil choisi :
+  un lampadaire bien réglé bascule exactement une fois le soir et une fois le matin. Avant, la vérification cherchait deux
+  nombres, un « sinon si » et les mots « allum » / « teind » dans le texte.
+
+**Ce que donnent les programmes sur cette nuit :**
+- les bons programmes (20/60, 25/55, 15/70) : 1 basculement le soir, 1 le matin ;
+- un seul seuil : 7 basculements le soir ;
+- « SINON éteindre » : 15 basculements le soir ;
+- la bande 35/45 de la pompe : 3 basculements le soir ;
+- les seuils croisés : 9 basculements le matin ;
+- les seuils inversés : éteint la nuit, allumé le jour ;
+- sans boucle : le programme s'arrête à 18 h 30.
+
+Chacun reçoit son retour, et le conseil nomme la cause : un seul seuil, le `else` dans la bande morte, des seuils trop
+proches ou croisés, la boucle qui manque. Un programme changé après son exécution doit être exécuté encore. La correction
+donne le programme en Python, la nuit du bon programme (19 h 10 et 6 h 09), et pourquoi chaque programme faux échoue.
+
+**Le composant.** `raise SystemExit` termine maintenant un programme sans erreur, comme en Python 3, même au milieu d'un
+`while True:`. Skulpt n'a pas `sys.exit()`. C'est ainsi que la nuit simulée s'arrête après son bilan. `LISEZMOI.md` le dit,
+et le banc le vérifie.
+
+**5e_C8.1, la version 🅰.** Pascal, à la question « que corriger ? » : « Le nom (logiciel) ». La version 🅰 s'appelait « Avec
+le banc réel du laboratoire », alors qu'elle renvoie au logiciel « laboratoire des matériaux » du Réseau National Technologie
+Collège. Elle donnait aussi une consigne de sécurité pour une charge suspendue. Elle devient « 🅰 Avec le logiciel du
+laboratoire » : une application gratuite, des essais de traction et de compression, aucune charge réelle manipulée. La
+consigne de sécurité est retirée, et la synthèse professeur et la fiche pédagogique sont corrigées de même. La question du
+QCM qui parle d'une charge suspendue porte sur l'énergie : elle reste.
+
+**Contrôles.** Les bancs :
+- banc de l'éditeur : 66 / 66 (un test de plus pour `SystemExit`) ;
+- 4e_C9.1 : 124 / 124 (114 avant) — onze tests pour l'activité 6 : l'éditeur monté sans squelette, le refus sans
+  exécution, sept programmes refusés avec leur retour, le bon programme et sa nuit, un programme changé à réexécuter ;
+- 5e_C8.1 : 39 / 39. Le test de sécurité est adapté : la page dit qu'aucune charge réelle n'est manipulée, et l'ancienne
+  consigne n'y est plus (`attendus_5e.json`) ;
+- bancs n°311 : 34 / 34 pour 4e_C9.1 comme pour 5e_C8.1.
+
+Les contrôles sont verts : `controle_squelette`, `controle_hors_ligne`, `controle_verrous`, `controle_impression`,
+`controle_contraste_liens`, `controle_gestes_outil`, `controle_liens`, `controle_hierarchie`, `controle_regles_visibles`,
+`controle_unites`, `controle_sigles`, `controle_medias`, `controle_fichiers_telechargeables`. `controle_schemas` ne
+trouve aucun ✘ ; ses ⚠ sont ceux de `main`.
+
+Les dix programmes ont été exécutés dans la page, à 1280 et à 390 px, sans erreur de script ni défilement de côté.

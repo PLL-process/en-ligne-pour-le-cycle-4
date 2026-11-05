@@ -2377,12 +2377,100 @@ pompe_allumee = <span class="kw">False</span>
       <div><b>Objectif :</b> transférer la structure « deux seuils + bande morte » sur un système différent, sans modèle fourni.</div>
       <div><b>Compétence :</b> <b>4e_C9.3</b> — <i>réaliser</i> un programme commandant un autre système réel.</div>
       <div><b>Production attendue :</b> le programme du lampadaire, écrit <b>sans squelette</b>.</div>
-      <div><b>Ressources :</b> ce que tu viens d'écrire — et rien d'autre.</div>
+      <div><b>Ressources :</b> ce que tu viens d'écrire — et l'éditeur Python de la page, qui simule le lampadaire pendant une nuit.</div>
     </div>
-    <div class="consigne"><b>Consigne :</b> un <b>lampadaire</b> de la cour doit s'allumer quand la nuit tombe et s'éteindre au petit jour. Il est équipé d'un capteur de luminosité qui renvoie L, de 0 (nuit noire) à 100 (plein soleil). Le même problème de clignotement se poserait au crépuscule. <b>Écris son programme.</b> Aucun squelette cette fois : c'est à toi de choisir la structure — et les valeurs.</div>
+    <div class="consigne"><b>Consigne :</b> un <b>lampadaire</b> de la cour doit s'allumer quand la nuit tombe et s'éteindre au petit jour. Il est équipé d'un capteur de luminosité qui renvoie L, de 0 (nuit noire) à 100 (plein soleil). Le même problème de clignotement se poserait au crépuscule. <b>Écris son programme</b> dans l'éditeur Python ci-dessous, puis ▶&nbsp;Exécuter&nbsp;: la page joue une nuit entière, de 18&nbsp;h&nbsp;30 à 6&nbsp;h&nbsp;45, et la console dit chaque fois que le lampadaire s'allume ou s'éteint, puis le bilan. Aucun squelette cette fois&nbsp;: c'est à toi de choisir la structure — et les valeurs. Nomme ton fichier <code>4e-LAMPADAIRE-TON NOM</code>, puis télécharge-le (geste 3).</div>
     <div class="exo">
-      <label for="reinv" style="display:block">Ton programme du lampadaire :</label>
-      <textarea id="reinv" style="min-height:130px" placeholder="Écris ton programme complet : les réglages, la mesure, la décision…"></textarea>
+      <!-- Pascal, 05/11/2026 : l'activité 6 a l'éditeur Python intégré (règle d'or n°320). La page simule la carte du
+           lampadaire et une nuit entière ; « Vérifier » juge le programme sur ce qu'il a fait pendant cette nuit. -->
+      <div class="carte-simulee" id="carte-lampadaire-aide">
+        <p><b>🔌 Pas de lampadaire branché&nbsp;: la page simule sa carte.</b> Dans l'éditeur ci-dessous, ces trois fonctions existent déjà&nbsp;: tu les appelles, tu ne les écris pas.</p>
+        <ul>
+          <li><code>lire_luminosite()</code> → la lumière L, de 0 (nuit noire) à 100 (plein soleil). Chaque appel avance l'horloge&nbsp;: une minute le soir et le matin, une demi-heure en pleine nuit.</li>
+          <li><code>allumer_lampadaire()</code> et <code>eteindre_lampadaire()</code> → la console écrit l'heure et la lumière chaque fois que le lampadaire <b>change</b> d'état.</li>
+        </ul>
+        <p>La nuit simulée ressemble à une vraie&nbsp;: au crépuscule, la lumière baisse <b>en tremblant</b> (des nuages), puis les phares d'une voiture passent&nbsp;; au petit jour, elle remonte, en tremblant aussi. Quand la nuit est finie, la console écrit le bilan et le programme s'arrête tout seul&nbsp;: pas besoin d'attendre ni de compter les minutes. Ce ne sont pas les mesures de TA cour&nbsp;; avec la vraie carte, les mêmes lignes liraient le vrai capteur.</p>
+      </div>
+      <script type="text/x-python" id="carte-lampadaire">
+# La carte du lampadaire, simulée par la page (4e_C9.1, activité 6) : une nuit de 18 h 30 à 6 h 45.
+import time as _time
+_time.sleep = lambda s=0: None
+_NUIT = [
+    (1110, 66), (1111, 65), (1112, 63), (1113, 72), (1114, 63), (1115, 70), (1116, 64), (1117, 59),
+    (1118, 67), (1119, 62), (1120, 56), (1121, 55), (1122, 49), (1123, 57), (1124, 55), (1125, 56),
+    (1126, 45), (1127, 58), (1128, 44), (1129, 56), (1130, 45), (1131, 54), (1132, 43), (1133, 49),
+    (1134, 39), (1135, 50), (1136, 41), (1137, 45), (1138, 32), (1139, 46), (1140, 44), (1141, 29),
+    (1142, 42), (1143, 40), (1144, 38), (1145, 34), (1146, 26), (1147, 28), (1148, 23), (1149, 26),
+    (1150, 18), (1151, 33), (1152, 17), (1153, 21), (1154, 30), (1155, 14), (1156, 23), (1157, 19),
+    (1158, 21), (1159, 9), (1160, 11), (1161, 20), (1162, 13), (1163, 20), (1164, 11), (1165, 12),
+    (1166, 8), (1167, 11), (1168, 6), (1169, 0), (1170, 4), (1171, 2), (1172, 2), (1173, 5),
+    (1174, 2), (1175, 24), (1176, 23), (1177, 22), (1178, 4), (1179, 6), (1180, 4), (1181, 3),
+    (1182, 5), (1183, 4), (1184, 2), (1185, 2), (1215, 2), (1245, 3), (1275, 1), (1305, 1),
+    (1335, 4), (1365, 1), (1395, 3), (1425, 4), (1455, 4), (1485, 3), (1515, 1), (1545, 2),
+    (1575, 4), (1605, 4), (1635, 1), (1665, 1), (1695, 2), (1725, 3), (1755, 2), (1770, 9),
+    (1771, 5), (1772, 6), (1773, 12), (1774, 8), (1775, 13), (1776, 17), (1777, 18), (1778, 18),
+    (1779, 13), (1780, 19), (1781, 21), (1782, 13), (1783, 14), (1784, 15), (1785, 32), (1786, 21),
+    (1787, 31), (1788, 36), (1789, 30), (1790, 36), (1791, 40), (1792, 39), (1793, 36), (1794, 28),
+    (1795, 36), (1796, 47), (1797, 43), (1798, 49), (1799, 44), (1800, 45), (1801, 41), (1802, 40),
+    (1803, 48), (1804, 48), (1805, 53), (1806, 50), (1807, 46), (1808, 50), (1809, 61), (1810, 56),
+    (1811, 56), (1812, 62), (1813, 55), (1814, 67), (1815, 58), (1816, 74), (1817, 73), (1818, 68),
+    (1819, 67), (1820, 58), (1821, 60), (1822, 62), (1823, 75), (1824, 79), (1825, 85), (1826, 80),
+    (1827, 82), (1828, 87), (1829, 90), (1830, 84), (1831, 85), (1832, 84), (1833, 70), (1834, 70),
+    (1835, 86), (1836, 84), (1837, 86), (1838, 84), (1839, 86), (1840, 87), (1841, 84), (1842, 86),
+    (1843, 84), (1844, 85), (1845, 86),
+]
+_FIN_SOIR = 75
+_DEBUT_MATIN = 95
+_pas = [0]
+_allume = [False]
+_allume_nuit = [False]
+_commande = [False]
+_bascules = [0, 0, 0]
+def _heure(m):
+    return "%d h %02d" % (m // 60 % 24, m % 60)
+def _moment():
+    k = _pas[0] - 1
+    return 0 if k <= _FIN_SOIR else (1 if k < _DEBUT_MATIN else 2)
+def _bilan():
+    print("— Fin de la nuit (6 h 45). Bilan de la nuit :")
+    if not _commande[0]:
+        print("   le lampadaire n'a jamais été commandé : ton programme n'appelle ni allumer_lampadaire(), ni eteindre_lampadaire().")
+    print("   le soir (18 h 30 → 19 h 45) :", _bascules[0], "basculement(s) ; à la nuit noire, le lampadaire était", "allumé." if _allume_nuit[0] else "éteint.")
+    if _bascules[1]:
+        print("   pendant la nuit noire :", _bascules[1], "basculement(s).")
+    print("   le matin (5 h 30 → 6 h 45) :", _bascules[2], "basculement(s) ; en plein jour, il était", "allumé." if _allume[0] else "éteint.")
+def lire_luminosite():
+    if _pas[0] == _DEBUT_MATIN:
+        _allume_nuit[0] = _allume[0]
+    if _pas[0] >= len(_NUIT):
+        _bilan()
+        raise SystemExit
+    _pas[0] += 1
+    return _NUIT[_pas[0] - 1][1]
+def _changer(etat):
+    _commande[0] = True
+    if _allume[0] != etat:
+        _allume[0] = etat
+        _bascules[_moment()] += 1
+        m, L = _NUIT[max(0, _pas[0] - 1)]
+        print(_heure(m), "— L =", L, "→", "💡 le lampadaire s'allume" if etat else "🌙 le lampadaire s'éteint")
+def allumer_lampadaire():
+    _changer(True)
+def eteindre_lampadaire():
+    _changer(False)
+</script>
+<div class="editeur-py" id="edpy-a6" data-fichier="4e-LAMPADAIRE-TON NOM" data-simulation="carte-lampadaire">
+  <label for="reinv">🐍 Ton programme du lampadaire — écris-le, puis ▶&nbsp;Exécuter pour le voir passer une nuit</label>
+  <textarea id="reinv" class="editeur-py-code" rows="10" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off"># Le programme du lampadaire, écrit sans modèle : les réglages, la mesure, la décision.
+# La page simule la carte (encadré 🔌 ci-dessus) :
+#   L = lire_luminosite()   → la lumière, de 0 (nuit noire) à 100 (plein soleil)
+#   allumer_lampadaire()    → allume le lampadaire
+#   eteindre_lampadaire()   → éteint le lampadaire
+# ▶ Exécuter joue une nuit entière, de 18 h 30 à 6 h 45.
+
+</textarea>
+  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur ton cahier&nbsp;: l'essai sur la nuit simulée demande la page avec JavaScript.</p>
+</div>
       <div class="assoc"><label for="a6_q1">Par rapport au programme de la pompe, qu'est-ce qui change ?</label><select id="a6_q1"><option value="">— choisir —</option><option>le sens : on allume quand la mesure est haute</option><option>rien : on recopie le programme de la pompe</option><option>la structure : la bande morte devient inutile</option><option>la grandeur mesurée, les seuils et l'action</option></select></div>
       <label for="a6_just" style="display:block;margin-top:10px"><b>Justifie tes deux seuils :</b> quelles valeurs as-tu choisies, et pourquoi cet écart-là plutôt qu'un autre ?</label>
       <textarea id="a6_just" placeholder="J'ai choisi … et … parce que…"></textarea>
@@ -2401,23 +2489,34 @@ pompe_allumee = <span class="kw">False</span>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Reprends ton programme de la pompe et demande-toi, ligne par ligne : qu'est-ce qui change ? Regarde la grandeur mesurée, les valeurs des seuils, le nom de l'action. Et le <b>sens</b> de la comparaison : change-t-il vraiment ?</p></details>
     <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Pour la pompe, « sec » = valeur <b>basse</b> = on allume. Pour le lampadaire, « sombre » = valeur <b>basse</b> = on allume aussi. Le sens ne s'inverse donc pas tant qu'on y réfléchit bien : dans les deux cas, on agit quand la mesure est basse. Ce qui change, ce sont les <b>valeurs</b> : la nuit tombe vers L = 20, le jour se lève vers L = 60 — et ce large écart n'est pas un hasard, le crépuscule est long.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>Programme attendu (une version parmi d'autres) :</b></p>
+      <p><b>Programme attendu, en Python (une version parmi d'autres) :</b></p>
       <div class="py">SEUIL_BAS = <span class="num">20</span>      <span class="cmt"># il fait vraiment sombre</span>
 SEUIL_HAUT = <span class="num">60</span>     <span class="cmt"># il fait vraiment jour</span>
-lire luminosité → L
-SI L &lt; SEUIL_BAS ALORS
-    allumer lampadaire
-SINON SI L &gt; SEUIL_HAUT ALORS
-    éteindre lampadaire
-<span class="cmt"># entre 20 et 60 : on ne change rien</span>
-FIN SI</div>
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    L = <span class="fn">lire_luminosite</span>()
+    <span class="kw">if</span> L &lt; SEUIL_BAS:
+        <span class="fn">allumer_lampadaire</span>()
+    <span class="kw">elif</span> L &gt; SEUIL_HAUT:
+        <span class="fn">eteindre_lampadaire</span>()
+    <span class="cmt"># entre 20 et 60 : on ne change rien</span></div>
+      <p><b>Sur la nuit simulée</b>, il bascule <b>une fois le soir</b> (19&nbsp;h&nbsp;10, quand L passe à 18) et <b>une fois le matin</b> (6&nbsp;h&nbsp;09, quand L passe à 61)&nbsp;: allumé à la nuit noire, éteint en plein jour. Les phares de 19&nbsp;h&nbsp;35 (L remonte à 24) et les nuages du matin ne le font pas changer&nbsp;: ils restent dans la bande morte. Un lampadaire bien réglé bascule une fois le soir et une fois le matin&nbsp;; la vérification refuse plus d'un basculement le soir ou le matin.</p>
+      <p><b>Les programmes qui échouent sur la même nuit, et pourquoi&nbsp;:</b></p>
+      <ul>
+        <li><b>Un seul seuil</b> (allumer si L &lt; 30, sinon éteindre)&nbsp;: 7 basculements le soir, 5 le matin. Autour de 30, chaque nuage et chaque phare fait passer L d'un côté à l'autre du seuil.</li>
+        <li><b>Deux seuils, mais un <code>else</code> qui éteint</b>&nbsp;: 15 basculements le soir. Dès que L dépasse 20, le <code>else</code> éteint&nbsp;: la bande morte a disparu.</li>
+        <li><b>Les seuils inversés</b> (allumer si L &gt; 60, éteindre si L &lt; 20)&nbsp;: allumé en plein jour, éteint à la nuit noire.</li>
+        <li><b>Les seuils croisés</b> (<code>SEUIL_BAS = 60</code>, <code>SEUIL_HAUT = 20</code>)&nbsp;: 3 basculements le soir, 9 le matin. Le programme ne garde qu'un seuil, 60, sans bande morte.</li>
+        <li><b>Le 35-45 de la pompe</b>&nbsp;: 3 basculements le soir. Une bande de 10 points est trop étroite pour une lumière qui tremble de ± 8 au crépuscule.</li>
+        <li><b>Sans boucle</b> (pas de <code>while True:</code>)&nbsp;: le programme lit la lumière une seule fois, à 18&nbsp;h&nbsp;30, puis s'arrête&nbsp;; il ne surveille pas la nuit.</li>
+      </ul>
       <p><b>Ce qui ne change pas :</b> la structure entière — deux réglages, une mesure, trois cas dont un vide — et le <b>sens</b> de la comparaison : pour la pompe comme pour le lampadaire, on allume quand la mesure est <b>basse</b> (sol sec, rue sombre). <b>Ce qui change :</b> la grandeur, les valeurs, le nom de l'actionneur. Une structure bien choisie se réemploie ; c'est à cela qu'on la reconnaît.</p>
       <p><b>Sur les valeurs :</b> l'écart 20-60 est <b>beaucoup plus large</b> que le 35-45 de la pompe, et c'est justifié : le crépuscule dure longtemps et la lumière y varie beaucoup — nuages, phares, reflets. Une bande étroite ferait clignoter le lampadaire pendant une demi-heure chaque soir. Toute valeur cohérente avec un tel raisonnement est acceptée : <b>c'est la justification qui est évaluée, pas le nombre</b>.</p>
       <p><b>Limite :</b> un vrai lampadaire n'utilise pas que la luminosité — il a souvent une horloge, comme notre pompe, pour ne pas s'allumer sous un orage de midi. Tu retrouveras ce dispositif complet en Thème 2.</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> recopier le programme de la pompe sans changer les valeurs — le crépuscule n'a rien à voir avec un sol qui sèche ; choisir deux seuils très proches « pour être précis », ce qui ramène exactement le problème qu'on vient de résoudre ; oublier le troisième cas et écrire un simple SINON.</div>
     <div class="retenir"><b>📌 À retenir :</b> une <b>structure</b> de programme se réinvestit d'un objet à l'autre : ce qui change, ce sont la grandeur, les valeurs et les noms — pas le squelette. La <b>largeur de la bande morte</b> se choisit d'après la façon dont la grandeur varie <b>en vrai</b> : quelques points pour un sol, plusieurs dizaines pour un crépuscule.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> un programme complet à trois cas, écrit sans squelette, avec deux seuils distincts <b>et</b> une justification qui relie l'écart choisi au comportement réel de la grandeur mesurée.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> un programme complet à trois cas, écrit sans squelette, qui, exécuté sur la nuit simulée, <b>s'allume une fois le soir et s'éteint une fois le matin</b>, <b>et</b> une justification qui relie l'écart choisi au comportement réel de la grandeur mesurée.</div>
   </div>
 </section>
 
@@ -3322,20 +3421,46 @@ const CHECKS = {
   6: function(){
     let ok = 0;
     if($("a6_q1").value.startsWith("la grandeur")) ok++;
-    const p = txt("reinv").toLowerCase();
-    const nombres = (p.match(/\d+/g) || []).map(Number);
-    const deuxSeuils = nombres.length >= 2 && (Math.max.apply(null, nombres) - Math.min.apply(null, nombres)) >= 5;
-    const progOk = p.length >= 70 && deuxSeuils &&
-                   (p.includes("sinon si") || p.includes("elif")) &&
-                   (p.includes("allum") && p.includes("teind"));
+    /* Le programme du lampadaire est jugé par son EXÉCUTION sur la nuit simulée (05/11/2026), plus par la présence
+       de deux nombres, d'un « sinon si » et des mots « allum » / « teind » dans son texte. */
+    const lj = lampJuger(window.__lamp);
     const j = txt("a6_just");
     const justOk = j.length >= 60 && (j.match(/\d+/g) || []).length >= 2;
     let extra = "";
-    if(!progOk) extra += " Ton programme doit être complet : deux seuils DIFFÉRENTS, un SINON SI, et les deux actions.";
+    if(!lj.ok)  extra += " Ton programme, exécuté sur la nuit simulée : " + lj.pourquoi;
     if(!justOk) extra += " Justifie tes deux valeurs : pourquoi cet écart-là ? (cite les deux nombres)";
-    return {score:ok, total:1, extra, valide: ok === 1 && progOk && justOk};
+    return {score:ok, total:1, extra, valide: ok === 1 && lj.ok && justOk};
   }
 };
+
+/* ── Le lampadaire (activité 6) : la dernière exécution de son éditeur, et ce qu'elle a fait pendant la nuit ── */
+window.__lamp = null;
+document.addEventListener("editeur-py:fin", e => { if(e.detail && e.detail.champ === "reinv") window.__lamp = e.detail; });
+function lampJuger(r){
+  const code = $("reinv") ? $("reinv").value : "";
+  if(!r) return {ok: false, pourquoi: "exécute-le d'abord (▶ Exécuter) : la page juge ce qu'il FAIT pendant la nuit, pas ce qu'il contient."};
+  if(r.code !== code) return {ok: false, pourquoi: "tu l'as changé depuis ta dernière exécution : exécute-le encore (▶), puis vérifie."};
+  if(r.erreur) return {ok: false, pourquoi: "il s'arrête sur une erreur" + (r.erreur.ligne ? ", ligne " + r.erreur.ligne : "") + " : lis l'explication dans la console, corrige, puis ▶."};
+  if(r.arret) return {ok: false, pourquoi: "il a été arrêté avant la fin de la nuit : laisse-le aller jusqu'au bilan."};
+  const s = r.sortie || "";
+  if(!/Fin de la nuit/.test(s)) return {ok: false, pourquoi: "il s'est arrêté avant la fin de la nuit : il ne lit la lumière qu'une fois. Pour surveiller toute la nuit, il lui faut une boucle (while True:)."};
+  if(/n'a jamais été commandé/.test(s)) return {ok: false, pourquoi: "pendant toute la nuit, il n'a jamais commandé le lampadaire : appelle allumer_lampadaire() et eteindre_lampadaire()."};
+  const nb = re => { const m = re.exec(s); return m ? +m[1] : 0; };
+  const soir = nb(/le soir[^:]*: (\d+) basculement/), nuit = nb(/pendant la nuit noire : (\d+) basculement/), matin = nb(/le matin[^:]*: (\d+) basculement/);
+  const allumeNuit = /à la nuit noire, le lampadaire était allumé/.test(s), eteintJour = /en plein jour, il était éteint/.test(s);
+  const p = [];
+  if(!allumeNuit) p.push("à la nuit noire, le lampadaire était éteint : il ne s'allume pas quand il fait sombre (regarde le sens de tes comparaisons)");
+  if(!eteintJour) p.push("en plein jour, il était encore allumé : il ne s'éteint pas au petit jour");
+  if(soir > 1 || matin > 1 || nuit > 0){
+    let pourquoi = "il s'affole : " + soir + " basculement(s) le soir, " + matin + " le matin" + (nuit ? ", " + nuit + " en pleine nuit" : "") + ", là où un lampadaire bien réglé bascule une fois le soir et une fois le matin";
+    const c = code.replace(/#.*$/gm, "");
+    if(!/\belif\b/.test(c)) pourquoi += ". Avec un seul seuil, chaque nuage ou chaque phare le fait basculer : il faut deux seuils, et rien entre les deux";
+    else if(/\belse\s*:/.test(c)) pourquoi += ". Ton « else » agit dès que L est entre les deux seuils : dans la bande morte, il ne faut RIEN faire";
+    else pourquoi += ". Tes deux seuils sont trop proches, ou croisés : au crépuscule, la lumière tremble de ± 8 ; la bande morte doit être plus large";
+    p.push(pourquoi);
+  }
+  return {ok: !p.length, pourquoi: p.join(" ; ") + "."};
+}
 
 const ENCOURAGE_OK = ["Excellent travail : tout est validé !","Bravo, activité maîtrisée !","Très bien : tu peux passer à la suite en confiance."];
 const ENCOURAGE_MI = ["Bonne démarche — vérifie les points restants avec l'aide de niveau 1.","Tu y es presque : relis la consigne et corrige ce qui manque.","C'est en bonne voie : l'aide de niveau 2 peut débloquer le reste."];

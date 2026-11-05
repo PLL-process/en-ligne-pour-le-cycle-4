@@ -51,8 +51,10 @@ de question et compare à la **limite élastique**.
 
 ## 4. Les trois versions
 
-- **🅰** avec le banc réel du laboratoire (celui de `5e_C8.2`) — consigne de sécurité : ne jamais
-  placer une main ni la tête sous une charge suspendue, charger par paliers, lunettes à la rupture.
+- **🅰** avec le logiciel « laboratoire des matériaux » du Réseau National Technologie Collège (le même
+  qu'en `5e_C8.2`) — une application gratuite à installer ; aucune charge réelle n'est manipulée, donc pas
+  de consigne de sécurité. (Corrigé le 05/11/2026 : la version s'appelait « avec le banc réel du
+  laboratoire » et donnait une consigne pour une charge suspendue.)
 - **🅱** avec le simulateur de la page — hors ligne, voie par défaut.
 - **🅲** sans écran — tableau imprimé, calculs à la main.
 

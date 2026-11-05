@@ -39,6 +39,9 @@ Vittascience reste un lien facultatif, écrit dans chaque bloc.
 - **`data-simulation`** nomme un `<script type="text/x-python" id="…">` de la page : des fonctions simulées
   (capteur, pompe…) exécutées AVANT le programme de l'élève, sans décaler ses numéros de ligne. La consigne les
   nomme et les décrit (exemple : l'encadré 🔌 de `4e_C6.2`).
+- **Une simulation qui finit son essai** (une nuit, une journée) lève `SystemExit` (`raise SystemExit`) : le programme
+  s'arrête sans erreur, comme en Python 3, même au milieu d'un `while True:` (Skulpt n'a pas `sys.exit()`). Exemple :
+  la nuit du lampadaire de `4e_C9.1`, activité 6, qui écrit son bilan puis s'arrête.
 - **Sans JavaScript**, la zone et le lien restent : la consigne se fait encore.
 
 ## L'échauffement : un éditeur d'essai, et les quatre gestes qui se cochent
