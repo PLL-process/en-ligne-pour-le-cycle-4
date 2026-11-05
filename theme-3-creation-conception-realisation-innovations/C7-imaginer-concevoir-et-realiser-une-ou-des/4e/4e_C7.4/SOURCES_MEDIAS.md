@@ -13,3 +13,12 @@ de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règ
 
 *Le 30/10/2026, cette image remplace `synthese_jardin_connecte.png` (même demande, « in Martinique », avec des palmiers) : le jardin de 4e est à New York, et Pascal a demandé « tout à NY ». L'ancien fichier est retiré du lot.*
 
+## La même image du jardin, sans panneau, pour la situation déclenchante (05/11/2026)
+
+Copie, octet pour octet, de l'image de `4e_C9.1` (même provenance, mêmes droits). Pascal, le 05/11/2026 : « il manque aussi des images réalistes ». Elle montre le jardin au fond de la cour **sans source d'énergie visible** : l'image au panneau solaire ci-dessus donnerait la réponse de la séquence ; elle reste dans la synthèse.
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/synthese_jardin_new_york.png` | Le jardin connecté d'une école de Brooklyn : un bac en bois avec des plants de tomates, la sonde d'humidité reliée à un boîtier gris sur un piquet, une petite cuve avec sa pompe et son goutte-à-goutte ; immeubles de briques et tours au fond. PNG 1 536 × 1 024, 2.8 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a small connected school vegetable garden in a Brooklyn, New York school courtyard: a raised wooden planter box with young tomato plants, a soil moisture sensor probe pushed into the soil with a thin cable running to a small grey weatherproof control box with one small LED on a short post, a small water tank with a small pump and a drip irrigation line, red brick school building and city towers behind, overcast daylight, no people, no text, no logos, the whole planter visible » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026 : le jardin et son boîtier gris, sans source d'énergie visible — c'est la question de la séquence) |
+
+
