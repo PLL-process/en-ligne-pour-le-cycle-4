@@ -1774,7 +1774,59 @@ svg .chx-jeton{pointer-events:none}
 
   <div class="exo bonus-defi" id="bonus-maison">
     <h3>🏠 Défi maison</h3>
-    <p>Choisis un objet chez toi (réveil, ventilateur, console…) et dessine <b>sa</b> chaîne d'énergie&nbsp;: une flèche d'entrée, des blocs avec leur fonction et le composant écrit dessous, la forme d'énergie sur chaque flèche, et l'action finale à la sortie. Montre-la à la classe.</p>
+    <p>Choisis un objet chez toi (réveil, ventilateur, console…) et construis <b>sa</b> chaîne d'énergie&nbsp;: une flèche d'entrée, des blocs avec leur fonction et le composant écrit dessous, la forme d'énergie sur chaque flèche, et l'action finale à la sortie. Montre-la à la classe.</p>
+<!-- constructeur de chaîne d’énergie : début (04/11/2026) — l’élève choisit, la chaîne se dessine (moteur des chaînes de la séance 2) -->
+<div class="cb" id="bmChaine">
+  <p class="cb-mode">🧩 <b>Construis-la ici</b>&nbsp;: choisis chaque pièce, ta chaîne se dessine à mesure. Puis «&nbsp;Vérifier&nbsp;» regarde si elle a toutes ses pièces.</p>
+  <p class="pp-papier">✏️ Sur la feuille&nbsp;: dessine ta chaîne dans le cadre, ou complète celle qui y est — une fonction dans chaque bloc, le composant écrit dessous, la forme d’énergie sur chaque flèche, l’action finale à la sortie.</p>
+  <div class="cb-boite chx-boite" id="bmBoite" tabindex="0" role="region" aria-label="Ta chaîne d’énergie, dessinée">
+    <svg class="cb-dessin" id="bmDessin" viewBox="0 0 840 240" role="img" aria-label="Le cadre de ta chaîne d’énergie, encore vide" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif"><rect class="chx-papier" x="3" y="3" width="834" height="234" rx="14" fill="#050f24" stroke="#9aa5b8" stroke-width="2" stroke-dasharray="10 8"/><text x="420" y="110" text-anchor="middle" font-size="18" font-weight="700" fill="#e4eaf5">Le cadre de ta chaîne d’énergie</text><text x="420" y="142" text-anchor="middle" font-size="16" fill="#9aa5b8">une entrée → des blocs (la fonction dedans, le composant dessous) → la sortie et l’action finale</text></svg>
+  </div>
+  <noscript><p>Sans JavaScript, la chaîne ne se dessine pas toute seule&nbsp;: dessine-la sur ton cahier, ou imprime la page et dessine-la dans le cadre.</p></noscript>
+  <div class="cb-reglages pp-ecran" role="group" aria-label="Les pièces de ta chaîne d’énergie">
+    <div class="cb-tetes">
+    <div class="cb-champ cb-tete"><label for="bmObjet">Mon objet</label><input type="text" id="bmObjet" maxlength="50" autocomplete="off" placeholder="un ventilateur, un réveil…"></div>
+    <div class="cb-champ cb-tete"><label for="bmNb">Nombre de blocs</label><select id="bmNb"><option value="2">2 blocs</option><option value="3" selected>3 blocs</option><option value="4">4 blocs</option><option value="5">5 blocs</option></select></div>
+    </div>
+    <fieldset class="cb-maillon" id="bmM0"><legend>➡ L’entrée</legend>
+      <div class="cb-champ"><label for="bmE0">Forme d’énergie qui entre</label><select id="bmE0"><option value="">— choisir —</option><option>CONVERTIR</option><option>Eau</option><option>Énergie chimique</option><option>Énergie électrique</option><option>Énergie lumineuse</option><option>Énergie mécanique</option><option>Énergie sonore</option><option>Énergie thermique</option><option>Information</option><option value="aucune">aucune : elle est déjà stockée (des piles)</option></select></div>
+      <div class="cb-champ"><label for="bmSource">D’où elle vient (facultatif)</label><input type="text" id="bmSource" maxlength="40" autocomplete="off" placeholder="la prise, le soleil…"></div>
+    </fieldset>
+    <fieldset class="cb-maillon" id="bmM1"><legend>Bloc 1</legend>
+      <div class="cb-champ"><label for="bmF1">Fonction, dans le bloc</label><select id="bmF1"><option value="">— choisir —</option><option>ACQUÉRIR</option><option>ALIMENTER</option><option>CONVERTIR</option><option>DISTRIBUER</option><option>ÉLECTRIQUE</option><option>MOTEUR</option><option>RÉGULER</option><option>STOCKER</option><option>TRAITER</option><option>TRANSMETTRE</option></select></div>
+      <div class="cb-champ"><label for="bmC1">Composant, écrit dessous</label><input type="text" id="bmC1" maxlength="50" autocomplete="off"></div>
+      <div class="cb-champ"><label for="bmE1">Énergie sur la flèche qui sort du bloc</label><select id="bmE1"><option value="">— choisir —</option><option>CONVERTIR</option><option>Eau</option><option>Énergie chimique</option><option>Énergie électrique</option><option>Énergie lumineuse</option><option>Énergie mécanique</option><option>Énergie sonore</option><option>Énergie thermique</option><option>Information</option></select></div>
+    </fieldset>
+    <fieldset class="cb-maillon" id="bmM2"><legend>Bloc 2</legend>
+      <div class="cb-champ"><label for="bmF2">Fonction, dans le bloc</label><select id="bmF2"><option value="">— choisir —</option><option>ACQUÉRIR</option><option>ALIMENTER</option><option>CONVERTIR</option><option>DISTRIBUER</option><option>ÉLECTRIQUE</option><option>MOTEUR</option><option>RÉGULER</option><option>STOCKER</option><option>TRAITER</option><option>TRANSMETTRE</option></select></div>
+      <div class="cb-champ"><label for="bmC2">Composant, écrit dessous</label><input type="text" id="bmC2" maxlength="50" autocomplete="off"></div>
+      <div class="cb-champ"><label for="bmE2">Énergie sur la flèche qui sort du bloc</label><select id="bmE2"><option value="">— choisir —</option><option>CONVERTIR</option><option>Eau</option><option>Énergie chimique</option><option>Énergie électrique</option><option>Énergie lumineuse</option><option>Énergie mécanique</option><option>Énergie sonore</option><option>Énergie thermique</option><option>Information</option></select></div>
+    </fieldset>
+    <fieldset class="cb-maillon" id="bmM3"><legend>Bloc 3</legend>
+      <div class="cb-champ"><label for="bmF3">Fonction, dans le bloc</label><select id="bmF3"><option value="">— choisir —</option><option>ACQUÉRIR</option><option>ALIMENTER</option><option>CONVERTIR</option><option>DISTRIBUER</option><option>ÉLECTRIQUE</option><option>MOTEUR</option><option>RÉGULER</option><option>STOCKER</option><option>TRAITER</option><option>TRANSMETTRE</option></select></div>
+      <div class="cb-champ"><label for="bmC3">Composant, écrit dessous</label><input type="text" id="bmC3" maxlength="50" autocomplete="off"></div>
+      <div class="cb-champ"><label for="bmE3">Énergie sur la flèche qui sort du bloc</label><select id="bmE3"><option value="">— choisir —</option><option>CONVERTIR</option><option>Eau</option><option>Énergie chimique</option><option>Énergie électrique</option><option>Énergie lumineuse</option><option>Énergie mécanique</option><option>Énergie sonore</option><option>Énergie thermique</option><option>Information</option></select></div>
+    </fieldset>
+    <fieldset class="cb-maillon" id="bmM4"><legend>Bloc 4</legend>
+      <div class="cb-champ"><label for="bmF4">Fonction, dans le bloc</label><select id="bmF4"><option value="">— choisir —</option><option>ACQUÉRIR</option><option>ALIMENTER</option><option>CONVERTIR</option><option>DISTRIBUER</option><option>ÉLECTRIQUE</option><option>MOTEUR</option><option>RÉGULER</option><option>STOCKER</option><option>TRAITER</option><option>TRANSMETTRE</option></select></div>
+      <div class="cb-champ"><label for="bmC4">Composant, écrit dessous</label><input type="text" id="bmC4" maxlength="50" autocomplete="off"></div>
+      <div class="cb-champ"><label for="bmE4">Énergie sur la flèche qui sort du bloc</label><select id="bmE4"><option value="">— choisir —</option><option>CONVERTIR</option><option>Eau</option><option>Énergie chimique</option><option>Énergie électrique</option><option>Énergie lumineuse</option><option>Énergie mécanique</option><option>Énergie sonore</option><option>Énergie thermique</option><option>Information</option></select></div>
+    </fieldset>
+    <fieldset class="cb-maillon" id="bmM5"><legend>Bloc 5</legend>
+      <div class="cb-champ"><label for="bmF5">Fonction, dans le bloc</label><select id="bmF5"><option value="">— choisir —</option><option>ACQUÉRIR</option><option>ALIMENTER</option><option>CONVERTIR</option><option>DISTRIBUER</option><option>ÉLECTRIQUE</option><option>MOTEUR</option><option>RÉGULER</option><option>STOCKER</option><option>TRAITER</option><option>TRANSMETTRE</option></select></div>
+      <div class="cb-champ"><label for="bmC5">Composant, écrit dessous</label><input type="text" id="bmC5" maxlength="50" autocomplete="off"></div>
+      <div class="cb-champ"><label for="bmE5">Énergie sur la flèche qui sort du bloc</label><select id="bmE5"><option value="">— choisir —</option><option>CONVERTIR</option><option>Eau</option><option>Énergie chimique</option><option>Énergie électrique</option><option>Énergie lumineuse</option><option>Énergie mécanique</option><option>Énergie sonore</option><option>Énergie thermique</option><option>Information</option></select></div>
+    </fieldset>
+    <fieldset class="cb-maillon" id="bmMS"><legend>⬅ La sortie</legend>
+      <div class="cb-champ"><label for="bmAction">Action finale (un verbe à l’infinitif)</label><input type="text" id="bmAction" maxlength="60" autocomplete="off" placeholder="brasser l’air, réveiller…"></div>
+      <div class="cb-champ"><label for="bmAbsent">Fonction absente (en pointillés)</label><select id="bmAbsent"><option value="">aucune</option><option value="TRANSMETTRE">TRANSMETTRE : rien ne se déplace</option></select></div>
+      <div class="cb-champ"><label for="bmRaison">Pourquoi est-elle absente&nbsp;?</label><input type="text" id="bmRaison" maxlength="60" autocomplete="off"></div>
+    </fieldset>
+  </div>
+  <button class="btn small cb-verifier" id="bmVerifier" type="button">✅ Vérifier la forme de ma chaîne</button>
+  <div class="feedback" id="bmRetour" role="status" aria-live="polite"></div>
+</div>
+<!-- constructeur de chaîne d’énergie : fin -->
     <label for="bonusMaison"><b>✍ Mon objet, et sa chaîne écrite en une ligne avec des flèches →&nbsp;:</b></label>
     <textarea id="bonusMaison" data-save rows="4" placeholder="Mon objet : … — énergie … → ALIMENTER (…) → …"></textarea>
 <details class="etayage">
@@ -1789,7 +1841,7 @@ svg .chx-jeton{pointer-events:none}
     <details class="correction corrige-bonus"><summary>✅ Corrigé du défi maison</summary>
       <p><b>Il n'y a pas une seule bonne réponse</b>&nbsp;: chaque objet a sa chaîne. Une chaîne juste a toujours une entrée avec sa forme d'énergie, des blocs qui portent une fonction — ALIMENTER (STOCKER pour une pile ou une batterie), DISTRIBUER, CONVERTIR, TRANSMETTRE —, le composant écrit sous chaque bloc, la forme d'énergie sur chaque flèche, et l'action finale à la sortie.</p>
       <p><b>Exemple 1, le ventilateur&nbsp;:</b> énergie électrique du réseau → ALIMENTER (la prise et le câble) → électrique → DISTRIBUER (l'interrupteur, le sélecteur de vitesse) → électrique → CONVERTIR (le moteur électrique) → mécanique → TRANSMETTRE (l'axe du moteur fait tourner l'hélice) → mécanique → <b>brasser l'air</b>. Une partie de l'énergie se perd en chaleur&nbsp;: le moteur chauffe.</p>
-      <p><b>Exemple 2, le réveil à piles&nbsp;:</b> STOCKER (deux piles — énergie chimique stockée) → électrique → DISTRIBUER (le circuit électronique) → électrique → CONVERTIR (le haut-parleur, qui donne de l'énergie sonore&nbsp;; l'afficheur, qui donne de l'énergie lumineuse) → <b>réveiller, afficher l'heure</b>. TRANSMETTRE est absent&nbsp;: rien ne se déplace. Dessine-le en pointillés, grisé, avec cette raison écrite à côté.</p>
+      <p><b>Exemple 2, le réveil à piles&nbsp;:</b> STOCKER (deux piles — énergie chimique stockée) → électrique → DISTRIBUER (le circuit électronique) → électrique → CONVERTIR (le haut-parleur, qui donne de l'énergie sonore&nbsp;; l'afficheur, qui donne de l'énergie lumineuse) → <b>réveiller, afficher l'heure</b>. TRANSMETTRE est absent&nbsp;: rien ne se déplace. Dans le constructeur, choisis-le comme «&nbsp;fonction absente&nbsp;» et écris pourquoi&nbsp;: il se dessine en pointillés, grisé, avec cette raison écrite dessous.</p>
       <p><b>Pourquoi&nbsp;:</b> ce sont les fonctions de la chaîne d'énergie du lampadaire (activité 2)&nbsp;; d'un objet à l'autre, seuls les composants et les formes d'énergie changent.</p>
       <p><b>Erreurs classiques&nbsp;:</b></p>
       <ul>
@@ -2361,20 +2413,23 @@ document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click
 .atelier-incruste table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.9em}
 .atelier-incruste th,.atelier-incruste td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
 .atelier-incruste th{background:var(--panel2);color:var(--sub)}
-.atelier-incruste .tableau-menus table.cdcf{table-layout:fixed;font-size:.92em}
+.atelier-incruste .tableau-menus table.cdcf{table-layout:auto;font-size:.92em}
 .atelier-incruste .tableau-menus table.cdcf caption{caption-side:top;text-align:left;color:var(--sub);font-size:.95em;padding:0 0 6px}
 .atelier-incruste .tableau-menus table.cdcf th{vertical-align:bottom}
-.atelier-incruste .tableau-menus table.cdcf td{overflow-wrap:break-word}
+.atelier-incruste .tableau-menus table.cdcf th,.atelier-incruste .tableau-menus table.cdcf td{overflow-wrap:normal;word-break:normal;-webkit-hyphens:manual;hyphens:manual}
 .atelier-incruste .tableau-menus select{width:100%;max-width:100%;background:var(--input-bg);color:var(--text);border:1px solid var(--input-bd);
   border-radius:8px;padding:7px 9px;font-family:inherit;font-size:1em;min-height:40px}
 .atelier-incruste .tableau-menus .menu-vu,.atelier-incruste .tableau-menus .menu-fleche{display:none}
-.atelier-incruste .tableau-menus.menus-js .menu-case{position:relative;display:flex;align-items:flex-start;gap:6px;width:100%;min-height:40px;
-  padding:7px 9px;border:1.5px solid var(--hl);border-radius:8px;background:var(--input-bg);cursor:pointer}
+.atelier-incruste .tableau-menus .menu-mesure,.atelier-incruste .tableau-menus .retour-mesure{display:block;height:0;overflow:hidden;overflow:clip;visibility:hidden;white-space:pre-line}
+.atelier-incruste .tableau-menus .retour-mesure{font-size:.86em;line-height:1.35}
+.atelier-incruste .tableau-menus.menus-js .menu-case{position:relative;display:grid;grid-template-columns:1fr auto;column-gap:6px;align-items:start;
+  width:100%;min-height:40px;padding:7px 9px;border:1.5px solid var(--hl);border-radius:8px;background:var(--input-bg);cursor:pointer}
 .atelier-incruste .tableau-menus.menus-js .menu-case select{position:absolute;top:0;left:0;width:100%;height:100%;min-height:0;margin:0;padding:0;
   opacity:0;cursor:pointer;font-size:16px}
-.atelier-incruste .tableau-menus.menus-js .menu-vu{display:block;flex:1 1 auto;min-width:0;white-space:normal;line-height:1.35;color:#fff}
+.atelier-incruste .tableau-menus.menus-js .menu-vu{display:block;grid-column:1;grid-row:1;white-space:normal;line-height:1.35;color:#fff}
+.atelier-incruste .tableau-menus.menus-js .menu-mesure{grid-column:1;grid-row:1;line-height:1.35}
 .atelier-incruste .tableau-menus.menus-js .menu-vu:empty::before{content:"choisir";color:var(--sub);font-style:italic}
-.atelier-incruste .tableau-menus.menus-js .menu-fleche{display:block;flex:0 0 auto;color:var(--hl);line-height:1.35}
+.atelier-incruste .tableau-menus.menus-js .menu-fleche{display:block;grid-column:2;grid-row:1;color:var(--hl);line-height:1.35}
 .atelier-incruste .tableau-menus.menus-js .menu-case:focus-within{outline:3px solid var(--hl);outline-offset:2px}
 .atelier-incruste .tableau-menus.menus-js .menu-case.choisi{border-color:var(--input-bd)}
 .atelier-incruste .tableau-menus td.case-menu.faux .menu-case{border-color:var(--err)}
@@ -2398,8 +2453,9 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
 @media (max-width:600px){.atelier-incruste .figure{overflow-x:auto;-webkit-overflow-scrolling:touch}.atelier-incruste .figure svg.schema,.atelier-incruste .figure img{min-width:560px}}
 @media (max-width:600px){.atelier-incruste .figure svg.schema.etroit{min-width:0}}
 @media (max-width:640px){.atelier-incruste .tableau-menus table.cdcf,.atelier-incruste .tableau-menus table.cdcf tbody,.atelier-incruste .tableau-menus table.cdcf tr,.atelier-incruste .tableau-menus table.cdcf td,.atelier-incruste .tableau-menus table.cdcf caption{display:block;width:100%}.atelier-incruste .tableau-menus table.cdcf thead{display:none}.atelier-incruste .tableau-menus table.cdcf tr{border:1px solid var(--input-bd);border-radius:10px;margin:0 0 10px;padding:2px 12px 8px;background:rgba(11,27,57,.55)}.atelier-incruste .tableau-menus table.cdcf td{border:none;padding:7px 0 3px}.atelier-incruste .tableau-menus table.cdcf td+td{border-top:1px dashed var(--input-bd)}.atelier-incruste .tableau-menus table.cdcf td::before{content:attr(data-col);display:block;font-size:.82em;font-weight:700;color:var(--sub);margin:0 0 3px}}
+@media screen{.atelier-incruste .tableau-menus.en-cartes table.cdcf,.atelier-incruste .tableau-menus.en-cartes table.cdcf tbody,.atelier-incruste .tableau-menus.en-cartes table.cdcf tr,.atelier-incruste .tableau-menus.en-cartes table.cdcf td,.atelier-incruste .tableau-menus.en-cartes table.cdcf caption{display:block;width:100%}.atelier-incruste .tableau-menus.en-cartes table.cdcf thead{display:none}.atelier-incruste .tableau-menus.en-cartes table.cdcf tr{border:1px solid var(--input-bd);border-radius:10px;margin:0 0 10px;padding:2px 12px 8px;background:rgba(11,27,57,.55)}.atelier-incruste .tableau-menus.en-cartes table.cdcf td{border:none;padding:7px 0 3px}.atelier-incruste .tableau-menus.en-cartes table.cdcf td+td{border-top:1px dashed var(--input-bd)}.atelier-incruste .tableau-menus.en-cartes table.cdcf td::before{content:attr(data-col);display:block;font-size:.82em;font-weight:700;color:var(--sub);margin:0 0 3px}}
 @media (max-width:600px){.atelier-incruste .card{padding:12px 12px}}
-@media print{.atelier-incruste .btn,.atelier-incruste .croquis-outils{display:none!important}.atelier-incruste .card{background:#fff;border-color:#999;break-inside:avoid-page}.atelier-incruste a,.atelier-incruste a:visited{color:#00309e!important}.atelier-incruste textarea,.atelier-incruste input[type=text]{background:#fff;color:#111;border-color:#999}.atelier-incruste fieldset.qcm-groupe legend,.atelier-incruste .consigne b{color:#111}.atelier-incruste .meta,.atelier-incruste .demo .ligne,.atelier-incruste details,.atelier-incruste .verif-liste li{background:#fff!important;color:#111}.atelier-incruste .retenir,.atelier-incruste .piege,.atelier-incruste .critere{background:#fff!important}.atelier-incruste .retenir b{color:#176b2c}.atelier-incruste .piege b{color:#a1122a}.atelier-incruste .critere b{color:#7a5a00}.atelier-incruste .retour{background:#fff!important;color:#111!important}.atelier-incruste .note,.atelier-incruste details summary,.atelier-incruste .retour-option,.atelier-incruste .meta b{color:#1a3a7a!important}.atelier-incruste details.cours summary{color:#111!important}.atelier-incruste .tableau-menus table.cdcf th{background:#fff!important;color:#111}.atelier-incruste .tableau-menus table.cdcf th,.atelier-incruste .tableau-menus table.cdcf td{border-color:#999}.atelier-incruste .tableau-menus table.cdcf tr{break-inside:avoid}.atelier-incruste .tableau-menus table.cdcf caption{color:#1a3a7a}.atelier-incruste .tableau-menus.menus-js .menu-case select,.atelier-incruste .tableau-menus .menu-fleche{display:none!important}.atelier-incruste .tableau-menus.menus-js .menu-case{border:none;padding:0;min-height:0;background:#fff!important}.atelier-incruste .tableau-menus.menus-js .menu-vu{color:#111}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty{min-width:7em;height:1.5em;border-bottom:1px solid #555}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty::before{content:""}.atelier-incruste .retour-case.visible{color:#a1122a}.atelier-incruste .encoche.juste{color:#176b2c}.atelier-incruste .encoche.faux{color:#a1122a}.atelier-incruste .encoche.vide{color:#7a5a00}}
+@media print{.atelier-incruste .btn,.atelier-incruste .croquis-outils{display:none!important}.atelier-incruste .card{background:#fff;border-color:#999;break-inside:avoid-page}.atelier-incruste a,.atelier-incruste a:visited{color:#00309e!important}.atelier-incruste textarea,.atelier-incruste input[type=text]{background:#fff;color:#111;border-color:#999}.atelier-incruste fieldset.qcm-groupe legend,.atelier-incruste .consigne b{color:#111}.atelier-incruste .meta,.atelier-incruste .demo .ligne,.atelier-incruste details,.atelier-incruste .verif-liste li{background:#fff!important;color:#111}.atelier-incruste .retenir,.atelier-incruste .piege,.atelier-incruste .critere{background:#fff!important}.atelier-incruste .retenir b{color:#176b2c}.atelier-incruste .piege b{color:#a1122a}.atelier-incruste .critere b{color:#7a5a00}.atelier-incruste .retour{background:#fff!important;color:#111!important}.atelier-incruste .note,.atelier-incruste details summary,.atelier-incruste .retour-option,.atelier-incruste .meta b{color:#1a3a7a!important}.atelier-incruste details.cours summary{color:#111!important}.atelier-incruste .tableau-menus table.cdcf th{background:#fff!important;color:#111}.atelier-incruste .tableau-menus table.cdcf th,.atelier-incruste .tableau-menus table.cdcf td{border-color:#999}.atelier-incruste .tableau-menus table.cdcf tr{break-inside:avoid}.atelier-incruste .tableau-menus table.cdcf caption{color:#1a3a7a}.atelier-incruste .tableau-menus.menus-js .menu-case select,.atelier-incruste .tableau-menus .menu-fleche{display:none!important}.atelier-incruste .tableau-menus.menus-js .menu-case{border:none;padding:0;min-height:0;background:#fff!important}.atelier-incruste .tableau-menus.menus-js .menu-vu{color:#111}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty{min-width:7em;height:1.5em;border-bottom:1px solid #555}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty::before{content:""}.atelier-incruste .tableau-menus .pp-choix{display:none!important}.atelier-incruste .retour-case.visible{color:#a1122a}.atelier-incruste .encoche.juste{color:#176b2c}.atelier-incruste .encoche.faux{color:#a1122a}.atelier-incruste .encoche.vide{color:#7a5a00}}
 .atelier-incruste{border-left:5px solid var(--head);}
 .atelier-incruste .card.exercice{background:rgba(10,27,61,.6)}
 .atelier-incruste>h3,.atelier-incruste>h4{color:var(--head);font-size:1.08em;margin:4px 0 8px}
@@ -2853,7 +2909,26 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
     }
   }
   racine.querySelectorAll("canvas.croquis-zone").forEach(croquis);
-  racine.querySelectorAll(".tableau-menus").forEach(function(t){ t.classList.add("menus-js"); });
+  /* Un tableau à menus ne coupe jamais un mot : une colonne trop étroite s'élargit. Si le tableau ne tient plus alors
+     dans son cadre, il passe en cartes, comme sur un téléphone. Mesuré quand sa largeur change (fenêtre, onglet ouvert). */
+  function cartesSiTrop(t){
+    var f = t.querySelector(".defile");
+    if (!f || !t.offsetWidth) return;
+    t.classList.remove("en-cartes");
+    if (f.scrollWidth > f.clientWidth + 1) t.classList.add("en-cartes");
+  }
+  racine.querySelectorAll(".tableau-menus").forEach(function(t){
+    t.classList.add("menus-js");
+    if (window.ResizeObserver){
+      var largeur = -1;
+      new ResizeObserver(function(l){
+        var w = Math.round(l[0].contentRect.width);
+        if (w !== largeur){ largeur = w; cartesSiTrop(t); }
+      }).observe(t);
+    } else cartesSiTrop(t);
+  });
+  // Un Bonus vivant : avec le script, ses champs écrivent dans le schéma ; sans lui, sa consigne « papier » reste.
+  racine.querySelectorAll(".bonus-vivant").forEach(function(t){ t.classList.add("vivant-js"); });
 
   /* ── Branchements ─────────────────────────────────────────────────── */
   var boites = racine.querySelectorAll("[data-cle]");
@@ -3188,5 +3263,405 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
 })();
 </script>
 <!-- chaines_lampadaire_pas_a_pas (script) : fin -->
+<!-- constructeur de chaîne d’énergie (style et script) : début -->
+<style>
+/* Défi maison — le constructeur de chaîne d'énergie (04/11/2026). Le dessin vient du moteur des chaînes de la séance 2. */
+.cb{margin:10px 0 14px}
+.cb-mode{margin:.4em 0 .6em}
+.cb-boite{background:#050f24;border:1px solid var(--border);border-radius:12px;padding:6px;margin:8px 0 10px}
+.cb-boite:focus-visible{outline:2px solid var(--hl);outline-offset:2px}
+#bmBoite.chx-etroite{position:sticky;top:var(--cb-haut,0px);z-index:5;max-height:min(42vh,340px);overflow-y:auto;overscroll-behavior:contain;box-shadow:0 6px 14px rgba(0,0,0,.45)}
+#bmBoite.chx-etroite>svg{max-width:var(--chx-max,420px)}
+.cb-reglages{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:10px;margin:8px 0}
+.cb-tetes{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:10px}
+.cb-tetes .cb-champ{margin:0;flex:1 1 160px}
+.cb-tetes .cb-champ:first-child{flex:2 1 220px}
+.cb-maillon{border:1px solid var(--border);border-radius:10px;padding:6px 10px 8px;margin:0;min-width:0;background:rgba(13,35,71,.55)}
+.cb-maillon[hidden]{display:none}
+.cb-maillon legend{font-weight:700;color:var(--sub);padding:0 4px;font-size:.9em}
+.cb-champ{display:flex;flex-direction:column;gap:3px;margin:5px 0;min-width:0}
+.cb-champ label{font-size:.84em;color:var(--sub)}
+.cb input[type=text],.cb select{min-height:44px}
+.cb-champ.cb-faux :is(input,select){outline:2px solid var(--err);outline-offset:1px}
+.cb-verifier{min-height:44px}
+#bmRetour ul{margin:.35em 0 0;padding-left:1.2em}
+#bmRetour li{margin:.25em 0}
+#bmRetour a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+#bmDessin .cb-trou{fill:#9aa5b8;font-style:italic}
+@media (max-width:760px){
+  .cb-reglages :is(input,select){scroll-margin-top:calc(var(--cb-haut,0px) + min(42vh,340px) + 14px)}
+}
+@media print{
+  .cb-mode{display:none}
+  #bmBoite{position:static!important;max-height:none!important;overflow:visible!important;box-shadow:none!important;background:#fff!important;
+           border:.6pt solid #94a3b8!important;border-radius:2mm!important;padding:1mm!important;break-inside:avoid}
+  #bmDessin .chx-papier,#bmDessin .chx-cadre{fill:#fff}
+  #bmDessin [fill="#e4eaf5"]{fill:#172a49}
+  #bmDessin [fill="#ffd66b"]{fill:#805600} #bmDessin [stroke="#ffd66b"]{stroke:#805600}
+  #bmDessin [fill="#61dafb"]{fill:#006a86} #bmDessin [stroke="#61dafb"]{stroke:#006a86}
+  #bmDessin [fill="#c68ef2"]{fill:#7836ad} #bmDessin [stroke="#c68ef2"]{stroke:#7836ad}
+  #bmDessin [fill="#81fba1"]{fill:#126c2a} #bmDessin [stroke="#81fba1"]{stroke:#126c2a}
+  #bmDessin [fill="#ffb454"]{fill:#925000} #bmDessin [stroke="#ffb454"]{stroke:#925000}
+  #bmDessin [fill="#81aaff"]{fill:#244e9a} #bmDessin [stroke="#81aaff"]{stroke:#244e9a}
+  #bmDessin [fill="#7cc4ff"]{fill:#1d4f91} #bmDessin [stroke="#7cc4ff"]{stroke:#1d4f91}
+  #bmDessin [fill="#9aa5b8"],#bmDessin .cb-trou{fill:#5f6672} #bmDessin [stroke="#9aa5b8"]{stroke:#5f6672}
+}
+</style>
+<script>
+/* Défi maison — le constructeur de chaîne d'énergie (04/11/2026).
+   L'élève choisit chaque pièce (menus, champs) ; sa chaîne se dessine à mesure, par le moteur des chaînes de la séance 2
+   (ChainePasAPas, posé dans la page) : la fonction dans le bloc, le composant dessous, la forme d'énergie sur chaque
+   flèche, l'entrée et la sortie, l'action finale en gras ; une fonction absente en pointillés, grisée, avec sa raison.
+   Deux dispositions, comme les chaînes de la séance 2 : une ligne (deux si elle est trop longue) quand le dessin a la
+   place, une colonne sur un téléphone. La page DÉCLARE (cette fonction), le moteur DESSINE.
+   « Vérifier » ne juge pas l'objet (chacun a le sien), seulement la forme : un retour par manque.
+   Les champs portent un identifiant : la sauvegarde de la page les garde, et la chaîne se redessine au rechargement. */
+(function(){
+  "use strict";
+  var racine = document.getElementById("bmChaine");
+  if (!racine || !window.ChainePasAPas) return;
+  var NS = "http://www.w3.org/2000/svg";
+  var dessin = document.getElementById("bmDessin"), boite = document.getElementById("bmBoite");
+  var JAUNE = "#ffd66b", CYAN = "#61dafb", VIOLET = "#c68ef2", VERT = "#81fba1", ORANGE = "#ffb454",
+      BLEU = "#81aaff", GRIS = "#9aa5b8", BLANC = "#e4eaf5";
+  var FONCTIONS = {ALIMENTER: JAUNE, STOCKER: JAUNE, DISTRIBUER: CYAN, CONVERTIR: VIOLET, TRANSMETTRE: VERT};
+  var LEURRES_F = {
+    "ACQUÉRIR": "ACQUÉRIR est une fonction de la chaîne d'information (un capteur mesure) : dans une chaîne d'énergie, un bloc dit ALIMENTER, STOCKER, DISTRIBUER, CONVERTIR ou TRANSMETTRE.",
+    "TRAITER": "TRAITER est une fonction de la chaîne d'information (la carte décide) : elle ne fait pas circuler l'énergie.",
+    "RÉGULER": "« Réguler » n'est pas une fonction de bloc, c'est une précision : choisis ALIMENTER et écris dessous « régulateur de charge ».",
+    "ÉLECTRIQUE": "« Électrique » est une forme d'énergie : elle va sur une flèche, pas dans un bloc. Le bloc dit ce qui est fait, avec un verbe.",
+    "MOTEUR": "« Moteur » est un composant : il s'écrit sous le bloc. Le bloc dit ce que fait le moteur : CONVERTIR."
+  };
+  var LEURRES_E = {
+    "Eau": {nature: "matiere", msg: "l'eau n'est pas de l'énergie, c'est de la matière. Sur une flèche de la chaîne d'énergie, écris une forme d'énergie (électrique, mécanique…)."},
+    "Information": {nature: "information", msg: "une information (une mesure, un ordre) circule dans la chaîne d'information, pas dans la chaîne d'énergie."},
+    "CONVERTIR": {nature: "energie", msg: "CONVERTIR est une fonction : elle va dans un bloc. Sur une flèche, c'est une forme d'énergie qui circule."}
+  };
+  var AUCUNE = "aucune";            // l'entrée « aucune » : l'énergie est déjà stockée (des piles), la chaîne commence par STOCKER
+  var TROUS = {"FONCTION ?": 1, "composant ?": 1, "Énergie ?": 1, "Action finale ?": 1, "Absente : pourquoi ?": 1};
+
+  function $c(id){ return document.getElementById(id); }
+  function val(id){ var e = $c(id); return e ? String(e.value || "") : ""; }
+  function norm(s){ return String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[’`]/g, "'").replace(/\s+/g, " ").trim(); }
+  function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  // ── Ce que l'élève a choisi ──
+  function lire(){
+    var n = parseInt(val("bmNb"), 10); n = isNaN(n) ? 3 : Math.max(2, Math.min(5, n));
+    var blocs = [];
+    for (var i = 1; i <= n; i++) blocs.push({i: i, f: val("bmF" + i), c: val("bmC" + i).trim(), e: val("bmE" + i)});
+    var raison = val("bmRaison").trim().replace(/^absente?\s*[:,.\-–—]?\s*(car|parce que|parce qu'|:)?\s*/i, "");
+    return {objet: val("bmObjet").trim(), n: n, e0: val("bmE0"), source: val("bmSource").trim(), blocs: blocs,
+            action: val("bmAction").trim(), absent: val("bmAbsent"), raison: raison};
+  }
+
+  // ── Mesurer un texte avec la police du dessin (le placement s'adapte à la police de l'appareil) ──
+  var mes = null, mesT = null;
+  function mesure(t, taille, gras, italique, espace){
+    if (!mes) {
+      mes = document.createElementNS(NS, "svg");
+      mes.setAttribute("aria-hidden", "true"); mes.setAttribute("focusable", "false");
+      mes.setAttribute("font-family", dessin.getAttribute("font-family") || "sans-serif");
+      mes.style.cssText = "position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;visibility:hidden;pointer-events:none";
+      mesT = document.createElementNS(NS, "text"); mesT.setAttribute("x", "0"); mesT.setAttribute("y", "20");
+      mes.appendChild(mesT); document.body.appendChild(mes);
+    }
+    mesT.setAttribute("font-size", taille); mesT.setAttribute("font-weight", gras ? 700 : 400);
+    mesT.setAttribute("font-style", italique ? "italic" : "normal");
+    if (espace) mesT.setAttribute("letter-spacing", espace); else mesT.removeAttribute("letter-spacing");
+    mesT.textContent = t;
+    var w = 0; try { w = mesT.getComputedTextLength(); } catch (e) { w = 0; }
+    return w || String(t).length * taille * (gras ? .64 : .56);
+  }
+  // Couper en lignes d'au plus `max` unités ; un mot trop long est coupé avec un trait d'union.
+  function couper(t, max, taille, gras, italique){
+    var lignes = [], cur = "";
+    String(t).split(/\s+/).filter(Boolean).forEach(function(m){
+      var essai = cur ? cur + " " + m : m;
+      if (!cur || mesure(essai, taille, gras, italique) <= max) cur = essai; else { lignes.push(cur); cur = m; }
+      while (cur.length > 3 && mesure(cur, taille, gras, italique) > max && cur.indexOf(" ") < 0) {
+        var k = cur.length - 1;
+        while (k > 2 && mesure(cur.slice(0, k) + "-", taille, gras, italique) > max) k--;
+        lignes.push(cur.slice(0, k) + "-"); cur = cur.slice(k);
+      }
+    });
+    if (cur) lignes.push(cur);
+    return lignes.length ? lignes : [""];
+  }
+  function natureDe(e){ return LEURRES_E[e] ? LEURRES_E[e].nature : "energie"; }
+  function etiquette(e){ return e || "Énergie ?"; }
+  function titre(s){ return "CHAÎNE D’ÉNERGIE" + (s.objet ? " — " + s.objet : ""); }
+  function raisonDe(s){ return s.raison ? "Absente : " + s.raison : "Absente : pourquoi ?"; }
+
+  var LARGE = {W: 830, h: 56, g: 32, entree: 40, sortie: 46, abs: 30,
+               T: {section: 16, fonction: 15, composant: 14, stock: 14, fleche: 14, texte: 15},
+               bloc: {h: 56, rx: 10, trait: 2.6, ecart: 8, interligne: 5, halo: 12}};
+  var ETROIT = {W: 256, h: 44,
+                T: {section: 15, fonction: 15, composant: 14, stock: 14, fleche: 14, texte: 15},
+                bloc: {h: 44, rx: 8, trait: 2.4, ecart: 6, interligne: 4, halo: 10}};
+
+  // ── Disposition large : une ligne de gauche à droite ; deux lignes si elle ne tient pas ──
+  function disposerLarge(s, els){
+    var D = LARGE, T = D.T, B = D.bloc, lh = T.fleche + 5, ch = T.composant + B.interligne, suf = "-L";
+    var bw = 112;
+    s.blocs.forEach(function(b){ bw = Math.max(bw, mesure(b.f || "FONCTION ?", T.fonction, true) + 16); });
+    if (s.absent) bw = Math.max(bw, mesure(s.absent, T.fonction, true) + 16);
+    bw = Math.ceil(Math.min(bw, 150));
+    var sans = s.e0 === AUCUNE, pas = bw + D.g, cw = pas - 14, x0 = sans ? 8 : 8 + D.entree, n = s.blocs.length;
+    var sortie = s.absent ? bw + 2 * D.abs : D.sortie;
+    var fin1 = x0 + n * bw + (n - 1) * D.g + 2 + sortie;
+    var rangs = (D.W - (fin1 + 10) - 6 >= 80) ? [s.blocs] : [s.blocs.slice(0, Math.ceil(n / 2)), s.blocs.slice(Math.ceil(n / 2))];
+    var tl = couper(titre(s), D.W - 16, T.section, true);
+    els.push({id: "titre" + suf, type: "section", couleur: ORANGE, texte: tl.join("\n"), large: {x: 8, y: 8 + T.section}});
+    var y = 8 + T.section + (tl.length - 1) * (T.section + 5) + 16;
+    var retour = null;                                    // la flèche qui passe d'une ligne à l'autre
+    rangs.forEach(function(rang, r){
+      var dernier = r === rangs.length - 1;
+      // les étiquettes de la bande au-dessus des blocs
+      var bande = [];
+      if (r === 0 && !sans) bande.push({id: "e0", t: couper(etiquette(s.e0), 118, T.fleche, false)
+                                   .concat(s.source ? couper("(" + s.source + ")", 118, T.fleche, false) : []), ancre: "start"});
+      rang.forEach(function(b, k){
+        if (k < rang.length - 1 || dernier) bande.push({id: "f" + b.i, t: couper(etiquette(b.e), 96, T.fleche, false), b: b, k: k});
+      });
+      var nl = 1; bande.forEach(function(e){ nl = Math.max(nl, e.t.length); });
+      var ry = y + T.fleche + (nl - 1) * lh + 12, ay = ry + D.h / 2, bas = ry + D.h;
+      if (retour) retour.points.push([x0 + bw / 2, ry - 2]);
+      rang.forEach(function(b, k){
+        var x = x0 + k * pas, F = FONCTIONS[b.f];
+        var comp = couper(b.c || "composant ?", (dernier && k === rang.length - 1 && s.absent) ? bw + 14 : cw, T.composant, false);
+        var def = {id: "b" + b.i + suf, type: "bloc", fonction: b.f || "FONCTION ?", composant: comp.join("\n"),
+                   couleur: F || (b.f ? BLEU : GRIS), large: {x: x, y: ry, l: bw}};
+        var nb = comp.length;
+        if (b.f === "STOCKER") { var st = couper("Énergie chimique stockée", cw, T.stock, false); def.stock = st.join("\n"); nb += st.length; }
+        els.push(def);
+        bas = Math.max(bas, ry + D.h + B.ecart + T.composant + (nb - 1) * ch + 5);
+      });
+      if (r === 0 && !sans) {
+        var e0 = bande[0];
+        els.push({id: "e0" + suf, type: "fleche", nature: natureDe(s.e0), texte: e0.t.join("\n"),
+                  large: {points: [[8, ay], [x0 - 2, ay]], ex: 8, ey: ry - 12 - (e0.t.length - 1) * lh, ancre: "start"}});
+      }
+      bande.forEach(function(e){
+        if (!e.b) return;
+        var b = e.b, x = x0 + e.k * pas, nat = natureDe(b.e);
+        if (e.k < rang.length - 1) {                       // entre deux blocs de la même ligne
+          els.push({id: "f" + b.i + suf, type: "fleche", nature: nat, texte: e.t.join("\n"),
+                    large: {points: [[x + bw + 2, ay], [x + pas - 2, ay]], ex: x + bw + D.g / 2, ey: ry - 12 - (e.t.length - 1) * lh}});
+        }
+      });
+      if (!dernier) {                                       // la flèche qui descend à la ligne suivante
+        var b = rang[rang.length - 1], xr = x0 + (rang.length - 1) * pas + bw, vx = xr + 28;
+        var t = couper(etiquette(b.e), 96, T.fleche, false), ey = ay + 22;
+        var yc = Math.max(bas + 14, ey + (t.length - 1) * lh + 16);
+        retour = {id: "f" + b.i + suf, type: "fleche", nature: natureDe(b.e), texte: t.join("\n"),
+                  large: {points: [[xr + 2, ay], [vx, ay], [vx, yc], [x0 + bw / 2, yc]], ex: vx + 10, ey: ey, ancre: "start"}};
+        retour.points = retour.large.points;
+        els.push(retour);
+        y = yc + 16;
+      } else {                                              // la sortie, l'action finale, la fonction absente
+        var xs = x0 + (rang.length - 1) * pas + bw + 2, fin = xs + sortie, d = rang[rang.length - 1];
+        var te = bande[bande.length - 1].t;
+        els.push({id: "f" + d.i + suf, type: "fleche", nature: natureDe(d.e), texte: te.join("\n"),
+                  large: {points: [[xs, ay], [fin - 2, ay]], ex: xs + sortie / 2, ey: ry - 12 - (te.length - 1) * lh}});
+        var ax = fin + 10, aw = Math.max(80, D.W - ax - 6);
+        var al = couper(s.action || "Action finale ?", aw, T.texte, true);
+        var haut = al.length * T.texte + (al.length - 1) * 6, top = Math.max(ry, ay - haut / 2);
+        els.push({id: "action" + suf, type: "texte", gras: true, couleur: s.action ? BLANC : GRIS, texte: al.join("\n"),
+                  large: {x: ax, y: top + T.texte * .8, ancre: "start"}});
+        bas = Math.max(bas, top + haut + 5);
+        if (s.absent) {
+          var rl = couper(raisonDe(s), bw + 16, T.composant, false, true);
+          var aby = ay + 20;
+          els.push({id: "abs" + suf, type: "absent", fonction: s.absent, raison: rl.join("\n"),
+                    large: {x: xs + (sortie - bw) / 2, y: aby, l: bw}});
+          bas = Math.max(bas, aby + D.h + B.ecart + T.composant + (rl.length - 1) * ch + 5);
+        }
+        y = bas;
+      }
+    });
+    return [0, 0, D.W, Math.ceil(y + 10)];
+  }
+
+  // ── Disposition étroite : une colonne, de haut en bas (le téléphone) ──
+  function disposerEtroit(s, els){
+    var D = ETROIT, T = D.T, B = D.bloc, lh = T.fleche + 5, ch = T.composant + B.interligne, suf = "-E";
+    var esp = ".02em", aw = s.absent ? Math.ceil(mesure(s.absent, T.fonction, true, false, esp) + 18) : 0;
+    var cx = s.absent ? Math.max(140, Math.min(160, aw + 22)) : 140, lx = cx + 10, lmax = D.W - lx - 4;
+    var cmax = 2 * Math.min(cx, D.W - cx) - 16;
+    var bw = 124;
+    s.blocs.forEach(function(b){ bw = Math.max(bw, mesure(b.f || "FONCTION ?", T.fonction, true, false, esp) + 24); });
+    bw = Math.ceil(Math.min(bw, 2 * Math.min(cx, D.W - cx) - 12));
+    var tl = couper(titre(s), D.W - 16, T.section, true);
+    els.push({id: "titre" + suf, type: "section", couleur: ORANGE, texte: tl.join("\n"), etroit: {x: 8, y: 6 + T.section}});
+    var y = 6 + T.section + (tl.length - 1) * (T.section + 5) + 12;
+    if (s.e0 !== AUCUNE) {
+      var et = couper(etiquette(s.e0), lmax, T.fleche, false).concat(s.source ? couper("(" + s.source + ")", lmax, T.fleche, false) : []);
+      var L = Math.max(36, T.fleche + (et.length - 1) * lh + 22);
+      els.push({id: "e0" + suf, type: "fleche", nature: natureDe(s.e0), texte: et.join("\n"),
+                etroit: {points: [[cx, y], [cx, y + L - 2]], ex: lx, ey: y + 6 + T.fleche, ancre: "start"}});
+      y += L;
+    } else y += 4;
+    s.blocs.forEach(function(b, k){
+      var F = FONCTIONS[b.f], dernier = k === s.blocs.length - 1;
+      var comp = couper(b.c || "composant ?", cmax, T.composant, false), nb = comp.length;
+      var def = {id: "b" + b.i + suf, type: "bloc", fonction: b.f || "FONCTION ?", composant: comp.join("\n"),
+                 couleur: F || (b.f ? BLEU : GRIS), etroit: {x: cx - bw / 2, y: y, l: bw}};
+      if (b.f === "STOCKER") { var st = couper("Énergie chimique stockée", cmax, T.stock, false); def.stock = st.join("\n"); nb += st.length; }
+      els.push(def);
+      var y1 = y + D.h + B.ecart + T.composant + (nb - 1) * ch + 9;
+      var t = couper(etiquette(b.e), lmax, T.fleche, false);
+      var L2 = Math.max(36, T.fleche + (t.length - 1) * lh + 22), ab = null;
+      if (dernier && s.absent) {
+        aw = Math.max(cx - 22, aw);
+        var rl = couper(raisonDe(s), aw - 4, T.composant, false, true);
+        ab = {id: "abs" + suf, type: "absent", fonction: s.absent, raison: rl.join("\n"), etroit: {x: 6, y: y1 + 10, l: aw}};
+        L2 = Math.max(L2, D.h + B.ecart + T.composant + (rl.length - 1) * ch + 26);
+      }
+      els.push({id: "f" + b.i + suf, type: "fleche", nature: natureDe(b.e), texte: t.join("\n"),
+                etroit: {points: [[cx, y1], [cx, y1 + L2 - 2]], ex: lx, ey: y1 + 6 + T.fleche, ancre: "start"}});
+      if (ab) els.push(ab);
+      y = y1 + L2;
+    });
+    var al = couper(s.action || "Action finale ?", cmax, T.texte, true);
+    els.push({id: "action" + suf, type: "texte", gras: true, couleur: s.action ? BLANC : GRIS, texte: al.join("\n"),
+              etroit: {x: cx, y: y + 4 + T.texte, ancre: "middle"}});
+    y += 4 + T.texte + (al.length - 1) * (T.texte + 6) + 8;
+    return [0, 0, D.W, Math.ceil(y)];
+  }
+
+  // ── La déclaration pour le moteur : une seule étape, tout est montré ──
+  var DECL = {seuil: 600,
+              large: {vue: [0, 0, 830, 260], tailles: LARGE.T, bloc: LARGE.bloc},
+              etroit: {vue: [0, 0, 256, 400], max: 420, tailles: ETROIT.T, bloc: ETROIT.bloc},
+              elements: [], etapes: [{tous: true}]};
+  function decrire(s){
+    var m = ["Ta chaîne d'énergie" + (s.objet ? ", " + s.objet : "") + ". Entrée : " + (s.e0 === AUCUNE ? "aucune, l'énergie est déjà stockée" : s.e0 || "forme d'énergie à choisir") + (s.source ? " (" + s.source + ")" : "") + "."];
+    s.blocs.forEach(function(b){
+      m.push("Bloc " + b.i + " : " + (b.f || "fonction à choisir") + ", composant : " + (b.c || "à écrire") + (b.f === "STOCKER" ? ", énergie chimique stockée" : "") +
+             ". Flèche " + (b.i === s.n ? "de sortie" : "suivante") + " : " + (b.e || "forme d'énergie à choisir") + ".");
+    });
+    if (s.absent) m.push(s.absent + " est absente, en pointillés : " + (s.raison || "raison à écrire") + ".");
+    m.push("Action finale : " + (s.action || "à écrire") + ".");
+    return m.join(" ");
+  }
+  function construire(){
+    var s = lire();
+    DECL.elements.length = 0;
+    DECL.large.vue = disposerLarge(s, DECL.elements);
+    DECL.etroit.vue = disposerEtroit(s, DECL.elements);
+    for (var i = 1; i <= 5; i++) {
+      var fs = $c("bmM" + i); if (fs) fs.hidden = i > s.n;
+      var le = racine.querySelector('label[for="bmE' + i + '"]');
+      if (le) le.textContent = i === s.n ? "Énergie sur la flèche de sortie" : "Énergie sur la flèche vers le bloc " + (i + 1);
+    }
+    dessin.setAttribute("aria-label", decrire(s));
+    return s;
+  }
+  function marquer(){                                       // les cases encore vides : en gris, en italique
+    [].forEach.call(dessin.querySelectorAll("text"), function(t){ t.classList.toggle("cb-trou", !!TROUS[t.textContent]); });
+  }
+  construire();
+  var api = ChainePasAPas(dessin, DECL, {boite: boite, apres: marquer});
+  if (!api) return;
+  marquer();
+
+  // Sur un téléphone, le dessin reste sous les yeux (collé sous la barre du site) et défile jusqu'à la pièce touchée.
+  function hautBarre(){
+    var nav = document.getElementById("navharm"), h = 0;
+    if (nav && getComputedStyle(nav).position === "sticky" && getComputedStyle(nav).display !== "none") h = Math.round(nav.getBoundingClientRect().height);
+    boite.style.setProperty("--cb-haut", h + "px");
+  }
+  var VISE = {bmObjet: "titre", bmNb: "titre", bmE0: "e0", bmSource: "e0", bmAction: "action", bmAbsent: "abs", bmRaison: "abs"};
+  function viser(id){
+    var m = /^bm([FCE])(\d)$/.exec(id || ""), cible = VISE[id];
+    if (m) cible = (m[1] === "E" && m[2] !== "0" ? "f" : m[2] === "0" ? "e" : "b") + m[2];
+    if (!cible) return;
+    DECL.etapes[0].vise = [cible + "-E"];
+    api.entrer(1);
+  }
+  var attente = null;
+  function majDessin(id){
+    construire(); api.rendre(); marquer();
+    if (id) viser(id);
+  }
+  racine.addEventListener("input", function(e){
+    var c = e.target.closest && e.target.closest(".cb-champ");
+    if (c) { c.classList.remove("cb-faux"); var x = c.querySelector("[aria-invalid]"); if (x) x.removeAttribute("aria-invalid"); }
+    clearTimeout(attente); var id = e.target.id;
+    attente = setTimeout(function(){ majDessin(id); }, 60);
+  });
+  racine.addEventListener("change", function(e){ clearTimeout(attente); majDessin(e.target.id); });
+  racine.addEventListener("focusin", function(e){ hautBarre(); if (e.target.id) viser(e.target.id); });
+  window.addEventListener("resize", hautBarre);
+  hautBarre();
+
+  // ── Vérifier : la forme, pas l'objet ; un retour par manque ──
+  var FORMES = /^(energie\b|electrique|mecanique|lumineuse|chimique|thermique|sonore|hydraulique|eau$|information$)/;
+  var VERBES_F = /^(alimenter|stocker|distribuer|convertir|transmettre|acquerir|traiter|reguler)$/;
+  var VERBE = /^\W*(?!lumiere\b|derriere\b|premiere\b|riviere\b|entre\b|notre\b|votre\b|autre\b|leur\b|air\b)[a-z]+(er|ir|re|oir)\b/;
+  function verifier(){
+    var s = lire(), r = [];
+    function manque(msg, champ){ r.push({msg: msg, champ: champ}); }
+    if (!s.objet) manque("Ton objet : écris son nom, il donne son titre au schéma.", "bmObjet");
+    if (!s.e0) manque("L'entrée : choisis la forme d'énergie qui arrive au premier bloc.", "bmE0");
+    else if (LEURRES_E[s.e0]) manque("L'entrée : " + LEURRES_E[s.e0].msg, "bmE0");
+    else if (s.e0 === AUCUNE && s.blocs[0].f !== "STOCKER")
+      manque("L'entrée : sans flèche d'entrée, l'énergie doit déjà être stockée dans l'objet ; ta chaîne commence alors par STOCKER (des piles). Sinon, choisis la forme d'énergie qui entre.", "bmE0");
+    if (s.blocs.filter(function(b){ return FONCTIONS[b.f]; }).length < 2)
+      manque("Une chaîne d'énergie a au moins deux blocs, chacun avec sa fonction (par exemple ALIMENTER, puis CONVERTIR).", "bmF1");
+    s.blocs.forEach(function(b){
+      var nom = "Bloc " + b.i + (FONCTIONS[b.f] ? " (" + b.f + ")" : "");
+      if (!b.f) manque(nom + " : choisis sa fonction dans le menu.", "bmF" + b.i);
+      else if (LEURRES_F[b.f]) manque(nom + " : " + LEURRES_F[b.f], "bmF" + b.i);
+      var c = norm(b.c);
+      if (!c) manque(nom + " : écris dessous le composant qui le fait (la prise, la pile, le moteur…).", "bmC" + b.i);
+      else if (FORMES.test(c)) manque(nom + " : sous le bloc, écris un composant (un objet), pas une forme d'énergie : elle va sur la flèche.", "bmC" + b.i);
+      else if (VERBES_F.test(c)) manque(nom + " : sous le bloc, écris le composant (un objet), pas une fonction : la fonction est déjà dans le bloc.", "bmC" + b.i);
+      var fl = b.i === s.n ? "La flèche de sortie" : "La flèche entre le bloc " + b.i + " et le bloc " + (b.i + 1);
+      if (!b.e) manque(fl + " : choisis la forme d'énergie qui y circule.", "bmE" + b.i);
+      else if (LEURRES_E[b.e]) manque(fl + " : " + LEURRES_E[b.e].msg, "bmE" + b.i);
+      else if (b.f === "STOCKER" && b.e === "Énergie chimique")
+        manque(fl + " : l'énergie chimique reste dans la pile (elle est écrite sous le composant) ; ce qui en sort, c'est de l'énergie électrique.", "bmE" + b.i);
+    });
+    if (!s.action) manque("La sortie : écris l'action finale, ce que fait l'objet au bout de la chaîne.", "bmAction");
+    else if (!VERBE.test(norm(s.action))) manque("La sortie : l'action finale commence par un verbe à l'infinitif (« Brasser l'air », « Réveiller », « Éclairer la pièce »).", "bmAction");
+    if (s.absent) {
+      if (s.blocs.some(function(b){ return b.f === s.absent; }))
+        manque("Fonction absente : ta chaîne a un bloc " + s.absent + ", elle n'est donc pas absente. Choisis « aucune », ou change ce bloc.", "bmAbsent");
+      if (!s.raison) manque("Fonction absente : écris pourquoi elle est absente (par exemple : rien ne se déplace).", "bmRaison");
+    }
+    return r;
+  }
+  var retour = $c("bmRetour");
+  $c("bmVerifier").addEventListener("click", function(){
+    var r = verifier();
+    [].forEach.call(racine.querySelectorAll(".cb-champ.cb-faux"), function(c){ c.classList.remove("cb-faux"); });
+    [].forEach.call(racine.querySelectorAll("[aria-invalid]"), function(c){ c.removeAttribute("aria-invalid"); });
+    while (retour.firstChild) retour.removeChild(retour.firstChild);
+    var p = document.createElement("p"); p.style.margin = "0";
+    if (!r.length) {
+      retour.className = "feedback show ok";
+      p.textContent = "✔ Ta chaîne a toutes ses pièces : une entrée, " + lire().n + " blocs avec leur fonction et leur composant, une forme d'énergie sur chaque flèche, une sortie et son action finale. Compare-la avec les exemples du corrigé, puis écris-la en une ligne ci-dessous.";
+      retour.appendChild(p);
+      return;
+    }
+    retour.className = "feedback show " + (r.length <= 2 ? "mixte" : "err");
+    p.textContent = "✘ " + (r.length === 1 ? "Une pièce" : r.length + " pièces") + " à reprendre (touche une ligne pour aller au champ) :";
+    retour.appendChild(p);
+    var ul = document.createElement("ul");
+    r.forEach(function(x){
+      var li = document.createElement("li"), a = document.createElement("a");
+      a.href = "#" + x.champ; a.textContent = x.msg; a.setAttribute("data-champ", x.champ);
+      a.addEventListener("click", function(ev){ ev.preventDefault(); var c = $c(x.champ); if (c) c.focus(); });
+      li.appendChild(a); ul.appendChild(li);
+      var c = $c(x.champ);
+      if (c) { c.setAttribute("aria-invalid", "true"); var z = c.closest(".cb-champ"); if (z) z.classList.add("cb-faux"); }
+    });
+    retour.appendChild(ul);
+  });
+})();
+</script>
+<!-- constructeur de chaîne d’énergie (style et script) : fin -->
 </body>
 </html>

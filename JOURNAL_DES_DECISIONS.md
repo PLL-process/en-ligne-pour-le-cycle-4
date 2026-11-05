@@ -27621,3 +27621,54 @@ contraste des liens, règles visibles, liens, navigation entre séances, formula
 testé : un vrai téléphone, Firefox, Safari, une impression réelle.
 
 **Reste** : les vagues C7 (14 pages), puis 5e_C1.3 et 5e_C1.5 au thème 1, puis D6 obligatoire.
+
+---
+
+## 04/11/2026 — Thème 2 : « Trace la courbe ! » et « dessine sa chaîne d'énergie » se font à l'écran ; le kit des ateliers réincrusté
+
+*Pascal, le 04/11/2026 : « Oui continue, tu as carte blanche ». Ces deux consignes restaient de l'inventaire des
+consignes « papier » (entrée « 5e_C2.1 Shenzhen », 04/11/2026) : elles demandaient un geste impossible sur une page
+HTML.*
+
+**4e_C4.1, le jardin connecté, Bonus « 📊 Défi données »** (bloc `#defiDonnees`). « Trace la courbe ! » se fait dans la
+page.
+- **Une table** de 6 lignes : horodatage (date et heure), lieu, valeur. La grandeur et son unité se choisissent en tête,
+  et l'unité s'écrit dans l'en-tête de la colonne.
+- **La courbe** se trace dès deux mesures : le temps en abscisse, gradué régulièrement ; la grandeur et son unité en
+  ordonnée ; les points reliés dans l'ordre du temps, une courbe par lieu, avec sa légende.
+- **Une valeur impossible** (un mot, « 24 °C » dans la case, 140 %) est signalée sous sa case sans bloquer le reste ; une
+  unité qui ne va pas avec la grandeur, sous son menu. « Vérifier » donne un retour par manque, qui mène à sa case.
+- **Un corrigé replié** : ce qu'on attend d'une table et d'une courbe justes, un exemple, les erreurs classiques. La zone
+  de texte `bonusRep` et la sauvegarde sont gardées.
+
+**5e_C4.1, le lampadaire intelligent, « 🏠 Défi maison »** (bloc `#bmChaine`). « Dessine sa chaîne d'énergie » se fait
+avec un constructeur.
+- **De 2 à 5 blocs** : la fonction se choisit dans un menu (avec cinq leurres : ACQUÉRIR, TRAITER, RÉGULER, ÉLECTRIQUE,
+  MOTEUR), le composant s'écrit dessous, la forme d'énergie de chaque flèche se choisit (trois leurres : eau,
+  information, CONVERTIR). L'élève écrit l'entrée (ou « aucune : déjà stockée » pour des piles) et l'action finale ; il
+  peut déclarer TRANSMETTRE absent, et dire pourquoi.
+- **La chaîne se dessine à mesure**, avec le moteur du dessin de la chaîne du lampadaire (`#chlDessin`), selon la règle
+  n°310 : sur une ligne à 1280 px (deux au-delà de quatre blocs), en colonne à 390 px.
+- **« Vérifier » juge la forme**, pas l'objet (chacun a le sien) : un retour par manque ou par piège. La zone de texte,
+  sa version étayée et le corrigé restent. Dans le corrigé, « Dessine-le en pointillés… » devient faisable avec le
+  constructeur.
+
+**Pour les deux**, sur papier : la table vide et un cadre quadrillé pour la courbe, ou le cadre de la chaîne, avec la
+consigne « Sur la feuille ». Cibles de 44 px, clavier. La séance 4 de 4e_C4.1 s'imprime en 4 pages au lieu de 3.
+
+**Règle n°300.** Les menus du constructeur de chaîne ne sont pas des questions à choix mais les pièces d'un schéma à
+construire, comme les menus posés dans la bête à cornes : une exception de plus, notée ici.
+
+**Les autres consignes du thème 2** sont faisables : 3e_C4.7 dit « dans le cahier », 4e_C4.1 Book Train fait dessiner dans
+draw.io, 3e_C4.3 tracer dans LibreOffice Calc, « relie » de 4e_C6.1 se fait avec des menus, celui de 5e_C4.7 « par la
+pensée ». L'inventaire des consignes « papier » est soldé.
+
+**Le kit des ateliers corrigé (PR #586) est réincrusté** dans 4e_C4.1 et 5e_C4.1 : les tableaux de menus s'impriment sans
+leurs listes d'options, et « négociable » ne se coupe plus dans la colonne Flexibilité.
+
+**Contrôles.** `tests_4e_C4.1-C4.9.mjs` **52 / 52** (41 avant), `tests_5e_C4.1-C4.8_sequence.mjs` **64 / 64** (55 avant),
+QCM 5e 25 / 25, bancs n°311 34 / 34 et 34 / 34, après réincrustation. `controle_schemas` : 0 ✘ sur les deux dossiers et
+sur 26 états remplis exportés. Impression, impression papier, squelette, verrous, hors ligne, liens, hiérarchie, règles
+visibles, unités, sigles, médias, rapports de tests, `verifier_chaines_energie` (77 / 77) : verts. Non testé : un vrai
+téléphone, Safari, Firefox, un lecteur d'écran, une impression réelle ; le format des dates sur un poste réglé en
+français (le navigateur des tests est en anglais).

@@ -2,7 +2,7 @@
 
 **Suite** : `tests_4e_C4.1-C4.9.mjs`, livrée dans ce dossier · **Outil** : Playwright
 (Chromium headless), viewport mobile 390 × 844, pages en `file://` (hors ligne) ·
-**Rejouée le 31/08/2026** · **Verdict : 35 / 35 ✅**
+**Rejouée le 31/08/2026, puis le 04/11/2026** · **Verdict : 52 / 52 ✅** (35 / 35 le 31/08/2026)
 
 > **Mise à jour du 24/10/2026.** L'exercice « Le cahier des charges : critère, niveau, flexibilité » (atelier du diagramme pieuvre, 4e) est inséré en tête de l'activité 5, qui passe à 55 min et exige sa réussite. La suite compte désormais **39 contrôles, 39 / 39** : l'activité 5 refusée sans l'exercice, l'exercice vérifié à vide puis rempli juste (classes F0 à F3 comprises), et ses réponses retrouvées au rechargement.
 
@@ -14,6 +14,20 @@
 > **18 quater** à l'impression, les 22 choix en texte, ni menu ni liste d'options. Banc n°311 : 34 / 34.
 > La page retire à l'impression la liste d'options que la fiche papier ajoute sous chaque menu, et resserre à 390 px
 > les marges des deux cadres de l'exercice (le tableau passe de 170 à 210 px de large).
+
+> **Mise à jour du 04/11/2026 — « Trace la courbe ! » se fait à l'écran (Bonus, défi données).** La consigne demandait
+> une table et une courbe, et la réponse était une zone de texte. Le défi a maintenant une **vraie table** (`#defiDonnees`,
+> 6 lignes : horodatage date et heure, lieu, valeur ; la grandeur et son unité choisies en tête, l'unité écrite dans
+> l'en-tête de la colonne) et **la courbe qui se trace** dès deux mesures complètes (SVG dans la page : le temps en
+> abscisse, gradué régulièrement, la grandeur et son unité en ordonnée, les points reliés dans l'ordre du temps, une
+> courbe par lieu avec sa légende). Une valeur impossible (un texte, « 24 °C », 140 %) est signalée sous sa case, sans
+> bloquer le reste ; une unité qui ne va pas avec la grandeur, sous son menu. « Vérifier » donne un retour par manque, et
+> un corrigé replié dit ce qu'on attend d'une table et d'une courbe justes, avec les erreurs classiques. La zone
+> `bonusRep` reste. La suite compte **52 contrôles, 52 / 52** : **33** à **43** (la table et son cadre au départ ; une,
+> deux, six mesures ; une valeur impossible ; l'unité ; « Vérifier » ; la sauvegarde ; 390 px et 1 280 px ; l'impression
+> remplie et vide ; le clavier ; aucune erreur JS). Hors suite : `controle_schemas.mjs` sur 14 états de la courbe (vide,
+> une mesure, six, deux lieux, une journée, un mois, des erreurs ; 1 280 et 390 px) : 0 ✘, 0 ⚠. La séance 4 imprimée
+> passe de 3 à 4 pages (la table et le cadre de la courbe).
 
 ```
 cd theme-2-.../C4-.../4e/4e_C4.1 && node tests_4e_C4.1-C4.9.mjs
