@@ -61,3 +61,21 @@ avant toute suppression.
 
 Ce qui se passe en classe. Cette séquence touche à des situations que certains élèves vivent :
 le professeur reste le seul à savoir ce que sa classe peut entendre, et à quel moment.
+
+## Découpage en séances à onglets (04/11/2026, vague des séquences sans onglets)
+
+La page était d'un seul tenant. Elle a maintenant trois séances à onglets, découpées sur les durées déjà écrites sur les
+activités ; les blocs ont été déplacés, pas réécrits.
+
+| Séance | Question directrice | Contenu | Temps |
+|---|---|---|---|
+| 1 — Regarder ce que ça révèle, puis retirer | Qu'est-ce qu'une photo publiée révèle, en plus de ce qu'on a voulu montrer — et que faut-il retirer pour que plus personne ne soit reconnaissable ? | Ouverture (avant de commencer, situation, problématique et hypothèse, règle de la séquence, trois façons, billet), activité 0, activité 1 | ~5 + 20 + 30 min : pleine, l'activité 1 peut se finir à la maison |
+| 2 — À qui est l'image, et qui a publié ? | A-t-on le droit de reprendre une image trouvée en ligne, et que devient la responsabilité quand six élèves partagent un seul compte ? | Activité 2 (licences), activité 3 (compte partagé) | ~25 + 25 min |
+| 3 — Qui est responsable de quoi ? Refaire, conclure | Devant un commentaire qui blesse, qu'engage chacun — et que doit faire le club avant sa prochaine publication ? | Activité 4, réinvestissement, synthèse, Bonus, bilan (retour à l'hypothèse, « Comment j'ai travaillé », positionnement), renvoi au QCM | ~25 + 15 + 15 min |
+
+Dès la séance 2, l'ouverture est repliée dans le volet « 📖 Rappel : la situation et ton hypothèse » (règle d'or n°311),
+jamais supprimée. Restent dehors : le titre, la mission (« 🎯 Ta mission : … », écrite le 04/11/2026 d'après la situation et la
+problématique) et la ligne du thème, la barre d'outils (« 🖨 Imprimer / PDF », ajoutée) et le
+**banc de publication**, qui sert aux trois séances : un seul banc, qui garde ce qui est coché ; il est dans l'activité 0
+à la séance 1, juste après l'en-tête de la séance 2 (avant l'activité 2), juste avant le Bonus à la séance 3.
+Sans JavaScript, la page reste d'un seul tenant, comme avant.

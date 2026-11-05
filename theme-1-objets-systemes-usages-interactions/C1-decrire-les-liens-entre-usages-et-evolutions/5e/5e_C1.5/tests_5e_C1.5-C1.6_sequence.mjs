@@ -72,10 +72,18 @@ ok('aucun marqueur de gabarit non remplacé', !/__[A-Z_0-9]+__/.test(src),
    (src.match(/__[A-Z_0-9]+__/g) || []).slice(0, 3).join(' '));
 
 // ── les activités ────────────────────────────────────────────────────────
+// Depuis le 04/11/2026 (vague n°311), la page a trois séances à onglets : une activité qui n'est pas dans la séance
+// ouverte n'est pas à l'écran. On ouvre la séance qui la porte, comme l'élève, avant de remplir ses champs.
+const ouvrirSeanceDe = async (id) => {
+  const pan = await p.evaluate(id => { const e = document.getElementById(id), x = e && e.closest('.seance-panel');
+    return x && !x.classList.contains('active') ? x.id : null; }, id);
+  if (pan) { await p.click('.seance-tab[data-panel="' + pan + '"]'); await p.waitForTimeout(80); }
+};
 for (const [n, champs] of Object.entries(REP.activites)) {
   for (const [id, val] of Object.entries(champs)) {
     const el = await p.$('#' + id);
     if (!el) { ok('champ ' + id + ' présent', false); continue; }
+    await ouvrirSeanceDe(id);
     const tag = await el.evaluate(e => e.tagName);
     if (tag === 'SELECT') await p.selectOption('#' + id, val); else await p.fill('#' + id, val);
   }
@@ -86,6 +94,7 @@ for (const [n, champs] of Object.entries(REP.activites)) {
 
 // ── une réponse fausse est refusée ───────────────────────────────────────
 if (REP.refus) {
+  await ouvrirSeanceDe(REP.refus.id);
   await p.selectOption('#' + REP.refus.id, REP.refus.faux);
   await p.evaluate(n => document.querySelector('[data-check="' + n + '"]').click(), REP.refus.act);
   ok('une réponse fausse est refusée',

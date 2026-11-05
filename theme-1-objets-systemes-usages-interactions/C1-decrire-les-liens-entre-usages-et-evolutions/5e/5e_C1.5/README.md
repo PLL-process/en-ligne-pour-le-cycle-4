@@ -72,7 +72,7 @@ Deux choses que le banc rend visibles et qu'aucun cours ne rend évidentes :
 | [`rapport_tests_5e_C1.5-C1.6.md`](rapport_tests_5e_C1.5-C1.6.md) | la sortie des deux suites, telle quelle |
 | `tests_*.mjs` · `reponses_*.json` · `publication.py` | de quoi tout rejouer |
 
-**Tests réels : 38/38 sur la séquence, 32/32 sur le QCM.**
+**Tests réels : 38/38 sur la séquence, 34/34 sur le QCM ; 57/57 au banc de la règle n°311 (trois séances à onglets, le volet « Rappel », le banc de publication qui suit la séance).**
 
 ## La règle de la séquence
 

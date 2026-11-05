@@ -27672,3 +27672,45 @@ sur 26 états remplis exportés. Impression, impression papier, squelette, verro
 visibles, unités, sigles, médias, rapports de tests, `verifier_chaines_energie` (77 / 77) : verts. Non testé : un vrai
 téléphone, Safari, Firefox, un lecteur d'écran, une impression réelle ; le format des dates sur un poste réglé en
 français (le navigateur des tests est en anglais).
+
+
+---
+
+## 04/11/2026 — Vague du thème 1 : 5e_C1.3 (C1.3-C1.4_SI) et 5e_C1.5 passent à onglets, avec le volet « 📖 Rappel »
+
+*Suite des vagues ouvertes par le pilote 4e_C8.1 (31/10/2026), après la vague C8 (#587). 5e_C1.3 est la page
+« C1.3-C1.4_SI » que le journal gardait « à part, en dernier » depuis le 22/10/2026.*
+
+**5e_C1.3, organiser les données d'un service de vélos partagés.** Les trois cartes « Séance N » de la page deviennent les
+trois onglets, chacune avec sa question directrice et son programme : séance 1, ouverture et activité 1 (avec l'exercice
+incrusté de la carte mentale) ; séance 2, activité 2 ; séance 3, activité 3, le transfert vers la Martinique et toute la
+clôture. Hors du volet : le titre, la mission, la barre d'outils (remontée sous la mission, avec « 🖨 Imprimer / PDF »), et
+la carte « 💾 Sauvegarde locale », un outil qui suit la séance ouverte. L'exercice incrusté garde ses marques
+(`incrustations.py --verifier` : « à jour »).
+- **Écrit**, ce que `controle_squelette` trouvait « à rédiger » : une **hypothèse de départ** (champ enregistré, avec sa
+  version étayée ; la page n'en avait pas) ; le retour à l'hypothèse dans le bilan ; « Comment j'ai travaillé » ; « Je me
+  positionne » sur 5e_C1.3 et 5e_C1.4 aux quatre niveaux du livret scolaire.
+- **Corrigé au passage** : « Effacer mes réponses locales » vidait le stockage mais pas la mémoire de la page, et la
+  première frappe réenregistrait toutes les anciennes réponses. Le banc le vérifie maintenant.
+- **Un banc de lot**, qu'elle n'avait pas : `tests_5e_C1.3-C1.4_sequence.mjs`, 24 / 24 (séances, sauvegarde des 12 zones,
+  positionnement, retour à l'hypothèse, exercice incrusté, effacement).
+
+**5e_C1.5, le compte du club.** Séance 1 : ouverture, activités 0 et 1 (pleine : l'activité 1 porte déjà « peut se faire à la
+maison », et le programme le dit) ; séance 2 : activités 2 et 3 ; séance 3 : activité 4, réinvestissement, clôture. Le
+banc de publication, qui sert aux trois séances, reste un seul bloc qui suit la séance (dans l'activité 0 à la séance 1,
+après l'en-tête à la séance 2, avant le Bonus à la séance 3).
+- **Écrit** : « Comment j'ai travaillé » ; un corrigé par défi du Bonus (l'ancien corrigé commun, réparti et complété :
+  chaque attendu, chiffres relus sur les compteurs du banc, erreurs fréquentes) ; une mission en une phrase, tirée de la
+  situation et de la problématique (« Ta mission : avant que le club appuie sur « publier », dire ce que sa photo révèle
+  en plus, ce qu'il faut retirer ou demander, et qui devient responsable de ce qui est publié »).
+- **Corrigé** : le `<title>` disait « Thème 3 ». Le positionnement garde l'échelle « geste » décidée le 21/09/2026.
+
+**Pour les deux** : sans JavaScript, toutes les séances à la suite ; l'onglet en cours mémorisé ; un lien direct ouvre la
+bonne séance ; une séance par fiche à l'impression ; les blocs déplacés, pas réécrits.
+
+**Contrôles.** Bancs n°311 (le banc commun, sans relais) : 5e_C1.3 54 / 54, 5e_C1.5 57 / 57. 5e_C1.5 : séquence 38 / 38,
+QCM 34 / 34, avant = après. `controle_squelette` : 0 défaut, aucun « à rédiger », aucun signalement. Verts : impression,
+impression papier (une fiche par séance), verrous, hors ligne, contraste des liens, règles visibles, liens, hiérarchie,
+unités, sigles, rapports de tests, formulations. Non testé : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+**À valider par Pascal** : l'hypothèse de départ de 5e_C1.3 et la mission de 5e_C1.5, écrites pour cette vague.
