@@ -30,6 +30,19 @@ p.on('requestfailed', r => fail.push(r.url()));
 p.on('dialog', async d => { dlg.push(d.message()); await d.dismiss(); });
 
 const T = []; const ok = (n, c, d = '') => T.push({ n, ok: !!c, d });
+/* Séances à onglets (vague de la règle d'or n°311, 04/11/2026) : une activité n'est plus à l'écran au chargement. Avant d'agir
+ * sur un champ, on ouvre, comme l'élève, l'onglet de la séance qui le porte ; un champ de l'ouverture se trouve à la séance 1
+ * (dès la séance 2, il est replié dans le volet « Rappel »). L'outil (banc, atelier) suit les séances qui s'en servent. */
+async function ouvrirSeanceDe(sel, q = p) {
+  const id = await q.evaluate(s => {
+    const e = document.querySelector(s); if (!e) return null;
+    const pan = e.closest('.seance-panel');
+    if (pan) return pan.classList.contains('active') ? null : pan.id;
+    const v = e.closest('#ouverture');
+    return v && !v.open ? document.querySelector('.seance-tab').dataset.panel : null;
+  }, sel);
+  if (id) { await q.click('.seance-tab[data-panel="' + id + '"]'); await q.waitForTimeout(80); }
+}
 
 await p.goto('file://' + f, { waitUntil: 'load' }); await p.waitForTimeout(500);
 
@@ -118,6 +131,7 @@ for (const [n, champs] of Object.entries(REP.activites)) {
   for (const [id, val] of Object.entries(champs)) {
     const el = await p.$('#' + id);
     if (!el) { ok('champ ' + id + ' présent', false); continue; }
+    await ouvrirSeanceDe('#' + id);
     const tag = await el.evaluate(e => e.tagName);
     if (tag === 'SELECT') await p.selectOption('#' + id, val); else await p.fill('#' + id, val);
   }
@@ -137,6 +151,7 @@ if (REP.verrou) {
 
 // ── une réponse fausse est refusée ───────────────────────────────────────
 if (REP.refus) {
+  await ouvrirSeanceDe('#' + REP.refus.id);
   await p.selectOption('#' + REP.refus.id, REP.refus.faux);
   await p.evaluate(n => document.querySelector('[data-check="' + n + '"]').click(), REP.refus.act);
   ok('une réponse fausse est refusée',
@@ -226,10 +241,13 @@ if (REP.seances) {
     !(await m.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)));
   const enVue = id => m.evaluate(id => { const r = document.getElementById(id).getBoundingClientRect();
     return r.top >= -2 && r.top < window.innerHeight / 2; }, id);
+  // les liens « Aller à ma séance » sont dans l'ouverture : on les prend à la séance 1, où elle est ouverte
   for (let i = 1; i <= S.nombre; i++) {
+    await m.click('.seance-tab[data-panel="s1"]'); await m.waitForTimeout(80);
     await m.click('nav.seances-liens a[href="#seance-' + i + '"]'); await m.waitForTimeout(150);
     ok('à 390 px : le lien du haut atteint la séance ' + i, await enVue('seance-' + i));
   }
+  await m.click('.seance-tab[data-panel="s1"]'); await m.waitForTimeout(80);   // de séance en séance, depuis la première
   for (let i = 1; i < S.nombre; i++) {
     await m.click('a.vers-seance[href="#seance-' + (i + 1) + '"]'); await m.waitForTimeout(150);
     ok('à 390 px : « ➡ Séance ' + (i + 1) + ' » mène à son en-tête', await enVue('seance-' + (i + 1)));

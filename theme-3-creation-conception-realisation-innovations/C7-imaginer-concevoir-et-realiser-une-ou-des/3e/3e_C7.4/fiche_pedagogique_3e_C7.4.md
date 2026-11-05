@@ -162,3 +162,24 @@ sujet.
 ├── tests_3e_C7.4_sequence.mjs · tests_3e_C7.4_qcm.mjs · reponses_3e_C7.4.json
 └── energie.py
 ```
+
+## Les séances passent à onglets (04/11/2026, vague de la règle d'or n°311)
+
+Le découpage en séances de 55 min ne change pas (activités 0 et 1 | activités 2 et 3 | activité 4 et REFAIRE, puis la clôture) : chaque en-tête « 🗓 Séance N » devient la tête de son onglet, chaque bouton de fin de séance ouvre la suivante, et l'onglet en cours est mémorisé. L'ouverture (étiquettes, liens « Aller à », « Avant de commencer », situation, problématique et hypothèse, sécurité, « Trois façons », billet d'entrée) est complète à la séance 1 et repliée dans le volet « 📖 Rappel » dès la séance 2, jamais supprimée. Sans JavaScript, la page reste d'un seul tenant.
+
+Restent visibles à chaque séance : le titre, la mission, la barre d'outils et le banc d'énergie, qui sert aux séances 1 et 2 : dans l'activité 0 à la séance 1, juste après l'en-tête à la séance 2 ; à la séance 3, ni à l'écran ni sur la fiche papier.
+
+Clôture : un corrigé par défi du Bonus (bascule secteur/accu, chaleur et accus Li-ion, mix électrique de la Martinique — un quart de renouvelable en 2024, bilan d'EDF en Martinique de mars 2025), « Comment j'ai travaillé », la ligne des quatre niveaux du livret, « Je me positionne » sur 3e_C3.2.
+
+### Sources des corrigés du Bonus (04/11/2026)
+
+- **Défi Martinique** — « environ un quart de l'électricité produite en Martinique en 2024 venait d'énergies
+  renouvelables » : EDF Martinique, communiqué « Bilan et perspectives », publié le 26 mars 2025
+  (<https://www.edf.mq/sites/sei_mq/files/2025-04/CP_EDF_Bilan%20et%20Perspectives_26mars25.pdf>, lu le 04/11/2026).
+  Le communiqué ne détaille pas la part de chaque source ; le corrigé ne la donne donc pas. Le chiffre change d'une année
+  à l'autre : le corrigé demande à l'élève une source et une année.
+- **Défi température** — les températures (recharge évitée au-delà de 45 °C environ, vieillissement nettement plus rapide
+  au-delà de 40 °C environ, une quinzaine de degrés de plus dans un boîtier fermé au soleil) sont des **ordres de grandeur**
+  courants pour les accus Li-ion, pas les valeurs d'une fiche constructeur précise ; le corrigé les écrit comme tels.
+
+Sécurité visible (retouche du 04/11/2026) : l'encadré reste dans le volet, mais l'en-tête de la séance 2, où l'on manipule (voie 🅰), en rappelle la consigne en une ligne — le 5 V côté élève et les accus Li-ion — avec un lien qui ouvre le volet sur l'encadré.

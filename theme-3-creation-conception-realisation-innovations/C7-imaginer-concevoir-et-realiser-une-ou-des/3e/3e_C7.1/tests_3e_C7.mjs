@@ -104,6 +104,20 @@ async function ouvrir(ctx, fichier) {
   return { page, erreurs };
 }
 
+/* Séances à onglets (vague de la règle d'or n°311, 04/11/2026) : une activité n'est plus à l'écran au chargement. Avant d'agir
+   sur un champ, on ouvre, comme l'élève, l'onglet de la séance qui le porte ; un champ de l'ouverture se trouve à la séance 1
+   (dès la séance 2, il est replié dans le volet « Rappel »). */
+async function ouvrirSeanceDe(pg, sel) {
+  const id = await pg.evaluate(s => {
+    const e = document.querySelector(s); if (!e) return null;
+    const pan = e.closest('.seance-panel');
+    if (pan) return pan.classList.contains('active') ? null : pan.id;
+    const v = e.closest('#ouverture');
+    return v && !v.open ? document.querySelector('.seance-tab').dataset.panel : null;
+  }, sel);
+  if (id) { await pg.click('.seance-tab[data-panel="' + id + '"]'); await pg.waitForTimeout(100); }
+}
+
 /* ═══════════════════ 1. La séquence ═══════════════════ */
 const ctx = await nav.newContext({ viewport: { width: 1280, height: 900 } });
 const { page, erreurs } = await ouvrir(ctx, CFG.seq);
@@ -112,7 +126,9 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
 
 /* — n°23 : le cadre horaire est reconnaissable, et il tient — */
 {
-  const txt = await page.locator("body").innerText();
+  /* depuis le passage à onglets (04/11/2026), les durées vivent dans trois panneaux dont deux sont repliés : on lit le
+     texte de toute la page (scripts et styles exclus), pas seulement ce qui est à l'écran */
+  const txt = await page.evaluate(() => { const c = document.body.cloneNode(true); c.querySelectorAll("script, style").forEach(x => x.remove()); return c.textContent; });
   const cadre = txt.match(/(\d+)\s*séances?\s+de\s+(\d+)\s*min/i);
   const parts = [...txt.matchAll(/~\s*(\d+)\s*min/g)].map(m => parseInt(m[1], 10));
   const total = parts.reduce((a, b) => a + b, 0);
@@ -204,6 +220,7 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
 
 /* — n°26 : le billet d'entrée, hors progression — */
 {
+  await ouvrirSeanceDe(page, "#be_1");   // le billet est dans l'ouverture : séance 1
   await page.selectOption("#be_1", { index: 1 });
   await page.selectOption("#be_2", { index: 1 });
   await page.selectOption("#be_3", { index: 1 });
@@ -400,6 +417,7 @@ if (!CFG.essaisBanc) {
 
 /* — l'ordre des étapes : la validation exige le bon ordre — */
 {
+  await ouvrirSeanceDe(page, "#a3o1");   // l'algorigramme est à la séance 2
   for (let i = 1; i <= 5; i++) await page.selectOption("#a3o" + i, String(i));
   await page.click('.btn.check[data-check="3"]');
   await page.waitForTimeout(150);
@@ -447,6 +465,7 @@ async function verifierActivite(n) {
   return (await page.locator("#fb" + n).textContent()) || "";
 }
 {
+  await ouvrirSeanceDe(page, "#activite-6");   // les activités 6 et 7 sont à la séance 3
   let fb = await verifierActivite(6);
   ok("séance 3 · act. 6 : refusée (🔒) tant que l'exercice FAST inséré n'est pas réussi",
      /🔒/.test(fb) && /diagramme FAST/.test(fb), fb.slice(0, 80));
@@ -560,6 +579,7 @@ await ctx.close();
   /* chaque séance, ouverte à son en-tête : visible, et sans défilement horizontal */
   const vues = [];
   for (let i = 1; i <= CFG.seances; i++) {
+    await pm.click('.seance-tab[data-panel="s' + i + '"]'); await pm.waitForTimeout(100);   // l'élève ouvre l'onglet de la séance
     await pm.locator("#seance-" + i).scrollIntoViewIfNeeded();
     await pm.waitForTimeout(120);
     vues.push(await pm.locator("#seance-" + i).isVisible());

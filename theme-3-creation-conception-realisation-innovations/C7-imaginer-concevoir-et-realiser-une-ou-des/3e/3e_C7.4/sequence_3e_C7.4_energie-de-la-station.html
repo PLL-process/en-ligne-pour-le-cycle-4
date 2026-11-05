@@ -164,6 +164,38 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
 
 /* Billet d'entrée (règle d'or n°26) : sans note ; il renvoie aux rattrapages du bloc « Avant de commencer ». */
 #billet .billet-intro{margin:.2em 0 .6em}#billet .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;border-left:3px solid var(--input-bd,var(--border,#274a8a));border-radius:0;background:none}#billet .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600;color:var(--text)}#billet .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;padding:7px 9px;background:var(--input-bg,rgba(127,127,127,.10));border:2px solid transparent;border-radius:9px}#billet .qcm-option:hover,#billet .qcm-option:focus-within{border-color:var(--hl)}#billet .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}#billet .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;font-weight:400}#billet .billet-retour{margin:.7em 0 0;padding:.55em .8em;border-radius:8px;border-left:4px solid var(--hl);background:rgba(127,127,127,.10)}#billet .billet-retour:empty{display:none}#billet .billet-retour.ok{border-left-color:var(--ok)}#billet .billet-retour.warn{border-left-color:var(--warn)}#billet .billet-retour.ko{border-left-color:var(--err)}#billet .billet-retour p{margin:.2em 0}#billet .billet-retour ul{margin:.3em 0 .2em 1.2em;padding:0}#billet .billet-retour li{margin:.25em 0}#billet .billet-retour a,#billet .billet-retour a:visited{color:var(--hl)}#billet .billet-note{font-size:.9em;opacity:.85}@media print{#billet .billet-retour,#billet .billet-retour a{color:#041a40!important;opacity:1!important}}
+
+/* ── Séances à onglets (squelette n°306) et volet « 📖 Rappel » (règle d'or n°311) — vague du 04/11/2026, sur le modèle
+   du pilote 4e_C8.1. Sans JavaScript (pas de classe js-onglets), la page reste d'un seul tenant : toutes les séances à la
+   suite, sans onglets, le volet ouvert et sans bouton. ── */
+.seance-tabs{display:none;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+.js-onglets .seance-tabs{display:flex}
+.seance-tab{flex:1;min-width:150px;min-height:44px;padding:11px 8px;border-radius:10px;background:var(--panel2);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit;line-height:1.3}
+.seance-tab small{display:block;font-weight:400;font-size:.9em;color:var(--sub)}
+.seance-tab.active{background:#1d4e89;color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+.seance-tab.active small{color:#e4eaf5}
+.seance-tab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.js-onglets .seance-panel{display:none}
+.js-onglets .seance-panel.active{display:block}
+.rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}
+.rappel-ouverture>summary{display:none}
+.rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+.rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media print{.rappel-ouverture>summary{display:none!important}}
+.positionnement{margin:8px 0;border:1px solid var(--border);border-radius:10px;padding:8px 12px}
+.positionnement legend{font-size:.9em;color:var(--sub);padding:0 6px}
+.positionnement label{display:inline-block;margin-right:14px}
+.positionnement input[type=radio]{width:auto}
+/* L'outil des séances (n°311 : un outil n'est pas du décor) : un seul nœud, qui suit les séances qui s'en servent. Hors de
+   son activité, il garde le cadre d'une carte et son titre ; ses tableaux défilent dans leur cadre à 390 px. */
+.outil-seance>.outil-titre{display:none}
+.seance-panel>.outil-seance{max-width:940px;margin:0 auto 18px}
+.seance-panel>.outil-seance>.outil-titre{display:block;margin:0 0 6px;color:var(--hl);font-weight:700}
+@media(max-width:680px){.outil-seance table{display:block;overflow-x:auto;max-width:100%}}
+/* La consigne de sécurité de la page, rappelée en une ligne dans l'en-tête des séances où l'on manipule (l'encadré complet
+   est dans le volet « Rappel » ; son lien l'ouvre). Comme aux vagues 5e et 4e. */
+.rappel-securite{margin:.6em 0 0;padding:6px 10px;border-left:4px solid var(--warn);background:rgba(255,214,102,.08);border-radius:0 8px 8px 0;font-size:.92em}
+.rappel-securite a,.rappel-securite a:visited{color:var(--hl)}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -499,13 +531,24 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
 
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_3e_C7.4.html">📖 Lexique</a></nav>
 
 <h1>🌀 La station doit tenir 72 heures sans secteur</h1>
-<p class="subtitle">Thème 3 · 3<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<p class="subtitle">Ta mission : choisir et dimensionner l'alimentation de la station d'alerte cyclonique pour qu'elle tienne 72 heures sans secteur, puis le dire à la mairie, chiffres à l'appui, dans un avis.</p>
+
+<div class="toolbar">
+  <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+</div>
+
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
+
 <div class="badges">
   <span class="badge niveau">Niveau 3e</span>
   <span class="badge code" title="Programme 2024 — 3e_C7.4 : Choisir une source d'énergie pour un OST.">3e_C7.4</span>
@@ -568,7 +611,7 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="securite">
   <h2>⚠️ Sécurité — à lire avant de brancher quoi que ce soit</h2>
   <div class="declencheur">
     <ul>
@@ -598,12 +641,6 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
     <li><b>🅲 Sans écran</b> — les tableaux s'impriment et toutes les valeurs figurent dans les
       corrections. Le travail reste le même : lire, comparer, décider, justifier.</li>
   </ul>
-</section>
-
-<section class="card seance-entete" id="seance-1" aria-labelledby="seance-1-titre">
-  <h2 id="seance-1-titre">🗓 Séance 1 — Combien d'énergie, pour combien de temps</h2>
-  <p class="seance-duree">Durée&nbsp;: 55 minutes · la situation et ton idée de départ, puis les activités 0 et 1, soit 45 minutes d'activités.</p>
-  <p><b>La question de la séance&nbsp;:</b> sur quel jour faut-il compter, et quelle réserve faut-il pour tenir 72 heures sans réseau&nbsp;?</p>
 </section>
 
 <!-- Billet d'entrée (n°26) : en tête de la séance 1, comme le pilote 3e_C1.1. Une question par ligne du bloc
@@ -679,11 +716,32 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
   });
 })();
 </script>
-<section class="card">
+
+</details><!-- /rappel-ouverture -->
+
+<nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" id="tab-s1" data-panel="s1" role="tab" aria-controls="s1" aria-selected="true" type="button">Séance 1<br><small>Combien d'énergie, pour combien de temps</small></button>
+  <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>Recharger ou tenir, et à quel prix</small></button>
+  <button class="seance-tab" id="tab-s3" data-panel="s3" role="tab" aria-controls="s3" aria-selected="false" type="button">Séance 3<br><small>L'avis à signer, puis l'îlet</small></button>
+</nav>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card seance-entete" id="seance-1" aria-labelledby="seance-1-titre">
+  <h2 id="seance-1-titre">🗓 Séance 1 — Combien d'énergie, pour combien de temps</h2>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · la situation et ton idée de départ, puis les activités 0 et 1, soit 45 minutes d'activités.</p>
+  <p><b>La question de la séance&nbsp;:</b> sur quel jour faut-il compter, et quelle réserve faut-il pour tenir 72 heures sans réseau&nbsp;?</p>
+</section>
+
+<section class="card" id="act0">
   <h2>🖐️ Activité 0 — FAIRE d'abord : quel jour faut-il dimensionner ⏱ ~20 min</h2>
   <p>Avant toute explication. Le banc compte ce que la station consomme en une
   journée <b>d'alerte</b> : buzzer et voyant allumés deux heures. Éteins-les, et tu obtiens
   une journée calme. <b>Compare les deux, puis passe les cinq sources.</b></p>
+  <!-- Un outil n'est pas du décor (n°311) : le banc sert aux séances 1 et 2 (activités 0 à 2). Un seul nœud : à la séance 1,
+       il reste ici ; à la séance 2, le script des onglets le place juste après l'en-tête de la séance ; sans JavaScript, il ne bouge pas. -->
+  <div class="outil-seance" id="outilBanc" data-seances="s1 s2">
+  <p class="outil-titre">🔋 Le banc d'énergie de l'activité 0 — le même, avec tes réglages</p>
   <div class="banc" id="banc">
     <table class="conso">
       <tr><th></th><th>Ce qui consomme</th><th>Courant (en milliampères)</th><th>Par jour</th><th>Énergie</th></tr>
@@ -729,6 +787,7 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
     <p class="detail-src" id="sDetail"></p>
     <p class="detail-src">Courants moyens sous 5 V, valeurs constructeur usuelles. Le rendement d'un régulateur linéaire vaut Vsortie ÷ Ventrée — ce n'est pas un réglage, c'est de la physique : il dissipe la différence en chaleur. Ensoleillement retenu pour la Martinique : 5,3 heures équivalent plein soleil par jour, avec 30 % de pertes de chaîne.</p>
   </div>
+  </div><!-- /outil-seance -->
 
   <div class="exo">
 
@@ -831,14 +890,18 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
 
 <nav class="fin-seance" aria-label="Fin de la séance 1">
   <p>Fin de la séance 1. La suite, la prochaine fois&nbsp;:</p>
-  <a class="btn vers-seance" href="#seance-2">➡ Séance 2 — Recharger ou tenir, et à quel prix</a>
+  <a class="btn vers-seance" href="#seance-2" data-vers="s2">➡ Séance 2 — Recharger ou tenir, et à quel prix</a>
 </nav>
+</div>
 
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
 <section class="card seance-entete" id="seance-2" aria-labelledby="seance-2-titre">
   <h2 id="seance-2-titre">🗓 Séance 2 — Recharger ou tenir, et à quel prix</h2>
   <p class="seance-duree">Durée&nbsp;: 55 minutes · activités 2 et 3, soit 55 minutes d'activités.</p>
   <p><b>Ce dont tu repars&nbsp;:</b> un jour d'alerte, la station consomme 6,04&nbsp;Wh (wattheures)&nbsp;; pour tenir 72&nbsp;heures, il lui faut 18,12&nbsp;Wh, et trois accus en donnent 28,2 (activité 1).</p>
   <p><b>La question de la séance&nbsp;:</b> un panneau solaire rend-il la station autonome, et que coûte chaque source sur toute sa vie&nbsp;?</p>
+  <p class="rappel-securite">⚠️ Avec le matériel : côté élève, il n'y a que du 5 V (volts) — le « secteur », c'est l'adaptateur USB fermé, qu'on n'ouvre pas —, et un accu Li-ion ne se court-circuite pas, ne se perce pas et ne s'écrase pas : s'il gonfle, chauffe ou sent, on le pose au sol, loin de tout, et on prévient un adulte. <i><a href="#securite">L'encadré complet</a> est dans le rappel, en haut de page.</i></p>
 </section>
 
 <section class="card">
@@ -980,9 +1043,12 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
 
 <nav class="fin-seance" aria-label="Fin de la séance 2">
   <p>Fin de la séance 2. La suite, la prochaine fois&nbsp;:</p>
-  <a class="btn vers-seance" href="#seance-3">➡ Séance 3 — L'avis à signer, puis l'îlet</a>
+  <a class="btn vers-seance" href="#seance-3" data-vers="s3">➡ Séance 3 — L'avis à signer, puis l'îlet</a>
 </nav>
+</div>
 
+<!-- ══════════════════ SÉANCE 3 ══════════════════ -->
+<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
 <section class="card seance-entete" id="seance-3" aria-labelledby="seance-3-titre">
   <h2 id="seance-3-titre">🗓 Séance 3 — L'avis à signer, puis l'îlet</h2>
   <p class="seance-duree">Durée&nbsp;: 55 minutes · l'activité 4 et le REFAIRE, soit 50 minutes d'activités, puis la synthèse, le bilan et le renvoi au QCM.</p>
@@ -1118,6 +1184,25 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
 
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+  <details class="correction"><summary>✅ Corrigé du défi bascule — passer du secteur à l'accu sans s'éteindre</summary><div>
+    <p><b>Le composant.</b> Ce qui bascule tout seul, sans coupure, s'appelle une <b>alimentation sans interruption</b> (ASI ; « onduleur » pour un ordinateur, <i lang="en">UPS</i> en anglais). À l'échelle de la station, en 5 V (volts), c'est un petit module d'alimentation à bascule automatique ; le montage le plus simple met deux diodes « en OU » : le secteur et l'accu alimentent la carte chacun par sa diode, et aucun interrupteur n'est à actionner. Un condensateur à l'entrée de la carte tient la tension pendant les quelques millisecondes du passage.</p>
+    <p><b>Ce qu'il faut tester</b>, écrit avant l'essai : la station tourne en alerte (buzzer et voyant allumés : le jour qui consomme le plus) ; on débranche l'adaptateur secteur. <b>Résultat attendu :</b> la carte ne redémarre pas — un compteur de démarrages écrit dans le programme ne bouge pas, et les mesures du vent continuent d'arriver sans trou. Puis on rebranche : même résultat attendu. On refait la coupure plusieurs fois (dix, par exemple), et une fois avec l'accu presque vide.</p>
+    <p><b>Attendus :</b> le nom du composant ; au moins un essai écrit avec son action (couper le secteur pendant que la station tourne) et son résultat attendu, qu'on peut observer (aucun redémarrage) ; l'essai répété, et le retour du secteur testé lui aussi.</p>
+    <p><b>Erreurs typiques :</b> « un interrupteur » — il faudrait quelqu'un pour le basculer, en plein cyclone ; « une batterie plus grosse » — elle stocke davantage, elle ne bascule rien ; un seul essai, ou un essai station éteinte ; oublier le retour du secteur ; écrire « vérifier que ça marche » sans dire ce qu'on regarde.</p>
+  </div></details>
+  <details class="correction"><summary>✅ Corrigé du défi température — la chaleur qui use l'accu</summary><div>
+    <p><b>La température, en ordre de grandeur.</b> En général, on ne recharge pas un accu Li-ion au-delà de 45 °C environ. Et chaque heure passée au chaud lui retire de la capacité, pour toujours : au-delà de 40 °C environ, il vieillit nettement plus vite. Le froid, lui, réduit seulement ce que l'accu donne sur le moment.</p>
+    <p><b>Pourquoi c'est un vrai problème ici.</b> L'air de la Martinique est souvent à 30 °C, et un boîtier fermé, en plein soleil, monte au-dessus de l'air : une quinzaine de degrés de plus à midi, environ, n'a rien d'exceptionnel. L'accu passerait ses après-midi autour de 45 °C, voire au-delà.</p>
+    <p><b>Où ne surtout pas le placer :</b> posé sur la dalle du toit-terrasse, qui chauffe au soleil et rayonne sa chaleur ; en plein soleil de midi et de l'après-midi ; dans un boîtier foncé ; contre le régulateur, qui dissipe en chaleur l'énergie qu'il perd (activité 0). <b>Où le placer :</b> à l'ombre — sous le panneau solaire, par exemple, ou du côté du mât que le soleil touche le moins —, dans un boîtier clair, surélevé, presse-étoupes vers le bas.</p>
+    <p><b>Attendus :</b> un ordre de grandeur de température et d'où il vient (la documentation d'un fabricant, par exemple) ; un endroit à éviter, avec sa raison ; un endroit proposé à la place.</p>
+    <p><b>Erreurs typiques :</b> « la chaleur aide la batterie » — elle l'use ; confondre la température de l'air donnée par la météo et celle qui règne dans le boîtier ; mettre le boîtier au soleil « pour qu'il sèche ».</p>
+  </div></details>
+  <details class="correction"><summary>✅ Corrigé du défi Martinique — d'où vient l'électricité du réseau</summary><div>
+    <p><b>Le chiffre.</b> En 2024, environ <b>un quart</b> de l'électricité produite en Martinique venait d'énergies renouvelables — biomasse, soleil, vent, déchets (source : EDF Martinique, bilan de l'année 2024 publié le 26 mars 2025). Le reste vient surtout de centrales thermiques qui brûlent du fioul. Une bonne réponse donne un chiffre, sa source et son année : il change d'une année à l'autre.</p>
+    <p><b>Ce que ça change à l'argument.</b> « Le secteur, c'est plus écologique que des accus » n'est pas vrai d'office : en Martinique, la plupart des wattheures du réseau viennent du fioul. Mais l'argument se chiffre. La station consomme 6,04 Wh (wattheures) par jour, soit 6,04 × 365 ≈ 2 205 Wh, environ 2,2 kWh (kilowattheures) par an : très peu. Ce qui pèse, c'est ce qu'on fabrique et ce qu'on jette — les 787 piles par an de l'activité 3 —, bien plus que l'origine de ces quelques kilowattheures. Et le panneau, qui recharge les accus, réduit justement la part prise au réseau.</p>
+    <p><b>Attendus :</b> un chiffre sourcé et daté ; la conclusion que l'argument ne vaut pas tel quel en Martinique ; une comparaison des quantités en jeu.</p>
+    <p><b>Erreurs typiques :</b> prendre le chiffre de la France hexagonale, où l'électricité vient surtout du nucléaire et des barrages, et l'appliquer à l'île ; un chiffre sans source ni année ; conclure « les accus sont plus écologiques » sans rien comparer.</p>
+  </div></details>
 </section>
 
 <section class="card">
@@ -1128,6 +1213,9 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
   ainsi que les idées reçues fonctionnent : elles sont vraies dans un cas et fausses au moment
   où ça compte.</p>
   <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">où as-tu hésité en dimensionnant la réserve, et qu'est-ce qui t'a surpris au banc ?</label></p>
+  <textarea id="bilanMeta" rows="2" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…"></textarea>
+  <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
   <p style="margin-top:12px"><b>Je me positionne sur 3e_C7.4 :</b></p>
   <select id="pos">
     <option value="">— je me positionne —</option>
@@ -1136,6 +1224,8 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
     <option>🟢 Maîtrise satisfaisante — je dimensionne sur le pire cas, avec marge, et je répartis les rôles</option>
     <option>⭐ Très bonne maîtrise — et j'argumente avec le cycle de vie et j'annonce ce que mon choix coûte</option>
   </select>
+  <fieldset class="positionnement"><legend>Je me positionne sur 3e_C3.2 (appui) — choisir un OST et argumenter ce choix en prenant en compte son cycle de vie et les trois piliers du développement durable</legend>
+<label><input type="radio" name="pos_c32" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c32" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c32" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c32" value="4"> ⭐ très bonne</label></fieldset>
 </section>
 
 <section class="card" style="text-align:center">
@@ -1143,6 +1233,8 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
   <p>30 questions — chaque mauvaise réponse est réfutée une par une — sur le dimensionnement au pire cas, la marge, la différence entre recharger et tenir, le cycle de vie et l'architecture d'alimentation.</p>
   <a class="btn" href="qcm_3e_C7.4_energie-de-la-station.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
+
+</div>
 
 <footer>Séquence 3e_C7.4 — <em>La station doit tenir 72 heures sans secteur</em> · Thème 3 · banc d'énergie original (CC0), valeurs calculées à partir des courants constructeur et des capacités réelles.</footer>
 
@@ -1152,6 +1244,7 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
 const KEY = "seq_3e_C7_4";
 const $ = id => document.getElementById(id);
 window.__exp = window.__exp || {};
+let ongletActif = null;   // la séance affichée (vague n°311, 04/11/2026), rangée à part des verrous
 
 function qmark(e, state){
   let m = e.previousElementSibling;
@@ -1308,23 +1401,98 @@ function save(){
   document.querySelectorAll("input, select, textarea").forEach(e => {
     if(!e.id) return;
     if(e.type === "checkbox" || (e.type === "radio" && e.closest("#billet"))) o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
+  o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
+  o.onglet = ongletActif;
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
 }
 function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
   if(!o) return;
+  ongletActif = o.onglet || null;   // lu d'abord : majBanc(), plus bas, enregistre
   Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
   Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  Object.entries(o.radios || {}).forEach(([name, v]) => { const r = document.querySelector('.positionnement input[name="' + name + '"][value="' + v + '"]'); if(r) r.checked = true; });
   window.__exp = o.exp || {};
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r && h.value.trim()) r.textContent = h.value;
+  // l'onglet en cours : un lien direct vers une ancre l'emporte sur lui
+  if(!location.hash && ongletActif && $(ongletActif)) montrerSeance(ongletActif, false);
 }
 document.addEventListener("input", () => {
   save();
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r) r.textContent = h.value.trim() || "—";
 });
+
+/* ══ Séances à onglets (squelette n°306) — vague du 04/11/2026, sur le modèle du pilote 4e_C8.1 ══ */
+/* Un outil n'est pas du décor (n°311) : le banc sert aux séances que nomme son data-seances. C'est un seul nœud. À la
+   séance qui porte son activité, il y reste ; à une autre séance qui s'en sert, il vient juste après l'en-tête de la
+   séance ; aux autres, il retourne à sa place (dans une séance repliée). Le déplacer garde son état (sources, cases).
+   Sans JavaScript, il ne bouge pas. */
+const OUTIL = $("outilBanc"), MAISON = OUTIL ? document.createComment(" place du banc ") : null;
+if(OUTIL) OUTIL.before(MAISON);
+function placerOutil(id){
+  if(!OUTIL) return;
+  const pan = $(id), chez = MAISON.parentNode.closest(".seance-panel");
+  const sert = (OUTIL.dataset.seances || "").split(/\s+/).includes(id);
+  if(pan && sert && pan !== chez){
+    const tete = pan.querySelector(".seance-entete");
+    if(tete){ if(tete.nextElementSibling !== OUTIL) tete.after(OUTIL); }
+    else if(pan.firstElementChild !== OUTIL) pan.prepend(OUTIL);
+  } else if(MAISON.nextSibling !== OUTIL) MAISON.after(OUTIL);
+  OUTIL.removeAttribute("data-pp-hors");   // la fiche papier le suit avec sa séance
+}
+function montrerSeance(id, memoriser){
+  if(!$(id)) return;
+  document.querySelectorAll(".seance-tab").forEach(x => { const on = x.dataset.panel === id; x.classList.toggle("active", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
+  document.querySelectorAll(".seance-panel").forEach(p => p.classList.toggle("active", p.id === id));
+  placerOutil(id);
+  appliqueSeance(id);
+  ongletActif = id;
+  if(memoriser !== false) save();
+}
+/* Un clic sur un onglet oublie l'ancre de l'adresse : au rechargement, c'est la séance mémorisée qui revient. */
+document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => {
+  montrerSeance(t.dataset.panel);
+  if(location.hash) try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){}
+}));
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte (ou le
+   volet, si l'ancre est dans l'ouverture). Comme au pilote, le volet ne se replie qu'une fois la page chargée. */
+function appliqueSeance(idPanneau){
+  const v = $("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", () => { const v = $("ouverture"); if(v){ voletAvantImpression = v.open; v.open = true; } });
+  window.addEventListener("afterprint", () => { const v = $("ouverture"); if(v && voletAvantImpression !== null){ v.open = voletAvantImpression; voletAvantImpression = null; } });
+  const cibleDuLien = () => { let id = ""; try{ id = decodeURIComponent(location.hash.slice(1)); }catch(e){} return id ? $(id) : null; };
+  const ouvrirSeanceDeLAncre = () => {
+    const cible = cibleDuLien(); if(!cible) return;
+    const pan = cible.closest(".seance-panel"), v = $("ouverture");
+    if(pan && !pan.classList.contains("active")){ montrerSeance(pan.id); setTimeout(() => cible.scrollIntoView({block:"start"}), 60); }
+    else if(!pan && v && !v.open && v.contains(cible)){ v.open = true; setTimeout(() => cible.scrollIntoView({block:"start"}), 60); }
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", () => {
+    const v = $("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active") || {}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
+/* Règle d'or n°101 — chaque séance mène explicitement à la suivante. Le bouton est un lien vers l'en-tête de la séance
+   suivante : on ouvre son onglet, puis le lien amène à son en-tête (sans JavaScript, il y mène tout seul). */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => montrerSeance(b.dataset.vers)));
+if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
+
 restore(); majBanc(false);
+placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // l'outil rejoint la séance affichée
 })();
 </script>
 

@@ -129,3 +129,13 @@ l'administre.
 ├── rapport_tests_3e_C7.8.md
 └── tests_3e_C7.8_sequence.mjs · tests_3e_C7.8_qcm.mjs · reponses_3e_C7.8.json
 ```
+
+## Les séances passent à onglets (04/11/2026, vague de la règle d'or n°311)
+
+Le découpage en séances de 55 min ne change pas (activités 0 et 1 | activités 2 et 3 | activité 4 et REFAIRE, puis la clôture) : chaque en-tête « 🗓 Séance N » devient la tête de son onglet, chaque bouton de fin de séance ouvre la suivante, et l'onglet en cours est mémorisé. L'ouverture (étiquettes, liens « Aller à », « Avant de commencer », situation, problématique et hypothèse, ce qui ne sort jamais, « Trois façons », billet d'entrée) est complète à la séance 1 et repliée dans le volet « 📖 Rappel » dès la séance 2, jamais supprimée. Sans JavaScript, la page reste d'un seul tenant.
+
+Restent visibles à chaque séance : le titre, la mission, la barre d'outils et le banc de liaison, qui sert aux séances 1 et 2 : dans l'activité 0 à la séance 1, juste après l'en-tête à la séance 2 (l'en-tête dit « Le banc de l'activité 0 te suit » au lieu de « en haut de la page ») ; à la séance 3, ni à l'écran ni sur la fiche papier. La copie unique de l'ancienne clé de 3e_C7.4 ne recopie pas la séance mémorisée par 3e_C7.4.
+
+Clôture : un corrigé par défi du Bonus (horloges et règle de fraîcheur, accusé de réception numéroté, vote à trois et la station du Marin), « Comment j'ai travaillé », la ligne des quatre niveaux du livret, « Je me positionne » sur 3e_C8.3.
+
+Sécurité visible (retouche du 04/11/2026) : l'encadré reste dans le volet, mais l'en-tête de la séance 2, où l'on manipule (voie 🅰), en rappelle la consigne en une ligne — aucun secret ni donnée personnelle dans un message, très basse tension — avec un lien qui ouvre le volet sur l'encadré.

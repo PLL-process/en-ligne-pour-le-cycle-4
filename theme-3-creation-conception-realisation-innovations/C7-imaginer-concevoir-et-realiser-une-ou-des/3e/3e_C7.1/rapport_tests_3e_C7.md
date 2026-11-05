@@ -127,3 +127,14 @@ fait » affirme le passé (n°304) ; 20 questions en listes déroulantes (n°300
 sur la page élève (n°298) ; une « image sans alternative » qui est un faux positif (le texte alternatif d'une capture
 contient « > »). Deux zones de rédaction de l'activité 3 (pseudo-code, correction du clignotement) n'ont pas de version
 étayée propre (n°31). Le contenu de Vittascience n'est pas rejoué (service externe).
+
+## Reprise du 04/11/2026 — les séances passent à onglets (vague de la règle d'or n°311)
+
+Découpage gardé (activités 0, 1 et 2 | gestes de Vittascience, activité 3 et REFAIRE | activités 6 et 7, puis la clôture) ; ouverture repliée dans le volet « 📖 Rappel » dès la séance 2. Voir la fiche pédagogique.
+
+- `node tests_regle_311_3e_C7.1.mjs` : « Où j'en suis » 18 / 18, relais 9 / 9, banc commun **34 / 34**.
+- `node tests_3e_C7.mjs .` : **71 / 71**, comme avant ; le banc lit les durées dans toute la page (scripts et styles exclus), ouvre l'onglet avant d'agir (billet, activité 3, séance 3) et, à 390 px, ouvre chaque séance par son onglet.
+
+Contrôles du dépôt, sur ce dossier ou sur tout le dépôt : `controle_squelette` 0 défaut (D1 à D6), aucun « à rédiger », aucun signalement ; `controle_impression` (0 page refusée), `controle_verrous`, `controle_hors_ligne`, `controle_contraste_liens`, `controle_regles_visibles`, `controle_liens`, `controle_navigation_seances`, `controle_hierarchie`, `controle_unites`, `controle_sigles`, `controle_impression_papier` : verts. `banc_papier.py` : une séance par fiche, 0 texte pâle, 0 champ d'écran imprimé. `verif_regles_audit.py` : les mêmes ✘ qu'avant, hors périmètre de cette vague.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

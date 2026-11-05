@@ -155,3 +155,14 @@ quelque chose pourrait se passer. Sinon il mesure son propre silence.*
   caractères et des lignes. C'est écrit dans la page, à l'élève.
 * Ils ne prouvent rien sur ce qui se passe **en classe**. Un test vert dit que la page fait ce
   qu'elle annonce, pas qu'un élève apprend.
+
+## Reprise du 04/11/2026 — les séances passent à onglets (vague de la règle d'or n°311)
+
+Découpage gardé (activités 0 et 1 | activités 2 et 3 | activité 4 et REFAIRE, puis la clôture) ; ouverture repliée dans le volet « 📖 Rappel » dès la séance 2. Voir la fiche pédagogique.
+
+- `node tests_regle_311_3e_C7.8.mjs` : l'outil suit la séance 14 / 14, ligne de sécurité 2 / 2, relais 8 / 8, banc commun **34 / 34**.
+- `tests_3e_C7.8_sequence.mjs` : **58 / 58**, comme avant ; le banc ouvre l'onglet avant d'agir. `tests_3e_C7.8_qcm.mjs` : 32 / 32.
+
+Contrôles du dépôt, sur ce dossier ou sur tout le dépôt : `controle_squelette` 0 défaut (D1 à D6), aucun « à rédiger », aucun signalement ; `controle_impression` (0 page refusée), `controle_verrous`, `controle_hors_ligne`, `controle_contraste_liens`, `controle_regles_visibles`, `controle_liens`, `controle_navigation_seances`, `controle_hierarchie`, `controle_unites`, `controle_sigles`, `controle_impression_papier` : verts. `banc_papier.py` : une séance par fiche, 0 texte pâle, 0 champ d'écran imprimé. `verif_regles_audit.py` : les mêmes ✘ qu'avant, hors périmètre de cette vague.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

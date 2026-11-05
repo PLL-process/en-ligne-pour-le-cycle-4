@@ -146,6 +146,56 @@ details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
 /* règle d'or n°305 — une activité qui demande Internet le dit à son début */
 .activite-en-ligne{border-left:4px solid #ffd66b;background:rgba(255,214,107,.12);padding:.55em .85em;border-radius:0 8px 8px 0;margin:.6em 0 .8em;font-size:.95em;line-height:1.45}
 @media print{.activite-en-ligne,.activite-en-ligne b{color:#1a1a1a!important}.activite-en-ligne{background:#fff8e1!important;border-left-color:#8a6400!important}}
+
+/* ── Séances à onglets (squelette n°306) et volet « 📖 Rappel » (règle d'or n°311) — vague du 04/11/2026, sur le modèle
+   du pilote 4e_C8.1. Sans JavaScript (pas de classe js-onglets), la page reste d'un seul tenant : toutes les séances à la
+   suite, sans onglets, le volet ouvert et sans bouton. ── */
+.seance-tabs{display:none;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+.js-onglets .seance-tabs{display:flex}
+.seance-tab{flex:1;min-width:150px;min-height:44px;padding:11px 8px;border-radius:10px;background:var(--panel2);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit;line-height:1.3}
+.seance-tab small{display:block;font-weight:400;font-size:.9em;color:var(--sub)}
+.seance-tab.active{background:#1d4e89;color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+.seance-tab.active small{color:#e4eaf5}
+.seance-tab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.js-onglets .seance-panel{display:none}
+.js-onglets .seance-panel.active{display:block}
+.rappel-ouverture{background:none;border:0;border-radius:0;padding:0;margin:0}
+.rappel-ouverture>summary{display:none}
+.rappel-ouverture.volet>summary{display:flex;align-items:center;cursor:pointer;min-height:44px;line-height:1.3;padding:8px 14px;max-width:940px;margin:10px auto 18px;border:1.5px solid var(--border);border-radius:12px;background:var(--panel);color:var(--hl);font-weight:700}
+.rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media print{.rappel-ouverture>summary{display:none!important}}
+.positionnement{margin:8px 0;border:1px solid var(--border);border-radius:10px;padding:8px 12px}
+.positionnement legend{font-size:.9em;color:var(--sub);padding:0 6px}
+.positionnement label{display:inline-block;margin-right:14px}
+.positionnement input[type=radio]{width:auto}
+/* L'outil des séances (n°311 : un outil n'est pas du décor) : un seul nœud, qui suit les séances qui s'en servent. Hors de
+   son activité, il garde le cadre d'une carte et son titre ; ses tableaux défilent dans leur cadre à 390 px. */
+.outil-seance>.outil-titre{display:none}
+.seance-panel>.outil-seance{max-width:940px;margin:0 auto 18px}
+.seance-panel>.outil-seance>.outil-titre{display:block;margin:0 0 6px;color:var(--hl);font-weight:700}
+@media(max-width:680px){.outil-seance table{display:block;overflow-x:auto;max-width:100%}}
+
+.seance-tab .done{color:var(--ok)}
+/* n°311 : à 390 px, le sélecteur de parcours tient sur deux lignes de boutons, sous son intitulé (comme le pilote) */
+@media (max-width:480px){
+  .choix-parcours-boutons .parcours-label{flex:1 1 100%;text-align:center}
+  .choix-parcours-boutons{align-items:flex-start}
+  .choix-parcours-boutons .parcours-btn{flex:1 1 42%;box-sizing:border-box;min-height:42px;display:flex;align-items:center;justify-content:center;padding:6px;font-size:.84em;white-space:nowrap}
+}
+.rappel-hyp{margin:8px 0 12px;padding:10px 12px;border-left:4px solid var(--hl);background:rgba(97,218,251,.06);border-radius:0 8px 8px 0}
+/* « 🗺 Où j'en suis » (consigne de la vague, 04/11/2026) : ouvert à la séance 1, replié dès la séance 2 ; sa ligne de résumé
+   garde l'information (activités validées). Sans JavaScript, il reste ouvert. */
+#taches{padding:0}
+#taches>details>summary{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 20px;cursor:pointer;color:var(--hl);font-weight:700;line-height:1.3}
+#taches>details>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+#taches>details>div{padding:0 20px 16px}
+#taches>details[open]>summary .taches-ouvrir{display:none}
+#taches>details:not([open])>summary .taches-replier{display:none}
+#taches .taches-ouvrir,#taches .taches-replier{margin-left:auto;font-weight:400;font-size:.85em;color:var(--sub)}
+@media print{#taches>details>summary{display:none!important}}
+@media (max-width:480px){#taches>details>summary{padding:8px 12px;font-size:.95em}#taches>details>div{padding:0 12px 14px}#taches .taches-mot{display:none}}
+/* hors de leur ancienne carte, les deux notes du sélecteur restent centrées sous lui */
+body>p.saved-note{display:block;max-width:940px;margin:6px auto}
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -508,11 +558,43 @@ details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="qcm_3e_C7_capteur-confort-ny.html">🧠 QCM</a><a href="lexique_3e_C7.1.html">📖 Lexique</a></nav>
 
 <h1>🌡️ Capteur de confort scolaire — New York</h1>
+<div class="subtitle">🎯 Ta mission : concevoir, valider et programmer l'alerte qui signale qu'une salle de classe new-yorkaise surchauffe.</div>
+<div class="identite" id="identite">
+<label>Nom&nbsp;: <input id="eleveNom" aria-label="Nom" autocomplete="family-name"></label>
+<label>Prénom&nbsp;: <input id="elevePrenom" aria-label="Prénom" autocomplete="given-name"></label>
+<label>Classe&nbsp;: <input id="eleveClasse" aria-label="Classe"></label>
+<span class="saved-note" id="savedNote"></span>
+</div>
+
+<div class="toolbar">
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+  <button class="btn ghost" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+</div>
+
+<div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
+  <span class="parcours-label">🔀 Mon parcours :</span>
+  <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 En simulation</button>
+  <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sur papier</button>
+  <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
+</div>
+
+<p class="saved-note" id="parcoursNote" role="status" aria-live="polite" style="text-align:center">Parcours affiché : <b>tous</b>.</p>
+
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque les corrections et les compléments : il ne reste que les consignes et les exercices.</p>
+
+<!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
+<details class="rappel-ouverture" id="ouverture" open>
+<summary>📖 Rappel : la situation et ton hypothèse</summary>
+
+<div class="badges"><span class="badge">3e</span><span class="badge">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span><span class="badge" title="Programme 2024 — 3e_C7.1 : Élaborer un processus de conception et de réalisation dans une durée, avec des tâches identifiées.&#10;3e_C7.2 : Proposer et fabriquer un ensemble de solutions pour produire un nouvel OST (croquis, schéma, graphique, algorithme, modélisation).&#10;3e_C8.1 : Mettre en œuvre une simulation pour valider la tenue mécanique d'un matériau.">3e_C7.1 · 3e_C7.2 · 3e_C8.1</span><span class="badge" title="Domaines du socle commun travaillés : D2 Les méthodes et outils pour apprendre · D4 Les systèmes naturels et les systèmes techniques · D5 Les représentations du monde et l’activité humaine.">Socle : D2 · D4 · D5</span><span class="badge" title="Ancrage : New York — collège en zone d'îlot de chaleur (rooftop / cour asphaltée).">New York</span><span class="badge" title="CRCN 3.4 Programmer — niveau 2.&#10;Le cadre : « Écrire des programmes et des algorithmes pour répondre à un besoin. »&#10;Ici : tu remets l’algorigramme de l’alerte en ordre, écris SI température &gt; seuil ALORS alerte, puis le programmes dans Vittascience et le confrontes à quatre scénarios.&#10;&#10;CRCN 1.3 Traiter des données — niveau 2.&#10;Le cadre : « Appliquer des traitements à des données pour les analyser et les interpréter. »&#10;Ici : pour chaque scénario de température, tu prédis le comportement, le vérifies au simulateur, et notes l’attendu, l’observé et la décision dans le tableau de tests.&#10;&#10;CRCN 5.1 Résoudre des problèmes techniques — niveau 2.&#10;Le cadre : « Résoudre des problèmes techniques pour garantir et rétablir le bon fonctionnement d’un environnement informatique. »&#10;Ici : LED éteinte alors que T = 33 °C : tu proposes une cause probable et le test qui la départage d’une autre.">🎯 CRCN 3.4 Programmer (Niv. 2) · 1.3 Traiter des données (Niv. 2) · 5.1 Résoudre des problèmes techniques (Niv. 2)</span><span class="badge" title="Durée : 3 séances de 55 min sur cette page — 145 min d'activités annoncées (la fabrication du boîtier se poursuit au TP « Le boîtier étanche », et l'atelier de planification prend une séance de plus). Séance 1 : activités 0, 1 et 2, soit 55 min · Séance 2 : activité 3 et REFAIRE, soit 45 min · Séance 3 : activités 6 et 7, puis le bilan, soit 45 min.">⏱ 3 séances de 55 min</span></div>
+
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
   <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
   <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
@@ -532,76 +614,6 @@ details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
   </ul>
   <p class="change"><b>Dans cette séquence&nbsp;:</b> personne ne te donne la liste des tâches. Une infirmière dit qu'il fait trop chaud en salle 214, l'emploi du temps dit le contraire, et c'est ta mesure qui tranchera. Tu vas <b>élaborer</b> le processus complet — découper, estimer, tenir une date — sur un problème dont on ignore la réponse.</p>
   <p class="filet">Un mot à garder en tête : un projet technique commence toujours par une question qu'on ne sait pas trancher autrement qu'en mesurant.</p>
-</section>
-
-
-<div class="subtitle">Concevoir et valider une solution pour signaler la surchauffe d'une salle (îlot de chaleur urbain)</div>
-<div class="badges"><span class="badge">3e</span><span class="badge">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span><span class="badge" title="Programme 2024 — 3e_C7.1 : Élaborer un processus de conception et de réalisation dans une durée, avec des tâches identifiées.&#10;3e_C7.2 : Proposer et fabriquer un ensemble de solutions pour produire un nouvel OST (croquis, schéma, graphique, algorithme, modélisation).&#10;3e_C8.1 : Mettre en œuvre une simulation pour valider la tenue mécanique d'un matériau.">3e_C7.1 · 3e_C7.2 · 3e_C8.1</span><span class="badge" title="Domaines du socle commun travaillés : D2 Les méthodes et outils pour apprendre · D4 Les systèmes naturels et les systèmes techniques · D5 Les représentations du monde et l’activité humaine.">Socle : D2 · D4 · D5</span><span class="badge" title="Ancrage : New York — collège en zone d'îlot de chaleur (rooftop / cour asphaltée).">New York</span><span class="badge" title="CRCN 3.4 Programmer — niveau 2.&#10;Le cadre : « Écrire des programmes et des algorithmes pour répondre à un besoin. »&#10;Ici : tu remets l’algorigramme de l’alerte en ordre, écris SI température &gt; seuil ALORS alerte, puis le programmes dans Vittascience et le confrontes à quatre scénarios.&#10;&#10;CRCN 1.3 Traiter des données — niveau 2.&#10;Le cadre : « Appliquer des traitements à des données pour les analyser et les interpréter. »&#10;Ici : pour chaque scénario de température, tu prédis le comportement, le vérifies au simulateur, et notes l’attendu, l’observé et la décision dans le tableau de tests.&#10;&#10;CRCN 5.1 Résoudre des problèmes techniques — niveau 2.&#10;Le cadre : « Résoudre des problèmes techniques pour garantir et rétablir le bon fonctionnement d’un environnement informatique. »&#10;Ici : LED éteinte alors que T = 33 °C : tu proposes une cause probable et le test qui la départage d’une autre.">🎯 CRCN 3.4 Programmer (Niv. 2) · 1.3 Traiter des données (Niv. 2) · 5.1 Résoudre des problèmes techniques (Niv. 2)</span><span class="badge" title="Durée : 3 séances de 55 min sur cette page — 145 min d'activités annoncées (la fabrication du boîtier se poursuit au TP « Le boîtier étanche », et l'atelier de planification prend une séance de plus). Séance 1 : activités 0, 1 et 2, soit 55 min · Séance 2 : activité 3 et REFAIRE, soit 45 min · Séance 3 : activités 6 et 7, puis le bilan, soit 45 min.">⏱ 3 séances de 55 min</span></div>
-<div class="identite" id="identite">
-<label>Nom&nbsp;: <input id="eleveNom" aria-label="Nom" autocomplete="family-name"></label>
-<label>Prénom&nbsp;: <input id="elevePrenom" aria-label="Prénom" autocomplete="given-name"></label>
-<label>Classe&nbsp;: <input id="eleveClasse" aria-label="Classe"></label>
-<span class="saved-note" id="savedNote"></span>
-</div>
-<section class="card">
-<div class="toolbar">
-  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
-  <button class="btn ghost" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
-</div>
-<div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
-  <span class="parcours-label">🔀 Mon parcours :</span>
-  <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 En simulation</button>
-  <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sur papier</button>
-  <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
-</div>
-<p class="saved-note" id="parcoursNote" role="status" aria-live="polite" style="text-align:center">Parcours affiché : <b>tous</b>.</p>
-<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque les corrections et les compléments : il ne reste que les consignes et les exercices.</p>
-<div class="progress-wrap">
-  <span class="progress-label">Ma progression : <b id="progTxt">0 / 8 activités validées</b></span>
-  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
-</div>
-
-<section class="card" id="billet">
-<h2>🎫 Billet d'entrée — trois questions, sans note</h2>
-<p>Cette séquence s'appuie sur ce que tu as fait en 4e — concevoir un support, puis le valider par des tests. <b>Elles ne comptent pas dans ta progression et ne sont pas notées</b> — « je ne sais pas encore » est une réponse utile.</p>
-<div class="exo">
-  <p><label for="be_1">1. Élaborer un processus de conception, cela veut dire…
-  <select id="be_1"><option value="">— choisir —</option><option>écrire soi-même les tâches, leur ordre et leur durée</option><option>suivre un planning donné par le professeur</option><option>fabriquer le plus vite possible</option><option>je ne sais pas encore</option></select></label></p>
-  <p><label for="be_2">2. Une simulation sert à…
-  <select id="be_2"><option value="">— choisir —</option><option>essayer sans fabriquer, pour éliminer les mauvaises pistes</option><option>remplacer définitivement les essais réels</option><option>faire joli dans le compte rendu</option><option>je ne sais pas encore</option></select></label></p>
-  <p><label for="be_3">3. Un essai n'a de valeur que si…
-  <select id="be_3"><option value="">— choisir —</option><option>le résultat attendu a été écrit AVANT</option><option>on le refait plusieurs fois</option><option>le professeur le valide</option><option>je ne sais pas encore</option></select></label></p>
-  <button class="btn small" id="btnBillet" type="button">Voir où j'en suis</button>
-  <p class="feedback" id="fbBillet" role="status"></p>
-</div>
-</section>
-
-<section class="card">
-<h2>🔀 Deux façons de vivre la séquence</h2>
-<div class="exo">
-<p data-parcours="b">🅱 <b>En simulation</b> : le simulateur thermique de l'activité 0 fonctionne dans la page, hors connexion, et sert de banc d'essai pour tous les cas — y compris ceux qu'on ne peut pas provoquer en classe. C'est le parcours principal.</p>
-<p data-parcours="c">🅲 <b>Sur papier</b> : croquis, tableau d'essais et algorigramme au cahier — <b>mêmes questions, mêmes validations</b>.</p>
-</div>
-<div class="retenir"><b>Aucun parcours ne retire de question.</b> Le sélecteur en haut de page masque seulement
-ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le monde.</div>
-</section>
-
-<section class="card" id="taches">
-<h2>🗺 Où j'en suis — les 8 activités de cette séquence, en trois séances</h2>
-<p>Chaque activité validée se colore ici. Rien ne se perd si tu t'arrêtes en route.</p>
-<p class="seances-liens">Aller à&nbsp;: <a href="#seance-1">Séance 1 — Faire, concevoir, valider</a> · <a href="#seance-2">Séance 2 — L'algorigramme, puis le code</a> · <a href="#seance-3">Séance 3 — Représenter les solutions</a></p>
-<div class="taches-bandeau" id="tachesBandeau"></div>
-</section>
-
-</section>
-
-<section class="card">
-<h2>🔁 Le contrat de la séquence</h2>
-<div class="contrat18">
-<p style="margin:0 0 6px"><b>FAIRE pour comprendre&nbsp;:</b> tu commences par MANIPULER le simulateur thermique (activité 0) — avant toute définition.</p>
-<p style="margin:0 0 6px"><b>COMPRENDRE&nbsp;:</b> chaque geste débouche sur un «&nbsp;À retenir&nbsp;» qui NOMME le concept (seuil, protocole, hystérésis…).</p>
-<p style="margin:0"><b>REFAIRE pour comprendre encore&nbsp;:</b> tu réinvestis le concept sur un NOUVEAU cas (l'humidité du local archives) — même squelette, autre habit.</p>
-</div>
 </section>
 
 <section class="card">
@@ -636,7 +648,6 @@ qu'une température mesurée.</p>
 <p class="problematique">Comment concevoir et valider une solution technique qui signale le dépassement d'un seuil de température dans une salle scolaire exposée à l'îlot de chaleur urbain&nbsp;?</p>
 </section>
 
-
 <section class="card">
 <h2>💡 Hypothèse de départ</h2>
 <label for="hyp">✍ Mon hypothèse : d'après toi, à partir de quelle température faut-il alerter — et pourquoi celle-là ?</label>
@@ -654,6 +665,68 @@ qu'une température mesurée.</p>
 <p class="saved-note">💾 Sauvegarde automatique dans la page, à chaque modification.</p>
 </section>
 
+<section class="card" id="billet">
+<h2>🎫 Billet d'entrée — trois questions, sans note</h2>
+<p>Cette séquence s'appuie sur ce que tu as fait en 4e — concevoir un support, puis le valider par des tests. <b>Elles ne comptent pas dans ta progression et ne sont pas notées</b> — « je ne sais pas encore » est une réponse utile.</p>
+<div class="exo">
+  <p><label for="be_1">1. Élaborer un processus de conception, cela veut dire…
+  <select id="be_1"><option value="">— choisir —</option><option>écrire soi-même les tâches, leur ordre et leur durée</option><option>suivre un planning donné par le professeur</option><option>fabriquer le plus vite possible</option><option>je ne sais pas encore</option></select></label></p>
+  <p><label for="be_2">2. Une simulation sert à…
+  <select id="be_2"><option value="">— choisir —</option><option>essayer sans fabriquer, pour éliminer les mauvaises pistes</option><option>remplacer définitivement les essais réels</option><option>faire joli dans le compte rendu</option><option>je ne sais pas encore</option></select></label></p>
+  <p><label for="be_3">3. Un essai n'a de valeur que si…
+  <select id="be_3"><option value="">— choisir —</option><option>le résultat attendu a été écrit AVANT</option><option>on le refait plusieurs fois</option><option>le professeur le valide</option><option>je ne sais pas encore</option></select></label></p>
+  <button class="btn small" id="btnBillet" type="button">Voir où j'en suis</button>
+  <p class="feedback" id="fbBillet" role="status"></p>
+</div>
+</section>
+
+<section class="card">
+<h2>🔁 Le contrat de la séquence</h2>
+<div class="contrat18">
+<p style="margin:0 0 6px"><b>FAIRE pour comprendre&nbsp;:</b> tu commences par MANIPULER le simulateur thermique (activité 0) — avant toute définition.</p>
+<p style="margin:0 0 6px"><b>COMPRENDRE&nbsp;:</b> chaque geste débouche sur un «&nbsp;À retenir&nbsp;» qui NOMME le concept (seuil, protocole, hystérésis…).</p>
+<p style="margin:0"><b>REFAIRE pour comprendre encore&nbsp;:</b> tu réinvestis le concept sur un NOUVEAU cas (l'humidité du local archives) — même squelette, autre habit.</p>
+</div>
+</section>
+
+<section class="card">
+<h2>🔀 Deux façons de vivre la séquence</h2>
+<div class="exo">
+<p data-parcours="b">🅱 <b>En simulation</b> : le simulateur thermique de l'activité 0 fonctionne dans la page, hors connexion, et sert de banc d'essai pour tous les cas — y compris ceux qu'on ne peut pas provoquer en classe. C'est le parcours principal.</p>
+<p data-parcours="c">🅲 <b>Sur papier</b> : croquis, tableau d'essais et algorigramme au cahier — <b>mêmes questions, mêmes validations</b>.</p>
+</div>
+<div class="retenir"><b>Aucun parcours ne retire de question.</b> Le sélecteur en haut de page masque seulement
+ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le monde.</div>
+</section>
+
+</details><!-- /rappel-ouverture -->
+
+<!-- Hors du volet, parce qu'ils servent à chaque séance : la progression et « Où j'en suis » (n°30). -->
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression : <b id="progTxt">0 / 8 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card" id="taches">
+<details id="tachesVolet" open>
+<summary><span>🗺 Où j'en suis — <span id="tachesResume">0 / 8 activités validées</span></span><span class="taches-replier" aria-hidden="true">▴<span class="taches-mot"> replier</span></span><span class="taches-ouvrir" aria-hidden="true">▾<span class="taches-mot"> la liste</span></span></summary>
+<div>
+<h2>🗺 Où j'en suis — les 8 activités de cette séquence, en trois séances</h2>
+<p>Chaque activité validée se colore ici. Rien ne se perd si tu t'arrêtes en route.</p>
+<p class="seances-liens">Aller à&nbsp;: <a href="#seance-1">Séance 1 — Faire, concevoir, valider</a> · <a href="#seance-2">Séance 2 — L'algorigramme, puis le code</a> · <a href="#seance-3">Séance 3 — Représenter les solutions</a></p>
+<div class="taches-bandeau" id="tachesBandeau"></div>
+</div>
+</details>
+</section>
+
+<nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" id="tab-s1" data-panel="s1" role="tab" aria-controls="s1" aria-selected="true" type="button">Séance 1<br><small>Faire, concevoir, valider</small><span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>L'algorigramme, puis le code</small><span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" id="tab-s3" data-panel="s3" role="tab" aria-controls="s3" aria-selected="false" type="button">Séance 3<br><small>Représenter les solutions</small><span class="done" id="done-s3"></span></button>
+</nav>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
 <section class="card seance-entete" id="seance-1" aria-labelledby="seance-1-titre">
 <h2 id="seance-1-titre">🗓 Séance 1 — Faire, concevoir, valider</h2>
 <p class="seance-duree">Durée&nbsp;: 55 minutes · activités 0, 1 et 2.</p>
@@ -760,9 +833,12 @@ qu'une température mesurée.</p>
 
 <nav class="fin-seance" aria-label="Fin de la séance 1">
 <p>Fin de la séance 1. La suite, la prochaine fois&nbsp;:</p>
-<a class="btn vers-seance" href="#seance-2">➡ Séance 2 — L'algorigramme, puis le code</a>
+<a class="btn vers-seance" href="#seance-2" data-vers="s2">➡ Séance 2 — L'algorigramme, puis le code</a>
 </nav>
+</div>
 
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
 <section class="card seance-entete" id="seance-2" aria-labelledby="seance-2-titre">
 <h2 id="seance-2-titre">🗓 Séance 2 — L'algorigramme, puis le code</h2>
 <p class="seance-duree">Durée&nbsp;: 55 minutes · les gestes de Vittascience, l'activité 3 et le REFAIRE.</p>
@@ -933,9 +1009,12 @@ FIN SI</pre>
 
 <nav class="fin-seance" aria-label="Fin de la séance 2">
 <p>Fin de la séance 2. La suite, la prochaine fois&nbsp;:</p>
-<a class="btn vers-seance" href="#seance-3">➡ Séance 3 — Représenter les solutions</a>
+<a class="btn vers-seance" href="#seance-3" data-vers="s3">➡ Séance 3 — Représenter les solutions</a>
 </nav>
+</div>
 
+<!-- ══════════════════ SÉANCE 3 ══════════════════ -->
+<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
 <section class="card seance-entete" id="seance-3" aria-labelledby="seance-3-titre">
 <h2 id="seance-3-titre">🗓 Séance 3 — Représenter les solutions</h2>
 <p class="seance-duree">Durée&nbsp;: 55 minutes · activités 6 et 7, puis le bilan de la séquence.</p>
@@ -1011,6 +1090,7 @@ else:
 <section class="card" id="bilan">
 <h2>🙋 Bilan personnel <span class="chrono">⏱ ~7 min</span></h2>
 <h3>Retour à mon hypothèse</h3>
+<div id="rappelHyp" class="rappel-hyp" style="display:none"></div>
 <label for="bilanHyp">✍ Relis ton hypothèse de départ, en haut de la page&nbsp;: après le simulateur et les essais, gardes-tu ton seuil d'alerte, le changes-tu ou le complètes-tu — et pourquoi&nbsp;?</label>
 <textarea id="bilanHyp" rows="2" placeholder="Au départ, je pensais… Les essais ont montré… Donc…"></textarea>
 <details class="etayage">
@@ -1086,6 +1166,8 @@ else:
 <a class="btn" href="qcm_3e_C7_capteur-confort-ny.html">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
 
+</div>
+
 <footer>TechnoQuest · Thème 3 · 3e_C7/C8 · Capteur confort · New York. Sauvegarde locale uniquement — aucune donnée envoyée.</footer>
 
 <script>
@@ -1094,6 +1176,7 @@ else:
 const KEY = "seq_3e_C7_capteur_confort";
 const $ = id => document.getElementById(id);
 window.__exp = window.__exp || {};
+let ongletActif = null;   // la séance affichée (vague n°311, 04/11/2026), rangée à part des verrous
 
 /* règle n°13 : coloration des listings */
 function pyc(src){
@@ -1188,17 +1271,21 @@ function save(){
     if(e.type === "radio" || e.type === "checkbox"){ if(e.checked) o.coches.push(e.id); return; }
     o.inputs[e.id] = e.value;
   });
+  o.onglet = ongletActif;   // l'onglet en cours (vague n°311, 04/11/2026)
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
   const sn = $("savedNote"); if(sn){ sn.textContent = "💾 Sauvegardé (" + new Date().toLocaleTimeString() + ")"; }
 }
 function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
   if(!o) return;
+  ongletActif = o.onglet || null;
   Object.entries(o.inputs || {}).forEach(([id, v]) => { const e = $(id); if(e && !e.closest(".atelier-incruste") && e.type !== "radio" && e.type !== "checkbox") e.value = v; });
   (o.coches || []).forEach(id => { const e = $(id); if(e && !e.closest(".atelier-incruste")) e.checked = true; });
   window.__exp = Object.assign(window.__exp || {}, o.exp || {});
   (o.par && o.par.s || []).forEach(x => { if(!par.s.includes(x)) par.s.push(x); });
-  updateProg();
+  updateProg(); majHyp();
+  // l'onglet en cours : un lien direct vers une ancre l'emporte sur lui
+  if(!location.hash && ongletActif && $(ongletActif)) montrerSeance(ongletActif, false);
 }
 document.addEventListener("change", e => { if(e.target.matches("input, select, textarea")) save(); });
 /* ══ Règle d'or n°30 — le tableau de bord des tâches, et la progression ══ */
@@ -1212,6 +1299,7 @@ const TACHES = [
   {n:"6", seance:3, libelle:"Contrôler un FAST avant de fabriquer"},
   {n:"7", seance:3, libelle:"Proposer par des croquis, puis choisir la représentation"}
 ];
+const SEANCES = {s1:["0","1","2"], s2:["3","4","5"], s3:["6","7"]};   // les activités (data-check) de chaque séance
 function majTaches(){
   const c = $("tachesBandeau"); if(!c) return;
   c.innerHTML = TACHES.map(t => {
@@ -1225,6 +1313,8 @@ function updateProg(){
   if($("progTxt")) $("progTxt").textContent = n + " / " + N + " activités validées";
   if($("progFill")) $("progFill").style.width = Math.round(n * 100 / N) + "%";
   if($("progBar")) $("progBar").setAttribute("aria-valuenow", n);
+  if($("tachesResume")) $("tachesResume").textContent = n + " / " + N + " activités validées";   // la ligne d'« Où j'en suis », repliée dès la séance 2
+  Object.entries(SEANCES).forEach(([id, acts]) => { const d = $("done-" + id); if(d) d.textContent = acts.every(a => par.s.includes(a)) ? " ✔" : ""; });
   majTaches();
 }
 
@@ -1282,6 +1372,62 @@ document.querySelectorAll(".parcours-btn").forEach(b => b.addEventListener("clic
   window.__exp.parcours = b.dataset.choix;
   majParcours(); save();
 }));
+
+/* retour à l'hypothèse (n°301) : le bilan relit ce que l'élève a écrit au début */
+function majHyp(){
+  const el = $("rappelHyp"), h = ($("hyp") || {}).value || ""; if(!el) return;
+  if(h.trim()){ el.style.display = "block"; el.innerHTML = "<b>🔎 Au début de la séquence, tu avais écrit :</b><br><i>« " + h.replace(/&/g,"&amp;").replace(/</g,"&lt;") + " »</i>"; }
+  else { el.style.display = "none"; }
+}
+if($("hyp")) $("hyp").addEventListener("input", majHyp);
+
+/* ══ Séances à onglets (squelette n°306) — vague du 04/11/2026, sur le modèle du pilote 4e_C8.1 ══ */
+function montrerSeance(id, memoriser){
+  if(!$(id)) return;
+  document.querySelectorAll(".seance-tab").forEach(x => { const on = x.dataset.panel === id; x.classList.toggle("active", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
+  document.querySelectorAll(".seance-panel").forEach(p => p.classList.toggle("active", p.id === id));
+  appliqueSeance(id);
+  ongletActif = id;
+  if(memoriser !== false) save();
+}
+/* Un clic sur un onglet oublie l'ancre de l'adresse : au rechargement, c'est la séance mémorisée qui revient. */
+document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => {
+  montrerSeance(t.dataset.panel);
+  if(location.hash) try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){}
+}));
+/* ══ Règle d'or n°311 : séance 1 = ouverture complète ; séance 2 et suivantes = le volet « 📖 Rappel », replié. ══
+   Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte (ou le
+   volet, si l'ancre est dans l'ouverture). Comme au pilote, le volet ne se replie qu'une fois la page chargée. */
+function appliqueSeance(idPanneau){
+  const v = $("ouverture"); if(!v) return;
+  const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
+  const t = $("tachesVolet"); if(t) t.open = n < 2;   // « Où j'en suis » : ouvert à la séance 1, replié ensuite (un clic le rouvre)
+  v.classList.toggle("volet", n >= 2);
+  v.toggleAttribute("data-fermer-au-chargement", n >= 2 && document.readyState !== "complete");
+  if(!v.hasAttribute("data-fermer-au-chargement")) v.open = n < 2;
+}
+{
+  let voletAvantImpression = null;
+  window.addEventListener("beforeprint", () => { const v = $("ouverture"); if(v){ voletAvantImpression = v.open; v.open = true; } });
+  window.addEventListener("afterprint", () => { const v = $("ouverture"); if(v && voletAvantImpression !== null){ v.open = voletAvantImpression; voletAvantImpression = null; } });
+  const cibleDuLien = () => { let id = ""; try{ id = decodeURIComponent(location.hash.slice(1)); }catch(e){} return id ? $(id) : null; };
+  const ouvrirSeanceDeLAncre = () => {
+    const cible = cibleDuLien(); if(!cible) return;
+    const pan = cible.closest(".seance-panel"), v = $("ouverture");
+    if(pan && !pan.classList.contains("active")){ montrerSeance(pan.id); setTimeout(() => cible.scrollIntoView({block:"start"}), 60); }
+    else if(!pan && v && !v.open && v.contains(cible)){ v.open = true; setTimeout(() => cible.scrollIntoView({block:"start"}), 60); }
+  };
+  window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
+  window.addEventListener("load", () => {
+    const v = $("ouverture"); if(!v || !v.hasAttribute("data-fermer-au-chargement")) return;
+    appliqueSeance((document.querySelector(".seance-panel.active") || {}).id);
+    const cible = cibleDuLien(); if(cible && cible.closest(".seance-panel.active")) cible.scrollIntoView({block:"start"});
+  });
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", ouvrirSeanceDeLAncre); else setTimeout(ouvrirSeanceDeLAncre, 0);
+}
+/* Règle d'or n°101 — chaque séance mène explicitement à la suivante. Le bouton est un lien vers l'en-tête de la séance
+   suivante : on ouvre son onglet, puis le lien amène à son en-tête (sans JavaScript, il y mène tout seul). */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => montrerSeance(b.dataset.vers)));
 
 restore();
 if(window.__exp && window.__exp.essentiel) document.body.classList.add("essentiel");
@@ -1635,20 +1781,23 @@ majEssentiel(); majParcours(); updateProg();
 .atelier-incruste table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.9em}
 .atelier-incruste th,.atelier-incruste td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
 .atelier-incruste th{background:var(--panel2);color:var(--sub)}
-.atelier-incruste .tableau-menus table.cdcf{table-layout:fixed;font-size:.92em}
+.atelier-incruste .tableau-menus table.cdcf{table-layout:auto;font-size:.92em}
 .atelier-incruste .tableau-menus table.cdcf caption{caption-side:top;text-align:left;color:var(--sub);font-size:.95em;padding:0 0 6px}
 .atelier-incruste .tableau-menus table.cdcf th{vertical-align:bottom}
-.atelier-incruste .tableau-menus table.cdcf td{overflow-wrap:break-word}
+.atelier-incruste .tableau-menus table.cdcf th,.atelier-incruste .tableau-menus table.cdcf td{overflow-wrap:normal;word-break:normal;-webkit-hyphens:manual;hyphens:manual}
 .atelier-incruste .tableau-menus select{width:100%;max-width:100%;background:var(--input-bg);color:var(--text);border:1px solid var(--input-bd);
   border-radius:8px;padding:7px 9px;font-family:inherit;font-size:1em;min-height:40px}
 .atelier-incruste .tableau-menus .menu-vu,.atelier-incruste .tableau-menus .menu-fleche{display:none}
-.atelier-incruste .tableau-menus.menus-js .menu-case{position:relative;display:flex;align-items:flex-start;gap:6px;width:100%;min-height:40px;
-  padding:7px 9px;border:1.5px solid var(--hl);border-radius:8px;background:var(--input-bg);cursor:pointer}
+.atelier-incruste .tableau-menus .menu-mesure,.atelier-incruste .tableau-menus .retour-mesure{display:block;height:0;overflow:hidden;overflow:clip;visibility:hidden;white-space:pre-line}
+.atelier-incruste .tableau-menus .retour-mesure{font-size:.86em;line-height:1.35}
+.atelier-incruste .tableau-menus.menus-js .menu-case{position:relative;display:grid;grid-template-columns:1fr auto;column-gap:6px;align-items:start;
+  width:100%;min-height:40px;padding:7px 9px;border:1.5px solid var(--hl);border-radius:8px;background:var(--input-bg);cursor:pointer}
 .atelier-incruste .tableau-menus.menus-js .menu-case select{position:absolute;top:0;left:0;width:100%;height:100%;min-height:0;margin:0;padding:0;
   opacity:0;cursor:pointer;font-size:16px}
-.atelier-incruste .tableau-menus.menus-js .menu-vu{display:block;flex:1 1 auto;min-width:0;white-space:normal;line-height:1.35;color:#fff}
+.atelier-incruste .tableau-menus.menus-js .menu-vu{display:block;grid-column:1;grid-row:1;white-space:normal;line-height:1.35;color:#fff}
+.atelier-incruste .tableau-menus.menus-js .menu-mesure{grid-column:1;grid-row:1;line-height:1.35}
 .atelier-incruste .tableau-menus.menus-js .menu-vu:empty::before{content:"choisir";color:var(--sub);font-style:italic}
-.atelier-incruste .tableau-menus.menus-js .menu-fleche{display:block;flex:0 0 auto;color:var(--hl);line-height:1.35}
+.atelier-incruste .tableau-menus.menus-js .menu-fleche{display:block;grid-column:2;grid-row:1;color:var(--hl);line-height:1.35}
 .atelier-incruste .tableau-menus.menus-js .menu-case:focus-within{outline:3px solid var(--hl);outline-offset:2px}
 .atelier-incruste .tableau-menus.menus-js .menu-case.choisi{border-color:var(--input-bd)}
 .atelier-incruste .tableau-menus td.case-menu.faux .menu-case{border-color:var(--err)}
@@ -1672,8 +1821,9 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
 @media (max-width:600px){.atelier-incruste .figure{overflow-x:auto;-webkit-overflow-scrolling:touch}.atelier-incruste .figure svg.schema,.atelier-incruste .figure img{min-width:560px}}
 @media (max-width:600px){.atelier-incruste .figure svg.schema.etroit{min-width:0}}
 @media (max-width:640px){.atelier-incruste .tableau-menus table.cdcf,.atelier-incruste .tableau-menus table.cdcf tbody,.atelier-incruste .tableau-menus table.cdcf tr,.atelier-incruste .tableau-menus table.cdcf td,.atelier-incruste .tableau-menus table.cdcf caption{display:block;width:100%}.atelier-incruste .tableau-menus table.cdcf thead{display:none}.atelier-incruste .tableau-menus table.cdcf tr{border:1px solid var(--input-bd);border-radius:10px;margin:0 0 10px;padding:2px 12px 8px;background:rgba(11,27,57,.55)}.atelier-incruste .tableau-menus table.cdcf td{border:none;padding:7px 0 3px}.atelier-incruste .tableau-menus table.cdcf td+td{border-top:1px dashed var(--input-bd)}.atelier-incruste .tableau-menus table.cdcf td::before{content:attr(data-col);display:block;font-size:.82em;font-weight:700;color:var(--sub);margin:0 0 3px}}
+@media screen{.atelier-incruste .tableau-menus.en-cartes table.cdcf,.atelier-incruste .tableau-menus.en-cartes table.cdcf tbody,.atelier-incruste .tableau-menus.en-cartes table.cdcf tr,.atelier-incruste .tableau-menus.en-cartes table.cdcf td,.atelier-incruste .tableau-menus.en-cartes table.cdcf caption{display:block;width:100%}.atelier-incruste .tableau-menus.en-cartes table.cdcf thead{display:none}.atelier-incruste .tableau-menus.en-cartes table.cdcf tr{border:1px solid var(--input-bd);border-radius:10px;margin:0 0 10px;padding:2px 12px 8px;background:rgba(11,27,57,.55)}.atelier-incruste .tableau-menus.en-cartes table.cdcf td{border:none;padding:7px 0 3px}.atelier-incruste .tableau-menus.en-cartes table.cdcf td+td{border-top:1px dashed var(--input-bd)}.atelier-incruste .tableau-menus.en-cartes table.cdcf td::before{content:attr(data-col);display:block;font-size:.82em;font-weight:700;color:var(--sub);margin:0 0 3px}}
 @media (max-width:600px){.atelier-incruste .card{padding:12px 12px}}
-@media print{.atelier-incruste .btn,.atelier-incruste .croquis-outils{display:none!important}.atelier-incruste .card{background:#fff;border-color:#999;break-inside:avoid-page}.atelier-incruste a,.atelier-incruste a:visited{color:#00309e!important}.atelier-incruste textarea,.atelier-incruste input[type=text]{background:#fff;color:#111;border-color:#999}.atelier-incruste fieldset.qcm-groupe legend,.atelier-incruste .consigne b{color:#111}.atelier-incruste .meta,.atelier-incruste .demo .ligne,.atelier-incruste details,.atelier-incruste .verif-liste li{background:#fff!important;color:#111}.atelier-incruste .retenir,.atelier-incruste .piege,.atelier-incruste .critere{background:#fff!important}.atelier-incruste .retenir b{color:#176b2c}.atelier-incruste .piege b{color:#a1122a}.atelier-incruste .critere b{color:#7a5a00}.atelier-incruste .retour{background:#fff!important;color:#111!important}.atelier-incruste .note,.atelier-incruste details summary,.atelier-incruste .retour-option,.atelier-incruste .meta b{color:#1a3a7a!important}.atelier-incruste details.cours summary{color:#111!important}.atelier-incruste .tableau-menus table.cdcf th{background:#fff!important;color:#111}.atelier-incruste .tableau-menus table.cdcf th,.atelier-incruste .tableau-menus table.cdcf td{border-color:#999}.atelier-incruste .tableau-menus table.cdcf tr{break-inside:avoid}.atelier-incruste .tableau-menus table.cdcf caption{color:#1a3a7a}.atelier-incruste .tableau-menus.menus-js .menu-case select,.atelier-incruste .tableau-menus .menu-fleche{display:none!important}.atelier-incruste .tableau-menus.menus-js .menu-case{border:none;padding:0;min-height:0;background:#fff!important}.atelier-incruste .tableau-menus.menus-js .menu-vu{color:#111}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty{min-width:7em;height:1.5em;border-bottom:1px solid #555}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty::before{content:""}.atelier-incruste .retour-case.visible{color:#a1122a}.atelier-incruste .encoche.juste{color:#176b2c}.atelier-incruste .encoche.faux{color:#a1122a}.atelier-incruste .encoche.vide{color:#7a5a00}}
+@media print{.atelier-incruste .btn,.atelier-incruste .croquis-outils{display:none!important}.atelier-incruste .card{background:#fff;border-color:#999;break-inside:avoid-page}.atelier-incruste a,.atelier-incruste a:visited{color:#00309e!important}.atelier-incruste textarea,.atelier-incruste input[type=text]{background:#fff;color:#111;border-color:#999}.atelier-incruste fieldset.qcm-groupe legend,.atelier-incruste .consigne b{color:#111}.atelier-incruste .meta,.atelier-incruste .demo .ligne,.atelier-incruste details,.atelier-incruste .verif-liste li{background:#fff!important;color:#111}.atelier-incruste .retenir,.atelier-incruste .piege,.atelier-incruste .critere{background:#fff!important}.atelier-incruste .retenir b{color:#176b2c}.atelier-incruste .piege b{color:#a1122a}.atelier-incruste .critere b{color:#7a5a00}.atelier-incruste .retour{background:#fff!important;color:#111!important}.atelier-incruste .note,.atelier-incruste details summary,.atelier-incruste .retour-option,.atelier-incruste .meta b{color:#1a3a7a!important}.atelier-incruste details.cours summary{color:#111!important}.atelier-incruste .tableau-menus table.cdcf th{background:#fff!important;color:#111}.atelier-incruste .tableau-menus table.cdcf th,.atelier-incruste .tableau-menus table.cdcf td{border-color:#999}.atelier-incruste .tableau-menus table.cdcf tr{break-inside:avoid}.atelier-incruste .tableau-menus table.cdcf caption{color:#1a3a7a}.atelier-incruste .tableau-menus.menus-js .menu-case select,.atelier-incruste .tableau-menus .menu-fleche{display:none!important}.atelier-incruste .tableau-menus.menus-js .menu-case{border:none;padding:0;min-height:0;background:#fff!important}.atelier-incruste .tableau-menus.menus-js .menu-vu{color:#111}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty{min-width:7em;height:1.5em;border-bottom:1px solid #555}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty::before{content:""}.atelier-incruste .tableau-menus .pp-choix{display:none!important}.atelier-incruste .retour-case.visible{color:#a1122a}.atelier-incruste .encoche.juste{color:#176b2c}.atelier-incruste .encoche.faux{color:#a1122a}.atelier-incruste .encoche.vide{color:#7a5a00}}
 .atelier-incruste{border-left:5px solid var(--head);}
 .atelier-incruste .card.exercice{background:rgba(10,27,61,.6)}
 .atelier-incruste>h3,.atelier-incruste>h4{color:var(--head);font-size:1.08em;margin:4px 0 8px}
@@ -2127,7 +2277,26 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
     }
   }
   racine.querySelectorAll("canvas.croquis-zone").forEach(croquis);
-  racine.querySelectorAll(".tableau-menus").forEach(function(t){ t.classList.add("menus-js"); });
+  /* Un tableau à menus ne coupe jamais un mot : une colonne trop étroite s'élargit. Si le tableau ne tient plus alors
+     dans son cadre, il passe en cartes, comme sur un téléphone. Mesuré quand sa largeur change (fenêtre, onglet ouvert). */
+  function cartesSiTrop(t){
+    var f = t.querySelector(".defile");
+    if (!f || !t.offsetWidth) return;
+    t.classList.remove("en-cartes");
+    if (f.scrollWidth > f.clientWidth + 1) t.classList.add("en-cartes");
+  }
+  racine.querySelectorAll(".tableau-menus").forEach(function(t){
+    t.classList.add("menus-js");
+    if (window.ResizeObserver){
+      var largeur = -1;
+      new ResizeObserver(function(l){
+        var w = Math.round(l[0].contentRect.width);
+        if (w !== largeur){ largeur = w; cartesSiTrop(t); }
+      }).observe(t);
+    } else cartesSiTrop(t);
+  });
+  // Un Bonus vivant : avec le script, ses champs écrivent dans le schéma ; sans lui, sa consigne « papier » reste.
+  racine.querySelectorAll(".bonus-vivant").forEach(function(t){ t.classList.add("vivant-js"); });
 
   /* ── Branchements ─────────────────────────────────────────────────── */
   var boites = racine.querySelectorAll("[data-cle]");
