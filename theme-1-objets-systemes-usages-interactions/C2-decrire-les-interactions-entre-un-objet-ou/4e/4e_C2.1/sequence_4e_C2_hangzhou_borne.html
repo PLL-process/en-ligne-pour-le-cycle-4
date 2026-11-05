@@ -1468,7 +1468,9 @@ function ouvrirSeanceDeLAncre(){
 }
 window.addEventListener("hashchange", ouvrirSeanceDeLAncre);
 appliqueSeance((document.querySelector(".seance-panel.active")||{}).id);
-ouvrirSeanceDeLAncre();
+/* Après la fin du script : ouvrir la séance d'une ancre clique un onglet, qui appelle majTaches() ;
+   appelé ici tout de suite, TACHES (déclaré plus bas) n'existait pas encore et le script s'arrêtait. */
+setTimeout(ouvrirSeanceDeLAncre, 0);
 
 /* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
 document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
