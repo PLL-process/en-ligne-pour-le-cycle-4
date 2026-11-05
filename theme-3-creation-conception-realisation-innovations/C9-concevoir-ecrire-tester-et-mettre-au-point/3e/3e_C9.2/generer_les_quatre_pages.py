@@ -44,6 +44,10 @@ la situation s'arrête avant la fermeture du volet, et tout ce qui est propre au
 feuille de style, posée hors de la première `<style>`, et son script, posé DANS le bloc
 « Onglets séances » que `corriger_script` remplace) n'atteint pas les quatre pages :
 relancé, le script les redonne à l'octet près.
+
+Règle n°311, D6 obligatoire (04/11/2026) : `controle_squelette` refuse une séquence sans onglets, sauf si elle le
+déclare. Chaque page porte donc `<meta name="sequence-sans-onglets" content="…">`, qui dit qu'elle est engendrée
+depuis la page tout-en-un.
 """
 import io, re, sys, json, pathlib
 
@@ -384,8 +388,13 @@ for p in PAGES:
     a, b = p["seances"]
     sous = (f'<p class="subtitle">🎯 Page {p["n"]} sur {len(PAGES)} · {les_seances(p)} '
             f'(2 séances de 55 min) — {p["but"]}</p>')
+    # Règle n°311, D6 obligatoire (04/11/2026) : une page sans onglets le déclare, et dit pourquoi.
+    sans_onglets = (f'<meta name="sequence-sans-onglets" content="page {p["n"]} sur {len(PAGES)} de la station, engendrée '
+                    f'depuis la page tout-en-un, qui a ses onglets de séance et son volet « Rappel »">')
+    if HEAD.count('<meta charset="UTF-8">') != 1:
+        raise SystemExit("HEAD : la ligne <meta charset=\"UTF-8\"> est introuvable ou en double")
     page = "\n".join([
-        HEAD, "<body>", NAVCSS, CSS_SUP, NAV, h1, sous, REPLI if p["n"] == 1 else REPLI_PLIE,
+        HEAD.replace('<meta charset="UTF-8">', '<meta charset="UTF-8">\n' + sans_onglets, 1), "<body>", NAVCSS, CSS_SUP, NAV, h1, sous, REPLI if p["n"] == 1 else REPLI_PLIE,
         badges_de(p), IDENTITE, toolbar, PROGRESS,
         corps_assemble,
         suivant(p["n"]),

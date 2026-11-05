@@ -8,8 +8,8 @@
  *   · clôture DANS le dernier panneau                               → acceptée
  *   · « Je me positionne » visible à la séance 1                    → refusé (D1)
  * Et ce que l'écriture du contrôle a appris :
- *   · page sans onglets, Bonus → Bilan → QCM                         → acceptée
- *   · page sans onglets, Bilan → QCM → Bonus (n°301 non appliquée)  → refusée (D3)
+ *   · page sans onglets (déclarée), Bonus → Bilan → QCM               → acceptée
+ *   · page sans onglets (déclarée), Bilan → QCM → Bonus (n°301)      → refusée (D3)
  *   · un « 💡 Bonus » en h4 au milieu d'un exercice de séance 1     → pas une clôture
  *     (il a trompé audit_cloture_sequence dans 3e_C1.5)
  *   · un dernier onglet « Hors parcours » : la clôture va dans la dernière SÉANCE → acceptée ;
@@ -38,7 +38,8 @@
  * D6, la règle n°311 (22/10/2026) — « à partir de la séance 2, l'élève voit sa séance, pas le décor » :
  *   · volet replié dès la séance 2, ouvert à la séance 1                → passe
  *   · volet jamais replié / sans bouton visible / déjà replié à la 1    → refusé
- *   · page sans volet : l'ouverture visible aux séances 2+ est SIGNALÉE (pas refusée, le temps des vagues)
+ *   · page à onglets sans volet : l'ouverture visible aux séances 2+ → refusée (obligatoire depuis le 04/11/2026)
+ *   · page sans onglets → refusée ; sauf <meta name="sequence-sans-onglets" content="la raison"> → passe
  *   · volet placé après la barre d'onglets                              → exception de D5
  * Usage : node _outils/tests_controle_squelette.mjs   Sortie : 0 si tout passe.
  */
@@ -62,6 +63,13 @@ const POS = '<fieldset class="qcm-groupe" id="pos1"><legend>3e_C1.1 — repérer
 const BILAN = `<section class="card"><h2>🏁 Bilan</h2><p>Relis ton hypothèse de départ.</p><h3>🧠 Comment j'ai travaillé</h3><textarea id="m1"></textarea><h3>📍 Je me positionne</h3>${POS}</section>`;
 const QCM = '<section class="card"><h2>🧠 Prêt·e à t\'entraîner ?</h2><a class="btn" href="qcm_banc.html">Lancer le QCM</a></section>';
 const CLOT = BONUS + BILAN + QCM;
+const SANS = '<meta name="sequence-sans-onglets" content="banc : une page d\'une seule séance">';
+// L'ouverture dans le volet « 📖 Rappel » (n°311, obligatoire depuis le 04/11/2026) : ouvert à la séance 1, replié ensuite.
+const R = (billet = true) => '<style>.rappel-ouverture>summary{display:none}.rappel-ouverture.volet>summary{display:block}</style>'
+  + '<details class="rappel-ouverture" open><summary>📖 Rappel : la situation et ton hypothèse</summary>' + OUV + (billet ? BILLET : '') + '</details>'
+  + `<script>addEventListener('DOMContentLoaded',()=>{const v=document.querySelector('.rappel-ouverture');
+document.querySelectorAll('.seance-tab').forEach(b=>b.addEventListener('click',()=>{const n=parseInt(b.dataset.panel.replace(/[^0-9]/g,''),10)||99;
+v.classList.toggle('volet',n>=2);v.open=n<2;}));});</script>`;
 const ACT = (n, x = '') => `<section class="card"><h2>Activité ${n}</h2><p>…</p>${x}</section>`;
 const page = (corps, avecOnglets = true, hors = false) => `<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>banc</title>
 <style>.seance-panel{display:none}.seance-panel.active{display:block}</style></head><body>${corps}
@@ -73,23 +81,23 @@ const panneau = (i, x, actif = false) => `<section class="seance-panel${actif ? 
 
 const CAS = [
   ['clôture HORS des panneaux (3e_C1.1 avant #418)', 1,
-    page(OUV + BILLET + onglets(3) + '<div>' + panneau(1, ACT(1), true) + panneau(2, ACT(2)) + panneau(3, ACT(3)) + '</div>' + CLOT)],
+    page(R() + onglets(3) + '<div>' + panneau(1, ACT(1), true) + panneau(2, ACT(2)) + panneau(3, ACT(3)) + '</div>' + CLOT)],
   ['clôture DANS le dernier panneau', 0,
-    page(OUV + BILLET + onglets(3) + '<div>' + panneau(1, ACT(1), true) + panneau(2, ACT(2)) + panneau(3, ACT(3) + CLOT) + '</div>')],
+    page(R() + onglets(3) + '<div>' + panneau(1, ACT(1), true) + panneau(2, ACT(2)) + panneau(3, ACT(3) + CLOT) + '</div>')],
   ['« Je me positionne » visible à la séance 1', 1,
-    page(OUV + BILLET + onglets(3) + '<div>' + panneau(1, ACT(1, '<h3>📍 Je me positionne</h3>' + POS), true) + panneau(2, ACT(2)) + panneau(3, ACT(3) + BONUS + QCM) + '</div>')],
-  ['sans onglets, Bonus → Bilan → QCM', 0, page(OUV + BILLET + ACT(1) + ACT(2) + CLOT, false)],
-  ['sans onglets, Bilan → QCM → Bonus', 1, page(OUV + BILLET + ACT(1) + ACT(2) + BILAN + QCM + BONUS, false)],
+    page(R() + onglets(3) + '<div>' + panneau(1, ACT(1, '<h3>📍 Je me positionne</h3>' + POS), true) + panneau(2, ACT(2)) + panneau(3, ACT(3) + BONUS + QCM) + '</div>')],
+  ['sans onglets (déclarée), Bonus → Bilan → QCM', 0, page(SANS + OUV + BILLET + ACT(1) + ACT(2) + CLOT, false)],
+  ['sans onglets (déclarée), Bilan → QCM → Bonus', 1, page(SANS + OUV + BILLET + ACT(1) + ACT(2) + BILAN + QCM + BONUS, false)],
   ['« 💡 Bonus » en h4 dans un exercice de séance 1', 0,
-    page(OUV + BILLET + onglets(2) + '<div>' + panneau(1, ACT(1, '<h4>💡 Bonus — validation tous cas</h4><p>…</p>'), true) + panneau(2, ACT(2) + CLOT) + '</div>')],
+    page(R() + onglets(2) + '<div>' + panneau(1, ACT(1, '<h4>💡 Bonus — validation tous cas</h4><p>…</p>'), true) + panneau(2, ACT(2) + CLOT) + '</div>')],
   ['dernier onglet « Hors parcours », clôture dans la dernière séance', 0,
-    page(OUV + BILLET + onglets(2, true) + '<div>' + panneau(1, ACT(1), true) + panneau(2, ACT(2) + CLOT) + '<section class="seance-panel" id="shors"><h2>Python</h2></section></div>')],
+    page(R() + onglets(2, true) + '<div>' + panneau(1, ACT(1), true) + panneau(2, ACT(2) + CLOT) + '<section class="seance-panel" id="shors"><h2>Python</h2></section></div>')],
   ['clôture dans l\'onglet « Hors parcours »', 1,
-    page(OUV + BILLET + onglets(2, true) + '<div>' + panneau(1, ACT(1), true) + panneau(2, ACT(2)) + '<section class="seance-panel" id="shors"><h2>Python</h2>' + CLOT + '</section></div>')],
+    page(R() + onglets(2, true) + '<div>' + panneau(1, ACT(1), true) + panneau(2, ACT(2)) + '<section class="seance-panel" id="shors"><h2>Python</h2>' + CLOT + '</section></div>')],
   ['Bonus en h2 à même le panneau, après le QCM (book-train)', 1,
-    page(OUV + BILLET + onglets(2) + '<div>' + panneau(1, ACT(1), true) + panneau(2, ACT(2) + BILAN + QCM + '<h2>🎁 Bonus</h2><textarea></textarea>') + '</div>')],
+    page(R() + onglets(2) + '<div>' + panneau(1, ACT(1), true) + panneau(2, ACT(2) + BILAN + QCM + '<h2>🎁 Bonus</h2><textarea></textarea>') + '</div>')],
   ['billet d\'entrée caché dans le panneau 2', 1,
-    page(OUV + onglets(2) + '<div>' + panneau(1, ACT(1), true) + panneau(2, BILLET + ACT(2) + CLOT) + '</div>')],
+    page(R(false) + onglets(2) + '<div>' + panneau(1, ACT(1), true) + panneau(2, BILLET + ACT(2) + CLOT) + '</div>')],
 ];
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'squelette-'));
@@ -119,11 +127,11 @@ for (const [nom, attendu, html] of CAS) {
   const TB = '<div id="tachesBandeau"><p>Séance 1 — étape 1/3 · ☐ activité 1</p></div>';
   const PIED = '<footer><p>Licence CC BY-SA — collège, 2026</p></footer>';
   const AVIS = '<p class="seance-avis">⚠️ Ce bloc ne fait pas partie des séances.</p>';
-  const base = (entre, apres = '') => page(OUV + BILLET + onglets(2, true) + entre + '<div>' + panneau(1, ACT(1), true) + panneau(2, ACT(2) + CLOT)
+  const base = (entre, apres = '') => page(R() + onglets(2, true) + entre + '<div>' + panneau(1, ACT(1), true) + panneau(2, ACT(2) + CLOT)
     + '<section class="seance-panel" id="shors"><h2>Python</h2></section></div>' + apres);
   const D5 = [
     ['panneau de séance 1 fermé trop tôt (4e_C1.4) : 1.a–1.f hors panneau', true,
-      page(OUV + BILLET + onglets(2) + '<div>' + panneau(1, ACT(1), true) + '<div class="section"><h3>✋ 1.a — Associer</h3><textarea id="r1a"></textarea><button>Vérifier</button></div>'
+      page(R() + onglets(2) + '<div>' + panneau(1, ACT(1), true) + '<div class="section"><h3>✋ 1.a — Associer</h3><textarea id="r1a"></textarea><button>Vérifier</button></div>'
         + panneau(2, ACT(2) + CLOT) + '</div>')],
     ['bloc « ✅ Autoévaluation » après les panneaux (3e_C1.5)', true,
       base('', '<div class="section"><h2>✅ Autoévaluation (coche)</h2><label>Je sais… <input type="checkbox"></label></div>')],
@@ -194,8 +202,11 @@ v.classList.toggle('volet',n>=2);${plier ? 'v.open=n<2;' : ''}}));</script>`;
     ['volet jamais replié : l\'ouverture reste visible à la séance 2', true, avec(volet(), js(false)), 'D6'],
     ['volet replié mais sans bouton (summary masqué) : ouverture inaccessible', true, avec(volet(), js(true).replace("v.classList.toggle('volet',n>=2);", '')), 'D6'],
     ['volet déjà replié à la séance 1 (ouverture absente du premier écran : D4 aussi)', true, avec(volet(false), js(true)), 'D6'],
-    ['page sans volet : ouverture visible à la séance 2 → signalée, pas refusée', false,
-      page(OUV + BILLET + onglets(3) + '<div>' + panneau(1, ACT(1), true) + panneau(2, ACT(2)) + panneau(3, ACT(3) + CLOT) + '</div>'), null],
+    ['page à onglets sans volet : ouverture visible à la séance 2', true,
+      page(OUV + BILLET + onglets(3) + '<div>' + panneau(1, ACT(1), true) + panneau(2, ACT(2)) + panneau(3, ACT(3) + CLOT) + '</div>'), 'D6'],
+    ['page sans onglets, non déclarée', true, page(OUV + BILLET + ACT(1) + ACT(2) + CLOT, false), 'D6'],
+    ['page sans onglets, déclarée (séquence éclatée)', false,
+      page('<meta name="sequence-sans-onglets" content="page 1 sur 4 de la station, découpée de la page tout-en-un">' + OUV + BILLET + ACT(1) + ACT(2) + CLOT, false), null],
     ['volet placé après la barre d\'onglets : exception de D5', false,
       page(css + onglets(3) + volet() + '<div>' + panneau(1, ACT(1), true) + panneau(2, ACT(2)) + panneau(3, ACT(3) + CLOT) + '</div>' + js(true)), null],
   ];
@@ -208,10 +219,8 @@ v.classList.toggle('volet',n>=2);${plier ? 'v.open=n<2;' : ''}}));</script>`;
     const r = await juger(ctx, f);
     const d6 = r.defauts.some((x) => x.code === 'D6');
     const autres = r.defauts.filter((x) => x.code !== "D6" && !(x.code === "D4" && /déjà replié/.test(nom)));
-    const signale = r.signales.some((s) => /n°311 non appliquée/.test(s));
-    const attendSignal = /sans volet/.test(nom);
-    dire(d6 === attendu && autres.length === 0 && signale === attendSignal,
-      `D6 — ${nom} → ${attendu ? 'refusé' : 'passe'}${attendSignal ? ' (signalé)' : ''}${autres.length ? ' (AUTRES : ' + autres.map((a) => a.code).join(',') + ')' : ''}`);
+    dire(d6 === attendu && autres.length === 0,
+      `D6 — ${nom} → ${attendu ? 'refusé' : 'passe'}${autres.length ? ' (AUTRES : ' + autres.map((a) => a.code).join(',') + ')' : ''}`);
   }
   await nav.close();
 }

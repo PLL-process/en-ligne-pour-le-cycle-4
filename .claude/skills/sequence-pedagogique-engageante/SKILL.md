@@ -5,7 +5,8 @@ description: Construire une séquence de technologie cycle 4 sur le squelette un
 
 # Séquence pédagogique engageante (squelette du dépôt)
 
-Mis à jour le 23/10/2026 (inventaire des skills) : aligné sur le journal jusqu'à la règle d'or n°311.
+Mis à jour le 23/10/2026 (inventaire des skills) : aligné sur le journal jusqu'à la règle d'or n°311 ; le 04/11/2026,
+la fin des vagues « onglets + volet » et D6 obligatoire.
 
 Le journal fait foi (règle d'or n°10). Pour le texte complet d'une règle, chercher « Règle d'or n°NNN » dans
 `JOURNAL_DES_DECISIONS.md`. Ce skill fixe la forme. Le fond pédagogique reste la décision de Pascal.
@@ -58,6 +59,21 @@ Dans l'ordre :
 `<details class="rappel-ouverture">` « 📖 Rappel : la situation et ton hypothèse », qui contient les étiquettes et tous les blocs
 d'ouverture, puis la séance. À la séance 1, le volet est ouvert et n'a pas de bouton. Ensuite, il est replié derrière un
 `<summary>` visible. Sans JavaScript et à l'impression, tout s'affiche. L'ouverture est repliée, jamais supprimée.
+
+**Toute séquence est à onglets** (vagues du 31/10 au 04/11/2026, sur le pilote 4e_C8.1) : `controle_squelette` refuse (D6)
+une page sans onglets, sauf si elle le déclare et dit pourquoi — `<meta name="sequence-sans-onglets" content="la raison">`,
+aujourd'hui seulement les quatre pages de la station 3e_C9.2, engendrées depuis la page tout-en-un. Ce que les vagues ont fixé :
+- les blocs sont **déplacés, jamais réécrits** ; le découpage suit les durées écrites sur les activités ;
+- **hors du volet**, ce qui sert à chaque séance : mission, identité, barre d'outils (au moins « 🖨 Imprimer / PDF » : le
+  banc n°311 l'exige), sélecteur de parcours, progression ;
+- **« 🗺 Où j'en suis »** est un `<details>` ouvert à la séance 1, replié dès la séance 2 derrière une ligne qui garde le
+  compte (« 2 / 6 activités validées ») ;
+- **un outil commun à plusieurs séances** (simulateur, banc, établi) reste un seul nœud : dans l'activité qui le présente,
+  puis après l'en-tête des autres séances qui s'en servent, absent de celles qui ne s'en servent pas ; jamais au-dessus des
+  onglets ni entre les onglets et les panneaux (D5) ;
+- **la sécurité reste visible** : l'encadré est dans le volet, et l'en-tête des séances où l'on manipule la redit en une
+  ligne, avec un lien qui ouvre le volet ;
+- **sans JavaScript**, une classe `js-onglets` absente : toutes les séances s'affichent à la suite.
 
 ⚠ **Référentiel : tension entre la n°298 et la n°306, relevée le 23/10/2026.**
 - La n°298 (15/09/2026) retire de la page élève le référentiel « en toutes lettres » : codes, formulations du BO, socle, CRCN.
@@ -113,7 +129,9 @@ La synthèse « à retenir » se place avant le Bonus (pratique de `3e_C5.1` et 
   autres voies, il est mémorisé et réversible. Chaque voie s'imprime seule (n°102).
 - Exemple qui fonctionne : `3e_C9.1` (`sequence_3e_C9.1_variables_types_systemes.html`), éprouvé par `tests_3e_C9.1.mjs`.
   Un sélecteur sans aucun `data-parcours` dans la page ne masque rien (n°136) : vérifier son effet à l'écran.
-- Au 23/10/2026, aucune page ne porte à la fois le sélecteur et le volet de la n°311 : leur cohabitation n'a pas été éprouvée.
+- Le sélecteur et le volet de la n°311 cohabitent depuis le 31/10/2026 (3e_C9.1, 4e_C9.1, 5e_C9.1, 3e_C9.2, puis le pilote
+  4e_C8.1 et les vagues C7) : le sélecteur reste **hors** du volet, visible à chaque séance, et tient sur deux lignes de
+  boutons à 390 px. Le banc n°311 de ces pages en fait foi.
 - L'encadré « Choix de l'outil » se place avant les voies, et les voies avant les séances. Si la séquence est débranchée par nature,
   omettre les voies et le justifier dans la fiche pédagogique.
 
@@ -195,7 +213,7 @@ La synthèse « à retenir » se place avant le Bonus (pratique de `3e_C5.1` et 
 
 ## Contrôles avant de rendre
 
-- `node _outils/controle_squelette.mjs <dossier>` : aucun défaut D1 à D6. Relancer avec `--json` pour lire les « à rédiger »
+- `node _outils/controle_squelette.mjs <dossier>` : aucun défaut D1 à D6 (D6 obligatoire depuis le 04/11/2026, page sans onglets comprise). Relancer avec `--json` pour lire les « à rédiger »
   (Bonus sans champ ou sans corrigé, bilan sans métacognition…) : le rapport texte ne les imprime pas.
 - `python3 _outils/verif_regles_audit.py <dossier>` : compter les ✘, car la sortie vaut 0 même quand il y en a.
 - `python3 _outils/controle_hierarchie.py <dossier>` (n°307) ; sur tout le dépôt : `controle_navigation_seances.py`,
