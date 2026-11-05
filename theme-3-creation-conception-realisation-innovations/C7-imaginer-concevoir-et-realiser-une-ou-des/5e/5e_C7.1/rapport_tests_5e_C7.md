@@ -8,6 +8,9 @@ rejouable : `node tests_5e_C7.mjs .`).
 > Règle d'or n°136 : chaque dispositif est vérifié par la **mesure de son effet** —
 > un nombre —, jamais par la présence de ses commandes.
 
+> **Mise à jour du 05/11/2026 — l'éditeur Python intégré.** L'onglet Vittascience est remplacé par l'**éditeur Python intégré** (`_ressources-communes/editeur-python/`, moteur Skulpt chargé au premier ▶ Exécuter, hors ligne) ; Vittascience reste un lien facultatif sous chaque éditeur. L'encart des gestes devient « les quatre gestes de l'éditeur Python » (écrire et exécuter, nommer, sortir, retrouver — « Documents › ta classe » écrit aux gestes 3 et 4), avec cinq captures réelles de la page (`captures_gestes.mjs`) et les captures de l'Explorateur reprises. Un éditeur (activité 3b). Le passage blocs ↔ Python reste proposé dans Vittascience (facultatif, mode mixte). Six contrôles ajoutés (ROUGE, verrou ouvert par une exécution). Le contrôle de la note lit `.editeur-py-note` et « geste 3 » ; l'encart a 8 captures (11 avant).
+> Suite du lot : `node tests_5e_C7.mjs .` → **54 / 54** (48 avant ; les 48 passent) ; banc n°311 : **34 / 34**, comme avant. Banc du composant : `node _ressources-communes/editeur-python/banc_editeur_python.mjs` → **54 / 54**. Non testé : un vrai téléphone, Safari, Firefox, une impression réelle, la fenêtre « Ouvrir » de Windows.
+
 > **Mise à jour du 31/10/2026 — règle d'or n°317.** La grille de validation de l'activité 2 se complète dans le
 > tableau : menus nommés (« Ligne 1, poser le sac — résultat attendu »), décision globale sur sa dernière ligne (elle
 > était sous le tableau), un retour écrit sous chaque case fausse ou vide après « Vérifier », et une correction

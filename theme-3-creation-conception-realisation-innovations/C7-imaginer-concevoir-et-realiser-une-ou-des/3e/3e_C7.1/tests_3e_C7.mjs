@@ -19,6 +19,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
 import { execSync } from "node:child_process";
+import { eprouverEditeurs, eprouverPose, executerBloc } from "../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs";
 
 let chromium;
 try { ({ chromium } = await import("playwright")); }
@@ -333,10 +334,10 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
     const texte = await page.evaluate(() => document.body.textContent);
     ok("gestes · plus de version 🅰 : ni bouton, ni carte, ni « Avec le matériel »",
        choix === "b,c,tous" && !/🅰/.test(texte) && !/Avec le matériel/i.test(texte), "boutons : " + choix);
-    const note = await page.locator("#vs1 .vs-note").first().textContent();
-    ok("gestes · l'activité 3 limite le volet Python et demande de nommer puis télécharger (geste 4)",
+    const note = await page.locator("#vs1 .editeur-py-note").first().textContent();   // l'éditeur Python intégré (04/11/2026)
+    ok("gestes · l'activité 3 limite le volet Python (Vittascience, facultatif) et demande de nommer puis télécharger (geste 3 de l'éditeur intégré)",
        note.includes("Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs.")
-       && note.includes("Nomme ton projet 3e-CAPTEUR-TON NOM, puis télécharge-le (geste 4)."), note.trim().slice(0, 120));
+       && note.includes("Nomme ton fichier 3e-CAPTEUR-TON NOM, puis télécharge-le (geste 3)."), note.trim().slice(0, 120));
     const txt = await page.evaluate(() => document.body.textContent);
     ok("gestes · le Bonus de 3e dit « En Python, un seul élément par print, et n'additionne pas de textes : le téléchargement les abîmerait. »",
        txt.includes("En Python, un seul élément par print, et n'additionne pas de textes : le téléchargement les abîmerait."));
@@ -344,7 +345,7 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
     await page.waitForTimeout(800);
     const imgs = await page.$$eval(".gestes-outil img", l => l.map(i => ({ charge: i.complete && i.naturalWidth > 0, alt: (i.getAttribute("alt") || "").trim().length })));
     ok("gestes · les " + imgs.length + " captures de l'encart se chargent, toutes avec un texte alternatif",
-       imgs.length === 12 && imgs.every(i => i.charge && i.alt > 20),
+       imgs.length === 9 && imgs.every(i => i.charge && i.alt > 20),
        imgs.filter(i => !i.charge).length + " cassée(s), " + imgs.filter(i => i.alt <= 20).length + " sans texte alternatif");
     /* un élève qui avait choisi 🅰 avant le retrait : sa sauvegarde dit « a » — dans un contexte à part */
     const ctxA = await nav.newContext({ viewport: { width: 390, height: 844 } });
@@ -550,6 +551,28 @@ async function verifierActivite(n) {
        && (await pV.inputValue("#hyp")).startsWith("Je pense") && (await pV.inputValue("#bilan4")) === "3",
      progV + (eV.length ? " · " + eV[0] : ""));
   await ctxV.close();
+}
+
+/* — l'éditeur Python intégré (04/11/2026) : il remplace l'onglet Vittascience. Le code de départ s'exécute (rien à
+     afficher : la décision est à écrire) ; le programme de la correction affiche ce que dit la correction ; une
+     exécution qui affiche quelque chose ouvre le verrou de l'activité 3b. — */
+{
+  const ctxE = await nav.newContext({ viewport: { width: 1280, height: 900 } });
+  const reseau = [];
+  ctxE.on("request", r => { if (/^https?:/.test(r.url())) reseau.push(r.url()); });
+  const { page: pe, erreurs: ee } = await ouvrir(ctxE, CFG.seq);
+  await eprouverPose(pe, ["vs1", "vs2"], ok);
+  await eprouverEditeurs(pe, [
+    { bloc: "vs1", nom: "activité 3b", onglet: "#tab-s2", depart: { sortie: "" },
+      corrige: { quoi: "ALERTE", sortie: "ALERTE\n",
+        code: 'seuil = 28\nT = 32\nif T > seuil:\n    print("ALERTE")\nelse:\n    print("ok")\n' } },
+    { bloc: "vs2", nom: "Bonus", onglet: "#tab-s3", depart: { sortie: "" },
+      corrige: { quoi: "PRÉ-ALERTE pour T = 27", sortie: "PRÉ-ALERTE\n",
+        code: 'T = 27\nif T > 28:\n    print("ALERTE")\nelif T > 26:\n    print("PRÉ-ALERTE")\nelse:\n    print("ok")\n' } },
+  ], ok);
+  ok("act. 3b : une exécution qui affiche quelque chose ouvre le verrou de l'éditeur (vs1)", await pe.evaluate(() => !!(window.__exp && window.__exp.vs1)));
+  ok("éditeur Python · aucune requête réseau, zéro erreur JavaScript", reseau.length === 0 && ee.length === 0, reseau.concat(ee).slice(0, 3).join(" | "));
+  await pe.close(); await ctxE.close();
 }
 
 /* — aucun envoi réseau — */

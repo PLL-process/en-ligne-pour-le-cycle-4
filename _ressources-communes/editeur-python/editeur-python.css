@@ -1,0 +1,92 @@
+/* editeur-python.css — l'habit de l'éditeur Python intégré (voir editeur-python.js).
+   Les couleurs viennent de la page (--panel2, --border, --text, --hl, --ok, --err, --warn, --btn) ;
+   les valeurs de repli sont celles du thème sombre du dépôt. Le code défile dans sa zone : la page,
+   elle, ne défile jamais de côté (390 px). Cibles de 44 px. À l'impression : le programme écrit et la
+   dernière sortie, ou des lignes vides. */
+.editeur-py{
+  --ep-fond:var(--panel2,#0a1b3d); --ep-bord:var(--border,#274a8a); --ep-texte:var(--text,#e4eaf5);
+  --ep-code:#07142e; --ep-marge:#8fa6cf; --ep-vif:var(--hl,#61dafb); --ep-ok:var(--ok,#81fba1);
+  --ep-ko:var(--err,#ff7b88); --ep-alerte:var(--warn,#ffd66b); --ep-btn:var(--btn,#1d4e89); --ep-btn-h:var(--btn-h,#2966b1);
+  --ep-mono:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;
+  margin:14px 0;padding:12px 14px;border:1px solid var(--ep-bord);border-left:4px solid var(--ep-vif);
+  border-radius:12px;background:var(--ep-fond);color:var(--ep-texte);max-width:100%;min-width:0;box-sizing:border-box
+}
+.editeur-py *{box-sizing:border-box}
+.editeur-py > label,.editeur-py .editeur-py-etiquette{display:block;font-weight:700;margin:0 0 8px;color:var(--ep-texte)}
+.editeur-py textarea.editeur-py-code{
+  display:block;width:100%;min-height:7.5em;margin:0;font-family:var(--ep-mono);font-size:15px;line-height:1.5;
+  tab-size:4;-moz-tab-size:4;white-space:pre;overflow:auto;overflow-wrap:normal;resize:vertical;
+  background:var(--ep-code);color:var(--ep-texte);border:1px solid var(--ep-bord);border-radius:8px;padding:8px 10px
+}
+/* ── avec JavaScript ── */
+.editeur-py--actif .editeur-py-sansjs{display:none}
+.editeur-py-note{margin:0 0 10px;font-size:.92em;line-height:1.5}
+.editeur-py-fichier{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.editeur-py-nom-lab{font-weight:600;font-size:.92em}
+.editeur-py-nom-groupe{display:inline-flex;align-items:center;gap:2px;flex:1 1 220px;min-width:0}
+.editeur-py input.editeur-py-nom{flex:1 1 auto;min-width:0;width:auto;min-height:44px;font-family:var(--ep-mono);font-size:.92em}
+.editeur-py-ext{font-family:var(--ep-mono);opacity:.85;padding-left:2px}
+.editeur-py .editeur-py-btn{min-height:44px;min-width:44px;padding:8px 14px;line-height:1.2;white-space:normal;text-align:center}
+.editeur-py .editeur-py-btn:disabled{opacity:.45;cursor:not-allowed}
+.editeur-py .editeur-py-executer{background:#1f7a3f;color:#fff}
+.editeur-py .editeur-py-executer:hover,.editeur-py .editeur-py-executer:focus-visible{background:#279650}
+.editeur-py .editeur-py-arreter{background:#8a2430;color:#fff}
+.editeur-py .editeur-py-arreter:hover:not(:disabled),.editeur-py .editeur-py-arreter:focus-visible{background:#a32d3b}
+.editeur-py .editeur-py-arme{outline:2px solid var(--ep-alerte);outline-offset:1px}
+.editeur-py .editeur-py-btn:focus-visible,.editeur-py textarea:focus-visible,.editeur-py input:focus-visible,.editeur-py-console:focus-visible{outline:3px solid var(--ep-alerte);outline-offset:2px}
+.editeur-py-zone{display:flex;align-items:stretch;min-width:0;border:1px solid var(--ep-bord);border-radius:8px;background:var(--ep-code);overflow:hidden}
+.editeur-py-zone textarea.editeur-py-code{flex:1 1 auto;min-width:0;border:0;border-radius:0;padding:8px 10px 8px 8px;background:transparent}
+.editeur-py-marge{flex:0 0 auto;overflow:hidden;padding:8px 6px 8px 8px;border-right:1px solid var(--ep-bord);background:rgba(0,0,0,.18);
+  font-family:var(--ep-mono);font-size:15px;line-height:1.5;color:var(--ep-marge);text-align:right;user-select:none;min-width:2.6em}
+.editeur-py-marge-int{white-space:pre;will-change:transform}
+.editeur-py-marge .editeur-py-ko{color:#1a0006;background:var(--ep-ko);border-radius:3px;padding:0 3px;font-weight:700}
+.editeur-py-aide{margin:6px 0 10px;font-size:.84em;opacity:.88}
+.editeur-py-barre{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 6px}
+.editeur-py-etat{margin:4px 0 8px;font-size:.9em;min-height:1.4em}
+.editeur-py-etat .editeur-py-btn{margin-left:6px;min-height:36px}
+.editeur-py-console-titre{margin:6px 0 4px;font-weight:700;font-size:.92em}
+.editeur-py-console{font-family:var(--ep-mono);font-size:14.5px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;
+  background:#020a1a;color:#e8f0ff;border:1px solid var(--ep-bord);border-radius:8px;padding:8px 10px;min-height:4.5em;max-height:300px;overflow:auto}
+.editeur-py-vide,.editeur-py-rien{opacity:.7;font-style:italic}
+.editeur-py-info{white-space:normal;font-family:inherit;margin:6px 0 0}
+.editeur-py-fin{color:var(--ep-ok)}
+.editeur-py-stop,.editeur-py-attente{color:var(--ep-alerte)}
+.editeur-py-panne{color:var(--ep-ko)}
+.editeur-py-erreur{white-space:normal;margin:8px 0 2px;padding:8px 10px;border-left:4px solid var(--ep-ko);background:rgba(255,123,136,.10);border-radius:6px;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
+.editeur-py-erreur p{margin:0 0 4px}
+.editeur-py-erreur-titre{font-weight:700;color:var(--ep-ko)}
+.editeur-py-erreur-brut{font-family:var(--ep-mono);font-size:.86em;opacity:.8}
+.editeur-py-entree{display:inline-flex;flex-wrap:wrap;gap:6px;align-items:center;max-width:100%}
+.editeur-py input.editeur-py-entree-champ{width:14em;max-width:100%;min-height:40px;font-family:var(--ep-mono);font-size:14px}
+.editeur-py-echo{color:var(--ep-vif)}
+.editeur-py-vitta,.editeur-py-sansjs{margin:10px 0 0;font-size:.9em}
+.editeur-py-vitta a.vs-lien{display:inline-block;min-height:44px;line-height:28px;text-decoration:none}
+/* l'encadré des fonctions simulées (une carte que la page simule) et le repli « Avec Vittascience » d'un bloc */
+.carte-simulee{margin:12px 0;padding:10px 14px;border:1px dashed var(--hl,#61dafb);border-radius:10px;background:rgba(97,218,251,.06)}
+.carte-simulee ul{margin:6px 0;padding-left:22px}
+.carte-simulee p{margin:4px 0}
+.editeur-py details.vs-vitta{margin:10px 0 0;font-size:.9em;max-width:100%}
+.editeur-py details.vs-vitta>summary{cursor:pointer;padding:12px 0;font-weight:600}
+.editeur-py details.vs-vitta pre{overflow:auto;max-width:100%}
+.editeur-py-imp{display:none}
+@media (max-width:480px){
+  .editeur-py{padding:10px 10px}
+  .editeur-py .editeur-py-btn{flex:1 1 auto}
+  .editeur-py textarea.editeur-py-code,.editeur-py-marge{font-size:14px}
+}
+/* ── à l'impression : le programme et la dernière sortie, en clair ── */
+@media print{
+  .editeur-py{background:#fff !important;color:#111 !important;border:1px solid #555 !important;border-left:3px solid #111 !important;break-inside:auto}
+  .editeur-py--actif .editeur-py-fichier,.editeur-py--actif .editeur-py-zone,.editeur-py--actif .editeur-py-aide,
+  .editeur-py--actif .editeur-py-barre,.editeur-py--actif .editeur-py-etat,.editeur-py--actif .editeur-py-console-titre,
+  .editeur-py--actif .editeur-py-console,.editeur-py--actif .editeur-py-vitta,.editeur-py-sansjs{display:none !important}
+  .editeur-py--actif .editeur-py-imp{display:block !important}
+  .editeur-py > label{color:#111 !important}
+  .editeur-py-imp-titre{margin:6px 0 2px;font-weight:700;color:#111 !important;break-after:avoid}
+  .editeur-py-imp pre{white-space:pre-wrap;overflow-wrap:anywhere;font-family:ui-monospace,Consolas,monospace;font-size:10pt;line-height:1.45;
+    color:#111 !important;background:#fff !important;border:1px solid #888;border-radius:4px;padding:5px 8px;margin:0 0 6px}
+  .editeur-py-imp pre.editeur-py-imp-vide,.editeur-py-imp pre:empty{min-height:5em;background:repeating-linear-gradient(#fff 0 1.45em,#999 1.45em calc(1.45em + 1px)) !important}
+  .editeur-py textarea.editeur-py-code{background:#fff !important;color:#111 !important;border:1px solid #888 !important}
+  .editeur-py details.vs-vitta{display:none !important}
+  .carte-simulee{background:#fff !important;color:#111 !important;border-color:#555 !important}
+}

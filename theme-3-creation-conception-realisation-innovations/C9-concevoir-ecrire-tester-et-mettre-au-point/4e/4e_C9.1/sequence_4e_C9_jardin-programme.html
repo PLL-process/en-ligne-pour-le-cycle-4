@@ -1442,6 +1442,7 @@ details.ppa-fixe{margin:10px 0}
 })();
 </script>
 <!-- moteur-algorigramme v1 : fin -->
+<link rel="stylesheet" href="../../../../_ressources-communes/editeur-python/editeur-python.css">
 </head>
 <body>
 <nav id="navharm" aria-label="Navigation du site">
@@ -1478,7 +1479,7 @@ details.ppa-fixe{margin:10px 0}
   <span class="badge code" title="Programme 2024 — 4e_C9.3 : Réaliser et mettre au point un programme commandant un système réel incluant éventuellement une interaction entre un humain et une machine.">4e_C9.3</span>
   <span class="badge theme">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span>
   <span class="badge socle" title="Domaines du socle commun travaillés : D1.3 Comprendre, s’exprimer en utilisant les langages mathématiques, scientifiques et informatiques · D2 Les méthodes et outils pour apprendre · D4 Les systèmes naturels et les systèmes techniques · D5 Les représentations du monde et l’activité humaine.">Socle : D1.3 · D2 · D4 · D5</span>
-  <span class="badge crcn" title="CRCN 3.4 Programmer.&#10;Le cadre : « Écrire des programmes et des algorithmes pour répondre à un besoin. »&#10;Ici : tu traduis la règle d’arrosage en algorigramme puis en pseudo-code, l’écris dans l’éditeur, conçois un jeu d’essais, et supprimes par une hystérésis les basculements de la pompe autour du seuil.&#10;&#10;CRCN 5.2 Évoluer dans un environnement numérique.&#10;Le cadre : « Installer, configurer et enrichir un environnement numérique (matériels, outils, services) pour disposer d’un cadre adapté aux activités menées, à leur contexte d’exercice ou à des valeurs. »&#10;Ici : tu fais tourner le banc d’essai du jardin, intégré à la page et sans connexion, puis l’éditeur de Vittascience pour exécuter ton programme.">CRCN : 3.4 Programmer · 5.2 Évoluer dans un environnement numérique</span>
+  <span class="badge crcn" title="CRCN 3.4 Programmer.&#10;Le cadre : « Écrire des programmes et des algorithmes pour répondre à un besoin. »&#10;Ici : tu traduis la règle d’arrosage en algorigramme puis en pseudo-code, l’écris dans l’éditeur, conçois un jeu d’essais, et supprimes par une hystérésis les basculements de la pompe autour du seuil.&#10;&#10;CRCN 5.2 Évoluer dans un environnement numérique.&#10;Le cadre : « Installer, configurer et enrichir un environnement numérique (matériels, outils, services) pour disposer d’un cadre adapté aux activités menées, à leur contexte d’exercice ou à des valeurs. »&#10;Ici : tu fais tourner le banc d’essai du jardin, intégré à la page et sans connexion, puis l’éditeur Python intégré à la page, sans connexion lui aussi, pour exécuter ton programme.">CRCN : 3.4 Programmer · 5.2 Évoluer dans un environnement numérique</span>
   <span class="badge duree">⏱ 3 séances de 55 min</span>
 </div>
 
@@ -1559,7 +1560,7 @@ details.ppa-fixe{margin:10px 0}
   <p>Les deux parcours visent les <b>mêmes</b> objectifs et donnent lieu aux <b>mêmes</b> validations : le 🅲 n'est pas un lot de consolation. Le sélecteur <b>🔀 Mon parcours</b>, en haut de page, range simplement au second plan ce qui ne te concerne pas — il ne retire aucune question.</p>
   <div class="versions">
     <div class="version vb" data-parcours="b"><h4>🅱 Simulation</h4>
-      <p>Deux outils, deux rôles : l'éditeur <b>Vittascience</b> pour écrire et exécuter ton programme, et le <b>banc d'essai intégré</b> à cette page pour voir la pompe réagir, faire trembler la mesure et compter les basculements. Le banc fonctionne <b>hors connexion</b>.</p></div>
+      <p>Deux outils, deux rôles : l'<b>éditeur Python</b> de la page pour écrire et exécuter ton programme (Vittascience reste possible, par un lien), et le <b>banc d'essai intégré</b> à cette page pour voir la pompe réagir, faire trembler la mesure et compter les basculements. Le banc fonctionne <b>hors connexion</b>.</p></div>
     <div class="version vc" data-parcours="c"><h4>🅲 Sans matériel</h4>
       <p>Tout est dans la page : le banc d'essai, les figures à lire, et les <b>traces d'exécution</b> fournies à l'activité 5. Tu peux tout faire, y compris à la maison, et être validé sur les mêmes critères.</p></div>
   </div>
@@ -1789,62 +1790,41 @@ FIN SI</div>
 <!-- ══════════════════ SÉANCE 2 ══════════════════ -->
 <div class="seance-panel" id="s2" role="tabpanel">
 <p class="mots-seance"><a href="lexique_4e_C9.1.html#seance-s2">📖 Les mots de cette séance</a></p>
-<!-- gestes-outil-v1 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau. -->
-<section class="card gestes-outil" aria-labelledby="gestes-vittascience">
-  <h2 id="gestes-vittascience">🧰 Avant de commencer (échauffement) — les quatre gestes de Vittascience</h2>
-  <p class="pourquoi">Quatre gestes à faire une fois, au début, et ta séance ne se perdra pas. Tu les as peut-être déjà faits une autre année&nbsp;: refais-les, c'est court. Et si tu ne les as jamais faits, tout est écrit ici.</p>
+<!-- gestes-outil-v2 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau ; n°297 : à la porte de l'outil.
+     Depuis le 04/11/2026 l'outil est l'éditeur Python INTÉGRÉ à la page (Vittascience devient facultatif). -->
+<section class="card gestes-outil" aria-labelledby="gestes-editeur-python">
+  <h2 id="gestes-editeur-python">🧰 Avant de commencer (échauffement) — les quatre gestes de l'éditeur Python</h2>
+  <p class="pourquoi">L'éditeur Python est <b>dans la page</b>, à chaque activité qui fait écrire un programme&nbsp;: rien à ouvrir, rien à installer, et il marche sans Internet. Quatre gestes, dans l'ordre où tu les fais, et ton programme ne se perdra pas — ni pendant la séance, ni la semaine suivante.</p>
   <ol>
-    <li><b>Ouvrir.</b> Clique sur le bouton <b>▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</b> de l'activité 3&nbsp;: l'éditeur Python s'ouvre dans un nouvel onglet, en <b>mode mixte</b>&nbsp;: des <b>blocs à gauche</b>, le <b>Python à droite</b>. Vittascience met déjà un exemple, le bloc «&nbsp;afficher Bonjour&nbsp;» et sa ligne Python&nbsp;: tu peux l'effacer avant de commencer.
+    <li><b>Écrire et exécuter.</b> Clique dans la zone de code de l'activité&nbsp;3&nbsp;: le programme de départ y est déjà. Écris ou modifie-le (<b>Tab</b> décale de 4 espaces), puis <b>▶&nbsp;Exécuter</b>&nbsp;: ce qu'il affiche s'écrit dans la <b>console</b>, dessous, et une erreur y est expliquée, avec sa ligne. <b>⏹&nbsp;Arrêter</b> interrompt un programme qui tourne sans fin. Ton programme est gardé tout seul dans la page, sur cet ordinateur.
       <figure class="geste-capture">
-        <img src="Images/geste_vitta_1_ouvrir_bouton.png" width="1400" height="875" loading="lazy"
-             alt="La page de la séquence, en thème sombre, sur l'activité 3. Dans le cadre « L'éditeur Vittascience — dans l'onglet Vittascience », une consigne en grand (« construis la décision en BLOCS… »), puis un bouton bleu « ▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet », suivi de la phrase « Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne. »">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le bouton <b>▶ Ouvrir l'éditeur Vittascience…</b>, dans le cadre de l'activité 3. <b>Puis&nbsp;:</b> clique-le&nbsp;; garde cet onglet-ci ouvert pour lire la consigne.</figcaption>
+        <img src="Images/geste_editeur_1_ecrire.png" width="844" height="606" loading="lazy"
+             alt="L'éditeur Python de la page, en thème sombre, de l'activité&nbsp;3. En haut, le champ « Nom du fichier » ; dessous, la zone de code aux lignes numérotées, avec un petit programme d'essai de trois lignes : H = 25, heure = 8, puis un print qui les affiche ; puis les boutons verts et rouges « Exécuter » et « Arrêter », et « Remettre le code de départ » ; en bas, la console, vide.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> la zone de code aux lignes numérotées, avec ici un petit programme d'essai (celui de l'activité est à écrire), les boutons <b>▶&nbsp;Exécuter</b>, <b>⏹&nbsp;Arrêter</b> et <b>↺&nbsp;Remettre le code de départ</b>, puis la console. <b>Puis&nbsp;:</b> clique <b>▶&nbsp;Exécuter</b>.</figcaption>
       </figure>
       <figure class="geste-capture">
-        <img src="Images/geste_vitta_1c_ouvrir_editeur.png" width="1400" height="875" loading="lazy"
-             alt="L'éditeur Python de Vittascience, en thème sombre et en mode mixte. En haut à gauche, le nom « Nouveau projet ». La barre d'outils : Nouveau, Ouvrir, Sauvegarder, Annuler, Rétablir, puis Exécuter au centre, et à droite les trois boutons de mode, celui du milieu (orange) étant actif. À gauche, les catégories de blocs (Affichage, Turtle, Graphiques, Numpy, IA, Logique, Boucles, Math, Texte, Variables, Listes) et un bloc orange « afficher Bonjour ! ». À droite, le code Python print('Bonjour !'). En bas, la console avec son message de bienvenue.">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> les <b>blocs à gauche</b>, le <b>Python à droite</b>, la console en bas, et le nom «&nbsp;Nouveau projet&nbsp;» en haut à gauche. <i>Le bloc «&nbsp;afficher Bonjour&nbsp;» est l'exemple que Vittascience pose dans tout projet neuf&nbsp;: tu peux l'effacer avant de commencer.</i></figcaption>
-      </figure>
-    </li>
-    <li><b>Nommer.</b> Clique le <b>crayon</b> à côté du nom du projet, en haut à gauche, et remplace «&nbsp;Nouveau projet&nbsp;» par <code>4e-JARDIN-TON&nbsp;NOM</code>. Un projet sans nom est introuvable la semaine suivante.
-      <figure class="geste-capture">
-        <img src="Images/geste_vitta_2_nommer_fenetre.png" width="1400" height="875" loading="lazy"
-             alt="Fenêtre « Modifier les informations du projet » de Vittascience, en thème sombre. Le champ « Nom du projet » contient 4e-JARDIN-DUPONT, avec une coche verte. Dessous, un champ « Description du projet (facultatif) » vide, puis deux boutons : « Annuler » en gris et « Modifier » en vert.">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> la fenêtre «&nbsp;Modifier les informations du projet&nbsp;», avec ton nom dans «&nbsp;Nom du projet&nbsp;». <b>Puis&nbsp;:</b> clique <b>Modifier</b>. <i>DUPONT est un exemple&nbsp;: mets ton nom.</i></figcaption>
-      </figure>
-      <figure class="geste-capture">
-        <img src="Images/geste_vitta_2b_nommer_resultat.png" width="1400" height="875" loading="lazy"
-             alt="L'éditeur après la validation : en haut à gauche, le nom du projet est devenu « 4e-JARDIN-DUPONT ».">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> ton nom apparaît en haut à gauche. C'est lui qui nommera ton fichier au geste 4.</figcaption>
+        <img src="Images/geste_editeur_1b_executer.png" width="844" height="610" loading="lazy"
+             alt="Le même éditeur après un clic sur « Exécuter » : la console affiche H = 25 % ; il est 8 h, puis « Terminé ».">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> la console affiche ce que ton programme écrit, puis «&nbsp;✔&nbsp;Terminé&nbsp;». <i>La première fois, Python met une seconde à se préparer.</i></figcaption>
       </figure>
     </li>
-    <li><b>Retrouver.</b> La semaine suivante, ouvre ton fichier&nbsp;: clique le <b>dossier</b> (Ouvrir), l'onglet <b>Depuis votre appareil</b>, le bouton <b>Ouvrir…</b>, puis ton fichier <code>.py</code> dans Documents, dans le dossier de ta classe. Vittascience te demande de confirmer&nbsp;: clique <b>Oui</b>. Ton programme revient, <b>en blocs et en Python</b>, avec son nom.
+    <li><b>Nommer.</b> Dans <b>📄&nbsp;Nom du fichier</b>, au-dessus de la zone, remplace <code>TON&nbsp;NOM</code> par ton nom&nbsp;: <code>4e-JARDIN-DUPONT</code>. Un fichier sans nom est introuvable la semaine suivante.
       <figure class="geste-capture">
-        <img src="Images/geste_vitta_3_retrouver_ouvrir.png" width="1400" height="875" loading="lazy"
-             alt="La fenêtre « Ouvrir un projet » de Vittascience, en thème sombre, avec cinq onglets : Mes projets sur le cloud, Projets de la communauté, Exemples, Mes projets locaux et Depuis votre appareil, ce dernier étant sélectionné. Une zone « Déposez vos fichiers ici… », un champ « Sélectionnez un fichier. » et un bouton vert « Ouvrir … ».">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> clique le <b>dossier</b> dans la barre d'outils, puis l'onglet <b>Depuis votre appareil</b>. <b>Puis&nbsp;:</b> clique <b>Ouvrir…</b> et choisis ton fichier <code>.py</code>, dans Documents, dans le dossier de ta classe. <i>N'utilise pas «&nbsp;Mes projets sur le cloud&nbsp;»&nbsp;: tu n'es pas connecté.</i></figcaption>
-      </figure>
-      <figure class="geste-capture">
-        <img src="Images/geste_vitta_3b_retrouver_confirmer.png" width="1400" height="875" loading="lazy"
-             alt="Une fenêtre « Avertissement ! » de Vittascience : « Est-ce que vous êtes sûr de vouloir importer ce fichier depuis votre ordinateur ? Vous allez perdre votre avancement fait manuellement. » Deux boutons : « Oui » en vert, « Non » en gris.">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> Vittascience te demande de confirmer. <b>Clique «&nbsp;Oui&nbsp;»</b>&nbsp;: ce que tu avais déjà fait dans cet onglet est remplacé par ton fichier.</figcaption>
-      </figure>
-      <figure class="geste-capture">
-        <img src="Images/geste_vitta_3c_retrouver_resultat.png" width="1400" height="875" loading="lazy"
-             alt="L'éditeur de Vittascience en mode mixte, après la réouverture. En haut à gauche, le nom « 4e-JARDIN-DUPONT ». À gauche, les blocs : cinq blocs « affecter à… la valeur » (SEUIL 40, HEURE_DEBUT 6, HEURE_FIN 10, H 25, heure 8) puis un bloc « si… sinon » avec « afficher POMPE ON » et « afficher POMPE OFF ». À droite, le code Python correspondant. La console, en bas, affiche POMPE ON.">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> ton programme est revenu, <b>en blocs et en Python</b>, avec ton nom. <b>Exécuter</b> affiche dans la console ce qu'il affichait avant. <i>Ce programme est un exemple&nbsp;: c'est le tien qui revient.</i></figcaption>
+        <img src="Images/geste_editeur_2_nommer.png" width="811" height="45" loading="lazy"
+             alt="Le haut de l'éditeur : le champ « Nom du fichier » contient 4e-JARDIN-DUPONT, suivi de « .py », puis les boutons « Télécharger mon .py » et « Ouvrir mon .py ».">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> ton nom dans le champ, juste avant «&nbsp;.py&nbsp;». <i>DUPONT est un exemple&nbsp;: mets ton nom.</i></figcaption>
       </figure>
     </li>
-    <li><b>Sortir.</b> Vittascience ne garde pas ton travail d'une séance à l'autre. Clique la <b>disquette</b>, puis <b>Télécharger</b>&nbsp;: un fichier <code>.py</code> au nom de ton projet arrive dans <b>Téléchargements</b>. Vittascience ajoute des chiffres à la fin du nom du fichier&nbsp;: c'est normal. <b>Déplace-le</b> dans <b>Documents</b>, dans <b>le dossier de ta classe (exemple&nbsp;: 4E3)</b>. Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans Documents, <b>Nouveau → Dossier</b>, tape le nom de ta classe, puis valide.
+    <li><b>Sortir.</b> La page garde ton programme sur <b>cet</b> ordinateur seulement&nbsp;: pour l'emporter, clique <b>⬇&nbsp;Télécharger mon .py</b>. Ton fichier arrive dans <b>Téléchargements</b>, au nom que tu lui as donné (<code>4e-JARDIN-DUPONT</code>, suivi de «&nbsp;.py&nbsp;») — le navigateur l'y range sans rien demander.<br>Ouvre l'<b>Explorateur de fichiers</b> (le dossier jaune de la barre des tâches, ou les touches <b>Windows&nbsp;+&nbsp;E</b>), clique <b>Téléchargements</b>, clique ton fichier une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b>. Va dans <b>Documents</b>, entre dans <b>le dossier de ta classe (exemple&nbsp;: 4E3)</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>.<br>Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans Documents, <b>Nouveau → Dossier</b>, tape le nom de ta classe, puis Entrée.
       <figure class="geste-capture">
-        <img src="Images/geste_vitta_4_sortir_telecharger.png" width="1400" height="875" loading="lazy"
-             alt="Fenêtre « Sauvegarder le projet » de Vittascience, en thème sombre, sans compte. Le texte « Pour enregistrer votre projet, veuillez vous connecter. », un bouton vert « Je me connecte », le mot « ou », un bouton orange « Je m'inscris ! », une ligne, le mot « ou », puis un bouton vert « Télécharger » avec un point d'interrogation.">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> la fenêtre «&nbsp;Sauvegarder le projet&nbsp;», ouverte par la <b>disquette</b>. <b>Ne te connecte pas et ne t'inscris pas&nbsp;:</b> clique <b>Télécharger</b>, le bouton vert tout en bas.</figcaption>
+        <img src="Images/geste_editeur_3_telecharger.png" width="844" height="632" loading="lazy"
+             alt="L'éditeur après un clic sur « Télécharger mon .py » : sous les boutons, la phrase « 4e-JARDIN-DUPONT.py part dans ton dossier Téléchargements. Range-le maintenant dans Documents › ta classe (geste 3). »">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> sous les boutons, la phrase qui dit que ton fichier (<code>4e-JARDIN-DUPONT</code>) part dans ton dossier Téléchargements. <b>Puis&nbsp;:</b> ouvre l'Explorateur de fichiers, sur Téléchargements.</figcaption>
       </figure>
       <figure class="geste-capture">
         <img src="Images/geste_vitta_4b_sortir_telechargements.png" width="1400" height="523" loading="lazy"
              alt="Fenêtre de l'Explorateur de fichiers de Windows, en thème sombre, ouverte sur « Téléchargements » et rétrécie : sous « Aujourd'hui », le fichier « 4e-JARDIN-DUPONT_202695_3431.py » est sélectionné ; en bas, la taille du fichier.">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le fichier <code>.py</code> au nom de ton projet, dans <b>Téléchargements</b> — le navigateur l'y range sans rien demander. Clique-le une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b> pour le couper. <i>Les chiffres à la fin du nom sont ajoutés par Vittascience&nbsp;; DUPONT est un exemple. La fenêtre est rétrécie pour ne montrer que ce fichier.</i></figcaption>
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> ton fichier <code>.py</code> dans <b>Téléchargements</b>. Clique-le une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b> pour le couper. <i>Sur cette capture, le fichier vient de Vittascience, qui ajoute des chiffres à la fin du nom&nbsp;; celui de la page porte simplement le nom que tu as tapé (<code>4e-JARDIN-DUPONT</code>). La fenêtre est rétrécie pour ne montrer que ce fichier.</i></figcaption>
       </figure>
       <figure class="geste-capture">
         <img src="Images/geste_vitta_4c_sortir_nouveau_dossier.png" width="1400" height="457" loading="lazy"
@@ -1854,15 +1834,23 @@ FIN SI</div>
       <figure class="geste-capture">
         <img src="Images/geste_vitta_4d_sortir_nom_de_classe.png" width="1400" height="457" loading="lazy"
              alt="La même ligne de l'Explorateur : le nom du dossier en cours de saisie est maintenant « 4E3 ».">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le nom de ta classe à la place de «&nbsp;Nouveau dossier&nbsp;». <b>Puis&nbsp;:</b> Entrée, double-clic sur le dossier pour y entrer, et <b>Ctrl&nbsp;+&nbsp;V</b> pour y coller ton fichier. <i>4E3 est un exemple&nbsp;: c'est le nom de ta classe.</i></figcaption>
+        <figcaption><b>Tape le nom de ta classe</b> (exemple&nbsp;: <b>4E3</b>), puis <b>Entrée</b>. Double-clique le dossier pour y entrer, puis <b>Ctrl&nbsp;+&nbsp;V</b>. <i>4E3 est un exemple&nbsp;: mets ta classe.</i></figcaption>
       </figure>
       <figure class="geste-capture">
         <img src="Images/geste_vitta_4e_sortir_resultat.png" width="1400" height="538" loading="lazy"
              alt="Fenêtre de l'Explorateur ouverte sur « Documents › 4E3 » : un seul fichier, « 4e-JARDIN-DUPONT_202695_3431.py », de type Python.File, sélectionné.">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> en haut, <b>Documents › 4E3</b>&nbsp;; dans la liste, ton fichier <code>.py</code>. Il n'est plus dans Téléchargements&nbsp;: il est rangé.</figcaption>
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> en haut, <b>Documents › 4E3</b>&nbsp;; dans la liste, ton fichier <code>.py</code>. Il n'est plus dans Téléchargements&nbsp;: il est rangé. <b>Retiens ce chemin&nbsp;: c'est là que tu le chercheras au geste 4.</b> <i>Sur la capture, le nom porte les chiffres de Vittascience.</i></figcaption>
+      </figure>
+    </li>
+    <li><b>Retrouver.</b> La semaine suivante, ton fichier est là où tu l'as rangé au geste 3&nbsp;: <b>Documents › ta classe</b>. C'est <b>là</b> que tu vas le chercher. Dans l'éditeur de l'activité, clique <b>📂&nbsp;Ouvrir mon .py</b>&nbsp;: la fenêtre «&nbsp;Ouvrir&nbsp;» de Windows apparaît. Dans sa colonne de gauche, clique <b>Documents</b>, puis double-clique <b>le dossier de ta classe</b> — le même qu'au geste 3 —, clique ton fichier (<code>4e-JARDIN-DUPONT</code>), puis le bouton <b>Ouvrir</b>. Ton programme revient dans l'éditeur, et son nom dans 📄&nbsp;Nom du fichier.
+      <figure class="geste-capture">
+        <img src="Images/geste_editeur_4_retrouver.png" width="844" height="608" loading="lazy"
+             alt="L'éditeur après « Ouvrir mon .py » : le champ « Nom du fichier » contient 4e-JARDIN-DUPONT, la zone de code contient le programme, et sous les boutons, la phrase « 4e-JARDIN-DUPONT.py est ouvert : ton programme est revenu dans l'éditeur ».">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> sous les boutons, la phrase «&nbsp;📂 … est ouvert&nbsp;: ton programme est revenu dans l'éditeur&nbsp;», et ton programme dans la zone. <i>La fenêtre «&nbsp;Ouvrir&nbsp;» de Windows n'est pas montrée&nbsp;: c'est celle de ton poste, avec Documents dans sa colonne de gauche.</i></figcaption>
       </figure>
     </li>
   </ol>
+  <p class="gestes-vitta"><b>Avec Vittascience (facultatif, Internet nécessaire).</b> Le lien «&nbsp;Vittascience, si tu préfères&nbsp;» ouvre son éditeur en <b>mode mixte</b> (blocs et Python)&nbsp;: construis, <b>Exécuter</b> → le <b>crayon</b>, <code>4e-JARDIN-TON&nbsp;NOM</code> → la <b>disquette</b>, <b>Télécharger</b> → Téléchargements → Documents › ta classe. Pour reprendre&nbsp;: le <b>dossier</b> (Ouvrir) → <b>Depuis votre appareil</b> → <b>Ouvrir…</b> → Documents › ta classe → ton fichier → <b>Oui</b>&nbsp;: les blocs et le Python reviennent.</p>
 </section>
 <section class="card">
   <h2>⌨️ Séance 2 — Écrire le programme, puis le mettre à l'épreuve</h2>
@@ -1870,34 +1858,33 @@ FIN SI</div>
 
   <div class="activite" id="act3">
     <header><span class="num">Activité 3</span><h3>Écrire et exécuter — des blocs au Python</h3><span class="duree">⏱ ~30 min</span></header>
-<p class="activite-en-ligne">🌐 <b>Cette activité demande une connexion Internet</b> — l'éditeur Vittascience est en ligne. <b>Sans connexion&nbsp;:</b> suis le Plan B, plus bas (« Pas de connexion ? ») : le programme sur le cahier, et le banc d'essai de cette page, qui fonctionne hors ligne.</p>
+<p class="activite-en-ligne">🌐 <b>Sans connexion, tout se fait dans la page</b>&nbsp;: l'éditeur Python est intégré à l'activité. Seul le lien «&nbsp;Vittascience, si tu préfères&nbsp;» demande Internet.</p>
     <div class="meta-grid">
-      <div><b>Objectif :</b> écrire le programme dans l'éditeur, l'exécuter, et retrouver dans le code chaque élément de l'algorigramme.</div>
+      <div><b>Objectif :</b> écrire le programme dans l'éditeur Python de la page, l'exécuter, et retrouver dans le code chaque élément de l'algorigramme.</div>
       <div><b>Compétence :</b> <b>4e_C9.2</b> — <i>traduire</i> un algorithme en un programme.</div>
       <div><b>Production attendue :</b> le programme téléchargé sous ton nom + le journal de ce que tu as observé.</div>
-      <div><b>Ressources :</b> l'éditeur Vittascience, par le lien ci-dessous, ou le banc d'essai de cette page si le réseau manque.</div>
+      <div><b>Ressources :</b> l'éditeur Python de la page, ci-dessous, et le banc d'essai de la page (en haut).</div>
     </div>
-    <div class="consigne"><b>Consigne :</b> écris le programme <b>en blocs</b> d'abord, regarde le Python s'écrire à côté, puis modifie le Python et regarde les blocs suivre. Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs. Nomme ton projet <code>4e-JARDIN-TON NOM</code>, puis télécharge-le (geste 4). Enfin, remplis le journal : ce n'est pas un compte rendu, c'est ta trace de travail.</div>
+    <div class="consigne"><b>Consigne :</b> dans l'éditeur Python ci-dessous, les réglages et les entrées sont écrits : <b>écris la décision</b> (le losange de ton algorigramme), puis ▶&nbsp;Exécuter. Change ensuite <code>H</code>, puis <code>heure</code>, et réexécute à chaque fois. Nomme ton fichier <code>4e-JARDIN-TON NOM</code>, puis télécharge-le (geste 3). Enfin, remplis le journal : ce n'est pas un compte rendu, c'est ta trace de travail. Avec Vittascience (facultatif), tu peux aussi construire la décision en blocs et regarder le Python s'écrire. Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs.</div>
 
-    <div class="palier" data-parcours="b">
-      <h4>🖥 L'éditeur Vittascience — dans l'onglet Vittascience</h4>
-      <p class="faire">👉 FAIS : construis la décision en <b>BLOCS</b> (Logique → si / sinon), observe le Python s'écrire à droite, puis change le seuil directement dans le Python et regarde les blocs bouger. Sans capteur réel, on fixe les valeurs à la main : <code>H = 25</code> et <code>heure = 8</code>, et <code>print("POMPE ON")</code> tient lieu de pompe.</p>
-      <div class="vitta-cadre">
-        <p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
-        <p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
-      </div>
-      <details class="repli-vitta-details" style="margin-top:10px">
-        <summary>🔌 Pas de connexion ? Voici comment travailler quand même</summary>
-        <div class="repli-vitta">
-          <p style="margin-top:0">Pas de connexion, réseau du collège filtré, page ouverte hors ligne : <b>tout reste faisable</b>.</p>
-          <ol style="margin-bottom:8px">
-            <li><b>Plan B — sans connexion du tout :</b> écris ton programme <b>sur le cahier</b> (la logique est ce qui compte, la saisie se fera plus tard), et utilise le <b>banc d'essai</b> en haut de cette page pour voir la pompe réagir. Tu peux répondre à TOUTES les questions et valider l'activité.</li>
-          </ol>
-          <p style="margin-bottom:0;font-size:.9em;color:var(--sub)">L'éditeur Vittascience est le seul élément de cette séquence qui demande Internet. Le banc d'essai, lui, fonctionne hors ligne.</p>
-          <p style="margin:6px 0 0;font-size:.9em;color:var(--sub)">À la séance 3, l'activité 5 a son propre <b>atelier du programme</b>, intégré à la page et sans connexion : des blocs, leur Python et une exécution sur la mesure qui tremble.</p>
-        </div>
-      </details>
-    </div>
+<div class="editeur-py" id="edpy-a3" data-fichier="4e-JARDIN-TON NOM">
+  <label for="py_a3">🐍 L'éditeur Python de la page — écris la décision, exécute, puis change H et heure</label>
+  <p class="editeur-py-note">👉 FAIS : écris le <code>if … and … :</code> et le <code>else :</code>, avec <code>print("POMPE ON")</code> et <code>print("POMPE OFF")</code> à la place de la pompe, puis ▶&nbsp;Exécuter. Sans capteur réel, on fixe les valeurs à la main (<code>H = 25</code>, <code>heure = 8</code>) : change-les, réexécute, et note ce que la console affiche dans ton journal. Le banc d'essai, en haut de page, fait réagir la pompe.</p>
+  <textarea id="py_a3" class="editeur-py-code" rows="13" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off"># --- les réglages, écrits une seule fois, tout en haut ---
+SEUIL = 40
+HEURE_DEBUT = 6
+HEURE_FIN = 10
+
+# --- les entrées (en vrai : le capteur et l'horloge) ---
+H = 25
+heure = 8
+
+# --- la décision : à toi ! SI H &lt; SEUIL ET heure entre HEURE_DEBUT et HEURE_FIN,
+#     ALORS print("POMPE ON"), SINON print("POMPE OFF")
+</textarea>
+  <p class="editeur-py-vitta">Avec Vittascience (facultatif, Internet nécessaire)&nbsp;: <a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p>
+  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur ton cahier, puis exécute-le dans Vittascience, par le lien.</p>
+</div>
 
     <div class="exo">
       <h4>a) Retrouver l'algorigramme dans le code</h4>
@@ -1945,10 +1932,10 @@ heure = <span class="num">8</span>
       <p><b>Q2 :</b> le <b>losange</b>.</p>
       <p><b>Q3 :</b> avec <code>or</code>, il suffit qu'<b>une</b> condition soit vraie : à 8 h du matin, la pompe s'allumerait sur un sol détrempé. Le programme ne planterait pas — il se tromperait, ce qui est bien pire. </p>
       <p><b>Q4 :</b> <code>H = 25</code> et <code>heure = 8</code> deviennent une lecture du capteur et de l'horloge ; les <code>print</code> deviennent la commande du <b>relais</b>. Le reste — les réglages, la décision — ne bouge pas d'une ligne.</p>
-      <p><b>Méthode :</b> écrire en blocs puis lire le Python n'est pas une béquille : c'est la même pensée dans deux écritures. Les blocs empêchent les fautes de frappe, le texte montre ce que la machine reçoit vraiment. Passer de l'un à l'autre, c'est vérifier qu'on a compris.</p>
+      <p><b>Méthode :</b> écrire la décision, l'exécuter, puis changer UNE valeur et réexécuter : c'est ainsi qu'on vérifie qu'on a compris. Les blocs (l'atelier de l'activité 5, ou Vittascience) disent la même chose dans une autre écriture : les blocs empêchent les fautes de frappe, le texte montre ce que la machine reçoit vraiment.</p>
       <p><b>Limite :</b> tant que <code>H</code> est écrit à la main, tu testes ton <b>raisonnement</b>, pas ton <b>montage</b>. Les deux se testent, mais pas en même temps ni avec les mêmes outils — et c'est en général le montage qui réserve les surprises.</p>
     </details>
-    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> oublier les deux-points en fin de ligne <code>if</code> ; ne pas indenter la ligne qui suit (en Python, le décalage <b>est</b> la structure) ; écrire <code>=</code> au lieu de <code>==</code> dans un test ; oublier d'enregistrer sous son nom — une page rechargée, et tout est perdu.</div>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> oublier les deux-points en fin de ligne <code>if</code> ; ne pas indenter la ligne qui suit (en Python, le décalage <b>est</b> la structure) ; écrire <code>=</code> au lieu de <code>==</code> dans un test ; oublier de télécharger son fichier sous son nom — la page garde le programme sur CET ordinateur seulement.</div>
     <div class="retenir"><b>📌 À retenir :</b> un programme se compose de <b>réglages</b> (les constantes, en haut), d'<b>entrées</b>, d'une <b>décision</b> et d'<b>actions</b>. <code>and</code> exige que tout soit vrai, <code>or</code> se contente d'une seule : la confusion des deux ne fait pas planter le programme, elle le fait <b>mentir</b>. Les blocs et le texte disent la même chose.</div>
     <div class="critere"><b>🎯 Critère de réussite :</b> 4 réponses justes sur 4, un journal qui cite des <b>valeurs</b> et des <b>résultats</b>, et au banc d'essai : l'humidité variée ✔ et l'essai « sol sec hors plage » ✔.</div>
   </div>
@@ -3972,5 +3959,7 @@ function signale(msg){
     if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
 }
 </script>
+<!-- éditeur Python intégré (04/11/2026) : un seul composant partagé, Skulpt chargé au premier ▶ Exécuter. -->
+<script src="../../../../_ressources-communes/editeur-python/editeur-python.js" defer></script>
 </body>
 </html>

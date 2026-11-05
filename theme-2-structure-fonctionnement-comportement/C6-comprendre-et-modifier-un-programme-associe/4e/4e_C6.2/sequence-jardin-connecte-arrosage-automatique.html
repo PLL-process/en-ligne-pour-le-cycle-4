@@ -551,6 +551,7 @@
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<link rel="stylesheet" href="../../../../_ressources-communes/editeur-python/editeur-python.css">
 </head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_4e_C6.2.html">📖 Lexique</a></nav>
@@ -643,7 +644,7 @@
 <section class="card">
   <h2>🎯 Mission</h2>
   <p><strong>Ta mission :</strong> compléter le programme du prototype (les blocs à remettre en ordre, puis les
-  trous du Python), le <b>tester dans l'éditeur Vittascience</b>, et valider son comportement sur un banc de tests —
+  trous du Python), le <b>tester dans l'éditeur Python de la page</b>, et valider son comportement sur un banc de tests —
   cas frontière compris.</p>
   <p><strong>Production attendue :</strong> un programme complété et testé, le banc de tests au vert, et un court
   argumentaire justifiant le seuil choisi.</p>
@@ -652,8 +653,8 @@
 <section class="card">
   <h2>🔀 Trois façons de vivre l'atelier</h2>
   <div class="donnees">
-    <p>🅰 <b>Avec matériel</b> : l'éditeur Vittascience relié à une carte réelle + capteur d'humidité + relais + petite pompe 5 V (volts) ou DEL de substitution (<b>très basse tension uniquement — jamais de secteur</b>).</p>
-    <p>🅱 <b>En simulation</b> : les <b>barres 🧪 bleues</b> des séances 1, 2 et du Bonus ouvrent l'éditeur Vittascience dans un nouvel onglet, en mode code (tu tapes ton programme) — un clic sur leur lien-bouton. Le simulateur de pompe de la séance 2 complète le tout. C'est le parcours principal.</p>
+    <p>🅰 <b>Avec matériel</b> : l'éditeur Vittascience (en ligne) relié à une carte réelle + capteur d'humidité + relais + petite pompe 5 V (volts) ou DEL de substitution (<b>très basse tension uniquement — jamais de secteur</b>).</p>
+    <p>🅱 <b>En simulation</b> : les <b>éditeurs Python 🐍</b> des séances 1, 2 et du Bonus sont dans la page — tu tapes ton programme, ▶&nbsp;Exécuter, et la page simule le capteur et la pompe. Le simulateur de pompe de la séance 2 complète le tout ; Vittascience reste possible, par un lien. C'est le parcours principal.</p>
     <p>🅲 <b>Sans matériel</b> : la remise en ordre, le Python à trous, le simulateur de pompe et le banc de tests fonctionnent entièrement dans la page, hors ligne.</p>
   </div>
   <div class="retenir"><b>📡 Méthode de l'atelier — prédire → tester → reporter :</b> à chaque exercice, tu PRÉDIS
@@ -756,7 +757,7 @@
 </script>
 
 <section class="card">
-<p class="activite-en-ligne">🌐 <b>Cette activité demande une connexion Internet</b> — l'éditeur Vittascience est en ligne. <b>Sans connexion&nbsp;:</b> écris ton programme sur le cahier : la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
+<p class="activite-en-ligne">🌐 <b>Sans connexion, tout se fait dans la page</b>&nbsp;: l'éditeur Python est intégré à l'activité. Seul le lien «&nbsp;Vittascience, si tu préfères&nbsp;» demande Internet.</p>
   <p class="question-directrice">Question directrice : comment mesurer l'humidité du sol et transmettre cette information ?</p>
 
   <div class="act">
@@ -789,65 +790,41 @@
     <details class="correction"><summary>📖 Correction complète</summary><div><p>1023 → <b>100 %</b> · 0 → <b>0 %</b> · 512 → <b>≈ 50 %</b> · conversion faite par <b>le programme de la carte</b>. C'est la transformation d'une donnée brute (0-1023) en information utile (un pourcentage) — exactement le rôle du TRAITEMENT dans la chaîne d'information.</p></div></details>
   </div>
 
-<!-- gestes-outil-v1 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau. -->
-<section class="card gestes-outil" aria-labelledby="gestes-vittascience">
-  <h2 id="gestes-vittascience">🧰 Avant de commencer (échauffement) — les quatre gestes de Vittascience</h2>
-  <p class="pourquoi">Quatre gestes à faire une fois, au début, et ta séance ne
-  se perdra pas. Tu les as peut-être déjà faits une autre année&nbsp;: refais-les,
-  c'est court. Et si tu ne les as jamais faits, tout est écrit ici — tu n'as
-  besoin de rien d'autre.</p>
+<!-- gestes-outil-v2 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau ; n°297 : à la porte de l'outil.
+     Depuis le 04/11/2026 l'outil est l'éditeur Python INTÉGRÉ à la page (Vittascience devient facultatif). -->
+<section class="card gestes-outil" aria-labelledby="gestes-editeur-python">
+  <h2 id="gestes-editeur-python">🧰 Avant de commencer (échauffement) — les quatre gestes de l'éditeur Python</h2>
+  <p class="pourquoi">L'éditeur Python est <b>dans la page</b>, à chaque activité qui fait écrire un programme&nbsp;: rien à ouvrir, rien à installer, et il marche sans Internet. Quatre gestes, dans l'ordre où tu les fais, et ton programme ne se perdra pas — ni pendant la séance, ni la semaine suivante.</p>
   <ol>
-    <li><b>Ouvrir.</b> Clique sur le bouton <b>▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</b> de l'activité&nbsp;: l'éditeur Python s'ouvre dans un nouvel onglet, en <b>mode code</b>&nbsp;: tu écris ton programme au clavier. Une ligne <code>print('Bonjour&nbsp;!')</code> est déjà là&nbsp;: efface-la avant de commencer.
+    <li><b>Écrire et exécuter.</b> Clique dans la zone de code de l'activité&nbsp;3&nbsp;: le programme de départ y est déjà. Écris ou modifie-le (<b>Tab</b> décale de 4 espaces), puis <b>▶&nbsp;Exécuter</b>&nbsp;: ce qu'il affiche s'écrit dans la <b>console</b>, dessous, et une erreur y est expliquée, avec sa ligne. <b>⏹&nbsp;Arrêter</b> interrompt un programme qui tourne sans fin. Ici, pas de carte branchée&nbsp;: le capteur et la pompe sont <b>simulés par la page</b> (l'encadré 🔌 de l'activité&nbsp;3 dit lesquels et comment). Ton programme est gardé tout seul dans la page, sur cet ordinateur.
       <figure class="geste-capture">
-        <img src="Images/geste_vitta_1_ouvrir_bouton.png" width="1400" height="875" loading="lazy"
-             alt="La page de la séquence, en thème sombre, sur l'activité 3. Dans le cadre « Reconstruis le programme de mesure dans l'onglet Vittascience — en Python », le préambule de simulation en huit lignes de code, un bouton « Copier le préambule », puis un bouton bleu « ▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet », suivi de la phrase « Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne. »">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le bouton <b>▶ Ouvrir l'éditeur Vittascience…</b>, dans le cadre de l'activité, sous le préambule et son bouton Copier. <b>Puis&nbsp;:</b> clique-le&nbsp;; garde cet onglet-ci ouvert pour lire la consigne.</figcaption>
+        <img src="Images/geste_editeur_1_ecrire.png" width="848" height="659" loading="lazy"
+             alt="L'éditeur Python de la page, en thème sombre, de l'activité&nbsp;3. En haut, le champ « Nom du fichier » ; dessous, la zone de code aux lignes numérotées, avec un petit programme d'essai de deux lignes : h = lire_capteur_pourcent(A0), puis un print ; puis les boutons verts et rouges « Exécuter » et « Arrêter », et « Remettre le code de départ » ; en bas, la console, vide.">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> la zone de code aux lignes numérotées, avec ici un petit programme d'essai (celui de l'activité est à écrire), les boutons <b>▶&nbsp;Exécuter</b>, <b>⏹&nbsp;Arrêter</b> et <b>↺&nbsp;Remettre le code de départ</b>, puis la console. <b>Puis&nbsp;:</b> clique <b>▶&nbsp;Exécuter</b>.</figcaption>
       </figure>
       <figure class="geste-capture">
-        <img src="Images/geste_vitta_1c_ouvrir_editeur.png" width="1400" height="875" loading="lazy"
-             alt="L'éditeur Python de Vittascience, en thème sombre et en mode code. En haut à gauche, le nom « Nouveau projet ». La barre d'outils : Nouveau, Ouvrir, Sauvegarder, Annuler, Rétablir, puis Exécuter au centre, et à droite les trois boutons de mode, celui du code (orange) étant actif. Une seule grande zone de texte contient la ligne 1, print('Bonjour !'). En bas, la console avec son message de bienvenue.">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> une seule grande zone de texte, la console en bas, et le nom «&nbsp;Nouveau projet&nbsp;» en haut à gauche. <b>Puis&nbsp;:</b> efface la ligne <code>print('Bonjour&nbsp;!')</code>, que Vittascience met dans tout projet neuf, et tape ton programme à la place.</figcaption>
-      </figure>
-    </li>
-    <li><b>Nommer.</b> Clique le <b>crayon</b> à côté du nom du projet, en haut à gauche, et remplace «&nbsp;Nouveau projet&nbsp;» par <code>4e-ARROSAGE-TON&nbsp;NOM</code>. Un projet sans nom est introuvable la semaine suivante.
-      <figure class="geste-capture">
-        <img src="Images/geste_vitta_2_nommer_fenetre.png" width="1400" height="875" loading="lazy"
-             alt="Fenêtre « Modifier les informations du projet » de Vittascience, en thème sombre. Le champ « Nom du projet » contient 4e-ARROSAGE-DUPONT, avec une coche verte. Dessous, un champ « Description du projet (facultatif) » vide, puis deux boutons : « Annuler » en gris et « Modifier » en vert.">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> la fenêtre «&nbsp;Modifier les informations du projet&nbsp;», avec ton nom dans «&nbsp;Nom du projet&nbsp;». <b>Puis&nbsp;:</b> clique <b>Modifier</b>. <i>DUPONT est un exemple&nbsp;: mets ton nom.</i></figcaption>
-      </figure>
-      <figure class="geste-capture">
-        <img src="Images/geste_vitta_2b_nommer_resultat.png" width="1400" height="875" loading="lazy"
-             alt="L'éditeur après la validation : en haut à gauche, le nom du projet est devenu « 4e-ARROSAGE-DU… » (coupé à l'écran).">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> ton nom apparaît en haut à gauche. Il est coupé à l'écran mais il est entier&nbsp;: c'est lui qui nommera ton fichier au geste 4.</figcaption>
+        <img src="Images/geste_editeur_1b_executer.png" width="848" height="686" loading="lazy"
+             alt="Le même éditeur après un clic sur « Exécuter » : la console affiche [capteur] 55 %, écrit par le capteur simulé, puis Le sol est à 55 %, puis « Terminé ».">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> la console affiche ce que ton programme écrit, puis «&nbsp;✔&nbsp;Terminé&nbsp;». <i>La première fois, Python met une seconde à se préparer.</i></figcaption>
       </figure>
     </li>
-    <li><b>Retrouver.</b> La semaine suivante, ne rouvre pas ton fichier par <b>Ouvrir → Depuis votre appareil</b>&nbsp;: Vittascience remettrait <code>print('Bonjour&nbsp;!')</code> à la place de ton programme. Ouvre ton fichier <code>.py</code> (celui du geste 4) dans le <b>Bloc-notes</b>&nbsp;: dans <b>Documents</b>, dans le dossier de ta classe, <b>clic droit</b> sur le fichier, puis <b>Modifier dans Bloc-notes</b>. Sélectionne à partir de la ligne <code>import time</code> (le préambule fait partie de ton programme), sans l'en-tête, puis <b>Ctrl&nbsp;+&nbsp;C</b>. Dans Vittascience, clique dans la zone de texte, <b>Ctrl&nbsp;+&nbsp;A</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>&nbsp;: ton programme remplace <code>print('Bonjour&nbsp;!')</code>.
+    <li><b>Nommer.</b> Dans <b>📄&nbsp;Nom du fichier</b>, au-dessus de la zone, remplace <code>TON&nbsp;NOM</code> par ton nom&nbsp;: <code>4e-ARROSAGE-act3-DUPONT</code>. Un fichier sans nom est introuvable la semaine suivante.
       <figure class="geste-capture">
-        <img src="Images/geste_vitta_3_retrouver_menu.png" width="832" height="388" loading="lazy"
-             alt="Le haut du menu qui s'ouvre au clic droit sur le fichier .py, en thème sombre. De haut en bas : « Ouvrir avec » en gras, « Convertir avec Doxillion », « WinRAR », « Déplacer vers OneDrive », « Éditer avec Notepad++ », « Unlock with File Locksmith », puis « Modifier dans Bloc-notes ». L'image est recadrée sur le haut du menu.">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le menu du clic droit, avec la ligne <b>Modifier dans Bloc-notes</b>. <b>Clique-la.</b> <b>Si cette ligne n'est pas dans le menu&nbsp;:</b> clique <b>Ouvrir avec</b>, cherche <b>Bloc-notes</b> dans la liste, puis <b>Une seule fois</b>. <i>Les autres lignes dépendent du poste&nbsp;: ce sont celles de ce poste-ci.</i></figcaption>
-      </figure>
-      <figure class="geste-capture">
-        <img src="Images/geste_vitta_3b_retrouver_bloc_notes.png" width="1400" height="843" loading="lazy"
-             alt="Le fichier .py ouvert dans le Bloc-notes de Windows, en thème sombre. Dans l'onglet, le début du nom du fichier : « 4e-ARROSAGE-DU… ». Sous la barre de menus (Fichier, Modifier, Affichage), quatorze lignes d'en-tête de Vittascience entre deux lignes de trois guillemets, dont une longue ligne Blocks coupée à droite. En dessous, sur fond bleu, seize lignes sélectionnées : les huit lignes du préambule, de « import time; A0 = 0; … » à « # ===== Ton programme commence ici ===== », puis le programme, de « seuil = 30 » à « attendre(1) ». L'image est recadrée sur la partie gauche de la fenêtre.">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le Bloc-notes, le nom de ton fichier dans l'onglet, l'en-tête de Vittascience, puis ton programme. <b>Sélectionne à partir de la ligne <code>import time</code></b> (le préambule fait partie de ton programme), <b>sans l'en-tête</b>, jusqu'à la fin. Puis <b>Ctrl&nbsp;+&nbsp;C</b>. <i>La fenêtre est recadrée sur sa partie gauche&nbsp;; le programme est un exemple.</i></figcaption>
-      </figure>
-      <figure class="geste-capture">
-        <img src="Images/geste_vitta_3c_retrouver_coller.png" width="1400" height="875" loading="lazy"
-             alt="L'éditeur Python de Vittascience, en thème sombre et en mode code, pendant l'exécution. La marge numérote les lignes de 1 à 17 : les huit lignes du préambule, puis le programme. Un bandeau vert « Exécution de votre code… Veuillez patienter. » porte un bouton « Arrêter ». La console, en bas, affiche des lignes comme « [capteur] 25 % » suivie de « [pompe] MARCHE », puis « [capteur] 45 % » suivie de « [pompe] arrêt ».">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> ton programme, préambule compris, a pris la place de <code>print('Bonjour&nbsp;!')</code>, et <b>Exécuter</b> remplit la console. <b>Pour arrêter&nbsp;:</b> clique <b>Arrêter</b>, dans le bandeau vert. En cas d'erreur, le numéro de ligne donné par la console est celui de la marge. <i>Le programme est un exemple&nbsp;: c'est le tien qui revient.</i></figcaption>
+        <img src="Images/geste_editeur_2_nommer.png" width="815" height="45" loading="lazy"
+             alt="Le haut de l'éditeur : le champ « Nom du fichier » contient 4e-ARROSAGE-act3-DUPONT, suivi de « .py », puis les boutons « Télécharger mon .py » et « Ouvrir mon .py ».">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> ton nom dans le champ, juste avant «&nbsp;.py&nbsp;». <i>DUPONT est un exemple&nbsp;: mets ton nom.</i></figcaption>
       </figure>
     </li>
-    <li><b>Sortir.</b> Vittascience ne garde pas ton travail d'une séance à l'autre. Clique la <b>disquette</b>, puis <b>Télécharger</b>&nbsp;: un fichier <code>.py</code> au nom de ton projet arrive dans <b>Téléchargements</b>. Vittascience ajoute des chiffres à la fin du nom du fichier&nbsp;: c'est normal. <b>Déplace-le</b> dans <b>Documents</b>, dans <b>le dossier de ta classe (exemple&nbsp;: 4E3)</b>. Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans Documents, <b>Nouveau → Dossier</b>, tape le nom de ta classe, puis valide.
+    <li><b>Sortir.</b> La page garde ton programme sur <b>cet</b> ordinateur seulement&nbsp;: pour l'emporter, clique <b>⬇&nbsp;Télécharger mon .py</b>. Ton fichier arrive dans <b>Téléchargements</b>, au nom que tu lui as donné (<code>4e-ARROSAGE-act3-DUPONT</code>, suivi de «&nbsp;.py&nbsp;») — le navigateur l'y range sans rien demander.<br>Ouvre l'<b>Explorateur de fichiers</b> (le dossier jaune de la barre des tâches, ou les touches <b>Windows&nbsp;+&nbsp;E</b>), clique <b>Téléchargements</b>, clique ton fichier une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b>. Va dans <b>Documents</b>, entre dans <b>le dossier de ta classe (exemple&nbsp;: 4E3)</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>.<br>Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans Documents, <b>Nouveau → Dossier</b>, tape le nom de ta classe, puis Entrée.
       <figure class="geste-capture">
-        <img src="Images/geste_vitta_4_sortir_telecharger.png" width="1400" height="875" loading="lazy"
-             alt="Fenêtre « Sauvegarder le projet » de Vittascience, en thème sombre, sans compte. Le texte « Pour enregistrer votre projet, veuillez vous connecter. », un bouton vert « Je me connecte », le mot « ou », un bouton orange « Je m'inscris ! », une ligne, le mot « ou », puis un bouton vert « Télécharger » avec un point d'interrogation.">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> la fenêtre «&nbsp;Sauvegarder le projet&nbsp;», ouverte par la <b>disquette</b>. <b>Ne te connecte pas et ne t'inscris pas&nbsp;:</b> clique <b>Télécharger</b>, le bouton vert tout en bas.</figcaption>
+        <img src="Images/geste_editeur_3_telecharger.png" width="848" height="708" loading="lazy"
+             alt="L'éditeur après un clic sur « Télécharger mon .py » : sous les boutons, la phrase « 4e-ARROSAGE-act3-DUPONT.py part dans ton dossier Téléchargements. Range-le maintenant dans Documents › ta classe (geste 3). »">
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> sous les boutons, la phrase qui dit que ton fichier (<code>4e-ARROSAGE-act3-DUPONT</code>) part dans ton dossier Téléchargements. <b>Puis&nbsp;:</b> ouvre l'Explorateur de fichiers, sur Téléchargements.</figcaption>
       </figure>
       <figure class="geste-capture">
         <img src="Images/geste_vitta_4b_sortir_telechargements.png" width="1400" height="543" loading="lazy"
              alt="Fenêtre de l'Explorateur de fichiers de Windows, en thème sombre, ouverte sur « Téléchargements » et rétrécie : sous « Aujourd'hui », le fichier « 4e-ARROSAGE-DUPONT_202694_75334.py » est sélectionné ; en bas, « 1 élément sélectionné 609 octet(s) ».">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le fichier <code>.py</code> au nom de ton projet, dans <b>Téléchargements</b> — le navigateur l'y range sans rien demander. Clique-le une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b> pour le couper. <i>Les chiffres à la fin du nom sont ajoutés par Vittascience&nbsp;; DUPONT est un exemple. La fenêtre est rétrécie pour ne montrer que ce fichier.</i></figcaption>
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> ton fichier <code>.py</code> dans <b>Téléchargements</b>. Clique-le une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b> pour le couper. <i>Sur cette capture, le fichier vient de Vittascience, qui ajoute des chiffres à la fin du nom&nbsp;; celui de la page porte simplement le nom que tu as tapé (<code>4e-ARROSAGE-act3-DUPONT</code>). La fenêtre est rétrécie pour ne montrer que ce fichier.</i></figcaption>
       </figure>
       <figure class="geste-capture">
         <img src="Images/geste_vitta_4c_sortir_nouveau_dossier.png" width="1400" height="457" loading="lazy"
@@ -857,20 +834,28 @@
       <figure class="geste-capture">
         <img src="Images/geste_vitta_4d_sortir_nom_de_classe.png" width="1400" height="457" loading="lazy"
              alt="La même ligne de l'Explorateur : le nom du dossier en cours de saisie est maintenant « 4E3 ».">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le nom de ta classe à la place de «&nbsp;Nouveau dossier&nbsp;». <b>Puis&nbsp;:</b> Entrée, double-clic sur le dossier pour y entrer, et <b>Ctrl&nbsp;+&nbsp;V</b> pour y coller ton fichier. <i>4E3 est un exemple&nbsp;: c'est le nom de ta classe.</i></figcaption>
+        <figcaption><b>Tape le nom de ta classe</b> (exemple&nbsp;: <b>4E3</b>), puis <b>Entrée</b>. Double-clique le dossier pour y entrer, puis <b>Ctrl&nbsp;+&nbsp;V</b>. <i>4E3 est un exemple&nbsp;: mets ta classe.</i></figcaption>
       </figure>
       <figure class="geste-capture">
         <img src="Images/geste_vitta_4e_sortir_resultat.png" width="1400" height="523" loading="lazy"
              alt="Fenêtre de l'Explorateur ouverte sur « Documents › 4E3 » : un seul fichier, « 4e-ARROSAGE-DUPONT_202694_75334.py », de type Python, 609 octets, sélectionné.">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> en haut, <b>Documents › 4E3</b>&nbsp;; dans la liste, ton fichier <code>.py</code>. Il n'est plus dans Téléchargements&nbsp;: il est rangé.</figcaption>
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> en haut, <b>Documents › 4E3</b>&nbsp;; dans la liste, ton fichier <code>.py</code>. Il n'est plus dans Téléchargements&nbsp;: il est rangé. <b>Retiens ce chemin&nbsp;: c'est là que tu le chercheras au geste 4.</b> <i>Sur la capture, le nom porte les chiffres de Vittascience.</i></figcaption>
+      </figure>
+    </li>
+    <li><b>Retrouver.</b> La semaine suivante, ton fichier est là où tu l'as rangé au geste 3&nbsp;: <b>Documents › ta classe</b>. C'est <b>là</b> que tu vas le chercher. Dans l'éditeur de l'activité, clique <b>📂&nbsp;Ouvrir mon .py</b>&nbsp;: la fenêtre «&nbsp;Ouvrir&nbsp;» de Windows apparaît. Dans sa colonne de gauche, clique <b>Documents</b>, puis double-clique <b>le dossier de ta classe</b> — le même qu'au geste 3 —, clique ton fichier (<code>4e-ARROSAGE-act3-DUPONT</code>), puis le bouton <b>Ouvrir</b>. Ton programme revient dans l'éditeur, et son nom dans 📄&nbsp;Nom du fichier.
+      <figure class="geste-capture">
+        <img src="Images/geste_editeur_4_retrouver.png" width="848" height="662" loading="lazy"
+             alt="L'éditeur après « Ouvrir mon .py » : le champ « Nom du fichier » contient 4e-ARROSAGE-act3-DUPONT, la zone de code contient le programme, et sous les boutons, la phrase « 4e-ARROSAGE-act3-DUPONT.py est ouvert : ton programme est revenu dans l'éditeur ».">
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> sous les boutons, la phrase «&nbsp;📂 … est ouvert&nbsp;: ton programme est revenu dans l'éditeur&nbsp;», et ton programme dans la zone. <i>La fenêtre «&nbsp;Ouvrir&nbsp;» de Windows n'est pas montrée&nbsp;: c'est celle de ton poste, avec Documents dans sa colonne de gauche.</i></figcaption>
       </figure>
     </li>
   </ol>
+  <p class="gestes-vitta"><b>Avec Vittascience (facultatif, Internet nécessaire).</b> Le lien «&nbsp;Vittascience, si tu préfères&nbsp;» ouvre son éditeur en <b>mode code</b>&nbsp;: colle d'abord le préambule de la carte (bouton 📋 sous chaque éditeur) à la place de <code>print('Bonjour&nbsp;!')</code>, écris sous ses huit lignes, <b>Exécuter</b> → le <b>crayon</b>, <code>4e-ARROSAGE-TON&nbsp;NOM</code> → la <b>disquette</b>, <b>Télécharger</b> → Téléchargements → Documents › ta classe. Pour reprendre&nbsp;: <b>📂&nbsp;Ouvrir mon .py</b> dans la page (son en-tête est retiré), puis <b>Ctrl&nbsp;+&nbsp;A</b>, <b>Ctrl&nbsp;+&nbsp;C</b> ici et <b>Ctrl&nbsp;+&nbsp;A</b>, <b>Ctrl&nbsp;+&nbsp;V</b> là-bas — son «&nbsp;Ouvrir → Depuis votre appareil&nbsp;» remettrait <code>print('Bonjour&nbsp;!')</code>.</p>
 </section>
   <div class="act">
     <header><span class="num">Activité 3</span><h3>Les blocs en désordre — remets le programme de MESURE en ordre</h3><span class="duree">⏱ 25 min</span></header>
     <div class="consigne"><b>Consigne :</b> le stagiaire a fait tomber les blocs du programme de mesure… Attribue à
-    chaque ligne sa position (1 à 5), puis <b>reconstruis et exécute</b> le programme dans l'éditeur 🧪 pour vérifier.</div>
+    chaque ligne sa position (1 à 5), puis <b>reconstruis et exécute</b> le programme dans l'éditeur Python, plus bas, pour vérifier&nbsp;: les cinq lignes y sont, dans le désordre du stagiaire.</div>
     <table class="parsons">
       <tr><td><select id="a3o1"><option value="">pos. ?</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><span class="py-var">humidite</span> <span class="py-op">=</span> <span class="py-var">valeur_brute</span> <span class="py-op">*</span> <span class="py-num">100</span> <span class="py-op">/</span> <span class="py-num">1023</span></td></tr>
       <tr><td><select id="a3o2"><option value="">pos. ?</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><span class="py-kw">attendre</span>(<span class="py-num">1</span>)</td></tr>
@@ -879,10 +864,52 @@
       <tr><td><select id="a3o5"><option value="">pos. ?</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><span class="py-var">valeur_brute</span> <span class="py-op">=</span> <span class="py-kw">lire_capteur</span>(<span class="py-var">A0</span>)</td></tr>
     </table>
     <p class="py-legende">🎨 Lis le code en couleurs : <span class="py-var">variables</span> · <span class="py-str">"textes"</span> · <span class="py-num">nombres</span> · <span class="py-kw">mots-clés</span> · <span class="py-op">=</span> et opérateurs</p>
-    <details class="vs" id="vs1" open>
-      <summary>🧪 Reconstruis le programme de mesure dans l'onglet Vittascience — en Python</summary>
-      <p class="vs-note">L'éditeur s'ouvre dans un nouvel onglet, en mode code&nbsp;: tu tapes ton programme dans la grande zone de texte, la console est en bas. (Connexion Internet nécessaire pour l'éditeur&nbsp;; le reste de la page fonctionne hors ligne.)</p>
-      <p class="vs-note"><b>Sans carte réelle, commence par coller le préambule ci-dessous</b> (bouton Copier)&nbsp;: dans l'éditeur, clique dans la zone de texte, <b>Ctrl&nbsp;+&nbsp;A</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>. Il fabrique les fonctions de la carte, qui affichent ce que la carte ferait.</p>
+    <div class="carte-simulee" id="fonctions-simulees">
+      <p><b>🔌 Pas de carte branchée&nbsp;: la page simule la carte.</b> Dans les éditeurs Python de cette page, ces fonctions existent déjà&nbsp;: tu les appelles, tu ne les écris pas. Elles écrivent dans la console ce que ferait la vraie carte.</p>
+      <ul>
+        <li><code>lire_capteur(A0)</code> → la valeur <b>brute</b> du capteur d'humidité, de 0 à 1&nbsp;023&nbsp;; la console écrit «&nbsp;[capteur] valeur brute …&nbsp;».</li>
+        <li><code>lire_capteur_pourcent(A0)</code> → l'humidité <b>en %</b>, déjà convertie&nbsp;; «&nbsp;[capteur] … %&nbsp;».</li>
+        <li><code>demarrer_pompe()</code> → «&nbsp;[pompe] MARCHE&nbsp;»&nbsp;; <code>arreter_pompe()</code> → «&nbsp;[pompe] arrêt&nbsp;».</li>
+        <li><code>attendre(1)</code> → le programme attend 1&nbsp;seconde, comme la carte.</li>
+      </ul>
+      <p>Le capteur simulé lit, l'une après l'autre, <b>55, 40, 25, 12, 28 puis 45&nbsp;%</b>, et recommence&nbsp;: les valeurs plausibles d'un pot qui sèche, puis qu'on arrose. Ce ne sont pas les mesures de TON jardin&nbsp;: avec la vraie carte, les mêmes lignes de programme liraient le vrai capteur.</p>
+    </div>
+    <script type="text/x-python" id="carte-simulee-arrosage">
+import time
+A0 = 0
+_mesures = [55, 40, 25, 12, 28, 45]
+_rang = [0]
+def _suivante():
+    _rang[0] = _rang[0] + 1
+    return _mesures[(_rang[0] - 1) % len(_mesures)]
+def lire_capteur_pourcent(broche):
+    v = _suivante()
+    print("[capteur]", v, "%")
+    return v
+def lire_capteur(broche):
+    v = _suivante() * 1023 // 100
+    print("[capteur] valeur brute", v)
+    return v
+def demarrer_pompe():
+    print("[pompe] MARCHE")
+def arreter_pompe():
+    print("[pompe] arrêt")
+def attendre(secondes):
+    time.sleep(secondes)
+</script>
+<div class="editeur-py" id="vs1" data-fichier="4e-ARROSAGE-act3-TON NOM" data-simulation="carte-simulee-arrosage">
+  <label for="py_a3">🐍 L'éditeur Python de la page — reconstruis le programme de mesure, puis exécute-le</label>
+  <p class="editeur-py-note">Remets les cinq lignes dans l'ordre que tu as choisi, et décale de 4 espaces (touche Tab) celles qui se répètent sous <code>while True:</code>. Puis ▶&nbsp;Exécuter : la console montre ce que lit le capteur simulé, une mesure par seconde. Le programme boucle sans fin, comme sur la vraie carte : clique ⏹&nbsp;Arrêter.</p>
+  <textarea id="py_a3" class="editeur-py-code" rows="7" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off">humidite = valeur_brute * 100 / 1023
+attendre(1)
+while True:  # répéter sans fin
+print("Humidité du sol :", humidite, "%")
+valeur_brute = lire_capteur(A0)
+</textarea>
+  <p class="editeur-py-vitta">Avec Vittascience (facultatif, Internet nécessaire)&nbsp;: <a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p>
+  <details class="vs-vitta">
+    <summary>Avec Vittascience&nbsp;: le préambule de la carte, à coller d'abord</summary>
+    <p>Vittascience ne connaît pas les fonctions de la carte simulée&nbsp;: colle d'abord ces huit lignes dans sa zone (<b>Ctrl&nbsp;+&nbsp;A</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>), puis ton programme dessous. Un programme qui boucle sans fin s'y arrête avec <b>Arrêter</b>, dans le bandeau vert.</p>
       <div class="preambule-carte">
         <pre class="code" id="preambule-vs1">import time; A0 = 0; mesures = [55, 40, 25, 12, 28, 45]; rang = [0]  # ===== Simulation de la carte (7 lignes) : ne les change pas =====
 def suivante(): rang[0] = rang[0] + 1; return mesures[(rang[0] - 1) % len(mesures)]
@@ -895,11 +922,9 @@ def attendre(secondes): time.sleep(secondes)
         <button type="button" class="btn copier-preambule" data-cible="preambule-vs1">📋 Copier le préambule</button>
         <span class="copie-etat" role="status" aria-live="polite"></span>
       </div>
-      <p class="vs-note">Tape ensuite tes cinq lignes sous le préambule, dans l'ordre que tu as choisi, clique <b>Exécuter</b> et observe la console. Le programme boucle sans fin&nbsp;: clique <b>Arrêter</b>, dans le bandeau vert, pour l'arrêter. En cas d'erreur, le numéro de ligne donné par la console est celui de la marge de l'éditeur.</p>
-      
-<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
-<p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
-    </details>
+  </details>
+  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur ton cahier, puis exécute-le dans Vittascience, par le lien.</p>
+</div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><div><p>On ne peut pas convertir une valeur qu'on n'a pas encore lue. Et « répéter sans fin » englobe tout ce qui doit se refaire chaque seconde.</p></div></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><div><p>Ordre logique du technicien :<br>① ouvrir la répétition (<code>while True:</code>) →<br>② LIRE le capteur →<br>③ CONVERTIR la valeur →<br>④ AFFICHER le résultat →<br>⑤ ATTENDRE avant la mesure suivante. Vérifie ta prédiction dans l'éditeur avant de valider.</p></div></details>
     <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
@@ -923,7 +948,7 @@ def attendre(secondes): time.sleep(secondes)
 <!-- ═══════════ SÉANCE 2 ═══════════ -->
 <div class="seance-panel" id="s2" role="tabpanel">
 <section class="card">
-<p class="activite-en-ligne">🌐 <b>Cette activité demande une connexion Internet</b> — l'éditeur Vittascience est en ligne. <b>Sans connexion&nbsp;:</b> écris ton programme sur le cahier : la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
+<p class="activite-en-ligne">🌐 <b>Sans connexion, tout se fait dans la page</b>&nbsp;: l'éditeur Python est intégré à l'activité. Seul le lien «&nbsp;Vittascience, si tu préfères&nbsp;» demande Internet.</p>
   <p class="question-directrice">Question directrice : comment décider si la plante doit être arrosée, et commander la pompe ?</p>
 
   <div class="act">
@@ -942,7 +967,7 @@ def attendre(secondes): time.sleep(secondes)
   <div class="act">
     <header><span class="num">Activité 5</span><h3>Le Python à trous — complète le programme du prototype</h3><span class="duree">⏱ 25 min</span></header>
     <div class="consigne"><b>Consigne :</b> voici le programme FOURNI du prototype, avec trois trous. PRÉDIS chaque trou,
-    puis <b>recopie et exécute</b> le programme complété dans l'éditeur 🧪 — c'est la capacité attendue de 4e_C6.2 !</div>
+    puis <b>complète les trous et exécute</b> le programme dans l'éditeur Python, plus bas — c'est la capacité attendue de 4e_C6.2 !</div>
     <div class="pytrous" aria-label="Programme Python à compléter">
 <span class="py-var">seuil</span> <span class="py-op">=</span> <span class="py-num">30</span><br>
 <span class="py-kw">while</span> <span class="py-kw">True</span><span class="py-op">:</span><br>
@@ -954,9 +979,22 @@ def attendre(secondes): time.sleep(secondes)
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="py-kw">attendre</span>(<span class="py-num">1</span>)
     </div>
     <label>PRÉDIS, puis vérifie dans l'éditeur : avec <code>humidite = 12</code> et <code>seuil = 30</code>, il se passe… <select id="a5q1"><option value="">— je choisis —</option><option>la pompe démarre (12 &lt; 30 est VRAI)</option><option>la pompe s'arrête</option><option>rien, le programme attend</option></select></label>
-    <details class="vs" id="vs2" open>
-      <summary>🧪 Recopie ton programme complété dans l'onglet Vittascience et exécute-le — la preuve par la console</summary>
-      <p class="vs-note">Mode code. <b>Colle d'abord le préambule</b> (bouton Copier, comme à l'activité 3)&nbsp;: <code>lire_capteur_pourcent</code>, <code>demarrer_pompe</code>, <code>arreter_pompe</code> et <code>attendre</code> existent alors, et elles affichent ce que la carte ferait.</p>
+<div class="editeur-py" id="vs2" data-fichier="4e-ARROSAGE-act5-TON NOM" data-simulation="carte-simulee-arrosage">
+  <label for="py_a5">🐍 L'éditeur Python de la page — complète les trois trous ___, puis exécute : la preuve par la console</label>
+  <p class="editeur-py-note">Remplace chaque <code>___</code> par ta réponse, puis ▶&nbsp;Exécuter. Les fonctions de la carte sont simulées par la page (encadré 🔌 de l'activité 3) : le capteur lit 55, 40, 25, 12, 28, puis 45&nbsp;%, et la console montre la décision pour chaque mesure. ⏹&nbsp;Arrêter pour finir.</p>
+  <textarea id="py_a5" class="editeur-py-code" rows="10" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off">seuil = 30
+while True:
+    humidite = lire_capteur_pourcent(A0)
+    if humidite ___ seuil:
+        ___
+    else:
+        ___
+    attendre(1)
+</textarea>
+  <p class="editeur-py-vitta">Avec Vittascience (facultatif, Internet nécessaire)&nbsp;: <a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p>
+  <details class="vs-vitta">
+    <summary>Avec Vittascience&nbsp;: le préambule de la carte, à coller d'abord</summary>
+    <p>Vittascience ne connaît pas les fonctions de la carte simulée&nbsp;: colle d'abord ces huit lignes dans sa zone (<b>Ctrl&nbsp;+&nbsp;A</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>), puis ton programme dessous. Un programme qui boucle sans fin s'y arrête avec <b>Arrêter</b>, dans le bandeau vert.</p>
       <div class="preambule-carte">
         <pre class="code" id="preambule-vs2">import time; A0 = 0; mesures = [55, 40, 25, 12, 28, 45]; rang = [0]  # ===== Simulation de la carte (7 lignes) : ne les change pas =====
 def suivante(): rang[0] = rang[0] + 1; return mesures[(rang[0] - 1) % len(mesures)]
@@ -969,11 +1007,9 @@ def attendre(secondes): time.sleep(secondes)
         <button type="button" class="btn copier-preambule" data-cible="preambule-vs2">📋 Copier le préambule</button>
         <span class="copie-etat" role="status" aria-live="polite"></span>
       </div>
-      <p class="vs-note">Recopie ensuite ton programme complété sous le préambule et clique <b>Exécuter</b>. Le capteur simulé lit 55, 40, 25, 12, 28, puis 45&nbsp;%, et recommence&nbsp;: la console montre la décision pour chaque mesure. Le programme boucle sans fin&nbsp;: clique <b>Arrêter</b>, dans le bandeau vert.</p>
-      
-<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
-<p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
-    </details>
+  </details>
+  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur ton cahier, puis exécute-le dans Vittascience, par le lien.</p>
+</div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><div><p>Reprends ta règle de l'activité 4 : elle se traduit mot à mot. « inférieure » → quel symbole ?</p></div></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><div><p>Trou par trou :<br>① la condition du SI est la traduction directe de « humidité inférieure au seuil » ;<br>② DANS le SI (sol sec), on démarre ;<br>③ dans le SINON (sol assez humide), on arrête. Puis exécute : pour une mesure de 12 %, quelle branche s'affiche ?</p></div></details>
     <button class="btn check" data-check="5" type="button">✅ Vérifier l'activité 5</button>
@@ -1177,7 +1213,7 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
 
 <section class="card" id="bonus">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-<p class="activite-en-ligne">🌐 <b>Cette activité demande une connexion Internet</b> — l'éditeur Vittascience est en ligne. <b>Sans connexion&nbsp;:</b> écris ton programme sur le cahier : la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
+<p class="activite-en-ligne">🌐 <b>Sans connexion, tout se fait dans la page</b>&nbsp;: l'éditeur Python est intégré à l'activité. Seul le lien «&nbsp;Vittascience, si tu préfères&nbsp;» demande Internet.</p>
   <p>Trois défis ouverts, sans vérificateur :</p>
   <p><b>🌙 Défi nuit :</b> on ne veut PAS arroser la nuit (l'eau s'évapore moins, la pompe réveille le gardien).
   Ajoute une deuxième condition avec <code>luminosite</code> : la pompe ne démarre que si le sol est sec ET s'il fait jour.</p>
@@ -1185,10 +1221,22 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
   modifiée en tête de programme en 🅱) — combien de lignes as-tu dû changer ? Pourquoi si peu ?</p>
   <p><b>🏡 Défi maison :</b> explique à quelqu'un de ta famille pourquoi le test « 30 pile » est le plus important
   du banc. S'il trouve la réponse tout seul à « et avec ≤ ? », vous avez gagné tous les deux.</p>
-  <details class="vs" id="vs3" open>
-    <summary>🧪 L'éditeur du Bonus — code tes défis ici, dans l'onglet Vittascience</summary>
-    <p class="vs-note">L'éditeur s'ouvre en mode code, console en bas. (Connexion Internet nécessaire pour l'éditeur&nbsp;; le reste de la page fonctionne hors ligne.)</p>
-    <p class="vs-note">Colle d'abord le préambule (bouton Copier), puis écris tes défis sous ses huit lignes. Un programme qui boucle sans fin s'arrête avec <b>Arrêter</b>, dans le bandeau vert.</p>
+<div class="editeur-py" id="vs3" data-fichier="4e-ARROSAGE-bonus-TON NOM" data-simulation="carte-simulee-arrosage">
+  <label for="py_bonus">🐍 L'éditeur du Bonus — code tes défis ici</label>
+  <p class="editeur-py-note">Les fonctions simulées de la carte (encadré 🔌 de l'activité 3) y marchent aussi. Le départ est celui du défi nuit : à toi d'y ajouter la luminosité.</p>
+  <textarea id="py_bonus" class="editeur-py-code" rows="10" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off"># Défi nuit : la pompe ne démarre que si le sol est sec ET s'il fait jour.
+seuil = 30
+luminosite = 80   # 0 : nuit noire ; 100 : plein soleil
+humidite = lire_capteur_pourcent(A0)
+if humidite &lt; seuil:
+    demarrer_pompe()
+else:
+    arreter_pompe()
+</textarea>
+  <p class="editeur-py-vitta">Avec Vittascience (facultatif, Internet nécessaire)&nbsp;: <a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p>
+  <details class="vs-vitta">
+    <summary>Avec Vittascience&nbsp;: le préambule de la carte, à coller d'abord</summary>
+    <p>Vittascience ne connaît pas les fonctions de la carte simulée&nbsp;: colle d'abord ces huit lignes dans sa zone (<b>Ctrl&nbsp;+&nbsp;A</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>), puis ton programme dessous. Un programme qui boucle sans fin s'y arrête avec <b>Arrêter</b>, dans le bandeau vert.</p>
     <div class="preambule-carte">
       <pre class="code" id="preambule-vs3">import time; A0 = 0; mesures = [55, 40, 25, 12, 28, 45]; rang = [0]  # ===== Simulation de la carte (7 lignes) : ne les change pas =====
 def suivante(): rang[0] = rang[0] + 1; return mesures[(rang[0] - 1) % len(mesures)]
@@ -1201,10 +1249,9 @@ def attendre(secondes): time.sleep(secondes)
       <button type="button" class="btn copier-preambule" data-cible="preambule-vs3">📋 Copier le préambule</button>
       <span class="copie-etat" role="status" aria-live="polite"></span>
     </div>
-    
-<p class="vs-ouvrir"><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">▶ Ouvrir l'éditeur Vittascience dans un nouvel onglet</a></p>
-<p class="vs-note">Vittascience n'accepte pas d'être affiché à l'intérieur d'une autre page : l'éditeur s'ouvre dans un onglet à part. Garde cet onglet-ci ouvert pour lire la consigne.</p>
   </details>
+  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur ton cahier, puis exécute-le dans Vittascience, par le lien.</p>
+</div>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
 </section>
@@ -1225,7 +1272,7 @@ def attendre(secondes): time.sleep(secondes)
   act. 3 (ordre) : while (1) → lire (2) → convertir (3) → print (4) → attendre (5) · act. 4 : inférieure + active ; frontière → arrêt ·
   act. 5 : <code>&lt;</code> / <code>demarrer_pompe()</code> / <code>arreter_pompe()</code> ; humidite 12 → démarre ·
   act. 6 : MARCHE / arrêt / arrêt (frontière = piège du &lt;=) · act. 7 : 4 « respecté » avec preuves · act. 8 : « n'arrose que si sec ».</p>
-  <p><strong>Verrous expérientiels :</strong> act. 3 exige l'ouverture de l'éditeur 🧪, act. 5 aussi, act. 6 exige
+  <p><strong>Verrous expérientiels :</strong> act. 3 exige une exécution dans l'éditeur Python (la console affiche « Humidité du sol »), act. 5 aussi (des lignes « [pompe] ») — ou un clic sur le lien Vittascience ; act. 6 exige
   les 3 tests du banc exécutés. Les réponses et badges des élèves restent dans la page (sauvegarde locale du poste).</p>
   <p><strong>Progressivité 2024 :</strong> 4e_C6.2 travaillée ici prépare 4e_C6.3 (tester/valider une modification)
   et l'atelier 3e_C9.1 (fonctions, types, multi-conditions). En amont : le SI/SINON du lampadaire de 5e.</p>
@@ -1233,7 +1280,7 @@ def attendre(secondes): time.sleep(secondes)
   tension uniquement, jamais de secteur.</p>
 </section>
 </div>
-<footer>Séquence 4e_C6.2 · Thème 2 · New York — objet-fil « Jardin connecté » (v2 densifiée, 30/07/2026). Page unique hors-ligne (éditeur Vittascience dans un onglet : connexion requise), sauvegarde locale uniquement — aucune donnée envoyée.</footer>
+<footer>Séquence 4e_C6.2 · Thème 2 · New York — objet-fil « Jardin connecté » (v2 densifiée, 30/07/2026). Page unique hors-ligne (éditeur Python intégré, Skulpt ; Vittascience en lien facultatif), sauvegarde locale uniquement — aucune donnée envoyée.</footer>
 
 <script>
 (function(){
@@ -1319,6 +1366,11 @@ document.querySelectorAll(".bench-run").forEach(b => b.addEventListener("click",
 
 /* ── suivi ouverture éditeurs ── */
 ["vs1","vs2","vs3"].forEach(id => { const d = $(id); const a = d && d.querySelector(".vs-lien"); if(a) a.addEventListener("click", () => { window.__exp[id] = true; save(); }); });
+/* l'éditeur Python intégré (04/11/2026) : le verrou se juge sur ce que l'exécution a AFFICHÉ — act. 3 : une mesure
+   « Humidité du sol » ; act. 5 : au moins une décision « [pompe] ». Arrêter un while True par ⏹ est normal. */
+document.addEventListener("editeur-py:fin", e => { const d = e.detail || {}; if(d.erreur) return;
+  const preuve = {vs1: /Humidité du sol/, vs2: /\[pompe\]/, vs3: /./}[d.bloc];
+  if(preuve && preuve.test(d.sortie || "")){ window.__exp[d.bloc] = true; save(); } });
 
 /* ── activité 7 : le cahier des charges à menus (règle d'or n°317) ──
    Un retour par option fausse, écrit sous sa case après « Vérifier » : il dit pourquoi ce n'est pas une preuve du
@@ -1383,7 +1435,7 @@ const CHECKS = {
   3(){ let s = 0;
     s += sv("a3o1","3"); s += sv("a3o2","5"); s += sv("a3o3","1"); s += sv("a3o4","4"); s += sv("a3o5","2");
     const exp = !!window.__exp.vs1;
-    return {score: s, total: 5, exp, expMsg: "Ouvre l'éditeur 🧪 et reconstruis ton programme avant de valider — c'est le test qui fait foi."};
+    return {score: s, total: 5, exp, expMsg: "Reconstruis ton programme dans l'éditeur Python et exécute-le (▶) avant de valider : la console doit afficher « Humidité du sol ». C'est le test qui fait foi."};
   },
   4(){ let s = 0;
     s += sv("a4q1","inf"); s += sv("a4q2","active"); s += sv("a4q3","à l'arrêt — 30 < 30 est FAUX");
@@ -1393,7 +1445,7 @@ const CHECKS = {
     s += sv("a5t1","<"); s += sv("a5t2","demarrer_pompe()"); s += sv("a5t3","arreter_pompe()");
     s += sv("a5q1","la pompe démarre (12 < 30 est VRAI)");
     const exp = !!window.__exp.vs2;
-    return {score: s, total: 4, exp, expMsg: "Recopie et exécute ton programme complété dans l'éditeur 🧪 — la console est ta preuve."};
+    return {score: s, total: 4, exp, expMsg: "Complète les trous dans l'éditeur Python et exécute ton programme (▶) — la console, avec ses lignes [pompe], est ta preuve."};
   },
   6(){ let s = 0;
     s += sv("a6q1","c'est le cas frontière : c'est là que les erreurs de symbole (< ou <=) se cachent");
@@ -2506,5 +2558,7 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
 })();
 </script>
 <!-- /ateliers-representations:moteur -->
+<!-- éditeur Python intégré (04/11/2026) : un seul composant partagé, Skulpt chargé au premier ▶ Exécuter. -->
+<script src="../../../../_ressources-communes/editeur-python/editeur-python.js" defer></script>
 </body>
 </html>

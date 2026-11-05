@@ -10,6 +10,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
 import { execSync } from "node:child_process";
+import { eprouverEditeurs, eprouverPose, executerBloc } from "../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs";
 
 let chromium;
 try { ({ chromium } = await import("playwright")); }
@@ -381,8 +382,8 @@ const run = async () => {
        "boutons : " + choix);
 
     const consigne = await page.locator("#s2 .consigne").first().textContent();
-    ok("gestes · la consigne de l'activité 3 dit « Nomme ton projet 4e-JARDIN-TON NOM, puis télécharge-le (geste 4) » (plus « Enregistre sous »)",
-       /Nomme ton projet 4e-JARDIN-TON NOM, puis télécharge-le \(geste 4\)/.test(consigne) && !/Enregistre sous/.test(consigne),
+    ok("gestes · la consigne de l'activité 3 dit « Nomme ton fichier 4e-JARDIN-TON NOM, puis télécharge-le (geste 3) » (éditeur intégré, 04/11/2026 ; plus « Enregistre sous »)",
+       /Nomme ton fichier 4e-JARDIN-TON NOM, puis télécharge-le \(geste 3\)/.test(consigne) && !/Enregistre sous/.test(consigne),
        consigne.trim().slice(0, 140));
     ok("gestes · la consigne de l'activité 3 limite le volet Python à ce que la consigne demande (« Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs. »)",
        consigne.includes("Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs."));
@@ -391,7 +392,7 @@ const run = async () => {
     await page.waitForTimeout(800);
     const imgs = await page.$$eval(".gestes-outil img", l => l.map(i => ({ charge: i.complete && i.naturalWidth > 0, alt: (i.getAttribute("alt") || "").trim().length })));
     ok("gestes · les " + imgs.length + " captures de l'encart se chargent, toutes avec un texte alternatif",
-       imgs.length === 12 && imgs.every(i => i.charge && i.alt > 20),
+       imgs.length === 9 && imgs.every(i => i.charge && i.alt > 20),
        imgs.filter(i => !i.charge).length + " cassée(s), " + imgs.filter(i => i.alt <= 20).length + " sans texte alternatif");
 
     /* un élève qui avait choisi 🅰 avant le retrait : sa sauvegarde dit « a » — dans un contexte à part */
@@ -801,6 +802,30 @@ const run = async () => {
   ok("mobile 390 px : pas de défilement horizontal, zéro erreur JS", debordement <= 1 && errMob.length === 0, "débord=" + debordement);
   await pm.screenshot({ path: path.join(CAP, String(++nCap).padStart(2, "0") + "_mobile_390px.png") });
   await mob.close();
+
+  /* ════════ L'ÉDITEUR PYTHON INTÉGRÉ (activité 3, 04/11/2026) — il remplace l'onglet Vittascience ════════
+     Le code de départ (réglages + entrées) s'exécute sans rien afficher ; la décision de la correction affiche POMPE ON,
+     puis POMPE OFF quand H = 55 ; Skulpt n'est pas chargé à l'ouverture ; aucun réseau. */
+  {
+    const ctxE = await navigateur.newContext({ viewport: { width: 1280, height: 900 } });
+    const reseau = [], errE = [];
+    ctxE.on("request", r => { if (/^https?:/.test(r.url())) reseau.push(r.url()); });
+    const pe = await ctxE.newPage(); pe.on("pageerror", e => errE.push(String(e)));
+    await pe.goto(url(SEQ)); await pe.waitForTimeout(400);
+    await eprouverPose(pe, ["edpy-a3"], ok);
+    const DECISION = "\nif H < SEUIL and heure >= HEURE_DEBUT and heure <= HEURE_FIN:\n    print(\"POMPE ON\")\nelse:\n    print(\"POMPE OFF\")\n";
+    const depart = await pe.evaluate(() => document.getElementById("py_a3").defaultValue);
+    await eprouverEditeurs(pe, [
+      { bloc: "edpy-a3", nom: "activité 3", onglet: "#tab-s2", depart: { sortie: "" },
+        corrige: { quoi: "POMPE ON (H = 25, heure = 8)", code: depart + DECISION, sortie: "POMPE ON\n" } },
+      { bloc: "edpy-a3", nom: "activité 3, H = 55", depart: { sortie: "" },
+        corrige: { quoi: "POMPE OFF quand H = 55", code: depart.replace("H = 25", "H = 55") + DECISION, sortie: "POMPE OFF\n" } },
+    ], ok);
+    ok("éditeur Python · hors du parcours 🅱 : visible dans les deux parcours, aucun champ dans un bloc [data-parcours]",
+       await pe.evaluate(() => !document.getElementById("edpy-a3").closest("[data-parcours]")));
+    ok("éditeur Python · aucune requête réseau, zéro erreur JavaScript", reseau.length === 0 && errE.length === 0, reseau.concat(errE).slice(0, 3).join(" | "));
+    await ctxE.close();
+  }
 
   await navigateur.close();
 

@@ -9,6 +9,9 @@ ajoutés pour l'activité 7) · **Verdict : 45 / 45 ✅**
 cd theme-2-.../C6-.../4e/4e_C6.2 && node tests_4e_C6.2.mjs
 ```
 
+> **Mise à jour du 05/11/2026 — l'éditeur Python intégré.** L'onglet Vittascience est remplacé par l'**éditeur Python intégré** (`_ressources-communes/editeur-python/`, moteur Skulpt chargé au premier ▶ Exécuter, hors ligne) ; Vittascience reste un lien facultatif sous chaque éditeur. L'encart des gestes devient « les quatre gestes de l'éditeur Python » (écrire et exécuter, nommer, sortir, retrouver — « Documents › ta classe » écrit aux gestes 3 et 4), avec cinq captures réelles de la page (`captures_gestes.mjs`) et les captures de l'Explorateur reprises. Trois éditeurs (activités 3, 5, Bonus). **La carte est simulée par la page** : `lire_capteur(A0)`, `lire_capteur_pourcent(A0)`, `demarrer_pompe()`, `arreter_pompe()`, `attendre(s)` (le capteur lit 55, 40, 25, 12, 28, 45 %), nommées dans l'encadré 🔌 de l'activité 3 ; le préambule à copier reste, replié, pour qui choisit Vittascience. Les verrous jugent ce que l'exécution AFFICHE (« Humidité du sol », « [pompe] »). Dix contrôles ajoutés ; les contrôles 7, 22 et 38 lisent les éditeurs intégrés au lieu des barres 🧪.
+> Suite du lot : `node tests_4e_C6.2.mjs` → **55 / 55** (45 avant ; les 45 passent) ; banc n°311 : **34 / 34**, comme avant. Banc du composant : `node _ressources-communes/editeur-python/banc_editeur_python.mjs` → **54 / 54**. Non testé : un vrai téléphone, Safari, Firefox, une impression réelle, la fenêtre « Ouvrir » de Windows.
+
 > **Mise à jour du 31/10/2026 — l'activité 7 passe à la règle d'or n°317.** Le tableau « fonction | critère | ton
 > verdict » se complète dans ses cases, par des menus nommés (« Ligne 1, détecter un sol sec — ton verdict et sa
 > preuve ») ; chaque menu offre quatre verdicts de même forme et de même longueur, mélangés, dont trois pièges

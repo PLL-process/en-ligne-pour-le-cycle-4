@@ -27938,3 +27938,54 @@ mairie…) et le niveau de 18 MPa toléré pour le bac de 4e_C7.3.
 
 **Vu en passant, déjà sur `main`** : 4e_C2.1 lève une erreur JavaScript (« Cannot access 'TACHES' before initialization »)
 quand on l'ouvre par un lien vers une ancre.
+
+---
+
+## 05/11/2026 — Un éditeur Python intégré à la page remplace le passage par Vittascience ; les gestes sans fossé (transversal)
+
+*Pascal, le 04/11/2026, sur 3e_C9.1 : « On demande d'aller sur l'interface Vittascience et l'interface n'est pas jointe à
+l'exercice. Donc dans tous les exercices où on en aura besoin, ça devra être fait. » Et sur l'encart des gestes : « on dit de
+télécharger dans Téléchargements, et ensuite d'ouvrir le document, et il y a un fossé entre les deux. » Vittascience refuse
+d'être affiché dans une autre page ; Pascal a choisi l'éditeur intégré.*
+
+> **Règle d'or n°320 — un exercice qui fait écrire et exécuter du Python le fait dans la page.** L'éditeur intégré (code,
+> ▶ Exécuter, console, erreurs expliquées en français, sauvegarde, ⬇ Télécharger et 📂 Ouvrir mon .py) est la voie
+> ordinaire ; Vittascience reste un lien facultatif, nécessaire seulement pour programmer une vraie carte.
+
+**La bibliothèque : Skulpt 1.2.0** (MIT, parties PSF), déposée dans `_ressources-communes/editeur-python/skulpt/` (547 + 398 Ko),
+chargée au premier ▶ Exécuter, sans réseau (`controle_hors_ligne`). Choisie parce qu'elle sait mettre le programme en pause :
+`input()` attend dans la console (jamais de fenêtre `prompt`), ⏹ arrête même pendant une attente, une boucle sans fin est
+coupée sans figer la page. Brython ouvrait une fenêtre et figeait l'onglet ; Pyodide pèse une dizaine de Mo. Écarts avec
+Python 3, expliqués à l'élève si besoin : un nom de variable accentué est refusé ; un nombre à virgule s'affiche avec 16
+chiffres au plus. Source, empreintes et licence : `editeur-python/LISEZMOI.md`.
+
+**Le composant** (`editeur-python.js` et `.css`, un bloc HTML court par exercice) : zone de code numérotée (Tab = 4 espaces,
+Échap puis Tab pour en sortir), ▶ Exécuter, ⏹ Arrêter, ↺ Remettre le code de départ (en deux clics, réversible), console
+`aria-live` ; les erreurs expliquées en français avec leur ligne marquée et le message de Python dessous ; un calcul sans pause
+arrêté après 5 s, une attente après 60 s ; la sauvegarde de la page (même identifiant de champ) ; ⬇ Télécharger et 📂 Ouvrir mon
+.py (l'en-tête d'un fichier Vittascience est retiré) ; « Vittascience, si tu préfères », au bon mode. 390 px sans défilement de
+côté, cibles de 44 px ; à l'impression, le code et la dernière sortie, ou des lignes vides ; sans JavaScript, la zone et le lien.
+
+**Les exercices outillés** : 3e_C9.1 (activités 3, 4 — le programme bugué, dont la console explique la `TypeError` —, 5 et
+Bonus) ; 5e_C9.1 (activité 3, activité 5 ③, Bonus) ; 4e_C9.1 (activité 3 ; l'atelier des blocs de l'activité 5 ne change pas) ;
+4e_C6.2 (activités 3 et 5, Bonus) ; 3e_C7.1 (activité 3b, Bonus) ; 5e_C7.1 (activité 3b). **4e_C6.2** simule la carte, et le dit :
+`lire_capteur(A0)`, `lire_capteur_pourcent(A0)`, `demarrer_pompe()`, `arreter_pompe()`, `attendre(s)` ; le capteur lit 55, 40,
+25, 12, 28 puis 45 %. **Les vérifications** s'ouvrent par une exécution menée au bout ; la barrière de 5e_C9.1, qui cherchait
+des mots, exécute le programme pour trois valeurs (un programme qui a les bons mots mais inverse les messages est refusé).
+
+**Les gestes, réécrits sans fossé** : « les quatre gestes de l'éditeur Python », dans l'ordre où l'élève les fait — écrire et
+exécuter ; nommer ; sortir (⬇ → Téléchargements → le ranger dans Documents › ta classe : « Retiens ce chemin : c'est là que tu
+le chercheras au geste 4 ») ; retrouver (📂 Ouvrir mon .py → le même dossier). Le chemin par le Bloc-notes disparaît. Une ligne
+« Avec Vittascience (facultatif) » dit la même chose là-bas. `controle_gestes_outil.py` connaît le nouvel outil (seule
+modification de `_outils/`). **3e_C9.2** garde Vittascience Arduino (la vraie carte) : la reprise de la séance 4 donne le chemin
+pour rouvrir le .ino depuis Documents › ta classe (page tout-en-un, puis les quatre pages engendrées).
+
+**Contrôles.** Banc de l'éditeur **54 / 54** (exécution, erreurs expliquées, `input()`, boucle sans fin, sauvegarde, ⬇ puis 📂,
+hors ligne, 390 px, impression). Bancs des lots : 3e_C9.1 53 / 53 (42 avant), 5e_C9.1 65 / 65 (55), 4e_C9.1 113 / 113 (105),
+4e_C6.2 55 / 55 (45), 3e_C7.1 79 / 79 (71), 5e_C7.1 54 / 54 (48), 3e_C9.2 167 / 167 ; n°311 34 / 34 sur les sept pages ; chaque
+exercice outillé : son code de départ et le programme de sa correction donnent la sortie attendue. À 0 : gestes d'outil, hors
+ligne, squelette, impression, verrous, liens, hiérarchie, règles visibles, unités, sigles, médias, fichiers téléchargeables. Non
+testé : un vrai téléphone, Safari, Firefox, une impression réelle.
+
+**À trancher par Pascal** : les anciennes captures de Vittascience et du Bloc-notes ne sont plus affichées (gardées sur le
+disque) ; 4e_C9.1, activité 6 (le lampadaire), n'est pas outillée (elle n'envoyait pas sur Vittascience).

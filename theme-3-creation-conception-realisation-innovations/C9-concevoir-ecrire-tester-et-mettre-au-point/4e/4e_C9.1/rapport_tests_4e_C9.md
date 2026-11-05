@@ -5,6 +5,9 @@ Agent : Fable · Environnement : Chromium headless (Playwright 1.55),
 viewport 1280×900 + émulation téléphone 390×844 · Suite : `tests_4e_C9.mjs`
 (committée dans ce dossier, rejouable : `node tests_4e_C9.mjs .`).
 
+> **Mise à jour du 05/11/2026 — l'éditeur Python intégré.** L'onglet Vittascience est remplacé par l'**éditeur Python intégré** (`_ressources-communes/editeur-python/`, moteur Skulpt chargé au premier ▶ Exécuter, hors ligne) ; Vittascience reste un lien facultatif sous chaque éditeur. L'encart des gestes devient « les quatre gestes de l'éditeur Python » (écrire et exécuter, nommer, sortir, retrouver — « Documents › ta classe » écrit aux gestes 3 et 4), avec cinq captures réelles de la page (`captures_gestes.mjs`) et les captures de l'Explorateur reprises. Activité 3 : l'éditeur (réglages et entrées écrits, la décision à écrire) remplace le cadre Vittascience et son repli « Pas de connexion ? », hors des blocs de parcours. L'atelier des blocs de l'activité 5 n'est pas touché. Huit contrôles ajoutés (code de départ, décision de la correction : POMPE ON, puis POMPE OFF avec H = 55, aucun champ dans un bloc de parcours, aucun réseau). La consigne dit désormais « Nomme ton fichier 4e-JARDIN-TON NOM, puis télécharge-le (geste 3) », et le contrôle qui la lit avec elle.
+> Suite du lot : `node tests_4e_C9.mjs .` → **113 / 113** (105 avant ; les 105 passent) ; banc n°311 : **34 / 34**, comme avant. Banc du composant : `node _ressources-communes/editeur-python/banc_editeur_python.mjs` → **54 / 54**. Non testé : un vrai téléphone, Safari, Firefox, une impression réelle, la fenêtre « Ouvrir » de Windows.
+
 > **Mise à jour du 31/10/2026 (2) — l'atelier du programme, activité 5 c et d.** Sous l'animation, l'élève construit son
 > programme en blocs, lit son Python et l'exécute sur le même tremblement que le banc, puis sur une vraie matinée ; la page
 > le juge par cette exécution. Suite du lot : **105 / 105** (77 avant). Détail au §10.

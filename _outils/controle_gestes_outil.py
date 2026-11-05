@@ -93,6 +93,7 @@ OUTILS = {
     "mblock": r"mblock",
     "thonny": r"thonny",
     "freecad": r"freecad",
+    "l'éditeur python": r"[ée]diteur python",   # l'éditeur intégré à la page (04/11/2026, _ressources-communes/editeur-python/)
 }
 
 

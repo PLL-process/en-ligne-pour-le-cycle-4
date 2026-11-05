@@ -16,7 +16,7 @@ le programme qui décide d'arroser — et qu'il faudra mettre au point.
 
 * **`sequence_4e_C9_jardin-programme.html`** — la séquence complète (3 séances de
   55 min, 6 activités) : les deux chaînes et le relais, l'algorigramme, l'écriture
-  en blocs puis en Python sur **Vittascience**, le jeu d'essais avec ses quatre
+  du Python dans l'**éditeur intégré à la page** (Vittascience en lien facultatif, depuis le 04/11/2026), le jeu d'essais avec ses quatre
   familles, la mise au point par **hystérésis**, et le réinvestissement sur un
   lampadaire **sans squelette fourni**.
   **Banc d'essai du jardin intégré** (humidité, heure, règle à un ou deux seuils,
@@ -66,8 +66,8 @@ secondes, et l'idée est acquise.
 > Le tremblement est une suite de valeurs **figée dans le code**, pas un tirage au
 > hasard : sans cela, la comparaison entre les deux règles ne prouverait rien.
 
-Le banc **fonctionne hors connexion**. Seul l'éditeur Vittascience demande une
-connexion, et un repli complet est prévu.
+Le banc **fonctionne hors connexion**, comme l'éditeur Python de l'activité 3 (depuis le 04/11/2026). Seul le lien
+facultatif vers Vittascience demande une connexion.
 
 ## Le relais de l'activité 1
 
