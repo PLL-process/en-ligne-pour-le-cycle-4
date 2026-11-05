@@ -10,6 +10,10 @@ from qbanque import Banque
 
 B = Banque()
 q = B.q
+#: la clé de sauvegarde du QCM : elle change quand ses questions changent (04/11/2026 : les mots de référence de la
+#: bête à cornes — « La matière d'œuvre » remplace « Reconnaître le schéma », « Le but devient… » et « Celui qui paie »
+#: les emploient)
+CLE = "besoin-bete-a-cornes_mots"
 
 IMG_VELO = {"src": "Images/bete_a_cornes_velo_cargo.svg",
             "alt": "Bête à cornes du vélo-cargo : à qui le produit rend-il service ? Léa. Sur quoi agit-il ? ses deux enfants "
@@ -83,20 +87,20 @@ q(C, "Un but bien écrit",
   "But = verbe à l'infinitif, sans solution.")
 
 q(C, "Celui qui paie",
-  "La mairie a commandé et payé le lampadaire du parking. Dans sa bête à cornes, à qui rend-il service ?",
+  "La mairie a commandé et payé le lampadaire du parking. Dans sa bête à cornes, qui est l'utilisateur, celui à qui il rend service ?",
   ["aux piétons qui traversent le parking la nuit",
    "à la mairie, puisque c'est elle qui l'a commandé",
    "à l'entreprise qui a fabriqué le lampadaire",
    "à l'ampoule, qui s'allume quand il fait nuit"],
-  "La case « à qui ? » nomme la personne que l'objet aide quand il fonctionne. La mairie décide et paie, mais ce sont les "
-  "piétons qui profitent de la lumière.",
+  "La case « à qui ? » nomme l'<b>utilisateur</b> : la personne que l'objet aide quand il fonctionne. La mairie décide et "
+  "paie — c'est l'acheteur —, mais ce sont les piétons qui profitent de la lumière.",
   "Un parent qui offre un vélo à son enfant le paie ; c'est pourtant à l'enfant que le vélo rend service.",
   "Confondre celui qui commande l'objet et celui qui s'en sert.",
   ["",
-   "La mairie commande et paie, mais elle ne marche pas sur le parking la nuit : celui qui paie n'est pas celui que l'objet aide.",
+   "La mairie commande et paie, mais elle ne marche pas sur le parking la nuit : l'acheteur n'est pas l'utilisateur.",
    "Le fabricant vend le lampadaire ; une fois installé, il n'en profite pas.",
    "L'ampoule est une pièce du lampadaire, une solution : elle n'a aucune case dans la bête à cornes."],
-  "Celui qui paie n'est pas toujours celui à qui l'objet rend service.")
+  "Celui qui paie n'est pas toujours l'utilisateur.")
 
 q(C, "La case « sur quoi ? » du lampadaire",
   "Sur cette bête à cornes à compléter, quel mot va dans la case « Sur quoi agit-il ? » ?",
@@ -163,34 +167,36 @@ q(C, "Ce que la bête à cornes ne fait pas",
    "C'est vrai : un verbe à l'infinitif, et aucune solution."],
   "La bête à cornes exprime le besoin ; les contraintes viennent après.")
 
-q(C, "Reconnaître le schéma",
-  "Un schéma a deux cases en haut (à qui ? sur quoi ?), l'objet au milieu et le but en bas. Comment l'appelle-t-on souvent ?",
-  ["la bête à cornes",
-   "le diagramme pieuvre",
-   "le diagramme de Gantt",
-   "la chaîne d'énergie"],
-  "Ce schéma exprime le besoin ; on l'appelle souvent la bête à cornes, à cause de la courbe qui part des deux cases et passe "
-  "sur le haut de l'objet, comme des cornes.",
-  "Le diagramme pieuvre, lui, met l'objet au centre et tous ses interacteurs autour.",
-  "Confondre les représentations parce qu'elles placent toutes l'objet quelque part.",
+q(C, "La matière d'œuvre",
+  "Dans la bête à cornes, la matière d'œuvre est…",
+  ["ce sur quoi il agit : ce qu'il déplace, touche, garde",
+   "la personne à qui le produit rend service, qui s'en sert",
+   "la matière dont le produit est fabriqué : bois, métal…",
+   "le service que rend le produit, écrit avec un verbe"],
+  "La <b>matière d'œuvre</b> est l'un des quatre mots de référence de la bête à cornes, qui vient de la méthode APTE "
+  "(<i>APplication aux Techniques d'Entreprise</i>) : la réponse à « Sur quoi agit-il ? ». C'est une chose ou une personne "
+  "que le produit déplace, touche, transforme ou garde.",
+  "Le vélo-cargo de Léa : sa matière d'œuvre, ce sont ses deux enfants et ses courses ; Léa est l'utilisatrice.",
+  "Confondre la matière d'œuvre avec l'utilisateur, ou avec le matériau dont l'objet est fait.",
   ["",
-   "Le diagramme pieuvre place l'objet au centre et, autour, tous ses interacteurs : il ne pose pas les trois questions du besoin.",
-   "Le diagramme de Gantt place des tâches dans le temps : il sert à organiser un projet.",
-   "La chaîne d'énergie suit l'énergie dans l'objet : alimenter, distribuer, convertir, transmettre."],
-  "Le besoin → la bête à cornes.")
+   "C'est l'utilisateur, la case « À qui le produit rend-il service ? » : pour le vélo-cargo, Léa — ses enfants sont la matière d'œuvre.",
+   "C'est le matériau, une solution : l'acier du cadre ne dit pas sur quoi le vélo-cargo agit.",
+   "C'est la fonction, la fonction d'usage : la case du bas, « Dans quel but ? »."],
+  "Matière d'œuvre = ce sur quoi le produit agit.")
 
 q(C, "Le but devient…",
-  "Le but écrit dans la bête à cornes devient…",
+  "Le but écrit dans la bête à cornes — sa case « Fonction » — est…",
   ["la fonction d'usage de l'objet",
-   "la liste des pièces à acheter",
+   "une fonction technique de l'objet",
    "le prix de vente de l'objet en magasin",
    "le nom de l'objet, écrit au centre"],
-  "Le but dit à quoi sert l'objet : c'est sa <b>fonction d'usage</b>. Elle sert ensuite de point de départ aux autres "
-  "schémas de l'objet.",
-  "Le vélo-cargo → fonction d'usage : transporter des enfants et des courses en ville.",
-  "Croire que le but est une phrase qui décore le schéma.",
+  "Le but dit à quoi sert l'objet, pour son utilisateur : c'est sa <b>fonction d'usage</b>, le mot de référence de la case du "
+  "bas. Elle sert ensuite de point de départ aux autres schémas de l'objet.",
+  "Le vélo-cargo → fonction d'usage : transporter des enfants et des courses en ville. Une fonction technique serait : "
+  "freiner, porter le bac.",
+  "Prendre une fonction technique (ce que fait l'objet pour rendre le service) pour la fonction d'usage.",
   ["",
-   "Les pièces sont des solutions : la bête à cornes n'en parle pas.",
+   "Une fonction technique dit ce que l'objet fait pour rendre le service (freiner, verrouiller) ; la case Fonction dit le service lui-même.",
    "Le prix ne figure pas dans la bête à cornes : elle dit à quoi sert l'objet.",
    "Le nom de l'objet est au centre ; le but, en bas, dit à quoi il sert."],
   "But = fonction d'usage.")

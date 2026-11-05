@@ -59,8 +59,8 @@ PARTIES = [
             '<div class="chaine">'
             "<div><b>FP1, fonction principale</b>De Léa aux enfants, en passant par le vélo&nbsp;: «&nbsp;permettre à "
             "Léa de transporter ses enfants&nbsp;».</div>"
-            "<div><b>La bête à cornes</b>Sa corne relie «&nbsp;à qui&nbsp;?&nbsp;» (Léa) et «&nbsp;sur quoi&nbsp;?&nbsp;» "
-            "(les enfants)&nbsp;: elle devient la FP1.</div>"
+            "<div><b>La bête à cornes</b>Sa corne relie l'utilisatrice (Léa) et la matière d'œuvre (les enfants)&nbsp;: "
+            "elle devient la FP1.</div>"
             "<div><b>FC1, FC2, fonctions contraintes</b>«&nbsp;Protéger les enfants&nbsp;», «&nbsp;résister à la "
             "pluie&nbsp;»&nbsp;: un seul interacteur.</div></div>"),
         retenir="la <b>FP</b> relie <b>deux</b> interacteurs par l'objet&nbsp;: c'est le <b>service rendu</b>, la corne "

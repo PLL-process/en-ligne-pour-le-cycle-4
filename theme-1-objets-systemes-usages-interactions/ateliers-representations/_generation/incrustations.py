@@ -31,7 +31,7 @@ import moteur  # noqa: E402
 DEPOT = moteur.DEPOT
 KIT = ("<!-- ateliers-representations:moteur -->", "<!-- /ateliers-representations:moteur -->")
 GARDER = re.compile(r"^(\.(?:card|meta|consigne|note|btn|figure|schema-vivant|defile|retour|encoche|option|options|demo|retenir|piege|critere|"
-                    r"croquis|verif|lsu|champ|tableau-menus)|fieldset|textarea|input|table|th|td|details|label|a)")
+                    r"croquis|verif|lsu|champ|tableau-menus|menus-schema|ms-[a-z-]+)|fieldset|textarea|input|select|table|th|td|details|label|a)")
 
 
 def css_incruste():
@@ -57,9 +57,9 @@ def css_incruste():
         return out
 
     # règles hors @media
-    hors = re.sub(r"@media[^{]*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}", "", src)
+    hors = re.sub(r"@(?:media|container)[^{]*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}", "", src)
     sortie += portee(hors)
-    for m in re.finditer(r"(@media[^{]*)\{((?:[^{}]*\{[^{}]*\})*[^{}]*)\}", src):
+    for m in re.finditer(r"(@(?:media|container)[^{]*)\{((?:[^{}]*\{[^{}]*\})*[^{}]*)\}", src):
         regles = portee(m.group(2))
         if regles:
             sortie.append("%s{%s}" % (m.group(1).strip(), "".join(regles)))
@@ -97,9 +97,12 @@ def section(inc):
     # numérotés dans l'ordre du bloc inséré (1, 2…), pas dans celui de l'atelier : la séquence lit « Exercice 1 », « Exercice 2 »
     # `premier_numero` (facultatif, 1 par défaut) : quand deux blocs se suivent dans la même activité, le second
     # continue la numérotation du premier (« Exercice 2 », « Exercice 3 ») au lieu de repartir à 1.
-    numeros = {exo: i + inc.get("premier_numero", 1) for i, exo in enumerate(inc["exos"])}
-    for exo in inc["exos"]:
-        ex = next(x for x in N["exercices"] if x["id"] == exo)
+    # Un exercice à `etiquette` (« 🧠 Rappel ») garde son nom et ne prend pas de numéro.
+    # Les exercices propres à une séquence (`RAPPELS` du module : une piqûre de rappel sur l'objet de la séquence) ne sont
+    # pas des onglets de l'atelier ; ils se cherchent là aussi.
+    choisis = [next(x for x in N["exercices"] + getattr(at, "RAPPELS", []) if x["id"] == exo) for exo in inc["exos"]]
+    numeros = dict(zip(inc["exos"], moteur.libelles(choisis, inc.get("premier_numero", 1))))
+    for exo, ex in zip(inc["exos"], choisis):
         uid = "%s_%s_%s" % (at.COURT, niv, ex["id"])
         cle = "rep_%s_%s_%s" % (at.SLUG, niv, ex["id"])
         # Les minutes de l'exercice sont déjà comptées dans celles de l'activité qui l'accueille :
@@ -108,7 +111,9 @@ def section(inc):
         h.append(html)
         defs[uid] = df
     page = build.page_niveau(at, niv)
-    h.append('<p class="note">%s Ces exercices viennent de <a href="%s">l\'atelier de %s « %s »</a>&nbsp;: '
+    # `note` (facultatif) : la phrase de fin, quand l'exercice n'est pas un onglet de l'atelier (un rappel propre à la séquence)
+    h.append('<p class="note">%s %s</p>' % (at.EMOJI, inc["note"] % moteur.rel(d, page)) if inc.get("note") else
+             '<p class="note">%s Ces exercices viennent de <a href="%s">l\'atelier de %s « %s »</a>&nbsp;: '
              'ce que tu fais ici s\'y retrouve, avec %s.</p>'
              % (at.EMOJI, moteur.rel(d, page), niv, at.TITRE, inc.get("suite", "les autres exercices et le QCM")))
     h.append('<script type="application/json">%s</script>' % json.dumps({"exercices": defs}, ensure_ascii=False).replace("</", "<\\/"))
@@ -122,7 +127,9 @@ def marqueurs(ident):
 
 def poser(inc, texte):
     debut, fin = marqueurs(inc["id"])
-    bloc = "%s\n%s\n%s" % (debut, section(inc), fin)
+    # `html` : le nom d'un texte du module (un dessin, sans exercice) — posé tel quel, sans le moteur des exercices
+    contenu = getattr(importlib.import_module("donnees_" + inc["module"]), inc["html"]) if inc.get("html") else section(inc)
+    bloc = "%s\n%s\n%s" % (debut, contenu, fin)
     if debut in texte:
         i, j = texte.index(debut), texte.index(fin) + len(fin)
         texte = texte[:i] + bloc + texte[j:]
@@ -138,6 +145,8 @@ def poser(inc, texte):
         texte = texte[:i] + bloc + "\n" + texte[i:]
     else:
         raise SystemExit("Incrustation sans point de pose : %s" % inc["id"])
+    if inc.get("html"):
+        return texte
     # le moteur, une fois par page
     m = bloc_moteur()
     if KIT[0] in texte:

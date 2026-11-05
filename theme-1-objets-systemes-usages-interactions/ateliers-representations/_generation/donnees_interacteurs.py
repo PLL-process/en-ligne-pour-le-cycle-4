@@ -340,13 +340,14 @@ E3 = dict(
                   items=[("FC3 — le trait vers la route en pente&nbsp;: quelle phrase&nbsp;?", "pente", "FC3 va vers la route en pente : que doit faire le vélo-cargo face à une côte ?"),
                          ("FC5 — le trait vers l'itinéraire&nbsp;: quelle phrase&nbsp;?", "lire", "FC5 va vers l'itinéraire, une information que Léa doit pouvoir lire en roulant.")]),
              dict(type="classer", name="bete",
-                  intro="<p>La bête à cornes du vélo-cargo dit&nbsp;: <b>à qui</b>&nbsp;? Léa · <b>sur quoi</b>&nbsp;? ses enfants · "
-                        "<b>dans quel but</b>&nbsp;? les transporter en ville. Où chaque partie se retrouve-t-elle dans le diagramme pieuvre&nbsp;?</p>",
+                  intro="<p>La bête à cornes du vélo-cargo dit&nbsp;: <b>à qui</b>&nbsp;? (l'utilisatrice) Léa · <b>sur quoi</b>&nbsp;? (la "
+                        "matière d'œuvre) ses enfants · <b>dans quel but</b>&nbsp;? (la fonction) les transporter en ville. Où chaque partie "
+                        "se retrouve-t-elle dans le diagramme pieuvre&nbsp;?</p>",
                   categories=[("depart", "la bulle d'où part la FP1"), ("arrivee", "la bulle où arrive la FP1"),
                               ("phrase", "la phrase de la FP1"), ("centre", "l'objet au centre, par où passe la FP1")],
-                  items=[("« À qui ? » — Léa", "depart", "La FP1 part de la personne à qui l'objet rend service."),
-                         ("« Sur quoi ? » — ses enfants", "arrivee", "La FP1 arrive à ce sur quoi l'objet agit."),
-                         ("« Dans quel but ? » — les transporter", "phrase", "Le but devient la phrase : permettre à Léa de les transporter."),
+                  items=[("« À qui ? », l'utilisatrice — Léa", "depart", "La FP1 part de l'utilisatrice, la personne à qui l'objet rend service."),
+                         ("« Sur quoi ? », la matière d'œuvre — ses enfants", "arrivee", "La FP1 arrive à la matière d'œuvre, ce sur quoi l'objet agit."),
+                         ("« Dans quel but ? », la fonction — les transporter", "phrase", "La fonction devient la phrase : permettre à Léa de les transporter."),
                          ("Le vélo-cargo", "centre", "Le produit est au milieu dans les deux schémas : la FP1 passe par lui.")])],
     aides=["<p>Lis d'abord la famille annoncée dans chaque bulle vide, puis cherche dans la banque le mot qui lui correspond. "
            "Il restera deux mots&nbsp;: demande-toi s'ils sont dedans ou dehors. Pour les fonctions, regarde vers quelle bulle "
@@ -371,9 +372,10 @@ E3 = dict(
         "Les trois autres raisons ne tiennent pas&nbsp;: les enfants bougent aussi et ont une bulle&nbsp;; la pluie n'est pas une "
         "personne et a une bulle&nbsp;; la taille ne décide de rien.",
         "<b>FP1</b> → relie <b>deux</b> éléments, Léa et ses enfants, <b>en passant par</b> le vélo-cargo → le service rendu",
-        "<b>FP1 et la bête à cornes</b> → Léa, c'est «&nbsp;à qui&nbsp;?&nbsp;» (la bulle de départ) ; les enfants, «&nbsp;sur "
-        "quoi&nbsp;?&nbsp;» (la bulle d'arrivée) ; transporter, «&nbsp;dans quel but&nbsp;?&nbsp;» (la phrase) ; le vélo-cargo, au "
-        "centre des deux schémas → la FP1 dit la <b>fonction d'usage</b>, c'est la corne de la bête à cornes",
+        "<b>FP1 et la bête à cornes</b> → Léa, l'utilisatrice, c'est «&nbsp;à qui&nbsp;?&nbsp;» (la bulle de départ) ; les enfants, "
+        "la matière d'œuvre, «&nbsp;sur quoi&nbsp;?&nbsp;» (la bulle d'arrivée) ; transporter, la fonction, «&nbsp;dans quel "
+        "but&nbsp;?&nbsp;» (la phrase) ; le vélo-cargo, le produit, au centre des deux schémas → la FP1 dit la <b>fonction "
+        "d'usage</b>, c'est la corne de la bête à cornes",
         '<figure class="figure">' + BETE_VERS_PIEUVRE + '<figcaption>La corne devient la FP1.</figcaption></figure>',
         "<b>FC1</b> → au bout de FP1, les enfants imposent aussi une contrainte → «&nbsp;protéger les enfants pendant le trajet&nbsp;» "
         "(c'est souvent le cas&nbsp;: ce sur quoi l'objet agit lui impose une condition)",
@@ -1041,8 +1043,9 @@ COURS = {
         "<li>Un même interacteur peut avoir plusieurs traits&nbsp;: Léa est dans FP1 et dans FP2. Il peut aussi porter "
         "<b>une FP et une FC</b>&nbsp;: les enfants sont au bout de la FP1, et la FC1 les relie aussi au vélo-cargo.</li></ul>"
         "<h3>La fonction principale, c'est la bête à cornes dans le diagramme</h3>"
-        "<ul><li>La FP1 part de l'élément «&nbsp;<b>à qui</b> l'objet rend-il service&nbsp;?&nbsp;» (Léa), passe par l'objet, et "
-        "arrive à l'élément «&nbsp;<b>sur quoi</b> agit-il&nbsp;?&nbsp;» (ses enfants).</li>"
+        "<ul><li>La FP1 part de l'<b>utilisateur</b>, l'élément «&nbsp;<b>à qui</b> l'objet rend-il service&nbsp;?&nbsp;» (Léa), "
+        "passe par l'objet, et arrive à la <b>matière d'œuvre</b>, l'élément «&nbsp;<b>sur quoi</b> agit-il&nbsp;?&nbsp;» (ses "
+        "enfants).</li>"
         "<li>Sa phrase dit «&nbsp;<b>dans quel but</b>&nbsp;?&nbsp;»&nbsp;: «&nbsp;permettre à Léa de transporter ses enfants&nbsp;». "
         "La FP1 décrit donc la <b>fonction d'usage</b> de l'objet.</li>"
         "<li>Très souvent, l'élément au bout de la FP1 impose <b>aussi</b> une contrainte, qu'on numérote FC1&nbsp;: les enfants "

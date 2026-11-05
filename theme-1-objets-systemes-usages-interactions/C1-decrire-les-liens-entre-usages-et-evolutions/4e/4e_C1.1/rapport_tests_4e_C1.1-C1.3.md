@@ -1,5 +1,15 @@
 # Rapport de tests — lot 4e_C1.1 à C1.3 « Tsinghua »
 
+## 04/11/2026 (nuit) — la piqûre de rappel des mots de référence de la bête à cornes
+
+`python3 tests_4e_C1.1-C1.3_tsinghua.py` → **65 contrôles, 65 verts** (63 avant : un test adapté, deux ajoutés) ·
+`node tests_regle_311_4e_C1.1.mjs` → **34 / 34**. En tête de l'activité 5, un exercice « 🧠 Rappel » (non numéroté) : les
+quatre mots de référence à placer dans le gabarit vide, puis la matière d'œuvre et la fonction d'usage du système de
+détection des feux ; le test vérifie son rang (avant les exercices 1 à 3, qui gardent leurs numéros), son refus à vide et
+sa réussite remplie juste. Ses retours mot par mot, son miroir et sa sauvegarde partagée avec le panneau
+`4e_C1.3/atelier_bete_a_cornes.html` sont vérifiés par `banc_ateliers.py`.
+
+
 **Dernière exécution : 24 octobre 2026** (ajout de la séance 5) · Chromium via Playwright ·
 `python3 tests_4e_C1.1-C1.3_tsinghua.py` → **63 contrôles, 63 verts** (46 sur la séquence, 17 sur le QCM),
 aucune erreur JavaScript · `node tests_regle_311_4e_C1.1.mjs` → **33 / 33**.

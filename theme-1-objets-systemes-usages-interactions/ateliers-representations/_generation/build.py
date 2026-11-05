@@ -183,6 +183,26 @@ def nom_panneau(at):
     return "atelier_%s.html" % at.NOM_PANNEAU
 
 
+def rappel_panneau(at, niv, code, d):
+    """La piqûre de rappel d'un panneau de code (`RAPPEL_PANNEAU` du module, Pascal le 04/11/2026) : l'exercice sur l'objet
+    de la séquence du code, incrusté comme dans la séquence (même clé de sauvegarde), avec le moteur des exercices.
+    Rend (section, moteur) ; deux chaînes vides si le code n'a pas de rappel."""
+    exo = getattr(at, "RAPPEL_PANNEAU", {}).get(code)
+    if not exo:
+        return "", ""
+    import incrustations
+    ex = next(x for x in at.NIVEAUX[niv]["exercices"] + getattr(at, "RAPPELS", []) if x["id"] == exo)
+    uid = "%s_%s_%s" % (at.COURT, niv, ex["id"])
+    cle = "rep_%s_%s_%s" % (at.SLUG, niv, ex["id"])
+    html, df = moteur.exercice(ex, ex.get("etiquette") or "Exercice 1", uid, cle, balise="h3")
+    section = ('<section class="card atelier-incruste" id="incruste-%s" aria-labelledby="incruste-%s-titre">'
+               '<h2 id="incruste-%s-titre">🧠 Avant l\'atelier&nbsp;: un rappel, sur l\'objet de ta séquence</h2>'
+               '<p>Deux à trois minutes pour retrouver les mots de référence de la bête à cornes. Ce que tu fais ici se '
+               'retrouve dans ta séquence.</p>%s<script type="application/json">%s</script></section>'
+               % (uid, uid, uid, html, json.dumps({"exercices": {uid: df}}, ensure_ascii=False).replace("</", "<\\/")))
+    return section, incrustations.bloc_moteur()
+
+
 def ecrire_panneaux(at):
     faits = []
     for niv, N in at.NIVEAUX.items():
@@ -214,13 +234,16 @@ def ecrire_panneaux(at):
                 'et se retrouve aussi dans <a href="%s">ton cahier de %s</a>, qui rassemble les exercices de toutes les représentations.</p></div>'
                 % (len(N["exercices"]), sum(x["duree"] for x in N["exercices"]), moteur.rel(d, cahier(niv)), niv),
             ]
+            rappel, kit = rappel_panneau(at, niv, code, d)
+            if rappel:
+                corps.append(rappel)
             if n:
                 corps.append('<div class="card"><p>Pour t\'entraîner ensuite&nbsp;: <a href="%s">&#129504; le QCM de l\'atelier</a> — '
                              '%d questions, dont %d illustrées. Il va de la 5e à la 3e&nbsp;: tu peux ne garder que les questions de '
                              'ton niveau.</p></div>' % (moteur.rel(d, qcm(at)) + "?codes=" + code, n[0], n[1]))
             corps.append('<div class="card"><p>Les autres façons de représenter une idée technique&nbsp;: '
                          '<a href="%s">🧭 la carte des représentations</a>.</p></div>' % moteur.rel(d, CARTE))
-            corps.append("</main></body></html>\n")
+            corps.append("</main>%s</body></html>\n" % (("\n" + kit) if rappel else ""))
             ecrire(p, "\n".join(corps))
             faits.append(p)
     return faits

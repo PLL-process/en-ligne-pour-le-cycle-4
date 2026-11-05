@@ -89,7 +89,7 @@ def remplir(pg, uid, d, exs):
                 pg.fill("#" + w["name"], exs[w["name"]])
             else:
                 rate.append(w["name"])
-        elif ty == "tableau":
+        elif ty in ("tableau", "menus"):
             for c in w["cases"]:
                 pg.select_option(sel + 'select[name="%s"]' % c["name"], value=c["bonne"])
         elif ty == "croquis":
@@ -424,6 +424,192 @@ def bonus_vivants(b, at, niv):
         ctx.close()
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# Les mots de référence de la bête à cornes (04/11/2026) : le dessin de référence, les exercices de mots (menus dans les
+# cases du gabarit vide), les piqûres de rappel des séquences et des panneaux, les questions des QCM.
+# ─────────────────────────────────────────────────────────────────────────────
+#: le gabarit de la n°318 : les ellipses et le rectangle, en unités du dessin
+FORMES_BAC = {"aqui": ("e", 350, 284.5, 134, 59.5), "surquoi": ("e", 825.5, 284.5, 134, 59.5),
+              "objet": ("e", 583, 476, 122, 73), "but": ("r", 250, 573, 732, 132)}
+JS_REF = """id => { const s = document.getElementById(id); if (!s) return null; const f = s.closest('figure');
+  return {mots: [...s.querySelectorAll('text')].map(t => t.textContent).join(' '), vb: s.getAttribute('viewBox'),
+          titre: f ? f.querySelector('figcaption').textContent : '',
+          ell: [...s.querySelectorAll('ellipse')].map(e => ['cx','cy','rx','ry'].map(a => e.getAttribute(a)).join(','))}; }"""
+#: chaque case d'un widget « menus » : son menu est-il dans sa forme (les quatre coins), en unités du dessin ?
+JS_MENUS_DANS = """([uid, F]) => { const b = document.getElementById(uid), svg = b.querySelector('.ms-dessin svg').getBoundingClientRect(),
+  k = svg.width / 960;
+  return [...b.querySelectorAll('.ms-case')].map(c => { const r = c.querySelector('select').getBoundingClientRect(),
+    f = F[c.dataset.pour.split('__')[1]];
+    const P = [[r.left, r.top], [r.right, r.top], [r.left, r.bottom], [r.right, r.bottom]].map(([x, y]) => [50 + (x - svg.left) / k, 150 + (y - svg.top) / k]);
+    return getComputedStyle(c).position === 'absolute' && (f[0] === 'e' ? P.every(([x, y]) => ((x - f[1]) / f[3]) ** 2 + ((y - f[2]) / f[4]) ** 2 <= 1)
+      : P.every(([x, y]) => x > f[1] && x < f[1] + f[3] && y > f[2] && y < f[2] + f[4])); }); }"""
+
+
+def ref_ok(r, apte=True):
+    """Le dessin de référence : le gabarit (cadre et ellipses de la n°318), ses quatre mots, son titre."""
+    return (r and r["vb"] == "50 150 960 570" and all(m in r["mots"] for m in ("Utilisateur", "Matière", "d'œuvre", "Produit", "Fonction"))
+            and r["ell"][:1] == ["350,284.5,134,59.5"] and "La bête à cornes (méthode APTE" in r["titre"]
+            and (not apte or "APplication aux Techniques d'Entreprise" in r["titre"]))
+
+
+def exo_menus(b, chemin, uid, w_def, nom):
+    """Un exercice de mots : à 1280 px, les menus dans leurs formes, un retour par option (le texte des données), le
+    miroir ; à 390 px, les menus sous le dessin, sans défilement ; le choix revient au rechargement ; l'impression."""
+    ctx = b.new_context(viewport={"width": 1280, "height": 900})
+    pg = ctx.new_page()
+    err = []
+    pg.on("pageerror", lambda e: err.append(str(e)))
+    pg.goto(chemin.as_uri())
+    pg.wait_for_timeout(250)
+    pg.evaluate("id => { const p = document.getElementById(id).closest('[role=tabpanel]'); if (p) document.getElementById('tab-' + p.id).click(); }", uid)
+    pg.wait_for_timeout(80)
+    t(nom + " : à 1280 px, chaque menu est posé dans sa case (les quatre coins dans l'ellipse ou le rectangle)",
+      all(pg.evaluate(JS_MENUS_DANS, [uid, FORMES_BAC])))
+    bons, n = True, 0
+    for c in w_def["cases"]:
+        sel = "#%s select[name=\"%s\"]" % (uid, c["name"])
+        for v in pg.eval_on_selector_all(sel + " option", "l => l.map(o => o.value).filter(Boolean)"):
+            pg.select_option(sel, v)
+            pg.click("#%s button.verifier" % uid)
+            vu = pg.inner_text('#%s .retour-case[data-pour="%s"]' % (uid, c["name"]))
+            attendu = c["ok"] if v == c["bonne"] else c["retours"][v]
+            n += v != c["bonne"]
+            if attendu[:50] not in vu or (vu.startswith("✔") != (v == c["bonne"])):
+                bons = False
+                print("   ", nom, c["name"], v, "→", vu[:70])
+        pg.select_option(sel, c["bonne"])
+    t(nom + " : chaque mot faux a son retour, propre à sa case (%d retours), et chaque bon mot le sien" % n, bons and n == 6 * len(w_def["cases"]))
+    pg.click("#%s button.verifier" % uid)
+    mir = pg.evaluate("uid => [...document.querySelectorAll('#' + uid + ' .ms-dessin svg text[data-car]')]"
+                      ".map(t => [...t.querySelectorAll('tspan')].map(x => x.textContent).join(' '))", uid)
+    t(nom + " : le mot choisi s'écrit dans sa case du dessin (miroir)", mir == ["Utilisateur", "Matière d'œuvre", "Produit", "Fonction"], mir)
+    t(nom + " : les quatre mots justes donnent 4 ✔ sous le dessin", pg.locator("#%s .ms-retours .retour-case.juste" % uid).count() == 4)
+    pg.reload()
+    pg.wait_for_timeout(300)
+    t(nom + " : les choix reviennent après un rechargement",
+      pg.evaluate("uid => [...document.querySelectorAll('#' + uid + ' .ms-case select')].map(s => s.value).join(',')", uid) == "util,mo,prod,fonc")
+    pg.emulate_media(media="print")
+    t(nom + " : à l'impression, les menus disparaissent et la consigne « Sur ta feuille » s'imprime",
+      not pg.is_visible("#%s .ms-case" % uid) and "Sur ta feuille" in pg.inner_text("#%s .ms-papier" % uid))
+    pg.emulate_media(media="screen")
+    pg.set_viewport_size({"width": 390, "height": 900})
+    pg.wait_for_timeout(150)
+    t(nom + " : à 390 px, les menus passent sous le dessin, sans défilement de côté",
+      pg.evaluate("uid => [...document.querySelectorAll('#' + uid + ' .ms-case')].every(c => getComputedStyle(c).position === 'static')", uid)
+      and not pg.evaluate("document.documentElement.scrollWidth > innerWidth"))
+    t(nom + " : aucune erreur JavaScript", not err, err)
+    ctx.close()
+
+
+def rappel_incruste(b, chemin, uid, nom, avant=None):
+    """Une piqûre de rappel incrustée (séquence ou panneau) : présente, à vide 🔴, juste « Tout est juste », la clé de
+    sauvegarde de l'atelier, sans défilement de côté à 390 px ; `avant` : l'exercice qui la suit."""
+    ctx = b.new_context(viewport={"width": 390, "height": 900})
+    pg = ctx.new_page()
+    err = []
+    pg.on("pageerror", lambda e: err.append(str(e)))
+    pg.goto(chemin.as_uri())
+    pg.wait_for_timeout(300)
+    pg.evaluate("localStorage.clear()")
+    present = pg.locator("#" + uid).count() == 1
+    t(nom + " : la piqûre de rappel est dans la page", present)
+    if not present:
+        ctx.close()
+        return
+    if avant:
+        t(nom + " : elle vient juste avant l'exercice où la bête à cornes revient",
+          pg.evaluate("([a, c]) => !!(document.getElementById(a).compareDocumentPosition(document.getElementById(c)) & 4)", [uid, avant]))
+    # la séance qui la porte, ouverte comme le ferait l'élève
+    pg.evaluate("""uid => { const p = document.getElementById(uid).closest('.seance-panel,[role=tabpanel]');
+      if (!p) return; const t = document.querySelector('[data-panel="' + p.id + '"], #tab-' + p.id); if (t) t.click(); }""", uid)
+    pg.wait_for_timeout(120)
+    d = pg.evaluate("uid => JSON.parse(document.getElementById(uid).closest('.atelier-incruste').querySelector('script[type=\"application/json\"]').textContent).exercices[uid]", uid)
+    pg.click("#%s button.verifier" % uid)
+    t(nom + " : « Vérifier » à vide donne un retour à reprendre", "🔴" in pg.inner_text("#%s .retour" % uid))
+    rate = remplir(pg, uid, d, {})
+    pg.click("#%s button.verifier" % uid)
+    pg.wait_for_timeout(60)
+    t(nom + " : rempli juste, « Tout est juste »", "Tout est juste" in pg.inner_text("#%s .retour" % uid) and not rate)
+    t(nom + " : la réponse est sauvegardée sous la clé de l'atelier (%s)" % d["cle"],
+      bool(json.loads(pg.evaluate("k => localStorage.getItem(k)", d["cle"]) or "{}").get("reussi")))
+    t(nom + " : à 390 px, aucun défilement de côté", not pg.evaluate("document.documentElement.scrollWidth > innerWidth"))
+    t(nom + " : aucune erreur JavaScript", not err, err)
+    ctx.close()
+
+
+def mots_de_reference(b):
+    import donnees_besoin as at
+    besoin = build.page_niveau
+    # 1. le dessin de référence, là où l'outil est présenté
+    ctx = b.new_context(viewport={"width": 1280, "height": 900})
+    pg = ctx.new_page()
+    pg.goto(besoin(at, "5e").as_uri())
+    pg.wait_for_timeout(200)
+    t("dessin de référence, atelier 5e : dans la situation, avant les exercices — le gabarit, ses quatre mots, « La bête à "
+      "cornes (méthode APTE) », APTE développé", ref_ok(pg.evaluate(JS_REF, "bc-ref"))
+      and pg.evaluate("!!document.querySelector('.rappel-ouverture #bc-ref') && !!(document.getElementById('bc-ref').compareDocumentPosition(document.querySelector('.onglets')) & 4)"))
+    t("atelier 5e : le premier onglet est « Pour commencer », l'exercice des mots ; les autres gardent leurs numéros",
+      pg.evaluate("[...document.querySelectorAll('[role=tab]')].map(o => o.firstChild.textContent).slice(0, 2).join('|')") == "Pour commencer|Exercice 1")
+    for niv in ("4e", "3e"):
+        pg.goto(besoin(at, niv).as_uri())
+        pg.wait_for_timeout(200)
+        t("dessin de référence, atelier %s : dans le cours (« Rappel »), APTE développé" % niv,
+          ref_ok(pg.evaluate(JS_REF, "bc-ref-k" + niv[0])) and pg.evaluate("id => !!document.getElementById(id).closest('details.cours')", "bc-ref-k" + niv[0]))
+        t("atelier %s : le premier onglet est « 🧠 Rappel », les autres gardent leurs numéros" % niv,
+          pg.evaluate("[...document.querySelectorAll('[role=tab]')].map(o => o.firstChild.textContent).slice(0, 2).join('|')") == "🧠 Rappel|Exercice 1")
+    pg.goto(build.cahier("5e").as_uri())
+    pg.wait_for_timeout(200)
+    t("dessin de référence, cahier de 5e : dans la carte de l'atelier « Le besoin », avant ses exercices",
+      ref_ok(pg.evaluate(JS_REF, "bc-ref-c5")) and pg.evaluate("!!(document.getElementById('bc-ref-c5').compareDocumentPosition(document.getElementById('bc_5e_mots')) & 4)"))
+    for niv in ("4e", "3e"):
+        pg.goto(build.cahier(niv).as_uri())
+        pg.wait_for_timeout(150)
+        t("cahier de %s : la piqûre de rappel, avec le dessin de référence dans sa correction" % niv,
+          ref_ok(pg.evaluate(JS_REF, "bc-m%s-c" % niv[0]), apte=False))
+    pg.goto(build.CARTE.as_uri())
+    pg.wait_for_timeout(150)
+    t("dessin de référence, carte des représentations : sous le tableau « Analyse externe », APTE développé dans le tableau",
+      ref_ok(pg.evaluate(JS_REF, "bc-ref")) and "APplication aux Techniques d'Entreprise" in pg.inner_text("table"))
+    shanghai = build.DEPOT / "theme-1-objets-systemes-usages-interactions/C3-caracteriser-et-choisir-un-objet-ou-un/5e/5e_C3.1/sequence_5e_C3.1-C3.4_shanghai.html"
+    pg.goto(shanghai.as_uri())
+    pg.wait_for_timeout(200)
+    t("dessin de référence, 5e_C3.1 Shanghai : avant l'exercice du vélo-cargo de Léa",
+      ref_ok(pg.evaluate(JS_REF, "bc-ref")) and pg.evaluate("!!(document.getElementById('bc-ref').compareDocumentPosition(document.getElementById('bc_5e_e1')) & 4)"))
+    # 2. les QCM : une question sur les mots de référence, des leurres réfutés, une clé nouvelle
+    pg.goto(build.qcm(at).as_uri())
+    pg.wait_for_timeout(200)
+    q = pg.evaluate("(() => { const x = QUESTIONS.find(q => q.n === \"La matière d'œuvre\"); return x && [x.o[x.r], x.d.join(' | '), x.expl, KEY]; })()")
+    t("QCM « Le besoin » : « La matière d'œuvre », leurres utilisateur, matériau, fonction réfutés, APTE développé, nouvelle clé",
+      q and q[0].startswith("ce sur quoi il agit") and "utilisateur" in q[1] and "matériau" in q[1] and "fonction d'usage" in q[1]
+      and "APplication aux Techniques d'Entreprise" in q[2] and q[3] == "qcm_besoin-bete-a-cornes_mots", str(q)[:160])
+    q = pg.evaluate("(() => { const x = QUESTIONS.find(q => q.n === 'Le but devient…'); return x && [x.o[x.r], x.d.join(' | ')]; })()")
+    t("QCM « Le besoin » : la case Fonction est la fonction d'usage, la fonction technique est un leurre réfuté",
+      q and q[0] == "la fonction d'usage de l'objet" and "fonction technique" in q[1], str(q)[:120])
+    import donnees_interacteurs as ati
+    pg.goto(build.qcm(ati).as_uri())
+    pg.wait_for_timeout(200)
+    q = pg.evaluate("(() => { const x = QUESTIONS.find(q => q.n === 'La bête à cornes dans la pieuvre'); return x && [x.q, x.o[x.r], x.expl, KEY]; })()")
+    t("QCM « pieuvre » : la bête à cornes → FP1 dite avec les mots de référence, nouvelle clé",
+      q and "utilisatrice" in q[0] and "matière d'œuvre" in q[1] and "utilisateur" in q[2] and q[3] == "qcm_interacteurs-pieuvre_mots", str(q)[:160])
+    ctx.close()
+    # 3. les exercices de mots des trois ateliers
+    for niv, exo in (("5e", "mots"), ("4e", "rappel"), ("3e", "rappel")):
+        ex = next(x for x in at.NIVEAUX[niv]["exercices"] if x["id"] == exo)
+        w = next(x for x in ex["widgets"] if x["type"] == "menus")
+        uid = "bc_%s_%s" % (niv, exo)
+        w_def = {"cases": [dict(name="%s__%s" % (uid, c["name"]), bonne=c["bonne"], ok=c["ok"], retours=c["retours"]) for c in w["cases"]]}
+        exo_menus(b, besoin(at, niv), uid, w_def, "atelier %s, exercice des mots" % niv)
+    # 4. les piqûres de rappel sur l'objet de la séquence : dans les panneaux des codes, et dans les séquences
+    seqs = {"rappel-feux": ("4e", "theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/4e/4e_C1.1/sequence_4e_C1.1-C1.3_tsinghua_feux.html", "bc_4e_e4"),
+            "rappel-velos": ("4e", "theme-1-objets-systemes-usages-interactions/C3-caracteriser-et-choisir-un-objet-ou-un/4e/4e_C3.1/sequence_4e_C3.1-C3.3_hangzhou.html", "bc_4e_e5"),
+            "rappel-local": ("3e", "theme-1-objets-systemes-usages-interactions/C3-caracteriser-et-choisir-un-objet-ou-un/3e/3e_C3.1/sequence_3e_C3.1-C3.4_shenzhen.html", "bc_3e_e6")}
+    for code, exo in at.RAPPEL_PANNEAU.items():
+        niv, seq, suivant = seqs[exo]
+        uid = "bc_%s_%s" % (niv, exo)
+        rappel_incruste(b, build.DEPOT / seq, uid, "séquence %s, rappel « %s »" % (pathlib.Path(seq).name.split("_")[1], exo), avant=suivant)
+        rappel_incruste(b, build.moteur.dossier_code(code) / build.nom_panneau(at), uid, "panneau %s, rappel « %s »" % (code, exo))
+
+
 def page_simple(b, chemin, nom, attendu_q=None):
     if not chemin.exists():
         t(nom + " : la page existe", False, chemin)
@@ -466,6 +652,8 @@ def main(modules, cahiers=False, sortie_json=None):
             page_simple(b, build.qcm(at), at.SLUG + " QCM", attendu_q=30)
             page_simple(b, build.synthese_eleve(at), at.SLUG + " synthèse élève")
             page_simple(b, build.synthese_prof(at), at.SLUG + " synthèse professeur")
+            if at.SLUG == "besoin-bete-a-cornes":
+                mots_de_reference(b)
         if cahiers:
             for niv in ("5e", "4e", "3e"):
                 if build.cahier(niv).exists():

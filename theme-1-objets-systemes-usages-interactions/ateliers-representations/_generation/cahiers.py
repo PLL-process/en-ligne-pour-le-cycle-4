@@ -15,13 +15,16 @@ def page(niv, ats, cahier, page_niveau, chemins_fn):
     defs, onglets, panneaux, codes = {}, [], [], []
     for at in ats:
         N = at.NIVEAUX[niv]
-        corps = ['<section class="card"><h2>%s %s</h2><p>%s</p><p class="note">Ces exercices sont les mêmes que ceux de '
+        # `PRESENTATION` (facultatif) : ce qui présente l'outil avant ses exercices (le dessin de référence, par exemple)
+        corps = ['<section class="card"><h2>%s %s</h2><p>%s</p>%s<p class="note">Ces exercices sont les mêmes que ceux de '
                  '<a href="%s">l\'atelier de %s</a>&nbsp;: ce que tu fais ici s\'y retrouve, et inversement.</p></section>'
-                 % (at.EMOJI, at.TITRE, at.PANNEAU_TEXTE[niv], moteur.rel(d, page_niveau(at, niv)), niv)]
+                 % (at.EMOJI, at.TITRE, at.PANNEAU_TEXTE[niv], getattr(at, "PRESENTATION", {}).get(niv, ""),
+                    moteur.rel(d, page_niveau(at, niv)), niv)]
+        noms = moteur.libelles(N["exercices"])
         for i, ex in enumerate(N["exercices"]):
             uid = "%s_%s_%s" % (at.COURT, niv, ex["id"])
             cle = "rep_%s_%s_%s" % (at.SLUG, niv, ex["id"])
-            h, df = moteur.exercice(ex, i + 1, uid, cle)
+            h, df = moteur.exercice(ex, noms[i], uid, cle)
             corps.append(h)
             defs[uid] = df
         k = len(onglets)

@@ -520,6 +520,48 @@ def bete_a_cornes(ident, a_qui, sur_quoi, objet, but, titre, desc, vivants=None,
     return _legende_unites(dessin)
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# Le dessin de référence (Pascal, 04/11/2026 : « Les mots de cette représentation devront être utilisés plusieurs
+# fois, ce sont des références. ») : le gabarit, rempli avec les mots de la méthode APTE. On n'en prend que les mots :
+# la forme reste le gabarit de la n°318, sans titre dans le dessin (le titre est posé au-dessus, par la page).
+# ─────────────────────────────────────────────────────────────────────────────
+#: les mots de référence, case par case : à qui ? sur quoi ? le produit, dans quel but ?
+MOTS_REFERENCE_BAC = {"a_qui": "Utilisateur", "sur_quoi": "Matière d'œuvre", "objet": "Produit", "but": "Fonction"}
+TITRE_REFERENCE_BAC = "La bête à cornes (méthode APTE)"
+APTE_DEVELOPPE = "APplication aux Techniques d'Entreprise"
+DESC_REFERENCE_BAC = ("Le gabarit de la bête à cornes, rempli avec ses mots de référence. En haut à gauche, sous la question "
+                      "« À qui le produit rend-il service ? », l'ellipse dit : Utilisateur. En haut à droite, sous « Sur quoi "
+                      "agit-il ? », l'ellipse dit : Matière d'œuvre. Au centre, plus bas, l'ellipse dit : Produit ; la corne "
+                      "part de l'ellipse de gauche, passe sur le haut du produit et remonte à l'ellipse de droite. De là, une "
+                      "flèche descend vers le rectangle « Dans quel but ? », qui dit : Fonction.")
+
+
+def bete_a_cornes_reference(ident="bc-ref"):
+    """Le dessin de référence : le gabarit et ses mots de référence (Utilisateur, Matière d'œuvre, Produit, Fonction)."""
+    m = MOTS_REFERENCE_BAC
+    s = bete_a_cornes(ident, m["a_qui"], m["sur_quoi"], m["objet"], m["but"],
+                      TITRE_REFERENCE_BAC + " : les mots de référence", DESC_REFERENCE_BAC)
+    # « etroit » : sur un téléphone, le dessin se réduit à la largeur de l'écran (kit.css), sans défilement de côté —
+    # quatre mots courts y restent lisibles. Le style en ligne sert aux pages écrites à la main (carte, séquences), qui
+    # n'ont pas la feuille des ateliers.
+    return s.replace('class="schema"', 'class="schema etroit" style="display:block;width:100%;max-width:820px;'
+                     'height:auto;margin:0 auto"', 1)
+
+
+def figure_reference_bac(ident="bc-ref", legende=None, apte=True, classe="figure bac-reference"):
+    """Le dessin de référence dans une page, sous son titre « La bête à cornes (méthode APTE) ».
+    `apte` : développer le sigle (n°313) — à la première apparition d'APTE dans la page. `legende` : la phrase sous le
+    titre (par défaut, les quatre mots et ce qu'ils nomment)."""
+    titre = ("La bête à cornes (méthode APTE, <i>APplication aux Techniques d'Entreprise</i>)" if apte
+             else TITRE_REFERENCE_BAC)
+    if legende is None:
+        legende = ("Ses quatre mots de référence, les mêmes pour tous les objets&nbsp;: l'<b>utilisateur</b> (à qui le produit "
+                   "rend service), la <b>matière d'œuvre</b> (ce sur quoi il agit), le <b>produit</b>, et la <b>fonction</b> "
+                   "(la fonction d'usage&nbsp;: dans quel but il existe).")
+    return ('<figure class="%s"><figcaption><b class="bac-ref-titre">%s</b><br>%s</figcaption>%s</figure>'
+            % (classe, titre, legende, bete_a_cornes_reference(ident)))
+
+
 def bete_vers_pieuvre(ident, a_qui, sur_quoi, objet, but, fp, fc, titre, desc, largeur=900, hauteur=420):
     """La même liaison, deux fois : la corne de la bête à cornes (à qui → par l'objet → sur quoi) devient la
     fonction principale FP1 du diagramme pieuvre. Repères ①②③ sur les deux schémas, légende en mots.

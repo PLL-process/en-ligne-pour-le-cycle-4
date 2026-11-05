@@ -16,18 +16,19 @@ PARTIES = [
         niveau="5e", emoji="🐂",
         titre="Comment dire le besoin auquel répond un objet&nbsp;?",
         titre_court="Comment dire le besoin&nbsp;?",
-        carte="Avec trois questions&nbsp;: à qui l'objet rend-il service, sur quoi agit-il, dans quel but.",
+        carte="Avec trois questions&nbsp;: à qui (l'utilisateur), sur quoi (la matière d'œuvre), dans quel but (la fonction).",
         exemple=(
             "<p>Le vélo-cargo de Léa, dans le schéma que l'on appelle souvent la <b>bête à cornes</b> (le programme dit "
             "«&nbsp;exprimer le besoin&nbsp;»)&nbsp;:</p>"
             '<div class="chaine">'
-            "<div><b>À qui rend-il service&nbsp;?</b>Léa&nbsp;: c'est elle qui s'en sert.</div>"
-            "<div><b>Sur quoi agit-il&nbsp;?</b>Ses deux enfants et ses courses&nbsp;: il les change de place.</div>"
-            "<div><b>Dans quel but&nbsp;?</b>Transporter ses enfants et ses courses en ville.</div></div>"),
-        retenir="le besoin se dit avec <b>trois questions</b>&nbsp;: <b>à qui</b> l'objet rend-il service, <b>sur "
-                "quoi</b> agit-il, <b>dans quel but</b>. La <b>bête à cornes</b> les rassemble et se lit comme une phrase.",
-        piege="mettre les enfants dans «&nbsp;à qui&nbsp;?&nbsp;». Ils sont dans le bac, mais c'est Léa que le vélo-cargo "
-              "aide&nbsp;: les enfants sont ce sur quoi il agit.",
+            "<div><b>Utilisateur — à qui&nbsp;?</b>Léa&nbsp;: c'est elle qui s'en sert.</div>"
+            "<div><b>Matière d'œuvre — sur quoi&nbsp;?</b>Ses deux enfants et ses courses&nbsp;: il les change de place.</div>"
+            "<div><b>Fonction — dans quel but&nbsp;?</b>Transporter ses enfants et ses courses en ville.</div></div>"),
+        retenir="le besoin se dit avec <b>trois questions</b>&nbsp;: <b>à qui</b> l'objet rend-il service (l'<b>utilisateur</b>), "
+                "<b>sur quoi</b> agit-il (la <b>matière d'œuvre</b>), <b>dans quel but</b> (la <b>fonction</b>). La <b>bête à "
+                "cornes</b> les rassemble autour du <b>produit</b>.",
+        piege="mettre les enfants dans «&nbsp;à qui&nbsp;?&nbsp;». Ils sont dans le bac, mais c'est Léa, l'utilisatrice, que le "
+              "vélo-cargo aide&nbsp;: les enfants sont la matière d'œuvre.",
     ),
     dict(
         niveau="5e", emoji="✍️",
@@ -43,8 +44,8 @@ PARTIES = [
             "</div>"),
         retenir="le <b>but</b> s'écrit avec un <b>verbe à l'infinitif</b> et ne nomme <b>aucune solution</b>. Il devient "
                 "la <b>fonction d'usage</b> de l'objet&nbsp;: ce à quoi il sert.",
-        piege="croire que celui qui paie est celui à qui l'objet rend service. La mairie paie le lampadaire&nbsp;; il "
-              "rend service aux piétons.",
+        piege="croire que celui qui paie est l'utilisateur. La mairie paie le lampadaire&nbsp;; ses utilisateurs sont les "
+              "piétons.",
     ),
     dict(
         niveau="5e", emoji="✅",
@@ -143,12 +144,14 @@ PARTIES = [
 LEXIQUE = [
     ("besoin", "need", "ce qui manque à quelqu'un."),
     ("bête à cornes", "need diagram", "le schéma du besoin, en trois questions."),
-    ("usager", "user", "la personne qui se sert de l'objet."),
+    ("utilisateur", "user", "la personne à qui l'objet rend service."),
+    ("matière d'œuvre", "object acted upon", "ce sur quoi l'objet agit."),
     ("rendre service", "to help", "aider quelqu'un, lui être utile."),
     ("agir sur", "to act on", "déplacer, toucher ou transformer."),
     ("but", "purpose", "ce pour quoi l'objet existe."),
     ("solution technique", "technical solution", "comment l'objet fait son travail."),
     ("fonction d'usage", "use function", "ce à quoi sert l'objet&nbsp;: le but."),
+    ("méthode APTE", "APTE method", "<i>APplication aux Techniques d'Entreprise</i>, d'où vient la bête à cornes."),
     ("évolution", "evolution", "un objet nouveau pour un besoin nouveau."),
     ("innovation", "innovation", "une invention entrée dans la vie courante."),
     ("développement durable", "sustainable development", "ne pas gâcher ce qu'il faudra demain."),

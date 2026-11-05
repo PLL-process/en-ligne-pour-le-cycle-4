@@ -2,7 +2,7 @@
 """Suite de tests du lot 4e_C1.1 à C1.3 — Tsinghua, concevoir avant de connecter.
 
 Ne sont déclarés dans le rapport que les tests présents ici et réellement
-exécutés. Deux fichiers sont couverts : la séquence (46 contrôles) et le QCM
+exécutés. Deux fichiers sont couverts : la séquence (48 contrôles) et le QCM
 (17 contrôles).
 
 PÉRIMÈTRE (règle d'or n°47) — ce que cette suite vérifie :
@@ -119,9 +119,12 @@ async def tester_sequence(p):
     t5=await pg.evaluate("document.getElementById('fb5').textContent")
     r.append(("activité 5 à vide : le message nomme les exercices à réussir", "Le besoin évolue" in t5 and "Corriger une carte mentale" in t5, t5[:120]))
     titres=await pg.evaluate("[...document.querySelectorAll('#s5 .atelier-incruste .card.exercice')].map(s=>[s.id,s.querySelector('h4').textContent])")
-    r.append(("séance 5 : trois exercices d'atelier, numérotés 1 à 3, dans l'activité 5",
-              [x[0] for x in titres]==[u for u,_,_ in INSERES] and all(x[1].startswith(n+" —") for x,(_,n,_) in zip(titres,INSERES))
-              and await pg.evaluate("document.querySelectorAll('#activite-5 .atelier-incruste').length")==2, str(titres)))
+    # 04/11/2026 : la piqûre de rappel des mots de référence de la bête à cornes, sur le système de détection, vient en
+    # tête de l'activité 5 ; elle ne prend pas de numéro (« 🧠 Rappel »), les trois exercices gardent 1 à 3
+    r.append(("séance 5 : la piqûre de rappel (non numérotée), puis trois exercices d'atelier numérotés 1 à 3, dans l'activité 5",
+              [x[0] for x in titres]==["bc_4e_rappel-feux"]+[u for u,_,_ in INSERES] and titres[0][1].startswith("🧠 Rappel —")
+              and all(x[1].startswith(n+" —") for x,(_,n,_) in zip(titres[1:],INSERES))
+              and await pg.evaluate("document.querySelectorAll('#activite-5 .atelier-incruste').length")==3, str(titres)))
     pos=await pg.evaluate("""(()=>{const s5=document.getElementById('s5'), s4=document.getElementById('s4');
         const h=[...s5.querySelectorAll('h2')].map(x=>x.textContent);
         const i=k=>h.findIndex(x=>x.includes(k));
@@ -139,6 +142,17 @@ async def tester_sequence(p):
         await pg.evaluate(REMPLIR, [uid, textes])
         await pg.click(f"#{uid} button.verifier"); await pg.wait_for_timeout(60)
         r.append((f"{nom} ({uid}) : rempli juste, il est réussi", "Tout est juste" in await pg.inner_text(f"#{uid} .retour")))
+    rap="bc_4e_rappel-feux"
+    await pg.click(f"#{rap} button.verifier"); await pg.wait_for_timeout(60)
+    r.append(("piqûre de rappel (bc_4e_rappel-feux) : à vide, le retour demande de reprendre", "🔴" in await pg.inner_text(f"#{rap} .retour")))
+    await pg.evaluate("""uid=>{const b=document.getElementById(uid);
+      const d=JSON.parse(b.closest('.atelier-incruste').querySelector('script[type="application/json"]').textContent).exercices[uid];
+      d.widgets.forEach(w=>{
+        if(w.type==='menus') w.cases.forEach(c=>{const s=b.querySelector('select[name="'+c.name+'"]'); s.value=c.bonne; s.dispatchEvent(new Event('change',{bubbles:true}));});
+        if(w.type==='choix'){const x=b.querySelector('input[name="'+w.name+'"][value="'+w.bonne+'"]'); x.checked=true; x.dispatchEvent(new Event('change',{bubbles:true}));}});}""", rap)
+    await pg.click(f"#{rap} button.verifier"); await pg.wait_for_timeout(60)
+    r.append(("piqûre de rappel : les quatre mots placés, puis la matière d'œuvre et la fonction d'usage du système de détection — réussie",
+              "Tout est juste" in await pg.inner_text(f"#{rap} .retour")))
     cles=await pg.evaluate("Object.keys(collect().inputs)")
     insere=await pg.evaluate("[...document.querySelectorAll('.atelier-incruste textarea, .atelier-incruste fieldset')].map(e=>e.id).filter(Boolean)")
     r.append(("la sauvegarde de la page laisse les champs des exercices insérés à leur propre sauvegarde",
