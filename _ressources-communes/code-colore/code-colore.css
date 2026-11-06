@@ -1,0 +1,24 @@
+/* code-colore.css — la palette du code coloré façon IDE (règle d'or n°13), voir code-colore.js.
+   Les teintes sont celles du thème sombre du dépôt (--hl, --ok, --energie, --head, --warn), écrites en clair : un listing
+   a toujours un fond sombre, même dans une page dont les variables ont été éclaircies pour l'impression.
+   À l'impression, des teintes foncées qui se lisent sur le papier blanc. */
+.py-var{color:#61dafb}
+.py-str{color:#81fba1}
+.py-num{color:#ffb454}
+.py-kw{color:#c68ef2;font-weight:600}
+.py-op{color:#ffd66b;font-weight:600}
+.py-com{color:#8aa6d8;font-style:italic}
+.py-legende{font-size:.82em;color:#9bbefc;margin:6px 0 0;line-height:1.6;
+  font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
+@media print{
+  .py-var{color:#047fa0 !important}
+  .py-str{color:#048827 !important}
+  .py-num{color:#ab6000 !important}
+  .py-kw{color:#6a1b9a !important}
+  .py-op{color:#7a5a00 !important}
+  .py-com{color:#555 !important}
+  .py-legende{color:#1a6af8 !important}
+}
+@media (forced-colors:active){
+  .py-var,.py-str,.py-num,.py-kw,.py-op,.py-com{color:CanvasText}
+}

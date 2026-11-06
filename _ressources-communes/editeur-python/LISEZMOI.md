@@ -21,6 +21,8 @@ Vittascience reste un lien facultatif, écrit dans chaque bloc.
 
 ```html
 <link rel="stylesheet" href="../../../../_ressources-communes/editeur-python/editeur-python.css">   <!-- dans <head> -->
+<link rel="stylesheet" href="../../../../_ressources-communes/code-colore/code-colore.css">        <!-- dans <head> -->
+<script src="../../../../_ressources-communes/code-colore/code-colore.js"></script>               <!-- dans <head> -->
 
 <div class="editeur-py" id="vs1" data-fichier="3e-VARIABLES-act3-TON NOM" [data-simulation="id-du-script"]>
   <label for="py_a3">🐍 L'éditeur Python de la page — …</label>
@@ -43,6 +45,21 @@ Vittascience reste un lien facultatif, écrit dans chaque bloc.
   s'arrête sans erreur, comme en Python 3, même au milieu d'un `while True:` (Skulpt n'a pas `sys.exit()`). Exemple :
   la nuit du lampadaire de `4e_C9.1`, activité 6, qui écrit son bilan puis s'arrête.
 - **Sans JavaScript**, la zone et le lien restent : la consigne se fait encore.
+
+## Le code en couleurs, comme dans un IDE (règle d'or n°13)
+
+Pascal, le 05/11/2026, sur le lampadaire de `4e_C9.1` : « sa zone de code est monochrome. À l'avenir, il faudrait
+changer ceci. De façon à avoir des couleurs. » Quand la page charge `code-colore.js` (voir le bloc ci-dessus), la zone
+de saisie est posée sur **le même code en couleurs**, la palette du site : variables cyan, `"textes"` verts, nombres
+orange, mots-clés violets en gras, `=` et opérateurs jaunes, `# commentaires` gris bleu en italique.
+
+- Une couche `<pre class="editeur-py-couleurs">` (muette pour un lecteur d'écran) est dessous, aux mêmes mesures que
+  la zone (police, interligne, marges, tabulations) ; le texte de la zone devient transparent, le curseur et la
+  sélection restent. Elle est redessinée à chaque frappe et défile avec la zone.
+- Une légende 🎨 suit le premier éditeur de la page, si la page n'en a pas déjà une.
+- À l'impression, le programme écrit garde ses couleurs, en teintes foncées pour le papier.
+- En mode « couleurs forcées » (contraste élevé de Windows), la couche disparaît et la zone redevient du texte
+  ordinaire. Sans `code-colore.js`, l'éditeur reste en une couleur, lisible.
 
 ## L'échauffement : un éditeur d'essai, et les quatre gestes qui se cochent
 

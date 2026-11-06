@@ -36,6 +36,17 @@ les outils d'évaluation et les images mutualisés dans le dépôt.
   [Skulpt 1.2.0](editeur-python/skulpt/LICENSE.txt) (licence MIT). Utilisé depuis le 04/11/2026 par
   les séquences qui envoyaient l'élève écrire du Python dans Vittascience.
 
+### Code coloré façon IDE
+
+- [Code coloré](code-colore/LISEZMOI.md) : le colorisateur commun (un JS, un CSS) de la règle d'or n°13. Il colore
+  les listings Python, le C des cartes et les algorithmes en français (`SI … ALORS`, `←`), et la zone de saisie de
+  l'éditeur Python. Depuis le 05/11/2026.
+
+### Le relais qui claque
+
+- [Relais animé](relais-anime/LISEZMOI.md) : la figure du relais vu en coupe, animée (la bobine, la lame, le ressort,
+  « clac »). Depuis le 05/11/2026.
+
 ### Images
 
 - [Ressources transversales](Images/Ressources%20transversales/) :

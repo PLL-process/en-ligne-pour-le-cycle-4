@@ -347,13 +347,21 @@
     choix.setAttribute("aria-label", "Choisir ton fichier .py à ouvrir dans l'éditeur"); choix.tabIndex = -1; choix.hidden = true;
     barreF.appendChild(labNom); barreF.appendChild(groupeNom); barreF.appendChild(bTel); barreF.appendChild(bOuv); barreF.appendChild(choix);
 
-    // ── la zone : marge numérotée + textarea
+    // ── la zone : marge numérotée + textarea, posé sur le même code en couleurs (règle d'or n°13 : un IDE colore le
+    //    code ; le texte de la zone devient transparent, le curseur et la sélection restent, les couleurs sont dessous)
     var zone = el("div", "editeur-py-zone");
     var marge = el("div", "editeur-py-marge"); marge.setAttribute("aria-hidden", "true");
     var interieur = el("div", "editeur-py-marge-int"); marge.appendChild(interieur);
+    var saisie = el("div", "editeur-py-saisie");
+    var couleurs = el("pre", "editeur-py-couleurs"); couleurs.setAttribute("aria-hidden", "true");
+    var colore = !!(window.CodeColore && window.CodeColore.html);
     ta.parentNode.insertBefore(barreF, ta);
     ta.parentNode.insertBefore(zone, ta);
-    zone.appendChild(marge); zone.appendChild(ta);
+    zone.appendChild(marge); zone.appendChild(saisie); saisie.appendChild(couleurs); saisie.appendChild(ta);
+    if (colore) {
+      zone.classList.add("editeur-py-zone--couleurs");
+      if (!document.querySelector(".py-legende")) window.CodeColore.legende(zone, "python");
+    }
     var aide = el("p", "editeur-py-aide", "⌨ Tab = 4 espaces · pour quitter la zone au clavier : Échap, puis Tab · ton programme est gardé tout seul dans cette page.");
     aide.id = id + "_aide";
 
@@ -402,7 +410,12 @@
       if (ligneErreur) marquer(ligneErreur);
       ta.rows = Math.min(18, Math.max(5, n + 1));
       interieur.style.transform = "translateY(" + (-ta.scrollTop) + "px)";
-      impCode.textContent = ta.value.trim() ? ta.value : "\n\n\n\n\n";
+      if (colore) {
+        couleurs.innerHTML = window.CodeColore.html(ta.value, "python") + "\n";
+        couleurs.scrollTop = ta.scrollTop; couleurs.scrollLeft = ta.scrollLeft;
+      }
+      if (colore && ta.value.trim()) impCode.innerHTML = window.CodeColore.html(ta.value, "python");
+      else impCode.textContent = ta.value.trim() ? ta.value : "\n\n\n\n\n";
       impCode.classList.toggle("editeur-py-imp-vide", !ta.value.trim());
     }
     function marquer(n) {
@@ -419,7 +432,10 @@
     function bientotSauver() { clearTimeout(minuterie); minuterie = setTimeout(sauver, 500); }
 
     ta.addEventListener("input", function () { demarquer(); majVue(); bientotSauver(); });
-    ta.addEventListener("scroll", function () { interieur.style.transform = "translateY(" + (-ta.scrollTop) + "px)"; });
+    ta.addEventListener("scroll", function () {
+      interieur.style.transform = "translateY(" + (-ta.scrollTop) + "px)";
+      if (colore) { couleurs.scrollTop = ta.scrollTop; couleurs.scrollLeft = ta.scrollLeft; }
+    });
     ta.addEventListener("blur", function () { clearTimeout(minuterie); });
 
     // ── le clavier : Tab = 4 espaces, Maj+Tab retire, Entrée garde le décalage, Échap libère Tab

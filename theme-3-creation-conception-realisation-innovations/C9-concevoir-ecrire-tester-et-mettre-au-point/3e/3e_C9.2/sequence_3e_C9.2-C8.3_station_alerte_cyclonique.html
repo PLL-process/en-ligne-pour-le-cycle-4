@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../../../_ressources-communes/code-colore/code-colore.css">
+<script src="../../../../_ressources-communes/code-colore/code-colore.js"></script>
 <title>Thème 3 · Martinique — 3e : La station d'alerte cyclonique se programme (3e_C9.2 + 3e_C8.3)</title>
 <style>
   :root{
@@ -1927,39 +1929,39 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
     <div class="consigne"><b>Consigne :</b> qu'ils viennent de Vittascience ou d'un autre logiciel de blocs, tes blocs sont traduits en <b>C++</b> avant d'entrer dans la carte — la bascule <b>BLOCS / CODE</b> de Vittascience te le montre en direct. Lis les trois extraits du programme de référence — c'est le même programme que le tien, écrit dans la langue de la machine — puis réponds. Version 🅲 : la trace d'exécution en d) remplace le moniteur série réel.</div>
     <div class="exo">
       <h4>Extrait 1 — les constantes et les variables (le début du fichier)</h4>
-<pre class="code"><span class="kw">const int</span> BROCHE_VENT   = A1;  <span class="cmt">// potentiomètre « anémomètre » sur A1</span>
-<span class="kw">const int</span> SEUIL_JAUNE  = <span class="num">63</span>;   <span class="cmt">// à partir de 63 : tempête tropicale</span>
-<span class="kw">const int</span> SEUIL_ORANGE = <span class="num">118</span>;  <span class="cmt">// à partir de 118 : ouragan</span>
-<span class="kw">const int</span> SEUIL_ROUGE  = <span class="num">178</span>;  <span class="cmt">// à partir de 178 : ouragan majeur</span>
-<span class="kw">int</span>  vitesseVent   = <span class="num">0</span>;        <span class="cmt">// vitesse du vent calculée, en km/h</span>
-<span class="kw">int</span>  niveauAlerte  = <span class="num">0</span>;        <span class="cmt">// 0 veille · 1 tempête · 2 ouragan · 3 majeur</span>
-<span class="kw">bool</span> alarmeAcquittee = <span class="kw">false</span>;  <span class="cmt">// true si l'humain a acquitté l'alarme</span></pre>
+<pre class="code" data-code-colore="arduino">const int BROCHE_VENT   = A1;  // potentiomètre « anémomètre » sur A1
+const int SEUIL_JAUNE  = 63;   // à partir de 63 : tempête tropicale
+const int SEUIL_ORANGE = 118;  // à partir de 118 : ouragan
+const int SEUIL_ROUGE  = 178;  // à partir de 178 : ouragan majeur
+int  vitesseVent   = 0;        // vitesse du vent calculée, en km/h
+int  niveauAlerte  = 0;        // 0 veille · 1 tempête · 2 ouragan · 3 majeur
+bool alarmeAcquittee = false;  // true si l'humain a acquitté l'alarme</pre>
       <div class="assoc"><label for="a5_q1">Pourquoi les seuils sont-ils déclarés <code>const</code> (constantes) ?</label><select id="a5_q1"><option value="">— choisir —</option><option>ils ne changent jamais pendant l'exécution : le programme interdit de les modifier par accident</option><option>pour qu'ils changent tout seuls avec le vent</option><option>parce que « const » rend le programme plus rapide à téléverser</option><option>c'est obligatoire pour tous les nombres</option></select></div>
       <h4>Extrait 2 — la conversion et la décision (dans <code>loop()</code>)</h4>
-<pre class="code"><span class="kw">int</span> mesureBrute = <span class="fn">analogRead</span>(BROCHE_VENT);          <span class="cmt">// valeur brute du CAN (0-1023)</span>
-vitesseVent = <span class="fn">map</span>(mesureBrute, <span class="num">0</span>, <span class="num">1023</span>, <span class="num">0</span>, <span class="num">250</span>);    <span class="cmt">// conversion en km/h</span>
-<span class="kw">if</span> (vitesseVent &gt;= SEUIL_ROUGE) {
-  niveauAlerte = <span class="num">3</span>;                                 <span class="cmt">// ouragan majeur</span>
-} <span class="kw">else if</span> (vitesseVent &gt;= SEUIL_ORANGE) {
-  niveauAlerte = <span class="num">2</span>;                                 <span class="cmt">// ouragan</span>
-} <span class="kw">else if</span> (vitesseVent &gt;= SEUIL_JAUNE) {
-  niveauAlerte = <span class="num">1</span>;                                 <span class="cmt">// tempête tropicale</span>
-} <span class="kw">else</span> {
-  niveauAlerte = <span class="num">0</span>;                                 <span class="cmt">// simple veille</span>
+<pre class="code" data-code-colore="arduino">int mesureBrute = analogRead(BROCHE_VENT);          // valeur brute du CAN (0-1023)
+vitesseVent = map(mesureBrute, 0, 1023, 0, 250);    // conversion en km/h
+if (vitesseVent &gt;= SEUIL_ROUGE) {
+  niveauAlerte = 3;                                 // ouragan majeur
+} else if (vitesseVent &gt;= SEUIL_ORANGE) {
+  niveauAlerte = 2;                                 // ouragan
+} else if (vitesseVent &gt;= SEUIL_JAUNE) {
+  niveauAlerte = 1;                                 // tempête tropicale
+} else {
+  niveauAlerte = 0;                                 // simple veille
 }</pre>
       <div class="assoc"><label for="a5_q2">La fonction <code>map(…)</code> fait, en une ligne, le travail de quel bloc du palier 1 ?</label><select id="a5_q2"><option value="">— choisir —</option><option>le calcul de conversion de l'échelle du capteur vers l'échelle lisible</option><option>le bloc « si / sinon » du palier 2</option><option>le bloc « répéter indéfiniment »</option><option>le bloc d'affichage sur le moniteur</option></select></div>
       <div class="assoc"><label for="a5_q3">Le <code>else if</code> traduit exactement…</label><select id="a5_q3"><option value="">— choisir —</option><option>le SINON SI de notre algorithme : testé seulement si le premier SI a répondu non</option><option>une deuxième boucle</option><option>une erreur de traduction du logiciel de blocs</option><option>un commentaire</option></select></div>
       <h4>Extrait 3 — le sous-programme d'affichage</h4>
-<pre class="code"><span class="cmt">// Sous-programme (fonction) : affiche le niveau et la vitesse sur le LCD</span>
-<span class="cmt">// — la structuration en sous-programmes est exigée en 3e.</span>
-<span class="kw">void</span> <span class="fn">afficherEtat</span>() {
-  ecran.<span class="fn">setCursor</span>(<span class="num">0</span>, <span class="num">0</span>);            <span class="cmt">// ligne 1 : le niveau</span>
-  <span class="kw">if</span> (niveauAlerte == <span class="num">3</span>) {
-    ecran.<span class="fn">setRGB</span>(<span class="num">255</span>, <span class="num">0</span>, <span class="num">0</span>);      <span class="cmt">// fond ROUGE</span>
-    ecran.<span class="fn">print</span>(<span class="num">"OURAGAN MAJEUR  "</span>);
-  } <span class="cmt">/* … puis ouragan, tempête, veille … */</span>
-  ecran.<span class="fn">setCursor</span>(<span class="num">0</span>, <span class="num">1</span>);            <span class="cmt">// ligne 2 : la mesure</span>
-  ecran.<span class="fn">print</span>(<span class="num">"Vent: "</span>); ecran.<span class="fn">print</span>(vitesseVent); ecran.<span class="fn">print</span>(<span class="num">" km/h   "</span>);
+<pre class="code" data-code-colore="arduino">// Sous-programme (fonction) : affiche le niveau et la vitesse sur le LCD
+// — la structuration en sous-programmes est exigée en 3e.
+void afficherEtat() {
+  ecran.setCursor(0, 0);            // ligne 1 : le niveau
+  if (niveauAlerte == 3) {
+    ecran.setRGB(255, 0, 0);      // fond ROUGE
+    ecran.print("OURAGAN MAJEUR  ");
+  } /* … puis ouragan, tempête, veille … */
+  ecran.setCursor(0, 1);            // ligne 2 : la mesure
+  ecran.print("Vent: "); ecran.print(vitesseVent); ecran.print(" km/h   ");
 }</pre>
       <div class="assoc"><label for="a5_q4">Quel est l'intérêt de ranger l'affichage dans le sous-programme <code>afficherEtat()</code> ?</label><select id="a5_q4"><option value="">— choisir —</option><option>la boucle reste lisible, et l'affichage se teste et se corrige à UN seul endroit</option><option>le programme devient plus lent, donc plus sûr</option><option>c'est purement décoratif</option><option>ça évite d'utiliser des variables</option></select></div>
       <h4>d) La trace d'exécution (version 🅲 — mise au point au moniteur)</h4>

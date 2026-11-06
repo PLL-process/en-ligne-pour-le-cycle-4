@@ -28367,3 +28367,77 @@ expliqués en même temps.
 - Contrôles du site, tous verts : `controle_squelette`, `controle_hors_ligne`, `controle_verrous`, `controle_impression`,
   `controle_liens`, `controle_hierarchie`, `controle_regles_visibles`, `controle_unites`, `controle_sigles`,
   `controle_medias`, `controle_fichiers_telechargeables`, `controle_longueurs`.
+
+## 05/11/2026 — Le code en couleurs partout, comme dans un IDE (règle d'or n°13) : l'éditeur Python colore sa zone de saisie, et les listings et algorithmes restés en une couleur prennent la palette du site (transversal)
+
+**Ce que Pascal a vu.** Sur le lampadaire de 4e_C9.1 : « le programme du lampadaire n'a pas de couleurs, comme dans une
+IDE. Me semble-t-il qu'on avait mis une règle d'or », puis : « sa zone de code est monochrome. À l'avenir, il faudrait
+changer ceci. De façon à avoir des couleurs. » Et : « il serait intéressant de regarder les autres captures, si les
+algorithmes ont des couleurs. »
+
+**La règle existait.** C'est la règle d'or n°13, « Code coloré façon IDE » (30/07/2026) : variables cyan, textes verts,
+nombres orange, mots-clés violets en gras, `=` et opérateurs jaunes, commentaires gris en italique, une légende 🎨 au
+premier listing. Elle était tenue par une fonction `pyc()` copiée dans quelques pages. **L'éditeur Python intégré
+(règle n°320, 04/11/2026) ne la respectait pas** : sa zone de saisie était un `<textarea>`, en une couleur.
+
+**Le relevé, page ouverte dans le navigateur**, sur tout le site :
+- **l'éditeur Python** : ses 21 zones de saisie, dans les six séquences outillées (3e_C9.1, 5e_C9.1, 4e_C9.1, 4e_C6.2,
+  3e_C7.1, 5e_C7.1), étaient en une couleur, et leur version imprimée aussi ;
+- **des listings en une couleur** : 3e_C1.5 (trois programmes Python), 4e_C1.4 (le programme du Bonus), 3e_C6.1 (le
+  programme v2, le houlographe, le programme d'origine du CodeLab) ;
+- **des algorithmes en une couleur** : les sept de l'entraînement DNB de 3e_C6.2, l'atelier 2 de 4e_C4.1 ;
+- **des listings colorés avec une autre palette** : 4e_C1.4 (les couleurs d'un autre éditeur, et `age` pris pour un
+  nombre), 3e_C9.2 (le C de la carte, mots-clés en cyan, nombres en jaune), le CodeLab de 3e_C6.1 (variables en
+  blanc). Règle n°120 : une couleur garde le même sens partout.
+- Déjà conformes : le TP mBot2, les listings `pyc()` de 3e_C9.1, 5e_C9.1, 4e_C6.2, 3e_C7.1, 5e_C7.1, le Python de
+  l'atelier des blocs de 4e_C9.1.
+
+**Un colorisateur commun** : `_ressources-communes/code-colore/` (`code-colore.js` et `.css`). Il a trois langages :
+- `python` ;
+- `arduino`, le C des cartes, avec ses commentaires `//` ;
+- `algo`, le pseudo-code en français, avec `SI … ALORS`, `TANT QUE`, `DÉMARRER`, `←` ; les petits mots de la phrase
+  restent en clair.
+
+Un listing le demande par `data-code-colore="…"`. Seul le texte est découpé : les menus déroulants de l'atelier 2 de
+4e_C4.1 restent en place. À l'impression, des teintes foncées pour le papier ; en mode « couleurs forcées », la couleur
+du système. Une légende 🎨 suit le premier listing de chaque page.
+
+**L'éditeur Python, comme un IDE.** Sa zone de saisie est posée sur le même code en couleurs. C'est une couche `<pre>`
+dessous, aux mêmes mesures, muette pour un lecteur d'écran. Le texte de la zone devient transparent ; le curseur et la
+sélection restent, et tombent sur leur lettre (capture vérifiée). La couche est redessinée à chaque frappe, défile avec
+la zone, et garde ses couleurs à l'impression. Sans `code-colore.js`, ou en contraste élevé, l'éditeur reste en une
+couleur, lisible.
+
+**Ce qui change dans les pages :**
+- les six séquences outillées chargent `code-colore` : leurs éditeurs sont en couleurs, et 4e_C9.1, qui n'avait
+  aucun listing coloré, a maintenant sa légende 🎨 ;
+- 3e_C1.5, le Bonus de 4e_C1.4 : leurs programmes sont colorés ;
+- 4e_C1.4, 3e_C9.2 : l'ancienne palette est retirée, la palette du site la remplace ;
+- 3e_C6.1 : le CodeLab colore par `CodeColore.html()`, et le programme d'origine aussi ;
+- 3e_C6.2, 4e_C4.1 : les algorithmes sont colorés ;
+- 3e_C9.2 : la page tout-en-un est retouchée, puis `generer_les_quatre_pages.py` est relancé, comme le veut son
+  en-tête.
+
+**Les captures de l'éditeur** (`geste_editeur_*.png`, 30 images dans six dossiers) sont refaites en couleurs par
+`captures_gestes.mjs`. Elles ne sont plus affichées dans les pages depuis l'échauffement, mais elles restent pour les
+fiches papier. Les autres images de code du dépôt sont des dessins (SVG) qui ont leurs propres couleurs (entrées et
+sorties, données lues et produites), ou des captures de blocs Vittascience, colorés par nature.
+
+**À l'avenir : un contrôle.** `_outils/controle_code_colore.mjs` ouvre chaque page et vérifie que chaque listing de
+programme ou d'algorithme, et chaque zone de saisie de code, est en couleurs. Il ne compte ni la sortie d'une console,
+ni le `<code>` d'une phrase. Le banc de l'éditeur a sa partie 18 : la couche colorée (même place, mêmes mesures,
+frappe, défilement, impression, couleurs forcées) et l'éditeur sans `code-colore.js`.
+
+**Contrôles.**
+- `controle_code_colore` (nouveau) : ✅ 106 listings dans 15 pages, tous en couleurs.
+- Le banc de l'éditeur : 76 / 76, dont la nouvelle partie 18 sur les couleurs. Le banc du relais : 29 / 29.
+- Les bancs des séquences sont verts :
+  - les pages de l'éditeur : 3e_C9.1 55 / 55, 5e_C9.1 66 / 66, 4e_C9.1 124 / 124, 3e_C7.1 80 / 80, 5e_C7.1 55 / 55,
+    4e_C6.2 56 / 56 ;
+  - les autres pages touchées : 3e_C6.1 35 / 35, 4e_C4.1 52 / 52, 3e_C9.2 167 / 167, pont en H 37 / 37 ;
+  - 3e_C6.1 attendait les anciennes classes de son CodeLab : son test lit maintenant la palette du site.
+- Bancs n°311 : 34 / 34 sur chacune des douze pages.
+- `controle_schemas` : aucun ✘.
+- Contrôles du site, tous verts : `controle_squelette`, `controle_hors_ligne`, `controle_verrous`, `controle_impression`,
+  `controle_liens`, `controle_hierarchie`, `controle_regles_visibles`, `controle_unites`, `controle_sigles`,
+  `controle_medias`, `controle_fichiers_telechargeables`, `controle_longueurs`.
