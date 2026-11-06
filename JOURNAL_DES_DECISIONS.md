@@ -28584,3 +28584,63 @@ l'impression, chargée en différé.
 - **Non exécuté** : les bancs des QCM, que la vague ne touche pas, et la validation HTML (aucun outil du dépôt ne la fait).
 - **Poids** : les 27 images dépassent 300 Ko (1,7 à 3,8 Mo). C'est voulu : un fichier Canva non modifié garde sa
   provenance (C2PA, XMP).
+
+## 06/11/2026 — Une fiche jumelle pour les arts plastiques : les codes cachés du dé sur sa pointe, et la spirale construite sur ses cotes (thème 3)
+
+**Demande de Pascal** : expliquer à un collègue d'arts plastiques « les codes cachés de ce dé : spirale de
+Fibonacci et nombre d'or », retrouver les calculs préparés pour les mathématiques, puis « rédiger une fiche
+jumelle pour les arts plastiques sur le modèle de la fiche maths (même gabarit, avec la construction de la
+spirale à partir des cotes de l'objet) et la livrer dans `atelier-cao/` par PR ».
+
+**Un constat d'abord, dit à Pascal** : le TP et son objet ne contiennent **aucune spirale**. Ils contiennent la
+suite de Fibonacci et le nombre d'or (M = 89, C = M/φ ≈ 55, Hsocle = M/φ⁴ ≈ 13, Rde ≈ 8, Rsocle = penetr ≈ 5,
+21 points, profil 5-3-3). La spirale se **construit après coup** sur ces cotes : un rectangle 89 × 55 découpé en
+carrés 55, 34, 21, 13, 8, 5, 3, 2, 1, 1, un quart de cercle par carré. La fiche le dit tel quel, et précise que
+cette spirale par quarts de cercle est l'approximation classique de la spirale d'or, pas la spirale logarithmique.
+
+**Livré.**
+- `atelier-cao/fiche_arts_tp_4e_socle.html` : même gabarit que `fiche_maths_tp_4e_socle.html` (feuille de style
+  reprise à l'identique, mêmes cartes « En deux phrases », « Ce que le TP ne fait pas », « Sources »). Contenu :
+  les deux ingrédients en clair (φ, Fibonacci, avec Pacioli et le *Modulor* comme repères d'histoire des arts) ;
+  le tableau des cotes et de leur Fibonacci ; la capture `Images/dsp_R9_presse_papier.png` ; la spirale en SVG,
+  calculée dans la page, et sa construction à la main en six étapes, à l'échelle 1 ; les trois questions du
+  programme d'arts plastiques du cycle 4 (représentation ; matérialité, objet et œuvre ; œuvre, espace, auteur,
+  spectateur) avec leurs points d'entrée cités mot pour mot, et les compétences ; cinq pistes ; ce que le TP ne
+  fait pas. Chaque fiche renvoie à l'autre (navigation et sources).
+- `atelier-cao/_generation/spirale_fibonacci.py` : engendre le SVG (pavage et continuité vérifiés par assertion) ;
+  la page incruste exactement sa sortie. Ligne de provenance dans `SOURCES_MEDIAS.md` (original, CC0).
+- `scenarios/tp_4e_socle_assemblage.json` : le pied du TP renvoie aux deux fiches ; page régénérée.
+- **Impression** (préférence de Pascal : le moins de pages, pas de blanc) : première épreuve à 7 pages A4, dont
+  trois presque vides — un bloc `overflow:auto` (le filet mobile des tableaux) est **insécable sur le papier**, et
+  la photo pleine largeur prenait une page. Sur le papier, le filet repasse en `overflow:visible`, la photo passe
+  à 38 % de la largeur, la spirale à 400 px, le corps à 0,84 em : **4 pages pleines**. Les tableaux gardent leur
+  filet à l'écran.
+
+**Réparé au passage — la chaîne de production disait faux depuis ce matin.** Le lot « Les pages au doigt »
+(06/11) a posé la règle `@media (pointer:coarse)` dans `_generation/gabarit_style.css` **et** à la main en fin de
+`<style>` des deux TP à champs (3e, 4e) : `verif_chaine.py` signalait **4 écarts sur 4**, aucune page n'étant plus
+ce que son scénario produit. Les quatre TP sont régénérés : la règle y est une fois, à la place que le gabarit
+lui donne (après le filet mobile) ; les 5e la reçoivent aussi (sans champ, elle y est sans effet, comme sur
+toutes les pages du site). Empreintes recalculées (`--empreintes`). Rien d'autre ne change dans ces pages.
+
+**Vérifié.**
+- `verif_chaine.py` : ✅ chaque page est ce que son scénario produit, chaque empreinte dit vrai (avant : ⛔ 4 écarts).
+- `verif_guidage.py` : 5e « Le dé » et 4e sans manquement ; 5e « calottes » et 3e gardent leur ✘ n°77 (paliers sans
+  image du résultat), **déjà présent sur main** et hors de ce lot (captures à prendre, `RELEVE_DES_CAPTURES_*.md`).
+- `tests_verif_effectifs.py` : 21 / 21.
+- Contrôles du site sur les trois pages touchées (fiche arts, fiche maths, TP 4e) : `controle_liens` (0 lien mort,
+  la fiche arts comprise), `controle_hierarchie`, `controle_unites`, `controle_debordement`, `controle_regles_visibles`
+  (une fiche `fiche_*` est une page professeur), `controle_tactile` (171 pages), `controle_sigles`, `controle_medias`
+  (la provenance de la spirale est écrite) : tous verts. `controle_impression_papier` et `controle_mode_essentiel`
+  ne lisent que des séquences : non applicables.
+- Rendu Playwright à 1 100 px et à 390 px : aucun défilement de côté, l'image se charge, aucune erreur console ;
+  PDF A4 : 4 pages.
+- **Non exécuté** : les bancs des QCM (non touchés) ; la validation HTML (aucun outil du dépôt ne la fait).
+- Le programme d'arts plastiques est cité d'après la version consolidée de juillet 2020 mise en ligne par
+  l'académie de Nice (les liens Eduscol trouvés renvoyaient vers des ressources d'accompagnement, pas vers le
+  programme) ; les intitulés des trois questions, des quatre compétences et des points d'entrée ont été lus dans ce
+  PDF avant d'être cités.
+
+**Reste à Pascal** : lire la fiche avec son collègue ; dire si les repères d'histoire des arts (Pacioli, Le
+Corbusier) et les cinq pistes lui conviennent, ou s'il préfère une fiche sans pistes, comme la fiche maths
+le propose (« rien, un rappel, une activité »).

@@ -480,3 +480,21 @@ Onshape » pour `tp5e_R7` (capture de Pascal, confirmée le 30/10/2026 ; section
 sombre. Il avait été remplacé le 18/08/2026 sans que sa ligne suive ; elle est désormais écrite (section
 « Le dé coloré du TP 5e — 18/08/2026 »). La question « capture ou rendu » est tranchée le 30/10/2026 : capture
 de Pascal.
+
+## La spirale de la fiche arts plastiques — 06/11/2026
+
+Figure « La spirale, construite sur les cotes de l'objet » de `fiche_arts_tp_4e_socle.html`.
+
+**Origine** : dessin vectoriel **engendré** par `_generation/spirale_fibonacci.py`, incrusté dans la
+page (SVG en ligne, aucun fichier image, aucune ressource distante — règle n°40). Relancer le script
+redonne le même SVG, octet pour octet. Ce n'est ni une capture ni un rendu : un tracé calculé, où
+chaque carré et chaque quart de cercle viennent des deux cotes de l'objet, 89 mm (le socle sur plats)
+et 55 mm (l'arête du dé), 1 unité = 1 mm.
+
+**Contrôles, dans le script** : les dix carrés (55, 34, 21, 13, 8, 5, 3, 2, 1, 1) pavent exactement le
+rectangle (somme des aires = 4 895 = 89 × 55) ; chaque arc commence là où le précédent finit.
+
+**Licence** : original, CC0.
+
+**Réemploi** : `Images/dsp_R9_presse_papier.png` (capture Onshape documentée plus haut) paraît aussi
+dans cette fiche, avec la même légende d'origine que dans les synthèses élève.
