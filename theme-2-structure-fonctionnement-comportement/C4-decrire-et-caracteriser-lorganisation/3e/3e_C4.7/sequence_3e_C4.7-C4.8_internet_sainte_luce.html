@@ -125,7 +125,7 @@
   .confiance input{accent-color:var(--hl)}
   .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
   footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
-  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:1300}
   .skip-link:focus{left:0}
   @media (prefers-reduced-motion: reduce){
     *{animation:none!important;transition:none!important}
@@ -190,6 +190,9 @@
 .situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
 .situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
 @media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
+/* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
+   (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
+@media (pointer:coarse){input,textarea,select{font-size:16px!important}}
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -554,6 +557,7 @@
 <!-- fiche-papier v1 : fin -->
 </head>
 <body>
+<a class="skip-link" href="#seances">Aller directement aux activités</a>
 <style id="navharm-css">
 #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
  padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
@@ -584,7 +588,6 @@
   @media print{#tachesBandeau{display:none}}
 </style>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_3e_C4.7.html">📖 Lexique</a></nav>
-<a class="skip-link" href="#seances">Aller directement aux activités</a>
 <h1>Thème 2 · Martinique — 3e · S5 : Internet jusqu'à Sainte-Luce</h1>
 <p class="subtitle">Comment l'alerte de notre station traverse-t-elle les réseaux pour arriver jusqu'aux téléphones ?</p>
 <div class="toolbar">

@@ -28441,3 +28441,70 @@ frappe, défilement, impression, couleurs forcées) et l'éditeur sans `code-col
 - Contrôles du site, tous verts : `controle_squelette`, `controle_hors_ligne`, `controle_verrous`, `controle_impression`,
   `controle_liens`, `controle_hierarchie`, `controle_regles_visibles`, `controle_unites`, `controle_sigles`,
   `controle_medias`, `controle_fichiers_telechargeables`, `controle_longueurs`.
+
+## 06/11/2026 — Les pages au doigt : chaque champ à 16 px au toucher (iPhone, iPad), « Aller au contenu » en premier, le ressort du relais (transversal)
+
+**D'où ça vient.** Pascal, le 05/11/2026, propose trois dépôts de skills : `emilkowalski/skills`, `pbakaus/impeccable`,
+`Leonxlnx/taste-skill`. Il dit : « On essaie, qu'en penses-tu ? ».
+- **Taste Skill est écarté.** Il fabrique des sites d'entreprise, et ses règles maison contredisent les nôtres :
+  « aucune légende sous une image », « une section par écran ».
+- **L'essai a été fait sans rien installer** : 4e_C9.1 est passée aux grilles `mobile-native`, `break-ui` et
+  `review-animations` d'Emil Kowalski, et `audit` d'Impeccable. La grille d'audit lui donne 15/20.
+- **Le seul vrai défaut que nos contrôles ne voyaient pas : le zoom d'iOS.** Les 92 champs de la page sont écrits en
+  13 à 15 px. Or, sur iPhone et iPad, un champ en dessous de 16 px fait zoomer la page dès qu'on le touche, et elle ne
+  dézoome pas.
+- Pascal, le 06/11/2026 : « corriger le P1 sur tout le site (zoom iOS), en une PR. Je peux y ajouter le P2 et les
+  finitions du relais. … oui. »
+
+**1. Le zoom d'iOS (P1), sur tout le site.**
+- **La règle** : `@media (pointer:coarse){input,textarea,select{font-size:16px!important}}`, dans la première feuille de
+  style ordinaire de chaque page qui a un champ (171 pages : 78 QCM, 60 séquences, 25 ateliers…).
+  - Elle n'agit que sur un écran tactile ; à la souris, rien ne change.
+  - `!important`, parce que les champs ont des tailles posées par classe (`.at-champ`, `.editeur-py-nom`…).
+  - Une première pose l'avait mise dans le `<style>` d'un `<noscript>`, sur 21 ateliers. Elle est maintenant dans la
+    première feuille ordinaire.
+- **Les gabarits qui fabriquent des pages la portent aussi** : `dnb_gabarit.html`, `gabarit_qcm.tpl`, `kit.css`, et les
+  deux `gabarit_style.css`.
+- **Les éditeurs à couche colorée suivent la zone** :
+  - l'éditeur Python : sa marge et sa couche passent aussi à 16 px ;
+  - les CodeLab de 3e_C6.1 et 3e_C6.2 : `max(16px, var(--cl-fs))`, pour que leur bouton A+ agrandisse encore.
+  - Mesuré : zone, couche et marge à 16 px et 24 px d'interligne.
+- **Mesuré au toucher**, dans Chromium avec le profil iPhone 13 (390 px) :
+  - avant, 165 pages sur 171 avaient un champ sous 16 px ; après, aucune ;
+  - aucune page ne défile de côté, ni avant ni après.
+  - Un vrai iPad reste le juge, l'émulation ne reproduit pas le zoom.
+
+**2. « Aller au contenu » en premier (P2).**
+- Dans les 23 pages qui ont ce lien, il était rangé dans la barre de navigation, après « Accueil » et « QCM » : au clavier,
+  c'était le 3e arrêt. Il est maintenant le premier lien du corps, hors de la barre.
+- Il passe au-dessus de la barre collante quand il a le focus (`z-index` 1300).
+- Vérifié sur les 23 pages : Tab le montre, visible, et Entrée saute au contenu.
+- 3e_C9.2 : `generer_les_quatre_pages.py` savait découper la barre jusqu'au lien. Il prend maintenant la barre seule, et
+  pose le lien juste après `<body>`. Les quatre pages régénérées sont identiques à celles corrigées.
+- Le repère `<main>` n'est pas posé : il faudrait envelopper tout le corps de 60 pages, un autre chantier.
+
+**3. Le ressort du relais.** La grille d'Emil dit « jamais `ease-in` », mais la lame qui se ferme en accélérant est juste
+en physique : l'aimant tire plus fort quand elle approche. On la garde. Le ressort, lui, pousse fort au départ puis
+faiblit : il relève la lame en ralentissant (`ease-out`). Le « clac » qui s'efface en fondu reste, même en mouvement
+réduit : c'est un fondu d'opacité, sans déplacement.
+
+**À l'avenir : un contrôle.** `_outils/controle_tactile.py` vérifie trois choses :
+- toute page à champ porte la règle, dans une feuille active ;
+- le lien d'évitement est le premier lien de la page ;
+- les gabarits portent la règle.
+
+Sur `main`, avant la correction, il trouve 199 écarts. Il est inscrit, avec `controle_code_colore.mjs`, dans la liste du
+skill `controle-qualite-lot`.
+
+**Contrôles.**
+- `controle_tactile` (nouveau) : ✅ 171 pages, 5 gabarits, 23 liens d'évitement.
+- Le banc de l'éditeur : 76 / 76. Le banc du relais : 29 / 29.
+- Les bancs des 19 dossiers qui ont un lien d'évitement :
+  - 3e_C4.1 23/23, 3e_C4.3 23/23, 3e_C4.7 35/35, 4e_C4.1 52/52, 5e_C4.1 64/64 et son QCM 25/25 ;
+  - 3e_C5.1 34/34, 4e_C5.1 26/26, 5e_C5.1 26/26 ;
+  - 3e_C6.1 35/35, 4e_C6.1 29/29, 5e_C6.1 32/32 ;
+  - 3e_C9.1 55/55, 3e_C9.2 167/167, pont en H 37/37, 4e_C9.1 124/124, 5e_C9.1 66/66 ;
+  - les bancs n°311, 34 / 34 dans chacun des 19 dossiers.
+- Contrôles du site, tous verts : `controle_squelette`, `controle_hors_ligne`, `controle_verrous`, `controle_impression`,
+  `controle_code_colore`, `controle_liens`, `controle_hierarchie`, `controle_regles_visibles`, `controle_debordement`,
+  `controle_medias`, `controle_fichiers_telechargeables`, `controle_impression_papier`.

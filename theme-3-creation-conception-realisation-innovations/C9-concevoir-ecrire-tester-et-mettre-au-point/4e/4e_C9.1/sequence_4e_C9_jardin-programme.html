@@ -144,7 +144,7 @@
   .confiance input{accent-color:var(--hl)}
   .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
   footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
-  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:1300}
   .skip-link:focus{left:0}
   /* ── Banc de simulation de la station ── */
   .banc{display:grid;grid-template-columns:1.05fr 1fr;gap:18px;align-items:start}
@@ -266,6 +266,9 @@
 .situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
 .situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
 @media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
+/* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
+   (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
+@media (pointer:coarse){input,textarea,select{font-size:16px!important}}
 </style>
 <style id="regle-311">
   /* Règle d'or n°311 — à partir de la séance 2, l'élève voit sa séance, pas le décor.
@@ -1464,10 +1467,10 @@ details.ppa-fixe{margin:10px 0}
 <script src="../../../../_ressources-communes/code-colore/code-colore.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#s1">Aller au contenu</a>
 <nav id="navharm" aria-label="Navigation du site">
   <a href="../../../../index.html">⌂ Accueil</a>
   <a href="qcm_4e_C9_jardin-programme.html">🧠 QCM</a>
-  <a class="skip-link" href="#s1">Aller au contenu</a>
 <a href="lexique_4e_C9.1.html">📖 Lexique</a></nav>
 
 <h1>🌱 Le jardin connecté se programme — 4e</h1>

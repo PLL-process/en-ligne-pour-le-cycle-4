@@ -181,7 +181,7 @@
   .confiance input{accent-color:var(--hl)}
   .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
   footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
-  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:1300}
   .skip-link:focus{left:0}
   /* ── Banc de simulation de la station ── */
   .banc{display:grid;grid-template-columns:1.05fr 1fr;gap:18px;align-items:start}
@@ -347,6 +347,9 @@
 /* règle d'or n°305 — une activité qui demande Internet le dit à son début */
 .activite-en-ligne{border-left:4px solid #ffd66b;background:rgba(255,214,107,.12);padding:.55em .85em;border-radius:0 8px 8px 0;margin:.6em 0 .8em;font-size:.95em;line-height:1.45}
 @media print{.activite-en-ligne,.activite-en-ligne b{color:#1a1a1a!important}.activite-en-ligne{background:#fff8e1!important;border-left-color:#8a6400!important}}
+/* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
+   (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
+@media (pointer:coarse){input,textarea,select{font-size:16px!important}}
 </style>
 <style id="regle-311">
   /* Règle d'or n°311 — à partir de la séance 2, l'élève voit sa séance, pas le décor.
@@ -699,6 +702,7 @@
 <!-- fiche-papier v1 : fin -->
 </head>
 <body>
+<a class="skip-link" href="#seances">Aller directement aux activités</a>
 <style id="navharm-css">
 #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
  padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
@@ -719,7 +723,6 @@
 @media print{#tachesBandeau{display:none}}
 </style>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_3e_C9.2.html">📖 Lexique</a></nav>
-<a class="skip-link" href="#seances">Aller directement aux activités</a>
 <h1>Thème 3 · Martinique — 3e : La station d'alerte cyclonique se programme</h1>
 <p class="subtitle">🎯 Ta mission : programmer la station commandée par la mairie — puis PROUVER qu'elle marche, protocole de test à l'appui, avant sa mise en service dans la cour.</p>
 

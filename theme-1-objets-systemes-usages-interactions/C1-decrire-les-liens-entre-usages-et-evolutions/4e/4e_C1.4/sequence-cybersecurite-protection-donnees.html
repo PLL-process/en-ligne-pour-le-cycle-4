@@ -484,6 +484,9 @@
 .rappel-ouverture.volet>summary{display:block;cursor:pointer;min-height:44px;line-height:44px;padding:0 14px;margin:10px 0;border:1.5px solid #234d8c;border-radius:12px;background:#0b2f5c;color:#61dafb;font-weight:700}
 .rappel-ouverture.volet>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
 @media print{.rappel-ouverture>summary{display:none!important}}
+/* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
+   (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
+@media (pointer:coarse){input,textarea,select{font-size:16px!important}}
 </style>
 <style id="ressource-css">
 /* Bloc « ressource externe » — posé par _outils poser_ressource.py. Ne pas éditer à la main. */
