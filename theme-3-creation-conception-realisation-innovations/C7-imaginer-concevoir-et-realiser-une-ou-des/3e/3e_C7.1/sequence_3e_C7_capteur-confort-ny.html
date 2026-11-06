@@ -208,6 +208,9 @@ body>p.saved-note{display:block;max-width:940px;margin:6px auto}
 .rappel-algo-formes li{display:flex;gap:10px;align-items:center;margin:0;padding:7px 9px;border-radius:8px;background:rgba(127,127,127,.08);line-height:1.4;min-width:0}
 .rappel-algo-formes svg{flex:0 0 64px;color:var(--hl)}
 @media print{.rappel-algo{background:#fff!important;color:#111!important;border-color:#555!important;break-inside:avoid}.rappel-algo-titre{color:#111!important}.rappel-algo-formes li{background:#fff!important;border:1px solid #bbb}.rappel-algo-formes svg{color:#111!important}}
+/* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
+   (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
+@media (pointer:coarse){input,textarea,select{font-size:16px!important}}
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */

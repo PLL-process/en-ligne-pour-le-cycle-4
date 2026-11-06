@@ -58,6 +58,8 @@ orange, mots-clés violets en gras, `=` et opérateurs jaunes, `# commentaires` 
   sélection restent. Elle est redessinée à chaque frappe et défile avec la zone.
 - Une légende 🎨 suit le premier éditeur de la page, si la page n'en a pas déjà une.
 - À l'impression, le programme écrit garde ses couleurs, en teintes foncées pour le papier.
+- Sur un écran tactile, la zone passe à 16 px, avec sa marge et sa couche colorée : en dessous, iPhone et iPad zoomeraient
+  la page dès que l'élève touche la zone (06/11/2026, `_outils/controle_tactile.py`).
 - En mode « couleurs forcées » (contraste élevé de Windows), la couche disparaît et la zone redevient du texte
   ordinaire. Sans `code-colore.js`, l'éditeur reste en une couleur, lisible.
 

@@ -182,7 +182,7 @@
   .confiance input{accent-color:var(--hl)}
   .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
   footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
-  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:1300}
   .skip-link:focus{left:0}
   /* ── Banc de simulation de la station ── */
   .banc{display:grid;grid-template-columns:1.05fr 1fr;gap:18px;align-items:start}
@@ -348,6 +348,9 @@
 /* règle d'or n°305 — une activité qui demande Internet le dit à son début */
 .activite-en-ligne{border-left:4px solid #ffd66b;background:rgba(255,214,107,.12);padding:.55em .85em;border-radius:0 8px 8px 0;margin:.6em 0 .8em;font-size:.95em;line-height:1.45}
 @media print{.activite-en-ligne,.activite-en-ligne b{color:#1a1a1a!important}.activite-en-ligne{background:#fff8e1!important;border-left-color:#8a6400!important}}
+/* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
+   (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
+@media (pointer:coarse){input,textarea,select{font-size:16px!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -684,6 +687,7 @@
 </script>
 <!-- fiche-papier v1 : fin -->
 <body>
+<a class="skip-link" href="#seances">Aller directement aux activités</a>
 <style id="navharm-css">
 #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
  padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
@@ -725,7 +729,6 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
 </style>
 
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_3e_C9.2.html">📖 Lexique</a></nav>
-<a class="skip-link" href="#seances">Aller directement aux activités</a>
 <h1>Thème 3 · Martinique — 3e : La station d'alerte cyclonique se programme — L'humain dans la boucle</h1>
 <p class="subtitle">🎯 Page 3 sur 4 · séances 5 et 6 (2 séances de 55 min) — Programmer l'acquittement, lire le code généré, diagnostiquer une panne.</p>
 <details class="repli-tout-en-un repli-volet"><summary>📄 La séquence entière en une seule page</summary><p>Réseau capricieux, ou besoin de tout avoir sous la main ? <a href="sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html">La séquence entière en une seule page</a> — mêmes activités, mêmes réponses enregistrées, aucun chargement entre les séances.</p></details>

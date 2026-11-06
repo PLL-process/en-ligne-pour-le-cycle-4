@@ -22,6 +22,9 @@ réalistes ou des schémas ou une animation ».
 - Le statut (`role="status"`) dit ce qui vient de se passer et compte les clacs. La légende rappelle que **chaque clac use un
   peu les contacts** : un relais s'use au nombre de fois qu'il bascule, pas au nombre d'années.
 
+Le mouvement suit la physique (06/11/2026) : l'aimant tire plus fort à mesure que la lame approche, elle se ferme donc en
+accélérant (`ease-in`) ; le ressort pousse fort au départ puis faiblit, il relève la lame en ralentissant (`ease-out`).
+
 Sans JavaScript et sur le papier, le schéma reste, au repos, avec son explication ; les boutons n'apparaissent pas. Avec
 « réduire les animations », la lame bascule sans mouvement et le courant ne défile pas.
 

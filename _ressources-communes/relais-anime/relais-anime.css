@@ -35,7 +35,7 @@
 .relais-anime .ra-contact{fill:#d9b44a;stroke:#8a6d1a;stroke-width:1}
 .relais-anime .ra-ressort{fill:none;stroke:var(--ra-trait);stroke-width:2;stroke-linejoin:round}
 .relais-anime .ra-ressort-groupe{transform-box:view-box;transform-origin:430px 96px;transform:scaleY(1)}
-.relais-anime .ra-lame-groupe{transform-box:view-box;transform-origin:300px 190px;transform:rotate(-9deg);transition:transform .12s ease-in}
+.relais-anime .ra-lame-groupe{transform-box:view-box;transform-origin:300px 190px;transform:rotate(-9deg);transition:transform .12s ease-out}
 .relais-anime .ra-lame{stroke:#c9d6ef;stroke-width:8;stroke-linecap:round}
 .relais-anime .ra-plot{fill:#d9b44a}
 .relais-anime .ra-axe{fill:var(--ra-fond);stroke:var(--ra-trait);stroke-width:2}
@@ -43,7 +43,10 @@
 /* l'ordre envoyé : la bobine aimantée, la lame baissée, le circuit de la pompe fermé */
 .relais-anime.ra-ferme .ra-lame-groupe{transform:rotate(0deg)}
 .relais-anime.ra-ferme .ra-ressort-groupe{transform:scaleY(1.27)}
-.relais-anime .ra-ressort-groupe{transition:transform .12s ease-in}
+/* l'aimant tire plus fort à mesure que la lame approche : elle se ferme en accélérant (ease-in) ; le ressort, lui, pousse
+   fort au départ puis faiblit : il relève la lame en ralentissant (ease-out). */
+.relais-anime .ra-ressort-groupe{transition:transform .12s ease-out}
+.relais-anime.ra-ferme .ra-lame-groupe,.relais-anime.ra-ferme .ra-ressort-groupe{transition-timing-function:ease-in}
 .relais-anime.ra-ferme .ra-champ path{opacity:1}
 .relais-anime.ra-ferme .ra-courant{opacity:1;animation:ra-courant .9s linear infinite}
 .relais-anime.ra-ferme .ra-rotor{animation:ra-tourne .6s linear infinite}

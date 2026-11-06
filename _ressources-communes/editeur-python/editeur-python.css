@@ -47,6 +47,8 @@
 .editeur-py-zone--couleurs textarea.editeur-py-code{color:transparent;-webkit-text-fill-color:transparent;caret-color:var(--ep-texte)}
 .editeur-py-zone--couleurs textarea.editeur-py-code::selection{background:rgba(97,218,251,.32)}
 .editeur-py-zone--couleurs textarea.editeur-py-code::placeholder{-webkit-text-fill-color:var(--ep-marge);color:var(--ep-marge)}
+/* au toucher, 16 px (sinon iOS zoome la page) : la marge et la couche colorée suivent la zone, au pixel près */
+@media (pointer:coarse){.editeur-py textarea.editeur-py-code,.editeur-py-marge,.editeur-py-couleurs{font-size:16px!important}}
 @media (forced-colors:active){
   .editeur-py-zone--couleurs textarea.editeur-py-code{color:CanvasText;-webkit-text-fill-color:CanvasText}
   .editeur-py-zone--couleurs .editeur-py-couleurs{display:none}

@@ -115,7 +115,9 @@ assert _volet_fin is None or _situ < _volet_fin < _banc, "le volet « Rappel » 
 
 HEAD        = seg(1, _style1)
 NAVCSS      = seg(_navcss, ferme(_navcss, "</style>"))
-NAV         = seg(ligne('<nav id="navharm"'), ligne('class="skip-link"'))
+NAV         = seg(ligne('<nav id="navharm"'), ligne('<nav id="navharm"'))   # la barre tient sur une ligne
+# « Aller au contenu » : le premier lien du corps de la page, avant la barre (_outils/controle_tactile.py, 06/11/2026)
+SAUT        = seg(ligne('class="skip-link"'), ligne('class="skip-link"'))
 H1          = seg(ligne("<h1>"), ligne("<h1>"))
 RAPPEL      = seg(_rappel, ferme(_rappel, "</section>"))
 BILLET      = seg(_billet - 1, ferme(_billet, "</section>"))
@@ -394,7 +396,7 @@ for p in PAGES:
     if HEAD.count('<meta charset="UTF-8">') != 1:
         raise SystemExit("HEAD : la ligne <meta charset=\"UTF-8\"> est introuvable ou en double")
     page = "\n".join([
-        HEAD.replace('<meta charset="UTF-8">', '<meta charset="UTF-8">\n' + sans_onglets, 1), "<body>", NAVCSS, CSS_SUP, NAV, h1, sous, REPLI if p["n"] == 1 else REPLI_PLIE,
+        HEAD.replace('<meta charset="UTF-8">', '<meta charset="UTF-8">\n' + sans_onglets, 1), "<body>", SAUT, NAVCSS, CSS_SUP, NAV, h1, sous, REPLI if p["n"] == 1 else REPLI_PLIE,
         badges_de(p), IDENTITE, toolbar, PROGRESS,
         corps_assemble,
         suivant(p["n"]),

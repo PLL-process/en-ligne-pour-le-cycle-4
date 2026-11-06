@@ -97,6 +97,8 @@ Lancer depuis la racine du dépôt. Python : `python3 _outils/<outil>.py`. Node 
 | `controle_impression.mjs` | rendu `media: print` : aucun texte sombre sur fond sombre ; sur une page qui porte la fiche papier, aucun texte sous 4,5 : 1 (25/10/2026) |
 | `controle_contraste_liens.mjs [chemin]` | n°303 (21/09/2026) : chaque lien se lit (contraste) |
 | `controle_debordement.py` | n°135 (second passage du 27/09/2026) : un tableau large défile au lieu de casser la page sur mobile |
+| `controle_tactile.py` | 06/11/2026 : sur iPhone et iPad, chaque champ passe à 16 px au toucher (sinon la page zoome) ; « Aller au contenu » est le premier lien de la page ; les gabarits qui fabriquent des pages portent la règle |
+| `controle_code_colore.mjs [--muet] [dossier]` | n°13 (05/11/2026), au navigateur : chaque listing de programme ou d'algorithme, et chaque éditeur de code, est en couleurs comme dans un IDE |
 | `controle_marqueurs.py` | pointes de flèche SVG mesurées en pixels |
 | `controle_loupe.py` | n°92 : l'agrandisseur de chaque page est le v2, une seule fois (25/10/2026) |
 | `banc_loupe.py [racine] [--captures <dossier>]` | n°92 au navigateur : un schéma SVG agrandi garde ses couleurs (écart mesuré), la légende ne recouvre pas l'image, à 1280, 390, 1920 px et 1280 px zoomé 150 % |

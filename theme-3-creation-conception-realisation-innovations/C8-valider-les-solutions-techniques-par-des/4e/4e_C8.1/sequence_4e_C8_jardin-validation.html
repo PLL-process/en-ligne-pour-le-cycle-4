@@ -180,6 +180,9 @@ details.correction>div{padding:0 14px 12px}
    imprime le choix en texte, ou une ligne quand la case est vide ; la fiche papier ajoute sous chaque menu la liste de
    ses options (8 listes, qui débordent des cases). On la retire ici, en attendant que le kit la retire lui-même. */
 @media print{.atelier-incruste .tableau-menus .pp-choix{display:none!important}}
+/* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
+   (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
+@media (pointer:coarse){input,textarea,select{font-size:16px!important}}
 </style>
 <style>
 /* annee_sur_le_toit_pas_a_pas (style) : début — situation déclenchante animée (25/10/2026).

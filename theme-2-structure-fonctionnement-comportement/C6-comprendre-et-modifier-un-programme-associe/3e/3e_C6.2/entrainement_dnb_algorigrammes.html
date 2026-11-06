@@ -84,6 +84,9 @@
     details{border-color:#999}details[open] summary{color:#111}
   }
   @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+/* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
+   (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
+@media (pointer:coarse){input,textarea,select{font-size:16px!important}}
 </style>
 <link rel="stylesheet" href="../../../../_ressources-communes/code-colore/code-colore.css">
 <script src="../../../../_ressources-communes/code-colore/code-colore.js"></script>
