@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="TP 4e « Le dé sur sa pointe » : les codes cachés de l’objet (nombre d’or, suite de Fibonacci), la spirale construite sur ses cotes, et les pistes pour les arts plastiques.">
+<title>Le dé sur sa pointe — côté arts plastiques (fiche pour les collègues)</title>
+<style>
+  /* Règle d'or n°40 — hors ligne d'abord : aucune police distante, pile système. */
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;
+        --sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;
+        --err:#ff7b88;--input-bg:#0b1b39;--input-bd:#2f5695;--btn:#1d4e89}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:0 0 46px;line-height:1.6;
+       font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
+  .page{max-width:940px;margin:0 auto;padding:0 16px}
+  h1{font-size:1.5em;color:var(--title);text-align:center;margin:16px 0 4px}
+  h2{font-size:1.14em;color:var(--head);margin:20px 0 8px}
+  h3{font-size:1em;color:var(--hl);margin:16px 0 6px}
+  h4{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .sous{text-align:center;color:var(--sub);margin:0 0 12px}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;
+       font-family:inherit;font-weight:600;font-size:.92em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd);color:var(--sub)}
+  .btn.small{font-size:.86em;padding:7px 13px}
+  .btn.qcm{background:#2b1a3f;border:1px solid var(--head);color:var(--head)}
+  .btn:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  a{color:var(--hl);text-decoration:underline;text-underline-offset:2px}
+  .saved-note{text-align:center;color:var(--sub);font-size:.84em;margin:4px 0}
+  .progress-wrap{max-width:940px;margin:8px auto;padding:0 16px}
+  .progress{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:999px;height:12px;overflow:hidden}
+  .progress>div{background:linear-gradient(90deg,#1d4e89,#61dafb);height:100%;width:0;transition:width .3s}
+  #progTxt{text-align:center;color:var(--sub);font-size:.85em;margin:4px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 14px;max-width:940px;padding:0 16px}
+  .seance-tab{flex:1;min-width:150px;padding:10px 8px;border-radius:10px;background:var(--input-bg);
+    border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.84em;font-weight:600;
+    color:var(--text);font-family:inherit;line-height:1.35}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}.seance-panel.active{display:block}
+  .meta{background:var(--panel2);border-left:3px solid var(--hl);border-radius:0 8px 8px 0;padding:8px 13px;margin:8px 0;font-size:.88em}
+  .assoc{margin:8px 0}
+  .assoc label{display:block;margin-bottom:4px}
+  select,textarea,input[type=text]{width:100%;background:var(--input-bg);color:var(--text);
+    border:1px solid var(--input-bd);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:.94em}
+  textarea{min-height:78px;resize:vertical}
+  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.86em}
+  th,td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--sub)}
+  .legende-badges{max-width:880px;margin:0 auto 12px;font-size:.82em;color:var(--sub);
+    background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 14px;line-height:1.5}
+  [title]{cursor:help}
+  .fig{margin:10px 0}
+  .fig img{width:100%;max-width:820px;display:block;border-radius:10px;border:1px solid var(--border);background:#050f24}
+  .fig figcaption{color:var(--sub);font-size:.82em;margin-top:4px}
+  details.aide,details.correction,details.etayage{margin:6px 0;border:1px solid var(--input-bd);
+    border-radius:8px;padding:6px 12px;background:rgba(11,27,57,.6)}
+  details summary{cursor:pointer;font-weight:600;color:var(--sub)}
+  details.correction summary{color:var(--warn)}
+  details.etayage{border-left:4px solid var(--hl)}
+  details.etayage summary{color:var(--hl)}
+  details.etayage ul{margin:6px 0;padding-left:22px}
+  details.etayage li{margin:5px 0}
+  .feedback{margin:8px 0;padding:9px 13px;border-radius:9px;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.mixte{background:rgba(255,214,107,.14);color:var(--warn)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .retenir{border-left:3px solid var(--ok);padding-left:11px;color:var(--ok)}
+  .piege{border-left:3px solid var(--err);padding-left:11px;color:#ffb0b8}
+  /* Règle d'or n°29 — mode essentiel */
+  body.essentiel .referentiel-card, body.essentiel details.correction,
+  body.essentiel .approfondissement{display:none}
+  /* Règle d'or n°30 — la barre COMPTE, ce bandeau SITUE */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:#0d2347;
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  footer{color:var(--sub);font-size:.84em;text-align:center;margin-top:22px}
+  @media(max-width:620px){.seance-tab{min-width:118px;font-size:.78em}}
+  @media print{body{background:#fff;color:#111}.toolbar,.btn,.seance-tabs,.progress-wrap,
+    .saved-note,#tachesBandeau,#navharm{display:none!important}
+    .seance-panel{display:block!important}.card{background:#fff;border-color:#999}
+    h1,h2,h3{color:#111}}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+  /* — impression : fond blanc, couleurs conservées (décision de Pascal, 02/09/2026).
+     Ce bloc vit ICI, dans le gabarit : la campagne du 02/09 l'avait écrit dans les cinq TP
+     engendrés, et la première régénération l'a effacé (règle d'or n°283). C'est l'union
+     des cinq blocs qu'elle avait posés, un sélecteur n'agissant que là où il existe. — */
+  @media print{
+    .card p,.filet{opacity:1!important}
+    .attendu,.avertir,.badge,.card,.critere,.etapes td,.etapes th,.legende-badges,.palier{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+    .card a,.note a{color:#047fa0!important}
+    .attendu b{color:#048827!important}
+    .legende-badges,.legende-badges b,.legende-badges span{color:#0a1b3d!important}
+    .badge,.capture b,.capture code,.capture figcaption,.capture i,.rituel,.rituel b,.voir,.voir b,.voir i{color:#0d2347!important}
+    .page code,.page footer,.sous,.sous b{color:#1a6af8!important}
+    .avertir,.avertir i,.avertir kbd{color:#3a2a0d!important}
+    .avertir code{color:#3a2a0d!important}
+    .avertir b,.card b,.exemple-note,.exemple-note b,.exemple-note i{color:#946b00!important}
+  }
+
+  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+  @media(max-width:680px){table{display:block;overflow-x:auto}}
+
+#navharm{display:flex;flex-wrap:wrap;gap:10px;max-width:900px;margin:14px auto 0;padding:0 18px}
+#navharm a{padding:6px 12px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;
+ color:#9bbefc;font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+@media print{#navharm{display:none}}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.93em;margin:8px 0}
+th,td{border:1px solid var(--border);padding:7px 9px;vertical-align:top;text-align:left}
+th{background:var(--panel2)}
+table.petit{width:auto}
+.note{color:var(--sub);font-size:.92em}
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
+@media print{th{background:#eef!important}}
+  /* — fiche arts : la spirale, dessinée dans la page (aucune image distante, règle n°40) — */
+  .fig-svg{margin:10px 0}
+  .fig-svg svg{width:100%;max-width:820px;height:auto;display:block;border-radius:10px;border:1px solid var(--border);background:#0a1b3d}
+  .fig-svg figcaption{color:var(--sub);font-size:.82em;margin-top:4px}
+  .deux{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  @media(max-width:680px){.deux{grid-template-columns:1fr}}
+  ol.etapes li{margin:5px 0}
+  .fig.objet img{max-width:520px;margin:0 auto}
+  @media print{.fig-svg svg{background:#fff!important;border-color:#999!important}
+    .spirale text,.spirale .num{fill:#0d2347!important}.spirale .cote{fill:#1a6af8!important}
+    .spirale .arc,.spirale .cadre{stroke:#0d2347!important}
+    /* — impression serrée : un bloc à « overflow » est insécable sur le papier, et une photo
+       pleine largeur prend une page à elle seule (constaté le 06/11/2026 : 7 pages, dont 3 de blanc). — */
+    .table-wrap{overflow:visible!important}
+    body{font-size:.84em;line-height:1.4}
+    .card{margin:6px 0;padding:6px 12px;break-inside:auto}
+    h1{font-size:1.25em;margin:4px 0 2px}h2{margin:6px 0 3px}h3{margin:6px 0 3px}
+    .fig.objet{display:flex;gap:10px;align-items:flex-start}.fig.objet img{width:38%;max-width:260px;margin:0}
+    .fig-svg svg{max-width:400px;margin:0 auto}
+    figure,.fig-svg,tr,li{break-inside:avoid}
+    #navharm,.sous a[href^="fiche_maths"]{color:#00309e}
+    .deux{gap:8px}}
+</style>
+</head>
+<body>
+<nav id="navharm" aria-label="Navigation du site">
+  <a href="../../../index.html">&#8962; Accueil</a>
+  <a href="tp_4e_socle_assemblage.html">&#8592; Le TP n°2 — Le dé sur sa pointe</a>
+  <a href="fiche_maths_tp_4e_socle.html">&#128208; La fiche jumelle, côté mathématiques</a>
+  <a href="../4e/4e_C7.1/sequence_4e_C7_jardin-conception.html">&#128218; La séquence de 4e</a>
+</nav>
+<div class="page">
+<h1>🎨 Le dé sur sa pointe — les codes cachés de l'objet, pour les arts plastiques</h1>
+<p class="sous">Fiche pour les collègues d'arts plastiques · TP n°2 de l'atelier CAO, 4e (technologie, codes 4e_C7.2 et 4e_C7.6) · fiche jumelle de la <a href="fiche_maths_tp_4e_socle.html">fiche pour les mathématiques</a></p>
+
+<div class="card">
+<h2>En deux phrases</h2>
+<p><b>En technologie</b>, l'élève de 4e construit dans <b>Onshape</b> un presse-papier&nbsp;: un socle <b>octogonal</b> surmonté d'une <b>moulure</b> obtenue par révolution, sur lequel il dresse un <b>dé en équilibre sur un de ses coins</b>. Il ne tape presque aucun nombre&nbsp;: toutes les cotes sortent de <b>M = 89 mm</b> et du <b>nombre d'or φ</b>, rangés dans des variables — et presque toutes retombent sur des nombres de la <b>suite de Fibonacci</b>.</p>
+<p><b>Rien de cela n'est visible</b> sur l'objet fini&nbsp;: c'est un code caché, à la manière des proportions qu'un peintre ou un architecte choisit sans les afficher. Cette fiche dit où sont ces codes, construit la <b>spirale</b> à partir des cotes réelles de l'objet, et propose des pistes — pour que vous décidiez ce que vous en faites&nbsp;: rien, un détour d'une séance, une co-intervention.</p>
+</div>
+
+<div class="card">
+<h2>Les deux ingrédients, en clair</h2>
+<div class="deux">
+<div>
+<h3>Le nombre d'or φ ≈ 1,618</h3>
+<p>C'est la proportion du <b>rectangle d'or</b>&nbsp;: un rectangle dont on retire un carré laisse un rectangle de <b>même proportion</b>, plus petit. Sa définition exacte est φ = (1 + √5) ÷ 2, et sa propriété rare&nbsp;: <b>φ² = φ + 1</b>. On le croise dans l'histoire des arts — de la <i>Divine proportion</i> de Luca Pacioli (1509, illustrée par Léonard de Vinci) au <i>Modulor</i> de Le Corbusier (1950) — plus souvent comme <b>choix revendiqué</b> d'un artiste que comme loi cachée de la nature.</p>
+</div>
+<div>
+<h3>La suite de Fibonacci</h3>
+<p><b>1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89</b>… chaque nombre est la somme des deux précédents. Divisez un terme par le précédent&nbsp;: 89 ÷ 55 ≈ 1,618. Plus on avance, plus on s'approche de φ. C'est pour cela que, parti de 89, on retombe sur 55, puis 34, 21, 13, 8, 5 en divisant par φ. Le lien avec les spirales de tournesol ou de pomme de pin est réel (le nombre de spirales est souvent un terme de la suite)&nbsp;; la « spirale de Fibonacci » tracée dans les carrés, elle, est une <b>construction</b> — et c'est celle que l'objet permet de tracer.</p>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2>Où sont les codes dans l'objet</h2>
+<p>Chaque cote vient de M = 89 mm divisé par une puissance de φ. Le tableau donne la formule telle que l'élève l'écrit dans Onshape, la valeur calculée, et le nombre de Fibonacci sur lequel elle tombe.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Élément de l'objet</th><th>Formule dans Onshape</th><th>Valeur</th><th>Fibonacci</th></tr></thead>
+<tbody>
+<tr><td>Largeur du socle, d'un plat à l'autre</td><td>M</td><td>89 mm</td><td><b>89</b></td></tr>
+<tr><td>Arête du dé</td><td>C = M ÷ φ</td><td>≈ 55,0 mm</td><td><b>55</b></td></tr>
+<tr><td>Nombre de points creusés sur le dé</td><td>1 + 2 + 3 + 4 + 5 + 6</td><td>21</td><td><b>21</b></td></tr>
+<tr><td>Épaisseur de la plinthe octogonale</td><td>Hsocle = M ÷ φ⁴</td><td>≈ 13,0 mm</td><td><b>13</b></td></tr>
+<tr><td>Arrondi des arêtes du dé</td><td>Rde = C ÷ φ⁴</td><td>≈ 8,0 mm</td><td><b>8</b></td></tr>
+<tr><td>Arrondi du socle · profondeur de la pointe dans le socle</td><td>Rsocle = Hsocle ÷ φ² · penetr = M ÷ φ⁶</td><td>≈ 5,0 mm (le même nombre, deux fois)</td><td><b>5</b></td></tr>
+<tr><td>Profil de la moulure (deux arrondis, trois hauteurs)</td><td>5, 3, 3 (cotes directes)</td><td>5 mm et 3 mm</td><td><b>5</b>, <b>3</b></td></tr>
+<tr><td>Rayon du bas de la moulure</td><td>35 (cote directe)</td><td>35 mm ≈ 89 ÷ (2√φ) = 34,99</td><td>≈ 34, par le nombre d'or seulement</td></tr>
+</tbody></table></div>
+<p class="note">Les valeurs sont celles de la <a href="fiche_maths_tp_4e_socle.html">fiche mathématiques</a>, lues dans le modèle de référence (Onshape) et recalculées avec un noyau de CAO indépendant le 27/09/2026. Le dé est <b>posé sur sa pointe</b> par deux rotations (45°, puis 35,26°)&nbsp;: sa grande diagonale devient verticale et, vu de dessus, ses trois faces visibles dessinent un <b>hexagone régulier</b>.</p>
+<figure class="fig objet">
+<img src="Images/dsp_R9_presse_papier.png" alt="Le presse-papier dans Onshape : un dé doré dressé sur un coin, au sommet d'un socle octogonal mouluré couleur pierre." loading="lazy">
+<figcaption>Capture d'écran du modèle de référence dans Onshape (27-28/09/2026)&nbsp;: 89 mm d'un plat à l'autre, un dé de 55 mm d'arête. Rien n'indique les proportions&nbsp;: elles se lisent seulement si l'on connaît le code.</figcaption>
+</figure>
+</div>
+
+<div class="card">
+<h2>La spirale, construite sur les cotes de l'objet</h2>
+<p>Le socle (89) et le dé (55) donnent un rectangle de <b>89 × 55</b>, presque d'or (89 ÷ 55 ≈ 1,618). On y découpe le plus grand carré possible, puis le suivant dans ce qui reste, et ainsi de suite&nbsp;: les carrés ont pour côtés <b>55, 34, 21, 13, 8, 5, 3, 2, 1, 1</b> — la suite de Fibonacci à l'envers — et ils remplissent le rectangle exactement (55² + 34² + 21² + … + 1² = 89 × 55 = 4 895). Un quart de cercle dans chaque carré, et la spirale apparaît.</p>
+<figure class="fig-svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 792 496" role="img" aria-labelledby="spirale-titre spirale-desc" class="spirale">
+<title id="spirale-titre">La spirale de Fibonacci construite sur les cotes du presse-papier</title>
+<desc id="spirale-desc">Un rectangle de 89 sur 55 millimètres découpé en carrés de côtés 55, 34, 21, 13, 8, 5, 3, 2, 1 et 1 ; un quart de cercle dans chaque carré forme une spirale qui s’enroule vers le petit coin.</desc>
+<style>.spirale .cadre{fill:none;stroke:#e4eaf5;stroke-width:3}.spirale .carre{fill-opacity:.13;stroke-width:1.6}.spirale .arc{fill:none;stroke:#fff;stroke-width:4.5;stroke-linecap:round}.spirale text{font-family:"Segoe UI",system-ui,Arial,sans-serif;fill:#e4eaf5}.spirale .num{font-weight:700}.spirale .cote{fill:#9bbefc;font-size:21px}</style>
+<rect class="cadre" x="40" y="28" width="712" height="440" rx="2"/>
+<rect class="carre" x="40" y="28" width="440" height="440" fill="#61dafb" stroke="#61dafb"/>
+<rect class="carre" x="480" y="28" width="272" height="272" fill="#81fba1" stroke="#81fba1"/>
+<rect class="carre" x="584" y="300" width="168" height="168" fill="#ffd66b" stroke="#ffd66b"/>
+<rect class="carre" x="480" y="364" width="104" height="104" fill="#c68ef2" stroke="#c68ef2"/>
+<rect class="carre" x="480" y="300" width="64" height="64" fill="#ff9f6b" stroke="#ff9f6b"/>
+<rect class="carre" x="544" y="300" width="40" height="40" fill="#ff7b88" stroke="#ff7b88"/>
+<rect class="carre" x="560" y="340" width="24" height="24" fill="#9bbefc" stroke="#9bbefc"/>
+<rect class="carre" x="544" y="348" width="16" height="16" fill="#9bbefc" stroke="#9bbefc"/>
+<rect class="carre" x="544" y="340" width="8" height="8" fill="#9bbefc" stroke="#9bbefc"/>
+<rect class="carre" x="552" y="340" width="8" height="8" fill="#9bbefc" stroke="#9bbefc"/>
+<text class="num" x="260.0" y="248.0" font-size="56" text-anchor="middle" dominant-baseline="central" fill="#61dafb">55</text>
+<text class="num" x="616.0" y="164.0" font-size="44" text-anchor="middle" dominant-baseline="central" fill="#81fba1">34</text>
+<text class="num" x="668.0" y="384.0" font-size="34" text-anchor="middle" dominant-baseline="central" fill="#ffd66b">21</text>
+<text class="num" x="532.0" y="416.0" font-size="24" text-anchor="middle" dominant-baseline="central" fill="#c68ef2">13</text>
+<text class="num" x="512.0" y="332.0" font-size="16" text-anchor="middle" dominant-baseline="central" fill="#ff9f6b">8</text>
+<text class="num" x="564.0" y="320.0" font-size="11" text-anchor="middle" dominant-baseline="central" fill="#ff7b88">5</text>
+<path class="arc" d="M 40 468 A 440 440 0 0 1 480 28 A 272 272 0 0 1 752 300 A 168 168 0 0 1 584 468 A 104 104 0 0 1 480 364 A 64 64 0 0 1 544 300 A 40 40 0 0 1 584 340 A 24 24 0 0 1 560 364 A 16 16 0 0 1 544 348 A 8 8 0 0 1 552 340 A 8 8 0 0 1 560 348"/>
+<text class="cote" x="396.0" y="19" text-anchor="middle">89 mm — le socle, d’un plat à l’autre</text>
+<text class="cote" transform="translate(30 248.0) rotate(-90)" text-anchor="middle">55 mm — l’arête du dé</text>
+</svg>
+<figcaption>Tracé calculé dans la page, 1 unité = 1 mm, à partir des deux cotes de l'objet. Les carrés 55, 21, 13, 8 et 5 sont des cotes du presse-papier (arête du dé, points, plinthe, arrondis)&nbsp;; 34 est le rayon de la moulure à 1 mm près. Original, CC0.</figcaption>
+</figure>
+<h3>La refaire à la main, à l'échelle 1 (une feuille A4 suffit)</h3>
+<ol class="etapes">
+<li>Tracer un rectangle de <b>89 mm × 55 mm</b>, à la règle.</li>
+<li>Y découper un carré de 55 à gauche&nbsp;: il reste une bande de 34 × 55 à droite.</li>
+<li>Dans la bande, un carré de 34 en haut&nbsp;: il reste 34 × 21 en bas.</li>
+<li>Continuer en tournant&nbsp;: 21 à droite, 13 en bas, 8 à gauche, 5 en haut, 3, 2, 1, 1. Chaque nouveau carré s'appuie sur le côté le plus long de ce qui reste.</li>
+<li>Au compas, un quart de cercle dans chaque carré, la pointe sur le coin que le carré partage avec le suivant&nbsp;: 55 → 34 → 21… La courbe se poursuit sans cassure.</li>
+<li>Poser le dé (55 mm) sur le premier carré, le socle (89 mm) sur la longueur&nbsp;: l'objet est dans le dessin.</li>
+</ol>
+<p class="note">Ce n'est pas tout à fait une spirale d'or (la vraie est <i>logarithmique</i>, et ses arcs ne sont pas des cercles)&nbsp;: c'est son approximation classique par quarts de cercle, celle que l'on trouve dans la plupart des manuels et des affiches. Le dire aux élèves évite une idée fausse fréquente.</p>
+</div>
+
+<div class="card">
+<h2>Ce que le programme d'arts plastiques y trouve</h2>
+<p class="note">D'après le <a href="https://www.pedagogie.ac-nice.fr/arts/wp-content/uploads/sites/33/2021/04/programme_arts_plastiques_cycle_4-juillet_2020.pdf">programme d'arts plastiques du cycle 4</a> (BO spécial n°11 du 26/11/2015, modifié par le BO n°31 du 30/07/2020&nbsp;; version consolidée mise en ligne par l'académie de Nice).</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Question du programme</th><th>Point d'entrée</th><th>Ce que l'objet apporte</th></tr></thead>
+<tbody>
+<tr><td><b>La représentation&nbsp;; images, réalité et fiction</b></td><td>« La ressemblance&nbsp;: le rapport au réel et la valeur expressive de l'écart en art »&nbsp;; « le dispositif de représentation&nbsp;: l'espace en deux dimensions (littéral et suggéré) »</td><td>Un objet en trois dimensions construit sur une proportion&nbsp;; sa mise à plat (vue de dessus&nbsp;: octogone et hexagone emboîtés&nbsp;; coupe de la moulure)&nbsp;; la différence entre l'objet modélisé, son rendu doré à l'écran et sa version imprimée en plastique.</td></tr>
+<tr><td><b>La matérialité de l'œuvre&nbsp;; l'objet et l'œuvre</b></td><td>« L'objet comme matériau en art&nbsp;: la transformation, les détournements des objets dans une intention artistique »&nbsp;; « le numérique en tant que processus et matériau artistiques »</td><td>Un dé — objet banal — détourné en presse-papier et dressé sur sa pointe&nbsp;; un modèle numérique paramétré, où changer <i>un</i> nombre (M) refait tout l'objet dans la même proportion.</td></tr>
+<tr><td><b>L'œuvre, l'espace, l'auteur, le spectateur</b></td><td>La présence de l'objet dans l'espace, le socle, le point de vue</td><td>Le socle mouluré « à l'antique » qui transforme l'objet en pièce exposée&nbsp;; l'équilibre sur une pointe, qui attire le regard&nbsp;; ce que voit le spectateur selon qu'il connaît ou non le code.</td></tr>
+</tbody></table></div>
+<p>Compétences travaillées, selon la piste choisie&nbsp;: <b>Expérimenter, produire, créer</b> (tracer, composer, prolonger)&nbsp;; <b>S'exprimer, analyser sa pratique, celle de ses pairs&nbsp;; établir une relation avec celle des artistes</b> (comparer avec des œuvres qui revendiquent la proportion)&nbsp;; <b>Se repérer dans les domaines liés aux arts plastiques</b> (repères d'histoire des arts&nbsp;: Pacioli, Le Corbusier).</p>
+</div>
+
+<div class="card">
+<h2>Pistes, si vous le souhaitez</h2>
+<ul>
+<li><b>Superposer.</b> Photographier le presse-papier imprimé (ou prendre la capture ci-dessus), le mettre à l'échelle sur la grille 89 × 55, et tracer la spirale par-dessus. Où passe-t-elle&nbsp;? Qu'est-ce qui coïncide, qu'est-ce qui ne coïncide pas&nbsp;? (La spirale ne « prouve » rien&nbsp;: l'objet a été dessiné avec ces nombres, pas avec cette courbe.)</li>
+<li><b>Composer avec la même règle.</b> Une affiche ou une page de carnet dont tous les formats (marges, cadre, image, titre) sont pris dans la suite 89, 55, 34, 21, 13, 8, 5 — comme l'objet. Puis la même composition avec des nombres « au hasard »&nbsp;: comparer.</li>
+<li><b>Changer M.</b> En technologie, remplacer 89 par 55 dans Onshape réduit tout l'objet dans le rapport 1/φ. En arts plastiques, la même question&nbsp;: une œuvre garde-t-elle son « caractère » quand on la réduit à l'identique&nbsp;? Et quand on ne réduit que le dé&nbsp;?</li>
+<li><b>Le socle.</b> Pourquoi un objet sur socle est-il regardé autrement&nbsp;? Dessiner le même dé posé à plat, sur sa pointe sans socle, sur sa pointe avec socle&nbsp;: trois statuts pour le même objet.</li>
+<li><b>Regarder ailleurs.</b> Confronter le code de l'objet aux œuvres qui revendiquent le nombre d'or (<i>Modulor</i>) et à l'idée reçue qui le voit partout (Parthénon, Joconde…)&nbsp;: distinguer ce qu'un auteur a choisi de ce qu'un spectateur a projeté.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Ce que le TP ne fait pas</h2>
+<ul>
+<li>Il ne dessine <b>aucune spirale</b>&nbsp;: la spirale de cette fiche est construite après coup sur les cotes de l'objet.</li>
+<li>Il ne parle pas d'histoire des arts&nbsp;: ses encarts « 📐 Côté maths » constatent la suite de Fibonacci et le nombre d'or, sans aller plus loin.</li>
+<li>Il n'évalue rien et ne pose aucune question&nbsp;: le TP apprend l'outil (règle d'or n°81 du dépôt).</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Sources</h2>
+<ul>
+<li>Ministère de l'Éducation nationale, <a href="https://www.pedagogie.ac-nice.fr/arts/wp-content/uploads/sites/33/2021/04/programme_arts_plastiques_cycle_4-juillet_2020.pdf">Programme d'arts plastiques du cycle 4</a>, version consolidée de juillet 2020 (BO spécial n°11 du 26/11/2015, modifié par le BO n°31 du 30/07/2020), mise en ligne par l'académie de Nice.</li>
+<li>La fiche jumelle&nbsp;: <a href="fiche_maths_tp_4e_socle.html">Le dé sur sa pointe — côté mathématiques</a> (valeurs, formules, repères Eduscol de mathématiques).</li>
+<li>Le TP lui-même&nbsp;: <a href="tp_4e_socle_assemblage.html">TP n°2 — Le dé sur sa pointe</a>, et le dé fourni <a href="de_55_calottes.step" download>de_55_calottes.step</a>.</li>
+<li>La capture du presse-papier&nbsp;: <code>Images/dsp_R9_presse_papier.png</code>, origine et licence dans <code>SOURCES_MEDIAS.md</code>. La spirale est tracée dans la page (SVG), original, CC0.</li>
+</ul>
+</div>
+<footer>Fiche pour les collègues d'arts plastiques · atelier CAO · Thème 3 · 4e · jumelle de la fiche mathématiques · rédigée le 06/11/2026.</footer>
+</div>
+</body>
+</html>
