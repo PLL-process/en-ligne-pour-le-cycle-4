@@ -185,6 +185,10 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+.situation-photo{margin:14px 0 4px}
+.situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
+.situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
+@media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -634,15 +638,20 @@
   <div class="declencheur">
     <p><b>Jeudi, 7 h 30&nbsp;:</b> dans la serre du collège, à Sainte-Luce. Le club jardin vient
     d'installer un <b>capteur d'ambiance</b> flambant neuf (température + humidité) qui doit envoyer ses mesures
-    au serveur de la serre. Sur le papier, tout est branché. En vrai&nbsp;: <b>aucune mesure n'arrive</b>, et
+    au serveur (l'ordinateur qui reçoit et garde les mesures) de la serre. Sur le papier, tout est branché. En vrai&nbsp;: <b>aucune mesure n'arrive</b>, et
     l'imprimante qui sort les étiquettes des semis est muette elle aussi. M.</p>
   <p><b>Firmin, le gestionnaire du réseau</b>,
     dépose une boîte sur la table&nbsp;: <em>«&nbsp;Là-dedans, il y a le plan de la serre. Je veux une équipe qui
-    me PRÉPARE l'arrivée de ce capteur dans les règles de l'art&nbsp;: un plan d'adressage, une adresse fixe
+    me PRÉPARE l'arrivée de ce capteur dans les règles de l'art&nbsp;: un plan d'adressage (la liste qui donne à chaque appareil son adresse sur le réseau), une adresse fixe
     correctement paramétrée — passerelle comprise — et surtout des dépanneurs capables de trouver une panne
     SANS tout débrancher au hasard. Vous vous entraînez dans le simulateur, et vous me prouvez chaque
     réparation.&nbsp;»</em></p>
-    <p><b>Ta mission d'expert&nbsp;:</b> concevoir le plan d'adressage de la serre, reconstruire son réseau dans
+      <figure class="situation-photo">
+    <img src="Images/situation_serre_capteur_muet.png" width="1536" height="1024" loading="lazy"
+         alt="Une serre aux parois grillagées : des plateaux de jeunes plants, un petit appareil blanc posé sur une table, et un boîtier blanc fixé au mur.">
+    <figcaption>La serre, à 7 h 30 : le capteur neuf est branché, et pourtant aucune mesure n'arrive. <i>Image générée par IA (Canva).</i></figcaption>
+  </figure>
+<p><b>Ta mission d'expert&nbsp;:</b> concevoir le plan d'adressage de la serre, reconstruire son réseau dans
     <b>Cisco Packet Tracer</b>, donner au capteur son <b>adresse IP fixe</b>, puis jouer les médecins du réseau&nbsp;:
     deux pannes t'attendent à la clinique, et la <b>simulation</b> devra valider chacun de tes diagnostics.</p>
   </div>

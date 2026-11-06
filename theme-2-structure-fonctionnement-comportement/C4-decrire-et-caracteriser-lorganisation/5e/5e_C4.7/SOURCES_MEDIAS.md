@@ -28,3 +28,11 @@ Le mini-simulateur d'enveloppe (act. 5) est un SVG interactif embarqué dans la 
 création originale du lot. Alt/desc présents dans chaque SVG (title + desc, role="img").
 Transcriptions du terminal (`Reply from…`, temps `<1ms` et `57-260 ms`) : valeurs
 réellement mesurées dans le simulateur lors de la session de captures.
+
+## Image générée par IA (Canva) pour la situation déclenchante (05/11/2026)
+
+Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal du 05/11/2026 : « il manque aussi des images réalistes ».
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/situation_salle_imprimante.png` | Une salle informatique : des rangées d'écrans, une borne au plafond, une imprimante chargée d'une pile de feuilles, des tablettes et des téléphones au premier plan. PNG 1 536 × 1 024, 2.2 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of a secondary-school technology classroom: rows of desktop computers, a network printer in the corner with a pile of duplicate printed pages in its output tray, a wifi access point on the ceiling, a tablet and several smartphones on a table, no people, no readable text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |

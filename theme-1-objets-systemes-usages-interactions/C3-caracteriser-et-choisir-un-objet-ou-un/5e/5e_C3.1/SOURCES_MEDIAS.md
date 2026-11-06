@@ -165,3 +165,11 @@ filtré.
 Sources du dessin et du bandeau : `_generation/figure_iso_velo_cargo/`. Le contrôleur de puissance est représenté entre la batterie et le moteur du moyeu arrière, avec deux câbles. La scène 6 et le schéma fixe sont issus du même générateur.
 
 La nouvelle narration de la scène 6 utilise la voix Piper `fr_FR-siwis-medium` et les mêmes réglages que les scènes précédentes. Durée MP3 : 14,63 s ; Opus et MP3 de secours fournis. Les scènes 1 à 5 sont conservées à l’octet près. La nouvelle prise a été **écoutée et validée par Pascal le 21/10/2026** (le fichier qu'il a écouté est identique à l'octet à celui du dépôt, SHA-256 dans `voix.json`) ; l’ancienne trace de validation de la scène 6 reste en historique dans `voix.json`. Licence et attribution SIWIS/Piper inchangées.
+
+## Image générée par IA (Canva) pour la situation déclenchante (05/11/2026)
+
+Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal du 05/11/2026 : « il manque aussi des images réalistes ».
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/situation_livraisons_shanghai.png` | Une camionnette blanche, portes arrière ouvertes, chargée de cartons, laisse une fumée grise derrière elle. Derrière, un quai de livraison et de hautes tours. PNG 1 536 × 1 024, 2.4 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of an early-morning urban logistics depot in Shanghai: an old white diesel delivery van with its rear doors open, stacked with small cardboard parcels, exhaust visible in the cool air, modern apartment towers in the background, no people, no readable text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |

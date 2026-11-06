@@ -57,3 +57,11 @@ Deux d'entre eux — `arborescence_fichiers.svg` et `local_serveur_distant.svg` 
 précisément le sujet de l'extrait de manuel retiré ci-dessus. Ils sont peut-être les
 remplaçants annoncés, dessinés puis jamais câblés dans la séquence. À trancher, pas à deviner.
 `_outils/controle_medias.py` les compte et les nomme sans les refuser.
+
+## Image générée par IA (Canva) pour la situation déclenchante (05/11/2026)
+
+Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal du 05/11/2026 : « il manque aussi des images réalistes ».
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/situation_fichiers_melanges.png` | Un bureau en désordre : un ordinateur portable dont l'écran est couvert de fichiers, des feuilles de tableaux éparpillées, des notes adhésives, une clé USB. PNG 1 536 × 1 024, 2.1 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo, top-down view of a cluttered school desk: a laptop showing a messy folder full of file icons with unreadable names, scattered printed spreadsheets, sticky notes, a USB stick and a bicycle key, everything mixed up, no people, no readable text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |

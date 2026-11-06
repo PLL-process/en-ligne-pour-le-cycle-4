@@ -130,3 +130,11 @@ licence ne dépende de personne. Mais **aucune page du lot ne les affiche** :
 Ces deux fichiers sont donc **hérités et conservés volontairement**, avec l'activité CRCN dont
 ils proviennent. Ils ne sont ni oubliés ni en attente d'une décision : leur emploi éventuel
 appartient à cette activité. Une décision écrite n'est pas une négligence (règle d'or n°271).
+
+## Image générée par IA (Canva) pour la situation déclenchante (05/11/2026)
+
+Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal du 05/11/2026 : « il manque aussi des images réalistes ».
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/situation_velos_college.png` | Des vélos garés en rang sous un auvent. À côté, une rampe en béton mouillée descend vers la mer, sous un ciel gris de pluie. PNG 1 536 × 1 024, 2.6 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of a row of identical plain school bicycles parked under a shelter at a Caribbean secondary school, tropical rain falling, a steep wet car-park ramp sloping down beside them, the sea visible in the distance, rust spots on a metal railing, bicycles seen from a distance and from the side, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |

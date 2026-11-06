@@ -350,6 +350,10 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+.situation-photo{margin:14px 0 4px}
+.situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
+.situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
+@media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
 </style>
 <style id="regle-311">
   /* Règle d'or n°311 — à partir de la séance 2, l'élève voit sa séance, pas le décor.
@@ -813,6 +817,12 @@
     <p><b>Lundi matin, Martinique.</b> Le principal te tend un courrier arrivé au club techno. La mairie a visité
     l'exposition du Thème 2 — celle où vous aviez expliqué comment fonctionne une station d'alerte cyclonique.
     Elle ne veut plus une explication&nbsp;: elle veut <b>la station</b>. En vrai, dans la cour, avant la saison cyclonique.</p>
+  <figure class="situation-photo">
+    <img src="Images/situation_courrier_mairie.png" width="1536" height="1024" loading="lazy"
+         alt="Une enveloppe posée sur le rebord d'une fenêtre. Dehors, la cour d'un collège aux bâtiments clairs, sous un ciel d'orage.">
+    <figcaption>Le courrier de la mairie, et la saison cyclonique qui approche : la commune veut la vraie station, dans la cour. <i>Image générée par IA (Canva).</i></figcaption>
+  </figure>
+
   </div>
   <div class="courrier" aria-label="Courrier de commande de la mairie">
     <div class="entete"><span><b>MAIRIE</b> — Direction des services techniques</span><span>Objet : commande d'un prototype</span></div>
@@ -830,10 +840,10 @@
           <li><b>ouragan majeur</b> — écran rouge — à partir de <b>178 km/h</b>.</li>
         </ul>
       </li>
-      <li><b>Allumer un voyant</b> dédié à chaque niveau — <b>un seul à la fois</b> — et le faire <b>pulser</b>
+      <li><b>Allumer un voyant</b> dédié à chaque niveau — <b>un seul à la fois</b> — et le faire <b>pulser</b> (clignoter doucement)
       dès la tempête tropicale, le vert restant fixe.</li>
       <li>En <b>ouragan majeur</b> seulement, <b>déclencher une alarme sonore</b>.</li>
-      <li>Permettre à l'agent d'accueil d'<b>acquitter l'alarme sonore d'un appui sur un bouton</b> — sans
+      <li>Permettre à l'agent d'accueil d'<b>acquitter l'alarme sonore d'un appui sur un bouton</b> (l'acquitter : la faire taire en montrant qu'on l'a entendue) — sans
       jamais éteindre l'affichage ni le signal lumineux.</li>
       <li>Réagir à un changement de vent en <b>moins d'une seconde</b>.</li>
     </ol>

@@ -247,6 +247,10 @@ body.essentiel .argu details.correction{display:none}
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+.situation-photo{margin:14px 0 4px}
+.situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
+.situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
+@media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
 </style>
 <style id="ressource-css">
 /* Bloc « ressource externe » — posé par _outils poser_ressource.py. Ne pas éditer à la main. */
@@ -757,7 +761,12 @@ body.essentiel .argu details.correction{display:none}
   <div class="section" id="situation-declenchante">
     <h3 id="q_auto_16_0">⚡ Situation déclenchante <span style="font-size:.8em;opacity:.8">(~5 min)</span></h3>
     <p id="q_auto_16_1">Un ami publie sur les réseaux sociaux une photo de vous prise au cours du week-end. Cette publication révèle votre localisation et votre identité sans votre accord. Quelles sont les conséquences possibles&nbsp;? Comment aurait-il dû agir avant de diffuser cette information&nbsp;? Quels conseils donneriez-vous à vos proches&nbsp;?</p>
-    <textarea aria-labelledby="q_auto_16_0 q_auto_16_1" id="auto_16" placeholder="Votre analyse…"></textarea>
+      <figure class="situation-photo">
+    <img src="Images/situation_photo_publiee.png" width="1536" height="1024" loading="lazy"
+         alt="Un téléphone posé sur une serviette de plage rayée, près d'un sac en paille. L'écran montre une publication : deux personnes de dos au bord de la mer, et un repère de lieu.">
+    <figcaption>Une photo publiée par un ami, avec l'endroit où elle a été prise. Qu'aurait-il dû faire avant de la partager ? <i>Image générée par IA (Canva).</i></figcaption>
+  </figure>
+<textarea aria-labelledby="q_auto_16_0 q_auto_16_1" id="auto_16" placeholder="Votre analyse…"></textarea>
     <button class="bouton-correction" onclick="toggleAnswer('corr_sit')">Voir la correction</button>
     <div class="answer" id="corr_sit">
       Conséquences possibles : atteinte à la vie privée, risques d’usurpation, harcèlement, diffusion non maîtrisée. Bonnes pratiques : demander le consentement, recadrer/masquer, limiter l’audience, paramétrer la confidentialité, retirer la publication sur demande.

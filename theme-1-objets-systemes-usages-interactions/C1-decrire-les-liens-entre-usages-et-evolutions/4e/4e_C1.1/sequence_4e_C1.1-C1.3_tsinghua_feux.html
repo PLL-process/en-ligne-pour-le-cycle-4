@@ -144,6 +144,10 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+.situation-photo{margin:14px 0 4px}
+.situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
+.situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
+@media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -590,8 +594,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   hectares</b> avaient brûlé en France depuis le début de l'année, et que <b>32 feux</b> étaient
   encore en cours.</p>
   <p>Une équipe fictive d'élèves-ingénieurs, inspirée du département d'ingénierie électronique de
-  l'université <b>Tsinghua</b> à Pékin, doit préparer un système de <b>détection précoce</b> des
-  départs de feu. Elle ne commence pas par choisir une caméra ou un microcontrôleur.</p>
+  l'université <b>Tsinghua</b> à Pékin, doit préparer un système de <b>détection précoce</b> (qui repère un feu dès qu'il démarre) des
+  départs de feu. Elle ne commence pas par choisir une caméra ou un microcontrôleur (une petite carte programmable qui commande l'objet).</p>
   <p style="color:var(--warn);font-size:1.05em">Elle commence par <b>comprendre le besoin</b> — et
   par regarder ce que les chiffres disent réellement, avant de calculer quoi que ce soit.</p>
   <p class="meta">📊 <b>Les données de cette séquence sont réelles et publiques</b>&nbsp;: ministère
@@ -599,6 +603,11 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   leurs sources sont citées dans le fichier. C'est la seule séquence du site où les chiffres ne
   sont pas simulés — <b>et c'est ce qui rend l'exercice difficile</b>&nbsp;: les vraies données ne
   sont jamais aussi bien rangées que celles qu'on invente.</p>
+  <figure class="situation-photo">
+    <img src="Images/situation_feu_foret.png" width="1536" height="1024" loading="lazy"
+         alt="Une colline couverte de pins, l'herbe jaunie au premier plan. Au loin, une colonne de fumée grise monte derrière la crête.">
+    <figcaption>Un départ de feu, au loin, sur une colline sèche. Avant de choisir le moindre capteur, il faut comprendre ce que disent les chiffres. <i>Image générée par IA (Canva).</i></figcaption>
+  </figure>
 </section>
 
 <section class="card">

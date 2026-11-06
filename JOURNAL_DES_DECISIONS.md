@@ -28508,3 +28508,79 @@ skill `controle-qualite-lot`.
 - Contrôles du site, tous verts : `controle_squelette`, `controle_hors_ligne`, `controle_verrous`, `controle_impression`,
   `controle_code_colore`, `controle_liens`, `controle_hierarchie`, `controle_regles_visibles`, `controle_debordement`,
   `controle_medias`, `controle_fichiers_telechargeables`, `controle_impression_papier`.
+
+## 06/11/2026 — Les situations déclenchantes illustrées, vague 2 : une image nouvelle dans 27 séquences, les mots techniques expliqués (transversal)
+
+**Ce que Pascal a demandé.** La suite de la vague 1 (#602) : « il manque aussi des images réalistes », puis « Ok
+continu ». La vague 1 avait posé les images déjà présentes dans le dépôt. Restaient 27 situations : les 19 dont l'image
+aurait donné la réponse, les 6 qui n'avaient aucune image (5e_C1.3, 5e_C1.5, 5e_C3.1, 4e_C4.7, 5e_C4.7, 3e_C4.8), et les
+deux séquences du numérique (4e_C1.4, 3e_C1.5).
+
+**Les images.** Les 27 images ont été générées le 05/11/2026 dans le Canva de Pascal, une par situation. Chacune montre le
+problème, jamais la solution :
+- un panneau absent là où la séquence cherche l'énergie (la station sous le cyclone, la nuit sans courant) ;
+- une carte nue au ruban adhésif, un boîtier imprimé raté, une sonde scotchée, des bacs morts, des casiers sans repère ;
+- deux mâts sous la pluie, sans dire lequel tient ; une platine vide qui attend son mât.
+
+Pascal les a téléchargées depuis son Chrome, puis jointes à la conversation. Ce sont des PNG de 1 536 × 1 024 px, **non
+modifiés** : le manifeste C2PA et le XMP de Canva sont gardés, comme le demandent les conditions de Canva (interdit d'en
+retirer la provenance). D'où leur poids, 1,7 à 3,8 Mo, au-dessus des 300 Ko de la règle : c'est la justification, la même
+que pour les images des synthèses et de la vague 1.
+
+**Reconnaître chaque fichier.** Les fichiers arrivent sous un nom sans rapport avec leur contenu. Chacun est comparé, en
+empreinte réduite (24 × 16 px, niveaux de gris), aux aperçus que Canva a rendus à la génération. Les 27 sont reconnus sans
+ambiguïté : un écart de 24 au plus avec la bonne image, de 582 au moins avec la suivante. Un doublon (le feu de forêt) est
+écarté.
+
+**La figure** est celle de la vague 1 : `figure.situation-photo`, 640 px au plus à l'écran, 60 % de la largeur à
+l'impression, chargée en différé.
+- **Le texte de remplacement** est écrit après avoir regardé chaque image en grand. Il dit ce qu'on voit, jamais la
+  réponse : « Une carte électronique nue, fixée avec du ruban adhésif en haut d'un tube métallique, sur un toit-terrasse
+  face à la mer et aux palmiers. »
+- **La légende** pose la question de la séquence et finit par « Image générée par IA (Canva) ». En 5e_C7.3, l'image
+  montre deux bancs, la séquence en compte trois : la légende dit « Trois bancs en tout pour six cents élèves, dans une
+  cour en plein soleil », ce qui reste vrai avec l'image.
+- **La place** : à la fin de la situation. Six pages ont un repère choisi, parce que la situation y continue ou s'y
+  écrit autrement :
+  - avant « Ta mission d'expert » (3e_C4.8, 4e_C4.7, 5e_C4.7) ;
+  - après le courrier de la mairie (3e_C9.2) ;
+  - avant « La leçon à en tirer » (4e_C1.4) ;
+  - avant le premier champ de réponse (3e_C1.5).
+- **3e_C9.2** : les quatre pages sont engendrées depuis la page tout-en-un (n°116). L'image entre donc dans la page
+  tout-en-un, puis `generer_les_quatre_pages.py` est relancé : elle paraît en page 1, et les pages 2 à 4 reçoivent seulement
+  la feuille de style.
+- **SOURCES_MEDIAS.md** : chaque lot reçoit une ligne, avec la demande faite à Canva mot pour mot. 3e_C1.5 n'en avait pas,
+  il en a un.
+
+**Les mots expliqués**, dans la phrase même :
+- 4e_C1.1 : le microcontrôleur, la détection précoce ;
+- 4e_C1.4 : hacké, l'usurpation d'identité, un malware, la 2FA ;
+- 5e_C1.2 : les fiches techniques ; 5e_C3.1 : le centre logistique, la camionnette thermique, le vélo-cargo à assistance électrique ;
+- 3e_C4.1 : le fusible, EDF, les UV ; 3e_C4.8 et 4e_C4.7 : le serveur, le commutateur, le plan d'adressage ;
+  5e_C4.7 : la borne WiFi ;
+- 3e_C7.1 : le seuil ; 3e_C7.3 : la recette, la cote « Ø50 × 3 », les embruns salins ; 3e_C7.4 : le secteur, le buzzer ;
+- 3e_C7.5 : les constituants, la commission de sécurité ; 3e_C7.7 : les couches, les supports, la gorge de joint ;
+- 4e_C7.3 : la recyclabilité, l'intendance ; 4e_C7.5 : les modules ; 4e_C7.7 : le méplat, Ø 4 mm, coté ;
+- 5e_C7.3 : le conseil de vie collégienne, l'intendance ; 5e_C7.5 : le capteur de luminosité, la DEL ;
+- 3e_C8.2 : la recette, le protocole ; 3e_C9.2 : pulser, et l'appui sur le bouton (acquitter l'alarme).
+
+**Contrôles.**
+- **Bancs des séquences, inchangés et verts** (51 bancs sur les 27 dossiers) :
+  - thème 1 : 3e_C1.5 45 / 45, 4e_C1.1 65 / 65, 5e_C1.2 50 / 50, 5e_C1.3 24 / 24, 5e_C1.5 38 / 38, 5e_C3.1 35 / 35 ;
+  - thème 2 : 3e_C4.1 23 / 23 ;
+  - thème 3 : 3e_C7.1 80 / 80, 3e_C7.3 68 / 68, 3e_C7.4 54 / 54, 3e_C7.5 54 / 54, 3e_C7.7 77 / 77, 4e_C7.1 47 / 47,
+    4e_C7.3 44 / 44, 4e_C7.5 41 / 41, 4e_C7.7 38 / 38, 5e_C7.1 55 / 55, 5e_C7.3 42 / 42, 5e_C7.4 35 / 35,
+    5e_C7.5 40 / 40, 3e_C8.1 62 / 62, 3e_C8.2 44 / 44, 3e_C9.2 167 / 167 (les quatre pages engendrées comprises) ;
+  - bancs n°311 : 34 / 34 sur chacune des 27 pages (27 / 27 en 5e_C3.1).
+- **À 390 px, au toucher** : les 28 figures se chargent, sans défilement de côté ni erreur JavaScript ; elles ont été
+  regardées une à une sur une planche.
+- **`controle_hierarchie`** a vu deux « murs sans repère », nés des gloses : 115 mots en 5e_C1.2, 113 mots en 3e_C7.4.
+  Le paragraphe s'ouvre désormais sur un repère en gras : « **Les chiffres existent.** », « **Puis vient le cyclone.** ».
+- **`controle_schemas`** sur les 27 dossiers : aucun ✘. Les ⚠ sont ceux de `main` : aucun schéma n'est ajouté.
+- **Contrôles du site, tous verts** : `controle_squelette`, `controle_hors_ligne`, `controle_verrous`,
+  `controle_impression`, `controle_code_colore`, `controle_liens`, `controle_hierarchie`, `controle_regles_visibles`,
+  `controle_unites`, `controle_sigles`, `controle_medias`, `controle_fichiers_telechargeables`, `controle_tactile`,
+  `controle_debordement`, `controle_mode_essentiel`.
+- **Non exécuté** : les bancs des QCM, que la vague ne touche pas, et la validation HTML (aucun outil du dépôt ne la fait).
+- **Poids** : les 27 images dépassent 300 Ko (1,7 à 3,8 Mo). C'est voulu : un fichier Canva non modifié garde sa
+  provenance (C2PA, XMP).

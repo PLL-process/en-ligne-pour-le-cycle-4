@@ -487,6 +487,10 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+.situation-photo{margin:14px 0 4px}
+.situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
+.situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
+@media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
 </style>
 <style id="ressource-css">
 /* Bloc « ressource externe » — posé par _outils poser_ressource.py. Ne pas éditer à la main. */
@@ -985,8 +989,13 @@
   <!-- Mise en situation générale -->
   <div class="section panel">
     <h2>📰 Mise en situation générale</h2>
-    <p>Imagine que tu utilises ton smartphone pour envoyer un e-mail avec une photo de classe. Soudain, ton compte est hacké car ton mot de passe était trop simple. Tes messages privés sont exposés sur les réseaux sociaux, et tu reçois des commentaires malveillants.</p>
-    <p><b>La leçon à en tirer.</b> Dans le monde d'aujourd'hui, où les e-mails, réseaux sociaux et services en ligne font partie de ton quotidien, les risques sont partout : vol de données, usurpation d'identité, ou propagation de malware. Mais avec les bonnes pratiques, tu peux te protéger – active 2FA, utilise des mots de passe forts, et sois vigilant avec les liens. Cela te prépare à un avenir où la cybersécurité est essentielle pour tous.</p>
+    <p>Imagine que tu utilises ton smartphone pour envoyer un e-mail avec une photo de classe. Soudain, ton compte est hacké (piraté : quelqu'un y entre à ta place) car ton mot de passe était trop simple. Tes messages privés sont exposés sur les réseaux sociaux, et tu reçois des commentaires malveillants.</p>
+      <figure class="situation-photo">
+    <img src="Images/situation_compte_pirate.png" width="1536" height="1024" loading="lazy"
+         alt="Un téléphone posé sur un bureau sombre, l'écran barré d'un triangle rouge avec un cadenas brisé. Au-dessus flottent des icônes rouges de notification.">
+    <figcaption>Une alerte sur le téléphone : le compte a été piraté. Comment est-ce arrivé, et comment l'éviter ? <i>Image générée par IA (Canva).</i></figcaption>
+  </figure>
+<p><b>La leçon à en tirer.</b> Dans le monde d'aujourd'hui, où les e-mails, réseaux sociaux et services en ligne font partie de ton quotidien, les risques sont partout : vol de données, usurpation d'identité (quelqu'un se fait passer pour toi), ou propagation de malware (un logiciel malveillant, qui abîme ou espionne). Mais avec les bonnes pratiques, tu peux te protéger – active 2FA (la double authentification : un code reçu sur ton téléphone, en plus du mot de passe), utilise des mots de passe forts, et sois vigilant avec les liens. Cela te prépare à un avenir où la cybersécurité est essentielle pour tous.</p>
   </div>
 
   <!-- Problématique -->

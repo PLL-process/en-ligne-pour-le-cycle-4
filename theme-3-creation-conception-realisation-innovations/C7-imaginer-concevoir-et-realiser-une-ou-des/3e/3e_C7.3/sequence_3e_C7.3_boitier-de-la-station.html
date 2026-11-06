@@ -217,6 +217,10 @@ section.card[id^="activite-"]{scroll-margin-top:60px}
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+.situation-photo{margin:14px 0 4px}
+.situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
+.situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
+@media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -604,15 +608,20 @@ section.card[id^="activite-"]{scroll-margin-top:60px}
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
   <div class="declencheur"><p><b>La station d'alerte cyclonique</b> est programmée
-(<b>3e_C9.2</b>), sa recette est signée (<b>3e_C8.3</b>), et son mât est validé : un
-<b>tube aluminium Ø50 × 3</b>, deux mètres, choisi en <b>3e_C8.2</b> après un essai de flexion.
+(<b>3e_C9.2</b>), sa recette (les essais qui prouvent qu'elle fait ce qu'on attend d'elle) est signée (<b>3e_C8.3</b>), et son mât est validé : un
+<b>tube aluminium Ø50 × 3</b> (50 mm de diamètre, 3 mm d'épaisseur), deux mètres, choisi en <b>3e_C8.2</b> après un essai de flexion.
 L'électronique est prête. Il manque la boîte qui la protège.</p>
 <p>Le cahier des charges tient en cinq lignes : la boîte fait <b>200 × 150 × 90 mm</b>, elle
 tient en tête de mât par vent de cyclone, elle vit dix ans sans ombre, elle reçoit les embruns
-salins, elle ne cuit pas l'électronique qu'elle abrite, et un agent doit pouvoir la fixer d'une
+salins (les gouttelettes d'eau de mer portées par le vent), elle ne cuit pas l'électronique qu'elle abrite, et un agent doit pouvoir la fixer d'une
 main en haut d'une échelle.</p>
 <p>Six matériaux sont proposés — trois qui s'impriment, trois qui se plient et se percent.
 <b>Aucun ne passe.</b></p></div>
+  <figure class="situation-photo">
+    <img src="Images/situation_carte_sans_abri.png" width="1536" height="1024" loading="lazy"
+         alt="Une carte électronique nue, fixée avec du ruban adhésif en haut d'un tube métallique, sur un toit-terrasse face à la mer et aux palmiers.">
+    <figcaption>L'électronique de la station, nue en haut de son mât, face à la mer. Dans quoi la protéger ? <i>Image générée par IA (Canva).</i></figcaption>
+  </figure>
 </section>
 
 <section class="card">

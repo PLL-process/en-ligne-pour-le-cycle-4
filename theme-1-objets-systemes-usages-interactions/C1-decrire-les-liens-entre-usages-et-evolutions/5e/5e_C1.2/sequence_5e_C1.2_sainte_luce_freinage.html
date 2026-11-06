@@ -141,6 +141,10 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+.situation-photo{margin:14px 0 4px}
+.situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
+.situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
+@media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
 </style>
 <style id="ressource-css">
 /* Bloc « ressource externe » — posé par _outils poser_ressource.py. Ne pas éditer à la main. */
@@ -582,13 +586,18 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <p>Le trajet est court, mais il n'est pas anodin&nbsp;: il y a la <b>descente du parking</b>, il
   <b>pleut souvent</b>, et le collège est à <b>quelques centaines de mètres de la mer</b> — le sel
   de l'air attaque les métaux toute l'année.</p>
-  <p>Le gestionnaire a demandé aux trois fournisseurs leurs fiches techniques, et il a fait passer
+  <p><b>Les chiffres existent.</b> Le gestionnaire a demandé aux trois fournisseurs leurs fiches techniques (les documents qui donnent les caractéristiques chiffrées), et il a fait passer
   un essai sur le parking&nbsp;: <b>quinze freinages chronométrés</b>. Il a maintenant deux
   tableaux de chiffres et aucune idée de ce qu'il faut en faire.</p>
   <p style="color:var(--warn);font-size:1.05em">Les trois freins <b>arrêtent</b> le vélo. Aucun des
   trois n'est meilleur que les autres partout. <b>Il va falloir choisir — et savoir pourquoi.</b></p>
   <p class="meta">⚠️ <b>Les données de cette séquence sont simulées</b>, construites pour l'exercice
   à partir d'ordres de grandeur réalistes. Elles ne décrivent aucun fournisseur réel.</p>
+  <figure class="situation-photo">
+    <img src="Images/situation_velos_college.png" width="1536" height="1024" loading="lazy"
+         alt="Des vélos garés en rang sous un auvent. À côté, une rampe en béton mouillée descend vers la mer, sous un ciel gris de pluie.">
+    <figcaption>Les vélos du collège : la pluie, la descente du parking, et la mer tout près. Quel frein tiendra le mieux ici ? <i>Image générée par IA (Canva).</i></figcaption>
+  </figure>
 </section>
 
 <section class="card">

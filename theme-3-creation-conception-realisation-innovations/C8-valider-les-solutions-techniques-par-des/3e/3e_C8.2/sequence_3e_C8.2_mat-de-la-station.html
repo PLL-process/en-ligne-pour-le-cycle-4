@@ -204,6 +204,10 @@ a.lien-ext:hover,a.lien-ext:focus-visible{color:#fff}
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+.situation-photo{margin:14px 0 4px}
+.situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
+.situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
+@media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -593,14 +597,19 @@ a.lien-ext:hover,a.lien-ext:focus-visible{color:#fff}
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
   <div class="declencheur">
-    <p>La station d'alerte cyclonique fonctionne. Son procès-verbal de recette est signé,
+    <p>La station d'alerte cyclonique fonctionne. Son procès-verbal de recette (le document qui liste les essais réussis) est signé,
     ses trois seuils sont vérifiés jusqu'aux frontières. La mairie l'accepte — et pose
     aussitôt la question suivante :</p>
     <p>« Elle va vivre dehors, en tête d'un mât de 2 m, sur le toit de l'annexe. Le jour
     où elle doit servir, il y a 180 km/h de vent. De quoi fait-on ce mât&nbsp;?
     Et surtout : <b>comment le prouvez-vous&nbsp;?</b> »</p>
-    <p>Cette fois, personne ne vous donne de protocole.</p>
+    <p>Cette fois, personne ne vous donne de protocole (la liste des étapes de l'essai).</p>
   </div>
+  <figure class="situation-photo">
+    <img src="Images/situation_station_sans_mat.png" width="1536" height="1024" loading="lazy"
+         alt="Sur un toit-terrasse, une station météo posée sur un support bas, et à côté une platine métallique vide, boulonnée au sol. Au loin, la mer sous un ciel d'orage.">
+    <figcaption>La station attend son mât de 2 m sur le toit de l'annexe. De quoi le faire, et comment le prouver ? <i>Image générée par IA (Canva).</i></figcaption>
+  </figure>
 </section>
 
 <section class="card">
