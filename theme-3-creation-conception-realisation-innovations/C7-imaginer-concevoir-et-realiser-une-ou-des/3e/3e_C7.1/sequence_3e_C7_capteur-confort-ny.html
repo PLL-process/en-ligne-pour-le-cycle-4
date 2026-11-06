@@ -211,6 +211,10 @@ body>p.saved-note{display:block;max-width:940px;margin:6px auto}
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+.situation-photo{margin:14px 0 4px}
+.situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
+.situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
+@media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -653,12 +657,17 @@ déplacerait les cours de l'après-midi. Là, c'est ma parole contre l'emploi du
 
 <p><b>Voilà ce que tu vas construire&nbsp;: un petit boîtier posé dans chaque salle, avec un voyant
 qu'on voit depuis la porte.</b> Vert tant qu'on peut travailler. Rouge quand la salle a dépassé le
-seuil. Et il garde en mémoire l'heure à laquelle il est passé au rouge, pour qu'on puisse le
+seuil (la température au-delà de laquelle on travaille mal). Et il garde en mémoire l'heure à laquelle il est passé au rouge, pour qu'on puisse le
 montrer.</p>
 
 <p class="note" style="opacity:.85">Le mot du métier, c'est <b>capteur de confort thermique</b>. On
 en pose dans les bureaux, les crèches et les trains — partout où une température discutée vaut moins
 qu'une température mesurée.</p>
+  <figure class="situation-photo">
+    <img src="Images/situation_salle_chaude.png" width="1536" height="1024" loading="lazy"
+         alt="Une salle de classe vide, baignée de soleil : de grandes baies vitrées donnent sur des immeubles, des sacs et une bouteille d'eau sont restés sur les tables.">
+    <figcaption>Une salle du dernier étage, un après-midi de juin. Quelles salles chauffent, et à quelle heure ? Personne ne l'a jamais mesuré. <i>Image générée par IA (Canva).</i></figcaption>
+  </figure>
 </section>
 
 <section class="card">

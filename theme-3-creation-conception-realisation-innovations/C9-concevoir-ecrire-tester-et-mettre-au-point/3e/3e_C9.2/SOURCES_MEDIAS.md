@@ -184,3 +184,11 @@ montage, toujours écrit à la main, original, **CC0** :
 
 Même jour : la planche `Images/blocs_palier4_acquitter.svg` fait sonner le buzzer au
 **niveau 3** (ouragan majeur) et non plus au niveau 2, comme le programme de référence.
+
+## Image générée par IA (Canva) pour la situation déclenchante (05/11/2026)
+
+Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal du 05/11/2026 : « il manque aussi des images réalistes ».
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/situation_courrier_mairie.png` | Une enveloppe posée sur le rebord d'une fenêtre. Dehors, la cour d'un collège aux bâtiments clairs, sous un ciel d'orage. PNG 1 536 × 1 024, 2.2 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of a sealed official letter envelope on a technology classroom table, through the window behind it a Caribbean school courtyard with an empty concrete base, dark clouds gathering over the sea announcing the hurricane season, morning light, no people, no readable text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |

@@ -154,3 +154,10 @@ Les quatre questions du dépôt qui portent sur les licences vivent au **thème 
 ce schéma répond en toutes lettres. Le fichier y est déplacé par une PR sœur du thème 1 ; il
 est retiré d'ici par celle-ci.
 
+## Image générée par IA (Canva) pour la situation déclenchante (05/11/2026)
+
+Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal du 05/11/2026 : « il manque aussi des images réalistes ».
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/situation_serre_capteur_muet.png` | Une serre aux parois grillagées : des plateaux de jeunes plants, un petit appareil blanc posé sur une table, et un boîtier blanc fixé au mur. PNG 1 536 × 1 024, 2.7 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo inside a small school greenhouse in the Caribbean at early morning: seedlings in trays, a new small white wall-mounted temperature and humidity sensor box with a dark status light, a small label printer on a potting bench with nothing coming out, no people, no readable text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |

@@ -176,6 +176,10 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+.situation-photo{margin:14px 0 4px}
+.situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
+.situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
+@media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -624,11 +628,16 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
     <p>Mardi matin, salle de technologie du collège, à Sainte-Luce. Une élève de 5eB envoie son compte
     rendu vers l'imprimante de la salle… et rien ne sort. Dix minutes plus tard, c'est le compte rendu
     d'un AUTRE élève qui sort — deux fois. M. Firmin, le gestionnaire du réseau du collège, passe la
-    tête par la porte&nbsp;: <em>«&nbsp;J'ai seize ordinateurs, une imprimante, une borne WiFi, une tablette et
+    tête par la porte&nbsp;: <em>«&nbsp;J'ai seize ordinateurs, une imprimante, une borne WiFi (le boîtier qui relie les appareils sans fil), une tablette et
     maintenant vos téléphones qui veulent se connecter… Il me faut des experts pour remettre de l'ordre.
     Vous me reconstruisez le réseau de la salle, et vous me PROUVEZ que chaque message arrive au bon
     appareil.&nbsp;»</em></p>
-    <p><b>Ta mission d'expert&nbsp;:</b> comprendre comment les messages circulent entre les appareils,
+      <figure class="situation-photo">
+    <img src="Images/situation_salle_imprimante.png" width="1536" height="1024" loading="lazy"
+         alt="Une salle informatique : des rangées d'écrans, une borne au plafond, une imprimante chargée d'une pile de feuilles, des tablettes et des téléphones au premier plan.">
+    <figcaption>La salle de technologie : seize ordinateurs, une imprimante, une borne sans fil. Un compte rendu se perd, un autre sort deux fois. <i>Image générée par IA (Canva).</i></figcaption>
+  </figure>
+<p><b>Ta mission d'expert&nbsp;:</b> comprendre comment les messages circulent entre les appareils,
     reconstruire le réseau de la salle dans le simulateur <b>Cisco Packet Tracer</b> (le même logiciel
     que les vrais techniciens réseau), y connecter même une tablette et un smartphone, et fournir la
     preuve que la livraison est fiable.</p>

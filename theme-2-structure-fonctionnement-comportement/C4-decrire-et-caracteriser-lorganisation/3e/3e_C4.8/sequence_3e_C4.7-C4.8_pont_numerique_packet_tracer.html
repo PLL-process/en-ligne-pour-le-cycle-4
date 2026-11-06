@@ -169,6 +169,10 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+.situation-photo{margin:14px 0 4px}
+.situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
+.situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
+@media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -639,18 +643,23 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
   <div class="declencheur">
     <p><b>Le club techno</b> du collège échange depuis la 4e avec la New York Public Library — souvenez-vous du
     Book Train. Cette année, le partenariat devient sérieux&nbsp;: la classe doit envoyer ses relevés de la
-    station d'alerte cyclonique au serveur du partenaire, à New York.</p>
+    station d'alerte cyclonique au serveur (l'ordinateur qui reçoit et garde les données) du partenaire, à New York.</p>
     <p><b>M. Firmin arrive avec un défi</b>&nbsp;:
     <em>«&nbsp;Vous savez faire vivre UN réseau — votre serre en est la preuve. Mais votre message, lui, doit
     QUITTER votre réseau, traverser l'océan et entrer dans un réseau qui n'est pas le vôtre. Montrez-moi,
     dans le simulateur, comment DEUX réseaux se parlent&nbsp;: construisez le nôtre, construisez le leur,
     posez le pont entre les deux — et prouvez-moi chaque saut du voyage.&nbsp;»</em></p>
-    <p><b>Ta mission d'expert&nbsp;:</b> concevoir un schéma à DEUX réseaux reliés par des <b>routeurs</b>,
+      <figure class="situation-photo">
+    <img src="Images/situation_vers_new_york.png" width="1536" height="1024" loading="lazy"
+         alt="Un ordinateur portable sur une table de classe : l'écran montre une carte du monde de nuit, un trait lumineux relie deux points. Par la fenêtre, la mer turquoise et une colline.">
+    <figcaption>De la Martinique à New York, un océan entre deux réseaux. Comment le message passe-t-il de l'un à l'autre ? <i>Image générée par IA (Canva).</i></figcaption>
+  </figure>
+<p><b>Ta mission d'expert&nbsp;:</b> concevoir un schéma à DEUX réseaux reliés par des <b>routeurs</b>,
     jouer au poste-frontière avec une <b>table de routage donnée</b>, construire le pont dans
     <b>Cisco Packet Tracer</b>, et rapporter les preuves du voyage&nbsp;: ping, <b>tracert</b> et la
     simulation saut par saut.</p>
   </div>
-  <p class="problematique">Pourquoi un simple commutateur ne suffit-il plus — et comment les routeurs et leurs tables font-ils voyager un message de réseau en réseau&nbsp;?</p>
+  <p class="problematique">Pourquoi un simple commutateur (le boîtier qui relie les appareils d'un même réseau) ne suffit-il plus — et comment les routeurs et leurs tables font-ils voyager un message de réseau en réseau&nbsp;?</p>
   <div class="exo">
     <label for="hyp1"><b>💭 Ton hypothèse de départ</b> (avant d'apprendre quoi que ce soit — on y reviendra au bilan)&nbsp;: d'après toi, que se passe-t-il à la «&nbsp;frontière&nbsp;» entre deux réseaux pour qu'un message trouve son chemin&nbsp;?</label>
     <textarea id="hyp1" placeholder="Je pense qu'à la frontière entre deux réseaux, le message…"></textarea>

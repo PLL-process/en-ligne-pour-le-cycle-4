@@ -23,3 +23,11 @@ avec `../3e_C4.3/Images/station_alerte_annotee.svg`, le dessin de la même stati
 `Images/chaine_energie_a_elaborer.svg` : schéma fonctionnel corrigé, production originale CC0. Fonctions dans les blocs, composants en dessous, formes d’énergie sur les flèches ; « Énergie chimique stockée » sous les batteries. Les descriptions accessibles suivent le dessin.
 
 Génération déterministe : `python _outils/regenerer_chaines_energie.py` depuis la racine. Source draw.io modifiable dans `_generation/chaines_energie/` (Book Train : `fichiers_drawio/`). Le SVG contient aussi cette source et utilise des textes SVG natifs, sans ressource distante.
+
+## Image générée par IA (Canva) pour la situation déclenchante (05/11/2026)
+
+Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal du 05/11/2026 : « il manque aussi des images réalistes ».
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/situation_station_reseau_coupe.png` | Sur un toit-terrasse, sous une pluie battante, un mât porte un boîtier gris et un capteur ; un câble descend vers le bâtiment. Autour, des palmiers pliés par le vent. PNG 1 536 × 1 024, 2.3 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of a small grey weather alert station box on a metal mast on the flat roof of a Caribbean school during a tropical storm, heavy rain and bending palm trees, a fallen electric power line in the street below and dark unlit houses, the station fed only by a single grey cable coming from the building, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |

@@ -197,6 +197,10 @@ table.releve td input{padding:4px 8px}
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+.situation-photo{margin:14px 0 4px}
+.situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
+.situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
+@media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -587,8 +591,13 @@ table.releve td input{padding:4px 8px}
 automatique pour leur jardin pédagogique. Les trois cartons sont arrivés, les trois montages ont
 été faits en suivant la notice, et <b>aucun des trois ne fonctionne</b> — mais pas de la même
 façon.</p>
-<p>Le fournisseur est formel : « tous les modules livrés sont testés et fonctionnels ».
+<p>Le fournisseur est formel : « tous les modules (les pièces toutes prêtes : carte, capteur, pompe) livrés sont testés et fonctionnels ».
 Il a raison. Le programme, lui, est le même dans les trois cartes, et il est correct.</p></div>
+  <figure class="situation-photo">
+    <img src="Images/situation_trois_kits.png" width="1536" height="1024" loading="lazy"
+         alt="Trois boîtes en carton ouvertes sur une table, chacune avec une carte, une sonde, une petite pompe et un tuyau. Devant, trois verres d'eau.">
+    <figcaption>Trois kits montés en suivant la notice, trois pompes à l'arrêt. Les modules marchent, le programme est juste : où est l'erreur ? <i>Image générée par IA (Canva).</i></figcaption>
+  </figure>
 </section>
 
 <section class="card">

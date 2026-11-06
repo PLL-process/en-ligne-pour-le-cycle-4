@@ -214,6 +214,10 @@ section.card[id^="activite-"]{scroll-margin-top:60px}
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+.situation-photo{margin:14px 0 4px}
+.situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
+.situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
+@media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -595,14 +599,19 @@ section.card[id^="activite-"]{scroll-margin-top:60px}
 
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
-  <div class="declencheur"><p><b>Le fichier part à l'imprimante.</b> Le logiciel de découpe en couches affiche
+  <div class="declencheur"><p><b>Le fichier part à l'imprimante.</b> Le logiciel de découpe en couches (il découpe la pièce en tranches fines, que l'imprimante dépose l'une sur l'autre) affiche
 trois avertissements, puis un quatrième message : <b>impression lancée</b>. Personne ne lit les
 avertissements, et la machine tourne cinquante-cinq minutes.</p>
 <p><b>Le résultat.</b> Le boîtier qui sort est <b>inutilisable</b>. La casquette anti-pluie est velue là où les
-supports ont été arrachés. La rainure de joint n'existe pas : à sa place, une ondulation. Et le
+supports (les petites colonnes que l'imprimante ajoute sous les parties en l'air) ont été arrachés. La rainure de joint (la petite gorge où se loge le joint qui empêche l'eau d'entrer) n'existe pas : à sa place, une ondulation. Et le
 couvercle ne ferme pas — il est soudé au fond sur trois centimètres.</p>
 <p>Rien n'est cassé, rien n'a mal tourné. <b>La machine a fait exactement ce qu'on lui a
 demandé</b>, avec les moyens qu'elle a. Le dessin, lui, avait été fait sans elle.</p></div>
+  <figure class="situation-photo">
+    <img src="Images/situation_impression_ratee.png" width="1536" height="1024" loading="lazy"
+         alt="Un boîtier gris imprimé en 3D, encore sous la buse de l'imprimante : le dessus est gondolé, les flancs couverts de fils de plastique, comme une toile d'araignée.">
+    <figcaption>Le boîtier tel qu'il sort de l'imprimante. La machine a fait ce qu'on lui a demandé : qu'aurait-il fallu lui demander ? <i>Image générée par IA (Canva).</i></figcaption>
+  </figure>
 </section>
 
 <section class="card">

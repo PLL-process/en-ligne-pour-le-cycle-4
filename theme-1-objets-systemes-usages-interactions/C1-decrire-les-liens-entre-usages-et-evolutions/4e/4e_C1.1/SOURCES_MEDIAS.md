@@ -51,3 +51,11 @@ leurs sources sont documentées à part, dans `SOURCES_DONNEES_FEUX_4e.md`.
 
 > Captures ajoutées le 10/09/2026 (lot pilote « les gestes d'outil en captures ») : dix PNG
 > de 43 à 148 Ko, chacun sous 300 Ko (règle n°40), `alt` complet sur chaque `<img>` (règle n°34).
+
+## Image générée par IA (Canva) pour la situation déclenchante (05/11/2026)
+
+Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal du 05/11/2026 : « il manque aussi des images réalistes ».
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/situation_feu_foret.png` | Une colline couverte de pins, l'herbe jaunie au premier plan. Au loin, une colonne de fumée grise monte derrière la crête. PNG 1 536 × 1 024, 2.7 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of a dry pine forest hillside in midsummer, a thin wisp of grey smoke rising from a distant ridge, hazy hot sky, parched yellow grass in the foreground, wide landscape view, no people, no vehicles, no equipment, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |

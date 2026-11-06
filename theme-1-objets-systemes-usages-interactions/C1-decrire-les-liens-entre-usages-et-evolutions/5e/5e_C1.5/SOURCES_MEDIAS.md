@@ -37,3 +37,11 @@ Aucun logo réel d'organisation, aucune capture d'un site de banque d'images : l
 symboles sont **redessinés**, dans le style des autres figures du dépôt. Le pictogramme
 Creative Commons et le symbole ™ sont représentés par leur forme générique, non par le logo
 déposé d'une organisation.
+
+## Image générée par IA (Canva) pour la situation déclenchante (05/11/2026)
+
+Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal du 05/11/2026 : « il manque aussi des images réalistes ».
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/situation_compte_club.png` | Une tablette posée sur une table de classe, ouverte sur une publication prête : la photo d'un tournesol dans un jardin, un bouton bleu en bas. Au fond, un tableau blanc. PNG 1 536 × 1 024, 2.4 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of a school technology classroom corner: a whiteboard with a small illegible handwritten scribble in its corner, a tablet on a table showing a draft social media post with a photo of a school vegetable garden and a large sunflower, the post not yet published, no people, no readable text, no real logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |

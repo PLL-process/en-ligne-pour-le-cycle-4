@@ -13,3 +13,10 @@ de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règ
 
 *Le 30/10/2026, cette image remplace `synthese_jardin_connecte.png` (même demande, « in Martinique », avec des palmiers) : le jardin de 4e est à New York, et Pascal a demandé « tout à NY ». L'ancien fichier est retiré du lot.*
 
+## Image générée par IA (Canva) pour la situation déclenchante (05/11/2026)
+
+Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal du 05/11/2026 : « il manque aussi des images réalistes ».
+
+| Fichier | Ce qu'elle montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/situation_trois_kits.png` | Trois boîtes en carton ouvertes sur une table, chacune avec une carte, une sonde, une petite pompe et un tuyau. Devant, trois verres d'eau. PNG 1 536 × 1 024, 2.6 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of three identical opened cardboard kits side by side on a school workshop table, each assembled with a small microcontroller board, a small water pump, plastic tubing and a soil moisture probe, the pumps dry and still, a glass of water nearby, no people, no readable text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
