@@ -28644,3 +28644,49 @@ toutes les pages du site). Empreintes recalculées (`--empreintes`). Rien d'autr
 **Reste à Pascal** : lire la fiche avec son collègue ; dire si les repères d'histoire des arts (Pacioli, Le
 Corbusier) et les cinq pistes lui conviennent, ou s'il préfère une fiche sans pistes, comme la fiche maths
 le propose (« rien, un rappel, une activité »).
+
+## 07/11/2026 — Quatre skills tirés d'une liste de Grok, réécrits sur le journal : situation déclenchante, lexique, mutualisation, différenciation dans la page (transversal : `.claude/skills`, `SKILLS_AUDIT.md`)
+
+**Ce que Pascal a demandé.** Par curiosité, il a demandé à Grok « les meilleurs skills » pour le dépôt, puis à
+Claude ce qu'il en pensait, puis : « Oui stp », puis « Tu as carte blanche ».
+
+**Le jugement sur la liste.** Quinze propositions, génériques : aucune ne cite les règles d'or ni le journal.
+Onze écartées : doublons de skills déjà là (`methode-fable`, `curriculum-assessment-cycle4`, `questioning-discussion`,
+`representations-techniques-cycle4`, `livraison-depot-cycle4`) ; QCM « 10 à 20 questions » contre le choix du
+23/10 (30 fixes) ; « progression spiralaire 5e → 4e → 3e » sans objet pour un professeur qui change de collège
+chaque année (n°304) ; « synthèse élève + professeur » couverte par `synthese-vulgarisee` (n°316).
+
+**Quatre retenues, réécrites de zéro** (aucun texte de Grok repris), dans `.claude/skills/` :
+- `situation-declenchante-ancree` — l'ouverture d'une séquence : une personne qui a un problème, un lieu nommé,
+  les mots techniques glosés dans la phrase et l'image réaliste qui montre le problème, jamais la solution (vagues
+  des 05 et 06/11), l'hypothèse rappelée mot pour mot au bilan (n°301), la problématique avec le verbe de la
+  compétence, les prérequis « compétences attendues + moyen de les rattraper » (n°304), ouverture repliée dès la
+  séance 2 (n°311).
+- `lexique-sequence` — n'invente aucun outil : dit comment remplir `vocabulaire_<lot>.json` pour
+  `generer_lexique.py` sans se faire refuser (zone exacte, source, pas deux vérités avec le « à retenir » du
+  QCM, mots de base par renvoi au commun), avec deux passes de relevé — les termes techniques et les mots
+  « faussement connus » (innovation, caduc) — et les quatre mots APTE identiques d'un lot à l'autre (05/11).
+  Première version du skill, écrite avant lecture du journal, inventait un `lexique.json` et un
+  `_outils/lexique_commun.json` : corrigée avant livraison.
+- `mutualisation-couverture` — complète `audit-couverture-cycle4` par un jugement : un COUVERT n'est accepté
+  qu'avec une activité vérifiée et deux questions de QCM sur le code (n°299) ; une mutualisation demande trois
+  critères ensemble (même objet-fil, séances contiguës au classeur, pas d'activité en plus) ; un doublon s'archive
+  dans le même commit que le recâblage (n°12), jamais ne se supprime ; les manques se trient par date de passage
+  au classeur. Sortie : un rapport et une liste de décisions à cocher par Pascal, rien d'exécuté avant.
+- `differenciation-dans-la-page` — refuse les « trois versions soutien / standard / approfondissement » (trois
+  pages à maintenir, un élève étiqueté par son URL) ; la différenciation vit dans la page unique avec ce que les
+  règles imposent déjà : aides à deux niveaux repliées, Bonus unique en clôture (n°4, 301, 306), critères de
+  réussite gradués sur les quatre niveaux LSU (échelle du 23/10), versions 🅰/🅱/🅲 (n°3), l'éditeur Python intégré
+  pour la 🅱 (05/11).
+
+**Le registre.** `SKILLS_AUDIT.md` reçoit les quatre lignes, et une cinquième qui manquait : `synthese-vulgarisee`
+(29/10, n°316) n'y figurait pas. Douze skills au dépôt. Les quatre nouveaux sont marqués **À EXERCER** : chacun sera
+relu sur le premier lot qui l'emploie, et corrigé au journal.
+
+**Contrôles.** Les quatre `SKILL.md` ont leur en-tête `name` / `description` ; aucun script, aucune page élève,
+aucun fichier engendré touché — `build_audit.py` et `make_index.py` sans objet. Branche `fable/skills-grok` sans
+motif de thème (n°302) : la garde-périmètre accepte avec avertissement, `.github/` non touché (n°5 amendée).
+
+**Reste à Pascal.** Fusionner ou non ; dire si « À EXERCER » lui convient comme statut d'un skill pas encore
+employé, ou s'il préfère que le skill naisse avec son premier lot (règle de `SKILLS_AUDIT.md`, « créées au moment où
+un lot en aura besoin ») — auquel cas les quatre peuvent attendre sur la branche.

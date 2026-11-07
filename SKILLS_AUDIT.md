@@ -7,6 +7,8 @@ installée si une skill locale suffit. Aucune skill ne contient de secret.*
 (7 du dépôt, 35 importés sur le compte claude.ai de Pascal), verdicts confrontés au
 journal jusqu'à la règle d'or n°311. Détail par skill (raison, preuve, question) :
 `inventaire_skills_2026-10-23.json`, remis à Pascal. Entrée du journal du 23/10/2026.
+Depuis : `synthese-vulgarisee` (29/10, n°316) et quatre skills le 07/11/2026 (voir ci-dessous) ; le
+dépôt compte douze skills.
 
 ## Skills du dépôt (`.claude/skills/`)
 
@@ -19,6 +21,18 @@ journal jusqu'à la règle d'or n°311. Détail par skill (raison, preuve, quest
 | `arduino-grove-college` | 21/07/2026 (lot 0) | 23/10/2026 | activités carte/capteurs, versions A/B/C, très basse tension | aucune | **UTILISÉE** |
 | `licences-medias-education` | 21/07/2026 (lot 0) | 23/10/2026 | provenance des médias, SOURCES_MEDIAS.md, documents d'éditeur | Python 3 stdlib | **UTILISÉE** |
 | `chaine-energie-fonctionnelle` | 21/10/2026 (n°310) | 23/10/2026 | schémas des chaînes d'énergie, représentation fonctionnelle | Python 3 stdlib | **UTILISÉE** |
+| `synthese-vulgarisee` | 29/10/2026 (n°316) | 29/10/2026 | synthèse élève lisible par un élève de 6e, deux pages A4 | aucune | **UTILISÉE** — absente du registre jusqu'au 07/11/2026 |
+| `situation-declenchante-ancree` | 07/11/2026 | 07/11/2026 | ouverture d'une séquence : personne, lieu nommé, mots glosés, image réaliste (05-06/11), hypothèse rappelée au bilan, problématique, prérequis sans « l'an dernier » (n°304) | aucune | **À EXERCER** sur le premier lot qui s'ouvre |
+| `lexique-sequence` | 07/11/2026 | 07/11/2026 | remplir `vocabulaire_<lot>.json` (deux passes : technique + lisibilité, sources, mots APTE), puis `generer_lexique.py` et `poser_lien_lexique.py` | Python 3 stdlib (outils existants) | **À EXERCER** |
+| `mutualisation-couverture` | 07/11/2026 | 07/11/2026 | revue qualitative de la matrice : COUVERT prouvé (activité vérifiée + 2 questions QCM), doublons → archivage n°12, mutualisation sur trois critères, manques triés par date de classeur ; rapport + décisions pour Pascal | `audit-couverture-cycle4` | **À EXERCER** |
+| `differenciation-dans-la-page` | 07/11/2026 | 07/11/2026 | différenciation dans la page unique : aides à deux niveaux, Bonus unique, critères gradués sur les 4 niveaux LSU, versions 🅰/🅱/🅲 — refuse les « trois versions » séparées | `k12-lesson-differentiation` pour le fond | **À EXERCER** |
+
+**Origine des quatre skills du 07/11/2026** : une liste de quinze « skills » proposée par Grok à Pascal, par
+curiosité. Onze ont été écartées — doublons de skills existants (`methode-fable`, `curriculum-assessment-cycle4`,
+`questioning-discussion`, `livraison-depot-cycle4`…), QCM « 10 à 20 questions » contraire au choix du 23/10 (30
+fixes), ou « progression spiralaire 5e → 4e → 3e » sans objet quand aucun élève n'a fait les séquences de l'année
+précédente (n°304). Les quatre retenues ont été réécrites de zéro sur le journal (jusqu'à la n°318) ; aucun texte
+de Grok n'y est repris.
 
 Questions pédagogiques posées à Pascal le 23/10/2026, **tranchées le même jour** et
 écrites dans ces skills : QCM à **30 questions fixes**, sans tirage aléatoire ; séquence
