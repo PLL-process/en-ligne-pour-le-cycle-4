@@ -29229,3 +29229,34 @@ dit faux au lot suivant — c'est la deuxième fois en trois jours (06/11 : `poi
 
 **Reste à Pascal** : montrer la trame d'EPI au collègue d'arts plastiques et, s'il y a un collègue de maths dans
 l'EPI, lui donner la fiche jumelle.
+
+## 08/11/2026 — Audit des séquences, étape 4 : la campagne technique exécutée sur le dépôt cloné (transversal)
+
+**Point de départ.** Pascal a transmis trois étapes d'un audit externe des séquences (1er novembre), toutes
+documentaires : lecture des pages publiques, aucun navigateur, aucun code. Carte blanche donnée ; choix fait :
+exécuter ce qu'elles n'avaient pas pu faire, et donner un verdict à chacun de leurs constats.
+
+**Fait.** Rapport `docs/audits/AUDIT_SEQUENCES_ETAPE_4_2026-11-08.md` ; les trois étapes et le banc Playwright
+rangés dans `docs/audits/sequences_etapes_1-3/`. Banc sur quatre séquences (Chengdu 5e_C1.1, jardin 4e_C4.1,
+stations 3e_C4.3 et 3e_C9.2) : 29 boutons « Vérifier » répondent, aucun ne réussit à vide, 0 erreur console,
+0 px de défilement à 375 px, 73 images avec `alt`, focus clavier visible. Dépôt entier : `controle_liens`,
+`controle_fichiers_telechargeables`, `controle_boutons_vivants` verts ; 88 CSV lus, 5 irréguliers (1 côté élève).
+
+**Verdicts.** Huit constats confirmés, un nuancé (scores de quiz ≠ compétence : c'est la conception), aucun
+infirmé. Les tests « synonyme, casse, accents » demandés par l'audit externe ne s'appliquent pas : aucune
+réponse libre n'est notée par les pages.
+
+**Trois constats nouveaux, chiffrés.**
+- L'index ignore les README pointeurs : 58 repères mutualisés sans aucun lien vers leur séquence, 43 avec
+  « Aucune ressource pédagogique publiée » — alors que chaque README dit où le code est travaillé. Cause dans
+  `make_index.py` l. 590. C'était le constat le plus répété des trois étapes ; une correction, 58 repères.
+- « Effacer ma sauvegarde » n'efface pas les clés `rep_*` des ateliers incrustés : 33 pages sur 58.
+- Nom, prénom et classe écrits en clair dans `localStorage` sur 95 pages, sans avertissement « poste partagé ».
+- Et la phrase « 12 V […] sans danger au toucher », vue dans le jardin par l'audit externe, vient de quatre
+  générateurs et vit dans dix pages : à corriger à la source (n°283), comme la licence dans la PR #621.
+
+**Non exécuté** (dit tel quel dans le rapport) : contrastes mesurés, zoom 200 %, lecteur d'écran, mode
+essentiel et verrous sur ces quatre pages, seuils des simulateurs de la station, matrice compétence → production.
+
+**Reste à Pascal.** Valider l'ordre du lot correctif (six lignes, une PR chacune) ; trancher la fiche D
+(afficher « quiz » et « production » séparément) et le sous-titre de l'échauffement tableur.
