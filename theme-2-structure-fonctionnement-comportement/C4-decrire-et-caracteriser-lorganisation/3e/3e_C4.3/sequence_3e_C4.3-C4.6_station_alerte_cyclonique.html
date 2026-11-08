@@ -193,6 +193,19 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+
+/* n°298 amendée (07/11/2026) : le référentiel, replié sous les étiquettes */
+details.referentiel-replie{margin:0 auto 14px;max-width:960px;border-left:4px solid var(--head,#c68ef2);border-radius:8px;padding:6px 12px;background:rgba(255,255,255,.04)}
+details.referentiel-replie>summary{cursor:pointer;font-weight:600;color:var(--head,#c68ef2);list-style:none;display:flex;gap:8px;align-items:center;min-height:44px}
+details.referentiel-replie>summary::-webkit-details-marker{display:none}
+details.referentiel-replie>summary::before{content:"▸";transition:transform .15s}
+details.referentiel-replie[open]>summary::before{transform:rotate(90deg)}
+details.referentiel-replie table{width:100%;border-collapse:collapse;font-size:.92em;margin:8px 0}
+details.referentiel-replie th,details.referentiel-replie td{border:1px solid var(--border,#274a8a);padding:5px 8px;vertical-align:top;text-align:left}
+details.referentiel-replie p{margin:8px 0}
+body.essentiel details.referentiel-replie{display:none}
+@media print{details.referentiel-replie{display:none}}
+@media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -616,6 +629,22 @@
   <span class="badge crcn" title="CRCN 1.2 Gérer des données.&#10;Le cadre : « Stocker et organiser des données pour les retrouver, les conserver et en faciliter l’accès et la gestion. »&#10;Ici : tu donnes à chaque information son type et son descripteur, construis l’enregistrement d’une mesure, puis choisis le format de fichier qui convient pour la transmettre ou la stocker.&#10;&#10;CRCN 1.3 Traiter des données.&#10;Le cadre : « Appliquer des traitements à des données pour les analyser et les interpréter. »&#10;Ici : tu exploites 48 heures de mesures de la nuit du cyclone pour reconstituer l’événement et vérifier que la station a réagi comme prévu.&#10;&#10;CRCN 3.4 Programmer.&#10;Le cadre : « Écrire des programmes et des algorithmes pour répondre à un besoin. »&#10;Ici : tu complètes la condition que le microcontrôleur exécute : SI le vent dépasse 118 km/h ALORS vigilance violette.&#10;&#10;CRCN 5.2 Évoluer dans un environnement numérique.&#10;Le cadre : « Installer, configurer et enrichir un environnement numérique (matériels, outils, services) pour disposer d’un cadre adapté aux activités menées, à leur contexte d’exercice ou à des valeurs. »&#10;Ici : tu choisis ta façon de travailler — montage Arduino réel, Vittascience en ligne ou simulateur de la page — et tu y fais tourner le convertisseur analogique-numérique.">CRCN : 1.2 Gérer des données · 1.3 Traiter des données · 3.4 Programmer · 5.2 Évoluer dans un environnement numérique</span>
   <span class="badge duree">⏱ 4 séances de 55 min</span>
 </div>
+<!-- n°298 amendée (07/11/2026) : le référentiel revient, replié, copie du bloc referentiel-eleve de la synthèse professeur -->
+<details class="referentiel-replie">
+  <summary>📋 Référentiel officiel (programme 2024)</summary>
+<div class="bloc referentiel-eleve">
+  <table class="refs">
+    <tr><th>Code</th><th>Sous-compétence travaillée</th><th>Socle</th><th>Activités</th></tr>
+    <tr><td><b>3e_C4.3</b></td><td>Décrire un OST en caractérisant sa chaîne d'information.</td><td>D1.3, D4</td><td>1, 2, R</td></tr>
+    <tr><td><b>3e_C4.4</b></td><td>Associer des grandeurs analogiques issues d'un OST à des données exploitables.</td><td>D1.3, D4</td><td>3, R</td></tr>
+    <tr><td><b>3e_C4.5</b></td><td>Représenter sous forme de données les informations de diverses natures utilisées par un OST.</td><td>D1.3, D2</td><td>4, R</td></tr>
+    <tr><td><b>3e_C4.6</b></td><td>Identifier, selon les cas, leur mise en forme, leur transmission ou leur stockage dans des fichiers (texte, image, nombre) afin de comprendre le fonctionnement de l’OST.</td><td>D2, D5</td><td>5, 6, R</td></tr>
+  </table>
+  <p style="font-size:.85em;color:var(--sub);margin-top:8px">Compétence parente <b>C4</b> : décrire et caractériser l'organisation interne d'un objet ou d'un système technique et ses échanges avec son environnement (énergies, données) — BO n°9 du 29/02/2024.</p>
+  <p style="font-size:.9em;color:var(--sub)"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>3e_C4.3</code> · <code>3e_C4.4</code> · <code>3e_C4.5</code> · <code>3e_C4.6</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel. Les formulations ci-dessus sont celles du référentiel.</p>
+</div>
+</details>
+
 
 <div class="identite" id="identite">
   <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>

@@ -19,7 +19,8 @@ Le journal fait foi (règle d'or n°10). Pour le texte complet d'une règle, che
   Fichier : `theme-1-objets-systemes-usages-interactions/C3-caracteriser-et-choisir-un-objet-ou-un/5e/5e_C3.1/sequence_5e_C3.1-C3.4_shanghai.html`
   (banc `tests_regle_311_5e_C3.1.mjs`).
 - Ne pas recopier du modèle ce qu'il ne respecte pas encore (relevé du 23/10/2026) :
-  - la carte « 📚 Le référentiel de la séquence — en toutes lettres », refusée par la n°298 ;
+  - la carte « 📚 Le référentiel de la séquence — en toutes lettres » **à découvert** (depuis le 07/11/2026 elle
+    revient sur la page, mais repliée : `details.referentiel-replie` fermé, n°298 amendée) ;
   - un Bonus sans corrigé, annoncé « sans vérificateur » (contraire aux n°86 et n°301) ;
   - l'absence de bloc « 🔄 Avant de commencer » ;
   - des étiquettes sans `title` ni `aria-label` (n°44) ;
@@ -35,7 +36,9 @@ Dans l'ordre :
 1. Titre `<h1>` et mission en une phrase (n°4, 24/07/2026).
 2. Barre d'outils : imprimer, effacer ma sauvegarde, mode essentiel (n°29, 08/08/2026).
 3. Ligne d'étiquettes sous le titre (niveau, codes, socle et CRCN, durée). Chaque étiquette a un `title` et un `aria-label`
-   (n°44, 08/08/2026, maintenus par la n°298). Sur la page élève, le référentiel se limite à cette ligne. Une compétence du
+   (n°44, 08/08/2026, maintenus par la n°298). Sur la page élève, le référentiel à découvert se limite à cette ligne ; juste
+   dessous, un dépliant `details.referentiel-replie` **fermé** porte la copie de la carte de la synthèse professeur
+   (n°298 amendée le 07/11/2026 : au doigt, une infobulle ne se survole pas ; outil `_outils/replier_referentiel.py`). Une compétence du
    CRCN s'y lit **en toutes lettres** — « 🎯 CRCN 1.3 Traiter des données — Niv. 2 », jamais « CRCN 1.3 » ni « CRCN » seul —
    et sa bulle (`title`) a trois étages par compétence : « CRCN 1.3 Traiter des données — niveau 2. », « Le cadre : « … » »
    (la description officielle, mot pour mot), « Ici : » ce que l'élève en fait dans CETTE séquence, à la deuxième personne,
@@ -83,8 +86,12 @@ aujourd'hui seulement les quatre pages de la station 3e_C9.2, engendrées depuis
   placé en tête. Il est accompagné de la phrase qui distingue le BO n°9 du 29/02/2024 de la codification interne du dépôt.
 - La n°306 garde pourtant un bloc « Je serai capable de… » dans l'ouverture. Au 23/10/2026, aucune page ne porte ce bloc
   sans la carte que la n°298 refuse.
-- Pratique actuelle des six pages de 3e du thème 2 passées à la n°298 (`3e_C4.3`, `3e_C5.1`, `3e_C6.1`…) : aucun bloc
-  référentiel sur la page élève. La suivre, et signaler l'écart dans le rapport du lot tant que Pascal n'a pas fixé cette forme.
+- **Tranché le 07/11/2026 (n°298 amendée)** : la carte revient sur toutes les pages qui l'avaient perdue, **repliée** dans
+  un `<details class="referentiel-replie">` fermé par défaut, juste sous la ligne d'étiquettes, copie du bloc
+  `referentiel-eleve` de la synthèse professeur (qui reste la référence). L'élève ne la lit pas sans le vouloir, le
+  professeur l'ouvre d'un tap. Masquée en mode essentiel et à l'impression. `verif_regles_audit.py` accepte le dépliant
+  fermé et refuse un dépliant livré `open`. Outil rejouable : `python3 _outils/replier_referentiel.py` (`--etat` pour voir).
+  Une page neuve naît avec ce dépliant ; les pages engendrées (ateliers) l'attendent de leur générateur.
 
 ## Séances
 

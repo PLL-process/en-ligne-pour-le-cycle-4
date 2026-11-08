@@ -28690,3 +28690,62 @@ motif de thème (n°302) : la garde-périmètre accepte avec avertissement, `.gi
 **Reste à Pascal.** Fusionner ou non ; dire si « À EXERCER » lui convient comme statut d'un skill pas encore
 employé, ou s'il préfère que le skill naisse avec son premier lot (règle de `SKILLS_AUDIT.md`, « créées au moment où
 un lot en aura besoin ») — auquel cas les quatre peuvent attendre sur la branche.
+
+## 07/11/2026 — Règle d'or n°298 (amendée) : le référentiel revient sur la page élève, replié sous les étiquettes (transversal : thèmes 1, 2 et 3, `_outils`, `.claude/skills`)
+
+**Ce que Pascal a vu.** Sur son téléphone, dans 5e_C2.1 : « je pouvais lire avant quelle est cette compétence ». La
+carte « 📚 Le référentiel de la séquence — en toutes lettres » a quitté la page le 26/10 (vague n°298 du thème 1) ;
+l'étiquette `5e_C2.1` a bien une infobulle, mais **au doigt, rien ne survole**. L'index, lui, n'a rien perdu (vérifié :
+336 Ko, 18 liens sur 5e_C1.1 contre 16 le 27/09).
+
+**Ce que Pascal a tranché** (question à quatre options, 07/11) : ni l'abrogation de la n°298 (« comme avant, partout »,
+qui contredirait son constat du 15/09), ni une exception pour la seule 5e_C2.1, ni une simple infobulle au toucher. La
+carte **revient sur toutes les pages qui l'avaient perdue, repliée**.
+
+> **Règle d'or n°298 (amendée le 07/11/2026).** La page élève ne se lit toujours pas comme un référentiel : sous le
+> titre, la ligne d'étiquettes reste tout ce qu'elle dit **à découvert**. Mais juste dessous, un dépliant
+> `<details class="referentiel-replie">`, **fermé par défaut**, porte la copie de la carte conservée dans la synthèse
+> professeur (bloc `referentiel-eleve`, qui reste la référence). L'élève ne la lit pas sans le vouloir ; le professeur
+> l'ouvre d'un tap. Un dépliant livré `open` est une lecture imposée : refusé. Le dépliant est masqué en mode essentiel
+> et à l'impression. Les pages engendrées (ateliers) le recevront de leur générateur.
+
+**Ce que fait cette PR** (branche `fable/regle-298-repliee`, sans motif de thème, n°302).
+- `_outils/replier_referentiel.py` (nouveau, rejouable, `--etat` pour voir) : pour chaque synthèse professeur qui porte un
+  bloc `referentiel-eleve`, lit la page d'origine dans le commentaire qui le précède, recopie le bloc (son `<h2>` devient
+  le `<summary>`), l'insère après `<div class="badges">…</div>` — après `</h1>` pour 4e_C1.4, qui n'a pas d'étiquettes —
+  et pose la feuille de style du dépliant avant le premier `</style>` (`body.essentiel` et `@media print` le masquent).
+- **48 séquences** touchées : thème 1 — 13 (3e_C1.1, 3e_C1.5, 4e_C1.1, 4e_C1.4, 5e_C1.1, 5e_C1.2, 5e_C1.5, 3e_C2.1,
+  4e_C2.1, 5e_C2.1, 3e_C3.1, 4e_C3.1, 5e_C3.1) ; thème 2 — 10 (3e_C4.3, 3e_C4.7, 3e_C4.8, 4e_C4.7, 5e_C4.1, 5e_C4.7,
+  3e_C5.1, 3e_C6.1, 3e_C6.2, 4e_C6.2) ; thème 3 — 25 (C7 : 3e ×6, 4e ×6, 5e ×4 ; C8 : 3e_C8.1, 3e_C8.2, 4e_C8.1, 5e_C8.1,
+  5e_C8.2 ; C9 : 3e_C9.1, 3e_C9.2, 4e_C9.1, 5e_C9.1). Les synthèses professeur ne changent pas.
+- **Non touchées, à faire par leur générateur** : l'atelier de planification C7.1 (`build_atelier.py`, 3 pages) et les sept
+  ateliers des représentations du thème 1 (`ateliers-representations/_generation`).
+- `verif_regles_audit.py`, règle 298 : accepte le dépliant **fermé** (« replié sous les étiquettes, n°298 amendée »),
+  refuse un dépliant `open`, et juge le reste de la page comme avant, dépliant retiré. La n°42 lit désormais la carte sur
+  la page (« (carte) ») : mêmes verdicts qu'en la lisant dans la synthèse.
+- `_outils/METHODE.md` et le skill `sequence-pedagogique-engageante` (ligne d'étiquettes, tension n°298 / n°306
+  relevée le 23/10 : tranchée) mis à jour.
+- **Bancs des lots inchangés** : ils comptent `.referentiel-card` sur la page (zéro, toujours) et lisent la carte dans la
+  synthèse professeur (toujours là). Aucun n'a été réécrit pour passer.
+- **Deux défauts vus par les contrôles, corrigés dans l'outil avant livraison.** (1) `controle_regles_visibles`
+  (n°309) : la carte dit « codes de classement internes à ce dépôt » — l'élève lirait la fabrique ; sur la page, la phrase
+  prend la forme de l'index depuis le 21/10 (« servent à ranger les séquences ; ils ne viennent pas du programme
+  officiel »), la synthèse professeur garde la sienne. (2) `controle_liens` : la carte de 3e_C6.1 portait deux liens
+  `../../3e_C6.2/…` justes depuis `Synthèses/`, morts depuis la séquence ; l'outil retire un `../` quand la synthèse vit
+  dans `Synthèses/`.
+
+**Vérifié.**
+- `verif_regles_audit.py` sur les 60 séquences, branche contre `main` : ✘ **135 → 135**, ✔ **789 → 789** ; n°298
+  « replié sous les étiquettes » sur **48** pages, zéro ✘ n°298.
+- Captures à 390 px de 5e_C2.1, même position de défilement, dans la PR : avant · après fermé · après ouvert. Aucun
+  défilement de côté (390 px), aucune erreur JavaScript.
+- Contrôles du site, exécutés sur la branche : `controle_squelette`, `controle_hors_ligne`, `controle_impression`,
+  `controle_verrous` (Playwright) ✅ ; `controle_regles_visibles`, `controle_liens`, `controle_hierarchie`,
+  `controle_mode_essentiel`, `controle_debordement`, `controle_competences`, `controle_formulations`,
+  `controle_impression_papier`, `controle_tactile`, `controle_boutons_vivants`, `controle_longueurs`, `controle_medias`,
+  `controle_sigles`, `controle_unites` ✅. `controle_regle4` : même refus sur `main` (bouton QCM à 54 % d'une page),
+  antérieur à ce lot. `controle_contraste_liens` : voir la description de la PR (lancé en dernier, long).
+
+**Reste à Pascal.** Fusionner ; dire si le titre du dépliant lui convient (« 📚 Le référentiel de la séquence — en toutes
+lettres », repris de la carte) ou s'il préfère plus court (« 📚 Ce que je serai capable de faire ») ; décider si les ateliers
+engendrés suivent, par leurs générateurs, dans une PR à part.

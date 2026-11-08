@@ -212,6 +212,19 @@ a.lien-outil,a.lien-outil:visited{color:var(--hl)}   /* règle d'or n°303 : un 
 .situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
 .situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
 @media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
+
+/* n°298 amendée (07/11/2026) : le référentiel, replié sous les étiquettes */
+details.referentiel-replie{margin:0 auto 14px;max-width:960px;border-left:4px solid var(--head,#c68ef2);border-radius:8px;padding:6px 12px;background:rgba(255,255,255,.04)}
+details.referentiel-replie>summary{cursor:pointer;font-weight:600;color:var(--head,#c68ef2);list-style:none;display:flex;gap:8px;align-items:center;min-height:44px}
+details.referentiel-replie>summary::-webkit-details-marker{display:none}
+details.referentiel-replie>summary::before{content:"▸";transition:transform .15s}
+details.referentiel-replie[open]>summary::before{transform:rotate(90deg)}
+details.referentiel-replie table{width:100%;border-collapse:collapse;font-size:.92em;margin:8px 0}
+details.referentiel-replie th,details.referentiel-replie td{border:1px solid var(--border,#274a8a);padding:5px 8px;vertical-align:top;text-align:left}
+details.referentiel-replie p{margin:8px 0}
+body.essentiel details.referentiel-replie{display:none}
+@media print{details.referentiel-replie{display:none}}
+@media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -582,6 +595,25 @@ a.lien-outil,a.lien-outil:visited{color:var(--hl)}   /* règle d'or n°303 : un 
 <summary>📖 Rappel : la situation et ton hypothèse</summary>
 
 <div class="badges"><span class="badge">5e</span><span class="badge">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span><span class="badge" title="Suivre un processus de conception et de réalisation dans une durée, avec des tâches identifiées.">5e_C7.1</span><span class="badge" title="Vérifier le comportement et les performances d'un objet technique en suivant un protocole fourni.">5e_C8.3</span><span class="badge" title="Réaliser et mettre au point un programme simple commandant un OST.">5e_C9.3</span><span class="badge" title="Domaines du socle commun travaillés : D2 Les méthodes et outils pour apprendre · D3 La formation de la personne et du citoyen · D4 Les systèmes naturels et les systèmes techniques · D5 Les représentations du monde et l’activité humaine.">Socle : D2 · D3 · D4 · D5</span><span class="badge" title="Ancrage : New York — hall d'une middle school.">New York</span><span class="badge" title="Durée : 3 séances de 55 min sur cette page — 110 min d'activités annoncées (le mini-projet complet se déroule sur 6 séances, atelier et réalisation compris).">⏱ 3 séances de 55 min</span></div>
+<!-- n°298 amendée (07/11/2026) : le référentiel revient, replié, copie du bloc referentiel-eleve de la synthèse professeur -->
+<details class="referentiel-replie">
+  <summary>📚 Les trois compétences travaillées — en toutes lettres</summary>
+<div class="bloc referentiel-eleve">
+<p>Ce ne sont pas des familles, ce sont <b>trois compétences précises</b> du programme 2024,
+citées mot pour mot&nbsp;:</p>
+<table class="refs">
+<tr><td><b>5e_C7.1</b></td><td>Suivre un processus de conception et de réalisation dans une durée, avec des tâches identifiées.</td></tr>
+<tr><td><b>5e_C8.3</b></td><td>Vérifier le comportement et les performances d'un objet technique en suivant un protocole fourni.</td></tr>
+<tr><td><b>5e_C9.3</b></td><td>Réaliser et mettre au point un programme simple commandant un OST.</td></tr>
+</table>
+<p style="opacity:.85;font-size:.93em">Cette séquence annonçait auparavant «&nbsp;C7 · C8 · C9&nbsp;»,
+c'est-à-dire <b>douze</b> compétences pour en servir trois. Elle n'en revendique plus que ce qu'elle
+produit&nbsp;: le choix d'un matériau, l'assemblage d'un prototype ou la modification d'un programme
+fourni relèvent d'autres codes, qui restent à créer.</p>
+  <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>5e_C7.1</code> · <code>5e_C8.3</code> · <code>5e_C9.3</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel.</p>
+</div>
+</details>
+
 
 <section class="card">
 <h2>📖 Situation déclenchante</h2>

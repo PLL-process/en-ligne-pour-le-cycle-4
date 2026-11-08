@@ -223,6 +223,19 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+
+/* n°298 amendée (07/11/2026) : le référentiel, replié sous les étiquettes */
+details.referentiel-replie{margin:0 auto 14px;max-width:960px;border-left:4px solid var(--head,#c68ef2);border-radius:8px;padding:6px 12px;background:rgba(255,255,255,.04)}
+details.referentiel-replie>summary{cursor:pointer;font-weight:600;color:var(--head,#c68ef2);list-style:none;display:flex;gap:8px;align-items:center;min-height:44px}
+details.referentiel-replie>summary::-webkit-details-marker{display:none}
+details.referentiel-replie>summary::before{content:"▸";transition:transform .15s}
+details.referentiel-replie[open]>summary::before{transform:rotate(90deg)}
+details.referentiel-replie table{width:100%;border-collapse:collapse;font-size:.92em;margin:8px 0}
+details.referentiel-replie th,details.referentiel-replie td{border:1px solid var(--border,#274a8a);padding:5px 8px;vertical-align:top;text-align:left}
+details.referentiel-replie p{margin:8px 0}
+body.essentiel details.referentiel-replie{display:none}
+@media print{details.referentiel-replie{display:none}}
+@media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -622,6 +635,24 @@
   <span class="badge socle" title="Domaines du socle commun travaillés : D1.3 Comprendre, s’exprimer en utilisant les langages mathématiques, scientifiques et informatiques · D2 Les méthodes et outils pour apprendre · D4 Les systèmes naturels et les systèmes techniques.">D1.3 · D2 · D4</span>
   <span class="badge duree">⏱ 3 séances de 55 min</span>
 </div>
+<!-- n°298 amendée (07/11/2026) : le référentiel revient, replié, copie du bloc referentiel-eleve de la synthèse professeur -->
+<details class="referentiel-replie">
+  <summary>📋 Référentiel (2024)</summary>
+<div class="bloc referentiel-eleve">
+  <table class="refs">
+    <tr><th>Compétence générale</th><td>C6 — Comprendre et modifier un programme associé à une fonctionnalité d'un objet ou d'un système technique</td></tr>
+    <tr><th>Sous-compétence</th><td><strong>4e_C6.2</strong> — Compléter un programme pour répondre à une fonctionnalité d'un OST</td></tr>
+    <tr><th>Compétences mobilisées</th><td><span class="tag">4e_C6.2</span><span class="tag">4e_C4.1</span> chaîne d'énergie <span class="tag">4e_C4.5</span> transformation des données <span class="tag">4e_C1.4</span> usage raisonné</td></tr>
+    <tr><th>Connaissances associées</th><td>Instruction conditionnelle, capteur analogique, seuil, structuration d'un programme (blocs et Python)</td></tr>
+    <tr><th>Capacité attendue (observable)</th><td>Remettre en ordre puis compléter la condition (seuil d'humidité) d'un programme FOURNI, l'exécuter dans l'éditeur, et prouver son comportement par un banc de tests</td></tr>
+    <tr><th>Niveau de maîtrise visé</th><td><b>Séance 1 :</b> découverte-entraînement (chaîne d'information, capteur, remise en ordre) · <b>Séance 2 :</b> consolidation (la capacité observable est travaillée : compléter ET tester la condition) · <b>Séance 3 :</b> validation-évaluation (banc de tests + cahier des charges → grille LSU 1-4 ci-dessous)</td></tr>
+    <tr><th>Domaines du socle</th><td>D1.3 (langage informatique) · D2 (méthodes/outils) · D4 (systèmes techniques) — et D3/D5 pour le volet impact (séance 3)</td></tr>
+    <tr><th>Compétence numérique (CRCN)</th><td>3.4 Programmer, Niv. 2 — action observable : condition complétée et exécutée dans l'éditeur Vittascience ; trace : réponses, banc de tests et badges sauvegardés dans la page</td></tr>
+  </table>
+  <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>4e_C1.4</code> · <code>4e_C4.1</code> · <code>4e_C4.5</code> · <code>4e_C6.2</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel.</p>
+</div>
+</details>
+
 
 <section class="card">
   <h2>📖 Situation déclenchante</h2>

@@ -319,6 +319,19 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+
+/* n°298 amendée (07/11/2026) : le référentiel, replié sous les étiquettes */
+details.referentiel-replie{margin:0 auto 14px;max-width:960px;border-left:4px solid var(--head,#c68ef2);border-radius:8px;padding:6px 12px;background:rgba(255,255,255,.04)}
+details.referentiel-replie>summary{cursor:pointer;font-weight:600;color:var(--head,#c68ef2);list-style:none;display:flex;gap:8px;align-items:center;min-height:44px}
+details.referentiel-replie>summary::-webkit-details-marker{display:none}
+details.referentiel-replie>summary::before{content:"▸";transition:transform .15s}
+details.referentiel-replie[open]>summary::before{transform:rotate(90deg)}
+details.referentiel-replie table{width:100%;border-collapse:collapse;font-size:.92em;margin:8px 0}
+details.referentiel-replie th,details.referentiel-replie td{border:1px solid var(--border,#274a8a);padding:5px 8px;vertical-align:top;text-align:left}
+details.referentiel-replie p{margin:8px 0}
+body.essentiel details.referentiel-replie{display:none}
+@media print{details.referentiel-replie{display:none}}
+@media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
 </style>
 <!-- lecteur-pas-a-pas v1 : début — lecteur commun des animations pas à pas ; source unique : _outils/lecteur_pas_a_pas/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -912,6 +925,44 @@
   <span class="badge theme" title="Durée prévue de la séquence, hors QCM d'entraînement.">5 séances de 55 min</span>
   <span class="badge theme" title="CRCN 1.3 Traiter des données.&#10;Le cadre : « Appliquer des traitements à des données pour les analyser et les interpréter. »&#10;Ici : tu repères les valeurs fausses du relevé de l’air, puis compares au tableur la moyenne avec et sans elles.&#10;&#10;CRCN 1.2 Gérer des données.&#10;Le cadre : « Stocker et organiser des données pour les retrouver, les conserver et en faciliter l’accès et la gestion. »&#10;Ici : tu conçois l’arborescence des relevés — un dossier racine et ses sous-dossiers — et des noms de fichiers qui se retrouvent.&#10;&#10;CRCN 4.1 Sécuriser l’environnement numérique.&#10;Le cadre : « Sécuriser les équipements, les communications et les données pour se prémunir contre les attaques, pièges, désagréments et incidents susceptibles de nuire au bon fonctionnement des matériels, logiciels, sites internet, et de compromettre les transactions et les données. »&#10;Ici : quatre valeurs ont changé dans le fichier déposé sur l’ENT : tu choisis les règles qui le protègent, à commencer par donner à chacun le droit minimal dont il a besoin.">🖥 CRCN 1.3 Traiter des données · 1.2 Gérer des données · 4.1 Sécuriser l’environnement numérique</span>
 </div>
+<!-- n°298 amendée (07/11/2026) : le référentiel revient, replié, copie du bloc referentiel-eleve de la synthèse professeur -->
+<details class="referentiel-replie">
+  <summary>📚 Le référentiel de la séquence — en toutes lettres</summary>
+<div class="bloc referentiel-eleve">
+  <p class="meta"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du
+  29 février 2024.<br><b>Codification opérationnelle</b>&nbsp;: <code>5e_C1.1</code> à
+  <code>5e_C1.6</code>. Ces codes servent à ranger les séquences ; ils ne viennent pas du programme officiel. <b>À la fin de cette séquence, je serai capable de…</b> — l'intitulé de la colonne est de nous&nbsp;; les formulations citées, elles, sont celles du BO, qui ne dit pas «&nbsp;je&nbsp;».</p>
+  <table>
+    <tr><th>Code</th><th>Je serai capable de…</th><th>Où</th></tr>
+    <tr><td><b>5e_C1.2</b></td><td>Comparer des principes techniques pour une même fonction
+      technique.</td><td>Séance 1</td></tr>
+    <tr><td><b>5e_C1.1</b></td><td>Collecter, trier et analyser des données.</td><td>Séance 2</td></tr>
+    <tr><td><b>5e_C1.4</b></td><td>Recenser des données, les identifier, les classer, les
+      représenter, les stocker, les retrouver dans une arborescence.</td><td>Séance 3</td></tr>
+    <tr><td><b>5e_C1.3</b></td><td>Décrire le rôle des systèmes d'information dans le partage
+      d'information.</td><td>Séance 4</td></tr>
+    <tr><td><b>5e_C1.5</b></td><td>Identifier des règles permettant de sécuriser un environnement
+      numérique (bases de la cybersécurité) et des règles de respect de la propriété
+      intellectuelle.</td><td>Séance 5</td></tr>
+    <tr><td><b>5e_C1.6</b></td><td>Appréhender la responsabilité de chacun dans les dérives
+      (cyberviolence, atteinte à la vie privée, aux données personnelles, usurpation
+      d'identité).</td><td>Séance 5</td></tr>
+  </table>
+  <p><b>Socle</b> — D2 méthodes et outils pour apprendre · D3 formation de la personne et du citoyen ·
+  D4 systèmes techniques · D5 représentations du monde.</p>
+  <p class="meta">🧵 <b>Six codes, une seule donnée.</b> Le relevé du capteur de la cour va traverser
+  toute la séquence&nbsp;: il sera <b>mesuré</b> (C1.2), <b>trié</b> (C1.1), <b>rangé</b> (C1.4),
+  <b>partagé</b> (C1.3), <b>protégé</b> (C1.5) — et il finira par <b>désigner quelqu'un</b> (C1.6).
+  Ce n'est pas six leçons&nbsp;: c'est une seule histoire, en six moments.</p>
+  <p class="legende-badges">🔎 <b>Ce que disent ces étiquettes.</b> <b>5e</b>&nbsp;: le niveau.
+<b>C1.1 à C1.6</b>&nbsp;: les six compétences travaillées — des codes de classement <b>propres à ce
+site</b>, écrits en toutes lettres plus bas. <b>D2 · D3 · D4 · D5</b>&nbsp;: les domaines du
+<b>socle commun</b>, les grandes familles de ce qu'on apprend au collège.
+<b>CRCN</b>&nbsp;: le cadre des compétences numériques, celui qu'on retrouve dans <b>Pix</b>.
+<b>5 séances de 55 min</b>&nbsp;: le temps prévu, sans compter le QCM.</p>
+</div>
+</details>
+
 
 <style>
   .gestes-outil{border:1px solid var(--border,#2a3550);border-left:4px solid #ffb300;

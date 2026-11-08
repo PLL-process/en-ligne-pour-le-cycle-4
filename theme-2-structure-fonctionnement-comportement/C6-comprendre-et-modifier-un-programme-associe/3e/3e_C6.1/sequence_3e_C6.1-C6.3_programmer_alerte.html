@@ -218,6 +218,19 @@
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
 @media (pointer:coarse){.cl-hl,.cl-ta,.cl-gutter{font-size:max(16px,var(--cl-fs,14px))!important}}
+
+/* n°298 amendée (07/11/2026) : le référentiel, replié sous les étiquettes */
+details.referentiel-replie{margin:0 auto 14px;max-width:960px;border-left:4px solid var(--head,#c68ef2);border-radius:8px;padding:6px 12px;background:rgba(255,255,255,.04)}
+details.referentiel-replie>summary{cursor:pointer;font-weight:600;color:var(--head,#c68ef2);list-style:none;display:flex;gap:8px;align-items:center;min-height:44px}
+details.referentiel-replie>summary::-webkit-details-marker{display:none}
+details.referentiel-replie>summary::before{content:"▸";transition:transform .15s}
+details.referentiel-replie[open]>summary::before{transform:rotate(90deg)}
+details.referentiel-replie table{width:100%;border-collapse:collapse;font-size:.92em;margin:8px 0}
+details.referentiel-replie th,details.referentiel-replie td{border:1px solid var(--border,#274a8a);padding:5px 8px;vertical-align:top;text-align:left}
+details.referentiel-replie p{margin:8px 0}
+body.essentiel details.referentiel-replie{display:none}
+@media print{details.referentiel-replie{display:none}}
+@media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -641,6 +654,20 @@
   <span class="badge crcn" title="CRCN 3.4 Programmer.&#10;Le cadre : « Écrire des programmes et des algorithmes pour répondre à un besoin. »&#10;Ici : tu lis le programme de la station et prédis ses sorties, le modifies pour l’alerte graduée, puis le valides par des jeux d’essai aux valeurs frontières.">CRCN : 3.4 Programmer</span>
   <span class="badge duree">⏱ 3 séances de 55 min</span>
 </div>
+<!-- n°298 amendée (07/11/2026) : le référentiel revient, replié, copie du bloc referentiel-eleve de la synthèse professeur -->
+<details class="referentiel-replie">
+  <summary>📋 Référentiel officiel (programme 2024)</summary>
+<div class="bloc referentiel-eleve">
+  <table class="refs">
+    <tr><th>Code</th><th>Sous-compétence travaillée</th><th>Socle</th><th>Activités</th></tr>
+    <tr><td><b>3e_C6.1</b></td><td>Déterminer les données utilisées et produites par un programme associé à une fonctionnalité en vue de le modifier.</td><td>D1.3, D2</td><td>1, 2, R</td></tr>
+    <tr><td><b>3e_C6.3</b></td><td>Modifier et tester le programme associé à une nouvelle fonctionnalité d'un OST.</td><td>D2, D4</td><td>3, 4, 5, R</td></tr>
+  </table>
+  <p style="font-size:.85em;color:var(--sub);margin-top:8px">Compétence parente <b>C6</b> — BO n°9 du 29/02/2024. Le code <b>3e_C6.2</b> (programmer un algorithme lié à une nouvelle fonctionnalité) est couvert par <a href="../3e_C6.2/sequence_3e_C6.2_auto_test_station.html">« L'auto-test de la station »</a>. Pour réviser la lecture d'algorigrammes avant la séance 2&nbsp;: <a href="../3e_C6.2/entrainement_dnb_algorigrammes.html">l'entraînement DNB</a>, 30 exercices corrigés.</p>
+  <p style="font-size:.9em;color:var(--sub)"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>3e_C6.1</code> · <code>3e_C6.2</code> · <code>3e_C6.3</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel. Les formulations ci-dessus sont celles du référentiel.</p>
+</div>
+</details>
+
 <div class="identite" id="identite">
   <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
   <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
