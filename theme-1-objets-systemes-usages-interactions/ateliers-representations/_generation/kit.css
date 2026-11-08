@@ -77,6 +77,16 @@ fieldset.qcm-groupe legend{font-weight:600;color:#fff;padding:0 6px;max-width:10
 .option{display:flex;align-items:flex-start;gap:9px;padding:7px 9px;border-radius:8px;border:1px solid transparent;cursor:pointer}
 .option:hover{border-color:var(--input-bd);background:rgba(29,78,137,.25)}
 .option input{margin-top:.32em;width:1.15em;height:1.15em;flex:0 0 auto;accent-color:#61dafb}
+/* la grille (08/11/2026) : les réponses une fois, lettrées ; chaque question, une rangée de lettres */
+.cles-grille{margin:10px 0 6px;padding:8px 12px;border:1px solid var(--input-bd);border-radius:10px}
+.cles-grille .cles-titre{margin:0 0 4px;font-weight:600}
+.cles-grille ol{margin:0;padding-left:0;list-style:none}
+.cles-grille li{margin:3px 0;padding-left:1.9em;text-indent:-1.9em}
+.cles-grille li b{display:inline-block;width:1.6em;text-indent:0;color:#61dafb}
+.options-grille{flex-direction:row;flex-wrap:wrap;gap:6px}
+.options-grille .option{align-items:center;gap:5px;padding:4px 8px;border-color:var(--input-bd)}
+.options-grille .option input{margin-top:0}
+.options-grille .option span{font-weight:700}
 .encoche{display:inline-block;min-width:1.3em;font-weight:700;margin-left:6px}
 .encoche.juste{color:var(--ok)} .encoche.faux{color:var(--err)} .encoche.vide{color:var(--warn)}
 .encoche-texte{font-size:.86em;font-weight:600;margin-left:4px}
@@ -237,6 +247,7 @@ footer.pied{max-width:940px;margin:30px auto 0;padding:0 16px;color:#7d9bd6;font
 /* Mode essentiel : on garde les consignes et les réponses, on replie le reste */
 body.essentiel details.correction,body.essentiel .approfondir,body.essentiel details.description{display:none}
 @media (max-width:600px){body{font-size:16px}.card{padding:12px 12px}.onglet{min-width:46%}h1{font-size:1.32em}}
+@media print{.cles-grille{border-color:#999!important}.cles-grille li b{color:#111!important}}
 @media print{
   body{background:#fff;color:#111;font-size:12pt}
   #navharm,.toolbar,.onglets,.progression,.btn,.croquis-outils,.evitement{display:none!important}

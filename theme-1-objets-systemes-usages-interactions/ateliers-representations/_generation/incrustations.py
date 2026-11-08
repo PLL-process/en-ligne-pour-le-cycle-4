@@ -31,7 +31,7 @@ import moteur  # noqa: E402
 DEPOT = moteur.DEPOT
 KIT = ("<!-- ateliers-representations:moteur -->", "<!-- /ateliers-representations:moteur -->")
 GARDER = re.compile(r"^(\.(?:card|meta|consigne|note|btn|figure|schema-vivant|defile|retour|encoche|option|options|demo|retenir|piege|critere|"
-                    r"croquis|verif|lsu|champ|tableau-menus|menus-schema|ms-[a-z-]+)|fieldset|textarea|input|select|table|th|td|details|label|a)")
+                    r"croquis|verif|lsu|champ|tableau-menus|menus-schema|cles-grille|ms-[a-z-]+)|fieldset|textarea|input|select|table|th|td|details|label|a)")
 
 
 def css_incruste():
