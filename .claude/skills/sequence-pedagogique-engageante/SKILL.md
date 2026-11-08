@@ -193,6 +193,10 @@ La synthèse « à retenir » se place avant le Bonus (pratique de `3e_C5.1` et 
   compare. Un schéma (SVG intégré ou fichier) est une zone à lui seul : ses unités sont nommées par la ligne
   « Unités : V (volts) » sous le dessin, posée par `python3 _outils/legende_unites.py <fichier.svg|page.html>` (le texte
   de `<title>`/`<desc>` ne compte pas : l'œil ne le voit pas). Pas besoin pour m, cm, mm, km, g, kg, L, s, min, h, °C, €, %, km/h.
+- Texte aéré (08/11/2026, skill `texte-clair-et-aere`) : une consigne est à l'impératif, 20 mots au plus, une action par
+  ligne, la condition d'abord ; une légende d'image se lit en lignes (« Ce que tu dois voir : », « Si tu vois ceci : »,
+  « Puis : », la note en italique à la fin) ; une correction donne la réponse, puis le pourquoi, puis chaque réponse refusée
+  avec sa raison, une par ligne. Vérifier avec `python3 _outils/audit_aeration.py --strict <page>`.
 - Personnes (n°302) : la page élève dit « tu » quand elle guide, « je » pour ce que l'élève saura faire et pour son positionnement.
   La troisième personne est réservée aux pages destinées à un collègue (synthèse professeur, fiche pédagogique).
 - Prévoir la sauvegarde locale et la reprise, les exports, une impression propre (n°102), une navigation complète au clavier

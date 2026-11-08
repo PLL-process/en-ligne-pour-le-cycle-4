@@ -555,9 +555,10 @@ def figure_reference_bac(ident="bc-ref", legende=None, apte=True, classe="figure
     titre = ("La bête à cornes (méthode APTE, <i>APplication aux Techniques d'Entreprise</i>)" if apte
              else TITRE_REFERENCE_BAC)
     if legende is None:
-        legende = ("Ses quatre mots de référence, les mêmes pour tous les objets&nbsp;: l'<b>utilisateur</b> (à qui le produit "
-                   "rend service), la <b>matière d'œuvre</b> (ce sur quoi il agit), le <b>produit</b>, et la <b>fonction</b> "
-                   "(la fonction d'usage&nbsp;: dans quel but il existe).")
+        # un mot de référence par ligne (08/11/2026, skill texte-clair-et-aere : la légende faisait 41 mots d'un tenant)
+        legende = ("Ses quatre mots de référence, les mêmes pour tous les objets&nbsp;:<br>• l'<b>utilisateur</b>&nbsp;: à qui le "
+                   "produit rend service&nbsp;;<br>• la <b>matière d'œuvre</b>&nbsp;: ce sur quoi il agit&nbsp;;<br>• le "
+                   "<b>produit</b>&nbsp;;<br>• la <b>fonction</b>&nbsp;: la fonction d'usage, dans quel but il existe.")
     return ('<figure class="%s"><figcaption><b class="bac-ref-titre">%s</b><br>%s</figcaption>%s</figure>'
             % (classe, titre, legende, bete_a_cornes_reference(ident)))
 
