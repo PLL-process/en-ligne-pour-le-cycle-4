@@ -243,7 +243,7 @@ body.essentiel details.referentiel-replie{display:none}
     padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
   .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
   .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
-  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
   .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
   @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
     .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
@@ -380,26 +380,6 @@ body.essentiel details.referentiel-replie{display:none}
   [data-lpp-racine]:not(.lpp-sans-impression)>:not([data-lpp="dessin"]):not(.lpp-imprime){display:none!important}
 }
 </style>
-<script>
-/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
-   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
-   fonctionner sur le groupe de boutons radio, sans être touché. */
-(function(){
-  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
-  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
-    configurable: true,
-    get: function(){
-      if (!this.classList.contains("qcm-groupe")) return undefined;
-      var c = this.querySelector("input[type=radio]:checked");
-      return c ? c.value : "";
-    },
-    set: function(v){
-      if (!this.classList.contains("qcm-groupe")) return;
-      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
-    }
-  });
-})();
-</script>
 <script>
 /* Fiche papier — source unique : _outils/impression_papier/papier.js (posé par poser.py ; ne pas modifier dans la page).
    Prépare, une fois, ce que le papier remplace (cachés à l'écran : .pp-papier) ; avant chaque impression, marque la séance
@@ -617,6 +597,26 @@ body.essentiel details.referentiel-replie{display:none}
 </script>
 <!-- fiche-papier v1 : fin -->
 <!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
@@ -831,12 +831,12 @@ main en haut d'une échelle.</p>
 <div id="tachesBandeau" aria-live="polite" aria-atomic="true">
   <span class="tb-titre">📋 Où j'en suis <span class="tb-compte"></span></span>
   <ul>
-    <li data-check="0"><span class="tb-etat">○</span> Vérifier l'activité 0</li>
-    <li data-check="1a"><span class="tb-etat">○</span> Vérifier la première partie</li>
-    <li data-check="1"><span class="tb-etat">○</span> Vérifier l'activité 1</li>
-    <li data-check="2"><span class="tb-etat">○</span> Vérifier l'activité 2</li>
-    <li data-check="3"><span class="tb-etat">○</span> Vérifier l'activité 3</li>
-    <li data-check="4"><span class="tb-etat">○</span> Vérifier le réinvestissement</li>
+    <li data-tache="0"><span class="tb-etat">○</span> Vérifier l'activité 0</li>
+    <li data-tache="1a"><span class="tb-etat">○</span> Vérifier la première partie</li>
+    <li data-tache="1"><span class="tb-etat">○</span> Vérifier l'activité 1</li>
+    <li data-tache="2"><span class="tb-etat">○</span> Vérifier l'activité 2</li>
+    <li data-tache="3"><span class="tb-etat">○</span> Vérifier l'activité 3</li>
+    <li data-tache="4"><span class="tb-etat">○</span> Vérifier le réinvestissement</li>
   </ul>
 </div>
 <!-- ══════════════════ SÉANCE 1 ══════════════════ -->
@@ -937,11 +937,11 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
     <tr><td>Masse du boîtier en aluminium (ρ = 2 700 kg/m³, surface 0,123 m²)</td><td class="num"><input type="text" inputmode="decimal" id="rel3" placeholder="… kg"></td></tr>
   </table>
     <fieldset class="qcm-groupe" id="a0q1">
-  <legend><b>La question qui compte :</b> l'aluminium (ρ = 2 700 kg/m³) est
+  <legend><b>La question qui compte :</b> l'aluminium (ρ = 2 700 kg/m³) est
     <b>1,9 fois plus dense</b> que le PVC (ρ = 1 400 kg/m³). Le boîtier en aluminium pèse-t-il
-    1,9 fois plus que le boîtier en PVC ?</legend>
-  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__1" value="non : plus résistant, il se contente d&#x27;une paroi bien plus fine, et les deux se tiennent"><label for="a0q1__1">non : plus résistant, il se contente d'une paroi bien plus fine, et les deux se tiennent</label></div>
-  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__2" value="oui : la masse est proportionnelle à la masse volumique du matériau employé"><label for="a0q1__2">oui : la masse est proportionnelle à la masse volumique du matériau employé</label></div>
+    1,9 fois plus que le boîtier en PVC ?</legend>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__1" value="non : plus résistant, il se contente d&#x27;une paroi bien plus fine, et les deux se tiennent"><label for="a0q1__1">non : plus résistant, il se contente d'une paroi bien plus fine, et les deux se tiennent</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__2" value="oui : la masse est proportionnelle à la masse volumique du matériau employé"><label for="a0q1__2">oui : la masse est proportionnelle à la masse volumique du matériau employé</label></div>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__3" value="non, il pèse deux fois moins, parce qu&#x27;une paroi fine pèse toujours moins lourd"><label for="a0q1__3">non, il pèse deux fois moins, parce qu'une paroi fine pèse toujours moins lourd</label></div>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__4" value="on ne peut pas le savoir tant que l&#x27;épaisseur n&#x27;est pas fixée par le cahier"><label for="a0q1__4">on ne peut pas le savoir tant que l'épaisseur n'est pas fixée par le cahier</label></div>
 </fieldset>
@@ -1021,29 +1021,29 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
     <p>Associe chaque candidat au motif exact de son élimination.</p>
     <fieldset class="qcm-groupe" id="a1r0">
   <legend><b>Le PLA</b></legend>
-  <div class="qcm-option"><input type="radio" name="a1r0" id="a1r0__1" value="deux exigences lui manquent : un an de soleil au lieu de dix, et le sel"><label for="a1r0__1">deux exigences lui manquent : un an de soleil au lieu de dix, et le sel</label></div>
-  <div class="qcm-option"><input type="radio" name="a1r0" id="a1r0__2" value="il ne lui manque que le sel : 4 sur 5 quand on en exige 5"><label for="a1r0__2">il ne lui manque que le sel : 4 sur 5 quand on en exige 5</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r0" id="a1r0__1" value="deux exigences lui manquent : un an de soleil au lieu de dix, et le sel"><label for="a1r0__1">deux exigences lui manquent : un an de soleil au lieu de dix, et le sel</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r0" id="a1r0__2" value="il ne lui manque que le sel : 4 sur 5 quand on en exige 5"><label for="a1r0__2">il ne lui manque que le sel : 4 sur 5 quand on en exige 5</label></div>
   <div class="qcm-option"><input type="radio" name="a1r0" id="a1r0__3" value="il tient le sel, la chaleur et l&#x27;effort — mais cinq ans de soleil, pas dix"><label for="a1r0__3">il tient le sel, la chaleur et l'effort — mais cinq ans de soleil, pas dix</label></div>
   <div class="qcm-option"><input type="radio" name="a1r0" id="a1r0__4" value="il tient tout, et il pèse 1,320 kg quand on en admet 1,2"><label for="a1r0__4">il tient tout, et il pèse 1,320 kg quand on en admet 1,2</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a1r1">
   <legend><b>Le PETG</b></legend>
-  <div class="qcm-option"><input type="radio" name="a1r1" id="a1r1__1" value="deux exigences lui manquent : un an de soleil au lieu de dix, et le sel"><label for="a1r1__1">deux exigences lui manquent : un an de soleil au lieu de dix, et le sel</label></div>
-  <div class="qcm-option"><input type="radio" name="a1r1" id="a1r1__2" value="il ne lui manque que le sel : 4 sur 5 quand on en exige 5"><label for="a1r1__2">il ne lui manque que le sel : 4 sur 5 quand on en exige 5</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r1" id="a1r1__1" value="deux exigences lui manquent : un an de soleil au lieu de dix, et le sel"><label for="a1r1__1">deux exigences lui manquent : un an de soleil au lieu de dix, et le sel</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r1" id="a1r1__2" value="il ne lui manque que le sel : 4 sur 5 quand on en exige 5"><label for="a1r1__2">il ne lui manque que le sel : 4 sur 5 quand on en exige 5</label></div>
   <div class="qcm-option"><input type="radio" name="a1r1" id="a1r1__3" value="il tient le sel, la chaleur et l&#x27;effort — mais cinq ans de soleil, pas dix"><label for="a1r1__3">il tient le sel, la chaleur et l'effort — mais cinq ans de soleil, pas dix</label></div>
   <div class="qcm-option"><input type="radio" name="a1r1" id="a1r1__4" value="il tient tout, et il pèse 1,320 kg quand on en admet 1,2"><label for="a1r1__4">il tient tout, et il pèse 1,320 kg quand on en admet 1,2</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a1r2">
   <legend><b>L'aluminium anodisé</b></legend>
-  <div class="qcm-option"><input type="radio" name="a1r2" id="a1r2__1" value="deux exigences lui manquent : un an de soleil au lieu de dix, et le sel"><label for="a1r2__1">deux exigences lui manquent : un an de soleil au lieu de dix, et le sel</label></div>
-  <div class="qcm-option"><input type="radio" name="a1r2" id="a1r2__2" value="il ne lui manque que le sel : 4 sur 5 quand on en exige 5"><label for="a1r2__2">il ne lui manque que le sel : 4 sur 5 quand on en exige 5</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r2" id="a1r2__1" value="deux exigences lui manquent : un an de soleil au lieu de dix, et le sel"><label for="a1r2__1">deux exigences lui manquent : un an de soleil au lieu de dix, et le sel</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r2" id="a1r2__2" value="il ne lui manque que le sel : 4 sur 5 quand on en exige 5"><label for="a1r2__2">il ne lui manque que le sel : 4 sur 5 quand on en exige 5</label></div>
   <div class="qcm-option"><input type="radio" name="a1r2" id="a1r2__3" value="il tient le sel, la chaleur et l&#x27;effort — mais cinq ans de soleil, pas dix"><label for="a1r2__3">il tient le sel, la chaleur et l'effort — mais cinq ans de soleil, pas dix</label></div>
   <div class="qcm-option"><input type="radio" name="a1r2" id="a1r2__4" value="il tient tout, et il pèse 1,320 kg quand on en admet 1,2"><label for="a1r2__4">il tient tout, et il pèse 1,320 kg quand on en admet 1,2</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a1r3">
   <legend><b>L'acier inoxydable 316</b></legend>
-  <div class="qcm-option"><input type="radio" name="a1r3" id="a1r3__1" value="deux exigences lui manquent : un an de soleil au lieu de dix, et le sel"><label for="a1r3__1">deux exigences lui manquent : un an de soleil au lieu de dix, et le sel</label></div>
-  <div class="qcm-option"><input type="radio" name="a1r3" id="a1r3__2" value="il ne lui manque que le sel : 4 sur 5 quand on en exige 5"><label for="a1r3__2">il ne lui manque que le sel : 4 sur 5 quand on en exige 5</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r3" id="a1r3__1" value="deux exigences lui manquent : un an de soleil au lieu de dix, et le sel"><label for="a1r3__1">deux exigences lui manquent : un an de soleil au lieu de dix, et le sel</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r3" id="a1r3__2" value="il ne lui manque que le sel : 4 sur 5 quand on en exige 5"><label for="a1r3__2">il ne lui manque que le sel : 4 sur 5 quand on en exige 5</label></div>
   <div class="qcm-option"><input type="radio" name="a1r3" id="a1r3__3" value="il tient le sel, la chaleur et l&#x27;effort — mais cinq ans de soleil, pas dix"><label for="a1r3__3">il tient le sel, la chaleur et l'effort — mais cinq ans de soleil, pas dix</label></div>
   <div class="qcm-option"><input type="radio" name="a1r3" id="a1r3__4" value="il tient tout, et il pèse 1,320 kg quand on en admet 1,2"><label for="a1r3__4">il tient tout, et il pèse 1,320 kg quand on en admet 1,2</label></div>
 </fieldset>
@@ -1076,7 +1076,7 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
   <div class="exo">
     <fieldset class="qcm-groupe" id="a1q1">
   <legend><b>1.</b> Aucun matériau ne tient le cahier des charges. Que fait
-    un bureau d'études dans cette situation ?</legend>
+    un bureau d'études dans cette situation ?</legend>
   <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__1" value="il rouvre le cahier des charges et dit quelle exigence il relâche, et pourquoi"><label for="a1q1__1">il rouvre le cahier des charges et dit quelle exigence il relâche, et pourquoi</label></div>
   <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__2" value="il retient le candidat le moins loin du but, puisqu&#x27;il faut bien en prendre un"><label for="a1q1__2">il retient le candidat le moins loin du but, puisqu'il faut bien en prendre un</label></div>
   <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__3" value="il recommence l&#x27;étude avec une liste de matériaux entièrement différente"><label for="a1q1__3">il recommence l'étude avec une liste de matériaux entièrement différente</label></div>
@@ -1084,11 +1084,11 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
 </fieldset>
     <fieldset class="qcm-groupe" id="a1q2">
   <legend><b>2.</b> Le PVC coûte 1,91 € et l'inox 8,58 €. Peut-on dire que le
-    PVC est « le moins mauvais des six » ?</legend>
-  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__1" value="non : un tri par seuils écarte, il ne classe pas ; les recalés ne sont pas rangés"><label for="a1q2__1">non : un tri par seuils écarte, il ne classe pas ; les recalés ne sont pas rangés</label></div>
-  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__2" value="oui : à motif d&#x27;élimination égal, c&#x27;est le prix qui départage les candidats"><label for="a1q2__2">oui : à motif d'élimination égal, c'est le prix qui départage les candidats</label></div>
+    PVC est « le moins mauvais des six » ?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__1" value="non : un tri par seuils écarte, il ne classe pas ; les recalés ne sont pas rangés"><label for="a1q2__1">non : un tri par seuils écarte, il ne classe pas ; les recalés ne sont pas rangés</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__2" value="oui : à motif d&#x27;élimination égal, c&#x27;est le prix qui départage les candidats"><label for="a1q2__2">oui : à motif d'élimination égal, c'est le prix qui départage les candidats</label></div>
   <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__3" value="oui, puisqu&#x27;il ne lui manque qu&#x27;une seule exigence sur les cinq demandées"><label for="a1q2__3">oui, puisqu'il ne lui manque qu'une seule exigence sur les cinq demandées</label></div>
-  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__4" value="non : c&#x27;est l&#x27;inox qui est le moins mauvais, car il ne rate que la masse"><label for="a1q2__4">non : c'est l'inox qui est le moins mauvais, car il ne rate que la masse</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__4" value="non : c&#x27;est l&#x27;inox qui est le moins mauvais, car il ne rate que la masse"><label for="a1q2__4">non : c'est l'inox qui est le moins mauvais, car il ne rate que la masse</label></div>
 </fieldset>
     <p style="font-size:.9em;color:var(--warn)">🔒 Clique d'abord sur « ⚖ Évaluer les candidats » : le résultat de cette activité est justement ce que l'évaluation affiche.</p>
     <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
@@ -1137,23 +1137,23 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
   </table>
     <p style="margin-top:12px"><b>Et qui entre, exactement ?</b></p>
     <fieldset class="qcm-groupe" id="qA">
-  <legend>Sortie A — le matériau qui entre est :</legend>
+  <legend>Sortie A — le matériau qui entre est :</legend>
   <div class="qcm-option"><input type="radio" name="qA" id="qA__1" value="l&#x27;aluminium anodisé"><label for="qA__1">l'aluminium anodisé</label></div>
   <div class="qcm-option"><input type="radio" name="qA" id="qA__2" value="l&#x27;acier inoxydable 316"><label for="qA__2">l'acier inoxydable 316</label></div>
   <div class="qcm-option"><input type="radio" name="qA" id="qA__3" value="le PETG"><label for="qA__3">le PETG</label></div>
   <div class="qcm-option"><input type="radio" name="qA" id="qA__4" value="le polypropylène recyclé"><label for="qA__4">le polypropylène recyclé</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="qB">
-  <legend>Sortie B — le matériau qui entre est :</legend>
+  <legend>Sortie B — le matériau qui entre est :</legend>
   <div class="qcm-option"><input type="radio" name="qB" id="qB__1" value="l&#x27;acier inoxydable 316"><label for="qB__1">l'acier inoxydable 316</label></div>
   <div class="qcm-option"><input type="radio" name="qB" id="qB__2" value="l&#x27;aluminium anodisé"><label for="qB__2">l'aluminium anodisé</label></div>
   <div class="qcm-option"><input type="radio" name="qB" id="qB__3" value="le PVC rigide"><label for="qB__3">le PVC rigide</label></div>
   <div class="qcm-option"><input type="radio" name="qB" id="qB__4" value="le PLA"><label for="qB__4">le PLA</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a2q1">
-  <legend><b>La question qui compte :</b> laquelle de ces trois sorties ne
-    coûte rien à personne ?</legend>
-  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__1" value="aucune : chacune déplace la contrainte ailleurs dans le système ou dans le temps"><label for="a2q1__1">aucune : chacune déplace la contrainte ailleurs dans le système ou dans le temps</label></div>
+  <legend><b>La question qui compte :</b> laquelle de ces trois sorties ne
+    coûte rien à personne ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__1" value="aucune : chacune déplace la contrainte ailleurs dans le système ou dans le temps"><label for="a2q1__1">aucune : chacune déplace la contrainte ailleurs dans le système ou dans le temps</label></div>
   <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__2" value="la sortie C, puisqu&#x27;elle fait entrer trois matériaux au lieu d&#x27;un seul"><label for="a2q1__2">la sortie C, puisqu'elle fait entrer trois matériaux au lieu d'un seul</label></div>
   <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__3" value="la sortie A, puisqu&#x27;un point de tenue au sel sur cinq est un écart minuscule"><label for="a2q1__3">la sortie A, puisqu'un point de tenue au sel sur cinq est un écart minuscule</label></div>
   <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__4" value="la sortie B, puisque l&#x27;inox tient toutes les autres exigences très largement"><label for="a2q1__4">la sortie B, puisque l'inox tient toutes les autres exigences très largement</label></div>
@@ -1215,31 +1215,31 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
 
     <p>Associe chaque sortie à ce qu'elle engage ailleurs dans le projet.</p>
     <fieldset class="qcm-groupe" id="a3p0">
-  <legend><b>Sortie A — abaisser la tenue au sel à 4 : l'aluminium entre</b></legend>
+  <legend><b>Sortie A — abaisser la tenue au sel à 4 : l'aluminium entre</b></legend>
   <div class="qcm-option"><input type="radio" name="a3p0" id="a3p0__1" value="il se plie et se perce à l&#x27;atelier, mais il ne s&#x27;imprime pas, et son anodisation devra être reprise avant dix ans"><label for="a3p0__1">il se plie et se perce à l'atelier, mais il ne s'imprime pas, et son anodisation devra être reprise avant dix ans</label></div>
   <div class="qcm-option"><input type="radio" name="a3p0" id="a3p0__2" value="on fabrique le boîtier au collège, et on accepte de le refaire une fois au milieu des dix ans"><label for="a3p0__2">on fabrique le boîtier au collège, et on accepte de le refaire une fois au milieu des dix ans</label></div>
-  <div class="qcm-option"><input type="radio" name="a3p0" id="a3p0__3" value="plus rien ne s&#x27;use, mais la pose d&#x27;une main en haut d&#x27;une échelle n&#x27;est plus possible : c&#x27;est l&#x27;argument qui avait écarté la barre d&#x27;acier en 3e_C8.2"><label for="a3p0__3">plus rien ne s'use, mais la pose d'une main en haut d'une échelle n'est plus possible : c'est l'argument qui avait écarté la barre d'acier en 3e_C8.2</label></div>
+  <div class="qcm-option"><input type="radio" name="a3p0" id="a3p0__3" value="plus rien ne s&#x27;use, mais la pose d&#x27;une main en haut d&#x27;une échelle n&#x27;est plus possible : c&#x27;est l&#x27;argument qui avait écarté la barre d&#x27;acier en 3e_C8.2"><label for="a3p0__3">plus rien ne s'use, mais la pose d'une main en haut d'une échelle n'est plus possible : c'est l'argument qui avait écarté la barre d'acier en 3e_C8.2</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a3p1">
-  <legend><b>Sortie B — porter la masse admise à 1,4 kg : l'inox entre</b></legend>
+  <legend><b>Sortie B — porter la masse admise à 1,4 kg : l'inox entre</b></legend>
   <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__1" value="il se plie et se perce à l&#x27;atelier, mais il ne s&#x27;imprime pas, et son anodisation devra être reprise avant dix ans"><label for="a3p1__1">il se plie et se perce à l'atelier, mais il ne s'imprime pas, et son anodisation devra être reprise avant dix ans</label></div>
   <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__2" value="on fabrique le boîtier au collège, et on accepte de le refaire une fois au milieu des dix ans"><label for="a3p1__2">on fabrique le boîtier au collège, et on accepte de le refaire une fois au milieu des dix ans</label></div>
-  <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__3" value="plus rien ne s&#x27;use, mais la pose d&#x27;une main en haut d&#x27;une échelle n&#x27;est plus possible : c&#x27;est l&#x27;argument qui avait écarté la barre d&#x27;acier en 3e_C8.2"><label for="a3p1__3">plus rien ne s'use, mais la pose d'une main en haut d'une échelle n'est plus possible : c'est l'argument qui avait écarté la barre d'acier en 3e_C8.2</label></div>
+  <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__3" value="plus rien ne s&#x27;use, mais la pose d&#x27;une main en haut d&#x27;une échelle n&#x27;est plus possible : c&#x27;est l&#x27;argument qui avait écarté la barre d&#x27;acier en 3e_C8.2"><label for="a3p1__3">plus rien ne s'use, mais la pose d'une main en haut d'une échelle n'est plus possible : c'est l'argument qui avait écarté la barre d'acier en 3e_C8.2</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a3p2">
-  <legend><b>Sortie C — abaisser la tenue au soleil à 5 ans : PETG, PVC et PP entrent</b></legend>
+  <legend><b>Sortie C — abaisser la tenue au soleil à 5 ans : PETG, PVC et PP entrent</b></legend>
   <div class="qcm-option"><input type="radio" name="a3p2" id="a3p2__1" value="il se plie et se perce à l&#x27;atelier, mais il ne s&#x27;imprime pas, et son anodisation devra être reprise avant dix ans"><label for="a3p2__1">il se plie et se perce à l'atelier, mais il ne s'imprime pas, et son anodisation devra être reprise avant dix ans</label></div>
   <div class="qcm-option"><input type="radio" name="a3p2" id="a3p2__2" value="on fabrique le boîtier au collège, et on accepte de le refaire une fois au milieu des dix ans"><label for="a3p2__2">on fabrique le boîtier au collège, et on accepte de le refaire une fois au milieu des dix ans</label></div>
-  <div class="qcm-option"><input type="radio" name="a3p2" id="a3p2__3" value="plus rien ne s&#x27;use, mais la pose d&#x27;une main en haut d&#x27;une échelle n&#x27;est plus possible : c&#x27;est l&#x27;argument qui avait écarté la barre d&#x27;acier en 3e_C8.2"><label for="a3p2__3">plus rien ne s'use, mais la pose d'une main en haut d'une échelle n'est plus possible : c'est l'argument qui avait écarté la barre d'acier en 3e_C8.2</label></div>
+  <div class="qcm-option"><input type="radio" name="a3p2" id="a3p2__3" value="plus rien ne s&#x27;use, mais la pose d&#x27;une main en haut d&#x27;une échelle n&#x27;est plus possible : c&#x27;est l&#x27;argument qui avait écarté la barre d&#x27;acier en 3e_C8.2"><label for="a3p2__3">plus rien ne s'use, mais la pose d'une main en haut d'une échelle n'est plus possible : c'est l'argument qui avait écarté la barre d'acier en 3e_C8.2</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a3q1">
-  <legend><b>1.</b> La sortie C fait entrer trois matériaux : PETG, PVC
+  <legend><b>1.</b> La sortie C fait entrer trois matériaux : PETG, PVC
     rigide et PP recyclé. Le collège veut fabriquer le boîtier lui-même, à l'imprimante 3D.
-    Lesquels restent ?</legend>
-  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__1" value="le PETG et le PP recyclé : le PVC ne s&#x27;imprime pas et ne se découpe pas au laser"><label for="a3q1__1">le PETG et le PP recyclé : le PVC ne s'imprime pas et ne se découpe pas au laser</label></div>
-  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__2" value="les trois : tout thermoplastique peut être extrudé par une imprimante 3D"><label for="a3q1__2">les trois : tout thermoplastique peut être extrudé par une imprimante 3D</label></div>
+    Lesquels restent ?</legend>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__1" value="le PETG et le PP recyclé : le PVC ne s&#x27;imprime pas et ne se découpe pas au laser"><label for="a3q1__1">le PETG et le PP recyclé : le PVC ne s'imprime pas et ne se découpe pas au laser</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__2" value="les trois : tout thermoplastique peut être extrudé par une imprimante 3D"><label for="a3q1__2">les trois : tout thermoplastique peut être extrudé par une imprimante 3D</label></div>
   <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__3" value="le PVC et le PETG, qui sont les deux plus rigides des trois candidats"><label for="a3q1__3">le PVC et le PETG, qui sont les deux plus rigides des trois candidats</label></div>
-  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__4" value="aucun : un boîtier étanche ne peut pas être obtenu par impression 3D"><label for="a3q1__4">aucun : un boîtier étanche ne peut pas être obtenu par impression 3D</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__4" value="aucun : un boîtier étanche ne peut pas être obtenu par impression 3D"><label for="a3q1__4">aucun : un boîtier étanche ne peut pas être obtenu par impression 3D</label></div>
 </fieldset>
     <p style="margin-top:14px"><b>2.</b> Rédige la justification que le bureau d'études rendra.
     Trois choses doivent y figurer : <b>la sortie retenue et le seuil déplacé</b>, <b>le matériau
@@ -1385,11 +1385,11 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
 <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« J'ai hésité au moment de choisir … parce que … »</li><li>« Ce qui m'a surpris dans le verdict du banc, c'est que … »</li><li>« La prochaine fois, je commencerai par … »</li></ul></details>
   <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
   <fieldset class="qcm-groupe" id="pos">
-  <legend><b>Je me positionne sur 3e_C7.3 :</b></legend>
+  <legend><b>Je me positionne sur 3e_C7.3 :</b></legend>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__1" value="🔴 Maîtrise insuffisante — je ne sais pas encore quoi faire quand aucun matériau ne convient"><label for="pos__1">🔴 Maîtrise insuffisante — je ne sais pas encore quoi faire quand aucun matériau ne convient</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__2" value="🟠 Maîtrise fragile — je sais dire quel matériau est le plus proche, mais pas ce que le relâchement coûte"><label for="pos__2">🟠 Maîtrise fragile — je sais dire quel matériau est le plus proche, mais pas ce que le relâchement coûte</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__3" value="🟠 Maîtrise fragile — je sais le faire si on me rappelle de ne déplacer qu&#x27;un seul seuil à la fois"><label for="pos__3">🟠 Maîtrise fragile — je sais le faire si on me rappelle de ne déplacer qu'un seul seuil à la fois</label></div>
-  <div class="qcm-option"><input type="radio" name="pos" id="pos__4" value="🟢 Maîtrise satisfaisante — je sais rouvrir un cahier des charges : nommer le seuil relâché, et dire qui en porte le coût"><label for="pos__4">🟢 Maîtrise satisfaisante — je sais rouvrir un cahier des charges : nommer le seuil relâché, et dire qui en porte le coût</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__4" value="🟢 Maîtrise satisfaisante — je sais rouvrir un cahier des charges : nommer le seuil relâché, et dire qui en porte le coût"><label for="pos__4">🟢 Maîtrise satisfaisante — je sais rouvrir un cahier des charges : nommer le seuil relâché, et dire qui en porte le coût</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__5" value="⭐ Très bonne maîtrise — je sais rouvrir un cahier des charges et dire qui porte le coût du relâchement, et je sais l&#x27;expliquer à un camarade ou le refaire sur un autre objet"><label for="pos__5">⭐ Très bonne maîtrise — je sais rouvrir un cahier des charges et dire qui porte le coût du relâchement, et je sais l'expliquer à un camarade ou le refaire sur un autre objet</label></div>
 </fieldset>
   <fieldset class="positionnement"><legend>Je me positionne sur 3e_C4.2 (appui) — justifier le choix d’un matériau et de son procédé de mise en forme au regard des contraintes techniques et environnementales</legend>
@@ -1728,7 +1728,7 @@ if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
 /* ══ Règle d'or n°30 — le bandeau des tâches : une ligne par activité, barrée quand elle est validée ══ */
 function majBandeau(){ const b=$("tachesBandeau"); if(!b) return; const ul=b.querySelector("ul"); if(!ul) return;
   const v=(window.__exp||{}).valides||{}; let faites=0;
-  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.check]; li.classList.toggle("faite", ok); if(ok) faites++;
+  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.tache]; li.classList.toggle("faite", ok); if(ok) faites++;
     li.querySelector(".tb-etat").textContent = ok ? "✔" : "○"; });
   const c=b.querySelector(".tb-compte"); if(c) c.textContent = faites + " / " + ul.children.length + " validée(s)"; }
 window.__exp = window.__exp || {};

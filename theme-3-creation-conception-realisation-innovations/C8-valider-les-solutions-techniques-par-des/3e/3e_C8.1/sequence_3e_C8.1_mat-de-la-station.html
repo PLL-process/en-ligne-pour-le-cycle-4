@@ -152,7 +152,7 @@ body.essentiel details.referentiel-replie{display:none}
     padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
   .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
   .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
-  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
   .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
   @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
     .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
@@ -289,26 +289,6 @@ body.essentiel details.referentiel-replie{display:none}
   [data-lpp-racine]:not(.lpp-sans-impression)>:not([data-lpp="dessin"]):not(.lpp-imprime){display:none!important}
 }
 </style>
-<script>
-/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
-   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
-   fonctionner sur le groupe de boutons radio, sans être touché. */
-(function(){
-  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
-  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
-    configurable: true,
-    get: function(){
-      if (!this.classList.contains("qcm-groupe")) return undefined;
-      var c = this.querySelector("input[type=radio]:checked");
-      return c ? c.value : "";
-    },
-    set: function(v){
-      if (!this.classList.contains("qcm-groupe")) return;
-      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
-    }
-  });
-})();
-</script>
 <script>
 /* Fiche papier — source unique : _outils/impression_papier/papier.js (posé par poser.py ; ne pas modifier dans la page).
    Prépare, une fois, ce que le papier remplace (cachés à l'écran : .pp-papier) ; avant chaque impression, marque la séance
@@ -526,6 +506,26 @@ body.essentiel details.referentiel-replie{display:none}
 </script>
 <!-- fiche-papier v1 : fin -->
 <!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
@@ -793,11 +793,11 @@ qu'à la question que tu lui as posée.</p>
 <div id="tachesBandeau" aria-live="polite" aria-atomic="true">
   <span class="tb-titre">📋 Où j'en suis <span class="tb-compte"></span></span>
   <ul>
-    <li data-check="1"><span class="tb-etat">○</span> Vérifier l'activité 1</li>
-    <li data-check="2"><span class="tb-etat">○</span> Vérifier l'activité 2</li>
-    <li data-check="3"><span class="tb-etat">○</span> Vérifier l'activité 3</li>
-    <li data-check="4"><span class="tb-etat">○</span> Vérifier l'activité 4</li>
-    <li data-check="5"><span class="tb-etat">○</span> Vérifier le réinvestissement</li>
+    <li data-tache="1"><span class="tb-etat">○</span> Vérifier l'activité 1</li>
+    <li data-tache="2"><span class="tb-etat">○</span> Vérifier l'activité 2</li>
+    <li data-tache="3"><span class="tb-etat">○</span> Vérifier l'activité 3</li>
+    <li data-tache="4"><span class="tb-etat">○</span> Vérifier l'activité 4</li>
+    <li data-tache="5"><span class="tb-etat">○</span> Vérifier le réinvestissement</li>
   </ul>
 </div>
 <!-- ══════════════════ SÉANCE 1 ══════════════════ -->
@@ -818,20 +818,20 @@ qu'à la question que tu lui as posée.</p>
     <h4>Règle, lance, réponds</h4>
     <p>Hauteur <b>2000 mm</b>, cas <b>poussée du banc</b>, limite <b>résistance à la rupture</b> —
     exactement ce que faisait le banc l'an dernier. Lance la simulation.</p>
-    <p><fieldset class="qcm-groupe" id="b1q1">
-  <legend>1. Combien de profilés sont retenus ?</legend>
+    <fieldset class="qcm-groupe" id="b1q1">
+  <legend>1. Combien de profilés sont retenus ?</legend>
   <div class="qcm-option"><input type="radio" name="b1q1" id="b1q1__1" value="1"><label for="b1q1__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="b1q1" id="b1q1__2" value="2"><label for="b1q1__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="b1q1" id="b1q1__3" value="3"><label for="b1q1__3">3</label></div>
   <div class="qcm-option"><input type="radio" name="b1q1" id="b1q1__4" value="5"><label for="b1q1__4">5</label></div>
-</fieldset></p>
-    <p><fieldset class="qcm-groupe" id="b1q2">
-  <legend>2. Que peut-on en conclure sur la simulation ?</legend>
-  <div class="qcm-option"><input type="radio" name="b1q2" id="b1q2__1" value="réglée comme le banc, elle retrouve le verdict du banc : on peut lui faire confiance pour la suite"><label for="b1q2__1">réglée comme le banc, elle retrouve le verdict du banc : on peut lui faire confiance pour la suite</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="b1q2">
+  <legend>2. Que peut-on en conclure sur la simulation ?</legend>
+  <div class="qcm-option"><input type="radio" name="b1q2" id="b1q2__1" value="réglée comme le banc, elle retrouve le verdict du banc : on peut lui faire confiance pour la suite"><label for="b1q2__1">réglée comme le banc, elle retrouve le verdict du banc : on peut lui faire confiance pour la suite</label></div>
   <div class="qcm-option"><input type="radio" name="b1q2" id="b1q2__2" value="elle est inutile puisqu&#x27;elle redit ce qu&#x27;on savait déjà"><label for="b1q2__2">elle est inutile puisqu'elle redit ce qu'on savait déjà</label></div>
   <div class="qcm-option"><input type="radio" name="b1q2" id="b1q2__3" value="elle est plus précise que le banc, donc le banc était faux"><label for="b1q2__3">elle est plus précise que le banc, donc le banc était faux</label></div>
-  <div class="qcm-option"><input type="radio" name="b1q2" id="b1q2__4" value="elle n&#x27;a servi à rien : le banc suffisait"><label for="b1q2__4">elle n'a servi à rien : le banc suffisait</label></div>
-</fieldset></p>
+  <div class="qcm-option"><input type="radio" name="b1q2" id="b1q2__4" value="elle n&#x27;a servi à rien : le banc suffisait"><label for="b1q2__4">elle n'a servi à rien : le banc suffisait</label></div>
+</fieldset>
     <button class="btn" data-check="1">Vérifier l'activité 1</button>
     <p class="feedback" id="fb1"></p>
     <details class="etayage"><summary>Un coup de pouce</summary>
@@ -873,30 +873,30 @@ qu'à la question que tu lui as posée.</p>
         <th>Moment sous le vent</th></tr>
       <tr><td>Tube aluminium Ø50 × 3</td><td>ronde</td><td>200 N·m</td><td>204 N·m</td></tr><tr><td>Barre pleine acier Ø20</td><td>ronde</td><td>200 N·m</td><td>128 N·m</td></tr><tr><td>Tube PVC Ø50 × 3</td><td>ronde</td><td>200 N·m</td><td>204 N·m</td></tr><tr><td>Poutre bois 40 × 40</td><td>carrée</td><td>200 N·m</td><td>298 N·m</td></tr><tr><td>Tube acier galvanisé Ø33,7 × 2,6</td><td>ronde</td><td>200 N·m</td><td>163 N·m</td></tr>
     </table>
-    <p><fieldset class="qcm-groupe" id="b2q1">
-  <legend>1. Quel profilé reçoit le <b>moins</b> de moment sous le vent ?</legend>
+    <fieldset class="qcm-groupe" id="b2q1">
+  <legend>1. Quel profilé reçoit le <b>moins</b> de moment sous le vent ?</legend>
   <div class="qcm-option"><input type="radio" name="b2q1" id="b2q1__1" value="Tube aluminium Ø50 × 3"><label for="b2q1__1">Tube aluminium Ø50 × 3</label></div>
   <div class="qcm-option"><input type="radio" name="b2q1" id="b2q1__2" value="Barre pleine acier Ø20"><label for="b2q1__2">Barre pleine acier Ø20</label></div>
   <div class="qcm-option"><input type="radio" name="b2q1" id="b2q1__3" value="Tube PVC Ø50 × 3"><label for="b2q1__3">Tube PVC Ø50 × 3</label></div>
   <div class="qcm-option"><input type="radio" name="b2q1" id="b2q1__4" value="Poutre bois 40 × 40"><label for="b2q1__4">Poutre bois 40 × 40</label></div>
   <div class="qcm-option"><input type="radio" name="b2q1" id="b2q1__5" value="Tube acier galvanisé Ø33,7 × 2,6"><label for="b2q1__5">Tube acier galvanisé Ø33,7 × 2,6</label></div>
-</fieldset></p>
-    <p><fieldset class="qcm-groupe" id="b2q2">
-  <legend>2. Pourquoi celui-là ?</legend>
-  <div class="qcm-option"><input type="radio" name="b2q2" id="b2q2__1" value="il est le plus étroit : il offre moins de surface au vent"><label for="b2q2__1">il est le plus étroit : il offre moins de surface au vent</label></div>
-  <div class="qcm-option"><input type="radio" name="b2q2" id="b2q2__2" value="il est le plus résistant : il encaisse mieux"><label for="b2q2__2">il est le plus résistant : il encaisse mieux</label></div>
-  <div class="qcm-option"><input type="radio" name="b2q2" id="b2q2__3" value="il est le plus lourd : il résiste au vent par son poids"><label for="b2q2__3">il est le plus lourd : il résiste au vent par son poids</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="b2q2">
+  <legend>2. Pourquoi celui-là ?</legend>
+  <div class="qcm-option"><input type="radio" name="b2q2" id="b2q2__1" value="il est le plus étroit : il offre moins de surface au vent"><label for="b2q2__1">il est le plus étroit : il offre moins de surface au vent</label></div>
+  <div class="qcm-option"><input type="radio" name="b2q2" id="b2q2__2" value="il est le plus résistant : il encaisse mieux"><label for="b2q2__2">il est le plus résistant : il encaisse mieux</label></div>
+  <div class="qcm-option"><input type="radio" name="b2q2" id="b2q2__3" value="il est le plus lourd : il résiste au vent par son poids"><label for="b2q2__3">il est le plus lourd : il résiste au vent par son poids</label></div>
   <div class="qcm-option"><input type="radio" name="b2q2" id="b2q2__4" value="il est en acier, et l&#x27;acier est insensible au vent"><label for="b2q2__4">il est en acier, et l'acier est insensible au vent</label></div>
-</fieldset></p>
-    <p><fieldset class="qcm-groupe" id="b2q3">
+</fieldset>
+    <fieldset class="qcm-groupe" id="b2q3">
   <legend>3. La poutre bois est large de 40 mm, le tube PVC de 50 mm. Pourtant le
     bois reçoit 298 N·m (newtons-mètres) et le PVC
-    204 N·m. Pourquoi le plus étroit prend-il le plus ?</legend>
-  <div class="qcm-option"><input type="radio" name="b2q3" id="b2q3__1" value="sa section est carrée : un carré freine le vent presque deux fois plus qu&#x27;un tube rond de même largeur"><label for="b2q3__1">sa section est carrée : un carré freine le vent presque deux fois plus qu'un tube rond de même largeur</label></div>
+    204 N·m. Pourquoi le plus étroit prend-il le plus ?</legend>
+  <div class="qcm-option"><input type="radio" name="b2q3" id="b2q3__1" value="sa section est carrée : un carré freine le vent presque deux fois plus qu&#x27;un tube rond de même largeur"><label for="b2q3__1">sa section est carrée : un carré freine le vent presque deux fois plus qu'un tube rond de même largeur</label></div>
   <div class="qcm-option"><input type="radio" name="b2q3" id="b2q3__2" value="le bois est plus rugueux, donc le vent accroche davantage"><label for="b2q3__2">le bois est plus rugueux, donc le vent accroche davantage</label></div>
   <div class="qcm-option"><input type="radio" name="b2q3" id="b2q3__3" value="le bois est plus léger, donc il bouge plus"><label for="b2q3__3">le bois est plus léger, donc il bouge plus</label></div>
   <div class="qcm-option"><input type="radio" name="b2q3" id="b2q3__4" value="c&#x27;est une erreur du simulateur"><label for="b2q3__4">c'est une erreur du simulateur</label></div>
-</fieldset></p>
+</fieldset>
     <button class="btn" data-check="2">Vérifier l'activité 2</button>
     <p class="feedback" id="fb2"></p>
     <details class="correction"><summary>Voir la correction complète</summary><div>
@@ -934,28 +934,28 @@ qu'à la question que tu lui as posée.</p>
     <h4>Deux lancements, un seul réglage change</h4>
     <p>Hauteur 2000 mm, cas <b>vent</b>. Lance une fois avec <b>résistance à la rupture</b>, puis
     une fois avec <b>limite élastique</b>. Note le nombre de retenus à chaque fois.</p>
-    <p><fieldset class="qcm-groupe" id="b3q1">
-  <legend>1. Combien de retenus avec la <b>rupture</b> ?</legend>
+    <fieldset class="qcm-groupe" id="b3q1">
+  <legend>1. Combien de retenus avec la <b>rupture</b> ?</legend>
   <div class="qcm-option"><input type="radio" name="b3q1" id="b3q1__1" value="2"><label for="b3q1__1">2</label></div>
   <div class="qcm-option"><input type="radio" name="b3q1" id="b3q1__2" value="1"><label for="b3q1__2">1</label></div>
   <div class="qcm-option"><input type="radio" name="b3q1" id="b3q1__3" value="3"><label for="b3q1__3">3</label></div>
   <div class="qcm-option"><input type="radio" name="b3q1" id="b3q1__4" value="4"><label for="b3q1__4">4</label></div>
-</fieldset></p>
-    <p><fieldset class="qcm-groupe" id="b3q2">
-  <legend>2. Combien avec la <b>limite élastique</b> ?</legend>
+</fieldset>
+    <fieldset class="qcm-groupe" id="b3q2">
+  <legend>2. Combien avec la <b>limite élastique</b> ?</legend>
   <div class="qcm-option"><input type="radio" name="b3q2" id="b3q2__1" value="1"><label for="b3q2__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="b3q2" id="b3q2__2" value="2"><label for="b3q2__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="b3q2" id="b3q2__3" value="3"><label for="b3q2__3">3</label></div>
   <div class="qcm-option"><input type="radio" name="b3q2" id="b3q2__4" value="0"><label for="b3q2__4">0</label></div>
-</fieldset></p>
-    <p><fieldset class="qcm-groupe" id="b3q3">
+</fieldset>
+    <fieldset class="qcm-groupe" id="b3q3">
   <legend>3. Quel profilé disparaît, et pourquoi ce choix de limite compte-t-il
-    ici ?</legend>
-  <div class="qcm-option"><input type="radio" name="b3q3" id="b3q3__1" value="le Tube acier galvanisé Ø33,7 × 2,6 : avec un coefficient de 2,7 il plierait définitivement, sans casser — et un mât tordu ne mesure plus rien"><label for="b3q3__1">le Tube acier galvanisé Ø33,7 × 2,6 : avec un coefficient de 2,7 il plierait définitivement, sans casser — et un mât tordu ne mesure plus rien</label></div>
-  <div class="qcm-option"><input type="radio" name="b3q3" id="b3q3__2" value="le Tube aluminium Ø50 × 3 : il est trop souple pour l&#x27;anémomètre"><label for="b3q3__2">le Tube aluminium Ø50 × 3 : il est trop souple pour l'anémomètre</label></div>
-  <div class="qcm-option"><input type="radio" name="b3q3" id="b3q3__3" value="aucun ne disparaît : les deux limites donnent le même résultat"><label for="b3q3__3">aucun ne disparaît : les deux limites donnent le même résultat</label></div>
-  <div class="qcm-option"><input type="radio" name="b3q3" id="b3q3__4" value="le Tube PVC Ø50 × 3 : il ne tenait déjà pas sur la rupture"><label for="b3q3__4">le Tube PVC Ø50 × 3 : il ne tenait déjà pas sur la rupture</label></div>
-</fieldset></p>
+    ici ?</legend>
+  <div class="qcm-option"><input type="radio" name="b3q3" id="b3q3__1" value="le Tube acier galvanisé Ø33,7 × 2,6 : avec un coefficient de 2,7 il plierait définitivement, sans casser — et un mât tordu ne mesure plus rien"><label for="b3q3__1">le Tube acier galvanisé Ø33,7 × 2,6 : avec un coefficient de 2,7 il plierait définitivement, sans casser — et un mât tordu ne mesure plus rien</label></div>
+  <div class="qcm-option"><input type="radio" name="b3q3" id="b3q3__2" value="le Tube aluminium Ø50 × 3 : il est trop souple pour l&#x27;anémomètre"><label for="b3q3__2">le Tube aluminium Ø50 × 3 : il est trop souple pour l'anémomètre</label></div>
+  <div class="qcm-option"><input type="radio" name="b3q3" id="b3q3__3" value="aucun ne disparaît : les deux limites donnent le même résultat"><label for="b3q3__3">aucun ne disparaît : les deux limites donnent le même résultat</label></div>
+  <div class="qcm-option"><input type="radio" name="b3q3" id="b3q3__4" value="le Tube PVC Ø50 × 3 : il ne tenait déjà pas sur la rupture"><label for="b3q3__4">le Tube PVC Ø50 × 3 : il ne tenait déjà pas sur la rupture</label></div>
+</fieldset>
     <button class="btn" data-check="3">Vérifier l'activité 3</button>
     <p class="feedback" id="fb3"></p>
     <details class="correction"><summary>Voir la correction complète</summary><div>
@@ -1034,38 +1034,38 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
   </table>
   <div class="exo">
     <h4>Décide</h4>
-    <p><fieldset class="qcm-groupe" id="b4q1">
+    <fieldset class="qcm-groupe" id="b4q1">
   <legend>1. Descendre le mât à 1 500 mm ferait passer un profilé de plus.
-    Peut-on le faire ?</legend>
-  <div class="qcm-option"><input type="radio" name="b4q1" id="b4q1__1" value="non : sous 2000 mm l&#x27;anémomètre lit les turbulences du toit, et la mesure ne vaut plus rien"><label for="b4q1__1">non : sous 2000 mm l'anémomètre lit les turbulences du toit, et la mesure ne vaut plus rien</label></div>
-  <div class="qcm-option"><input type="radio" name="b4q1" id="b4q1__2" value="oui : moins haut, c&#x27;est plus sûr, et c&#x27;est ce qui compte"><label for="b4q1__2">oui : moins haut, c'est plus sûr, et c'est ce qui compte</label></div>
+    Peut-on le faire ?</legend>
+  <div class="qcm-option"><input type="radio" name="b4q1" id="b4q1__1" value="non : sous 2000 mm l&#x27;anémomètre lit les turbulences du toit, et la mesure ne vaut plus rien"><label for="b4q1__1">non : sous 2000 mm l'anémomètre lit les turbulences du toit, et la mesure ne vaut plus rien</label></div>
+  <div class="qcm-option"><input type="radio" name="b4q1" id="b4q1__2" value="oui : moins haut, c&#x27;est plus sûr, et c&#x27;est ce qui compte"><label for="b4q1__2">oui : moins haut, c'est plus sûr, et c'est ce qui compte</label></div>
   <div class="qcm-option"><input type="radio" name="b4q1" id="b4q1__3" value="oui, si on accepte un coefficient de 2 au lieu de 3"><label for="b4q1__3">oui, si on accepte un coefficient de 2 au lieu de 3</label></div>
-  <div class="qcm-option"><input type="radio" name="b4q1" id="b4q1__4" value="oui : la hauteur ne change rien au moment"><label for="b4q1__4">oui : la hauteur ne change rien au moment</label></div>
-</fieldset></p>
-    <p><fieldset class="qcm-groupe" id="b4q2">
+  <div class="qcm-option"><input type="radio" name="b4q1" id="b4q1__4" value="oui : la hauteur ne change rien au moment"><label for="b4q1__4">oui : la hauteur ne change rien au moment</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="b4q2">
   <legend>2. Avec le réglage qui répond au cahier des charges — 2000 mm, vent,
-    limite élastique — quel profilé retiens-tu ?</legend>
+    limite élastique — quel profilé retiens-tu ?</legend>
   <div class="qcm-option"><input type="radio" name="b4q2" id="b4q2__1" value="Tube aluminium Ø50 × 3"><label for="b4q2__1">Tube aluminium Ø50 × 3</label></div>
   <div class="qcm-option"><input type="radio" name="b4q2" id="b4q2__2" value="Barre pleine acier Ø20"><label for="b4q2__2">Barre pleine acier Ø20</label></div>
   <div class="qcm-option"><input type="radio" name="b4q2" id="b4q2__3" value="Tube PVC Ø50 × 3"><label for="b4q2__3">Tube PVC Ø50 × 3</label></div>
   <div class="qcm-option"><input type="radio" name="b4q2" id="b4q2__4" value="Poutre bois 40 × 40"><label for="b4q2__4">Poutre bois 40 × 40</label></div>
   <div class="qcm-option"><input type="radio" name="b4q2" id="b4q2__5" value="Tube acier galvanisé Ø33,7 × 2,6"><label for="b4q2__5">Tube acier galvanisé Ø33,7 × 2,6</label></div>
-</fieldset></p>
-    <p><fieldset class="qcm-groupe" id="b4q3">
+</fieldset>
+    <fieldset class="qcm-groupe" id="b4q3">
   <legend>3. Le banc de 3e_C8.2 retenait déjà celui-là. La simulation n'a donc
-    servi à rien ?</legend>
-  <div class="qcm-option"><input type="radio" name="b4q3" id="b4q3__1" value="si : elle a montré que le bon verdict tenait pour les bonnes raisons, et que deux concurrents avaient été mal jugés par le banc"><label for="b4q3__1">si : elle a montré que le bon verdict tenait pour les bonnes raisons, et que deux concurrents avaient été mal jugés par le banc</label></div>
-  <div class="qcm-option"><input type="radio" name="b4q3" id="b4q3__2" value="non, en effet : le banc suffisait, la simulation a fait perdre du temps"><label for="b4q3__2">non, en effet : le banc suffisait, la simulation a fait perdre du temps</label></div>
-  <div class="qcm-option"><input type="radio" name="b4q3" id="b4q3__3" value="si : elle prouve que le banc était faux"><label for="b4q3__3">si : elle prouve que le banc était faux</label></div>
+    servi à rien ?</legend>
+  <div class="qcm-option"><input type="radio" name="b4q3" id="b4q3__1" value="si : elle a montré que le bon verdict tenait pour les bonnes raisons, et que deux concurrents avaient été mal jugés par le banc"><label for="b4q3__1">si : elle a montré que le bon verdict tenait pour les bonnes raisons, et que deux concurrents avaient été mal jugés par le banc</label></div>
+  <div class="qcm-option"><input type="radio" name="b4q3" id="b4q3__2" value="non, en effet : le banc suffisait, la simulation a fait perdre du temps"><label for="b4q3__2">non, en effet : le banc suffisait, la simulation a fait perdre du temps</label></div>
+  <div class="qcm-option"><input type="radio" name="b4q3" id="b4q3__3" value="si : elle prouve que le banc était faux"><label for="b4q3__3">si : elle prouve que le banc était faux</label></div>
   <div class="qcm-option"><input type="radio" name="b4q3" id="b4q3__4" value="on ne peut pas savoir"><label for="b4q3__4">on ne peut pas savoir</label></div>
-</fieldset></p>
-    <p><fieldset class="qcm-groupe" id="b4q4">
-  <legend>4. Quel angle mort partagent le banc ET la simulation ?</legend>
-  <div class="qcm-option"><input type="radio" name="b4q4" id="b4q4__1" value="la fatigue : les deux chargent une seule fois, le vent fait vibrer le mât des milliers de fois"><label for="b4q4__1">la fatigue : les deux chargent une seule fois, le vent fait vibrer le mât des milliers de fois</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="b4q4">
+  <legend>4. Quel angle mort partagent le banc ET la simulation ?</legend>
+  <div class="qcm-option"><input type="radio" name="b4q4" id="b4q4__1" value="la fatigue : les deux chargent une seule fois, le vent fait vibrer le mât des milliers de fois"><label for="b4q4__1">la fatigue : les deux chargent une seule fois, le vent fait vibrer le mât des milliers de fois</label></div>
   <div class="qcm-option"><input type="radio" name="b4q4" id="b4q4__2" value="la résistance du matériau, qu&#x27;aucun des deux ne mesure"><label for="b4q4__2">la résistance du matériau, qu'aucun des deux ne mesure</label></div>
   <div class="qcm-option"><input type="radio" name="b4q4" id="b4q4__3" value="la hauteur du mât, qu&#x27;aucun des deux ne prend en compte"><label for="b4q4__3">la hauteur du mât, qu'aucun des deux ne prend en compte</label></div>
-  <div class="qcm-option"><input type="radio" name="b4q4" id="b4q4__4" value="aucun : ensemble, ils voient tout"><label for="b4q4__4">aucun : ensemble, ils voient tout</label></div>
-</fieldset></p>
+  <div class="qcm-option"><input type="radio" name="b4q4" id="b4q4__4" value="aucun : ensemble, ils voient tout"><label for="b4q4__4">aucun : ensemble, ils voient tout</label></div>
+</fieldset>
     <button class="btn" data-check="4">Vérifier l'activité 4</button>
     <p class="feedback" id="fb4"></p>
     <details class="correction"><summary>Voir la correction complète</summary><div>
@@ -1091,21 +1091,21 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
   <p>La mairie veut installer le même type de mât sur le <b>quai du port</b>, où le vent de
   référence monte à 180 km/h.</p>
   <div class="exo">
-    <p><fieldset class="qcm-groupe" id="b5q1">
-  <legend>1. Sans lancer la simulation : la pression du vent passe de 150 à
+    <fieldset class="qcm-groupe" id="b5q1">
+  <legend>1. Sans lancer la simulation : la pression du vent passe de 150 à
     180 km/h. Elle est multipliée par…</legend>
   <div class="qcm-option"><input type="radio" name="b5q1" id="b5q1__1" value="environ 1,4 — la pression dépend du CARRÉ de la vitesse"><label for="b5q1__1">environ 1,4 — la pression dépend du CARRÉ de la vitesse</label></div>
   <div class="qcm-option"><input type="radio" name="b5q1" id="b5q1__2" value="1,2 — comme la vitesse"><label for="b5q1__2">1,2 — comme la vitesse</label></div>
   <div class="qcm-option"><input type="radio" name="b5q1" id="b5q1__3" value="2,0 — le vent double d&#x27;effet"><label for="b5q1__3">2,0 — le vent double d'effet</label></div>
-  <div class="qcm-option"><input type="radio" name="b5q1" id="b5q1__4" value="elle ne change pas : c&#x27;est le même vent"><label for="b5q1__4">elle ne change pas : c'est le même vent</label></div>
-</fieldset></p>
-    <p><fieldset class="qcm-groupe" id="b5q2">
-  <legend>2. Quel réglage du simulateur faut-il changer pour le vérifier ?</legend>
-  <div class="qcm-option"><input type="radio" name="b5q2" id="b5q2__1" value="aucun des trois : la vitesse du vent n&#x27;est pas réglable ici, il faudrait la rendre réglable"><label for="b5q2__1">aucun des trois : la vitesse du vent n'est pas réglable ici, il faudrait la rendre réglable</label></div>
+  <div class="qcm-option"><input type="radio" name="b5q1" id="b5q1__4" value="elle ne change pas : c&#x27;est le même vent"><label for="b5q1__4">elle ne change pas : c'est le même vent</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="b5q2">
+  <legend>2. Quel réglage du simulateur faut-il changer pour le vérifier ?</legend>
+  <div class="qcm-option"><input type="radio" name="b5q2" id="b5q2__1" value="aucun des trois : la vitesse du vent n&#x27;est pas réglable ici, il faudrait la rendre réglable"><label for="b5q2__1">aucun des trois : la vitesse du vent n'est pas réglable ici, il faudrait la rendre réglable</label></div>
   <div class="qcm-option"><input type="radio" name="b5q2" id="b5q2__2" value="la hauteur"><label for="b5q2__2">la hauteur</label></div>
   <div class="qcm-option"><input type="radio" name="b5q2" id="b5q2__3" value="la limite de comparaison"><label for="b5q2__3">la limite de comparaison</label></div>
   <div class="qcm-option"><input type="radio" name="b5q2" id="b5q2__4" value="le cas de charge suffit"><label for="b5q2__4">le cas de charge suffit</label></div>
-</fieldset></p>
+</fieldset>
     <button class="btn" data-check="5">Vérifier le réinvestissement</button>
     <p class="feedback" id="fb5"></p>
     <details class="correction"><summary>Voir la correction complète</summary><div>
@@ -1180,7 +1180,7 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
   <h3>📍 Je me positionne</h3>
   <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
   <p style="margin-top:12px"><fieldset class="qcm-groupe" id="auto1">
-  <legend>3e_C8.1 — mettre en œuvre une simulation pour valider la tenue mécanique d’un matériau :</legend>
+  <legend>3e_C8.1 — mettre en œuvre une simulation pour valider la tenue mécanique d’un matériau :</legend>
   <div class="qcm-option"><input type="radio" name="auto1" id="auto1__1" value="🔴 Maîtrise insuffisante — je lance la simulation, mais je ne sais pas encore quoi régler"><label for="auto1__1">🔴 Maîtrise insuffisante — je lance la simulation, mais je ne sais pas encore quoi régler</label></div>
   <div class="qcm-option"><input type="radio" name="auto1" id="auto1__2" value="🟠 Maîtrise fragile — je la règle si l&#x27;on me dit quel cas de charge et quelle limite prendre"><label for="auto1__2">🟠 Maîtrise fragile — je la règle si l'on me dit quel cas de charge et quelle limite prendre</label></div>
   <div class="qcm-option"><input type="radio" name="auto1" id="auto1__3" value="🟢 Maîtrise satisfaisante — je choisis seul·e la hauteur, le cas de charge et la limite qui répondent au cahier des charges"><label for="auto1__3">🟢 Maîtrise satisfaisante — je choisis seul·e la hauteur, le cas de charge et la limite qui répondent au cahier des charges</label></div>
@@ -1450,7 +1450,7 @@ if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
 /* ══ Règle d'or n°30 — le bandeau des tâches : une ligne par activité, barrée quand elle est validée ══ */
 function majBandeau(){ const b=$("tachesBandeau"); if(!b) return; const ul=b.querySelector("ul"); if(!ul) return;
   const v=(window.__exp||{}).valides||{}; let faites=0;
-  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.check]; li.classList.toggle("faite", ok); if(ok) faites++;
+  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.tache]; li.classList.toggle("faite", ok); if(ok) faites++;
     li.querySelector(".tb-etat").textContent = ok ? "✔" : "○"; });
   const c=b.querySelector(".tb-compte"); if(c) c.textContent = faites + " / " + ul.children.length + " validée(s)"; }
 window.__exp = window.__exp || {};

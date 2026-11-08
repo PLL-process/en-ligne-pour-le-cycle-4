@@ -85,7 +85,7 @@ CSS_QCM = """
     padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
   .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
   .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
-  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
   .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
   @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
     .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
@@ -120,7 +120,7 @@ if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
 /* ══ Règle d'or n°30 — le bandeau des tâches : une ligne par activité, barrée quand elle est validée ══ */
 function majBandeau(){ const b=$("tachesBandeau"); if(!b) return; const ul=b.querySelector("ul"); if(!ul) return;
   const v=(window.__exp||{}).valides||{}; let faites=0;
-  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.check]; li.classList.toggle("faite", ok); if(ok) faites++;
+  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.tache]; li.classList.toggle("faite", ok); if(ok) faites++;
     li.querySelector(".tb-etat").textContent = ok ? "✔" : "○"; });
   const c=b.querySelector(".tb-compte"); if(c) c.textContent = faites + " / " + ul.children.length + " validée(s)"; }
 window.__exp = window.__exp || {};
@@ -135,6 +135,16 @@ def refus(msg):
 
 def texte(h):
     return re.sub(r"\s+", " ", html_mod.unescape(re.sub(r"<[^>]+>", "", h))).strip()
+
+
+def insecable(texte):
+    """Ponctuation haute à la française : dans une option de liste déroulante, le texte ne se pliait
+    jamais ; dans un libellé qui se plie à 390 px, « ? » ou « : » partait seul en début de ligne
+    (revue d'écran V2, 08/11/2026). L'espace devant ? ! : ; » et derrière « devient une espace fine
+    insécable (U+202F) dans ce qui s'AFFICHE (legend, label) ; la value des boutons n'est pas touchée,
+    c'est elle que lisent les corrections et les bancs."""
+    texte = re.sub(r"(?<=\S) (?=[?!:;»])", "\u202f", texte)
+    return re.sub(r"(?<=«) (?=\S)", "\u202f", texte)
 
 
 def convertir_selects(t, page):
@@ -192,11 +202,11 @@ def convertir_selects(t, page):
                 enonce = aria.group(1)
             else:
                 refus("%s : impossible de lire l'énoncé de #%s (ni <label for>, ni <p> juste avant) — à écrire à la main" % (page, sid))
-        lignes = ['<fieldset class="qcm-groupe" id="%s">' % sid, "  <legend>%s</legend>" % enonce]
+        lignes = ['<fieldset class="qcm-groupe" id="%s">' % sid, "  <legend>%s</legend>" % insecable(enonce)]
         for n, (val, lib) in enumerate(props, 1):
             vesc = html_mod.escape(val, quote=True)
             lignes.append('  <div class="qcm-option"><input type="radio" name="%s" id="%s__%d" value="%s"><label for="%s__%d">%s</label></div>'
-                          % (sid, sid, n, vesc, sid, n, lib))
+                          % (sid, sid, n, vesc, sid, n, insecable(lib)))
         lignes.append("</fieldset>")
         bloc = "\n".join(lignes)
         # remplacer : le select, puis l'énoncé retiré (qui le précède ou vit ailleurs)
@@ -207,13 +217,24 @@ def convertir_selects(t, page):
             else:
                 refus("%s : énoncé de #%s introuvable au moment de le retirer" % (page, sid))
         t = t.replace("@@SELECT_%s@@" % sid, bloc, 1)
+        # Un <fieldset> n'a pas sa place dans un <p> : le navigateur ferme le <p> avant lui et
+        # ce qui suit n'est plus où on le croit (vu sur 3e_C8.1, b1q1). Si le select vivait seul
+        # dans un <p> (« <p><label>…</label><select>…</select></p> »), ce <p> s'efface.
+        t = re.sub(r"<p>\s*(<fieldset class=\"qcm-groupe\" id=\"%s\">.*?</fieldset>)\s*</p>" % re.escape(sid), r"\1", t, count=1, flags=re.S)
         faits.append((sid, len(props)))
     return t, faits, laisses
 
 
 def poser_proto_css(t):
     if "HTMLFieldSetElement.prototype" not in t:
-        i = t.find("<script")
+        # devant le premier <script> de la page qui n'appartient pas à la fiche papier : ce bloc
+        # (<!-- fiche-papier … : début/fin -->) est une source unique recopiée par poser.py, et
+        # controle_impression_papier le compare au texte de _outils/impression_papier/
+        fin_papier = t.find("<!-- fiche-papier")
+        if fin_papier != -1:
+            m = re.search(r"<!-- fiche-papier [^ ]+ : fin -->", t)
+            fin_papier = m.end() if m else -1
+        i = t.find("<script", max(fin_papier, 0))
         t = t[:i] + PROTO + t[i:]
     # la feuille des groupes est reconnue à sa règle d'écran NON limitée à #billet ; une règle
     # d'impression (`.qcm-groupe{border:0!important…}` de la fiche papier) ne compte pas
@@ -264,7 +285,8 @@ def poser_bandeau(t, page):
     boutons = re.findall(r'<button class="btn(?: check)?" data-check="([^"]+)"[^>]*>(.*?)</button>', t, re.S)
     if len(boutons) < 2:
         return t
-    lis = "".join('    <li data-check="%s"><span class="tb-etat">○</span> %s</li>\n' % (n, texte(lib).replace("✅ ", "")) for n, lib in boutons)
+    # `data-tache`, pas `data-check` : les bancs cliquent `[data-check="n"]` et tomberaient sur la ligne du bandeau
+    lis = "".join('    <li data-tache="%s"><span class="tb-etat">○</span> %s</li>\n' % (n, texte(lib).replace("✅ ", "")) for n, lib in boutons)
     bandeau = ('<div id="tachesBandeau" aria-live="polite" aria-atomic="true">\n'
                '  <span class="tb-titre">📋 Où j\'en suis <span class="tb-compte"></span></span>\n  <ul>\n' + lis + '  </ul>\n</div>\n')
     m = re.search(r'<(nav|div) class="seance-tabs"[^>]*>.*?</\1>\s*', t, re.S)

@@ -240,7 +240,7 @@ body.essentiel details.referentiel-replie{display:none}
     padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
   .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
   .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
-  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
   .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
   @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
     .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
@@ -377,26 +377,6 @@ body.essentiel details.referentiel-replie{display:none}
   [data-lpp-racine]:not(.lpp-sans-impression)>:not([data-lpp="dessin"]):not(.lpp-imprime){display:none!important}
 }
 </style>
-<script>
-/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
-   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
-   fonctionner sur le groupe de boutons radio, sans être touché. */
-(function(){
-  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
-  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
-    configurable: true,
-    get: function(){
-      if (!this.classList.contains("qcm-groupe")) return undefined;
-      var c = this.querySelector("input[type=radio]:checked");
-      return c ? c.value : "";
-    },
-    set: function(v){
-      if (!this.classList.contains("qcm-groupe")) return;
-      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
-    }
-  });
-})();
-</script>
 <script>
 /* Fiche papier — source unique : _outils/impression_papier/papier.js (posé par poser.py ; ne pas modifier dans la page).
    Prépare, une fois, ce que le papier remplace (cachés à l'écran : .pp-papier) ; avant chaque impression, marque la séance
@@ -614,6 +594,26 @@ body.essentiel details.referentiel-replie{display:none}
 </script>
 <!-- fiche-papier v1 : fin -->
 <!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
@@ -747,12 +747,12 @@ demandé</b>, avec les moyens qu'elle a. Le dessin, lui, avait été fait sans e
 <div id="tachesBandeau" aria-live="polite" aria-atomic="true">
   <span class="tb-titre">📋 Où j'en suis <span class="tb-compte"></span></span>
   <ul>
-    <li data-check="0"><span class="tb-etat">○</span> Vérifier l'activité 0</li>
-    <li data-check="1a"><span class="tb-etat">○</span> Vérifier la première partie</li>
-    <li data-check="1"><span class="tb-etat">○</span> Vérifier l'activité 1</li>
-    <li data-check="2"><span class="tb-etat">○</span> Vérifier l'activité 2</li>
-    <li data-check="3"><span class="tb-etat">○</span> Vérifier l'activité 3</li>
-    <li data-check="4"><span class="tb-etat">○</span> Vérifier le réinvestissement</li>
+    <li data-tache="0"><span class="tb-etat">○</span> Vérifier l'activité 0</li>
+    <li data-tache="1a"><span class="tb-etat">○</span> Vérifier la première partie</li>
+    <li data-tache="1"><span class="tb-etat">○</span> Vérifier l'activité 1</li>
+    <li data-tache="2"><span class="tb-etat">○</span> Vérifier l'activité 2</li>
+    <li data-tache="3"><span class="tb-etat">○</span> Vérifier l'activité 3</li>
+    <li data-tache="4"><span class="tb-etat">○</span> Vérifier le réinvestissement</li>
   </ul>
 </div>
 <!-- ══════════════════ SÉANCE 1 ══════════════════ -->
@@ -775,35 +775,35 @@ demandé</b>, avec les moyens qu'elle a. Le dessin, lui, avait été fait sans e
   <legend><b>L'impression 3D</b></legend>
   <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__1" value="un bourrelet à la base, et des stries sur toutes les faces inclinées"><label for="a0r0__1">un bourrelet à la base, et des stries sur toutes les faces inclinées</label></div>
   <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__2" value="un rayon de 1,5 mm imposé à chaque angle interne"><label for="a0r0__2">un rayon de 1,5 mm imposé à chaque angle interne</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__3" value="un trait de coupe de 0,2 mm : toute ouverture sort plus large"><label for="a0r0__3">un trait de coupe de 0,2 mm : toute ouverture sort plus large</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__3" value="un trait de coupe de 0,2 mm : toute ouverture sort plus large"><label for="a0r0__3">un trait de coupe de 0,2 mm : toute ouverture sort plus large</label></div>
   <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__4" value="une paroi qui s&#x27;amincit dans les angles, et d&#x27;autant plus qu&#x27;ils sont profonds"><label for="a0r0__4">une paroi qui s'amincit dans les angles, et d'autant plus qu'ils sont profonds</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a0r1">
   <legend><b>La découpe laser</b></legend>
   <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__1" value="un bourrelet à la base, et des stries sur toutes les faces inclinées"><label for="a0r1__1">un bourrelet à la base, et des stries sur toutes les faces inclinées</label></div>
   <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__2" value="un rayon de 1,5 mm imposé à chaque angle interne"><label for="a0r1__2">un rayon de 1,5 mm imposé à chaque angle interne</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__3" value="un trait de coupe de 0,2 mm : toute ouverture sort plus large"><label for="a0r1__3">un trait de coupe de 0,2 mm : toute ouverture sort plus large</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__3" value="un trait de coupe de 0,2 mm : toute ouverture sort plus large"><label for="a0r1__3">un trait de coupe de 0,2 mm : toute ouverture sort plus large</label></div>
   <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__4" value="une paroi qui s&#x27;amincit dans les angles, et d&#x27;autant plus qu&#x27;ils sont profonds"><label for="a0r1__4">une paroi qui s'amincit dans les angles, et d'autant plus qu'ils sont profonds</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a0r2">
   <legend><b>La fraiseuse numérique</b></legend>
   <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__1" value="un bourrelet à la base, et des stries sur toutes les faces inclinées"><label for="a0r2__1">un bourrelet à la base, et des stries sur toutes les faces inclinées</label></div>
   <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__2" value="un rayon de 1,5 mm imposé à chaque angle interne"><label for="a0r2__2">un rayon de 1,5 mm imposé à chaque angle interne</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__3" value="un trait de coupe de 0,2 mm : toute ouverture sort plus large"><label for="a0r2__3">un trait de coupe de 0,2 mm : toute ouverture sort plus large</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__3" value="un trait de coupe de 0,2 mm : toute ouverture sort plus large"><label for="a0r2__3">un trait de coupe de 0,2 mm : toute ouverture sort plus large</label></div>
   <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__4" value="une paroi qui s&#x27;amincit dans les angles, et d&#x27;autant plus qu&#x27;ils sont profonds"><label for="a0r2__4">une paroi qui s'amincit dans les angles, et d'autant plus qu'ils sont profonds</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a0r3">
   <legend><b>Le thermoformage</b></legend>
   <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__1" value="un bourrelet à la base, et des stries sur toutes les faces inclinées"><label for="a0r3__1">un bourrelet à la base, et des stries sur toutes les faces inclinées</label></div>
   <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__2" value="un rayon de 1,5 mm imposé à chaque angle interne"><label for="a0r3__2">un rayon de 1,5 mm imposé à chaque angle interne</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__3" value="un trait de coupe de 0,2 mm : toute ouverture sort plus large"><label for="a0r3__3">un trait de coupe de 0,2 mm : toute ouverture sort plus large</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__3" value="un trait de coupe de 0,2 mm : toute ouverture sort plus large"><label for="a0r3__3">un trait de coupe de 0,2 mm : toute ouverture sort plus large</label></div>
   <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__4" value="une paroi qui s&#x27;amincit dans les angles, et d&#x27;autant plus qu&#x27;ils sont profonds"><label for="a0r3__4">une paroi qui s'amincit dans les angles, et d'autant plus qu'ils sont profonds</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a0q1">
   <legend><b>Et une question.</b> Le logiciel de découpe en couches avait
     affiché trois avertissements avant de lancer l'impression. Pourquoi la machine a-t-elle
-    quand même imprimé ?</legend>
-  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__1" value="parce qu&#x27;un avertissement signale un risque, il n&#x27;interdit pas : c&#x27;est à nous de lire"><label for="a0q1__1">parce qu'un avertissement signale un risque, il n'interdit pas : c'est à nous de lire</label></div>
+    quand même imprimé ?</legend>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__1" value="parce qu&#x27;un avertissement signale un risque, il n&#x27;interdit pas : c&#x27;est à nous de lire"><label for="a0q1__1">parce qu'un avertissement signale un risque, il n'interdit pas : c'est à nous de lire</label></div>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__2" value="parce que le fichier envoyé ne comportait aucune erreur de géométrie détectable"><label for="a0q1__2">parce que le fichier envoyé ne comportait aucune erreur de géométrie détectable</label></div>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__3" value="parce que la machine corrige d&#x27;elle-même les formes qu&#x27;elle ne sait pas produire"><label for="a0q1__3">parce que la machine corrige d'elle-même les formes qu'elle ne sait pas produire</label></div>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__4" value="parce que les avertissements ne concernaient que la durée totale de l&#x27;impression"><label for="a0q1__4">parce que les avertissements ne concernaient que la durée totale de l'impression</label></div>
@@ -883,20 +883,20 @@ demandé</b>, avec les moyens qu'elle a. Le dessin, lui, avait été fait sans e
     <fieldset class="qcm-groupe" id="a1r0">
   <legend><b>La casquette anti-pluie inclinée à 70°</b></legend>
   <div class="qcm-option"><input type="radio" name="a1r0" id="a1r0__1" value="au-delà de 45° la buse a besoin d&#x27;un support, et le support laisse une surface rugueuse"><label for="a1r0__1">au-delà de 45° la buse a besoin d'un support, et le support laisse une surface rugueuse</label></div>
-  <div class="qcm-option"><input type="radio" name="a1r0" id="a1r0__2" value="l&#x27;impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent"><label for="a1r0__2">l'impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent</label></div>
-  <div class="qcm-option"><input type="radio" name="a1r0" id="a1r0__3" value="une couche fait 0,2 mm : un détail de 0,3 mm, c&#x27;est une couche et demie"><label for="a1r0__3">une couche fait 0,2 mm : un détail de 0,3 mm, c'est une couche et demie</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r0" id="a1r0__2" value="l&#x27;impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent"><label for="a1r0__2">l'impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r0" id="a1r0__3" value="une couche fait 0,2 mm : un détail de 0,3 mm, c&#x27;est une couche et demie"><label for="a1r0__3">une couche fait 0,2 mm : un détail de 0,3 mm, c'est une couche et demie</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a1r1">
   <legend><b>La rainure de joint de 0,3 mm de profondeur</b></legend>
   <div class="qcm-option"><input type="radio" name="a1r1" id="a1r1__1" value="au-delà de 45° la buse a besoin d&#x27;un support, et le support laisse une surface rugueuse"><label for="a1r1__1">au-delà de 45° la buse a besoin d'un support, et le support laisse une surface rugueuse</label></div>
-  <div class="qcm-option"><input type="radio" name="a1r1" id="a1r1__2" value="l&#x27;impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent"><label for="a1r1__2">l'impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent</label></div>
-  <div class="qcm-option"><input type="radio" name="a1r1" id="a1r1__3" value="une couche fait 0,2 mm : un détail de 0,3 mm, c&#x27;est une couche et demie"><label for="a1r1__3">une couche fait 0,2 mm : un détail de 0,3 mm, c'est une couche et demie</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r1" id="a1r1__2" value="l&#x27;impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent"><label for="a1r1__2">l'impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r1" id="a1r1__3" value="une couche fait 0,2 mm : un détail de 0,3 mm, c&#x27;est une couche et demie"><label for="a1r1__3">une couche fait 0,2 mm : un détail de 0,3 mm, c'est une couche et demie</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a1r2">
   <legend><b>Le jeu de 0,1 mm entre le couvercle et le fond</b></legend>
   <div class="qcm-option"><input type="radio" name="a1r2" id="a1r2__1" value="au-delà de 45° la buse a besoin d&#x27;un support, et le support laisse une surface rugueuse"><label for="a1r2__1">au-delà de 45° la buse a besoin d'un support, et le support laisse une surface rugueuse</label></div>
-  <div class="qcm-option"><input type="radio" name="a1r2" id="a1r2__2" value="l&#x27;impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent"><label for="a1r2__2">l'impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent</label></div>
-  <div class="qcm-option"><input type="radio" name="a1r2" id="a1r2__3" value="une couche fait 0,2 mm : un détail de 0,3 mm, c&#x27;est une couche et demie"><label for="a1r2__3">une couche fait 0,2 mm : un détail de 0,3 mm, c'est une couche et demie</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r2" id="a1r2__2" value="l&#x27;impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent"><label for="a1r2__2">l'impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r2" id="a1r2__3" value="une couche fait 0,2 mm : un détail de 0,3 mm, c&#x27;est une couche et demie"><label for="a1r2__3">une couche fait 0,2 mm : un détail de 0,3 mm, c'est une couche et demie</label></div>
 </fieldset>
     <button class="btn check" data-check="1a" type="button">✅ Vérifier la première partie</button>
     <div class="feedback" id="fb1a"></div>
@@ -927,28 +927,28 @@ demandé</b>, avec les moyens qu'elle a. Le dessin, lui, avait été fait sans e
   vérification ci-dessous reprend aussi les trois associations de la première partie.</p>
   <div class="exo">
     <fieldset class="qcm-groupe" id="a1q1">
-  <legend><b>1.</b> Deux cotes ne bloquent rien : la <b>paroi de 2,9 mm</b>
-    et les <b>angles internes vifs</b>. Que faut-il en faire ?</legend>
-  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__1" value="rien : elles passent déjà, et les modifier ne ferait qu&#x27;ajouter du risque"><label for="a1q1__1">rien : elles passent déjà, et les modifier ne ferait qu'ajouter du risque</label></div>
+  <legend><b>1.</b> Deux cotes ne bloquent rien : la <b>paroi de 2,9 mm</b>
+    et les <b>angles internes vifs</b>. Que faut-il en faire ?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__1" value="rien : elles passent déjà, et les modifier ne ferait qu&#x27;ajouter du risque"><label for="a1q1__1">rien : elles passent déjà, et les modifier ne ferait qu'ajouter du risque</label></div>
   <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__2" value="les corriger aussi, pour que tout le dessin soit adapté à l&#x27;impression"><label for="a1q1__2">les corriger aussi, pour que tout le dessin soit adapté à l'impression</label></div>
   <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__3" value="les arrondir légèrement, car un angle vif fragilise toujours une pièce"><label for="a1q1__3">les arrondir légèrement, car un angle vif fragilise toujours une pièce</label></div>
   <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__4" value="les supprimer du dessin, puisqu&#x27;elles ne sont pas contraintes par la machine"><label for="a1q1__4">les supprimer du dessin, puisqu'elles ne sont pas contraintes par la machine</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a1q2">
   <legend><b>2.</b> D'où vient la paroi de 2,9 mm, et pourquoi ne la
-    touche-t-on pas ?</legend>
-  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__1" value="d&#x27;un calcul de 3e_C7.3 : elle tient le vent, et l&#x27;impression la sait faire"><label for="a1q2__1">d'un calcul de 3e_C7.3 : elle tient le vent, et l'impression la sait faire</label></div>
+    touche-t-on pas ?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__1" value="d&#x27;un calcul de 3e_C7.3 : elle tient le vent, et l&#x27;impression la sait faire"><label for="a1q2__1">d'un calcul de 3e_C7.3 : elle tient le vent, et l'impression la sait faire</label></div>
   <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__2" value="d&#x27;un réglage par défaut du logiciel de modélisation utilisé en 3e_C7.6"><label for="a1q2__2">d'un réglage par défaut du logiciel de modélisation utilisé en 3e_C7.6</label></div>
   <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__3" value="d&#x27;une norme d&#x27;étanchéité qui impose 2,9 mm à tout boîtier d&#x27;extérieur"><label for="a1q2__3">d'une norme d'étanchéité qui impose 2,9 mm à tout boîtier d'extérieur</label></div>
-  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__4" value="du diamètre de la buse : 2,9 mm correspond à sept passes de 0,4 mm"><label for="a1q2__4">du diamètre de la buse : 2,9 mm correspond à sept passes de 0,4 mm</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__4" value="du diamètre de la buse : 2,9 mm correspond à sept passes de 0,4 mm"><label for="a1q2__4">du diamètre de la buse : 2,9 mm correspond à sept passes de 0,4 mm</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a1q3">
   <legend><b>3.</b> À quoi sert de savoir tout cela <em>avant</em>
-    d'imprimer ?</legend>
+    d'imprimer ?</legend>
   <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__1" value="à ne pas dépenser une heure de machine pour découvrir ce qu&#x27;un tableau disait"><label for="a1q3__1">à ne pas dépenser une heure de machine pour découvrir ce qu'un tableau disait</label></div>
   <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__2" value="à pouvoir reprocher au logiciel de découpe de ne pas avoir bloqué l&#x27;impression"><label for="a1q3__2">à pouvoir reprocher au logiciel de découpe de ne pas avoir bloqué l'impression</label></div>
   <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__3" value="à choisir un autre moyen de fabrication que l&#x27;impression tridimensionnelle"><label for="a1q3__3">à choisir un autre moyen de fabrication que l'impression tridimensionnelle</label></div>
-  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__4" value="à rien de particulier : on aurait vu les trois défauts sur la pièce imprimée"><label for="a1q3__4">à rien de particulier : on aurait vu les trois défauts sur la pièce imprimée</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__4" value="à rien de particulier : on aurait vu les trois défauts sur la pièce imprimée"><label for="a1q3__4">à rien de particulier : on aurait vu les trois défauts sur la pièce imprimée</label></div>
 </fieldset>
     <p style="font-size:.9em;color:var(--warn)">🔒 Lance d'abord l'atelier sur le dessin d'origine : le résultat de cette activité est justement ce que l'atelier affiche.</p>
     <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
@@ -1033,27 +1033,27 @@ millimètre</span></td></tr></tbody></table></div></div><p><button type="button"
   </table>
     <fieldset class="qcm-groupe" id="a2q1">
   <legend><b>1.</b> La casquette passe de 70° à 45°. Écarte-t-elle encore
-    l'eau du joint ?</legend>
-  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__1" value="oui : c&#x27;est la pente qui écarte l&#x27;eau, et 45° est déjà une forte pente"><label for="a2q1__1">oui : c'est la pente qui écarte l'eau, et 45° est déjà une forte pente</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__2" value="non : à 45° l&#x27;eau ruisselle directement dans la rainure du joint torique"><label for="a2q1__2">non : à 45° l'eau ruisselle directement dans la rainure du joint torique</label></div>
+    l'eau du joint ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__1" value="oui : c&#x27;est la pente qui écarte l&#x27;eau, et 45° est déjà une forte pente"><label for="a2q1__1">oui : c'est la pente qui écarte l'eau, et 45° est déjà une forte pente</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__2" value="non : à 45° l&#x27;eau ruisselle directement dans la rainure du joint torique"><label for="a2q1__2">non : à 45° l'eau ruisselle directement dans la rainure du joint torique</label></div>
   <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__3" value="oui, à condition d&#x27;ajouter une gouttière sur le pourtour du couvercle"><label for="a2q1__3">oui, à condition d'ajouter une gouttière sur le pourtour du couvercle</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__4" value="non : il faudrait au moins 60° pour que l&#x27;eau soit correctement écartée"><label for="a2q1__4">non : il faudrait au moins 60° pour que l'eau soit correctement écartée</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__4" value="non : il faudrait au moins 60° pour que l&#x27;eau soit correctement écartée"><label for="a2q1__4">non : il faudrait au moins 60° pour que l'eau soit correctement écartée</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a2q2">
   <legend><b>2.</b> Qu'est-ce que ces trois corrections ont changé au
-    <b>cahier des charges</b> ?</legend>
-  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__1" value="rien : même matière, même encombrement, même étanchéité, même masse admise"><label for="a2q2__1">rien : même matière, même encombrement, même étanchéité, même masse admise</label></div>
+    <b>cahier des charges</b> ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__1" value="rien : même matière, même encombrement, même étanchéité, même masse admise"><label for="a2q2__1">rien : même matière, même encombrement, même étanchéité, même masse admise</label></div>
   <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__2" value="l&#x27;étanchéité, qui devient moins bonne avec un jeu de couvercle plus grand"><label for="a2q2__2">l'étanchéité, qui devient moins bonne avec un jeu de couvercle plus grand</label></div>
   <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__3" value="la masse, qui augmente parce que la rainure est deux fois plus profonde"><label for="a2q2__3">la masse, qui augmente parce que la rainure est deux fois plus profonde</label></div>
   <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__4" value="la tenue au vent, car une casquette moins inclinée offre plus de prise"><label for="a2q2__4">la tenue au vent, car une casquette moins inclinée offre plus de prise</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a2q3">
   <legend><b>3.</b> En quoi ce geste diffère-t-il de celui de
-    <code>3e_C7.3</code>, où l'on avait dû relâcher une exigence ?</legend>
-  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__1" value="là on changeait ce que l&#x27;objet doit faire ; ici on change comment on le dessine"><label for="a2q3__1">là on changeait ce que l'objet doit faire ; ici on change comment on le dessine</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__2" value="il ne diffère pas : dans les deux cas on assouplit une contrainte trop sévère"><label for="a2q3__2">il ne diffère pas : dans les deux cas on assouplit une contrainte trop sévère</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__3" value="là on changeait le dessin ; ici on change le matériau et son procédé"><label for="a2q3__3">là on changeait le dessin ; ici on change le matériau et son procédé</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__4" value="là le coût était nul ; ici chaque correction se paie en temps de machine"><label for="a2q3__4">là le coût était nul ; ici chaque correction se paie en temps de machine</label></div>
+    <code>3e_C7.3</code>, où l'on avait dû relâcher une exigence ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__1" value="là on changeait ce que l&#x27;objet doit faire ; ici on change comment on le dessine"><label for="a2q3__1">là on changeait ce que l'objet doit faire ; ici on change comment on le dessine</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__2" value="il ne diffère pas : dans les deux cas on assouplit une contrainte trop sévère"><label for="a2q3__2">il ne diffère pas : dans les deux cas on assouplit une contrainte trop sévère</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__3" value="là on changeait le dessin ; ici on change le matériau et son procédé"><label for="a2q3__3">là on changeait le dessin ; ici on change le matériau et son procédé</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__4" value="là le coût était nul ; ici chaque correction se paie en temps de machine"><label for="a2q3__4">là le coût était nul ; ici chaque correction se paie en temps de machine</label></div>
 </fieldset>
     <p style="font-size:.9em;color:var(--warn)">🔒 Amène d'abord l'atelier à retenir UN moyen, en corrigeant les cotes qui bloquent : c'est l'expérience que cette activité demande de relever.</p>
     <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
@@ -1119,26 +1119,26 @@ millimètre</span></td></tr></tbody></table></div></div><p><button type="button"
 
     <p>Associe chaque chose qu'on aurait apprise en recommençant à la façon de la savoir avant.</p>
     <fieldset class="qcm-groupe" id="a4y0">
-  <legend><b>« Le couvercle ne ferme pas »</b></legend>
+  <legend><b>« Le couvercle ne ferme pas »</b></legend>
   <div class="qcm-option"><input type="radio" name="a4y0" id="a4y0__1" value="on l&#x27;aurait poncée — sans second tirage, il faut l&#x27;angle qui évite le support"><label for="a4y0__1">on l'aurait poncée — sans second tirage, il faut l'angle qui évite le support</label></div>
   <div class="qcm-option"><input type="radio" name="a4y0" id="a4y0__2" value="on l&#x27;aurait vu au premier tirage — sans tirage d&#x27;essai, il faut dessiner le jeu"><label for="a4y0__2">on l'aurait vu au premier tirage — sans tirage d'essai, il faut dessiner le jeu</label></div>
   <div class="qcm-option"><input type="radio" name="a4y0" id="a4y0__3" value="on ne l&#x27;aurait su qu&#x27;en vrai — c&#x27;est ce qu&#x27;une simulation sert à savoir avant"><label for="a4y0__3">on ne l'aurait su qu'en vrai — c'est ce qu'une simulation sert à savoir avant</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a4y1">
-  <legend><b>« La casquette est velue »</b></legend>
+  <legend><b>« La casquette est velue »</b></legend>
   <div class="qcm-option"><input type="radio" name="a4y1" id="a4y1__1" value="on l&#x27;aurait poncée — sans second tirage, il faut l&#x27;angle qui évite le support"><label for="a4y1__1">on l'aurait poncée — sans second tirage, il faut l'angle qui évite le support</label></div>
   <div class="qcm-option"><input type="radio" name="a4y1" id="a4y1__2" value="on l&#x27;aurait vu au premier tirage — sans tirage d&#x27;essai, il faut dessiner le jeu"><label for="a4y1__2">on l'aurait vu au premier tirage — sans tirage d'essai, il faut dessiner le jeu</label></div>
   <div class="qcm-option"><input type="radio" name="a4y1" id="a4y1__3" value="on ne l&#x27;aurait su qu&#x27;en vrai — c&#x27;est ce qu&#x27;une simulation sert à savoir avant"><label for="a4y1__3">on ne l'aurait su qu'en vrai — c'est ce qu'une simulation sert à savoir avant</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a4y2">
-  <legend><b>« La pièce a cassé au premier cyclone »</b></legend>
+  <legend><b>« La pièce a cassé au premier cyclone »</b></legend>
   <div class="qcm-option"><input type="radio" name="a4y2" id="a4y2__1" value="on l&#x27;aurait poncée — sans second tirage, il faut l&#x27;angle qui évite le support"><label for="a4y2__1">on l'aurait poncée — sans second tirage, il faut l'angle qui évite le support</label></div>
   <div class="qcm-option"><input type="radio" name="a4y2" id="a4y2__2" value="on l&#x27;aurait vu au premier tirage — sans tirage d&#x27;essai, il faut dessiner le jeu"><label for="a4y2__2">on l'aurait vu au premier tirage — sans tirage d'essai, il faut dessiner le jeu</label></div>
   <div class="qcm-option"><input type="radio" name="a4y2" id="a4y2__3" value="on ne l&#x27;aurait su qu&#x27;en vrai — c&#x27;est ce qu&#x27;une simulation sert à savoir avant"><label for="a4y2__3">on ne l'aurait su qu'en vrai — c'est ce qu'une simulation sert à savoir avant</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a3q1">
   <legend><b>1.</b> La simulation de <code>3e_C8.1</code> dit que la pièce
-    tient le vent. Que ne dit-elle pas ?</legend>
+    tient le vent. Que ne dit-elle pas ?</legend>
   <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__1" value="que les couches imprimées se séparent plus facilement entre elles que dans la matière"><label for="a3q1__1">que les couches imprimées se séparent plus facilement entre elles que dans la matière</label></div>
   <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__2" value="quelle contrainte maximale la pièce subit au point le plus sollicité du boîtier"><label for="a3q1__2">quelle contrainte maximale la pièce subit au point le plus sollicité du boîtier</label></div>
   <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__3" value="si la contrainte calculée dépasse ou non la limite élastique du matériau retenu"><label for="a3q1__3">si la contrainte calculée dépasse ou non la limite élastique du matériau retenu</label></div>
@@ -1294,7 +1294,7 @@ millimètre</span></td></tr></tbody></table></div></div><p><button type="button"
 <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« J'ai hésité en corrigeant les cotes au moment de … »</li><li>« Ce qui m'a surpris dans le verdict de l'atelier, c'est que … »</li></ul></details>
   <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
   <fieldset class="qcm-groupe" id="pos">
-  <legend><b>Je me positionne sur 3e_C7.7 :</b></legend>
+  <legend><b>Je me positionne sur 3e_C7.7 :</b></legend>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__1" value="🔴 Maîtrise insuffisante — je ne sais pas encore quoi faire quand une machine ne rend pas la pièce dessinée"><label for="pos__1">🔴 Maîtrise insuffisante — je ne sais pas encore quoi faire quand une machine ne rend pas la pièce dessinée</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__2" value="🟠 Maîtrise fragile — je repère les cotes bloquantes, mais je corrige aussi celles qui passaient déjà"><label for="pos__2">🟠 Maîtrise fragile — je repère les cotes bloquantes, mais je corrige aussi celles qui passaient déjà</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__3" value="🟠 Maîtrise fragile — je sais le faire si on m&#x27;indique quelles cotes posent problème"><label for="pos__3">🟠 Maîtrise fragile — je sais le faire si on m'indique quelles cotes posent problème</label></div>
@@ -1679,7 +1679,7 @@ if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
 /* ══ Règle d'or n°30 — le bandeau des tâches : une ligne par activité, barrée quand elle est validée ══ */
 function majBandeau(){ const b=$("tachesBandeau"); if(!b) return; const ul=b.querySelector("ul"); if(!ul) return;
   const v=(window.__exp||{}).valides||{}; let faites=0;
-  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.check]; li.classList.toggle("faite", ok); if(ok) faites++;
+  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.tache]; li.classList.toggle("faite", ok); if(ok) faites++;
     li.querySelector(".tb-etat").textContent = ok ? "✔" : "○"; });
   const c=b.querySelector(".tb-compte"); if(c) c.textContent = faites + " / " + ul.children.length + " validée(s)"; }
 window.__exp = window.__exp || {};

@@ -230,7 +230,7 @@ body.essentiel details.referentiel-replie{display:none}
     padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
   .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
   .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
-  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
   .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
   @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
     .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
@@ -367,26 +367,6 @@ body.essentiel details.referentiel-replie{display:none}
   [data-lpp-racine]:not(.lpp-sans-impression)>:not([data-lpp="dessin"]):not(.lpp-imprime){display:none!important}
 }
 </style>
-<script>
-/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
-   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
-   fonctionner sur le groupe de boutons radio, sans être touché. */
-(function(){
-  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
-  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
-    configurable: true,
-    get: function(){
-      if (!this.classList.contains("qcm-groupe")) return undefined;
-      var c = this.querySelector("input[type=radio]:checked");
-      return c ? c.value : "";
-    },
-    set: function(v){
-      if (!this.classList.contains("qcm-groupe")) return;
-      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
-    }
-  });
-})();
-</script>
 <script>
 /* Fiche papier — source unique : _outils/impression_papier/papier.js (posé par poser.py ; ne pas modifier dans la page).
    Prépare, une fois, ce que le papier remplace (cachés à l'écran : .pp-papier) ; avant chaque impression, marque la séance
@@ -604,6 +584,26 @@ body.essentiel details.referentiel-replie{display:none}
 </script>
 <!-- fiche-papier v1 : fin -->
 <!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
@@ -903,13 +903,13 @@ body.essentiel details.referentiel-replie{display:none}
 <div id="tachesBandeau" aria-live="polite" aria-atomic="true">
   <span class="tb-titre">📋 Où j'en suis <span class="tb-compte"></span></span>
   <ul>
-    <li data-check="0"><span class="tb-etat">○</span> Vérifier l'activité 0</li>
-    <li data-check="1"><span class="tb-etat">○</span> Vérifier l'activité 1</li>
-    <li data-check="2"><span class="tb-etat">○</span> Vérifier l'activité 2</li>
-    <li data-check="3"><span class="tb-etat">○</span> Vérifier l'activité 3</li>
-    <li data-check="4"><span class="tb-etat">○</span> Vérifier l'activité 4</li>
-    <li data-check="5"><span class="tb-etat">○</span> Vérifier l'activité 5</li>
-    <li data-check="6"><span class="tb-etat">○</span> Vérifier le réinvestissement</li>
+    <li data-tache="0"><span class="tb-etat">○</span> Vérifier l'activité 0</li>
+    <li data-tache="1"><span class="tb-etat">○</span> Vérifier l'activité 1</li>
+    <li data-tache="2"><span class="tb-etat">○</span> Vérifier l'activité 2</li>
+    <li data-tache="3"><span class="tb-etat">○</span> Vérifier l'activité 3</li>
+    <li data-tache="4"><span class="tb-etat">○</span> Vérifier l'activité 4</li>
+    <li data-tache="5"><span class="tb-etat">○</span> Vérifier l'activité 5</li>
+    <li data-tache="6"><span class="tb-etat">○</span> Vérifier le réinvestissement</li>
   </ul>
 </div>
 <!-- ══════════════════ SÉANCE 1 ══════════════════ -->
@@ -940,8 +940,8 @@ body.essentiel details.referentiel-replie{display:none}
     <fieldset class="qcm-groupe" id="a0q2">
   <legend><b>2.</b> Bascule le banc en <b>traction</b> et reprends le même profilé. Les deux
     charges de rupture sont…</legend>
-  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__1" value="les mêmes : c&#x27;est la même matière"><label for="a0q2__1">les mêmes : c'est la même matière</label></div>
-  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__2" value="très différentes : il cède des centaines de fois plus tôt en flexion"><label for="a0q2__2">très différentes : il cède des centaines de fois plus tôt en flexion</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__1" value="les mêmes : c&#x27;est la même matière"><label for="a0q2__1">les mêmes : c'est la même matière</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__2" value="très différentes : il cède des centaines de fois plus tôt en flexion"><label for="a0q2__2">très différentes : il cède des centaines de fois plus tôt en flexion</label></div>
   <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__3" value="différentes de quelques newtons seulement"><label for="a0q2__3">différentes de quelques newtons seulement</label></div>
   <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__4" value="impossibles à comparer, le banc refuse"><label for="a0q2__4">impossibles à comparer, le banc refuse</label></div>
 </fieldset>
@@ -1003,7 +1003,7 @@ body.essentiel details.referentiel-replie{display:none}
   <legend><b>Question 2.</b> Repasse le banc en <b>⟂ flexion</b> et refais le classement.
     Le mât désigné est-il le même&nbsp;?</legend>
   <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__1" value="oui, c&#x27;est le même dans les deux essais"><label for="a1q2__1">oui, c'est le même dans les deux essais</label></div>
-  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__2" value="non : celui qui gagne en traction n&#x27;est que quatrième en flexion"><label for="a1q2__2">non : celui qui gagne en traction n'est que quatrième en flexion</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__2" value="non : celui qui gagne en traction n&#x27;est que quatrième en flexion"><label for="a1q2__2">non : celui qui gagne en traction n'est que quatrième en flexion</label></div>
   <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__3" value="non, mais l&#x27;écart est trop petit pour compter"><label for="a1q2__3">non, mais l'écart est trop petit pour compter</label></div>
   <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__4" value="le banc donne le même ordre, seules les unités changent"><label for="a1q2__4">le banc donne le même ordre, seules les unités changent</label></div>
 </fieldset>
@@ -1119,7 +1119,7 @@ impératif :
 </fieldset>
     <fieldset class="qcm-groupe" id="a2q2">
   <legend><b>Décision 2 — la grandeur mesurée.</b> Une seule mesure ne suffit pas ici. Laquelle
-    manque au « il casse à tant de newtons »&nbsp;?</legend>
+    manque au « il casse à tant de newtons »&nbsp;?</legend>
   <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__1" value="la couleur du profilé après essai"><label for="a2q2__1">la couleur du profilé après essai</label></div>
   <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__2" value="la flèche en tête sous une charge d&#x27;essai commune"><label for="a2q2__2">la flèche en tête sous une charge d'essai commune</label></div>
   <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__3" value="le prix au mètre de chaque profilé"><label for="a2q2__3">le prix au mètre de chaque profilé</label></div>
@@ -1131,7 +1131,7 @@ impératif :
   <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__1" value="la couleur et la marque des profilés"><label for="a2q3__1">la couleur et la marque des profilés</label></div>
   <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__2" value="la hauteur, la fixation au pied et le point d&#x27;application de la charge"><label for="a2q3__2">la hauteur, la fixation au pied et le point d'application de la charge</label></div>
   <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__3" value="la section et la matière, pour que ce soit comparable"><label for="a2q3__3">la section et la matière, pour que ce soit comparable</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__4" value="rien : chaque candidat s&#x27;essaie comme il vient"><label for="a2q3__4">rien : chaque candidat s'essaie comme il vient</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__4" value="rien : chaque candidat s&#x27;essaie comme il vient"><label for="a2q3__4">rien : chaque candidat s'essaie comme il vient</label></div>
 </fieldset>
     <p><b>Décision 4 — le critère de rupture.</b> D'après le cahier des charges, la charge de
     rupture exigée en tête vaut, en newtons :</p>
@@ -1140,7 +1140,7 @@ impératif :
     tous les candidats, en newtons :</p>
     <input type="text" inputmode="numeric" id="a2q5" placeholder="… N">
     <fieldset class="qcm-groupe" id="a2q6">
-  <legend><b>Décision 6 — la règle de décision,</b> écrite AVANT de mesurer :</legend>
+  <legend><b>Décision 6 — la règle de décision,</b> écrite AVANT de mesurer :</legend>
   <div class="qcm-option"><input type="radio" name="a2q6" id="a2q6__1" value="je retiens le mât qui casse le plus tard, un point c&#x27;est tout"><label for="a2q6__1">je retiens le mât qui casse le plus tard, un point c'est tout</label></div>
   <div class="qcm-option"><input type="radio" name="a2q6" id="a2q6__2" value="je retiens le mât le moins cher parmi ceux qui ne cassent pas"><label for="a2q6__2">je retiens le mât le moins cher parmi ceux qui ne cassent pas</label></div>
   <div class="qcm-option"><input type="radio" name="a2q6" id="a2q6__3" value="je retiens un mât seulement s&#x27;il tient les DEUX critères"><label for="a2q6__3">je retiens un mât seulement s'il tient les DEUX critères</label></div>
@@ -1275,43 +1275,43 @@ impératif :
   <div class="exo">
     <fieldset class="qcm-groupe" id="a4q0">
   <legend><b>Tube aluminium Ø50 × 3</b></legend>
-  <div class="qcm-option"><input type="radio" name="a4q0" id="a4q0__1" value="L&#x27;humidité : une poutre qui a pris l&#x27;eau ne casse plus à la même charge, et le banc essaie du bois sec."><label for="a4q0__1">L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q0" id="a4q0__2" value="La galvanisation protège tant qu&#x27;on ne la perce pas : c&#x27;est le trou de fixation, non traité, qui rouille en premier."><label for="a4q0__2">La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q0" id="a4q0__3" value="Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c&#x27;est la fatigue, et elle casse plus bas que l&#x27;essai."><label for="a4q0__3">Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q0" id="a4q0__4" value="Presque 5 kg à hisser sur un toit et à fixer en haut d&#x27;une échelle : le banc, lui, ne pèse rien."><label for="a4q0__4">Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q0" id="a4q0__5" value="Sous le soleil des tropiques, le PVC vieillit et devient cassant : l&#x27;essai, lui, est fait sur un tube neuf."><label for="a4q0__5">Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q0" id="a4q0__1" value="L&#x27;humidité : une poutre qui a pris l&#x27;eau ne casse plus à la même charge, et le banc essaie du bois sec."><label for="a4q0__1">L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q0" id="a4q0__2" value="La galvanisation protège tant qu&#x27;on ne la perce pas : c&#x27;est le trou de fixation, non traité, qui rouille en premier."><label for="a4q0__2">La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q0" id="a4q0__3" value="Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c&#x27;est la fatigue, et elle casse plus bas que l&#x27;essai."><label for="a4q0__3">Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q0" id="a4q0__4" value="Presque 5 kg à hisser sur un toit et à fixer en haut d&#x27;une échelle : le banc, lui, ne pèse rien."><label for="a4q0__4">Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q0" id="a4q0__5" value="Sous le soleil des tropiques, le PVC vieillit et devient cassant : l&#x27;essai, lui, est fait sur un tube neuf."><label for="a4q0__5">Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a4q1">
   <legend><b>Barre pleine acier Ø20</b></legend>
-  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__1" value="L&#x27;humidité : une poutre qui a pris l&#x27;eau ne casse plus à la même charge, et le banc essaie du bois sec."><label for="a4q1__1">L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__2" value="La galvanisation protège tant qu&#x27;on ne la perce pas : c&#x27;est le trou de fixation, non traité, qui rouille en premier."><label for="a4q1__2">La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__3" value="Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c&#x27;est la fatigue, et elle casse plus bas que l&#x27;essai."><label for="a4q1__3">Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__4" value="Presque 5 kg à hisser sur un toit et à fixer en haut d&#x27;une échelle : le banc, lui, ne pèse rien."><label for="a4q1__4">Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__5" value="Sous le soleil des tropiques, le PVC vieillit et devient cassant : l&#x27;essai, lui, est fait sur un tube neuf."><label for="a4q1__5">Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__1" value="L&#x27;humidité : une poutre qui a pris l&#x27;eau ne casse plus à la même charge, et le banc essaie du bois sec."><label for="a4q1__1">L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__2" value="La galvanisation protège tant qu&#x27;on ne la perce pas : c&#x27;est le trou de fixation, non traité, qui rouille en premier."><label for="a4q1__2">La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__3" value="Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c&#x27;est la fatigue, et elle casse plus bas que l&#x27;essai."><label for="a4q1__3">Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__4" value="Presque 5 kg à hisser sur un toit et à fixer en haut d&#x27;une échelle : le banc, lui, ne pèse rien."><label for="a4q1__4">Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__5" value="Sous le soleil des tropiques, le PVC vieillit et devient cassant : l&#x27;essai, lui, est fait sur un tube neuf."><label for="a4q1__5">Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a4q2">
   <legend><b>Tube PVC Ø50 × 3</b></legend>
-  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__1" value="L&#x27;humidité : une poutre qui a pris l&#x27;eau ne casse plus à la même charge, et le banc essaie du bois sec."><label for="a4q2__1">L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__2" value="La galvanisation protège tant qu&#x27;on ne la perce pas : c&#x27;est le trou de fixation, non traité, qui rouille en premier."><label for="a4q2__2">La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__3" value="Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c&#x27;est la fatigue, et elle casse plus bas que l&#x27;essai."><label for="a4q2__3">Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__4" value="Presque 5 kg à hisser sur un toit et à fixer en haut d&#x27;une échelle : le banc, lui, ne pèse rien."><label for="a4q2__4">Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__5" value="Sous le soleil des tropiques, le PVC vieillit et devient cassant : l&#x27;essai, lui, est fait sur un tube neuf."><label for="a4q2__5">Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__1" value="L&#x27;humidité : une poutre qui a pris l&#x27;eau ne casse plus à la même charge, et le banc essaie du bois sec."><label for="a4q2__1">L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__2" value="La galvanisation protège tant qu&#x27;on ne la perce pas : c&#x27;est le trou de fixation, non traité, qui rouille en premier."><label for="a4q2__2">La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__3" value="Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c&#x27;est la fatigue, et elle casse plus bas que l&#x27;essai."><label for="a4q2__3">Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__4" value="Presque 5 kg à hisser sur un toit et à fixer en haut d&#x27;une échelle : le banc, lui, ne pèse rien."><label for="a4q2__4">Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__5" value="Sous le soleil des tropiques, le PVC vieillit et devient cassant : l&#x27;essai, lui, est fait sur un tube neuf."><label for="a4q2__5">Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a4q3">
   <legend><b>Poutre bois 40 × 40</b></legend>
-  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__1" value="L&#x27;humidité : une poutre qui a pris l&#x27;eau ne casse plus à la même charge, et le banc essaie du bois sec."><label for="a4q3__1">L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__2" value="La galvanisation protège tant qu&#x27;on ne la perce pas : c&#x27;est le trou de fixation, non traité, qui rouille en premier."><label for="a4q3__2">La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__3" value="Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c&#x27;est la fatigue, et elle casse plus bas que l&#x27;essai."><label for="a4q3__3">Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__4" value="Presque 5 kg à hisser sur un toit et à fixer en haut d&#x27;une échelle : le banc, lui, ne pèse rien."><label for="a4q3__4">Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__5" value="Sous le soleil des tropiques, le PVC vieillit et devient cassant : l&#x27;essai, lui, est fait sur un tube neuf."><label for="a4q3__5">Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__1" value="L&#x27;humidité : une poutre qui a pris l&#x27;eau ne casse plus à la même charge, et le banc essaie du bois sec."><label for="a4q3__1">L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__2" value="La galvanisation protège tant qu&#x27;on ne la perce pas : c&#x27;est le trou de fixation, non traité, qui rouille en premier."><label for="a4q3__2">La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__3" value="Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c&#x27;est la fatigue, et elle casse plus bas que l&#x27;essai."><label for="a4q3__3">Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__4" value="Presque 5 kg à hisser sur un toit et à fixer en haut d&#x27;une échelle : le banc, lui, ne pèse rien."><label for="a4q3__4">Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__5" value="Sous le soleil des tropiques, le PVC vieillit et devient cassant : l&#x27;essai, lui, est fait sur un tube neuf."><label for="a4q3__5">Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a4q4">
   <legend><b>Tube acier galvanisé Ø33,7 × 2,6</b></legend>
-  <div class="qcm-option"><input type="radio" name="a4q4" id="a4q4__1" value="L&#x27;humidité : une poutre qui a pris l&#x27;eau ne casse plus à la même charge, et le banc essaie du bois sec."><label for="a4q4__1">L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q4" id="a4q4__2" value="La galvanisation protège tant qu&#x27;on ne la perce pas : c&#x27;est le trou de fixation, non traité, qui rouille en premier."><label for="a4q4__2">La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q4" id="a4q4__3" value="Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c&#x27;est la fatigue, et elle casse plus bas que l&#x27;essai."><label for="a4q4__3">Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q4" id="a4q4__4" value="Presque 5 kg à hisser sur un toit et à fixer en haut d&#x27;une échelle : le banc, lui, ne pèse rien."><label for="a4q4__4">Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q4" id="a4q4__5" value="Sous le soleil des tropiques, le PVC vieillit et devient cassant : l&#x27;essai, lui, est fait sur un tube neuf."><label for="a4q4__5">Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q4" id="a4q4__1" value="L&#x27;humidité : une poutre qui a pris l&#x27;eau ne casse plus à la même charge, et le banc essaie du bois sec."><label for="a4q4__1">L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q4" id="a4q4__2" value="La galvanisation protège tant qu&#x27;on ne la perce pas : c&#x27;est le trou de fixation, non traité, qui rouille en premier."><label for="a4q4__2">La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q4" id="a4q4__3" value="Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c&#x27;est la fatigue, et elle casse plus bas que l&#x27;essai."><label for="a4q4__3">Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q4" id="a4q4__4" value="Presque 5 kg à hisser sur un toit et à fixer en haut d&#x27;une échelle : le banc, lui, ne pèse rien."><label for="a4q4__4">Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q4" id="a4q4__5" value="Sous le soleil des tropiques, le PVC vieillit et devient cassant : l&#x27;essai, lui, est fait sur un tube neuf."><label for="a4q4__5">Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</label></div>
 </fieldset>
     <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
     <div class="feedback" id="fb4"></div>
@@ -1368,7 +1368,7 @@ impératif :
     <fieldset class="qcm-groupe" id="a5q3">
   <legend><b>Question 3.</b> Le Tube acier galvanisé Ø33,7 × 2,6 casse à 367 N pour 300 exigés, mais sa
     flèche vaut 41,1 mm pour 40 admis. Que dis-tu à la mairie&nbsp;?</legend>
-  <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__1" value="on l&#x27;accepte : 1,1 mm d&#x27;écart, ce n&#x27;est rien du tout"><label for="a5q3__1">on l'accepte : 1,1 mm d'écart, ce n'est rien du tout</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__1" value="on l&#x27;accepte : 1,1 mm d&#x27;écart, ce n&#x27;est rien du tout"><label for="a5q3__1">on l'accepte : 1,1 mm d'écart, ce n'est rien du tout</label></div>
   <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__2" value="on le refuse en l&#x27;état, et mon protocole aurait dû annoncer son incertitude"><label for="a5q3__2">on le refuse en l'état, et mon protocole aurait dû annoncer son incertitude</label></div>
   <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__3" value="on refait l&#x27;essai jusqu&#x27;à obtenir 40 mm"><label for="a5q3__3">on refait l'essai jusqu'à obtenir 40 mm</label></div>
   <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__4" value="on le retient quand même, il est plus solide que l&#x27;autre en rupture"><label for="a5q3__4">on le retient quand même, il est plus solide que l'autre en rupture</label></div>
@@ -1494,7 +1494,7 @@ impératif :
 <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« J'ai hésité en écrivant mon protocole au moment de … »</li><li>« Ce qui m'a surpris quand je l'ai exécuté au banc, c'est que … »</li></ul></details>
   <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
   <fieldset class="qcm-groupe" id="pos">
-  <legend><b>Je me positionne sur 3e_C8.2 — proposer un protocole de test :</b></legend>
+  <legend><b>Je me positionne sur 3e_C8.2 — proposer un protocole de test :</b></legend>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__1" value="🔴 Maîtrise insuffisante — je sais exécuter un protocole, pas encore en écrire un"><label for="pos__1">🔴 Maîtrise insuffisante — je sais exécuter un protocole, pas encore en écrire un</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__2" value="🟠 Maîtrise fragile — j&#x27;écris le protocole si on me rappelle les rubriques"><label for="pos__2">🟠 Maîtrise fragile — j'écris le protocole si on me rappelle les rubriques</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__3" value="🟢 Maîtrise satisfaisante — je choisis la sollicitation, les seuils et la règle de décision"><label for="pos__3">🟢 Maîtrise satisfaisante — je choisis la sollicitation, les seuils et la règle de décision</label></div>
@@ -1813,7 +1813,7 @@ if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
 /* ══ Règle d'or n°30 — le bandeau des tâches : une ligne par activité, barrée quand elle est validée ══ */
 function majBandeau(){ const b=$("tachesBandeau"); if(!b) return; const ul=b.querySelector("ul"); if(!ul) return;
   const v=(window.__exp||{}).valides||{}; let faites=0;
-  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.check]; li.classList.toggle("faite", ok); if(ok) faites++;
+  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.tache]; li.classList.toggle("faite", ok); if(ok) faites++;
     li.querySelector(".tb-etat").textContent = ok ? "✔" : "○"; });
   const c=b.querySelector(".tb-compte"); if(c) c.textContent = faites + " / " + ul.children.length + " validée(s)"; }
 window.__exp = window.__exp || {};

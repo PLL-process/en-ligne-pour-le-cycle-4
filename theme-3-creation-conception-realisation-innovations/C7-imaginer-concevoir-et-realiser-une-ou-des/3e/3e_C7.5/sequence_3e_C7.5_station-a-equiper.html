@@ -230,7 +230,7 @@ body.essentiel details.referentiel-replie{display:none}
     padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
   .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
   .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
-  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
   .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
   @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
     .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
@@ -367,26 +367,6 @@ body.essentiel details.referentiel-replie{display:none}
   [data-lpp-racine]:not(.lpp-sans-impression)>:not([data-lpp="dessin"]):not(.lpp-imprime){display:none!important}
 }
 </style>
-<script>
-/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
-   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
-   fonctionner sur le groupe de boutons radio, sans être touché. */
-(function(){
-  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
-  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
-    configurable: true,
-    get: function(){
-      if (!this.classList.contains("qcm-groupe")) return undefined;
-      var c = this.querySelector("input[type=radio]:checked");
-      return c ? c.value : "";
-    },
-    set: function(v){
-      if (!this.classList.contains("qcm-groupe")) return;
-      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
-    }
-  });
-})();
-</script>
 <script>
 /* Fiche papier — source unique : _outils/impression_papier/papier.js (posé par poser.py ; ne pas modifier dans la page).
    Prépare, une fois, ce que le papier remplace (cachés à l'écran : .pp-papier) ; avant chaque impression, marque la séance
@@ -604,6 +584,26 @@ body.essentiel details.referentiel-replie{display:none}
 </script>
 <!-- fiche-papier v1 : fin -->
 <!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
@@ -819,12 +819,12 @@ cahier des charges de <em>votre</em> collège.</p>
 <div id="tachesBandeau" aria-live="polite" aria-atomic="true">
   <span class="tb-titre">📋 Où j'en suis <span class="tb-compte"></span></span>
   <ul>
-    <li data-check="0"><span class="tb-etat">○</span> Vérifier l'activité 0</li>
-    <li data-check="1"><span class="tb-etat">○</span> Vérifier l'activité 1</li>
-    <li data-check="2"><span class="tb-etat">○</span> Vérifier l'activité 2</li>
-    <li data-check="3"><span class="tb-etat">○</span> Vérifier l'activité 3</li>
-    <li data-check="4"><span class="tb-etat">○</span> Vérifier l'activité 4</li>
-    <li data-check="5"><span class="tb-etat">○</span> Vérifier le réinvestissement</li>
+    <li data-tache="0"><span class="tb-etat">○</span> Vérifier l'activité 0</li>
+    <li data-tache="1"><span class="tb-etat">○</span> Vérifier l'activité 1</li>
+    <li data-tache="2"><span class="tb-etat">○</span> Vérifier l'activité 2</li>
+    <li data-tache="3"><span class="tb-etat">○</span> Vérifier l'activité 3</li>
+    <li data-tache="4"><span class="tb-etat">○</span> Vérifier l'activité 4</li>
+    <li data-tache="5"><span class="tb-etat">○</span> Vérifier le réinvestissement</li>
   </ul>
 </div>
 <!-- ══════════════════ SÉANCE 1 ══════════════════ -->
@@ -914,39 +914,39 @@ condition</span></td></tr></tbody></table></div></div><p><button type="button" c
     <p>Associe chaque exigence de la commission au constituant qu'elle impose.</p>
     <fieldset class="qcm-groupe" id="a0r0">
   <legend><b>Exigence 1 — déclencher au-delà de 90 km/h de vent</b></legend>
-  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__1" value="elle impose l&#x27;anémomètre : c&#x27;est la seule grandeur du cahier des charges"><label for="a0r0__1">elle impose l'anémomètre : c'est la seule grandeur du cahier des charges</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__2" value="elle impose la batterie et le panneau : l&#x27;USB suppose un ordinateur allumé en permanence"><label for="a0r0__2">elle impose la batterie et le panneau : l'USB suppose un ordinateur allumé en permanence</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__3" value="elle impose la carte SD : sans elle, la station alerte mais ne prouve rien"><label for="a0r0__3">elle impose la carte SD : sans elle, la station alerte mais ne prouve rien</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__4" value="elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres"><label for="a0r0__4">elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__1" value="elle impose l&#x27;anémomètre : c&#x27;est la seule grandeur du cahier des charges"><label for="a0r0__1">elle impose l'anémomètre : c'est la seule grandeur du cahier des charges</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__2" value="elle impose la batterie et le panneau : l&#x27;USB suppose un ordinateur allumé en permanence"><label for="a0r0__2">elle impose la batterie et le panneau : l'USB suppose un ordinateur allumé en permanence</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__3" value="elle impose la carte SD : sans elle, la station alerte mais ne prouve rien"><label for="a0r0__3">elle impose la carte SD : sans elle, la station alerte mais ne prouve rien</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__4" value="elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres"><label for="a0r0__4">elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a0r1">
   <legend><b>Exigence 2 — une alerte visible depuis la cour en plein jour</b></legend>
-  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__1" value="elle impose l&#x27;anémomètre : c&#x27;est la seule grandeur du cahier des charges"><label for="a0r1__1">elle impose l'anémomètre : c'est la seule grandeur du cahier des charges</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__2" value="elle impose la batterie et le panneau : l&#x27;USB suppose un ordinateur allumé en permanence"><label for="a0r1__2">elle impose la batterie et le panneau : l'USB suppose un ordinateur allumé en permanence</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__3" value="elle impose la carte SD : sans elle, la station alerte mais ne prouve rien"><label for="a0r1__3">elle impose la carte SD : sans elle, la station alerte mais ne prouve rien</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__4" value="elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres"><label for="a0r1__4">elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__1" value="elle impose l&#x27;anémomètre : c&#x27;est la seule grandeur du cahier des charges"><label for="a0r1__1">elle impose l'anémomètre : c'est la seule grandeur du cahier des charges</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__2" value="elle impose la batterie et le panneau : l&#x27;USB suppose un ordinateur allumé en permanence"><label for="a0r1__2">elle impose la batterie et le panneau : l'USB suppose un ordinateur allumé en permanence</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__3" value="elle impose la carte SD : sans elle, la station alerte mais ne prouve rien"><label for="a0r1__3">elle impose la carte SD : sans elle, la station alerte mais ne prouve rien</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__4" value="elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres"><label for="a0r1__4">elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a0r2">
   <legend><b>Exigence 3 — tenir 72 heures sans intervention</b></legend>
-  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__1" value="elle impose l&#x27;anémomètre : c&#x27;est la seule grandeur du cahier des charges"><label for="a0r2__1">elle impose l'anémomètre : c'est la seule grandeur du cahier des charges</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__2" value="elle impose la batterie et le panneau : l&#x27;USB suppose un ordinateur allumé en permanence"><label for="a0r2__2">elle impose la batterie et le panneau : l'USB suppose un ordinateur allumé en permanence</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__3" value="elle impose la carte SD : sans elle, la station alerte mais ne prouve rien"><label for="a0r2__3">elle impose la carte SD : sans elle, la station alerte mais ne prouve rien</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__4" value="elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres"><label for="a0r2__4">elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__1" value="elle impose l&#x27;anémomètre : c&#x27;est la seule grandeur du cahier des charges"><label for="a0r2__1">elle impose l'anémomètre : c'est la seule grandeur du cahier des charges</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__2" value="elle impose la batterie et le panneau : l&#x27;USB suppose un ordinateur allumé en permanence"><label for="a0r2__2">elle impose la batterie et le panneau : l'USB suppose un ordinateur allumé en permanence</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__3" value="elle impose la carte SD : sans elle, la station alerte mais ne prouve rien"><label for="a0r2__3">elle impose la carte SD : sans elle, la station alerte mais ne prouve rien</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__4" value="elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres"><label for="a0r2__4">elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a0r3">
   <legend><b>Exigence 4 — un historique consultable après l'événement</b></legend>
-  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__1" value="elle impose l&#x27;anémomètre : c&#x27;est la seule grandeur du cahier des charges"><label for="a0r3__1">elle impose l'anémomètre : c'est la seule grandeur du cahier des charges</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__2" value="elle impose la batterie et le panneau : l&#x27;USB suppose un ordinateur allumé en permanence"><label for="a0r3__2">elle impose la batterie et le panneau : l'USB suppose un ordinateur allumé en permanence</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__3" value="elle impose la carte SD : sans elle, la station alerte mais ne prouve rien"><label for="a0r3__3">elle impose la carte SD : sans elle, la station alerte mais ne prouve rien</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__4" value="elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres"><label for="a0r3__4">elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__1" value="elle impose l&#x27;anémomètre : c&#x27;est la seule grandeur du cahier des charges"><label for="a0r3__1">elle impose l'anémomètre : c'est la seule grandeur du cahier des charges</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__2" value="elle impose la batterie et le panneau : l&#x27;USB suppose un ordinateur allumé en permanence"><label for="a0r3__2">elle impose la batterie et le panneau : l'USB suppose un ordinateur allumé en permanence</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__3" value="elle impose la carte SD : sans elle, la station alerte mais ne prouve rien"><label for="a0r3__3">elle impose la carte SD : sans elle, la station alerte mais ne prouve rien</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__4" value="elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres"><label for="a0r3__4">elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a0q1">
-  <legend><b>Et une question de fond :</b> le module carte SD ne mesure
-    rien, ne décide rien, n'agit pas et ne fournit pas d'énergie. Que faut-il en conclure ?</legend>
+  <legend><b>Et une question de fond :</b> le module carte SD ne mesure
+    rien, ne décide rien, n'agit pas et ne fournit pas d'énergie. Que faut-il en conclure ?</legend>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__1" value="un cahier des charges peut exiger un constituant hors des quatre fonctions"><label for="a0q1__1">un cahier des charges peut exiger un constituant hors des quatre fonctions</label></div>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__2" value="la carte SD est un constituant facultatif, qu&#x27;on peut retirer sans conséquence"><label for="a0q1__2">la carte SD est un constituant facultatif, qu'on peut retirer sans conséquence</label></div>
-  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__3" value="les quatre fonctions sont incomplètes : il en existe une cinquième, « mémoriser »"><label for="a0q1__3">les quatre fonctions sont incomplètes : il en existe une cinquième, « mémoriser »</label></div>
-  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__4" value="il s&#x27;agit d&#x27;une erreur du fournisseur : ce module n&#x27;a rien à faire dans le carton"><label for="a0q1__4">il s'agit d'une erreur du fournisseur : ce module n'a rien à faire dans le carton</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__3" value="les quatre fonctions sont incomplètes : il en existe une cinquième, « mémoriser »"><label for="a0q1__3">les quatre fonctions sont incomplètes : il en existe une cinquième, « mémoriser »</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__4" value="il s&#x27;agit d&#x27;une erreur du fournisseur : ce module n&#x27;a rien à faire dans le carton"><label for="a0q1__4">il s'agit d'une erreur du fournisseur : ce module n'a rien à faire dans le carton</label></div>
 </fieldset>
     <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
     <div class="feedback" id="fb0"></div>
@@ -1082,16 +1082,16 @@ condition</span></td></tr></tbody></table></div></div><p><button type="button" c
 
     <table class="cat">
       <tr><th>Constituant</th><th>Ce qu'il fait</th><th>mA</th><th>Port</th></tr>
-      <tr id="tr_carte"><td><b>Carte Arduino UNO</b></td><td>elle exécute le programme</td><td class="ma" id="ma_carte">—</td><td class="pt"><select data-interface="port" id="pt_carte" aria-label="Port de Carte Arduino UNO"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_shield"><td><b>Base Shield V2</b></td><td>il donne des ports Grove à la carte</td><td class="ma" id="ma_shield">—</td><td class="pt"><select data-interface="port" id="pt_shield" aria-label="Port de Base Shield V2"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_anemo"><td><b>Anémomètre Grove</b></td><td>il mesure la vitesse du vent</td><td class="ma" id="ma_anemo">—</td><td class="pt"><select data-interface="port" id="pt_anemo" aria-label="Port de Anémomètre Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_pluie"><td><b>Capteur de pluie Grove</b></td><td>il détecte la présence de pluie</td><td class="ma" id="ma_pluie">—</td><td class="pt"><select data-interface="port" id="pt_pluie" aria-label="Port de Capteur de pluie Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_lcd"><td><b>Écran LCD I2C Grove (16 × 2)</b></td><td>il affiche la mesure, lisible à 30 cm</td><td class="ma" id="ma_lcd">—</td><td class="pt"><select data-interface="port" id="pt_lcd" aria-label="Port de Écran LCD I2C Grove (16 × 2)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_bandeau"><td><b>Bandeau de 8 DEL de puissance</b></td><td>il signale l'alerte, visible de la cour</td><td class="ma" id="ma_bandeau">—</td><td class="pt"><select data-interface="port" id="pt_bandeau" aria-label="Port de Bandeau de 8 DEL de puissance"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_buzzer"><td><b>Buzzer Grove</b></td><td>il émet un son d'alerte</td><td class="ma" id="ma_buzzer">—</td><td class="pt"><select data-interface="port" id="pt_buzzer" aria-label="Port de Buzzer Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_sd"><td><b>Module carte SD Grove</b></td><td>il enregistre les mesures et leur heure</td><td class="ma" id="ma_sd">—</td><td class="pt"><select data-interface="port" id="pt_sd" aria-label="Port de Module carte SD Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_usb"><td><b>Câble USB 5 V (volts), 500 mA (milliampères)</b></td><td>il alimente depuis un ordinateur</td><td class="ma" id="ma_usb">—</td><td class="pt"><select data-interface="port" id="pt_usb" aria-label="Port de Câble USB 5 V (500 mA)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_alim"><td><b>Batterie 5 V / 2 A (ampères) + panneau solaire (TBT)</b></td><td>elle alimente la station sur site</td><td class="ma" id="ma_alim">—</td><td class="pt"><select data-interface="port" id="pt_alim" aria-label="Port de Batterie 5 V / 2 A + panneau solaire (TBT)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_carte"><td><b>Carte Arduino UNO</b></td><td>elle exécute le programme</td><td class="ma" id="ma_carte">—</td><td class="pt"><select id="pt_carte" data-interface="port" aria-label="Port de Carte Arduino UNO"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_shield"><td><b>Base Shield V2</b></td><td>il donne des ports Grove à la carte</td><td class="ma" id="ma_shield">—</td><td class="pt"><select id="pt_shield" data-interface="port" aria-label="Port de Base Shield V2"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_anemo"><td><b>Anémomètre Grove</b></td><td>il mesure la vitesse du vent</td><td class="ma" id="ma_anemo">—</td><td class="pt"><select id="pt_anemo" data-interface="port" aria-label="Port de Anémomètre Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_pluie"><td><b>Capteur de pluie Grove</b></td><td>il détecte la présence de pluie</td><td class="ma" id="ma_pluie">—</td><td class="pt"><select id="pt_pluie" data-interface="port" aria-label="Port de Capteur de pluie Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_lcd"><td><b>Écran LCD I2C Grove (16 × 2)</b></td><td>il affiche la mesure, lisible à 30 cm</td><td class="ma" id="ma_lcd">—</td><td class="pt"><select id="pt_lcd" data-interface="port" aria-label="Port de Écran LCD I2C Grove (16 × 2)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_bandeau"><td><b>Bandeau de 8 DEL de puissance</b></td><td>il signale l'alerte, visible de la cour</td><td class="ma" id="ma_bandeau">—</td><td class="pt"><select id="pt_bandeau" data-interface="port" aria-label="Port de Bandeau de 8 DEL de puissance"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_buzzer"><td><b>Buzzer Grove</b></td><td>il émet un son d'alerte</td><td class="ma" id="ma_buzzer">—</td><td class="pt"><select id="pt_buzzer" data-interface="port" aria-label="Port de Buzzer Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_sd"><td><b>Module carte SD Grove</b></td><td>il enregistre les mesures et leur heure</td><td class="ma" id="ma_sd">—</td><td class="pt"><select id="pt_sd" data-interface="port" aria-label="Port de Module carte SD Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_usb"><td><b>Câble USB 5 V (volts), 500 mA (milliampères)</b></td><td>il alimente depuis un ordinateur</td><td class="ma" id="ma_usb">—</td><td class="pt"><select id="pt_usb" data-interface="port" aria-label="Port de Câble USB 5 V (500 mA)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_alim"><td><b>Batterie 5 V / 2 A (ampères) + panneau solaire (TBT)</b></td><td>elle alimente la station sur site</td><td class="ma" id="ma_alim">—</td><td class="pt"><select id="pt_alim" data-interface="port" aria-label="Port de Batterie 5 V / 2 A + panneau solaire (TBT)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
     </table>
     <p class="budget" id="budget">—</p>
     <p style="font-size:.9em;color:var(--sub);margin:10px 0 2px">Le programme téléversé dans la carte (on ne le modifie pas) :</p>
@@ -1116,7 +1116,7 @@ sinon
     <h4>Une fois que l'établi affiche ✔</h4>
     <p>Les cinq premières encoches relisent <b>ton établi</b>. La sixième est une question.</p>
     <fieldset class="qcm-groupe" id="a2q1">
-  <legend><b>Pourquoi le bandeau doit-il être sur D6 et pas sur D2 ?</b></legend>
+  <legend><b>Pourquoi le bandeau doit-il être sur D6 et pas sur D2 ?</b></legend>
   <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__1" value="parce que le programme écrit sur D6, et qu&#x27;on ne le modifie pas ici"><label for="a2q1__1">parce que le programme écrit sur D6, et qu'on ne le modifie pas ici</label></div>
   <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__2" value="parce que D2 ne supporte pas les 480 mA du bandeau"><label for="a2q1__2">parce que D2 ne supporte pas les 480 milliampères du bandeau</label></div>
   <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__3" value="parce que D6 est le seul port numérique libre du Base Shield"><label for="a2q1__3">parce que D6 est le seul port numérique libre du Base Shield</label></div>
@@ -1151,28 +1151,28 @@ sinon
     <p>Associe chaque retrait au refus que l'établi t'a opposé.</p>
     <fieldset class="qcm-groupe" id="a2s0">
   <legend><b>On retire l'anémomètre</b></legend>
-  <div class="qcm-option"><input type="radio" name="a2s0" id="a2s0__1" value="il ne reste que l&#x27;USB : 580 mA demandés, 500 disponibles, la carte redémarre"><label for="a2s0__1">il ne reste que l'USB : 580 milliampères demandés, 500 disponibles, la carte redémarre</label></div>
+  <div class="qcm-option"><input type="radio" name="a2s0" id="a2s0__1" value="il ne reste que l&#x27;USB : 580 mA demandés, 500 disponibles, la carte redémarre"><label for="a2s0__1">il ne reste que l'USB : 580 milliampères demandés, 500 disponibles, la carte redémarre</label></div>
   <div class="qcm-option"><input type="radio" name="a2s0" id="a2s0__2" value="l&#x27;alerte existe dans la carte, et personne dans la cour ne la voit"><label for="a2s0__2">l'alerte existe dans la carte, et personne dans la cour ne la voit</label></div>
   <div class="qcm-option"><input type="radio" name="a2s0" id="a2s0__3" value="la station alerte correctement, et ne peut rien prouver après l&#x27;événement"><label for="a2s0__3">la station alerte correctement, et ne peut rien prouver après l'événement</label></div>
   <div class="qcm-option"><input type="radio" name="a2s0" id="a2s0__4" value="la station ne peut plus mesurer la grandeur sur laquelle porte le seuil"><label for="a2s0__4">la station ne peut plus mesurer la grandeur sur laquelle porte le seuil</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a2s1">
   <legend><b>On retire le bandeau de DEL</b></legend>
-  <div class="qcm-option"><input type="radio" name="a2s1" id="a2s1__1" value="il ne reste que l&#x27;USB : 580 mA demandés, 500 disponibles, la carte redémarre"><label for="a2s1__1">il ne reste que l'USB : 580 milliampères demandés, 500 disponibles, la carte redémarre</label></div>
+  <div class="qcm-option"><input type="radio" name="a2s1" id="a2s1__1" value="il ne reste que l&#x27;USB : 580 mA demandés, 500 disponibles, la carte redémarre"><label for="a2s1__1">il ne reste que l'USB : 580 milliampères demandés, 500 disponibles, la carte redémarre</label></div>
   <div class="qcm-option"><input type="radio" name="a2s1" id="a2s1__2" value="l&#x27;alerte existe dans la carte, et personne dans la cour ne la voit"><label for="a2s1__2">l'alerte existe dans la carte, et personne dans la cour ne la voit</label></div>
   <div class="qcm-option"><input type="radio" name="a2s1" id="a2s1__3" value="la station alerte correctement, et ne peut rien prouver après l&#x27;événement"><label for="a2s1__3">la station alerte correctement, et ne peut rien prouver après l'événement</label></div>
   <div class="qcm-option"><input type="radio" name="a2s1" id="a2s1__4" value="la station ne peut plus mesurer la grandeur sur laquelle porte le seuil"><label for="a2s1__4">la station ne peut plus mesurer la grandeur sur laquelle porte le seuil</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a2s2">
   <legend><b>On retire le module carte SD</b></legend>
-  <div class="qcm-option"><input type="radio" name="a2s2" id="a2s2__1" value="il ne reste que l&#x27;USB : 580 mA demandés, 500 disponibles, la carte redémarre"><label for="a2s2__1">il ne reste que l'USB : 580 milliampères demandés, 500 disponibles, la carte redémarre</label></div>
+  <div class="qcm-option"><input type="radio" name="a2s2" id="a2s2__1" value="il ne reste que l&#x27;USB : 580 mA demandés, 500 disponibles, la carte redémarre"><label for="a2s2__1">il ne reste que l'USB : 580 milliampères demandés, 500 disponibles, la carte redémarre</label></div>
   <div class="qcm-option"><input type="radio" name="a2s2" id="a2s2__2" value="l&#x27;alerte existe dans la carte, et personne dans la cour ne la voit"><label for="a2s2__2">l'alerte existe dans la carte, et personne dans la cour ne la voit</label></div>
   <div class="qcm-option"><input type="radio" name="a2s2" id="a2s2__3" value="la station alerte correctement, et ne peut rien prouver après l&#x27;événement"><label for="a2s2__3">la station alerte correctement, et ne peut rien prouver après l'événement</label></div>
   <div class="qcm-option"><input type="radio" name="a2s2" id="a2s2__4" value="la station ne peut plus mesurer la grandeur sur laquelle porte le seuil"><label for="a2s2__4">la station ne peut plus mesurer la grandeur sur laquelle porte le seuil</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a2s3">
   <legend><b>On retire la batterie</b></legend>
-  <div class="qcm-option"><input type="radio" name="a2s3" id="a2s3__1" value="il ne reste que l&#x27;USB : 580 mA demandés, 500 disponibles, la carte redémarre"><label for="a2s3__1">il ne reste que l'USB : 580 milliampères demandés, 500 disponibles, la carte redémarre</label></div>
+  <div class="qcm-option"><input type="radio" name="a2s3" id="a2s3__1" value="il ne reste que l&#x27;USB : 580 mA demandés, 500 disponibles, la carte redémarre"><label for="a2s3__1">il ne reste que l'USB : 580 milliampères demandés, 500 disponibles, la carte redémarre</label></div>
   <div class="qcm-option"><input type="radio" name="a2s3" id="a2s3__2" value="l&#x27;alerte existe dans la carte, et personne dans la cour ne la voit"><label for="a2s3__2">l'alerte existe dans la carte, et personne dans la cour ne la voit</label></div>
   <div class="qcm-option"><input type="radio" name="a2s3" id="a2s3__3" value="la station alerte correctement, et ne peut rien prouver après l&#x27;événement"><label for="a2s3__3">la station alerte correctement, et ne peut rien prouver après l'événement</label></div>
   <div class="qcm-option"><input type="radio" name="a2s3" id="a2s3__4" value="la station ne peut plus mesurer la grandeur sur laquelle porte le seuil"><label for="a2s3__4">la station ne peut plus mesurer la grandeur sur laquelle porte le seuil</label></div>
@@ -1227,11 +1227,11 @@ sinon
     <tr><td>Ce que fournit le câble USB</td><td class="num"><input type="text" inputmode="decimal" id="rel2" placeholder="… mA"></td></tr>
   </table>
     <fieldset class="qcm-groupe" id="a4q1">
-  <legend><b>Et la conclusion :</b> qu'est-ce que le budget de courant a
-    imposé, dans cette conception ?</legend>
+  <legend><b>Et la conclusion :</b> qu'est-ce que le budget de courant a
+    imposé, dans cette conception ?</legend>
   <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__1" value="une exigence d&#x27;usage a fini par décider de la source d&#x27;énergie"><label for="a4q1__1">une exigence d'usage a fini par décider de la source d'énergie</label></div>
   <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__2" value="il fallait renoncer au bandeau et accepter un écran LCD"><label for="a4q1__2">il fallait renoncer au bandeau et accepter un écran LCD</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__3" value="le budget de courant n&#x27;a rien imposé : il se constate après coup"><label for="a4q1__3">le budget de courant n'a rien imposé : il se constate après coup</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__3" value="le budget de courant n&#x27;a rien imposé : il se constate après coup"><label for="a4q1__3">le budget de courant n'a rien imposé : il se constate après coup</label></div>
   <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__4" value="il fallait deux cartes, une par constituant gourmand"><label for="a4q1__4">il fallait deux cartes, une par constituant gourmand</label></div>
 </fieldset>
     <p style="font-size:.9em;color:var(--warn)">🔒 Retire la batterie de ton montage complet et re-teste : l'établi te donnera le nombre exact qu'on te demande ici.</p>
@@ -1348,7 +1348,7 @@ sinon
 <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« J'ai hésité en choisissant les constituants au moment de … »</li><li>« Ce qui m'a surpris dans les refus de l'établi, c'est que … »</li></ul></details>
   <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
   <fieldset class="qcm-groupe" id="pos">
-  <legend><b>Je me positionne sur 3e_C7.5 :</b></legend>
+  <legend><b>Je me positionne sur 3e_C7.5 :</b></legend>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__1" value="🔴 Maîtrise insuffisante — je ne sais pas encore par où prendre un catalogue plus large que le besoin"><label for="pos__1">🔴 Maîtrise insuffisante — je ne sais pas encore par où prendre un catalogue plus large que le besoin</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__2" value="🟠 Maîtrise fragile — je sais assembler correctement, mais je choisis encore d&#x27;après ce qui est disponible"><label for="pos__2">🟠 Maîtrise fragile — je sais assembler correctement, mais je choisis encore d'après ce qui est disponible</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__3" value="🟠 Maîtrise fragile — je sais choisir quand on m&#x27;aide à relire le cahier des charges exigence par exigence"><label for="pos__3">🟠 Maîtrise fragile — je sais choisir quand on m'aide à relire le cahier des charges exigence par exigence</label></div>
@@ -1683,7 +1683,7 @@ if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
 /* ══ Règle d'or n°30 — le bandeau des tâches : une ligne par activité, barrée quand elle est validée ══ */
 function majBandeau(){ const b=$("tachesBandeau"); if(!b) return; const ul=b.querySelector("ul"); if(!ul) return;
   const v=(window.__exp||{}).valides||{}; let faites=0;
-  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.check]; li.classList.toggle("faite", ok); if(ok) faites++;
+  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.tache]; li.classList.toggle("faite", ok); if(ok) faites++;
     li.querySelector(".tb-etat").textContent = ok ? "✔" : "○"; });
   const c=b.querySelector(".tb-compte"); if(c) c.textContent = faites + " / " + ul.children.length + " validée(s)"; }
 window.__exp = window.__exp || {};
