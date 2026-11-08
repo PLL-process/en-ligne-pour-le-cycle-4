@@ -28859,3 +28859,19 @@ les pages des PR #608 et #610 (voir le rapport, section 3).
 
 **Reste à Pascal.** Les décisions de la section 6 du rapport — l'ordre des vagues, l'exemption du contrôle n°300,
 la convention `c:"Cx.y"` pour tous les QCM, les 4 codes à vérifier, la n°23.
+
+## 07/11/2026 — V1 de la boucle d'audit : le contrôle n°300 ne compte plus les menus voulus par les n°317 et 318 (transversal : `_outils`, `docs/audits`)
+
+**Décision de Pascal (07/11, 21 h 13)** : l'ordre des vagues proposé dans `RAPPORT_AUDIT_2026-11-07.md` est retenu, au
+rythme de **trois vagues par semaine et par thème**. V1 est la première.
+
+**Ce que fait cette PR.** `verif_regles_audit.py`, règle n°300 : les listes déroulantes dont l'id dit `…cdcf…`
+(cahier des charges, widget `tableau`, n°317) ou `bc_<niv>_rappel-…__aqui|surquoi|objet|but` et `bac_…` (rappel intégré
+de la bête à cornes, lot du 05/11, forme n°318) sont **voulues** : comptées à part dans le message, elles ne font plus
+tomber la règle. Les `be_*` sont les billets d'entrée, pas la bête à cornes : le crible du rapport est corrigé.
+
+**Mesuré.** ✘ **135 → 130** ; n°300 : **51 → 46 pages**, cinq passent (seuls des menus voulus) ; il reste **1 196
+listes** réellement à convertir sur 46 séquences — le chiffre de référence de V2 et V3. Aucune page touchée.
+
+**Reste à Pascal.** Fusionner ; répondre aux décisions 2, 4 et 5 du rapport (convention `c:"Cx.y"`, codes à vérifier,
+n°23).

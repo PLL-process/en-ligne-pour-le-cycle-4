@@ -436,6 +436,10 @@ def regle_298(src: str) -> tuple[str, str]:
 #: exemptée d'avance par une échappatoire que personne n'aurait relue.
 LISTE_DEROULANTE = re.compile(r"<select\b[^>]*>", re.I)
 IDENTIFIANT_SELECT = re.compile(r'<select\b[^>]*\bid="([^"]+)"', re.I)
+#: menus imposés par les n°317 (cahier des charges, `…cdcf…`) et 318 (rappel de la bête à cornes,
+#: `bc_…__aqui|surquoi|objet|but`, `bac_…`) — reconnus à leur id (07/11/2026)
+MENU_VOULU_ID = re.compile(r"(?:^|_)cdcf(?:_|$)|^bc_[^\"]*__(?:aqui|surquoi|objet|but)$|^bac_", re.I)
+MENU_VOULU = re.compile(r'\bid="(?:[^"]*(?:^|_)cdcf(?:_|$)[^"]*|bc_[^"]*__(?:aqui|surquoi|objet|but)|bac_[^"]*)"', re.I)
 
 
 def regle_300(src: str) -> tuple[str, str]:
@@ -454,13 +458,25 @@ def regle_300(src: str) -> tuple[str, str]:
     listes = LISTE_DEROULANTE.findall(src)
     if not listes:
         return "OK", "aucune liste déroulante : les questions occupent le flux de la page"
-    ids = IDENTIFIANT_SELECT.findall(src)
+    # Deux règles plus récentes IMPOSENT des menus, et ce contrôle les comptait comme des défauts
+    # (vu par l'audit du 07/11/2026) : la n°317 (31/10/2026) — un cahier des charges se complète
+    # dans son tableau, par des menus déroulants (ids `…cdcf…`, widget `tableau`) ; et l'exercice
+    # intégré de rappel de la bête à cornes (lot du 05/11/2026, forme n°318) — ses quatre cases
+    # sont des menus (ids `bc_<niv>_rappel-…__aqui|surquoi|objet|but`, `bac_…`). Ces menus sont
+    # voulus : ils sont comptés à part, et ne font pas tomber la règle.
+    voulus = [i for i in listes if MENU_VOULU.search(i)]
+    restants = [i for i in listes if not MENU_VOULU.search(i)]
+    ids = [i for i in IDENTIFIANT_SELECT.findall(src) if not MENU_VOULU_ID.search(i)]
+    note_voulus = (f" ; {len(voulus)} menu(s) voulu(s) par les n°317/318 (cahier des charges, bête à cornes), non comptés"
+                   if voulus else "")
+    if not restants:
+        return "OK", f"seuls des menus voulus par les n°317/318 ({len(voulus)}) : cahier des charges, bête à cornes"
     apercu = ", ".join(ids[:6]) + (" …" if len(ids) > 6 else "")
     return "ECHEC", (
-        f"{len(listes)} question(s) posée(s) par une liste déroulante"
+        f"{len(restants)} question(s) posée(s) par une liste déroulante"
         + (f" ({apercu})" if ids else "")
         + " — le menu natif se dessine par-dessus l'énoncé ; à convertir en"
-        " groupe de boutons radio (gabarit du pilote 3e_C1.1)")
+        " groupe de boutons radio (gabarit du pilote 3e_C1.1)" + note_voulus)
 
 
 
