@@ -29260,3 +29260,27 @@ essentiel et verrous sur ces quatre pages, seuils des simulateurs de la station,
 
 **Reste à Pascal.** Valider l'ordre du lot correctif (six lignes, une PR chacune) ; trancher la fiche D
 (afficher « quiz » et « production » séparément) et le sous-titre de l'échauffement tableur.
+
+---
+
+---
+
+## 08/11/2026 — Révision des trois thèmes, 4 : 4e_C1.4, la situation ne donne plus la réponse avant l'exercice
+
+*Suite de la passe complète par séquence (décision du 08/11/2026), ligne 4 du suivi. Carte blanche.*
+
+**La page** (cybersécurité, protection des données) était déjà sur le gabarit commun, à zéro ✘ et sans liste déroulante.
+Sa charge venait d'ailleurs : chacune des cinq « 📰 Mise en situation » enchaînait le récit, puis « Risques impliqués »,
+« Bonne attitude à avoir » et une phrase de morale — la réponse de l'exercice qui suit, lue avant de chercher. Ces trois
+paragraphes se replient dans « 💡 Ce que cette situation apprend — à ouvrir après avoir répondu » : le récit reste, la
+leçon vient après. Séance 1 : 1 045 → 894 mots visibles ; séance 3 : 1 291 → 1 180 ; aucune séance au-delà du repère.
+En 5.b, l'exemple de réponse répétait mot pour mot la liste d'exemples qui le précédait : replié, à ouvrir si l'élève
+bloque. Les deux glisser-déposer disaient « survole » : ils disent aussi « touche », parce qu'on les fait au doigt.
+
+**Aération** : `aerer_corrections.py --partout` pose 76 retours ; deux corrections du Bonus (ce qui ralentit un logiciel qui
+devine ; ce qui trahit `P@ssw0rd2026!`), la consigne du retour à l'hypothèse et deux défis du Bonus sont réécrits à la
+main, une idée par ligne, sans rien retirer. `audit_aeration.py --strict` : 9 → 0.
+
+**Vérifié** : banc n°311 34 / 34 ; squelette, mode essentiel, hiérarchie, liens, licence, règles visibles, unités, sigles,
+compétences, fiche papier, impression (0 refus), verrous, hors ligne, tactile : verts. Revue d'écran à 390 et 1 280 px, mode
+essentiel compris. **Reste** : le lexique du lot n'a pas d'ancres par séance ; les activités n'annoncent pas de durée.

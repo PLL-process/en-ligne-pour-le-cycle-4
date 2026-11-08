@@ -20,7 +20,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 1 | `5e_C1.5` | 1549 → 1322 | 4 → 0 | 27 → 0 | 18 → 0 | livrée #619 |
 | 2 | `5e_C1.3` | 1050 → 1043 | 0 | 0 | 5 → 0 | livrée #620 |
 | 3 | `4e_C1.1` | 3570 → 2911 | 0 | 0 | 22 → 0 | livrée #620 — séance 5 : décision de Pascal |
-| 4 | `4e_C1.4` | 1291 | 0 | 0 | 9 | à faire |
+| 4 | `4e_C1.4` | 1291 → 1180 | 0 | 0 | 9 → 0 | livrée #PR |
 | 5 | `3e_C1.5` | 2017 | 0 | 0 | 19 | à faire |
 | 6 | `3e_C2.1` | 1861 | 0 | 0 | 6 | à faire |
 | 7 | `5e_C1.1` | 1629 | 0 | 0 | 26 | à faire |
@@ -100,3 +100,10 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
   - **la séance 5 reste au-dessus du repère** : trois exercices d'atelier de 12 à 15 minutes (séance voulue par Pascal
     le 24/10/2026), dont le texte visible vient des exercices eux-mêmes. Deux pistes, à trancher par Pascal : la
     scinder en deux séances, ou rendre l'exercice 3 (« Corriger une carte mentale mal faite ») facultatif.
+- **4e_C1.4** (cybersécurité), 08/11/2026 : page déjà sur le gabarit commun, 0 ✘, 0 menu. Les cinq « Mise en situation »
+  donnaient la réponse avant l'exercice (« Risques impliqués », « Bonne attitude à avoir ») : ces trois paragraphes se
+  replient dans « 💡 Ce que cette situation apprend — à ouvrir après avoir répondu » (séance 1 : 1 045 → 894 ; séance 3 :
+  1 291 → 1 180). Aération : 76 retours posés par l'outil, deux corrections du Bonus et quatre consignes réécrites à la
+  main (strict à 0). En 5.b, l'exemple de réponse répétait la liste d'exemples : replié. Les deux glisser-déposer nomment
+  le toucher. Reste : le lexique du lot n'a pas d'ancres par séance ; aucune durée annoncée sur les activités (n°23 non
+  signalée par le contrôle).
