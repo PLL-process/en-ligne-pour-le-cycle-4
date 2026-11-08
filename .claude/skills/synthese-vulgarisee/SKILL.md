@@ -185,6 +185,8 @@ que trois phrases décrivent.
 
 - **Tu**, voix active, présent. Phrases de 15 mots en moyenne ; aucune au-delà de 25.
 - **Un mot technique est expliqué la première fois qu'il paraît**, dans la phrase même ou dans le lexique.
+- **Une idée par ligne** sous une image et dans « Vérifie-toi » : la légende et la réponse s'aèrent selon le skill
+  `texte-clair-et-aere` (`audit_aeration.py --strict` sur la synthèse).
 - **Pas de maximes** : « Il conserve, il ne juge pas » devient « Le fichier garde les mesures. Il ne vérifie pas si
   elles sont justes. » Ce qui est sous-entendu s'écrit.
 - **Du concret avant l'abstrait** : l'exemple d'abord, la règle ensuite.

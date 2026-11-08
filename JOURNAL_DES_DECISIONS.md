@@ -29026,3 +29026,54 @@ rapide gardaient leur fond sombre) ; rendu regardé à 1 280 et 390 px, sans dé
 
 **Reste à Pascal.** Fusionner. Dire s'il veut d'autres ressources dans l'accès rapide, ou un autre repère pour le TP et
 les évaluations des variables (posés sous 5e_C9.1 et 4e_C9.1).
+## 08/11/2026 — Skill `texte-clair-et-aere` : les légendes et les corrections s'aèrent, une idée par ligne (transversal : `.claude/skills`, `_outils`, thèmes 1, 2 et 3)
+
+**Ce que Pascal a demandé.** « Je voudrais aussi des skills pédagogiques et d'autres qui ordonnent et aèrent mieux
+certains paragraphes, notamment quant aux textes au-dessous des images ; bien souvent un retour à la ligne est
+nécessaire, dans les corrections, etc. », puis : « on devrait chercher et modifier en l'améliorant ces skills ».
+
+**La veille** (lecture seule, aucun code exécuté ; détail dans `SKILLS_AUDIT.md`). Aucun skill installé. Les idées
+retenues viennent de `francais-simple` (sachahjkl, MIT, d'après l'ASD-STE100 : consigne et explication séparées, 20
+et 25 mots, la condition avant l'action), de `refine-prose` et `clean-copy` (petekp, MIT : la réponse d'abord, couper
+la légende qui répète l'image), d'`assessment-design` (idstack, MIT : la correction élaborée, le pourquoi), de Strunk
+(domaine public) et de `practical-typography` (45 à 90 caractères par ligne). Écartés : `school-skills` (cadre
+américain, installeur), `style-prose` (hors sujet), le plugin idstack (scripts, extension Chrome, jeton Canvas).
+
+**Ce qui est livré.**
+- **Le skill `texte-clair-et-aere`**, écrit en français pour le dépôt : les deux sortes de texte, huit règles,
+  l'anatomie d'une légende (« Ce que tu dois voir », « Si tu vois ceci », « Puis », la note), l'ordre d'une correction
+  (la réponse, le pourquoi, chaque refus avec sa raison, le piège), la liste avant livraison. Les corrections restent
+  exhaustives : aérer n'enlève rien.
+- **`_outils/audit_aeration.py`** mesure quatre défauts : L1 légende de plus de 35 mots d'un tenant, L2 partie de
+  légende collée, C1 bloc de correction de plus de 45 mots, C2 idées cousues de « ; » ou de « → ». `--strict` pour
+  les pages d'un lot.
+- **`_outils/aerer_legendes.py`** pose un retour à la ligne devant « Puis : », la note en italique de fin, la mention
+  « Image générée par IA » et les repères ①②③ qui annoncent un point. Il ne change aucun mot.
+- **La passe sur tout le site, puis le pilote** : 328 retours à la ligne dans 107 pages (dont les 47 synthèses élève, qui impriment
+  le même nombre de pages qu'avant : 29 en deux pages, 18 en trois). L2 tombe de 225 à 0.
+- **Le pilote 5e_C3.1** (Shanghai), réécrit à la main : 21 légendes et 11 blocs de correction, `--strict` à zéro.
+- La légende de référence de la bête à cornes (quatre mots APTE) passe en liste, dans `figures.py` et dans les quatre
+  pages d'atelier qui la portent, sans régénérer (le générateur réécrirait d'autres pages : dérive déjà notée par
+  l'audit du 07/11).
+- `controle-qualite-lot`, `sequence-pedagogique-engageante` et `synthese-vulgarisee` renvoient au skill et à l'audit.
+
+**Ce qui reste, mesuré** : L1 121 légendes, C1 937 et C2 245 blocs de correction sur 269 pages. Ces trois-là se
+réécrivent à la main, page par page. La proposition : les faire avec les vagues de la boucle d'audit, chaque page
+touchée par une vague sortant à zéro.
+
+**Contrôles.**
+- **Bancs des pages touchées** :
+  - 5e_C3.1 : 35 / 35, et 27 / 27 au banc n°311 ;
+  - ateliers des représentations (`banc_ateliers.py`) : 517 / 517 ;
+  - 3e_C9.2 : 167 / 167, avec les quatre pages engendrées ;
+  - 5e_C2.1 : 149 / 151. Les deux échecs (liens de navigation des deux synthèses) sont les mêmes sur `main`.
+- **`audit_aeration.py --strict`** sur 5e_C3.1 : zéro écart.
+- **Impression** : les 47 synthèses élève touchées impriment le même nombre de pages qu'avant (`mesurer_impression.py`, sur la branche et sur `main`).
+- **Rendu à 390 px** (légendes et correction de 5e_C3.1) : aucun défilement de côté.
+- **Contrôles du site, verts** : `controle_hierarchie`, `controle_liens`, `controle_regles_visibles`, `controle_sigles`, `controle_unites`, `controle_tactile`, `controle_licence` (410 pages), `controle_mode_essentiel`, `controle_hors_ligne`.
+- **`controle_squelette` et `controle_impression` sortent à 1, à l'identique sur `main`** (sorties comparées ligne à ligne). Ce n'est pas cette PR : c'est la mention de licence de #616, comptée hors panneau dans 5 séquences et trop pâle à l'impression dans 3 QCM.
+- **Corrigé en route** : le générateur des ateliers, relancé une fois, avait aussi réécrit 24 copies d'ateliers rangées ailleurs, sans leur mention de licence. Elles sont remises comme sur `main`.
+- **Non exécuté** : la validation HTML (aucun outil du dépôt ne la fait).
+
+**Reste à Pascal.** Fusionner ; dire si la réécriture des légendes et des corrections suit les vagues de la boucle
+d'audit (proposé), ou devient une vague à elle seule.
