@@ -114,14 +114,30 @@ function questionXml(q, idx, ctx) {
     }
   }
   const enonce = p(q.q) + imgHtml;
-  const general = bloc('Pourquoi :', q.expl) + bloc('Exemple :', q.ex) + bloc('Erreur fréquente :', q.err)
-    + bloc('Nuance :', q.nuance) + bloc('À retenir :', q.ret);
+  /* Le corrigé, dans l'ordre où un élève le lit : la bonne réponse, puis cinq temps numérotés
+     (pourquoi → exemple → piège → nuance → à retenir). Même fond que la page du site, rien de réécrit. */
+  const etapes = [
+    ['Pourquoi', q.expl], ['Un exemple', q.ex], ['Le piège classique', q.err], ['Pour aller plus loin', q.nuance],
+  ].filter(([, v]) => v && String(v).trim());
+  const general = `<div class="corrige-cycle4">`
+    + `<p><strong>✅ La bonne réponse :</strong> <em>${esc(q.o[q.r])}</em></p>`
+    + (etapes.length ? `<ol>${etapes.map(([t, v]) => `<li><strong>${t}</strong> — ${esc(v)}</li>`).join('')}</ol>` : '')
+    + bloc('📌 À retenir :', q.ret)
+    + `</div>`;
   const reponses = q.o.map((o, i) => {
     const bonne = i === q.r;
     const d = Array.isArray(q.d) ? (q.d[i] || '') : '';
-    const fb = bonne ? ('Exact. ' + (q.ret || '')) : (d || 'Ce n’est pas cela. Relis la rétroaction générale.');
+    const fb = bonne
+      ? `✅ Exact. ${q.ret || ''}`
+      : `❌ Pas celle-là. ${d || 'Relis l’énoncé et les autres propositions.'}`;
     return `    <answer fraction="${bonne ? 100 : 0}" format="html">\n      ${texte('html', p(o))}\n      <feedback format="html">${texte('html', p(fb))}</feedback>\n    </answer>`;
   }).join('\n');
+  /* Deux indices pour le mode « Interactif avec essais multiples » : trois essais, l'élève est guidé
+     avant de recommencer. clearwrong efface le choix faux ; shownumcorrect est muet à réponse unique. */
+  const indices = [
+    q.err ? `💡 Indice 1 — le piège classique : ${q.err}` : (q.expl ? `💡 Indice 1 : ${q.expl}` : ''),
+    q.ret ? `💡 Indice 2 — à retenir : ${q.ret}` : (q.ex ? `💡 Indice 2 — un exemple : ${q.ex}` : ''),
+  ].filter(Boolean).map(h => `    <hint format="html">\n      ${texte('html', p(h))}\n      <clearwrong/>\n    </hint>`).join('\n');
   const tags = [...new Set([q.c, ctx.niveau, ctx.code].filter(Boolean))].map(t => `      <tag><text>${esc(t)}</text></tag>`).join('\n');
   return `  <question type="multichoice">
     <name><text>${esc(nom)}</text></name>
@@ -139,8 +155,9 @@ function questionXml(q, idx, ctx) {
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html"><text>Bonne réponse.</text></correctfeedback>
     <partiallycorrectfeedback format="html"><text>Réponse partiellement correcte.</text></partiallycorrectfeedback>
-    <incorrectfeedback format="html"><text>Réponse incorrecte.</text></incorrectfeedback>
+    <incorrectfeedback format="html"><text>Ce n’est pas la bonne réponse : lis le corrigé ci-dessous, il est fait pour ça.</text></incorrectfeedback>
 ${reponses}
+${indices}
     <tags>
 ${tags}
     </tags>

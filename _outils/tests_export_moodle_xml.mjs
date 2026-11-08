@@ -73,9 +73,11 @@ verifier('exactement une réponse à 100 par question', (xml.match(/fraction="10
 verifier('le « < » d’une option est échappé, pas interprété', xml.includes('S2 &lt; S1 &lt; S3') && !xml.includes('<p>S2 < S1'));
 verifier('l’image est embarquée en base64 et référencée par @@PLUGINFILE@@',
   xml.includes(`encoding="base64">${Buffer.from(SVG).toString('base64')}</file>`) && xml.includes('@@PLUGINFILE@@/banc-q01.svg'));
-verifier('la rétroaction générale porte pourquoi, exemple, erreur, nuance, à retenir',
-  ['Pourquoi :', 'Exemple :', 'Erreur fréquente :', 'Nuance :', 'À retenir :'].every(e => xml.includes(e)));
-verifier('la rétroaction d’un distracteur est reprise de d[i]', xml.includes('Non : S2 traite plus que S1.'));
+verifier('le corrigé ouvre sur la bonne réponse puis déroule pourquoi, exemple, piège, nuance, à retenir, dans cet ordre',
+  (() => { const i = ['✅ La bonne réponse :', '<em>S1 &lt; S2 &lt; S3</em>', '<li><strong>Pourquoi</strong>', '<li><strong>Un exemple</strong>', '<li><strong>Le piège classique</strong>', '<li><strong>Pour aller plus loin</strong>', '📌 À retenir :'].map(e => xml.indexOf(e)); return i.every(x => x >= 0) && i.every((x, k) => k === 0 || x > i[k - 1]); })());
+verifier('deux indices par question pour le mode interactif, avec clearwrong', (xml.match(/<hint format="html">/g) || []).length === 4 && (xml.match(/<clearwrong\/>/g) || []).length === 4);
+verifier('une question sans « nuance » n’a pas de temps « Pour aller plus loin » vide', (xml.match(/Pour aller plus loin/g) || []).length === 1);
+verifier('la rétroaction d’un distracteur est reprise de d[i], précédée du ❌', xml.includes('❌ Pas celle-là. Non : S2 traite plus que S1.'));
 verifier('idnumber stable par question', xml.includes('<idnumber>banc-q01</idnumber>') && xml.includes('<idnumber>banc-q02</idnumber>'));
 verifier('l’étiquette de compétence est posée', xml.includes('<tag><text>5e_C3.2</text></tag>'));
 const inv = fs.readFileSync(path.join(BAC, 'sortie', 'INVENTAIRE.md'), 'utf-8');

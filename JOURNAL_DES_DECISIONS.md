@@ -28899,6 +28899,15 @@ automatisation premium, 4e_C6.2 algorigrammes domotique). Elles passeront au gab
 par un second lecteur : décision à prendre. Constaté au passage : le `<h1>` de `3e_C6.2/qcm_3e_C6.2_auto_test.html`
 annonce « 4e · Atelier : QCM — SOS serre » — en-tête à corriger dans un lot du thème 2.
 
+**Ajout du 08/11, 7 h 39 (« il faudrait que cela soit super premium, que l'élève puisse recommencer et que la
+correction soit exhaustive, pédagogique, ordonnée et vulgarisée »).** Le corrigé de chaque question ouvre sur
+**✅ la bonne réponse**, puis déroule cinq temps numérotés — Pourquoi, Un exemple, Le piège classique, Pour
+aller plus loin (si nuance), 📌 À retenir — dans l'ordre où on l'apprend ; chaque distracteur répond « ❌ Pas
+celle-là » avec sa raison propre ; **deux indices** par question (le piège, puis l'à-retenir) alimentent le
+mode **« Interactif avec essais multiples »** : trois essais, le choix faux s'efface, l'élève est guidé avant
+de recommencer ; tentatives illimitées et note la plus haute côté test. Les réglages sont écrits pas à pas
+dans `MODE_D_EMPLOI_ELEA.md` (§3). 4 362 indices, banc 18/18.
+
 **Reste à Pascal.** Fusionner ; créer un parcours par niveau dans Éléa et importer `5e.xml` pour commencer ;
 dire si les six QCM restants doivent migrer au gabarit QUESTIONS.
 
