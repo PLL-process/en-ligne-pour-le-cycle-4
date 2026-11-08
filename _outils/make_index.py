@@ -280,6 +280,114 @@ except (FileNotFoundError, KeyError):
     pass
 
 
+# ── Codes couverts par mutualisation : l'index dit OÙ (audit étape 1, A01, 08/11/2026) ──
+#
+# Constat de l'audit externe du 01/11/2026 : l'index affichait « Couvert par une
+# séquence mutualisée » et, juste dessous, « Aucune ressource pédagogique publiée
+# pour ce repère ». L'élève ou l'enseignant ne savait pas quelle séquence ouvrir.
+# Le README du dossier le savait (il est engendré par `pointeurs_codes.py` ou écrit
+# à la main) — mais il était replié dans « Fichiers de gouvernance ». On le LIT ici,
+# on ne devine rien : la cible doit exister sur le disque, sinon rien n'est affiché.
+LIEN_MD = re.compile(r"\[([^\]]+)\]\(([^)\s]+\.html(?:#[^)\s]*)?)\)")
+TITRE_HTML = re.compile(r"<title[^>]*>(.*?)</title>", re.S | re.I)
+
+
+def _texte_md(s):
+    """Un paragraphe Markdown ramené au texte nu, pour une ligne de l'index."""
+    s = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", s)
+    s = re.sub(r"[*`]+", "", s)  # pas « _ » : les codes s'écrivent 5e_C1.5
+    s = re.sub(r"\s+", " ", s).strip()
+    return s
+
+
+def pointeur_mutualise(rel, full_code, formulation=""):
+    """(href, titre, où) pour un dossier sans ressource propre, ou None.
+
+    `href` est relatif à la racine du dépôt (donc à `index.html`) ; le titre est
+    celui que la page cible se donne (<title>), à défaut le texte du lien ; « où »
+    est le paragraphe du README qui nomme l'activité ou la séance, à défaut le
+    premier paragraphe de corps. Si ce paragraphe nomme une séance N et que la
+    page porte `id="sN"`, l'ancre est ajoutée : la page ouvre cet onglet.
+    """
+    chemin_readme = os.path.join(DST, rel, "README.md")
+    try:
+        with open(chemin_readme, encoding="utf-8") as f:
+            md = f.read()
+    except OSError:
+        return None
+    cible = None
+    for texte, href in LIEN_MD.findall(md):
+        fichier = href.split("#")[0]
+        absolu = os.path.normpath(os.path.join(DST, rel, fichier))
+        if os.path.isfile(absolu):
+            cible = (texte, href, absolu)
+            break
+    if not cible:
+        return None
+    texte_lien, href, absolu = cible
+    try:
+        with open(absolu, encoding="utf-8") as f:
+            src = f.read(20000)
+    except OSError:
+        src = ""
+    m = TITRE_HTML.search(src)
+    titre = html.unescape(re.sub(r"<[^>]+>", "", m.group(1))).strip() if m else _texte_md(texte_lien)
+    titre = re.sub(r"\s+", " ", titre)
+    # Le paragraphe « où » : celui qui nomme l'activité ou la séance.
+    corps = re.split(r"\n\s*\n", md)
+    norm = lambda t: re.sub(r"[’']", "'", re.sub(r"\s+", " ", t)).strip().lower()
+    debut_formulation = norm(_texte_md(formulation))[:40] if formulation else None
+    paras, apres_lien = [], ""
+    for p in corps:
+        lignes = [l for l in p.strip().split("\n") if l.strip()]
+        if not lignes:
+            continue
+        # La ligne « ➡ [lien](…) (séance 1 : …) » : ce qui suit le lien dit souvent où.
+        if lignes[0].lstrip().startswith("➡") and href in p:
+            queue = _texte_md(p.split(")", 1)[1] if ")" in p else "")
+            queue = queue.strip(" —–-:(").rstrip(").")
+            if len(queue) >= 25 and not apres_lien:
+                apres_lien = queue
+            continue
+        # Pas les titres, citations, tableaux, lignes ➡, ni les notes en italique
+        # (*Pourquoi…*, *Formulation…*, *Lot 09…*).
+        if any(l.lstrip().startswith(("#", ">", "|", "---", "➡")) for l in lignes):
+            continue
+        if re.match(r"\*[^*\s]", lignes[0].lstrip()):  # *note en italique*, pas « * item »
+            continue
+        t = _texte_md(" ".join(lignes))
+        if len(t) < 25:
+            continue
+        # Ni la formule creuse « ✅ couverte par une séquence mutualisée » (le lien
+        # suffit), ni la formulation du référentiel déjà affichée au-dessus.
+        if t.startswith("✅") or re.search(r"couverte? par une séquence mutualisée\.?$", t, re.I):
+            continue
+        if debut_formulation and norm(t).startswith(debut_formulation):
+            # « Formulation. L'activité 2 (…) porte cette sous-compétence. » : on
+            # garde ce qui suit la formulation, c'est là qu'est le « où ».
+            # La formulation peut être paraphrasée : on coupe à sa première phrase.
+            fin = re.search(r"[.)]\s+(?=[A-ZÀ-Ý«L'])", t[20:])
+            t = t[20 + fin.end():].strip() if fin else ""
+            if len(t) < 25:
+                continue
+        paras.append(t)
+    if apres_lien:
+        paras.append(apres_lien)
+    ou = next((p for p in paras if re.search(r"\b(activit|act\. ?\d|séance|partie|TP\b)", p, re.I)),
+              next((p for p in paras if not p.startswith("Ce dossier ne porte")), paras[0] if paras else ""))
+    # Une phrase ou deux, jamais un pavé (lisible sur un téléphone).
+    if len(ou) > 260:
+        coupe = ou[:260]
+        point = coupe.rfind(". ")
+        ou = coupe[:point + 1].strip() if point > 80 else coupe.rstrip(" ,;:") + "…"
+    ancre = ""
+    ms = re.search(r"séance\s+(\d)\b", ou, re.I)
+    if ms and "#" not in href and re.search(r'id="s%s"' % ms.group(1), src):
+        ancre = "#s" + ms.group(1)
+    rel_href = os.path.relpath(absolu, DST).replace("\\", "/") + (href[href.index("#"):] if "#" in href else ancre)
+    return rel_href, titre, ou
+
+
 def slugify(s, maxlen=45):
     s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode("ascii")
     s = re.sub(r"[^a-zA-Z0-9]+", "-", s).strip("-").lower()
@@ -470,6 +578,8 @@ a:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid var
 .rep ul{list-style:none;margin:4px 0 0;padding:0}
 .rep li{margin:2px 0;overflow-wrap:anywhere}
 .rep .maint{margin-top:3px}
+.rep .renvoi .empty{display:block;margin-top:3px}
+.rep .renvoi-ou{margin:3px 0 0;color:#9db4e6;font-size:.92em;line-height:1.4;overflow-wrap:anywhere}
 .rep .maint summary{cursor:pointer;color:#5b7bb8;font-size:.92em}
 .rep .maint a{color:#7d9bd6}
 .socle-cle{max-width:1080px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:10px 18px;font-size:.82em;color:var(--sub)}
@@ -587,7 +697,22 @@ for theme_n in [1, 2, 3]:
                 puce, couleur = STATUT_PUCE.get(statut, ("", "#5b7bb8"))
                 bloc_statut = (f'<span class="statut" style="color:{couleur}" title="{html.escape(statut)}">{puce} {html.escape(statut.capitalize())}</span>'
                                if statut else "")
-                corps = f'<ul>{"".join(peda)}</ul>' if peda else '<span class="empty">Aucune ressource pédagogique publiée pour ce repère.</span>'
+                if peda:
+                    corps = f'<ul>{"".join(peda)}</ul>'
+                else:
+                    # A01 (audit externe du 01/11/2026) : un code sans ressource propre
+                    # mais « couvert par une séquence mutualisée » doit dire OÙ aller.
+                    # La cible est lue dans le README pointeur du dossier, jamais devinée.
+                    pm = pointeur_mutualise(rel, full_code, ctext)
+                    if pm:
+                        href_pm, titre_pm, ou_pm = pm
+                        corps = ('<div class="renvoi"><span class="empty">Ressource dédiée absente — '
+                                 'compétence traitée dans :</span><ul><li>🔗 '
+                                 f'<a href="{html.escape(href_pm)}">{html.escape(titre_pm)}</a></li></ul>'
+                                 + (f'<p class="renvoi-ou">{html.escape(ou_pm)}</p>' if ou_pm else "")
+                                 + '</div>')
+                    else:
+                        corps = '<span class="empty">Aucune ressource pédagogique publiée pour ce repère.</span>'
                 if maint:
                     corps += ('<details class="maint"><summary>🔧 Fichiers de gouvernance ('
                               + str(len(maint)) + ')</summary><p>' + " · ".join(maint) + '</p></details>')
