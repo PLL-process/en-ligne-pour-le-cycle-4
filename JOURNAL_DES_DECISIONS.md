@@ -28815,3 +28815,47 @@ compte claude.ai qui porte la boucle pour les pages hors lot (livré à Pascal a
 aucun défilement de côté, aucune erreur JavaScript, dépliant fermé et ouvert.
 
 **Reste à Pascal.** Fusionner ; installer sur son compte le skill `revue-ecran-trois-tours` livré avec cette PR.
+
+## 07/11/2026 — Audit des trois thèmes, tranche 0 : l'état des lieux rejouable, le crible des 135 ✘, et la boucle du lundi (transversal : `_outils`, `docs/audits`)
+
+**Ce que Pascal a demandé.** « Un audit des trois thèmes ainsi qu'une boucle d'améliorations possible sur tous les
+plans », les trois thèmes « au peigne fin », une tâche planifiée hebdomadaire, et « une veille des nouveaux ou pas skills
+et plugins qui pourraient servir ».
+
+**L'outil.** `_outils/rapport_audit.py` lit ce que le dépôt mesure déjà et l'écrit en un rapport classé P1/P2/P3 :
+la matrice de couverture (statut par thème, codes non complets, anomalies), `verif_regles_audit.py` (✘ par règle et par
+page, avec un signal « toute une famille : vérifier le contrôle avant les pages »), les contrôles de `_outils/`
+(`--complet` pour Playwright), la preuve des codes COUVERT au QCM du lot principal, et la dérive des générateurs
+(relancés dans une copie hors git, jamais `build_qcms.py`). Il ne corrige rien ; les décisions sont à la fin.
+Sortie : `docs/audits/RAPPORT_AUDIT_<date>.md`. Premier rapport : `RAPPORT_AUDIT_2026-11-07.md`.
+
+**Ce qu'il a trouvé** (main du 07/11 au soir, après #610).
+- **P1** : aucun contrôle bloquant rouge ; 4 codes « à vérifier par l'enseignant » (3e_C7.1, 3e_C7.2, 4e_C8.1, 5e_C7.1 :
+  les séquences-projets du thème 3, décision de Pascal sur le report des scores, pas un lot) ; la preuve des 58
+  mutualisations au QCM n'est **mesurable que pour le thème 1** (seuls ses QCM marquent leurs questions par code) — pour
+  19 codes la mesure dit « non marqué », ce qui est une décision, pas un défaut.
+- **P2** : 135 ✘ sur 51 pages, criblés à la main = **trois chantiers** — la conversion n°300 (48 pages, ≈ 1 200 listes
+  déroulantes, faite jusqu'ici sur le pilote et les familles C1-C3 du thème 1 seulement), la famille C7/C8 restée sur
+  l'ancien gabarit (19 pages : n°29, 30, 31, 34 ensemble), et quatre pages ponctuelles (n°301 ×3, n°23 ×2) ; **plus une
+  exemption à écrire** dans le contrôle n°300 : il compte les menus de la bête à cornes et des cahiers des charges que
+  les n°317 et n°318 imposent. 12 fichiers changeraient à la régénération (11 lexiques retouchés à la main, une page de
+  3e_C9.2). `controle_regle4` (3e_C9.2 recette) et `controle_schemas` (2 schémas, 41 ✘) rouges.
+- **P3** : 107 codes annotés dans la matrice (QCM, provenance des médias, images lourdes, différenciation, n°58).
+
+**La boucle** (décision de Pascal : 2 et 3 du cadre proposé). Une vague par semaine et par thème, prise dans le rapport
+par priorité, livrée par PR avec la revue d'écran en trois tours, close au journal ; le rapport se régénère après
+chaque vague. Ordre proposé dans le rapport (V1 → V7), à valider par Pascal.
+
+**La tâche du lundi** (créée le 07/11/2026, 7 h 35 heure de Martinique, hebdomadaire) : clone de `main`, rapport
+`--complet --generateurs`, section « Depuis la semaine dernière », crible reporté, **veille** des skills et plugins qui
+touchent le sujet (inspection en lecture seule selon la règle du registre, verdicts proposés dans le rapport, jamais
+d'installation, `SKILLS_AUDIT.md` n'est modifié que sur décision de Pascal), entrée au journal, PR
+`fable/audit-hebdo-<date>` par l'API REST (colis en plan B). Elle ne fusionne jamais.
+
+**Vérifié.** Le rapport du 07/11 a tourné deux fois (la seconde après deux corrections de l'outil : la preuve des
+COUVERT ne fabrique plus de zéro quand le QCM n'est pas marqué, et `build_tp.py` est appelé scénario par scénario) ;
+les générateurs relancés dans la copie sont tous à 0 ; les contrôles Playwright ont tourné à part le même soir sur
+les pages des PR #608 et #610 (voir le rapport, section 3).
+
+**Reste à Pascal.** Les décisions de la section 6 du rapport — l'ordre des vagues, l'exemption du contrôle n°300,
+la convention `c:"Cx.y"` pour tous les QCM, les 4 codes à vérifier, la n°23.
