@@ -28750,3 +28750,34 @@ carte **revient sur toutes les pages qui l'avaient perdue, repliée**.
 **Reste à Pascal.** Fusionner ; dire si le titre du dépliant lui convient (« 📚 Le référentiel de la séquence — en toutes
 lettres », repris de la carte) ou s'il préfère plus court (« 📚 Ce que je serai capable de faire ») ; décider si les ateliers
 engendrés suivent, par leurs générateurs, dans une PR à part.
+## 07/11/2026 — Quatre skills de design inspectés, tous refusés ; une idée reprise : la revue d'écran en trois tours (transversal : `SKILLS_AUDIT.md`, `.claude/skills`)
+
+**Ce que Pascal a demandé.** Deux images de classements « top 10 des skills par étoiles GitHub » (Claude Code, puis
+opencode) ; « UI UX Pro Max et Taste Skill touchent mon sujet, inspecte-les et prends les meilleurs aussi pour l'image
+jointe ». Puis « Ok » pour l'idée à reprendre.
+
+**L'inspection** (règle du registre : SKILL.md, scripts, dépendances, réseau, permissions, réputation — lue sur les dépôts
+GitHub, pas installée) : UI UX Pro Max, Taste Skill, Impeccable, Ponytail. Les six autres de la seconde image sont hors
+sujet par leur description (outils de développement, explorateurs de code, mode télégraphique, liste de liens).
+
+**Le verdict, consigné dans `SKILLS_AUDIT.md`** : **aucun n'est installé**, pour les raisons qui ont refusé ECC le 23/10 —
+catalogue présenté au modèle, écriture dans les dossiers de tous les assistants, hooks qui s'exécutent sans l'utilisateur,
+binaire téléchargé, télémétrie, mode sans sandbox, code mis à jour par `git pull` sans relecture, offres payantes. Et sur le
+fond : leurs règles contredisent les règles d'or (« pas d'emoji comme icône »), ou visent des tics que le dépôt n'a pas.
+Ce qu'ils vérifient d'utile (contraste, focus, mouvement réduit, reflux à 375 px, images libres créditées) est déjà dans
+`_outils/` et dans les règles n°1 et n°34.
+
+**Une idée reprise, réécrite de zéro** (aucun code tiers, comme pour `inventaire-skills` et `balayage-navigateur`) : la
+boucle de Taste Skill « capture → trois pires défauts → corriger, trois tours au plus ». La méthode capturait déjà à
+390 px (pilier 2, point 6) ; elle ne bouclait pas. Elle entre dans `controle-qualite-lot`, section « La revue d'écran en
+trois tours » : capturer à 390 et 1 280 px, regarder les captures, nommer les trois pires défauts (lire/répondre, puis
+gêne, puis laideur), corriger ceux-là seulement, recapturer à la même position, trois tours au plus, le reste au rapport
+comme restant ; les captures du premier et du dernier tour dans la PR. Ce n'est pas une direction artistique : la forme
+reste celle des règles d'or (n°306, 311, 315).
+
+**Premier emploi** : la PR de la n°298 amendée (même jour) a fait un tour — capture, un défaut d'aucun ordre vu à l'œil
+(le bandeau collant recouvre « Mode essentiel : OFF » à cette position de défilement, antérieur au lot et hors de son
+mandat), zéro correction.
+
+**Reste à Pascal.** Fusionner ; dire si trois tours est le bon nombre ; dire si un skill du compte doit porter la boucle
+(pour les ateliers et pages hors lot), ou si `controle-qualite-lot` suffit.

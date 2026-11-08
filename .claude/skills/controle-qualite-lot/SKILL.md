@@ -149,6 +149,28 @@ pour Node, les `.mjs` tombent en `ERR_MODULE_NOT_FOUND` (constaté le 23/10/2026
 - Poids des images, à la main : `find <dossier du lot> -type f \( -name '*.png' -o -name '*.jpg' -o -name '*.jpeg' \) -size +300k`.
 - Aucun outil du dépôt ne valide le HTML, ne vérifie le parcours au clavier seul ni ne cherche les secrets : les faire à la main, ou les lister comme restants.
 
+### La revue d'écran en trois tours (décision de Pascal, 07/11/2026)
+
+Un contrôle mesure ce qu'on lui a appris à mesurer ; une capture montre ce à quoi personne n'avait pensé (pilier 2, point 6
+de `_outils/METHODE.md`). La méthode capturait déjà ; elle ne bouclait pas. Idée reprise de l'inspection du skill externe
+« Taste Skill » du 07/11/2026 (refusé, voir `SKILLS_AUDIT.md`) et réécrite de zéro pour le dépôt — aucun code tiers.
+
+1. **Capturer** chaque page élève du lot, telle que le navigateur la rend, à **390 px** et à **1 280 px**, au premier écran
+   et sur chaque bloc dont la forme a changé (les captures vont dans `_outils/captures_<sujet>_<date>/`, comme les vagues
+   précédentes).
+2. **Regarder** les captures — vraiment, avec l'outil de lecture d'image — et nommer **les trois pires défauts**, dans
+   l'ordre : ce qui empêche de lire ou de répondre, puis ce qui gêne, puis ce qui est laid. Un défaut nommé dit la page,
+   la largeur, l'endroit, et ce qu'on voit (« à 390 px, la `<legend>` passe à la ligne et coupe le bord du `<fieldset>` »).
+3. **Corriger** ces trois-là, pas davantage, puis **recapturer** à la même position de défilement.
+4. **Trois tours au plus.** Au troisième, ce qui reste est écrit dans le rapport du lot comme restant, avec sa capture ;
+   on ne prolonge pas la boucle, on livre.
+5. Les captures du premier et du dernier tour vont dans la description de la PR (deux images de la même question, même
+   position de défilement), et le rapport de tests dit combien de tours ont été faits et ce que chacun a corrigé.
+
+Ce que la boucle ne remplace pas : les contrôles de `_outils/` (ils passent avant), les bancs du lot, et le regard de Pascal.
+Ce qu'elle n'est pas : une « direction artistique » — la forme des pages est fixée par les règles d'or (n°306, n°311, n°315),
+la boucle corrige des défauts, elle ne choisit pas un style.
+
 ## Sortie obligatoire
 
 - `rapport_tests_<lot>.md` dans le dossier du lot :
