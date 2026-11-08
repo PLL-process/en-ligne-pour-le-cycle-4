@@ -28994,3 +28994,35 @@ l'index et d'une synthèse d'atelier : mention visible, pas de défilement horiz
 
 **Reste à Pascal.** Fusionner ; ajouter `python3 _outils/controle_licence.py` à la liste des contrôles de
 la boucle du lundi s'il veut qu'une page régénérée nue soit vue avant publication.
+
+## 08/11/2026 — L'index retrouve les ressources rangées ailleurs : les évaluations des variables, le TP des variables, le dé et ses EPI (transversal : `_outils`, `index.html`)
+
+**Ce que Pascal a demandé.** « Je ne vois pas dans l'index certaines séquences qui sont allées ailleurs, dont je me
+sers cette année, car j'ai toujours du mal à les retrouver, notamment les 2 évaluations sur les variables, les TP des
+variables et du dé doré. Et les séquences pour les EPI pourraient apparaître dans l'index au bon endroit. »
+
+**Ce qui manquait, et pourquoi.** L'index ne parcourt que les dossiers des repères (`<niveau>_<code>`).
+- Les deux évaluations notées (sujets A et B, « conditions, boucles, variables », Vittascience en blocs, 5e – 4e) et le
+  TP « Vittascience en blocs : créer des variables » vivent dans l'archive de 3e_C9.1 : ils y ont été posés à côté de
+  l'ancienne version qu'ils prolongent, et l'index ignore l'archive par principe.
+- Les deux fiches EPI du dé sur sa pointe (mathématiques : nombre d'or, suite de Fibonacci ; arts plastiques : les codes
+  cachés de l'objet) vivent dans l'atelier CAO, rattaché à aucun repère.
+- Le TP du dé sur sa pointe était bien dans l'index, sous un titre qui ne dit pas « nombre d'or ».
+- La page `3e_C9.1/vittascience_variables.html` n'est plus qu'un renvoi (« Ressource déplacée ») : l'index la montrait
+  comme une activité.
+
+**Ce qui change.** Aucun fichier ne bouge : leurs adresses sont celles que les élèves ont déjà.
+- `_outils/index_complements.json` rattache chaque ressource à son repère : les évaluations et le TP des variables à
+  5e_C9.1 et 4e_C9.1, à côté des séquences de programmation de ces niveaux ; les deux fiches EPI à 4e_C7.2 et 4e_C7.6, à
+  côté du TP du dé sur sa pointe. Elles y portent la marque ↪ (« rangée ailleurs », le dossier au survol).
+- Un bloc **⚡ Accès rapide** ouvre l'index : programmer les variables (5e – 4e et 3e), le dé dans Onshape (5e, 4e, le
+  socle en nombre d'or), les EPI du dé. Il se complète en ajoutant une ligne au fichier.
+- `make_index.py` lit ce fichier, s'arrête si un chemin n'existe plus, et range les pages de renvoi avec les fichiers
+  de gouvernance. L'index passe de 462 à 471 ressources pédagogiques (+10 rattachées, −1 renvoi).
+
+**Contrôles.** `controle_liens`, `controle_atteignabilite`, `controle_licence`, `controle_sigles`, `controle_tactile`
+verts ; `controle_contraste_liens` sur `index.html` vert après une correction (à l'impression, les cadres de l'accès
+rapide gardaient leur fond sombre) ; rendu regardé à 1 280 et 390 px, sans défilement de côté.
+
+**Reste à Pascal.** Fusionner. Dire s'il veut d'autres ressources dans l'accès rapide, ou un autre repère pour le TP et
+les évaluations des variables (posés sous 5e_C9.1 et 4e_C9.1).
