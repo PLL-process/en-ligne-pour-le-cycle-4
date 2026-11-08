@@ -523,6 +523,8 @@ def rappel_incruste(b, chemin, uid, nom, avant=None):
     pg.evaluate("""uid => { const p = document.getElementById(uid).closest('.seance-panel,[role=tabpanel]');
       if (!p) return; const t = document.querySelector('[data-panel="' + p.id + '"], #tab-' + p.id); if (t) t.click(); }""", uid)
     pg.wait_for_timeout(120)
+    # un rappel replié (option `replie`, 08/11/2026) s'ouvre comme le ferait l'élève qui a oublié les mots
+    pg.evaluate("uid => { const r = document.getElementById(uid).closest('details.incruste-repliee'); if (r) r.open = true; }", uid)
     d = pg.evaluate("uid => JSON.parse(document.getElementById(uid).closest('.atelier-incruste').querySelector('script[type=\"application/json\"]').textContent).exercices[uid]", uid)
     pg.click("#%s button.verifier" % uid)
     t(nom + " : « Vérifier » à vide donne un retour à reprendre", "🔴" in pg.inner_text("#%s .retour" % uid))

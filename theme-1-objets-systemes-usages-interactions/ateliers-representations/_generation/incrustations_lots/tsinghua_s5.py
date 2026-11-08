@@ -20,23 +20,19 @@ ENTREES = [
          sequence=SEQ, avant=REPERE,
          balise="h3", balise_exo="h4",
          titre="a) Justifier une évolution&nbsp;: le jardin passe de l'arrosoir au système connecté",
-         intro="<b>Un autre objet, le même raisonnement.</b> En séance 4, le système de détection des feux a évolué&nbsp;: "
-               "d'un seuil de température seul au croisement de plusieurs indices, parce que le besoin avait changé — moins "
-               "de fausses alertes. Ici, ni forêt ni feu&nbsp;: <b>le jardin partagé d'un collège</b>, qui passe de "
-               "l'arrosoir à un système d'arrosage connecté. Pour justifier ce changement, tu compares deux <b>bêtes à "
-               "cornes</b>, le schéma du besoin&nbsp;; le cours, juste en dessous, le rappelle. Comme tes exigences, le "
-               "nouveau but ne nomme aucune solution. Un exercice, environ douze minutes&nbsp;; il se vérifie tout seul et "
-               "a sa correction complète.",
+         intro="<b>Un autre objet, le même raisonnement.</b> En séance 4, le système de détection des feux a évolué parce "
+               "que le besoin avait changé. <br>Ici, <b>le jardin partagé d'un collège</b> passe de l'arrosoir à un "
+               "système d'arrosage connecté&nbsp;: compare les deux <b>bêtes à cornes</b> pour justifier ce changement. "
+               "<br>Environ douze minutes&nbsp;; l'exercice se vérifie tout seul et a sa correction complète.",
          suite="un exercice pour passer du besoin aux caractéristiques, et le QCM de l'atelier"),
     dict(id="cm-4e-tsinghua-s5", module="carte_mentale", niveau="4e", exos=["e3", "e4"],
          sequence=SEQ, avant=REPERE, premier_numero=2,
          balise="h3", balise_exo="h4",
          titre="b) Peser le pour et le contre&nbsp;: la carte mentale de l'arrosage connecté",
-         intro="<b>Le même jardin, cette fois pour peser le pour et le contre.</b> En séance 3, la détection automatisée "
-               "des feux avait ses deux faces&nbsp;: du temps gagné, mais aussi des fausses alertes, un coût, de l'énergie "
-               "consommée. L'arrosage connecté est <b>un autre objet</b>, et il a lui aussi ses avantages et ses "
-               "inconvénients. Pour les ranger face à face sans rien oublier, on dessine une <b>carte mentale</b>&nbsp;: "
-               "complète celle du club jardin, puis corrige la carte mal faite d'un élève. Deux exercices, environ un quart "
-               "d'heure chacun&nbsp;; chacun se vérifie tout seul et a sa correction complète.",
+         intro="<b>Le même jardin, cette fois pour peser le pour et le contre.</b> En séance 3, la détection des feux "
+               "avait ses avantages et ses inconvénients&nbsp;; l'arrosage connecté aussi. <br>Pour les ranger face à face, "
+               "on dessine une <b>carte mentale</b>&nbsp;: complète celle du club jardin, puis corrige la carte mal faite "
+               "d'un élève. <br>Deux exercices, environ un quart d'heure chacun&nbsp;; chacun se vérifie tout seul et a sa "
+               "correction complète.",
          suite="le QCM de l'atelier"),
 ]

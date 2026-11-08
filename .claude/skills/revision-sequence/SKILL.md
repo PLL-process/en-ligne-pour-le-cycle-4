@@ -49,24 +49,39 @@ Les cinq commandes ci-dessus sur la page (et ses pages engendrées), chiffres no
 Objectif : chaque séance sous 1 200 mots visibles. **On ne retire aucune notion** : on replie, on range, on coupe le
 redondant.
 - **Replier ce qui ne sert qu'au besoin** dans un `<details>` dont le titre dit ce qu'il y a dedans :
-  - l'encart des gestes (« 🖐 Les 6 gestes, en images — ouvre si tu ne sais plus faire ») : les captures restent sur la
-    page (décision des gestes en captures) ;
+  - les captures des gestes : `python3 _outils/replier_captures.py <page> --ecrire`. Chaque geste reste écrit en toutes
+    lettres ; ses captures et leurs légendes se rangent dessous, « 🖼 Le voir en images — 3 captures : ce que tu dois
+    voir, et que faire si ça ne marche pas » (4e_C1.1, séance 1 : 1 641 → 921 mots) ;
+  - une piqûre de rappel incrustée : l'option `replie="…"` de son entrée dans `incrustations_lots/`, puis
+    `python3 incrustations.py --seq <code>` (le texte du résumé dit ce qu'elle contient et à qui elle sert) ;
   - les explications qui suivent une activité (« Pourquoi ? ») ;
   - les compléments, les « pour aller plus loin ».
 - **Marquer `class="approfondissement"`** ce qui n'est pas indispensable pour faire : le mode essentiel (n°29) le cache.
 - **Couper le redondant** (`clean-copy`, repris dans `texte-clair-et-aere`) : une phrase qui répète un titre, une consigne
   dite deux fois, une annonce (« Dans cette activité, tu vas… » suivie de la consigne qui le dit).
 - La situation déclenchante, l'hypothèse, la problématique et la clôture ne bougent pas (n°306, n°311).
+- **Ne pas défaire une décision de Pascal pour tenir le repère** : une séance qu'il a voulue telle (des exercices
+  ajoutés, une séance de plus) garde son contenu ; l'écart va dans le suivi, avec les pistes, et la question dans la PR.
 
 ### 4. Aérer le texte
 Skill `texte-clair-et-aere` : consignes à l'impératif, 20 mots au plus, une action par ligne ; légendes en lignes ;
 corrections réponse → pourquoi → refus un par ligne → le piège.
-- `python3 _outils/aerer_legendes.py <page> --ecrire` et `python3 _outils/aerer_corrections.py <page> --ecrire` posent
-  les retours à la ligne (entre les parties d'une légende, entre les phrases d'une correction, après chaque « ; »), sans
-  changer un mot ; ils nomment ce qui reste à réécrire à la main.
+- `python3 _outils/aerer_legendes.py <page> --ecrire` et `python3 _outils/aerer_corrections.py <page> --partout --ecrire`
+  posent les retours à la ligne (entre les parties d'une légende ; entre les phrases d'une correction, d'une consigne,
+  d'une définition, d'une légende de plus de 35 mots ; après chaque « ; » d'une correction), sans changer un mot ; ils
+  nomment ce qui reste à réécrire à la main. Ils ne touchent jamais une incrustation des ateliers : son texte se
+  corrige à la source (ci-dessous).
 - `python3 _outils/audit_aeration.py --strict <page>` à zéro.
 - Les consignes et annonces de plus de 25 mots (« Au programme : … », la question directrice) passent en lignes ①, ②,
-  ③ ou en deux phrases.
+  ③ ou en deux phrases. `node _outils/mesurer_charge.mjs --longs 30 <page>` les cite, séance par séance.
+- **Un texte d'une incrustation d'atelier** (`<!-- ateliers-representations:debut … -->`) se corrige à sa source
+  (`ateliers-representations/_generation/` : `incrustations_lots/` pour l'introduction propre à la séquence,
+  `donnees_<atelier>.py` pour l'exercice), puis :
+  - la séquence : `python3 incrustations.py --seq <code>` (n'écrit que cette séquence, entre ses marqueurs) ; vérifier
+    par `--verifier --seq <code>` (« à jour ») ;
+  - les ateliers et les cahiers qui portent le même exercice : le même remplacement, à l'identique, dans leurs pages.
+    **Ne jamais lancer `build.py` dans le dépôt** (il réécrit d'autres pages, sans leur mention de licence) ; pour
+    vérifier qu'il produirait le même texte, le rejouer dans une copie de travail à part (`git worktree`).
 
 ### 5. Le reste du lot, vérifié au passage
 - **Séances de 55 minutes** : les durées annoncées des activités tiennent dans 55 minutes (n°23).

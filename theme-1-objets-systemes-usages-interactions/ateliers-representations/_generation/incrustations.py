@@ -75,6 +75,11 @@ def css_incruste():
     # corrigés à la main le 06/11 et la régénération les cassait (vu le 07/11/2026). La règle nue
     # est donc ajoutée ici, à la source : elle vaut pour toute la page, ce qui est le but.
     sortie.append("@media (pointer:coarse){input,textarea,select{font-size:16px!important}}")
+    # `replie` (08/11/2026) : une incrustation rangée dans un <details> fermé, son résumé bien visible
+    sortie.append("details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:12px;padding:6px 12px}"
+                  "details.incruste-repliee>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}"
+                  "details.incruste-repliee[open]>summary{margin-bottom:8px}"
+                  "@media print{details.incruste-repliee{border-color:#999}}")
     return "\n".join(sortie)
 
 
@@ -135,6 +140,10 @@ def poser(inc, texte):
     debut, fin = marqueurs(inc["id"])
     # `html` : le nom d'un texte du module (un dessin, sans exercice) — posé tel quel, sans le moteur des exercices
     contenu = getattr(importlib.import_module("donnees_" + inc["module"]), inc["html"]) if inc.get("html") else section(inc)
+    # `replie` (facultatif, 08/11/2026, révision des trois thèmes : la charge de lecture) : le texte d'un résumé ; la
+    # section se range dans un <details> fermé, au même endroit. Pour un rappel, qui ne sert qu'à qui l'a oublié.
+    if inc.get("replie"):
+        contenu = '<details class="incruste-repliee"><summary>%s</summary>\n%s\n</details>' % (inc["replie"], contenu)
     bloc = "%s\n%s\n%s" % (debut, contenu, fin)
     if debut in texte:
         i, j = texte.index(debut), texte.index(fin) + len(fin)
