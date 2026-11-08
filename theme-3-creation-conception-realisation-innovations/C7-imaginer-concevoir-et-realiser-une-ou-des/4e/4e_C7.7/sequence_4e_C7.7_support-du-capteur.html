@@ -1416,11 +1416,12 @@ const CHECKS = {
        s += sv("a3q1","oui : 18 min à la découpe laser, 1 h 13 à la fraiseuse numérique"); s += sv("a3q2","la fraiseuse sort du délai : 6 h 25 contre 1 h 10 à la découpe laser"); s += pres("a3j", 70);
        return {score: s, total: 3, exp: !!window.__exp.quantite,
                expMsg: "Change d'abord la quantité sur l'atelier (le menu « Nombre de pièces à produire ») : c'est ce geste-là que l'activité te demande de commenter."}; },
-  4(){ return {score: pres("reinv", 140), total: 1, exp: true}; }
+  4(){ return {score: pres("reinv", 140), total: 1, exp: true, libre: true}; }
 };
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; save(); return; }
   if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }

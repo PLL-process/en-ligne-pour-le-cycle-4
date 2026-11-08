@@ -1556,11 +1556,12 @@ const CHECKS = {
   4(){ let s = 0;
        s += sv("a4c0", "Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire."); s += sv("a4c1", "Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé."); s += sv("a4c2", "Le délai de fraîcheur : un accord périmé ne déclenche rien."); s += sv("a4c3", "Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche."); s += sv("a4c4", "Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée."); s += sv("a4c5", "Le numéro d'ordre : le doublon est ignoré et le manque est repéré.");
        return {score: s, total: 6, exp: true}; },
-  5(){ return {score: pres("reinv", 120), total: 1, exp: true}; }
+  5(){ return {score: pres("reinv", 120), total: 1, exp: true, libre: true}; }
 };
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; save(); return; }
   if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; (window.__exp.valides = window.__exp.valides || {})[n] = 1; majBandeau(); }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }

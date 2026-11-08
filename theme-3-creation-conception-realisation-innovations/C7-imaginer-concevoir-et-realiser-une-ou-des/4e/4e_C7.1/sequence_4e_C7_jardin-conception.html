@@ -1010,7 +1010,7 @@ const CHECKS = {
     return {score: s, total: 5, exp: true}; },
   2(){ let s = 0; s += pres("a1t1", 5); s += pres("a1t2", 5); s += pres("a1t3", 5); s += pres("a1t4", 5);
     return {score: s, total: 4, exp: true}; },
-  3(){ return {score: pres("a2sol", 40), total: 1, exp: true}; },
+  3(){ return {score: pres("a2sol", 40), total: 1, exp: true, libre: true}; },
   4(){ let s = 0;
     s += sv("a3m1a","Moyenne"); s += sv("a3m1b","Facile"); s += sv("a3m1c","Faible");
     s += sv("a3m2a","Bonne"); s += sv("a3m2b","Moyenne"); s += sv("a3m2c","Faible");
@@ -1025,6 +1025,7 @@ const CHECKS = {
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; save(); return; }
   if(ratio === 1){ fb.textContent = "🎉 Bravo — activité validée ✔ " + r.score + "/" + r.total + " ! Ouvre la correction pour comparer avec la version du technicien."; fb.className = "feedback show ok";
     if(!par.s.includes(n)){ par.s.push(n); } updateProg(); }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — il y a du très bon ! Les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }

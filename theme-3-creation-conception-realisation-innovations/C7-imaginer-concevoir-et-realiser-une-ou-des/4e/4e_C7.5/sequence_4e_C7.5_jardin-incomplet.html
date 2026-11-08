@@ -1506,11 +1506,12 @@ const CHECKS = {
        s += sv("a3q1","le capteur de température de l'air"); s += sv("a3q2","on mesure une grandeur, mais pas celle sur laquelle le programme décide"); s += sv("pt_hum","A0");
        return {score: s, total: 3, exp: !!window.__exp.diag_requis_hum,
                expMsg: "Charge le cas 3 sur l'établi et teste-le : ce cas-là ne se devine pas, il se lit."}; },
-  4(){ return {score: pres("reinv", 140), total: 1, exp: true}; }
+  4(){ return {score: pres("reinv", 140), total: 1, exp: true, libre: true}; }
 };
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; save(); return; }
   if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }

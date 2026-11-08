@@ -1285,7 +1285,7 @@ const par = {s: []};
 const CHECKS = {
   0(){ let s = 0; s += sv("a0q1","28 °C"); s += sv("a0q2","s'éteint aussitôt");
     return {score: s, total: 2, exp: !!(window.__exp.simMontee && window.__exp.simDescente), expMsg: "Manipule d'abord le curseur : franchis le seuil en MONTANT puis en DESCENDANT — c'est l'expérience qui fait foi."}; },
-  1(){ return {score: pres("a1sol", 30), total: 1, exp: true}; },
+  1(){ return {score: pres("a1sol", 30), total: 1, exp: true, libre: true}; },
   2(){ let s = 0;
     s += sv("a2p1","Alerte OFF"); s += sv("a2p2","Alerte OFF"); s += sv("a2p3","Alerte ON"); s += sv("a2p4","Alerte OFF");
     s += sv("a2o1","LED éteinte"); s += sv("a2o2","LED éteinte"); s += sv("a2o3","LED allumée"); s += sv("a2o4","LED éteinte");
@@ -1295,7 +1295,7 @@ const CHECKS = {
     return {score: s, total: 5, exp: true}; },
   4(){ let s = 0; s += pres("algo", 25); s += pres("a3hys", 15); s += pres("a3diag", 15);
     return {score: s, total: 3, exp: !!window.__exp.vs1, expMsg: "Exécute ton alerte dans l'éditeur Python (▶) avant de valider — la console doit afficher ALERTE ou ok : c'est le test qui fait foi."}; },
-  5(){ return {score: pres("reinv", 25), total: 1, exp: true}; },
+  5(){ return {score: pres("reinv", 25), total: 1, exp: true, libre: true}; },
   /* séance 3 : les exercices d'atelier insérés doivent être réussis (leur clé de sauvegarde, partagée avec l'atelier) */
   6(){ const fast = reussi("rep_fast_3e_e6");
     return {score: fast ? 1 : 0, total: 1, exp: fast,
@@ -1310,6 +1310,7 @@ function reussi(cle){ try { return !!(JSON.parse(localStorage.getItem(cle) || "n
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; save(); return; }
   if(ratio === 1){ fb.textContent = "🎉 Bravo — activité validée ✔ " + r.score + "/" + r.total + " ! Ouvre la correction pour comparer avec la version du technicien."; fb.className = "feedback show ok"; 
     if(!par.s.includes(n)){ par.s.push(n); } updateProg(); }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — il y a du très bon ! Les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }

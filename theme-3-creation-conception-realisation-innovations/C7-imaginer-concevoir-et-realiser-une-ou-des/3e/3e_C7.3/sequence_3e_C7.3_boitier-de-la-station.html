@@ -1601,11 +1601,12 @@ const CHECKS = {
   3(){ let s = 0;
        s += sv("a3p0", "il se plie et se perce à l'atelier, mais il ne s'imprime pas, et son anodisation devra être reprise avant dix ans"); s += sv("a3p1", "plus rien ne s'use, mais la pose d'une main en haut d'une échelle n'est plus possible : c'est l'argument qui avait écarté la barre d'acier en 3e_C8.2"); s += sv("a3p2", "on fabrique le boîtier au collège, et on accepte de le refaire une fois au milieu des dix ans"); s += sv("a3q1","le PETG et le PP recyclé : le PVC ne s'imprime pas et ne se découpe pas au laser"); s += pres("a3j", 180);
        return {score: s, total: 5, exp: true}; },
-  4(){ return {score: pres("reinv", 170), total: 1, exp: true}; }
+  4(){ return {score: pres("reinv", 170), total: 1, exp: true, libre: true}; }
 };
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; (window.__exp.valides = window.__exp.valides || {})[n] = 1; majBandeau(); save(); return; }
   if(ratio === 1){ fb.textContent = r.partie
       ? "🎉 Première partie validée — " + r.score + "/" + r.total + ". La suite de l'activité, et sa correction complète, ouvrent la prochaine séance."
       : "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; (window.__exp.valides = window.__exp.valides || {})[n] = 1; majBandeau(); }

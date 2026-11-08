@@ -1397,11 +1397,12 @@ const CHECKS = {
   4(){ let s = 0;
        s += sv("a4a0", "Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin."); s += sv("a4a1", "Une donnée personnelle, et des milliers de fois le poids d'une mesure, pour rien."); s += sv("a4a2", "De l'énergie et de la place dépensées pour des valeurs dont personne n'a l'usage."); s += sv("a4a3", "Celle-là s'envoie : c'est exactement ce dont le destinataire a besoin.");
        return {score: s, total: 4, exp: true}; },
-  5(){ return {score: pres("reinv", 90), total: 1, exp: true}; }
+  5(){ return {score: pres("reinv", 90), total: 1, exp: true, libre: true}; }
 };
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; save(); return; }
   if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
