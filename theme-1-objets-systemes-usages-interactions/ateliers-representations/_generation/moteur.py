@@ -655,6 +655,10 @@ def page_atelier(at, niv, chemins):
          '<button type="button" class="btn ghost" id="btnEffacer">🗑 Effacer ma sauvegarde</button>'
          '<button type="button" class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : désactivé</button></div>',
          '<p class="note" id="noteSauvegarde" style="text-align:center" aria-live="polite">Ton travail s\'enregistre tout seul dans ce navigateur.</p>',
+         # Audit externe A05 (08/11/2026) : sur un poste partagé, l'élève suivant lit les réponses du précédent.
+         '<p class="note" data-note="poste-partage" style="text-align:center">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: '
+         'un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF '
+         'si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>',
          '<div class="etiquettes">',
          '<span class="etiquette niveau" title="Niveau de classe" aria-label="Niveau : %s">%s</span>' % (niv, niv)]
     for c in codes:

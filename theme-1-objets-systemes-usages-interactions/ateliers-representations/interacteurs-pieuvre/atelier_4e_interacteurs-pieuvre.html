@@ -304,7 +304,8 @@ body.essentiel details.referentiel-replie{display:none}
 <body>
 <a class="evitement" href="#contenu">Aller au contenu</a>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../index.html">&#8962; Accueil</a><a href="../../C2-decrire-les-interactions-entre-un-objet-ou/4e/4e_C2.1/sequence_4e_C2_hangzhou_borne.html">&#8592; Revenir à la séquence</a><a href="../cahiers/cahier_4e_representations.html">📒 Mon cahier de 4e</a><a href="../../_reperes/carte_des_representations.html">🧭 Toutes les représentations</a><a href="qcm_interacteurs-pieuvre.html">🧠 Le QCM</a></nav>
-<main id="contenu" class="page"><h1>🐙 Le diagramme des interacteurs extérieurs</h1><p class="mission">Passer du dessin des interacteurs à des contraintes écrites, que l'on peut vérifier.</p><div class="toolbar"><button type="button" class="btn" id="btnImprimer">🖨 Imprimer</button><button type="button" class="btn ghost" id="btnEffacer">🗑 Effacer ma sauvegarde</button><button type="button" class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : désactivé</button></div><p class="note" id="noteSauvegarde" style="text-align:center" aria-live="polite">Ton travail s'enregistre tout seul dans ce navigateur.</p><div class="etiquettes"><span class="etiquette niveau" title="Niveau de classe" aria-label="Niveau : 4e">4e</span><span class="etiquette code" title="Repérer et expliquer les contraintes, exigences prises en compte (sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité) pour répondre aux attentes des utilisateurs." aria-label="Compétence 4e_C2.2 : Repérer et expliquer les contraintes, exigences prises en compte (sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité) pour répondre aux attentes des utilisateurs.">4e_C2.2</span><span class="etiquette duree" title="Durée indicative de tous les exercices" aria-label="Durée indicative : environ 37 minutes">⏱ ≈ 37 min</span><span class="etiquette" title="Le diagramme des interacteurs extérieurs, souvent appelé diagramme pieuvre" aria-label="Représentation : Le diagramme des interacteurs extérieurs, souvent appelé diagramme pieuvre">🐙 diagramme pieuvre</span></div>
+<main id="contenu" class="page"><h1>🐙 Le diagramme des interacteurs extérieurs</h1><p class="mission">Passer du dessin des interacteurs à des contraintes écrites, que l'on peut vérifier.</p><div class="toolbar"><button type="button" class="btn" id="btnImprimer">🖨 Imprimer</button><button type="button" class="btn ghost" id="btnEffacer">🗑 Effacer ma sauvegarde</button><button type="button" class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : désactivé</button></div><p class="note" id="noteSauvegarde" style="text-align:center" aria-live="polite">Ton travail s'enregistre tout seul dans ce navigateur.</p>
+<p class="note" data-note="poste-partage" style="text-align:center">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p><div class="etiquettes"><span class="etiquette niveau" title="Niveau de classe" aria-label="Niveau : 4e">4e</span><span class="etiquette code" title="Repérer et expliquer les contraintes, exigences prises en compte (sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité) pour répondre aux attentes des utilisateurs." aria-label="Compétence 4e_C2.2 : Repérer et expliquer les contraintes, exigences prises en compte (sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité) pour répondre aux attentes des utilisateurs.">4e_C2.2</span><span class="etiquette duree" title="Durée indicative de tous les exercices" aria-label="Durée indicative : environ 37 minutes">⏱ ≈ 37 min</span><span class="etiquette" title="Le diagramme des interacteurs extérieurs, souvent appelé diagramme pieuvre" aria-label="Représentation : Le diagramme des interacteurs extérieurs, souvent appelé diagramme pieuvre">🐙 diagramme pieuvre</span></div>
 <!-- n°298 amendée (07/11/2026) : le référentiel revient, replié, copie du bloc referentiel-eleve de la synthèse professeur -->
 <details class="referentiel-replie">
   <summary>📚 Le référentiel de l'atelier — en toutes lettres</summary>
@@ -490,6 +491,19 @@ gardienne</span></td></tr></tbody></table></div></div><fieldset class="qcm-group
   function lire(k){ try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch(e){ return null; } }
   function ecrire(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
   function oublier(k){ try { localStorage.removeItem(k); } catch(e){} }
+
+  /* Une confirmation en deux clics, DANS la page : le premier clic change le texte du
+     bouton, le second (sous six secondes) exécute. Jamais de boîte modale du navigateur —
+     elle bloque la page et échappe au lecteur d'écran (audit externe A05, 08/11/2026). */
+  var _armes = {};
+  function armerDeuxClics(bouton, message){
+    var cle = bouton.id || bouton.textContent, t = Date.now();
+    if (_armes[cle] && t - _armes[cle].t < 6000){ bouton.textContent = _armes[cle].texte; delete _armes[cle]; return true; }
+    _armes[cle] = {t: t, texte: bouton.textContent};
+    bouton.setAttribute("aria-live", "polite"); bouton.textContent = message;
+    setTimeout(function(){ if (_armes[cle] && _armes[cle].t === t){ bouton.textContent = _armes[cle].texte; delete _armes[cle]; } }, 6000);
+    return false;
+  }
 
   function norm(s){
     return String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
@@ -935,7 +949,7 @@ gardienne</span></td></tr></tbody></table></div></div><fieldset class="qcm-group
         if (pile.length){ ctx.putImageData(pile.pop(), 0, 0); etat.traits = Math.max(0, (etat.traits || 0) - 1); memoriser(); }
       });
       if (tout) tout.addEventListener("click", function(){
-        if (!window.confirm("Effacer tout ton croquis ?")) return;
+        if (!armerDeuxClics(tout, "Effacer tout ton croquis ? Clique encore pour confirmer.")) return;
         pile = []; fond(); etat = {traits: 0}; memoriser();
       });
     }
@@ -981,7 +995,7 @@ gardienne</span></td></tr></tbody></table></div></div><fieldset class="qcm-group
   if (btnImp) btnImp.addEventListener("click", function(){ window.print(); });
   var btnEff = document.getElementById("btnEffacer");
   if (btnEff) btnEff.addEventListener("click", function(){
-    if (!window.confirm("Effacer tout ce que tu as écrit sur cette page ? Le travail des mêmes exercices disparaîtra aussi de ton cahier.")) return;
+    if (!armerDeuxClics(btnEff, "Tout effacer sur cette page, et dans ton cahier ? Clique encore pour confirmer.")) return;
     for (var j = 0; j < boites.length; j++){ oublier(boites[j].getAttribute("data-cle")); }
     document.querySelectorAll("canvas.croquis-zone").forEach(function(c){ oublier(c.getAttribute("data-cle-croquis")); });
     oublier(cleOnglet);

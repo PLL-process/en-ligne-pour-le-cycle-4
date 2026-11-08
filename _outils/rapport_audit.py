@@ -70,7 +70,8 @@ CONTROLES_PY = ["controle_liens.py", "controle_regles_visibles.py", "controle_ta
                 "controle_boutons_vivants.py", "controle_longueurs.py", "controle_regle4.py",
                 "controle_medias.py", "controle_sigles.py", "controle_unites.py",
                 "controle_fichiers_telechargeables.py", "controle_atteignabilite.py",
-                "controle_rapports_tests.py", "controle_blocs_dessines.py", "controle_schemas.mjs"]
+                "controle_rapports_tests.py", "controle_blocs_dessines.py", "controle_schemas.mjs",
+                "controle_sauvegarde_locale.py", "controle_gestes_outil.py", "controle_licence.py"]
 CONTROLES_MJS = ["controle_squelette.mjs", "controle_hors_ligne.mjs", "controle_impression.mjs",
                  "controle_verrous.mjs", "controle_contraste_liens.mjs", "controle_code_colore.mjs"]
 #: un rouge ici empêche d'utiliser la page : P1
