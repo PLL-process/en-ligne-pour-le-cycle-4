@@ -18,8 +18,8 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | N° | Séquence | Séance la plus lourde (mots) | ✘ règles | Menus | Aération | État |
 |---|---|---|---|---|---|---|
 | 1 | `5e_C1.5` | 1549 → 1322 | 4 → 0 | 27 → 0 | 18 → 0 | livrée #619 |
-| 2 | `5e_C1.3` | 1050 | 0 | 0 | 5 | à faire |
-| 3 | `4e_C1.1` | 3570 | 0 | 0 | 22 | à faire |
+| 2 | `5e_C1.3` | 1050 → 1043 | 0 | 0 | 5 → 0 | livrée #620 |
+| 3 | `4e_C1.1` | 3570 → 2911 | 0 | 0 | 22 → 0 | livrée #620 — séance 5 : décision de Pascal |
 | 4 | `4e_C1.4` | 1291 | 0 | 0 | 9 | à faire |
 | 5 | `3e_C1.5` | 2017 | 0 | 0 | 19 | à faire |
 | 6 | `3e_C2.1` | 1861 | 0 | 0 | 6 | à faire |
@@ -82,4 +82,21 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
   annonces de plus de 25 mots coupées en lignes. Séance 3 : 1 549 → 1 322 mots, au-dessus du repère : c'est la séance
   de clôture (synthèse, banc de publication pour le Bonus, Bonus facultatif, bilan) ; sans le Bonus et son banc, elle
   passe sous 1 000.
-
+- **5e_C1.3** (les vélos de Hangzhou), 08/11/2026 : déjà sous le repère (1 050 / 217 / 718 mots). 14 retours à la ligne
+  dans les corrections, 5 hors corrections (`aerer_corrections.py --partout`) ; les trois « Au programme », la consigne
+  de l'activité 2, le transfert et le bilan en lignes ;
+  l'incrustation de l'atelier « carte mentale » allégée (la définition de « donnée » y était dite trois fois, l'intro ne
+  la redit plus ; la consigne passe en ① ② ⚠), corrigée à l'identique dans sa source (`donnees_carte_mentale.py`,
+  `incrustations_lots/donnees_et_validation.py`), l'atelier de 5e et le cahier de 5e — le générateur, rejoué à part,
+  produit le même texte.
+- **4e_C1.1** (Tsinghua, les feux), 08/11/2026 :
+  - séance 1 : 1 641 → 921 mots. Les 15 captures des quatre gestes du tableur se déplient à la demande
+    (`replier_captures.py`) : chaque geste reste écrit en toutes lettres, ses images et leurs légendes sont à un clic ;
+  - séance 5 : 3 570 → 2 911 mots. La piqûre de rappel de la bête à cornes est repliée (option `replie` des
+    incrustations) ; les introductions des deux blocs d'exercices et de l'activité 5 ne redisent plus l'objectif ;
+  - 75 retours à la ligne (corrections, consignes, définitions, légendes) ; trois légendes réécrites ; six corrections
+    des ateliers aérées à leur source (`donnees_besoin.py`, `donnees_carte_mentale.py`), dans les ateliers, les cahiers
+    et les séquences qui les portent ;
+  - **la séance 5 reste au-dessus du repère** : trois exercices d'atelier de 12 à 15 minutes (séance voulue par Pascal
+    le 24/10/2026), dont le texte visible vient des exercices eux-mêmes. Deux pistes, à trancher par Pascal : la
+    scinder en deux séances, ou rendre l'exercice 3 (« Corriger une carte mentale mal faite ») facultatif.

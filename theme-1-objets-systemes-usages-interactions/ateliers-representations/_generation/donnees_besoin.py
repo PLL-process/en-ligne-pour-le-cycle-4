@@ -230,8 +230,8 @@ CORRECTION_MOTS = [
     "<b>Matière d'œuvre</b> → en haut à droite, sous «&nbsp;Sur quoi agit-il&nbsp;?&nbsp;» → ce sur quoi le produit agit",
     "<b>Produit</b> → au centre, dans l'ellipse sous la corne → l'objet lui-même",
     "<b>Fonction</b> → en bas, sous «&nbsp;Dans quel but&nbsp;?&nbsp;» → la fonction d'usage, le service rendu",
-    "Refusés&nbsp;: <b>Acheteur</b> → il paie, il ne se sert pas forcément du produit&nbsp;; <b>Matériau</b> → ce dont le "
-    "produit est fait, une solution — pas la matière d'œuvre&nbsp;; <b>Fonction technique</b> → ce que le produit fait pour "
+    "Refusés&nbsp;: <b>Acheteur</b> → il paie, il ne se sert pas forcément du produit&nbsp;; <br><b>Matériau</b> → ce dont le "
+    "produit est fait, une solution — pas la matière d'œuvre&nbsp;; <br><b>Fonction technique</b> → ce que le produit fait pour "
     "rendre le service, pas le service lui-même.",
 ]
 
@@ -420,11 +420,12 @@ R_FEUX = exercice_mots(
                   "tech": "C'est une fonction technique : ce que le système fait pour rendre le service — celle qui a évolué en séance 4. La fonction d'usage dit le service lui-même.",
                   "solution": "Ce sont des solutions, des pièces : elles disent comment. La fonction commence par un verbe à l'infinitif.",
                   "util": "Ce sont les utilisateurs, la case en haut à gauche. La fonction dit dans quel but le système existe."})],
-    ["<b>Le système de détection</b> → utilisateurs&nbsp;: les pompiers → matière d'œuvre&nbsp;: <b>la forêt surveillée</b> → "
-     "produit&nbsp;: le système de détection des départs de feu → fonction&nbsp;: <b>prévenir les pompiers d'un départ de feu "
-     "dans la forêt, le plus tôt possible</b>",
+    ["<b>Le système de détection</b>&nbsp;: <br>utilisateurs&nbsp;: les pompiers&nbsp;; <br>matière d'œuvre&nbsp;: <b>la forêt "
+     "surveillée</b>&nbsp;; <br>produit&nbsp;: le système de détection des départs de feu&nbsp;; <br>fonction&nbsp;: <b>prévenir "
+     "les pompiers d'un départ de feu dans la forêt, le plus tôt possible</b>",
      "Refusés&nbsp;: «&nbsp;comparer la température à un seuil…&nbsp;» → une fonction technique (c'est elle qui a changé en "
-     "séance 4, pas la fonction d'usage)&nbsp;; la caméra et le capteur → des solutions&nbsp;; les pompiers → les utilisateurs.",
+     "séance 4, pas la fonction d'usage)&nbsp;; <br>la caméra et le capteur → des solutions&nbsp;; <br>les pompiers → les "
+     "utilisateurs.",
      ("conclusion", "Le besoin du système n'a pas bougé&nbsp;; ce sont ses fonctions techniques qui ont évolué. Les quatre mots "
                     "le disent vite.")],
     dict(consigne="Un détecteur de fumée dans une chambre&nbsp;: son utilisateur, sa matière d'œuvre, sa fonction&nbsp;?",
@@ -895,9 +896,10 @@ E4 = dict(
            "Nouveau but = verbe + les plantes + l'absence + l'eau, sans aucune solution.</p>"],
     jumeau=dict(consigne="Un élève portait ses affaires dans un cartable. Ses livres sont devenus trop lourds pour son dos&nbsp;: il "
                          "utilise maintenant un sac à roulettes. Quelle branche du besoin a changé, et quel est le nouveau but&nbsp;?",
-                correction="À qui&nbsp;? → l'élève, pareil. Sur quoi&nbsp;? → ses affaires de classe, pareil. <b>Le but change</b>&nbsp;: "
-                           "« transporter ses affaires de classe » devient « transporter ses affaires de classe <b>sans se faire mal "
-                           "au dos</b> ». Les roulettes sont la solution&nbsp;: elles n'entrent pas dans le but."),
+                correction="À qui&nbsp;? → l'élève, pareil. <br>Sur quoi&nbsp;? → ses affaires de classe, pareil. <br><b>Le but "
+                           "change</b>&nbsp;: « transporter ses affaires de classe » devient « transporter ses affaires de classe "
+                           "<b>sans se faire mal au dos</b> ». <br>Les roulettes sont la solution&nbsp;: elles n'entrent pas dans le "
+                           "but."),
     correction=[
         '<figure class="figure">' + BAC_ARROSAGE_C + '<figcaption>Après&nbsp;: la bête à cornes du système d\'arrosage, avec son '
         'nouveau but.</figcaption></figure>',
@@ -908,8 +910,8 @@ E4 = dict(
         "<b>Un nouveau but attendu&nbsp;:</b> « Arroser les plantes du jardin, même en l'absence de la gardienne, sans gaspiller l'eau. »",
         "« même en l'absence de la gardienne » → vient des vacances&nbsp;; « sans gaspiller l'eau » → vient de la canicule et de la cuve",
         "<b>Refusé&nbsp;:</b> « Arroser grâce à un capteur et à une pompe » → deux solutions dans le but",
-        "<b>Pourquoi l'objet a évolué</b> → parce que le besoin a changé. Un arrosoir percé se remplacerait par un arrosoir&nbsp;; "
-        "la mode ne suffit pas&nbsp;; les plantes sont les mêmes.",
+        "<b>Pourquoi l'objet a évolué</b> → parce que le besoin a changé. <br>Un arrosoir percé se remplacerait par un "
+        "arrosoir&nbsp;; <br>la mode ne suffit pas&nbsp;; <br>les plantes sont les mêmes.",
         ("conclusion", "Un objet évolue parce que le <b>besoin</b> évolue&nbsp;: ici, c'est la <b>fonction</b> (le but) qui s'est "
                        "enrichie, pas l'utilisatrice ni la matière d'œuvre."),
     ],
