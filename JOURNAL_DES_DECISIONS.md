@@ -29229,3 +29229,46 @@ dit faux au lot suivant — c'est la deuxième fois en trois jours (06/11 : `poi
 
 **Reste à Pascal** : montrer la trame d'EPI au collègue d'arts plastiques et, s'il y a un collègue de maths dans
 l'EPI, lui donner la fiche jumelle.
+
+## 08/11/2026 — Révision des trois thèmes, 4 : 4e_C1.4 (cybersécurité) — la séance 3 sous le repère, et un jeu qui ne pouvait pas se jouer (thème 1)
+
+**Suite de la passe complète** (skill `revision-sequence`), dans l'ordre du suivi : ligne n°4. Pascal, « Tu as carte
+blanche » (08/11, 11 h 46) : la passe complète par séquence remplace la vague V2 de 4e prévue la veille ; la famille
+C7/C8 de 4e passera à son tour de suivi (lignes 40 à 46), gabarit compris.
+
+**Mesuré, avant → après.** Séance 3 (traces, propriété intellectuelle, clôture) **1 291 → 1 172 mots visibles** ; les
+autres séances 1 048, 664, 686 ; **0 ✘** de règles, 0 menu, **9 → 0** écarts d'aération ; aucune notion ni correction
+retirée : ce qui sort de la vue est replié (les trois défis du Bonus, les exemples de 5.b, la légende des sigles CC).
+
+**Ce qui a changé.**
+- **Texte** : `aerer_corrections.py --partout` (76 retours à la ligne), puis à la main les mises en situation des
+  sections 3, 4, 5, 6 et du hors parcours Python (une phrase par ligne, « les risques », « la bonne attitude » en ①②③,
+  la morale finale en `approfondissement`), la « leçon à en tirer » de l'ouverture, les deux blocs du corrigé du Bonus
+  de plus de 45 mots, les consignes des assistants conversationnels ; l'exemple de 5.b qui répétait sa liste tombe ;
+  les vouvoiements restants (« Expliquez », « Cochez », « Votre réponse ») passent au tu.
+- **Lu comme un élève, à 390 px — les trois décrochages** : (1) neuf zones de réponse sur dix-huit gardaient la taille
+  par défaut du navigateur (~180 px de large) → `textarea{width:100%}` ; (2) le **jeu des licences 6.c ne pouvait pas
+  se jouer** : chaque zone ne gardait qu'une étiquette alors qu'une licence va dans plusieurs catégories (CC BY dans
+  trois), et les infobulles n'existaient qu'au survol de la souris → les quatre zones sont `data-multi` et
+  `data-copie` (la zone reçoit une copie, la licence reste dans la réserve, une même licence n'entre qu'une fois,
+  double-clic pour retirer), légende des sigles repliée au-dessus du jeu, infobulles au toucher (`:focus`) et jamais
+  plus larges que l'écran ; les étiquettes et les cas de 6.b se lisent sans survol (« Citer l'auteur et la licence »,
+  « Une œuvre sans licence indiquée ») ; (3) la barre de score collante prenait **178 px sur 844** à chaque écran → elle
+  défile avec la page sous 480 px ; le bloc Python élargissait la page à 718 px → `pre{overflow-x:auto}`.
+- **Au passage** : 6.a compte dans le score de la section 6 (il annonçait « 2 points » sans porter la classe lue par
+  `checkSection`) ; 6.b dit « non noté » ; 5.c dit ses 7 questions ; aide et correction de la section 6 réécrites avec
+  les mots du jeu (six cas, quatre catégories, le piège) ; dépôt au clavier réparé (zones focalisables, `dragstart`
+  synthétique sans `dataTransfer` ne jette plus d'erreur, `data-multi` respecté au clavier).
+
+**Vérifié** (08/11/2026, Chromium Playwright) : `tests_regle_311_4e_C1.4.mjs` 34/34 ; `mesurer_charge` 0 séance au-delà
+de 1 200 ; `verif_regles_audit` 0 ✘ ; `audit_aeration --strict` 0 ; `controle_squelette`, `controle_hors_ligne`,
+`controle_contraste_liens`, `controle_mode_essentiel`, `controle_hierarchie`, `controle_liens`, `controle_tactile`,
+`controle_licence`, `controle_regles_visibles`, `controle_impression_papier`, `controle_impression --muet`,
+`banc_papier --filtre 4e_C1.4`, `controle_navigation_seances`, `controle_verrous` : 0 refus ; jeu des licences joué par
+script (copie, doublon refusé, retrait, 6.a compté : « 1 bonne réponse sur 8 »), 0 erreur JS, largeur 390 sur les
+quatre panneaux. Captures 390 et 1 280 px dans `_outils/captures_revision_4e_C1.4_2026-11-08/`. **Non exécuté** :
+`controle_schemas` (aucun schéma touché), un vrai téléphone, Firefox, Safari.
+
+**Reste à Pascal.** Fusionner. Le hors parcours Python (686 mots, relève de C9) n'a été qu'aéré ; les sept quiz à deux
+choix (« Suivre navigation / Chiffrer données ») restent télégraphiques — à reprendre si Pascal le veut, ce n'est pas un
+décrochage de lecture. Suivant : ligne n°5, `3e_C1.5`.

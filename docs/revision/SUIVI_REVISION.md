@@ -20,7 +20,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 1 | `5e_C1.5` | 1549 → 1322 | 4 → 0 | 27 → 0 | 18 → 0 | livrée #619 |
 | 2 | `5e_C1.3` | 1050 → 1043 | 0 | 0 | 5 → 0 | livrée #620 |
 | 3 | `4e_C1.1` | 3570 → 2911 | 0 | 0 | 22 → 0 | livrée #620 — séance 5 : décision de Pascal |
-| 4 | `4e_C1.4` | 1291 | 0 | 0 | 9 | à faire |
+| 4 | `4e_C1.4` | 1291 → 1172 | 0 | 0 | 9 → 0 | livrée #PRNUM |
 | 5 | `3e_C1.5` | 2017 | 0 | 0 | 19 | à faire |
 | 6 | `3e_C2.1` | 1861 | 0 | 0 | 6 | à faire |
 | 7 | `5e_C1.1` | 1629 | 0 | 0 | 26 | à faire |
@@ -100,3 +100,18 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
   - **la séance 5 reste au-dessus du repère** : trois exercices d'atelier de 12 à 15 minutes (séance voulue par Pascal
     le 24/10/2026), dont le texte visible vient des exercices eux-mêmes. Deux pistes, à trancher par Pascal : la
     scinder en deux séances, ou rendre l'exercice 3 (« Corriger une carte mentale mal faite ») facultatif.
+- **4e_C1.4** (cybersécurité), 08/11/2026 : séance 3 (traces, propriété intellectuelle et clôture) 1 291 → 1 172 mots : les
+  trois défis du Bonus et les exemples de 5.b se déplient à la demande, les mises en situation passent en lignes (une
+  phrase par ligne, « la bonne attitude » en ①②③), l'exemple de 5.b qui répétait la liste tombe. Corrections aérées
+  (`aerer_corrections.py --partout`, puis les deux blocs de plus de 45 mots à la main) ; vouvoiements restants passés au tu.
+  **Lu comme un élève, à 390 px** : (1) neuf zones de réponse sur dix-huit gardaient la taille par défaut du navigateur
+  (~180 px) → pleine largeur partout ; (2) le jeu des licences 6.c ne pouvait pas se jouer — chaque zone ne gardait qu'une
+  étiquette alors qu'une licence va dans plusieurs catégories, et les infobulles n'existaient qu'au survol → les zones
+  reçoivent une copie, la licence reste dans la réserve, double-clic pour retirer, légende des sigles repliée, infobulles
+  au toucher (focus) et jamais plus larges que l'écran ; les étiquettes et les cas de 6.b se lisent sans survol ;
+  (3) la barre de score collante prenait 178 px sur 844 à chaque écran → elle défile avec la page sur téléphone ; le
+  bloc Python élargissait la page à 718 px → le code défile dans son cadre. Au passage : 6.a compte dans le score de la
+  section (il annonçait 2 points sans être lu), 6.b dit « non noté », 5.c dit ses 7 questions, aide et correction de la
+  section 6 réécrites avec les mots du jeu, dépôt au clavier réparé (zones focalisables, `dragstart` synthétique sans
+  `dataTransfer`). Hors parcours Python inchangé sur le fond (686 mots).
+
