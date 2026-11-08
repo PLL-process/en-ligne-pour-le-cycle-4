@@ -28876,6 +28876,41 @@ listes** réellement à convertir sur 46 séquences — le chiffre de référenc
 **Reste à Pascal.** Fusionner ; répondre aux décisions 2, 4 et 5 du rapport (convention `c:"Cx.y"`, codes à vérifier,
 n°23).
 
+## 08/11/2026 — Les 72 QCM du site deviennent une banque de questions Éléa : export Moodle XML (transversal : `_outils`, `_exports/moodle`)
+
+**Décision de Pascal (08/11, 7 h)** : le site GitHub Pages reste la bibliothèque (séquences, animations, QCM
+d'entraînement) ; **Éléa Martinique** (`martinique.elea.apps.education.fr`, le Moodle national relié à Colibri,
+accès vérifié le matin même) porte les comptes élèves, la note et la trace des QCM. Pas de Moodle à héberger,
+pas de dépôt privé : la protection du travail, c'est la licence sur le dépôt public et les corrigés d'évaluation
+qui ne vivent plus que côté serveur. La validation des compétences reste dans Pronote (pas de double suivi).
+
+**Ce que fait cette PR.** `_outils/export_moodle_xml.mjs` lit les 72 pages `qcm_*.html` au format `const QUESTIONS`
+(gabarit 5e_C3.1) et écrit `_exports/moodle/{5e,4e,3e,ateliers}.xml` : **2 181 questions**, une catégorie par QCM
+(`Technologie Cycle 4 / <niveau> / Thème N — <code> · <titre>`), réponse unique, rétroaction par distracteur (`d[i]`),
+corrigé exhaustif en rétroaction générale (pourquoi, exemple, erreur fréquente, nuance, à retenir), **212 images
+embarquées en base64** (raison du XML Moodle plutôt que GIFT), étiquette par code, idnumber stable, ordre des
+réponses non mélangé, pas de tirage (23/10/2026). `INVENTAIRE.md` est engendré ; `MODE_D_EMPLOI_ELEA.md` donne
+les gestes d'import et la règle de mise à jour (Moodle ajoute, ne fusionne pas : supprimer la catégorie, réimporter
+`par-qcm/<slug>.xml`, non versionné). Banc `tests_export_moodle_xml.mjs` : 16/16, en sous-processus (n°299).
+
+**Laissé de côté, et pourquoi.** Six pages QCM sans bloc `QUESTIONS` (trois de l'ancien gabarit `checkMCQ` —
+4e_C4.4 eCall, 4e_C6.2 jardin, 3e_C9.1 Python — et trois pages intégrées : 4e_C2.1 fonctionnement, 4e_C4.1
+automatisation premium, 4e_C6.2 algorigrammes domotique). Elles passeront au gabarit QUESTIONS ou s'exporteront
+par un second lecteur : décision à prendre. Constaté au passage : le `<h1>` de `3e_C6.2/qcm_3e_C6.2_auto_test.html`
+annonce « 4e · Atelier : QCM — SOS serre » — en-tête à corriger dans un lot du thème 2.
+
+**Ajout du 08/11, 7 h 39 (« il faudrait que cela soit super premium, que l'élève puisse recommencer et que la
+correction soit exhaustive, pédagogique, ordonnée et vulgarisée »).** Le corrigé de chaque question ouvre sur
+**✅ la bonne réponse**, puis déroule cinq temps numérotés — Pourquoi, Un exemple, Le piège classique, Pour
+aller plus loin (si nuance), 📌 À retenir — dans l'ordre où on l'apprend ; chaque distracteur répond « ❌ Pas
+celle-là » avec sa raison propre ; **deux indices** par question (le piège, puis l'à-retenir) alimentent le
+mode **« Interactif avec essais multiples »** : trois essais, le choix faux s'efface, l'élève est guidé avant
+de recommencer ; tentatives illimitées et note la plus haute côté test. Les réglages sont écrits pas à pas
+dans `MODE_D_EMPLOI_ELEA.md` (§3). 4 362 indices, banc 18/18.
+
+**Reste à Pascal.** Fusionner ; créer un parcours par niveau dans Éléa et importer `5e.xml` pour commencer ;
+dire si les six QCM restants doivent migrer au gabarit QUESTIONS.
+
 ## 08/11/2026 — V2 de la boucle d'audit, 3e : la famille C7/C8 rejoint le gabarit commun (n°306) et ses questions deviennent des groupes de boutons radio (n°300) (thème 3 ; `_outils` : un outil nouveau)
 
 **Décision de Pascal** (07/11, « Maintenant », puis 08/11, « Continue ») : lancer V2 dans l'ordre retenu la veille.
