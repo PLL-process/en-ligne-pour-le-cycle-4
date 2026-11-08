@@ -26,6 +26,8 @@ const ouvrir = async (id) => { await p.click(`.seance-tab[data-panel="${id}"]`);
 const ouvrirSeanceDe = async (sel) => {
   const pan = await p.evaluate((s) => { const x = document.querySelector(s).closest('.seance-panel'); return x && !x.classList.contains('active') ? x.id : null; }, sel);
   if (pan) await ouvrir(pan);
+  // un bloc replié (le Bonus, révision du 08/11/2026) s'ouvre comme le ferait l'élève
+  await p.evaluate((s) => { for (let d = document.querySelector(s).closest('details'); d; d = d.parentElement.closest('details')) d.open = true; }, sel);
 };
 
 // ── les séances ──────────────────────────────────────────────────────────

@@ -29,6 +29,9 @@ LSU = ["Maîtrise insuffisante", "Maîtrise fragile", "Maîtrise satisfaisante",
 RONDS = "①②③④⑤⑥⑦⑧⑨"
 
 
+LETTRES = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+
 def e(s):
     return html.escape(str(s), quote=True)
 
@@ -168,12 +171,34 @@ class Rendu:
         h = []
         if w.get("intro"):
             h.append("<div>%s</div>" % w["intro"])
+        # 08/11/2026 (révision des trois thèmes, la charge de lecture) : trois items ou plus qui partagent trois
+        # catégories ou plus se lisent EN GRILLE — les catégories écrites une fois, lettrées A, B, C ; chaque item, une
+        # rangée de lettres. La valeur de chaque bouton ne change pas (vérification, sauvegarde, bancs) ; le texte
+        # entier est dans son `aria-label`. Sans grille, six questions à cinq réponses écrivaient trente réponses.
+        grille = len(w["items"]) >= 3 and len(w["categories"]) >= 3 and not w.get("sans_grille")
+        if grille:
+            h.append('<div class="cles-grille"><p class="cles-titre">Les réponses possibles — choisis une lettre pour '
+                     'chaque ligne&nbsp;:</p><ol>%s</ol></div>'
+                     % "".join("<li><b>%s</b>%s</li>" % (LETTRES[k], lib) for k, (_, lib) in enumerate(w["categories"])))
         for i, (lib, bonne, indice) in enumerate(w["items"]):
             name = self.nom("%s_%d" % (w["name"], i))
             items.append({"name": name, "bonne": bonne, "indice": indice})
-            h.append('<fieldset class="qcm-groupe"><legend>%s <span class="encoche" data-pour="%s"></span></legend>%s</fieldset>'
-                     % (lib, name, self.options(name, w["categories"])))
+            opts = self.options_grille(name, w["categories"]) if grille else self.options(name, w["categories"])
+            h.append('<fieldset class="qcm-groupe%s"><legend>%s <span class="encoche" data-pour="%s"></span></legend>%s</fieldset>'
+                     % (" qcm-grille" if grille else "", lib, name, opts))
         self.defs.append({"type": "classer", "items": items})
+        return "".join(h)
+
+    def options_grille(self, name, options):
+        """les boutons d'une rangée de grille : la lettre à l'écran, le texte entier pour le lecteur d'écran"""
+        h = ['<div class="options options-grille">']
+        for i, (val, lib) in enumerate(options):
+            ident = "%s-%d" % (name, i)
+            clair = html.unescape(re.sub(r"<[^>]+>", "", lib)).strip()
+            h.append('<label class="option" for="%s" title="%s"><input type="radio" id="%s" name="%s" value="%s" '
+                     'aria-label="%s"><span>%s</span></label>'
+                     % (ident, e(clair), ident, name, e(val), e("%s — %s" % (LETTRES[i], clair)), LETTRES[i]))
+        h.append("</div>")
         return "".join(h)
 
     def liste(self, w):

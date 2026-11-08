@@ -7,13 +7,14 @@ exécutés. Deux fichiers sont couverts : la séquence (48 contrôles) et le QCM
 
 PÉRIMÈTRE (règle d'or n°47) — ce que cette suite vérifie :
   · les six verrous, fermés sur une page vide et ouverts sur une production complète ;
-  · la séance 5 (24/10/2026) : ses trois exercices d'atelier (besoin 4e e4, carte mentale
-    4e e3 et e4), chacun refusé à vide puis réussi rempli juste — les réponses sont lues dans
-    leur définition embarquée —, exigés par le vérificateur de l'activité 5, numérotés 1 à 3 ;
-    la clôture (Bonus, Bilan, QCM) passée de la séance 4 à la séance 5 ; le bouton qui mène de
-    la séance 4 à la séance 5 ; la sauvegarde de la page qui laisse les champs des exercices
-    insérés à leur propre sauvegarde ; la reprise d'un travail enregistré avant l'ajout de la
-    séance 5 ;
+  · les séances 5 et 6 (24/10/2026, séance 5 coupée en deux le 08/11/2026 à la demande de
+    Pascal) : leurs trois exercices d'atelier (besoin 4e e4 et carte mentale 4e e3 en séance 5,
+    carte mentale 4e e4 en séance 6), chacun refusé à vide puis réussi rempli juste — les
+    réponses sont lues dans leur définition embarquée —, exigés par les vérificateurs des
+    activités 5 et 6 ; la clôture (Bonus, Bilan, QCM) en séance 6 ; les boutons qui mènent de
+    la séance 4 à la 5, puis à la 6 ; la sauvegarde de la page qui laisse les champs des
+    exercices insérés à leur propre sauvegarde ; la reprise d'un travail enregistré avant
+    l'ajout des séances 5 et 6 ;
   · les DEUX refus argumentés : une exigence qui nomme un composant, et l'oubli
     du mot « passager » dans une équivalence — dans les deux cas on vérifie que
     le message DIT la raison, pas seulement qu'il refuse ;
@@ -88,7 +89,8 @@ REMPLIR = """([uid, textes]) => {
 }"""
 INSERES = [("bc_4e_e4", "Exercice 1", {"but": "Arroser les plantes du jardin même quand la gardienne est absente, sans gaspiller l'eau de la cuve."}),
            ("cm_4e_e3", "Exercice 2", {"mafeuille": "les capteurs s'usent, à changer"}),
-           ("cm_4e_e4", "Exercice 3", {"motscles": "plus besoin de venir"})]
+           ("cm_4e_e4", "Exercice 1", {"motscles": "plus besoin de venir"})]
+SEANCE = {"bc_4e_e4": "s5", "cm_4e_e3": "s5", "cm_4e_e4": "s6"}
 CLES = ["rep_besoin-bete-a-cornes_4e_e4", "rep_carte-mentale_4e_e3", "rep_carte-mentale_4e_e4"]
 
 
@@ -98,7 +100,7 @@ async def tester_sequence(p):
     pg.on("console", lambda m: errs.append("console:"+m.text) if m.type=="error" else None)
     await pg.goto(SEQ); r=[]
     await pg.evaluate("localStorage.clear()"); await pg.reload()
-    for n in range(6):
+    for n in range(7):
         await pg.click("#tab-s%d"%max(1,n)); await pg.click(f"[data-check='{n}']")
         cls=await pg.evaluate(f"document.getElementById('fb{n}').className")
         r.append(("verrou fermé check %d"%n, "ok" not in cls.split()))
@@ -116,32 +118,40 @@ async def tester_sequence(p):
     await pg.click("#tab-s4"); await pg.click(".vers-seance[data-vers='s5']"); await pg.wait_for_timeout(100)
     r.append(("le bouton de la séance 4 mène à la séance 5",
               await pg.evaluate("document.querySelector('.seance-panel.active').id")=="s5"))
+    await pg.click("[data-check='5']")
     t5=await pg.evaluate("document.getElementById('fb5').textContent")
-    r.append(("activité 5 à vide : le message nomme les exercices à réussir", "Le besoin évolue" in t5 and "Corriger une carte mentale" in t5, t5[:120]))
-    titres=await pg.evaluate("[...document.querySelectorAll('#s5 .atelier-incruste .card.exercice')].map(s=>[s.id,s.querySelector('h4').textContent])")
+    r.append(("activité 5 à vide : le message nomme les deux exercices à réussir", "Le besoin évolue" in t5 and "avantages et les inconvénients" in t5 and "Corriger" not in t5, t5[:160]))
+    titres=await pg.evaluate("[...document.querySelectorAll('#s5 .atelier-incruste .card.exercice, #s6 .atelier-incruste .card.exercice')].map(s=>[s.id,s.querySelector('h4').textContent,s.closest('.seance-panel').id])")
     # 04/11/2026 : la piqûre de rappel des mots de référence de la bête à cornes, sur le système de détection, vient en
-    # tête de l'activité 5 ; elle ne prend pas de numéro (« 🧠 Rappel »), les trois exercices gardent 1 à 3
-    r.append(("séance 5 : la piqûre de rappel (non numérotée), puis trois exercices d'atelier numérotés 1 à 3, dans l'activité 5",
+    # tête de l'activité 5 ; elle ne prend pas de numéro (« 🧠 Rappel »). 08/11/2026 : séance 5 coupée en deux — les
+    # exercices 1 et 2 en séance 5, l'exercice 3 devient l'exercice 1 de la séance 6
+    r.append(("séances 5 et 6 : le rappel (non numéroté) et les exercices 1 et 2 dans l'activité 5, l'exercice 1 de la séance 6 dans l'activité 6",
               [x[0] for x in titres]==["bc_4e_rappel-feux"]+[u for u,_,_ in INSERES] and titres[0][1].startswith("🧠 Rappel —")
-              and all(x[1].startswith(n+" —") for x,(_,n,_) in zip(titres[1:],INSERES))
-              and await pg.evaluate("document.querySelectorAll('#activite-5 .atelier-incruste').length")==3, str(titres)))
-    pos=await pg.evaluate("""(()=>{const s5=document.getElementById('s5'), s4=document.getElementById('s4');
-        const h=[...s5.querySelectorAll('h2')].map(x=>x.textContent);
+              and all(x[1].startswith(n+" —") and x[2]==SEANCE[u] for x,(u,n,_) in zip(titres[1:],INSERES))
+              and await pg.evaluate("document.querySelectorAll('#activite-5 .atelier-incruste').length")==3
+              and await pg.evaluate("document.querySelectorAll('#activite-6 .atelier-incruste').length")==1, str(titres)))
+    pos=await pg.evaluate("""(()=>{const s6=document.getElementById('s6'), s5=document.getElementById('s5'), s4=document.getElementById('s4');
+        const h=[...s6.querySelectorAll('h2')].map(x=>x.textContent);
         const i=k=>h.findIndex(x=>x.includes(k));
-        return {ordre: i('Activité 5')===0 && i('Activité 5')<i('Bonus') && i('Bonus')<i('Bilan') && i('Bilan')<i("t'entraîner"),
-                s4: [...s4.querySelectorAll('h2')].some(x=>/Bonus|Bilan|entraîner/.test(x.textContent)),
-                qcm: !!s5.querySelector('#lienQcm')};})()""")
-    r.append(("la clôture (Bonus → Bilan → QCM) est en séance 5, après l'activité 5, et plus en séance 4",
-              pos["ordre"] and pos["qcm"] and not pos["s4"], str(pos)))
-    i_ta=await pg.evaluate("document.querySelectorAll('#s5 .atelier-incruste textarea').length")
-    i_et=await pg.evaluate("document.querySelectorAll('#s5 .atelier-incruste details.etayage').length")
+        const fin=x=>[...x.querySelectorAll('h2')].some(y=>/Bonus|Bilan|entraîner/.test(y.textContent));
+        return {ordre: i('Activité 6')===0 && i('Activité 6')<i('Bonus') && i('Bonus')<i('Bilan') && i('Bilan')<i("t'entraîner"),
+                s4: fin(s4), s5: fin(s5), qcm: !!s6.querySelector('#lienQcm')};})()""")
+    r.append(("la clôture (Bonus → Bilan → QCM) est en séance 6, après l'activité 6, et ni en séance 4 ni en séance 5",
+              pos["ordre"] and pos["qcm"] and not pos["s4"] and not pos["s5"], str(pos)))
+    await pg.click(".vers-seance[data-vers='s6']"); await pg.wait_for_timeout(100)
+    r.append(("le bouton de la séance 5 mène à la séance 6",
+              await pg.evaluate("document.querySelector('.seance-panel.active').id")=="s6"))
+    i_ta=await pg.evaluate("document.querySelectorAll('#s5 .atelier-incruste textarea, #s6 .atelier-incruste textarea').length")
+    i_et=await pg.evaluate("document.querySelectorAll('#s5 .atelier-incruste details.etayage, #s6 .atelier-incruste details.etayage').length")
     r.append(("exercices insérés : chaque zone de rédaction a sa version étayée (n°31)", i_ta>=3 and i_et>=i_ta, f"{i_ta} zones / {i_et} étayages"))
     for uid, nom, textes in INSERES:
+        await pg.click("#tab-" + SEANCE[uid]); await pg.wait_for_timeout(60)
         await pg.click(f"#{uid} button.verifier"); await pg.wait_for_timeout(60)
         r.append((f"{nom} ({uid}) : à vide, le retour demande de reprendre", "🔴" in await pg.inner_text(f"#{uid} .retour")))
         await pg.evaluate(REMPLIR, [uid, textes])
         await pg.click(f"#{uid} button.verifier"); await pg.wait_for_timeout(60)
         r.append((f"{nom} ({uid}) : rempli juste, il est réussi", "Tout est juste" in await pg.inner_text(f"#{uid} .retour")))
+    await pg.click("#tab-s5"); await pg.wait_for_timeout(60)
     rap="bc_4e_rappel-feux"
     # révision du 08/11/2026 (charge de lecture) : le rappel est replié, l'élève qui a oublié les mots l'ouvre
     replie=await pg.evaluate("""uid=>{const d=document.getElementById(uid).closest('details.incruste-repliee');
@@ -161,7 +171,7 @@ async def tester_sequence(p):
     insere=await pg.evaluate("[...document.querySelectorAll('.atelier-incruste textarea, .atelier-incruste fieldset')].map(e=>e.id).filter(Boolean)")
     r.append(("la sauvegarde de la page laisse les champs des exercices insérés à leur propre sauvegarde",
               not (set(cles) & set(insere)) and "a2_estim" in cles and "bilan1" in cles))
-    for n in range(6):
+    for n in range(7):
         await pg.click("#tab-s%d"%max(1,n)); await pg.click(f"[data-check='{n}']")
         cls=await pg.evaluate(f"document.getElementById('fb{n}').className")
         txt=await pg.evaluate(f"document.getElementById('fb{n}').textContent")
@@ -186,8 +196,8 @@ async def tester_sequence(p):
     for n in (3,4):
         await pg.click("#tab-s%d"%n); await pg.click(f"[data-check='{n}']")
     prog=await pg.evaluate("document.getElementById('progTxt').textContent")
-    r.append(("progression 5/5, onglet de la séance 5 coché", prog.strip().startswith("5 / 5")
-              and "✔" in await pg.inner_text("#done-s5")))
+    r.append(("progression 6/6, onglets des séances 5 et 6 cochés", prog.strip().startswith("6 / 6")
+              and "✔" in await pg.inner_text("#done-s5") and "✔" in await pg.inner_text("#done-s6")))
     h=await pg.evaluate("document.getElementById('lienQcm').getAttribute('href')")
     r.append(("QCM complet en fin", "#" not in h))
     # à mi-parcours, le bouton doit cibler les seules compétences validées
@@ -197,25 +207,32 @@ async def tester_sequence(p):
     await pg.evaluate("window.__valid={5:true}; majProgress();")
     h3=await pg.evaluate("document.getElementById('lienQcm').getAttribute('href')")
     r.append(("QCM ciblé après la seule activité 5 = #codes=C1.2,C1.3", h3.endswith("#codes=C1.2,C1.3"), h3))
-    await pg.evaluate("window.__valid={1:true,2:true,3:true,4:true,5:true}; majProgress(); save();")
+    await pg.evaluate("window.__valid={6:true}; majProgress();")
+    h4=await pg.evaluate("document.getElementById('lienQcm').getAttribute('href')")
+    r.append(("QCM ciblé après la seule activité 6 = #codes=C1.2", h4.endswith("#codes=C1.2"), h4))
+    await pg.evaluate("window.__valid={1:true,2:true,3:true,4:true,5:true,6:true}; majProgress(); save();")
     await pg.reload()
     r.append(("restauration textarea", "39,68" in await pg.evaluate("document.getElementById('a2_estim').value")))
-    r.append(("restauration progression", (await pg.evaluate("document.getElementById('progTxt').textContent")).strip().startswith("5 / 5")))
+    r.append(("restauration progression", (await pg.evaluate("document.getElementById('progTxt').textContent")).strip().startswith("6 / 6")))
     r.append(("les exercices insérés retrouvent leur travail après rechargement",
               await pg.evaluate("document.querySelector('#bc_4e_e4 textarea').value.startsWith('Arroser')")
               and await pg.evaluate("(k=>k.every(c=>JSON.parse(localStorage.getItem(c)||'{}').reussi))(%s)" % json.dumps(CLES))))
-    # reprise d'un travail enregistré AVANT l'ajout de la séance 5 (quatre activités, aucun exercice d'atelier)
+    # reprise d'un travail enregistré AVANT l'ajout des séances 5 et 6 (quatre activités, aucun exercice d'atelier)
     await pg.evaluate("""(k)=>{localStorage.clear(); localStorage.setItem(k, JSON.stringify({inputs:{a2_estim:"Ratio : 39,68 t/ha (ancienne sauvegarde)", bilan1:"ancien bilan"},
         valid:{1:true,2:true,3:true,4:true}, exp:{}}));}""", "seq_4e_C1_tsinghua_feux")
     await pg.reload()
     ancien=await pg.evaluate("""({p:document.getElementById('progTxt').textContent.trim(), a:document.getElementById('a2_estim').value,
-        b:document.getElementById('bilan1').value, s4:document.getElementById('done-s4').textContent, s5:document.getElementById('done-s5').textContent})""")
-    r.append(("reprise d'une sauvegarde d'avant la séance 5 : 4 / 5, réponses restaurées, séance 5 à faire",
-              ancien["p"].startswith("4 / 5") and "ancienne sauvegarde" in ancien["a"] and ancien["b"]=="ancien bilan"
-              and "✔" in ancien["s4"] and "✔" not in ancien["s5"], str(ancien)))
+        b:document.getElementById('bilan1').value, s4:document.getElementById('done-s4').textContent, s5:document.getElementById('done-s5').textContent,
+        s6:document.getElementById('done-s6').textContent})""")
+    r.append(("reprise d'une sauvegarde d'avant les séances 5 et 6 : 4 / 6, réponses restaurées, séances 5 et 6 à faire",
+              ancien["p"].startswith("4 / 6") and "ancienne sauvegarde" in ancien["a"] and ancien["b"]=="ancien bilan"
+              and "✔" in ancien["s4"] and "✔" not in ancien["s5"] and "✔" not in ancien["s6"], str(ancien)))
     await pg.click("#tab-s5"); await pg.click("[data-check='5']")
     r.append(("…et l'activité 5 reste fermée tant que ses exercices ne sont pas faits",
               "ok" not in (await pg.evaluate("document.getElementById('fb5').className")).split()))
+    await pg.click("#tab-s6"); await pg.click("[data-check='6']")
+    r.append(("…et l'activité 6 aussi",
+              "ok" not in (await pg.evaluate("document.getElementById('fb6').className")).split()))
     body=await pg.evaluate("document.body.textContent")
     for lbl,mot in (("bloc entraînement","t'entraîner"),("bloc Bonus","Bonus"),("corrigé du Bonus","Corrigé du Bonus"),
                     ("garde-fous humains","Garde-fous humains"),("bloc CRCN avec sa trace","transformations")):
@@ -236,20 +253,20 @@ async def tester_sequence(p):
     errs=[]; pg.on("pageerror", lambda e: errs.append(str(e)))
     await pg.goto(SEQ); await pg.evaluate("localStorage.clear()"); await pg.reload()
     deb=[]
-    for s in range(1,6):
+    for s in range(1,7):
         await pg.click("#tab-s%d"%s); await pg.wait_for_timeout(120)
         deb.append(await pg.evaluate("[document.querySelector('.seance-panel.active').id, document.documentElement.scrollWidth-document.documentElement.clientWidth]"))
-    r.append(("390 px : les cinq séances s'ouvrent, sans défilement horizontal, sans erreur JS",
-              [x[0] for x in deb]==["s1","s2","s3","s4","s5"] and all(x[1]<=0 for x in deb) and not errs, str(deb)))
+    r.append(("390 px : les six séances s'ouvrent, sans défilement horizontal, sans erreur JS",
+              [x[0] for x in deb]==["s1","s2","s3","s4","s5","s6"] and all(x[1]<=0 for x in deb) and not errs, str(deb)))
     # de séance en séance par le bouton « Séance N — … › » en bas de chaque panneau, puis la reprise après rechargement
     await pg.click("#tab-s1"); suite=[]
-    for _ in range(4):
+    for _ in range(5):
         await pg.click(".seance-panel.active .vers-seance"); await pg.wait_for_timeout(120)
         suite.append(await pg.evaluate("[document.querySelector('.seance-panel.active').id, document.documentElement.scrollWidth-document.documentElement.clientWidth]"))
-    r.append(("390 px : chaque séance mène à la suivante par son bouton, jusqu'à la séance 5", [x[0] for x in suite]==["s2","s3","s4","s5"] and all(x[1]<=0 for x in suite), str(suite)))
+    r.append(("390 px : chaque séance mène à la suivante par son bouton, jusqu'à la séance 6", [x[0] for x in suite]==["s2","s3","s4","s5","s6"] and all(x[1]<=0 for x in suite), str(suite)))
     await pg.evaluate("""()=>{const e=document.getElementById('meta1'); e.value='reprise à 390 px'; e.dispatchEvent(new Event('input',{bubbles:true}));}""")
     await pg.reload(); await pg.wait_for_timeout(200)
-    r.append(("390 px : la réponse du bilan (séance 5) survit au rechargement", await pg.evaluate("document.getElementById('meta1').value")=="reprise à 390 px" and not errs))
+    r.append(("390 px : la réponse du bilan (séance 6) survit au rechargement", await pg.evaluate("document.getElementById('meta1').value")=="reprise à 390 px" and not errs))
     for x in r:
         n,o = x[0], x[1]
         print(("✅" if o else "❌"), n, x[2] if len(x)>2 else "")

@@ -41,7 +41,8 @@ Les cinq commandes ci-dessus sur la page (et ses pages engendrées), chiffres no
   (`data-interface`) restent des listes. Quand la page sauvegarde par sa propre fonction (`collect()`, `restore()`),
   l'outil le dit : on y ajoute `fieldset.qcm-groupe` à la main, comme `patcher_save` le fait pour la forme connue.
 - **Des questions qui partagent leurs réponses** (« associe chaque personne… ») : `python3 _outils/grilles_radio.py
-  <page> --ecrire` les range en grille — les réponses une fois, lettrées A, B, C ; chaque question, une rangée de lettres.
+  <page> --ecrire` les range en grille (dans une incrustation d'atelier, c'est le moteur qui le fait : le widget
+  `classer` se lit en grille dès trois items et trois catégories, depuis le 08/11/2026) — les réponses une fois, lettrées A, B, C ; chaque question, une rangée de lettres.
   Sans grille, la conversion n°300 écrit cinq fois les cinq réponses (5e_C1.5 : séance 2, 1 169 → 888 mots).
 - **Les autres ✘** (n°23 durée, n°301 clôture, n°304 avant de commencer…) : à la main, selon leur skill.
 
@@ -54,6 +55,10 @@ redondant.
     voir, et que faire si ça ne marche pas » (4e_C1.1, séance 1 : 1 641 → 921 mots) ;
   - une piqûre de rappel incrustée : l'option `replie="…"` de son entrée dans `incrustations_lots/`, puis
     `python3 incrustations.py --seq <code>` (le texte du résumé dit ce qu'elle contient et à qui elle sert) ;
+  - le Bonus : `python3 _outils/replier_bonus.py <page> --ecrire`. Son titre reste visible à sa place (la clôture se
+    lit Bonus → Bilan → QCM) ; ses défis, ses champs et son corrigé se déplient « quand tu as fini ». Un banc qui
+    remplit les champs du Bonus ouvre d'abord le `<details>`, comme l'élève ;
+  - les exemples d'une consigne, les conseils d'un devoir à faire à la maison : dans un `<details>` titré ;
   - les explications qui suivent une activité (« Pourquoi ? ») ;
   - les compléments, les « pour aller plus loin ».
 - **Marquer `class="approfondissement"`** ce qui n'est pas indispensable pour faire : le mode essentiel (n°29) le cache.
@@ -91,6 +96,11 @@ corrections réponse → pourquoi → refus un par ligne → le piège.
 - **Synthèse élève** : `audit_aeration.py --strict` et deux pages A4 (`synthese-vulgarisee`).
 
 ### 6. Lire comme un élève
+Ce que la lecture attentive a trouvé sur les premières séquences, à chercher partout : le « vous » (n°302) ; le style
+télégraphique (« désactive géo inutile ») ; un anglicisme non expliqué (« hover ») ; un encadré qui donne d'avance la
+réponse de l'exercice qui le suit ; une correction en double (même identifiant) ou une question sans correction ; un
+faux titre (texte grossi) ou un `<h1>` au milieu d'une séance ; un exemple écrit deux fois.
+
 Lire chaque séance du début à la fin, à 390 px, comme un élève de 5e qui lit mal. Noter les trois endroits où il
 décroche (mot inconnu, phrase trop longue, consigne ambiguë, aller-retour dans la page) ; les corriger.
 
