@@ -54,13 +54,9 @@ def professeur(at, page_niveau, chemins_fn, chemin):
     h = [_tete("Synthèse professeur — %s" % at.TITRE_COURT, "Synthèse professeur de l'atelier : %s." % at.TITRE_COURT, "".join(nav))]
     h.append("<h1>%s %s — synthèse professeur</h1>" % (at.EMOJI, at.TITRE))
     # Le référentiel, recopié sans réécriture
-    h.append('<div class="bloc referentiel-eleve card"><h2>📚 Le référentiel de l\'atelier — en toutes lettres</h2><div class="defile"><table>'
-             '<thead><tr><th scope="col">Code</th><th scope="col">Formulation</th><th scope="col">Domaines du socle</th></tr></thead><tbody>')
-    for niv, N in at.NIVEAUX.items():
-        for c in N["codes"]:
-            texte, socle = moteur.REFERENTIEL[c]
-            h.append("<tr><td>%s</td><td>%s</td><td>%s</td></tr>" % (e(c), e(texte), e(socle)))
-    h.append("</tbody></table></div><p><small>Référence normative&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. "
+    h.append('<div class="bloc referentiel-eleve card"><h2>📚 Le référentiel de l\'atelier — en toutes lettres</h2>'
+             + moteur.tableau_referentiel(at))      # une seule table, partagée avec la page élève (n°298 amendée)
+    h.append("<p><small>Référence normative&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. "
              "Codification opérationnelle&nbsp;: les codes (5e_C2.1…) sont des codes de classement internes à ce dépôt&nbsp;; ils ne "
              "figurent pas comme tels au BO.</small></p></div>")
     h.append('<section class="card"><h2>🔗 Place sur la chaîne d\'analyse</h2>%s</section>' % at.CHAINE)
