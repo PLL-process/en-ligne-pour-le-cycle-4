@@ -29261,6 +29261,66 @@ essentiel et verrous sur ces quatre pages, seuils des simulateurs de la station,
 **Reste à Pascal.** Valider l'ordre du lot correctif (six lignes, une PR chacune) ; trancher la fiche D
 (afficher « quiz » et « production » séparément) et le sous-titre de l'échauffement tableur.
 
+## 08/11/2026 — Révision des trois thèmes, 4 à 6 : 4e_C1.4, 3e_C1.5, 3e_C2.1 ; la séance 5 de 4e_C1.1 coupée en deux ; le Bonus et les exercices « classer » allégés (transversal : `_outils`, ateliers des représentations ; thème 1)
+
+**Décision de Pascal** (sur la question posée dans #620) : la séance 5 de 4e_C1.1, plus de 2 900 mots à lire, est
+« coupée en deux séances ».
+- Séance 5 — Justifier : la piqûre de rappel (repliée), l'exercice 1 (le besoin évolue) et l'exercice 2 (les avantages
+  et les inconvénients) ; l'activité 5 exige ces deux exercices réussis.
+- Séance 6 — Conclure : l'ancien exercice 3 (« Corriger une carte mentale mal faite »), désormais activité 6, puis
+  Bonus → Bilan → QCM.
+- La page passe à six séances (badges, progression « / 6 », tâches, QCM ciblé, lexique : trois mots rattachés à la
+  séance 6), l'incrustation de la carte mentale se partage en deux entrées (`tsinghua_s5.py`), la fiche pédagogique et
+  le README le disent. Banc : 71 / 71 (cinq contrôles ajoutés pour la séance 6).
+- La séance 5 reste au-dessus du repère (1 836 mots) : deux exercices d'atelier, dont le texte visible vient des
+  exercices eux-mêmes.
+
+**Le Bonus se déplie quand on a fini** (`_outils/replier_bonus.py`, nouveau). Le Bonus est facultatif et ne sert qu'à
+l'élève qui a fini ; ouvert, il ajoutait 150 à 250 mots à la séance de clôture. Son titre reste visible, à sa place
+(Bonus → Bilan → QCM, n°311) ; la note, les défis, leurs champs et leur corrigé se rangent dans un `<details>` :
+« 🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini ». Posé sur les séquences de cette PR et sur les trois déjà
+révisées (5e_C1.5 : séance 3, 1 322 → 1 206 mots). 51 séquences sur 56 ont un Bonus que l'outil reconnaît ; chacune le
+reçoit à son tour de passe.
+
+**Les exercices « classer » des ateliers se lisent en grille** (`moteur.py`, `kit.css`). Le widget qui fait associer
+plusieurs items aux mêmes catégories écrivait toutes les catégories sous chaque item : six questions à cinq modes de
+représentation, trente lignes. Dès trois items et trois catégories, les catégories s'écrivent une fois, lettrées A, B,
+C ; chaque item garde sa rangée de lettres. Les valeurs des boutons ne changent pas (vérification, sauvegarde partagée
+avec l'atelier, bancs) ; le texte entier est dans `aria-label`. Les incrustations le reçoivent quand leur séquence est
+remise à jour (`incrustations.py --seq`), séquence par séquence ; les pages d'atelier, à leur prochaine régénération.
+
+**4e_C1.4** (cybersécurité) : séance 3, 1 291 → 1 056 mots. Les exemples de 5.b se déplient (l'un était écrit deux
+fois) ; le titre de 5.a ne répète plus la question ; les étiquettes du Bonus ne recopient plus sa consigne. Lu comme un
+élève : « hover », « désactive géo inutile », « cite les sources pour œuvres » et les « Risques » télégraphiques
+réécrits en phrases.
+
+**3e_C1.5** (numérique et société) : séance 4, 2 017 → 1 588 mots ; séance 2, 1 219 → 1 184.
+- Le devoir sur les troubles musculo-squelettiques garde sa consigne ; ses conseils (INRS) se déplient ; la conclusion
+  passe du « vous » au « tu ».
+- Séance 2 : deux faux titres (texte de 28 px) et un `<h1>` au milieu d'une séance deviennent des titres de leur niveau ;
+  une correction en double (même identifiant sous deux questions, la première sans bouton) devient deux corrections,
+  chacune à sa question ; l'encadré d'introduction ne donne plus d'avance les réponses du tri 2.a.
+- La séance 4 reste au-dessus du repère : la clôture la plus longue du site (activité 5, bilan, synthèse sur l'écologie
+  du numérique, autoévaluation, devoir), écart justifié dans le suivi.
+
+**3e_C2.1** (Pékin, la borne) : séance 3, 1 861 → 1 424 mots, par la grille du « classer » surtout. Les séances 2 et 3
+restent au-dessus du repère (deux activités et un document à lire ; l'exercice d'atelier et la production défendue
+avant la clôture), écarts justifiés dans le suivi.
+
+**Ateliers, à leur source** : trois corrections et un argumentaire modèle en lignes (`donnees_cas_utilisation.py`,
+`donnees_carte_mentale.py`), dans les ateliers et les cahiers qui les portent ; deux introductions d'incrustation
+allégées. `banc_ateliers.py` ouvre un rappel replié comme l'élève.
+
+**Contrôles.**
+- 4e_C1.1 : banc 71 / 71 ; n°311 34 / 34 ; fiche papier ✅ ; squelette, navigation des séances verts.
+- 4e_C1.4 : n°311 34 / 34 ; `verif_regles` 0 ✘ ; `audit_aeration --strict` 0.
+- 3e_C1.5 : banc 45 / 45 ; n°311 34 / 34 ; `audit_aeration --strict` 0.
+- 3e_C2.1 : banc 55 / 58, comme sur `main` (n°298, liens des deux synthèses) ; n°311 34 / 34 ; `audit_aeration --strict` 0.
+- 5e_C1.5 : bancs 38 / 38 et 34 / 34 ; 5e_C1.3 : 24 / 24 (le banc ouvre le Bonus avant de le remplir) et 34 / 34.
+- Incrustations des séquences touchées : « à jour ».
+
+**Reste à Pascal.** Fusionner. Suite de l'ordre : 5e_C1.1, 5e_C1.2, 5e_C3.1, 4e_C2.1, 4e_C3.1…
+
 ---
 
 ---
@@ -29284,3 +29344,5 @@ main, une idée par ligne, sans rien retirer. `audit_aeration.py --strict` : 9 �
 **Vérifié** : banc n°311 34 / 34 ; squelette, mode essentiel, hiérarchie, liens, licence, règles visibles, unités, sigles,
 compétences, fiche papier, impression (0 refus), verrous, hors ligne, tactile : verts. Revue d'écran à 390 et 1 280 px, mode
 essentiel compris. **Reste** : le lexique du lot n'a pas d'ancres par séance ; les activités n'annoncent pas de durée.
+
+**Fusion avec `main` (même jour)** : la PR #624, fusionnée entre-temps, avait déjà révisé 4e_C1.4 (texte simplifié, exemples de 5.b repliés). Résolution : le texte de #624 est gardé partout ; cette PR n'y ajoute que son idée propre — les leçons des cinq situations repliées dans un `<details>` ouvert après la réponse. Les chiffres de mots de l'entrée ci-dessus sont ceux mesurés avant la fusion.

@@ -17,12 +17,12 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 
 | N° | Séquence | Séance la plus lourde (mots) | ✘ règles | Menus | Aération | État |
 |---|---|---|---|---|---|---|
-| 1 | `5e_C1.5` | 1549 → 1322 | 4 → 0 | 27 → 0 | 18 → 0 | livrée #619 |
+| 1 | `5e_C1.5` | 1549 → 1206 | 4 → 0 | 27 → 0 | 18 → 0 | livrée #619 |
 | 2 | `5e_C1.3` | 1050 → 1043 | 0 | 0 | 5 → 0 | livrée #620 |
-| 3 | `4e_C1.1` | 3570 → 2911 | 0 | 0 | 22 → 0 | livrée #620 — séance 5 : décision de Pascal |
-| 4 | `4e_C1.4` | 1291 → 1180 | 0 | 0 | 9 → 0 | livrée #625 |
-| 5 | `3e_C1.5` | 2017 | 0 | 0 | 19 | à faire |
-| 6 | `3e_C2.1` | 1861 | 0 | 0 | 6 | à faire |
+| 3 | `4e_C1.1` | 3570 → 1836 | 0 | 0 | 22 → 0 | livrée #620 ; séance 5 coupée en deux (décision de Pascal) #624 |
+| 4 | `4e_C1.4` | 1291 → 1056 | 0 | 0 | 9 → 0 | livrée #624 ; #625 replie les leçons des situations |
+| 5 | `3e_C1.5` | 2017 → 1588 | 0 | 0 | 19 → 0 | livrée #624 — séance 4 au-dessus du repère, justifiée |
+| 6 | `3e_C2.1` | 1861 → 1424 | 0 | 0 | 6 → 0 | livrée #624 — séances 2 et 3 au-dessus du repère, justifiées |
 | 7 | `5e_C1.1` | 1629 | 0 | 0 | 26 | à faire |
 | 8 | `5e_C1.2` | 2117 | 0 | 0 | 26 | à faire |
 | 9 | `5e_C3.1` | 2912 | 0 | 0 | 0 | à faire |
@@ -97,13 +97,32 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
   - 75 retours à la ligne (corrections, consignes, définitions, légendes) ; trois légendes réécrites ; six corrections
     des ateliers aérées à leur source (`donnees_besoin.py`, `donnees_carte_mentale.py`), dans les ateliers, les cahiers
     et les séquences qui les portent ;
-  - **la séance 5 reste au-dessus du repère** : trois exercices d'atelier de 12 à 15 minutes (séance voulue par Pascal
-    le 24/10/2026), dont le texte visible vient des exercices eux-mêmes. Deux pistes, à trancher par Pascal : la
-    scinder en deux séances, ou rendre l'exercice 3 (« Corriger une carte mentale mal faite ») facultatif.
-- **4e_C1.4** (cybersécurité), 08/11/2026 : page déjà sur le gabarit commun, 0 ✘, 0 menu. Les cinq « Mise en situation »
-  donnaient la réponse avant l'exercice (« Risques impliqués », « Bonne attitude à avoir ») : ces trois paragraphes se
-  replient dans « 💡 Ce que cette situation apprend — à ouvrir après avoir répondu » (séance 1 : 1 045 → 894 ; séance 3 :
-  1 291 → 1 180). Aération : 76 retours posés par l'outil, deux corrections du Bonus et quatre consignes réécrites à la
-  main (strict à 0). En 5.b, l'exemple de réponse répétait la liste d'exemples : replié. Les deux glisser-déposer nomment
-  le toucher. Reste : le lexique du lot n'a pas d'ancres par séance ; aucune durée annoncée sur les activités (n°23 non
-  signalée par le contrôle).
+  - **la séance 5 restait au-dessus du repère** (trois exercices d'atelier voulus le 24/10/2026). Pascal, le
+    08/11/2026 : « la couper en deux séances ». Séance 5 : le rappel et les exercices 1 et 2 (1 836 mots) ; séance 6 :
+    l'exercice 3 et la clôture (1 106 mots). La séance 5 reste au-dessus du repère : deux exercices d'atelier, dont le
+    texte visible vient des exercices eux-mêmes (énoncés, schémas de la bête à cornes, propositions).
+- **4e_C1.4** (cybersécurité), 08/11/2026 : séance 3, 1 291 → 1 056 mots (le Bonus replié compris). Les exemples de l'activité 5.b se déplient à
+  la demande (l'un d'eux était écrit deux fois) ; le titre de 5.a ne répète plus la question ; la phrase « Personne n'est
+  pénalisé… » du Bonus (son titre dit déjà « facultatif ») et la redite du bilan retirées ; les étiquettes du Bonus ne
+  recopient plus la consigne. Lu comme un élève : « hover », « désactive géo inutile », « cite les sources pour œuvres »
+  et les « Risques » en style télégraphique réécrits en phrases. 76 retours à la ligne ; deux corrections coupées à la main. Puis (#625, fusionnée après #624) : les cinq « Mise en situation » donnaient la réponse avant l'exercice (« Risques impliqués », « Bonne attitude à avoir ») — ces paragraphes se replient dans « 💡 Ce que cette situation apprend — à ouvrir après avoir répondu » ; le texte repris est celui de #624.
+- **Le Bonus se déplie quand on a fini** (`replier_bonus.py`, 08/11/2026) : posé aussi sur 5e_C1.5 (séance 3 : 1 322 →
+  1 206 mots), 5e_C1.3 et 4e_C1.1, déjà révisées. Le titre du Bonus reste visible ; ses défis, ses champs et son corrigé
+  sont à un clic.
+- **3e_C1.5** (numérique et société), 08/11/2026 : séance 4 (clôture), 2 017 → 1 588 mots ; séance 2, 1 219 → 1 184.
+  Le Bonus replié ; le devoir sur les troubles musculo-squelettiques garde sa consigne, ses conseils (INRS) se
+  déplient ; la conclusion passe du « vous » au « tu ». Séance 2 : deux faux titres (texte de 28 px) et un `<h1>` au
+  milieu d'une séance deviennent des titres de leur niveau ; une correction en double (même identifiant sous deux
+  questions, la première question sans bouton) coupée en deux corrections, chacune à sa question ; l'encadré
+  d'introduction ne donne plus d'avance les réponses du tri 2.a ; l'introduction de l'incrustation de la carte
+  mentale allégée (à sa source). 89 retours à la ligne ; un argumentaire modèle de l'atelier de 3e en lignes, à sa
+  source. **La séance 4 reste au-dessus du repère** : c'est la clôture la plus longue du site (activité 5 de 25 min,
+  bilan, synthèse sur l'écologie du numérique, autoévaluation, devoir).
+- **3e_C2.1** (Pékin, la borne), 08/11/2026 : séance 3, 1 861 → 1 424 mots ; séance 2, 1 246 → 1 243. **Les exercices
+  « classer » des ateliers se lisent en grille** (`moteur.py`, 08/11/2026) : six questions qui partageaient cinq modes de
+  représentation les écrivaient trente fois ; les modes s'écrivent une fois, lettrés, et chaque question a sa rangée
+  de lettres. Le Bonus replié ; l'introduction de l'incrustation allégée (à sa source) ; une légende et deux
+  corrections en lignes. **Les séances 2 et 3 restent au-dessus du repère** : séance 2, deux activités (six modes, trois
+  destinataires ; l'algorigramme de l'incident), avec le document de six modes à lire ; séance 3, l'exercice d'atelier
+  et la production défendue, avant la clôture. Le banc de la séquence : 55 / 58, comme sur `main` (n°298, liens des
+  deux synthèses).

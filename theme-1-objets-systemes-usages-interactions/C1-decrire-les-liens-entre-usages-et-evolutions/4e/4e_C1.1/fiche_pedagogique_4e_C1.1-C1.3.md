@@ -1,6 +1,6 @@
 # Fiche pédagogique — 4e_C1.1 à C1.3 « Tsinghua : concevoir avant de connecter »
 
-**Niveau** 4e · **Thème 1** · **Durée** 5 séances de 55 min (242 min annoncés pour 275 — séances de 50, 50, 45, 45 et 52 min ; la séance 5, ajoutée le 24/10/2026, porte l'activité 5 (42 min) et le bilan (10 min). Avant : 4 séances, 200 min pour 220, séance 4 à 45 + 10 = 55 min ; l'activité 4 était annoncée à 50 min, ce qui faisait 60 avec le bilan dans un créneau de 55 — audit du 08/09)
+**Niveau** 4e · **Thème 1** · **Durée** 6 séances de 55 min (242 min annoncés pour 330 — séances de 50, 50, 45, 45, 30 et 25 min, sans compter la lecture ni le QCM ; le 08/11/2026, la séance 5 est coupée en deux à la demande de Pascal (voir plus bas) ; la séance 5, ajoutée le 24/10/2026, porte l'activité 5 (42 min) et le bilan (10 min). Avant : 4 séances, 200 min pour 220, séance 4 à 45 + 10 = 55 min ; l'activité 4 était annoncée à 50 min, ce qui faisait 60 avec le bilan dans un créneau de 55 — audit du 08/09)
 **Matériel** un **thermomètre** (mesure de 10 min en séance 1, comprise dans l'activité) · un
 tableur, utile mais **pas indispensable**
 
@@ -42,8 +42,8 @@ elle procède.
 | 3 | **Comparer sans confondre les périmètres** | 45 min | quatre équivalences avec **leur unité exacte** |
 | 4 | **Du nombre au besoin technique** | 45 min | **cinq exigences vérifiables**, sans aucun composant |
 | 5 | **Justifier une évolution, sur un autre objet** — trois exercices des ateliers des représentations | 42 min | les trois exercices **réussis** : deux bêtes à cornes comparées et un nouveau but (4e_C1.3), une carte mentale complétée, une carte mentale corrigée (4e_C1.2) |
-| Bilan (séance 5) | Hypothèse, métacognition, auto-positionnement sur les 3 codes | 10 min | — |
-| Bonus (séance 5) | Martinique, sans caméra, équivalence retournée — **facultatif** | hors temps | corrigé replié |
+| Bilan (séance 6) | Hypothèse, métacognition, auto-positionnement sur les 3 codes | 10 min | — |
+| Bonus (séance 6) | Martinique, sans caméra, équivalence retournée — **facultatif** | hors temps | corrigé replié |
 
 ## 🔧 La mesure dans la cour — dix minutes, et elle n'est pas facultative
 
@@ -108,6 +108,16 @@ la séquence. Avec le bilan, la séance compte 52 min : l'exercice 3 tient, il n
 exercice a son cours replié, ses deux aides, son exercice jumeau, sa correction complète, et sa propre
 sauvegarde, partagée avec la page de l'atelier et le cahier de 4e. Le vérificateur de l'activité 5 exige
 les trois exercices **réussis**.
+
+**Le 08/11/2026, la séance 5 est coupée en deux** (révision des trois thèmes ; Pascal : « la couper en deux
+séances »). Elle donnait plus de 2 900 mots à lire, soit 24 minutes de lecture seule sur 55. Désormais :
+
+| Séance | Contenu | Durée |
+|---|---|---|
+| 5 — Justifier | la piqûre de rappel de la bête à cornes (repliée), exercices 1 et 2 (activité 5) | 3 + 12 + 15 min |
+| 6 — Conclure | l'exercice 3, qui devient l'exercice 1 de l'activité 6 ; puis Bonus → Bilan → QCM | 15 + 10 min |
+
+Le vérificateur de l'activité 5 exige les deux premiers exercices réussis ; celui de l'activité 6, le troisième.
 
 ⚠️ À relire : l'exercice 2 définit l'« évolution technologique » comme « le passage d'une ancienne façon
 de faire à une nouvelle », quand l'encadré « Trois mots » de la séance 4 en donne le sens restreint
