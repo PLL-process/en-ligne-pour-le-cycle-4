@@ -3,6 +3,7 @@
 import os, re, sys, unicodedata, html, json
 sys.path.insert(0, os.path.dirname(__file__))
 from data_competences import COMP_BY_LEVEL, C_PARENT, THEME_TITLES
+from licence_cc import MENTION as MENTION_LICENCE, MENTION_MD as MENTION_LICENCE_MD  # règle d'or n°321
 
 DST = os.path.join(os.path.dirname(__file__), "..")  # racine du dépôt
 PAGES_BASE = "https://pll-process.github.io/en-ligne-pour-le-cycle-4"
@@ -555,6 +556,7 @@ parts.append(f"""<footer>
 <p>📦 <a href="_ressources-communes/">Ressources communes</a> · 🗄️ <a href="_archive-anciennes-versions/">Archive des anciennes versions</a> · <a href="RAPPORT_MIGRATION.md">Rapport de migration</a></p>
 {LIGNE_REPERES}
 <p><b>Référence normative</b> : programme de technologie du cycle 4 — BO n°9 du 29 février 2024.<br><b>Codification opérationnelle</b> : adaptation pédagogique de ce site, appuyée sur les repères de progressivité du programme et sur les cahiers Nathan 5e/4e/3e (éd. 2024). Structure générée depuis le classeur <em>Référentiel_Technologie_Cycle4_2024.xlsx</em>.<br><span style="color:#7d9bd6">Page générée automatiquement depuis <code>_outils/data_competences.py</code> — aucun intitulé n'est ressaisi à la main.</span></p>
+{MENTION_LICENCE}
 </footer>
 <script>
 /* ── Badges NEW automatiques (source : nouveautes.json, embarqué à la génération) ── */
@@ -634,6 +636,8 @@ Séquences, QCM et ressources de **technologie collège (cycle 4)**, classés se
 **programme 2024** (BO n°9 du 29 février 2024) et les cahiers **Nathan 5e / 4e / 3e (éd. 2024)**.
 
 👉 **Navigation en ligne : [{PAGES_BASE}]({PAGES_BASE}/)** (page d'accueil interactive)
+
+{MENTION_LICENCE_MD}
 
 ## 🗂️ Organisation
 
