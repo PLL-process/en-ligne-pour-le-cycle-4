@@ -81,7 +81,10 @@ BLOQUANTS = {"controle_liens.py", "controle_regles_visibles.py", "controle_tacti
 GENERATEURS = [
     ("theme-1-objets-systemes-usages-interactions/ateliers-representations/_generation", "build.py"),
     ("theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/atelier-planification/_generation", "build_atelier.py"),
-    ("theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/atelier-cao/_generation", "build_tp.py"),
+    ("theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/atelier-cao/_generation", "build_tp.py ../scenarios/tp_5e_de_onshape.json"),
+    ("theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/atelier-cao/_generation", "build_tp.py ../scenarios/tp_5e_de_calottes.json"),
+    ("theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/atelier-cao/_generation", "build_tp.py ../scenarios/tp_4e_socle_assemblage.json"),
+    ("theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/atelier-cao/_generation", "build_tp.py ../scenarios/tp_3e_boitier_etanche.json"),
     ("theme-3-creation-conception-realisation-innovations/C9-concevoir-ecrire-tester-et-mettre-au-point/3e/3e_C9.2", "generer_les_quatre_pages.py"),
     (".", "_outils/generer_lexique.py --tous theme-1-objets-systemes-usages-interactions theme-2-structure-fonctionnement-comportement theme-3-creation-conception-realisation-innovations"),
 ]
@@ -162,11 +165,22 @@ def preuves_couverts(rows):
             if m:
                 g = m.group(1)
                 cible = os.path.normpath(os.path.join(dossier, g)) if g.startswith("..") else os.path.join(os.path.dirname(dossier), g)
-        n_q = 0
+        # La mesure n'a de sens que si le QCM du lot marque ses questions par code (`c:"C2.2"`,
+        # convention des lots du thème 1). Un QCM qui marque autrement (`c:"EN"`, `c:"ID"`) ou pas du
+        # tout, ou un lot sans QCM à sa racine, ne dit rien : le rapport l'écrit, il n'invente pas un zéro.
+        n_q, marque, trouve = 0, False, False
         if cible and os.path.isdir(cible):
-            for f in os.listdir(cible):
+            for f in sorted(os.listdir(cible)):
                 if f.startswith("qcm") and f.endswith(".html"):
-                    n_q += len(re.findall(r'\bc:"%s"' % re.escape(suffixe), open(os.path.join(cible, f), encoding="utf-8").read()))
+                    trouve = True
+                    src = open(os.path.join(cible, f), encoding="utf-8").read()
+                    if re.search(r'\bc:"C\d\.\d+"', src):
+                        marque = True
+                    n_q += len(re.findall(r'\bc:"%s"' % re.escape(suffixe), src))
+        if not trouve:
+            n_q = "pas de QCM à la racine du lot"
+        elif not marque:
+            n_q = "QCM non marqué par code"
         sortie.append((code, r["theme"], os.path.relpath(cible, RACINE) if cible else "—", n_q, r["croisement"][:80]))
     return sortie
 
@@ -225,6 +239,7 @@ def ecrire(sortie, complet, generateurs):
     # Résumé
     p1 = [c for c, code, _ in ctrl if c in BLOQUANTS and code not in (0, None)]
     sans_preuve = [p for p in preuves if p[3] == 0]
+    non_mesurables = [p for p in preuves if isinstance(p[3], str)]
     a_verifier = [r for r in non_complets if not r["statut"].startswith("COUVERT") and not r["statut"].startswith("EXISTANT")]
     n_x = sum(len(v) for v in par_regle.values())
     L.append("## Résumé")
@@ -233,7 +248,8 @@ def ecrire(sortie, complet, generateurs):
     L.append("|---|---|---|")
     L.append("| Contrôles bloquants rouges | %d (%s) | P1 |" % (len(p1), ", ".join(p1) or "aucun"))
     L.append("| Codes À VÉRIFIER / ABSENT | %d | P1 |" % len(a_verifier))
-    L.append("| Codes COUVERT sans preuve au QCM (0 question marquée) | %d sur %d | P1 |" % (len(sans_preuve), len(preuves)))
+    L.append("| Codes COUVERT sans preuve au QCM (0 question marquée, QCM marqué par code) | %d sur %d | P1 |" % (len(sans_preuve), len(preuves)))
+    L.append("| Codes COUVERT dont la preuve n'est pas mesurable (QCM non marqué par code, ou absent de la racine) | %d sur %d | décision |" % (len(non_mesurables), len(preuves)))
     L.append("| ✘ de règles d'or (à cribler) | %d sur %d pages | P2 |" % (n_x, len(par_page)))
     L.append("| Codes EXISTANT À AMÉLIORER | %d | P2 |" % sum(1 for r in non_complets if r["statut"].startswith("EXISTANT")))
     if gen:
@@ -262,13 +278,15 @@ def ecrire(sortie, complet, generateurs):
     L.append("")
     L.append("### Codes COUVERT par mutualisation : la preuve au QCM")
     L.append("")
-    L.append("Preuve retenue : au moins deux questions du QCM du lot principal marquées du code (`c:\"Cx.y\"`). Zéro = couvert sans preuve (P1).")
+    L.append("Preuve retenue : au moins deux questions du QCM du lot principal marquées du code (`c:\"Cx.y\"`). Zéro = couvert sans preuve (P1). "
+             "La mesure ne vaut que pour les QCM qui marquent leurs questions par code (convention des lots du thème 1) ; "
+             "ailleurs elle dit « non marqué » — ce qui est une décision à prendre, pas un défaut.")
     L.append("")
     L.append("| Code | Thème | Lot principal | Questions marquées | Note de la matrice |")
     L.append("|---|---|---|---|---|")
-    for code, t, cible, n, note in sorted(preuves, key=lambda x: (x[3], x[0])):
-        L.append("| %s | %s | %s | %s | %s |" % (code, t, cible.split("/")[-1] if cible != "—" else "—",
-                                                 ("**0 — sans preuve**" if n == 0 else ("1 — faible" if n == 1 else str(n))), note.replace("|", "/")))
+    for code, t, cible, n, note in sorted(preuves, key=lambda x: ((0 if x[3] == 0 else 1 if isinstance(x[3], str) else 2), x[0])):
+        libelle = ("**0 — sans preuve**" if n == 0 else ("1 — faible" if n == 1 else (("*%s*" % n) if isinstance(n, str) else str(n))))
+        L.append("| %s | %s | %s | %s | %s |" % (code, t, cible.split("/")[-1] if cible != "—" else "—", libelle, note.replace("|", "/")))
     L.append("")
 
     # Règles d'or
@@ -315,7 +333,7 @@ def ecrire(sortie, complet, generateurs):
         L.append("| Générateur | Sortie | Dernière ligne |")
         L.append("|---|---|---|")
         for d, cmd, code, ligne in rapports:
-            L.append("| `%s` | %s | %s |" % (cmd.split()[0], ("✅ 0" if code == 0 else "✘ %s" % code), ligne.replace("|", "/")))
+            L.append("| `%s` | %s | %s |" % (cmd.replace("../scenarios/", ""), ("✅ 0" if code == 0 else "✘ %s" % code), ligne.replace("|", "/")))
         L.append("")
         L.append("Fichiers qu'une régénération changerait (%d) — une retouche faite à la main sur ces pages sera écrasée :" % len(changes))
         L.append("")
@@ -358,6 +376,7 @@ def ecrire(sortie, complet, generateurs):
     L.append("- [ ] Ordre des vagues : P1 d'abord, puis une règle d'or par vague (la plus nombreuse en premier), puis les P3 ?")
     L.append("- [ ] Pour chaque règle qui tombe sur toute une famille : corriger le contrôle, ou les pages ?")
     L.append("- [ ] Les codes COUVERT sans preuve : ajouter deux questions au QCM du lot principal, ou retirer la mutualisation ?")
+    L.append("- [ ] Les QCM non marqués par code : adopter la convention `c:\"Cx.y\"` partout (règle d'or candidate), pour que la preuve se mesure ?")
     L.append("- [ ] Les codes À VÉRIFIER (thème 3) : qui regarde, et quand ?")
     L.append("")
     os.makedirs(os.path.dirname(sortie), exist_ok=True)
