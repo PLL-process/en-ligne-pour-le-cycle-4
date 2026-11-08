@@ -5,6 +5,8 @@ Séquences, QCM et ressources de **technologie collège (cycle 4)**, classés se
 
 👉 **Navigation en ligne : [https://pll-process.github.io/en-ligne-pour-le-cycle-4](https://pll-process.github.io/en-ligne-pour-le-cycle-4/)** (page d'accueil interactive)
 
+📄 Ce dépôt est sous licence [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr) — © Pascal Gouacide, 2026. Réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions. Voir `LICENSE.md`.
+
 ## 🗂️ Organisation
 
 ```text

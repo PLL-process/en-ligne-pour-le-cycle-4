@@ -28875,3 +28875,32 @@ listes** réellement à convertir sur 46 séquences — le chiffre de référenc
 
 **Reste à Pascal.** Fusionner ; répondre aux décisions 2, 4 et 5 du rapport (convention `c:"Cx.y"`, codes à vérifier,
 n°23).
+
+## 08/11/2026 — Règle d'or n°321 : le dépôt est sous CC BY-NC-SA 4.0 et chaque page le dit en pied (transversal : thèmes 1, 2 et 3, `_outils`, `LICENSE.md`)
+
+**Décision de Pascal (08/11, 7 h 31)** : « d'abord tous les fichiers en BY-NC-SA ». Sans mention, le travail
+était « tous droits réservés » par défaut — un collègue ne savait pas ce qu'il pouvait reprendre, un éditeur
+n'avait rien à craindre. CC BY-NC-SA 4.0 autorise ce que Pascal veut (reprendre, adapter, republier entre
+collègues, déposer sur Éléa) et nomme ce qu'il refuse (vendre, fermer ce qui est ouvert). C'est la licence
+des ressources Éduscol et académiques. Une licence est un contrat de confiance, pas une serrure : la serrure
+des évaluations, c'est Éléa (entrée précédente).
+
+**Règle d'or n°321.** `LICENSE.md` à la racine nomme CC BY-NC-SA 4.0 ; chaque page HTML publiée (hors
+archive) porte en pied la mention de `_outils/licence_cc.py` (source unique du texte, reconnue par
+`data-licence="cc-by-nc-sa"`) ; le README racine porte la mention Markdown. Contrôle :
+`controle_licence.py` (sortie 1 au premier manque, `--corriger` pose la mention avant `</footer>`, sinon
+avant `</body>`), banc `tests_controle_licence.py` 16/16 en sous-processus (n°299).
+
+**Ce que fait cette PR.** 410 pages reçoivent la mention (les 251 avec `<footer>` dans le pied, les autres
+avant `</body>`) ; `make_index.py` l'écrit dans `index.html` et `README.md` à chaque génération ;
+`generer_lexique.py` l'écrit dans les 59 lexiques — son banc, qui figeait le pied octet pour octet, est mis
+à jour en conséquence (29/29). Médias de tiers, extraits du programme, marques et productions d'élèves sont
+exclus explicitement dans `LICENSE.md`.
+
+**Ce qui a tourné.** `verif_regles_audit.py` : 130 manquements avant et après (aucun effet de bord) ;
+`controle_entete_qcm`, `controle_regles_visibles`, `controle_hierarchie`, `controle_liens`,
+`controle_sigles`, `controle_debordement` : verts ; rendu Chromium à 390 et 1280 px de 5e_C3.1, de
+l'index et d'une synthèse d'atelier : mention visible, pas de défilement horizontal, 0 erreur JS.
+
+**Reste à Pascal.** Fusionner ; ajouter `python3 _outils/controle_licence.py` à la liste des contrôles de
+la boucle du lundi s'il veut qu'une page régénérée nue soit vue avant publication.

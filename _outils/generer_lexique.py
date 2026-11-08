@@ -96,6 +96,9 @@ import sys
 import unicodedata
 from html.parser import HTMLParser
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from licence_cc import MENTION as MENTION_LICENCE  # règle d'or n°321
+
 CHAMP = lambda bloc, nom: (
     m.group(1) if (m := re.search(r'"?\b%s"?\s*:\s*"((?:[^"\\]|\\.)*)"' % nom, bloc)) else ""
 )
@@ -236,6 +239,7 @@ GABARIT = """<!DOCTYPE html>
 </main>
 <footer>
 {pied}
+{licence}
 </footer>
 </body>
 </html>
@@ -539,12 +543,14 @@ def ecrire_lexique(dossier, titre, retour, commun=None):
                 "de l'ouverture et des séances" if 0 in par_seance else "des séances",
                 SOUS_TITRE.format(compte=total)),
             corps="\n".join(sections_vocabulaire(par_seance) + corps),
-            pied=PIED_VOCAB.format(fichier=html.escape(fichier_vocab), sources=sources))
+            pied=PIED_VOCAB.format(fichier=html.escape(fichier_vocab), sources=sources),
+            licence=MENTION_LICENCE)
     else:
         page = GABARIT.format(titre=html.escape(titre), retour=html.escape(retour),
                               style_vocab="", style_vocab_impr="",
                               sous_titre=SOUS_TITRE.format(compte=total),
-                              corps="\n".join(corps), pied=PIED.format(sources=sources))
+                              corps="\n".join(corps), pied=PIED.format(sources=sources),
+                              licence=MENTION_LICENCE)
     sortie = os.path.join(dossier, "lexique_%s.html" % code)
     garde_ecrasement(sortie, page)
     open(sortie, "w", encoding="utf-8").write(page)

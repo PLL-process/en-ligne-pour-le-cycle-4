@@ -45,6 +45,7 @@ import json  # noqa: E402
 
 from generer_lexique import (page_de_retour, ecrire_lexique, RefusVocabulaire,  # noqa: E402
                              LexiqueProtege, IDS_POSES, EXCLUS, lire_commun)
+from licence_cc import MENTION as MENTION_LICENCE, retirer as retirer_licence  # noqa: E402  (n°321)
 
 CAS = [
     (["sequence_5e_C8.1_patere.html", "qcm_5e_C8.1_patere.html"],
@@ -100,12 +101,14 @@ def cas_vocabulaire():
         page = pathlib.Path(ecrire_lexique(str(d), "x", "sequence_x.html")[0]).read_text(encoding="utf-8")
         for attendu in ('<p class="sub">1 notions, tirées mot pour mot des QCM du lot · imprimable',
                         "  Chaque ligne provient d'une question de qcm_x.html. Rien n'a été réécrit ici :\n"
-                        "  ce lexique rassemble ce que les corrections disaient déjà, une par une.\n</footer>",
+                        "  ce lexique rassemble ce que les corrections disaient déjà, une par une.\n"
+                        + MENTION_LICENCE + "\n</footer>",  # n°321 : la mention de licence ferme le pied
                         "text-align:center}\n  @media print{\n",
                         "{color:#1a6af8}\n  }\n"):
             if attendu not in page:
                 echecs.append("sans vocabulaire, la page a changé : %r manque" % attendu[:50])
-        if "seance-s" in page or "source" in page:
+        sans_licence = retirer_licence(page)  # « Ressource sous licence » contient « source »
+        if "seance-s" in sans_licence or "source" in sans_licence:
             echecs.append("sans vocabulaire, la page parle de séances ou de sources")
     finally:
         shutil.rmtree(d.parent)
