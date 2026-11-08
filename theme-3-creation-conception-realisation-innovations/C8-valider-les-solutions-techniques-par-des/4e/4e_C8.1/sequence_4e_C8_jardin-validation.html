@@ -183,6 +183,19 @@ details.correction>div{padding:0 14px 12px}
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+
+/* n°298 amendée (07/11/2026) : le référentiel, replié sous les étiquettes */
+details.referentiel-replie{margin:0 auto 14px;max-width:960px;border-left:4px solid var(--head,#c68ef2);border-radius:8px;padding:6px 12px;background:rgba(255,255,255,.04)}
+details.referentiel-replie>summary{cursor:pointer;font-weight:600;color:var(--head,#c68ef2);list-style:none;display:flex;gap:8px;align-items:center;min-height:44px}
+details.referentiel-replie>summary::-webkit-details-marker{display:none}
+details.referentiel-replie>summary::before{content:"▸";transition:transform .15s}
+details.referentiel-replie[open]>summary::before{transform:rotate(90deg)}
+details.referentiel-replie table{width:100%;border-collapse:collapse;font-size:.92em;margin:8px 0}
+details.referentiel-replie th,details.referentiel-replie td{border:1px solid var(--border,#274a8a);padding:5px 8px;vertical-align:top;text-align:left}
+details.referentiel-replie p{margin:8px 0}
+body.essentiel details.referentiel-replie{display:none}
+@media print{details.referentiel-replie{display:none}}
+@media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
 </style>
 <style>
 /* annee_sur_le_toit_pas_a_pas (style) : début — situation déclenchante animée (25/10/2026).
@@ -830,6 +843,23 @@ details.correction>div{padding:0 14px 12px}
 <summary>📖 Rappel : la situation et ton hypothèse</summary>
 
 <div class="badges"><span class="badge">4e</span><span class="badge">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span><span class="badge" title="Programme 2024 — 4e_C8.1 : Paramétrer une simulation fournie pour valider la tenue mécanique d'un matériau.&#10;4e_C8.2 : Proposer un protocole de test pour valider la tenue mécanique d'un matériau.&#10;4e_C8.3 : Proposer un protocole de test pour valider le comportement et les performances d'un objet technique.">4e_C8.1 · C8.2 · C8.3</span><span class="badge" title="Domaines du socle commun travaillés : D2 Les méthodes et outils pour apprendre · D3 La formation de la personne et du citoyen · D4 Les systèmes naturels et les systèmes techniques · D5 Les représentations du monde et l’activité humaine.">Socle : D2 · D3 · D4 · D5</span><span class="badge" title="Ancrage : New York — school garden / rooftop.">New York</span><span class="badge" title="CRCN 1.3 Traiter des données — niveaux 2 à 3.&#10;Le cadre : « Appliquer des traitements à des données pour les analyser et les interpréter. »&#10;Ici : tu ranges les résultats de tes tests dans un tableau — attendu, observé, conforme — et tu en tires une décision : validée, à améliorer ou rejetée.&#10;&#10;CRCN 5.1 Résoudre des problèmes techniques — niveau 2.&#10;Le cadre : « Résoudre des problèmes techniques pour garantir et rétablir le bon fonctionnement d’un environnement informatique. »&#10;Ici : l’attache a cassé au gel : tu proposes une cause probable et le test qui la départage d’une autre.">🎯 CRCN 1.3 Traiter des données (Niv. 2-3) · 5.1 Résoudre des problèmes techniques (Niv. 2)</span><span class="badge" title="Durée : 3 séances de 55 min.">⏱ 3 séances de 55 min</span></div>
+<!-- n°298 amendée (07/11/2026) : le référentiel revient, replié, copie du bloc referentiel-eleve de la synthèse professeur -->
+<details class="referentiel-replie">
+  <summary>🎯 Ce que dit le programme</summary>
+<div class="bloc referentiel-eleve">
+<table class="refs">
+<tr><th>Code</th><th>Je serai capable de…</th><th>Où, dans cette séquence</th></tr>
+<tr><td><b>4e_C8.1</b></td><td>Paramétrer une simulation fournie pour valider la tenue mécanique d'un matériau.</td><td>Activité 0 (banc de tests virtuel)</td></tr>
+<tr><td><b>4e_C8.2</b></td><td>Proposer un protocole de test pour valider la tenue mécanique d'un matériau.</td><td>Activités 1 et 2</td></tr>
+<tr><td><b>4e_C8.3</b></td><td>Proposer un protocole de test pour valider le comportement et les performances d'un objet technique.</td><td>Activités 2, 3 et le réinvestissement</td></tr>
+</table>
+<div class="retenir"><b>Le verbe est « proposer un protocole »</b>, pas « tester ». Ce qu'on évalue, c'est le
+<b>résultat attendu écrit à l'avance</b> — un essai dont l'attendu est rédigé après coup ne prouve rien.
+En 3e, ce protocole deviendra une <b>recette</b> avec procès-verbal (séquence 3e_C9.2).</div>
+  <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>3e_C9.2</code> · <code>4e_C8.1</code> · <code>4e_C8.2</code> · <code>4e_C8.3</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel.</p>
+</div>
+</details>
+
 
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
   <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>

@@ -205,6 +205,19 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+
+/* n°298 amendée (07/11/2026) : le référentiel, replié sous les étiquettes */
+details.referentiel-replie{margin:0 auto 14px;max-width:960px;border-left:4px solid var(--head,#c68ef2);border-radius:8px;padding:6px 12px;background:rgba(255,255,255,.04)}
+details.referentiel-replie>summary{cursor:pointer;font-weight:600;color:var(--head,#c68ef2);list-style:none;display:flex;gap:8px;align-items:center;min-height:44px}
+details.referentiel-replie>summary::-webkit-details-marker{display:none}
+details.referentiel-replie>summary::before{content:"▸";transition:transform .15s}
+details.referentiel-replie[open]>summary::before{transform:rotate(90deg)}
+details.referentiel-replie table{width:100%;border-collapse:collapse;font-size:.92em;margin:8px 0}
+details.referentiel-replie th,details.referentiel-replie td{border:1px solid var(--border,#274a8a);padding:5px 8px;vertical-align:top;text-align:left}
+details.referentiel-replie p{margin:8px 0}
+body.essentiel details.referentiel-replie{display:none}
+@media print{details.referentiel-replie{display:none}}
+@media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -566,6 +579,19 @@ a[href="#banc"],a[href="#banc"]:visited{color:var(--hl)}
   <span class="badge socle" title="Domaines du socle commun travaillés : D1.3 Comprendre, s’exprimer en utilisant les langages mathématiques, scientifiques et informatiques · D2 Les méthodes et outils pour apprendre · D3 La formation de la personne et du citoyen · D4 Les systèmes naturels et les systèmes techniques · D5 Les représentations du monde et l’activité humaine.">Socle : D1.3 · D2 · D3 · D4 · D5</span>
   <span class="badge duree" title="Durée : 3 séances de 55 minutes, 150 minutes d'activités" aria-label="Durée : 3 séances de 55 minutes">⏱ 3 séances de 55 min</span>
 </div>
+<!-- n°298 amendée (07/11/2026) : le référentiel revient, replié, copie du bloc referentiel-eleve de la synthèse professeur -->
+<details class="referentiel-replie">
+  <summary>🎯 Ce que dit le programme</summary>
+<div class="bloc referentiel-eleve">
+  <table class="refs">
+    <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
+    <tr><td><b>3e_C7.8</b></td><td>Interfacer deux objets techniques communicants.</td><td>Séance 1 : activités 0 et 1 · séance 2 : activités 2 et 3 · séance 3 : REFAIRE</td></tr>
+    <tr><td>3e_C8.3 <span style="color:var(--sub)">(appui)</span></td><td>Proposer un protocole de test pour valider le comportement et les performances d'un objet technique.</td><td>Séance 3 : activité 4</td></tr>
+  </table>
+  <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>3e_C7.8</code> · <code>3e_C8.3</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel.</p>
+</div>
+</details>
+
 <nav class="seances-nav" aria-label="Les trois séances de la séquence">
   <p class="seances-liens">🗓 Aller à&nbsp;: <a href="#seance-1">Séance 1 — Ce que deux machines s'échangent</a> · <a href="#seance-2">Séance 2 — Se mettre d'accord, et quand l'autre se tait</a> · <a href="#seance-3">Séance 3 — Prouver que la liaison tient, puis passer à trois</a></p>
 </nav>

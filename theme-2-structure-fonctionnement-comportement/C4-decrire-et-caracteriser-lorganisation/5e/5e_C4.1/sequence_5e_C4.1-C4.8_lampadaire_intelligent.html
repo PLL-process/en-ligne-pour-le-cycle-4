@@ -218,6 +218,19 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+
+/* n°298 amendée (07/11/2026) : le référentiel, replié sous les étiquettes */
+details.referentiel-replie{margin:0 auto 14px;max-width:960px;border-left:4px solid var(--head,#c68ef2);border-radius:8px;padding:6px 12px;background:rgba(255,255,255,.04)}
+details.referentiel-replie>summary{cursor:pointer;font-weight:600;color:var(--head,#c68ef2);list-style:none;display:flex;gap:8px;align-items:center;min-height:44px}
+details.referentiel-replie>summary::-webkit-details-marker{display:none}
+details.referentiel-replie>summary::before{content:"▸";transition:transform .15s}
+details.referentiel-replie[open]>summary::before{transform:rotate(90deg)}
+details.referentiel-replie table{width:100%;border-collapse:collapse;font-size:.92em;margin:8px 0}
+details.referentiel-replie th,details.referentiel-replie td{border:1px solid var(--border,#274a8a);padding:5px 8px;vertical-align:top;text-align:left}
+details.referentiel-replie p{margin:8px 0}
+body.essentiel details.referentiel-replie{display:none}
+@media print{details.referentiel-replie{display:none}}
+@media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -1210,6 +1223,26 @@ svg .chx-jeton{pointer-events:none}
   <span class="badge socle" title="Domaines du socle commun travaillés : D1.3 Comprendre, s’exprimer en utilisant les langages mathématiques, scientifiques et informatiques · D2 Les méthodes et outils pour apprendre · D4 Les systèmes naturels et les systèmes techniques · D5 Les représentations du monde et l’activité humaine.">Socle : D1.3, D2, D4, D5</span>
   <span class="badge duree" title="Durée : six séances de 55 minutes" aria-label="Durée : six séances de 55 minutes">⏱ 6 séances de 55 min</span>
 </div>
+<!-- n°298 amendée (07/11/2026) : le référentiel revient, replié, copie du bloc referentiel-eleve de la synthèse professeur -->
+<details class="referentiel-replie">
+  <summary>📋 Référentiel officiel (programme 2024)</summary>
+<div class="bloc referentiel-eleve">
+  <table class="refs">
+    <tr><th>Code</th><th>Sous-compétence travaillée</th><th>Activités</th></tr>
+    <tr><td><b>5e_C4.1</b></td><td>Associer des solutions techniques à une ou des fonctions techniques.</td><td>1, 7, R</td></tr>
+    <tr><td><b>5e_C4.2</b></td><td>Identifier des constituants de la chaîne d’énergie d’un objet technique (l’organisation de la chaîne d’énergie étant fournie).</td><td>2, R</td></tr>
+    <tr><td><b>5e_C4.3</b></td><td>Indiquer la nature des énergies en entrée et en sortie des constituants de la chaîne d’énergie.</td><td>2, R</td></tr>
+    <tr><td><b>5e_C4.4</b></td><td>Identifier les principaux matériaux constitutifs d’un OST.</td><td>1, R</td></tr>
+    <tr><td><b>5e_C4.5</b></td><td>Identifier des constituants de la chaîne d’information d’un OST (l’organisation de la chaîne d’information étant fournie).</td><td>3, R</td></tr>
+    <tr><td><b>5e_C4.6</b></td><td>Déterminer des descripteurs permettant de décrire des objets sous forme de données en précisant leurs types et leurs formats.</td><td>4</td></tr>
+    <tr><td><b>5e_C4.7</b></td><td>Identifier les composants qui constituent un réseau local (terminaux, commutateurs, liaisons filaires et sans fil (WiFi)) et sa topologie.</td><td>5</td></tr>
+    <tr><td><b>5e_C4.8</b></td><td>Justifier la nécessité d’identifier les terminaux pour communiquer sur un réseau local (activité débranchée et vérification par un outil de simulation).</td><td>6</td></tr>
+  </table>
+  <p style="font-size:.85em;color:var(--sub);margin-top:8px">Compétence parente <b>C4</b> — BO n°9 du 29/02/2024. Cette séquence 5e prépare les séquences 3e du même thème (« Station d'alerte cyclonique », « Internet jusqu'à Sainte-Luce »).</p>
+  <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>5e_C4.1</code> · <code>5e_C4.2</code> · <code>5e_C4.3</code> · <code>5e_C4.4</code> · <code>5e_C4.5</code> · <code>5e_C4.6</code> · <code>5e_C4.7</code> · <code>5e_C4.8</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel.</p>
+</div>
+</details>
+
 
 <div class="identite" id="identite">
   <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>

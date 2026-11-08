@@ -29,7 +29,9 @@ sur toute séquence HTML du dépôt, les règles mécanisables :
   n°54  un nombre annoncé sur un autre fichier correspond au fait
   n°67  une consigne de production s'accompagne d'un champ de saisie
   n°298 la page élève ne porte ni le référentiel « en toutes lettres » ni la légende
-        des étiquettes : ils vont dans la synthèse professeur
+        des étiquettes à découvert : ils vont dans la synthèse professeur ; depuis
+        l'amendement du 07/11/2026, une copie peut vivre sur la page, mais REPLIÉE
+        (details.referentiel-replie fermé sous les étiquettes)
 
 Les règles n°24, n°25, n°27, n°28 et n°32 relèvent du jugement pédagogique :
 le script les SIGNALE pour relecture humaine, il ne les tranche pas. Il ne dit
@@ -395,14 +397,31 @@ REFERENTIEL_ELEVE = re.compile(
     r'(?:[Rr]éférentiel|Ce que dit le programme|Compétences\s*(?:&amp;|&)\s*connaissances|compétences travaillées\s*—\s*en toutes lettres)', re.S)
 
 
+#: Amendement du 07/11/2026 (décision de Pascal, sur son téléphone : l'infobulle d'une
+#: étiquette ne se survole pas au doigt, et il ne pouvait plus lire ce qu'est 5e_C2.1) :
+#: le référentiel PEUT revenir sur la page, à une condition — REPLIÉ dans un
+#: `<details class="referentiel-replie">` fermé, posé sous les étiquettes. L'élève ne le lit
+#: pas sans le vouloir (le constat du 15/09 tient), le professeur l'ouvre d'un tap. Un
+#: dépliant livré ouvert (`open`) redevient une lecture imposée : refusé. Hors du dépliant,
+#: la règle du 15/09 s'applique telle quelle. Outil : `_outils/replier_referentiel.py`.
+REFERENTIEL_REPLIE = re.compile(r'<details\b([^>]*)class="[^"]*\breferentiel-replie\b[^"]*"[^>]*>.*?</details>', re.S)
+
+
 def regle_298(src: str) -> tuple[str, str]:
+    replies = list(REFERENTIEL_REPLIE.finditer(src))
+    ouverts = [m for m in replies if re.search(r'\bopen\b', m.group(0)[:m.group(0).find('>') + 1])]
+    if ouverts:
+        return "ECHEC", "le dépliant du référentiel est livré OUVERT : il doit être fermé par défaut (n°298 amendée)"
+    hors = REFERENTIEL_REPLIE.sub("", src)
     trouve = []
-    if REFERENTIEL_ELEVE.search(src):
+    if REFERENTIEL_ELEVE.search(hors):
         trouve.append("le référentiel « en toutes lettres »")
-    if 'class="legende-badges"' in src:
+    if 'class="legende-badges"' in hors:
         trouve.append("la légende des étiquettes")
     if trouve:
-        return "ECHEC", "la page élève porte " + " et ".join(trouve) + " : à déplacer dans la synthèse professeur"
+        return "ECHEC", "la page élève porte " + " et ".join(trouve) + " à découvert : à replier (details.referentiel-replie) ou à déplacer dans la synthèse professeur"
+    if replies:
+        return "OK", "le référentiel est sur la page, replié sous les étiquettes (n°298 amendée le 07/11/2026)"
     return "OK", "ni référentiel ni légende des étiquettes sur la page élève"
 
 

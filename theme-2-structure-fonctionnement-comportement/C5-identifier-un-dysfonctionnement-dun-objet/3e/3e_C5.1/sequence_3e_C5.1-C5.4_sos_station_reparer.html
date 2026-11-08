@@ -192,6 +192,19 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+
+/* n°298 amendée (07/11/2026) : le référentiel, replié sous les étiquettes */
+details.referentiel-replie{margin:0 auto 14px;max-width:960px;border-left:4px solid var(--head,#c68ef2);border-radius:8px;padding:6px 12px;background:rgba(255,255,255,.04)}
+details.referentiel-replie>summary{cursor:pointer;font-weight:600;color:var(--head,#c68ef2);list-style:none;display:flex;gap:8px;align-items:center;min-height:44px}
+details.referentiel-replie>summary::-webkit-details-marker{display:none}
+details.referentiel-replie>summary::before{content:"▸";transition:transform .15s}
+details.referentiel-replie[open]>summary::before{transform:rotate(90deg)}
+details.referentiel-replie table{width:100%;border-collapse:collapse;font-size:.92em;margin:8px 0}
+details.referentiel-replie th,details.referentiel-replie td{border:1px solid var(--border,#274a8a);padding:5px 8px;vertical-align:top;text-align:left}
+details.referentiel-replie p{margin:8px 0}
+body.essentiel details.referentiel-replie{display:none}
+@media print{details.referentiel-replie{display:none}}
+@media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -615,6 +628,22 @@
   <span class="badge crcn" title="CRCN 3.4 Programmer.&#10;Le cadre : « Écrire des programmes et des algorithmes pour répondre à un besoin. »&#10;Ici : tu suis l’arbre de diagnostic de la sirène — un algorigramme : losange pour un test, rectangle pour une action — et tu prévois sa conclusion.&#10;&#10;CRCN 5.1 Résoudre des problèmes techniques.&#10;Le cadre : « Résoudre des problèmes techniques pour garantir et rétablir le bon fonctionnement d’un environnement informatique. »&#10;Ici : tu rédiges un protocole de dépannage, puis localises la panne de la sirène en un minimum de mesures, la répares au simulateur et retestes.&#10;&#10;CRCN 5.2 Évoluer dans un environnement numérique.&#10;Le cadre : « Installer, configurer et enrichir un environnement numérique (matériels, outils, services) pour disposer d’un cadre adapté aux activités menées, à leur contexte d’exercice ou à des valeurs. »&#10;Ici : tu travailles dans le simulateur de dépannage de la page ; en version logiciel, tu modélises la pièce dans FreeCAD et l’exportes en STL.">CRCN : 3.4 Programmer · 5.1 Résoudre des problèmes techniques · 5.2 Évoluer dans un environnement numérique</span>
   <span class="badge duree">⏱ 4 séances de 55 min</span>
 </div>
+<!-- n°298 amendée (07/11/2026) : le référentiel revient, replié, copie du bloc referentiel-eleve de la synthèse professeur -->
+<details class="referentiel-replie">
+  <summary>📋 Référentiel officiel (programme 2024)</summary>
+<div class="bloc referentiel-eleve">
+  <table class="refs">
+    <tr><th>Code</th><th>Sous-compétence travaillée</th><th>Socle</th><th>Activités</th></tr>
+    <tr><td><b>3e_C5.1</b></td><td>Formuler des hypothèses expliquant le dysfonctionnement d\'un objet technique.</td><td>D1.3, D4</td><td>1, 2, R</td></tr>
+    <tr><td><b>3e_C5.2</b></td><td>Proposer un protocole de dépannage puis de réparation.</td><td>D2, D4</td><td>3, R</td></tr>
+    <tr><td><b>3e_C5.3</b></td><td>Réaliser le dépannage ou la réparation d\'un système défectueux.</td><td>D2, D4, D5</td><td>4, R</td></tr>
+    <tr><td><b>3e_C5.4</b></td><td>Réaliser une pièce sur mesure pour réparer un objet technique.</td><td>D2, D3, D4</td><td>5</td></tr>
+  </table>
+  <p style="font-size:.85em;color:var(--sub);margin-top:8px">Compétence parente <b>C5</b> : identifier un dysfonctionnement d\'un objet technique et y remédier — BO n°9 du 29/02/2024. Suite directe des séquences « Station d\'alerte » (C4.3→C4.6) et « Internet jusqu\'à Sainte-Luce » (C4.7-C4.8).</p>
+  <p style="font-size:.9em;color:var(--sub)"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>3e_C5.1</code> · <code>3e_C5.2</code> · <code>3e_C5.3</code> · <code>3e_C5.4</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel. Les formulations ci-dessus sont celles du référentiel.</p>
+</div>
+</details>
+
 <div class="identite" id="identite">
   <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
   <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>

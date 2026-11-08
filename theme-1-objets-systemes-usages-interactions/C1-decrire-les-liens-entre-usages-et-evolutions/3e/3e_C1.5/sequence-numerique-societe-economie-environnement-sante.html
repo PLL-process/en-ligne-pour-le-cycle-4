@@ -251,6 +251,19 @@ body.essentiel .argu details.correction{display:none}
 .situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
 .situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
 @media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
+
+/* n°298 amendée (07/11/2026) : le référentiel, replié sous les étiquettes */
+details.referentiel-replie{margin:0 auto 14px;max-width:960px;border-left:4px solid var(--head,#c68ef2);border-radius:8px;padding:6px 12px;background:rgba(255,255,255,.04)}
+details.referentiel-replie>summary{cursor:pointer;font-weight:600;color:var(--head,#c68ef2);list-style:none;display:flex;gap:8px;align-items:center;min-height:44px}
+details.referentiel-replie>summary::-webkit-details-marker{display:none}
+details.referentiel-replie>summary::before{content:"▸";transition:transform .15s}
+details.referentiel-replie[open]>summary::before{transform:rotate(90deg)}
+details.referentiel-replie table{width:100%;border-collapse:collapse;font-size:.92em;margin:8px 0}
+details.referentiel-replie th,details.referentiel-replie td{border:1px solid var(--border,#274a8a);padding:5px 8px;vertical-align:top;text-align:left}
+details.referentiel-replie p{margin:8px 0}
+body.essentiel details.referentiel-replie{display:none}
+@media print{details.referentiel-replie{display:none}}
+@media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
 </style>
 <style id="ressource-css">
 /* Bloc « ressource externe » — posé par _outils poser_ressource.py. Ne pas éditer à la main. */
@@ -677,6 +690,36 @@ body.essentiel .argu details.correction{display:none}
   <span class="badge code" title="Exprimer dans un argumentaire court le rôle du développement stratégique du numérique au sein de la société et des environnements professionnels (ou des métiers)." aria-label="3e_C1.5 : Exprimer dans un argumentaire court le rôle du développement stratégique du numérique au sein de la société et des environnements professionnels (ou des métiers).">3e_C1.5</span>
   <span class="badge duree" title="Durée prévue de la séquence, hors QCM d'entraînement et hors bloc Python." aria-label="Durée prévue : quatre séances de cinquante-cinq minutes, hors QCM d'entraînement">4 séances de 55 min</span>
 </div>
+<!-- n°298 amendée (07/11/2026) : le référentiel revient, replié, copie du bloc referentiel-eleve de la synthèse professeur -->
+<details class="referentiel-replie">
+  <summary>🎯 Fiche d'activité</summary>
+<div class="bloc referentiel-eleve">
+  <table class="info referentiel-card">
+<tr><td>Thématique abordée :</td><td>Écologie du numérique et usages responsables (impression raisonnée), protection des données, initiation Python appliquée aux usages (HTTP/HTTPS).</td></tr>
+<!-- décision de Pascal du 28/10/2026 (5a) : la fiche citait les formulations de 5e_C1.5 et 5e_C1.6 ; elle cite celles des
+     codes de la page, au mot près (BO n°9 du 29/02/2024). La troisième ligne d'origine est gardée, dite pour ce qu'elle est. -->
+<tr><td>Attendu de fin de cycle :</td><td><b>3e_C1.3</b> — Exprimer dans un argumentaire court l’incidence d’un OST sur la société.<br/>
+    <b>3e_C1.4</b> — Exprimer dans un argumentaire court l’incidence des contraintes sociétales sur les OST.<br/>
+    <b>3e_C1.5</b> — Exprimer dans un argumentaire court le rôle du développement stratégique du numérique au sein de la société et des environnements professionnels (ou des métiers).<br/>
+    <i>Visée propre à la séquence (hors BO)</i>&nbsp;: comprendre l’impact environnemental des technologies et adopter des gestes sobres (impression, vidéo, stockage).</td></tr>
+<tr><td>Compétences détaillées :</td><td>- Expliquer l’« écologie du numérique » et relier fabrication/usage/fin de vie aux impacts (équipements, centres de données, réseaux).<br/>
+    - Mettre en œuvre une <strong>impression raisonnée</strong> (aperçu, pages ciblées, recto-verso, plusieurs pages par feuille, PDF quand c’est pertinent).<br/>
+    - Lire, compléter et tester un <strong>programme Python</strong> simple (commentaires, variables, <code>print</code>, conditions <code>if/else</code>) sur un compilateur en ligne.<br/>
+    - Respecter les droits (image, auteur), soigner son e-réputation et ses réglages de confidentialité.</td></tr>
+<tr><td>Connaissances à mobiliser :</td><td>Cycle de vie des équipements ; gestes sobres (impression/streaming/mails) ; notions HTTP/HTTPS (rôle du chiffrement) ; 
+    composants d’un programme (commentaires, instructions, entrée/sortie, tests) ; consentement et droit à l’image.</td></tr>
+<tr><td>Compétences du socle commun travaillées :</td><td>D1 – Langages (argumenter à partir d’un document technique) ;<br/>
+  D2 – Méthodes et outils (expérimenter en Python et configurer l’impression) ; <br/>
+    D3 – Personne et citoyen (responsabilités numériques) ;<br/> D4 – Systèmes naturels et techniques (impacts, sobriété).</td></tr>
+<tr><td>Compétences numériques (CRCN) :</td><td>Information et données (sélection d’informations utiles dans un PDF) ; <br/>
+    Création de contenus (documents PDF/impressions maîtrisées) ; <br/>
+    Protection et sécurité (bonnes pratiques, HTTPS) ; <br/>
+    Environnement numérique (utiliser des outils en ligne pour tester du code)..</td></tr>
+</table>
+  <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>3e_C1.3</code> · <code>3e_C1.4</code> · <code>3e_C1.5</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel.</p>
+</div>
+</details>
+
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
   <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
   <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
