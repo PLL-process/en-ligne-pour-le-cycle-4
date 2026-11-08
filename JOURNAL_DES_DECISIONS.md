@@ -28737,7 +28737,7 @@ carte **revient sur toutes les pages qui l'avaient perdue, repliée**.
 **Vérifié.**
 - `verif_regles_audit.py` sur les 60 séquences, branche contre `main` : ✘ **135 → 135**, ✔ **789 → 789** ; n°298
   « replié sous les étiquettes » sur **48** pages, zéro ✘ n°298.
-- Captures à 390 px de 5e_C2.1, même position de défilement, dans  et la PR :
+- Captures à 390 px de 5e_C2.1, même position de défilement, dans `_outils/captures_regle_298_2026-11-07/` et la PR :
   avant · après fermé · après ouvert. Aucun
   défilement de côté (390 px), aucune erreur JavaScript.
 - Contrôles du site, exécutés sur la branche : `controle_squelette`, `controle_hors_ligne`, `controle_impression`,
