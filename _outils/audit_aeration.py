@@ -39,8 +39,14 @@ def texte(fragment):
     return re.sub(r"\s+", " ", html.unescape(t)).strip()
 
 
+# un schéma SVG (son <title>, son <desc> : ce que lit un lecteur d'écran), un script, une feuille de style ne sont pas
+# du texte qui s'affiche en paragraphe : ils ne comptent pas (08/11/2026, révision des trois thèmes — la description
+# d'une carte mentale dans une correction comptait 197 mots « d'un seul tenant »)
+INVISIBLE = re.compile(r"<(svg|script|style|template)\b.*?</\1\s*>", re.S | re.I)
+
+
 def blocs(fragment):
-    return [b for b in (texte(x) for x in FRONTIERE.split(fragment)) if b]
+    return [b for b in (texte(x) for x in FRONTIERE.split(INVISIBLE.sub(" ", fragment))) if b]
 
 
 def mots(t):

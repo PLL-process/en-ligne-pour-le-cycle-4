@@ -8,7 +8,7 @@ installée si une skill locale suffit. Aucune skill ne contient de secret.*
 journal jusqu'à la règle d'or n°311. Détail par skill (raison, preuve, question) :
 `inventaire_skills_2026-10-23.json`, remis à Pascal. Entrée du journal du 23/10/2026.
 Depuis : `synthese-vulgarisee` (29/10, n°316) et quatre skills le 07/11/2026 (voir ci-dessous) ; le
-dépôt compte douze skills, treize avec `texte-clair-et-aere` (08/11/2026).
+dépôt compte douze skills, quatorze avec `texte-clair-et-aere` et `revision-sequence` (08/11/2026).
 
 ## Skills du dépôt (`.claude/skills/`)
 
@@ -26,7 +26,8 @@ dépôt compte douze skills, treize avec `texte-clair-et-aere` (08/11/2026).
 | `lexique-sequence` | 07/11/2026 | 07/11/2026 | remplir `vocabulaire_<lot>.json` (deux passes : technique + lisibilité, sources, mots APTE), puis `generer_lexique.py` et `poser_lien_lexique.py` | Python 3 stdlib (outils existants) | **À EXERCER** |
 | `mutualisation-couverture` | 07/11/2026 | 07/11/2026 | revue qualitative de la matrice : COUVERT prouvé (activité vérifiée + 2 questions QCM), doublons → archivage n°12, mutualisation sur trois critères, manques triés par date de classeur ; rapport + décisions pour Pascal | `audit-couverture-cycle4` | **À EXERCER** |
 | `differenciation-dans-la-page` | 07/11/2026 | 07/11/2026 | différenciation dans la page unique : aides à deux niveaux, Bonus unique, critères gradués sur les 4 niveaux LSU, versions 🅰/🅱/🅲 — refuse les « trois versions » séparées | `k12-lesson-differentiation` pour le fond | **À EXERCER** |
-| `texte-clair-et-aere` | 08/11/2026 | 08/11/2026 | texte élève aéré : consigne et explication séparées, légendes en lignes, corrections réponse → pourquoi → refus un par ligne ; `audit_aeration.py`, `aerer_legendes.py` | Python 3 stdlib | **UTILISÉE** — pilote 5e_C3.1, passe des légendes sur tout le site |
+| `texte-clair-et-aere` | 08/11/2026 | 08/11/2026 | texte élève aéré : consigne et explication séparées, légendes en lignes, corrections réponse → pourquoi → refus un par ligne ; `audit_aeration.py`, `aerer_legendes.py`, `aerer_corrections.py` (08/11) | Python 3 stdlib | **UTILISÉE** — pilote 5e_C3.1, passe des légendes sur tout le site |
+| `revision-sequence` | 08/11/2026 | 08/11/2026 | révision des trois thèmes, une passe complète par séquence : règles d'or à zéro, lecture visible par séance sous 1 200 mots, texte aéré, lecture comme un élève ; `bilan_revision.py`, `mesurer_charge.mjs`, `grilles_radio.py`, suivi `docs/revision/SUIVI_REVISION.md` | Python 3 stdlib, Node, Playwright ; enchaîne les skills du dépôt | **UTILISÉE** — 5e_C1.5, première séquence de l'ordre |
 
 **Origine des quatre skills du 07/11/2026** : une liste de quinze « skills » proposée par Grok à Pascal, par
 curiosité. Onze ont été écartées — doublons de skills existants (`methode-fable`, `curriculum-assessment-cycle4`,

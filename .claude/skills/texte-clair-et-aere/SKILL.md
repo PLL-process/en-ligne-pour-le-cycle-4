@@ -103,10 +103,14 @@ python3 _outils/audit_aeration.py                    # tout le site : légendes 
 python3 _outils/audit_aeration.py <page>…            # chaque écart cité
 python3 _outils/audit_aeration.py --strict <page>…   # sortie 1 s'il reste un écart (page livrée, page pilote)
 python3 _outils/aerer_legendes.py <page>… [--ecrire] # un <br> devant « Puis : », la note finale, ①… ; ne change aucun mot
+python3 _outils/aerer_corrections.py <page>… [--ecrire]  # un <br> entre les phrases d'une correction, après chaque « ; »
 ```
 
-`aerer_legendes.py` ne touche que les légendes et n'ajoute que des retours à la ligne : il règle tout L2. L1, C1 et C2
-se réécrivent à la main, avec les règles ci-dessus. Une page engendrée (3e_C9.2, ateliers des représentations) se
+`aerer_legendes.py` ne touche que les légendes et n'ajoute que des retours à la ligne : il règle tout L2.
+`aerer_corrections.py` (08/11/2026, révision des trois thèmes) fait de même dans les corrections : il passe à la ligne
+entre les phrases d'un bloc C1 (une ligne d'au moins 12 mots, sauf un repère court en tête) et après chaque « ; » d'un
+bloc C2. Il ne change aucun mot et nomme la phrase seule de plus de 45 mots, à réécrire à la main. L1, le reste de C1
+et C2 se réécrivent à la main, avec les règles ci-dessus. Une page engendrée (3e_C9.2, ateliers des représentations) se
 corrige dans sa source, puis se régénère ; si le générateur réécrirait d'autres pages (dérive déjà notée par l'audit),
 on corrige à l'identique la source et les pages, sans régénérer.
 

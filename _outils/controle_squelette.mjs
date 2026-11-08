@@ -57,7 +57,9 @@
  *         · #tachesBandeau, section#taches — le tableau de bord des tâches (n°30) : il
  *           SITUE l'élève dans la séquence, il est fait pour être vu à chaque séance ;
  *         · .seance-avis — l'avis « ce bloc est hors parcours », qui accompagne l'onglet ;
- *         · footer — le pied de page (crédits, licence), qui n'est pas du contenu de séance.
+ *         · footer — le pied de page (crédits, licence), qui n'est pas du contenu de séance ;
+ *         · .licence-cc — la mention de licence (n°321), posée avant </body> quand la page n'a pas de <footer>
+ *           (08/11/2026 : cinq séquences du thème 1 tombaient sur D5 pour elle seule).
  *         · details.rappel-ouverture — le volet « 📖 Rappel » de la n°311 : il ENVELOPPE l'ouverture.
  *       Rapport : par page, les titres de ce qui fuit (à défaut, le premier texte).
  *   D6  (n°311, 22/10/2026) « à partir de la séance 2, l'élève voit sa séance, pas le décor » :
@@ -200,7 +202,7 @@ function releverBlocs() {
   const pv = [...document.querySelectorAll('.seance-panel, [role="tabpanel"]')].find((x) => vis(x));
   // ── D5 : ce qui, après la barre d'onglets, n'est dans aucun panneau ──
   // Jugé par le conteneur. Les exceptions sont listées dans l'en-tête, et nulle part ailleurs.
-  const EXCEPTIONS = '#tachesBandeau, section#taches, .seance-avis, footer, details.rappel-ouverture';
+  const EXCEPTIONS = '#tachesBandeau, section#taches, .seance-avis, footer, .licence-cc, details.rappel-ouverture';
   const onglet1 = document.querySelector('button.seance-tab, [role="tab"]:not(a), button[data-panel]');
   const barre = onglet1 && (onglet1.closest('.seance-tabs, [role="tablist"], #seances') || onglet1.parentElement);
   const fuites = [];

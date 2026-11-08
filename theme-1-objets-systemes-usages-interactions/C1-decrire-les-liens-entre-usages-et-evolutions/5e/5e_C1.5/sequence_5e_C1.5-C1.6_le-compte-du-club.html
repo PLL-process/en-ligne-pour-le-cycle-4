@@ -204,6 +204,33 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+
+  /* Règle d'or n°29 — mode essentiel : les corrections et les compléments se masquent, rien ne se perd */
+  body.essentiel details.correction,body.essentiel .approfondissement,body.essentiel .bonus-complement{display:none}
+  /* Règle d'or n°30 — la barre compte, ce bandeau situe */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:var(--panel,#0d2347);
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  /* Règle d'or n°31 — version étayée : des phrases à compléter, repliées */
+  details.etayage{margin:8px 0 12px;padding:6px 12px;border-left:4px solid var(--hl);border-radius:8px}
+  details.etayage summary{cursor:pointer;color:var(--hl);font-weight:600}
+  details.etayage ul{margin:6px 0;padding-left:22px}details.etayage li{margin:5px 0}
+  @media print{#tachesBandeau{display:none}details.etayage{border-color:#999!important}details.etayage summary{color:#047fa0!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -540,7 +567,39 @@ body.essentiel details.referentiel-replie{display:none}
 </script>
 <!-- fiche-papier v1 : fin -->
 <!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script>document.documentElement.classList.add("js-onglets");</script>
+<style id="css-qcm-grille">
+/* grilles_radio.py (08/11/2026) : des questions qui partagent leurs réponses se lisent en grille — les réponses une
+   fois, lettrées ; chaque question, une rangée de lettres. La valeur de chaque bouton est le texte de la réponse. */
+.qcm-cles{margin:10px 0 6px;padding:8px 12px;border:1px solid var(--border,#274a8a);border-radius:10px;background:var(--panel2,#0a1b3d)}
+.qcm-cles-titre{margin:0 0 4px;font-weight:600}
+.qcm-cles ol{margin:0;padding-left:0;list-style:none}
+.qcm-cles li{margin:3px 0;padding-left:1.9em;text-indent:-1.9em}
+.qcm-cles li b{display:inline-block;width:1.6em;text-indent:0;color:var(--hl,#61dafb)}
+.qcm-groupe.qcm-grille .qcm-option{display:inline-flex;align-items:center;gap:4px;margin:2px 2px 2px 0;padding:3px 5px;width:auto;min-width:0}
+.qcm-groupe.qcm-grille .qcm-option label{flex:none;font-weight:700}
+@media print{.qcm-cles{background:#fff!important;border-color:#999!important;color:#111!important}.qcm-cles li b{color:#111!important}}
+</style>
 </head>
 <body>
 
@@ -552,6 +611,8 @@ body.essentiel details.referentiel-replie{display:none}
 
 <div class="toolbar">
   <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+
+  <button class="btn ghost" id="btnEssentiel" type="button" aria-pressed="false" title="Masquer les corrections et les compléments, pour ne garder que les consignes et les exercices. Un second clic ramène tout.">🎯 Mode essentiel : OFF</button>
 </div>
 
 <!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
@@ -621,7 +682,7 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
   <p class="problematique">Une publication ne dit pas seulement ce qu'on a voulu écrire. Que révèle-t-elle en plus, et qui en devient responsable ?</p>
   <div class="exo">
     <h4>💡 Ton idée à toi, avant tout essai</h4>
-    <textarea id="hyp" rows="3" placeholder="À mon avis, ce qu'une photo publiée révèle en plus, c'est…"></textarea>
+    <textarea aria-label="À mon avis, ce qu&#x27;une photo publiée révèle en plus, c&#x27;est…" id="hyp" rows="3" placeholder="À mon avis, ce qu'une photo publiée révèle en plus, c'est…"></textarea>
     <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan.
     Personne ne la corrige : elle sert à mesurer le chemin parcouru.</p>
   </div>
@@ -737,12 +798,23 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
   <button class="seance-tab" id="tab-s3" data-panel="s3" role="tab" aria-controls="s3" aria-selected="false" type="button">Séance 3<br><small>Responsabilité, refaire, conclure</small></button>
 </nav>
 
+<div id="tachesBandeau" aria-live="polite" aria-atomic="true">
+  <span class="tb-titre">📋 Où j'en suis <span class="tb-compte"></span></span>
+  <ul>
+    <li data-tache="0"><span class="tb-etat">○</span> Vérifier l'activité 0</li>
+    <li data-tache="1"><span class="tb-etat">○</span> Vérifier l'activité 1</li>
+    <li data-tache="2"><span class="tb-etat">○</span> Vérifier l'activité 2</li>
+    <li data-tache="3"><span class="tb-etat">○</span> Vérifier l'activité 3</li>
+    <li data-tache="4"><span class="tb-etat">○</span> Vérifier l'activité 4</li>
+    <li data-tache="5"><span class="tb-etat">○</span> Vérifier le réinvestissement</li>
+  </ul>
+</div>
 <!-- ══════════════════ SÉANCE 1 ══════════════════ -->
 <div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
 <section class="card seance-tete">
 <h2>🧭 Séance 1 — Regarder ce que ça révèle, puis retirer</h2>
-<p class="question-directrice">Question directrice : qu'est-ce qu'une photo publiée révèle, en plus de ce qu'on a voulu montrer — et que faut-il retirer pour que plus personne ne soit reconnaissable ?</p>
-<p style="font-size:.92em;color:var(--sub)">Au programme : l'ouverture, puis regarder ce que révèle la publication préparée par le club (activité 0, environ 20 min) et retirer des éléments un par un en comptant les indices (activité 1, environ 30 min). Avec l'ouverture, la séance est pleine : l'activité 1 peut se terminer à la maison.</p>
+<p class="question-directrice">Question directrice : qu'est-ce qu'une photo publiée révèle, en plus de ce qu'on a voulu montrer ? <br>Que faut-il retirer pour que plus personne ne soit reconnaissable ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : <br>① l'ouverture ; <br>② regarder ce que révèle la publication du club (activité 0, environ 20 min) ; <br>③ retirer des éléments un par un en comptant les indices (activité 1, environ 30 min). <br>La séance est pleine : l'activité 1 peut se terminer à la maison.</p>
 </section>
 
 <section class="card" id="act0">
@@ -765,7 +837,7 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
       <tr id="tr_geoloc"><td class="ck"><input type="checkbox" id="el_geoloc"></td><td><b>La géolocalisation enregistrée par le téléphone</b></td><td>une métadonnée du fichier, invisible à l'écran</td></tr>
     </table>
     <div class="publi-cmd"><label for="img">L'image d'illustration utilisée :</label>
-      <select id="img">
+      <select data-interface="commande" id="img">
         <option>— je choisis —</option>
         <option>une image trouvée sur un site, sans licence indiquée</option>
         <option>une image sous licence CC BY, avec le nom de l'auteur cité</option>
@@ -773,7 +845,7 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
         <option>aucune image d'illustration</option>
       </select></div>
     <div class="publi-cmd"><label for="autor">L'autorisation de publier la personne :</label>
-      <select id="autor">
+      <select data-interface="commande" id="autor">
         <option>— je choisis —</option>
         <option>aucune autorisation demandée</option>
         <option>Maël est d'accord, il l'a dit à l'oral</option>
@@ -803,33 +875,30 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
   <div class="exo">
 
     <h4>Après avoir regardé</h4>
-    <p><b>1.</b> La publication contient un élément que <em>personne n'a écrit</em> et que
-    personne ne voit à l'écran. Lequel ?</p>
-    <select id="a0q1">
-      <option value="">— je choisis —</option>
-      <option>la géolocalisation enregistrée par le téléphone dans le fichier</option>
-      <option>le nom du collège, ajouté automatiquement par le réseau social</option>
-      <option>le nom de famille de Maël, complété par le téléphone</option>
-      <option>l'heure de la prise de vue, ajoutée par le club dans le texte</option>
-    </select>
-    <p><b>2.</b> Ce que le banc appelle « un indice », c'est…</p>
-    <select id="a0q2">
-      <option value="">— je choisis —</option>
-      <option>un élément qui aide à remonter à une personne réelle ou à l'endroit où elle est</option>
-      <option>une erreur d'orthographe repérée dans le texte de la publication</option>
-      <option>un élément que le réseau social refusera de publier</option>
-      <option>une information que le club a oublié d'écrire dans la légende</option>
-    </select>
-    <p><b>3.</b> Le banc signale que la plaque de rue et l'heure, ensemble, donnent « un
-    rendez-vous ». Pourquoi <em>ensemble</em> ?</p>
-    <select id="a0q3">
-      <option value="">— je choisis —</option>
-      <option>un lieu seul ou une heure seule ne dit pas où sera quelqu'un</option>
-      <option>parce que le réseau social les affiche l'un à côté de l'autre</option>
-      <option>parce que la plaque de rue est illisible sans l'heure de la photo</option>
-      <option>parce que l'heure change le sens de la photo aux yeux du lecteur</option>
-    </select>
-    <p style="font-size:.9em;color:var(--warn)">🔒 Charge d'abord la publication du club sur le banc et clique sur « 🔍 Regarder ce que ça révèle » — on ne commente pas ce qu'on n'a pas regardé.</p>
+    <fieldset class="qcm-groupe" id="a0q1">
+  <legend><b>1.</b> La publication contient un élément que <em>personne n'a écrit</em> et que
+    personne ne voit à l'écran. Lequel ?</legend>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__1" value="la géolocalisation enregistrée par le téléphone dans le fichier"><label for="a0q1__1">la géolocalisation enregistrée par le téléphone dans le fichier</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__2" value="le nom du collège, ajouté automatiquement par le réseau social"><label for="a0q1__2">le nom du collège, ajouté automatiquement par le réseau social</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__3" value="le nom de famille de Maël, complété par le téléphone"><label for="a0q1__3">le nom de famille de Maël, complété par le téléphone</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__4" value="l&#x27;heure de la prise de vue, ajoutée par le club dans le texte"><label for="a0q1__4">l'heure de la prise de vue, ajoutée par le club dans le texte</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a0q2">
+  <legend><b>2.</b> Ce que le banc appelle « un indice », c'est…</legend>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__1" value="un élément qui aide à remonter à une personne réelle ou à l&#x27;endroit où elle est"><label for="a0q2__1">un élément qui aide à remonter à une personne réelle ou à l'endroit où elle est</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__2" value="une erreur d&#x27;orthographe repérée dans le texte de la publication"><label for="a0q2__2">une erreur d'orthographe repérée dans le texte de la publication</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__3" value="un élément que le réseau social refusera de publier"><label for="a0q2__3">un élément que le réseau social refusera de publier</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__4" value="une information que le club a oublié d&#x27;écrire dans la légende"><label for="a0q2__4">une information que le club a oublié d'écrire dans la légende</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a0q3">
+  <legend><b>3.</b> Le banc signale que la plaque de rue et l'heure, ensemble, donnent « un
+    rendez-vous ». Pourquoi <em>ensemble</em> ?</legend>
+  <div class="qcm-option"><input type="radio" name="a0q3" id="a0q3__1" value="un lieu seul ou une heure seule ne dit pas où sera quelqu&#x27;un"><label for="a0q3__1">un lieu seul ou une heure seule ne dit pas où sera quelqu'un</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q3" id="a0q3__2" value="parce que le réseau social les affiche l&#x27;un à côté de l&#x27;autre"><label for="a0q3__2">parce que le réseau social les affiche l'un à côté de l'autre</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q3" id="a0q3__3" value="parce que la plaque de rue est illisible sans l&#x27;heure de la photo"><label for="a0q3__3">parce que la plaque de rue est illisible sans l'heure de la photo</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q3" id="a0q3__4" value="parce que l&#x27;heure change le sens de la photo aux yeux du lecteur"><label for="a0q3__4">parce que l'heure change le sens de la photo aux yeux du lecteur</label></div>
+</fieldset>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Charge d'abord la publication du club sur le banc. <br>Puis clique sur « 🔍 Regarder ce que ça révèle » : on ne commente pas ce qu'on n'a pas regardé.</p>
     <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
     <div class="feedback" id="fb0"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
@@ -840,8 +909,8 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
       <p><b>2.</b> Un indice n'est pas une faute : c'est un élément qui <b>rapproche d'une
       personne réelle</b>, ou de l'endroit où elle se trouve. Le banc les compte, sans dire si
       c'est bien ou mal.</p>
-      <p><b>3.</b> Une rue sans heure, c'est un lieu où l'on passe parfois. Une heure sans lieu,
-      c'est un moment. <b>Les deux ensemble, c'est un rendez-vous auquel on n'a pas invité.</b>
+      <p><b>3.</b> Une rue sans heure, c'est un lieu où l'on passe parfois. <br>Une heure sans lieu,
+      c'est un moment. <b><br>Les deux ensemble, c'est un rendez-vous auquel on n'a pas invité.</b>
       C'est la leçon la plus importante du banc : ce n'est presque jamais un élément qui
       identifie quelqu'un, c'est leur <b>combinaison</b>.</p>
     </div></details>
@@ -851,8 +920,7 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
 <section class="card" id="act1">
   <h2>➖ Activité 1 — Retirer, et compter ⏱ ~30 min</h2><p class="pastille-maison" style="display:inline-block;margin:.35rem 0 .2rem;padding:.15rem .7rem;border:1px solid currentColor;border-radius:10px;font-size:.9rem;font-weight:600;line-height:1.4">🏠 Peut se faire à la maison (sans matériel, sur téléphone)</p>
   <p>La publication chargée compte <b>sept indices</b>. Décoche des éléments, un par
-  un, et regarde le compteur. Ton but : garder la photo du jardin connecté — c'est le sujet, on
-  ne va pas y renoncer — et faire tomber le compteur à <b>zéro</b>.</p>
+  un, et regarde le compteur. <br>Ton but : faire tomber le compteur à <b>zéro</b>. <br>Garde la photo du jardin connecté : c'est le sujet, on ne va pas y renoncer.</p>
   <p style="color:var(--sub);font-size:.92em">Commence par retirer le visage. Puis regarde le
   compteur : tu verras qu'il en reste beaucoup.</p>    <p style="font-size:.92em;color:var(--sub);margin:8px 0"><a href="#etabli">↑ Remonte au banc</a> — c'est le même, et il a gardé ta publication. Une page ne porte qu'un seul banc : deux exemplaires, ce seraient deux instruments qui répondent au même nom.</p>
 
@@ -864,24 +932,22 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
     <tr><td>La même, sans le visage de Maël</td><td class="num"><input type="text" inputmode="decimal" id="rel1" placeholder="… indices"></td></tr>
     <tr><td>Le minimum, en gardant la photo du jardin</td><td class="num"><input type="text" inputmode="decimal" id="rel2" placeholder="… indices"></td></tr>
   </table>
-    <p style="margin-top:14px"><b>Et la question qui compte :</b> pourquoi retirer le visage
-    ne suffit-il pas à rendre Maël non identifiable ?</p>
-    <select id="a1q1">
-      <option value="">— je choisis —</option>
-      <option>son nom, sa classe et son collège le désignent toujours</option>
-      <option>le réseau social conserve une copie du visage effacé</option>
-      <option>parce que la photo reste floue au lieu de disparaître vraiment</option>
-      <option>parce qu'un visage retiré laisse une trace visible sur l'image</option>
-    </select>
-    <p><b>Et une deuxième :</b> l'accord écrit de Maël et de ses responsables légaux…</p>
-    <select id="a1q2">
-      <option value="">— je choisis —</option>
-      <option>rend la publication licite, et ne le rend pas moins reconnaissable</option>
-      <option>fait tomber le compteur d'indices à zéro d'un seul coup</option>
-      <option>n'est pas nécessaire tant que la photo reste sur le compte du collège</option>
-      <option>remplace l'autorisation orale, qui suffisait déjà largement</option>
-    </select>
-    <p style="font-size:.9em;color:var(--warn)">🔒 Descends d'abord le compteur d'indices à zéro sur le banc, en gardant la photo du jardin : c'est ce geste-là que l'activité te demande de commenter.</p>
+    <fieldset class="qcm-groupe" id="a1q1">
+  <legend><b>Et la question qui compte :</b> pourquoi retirer le visage
+    ne suffit-il pas à rendre Maël non identifiable ?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__1" value="son nom, sa classe et son collège le désignent toujours"><label for="a1q1__1">son nom, sa classe et son collège le désignent toujours</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__2" value="le réseau social conserve une copie du visage effacé"><label for="a1q1__2">le réseau social conserve une copie du visage effacé</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__3" value="parce que la photo reste floue au lieu de disparaître vraiment"><label for="a1q1__3">parce que la photo reste floue au lieu de disparaître vraiment</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__4" value="parce qu&#x27;un visage retiré laisse une trace visible sur l&#x27;image"><label for="a1q1__4">parce qu'un visage retiré laisse une trace visible sur l'image</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a1q2">
+  <legend><b>Et une deuxième :</b> l'accord écrit de Maël et de ses responsables légaux…</legend>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__1" value="rend la publication licite, et ne le rend pas moins reconnaissable"><label for="a1q2__1">rend la publication licite, et ne le rend pas moins reconnaissable</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__2" value="fait tomber le compteur d&#x27;indices à zéro d&#x27;un seul coup"><label for="a1q2__2">fait tomber le compteur d'indices à zéro d'un seul coup</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__3" value="n&#x27;est pas nécessaire tant que la photo reste sur le compte du collège"><label for="a1q2__3">n'est pas nécessaire tant que la photo reste sur le compte du collège</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__4" value="remplace l&#x27;autorisation orale, qui suffisait déjà largement"><label for="a1q2__4">remplace l'autorisation orale, qui suffisait déjà largement</label></div>
+</fieldset>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Descends d'abord le compteur d'indices à zéro sur le banc, en gardant la photo du jardin. <br>C'est ce geste-là que l'activité te demande de commenter.</p>
     <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
     <div class="feedback" id="fb1"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
@@ -892,9 +958,9 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
       <tr><td>La même, sans le visage de Maël</td><td><b>6,0 indices</b></td></tr>
       <tr><td>Le minimum, en gardant la photo du jardin</td><td><b>0,0 indices</b></td></tr>
       </table>
-      <p style="margin-top:10px"><b>Retirer le visage fait passer de 7 à 6.</b> C'est un
+      <p style="margin-top:10px"><b>Retirer le visage fait passer de 7 à 6.</b><br>C'est un
       élément sur sept, et le plus visible — mais le nom, la classe, le collège, la rue, l'heure
-      et la géolocalisation sont toujours là. Dans un collège, « Maël Céleste, 5eB » désigne une
+      et la géolocalisation sont toujours là. <br>Dans un collège, « Maël Céleste, 5eB » désigne une
       personne et une seule.</p>
       <p><b>L'autorisation écrite</b> change la <em>légalité</em>, pas la <em>visibilité</em>.
       Avec elle, on a le droit de publier ; Maël reste exactement aussi reconnaissable. Ce sont
@@ -914,8 +980,8 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
 <div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
 <section class="card seance-tete">
 <h2>🧭 Séance 2 — À qui est l'image, et qui a publié ?</h2>
-<p class="question-directrice">Question directrice : a-t-on le droit de reprendre une image trouvée en ligne, et que devient la responsabilité quand six élèves partagent un seul compte ?</p>
-<p style="font-size:.92em;color:var(--sub)">Au programme : l'image d'illustration et ses licences, sur le banc (activité 2, environ 25 min), puis le compte partagé à six (activité 3, environ 25 min).</p>
+<p class="question-directrice">Question directrice : a-t-on le droit de reprendre une image trouvée en ligne ? <br>Et que devient la responsabilité quand six élèves partagent un seul compte ?</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : <br>① l'image d'illustration et ses licences, sur le banc (activité 2, environ 25 min) ; <br>② le compte partagé à six (activité 3, environ 25 min).</p>
 </section>
 
 <section class="card" id="act2">
@@ -927,60 +993,55 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
   <div class="exo">
 
     <p>Associe chaque provenance à ce qu'on a le droit d'en faire.</p>
-    <p style="margin-top:12px"><b>Une image sans mention de licence, trouvée sur un site</b></p>
-    <select id="a2l0">
-      <option value="">— je choisis —</option>
-      <option>elle appartient à ceux qui l'ont prise : ce sont eux qui décident</option>
-      <option>protégée par défaut : on ne la reprend pas sans demander</option>
-      <option>réutilisable en citant l'auteur, mais pas dans un usage commercial</option>
-      <option>réutilisable librement, y compris sans citer l'auteur</option>
-      <option>réutilisable, à condition de citer l'auteur</option>
-    </select>
-    <p style="margin-top:12px"><b>Une image sous licence CC BY</b></p>
-    <select id="a2l1">
-      <option value="">— je choisis —</option>
-      <option>elle appartient à ceux qui l'ont prise : ce sont eux qui décident</option>
-      <option>protégée par défaut : on ne la reprend pas sans demander</option>
-      <option>réutilisable en citant l'auteur, mais pas dans un usage commercial</option>
-      <option>réutilisable librement, y compris sans citer l'auteur</option>
-      <option>réutilisable, à condition de citer l'auteur</option>
-    </select>
-    <p style="margin-top:12px"><b>Une image sous licence CC BY-NC</b></p>
-    <select id="a2l2">
-      <option value="">— je choisis —</option>
-      <option>elle appartient à ceux qui l'ont prise : ce sont eux qui décident</option>
-      <option>protégée par défaut : on ne la reprend pas sans demander</option>
-      <option>réutilisable en citant l'auteur, mais pas dans un usage commercial</option>
-      <option>réutilisable librement, y compris sans citer l'auteur</option>
-      <option>réutilisable, à condition de citer l'auteur</option>
-    </select>
-    <p style="margin-top:12px"><b>Une image dans le domaine public ou en CC0</b></p>
-    <select id="a2l3">
-      <option value="">— je choisis —</option>
-      <option>elle appartient à ceux qui l'ont prise : ce sont eux qui décident</option>
-      <option>protégée par défaut : on ne la reprend pas sans demander</option>
-      <option>réutilisable en citant l'auteur, mais pas dans un usage commercial</option>
-      <option>réutilisable librement, y compris sans citer l'auteur</option>
-      <option>réutilisable, à condition de citer l'auteur</option>
-    </select>
-    <p style="margin-top:12px"><b>Une photo prise par la classe elle-même</b></p>
-    <select id="a2l4">
-      <option value="">— je choisis —</option>
-      <option>elle appartient à ceux qui l'ont prise : ce sont eux qui décident</option>
-      <option>protégée par défaut : on ne la reprend pas sans demander</option>
-      <option>réutilisable en citant l'auteur, mais pas dans un usage commercial</option>
-      <option>réutilisable librement, y compris sans citer l'auteur</option>
-      <option>réutilisable, à condition de citer l'auteur</option>
-    </select>
-    <p style="margin-top:14px"><b>Et pour finir :</b> une image affichée par un moteur de
-    recherche d'images est…</p>
-    <select id="a2q1">
-      <option value="">— je choisis —</option>
-      <option>soumise aux mêmes règles que sur le site d'où elle vient</option>
-      <option>libre de droits, puisque le moteur la met à disposition</option>
-      <option>utilisable si on ne la modifie pas et qu'on ne la vend pas</option>
-      <option>utilisable dans un cadre scolaire, sans autre condition</option>
-    </select>
+    <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>elle appartient à ceux qui l'ont prise : ce sont eux qui décident</li><li><b>B</b>protégée par défaut : on ne la reprend pas sans demander</li><li><b>C</b>réutilisable en citant l'auteur, mais pas dans un usage commercial</li><li><b>D</b>réutilisable librement, y compris sans citer l'auteur</li><li><b>E</b>réutilisable, à condition de citer l'auteur</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="a2l0">
+  <legend><b>Une image sans mention de licence, trouvée sur un site</b></legend>
+  <div class="qcm-option"><input type="radio" name="a2l0" id="a2l0__1" value="elle appartient à ceux qui l&#x27;ont prise : ce sont eux qui décident" aria-label="A — elle appartient à ceux qui l&#x27;ont prise : ce sont eux qui décident"><label for="a2l0__1" title="elle appartient à ceux qui l&#x27;ont prise : ce sont eux qui décident">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l0" id="a2l0__2" value="protégée par défaut : on ne la reprend pas sans demander" aria-label="B — protégée par défaut : on ne la reprend pas sans demander"><label for="a2l0__2" title="protégée par défaut : on ne la reprend pas sans demander">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l0" id="a2l0__3" value="réutilisable en citant l&#x27;auteur, mais pas dans un usage commercial" aria-label="C — réutilisable en citant l&#x27;auteur, mais pas dans un usage commercial"><label for="a2l0__3" title="réutilisable en citant l&#x27;auteur, mais pas dans un usage commercial">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l0" id="a2l0__4" value="réutilisable librement, y compris sans citer l&#x27;auteur" aria-label="D — réutilisable librement, y compris sans citer l&#x27;auteur"><label for="a2l0__4" title="réutilisable librement, y compris sans citer l&#x27;auteur">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l0" id="a2l0__5" value="réutilisable, à condition de citer l&#x27;auteur" aria-label="E — réutilisable, à condition de citer l&#x27;auteur"><label for="a2l0__5" title="réutilisable, à condition de citer l&#x27;auteur">E</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a2l1">
+  <legend><b>Une image sous licence CC BY</b></legend>
+  <div class="qcm-option"><input type="radio" name="a2l1" id="a2l1__1" value="elle appartient à ceux qui l&#x27;ont prise : ce sont eux qui décident" aria-label="A — elle appartient à ceux qui l&#x27;ont prise : ce sont eux qui décident"><label for="a2l1__1" title="elle appartient à ceux qui l&#x27;ont prise : ce sont eux qui décident">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l1" id="a2l1__2" value="protégée par défaut : on ne la reprend pas sans demander" aria-label="B — protégée par défaut : on ne la reprend pas sans demander"><label for="a2l1__2" title="protégée par défaut : on ne la reprend pas sans demander">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l1" id="a2l1__3" value="réutilisable en citant l&#x27;auteur, mais pas dans un usage commercial" aria-label="C — réutilisable en citant l&#x27;auteur, mais pas dans un usage commercial"><label for="a2l1__3" title="réutilisable en citant l&#x27;auteur, mais pas dans un usage commercial">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l1" id="a2l1__4" value="réutilisable librement, y compris sans citer l&#x27;auteur" aria-label="D — réutilisable librement, y compris sans citer l&#x27;auteur"><label for="a2l1__4" title="réutilisable librement, y compris sans citer l&#x27;auteur">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l1" id="a2l1__5" value="réutilisable, à condition de citer l&#x27;auteur" aria-label="E — réutilisable, à condition de citer l&#x27;auteur"><label for="a2l1__5" title="réutilisable, à condition de citer l&#x27;auteur">E</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a2l2">
+  <legend><b>Une image sous licence CC BY-NC</b></legend>
+  <div class="qcm-option"><input type="radio" name="a2l2" id="a2l2__1" value="elle appartient à ceux qui l&#x27;ont prise : ce sont eux qui décident" aria-label="A — elle appartient à ceux qui l&#x27;ont prise : ce sont eux qui décident"><label for="a2l2__1" title="elle appartient à ceux qui l&#x27;ont prise : ce sont eux qui décident">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l2" id="a2l2__2" value="protégée par défaut : on ne la reprend pas sans demander" aria-label="B — protégée par défaut : on ne la reprend pas sans demander"><label for="a2l2__2" title="protégée par défaut : on ne la reprend pas sans demander">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l2" id="a2l2__3" value="réutilisable en citant l&#x27;auteur, mais pas dans un usage commercial" aria-label="C — réutilisable en citant l&#x27;auteur, mais pas dans un usage commercial"><label for="a2l2__3" title="réutilisable en citant l&#x27;auteur, mais pas dans un usage commercial">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l2" id="a2l2__4" value="réutilisable librement, y compris sans citer l&#x27;auteur" aria-label="D — réutilisable librement, y compris sans citer l&#x27;auteur"><label for="a2l2__4" title="réutilisable librement, y compris sans citer l&#x27;auteur">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l2" id="a2l2__5" value="réutilisable, à condition de citer l&#x27;auteur" aria-label="E — réutilisable, à condition de citer l&#x27;auteur"><label for="a2l2__5" title="réutilisable, à condition de citer l&#x27;auteur">E</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a2l3">
+  <legend><b>Une image dans le domaine public ou en CC0</b></legend>
+  <div class="qcm-option"><input type="radio" name="a2l3" id="a2l3__1" value="elle appartient à ceux qui l&#x27;ont prise : ce sont eux qui décident" aria-label="A — elle appartient à ceux qui l&#x27;ont prise : ce sont eux qui décident"><label for="a2l3__1" title="elle appartient à ceux qui l&#x27;ont prise : ce sont eux qui décident">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l3" id="a2l3__2" value="protégée par défaut : on ne la reprend pas sans demander" aria-label="B — protégée par défaut : on ne la reprend pas sans demander"><label for="a2l3__2" title="protégée par défaut : on ne la reprend pas sans demander">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l3" id="a2l3__3" value="réutilisable en citant l&#x27;auteur, mais pas dans un usage commercial" aria-label="C — réutilisable en citant l&#x27;auteur, mais pas dans un usage commercial"><label for="a2l3__3" title="réutilisable en citant l&#x27;auteur, mais pas dans un usage commercial">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l3" id="a2l3__4" value="réutilisable librement, y compris sans citer l&#x27;auteur" aria-label="D — réutilisable librement, y compris sans citer l&#x27;auteur"><label for="a2l3__4" title="réutilisable librement, y compris sans citer l&#x27;auteur">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l3" id="a2l3__5" value="réutilisable, à condition de citer l&#x27;auteur" aria-label="E — réutilisable, à condition de citer l&#x27;auteur"><label for="a2l3__5" title="réutilisable, à condition de citer l&#x27;auteur">E</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a2l4">
+  <legend><b>Une photo prise par la classe elle-même</b></legend>
+  <div class="qcm-option"><input type="radio" name="a2l4" id="a2l4__1" value="elle appartient à ceux qui l&#x27;ont prise : ce sont eux qui décident" aria-label="A — elle appartient à ceux qui l&#x27;ont prise : ce sont eux qui décident"><label for="a2l4__1" title="elle appartient à ceux qui l&#x27;ont prise : ce sont eux qui décident">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l4" id="a2l4__2" value="protégée par défaut : on ne la reprend pas sans demander" aria-label="B — protégée par défaut : on ne la reprend pas sans demander"><label for="a2l4__2" title="protégée par défaut : on ne la reprend pas sans demander">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l4" id="a2l4__3" value="réutilisable en citant l&#x27;auteur, mais pas dans un usage commercial" aria-label="C — réutilisable en citant l&#x27;auteur, mais pas dans un usage commercial"><label for="a2l4__3" title="réutilisable en citant l&#x27;auteur, mais pas dans un usage commercial">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l4" id="a2l4__4" value="réutilisable librement, y compris sans citer l&#x27;auteur" aria-label="D — réutilisable librement, y compris sans citer l&#x27;auteur"><label for="a2l4__4" title="réutilisable librement, y compris sans citer l&#x27;auteur">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a2l4" id="a2l4__5" value="réutilisable, à condition de citer l&#x27;auteur" aria-label="E — réutilisable, à condition de citer l&#x27;auteur"><label for="a2l4__5" title="réutilisable, à condition de citer l&#x27;auteur">E</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a2q1">
+  <legend><b>Et pour finir :</b> une image affichée par un moteur de
+    recherche d'images est…</legend>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__1" value="soumise aux mêmes règles que sur le site d&#x27;où elle vient"><label for="a2q1__1">soumise aux mêmes règles que sur le site d'où elle vient</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__2" value="libre de droits, puisque le moteur la met à disposition"><label for="a2q1__2">libre de droits, puisque le moteur la met à disposition</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__3" value="utilisable si on ne la modifie pas et qu&#x27;on ne la vend pas"><label for="a2q1__3">utilisable si on ne la modifie pas et qu'on ne la vend pas</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__4" value="utilisable dans un cadre scolaire, sans autre condition"><label for="a2q1__4">utilisable dans un cadre scolaire, sans autre condition</label></div>
+</fieldset>
     <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
     <div class="feedback" id="fb2"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
@@ -991,12 +1052,11 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
       <p><b>Une image dans le domaine public ou en CC0</b> — réutilisable librement, y compris sans citer l'auteur</p>
       <p><b>Une photo prise par la classe elle-même</b> — elle appartient à ceux qui l'ont prise : ce sont eux qui décident</p>
       <p style="margin-top:10px">Un moteur de recherche d'images <b>affiche</b> des images ; il
-      ne les donne pas. Chacune reste soumise aux règles du site d'origine — et par défaut,
+      ne les donne pas. <br>Chacune reste soumise aux règles du site d'origine — et par défaut,
       une œuvre est <b>protégée</b> : l'absence de mention ne veut pas dire « libre », elle veut
       dire « il faut demander ».</p>
       <p>Les licences <b>Creative Commons</b> servent exactement à ça : elles permettent à un
-      auteur de dire à l'avance ce qu'il autorise. <code>BY</code> = citer l'auteur ;
-      <code>NC</code> = pas d'usage commercial ; <code>CC0</code> = aucune condition.</p>
+      auteur de dire à l'avance ce qu'il autorise. <code>BY</code> = citer l'auteur ; <br><code>NC</code> = pas d'usage commercial ; <br><code>CC0</code> = aucune condition.</p>
       <p style="color:var(--sub)">Ce n'est pas une règle d'école : c'est le droit d'auteur, et il
       protège aussi <b>tes</b> créations. La photo que tu prends t'appartient — et quelqu'un qui
       la reprendrait sans te demander enfreindrait la même règle.</p>
@@ -1011,55 +1071,50 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
   <div class="exo">
 
     <p>Associe chaque situation à sa conséquence.</p>
-    <p style="margin-top:12px"><b>Six élèves connaissent le mot de passe</b></p>
-    <select id="a3p0">
-      <option value="">— je choisis —</option>
-      <option>il garde l'accès tant que personne ne change le mot de passe</option>
-      <option>le mot de passe n'est plus un secret : il n'en protège plus rien</option>
-      <option>on ne peut pas savoir qui l'a écrite : la responsabilité devient indécidable</option>
-      <option>toute personne qui entre dans la salle peut publier au nom du collège</option>
-    </select>
-    <p style="margin-top:12px"><b>Un membre quitte le club en cours d'année</b></p>
-    <select id="a3p1">
-      <option value="">— je choisis —</option>
-      <option>il garde l'accès tant que personne ne change le mot de passe</option>
-      <option>le mot de passe n'est plus un secret : il n'en protège plus rien</option>
-      <option>on ne peut pas savoir qui l'a écrite : la responsabilité devient indécidable</option>
-      <option>toute personne qui entre dans la salle peut publier au nom du collège</option>
-    </select>
-    <p style="margin-top:12px"><b>Une publication maladroite apparaît sur le compte</b></p>
-    <select id="a3p2">
-      <option value="">— je choisis —</option>
-      <option>il garde l'accès tant que personne ne change le mot de passe</option>
-      <option>le mot de passe n'est plus un secret : il n'en protège plus rien</option>
-      <option>on ne peut pas savoir qui l'a écrite : la responsabilité devient indécidable</option>
-      <option>toute personne qui entre dans la salle peut publier au nom du collège</option>
-    </select>
-    <p style="margin-top:12px"><b>Le mot de passe est écrit au tableau de la salle</b></p>
-    <select id="a3p3">
-      <option value="">— je choisis —</option>
-      <option>il garde l'accès tant que personne ne change le mot de passe</option>
-      <option>le mot de passe n'est plus un secret : il n'en protège plus rien</option>
-      <option>on ne peut pas savoir qui l'a écrite : la responsabilité devient indécidable</option>
-      <option>toute personne qui entre dans la salle peut publier au nom du collège</option>
-    </select>
-    <p style="margin-top:14px"><b>Et la question qui relie tout :</b> pourquoi un compte partagé
-    empêche-t-il de parler de responsabilité ?</p>
-    <select id="a3q1">
-      <option value="">— je choisis —</option>
-      <option>être responsable suppose qu'on puisse établir qui a agi</option>
-      <option>parce que le réseau social interdit les comptes à plusieurs</option>
-      <option>parce qu'un compte partagé se fait pirater plus facilement</option>
-      <option>parce que les six membres sont alors responsables à parts égales</option>
-    </select>
-    <p><b>Et la réparation :</b> le club veut pouvoir dire qui publie. Que fait-il ?</p>
-    <select id="a3q2">
-      <option value="">— je choisis —</option>
-      <option>un compte par membre, avec un rôle donné et retirable</option>
-      <option>il garde le compte commun et note les publications sur un cahier</option>
-      <option>il change le mot de passe chaque semaine et le dit à voix haute</option>
-      <option>il demande à chacun de signer ses publications dans le texte</option>
-    </select>
+    <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>il garde l'accès tant que personne ne change le mot de passe</li><li><b>B</b>le mot de passe n'est plus un secret : il n'en protège plus rien</li><li><b>C</b>on ne peut pas savoir qui l'a écrite : la responsabilité devient indécidable</li><li><b>D</b>toute personne qui entre dans la salle peut publier au nom du collège</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="a3p0">
+  <legend><b>Six élèves connaissent le mot de passe</b></legend>
+  <div class="qcm-option"><input type="radio" name="a3p0" id="a3p0__1" value="il garde l&#x27;accès tant que personne ne change le mot de passe" aria-label="A — il garde l&#x27;accès tant que personne ne change le mot de passe"><label for="a3p0__1" title="il garde l&#x27;accès tant que personne ne change le mot de passe">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a3p0" id="a3p0__2" value="le mot de passe n&#x27;est plus un secret : il n&#x27;en protège plus rien" aria-label="B — le mot de passe n&#x27;est plus un secret : il n&#x27;en protège plus rien"><label for="a3p0__2" title="le mot de passe n&#x27;est plus un secret : il n&#x27;en protège plus rien">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a3p0" id="a3p0__3" value="on ne peut pas savoir qui l&#x27;a écrite : la responsabilité devient indécidable" aria-label="C — on ne peut pas savoir qui l&#x27;a écrite : la responsabilité devient indécidable"><label for="a3p0__3" title="on ne peut pas savoir qui l&#x27;a écrite : la responsabilité devient indécidable">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a3p0" id="a3p0__4" value="toute personne qui entre dans la salle peut publier au nom du collège" aria-label="D — toute personne qui entre dans la salle peut publier au nom du collège"><label for="a3p0__4" title="toute personne qui entre dans la salle peut publier au nom du collège">D</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a3p1">
+  <legend><b>Un membre quitte le club en cours d'année</b></legend>
+  <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__1" value="il garde l&#x27;accès tant que personne ne change le mot de passe" aria-label="A — il garde l&#x27;accès tant que personne ne change le mot de passe"><label for="a3p1__1" title="il garde l&#x27;accès tant que personne ne change le mot de passe">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__2" value="le mot de passe n&#x27;est plus un secret : il n&#x27;en protège plus rien" aria-label="B — le mot de passe n&#x27;est plus un secret : il n&#x27;en protège plus rien"><label for="a3p1__2" title="le mot de passe n&#x27;est plus un secret : il n&#x27;en protège plus rien">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__3" value="on ne peut pas savoir qui l&#x27;a écrite : la responsabilité devient indécidable" aria-label="C — on ne peut pas savoir qui l&#x27;a écrite : la responsabilité devient indécidable"><label for="a3p1__3" title="on ne peut pas savoir qui l&#x27;a écrite : la responsabilité devient indécidable">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__4" value="toute personne qui entre dans la salle peut publier au nom du collège" aria-label="D — toute personne qui entre dans la salle peut publier au nom du collège"><label for="a3p1__4" title="toute personne qui entre dans la salle peut publier au nom du collège">D</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a3p2">
+  <legend><b>Une publication maladroite apparaît sur le compte</b></legend>
+  <div class="qcm-option"><input type="radio" name="a3p2" id="a3p2__1" value="il garde l&#x27;accès tant que personne ne change le mot de passe" aria-label="A — il garde l&#x27;accès tant que personne ne change le mot de passe"><label for="a3p2__1" title="il garde l&#x27;accès tant que personne ne change le mot de passe">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a3p2" id="a3p2__2" value="le mot de passe n&#x27;est plus un secret : il n&#x27;en protège plus rien" aria-label="B — le mot de passe n&#x27;est plus un secret : il n&#x27;en protège plus rien"><label for="a3p2__2" title="le mot de passe n&#x27;est plus un secret : il n&#x27;en protège plus rien">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a3p2" id="a3p2__3" value="on ne peut pas savoir qui l&#x27;a écrite : la responsabilité devient indécidable" aria-label="C — on ne peut pas savoir qui l&#x27;a écrite : la responsabilité devient indécidable"><label for="a3p2__3" title="on ne peut pas savoir qui l&#x27;a écrite : la responsabilité devient indécidable">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a3p2" id="a3p2__4" value="toute personne qui entre dans la salle peut publier au nom du collège" aria-label="D — toute personne qui entre dans la salle peut publier au nom du collège"><label for="a3p2__4" title="toute personne qui entre dans la salle peut publier au nom du collège">D</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a3p3">
+  <legend><b>Le mot de passe est écrit au tableau de la salle</b></legend>
+  <div class="qcm-option"><input type="radio" name="a3p3" id="a3p3__1" value="il garde l&#x27;accès tant que personne ne change le mot de passe" aria-label="A — il garde l&#x27;accès tant que personne ne change le mot de passe"><label for="a3p3__1" title="il garde l&#x27;accès tant que personne ne change le mot de passe">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a3p3" id="a3p3__2" value="le mot de passe n&#x27;est plus un secret : il n&#x27;en protège plus rien" aria-label="B — le mot de passe n&#x27;est plus un secret : il n&#x27;en protège plus rien"><label for="a3p3__2" title="le mot de passe n&#x27;est plus un secret : il n&#x27;en protège plus rien">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a3p3" id="a3p3__3" value="on ne peut pas savoir qui l&#x27;a écrite : la responsabilité devient indécidable" aria-label="C — on ne peut pas savoir qui l&#x27;a écrite : la responsabilité devient indécidable"><label for="a3p3__3" title="on ne peut pas savoir qui l&#x27;a écrite : la responsabilité devient indécidable">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a3p3" id="a3p3__4" value="toute personne qui entre dans la salle peut publier au nom du collège" aria-label="D — toute personne qui entre dans la salle peut publier au nom du collège"><label for="a3p3__4" title="toute personne qui entre dans la salle peut publier au nom du collège">D</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a3q1">
+  <legend><b>Et la question qui relie tout :</b> pourquoi un compte partagé
+    empêche-t-il de parler de responsabilité ?</legend>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__1" value="être responsable suppose qu&#x27;on puisse établir qui a agi"><label for="a3q1__1">être responsable suppose qu'on puisse établir qui a agi</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__2" value="parce que le réseau social interdit les comptes à plusieurs"><label for="a3q1__2">parce que le réseau social interdit les comptes à plusieurs</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__3" value="parce qu&#x27;un compte partagé se fait pirater plus facilement"><label for="a3q1__3">parce qu'un compte partagé se fait pirater plus facilement</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__4" value="parce que les six membres sont alors responsables à parts égales"><label for="a3q1__4">parce que les six membres sont alors responsables à parts égales</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a3q2">
+  <legend><b>Et la réparation :</b> le club veut pouvoir dire qui publie. Que fait-il ?</legend>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__1" value="un compte par membre, avec un rôle donné et retirable"><label for="a3q2__1">un compte par membre, avec un rôle donné et retirable</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__2" value="il garde le compte commun et note les publications sur un cahier"><label for="a3q2__2">il garde le compte commun et note les publications sur un cahier</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__3" value="il change le mot de passe chaque semaine et le dit à voix haute"><label for="a3q2__3">il change le mot de passe chaque semaine et le dit à voix haute</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__4" value="il demande à chacun de signer ses publications dans le texte"><label for="a3q2__4">il demande à chacun de signer ses publications dans le texte</label></div>
+</fieldset>
     <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
     <div class="feedback" id="fb3"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
@@ -1068,14 +1123,12 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
       <p><b>Un membre quitte le club en cours d'année</b> — il garde l'accès tant que personne ne change le mot de passe</p>
       <p><b>Une publication maladroite apparaît sur le compte</b> — on ne peut pas savoir qui l'a écrite : la responsabilité devient indécidable</p>
       <p><b>Le mot de passe est écrit au tableau de la salle</b> — toute personne qui entre dans la salle peut publier au nom du collège</p>
-      <p style="margin-top:10px"><b>Voilà la charnière de la séquence.</b> Un mot de passe
-      partagé n'est pas seulement moins sûr : il rend la <b>responsabilité indécidable</b>.
-      Quand une publication pose problème, on ne peut ni savoir qui l'a faite, ni la lui
-      attribuer, ni la lui retirer. Ce n'est pas un problème technique — c'est ce qui empêche
+      <p style="margin-top:10px"><b>Voilà la charnière de la séquence.</b><br>Un mot de passe
+      partagé n'est pas seulement moins sûr : il rend la <b>responsabilité indécidable</b>. <br>Quand une publication pose problème, on ne peut ni savoir qui l'a faite, ni la lui
+      attribuer, ni la lui retirer. <br>Ce n'est pas un problème technique — c'est ce qui empêche
       toute la suite.</p>
       <p><b>La réparation</b> tient en une phrase : <b>un compte par personne</b>, et des
-      <b>rôles</b> donnés par un adulte responsable, qui se retirent quand quelqu'un s'en va.
-      Un cahier ne prouve rien ; signer dans le texte se falsifie ; changer le mot de passe à
+      <b>rôles</b> donnés par un adulte responsable, qui se retirent quand quelqu'un s'en va. <br>Un cahier ne prouve rien ; <br>signer dans le texte se falsifie ; <br>changer le mot de passe à
       voix haute recrée exactement le problème.</p>
       <p style="color:var(--sub)">Et la règle générale, qui vaut bien au-delà du club :
       <b>un mot de passe qui a été dit à quelqu'un n'est plus un mot de passe.</b> Le nombre de
@@ -1092,7 +1145,7 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
 <section class="card seance-tete">
 <h2>🧭 Séance 3 — Qui est responsable de quoi ? Refaire, conclure</h2>
 <p class="question-directrice">Question directrice : devant un commentaire qui blesse, qu'engage chacun — et que doit faire le club avant sa prochaine publication ?</p>
-<p style="font-size:.92em;color:var(--sub)">Au programme : le commentaire qui blesse (activité 4, environ 25 min), le réinvestissement (environ 15 min), puis la synthèse, le Bonus, le bilan et le renvoi vers le QCM.</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme : <br>① le commentaire qui blesse (activité 4, environ 25 min) ; <br>② le réinvestissement (environ 15 min) ; <br>③ la synthèse, le Bonus, le bilan et le QCM.</p>
 </section>
 
 <section class="card" id="act4">
@@ -1104,69 +1157,63 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
   <div class="exo">
 
     <p>Associe chaque personne à ce qu'elle engage.</p>
-    <p style="margin-top:12px"><b>Celui qui écrit le commentaire moqueur</b></p>
-    <select id="a4a0">
-      <option value="">— je choisis —</option>
-      <option>il est l'auteur : c'est lui qui engage sa responsabilité en premier</option>
-      <option>il le diffuse à des gens qui ne l'auraient jamais vu : il aggrave</option>
-      <option>il le rend plus visible et le soutient publiquement : il y prend part</option>
-      <option>il n'a rien écrit, et son silence laisse la situation durer</option>
-      <option>il répond de ce qui reste publié sous ce compte, même s'il n'a rien écrit</option>
-    </select>
-    <p style="margin-top:12px"><b>Celui qui met un « j'aime » sous ce commentaire</b></p>
-    <select id="a4a1">
-      <option value="">— je choisis —</option>
-      <option>il est l'auteur : c'est lui qui engage sa responsabilité en premier</option>
-      <option>il le diffuse à des gens qui ne l'auraient jamais vu : il aggrave</option>
-      <option>il le rend plus visible et le soutient publiquement : il y prend part</option>
-      <option>il n'a rien écrit, et son silence laisse la situation durer</option>
-      <option>il répond de ce qui reste publié sous ce compte, même s'il n'a rien écrit</option>
-    </select>
-    <p style="margin-top:12px"><b>Celui qui le voit et ne dit rien</b></p>
-    <select id="a4a2">
-      <option value="">— je choisis —</option>
-      <option>il est l'auteur : c'est lui qui engage sa responsabilité en premier</option>
-      <option>il le diffuse à des gens qui ne l'auraient jamais vu : il aggrave</option>
-      <option>il le rend plus visible et le soutient publiquement : il y prend part</option>
-      <option>il n'a rien écrit, et son silence laisse la situation durer</option>
-      <option>il répond de ce qui reste publié sous ce compte, même s'il n'a rien écrit</option>
-    </select>
-    <p style="margin-top:12px"><b>Celui qui en fait une capture et la renvoie ailleurs</b></p>
-    <select id="a4a3">
-      <option value="">— je choisis —</option>
-      <option>il est l'auteur : c'est lui qui engage sa responsabilité en premier</option>
-      <option>il le diffuse à des gens qui ne l'auraient jamais vu : il aggrave</option>
-      <option>il le rend plus visible et le soutient publiquement : il y prend part</option>
-      <option>il n'a rien écrit, et son silence laisse la situation durer</option>
-      <option>il répond de ce qui reste publié sous ce compte, même s'il n'a rien écrit</option>
-    </select>
-    <p style="margin-top:12px"><b>Celui qui tient le compte du club</b></p>
-    <select id="a4a4">
-      <option value="">— je choisis —</option>
-      <option>il est l'auteur : c'est lui qui engage sa responsabilité en premier</option>
-      <option>il le diffuse à des gens qui ne l'auraient jamais vu : il aggrave</option>
-      <option>il le rend plus visible et le soutient publiquement : il y prend part</option>
-      <option>il n'a rien écrit, et son silence laisse la situation durer</option>
-      <option>il répond de ce qui reste publié sous ce compte, même s'il n'a rien écrit</option>
-    </select>
-    <p style="margin-top:14px"><b>Le premier geste.</b> Maël voit le commentaire. Que fait-il
-    en premier ?</p>
-    <select id="a4q1">
-      <option value="">— je choisis —</option>
-      <option>il en parle à un adulte de l'établissement, et garde une capture</option>
-      <option>il répond au commentaire pour rétablir la vérité</option>
-      <option>il supprime la publication pour que tout disparaisse</option>
-      <option>il attend quelques jours pour voir si ça se calme tout seul</option>
-    </select>
-    <p><b>Et l'usurpation.</b> Le lendemain, une publication insultante paraît sur le compte du
-    club. Aucun membre ne l'a écrite. Que peut prouver le club ?</p>
-    <select id="a4q2">
-      <option value="">— je choisis —</option>
-      <option>rien : avec un compte partagé, il ne peut même pas s'en dédouaner</option>
-      <option>que ce n'est aucun des six, puisqu'ils s'en portent garants</option>
-      <option>que le compte a été piraté, puisqu'ils n'ont rien écrit</option>
-      <option>que la publication est fausse, en la supprimant rapidement</option>
-    </select>
+    <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>il est l'auteur : c'est lui qui engage sa responsabilité en premier</li><li><b>B</b>il le diffuse à des gens qui ne l'auraient jamais vu : il aggrave</li><li><b>C</b>il le rend plus visible et le soutient publiquement : il y prend part</li><li><b>D</b>il n'a rien écrit, et son silence laisse la situation durer</li><li><b>E</b>il répond de ce qui reste publié sous ce compte, même s'il n'a rien écrit</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="a4a0">
+  <legend><b>Celui qui écrit le commentaire moqueur</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4a0" id="a4a0__1" value="il est l&#x27;auteur : c&#x27;est lui qui engage sa responsabilité en premier" aria-label="A — il est l&#x27;auteur : c&#x27;est lui qui engage sa responsabilité en premier"><label for="a4a0__1" title="il est l&#x27;auteur : c&#x27;est lui qui engage sa responsabilité en premier">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a0" id="a4a0__2" value="il le diffuse à des gens qui ne l&#x27;auraient jamais vu : il aggrave" aria-label="B — il le diffuse à des gens qui ne l&#x27;auraient jamais vu : il aggrave"><label for="a4a0__2" title="il le diffuse à des gens qui ne l&#x27;auraient jamais vu : il aggrave">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a0" id="a4a0__3" value="il le rend plus visible et le soutient publiquement : il y prend part" aria-label="C — il le rend plus visible et le soutient publiquement : il y prend part"><label for="a4a0__3" title="il le rend plus visible et le soutient publiquement : il y prend part">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a0" id="a4a0__4" value="il n&#x27;a rien écrit, et son silence laisse la situation durer" aria-label="D — il n&#x27;a rien écrit, et son silence laisse la situation durer"><label for="a4a0__4" title="il n&#x27;a rien écrit, et son silence laisse la situation durer">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a0" id="a4a0__5" value="il répond de ce qui reste publié sous ce compte, même s&#x27;il n&#x27;a rien écrit" aria-label="E — il répond de ce qui reste publié sous ce compte, même s&#x27;il n&#x27;a rien écrit"><label for="a4a0__5" title="il répond de ce qui reste publié sous ce compte, même s&#x27;il n&#x27;a rien écrit">E</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a4a1">
+  <legend><b>Celui qui met un « j'aime » sous ce commentaire</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4a1" id="a4a1__1" value="il est l&#x27;auteur : c&#x27;est lui qui engage sa responsabilité en premier" aria-label="A — il est l&#x27;auteur : c&#x27;est lui qui engage sa responsabilité en premier"><label for="a4a1__1" title="il est l&#x27;auteur : c&#x27;est lui qui engage sa responsabilité en premier">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a1" id="a4a1__2" value="il le diffuse à des gens qui ne l&#x27;auraient jamais vu : il aggrave" aria-label="B — il le diffuse à des gens qui ne l&#x27;auraient jamais vu : il aggrave"><label for="a4a1__2" title="il le diffuse à des gens qui ne l&#x27;auraient jamais vu : il aggrave">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a1" id="a4a1__3" value="il le rend plus visible et le soutient publiquement : il y prend part" aria-label="C — il le rend plus visible et le soutient publiquement : il y prend part"><label for="a4a1__3" title="il le rend plus visible et le soutient publiquement : il y prend part">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a1" id="a4a1__4" value="il n&#x27;a rien écrit, et son silence laisse la situation durer" aria-label="D — il n&#x27;a rien écrit, et son silence laisse la situation durer"><label for="a4a1__4" title="il n&#x27;a rien écrit, et son silence laisse la situation durer">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a1" id="a4a1__5" value="il répond de ce qui reste publié sous ce compte, même s&#x27;il n&#x27;a rien écrit" aria-label="E — il répond de ce qui reste publié sous ce compte, même s&#x27;il n&#x27;a rien écrit"><label for="a4a1__5" title="il répond de ce qui reste publié sous ce compte, même s&#x27;il n&#x27;a rien écrit">E</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a4a2">
+  <legend><b>Celui qui le voit et ne dit rien</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4a2" id="a4a2__1" value="il est l&#x27;auteur : c&#x27;est lui qui engage sa responsabilité en premier" aria-label="A — il est l&#x27;auteur : c&#x27;est lui qui engage sa responsabilité en premier"><label for="a4a2__1" title="il est l&#x27;auteur : c&#x27;est lui qui engage sa responsabilité en premier">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a2" id="a4a2__2" value="il le diffuse à des gens qui ne l&#x27;auraient jamais vu : il aggrave" aria-label="B — il le diffuse à des gens qui ne l&#x27;auraient jamais vu : il aggrave"><label for="a4a2__2" title="il le diffuse à des gens qui ne l&#x27;auraient jamais vu : il aggrave">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a2" id="a4a2__3" value="il le rend plus visible et le soutient publiquement : il y prend part" aria-label="C — il le rend plus visible et le soutient publiquement : il y prend part"><label for="a4a2__3" title="il le rend plus visible et le soutient publiquement : il y prend part">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a2" id="a4a2__4" value="il n&#x27;a rien écrit, et son silence laisse la situation durer" aria-label="D — il n&#x27;a rien écrit, et son silence laisse la situation durer"><label for="a4a2__4" title="il n&#x27;a rien écrit, et son silence laisse la situation durer">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a2" id="a4a2__5" value="il répond de ce qui reste publié sous ce compte, même s&#x27;il n&#x27;a rien écrit" aria-label="E — il répond de ce qui reste publié sous ce compte, même s&#x27;il n&#x27;a rien écrit"><label for="a4a2__5" title="il répond de ce qui reste publié sous ce compte, même s&#x27;il n&#x27;a rien écrit">E</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a4a3">
+  <legend><b>Celui qui en fait une capture et la renvoie ailleurs</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4a3" id="a4a3__1" value="il est l&#x27;auteur : c&#x27;est lui qui engage sa responsabilité en premier" aria-label="A — il est l&#x27;auteur : c&#x27;est lui qui engage sa responsabilité en premier"><label for="a4a3__1" title="il est l&#x27;auteur : c&#x27;est lui qui engage sa responsabilité en premier">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a3" id="a4a3__2" value="il le diffuse à des gens qui ne l&#x27;auraient jamais vu : il aggrave" aria-label="B — il le diffuse à des gens qui ne l&#x27;auraient jamais vu : il aggrave"><label for="a4a3__2" title="il le diffuse à des gens qui ne l&#x27;auraient jamais vu : il aggrave">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a3" id="a4a3__3" value="il le rend plus visible et le soutient publiquement : il y prend part" aria-label="C — il le rend plus visible et le soutient publiquement : il y prend part"><label for="a4a3__3" title="il le rend plus visible et le soutient publiquement : il y prend part">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a3" id="a4a3__4" value="il n&#x27;a rien écrit, et son silence laisse la situation durer" aria-label="D — il n&#x27;a rien écrit, et son silence laisse la situation durer"><label for="a4a3__4" title="il n&#x27;a rien écrit, et son silence laisse la situation durer">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a3" id="a4a3__5" value="il répond de ce qui reste publié sous ce compte, même s&#x27;il n&#x27;a rien écrit" aria-label="E — il répond de ce qui reste publié sous ce compte, même s&#x27;il n&#x27;a rien écrit"><label for="a4a3__5" title="il répond de ce qui reste publié sous ce compte, même s&#x27;il n&#x27;a rien écrit">E</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a4a4">
+  <legend><b>Celui qui tient le compte du club</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4a4" id="a4a4__1" value="il est l&#x27;auteur : c&#x27;est lui qui engage sa responsabilité en premier" aria-label="A — il est l&#x27;auteur : c&#x27;est lui qui engage sa responsabilité en premier"><label for="a4a4__1" title="il est l&#x27;auteur : c&#x27;est lui qui engage sa responsabilité en premier">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a4" id="a4a4__2" value="il le diffuse à des gens qui ne l&#x27;auraient jamais vu : il aggrave" aria-label="B — il le diffuse à des gens qui ne l&#x27;auraient jamais vu : il aggrave"><label for="a4a4__2" title="il le diffuse à des gens qui ne l&#x27;auraient jamais vu : il aggrave">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a4" id="a4a4__3" value="il le rend plus visible et le soutient publiquement : il y prend part" aria-label="C — il le rend plus visible et le soutient publiquement : il y prend part"><label for="a4a4__3" title="il le rend plus visible et le soutient publiquement : il y prend part">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a4" id="a4a4__4" value="il n&#x27;a rien écrit, et son silence laisse la situation durer" aria-label="D — il n&#x27;a rien écrit, et son silence laisse la situation durer"><label for="a4a4__4" title="il n&#x27;a rien écrit, et son silence laisse la situation durer">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a4" id="a4a4__5" value="il répond de ce qui reste publié sous ce compte, même s&#x27;il n&#x27;a rien écrit" aria-label="E — il répond de ce qui reste publié sous ce compte, même s&#x27;il n&#x27;a rien écrit"><label for="a4a4__5" title="il répond de ce qui reste publié sous ce compte, même s&#x27;il n&#x27;a rien écrit">E</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a4q1">
+  <legend><b>Le premier geste.</b> Maël voit le commentaire. Que fait-il
+    en premier ?</legend>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__1" value="il en parle à un adulte de l&#x27;établissement, et garde une capture"><label for="a4q1__1">il en parle à un adulte de l'établissement, et garde une capture</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__2" value="il répond au commentaire pour rétablir la vérité"><label for="a4q1__2">il répond au commentaire pour rétablir la vérité</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__3" value="il supprime la publication pour que tout disparaisse"><label for="a4q1__3">il supprime la publication pour que tout disparaisse</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__4" value="il attend quelques jours pour voir si ça se calme tout seul"><label for="a4q1__4">il attend quelques jours pour voir si ça se calme tout seul</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a4q2">
+  <legend><b>Et l'usurpation.</b> Le lendemain, une publication insultante paraît sur le compte du
+    club. Aucun membre ne l'a écrite. Que peut prouver le club ?</legend>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__1" value="rien : avec un compte partagé, il ne peut même pas s&#x27;en dédouaner"><label for="a4q2__1">rien : avec un compte partagé, il ne peut même pas s'en dédouaner</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__2" value="que ce n&#x27;est aucun des six, puisqu&#x27;ils s&#x27;en portent garants"><label for="a4q2__2">que ce n'est aucun des six, puisqu'ils s'en portent garants</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__3" value="que le compte a été piraté, puisqu&#x27;ils n&#x27;ont rien écrit"><label for="a4q2__3">que le compte a été piraté, puisqu'ils n'ont rien écrit</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__4" value="que la publication est fausse, en la supprimant rapidement"><label for="a4q2__4">que la publication est fausse, en la supprimant rapidement</label></div>
+</fieldset>
     <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
     <div class="feedback" id="fb4"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
@@ -1176,13 +1223,13 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
       <p><b>Celui qui le voit et ne dit rien</b> — il n'a rien écrit, et son silence laisse la situation durer</p>
       <p><b>Celui qui en fait une capture et la renvoie ailleurs</b> — il le diffuse à des gens qui ne l'auraient jamais vu : il aggrave</p>
       <p><b>Celui qui tient le compte du club</b> — il répond de ce qui reste publié sous ce compte, même s'il n'a rien écrit</p>
-      <p style="margin-top:10px"><b>Le premier geste n'est pas de répondre.</b> Répondre nourrit,
-      et engage à son tour. On en parle à un adulte de l'établissement — professeur, CPE,
+      <p style="margin-top:10px"><b>Le premier geste n'est pas de répondre.</b><br>Répondre nourrit,
+      et engage à son tour. <br>On en parle à un adulte de l'établissement — professeur, CPE,
       infirmière — et on <b>garde une capture</b> avant toute suppression : c'est ce qui permet
-      d'établir les faits. Supprimer tout de suite fait disparaître la preuve en même temps que
-      le commentaire. Le <b>3018</b> est le numéro national gratuit pour les violences numériques.</p>
-      <p><b>L'usurpation, et le retour du compte partagé.</b> Le club ne peut rien prouver — ni
-      qui a publié, ni que ce n'était aucun d'eux. <b>Un compte partagé ne permet même pas de
+      d'établir les faits. <br>Supprimer tout de suite fait disparaître la preuve en même temps que
+      le commentaire. <br>Le <b>3018</b> est le numéro national gratuit pour les violences numériques.</p>
+      <p><b>L'usurpation, et le retour du compte partagé.</b><br>Le club ne peut rien prouver — ni
+      qui a publié, ni que ce n'était aucun d'eux. <b><br>Un compte partagé ne permet même pas de
       se dédouaner.</b> C'est le même défaut qu'à l'activité 3, vu de l'autre côté : ce qui
       empêche d'attribuer une faute empêche aussi de s'en défendre.</p>
       <p style="color:var(--sub)">Et le « j'aime » : il ne s'agit pas de dire que celui qui aime
@@ -1194,12 +1241,10 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
 
 <section class="card">
   <h2>🔄 REFAIRE — Réinvestissement ⏱ ~15 min</h2><p class="pastille-maison" style="display:inline-block;margin:.35rem 0 .2rem;padding:.15rem .7rem;border:1px solid currentColor;border-radius:10px;font-size:.9rem;font-weight:600;line-height:1.4">🏠 Peut se faire à la maison (sans matériel, sur téléphone)</p>
-<p>Le club veut publier la photo de la remise des prix du concours de robotique :
-  huit élèves de face, la coupe, le nom du collège sur la banderole, et le trophée qu'on
-  distingue bien.</p>
-  <p>Écris, en quelques lignes : <b>ce que tu retires</b>, <b>ce que tu demandes et à qui</b>,
-  et <b>ce que le club change à son compte</b> avant de publier quoi que ce soit.</p>
-  <textarea id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+<p>Le club veut publier la photo de la remise des prix du concours de robotique. <br>On y voit huit élèves de face, la coupe, le nom du collège sur la banderole, et le trophée, qu'on distingue bien.</p>
+  <p>Avant toute publication, écris en quelques lignes&nbsp;: <br>① <b>ce que tu retires</b>&nbsp;; <br>② <b>ce que tu demandes, et à qui</b>&nbsp;; <br>③ <b>ce que le club change à son compte</b>.</p>
+  <textarea aria-label="Je choisirais … parce que …" id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Avant de publier, je retire … , parce que … »</li><li>« Je demande l'accord de … , parce que … »</li><li>« Le club change son compte : … , pour que … »</li></ul></details>
   <button class="btn check" data-check="5" type="button">✅ Vérifier le réinvestissement</button>
   <div class="feedback" id="fb5"></div>
   <details class="correction"><summary>📖 Correction</summary><div>
@@ -1213,7 +1258,7 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
       et le mot de passe commun effacé du tableau. Sans cela, la publication de demain
       appartiendra à tout le monde et à personne.</p>
       <p style="color:var(--sub)">Et une question qu'on n'a pas encore posée : <b>combien de
-      temps ?</b> Une photo publiée reste. Les huit élèves de la photo auront vingt ans, puis
+      temps ?</b> Une photo publiée reste. <br>Les huit élèves de la photo auront vingt ans, puis
       trente. Le droit à l'effacement existe, il n'est pas automatique — et il ne rattrape pas
       les copies déjà faites par d'autres.</p></div></details>
 </section>
@@ -1249,6 +1294,7 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
   ou plus</b>. Puis une autre qui a <b>zéro indice</b> et <b>une règle enfreinte</b>.</p>
   <label for="bonus1" style="display:block;font-weight:600;margin:10px 0 4px">Les deux publications que j'ai composées, élément par élément :</label>
   <textarea id="bonus1" style="min-height:80px"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« La publication n° … n'enfreint aucune règle, mais elle donne … indices : … »</li><li>« La publication n° … ne donne aucun indice, mais elle enfreint la règle « … ». »</li></ul></details>
   <details class="correction">
     <summary>✅ Corrigé du défi 1 — les deux publications (à ouvrir après avoir cherché sur le banc)</summary>
 
@@ -1258,50 +1304,49 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
     <p><b>Zéro règle enfreinte, et trois indices ou plus.</b> Deux façons d'y arriver, et
     elles n'enseignent pas la même chose.</p>
     <ul>
-      <li><b>La plus simple.</b> Garde la photo du jardin, la plaque de rue, l'heure, le
-      nom du collège et la mention de la classe&nbsp;; laisse de côté le visage de Maël
-      et son nom&nbsp;; pour l'illustration, choisis une provenance réglée — une photo
-      prise par la classe, ou une image sous licence CC BY avec l'auteur cité. Le banc
+      <li><b>La plus simple.</b><br>Garde la photo du jardin, la plaque de rue, l'heure, le
+      nom du collège et la mention de la classe&nbsp;; <br>laisse de côté le visage de Maël
+      et son nom&nbsp;; <br>pour l'illustration, choisis une provenance réglée — une photo
+      prise par la classe, ou une image sous licence CC BY avec l'auteur cité. <br>Le banc
       affiche <b>4 indices, 0 règle enfreinte</b>.</li>
-      <li><b>La plus instructive.</b> Garde <b>tout</b>, visage et nom compris, et choisis
-      «&nbsp;accord écrit de Maël et de ses responsables légaux&nbsp;». Le banc affiche
+      <li><b>La plus instructive.</b><br>Garde <b>tout</b>, visage et nom compris, et choisis
+      «&nbsp;accord écrit de Maël et de ses responsables légaux&nbsp;». <br>Le banc affiche
       <b>7 indices, 0 règle enfreinte</b>. L'autorisation a rendu la publication
-      licite — et elle n'a retiré <i>aucun</i> indice. Maël est exactement aussi
+      licite — et elle n'a retiré <i>aucun</i> indice. <br>Maël est exactement aussi
       reconnaissable qu'avant.</li>
     </ul>
 
-    <p><b>Zéro indice, et une règle enfreinte.</b> Décoche tout sauf la photo du jardin —
+    <p><b>Zéro indice, et une règle enfreinte.</b><br>Décoche tout sauf la photo du jardin —
     c'est le seul élément qui n'est pas un indice — puis choisis, pour l'illustration,
-    «&nbsp;une image trouvée sur un site, sans licence indiquée&nbsp;». Le banc affiche
-    <b>0 indice, 1 règle enfreinte</b>&nbsp;: le droit d'auteur. Personne n'est
+    «&nbsp;une image trouvée sur un site, sans licence indiquée&nbsp;». <br>Le banc affiche
+    <b>0 indice, 1 règle enfreinte</b>&nbsp;: le droit d'auteur. <br>Personne n'est
     identifiable, et la publication reste illicite.</p>
 
-    <p><b>Ce que les deux démontrent ensemble.</b> Être en règle et être discret sont deux
-    propriétés différentes, et elles ne varient pas ensemble. On peut être parfaitement en
+    <p><b>Ce que les deux démontrent ensemble.</b><br>Être en règle et être discret sont deux
+    propriétés différentes, et elles ne varient pas ensemble. <br>On peut être parfaitement en
     règle et parfaitement identifiable&nbsp;; on peut être parfaitement anonyme et hors la
-    loi. Les deux compteurs du banc ne mesurent pas la même chose de deux façons&nbsp;:
+    loi. <br>Les deux compteurs du banc ne mesurent pas la même chose de deux façons&nbsp;:
     l'un compte ce que la publication <b>révèle</b>, l'autre ce qu'elle
     <b>enfreint</b>.</p>
 
     <p><b>Attendus.</b> Pour chacune des deux publications : la liste des éléments cochés, la provenance de l'image et
-    l'autorisation choisies dans les deux menus, puis les deux chiffres que le banc affiche (indices, règles enfreintes).
-    Toute publication qui affiche <b>0 règle et 3 indices ou plus</b> convient pour la première : la plus simple ci-dessus
-    avec la géolocalisation en plus en affiche <b>5</b>. Pour la seconde, la photo du jardin doit rester : décocher aussi
+    l'autorisation choisies dans les deux menus, puis les deux chiffres que le banc affiche (indices, règles enfreintes). <br>Toute publication qui affiche <b>0 règle et 3 indices ou plus</b> convient pour la première : la plus simple ci-dessus
+    avec la géolocalisation en plus en affiche <b>5</b>. <br>Pour la seconde, la photo du jardin doit rester : décocher aussi
     le jardin laisse les compteurs à 0 et 1, mais il n'y a plus de publication — le banc répond « Il n'y a rien à
     publier ».</p>
 
     <p class="note"><b>Erreurs fréquentes.</b> Croire qu'une autorisation rend
     anonyme&nbsp;: le banc le montre littéralement, le compteur d'indices ne bouge pas d'un
-    seul quand l'accord est donné. Et croire qu'un compteur à zéro suffit&nbsp;: zéro
+    seul quand l'accord est donné. <br>Et croire qu'un compteur à zéro suffit&nbsp;: zéro
     indice avec une règle enfreinte reste une publication qu'on ne peut pas publier.</p>
     <ul>
       <li><b>Oublier la géolocalisation.</b> Elle ne se voit pas sur la photo, mais elle compte : la photo du jardin
       avec la géolocalisation, c'est <b>1 indice</b>, pas zéro.</li>
-      <li><b>Laisser un menu sur « — je choisis — ».</b> Le banc ne compte pas une décision qui manque comme une règle
+      <li><b>Laisser un menu sur « — je choisis — ».</b><br>Le banc ne compte pas une décision qui manque comme une règle
       enfreinte : avec la photo du jardin seule et l'image non choisie, il affiche <b>0 règle</b> et refuse de publier
-      tant que la provenance de l'image n'est pas décidée. Pour obtenir la règle enfreinte, il faut choisir l'image
+      tant que la provenance de l'image n'est pas décidée. <br>Pour obtenir la règle enfreinte, il faut choisir l'image
       sans licence.</li>
-      <li><b>Prendre l'accord oral pour l'accord écrit.</b> Avec tout coché et « Maël est d'accord, il l'a dit à
+      <li><b>Prendre l'accord oral pour l'accord écrit.</b><br>Avec tout coché et « Maël est d'accord, il l'a dit à
       l'oral », le banc affiche <b>7 indices et 2 règles</b> : un accord oral ne se prouve pas, et pour un mineur ce
       sont ses responsables légaux qui autorisent.</li>
     </ul>
@@ -1312,6 +1357,7 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
   te concerner — et pourquoi.</p>
   <label for="bonus2" style="display:block;font-weight:600;margin:10px 0 4px">Celle des deux que j'accepterais de voir me concerner, et pourquoi :</label>
   <textarea id="bonus2" style="min-height:80px"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« J'accepterais de voir la publication n° … me concerner, parce que … »</li><li>« Je refuserais l'autre, parce que … »</li></ul></details>
   <details class="correction">
     <summary>✅ Corrigé du défi 2 — celle que j'accepterais de voir me concerner</summary>
 
@@ -1334,7 +1380,7 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
     <p><b>Attendus.</b> Un choix entre les deux publications, et la raison du choix : ce sur quoi tu t'appuies (le
     droit, ou ce qu'on peut déduire de toi), puis ce que ton choix ne règle pas.</p>
     <p>Ce qu'une bonne réponse ne fait pas&nbsp;: trancher sans dire <b>au nom de
-    quoi</b>. «&nbsp;Je préfère la deuxième&nbsp;» n'est pas une réponse&nbsp;;
+    quoi</b>. <br>«&nbsp;Je préfère la deuxième&nbsp;» n'est pas une réponse&nbsp;;
     «&nbsp;je préfère la deuxième parce que je donne plus de poids à ce qu'on peut
     déduire de moi qu'à la régularité de la publication&nbsp;» en est une.</p>
     <p class="note"><b>Erreurs fréquentes.</b></p>
@@ -1355,25 +1401,23 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
   <p style="font-size:.92em;color:var(--sub)">Compare : ta réponse de départ parlait-elle d'un
   élément à retirer, ou de la combinaison de plusieurs ?</p>
 
-  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
-  <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">où as-tu hésité sur le banc ou
-  dans les activités, et qu'est-ce qui t'a surpris — par exemple quand le compteur d'indices n'est pas tombé à zéro en
-  retirant le visage ?</label></p>
+  <textarea aria-label="Ce que je sais faire maintenant, et ce qui me résiste encore…" id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Au départ, je pensais qu'il suffisait de retirer … ; maintenant je sais que … »</li><li>« Ce que je sais faire : … »</li><li>« Ce qui me résiste encore : … »</li></ul></details>
+  <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">où as-tu hésité, sur le banc ou dans les activités ? <br>Qu'est-ce qui t'a surpris ? Par exemple, quand le compteur d'indices n'est pas tombé à zéro en retirant le visage.</label></p>
   <textarea id="bilanMeta" rows="2" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…"></textarea>
   <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><ul><li>J'ai hésité sur ____ , parce que ____ .</li><li>Ce qui m'a surpris, c'est ____ .</li></ul></details>
-  <p style="margin-top:12px"><b>Je me positionne sur 5e_C1.5 :</b></p>
-  <select id="pos">
-    <option value="">— je me positionne —</option>
-    <option>Je sais dire ce qu'une publication révèle en plus, et ce que chacun y engage</option>
-    <option>Je sais le dire si on m'aide à repérer les éléments un par un</option>
-    <option>Je repère les éléments visibles, mais pas ce qui se déduit de leur combinaison</option>
-    <option>Je ne sais pas encore ce qu'une publication révèle au-delà de ce qu'elle montre</option>
-  </select>
+  <fieldset class="qcm-groupe" id="pos">
+  <legend><b>Je me positionne sur 5e_C1.5 :</b></legend>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__1" value="Je sais dire ce qu&#x27;une publication révèle en plus, et ce que chacun y engage"><label for="pos__1">Je sais dire ce qu'une publication révèle en plus, et ce que chacun y engage</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__2" value="Je sais le dire si on m&#x27;aide à repérer les éléments un par un"><label for="pos__2">Je sais le dire si on m'aide à repérer les éléments un par un</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__3" value="Je repère les éléments visibles, mais pas ce qui se déduit de leur combinaison"><label for="pos__3">Je repère les éléments visibles, mais pas ce qui se déduit de leur combinaison</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__4" value="Je ne sais pas encore ce qu&#x27;une publication révèle au-delà de ce qu&#x27;elle montre"><label for="pos__4">Je ne sais pas encore ce qu'une publication révèle au-delà de ce qu'elle montre</label></div>
+</fieldset>
 </section>
 
 <section class="card" style="text-align:center">
   <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
-  <p>30 questions sur ce qu'une publication révèle, ce qu'on a le droit de reprendre, et ce que chacun engage. 15 portent sur 5e_C1.5, 15 sur 5e_C1.6.</p>
+  <p>30 questions sur ce qu'une publication révèle, ce qu'on a le droit de reprendre, et ce que chacun engage. <br>15 portent sur 5e_C1.5, 15 sur 5e_C1.6.</p>
   <a class="btn" href="qcm_5e_C1.5-C1.6_le-compte-du-club.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
 
@@ -1590,11 +1634,11 @@ const CHECKS = {
   0(){ let s = 0;
        s += sv("a0q1","la géolocalisation enregistrée par le téléphone dans le fichier"); s += sv("a0q2","un élément qui aide à remonter à une personne réelle ou à l'endroit où elle est"); s += sv("a0q3","un lieu seul ou une heure seule ne dit pas où sera quelqu'un");
        return {score: s, total: 3, exp: !!window.__exp.regarde,
-               expMsg: "Charge d'abord la publication du club sur le banc et clique sur « 🔍 Regarder ce que ça révèle » — on ne commente pas ce qu'on n'a pas regardé."}; },
+               expMsg: "Charge d'abord la publication du club sur le banc. Puis clique sur « 🔍 Regarder ce que ça révèle » : on ne commente pas ce qu'on n'a pas regardé."}; },
   1(){ let s = 0;
        s += nb("rel0", 7, 0); s += nb("rel1", 6, 0); s += nb("rel2", 0, 0); s += sv("a1q1","son nom, sa classe et son collège le désignent toujours"); s += sv("a1q2","rend la publication licite, et ne le rend pas moins reconnaissable");
        return {score: s, total: 5, exp: !!window.__exp.anonyme,
-               expMsg: "Descends d'abord le compteur d'indices à zéro sur le banc, en gardant la photo du jardin : c'est ce geste-là que l'activité te demande de commenter."}; },
+               expMsg: "Descends d'abord le compteur d'indices à zéro sur le banc, en gardant la photo du jardin. C'est ce geste-là que l'activité te demande de commenter."}; },
   2(){ let s = 0;
        s += sv("a2l0", "protégée par défaut : on ne la reprend pas sans demander"); s += sv("a2l1", "réutilisable, à condition de citer l'auteur"); s += sv("a2l2", "réutilisable en citant l'auteur, mais pas dans un usage commercial"); s += sv("a2l3", "réutilisable librement, y compris sans citer l'auteur"); s += sv("a2l4", "elle appartient à ceux qui l'ont prise : ce sont eux qui décident"); s += sv("a2q1","soumise aux mêmes règles que sur le site d'où elle vient");
        return {score: s, total: 6, exp: true}; },
@@ -1609,7 +1653,7 @@ const CHECKS = {
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
-  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
+  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; (window.__exp.valides = window.__exp.valides || {})[n] = 1; majBandeau(); }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
   save();
@@ -1617,8 +1661,9 @@ document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("cli
 
 function save(){
   const o = {inputs: {}, checks: {}, exp: window.__exp};
-  document.querySelectorAll("input, select, textarea").forEach(e => {
+  document.querySelectorAll("input, select, textarea, fieldset.qcm-groupe").forEach(e => {
     if(!e.id) return;
+    if(e.type === "radio" && e.closest(".qcm-groupe")) return;   // n°300 : le groupe porte sa valeur, pas ses boutons
     if(e.type === "checkbox" || (e.type === "radio" && e.closest("#billet"))) o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
   o.onglet = ongletActif;   // l'onglet en cours, à part des verrous
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
@@ -1700,6 +1745,25 @@ if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
 
 restore(); majPubli(false); regarder(false);
 placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // le banc rejoint la séance affichée
+
+/* ══ Règle d'or n°29 — mode essentiel (gabarit commun, V2 du 07/11/2026) ══ */
+function majEssentiel(){ const b=$("btnEssentiel"); if(!b) return;
+  const on=document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false"); }
+if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
+  document.body.classList.toggle("essentiel");
+  (window.__exp = window.__exp || {})["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save(); });
+/* ══ Règle d'or n°30 — le bandeau des tâches : une ligne par activité, barrée quand elle est validée ══ */
+function majBandeau(){ const b=$("tachesBandeau"); if(!b) return; const ul=b.querySelector("ul"); if(!ul) return;
+  const v=(window.__exp||{}).valides||{}; let faites=0;
+  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.tache]; li.classList.toggle("faite", ok); if(ok) faites++;
+    li.querySelector(".tb-etat").textContent = ok ? "✔" : "○"; });
+  const c=b.querySelector(".tb-compte"); if(c) c.textContent = faites + " / " + ul.children.length + " validée(s)"; }
+window.__exp = window.__exp || {};
+if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majBandeau();
 })();
 </script>
 
