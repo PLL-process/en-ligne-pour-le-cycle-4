@@ -41,6 +41,33 @@ try:
 except FileNotFoundError:
     HERITEES = set()
 
+# ─────────────────────────────────────────────────────────────────────────────
+# Les ressources « rangées ailleurs » (08/11/2026). Pascal : « je ne vois pas dans l'index certaines séquences qui
+# sont allées ailleurs, dont je me sers cette année, car j'ai toujours du mal à les retrouver ». L'index ne parcourt
+# que les dossiers des repères : une page restée dans l'archive ou dans un atelier partagé n'y paraît jamais. Le
+# fichier _outils/index_complements.json la rattache à son repère (marque ↪) et à l'« Accès rapide » de tête, sans
+# déplacer le fichier : son adresse est celle que les élèves ont déjà. Un chemin disparu arrête la génération.
+# ─────────────────────────────────────────────────────────────────────────────
+COMPLEMENTS_PATH = os.path.join(os.path.dirname(__file__), "index_complements.json")
+try:
+    with open(COMPLEMENTS_PATH, encoding="utf-8") as _f:
+        COMPLEMENTS = json.load(_f)
+except FileNotFoundError:
+    COMPLEMENTS = {"ranges_ailleurs": [], "acces_rapide": []}
+_RACINE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+for _e in COMPLEMENTS.get("ranges_ailleurs", []) + COMPLEMENTS.get("acces_rapide", []):
+    if not os.path.isfile(os.path.join(_RACINE, _e["chemin"])):
+        raise SystemExit("✘ index_complements.json : le fichier n'existe plus : " + _e["chemin"])
+EMOJI_COMPLEMENT = {"Activité": "🔧", "Évaluation": "📝", "EPI": "🤝", "Séquence": "📘", "QCM": "🧠"}
+
+
+def page_deplacee(chemin):
+    """une page qui n'est plus qu'un renvoi (« Ressource déplacée ») n'est pas une ressource à proposer"""
+    try:
+        return "<title>Ressource déplacée" in open(chemin, encoding="utf-8", errors="ignore").read(4000)
+    except OSError:
+        return False
+
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -412,6 +439,20 @@ a,a:where(:visited){color:#9ecbff}
 @media print{.badge-new{animation:none;background:#fff;border:1.5px solid #111;color:#111}}
 .code-line.nv-cible{background:rgba(255,180,84,.1);border-radius:8px;outline:1px solid rgba(255,180,84,.45)}
 .code-line{scroll-margin-top:14px}
+/* ── Accès rapide et ressources rangées ailleurs (08/11/2026) ── */
+.rapide{max-width:1080px;margin:0 auto 30px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:16px 22px}
+.rapide h2{margin:0 0 4px;color:var(--title);font-size:1.15em}
+.rapide-note{margin:0 0 12px;color:var(--sub);font-size:.85em}
+.rapide-grille{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media(max-width:980px){.rapide-grille{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.rapide{padding:14px 12px}.rapide-grille{grid-template-columns:1fr}}
+.rapide-groupe{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:10px 14px;min-width:0}
+.rapide-groupe h3{margin:0 0 6px;font-size:.92em;color:var(--head)}
+.rapide-groupe ul{margin:0;padding-left:18px;font-size:.88em}
+.rapide-groupe li{margin:4px 0;overflow-wrap:anywhere}
+.rapide .niv{color:var(--sub);font-size:.85em;white-space:nowrap}
+.ailleurs{color:var(--sub);cursor:help}
+@media print{.rapide,.rapide-groupe{background:#fff!important;border-color:#999!important}.rapide h2,.rapide-groupe h3{color:#274a8a!important}.rapide-note,.rapide .niv{color:#4b74c6!important}}
 
 /* ── Règle d'or n°41 — l'index tenu au même niveau que ce qu'il indexe ── */
 a:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid var(--hl);outline-offset:2px;border-radius:4px}
@@ -480,6 +521,22 @@ D5 : les représentations du monde et l'activité humaine.</div>
 <main id="contenu">
 """)
 
+# L'accès rapide : ce que Pascal cherche le plus souvent cette année, en tête de page (08/11/2026).
+if COMPLEMENTS.get("acces_rapide"):
+    groupes = {}
+    for e in COMPLEMENTS["acces_rapide"]:
+        groupes.setdefault(e["groupe"], []).append(e)
+    blocs_rapides = []
+    for g, items in groupes.items():
+        lis = "".join(f'<li><a href="{html.escape(e["chemin"])}">{html.escape(e["titre"])}</a> '
+                      f'<span class="niv">{html.escape(e["niveau"])}</span></li>' for e in items)
+        blocs_rapides.append(f'<div class="rapide-groupe"><h3>{html.escape(g)}</h3><ul>{lis}</ul></div>')
+    parts.append('<section class="rapide" id="acces-rapide" aria-labelledby="titre-rapide">'
+                 '<h2 id="titre-rapide">⚡ Accès rapide</h2>'
+                 '<p class="rapide-note">Les ressources qu\'on cherche le plus souvent cette année. '
+                 'Celles marquées ↪ dans les listes ci-dessous sont rangées dans un autre dossier.</p>'
+                 f'<div class="rapide-grille">{"".join(blocs_rapides)}</div></section>')
+
 total_peda = 0
 for theme_n in [1, 2, 3]:
     parts.append(f'<section class="theme" id="theme-{theme_n}"><header style="color:{THEME_COLOR[theme_n]}">{THEME_EMOJI[theme_n]} Thème {theme_n} — {html.escape(THEME_TITLES[theme_n])}<span class="nv-theme-slot" data-theme="{theme_n}"></span></header>')
@@ -507,6 +564,8 @@ for theme_n in [1, 2, 3]:
                     lien = f'{html.escape(r)}/{html.escape(fn)}'
                     herit = ('<span class="badge-herit" title="Ressource héritée — modernisation prévue">🛠</span>'
                              if f"{r}/{fn}" in HERITEES else "")
+                    if genre and nom.endswith(".html") and page_deplacee(os.path.join(DST, r, fn)):
+                        genre = None
                     if genre:
                         emoji, libelle = genre
                         # Un TP porte son rang et son nom dans son <h1> : on les
@@ -516,6 +575,12 @@ for theme_n in [1, 2, 3]:
                         peda.append(f'<li>{emoji} <a href="{lien}">{html.escape(titre)}</a>{herit}</li>')
                     else:
                         maint.append(f'<a href="{lien}">{html.escape(nom)}</a>')
+                for e in COMPLEMENTS.get("ranges_ailleurs", []):
+                    if e["code"] == full_code:
+                        dossier = e["chemin"].rsplit("/", 1)[0]
+                        peda.append(f'<li>{EMOJI_COMPLEMENT.get(e["type"], "📄")} <a href="{html.escape(e["chemin"])}">'
+                                    f'{html.escape(e["titre"])}</a> <span class="ailleurs" title="Rangée ailleurs : '
+                                    f'{html.escape(dossier)}">↪</span></li>')
                 n_peda += len(peda)
 
                 statut = STATUT_PAR_CODE.get(full_code, "")
