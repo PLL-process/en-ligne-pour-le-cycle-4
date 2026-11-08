@@ -43,6 +43,7 @@ CE QU'IL FAIT
          le texte du <p> qui précède.
 
     python3 _outils/migrer_gabarit_306.py <page.html> [--etat]
+    python3 _outils/migrer_gabarit_306.py <page.html> --n300 [--etat]   (page déjà sur le gabarit commun : n°300 seule)
 Il s'arrête sans écrire au premier doute ; il est rejouable (une page déjà migrée ne
 bouge plus).
 """
@@ -361,6 +362,26 @@ def etiqueter_textareas(t, page):
     return t, faits
 
 
+def migrer_n300(chemin, etat):
+    """--n300 (08/11/2026, révision des trois thèmes) : une page déjà sur le gabarit commun ne reçoit que la conversion
+    des listes en groupes (n°300), le prototype « le groupe porte sa valeur » et la feuille des groupes. Sa sauvegarde
+    est étendue si elle a la forme connue ; sinon l'outil le DIT (collect()/restore() propres à la page, à adapter à
+    la main) au lieu de refuser."""
+    page = os.path.basename(chemin)
+    t = open(chemin, encoding="utf-8").read()
+    t, selects, laisses = convertir_selects(t, page)
+    t = poser_proto_css(t)
+    note = ""
+    try:
+        t = patcher_save(t, page)
+    except SystemExit:
+        note = " · sauvegarde à adapter à la main (save/collect propres à la page)"
+    if not etat:
+        open(chemin, "w", encoding="utf-8").write(t)
+    print("%s %s : %d liste(s) → groupes (%d propositions), %d menu(s) voulu(s) laissé(s)%s"
+          % ("À CONVERTIR" if etat else "CONVERTIE", page, len(selects), sum(n for _, n in selects), len(laisses), note))
+
+
 def migrer(chemin, etat):
     page = os.path.basename(chemin)
     t = open(chemin, encoding="utf-8").read()
@@ -381,4 +402,4 @@ def migrer(chemin, etat):
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     for a in args:
-        migrer(a, "--etat" in sys.argv)
+        (migrer_n300 if "--n300" in sys.argv else migrer)(a, "--etat" in sys.argv)

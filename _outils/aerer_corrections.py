@@ -1,0 +1,177 @@
+#!/usr/bin/env python3
+"""aerer_corrections.py — une correction d'un seul tenant passe à la ligne entre ses phrases (08/11/2026).
+
+Skill `texte-clair-et-aere`, passe complète d'une séquence (skill `revision-sequence`). `audit_aeration.py` signale
+dans les corrections deux défauts :
+  C1  un bloc de plus de 45 mots d'un seul tenant ;
+  C2  un bloc où deux « ; » ou plus cousent des idées.
+Pour un bloc C1, l'outil pose un retour à la ligne (<br>) à la fin d'une phrase, en gardant ensemble les phrases
+courtes : une ligne fait au moins 12 mots avant qu'un retour soit posé, sauf une phrase courte en tête de bloc
+(un repère : « Erreurs fréquentes. ») quand au moins 25 mots la suivent. Pour un bloc C2, il passe à la ligne après
+chaque « ; » (la forme de liste française : chaque item finit par « ; », le dernier par « . »).
+
+Il NE CHANGE AUCUN MOT. Il ne touche que le texte des blocs de correction (classes correction, correction-bloc,
+corrige-bonus, feedback), jamais l'intérieur d'un <code>, <kbd>, <pre>, <script>, <style>, <summary>, d'un titre, d'un
+champ ou d'un bouton. Une phrase seule de plus de 45 mots reste à réécrire à la main : l'outil la signale.
+
+Usage : python3 _outils/aerer_corrections.py <page.html>… [--ecrire]       (sans --ecrire : ce qui changerait)
+"""
+import os
+import re
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import audit_aeration as A  # noqa: E402
+
+MIN_LIGNE = 12
+INTERDITS = {"code", "kbd", "pre", "script", "style", "summary", "h1", "h2", "h3", "h4", "h5", "h6", "textarea",
+             "select", "option", "button", "label", "legend", "svg"}
+FRONTIERE = re.compile(r"^<\s*(/?)\s*(br|p|li|td|th|tr|h[1-6]|div|ul|ol|dl|dt|dd|table|summary|details|figure|section)\b",
+                       re.I)
+# une fin de phrase : . ! ? ou … (éventuellement suivie de » ou d'une parenthèse), une espace, puis une majuscule,
+# un guillemet ou un chiffre. « p. ex. », « 1. » en tête de liste et les nombres décimaux ne sont pas des fins.
+FIN = re.compile(r"(?<!\bp)(?<!\bex)(?<!\bcf)(?<!\bn°)(?<=[a-zà-ÿ0-9)»\]%])([.!?…]+[»)]?)(\s|&nbsp;)+(?=[A-ZÀ-ÖØ-Ý«0-9])")
+PV = re.compile(r"(&nbsp;| |\s)?;(\s|&nbsp;)+")
+
+
+DELIM = re.compile(r"(<br\s*/?>|</?(?:p|li|td|th|tr|h[1-6]|div|ul|ol|dl|dt|dd|table|summary|details|figure|section)\b[^>]*>)",
+                   re.I)
+DEBUT_MAJ = re.compile(r"(?:\s|&nbsp;)*(?=[A-ZÀ-ÖØ-Ý«0-9])")
+POINT_EN_TETE = re.compile(r"^([.!?…]+[»)]?)(?:\s|&nbsp;)+(?=[A-ZÀ-ÖØ-Ý«0-9])")
+
+
+def mots_texte(fragment):
+    return len(A.texte(fragment).split())
+
+
+def reflow_segment(seg, pile):
+    """un segment entre deux frontières : (segment aéré, retours posés)"""
+    total = mots_texte(seg)
+    c1 = total > A.SEUIL_CORRECTION
+    c2 = A.texte(seg).count(";") >= 2
+    toks = re.findall(r"<[^>]*>|[^<]+", seg, re.S)
+    if not (c1 or c2):
+        for t in toks:   # tenir la pile des balises interdites à jour
+            m = re.match(r"<\s*(/?)\s*([a-zA-Z0-9]+)", t)
+            if m and m.group(2).lower() in INTERDITS:
+                if m.group(1):
+                    if pile and pile[-1] == m.group(2).lower():
+                        pile.pop()
+                elif not t.endswith("/>"):
+                    pile.append(m.group(2).lower())
+        return seg, 0
+    sortie, poses, consommes, ligne, fin_avant, espace_avant = [], 0, 0, 0, False, False
+    for t in toks:
+        if t.startswith("<"):
+            m = re.match(r"<\s*(/?)\s*([a-zA-Z0-9]+)", t)
+            if m and m.group(2).lower() in INTERDITS:
+                if m.group(1):
+                    if pile and pile[-1] == m.group(2).lower():
+                        pile.pop()
+                elif not t.endswith("/>"):
+                    pile.append(m.group(2).lower())
+            sortie.append(t)
+            continue
+        n_t = len(t.split())
+        if pile:
+            sortie.append(t)
+            consommes += n_t
+            ligne += n_t
+            fin_avant = False
+            continue
+        coupes = []   # (texte gardé jusqu'à, reprise à, genre)
+        if fin_avant:
+            md = DEBUT_MAJ.match(t)
+            if md and (md.end() > 0 or espace_avant):
+                coupes.append((0, md.end(), "fin"))
+        mp = POINT_EN_TETE.match(t)
+        if mp and ligne > 0:
+            coupes.append((mp.end(1), mp.end(), "fin"))
+        for m in FIN.finditer(t):
+            coupes.append((m.end(1), m.end(), "fin"))
+        if c2:
+            for m in PV.finditer(t):
+                coupes.append((m.start() + len(m.group(1) or "") + 1, m.end(), "pv"))   # « ; » reste en fin de ligne
+        coupes.sort()
+        morceaux, pos = [], 0
+        for garde, reprise, genre in coupes:
+            if garde < pos:
+                continue
+            mots_avant = ligne + len(t[pos:garde].split())
+            reste = total - (consommes + len(t[:reprise].split()))
+            # une phrase courte en tête (« Erreurs fréquentes. ») ouvre sa ligne quand un long texte la suit ;
+            # sinon les phrases courtes restent ensemble
+            if (genre == "pv" and mots_avant >= 4) or (genre == "fin" and c1 and
+                                                        (mots_avant >= MIN_LIGNE or (mots_avant >= 3 and reste >= 25))):
+                morceaux.append(t[pos:garde] + (" <br>" if garde else "<br>"))
+                poses += 1
+                pos = reprise
+                ligne = 0
+        reste_t = t[pos:]
+        morceaux.append(reste_t)
+        ligne += len(reste_t.split())
+        consommes += n_t
+        fin_avant = bool(re.search(r"[a-zà-ÿ0-9)»\]%][.!?…]+[»)]?(?:\s|&nbsp;)*$", t))
+        espace_avant = bool(re.search(r"(?:\s|&nbsp;)$", t))
+        sortie.append("".join(morceaux))
+    return "".join(sortie), poses
+
+
+def reflow(fragment):
+    """retourne (fragment avec <br>, nombre de retours posés, blocs encore trop longs)"""
+    pile, sortie, poses = [], [], 0
+    for seg in DELIM.split(fragment):
+        if DELIM.fullmatch(seg or ""):
+            sortie.append(seg)
+            continue
+        neuf, n = reflow_segment(seg, pile)
+        sortie.append(neuf)
+        poses += n
+    neuf = "".join(sortie)
+    longues = [b[:80] for b in A.blocs(neuf) if A.mots(b) > A.SEUIL_CORRECTION]
+    return neuf, poses, longues
+
+
+def traiter(chemin, ecrire):
+    s = open(chemin, encoding="utf-8").read()
+    morceaux, pos, total, longues = [], 0, 0, []
+    for m in re.finditer(r"<(div|p|section|details|aside)\b[^>]*%s[^>]*>" % A.CLASSES_CORRECTION.pattern, s):
+        if m.start() < pos:
+            continue
+        contenu = A.element(s, m.start())
+        deb = s.index(contenu, m.start()) if contenu else m.end()
+        fin = deb + len(contenu)
+        neuf, n, lg = reflow(contenu)
+        morceaux.append(s[pos:deb])
+        morceaux.append(neuf)
+        pos = fin
+        total += n
+        longues += lg
+    morceaux.append(s[pos:])
+    neuf = "".join(morceaux)
+    if ecrire and neuf != s:
+        open(chemin, "w", encoding="utf-8").write(neuf)
+    return total, longues
+
+
+def main():
+    args = sys.argv[1:]
+    ecrire = "--ecrire" in args
+    pages = [a for a in args if not a.startswith("--")]
+    if not pages:
+        print(__doc__)
+        return 2
+    somme = 0
+    for p in pages:
+        n, longues = traiter(p, ecrire)
+        somme += n
+        if n or longues:
+            print(("✎ " if ecrire else "· ") + p + " : %d retour(s) à la ligne" % n)
+        for l in longues:
+            print("   ⚠ reste d'un seul tenant (phrase à réécrire à la main) : « %s… »" % l)
+    print("%d page(s) lues, %d retour(s) à la ligne %s" % (len(pages), somme, "posés" if ecrire else "à poser"))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

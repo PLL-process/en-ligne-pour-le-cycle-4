@@ -29077,3 +29077,72 @@ touchée par une vague sortant à zéro.
 
 **Reste à Pascal.** Fusionner ; dire si la réécriture des légendes et des corrections suit les vagues de la boucle
 d'audit (proposé), ou devient une vague à elle seule.
+
+## 08/11/2026 — Révision des trois thèmes : une passe complète par séquence, pour alléger ce que l'élève a à lire (transversal : `.claude/skills`, `_outils`, `docs/revision`, thème 1 : 5e_C1.5)
+
+**La demande.** Pascal : « Une révision des 3 thèmes s'impose… qu'en penses-tu ? » Puis, sur la proposition : « 1. Oui
+[la passe complète par séquence] 2. Ordre : c'est urgent, donc tu as carte blanche pour tous les thèmes de toutes les
+séquences 3. Non, depuis longtemps cela me paraissait une charge cognitive. »
+
+**Ce qui est décidé.**
+- **Une passe complète par séquence**, au lieu des vagues règle par règle : chaque page est ouverte une fois et ressort
+  révisée sur tous les plans — règles d'or à zéro, lecture allégée, texte aéré, lecture comme un élève, revue d'écran.
+  Méthode : skill `revision-sequence` (nouveau), qui enchaîne les skills existants sans les remplacer.
+- **L'ordre** : celui des classeurs de progression, ce qui passe en classe le plus tôt d'abord, les trois niveaux
+  entrelacés. Le suivi, une ligne par séquence : `docs/revision/SUIVI_REVISION.md`.
+- **La charge se mesure** : `_outils/mesurer_charge.mjs` ouvre chaque séquence à 390 px, clique chaque séance et compte
+  les mots que l'élève voit sans rien déplier. **Repère : 1 200 mots visibles par séance**, soit 10 minutes de lecture
+  seule à 120 mots par minute (un lecteur de collège sans aisance) sur une séance de 55 minutes. C'est un repère, pas
+  une règle : un écart se justifie dans le suivi.
+- **On ne retire aucune notion** : ce qui sort de la vue est replié (`<details>` titré) ou marqué
+  `approfondissement` (le mode essentiel le cache), jamais supprimé. Seul le redondant est coupé.
+
+**L'état de départ, mesuré le 08/11/2026** (56 séquences, 188 séances) : médiane 1 134 mots visibles par séance ;
+**86 séances au-delà de 1 200**, jusqu'à 3 570 ; le mode essentiel ne retire que 2 % du texte. Sur les pages de
+séquence : 87 ✘ de règles, 995 questions encore en listes déroulantes, 897 écarts d'aération ; une seule séquence
+propre (5e_C3.1). `python3 _outils/bilan_revision.py` refait ce tableau à tout moment.
+
+**Les outils nouveaux.**
+- `_outils/bilan_revision.py` : les 56 séquences dans l'ordre de passage — mots, ✘, menus, aération, état lu dans le
+  suivi ; `--md` écrit le tableau.
+- `_outils/mesurer_charge.mjs` : la charge par séance (mots, mode essentiel, écrans, champs) ; sortie 2 si rien n'est lu.
+- `_outils/grilles_radio.py` : **des questions qui partagent leurs réponses se lisent en grille.** La conversion n°300
+  écrivait cinq fois les cinq réponses d'un « associe chaque personne… » ; la grille les écrit une fois, lettrées A, B,
+  C, et chaque question garde une rangée de boutons. La valeur de chaque bouton reste le texte de la réponse (la
+  vérification, la sauvegarde et les bancs n'y voient rien) ; le texte entier est dans `aria-label`. Mesuré : 427 listes
+  sur 1 173 sont dans ce cas.
+- `_outils/aerer_corrections.py` : un retour à la ligne entre les phrases d'une correction d'un seul tenant et après
+  chaque « ; ». Il ne change aucun mot (vérifié par comparaison du texte avant et après) et nomme ce qui reste à
+  réécrire à la main.
+- `_outils/migrer_gabarit_306.py --n300` : sur une page déjà au gabarit commun, la seule conversion des listes en
+  groupes ; quand la page sauvegarde par sa propre fonction, l'outil le dit au lieu de refuser.
+- `_outils/audit_aeration.py` ne compte plus le texte d'un schéma SVG, d'un script ou d'une feuille de style : la
+  description d'une carte mentale (son `<desc>`, lue par un lecteur d'écran) comptait dans une correction de 5e_C1.3
+  pour « 197 mots d'un seul tenant ». Sur le site, C1 passe de 937 à 846 (dont les 17 de 5e_C1.5, réglés).
+- `controle-qualite-lot` et `texte-clair-et-aere` renvoient aux nouveaux outils ; `SKILLS_AUDIT.md` a sa ligne.
+
+**La première séquence : 5e_C1.5** (le compte du club).
+- Ancien gabarit → gabarit commun (`migrer_gabarit_306.py`) : 25 listes en groupes, mode essentiel, bandeau, quatre
+  versions étayées (`etayage_…json`, des phrases à compléter, même niveau attendu). Le banc garde ses questions grâce au
+  shim `_groupesRadio(page)`.
+- Trois grilles : 14 questions qui partageaient leurs réponses. Séance 2 : 1 169 → 888 mots visibles.
+- 40 retours à la ligne dans les corrections ; 13 consignes et annonces de plus de 25 mots coupées en lignes ①②③
+  (la question directrice, « Au programme », les messages des verrous, la consigne de réinvestissement).
+- **Avant → après** : séance la plus lourde 1 549 → 1 322 mots ; ✘ de règles 4 → 0 ; menus 27 → 0 ; aération 18 → 0.
+  La séance 3 reste au-dessus du repère : c'est la clôture (synthèse, banc de publication du Bonus, Bonus facultatif,
+  bilan) ; sans le Bonus et son banc, elle passe sous 1 000. Écart justifié dans le suivi.
+
+**Corrigé en route : la mention de licence de #616.**
+- `controle_squelette` (D5, « rien hors des panneaux ») comptait la mention de licence du pied de page comme du contenu
+  égaré sur cinq séquences : `.licence-cc` rejoint ses exceptions, avec le pied de page dont elle fait partie.
+- `controle_impression` : sur trois QCM (4e_C4.1, 4e_C4.4, 4e_C6.2), la mention s'imprimait pâle sur fond sombre ;
+  un cartouche blanc à l'impression (n°303, n°321).
+
+**Contrôles.**
+- 5e_C1.5 : `verif_regles_audit` 0 ✘ ; `audit_aeration --strict` 0 ; banc de la séquence 38 / 38 ; banc du QCM 34 / 34 ;
+  `controle_squelette`, `controle_contraste_liens`, `controle_hierarchie`, `controle_mode_essentiel`, `banc_papier` verts.
+- Site : `controle_squelette` (60 séquences ouvertes) et `controle_impression` (408 pages) repassent au vert ; ils
+  sortaient à 1 sur `main` depuis #616.
+
+**Reste à Pascal.** Fusionner. La suite suit l'ordre du suivi, une PR par séquence ou par deux ou trois petites :
+5e_C1.3, 4e_C1.1, 4e_C1.4, 3e_C1.5, 3e_C2.1…
