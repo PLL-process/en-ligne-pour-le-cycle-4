@@ -511,6 +511,37 @@ def entete(titre_onglet, description, css_extra=""):
             % (e(description), e(titre_onglet), KIT_CSS, css_extra))
 
 
+def _replier_outil():
+    """L'outil du dépôt pour la n°298 amendée — une seule source, importée (même geste que la loupe)."""
+    src = (DEPOT / "_outils" / "replier_referentiel.py").read_text(encoding="utf-8")
+    ns = {"__file__": str(DEPOT / "_outils" / "replier_referentiel.py")}
+    exec(compile(src.split('\nif __name__ == "__main__":')[0], "replier_referentiel", "exec"), ns)
+    return ns
+
+
+def tableau_referentiel(at):
+    """Le référentiel de l'atelier, mot pour mot : la même table pour la synthèse professeur et,
+    repliée, pour la page élève (n°298 amendée, 07/11/2026)."""
+    h = ['<div class="defile"><table><thead><tr><th scope="col">Code</th><th scope="col">Formulation</th>'
+         '<th scope="col">Domaines du socle</th></tr></thead><tbody>']
+    for niv, N in at.NIVEAUX.items():
+        for c in N["codes"]:
+            texte, socle = REFERENTIEL[c]
+            h.append("<tr><td>%s</td><td>%s</td><td>%s</td></tr>" % (e(c), e(texte), e(socle)))
+    h.append("</tbody></table></div>")
+    return "".join(h)
+
+
+def referentiel_replie(at):
+    """Le dépliant fermé sous les étiquettes : la table, puis la phrase BO / codification dans les
+    mots de l'index (règle n°309 : l'élève lit le savoir, pas la fabrique)."""
+    corps = (tableau_referentiel(at)
+             + "<p><small>Référence normative&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. "
+               "Codification opérationnelle&nbsp;: les codes (5e_C2.1…) servent à ranger les séquences&nbsp;; "
+               "ils ne viennent pas du programme officiel.</small></p>")
+    return _replier_outil()["envelopper"](corps, "📚 Le référentiel de l'atelier — en toutes lettres")
+
+
 def loupe():
     """L'agrandisseur d'images du site (images et schémas), recopié tel quel."""
     src = (DEPOT / "theme-3-creation-conception-realisation-innovations" / "audit" / "loupe.py").read_text(encoding="utf-8")
@@ -613,7 +644,8 @@ def page_atelier(at, niv, chemins):
 
     titre = "%s %s" % (at.EMOJI, at.TITRE)
     h = [entete("Thème 1 · %s — Atelier : %s (%s)" % (niv, at.TITRE_COURT, " · ".join(codes)),
-                "Atelier de %s : %s — exercices corrigés, %s." % (niv, at.TITRE_COURT, " · ".join(codes))),
+                "Atelier de %s : %s — exercices corrigés, %s." % (niv, at.TITRE_COURT, " · ".join(codes)),
+                _replier_outil()["CSS"]),       # la feuille du dépliant (n°298 amendée), sur la page élève seulement
          '<body>\n<a class="evitement" href="#contenu">Aller au contenu</a>\n',
          navigation(chemins, niv),
          '<main id="contenu" class="page">',
@@ -630,6 +662,7 @@ def page_atelier(at, niv, chemins):
     h.append('<span class="etiquette duree" title="Durée indicative de tous les exercices" aria-label="Durée indicative : environ %d minutes">⏱ ≈ %d min</span>' % (total_min, total_min))
     h.append('<span class="etiquette" title="%s" aria-label="Représentation : %s">%s</span>' % (e(at.TITRE_COMPLET), e(at.TITRE_COMPLET), e(at.ETIQUETTE)))
     h.append("</div>")
+    h.append(referentiel_replie(at))          # n°298 amendée : replié, fermé, sous les étiquettes
     # Ouverture (repliée à partir du 2e onglet)
     h.append('<details class="rappel-ouverture" open><summary>📖 Rappel : la situation et ton hypothèse</summary>')
     h.append(avant_de_commencer(N["avant"], page_id + "__avant"))

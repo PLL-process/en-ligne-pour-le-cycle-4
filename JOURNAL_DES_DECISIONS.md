@@ -28781,3 +28781,37 @@ mandat), zéro correction.
 
 **Reste à Pascal.** Fusionner ; dire si trois tours est le bon nombre ; dire si un skill du compte doit porter la boucle
 (pour les ateliers et pages hors lot), ou si `controle-qualite-lot` suffit.
+
+## 07/11/2026 — Règle d'or n°298 amendée, suite : les ateliers engendrés reçoivent le dépliant par leurs générateurs ; la règle tactile du kit revient à sa source (transversal : thèmes 1 et 3, `_outils`)
+
+**Les choix de Pascal, 07/11/2026, aux trois questions laissées le même jour.** 1a — le titre du dépliant reste « 📚 Le
+référentiel de la séquence — en toutes lettres » (et « … de l'atelier … » sur les ateliers). 2a — les ateliers engendrés
+suivent, par leurs générateurs, dans cette PR à part. 3a — trois tours pour la revue d'écran, et « oui » pour un skill du
+compte claude.ai qui porte la boucle pour les pages hors lot (livré à Pascal avec cette PR, non versionné ici).
+
+**Ce que fait cette PR.**
+- `_outils/replier_referentiel.py` gagne deux portes pour les générateurs : `replier_depuis_synthese(page, synthèse)`
+  (la page reçoit, repliée, la carte que sa synthèse professeur conserve) et `envelopper(corps, titre)` (le dépliant
+  fermé autour d'une carte qu'un moteur construit lui-même). Le point d'insertion accepte `div.badges` et `div.etiquettes`.
+- **Atelier de planification C7.1** (`build_atelier.py`, 3 pages) : même geste que la loupe (n°92) — l'outil est importé,
+  jamais recopié ; la carte vient de `Synthèses/synthese_professeur_C7.1_planification.html`, posée sous les badges ;
+  le générateur s'arrête si le dépliant manque.
+- **Sept ateliers des représentations** (`_generation/moteur.py`, 18 pages de niveau) : la table du référentiel est
+  construite une seule fois (`tableau_referentiel`) et partagée entre la synthèse professeur (`syntheses.py`, inchangée à
+  l'octet) et la page élève, où elle est repliée sous les étiquettes avec la phrase BO / codification dans les mots de
+  l'index (n°309). La feuille du dépliant n'est posée que sur les pages d'atelier (ni cahiers, ni panneaux, ni synthèses).
+- **Trouvé en régénérant, corrigé à la source** : les trois panneaux `atelier_bete_a_cornes.html` (4e_C1.3, 3e_C3.1,
+  4e_C3.1) avaient été corrigés à la main le 06/11 (règle des 16 px au toucher) sans que `incrustations.py` le sache — la
+  feuille du kit, une fois limitée à `.atelier-incruste`, n'est plus la règle nue que `controle_tactile.py` reconnaît, et
+  la régénération refaisait tomber le contrôle. La règle nue est ajoutée dans `css_incruste()` ; les trois panneaux sont
+  régénérés (leur seule différence avec `main` est l'emplacement et la forme de cette règle).
+- Captures à 390 px de `atelier_5e_fast.html`, même position de défilement : `_outils/captures_regle_298_ateliers_2026-11-07/`.
+
+**Vérifié.** `build.py` et `build_atelier.py` : sortie 0 ; synthèses professeur et cahiers : aucune différence avec `main`.
+`banc_ateliers.py` **517 / 517** ; `tests_atelier_C7.1.py` **48 / 48**. Contrôles du site : `controle_regles_visibles`,
+`controle_liens`, `controle_tactile` (✘ 3 → ✅ après la correction à la source), `controle_hierarchie`,
+`controle_mode_essentiel`, `controle_debordement`, `controle_impression_papier`, `controle_boutons_vivants`,
+`controle_medias` ✅ ; `controle_contraste_liens` sur chaque page régénérée (résultat en commentaire de la PR). À 390 px :
+aucun défilement de côté, aucune erreur JavaScript, dépliant fermé et ouvert.
+
+**Reste à Pascal.** Fusionner ; installer sur son compte le skill `revue-ecran-trois-tours` livré avec cette PR.

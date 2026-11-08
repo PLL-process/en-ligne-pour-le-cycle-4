@@ -94,6 +94,9 @@
   /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
   @media(max-width:680px){table{display:block;overflow-x:auto}}
   @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+/* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
+   (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
+@media (pointer:coarse){input,textarea,select{font-size:16px!important}}
 
 
   /* Le rappel spiralaire (règle d'or n°87) : il ouvre la page, on ne le replie
@@ -157,9 +160,19 @@
   .card span,.page code,.page footer,.q span,.sous{color:#1a6af8!important}
   .correction summary,.jalon{color:#946b00!important}
 }
-/* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
-   (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
-@media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+
+/* n°298 amendée (07/11/2026) : le référentiel, replié sous les étiquettes */
+details.referentiel-replie{margin:0 auto 14px;max-width:960px;border-left:4px solid var(--head,#c68ef2);border-radius:8px;padding:6px 12px;background:rgba(255,255,255,.04)}
+details.referentiel-replie>summary{cursor:pointer;font-weight:600;color:var(--head,#c68ef2);list-style:none;display:flex;gap:8px;align-items:center;min-height:44px}
+details.referentiel-replie>summary::-webkit-details-marker{display:none}
+details.referentiel-replie>summary::before{content:"▸";transition:transform .15s}
+details.referentiel-replie[open]>summary::before{transform:rotate(90deg)}
+details.referentiel-replie table{width:100%;border-collapse:collapse;font-size:.92em;margin:8px 0}
+details.referentiel-replie th,details.referentiel-replie td{border:1px solid var(--border,#274a8a);padding:5px 8px;vertical-align:top;text-align:left}
+details.referentiel-replie p{margin:8px 0}
+body.essentiel details.referentiel-replie{display:none}
+@media print{details.referentiel-replie{display:none}}
+@media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
 </style>
 </head>
 <body>
@@ -184,6 +197,39 @@ qui décide de la date de fin.</p>
   <span class="badge theme" title="Durée prévue : une séance de 55 minutes, à placer au lancement du projet.">1 séance de 55 min</span>
   <span class="badge theme" title="Une manipulation réelle en papier est au parcours obligatoire, pas en bonus.">&#9986; Bandes de papier obligatoires</span>
 </div>
+<!-- n°298 amendée (07/11/2026) : le référentiel revient, replié, copie du bloc referentiel-eleve de la synthèse professeur -->
+<details class="referentiel-replie">
+  <summary>&#128218; Le référentiel — en toutes lettres</summary>
+<div class="bloc referentiel-eleve">
+  <p>Voici, mot pour mot, ce que demande le programme de technologie du cycle 4 (2024) sur ce
+  point. Ce n'est pas un résumé&nbsp;: c'est le texte.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>D'où ça vient</th><th>Ce qui est écrit</th></tr></thead>
+    <tbody>
+      <tr><td>Connaissances associées, gestion de projet</td>
+          <td><b>« Le diagramme de planification des tâches&nbsp;: notion de tâches, durée et
+          contraintes entre tâches. »</b></td></tr>
+      <tr><td>Compétence, en 5e</td>
+          <td><b>Suivre</b> un processus de réalisation d'un objet avec des tâches identifiées.</td></tr>
+      <tr><td>Compétence, en 4e</td>
+          <td><b>Organiser</b> un processus de réalisation d'un objet avec des tâches identifiées.</td></tr>
+      <tr><td>Compétence, en 3e</td>
+          <td><b>Élaborer</b> un processus de réalisation d'un objet avec des tâches identifiées.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="retenir">Le programme nomme <b>trois choses</b>, et trois seulement&nbsp;: les
+  <b>tâches</b>, leur <b>durée</b>, et les <b>contraintes entre tâches</b>. Tout le reste — le
+  chemin le plus long, les marges, le jalon — se déduit de ces trois-là. C'est pour ça qu'on
+  commence par elles.</p>
+  <p class="legende-badges">&#128270; <b>Ce que disent ces étiquettes.</b>
+<b>5e &middot; 4e &middot; 3e</b>&nbsp;: la même notion aux trois niveaux, avec un travail différent à chacun.
+<b>C7.1</b>&nbsp;: un code de classement <b>propre à ce site</b>, écrit en toutes lettres plus bas.
+<b>D2 &middot; D3 &middot; D4</b>&nbsp;: les domaines du <b>socle commun</b>.
+<b>&#9986; Bandes de papier</b>&nbsp;: on découpe vraiment, avant d'ouvrir un logiciel.</p>
+  <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>5e_C7.1</code> · <code>4e_C7.1</code> · <code>3e_C7.1</code> (« C7.1 » sur l'étiquette de l'atelier) servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel.</p>
+</div>
+</details>
+
 <div class="toolbar">
   <button class="btn" id="btnPrint" title="Imprimer la page, ou l'enregistrer en PDF. Tes réponses écrites sont imprimées avec.">&#128424; Imprimer</button>
   <button class="btn ghost" id="btnReset" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Une confirmation te sera demandée.">&#128465; Effacer ma sauvegarde</button>

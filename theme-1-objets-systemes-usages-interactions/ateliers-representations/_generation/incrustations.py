@@ -69,6 +69,12 @@ def css_incruste():
     sortie.append(".atelier-incruste .card.exercice>h4,.atelier-incruste .card.exercice>h5{color:var(--hl);font-size:1.02em;margin:4px 0 8px}")
     sortie.append("@media print{.atelier-incruste,.atelier-incruste .card.exercice{background:#fff!important;color:#111}"
                   ".atelier-incruste>h3,.atelier-incruste>h4,.atelier-incruste .card.exercice>h4,.atelier-incruste .card.exercice>h5{color:#111}}")
+    # Vague du 06/11/2026 (« les pages au doigt ») : un champ écrit en moins de 16 px fait zoomer
+    # iOS. La règle du kit, une fois limitée à .atelier-incruste, n'est plus celle que
+    # `controle_tactile.py` reconnaît (sa MARQUE est la règle nue) ; les panneaux avaient été
+    # corrigés à la main le 06/11 et la régénération les cassait (vu le 07/11/2026). La règle nue
+    # est donc ajoutée ici, à la source : elle vaut pour toute la page, ce qui est le but.
+    sortie.append("@media (pointer:coarse){input,textarea,select{font-size:16px!important}}")
     return "\n".join(sortie)
 
 

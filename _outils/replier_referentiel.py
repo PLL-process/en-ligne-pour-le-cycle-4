@@ -102,8 +102,31 @@ def depliant(bloc, remonter):
             f'  <summary>{titre}</summary>\n{corps}\n</details>\n')
 
 
+def envelopper(corps, titre="📚 Le référentiel de la séquence — en toutes lettres"):
+    """Le dépliant fermé autour d'un corps déjà écrit (pour les générateurs qui
+    construisent la carte eux-mêmes, comme le moteur des ateliers des représentations)."""
+    return (f'\n{COMMENTAIRE}\n<details class="referentiel-replie">\n'
+            f'  <summary>{titre}</summary>\n<div class="bloc referentiel-eleve">\n{corps}\n</div>\n</details>\n')
+
+
+def replier_depuis_synthese(page_src, chemin_synthese, remonter=True):
+    """Pour un générateur : la page engendrée reçoit, repliée, la carte que sa synthèse
+    professeur conserve. Lève une erreur si la synthèse n'a pas de bloc : une page
+    engendrée doit porter elle-même tout ce que les règles exigent (même esprit que la
+    loupe, règle n°92)."""
+    src = open(chemin_synthese, encoding="utf-8").read()
+    m = re.search(r'<div class="bloc referentiel-eleve[^"]*">', src)
+    if not m:
+        raise SystemExit("n°298 amendée : aucun bloc referentiel-eleve dans %s" % chemin_synthese)
+    bloc = bloc_equilibre(src, m.start())
+    nouveau, ou = inserer(page_src, depliant(bloc, remonter))
+    if nouveau is None:
+        raise SystemExit("n°298 amendée : ni étiquettes ni titre où poser le dépliant (%s)" % ou)
+    return styler(nouveau)
+
+
 def inserer(page_src, html):
-    m = re.search(r'<div class="badges">', page_src)
+    m = re.search(r'<div class="badges">|<div class="etiquettes">', page_src)
     if m:
         fin = m.start() + len(bloc_equilibre(page_src, m.start()))
         return page_src[:fin] + html + page_src[fin:], "après les étiquettes"

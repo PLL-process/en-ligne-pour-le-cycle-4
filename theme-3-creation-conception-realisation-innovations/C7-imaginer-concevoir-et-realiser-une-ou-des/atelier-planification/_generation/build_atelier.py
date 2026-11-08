@@ -38,6 +38,21 @@ def _loupe():
     return mod.BLOC
 
 
+# Règle d'or n°298 amendée (07/11/2026) — le référentiel revient sur la page, REPLIÉ.
+# Même geste que la loupe : une seule source, importée. La carte vit dans la synthèse
+# professeur (bloc `referentiel-eleve`, déplacé là le 28/10/2026) ; l'outil du dépôt la
+# recopie dans un dépliant fermé sous les étiquettes, et traduit pour l'élève les mots
+# de fabrique (n°309). Une régénération ne peut plus l'oublier.
+def _replier(html):
+    chemin = pathlib.Path(__file__).resolve().parents[4] / "_outils" / "replier_referentiel.py"
+    if not chemin.exists():
+        raise SystemExit("n°298 amendée : _outils/replier_referentiel.py est introuvable (%s)." % chemin)
+    spec = _iu.spec_from_file_location("replier_referentiel", chemin)
+    mod = _iu.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.replier_depuis_synthese(html, D / "Synthèses" / "synthese_professeur_C7.1_planification.html")
+
+
 # Règle d'or n°303 — un lien se lit, à l'écran comme sur le papier. Texte repris
 # tel quel des pages publiées (retouche du 21/09/2026). Le bloc se glisse dans le
 # <style> de la loupe, là où la retouche l'avait posé à la main : l'écrire ici
@@ -1550,6 +1565,10 @@ def page(niv):
     resultat = resultat.replace("@@LOUPE@@", _loupe().replace("</style>", N303 + "</style>", 1))
     if "@@LOUPE@@" in resultat or "loupe-images-v2" not in resultat:
         raise SystemExit("Règle n°92 : l'agrandisseur d'images n'a pas été posé "
+                         "dans le parcours %s — arrêt avant écriture." % niv)
+    resultat = _replier(resultat)
+    if 'class="referentiel-replie"' not in resultat:
+        raise SystemExit("n°298 amendée : le dépliant du référentiel n'a pas été posé "
                          "dans le parcours %s — arrêt avant écriture." % niv)
     return resultat
 
