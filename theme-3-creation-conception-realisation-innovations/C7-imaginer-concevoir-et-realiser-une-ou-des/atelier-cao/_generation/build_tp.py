@@ -42,6 +42,12 @@ G = pathlib.Path(__file__).resolve().parent
 D = G.parent
 CSS = (G / "gabarit_style.css").read_text(encoding="utf-8")
 
+# Règle d'or n°321 (08/11/2026) : chaque page porte la mention de licence en pied. La mention
+# vient de `_outils/licence_cc.py`, source unique ; le générateur la pose lui-même, sinon la
+# page régénérée la perd et `verif_chaine.py` dit faux (constaté le 08/11/2026 : 4 écarts sur 4).
+sys.path.insert(0, str(D.parents[2] / "_outils"))
+from licence_cc import MENTION as MENTION_LICENCE  # noqa: E402
+
 STYLE_TP = """
   .palier{background:var(--panel);border:1px solid var(--border);border-radius:12px;
     padding:14px 18px;margin:16px 0}
@@ -414,7 +420,8 @@ Les encadrés orange préviennent des pièges. À la fin de chaque partie, une i
 %(corps)s
 
 %(et_ensuite)s
-%(apres)s<footer>%(pied)s</footer>
+%(apres)s<footer>%(pied)s%(licence)s
+</footer>
 </div>
 @@LOUPE@@
 </body>
@@ -422,7 +429,7 @@ Les encadrés orange préviennent des pièges. À la fin de chaque partie, une i
 """ % {"desc": html.escape(s.get("description", "")), "titre_page": html.escape(s["titre_page"]),
        "css": CSS, "css_tp": STYLE_TP + (STYLE_COTE_MATHS if any(p.get("cote_maths") for p in paliers) else ""), "titre": esc(s["titre"]), "sous": esc(s["sous_titre"]),
        "niveau": esc(s["niveau"]), "logiciel": esc(s["logiciel"]), "badges": badges,
-       "corps": corps, "pied": esc(s.get("pied", "Ressource originale.")),
+       "corps": corps, "pied": esc(s.get("pied", "Ressource originale.")), "licence": MENTION_LICENCE,
        # ce qui suit « Et ensuite » : traces à garder, « Prêt·e à t'entraîner », Bonus
        # (règle n°4 §4). HTML brut, ligne à ligne, tel quel — le scénario en est la
        # source ; l'écrire dans la page engendrée s'efface à la régénération (n°283).

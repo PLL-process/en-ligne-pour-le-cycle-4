@@ -29146,3 +29146,41 @@ propre (5e_C3.1). `python3 _outils/bilan_revision.py` refait ce tableau à tout 
 
 **Reste à Pascal.** Fusionner. La suite suit l'ordre du suivi, une PR par séquence ou par deux ou trois petites :
 5e_C1.3, 4e_C1.1, 4e_C1.4, 3e_C1.5, 3e_C2.1…
+
+## 08/11/2026 — Les cinq pistes de la fiche arts plastiques deviennent des mini-séances, avec une trame d'EPI ; le générateur des TP apprend la mention de licence (thème 3)
+
+**Demande de Pascal** : à la question « les cinq pistes sont-elles les bonnes ? », il a répondu « tu as carte
+blanche ». Il utilise cette année le TP du dé doré **en EPI** : c'est l'usage qui a guidé le choix.
+
+**Choix fait.** Les cinq pistes restent, mais elles cessent d'être cinq paragraphes : chacune devient une
+**mini-séance d'une heure** qui dit ce que l'élève <i>fait</i>, puis « Il faut » (matériel), « Question du
+programme », « Compétence », « On regarde » (ce qu'on observe chez l'élève — pas une note). Elles sont rangées en
+progression : regarder (superposer) → tracer (la spirale à l'échelle 1) → composer (la même règle pour une page) →
+mettre en scène (le même dé, trois statuts) → prendre du recul (ce que l'auteur a choisi, ce que le spectateur
+projette). « Une seule heure ? La piste 2. » S'y ajoute une **trame d'EPI technologie × arts plastiques ×
+mathématiques** en quatre temps et une production commune (exposition des presse-papiers, chacun sur son dessin de
+spirale, avec son cartel). Le paragraphe « Compétences travaillées » de la carte du programme, devenu redondant,
+renvoie aux pistes. Texte ordonné et aéré (préférence de Pascal du 08/11).
+
+**Impression** : 5 pages A4 pleines (4 avant la révision ; les pistes et la trame d'EPI valent la page de plus ;
+pistes et trame insécables, corps à 0,8 em sur le papier seulement).
+
+**Réparé au passage — la chaîne de production de l'atelier disait faux depuis la n°321.** Le lot de licence
+(PR #616) a posé la mention CC BY-NC-SA dans les quatre TP engendrés **à la main**, sans l'apprendre au
+générateur : `verif_chaine.py` signalait 4 écarts sur 4, et une régénération aurait **retiré** la mention des pages.
+`_generation/build_tp.py` importe désormais `MENTION` depuis `_outils/licence_cc.py` (source unique de la n°321) et
+la pose lui-même avant `</footer>`, exactement là où `injecter()` l'avait mise : les quatre pages régénérées sont
+**identiques octet pour octet** à celles du disque, aucune empreinte ne change. Leçon pour les lots transversaux
+qui touchent toutes les pages : **une page engendrée se change dans son générateur** (n°283), sinon la chaîne
+dit faux au lot suivant — c'est la deuxième fois en trois jours (06/11 : `pointer:coarse`).
+
+**Vérifié.**
+- `verif_chaine.py` ✅ (avant : ⛔ 4 écarts) · `tests_verif_effectifs.py` 21 / 21 · `verif_guidage.py` 4e sans manquement.
+- Contrôles du site sur la fiche : `controle_liens`, `controle_hierarchie`, `controle_unites`, `controle_debordement`,
+  `controle_regles_visibles`, `controle_tactile`, `controle_sigles`, `controle_medias` verts ; `controle_licence`
+  (dépôt entier) : 410 pages portent la mention.
+- Rendu Playwright à 1 100 px et 390 px : aucun défilement de côté, image chargée, aucune erreur console ; PDF A4 : 5 pages.
+- **Non exécuté** : bancs des QCM (non touchés) ; validation HTML.
+
+**Reste à Pascal** : montrer la trame d'EPI au collègue d'arts plastiques et, s'il y a un collègue de maths dans
+l'EPI, lui donner la fiche jumelle.
