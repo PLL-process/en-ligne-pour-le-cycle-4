@@ -243,3 +243,21 @@ aucun signalement ; `controle_impression` (0 page refusée), `controle_verrous`,
 (n°29, 30, 31, 34, 300), hors périmètre de cette vague.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## 08/11/2026 — V2 de la boucle d'audit : gabarit commun (n°306) et groupes de boutons radio (n°300)
+
+Page migrée par `_outils/migrer_gabarit_306.py` (rejouable depuis `main`, résultat identique octet pour octet) : chaque
+question posée par une liste déroulante devient un `fieldset.qcm-groupe` qui porte sa valeur ; bouton « mode essentiel »
+(n°29), bandeau des tâches (n°30), versions étayées `etayage_sequence_3e_C8.2_….json` (n°31), `aria-label` sur les zones de
+texte (n°34). Les listes d'interface (`data-interface` : commandes du simulateur, ports de l'établi) restent des menus.
+
+Les bancs n'ont pas changé de questions : un shim `_groupesRadio(page)` en tête de `tests_3e_C8.2_sequence.mjs` fait
+porter `selectOption` / `fill` / `inputValue` sur le groupe (valeur ou libellé, `{index}` accepté), comme sur l'ancienne
+liste. Adaptations du banc : le repli « `#a2q2` index 2 » (qui comptait l'invite de l'ancienne liste) tombe, l'apostrophe droite suit ; les cinq listes de l'activité 4 se comptent en propositions non vides (5) sur `select` ou `fieldset`.
+
+Exécuté le 08/11/2026 (Chromium Playwright, session cloud) : `tests_3e_C8.2_sequence.mjs` **44 / 44** ; `tests_3e_C8.2_qcm.mjs`
+**32 / 32** ; `tests_regle_311_3e_C8.2.mjs` **34 / 34** ; `verif_regles_audit.py` **0 ✘** sur la page ; `controle_squelette`,
+`controle_hors_ligne`, `controle_contraste_liens`, `controle_impression_papier`, `banc_papier.py --filtre 3e_C8.2`,
+`controle_impression --muet`, `controle_regles_visibles`, `controle_liens`, `controle_tactile`, `controle_mode_essentiel`,
+`controle_navigation_seances`, `controle_verrous`, `controle_rapports_tests` : 0 refus. Captures 390 px avant/après/essentiel
+dans `_outils/captures_v2_3e_2026-11-08/`. Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

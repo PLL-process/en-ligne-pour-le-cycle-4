@@ -28901,3 +28901,59 @@ annonce « 4e · Atelier : QCM — SOS serre » — en-tête à corriger dans un
 
 **Reste à Pascal.** Fusionner ; créer un parcours par niveau dans Éléa et importer `5e.xml` pour commencer ;
 dire si les six QCM restants doivent migrer au gabarit QUESTIONS.
+
+## 08/11/2026 — V2 de la boucle d'audit, 3e : la famille C7/C8 rejoint le gabarit commun (n°306) et ses questions deviennent des groupes de boutons radio (n°300) (thème 3 ; `_outils` : un outil nouveau)
+
+**Décision de Pascal** (07/11, « Maintenant », puis 08/11, « Continue ») : lancer V2 dans l'ordre retenu la veille.
+V2 porte sur les 19 pages de la famille C7/C8 restées sur l'ancien gabarit ; cette PR fait les **7 pages de 3e**
+(3e_C7.3, C7.4, C7.5, C7.7, C7.8, C8.1, C8.2). Les 6 de 4e puis les 6 de 5e suivent, une PR par niveau.
+
+**Ce que fait cette PR.**
+- `_outils/migrer_gabarit_306.py` (nouveau, **rejouable**) : depuis la page de `main`, il convertit chaque question posée
+  par une liste déroulante en `fieldset.qcm-groupe` (l'énoncé — `<label for>`, `<p>` qui précède, ou `aria-label` — va
+  dans la `<legend>`, l'invite tombe, les `value` sont intactes), pose le prototype « le groupe porte sa valeur »,
+  la feuille des groupes et celle du gabarit, le bouton **mode essentiel** (n°29), le **bandeau des tâches** (n°30,
+  branché sur la validation de chaque activité), les **versions étayées** lues dans `etayage_sequence_<page>.json` (n°31),
+  l'`aria-label` des zones de texte (n°34), et étend `save()` au groupe. Il **refuse** plutôt que de deviner (énoncé
+  introuvable, deux blocs). Rejoué ce jour depuis `origin/main` sur les sept pages : **identique octet pour octet** aux
+  pages livrées — la seule préparation à la main est le marquage `data-interface="port"` des dix menus de l'établi de
+  3e_C7.5 (`<select id="pt_…">`), fait avant le passage.
+- Chiffres : **123 listes → 123 groupes (510 propositions)** ; **38 versions étayées** ; **31 `aria-label`** ; 16 menus
+  laissés tels quels et marqués `data-interface` (10 ports de l'établi, 6 commandes de simulateur sans invite : `src`,
+  `qte`, `haut`, `cas`, `crit`, `prof`) — le contrôle n°300 les compte à part, comme les menus voulus de V1.
+- Deux pièges de l'outil, trouvés et corrigés : un `<fieldset>` laissé dans un `<p>` casse le DOM (le `<p>` enveloppant
+  s'efface) ; le prototype s'insérait dans le **bloc de la fiche papier** (source unique, `poser.py`), que
+  `controle_impression_papier` compare au texte de `_outils/impression_papier/` — il se pose maintenant après ce bloc.
+- Les **bancs ne changent pas de questions** : un shim `_groupesRadio(page)` en tête des sept `tests_*_sequence.mjs` fait
+  porter `selectOption` / `fill` / `inputValue` sur le groupe (valeur ou libellé, `{index}` accepté, erreur nommée
+  sinon). Trois adaptations locales, dites dans les `rapport_tests_*.md` : 3e_C8.1 lit les propositions sur `option` ou
+  `input[type=radio]` ; 3e_C8.2 perd un repli « `#a2q2` index 2 » qui comptait l'invite de l'ancienne liste, et compte les
+  cinq angles morts en propositions non vides ; `tests_regle_311_3e_C7.8` coche `#hors input[value=…]`.
+
+**Revue d'écran en trois tours** (390 px, premier groupe converti de chaque page, avant / après / essentiel,
+`_outils/captures_v2_3e_2026-11-08/`). Tour 1, les trois pires : (1) « ? » et « : » **seuls en début de ligne** dans les
+légendes et libellés — une option de liste ne se pliait jamais, un libellé à 390 px si : l'outil met une espace fine
+insécable (U+202F) devant `? ! : ; »` dans ce qui s'affiche, la `value` n'y touche pas ; (2) sur 3e_C7.8, les libellés
+du groupe `#hors` en **bleu pâle** (`.lien-cmd label{color:var(--sub)}`, règle locale écrite pour l'ancienne liste) :
+la feuille des groupes fixe désormais `color:var(--text);font-size:1em;font-weight:400` sur le libellé d'une
+proposition ; (3) la légende déborde du filet gauche du groupe — c'est le dessin du pilote 3e_C1.1 (n°300), pas un
+défaut de V2. Tour 2 : (1) et (2) corrigés et revus ; reste (3), et les groupes à propositions courtes (« 1 · 2 · 3 · 5 »)
+qui prennent quatre lignes là où une rangée suffirait — **restant**, à regarder au niveau du gabarit, capture
+`3e_C8.1_apres_390.png`. Pas de tour 3 nécessaire.
+
+**Mesuré** (`verif_regles_audit.py`, dépôt entier) : ✘ **130 → 95** ; n°300 : **46 → 39 pages**, **1 196 → 1 057 listes**
+à convertir ; n°29/30/31/34 : **19 → 12 pages** (les 4e et 5e de la famille). Les sept pages sont à **0 ✘**.
+
+**Vérifié** (08/11/2026, Chromium Playwright) : les 21 bancs du lot — séquence 68/68, 54/54, 54/54, 77/77, 58/58, 62/62,
+44/44 (les scores d'avant la vague) ; QCM 32/32 ×7 ; n°311 34/34 ×7 — ; `banc_mat.py`, `energie.py`, `profils_3e_C8.2.py`
+sans erreur ; `controle_squelette`, `controle_hors_ligne` (7 pages), `controle_contraste_liens` (page par page),
+`controle_impression --muet`, `controle_impression_papier`, `banc_papier.py --filtre` ×7, `controle_regles_visibles`,
+`controle_liens`, `controle_tactile`, `controle_mode_essentiel`, `controle_navigation_seances`, `controle_verrous`,
+`controle_rapports_tests`, `controle_formulations`, `controle_longueurs`, `controle_debordement` : 0 refus. **Non
+exécuté** : `controle_schemas` et `banc_loupe` (aucun schéma touché), un vrai téléphone, Firefox, Safari, une impression
+réelle.
+
+**Reste à Pascal.** Fusionner. **Décision à prendre** : les menus d'interface (`data-interface` — ports de l'établi,
+commandes de simulateur sans invite) ne sont pas des questions au sens de la n°300 et restent des listes ; si Pascal
+les veut aussi en boutons, l'outil sait les convertir (il suffit de retirer le marquage). Puis V2 4e (6 pages), V2 5e
+(6 pages).
