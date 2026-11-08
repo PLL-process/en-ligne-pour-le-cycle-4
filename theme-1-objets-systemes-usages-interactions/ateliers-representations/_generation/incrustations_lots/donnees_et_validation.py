@@ -17,11 +17,10 @@ ENTREES = [
          avant="<p><strong>Consigne :</strong> observe le schéma puis classe les éléments suivants",
          balise="h4", balise_exo="h5",
          titre="D'abord, qu'est-ce qu'une donnée&nbsp;? La carte mentale d'un autre projet",
-         intro="Pour décrire le système d'information des vélos, il faut savoir reconnaître une <b>donnée</b>&nbsp;: une "
-               "information que l'on peut enregistrer dans un fichier. Entraîne-toi sur un autre projet, le <b>lampadaire "
-               "intelligent</b> d'une classe de 5e&nbsp;: recense ses données, puis range-les dans une <b>carte mentale</b>, "
-               "qu'on appelle aussi carte heuristique. Un exercice, environ un quart d'heure&nbsp;; il se vérifie tout seul "
-               "et a sa correction complète.",
+         intro="Pour décrire le système d'information des vélos, il faut d'abord savoir reconnaître une <b>donnée</b>. "
+               "<br>Entraîne-toi sur un autre projet, le <b>lampadaire intelligent</b> d'une classe de 5e&nbsp;: recense ses "
+               "données, puis range-les dans une <b>carte mentale</b> (on dit aussi carte heuristique). <br>Un exercice, "
+               "environ un quart d'heure&nbsp;; il se vérifie tout seul et a sa correction complète.",
          suite="un second exercice qui passe de la carte mentale aux dossiers de l'ordinateur, et le QCM de l'atelier"),
     dict(id="cm-3e-numerique-societe", module="carte_mentale", niveau="3e", exos=["e5"],
          sequence=C1 + "3e/3e_C1.5/sequence-numerique-societe-economie-environnement-sante.html",

@@ -143,6 +143,10 @@ async def tester_sequence(p):
         await pg.click(f"#{uid} button.verifier"); await pg.wait_for_timeout(60)
         r.append((f"{nom} ({uid}) : rempli juste, il est réussi", "Tout est juste" in await pg.inner_text(f"#{uid} .retour")))
     rap="bc_4e_rappel-feux"
+    # révision du 08/11/2026 (charge de lecture) : le rappel est replié, l'élève qui a oublié les mots l'ouvre
+    replie=await pg.evaluate("""uid=>{const d=document.getElementById(uid).closest('details.incruste-repliee');
+      const r=!!d && !d.open && /Piqûre de rappel/.test(d.querySelector('summary').textContent); if(d) d.open=true; return r;}""", rap)
+    r.append(("piqûre de rappel : repliée au chargement, son résumé dit ce qu'elle contient", replie))
     await pg.click(f"#{rap} button.verifier"); await pg.wait_for_timeout(60)
     r.append(("piqûre de rappel (bc_4e_rappel-feux) : à vide, le retour demande de reprendre", "🔴" in await pg.inner_text(f"#{rap} .retour")))
     await pg.evaluate("""uid=>{const b=document.getElementById(uid);

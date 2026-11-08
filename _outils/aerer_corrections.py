@@ -11,10 +11,17 @@ courtes : une ligne fait au moins 12 mots avant qu'un retour soit posé, sauf un
 chaque « ; » (la forme de liste française : chaque item finit par « ; », le dernier par « . »).
 
 Il NE CHANGE AUCUN MOT. Il ne touche que le texte des blocs de correction (classes correction, correction-bloc,
-corrige-bonus, feedback), jamais l'intérieur d'un <code>, <kbd>, <pre>, <script>, <style>, <summary>, d'un titre, d'un
+corrige-bonus, feedback), jamais une incrustation des ateliers (son texte vient du générateur), jamais l'intérieur d'un <code>, <kbd>, <pre>, <script>, <style>, <summary>, d'un titre, d'un
 champ ou d'un bouton. Une phrase seule de plus de 45 mots reste à réécrire à la main : l'outil la signale.
 
 Usage : python3 _outils/aerer_corrections.py <page.html>… [--ecrire]       (sans --ecrire : ce qui changerait)
+        python3 _outils/aerer_corrections.py <page.html>… --partout [--ecrire]
+
+--partout (08/11/2026, révision des trois thèmes) : la même passe, hors des corrections, sur les paragraphes, les items
+de liste et les définitions (<p>, <li>, <dd>) que l'élève lit d'un seul tenant, au-delà de 30 mots, et sur les légendes
+(<figcaption>) au-delà de 35 (le seuil L1 de l'audit) : une consigne,
+une annonce, une définition passent à la ligne entre leurs phrases. Jamais dans une incrustation des ateliers (le texte
+y vient du générateur : il se corrige à sa source), ni dans un script, un style ou un schéma.
 """
 import os
 import re
@@ -44,10 +51,10 @@ def mots_texte(fragment):
     return len(A.texte(fragment).split())
 
 
-def reflow_segment(seg, pile):
+def reflow_segment(seg, pile, seuil=None):
     """un segment entre deux frontières : (segment aéré, retours posés)"""
     total = mots_texte(seg)
-    c1 = total > A.SEUIL_CORRECTION
+    c1 = total > (seuil or A.SEUIL_CORRECTION)
     c2 = A.texte(seg).count(";") >= 2
     toks = re.findall(r"<[^>]*>|[^<]+", seg, re.S)
     if not (c1 or c2):
@@ -117,26 +124,72 @@ def reflow_segment(seg, pile):
     return "".join(sortie), poses
 
 
-def reflow(fragment):
+def reflow(fragment, seuil=None):
     """retourne (fragment avec <br>, nombre de retours posés, blocs encore trop longs)"""
     pile, sortie, poses = [], [], 0
     for seg in DELIM.split(fragment):
         if DELIM.fullmatch(seg or ""):
             sortie.append(seg)
             continue
-        neuf, n = reflow_segment(seg, pile)
+        neuf, n = reflow_segment(seg, pile, seuil)
         sortie.append(neuf)
         poses += n
     neuf = "".join(sortie)
-    longues = [b[:80] for b in A.blocs(neuf) if A.mots(b) > A.SEUIL_CORRECTION]
+    longues = [b[:80] for b in A.blocs(neuf) if A.mots(b) > (seuil or A.SEUIL_CORRECTION)]
     return neuf, poses, longues
 
 
-def traiter(chemin, ecrire):
+SEUIL_PARTOUT = 30
+INCRUSTATION = re.compile(r"<!-- ateliers-representations:debut (\S+) -->.*?<!-- ateliers-representations:fin \1 -->", re.S)
+EXCLUS = re.compile(r"<!-- ateliers-representations:debut (\S+) -->.*?<!-- ateliers-representations:fin \1 -->|"
+                    r"<(script|style|svg|template|h[1-6]|summary)\b.*?</\2\s*>|"
+                    r"<(?:p|footer)\b[^>]*class=\"[^\"]*licence-cc[^>]*>.*?</(?:p|footer)>", re.S | re.I)
+
+
+def zones_exclues(s):
+    z = [(m.start(), m.end()) for m in EXCLUS.finditer(s)]
+    for m in re.finditer(r"<(div|p|section|details|aside)\b[^>]*%s[^>]*>" % A.CLASSES_CORRECTION.pattern, s):
+        contenu = A.element(s, m.start())
+        z.append((m.start(), s.index(contenu, m.start()) + len(contenu) if contenu else m.end()))
+    return sorted(z)
+
+
+def partout(s):
+    """les <p>, <li>, <dd> hors corrections et hors incrustations : (page aérée, retours posés, blocs restés longs)"""
+    zones = zones_exclues(s)
+
+    def exclu(a, b):
+        return any(x < b and a < y for x, y in zones)
+    morceaux, pos, total, longues = [], 0, 0, []
+    for m in re.finditer(r"<(p|li|dd|figcaption)\b[^>]*>", s):
+        if m.start() < pos:
+            continue
+        contenu = A.element(s, m.start())
+        deb = s.index(">", m.start()) + 1
+        fin = deb + len(contenu)
+        # une légende : le seuil de l'audit (L1, 35 mots), une phrase par ligne au-delà
+        seuil = A.SEUIL_LEGENDE if m.group(1) == "figcaption" else SEUIL_PARTOUT
+        if exclu(m.start(), fin) or A.mots(A.texte(contenu)) <= seuil:
+            continue
+        # un <li> qui porte une sous-liste ou une figure : on n'aère que son texte, segment par segment (DELIM)
+        neuf, n, lg = reflow(contenu, seuil)
+        if n:
+            morceaux.append(s[pos:deb])
+            morceaux.append(neuf)
+            pos = fin
+            total += n
+        longues += lg
+    morceaux.append(s[pos:])
+    return "".join(morceaux), total, longues
+
+
+def traiter(chemin, ecrire, tout=False):
     s = open(chemin, encoding="utf-8").read()
     morceaux, pos, total, longues = [], 0, 0, []
+    # une incrustation des ateliers vient du générateur : son texte s'aère à sa source, pas ici
+    incrustations = [(x.start(), x.end()) for x in INCRUSTATION.finditer(s)]
     for m in re.finditer(r"<(div|p|section|details|aside)\b[^>]*%s[^>]*>" % A.CLASSES_CORRECTION.pattern, s):
-        if m.start() < pos:
+        if m.start() < pos or any(x <= m.start() < y for x, y in incrustations):
             continue
         contenu = A.element(s, m.start())
         deb = s.index(contenu, m.start()) if contenu else m.end()
@@ -149,6 +202,10 @@ def traiter(chemin, ecrire):
         longues += lg
     morceaux.append(s[pos:])
     neuf = "".join(morceaux)
+    if tout:
+        neuf, n, lg = partout(neuf)
+        total += n
+        longues += lg
     if ecrire and neuf != s:
         open(chemin, "w", encoding="utf-8").write(neuf)
     return total, longues
@@ -163,7 +220,7 @@ def main():
         return 2
     somme = 0
     for p in pages:
-        n, longues = traiter(p, ecrire)
+        n, longues = traiter(p, ecrire, "--partout" in args)
         somme += n
         if n or longues:
             print(("✎ " if ecrire else "· ") + p + " : %d retour(s) à la ligne" % n)

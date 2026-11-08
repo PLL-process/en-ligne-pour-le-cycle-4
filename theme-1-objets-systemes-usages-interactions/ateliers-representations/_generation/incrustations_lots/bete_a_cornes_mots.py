@@ -42,6 +42,9 @@ ENTREES = [
          sequence=C1 + "4e/4e_C1.1/sequence_4e_C1.1-C1.3_tsinghua_feux.html", avant=debut("bc-4e-tsinghua-s5"),
          balise="h3", balise_exo="h4",
          titre="🧠 Piqûre de rappel&nbsp;: les mots de la bête à cornes, sur ton système",
+         # révision du 08/11/2026 (la charge de lecture de la séance 5) : le rappel ne sert qu'à qui a oublié les mots
+         replie="🧠 Piqûre de rappel (2 à 3 min)&nbsp;: les quatre mots de la bête à cornes — ouvre-la si tu ne les as "
+                "plus en tête",
          intro="La bête à cornes revient juste après, sur le jardin d'un collège. Avant, retrouve ses quatre <b>mots de "
                "référence</b> — utilisateur, matière d'œuvre, produit, fonction — sur le système de détection des feux des "
                "séances 1 à 4. Deux à trois minutes&nbsp;; l'exercice se vérifie tout seul et a sa correction complète.",

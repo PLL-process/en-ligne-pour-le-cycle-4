@@ -29146,3 +29146,48 @@ propre (5e_C3.1). `python3 _outils/bilan_revision.py` refait ce tableau à tout 
 
 **Reste à Pascal.** Fusionner. La suite suit l'ordre du suivi, une PR par séquence ou par deux ou trois petites :
 5e_C1.3, 4e_C1.1, 4e_C1.4, 3e_C1.5, 3e_C2.1…
+
+## 08/11/2026 — Révision des trois thèmes, 2 et 3 : 5e_C1.3 et 4e_C1.1 ; les captures des gestes se déplient à la demande (transversal : `_outils`, ateliers des représentations ; thème 1)
+
+**Suite de la passe complète** (skill `revision-sequence`), dans l'ordre du suivi.
+
+**Les outils, complétés.**
+- `_outils/replier_captures.py` (nouveau) : sous chaque geste d'un encart (n°93), les captures d'écran et leurs légendes
+  se rangent dans un `<details>` placé au même endroit — « 🖼 Le voir en images — 3 captures : ce que tu dois voir, et
+  que faire si ça ne marche pas ». **Le geste reste écrit en toutes lettres, visible.** Les captures avaient été posées
+  « visibles d'emblée » (journal du 10/09/2026) ; elles faisaient l'essentiel du texte de la séance (4e_C1.1 : 1 007 mots
+  pour l'échauffement, 1 641 pour la séance). Un élève qui sait faire lit le geste et passe ; un élève qui hésite ouvre
+  les images. Treize séquences portent de telles captures : chacune sera repliée à son tour de passe.
+- `_outils/aerer_corrections.py --partout` : la même passe hors des corrections — paragraphes, items, définitions de
+  plus de 30 mots, légendes de plus de 35 — sans changer un mot. Il ne touche plus jamais une incrustation des ateliers
+  (son texte vient du générateur, qui l'écraserait), ni la mention de licence.
+- `_outils/mesurer_charge.mjs --longs 30` : cite, séance par séance, chaque bloc visible d'un seul tenant.
+- Ateliers des représentations, `incrustations.py` : l'option `replie="…"` range une incrustation dans un `<details>`
+  fermé, pour un rappel qui ne sert qu'à qui a oublié. `incrustations.py --seq <code>` n'écrit que la séquence dite ; on
+  s'en sert pour remettre une séquence à jour. `build.py`, lui, ne se lance toujours pas dans le dépôt.
+- La phrase « Les quatre niveaux sont ceux du livret scolaire… » passe en trois lignes dans les 20 pages qui la portent.
+
+**5e_C1.3** (les vélos de Hangzhou) : déjà sous le repère. 19 retours à la ligne, les annonces et la consigne de
+l'activité 2 en lignes ①②③. L'incrustation de la carte mentale disait trois fois ce qu'est une donnée : l'introduction
+ne le redit plus, la consigne passe en ① ② ⚠ — corrigée dans sa source, l'atelier de 5e et le cahier de 5e.
+
+**4e_C1.1** (Tsinghua, les feux).
+- Séance 1 : 1 641 → 921 mots visibles (les captures des quatre gestes, repliées).
+- Séance 5 : 3 570 → 2 911 mots. La piqûre de rappel de la bête à cornes est repliée ; les introductions ne redisent plus
+  l'objectif de l'activité.
+- 75 retours à la ligne ; trois légendes réécrites ; six corrections des ateliers aérées à leur source
+  (`donnees_besoin.py`, `donnees_carte_mentale.py`) et, à l'identique, dans les ateliers, les cahiers et les séquences
+  qui les portent (4e_C3.1, 3e_C3.1 pour la correction de référence de la bête à cornes).
+- **La séance 5 reste au-dessus du repère.** Elle porte trois exercices d'atelier de 12 à 15 minutes, voulus le 24/10/2026 ;
+  le texte visible vient des exercices eux-mêmes (énoncés, schémas, propositions). On ne défait pas une décision de
+  Pascal pour tenir un repère : la question lui est posée (scinder la séance en deux, ou rendre l'exercice 3 facultatif).
+
+**Contrôles.**
+- 5e_C1.3 : banc 24 / 24, banc n°311 34 / 34 ; `audit_aeration --strict` 0 ; `verif_regles` 0 ✘ ; squelette, hiérarchie,
+  mode essentiel verts.
+- 4e_C1.1 : banc 66 / 66 (un contrôle ajouté : le rappel est replié au chargement et son résumé le dit) ; banc n°311
+  34 / 34 ; `audit_aeration --strict` 0 ; `verif_regles` 0 ✘ ; squelette, hiérarchie, mode essentiel, gestes d'outil verts.
+- Le texte des pages ne change pas d'un mot là où seuls des retours à la ligne sont posés (comparé avant / après).
+- Incrustations de 5e_C1.3 et de 4e_C1.1 : « à jour » (`incrustations.py --verifier`).
+
+**Reste à Pascal.** Fusionner ; trancher la séance 5 de 4e_C1.1.

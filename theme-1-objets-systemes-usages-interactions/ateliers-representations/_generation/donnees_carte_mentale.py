@@ -319,14 +319,14 @@ E1 = dict(
           ("LED", "une petite lampe qui consomme peu d'électricité (de l'anglais <i lang=\"en\">light-emitting diode</i>, "
            "diode électroluminescente).")],
     intro="<p>La classe de 5e construit un <b>lampadaire intelligent</b> pour une rue de Sainte-Luce&nbsp;: la nuit tombe, le capteur "
-          "mesure la lumière, et la LED s'allume toute seule. Après trois séances, l'équipe a beaucoup de choses sur sa table "
-          "et sur sa tablette. Pour ne rien perdre, elle les range dans une <b>carte mentale</b>&nbsp;: au centre, le projet&nbsp;; "
+          "mesure la lumière, et la LED s'allume toute seule. <br>Après trois séances, l'équipe a beaucoup de choses sur sa table "
+          "et sur sa tablette. <br>Pour ne rien perdre, elle les range dans une <b>carte mentale</b>&nbsp;: au centre, le projet&nbsp;; "
           "sur chaque branche, une famille de données.</p>",
     consigne="<p>Une <b>donnée</b>, c'est une information que l'on peut enregistrer dans un fichier&nbsp;: une photo, des "
-             "nombres, un texte, un programme. <b>D'abord, recense les données</b>&nbsp;: coche ce qui en est une. <b>Puis "
-             "range-les</b> dans la carte mentale&nbsp;: chaque branche a déjà une feuille d'exemple et une feuille vide, en "
-             "pointillés. Choisis ce qui va dans chaque feuille vide&nbsp;; ton choix s'écrit dans la carte. Une étiquette de "
-             "la liste n'a sa place dans aucune branche.</p>",
+             "nombres, un texte, un programme.</p><p>① <b>Recense les données</b>&nbsp;: coche ce qui en est une. <br>② <b>Range-les</b> "
+             "dans la carte mentale&nbsp;: chaque branche a déjà une feuille d'exemple et une feuille vide, en pointillés. <br>Choisis ce qui "
+             "va dans chaque feuille vide&nbsp;; ton choix s'écrit dans la carte. <br>⚠ Une étiquette de la liste n'a sa place dans "
+             "aucune branche.</p>",
     critere="tu coches les cinq données et seulement elles, et chaque feuille vide reçoit la donnée de sa famille.",
     widgets=[dict(type="cases", name="donnees",
                   legende="Sur la table de l'équipe, qu'est-ce qui est une <b>donnée</b>, c'est-à-dire une information que l'on "
@@ -573,9 +573,9 @@ E3 = dict(
            "« les plantes ont besoin d'eau » → vrai avant comme après → <b>hors sujet</b>.</p>"],
     jumeau=dict(consigne="Le collège remplace les clés de la salle de technologie par un badge électronique. Donne un avantage, "
                          "un inconvénient, et une phrase vraie mais hors sujet.",
-                correction="Avantage&nbsp;: <b>un badge perdu se désactive</b> (plus besoin de changer la serrure). Inconvénient&nbsp;: "
-                           "<b>la porte ne s'ouvre plus en cas de panne de courant</b>. Hors sujet&nbsp;: « la salle de technologie est "
-                           "au premier étage » — vrai, mais rien à voir avec l'évolution."),
+                correction="Avantage&nbsp;: <b>un badge perdu se désactive</b> (plus besoin de changer la serrure). <br>Inconvénient"
+                           "&nbsp;: <b>la porte ne s'ouvre plus en cas de panne de courant</b>. <br>Hors sujet&nbsp;: « la salle de "
+                           "technologie est au premier étage » — vrai, mais rien à voir avec l'évolution."),
     correction=[
         '<figure class="figure">' + CM_ARROSAGE_CORRIGE + '<figcaption>La carte mentale complétée (la dernière feuille est un exemple de réponse).</figcaption></figure>',
         "<b>« n'arrose que si la terre est sèche »</b> → moins d'eau gaspillée qu'à l'arrosoir → <b>Avantages</b>",
