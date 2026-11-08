@@ -464,19 +464,28 @@ def regle_300(src: str) -> tuple[str, str]:
     # intégré de rappel de la bête à cornes (lot du 05/11/2026, forme n°318) — ses quatre cases
     # sont des menus (ids `bc_<niv>_rappel-…__aqui|surquoi|objet|but`, `bac_…`). Ces menus sont
     # voulus : ils sont comptés à part, et ne font pas tomber la règle.
-    voulus = [i for i in listes if MENU_VOULU.search(i)]
-    restants = [i for i in listes if not MENU_VOULU.search(i)]
+    # Une LISTE D'INTERFACE (le port où monter un constituant sur un établi : seize entrées
+    # identiques sur dix champs, 3e_C7.5) n'est pas une question : la règle du 20/09 l'annonçait
+    # (« elle serait signalée… elle mérite d'être discutée »). Elle se déclare `data-interface`
+    # sur le <select>, et se compte à part — décision de V2 (07/11/2026), soumise à Pascal.
+    interfaces = [i for i in listes if "data-interface=" in i]
+    voulus = [i for i in listes if MENU_VOULU.search(i) and i not in interfaces]
+    restants = [i for i in listes if not MENU_VOULU.search(i) and i not in interfaces]
     ids = [i for i in IDENTIFIANT_SELECT.findall(src) if not MENU_VOULU_ID.search(i)]
+    if interfaces:
+        idsi = set(re.findall(r'\bid="([^"]+)"', " ".join(interfaces)))
+        ids = [i for i in ids if i not in idsi]
     note_voulus = (f" ; {len(voulus)} menu(s) voulu(s) par les n°317/318 (cahier des charges, bête à cornes), non comptés"
                    if voulus else "")
+    note_iface = (f" ; {len(interfaces)} liste(s) d'interface (`data-interface`), non comptée(s)" if interfaces else "")
     if not restants:
-        return "OK", f"seuls des menus voulus par les n°317/318 ({len(voulus)}) : cahier des charges, bête à cornes"
+        return "OK", f"seuls des menus voulus par les n°317/318 ({len(voulus)}) : cahier des charges, bête à cornes" + note_iface
     apercu = ", ".join(ids[:6]) + (" …" if len(ids) > 6 else "")
     return "ECHEC", (
         f"{len(restants)} question(s) posée(s) par une liste déroulante"
         + (f" ({apercu})" if ids else "")
         + " — le menu natif se dessine par-dessus l'énoncé ; à convertir en"
-        " groupe de boutons radio (gabarit du pilote 3e_C1.1)" + note_voulus)
+        " groupe de boutons radio (gabarit du pilote 3e_C1.1)" + note_voulus + note_iface)
 
 
 

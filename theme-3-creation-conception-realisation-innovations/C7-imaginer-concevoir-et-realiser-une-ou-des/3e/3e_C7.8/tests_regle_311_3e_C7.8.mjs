@@ -70,7 +70,7 @@ async function outilSuitLaSeance({ page, outil, maison, seances, toutes, geste, 
 
 await outilSuitLaSeance({ page: 'sequence_3e_C7.8_deux-stations.html', outil: '#outilBanc', maison: 'act0',
   seances: ['s1', 's2'], toutes: ['s1', 's2', 's3'],
-  geste: async (p) => { await p.check('#ch0'); await p.check('#ch1'); await p.selectOption('#hors', 'déclenche seule, et signale qu\'elle est seule'); await p.click('#envoyer'); await p.waitForTimeout(60); },
+  geste: async (p) => { await p.check('#ch0'); await p.check('#ch1'); await p.check('#hors input[value="déclenche seule, et signale qu\'elle est seule"]'); /* groupe de boutons radio (n°300) */ await p.click('#envoyer'); await p.waitForTimeout(60); },
   etat: (p) => p.evaluate(() => [String(document.getElementById('ch0').checked), String(document.getElementById('ch1').checked), document.getElementById('hors').value, document.getElementById('trame').textContent]) });
 
 /* La sécurité reste visible (retouche du 04/11/2026) : l'encadré est dans le volet, et l'en-tête de chaque séance où l'on

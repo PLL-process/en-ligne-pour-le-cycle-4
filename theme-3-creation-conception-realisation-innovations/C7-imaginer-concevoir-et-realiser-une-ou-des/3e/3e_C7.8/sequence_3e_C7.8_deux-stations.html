@@ -218,6 +218,33 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+
+  /* Règle d'or n°29 — mode essentiel : les corrections et les compléments se masquent, rien ne se perd */
+  body.essentiel details.correction,body.essentiel .approfondissement,body.essentiel .bonus-complement{display:none}
+  /* Règle d'or n°30 — la barre compte, ce bandeau situe */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:var(--panel,#0d2347);
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  /* Règle d'or n°31 — version étayée : des phrases à compléter, repliées */
+  details.etayage{margin:8px 0 12px;padding:6px 12px;border-left:4px solid var(--hl);border-radius:8px}
+  details.etayage summary{cursor:pointer;color:var(--hl);font-weight:600}
+  details.etayage ul{margin:6px 0;padding-left:22px}details.etayage li{margin:5px 0}
+  @media print{#tachesBandeau{display:none}details.etayage{border-color:#999!important}details.etayage summary{color:#047fa0!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -554,6 +581,26 @@ body.essentiel details.referentiel-replie{display:none}
 </script>
 <!-- fiche-papier v1 : fin -->
 <!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
@@ -565,6 +612,8 @@ body.essentiel details.referentiel-replie{display:none}
 
 <div class="toolbar">
   <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+
+  <button class="btn ghost" id="btnEssentiel" type="button" aria-pressed="false" title="Masquer les corrections et les compléments, pour ne garder que les consignes et les exercices. Un second clic ramène tout.">🎯 Mode essentiel : OFF</button>
 </div>
 
 <!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
@@ -646,7 +695,7 @@ body.essentiel details.referentiel-replie{display:none}
     <p>« La sirène ne part que si les deux stations sont d'accord. » <b>Quel problème cette règle
     crée-t-elle&nbsp;?</b> Écris ta réponse avant tout essai : c'est la question de toute la
     séquence, et on la relira au bilan.</p>
-    <textarea id="hyp" rows="3" placeholder="Si les deux doivent être d'accord, alors le jour où…"></textarea>
+    <textarea aria-label="Si les deux doivent être d&#x27;accord, alors le jour où…" id="hyp" rows="3" placeholder="Si les deux doivent être d'accord, alors le jour où…"></textarea>
 
     <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan.
     Personne ne la corrige : elle sert à mesurer le chemin parcouru.</p>
@@ -768,6 +817,17 @@ body.essentiel details.referentiel-replie{display:none}
   <button class="seance-tab" id="tab-s3" data-panel="s3" role="tab" aria-controls="s3" aria-selected="false" type="button">Séance 3<br><small>Prouver que la liaison tient, puis passer à trois</small></button>
 </nav>
 
+<div id="tachesBandeau" aria-live="polite" aria-atomic="true">
+  <span class="tb-titre">📋 Où j'en suis <span class="tb-compte"></span></span>
+  <ul>
+    <li data-tache="0"><span class="tb-etat">○</span> Vérifier l'activité 0</li>
+    <li data-tache="1"><span class="tb-etat">○</span> Vérifier l'activité 1</li>
+    <li data-tache="2"><span class="tb-etat">○</span> Vérifier l'activité 2</li>
+    <li data-tache="3"><span class="tb-etat">○</span> Vérifier l'activité 3</li>
+    <li data-tache="4"><span class="tb-etat">○</span> Vérifier l'activité 4</li>
+    <li data-tache="5"><span class="tb-etat">○</span> Vérifier le réinvestissement</li>
+  </ul>
+</div>
 <!-- ══════════════════ SÉANCE 1 ══════════════════ -->
 <div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
 <section class="card seance-entete" id="seance-1" aria-labelledby="seance-1-titre">
@@ -814,13 +874,12 @@ body.essentiel details.referentiel-replie{display:none}
     <ul class="recu" id="recu"></ul>
 
     <div class="lien-cmd">
-      <label for="hors">Quand le lien est coupé, l'objet…</label>
-      <select id="hors">
-        <option value="">— je choisis —</option>
-        <option>déclenche seule, sans rien signaler</option>
-        <option>ne déclenche jamais sans l'accord de l'autre</option>
-        <option>déclenche seule, et signale qu'elle est seule</option>
-      </select>
+      <fieldset class="qcm-groupe" id="hors">
+  <legend>Quand le lien est coupé, l'objet…</legend>
+  <div class="qcm-option"><input type="radio" name="hors" id="hors__1" value="déclenche seule, sans rien signaler"><label for="hors__1">déclenche seule, sans rien signaler</label></div>
+  <div class="qcm-option"><input type="radio" name="hors" id="hors__2" value="ne déclenche jamais sans l&#x27;accord de l&#x27;autre"><label for="hors__2">ne déclenche jamais sans l'accord de l'autre</label></div>
+  <div class="qcm-option"><input type="radio" name="hors" id="hors__3" value="déclenche seule, et signale qu&#x27;elle est seule"><label for="hors__3">déclenche seule, et signale qu'elle est seule</label></div>
+</fieldset>
     </div>
     <div class="lien-cmd">
       <button class="btn" id="envoyer" type="button">📨 Envoyer une mesure</button>
@@ -835,30 +894,27 @@ body.essentiel details.referentiel-replie{display:none}
   <div class="exo">
 
     <h4>Après avoir essayé</h4>
-    <p><b>1.</b> Le Robert envoie <code>{"v":124,"u":"km/h"}</code>. Sainte-Anne peut…</p>
-    <select id="a0q1">
-      <option value="">— je choisis —</option>
-      <option>lire une vitesse, sans savoir qui l'a mesurée ni quand</option>
-      <option>décider seule si l'alerte doit partir</option>
-      <option>vérifier que le niveau annoncé est cohérent</option>
-      <option>tout faire : le message est complet</option>
-    </select>
-    <p><b>2.</b> Quel champ permet à Sainte-Anne de <b>repérer un message perdu</b>&nbsp;?</p>
-    <select id="a0q2">
-      <option value="">— je choisis —</option>
-      <option>le numéro d'ordre du message</option>
-      <option>l'identifiant de la station</option>
-      <option>l'unité de la mesure</option>
-      <option>aucun : un message perdu ne se repère pas</option>
-    </select>
-    <p><b>3.</b> Coupe le lien, puis envoie. Sans comportement choisi, le banc dit…</p>
-    <select id="a0q3">
-      <option value="">— je choisis —</option>
-      <option>que l'objet ne sait pas quoi faire</option>
-      <option>que le message est parti quand même</option>
-      <option>que l'autre station a répondu</option>
-      <option>que l'alerte est déclenchée automatiquement</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a0q1">
+  <legend><b>1.</b> Le Robert envoie <code>{"v":124,"u":"km/h"}</code>. Sainte-Anne peut…</legend>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__1" value="lire une vitesse, sans savoir qui l&#x27;a mesurée ni quand"><label for="a0q1__1">lire une vitesse, sans savoir qui l'a mesurée ni quand</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__2" value="décider seule si l&#x27;alerte doit partir"><label for="a0q1__2">décider seule si l'alerte doit partir</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__3" value="vérifier que le niveau annoncé est cohérent"><label for="a0q1__3">vérifier que le niveau annoncé est cohérent</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__4" value="tout faire : le message est complet"><label for="a0q1__4">tout faire : le message est complet</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a0q2">
+  <legend><b>2.</b> Quel champ permet à Sainte-Anne de <b>repérer un message perdu</b>&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__1" value="le numéro d&#x27;ordre du message"><label for="a0q2__1">le numéro d'ordre du message</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__2" value="l&#x27;identifiant de la station"><label for="a0q2__2">l'identifiant de la station</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__3" value="l&#x27;unité de la mesure"><label for="a0q2__3">l'unité de la mesure</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__4" value="aucun : un message perdu ne se repère pas"><label for="a0q2__4">aucun : un message perdu ne se repère pas</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a0q3">
+  <legend><b>3.</b> Coupe le lien, puis envoie. Sans comportement choisi, le banc dit…</legend>
+  <div class="qcm-option"><input type="radio" name="a0q3" id="a0q3__1" value="que l&#x27;objet ne sait pas quoi faire"><label for="a0q3__1">que l'objet ne sait pas quoi faire</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q3" id="a0q3__2" value="que le message est parti quand même"><label for="a0q3__2">que le message est parti quand même</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q3" id="a0q3__3" value="que l&#x27;autre station a répondu"><label for="a0q3__3">que l'autre station a répondu</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q3" id="a0q3__4" value="que l&#x27;alerte est déclenchée automatiquement"><label for="a0q3__4">que l'alerte est déclenchée automatiquement</label></div>
+</fieldset>
     <p style="font-size:.9em;color:var(--warn)">🔒 Coche d'abord quelques champs dans le banc et regarde ce que la station d'en face peut en faire — l'essai d'abord.</p>
     <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
     <div class="feedback" id="fb0"></div>
@@ -887,49 +943,45 @@ body.essentiel details.referentiel-replie{display:none}
   utiles, aucun des deux champs de trop</b>.</p>
   <div class="exo">
 
-    <p><b>1.</b> Pourquoi envoyer le <b>niveau d'alerte calculé</b> (<code>niv</code>) et pas
-    seulement la vitesse mesurée&nbsp;?</p>
-    <select id="a1q1">
-      <option value="">— je choisis —</option>
-      <option>sinon chaque station doit refaire les seuils de l'autre, et un réglage différent passe inaperçu</option>
-      <option>parce que la vitesse est trop longue à transmettre</option>
-      <option>parce que le niveau est plus précis que la vitesse</option>
-      <option>ce n'est pas utile : la vitesse suffit toujours</option>
-    </select>
-    <p><b>2.</b> Alors pourquoi envoyer <b>aussi</b> la vitesse&nbsp;?</p>
-    <select id="a1q2">
-      <option value="">— je choisis —</option>
-      <option>pour pouvoir vérifier que le niveau annoncé correspond à la mesure</option>
-      <option>parce que le niveau seul ne passe pas sur le réseau</option>
-      <option>pour que la station la plus rapide gagne</option>
-      <option>ce n'est pas utile : le niveau suffit toujours</option>
-    </select>
-    <p><b>3.</b> À quoi sert le <b>numéro d'ordre</b> (<code>seq</code>)&nbsp;?</p>
-    <select id="a1q3">
-      <option value="">— je choisis —</option>
-      <option>à repérer un message perdu ou reçu deux fois</option>
-      <option>à savoir quelle station a émis le message</option>
-      <option>à trier les messages par importance</option>
-      <option>à compter combien de messages restent à envoyer</option>
-    </select>
-    <p><b>4.</b> Les <b>2 000 dernières mesures</b> jointes à chaque message&nbsp;?</p>
-    <select id="a1q4">
-      <option value="">— je choisis —</option>
-      <option>inutile et coûteux : l'autre décide sur la mesure du moment</option>
-      <option>indispensable : sans historique, aucune décision n'est possible</option>
-      <option>utile une fois par jour, pas à chaque message</option>
-      <option>obligatoire pour prouver la décision après coup</option>
-    </select>
-    <p><b>5.</b> Et la <b>clé du réseau</b>, « pour que l'autre puisse se connecter »&nbsp;?</p>
-    <select id="a1q5">
-      <option value="">— je choisis —</option>
-      <option>jamais : un secret ne circule pas dans un message</option>
-      <option>seulement au premier message, pour établir la liaison</option>
-      <option>seulement si le réseau est celui du collège</option>
-      <option>c'est la façon normale d'appairer deux objets</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a1q1">
+  <legend><b>1.</b> Pourquoi envoyer le <b>niveau d'alerte calculé</b> (<code>niv</code>) et pas
+    seulement la vitesse mesurée&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__1" value="sinon chaque station doit refaire les seuils de l&#x27;autre, et un réglage différent passe inaperçu"><label for="a1q1__1">sinon chaque station doit refaire les seuils de l'autre, et un réglage différent passe inaperçu</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__2" value="parce que la vitesse est trop longue à transmettre"><label for="a1q1__2">parce que la vitesse est trop longue à transmettre</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__3" value="parce que le niveau est plus précis que la vitesse"><label for="a1q1__3">parce que le niveau est plus précis que la vitesse</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__4" value="ce n&#x27;est pas utile : la vitesse suffit toujours"><label for="a1q1__4">ce n'est pas utile : la vitesse suffit toujours</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a1q2">
+  <legend><b>2.</b> Alors pourquoi envoyer <b>aussi</b> la vitesse&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__1" value="pour pouvoir vérifier que le niveau annoncé correspond à la mesure"><label for="a1q2__1">pour pouvoir vérifier que le niveau annoncé correspond à la mesure</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__2" value="parce que le niveau seul ne passe pas sur le réseau"><label for="a1q2__2">parce que le niveau seul ne passe pas sur le réseau</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__3" value="pour que la station la plus rapide gagne"><label for="a1q2__3">pour que la station la plus rapide gagne</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__4" value="ce n&#x27;est pas utile : le niveau suffit toujours"><label for="a1q2__4">ce n'est pas utile : le niveau suffit toujours</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a1q3">
+  <legend><b>3.</b> À quoi sert le <b>numéro d'ordre</b> (<code>seq</code>)&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__1" value="à repérer un message perdu ou reçu deux fois"><label for="a1q3__1">à repérer un message perdu ou reçu deux fois</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__2" value="à savoir quelle station a émis le message"><label for="a1q3__2">à savoir quelle station a émis le message</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__3" value="à trier les messages par importance"><label for="a1q3__3">à trier les messages par importance</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__4" value="à compter combien de messages restent à envoyer"><label for="a1q3__4">à compter combien de messages restent à envoyer</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a1q4">
+  <legend><b>4.</b> Les <b>2 000 dernières mesures</b> jointes à chaque message&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__1" value="inutile et coûteux : l&#x27;autre décide sur la mesure du moment"><label for="a1q4__1">inutile et coûteux : l'autre décide sur la mesure du moment</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__2" value="indispensable : sans historique, aucune décision n&#x27;est possible"><label for="a1q4__2">indispensable : sans historique, aucune décision n'est possible</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__3" value="utile une fois par jour, pas à chaque message"><label for="a1q4__3">utile une fois par jour, pas à chaque message</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__4" value="obligatoire pour prouver la décision après coup"><label for="a1q4__4">obligatoire pour prouver la décision après coup</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a1q5">
+  <legend><b>5.</b> Et la <b>clé du réseau</b>, « pour que l'autre puisse se connecter »&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q5" id="a1q5__1" value="jamais : un secret ne circule pas dans un message"><label for="a1q5__1">jamais : un secret ne circule pas dans un message</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q5" id="a1q5__2" value="seulement au premier message, pour établir la liaison"><label for="a1q5__2">seulement au premier message, pour établir la liaison</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q5" id="a1q5__3" value="seulement si le réseau est celui du collège"><label for="a1q5__3">seulement si le réseau est celui du collège</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q5" id="a1q5__4" value="c&#x27;est la façon normale d&#x27;appairer deux objets"><label for="a1q5__4">c'est la façon normale d'appairer deux objets</label></div>
+</fieldset>
     <p><b>6.</b> Recopie le message complet que le banc affiche :</p>
-    <textarea id="a1msg" rows="2" placeholder='{"id":"robert", …}'></textarea>
+    <textarea aria-label="6. Recopie le message complet que le banc affiche :" id="a1msg" rows="2" placeholder='{"id":"robert", …}'></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Le message complet affiché par le banc est : « … ». »</li><li>« Il contient … (l'identité de la station), … (la mesure) et … (l'heure). »</li></ul></details>
     <p style="font-size:.9em;color:var(--warn)">🔒 Compose d'abord, dans le banc, un message qui coche les six champs utiles et aucun des deux champs de trop.</p>
     <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
     <div class="feedback" id="fb1"></div>
@@ -984,36 +1036,34 @@ body.essentiel details.referentiel-replie{display:none}
   <em>dans quel délai</em>.</p>
   <div class="exo">
 
-    <p><b>1.</b> Le Robert annonce <code>niv:2</code>, Sainte-Anne <code>niv:2</code>. Elles sont
-    d'accord. Mais le message du Robert date de <b>trois heures</b>. Que faut-il en faire&nbsp;?</p>
-    <select id="a2q1">
-      <option value="">— je choisis —</option>
-      <option>l'ignorer : un accord sur une information périmée n'est pas un accord</option>
-      <option>l'accepter : les deux niveaux sont identiques</option>
-      <option>l'accepter, mais baisser le niveau d'un cran</option>
-      <option>attendre un troisième message avant de décider</option>
-    </select>
-    <p><b>2.</b> Le Robert annonce <code>niv:2</code> et Sainte-Anne <code>niv:1</code>, toutes
-    deux à l'instant. Le vent est-il dangereux&nbsp;?</p>
-    <select id="a2q2">
-      <option value="">— je choisis —</option>
-      <option>peut-être : trente kilomètres séparent les deux, le vent n'y est pas le même</option>
-      <option>non : puisqu'elles ne sont pas d'accord, il ne se passe rien</option>
-      <option>oui : dès qu'une station annonce 2, l'alerte est justifiée</option>
-      <option>impossible à dire : il faut une troisième station</option>
-    </select>
-    <p><b>3.</b> Quelle règle d'accord retiens-tu&nbsp;?</p>
-    <select id="a2q3">
-      <option value="">— je choisis —</option>
-      <option>alerte si les deux annoncent au moins le niveau 2, sur des messages de moins de 15 minutes</option>
-      <option>alerte si l'une des deux annonce au moins le niveau 2</option>
-      <option>alerte si les deux annoncent exactement le même niveau, quel qu'il soit</option>
-      <option>alerte si la moyenne des deux vitesses dépasse le seuil</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a2q1">
+  <legend><b>1.</b> Le Robert annonce <code>niv:2</code>, Sainte-Anne <code>niv:2</code>. Elles sont
+    d'accord. Mais le message du Robert date de <b>trois heures</b>. Que faut-il en faire&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__1" value="l&#x27;ignorer : un accord sur une information périmée n&#x27;est pas un accord"><label for="a2q1__1">l'ignorer : un accord sur une information périmée n'est pas un accord</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__2" value="l&#x27;accepter : les deux niveaux sont identiques"><label for="a2q1__2">l'accepter : les deux niveaux sont identiques</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__3" value="l&#x27;accepter, mais baisser le niveau d&#x27;un cran"><label for="a2q1__3">l'accepter, mais baisser le niveau d'un cran</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__4" value="attendre un troisième message avant de décider"><label for="a2q1__4">attendre un troisième message avant de décider</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a2q2">
+  <legend><b>2.</b> Le Robert annonce <code>niv:2</code> et Sainte-Anne <code>niv:1</code>, toutes
+    deux à l'instant. Le vent est-il dangereux&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__1" value="peut-être : trente kilomètres séparent les deux, le vent n&#x27;y est pas le même"><label for="a2q2__1">peut-être : trente kilomètres séparent les deux, le vent n'y est pas le même</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__2" value="non : puisqu&#x27;elles ne sont pas d&#x27;accord, il ne se passe rien"><label for="a2q2__2">non : puisqu'elles ne sont pas d'accord, il ne se passe rien</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__3" value="oui : dès qu&#x27;une station annonce 2, l&#x27;alerte est justifiée"><label for="a2q2__3">oui : dès qu'une station annonce 2, l'alerte est justifiée</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__4" value="impossible à dire : il faut une troisième station"><label for="a2q2__4">impossible à dire : il faut une troisième station</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a2q3">
+  <legend><b>3.</b> Quelle règle d'accord retiens-tu&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__1" value="alerte si les deux annoncent au moins le niveau 2, sur des messages de moins de 15 minutes"><label for="a2q3__1">alerte si les deux annoncent au moins le niveau 2, sur des messages de moins de 15 minutes</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__2" value="alerte si l&#x27;une des deux annonce au moins le niveau 2"><label for="a2q3__2">alerte si l'une des deux annonce au moins le niveau 2</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__3" value="alerte si les deux annoncent exactement le même niveau, quel qu&#x27;il soit"><label for="a2q3__3">alerte si les deux annoncent exactement le même niveau, quel qu'il soit</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__4" value="alerte si la moyenne des deux vitesses dépasse le seuil"><label for="a2q3__4">alerte si la moyenne des deux vitesses dépasse le seuil</label></div>
+</fieldset>
     <p><b>Écris ta règle en une phrase complète</b>, telle qu'un programme pourrait l'appliquer :
     dis <em>sur quoi</em> l'accord porte, <em>quelle fraîcheur</em> tu exiges, et <em>ce qui se
     passe</em> quand la règle est vérifiée.</p>
-    <textarea id="a2regle" rows="3" placeholder="La sirène part si …, à condition que …, et alors …"></textarea>
+    <textarea aria-label="La sirène part si …, à condition que …, et alors …" id="a2regle" rows="3" placeholder="La sirène part si …, à condition que …, et alors …"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« La sirène part si les deux stations annoncent …, à condition que leurs messages datent de moins de … minutes, et alors …. »</li><li>« L'accord porte sur … (le niveau / la vitesse / …) ; la fraîcheur exigée est … ; quand la règle est vérifiée, la station … »</li></ul></details>
     <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
     <div class="feedback" id="fb2"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
@@ -1051,42 +1101,39 @@ body.essentiel details.referentiel-replie{display:none}
   précisément quand il y a un cyclone.</p>
   <div class="exo">
 
-    <p><b>1.</b> « <b>Ne déclenche jamais sans l'accord de l'autre</b> » — que se passe-t-il si
-    Sainte-Anne est détruite par le grain qui arrive sur Le Robert&nbsp;?</p>
-    <select id="a3q1">
-      <option value="">— je choisis —</option>
-      <option>aucune alerte, alors que le danger est mesuré : c'est le pire des trois</option>
-      <option>l'alerte part quand même, par sécurité</option>
-      <option>la station du Robert prend le relais de Sainte-Anne</option>
-      <option>rien de grave : une station suffit rarement</option>
-    </select>
-    <p><b>2.</b> « <b>Déclenche seule, sans rien signaler</b> » — quel défaut cela réintroduit-il&nbsp;?</p>
-    <select id="a3q2">
-      <option value="">— je choisis —</option>
-      <option>les fausses alertes reviennent, et personne ne sait que l'alerte n'était pas corroborée</option>
-      <option>la sirène ne part jamais</option>
-      <option>l'autre station est effacée du système</option>
-      <option>aucun : c'est la solution la plus simple</option>
-    </select>
-    <p><b>3.</b> Quel comportement retiens-tu&nbsp;?</p>
-    <select id="a3q3">
-      <option value="">— je choisis —</option>
-      <option>déclencher seule, et signaler que l'alerte n'est pas corroborée</option>
-      <option>ne jamais déclencher seule</option>
-      <option>déclencher seule sans rien dire</option>
-      <option>attendre le retour du lien avant de décider</option>
-    </select>
-    <p><b>4.</b> À partir de combien de temps sans nouvelles considère-t-on l'autre
-    muette&nbsp;? La station envoie un message toutes les 5 minutes.</p>
-    <select id="a3q4">
-      <option value="">— je choisis —</option>
-      <option>après 15 minutes, soit trois messages manqués</option>
-      <option>dès le premier message manqué</option>
-      <option>après deux heures, pour être bien sûr</option>
-      <option>jamais : on attend indéfiniment</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a3q1">
+  <legend><b>1.</b> « <b>Ne déclenche jamais sans l'accord de l'autre</b> » — que se passe-t-il si
+    Sainte-Anne est détruite par le grain qui arrive sur Le Robert&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__1" value="aucune alerte, alors que le danger est mesuré : c&#x27;est le pire des trois"><label for="a3q1__1">aucune alerte, alors que le danger est mesuré : c'est le pire des trois</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__2" value="l&#x27;alerte part quand même, par sécurité"><label for="a3q1__2">l'alerte part quand même, par sécurité</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__3" value="la station du Robert prend le relais de Sainte-Anne"><label for="a3q1__3">la station du Robert prend le relais de Sainte-Anne</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__4" value="rien de grave : une station suffit rarement"><label for="a3q1__4">rien de grave : une station suffit rarement</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a3q2">
+  <legend><b>2.</b> « <b>Déclenche seule, sans rien signaler</b> » — quel défaut cela réintroduit-il&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__1" value="les fausses alertes reviennent, et personne ne sait que l&#x27;alerte n&#x27;était pas corroborée"><label for="a3q2__1">les fausses alertes reviennent, et personne ne sait que l'alerte n'était pas corroborée</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__2" value="la sirène ne part jamais"><label for="a3q2__2">la sirène ne part jamais</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__3" value="l&#x27;autre station est effacée du système"><label for="a3q2__3">l'autre station est effacée du système</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__4" value="aucun : c&#x27;est la solution la plus simple"><label for="a3q2__4">aucun : c'est la solution la plus simple</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a3q3">
+  <legend><b>3.</b> Quel comportement retiens-tu&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3q3" id="a3q3__1" value="déclencher seule, et signaler que l&#x27;alerte n&#x27;est pas corroborée"><label for="a3q3__1">déclencher seule, et signaler que l'alerte n'est pas corroborée</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q3" id="a3q3__2" value="ne jamais déclencher seule"><label for="a3q3__2">ne jamais déclencher seule</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q3" id="a3q3__3" value="déclencher seule sans rien dire"><label for="a3q3__3">déclencher seule sans rien dire</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q3" id="a3q3__4" value="attendre le retour du lien avant de décider"><label for="a3q3__4">attendre le retour du lien avant de décider</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a3q4">
+  <legend><b>4.</b> À partir de combien de temps sans nouvelles considère-t-on l'autre
+    muette&nbsp;? La station envoie un message toutes les 5 minutes.</legend>
+  <div class="qcm-option"><input type="radio" name="a3q4" id="a3q4__1" value="après 15 minutes, soit trois messages manqués"><label for="a3q4__1">après 15 minutes, soit trois messages manqués</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q4" id="a3q4__2" value="dès le premier message manqué"><label for="a3q4__2">dès le premier message manqué</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q4" id="a3q4__3" value="après deux heures, pour être bien sûr"><label for="a3q4__3">après deux heures, pour être bien sûr</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q4" id="a3q4__4" value="jamais : on attend indéfiniment"><label for="a3q4__4">jamais : on attend indéfiniment</label></div>
+</fieldset>
     <p><b>En une phrase :</b> qu'est-ce que « dégradé, pas éteint » veut dire ici&nbsp;?</p>
-    <textarea id="a3ph" rows="2" placeholder="Quand l'autre se tait, la station…"></textarea>
+    <textarea aria-label="Quand l&#x27;autre se tait, la station…" id="a3ph" rows="2" placeholder="Quand l'autre se tait, la station…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Quand l'autre se tait pendant plus de … minutes, la station … au lieu de …. »</li><li>« « Dégradé, pas éteint » veut dire ici que la station continue à …, mais signale que … »</li></ul></details>
     <p style="font-size:.9em;color:var(--warn)">🔒 Coupe le lien au banc et essaie les trois comportements avant de répondre — c'est l'essai qui tranche, pas l'intuition.</p>
     <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
     <div class="feedback" id="fb3"></div>
@@ -1137,66 +1184,60 @@ body.essentiel details.referentiel-replie{display:none}
   validé tant qu'on ne l'a pas essayé. Associe chaque essai à <b>ce qu'il prouve</b> — et
   remarque qu'aucun ne se contente de « ça marche ».</p>
   <div class="exo">
-    <p style="margin-top:12px"><b>Les deux stations annoncent le niveau 2, à l'instant</b></p>
-    <select id="a4c0">
-      <option value="">— je choisis —</option>
-      <option>Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.</option>
-      <option>Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.</option>
-      <option>Le délai de fraîcheur : un accord périmé ne déclenche rien.</option>
-      <option>Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.</option>
-      <option>Le numéro d'ordre : le doublon est ignoré et le manque est repéré.</option>
-      <option>Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.</option>
-    </select>
-    <p style="margin-top:12px"><b>Le Robert annonce 2, Sainte-Anne annonce 1</b></p>
-    <select id="a4c1">
-      <option value="">— je choisis —</option>
-      <option>Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.</option>
-      <option>Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.</option>
-      <option>Le délai de fraîcheur : un accord périmé ne déclenche rien.</option>
-      <option>Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.</option>
-      <option>Le numéro d'ordre : le doublon est ignoré et le manque est repéré.</option>
-      <option>Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.</option>
-    </select>
-    <p style="margin-top:12px"><b>Les deux annoncent 2, mais le message du Robert a trois heures</b></p>
-    <select id="a4c2">
-      <option value="">— je choisis —</option>
-      <option>Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.</option>
-      <option>Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.</option>
-      <option>Le délai de fraîcheur : un accord périmé ne déclenche rien.</option>
-      <option>Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.</option>
-      <option>Le numéro d'ordre : le doublon est ignoré et le manque est repéré.</option>
-      <option>Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.</option>
-    </select>
-    <p style="margin-top:12px"><b>Sainte-Anne cesse d'émettre pendant vingt minutes</b></p>
-    <select id="a4c3">
-      <option value="">— je choisis —</option>
-      <option>Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.</option>
-      <option>Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.</option>
-      <option>Le délai de fraîcheur : un accord périmé ne déclenche rien.</option>
-      <option>Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.</option>
-      <option>Le numéro d'ordre : le doublon est ignoré et le manque est repéré.</option>
-      <option>Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.</option>
-    </select>
-    <p style="margin-top:12px"><b>Sainte-Anne se tait ET Le Robert mesure 124 km/h</b></p>
-    <select id="a4c4">
-      <option value="">— je choisis —</option>
-      <option>Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.</option>
-      <option>Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.</option>
-      <option>Le délai de fraîcheur : un accord périmé ne déclenche rien.</option>
-      <option>Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.</option>
-      <option>Le numéro d'ordre : le doublon est ignoré et le manque est repéré.</option>
-      <option>Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.</option>
-    </select>
-    <p style="margin-top:12px"><b>Le message 417 arrive deux fois, puis le 419 arrive sans le 418</b></p>
-    <select id="a4c5">
-      <option value="">— je choisis —</option>
-      <option>Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.</option>
-      <option>Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.</option>
-      <option>Le délai de fraîcheur : un accord périmé ne déclenche rien.</option>
-      <option>Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.</option>
-      <option>Le numéro d'ordre : le doublon est ignoré et le manque est repéré.</option>
-      <option>Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a4c0">
+  <legend><b>Les deux stations annoncent le niveau 2, à l'instant</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4c0" id="a4c0__1" value="Le cas nominal : la sirène part. C&#x27;est le seul essai que tout le monde pense à faire."><label for="a4c0__1">Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c0" id="a4c0__2" value="Le cas qui décide de tout : l&#x27;alerte part quand même, marquée non corroborée."><label for="a4c0__2">Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c0" id="a4c0__3" value="Le délai de fraîcheur : un accord périmé ne déclenche rien."><label for="a4c0__3">Le délai de fraîcheur : un accord périmé ne déclenche rien.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c0" id="a4c0__4" value="Le désaccord : la sirène ne part pas, et l&#x27;écart est affiché plutôt qu&#x27;effacé."><label for="a4c0__4">Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c0" id="a4c0__5" value="Le numéro d&#x27;ordre : le doublon est ignoré et le manque est repéré."><label for="a4c0__5">Le numéro d'ordre : le doublon est ignoré et le manque est repéré.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c0" id="a4c0__6" value="Le silence : au bout de 15 min, l&#x27;autre est déclarée muette et le mode dégradé s&#x27;enclenche."><label for="a4c0__6">Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a4c1">
+  <legend><b>Le Robert annonce 2, Sainte-Anne annonce 1</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4c1" id="a4c1__1" value="Le cas nominal : la sirène part. C&#x27;est le seul essai que tout le monde pense à faire."><label for="a4c1__1">Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c1" id="a4c1__2" value="Le cas qui décide de tout : l&#x27;alerte part quand même, marquée non corroborée."><label for="a4c1__2">Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c1" id="a4c1__3" value="Le délai de fraîcheur : un accord périmé ne déclenche rien."><label for="a4c1__3">Le délai de fraîcheur : un accord périmé ne déclenche rien.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c1" id="a4c1__4" value="Le désaccord : la sirène ne part pas, et l&#x27;écart est affiché plutôt qu&#x27;effacé."><label for="a4c1__4">Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c1" id="a4c1__5" value="Le numéro d&#x27;ordre : le doublon est ignoré et le manque est repéré."><label for="a4c1__5">Le numéro d'ordre : le doublon est ignoré et le manque est repéré.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c1" id="a4c1__6" value="Le silence : au bout de 15 min, l&#x27;autre est déclarée muette et le mode dégradé s&#x27;enclenche."><label for="a4c1__6">Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a4c2">
+  <legend><b>Les deux annoncent 2, mais le message du Robert a trois heures</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4c2" id="a4c2__1" value="Le cas nominal : la sirène part. C&#x27;est le seul essai que tout le monde pense à faire."><label for="a4c2__1">Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c2" id="a4c2__2" value="Le cas qui décide de tout : l&#x27;alerte part quand même, marquée non corroborée."><label for="a4c2__2">Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c2" id="a4c2__3" value="Le délai de fraîcheur : un accord périmé ne déclenche rien."><label for="a4c2__3">Le délai de fraîcheur : un accord périmé ne déclenche rien.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c2" id="a4c2__4" value="Le désaccord : la sirène ne part pas, et l&#x27;écart est affiché plutôt qu&#x27;effacé."><label for="a4c2__4">Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c2" id="a4c2__5" value="Le numéro d&#x27;ordre : le doublon est ignoré et le manque est repéré."><label for="a4c2__5">Le numéro d'ordre : le doublon est ignoré et le manque est repéré.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c2" id="a4c2__6" value="Le silence : au bout de 15 min, l&#x27;autre est déclarée muette et le mode dégradé s&#x27;enclenche."><label for="a4c2__6">Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a4c3">
+  <legend><b>Sainte-Anne cesse d'émettre pendant vingt minutes</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4c3" id="a4c3__1" value="Le cas nominal : la sirène part. C&#x27;est le seul essai que tout le monde pense à faire."><label for="a4c3__1">Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c3" id="a4c3__2" value="Le cas qui décide de tout : l&#x27;alerte part quand même, marquée non corroborée."><label for="a4c3__2">Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c3" id="a4c3__3" value="Le délai de fraîcheur : un accord périmé ne déclenche rien."><label for="a4c3__3">Le délai de fraîcheur : un accord périmé ne déclenche rien.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c3" id="a4c3__4" value="Le désaccord : la sirène ne part pas, et l&#x27;écart est affiché plutôt qu&#x27;effacé."><label for="a4c3__4">Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c3" id="a4c3__5" value="Le numéro d&#x27;ordre : le doublon est ignoré et le manque est repéré."><label for="a4c3__5">Le numéro d'ordre : le doublon est ignoré et le manque est repéré.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c3" id="a4c3__6" value="Le silence : au bout de 15 min, l&#x27;autre est déclarée muette et le mode dégradé s&#x27;enclenche."><label for="a4c3__6">Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a4c4">
+  <legend><b>Sainte-Anne se tait ET Le Robert mesure 124 km/h</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4c4" id="a4c4__1" value="Le cas nominal : la sirène part. C&#x27;est le seul essai que tout le monde pense à faire."><label for="a4c4__1">Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c4" id="a4c4__2" value="Le cas qui décide de tout : l&#x27;alerte part quand même, marquée non corroborée."><label for="a4c4__2">Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c4" id="a4c4__3" value="Le délai de fraîcheur : un accord périmé ne déclenche rien."><label for="a4c4__3">Le délai de fraîcheur : un accord périmé ne déclenche rien.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c4" id="a4c4__4" value="Le désaccord : la sirène ne part pas, et l&#x27;écart est affiché plutôt qu&#x27;effacé."><label for="a4c4__4">Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c4" id="a4c4__5" value="Le numéro d&#x27;ordre : le doublon est ignoré et le manque est repéré."><label for="a4c4__5">Le numéro d'ordre : le doublon est ignoré et le manque est repéré.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c4" id="a4c4__6" value="Le silence : au bout de 15 min, l&#x27;autre est déclarée muette et le mode dégradé s&#x27;enclenche."><label for="a4c4__6">Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a4c5">
+  <legend><b>Le message 417 arrive deux fois, puis le 419 arrive sans le 418</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4c5" id="a4c5__1" value="Le cas nominal : la sirène part. C&#x27;est le seul essai que tout le monde pense à faire."><label for="a4c5__1">Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c5" id="a4c5__2" value="Le cas qui décide de tout : l&#x27;alerte part quand même, marquée non corroborée."><label for="a4c5__2">Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c5" id="a4c5__3" value="Le délai de fraîcheur : un accord périmé ne déclenche rien."><label for="a4c5__3">Le délai de fraîcheur : un accord périmé ne déclenche rien.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c5" id="a4c5__4" value="Le désaccord : la sirène ne part pas, et l&#x27;écart est affiché plutôt qu&#x27;effacé."><label for="a4c5__4">Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c5" id="a4c5__5" value="Le numéro d&#x27;ordre : le doublon est ignoré et le manque est repéré."><label for="a4c5__5">Le numéro d'ordre : le doublon est ignoré et le manque est repéré.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c5" id="a4c5__6" value="Le silence : au bout de 15 min, l&#x27;autre est déclarée muette et le mode dégradé s&#x27;enclenche."><label for="a4c5__6">Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.</label></div>
+</fieldset>
     <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
     <div class="feedback" id="fb4"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
@@ -1223,7 +1264,8 @@ body.essentiel details.referentiel-replie{display:none}
   Dans <b>le comportement quand l'une se tait</b>&nbsp;?<br>
   Et une question de plus, qui n'existait pas à
   deux : que fait-on si <b>deux stations disent 2 et la troisième dit 0</b>&nbsp;?</p>
-  <textarea id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+  <textarea aria-label="Je choisirais … parce que …" id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Avec trois stations, dans le message, ce qui change : … ; dans la règle d'accord : … ; quand l'une se tait : …. »</li><li>« Si deux stations disent 2 et la troisième dit 0, je décide de …, parce que … »</li></ul></details>
   <button class="btn check" data-check="5" type="button">✅ Vérifier le réinvestissement</button>
   <div class="feedback" id="fb5"></div>
   <details class="correction"><summary>📖 Correction</summary><div>
@@ -1283,6 +1325,7 @@ body.essentiel details.referentiel-replie{display:none}
 
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Les avions embarquent trois sondes et non deux parce que, avec deux sondes qui ne sont pas d'accord, on ne sait pas …. »</li><li>« Pour la station du Marin, cela veut dire que … »</li></ul></details>
   <details class="correction"><summary>✅ Corrigé du défi horloges — une horloge qui retarde de dix minutes</summary><div>
     <p><b>Ce qui se passe.</b> Ta règle n'accepte que des messages de moins de 15 minutes, et chaque station juge l'âge d'un message d'après l'heure <code>t</code> qu'il porte. Si l'horloge de Sainte-Anne retarde de 10 minutes, ses messages paraissent au Robert plus vieux de 10 minutes : une mesure faite il y a 6 minutes semble en avoir 16, et l'accord est refusé alors que les deux stations voient le même grain. Dans l'autre sens, c'est pire : Sainte-Anne croit plus jeunes les messages du Robert, et accepte un message vieux de 20 minutes comme s'il en avait 10 — un accord périmé passe pour un accord.</p>
     <p><b>Comment deux machines se mettent à l'heure.</b> Par le réseau, avec le protocole NTP (de l'anglais <i lang="en">Network Time Protocol</i>) : à intervalles réguliers, chaque station demande l'heure à un serveur de temps et corrige son horloge. Une station sans réseau peut aussi prendre l'heure d'un récepteur GPS.</p>
@@ -1312,18 +1355,19 @@ body.essentiel details.referentiel-replie{display:none}
   d'accord » créait. Relis-toi. C'était probablement la bonne intuition — et ce que la séquence
   ajoute, c'est qu'on ne choisit pas entre supprimer les fausses alertes et garder les vraies :
   <em>on déclenche, et on dit qu'on était seul</em>.</p>
-  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <textarea aria-label="Ce que je sais faire maintenant, et ce qui me résiste encore…" id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Au départ, je pensais que la règle « les deux d'accord » créait le problème suivant : … ; maintenant je sais que … »</li><li>« Ce que je sais faire : … ; ce qui me résiste encore : … »</li></ul></details>
   <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">où as-tu hésité en écrivant la règle d'accord, et qu'est-ce qui t'a surpris quand tu as coupé le lien au banc ?</label></p>
   <textarea id="bilanMeta" rows="2" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« J'ai hésité en écrivant la règle d'accord au moment de … »</li><li>« Ce qui m'a surpris quand j'ai coupé le lien au banc, c'est que … »</li></ul></details>
   <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
-  <p style="margin-top:12px"><b>Je me positionne sur 3e_C7.8 :</b></p>
-  <select id="pos">
-    <option value="">— je me positionne —</option>
-    <option>🔴 Maîtrise insuffisante — je fais échanger deux objets sans décider ce qu'ils s'envoient</option>
-    <option>🟠 Maîtrise fragile — je compose le message si on me rappelle les champs</option>
-    <option>🟢 Maîtrise satisfaisante — j'écris le message, la règle d'accord et son délai de fraîcheur</option>
-    <option>⭐ Très bonne maîtrise — et je décide du comportement en cas de silence, et je l'assortis d'essais</option>
-  </select>
+  <fieldset class="qcm-groupe" id="pos">
+  <legend><b>Je me positionne sur 3e_C7.8 :</b></legend>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__1" value="🔴 Maîtrise insuffisante — je fais échanger deux objets sans décider ce qu&#x27;ils s&#x27;envoient"><label for="pos__1">🔴 Maîtrise insuffisante — je fais échanger deux objets sans décider ce qu'ils s'envoient</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__2" value="🟠 Maîtrise fragile — je compose le message si on me rappelle les champs"><label for="pos__2">🟠 Maîtrise fragile — je compose le message si on me rappelle les champs</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__3" value="🟢 Maîtrise satisfaisante — j&#x27;écris le message, la règle d&#x27;accord et son délai de fraîcheur"><label for="pos__3">🟢 Maîtrise satisfaisante — j'écris le message, la règle d'accord et son délai de fraîcheur</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__4" value="⭐ Très bonne maîtrise — et je décide du comportement en cas de silence, et je l&#x27;assortis d&#x27;essais"><label for="pos__4">⭐ Très bonne maîtrise — et je décide du comportement en cas de silence, et je l'assortis d'essais</label></div>
+</fieldset>
   <fieldset class="positionnement"><legend>Je me positionne sur 3e_C8.3 (appui) — proposer un protocole de test pour valider le comportement et les performances d'un objet technique</legend>
 <label><input type="radio" name="pos_c83" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c83" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c83" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c83" value="4"> ⭐ très bonne</label></fieldset>
 </section>
@@ -1515,7 +1559,7 @@ const CHECKS = {
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
-  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
+  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; (window.__exp.valides = window.__exp.valides || {})[n] = 1; majBandeau(); }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
   save();
@@ -1523,8 +1567,9 @@ document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("cli
 
 function save(){
   const o = {inputs: {}, checks: {}, exp: window.__exp};
-  document.querySelectorAll("input, select, textarea").forEach(e => {
+  document.querySelectorAll("input, select, textarea, fieldset.qcm-groupe").forEach(e => {
     if(!e.id) return;
+    if(e.type === "radio" && e.closest(".qcm-groupe")) return;   // n°300 : le groupe porte sa valeur, pas ses boutons
     if(e.type === "checkbox" || (e.type === "radio" && e.closest("#billet"))) o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
   // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
   o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
@@ -1618,6 +1663,25 @@ if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
 
 restore(); majLien();
 placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // l'outil rejoint la séance affichée
+
+/* ══ Règle d'or n°29 — mode essentiel (gabarit commun, V2 du 07/11/2026) ══ */
+function majEssentiel(){ const b=$("btnEssentiel"); if(!b) return;
+  const on=document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false"); }
+if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
+  document.body.classList.toggle("essentiel");
+  (window.__exp = window.__exp || {})["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save(); });
+/* ══ Règle d'or n°30 — le bandeau des tâches : une ligne par activité, barrée quand elle est validée ══ */
+function majBandeau(){ const b=$("tachesBandeau"); if(!b) return; const ul=b.querySelector("ul"); if(!ul) return;
+  const v=(window.__exp||{}).valides||{}; let faites=0;
+  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.tache]; li.classList.toggle("faite", ok); if(ok) faites++;
+    li.querySelector(".tb-etat").textContent = ok ? "✔" : "○"; });
+  const c=b.querySelector(".tb-compte"); if(c) c.textContent = faites + " / " + ul.children.length + " validée(s)"; }
+window.__exp = window.__exp || {};
+if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majBandeau();
 })();
 </script>
 

@@ -166,3 +166,21 @@ Découpage gardé (activités 0 et 1 | activités 2 et 3 | activité 4 et REFAIR
 Contrôles du dépôt, sur ce dossier ou sur tout le dépôt : `controle_squelette` 0 défaut (D1 à D6), aucun « à rédiger », aucun signalement ; `controle_impression` (0 page refusée), `controle_verrous`, `controle_hors_ligne`, `controle_contraste_liens`, `controle_regles_visibles`, `controle_liens`, `controle_navigation_seances`, `controle_hierarchie`, `controle_unites`, `controle_sigles`, `controle_impression_papier` : verts. `banc_papier.py` : une séance par fiche, 0 texte pâle, 0 champ d'écran imprimé. `verif_regles_audit.py` : les mêmes ✘ qu'avant, hors périmètre de cette vague.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## 08/11/2026 — V2 de la boucle d'audit : gabarit commun (n°306) et groupes de boutons radio (n°300)
+
+Page migrée par `_outils/migrer_gabarit_306.py` (rejouable depuis `main`, résultat identique octet pour octet) : chaque
+question posée par une liste déroulante devient un `fieldset.qcm-groupe` qui porte sa valeur ; bouton « mode essentiel »
+(n°29), bandeau des tâches (n°30), versions étayées `etayage_sequence_3e_C7.8_….json` (n°31), `aria-label` sur les zones de
+texte (n°34). Les listes d'interface (`data-interface` : commandes du simulateur, ports de l'établi) restent des menus.
+
+Les bancs n'ont pas changé de questions : un shim `_groupesRadio(page)` en tête de `tests_3e_C7.8_sequence.mjs` fait
+porter `selectOption` / `fill` / `inputValue` sur le groupe (valeur ou libellé, `{index}` accepté), comme sur l'ancienne
+liste. `tests_regle_311_3e_C7.8.mjs` : le geste coche `#hors input[value=…]` au lieu de `selectOption` (le champ est un groupe).
+
+Exécuté le 08/11/2026 (Chromium Playwright, session cloud) : `tests_3e_C7.8_sequence.mjs` **58 / 58** ; `tests_3e_C7.8_qcm.mjs`
+**32 / 32** ; `tests_regle_311_3e_C7.8.mjs` **34 / 34** ; `verif_regles_audit.py` **0 ✘** sur la page ; `controle_squelette`,
+`controle_hors_ligne`, `controle_contraste_liens`, `controle_impression_papier`, `banc_papier.py --filtre 3e_C7.8`,
+`controle_impression --muet`, `controle_regles_visibles`, `controle_liens`, `controle_tactile`, `controle_mode_essentiel`,
+`controle_navigation_seances`, `controle_verrous`, `controle_rapports_tests` : 0 refus. Captures 390 px avant/après/essentiel
+dans `_outils/captures_v2_3e_2026-11-08/`. Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

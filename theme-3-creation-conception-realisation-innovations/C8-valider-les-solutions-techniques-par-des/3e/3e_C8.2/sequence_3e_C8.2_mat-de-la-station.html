@@ -221,6 +221,33 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+
+  /* Règle d'or n°29 — mode essentiel : les corrections et les compléments se masquent, rien ne se perd */
+  body.essentiel details.correction,body.essentiel .approfondissement,body.essentiel .bonus-complement{display:none}
+  /* Règle d'or n°30 — la barre compte, ce bandeau situe */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:var(--panel,#0d2347);
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  /* Règle d'or n°31 — version étayée : des phrases à compléter, repliées */
+  details.etayage{margin:8px 0 12px;padding:6px 12px;border-left:4px solid var(--hl);border-radius:8px}
+  details.etayage summary{cursor:pointer;color:var(--hl);font-weight:600}
+  details.etayage ul{margin:6px 0;padding-left:22px}details.etayage li{margin:5px 0}
+  @media print{#tachesBandeau{display:none}details.etayage{border-color:#999!important}details.etayage summary{color:#047fa0!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -557,6 +584,26 @@ body.essentiel details.referentiel-replie{display:none}
 </script>
 <!-- fiche-papier v1 : fin -->
 <!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script>document.documentElement.classList.add("js-onglets");</script>
 </head>
 <body>
@@ -568,6 +615,8 @@ body.essentiel details.referentiel-replie{display:none}
 
 <div class="toolbar">
   <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+
+  <button class="btn ghost" id="btnEssentiel" type="button" aria-pressed="false" title="Masquer les corrections et les compléments, pour ne garder que les consignes et les exercices. Un second clic ramène tout.">🎯 Mode essentiel : OFF</button>
 </div>
 
 <!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
@@ -655,7 +704,7 @@ body.essentiel details.referentiel-replie{display:none}
     <p>Tu as déjà éprouvé des matériaux en 5<sup>e</sup> : on tirait sur une éprouvette
     jusqu'à la rupture. Est-ce que ce même essai répond à la question du mât&nbsp;?
     Réponds franchement — personne ne corrige, et on relira ta réponse au bilan.</p>
-    <textarea id="hyp" rows="3" placeholder="À mon avis, l'essai de traction de 5e… parce que…"></textarea>
+    <textarea aria-label="À mon avis, l&#x27;essai de traction de 5e… parce que…" id="hyp" rows="3" placeholder="À mon avis, l'essai de traction de 5e… parce que…"></textarea>
   </div>
 </section>
 
@@ -815,7 +864,7 @@ body.essentiel details.referentiel-replie{display:none}
       </div>
       <div class="banc-cmd">
         <label for="prof">Profilé :</label>
-        <select id="prof">
+        <select data-interface="commande" id="prof">
         <option value="Tube aluminium Ø50 × 3">Tube aluminium Ø50 × 3</option>
         <option value="Barre pleine acier Ø20">Barre pleine acier Ø20</option>
         <option value="Tube PVC Ø50 × 3">Tube PVC Ø50 × 3</option>
@@ -851,6 +900,18 @@ body.essentiel details.referentiel-replie{display:none}
   <button class="seance-tab" id="tab-s4" data-panel="s4" role="tab" aria-controls="s4" aria-selected="false" type="button">Séance 4<br><small>Décider, et signer l'avis</small></button>
 </nav>
 
+<div id="tachesBandeau" aria-live="polite" aria-atomic="true">
+  <span class="tb-titre">📋 Où j'en suis <span class="tb-compte"></span></span>
+  <ul>
+    <li data-tache="0"><span class="tb-etat">○</span> Vérifier l'activité 0</li>
+    <li data-tache="1"><span class="tb-etat">○</span> Vérifier l'activité 1</li>
+    <li data-tache="2"><span class="tb-etat">○</span> Vérifier l'activité 2</li>
+    <li data-tache="3"><span class="tb-etat">○</span> Vérifier l'activité 3</li>
+    <li data-tache="4"><span class="tb-etat">○</span> Vérifier l'activité 4</li>
+    <li data-tache="5"><span class="tb-etat">○</span> Vérifier l'activité 5</li>
+    <li data-tache="6"><span class="tb-etat">○</span> Vérifier le réinvestissement</li>
+  </ul>
+</div>
 <!-- ══════════════════ SÉANCE 1 ══════════════════ -->
 <div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
 <section class="card seance-entete" id="seance-1" aria-labelledby="seance-1-titre">
@@ -869,23 +930,21 @@ body.essentiel details.referentiel-replie{display:none}
 
   <div class="exo">
     <h4>Après avoir cassé trois profilés</h4>
-    <p><b>1.</b> En flexion, le mât casse…</p>
-    <select id="a0q1">
-      <option value="">— je choisis —</option>
-      <option>en pleine hauteur, au milieu</option>
-      <option>au ras du socle, là où il est encastré</option>
-      <option>tout en haut, sous la station</option>
-      <option>n'importe où, c'est au hasard</option>
-    </select>
-    <p><b>2.</b> Bascule le banc en <b>traction</b> et reprends le même profilé. Les deux
-    charges de rupture sont…</p>
-    <select id="a0q2">
-      <option value="">— je choisis —</option>
-      <option>les mêmes : c'est la même matière</option>
-      <option>très différentes : il cède des centaines de fois plus tôt en flexion</option>
-      <option>différentes de quelques newtons seulement</option>
-      <option>impossibles à comparer, le banc refuse</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a0q1">
+  <legend><b>1.</b> En flexion, le mât casse…</legend>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__1" value="en pleine hauteur, au milieu"><label for="a0q1__1">en pleine hauteur, au milieu</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__2" value="au ras du socle, là où il est encastré"><label for="a0q1__2">au ras du socle, là où il est encastré</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__3" value="tout en haut, sous la station"><label for="a0q1__3">tout en haut, sous la station</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__4" value="n&#x27;importe où, c&#x27;est au hasard"><label for="a0q1__4">n'importe où, c'est au hasard</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a0q2">
+  <legend><b>2.</b> Bascule le banc en <b>traction</b> et reprends le même profilé. Les deux
+    charges de rupture sont…</legend>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__1" value="les mêmes : c&#x27;est la même matière"><label for="a0q2__1">les mêmes : c'est la même matière</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__2" value="très différentes : il cède des centaines de fois plus tôt en flexion"><label for="a0q2__2">très différentes : il cède des centaines de fois plus tôt en flexion</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__3" value="différentes de quelques newtons seulement"><label for="a0q2__3">différentes de quelques newtons seulement</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__4" value="impossibles à comparer, le banc refuse"><label for="a0q2__4">impossibles à comparer, le banc refuse</label></div>
+</fieldset>
     <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
     <div class="feedback" id="fb0"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
@@ -931,37 +990,35 @@ body.essentiel details.referentiel-replie{display:none}
     </table>
     <p style="font-size:.9em;color:var(--warn)">🔒 Le vérificateur attend que les cinq
     profilés aient réellement été rompus en traction au banc.</p>
-    <p><b>Question 1.</b> D'après ces cinq relevés, quel mât le protocole de 5<sup>e</sup>
-    désigne-t-il&nbsp;?</p>
-    <select id="a1q1">
-      <option value="">— je choisis —</option>
-      <option>Tube aluminium Ø50 × 3</option>
-      <option>Barre pleine acier Ø20</option>
-      <option>Tube PVC Ø50 × 3</option>
-      <option>Poutre bois 40 × 40</option>
-      <option>Tube acier galvanisé Ø33,7 × 2,6</option>
-    </select>
-    <p><b>Question 2.</b> Repasse le banc en <b>⟂ flexion</b> et refais le classement.
-    Le mât désigné est-il le même&nbsp;?</p>
-    <select id="a1q2">
-      <option value="">— je choisis —</option>
-      <option>oui, c'est le même dans les deux essais</option>
-      <option>non : celui qui gagne en traction n'est que quatrième en flexion</option>
-      <option>non, mais l'écart est trop petit pour compter</option>
-      <option>le banc donne le même ordre, seules les unités changent</option>
-    </select>
-    <p><b>Question 3.</b> Pourquoi la barre pleine en acier, la plus résistante de toutes en
-    traction, s'effondre-t-elle en flexion&nbsp;?</p>
-    <select id="a1q3">
-      <option value="">— je choisis —</option>
-      <option>parce que l'acier est un mauvais matériau pour un mât</option>
-      <option>parce qu'en flexion, ce qui compte est autant la forme que la matière</option>
-      <option>parce que le banc de flexion est moins précis</option>
-      <option>parce qu'elle est plus lourde que les autres</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a1q1">
+  <legend><b>Question 1.</b> D'après ces cinq relevés, quel mât le protocole de 5<sup>e</sup>
+    désigne-t-il&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__1" value="Tube aluminium Ø50 × 3"><label for="a1q1__1">Tube aluminium Ø50 × 3</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__2" value="Barre pleine acier Ø20"><label for="a1q1__2">Barre pleine acier Ø20</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__3" value="Tube PVC Ø50 × 3"><label for="a1q1__3">Tube PVC Ø50 × 3</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__4" value="Poutre bois 40 × 40"><label for="a1q1__4">Poutre bois 40 × 40</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__5" value="Tube acier galvanisé Ø33,7 × 2,6"><label for="a1q1__5">Tube acier galvanisé Ø33,7 × 2,6</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a1q2">
+  <legend><b>Question 2.</b> Repasse le banc en <b>⟂ flexion</b> et refais le classement.
+    Le mât désigné est-il le même&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__1" value="oui, c&#x27;est le même dans les deux essais"><label for="a1q2__1">oui, c'est le même dans les deux essais</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__2" value="non : celui qui gagne en traction n&#x27;est que quatrième en flexion"><label for="a1q2__2">non : celui qui gagne en traction n'est que quatrième en flexion</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__3" value="non, mais l&#x27;écart est trop petit pour compter"><label for="a1q2__3">non, mais l'écart est trop petit pour compter</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__4" value="le banc donne le même ordre, seules les unités changent"><label for="a1q2__4">le banc donne le même ordre, seules les unités changent</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a1q3">
+  <legend><b>Question 3.</b> Pourquoi la barre pleine en acier, la plus résistante de toutes en
+    traction, s'effondre-t-elle en flexion&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__1" value="parce que l&#x27;acier est un mauvais matériau pour un mât"><label for="a1q3__1">parce que l'acier est un mauvais matériau pour un mât</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__2" value="parce qu&#x27;en flexion, ce qui compte est autant la forme que la matière"><label for="a1q3__2">parce qu'en flexion, ce qui compte est autant la forme que la matière</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__3" value="parce que le banc de flexion est moins précis"><label for="a1q3__3">parce que le banc de flexion est moins précis</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__4" value="parce qu&#x27;elle est plus lourde que les autres"><label for="a1q3__4">parce qu'elle est plus lourde que les autres</label></div>
+</fieldset>
     <p><b>En une phrase :</b> qu'est-ce que le protocole de 5<sup>e</sup> mesure, et pourquoi
     cela ne suffit-il pas ici&nbsp;?</p>
-    <textarea id="a1ph" rows="2" placeholder="Il mesure… mais le mât, lui,…"></textarea>
+    <textarea aria-label="Il mesure… mais le mât, lui,…" id="a1ph" rows="2" placeholder="Il mesure… mais le mât, lui,…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Le protocole de 5e mesure …, mais le mât, lui, travaille en …, et cela dépend de … autant que de la matière. »</li><li>« Il mesure … mais ne dit rien de …, qui est pourtant ce qui compte ici. »</li></ul></details>
     <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
     <div class="feedback" id="fb1"></div>
     <details class="correction"><summary>📖 Correction — deux classements, cinq mêmes candidats</summary><div>
@@ -1053,58 +1110,60 @@ impératif :
   avant l'essai</b>. Prends-les une par une, puis rédige.</p>
 
   <div class="exo">
-    <p><b>Décision 1 — la sollicitation.</b> Qu'est-ce que le banc doit faire subir au mât&nbsp;?</p>
-    <select id="a2q1">
-      <option value="">— je choisis —</option>
-      <option>le tirer dans son axe, comme en 5e</option>
-      <option>le pousser en tête, perpendiculairement, comme le vent</option>
-      <option>l'écraser par le haut, comme un poids posé dessus</option>
-      <option>le chauffer jusqu'à ce qu'il se déforme</option>
-    </select>
-    <p><b>Décision 2 — la grandeur mesurée.</b> Une seule mesure ne suffit pas ici. Laquelle
-    manque au « il casse à tant de newtons »&nbsp;?</p>
-    <select id="a2q2">
-      <option value="">— je choisis —</option>
-      <option>la couleur du profilé après essai</option>
-      <option>la flèche en tête sous une charge d'essai commune</option>
-      <option>le prix au mètre de chaque profilé</option>
-      <option>le temps mis pour monter la charge</option>
-    </select>
-    <p><b>Décision 3 — ce qui ne doit pas varier.</b> D'un candidat à l'autre, on garde
-    identiques…</p>
-    <select id="a2q3">
-      <option value="">— je choisis —</option>
-      <option>la couleur et la marque des profilés</option>
-      <option>la hauteur, la fixation au pied et le point d'application de la charge</option>
-      <option>la section et la matière, pour que ce soit comparable</option>
-      <option>rien : chaque candidat s'essaie comme il vient</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a2q1">
+  <legend><b>Décision 1 — la sollicitation.</b> Qu'est-ce que le banc doit faire subir au mât&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__1" value="le tirer dans son axe, comme en 5e"><label for="a2q1__1">le tirer dans son axe, comme en 5e</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__2" value="le pousser en tête, perpendiculairement, comme le vent"><label for="a2q1__2">le pousser en tête, perpendiculairement, comme le vent</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__3" value="l&#x27;écraser par le haut, comme un poids posé dessus"><label for="a2q1__3">l'écraser par le haut, comme un poids posé dessus</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__4" value="le chauffer jusqu&#x27;à ce qu&#x27;il se déforme"><label for="a2q1__4">le chauffer jusqu'à ce qu'il se déforme</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a2q2">
+  <legend><b>Décision 2 — la grandeur mesurée.</b> Une seule mesure ne suffit pas ici. Laquelle
+    manque au « il casse à tant de newtons »&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__1" value="la couleur du profilé après essai"><label for="a2q2__1">la couleur du profilé après essai</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__2" value="la flèche en tête sous une charge d&#x27;essai commune"><label for="a2q2__2">la flèche en tête sous une charge d'essai commune</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__3" value="le prix au mètre de chaque profilé"><label for="a2q2__3">le prix au mètre de chaque profilé</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__4" value="le temps mis pour monter la charge"><label for="a2q2__4">le temps mis pour monter la charge</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a2q3">
+  <legend><b>Décision 3 — ce qui ne doit pas varier.</b> D'un candidat à l'autre, on garde
+    identiques…</legend>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__1" value="la couleur et la marque des profilés"><label for="a2q3__1">la couleur et la marque des profilés</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__2" value="la hauteur, la fixation au pied et le point d&#x27;application de la charge"><label for="a2q3__2">la hauteur, la fixation au pied et le point d'application de la charge</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__3" value="la section et la matière, pour que ce soit comparable"><label for="a2q3__3">la section et la matière, pour que ce soit comparable</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__4" value="rien : chaque candidat s&#x27;essaie comme il vient"><label for="a2q3__4">rien : chaque candidat s'essaie comme il vient</label></div>
+</fieldset>
     <p><b>Décision 4 — le critère de rupture.</b> D'après le cahier des charges, la charge de
     rupture exigée en tête vaut, en newtons :</p>
     <input type="text" inputmode="numeric" id="a2q4" placeholder="… N">
     <p><b>Décision 5 — la charge d'essai commune</b> sous laquelle on mesure la flèche de
     tous les candidats, en newtons :</p>
     <input type="text" inputmode="numeric" id="a2q5" placeholder="… N">
-    <p><b>Décision 6 — la règle de décision,</b> écrite AVANT de mesurer :</p>
-    <select id="a2q6">
-      <option value="">— je choisis —</option>
-      <option>je retiens le mât qui casse le plus tard, un point c'est tout</option>
-      <option>je retiens le mât le moins cher parmi ceux qui ne cassent pas</option>
-      <option>je retiens un mât seulement s'il tient les DEUX critères</option>
-      <option>je retiens le mât le plus léger, la solidité viendra après</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a2q6">
+  <legend><b>Décision 6 — la règle de décision,</b> écrite AVANT de mesurer :</legend>
+  <div class="qcm-option"><input type="radio" name="a2q6" id="a2q6__1" value="je retiens le mât qui casse le plus tard, un point c&#x27;est tout"><label for="a2q6__1">je retiens le mât qui casse le plus tard, un point c'est tout</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q6" id="a2q6__2" value="je retiens le mât le moins cher parmi ceux qui ne cassent pas"><label for="a2q6__2">je retiens le mât le moins cher parmi ceux qui ne cassent pas</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q6" id="a2q6__3" value="je retiens un mât seulement s&#x27;il tient les DEUX critères"><label for="a2q6__3">je retiens un mât seulement s'il tient les DEUX critères</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q6" id="a2q6__4" value="je retiens le mât le plus léger, la solidité viendra après"><label for="a2q6__4">je retiens le mât le plus léger, la solidité viendra après</label></div>
+</fieldset>
 
     <div class="protocadre">
       <h5>📝 Ton protocole, rédigé — six lignes numérotées</h5>
       <p style="font-size:.9em;color:var(--sub);margin:0 0 8px">Reprends tes six décisions et
       écris-les comme un protocole qu'un autre groupe pourrait exécuter sans te poser de
       question. Numérote.</p>
-      <textarea id="a2proto" rows="8" placeholder="1. Fixer chaque candidat…
+      <textarea aria-label="1. Fixer chaque candidat…
+2. …
+3. …
+4. …
+5. …
+6. …" id="a2proto" rows="8" placeholder="1. Fixer chaque candidat…
 2. …
 3. …
 4. …
 5. …
 6. …"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« 1. Fixer chaque candidat … (comment, à quelle longueur). »</li><li>« 2. Appliquer une poussée de … N à … (où), avec …. »</li><li>« 3. Mesurer … (quoi, avec quel instrument). »</li><li>« 4. Augmenter … jusqu'à …. »</li><li>« 5. Noter … pour chaque candidat. »</li><li>« 6. Retenir un mât seulement si … ET …. »</li></ul></details>
     </div>
     <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
     <div class="feedback" id="fb2"></div>
@@ -1214,51 +1273,46 @@ impératif :
   <p>Ton banc pousse une fois, sur un profilé neuf, à température ambiante, dans une salle
   sèche. Associe chaque candidat à ce que <em>ton</em> essai ne verra jamais.</p>
   <div class="exo">
-    <p><b>Tube aluminium Ø50 × 3</b></p>
-    <select id="a4q0">
-      <option value="">— je choisis —</option>
-        <option>L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</option>
-        <option>La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</option>
-        <option>Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</option>
-        <option>Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</option>
-        <option>Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</option>
-    </select>
-    <p><b>Barre pleine acier Ø20</b></p>
-    <select id="a4q1">
-      <option value="">— je choisis —</option>
-        <option>L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</option>
-        <option>La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</option>
-        <option>Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</option>
-        <option>Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</option>
-        <option>Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</option>
-    </select>
-    <p><b>Tube PVC Ø50 × 3</b></p>
-    <select id="a4q2">
-      <option value="">— je choisis —</option>
-        <option>L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</option>
-        <option>La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</option>
-        <option>Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</option>
-        <option>Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</option>
-        <option>Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</option>
-    </select>
-    <p><b>Poutre bois 40 × 40</b></p>
-    <select id="a4q3">
-      <option value="">— je choisis —</option>
-        <option>L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</option>
-        <option>La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</option>
-        <option>Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</option>
-        <option>Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</option>
-        <option>Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</option>
-    </select>
-    <p><b>Tube acier galvanisé Ø33,7 × 2,6</b></p>
-    <select id="a4q4">
-      <option value="">— je choisis —</option>
-        <option>L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</option>
-        <option>La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</option>
-        <option>Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</option>
-        <option>Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</option>
-        <option>Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a4q0">
+  <legend><b>Tube aluminium Ø50 × 3</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4q0" id="a4q0__1" value="L&#x27;humidité : une poutre qui a pris l&#x27;eau ne casse plus à la même charge, et le banc essaie du bois sec."><label for="a4q0__1">L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q0" id="a4q0__2" value="La galvanisation protège tant qu&#x27;on ne la perce pas : c&#x27;est le trou de fixation, non traité, qui rouille en premier."><label for="a4q0__2">La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q0" id="a4q0__3" value="Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c&#x27;est la fatigue, et elle casse plus bas que l&#x27;essai."><label for="a4q0__3">Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q0" id="a4q0__4" value="Presque 5 kg à hisser sur un toit et à fixer en haut d&#x27;une échelle : le banc, lui, ne pèse rien."><label for="a4q0__4">Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q0" id="a4q0__5" value="Sous le soleil des tropiques, le PVC vieillit et devient cassant : l&#x27;essai, lui, est fait sur un tube neuf."><label for="a4q0__5">Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a4q1">
+  <legend><b>Barre pleine acier Ø20</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__1" value="L&#x27;humidité : une poutre qui a pris l&#x27;eau ne casse plus à la même charge, et le banc essaie du bois sec."><label for="a4q1__1">L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__2" value="La galvanisation protège tant qu&#x27;on ne la perce pas : c&#x27;est le trou de fixation, non traité, qui rouille en premier."><label for="a4q1__2">La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__3" value="Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c&#x27;est la fatigue, et elle casse plus bas que l&#x27;essai."><label for="a4q1__3">Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__4" value="Presque 5 kg à hisser sur un toit et à fixer en haut d&#x27;une échelle : le banc, lui, ne pèse rien."><label for="a4q1__4">Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__5" value="Sous le soleil des tropiques, le PVC vieillit et devient cassant : l&#x27;essai, lui, est fait sur un tube neuf."><label for="a4q1__5">Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a4q2">
+  <legend><b>Tube PVC Ø50 × 3</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__1" value="L&#x27;humidité : une poutre qui a pris l&#x27;eau ne casse plus à la même charge, et le banc essaie du bois sec."><label for="a4q2__1">L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__2" value="La galvanisation protège tant qu&#x27;on ne la perce pas : c&#x27;est le trou de fixation, non traité, qui rouille en premier."><label for="a4q2__2">La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__3" value="Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c&#x27;est la fatigue, et elle casse plus bas que l&#x27;essai."><label for="a4q2__3">Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__4" value="Presque 5 kg à hisser sur un toit et à fixer en haut d&#x27;une échelle : le banc, lui, ne pèse rien."><label for="a4q2__4">Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__5" value="Sous le soleil des tropiques, le PVC vieillit et devient cassant : l&#x27;essai, lui, est fait sur un tube neuf."><label for="a4q2__5">Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a4q3">
+  <legend><b>Poutre bois 40 × 40</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__1" value="L&#x27;humidité : une poutre qui a pris l&#x27;eau ne casse plus à la même charge, et le banc essaie du bois sec."><label for="a4q3__1">L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__2" value="La galvanisation protège tant qu&#x27;on ne la perce pas : c&#x27;est le trou de fixation, non traité, qui rouille en premier."><label for="a4q3__2">La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__3" value="Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c&#x27;est la fatigue, et elle casse plus bas que l&#x27;essai."><label for="a4q3__3">Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__4" value="Presque 5 kg à hisser sur un toit et à fixer en haut d&#x27;une échelle : le banc, lui, ne pèse rien."><label for="a4q3__4">Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__5" value="Sous le soleil des tropiques, le PVC vieillit et devient cassant : l&#x27;essai, lui, est fait sur un tube neuf."><label for="a4q3__5">Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a4q4">
+  <legend><b>Tube acier galvanisé Ø33,7 × 2,6</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4q4" id="a4q4__1" value="L&#x27;humidité : une poutre qui a pris l&#x27;eau ne casse plus à la même charge, et le banc essaie du bois sec."><label for="a4q4__1">L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q4" id="a4q4__2" value="La galvanisation protège tant qu&#x27;on ne la perce pas : c&#x27;est le trou de fixation, non traité, qui rouille en premier."><label for="a4q4__2">La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q4" id="a4q4__3" value="Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c&#x27;est la fatigue, et elle casse plus bas que l&#x27;essai."><label for="a4q4__3">Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q4" id="a4q4__4" value="Presque 5 kg à hisser sur un toit et à fixer en haut d&#x27;une échelle : le banc, lui, ne pèse rien."><label for="a4q4__4">Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q4" id="a4q4__5" value="Sous le soleil des tropiques, le PVC vieillit et devient cassant : l&#x27;essai, lui, est fait sur un tube neuf."><label for="a4q4__5">Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</label></div>
+</fieldset>
     <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
     <div class="feedback" id="fb4"></div>
     <details class="correction"><summary>📖 Correction — cinq angles morts</summary><div>
@@ -1295,36 +1349,34 @@ impératif :
   <p><b>Objectif :</b> transformer dix relevés en un avis qu'on assume devant la mairie.
   <b>Compétence :</b> 3e_C8.2. <b>Production attendue :</b> 3 réponses + un avis rédigé.</p>
   <div class="exo">
-    <p><b>Question 1.</b> Combien de candidats passent le critère de <b>rupture</b>
-    (≥ 300 N, en newtons)&nbsp;?</p>
-    <select id="a5q1">
-      <option value="">— je choisis —</option>
-      <option>aucun</option>
-      <option>un seul</option>
-      <option>deux</option>
-      <option>les cinq</option>
-    </select>
-    <p><b>Question 2.</b> Combien passent <b>aussi</b> le critère de flèche
-    (≤ 40 mm)&nbsp;?</p>
-    <select id="a5q2">
-      <option value="">— je choisis —</option>
-      <option>aucun</option>
-      <option>un seul</option>
-      <option>deux</option>
-      <option>les cinq</option>
-    </select>
-    <p><b>Question 3.</b> Le Tube acier galvanisé Ø33,7 × 2,6 casse à 367 N pour 300 exigés, mais sa
-    flèche vaut 41,1 mm pour 40 admis. Que dis-tu à la mairie&nbsp;?</p>
-    <select id="a5q3">
-      <option value="">— je choisis —</option>
-      <option>on l'accepte : 1,1 mm d'écart, ce n'est rien du tout</option>
-      <option>on le refuse en l'état, et mon protocole aurait dû annoncer son incertitude</option>
-      <option>on refait l'essai jusqu'à obtenir 40 mm</option>
-      <option>on le retient quand même, il est plus solide que l'autre en rupture</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a5q1">
+  <legend><b>Question 1.</b> Combien de candidats passent le critère de <b>rupture</b>
+    (≥ 300 N, en newtons)&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__1" value="aucun"><label for="a5q1__1">aucun</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__2" value="un seul"><label for="a5q1__2">un seul</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__3" value="deux"><label for="a5q1__3">deux</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__4" value="les cinq"><label for="a5q1__4">les cinq</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a5q2">
+  <legend><b>Question 2.</b> Combien passent <b>aussi</b> le critère de flèche
+    (≤ 40 mm)&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__1" value="aucun"><label for="a5q2__1">aucun</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__2" value="un seul"><label for="a5q2__2">un seul</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__3" value="deux"><label for="a5q2__3">deux</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__4" value="les cinq"><label for="a5q2__4">les cinq</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a5q3">
+  <legend><b>Question 3.</b> Le Tube acier galvanisé Ø33,7 × 2,6 casse à 367 N pour 300 exigés, mais sa
+    flèche vaut 41,1 mm pour 40 admis. Que dis-tu à la mairie&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__1" value="on l&#x27;accepte : 1,1 mm d&#x27;écart, ce n&#x27;est rien du tout"><label for="a5q3__1">on l'accepte : 1,1 mm d'écart, ce n'est rien du tout</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__2" value="on le refuse en l&#x27;état, et mon protocole aurait dû annoncer son incertitude"><label for="a5q3__2">on le refuse en l'état, et mon protocole aurait dû annoncer son incertitude</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__3" value="on refait l&#x27;essai jusqu&#x27;à obtenir 40 mm"><label for="a5q3__3">on refait l'essai jusqu'à obtenir 40 mm</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__4" value="on le retient quand même, il est plus solide que l&#x27;autre en rupture"><label for="a5q3__4">on le retient quand même, il est plus solide que l'autre en rupture</label></div>
+</fieldset>
     <p><b>Ton avis, en deux ou trois phrases.</b> Nomme le mât retenu, cite <b>tes deux
     chiffres</b>, et dis ce que ton essai n'a pas vérifié.</p>
-    <textarea id="a5avis" rows="4" placeholder="Je recommande … : sa rupture relevée est de … N pour … N exigés, et sa flèche de … mm pour … mm admis. En revanche, mon essai n'a pas vérifié …"></textarea>
+    <textarea aria-label="Je recommande … : sa rupture relevée est de … N pour … N exigés, et sa flèche de … mm pour … mm admis. En revanche, mon essai n&#x27;a pas vérifié …" id="a5avis" rows="4" placeholder="Je recommande … : sa rupture relevée est de … N pour … N exigés, et sa flèche de … mm pour … mm admis. En revanche, mon essai n'a pas vérifié …"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Je recommande le mât … : sa rupture relevée est de … N pour … N exigés, et sa flèche de … mm pour … mm admis. »</li><li>« Ce que mon essai n'a pas vérifié : … (la durée, le sel, les rafales, …). »</li></ul></details>
     <button class="btn check" data-check="5" type="button">✅ Vérifier l'activité 5</button>
     <div class="feedback" id="fb5"></div>
     <details class="correction"><summary>📖 Correction détaillée</summary><div>
@@ -1351,7 +1403,8 @@ impératif :
   autonome. La surface offerte au vent double : la poussée équivalente passe de 100 N (newtons)
   à <b>200 N</b>. Le reste du cahier des charges ne bouge pas.</p>
   <p><b>Quelles lignes de ton protocole changent, et qu'est-ce que cela change au résultat ?</b></p>
-  <textarea id="reinv" rows="4" placeholder="Ligne … : … devient … — et alors, au banc, …"></textarea>
+  <textarea aria-label="Ligne … : … devient … — et alors, au banc, …" id="reinv" rows="4" placeholder="Ligne … : … devient … — et alors, au banc, …"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Ligne … de mon protocole : « … » devient « … » — et alors, au banc, …. »</li><li>« Avec 200 N au lieu de 100 N, le mât … passe / ne passe plus, parce que … »</li></ul></details>
   <button class="btn check" data-check="6" type="button">✅ Vérifier le réinvestissement</button>
   <div class="feedback" id="fb6"></div>
   <details class="correction"><summary>📖 Correction</summary><div>
@@ -1407,6 +1460,7 @@ impératif :
   écris ce que cela t'apprend sur le choix d'un instrument.</p>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Le laboratoire des matériaux propose / ne propose pas d'essai de flexion. »</li><li>« Cela m'apprend qu'un instrument …, et que le choisir, c'est d'abord … »</li></ul></details>
   <details class="correction"><summary>✅ Corrigé du défi forme — deux tubes de même forme</summary><div>
     <p><b>Ce que la comparaison mesure : la raideur de la matière, et elle seule.</b> Même forme, même hauteur, même charge de 100 N (newtons) : dans la formule de la flèche, f = F·L³/(3·E·I), seul E change — le module d'élasticité, la raideur de la matière. Le calcul : 723,8 mm ÷ 31,0 mm ≈ 23,3 ; l'aluminium est environ 23 fois plus raide que le PVC. C'est bien le rapport des modules que le banc utilise : 70 000 MPa (mégapascals) ÷ 3 000 MPa ≈ 23,3.</p>
     <p><b>Pourquoi c'est le seul couple :</b> pour tous les autres couples, la forme <em>et</em> la matière changent en même temps. Deux choses varient : on ne peut pas dire laquelle cause l'écart. Ici, une seule chose change.</p>
@@ -1433,18 +1487,19 @@ impératif :
   <p>Tu pensais peut-être que l'essai de 5<sup>e</sup> suffisait. Il était juste — et il
   désignait le mauvais mât. Qu'est-ce qui, dans ton protocole d'aujourd'hui, empêche cette
   erreur&nbsp;?</p>
-  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <textarea aria-label="Ce que je sais faire maintenant, et ce qui me résiste encore…" id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« L'essai de 5e était juste, mais il désignait le mauvais mât parce que …. »</li><li>« Dans mon protocole d'aujourd'hui, ce qui empêche cette erreur, c'est la ligne … : … »</li></ul></details>
   <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">où as-tu hésité en écrivant ton protocole, et qu'est-ce qui t'a surpris quand tu l'as exécuté au banc ?</label></p>
   <textarea id="bilanMeta" rows="2" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« J'ai hésité en écrivant mon protocole au moment de … »</li><li>« Ce qui m'a surpris quand je l'ai exécuté au banc, c'est que … »</li></ul></details>
   <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
-  <p style="margin-top:12px"><b>Je me positionne sur 3e_C8.2 — proposer un protocole de test :</b></p>
-  <select id="pos">
-    <option value="">— je me positionne —</option>
-    <option>🔴 Maîtrise insuffisante — je sais exécuter un protocole, pas encore en écrire un</option>
-    <option>🟠 Maîtrise fragile — j'écris le protocole si on me rappelle les rubriques</option>
-    <option>🟢 Maîtrise satisfaisante — je choisis la sollicitation, les seuils et la règle de décision</option>
-    <option>⭐ Très bonne maîtrise — et je sais dire ce que mon protocole ne prouve pas</option>
-  </select>
+  <fieldset class="qcm-groupe" id="pos">
+  <legend><b>Je me positionne sur 3e_C8.2 — proposer un protocole de test :</b></legend>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__1" value="🔴 Maîtrise insuffisante — je sais exécuter un protocole, pas encore en écrire un"><label for="pos__1">🔴 Maîtrise insuffisante — je sais exécuter un protocole, pas encore en écrire un</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__2" value="🟠 Maîtrise fragile — j&#x27;écris le protocole si on me rappelle les rubriques"><label for="pos__2">🟠 Maîtrise fragile — j'écris le protocole si on me rappelle les rubriques</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__3" value="🟢 Maîtrise satisfaisante — je choisis la sollicitation, les seuils et la règle de décision"><label for="pos__3">🟢 Maîtrise satisfaisante — je choisis la sollicitation, les seuils et la règle de décision</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__4" value="⭐ Très bonne maîtrise — et je sais dire ce que mon protocole ne prouve pas"><label for="pos__4">⭐ Très bonne maîtrise — et je sais dire ce que mon protocole ne prouve pas</label></div>
+</fieldset>
   <fieldset class="positionnement"><legend>Je me positionne sur 3e_C3.4 (appui) — définir et mettre en œuvre un protocole pour mesurer une caractéristique, une performance d’un objet ou d’un système technique</legend>
 <label><input type="radio" name="pos_c34" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c34" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c34" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c34" value="4"> ⭐ très bonne</label></fieldset>
 </section>
@@ -1635,7 +1690,7 @@ const CHECKS = {
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
-  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
+  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; (window.__exp.valides = window.__exp.valides || {})[n] = 1; majBandeau(); }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
   save();
@@ -1644,7 +1699,9 @@ document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("cli
 /* ── sauvegarde locale ─────────────────────────────────────────────────── */
 function save(){
   const o = {inputs: {}, exp: window.__exp, flex: [...rompus.flex], trac: [...rompus.trac]};
-  document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
+  document.querySelectorAll("input, select, textarea, fieldset.qcm-groupe").forEach(e => { if(!e.id) return;
+    if(e.type === "radio" && e.closest(".qcm-groupe")) return;   // n°300 : le groupe porte sa valeur, pas ses boutons
+    o.inputs[e.id] = e.value; });
   // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
   document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { o.inputs[c.id] = c.checked; });
   // les réponses du billet d'entrée (n°26) : à part, pour que restore() ne réécrive pas leur valeur
@@ -1744,6 +1801,25 @@ if($("a2proto")) $("a2proto").addEventListener("input", majProto);
 
 restore(); bascule("flex");
 placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // l'outil rejoint la séance affichée
+
+/* ══ Règle d'or n°29 — mode essentiel (gabarit commun, V2 du 07/11/2026) ══ */
+function majEssentiel(){ const b=$("btnEssentiel"); if(!b) return;
+  const on=document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false"); }
+if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
+  document.body.classList.toggle("essentiel");
+  (window.__exp = window.__exp || {})["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save(); });
+/* ══ Règle d'or n°30 — le bandeau des tâches : une ligne par activité, barrée quand elle est validée ══ */
+function majBandeau(){ const b=$("tachesBandeau"); if(!b) return; const ul=b.querySelector("ul"); if(!ul) return;
+  const v=(window.__exp||{}).valides||{}; let faites=0;
+  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.tache]; li.classList.toggle("faite", ok); if(ok) faites++;
+    li.querySelector(".tb-etat").textContent = ok ? "✔" : "○"; });
+  const c=b.querySelector(".tb-compte"); if(c) c.textContent = faites + " / " + ul.children.length + " validée(s)"; }
+window.__exp = window.__exp || {};
+if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majBandeau();
 })();
 </script>
 
