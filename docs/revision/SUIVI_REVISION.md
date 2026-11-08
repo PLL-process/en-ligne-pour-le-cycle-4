@@ -20,7 +20,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 1 | `5e_C1.5` | 1549 → 1206 | 4 → 0 | 27 → 0 | 18 → 0 | livrée #619 |
 | 2 | `5e_C1.3` | 1050 → 1043 | 0 | 0 | 5 → 0 | livrée #620 |
 | 3 | `4e_C1.1` | 3570 → 1836 | 0 | 0 | 22 → 0 | livrée #620 ; séance 5 coupée en deux (décision de Pascal) #624 |
-| 4 | `4e_C1.4` | 1291 → 1056 | 0 | 0 | 9 → 0 | livrée #624 |
+| 4 | `4e_C1.4` | 1291 → 1056 | 0 | 0 | 9 → 0 | livrée #624 ; #625 replie les leçons des situations |
 | 5 | `3e_C1.5` | 2017 → 1588 | 0 | 0 | 19 → 0 | livrée #624 — séance 4 au-dessus du repère, justifiée |
 | 6 | `3e_C2.1` | 1861 → 1424 | 0 | 0 | 6 → 0 | livrée #624 — séances 2 et 3 au-dessus du repère, justifiées |
 | 7 | `5e_C1.1` | 1629 | 0 | 0 | 26 | à faire |
@@ -105,7 +105,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
   la demande (l'un d'eux était écrit deux fois) ; le titre de 5.a ne répète plus la question ; la phrase « Personne n'est
   pénalisé… » du Bonus (son titre dit déjà « facultatif ») et la redite du bilan retirées ; les étiquettes du Bonus ne
   recopient plus la consigne. Lu comme un élève : « hover », « désactive géo inutile », « cite les sources pour œuvres »
-  et les « Risques » en style télégraphique réécrits en phrases. 76 retours à la ligne ; deux corrections coupées à la main.
+  et les « Risques » en style télégraphique réécrits en phrases. 76 retours à la ligne ; deux corrections coupées à la main. Puis (#625, fusionnée après #624) : les cinq « Mise en situation » donnaient la réponse avant l'exercice (« Risques impliqués », « Bonne attitude à avoir ») — ces paragraphes se replient dans « 💡 Ce que cette situation apprend — à ouvrir après avoir répondu » ; le texte repris est celui de #624.
 - **Le Bonus se déplie quand on a fini** (`replier_bonus.py`, 08/11/2026) : posé aussi sur 5e_C1.5 (séance 3 : 1 322 →
   1 206 mots), 5e_C1.3 et 4e_C1.1, déjà révisées. Le titre du Bonus reste visible ; ses défis, ses champs et son corrigé
   sont à un clic.
