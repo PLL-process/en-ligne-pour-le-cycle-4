@@ -29346,3 +29346,19 @@ compétences, fiche papier, impression (0 refus), verrous, hors ligne, tactile :
 essentiel compris. **Reste** : le lexique du lot n'a pas d'ancres par séance ; les activités n'annoncent pas de durée.
 
 **Fusion avec `main` (même jour)** : la PR #624, fusionnée entre-temps, avait déjà révisé 4e_C1.4 (texte simplifié, exemples de 5.b repliés). Résolution : le texte de #624 est gardé partout ; cette PR n'y ajoute que son idée propre — les leçons des cinq situations repliées dans un `<details>` ouvert après la réponse. Les chiffres de mots de l'entrée ci-dessus sont ceux mesurés avant la fusion.
+
+---
+
+## 10/11/2026 — Révision des trois thèmes, 13 : 3e_C4.3, 33 listes en boutons radio, la table des 48 h et la synthèse repliées (thème 2)
+
+**Décisions.**
+- **n°300** : `migrer_gabarit_306.py --n300` convertit les 33 listes (131 propositions) ; `grilles_radio.py` pose six grilles (26 questions) une fois les enveloppes `div.assoc` retirées autour des groupes. La page sauvegardait déjà les boutons radio par leur nom ; `collect()` lit aussi la valeur des groupes.
+- **n°301** : le ✘ « le Bonus vient APRÈS le bilan » était un faux : la correction de l'activité 7 disait « ton bilan personnel ci-dessous », et l'audit y voyait le bilan. La phrase dit maintenant « Mon bilan », plus bas.
+- **Replis** : le Bonus (`replier_bonus.py`) ; la **table des 48 h de mesures** (48 lignes × 6 colonnes, 400 « mots » de nombres) sous « 📊 La table des 48 h — ouvre-la pour fouiller » ; le corps de la **synthèse en page** sous son titre (« Les quatre parties de la synthèse et le vocabulaire — à relire avant le QCM »). Rien n'est retiré.
+- **Aération** : 47 retours posés par l'outil ; les corrections « cousues » (1 → Acquérir · 2 → Alimenter…, vent → entier · pression → décimal…, tableau → .csv · carte → .png…, l'exemple « rafale à 132 km/h → … ») réécrites une idée par ligne ; la situation déclenchante en phrases courtes.
+- **Bancs** : shim `_groupesRadio(page)` ; le remplissage « par préfixe » accepte un groupe (ses propositions sont ses inputs) ; le banc ouvre les volets repliés.
+
+**Mesure.** Séance 4 : 1 928 → 1 252 mots visibles (essentiel 1 243) ; séances 1 à 3 : 817 · 460 · 437. ✘ 2 → 0 ; menus 33 → 0 ; aération 8 → 0. Bancs 23/23 et 34/34 ; contrôles verts.
+
+**Question à Pascal.** La séance 4 annonce 85 min d'activités (activité 5 : 20 min, activité 6 : 35 min, réinvestissement « bouée houlographe » : 30 min) plus la clôture. Piste : le réinvestissement et la clôture en séance 5, comme la séance 5 de 4e_C1.1 coupée en deux (#624). Non fait sans sa décision.
+
