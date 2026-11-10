@@ -53,6 +53,8 @@ ENTREES = [
          sequence=C3 + "4e/4e_C3.1/sequence_4e_C3.1-C3.3_hangzhou.html", avant=debut("bc-4e-hangzhou-c3"),
          balise="h4", balise_exo="h5",
          titre="🧠 Piqûre de rappel&nbsp;: les mots de la bête à cornes, sur la flotte de Hangzhou",
+         replie="🧠 Piqûre de rappel (2 à 3 min)&nbsp;: les quatre mots de la bête à cornes — ouvre-la si tu ne les as "
+                "plus en tête",
          intro="Tu vas tirer des caractéristiques d'une bête à cornes. Avant, retrouve ses quatre <b>mots de référence</b> — "
                "utilisateur, matière d'œuvre, produit, fonction — sur <b>ton</b> objet, la flotte de vélos de Hangzhou. Deux "
                "à trois minutes&nbsp;; l'exercice se vérifie tout seul et a sa correction complète.",

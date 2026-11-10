@@ -53,7 +53,9 @@ redondant.
   - les captures des gestes : `python3 _outils/replier_captures.py <page> --ecrire`. Chaque geste reste écrit en toutes
     lettres ; ses captures et leurs légendes se rangent dessous, « 🖼 Le voir en images — 3 captures : ce que tu dois
     voir, et que faire si ça ne marche pas » (4e_C1.1, séance 1 : 1 641 → 921 mots) ;
-  - une piqûre de rappel incrustée : l'option `replie="…"` de son entrée dans `incrustations_lots/`, puis
+  - une piqûre de rappel incrustée (bête à cornes : `incrustations_lots/bete_a_cornes_mots.py` ; cahier des charges :
+    la clé `replie` du rappel dans `donnees_rappel_cdc.py`), **seulement si le vérificateur de l'activité ne l'exige
+    pas** (chercher sa clé `rep_…` dans le script de la page) : l'option `replie="…"` de son entrée, puis
     `python3 incrustations.py --seq <code>` (le texte du résumé dit ce qu'elle contient et à qui elle sert) ;
   - le Bonus : `python3 _outils/replier_bonus.py <page> --ecrire`. Son titre reste visible à sa place (la clôture se
     lit Bonus → Bilan → QCM) ; ses défis, ses champs et son corrigé se déplient « quand tu as fini ». Un banc qui
@@ -79,6 +81,9 @@ corrections réponse → pourquoi → refus un par ligne → le piège.
 - `python3 _outils/audit_aeration.py --strict <page>` à zéro.
 - Les consignes et annonces de plus de 25 mots (« Au programme : … », la question directrice) passent en lignes ①, ②,
   ③ ou en deux phrases. `node _outils/mesurer_charge.mjs --longs 30 <page>` les cite, séance par séance.
+- **Le texte d'une incrustation s'aère tout seul** depuis le 10/11/2026 : `incrustations.py --seq <code>` passe chaque
+  incrustation par `aerer_corrections.aerer` (retours à la ligne, aucun mot changé). On relance donc `--seq <code>` à
+  chaque passe : la séquence reçoit aussi les grilles du « classer ». Ce qui reste à réécrire :
 - **Un texte d'une incrustation d'atelier** (`<!-- ateliers-representations:debut … -->`) se corrige à sa source
   (`ateliers-representations/_generation/` : `incrustations_lots/` pour l'introduction propre à la séquence,
   `donnees_<atelier>.py` pour l'exercice), puis :

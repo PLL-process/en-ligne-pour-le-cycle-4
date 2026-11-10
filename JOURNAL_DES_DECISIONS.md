@@ -29396,6 +29396,126 @@ séance au-dessus du repère ; `controle_licence` ✓. Non exécuté : vrai tél
 - **Banc du lot** : le shim `_groupesRadio(page)` (V2 du 08/11) ajouté ; le banc ouvre les Bonus repliés avant de remplir leurs champs.
 
 **Mesure.** Séance 1 : 1 444 → 1 032 mots visibles ; séance 2 : 1 156 → 997. ✘ 1 → 0 ; menus 33 → 0 ; aération 6 → 0. Bancs 23/23 et 34/34 ; contrôles verts.
+
+---
+
+
+---
+
+
+---
+
+## 10/11/2026 — Révision des trois thèmes, 5 bis : 3e_C1.5, la séance 4 lit 140 mots de moins
+
+**Contexte.** #624 avait révisé 3e_C1.5 (séance 4 : 2 017 → 1 588 mots visibles). Une seconde session avait fait la même passe en parallèle ; de ce doublon, seul ce que #624 n'avait pas fait est gardé, posé sur `main`.
+
+**Décisions.**
+- La grille « Ce que je regarde dans ton argumentaire » de l'activité 5 n'apparaît qu'après **Vérifier mes réponses** : avant, elle répétait mot pour mot la liste de la consigne 5.b.
+- Le bandeau (Objectif, Ce que tu produis), le critère de réussite et la consigne du 5.a ne redisent plus la liste du 5.b ni les légendes des questions.
+- Les étiquettes du bilan vont à la ligne (problématique, retour sur l'hypothèse) ; « Relis ta première hypothèse » dit où elle est (sous la situation de départ), car le rappel ne s'affiche que si l'élève l'avait écrite.
+- Le paragraphe du QCM d'entraînement tient en deux lignes.
+
+**Mesure.** Séance 4 : 1 588 → 1 448 mots visibles (essentiel 1 433) ; aération 0 ; ✘ 0 ; bancs 45/45 et 34/34 ; contrôles verts. L'écart au repère reste celui de la clôture complète (n°301, n°306 D2 : le positionnement doit rester visible) et de l'activité 5 (24/10).
+
+**Leçon.** Deux sessions sur le même suivi font le même travail : avant d'ouvrir une séquence, regarder `main` et les branches `fable/revision*` distantes ; livrer le complément, pas la passe entière.
+
+## 08/11/2026 — Les voix des deux pilotes (5e_C4.1, 4e_C9.1) ralenties à 1.15 et dotées d'une marge de silence ; dix-huit prises refaites, à écouter (thèmes 2 et 3)
+
+**Point de départ.** Revue du 30/10/2026 des dix-huit prises des pilotes A et B (#571, #572), par transcription
+automatique (Whisper small puis medium, hors ligne) comparée mot pour mot au texte « envoye » de `phrases.json`,
+plus mesure des durées, marges et crêtes. Verdict : texte prononcé conforme sur 18 prises ; contournements de
+phonétisation efficaces (« lède », « parkinng », « lux », « ache », « inférieur à ») ; mais **la voix commençait à
+0 ms sur 16 prises** (coupe des silences à −45 dB sans marge, attaque mangée au lancement) et **débit de 150 à
+210 mots/min**, moyenne 185, rapide pour des élèves qui lisent mal (une voix off pédagogique tourne à 140–160).
+Deux passages à écouter (pompe 3, « L'humidité » ; pompe 7, « pompe ») ; Pascal a validé les étapes 1 à 8 de la
+pompe le 31/10 (« la bande sonore est bonne »).
+
+**Décision de Pascal (08/11/2026, « 1a 2b 3a »).** Marges corrigées tout de suite, branche + PR ; vitesse
+ralentie à `length_scale` 1.15 — donc resynthèse et nouvelle écoute des dix-huit prises, y compris les huit
+validées le 31/10 ; état des prises mis à jour dans `voix.json`.
+
+**Fait.** Dans les deux `generer.py` : après la coupe, `adelay=200:all=1,apad=pad_dur=0.3` (200 ms devant,
+300 ms derrière), avant `loudnorm`. Dans les deux `voix.json` : `length_scale` 1.15, chaîne audio et état des
+prises à jour (empreintes, durées). Modèle SIWIS medium téléchargé depuis l'archive sherpa-onnx, empreintes
+`b015076c…` et `39479916…` identiques à celles notées le 30/10. Trente-six fichiers régénérés ; les étapes 3 et 7 de la pompe reprises le 10/11 jusqu'à ce que la transcription
+entende le « L' » de « L'humidité » (Piper l'avale parfois en début de phrase : défaut de synthèse, pas de montage). Contrôle des
+nouvelles prises : marges 0,20 s devant / 0,34 s derrière sur 18/18 ; débit moyen 158 mots/min (132 à 190) ;
+total 186 s (était 160 s) ; mp3 et ogg à 0,1 s près ; transcription Whisper medium conforme (voir la PR).
+`SOURCES_MEDIAS.md` et `README.md` des deux lots mis à jour.
+
+**Pas fait, dit tel quel.** Les trois autres lots de voix (vélo-cargo 5e_C3.1, trois principes 5e_C1.1, jardin
+4e_C8.1) restent à 1.0 et sans marge : le site a désormais deux vitesses de voix. Les crêtes mesurées après
+encodage (−0,6 à −1,3 dBFS) dépassent la cible −1,5 dB du `loudnorm` : cosmétique, non traité.
+
+**Reste à Pascal.** Écouter les dix-huit prises (3 min 06) ; dire si les trois autres lots s'alignent sur 1.15 et
+les marges (même recette, 3 × `generer.py`, nouvelle écoute de leurs 24 prises) ; dire si ces réglages deviennent la
+règle des voix off (candidate pour `_outils/REGLES_OR_CANDIDATES.md`).
+
+## 10/11/2026 — Révision des trois thèmes, 7 à 11 : 5e_C1.1, 5e_C1.2, 5e_C3.1, 4e_C2.1, 4e_C3.1 ; les incrustations s'aèrent à leur source (transversal : `_outils`, ateliers des représentations ; thème 1)
+
+**Suite de la passe complète** (skill `revision-sequence`), dans l'ordre du suivi.
+
+**Ce qui change dans les outils.**
+- **Les incrustations des ateliers s'aèrent à leur source.** `incrustations.py` passe désormais chaque incrustation qu'il
+  engendre par `aerer_corrections.aerer` (fonction nouvelle, la même passe que sur une page : retours à la ligne entre
+  les phrases d'une correction, d'une consigne, d'une introduction trop longues ; aucun mot changé). Jusqu'ici, chaque
+  correction d'atelier se corrigeait à la main dans sa source et dans chaque page qui la portait.
+- **Le rappel du cahier des charges** (`donnees_rappel_cdc.py`) écrit ses corrections une idée par ligne : la ligne du
+  tableau en cinq lignes, chaque piège sur la sienne (des blocs de 80 à 120 mots d'un seul tenant). Il accepte la clé
+  `replie`, comme les autres incrustations.
+- `aerer_corrections.py` : un retour posé juste après l'ouverture d'un gras passe devant lui (« `<b><br>` » →
+  « `<br><b>` ») ; corrigé dans les 10 pages où c'était arrivé.
+- Les neuf séquences révisées qui portent une incrustation sont remises à jour (`--seq`) ; les 17 autres le seront à
+  leur tour de passe. D'ici là `incrustations.py --verifier` les dit « à mettre à jour » : c'est attendu.
+
+**Les cinq séquences** (mots visibles de la séance la plus lourde ; aération) :
+- 5e_C1.1 (Chengdu) : 1 629 → 1 301 ; 26 → 0. Séance 2 : 1 629 → 907.
+- 5e_C1.2 (Sainte-Luce) : 2 117 → 1 967 ; 26 → 0. Séance 2 : 1 696 → 923.
+- 5e_C3.1 (Shanghai) : 2 912 → 1 994 ; 0. Séance 4 : 2 912 → 1 447.
+- 4e_C2.1 (Hangzhou, la borne) : 2 625 → 1 716 ; 24 → 0.
+- 4e_C3.1 (Hangzhou, les vélos) : 1 850 → 1 299 ; 10 → 0.
+
+Ce qui a été fait : 53 captures de gestes repliées sous leur geste (les trois séquences de 5e au tableur) ; le Bonus
+replié ; 327 retours à la ligne ; les exercices « classer » en grille ; les gestes « Nommer » et « Sortir » en lignes ;
+les légendes des gestes coupées en deux phrases ; deux piqûres de rappel repliées (le cahier des charges en 4e_C2.1,
+799 mots ; la bête à cornes en 4e_C3.1), après vérification que le vérificateur de leur activité ne les exige pas ;
+en 5e_C1.1, la variante de la pesée en continu passe en « Pour aller plus loin ».
+
+**Ce qui reste au-dessus du repère**, justifié dans le suivi : huit séances, toutes portées par un exercice d'atelier
+(700 à 1 100 mots à lui seul : énoncé, schéma, propositions) ou par la clôture. Le prochain levier serait dans le
+moteur des ateliers lui-même (le cours replié, les aides), pas dans les séquences.
+
+**Question à Pascal : 4e_C2.1, la règle n°23.** 165 minutes annoncées pour 165 disponibles, sans les 10 minutes de
+service : ✘ ancien, non corrigé ici. Les trois séances sont pleines (5 + 50, 30 + 25, 45 + 10). Réduire une durée
+annoncée sans rien retirer serait faux. Deux pistes : une quatrième séance, ou l'exercice d'atelier du croquis
+(séance 1) rendu facultatif.
+
+**Contrôles.**
+- 5e_C1.1 : banc 43 / 43, animation 50 / 50, n°311 34 / 34. 5e_C1.2 : banc 50 / 50, n°311 34 / 34.
+- 5e_C3.1 : banc 35 / 35, n°311 27 / 27, voix 24 / 24. 4e_C3.1 : banc 32 / 32, n°311 34 / 34.
+- 4e_C2.1 : banc 62 / 65, comme sur `main` (n°298, liens des deux synthèses) ; n°311 34 / 34.
+- Séquences déjà révisées et remises à jour : 4e_C1.1 71 / 71, 3e_C1.5 45 / 45, 3e_C2.1 55 / 58 (comme `main`),
+  5e_C1.3 24 / 24. Ateliers : `banc_ateliers` 517 / 517.
+- Les cinq séquences : `audit_aeration --strict` 0 ; `verif_regles` 0 ✘, sauf n°23 de 4e_C2.1 (ci-dessus) ; squelette,
+  mode essentiel, hiérarchie verts. Site : `controle_liens`, `controle_tactile`, `controle_gestes_outil` verts.
+- Le texte des cinq pages ne change pas d'un mot là où seuls des retours à la ligne et des replis sont posés
+  (comparé avant / après).
+
+**Reste à Pascal.** Fusionner ; trancher le n°23 de 4e_C2.1. Suite de l'ordre : 3e_C4.1, 3e_C4.3, 5e_C2.1, 4e_C4.1…
+(les séquences du thème 2 ont encore leurs listes déroulantes : n°300).
+
+## 10/11/2026 — Révision des trois thèmes, 13 : 3e_C4.3, 33 listes en boutons radio, la table des 48 h et la synthèse repliées (thème 2)
+
+**Décisions.**
+- **n°300** : `migrer_gabarit_306.py --n300` convertit les 33 listes (131 propositions) ; `grilles_radio.py` pose six grilles (26 questions) une fois les enveloppes `div.assoc` retirées autour des groupes. La page sauvegardait déjà les boutons radio par leur nom ; `collect()` lit aussi la valeur des groupes.
+- **n°301** : le ✘ « le Bonus vient APRÈS le bilan » était un faux : la correction de l'activité 7 disait « ton bilan personnel ci-dessous », et l'audit y voyait le bilan. La phrase dit maintenant « Mon bilan », plus bas.
+- **Replis** : le Bonus (`replier_bonus.py`) ; la **table des 48 h de mesures** (48 lignes × 6 colonnes, 400 « mots » de nombres) sous « 📊 La table des 48 h — ouvre-la pour fouiller » ; le corps de la **synthèse en page** sous son titre (« Les quatre parties de la synthèse et le vocabulaire — à relire avant le QCM »). Rien n'est retiré.
+- **Aération** : 47 retours posés par l'outil ; les corrections « cousues » (1 → Acquérir · 2 → Alimenter…, vent → entier · pression → décimal…, tableau → .csv · carte → .png…, l'exemple « rafale à 132 km/h → … ») réécrites une idée par ligne ; la situation déclenchante en phrases courtes.
+- **Bancs** : shim `_groupesRadio(page)` ; le remplissage « par préfixe » accepte un groupe (ses propositions sont ses inputs) ; le banc ouvre les volets repliés.
+
+**Mesure.** Séance 4 : 1 928 → 1 252 mots visibles (essentiel 1 243) ; séances 1 à 3 : 817 · 460 · 437. ✘ 2 → 0 ; menus 33 → 0 ; aération 8 → 0. Bancs 23/23 et 34/34 ; contrôles verts.
+
+**Question à Pascal.** La séance 4 annonce 85 min d'activités (activité 5 : 20 min, activité 6 : 35 min, réinvestissement « bouée houlographe » : 30 min) plus la clôture. Piste : le réinvestissement et la clôture en séance 5, comme la séance 5 de 4e_C1.1 coupée en deux (#624). Non fait sans sa décision.
 ## 10/11/2026 — Audit externe des séquences : cinq constats corrigés, cinq points instruits, deux contrôles de plus (transversal : `_outils`, `index`, trois thèmes)
 
 **Demande de Pascal** : un audit externe des pages élèves (reçu le 01/11, cinq constats A01–A05 et cinq « points

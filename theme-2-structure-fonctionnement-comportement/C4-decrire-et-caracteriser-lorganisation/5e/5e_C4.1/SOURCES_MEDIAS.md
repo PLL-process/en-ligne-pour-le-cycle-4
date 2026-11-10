@@ -50,12 +50,15 @@ synthèse et de l'impression.
 - **Licence** : **CC BY 4.0** (fiche `MODEL_CARD` livrée avec le modèle).
 - **Attribution exigée** : « Voix de synthèse Piper « fr_FR-siwis-medium », entraînée sur la base SIWIS (Université d'Édimbourg), CC BY 4.0. »
   Elle figure ici, dans `voix.json` et, en version courte (« Voix de synthèse : SIWIS (CC BY 4.0) »), sous l'animation.
-- **Chaîne audio** : celle des trois autres animations (silences coupés à −45 dB, −16 LUFS, crête −1,5 dB, mono).
+- **Chaîne audio** : celle des autres animations (silences coupés à −45 dB, −16 LUFS, crête −1,5 dB, mono), plus, depuis le 08/11/2026,
+  une marge de silence remise après la coupe (200 ms devant, 300 ms derrière : la voix commençait à 0 ms et le lecteur mangeait
+  l'attaque). **Vitesse 1.15** depuis le 08/11/2026 (décision de Pascal : 150 à 210 mots/min à 1.0, trop rapide ; 130 à 190 à 1.15).
 - **Texte envoyé à la voix** : celui de la page, sauf « LED » dit « lède » (étapes 7 et 8), les nombres et « activité 2 » en toutes lettres
   (étapes 2, 5 et 9), « parking » écrit « parkinng » (étape 3 : l'automatique le disait à l'anglaise), et la règle de l'étape 5 dite « si nuit
   et passage, allumer ». Détail dans `_generation/voix_chaines/phrases.json` ; `generer.py --verifier` compare les phrases à la page.
-- **Prises produites le 30/10/2026, NON ÉCOUTÉES** : à faire écouter à Pascal (`voix.json`, clé `prises`). Reproductibilité à l'octet : non
-  (Piper tire du bruit à chaque prise).
+- **Prises produites le 08/11/2026 (vitesse 1.15), NON ÉCOUTÉES** : à faire écouter à Pascal (`voix.json`, clé `prises`). Celles du
+  30/10/2026 (vitesse 1.0) n'avaient pas été écoutées ; leur transcription automatique était conforme mot pour mot. Reproductibilité
+  à l'octet : non (Piper tire du bruit à chaque prise).
 
 ## Image reprise d'un lot voisin pour la situation déclenchante (05/11/2026)
 

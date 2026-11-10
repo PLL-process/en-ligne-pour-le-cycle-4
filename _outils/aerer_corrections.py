@@ -135,10 +135,13 @@ def reflow(fragment, seuil=None):
         sortie.append(neuf)
         poses += n
     neuf = "".join(sortie)
+    # un retour posé juste après l'ouverture d'un gras ou d'un italique passe devant lui (« <b><br>Puis » → « <br><b>Puis »)
+    neuf = BR_DANS_BALISE.sub(r"<br>\1", neuf)
     longues = [b[:80] for b in A.blocs(neuf) if A.mots(b) > (seuil or A.SEUIL_CORRECTION)]
     return neuf, poses, longues
 
 
+BR_DANS_BALISE = re.compile(r"((?:<(?:b|i|em|strong|u)>)+)<br>")
 SEUIL_PARTOUT = 30
 INCRUSTATION = re.compile(r"<!-- ateliers-representations:debut (\S+) -->.*?<!-- ateliers-representations:fin \1 -->", re.S)
 EXCLUS = re.compile(r"<!-- ateliers-representations:debut (\S+) -->.*?<!-- ateliers-representations:fin \1 -->|"
@@ -183,8 +186,9 @@ def partout(s):
     return "".join(morceaux), total, longues
 
 
-def traiter(chemin, ecrire, tout=False):
-    s = open(chemin, encoding="utf-8").read()
+def aerer(s, tout=False):
+    """la passe sur un texte HTML : (texte aéré, retours posés, blocs restés longs). `incrustations.py` l'appelle sur
+    chaque incrustation qu'il engendre (10/11/2026) : c'est ainsi que le texte des ateliers s'aère « à sa source »."""
     morceaux, pos, total, longues = [], 0, 0, []
     # une incrustation des ateliers vient du générateur : son texte s'aère à sa source, pas ici
     incrustations = [(x.start(), x.end()) for x in INCRUSTATION.finditer(s)]
@@ -206,6 +210,12 @@ def traiter(chemin, ecrire, tout=False):
         neuf, n, lg = partout(neuf)
         total += n
         longues += lg
+    return neuf, total, longues
+
+
+def traiter(chemin, ecrire, tout=False):
+    s = open(chemin, encoding="utf-8").read()
+    neuf, total, longues = aerer(s, tout)
     if ecrire and neuf != s:
         open(chemin, "w", encoding="utf-8").write(neuf)
     return total, longues
