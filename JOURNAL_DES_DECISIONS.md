@@ -29346,3 +29346,56 @@ compétences, fiche papier, impression (0 refus), verrous, hors ligne, tactile :
 essentiel compris. **Reste** : le lexique du lot n'a pas d'ancres par séance ; les activités n'annoncent pas de durée.
 
 **Fusion avec `main` (même jour)** : la PR #624, fusionnée entre-temps, avait déjà révisé 4e_C1.4 (texte simplifié, exemples de 5.b repliés). Résolution : le texte de #624 est gardé partout ; cette PR n'y ajoute que son idée propre — les leçons des cinq situations repliées dans un `<details>` ouvert après la réponse. Les chiffres de mots de l'entrée ci-dessus sont ceux mesurés avant la fusion.
+
+## 10/11/2026 — Révision des trois thèmes, 7 à 11 : 5e_C1.1, 5e_C1.2, 5e_C3.1, 4e_C2.1, 4e_C3.1 ; les incrustations s'aèrent à leur source (transversal : `_outils`, ateliers des représentations ; thème 1)
+
+**Suite de la passe complète** (skill `revision-sequence`), dans l'ordre du suivi.
+
+**Ce qui change dans les outils.**
+- **Les incrustations des ateliers s'aèrent à leur source.** `incrustations.py` passe désormais chaque incrustation qu'il
+  engendre par `aerer_corrections.aerer` (fonction nouvelle, la même passe que sur une page : retours à la ligne entre
+  les phrases d'une correction, d'une consigne, d'une introduction trop longues ; aucun mot changé). Jusqu'ici, chaque
+  correction d'atelier se corrigeait à la main dans sa source et dans chaque page qui la portait.
+- **Le rappel du cahier des charges** (`donnees_rappel_cdc.py`) écrit ses corrections une idée par ligne : la ligne du
+  tableau en cinq lignes, chaque piège sur la sienne (des blocs de 80 à 120 mots d'un seul tenant). Il accepte la clé
+  `replie`, comme les autres incrustations.
+- `aerer_corrections.py` : un retour posé juste après l'ouverture d'un gras passe devant lui (« `<b><br>` » →
+  « `<br><b>` ») ; corrigé dans les 10 pages où c'était arrivé.
+- Les neuf séquences révisées qui portent une incrustation sont remises à jour (`--seq`) ; les 17 autres le seront à
+  leur tour de passe. D'ici là `incrustations.py --verifier` les dit « à mettre à jour » : c'est attendu.
+
+**Les cinq séquences** (mots visibles de la séance la plus lourde ; aération) :
+- 5e_C1.1 (Chengdu) : 1 629 → 1 301 ; 26 → 0. Séance 2 : 1 629 → 907.
+- 5e_C1.2 (Sainte-Luce) : 2 117 → 1 967 ; 26 → 0. Séance 2 : 1 696 → 923.
+- 5e_C3.1 (Shanghai) : 2 912 → 1 994 ; 0. Séance 4 : 2 912 → 1 447.
+- 4e_C2.1 (Hangzhou, la borne) : 2 625 → 1 716 ; 24 → 0.
+- 4e_C3.1 (Hangzhou, les vélos) : 1 850 → 1 299 ; 10 → 0.
+
+Ce qui a été fait : 53 captures de gestes repliées sous leur geste (les trois séquences de 5e au tableur) ; le Bonus
+replié ; 327 retours à la ligne ; les exercices « classer » en grille ; les gestes « Nommer » et « Sortir » en lignes ;
+les légendes des gestes coupées en deux phrases ; deux piqûres de rappel repliées (le cahier des charges en 4e_C2.1,
+799 mots ; la bête à cornes en 4e_C3.1), après vérification que le vérificateur de leur activité ne les exige pas ;
+en 5e_C1.1, la variante de la pesée en continu passe en « Pour aller plus loin ».
+
+**Ce qui reste au-dessus du repère**, justifié dans le suivi : huit séances, toutes portées par un exercice d'atelier
+(700 à 1 100 mots à lui seul : énoncé, schéma, propositions) ou par la clôture. Le prochain levier serait dans le
+moteur des ateliers lui-même (le cours replié, les aides), pas dans les séquences.
+
+**Question à Pascal : 4e_C2.1, la règle n°23.** 165 minutes annoncées pour 165 disponibles, sans les 10 minutes de
+service : ✘ ancien, non corrigé ici. Les trois séances sont pleines (5 + 50, 30 + 25, 45 + 10). Réduire une durée
+annoncée sans rien retirer serait faux. Deux pistes : une quatrième séance, ou l'exercice d'atelier du croquis
+(séance 1) rendu facultatif.
+
+**Contrôles.**
+- 5e_C1.1 : banc 43 / 43, animation 50 / 50, n°311 34 / 34. 5e_C1.2 : banc 50 / 50, n°311 34 / 34.
+- 5e_C3.1 : banc 35 / 35, n°311 27 / 27, voix 24 / 24. 4e_C3.1 : banc 32 / 32, n°311 34 / 34.
+- 4e_C2.1 : banc 62 / 65, comme sur `main` (n°298, liens des deux synthèses) ; n°311 34 / 34.
+- Séquences déjà révisées et remises à jour : 4e_C1.1 71 / 71, 3e_C1.5 45 / 45, 3e_C2.1 55 / 58 (comme `main`),
+  5e_C1.3 24 / 24. Ateliers : `banc_ateliers` 517 / 517.
+- Les cinq séquences : `audit_aeration --strict` 0 ; `verif_regles` 0 ✘, sauf n°23 de 4e_C2.1 (ci-dessus) ; squelette,
+  mode essentiel, hiérarchie verts. Site : `controle_liens`, `controle_tactile`, `controle_gestes_outil` verts.
+- Le texte des cinq pages ne change pas d'un mot là où seuls des retours à la ligne et des replis sont posés
+  (comparé avant / après).
+
+**Reste à Pascal.** Fusionner ; trancher le n°23 de 4e_C2.1. Suite de l'ordre : 3e_C4.1, 3e_C4.3, 5e_C2.1, 4e_C4.1…
+(les séquences du thème 2 ont encore leurs listes déroulantes : n°300).

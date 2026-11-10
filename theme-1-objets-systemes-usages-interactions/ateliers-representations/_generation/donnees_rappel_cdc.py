@@ -165,15 +165,17 @@ def ligne(nom, court, fonction, interacteurs, designation, critere, niveau, flex
 def _correction(r):
     out = []
     for L in r["lignes"]:
-        out.append("<b>%s</b> → %s (%s) · «&nbsp;%s&nbsp;» · critère&nbsp;: %s · niveau&nbsp;: %s · %s"
+        # 10/11/2026 (révision des trois thèmes, skill texte-clair-et-aere) : une idée par ligne — la ligne du tableau
+        # en cinq lignes, chaque piège sur la sienne
+        out.append("<b>%s</b> → %s (%s) <br>«&nbsp;%s&nbsp;» <br>critère&nbsp;: %s <br>niveau&nbsp;: %s <br>%s"
                    % (L["nom"], L["fonction"].upper(), L["interacteurs"], L["designation"], L["critere"], L["niveau"],
                       NOM_FLEX[L["flex"]]))
         for col in COLONNES:
             if col not in L["corr"]:
                 continue
             bon, pourquoi, pieges = L["corr"][col]
-            out.append("<b>%s</b> → %s&nbsp;: %s. Les pièges&nbsp;: %s"
-                       % (col, bon, pourquoi, " ; ".join((t if t.startswith(p) else "%s → %s" % (p, t)).rstrip(".")
+            out.append("<b>%s</b> → %s&nbsp;: %s. <br>Les pièges&nbsp;: <br>%s"
+                       % (col, bon, pourquoi, "&nbsp;; <br>".join((t if t.startswith(p) else "%s → %s" % (p, t)).rstrip(".")
                                                         for p, t in pieges) + "."))
     out.append(("conclusion", "Chaque ligne du cahier des charges a sa <b>fonction</b> (FP ou FC), sa <b>désignation</b> (un verbe "
                               "à l'infinitif), son <b>critère</b> (ce qu'on mesure), son <b>niveau</b> (un nombre et son unité) "
@@ -322,6 +324,9 @@ RAPPELS = [
          ]),
     # ── 4e
     dict(id="hangzhou-4e", niveau="4e",
+         # révision du 10/11/2026 (la charge de lecture de la séance 3, 2 600 mots) : le rappel ne sert qu'à qui a oublié
+         replie="🔁 Piqûre de rappel (5 min)&nbsp;: le cahier des charges, en tableau à menus — ouvre-la si tu ne sais "
+                "plus ce qu'est un critère, un niveau, une flexibilité",
          sequence=T1 + "C2-decrire-les-interactions-entre-un-objet-ou/4e/4e_C2.1/sequence_4e_C2_hangzhou_borne.html",
          avant="  <h4>Ton cahier des charges</h4>", balise="h4", balise_exo="h5",
          titre="Deux lignes du cahier des charges de la borne",
