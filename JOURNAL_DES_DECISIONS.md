@@ -29396,3 +29396,25 @@ séance au-dessus du repère ; `controle_licence` ✓. Non exécuté : vrai tél
 - **Banc du lot** : le shim `_groupesRadio(page)` (V2 du 08/11) ajouté ; le banc ouvre les Bonus repliés avant de remplir leurs champs.
 
 **Mesure.** Séance 1 : 1 444 → 1 032 mots visibles ; séance 2 : 1 156 → 997. ✘ 1 → 0 ; menus 33 → 0 ; aération 6 → 0. Bancs 23/23 et 34/34 ; contrôles verts.
+
+---
+
+
+---
+
+
+---
+
+## 10/11/2026 — Révision des trois thèmes, 5 bis : 3e_C1.5, la séance 4 lit 140 mots de moins
+
+**Contexte.** #624 avait révisé 3e_C1.5 (séance 4 : 2 017 → 1 588 mots visibles). Une seconde session avait fait la même passe en parallèle ; de ce doublon, seul ce que #624 n'avait pas fait est gardé, posé sur `main`.
+
+**Décisions.**
+- La grille « Ce que je regarde dans ton argumentaire » de l'activité 5 n'apparaît qu'après **Vérifier mes réponses** : avant, elle répétait mot pour mot la liste de la consigne 5.b.
+- Le bandeau (Objectif, Ce que tu produis), le critère de réussite et la consigne du 5.a ne redisent plus la liste du 5.b ni les légendes des questions.
+- Les étiquettes du bilan vont à la ligne (problématique, retour sur l'hypothèse) ; « Relis ta première hypothèse » dit où elle est (sous la situation de départ), car le rappel ne s'affiche que si l'élève l'avait écrite.
+- Le paragraphe du QCM d'entraînement tient en deux lignes.
+
+**Mesure.** Séance 4 : 1 588 → 1 448 mots visibles (essentiel 1 433) ; aération 0 ; ✘ 0 ; bancs 45/45 et 34/34 ; contrôles verts. L'écart au repère reste celui de la clôture complète (n°301, n°306 D2 : le positionnement doit rester visible) et de l'activité 5 (24/10).
+
+**Leçon.** Deux sessions sur le même suivi font le même travail : avant d'ouvrir une séquence, regarder `main` et les branches `fable/revision*` distantes ; livrer le complément, pas la passe entière.
