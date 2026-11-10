@@ -29,6 +29,12 @@ import build  # noqa: E402
 import moteur  # noqa: E402
 
 DEPOT = moteur.DEPOT
+sys.path.insert(0, str(DEPOT / "_outils"))
+import aerer_corrections  # noqa: E402
+
+
+def _aerer(contenu):
+    return aerer_corrections.aerer(contenu, tout=True)[0]
 KIT = ("<!-- ateliers-representations:moteur -->", "<!-- /ateliers-representations:moteur -->")
 GARDER = re.compile(r"^(\.(?:card|meta|consigne|note|btn|figure|schema-vivant|defile|retour|encoche|option|options|demo|retenir|piege|critere|"
                     r"croquis|verif|lsu|champ|tableau-menus|menus-schema|cles-grille|ms-[a-z-]+)|fieldset|textarea|input|select|table|th|td|details|label|a)")
@@ -142,6 +148,10 @@ def poser(inc, texte):
     contenu = getattr(importlib.import_module("donnees_" + inc["module"]), inc["html"]) if inc.get("html") else section(inc)
     # `replie` (facultatif, 08/11/2026, révision des trois thèmes : la charge de lecture) : le texte d'un résumé ; la
     # section se range dans un <details> fermé, au même endroit. Pour un rappel, qui ne sert qu'à qui l'a oublié.
+    # 10/11/2026 (révision des trois thèmes) : le texte de l'incrustation s'aère ici, à sa source — un retour à la
+    # ligne entre les phrases d'une correction, d'une consigne, d'une introduction trop longues, sans changer un mot
+    # (`_outils/aerer_corrections.py`, qui ne touche jamais une incrustation déjà posée dans une page)
+    contenu = _aerer(contenu)
     if inc.get("replie"):
         contenu = '<details class="incruste-repliee"><summary>%s</summary>\n%s\n</details>' % (inc["replie"], contenu)
     bloc = "%s\n%s\n%s" % (debut, contenu, fin)
