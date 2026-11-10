@@ -36,6 +36,37 @@
  */
 import { chromium } from 'playwright';
 import path from 'node:path';
+
+/* Règle d'or n°300 (révision de la séquence, 10/11/2026) : les questions de la page sont des groupes de boutons
+   radio (fieldset.qcm-groupe) qui portent leur valeur. selectOption et fill visant un groupe cochent la
+   proposition qui porte cette valeur — la leçon de la vague du 20/09 : on vise la VALEUR, jamais la
+   position. Rien d'autre du banc ne change. */
+function _groupesRadio(page){
+  const origIV = page.inputValue.bind(page);
+  page.inputValue = async (sel, ...reste) => {
+    const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+    return groupe ? page.evaluate(s => document.querySelector(s).value, sel) : origIV(sel, ...reste);
+  };
+  for (const nom of ['selectOption', 'fill']) {
+    const orig = page[nom].bind(page);
+    page[nom] = async (sel, val, ...reste) => {
+      const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+      if (!groupe) return orig(sel, val, ...reste);
+      // comme Playwright sur un <select> : une chaîne vise la valeur OU le libellé ; {index}, {value}, {label} sont acceptés
+      const v = (val && typeof val === 'object') ? val : { label: String(val), value: String(val) };
+      const ok = await page.evaluate(([s, v]) => {
+        const e = document.querySelector(s); const inputs = [...e.querySelectorAll('input[type=radio]')];
+        const lib = i => (e.querySelector('label[for="' + i.id + '"]') || {}).textContent?.trim();
+        const c = v.index !== undefined ? inputs[v.index]
+          : inputs.find(i => i.value === v.value) || inputs.find(i => lib(i) === v.label);
+        if (!c) return false;
+        c.checked = true; c.dispatchEvent(new Event('change', {bubbles: true})); return true;
+      }, [sel, v]);
+      if (!ok) throw new Error('aucune proposition \u00ab ' + JSON.stringify(v) + ' \u00bb dans ' + sel);
+    };
+  }
+  return page;
+}
 import fs from 'node:fs';
 
 const ICI = path.dirname(new URL(import.meta.url).pathname);
@@ -48,13 +79,15 @@ const b = await chromium.launch();
 /* ════════════════ SÉQUENCE ════════════════ */
 {
 const ctx = await b.newContext({ viewport: { width: 390, height: 844 } });
-const p = await ctx.newPage();
+const p = _groupesRadio(await ctx.newPage());
 const err = [], dlg = [];
 p.on('pageerror', e => err.push(e.message));
 p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()); });
 p.on('dialog', async d => { dlg.push(d.message()); await d.dismiss(); });
 
 await p.goto('file://' + SEQ, { waitUntil: 'load' });
+// Révision du 10/11/2026 : Bonus, table des 48 h et synthèse sont repliés ; le banc les ouvre.
+await p.evaluate(() => document.querySelectorAll('details.bonus-replie').forEach(d => { d.open = true; }));
 await p.waitForTimeout(350);
 
 ok('1 · chargement sans erreur JS', err.length === 0, err.slice(0, 2).join(' | '));
@@ -139,7 +172,8 @@ async function remplir(n) {
   }
   for (const [id, debut] of Object.entries(plan.prefixes)) {
     const val = await p.$eval('#' + id,
-      (s, d) => [...s.options].map(o => o.value || o.textContent).find(x => x.startsWith(d)), debut);
+      // n°300 (10/11/2026) : la question peut être un groupe de boutons radio — ses propositions sont ses inputs
+      (s, d) => [...(s.options || s.querySelectorAll('input[type=radio]'))].map(o => o.value || o.textContent).find(x => x.startsWith(d)), debut);
     if (val) await p.selectOption('#' + id, val);
   }
   for (const [id, v] of Object.entries(plan.nombres)) {
@@ -239,7 +273,7 @@ await ctx.close();
 /** Joue une partie : `justes` bonnes, `fausses` mauvaises, le reste non répondu. */
 async function partie(justes, fausses) {
   const ctx = await b.newContext({ viewport: { width: 390, height: 844 } });
-  const p = await ctx.newPage();
+  const p = _groupesRadio(await ctx.newPage());
   const err = []; p.on('pageerror', e => err.push(e.message));
   await p.goto('file://' + QCM, { waitUntil: 'load' });
   await p.waitForTimeout(250);

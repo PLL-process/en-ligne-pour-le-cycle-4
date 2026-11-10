@@ -206,6 +206,19 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -541,6 +554,23 @@ body.essentiel details.referentiel-replie{display:none}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<style id="css-qcm-grille">
+/* grilles_radio.py (08/11/2026) : des questions qui partagent leurs réponses se lisent en grille — les réponses une
+   fois, lettrées ; chaque question, une rangée de lettres. La valeur de chaque bouton est le texte de la réponse. */
+.qcm-cles{margin:10px 0 6px;padding:8px 12px;border:1px solid var(--border,#274a8a);border-radius:10px;background:var(--panel2,#0a1b3d)}
+.qcm-cles-titre{margin:0 0 4px;font-weight:600}
+.qcm-cles ol{margin:0;padding-left:0;list-style:none}
+.qcm-cles li{margin:3px 0;padding-left:1.9em;text-indent:-1.9em}
+.qcm-cles li b{display:inline-block;width:1.6em;text-indent:0;color:var(--hl,#61dafb)}
+.qcm-groupe.qcm-grille .qcm-option{display:inline-flex;align-items:center;gap:4px;margin:2px 2px 2px 0;padding:3px 5px;width:auto;min-width:0}
+.qcm-groupe.qcm-grille .qcm-option label{flex:none;font-weight:700}
+@media print{.qcm-cles{background:#fff!important;border-color:#999!important;color:#111!important}.qcm-cles li b{color:#111!important}}
+</style>
+<style id="css-bonus-replie">
+/* replier_bonus.py (08/11/2026) : le Bonus se déplie quand on a fini */
+details.bonus-replie>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}
+details.bonus-replie[open]>summary{margin-bottom:8px}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#seances">Aller directement aux activités</a>
@@ -614,7 +644,7 @@ body.essentiel details.referentiel-replie{display:none}
       <p class="rattrapage">→ pas encore sûr·e ? <a href="../../4e/4e_C4.1/Synthèses/synthese_eleve_4e_C4.1-C4.9.html#donnee">relis « Que devient la mesure entre la terre du bac et la tablette ? » dans la synthèse 4e_C4.1 à C4.9</a></p>
     </li>
   </ul>
-  <p class="change"><b>Dans cette séquence&nbsp;:</b> la station d'alerte cyclonique ne renseigne pas, elle <b>prévient</b>. Une mesure fausse ou perdue ne gêne pas un arrosage : elle fait rater une alerte. Tu vas devoir décider <b>à partir de quel seuil</b> on dérange les gens.</p>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> la station d'alerte cyclonique ne renseigne pas, elle <b>prévient</b>. <br>Une mesure fausse ou perdue ne gêne pas un arrosage : elle fait rater une alerte. <br>Tu vas devoir décider <b>à partir de quel seuil</b> on dérange les gens.</p>
   <p class="filet">Un mot à garder en tête : un capteur transforme une grandeur physique en un nombre, et ce nombre n'est jamais exact.</p>
 </section>
 
@@ -641,7 +671,7 @@ body.essentiel details.referentiel-replie{display:none}
     <tr><td><b>3e_C4.6</b></td><td>Identifier, selon les cas, leur mise en forme, leur transmission ou leur stockage dans des fichiers (texte, image, nombre) afin de comprendre le fonctionnement de l’OST.</td><td>D2, D5</td><td>5, 6, R</td></tr>
   </table>
   <p style="font-size:.85em;color:var(--sub);margin-top:8px">Compétence parente <b>C4</b> : décrire et caractériser l'organisation interne d'un objet ou d'un système technique et ses échanges avec son environnement (énergies, données) — BO n°9 du 29/02/2024.</p>
-  <p style="font-size:.9em;color:var(--sub)"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>3e_C4.3</code> · <code>3e_C4.4</code> · <code>3e_C4.5</code> · <code>3e_C4.6</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel. Les formulations ci-dessus sont celles du référentiel.</p>
+  <p style="font-size:.9em;color:var(--sub)"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b><br>Codification opérationnelle</b>&nbsp;: les codes <code>3e_C4.3</code> · <code>3e_C4.4</code> · <code>3e_C4.5</code> · <code>3e_C4.6</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel. <br>Les formulations ci-dessus sont celles du référentiel.</p>
 </div>
 </details>
 
@@ -658,13 +688,13 @@ body.essentiel details.referentiel-replie{display:none}
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
   <div class="declencheur">
-    <p><b>Mercredi 26 août, Martinique.</b> Météo-France vient de placer l'île en vigilance jaune (le premier niveau d'alerte météo : « soyez attentifs ») : une onde tropicale (une zone de mauvais temps qui traverse l'Atlantique)
-    s'est transformée en tempête et pourrait devenir un ouragan d'ici 48 heures. Au collège de Sainte-Luce, on se souvient
+    <p><b>Mercredi 26 août, Martinique.</b><br>Météo-France vient de placer l'île en vigilance jaune (le premier niveau d'alerte météo : « soyez attentifs »). <br>Une onde tropicale (une zone de mauvais temps qui traverse l'Atlantique)
+    s'est transformée en tempête. <br>Elle pourrait devenir un ouragan d'ici 48 heures. <br>Au collège de Sainte-Luce, on se souvient
     des dégâts de 2023 : coupures d'électricité, réseau téléphonique saturé, familles isolées dans les hauteurs sans information.</p>
-    <p>Le conseil municipal propose au collège un projet : installer sur le toit une <b>station d'alerte cyclonique autonome</b>,
-    capable de mesurer le vent, la pluie et la pression, de fonctionner sur batterie solaire, et de prévenir les habitants du
+    <p>Le conseil municipal propose au collège un projet : installer sur le toit une <b>station d'alerte cyclonique autonome</b>. <br>
+    Elle mesure le vent, la pluie et la pression. <br>Elle fonctionne sur batterie solaire. <br>Elle prévient les habitants du
     quartier <b>même quand Internet est coupé</b>, grâce à une sirène et à une liaison radio (des messages envoyés par ondes, sans fil ni Internet).</p>
-    <p>Avant de la construire, il faut comprendre <em>comment elle fonctionne de l'intérieur</em> : comment une rafale de vent
+    <p>Avant de la construire, il faut comprendre <em>comment elle fonctionne de l'intérieur</em>. <br>Comment une rafale de vent
     devient-elle un nombre dans une machine, puis une alerte sur un téléphone ?</p>
   </div>
   <figure class="situation-photo">
@@ -687,7 +717,7 @@ body.essentiel details.referentiel-replie{display:none}
     <textarea id="hyp1" placeholder="J'imagine que…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Quand le vent souffle sur l&#x27;anémomètre, celui-ci ____.</li>
     <li>Ensuite, ce que le capteur produit est transformé par ____.</li>
@@ -698,7 +728,7 @@ body.essentiel details.referentiel-replie{display:none}
     <textarea id="hyp2" placeholder="Je pense cela parce que…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Je m&#x27;appuie sur ____ (objet déjà vu, expérience, cours précédent).</li>
     <li>Ce qui me fait penser cela, c&#x27;est que ____.</li>
@@ -716,7 +746,7 @@ body.essentiel details.referentiel-replie{display:none}
     <tr><td>Arduino UNO / R4 + Grove (capteur de luminosité, LCD)</td><td>Matériel confirmé au labo : montre un vrai CAN 10 bits (valeurs 0-1023) sur une grandeur réellement mesurée.</td><td>VittaScience (simulation en ligne, gratuite, sans installation)</td></tr>
     <tr><td>LibreOffice Calc (activité 6)</td><td>Gratuit, installé au collège : exploite le fichier de mesures CSV/ODS.</td><td>Tableau intégré à la page (aucune installation) ; XLSX fourni pour Excel</td></tr>
   </table>
-  <p style="font-size:.85em;color:var(--sub)">⚠ Aucun anémomètre ni baromètre Grove n'est confirmé au labo : la mesure du vent réel n'est <b>pas</b> exigée — le capteur de luminosité joue le rôle de « grandeur analogique » en version A. Compatibilités non testées signalées dans la fiche professeur.</p>
+  <p style="font-size:.85em;color:var(--sub)">⚠ Aucun anémomètre ni baromètre Grove n'est confirmé au labo : la mesure du vent réel n'est <b>pas</b> exigée. <br>Le capteur de luminosité joue le rôle de « grandeur analogique » en version A. <br>Compatibilités non testées signalées dans la fiche professeur.</p>
 </section>
 
 <section class="card">
@@ -731,8 +761,7 @@ body.essentiel details.referentiel-replie{display:none}
       Aucun matériel, un compte n'est pas obligatoire pour tester.</p></div>
     <div class="version vc"><h4>🅲 Sans matériel</h4>
       <p>Tout est dans cette page : simulateur de CAN (activité 3) et jeu de données 48 h enregistré (activité 6, fichiers
-      <a href="donnees/mesures_station_48h_simulees.csv">CSV</a> · <a href="donnees/mesures_station_48h_simulees.ods">ODS</a> · <a href="donnees/mesures_station_48h_simulees.xlsx">XLSX</a>).
-      Personne n'est pénalisé si le matériel manque.</p></div>
+      <a href="donnees/mesures_station_48h_simulees.csv">CSV</a> · <a href="donnees/mesures_station_48h_simulees.ods">ODS</a> · <a href="donnees/mesures_station_48h_simulees.xlsx">XLSX</a>). <br>Personne n'est pénalisé si le matériel manque.</p></div>
   </div>
 </section>
 </details>
@@ -756,7 +785,7 @@ body.essentiel details.referentiel-replie{display:none}
      « Avant de commencer » ; « Voir où j'en suis » renvoie aux rattrapages de ces lignes. -->
 <section class="card" id="billet" aria-labelledby="billet-t">
   <h2 id="billet-t">🎫 Billet d'entrée — trois questions, sans note</h2>
-  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. « Je ne sais pas encore » est une réponse utile.</p>
+  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <b><br>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1">
       <legend>Dans la station, qui <b>décide</b> de déclencher l'alerte ?</legend>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="le capteur de vent, qui mesure"><label for="be_1__1">le capteur de vent, qui mesure</label></div>
@@ -781,6 +810,26 @@ body.essentiel details.referentiel-replie{display:none}
   <button type="button" class="btn" id="btnBillet">🎫 Voir où j'en suis</button>
   <div class="billet-retour" id="fbBillet" role="status" aria-live="polite"></div>
 </section>
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script>
 /* Billet d'entrée — sans note, hors progression (règle d'or n°26). Chaque question vérifie une ligne du bloc
    « Avant de commencer » ; une réponse manquée renvoie au rattrapage que cette ligne porte déjà. */
@@ -841,19 +890,68 @@ body.essentiel details.referentiel-replie{display:none}
     <object class="figure" data="Images/station_alerte_annotee.svg" type="image/svg+xml" aria-label="Schéma annoté de la station d'alerte cyclonique : anémomètre, panneau solaire, pluviomètre, antenne, boîtier électronique, sirène">Schéma annoté de la station (SVG)</object>
     <div class="consigne"><b>Consigne :</b> observe le schéma, puis attribue à chacun des 8 éléments sa <b>fonction</b> dans la station : <b>Acquérir</b> (capter une grandeur), <b>Traiter</b> (décider), <b>Communiquer</b> (diffuser), ou <b>Alimenter</b> (fournir l'énergie). Justifie ensuite le cas du panneau solaire.</div>
     <div class="exo">
-      <div class="assoc"><label for="a1_1">1. Anémomètre + girouette</label><select id="a1_1"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
-      <div class="assoc"><label for="a1_2">2. Panneau solaire + batterie</label><select id="a1_2"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
-      <div class="assoc"><label for="a1_3">3. Pluviomètre</label><select id="a1_3"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
-      <div class="assoc"><label for="a1_4">4. Baromètre (dans le boîtier)</label><select id="a1_4"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
-      <div class="assoc"><label for="a1_5">5. Microcontrôleur</label><select id="a1_5"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
-      <div class="assoc"><label for="a1_6">6. Antenne radio</label><select id="a1_6"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
-      <div class="assoc"><label for="a1_7">7. Sirène + gyrophare</label><select id="a1_7"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
-      <div class="assoc"><label for="a1_8">8. Application mobile des habitants</label><select id="a1_8"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
+      <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>Acquérir</li><li><b>B</b>Traiter</li><li><b>C</b>Communiquer</li><li><b>D</b>Alimenter</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="a1_1">
+  <legend>1. Anémomètre + girouette</legend>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__1" value="Acquérir" aria-label="A — Acquérir"><label for="a1_1__1" title="Acquérir">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__2" value="Traiter" aria-label="B — Traiter"><label for="a1_1__2" title="Traiter">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__3" value="Communiquer" aria-label="C — Communiquer"><label for="a1_1__3" title="Communiquer">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__4" value="Alimenter" aria-label="D — Alimenter"><label for="a1_1__4" title="Alimenter">D</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a1_2">
+  <legend>2. Panneau solaire + batterie</legend>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__1" value="Acquérir" aria-label="A — Acquérir"><label for="a1_2__1" title="Acquérir">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__2" value="Traiter" aria-label="B — Traiter"><label for="a1_2__2" title="Traiter">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__3" value="Communiquer" aria-label="C — Communiquer"><label for="a1_2__3" title="Communiquer">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__4" value="Alimenter" aria-label="D — Alimenter"><label for="a1_2__4" title="Alimenter">D</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a1_3">
+  <legend>3. Pluviomètre</legend>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__1" value="Acquérir" aria-label="A — Acquérir"><label for="a1_3__1" title="Acquérir">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__2" value="Traiter" aria-label="B — Traiter"><label for="a1_3__2" title="Traiter">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__3" value="Communiquer" aria-label="C — Communiquer"><label for="a1_3__3" title="Communiquer">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__4" value="Alimenter" aria-label="D — Alimenter"><label for="a1_3__4" title="Alimenter">D</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a1_4">
+  <legend>4. Baromètre (dans le boîtier)</legend>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__1" value="Acquérir" aria-label="A — Acquérir"><label for="a1_4__1" title="Acquérir">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__2" value="Traiter" aria-label="B — Traiter"><label for="a1_4__2" title="Traiter">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__3" value="Communiquer" aria-label="C — Communiquer"><label for="a1_4__3" title="Communiquer">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__4" value="Alimenter" aria-label="D — Alimenter"><label for="a1_4__4" title="Alimenter">D</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a1_5">
+  <legend>5. Microcontrôleur</legend>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__1" value="Acquérir" aria-label="A — Acquérir"><label for="a1_5__1" title="Acquérir">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__2" value="Traiter" aria-label="B — Traiter"><label for="a1_5__2" title="Traiter">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__3" value="Communiquer" aria-label="C — Communiquer"><label for="a1_5__3" title="Communiquer">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__4" value="Alimenter" aria-label="D — Alimenter"><label for="a1_5__4" title="Alimenter">D</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a1_6">
+  <legend>6. Antenne radio</legend>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__1" value="Acquérir" aria-label="A — Acquérir"><label for="a1_6__1" title="Acquérir">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__2" value="Traiter" aria-label="B — Traiter"><label for="a1_6__2" title="Traiter">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__3" value="Communiquer" aria-label="C — Communiquer"><label for="a1_6__3" title="Communiquer">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__4" value="Alimenter" aria-label="D — Alimenter"><label for="a1_6__4" title="Alimenter">D</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a1_7">
+  <legend>7. Sirène + gyrophare</legend>
+  <div class="qcm-option"><input type="radio" name="a1_7" id="a1_7__1" value="Acquérir" aria-label="A — Acquérir"><label for="a1_7__1" title="Acquérir">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_7" id="a1_7__2" value="Traiter" aria-label="B — Traiter"><label for="a1_7__2" title="Traiter">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_7" id="a1_7__3" value="Communiquer" aria-label="C — Communiquer"><label for="a1_7__3" title="Communiquer">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_7" id="a1_7__4" value="Alimenter" aria-label="D — Alimenter"><label for="a1_7__4" title="Alimenter">D</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a1_8">
+  <legend>8. Application mobile des habitants</legend>
+  <div class="qcm-option"><input type="radio" name="a1_8" id="a1_8__1" value="Acquérir" aria-label="A — Acquérir"><label for="a1_8__1" title="Acquérir">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_8" id="a1_8__2" value="Traiter" aria-label="B — Traiter"><label for="a1_8__2" title="Traiter">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_8" id="a1_8__3" value="Communiquer" aria-label="C — Communiquer"><label for="a1_8__3" title="Communiquer">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_8" id="a1_8__4" value="Alimenter" aria-label="D — Alimenter"><label for="a1_8__4" title="Alimenter">D</label></div>
+</fieldset>
       <label for="a1_just" style="display:block;margin-top:10px"><b>Justification :</b> le panneau solaire fait-il partie de la chaîne d'<em>information</em> ? Explique.</label>
       <textarea id="a1_just" placeholder="Le panneau solaire…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Le panneau solaire ne fait pas partie de la chaîne d&#x27;information, parce qu&#x27;il ____.</li>
     <li>Son rôle est de ____, ce qui correspond à la fonction ____.</li>
@@ -864,9 +962,17 @@ body.essentiel details.referentiel-replie{display:none}
       <div class="feedback" id="fb1" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Pose-toi la question : cet élément <b>capte</b>-t-il quelque chose du monde réel (vent, pluie, pression) ? <b>décide</b>-t-il ? <b>diffuse</b>-t-il un message ? ou fournit-il seulement de l'<b>énergie</b> ?</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Les <b>capteurs</b> sont toujours du côté « Acquérir » : anémomètre, pluviomètre, baromètre. Il n'y a qu'<b>un seul</b> élément qui décide : celui qui contient le programme. Tout ce qui envoie l'alerte vers l'extérieur (ondes radio, son, lumière, écran) relève de « Communiquer ». Le panneau solaire, lui, ne manipule aucune information…</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Les <b>capteurs</b> sont toujours du côté « Acquérir » : anémomètre, pluviomètre, baromètre. <br>Il n'y a qu'<b>un seul</b> élément qui décide : celui qui contient le programme. <br>Tout ce qui envoie l'alerte vers l'extérieur (ondes radio, son, lumière, écran) relève de « Communiquer ». <br>Le panneau solaire, lui, ne manipule aucune information…</p></details>
     <details class="correction"><summary>✅ Correction complète (à ouvrir après vérification)</summary>
-      <p><b>Réponses :</b> 1 → Acquérir · 2 → Alimenter · 3 → Acquérir · 4 → Acquérir · 5 → Traiter · 6 → Communiquer · 7 → Communiquer · 8 → Communiquer.</p>
+      <p><b>Réponses :</b> <br>
+      1. Anémomètre + girouette : Acquérir. <br>
+      2. Panneau solaire + batterie : Alimenter. <br>
+      3. Pluviomètre : Acquérir. <br>
+      4. Baromètre : Acquérir. <br>
+      5. Microcontrôleur : Traiter. <br>
+      6. Antenne radio : Communiquer. <br>
+      7. Sirène + gyrophare : Communiquer. <br>
+      8. Application mobile des habitants : Communiquer.</p>
       <p><b>Méthode :</b> on classe chaque constituant selon ce qu'il fait de l'<em>information</em> : la faire entrer (capteur), la transformer en décision (microcontrôleur), la faire sortir (antenne, sirène, application).</p>
       <p><b>Justification attendue :</b> le panneau solaire et la batterie n'appartiennent <b>pas</b> à la chaîne d'information : ils forment la <b>chaîne d'énergie</b> de la station. Sans eux la station s'éteint, mais ils ne captent, ne traitent et ne transmettent aucune information.</p>
 <div class="regle-or-schema" role="note" style="border:3px solid #1F3864;border-radius:12px;padding:14px 18px;margin:18px 0;background:#EAF1FB;font-weight:600;line-height:1.5;">📐 Règle d'or du schéma : l'INFORMATION en haut, l'ÉNERGIE en bas, la flèche d'ORDRE qui descend — le cerveau au-dessus des muscles, la commande au-dessus de la puissance. La disposition EST une leçon : elle montre qui commande, sans un mot.</div>
@@ -890,13 +996,48 @@ body.essentiel details.referentiel-replie{display:none}
     <div class="consigne"><b>Consigne :</b> remets les fonctions dans l'ordre de circulation de l'information, puis indique la <b>nature du signal</b> à chaque étape. Termine par l'exemple chiffré.</div>
     <div class="exo">
       <p><b>a) L'ordre des fonctions :</b></p>
-      <div class="assoc"><label for="a2_f1">Fonction n°1 (entrée)</label><select id="a2_f1"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option></select></div>
-      <div class="assoc"><label for="a2_f2">Fonction n°2</label><select id="a2_f2"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option></select></div>
-      <div class="assoc"><label for="a2_f3">Fonction n°3 (sortie)</label><select id="a2_f3"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option></select></div>
+      <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>Acquérir</li><li><b>B</b>Traiter</li><li><b>C</b>Communiquer</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="a2_f1">
+  <legend>Fonction n°1 (entrée)</legend>
+  <div class="qcm-option"><input type="radio" name="a2_f1" id="a2_f1__1" value="Acquérir" aria-label="A — Acquérir"><label for="a2_f1__1" title="Acquérir">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_f1" id="a2_f1__2" value="Traiter" aria-label="B — Traiter"><label for="a2_f1__2" title="Traiter">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_f1" id="a2_f1__3" value="Communiquer" aria-label="C — Communiquer"><label for="a2_f1__3" title="Communiquer">C</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a2_f2">
+  <legend>Fonction n°2</legend>
+  <div class="qcm-option"><input type="radio" name="a2_f2" id="a2_f2__1" value="Acquérir" aria-label="A — Acquérir"><label for="a2_f2__1" title="Acquérir">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_f2" id="a2_f2__2" value="Traiter" aria-label="B — Traiter"><label for="a2_f2__2" title="Traiter">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_f2" id="a2_f2__3" value="Communiquer" aria-label="C — Communiquer"><label for="a2_f2__3" title="Communiquer">C</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a2_f3">
+  <legend>Fonction n°3 (sortie)</legend>
+  <div class="qcm-option"><input type="radio" name="a2_f3" id="a2_f3__1" value="Acquérir" aria-label="A — Acquérir"><label for="a2_f3__1" title="Acquérir">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_f3" id="a2_f3__2" value="Traiter" aria-label="B — Traiter"><label for="a2_f3__2" title="Traiter">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_f3" id="a2_f3__3" value="Communiquer" aria-label="C — Communiquer"><label for="a2_f3__3" title="Communiquer">C</label></div>
+</fieldset>
       <p style="margin-top:12px"><b>b) La nature des signaux :</b></p>
-      <div class="assoc"><label for="a2_s1">Ce qui entre dans les capteurs</label><select id="a2_s1"><option value="">— choisir —</option><option>grandeurs physiques (vent, pluie, pression)</option><option>signal électrique analogique</option><option>données numériques</option><option>message d'alerte</option></select></div>
-      <div class="assoc"><label for="a2_s2">Ce qui sort des capteurs</label><select id="a2_s2"><option value="">— choisir —</option><option>grandeurs physiques (vent, pluie, pression)</option><option>signal électrique analogique</option><option>données numériques</option><option>message d'alerte</option></select></div>
-      <div class="assoc"><label for="a2_s3">Ce qui circule après le traitement</label><select id="a2_s3"><option value="">— choisir —</option><option>grandeurs physiques (vent, pluie, pression)</option><option>signal électrique analogique</option><option>données numériques</option><option>message d'alerte</option></select></div>
+      <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>grandeurs physiques (vent, pluie, pression)</li><li><b>B</b>signal électrique analogique</li><li><b>C</b>données numériques</li><li><b>D</b>message d'alerte</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="a2_s1">
+  <legend>Ce qui entre dans les capteurs</legend>
+  <div class="qcm-option"><input type="radio" name="a2_s1" id="a2_s1__1" value="grandeurs physiques (vent, pluie, pression)" aria-label="A — grandeurs physiques (vent, pluie, pression)"><label for="a2_s1__1" title="grandeurs physiques (vent, pluie, pression)">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_s1" id="a2_s1__2" value="signal électrique analogique" aria-label="B — signal électrique analogique"><label for="a2_s1__2" title="signal électrique analogique">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_s1" id="a2_s1__3" value="données numériques" aria-label="C — données numériques"><label for="a2_s1__3" title="données numériques">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_s1" id="a2_s1__4" value="message d&#x27;alerte" aria-label="D — message d&#x27;alerte"><label for="a2_s1__4" title="message d&#x27;alerte">D</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a2_s2">
+  <legend>Ce qui sort des capteurs</legend>
+  <div class="qcm-option"><input type="radio" name="a2_s2" id="a2_s2__1" value="grandeurs physiques (vent, pluie, pression)" aria-label="A — grandeurs physiques (vent, pluie, pression)"><label for="a2_s2__1" title="grandeurs physiques (vent, pluie, pression)">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_s2" id="a2_s2__2" value="signal électrique analogique" aria-label="B — signal électrique analogique"><label for="a2_s2__2" title="signal électrique analogique">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_s2" id="a2_s2__3" value="données numériques" aria-label="C — données numériques"><label for="a2_s2__3" title="données numériques">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_s2" id="a2_s2__4" value="message d&#x27;alerte" aria-label="D — message d&#x27;alerte"><label for="a2_s2__4" title="message d&#x27;alerte">D</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a2_s3">
+  <legend>Ce qui circule après le traitement</legend>
+  <div class="qcm-option"><input type="radio" name="a2_s3" id="a2_s3__1" value="grandeurs physiques (vent, pluie, pression)" aria-label="A — grandeurs physiques (vent, pluie, pression)"><label for="a2_s3__1" title="grandeurs physiques (vent, pluie, pression)">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_s3" id="a2_s3__2" value="signal électrique analogique" aria-label="B — signal électrique analogique"><label for="a2_s3__2" title="signal électrique analogique">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_s3" id="a2_s3__3" value="données numériques" aria-label="C — données numériques"><label for="a2_s3__3" title="données numériques">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_s3" id="a2_s3__4" value="message d&#x27;alerte" aria-label="D — message d&#x27;alerte"><label for="a2_s3__4" title="message d&#x27;alerte">D</label></div>
+</fieldset>
       <p style="margin-top:12px"><b>c) L'exemple chiffré :</b> complète la condition programmée dans le microcontrôleur pour l'alerte violette (seuil officiel d'un ouragan : 118 km/h) :</p>
       <p style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#08132c;padding:10px;border-radius:8px">SI vent &gt; <input type="number" id="a2_seuil" style="width:90px;display:inline-block"> km/h ALORS vigilance ← violette</p>
       <button class="btn small" data-check="2" style="margin-top:8px">✔ Vérifier mes réponses</button>
@@ -904,11 +1045,16 @@ body.essentiel details.referentiel-replie{display:none}
     </div>
     <object class="figure" data="Images/chaine_information_station.svg" type="image/svg+xml" aria-label="Schéma bloc de la chaîne d'information : acquérir avec les capteurs, traiter avec le microcontrôleur, communiquer avec l'antenne et la sirène">Schéma bloc de la chaîne d'information (SVG)</object>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>L'information suit le chemin du monde réel vers les habitants : on <b>capte</b> d'abord, on <b>réfléchit</b> ensuite, on <b>prévient</b> enfin.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Un capteur transforme une grandeur physique en <b>signal électrique</b>. Le CAN du microcontrôleur transforme ce signal en <b>nombres</b> (tu verras comment en séance 2). Après traitement, ce qui circule vers l'antenne et la sirène, ce sont des <b>données numériques</b> (le message d'alerte est leur forme finale, côté habitants).</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Un capteur transforme une grandeur physique en <b>signal électrique</b>. <br>Le CAN du microcontrôleur transforme ce signal en <b>nombres</b> (tu verras comment en séance 2). <br>Après traitement, ce qui circule vers l'antenne et la sirène, ce sont des <b>données numériques</b> (le message d'alerte est leur forme finale, côté habitants).</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>a)</b> Acquérir → Traiter → Communiquer.<br><b>b)</b> entrée capteurs : grandeurs physiques ; sortie capteurs : signal électrique analogique ; après traitement : données numériques.<br><b>c)</b> seuil = <b>118</b> km/h.</p>
+      <p><b>a)</b> Acquérir → Traiter → Communiquer.<br><b>b)</b> entrée capteurs : grandeurs physiques ; <br>sortie capteurs : signal électrique analogique ; <br>après traitement : données numériques.<br><b>c)</b> seuil = <b>118</b> km/h.</p>
       <p><b>Raisonnement :</b> chaque bloc transforme la nature du signal — c'est la définition même de la chaîne d'information. Le schéma SVG ci-dessus sert d'auto-vérification : compare-le à tes réponses.</p>
-      <p><b>Exemple concret :</b> rafale à 132 km/h → l'anémomètre tourne vite → tension électrique élevée → le CAN produit le nombre 132 → 132 &gt; 118 → le microcontrôleur envoie « vigilance violette » à l'antenne et déclenche la sirène.</p>
+      <p><b>Exemple concret, une rafale à 132 km/h :</b> <br>
+      l'anémomètre tourne vite ; <br>
+      la tension électrique monte ; <br>
+      le CAN produit le nombre 132 ; <br>
+      132 &gt; 118 ; <br>
+      le microcontrôleur envoie « vigilance violette » à l'antenne et déclenche la sirène.</p>
       <p><b>Contre-exemple :</b> si on inversait Traiter et Communiquer, la station enverrait des mesures brutes sans jamais décider d'alerter — les habitants recevraient « 132 » sans savoir quoi en faire.</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> confondre la nature du signal <em>avant</em> et <em>après</em> le capteur ; écrire un seuil « au hasard » (150, 100…) au lieu du seuil officiel de l'ouragan (118 km/h, vents soutenus).</div>
@@ -970,7 +1116,7 @@ body.essentiel details.referentiel-replie{display:none}
       <textarea id="a3_exp" placeholder="La grandeur réelle est…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>La grandeur réelle (la pression) est continue : entre deux valeurs, il existe ____.</li>
     <li>Le CAN, lui, ne peut distinguer que ____ paliers : il est obligé de ____.</li>
@@ -980,13 +1126,13 @@ body.essentiel details.referentiel-replie{display:none}
       <button class="btn small" data-check="3" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb3" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Pour a) : place le curseur exactement sur la valeur demandée et lis l'écran du simulateur — la réponse s'affiche, il faut juste savoir <em>où</em> regarder. Pour b) : 10 bits → 2 multiplié par lui-même 10 fois.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>2¹⁰ = 1024 paliers (numérotés 0 à 1023). Précision = étendue ÷ 1023 = 150 ÷ 1023. Pour N = 512 : pression = 868 + 512 × (150 ÷ 1023) ≈ 868 + 75 = 943 hPa. Remarque que c'est cohérent avec ta lecture a) !</p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Pour a) : place le curseur exactement sur la valeur demandée et lis l'écran du simulateur — la réponse s'affiche, il faut juste savoir <em>où</em> regarder. <br>Pour b) : 10 bits → 2 multiplié par lui-même 10 fois.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>2¹⁰ = 1024 paliers (numérotés 0 à 1023). <br>Précision = étendue ÷ 1023 = 150 ÷ 1023. <br>Pour N = 512 : pression = 868 + 512 × (150 ÷ 1023) ≈ 868 + 75 = 943 hPa. <br>Remarque que c'est cohérent avec ta lecture a) !</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
       <p><b>a)</b> à 943 hPa le CAN sort <b>N = 512</b> (à ±1 près, arrondi) ; au maximum (1018 hPa) : <b>N = 1023</b>, jamais 1024 — on compte depuis 0.</p>
       <p><b>b)</b> 2¹⁰ = <b>1024 paliers</b> · précision = 150 ÷ 1023 ≈ <b>0,15 hPa</b> par palier · N = 512 → 868 + 512 × 0,1466 ≈ <b>943 hPa</b>.</p>
       <p><b>Méthode générale :</b> valeur = minimum + N × (étendue ÷ 1023). C'est une simple proportionnalité : N va de 0 à 1023 pendant que la pression va de 868 à 1018 hPa.</p>
-      <p><b>c) Explication attendue :</b> la grandeur réelle est <b>continue</b> (une infinité de valeurs possibles) alors que le CAN ne dispose que de 1024 <b>paliers</b> : entre deux paliers, il choisit le plus proche. La donnée est donc une approximation — excellente ici (0,15 hPa), largement suffisante pour détecter un cyclone.</p>
+      <p><b>c) Explication attendue :</b> la grandeur réelle est <b>continue</b> (une infinité de valeurs possibles) alors que le CAN ne dispose que de 1024 <b>paliers</b> : entre deux paliers, il choisit le plus proche. <br>La donnée est donc une approximation — excellente ici (0,15 hPa), largement suffisante pour détecter un cyclone.</p>
       <p><b>Exemple :</b> une pression réelle de 943,07 hPa et une autre de 943,12 hPa donneront le même N : la différence est plus petite qu'un palier.</p>
       <p><b>Limite :</b> plus on veut de précision, plus il faut de bits (12, 16…) — mais les fichiers deviennent plus lourds et le convertisseur plus cher : c'est un choix d'ingénieur.</p>
     </details>
@@ -997,7 +1143,7 @@ body.essentiel details.referentiel-replie{display:none}
       <p><b>Matériel :</b> Arduino UNO classique <em>ou</em> UNO R4 Minima + câble USB + Grove Base Shield V2 (sélecteur sur <b>5 V (volts)</b>) + capteur de luminosité Grove sur <b>A0</b> + écran LCD RGB Grove sur <b>I2C</b>.</p>
       <p><b>Programme (Arduino IDE) :</b> lire <code>analogRead(A0)</code> et afficher la valeur brute 0-1023 sur le LCD. En couvrant plus ou moins le capteur avec la main, on <em>voit</em> le CAN travailler.</p>
       <p><b>Protocole de test :</b><br>1. brancher le shield seul → vérifier l'alimentation ;<br>2. téléverser ;<br>3. capteur découvert = valeur haute, couvert = proche de 0 ;<br>4. noter 3 couples (situation, N).</p>
-      <p><b>Dépannage :</b> rien à l'écran → vérifier le connecteur I2C et la bibliothèque <code>Grove - LCD RGB Backlight</code> ; valeurs figées → mauvais port analogique ; UNO R4 : vérifier que la carte sélectionnée dans l'IDE est bien « UNO R4 Minima » (bibliothèque LCD compatible non testée au labo — <b>MATÉRIEL À CONFIRMER : prévoir l'alternative VittaScience</b>).</p>
+      <p><b>Dépannage :</b> rien à l'écran → vérifier le connecteur I2C et la bibliothèque <code>Grove - LCD RGB Backlight</code> ; <br>valeurs figées → mauvais port analogique ; <br>UNO R4 : vérifier que la carte sélectionnée dans l'IDE est bien « UNO R4 Minima » (bibliothèque LCD compatible non testée au labo — <b>MATÉRIEL À CONFIRMER : prévoir l'alternative VittaScience</b>).</p>
       <p><b>Sécurité :</b> très basse tension uniquement ; câblage vérifié avant branchement USB ; ne jamais brancher/débrancher un module sous tension.</p>
     </details>
   </div>
@@ -1023,16 +1169,65 @@ body.essentiel details.referentiel-replie{display:none}
     <div class="consigne"><b>Consigne :</b> a) attribue un type à chaque information ; b) construis l'enregistrement d'une mesure ; c) code les niveaux de vigilance en binaire.</div>
     <div class="exo">
       <h4>a) Quel type pour quelle information ?</h4>
-      <div class="assoc"><label for="a4_1">Vitesse du vent : 132</label><select id="a4_1"><option value="">— choisir —</option><option>nombre entier</option><option>nombre décimal</option><option>texte</option><option>booléen</option><option>date + heure</option></select></div>
-      <div class="assoc"><label for="a4_2">Pression : 987.4</label><select id="a4_2"><option value="">— choisir —</option><option>nombre entier</option><option>nombre décimal</option><option>texte</option><option>booléen</option><option>date + heure</option></select></div>
-      <div class="assoc"><label for="a4_3">Commune : "Sainte-Luce"</label><select id="a4_3"><option value="">— choisir —</option><option>nombre entier</option><option>nombre décimal</option><option>texte</option><option>booléen</option><option>date + heure</option></select></div>
-      <div class="assoc"><label for="a4_4">Sirène déclenchée ? vrai/faux</label><select id="a4_4"><option value="">— choisir —</option><option>nombre entier</option><option>nombre décimal</option><option>texte</option><option>booléen</option><option>date + heure</option></select></div>
-      <div class="assoc"><label for="a4_5">Moment de la mesure : 2026-08-28 14:35</label><select id="a4_5"><option value="">— choisir —</option><option>nombre entier</option><option>nombre décimal</option><option>texte</option><option>booléen</option><option>date + heure</option></select></div>
-      <div class="assoc"><label for="a4_6">Numéro de la station : 3</label><select id="a4_6"><option value="">— choisir —</option><option>nombre entier</option><option>nombre décimal</option><option>texte</option><option>booléen</option><option>date + heure</option></select></div>
+      <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>nombre entier</li><li><b>B</b>nombre décimal</li><li><b>C</b>texte</li><li><b>D</b>booléen</li><li><b>E</b>date + heure</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="a4_1">
+  <legend>Vitesse du vent : 132</legend>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__1" value="nombre entier" aria-label="A — nombre entier"><label for="a4_1__1" title="nombre entier">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__2" value="nombre décimal" aria-label="B — nombre décimal"><label for="a4_1__2" title="nombre décimal">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__3" value="texte" aria-label="C — texte"><label for="a4_1__3" title="texte">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__4" value="booléen" aria-label="D — booléen"><label for="a4_1__4" title="booléen">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_1" id="a4_1__5" value="date + heure" aria-label="E — date + heure"><label for="a4_1__5" title="date + heure">E</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a4_2">
+  <legend>Pression : 987.4</legend>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__1" value="nombre entier" aria-label="A — nombre entier"><label for="a4_2__1" title="nombre entier">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__2" value="nombre décimal" aria-label="B — nombre décimal"><label for="a4_2__2" title="nombre décimal">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__3" value="texte" aria-label="C — texte"><label for="a4_2__3" title="texte">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__4" value="booléen" aria-label="D — booléen"><label for="a4_2__4" title="booléen">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__5" value="date + heure" aria-label="E — date + heure"><label for="a4_2__5" title="date + heure">E</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a4_3">
+  <legend>Commune : "Sainte-Luce"</legend>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__1" value="nombre entier" aria-label="A — nombre entier"><label for="a4_3__1" title="nombre entier">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__2" value="nombre décimal" aria-label="B — nombre décimal"><label for="a4_3__2" title="nombre décimal">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__3" value="texte" aria-label="C — texte"><label for="a4_3__3" title="texte">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__4" value="booléen" aria-label="D — booléen"><label for="a4_3__4" title="booléen">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__5" value="date + heure" aria-label="E — date + heure"><label for="a4_3__5" title="date + heure">E</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a4_4">
+  <legend>Sirène déclenchée ? vrai/faux</legend>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__1" value="nombre entier" aria-label="A — nombre entier"><label for="a4_4__1" title="nombre entier">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__2" value="nombre décimal" aria-label="B — nombre décimal"><label for="a4_4__2" title="nombre décimal">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__3" value="texte" aria-label="C — texte"><label for="a4_4__3" title="texte">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__4" value="booléen" aria-label="D — booléen"><label for="a4_4__4" title="booléen">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__5" value="date + heure" aria-label="E — date + heure"><label for="a4_4__5" title="date + heure">E</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a4_5">
+  <legend>Moment de la mesure : 2026-08-28 14:35</legend>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__1" value="nombre entier" aria-label="A — nombre entier"><label for="a4_5__1" title="nombre entier">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__2" value="nombre décimal" aria-label="B — nombre décimal"><label for="a4_5__2" title="nombre décimal">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__3" value="texte" aria-label="C — texte"><label for="a4_5__3" title="texte">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__4" value="booléen" aria-label="D — booléen"><label for="a4_5__4" title="booléen">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__5" value="date + heure" aria-label="E — date + heure"><label for="a4_5__5" title="date + heure">E</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a4_6">
+  <legend>Numéro de la station : 3</legend>
+  <div class="qcm-option"><input type="radio" name="a4_6" id="a4_6__1" value="nombre entier" aria-label="A — nombre entier"><label for="a4_6__1" title="nombre entier">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_6" id="a4_6__2" value="nombre décimal" aria-label="B — nombre décimal"><label for="a4_6__2" title="nombre décimal">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_6" id="a4_6__3" value="texte" aria-label="C — texte"><label for="a4_6__3" title="texte">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_6" id="a4_6__4" value="booléen" aria-label="D — booléen"><label for="a4_6__4" title="booléen">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_6" id="a4_6__5" value="date + heure" aria-label="E — date + heure"><label for="a4_6__5" title="date + heure">E</label></div>
+</fieldset>
 
       <h4>b) Construire l'enregistrement</h4>
-      <p>Une mesure complète = une <b>ligne</b> de la table de données. Choisis un <b>descripteur</b> correct (nom de colonne : sans espace ni accent, explicite) pour la donnée « vitesse du vent en km/h » :</p>
-      <div class="assoc"><label for="a4_desc">Descripteur choisi</label><select id="a4_desc"><option value="">— choisir —</option><option>v</option><option>vent_kmh</option><option>la vitesse du vent</option><option>données2</option></select></div>
+      <p>Une mesure complète = une <b>ligne</b> de la table de données. <br>Choisis un <b>descripteur</b> correct pour la donnée « vitesse du vent en km/h » — un nom de colonne sans espace ni accent, explicite :</p>
+      <fieldset class="qcm-groupe" id="a4_desc">
+  <legend>Descripteur choisi</legend>
+  <div class="qcm-option"><input type="radio" name="a4_desc" id="a4_desc__1" value="v"><label for="a4_desc__1">v</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_desc" id="a4_desc__2" value="vent_kmh"><label for="a4_desc__2">vent_kmh</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_desc" id="a4_desc__3" value="la vitesse du vent"><label for="a4_desc__3">la vitesse du vent</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_desc" id="a4_desc__4" value="données2"><label for="a4_desc__4">données2</label></div>
+</fieldset>
 
       <h4>c) Coder la vigilance en binaire (3 bits)</h4>
       <p>En suivant le code du schéma (verte = 000, jaune = 001, orange = 010, rouge = 011, violette = 100), code <b>rouge</b> :</p>
@@ -1045,11 +1240,11 @@ body.essentiel details.referentiel-replie{display:none}
       <button class="btn small" data-check="4" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb4" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Un nombre <em>avec virgule</em> n'est pas un entier. « vrai/faux » n'a que deux valeurs possibles : c'est la définition d'un type précis. Pour c) : combien de valeurs différentes peut-on coder avec n bits ?</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Rouge est le 4e niveau en partant de 0 : verte=0, jaune=1, orange=2, rouge=3 → 3 en binaire s'écrit 011. Pour 12 niveaux : 3 bits → 8 valeurs (pas assez), 4 bits → 16 valeurs (suffisant).</p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Un nombre <em>avec virgule</em> n'est pas un entier. <br>« vrai/faux » n'a que deux valeurs possibles : c'est la définition d'un type précis. <br>Pour c) : combien de valeurs différentes peut-on coder avec n bits ?</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Rouge est le 4e niveau en partant de 0 : verte=0, jaune=1, orange=2, rouge=3 → 3 en binaire s'écrit 011. <br>Pour 12 niveaux : 3 bits → 8 valeurs (pas assez), 4 bits → 16 valeurs (suffisant).</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>a)</b> vent → entier · pression → décimal · commune → texte · sirène → booléen · moment → date + heure · numéro de station → entier.</p>
-      <p><b>b)</b> <code>vent_kmh</code> : explicite (on sait ce que c'est ET l'unité), sans espace ni accent — utilisable dans tous les logiciels. <code>v</code> est trop court (illisible dans 6 mois), « la vitesse du vent » contient des espaces (source d'erreurs), « données2 » ne dit rien.</p>
+      <p><b>a)</b> Le vent : un entier. <br>La pression : un décimal. <br>La commune : du texte. <br>La sirène : un booléen. <br>Le moment : une date + une heure. <br>Le numéro de station : un entier.</p>
+      <p><b>b)</b> <code>vent_kmh</code> : explicite (on sait ce que c'est ET l'unité), sans espace ni accent — utilisable dans tous les logiciels. <br><code>v</code> est trop court (illisible dans 6 mois). <br>« la vitesse du vent » contient des espaces (source d'erreurs). <br>« données2 » ne dit rien.</p>
       <p><b>c)</b> rouge = <b>011</b> (car rouge est la valeur n°3 et 3 = 0×4 + 1×2 + 1×1). Pour 12 niveaux : <b>4 bits</b>, car 2³ = 8 &lt; 12 ≤ 16 = 2⁴.</p>
       <p><b>Raisonnement à connaître :</b> pour coder V valeurs, on cherche le plus petit n tel que 2ⁿ ≥ V.</p>
       <p><b>Exemple :</b> les 26 lettres de l'alphabet demandent 5 bits (2⁵ = 32 ≥ 26) ; c'est exactement ainsi que fonctionnent les codes informatiques comme l'ASCII (7 bits pour 128 caractères).</p>
@@ -1080,21 +1275,64 @@ body.essentiel details.referentiel-replie{display:none}
     <div class="consigne"><b>Consigne :</b> a) choisis le format le plus adapté à chaque fichier produit par le système d'alerte ; b) réponds par vrai ou faux et corrige mentalement les affirmations fausses.</div>
     <div class="exo">
       <h4>a) Associer format et information</h4>
-      <div class="assoc"><label for="a5_1">Le tableau des 48 h de mesures</label><select id="a5_1"><option value="">— choisir —</option><option>.csv</option><option>.png</option><option>.mp3</option><option>.txt libre</option></select></div>
-      <div class="assoc"><label for="a5_2">La carte des vents à afficher sur le site</label><select id="a5_2"><option value="">— choisir —</option><option>.csv</option><option>.png</option><option>.mp3</option><option>.txt libre</option></select></div>
-      <div class="assoc"><label for="a5_3">Le message sonore diffusé par haut-parleur</label><select id="a5_3"><option value="">— choisir —</option><option>.csv</option><option>.png</option><option>.mp3</option><option>.txt libre</option></select></div>
-      <div class="assoc"><label for="a5_4">Le message d'alerte structuré envoyé à l'application (code niveau, commune, heure)</label><select id="a5_4"><option value="">— choisir —</option><option>.json</option><option>.png</option><option>.mp3</option><option>.xlsx</option></select></div>
-      <div class="assoc"><label for="a5_5">Les consignes de sécurité illustrées, à imprimer en mairie</label><select id="a5_5"><option value="">— choisir —</option><option>.pdf</option><option>.csv</option><option>.mp3</option><option>.json</option></select></div>
+      <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>.csv</li><li><b>B</b>.png</li><li><b>C</b>.mp3</li><li><b>D</b>.txt libre</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="a5_1">
+  <legend>Le tableau des 48 h de mesures</legend>
+  <div class="qcm-option"><input type="radio" name="a5_1" id="a5_1__1" value=".csv" aria-label="A — .csv"><label for="a5_1__1" title=".csv">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_1" id="a5_1__2" value=".png" aria-label="B — .png"><label for="a5_1__2" title=".png">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_1" id="a5_1__3" value=".mp3" aria-label="C — .mp3"><label for="a5_1__3" title=".mp3">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_1" id="a5_1__4" value=".txt libre" aria-label="D — .txt libre"><label for="a5_1__4" title=".txt libre">D</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a5_2">
+  <legend>La carte des vents à afficher sur le site</legend>
+  <div class="qcm-option"><input type="radio" name="a5_2" id="a5_2__1" value=".csv" aria-label="A — .csv"><label for="a5_2__1" title=".csv">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_2" id="a5_2__2" value=".png" aria-label="B — .png"><label for="a5_2__2" title=".png">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_2" id="a5_2__3" value=".mp3" aria-label="C — .mp3"><label for="a5_2__3" title=".mp3">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_2" id="a5_2__4" value=".txt libre" aria-label="D — .txt libre"><label for="a5_2__4" title=".txt libre">D</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a5_3">
+  <legend>Le message sonore diffusé par haut-parleur</legend>
+  <div class="qcm-option"><input type="radio" name="a5_3" id="a5_3__1" value=".csv" aria-label="A — .csv"><label for="a5_3__1" title=".csv">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_3" id="a5_3__2" value=".png" aria-label="B — .png"><label for="a5_3__2" title=".png">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_3" id="a5_3__3" value=".mp3" aria-label="C — .mp3"><label for="a5_3__3" title=".mp3">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_3" id="a5_3__4" value=".txt libre" aria-label="D — .txt libre"><label for="a5_3__4" title=".txt libre">D</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="a5_4">
+  <legend>Le message d'alerte structuré envoyé à l'application (code niveau, commune, heure)</legend>
+  <div class="qcm-option"><input type="radio" name="a5_4" id="a5_4__1" value=".json"><label for="a5_4__1">.json</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_4" id="a5_4__2" value=".png"><label for="a5_4__2">.png</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_4" id="a5_4__3" value=".mp3"><label for="a5_4__3">.mp3</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_4" id="a5_4__4" value=".xlsx"><label for="a5_4__4">.xlsx</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="a5_5">
+  <legend>Les consignes de sécurité illustrées, à imprimer en mairie</legend>
+  <div class="qcm-option"><input type="radio" name="a5_5" id="a5_5__1" value=".pdf"><label for="a5_5__1">.pdf</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_5" id="a5_5__2" value=".csv"><label for="a5_5__2">.csv</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_5" id="a5_5__3" value=".mp3"><label for="a5_5__3">.mp3</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_5" id="a5_5__4" value=".json"><label for="a5_5__4">.json</label></div>
+</fieldset>
       <h4>b) Vrai ou faux ?</h4>
-      <div class="assoc"><label for="a5_v1">« Quand la station transmet son fichier au serveur, le fichier disparaît de la station. »</label><select id="a5_v1"><option value="">— choisir —</option><option>vrai</option><option>faux</option></select></div>
-      <div class="assoc"><label for="a5_v2">« Stocker les mesures sur le serveur ET sur la carte mémoire de la station est une précaution utile en cas de cyclone. »</label><select id="a5_v2"><option value="">— choisir —</option><option>vrai</option><option>faux</option></select></div>
+      <fieldset class="qcm-groupe" id="a5_v1">
+  <legend>« Quand la station transmet son fichier au serveur, le fichier disparaît de la station. »</legend>
+  <div class="qcm-option"><input type="radio" name="a5_v1" id="a5_v1__1" value="vrai"><label for="a5_v1__1">vrai</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_v1" id="a5_v1__2" value="faux"><label for="a5_v1__2">faux</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="a5_v2">
+  <legend>« Stocker les mesures sur le serveur ET sur la carte mémoire de la station est une précaution utile en cas de cyclone. »</legend>
+  <div class="qcm-option"><input type="radio" name="a5_v2" id="a5_v2__1" value="vrai"><label for="a5_v2__1">vrai</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_v2" id="a5_v2__2" value="faux"><label for="a5_v2__2">faux</label></div>
+</fieldset>
       <button class="btn small" data-check="5" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb5" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Demande-toi ce que <em>contient</em> le fichier : des lignes et colonnes ? une image ? du son ? un petit message organisé ? un document mis en page ?</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Transmettre un fichier, c'est en envoyer une <b>copie</b> : l'original reste sur place. Et si l'antenne est arrachée par le vent, seule la copie <em>locale</em> (carte mémoire) survivra — d'où l'intérêt du double stockage.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Transmettre un fichier, c'est en envoyer une <b>copie</b> : l'original reste sur place. <br>Et si l'antenne est arrachée par le vent, seule la copie <em>locale</em> (carte mémoire) survivra — d'où l'intérêt du double stockage.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>a)</b> tableau → <b>.csv</b> (texte tabulé, lisible par tous les tableurs) · carte → <b>.png</b> (image) · message sonore → <b>.mp3</b> (son compressé) · message structuré → <b>.json</b> (données organisées clé:valeur, idéal entre machines) · consignes à imprimer → <b>.pdf</b> (mise en page figée).</p>
+      <p><b>a)</b> Le tableau : <b>.csv</b> (texte tabulé, lisible par tous les tableurs). <br>
+      La carte : <b>.png</b> (image). <br>
+      Le message sonore : <b>.mp3</b> (son compressé). <br>
+      Le message structuré : <b>.json</b> (données organisées clé:valeur, idéal entre machines). <br>
+      Les consignes à imprimer : <b>.pdf</b> (mise en page figée).</p>
       <p><b>b)</b> Faux : transmettre = <b>copier</b>, l'original reste sur la station. Vrai : le double stockage (local + serveur) est une <b>redondance</b> volontaire — si la liaison casse pendant le cyclone, aucune mesure n'est perdue ; on resynchronise après.</p>
       <p><b>Exemple concret :</b> quand tu envoies une photo par messagerie, elle reste dans ta galerie — c'est exactement la même logique.</p>
       <p><b>Limite :</b> le « meilleur » format dépend de l'usage : un .xlsx conviendrait aussi au tableau, mais le .csv, plus simple et universel, se transmet plus légèrement par radio.</p>
@@ -1114,13 +1352,15 @@ body.essentiel details.referentiel-replie{display:none}
     </div>
     <div class="consigne"><b>Consigne :</b> la station a enregistré 48 h de mesures pendant l'approche d'un cyclone (données <b>simulées</b> à but pédagogique). Fouille la table (ou ouvre le fichier dans LibreOffice Calc) et réponds. Chaque ligne est un <b>enregistrement</b> horodaté.</div>
     <div class="exo">
+      <details class="bonus-replie" id="table48h"><summary>📊 La table des 48 h de mesures — ouvre-la pour fouiller (48 lignes, 6 colonnes)</summary>
       <div class="table-scroll" tabindex="0" aria-label="Table des 48 heures de mesures de la station, défilable">
         <table class="donnees" id="tableDonnees">
           <thead><tr><th>horodatage</th><th>vent_kmh</th><th>rafale_kmh</th><th>pression_hpa</th><th>pluie_mm</th><th>vigilance</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
-      <div class="assoc" style="margin-top:12px"><label for="a6_1">1. À quelle heure la station est-elle passée en vigilance <b>rouge</b> ? (format JJ 28/29 puis heure, ex. « 29 à 08:00 » — écris juste l'heure du jour 29, ex. 08)</label><input type="text" id="a6_1" placeholder="heure (0-23)"></div>
+      </details>
+      <div class="assoc" style="margin-top:12px"><label for="a6_1">1. À quelle heure la station est-elle passée en vigilance <b>rouge</b> ? <br>Écris juste l'heure du jour 29 (ex. 08 pour « 29 à 08:00 »).</label><input type="text" id="a6_1" placeholder="heure (0-23)"></div>
       <div class="assoc"><label for="a6_2">2. Quelle est la pression <b>minimale</b> enregistrée (en hPa, 1 décimale) ?</label><input type="number" step="0.1" id="a6_2"></div>
       <div class="assoc"><label for="a6_3">3. Quelle rafale <b>maximale</b> la station a-t-elle mesurée (km/h) ?</label><input type="number" id="a6_3"></div>
       <div class="assoc"><label for="a6_4">4. Combien d'heures se sont écoulées entre le passage en orange et le passage en violette ?</label><input type="number" id="a6_4"></div>
@@ -1128,7 +1368,7 @@ body.essentiel details.referentiel-replie{display:none}
       <textarea id="a6_conc" placeholder="J'observe que… donc…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Quand le vent monte, la pression ____.</li>
     <li>Les deux mesures ensemble rendent l&#x27;alerte plus fiable parce qu&#x27;une seule pourrait ____.</li>
@@ -1138,12 +1378,12 @@ body.essentiel details.referentiel-replie{display:none}
       <button class="btn small" data-check="6" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb6" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>La colonne <b>vigilance</b> change de valeur à des lignes précises : repère la <em>première</em> ligne « rouge ». Pour le minimum et le maximum, parcours les colonnes — ou utilise les fonctions MIN() et MAX() dans LibreOffice.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Dans LibreOffice Calc : <code>=MIN(E3:E50)</code> pour la pression minimale, <code>=MAX(D3:D50)</code> pour la rafale. Le passage en orange se lit le jour 28, celui en violette le jour 29 : compte les lignes entre les deux (1 ligne = 1 heure).</p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>La colonne <b>vigilance</b> change de valeur à des lignes précises : repère la <em>première</em> ligne « rouge ». <br>Pour le minimum et le maximum, parcours les colonnes — ou utilise les fonctions MIN() et MAX() dans LibreOffice.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Dans LibreOffice Calc : <code>=MIN(E3:E50)</code> pour la pression minimale, <code>=MAX(D3:D50)</code> pour la rafale. <br>Le passage en orange se lit le jour 28, celui en violette le jour 29 : compte les lignes entre les deux (1 ligne = 1 heure).</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
       <p><b>1.</b> Premier « rouge » : le <b>29 à 08:00</b> (réponse attendue : 8).<br><b>2.</b> Pression minimale : <b>966,8 hPa (hectopascals)</b> (dernière ligne, cœur du phénomène au plus près).<br><b>3.</b> Rafale maximale : <b>223 km/h</b>.<br><b>4.</b> Orange le 28 à 15:00, violette le 29 à 15:00 → <b>24 heures</b>.</p>
       <p><b>Méthode :</b> une table structurée se lit par colonnes (descripteurs) et par lignes (enregistrements). Les fonctions MIN/MAX du tableur évitent les erreurs de lecture — c'est exactement pour cela que les données sont <em>structurées</em>.</p>
-      <p><b>5. Conclusion attendue :</b> quand le vent augmente, la pression <b>chute</b> (de 1012 à 967 hPa) : les deux grandeurs varient en sens inverse. En croisant deux capteurs indépendants, la station évite les fausses alertes : une rafale isolée sans chute de pression (par exemple un grain passager) ne déclenchera pas la sirène. C'est le principe de la <b>validation croisée</b> des mesures.</p>
+      <p><b>5. Conclusion attendue :</b> quand le vent augmente, la pression <b>chute</b> (de 1012 à 967 hPa) : les deux grandeurs varient en sens inverse. <br>En croisant deux capteurs indépendants, la station évite les fausses alertes : une rafale isolée sans chute de pression (par exemple un grain passager) ne déclenchera pas la sirène. <br>C'est le principe de la <b>validation croisée</b> des mesures.</p>
       <p><b>Erreur à éviter dans la conclusion :</b> écrire « la pression fait monter le vent » — on observe une <em>corrélation</em>, le cyclone est la cause des deux.</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> lire la <em>dernière</em> ligne orange au lieu de la <em>première</em> rouge ; confondre vent moyen et rafale ; compter les heures en oubliant le passage de minuit (15:00 → 15:00 le lendemain = 24 h, pas 0 h !).</div>
@@ -1162,21 +1402,52 @@ body.essentiel details.referentiel-replie{display:none}
     <div class="consigne"><b>Consigne :</b> la commune de Sainte-Anne installe une <b>bouée houlographe</b> : elle mesure la hauteur des vagues (houle cyclonique) grâce à un accéléromètre, et transmet ses mesures par liaison satellite aux pêcheurs et à la mairie. Réponds sans recopier les corrections précédentes : la situation a changé !</div>
     <div class="exo">
       <h4>a) Sa chaîne d'information</h4>
-      <div class="assoc"><label for="a7_1">Fonction « Acquérir » assurée par…</label><select id="a7_1"><option value="">— choisir —</option><option>l'accéléromètre</option><option>le microcontrôleur</option><option>l'émetteur satellite</option><option>la batterie</option></select></div>
-      <div class="assoc"><label for="a7_2">Fonction « Traiter » assurée par…</label><select id="a7_2"><option value="">— choisir —</option><option>l'accéléromètre</option><option>le microcontrôleur</option><option>l'émetteur satellite</option><option>la batterie</option></select></div>
-      <div class="assoc"><label for="a7_3">Fonction « Communiquer » assurée par…</label><select id="a7_3"><option value="">— choisir —</option><option>l'accéléromètre</option><option>le microcontrôleur</option><option>l'émetteur satellite</option><option>la batterie</option></select></div>
+      <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>l'accéléromètre</li><li><b>B</b>le microcontrôleur</li><li><b>C</b>l'émetteur satellite</li><li><b>D</b>la batterie</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="a7_1">
+  <legend>Fonction « Acquérir » assurée par…</legend>
+  <div class="qcm-option"><input type="radio" name="a7_1" id="a7_1__1" value="l&#x27;accéléromètre" aria-label="A — l&#x27;accéléromètre"><label for="a7_1__1" title="l&#x27;accéléromètre">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_1" id="a7_1__2" value="le microcontrôleur" aria-label="B — le microcontrôleur"><label for="a7_1__2" title="le microcontrôleur">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_1" id="a7_1__3" value="l&#x27;émetteur satellite" aria-label="C — l&#x27;émetteur satellite"><label for="a7_1__3" title="l&#x27;émetteur satellite">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_1" id="a7_1__4" value="la batterie" aria-label="D — la batterie"><label for="a7_1__4" title="la batterie">D</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a7_2">
+  <legend>Fonction « Traiter » assurée par…</legend>
+  <div class="qcm-option"><input type="radio" name="a7_2" id="a7_2__1" value="l&#x27;accéléromètre" aria-label="A — l&#x27;accéléromètre"><label for="a7_2__1" title="l&#x27;accéléromètre">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_2" id="a7_2__2" value="le microcontrôleur" aria-label="B — le microcontrôleur"><label for="a7_2__2" title="le microcontrôleur">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_2" id="a7_2__3" value="l&#x27;émetteur satellite" aria-label="C — l&#x27;émetteur satellite"><label for="a7_2__3" title="l&#x27;émetteur satellite">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_2" id="a7_2__4" value="la batterie" aria-label="D — la batterie"><label for="a7_2__4" title="la batterie">D</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="a7_3">
+  <legend>Fonction « Communiquer » assurée par…</legend>
+  <div class="qcm-option"><input type="radio" name="a7_3" id="a7_3__1" value="l&#x27;accéléromètre" aria-label="A — l&#x27;accéléromètre"><label for="a7_3__1" title="l&#x27;accéléromètre">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_3" id="a7_3__2" value="le microcontrôleur" aria-label="B — le microcontrôleur"><label for="a7_3__2" title="le microcontrôleur">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_3" id="a7_3__3" value="l&#x27;émetteur satellite" aria-label="C — l&#x27;émetteur satellite"><label for="a7_3__3" title="l&#x27;émetteur satellite">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_3" id="a7_3__4" value="la batterie" aria-label="D — la batterie"><label for="a7_3__4" title="la batterie">D</label></div>
+</fieldset>
       <h4>b) Son CAN</h4>
       <p>Le capteur mesure des vagues de 0 à 12 m avec un CAN <b>8 bits</b>.</p>
       <div class="assoc"><label for="a7_4">Combien de paliers ce CAN distingue-t-il ?</label><input type="number" id="a7_4"></div>
       <div class="assoc"><label for="a7_5">Le CAN sort N = 170. Quelle hauteur de vague en mètres ? (arrondis au dixième : 12 × N ÷ 255)</label><input type="number" step="0.1" id="a7_5"></div>
       <h4>c) Ses données et son fichier</h4>
-      <div class="assoc"><label for="a7_6">Type de la donnée « hauteur_m = 8.0 »</label><select id="a7_6"><option value="">— choisir —</option><option>nombre entier</option><option>nombre décimal</option><option>texte</option><option>booléen</option></select></div>
-      <div class="assoc"><label for="a7_7">Format du fichier des mesures de la journée</label><select id="a7_7"><option value="">— choisir —</option><option>.csv</option><option>.png</option><option>.mp3</option><option>.pdf</option></select></div>
+      <fieldset class="qcm-groupe" id="a7_6">
+  <legend>Type de la donnée « hauteur_m = 8.0 »</legend>
+  <div class="qcm-option"><input type="radio" name="a7_6" id="a7_6__1" value="nombre entier"><label for="a7_6__1">nombre entier</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_6" id="a7_6__2" value="nombre décimal"><label for="a7_6__2">nombre décimal</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_6" id="a7_6__3" value="texte"><label for="a7_6__3">texte</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_6" id="a7_6__4" value="booléen"><label for="a7_6__4">booléen</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="a7_7">
+  <legend>Format du fichier des mesures de la journée</legend>
+  <div class="qcm-option"><input type="radio" name="a7_7" id="a7_7__1" value=".csv"><label for="a7_7__1">.csv</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_7" id="a7_7__2" value=".png"><label for="a7_7__2">.png</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_7" id="a7_7__3" value=".mp3"><label for="a7_7__3">.mp3</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_7" id="a7_7__4" value=".pdf"><label for="a7_7__4">.pdf</label></div>
+</fieldset>
       <label for="a7_just" style="display:block;margin-top:10px"><b>d) Justifie</b> en 2-3 phrases : pourquoi la bouée stocke-t-elle aussi ses mesures sur une carte mémoire interne alors qu'elle les transmet déjà par satellite ?</label>
       <textarea id="a7_just" placeholder="Parce que…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>La bouée stocke aussi ses mesures en interne parce que la transmission par satellite peut ____.</li>
     <li>Si la liaison est coupée, les mesures ____ — alors qu&#x27;avec la carte mémoire, ____.</li>
@@ -1187,13 +1458,13 @@ body.essentiel details.referentiel-replie{display:none}
       <div class="feedback" id="fb7" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Reprends la logique de la station : qui capte ? qui décide ? qui envoie ? Pour le CAN 8 bits : 2⁸ = ?</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>2⁸ = 256 paliers (0 à 255). Hauteur = 12 × 170 ÷ 255 = 8,0 m. Pour d) pense à ce qui peut arriver à une liaison satellite en plein cyclone…</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>2⁸ = 256 paliers (0 à 255). <br>Hauteur = 12 × 170 ÷ 255 = 8,0 m. Pour d) pense à ce qui peut arriver à une liaison satellite en plein cyclone…</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
       <p><b>a)</b> Acquérir → accéléromètre · Traiter → microcontrôleur · Communiquer → émetteur satellite (la batterie = chaîne d'énergie, hors chaîne d'information).</p>
       <p><b>b)</b> 2⁸ = <b>256 paliers</b> · hauteur = 12 × 170 ÷ 255 = <b>8,0 m</b> — une houle cyclonique dangereuse.</p>
       <p><b>c)</b> 8.0 → nombre <b>décimal</b> · fichier de mesures → <b>.csv</b>.</p>
       <p><b>d)</b> La transmission peut être interrompue (antenne endommagée, satellite saturé, forte pluie atténuant le signal). Le stockage local est une <b>redondance</b> : aucune mesure n'est perdue, on récupère et resynchronise le fichier après l'événement. Transmettre = copier ; l'original doit vivre quelque part.</p>
-      <p><b>Bilan :</b> si tu as réussi sans regarder les activités précédentes, les notions sont acquises. Sinon, note ce qui t'a manqué dans ton bilan personnel ci-dessous — c'est exactement à ça qu'il sert.</p>
+      <p><b>Et maintenant :</b> si tu as réussi sans regarder les activités précédentes, les notions sont acquises. <br>Sinon, note ce qui t'a manqué dans « Mon bilan », plus bas — c'est exactement à ça qu'il sert.</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> reprendre 1024 paliers (c'était le CAN 10 bits de la station !) ; typer 8.0 en entier ; oublier que la justification d) doit parler de <em>copie</em> et de <em>risque de coupure</em>, pas seulement « c'est plus sûr ».</div>
     <div class="retenir"><b>📌 À retenir :</b> la démarche est <b>transférable</b> : tout objet connecté (station, bouée, montre, voiture) se décrit par sa chaîne d'information, son CAN, ses données typées et ses fichiers transmis/stockés.</div>
@@ -1203,27 +1474,31 @@ body.essentiel details.referentiel-replie{display:none}
 
 <section class="card">
   <h2>📝 Synthèse de la séquence — à retenir</h2>
+  <details class="bonus-replie" id="synthese-page"><summary>📝 Les quatre parties de la synthèse et le vocabulaire — à relire avant le QCM</summary>
   <p style="font-size:.88em;color:var(--sub)">Toutes ces notions ont été construites dans les activités 1 à 6 — rien de nouveau ici.</p>
   <h4>1. La chaîne d'information (activités 1-2)</h4>
-  <p><b>ACQUÉRIR</b> (capteurs) → <b>TRAITER</b> (microcontrôleur + programme et ses seuils) → <b>COMMUNIQUER</b> (antenne, sirène, application). La chaîne d'énergie (panneau solaire, batterie) alimente ces blocs mais ne transporte aucune information. À chaque étape la nature du signal change : grandeur physique → signal électrique → donnée numérique → message.</p>
+  <p><b>ACQUÉRIR</b> (capteurs) → <b>TRAITER</b> (microcontrôleur + programme et ses seuils) → <b>COMMUNIQUER</b> (antenne, sirène, application). <br>La chaîne d'énergie (panneau solaire, batterie) alimente ces blocs mais ne transporte aucune information. <br>À chaque étape la nature du signal change : grandeur physique → signal électrique → donnée numérique → message.</p>
   <h4>2. De l'analogique au numérique (activité 3)</h4>
-  <p>Le <b>CAN</b> échantillonne un signal continu et produit un entier sur n bits : <b>2ⁿ paliers</b> (10 bits → 1024 valeurs, de 0 à 1023). <b>valeur = min + N × (étendue ÷ (2ⁿ − 1))</b>. La donnée numérique est une approximation dont la précision dépend du nombre de bits.</p>
+  <p>Le <b>CAN</b> échantillonne un signal continu et produit un entier sur n bits : <b>2ⁿ paliers</b> (10 bits → 1024 valeurs, de 0 à 1023). <br><b>valeur = min + N × (étendue ÷ (2ⁿ − 1))</b>. <br>La donnée numérique est une approximation dont la précision dépend du nombre de bits.</p>
   <h4>3. Représenter les informations en données (activité 4)</h4>
-  <p>Chaque information reçoit un <b>type</b> (entier, décimal, texte, booléen, date) et un <b>descripteur</b> explicite (<code>vent_kmh</code>). Un <b>enregistrement</b> regroupe les données d'un même instant. Avec n bits on code 2ⁿ valeurs distinctes.</p>
+  <p>Chaque information reçoit un <b>type</b> (entier, décimal, texte, booléen, date) et un <b>descripteur</b> explicite (<code>vent_kmh</code>). <br>Un <b>enregistrement</b> regroupe les données d'un même instant. Avec n bits on code 2ⁿ valeurs distinctes.</p>
   <h4>4. Fichiers : mise en forme, transmission, stockage (activités 5-6)</h4>
-  <p>Le format suit la nature de l'information : <b>.csv/.ods</b> tableau · <b>.json</b> message structuré · <b>.png/.svg</b> image · <b>.mp3</b> son · <b>.pdf</b> document. Transmettre = <b>copier</b> vers un autre équipement ; stocker = conserver, souvent en double (<b>redondance</b>) pour résister aux pannes.</p>
+  <p>Le format suit la nature de l'information : <b>.csv/.ods</b> tableau · <b>.json</b> message structuré · <b>.png/.svg</b> image · <b>.mp3</b> son · <b>.pdf</b> document. <br>Transmettre = <b>copier</b> vers un autre équipement ; stocker = conserver, souvent en double (<b>redondance</b>) pour résister aux pannes.</p>
   <h4>🇬🇧 Vocabulaire utile</h4>
   <p class="tag-zone"><span class="tag">capteur = sensor</span><span class="tag">CAN = ADC</span><span class="tag">donnée = data</span><span class="tag">booléen = boolean</span><span class="tag">chaîne de caractères = string</span><span class="tag">fichier = file</span><span class="tag">stockage = storage</span><span class="tag">téléverser = to upload</span></p>
+  </details>
 </section>
 
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+<details class="bonus-replie"><summary>🎁 Le défi du Bonus — ouvre-le quand tu as fini</summary>
   <p>Pour aller plus loin, au choix :</p>
-  <p>🌪 <b>Défi données :</b> dans LibreOffice Calc, trace le graphique vent/pression des 48 h (Insertion → Diagramme → Ligne) : la « pince » qui se referme entre les deux courbes est la signature visuelle d'un cyclone.</p>
+  <p>🌪 <b>Défi données :</b> dans LibreOffice Calc, trace le graphique vent/pression des 48 h (Insertion → Diagramme → Ligne). <br>La « pince » qui se referme entre les deux courbes est la signature visuelle d'un cyclone.</p>
   <p>📡 <b>Défi recherche :</b> comment les <em>vraies</em> stations de Météo-France Antilles transmettent-elles leurs mesures quand le réseau mobile tombe ? (piste : liaisons satellite et radio VHF).</p>
-  <p>🔧 <b>Défi maker :</b> avec le professeur, ajoute au montage Arduino un seuil qui allume la LED quand la luminosité passe sous une valeur choisie — tu viens de programmer… une alerte.</p>
+  <p>🔧 <b>Défi maker :</b> avec le professeur, ajoute au montage Arduino un seuil qui allume la LED quand la luminosité passe sous une valeur choisie. <br>Tu viens de programmer… une alerte.</p>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+</details>
 </section>
 
 <section class="card">
@@ -1235,7 +1510,7 @@ body.essentiel details.referentiel-replie{display:none}
     <textarea id="hyp_retour" placeholder="En fait, entre le vent et l'écran, il se passe…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Au départ je pensais que ____.</li>
     <li>Maintenant je sais que ____, parce que ____ me l&#x27;a montré.</li>
@@ -1247,7 +1522,7 @@ body.essentiel details.referentiel-replie{display:none}
     <div><label for="bilan1"><b>Ce que j'ai appris :</b></label><textarea id="bilan1"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>J&#x27;ai appris que une grandeur physique devient une donnée numérique en ____.</li>
     <li>J&#x27;ai appris que le nombre de paliers d&#x27;un CAN dépend de ____.</li>
@@ -1257,7 +1532,7 @@ body.essentiel details.referentiel-replie{display:none}
     <div><label for="bilan2"><b>Ce que je sais maintenant faire :</b></label><textarea id="bilan2"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Je sais maintenant calculer la précision d&#x27;un capteur à partir de ____.</li>
     <li>Je sais maintenant lire un relevé horaire et y repérer ____.</li>
@@ -1267,7 +1542,7 @@ body.essentiel details.referentiel-replie{display:none}
     <div><label for="bilan3"><b>Ce que je dois encore revoir :</b></label><textarea id="bilan3"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Je dois encore revoir ____, parce que ____.</li>
     <li>Ce que je n&#x27;arrive pas encore à faire seul·e : ____.</li>
@@ -1309,7 +1584,8 @@ const KEY = "seq_3e_C4.3-C4.6_station";
 const $ = id => document.getElementById(id);
 function collect(){
   const o = {inputs:{}, radios:{}, valid: window.__valid || {}};
-  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{
+  // n°300 : chaque groupe de boutons radio (fieldset.qcm-groupe) porte sa valeur
+  document.querySelectorAll("input[id],textarea[id],select[id],fieldset.qcm-groupe[id]").forEach(el=>{
     if(el.type==="radio") return;
     o.inputs[el.id] = el.value;
   });

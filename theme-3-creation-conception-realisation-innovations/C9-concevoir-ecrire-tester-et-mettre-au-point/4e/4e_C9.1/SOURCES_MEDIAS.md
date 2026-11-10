@@ -69,11 +69,13 @@ vraiment. `Images/hysteresis_chronogramme.svg` reste en place : dans un volet so
 - **Licence** : **CC BY 4.0**. **Attribution exigée** : « Voix de synthèse Piper « fr_FR-siwis-medium », entraînée sur la base SIWIS
   (Université d'Édimbourg), CC BY 4.0. » Elle figure ici, dans `voix.json` et, en version courte (« Voix de synthèse : SIWIS (CC BY 4.0) »),
   sous l'animation.
-- **Chaîne audio** : celle des autres animations (silences coupés à −45 dB, −16 LUFS, crête −1,5 dB, mono).
+- **Chaîne audio** : celle des autres animations (silences coupés à −45 dB, −16 LUFS, crête −1,5 dB, mono), plus, depuis le 08/11/2026,
+  une marge de silence remise après la coupe (200 ms devant, 300 ms derrière). **Vitesse 1.15** depuis le 08/11/2026 (décision de Pascal).
 - **Texte envoyé à la voix** : celui de la page, sauf les signes =, < et >, que la phonétisation automatique saute : ils sont dits
   « égale », « inférieur à », « supérieur à » (étapes 2, 4 et 5). Détail dans `_generation/voix_pompe/phrases.json`.
-- **Étapes 1 à 8 : écoutées et validées par Pascal le 31/10/2026** (« la bande sonore est bonne »). **Étape 9 : nouvelle prise du 31/10/2026**
-  (même voix, mêmes réglages, `generer.py --scene 9`), **NON écoutée** : à réécouter (`voix.json`, clé `prises`).
+- **Les neuf prises ont été refaites le 08/11/2026 (vitesse 1.15, marges) : NON ÉCOUTÉES**, à faire écouter à Pascal (`voix.json`, clé
+  `prises`). Les prises de 1.0 des étapes 1 à 8 avaient été validées par Pascal le 31/10/2026 (« la bande sonore est bonne ») ; l'étape 9
+  du 31/10/2026 ne l'avait pas été.
 
 ## L'atelier du programme (activité 5 c et d) — 31/10/2026
 

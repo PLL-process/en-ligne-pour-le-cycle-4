@@ -23,5 +23,7 @@ _rc = _iu.module_from_spec(_spec)
 _spec.loader.exec_module(_rc)
 
 ENTREES = [dict(id="%s-%s" % (_rc.COURT, r["id"]), rappel=r["id"], module="rappel_cdc", niveau=r["niveau"], exos=[],
-                sequence=r["sequence"], avant=r["avant"], balise=r["balise"], balise_exo=r["balise_exo"])
+                sequence=r["sequence"], avant=r["avant"], balise=r["balise"], balise_exo=r["balise_exo"],
+                # `replie` (révision des trois thèmes, 10/11/2026) : le rappel se range dans un <details> fermé
+                **({"replie": r["replie"]} if r.get("replie") else {}))
            for r in _rc.RAPPELS if r.get("sequence")]
