@@ -90,11 +90,11 @@
   cursor:help;
   transition: all 0.2s ease;
 }
-.tooltip[data-tip]:hover{
+.tooltip[data-tip]:hover,.tooltip[data-tip]:focus,.tooltip[data-tip]:focus-within{
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(97,218,251,0.3);
 }
-.tooltip[data-tip]:hover::after{
+.tooltip[data-tip]:hover::after,.tooltip[data-tip]:focus::after,.tooltip[data-tip]:focus-within::after{
   content:attr(data-tip);
   position:absolute;
   left:50%;
@@ -105,8 +105,8 @@
   border:1px solid #2d65a3;
   border-radius:8px;
   padding:12px;
-  min-width:280px;
-  max-width:400px;
+  min-width:min(280px, 80vw);
+  max-width:min(400px, 90vw);
   box-shadow:var(--glow);
   z-index:1000;
   white-space:normal;
@@ -487,6 +487,10 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+/* révision du 08/11/2026 : toute zone de réponse prend la largeur de la page (neuf gardaient la taille par défaut, ~180 px) */
+textarea{width:100%;box-sizing:border-box;min-height:72px;border-radius:8px;padding:8px}
+/* un bloc de code défile dans son cadre, la page ne s'élargit pas (hors parcours Python : 718 px à 390 px d'écran) */
+pre{overflow-x:auto;max-width:100%;box-sizing:border-box}
 .situation-photo{margin:14px 0 4px}
 .situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
 .situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
@@ -1217,7 +1221,7 @@ lui-même.</p>
 
 
 
-<h3>📦 1.c — Faites glisser chaque étiquette dans la bonne colonne (8 étiquettes) (3 points)</h3>
+<h3>📦 1.c — Glisse chaque étiquette dans la bonne colonne (8 étiquettes) (3 points)</h3>
 
 <!-- Banque d’étiquettes -->
 <div class="pool" id="pool1c">
@@ -1749,7 +1753,7 @@ Fin du programme.</code></pre>
     </div>
 
     <h3>❓ 3.b&nbsp;—&nbsp;Pourquoi sont‑elles sensibles ? (non noté)</h3>
-    <p>Expliquez pourquoi il faut protéger ces données et ce qu’il pourrait arriver si elles étaient dévoilées.</p>
+    <p>Explique pourquoi il faut protéger ces données.<br>Dis ce qui pourrait arriver si elles étaient dévoilées.</p>
     <div class="response-label">Ta réponse ici 👇</div><textarea id="q3b" aria-label="3.b — Pourquoi ces données sont-elles sensibles ?"></textarea><details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p><ul><li>Ces données sont sensibles parce qu'elles permettent de ____ .</li><li>Si elles étaient dévoilées, il pourrait arriver ____ .</li><li>La personne qui en subirait les conséquences serait ____ .</li></ul></details>
     <button onclick="toggleAnswer('ans4_3b')">Voir la correction</button>
 <div class="answer" id="ans4_3b">
@@ -1763,7 +1767,7 @@ Fin du programme.</code></pre>
 
 
   <h3>❓3.c&nbsp;—&nbsp;Qu’est‑ce qu’un identifiant de connexion et pourquoi faut‑il le protéger ?</h3>
-  <textarea id="q3c" placeholder="Votre réponse…" rows="2" aria-label="3.c — Qu'est-ce qu'un identifiant de connexion, et pourquoi le protéger ?"></textarea></div><br/>
+  <textarea id="q3c" placeholder="Ta réponse…" rows="2" aria-label="3.c — Qu'est-ce qu'un identifiant de connexion, et pourquoi le protéger ?"></textarea></div><br/>
   <button onclick="toggleAnswer('mq3_id')">Voir la correction</button>
   <div class="answer" id="mq3_id">
     <p>✅ Un identifiant (login) permet d’accéder à vos services en ligne (ENT, réseau social, messagerie). <br>S’il est divulgué avec votre mot de passe, un attaquant peut accéder à vos comptes et usurper votre identité.</p>
@@ -2207,7 +2211,7 @@ Fin du programme.</code></pre>
 
 
 
-    <h3>🔒 <strong>5.c — Quiz Traces en Ligne (6 questions)</strong></h3>
+    <h3>🔒 <strong>5.c — Quiz Traces en Ligne (7 questions)</strong></h3>
 
 <div class="qcm-block qcm-sec5" role="radiogroup">
   <div class="qcm-question"><span class="ico" aria-hidden="true">🍪</span> Q1 : Les cookies servent à :</div>
@@ -2311,8 +2315,8 @@ Fin du programme.</code></pre>
     <div class="box">
       <span class="close" onclick="this.parentElement.parentElement.style.display='none'">×</span>
       <h3>Aide pour la section 5</h3>
-      <p>Cochez : VPN, Bloquer cookies, Déconnexion.</p>
-      <p>Quiz : Pensez à ce qui réduit la visibilité en ligne.</p>
+      <p>Coche : le VPN, bloquer les cookies, se déconnecter.</p>
+      <p>Quiz : pense à ce qui réduit ce qu'on voit de toi en ligne.</p>
     </div>
   </div>
 
@@ -2339,91 +2343,91 @@ Fin du programme.</code></pre>
     </details>
     </div>
 
-    <h3>✋ 6.a — Droit à l'image (Vrai/Faux) (2 points)</h3>
-    <div class="qcm-block" style="background:#0a2547;border-radius:8px;padding:10px;border-left:5px solid var(--accent);margin-bottom:10px;">
+    <h3>✋ 6.a — Droit à l'image (Vrai/Faux) (1 point)</h3>
+    <div class="qcm-block qcm-sec6" style="background:#0a2547;border-radius:8px;padding:10px;border-left:5px solid var(--accent);margin-bottom:10px;">
       <label><input type="radio" name="img1" value="1"> Publier la photo d’un camarade sans autorisation est autorisé si c’est “pour rire”.</label><br/>
       <label><input type="radio" name="img1" value="2" data-correct="1"> Il faut une autorisation claire (ou celle des responsables légaux pour un mineur) avant diffusion.</label>
     </div>
 
-    <h3>👤 6.b — Respecter la propriété intellectuelle (6 paires) (2 points)</h3>
+    <h3>👤 6.b — Respecter la propriété intellectuelle (6 paires) (non noté)</h3>
     <div style="background:linear-gradient(135deg, #1e3c72, #2a5298); padding:20px; border-radius:12px; margin:16px 0; box-shadow:0 8px 32px rgba(30,60,114,0.4);">
       <h4 style="color:#fff; text-align:center; margin-bottom:16px;">🎮 Associer propriété intellectuelle !</h4>
-      <p style="color:#e0e7ff; text-align:center; font-size:0.95rem;">Glisse chaque action vers son cas (au doigt ou à la souris). <br>Survole ou touche une étiquette pour en savoir plus.</p>
+      <p style="color:#e0e7ff; text-align:center; font-size:0.95rem;">Glisse chaque action vers le cas qui lui correspond.<br>Touche une action pour lire ce qu'elle veut dire.</p>
       
       <div class="pool" id="pool6b" style="justify-content:center; gap:12px; margin:20px 0;">
 <span class="draggable tooltip" tabindex="0"
       role="button"
-      aria-label="Faire glisser ou sélectionner 'Citer licence'"
+      aria-label="Faire glisser ou sélectionner 'Citer l’auteur et la licence'"
       data-type="cc"
-      data-tip="📝 Citer licence : Indique l'auteur et le type CC !">
-  Citer licence
+      data-tip="📝 Citer l'auteur et la licence : écris le nom de l'auteur et le sigle CC.">
+  Citer l'auteur et la licence
 </span>
 
 <span class="draggable tooltip" tabindex="0"
       role="button"
-      aria-label="Faire glisser ou sélectionner 'Demander autorisation'"
+      aria-label="Faire glisser ou sélectionner 'Demander son autorisation'"
       data-type="ask"
-      data-tip="🙋 Demander autorisation : Toujours demander à l'auteur !">
-  Demander autorisation
+      data-tip="🙋 Demander son autorisation : à l'auteur, ou à la personne filmée.">
+  Demander son autorisation
 </span>
 
 <span class="draggable tooltip" tabindex="0"
       role="button"
       aria-label="Faire glisser ou sélectionner 'Ne pas publier'"
       data-type="np"
-      data-tip="🚫 Ne pas publier : Si pas d'accord, n'utilise pas !">
+      data-tip="🚫 Ne pas publier : sans accord, on n'utilise pas.">
   Ne pas publier
 </span>
 
 <span class="draggable tooltip" tabindex="0"
       role="button"
-      aria-label="Faire glisser ou sélectionner 'Licence CC-NC'"
+      aria-label="Faire glisser ou sélectionner 'Pas pour vendre'"
       data-type="ccnc"
-      data-tip="💰 Licence CC-NC : Non commercial, pas pour vendre !">
-  CC-NC
+      data-tip="💰 Pas pour vendre : la licence CC BY-NC interdit l'usage commercial.">
+  Pas pour vendre
 </span>
 
 <span class="draggable tooltip" tabindex="0"
       role="button"
-      aria-label="Faire glisser ou sélectionner 'Autorisation image'"
+      aria-label="Faire glisser ou sélectionner 'L’accord de la personne'"
       data-type="askim"
-      data-tip="📸 Autorisation image : Pour photos de personnes !">
-  Autorisation image
+      data-tip="📸 L'accord de la personne : c'est le droit à l'image.">
+  L'accord de la personne
 </span>
 
 <span class="draggable tooltip" tabindex="0"
       role="button"
-      aria-label="Faire glisser ou sélectionner 'Pas de copie'"
+      aria-label="Faire glisser ou sélectionner 'Ne pas copier'"
       data-type="npcc"
-      data-tip="🛑 Pas de copie sans licence : Respecte le copyright !">
-  Pas de copie
+      data-tip="🛑 Ne pas copier : sans licence indiquée, l'œuvre est protégée par le droit d'auteur.">
+  Ne pas copier
 </span>
 
       </div>
 
       <div class="pool" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
         <div style="background:#4CAF50;color:white;padding:16px;border-radius:8px;">
-          <h4>Image en ligne</h4>
+          <h4>Une image trouvée en ligne, sous licence CC</h4>
           <div id="zPI1" class="dropzone" data-accept="cc"></div>
         </div>
         <div style="background:#2196F3;color:white;padding:16px;border-radius:8px;">
-          <h4>Filmer camarade</h4>
+          <h4>Je veux filmer un camarade</h4>
           <div id="zPI2" class="dropzone" data-accept="ask"></div>
         </div>
         <div style="background:#F57C00;color:white;padding:16px;border-radius:8px;">
-          <h4>Sans accord</h4>
+          <h4>Il n'est pas d'accord</h4>
           <div id="zPI3" class="dropzone" data-accept="np"></div>
         </div>
         <div style="background:#795548;color:white;padding:16px;border-radius:8px;">
-          <h4>Image non commercial</h4>
+          <h4>Une image sous licence CC BY-NC</h4>
           <div id="zPI4" class="dropzone" data-accept="ccnc"></div>
         </div>
         <div style="background:#607D8B;color:white;padding:16px;border-radius:8px;">
-          <h4>Droit à l'image</h4>
+          <h4>Une photo où l'on reconnaît quelqu'un</h4>
           <div id="zPI5" class="dropzone" data-accept="askim"></div>
         </div>
         <div style="background:#FF9800;color:white;padding:16px;border-radius:8px;">
-          <h4>Sans licence</h4>
+          <h4>Une œuvre sans licence indiquée</h4>
           <div id="zPI6" class="dropzone" data-accept="npcc"></div>
         </div>
       </div>
@@ -2433,7 +2437,17 @@ Fin du programme.</code></pre>
     <h3>❓ 6.c — Jeu des licences Creative Commons (inspiré PIX)</h3>
     <div style="background:linear-gradient(135deg, #1e3c72, #2a5298); padding:20px; border-radius:12px; margin:16px 0; box-shadow:0 8px 32px rgba(30,60,114,0.4);">
       <h4 style="color:#fff; text-align:center; margin-bottom:16px;">🎮 Chasse aux Licences CC - Filtre comme sur PIX !</h4>
-      <p style="color:#e0e7ff; text-align:center; font-size:0.95rem;">Touche ou survole chaque étiquette pour découvrir ce qu’elle autorise. <br>Glisse-la dans la bonne catégorie (au doigt ou à la souris).</p>
+      <p style="color:#e0e7ff; text-align:center; font-size:0.95rem;">Touche une licence pour lire ce qu'elle permet.<br>Glisse-la ensuite dans chaque catégorie qui lui va : une licence peut aller dans plusieurs, elle reste dans la réserve.<br>Double-clique sur une licence mal placée pour la retirer.</p>
+      <details style="margin:0 0 12px;color:#e0e7ff">
+        <summary style="cursor:pointer">📖 Ce que veut dire chaque sigle — à lire avant de jouer</summary>
+        <ul style="margin:8px 0 0 18px;font-size:.95rem;line-height:1.5">
+          <li><b>BY</b> : cite l'auteur.</li>
+          <li><b>NC</b> : pas d'usage commercial (pas pour vendre).</li>
+          <li><b>ND</b> : pas de modification.</li>
+          <li><b>SA</b> : si tu modifies, partage sous la même licence.</li>
+          <li><b>CC0</b> : l'auteur renonce à ses droits, tout est permis.</li>
+        </ul>
+      </details>
       
       <div class="pool" id="pool6c" style="justify-content:center; gap:12px; margin:20px 0;">
 <span class="draggable tooltip" tabindex="0"
@@ -2474,19 +2488,19 @@ Fin du programme.</code></pre>
       <div class="pool" style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px; margin:20px 0;">
         <div style="background:#2E7D32;color:white;padding:16px;border-radius:8px;">
           <h4>💵 Usage commercial OK</h4>
-          <div id="zComm" class="dropzone" style="min-height:80px;"></div>
+          <div id="zComm" class="dropzone" data-multi="1" data-copie="1" style="min-height:80px;"></div>
         </div>
         <div style="background:#1976D2;color:white;padding:16px;border-radius:8px;">
           <h4>✏️ Modification autorisée</h4>
-          <div id="zMod" class="dropzone" style="min-height:80px;"></div>
+          <div id="zMod" class="dropzone" data-multi="1" data-copie="1" style="min-height:80px;"></div>
         </div>
         <div style="background:#F57C00;color:white;padding:16px;border-radius:8px;">
           <h4>📝 Attribution obligatoire</h4>
-          <div id="zAttr" class="dropzone" style="min-height:80px;"></div>
+          <div id="zAttr" class="dropzone" data-multi="1" data-copie="1" style="min-height:80px;"></div>
         </div>
         <div style="background:#7B1FA2;color:white;padding:16px;border-radius:8px;">
           <h4>🔄 Partage sous même licence</h4>
-          <div id="zSA" class="dropzone" style="min-height:80px;"></div>
+          <div id="zSA" class="dropzone" data-multi="1" data-copie="1" style="min-height:80px;"></div>
         </div>
       </div>
     </div>
@@ -2597,10 +2611,8 @@ Fin du programme.</code></pre>
     <div class="box">
       <span class="close" onclick="this.parentElement.parentElement.style.display='none'">×</span>
       <h3>Aide pour la section 6</h3>
-      <p>Image en ligne : Citer licence</p>
-      <p>Filmer camarade : Demander autorisation</p>
-      <p>Sans accord : Ne pas publier</p>
-      <p>Jeu : Survole pour définitions. <br>Commercial : CC0, CC BY, CC BY-SA, CC BY-ND. Modification : CC0, CC BY, CC BY-SA, CC BY-NC, CC BY-NC-SA. Attribution : CC BY et combinaisons. <br>ShareAlike : CC BY-SA, CC BY-NC-SA.</p>
+      <p><b>6.b, trois cas pour démarrer :</b><br>une image en ligne sous licence CC → citer l'auteur et la licence ;<br>filmer un camarade → demander son autorisation ;<br>il n'est pas d'accord → ne pas publier.</p>
+      <p><b>6.c :</b> ouvre « Ce que veut dire chaque sigle ».<br>Une licence sans <b>NC</b> autorise la vente.<br>Une licence sans <b>ND</b> autorise la modification.<br>Toutes les licences <b>BY</b> demandent de citer l'auteur.<br>Les licences <b>SA</b> imposent la même licence au partage.</p>
     </div>
   </div>
 
@@ -2608,11 +2620,21 @@ Fin du programme.</code></pre>
     <div class="box">
       <span class="close" onclick="this.parentElement.parentElement.style.display='none'">×</span>
       <h3>Correction pour la section 6</h3>
-      <p>Image en ligne : Citer licence</p>
-      <p>Filmer camarade : Demander autorisation</p>
-      <p>Sans accord : Ne pas publier</p>
-      <p>Q1: Œuvres, Q2: Partage conditions, Q3: Interdit, Q4: Tes posts, Q5: Citation, Q6: Autorisation, Q7: Ne pas publier.</p>
-      <p>Jeu : Commercial : CC0, CC BY, CC BY-SA, CC BY-ND. Modification : CC0, CC BY, CC BY-SA, CC BY-NC, CC BY-NC-SA. Attribution : CC BY, CC BY-SA, CC BY-ND, CC BY-NC, CC BY-NC-SA, CC BY-NC-ND. ShareAlike : CC BY-SA, CC BY-NC-SA.</p>
+      <p><b>6.a :</b> il faut une autorisation claire avant de diffuser — celle des responsables légaux pour un mineur.<br>« Pour rire » n'est pas une autorisation.</p>
+      <p><b>6.b, les six cas :</b><br>
+      • une image trouvée en ligne, sous licence CC → <b>citer l'auteur et la licence</b> ;<br>
+      • je veux filmer un camarade → <b>demander son autorisation</b> ;<br>
+      • il n'est pas d'accord → <b>ne pas publier</b> ;<br>
+      • une image sous licence CC BY-NC → <b>pas pour vendre</b> ;<br>
+      • une photo où l'on reconnaît quelqu'un → <b>l'accord de la personne</b> (droit à l'image) ;<br>
+      • une œuvre sans licence indiquée → <b>ne pas copier</b> : elle est protégée par le droit d'auteur.</p>
+      <p><b>6.c, le jeu des licences :</b><br>
+      • Usage commercial OK : CC0, CC BY, CC BY-SA, CC BY-ND — toutes celles sans <b>NC</b>.<br>
+      • Modification autorisée : CC0, CC BY, CC BY-SA, CC BY-NC, CC BY-NC-SA — toutes celles sans <b>ND</b>.<br>
+      • Attribution obligatoire : les six licences <b>BY</b> ; CC0 seule n'exige rien.<br>
+      • Partage sous même licence : CC BY-SA, CC BY-NC-SA — celles qui portent <b>SA</b>.<br>
+      Le piège : une licence va dans plusieurs catégories, CC BY dans trois.</p>
+      <p><b>6.d :</b> Q1 œuvres ; Q2 partage avec conditions ; Q3 interdit ; Q4 tes posts ; Q5 citation ; Q6 demander autorisation ; Q7 ne pas publier.</p>
     </div>
   </div>
 
@@ -2858,6 +2880,8 @@ window.addEventListener('DOMContentLoaded', () => {
     if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
     if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
   });
+  // les zones doivent pouvoir recevoir le focus, sinon le dépôt au clavier (Entrée sur la zone) est impossible
+  document.querySelectorAll('.dropzone').forEach(z => { if (!z.hasAttribute('tabindex')) z.setAttribute('tabindex', '0'); });
 
   // 2) souris
   let dragEl = null;
@@ -2865,8 +2889,10 @@ window.addEventListener('DOMContentLoaded', () => {
     const t = e.target.closest('.draggable');
     if (!t) return;
     dragEl = t;
-    e.dataTransfer.setData('text/plain', t.dataset.type || '');
-    e.dataTransfer.effectAllowed = 'move';
+    if (e.dataTransfer) {                      // un dragstart synthétique (clavier) n'a pas de dataTransfer
+      e.dataTransfer.setData('text/plain', t.dataset.type || '');
+      e.dataTransfer.effectAllowed = 'move';
+    }
     setTimeout(() => t.classList.add('dragging'), 0);
   });
   document.addEventListener('dragend', () => {
@@ -2877,6 +2903,20 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 
+
+  function deposer(zone, el) {
+    const type = (el.dataset.type || '').trim();
+    if (zone.getAttribute('data-copie') === '1') {
+      if (zone.querySelector('.draggable[data-type="' + type + '"]')) return null;   // déjà dans cette catégorie
+      const c = el.closest('.dropzone') ? el : el.cloneNode(true);                     // depuis la réserve : une copie
+      c.classList.add('placed'); zone.appendChild(c); return c;
+    }
+    zone.appendChild(el); el.classList.add('placed'); return el;
+  }
+  // retirer une licence mal placée : double-clic sur une copie posée dans une zone data-copie
+  document.addEventListener('dblclick', e => {
+    const el = e.target.closest('.dropzone[data-copie="1"] .draggable'); if (el) el.remove();
+  });
 
   document.querySelectorAll('.dropzone').forEach(zone => {
     zone.addEventListener('dragover', e => {
@@ -2907,10 +2947,11 @@ window.addEventListener('DOMContentLoaded', () => {
       zone.querySelectorAll('.draggable').forEach(x => x.remove());
     }
 
-    // --- Dépôt : on DÉPLACE l'étiquette glissée (pas de clone pour éviter les doublons) ---
-    zone.appendChild(dragEl);                              // Dépose l'élément réellement glissé
-    dragEl.classList.add('placed');                        // Marquage visuel (optionnel)
-    dragEl.focus();                                        // Focus accessibilité
+    // --- Dépôt : on DÉPLACE l'étiquette glissée (pas de clone pour éviter les doublons)…
+    //     sauf dans une zone data-copie="1" (jeu des licences, 6.c) : une licence va dans PLUSIEURS catégories,
+    //     la zone reçoit une copie et l'étiquette reste dans la réserve ; une même licence n'y entre qu'une fois.
+    const depose = deposer(zone, dragEl);
+    if (depose) depose.focus();                            // Focus accessibilité
     dragEl = null;                                         // Réinitialise l’état de glisser en cours
     });
   });
@@ -2935,11 +2976,11 @@ window.addEventListener('DOMContentLoaded', () => {
     if ((e.key === 'Enter' || e.key === ' ') && picked && a && a.classList.contains('dropzone')) {
       e.preventDefault();
       a.classList.remove('drop-target');
-      a.querySelectorAll('.draggable').forEach(x => a.removeChild(x));
-      a.appendChild(picked);
-      picked.classList.remove('dragging');
-      picked.removeAttribute('aria-grabbed');
-      picked.focus();
+      if (a.getAttribute('data-multi') !== '1') a.querySelectorAll('.draggable').forEach(x => a.removeChild(x));
+      const pose = deposer(a, picked) || picked;
+      picked.classList.remove('dragging'); pose.classList.remove('dragging');
+      picked.removeAttribute('aria-grabbed'); pose.removeAttribute('aria-grabbed');
+      pose.focus();
       picked = null;
       document.querySelectorAll('.dropzone').forEach(z => z.classList.remove('drop-target'));
     }
