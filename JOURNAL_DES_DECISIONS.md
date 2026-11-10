@@ -29516,3 +29516,26 @@ annoncée sans rien retirer serait faux. Deux pistes : une quatrième séance, o
 **Mesure.** Séance 4 : 1 928 → 1 252 mots visibles (essentiel 1 243) ; séances 1 à 3 : 817 · 460 · 437. ✘ 2 → 0 ; menus 33 → 0 ; aération 8 → 0. Bancs 23/23 et 34/34 ; contrôles verts.
 
 **Question à Pascal.** La séance 4 annonce 85 min d'activités (activité 5 : 20 min, activité 6 : 35 min, réinvestissement « bouée houlographe » : 30 min) plus la clôture. Piste : le réinvestissement et la clôture en séance 5, comme la séance 5 de 4e_C1.1 coupée en deux (#624). Non fait sans sa décision.
+
+## 10/11/2026 — Le lien de la licence se lit sur toutes les pages : la mention porte sa couleur (n°303, n°321) (transversal : les trois thèmes, `_outils`)
+
+**D'où ça vient.** V2 4e (10/11) : sur 4e_C7.4 et 4e_C7.8, le lien « CC BY-NC-SA 4.0 » posé en pied de page par #616
+restait au **bleu par défaut du navigateur** — 2,03:1 sur fond sombre. `controle_contraste_liens` sur tout le site
+(410 pages, 3 250 liens) : **91 pages** dans ce cas (15 du thème 1, 35 du thème 2, 41 du thème 3 — 17 synthèses, 5 QCM,
+12 séquences, des lexiques), toutes pour ce seul lien : les pages sans règle de couleur pour `a`. Rien d'autre ne manquait.
+
+**Ce qui change** — à la source, `_outils/licence_cc.py`, puis la mention réécrite sur les 410 pages qui la portent :
+- la mention arrive avec sa feuille de trois règles — `.licence-cc a` et `.licence-cc a:visited` en `color:inherit`,
+  souligné (le lien prend la couleur du texte du pied de page, lu de la même façon), et sur papier `color:#000` (sur le
+  QCM de 4e_C2.1, le pied de page s'imprime en gris clair : hérité, le lien tombait à 2,54:1) ;
+- `opacity:.85` retirée : un texte qu'on pose pour être lu ne se grise pas ;
+- `retirer()` retire la feuille avec la mention ; `make_index.py` et `generer_lexique.py`, qui importent `MENTION`,
+  suivent sans retouche. La règle n°303 n'est pas amendée : elle s'applique.
+
+**Vérifié** (10/11/2026, Chromium Playwright) : `controle_contraste_liens` sur tout le site — **0 lien sous le seuil
+(écran, visité, papier), 0 page qui colore `a` sans `a:visited`** (91 → 0) ; `tests_controle_licence.py` vert ;
+`controle_licence` 410/410 ; `controle_regles_visibles`, `controle_impression_papier`, `controle_tactile`,
+`controle_liens`, `controle_impression --muet` : 0 refus ; `verif_regles_audit` inchangé. Non exécuté : une impression
+réelle, Firefox, Safari.
+
+**Reste à Pascal.** Fusionner (410 pages touchées d'une ligne chacune, rien d'autre).

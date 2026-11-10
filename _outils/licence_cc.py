@@ -8,6 +8,11 @@ n°321). Ce module est la source unique du texte : `make_index.py`, `generer_lex
 
 La mention est reconnue par son attribut `data-licence="cc-by-nc-sa"` : c'est lui que le
 contrôle cherche, pas le texte, pour qu'un libellé retouché ne passe pas pour une absence.
+
+Le lien porte sa couleur (`color:inherit`, souligné, par une feuille de deux règles — `a` et `a:visited`, n°303 — posée avec la mention) : sur 91 pages sans règle de couleur pour `a`,
+il restait au bleu par défaut du navigateur, 2,03:1 sur fond sombre — règle d'or n°303, constat du
+10/11/2026 (`controle_contraste_liens` sur tout le site). Et la mention n'est plus estompée
+(`opacity:.85` retirée) : un texte qu'on pose pour être lu ne se grise pas.
 """
 import re
 
@@ -17,7 +22,8 @@ ANNEE = "2026"
 MARQUEUR = 'data-licence="cc-by-nc-sa"'
 
 MENTION = (
-    f'<p class="licence-cc" {MARQUEUR} style="font-size:.8em;opacity:.85;margin-top:.8em">'
+    '<style>.licence-cc a,.licence-cc a:visited{color:inherit;text-decoration:underline}@media print{.licence-cc a,.licence-cc a:visited{color:#000}}</style>'
+    f'<p class="licence-cc" {MARQUEUR} style="font-size:.8em;margin-top:.8em">'
     f'📄 Ressource sous licence <a href="{URL}" rel="license">CC BY-NC-SA 4.0</a> '
     f'— © {AUTEUR}, {ANNEE} · Technologie cycle 4 · réutilisation et adaptation libres '
     f'à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>'
@@ -48,4 +54,4 @@ def injecter(html: str) -> str:
 
 def retirer(html: str) -> str:
     """L'inverse d'`injecter` — pour les bancs et pour un retrait voulu, jamais appelé en production."""
-    return re.sub(r'<p class="licence-cc" data-licence="cc-by-nc-sa"[^>]*>.*?</p>\n?', "", html, flags=re.S)
+    return re.sub(r'(<style>\.licence-cc a[^<]*</style>)?<p class="licence-cc" data-licence="cc-by-nc-sa"[^>]*>.*?</p>\n?', "", html, flags=re.S)
