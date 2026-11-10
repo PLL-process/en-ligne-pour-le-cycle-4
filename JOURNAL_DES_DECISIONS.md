@@ -29516,3 +29516,18 @@ annoncée sans rien retirer serait faux. Deux pistes : une quatrième séance, o
 **Mesure.** Séance 4 : 1 928 → 1 252 mots visibles (essentiel 1 243) ; séances 1 à 3 : 817 · 460 · 437. ✘ 2 → 0 ; menus 33 → 0 ; aération 8 → 0. Bancs 23/23 et 34/34 ; contrôles verts.
 
 **Question à Pascal.** La séance 4 annonce 85 min d'activités (activité 5 : 20 min, activité 6 : 35 min, réinvestissement « bouée houlographe » : 30 min) plus la clôture. Piste : le réinvestissement et la clôture en séance 5, comme la séance 5 de 4e_C1.1 coupée en deux (#624). Non fait sans sa décision.
+
+---
+
+## 10/11/2026 — Révision des trois thèmes, 15 : 4e_C4.1, l'exercice incrusté se replie par son option, le prototype n°300 hors de l'incrustation
+
+**Décisions.**
+- **Replis** : l'exercice « cahier des charges » incrusté en tête de l'activité 5 (demande de Pascal du 31/10, 999 mots visibles) reste en place et se replie par l'option `replie="…"` de son entrée (`incrustations_lots/fast_et_flexibilite.py`), puis `incrustations.py --seq 4e_C4.1` ; le Bonus (défi données) par `replier_bonus.py`. Séance 4 : 2 394 → 782 mots.
+- **n°300** : 39 listes → groupes de boutons radio (17 questions, 108 propositions) ; les 22 menus du cahier des charges (n°317) restent des listes, et les deux menus d'interface du défi données (grandeur, unité) redeviennent des listes, marqués `data-interface` : la table lit leurs options. `collect()` adapté ; enveloppes `div.assoc` retirées.
+- **Leçon d'outil** : `migrer_gabarit_306.py --n300` pose le bloc « le groupe porte sa valeur » devant le premier `<script>` après la fiche papier — ici, ce script était **dans l'incrustation** ; la régénération l'a effacé, et toutes les activités rendaient 0 / n. Le bloc est reposé après `ateliers-representations:fin`. À faire dans l'outil : ne jamais insérer entre les marqueurs d'une incrustation.
+- **Impression** : les volets repliés (Bonus, exercice incrusté) s'ouvrent pour l'impression, sous `beforeprint` et sous le média d'impression émulé — le défi données est une fiche papier (table à remplir, cadre de la courbe). `replier_bonus.py` ne le fait pas : à y ajouter.
+- **Aération** : 39 retours posés ; trois corrections « cousues » (fonctions des composants, procédés d'après les indices, l'aide de niveau 1) une idée par ligne ; la mission de l'ouverture en ①②③④ et au « tu » ; les trois textes d'un seul tenant de l'exercice incrusté corrigés à la source (`donnees_interacteurs.py`) et à l'identique dans l'atelier interacteurs 4e, le cahier 4e et la synthèse professeur.
+- **Bancs** : shim `_groupesRadio(page)` ; `remplir` accepte un groupe ; le banc ouvre les volets après chaque chargement ; la lecture des causes du simulateur réseau accepte des boutons radio. 52/52 et 34/34.
+
+**Mesure.** Séances : 782 · 762 · 594 · 782 mots visibles. ✘ 1 → 0 ; menus 39 → 0 ; aération 11 → 0 ; contrôles verts.
+
