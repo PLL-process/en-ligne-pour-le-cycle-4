@@ -897,6 +897,18 @@ body.essentiel details.referentiel-replie{display:none}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<style id="css-geste-images">
+/* replier_captures.py (08/11/2026) : les captures d'un geste se déplient à la demande */
+details.geste-images{margin:8px 0;border:1px dashed var(--border,#274a8a);border-radius:10px;padding:4px 10px}
+details.geste-images>summary{cursor:pointer;font-weight:600;padding:4px 0;min-height:24px}
+details.geste-images[open]>summary{margin-bottom:6px}
+@media print{details.geste-images{border-color:#999!important}}
+</style>
+<style id="css-bonus-replie">
+/* replier_bonus.py (08/11/2026) : le Bonus se déplie quand on a fini */
+details.bonus-replie>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}
+details.bonus-replie[open]>summary{margin-bottom:8px}
+</style>
 </head>
 <body>
 <style id="navharm-css">
@@ -931,7 +943,7 @@ body.essentiel details.referentiel-replie{display:none}
 <div class="bloc referentiel-eleve">
   <p class="meta"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du
   29 février 2024.<br><b>Codification opérationnelle</b>&nbsp;: <code>5e_C1.1</code> à
-  <code>5e_C1.6</code>. Ces codes servent à ranger les séquences ; ils ne viennent pas du programme officiel. <b>À la fin de cette séquence, je serai capable de…</b> — l'intitulé de la colonne est de nous&nbsp;; les formulations citées, elles, sont celles du BO, qui ne dit pas «&nbsp;je&nbsp;».</p>
+  <code>5e_C1.6</code>. <br>Ces codes servent à ranger les séquences ; <br>ils ne viennent pas du programme officiel. <br><b>À la fin de cette séquence, je serai capable de…</b> — l'intitulé de la colonne est de nous&nbsp;; <br>les formulations citées, elles, sont celles du BO, qui ne dit pas «&nbsp;je&nbsp;».</p>
   <table>
     <tr><th>Code</th><th>Je serai capable de…</th><th>Où</th></tr>
     <tr><td><b>5e_C1.2</b></td><td>Comparer des principes techniques pour une même fonction
@@ -950,15 +962,14 @@ body.essentiel details.referentiel-replie{display:none}
   </table>
   <p><b>Socle</b> — D2 méthodes et outils pour apprendre · D3 formation de la personne et du citoyen ·
   D4 systèmes techniques · D5 représentations du monde.</p>
-  <p class="meta">🧵 <b>Six codes, une seule donnée.</b> Le relevé du capteur de la cour va traverser
+  <p class="meta">🧵 <b>Six codes, une seule donnée.</b><br>Le relevé du capteur de la cour va traverser
   toute la séquence&nbsp;: il sera <b>mesuré</b> (C1.2), <b>trié</b> (C1.1), <b>rangé</b> (C1.4),
-  <b>partagé</b> (C1.3), <b>protégé</b> (C1.5) — et il finira par <b>désigner quelqu'un</b> (C1.6).
-  Ce n'est pas six leçons&nbsp;: c'est une seule histoire, en six moments.</p>
+  <b>partagé</b> (C1.3), <b>protégé</b> (C1.5) — et il finira par <b>désigner quelqu'un</b> (C1.6). <br>Ce n'est pas six leçons&nbsp;: c'est une seule histoire, en six moments.</p>
   <p class="legende-badges">🔎 <b>Ce que disent ces étiquettes.</b> <b>5e</b>&nbsp;: le niveau.
-<b>C1.1 à C1.6</b>&nbsp;: les six compétences travaillées — des codes de classement <b>propres à ce
-site</b>, écrits en toutes lettres plus bas. <b>D2 · D3 · D4 · D5</b>&nbsp;: les domaines du
+<br><b>C1.1 à C1.6</b>&nbsp;: les six compétences travaillées — des codes de classement <b>propres à ce
+site</b>, écrits en toutes lettres plus bas. <br><b>D2 · D3 · D4 · D5</b>&nbsp;: les domaines du
 <b>socle commun</b>, les grandes familles de ce qu'on apprend au collège.
-<b>CRCN</b>&nbsp;: le cadre des compétences numériques, celui qu'on retrouve dans <b>Pix</b>.
+<br><b>CRCN</b>&nbsp;: le cadre des compétences numériques, celui qu'on retrouve dans <b>Pix</b>.
 <b>5 séances de 55 min</b>&nbsp;: le temps prévu, sans compter le QCM.</p>
 </div>
 </details>
@@ -984,16 +995,16 @@ site</b>, écrits en toutes lettres plus bas. <b>D2 · D3 · D4 · D5</b>&nbsp;:
 <p class="saved-note">Tes réponses sont enregistrées <b>dans ce navigateur uniquement</b>&nbsp;:
 elles ne partent nulle part, et tu les retrouveras sur <b>ce même ordinateur</b>.</p>
 <p class="saved-note" id="aide-essentiel">🎯 <b>Le mode essentiel</b> masque les
-corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. Utile quand la
+corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. <br>Utile quand la
 page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p>
 
 <section class="card">
   <h2>🇨🇳 La situation&nbsp;: un capteur dans la cour, et personne ne sait quoi en faire</h2>
-  <p><b>Un collège de Chengdu</b> a installé un capteur de particules fines (des poussières si petites qu'on ne les voit pas, et qui entrent dans les poumons) dans sa cour. Depuis
+  <p><b>Un collège de Chengdu</b> a installé un capteur de particules fines (des poussières si petites qu'on ne les voit pas, et qui entrent dans les poumons) dans sa cour. <br>Depuis
   une semaine, il enregistre une valeur toutes les heures. Le fichier grossit&nbsp;: <b>90 lignes</b>.</p>
-  <p>Personne n'ose s'en servir. Le professeur de technologie a ouvert le fichier et s'est
-  arrêté&nbsp;: il y a une valeur <b>négative</b>. La vie scolaire voudrait savoir s'il faut ouvrir
-  les fenêtres le matin. Et quelqu'un a déjà envoyé une capture d'écran dans un groupe de discussion,
+  <p>Personne n'ose s'en servir. <br>Le professeur de technologie a ouvert le fichier et s'est
+  arrêté&nbsp;: il y a une valeur <b>négative</b>. <br>La vie scolaire voudrait savoir s'il faut ouvrir
+  les fenêtres le matin. <br>Et quelqu'un a déjà envoyé une capture d'écran dans un groupe de discussion,
   avec un commentaire.</p>
   <p style="color:var(--warn);font-size:1.05em">Une donnée qui reste dans un fichier ne sert à rien.
   Une donnée qu'on publie sans réfléchir peut faire du mal. <b>Entre les deux, il y a tout le
@@ -1075,11 +1086,11 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <p class="feedback" id="fb0" role="status"></p>
   <details class="aide" id="capsule"><summary>🎒 Je révise en 3 minutes</summary>
     <p>Une <b>fonction technique</b> dit ce que l'objet doit faire&nbsp;: elle commence par un verbe
-    à l'infinitif — «&nbsp;mesurer la poussière&nbsp;», «&nbsp;maintenir au frais&nbsp;». Elle ne dit
+    à l'infinitif — «&nbsp;mesurer la poussière&nbsp;», «&nbsp;maintenir au frais&nbsp;». <br>Elle ne dit
     pas <b>comment</b>&nbsp;: ça, c'est le <b>principe</b>, et plusieurs principes peuvent remplir la
     même fonction.</p>
     <p>Au tableur, <code>=MOYENNE(A2:A8)</code> calcule la moyenne d'une plage de cellules.</p>
-    <p>Une <b>donnée personnelle</b> n'est pas seulement un nom. C'est toute information qui permet
+    <p>Une <b>donnée personnelle</b> n'est pas seulement un nom. <br>C'est toute information qui permet
     de <b>reconnaître quelqu'un</b>, même sans le nommer&nbsp;: «&nbsp;la personne qui passe la
     balayeuse le mardi&nbsp;» désigne une personne précise dans un collège.</p>
   </details>
@@ -1090,21 +1101,20 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <div class="meta"><b>Objectif</b> comparer des principes techniques pour une même fonction ·
   <b>Compétence</b> 5e_C1.2 · <b>Production</b> le principe retenu pour le collège, et sa justification</div>
 
-  <p>Le collège doit choisir son capteur. Trois appareils existent, et <b>ils remplissent la même
-  fonction</b>&nbsp;: mesurer la concentration de poussières dans l'air. Ils n'emploient pas le même
+  <p>Le collège doit choisir son capteur. <br>Trois appareils existent, et <b>ils remplissent la même
+  fonction</b>&nbsp;: mesurer la concentration de poussières dans l'air. <br>Ils n'emploient pas le même
   <b>principe</b> — c'est-à-dire pas le même phénomène physique.</p>
 
 <div class="p3" id="planche3">
-  <p class="p3fonction">📄 <b>Document à lire — une seule fonction, trois principes.</b>
-  Fonction technique&nbsp;: <b>mesurer la concentration de poussières dans l'air</b>. Voici trois façons
-  d'y arriver. Aucune n'est «&nbsp;la bonne&nbsp;»&nbsp;: chacune a un prix, un délai, une exigence.</p>
+  <p class="p3fonction">📄 <b>Document à lire — une seule fonction, trois principes.</b><br>Fonction technique&nbsp;: <b>mesurer la concentration de poussières dans l'air</b>. Voici trois façons
+  d'y arriver. <br>Aucune n'est «&nbsp;la bonne&nbsp;»&nbsp;: chacune a un prix, un délai, une exigence.</p>
   <div class="p3unite">
-    <p><b>D'abord, ce qu'on mesure.</b> On cherche la <b>masse de poussières</b> présente dans un
-    <b>volume d'air</b>&nbsp;: une <b>concentration</b>. C'est ce qui permet de comparer deux mesures,
+    <p><b>D'abord, ce qu'on mesure.</b><br>On cherche la <b>masse de poussières</b> présente dans un
+    <b>volume d'air</b>&nbsp;: une <b>concentration</b>. <br>C'est ce qui permet de comparer deux mesures,
     même si les appareils n'ont pas aspiré la même quantité d'air.</p>
     <p class="p3calc">20 µg de poussière récoltés dans 2 m³ d'air → <b>20 ÷ 2 = 10 µg/m³ (microgrammes par mètre cube)</b></p>
     <p>Le <b>µg</b> (microgramme) est un <b>millionième de gramme</b> — un grain de sable pèse déjà
-    1&nbsp;000&nbsp;µg. Le <b>m³</b> est un cube d'un mètre de côté, à peu près l'air d'une cabine de douche.</p>
+    1&nbsp;000&nbsp;µg. <br>Le <b>m³</b> est un cube d'un mètre de côté, à peu près l'air d'une cabine de douche.</p>
   </div>
   <!-- trois_principes_pas_a_pas : début
        Animation pas à pas des trois principes (demande de Pascal du 25/10/2026) : elle remplace À L'ÉCRAN les trois
@@ -1305,7 +1315,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     <div class="tpa-outils">
       <button type="button" class="btn small ghost" id="tpaLentille" aria-pressed="false" hidden>🧽 Salir la lentille</button>
     </div>
-    <p class="tpa-note" id="tpaNoteSale" hidden>🧽 <b>Lentille sale</b>&nbsp;: le capteur compte aussi des éclats qui ne viennent d'aucun grain. L'appareil «&nbsp;voit&nbsp;» de la poussière qui n'existe pas — et rien ne le signale.</p>
+    <p class="tpa-note" id="tpaNoteSale" hidden>🧽 <b>Lentille sale</b>&nbsp;: le capteur compte aussi des éclats qui ne viennent d'aucun grain. <br>L'appareil «&nbsp;voit&nbsp;» de la poussière qui n'existe pas — et rien ne le signale.</p>
     <p class="tpa-titre" id="tpaTitre" data-lpp="titre"></p>
     <div class="tpa-texte" id="tpaTexte" data-lpp="texte" aria-live="polite"></div>
     <div class="tpa-nav">
@@ -1344,7 +1354,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
         </div>
         <div class="p3right">
           <ol class="p3etapes"><li>Une petite lampe (une diode ou un laser) éclaire l'air qui passe dans le boîtier.</li><li>Chaque grain de poussière renvoie un peu de lumière sur le côté.</li><li>Un capteur de lumière compte ces éclats&nbsp;: plus il y en a, plus l'air est chargé.</li></ol>
-          <p class="p3idee">💡 <b>L'idée à retenir</b>&nbsp;: On ne pèse rien, on <b>compte des éclats de lumière</b>. C'est rapide et pas cher — mais si la lentille se salit, l'appareil «&nbsp;voit&nbsp;» de la poussière qui n'existe pas, ou n'en voit plus, <b>sans prévenir</b>.</p>
+          <p class="p3idee">💡 <b>L'idée à retenir</b>&nbsp;: On ne pèse rien, on <b>compte des éclats de lumière</b>. <br>C'est rapide et pas cher — mais si la lentille se salit, l'appareil «&nbsp;voit&nbsp;» de la poussière qui n'existe pas, ou n'en voit plus, <b>sans prévenir</b>.</p>
           <p class="p3savoir">ℹ️ C'est le principe des petits capteurs à 25&nbsp;€ et des stations mobiles.</p>
         </div>
       </div>
@@ -1373,7 +1383,9 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
         <div class="p3right">
           <ol class="p3etapes"><li>Une pompe fait passer l'air à travers un filtre pendant <b>24 h</b>.</li><li>On pèse le filtre avant, puis après.</li><li>La différence de masse, c'est la poussière&nbsp;; on la divise par le volume d'air aspiré.</li></ol>
           <p class="p3idee">💡 <b>L'idée à retenir</b>&nbsp;: C'est une <b>vraie pesée</b>, la plus juste des trois — mais il faut attendre <b>un jour entier</b> pour avoir UN résultat.</p>
-          <p class="p3savoir">ℹ️ C'est la méthode de référence des laboratoires, celle qui sert à vérifier les autres. <b>Une variante pour peser en continu</b>&nbsp;: le filtre est fixé sur un petit support qui vibre. Les poussières s'y déposent, le filtre devient plus lourd, le support vibre moins vite — et l'appareil traduit ce ralentissement en masse (une <i>microbalance</i>, comme dans les appareils TEOM). Les poussières ajoutent de la masse&nbsp;; cette masse modifie la vibration.</p>
+          <p class="p3savoir">ℹ️ C'est la méthode de référence des laboratoires, celle qui sert à vérifier les autres.</p>
+          <details class="approfondissement"><summary>➕ Pour aller plus loin&nbsp;: une variante pour peser en continu</summary>
+          <p class="p3savoir">Le filtre est fixé sur un petit support qui vibre. <br>Les poussières s'y déposent, le filtre devient plus lourd, le support vibre moins vite — et l'appareil traduit ce ralentissement en masse (une <i>microbalance</i>, comme dans les appareils TEOM). <br>Les poussières ajoutent de la masse&nbsp;; cette masse modifie la vibration.</p></details>
         </div>
       </div>
     </article>
@@ -1503,8 +1515,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     <p>Deux contraintes éliminent vite&nbsp;: le <b>budget d'un collège</b>, et le fait que
     <b>personne sur place</b> n'est technicien de laboratoire.</p></details>
   <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
-    <p>Demande-toi <b>à quoi servira la mesure</b>. Si c'est pour décider d'ouvrir les fenêtres le
-    matin, il faut une réponse <b>dans l'heure</b>. Un appareil très précis qui répond le lendemain
+    <p>Demande-toi <b>à quoi servira la mesure</b>. <br>Si c'est pour décider d'ouvrir les fenêtres le
+    matin, il faut une réponse <b>dans l'heure</b>. <br>Un appareil très précis qui répond le lendemain
     ne rend pas ce service — même s'il est meilleur «&nbsp;dans l'absolu&nbsp;».</p></details>
 
   <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
@@ -1524,15 +1536,15 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     <p><b>P3, l'atténuation bêta</b>, est éliminée par une contrainte qui n'a rien de technique&nbsp;:
     une <b>source radioactive scellée</b> impose un contrôle réglementaire qu'un collège ne peut pas
     assurer. 6 500 € et 12 W (watts) achèvent de la disqualifier.</p>
-    <p><b>Le volume d'air</b>&nbsp;: sans lui, une masse de poussières ne dit rien. 20&nbsp;µg dans 2&nbsp;m³
-    et 20&nbsp;µg dans 10&nbsp;m³, ce n'est pas le même air. Rapporter la masse au volume — 10&nbsp;µg/m³
+    <p><b>Le volume d'air</b>&nbsp;: sans lui, une masse de poussières ne dit rien. <br>20&nbsp;µg dans 2&nbsp;m³
+    et 20&nbsp;µg dans 10&nbsp;m³, ce n'est pas le même air. <br>Rapporter la masse au volume — 10&nbsp;µg/m³
     contre 2&nbsp;µg/m³ — est ce qui rend deux mesures <b>comparables</b>.</p>
     <p class="meta">Retiens la distinction, elle servira toute l'année&nbsp;: la <b>fonction</b> dit
-    ce qu'il faut faire («&nbsp;mesurer la poussière&nbsp;»)&nbsp;; le <b>principe</b> dit par quel
-    phénomène physique on y arrive&nbsp;; la <b>solution</b> est l'appareil précis qu'on achète.</p>
+    ce qu'il faut faire («&nbsp;mesurer la poussière&nbsp;»)&nbsp;; <br>le <b>principe</b> dit par quel
+    phénomène physique on y arrive&nbsp;; <br>la <b>solution</b> est l'appareil précis qu'on achète.</p>
   </details>
   <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une même <b>fonction</b> se remplit par plusieurs
-  <b>principes</b>. Le meilleur principe n'est pas le plus précis&nbsp;: c'est celui qui rend le
+  <b>principes</b>. <br>Le meilleur principe n'est pas le plus précis&nbsp;: c'est celui qui rend le
   service attendu, dans les contraintes réelles.</p>
   <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: choisir l'appareil le plus performant du tableau
   sans regarder ce qu'il exige — argent, compétence, réglementation.</p>
@@ -1545,34 +1557,37 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 <section class="card gestes-outil" aria-labelledby="gestes-tableur">
   <h2 id="gestes-tableur">🧰 Avant de commencer (échauffement) — les quatre gestes du tableur</h2>
   <p class="pourquoi">Quatre gestes à faire une fois, au début, et ta séance ne
-  se perdra pas. Tu les as peut-être déjà faits une autre année&nbsp;: refais-les,
-  c'est court. Et si tu ne les as jamais faits, tout est écrit ici — tu n'as
+  se perdra pas. <br>Tu les as peut-être déjà faits une autre année&nbsp;: refais-les,
+  c'est court. <br>Et si tu ne les as jamais faits, tout est écrit ici — tu n'as
   besoin de rien d'autre.</p>
   <ol>
     <li><b>Ouvrir.</b> Ouvre le tableur (<b>LibreOffice Calc</b>), puis ouvre le fichier <a href="releves_air_chengdu_simules.csv" download title="Télécharger releves_air_chengdu_simules.csv">📥&nbsp;<code>releves_air_chengdu_simules.csv</code></a> (clique ici pour le télécharger) (<b>Fichier → Ouvrir…</b>). Dans la fenêtre d'import, garde <b>Point-virgule</b> coché comme séparateur et valide.
-      <figure class="geste-capture">
+      <details class="geste-images"><summary>🖼 Le voir en images — 3 captures : ce que tu dois voir, et que faire si ça ne marche pas</summary>
+<figure class="geste-capture">
         <img src="Images/geste_tableur_1_ouvrir_import_csv.png" width="1400" height="1013" loading="lazy"
              alt="Boîte de dialogue « Import de texte » de LibreOffice Calc, en français et en mode sombre, pour le fichier releves_air_chengdu_simules.csv. En haut : Jeu de caractères « - Automatique - », Locale « Par défaut - Français (France) », À partir de la ligne 1. Dans « Options de séparateur », le bouton « Séparé par » est sélectionné ; parmi les cases Tabulation, Virgule, Point-virgule, Espace et Autre, seule Point-virgule est cochée. En bas, l'aperçu montre les données réparties en cinq colonnes : jour, heure, pm25_ug_m3, temperature_c, humidite_pct ; la colonne pm25_ug_m3 affiche 24,3 puis 28,0 puis 25,9, écrits avec une virgule. Les boutons OK et Annuler sont en bas à droite.">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> dans «&nbsp;Options de séparateur&nbsp;», la case <b>Point-virgule</b> cochée, et l'aperçu du bas déjà découpé en cinq colonnes. Si c'est «&nbsp;Détecté (;)&nbsp;» qui est sélectionné, c'est bon aussi&nbsp;: le (;) dit que le point-virgule a été reconnu. <br><b>Puis&nbsp;:</b> clique <b>OK</b>.</figcaption>
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> dans «&nbsp;Options de séparateur&nbsp;», la case <b>Point-virgule</b> cochée, et l'aperçu du bas déjà découpé en cinq colonnes. <br>Si c'est «&nbsp;Détecté (;)&nbsp;» qui est sélectionné, c'est bon aussi&nbsp;: le (;) dit que le point-virgule a été reconnu. <br><b>Puis&nbsp;:</b> clique <b>OK</b>.</figcaption>
       </figure>
       <figure class="geste-capture">
         <img src="Images/geste_tableur_1b_ouvrir_resultat.png" width="1400" height="849" loading="lazy"
              alt="Fenêtre de LibreOffice Calc, en français et en mode sombre, dont la barre de titre indique releves_air_chengdu_simules.csv. La feuille montre cinq colonnes, de A à E : jour, heure, pm25_ug_m3, temperature_c, humidite_pct, et une trentaine de lignes de relevés, de lundi 06:00 à mercredi 10:00, chaque donnée dans sa propre cellule. Dans les colonnes C, D et E, les nombres sont alignés à droite, y compris 24,3 et 73,4.">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> chaque donnée est dans sa propre colonne, de A à E, avec les titres sur la ligne 1. Regarde la colonne <b>pm25_ug_m3</b>&nbsp;: les nombres sont <b>collés à droite</b> de leur cellule. C'est la preuve que le tableur les a compris comme des nombres, et non comme du texte.</figcaption>
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> chaque donnée est dans sa propre colonne, de A à E, avec les titres sur la ligne 1. <br>Regarde la colonne <b>pm25_ug_m3</b>&nbsp;: les nombres sont <b>collés à droite</b> de leur cellule. <br>C'est la preuve que le tableur les a compris comme des nombres, et non comme du texte.</figcaption>
       </figure>
       <figure class="geste-capture">
         <img src="Images/geste_tableur_1c_ouvrir_erreur_separateur.png" width="1400" height="849" loading="lazy"
              alt="La même fenêtre de LibreOffice Calc, mais après un import avec la Virgule comme séparateur. La ligne 1 tient tout entière dans la colonne A : jour;heure;pm25_ug_m3;temperature_c;humidite_pct. Chaque relevé, lui, est coupé en quatre morceaux : la colonne A contient « lundi;06:00;24 », la colonne B « 3;21 », la colonne C « 2;73 » et la colonne D « 4 ».">
-        <figcaption><b>Si tu vois ceci&nbsp;:</b> ta ligne de titres est collée dans la colonne A avec ses points-virgules, et chaque relevé est coupé en plein milieu de ses nombres — 24 d'un côté, 3 de l'autre. Le séparateur choisi n'était pas le bon&nbsp;: c'était la virgule, qui sert ici de <b>virgule décimale</b>. Ferme le fichier sans l'enregistrer (<b>Fichier → Fermer</b>), recommence <b>Fichier → Ouvrir…</b> et coche <b>Point-virgule</b>.</figcaption>
+        <figcaption><b>Si tu vois ceci&nbsp;:</b> ta ligne de titres est collée dans la colonne A avec ses points-virgules. <br>Et chaque relevé est coupé en plein milieu de ses nombres — 24 d'un côté, 3 de l'autre. <br>Le séparateur choisi n'était pas le bon&nbsp;: c'était la virgule, qui sert ici de <b>virgule décimale</b>. <br>Ferme le fichier sans l'enregistrer (<b>Fichier → Fermer</b>), recommence <b>Fichier → Ouvrir…</b> et coche <b>Point-virgule</b>.</figcaption>
       </figure>
+</details>
 
-      <details class="aide"><summary>💡 Astuce — élargir une colonne</summary><p>Si une colonne semble trop étroite (un mot coupé, un nombre collé à la colonne suivante), élargis-la&nbsp;: place le curseur sur la ligne fine entre deux lettres de colonnes (par exemple entre <b>C</b> et <b>D</b>), puis <b>double-clique</b> dessus — la colonne prend la largeur de son contenu. Pour toutes les colonnes d'un coup&nbsp;: clique sur la case vide en haut à gauche (au-dessus de la ligne 1, à gauche de la colonne A) pour tout sélectionner, puis un seul double-clic sur n'importe quelle ligne entre deux lettres suffit.</p></details>
+      <details class="aide"><summary>💡 Astuce — élargir une colonne</summary><p>Si une colonne semble trop étroite (un mot coupé, un nombre collé à la colonne suivante), élargis-la&nbsp;: place le curseur sur la ligne fine entre deux lettres de colonnes (par exemple entre <b>C</b> et <b>D</b>), puis <b>double-clique</b> dessus — la colonne prend la largeur de son contenu. <br>Pour toutes les colonnes d'un coup&nbsp;: clique sur la case vide en haut à gauche (au-dessus de la ligne 1, à gauche de la colonne A) pour tout sélectionner, puis un seul double-clic sur n'importe quelle ligne entre deux lettres suffit.</p></details>
     </li>
-    <li><b>Nommer.</b> <b>Fichier → Enregistrer sous…</b> tout de suite, au format <b>Classeur ODF (.ods)</b>, sous <code>5E-AIR-TON&nbsp;NOM</code>, dans <b>Documents</b>, dans le <b>dossier qui porte le nom de ta classe</b> (par exemple <code>5E1</code>). Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans la fenêtre d'enregistrement, ouvre Documents, clique sur <b>Nouveau dossier</b>, tape le nom de ta classe, valide, puis entre dedans.
-      <figure class="geste-capture">
+    <li><b>Nommer.</b> <b>Fichier → Enregistrer sous…</b> tout de suite&nbsp;: <br>• au format <b>Classeur ODF (.ods)</b>&nbsp;; <br>• sous <code>5E-AIR-TON&nbsp;NOM</code>&nbsp;; <br>• dans <b>Documents</b>, dans le <b>dossier qui porte le nom de ta classe</b> (par exemple <code>5E1</code>). <br>Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans la fenêtre d'enregistrement, ouvre Documents, clique sur <b>Nouveau dossier</b>, tape le nom de ta classe, valide, puis entre dedans.
+      <details class="geste-images"><summary>🖼 Le voir en images — 7 captures : ce que tu dois voir</summary>
+<figure class="geste-capture">
         <img src="Images/geste_tableur_2_nommer_documents.png" width="1400" height="136" loading="lazy"
              alt="Le haut de la boîte de dialogue « Enregistrer sous » de Windows, en mode sombre. Sur la ligne du chemin, une icône de dossier Documents puis, entre chevrons, le seul mot Documents. En dessous, la barre d'outils de la boîte avec les boutons Organiser et Nouveau dossier.">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le chemin, tout en haut, finit par <b>Documents</b>. Si la fenêtre s'ouvre ailleurs — Téléchargements, par exemple — clique sur <b>Documents</b> dans la colonne de gauche. <i>Seul le haut de la fenêtre est montré ici&nbsp;: en dessous, tu verras la liste de tes propres dossiers.</i> Cherche dedans celui qui porte le nom de ta classe&nbsp;: s'il y est, entre dedans (double-clic) et passe aux trois dernières images ; s'il n'y est pas, continue ci-dessous.</figcaption>
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> le chemin, tout en haut, finit par <b>Documents</b>. <br>Si la fenêtre s'ouvre ailleurs — Téléchargements, par exemple — clique sur <b>Documents</b> dans la colonne de gauche. <br><i>Seul le haut de la fenêtre est montré ici&nbsp;: en dessous, tu verras la liste de tes propres dossiers.</i><br>Cherche dedans celui qui porte le nom de ta classe&nbsp;: s'il y est, entre dedans (double-clic) et passe aux trois dernières images ; s'il n'y est pas, continue ci-dessous.</figcaption>
       </figure>
       <figure class="geste-capture">
         <img src="Images/geste_tableur_2b_nommer_bouton_nouveau_dossier.png" width="1400" height="136" loading="lazy"
@@ -1587,12 +1602,12 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       <figure class="geste-capture">
         <img src="Images/geste_tableur_2d_nommer_dossier_cree.png" width="1400" height="263" loading="lazy"
              alt="La même boîte « Enregistrer sous » après validation : la ligne porte maintenant le nom 5E1 écrit normalement, avec l'icône de dossier, la date du jour et la mention Dossier dans la colonne Type.">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> la case où tu écrivais a disparu, et ton dossier porte son nom, avec la mention <b>Dossier</b> dans la colonne Type. Windows n'entre pas dedans tout seul&nbsp;: <b>double-clique</b> sur son nom pour y entrer. <br><i>5E1 est un exemple.</i></figcaption>
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> la case où tu écrivais a disparu, et ton dossier porte son nom, avec la mention <b>Dossier</b> dans la colonne Type. <br>Windows n'entre pas dedans tout seul&nbsp;: <b>double-clique</b> sur son nom pour y entrer. <br><i>5E1 est un exemple.</i></figcaption>
       </figure>
       <figure class="geste-capture">
         <img src="Images/geste_tableur_2e_nommer_enregistrer_sous.png" width="1400" height="1303" loading="lazy"
              alt="La boîte « Enregistrer sous » entière, maintenant dans le dossier de la classe : le chemin, en haut, indique Documents puis 5E1, et la liste des fichiers affiche « Aucun élément ne correspond à votre recherche ». En bas, le champ « Nom du fichier » contient 5E-AIR-DUPONT et le champ « Type » affiche « Classeur ODF (*.ods) ». La case « Extensi… », qui ajoute l'extension automatiquement, est cochée. En bas à droite, les boutons Enregistrer et Annuler.">
-        <figcaption><b>Ce que tu dois voir avant d'enregistrer&nbsp;:</b> trois choses. Le chemin, en haut, finit par <b>Documents</b> puis <b>le nom de ta classe</b> ; le <b>Nom du fichier</b> suit la consigne ; <b>Type&nbsp;: Classeur ODF (*.ods)</b> — si tu lis encore «&nbsp;Texte CSV&nbsp;», ouvre la liste et choisis Classeur ODF. <br><b>Puis&nbsp;:</b> <b>Enregistrer</b>. <br><i>DUPONT et 5E1 sont des exemples&nbsp;: mets ton nom et ta classe.</i></figcaption>
+        <figcaption><b>Ce que tu dois voir avant d'enregistrer&nbsp;:</b> trois choses. <br>Le chemin, en haut, finit par <b>Documents</b> puis <b>le nom de ta classe</b> ; <br>le <b>Nom du fichier</b> suit la consigne ; <br><b>Type&nbsp;: Classeur ODF (*.ods)</b> — si tu lis encore «&nbsp;Texte CSV&nbsp;», ouvre la liste et choisis Classeur ODF. <br><b>Puis&nbsp;:</b> <b>Enregistrer</b>. <br><i>DUPONT et 5E1 sont des exemples&nbsp;: mets ton nom et ta classe.</i></figcaption>
       </figure>
       <figure class="geste-capture">
         <img src="Images/geste_tableur_2f_nommer_resultat.png" width="1400" height="849" loading="lazy"
@@ -1602,14 +1617,16 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       <figure class="geste-capture">
         <img src="Images/geste_tableur_2g_nommer_explorateur.png" width="1400" height="577" loading="lazy"
              alt="Fenêtre de l'Explorateur de fichiers de Windows, en français et en mode sombre. La barre d'adresse, repliée, indique des points de suspension puis Documents puis 5E1. La liste contient un seul fichier, 5E-AIR-DUPONT.ods, avec sa date de modification et le type Feuille de calcul. En bas à gauche, « 1 élément ».">
-        <figcaption><b>Pour vérifier, ou pour le retrouver plus tard&nbsp;:</b> ouvre l'<b>Explorateur de fichiers</b> de Windows, va dans <b>Documents</b>, puis dans le dossier de ta classe&nbsp;: ton fichier <b>.ods</b> est là. Ce chemin — Documents, puis ta classe — est celui à refaire à la séance suivante. <br><i>5E1 et DUPONT sont des exemples.</i></figcaption>
+        <figcaption><b>Pour vérifier, ou pour le retrouver plus tard&nbsp;:</b> ouvre l'<b>Explorateur de fichiers</b> de Windows, va dans <b>Documents</b>, puis dans le dossier de ta classe&nbsp;: ton fichier <b>.ods</b> est là. <br>Ce chemin — Documents, puis ta classe — est celui à refaire à la séance suivante. <br><i>5E1 et DUPONT sont des exemples.</i></figcaption>
       </figure>
+</details>
     </li>
     <li><b>Retrouver.</b> Le tableur n'enregistre pas tout seul&nbsp;: <kbd>Ctrl</kbd>+<kbd>S</kbd> après chaque série de saisies. Rouvre ton fichier au début de la séance suivante pour vérifier qu'il est complet.
-      <figure class="geste-capture">
+      <details class="geste-images"><summary>🖼 Le voir en images — 3 captures : ce que tu dois voir</summary>
+<figure class="geste-capture">
         <img src="Images/geste_tableur_3_retrouver_avant_ctrl_s.png" width="1400" height="849" loading="lazy"
              alt="Fenêtre de LibreOffice Calc, fichier 5E-AIR-DUPONT.ods, en mode sombre. La feuille est descendue jusqu'au bas des relevés : on lit les dernières lignes de dimanche, dont 251 à 16 h, puis la ligne 92 où le mot « moyenne » vient d'être tapé en A92. En bas à gauche, dans la barre d'état, l'icône en forme de disquette est rouge, ce qui signale des modifications non enregistrées.">
-        <figcaption><b>Ce que tu dois voir avant Ctrl+S&nbsp;:</b> tu as tapé quelque chose (ici «&nbsp;moyenne&nbsp;» en A92, sous la dernière ligne de relevés, un exemple), et en bas à gauche de la fenêtre, la petite icône de la barre d'état est <b>rouge</b>&nbsp;: ce qui est à l'écran n'est pas encore sur le disque. Le raccourci n'ouvre aucune fenêtre&nbsp;: c'est cette icône qui te répond.</figcaption>
+        <figcaption><b>Ce que tu dois voir avant Ctrl+S&nbsp;:</b> tu as tapé quelque chose (ici «&nbsp;moyenne&nbsp;» en A92, sous la dernière ligne de relevés, un exemple). <br>En bas à gauche de la fenêtre, la petite icône de la barre d'état est <b>rouge</b>&nbsp;: ce qui est à l'écran n'est pas encore sur le disque. <br>Le raccourci n'ouvre aucune fenêtre&nbsp;: c'est cette icône qui te répond.</figcaption>
       </figure>
       <figure class="geste-capture">
         <img src="Images/geste_tableur_3b_retrouver_apres_ctrl_s.png" width="1400" height="849" loading="lazy"
@@ -1619,20 +1636,23 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       <figure class="geste-capture">
         <img src="Images/geste_tableur_3c_retrouver_rouvrir.png" width="1400" height="812" loading="lazy"
              alt="Boîte de dialogue « Ouvrir » de Windows, en mode sombre. Le chemin, en haut, indique Documents puis 5E1. La liste montre un seul fichier, 5E-AIR-DUPONT.ods, sélectionné et coché, de type Feuille de calcul. En bas, le champ « Nom du fichier » contient 5E-AIR-DUPONT.ods et le bouton Ouvrir est à droite.">
-        <figcaption><b>Pour rouvrir à la séance suivante&nbsp;:</b> <b>Fichier → Ouvrir…</b>, va dans <b>Documents</b>, puis dans le dossier de ta classe, et choisis le fichier qui finit par <b>.ods</b> — pas le .csv, qui est le fichier de départ, sans ton travail. Le nom complet s'écrit en bas, dans <b>Nom du fichier</b>&nbsp;: c'est là qu'on vérifie. <br><i>Le nom et le dossier sont des exemples.</i></figcaption>
+        <figcaption><b>Pour rouvrir à la séance suivante&nbsp;:</b> <b>Fichier → Ouvrir…</b>, va dans <b>Documents</b>, puis dans le dossier de ta classe. <br>Choisis le fichier qui finit par <b>.ods</b> — pas le .csv, qui est le fichier de départ, sans ton travail. <br>Le nom complet s'écrit en bas, dans <b>Nom du fichier</b>&nbsp;: c'est là qu'on vérifie. <br><i>Le nom et le dossier sont des exemples.</i></figcaption>
       </figure>
+</details>
     </li>
-    <li><b>Sortir.</b> Le classeur est le rendu. D'abord, fais le graphique&nbsp;: sélectionne les colonnes <b>B</b> et <b>C</b> (<code>heure</code>, <code>pm25_ug_m3</code>) des douze lignes du lundi, puis <b>Insertion → Diagramme…</b>, garde le type <b>Colonnes</b>, et <b>Terminer</b>. Un graphique se copie dans le compte rendu, ou s'exporte en image par un clic droit.
-      <figure class="geste-capture">
+    <li><b>Sortir.</b> Le classeur est le rendu. <br>D'abord, fais le graphique&nbsp;: <br>① sélectionne les colonnes <b>B</b> et <b>C</b> (<code>heure</code>, <code>pm25_ug_m3</code>) des douze lignes du lundi&nbsp;; <br>② <b>Insertion → Diagramme…</b>&nbsp;; <br>③ garde le type <b>Colonnes</b>, et <b>Terminer</b>. <br>Un graphique se copie dans le compte rendu, ou s'exporte en image par un clic droit.
+      <details class="geste-images"><summary>🖼 Le voir en images — 2 captures : ce que tu dois voir</summary>
+<figure class="geste-capture">
         <img src="Images/geste_tableur_4_sortir_clic_droit_graphique.png" width="1400" height="849" loading="lazy"
              alt="Fenêtre de LibreOffice Calc en mode sombre avec un diagramme en colonnes posé sur la feuille et sélectionné : de petites poignées carrées l'entourent. Un menu contextuel est ouvert par-dessus : Couper, Copier, Coller, Position et taille, Ancre, Positionner, Nom, Texte alternatif, Assigner la macro, Exporter comme image, Éditer. Le diagramme porte la légende pm25_ug_m3 et ses douze colonnes se lisent heure par heure, de 06:00 à 18:00. Derrière, on lit les relevés de lundi, mardi et mercredi, dont la valeur négative −4,2 à la ligne 32.">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> un <b>clic</b> sur le graphique (des petites poignées carrées apparaissent autour), puis un <b>clic droit</b>&nbsp;: le menu propose <b>Copier</b> (pour le coller dans le compte rendu) et <b>Exporter comme image</b>. <br><i>Le graphique montré est un exemple, construit sur les douze relevés du lundi.</i></figcaption>
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> un <b>clic</b> sur le graphique (des petites poignées carrées apparaissent autour). <br>Puis un <b>clic droit</b>&nbsp;: le menu propose <b>Copier</b> (pour le coller dans le compte rendu) et <b>Exporter comme image</b>. <br><i>Le graphique montré est un exemple, construit sur les douze relevés du lundi.</i></figcaption>
       </figure>
       <figure class="geste-capture">
         <img src="Images/geste_tableur_4b_sortir_enregistrer_image.png" width="1400" height="812" loading="lazy"
              alt="Boîte de dialogue « Enregistrer en tant qu'image » de Windows, en mode sombre, ouverte sur le dossier de la classe : le chemin indique Documents puis 5E1, et la liste affiche « Aucun élément ne correspond à votre recherche » parce que seules les images y sont affichées. Le champ « Nom du fichier » contient graphique-5E-AIR-DUPONT ; le champ « Type » affiche PNG - Portable Network Graphics. Le bouton Enregistrer est en bas à droite.">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> après <b>Exporter comme image</b>, cette boîte s'ouvre ; garde le type <b>PNG</b>, donne un nom, vérifie que le chemin finit par le nom de ta classe, <b>Enregistrer</b>. Le fichier image apparaît dans ton dossier, à côté du classeur. <br><i>Le nom et le dossier sont des exemples.</i></figcaption>
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> après <b>Exporter comme image</b>, cette boîte s'ouvre ; garde le type <b>PNG</b>, donne un nom, vérifie que le chemin finit par le nom de ta classe, <b>Enregistrer</b>. <br>Le fichier image apparaît dans ton dossier, à côté du classeur. <br><i>Le nom et le dossier sont des exemples.</i></figcaption>
       </figure>
+</details>
     </li>
   </ol>
 </section>
@@ -1644,7 +1664,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <p>Le capteur tourne depuis une semaine. Le fichier
   <a href="releves_air_chengdu_simules.csv" download title="Télécharger releves_air_chengdu_simules.csv">📥&nbsp;<code>releves_air_chengdu_simules.csv</code></a> contient <b>90 relevés</b>&nbsp;: jour, heure,
   PM2.5 en µg/m³, température, humidité.</p>
-  <p style="color:var(--warn)"><b>Il contient aussi quatre anomalies.</b> Aucune n'est signalée. Tu
+  <p style="color:var(--warn)"><b>Il contient aussi quatre anomalies.</b><br>Aucune n'est signalée. <br>Tu
   dois les trouver avant de calculer quoi que ce soit&nbsp;: <b>une moyenne calculée sur des données
   sales est fausse, et elle a l'air juste.</b></p>
 
@@ -1687,16 +1707,16 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 
   <h4>b) Deux chemins vers le même travail</h4>
   <p>Ce qui est évalué ici, c'est ta capacité à <b>reconnaître ce qui n'est pas une mesure</b> et à
-  dire ce que cela coûte au résultat. Le tableur est un <b>outil</b>&nbsp;: il fait le calcul, il ne
-  fait pas le raisonnement. Deux chemins mènent donc aux mêmes réponses — choisis le tien, ou suis
+  dire ce que cela coûte au résultat. <br>Le tableur est un <b>outil</b>&nbsp;: il fait le calcul, il ne
+  fait pas le raisonnement. <br>Deux chemins mènent donc aux mêmes réponses — choisis le tien, ou suis
   celui que ton professeur indique.</p>
   <div class="assoc">
     <p style="margin:0"><b>🔵 Chemin autonome</b>&nbsp;: tu ouvres le fichier
     <a href="releves_air_chengdu_simules.csv" download title="Télécharger releves_air_chengdu_simules.csv">📥&nbsp;<code>releves_air_chengdu_simules.csv</code></a> dans un tableur, tu tries, tu repères, tu calcules
     les deux moyennes toi-même. Les modes opératoires sont juste en dessous.</p>
     <p style="margin:.5em 0 0"><b>🟢 Chemin guidé</b>&nbsp;: si le tableur n'est pas disponible, ou
-    s'il te ralentit, ouvre l'extrait ci-dessous. Il contient les lignes suspectes déjà sorties du
-    fichier et les deux moyennes déjà calculées. <b>Le travail restant est exactement le
+    s'il te ralentit, ouvre l'extrait ci-dessous. <br>Il contient les lignes suspectes déjà sorties du
+    fichier et les deux moyennes déjà calculées. <br><b>Le travail restant est exactement le
     même</b>&nbsp;: dire ce qui ne va pas dans chacune, et ce que l'écart entre les deux moyennes
     signifie.</p>
   </div>
@@ -1740,32 +1760,32 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       <figure class="geste-capture">
         <img src="Images/geste_activite2_trier_2_resultat.png" width="1400" height="849" loading="lazy"
              alt="La même feuille après le tri. La ligne 1 garde les titres ; la ligne 2 est mercredi 11:00 avec −4,2 dans la colonne pm25_ug_m3, puis 10,1 ; 13 ; 16 ; 16,4… en ordre croissant. Chaque ligne a gardé son jour, son heure, sa température et son humidité.">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> les titres sont restés en ligne 1, et la première valeur de <code>pm25_ug_m3</code> est <b>−4,2</b> — la valeur impossible arrive en tête, comme le mode opératoire l'annonce. Regarde aussi la colonne A&nbsp;: <b>mercredi 11:00</b> a suivi sa valeur. Un relevé est une ligne entière&nbsp;: elle se déplace d'un bloc.</figcaption>
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> les titres sont restés en ligne 1, et la première valeur de <code>pm25_ug_m3</code> est <b>−4,2</b> — la valeur impossible arrive en tête, comme le mode opératoire l'annonce. <br>Regarde aussi la colonne A&nbsp;: <b>mercredi 11:00</b> a suivi sa valeur. Un relevé est une ligne entière&nbsp;: elle se déplace d'un bloc.</figcaption>
       </figure>
       
       <figure class="geste-capture">
         <img src="Images/geste_activite2_trier_3_erreur_etendre.png" width="1400" height="849" loading="lazy"
              alt="La même fenêtre, avec seulement la colonne C (C1:C91) sélectionnée, et une boîte « Trier la plage » ouverte par-dessus. Elle dit : « Les cellules proches de la sélection active contiennent également des données. Voulez-vous étendre la plage de tri de A1:E91, ou trier la plage actuellement sélectionnée, C1:C91 ? » Trois boutons : Étendre la sélection, Sélection active, Annuler.">
-        <figcaption><b>Si tu vois ceci&nbsp;:</b> tu n'as sélectionné qu'<b>une</b> colonne avant de trier. Calc te le dit, et te propose d'étendre&nbsp;: <b>choisis Étendre la sélection</b>. Pourquoi&nbsp;: une ligne est un relevé, ses cinq cellules restent ensemble. «&nbsp;Sélection active&nbsp;» trierait la colonne toute seule, et chaque valeur perdrait son jour et son heure.</figcaption>
+        <figcaption><b>Si tu vois ceci&nbsp;:</b> tu n'as sélectionné qu'<b>une</b> colonne avant de trier. <br>Calc te le dit, et te propose d'étendre&nbsp;: <b>choisis Étendre la sélection</b>. <br>Pourquoi&nbsp;: une ligne est un relevé, ses cinq cellules restent ensemble. «&nbsp;Sélection active&nbsp;» trierait la colonne toute seule, et chaque valeur perdrait son jour et son heure.</figcaption>
       </figure>
       </li>
       <li><b>Moyenne</b>&nbsp;: <code>=MOYENNE(C2:C91)</code>
       <figure class="geste-capture">
         <img src="Images/geste_activite2_formule_1_saisie.png" width="1400" height="849" loading="lazy"
              alt="Fenêtre de LibreOffice Calc descendue au bas des relevés, lignes 76 à 108. En A92, le mot « moyenne » ; en C92, juste sous la dernière valeur (251 en C91), la formule =MOYENNE(C2:C91) est en cours de saisie : elle s'affiche à la fois dans la cellule et dans la barre de formule, à côté des icônes de saisie ✗ et ✓.">
-        <figcaption><b>Ce que tu dois voir&nbsp;:</b> la cellule sous la colonne <code>pm25_ug_m3</code> (ici <b>C92</b>) active, et <code>=MOYENNE(C2:C91)</code> écrit à la fois dans la cellule et dans la barre de formule, <b>avant</b> d'appuyer sur Entrée. Le <b>=</b> est le premier caractère&nbsp;: c'est lui qui dit à Calc de calculer. <br><i>«&nbsp;moyenne&nbsp;» en A92 est une étiquette, un exemple.</i></figcaption>
+        <figcaption><b>Ce que tu dois voir&nbsp;:</b> la cellule sous la colonne <code>pm25_ug_m3</code> (ici <b>C92</b>) active, et <code>=MOYENNE(C2:C91)</code> écrit à la fois dans la cellule et dans la barre de formule, <b>avant</b> d'appuyer sur Entrée. <br>Le <b>=</b> est le premier caractère&nbsp;: c'est lui qui dit à Calc de calculer. <br><i>«&nbsp;moyenne&nbsp;» en A92 est une étiquette, un exemple.</i></figcaption>
       </figure>
       
       <figure class="geste-capture">
         <img src="Images/geste_activite2_formule_2_resultat.png" width="1400" height="849" loading="lazy"
              alt="La même fenêtre après Entrée, la cellule C92 de nouveau sélectionnée : elle affiche 27,363333333, aligné à droite comme un nombre, et la barre de formule, en haut, affiche encore =MOYENNE(C2:C91).">
-        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> la cellule affiche <b>27,363…</b> — la moyenne brute, que la page arrondit à <b>27,4&nbsp;µg/m³</b> — et la barre de formule, elle, montre encore <code>=MOYENNE(C2:C91)</code>. Deux vues d'une même cellule&nbsp;: la <b>formule</b> dans la barre, le <b>résultat</b> dans la grille. <br><i>La valeur est celle du fichier de la séquence.</i></figcaption>
+        <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> la cellule affiche <b>27,363…</b> — la moyenne brute, que la page arrondit à <b>27,4&nbsp;µg/m³</b> — et la barre de formule, elle, montre encore <code>=MOYENNE(C2:C91)</code>. <br>Deux vues d'une même cellule&nbsp;: la <b>formule</b> dans la barre, le <b>résultat</b> dans la grille. <br><i>La valeur est celle du fichier de la séquence.</i></figcaption>
       </figure>
       
       <figure class="geste-capture">
         <img src="Images/geste_activite2_formule_3_erreur_sans_egal.png" width="1400" height="849" loading="lazy"
              alt="La même fenêtre, cellule C93 sélectionnée : elle affiche le texte MOYENNE(C2:C91) aligné à gauche, sans résultat, et la barre de formule montre le même texte, sans le signe =. Au-dessus, C92 affiche bien 27,363333333.">
-        <figcaption><b>Si tu vois ceci&nbsp;:</b> la cellule répète ta formule en toutes lettres, collée à gauche, sans nombre — tu as oublié le <b>=</b>. Sans lui, Calc range ce que tu tapes comme du <b>texte</b>. Reviens dans la cellule, ajoute <b>=</b> devant, valide.</figcaption>
+        <figcaption><b>Si tu vois ceci&nbsp;:</b> la cellule répète ta formule en toutes lettres, collée à gauche, sans nombre — tu as oublié le <b>=</b>. <br>Sans lui, Calc range ce que tu tapes comme du <b>texte</b>. <br>Reviens dans la cellule, ajoute <b>=</b> devant, valide.</figcaption>
       </figure>
       </li>
       <li><b>Moyenne sans les valeurs fausses</b>&nbsp;:
@@ -1809,7 +1829,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     plusieurs heures de suite), l'autre est une <b>absence</b> (compte les lignes d'une journée&nbsp;:
     il devrait y en avoir 13).</p>
     <p>Un capteur qui répète exactement la même valeur pendant six heures a très probablement
-    cessé de mesurer&nbsp;: il est figé. Une vraie mesure varie presque toujours un peu. Ce n'est
+    cessé de mesurer&nbsp;: il est figé. <br>Une vraie mesure varie presque toujours un peu. Ce n'est
     pas une preuve, c'est un fort soupçon&nbsp;: on le signale, et on va vérifier l'appareil.</p></details>
 
   <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
@@ -1821,9 +1841,9 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       <li><b>Mercredi 11 h&nbsp;: −4,2 µg/m³.</b> Impossible&nbsp;: une concentration est une
       quantité de matière, elle ne peut pas être négative. Sans doute une erreur du capteur au
       moment d'un redémarrage.</li>
-      <li><b>Vendredi, de 9 h à 14 h&nbsp;: 23,7 six fois de suite.</b> Très probablement un <b>capteur
-      figé</b>. Une vraie mesure varie presque toujours un peu&nbsp;: à 0,1 près, six valeurs
-      strictement identiques d'affilée sont très improbables. Ce n'est pas une preuve — on le
+      <li><b>Vendredi, de 9 h à 14 h&nbsp;: 23,7 six fois de suite.</b><br>Très probablement un <b>capteur
+      figé</b>. <br>Une vraie mesure varie presque toujours un peu&nbsp;: à 0,1 près, six valeurs
+      strictement identiques d'affilée sont très improbables. <br>Ce n'est pas une preuve — on le
       signale comme suspect, on vérifie le capteur, et on ne conclut rien sur l'air de ce
       vendredi.</li>
       <li><b>Lundi 14 h&nbsp;: relevé manquant.</b> La journée ne compte que 12 lignes au lieu de 13.
@@ -1831,15 +1851,13 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       <li><b>Dimanche 16 h&nbsp;: 251,0</b> alors que les heures voisines sont vers 25. Une
       <b>virgule décalée</b>&nbsp;: 25,1 est devenu 251.</li>
     </ol>
-    <p><b>Les moyennes</b>&nbsp;: <b>27,4 µg/m³</b> avec les valeurs fausses, <b>25,2 µg/m³</b> sans.
-    L'écart paraît petit — 2,2 µg/m³ — et il vient de <b>deux valeurs sur quatre-vingt-dix</b> (−4,2 et 251).
-    C'est exactement pour cela qu'il est dangereux&nbsp;: <b>une moyenne calculée sur des données
-    sales n'a pas l'air fausse.</b> Rien ne signale l'erreur.</p>
+    <p><b>Les moyennes</b>&nbsp;: <b>27,4 µg/m³</b> avec les valeurs fausses, <b>25,2 µg/m³</b> sans. <br>L'écart paraît petit — 2,2 µg/m³ — et il vient de <b>deux valeurs sur quatre-vingt-dix</b> (−4,2 et 251). <br>C'est exactement pour cela qu'il est dangereux&nbsp;: <b>une moyenne calculée sur des données
+    sales n'a pas l'air fausse.</b><br>Rien ne signale l'erreur.</p>
     <p><b>Ce qu'on fait des valeurs fausses</b>&nbsp;: on les <b>écarte du calcul</b>, mais on les
     <b>garde dans le fichier</b> avec une note. Les effacer, c'est perdre la trace d'un
     dysfonctionnement du capteur — et c'est justement ce qu'il faut signaler au technicien.</p>
     <p class="meta">🔎 <b>Et pendant que tu triais, tu as peut-être vu autre chose&nbsp;:</b> les
-    <b>mardis et jeudis à 7 h</b>, la valeur monte à 67-69 µg/m³ contre 26-28 les autres jours. Ce
+    <b>mardis et jeudis à 7 h</b>, la valeur monte à 67-69 µg/m³ contre 26-28 les autres jours. <br>Ce
     n'est pas une anomalie — c'est un <b>fait</b>, et il reviendra à la séance 5.</p>
   </details>
   <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on <b>nettoie avant de calculer</b>. Une moyenne
@@ -1952,7 +1970,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un nom de fichier s'écrit pour <b>celui qui
   cherchera</b> — souvent soi-même, dans six mois, et sans souvenir.</p>
   <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: ranger par date de création plutôt que par
-  nature. On cherche presque toujours «&nbsp;le graphique&nbsp;», rarement «&nbsp;ce que j'ai fait
+  nature. <br>On cherche presque toujours «&nbsp;le graphique&nbsp;», rarement «&nbsp;ce que j'ai fait
   le 17 mars&nbsp;».</p>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s4" type="button">Séance 4 — Partager ›</button></p>
@@ -1964,9 +1982,9 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <div class="meta"><b>Objectif</b> décrire le rôle d'un système d'information dans le partage ·
   <b>Compétence</b> 5e_C1.3 · <b>Production</b> les quatre étages, et qui a le droit de faire quoi</div>
 
-  <p>Le capteur mesure. Le tableur calcule. Le graphique s'affiche sur l'ENT. Entre les deux, il y a
+  <p>Le capteur mesure. <br>Le tableur calcule. <br>Le graphique s'affiche sur l'ENT. Entre les deux, il y a
   des fichiers, un serveur, des personnes et des droits&nbsp;: <b>c'est cela, un système
-  d'information.</b> Ce n'est pas une machine — c'est une <b>chaîne</b>.</p>
+  d'information.</b><br>Ce n'est pas une machine — c'est une <b>chaîne</b>.</p>
 
   <fieldset class="qcm-groupe" id="a4_1">
   <legend>Un système d'information, c'est&nbsp;:</legend>
@@ -2055,7 +2073,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   personnes et d'outils</b>, pas une machine. Chaque étage transforme la donnée&nbsp;; chaque étage
   a ses droits.</p>
   <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: croire qu'une donnée «&nbsp;circule&nbsp;» sans
-  changer. Elle est nettoyée, calculée, mise en forme — et à la fin, ce qu'on lit n'est plus ce que
+  changer. <br>Elle est nettoyée, calculée, mise en forme — et à la fin, ce qu'on lit n'est plus ce que
   le capteur a mesuré.</p>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s5" type="button">Séance 5 — Protéger, puis répondre ›</button></p>
@@ -2068,9 +2086,9 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   publication · <b>Compétences</b> 5e_C1.5 et 5e_C1.6 · <b>Production</b> les mesures de sécurité, et
   la décision de publication justifiée</div>
 
-  <p><b>Ce qui s'est passé.</b> Le fichier de relevés a été déposé sur l'ENT du collège pour que
-  chacun puisse travailler dessus. Trois jours plus tard, le professeur l'ouvre&nbsp;: <b>quatre
-  valeurs ont changé</b>, et la moyenne n'est plus la même. Personne n'a rien dit.</p>
+  <p><b>Ce qui s'est passé.</b><br>Le fichier de relevés a été déposé sur l'ENT du collège pour que
+  chacun puisse travailler dessus. <br>Trois jours plus tard, le professeur l'ouvre&nbsp;: <b>quatre
+  valeurs ont changé</b>, et la moyenne n'est plus la même. <br>Personne n'a rien dit.</p>
 
   <h4>a) Sécuriser (5e_C1.5)</h4>
   <fieldset class="qcm-groupe" id="a5_1">
@@ -2119,11 +2137,11 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     <li>«&nbsp;Mesure 3&nbsp;: ____. Cela empêche ____.&nbsp;»</li></ul></details>
 
   <h4>b) Répondre (5e_C1.6)</h4>
-  <p>Le fichier est restauré. En le nettoyant, la classe remarque enfin ce que le tri avait montré
+  <p>Le fichier est restauré. <br>En le nettoyant, la classe remarque enfin ce que le tri avait montré
   dès la séance 2&nbsp;: <b>les mardis et jeudis à 7 h, la valeur monte à 67 µg/m³ (microgrammes par mètre cube)</b> contre 26 les
   autres jours.</p>
   <p>La classe cherche, et trouve&nbsp;: <b>la balayeuse mécanique passe dans la cour ces jours-là,
-  à cette heure-là.</b> Le fait est exact. Et dans ce collège, <b>une seule personne conduit cette
+  à cette heure-là.</b><br>Le fait est exact. Et dans ce collège, <b>une seule personne conduit cette
   balayeuse.</b></p>
 
   <figure class="fig">
@@ -2178,7 +2196,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     <p>Écris d'abord ce que tu veux <b>obtenir</b> — que le nettoyage change d'heure. Puis demande-toi
     le minimum d'informations nécessaire pour l'obtenir.</p></details>
   <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
-    <p>Une publication utile désigne <b>ce qu'il faut changer</b>, pas <b>qui a mal fait</b>. Ici,
+    <p>Une publication utile désigne <b>ce qu'il faut changer</b>, pas <b>qui a mal fait</b>. <br>Ici,
     rien n'a été mal fait&nbsp;: quelqu'un nettoie la cour, c'est son travail, et c'est l'<b>horaire</b>
     qui pose problème.</p>
     <p>Test avant de publier&nbsp;: <b>si cette personne lisait ta publication, pourrait-elle
@@ -2209,14 +2227,13 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     <p style="margin-top:14px"><b>La publication.</b> Voici la version <b>C</b>, développée&nbsp;:</p>
     <blockquote style="border-left:4px solid var(--ok);margin:8px 0;padding:2px 14px">
       «&nbsp;Les relevés du capteur de la cour montrent une concentration de particules
-      <b>2,5 fois plus élevée</b> les mardis et jeudis à 7 h (67 µg/m³ contre 26 les autres jours).
-      Ce pic correspond au <b>nettoyage mécanique de la cour</b>, programmé ces jours-là à cette
-      heure. Nous proposons de <b>décaler ce nettoyage</b> avant l'arrivée des élèves, ou de
+      <b>2,5 fois plus élevée</b> les mardis et jeudis à 7 h (67 µg/m³ contre 26 les autres jours). <br>Ce pic correspond au <b>nettoyage mécanique de la cour</b>, programmé ces jours-là à cette
+      heure. <br>Nous proposons de <b>décaler ce nettoyage</b> avant l'arrivée des élèves, ou de
       l'effectuer en fin de journée.&nbsp;»
     </blockquote>
     <p><b>Ce qui a été écarté</b>&nbsp;: le nom de l'agent, sa photo, et toute formule qui permettrait
     de le reconnaître — y compris «&nbsp;la personne qui passe la balayeuse&nbsp;», qui dans un
-    collège ne désigne qu'une personne. <b>Pour protéger</b> quelqu'un qui n'a rien fait de mal&nbsp;:
+    collège ne désigne qu'une personne. <br><b>Pour protéger</b> quelqu'un qui n'a rien fait de mal&nbsp;:
     il fait son travail, à l'heure qu'on lui a donnée.</p>
     <p><b>Et ce qui n'a pas été écarté</b>&nbsp;: le chiffre, la cause et la proposition. Sans eux, la
     publication serait honnête et <b>inutile</b> — et l'air de la cour resterait le même.</p>
@@ -2225,10 +2242,10 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     ce qui est mis en cause est un <b>horaire</b>, pas quelqu'un.</p>
   </details>
   <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on n'a pas le choix des faits, on a le choix de
-  <b>ce qu'on en publie</b>. La question n'est pas «&nbsp;est-ce vrai&nbsp;?&nbsp;» mais
+  <b>ce qu'on en publie</b>. <br>La question n'est pas «&nbsp;est-ce vrai&nbsp;?&nbsp;» mais
   «&nbsp;<b>qui cela désigne, et pour quel effet&nbsp;?</b>&nbsp;»</p>
   <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: croire qu'une information est anonyme parce
-  qu'elle ne contient pas de nom. Dans un petit groupe, une fonction, un horaire ou une habitude
+  qu'elle ne contient pas de nom. <br>Dans un petit groupe, une fonction, un horaire ou une habitude
   suffisent à désigner quelqu'un.</p>
   <p><b>Critère de réussite</b>&nbsp;: tes trois mesures disent ce qu'elles empêchent, et ta
   publication contient le chiffre, la cause et une proposition — sans permettre de reconnaître
@@ -2237,10 +2254,11 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 
 <section class="card approfondissement">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+<details class="bonus-replie"><summary>🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini</summary>
   <p class="meta">Réponds dans les cadres avant d'ouvrir le corrigé : c'est en cherchant
   que le corrigé devient utile.</p>
   <p><b>1.</b> Cherche une <b>donnée publique</b> sur ta commune — qualité de l'air, pluviométrie,
-  fréquentation d'un équipement. Combien de temps te faut-il pour la trouver&nbsp;? Est-elle
+  fréquentation d'un équipement. <br>Combien de temps te faut-il pour la trouver&nbsp;? Est-elle
   téléchargeable, ou seulement affichée&nbsp;?
     <div class="assoc">
       <label for="bonus1" style="display:block">La donnée trouvée, le temps qu'il m'a fallu, et si elle est téléchargeable :</label>
@@ -2263,22 +2281,22 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   </p>
 
   <details class="correction"><summary>📖 Corrigé du Bonus — un exemple entièrement traité</summary>
-    <p><b>1. Une donnée publique sur la commune.</b> Exemple pris&nbsp;: la qualité de l'air en
+    <p><b>1. Une donnée publique sur la commune.</b><br>Exemple pris&nbsp;: la qualité de l'air en
     Martinique, publiée par l'association agréée de surveillance (Gwad'Air / Madininair selon les
-    territoires). <b>Sept minutes</b> pour trouver la page, et une découverte&nbsp;: la valeur du
+    territoires). <br><b>Sept minutes</b> pour trouver la page, et une découverte&nbsp;: la valeur du
     jour s'affiche, mais l'historique n'est téléchargeable qu'en demandant.</p>
     <p><b>Ce qu'on apprend en cherchant</b>&nbsp;: une donnée «&nbsp;publique&nbsp;» n'est pas
     toujours <b>réutilisable</b>. Voir un chiffre et pouvoir le traiter sont deux choses
     différentes — et c'est exactement la distinction entre <b>diffusion</b> et <b>partage</b> vue à
     la séance 4.</p>
-    <p><b>2. Le rangement de mon dossier.</b> 47 fichiers au départ. Après application des quatre
-    règles&nbsp;: 31 fichiers, dans 4 dossiers. <b>16 supprimés</b> — dont neuf doublons
+    <p><b>2. Le rangement de mon dossier.</b><br>47 fichiers au départ. <br>Après application des quatre
+    règles&nbsp;: 31 fichiers, dans 4 dossiers. <br><b>16 supprimés</b> — dont neuf doublons
     (<code>DM (1).odt</code>, <code>DM (2).odt</code>…), quatre brouillons vides, et trois captures
     d'écran dont je ne savais plus à quoi elles servaient.</p>
     <p><b>Ce qui surprend</b>&nbsp;: le tiers du dossier ne servait à rien, et il n'était pas
     identifiable avant qu'on regarde chaque fichier un par un. C'est le prix des mauvais noms.</p>
-    <p><b>3. Une donnée exacte qui désigne quelqu'un.</b> Exemple pris&nbsp;: un collège publie le
-    <b>taux de réussite au DNB par classe</b>. Les chiffres sont exacts. Mais avec une seule classe
+    <p><b>3. Une donnée exacte qui désigne quelqu'un.</b><br>Exemple pris&nbsp;: un collège publie le
+    <b>taux de réussite au DNB par classe</b>. <br>Les chiffres sont exacts. <br>Mais avec une seule classe
     de 3e B, «&nbsp;la 3e B a 62 %&nbsp;» désigne aussi <b>le professeur principal de la 3e B</b>, et
     trente élèves reconnaissables par leurs camarades.</p>
     <p><b>Ce qu'il aurait fallu publier</b>&nbsp;: le taux <b>de l'établissement</b>, et son évolution
@@ -2288,6 +2306,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     donnée est exacte, l'échelle de publication est ce qui décide qui elle désigne. <b>Changer
     l'échelle, ce n'est pas mentir&nbsp;: c'est choisir ce que la donnée doit servir.</b></p>
   </details>
+</details>
 </section>
 
 <section class="card">
@@ -2314,7 +2333,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 
   <h3>🧭 Comment j'ai travaillé</h3>
   <p class="meta">Ces trois questions ne portent pas sur ce que tu as trouvé, mais sur <b>comment</b>
-  tu t'y es pris. Elles sont reprises de la séquence précédente sur ce thème, où elles étaient déjà
+  tu t'y es pris. <br>Elles sont reprises de la séquence précédente sur ce thème, où elles étaient déjà
   la meilleure idée.</p>
   <div class="assoc"><label for="meta1">Qu'ai-je réussi <b>sans aide</b>&nbsp;? Qu'est-ce qui m'a demandé le plus d'efforts&nbsp;?</label>
     <textarea id="meta1" aria-label="Ce que j'ai réussi sans aide, et ce qui m'a demandé des efforts"></textarea></div>
@@ -2350,7 +2369,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 <section class="card">
   <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
   <p>Le QCM de la séquence compte <b>30 questions</b>, dont <b>13 illustrées</b> — les quatre documents du dossier y reviennent, chacun sous un angle différent, et chaque réponse
-  fausse y est expliquée. Elles se répartissent sur les <b>six codes</b>&nbsp;:</p>
+  fausse y est expliquée. <br>Elles se répartissent sur les <b>six codes</b>&nbsp;:</p>
   <ul>
     <li><b>5e_C1.1</b> collecter, trier, analyser — 6 questions <span class="meta">(séance 2)</span></li>
     <li><b>5e_C1.2</b> comparer des principes — 5 questions <span class="meta">(séance 1)</span></li>
@@ -2365,7 +2384,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
      title="Ouvre le QCM d'entraînement dans la même fenêtre. Tes réponses y sont enregistrées séparément de celles de la séquence.">🌫️ Lancer le QCM de la séquence</a></p>
   <p class="meta">Dans le QCM, tu peux à tout moment choisir&nbsp;: <b>parcours complet</b> (les 30),
   <b>10 questions</b>, <b>révision ciblée</b> (une compétence au choix), ou <b>uniquement mes
-  erreurs</b>. Avec six compétences, la révision ciblée est particulièrement utile.</p>
+  erreurs</b>. <br>Avec six compétences, la révision ciblée est particulièrement utile.</p>
 </section>
 
 
