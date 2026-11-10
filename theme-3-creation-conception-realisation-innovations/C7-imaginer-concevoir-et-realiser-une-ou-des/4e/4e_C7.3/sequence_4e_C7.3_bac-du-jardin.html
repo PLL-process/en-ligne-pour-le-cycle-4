@@ -221,6 +221,33 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+
+  /* Règle d'or n°29 — mode essentiel : les corrections et les compléments se masquent, rien ne se perd */
+  body.essentiel details.correction,body.essentiel .approfondissement,body.essentiel .bonus-complement{display:none}
+  /* Règle d'or n°30 — la barre compte, ce bandeau situe */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:var(--panel,#0d2347);
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  /* Règle d'or n°31 — version étayée : des phrases à compléter, repliées */
+  details.etayage{margin:8px 0 12px;padding:6px 12px;border-left:4px solid var(--hl);border-radius:8px}
+  details.etayage summary{cursor:pointer;color:var(--hl);font-weight:600}
+  details.etayage ul{margin:6px 0;padding-left:22px}details.etayage li{margin:5px 0}
+  @media print{#tachesBandeau{display:none}details.etayage{border-color:#999!important}details.etayage summary{color:#047fa0!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -557,7 +584,44 @@ body.essentiel details.referentiel-replie{display:none}
 </script>
 <!-- fiche-papier v1 : fin -->
 <!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script>document.documentElement.classList.add("js-onglets");</script>
+<style id="css-qcm-grille">
+/* grilles_radio.py (08/11/2026) : des questions qui partagent leurs réponses se lisent en grille — les réponses une
+   fois, lettrées ; chaque question, une rangée de lettres. La valeur de chaque bouton est le texte de la réponse. */
+.qcm-cles{margin:10px 0 6px;padding:8px 12px;border:1px solid var(--border,#274a8a);border-radius:10px;background:var(--panel2,#0a1b3d)}
+.qcm-cles-titre{margin:0 0 4px;font-weight:600}
+.qcm-cles ol{margin:0;padding-left:0;list-style:none}
+.qcm-cles li{margin:3px 0;padding-left:1.9em;text-indent:-1.9em}
+.qcm-cles li b{display:inline-block;width:1.6em;text-indent:0;color:var(--hl,#61dafb)}
+.qcm-groupe.qcm-grille .qcm-option{display:inline-flex;align-items:center;gap:2px;margin:0;padding:3px 3px;width:auto;min-width:0}
+.qcm-groupe.qcm-grille .qcm-option label{flex:none;font-weight:700}
+.qcm-groupe.qcm-grille{display:flex;flex-wrap:wrap;align-items:center;column-gap:4px;row-gap:2px}
+/* six lettres tiennent sur une rangée à 390 px, même au fond de trois cadres emboîtés (revue d'écran V2 4e, 10/11/2026 :
+   la lettre F partait seule à la ligne sur 4e_C7.5) : bouton 17 px, lettre resserrée */
+.qcm-groupe.qcm-grille .qcm-option input[type=radio]{width:17px;height:17px;margin:0}
+.qcm-groupe.qcm-grille .qcm-option label{padding:0 1px;letter-spacing:0}
+@media print{.qcm-cles{background:#fff!important;border-color:#999!important;color:#111!important}.qcm-cles li b{color:#111!important}}
+</style>
 </head>
 <body>
 
@@ -569,6 +633,8 @@ body.essentiel details.referentiel-replie{display:none}
 <div class="toolbar">
   <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
   <button class="btn ghost" id="btnReset" type="button" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button>
+
+  <button class="btn ghost" id="btnEssentiel" type="button" aria-pressed="false" title="Masquer les corrections et les compléments, pour ne garder que les consignes et les exercices. Un second clic ramène tout.">🎯 Mode essentiel : OFF</button>
 </div>
 
 <p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
@@ -641,7 +707,7 @@ lequel prendre — et attend une réponse chiffrée.</p></div>
   <p class="problematique">Trois matériaux passent toutes les exigences. Sur quoi les classe-t-on, quand le moins cher à l'achat n'est pas le moins cher ?</p>
   <div class="exo">
     <h4>💡 Ton idée à toi, avant tout essai</h4>
-    <textarea id="hyp" rows="3" placeholder="À mon avis, entre trois matériaux qui conviennent tous, on choisit d'après…"></textarea>
+    <textarea aria-label="À mon avis, entre trois matériaux qui conviennent tous, on choisit d&#x27;après…" id="hyp" rows="3" placeholder="À mon avis, entre trois matériaux qui conviennent tous, on choisit d'après…"></textarea>
     <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan.
     Personne ne la corrige : elle sert à mesurer le chemin parcouru.</p>
   </div>
@@ -761,6 +827,16 @@ lequel prendre — et attend une réponse chiffrée.</p></div>
   <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>Comparer sur une durée, conclure</small><span class="done" id="done-s2"></span></button>
 </nav>
 
+<div id="tachesBandeau" aria-live="polite" aria-atomic="true">
+  <span class="tb-titre">📋 Où j'en suis <span class="tb-compte"></span></span>
+  <ul>
+    <li data-tache="0"><span class="tb-etat">○</span> Vérifier l'activité 0</li>
+    <li data-tache="1"><span class="tb-etat">○</span> Vérifier l'activité 1</li>
+    <li data-tache="2"><span class="tb-etat">○</span> Vérifier l'activité 2</li>
+    <li data-tache="3"><span class="tb-etat">○</span> Vérifier l'activité 3</li>
+    <li data-tache="4"><span class="tb-etat">○</span> Vérifier le réinvestissement</li>
+  </ul>
+</div>
 <!-- ══════════════════ SÉANCE 1 ══════════════════ -->
 <div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
 <section class="card seance-tete">
@@ -846,38 +922,35 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
   <div class="exo">
 
     <p>Associe chaque exigence du cahier des charges à la contrainte qui l'a fait écrire.</p>
-    <p style="margin-top:12px"><b>Résistance en flexion — au moins 20 MPa (mégapascals)</b></p>
-    <select id="a2c0" aria-label="Résistance en flexion — au moins 20 MPa (mégapascals)">
-      <option value="">— je choisis —</option>
-      <option value="la terre humide pousse sur les parois, avec 1,5 kN sur le grand côté">la terre humide pousse sur les parois, avec 1,5 kilonewton sur le grand côté</option>
-      <option>la terre reste mouillée en permanence : c'est le principe d'un jardin arrosé</option>
-      <option>le collège s'est engagé par écrit à ne pas installer ce qu'il ne saura pas jeter</option>
-      <option>quatre élèves et un adulte doivent pouvoir le déplacer une fois plein</option>
-    </select>
-    <p style="margin-top:12px"><b>Tenue à l'eau — au moins 4 sur 5</b></p>
-    <select id="a2c1" aria-label="Tenue à l'eau — au moins 4 sur 5">
-      <option value="">— je choisis —</option>
-      <option value="la terre humide pousse sur les parois, avec 1,5 kN sur le grand côté">la terre humide pousse sur les parois, avec 1,5 kilonewton sur le grand côté</option>
-      <option>la terre reste mouillée en permanence : c'est le principe d'un jardin arrosé</option>
-      <option>le collège s'est engagé par écrit à ne pas installer ce qu'il ne saura pas jeter</option>
-      <option>quatre élèves et un adulte doivent pouvoir le déplacer une fois plein</option>
-    </select>
-    <p style="margin-top:12px"><b>Recyclabilité — au moins 40 %</b></p>
-    <select id="a2c2" aria-label="Recyclabilité — au moins 40 %">
-      <option value="">— je choisis —</option>
-      <option value="la terre humide pousse sur les parois, avec 1,5 kN sur le grand côté">la terre humide pousse sur les parois, avec 1,5 kilonewton sur le grand côté</option>
-      <option>la terre reste mouillée en permanence : c'est le principe d'un jardin arrosé</option>
-      <option>le collège s'est engagé par écrit à ne pas installer ce qu'il ne saura pas jeter</option>
-      <option>quatre élèves et un adulte doivent pouvoir le déplacer une fois plein</option>
-    </select>
-    <p style="margin-top:12px"><b>Masse de la pièce — au plus 60 kg</b></p>
-    <select id="a2c3" aria-label="Masse de la pièce — au plus 60 kg">
-      <option value="">— je choisis —</option>
-      <option value="la terre humide pousse sur les parois, avec 1,5 kN sur le grand côté">la terre humide pousse sur les parois, avec 1,5 kilonewton sur le grand côté</option>
-      <option>la terre reste mouillée en permanence : c'est le principe d'un jardin arrosé</option>
-      <option>le collège s'est engagé par écrit à ne pas installer ce qu'il ne saura pas jeter</option>
-      <option>quatre élèves et un adulte doivent pouvoir le déplacer une fois plein</option>
-    </select>
+    <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>la terre humide pousse sur les parois, avec 1,5 kN sur le grand côté</li><li><b>B</b>la terre reste mouillée en permanence : c'est le principe d'un jardin arrosé</li><li><b>C</b>le collège s'est engagé par écrit à ne pas installer ce qu'il ne saura pas jeter</li><li><b>D</b>quatre élèves et un adulte doivent pouvoir le déplacer une fois plein</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="a2c0">
+  <legend><b>Résistance en flexion — au moins 20 MPa (mégapascals)</b></legend>
+  <div class="qcm-option"><input type="radio" name="a2c0" id="a2c0__1" value="la terre humide pousse sur les parois, avec 1,5 kN sur le grand côté" aria-label="A — la terre humide pousse sur les parois, avec 1,5 kN sur le grand côté"><label for="a2c0__1" title="la terre humide pousse sur les parois, avec 1,5 kN sur le grand côté">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a2c0" id="a2c0__2" value="la terre reste mouillée en permanence : c&#x27;est le principe d&#x27;un jardin arrosé" aria-label="B — la terre reste mouillée en permanence : c&#x27;est le principe d&#x27;un jardin arrosé"><label for="a2c0__2" title="la terre reste mouillée en permanence : c&#x27;est le principe d&#x27;un jardin arrosé">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a2c0" id="a2c0__3" value="le collège s&#x27;est engagé par écrit à ne pas installer ce qu&#x27;il ne saura pas jeter" aria-label="C — le collège s&#x27;est engagé par écrit à ne pas installer ce qu&#x27;il ne saura pas jeter"><label for="a2c0__3" title="le collège s&#x27;est engagé par écrit à ne pas installer ce qu&#x27;il ne saura pas jeter">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a2c0" id="a2c0__4" value="quatre élèves et un adulte doivent pouvoir le déplacer une fois plein" aria-label="D — quatre élèves et un adulte doivent pouvoir le déplacer une fois plein"><label for="a2c0__4" title="quatre élèves et un adulte doivent pouvoir le déplacer une fois plein">D</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a2c1">
+  <legend><b>Tenue à l'eau — au moins 4 sur 5</b></legend>
+  <div class="qcm-option"><input type="radio" name="a2c1" id="a2c1__1" value="la terre humide pousse sur les parois, avec 1,5 kN sur le grand côté" aria-label="A — la terre humide pousse sur les parois, avec 1,5 kN sur le grand côté"><label for="a2c1__1" title="la terre humide pousse sur les parois, avec 1,5 kN sur le grand côté">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a2c1" id="a2c1__2" value="la terre reste mouillée en permanence : c&#x27;est le principe d&#x27;un jardin arrosé" aria-label="B — la terre reste mouillée en permanence : c&#x27;est le principe d&#x27;un jardin arrosé"><label for="a2c1__2" title="la terre reste mouillée en permanence : c&#x27;est le principe d&#x27;un jardin arrosé">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a2c1" id="a2c1__3" value="le collège s&#x27;est engagé par écrit à ne pas installer ce qu&#x27;il ne saura pas jeter" aria-label="C — le collège s&#x27;est engagé par écrit à ne pas installer ce qu&#x27;il ne saura pas jeter"><label for="a2c1__3" title="le collège s&#x27;est engagé par écrit à ne pas installer ce qu&#x27;il ne saura pas jeter">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a2c1" id="a2c1__4" value="quatre élèves et un adulte doivent pouvoir le déplacer une fois plein" aria-label="D — quatre élèves et un adulte doivent pouvoir le déplacer une fois plein"><label for="a2c1__4" title="quatre élèves et un adulte doivent pouvoir le déplacer une fois plein">D</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a2c2">
+  <legend><b>Recyclabilité — au moins 40 %</b></legend>
+  <div class="qcm-option"><input type="radio" name="a2c2" id="a2c2__1" value="la terre humide pousse sur les parois, avec 1,5 kN sur le grand côté" aria-label="A — la terre humide pousse sur les parois, avec 1,5 kN sur le grand côté"><label for="a2c2__1" title="la terre humide pousse sur les parois, avec 1,5 kN sur le grand côté">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a2c2" id="a2c2__2" value="la terre reste mouillée en permanence : c&#x27;est le principe d&#x27;un jardin arrosé" aria-label="B — la terre reste mouillée en permanence : c&#x27;est le principe d&#x27;un jardin arrosé"><label for="a2c2__2" title="la terre reste mouillée en permanence : c&#x27;est le principe d&#x27;un jardin arrosé">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a2c2" id="a2c2__3" value="le collège s&#x27;est engagé par écrit à ne pas installer ce qu&#x27;il ne saura pas jeter" aria-label="C — le collège s&#x27;est engagé par écrit à ne pas installer ce qu&#x27;il ne saura pas jeter"><label for="a2c2__3" title="le collège s&#x27;est engagé par écrit à ne pas installer ce qu&#x27;il ne saura pas jeter">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a2c2" id="a2c2__4" value="quatre élèves et un adulte doivent pouvoir le déplacer une fois plein" aria-label="D — quatre élèves et un adulte doivent pouvoir le déplacer une fois plein"><label for="a2c2__4" title="quatre élèves et un adulte doivent pouvoir le déplacer une fois plein">D</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a2c3">
+  <legend><b>Masse de la pièce — au plus 60 kg</b></legend>
+  <div class="qcm-option"><input type="radio" name="a2c3" id="a2c3__1" value="la terre humide pousse sur les parois, avec 1,5 kN sur le grand côté" aria-label="A — la terre humide pousse sur les parois, avec 1,5 kN sur le grand côté"><label for="a2c3__1" title="la terre humide pousse sur les parois, avec 1,5 kN sur le grand côté">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a2c3" id="a2c3__2" value="la terre reste mouillée en permanence : c&#x27;est le principe d&#x27;un jardin arrosé" aria-label="B — la terre reste mouillée en permanence : c&#x27;est le principe d&#x27;un jardin arrosé"><label for="a2c3__2" title="la terre reste mouillée en permanence : c&#x27;est le principe d&#x27;un jardin arrosé">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a2c3" id="a2c3__3" value="le collège s&#x27;est engagé par écrit à ne pas installer ce qu&#x27;il ne saura pas jeter" aria-label="C — le collège s&#x27;est engagé par écrit à ne pas installer ce qu&#x27;il ne saura pas jeter"><label for="a2c3__3" title="le collège s&#x27;est engagé par écrit à ne pas installer ce qu&#x27;il ne saura pas jeter">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a2c3" id="a2c3__4" value="quatre élèves et un adulte doivent pouvoir le déplacer une fois plein" aria-label="D — quatre élèves et un adulte doivent pouvoir le déplacer une fois plein"><label for="a2c3__4" title="quatre élèves et un adulte doivent pouvoir le déplacer une fois plein">D</label></div>
+</fieldset>
     <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
     <div class="feedback" id="fb0"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
@@ -918,7 +991,7 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
       <tr id="ex_masse_max"><td class="ck"><input type="checkbox" id="on_masse_max" checked aria-label="Masse de la pièce"></td><td>Masse de la pièce</td><td>au plus</td><td class="sv"><input type="text" inputmode="decimal" id="sv_masse_max" value="60" aria-label="Seuil de Masse de la pièce"></td><td class="pq">il doit pouvoir être déplacé plein par quatre élèves et un adulte</td></tr>
     </table>
     <div class="bancm-cmd"><label for="duree">Comparer les coûts sur :</label>
-      <select id="duree">
+      <select data-interface="commande" id="duree">
         <option value="0">l'achat seulement</option>
         <option value="4">4 ans — le temps d'une génération de collégiens</option>
         <option value="10">10 ans</option>
@@ -947,37 +1020,34 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
 
     <h4>Après l'évaluation</h4>
     <p>Associe chaque matériau recalé au motif de son élimination.</p>
-    <p style="margin-top:12px"><b>Le pin non traité</b></p>
-    <select id="a1r0" aria-label="Le pin non traité">
-      <option value="">— je choisis —</option>
-      <option>il tient tout, sauf l'engagement du collège sur le recyclage</option>
-      <option>il échoue sur trois exigences d'un coup : soleil, sel et eau</option>
-      <option>la terre mouillée l'attaque, et le bac ferait 267 kg à vide</option>
-    </select>
-    <p style="margin-top:12px"><b>Le pin traité autoclave</b></p>
-    <select id="a1r1" aria-label="Le pin traité autoclave">
-      <option value="">— je choisis —</option>
-      <option>il tient tout, sauf l'engagement du collège sur le recyclage</option>
-      <option>il échoue sur trois exigences d'un coup : soleil, sel et eau</option>
-      <option>la terre mouillée l'attaque, et le bac ferait 267 kg à vide</option>
-    </select>
-    <p style="margin-top:12px"><b>L'acier galvanisé</b></p>
-    <select id="a1r2" aria-label="L'acier galvanisé">
-      <option value="">— je choisis —</option>
-      <option>il tient tout, sauf l'engagement du collège sur le recyclage</option>
-      <option>il échoue sur trois exigences d'un coup : soleil, sel et eau</option>
-      <option>la terre mouillée l'attaque, et le bac ferait 267 kg à vide</option>
-    </select>
-    <p style="margin-top:14px"><b>Et une question.</b> Le pin traité autoclave coûte 71 € : c'est
+    <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>il tient tout, sauf l'engagement du collège sur le recyclage</li><li><b>B</b>il échoue sur trois exigences d'un coup : soleil, sel et eau</li><li><b>C</b>la terre mouillée l'attaque, et le bac ferait 267 kg à vide</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="a1r0">
+  <legend><b>Le pin non traité</b></legend>
+  <div class="qcm-option"><input type="radio" name="a1r0" id="a1r0__1" value="il tient tout, sauf l&#x27;engagement du collège sur le recyclage" aria-label="A — il tient tout, sauf l&#x27;engagement du collège sur le recyclage"><label for="a1r0__1" title="il tient tout, sauf l&#x27;engagement du collège sur le recyclage">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r0" id="a1r0__2" value="il échoue sur trois exigences d&#x27;un coup : soleil, sel et eau" aria-label="B — il échoue sur trois exigences d&#x27;un coup : soleil, sel et eau"><label for="a1r0__2" title="il échoue sur trois exigences d&#x27;un coup : soleil, sel et eau">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r0" id="a1r0__3" value="la terre mouillée l&#x27;attaque, et le bac ferait 267 kg à vide" aria-label="C — la terre mouillée l&#x27;attaque, et le bac ferait 267 kg à vide"><label for="a1r0__3" title="la terre mouillée l&#x27;attaque, et le bac ferait 267 kg à vide">C</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a1r1">
+  <legend><b>Le pin traité autoclave</b></legend>
+  <div class="qcm-option"><input type="radio" name="a1r1" id="a1r1__1" value="il tient tout, sauf l&#x27;engagement du collège sur le recyclage" aria-label="A — il tient tout, sauf l&#x27;engagement du collège sur le recyclage"><label for="a1r1__1" title="il tient tout, sauf l&#x27;engagement du collège sur le recyclage">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r1" id="a1r1__2" value="il échoue sur trois exigences d&#x27;un coup : soleil, sel et eau" aria-label="B — il échoue sur trois exigences d&#x27;un coup : soleil, sel et eau"><label for="a1r1__2" title="il échoue sur trois exigences d&#x27;un coup : soleil, sel et eau">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r1" id="a1r1__3" value="la terre mouillée l&#x27;attaque, et le bac ferait 267 kg à vide" aria-label="C — la terre mouillée l&#x27;attaque, et le bac ferait 267 kg à vide"><label for="a1r1__3" title="la terre mouillée l&#x27;attaque, et le bac ferait 267 kg à vide">C</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a1r2">
+  <legend><b>L'acier galvanisé</b></legend>
+  <div class="qcm-option"><input type="radio" name="a1r2" id="a1r2__1" value="il tient tout, sauf l&#x27;engagement du collège sur le recyclage" aria-label="A — il tient tout, sauf l&#x27;engagement du collège sur le recyclage"><label for="a1r2__1" title="il tient tout, sauf l&#x27;engagement du collège sur le recyclage">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r2" id="a1r2__2" value="il échoue sur trois exigences d&#x27;un coup : soleil, sel et eau" aria-label="B — il échoue sur trois exigences d&#x27;un coup : soleil, sel et eau"><label for="a1r2__2" title="il échoue sur trois exigences d&#x27;un coup : soleil, sel et eau">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r2" id="a1r2__3" value="la terre mouillée l&#x27;attaque, et le bac ferait 267 kg à vide" aria-label="C — la terre mouillée l&#x27;attaque, et le bac ferait 267 kg à vide"><label for="a1r2__3" title="la terre mouillée l&#x27;attaque, et le bac ferait 267 kg à vide">C</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a1q1">
+  <legend><b>Et une question.</b> Le pin traité autoclave coûte 71 € : c'est
     le moins cher de tous les candidats qui tiennent l'eau, le sel et le soleil. Il est pourtant
-    recalé, sur la seule recyclabilité (20 % contre 40 % exigés). Que faut-il en conclure ?</p>
-    <select id="a1q1">
-      <option value="">— je choisis —</option>
-      <option>que le traitement qui le rend durable est ce qui ferme sa filière de recyclage</option>
-      <option>que la recyclabilité est un critère moins sérieux que la tenue à l'eau</option>
-      <option>que le seuil de 40 % a été mal choisi et qu'il faudrait le baisser</option>
-      <option>que le bois traité est interdit dans les établissements scolaires</option>
-    </select>
+    recalé, sur la seule recyclabilité (20 % contre 40 % exigés). Que faut-il en conclure ?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__1" value="que le traitement qui le rend durable est ce qui ferme sa filière de recyclage"><label for="a1q1__1">que le traitement qui le rend durable est ce qui ferme sa filière de recyclage</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__2" value="que la recyclabilité est un critère moins sérieux que la tenue à l&#x27;eau"><label for="a1q1__2">que la recyclabilité est un critère moins sérieux que la tenue à l'eau</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__3" value="que le seuil de 40 % a été mal choisi et qu&#x27;il faudrait le baisser"><label for="a1q1__3">que le seuil de 40 % a été mal choisi et qu'il faudrait le baisser</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__4" value="que le bois traité est interdit dans les établissements scolaires"><label for="a1q1__4">que le bois traité est interdit dans les établissements scolaires</label></div>
+</fieldset>
     <p style="font-size:.9em;color:var(--warn)">🔒 Clique d'abord sur « ⚖ Évaluer les candidats » : on ne commente pas un tri qu'on n'a pas fait.</p>
     <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
     <div class="feedback" id="fb1"></div>
@@ -1027,15 +1097,14 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
     <tr><td>Le teck, sur 15 ans</td><td class="num"><input type="text" inputmode="decimal" id="rel2" placeholder="… €"></td></tr>
     <tr><td>Le PVC, sur 15 ans</td><td class="num"><input type="text" inputmode="decimal" id="rel3" placeholder="… €"></td></tr>
   </table>
-    <p style="margin-top:14px"><b>La question qui compte :</b> à l'achat, le PVC est deuxième et
-    le teck troisième. Sur 15 ans, ils ont échangé leurs places. Pourquoi ?</p>
-    <select id="a2q1">
-      <option value="">— je choisis —</option>
-      <option>le PVC dure 8 ans : il faut l'acheter deux fois là où un seul teck suffit</option>
-      <option>le prix du PVC au kilogramme augmente avec le temps qui passe</option>
-      <option>le teck devient moins cher parce qu'il est acheté en plus grande quantité</option>
-      <option>le banc ajoute un coût d'entretien annuel au matériau le moins durable</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a2q1">
+  <legend><b>La question qui compte :</b> à l'achat, le PVC est deuxième et
+    le teck troisième. Sur 15 ans, ils ont échangé leurs places. Pourquoi ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__1" value="le PVC dure 8 ans : il faut l&#x27;acheter deux fois là où un seul teck suffit"><label for="a2q1__1">le PVC dure 8 ans : il faut l'acheter deux fois là où un seul teck suffit</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__2" value="le prix du PVC au kilogramme augmente avec le temps qui passe"><label for="a2q1__2">le prix du PVC au kilogramme augmente avec le temps qui passe</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__3" value="le teck devient moins cher parce qu&#x27;il est acheté en plus grande quantité"><label for="a2q1__3">le teck devient moins cher parce qu'il est acheté en plus grande quantité</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__4" value="le banc ajoute un coût d&#x27;entretien annuel au matériau le moins durable"><label for="a2q1__4">le banc ajoute un coût d'entretien annuel au matériau le moins durable</label></div>
+</fieldset>
     <p style="font-size:.9em;color:var(--warn)">🔒 Change d'abord la durée de comparaison sur le banc (le menu « Comparer les coûts sur : ») : c'est ce geste-là que l'activité te demande de commenter.</p>
     <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
     <div class="feedback" id="fb2"></div>
@@ -1070,27 +1139,26 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
 
   <div class="exo">
 
-    <p><b>1.</b> Passe la durée à <b>20 ans</b>. Le teck, deuxième à 15 ans, redevient dernier.
-    Pourquoi ?</p>
-    <select id="a3q1" aria-label="Pourquoi ?">
-      <option value="">— je choisis —</option>
-      <option>à 20 ans il faut un second teck, qui aura encore dix ans de vie inutilisés</option>
-      <option>le teck s'abîme plus vite au-delà de quinze ans d'exposition au soleil</option>
-      <option>le PVC bénéficie d'une remise à partir du troisième exemplaire acheté</option>
-      <option>le banc cesse de compter les remplacements au-delà de quinze années</option>
-    </select>
-    <p><b>2.</b> Le PP recyclé est le moins cher sur <em>toutes</em> les durées, et le plus
-    recyclable des six (95 %). Sur 15 ans, qu'est-ce que son prix ne dit pas ?</p>
-    <select id="a3q2" aria-label="Sur 15 ans, qu'est-ce que son prix ne dit pas ?">
-      <option value="">— je choisis —</option>
-      <option>qu'on aura fabriqué et transporté trois bacs au lieu d'un seul</option>
-      <option>qu'il est fabriqué à partir de déchets plastiques déjà collectés</option>
-      <option value="que sa résistance de 30 MPa est juste au niveau du seuil exigé">que sa résistance de 30 mégapascals est juste au niveau du seuil exigé</option>
-      <option>qu'il se travaille au collège par sciage, perçage et impression</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a3q1">
+  <legend><b>1.</b> Passe la durée à <b>20 ans</b>. Le teck, deuxième à 15 ans, redevient dernier.
+    Pourquoi ?</legend>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__1" value="à 20 ans il faut un second teck, qui aura encore dix ans de vie inutilisés"><label for="a3q1__1">à 20 ans il faut un second teck, qui aura encore dix ans de vie inutilisés</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__2" value="le teck s&#x27;abîme plus vite au-delà de quinze ans d&#x27;exposition au soleil"><label for="a3q1__2">le teck s'abîme plus vite au-delà de quinze ans d'exposition au soleil</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__3" value="le PVC bénéficie d&#x27;une remise à partir du troisième exemplaire acheté"><label for="a3q1__3">le PVC bénéficie d'une remise à partir du troisième exemplaire acheté</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__4" value="le banc cesse de compter les remplacements au-delà de quinze années"><label for="a3q1__4">le banc cesse de compter les remplacements au-delà de quinze années</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a3q2">
+  <legend><b>2.</b> Le PP recyclé est le moins cher sur <em>toutes</em> les durées, et le plus
+    recyclable des six (95 %). Sur 15 ans, qu'est-ce que son prix ne dit pas ?</legend>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__1" value="qu&#x27;on aura fabriqué et transporté trois bacs au lieu d&#x27;un seul"><label for="a3q2__1">qu'on aura fabriqué et transporté trois bacs au lieu d'un seul</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__2" value="qu&#x27;il est fabriqué à partir de déchets plastiques déjà collectés"><label for="a3q2__2">qu'il est fabriqué à partir de déchets plastiques déjà collectés</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__3" value="que sa résistance de 30 MPa est juste au niveau du seuil exigé"><label for="a3q2__3">que sa résistance de 30 mégapascals est juste au niveau du seuil exigé</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__4" value="qu&#x27;il se travaille au collège par sciage, perçage et impression"><label for="a3q2__4">qu'il se travaille au collège par sciage, perçage et impression</label></div>
+</fieldset>
     <p><b>3.</b> Le collège doit trancher. Écris en deux phrases <b>la durée que tu retiens</b>,
     <b>le matériau qui gagne à cette durée</b>, et pourquoi cette durée-là.</p>
-    <textarea id="a3j" rows="3" placeholder="Je compare sur … ans, parce que … Le matériau retenu est alors …"></textarea>
+    <textarea aria-label="Je compare sur … ans, parce que … Le matériau retenu est alors …" id="a3j" rows="3" placeholder="Je compare sur … ans, parce que … Le matériau retenu est alors …"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Le collège retient une durée de … ans, parce que … »</li><li>« À cette durée, le matériau qui gagne est …, pour … € en tout. »</li><li>« Cette durée-là, et pas une autre, parce que le bac … »</li></ul></details>
     <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
     <div class="feedback" id="fb3"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
@@ -1123,7 +1191,8 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
   bacs sont à l'ombre presque toute la journée.</p>
   <p>Écris : <b>quelle exigence tu peux abaisser</b>, <b>quel matériau cela fait entrer</b>, et
   si le classement sur 15 ans en est changé.</p>
-  <textarea id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+  <textarea aria-label="Je choisirais … parce que …" id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« À Albany, l'exigence que je peux abaisser est « … », parce que … »</li><li>« Cela fait entrer le matériau …, qui était éliminé par … »</li><li>« Sur 15 ans, le classement … (change / ne change pas), parce que … »</li></ul></details>
   <button class="btn check" data-check="4" type="button">✅ Vérifier le réinvestissement</button>
   <div class="feedback" id="fb4"></div>
   <details class="correction"><summary>📖 Correction</summary><div>
@@ -1176,6 +1245,7 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
 
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Le teck passe devant le PVC l'année … : le PVC en est à … achats, le teck à …. »</li><li>« Il repasse derrière l'année …, parce que …. »</li><li>« Ces deux dates dépendent de … et de …, pas de … »</li></ul></details>
   <details class="correction"><summary>✅ Corrigé du Bonus — les deux années où le classement bascule, et d'où viennent les durées</summary><div>
     <p><b>On compte les achats.</b> Sur une durée donnée, on rachète un bac chaque fois que le précédent arrive au bout de sa vie. Le PVC (8 ans) s'achète une fois jusqu'à 8 ans, deux fois de 9 à 16 ans, trois fois de 17 à 24 ans. Le teck (15 ans) s'achète une fois jusqu'à 15 ans, deux fois de 16 à 30 ans.</p>
     <table class="refs">
@@ -1200,19 +1270,21 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
   <p style="font-size:.92em;color:var(--sub)">Compare : ta réponse de départ parlait-elle d'une
   durée ?</p>
 
-  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <textarea aria-label="Ce que je sais faire maintenant, et ce qui me résiste encore…" id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Au départ, ma réponse parlait de … ; elle ne parlait pas de la durée. »</li><li>« Maintenant je sais qu'un matériau n'est « le meilleur » que pour … »</li><li>« Ce qui me résiste encore : … »</li></ul></details>
   <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">où as-tu hésité en lisant le banc, et qu'est-ce qui t'a surpris quand le classement s'est retourné ?</label></p>
   <textarea id="bilanMeta" rows="2" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« J'ai hésité en lisant le banc au moment où … »</li><li>« Ce qui m'a surpris quand le classement s'est retourné, c'est que … »</li><li>« La prochaine fois, je regarderai d'abord … »</li></ul></details>
   <h3>📍 Je me positionne</h3>
   <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : <br>maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. <br>Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
-  <p style="margin-top:12px"><label for="pos"><b>4e_C7.3 — comparer différents matériaux pour choisir le plus adapté :</b></label></p>
-  <select id="pos">
-    <option value="">— je me positionne —</option>
-    <option>🔴 Maîtrise insuffisante — je compare encore les prix d'achat, ou je ne sais pas encore quoi comparer</option>
-    <option>🟠 Maîtrise fragile — je compare en coût global si l'on me rappelle de compter les remplacements</option>
-    <option>🟢 Maîtrise satisfaisante — je compare des matériaux en coût global, et je dis sur quelle durée je compare</option>
-    <option>⭐ Très bonne maîtrise — et je dis aussi ce que ma comparaison ne mesure pas : fabrication, transport, fin de vie</option>
-  </select>
+  <p style="margin-top:12px"></p>
+  <fieldset class="qcm-groupe" id="pos">
+  <legend><b>4e_C7.3 — comparer différents matériaux pour choisir le plus adapté :</b></legend>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__1" value="🔴 Maîtrise insuffisante — je compare encore les prix d&#x27;achat, ou je ne sais pas encore quoi comparer"><label for="pos__1">🔴 Maîtrise insuffisante — je compare encore les prix d'achat, ou je ne sais pas encore quoi comparer</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__2" value="🟠 Maîtrise fragile — je compare en coût global si l&#x27;on me rappelle de compter les remplacements"><label for="pos__2">🟠 Maîtrise fragile — je compare en coût global si l'on me rappelle de compter les remplacements</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__3" value="🟢 Maîtrise satisfaisante — je compare des matériaux en coût global, et je dis sur quelle durée je compare"><label for="pos__3">🟢 Maîtrise satisfaisante — je compare des matériaux en coût global, et je dis sur quelle durée je compare</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__4" value="⭐ Très bonne maîtrise — et je dis aussi ce que ma comparaison ne mesure pas : fabrication, transport, fin de vie"><label for="pos__4">⭐ Très bonne maîtrise — et je dis aussi ce que ma comparaison ne mesure pas : fabrication, transport, fin de vie</label></div>
+</fieldset>
   <fieldset class="positionnement"><legend>4e_C3.2 (appui) — comparer qualitativement et/ou quantitativement (incidences environnementales, bilan carbone, efficacité énergétique) plusieurs OST répondant au même besoin et arrêter un choix</legend>
 <label><input type="radio" name="pos_c32" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c32" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c32" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c32" value="4"> ⭐ très bonne</label></fieldset>
 </section>
@@ -1417,7 +1489,7 @@ const CHECKS = {
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
-  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; (window.__exp.valides = window.__exp.valides || {})[n] = 1; majBandeau(); save(); return; }
   if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
@@ -1426,8 +1498,9 @@ document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("cli
 
 function save(){
   const o = {inputs: {}, checks: {}, exp: window.__exp};
-  document.querySelectorAll("input, select, textarea").forEach(e => {
+  document.querySelectorAll("input, select, textarea, fieldset.qcm-groupe").forEach(e => {
     if(!e.id) return;
+    if(e.type === "radio" && e.closest(".qcm-groupe")) return;   // n°300 : le groupe porte sa valeur, pas ses boutons
     if(e.type === "checkbox" || (e.type === "radio" && e.closest("#billet"))) o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
   // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
   o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
@@ -1519,6 +1592,25 @@ if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
 
 restore(); majBanc();
 placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // l'outil rejoint la séance affichée
+
+/* ══ Règle d'or n°29 — mode essentiel (gabarit commun, V2 du 07/11/2026) ══ */
+function majEssentiel(){ const b=$("btnEssentiel"); if(!b) return;
+  const on=document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false"); }
+if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
+  document.body.classList.toggle("essentiel");
+  (window.__exp = window.__exp || {})["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save(); });
+/* ══ Règle d'or n°30 — le bandeau des tâches : une ligne par activité, barrée quand elle est validée ══ */
+function majBandeau(){ const b=$("tachesBandeau"); if(!b) return; const ul=b.querySelector("ul"); if(!ul) return;
+  const v=(window.__exp||{}).valides||{}; let faites=0;
+  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.tache]; li.classList.toggle("faite", ok); if(ok) faites++;
+    li.querySelector(".tb-etat").textContent = ok ? "✔" : "○"; });
+  const c=b.querySelector(".tb-compte"); if(c) c.textContent = faites + " / " + ul.children.length + " validée(s)"; }
+window.__exp = window.__exp || {};
+if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majBandeau();
 })();
 </script>
 

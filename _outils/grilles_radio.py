@@ -34,8 +34,13 @@ CSS = """<style id="css-qcm-grille">
 .qcm-cles ol{margin:0;padding-left:0;list-style:none}
 .qcm-cles li{margin:3px 0;padding-left:1.9em;text-indent:-1.9em}
 .qcm-cles li b{display:inline-block;width:1.6em;text-indent:0;color:var(--hl,#61dafb)}
-.qcm-groupe.qcm-grille .qcm-option{display:inline-flex;align-items:center;gap:4px;margin:2px 2px 2px 0;padding:3px 5px;width:auto;min-width:0}
+.qcm-groupe.qcm-grille .qcm-option{display:inline-flex;align-items:center;gap:2px;margin:0;padding:3px 3px;width:auto;min-width:0}
 .qcm-groupe.qcm-grille .qcm-option label{flex:none;font-weight:700}
+.qcm-groupe.qcm-grille{display:flex;flex-wrap:wrap;align-items:center;column-gap:4px;row-gap:2px}
+/* six lettres tiennent sur une rangée à 390 px, même au fond de trois cadres emboîtés (revue d'écran V2 4e, 10/11/2026 :
+   la lettre F partait seule à la ligne sur 4e_C7.5) : bouton 17 px, lettre resserrée */
+.qcm-groupe.qcm-grille .qcm-option input[type=radio]{width:17px;height:17px;margin:0}
+.qcm-groupe.qcm-grille .qcm-option label{padding:0 1px;letter-spacing:0}
 @media print{.qcm-cles{background:#fff!important;border-color:#999!important;color:#111!important}.qcm-cles li b{color:#111!important}}
 </style>
 """

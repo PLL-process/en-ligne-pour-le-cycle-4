@@ -205,6 +205,35 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+
+  /* Règle d'or n°29 — mode essentiel : les corrections et les compléments se masquent, rien ne se perd */
+  body.essentiel details.correction,body.essentiel .approfondissement,body.essentiel .bonus-complement{display:none}
+  /* Règle d'or n°30 — la barre compte, ce bandeau situe */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:var(--panel,#0d2347);
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  /* Règle d'or n°31 — version étayée : des phrases à compléter, repliées */
+  details.etayage{margin:8px 0 12px;padding:6px 12px;border-left:4px solid var(--hl);border-radius:8px}
+  details.etayage summary{cursor:pointer;color:var(--hl);font-weight:600}
+  details.etayage ul{margin:6px 0;padding-left:22px}details.etayage li{margin:5px 0}
+  @media print{#tachesBandeau{display:none}details.etayage{border-color:#999!important}details.etayage summary{color:#047fa0!important}}
+  /* n°303 : un lien se lit — même règle que les pages sœurs de la famille (4e_C7.3) ; sans elle, le lien de la licence (#616) restait au bleu par défaut du navigateur, 2,03:1 sur fond sombre (10/11/2026) */
+  a,a:where(:visited){color:#9ecbff}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -541,7 +570,44 @@ body.essentiel details.referentiel-replie{display:none}
 </script>
 <!-- fiche-papier v1 : fin -->
 <!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script>document.documentElement.classList.add("js-onglets");</script>
+<style id="css-qcm-grille">
+/* grilles_radio.py (08/11/2026) : des questions qui partagent leurs réponses se lisent en grille — les réponses une
+   fois, lettrées ; chaque question, une rangée de lettres. La valeur de chaque bouton est le texte de la réponse. */
+.qcm-cles{margin:10px 0 6px;padding:8px 12px;border:1px solid var(--border,#274a8a);border-radius:10px;background:var(--panel2,#0a1b3d)}
+.qcm-cles-titre{margin:0 0 4px;font-weight:600}
+.qcm-cles ol{margin:0;padding-left:0;list-style:none}
+.qcm-cles li{margin:3px 0;padding-left:1.9em;text-indent:-1.9em}
+.qcm-cles li b{display:inline-block;width:1.6em;text-indent:0;color:var(--hl,#61dafb)}
+.qcm-groupe.qcm-grille .qcm-option{display:inline-flex;align-items:center;gap:2px;margin:0;padding:3px 3px;width:auto;min-width:0}
+.qcm-groupe.qcm-grille .qcm-option label{flex:none;font-weight:700}
+.qcm-groupe.qcm-grille{display:flex;flex-wrap:wrap;align-items:center;column-gap:4px;row-gap:2px}
+/* six lettres tiennent sur une rangée à 390 px, même au fond de trois cadres emboîtés (revue d'écran V2 4e, 10/11/2026 :
+   la lettre F partait seule à la ligne sur 4e_C7.5) : bouton 17 px, lettre resserrée */
+.qcm-groupe.qcm-grille .qcm-option input[type=radio]{width:17px;height:17px;margin:0}
+.qcm-groupe.qcm-grille .qcm-option label{padding:0 1px;letter-spacing:0}
+@media print{.qcm-cles{background:#fff!important;border-color:#999!important;color:#111!important}.qcm-cles li b{color:#111!important}}
+</style>
 </head>
 <body>
 
@@ -553,6 +619,8 @@ body.essentiel details.referentiel-replie{display:none}
 <div class="toolbar">
   <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
   <button class="btn ghost" id="btnReset" type="button" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button>
+
+  <button class="btn ghost" id="btnEssentiel" type="button" aria-pressed="false" title="Masquer les corrections et les compléments, pour ne garder que les consignes et les exercices. Un second clic ramène tout.">🎯 Mode essentiel : OFF</button>
 </div>
 
 <p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
@@ -631,7 +699,7 @@ body.essentiel details.referentiel-replie{display:none}
     <h4>💡 Ton idée à toi, avant tout essai</h4>
     <p>Avant tout essai : d'après toi, <b>que faut-il mettre dans le message</b> que le jardin
     envoie&nbsp;? Écris ta liste — trois ou quatre choses suffisent.</p>
-    <textarea id="hyp" rows="3" placeholder="Je mettrais… parce que…"></textarea>
+    <textarea aria-label="Je mettrais… parce que…" id="hyp" rows="3" placeholder="Je mettrais… parce que…"></textarea>
 
     <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan.
     Personne ne la corrige : elle sert à mesurer le chemin parcouru.</p>
@@ -750,6 +818,17 @@ body.essentiel details.referentiel-replie{display:none}
   <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>Rythme, coupure, ce qu'on n'envoie pas</small><span class="done" id="done-s2"></span></button>
 </nav>
 
+<div id="tachesBandeau" aria-live="polite" aria-atomic="true">
+  <span class="tb-titre">📋 Où j'en suis <span class="tb-compte"></span></span>
+  <ul>
+    <li data-tache="0"><span class="tb-etat">○</span> Vérifier l'activité 0</li>
+    <li data-tache="1"><span class="tb-etat">○</span> Vérifier l'activité 1</li>
+    <li data-tache="2"><span class="tb-etat">○</span> Vérifier l'activité 2</li>
+    <li data-tache="3"><span class="tb-etat">○</span> Vérifier l'activité 3</li>
+    <li data-tache="4"><span class="tb-etat">○</span> Vérifier l'activité 4</li>
+    <li data-tache="5"><span class="tb-etat">○</span> Vérifier le réinvestissement</li>
+  </ul>
+</div>
 <!-- ══════════════════ SÉANCE 1 ══════════════════ -->
 <div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
 <section class="card seance-tete">
@@ -789,13 +868,12 @@ body.essentiel details.referentiel-replie{display:none}
     <ul class="recu" id="recu"></ul>
 
     <div class="lien-cmd">
-      <label for="hors">Quand le lien est coupé, l'objet…</label>
-      <select id="hors">
-        <option value="">— je choisis —</option>
-        <option>perd la mesure et passe à la suivante</option>
-        <option>garde les mesures en file et les envoie au retour du lien</option>
-        <option>cesse d'arroser jusqu'au retour du lien</option>
-      </select>
+      <fieldset class="qcm-groupe" id="hors">
+  <legend>Quand le lien est coupé, l'objet…</legend>
+  <div class="qcm-option"><input type="radio" name="hors" id="hors__1" value="perd la mesure et passe à la suivante"><label for="hors__1">perd la mesure et passe à la suivante</label></div>
+  <div class="qcm-option"><input type="radio" name="hors" id="hors__2" value="garde les mesures en file et les envoie au retour du lien"><label for="hors__2">garde les mesures en file et les envoie au retour du lien</label></div>
+  <div class="qcm-option"><input type="radio" name="hors" id="hors__3" value="cesse d&#x27;arroser jusqu&#x27;au retour du lien"><label for="hors__3">cesse d'arroser jusqu'au retour du lien</label></div>
+</fieldset>
     </div>
     <div class="lien-cmd">
       <button class="btn" id="envoyer" type="button">📨 Envoyer une mesure</button>
@@ -809,30 +887,27 @@ body.essentiel details.referentiel-replie{display:none}
   <div class="exo">
 
     <h4>Après avoir essayé</h4>
-    <p><b>1.</b> Avec un message qui ne contient que <code>{"h":38}</code>, le récepteur…</p>
-    <select id="a0q1">
-      <option value="">— je choisis —</option>
-      <option>affiche un nombre, et ne sait rien en faire d'autre</option>
-      <option>sait tout ce qu'il lui faut : la mesure est là</option>
-      <option>ne reçoit rien du tout : le message est vide</option>
-      <option>devine l'unité d'après la valeur 38</option>
-    </select>
-    <p><b>2.</b> Sans l'identifiant de l'objet, le problème est que…</p>
-    <select id="a0q2">
-      <option value="">— je choisis —</option>
-      <option>plusieurs objets envoient sur le même réseau, et on ne sait plus qui parle</option>
-      <option>le message ne peut pas arriver jusqu'au récepteur</option>
-      <option>le récepteur affiche le message deux fois</option>
-      <option>il n'y a aucun problème : il n'y a qu'un seul jardin</option>
-    </select>
-    <p><b>3.</b> Sans l'unité, la valeur 38…</p>
-    <select id="a0q3">
-      <option value="">— je choisis —</option>
-      <option>ne veut rien dire : 38 %, 38 °C ou 38 mL ?</option>
-      <option>veut forcément dire 38 pour cent</option>
-      <option>est refusée par le réseau</option>
-      <option>est convertie automatiquement par le récepteur</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a0q1">
+  <legend><b>1.</b> Avec un message qui ne contient que <code>{"h":38}</code>, le récepteur…</legend>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__1" value="affiche un nombre, et ne sait rien en faire d&#x27;autre"><label for="a0q1__1">affiche un nombre, et ne sait rien en faire d'autre</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__2" value="sait tout ce qu&#x27;il lui faut : la mesure est là"><label for="a0q1__2">sait tout ce qu'il lui faut : la mesure est là</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__3" value="ne reçoit rien du tout : le message est vide"><label for="a0q1__3">ne reçoit rien du tout : le message est vide</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__4" value="devine l&#x27;unité d&#x27;après la valeur 38"><label for="a0q1__4">devine l'unité d'après la valeur 38</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a0q2">
+  <legend><b>2.</b> Sans l'identifiant de l'objet, le problème est que…</legend>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__1" value="plusieurs objets envoient sur le même réseau, et on ne sait plus qui parle"><label for="a0q2__1">plusieurs objets envoient sur le même réseau, et on ne sait plus qui parle</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__2" value="le message ne peut pas arriver jusqu&#x27;au récepteur"><label for="a0q2__2">le message ne peut pas arriver jusqu'au récepteur</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__3" value="le récepteur affiche le message deux fois"><label for="a0q2__3">le récepteur affiche le message deux fois</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__4" value="il n&#x27;y a aucun problème : il n&#x27;y a qu&#x27;un seul jardin"><label for="a0q2__4">il n'y a aucun problème : il n'y a qu'un seul jardin</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a0q3">
+  <legend><b>3.</b> Sans l'unité, la valeur 38…</legend>
+  <div class="qcm-option"><input type="radio" name="a0q3" id="a0q3__1" value="ne veut rien dire : 38 %, 38 °C ou 38 mL ?"><label for="a0q3__1">ne veut rien dire : 38 %, 38 °C ou 38 mL ?</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q3" id="a0q3__2" value="veut forcément dire 38 pour cent"><label for="a0q3__2">veut forcément dire 38 pour cent</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q3" id="a0q3__3" value="est refusée par le réseau"><label for="a0q3__3">est refusée par le réseau</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q3" id="a0q3__4" value="est convertie automatiquement par le récepteur"><label for="a0q3__4">est convertie automatiquement par le récepteur</label></div>
+</fieldset>
     <p style="font-size:.9em;color:var(--warn)">🔒 Coche d'abord quelques champs dans le banc et regarde ce que le récepteur peut en faire — l'essai d'abord.</p>
     <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
     <div class="feedback" id="fb0"></div>
@@ -869,42 +944,39 @@ body.essentiel details.referentiel-replie{display:none}
   champs utiles</b> et <b>aucun des deux champs de trop</b>.</p>
   <div class="exo">
 
-    <p><b>1.</b> Pourquoi faut-il l'<b>heure</b> de la mesure, alors que le récepteur sait bien
-    quand il l'a reçue&nbsp;?</p>
-    <select id="a1q1" aria-label="Pourquoi faut-il l'heure de la mesure, alors que le récepteur sait bien quand il l'a reçue ?">
-      <option value="">— je choisis —</option>
-      <option>parce qu'une mesure gardée en file arrive plus tard qu'elle n'a été prise</option>
-      <option>parce que le récepteur n'a pas d'horloge</option>
-      <option>parce que le réseau met plusieurs heures à transporter un message</option>
-      <option>ce n'est pas nécessaire : l'heure de réception suffit toujours</option>
-    </select>
-    <p><b>2.</b> Pourquoi l'<b>identifiant</b> devient-il indispensable l'an prochain&nbsp;?</p>
-    <select id="a1q2" aria-label="Pourquoi l'identifiant devient-il indispensable l'an prochain ?">
-      <option value="">— je choisis —</option>
-      <option>parce qu'il y aura trois jardins qui enverront la même sorte de message</option>
-      <option>parce que le réseau exige un identifiant dans chaque message</option>
-      <option>parce que l'adresse IP du jardin va changer</option>
-      <option>parce que le gestionnaire ne connaît pas le nom du jardin</option>
-    </select>
-    <p><b>3.</b> Les <b>127 variables internes</b> de la carte : pourquoi ne pas tout envoyer,
-    au cas où&nbsp;?</p>
-    <select id="a1q3" aria-label="Les 127 variables internes de la carte : pourquoi ne pas tout envoyer, au cas où ?">
-      <option value="">— je choisis —</option>
-      <option>ça coûte de l'énergie et de la place, et personne n'en a l'usage</option>
-      <option>la carte n'a pas le droit de lire ses propres variables</option>
-      <option>le récepteur ne saurait pas les afficher</option>
-      <option>il n'y a aucune raison : envoyer plus est toujours mieux</option>
-    </select>
-    <p><b>4.</b> Et le <b>prénom de l'élève</b> qui a programmé la carte&nbsp;?</p>
-    <select id="a1q4" aria-label="Et le prénom de l'élève qui a programmé la carte ?">
-      <option value="">— je choisis —</option>
-      <option>c'est une donnée personnelle : elle n'a rien à faire dans une mesure</option>
-      <option>c'est utile pour savoir qui appeler en cas de panne</option>
-      <option>c'est obligatoire pour identifier l'objet sur le réseau</option>
-      <option>c'est sans importance, un prénom n'est pas une donnée</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a1q1">
+  <legend><b>1.</b> Pourquoi faut-il l'<b>heure</b> de la mesure, alors que le récepteur sait bien
+    quand il l'a reçue&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__1" value="parce qu&#x27;une mesure gardée en file arrive plus tard qu&#x27;elle n&#x27;a été prise"><label for="a1q1__1">parce qu'une mesure gardée en file arrive plus tard qu'elle n'a été prise</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__2" value="parce que le récepteur n&#x27;a pas d&#x27;horloge"><label for="a1q1__2">parce que le récepteur n'a pas d'horloge</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__3" value="parce que le réseau met plusieurs heures à transporter un message"><label for="a1q1__3">parce que le réseau met plusieurs heures à transporter un message</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__4" value="ce n&#x27;est pas nécessaire : l&#x27;heure de réception suffit toujours"><label for="a1q1__4">ce n'est pas nécessaire : l'heure de réception suffit toujours</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a1q2">
+  <legend><b>2.</b> Pourquoi l'<b>identifiant</b> devient-il indispensable l'an prochain&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__1" value="parce qu&#x27;il y aura trois jardins qui enverront la même sorte de message"><label for="a1q2__1">parce qu'il y aura trois jardins qui enverront la même sorte de message</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__2" value="parce que le réseau exige un identifiant dans chaque message"><label for="a1q2__2">parce que le réseau exige un identifiant dans chaque message</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__3" value="parce que l&#x27;adresse IP du jardin va changer"><label for="a1q2__3">parce que l'adresse IP du jardin va changer</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__4" value="parce que le gestionnaire ne connaît pas le nom du jardin"><label for="a1q2__4">parce que le gestionnaire ne connaît pas le nom du jardin</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a1q3">
+  <legend><b>3.</b> Les <b>127 variables internes</b> de la carte : pourquoi ne pas tout envoyer,
+    au cas où&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__1" value="ça coûte de l&#x27;énergie et de la place, et personne n&#x27;en a l&#x27;usage"><label for="a1q3__1">ça coûte de l'énergie et de la place, et personne n'en a l'usage</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__2" value="la carte n&#x27;a pas le droit de lire ses propres variables"><label for="a1q3__2">la carte n'a pas le droit de lire ses propres variables</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__3" value="le récepteur ne saurait pas les afficher"><label for="a1q3__3">le récepteur ne saurait pas les afficher</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__4" value="il n&#x27;y a aucune raison : envoyer plus est toujours mieux"><label for="a1q3__4">il n'y a aucune raison : envoyer plus est toujours mieux</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a1q4">
+  <legend><b>4.</b> Et le <b>prénom de l'élève</b> qui a programmé la carte&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__1" value="c&#x27;est une donnée personnelle : elle n&#x27;a rien à faire dans une mesure"><label for="a1q4__1">c'est une donnée personnelle : elle n'a rien à faire dans une mesure</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__2" value="c&#x27;est utile pour savoir qui appeler en cas de panne"><label for="a1q4__2">c'est utile pour savoir qui appeler en cas de panne</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__3" value="c&#x27;est obligatoire pour identifier l&#x27;objet sur le réseau"><label for="a1q4__3">c'est obligatoire pour identifier l'objet sur le réseau</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__4" value="c&#x27;est sans importance, un prénom n&#x27;est pas une donnée"><label for="a1q4__4">c'est sans importance, un prénom n'est pas une donnée</label></div>
+</fieldset>
     <p><b>5.</b> Recopie ici le message que le banc affiche quand il est complet :</p>
-    <textarea id="a1msg" rows="2" placeholder='{"id":"jardin-cour", …}'></textarea>
+    <textarea aria-label="5. Recopie ici le message que le banc affiche quand il est complet :" id="a1msg" rows="2" placeholder='{"id":"jardin-cour", …}'></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Le message complet affiché par le banc : { … } »</li></ul></details>
     <p style="font-size:.9em;color:var(--warn)">🔒 Compose d'abord, dans le banc, un message qui coche les cinq champs utiles et aucun des deux champs de trop.</p>
     <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
     <div class="feedback" id="fb1"></div>
@@ -951,33 +1023,30 @@ body.essentiel details.referentiel-replie{display:none}
   </ul>
   <div class="exo">
 
-    <p><b>1.</b> Si <b>le serveur demande</b>, que se passe-t-il la nuit, quand personne
-    n'ouvre la page&nbsp;?</p>
-    <select id="a2q1" aria-label="Si le serveur demande, que se passe-t-il la nuit, quand personne n'ouvre la page ?">
-      <option value="">— je choisis —</option>
-      <option>aucune mesure n'est enregistrée : l'historique a un trou</option>
-      <option>l'objet envoie quand même, par sécurité</option>
-      <option>le serveur enregistre les mesures à l'avance</option>
-      <option>rien ne change : l'historique est complet</option>
-    </select>
-    <p><b>2.</b> Si <b>l'objet pousse</b> toutes les cinq minutes, que se passe-t-il quand
-    l'humidité ne bouge pas de la journée&nbsp;?</p>
-    <select id="a2q2" aria-label="Si l'objet pousse toutes les cinq minutes, que se passe-t-il quand l'humidité ne bouge pas de la journée ?">
-      <option value="">— je choisis —</option>
-      <option>on envoie 288 fois la même valeur, pour rien</option>
-      <option>l'objet s'arrête tout seul, faute de nouveauté</option>
-      <option>le réseau bloque les messages identiques</option>
-      <option>c'est parfait : plus il y a de mesures, mieux c'est</option>
-    </select>
-    <p><b>3.</b> Le gestionnaire veut un historique complet <b>et</b> peu de messages. La bonne
-    règle est donc…</p>
-    <select id="a2q3">
-      <option value="">— je choisis —</option>
-      <option>envoyer si la valeur a changé, et au moins une fois par heure</option>
-      <option>envoyer toutes les cinq minutes, quoi qu'il arrive</option>
-      <option>n'envoyer que lorsque le serveur le demande</option>
-      <option>n'envoyer que lorsque la pompe se déclenche</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a2q1">
+  <legend><b>1.</b> Si <b>le serveur demande</b>, que se passe-t-il la nuit, quand personne
+    n'ouvre la page&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__1" value="aucune mesure n&#x27;est enregistrée : l&#x27;historique a un trou"><label for="a2q1__1">aucune mesure n'est enregistrée : l'historique a un trou</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__2" value="l&#x27;objet envoie quand même, par sécurité"><label for="a2q1__2">l'objet envoie quand même, par sécurité</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__3" value="le serveur enregistre les mesures à l&#x27;avance"><label for="a2q1__3">le serveur enregistre les mesures à l'avance</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__4" value="rien ne change : l&#x27;historique est complet"><label for="a2q1__4">rien ne change : l'historique est complet</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a2q2">
+  <legend><b>2.</b> Si <b>l'objet pousse</b> toutes les cinq minutes, que se passe-t-il quand
+    l'humidité ne bouge pas de la journée&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__1" value="on envoie 288 fois la même valeur, pour rien"><label for="a2q2__1">on envoie 288 fois la même valeur, pour rien</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__2" value="l&#x27;objet s&#x27;arrête tout seul, faute de nouveauté"><label for="a2q2__2">l'objet s'arrête tout seul, faute de nouveauté</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__3" value="le réseau bloque les messages identiques"><label for="a2q2__3">le réseau bloque les messages identiques</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__4" value="c&#x27;est parfait : plus il y a de mesures, mieux c&#x27;est"><label for="a2q2__4">c'est parfait : plus il y a de mesures, mieux c'est</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a2q3">
+  <legend><b>3.</b> Le gestionnaire veut un historique complet <b>et</b> peu de messages. La bonne
+    règle est donc…</legend>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__1" value="envoyer si la valeur a changé, et au moins une fois par heure"><label for="a2q3__1">envoyer si la valeur a changé, et au moins une fois par heure</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__2" value="envoyer toutes les cinq minutes, quoi qu&#x27;il arrive"><label for="a2q3__2">envoyer toutes les cinq minutes, quoi qu'il arrive</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__3" value="n&#x27;envoyer que lorsque le serveur le demande"><label for="a2q3__3">n'envoyer que lorsque le serveur le demande</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__4" value="n&#x27;envoyer que lorsque la pompe se déclenche"><label for="a2q3__4">n'envoyer que lorsque la pompe se déclenche</label></div>
+</fieldset>
     <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
     <div class="feedback" id="fb2"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
@@ -1010,33 +1079,31 @@ body.essentiel details.referentiel-replie{display:none}
   regarde le journal. Recommence avec les trois comportements, puis <b>rétablis</b>.</p>
   <div class="exo">
 
-    <p><b>1.</b> Avec « <b>perd la mesure</b> », que reste-t-il de la coupure&nbsp;?</p>
-    <select id="a3q1" aria-label="Avec « perd la mesure », que reste-t-il de la coupure ?">
-      <option value="">— je choisis —</option>
-      <option>rien : les mesures de la coupure n'existent plus nulle part</option>
-      <option>un message d'erreur dans l'historique</option>
-      <option>les mesures, qui repartiront au retour du lien</option>
-      <option>une alerte envoyée au gestionnaire</option>
-    </select>
-    <p><b>2.</b> Avec « <b>garde en file</b> », que se passe-t-il au rétablissement&nbsp;?</p>
-    <select id="a3q2" aria-label="Avec « garde en file », que se passe-t-il au rétablissement ?">
-      <option value="">— je choisis —</option>
-      <option>toutes les mesures en attente partent d'un coup, avec leur heure d'origine</option>
-      <option>seule la dernière mesure est envoyée</option>
-      <option>les mesures partent avec l'heure du rétablissement</option>
-      <option>la file est effacée : elle ne sert qu'à compter</option>
-    </select>
-    <p><b>3.</b> Et « <b>cesse d'arroser</b> »&nbsp;?</p>
-    <select id="a3q3" aria-label="Et « cesse d'arroser » ?">
-      <option value="">— je choisis —</option>
-      <option>c'est un défaut grave : le réseau n'a rien à voir avec l'arrosage</option>
-      <option>c'est prudent : mieux vaut ne rien faire sans supervision</option>
-      <option>c'est obligatoire : un objet non surveillé doit s'arrêter</option>
-      <option>c'est équivalent aux deux autres comportements</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a3q1">
+  <legend><b>1.</b> Avec « <b>perd la mesure</b> », que reste-t-il de la coupure&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__1" value="rien : les mesures de la coupure n&#x27;existent plus nulle part"><label for="a3q1__1">rien : les mesures de la coupure n'existent plus nulle part</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__2" value="un message d&#x27;erreur dans l&#x27;historique"><label for="a3q1__2">un message d'erreur dans l'historique</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__3" value="les mesures, qui repartiront au retour du lien"><label for="a3q1__3">les mesures, qui repartiront au retour du lien</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__4" value="une alerte envoyée au gestionnaire"><label for="a3q1__4">une alerte envoyée au gestionnaire</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a3q2">
+  <legend><b>2.</b> Avec « <b>garde en file</b> », que se passe-t-il au rétablissement&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__1" value="toutes les mesures en attente partent d&#x27;un coup, avec leur heure d&#x27;origine"><label for="a3q2__1">toutes les mesures en attente partent d'un coup, avec leur heure d'origine</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__2" value="seule la dernière mesure est envoyée"><label for="a3q2__2">seule la dernière mesure est envoyée</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__3" value="les mesures partent avec l&#x27;heure du rétablissement"><label for="a3q2__3">les mesures partent avec l'heure du rétablissement</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__4" value="la file est effacée : elle ne sert qu&#x27;à compter"><label for="a3q2__4">la file est effacée : elle ne sert qu'à compter</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a3q3">
+  <legend><b>3.</b> Et « <b>cesse d'arroser</b> »&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3q3" id="a3q3__1" value="c&#x27;est un défaut grave : le réseau n&#x27;a rien à voir avec l&#x27;arrosage"><label for="a3q3__1">c'est un défaut grave : le réseau n'a rien à voir avec l'arrosage</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q3" id="a3q3__2" value="c&#x27;est prudent : mieux vaut ne rien faire sans supervision"><label for="a3q3__2">c'est prudent : mieux vaut ne rien faire sans supervision</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q3" id="a3q3__3" value="c&#x27;est obligatoire : un objet non surveillé doit s&#x27;arrêter"><label for="a3q3__3">c'est obligatoire : un objet non surveillé doit s'arrêter</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q3" id="a3q3__4" value="c&#x27;est équivalent aux deux autres comportements"><label for="a3q3__4">c'est équivalent aux deux autres comportements</label></div>
+</fieldset>
     <p><b>En une phrase :</b> quelle différence fais-tu entre un objet <em>branché</em> et un
     objet <em>interfacé</em>&nbsp;?</p>
-    <textarea id="a3ph" rows="2" placeholder="Un objet branché… tandis qu'un objet interfacé…"></textarea>
+    <textarea aria-label="Un objet branché… tandis qu&#x27;un objet interfacé…" id="a3ph" rows="2" placeholder="Un objet branché… tandis qu'un objet interfacé…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Un objet branché …, alors qu'un objet interfacé … »</li></ul></details>
     <p style="font-size:.9em;color:var(--warn)">🔒 Coupe le lien au banc, envoie quelques mesures, essaie les trois comportements, puis rétablis — c'est l'essai qui répond.</p>
     <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
     <div class="feedback" id="fb3"></div>
@@ -1065,38 +1132,35 @@ body.essentiel details.referentiel-replie{display:none}
   4e_C7.8. <b>Production attendue :</b> 4 associations.</p>
   <p>Associe chaque chose qu'on serait tenté d'ajouter au message à la raison de ne pas le faire.</p>
   <div class="exo">
-    <p style="margin-top:12px"><b>Le mot de passe du réseau Wi-Fi du collège</b></p>
-    <select id="a4a0" aria-label="Le mot de passe du réseau Wi-Fi du collège">
-      <option value="">— je choisis —</option>
-      <option>Celle-là s'envoie : c'est exactement ce dont le destinataire a besoin.</option>
-      <option>De l'énergie et de la place dépensées pour des valeurs dont personne n'a l'usage.</option>
-      <option>Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin.</option>
-      <option>Une donnée personnelle, et des milliers de fois le poids d'une mesure, pour rien.</option>
-    </select>
-    <p style="margin-top:12px"><b>La photo de la classe qui a monté le jardin</b></p>
-    <select id="a4a1" aria-label="La photo de la classe qui a monté le jardin">
-      <option value="">— je choisis —</option>
-      <option>Celle-là s'envoie : c'est exactement ce dont le destinataire a besoin.</option>
-      <option>De l'énergie et de la place dépensées pour des valeurs dont personne n'a l'usage.</option>
-      <option>Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin.</option>
-      <option>Une donnée personnelle, et des milliers de fois le poids d'une mesure, pour rien.</option>
-    </select>
-    <p style="margin-top:12px"><b>Les 127 variables internes de la carte</b></p>
-    <select id="a4a2" aria-label="Les 127 variables internes de la carte">
-      <option value="">— je choisis —</option>
-      <option>Celle-là s'envoie : c'est exactement ce dont le destinataire a besoin.</option>
-      <option>De l'énergie et de la place dépensées pour des valeurs dont personne n'a l'usage.</option>
-      <option>Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin.</option>
-      <option>Une donnée personnelle, et des milliers de fois le poids d'une mesure, pour rien.</option>
-    </select>
-    <p style="margin-top:12px"><b>L'humidité mesurée, avec son unité et son heure</b></p>
-    <select id="a4a3" aria-label="L'humidité mesurée, avec son unité et son heure">
-      <option value="">— je choisis —</option>
-      <option>Celle-là s'envoie : c'est exactement ce dont le destinataire a besoin.</option>
-      <option>De l'énergie et de la place dépensées pour des valeurs dont personne n'a l'usage.</option>
-      <option>Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin.</option>
-      <option>Une donnée personnelle, et des milliers de fois le poids d'une mesure, pour rien.</option>
-    </select>
+    <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>Celle-là s'envoie : c'est exactement ce dont le destinataire a besoin.</li><li><b>B</b>De l'énergie et de la place dépensées pour des valeurs dont personne n'a l'usage.</li><li><b>C</b>Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin.</li><li><b>D</b>Une donnée personnelle, et des milliers de fois le poids d'une mesure, pour rien.</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="a4a0">
+  <legend><b>Le mot de passe du réseau Wi-Fi du collège</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4a0" id="a4a0__1" value="Celle-là s&#x27;envoie : c&#x27;est exactement ce dont le destinataire a besoin." aria-label="A — Celle-là s&#x27;envoie : c&#x27;est exactement ce dont le destinataire a besoin."><label for="a4a0__1" title="Celle-là s&#x27;envoie : c&#x27;est exactement ce dont le destinataire a besoin.">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a0" id="a4a0__2" value="De l&#x27;énergie et de la place dépensées pour des valeurs dont personne n&#x27;a l&#x27;usage." aria-label="B — De l&#x27;énergie et de la place dépensées pour des valeurs dont personne n&#x27;a l&#x27;usage."><label for="a4a0__2" title="De l&#x27;énergie et de la place dépensées pour des valeurs dont personne n&#x27;a l&#x27;usage.">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a0" id="a4a0__3" value="Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin." aria-label="C — Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin."><label for="a4a0__3" title="Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin.">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a0" id="a4a0__4" value="Une donnée personnelle, et des milliers de fois le poids d&#x27;une mesure, pour rien." aria-label="D — Une donnée personnelle, et des milliers de fois le poids d&#x27;une mesure, pour rien."><label for="a4a0__4" title="Une donnée personnelle, et des milliers de fois le poids d&#x27;une mesure, pour rien.">D</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a4a1">
+  <legend><b>La photo de la classe qui a monté le jardin</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4a1" id="a4a1__1" value="Celle-là s&#x27;envoie : c&#x27;est exactement ce dont le destinataire a besoin." aria-label="A — Celle-là s&#x27;envoie : c&#x27;est exactement ce dont le destinataire a besoin."><label for="a4a1__1" title="Celle-là s&#x27;envoie : c&#x27;est exactement ce dont le destinataire a besoin.">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a1" id="a4a1__2" value="De l&#x27;énergie et de la place dépensées pour des valeurs dont personne n&#x27;a l&#x27;usage." aria-label="B — De l&#x27;énergie et de la place dépensées pour des valeurs dont personne n&#x27;a l&#x27;usage."><label for="a4a1__2" title="De l&#x27;énergie et de la place dépensées pour des valeurs dont personne n&#x27;a l&#x27;usage.">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a1" id="a4a1__3" value="Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin." aria-label="C — Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin."><label for="a4a1__3" title="Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin.">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a1" id="a4a1__4" value="Une donnée personnelle, et des milliers de fois le poids d&#x27;une mesure, pour rien." aria-label="D — Une donnée personnelle, et des milliers de fois le poids d&#x27;une mesure, pour rien."><label for="a4a1__4" title="Une donnée personnelle, et des milliers de fois le poids d&#x27;une mesure, pour rien.">D</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a4a2">
+  <legend><b>Les 127 variables internes de la carte</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4a2" id="a4a2__1" value="Celle-là s&#x27;envoie : c&#x27;est exactement ce dont le destinataire a besoin." aria-label="A — Celle-là s&#x27;envoie : c&#x27;est exactement ce dont le destinataire a besoin."><label for="a4a2__1" title="Celle-là s&#x27;envoie : c&#x27;est exactement ce dont le destinataire a besoin.">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a2" id="a4a2__2" value="De l&#x27;énergie et de la place dépensées pour des valeurs dont personne n&#x27;a l&#x27;usage." aria-label="B — De l&#x27;énergie et de la place dépensées pour des valeurs dont personne n&#x27;a l&#x27;usage."><label for="a4a2__2" title="De l&#x27;énergie et de la place dépensées pour des valeurs dont personne n&#x27;a l&#x27;usage.">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a2" id="a4a2__3" value="Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin." aria-label="C — Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin."><label for="a4a2__3" title="Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin.">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a2" id="a4a2__4" value="Une donnée personnelle, et des milliers de fois le poids d&#x27;une mesure, pour rien." aria-label="D — Une donnée personnelle, et des milliers de fois le poids d&#x27;une mesure, pour rien."><label for="a4a2__4" title="Une donnée personnelle, et des milliers de fois le poids d&#x27;une mesure, pour rien.">D</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a4a3">
+  <legend><b>L'humidité mesurée, avec son unité et son heure</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4a3" id="a4a3__1" value="Celle-là s&#x27;envoie : c&#x27;est exactement ce dont le destinataire a besoin." aria-label="A — Celle-là s&#x27;envoie : c&#x27;est exactement ce dont le destinataire a besoin."><label for="a4a3__1" title="Celle-là s&#x27;envoie : c&#x27;est exactement ce dont le destinataire a besoin.">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a3" id="a4a3__2" value="De l&#x27;énergie et de la place dépensées pour des valeurs dont personne n&#x27;a l&#x27;usage." aria-label="B — De l&#x27;énergie et de la place dépensées pour des valeurs dont personne n&#x27;a l&#x27;usage."><label for="a4a3__2" title="De l&#x27;énergie et de la place dépensées pour des valeurs dont personne n&#x27;a l&#x27;usage.">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a3" id="a4a3__3" value="Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin." aria-label="C — Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin."><label for="a4a3__3" title="Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin.">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a3" id="a4a3__4" value="Une donnée personnelle, et des milliers de fois le poids d&#x27;une mesure, pour rien." aria-label="D — Une donnée personnelle, et des milliers de fois le poids d&#x27;une mesure, pour rien."><label for="a4a3__4" title="Une donnée personnelle, et des milliers de fois le poids d&#x27;une mesure, pour rien.">D</label></div>
+</fieldset>
     <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
     <div class="feedback" id="fb4"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
@@ -1117,7 +1181,8 @@ body.essentiel details.referentiel-replie{display:none}
   veut en plus être <b>prévenu</b> quand un jardin n'a pas arrosé depuis deux jours.</p>
   <p><b>Qu'est-ce qui change dans ton message, et qu'est-ce qui ne change pas&nbsp;?</b>
   Dis aussi comment le récepteur peut savoir qu'un jardin est en panne.</p>
-  <textarea id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+  <textarea aria-label="Je choisirais … parce que …" id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Avec trois jardins, dans mon message, ce qui change : … ; ce qui ne change pas : …. »</li><li>« Le récepteur sait qu'un jardin est en panne quand …, parce que … »</li><li>« Pour prévenir au bout de deux jours sans arrosage, il faut … »</li></ul></details>
   <button class="btn check" data-check="5" type="button">✅ Vérifier le réinvestissement</button>
   <div class="feedback" id="fb5"></div>
   <details class="correction"><summary>📖 Correction</summary><div>
@@ -1174,6 +1239,7 @@ body.essentiel details.referentiel-replie{display:none}
 
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Défi format : en CSV, le même message ressemblerait à « … » ; on gagne …, on perd …. »</li><li>« Défi taille : le message complet fait … caractères, la version aux noms entiers … caractères. »</li><li>« Sur 288 envois par jour, cela fait … caractères de différence. »</li></ul></details>
   <details class="correction"><summary>✅ Corrigé du défi format — le même message en CSV</summary><div>
     <p><b>Le même message en CSV.</b> Une première ligne donne les noms des colonnes, une fois pour toutes : <code>id,h,u,t,pompe</code>. Chaque mesure n'envoie ensuite que ses valeurs, séparées par des virgules, dans le même ordre : <code>jardin-cour,38,%,14:07,false</code> — 28 caractères au lieu des 61 du message JSON.</p>
     <p><b>Ce qu'on gagne :</b> un message plus court, puisque les noms ne voyagent plus avec chaque mesure ; un historique qui s'ouvre directement dans un tableur, une colonne par champ.</p>
@@ -1203,19 +1269,21 @@ body.essentiel details.referentiel-replie{display:none}
 <p>Tu avais écrit ta liste de champs avant tout essai. Compare-la aux cinq
   retenus. Ce qui compte n'est pas d'avoir eu la bonne liste : c'est de savoir maintenant
   <em>d'où</em> vient chaque champ — d'un besoin du destinataire, pas d'une habitude.</p>
-  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <textarea aria-label="Ce que je sais faire maintenant, et ce qui me résiste encore…" id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Ma liste de départ contenait … ; les cinq champs retenus sont …. »</li><li>« Ce qui manquait à ma liste : …, parce que sans lui le récepteur …. »</li><li>« Ce que je sais faire maintenant : … »</li></ul></details>
   <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">où as-tu hésité en composant le message, et qu'est-ce qui t'a surpris quand tu as coupé le lien ?</label></p>
   <textarea id="bilanMeta" rows="2" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« J'ai hésité en composant le message au moment de … »</li><li>« Ce qui m'a surpris quand j'ai coupé le lien : … »</li><li>« La prochaine fois, je penserai d'abord à … »</li></ul></details>
   <h3>📍 Je me positionne</h3>
   <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : <br>maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. <br>Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
-  <p style="margin-top:12px"><label for="pos"><b>4e_C7.8 — interfacer un objet technique avec un réseau :</b></label></p>
-  <select id="pos">
-    <option value="">— je me positionne —</option>
-    <option>🔴 Maîtrise insuffisante — je confonds brancher un objet et l'interfacer</option>
-    <option>🟠 Maîtrise fragile — je compose le message si on me rappelle les champs</option>
-    <option>🟢 Maîtrise satisfaisante — je décide le contenu, le rythme et l'initiative, et je les justifie</option>
-    <option>⭐ Très bonne maîtrise — et je décide ce que l'objet fait quand le lien tombe</option>
-  </select>
+  <p style="margin-top:12px"></p>
+  <fieldset class="qcm-groupe" id="pos">
+  <legend><b>4e_C7.8 — interfacer un objet technique avec un réseau :</b></legend>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__1" value="🔴 Maîtrise insuffisante — je confonds brancher un objet et l&#x27;interfacer"><label for="pos__1">🔴 Maîtrise insuffisante — je confonds brancher un objet et l'interfacer</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__2" value="🟠 Maîtrise fragile — je compose le message si on me rappelle les champs"><label for="pos__2">🟠 Maîtrise fragile — je compose le message si on me rappelle les champs</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__3" value="🟢 Maîtrise satisfaisante — je décide le contenu, le rythme et l&#x27;initiative, et je les justifie"><label for="pos__3">🟢 Maîtrise satisfaisante — je décide le contenu, le rythme et l'initiative, et je les justifie</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__4" value="⭐ Très bonne maîtrise — et je décide ce que l&#x27;objet fait quand le lien tombe"><label for="pos__4">⭐ Très bonne maîtrise — et je décide ce que l'objet fait quand le lien tombe</label></div>
+</fieldset>
   <fieldset class="positionnement"><legend>4e_C1.4 (appui) — identifier et appliquer les règles pour un usage raisonné des objets communicants et des environnements numériques (propriété intellectuelle, identité numérique, témoins de connexion, géolocalisation)</legend>
 <label><input type="radio" name="pos_c14" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c14" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c14" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c14" value="4"> ⭐ très bonne</label></fieldset>
 </section>
@@ -1402,7 +1470,7 @@ const CHECKS = {
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
-  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; (window.__exp.valides = window.__exp.valides || {})[n] = 1; majBandeau(); save(); return; }
   if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
@@ -1411,8 +1479,9 @@ document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("cli
 
 function save(){
   const o = {inputs: {}, checks: {}, exp: window.__exp};
-  document.querySelectorAll("input, select, textarea").forEach(e => {
+  document.querySelectorAll("input, select, textarea, fieldset.qcm-groupe").forEach(e => {
     if(!e.id) return;
+    if(e.type === "radio" && e.closest(".qcm-groupe")) return;   // n°300 : le groupe porte sa valeur, pas ses boutons
     if(e.type === "checkbox" || (e.type === "radio" && e.closest("#billet"))) o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
   // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
   o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
@@ -1500,6 +1569,25 @@ if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
 
 restore(); majLien();
 placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // l'outil rejoint la séance affichée
+
+/* ══ Règle d'or n°29 — mode essentiel (gabarit commun, V2 du 07/11/2026) ══ */
+function majEssentiel(){ const b=$("btnEssentiel"); if(!b) return;
+  const on=document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false"); }
+if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
+  document.body.classList.toggle("essentiel");
+  (window.__exp = window.__exp || {})["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save(); });
+/* ══ Règle d'or n°30 — le bandeau des tâches : une ligne par activité, barrée quand elle est validée ══ */
+function majBandeau(){ const b=$("tachesBandeau"); if(!b) return; const ul=b.querySelector("ul"); if(!ul) return;
+  const v=(window.__exp||{}).valides||{}; let faites=0;
+  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.tache]; li.classList.toggle("faite", ok); if(ok) faites++;
+    li.querySelector(".tb-etat").textContent = ok ? "✔" : "○"; });
+  const c=b.querySelector(".tb-compte"); if(c) c.textContent = faites + " / " + ul.children.length + " validée(s)"; }
+window.__exp = window.__exp || {};
+if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majBandeau();
 })();
 </script>
 
