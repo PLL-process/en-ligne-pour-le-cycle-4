@@ -29347,6 +29347,59 @@ essentiel compris. **Reste** : le lexique du lot n'a pas d'ancres par séance ; 
 
 **Fusion avec `main` (même jour)** : la PR #624, fusionnée entre-temps, avait déjà révisé 4e_C1.4 (texte simplifié, exemples de 5.b repliés). Résolution : le texte de #624 est gardé partout ; cette PR n'y ajoute que son idée propre — les leçons des cinq situations repliées dans un `<details>` ouvert après la réponse. Les chiffres de mots de l'entrée ci-dessus sont ceux mesurés avant la fusion.
 
+## 10/11/2026 — Révision des trois thèmes, 4 bis : le jeu des licences de 4e_C1.4 devient jouable, et la séance 6 se lit (thème 1)
+
+**D'où ça vient.** En relisant 4e_C1.4 après #624 (la passe « lire comme un élève »), l'activité 6.c « le jeu des
+licences » ne pouvait pas être réussie : la correction dit qu'une licence va dans **plusieurs** catégories (CC BY
+dans trois), mais le dépôt **déplaçait** l'étiquette — posée dans « usage commercial », elle quittait la réserve et ne
+pouvait plus aller dans « modification ». Et la consigne disait « survole » : sur un téléphone, rien ne se survole.
+
+**Ce qui change** (`sequence-cybersecurite-protection-donnees.html`, une page).
+- **6.c** : les quatre zones portent `data-multi="1" data-copie="1"` ; une zone « copie » reçoit une **copie** de la
+  licence, l'étiquette reste dans la réserve, une même licence n'entre qu'une fois par zone ; un double-clic retire une
+  copie mal placée. Le dépôt au clavier (Entrée sur la zone) suit la même règle ; les zones reçoivent le focus
+  (`tabindex="0"`), un `dragstart` synthétique sans `dataTransfer` ne casse plus. Un dépliant « 📖 Ce que veut dire
+  chaque sigle — à lire avant de jouer » (BY, NC, ND, SA, CC0) précède le jeu.
+- **6.b** : les six cas et les six actions se lisent en entier (« Une image trouvée en ligne, sous licence CC » →
+  « Citer l'auteur et la licence », au lieu de « Image en ligne » → « Citer licence ») ; l'info-bulle s'ouvre aussi au
+  **toucher et au focus** (`:focus`, `:focus-within`), et tient dans l'écran (`max-width:min(400px, 90vw)`).
+- **Les corrections de la séance 6** réécrites en lignes : 6.a la règle, 6.b les six cas un par ligne, 6.c les quatre
+  catégories avec leur règle (« toutes celles sans NC »), et le piège ; 6.d en une ligne par question.
+- **Le compte des points se lit dans la page** : 6.a vaut 1 point (un bloc), 6.b est dit « non noté » (les ateliers
+  glisser-déposer n'entrent pas dans le total, décision du 09/09/2026), 5.c annonce ses 7 questions (il en a 7).
+- Au passage : le dernier « vous » (1.c, 3.c « Ta réponse… ») ; `pre{overflow-x:auto}` (un bloc de code hors parcours
+  élargissait la page à 718 px sur 390) ; les zones de texte à 100 % de large.
+
+**Vérifié** (10/11/2026, Chromium Playwright) : un banc jetable du jeu — CC BY posée dans « commercial » puis
+« modification » : une copie dans chaque zone, l'étiquette toujours dans la réserve, pas de doublon au second dépôt,
+retirée au double-clic, quatre zones focusables, 0 erreur JS ; `tests_regle_311_4e_C1.4.mjs` 34 / 34 ;
+`verif_regles_audit` 0 ✘ ; `audit_aeration --strict` ✅ ; `mesurer_charge` : 1 050 · 714 · 1 122 · 730 mots, aucune
+séance au-dessus du repère ; `controle_licence` ✓. Non exécuté : vrai téléphone, Firefox, Safari.
+
+**Reste à Pascal.** Fusionner. La révision reprend à la séquence 7 du suivi, 5e_C1.1.
+
+---
+
+
+---
+
+## 10/11/2026 — Révision des trois thèmes, 12 : 3e_C4.1, les 33 listes deviennent des boutons radio et les Bonus se replient (thème 2)
+
+**Contexte.** Première séquence du thème 2 dans la passe de révision (skill `revision-sequence`). Deux sessions tournant sur le même suivi, celle-ci prend les lignes des thèmes 2 et 3 dans l'ordre du suivi, l'autre garde le thème 1.
+
+**Décisions.**
+- **n°300** : `migrer_gabarit_306.py --n300` convertit les 33 listes déroulantes (147 propositions) ; la page sauvegarde par sa propre fonction `collect()`, qui lit désormais `fieldset.qcm-groupe[id]` et ne liste plus ses boutons un à un. Les enveloppes `div.assoc` (deux colonnes, faites pour un libellé + une liste) sont retirées autour des groupes : elles empêchaient `grilles_radio.py` de voir la suite.
+- **Grille** : les cinq positions du schéma-bloc (a) partagent leurs sept réponses → une grille lettrée A–G (35 lignes de moins). Les natures d'énergie (b) ne se rangent pas en grille : leurs propositions diffèrent d'une question à l'autre, c'est voulu.
+- **Bonus** : celui de la clôture par `replier_bonus.py` ; celui de la séance 1 (« La loi d'Ohm au chevet de la station », 20 min facultatif, 347 mots) replié de la même façon sous son titre — la séance 1 tient déjà ses 55 min avec les activités 1 et 2.
+- **Aération** : 33 retours posés par l'outil ; trois corrections « cousues » (→ et ·) réécrites une idée par ligne ; la mission de l'ouverture en ①②③ ; la problématique en deux questions ; « c'est vous les concepteurs » → « c'est toi le concepteur » (n°302).
+- **n°312** : la clé lettrée de la grille reprend le nom de l'unité (« 12 V (volts) »), comme les libellés.
+- **Banc du lot** : le shim `_groupesRadio(page)` (V2 du 08/11) ajouté ; le banc ouvre les Bonus repliés avant de remplir leurs champs.
+
+**Mesure.** Séance 1 : 1 444 → 1 032 mots visibles ; séance 2 : 1 156 → 997. ✘ 1 → 0 ; menus 33 → 0 ; aération 6 → 0. Bancs 23/23 et 34/34 ; contrôles verts.
+
+---
+
+
 ---
 
 ## 08/11/2026 — Les voix des deux pilotes (5e_C4.1, 4e_C9.1) ralenties à 1.15 et dotées d'une marge de silence ; dix-huit prises refaites, à écouter (thèmes 2 et 3)
