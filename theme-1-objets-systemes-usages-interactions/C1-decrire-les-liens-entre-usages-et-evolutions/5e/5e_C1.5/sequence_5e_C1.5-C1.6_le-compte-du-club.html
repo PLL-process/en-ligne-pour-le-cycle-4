@@ -396,7 +396,7 @@ body.essentiel details.referentiel-replie{display:none}
   }
 
   // Les blocs qui ne servent qu'à l'écran, reconnus à leur titre (ils n'ont pas de classe commune).
-  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique|crcn mobilisés/i;
+  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|avant l.activité \d|avant la séance \d|échauffement|en-tête pédagogique|crcn mobilisés/i;
   function blocsEcran(){
     document.querySelectorAll("section, .card").forEach(function(c){
       var t = c.querySelector(":scope > h2, :scope > h3");
@@ -616,10 +616,12 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 
 <div class="toolbar">
   <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset" type="button" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button>
 
   <button class="btn ghost" id="btnEssentiel" type="button" aria-pressed="false" title="Masquer les corrections et les compléments, pour ne garder que les consignes et les exercices. Un second clic ramène tout.">🎯 Mode essentiel : OFF</button>
 </div>
 
+<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
 <!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
 <details class="rappel-ouverture" id="ouverture" open>
 <summary>📖 Rappel : la situation et ton hypothèse</summary>
@@ -831,15 +833,15 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
     <p style="font-size:.92em;color:var(--sub);margin:0 0 8px"><b>Le banc de publication : coche ce que la publication contient, puis regarde. Le banc ne dit pas si c'est bien — il dit ce que ça révèle et ce que ça engage.</b></p>
 
     <table class="elems">
-      <tr><th></th><th>Élément</th><th>Ce que c'est</th></tr>
-      <tr id="tr_jardin"><td class="ck"><input type="checkbox" id="el_jardin"></td><td><b>La photo du jardin connecté</b></td><td>le sujet de la publication</td></tr>
-      <tr id="tr_visage"><td class="ck"><input type="checkbox" id="el_visage"></td><td><b>Le visage de Maël, au premier plan</b></td><td>un camarade parfaitement reconnaissable</td></tr>
-      <tr id="tr_nom"><td class="ck"><input type="checkbox" id="el_nom"></td><td><b>Son nom et son prénom en légende</b></td><td>« Maël Céleste »</td></tr>
-      <tr id="tr_plaque"><td class="ck"><input type="checkbox" id="el_plaque"></td><td><b>La plaque de rue derrière lui</b></td><td>« rue Victor Schœlcher »</td></tr>
-      <tr id="tr_heure"><td class="ck"><input type="checkbox" id="el_heure"></td><td><b>La date et l'heure de la prise de vue</b></td><td>jeudi, 14 h 05</td></tr>
-      <tr id="tr_college"><td class="ck"><input type="checkbox" id="el_college"></td><td><b>Le nom du collège dans la légende</b></td><td>l'établissement, en clair</td></tr>
-      <tr id="tr_classe"><td class="ck"><input type="checkbox" id="el_classe"></td><td><b>La mention « la classe de 5eB »</b></td><td>dans le texte de la publication</td></tr>
-      <tr id="tr_geoloc"><td class="ck"><input type="checkbox" id="el_geoloc"></td><td><b>La géolocalisation enregistrée par le téléphone</b></td><td>une métadonnée du fichier, invisible à l'écran</td></tr>
+      <tr><td></td><th>Élément</th><th>Ce que c'est</th></tr>
+      <tr id="tr_jardin"><td class="ck"><input type="checkbox" id="el_jardin" aria-label="La photo du jardin connecté"></td><td><b>La photo du jardin connecté</b></td><td>le sujet de la publication</td></tr>
+      <tr id="tr_visage"><td class="ck"><input type="checkbox" id="el_visage" aria-label="Le visage de Maël, au premier plan"></td><td><b>Le visage de Maël, au premier plan</b></td><td>un camarade parfaitement reconnaissable</td></tr>
+      <tr id="tr_nom"><td class="ck"><input type="checkbox" id="el_nom" aria-label="Son nom et son prénom en légende"></td><td><b>Son nom et son prénom en légende</b></td><td>« Maël Céleste »</td></tr>
+      <tr id="tr_plaque"><td class="ck"><input type="checkbox" id="el_plaque" aria-label="La plaque de rue derrière lui"></td><td><b>La plaque de rue derrière lui</b></td><td>« rue Victor Schœlcher »</td></tr>
+      <tr id="tr_heure"><td class="ck"><input type="checkbox" id="el_heure" aria-label="La date et l'heure de la prise de vue"></td><td><b>La date et l'heure de la prise de vue</b></td><td>jeudi, 14 h 05</td></tr>
+      <tr id="tr_college"><td class="ck"><input type="checkbox" id="el_college" aria-label="Le nom du collège dans la légende"></td><td><b>Le nom du collège dans la légende</b></td><td>l'établissement, en clair</td></tr>
+      <tr id="tr_classe"><td class="ck"><input type="checkbox" id="el_classe" aria-label="La mention « la classe de 5eB »"></td><td><b>La mention « la classe de 5eB »</b></td><td>dans le texte de la publication</td></tr>
+      <tr id="tr_geoloc"><td class="ck"><input type="checkbox" id="el_geoloc" aria-label="La géolocalisation enregistrée par le téléphone"></td><td><b>La géolocalisation enregistrée par le téléphone</b></td><td>une métadonnée du fichier, invisible à l'écran</td></tr>
     </table>
     <div class="publi-cmd"><label for="img">L'image d'illustration utilisée :</label>
       <select data-interface="commande" id="img">
@@ -1430,7 +1432,7 @@ la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore ap
 
 </div>
 
-<footer>Séquence 5e_C1.5 + 5e_C1.6 — « Le compte du club ». Banc de publication original (CC0), aucune donnée réelle, aucune connexion, fonctionne hors ligne. Programme 2024, Thème 1.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.8em;opacity:.85;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+<footer>Séquence 5e_C1.5 + 5e_C1.6 — « Le compte du club ». Banc de publication original (CC0), aucune donnée réelle, aucune connexion, fonctionne hors ligne. Programme 2024, Thème 1.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license" style="color:inherit;text-decoration:underline">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 
 <script>
@@ -1655,11 +1657,12 @@ const CHECKS = {
   4(){ let s = 0;
        s += sv("a4a0", "il est l'auteur : c'est lui qui engage sa responsabilité en premier"); s += sv("a4a1", "il le rend plus visible et le soutient publiquement : il y prend part"); s += sv("a4a2", "il n'a rien écrit, et son silence laisse la situation durer"); s += sv("a4a3", "il le diffuse à des gens qui ne l'auraient jamais vu : il aggrave"); s += sv("a4a4", "il répond de ce qui reste publié sous ce compte, même s'il n'a rien écrit"); s += sv("a4q1","il en parle à un adulte de l'établissement, et garde une capture"); s += sv("a4q2","rien : avec un compte partagé, il ne peut même pas s'en dédouaner");
        return {score: s, total: 7, exp: true}; },
-  5(){ return {score: pres("reinv", 140), total: 1, exp: true}; }
+  5(){ return {score: pres("reinv", 140), total: 1, exp: true, libre: true}; }
 };
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; save(); return; }
   if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; (window.__exp.valides = window.__exp.valides || {})[n] = 1; majBandeau(); }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
@@ -1774,5 +1777,22 @@ majEssentiel(); majBandeau();
 })();
 </script>
 
+
+<script>
+/* Effacement de la sauvegarde locale, en deux clics et sans boîte modale
+   (audit externe A05, 08/11/2026 ; posé par _outils/controle_sauvegarde_locale.py). */
+(function(){
+  "use strict";
+  var b = document.getElementById("btnReset"); if (!b) return;
+  var cle = "seq_5e_C1_5_C1_6", arme = 0, texte = b.textContent;
+  b.setAttribute("aria-live", "polite");
+  b.addEventListener("click", function(){
+    var t = Date.now();
+    if (arme && t - arme < 6000){ try{ localStorage.removeItem(cle); }catch(e){} location.reload(); return; }
+    arme = t; b.textContent = "🗑 Clique encore pour confirmer l'effacement";
+    setTimeout(function(){ if (arme === t){ arme = 0; b.textContent = texte; } }, 6000);
+  });
+})();
+</script>
 </body>
 </html>

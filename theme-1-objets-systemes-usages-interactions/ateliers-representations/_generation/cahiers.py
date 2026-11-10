@@ -80,6 +80,10 @@ def page(niv, ats, cahier, page_niveau, chemins_fn):
          '<button type="button" class="btn ghost" id="btnEffacer">🗑 Effacer ma sauvegarde</button>'
          '<button type="button" class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : désactivé</button></div>',
          '<p class="note" id="noteSauvegarde" style="text-align:center" aria-live="polite">Ton travail s\'enregistre tout seul dans ce navigateur.</p>',
+         # Audit externe A05 (08/11/2026) : sur un poste partagé, l'élève suivant lit les réponses du précédent.
+         '<p class="note" data-note="poste-partage" style="text-align:center">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: '
+         'un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF '
+         'si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>',
          '<div class="etiquettes"><span class="etiquette niveau" title="Niveau de classe" aria-label="Niveau : %s">%s</span>' % (niv, niv)]
     for c in codes:
         h.append('<span class="etiquette code" title="%s" aria-label="Compétence %s : %s">%s</span>'
@@ -102,7 +106,7 @@ def page(niv, ats, cahier, page_niveau, chemins_fn):
     h.append("</main>")
     mentions = " ".join(at.MENTION_FICTION for at in ats)
     h.append('<footer class="pied"><p>%s</p><p>Technologie cycle 4 · programme 2024 · page utilisable sans Internet · ton travail '
-             'reste dans ce navigateur, rien n\'est envoyé.</p></footer>' % mentions)
+             'reste dans ce navigateur, rien n\'est envoyé.</p>%s\n</footer>' % (mentions, moteur.MENTION_LICENCE))
     h.append(moteur.fin_page({"page": pid, "exercices": defs}))
     return chemin, "".join(h)
 

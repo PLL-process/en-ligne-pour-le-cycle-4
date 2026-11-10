@@ -29516,6 +29516,52 @@ annoncée sans rien retirer serait faux. Deux pistes : une quatrième séance, o
 **Mesure.** Séance 4 : 1 928 → 1 252 mots visibles (essentiel 1 243) ; séances 1 à 3 : 817 · 460 · 437. ✘ 2 → 0 ; menus 33 → 0 ; aération 8 → 0. Bancs 23/23 et 34/34 ; contrôles verts.
 
 **Question à Pascal.** La séance 4 annonce 85 min d'activités (activité 5 : 20 min, activité 6 : 35 min, réinvestissement « bouée houlographe » : 30 min) plus la clôture. Piste : le réinvestissement et la clôture en séance 5, comme la séance 5 de 4e_C1.1 coupée en deux (#624). Non fait sans sa décision.
+## 10/11/2026 — Audit externe des séquences : cinq constats corrigés, cinq points instruits, deux contrôles de plus (transversal : `_outils`, `index`, trois thèmes)
+
+**Demande de Pascal** : un audit externe des pages élèves (reçu le 01/11, cinq constats A01–A05 et cinq « points
+restant à auditer ») ; « tu as carte blanche jusqu'à la fin ». Rapport complet, mesures avant/après et décisions
+à prendre : `docs/audits/AUDIT_EXTERNE_2026-11-01_etapes_1_et_2.md`.
+
+**Choix faits.**
+- **A01** — l'index lit le README pointeur de chaque code mutualisé et affiche « Ressource dédiée absente —
+  compétence traitée dans : … » avec le lien et la phrase du README (43 codes, pas seulement les trois cités).
+- **A02/A03** (Chengdu) — ± 10 % annoncé comme incertitude supposée pour l'exercice, sans justesse/fidélité en 5e ;
+  l'entretien du capteur fermé dit la même chose dans le tableau et la correction (contrôle, remplacement, pas de
+  nettoyage).
+- **A04** — règle d'or n°297 amendée : le titre de l'encart des gestes dit **avant quoi** il se place (« Avant
+  l'activité N (échauffement) » / « Avant la séance N (échauffement) »), sur les 16 encarts ; `papier.js` connaît
+  ces titres (sinon l'encart s'imprimait).
+- **A05** — **règle d'or n°322 : une page qui garde les réponses de l'élève dans le navigateur (1) sait les effacer
+  d'un bouton nommé, (2) prévient du poste partagé par la note `data-note="poste-partage"`, (3) ne confirme jamais
+  par une boîte modale du navigateur — deux clics dans la page.** Contrôle `controle_sauvegarde_locale.py`
+  (+ `--corriger`). 10 séquences sans effacement réparées, 109 notes posées, 54 `confirm()` retirés (kit.js des
+  ateliers et ses copies ; planification dans son générateur).
+- **Boutons « Vérifier »** — **règle d'or n°323 : la bonne réponse ne se devine pas à sa place** ; contrôle
+  `controle_ordre_propositions.py` (+ `--corriger`, mélange déterministe, graine = page + id). 256 groupes sur 256
+  avaient la bonne réponse en première position dans 10 séquences. Et une vérification qui ne mesure que la
+  longueur d'un texte libre dit « ✍️ Réponse enregistrée … ouvre la correction et compare », jamais
+  « 🎉 Activité validée » (20 séquences).
+- **Accessibilité** — mention de licence lisible (sans opacité, lien qui hérite la couleur du pied), `.timer-off`
+  des QCM à 5,6 : 1, barres de progression, cases et menus nommés, coins de tableaux. Le structurel (`<main>`,
+  sauts h2→h4) est une décision.
+- **Générateurs** — moteur.py, cahiers.py, build.py, syntheses.py (ateliers de représentation) et
+  build_atelier.py (planification) posent eux-mêmes la mention n°321 et portent les retouches du lot ;
+  régénération à blanc = 0 fichier changé (70 avant).
+
+**Vérifié.** Balayage navigateur 408 pages, 0 constat · axe-core avant/après sur 408 pages · banc « texte
+arbitraire » sur 56 séquences, 0 activité validée · `controle_impression.mjs` 0 refus · `controle_licence`,
+`controle_gestes_outil` + tests, `controle_liens`, `controle_atteignabilite`, `controle_regles_visibles`,
+`controle_boutons_vivants`, `controle_impression_papier`, `banc_papier`, `verif_chaine.py` (planification) verts ·
+bancs 3e_C7 80/80, 5e_C7 55/55, 4e_C7 47/47 ; 4e_C8 53/54 et `tests_atelier_C7.1.py` échouent **déjà sur main**
+(débord mobile 15 px ; assertion « aucun http:// » depuis le lien CC). Rouges connus et inchangés : `controle_regle4`,
+`controle_effectifs_qcm`. **Non exécuté** : clavier pas à pas, lecteur d'écran, zoom 200 %, version publiée.
+
+**Reste à Pascal** : les sept décisions du rapport (export JSON ou PDF seul ; note sur les QCM ; longueur des bonnes
+réponses ; `<main>` et titres dans le gabarit n°306 ; vigilance violette 3e_C4.3 ; échelle LSU dans 24 séquences ;
+sept pages hors gabarit).
+
+---
+
 
 ---
 
@@ -29530,4 +29576,3 @@ annoncée sans rien retirer serait faux. Deux pistes : une quatrième séance, o
 - **Bancs** : shim `_groupesRadio(page)` ; `remplir` accepte un groupe ; le banc ouvre les volets après chaque chargement ; la lecture des causes du simulateur réseau accepte des boutons radio. 52/52 et 34/34.
 
 **Mesure.** Séances : 782 · 762 · 594 · 782 mots visibles. ✘ 1 → 0 ; menus 39 → 0 ; aération 11 → 0 ; contrôles verts.
-

@@ -350,7 +350,7 @@ body.essentiel details.referentiel-replie{display:none}
   }
 
   // Les blocs qui ne servent qu'à l'écran, reconnus à leur titre (ils n'ont pas de classe commune).
-  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique|crcn mobilisés/i;
+  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|avant l.activité \d|avant la séance \d|échauffement|en-tête pédagogique|crcn mobilisés/i;
   function blocsEcran(){
     document.querySelectorAll("section, .card").forEach(function(c){
       var t = c.querySelector(":scope > h2, :scope > h3");
@@ -532,8 +532,10 @@ body.essentiel details.referentiel-replie{display:none}
 
 <div class="toolbar">
   <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset" type="button" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button>
 </div>
 
+<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
 <!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
 <details class="rappel-ouverture" id="ouverture" open>
 <summary>📖 Rappel : la situation et ton hypothèse</summary>
@@ -820,7 +822,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>parce que le banc n'accepte qu'une seule taille</option>
     </select>
     <p><b>Question 2.</b> À quel moment précis note-t-on la valeur ?</p>
-    <select id="a1q2">
+    <select id="a1q2" aria-label="À quel moment précis note-t-on la valeur ?">
       <option value="">— je choisis —</option>
       <option>au début, quand on accroche la première charge</option>
       <option>quand l'éprouvette commence à s'allonger</option>
@@ -829,7 +831,7 @@ body.essentiel details.referentiel-replie{display:none}
     </select>
     <p><b>Question 3.</b> Le protocole dit « une éprouvette NEUVE ». Pourquoi pas réutiliser
     la précédente ?</p>
-    <select id="a1q3">
+    <select id="a1q3" aria-label="Pourquoi pas réutiliser la précédente ?">
       <option value="">— je choisis —</option>
       <option>parce qu'elle est sale</option>
       <option>parce qu'une éprouvette déjà tirée est abîmée, même si ça ne se voit pas</option>
@@ -838,7 +840,7 @@ body.essentiel details.referentiel-replie{display:none}
     </select>
     <p><b>Question 4.</b> La dernière ligne interdit de comparer des essais faits sur deux bancs
     différents. Quel mot du protocole cette règle protège-t-elle ?</p>
-    <select id="a1q4">
+    <select id="a1q4" aria-label="Quel mot du protocole cette règle protège-t-elle ?">
       <option value="">— je choisis —</option>
       <option>« neuve »</option>
       <option>« comparer »</option>
@@ -930,7 +932,7 @@ body.essentiel details.referentiel-replie{display:none}
         fois la charge prévue, parce qu'un élève s'y suspend un jour ou l'autre.</li>
     </ul>
     <p><b>Question 1.</b> Quelle charge la patère doit-elle donc tenir ?</p>
-    <select id="a3q1">
+    <select id="a3q1" aria-label="Quelle charge la patère doit-elle donc tenir ?">
       <option value="">— je choisis —</option>
       <option>8 kg</option>
       <option>13 kg</option>
@@ -938,7 +940,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>100 kg</option>
     </select>
     <p><b>Question 2.</b> D'après tes relevés, combien de matériaux passent cette barre ?</p>
-    <select id="a3q2">
+    <select id="a3q2" aria-label="D'après tes relevés, combien de matériaux passent cette barre ?">
       <option value="">— je choisis —</option>
       <option>un seul</option>
       <option>deux</option>
@@ -946,7 +948,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>aucun</option>
     </select>
     <p><b>Question 3.</b> Le bois casse à 41 kg pour 40 kg exigés. Que dis-tu au gestionnaire ?</p>
-    <select id="a3q3">
+    <select id="a3q3" aria-label="Que dis-tu au gestionnaire ?">
       <option value="">— je choisis —</option>
       <option>c'est bon, 41 est plus grand que 40</option>
       <option>ça passe tout juste : une pièce un peu moins bonne que l'éprouvette ne passe plus</option>
@@ -980,7 +982,7 @@ body.essentiel details.referentiel-replie{display:none}
   Associe chaque matériau à la <em>chose que l'essai de traction n'a pas vue</em>.</p>
   <div class="exo">
     <p><b>Bois (pin)</b></p>
-    <select id="a4q0">
+    <select id="a4q0" aria-label="Bois (pin)">
       <option value="">— je choisis —</option>
         <option>51 kg dans le sens des couches. En travers, l'éprouvette se déchire à moins de la moitié.</option>
         <option>En bord de mer, sans protection, il rouille — et une patère rouillée tache les manteaux.</option>
@@ -989,7 +991,7 @@ body.essentiel details.referentiel-replie{display:none}
         <option>Un nœud dans la pièce, et la même éprouvette casse bien plus tôt.</option>
     </select>
     <p><b>PLA imprimé en 3D</b></p>
-    <select id="a4q1">
+    <select id="a4q1" aria-label="PLA imprimé en 3D">
       <option value="">— je choisis —</option>
         <option>51 kg dans le sens des couches. En travers, l'éprouvette se déchire à moins de la moitié.</option>
         <option>En bord de mer, sans protection, il rouille — et une patère rouillée tache les manteaux.</option>
@@ -998,7 +1000,7 @@ body.essentiel details.referentiel-replie{display:none}
         <option>Un nœud dans la pièce, et la même éprouvette casse bien plus tôt.</option>
     </select>
     <p><b>PVC rigide</b></p>
-    <select id="a4q2">
+    <select id="a4q2" aria-label="PVC rigide">
       <option value="">— je choisis —</option>
         <option>51 kg dans le sens des couches. En travers, l'éprouvette se déchire à moins de la moitié.</option>
         <option>En bord de mer, sans protection, il rouille — et une patère rouillée tache les manteaux.</option>
@@ -1007,7 +1009,7 @@ body.essentiel details.referentiel-replie{display:none}
         <option>Un nœud dans la pièce, et la même éprouvette casse bien plus tôt.</option>
     </select>
     <p><b>Aluminium</b></p>
-    <select id="a4q3">
+    <select id="a4q3" aria-label="Aluminium">
       <option value="">— je choisis —</option>
         <option>51 kg dans le sens des couches. En travers, l'éprouvette se déchire à moins de la moitié.</option>
         <option>En bord de mer, sans protection, il rouille — et une patère rouillée tache les manteaux.</option>
@@ -1016,7 +1018,7 @@ body.essentiel details.referentiel-replie{display:none}
         <option>Un nœud dans la pièce, et la même éprouvette casse bien plus tôt.</option>
     </select>
     <p><b>Acier doux</b></p>
-    <select id="a4q4">
+    <select id="a4q4" aria-label="Acier doux">
       <option value="">— je choisis —</option>
         <option>51 kg dans le sens des couches. En travers, l'éprouvette se déchire à moins de la moitié.</option>
         <option>En bord de mer, sans protection, il rouille — et une patère rouillée tache les manteaux.</option>
@@ -1115,7 +1117,7 @@ body.essentiel details.referentiel-replie{display:none}
   <textarea id="bilanMeta" rows="2" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…"></textarea>
   <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : <br>maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. <br>Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
   <p style="margin-top:12px"><b>Je me positionne sur 5e_C8.2 — mettre en œuvre un protocole fourni :</b></p>
-  <select id="pos">
+  <select id="pos" aria-label="Je me positionne sur 5e_C8.2 — mettre en œuvre un protocole fourni :">
     <option value="">— je me positionne —</option>
     <option>🔴 Maîtrise insuffisante — je ne sais pas encore quoi noter, ni quand</option>
     <option>🟠 Maîtrise fragile — j'y arrive avec le protocole sous les yeux, ligne par ligne</option>
@@ -1136,7 +1138,7 @@ body.essentiel details.referentiel-replie{display:none}
 </div>
 
 <footer>Séquence 5e_C8.2 — <em>La patère du hall</em> · Thème 3 · banc d'essai original (CC0),
-valeurs simulées cohérentes avec les résistances usuelles.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.8em;opacity:.85;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+valeurs simulées cohérentes avec les résistances usuelles.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license" style="color:inherit;text-decoration:underline">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 
 <script>
@@ -1236,11 +1238,12 @@ const CHECKS = {
        return {score: s, total: 4, exp: true}; },
   4(){ let s = 0; s += sv("a4q0", "Un nœud dans la pièce, et la même éprouvette casse bien plus tôt."); s += sv("a4q1", "51 kg dans le sens des couches. En travers, l'éprouvette se déchire à moins de la moitié."); s += sv("a4q2", "Le PVC flue : sous une charge permanente, il se déforme lentement pendant des mois."); s += sv("a4q3", "Léger et solide, mais il se raye et se plie définitivement avant de casser."); s += sv("a4q4", "En bord de mer, sans protection, il rouille — et une patère rouillée tache les manteaux.");
        return {score: s, total: 5, exp: true}; },
-  5(){ return {score: pres("reinv", 40), total: 1, exp: true}; }
+  5(){ return {score: pres("reinv", 40), total: 1, exp: true, libre: true}; }
 };
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; save(); return; }
   if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
@@ -1329,5 +1332,22 @@ restore(); dessine();
 })();
 </script>
 
+
+<script>
+/* Effacement de la sauvegarde locale, en deux clics et sans boîte modale
+   (audit externe A05, 08/11/2026 ; posé par _outils/controle_sauvegarde_locale.py). */
+(function(){
+  "use strict";
+  var b = document.getElementById("btnReset"); if (!b) return;
+  var cle = "seq_5e_C8_2_patere", arme = 0, texte = b.textContent;
+  b.setAttribute("aria-live", "polite");
+  b.addEventListener("click", function(){
+    var t = Date.now();
+    if (arme && t - arme < 6000){ try{ localStorage.removeItem(cle); }catch(e){} location.reload(); return; }
+    arme = t; b.textContent = "🗑 Clique encore pour confirmer l'effacement";
+    setTimeout(function(){ if (arme === t){ arme = 0; b.textContent = texte; } }, 6000);
+  });
+})();
+</script>
 </body>
 </html>
