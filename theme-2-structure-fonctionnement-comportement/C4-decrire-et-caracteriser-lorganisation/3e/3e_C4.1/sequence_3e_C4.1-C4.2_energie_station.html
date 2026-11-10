@@ -183,6 +183,19 @@
 .situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
 .situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
 @media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -518,6 +531,23 @@
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<style id="css-qcm-grille">
+/* grilles_radio.py (08/11/2026) : des questions qui partagent leurs réponses se lisent en grille — les réponses une
+   fois, lettrées ; chaque question, une rangée de lettres. La valeur de chaque bouton est le texte de la réponse. */
+.qcm-cles{margin:10px 0 6px;padding:8px 12px;border:1px solid var(--border,#274a8a);border-radius:10px;background:var(--panel2,#0a1b3d)}
+.qcm-cles-titre{margin:0 0 4px;font-weight:600}
+.qcm-cles ol{margin:0;padding-left:0;list-style:none}
+.qcm-cles li{margin:3px 0;padding-left:1.9em;text-indent:-1.9em}
+.qcm-cles li b{display:inline-block;width:1.6em;text-indent:0;color:var(--hl,#61dafb)}
+.qcm-groupe.qcm-grille .qcm-option{display:inline-flex;align-items:center;gap:4px;margin:2px 2px 2px 0;padding:3px 5px;width:auto;min-width:0}
+.qcm-groupe.qcm-grille .qcm-option label{flex:none;font-weight:700}
+@media print{.qcm-cles{background:#fff!important;border-color:#999!important;color:#111!important}.qcm-cles li b{color:#111!important}}
+</style>
+<style id="css-bonus-replie">
+/* replier_bonus.py (08/11/2026) : le Bonus se déplie quand on a fini */
+details.bonus-replie>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}
+details.bonus-replie[open]>summary{margin-bottom:8px}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#seances">Aller directement aux activités</a>
@@ -591,7 +621,7 @@
       <p class="rattrapage">→ pas encore sûr·e ? <a href="../../4e/4e_C4.1_book-train/Synthèses/synthese_eleve_4e_C4.1-C4.2-C4.4.html#partie-1">relis la partie 1 de la synthèse 4e_C4.1, C4.2 et C4.4, « Lire l'organisation d'un système »</a></p>
     </li>
   </ul>
-  <p class="change"><b>Dans cette séquence&nbsp;:</b> la station d'alerte cyclonique est <b>seule</b>, dehors, et le courant peut être coupé pendant plusieurs jours — c'est même le moment où elle sert le plus. Décrire sa chaîne d'énergie ne suffit pas : tu vas la <b>dimensionner</b>, et prouver qu'elle tient.</p>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> la station d'alerte cyclonique est <b>seule</b>, dehors, et le courant peut être coupé pendant plusieurs jours — c'est même le moment où elle sert le plus. <br>Décrire sa chaîne d'énergie ne suffit pas : tu vas la <b>dimensionner</b>, et prouver qu'elle tient.</p>
   <p class="filet">Un mot à garder en tête : une chaîne d'énergie, c'est le trajet de l'énergie depuis sa source jusqu'à ce qui bouge, chauffe ou éclaire.</p>
 </section>
 
@@ -616,13 +646,14 @@
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
   <div class="declencheur">
-    <p><b>Souviens-toi de la panne…</b> Pendant l'exercice cyclone, la station d'alerte s'est tue — et l'équipe
-    de « SOS station » a réparé le câble et le fusible (la petite pièce qui coupe le circuit quand le courant devient dangereux). Mais le rapport de la mairie pointe un problème plus grave :
-    <b>la station est branchée sur le réseau EDF (le courant des prises, qui arrive par les lignes électriques)</b>. Or, pendant un vrai cyclone, le réseau coupe presque toujours…
+    <p><b>Souviens-toi de la panne…</b><br>Pendant l'exercice cyclone, la station d'alerte s'est tue. <br>L'équipe
+    de « SOS station » a réparé le câble et le fusible (la petite pièce qui coupe le circuit quand le courant devient dangereux). <br>Mais le rapport de la mairie pointe un problème plus grave :
+    <b>la station est branchée sur le réseau EDF (le courant des prises, qui arrive par les lignes électriques)</b>. <br>Or, pendant un vrai cyclone, le réseau coupe presque toujours…
     au moment précis où l'on a le plus besoin d'être alerté !</p>
-    <p>La mission de la 3e : <b>concevoir l'alimentation AUTONOME de la station</b> — élaborer sa chaîne d'énergie
-    (ce n'est plus fourni : c'est vous les concepteurs), la dimensionner pour tenir <b>72 heures sans réseau</b>,
-    et justifier chaque matériau face au vent, au sel, aux UV (les rayons ultraviolets du soleil, qui abîment les plastiques)… et à la planète.</p>
+    <p>La mission de la 3e : <b>concevoir l'alimentation AUTONOME de la station</b>. <br>
+    ① Élaborer sa chaîne d'énergie — ce n'est plus fourni : c'est toi le concepteur. <br>
+    ② La dimensionner pour tenir <b>72 heures sans réseau</b>. <br>
+    ③ Justifier chaque matériau face au vent, au sel, aux UV (les rayons ultraviolets du soleil, qui abîment les plastiques)… et à la planète.</p>
   </div>
   <figure class="situation-photo">
     <img src="Images/situation_station_reseau_coupe.png" width="1536" height="1024" loading="lazy"
@@ -633,14 +664,14 @@
 
 <section class="card">
   <h2>❓ Problématique</h2>
-  <p class="problematique">Comment élaborer et dimensionner une chaîne d'énergie autonome capable de tenir 72 h de cyclone —
-  et justifier le choix de chaque matériau et de son procédé de mise en forme ?</p>
+  <p class="problematique">Comment élaborer et dimensionner une chaîne d'énergie autonome capable de tenir 72 h de cyclone ? <br>
+  Et comment justifier le choix de chaque matériau et de son procédé de mise en forme ?</p>
   <div class="exo">
     <label for="hyp1"><b>✍ Mon hypothèse :</b> de quoi la station aura-t-elle besoin pour produire, stocker et gérer sa propre énergie ? Quels matériaux résisteront au bord de mer ?</label>
     <textarea id="hyp1" rows="3" placeholder="J'écris mon hypothèse ici — on la retrouvera au bilan…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Pour produire son énergie, la station aura besoin de ____.</li>
     <li>Pour la stocker jusqu&#x27;à la nuit et pendant les 72 h de cyclone, il faudra ____.</li>
@@ -677,7 +708,7 @@
      « Avant de commencer » ; « Voir où j'en suis » renvoie aux rattrapages de ces lignes. -->
 <section class="card" id="billet" aria-labelledby="billet-t">
   <h2 id="billet-t">🎫 Billet d'entrée — trois questions, sans note</h2>
-  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. « Je ne sais pas encore » est une réponse utile.</p>
+  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <b><br>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1">
       <legend>Dans une chaîne d'énergie, la <b>batterie</b> remplit la fonction…</legend>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="CONVERTIR"><label for="be_1__1">CONVERTIR</label></div>
@@ -702,6 +733,26 @@
   <button type="button" class="btn" id="btnBillet">🎫 Voir où j'en suis</button>
   <div class="billet-retour" id="fbBillet" role="status" aria-live="polite"></div>
 </section>
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script>
 /* Billet d'entrée — sans note, hors progression (règle d'or n°26). Chaque question vérifie une ligne du bloc
    « Avant de commencer » ; une réponse manquée renvoie au rattrapage que cette ligne porte déjà. */
@@ -761,35 +812,117 @@
     </div>
     <figure class="figure">
       <object data="Images/chaine_energie_a_elaborer.svg" type="image/svg+xml" aria-label="Gabarit de schéma-bloc à compléter et palette de blocs disponibles" style="width:100%"></object>
-      <figcaption>Le gabarit (en haut) présente les branchements : les numéros sont des repères, pas un ordre de passage. La palette (en bas) : deux composants sont hors du périmètre de l’alimentation.</figcaption>
+      <figcaption>Le gabarit (en haut) présente les branchements : les numéros sont des repères, pas un ordre de passage. <br>La palette (en bas) : deux composants sont hors du périmètre de l’alimentation.</figcaption>
     </figure>
     <div class="consigne"><b>Consigne :</b> a) place chaque bloc de la palette à la bonne position du gabarit ; b) indique la nature de l'énergie à chaque étape ; c) démasque les deux intrus.</div>
     <div class="exo">
       <h4>a) Je place les blocs</h4>
-      <div class="assoc"><label for="b1_1">Position 1 — CONVERTIR (lumière en électricité) :</label><select id="b1_1"><option value="">— choisir —</option><option>le panneau solaire</option><option value="la batterie 12 V">la batterie 12 V (volts)</option><option>le régulateur de charge</option><option value="le convertisseur 12 V → 5 V">le convertisseur 12 V (volts) → 5 V</option><option>le basculement secteur / batterie</option><option>l'ampoule</option><option>le haut-parleur</option></select></div>
-      <div class="assoc"><label for="b1_2">Position 2 — STOCKER (branche batterie) :</label><select id="b1_2"><option value="">— choisir —</option><option>le panneau solaire</option><option>la batterie 12 V</option><option>le régulateur de charge</option><option>le convertisseur 12 V → 5 V</option><option>le basculement secteur / batterie</option><option>l'ampoule</option><option>le haut-parleur</option></select></div>
-      <div class="assoc"><label for="b1_3">Position 3 — ALIMENTER (réguler la charge) :</label><select id="b1_3"><option value="">— choisir —</option><option>le panneau solaire</option><option>la batterie 12 V</option><option>le régulateur de charge</option><option>le convertisseur 12 V → 5 V</option><option>le basculement secteur / batterie</option><option>l'ampoule</option><option>le haut-parleur</option></select></div>
-      <div class="assoc"><label for="b1_4">Position 4 — ALIMENTER (adapter la tension, carte en 5 V) :</label><select id="b1_4"><option value="">— choisir —</option><option>le panneau solaire</option><option>la batterie 12 V</option><option>le régulateur de charge</option><option>le convertisseur 12 V → 5 V</option><option>le basculement secteur / batterie</option><option>l'ampoule</option><option>le haut-parleur</option></select></div>
-      <div class="assoc"><label for="b1_5">Position 5 — DISTRIBUER : sélectionner la source disponible :</label><select id="b1_5"><option value="">— choisir —</option><option>le panneau solaire</option><option>la batterie 12 V</option><option>le régulateur de charge</option><option>le convertisseur 12 V → 5 V</option><option>le basculement secteur / batterie</option><option>l'ampoule</option><option>le haut-parleur</option></select></div>
+      <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>le panneau solaire</li><li><b>B</b>la batterie 12 V (volts)</li><li><b>C</b>le régulateur de charge</li><li><b>D</b>le convertisseur 12 V (volts) → 5 V</li><li><b>E</b>le basculement secteur / batterie</li><li><b>F</b>l'ampoule</li><li><b>G</b>le haut-parleur</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="b1_1">
+  <legend>Position 1 — CONVERTIR (lumière en électricité) :</legend>
+  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__1" value="le panneau solaire" aria-label="A — le panneau solaire"><label for="b1_1__1" title="le panneau solaire">A</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__2" value="la batterie 12 V" aria-label="B — la batterie 12 V (volts)"><label for="b1_1__2" title="la batterie 12 V">B</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__3" value="le régulateur de charge" aria-label="C — le régulateur de charge"><label for="b1_1__3" title="le régulateur de charge">C</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__4" value="le convertisseur 12 V → 5 V" aria-label="D — le convertisseur 12 V (volts) → 5 V"><label for="b1_1__4" title="le convertisseur 12 V → 5 V">D</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__5" value="le basculement secteur / batterie" aria-label="E — le basculement secteur / batterie"><label for="b1_1__5" title="le basculement secteur / batterie">E</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__6" value="l&#x27;ampoule" aria-label="F — l&#x27;ampoule"><label for="b1_1__6" title="l&#x27;ampoule">F</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__7" value="le haut-parleur" aria-label="G — le haut-parleur"><label for="b1_1__7" title="le haut-parleur">G</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="b1_2">
+  <legend>Position 2 — STOCKER (branche batterie) :</legend>
+  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__1" value="le panneau solaire" aria-label="A — le panneau solaire"><label for="b1_2__1" title="le panneau solaire">A</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__2" value="la batterie 12 V" aria-label="B — la batterie 12 V (volts)"><label for="b1_2__2" title="la batterie 12 V">B</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__3" value="le régulateur de charge" aria-label="C — le régulateur de charge"><label for="b1_2__3" title="le régulateur de charge">C</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__4" value="le convertisseur 12 V → 5 V" aria-label="D — le convertisseur 12 V (volts) → 5 V"><label for="b1_2__4" title="le convertisseur 12 V → 5 V">D</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__5" value="le basculement secteur / batterie" aria-label="E — le basculement secteur / batterie"><label for="b1_2__5" title="le basculement secteur / batterie">E</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__6" value="l&#x27;ampoule" aria-label="F — l&#x27;ampoule"><label for="b1_2__6" title="l&#x27;ampoule">F</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__7" value="le haut-parleur" aria-label="G — le haut-parleur"><label for="b1_2__7" title="le haut-parleur">G</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="b1_3">
+  <legend>Position 3 — ALIMENTER (réguler la charge) :</legend>
+  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__1" value="le panneau solaire" aria-label="A — le panneau solaire"><label for="b1_3__1" title="le panneau solaire">A</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__2" value="la batterie 12 V" aria-label="B — la batterie 12 V (volts)"><label for="b1_3__2" title="la batterie 12 V">B</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__3" value="le régulateur de charge" aria-label="C — le régulateur de charge"><label for="b1_3__3" title="le régulateur de charge">C</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__4" value="le convertisseur 12 V → 5 V" aria-label="D — le convertisseur 12 V (volts) → 5 V"><label for="b1_3__4" title="le convertisseur 12 V → 5 V">D</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__5" value="le basculement secteur / batterie" aria-label="E — le basculement secteur / batterie"><label for="b1_3__5" title="le basculement secteur / batterie">E</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__6" value="l&#x27;ampoule" aria-label="F — l&#x27;ampoule"><label for="b1_3__6" title="l&#x27;ampoule">F</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__7" value="le haut-parleur" aria-label="G — le haut-parleur"><label for="b1_3__7" title="le haut-parleur">G</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="b1_4">
+  <legend>Position 4 — ALIMENTER (adapter la tension, carte en 5 V) :</legend>
+  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__1" value="le panneau solaire" aria-label="A — le panneau solaire"><label for="b1_4__1" title="le panneau solaire">A</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__2" value="la batterie 12 V" aria-label="B — la batterie 12 V (volts)"><label for="b1_4__2" title="la batterie 12 V">B</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__3" value="le régulateur de charge" aria-label="C — le régulateur de charge"><label for="b1_4__3" title="le régulateur de charge">C</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__4" value="le convertisseur 12 V → 5 V" aria-label="D — le convertisseur 12 V (volts) → 5 V"><label for="b1_4__4" title="le convertisseur 12 V → 5 V">D</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__5" value="le basculement secteur / batterie" aria-label="E — le basculement secteur / batterie"><label for="b1_4__5" title="le basculement secteur / batterie">E</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__6" value="l&#x27;ampoule" aria-label="F — l&#x27;ampoule"><label for="b1_4__6" title="l&#x27;ampoule">F</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__7" value="le haut-parleur" aria-label="G — le haut-parleur"><label for="b1_4__7" title="le haut-parleur">G</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-grille" id="b1_5">
+  <legend>Position 5 — DISTRIBUER : sélectionner la source disponible :</legend>
+  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__1" value="le panneau solaire" aria-label="A — le panneau solaire"><label for="b1_5__1" title="le panneau solaire">A</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__2" value="la batterie 12 V" aria-label="B — la batterie 12 V (volts)"><label for="b1_5__2" title="la batterie 12 V">B</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__3" value="le régulateur de charge" aria-label="C — le régulateur de charge"><label for="b1_5__3" title="le régulateur de charge">C</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__4" value="le convertisseur 12 V → 5 V" aria-label="D — le convertisseur 12 V (volts) → 5 V"><label for="b1_5__4" title="le convertisseur 12 V → 5 V">D</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__5" value="le basculement secteur / batterie" aria-label="E — le basculement secteur / batterie"><label for="b1_5__5" title="le basculement secteur / batterie">E</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__6" value="l&#x27;ampoule" aria-label="F — l&#x27;ampoule"><label for="b1_5__6" title="l&#x27;ampoule">F</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__7" value="le haut-parleur" aria-label="G — le haut-parleur"><label for="b1_5__7" title="le haut-parleur">G</label></div>
+</fieldset>
       <h4>b) Les natures de l'énergie</h4>
-      <div class="assoc"><label for="n1_1">À l'entrée du panneau :</label><select id="n1_1"><option value="">— choisir —</option><option>énergie lumineuse</option><option>énergie électrique</option><option>énergie chimique</option><option>énergie mécanique</option></select></div>
-      <div class="assoc"><label for="n1_2">À la sortie du panneau :</label><select id="n1_2"><option value="">— choisir —</option><option>énergie lumineuse</option><option>énergie électrique</option><option>énergie chimique</option><option>énergie thermique</option></select></div>
-      <div class="assoc"><label for="n1_3">Stockée dans la batterie sous forme…</label><select id="n1_3"><option value="">— choisir —</option><option>énergie chimique</option><option>énergie lumineuse</option><option>énergie mécanique</option><option>énergie sonore</option></select></div>
-      <div class="assoc"><label for="n1_4">Fournie à la carte électronique :</label><select id="n1_4"><option value="">— choisir —</option><option>énergie électrique (en 5 V)</option><option>énergie chimique</option><option>énergie lumineuse</option><option>énergie éolienne</option></select></div>
+      <fieldset class="qcm-groupe" id="n1_1">
+  <legend>À l'entrée du panneau :</legend>
+  <div class="qcm-option"><input type="radio" name="n1_1" id="n1_1__1" value="énergie lumineuse"><label for="n1_1__1">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_1" id="n1_1__2" value="énergie électrique"><label for="n1_1__2">énergie électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_1" id="n1_1__3" value="énergie chimique"><label for="n1_1__3">énergie chimique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_1" id="n1_1__4" value="énergie mécanique"><label for="n1_1__4">énergie mécanique</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="n1_2">
+  <legend>À la sortie du panneau :</legend>
+  <div class="qcm-option"><input type="radio" name="n1_2" id="n1_2__1" value="énergie lumineuse"><label for="n1_2__1">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_2" id="n1_2__2" value="énergie électrique"><label for="n1_2__2">énergie électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_2" id="n1_2__3" value="énergie chimique"><label for="n1_2__3">énergie chimique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_2" id="n1_2__4" value="énergie thermique"><label for="n1_2__4">énergie thermique</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="n1_3">
+  <legend>Stockée dans la batterie sous forme…</legend>
+  <div class="qcm-option"><input type="radio" name="n1_3" id="n1_3__1" value="énergie chimique"><label for="n1_3__1">énergie chimique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_3" id="n1_3__2" value="énergie lumineuse"><label for="n1_3__2">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_3" id="n1_3__3" value="énergie mécanique"><label for="n1_3__3">énergie mécanique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_3" id="n1_3__4" value="énergie sonore"><label for="n1_3__4">énergie sonore</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="n1_4">
+  <legend>Fournie à la carte électronique :</legend>
+  <div class="qcm-option"><input type="radio" name="n1_4" id="n1_4__1" value="énergie électrique (en 5 V)"><label for="n1_4__1">énergie électrique (en 5 V)</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_4" id="n1_4__2" value="énergie chimique"><label for="n1_4__2">énergie chimique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_4" id="n1_4__3" value="énergie lumineuse"><label for="n1_4__3">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_4" id="n1_4__4" value="énergie éolienne"><label for="n1_4__4">énergie éolienne</label></div>
+</fieldset>
       <h4>c) Les intrus</h4>
-      <div class="assoc"><label for="i1_a">Premier intrus :</label><select id="i1_a"><option value="">— choisir —</option><option>l'ampoule</option><option>le haut-parleur</option><option>le régulateur de charge</option><option>la batterie 12 V</option></select></div>
-      <div class="assoc"><label for="i1_b">Second intrus :</label><select id="i1_b"><option value="">— choisir —</option><option>l'ampoule</option><option>le haut-parleur</option><option>le panneau solaire</option><option>le convertisseur 12 V → 5 V</option></select></div>
+      <fieldset class="qcm-groupe" id="i1_a">
+  <legend>Premier intrus :</legend>
+  <div class="qcm-option"><input type="radio" name="i1_a" id="i1_a__1" value="l&#x27;ampoule"><label for="i1_a__1">l'ampoule</label></div>
+  <div class="qcm-option"><input type="radio" name="i1_a" id="i1_a__2" value="le haut-parleur"><label for="i1_a__2">le haut-parleur</label></div>
+  <div class="qcm-option"><input type="radio" name="i1_a" id="i1_a__3" value="le régulateur de charge"><label for="i1_a__3">le régulateur de charge</label></div>
+  <div class="qcm-option"><input type="radio" name="i1_a" id="i1_a__4" value="la batterie 12 V"><label for="i1_a__4">la batterie 12 V</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="i1_b">
+  <legend>Second intrus :</legend>
+  <div class="qcm-option"><input type="radio" name="i1_b" id="i1_b__1" value="l&#x27;ampoule"><label for="i1_b__1">l'ampoule</label></div>
+  <div class="qcm-option"><input type="radio" name="i1_b" id="i1_b__2" value="le haut-parleur"><label for="i1_b__2">le haut-parleur</label></div>
+  <div class="qcm-option"><input type="radio" name="i1_b" id="i1_b__3" value="le panneau solaire"><label for="i1_b__3">le panneau solaire</label></div>
+  <div class="qcm-option"><input type="radio" name="i1_b" id="i1_b__4" value="le convertisseur 12 V → 5 V"><label for="i1_b__4">le convertisseur 12 V → 5 V</label></div>
+</fieldset>
     </div>
-    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Repère le trajet panneau → régulateur → sélection de source → adaptation à 5 V. La batterie est une branche de stockage reliée au régulateur : identifie la charge et la décharge.</p></details>
-    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le régulateur protège la batterie (ni surcharge, ni décharge totale). Le basculement sélectionne une source disponible : alimentation secteur isolée si elle est présente, ou alimentation solaire/batterie selon le montage. Les intrus sont des <b>actionneurs de sortie</b> : ils consomment de l'énergie, ils n'en fournissent pas à la station.</p></details>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Repère le trajet : panneau → régulateur → sélection de source → adaptation à 5 V. <br>La batterie est une branche de stockage reliée au régulateur : identifie la charge et la décharge.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le régulateur protège la batterie (ni surcharge, ni décharge totale). <br>Le basculement sélectionne une source disponible : alimentation secteur isolée si elle est présente, ou alimentation solaire/batterie selon le montage. <br>Les intrus sont des <b>actionneurs de sortie</b> : ils consomment de l'énergie, ils n'en fournissent pas à la station.</p></details>
     <button class="btn small" data-check="1" type="button">✅ Vérifier mes réponses</button>
     <p class="feedback" id="fb1" role="status"></p>
     <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
-      <p>1 → <b>panneau solaire</b> (capte la lumière ET la convertit en électricité) · 2 → <b>batterie 12 V</b> ·
-      3 → <b>régulateur de charge</b> · 4 → <b>convertisseur 12 V → 5 V</b> · 5 → <b>basculement secteur / batterie</b>.
-      Natures : <b>lumineuse → électrique → chimique (stockée) → électrique (5 V)</b>.
-      Hors du périmètre de l’alimentation : <b>l'ampoule et le haut-parleur</b>. Ce sont des récepteurs ; ils pourraient appartenir à la signalisation de la station.
-      En 5e la chaîne était fournie, en 4e on la complétait : en 3e, <b>tu l'as élaborée</b> — c'est exactement 3e_C4.1.</p>
+      <p>Position 1 : le <b>panneau solaire</b> — il capte la lumière ET la convertit en électricité. <br>
+      Position 2 : la <b>batterie 12 V</b>. <br>
+      Position 3 : le <b>régulateur de charge</b>. <br>
+      Position 4 : le <b>convertisseur 12 V → 5 V</b>. <br>
+      Position 5 : le <b>basculement secteur / batterie</b>. <br>Natures : <b>lumineuse → électrique → chimique (stockée) → électrique (5 V)</b>. <br>Hors du périmètre de l’alimentation : <b>l'ampoule et le haut-parleur</b>. <br>Ce sont des récepteurs ; ils pourraient appartenir à la signalisation de la station. <br>En 5e la chaîne était fournie, en 4e on la complétait : en 3e, <b>tu l'as élaborée</b> — c'est exactement 3e_C4.1.</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> élaborer une chaîne d'énergie = choisir les blocs UTILES, les ordonner selon les fonctions (convertir → alimenter → distribuer → alimenter, la batterie stockant en branche), et nommer la nature de l'énergie à chaque étape.</div>
     <div class="erreurs"><b>⚠ Pièges classiques :</b> placer la batterie avant le panneau (rien ne la rechargerait) ; oublier le régulateur (batterie détruite en quelques semaines) ; prendre les intrus (une ampoule CONSOMME, elle ne produit pas).</div>
@@ -810,7 +943,13 @@
       <div class="assoc"><label for="d2_1">Énergie nécessaire pour 72 h : 6 W × 72 h = … Wh</label><input type="number" id="d2_1" min="0" max="2000" step="1" inputmode="numeric"></div>
       <div class="assoc"><label for="d2_2">Capacité minimale de la batterie 12 V : 432 Wh (wattheures) ÷ 12 V = … Ah</label><input type="number" id="d2_2" min="0" max="200" step="1" inputmode="numeric"></div>
       <h4>b) Mon choix dans le catalogue</h4>
-      <div class="assoc"><label for="d2_3">Batterie retenue :</label><select id="d2_3"><option value="">— choisir —</option><option value="40 Ah — la capacité minimale + une marge de sécurité">40 Ah (ampères-heures) — la capacité minimale + une marge de sécurité</option><option value="20 Ah — moins chère, ça devrait passer">20 Ah (ampères-heures) — moins chère, ça devrait passer</option><option value="100 Ah — on ne sait jamais, prenons énorme">100 Ah (ampères-heures) — on ne sait jamais, prenons énorme</option><option value="36 Ah — exactement le calcul, pas un Ah de plus">36 Ah (ampères-heures) — exactement le calcul, pas un Ah de plus</option></select></div>
+      <fieldset class="qcm-groupe" id="d2_3">
+  <legend>Batterie retenue :</legend>
+  <div class="qcm-option"><input type="radio" name="d2_3" id="d2_3__1" value="40 Ah — la capacité minimale + une marge de sécurité"><label for="d2_3__1">40 Ah (ampères-heures) — la capacité minimale + une marge de sécurité</label></div>
+  <div class="qcm-option"><input type="radio" name="d2_3" id="d2_3__2" value="20 Ah — moins chère, ça devrait passer"><label for="d2_3__2">20 Ah (ampères-heures) — moins chère, ça devrait passer</label></div>
+  <div class="qcm-option"><input type="radio" name="d2_3" id="d2_3__3" value="100 Ah — on ne sait jamais, prenons énorme"><label for="d2_3__3">100 Ah (ampères-heures) — on ne sait jamais, prenons énorme</label></div>
+  <div class="qcm-option"><input type="radio" name="d2_3" id="d2_3__4" value="36 Ah — exactement le calcul, pas un Ah de plus"><label for="d2_3__4">36 Ah (ampères-heures) — exactement le calcul, pas un Ah de plus</label></div>
+</fieldset>
       <h4>c) Le crash-test cyclone (simulateur)</h4>
       <div class="simu" style="margin:10px 0">
         <div>
@@ -827,14 +966,14 @@
         </div>
       </div>
     </div>
-    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Wh = W × h, comme des « watts pendant des heures ». Puis divise par la tension (12 V) pour passer en Ah. Compare ensuite au catalogue : que vaut une marge de sécurité ?</p></details>
-    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>6 × 72 = 432 Wh. 432 ÷ 12 = 36 Ah. Une batterie vieillit et le cyclone peut durer : 36 Ah « tout juste », c'est déjà trop juste. 100 Ah tiendrait… mais coût, poids et impact environnemental explosent : dimensionner, ce n'est pas surdimensionner.</p></details>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Wh = W × h, comme des « watts pendant des heures ». <br>Puis divise par la tension (12 V) pour passer en Ah. Compare ensuite au catalogue : que vaut une marge de sécurité ?</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>6 × 72 = 432 Wh. <br>432 ÷ 12 = 36 Ah. <br>Une batterie vieillit et le cyclone peut durer : 36 Ah « tout juste », c'est déjà trop juste. <br>100 Ah tiendrait… mais coût, poids et impact environnemental explosent : dimensionner, ce n'est pas surdimensionner.</p></details>
     <button class="btn small" data-check="2" type="button">✅ Vérifier mes réponses</button>
     <p class="feedback" id="fb2" role="status"></p>
     <details class="correction"><summary>📖 Correction complète</summary>
-      <p>Énergie : <b>432 Wh</b>. Capacité minimale : <b>36 Ah</b>. Choix : <b>40 Ah</b> — le minimum PLUS une marge
+      <p>Énergie : <b>432 Wh</b>. <br>Capacité minimale : <b>36 Ah</b>. <br>Choix : <b>40 Ah</b> — le minimum PLUS une marge
       (vieillissement de la batterie, cyclone qui s'éternise), sans tomber dans le surdimensionnement (coût, poids,
-      impact environnemental d'une 100 Ah inutile). Au simulateur : 20 Ah → 20 × 12 ÷ 6 = 40 h ❌ ; 40 Ah → 80 h ✅.</p>
+      impact environnemental d'une 100 Ah inutile). <br>Au simulateur : 20 Ah → 20 × 12 ÷ 6 = 40 h ❌ ; 40 Ah → 80 h ✅.</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> dimensionner = calculer le besoin (Wh = W × h), convertir (Ah = Wh ÷ V), puis choisir AVEC une marge raisonnée. Ni trop juste, ni démesuré.</div>
     <div class="erreurs"><b>⚠ Pièges classiques :</b> confondre W (puissance) et Wh (énergie) ; prendre « exactement le calcul » sans marge ; surdimensionner « pour être tranquille » en oubliant coût et environnement.</div>
@@ -843,6 +982,7 @@
 
   <div class="activite" id="act6">
     <header><span class="num">Bonus</span><h3>La loi d'Ohm au chevet de la station — pont avec la physique</h3><span class="duree">⏱ 20 min (facultatif)</span></header>
+    <details class="bonus-replie"><summary>🎁 Le défi du Bonus — ouvre-le quand tu as fini les activités 1 et 2</summary>
     <div class="meta-grid">
       <div><b>Objectif :</b> utiliser U = R × I sur un cas RÉEL de la station : le courant consommé, la chute de tension dans le câble, le choix du fusible.</div>
       <div><b>Pont interdisciplinaire :</b> physique-chimie (électricité) — souvent survolée faute de temps : ici, elle sert à quelque chose de concret.</div>
@@ -853,21 +993,27 @@
     <div class="exo">
       <div class="assoc"><label for="b6_1">a) Courant absorbé : I = P ÷ U = 6 W ÷ 12 V = … A</label><input type="number" id="b6_1" min="0" max="10" step="0.1" inputmode="decimal"></div>
       <div class="assoc"><label for="b6_2">b) Chute de tension dans le câble : U = R × I = 0,4 Ω × 0,5 A = … V</label><input type="number" id="b6_2" min="0" max="5" step="0.1" inputmode="decimal"></div>
-      <div class="assoc"><label for="b6_3">c) Quel fusible choisir pour protéger la ligne (courant normal : 0,5 A) ?</label><select id="b6_3"><option value="">— choisir —</option><option>1 A : au-dessus du courant normal, il fond seulement en cas d'anomalie</option><option>0,5 A : exactement le courant normal</option><option>10 A : très large, aucun risque de fondre</option><option>0,1 A : le plus sensible possible</option></select></div>
+      <fieldset class="qcm-groupe" id="b6_3">
+  <legend>c) Quel fusible choisir pour protéger la ligne (courant normal : 0,5 A) ?</legend>
+  <div class="qcm-option"><input type="radio" name="b6_3" id="b6_3__1" value="1 A : au-dessus du courant normal, il fond seulement en cas d&#x27;anomalie"><label for="b6_3__1">1 A : au-dessus du courant normal, il fond seulement en cas d'anomalie</label></div>
+  <div class="qcm-option"><input type="radio" name="b6_3" id="b6_3__2" value="0,5 A : exactement le courant normal"><label for="b6_3__2">0,5 A : exactement le courant normal</label></div>
+  <div class="qcm-option"><input type="radio" name="b6_3" id="b6_3__3" value="10 A : très large, aucun risque de fondre"><label for="b6_3__3">10 A : très large, aucun risque de fondre</label></div>
+  <div class="qcm-option"><input type="radio" name="b6_3" id="b6_3__4" value="0,1 A : le plus sensible possible"><label for="b6_3__4">0,1 A : le plus sensible possible</label></div>
+</fieldset>
     </div>
-    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Deux formules seulement : P = U × I (donc I = P ÷ U) et la loi d'Ohm U = R × I. Remplace par les valeurs et pose l'opération.</p></details>
-    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>I = 6 ÷ 12 = 0,5 A. Puis U = 0,4 × 0,5 = 0,2 V : le câble « vole » 0,2 V à la station — négligeable ici, mais c'est pour ça qu'on limite la longueur des câbles. Le fusible : à 0,5 A pile, il fondrait en fonctionnement normal ; à 10 A, il laisserait passer un court-circuit destructeur. Souviens-toi du fusible de « SOS station » !</p></details>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Deux formules seulement : P = U × I (donc I = P ÷ U), et la loi d'Ohm U = R × I. <br>Remplace par les valeurs et pose l'opération.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>I = 6 ÷ 12 = 0,5 A. <br>Puis U = 0,4 × 0,5 = 0,2 V : le câble « vole » 0,2 V à la station. <br>Négligeable ici, mais c'est pour ça qu'on limite la longueur des câbles. <br>Le fusible : à 0,5 A pile, il fondrait en fonctionnement normal ; à 10 A, il laisserait passer un court-circuit destructeur. <br>Souviens-toi du fusible de « SOS station » !</p></details>
     <button class="btn small" data-check="6" type="button">✅ Vérifier mes réponses</button>
     <p class="feedback" id="fb6" role="status"></p>
     <details class="correction"><summary>📖 Correction complète</summary>
-      <p>I = P ÷ U = 6 ÷ 12 = <b>0,5 A</b>. Chute dans le câble : U = R × I = 0,4 × 0,5 = <b>0,2 V</b> — la loi d'Ohm
-      n'est pas une formule abstraite : elle explique pourquoi un câble trop long ou trop fin « mange » la tension.
-      Fusible : <b>1 A</b> — au-dessus du courant normal (0,5 A) pour ne pas fondre sans raison, assez bas pour couper
-      net un court-circuit. C'est exactement le fusible que l'équipe « SOS station » avait remplacé !</p>
+      <p>I = P ÷ U = 6 ÷ 12 = <b>0,5 A</b>. <br>Chute dans le câble : U = R × I = 0,4 × 0,5 = <b>0,2 V</b> — la loi d'Ohm
+      n'est pas une formule abstraite : elle explique pourquoi un câble trop long ou trop fin « mange » la tension. <br>Fusible : <b>1 A</b> — au-dessus du courant normal (0,5 A) pour ne pas fondre sans raison, assez bas pour couper
+      net un court-circuit. <br>C'est exactement le fusible que l'équipe « SOS station » avait remplacé !</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> P = U × I et U = R × I suffisent pour dimensionner courant, câble et fusible. La physique et la technologie sont les deux faces du même objet.</div>
     <div class="erreurs"><b>⚠ Pièges classiques :</b> confondre P (watts) et I (ampères) ; choisir un fusible « exactement » au courant normal (il fond tout le temps) ou énorme (il ne protège plus rien).</div>
     <div class="critere"><b>🎯 Critère de réussite :</b> 3 / 3 — activité bonus : elle ne compte pas dans la barre de progression, mais elle compte pour ta culture de technicien !</div>
+    </details>
   </div>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Justifier les matériaux ›</button></p>
@@ -892,20 +1038,53 @@
     </figure>
     <div class="consigne"><b>Consigne :</b> pour chaque contrainte, choisis l'exigence qu'elle impose.</div>
     <div class="exo">
-      <div class="assoc"><label for="c3_1">💨 Vent cyclonique (230 km/h) →</label><select id="c3_1"><option value="">— choisir —</option><option>des fixations renforcées et un mât très résistant</option><option>des couleurs vives</option><option>un coffret plus grand</option><option>rien de particulier</option></select></div>
-      <div class="assoc"><label for="c3_2">🧂 Embruns salins →</label><select id="c3_2"><option value="">— choisir —</option><option>des métaux protégés (galvanisé, inox ou aluminium)</option><option>de l'acier brut, moins cher</option><option>du bois vernis</option><option>plus de peinture blanche</option></select></div>
-      <div class="assoc"><label for="c3_3">☀ UV intenses →</label><select id="c3_3"><option value="">— choisir —</option><option>des plastiques traités anti-UV</option><option>n'importe quel plastique</option><option>du métal uniquement</option><option>un parasol</option></select></div>
-      <div class="assoc"><label for="c3_4">🌡 Chaleur + humidité →</label><select id="c3_4"><option value="">— choisir —</option><option>un coffret étanche MAIS ventilé</option><option>un coffret hermétique sans aération</option><option>un coffret grillagé ouvert</option><option>pas de coffret</option></select></div>
-      <div class="assoc"><label for="c3_5">🌱 Contrainte environnementale →</label><select id="c3_5"><option value="">— choisir —</option><option>des matériaux recyclables et des pièces réparables</option><option>du tout-jetable, plus simple</option><option>importer de très loin</option><option>coller toutes les pièces entre elles</option></select></div>
+      <fieldset class="qcm-groupe" id="c3_1">
+  <legend>💨 Vent cyclonique (230 km/h) →</legend>
+  <div class="qcm-option"><input type="radio" name="c3_1" id="c3_1__1" value="des fixations renforcées et un mât très résistant"><label for="c3_1__1">des fixations renforcées et un mât très résistant</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_1" id="c3_1__2" value="des couleurs vives"><label for="c3_1__2">des couleurs vives</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_1" id="c3_1__3" value="un coffret plus grand"><label for="c3_1__3">un coffret plus grand</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_1" id="c3_1__4" value="rien de particulier"><label for="c3_1__4">rien de particulier</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="c3_2">
+  <legend>🧂 Embruns salins →</legend>
+  <div class="qcm-option"><input type="radio" name="c3_2" id="c3_2__1" value="des métaux protégés (galvanisé, inox ou aluminium)"><label for="c3_2__1">des métaux protégés (galvanisé, inox ou aluminium)</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_2" id="c3_2__2" value="de l&#x27;acier brut, moins cher"><label for="c3_2__2">de l'acier brut, moins cher</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_2" id="c3_2__3" value="du bois vernis"><label for="c3_2__3">du bois vernis</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_2" id="c3_2__4" value="plus de peinture blanche"><label for="c3_2__4">plus de peinture blanche</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="c3_3">
+  <legend>☀ UV intenses →</legend>
+  <div class="qcm-option"><input type="radio" name="c3_3" id="c3_3__1" value="des plastiques traités anti-UV"><label for="c3_3__1">des plastiques traités anti-UV</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_3" id="c3_3__2" value="n&#x27;importe quel plastique"><label for="c3_3__2">n'importe quel plastique</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_3" id="c3_3__3" value="du métal uniquement"><label for="c3_3__3">du métal uniquement</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_3" id="c3_3__4" value="un parasol"><label for="c3_3__4">un parasol</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="c3_4">
+  <legend>🌡 Chaleur + humidité →</legend>
+  <div class="qcm-option"><input type="radio" name="c3_4" id="c3_4__1" value="un coffret étanche MAIS ventilé"><label for="c3_4__1">un coffret étanche MAIS ventilé</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_4" id="c3_4__2" value="un coffret hermétique sans aération"><label for="c3_4__2">un coffret hermétique sans aération</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_4" id="c3_4__3" value="un coffret grillagé ouvert"><label for="c3_4__3">un coffret grillagé ouvert</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_4" id="c3_4__4" value="pas de coffret"><label for="c3_4__4">pas de coffret</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="c3_5">
+  <legend>🌱 Contrainte environnementale →</legend>
+  <div class="qcm-option"><input type="radio" name="c3_5" id="c3_5__1" value="des matériaux recyclables et des pièces réparables"><label for="c3_5__1">des matériaux recyclables et des pièces réparables</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_5" id="c3_5__2" value="du tout-jetable, plus simple"><label for="c3_5__2">du tout-jetable, plus simple</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_5" id="c3_5__3" value="importer de très loin"><label for="c3_5__3">importer de très loin</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_5" id="c3_5__4" value="coller toutes les pièces entre elles"><label for="c3_5__4">coller toutes les pièces entre elles</label></div>
+</fieldset>
     </div>
     <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Relis les encadrés du document : chaque contrainte contient déjà sa conséquence. Le sel attaque quoi ? Les UV fragilisent quoi ?</p></details>
     <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Étanche ET ventilé n'est pas contradictoire : aérations en chicane, membranes… L'électronique chauffe : sans ventilation elle cuit ; sans étanchéité elle prend l'eau tropicale.</p></details>
     <button class="btn small" data-check="3" type="button">✅ Vérifier mes réponses</button>
     <p class="feedback" id="fb3" role="status"></p>
     <details class="correction"><summary>📖 Correction complète</summary>
-      <p>Vent → fixations renforcées + mât résistant · Embruns → métaux protégés · UV → plastiques traités ·
-      Chaleur/humidité → étanche MAIS ventilé · Environnement → recyclable et réparable. En 3e, on croise TOUJOURS
-      contraintes <b>techniques</b> ET <b>environnementales</b> : c'est le cœur de C4.2.</p>
+      <p>Le vent : des fixations renforcées et un mât résistant. <br>
+      Les embruns : des métaux protégés. <br>
+      Les UV : des plastiques traités. <br>
+      La chaleur et l'humidité : un coffret étanche MAIS ventilé. <br>
+      L'environnement : du recyclable et du réparable. <br>
+      En 3e, on croise TOUJOURS contraintes <b>techniques</b> ET <b>environnementales</b> : c'est le cœur de C4.2.</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> un choix de matériau se justifie par les CONTRAINTES — jamais par « c'est joli » ou « c'est ce qu'on avait ».</div>
     <div class="critere"><b>🎯 Critère de réussite :</b> 5 / 5 associations.</div>
@@ -926,19 +1105,67 @@
     <div class="consigne"><b>Consigne :</b> a) choisis matériau et procédé pour chaque pièce (l'abaque t'aide, mais des pièges rôdent) ; b) rédige la justification COMPLÈTE pour le mât : au moins deux contraintes croisées.</div>
     <div class="exo">
       <h4>a) Mes choix de bureau d'études</h4>
-      <div class="assoc"><label for="m4_1">🗼 Mât — matériau :</label><select id="m4_1"><option value="">— choisir —</option><option>acier galvanisé à chaud</option><option>acier brut (moins cher)</option><option>PVC ordinaire</option><option>ABS</option></select></div>
-      <div class="assoc"><label for="p4_1">🗼 Mât — procédé :</label><select id="p4_1"><option value="">— choisir —</option><option>laminage + soudure</option><option>impression 3D</option><option>moulage par injection</option><option>thermoformage</option></select></div>
-      <div class="assoc"><label for="m4_2">🧰 Coffret — matériau :</label><select id="m4_2"><option value="">— choisir —</option><option>polycarbonate traité anti-UV</option><option>PVC ordinaire</option><option>acier brut</option><option>carton traité</option></select></div>
-      <div class="assoc"><label for="p4_2">🧰 Coffret — procédé :</label><select id="p4_2"><option value="">— choisir —</option><option>moulage par injection</option><option>laminage + soudure</option><option>impression 3D</option><option>usinage dans la masse</option></select></div>
-      <div class="assoc"><label for="m4_3">📐 Support du panneau — matériau :</label><select id="m4_3"><option value="">— choisir —</option><option>aluminium</option><option>acier brut</option><option>ABS</option><option>cuivre</option></select></div>
-      <div class="assoc"><label for="p4_3">📐 Support du panneau — procédé :</label><select id="p4_3"><option value="">— choisir —</option><option>extrusion</option><option>impression 3D</option><option>moulage par injection</option><option>tissage</option></select></div>
-      <div class="assoc"><label for="m4_4">🌀 Carénage de l'anémomètre (pièce unique) — matériau :</label><select id="m4_4"><option value="">— choisir —</option><option>ABS + vernis anti-UV</option><option>acier galvanisé à chaud</option><option>verre</option><option>béton</option></select></div>
-      <div class="assoc"><label for="p4_4">🌀 Carénage — procédé :</label><select id="p4_4"><option value="">— choisir —</option><option>impression 3D</option><option>moulage par injection</option><option>laminage + soudure</option><option>extrusion</option></select></div>
+      <fieldset class="qcm-groupe" id="m4_1">
+  <legend>🗼 Mât — matériau :</legend>
+  <div class="qcm-option"><input type="radio" name="m4_1" id="m4_1__1" value="acier galvanisé à chaud"><label for="m4_1__1">acier galvanisé à chaud</label></div>
+  <div class="qcm-option"><input type="radio" name="m4_1" id="m4_1__2" value="acier brut (moins cher)"><label for="m4_1__2">acier brut (moins cher)</label></div>
+  <div class="qcm-option"><input type="radio" name="m4_1" id="m4_1__3" value="PVC ordinaire"><label for="m4_1__3">PVC ordinaire</label></div>
+  <div class="qcm-option"><input type="radio" name="m4_1" id="m4_1__4" value="ABS"><label for="m4_1__4">ABS</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="p4_1">
+  <legend>🗼 Mât — procédé :</legend>
+  <div class="qcm-option"><input type="radio" name="p4_1" id="p4_1__1" value="laminage + soudure"><label for="p4_1__1">laminage + soudure</label></div>
+  <div class="qcm-option"><input type="radio" name="p4_1" id="p4_1__2" value="impression 3D"><label for="p4_1__2">impression 3D</label></div>
+  <div class="qcm-option"><input type="radio" name="p4_1" id="p4_1__3" value="moulage par injection"><label for="p4_1__3">moulage par injection</label></div>
+  <div class="qcm-option"><input type="radio" name="p4_1" id="p4_1__4" value="thermoformage"><label for="p4_1__4">thermoformage</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="m4_2">
+  <legend>🧰 Coffret — matériau :</legend>
+  <div class="qcm-option"><input type="radio" name="m4_2" id="m4_2__1" value="polycarbonate traité anti-UV"><label for="m4_2__1">polycarbonate traité anti-UV</label></div>
+  <div class="qcm-option"><input type="radio" name="m4_2" id="m4_2__2" value="PVC ordinaire"><label for="m4_2__2">PVC ordinaire</label></div>
+  <div class="qcm-option"><input type="radio" name="m4_2" id="m4_2__3" value="acier brut"><label for="m4_2__3">acier brut</label></div>
+  <div class="qcm-option"><input type="radio" name="m4_2" id="m4_2__4" value="carton traité"><label for="m4_2__4">carton traité</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="p4_2">
+  <legend>🧰 Coffret — procédé :</legend>
+  <div class="qcm-option"><input type="radio" name="p4_2" id="p4_2__1" value="moulage par injection"><label for="p4_2__1">moulage par injection</label></div>
+  <div class="qcm-option"><input type="radio" name="p4_2" id="p4_2__2" value="laminage + soudure"><label for="p4_2__2">laminage + soudure</label></div>
+  <div class="qcm-option"><input type="radio" name="p4_2" id="p4_2__3" value="impression 3D"><label for="p4_2__3">impression 3D</label></div>
+  <div class="qcm-option"><input type="radio" name="p4_2" id="p4_2__4" value="usinage dans la masse"><label for="p4_2__4">usinage dans la masse</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="m4_3">
+  <legend>📐 Support du panneau — matériau :</legend>
+  <div class="qcm-option"><input type="radio" name="m4_3" id="m4_3__1" value="aluminium"><label for="m4_3__1">aluminium</label></div>
+  <div class="qcm-option"><input type="radio" name="m4_3" id="m4_3__2" value="acier brut"><label for="m4_3__2">acier brut</label></div>
+  <div class="qcm-option"><input type="radio" name="m4_3" id="m4_3__3" value="ABS"><label for="m4_3__3">ABS</label></div>
+  <div class="qcm-option"><input type="radio" name="m4_3" id="m4_3__4" value="cuivre"><label for="m4_3__4">cuivre</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="p4_3">
+  <legend>📐 Support du panneau — procédé :</legend>
+  <div class="qcm-option"><input type="radio" name="p4_3" id="p4_3__1" value="extrusion"><label for="p4_3__1">extrusion</label></div>
+  <div class="qcm-option"><input type="radio" name="p4_3" id="p4_3__2" value="impression 3D"><label for="p4_3__2">impression 3D</label></div>
+  <div class="qcm-option"><input type="radio" name="p4_3" id="p4_3__3" value="moulage par injection"><label for="p4_3__3">moulage par injection</label></div>
+  <div class="qcm-option"><input type="radio" name="p4_3" id="p4_3__4" value="tissage"><label for="p4_3__4">tissage</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="m4_4">
+  <legend>🌀 Carénage de l'anémomètre (pièce unique) — matériau :</legend>
+  <div class="qcm-option"><input type="radio" name="m4_4" id="m4_4__1" value="ABS + vernis anti-UV"><label for="m4_4__1">ABS + vernis anti-UV</label></div>
+  <div class="qcm-option"><input type="radio" name="m4_4" id="m4_4__2" value="acier galvanisé à chaud"><label for="m4_4__2">acier galvanisé à chaud</label></div>
+  <div class="qcm-option"><input type="radio" name="m4_4" id="m4_4__3" value="verre"><label for="m4_4__3">verre</label></div>
+  <div class="qcm-option"><input type="radio" name="m4_4" id="m4_4__4" value="béton"><label for="m4_4__4">béton</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="p4_4">
+  <legend>🌀 Carénage — procédé :</legend>
+  <div class="qcm-option"><input type="radio" name="p4_4" id="p4_4__1" value="impression 3D"><label for="p4_4__1">impression 3D</label></div>
+  <div class="qcm-option"><input type="radio" name="p4_4" id="p4_4__2" value="moulage par injection"><label for="p4_4__2">moulage par injection</label></div>
+  <div class="qcm-option"><input type="radio" name="p4_4" id="p4_4__3" value="laminage + soudure"><label for="p4_4__3">laminage + soudure</label></div>
+  <div class="qcm-option"><input type="radio" name="p4_4" id="p4_4__4" value="extrusion"><label for="p4_4__4">extrusion</label></div>
+</fieldset>
       <h4>b) Ma justification du mât (2 contraintes croisées minimum)</h4>
       <textarea id="j4" rows="3" placeholder="Le mât est en … mis en forme par … parce que…" aria-label="🌀 Carénage — procédé"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Pour le mât, je choisis ____ parce qu&#x27;il doit d&#x27;abord résister à ____.</li>
     <li>Il doit aussi supporter ____ : c&#x27;est la deuxième contrainte, et elle écarte ____.</li>
@@ -946,15 +1173,15 @@
   </ul>
 </details>
     </div>
-    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Deux questions à te poser : quelle CONTRAINTE domine pour cette pièce (vent ? sel ? UV ?) et combien d'exemplaires (pièce unique → impression 3D ; grande série → injection ; profilé long → extrusion).</p></details>
-    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Pour le mât : le sel attaque l'acier brut (souviens-toi du lampadaire de 5e !), et le vent exige la solidité de l'acier — d'où l'acier GALVANISÉ. Ta justification doit citer les deux : « solide face au vent » ET « protégé du sel ».</p></details>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Deux questions à te poser : quelle CONTRAINTE domine pour cette pièce (vent ? sel ? UV ?) et combien d'exemplaires (pièce unique → impression 3D ; <br>grande série → injection ; <br>profilé long → extrusion).</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Pour le mât : le sel attaque l'acier brut (souviens-toi du lampadaire de 5e !). <br>Le vent exige la solidité de l'acier. <br>D'où l'acier GALVANISÉ. <br>Ta justification doit citer les deux : « solide face au vent » ET « protégé du sel ».</p></details>
     <button class="btn small" data-check="4" type="button">✅ Vérifier mes réponses</button>
     <p class="feedback" id="fb4" role="status"></p>
     <details class="correction"><summary>📖 Correction complète</summary>
-      <p>Mât : <b>acier galvanisé à chaud</b>, <b>laminage + soudure</b>. Coffret : <b>polycarbonate anti-UV</b>,
-      <b>injection</b> (forme complexe + série). Support : <b>aluminium</b>, <b>extrusion</b> (profilé). Carénage :
+      <p>Mât : <b>acier galvanisé à chaud</b>, <b>laminage + soudure</b>. <br>Coffret : <b>polycarbonate anti-UV</b>,
+      <b>injection</b> (forme complexe + série). <br>Support : <b>aluminium</b>, <b>extrusion</b> (profilé). <br>Carénage :
       <b>ABS verni</b>, <b>impression 3D</b> (pièce unique : un moule d'injection coûterait des milliers d'euros pour
-      UNE pièce !). Justification type : « Le mât est en acier galvanisé à chaud, laminé puis soudé, car l'acier résiste
+      UNE pièce !). <br>Justification type : « Le mât est en acier galvanisé à chaud, laminé puis soudé, car l'acier résiste
       au vent cyclonique et la galvanisation le protège de la corrosion des embruns ; l'acier est de plus recyclable. »</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> matériau ← contraintes du site · procédé ← forme de la pièce + taille de série. Une justification de 3e croise AU MOINS deux contraintes, dont l'environnement quand c'est pertinent.</div>
@@ -972,18 +1199,51 @@
     </div>
     <div class="consigne"><b>Consigne :</b> la mairie veut 200 bornes solaires pour le stade. Réponds en concepteur.</div>
     <div class="exo">
-      <div class="assoc"><label for="r5_1">Le bloc INDISPENSABLE entre le panneau et la lampe (la nuit, pas de soleil !) :</label><select id="r5_1"><option value="">— choisir —</option><option>une batterie (avec son régulateur)</option><option>une rallonge</option><option>un deuxième panneau</option><option>un interrupteur simple</option></select></div>
-      <div class="assoc"><label for="r5_2">L'énergie y est stockée sous forme…</label><select id="r5_2"><option value="">— choisir —</option><option>chimique</option><option>lumineuse</option><option>mécanique</option><option>thermique</option></select></div>
-      <div class="assoc"><label for="r5_3">Le poteau de la borne, en bord de mer :</label><select id="r5_3"><option value="">— choisir —</option><option>acier galvanisé à chaud</option><option>acier brut</option><option>carton compressé</option><option>PVC ordinaire</option></select></div>
-      <div class="assoc"><label for="r5_4">Le capot plastique, à produire en 200 exemplaires :</label><select id="r5_4"><option value="">— choisir —</option><option>moulage par injection (la série rentabilise le moule)</option><option>impression 3D une par une</option><option>sculpture à la main</option><option>découpe de récupération</option></select></div>
-      <div class="assoc"><label for="r5_5">L'argument environnemental du dossier :</label><select id="r5_5"><option value="">— choisir —</option><option>énergie solaire renouvelable + matériaux recyclables + pièces remplaçables</option><option>c'est moins cher, point final</option><option>le plastique se jette facilement</option><option>aucun argument nécessaire</option></select></div>
+      <fieldset class="qcm-groupe" id="r5_1">
+  <legend>Le bloc INDISPENSABLE entre le panneau et la lampe (la nuit, pas de soleil !) :</legend>
+  <div class="qcm-option"><input type="radio" name="r5_1" id="r5_1__1" value="une batterie (avec son régulateur)"><label for="r5_1__1">une batterie (avec son régulateur)</label></div>
+  <div class="qcm-option"><input type="radio" name="r5_1" id="r5_1__2" value="une rallonge"><label for="r5_1__2">une rallonge</label></div>
+  <div class="qcm-option"><input type="radio" name="r5_1" id="r5_1__3" value="un deuxième panneau"><label for="r5_1__3">un deuxième panneau</label></div>
+  <div class="qcm-option"><input type="radio" name="r5_1" id="r5_1__4" value="un interrupteur simple"><label for="r5_1__4">un interrupteur simple</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="r5_2">
+  <legend>L'énergie y est stockée sous forme…</legend>
+  <div class="qcm-option"><input type="radio" name="r5_2" id="r5_2__1" value="chimique"><label for="r5_2__1">chimique</label></div>
+  <div class="qcm-option"><input type="radio" name="r5_2" id="r5_2__2" value="lumineuse"><label for="r5_2__2">lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="r5_2" id="r5_2__3" value="mécanique"><label for="r5_2__3">mécanique</label></div>
+  <div class="qcm-option"><input type="radio" name="r5_2" id="r5_2__4" value="thermique"><label for="r5_2__4">thermique</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="r5_3">
+  <legend>Le poteau de la borne, en bord de mer :</legend>
+  <div class="qcm-option"><input type="radio" name="r5_3" id="r5_3__1" value="acier galvanisé à chaud"><label for="r5_3__1">acier galvanisé à chaud</label></div>
+  <div class="qcm-option"><input type="radio" name="r5_3" id="r5_3__2" value="acier brut"><label for="r5_3__2">acier brut</label></div>
+  <div class="qcm-option"><input type="radio" name="r5_3" id="r5_3__3" value="carton compressé"><label for="r5_3__3">carton compressé</label></div>
+  <div class="qcm-option"><input type="radio" name="r5_3" id="r5_3__4" value="PVC ordinaire"><label for="r5_3__4">PVC ordinaire</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="r5_4">
+  <legend>Le capot plastique, à produire en 200 exemplaires :</legend>
+  <div class="qcm-option"><input type="radio" name="r5_4" id="r5_4__1" value="moulage par injection (la série rentabilise le moule)"><label for="r5_4__1">moulage par injection (la série rentabilise le moule)</label></div>
+  <div class="qcm-option"><input type="radio" name="r5_4" id="r5_4__2" value="impression 3D une par une"><label for="r5_4__2">impression 3D une par une</label></div>
+  <div class="qcm-option"><input type="radio" name="r5_4" id="r5_4__3" value="sculpture à la main"><label for="r5_4__3">sculpture à la main</label></div>
+  <div class="qcm-option"><input type="radio" name="r5_4" id="r5_4__4" value="découpe de récupération"><label for="r5_4__4">découpe de récupération</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="r5_5">
+  <legend>L'argument environnemental du dossier :</legend>
+  <div class="qcm-option"><input type="radio" name="r5_5" id="r5_5__1" value="énergie solaire renouvelable + matériaux recyclables + pièces remplaçables"><label for="r5_5__1">énergie solaire renouvelable + matériaux recyclables + pièces remplaçables</label></div>
+  <div class="qcm-option"><input type="radio" name="r5_5" id="r5_5__2" value="c&#x27;est moins cher, point final"><label for="r5_5__2">c'est moins cher, point final</label></div>
+  <div class="qcm-option"><input type="radio" name="r5_5" id="r5_5__3" value="le plastique se jette facilement"><label for="r5_5__3">le plastique se jette facilement</label></div>
+  <div class="qcm-option"><input type="radio" name="r5_5" id="r5_5__4" value="aucun argument nécessaire"><label for="r5_5__4">aucun argument nécessaire</label></div>
+</fieldset>
     </div>
     <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>C'est la même chaîne que la station (en plus simple) et les mêmes contraintes de site. Pour le capot : 200 exemplaires, ce n'est plus une pièce unique…</p></details>
     <button class="btn small" data-check="5" type="button">✅ Vérifier mes réponses</button>
     <p class="feedback" id="fb5" role="status"></p>
     <details class="correction"><summary>📖 Correction complète</summary>
-      <p>Batterie + régulateur · chimique · acier galvanisé · injection (à 200 exemplaires, le moule est rentabilisé —
-      l'inverse exact du carénage unique de la station !) · l'argument complet : renouvelable + recyclable + réparable.</p>
+      <p>Le stockage : la batterie et son régulateur. <br>
+      L'énergie stockée : chimique. <br>
+      Le mât : l'acier galvanisé. <br>
+      Le procédé : l'injection — à 200 exemplaires, le moule est rentabilisé, l'inverse exact du carénage unique de la station. <br>
+      L'argument complet : renouvelable, recyclable et réparable.</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> la démarche est transférable à tout OST autonome : élaborer la chaîne, dimensionner, justifier matériaux ET procédés selon les contraintes et la série.</div>
     <div class="critere"><b>🎯 Critère de réussite :</b> au moins 4 / 5.</div>
@@ -992,11 +1252,13 @@
 
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-  <p>♻ <b>Défi citoyen :</b> relève la puissance (W) de 3 appareils de la maison et estime l'énergie qu'ils consomment en une journée (Wh) — lequel pèse le plus lourd sur la facture ?</p>
-  <p>🔋 <b>Défi powerbank :</b> retrouve la capacité (mAh) d'une batterie externe et calcule combien de fois elle peut recharger un téléphone (≈ 3 000 mAh, en milliampères-heures). Retrouve-t-on la marge de sécurité du dimensionnement ?</p>
+<details class="bonus-replie"><summary>🎁 Le défi du Bonus — ouvre-le quand tu as fini</summary>
+  <p>♻ <b>Défi citoyen :</b> relève la puissance (W) de 3 appareils de la maison. <br>Estime l'énergie qu'ils consomment en une journée (Wh). <br>Lequel pèse le plus lourd sur la facture ?</p>
+  <p>🔋 <b>Défi powerbank :</b> retrouve la capacité (mAh) d'une batterie externe et calcule combien de fois elle peut recharger un téléphone (≈ 3 000 mAh, en milliampères-heures). <br>Retrouve-t-on la marge de sécurité du dimensionnement ?</p>
   <p>🌞 <b>Défi Martinique :</b> repère autour de chez toi 3 installations photovoltaïques ; pour chacune, cherche où se cache la batterie… ou explique pourquoi il n'y en a pas.</p>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+</details>
 </section>
 
 <section class="card" id="bilan">
@@ -1005,17 +1267,29 @@
     <div>
       <div id="rappelHyp" style="display:none"><b>🔙 Ton hypothèse de départ :</b> <span id="hypRappelTxt" style="font-style:italic"></span>
       <p>Compare-la à ce que tu sais maintenant : avais-tu pensé au stockage ? À la marge de sécurité ? Au sel ?</p></div>
-      <p><b>Ce que tu sais faire désormais :</b> élaborer et dimensionner une chaîne d'énergie autonome (3e_C4.1),
-      et justifier un matériau et son procédé en croisant contraintes techniques ET environnementales (3e_C4.2) —
-      la station d'alerte est enfin prête à affronter un vrai cyclone, réseau coupé ou non.</p>
+      <p><b>Ce que tu sais faire désormais :</b> élaborer et dimensionner une chaîne d'énergie autonome (3e_C4.1) ; <br>
+      justifier un matériau et son procédé en croisant contraintes techniques ET environnementales (3e_C4.2). <br>
+      La station d'alerte est enfin prête à affronter un vrai cyclone, réseau coupé ou non.</p>
       <p class="refs">Et après ? La station complète t'attend : <a href="../3e_C4.3/sequence_3e_C4.3-C4.6_station_alerte_cyclonique.html">ses chaînes d'information et ses données</a>,
       <a href="../../../C5-identifier-un-dysfonctionnement-dun-objet/3e/3e_C5.1/sequence_3e_C5.1-C5.4_sos_station_reparer.html">son dépannage</a> et
       <a href="../../../C6-comprendre-et-modifier-un-programme-associe/3e/3e_C6.1/sequence_3e_C6.1-C6.3_programmer_alerte.html">son programme d'alerte</a>.</p>
     </div>
     <div class="confiance">
       <p><b>🎯 Auto-positionnement :</b> pour chaque compétence, où en es-tu ?</p>
-      <div class="assoc"><label for="auto1">3e_C4.1 — élaborer la chaîne d'énergie :</label><select id="auto1"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
-      <div class="assoc"><label for="auto2">3e_C4.2 — justifier matériau et procédé :</label><select id="auto2"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <fieldset class="qcm-groupe" id="auto1">
+  <legend>3e_C4.1 — élaborer la chaîne d'énergie :</legend>
+  <div class="qcm-option"><input type="radio" name="auto1" id="auto1__1" value="🔴 fragile"><label for="auto1__1">🔴 fragile</label></div>
+  <div class="qcm-option"><input type="radio" name="auto1" id="auto1__2" value="🟡 en cours"><label for="auto1__2">🟡 en cours</label></div>
+  <div class="qcm-option"><input type="radio" name="auto1" id="auto1__3" value="🟢 solide"><label for="auto1__3">🟢 solide</label></div>
+  <div class="qcm-option"><input type="radio" name="auto1" id="auto1__4" value="⭐ expert"><label for="auto1__4">⭐ expert</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="auto2">
+  <legend>3e_C4.2 — justifier matériau et procédé :</legend>
+  <div class="qcm-option"><input type="radio" name="auto2" id="auto2__1" value="🔴 fragile"><label for="auto2__1">🔴 fragile</label></div>
+  <div class="qcm-option"><input type="radio" name="auto2" id="auto2__2" value="🟡 en cours"><label for="auto2__2">🟡 en cours</label></div>
+  <div class="qcm-option"><input type="radio" name="auto2" id="auto2__3" value="🟢 solide"><label for="auto2__3">🟢 solide</label></div>
+  <div class="qcm-option"><input type="radio" name="auto2" id="auto2__4" value="⭐ expert"><label for="auto2__4">⭐ expert</label></div>
+</fieldset>
       <p class="refs"><a href="Synthèses/synthese_eleve_3e_C4.1-C4.2.html">📄 Synthèse élève</a> · <a href="Synthèses/synthese_professeur_3e_C4.1-C4.2.html">👩‍🏫 Synthèse professeur</a></p>
     </div>
   </div>
@@ -1041,7 +1315,10 @@ const KEY = "seq_3e_C4.1-C4.2_energie";
 const $ = id => document.getElementById(id);
 function collect(){
   const o = {inputs:{}, valid: window.__valid || {}, exp: window.__exp || {}};
-  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ o.inputs[el.id]=el.value; });
+  // n°300 : chaque groupe de boutons radio porte sa valeur (fieldset.qcm-groupe) ; ses boutons ne sont pas listés un à un
+  document.querySelectorAll("input[id],textarea[id],select[id],fieldset.qcm-groupe[id]").forEach(el=>{
+    if(el.type==="radio" && el.closest("fieldset.qcm-groupe")) return;
+    o.inputs[el.id]=el.value; });
   // les cases « Avant de commencer » (n°304) et les réponses du billet d'entrée (n°26) : cochées ou non
   document.querySelectorAll(".rappel-spiralaire input[type=checkbox], #billet input[type=radio]").forEach(c=>{ o.inputs[c.id]=c.checked; });
   return o;
