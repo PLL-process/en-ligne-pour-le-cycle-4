@@ -367,7 +367,7 @@ body.essentiel details.referentiel-replie{display:none}
   }
 
   // Les blocs qui ne servent qu'à l'écran, reconnus à leur titre (ils n'ont pas de classe commune).
-  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique|crcn mobilisés/i;
+  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|avant l.activité \d|avant la séance \d|échauffement|en-tête pédagogique|crcn mobilisés/i;
   function blocsEcran(){
     document.querySelectorAll("section, .card").forEach(function(c){
       var t = c.querySelector(":scope > h2, :scope > h3");
@@ -549,8 +549,10 @@ body.essentiel details.referentiel-replie{display:none}
 
 <div class="toolbar">
   <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset" type="button" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button>
 </div>
 
+<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
 <!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
 <details class="rappel-ouverture" id="ouverture" open>
 <summary>📖 Rappel : la situation et ton hypothèse</summary>
@@ -753,10 +755,10 @@ body.essentiel details.referentiel-replie{display:none}
 <section class="outil-commun" id="outilBanc" aria-label="Le banc d'énergie">
   <div class="banc">
     <table class="conso">
-      <tr><th></th><th>Ce qui consomme</th><th>Courant (en milliampères)</th><th>Par jour</th><th>Énergie</th></tr>
-      <tr id="tr0"><td class="ck"><input type="checkbox" id="ck0" checked></td><td>Carte Arduino UNO</td><td class="n">45 mA</td><td class="n">10 h</td><td class="n" id="wh0">2,250 Wh (wattheures)</td></tr>
-      <tr id="tr1"><td class="ck"><input type="checkbox" id="ck1" checked></td><td>Capteur de présence du sac</td><td class="n">0,5 mA</td><td class="n">10 h</td><td class="n" id="wh1">0,025 Wh</td></tr>
-      <tr id="tr2"><td class="ck"><input type="checkbox" id="ck2" checked></td><td>DEL indicatrice</td><td class="n">10 mA</td><td class="n">10 h</td><td class="n" id="wh2">0,500 Wh</td></tr>
+      <tr><td></td><th>Ce qui consomme</th><th>Courant (en milliampères)</th><th>Par jour</th><th>Énergie</th></tr>
+      <tr id="tr0"><td class="ck"><input type="checkbox" id="ck0" checked aria-label="Carte Arduino UNO"></td><td>Carte Arduino UNO</td><td class="n">45 mA</td><td class="n">10 h</td><td class="n" id="wh0">2,250 Wh (wattheures)</td></tr>
+      <tr id="tr1"><td class="ck"><input type="checkbox" id="ck1" checked aria-label="Capteur de présence du sac"></td><td>Capteur de présence du sac</td><td class="n">0,5 mA</td><td class="n">10 h</td><td class="n" id="wh1">0,025 Wh</td></tr>
+      <tr id="tr2"><td class="ck"><input type="checkbox" id="ck2" checked aria-label="DEL indicatrice"></td><td>DEL indicatrice</td><td class="n">10 mA</td><td class="n">10 h</td><td class="n" id="wh2">0,500 Wh</td></tr>
       <tr class="tot"><td class="ck"></td><td colspan="3">Consommation du montage, par jour</td>
           <td class="n" id="etot">—</td></tr>
     </table>
@@ -810,7 +812,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>toute l'année scolaire</option>
     </select>
     <p><b>2.</b> Deux sources ne donnent pas une autonomie en jours. Lesquelles&nbsp;?</p>
-    <select id="a0q2">
+    <select id="a0q2" aria-label="Lesquelles ?">
       <option value="">— je choisis —</option>
       <option>la pile 9 V et les piles AA</option>
       <option>le secteur et le panneau solaire</option>
@@ -842,7 +844,7 @@ body.essentiel details.referentiel-replie{display:none}
   l'électricité. Associe chaque source à la forme d'énergie qu'elle contient <b>au départ</b>.</p>
   <div class="exo">
     <p style="margin-top:12px"><b>Pile 9 V (volts) alcaline</b></p>
-    <select id="a1f0">
+    <select id="a1f0" aria-label="Pile 9 V (volts) alcaline">
       <option value="">— je choisis —</option>
       <option>chimique aussi — quatre fois la même réaction</option>
       <option>chimique — une réaction dans la pile</option>
@@ -851,7 +853,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>électrique — elle arrive déjà sous cette forme</option>
     </select>
     <p style="margin-top:12px"><b>4 piles AA alcalines</b></p>
-    <select id="a1f1">
+    <select id="a1f1" aria-label="4 piles AA alcalines">
       <option value="">— je choisis —</option>
       <option>chimique aussi — quatre fois la même réaction</option>
       <option>chimique — une réaction dans la pile</option>
@@ -860,7 +862,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>électrique — elle arrive déjà sous cette forme</option>
     </select>
     <p style="margin-top:12px"><b>Accu Li-ion 18650 rechargeable</b></p>
-    <select id="a1f2">
+    <select id="a1f2" aria-label="Accu Li-ion 18650 rechargeable">
       <option value="">— je choisis —</option>
       <option>chimique aussi — quatre fois la même réaction</option>
       <option>chimique — une réaction dans la pile</option>
@@ -869,7 +871,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>électrique — elle arrive déjà sous cette forme</option>
     </select>
     <p style="margin-top:12px"><b>Secteur — adaptateur USB scellé</b></p>
-    <select id="a1f3">
+    <select id="a1f3" aria-label="Secteur — adaptateur USB scellé">
       <option value="">— je choisis —</option>
       <option>chimique aussi — quatre fois la même réaction</option>
       <option>chimique — une réaction dans la pile</option>
@@ -878,7 +880,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>électrique — elle arrive déjà sous cette forme</option>
     </select>
     <p style="margin-top:12px"><b>Panneau solaire 1 W (watts) crête + accu</b></p>
-    <select id="a1f4">
+    <select id="a1f4" aria-label="Panneau solaire 1 W (watts) crête + accu">
       <option value="">— je choisis —</option>
       <option>chimique aussi — quatre fois la même réaction</option>
       <option>chimique — une réaction dans la pile</option>
@@ -981,7 +983,7 @@ body.essentiel details.referentiel-replie{display:none}
 
     <p><b>Question 1.</b> Le banc dit que le panneau solaire récolte 3,7 Wh (wattheures) par jour pour
     2,78 consommés : il suffit. Pourquoi n'est-il pourtant pas le bon choix ici&nbsp;?</p>
-    <select id="a3q1">
+    <select id="a3q1" aria-label="Pourquoi n'est-il pourtant pas le bon choix ici ?">
       <option value="">— je choisis —</option>
       <option>parce qu'il n'y a pas de soleil dans un hall</option>
       <option>parce qu'il coûte trop cher pour un collège</option>
@@ -998,7 +1000,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>jamais : elles durent l'année</option>
     </select>
     <p><b>Question 3.</b> Quelle source choisis-tu&nbsp;?</p>
-    <select id="a3q3">
+    <select id="a3q3" aria-label="Quelle source choisis-tu ?">
       <option value="">— je choisis —</option>
       <option>le secteur, par son adaptateur USB fermé</option>
       <option value="la pile 9 V, la plus simple à brancher">la pile 9 volts, la plus simple à brancher</option>
@@ -1038,7 +1040,7 @@ body.essentiel details.referentiel-replie{display:none}
   d'elle.</p>
   <div class="exo">
     <p style="margin-top:12px"><b>Pile 9 V (volts) alcaline</b></p>
-    <select id="a4a0">
+    <select id="a4a0" aria-label="Pile 9 V (volts) alcaline">
       <option value="">— je choisis —</option>
       <option>Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas.</option>
       <option>Il faut une prise à portée — et le hall en a une, la cour non.</option>
@@ -1046,7 +1048,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>Le déchet : une pile par jour, c'est un bac de collecte plein à Noël.</option>
     </select>
     <p style="margin-top:12px"><b>Accu Li-ion 18650 rechargeable</b></p>
-    <select id="a4a1">
+    <select id="a4a1" aria-label="Accu Li-ion 18650 rechargeable">
       <option value="">— je choisis —</option>
       <option>Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas.</option>
       <option>Il faut une prise à portée — et le hall en a une, la cour non.</option>
@@ -1054,7 +1056,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>Le déchet : une pile par jour, c'est un bac de collecte plein à Noël.</option>
     </select>
     <p style="margin-top:12px"><b>Secteur — adaptateur USB scellé</b></p>
-    <select id="a4a2">
+    <select id="a4a2" aria-label="Secteur — adaptateur USB scellé">
       <option value="">— je choisis —</option>
       <option>Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas.</option>
       <option>Il faut une prise à portée — et le hall en a une, la cour non.</option>
@@ -1062,7 +1064,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>Le déchet : une pile par jour, c'est un bac de collecte plein à Noël.</option>
     </select>
     <p style="margin-top:12px"><b>Panneau solaire 1 W (watts) crête + accu</b></p>
-    <select id="a4a3">
+    <select id="a4a3" aria-label="Panneau solaire 1 W (watts) crête + accu">
       <option value="">— je choisis —</option>
       <option>Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas.</option>
       <option>Il faut une prise à portée — et le hall en a une, la cour non.</option>
@@ -1210,7 +1212,7 @@ body.essentiel details.referentiel-replie{display:none}
 
 </div>
 
-<footer>Séquence 5e_C7.4 — <em>L'indicateur du hall</em> · Thème 3 · banc d'énergie original (CC0), valeurs calculées à partir des courants constructeur et des capacités réelles.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.8em;opacity:.85;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+<footer>Séquence 5e_C7.4 — <em>L'indicateur du hall</em> · Thème 3 · banc d'énergie original (CC0), valeurs calculées à partir des courants constructeur et des capacités réelles.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license" style="color:inherit;text-decoration:underline">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 
 <script>
@@ -1356,11 +1358,12 @@ const CHECKS = {
   4(){ let s = 0;
        s += sv("a4a0", "Le déchet : une pile par jour, c'est un bac de collecte plein à Noël."); s += sv("a4a1", "Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas."); s += sv("a4a2", "Il faut une prise à portée — et le hall en a une, la cour non."); s += sv("a4a3", "Il lui faut du soleil, donc un dehors, une orientation et un nettoyage.");
        return {score: s, total: 4, exp: true}; },
-  5(){ return {score: pres("reinv", 60), total: 1, exp: true}; }
+  5(){ return {score: pres("reinv", 60), total: 1, exp: true, libre: true}; }
 };
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; save(); return; }
   if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
@@ -1452,5 +1455,22 @@ restore(); majBanc(false);
 })();
 </script>
 
+
+<script>
+/* Effacement de la sauvegarde locale, en deux clics et sans boîte modale
+   (audit externe A05, 08/11/2026 ; posé par _outils/controle_sauvegarde_locale.py). */
+(function(){
+  "use strict";
+  var b = document.getElementById("btnReset"); if (!b) return;
+  var cle = "seq_5e_C7_4", arme = 0, texte = b.textContent;
+  b.setAttribute("aria-live", "polite");
+  b.addEventListener("click", function(){
+    var t = Date.now();
+    if (arme && t - arme < 6000){ try{ localStorage.removeItem(cle); }catch(e){} location.reload(); return; }
+    arme = t; b.textContent = "🗑 Clique encore pour confirmer l'effacement";
+    setTimeout(function(){ if (arme === t){ arme = 0; b.textContent = texte; } }, 6000);
+  });
+})();
+</script>
 </body>
 </html>

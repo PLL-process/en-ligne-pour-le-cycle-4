@@ -13,6 +13,13 @@ visuelle.
 import importlib.util as _iu
 import json
 import pathlib
+import sys
+
+# Règle d'or n°321 (08/11/2026) : la mention de licence vient de `_outils/licence_cc.py`, source
+# unique ; le générateur la pose lui-même, sinon la page régénérée la perd et verif_chaine.py dit
+# faux (constaté le 10/11/2026 : 3 écarts sur 3).
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[4] / "_outils"))
+from licence_cc import MENTION as MENTION_LICENCE  # noqa: E402
 
 G = pathlib.Path(__file__).resolve().parent
 D = G.parent
@@ -265,6 +272,7 @@ qui décide de la date de fin.</p>
 </div>
 <p class="saved-note">Tes réponses sont enregistrées <b>dans ce navigateur uniquement</b>&nbsp;:
 elles ne partent nulle part, et tu les retrouveras sur <b>ce même ordinateur</b>.</p>
+<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
 <p class="saved-note" id="aide-essentiel">&#127919; <b>Le mode essentiel</b> masque les corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. Rien n'est
 perdu — un second clic ramène tout.</p>
 """   # gabarit : formaté par page()
@@ -314,7 +322,7 @@ HAUT = """
 </section>
 
 <div class="progress-wrap">
-  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0"><div id="progFill"></div></div>
+  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0" aria-label="Progression"><div id="progFill"></div></div>
   <p id="progTxt">0 / 3 étapes validées</p>
 </div>
 
@@ -989,7 +997,7 @@ BAS_T = """
 </section>
 <footer>Ressource originale &middot; Thème 3 &middot; C7.1 &middot; images, licences et
 limites dans <code>SOURCES_MEDIAS.md</code> &middot; page utilisable hors ligne, aucune donnée
-envoyée.</footer>
+envoyée.%(licence)s</footer>
 """   # gabarit : formaté par page(), pas au chargement
 
 POS = opts(["je ne sais pas encore", "j'y arrive avec de l'aide",
@@ -1070,8 +1078,13 @@ document.addEventListener("change", ev=>{
 document.addEventListener("input", ev=>{ if(ev.target.tagName==="TEXTAREA") save(); });
 
 $("btnPrint").addEventListener("click", ()=>window.print());
+/* Effacement en deux clics, dans la page : jamais de boîte modale (audit externe A05, 10/11/2026). */
+let _resetArme = 0;
 $("btnReset").addEventListener("click", ()=>{
-  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+  const b = $("btnReset"), t = Date.now();
+  if(_resetArme && t - _resetArme < 6000){ localStorage.removeItem(KEY); location.reload(); return; }
+  _resetArme = t; const texte = b.textContent; b.textContent = "🗑 Clique encore pour confirmer l'effacement";
+  setTimeout(()=>{ if(_resetArme === t){ _resetArme = 0; b.textContent = texte; } }, 6000);
 });
 $("btnEssentiel").addEventListener("click", ()=>{
   const on=document.body.classList.toggle("essentiel");
@@ -1549,7 +1562,7 @@ def page(niv):
                          "taches": json.dumps(taches, ensure_ascii=False),
                          "panneau": json.dumps(panneau, ensure_ascii=False)}
 
-    bas = BAS_T % {"verbe": n["verbe"], "pos": POS, "bonus": bonus(niv, n["projet"])}
+    bas = BAS_T % {"verbe": n["verbe"], "pos": POS, "bonus": bonus(niv, n["projet"]), "licence": MENTION_LICENCE}
     corps = n["corps"].replace("<!--GANTT-->", figure_gantt(niv, n["projet"]))
     if "<!--GANTT-->" in corps:
         raise SystemExit("Marqueur GANTT non remplacé dans le parcours %s." % niv)

@@ -368,7 +368,7 @@ body.essentiel details.referentiel-replie{display:none}
   }
 
   // Les blocs qui ne servent qu'à l'écran, reconnus à leur titre (ils n'ont pas de classe commune).
-  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique|crcn mobilisés/i;
+  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|avant l.activité \d|avant la séance \d|échauffement|en-tête pédagogique|crcn mobilisés/i;
   function blocsEcran(){
     document.querySelectorAll("section, .card").forEach(function(c){
       var t = c.querySelector(":scope > h2, :scope > h3");
@@ -551,8 +551,10 @@ body.essentiel details.referentiel-replie{display:none}
 
 <div class="toolbar">
   <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset" type="button" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button>
 </div>
 
+<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
 <!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
 <details class="rappel-ouverture" id="ouverture" open>
 <summary>📖 Rappel : la situation et ton hypothèse</summary>
@@ -833,12 +835,12 @@ body.essentiel details.referentiel-replie{display:none}
   total. <b>Éteins la pompe. Puis rallume-la et éteins la carte.</b></p>
   <div class="banc" id="banc">
     <table class="conso">
-      <tr><th></th><th>Ce qui consomme</th><th>Courant (en milliampères)</th><th>Par jour</th><th>Énergie</th></tr>
-      <tr id="tr0"><td class="ck"><input type="checkbox" id="ck0" checked></td><td>Carte Arduino UNO</td><td class="n">45 mA</td><td class="n">24 h</td><td class="n" id="wh0">5,400 Wh (wattheures)</td></tr>
-      <tr id="tr1"><td class="ck"><input type="checkbox" id="ck1" checked></td><td>Capteur d'humidité du sol</td><td class="n">2 mA</td><td class="n">24 h</td><td class="n" id="wh1">0,240 Wh</td></tr>
-      <tr id="tr2"><td class="ck"><input type="checkbox" id="ck2" checked></td><td>Écran LCD RGB</td><td class="n">40 mA</td><td class="n">1 h</td><td class="n" id="wh2">0,200 Wh</td></tr>
-      <tr id="tr3"><td class="ck"><input type="checkbox" id="ck3" checked></td><td>Module relais</td><td class="n">70 mA</td><td class="n">1 min</td><td class="n" id="wh3">0,006 Wh</td></tr>
-      <tr id="tr4"><td class="ck"><input type="checkbox" id="ck4" checked></td><td>Pompe immergée 5 V (volts)</td><td class="n">300 mA</td><td class="n">1 min</td><td class="n" id="wh4">0,025 Wh</td></tr>
+      <tr><td></td><th>Ce qui consomme</th><th>Courant (en milliampères)</th><th>Par jour</th><th>Énergie</th></tr>
+      <tr id="tr0"><td class="ck"><input type="checkbox" id="ck0" checked aria-label="Carte Arduino UNO"></td><td>Carte Arduino UNO</td><td class="n">45 mA</td><td class="n">24 h</td><td class="n" id="wh0">5,400 Wh (wattheures)</td></tr>
+      <tr id="tr1"><td class="ck"><input type="checkbox" id="ck1" checked aria-label="Capteur d'humidité du sol"></td><td>Capteur d'humidité du sol</td><td class="n">2 mA</td><td class="n">24 h</td><td class="n" id="wh1">0,240 Wh</td></tr>
+      <tr id="tr2"><td class="ck"><input type="checkbox" id="ck2" checked aria-label="Écran LCD RGB"></td><td>Écran LCD RGB</td><td class="n">40 mA</td><td class="n">1 h</td><td class="n" id="wh2">0,200 Wh</td></tr>
+      <tr id="tr3"><td class="ck"><input type="checkbox" id="ck3" checked aria-label="Module relais"></td><td>Module relais</td><td class="n">70 mA</td><td class="n">1 min</td><td class="n" id="wh3">0,006 Wh</td></tr>
+      <tr id="tr4"><td class="ck"><input type="checkbox" id="ck4" checked aria-label="Pompe immergée 5 V (volts)"></td><td>Pompe immergée 5 V (volts)</td><td class="n">300 mA</td><td class="n">1 min</td><td class="n" id="wh4">0,025 Wh</td></tr>
       <tr class="tot"><td class="ck"></td><td colspan="3">Consommation du montage, par jour</td>
           <td class="n" id="etot">—</td></tr>
     </table>
@@ -897,7 +899,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>0,00 Wh — il ne reste rien</option>
     </select>
     <p><b>3.</b> Pourquoi la pompe, qui tire 300 mA (milliampères), pèse-t-elle si peu&nbsp;?</p>
-    <select id="a0q3">
+    <select id="a0q3" aria-label="Pourquoi la pompe, qui tire 300 mA (milliampères), pèse-t-elle si peu ?">
       <option value="">— je choisis —</option>
       <option>parce qu'elle ne tourne que 60 secondes par jour</option>
       <option>parce que le banc oublie de la compter</option>
@@ -939,49 +941,49 @@ body.essentiel details.referentiel-replie{display:none}
   chacune, dis si c'en est un — <b>ici, pour ce jardin-là</b>.</p>
   <div class="exo">
     <p style="margin-top:12px"><b>L'autonomie : combien de temps le jardin tient sans que personne n'intervienne</b></p>
-    <select id="a1c0">
+    <select id="a1c0" aria-label="L'autonomie : combien de temps le jardin tient sans que personne n'intervienne">
       <option value="">— je choisis —</option>
       <option>c'est un critère utile ici</option>
       <option>ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</option>
     </select>
     <p style="margin-top:12px"><b>La couleur du boîtier de la source</b></p>
-    <select id="a1c1">
+    <select id="a1c1" aria-label="La couleur du boîtier de la source">
       <option value="">— je choisis —</option>
       <option>c'est un critère utile ici</option>
       <option>ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</option>
     </select>
     <p style="margin-top:12px"><b>La disponibilité d'une prise à l'endroit exact du jardin</b></p>
-    <select id="a1c2">
+    <select id="a1c2" aria-label="La disponibilité d'une prise à l'endroit exact du jardin">
       <option value="">— je choisis —</option>
       <option>c'est un critère utile ici</option>
       <option>ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</option>
     </select>
     <p style="margin-top:12px"><b>Le coût sur une année entière, et pas seulement le prix d'achat</b></p>
-    <select id="a1c3">
+    <select id="a1c3" aria-label="Le coût sur une année entière, et pas seulement le prix d'achat">
       <option value="">— je choisis —</option>
       <option>c'est un critère utile ici</option>
       <option>ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</option>
     </select>
     <p style="margin-top:12px"><b>La marque du fabricant de la pile</b></p>
-    <select id="a1c4">
+    <select id="a1c4" aria-label="La marque du fabricant de la pile">
       <option value="">— je choisis —</option>
       <option>c'est un critère utile ici</option>
       <option>ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</option>
     </select>
     <p style="margin-top:12px"><b>Le déchet produit : ce qu'on jette, et à quelle fréquence</b></p>
-    <select id="a1c5">
+    <select id="a1c5" aria-label="Le déchet produit : ce qu'on jette, et à quelle fréquence">
       <option value="">— je choisis —</option>
       <option>c'est un critère utile ici</option>
       <option>ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</option>
     </select>
     <p style="margin-top:12px"><b>Le poids de la source, alors que le jardin ne bouge jamais</b></p>
-    <select id="a1c6">
+    <select id="a1c6" aria-label="Le poids de la source, alors que le jardin ne bouge jamais">
       <option value="">— je choisis —</option>
       <option>c'est un critère utile ici</option>
       <option>ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</option>
     </select>
     <p style="margin-top:12px"><b>La sécurité : ce que l'élève manipule reste-t-il en très basse tension</b></p>
-    <select id="a1c7">
+    <select id="a1c7" aria-label="La sécurité : ce que l'élève manipule reste-t-il en très basse tension">
       <option value="">— je choisis —</option>
       <option>c'est un critère utile ici</option>
       <option>ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</option>
@@ -1017,7 +1019,7 @@ body.essentiel details.referentiel-replie{display:none}
   chacune, dis ce que le banc conclut.</p>
   <div class="exo">
     <p style="margin-top:12px"><b>Pile 9 V (volts) alcaline</b></p>
-    <select id="a2g0">
+    <select id="a2g0" aria-label="Pile 9 V (volts) alcaline">
       <option value="">— je choisis —</option>
       <option>elle ne suffit pas : il manque de l'énergie chaque jour</option>
       <option>illimitée, tant qu'il y a du réseau</option>
@@ -1026,7 +1028,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>un peu plus de deux jours</option>
     </select>
     <p style="margin-top:12px"><b>4 piles AA alcalines</b></p>
-    <select id="a2g1">
+    <select id="a2g1" aria-label="4 piles AA alcalines">
       <option value="">— je choisis —</option>
       <option>elle ne suffit pas : il manque de l'énergie chaque jour</option>
       <option>illimitée, tant qu'il y a du réseau</option>
@@ -1035,7 +1037,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>un peu plus de deux jours</option>
     </select>
     <p style="margin-top:12px"><b>Accu Li-ion 18650 rechargeable</b></p>
-    <select id="a2g2">
+    <select id="a2g2" aria-label="Accu Li-ion 18650 rechargeable">
       <option value="">— je choisis —</option>
       <option>elle ne suffit pas : il manque de l'énergie chaque jour</option>
       <option>illimitée, tant qu'il y a du réseau</option>
@@ -1044,7 +1046,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>un peu plus de deux jours</option>
     </select>
     <p style="margin-top:12px"><b>Secteur — adaptateur USB scellé</b></p>
-    <select id="a2g3">
+    <select id="a2g3" aria-label="Secteur — adaptateur USB scellé">
       <option value="">— je choisis —</option>
       <option>elle ne suffit pas : il manque de l'énergie chaque jour</option>
       <option>illimitée, tant qu'il y a du réseau</option>
@@ -1053,7 +1055,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>un peu plus de deux jours</option>
     </select>
     <p style="margin-top:12px"><b>Panneau solaire 1 W (watts) crête + accu</b></p>
-    <select id="a2g4">
+    <select id="a2g4" aria-label="Panneau solaire 1 W (watts) crête + accu">
       <option value="">— je choisis —</option>
       <option>elle ne suffit pas : il manque de l'énergie chaque jour</option>
       <option>illimitée, tant qu'il y a du réseau</option>
@@ -1111,7 +1113,7 @@ body.essentiel details.referentiel-replie{display:none}
   <div class="exo">
 
     <p><b>Question 1.</b> Sur le seul critère de l'autonomie, quelle source gagne&nbsp;?</p>
-    <select id="a3q1">
+    <select id="a3q1" aria-label="Sur le seul critère de l'autonomie, quelle source gagne ?">
       <option value="">— je choisis —</option>
       <option>le secteur : illimitée</option>
       <option>les quatre piles AA : 2,1 jours</option>
@@ -1120,7 +1122,7 @@ body.essentiel details.referentiel-replie{display:none}
     </select>
     <p><b>Question 2.</b> Et pourtant le secteur pose un problème que la grille fait apparaître.
     Lequel&nbsp;?</p>
-    <select id="a3q2">
+    <select id="a3q2" aria-label="Lequel ?">
       <option value="">— je choisis —</option>
       <option>il n'y a pas de prise au fond de la cour, et l'amener coûte 400 €</option>
       <option>il n'est pas assez puissant pour la pompe</option>
@@ -1325,7 +1327,7 @@ body.essentiel details.referentiel-replie{display:none}
 
 </div>
 
-<footer>Séquence 4e_C7.4 — <em>De quoi vit le jardin connecté</em> · Thème 3 · banc d'énergie original (CC0), valeurs calculées à partir des courants constructeur et des capacités réelles.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.8em;opacity:.85;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+<footer>Séquence 4e_C7.4 — <em>De quoi vit le jardin connecté</em> · Thème 3 · banc d'énergie original (CC0), valeurs calculées à partir des courants constructeur et des capacités réelles.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license" style="color:inherit;text-decoration:underline">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 
 <script>
@@ -1476,11 +1478,12 @@ const CHECKS = {
               + sv("a4q2", "suffit largement : il récolte près du triple")
               + pres("a4ph", 40);
        return {score: s, total: 3, exp: true}; },
-  5(){ return {score: pres("reinv", 80), total: 1, exp: true}; }
+  5(){ return {score: pres("reinv", 80), total: 1, exp: true, libre: true}; }
 };
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; save(); return; }
   if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
@@ -1582,5 +1585,22 @@ placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // l'o
 </script>
 
 <script src="../../../../_ressources-communes/relais-anime/relais-anime.js" defer></script>
+
+<script>
+/* Effacement de la sauvegarde locale, en deux clics et sans boîte modale
+   (audit externe A05, 08/11/2026 ; posé par _outils/controle_sauvegarde_locale.py). */
+(function(){
+  "use strict";
+  var b = document.getElementById("btnReset"); if (!b) return;
+  var cle = "seq_4e_C7_4", arme = 0, texte = b.textContent;
+  b.setAttribute("aria-live", "polite");
+  b.addEventListener("click", function(){
+    var t = Date.now();
+    if (arme && t - arme < 6000){ try{ localStorage.removeItem(cle); }catch(e){} location.reload(); return; }
+    arme = t; b.textContent = "🗑 Clique encore pour confirmer l'effacement";
+    setTimeout(function(){ if (arme === t){ arme = 0; b.textContent = texte; } }, 6000);
+  });
+})();
+</script>
 </body>
 </html>

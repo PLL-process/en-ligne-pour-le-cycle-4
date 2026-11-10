@@ -97,7 +97,7 @@ def professeur(at, page_niveau, chemins_fn, chemin):
              "<li>Tout se fait dans la page, sans papier ni Internet&nbsp;; le travail est partagé avec le cahier du niveau.</li></ul></section>")
     if getattr(at, "NOTES_PROF", None):
         h.append('<section class="card"><h2>📝 Choix de conception de l\'atelier</h2>%s</section>' % at.NOTES_PROF)
-    h.append("</main>\n</body>\n</html>\n")
+    h.append("</main>\n" + moteur.MENTION_LICENCE + "\n</body>\n</html>\n")  # n°321, là où injecter() la posait
     return "".join(h)
 
 
@@ -281,7 +281,7 @@ def eleve(at, page_niveau, chemins_fn, chemin):
     a('  <h2 id="les-mots" style="margin-top:0">📖 Les mots de l\'atelier</h2>\n  <dl class="lexique">')
     for fr, en, defi in S.LEXIQUE:
         a('    <div><dt>%s <span class="en" lang="en">— %s</span></dt><dd>%s</dd></div>' % (fr, en, defi))
-    a('  </dl>\n</div>\n</main>\n</body>\n</html>\n')
+    a('  </dl>\n</div>\n</main>\n' + moteur.MENTION_LICENCE + '\n</body>\n</html>\n')  # n°321
     return "\n".join(o)
 
 

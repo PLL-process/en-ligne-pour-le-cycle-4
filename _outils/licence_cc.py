@@ -17,8 +17,8 @@ ANNEE = "2026"
 MARQUEUR = 'data-licence="cc-by-nc-sa"'
 
 MENTION = (
-    f'<p class="licence-cc" {MARQUEUR} style="font-size:.8em;opacity:.85;margin-top:.8em">'
-    f'📄 Ressource sous licence <a href="{URL}" rel="license">CC BY-NC-SA 4.0</a> '
+    f'<p class="licence-cc" {MARQUEUR} style="font-size:.85em;margin-top:.8em">'
+    f'📄 Ressource sous licence <a href="{URL}" rel="license" style="color:inherit;text-decoration:underline">CC BY-NC-SA 4.0</a> '
     f'— © {AUTEUR}, {ANNEE} · Technologie cycle 4 · réutilisation et adaptation libres '
     f'à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>'
 )

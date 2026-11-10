@@ -385,7 +385,7 @@ body.essentiel details.referentiel-replie{display:none}
   }
 
   // Les blocs qui ne servent qu'à l'écran, reconnus à leur titre (ils n'ont pas de classe commune).
-  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique|crcn mobilisés/i;
+  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|avant l.activité \d|avant la séance \d|échauffement|en-tête pédagogique|crcn mobilisés/i;
   function blocsEcran(){
     document.querySelectorAll("section, .card").forEach(function(c){
       var t = c.querySelector(":scope > h2, :scope > h3");
@@ -602,6 +602,7 @@ body.essentiel details.referentiel-replie{display:none}
   <button class="btn ghost" id="btnReset">🗑 Tout effacer</button>
   <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
 </div>
+<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Tout effacer&nbsp;».</p>
 <p class="saved-note" id="savedNote" aria-live="polite"></p>
 <details class="rappel-ouverture" id="ouverture" open>
 <summary>📖 Rappel : la situation et ton hypothèse</summary>
@@ -715,7 +716,7 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
 
 <div class="progress-wrap">
   <span class="progress-label" id="progTxt">0 / 5 activités validées</span>
-  <div class="progress-bar" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><div id="progFill"></div></div>
+  <div class="progress-bar" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" aria-label="Progression"><div id="progFill"></div></div>
 </div>
 
 <div class="seance-tabs" id="seances" role="tablist" aria-label="Les trois séances">
@@ -989,7 +990,7 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
 
 <!-- gestes-outil-v1 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau. -->
 <section class="card gestes-outil" aria-labelledby="gestes-packettracer">
-  <h2 id="gestes-packettracer">🧰 Avant de commencer — les quatre gestes de Packet Tracer</h2>
+  <h2 id="gestes-packettracer">🧰 Avant l'activité 3 (échauffement) — les quatre gestes de Packet Tracer</h2>
   <p class="pourquoi">Quatre gestes à faire une fois, au début, et ta séance ne
   se perdra pas. Tu les as peut-être déjà faits une autre année&nbsp;: refais-les,
   c'est court. Et si tu ne les as jamais faits, tout est écrit ici — tu n'as
@@ -1375,7 +1376,7 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
   <p>Séquence 5e_C4.7 · 5e_C4.8 — Thème 2 · Structure, fonctionnement, comportement · Technologie cycle 4 (programme 2024)</p>
   <p>Captures reconstituées d'après Cisco Packet Tracer 8.2 (schémas originaux CC0 — aucune capture propriétaire). Cisco et Packet Tracer sont des marques de Cisco Systems, Inc.</p>
   <p>Fonctionne hors connexion après chargement · aucune donnée envoyée sur un serveur · sauvegarde locale sur cet appareil uniquement</p>
-<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.8em;opacity:.85;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license" style="color:inherit;text-decoration:underline">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 
 <script>

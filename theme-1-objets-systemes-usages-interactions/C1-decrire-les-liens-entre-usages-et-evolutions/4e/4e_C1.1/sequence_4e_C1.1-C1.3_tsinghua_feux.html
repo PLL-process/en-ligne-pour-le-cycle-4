@@ -354,7 +354,7 @@ body.essentiel details.referentiel-replie{display:none}
   }
 
   // Les blocs qui ne servent qu'à l'écran, reconnus à leur titre (ils n'ont pas de classe commune).
-  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique|crcn mobilisés/i;
+  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|avant l.activité \d|avant la séance \d|échauffement|en-tête pédagogique|crcn mobilisés/i;
   function blocsEcran(){
     document.querySelectorAll("section, .card").forEach(function(c){
       var t = c.querySelector(":scope > h2, :scope > h3");
@@ -641,6 +641,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 
 <p class="saved-note">Tes réponses sont enregistrées <b>dans ce navigateur uniquement</b>&nbsp;:
 elles ne partent nulle part, et tu les retrouveras sur <b>ce même ordinateur</b>.</p>
+<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
 <p class="saved-note" id="aide-essentiel">🎯 <b>Le mode essentiel</b> masque les
 corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. <br>Utile quand la
 page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p>
@@ -711,7 +712,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 </div>
 
 <div class="progress-wrap">
-  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><div id="progFill"></div></div>
+  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" aria-label="Progression"><div id="progFill"></div></div>
   <p id="progTxt">0 / 6 activités validées</p>
 </div>
 
@@ -732,10 +733,10 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <p>Trois questions sur ce que tu sais déjà. <b>Aucune note</b>&nbsp;: c'est un aiguillage.</p>
   <fieldset class="qcm-groupe" id="be_1">
   <legend>Deux valeurs peuvent être additionnées&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="seulement si elles ont la même unité et le même sens"><label for="be_1__1">seulement si elles ont la même unité et le même sens</label></div>
-  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="dès qu'elles sont dans la même colonne"><label for="be_1__2">dès qu'elles sont dans la même colonne</label></div>
-  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="dès que le tableur l'accepte"><label for="be_1__3">dès que le tableur l'accepte</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="toujours, si ce sont des nombres"><label for="be_1__4">toujours, si ce sont des nombres</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="dès que le tableur l'accepte"><label for="be_1__3">dès que le tableur l'accepte</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="dès qu'elles sont dans la même colonne"><label for="be_1__2">dès qu'elles sont dans la même colonne</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="seulement si elles ont la même unité et le même sens"><label for="be_1__1">seulement si elles ont la même unité et le même sens</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="be_2">
   <legend>Un <b>pourcentage</b> comme «&nbsp;50 % des départs de feu&nbsp;» est&nbsp;:</legend>
@@ -746,10 +747,10 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 </fieldset>
   <fieldset class="qcm-groupe" id="be_3">
   <legend>Une <b>estimation</b> et une <b>mesure</b>&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="ne se valent pas : une estimation est calculée à partir d'autre chose, et elle doit annoncer ses limites"><label for="be_3__1">ne se valent pas : une estimation est calculée à partir d'autre chose, et elle doit annoncer ses limites</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="une mesure est toujours exacte"><label for="be_3__4">une mesure est toujours exacte</label></div>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="c'est la même chose"><label for="be_3__2">c'est la même chose</label></div>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="une estimation est toujours fausse"><label for="be_3__3">une estimation est toujours fausse</label></div>
-  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="une mesure est toujours exacte"><label for="be_3__4">une mesure est toujours exacte</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="ne se valent pas : une estimation est calculée à partir d'autre chose, et elle doit annoncer ses limites"><label for="be_3__1">ne se valent pas : une estimation est calculée à partir d'autre chose, et elle doit annoncer ses limites</label></div>
 </fieldset>
   <button class="btn small" data-check="0" type="button">🎫 Vérifier mon billet d'entrée</button>
   <p class="feedback" id="fb0" role="status"></p>
@@ -767,7 +768,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 
 <!-- gestes-outil-v1 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau. -->
 <section class="card gestes-outil" aria-labelledby="gestes-tableur">
-  <h2 id="gestes-tableur">🧰 Avant de commencer (échauffement) — les quatre gestes du tableur</h2>
+  <h2 id="gestes-tableur">🧰 Avant l'activité 1 (échauffement) — les quatre gestes du tableur</h2>
   <p class="pourquoi">Quatre gestes à faire une fois, au début, et ta séance ne
   se perdra pas. <br>Tu les as peut-être déjà faits une autre année&nbsp;: refais-les,
   c'est court. <br>Et si tu ne les as jamais faits, tout est écrit ici — tu n'as
@@ -920,38 +921,38 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <code>unite</code>, <code>source</code> et <code>statut</code>.</p>
   <fieldset class="qcm-groupe" id="a1_1">
   <legend>«&nbsp;50 000 ha&nbsp;», «&nbsp;32 feux&nbsp;» et «&nbsp;50 %&nbsp;» ne s'additionnent pas parce que&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__1" value="ce sont trois grandeurs différentes : une surface cumulée, un état instantané, une proportion"><label for="a1_1__1">ce sont trois grandeurs différentes : une surface cumulée, un état instantané, une proportion</label></div>
-  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__2" value="les nombres sont trop éloignés les uns des autres"><label for="a1_1__2">les nombres sont trop éloignés les uns des autres</label></div>
   <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__3" value="elles viennent de trois sources différentes"><label for="a1_1__3">elles viennent de trois sources différentes</label></div>
   <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__4" value="le tableur refuserait l'opération"><label for="a1_1__4">le tableur refuserait l'opération</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__1" value="ce sont trois grandeurs différentes : une surface cumulée, un état instantané, une proportion"><label for="a1_1__1">ce sont trois grandeurs différentes : une surface cumulée, un état instantané, une proportion</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__2" value="les nombres sont trop éloignés les uns des autres"><label for="a1_1__2">les nombres sont trop éloignés les uns des autres</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a1_2">
   <legend>«&nbsp;50 000 ha depuis le 1<sup>er</sup> janvier&nbsp;» est&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__1" value="un cumul, et un minimum annoncé : la surface réelle est au moins celle-là"><label for="a1_2__1">un cumul, et un minimum annoncé : la surface réelle est au moins celle-là</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__4" value="une estimation calculée par un modèle"><label for="a1_2__4">une estimation calculée par un modèle</label></div>
   <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__2" value="la surface qui brûle chaque jour"><label for="a1_2__2">la surface qui brûle chaque jour</label></div>
   <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__3" value="la surface totale des forêts françaises"><label for="a1_2__3">la surface totale des forêts françaises</label></div>
-  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__4" value="une estimation calculée par un modèle"><label for="a1_2__4">une estimation calculée par un modèle</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__1" value="un cumul, et un minimum annoncé : la surface réelle est au moins celle-là"><label for="a1_2__1">un cumul, et un minimum annoncé : la surface réelle est au moins celle-là</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a1_3">
   <legend>«&nbsp;32 feux en cours&nbsp;» est&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__1" value="un état instantané : le nombre à un moment donné, qui aura changé le lendemain"><label for="a1_3__1">un état instantané : le nombre à un moment donné, qui aura changé le lendemain</label></div>
-  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__2" value="le nombre de feux de l'année"><label for="a1_3__2">le nombre de feux de l'année</label></div>
-  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__3" value="une moyenne journalière"><label for="a1_3__3">une moyenne journalière</label></div>
   <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__4" value="une prévision"><label for="a1_3__4">une prévision</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__3" value="une moyenne journalière"><label for="a1_3__3">une moyenne journalière</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__2" value="le nombre de feux de l'année"><label for="a1_3__2">le nombre de feux de l'année</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__1" value="un état instantané : le nombre à un moment donné, qui aura changé le lendemain"><label for="a1_3__1">un état instantané : le nombre à un moment donné, qui aura changé le lendemain</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a1_4">
   <legend>La colonne <code>statut</code> porte «&nbsp;minimum_annonce&nbsp;», «&nbsp;instantane&nbsp;», «&nbsp;estimation_modelee&nbsp;». Elle sert à&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__1" value="dire de quelle NATURE est chaque chiffre — c'est elle qui empêche les additions absurdes"><label for="a1_4__1">dire de quelle NATURE est chaque chiffre — c'est elle qui empêche les additions absurdes</label></div>
-  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__2" value="indiquer la date de la mesure"><label for="a1_4__2">indiquer la date de la mesure</label></div>
   <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__3" value="classer les lignes par ordre d'importance"><label for="a1_4__3">classer les lignes par ordre d'importance</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__2" value="indiquer la date de la mesure"><label for="a1_4__2">indiquer la date de la mesure</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__1" value="dire de quelle NATURE est chaque chiffre — c'est elle qui empêche les additions absurdes"><label for="a1_4__1">dire de quelle NATURE est chaque chiffre — c'est elle qui empêche les additions absurdes</label></div>
   <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__4" value="signaler les erreurs du fichier"><label for="a1_4__4">signaler les erreurs du fichier</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a1_5">
   <legend>Pourquoi la colonne <code>source</code> est-elle indispensable&nbsp;?</legend>
-  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__1" value="parce qu'un chiffre sans source ne peut être ni vérifié ni discuté"><label for="a1_5__1">parce qu'un chiffre sans source ne peut être ni vérifié ni discuté</label></div>
-  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__2" value="pour faire plus sérieux"><label for="a1_5__2">pour faire plus sérieux</label></div>
-  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__3" value="parce que c'est obligatoire dans un fichier CSV"><label for="a1_5__3">parce que c'est obligatoire dans un fichier CSV</label></div>
   <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__4" value="pour trier les lignes plus facilement"><label for="a1_5__4">pour trier les lignes plus facilement</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__2" value="pour faire plus sérieux"><label for="a1_5__2">pour faire plus sérieux</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__1" value="parce qu'un chiffre sans source ne peut être ni vérifié ni discuté"><label for="a1_5__1">parce qu'un chiffre sans source ne peut être ni vérifié ni discuté</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__3" value="parce que c'est obligatoire dans un fichier CSV"><label for="a1_5__3">parce que c'est obligatoire dans un fichier CSV</label></div>
 </fieldset>
 
   <h4>c) Ta justification</h4>
@@ -1029,36 +1030,36 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <fieldset class="qcm-groupe" id="a2_1">
   <legend>Le ratio 20 000 000 ÷ 504 002 ≈ 39,68 t/ha est&nbsp;:</legend>
   <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__1" value="un proxy : une valeur empruntée à un autre contexte, faute de mieux"><label for="a2_1__1">un proxy : une valeur empruntée à un autre contexte, faute de mieux</label></div>
-  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__2" value="une mesure faite en France en 2026"><label for="a2_1__2">une mesure faite en France en 2026</label></div>
   <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__3" value="une valeur officielle applicable partout"><label for="a2_1__3">une valeur officielle applicable partout</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__2" value="une mesure faite en France en 2026"><label for="a2_1__2">une mesure faite en France en 2026</label></div>
   <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__4" value="une constante physique"><label for="a2_1__4">une constante physique</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a2_2">
   <legend>Appliquer ce ratio aux 50 000 ha français donne environ&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__1" value="1,98 million de tonnes de CO₂"><label for="a2_2__1">1,98 million de tonnes de CO₂</label></div>
-  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__2" value="39,68 millions de tonnes"><label for="a2_2__2">39,68 millions de tonnes</label></div>
   <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__3" value="504 002 tonnes"><label for="a2_2__3">504 002 tonnes</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__1" value="1,98 million de tonnes de CO₂"><label for="a2_2__1">1,98 million de tonnes de CO₂</label></div>
   <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__4" value="20 millions de tonnes"><label for="a2_2__4">20 millions de tonnes</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_2" id="a2_2__2" value="39,68 millions de tonnes"><label for="a2_2__2">39,68 millions de tonnes</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a2_3">
   <legend>Ce que cette estimation ne prend PAS en compte&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__1" value="le type de végétation, l'humidité, la sévérité du feu et la biomasse réellement consumée"><label for="a2_3__1">le type de végétation, l'humidité, la sévérité du feu et la biomasse réellement consumée</label></div>
-  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__2" value="rien : le calcul est complet"><label for="a2_3__2">rien : le calcul est complet</label></div>
-  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__3" value="uniquement la date"><label for="a2_3__3">uniquement la date</label></div>
   <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__4" value="seulement le nombre de feux"><label for="a2_3__4">seulement le nombre de feux</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__1" value="le type de végétation, l'humidité, la sévérité du feu et la biomasse réellement consumée"><label for="a2_3__1">le type de végétation, l'humidité, la sévérité du feu et la biomasse réellement consumée</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__3" value="uniquement la date"><label for="a2_3__3">uniquement la date</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__2" value="rien : le calcul est complet"><label for="a2_3__2">rien : le calcul est complet</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a2_4">
   <legend>Présenter ce résultat comme «&nbsp;les émissions des feux français de 2026&nbsp;» serait&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__1" value="malhonnête : ce n'est pas une mesure, c'est un ordre de grandeur emprunté à un autre territoire et une autre année"><label for="a2_4__1">malhonnête : ce n'est pas une mesure, c'est un ordre de grandeur emprunté à un autre territoire et une autre année</label></div>
-  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__2" value="acceptable, puisque le calcul est juste"><label for="a2_4__2">acceptable, puisque le calcul est juste</label></div>
-  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__3" value="acceptable si on cite la source"><label for="a2_4__3">acceptable si on cite la source</label></div>
   <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__4" value="sans importance, c'est un exercice"><label for="a2_4__4">sans importance, c'est un exercice</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__2" value="acceptable, puisque le calcul est juste"><label for="a2_4__2">acceptable, puisque le calcul est juste</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__1" value="malhonnête : ce n'est pas une mesure, c'est un ordre de grandeur emprunté à un autre territoire et une autre année"><label for="a2_4__1">malhonnête : ce n'est pas une mesure, c'est un ordre de grandeur emprunté à un autre territoire et une autre année</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_4" id="a2_4__3" value="acceptable si on cite la source"><label for="a2_4__3">acceptable si on cite la source</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a2_5">
   <legend>À quoi sert alors une estimation dont on connaît les limites&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__3" value="à remplacer une mesure officielle"><label for="a2_5__3">à remplacer une mesure officielle</label></div>
   <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__1" value="à donner un ordre de grandeur : savoir si l'on parle de milliers ou de millions de tonnes"><label for="a2_5__1">à donner un ordre de grandeur : savoir si l'on parle de milliers ou de millions de tonnes</label></div>
   <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__2" value="à rien, puisqu'elle n'est pas exacte"><label for="a2_5__2">à rien, puisqu'elle n'est pas exacte</label></div>
-  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__3" value="à remplacer une mesure officielle"><label for="a2_5__3">à remplacer une mesure officielle</label></div>
   <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__4" value="à convaincre plus facilement"><label for="a2_5__4">à convaincre plus facilement</label></div>
 </fieldset>
 
@@ -1126,38 +1127,38 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   </table>
   <fieldset class="qcm-groupe" id="a3_1">
   <legend>Comparer le facteur «&nbsp;voiture, par km&nbsp;» au facteur «&nbsp;TGV, par passager-km&nbsp;» directement&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__1" value="est un piège : l'un compte un véhicule, l'autre une personne — les périmètres diffèrent"><label for="a3_1__1">est un piège : l'un compte un véhicule, l'autre une personne — les périmètres diffèrent</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__2" value="est correct, ce sont deux moyens de transport"><label for="a3_1__2">est correct, ce sont deux moyens de transport</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__3" value="est correct si on arrondit"><label for="a3_1__3">est correct si on arrondit</label></div>
   <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__4" value="est impossible à calculer"><label for="a3_1__4">est impossible à calculer</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__3" value="est correct si on arrondit"><label for="a3_1__3">est correct si on arrondit</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__2" value="est correct, ce sont deux moyens de transport"><label for="a3_1__2">est correct, ce sont deux moyens de transport</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__1" value="est un piège : l'un compte un véhicule, l'autre une personne — les périmètres diffèrent"><label for="a3_1__1">est un piège : l'un compte un véhicule, l'autre une personne — les périmètres diffèrent</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a3_2">
   <legend>Le titre du graphique doit contenir le mot&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__1" value="« équivalences » — et surtout pas « mêmes impacts »"><label for="a3_2__1">« équivalences » — et surtout pas « mêmes impacts »</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__2" value="« mêmes impacts »"><label for="a3_2__2">« mêmes impacts »</label></div>
   <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__3" value="« comparaison exacte »"><label for="a3_2__3">« comparaison exacte »</label></div>
   <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__4" value="« pollution »"><label for="a3_2__4">« pollution »</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__1" value="« équivalences » — et surtout pas « mêmes impacts »"><label for="a3_2__1">« équivalences » — et surtout pas « mêmes impacts »</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__2" value="« mêmes impacts »"><label for="a3_2__2">« mêmes impacts »</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a3_3">
   <legend>Dire «&nbsp;les feux ont émis autant que 14 milliards de km en voiture&nbsp;» signifie&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__1" value="que les quantités de CO₂ sont du même ordre — pas que les deux phénomènes se ressemblent"><label for="a3_3__1">que les quantités de CO₂ sont du même ordre — pas que les deux phénomènes se ressemblent</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__2" value="que les feux et la voiture ont le même effet sur l'environnement"><label for="a3_3__2">que les feux et la voiture ont le même effet sur l'environnement</label></div>
   <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__3" value="qu'il faudrait interdire la voiture"><label for="a3_3__3">qu'il faudrait interdire la voiture</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__2" value="que les feux et la voiture ont le même effet sur l'environnement"><label for="a3_3__2">que les feux et la voiture ont le même effet sur l'environnement</label></div>
   <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__4" value="que les feux ne sont pas graves"><label for="a3_3__4">que les feux ne sont pas graves</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__1" value="que les quantités de CO₂ sont du même ordre — pas que les deux phénomènes se ressemblent"><label for="a3_3__1">que les quantités de CO₂ sont du même ordre — pas que les deux phénomènes se ressemblent</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a3_4">
   <legend>L'intérêt d'une équivalence est&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__1" value="de rendre une quantité lisible par quelqu'un qui n'a aucune idée de ce qu'est une mégatonne"><label for="a3_4__1">de rendre une quantité lisible par quelqu'un qui n'a aucune idée de ce qu'est une mégatonne</label></div>
   <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__2" value="de prouver un point de vue"><label for="a3_4__2">de prouver un point de vue</label></div>
   <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__3" value="de remplacer le chiffre d'origine"><label for="a3_4__3">de remplacer le chiffre d'origine</label></div>
   <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__4" value="de simplifier le calcul"><label for="a3_4__4">de simplifier le calcul</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__1" value="de rendre une quantité lisible par quelqu'un qui n'a aucune idée de ce qu'est une mégatonne"><label for="a3_4__1">de rendre une quantité lisible par quelqu'un qui n'a aucune idée de ce qu'est une mégatonne</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a3_5">
   <legend>Une évolution technologique — ici, la détection automatisée — apporte&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__1" value="des avantages ET des inconvénients, qu'il faut nommer tous les deux"><label for="a3_5__1">des avantages ET des inconvénients, qu'il faut nommer tous les deux</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__2" value="uniquement des avantages, sinon on ne l'adopterait pas"><label for="a3_5__2">uniquement des avantages, sinon on ne l'adopterait pas</label></div>
   <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__3" value="uniquement des inconvénients"><label for="a3_5__3">uniquement des inconvénients</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__2" value="uniquement des avantages, sinon on ne l'adopterait pas"><label for="a3_5__2">uniquement des avantages, sinon on ne l'adopterait pas</label></div>
   <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__4" value="ni l'un ni l'autre : c'est neutre"><label for="a3_5__4">ni l'un ni l'autre : c'est neutre</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_5" id="a3_5__1" value="des avantages ET des inconvénients, qu'il faut nommer tous les deux"><label for="a3_5__1">des avantages ET des inconvénients, qu'il faut nommer tous les deux</label></div>
 </fieldset>
 
   <h4>Tes quatre équivalences</h4>
@@ -1281,31 +1282,31 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 </fieldset>
   <fieldset class="qcm-groupe" id="a4_2">
   <legend>Une <b>exigence vérifiable</b> se reconnaît à ce qu'elle&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__1" value="peut être contrôlée par une mesure ou un test qui répond par oui ou par non"><label for="a4_2__1">peut être contrôlée par une mesure ou un test qui répond par oui ou par non</label></div>
-  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__2" value="est écrite en termes techniques"><label for="a4_2__2">est écrite en termes techniques</label></div>
   <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__3" value="contient toujours un nombre"><label for="a4_2__3">contient toujours un nombre</label></div>
   <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__4" value="désigne le composant à utiliser"><label for="a4_2__4">désigne le composant à utiliser</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__2" value="est écrite en termes techniques"><label for="a4_2__2">est écrite en termes techniques</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_2" id="a4_2__1" value="peut être contrôlée par une mesure ou un test qui répond par oui ou par non"><label for="a4_2__1">peut être contrôlée par une mesure ou un test qui répond par oui ou par non</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a4_3">
   <legend>«&nbsp;Installer une caméra thermique&nbsp;» est&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__1" value="une solution, pas une exigence : elle désigne déjà le moyen"><label for="a4_3__1">une solution, pas une exigence : elle désigne déjà le moyen</label></div>
   <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__2" value="une exigence vérifiable"><label for="a4_3__2">une exigence vérifiable</label></div>
-  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__3" value="une contrainte réglementaire"><label for="a4_3__3">une contrainte réglementaire</label></div>
   <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__4" value="un besoin"><label for="a4_3__4">un besoin</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__3" value="une contrainte réglementaire"><label for="a4_3__3">une contrainte réglementaire</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_3" id="a4_3__1" value="une solution, pas une exigence : elle désigne déjà le moyen"><label for="a4_3__1">une solution, pas une exigence : elle désigne déjà le moyen</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a4_4">
   <legend>Pourquoi le système ne doit-il pas décider seul de l'alerte&nbsp;?</legend>
-  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__1" value="parce qu'une alerte automatique doit pouvoir être vérifiée par un opérateur avant d'engager des secours"><label for="a4_4__1">parce qu'une alerte automatique doit pouvoir être vérifiée par un opérateur avant d'engager des secours</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__4" value="parce que cela coûte moins cher"><label for="a4_4__4">parce que cela coûte moins cher</label></div>
   <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__2" value="parce que les machines sont toujours moins fiables que les humains"><label for="a4_4__2">parce que les machines sont toujours moins fiables que les humains</label></div>
   <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__3" value="parce que c'est interdit"><label for="a4_4__3">parce que c'est interdit</label></div>
-  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__4" value="parce que cela coûte moins cher"><label for="a4_4__4">parce que cela coûte moins cher</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_4" id="a4_4__1" value="parce qu'une alerte automatique doit pouvoir être vérifiée par un opérateur avant d'engager des secours"><label for="a4_4__1">parce qu'une alerte automatique doit pouvoir être vérifiée par un opérateur avant d'engager des secours</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a4_5">
   <legend>«&nbsp;L'absence de donnée prouve qu'il n'y a pas de feu&nbsp;» est&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__1" value="faux : un capteur en panne, hors de portée ou déchargé ne transmet rien non plus"><label for="a4_5__1">faux : un capteur en panne, hors de portée ou déchargé ne transmet rien non plus</label></div>
-  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__2" value="vrai, si le système fonctionne"><label for="a4_5__2">vrai, si le système fonctionne</label></div>
   <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__3" value="vrai la nuit seulement"><label for="a4_5__3">vrai la nuit seulement</label></div>
   <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__4" value="sans rapport avec la conception du système"><label for="a4_5__4">sans rapport avec la conception du système</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__1" value="faux : un capteur en panne, hors de portée ou déchargé ne transmet rien non plus"><label for="a4_5__1">faux : un capteur en panne, hors de portée ou déchargé ne transmet rien non plus</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_5" id="a4_5__2" value="vrai, si le système fonctionne"><label for="a4_5__2">vrai, si le système fonctionne</label></div>
 </fieldset>
 
   <h4>Tes cinq exigences</h4>
@@ -1514,26 +1515,26 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   </div>
   <fieldset class="qcm-groupe" id="pos1">
   <legend>📍 <b>4e_C1.1</b> — <i>mettre en relation les OST avec leurs usages</i>&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__1" value="🔴 Maîtrise insuffisante — je ne vois pas le lien entre les chiffres et le système"><label for="pos1__1">🔴 Maîtrise insuffisante — je ne vois pas le lien entre les chiffres et le système</label></div>
   <div class="qcm-option"><input type="radio" name="pos1" id="pos1__2" value="🟠 Maîtrise fragile — je le vois avec de l'aide"><label for="pos1__2">🟠 Maîtrise fragile — je le vois avec de l'aide</label></div>
-  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__3" value="🟢 Maîtrise satisfaisante — je pars d'un usage pour dire ce que le système doit faire"><label for="pos1__3">🟢 Maîtrise satisfaisante — je pars d'un usage pour dire ce que le système doit faire</label></div>
   <div class="qcm-option"><input type="radio" name="pos1" id="pos1__4" value="⭐ Très bonne maîtrise — je remonte d'un chiffre public jusqu'à une exigence vérifiable"><label for="pos1__4">⭐ Très bonne maîtrise — je remonte d'un chiffre public jusqu'à une exigence vérifiable</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__1" value="🔴 Maîtrise insuffisante — je ne vois pas le lien entre les chiffres et le système"><label for="pos1__1">🔴 Maîtrise insuffisante — je ne vois pas le lien entre les chiffres et le système</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__3" value="🟢 Maîtrise satisfaisante — je pars d'un usage pour dire ce que le système doit faire"><label for="pos1__3">🟢 Maîtrise satisfaisante — je pars d'un usage pour dire ce que le système doit faire</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="pos2">
   <legend>📍 <b>4e_C1.2</b> — <i>identifier les avantages et les inconvénients des
     évolutions</i>&nbsp;:</legend>
   <div class="qcm-option"><input type="radio" name="pos2" id="pos2__1" value="🔴 Maîtrise insuffisante — je ne vois que les avantages"><label for="pos2__1">🔴 Maîtrise insuffisante — je ne vois que les avantages</label></div>
   <div class="qcm-option"><input type="radio" name="pos2" id="pos2__2" value="🟠 Maîtrise fragile — je cite un inconvénient si on me le demande"><label for="pos2__2">🟠 Maîtrise fragile — je cite un inconvénient si on me le demande</label></div>
-  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__3" value="🟢 Maîtrise satisfaisante — je nomme les deux faces d'une évolution"><label for="pos2__3">🟢 Maîtrise satisfaisante — je nomme les deux faces d'une évolution</label></div>
   <div class="qcm-option"><input type="radio" name="pos2" id="pos2__4" value="⭐ Très bonne maîtrise — je repère aussi ce qu'une comparaison fait croire à tort"><label for="pos2__4">⭐ Très bonne maîtrise — je repère aussi ce qu'une comparaison fait croire à tort</label></div>
+  <div class="qcm-option"><input type="radio" name="pos2" id="pos2__3" value="🟢 Maîtrise satisfaisante — je nomme les deux faces d'une évolution"><label for="pos2__3">🟢 Maîtrise satisfaisante — je nomme les deux faces d'une évolution</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="pos3">
   <legend>📍 <b>4e_C1.3</b> — <i>justifier l'évolution d'un OST pour répondre à
     l'évolution des besoins</i>&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__1" value="🔴 Maîtrise insuffisante — je décris l'objet sans dire pourquoi il a changé"><label for="pos3__1">🔴 Maîtrise insuffisante — je décris l'objet sans dire pourquoi il a changé</label></div>
-  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__2" value="🟠 Maîtrise fragile — je relie l'évolution à un besoin avec de l'aide"><label for="pos3__2">🟠 Maîtrise fragile — je relie l'évolution à un besoin avec de l'aide</label></div>
   <div class="qcm-option"><input type="radio" name="pos3" id="pos3__3" value="🟢 Maîtrise satisfaisante — j'écris des exigences qui découlent d'un besoin"><label for="pos3__3">🟢 Maîtrise satisfaisante — j'écris des exigences qui découlent d'un besoin</label></div>
   <div class="qcm-option"><input type="radio" name="pos3" id="pos3__4" value="⭐ Très bonne maîtrise — mes exigences sont vérifiables et ne désignent aucun composant"><label for="pos3__4">⭐ Très bonne maîtrise — mes exigences sont vérifiables et ne désignent aucun composant</label></div>
+  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__1" value="🔴 Maîtrise insuffisante — je décris l'objet sans dire pourquoi il a changé"><label for="pos3__1">🔴 Maîtrise insuffisante — je décris l'objet sans dire pourquoi il a changé</label></div>
+  <div class="qcm-option"><input type="radio" name="pos3" id="pos3__2" value="🟠 Maîtrise fragile — je relie l'évolution à un besoin avec de l'aide"><label for="pos3__2">🟠 Maîtrise fragile — je relie l'évolution à un besoin avec de l'aide</label></div>
 </fieldset>
 </section>
 
@@ -2449,6 +2450,19 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
   function ecrire(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
   function oublier(k){ try { localStorage.removeItem(k); } catch(e){} }
 
+  /* Une confirmation en deux clics, DANS la page : le premier clic change le texte du
+     bouton, le second (sous six secondes) exécute. Jamais de boîte modale du navigateur —
+     elle bloque la page et échappe au lecteur d'écran (audit externe A05, 08/11/2026). */
+  var _armes = {};
+  function armerDeuxClics(bouton, message){
+    var cle = bouton.id || bouton.textContent, t = Date.now();
+    if (_armes[cle] && t - _armes[cle].t < 6000){ bouton.textContent = _armes[cle].texte; delete _armes[cle]; return true; }
+    _armes[cle] = {t: t, texte: bouton.textContent};
+    bouton.setAttribute("aria-live", "polite"); bouton.textContent = message;
+    setTimeout(function(){ if (_armes[cle] && _armes[cle].t === t){ bouton.textContent = _armes[cle].texte; delete _armes[cle]; } }, 6000);
+    return false;
+  }
+
   function norm(s){
     return String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
       .replace(/[’`]/g, "'").replace(/œ/g, "oe").replace(/æ/g, "ae")
@@ -2893,7 +2907,7 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
         if (pile.length){ ctx.putImageData(pile.pop(), 0, 0); etat.traits = Math.max(0, (etat.traits || 0) - 1); memoriser(); }
       });
       if (tout) tout.addEventListener("click", function(){
-        if (!window.confirm("Effacer tout ton croquis ?")) return;
+        if (!armerDeuxClics(tout, "Effacer tout ton croquis ? Clique encore pour confirmer.")) return;
         pile = []; fond(); etat = {traits: 0}; memoriser();
       });
     }
@@ -2939,7 +2953,7 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
   if (btnImp) btnImp.addEventListener("click", function(){ window.print(); });
   var btnEff = document.getElementById("btnEffacer");
   if (btnEff) btnEff.addEventListener("click", function(){
-    if (!window.confirm("Effacer tout ce que tu as écrit sur cette page ? Le travail des mêmes exercices disparaîtra aussi de ton cahier.")) return;
+    if (!armerDeuxClics(btnEff, "Tout effacer sur cette page, et dans ton cahier ? Clique encore pour confirmer.")) return;
     for (var j = 0; j < boites.length; j++){ oublier(boites[j].getAttribute("data-cle")); }
     document.querySelectorAll("canvas.croquis-zone").forEach(function(c){ oublier(c.getAttribute("data-cle-croquis")); });
     oublier(cleOnglet);
@@ -2988,6 +3002,6 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
 })();
 </script>
 <!-- /ateliers-representations:moteur -->
-<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.8em;opacity:.85;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license" style="color:inherit;text-decoration:underline">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </body>
 </html>
