@@ -556,7 +556,7 @@ def figure_reference_bac(ident="bc-ref", legende=None, apte=True, classe="figure
              else TITRE_REFERENCE_BAC)
     if legende is None:
         # un mot de référence par ligne (08/11/2026, skill texte-clair-et-aere : la légende faisait 41 mots d'un tenant)
-        legende = ("Ses quatre mots de référence, les mêmes pour tous les objets&nbsp;:<br>• l'<b>utilisateur</b>&nbsp;: à qui le "
+        legende = ("Ses quatre mots de référence, les mêmes pour tous les objets&nbsp;: <br>• l'<b>utilisateur</b>&nbsp;: à qui le "
                    "produit rend service&nbsp;;<br>• la <b>matière d'œuvre</b>&nbsp;: ce sur quoi il agit&nbsp;;<br>• le "
                    "<b>produit</b>&nbsp;;<br>• la <b>fonction</b>&nbsp;: la fonction d'usage, dans quel but il existe.")
     return ('<figure class="%s"><figcaption><b class="bac-ref-titre">%s</b><br>%s</figcaption>%s</figure>'

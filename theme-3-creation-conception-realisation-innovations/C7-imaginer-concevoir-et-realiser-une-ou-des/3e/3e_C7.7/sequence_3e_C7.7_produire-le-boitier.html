@@ -423,7 +423,7 @@ body.essentiel details.referentiel-replie{display:none}
   }
 
   // Les blocs qui ne servent qu'à l'écran, reconnus à leur titre (ils n'ont pas de classe commune).
-  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique|crcn mobilisés/i;
+  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|avant l.activité \d|avant la séance \d|échauffement|en-tête pédagogique|crcn mobilisés/i;
   function blocsEcran(){
     document.querySelectorAll("section, .card").forEach(function(c){
       var t = c.querySelector(":scope > h2, :scope > h3");
@@ -625,10 +625,12 @@ body.essentiel details.referentiel-replie{display:none}
 
 <div class="toolbar">
   <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset" type="button" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button>
 
   <button class="btn ghost" id="btnEssentiel" type="button" aria-pressed="false" title="Masquer les corrections et les compléments, pour ne garder que les consignes et les exercices. Un second clic ramène tout.">🎯 Mode essentiel : OFF</button>
 </div>
 
+<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
 <!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
 <details class="rappel-ouverture" id="ouverture" open>
 <summary>📖 Rappel : la situation et ton hypothèse</summary>
@@ -844,7 +846,7 @@ demandé</b>, avec les moyens qu'elle a. Le dessin, lui, avait été fait sans e
 
     <p style="font-size:.9em;color:var(--sub);margin:8px 0 2px">Chaque cote se modifie. <b>Le cahier des charges, lui, ne bouge pas</b> : ni la matière, ni l'encombrement, ni ce que l'objet doit faire.</p>
     <table class="traits">
-      <tr><th></th><th>Ce que le dessin demande</th><th>Cote dessinée</th><th>Pourquoi</th></tr>
+      <tr><td></td><th>Ce que le dessin demande</th><th>Cote dessinée</th><th>Pourquoi</th></tr>
       <tr id="li_epaisseur"><td class="etat" id="et_epaisseur">·</td><td>Paroi étanche de 2,9 mm</td><td class="val"><input type="text" inputmode="decimal" id="tr_epaisseur" value="2,9" aria-label="Cote : Paroi étanche de 2,9 mm"></td><td class="pq">l'épaisseur calculée en 3e_C7.3 : e = 3,00 × racine(50 ÷ 53) pour le PETG</td></tr>
       <tr id="li_surplomb"><td class="etat" id="et_surplomb">·</td><td>Casquette anti-pluie inclinée à 70°</td><td class="val"><input type="text" inputmode="decimal" id="tr_surplomb" value="70,0" aria-label="Cote : Casquette anti-pluie inclinée à 70°"></td><td class="pq">elle écarte l'eau du joint : c'est une fonction, pas une décoration</td></tr>
       <tr id="li_res_z"><td class="etat" id="et_res_z">·</td><td>Rainure de joint de 0,3 mm de profondeur</td><td class="val"><input type="text" inputmode="decimal" id="tr_res_z" value="0,3" aria-label="Cote : Rainure de joint de 0,3 mm de profondeur"></td><td class="pq">le joint torique doit se loger et rester en place</td></tr>
@@ -1313,7 +1315,7 @@ millimètre</span></td></tr></tbody></table></div></div><p><button type="button"
 
 </div>
 
-<footer>Séquence 3e_C7.7 — « Produire le boîtier ». Atelier des moyens original (CC0), domaines et temps calculés par <a href="moyens.py" download title="Télécharger moyens.py">📥&nbsp;moyens.py</a>, aucune dépendance externe. Programme 2024, Thème 3.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.8em;opacity:.85;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+<footer>Séquence 3e_C7.7 — « Produire le boîtier ». Atelier des moyens original (CC0), domaines et temps calculés par <a href="moyens.py" download title="Télécharger moyens.py">📥&nbsp;moyens.py</a>, aucune dépendance externe. Programme 2024, Thème 3.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license" style="color:inherit;text-decoration:underline">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 
 <script>
@@ -1550,11 +1552,12 @@ const CHECKS = {
   3(){ let s = 0;
        s += sv("a4y0", "on l'aurait vu au premier tirage — sans tirage d'essai, il faut dessiner le jeu"); s += sv("a4y1", "on l'aurait poncée — sans second tirage, il faut l'angle qui évite le support"); s += sv("a4y2", "on ne l'aurait su qu'en vrai — c'est ce qu'une simulation sert à savoir avant"); s += sv("a3q1","que les couches imprimées se séparent plus facilement entre elles que dans la matière"); s += pres("a3j", 180);
        return {score: s, total: 5, exp: true}; },
-  4(){ return {score: pres("reinv", 170), total: 1, exp: true}; }
+  4(){ return {score: pres("reinv", 170), total: 1, exp: true, libre: true}; }
 };
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; (window.__exp.valides = window.__exp.valides || {})[n] = 1; majBandeau(); save(); return; }
   if(ratio === 1){ fb.textContent = r.partie
       ? "🎉 Première partie validée — " + r.score + "/" + r.total + ". La suite de l'activité, et sa correction complète, ouvrent la prochaine séance."
       : "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; (window.__exp.valides = window.__exp.valides || {})[n] = 1; majBandeau(); }
@@ -1851,6 +1854,20 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
   function lire(k){ try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch(e){ return null; } }
   function ecrire(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
   function oublier(k){ try { localStorage.removeItem(k); } catch(e){} }
+
+  /* Une confirmation en deux clics, DANS la page : le premier clic change le texte du
+     bouton, le second (sous six secondes) exécute. Jamais de boîte modale du navigateur —
+     elle bloque la page et échappe au lecteur d'écran (audit externe A05, 08/11/2026). */
+  var _armes = {};
+  function armerDeuxClics(bouton, message){
+    var cle = bouton.id || bouton.textContent, t = Date.now();
+    if (_armes[cle] && t - _armes[cle].t < 6000){ bouton.textContent = _armes[cle].texte; delete _armes[cle]; return true; }
+    _armes[cle] = {t: t, texte: bouton.textContent};
+    bouton.setAttribute("aria-live", "polite"); bouton.textContent = message;
+    setTimeout(function(){ if (_armes[cle] && _armes[cle].t === t){ bouton.textContent = _armes[cle].texte; delete _armes[cle]; } }, 6000);
+    return false;
+  }
+
 
   function norm(s){
     return String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
@@ -2296,7 +2313,7 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
         if (pile.length){ ctx.putImageData(pile.pop(), 0, 0); etat.traits = Math.max(0, (etat.traits || 0) - 1); memoriser(); }
       });
       if (tout) tout.addEventListener("click", function(){
-        if (!window.confirm("Effacer tout ton croquis ?")) return;
+        if (!armerDeuxClics(tout, "Effacer tout ton croquis ? Clique encore pour confirmer.")) return;
         pile = []; fond(); etat = {traits: 0}; memoriser();
       });
     }
@@ -2342,7 +2359,7 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
   if (btnImp) btnImp.addEventListener("click", function(){ window.print(); });
   var btnEff = document.getElementById("btnEffacer");
   if (btnEff) btnEff.addEventListener("click", function(){
-    if (!window.confirm("Effacer tout ce que tu as écrit sur cette page ? Le travail des mêmes exercices disparaîtra aussi de ton cahier.")) return;
+    if (!armerDeuxClics(btnEff, "Tout effacer sur cette page, et dans ton cahier ? Clique encore pour confirmer.")) return;
     for (var j = 0; j < boites.length; j++){ oublier(boites[j].getAttribute("data-cle")); }
     document.querySelectorAll("canvas.croquis-zone").forEach(function(c){ oublier(c.getAttribute("data-cle-croquis")); });
     oublier(cleOnglet);
@@ -2391,5 +2408,22 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
 })();
 </script>
 <!-- /ateliers-representations:moteur -->
+
+<script>
+/* Effacement de la sauvegarde locale, en deux clics et sans boîte modale
+   (audit externe A05, 08/11/2026 ; posé par _outils/controle_sauvegarde_locale.py). */
+(function(){
+  "use strict";
+  var b = document.getElementById("btnReset"); if (!b) return;
+  var cle = "seq_3e_C7_7", arme = 0, texte = b.textContent;
+  b.setAttribute("aria-live", "polite");
+  b.addEventListener("click", function(){
+    var t = Date.now();
+    if (arme && t - arme < 6000){ try{ localStorage.removeItem(cle); }catch(e){} location.reload(); return; }
+    arme = t; b.textContent = "🗑 Clique encore pour confirmer l'effacement";
+    setTimeout(function(){ if (arme === t){ arme = 0; b.textContent = texte; } }, 6000);
+  });
+})();
+</script>
 </body>
 </html>

@@ -370,7 +370,7 @@ body.essentiel details.referentiel-replie{display:none}
   }
 
   // Les blocs qui ne servent qu'à l'écran, reconnus à leur titre (ils n'ont pas de classe commune).
-  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique|crcn mobilisés/i;
+  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|avant l.activité \d|avant la séance \d|échauffement|en-tête pédagogique|crcn mobilisés/i;
   function blocsEcran(){
     document.querySelectorAll("section, .card").forEach(function(c){
       var t = c.querySelector(":scope > h2, :scope > h3");
@@ -552,8 +552,10 @@ body.essentiel details.referentiel-replie{display:none}
 
 <div class="toolbar">
   <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset" type="button" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button>
 </div>
 
+<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
 <!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
 <details class="rappel-ouverture" id="ouverture" open>
 <summary>📖 Rappel : la situation et ton hypothèse</summary>
@@ -769,14 +771,14 @@ body.essentiel details.referentiel-replie{display:none}
     </div>
 
     <table class="champs">
-      <tr><th></th><th>Champ</th><th>Ce que c'est</th></tr>
-      <tr id="tr0"><td class="ck"><input type="checkbox" id="ch0"></td><td><code>id</code></td><td>l'identifiant de l'objet qui parle</td></tr>
-      <tr id="tr1"><td class="ck"><input type="checkbox" id="ch1"></td><td><code>h</code></td><td>la valeur lue par le capteur d'humidité</td></tr>
-      <tr id="tr2"><td class="ck"><input type="checkbox" id="ch2"></td><td><code>u</code></td><td>l'unité de cette valeur</td></tr>
-      <tr id="tr3"><td class="ck"><input type="checkbox" id="ch3"></td><td><code>t</code></td><td>l'heure à laquelle la mesure a été prise</td></tr>
-      <tr id="tr4"><td class="ck"><input type="checkbox" id="ch4"></td><td><code>pompe</code></td><td>l'état de la pompe au moment de la mesure</td></tr>
-      <tr id="tr5"><td class="ck"><input type="checkbox" id="ch5"></td><td><code>etat</code></td><td>les 127 variables internes de la carte</td></tr>
-      <tr id="tr6"><td class="ck"><input type="checkbox" id="ch6"></td><td><code>eleve</code></td><td>le prénom de l'élève qui a programmé la carte</td></tr>
+      <tr><td></td><th>Champ</th><th>Ce que c'est</th></tr>
+      <tr id="tr0"><td class="ck"><input type="checkbox" id="ch0" aria-label="id"></td><td><code>id</code></td><td>l'identifiant de l'objet qui parle</td></tr>
+      <tr id="tr1"><td class="ck"><input type="checkbox" id="ch1" aria-label="h"></td><td><code>h</code></td><td>la valeur lue par le capteur d'humidité</td></tr>
+      <tr id="tr2"><td class="ck"><input type="checkbox" id="ch2" aria-label="u"></td><td><code>u</code></td><td>l'unité de cette valeur</td></tr>
+      <tr id="tr3"><td class="ck"><input type="checkbox" id="ch3" aria-label="t"></td><td><code>t</code></td><td>l'heure à laquelle la mesure a été prise</td></tr>
+      <tr id="tr4"><td class="ck"><input type="checkbox" id="ch4" aria-label="pompe"></td><td><code>pompe</code></td><td>l'état de la pompe au moment de la mesure</td></tr>
+      <tr id="tr5"><td class="ck"><input type="checkbox" id="ch5" aria-label="etat"></td><td><code>etat</code></td><td>les 127 variables internes de la carte</td></tr>
+      <tr id="tr6"><td class="ck"><input type="checkbox" id="ch6" aria-label="eleve"></td><td><code>eleve</code></td><td>le prénom de l'élève qui a programmé la carte</td></tr>
     </table>
 
     <p style="font-size:.9em;color:var(--sub);margin:10px 0 4px">Le message que l'objet envoie :</p>
@@ -869,7 +871,7 @@ body.essentiel details.referentiel-replie{display:none}
 
     <p><b>1.</b> Pourquoi faut-il l'<b>heure</b> de la mesure, alors que le récepteur sait bien
     quand il l'a reçue&nbsp;?</p>
-    <select id="a1q1">
+    <select id="a1q1" aria-label="Pourquoi faut-il l'heure de la mesure, alors que le récepteur sait bien quand il l'a reçue ?">
       <option value="">— je choisis —</option>
       <option>parce qu'une mesure gardée en file arrive plus tard qu'elle n'a été prise</option>
       <option>parce que le récepteur n'a pas d'horloge</option>
@@ -877,7 +879,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>ce n'est pas nécessaire : l'heure de réception suffit toujours</option>
     </select>
     <p><b>2.</b> Pourquoi l'<b>identifiant</b> devient-il indispensable l'an prochain&nbsp;?</p>
-    <select id="a1q2">
+    <select id="a1q2" aria-label="Pourquoi l'identifiant devient-il indispensable l'an prochain ?">
       <option value="">— je choisis —</option>
       <option>parce qu'il y aura trois jardins qui enverront la même sorte de message</option>
       <option>parce que le réseau exige un identifiant dans chaque message</option>
@@ -886,7 +888,7 @@ body.essentiel details.referentiel-replie{display:none}
     </select>
     <p><b>3.</b> Les <b>127 variables internes</b> de la carte : pourquoi ne pas tout envoyer,
     au cas où&nbsp;?</p>
-    <select id="a1q3">
+    <select id="a1q3" aria-label="Les 127 variables internes de la carte : pourquoi ne pas tout envoyer, au cas où ?">
       <option value="">— je choisis —</option>
       <option>ça coûte de l'énergie et de la place, et personne n'en a l'usage</option>
       <option>la carte n'a pas le droit de lire ses propres variables</option>
@@ -894,7 +896,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>il n'y a aucune raison : envoyer plus est toujours mieux</option>
     </select>
     <p><b>4.</b> Et le <b>prénom de l'élève</b> qui a programmé la carte&nbsp;?</p>
-    <select id="a1q4">
+    <select id="a1q4" aria-label="Et le prénom de l'élève qui a programmé la carte ?">
       <option value="">— je choisis —</option>
       <option>c'est une donnée personnelle : elle n'a rien à faire dans une mesure</option>
       <option>c'est utile pour savoir qui appeler en cas de panne</option>
@@ -951,7 +953,7 @@ body.essentiel details.referentiel-replie{display:none}
 
     <p><b>1.</b> Si <b>le serveur demande</b>, que se passe-t-il la nuit, quand personne
     n'ouvre la page&nbsp;?</p>
-    <select id="a2q1">
+    <select id="a2q1" aria-label="Si le serveur demande, que se passe-t-il la nuit, quand personne n'ouvre la page ?">
       <option value="">— je choisis —</option>
       <option>aucune mesure n'est enregistrée : l'historique a un trou</option>
       <option>l'objet envoie quand même, par sécurité</option>
@@ -960,7 +962,7 @@ body.essentiel details.referentiel-replie{display:none}
     </select>
     <p><b>2.</b> Si <b>l'objet pousse</b> toutes les cinq minutes, que se passe-t-il quand
     l'humidité ne bouge pas de la journée&nbsp;?</p>
-    <select id="a2q2">
+    <select id="a2q2" aria-label="Si l'objet pousse toutes les cinq minutes, que se passe-t-il quand l'humidité ne bouge pas de la journée ?">
       <option value="">— je choisis —</option>
       <option>on envoie 288 fois la même valeur, pour rien</option>
       <option>l'objet s'arrête tout seul, faute de nouveauté</option>
@@ -1009,7 +1011,7 @@ body.essentiel details.referentiel-replie{display:none}
   <div class="exo">
 
     <p><b>1.</b> Avec « <b>perd la mesure</b> », que reste-t-il de la coupure&nbsp;?</p>
-    <select id="a3q1">
+    <select id="a3q1" aria-label="Avec « perd la mesure », que reste-t-il de la coupure ?">
       <option value="">— je choisis —</option>
       <option>rien : les mesures de la coupure n'existent plus nulle part</option>
       <option>un message d'erreur dans l'historique</option>
@@ -1017,7 +1019,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>une alerte envoyée au gestionnaire</option>
     </select>
     <p><b>2.</b> Avec « <b>garde en file</b> », que se passe-t-il au rétablissement&nbsp;?</p>
-    <select id="a3q2">
+    <select id="a3q2" aria-label="Avec « garde en file », que se passe-t-il au rétablissement ?">
       <option value="">— je choisis —</option>
       <option>toutes les mesures en attente partent d'un coup, avec leur heure d'origine</option>
       <option>seule la dernière mesure est envoyée</option>
@@ -1025,7 +1027,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>la file est effacée : elle ne sert qu'à compter</option>
     </select>
     <p><b>3.</b> Et « <b>cesse d'arroser</b> »&nbsp;?</p>
-    <select id="a3q3">
+    <select id="a3q3" aria-label="Et « cesse d'arroser » ?">
       <option value="">— je choisis —</option>
       <option>c'est un défaut grave : le réseau n'a rien à voir avec l'arrosage</option>
       <option>c'est prudent : mieux vaut ne rien faire sans supervision</option>
@@ -1064,7 +1066,7 @@ body.essentiel details.referentiel-replie{display:none}
   <p>Associe chaque chose qu'on serait tenté d'ajouter au message à la raison de ne pas le faire.</p>
   <div class="exo">
     <p style="margin-top:12px"><b>Le mot de passe du réseau Wi-Fi du collège</b></p>
-    <select id="a4a0">
+    <select id="a4a0" aria-label="Le mot de passe du réseau Wi-Fi du collège">
       <option value="">— je choisis —</option>
       <option>Celle-là s'envoie : c'est exactement ce dont le destinataire a besoin.</option>
       <option>De l'énergie et de la place dépensées pour des valeurs dont personne n'a l'usage.</option>
@@ -1072,7 +1074,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>Une donnée personnelle, et des milliers de fois le poids d'une mesure, pour rien.</option>
     </select>
     <p style="margin-top:12px"><b>La photo de la classe qui a monté le jardin</b></p>
-    <select id="a4a1">
+    <select id="a4a1" aria-label="La photo de la classe qui a monté le jardin">
       <option value="">— je choisis —</option>
       <option>Celle-là s'envoie : c'est exactement ce dont le destinataire a besoin.</option>
       <option>De l'énergie et de la place dépensées pour des valeurs dont personne n'a l'usage.</option>
@@ -1080,7 +1082,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>Une donnée personnelle, et des milliers de fois le poids d'une mesure, pour rien.</option>
     </select>
     <p style="margin-top:12px"><b>Les 127 variables internes de la carte</b></p>
-    <select id="a4a2">
+    <select id="a4a2" aria-label="Les 127 variables internes de la carte">
       <option value="">— je choisis —</option>
       <option>Celle-là s'envoie : c'est exactement ce dont le destinataire a besoin.</option>
       <option>De l'énergie et de la place dépensées pour des valeurs dont personne n'a l'usage.</option>
@@ -1088,7 +1090,7 @@ body.essentiel details.referentiel-replie{display:none}
       <option>Une donnée personnelle, et des milliers de fois le poids d'une mesure, pour rien.</option>
     </select>
     <p style="margin-top:12px"><b>L'humidité mesurée, avec son unité et son heure</b></p>
-    <select id="a4a3">
+    <select id="a4a3" aria-label="L'humidité mesurée, avec son unité et son heure">
       <option value="">— je choisis —</option>
       <option>Celle-là s'envoie : c'est exactement ce dont le destinataire a besoin.</option>
       <option>De l'énergie et de la place dépensées pour des valeurs dont personne n'a l'usage.</option>
@@ -1226,7 +1228,7 @@ body.essentiel details.referentiel-replie{display:none}
 
 </div>
 
-<footer>Séquence 4e_C7.8 — <em>Le jardin publie sa mesure</em> · Thème 3 · banc de liaison original (CC0), hors ligne, sans dépendance.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.8em;opacity:.85;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+<footer>Séquence 4e_C7.8 — <em>Le jardin publie sa mesure</em> · Thème 3 · banc de liaison original (CC0), hors ligne, sans dépendance.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license" style="color:inherit;text-decoration:underline">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 
 <script>
@@ -1395,11 +1397,12 @@ const CHECKS = {
   4(){ let s = 0;
        s += sv("a4a0", "Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin."); s += sv("a4a1", "Une donnée personnelle, et des milliers de fois le poids d'une mesure, pour rien."); s += sv("a4a2", "De l'énergie et de la place dépensées pour des valeurs dont personne n'a l'usage."); s += sv("a4a3", "Celle-là s'envoie : c'est exactement ce dont le destinataire a besoin.");
        return {score: s, total: 4, exp: true}; },
-  5(){ return {score: pres("reinv", 90), total: 1, exp: true}; }
+  5(){ return {score: pres("reinv", 90), total: 1, exp: true, libre: true}; }
 };
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; save(); return; }
   if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
@@ -1500,5 +1503,22 @@ placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // l'o
 })();
 </script>
 
+
+<script>
+/* Effacement de la sauvegarde locale, en deux clics et sans boîte modale
+   (audit externe A05, 08/11/2026 ; posé par _outils/controle_sauvegarde_locale.py). */
+(function(){
+  "use strict";
+  var b = document.getElementById("btnReset"); if (!b) return;
+  var cle = "seq_4e_C7_8", arme = 0, texte = b.textContent;
+  b.setAttribute("aria-live", "polite");
+  b.addEventListener("click", function(){
+    var t = Date.now();
+    if (arme && t - arme < 6000){ try{ localStorage.removeItem(cle); }catch(e){} location.reload(); return; }
+    arme = t; b.textContent = "🗑 Clique encore pour confirmer l'effacement";
+    setTimeout(function(){ if (arme === t){ arme = 0; b.textContent = texte; } }, 6000);
+  });
+})();
+</script>
 </body>
 </html>

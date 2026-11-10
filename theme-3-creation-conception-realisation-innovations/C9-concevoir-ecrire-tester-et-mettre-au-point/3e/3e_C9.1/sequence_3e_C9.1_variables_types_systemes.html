@@ -479,7 +479,7 @@ body.essentiel details.referentiel-replie{display:none}
   }
 
   // Les blocs qui ne servent qu'à l'écran, reconnus à leur titre (ils n'ont pas de classe commune).
-  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique|crcn mobilisés/i;
+  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|avant l.activité \d|avant la séance \d|échauffement|en-tête pédagogique|crcn mobilisés/i;
   function blocsEcran(){
     document.querySelectorAll("section, .card").forEach(function(c){
       var t = c.querySelector(":scope > h2, :scope > h3");
@@ -692,6 +692,7 @@ body.essentiel details.referentiel-replie{display:none}
   <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
   <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
 </div>
+<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
 <div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
   <span class="parcours-label">🔀 Mon parcours :</span>
   <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 En simulation</button>
@@ -862,7 +863,7 @@ body.essentiel details.referentiel-replie{display:none}
 
 <div class="progress-wrap">
   <span class="progress-label">Ma progression : <b id="progTxt">0 / 5 activités validées</b></span>
-  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progBar" aria-label="Progression"><div id="progFill"></div></div>
 </div>
 
 <section class="card" id="taches">
@@ -1028,7 +1029,7 @@ passages = passages + groupe</pre>
      Depuis le 05/11/2026 (Pascal : « que l'élève, dans l'échauffement, puisse pratiquer »), l'échauffement a son propre
      éditeur, un vrai : l'élève fait les quatre gestes sur un programme d'essai, et chaque geste réussi se coche. -->
 <section class="card gestes-outil" aria-labelledby="gestes-editeur-python">
-  <h2 id="gestes-editeur-python">🧰 Avant de commencer (échauffement) — les quatre gestes de l'éditeur Python</h2>
+  <h2 id="gestes-editeur-python">🧰 Avant la séance 2 (échauffement) — les quatre gestes de l'éditeur Python</h2>
   <p class="pourquoi">L'éditeur Python est <b>dans la page</b>, à chaque activité qui fait écrire un programme&nbsp;: rien à ouvrir, rien à installer, et il marche sans Internet. <b>Entraîne-toi d'abord ici</b>, sur un petit programme d'essai&nbsp;: l'éditeur d'essai, à côté des gestes (dessous, sur un petit écran), est un vrai, le même que dans l'activité&nbsp;3. Fais les quatre gestes dans l'ordre&nbsp;: chacun se coche quand il est réussi. Ensuite, dans l'activité&nbsp;3, tu referas les mêmes avec ton vrai programme, et il ne se perdra pas — ni pendant la séance, ni la semaine suivante.</p>
   <div class="gestes-pratique-atelier">
   <ol class="gestes-pratique" data-editeur="py_echauffement" data-bilan="gestes-bilan" aria-label="Les quatre gestes, à faire dans l'éditeur d'essai">
@@ -1278,7 +1279,7 @@ print(message, minutes, "min |", temperature_c, "C")
     <div class="consigne"><b>② Le banc de mise au point :</b> exécute les 4 tests (dans l'ordre que tu veux) en cliquant ▶ — la page calcule ce que TA fonction (celle du document 3, avec <code>air &gt; 100</code>) renvoie vraiment.</div>
     <div class="bench">
       <table aria-label="Banc de tests de la fonction vitesse_ventilation">
-        <tr><th>Test</th><th>air</th><th>train_arrive</th><th>Attendu (besoin)</th><th>Obtenu</th><th></th></tr>
+        <tr><th>Test</th><th>air</th><th>train_arrive</th><th>Attendu (besoin)</th><th>Obtenu</th><td></td></tr>
         <tr><td>T1 — heure de pointe polluée</td><td>150</td><td>False</td><td>3</td><td class="res" id="bt1">—</td><td><button class="btn ghost bench-run" data-t="1" type="button">▶</button></td></tr>
         <tr><td>T2 — un train approche</td><td>60</td><td>True</td><td>2</td><td class="res" id="bt2">—</td><td><button class="btn ghost bench-run" data-t="2" type="button">▶</button></td></tr>
         <tr><td>T3 — nuit calme</td><td>40</td><td>False</td><td>1</td><td class="res" id="bt3">—</td><td><button class="btn ghost bench-run" data-t="3" type="button">▶</button></td></tr>
@@ -1411,7 +1412,7 @@ print("Canicule :", fahrenheit_vers_celsius(98), "°C")
   <p>Atelier 3e_C9.1 · Thème 3 · New York — refonte de la ressource « Vittascience : variables » (enquête
   Vittascience adaptée par P. Gouacide). Page unique hors-ligne (éditeur
   Python intégré, Skulpt ; Vittascience en lien facultatif), sauvegarde locale uniquement — aucune donnée envoyée. Images : SVG originaux CC0.</p>
-<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.8em;opacity:.85;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license" style="color:inherit;text-decoration:underline">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 <script>
 (function(){

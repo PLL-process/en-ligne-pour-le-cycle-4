@@ -413,7 +413,7 @@ body.essentiel details.referentiel-replie{display:none}
   }
 
   // Les blocs qui ne servent qu'à l'écran, reconnus à leur titre (ils n'ont pas de classe commune).
-  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique|crcn mobilisés/i;
+  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|avant l.activité \d|avant la séance \d|échauffement|en-tête pédagogique|crcn mobilisés/i;
   function blocsEcran(){
     document.querySelectorAll("section, .card").forEach(function(c){
       var t = c.querySelector(":scope > h2, :scope > h3");
@@ -615,10 +615,12 @@ body.essentiel details.referentiel-replie{display:none}
 
 <div class="toolbar">
   <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset" type="button" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button>
 
   <button class="btn ghost" id="btnEssentiel" type="button" aria-pressed="false" title="Masquer les corrections et les compléments, pour ne garder que les consignes et les exercices. Un second clic ramène tout.">🎯 Mode essentiel : OFF</button>
 </div>
 
+<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
 <!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
 <details class="rappel-ouverture" id="ouverture" open>
 <summary>📖 Rappel : la situation et ton hypothèse</summary>
@@ -1514,7 +1516,7 @@ impératif :
 </div>
 
 <footer>Séquence 3e_C8.2 — <em>Le mât de la station</em> · Thème 3 · banc d'essai original (CC0),
-valeurs calculées avec les formules de la poutre encastrée.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.8em;opacity:.85;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+valeurs calculées avec les formules de la poutre encastrée.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license" style="color:inherit;text-decoration:underline">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 
 <script>
@@ -1685,11 +1687,12 @@ const CHECKS = {
   5(){ return {score: sv("a5q1","deux") + sv("a5q2","un seul")
                     + sv("a5q3","on le refuse en l'état, et mon protocole aurait dû annoncer son incertitude")
                     + pres("a5avis", 90), total: 4, exp: true}; },
-  6(){ return {score: pres("reinv", 60), total: 1, exp: true}; }
+  6(){ return {score: pres("reinv", 60), total: 1, exp: true, libre: true}; }
 };
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; save(); return; }
   if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; (window.__exp.valides = window.__exp.valides || {})[n] = 1; majBandeau(); }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
@@ -1985,6 +1988,20 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
   function lire(k){ try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch(e){ return null; } }
   function ecrire(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
   function oublier(k){ try { localStorage.removeItem(k); } catch(e){} }
+
+  /* Une confirmation en deux clics, DANS la page : le premier clic change le texte du
+     bouton, le second (sous six secondes) exécute. Jamais de boîte modale du navigateur —
+     elle bloque la page et échappe au lecteur d'écran (audit externe A05, 08/11/2026). */
+  var _armes = {};
+  function armerDeuxClics(bouton, message){
+    var cle = bouton.id || bouton.textContent, t = Date.now();
+    if (_armes[cle] && t - _armes[cle].t < 6000){ bouton.textContent = _armes[cle].texte; delete _armes[cle]; return true; }
+    _armes[cle] = {t: t, texte: bouton.textContent};
+    bouton.setAttribute("aria-live", "polite"); bouton.textContent = message;
+    setTimeout(function(){ if (_armes[cle] && _armes[cle].t === t){ bouton.textContent = _armes[cle].texte; delete _armes[cle]; } }, 6000);
+    return false;
+  }
+
 
   function norm(s){
     return String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
@@ -2430,7 +2447,7 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
         if (pile.length){ ctx.putImageData(pile.pop(), 0, 0); etat.traits = Math.max(0, (etat.traits || 0) - 1); memoriser(); }
       });
       if (tout) tout.addEventListener("click", function(){
-        if (!window.confirm("Effacer tout ton croquis ?")) return;
+        if (!armerDeuxClics(tout, "Effacer tout ton croquis ? Clique encore pour confirmer.")) return;
         pile = []; fond(); etat = {traits: 0}; memoriser();
       });
     }
@@ -2476,7 +2493,7 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
   if (btnImp) btnImp.addEventListener("click", function(){ window.print(); });
   var btnEff = document.getElementById("btnEffacer");
   if (btnEff) btnEff.addEventListener("click", function(){
-    if (!window.confirm("Effacer tout ce que tu as écrit sur cette page ? Le travail des mêmes exercices disparaîtra aussi de ton cahier.")) return;
+    if (!armerDeuxClics(btnEff, "Tout effacer sur cette page, et dans ton cahier ? Clique encore pour confirmer.")) return;
     for (var j = 0; j < boites.length; j++){ oublier(boites[j].getAttribute("data-cle")); }
     document.querySelectorAll("canvas.croquis-zone").forEach(function(c){ oublier(c.getAttribute("data-cle-croquis")); });
     oublier(cleOnglet);
@@ -2525,5 +2542,22 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
 })();
 </script>
 <!-- /ateliers-representations:moteur -->
+
+<script>
+/* Effacement de la sauvegarde locale, en deux clics et sans boîte modale
+   (audit externe A05, 08/11/2026 ; posé par _outils/controle_sauvegarde_locale.py). */
+(function(){
+  "use strict";
+  var b = document.getElementById("btnReset"); if (!b) return;
+  var cle = "seq_3e_C8_2_mat_station", arme = 0, texte = b.textContent;
+  b.setAttribute("aria-live", "polite");
+  b.addEventListener("click", function(){
+    var t = Date.now();
+    if (arme && t - arme < 6000){ try{ localStorage.removeItem(cle); }catch(e){} location.reload(); return; }
+    arme = t; b.textContent = "🗑 Clique encore pour confirmer l'effacement";
+    setTimeout(function(){ if (arme === t){ arme = 0; b.textContent = texte; } }, 6000);
+  });
+})();
+</script>
 </body>
 </html>

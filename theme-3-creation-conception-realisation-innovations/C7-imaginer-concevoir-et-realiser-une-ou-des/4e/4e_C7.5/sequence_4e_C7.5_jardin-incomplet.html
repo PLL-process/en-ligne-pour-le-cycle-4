@@ -379,7 +379,7 @@ body.essentiel details.referentiel-replie{display:none}
   }
 
   // Les blocs qui ne servent qu'à l'écran, reconnus à leur titre (ils n'ont pas de classe commune).
-  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique|crcn mobilisés/i;
+  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|avant l.activité \d|avant la séance \d|échauffement|en-tête pédagogique|crcn mobilisés/i;
   function blocsEcran(){
     document.querySelectorAll("section, .card").forEach(function(c){
       var t = c.querySelector(":scope > h2, :scope > h3");
@@ -562,8 +562,10 @@ body.essentiel details.referentiel-replie{display:none}
 
 <div class="toolbar">
   <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset" type="button" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button>
 </div>
 
+<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
 <!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
 <details class="rappel-ouverture" id="ouverture" open>
 <summary>📖 Rappel : la situation et ton hypothèse</summary>
@@ -907,7 +909,7 @@ impératif.</span></td></tr></tbody></table></div></div><p><button type="button"
 
     <p>Associe chaque constituant à sa fonction dans la chaîne.</p>
     <p style="margin-top:12px"><b>Le capteur d'humidité du sol</b></p>
-    <select id="a0r0">
+    <select id="a0r0" aria-label="Le capteur d'humidité du sol">
       <option value="">— je choisis —</option>
       <option>Acquérir — il prend la mesure sur laquelle on décide</option>
       <option>Agir — elle produit l'effet attendu dans le jardin</option>
@@ -917,7 +919,7 @@ impératif.</span></td></tr></tbody></table></div></div><p><button type="button"
       <option>Traiter — elle compare la mesure au seuil et décide</option>
     </select>
     <p style="margin-top:12px"><b>La carte Arduino UNO</b></p>
-    <select id="a0r1">
+    <select id="a0r1" aria-label="La carte Arduino UNO">
       <option value="">— je choisis —</option>
       <option>Acquérir — il prend la mesure sur laquelle on décide</option>
       <option>Agir — elle produit l'effet attendu dans le jardin</option>
@@ -927,7 +929,7 @@ impératif.</span></td></tr></tbody></table></div></div><p><button type="button"
       <option>Traiter — elle compare la mesure au seuil et décide</option>
     </select>
     <p style="margin-top:12px"><b>Le module relais</b></p>
-    <select id="a0r2">
+    <select id="a0r2" aria-label="Le module relais">
       <option value="">— je choisis —</option>
       <option>Acquérir — il prend la mesure sur laquelle on décide</option>
       <option>Agir — elle produit l'effet attendu dans le jardin</option>
@@ -937,7 +939,7 @@ impératif.</span></td></tr></tbody></table></div></div><p><button type="button"
       <option>Traiter — elle compare la mesure au seuil et décide</option>
     </select>
     <p style="margin-top:12px"><b>La pompe immergée</b></p>
-    <select id="a0r3">
+    <select id="a0r3" aria-label="La pompe immergée">
       <option value="">— je choisis —</option>
       <option>Acquérir — il prend la mesure sur laquelle on décide</option>
       <option>Agir — elle produit l'effet attendu dans le jardin</option>
@@ -947,7 +949,7 @@ impératif.</span></td></tr></tbody></table></div></div><p><button type="button"
       <option>Traiter — elle compare la mesure au seuil et décide</option>
     </select>
     <p style="margin-top:12px"><b>L'alimentation externe 5 V (volts) / 2 A (ampères)</b></p>
-    <select id="a0r4">
+    <select id="a0r4" aria-label="L'alimentation externe 5 V (volts) / 2 A (ampères)">
       <option value="">— je choisis —</option>
       <option>Acquérir — il prend la mesure sur laquelle on décide</option>
       <option>Agir — elle produit l'effet attendu dans le jardin</option>
@@ -957,7 +959,7 @@ impératif.</span></td></tr></tbody></table></div></div><p><button type="button"
       <option>Traiter — elle compare la mesure au seuil et décide</option>
     </select>
     <p style="margin-top:12px"><b>Le Base Shield V2</b></p>
-    <select id="a0r5">
+    <select id="a0r5" aria-label="Le Base Shield V2">
       <option value="">— je choisis —</option>
       <option>Acquérir — il prend la mesure sur laquelle on décide</option>
       <option>Agir — elle produit l'effet attendu dans le jardin</option>
@@ -1055,7 +1057,7 @@ si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
 
     <p><b>1.</b> D'après le symptôme <em>seul</em>, avant même de tester : quelles fonctions
     sont sûrement tenues ?</p>
-    <select id="a1q1">
+    <select id="a1q1" aria-label="D'après le symptôme seul, avant même de tester : quelles fonctions sont sûrement tenues ?">
       <option value="">— je choisis —</option>
       <option>acquérir, traiter et alimenter : la mesure s'affiche, donc elle circule</option>
       <option>aucune : si rien ne s'arrose, c'est que rien ne fonctionne</option>
@@ -1063,7 +1065,7 @@ si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
       <option>toutes les quatre : l'affichage prouve que la chaîne est complète</option>
     </select>
     <p><b>2.</b> Quel constituant manque ?</p>
-    <select id="a1q2">
+    <select id="a1q2" aria-label="Quel constituant manque ?">
       <option value="">— je choisis —</option>
       <option>le module relais</option>
       <option>le capteur d'humidité du sol</option>
@@ -1118,7 +1120,7 @@ si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
     <p><b>1.</b> Combien de milliampères le montage du cas 2 demande-t-il en tout ?</p>
     <input type="text" inputmode="numeric" id="a2q1" placeholder="… mA">
     <p><b>2.</b> Pourquoi la carte redémarre-t-elle exactement au démarrage de la pompe ?</p>
-    <select id="a2q2">
+    <select id="a2q2" aria-label="Pourquoi la carte redémarre-t-elle exactement au démarrage de la pompe ?">
       <option value="">— je choisis —</option>
       <option>la demande dépasse ce que l'USB peut fournir : la tension s'effondre</option>
       <option>la pompe envoie de l'eau sur la carte et provoque un court-circuit</option>
@@ -1156,7 +1158,7 @@ si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
   <div class="exo">
 
     <p><b>1.</b> Quel capteur est monté sur A0 dans ce cas ?</p>
-    <select id="a3q1">
+    <select id="a3q1" aria-label="Quel capteur est monté sur A0 dans ce cas ?">
       <option value="">— je choisis —</option>
       <option>le capteur de température de l'air</option>
       <option>le capteur d'humidité du sol</option>
@@ -1164,7 +1166,7 @@ si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
       <option>les deux capteurs sont montés sur A0</option>
     </select>
     <p><b>2.</b> La fonction « acquérir » est pourtant bien tenue. Alors où est le problème ?</p>
-    <select id="a3q2">
+    <select id="a3q2" aria-label="Alors où est le problème ?">
       <option value="">— je choisis —</option>
       <option>on mesure une grandeur, mais pas celle sur laquelle le programme décide</option>
       <option>un capteur de température consomme trop pour le budget disponible</option>
@@ -1294,7 +1296,7 @@ si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
 
 </div>
 
-<footer>Séquence 4e_C7.5 — « Le jardin qui n'arrose pas encore ». Établi Grove original (CC0), aucune dépendance externe, fonctionne hors ligne. Programme 2024, Thème 3.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.8em;opacity:.85;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+<footer>Séquence 4e_C7.5 — « Le jardin qui n'arrose pas encore ». Établi Grove original (CC0), aucune dépendance externe, fonctionne hors ligne. Programme 2024, Thème 3.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license" style="color:inherit;text-decoration:underline">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 
 <script>
@@ -1504,11 +1506,12 @@ const CHECKS = {
        s += sv("a3q1","le capteur de température de l'air"); s += sv("a3q2","on mesure une grandeur, mais pas celle sur laquelle le programme décide"); s += sv("pt_hum","A0");
        return {score: s, total: 3, exp: !!window.__exp.diag_requis_hum,
                expMsg: "Charge le cas 3 sur l'établi et teste-le : ce cas-là ne se devine pas, il se lit."}; },
-  4(){ return {score: pres("reinv", 140), total: 1, exp: true}; }
+  4(){ return {score: pres("reinv", 140), total: 1, exp: true, libre: true}; }
 };
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; save(); return; }
   if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
@@ -1775,6 +1778,20 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
   function lire(k){ try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch(e){ return null; } }
   function ecrire(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
   function oublier(k){ try { localStorage.removeItem(k); } catch(e){} }
+
+  /* Une confirmation en deux clics, DANS la page : le premier clic change le texte du
+     bouton, le second (sous six secondes) exécute. Jamais de boîte modale du navigateur —
+     elle bloque la page et échappe au lecteur d'écran (audit externe A05, 08/11/2026). */
+  var _armes = {};
+  function armerDeuxClics(bouton, message){
+    var cle = bouton.id || bouton.textContent, t = Date.now();
+    if (_armes[cle] && t - _armes[cle].t < 6000){ bouton.textContent = _armes[cle].texte; delete _armes[cle]; return true; }
+    _armes[cle] = {t: t, texte: bouton.textContent};
+    bouton.setAttribute("aria-live", "polite"); bouton.textContent = message;
+    setTimeout(function(){ if (_armes[cle] && _armes[cle].t === t){ bouton.textContent = _armes[cle].texte; delete _armes[cle]; } }, 6000);
+    return false;
+  }
+
 
   function norm(s){
     return String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
@@ -2220,7 +2237,7 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
         if (pile.length){ ctx.putImageData(pile.pop(), 0, 0); etat.traits = Math.max(0, (etat.traits || 0) - 1); memoriser(); }
       });
       if (tout) tout.addEventListener("click", function(){
-        if (!window.confirm("Effacer tout ton croquis ?")) return;
+        if (!armerDeuxClics(tout, "Effacer tout ton croquis ? Clique encore pour confirmer.")) return;
         pile = []; fond(); etat = {traits: 0}; memoriser();
       });
     }
@@ -2266,7 +2283,7 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
   if (btnImp) btnImp.addEventListener("click", function(){ window.print(); });
   var btnEff = document.getElementById("btnEffacer");
   if (btnEff) btnEff.addEventListener("click", function(){
-    if (!window.confirm("Effacer tout ce que tu as écrit sur cette page ? Le travail des mêmes exercices disparaîtra aussi de ton cahier.")) return;
+    if (!armerDeuxClics(btnEff, "Tout effacer sur cette page, et dans ton cahier ? Clique encore pour confirmer.")) return;
     for (var j = 0; j < boites.length; j++){ oublier(boites[j].getAttribute("data-cle")); }
     document.querySelectorAll("canvas.croquis-zone").forEach(function(c){ oublier(c.getAttribute("data-cle-croquis")); });
     oublier(cleOnglet);
@@ -2316,5 +2333,22 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
 </script>
 <!-- /ateliers-representations:moteur -->
 <script src="../../../../_ressources-communes/relais-anime/relais-anime.js" defer></script>
+
+<script>
+/* Effacement de la sauvegarde locale, en deux clics et sans boîte modale
+   (audit externe A05, 08/11/2026 ; posé par _outils/controle_sauvegarde_locale.py). */
+(function(){
+  "use strict";
+  var b = document.getElementById("btnReset"); if (!b) return;
+  var cle = "seq_4e_C7_5", arme = 0, texte = b.textContent;
+  b.setAttribute("aria-live", "polite");
+  b.addEventListener("click", function(){
+    var t = Date.now();
+    if (arme && t - arme < 6000){ try{ localStorage.removeItem(cle); }catch(e){} location.reload(); return; }
+    arme = t; b.textContent = "🗑 Clique encore pour confirmer l'effacement";
+    setTimeout(function(){ if (arme === t){ arme = 0; b.textContent = texte; } }, 6000);
+  });
+})();
+</script>
 </body>
 </html>
