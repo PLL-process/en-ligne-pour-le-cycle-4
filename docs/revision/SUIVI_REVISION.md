@@ -32,7 +32,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 13 | `3e_C4.3` | 1928 → 1252 | 2 → 0 | 33 → 0 | 8 → 0 | livrée #633 — séance 4 à 1 252 : 85 min d'activités annoncées (20 + 35 + 30), question posée à Pascal (réinvestissement en séance 5 ?) |
 | 14 | `5e_C2.1` | 2272 | 0 | 0 | 20 | à faire |
 | 15 | `4e_C4.1` | 2394 | 1 | 39 | 11 | à faire |
-| 16 | `4e_C4.1_book-train` | 2752 → 1510 | 0 | 0 | 14 → 0 | livrée #PR — séances 2 (1 307) et 3 (1 510) au-dessus du repère : exercices à six positions, deux chaînes à étiqueter, fichiers draw.io à télécharger ; le reste est replié |
+| 16 | `4e_C4.1_book-train` | 2752 → 1510 | 0 | 0 | 14 → 0 | livrée #642 — séances 2 (1 307) et 3 (1 510) au-dessus du repère : exercices à six positions, deux chaînes à étiqueter, fichiers draw.io à télécharger ; le reste est replié |
 | 17 | `3e_C4.7` | 1169 | 1 | 28 | 8 | à faire |
 | 18 | `3e_C4.8` | 2076 | 1 | 30 | 9 | à faire |
 | 19 | `3e_C5.1` | 1238 | 1 | 30 | 5 | à faire |
