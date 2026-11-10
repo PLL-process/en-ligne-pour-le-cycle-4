@@ -29383,6 +29383,28 @@ séance au-dessus du repère ; `controle_licence` ✓. Non exécuté : vrai tél
 
 ---
 
+## 10/11/2026 — Révision des trois thèmes, 12 : 3e_C4.1, les 33 listes deviennent des boutons radio et les Bonus se replient (thème 2)
+
+**Contexte.** Première séquence du thème 2 dans la passe de révision (skill `revision-sequence`). Deux sessions tournant sur le même suivi, celle-ci prend les lignes des thèmes 2 et 3 dans l'ordre du suivi, l'autre garde le thème 1.
+
+**Décisions.**
+- **n°300** : `migrer_gabarit_306.py --n300` convertit les 33 listes déroulantes (147 propositions) ; la page sauvegarde par sa propre fonction `collect()`, qui lit désormais `fieldset.qcm-groupe[id]` et ne liste plus ses boutons un à un. Les enveloppes `div.assoc` (deux colonnes, faites pour un libellé + une liste) sont retirées autour des groupes : elles empêchaient `grilles_radio.py` de voir la suite.
+- **Grille** : les cinq positions du schéma-bloc (a) partagent leurs sept réponses → une grille lettrée A–G (35 lignes de moins). Les natures d'énergie (b) ne se rangent pas en grille : leurs propositions diffèrent d'une question à l'autre, c'est voulu.
+- **Bonus** : celui de la clôture par `replier_bonus.py` ; celui de la séance 1 (« La loi d'Ohm au chevet de la station », 20 min facultatif, 347 mots) replié de la même façon sous son titre — la séance 1 tient déjà ses 55 min avec les activités 1 et 2.
+- **Aération** : 33 retours posés par l'outil ; trois corrections « cousues » (→ et ·) réécrites une idée par ligne ; la mission de l'ouverture en ①②③ ; la problématique en deux questions ; « c'est vous les concepteurs » → « c'est toi le concepteur » (n°302).
+- **n°312** : la clé lettrée de la grille reprend le nom de l'unité (« 12 V (volts) »), comme les libellés.
+- **Banc du lot** : le shim `_groupesRadio(page)` (V2 du 08/11) ajouté ; le banc ouvre les Bonus repliés avant de remplir leurs champs.
+
+**Mesure.** Séance 1 : 1 444 → 1 032 mots visibles ; séance 2 : 1 156 → 997. ✘ 1 → 0 ; menus 33 → 0 ; aération 6 → 0. Bancs 23/23 et 34/34 ; contrôles verts.
+
+---
+
+
+---
+
+
+---
+
 ## 10/11/2026 — Révision des trois thèmes, 5 bis : 3e_C1.5, la séance 4 lit 140 mots de moins
 
 **Contexte.** #624 avait révisé 3e_C1.5 (séance 4 : 2 017 → 1 588 mots visibles). Une seconde session avait fait la même passe en parallèle ; de ce doublon, seul ce que #624 n'avait pas fait est gardé, posé sur `main`.
