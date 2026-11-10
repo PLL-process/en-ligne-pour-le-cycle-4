@@ -106,7 +106,7 @@ def page(niv, ats, cahier, page_niveau, chemins_fn):
     h.append("</main>")
     mentions = " ".join(at.MENTION_FICTION for at in ats)
     h.append('<footer class="pied"><p>%s</p><p>Technologie cycle 4 · programme 2024 · page utilisable sans Internet · ton travail '
-             'reste dans ce navigateur, rien n\'est envoyé.</p></footer>' % mentions)
+             'reste dans ce navigateur, rien n\'est envoyé.</p>%s\n</footer>' % (mentions, moteur.MENTION_LICENCE))
     h.append(moteur.fin_page({"page": pid, "exercices": defs}))
     return chemin, "".join(h)
 

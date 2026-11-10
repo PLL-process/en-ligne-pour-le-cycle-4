@@ -19,6 +19,13 @@ import re
 ICI = pathlib.Path(__file__).resolve().parent
 RACINE_ATELIERS = ICI.parent                       # …/ateliers-representations
 THEME1 = RACINE_ATELIERS.parent                    # …/theme-1-…
+
+# Règle d'or n°321 (08/11/2026) : la mention de licence vient de `_outils/licence_cc.py`, source
+# unique ; le générateur la pose lui-même, sinon la page régénérée la perd (constaté le
+# 10/11/2026 : 52 pages d'ateliers en dérive, la mention ayant été posée à la main par PR #616).
+import sys as _sys
+_sys.path.insert(0, str(THEME1.parent / "_outils"))
+from licence_cc import MENTION as MENTION_LICENCE  # noqa: E402
 DEPOT = THEME1.parent
 
 KIT_CSS = (ICI / "kit.css").read_text(encoding="utf-8")
@@ -691,7 +698,7 @@ def page_atelier(at, niv, chemins):
                  % (pid, pid, "" if i == 0 else " hidden", contenu))
     h.append("</main>")
     h.append('<footer class="pied"><p>%s</p><p>Technologie cycle 4 · programme 2024 · page utilisable sans Internet · '
-             'ton travail reste dans ce navigateur, rien n\'est envoyé.</p></footer>' % at.MENTION_FICTION)
+             'ton travail reste dans ce navigateur, rien n\'est envoyé.</p>%s\n</footer>' % (at.MENTION_FICTION, MENTION_LICENCE))
     h.append(fin_page({"page": page_id, "exercices": defs}))
     return "".join(h)
 
