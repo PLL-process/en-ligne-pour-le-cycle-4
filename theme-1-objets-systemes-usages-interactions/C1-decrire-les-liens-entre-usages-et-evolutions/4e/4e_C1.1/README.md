@@ -23,7 +23,7 @@ sont hétérogènes, les périmètres sont incompatibles. C'est précisément ce
 | 4 | **Du nombre au besoin technique** | 45 min |
 | 5 | **Justifier une évolution, sur un autre objet** — trois exercices des ateliers des représentations (bête à cornes, carte mentale), puis le bilan | 42 + 10 min |
 
-242 min annoncés pour 275 disponibles (cinq séances de 55 min ; la séance 5 a été ajoutée le 24/10/2026).
+242 min annoncés pour 330 disponibles (six séances de 55 min ; la séance 5 a été ajoutée le 24/10/2026, puis coupée en deux le 08/11/2026 : sa lecture dépassait 2 900 mots).
 
 ## Ce que la séquence démontre
 

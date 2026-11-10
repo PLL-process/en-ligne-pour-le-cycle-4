@@ -73,11 +73,9 @@ ENTREES = [
          balise="h4", balise_exo="h5",
          titre="D'abord, choisir le mode selon la question",
          intro="Un mode de représentation n'est jamais bon en soi&nbsp;: il est bon pour une <b>question</b>, et pour "
-               "un destinataire. Avant de produire, un dernier entraînement sur une autre borne, celle d'une station de "
-               "vélos du front de mer&nbsp;: six questions, et pour chacune le mode qui y répond. Deux modes s'ajoutent "
-               "aux six de la séquence&nbsp;: le <b>diagramme de cas d'utilisation</b> (qui fait quoi avec le système) "
-               "et le <b>diagramme des interacteurs</b> (tout ce qui entoure l'objet)&nbsp;; le cours, juste en dessous, "
-               "les présente. Un exercice, environ un quart d'heure&nbsp;; il se vérifie tout seul et a sa correction "
-               "complète.",
+               "un destinataire. <br>Dernier entraînement avant de produire, sur la borne d'une station de vélos du front "
+               "de mer. Deux modes s'ajoutent aux six de la séquence&nbsp;: le <b>diagramme de cas d'utilisation</b> et "
+               "le <b>diagramme des interacteurs</b> (le cours, juste en dessous, les présente). <br>Environ un quart "
+               "d'heure&nbsp;; l'exercice se vérifie tout seul et a sa correction complète.",
          suite="la construction du diagramme d'une station d'alerte cyclonique, et le QCM de l'atelier"),
 ]

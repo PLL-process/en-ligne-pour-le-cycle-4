@@ -781,11 +781,11 @@ E5 = dict(
         "<b>« personnes âgées isolées »</b> → sans téléphone, elles ne reçoivent pas le message → <b>négative</b>",
         "<b>« vent, pluie, pression »</b> → ce que la station mesure → <b>ni l'une ni l'autre</b>&nbsp;: c'est le fonctionnement, "
         "pas un effet sur la vie des personnes",
-        "<b>Un argumentaire attendu&nbsp;:</b> « La station d'alerte cyclonique est utile aux habitants, car <b>l'alerte arrive "
-        "plus tôt</b>&nbsp;: on a le temps d'évacuer les quartiers bas et de rentrer les bateaux. La sirène prévient aussi ceux "
-        "qui n'ont pas de téléphone. <b>Cependant</b>, elle <b>coûte cher</b> à la commune, et une <b>fausse alerte</b> ferme les "
-        "écoles pour rien&nbsp;: on risque de ne plus y croire. <b>En conclusion</b>, c'est une bonne chose, à condition de "
-        "limiter les fausses alertes. »",
+        "<b>Un argumentaire attendu&nbsp;:</b> <br>« La station d'alerte cyclonique est utile aux habitants, car <b>l'alerte "
+        "arrive plus tôt</b>&nbsp;: on a le temps d'évacuer les quartiers bas et de rentrer les bateaux. <br>La sirène prévient "
+        "aussi ceux qui n'ont pas de téléphone. <br><b>Cependant</b>, elle <b>coûte cher</b> à la commune, et une <b>fausse "
+        "alerte</b> ferme les écoles pour rien&nbsp;: on risque de ne plus y croire. <br><b>En conclusion</b>, c'est une bonne "
+        "chose, à condition de limiter les fausses alertes. »",
         "Chaque idée du texte vient d'une <b>branche</b> de la carte&nbsp;: Sécurité, Sans téléphone, Coût, Fausses alertes. La "
         "branche « Ce qu'elle mesure » ne sert pas&nbsp;: elle décrit l'objet, elle ne dit pas son effet sur la société.",
         ("conclusion", "La carte mentale <b>prépare</b> l'argumentaire&nbsp;: on y choisit une branche positive, une branche "

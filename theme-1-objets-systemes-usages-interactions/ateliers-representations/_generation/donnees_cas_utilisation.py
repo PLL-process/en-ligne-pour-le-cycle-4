@@ -807,7 +807,7 @@ E6 = dict(
            "Le diagramme de cas d'utilisation montre les actions, mais <b>pas leur ordre</b> ni les tests.</p>"],
     jumeau=dict(consigne="Pour la station d'alerte cyclonique&nbsp;: « Combien d'alertes ont été déclenchées chaque mois de la "
                          "saison&nbsp;? » et « Qui reçoit l'alerte, et qui la déclenche&nbsp;? ». Quel mode pour chaque question&nbsp;?",
-                correction="Le nombre d'alertes par mois → des quantités à comparer → <b>un graphique</b>. Qui reçoit, qui "
+                correction="Le nombre d'alertes par mois → des quantités à comparer → <b>un graphique</b>. <br>Qui reçoit, qui "
                            "déclenche → qui fait quoi avec la station → <b>le diagramme de cas d'utilisation</b>."),
     correction=[
         "<b>Question 1</b> → « qui… pour faire quoi » → <b>le diagramme de cas d'utilisation</b>",

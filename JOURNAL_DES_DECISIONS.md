@@ -29230,6 +29230,172 @@ dit faux au lot suivant — c'est la deuxième fois en trois jours (06/11 : `poi
 **Reste à Pascal** : montrer la trame d'EPI au collègue d'arts plastiques et, s'il y a un collègue de maths dans
 l'EPI, lui donner la fiche jumelle.
 
+## 08/11/2026 — Audit des séquences, étape 4 : la campagne technique exécutée sur le dépôt cloné (transversal)
+
+**Point de départ.** Pascal a transmis trois étapes d'un audit externe des séquences (1er novembre), toutes
+documentaires : lecture des pages publiques, aucun navigateur, aucun code. Carte blanche donnée ; choix fait :
+exécuter ce qu'elles n'avaient pas pu faire, et donner un verdict à chacun de leurs constats.
+
+**Fait.** Rapport `docs/audits/AUDIT_SEQUENCES_ETAPE_4_2026-11-08.md` ; les trois étapes et le banc Playwright
+rangés dans `docs/audits/sequences_etapes_1-3/`. Banc sur quatre séquences (Chengdu 5e_C1.1, jardin 4e_C4.1,
+stations 3e_C4.3 et 3e_C9.2) : 29 boutons « Vérifier » répondent, aucun ne réussit à vide, 0 erreur console,
+0 px de défilement à 375 px, 73 images avec `alt`, focus clavier visible. Dépôt entier : `controle_liens`,
+`controle_fichiers_telechargeables`, `controle_boutons_vivants` verts ; 88 CSV lus, 5 irréguliers (1 côté élève).
+
+**Verdicts.** Huit constats confirmés, un nuancé (scores de quiz ≠ compétence : c'est la conception), aucun
+infirmé. Les tests « synonyme, casse, accents » demandés par l'audit externe ne s'appliquent pas : aucune
+réponse libre n'est notée par les pages.
+
+**Trois constats nouveaux, chiffrés.**
+- L'index ignore les README pointeurs : 58 repères mutualisés sans aucun lien vers leur séquence, 43 avec
+  « Aucune ressource pédagogique publiée » — alors que chaque README dit où le code est travaillé. Cause dans
+  `make_index.py` l. 590. C'était le constat le plus répété des trois étapes ; une correction, 58 repères.
+- « Effacer ma sauvegarde » n'efface pas les clés `rep_*` des ateliers incrustés : 33 pages sur 58.
+- Nom, prénom et classe écrits en clair dans `localStorage` sur 95 pages, sans avertissement « poste partagé ».
+- Et la phrase « 12 V […] sans danger au toucher », vue dans le jardin par l'audit externe, vient de quatre
+  générateurs et vit dans dix pages : à corriger à la source (n°283), comme la licence dans la PR #621.
+
+**Non exécuté** (dit tel quel dans le rapport) : contrastes mesurés, zoom 200 %, lecteur d'écran, mode
+essentiel et verrous sur ces quatre pages, seuils des simulateurs de la station, matrice compétence → production.
+
+**Reste à Pascal.** Valider l'ordre du lot correctif (six lignes, une PR chacune) ; trancher la fiche D
+(afficher « quiz » et « production » séparément) et le sous-titre de l'échauffement tableur.
+
+## 08/11/2026 — Révision des trois thèmes, 4 à 6 : 4e_C1.4, 3e_C1.5, 3e_C2.1 ; la séance 5 de 4e_C1.1 coupée en deux ; le Bonus et les exercices « classer » allégés (transversal : `_outils`, ateliers des représentations ; thème 1)
+
+**Décision de Pascal** (sur la question posée dans #620) : la séance 5 de 4e_C1.1, plus de 2 900 mots à lire, est
+« coupée en deux séances ».
+- Séance 5 — Justifier : la piqûre de rappel (repliée), l'exercice 1 (le besoin évolue) et l'exercice 2 (les avantages
+  et les inconvénients) ; l'activité 5 exige ces deux exercices réussis.
+- Séance 6 — Conclure : l'ancien exercice 3 (« Corriger une carte mentale mal faite »), désormais activité 6, puis
+  Bonus → Bilan → QCM.
+- La page passe à six séances (badges, progression « / 6 », tâches, QCM ciblé, lexique : trois mots rattachés à la
+  séance 6), l'incrustation de la carte mentale se partage en deux entrées (`tsinghua_s5.py`), la fiche pédagogique et
+  le README le disent. Banc : 71 / 71 (cinq contrôles ajoutés pour la séance 6).
+- La séance 5 reste au-dessus du repère (1 836 mots) : deux exercices d'atelier, dont le texte visible vient des
+  exercices eux-mêmes.
+
+**Le Bonus se déplie quand on a fini** (`_outils/replier_bonus.py`, nouveau). Le Bonus est facultatif et ne sert qu'à
+l'élève qui a fini ; ouvert, il ajoutait 150 à 250 mots à la séance de clôture. Son titre reste visible, à sa place
+(Bonus → Bilan → QCM, n°311) ; la note, les défis, leurs champs et leur corrigé se rangent dans un `<details>` :
+« 🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini ». Posé sur les séquences de cette PR et sur les trois déjà
+révisées (5e_C1.5 : séance 3, 1 322 → 1 206 mots). 51 séquences sur 56 ont un Bonus que l'outil reconnaît ; chacune le
+reçoit à son tour de passe.
+
+**Les exercices « classer » des ateliers se lisent en grille** (`moteur.py`, `kit.css`). Le widget qui fait associer
+plusieurs items aux mêmes catégories écrivait toutes les catégories sous chaque item : six questions à cinq modes de
+représentation, trente lignes. Dès trois items et trois catégories, les catégories s'écrivent une fois, lettrées A, B,
+C ; chaque item garde sa rangée de lettres. Les valeurs des boutons ne changent pas (vérification, sauvegarde partagée
+avec l'atelier, bancs) ; le texte entier est dans `aria-label`. Les incrustations le reçoivent quand leur séquence est
+remise à jour (`incrustations.py --seq`), séquence par séquence ; les pages d'atelier, à leur prochaine régénération.
+
+**4e_C1.4** (cybersécurité) : séance 3, 1 291 → 1 056 mots. Les exemples de 5.b se déplient (l'un était écrit deux
+fois) ; le titre de 5.a ne répète plus la question ; les étiquettes du Bonus ne recopient plus sa consigne. Lu comme un
+élève : « hover », « désactive géo inutile », « cite les sources pour œuvres » et les « Risques » télégraphiques
+réécrits en phrases.
+
+**3e_C1.5** (numérique et société) : séance 4, 2 017 → 1 588 mots ; séance 2, 1 219 → 1 184.
+- Le devoir sur les troubles musculo-squelettiques garde sa consigne ; ses conseils (INRS) se déplient ; la conclusion
+  passe du « vous » au « tu ».
+- Séance 2 : deux faux titres (texte de 28 px) et un `<h1>` au milieu d'une séance deviennent des titres de leur niveau ;
+  une correction en double (même identifiant sous deux questions, la première sans bouton) devient deux corrections,
+  chacune à sa question ; l'encadré d'introduction ne donne plus d'avance les réponses du tri 2.a.
+- La séance 4 reste au-dessus du repère : la clôture la plus longue du site (activité 5, bilan, synthèse sur l'écologie
+  du numérique, autoévaluation, devoir), écart justifié dans le suivi.
+
+**3e_C2.1** (Pékin, la borne) : séance 3, 1 861 → 1 424 mots, par la grille du « classer » surtout. Les séances 2 et 3
+restent au-dessus du repère (deux activités et un document à lire ; l'exercice d'atelier et la production défendue
+avant la clôture), écarts justifiés dans le suivi.
+
+**Ateliers, à leur source** : trois corrections et un argumentaire modèle en lignes (`donnees_cas_utilisation.py`,
+`donnees_carte_mentale.py`), dans les ateliers et les cahiers qui les portent ; deux introductions d'incrustation
+allégées. `banc_ateliers.py` ouvre un rappel replié comme l'élève.
+
+**Contrôles.**
+- 4e_C1.1 : banc 71 / 71 ; n°311 34 / 34 ; fiche papier ✅ ; squelette, navigation des séances verts.
+- 4e_C1.4 : n°311 34 / 34 ; `verif_regles` 0 ✘ ; `audit_aeration --strict` 0.
+- 3e_C1.5 : banc 45 / 45 ; n°311 34 / 34 ; `audit_aeration --strict` 0.
+- 3e_C2.1 : banc 55 / 58, comme sur `main` (n°298, liens des deux synthèses) ; n°311 34 / 34 ; `audit_aeration --strict` 0.
+- 5e_C1.5 : bancs 38 / 38 et 34 / 34 ; 5e_C1.3 : 24 / 24 (le banc ouvre le Bonus avant de le remplir) et 34 / 34.
+- Incrustations des séquences touchées : « à jour ».
+
+**Reste à Pascal.** Fusionner. Suite de l'ordre : 5e_C1.1, 5e_C1.2, 5e_C3.1, 4e_C2.1, 4e_C3.1…
+
+---
+
+---
+
+## 08/11/2026 — Révision des trois thèmes, 4 : 4e_C1.4, la situation ne donne plus la réponse avant l'exercice
+
+*Suite de la passe complète par séquence (décision du 08/11/2026), ligne 4 du suivi. Carte blanche.*
+
+**La page** (cybersécurité, protection des données) était déjà sur le gabarit commun, à zéro ✘ et sans liste déroulante.
+Sa charge venait d'ailleurs : chacune des cinq « 📰 Mise en situation » enchaînait le récit, puis « Risques impliqués »,
+« Bonne attitude à avoir » et une phrase de morale — la réponse de l'exercice qui suit, lue avant de chercher. Ces trois
+paragraphes se replient dans « 💡 Ce que cette situation apprend — à ouvrir après avoir répondu » : le récit reste, la
+leçon vient après. Séance 1 : 1 045 → 894 mots visibles ; séance 3 : 1 291 → 1 180 ; aucune séance au-delà du repère.
+En 5.b, l'exemple de réponse répétait mot pour mot la liste d'exemples qui le précédait : replié, à ouvrir si l'élève
+bloque. Les deux glisser-déposer disaient « survole » : ils disent aussi « touche », parce qu'on les fait au doigt.
+
+**Aération** : `aerer_corrections.py --partout` pose 76 retours ; deux corrections du Bonus (ce qui ralentit un logiciel qui
+devine ; ce qui trahit `P@ssw0rd2026!`), la consigne du retour à l'hypothèse et deux défis du Bonus sont réécrits à la
+main, une idée par ligne, sans rien retirer. `audit_aeration.py --strict` : 9 → 0.
+
+**Vérifié** : banc n°311 34 / 34 ; squelette, mode essentiel, hiérarchie, liens, licence, règles visibles, unités, sigles,
+compétences, fiche papier, impression (0 refus), verrous, hors ligne, tactile : verts. Revue d'écran à 390 et 1 280 px, mode
+essentiel compris. **Reste** : le lexique du lot n'a pas d'ancres par séance ; les activités n'annoncent pas de durée.
+
+**Fusion avec `main` (même jour)** : la PR #624, fusionnée entre-temps, avait déjà révisé 4e_C1.4 (texte simplifié, exemples de 5.b repliés). Résolution : le texte de #624 est gardé partout ; cette PR n'y ajoute que son idée propre — les leçons des cinq situations repliées dans un `<details>` ouvert après la réponse. Les chiffres de mots de l'entrée ci-dessus sont ceux mesurés avant la fusion.
+
+## 10/11/2026 — Révision des trois thèmes, 4 bis : le jeu des licences de 4e_C1.4 devient jouable, et la séance 6 se lit (thème 1)
+
+**D'où ça vient.** En relisant 4e_C1.4 après #624 (la passe « lire comme un élève »), l'activité 6.c « le jeu des
+licences » ne pouvait pas être réussie : la correction dit qu'une licence va dans **plusieurs** catégories (CC BY
+dans trois), mais le dépôt **déplaçait** l'étiquette — posée dans « usage commercial », elle quittait la réserve et ne
+pouvait plus aller dans « modification ». Et la consigne disait « survole » : sur un téléphone, rien ne se survole.
+
+**Ce qui change** (`sequence-cybersecurite-protection-donnees.html`, une page).
+- **6.c** : les quatre zones portent `data-multi="1" data-copie="1"` ; une zone « copie » reçoit une **copie** de la
+  licence, l'étiquette reste dans la réserve, une même licence n'entre qu'une fois par zone ; un double-clic retire une
+  copie mal placée. Le dépôt au clavier (Entrée sur la zone) suit la même règle ; les zones reçoivent le focus
+  (`tabindex="0"`), un `dragstart` synthétique sans `dataTransfer` ne casse plus. Un dépliant « 📖 Ce que veut dire
+  chaque sigle — à lire avant de jouer » (BY, NC, ND, SA, CC0) précède le jeu.
+- **6.b** : les six cas et les six actions se lisent en entier (« Une image trouvée en ligne, sous licence CC » →
+  « Citer l'auteur et la licence », au lieu de « Image en ligne » → « Citer licence ») ; l'info-bulle s'ouvre aussi au
+  **toucher et au focus** (`:focus`, `:focus-within`), et tient dans l'écran (`max-width:min(400px, 90vw)`).
+- **Les corrections de la séance 6** réécrites en lignes : 6.a la règle, 6.b les six cas un par ligne, 6.c les quatre
+  catégories avec leur règle (« toutes celles sans NC »), et le piège ; 6.d en une ligne par question.
+- **Le compte des points se lit dans la page** : 6.a vaut 1 point (un bloc), 6.b est dit « non noté » (les ateliers
+  glisser-déposer n'entrent pas dans le total, décision du 09/09/2026), 5.c annonce ses 7 questions (il en a 7).
+- Au passage : le dernier « vous » (1.c, 3.c « Ta réponse… ») ; `pre{overflow-x:auto}` (un bloc de code hors parcours
+  élargissait la page à 718 px sur 390) ; les zones de texte à 100 % de large.
+
+**Vérifié** (10/11/2026, Chromium Playwright) : un banc jetable du jeu — CC BY posée dans « commercial » puis
+« modification » : une copie dans chaque zone, l'étiquette toujours dans la réserve, pas de doublon au second dépôt,
+retirée au double-clic, quatre zones focusables, 0 erreur JS ; `tests_regle_311_4e_C1.4.mjs` 34 / 34 ;
+`verif_regles_audit` 0 ✘ ; `audit_aeration --strict` ✅ ; `mesurer_charge` : 1 050 · 714 · 1 122 · 730 mots, aucune
+séance au-dessus du repère ; `controle_licence` ✓. Non exécuté : vrai téléphone, Firefox, Safari.
+
+**Reste à Pascal.** Fusionner. La révision reprend à la séquence 7 du suivi, 5e_C1.1.
+
+---
+
+
+---
+
+## 10/11/2026 — Révision des trois thèmes, 12 : 3e_C4.1, les 33 listes deviennent des boutons radio et les Bonus se replient (thème 2)
+
+**Contexte.** Première séquence du thème 2 dans la passe de révision (skill `revision-sequence`). Deux sessions tournant sur le même suivi, celle-ci prend les lignes des thèmes 2 et 3 dans l'ordre du suivi, l'autre garde le thème 1.
+
+**Décisions.**
+- **n°300** : `migrer_gabarit_306.py --n300` convertit les 33 listes déroulantes (147 propositions) ; la page sauvegarde par sa propre fonction `collect()`, qui lit désormais `fieldset.qcm-groupe[id]` et ne liste plus ses boutons un à un. Les enveloppes `div.assoc` (deux colonnes, faites pour un libellé + une liste) sont retirées autour des groupes : elles empêchaient `grilles_radio.py` de voir la suite.
+- **Grille** : les cinq positions du schéma-bloc (a) partagent leurs sept réponses → une grille lettrée A–G (35 lignes de moins). Les natures d'énergie (b) ne se rangent pas en grille : leurs propositions diffèrent d'une question à l'autre, c'est voulu.
+- **Bonus** : celui de la clôture par `replier_bonus.py` ; celui de la séance 1 (« La loi d'Ohm au chevet de la station », 20 min facultatif, 347 mots) replié de la même façon sous son titre — la séance 1 tient déjà ses 55 min avec les activités 1 et 2.
+- **Aération** : 33 retours posés par l'outil ; trois corrections « cousues » (→ et ·) réécrites une idée par ligne ; la mission de l'ouverture en ①②③ ; la problématique en deux questions ; « c'est vous les concepteurs » → « c'est toi le concepteur » (n°302).
+- **n°312** : la clé lettrée de la grille reprend le nom de l'unité (« 12 V (volts) »), comme les libellés.
+- **Banc du lot** : le shim `_groupesRadio(page)` (V2 du 08/11) ajouté ; le banc ouvre les Bonus repliés avant de remplir leurs champs.
+
+**Mesure.** Séance 1 : 1 444 → 1 032 mots visibles ; séance 2 : 1 156 → 997. ✘ 1 → 0 ; menus 33 → 0 ; aération 6 → 0. Bancs 23/23 et 34/34 ; contrôles verts.
 ## 10/11/2026 — Audit externe des séquences : cinq constats corrigés, cinq points instruits, deux contrôles de plus (transversal : `_outils`, `index`, trois thèmes)
 
 **Demande de Pascal** : un audit externe des pages élèves (reçu le 01/11, cinq constats A01–A05 et cinq « points
