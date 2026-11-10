@@ -138,7 +138,10 @@ for (const [n, champs] of Object.entries(REP.activites)) {
   }
   await p.evaluate(n => document.querySelector('[data-check="' + n + '"]').click(), n);
   const fb = await p.textContent('#fb' + n);
-  ok('activité ' + n + ' validée (' + REP.totaux[n] + ')', fb.includes(REP.totaux[n]), fb.slice(0, 75));
+  // depuis #637 (10/11/2026), une réponse libre n'est pas « validée » mais « enregistrée » : le retour ✍️ vaut 1/1 ;
+  // la validation elle-même est vérifiée par la classe « ok » du retour (bandeau des tâches, n°30)
+  const okCls = await p.$eval('#fb' + n, e => e.classList.contains('ok'));
+  ok('activité ' + n + ' validée (' + REP.totaux[n] + ')', okCls && (fb.includes(REP.totaux[n]) || fb.startsWith('✍️')), fb.slice(0, 75));
 }
 
 // ── une réponse fausse est refusée ───────────────────────────────────────

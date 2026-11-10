@@ -399,7 +399,7 @@ body.essentiel details.referentiel-replie{display:none}
   }
 
   // Les blocs qui ne servent qu'à l'écran, reconnus à leur titre (ils n'ont pas de classe commune).
-  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique|crcn mobilisés/i;
+  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|avant l.activité \d|avant la séance \d|échauffement|en-tête pédagogique|crcn mobilisés/i;
   function blocsEcran(){
     document.querySelectorAll("section, .card").forEach(function(c){
       var t = c.querySelector(":scope > h2, :scope > h3");
@@ -618,10 +618,12 @@ body.essentiel details.referentiel-replie{display:none}
 
 <div class="toolbar">
   <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset" type="button" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button>
 
   <button class="btn ghost" id="btnEssentiel" type="button" aria-pressed="false" title="Masquer les corrections et les compléments, pour ne garder que les consignes et les exercices. Un second clic ramène tout.">🎯 Mode essentiel : OFF</button>
 </div>
 
+<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
 <!-- Règle d'or n°311 : l'ouverture, complète à la séance 1, se replie dans ce volet à partir de la séance 2 (jamais supprimée). -->
 <details class="rappel-ouverture" id="ouverture" open>
 <summary>📖 Rappel : la situation et ton hypothèse</summary>
@@ -848,14 +850,14 @@ body.essentiel details.referentiel-replie{display:none}
     </div>
 
     <table class="champs">
-      <tr><th></th><th>Champ</th><th>Ce que c'est</th></tr>
-      <tr id="tr0"><td class="ck"><input type="checkbox" id="ch0"></td><td><code>id</code></td><td>l'identifiant de l'objet qui parle</td></tr>
-      <tr id="tr1"><td class="ck"><input type="checkbox" id="ch1"></td><td><code>h</code></td><td>la valeur lue par le capteur d'humidité</td></tr>
-      <tr id="tr2"><td class="ck"><input type="checkbox" id="ch2"></td><td><code>u</code></td><td>l'unité de cette valeur</td></tr>
-      <tr id="tr3"><td class="ck"><input type="checkbox" id="ch3"></td><td><code>t</code></td><td>l'heure à laquelle la mesure a été prise</td></tr>
-      <tr id="tr4"><td class="ck"><input type="checkbox" id="ch4"></td><td><code>pompe</code></td><td>l'état de la pompe au moment de la mesure</td></tr>
-      <tr id="tr5"><td class="ck"><input type="checkbox" id="ch5"></td><td><code>etat</code></td><td>les 127 variables internes de la carte</td></tr>
-      <tr id="tr6"><td class="ck"><input type="checkbox" id="ch6"></td><td><code>eleve</code></td><td>le prénom de l'élève qui a programmé la carte</td></tr>
+      <tr><td></td><th>Champ</th><th>Ce que c'est</th></tr>
+      <tr id="tr0"><td class="ck"><input type="checkbox" id="ch0" aria-label="id"></td><td><code>id</code></td><td>l'identifiant de l'objet qui parle</td></tr>
+      <tr id="tr1"><td class="ck"><input type="checkbox" id="ch1" aria-label="h"></td><td><code>h</code></td><td>la valeur lue par le capteur d'humidité</td></tr>
+      <tr id="tr2"><td class="ck"><input type="checkbox" id="ch2" aria-label="u"></td><td><code>u</code></td><td>l'unité de cette valeur</td></tr>
+      <tr id="tr3"><td class="ck"><input type="checkbox" id="ch3" aria-label="t"></td><td><code>t</code></td><td>l'heure à laquelle la mesure a été prise</td></tr>
+      <tr id="tr4"><td class="ck"><input type="checkbox" id="ch4" aria-label="pompe"></td><td><code>pompe</code></td><td>l'état de la pompe au moment de la mesure</td></tr>
+      <tr id="tr5"><td class="ck"><input type="checkbox" id="ch5" aria-label="etat"></td><td><code>etat</code></td><td>les 127 variables internes de la carte</td></tr>
+      <tr id="tr6"><td class="ck"><input type="checkbox" id="ch6" aria-label="eleve"></td><td><code>eleve</code></td><td>le prénom de l'élève qui a programmé la carte</td></tr>
     </table>
 
     <p style="font-size:.9em;color:var(--sub);margin:10px 0 4px">Le message que l'objet envoie :</p>
@@ -1294,7 +1296,7 @@ body.essentiel details.referentiel-replie{display:none}
 
 </div>
 
-<footer>Séquence 4e_C7.8 — <em>Le jardin publie sa mesure</em> · Thème 3 · banc de liaison original (CC0), hors ligne, sans dépendance.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.8em;opacity:.85;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+<footer>Séquence 4e_C7.8 — <em>Le jardin publie sa mesure</em> · Thème 3 · banc de liaison original (CC0), hors ligne, sans dépendance.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license" style="color:inherit;text-decoration:underline">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 
 <script>
@@ -1463,12 +1465,13 @@ const CHECKS = {
   4(){ let s = 0;
        s += sv("a4a0", "Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin."); s += sv("a4a1", "Une donnée personnelle, et des milliers de fois le poids d'une mesure, pour rien."); s += sv("a4a2", "De l'énergie et de la place dépensées pour des valeurs dont personne n'a l'usage."); s += sv("a4a3", "Celle-là s'envoie : c'est exactement ce dont le destinataire a besoin.");
        return {score: s, total: 4, exp: true}; },
-  5(){ return {score: pres("reinv", 90), total: 1, exp: true}; }
+  5(){ return {score: pres("reinv", 90), total: 1, exp: true, libre: true}; }
 };
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
-  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; (window.__exp.valides = window.__exp.valides || {})[n] = 1; majBandeau(); }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; (window.__exp.valides = window.__exp.valides || {})[n] = 1; majBandeau(); save(); return; }
+  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
   save();
@@ -1588,5 +1591,22 @@ majEssentiel(); majBandeau();
 })();
 </script>
 
+
+<script>
+/* Effacement de la sauvegarde locale, en deux clics et sans boîte modale
+   (audit externe A05, 08/11/2026 ; posé par _outils/controle_sauvegarde_locale.py). */
+(function(){
+  "use strict";
+  var b = document.getElementById("btnReset"); if (!b) return;
+  var cle = "seq_4e_C7_8", arme = 0, texte = b.textContent;
+  b.setAttribute("aria-live", "polite");
+  b.addEventListener("click", function(){
+    var t = Date.now();
+    if (arme && t - arme < 6000){ try{ localStorage.removeItem(cle); }catch(e){} location.reload(); return; }
+    arme = t; b.textContent = "🗑 Clique encore pour confirmer l'effacement";
+    setTimeout(function(){ if (arme === t){ arme = 0; b.textContent = texte; } }, 6000);
+  });
+})();
+</script>
 </body>
 </html>

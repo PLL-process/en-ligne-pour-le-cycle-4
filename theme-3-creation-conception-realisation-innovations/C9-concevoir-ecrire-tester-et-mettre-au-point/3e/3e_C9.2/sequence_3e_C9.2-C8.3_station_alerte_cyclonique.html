@@ -534,7 +534,7 @@
   }
 
   // Les blocs qui ne servent qu'à l'écran, reconnus à leur titre (ils n'ont pas de classe commune).
-  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique|crcn mobilisés/i;
+  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|avant l.activité \d|avant la séance \d|échauffement|en-tête pédagogique|crcn mobilisés/i;
   function blocsEcran(){
     document.querySelectorAll("section, .card").forEach(function(c){
       var t = c.querySelector(":scope > h2, :scope > h3");
@@ -737,6 +737,7 @@
   <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
   <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
 </div>
+<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
 <div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
   <span class="parcours-label">🔀 Mon parcours :</span>
   <button class="btn ghost parcours-btn" data-choix="a" aria-pressed="false">🅰 J'ai le matériel</button>
@@ -1030,7 +1031,7 @@
 
 <div class="progress-wrap">
   <span class="progress-label">Ma progression dans la séquence : <b id="progTxt">0 / 7 activités validées</b></span>
-  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0" id="progBar" aria-label="Progression"><div id="progFill"></div></div>
 </div>
 
 <section class="card" id="bancCard" aria-labelledby="banc-titre">
@@ -1505,7 +1506,7 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
 <!-- ══════════════════ SÉANCE 3 ══════════════════ -->
 <div class="seance-panel" id="s3" role="tabpanel">
 <section class="card gestes-outil" aria-labelledby="gestes-ardublock">
-  <h2 id="gestes-ardublock">🧰 Avant de commencer (échauffement) — les cinq gestes de Vittascience</h2>
+  <h2 id="gestes-ardublock">🧰 Avant la séance 3 (échauffement) — les cinq gestes de Vittascience</h2>
 <p class="activite-en-ligne">🌐 <b>Cette activité demande une connexion Internet</b> — l'éditeur Vittascience est en ligne. <b>Sans connexion&nbsp;:</b> suis le Plan B, plus bas (« Pas de connexion ? ») : les planches de paliers, les captures réelles et le banc d'essai de cette page.</p>
   <p class="pourquoi">Cinq gestes à faire une fois, au début, et ta séance ne se perdra pas.
   Tu as peut-être déjà programmé en blocs une autre année&nbsp;: refais-les quand même, c'est court.
@@ -2290,7 +2291,7 @@ vent(km/h)=186  niveau=3</pre>
 <footer>
   <p>Séquence 3e_C9.2 (dossier principal) + 3e_C8.3 · Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser · Technologie cycle 4 (programme 2024)</p>
   <p>Fonctionne hors connexion après chargement · aucune donnée envoyée sur un serveur · sauvegarde locale sur cet appareil uniquement</p>
-<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.8em;opacity:.85;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license" style="color:inherit;text-decoration:underline">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 <script>
 "use strict";
@@ -3209,6 +3210,19 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
   function ecrire(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
   function oublier(k){ try { localStorage.removeItem(k); } catch(e){} }
 
+  /* Une confirmation en deux clics, DANS la page : le premier clic change le texte du
+     bouton, le second (sous six secondes) exécute. Jamais de boîte modale du navigateur —
+     elle bloque la page et échappe au lecteur d'écran (audit externe A05, 08/11/2026). */
+  var _armes = {};
+  function armerDeuxClics(bouton, message){
+    var cle = bouton.id || bouton.textContent, t = Date.now();
+    if (_armes[cle] && t - _armes[cle].t < 6000){ bouton.textContent = _armes[cle].texte; delete _armes[cle]; return true; }
+    _armes[cle] = {t: t, texte: bouton.textContent};
+    bouton.setAttribute("aria-live", "polite"); bouton.textContent = message;
+    setTimeout(function(){ if (_armes[cle] && _armes[cle].t === t){ bouton.textContent = _armes[cle].texte; delete _armes[cle]; } }, 6000);
+    return false;
+  }
+
   function norm(s){
     return String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
       .replace(/[’`]/g, "'").replace(/œ/g, "oe").replace(/æ/g, "ae")
@@ -3653,7 +3667,7 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
         if (pile.length){ ctx.putImageData(pile.pop(), 0, 0); etat.traits = Math.max(0, (etat.traits || 0) - 1); memoriser(); }
       });
       if (tout) tout.addEventListener("click", function(){
-        if (!window.confirm("Effacer tout ton croquis ?")) return;
+        if (!armerDeuxClics(tout, "Effacer tout ton croquis ? Clique encore pour confirmer.")) return;
         pile = []; fond(); etat = {traits: 0}; memoriser();
       });
     }
@@ -3699,7 +3713,7 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
   if (btnImp) btnImp.addEventListener("click", function(){ window.print(); });
   var btnEff = document.getElementById("btnEffacer");
   if (btnEff) btnEff.addEventListener("click", function(){
-    if (!window.confirm("Effacer tout ce que tu as écrit sur cette page ? Le travail des mêmes exercices disparaîtra aussi de ton cahier.")) return;
+    if (!armerDeuxClics(btnEff, "Tout effacer sur cette page, et dans ton cahier ? Clique encore pour confirmer.")) return;
     for (var j = 0; j < boites.length; j++){ oublier(boites[j].getAttribute("data-cle")); }
     document.querySelectorAll("canvas.croquis-zone").forEach(function(c){ oublier(c.getAttribute("data-cle-croquis")); });
     oublier(cleOnglet);

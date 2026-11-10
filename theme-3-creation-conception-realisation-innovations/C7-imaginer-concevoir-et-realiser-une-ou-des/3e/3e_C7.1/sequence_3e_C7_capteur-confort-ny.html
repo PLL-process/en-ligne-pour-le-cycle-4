@@ -420,7 +420,7 @@ body.essentiel details.referentiel-replie{display:none}
   }
 
   // Les blocs qui ne servent qu'à l'écran, reconnus à leur titre (ils n'ont pas de classe commune).
-  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique|crcn mobilisés/i;
+  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|avant l.activité \d|avant la séance \d|échauffement|en-tête pédagogique|crcn mobilisés/i;
   function blocsEcran(){
     document.querySelectorAll("section, .card").forEach(function(c){
       var t = c.querySelector(":scope > h2, :scope > h3");
@@ -611,8 +611,10 @@ body.essentiel details.referentiel-replie{display:none}
 <div class="toolbar">
   <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
   <button class="btn ghost" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset" type="button" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button>
 </div>
 
+<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
 <div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
   <span class="parcours-label">🔀 Mon parcours :</span>
   <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 En simulation</button>
@@ -759,7 +761,7 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 <!-- Hors du volet, parce qu'ils servent à chaque séance : la progression et « Où j'en suis » (n°30). -->
 <div class="progress-wrap">
   <span class="progress-label">Ma progression : <b id="progTxt">0 / 8 activités validées</b></span>
-  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0" id="progBar" aria-label="Progression"><div id="progFill"></div></div>
 </div>
 
 <section class="card" id="taches">
@@ -905,7 +907,7 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
      Depuis le 05/11/2026 (Pascal : « que l'élève, dans l'échauffement, puisse pratiquer »), l'échauffement a son propre
      éditeur, un vrai : l'élève fait les quatre gestes sur un programme d'essai, et chaque geste réussi se coche. -->
 <section class="card gestes-outil" aria-labelledby="gestes-editeur-python">
-  <h2 id="gestes-editeur-python">🧰 Avant de commencer (échauffement) — les quatre gestes de l'éditeur Python</h2>
+  <h2 id="gestes-editeur-python">🧰 Avant l'activité 3 (échauffement) — les quatre gestes de l'éditeur Python</h2>
   <p class="pourquoi">L'éditeur Python est <b>dans la page</b>, à chaque activité qui fait écrire un programme&nbsp;: rien à ouvrir, rien à installer, et il marche sans Internet. <b>Entraîne-toi d'abord ici</b>, sur un petit programme d'essai&nbsp;: l'éditeur d'essai, à côté des gestes (dessous, sur un petit écran), est un vrai, le même que dans l'activité&nbsp;3. Fais les quatre gestes dans l'ordre&nbsp;: chacun se coche quand il est réussi. Ensuite, dans l'activité&nbsp;3, tu referas les mêmes avec ton vrai programme, et il ne se perdra pas — ni pendant la séance, ni la semaine suivante.</p>
   <div class="gestes-pratique-atelier">
   <ol class="gestes-pratique" data-editeur="py_echauffement" data-bilan="gestes-bilan" aria-label="Les quatre gestes, à faire dans l'éditeur d'essai">
@@ -1219,7 +1221,7 @@ else:
 
 </div>
 
-<footer>TechnoQuest · Thème 3 · 3e_C7/C8 · Capteur confort · New York. Sauvegarde locale uniquement — aucune donnée envoyée.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.8em;opacity:.85;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+<footer>TechnoQuest · Thème 3 · 3e_C7/C8 · Capteur confort · New York. Sauvegarde locale uniquement — aucune donnée envoyée.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license" style="color:inherit;text-decoration:underline">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 
 <script>
@@ -1283,7 +1285,7 @@ const par = {s: []};
 const CHECKS = {
   0(){ let s = 0; s += sv("a0q1","28 °C"); s += sv("a0q2","s'éteint aussitôt");
     return {score: s, total: 2, exp: !!(window.__exp.simMontee && window.__exp.simDescente), expMsg: "Manipule d'abord le curseur : franchis le seuil en MONTANT puis en DESCENDANT — c'est l'expérience qui fait foi."}; },
-  1(){ return {score: pres("a1sol", 30), total: 1, exp: true}; },
+  1(){ return {score: pres("a1sol", 30), total: 1, exp: true, libre: true}; },
   2(){ let s = 0;
     s += sv("a2p1","Alerte OFF"); s += sv("a2p2","Alerte OFF"); s += sv("a2p3","Alerte ON"); s += sv("a2p4","Alerte OFF");
     s += sv("a2o1","LED éteinte"); s += sv("a2o2","LED éteinte"); s += sv("a2o3","LED allumée"); s += sv("a2o4","LED éteinte");
@@ -1293,7 +1295,7 @@ const CHECKS = {
     return {score: s, total: 5, exp: true}; },
   4(){ let s = 0; s += pres("algo", 25); s += pres("a3hys", 15); s += pres("a3diag", 15);
     return {score: s, total: 3, exp: !!window.__exp.vs1, expMsg: "Exécute ton alerte dans l'éditeur Python (▶) avant de valider — la console doit afficher ALERTE ou ok : c'est le test qui fait foi."}; },
-  5(){ return {score: pres("reinv", 25), total: 1, exp: true}; },
+  5(){ return {score: pres("reinv", 25), total: 1, exp: true, libre: true}; },
   /* séance 3 : les exercices d'atelier insérés doivent être réussis (leur clé de sauvegarde, partagée avec l'atelier) */
   6(){ const fast = reussi("rep_fast_3e_e6");
     return {score: fast ? 1 : 0, total: 1, exp: fast,
@@ -1308,6 +1310,7 @@ function reussi(cle){ try { return !!(JSON.parse(localStorage.getItem(cle) || "n
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; save(); return; }
   if(ratio === 1){ fb.textContent = "🎉 Bravo — activité validée ✔ " + r.score + "/" + r.total + " ! Ouvre la correction pour comparer avec la version du technicien."; fb.className = "feedback show ok"; 
     if(!par.s.includes(n)){ par.s.push(n); } updateProg(); }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — il y a du très bon ! Les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
@@ -1921,6 +1924,19 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
   function ecrire(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
   function oublier(k){ try { localStorage.removeItem(k); } catch(e){} }
 
+  /* Une confirmation en deux clics, DANS la page : le premier clic change le texte du
+     bouton, le second (sous six secondes) exécute. Jamais de boîte modale du navigateur —
+     elle bloque la page et échappe au lecteur d'écran (audit externe A05, 08/11/2026). */
+  var _armes = {};
+  function armerDeuxClics(bouton, message){
+    var cle = bouton.id || bouton.textContent, t = Date.now();
+    if (_armes[cle] && t - _armes[cle].t < 6000){ bouton.textContent = _armes[cle].texte; delete _armes[cle]; return true; }
+    _armes[cle] = {t: t, texte: bouton.textContent};
+    bouton.setAttribute("aria-live", "polite"); bouton.textContent = message;
+    setTimeout(function(){ if (_armes[cle] && _armes[cle].t === t){ bouton.textContent = _armes[cle].texte; delete _armes[cle]; } }, 6000);
+    return false;
+  }
+
   function norm(s){
     return String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
       .replace(/[’`]/g, "'").replace(/œ/g, "oe").replace(/æ/g, "ae")
@@ -2365,7 +2381,7 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
         if (pile.length){ ctx.putImageData(pile.pop(), 0, 0); etat.traits = Math.max(0, (etat.traits || 0) - 1); memoriser(); }
       });
       if (tout) tout.addEventListener("click", function(){
-        if (!window.confirm("Effacer tout ton croquis ?")) return;
+        if (!armerDeuxClics(tout, "Effacer tout ton croquis ? Clique encore pour confirmer.")) return;
         pile = []; fond(); etat = {traits: 0}; memoriser();
       });
     }
@@ -2411,7 +2427,7 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
   if (btnImp) btnImp.addEventListener("click", function(){ window.print(); });
   var btnEff = document.getElementById("btnEffacer");
   if (btnEff) btnEff.addEventListener("click", function(){
-    if (!window.confirm("Effacer tout ce que tu as écrit sur cette page ? Le travail des mêmes exercices disparaîtra aussi de ton cahier.")) return;
+    if (!armerDeuxClics(btnEff, "Tout effacer sur cette page, et dans ton cahier ? Clique encore pour confirmer.")) return;
     for (var j = 0; j < boites.length; j++){ oublier(boites[j].getAttribute("data-cle")); }
     document.querySelectorAll("canvas.croquis-zone").forEach(function(c){ oublier(c.getAttribute("data-cle-croquis")); });
     oublier(cleOnglet);
@@ -2462,5 +2478,22 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
 <!-- /ateliers-representations:moteur -->
 <!-- éditeur Python intégré (04/11/2026) : un seul composant partagé, Skulpt chargé au premier ▶ Exécuter. -->
 <script src="../../../../_ressources-communes/editeur-python/editeur-python.js" defer></script>
+
+<script>
+/* Effacement de la sauvegarde locale, en deux clics et sans boîte modale
+   (audit externe A05, 08/11/2026 ; posé par _outils/controle_sauvegarde_locale.py). */
+(function(){
+  "use strict";
+  var b = document.getElementById("btnReset"); if (!b) return;
+  var cle = "seq_3e_C7_capteur_confort", arme = 0, texte = b.textContent;
+  b.setAttribute("aria-live", "polite");
+  b.addEventListener("click", function(){
+    var t = Date.now();
+    if (arme && t - arme < 6000){ try{ localStorage.removeItem(cle); }catch(e){} location.reload(); return; }
+    arme = t; b.textContent = "🗑 Clique encore pour confirmer l'effacement";
+    setTimeout(function(){ if (arme === t){ arme = 0; b.textContent = texte; } }, 6000);
+  });
+})();
+</script>
 </body>
 </html>

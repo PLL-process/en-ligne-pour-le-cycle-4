@@ -363,7 +363,7 @@ body.essentiel details.referentiel-replie{display:none}
   }
 
   // Les blocs qui ne servent qu'à l'écran, reconnus à leur titre (ils n'ont pas de classe commune).
-  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|en-tête pédagogique|crcn mobilisés/i;
+  var TITRES_ECRAN = /billet d.entrée|façons de vivre|où (en suis|j.en suis)|référentiel|ce que dit le programme|ce que tu as déjà fait|avant de commencer|avant l.activité \d|avant la séance \d|échauffement|en-tête pédagogique|crcn mobilisés/i;
   function blocsEcran(){
     document.querySelectorAll("section, .card").forEach(function(c){
       var t = c.querySelector(":scope > h2, :scope > h3");
@@ -628,6 +628,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 
 <p class="saved-note">Tes réponses sont enregistrées <b>dans ce navigateur uniquement</b>&nbsp;:
 elles ne partent nulle part, et tu les retrouveras sur <b>ce même ordinateur</b>.</p>
+<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
 <p class="saved-note" id="aide-essentiel">🎯 <b>Le mode essentiel</b> masque les
 corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. <br>Utile quand la
 page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p>
@@ -702,7 +703,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 </div>
 
 <div class="progress-wrap">
-  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><div id="progFill"></div></div>
+  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" aria-label="Progression"><div id="progFill"></div></div>
   <p id="progTxt">0 / 5 activités validées</p>
 </div>
 
@@ -720,23 +721,23 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <p>Trois questions sur ce que tu sais déjà. <b>Aucune note</b>&nbsp;: c'est un aiguillage.</p>
   <fieldset class="qcm-groupe" id="be_1">
   <legend>Une <b>fonction technique</b>, c'est&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="ce que l'objet doit faire, dit par un verbe à l'infinitif, sans dire par quel moyen"><label for="be_1__1">ce que l'objet doit faire, dit par un verbe à l'infinitif, sans dire par quel moyen</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="ce à quoi l'objet sert pour celui qui l'utilise"><label for="be_1__2">ce à quoi l'objet sert pour celui qui l'utilise</label></div>
-  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="le nom du composant qui la réalise"><label for="be_1__3">le nom du composant qui la réalise</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="la marque de l'objet"><label for="be_1__4">la marque de l'objet</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="ce que l'objet doit faire, dit par un verbe à l'infinitif, sans dire par quel moyen"><label for="be_1__1">ce que l'objet doit faire, dit par un verbe à l'infinitif, sans dire par quel moyen</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="le nom du composant qui la réalise"><label for="be_1__3">le nom du composant qui la réalise</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="be_2">
   <legend>Le <b>frottement</b> entre deux surfaces qui glissent l'une sur l'autre&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="ne produit rien tant qu'il n'y a pas d'électricité"><label for="be_2__3">ne produit rien tant qu'il n'y a pas d'électricité</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="freine le mouvement et produit de la chaleur"><label for="be_2__1">freine le mouvement et produit de la chaleur</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="accélère le mouvement"><label for="be_2__2">accélère le mouvement</label></div>
-  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="ne produit rien tant qu'il n'y a pas d'électricité"><label for="be_2__3">ne produit rien tant qu'il n'y a pas d'électricité</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="n'existe que sur les surfaces rugueuses"><label for="be_2__4">n'existe que sur les surfaces rugueuses</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="be_3">
   <legend>Comparer deux solutions, c'est d'abord&nbsp;:</legend>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="les juger sur les mêmes critères, mesurés de la même façon"><label for="be_3__1">les juger sur les mêmes critères, mesurés de la même façon</label></div>
-  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="choisir la moins chère"><label for="be_3__2">choisir la moins chère</label></div>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="demander laquelle on préfère"><label for="be_3__3">demander laquelle on préfère</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="choisir la moins chère"><label for="be_3__2">choisir la moins chère</label></div>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="compter le nombre de pièces de chacune"><label for="be_3__4">compter le nombre de pièces de chacune</label></div>
 </fieldset>
   <button class="btn small" data-check="0" type="button">🎫 Vérifier mon billet d'entrée</button>
@@ -878,38 +879,38 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <h4>b) Trois mots qu'on confond</h4>
   <fieldset class="qcm-groupe" id="a1_1">
   <legend>«&nbsp;<b>Arrêter un vélo en mouvement</b>&nbsp;» est&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__1" value="une fonction technique : elle dit ce qu'il faut obtenir, sans dire par quel moyen"><label for="a1_1__1">une fonction technique : elle dit ce qu'il faut obtenir, sans dire par quel moyen</label></div>
-  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__2" value="un principe technique : elle nomme un phénomène physique"><label for="a1_1__2">un principe technique : elle nomme un phénomène physique</label></div>
-  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__3" value="une solution technique : elle désigne un frein précis"><label for="a1_1__3">une solution technique : elle désigne un frein précis</label></div>
   <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__4" value="une marque de frein"><label for="a1_1__4">une marque de frein</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__1" value="une fonction technique : elle dit ce qu'il faut obtenir, sans dire par quel moyen"><label for="a1_1__1">une fonction technique : elle dit ce qu'il faut obtenir, sans dire par quel moyen</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__3" value="une solution technique : elle désigne un frein précis"><label for="a1_1__3">une solution technique : elle désigne un frein précis</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__2" value="un principe technique : elle nomme un phénomène physique"><label for="a1_1__2">un principe technique : elle nomme un phénomène physique</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a1_2">
   <legend>«&nbsp;<b>Serrer la jante entre deux patins par frottement</b>&nbsp;» est&nbsp;:</legend>
   <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__1" value="un principe : c'est le phénomène employé pour remplir la fonction"><label for="a1_2__1">un principe : c'est le phénomène employé pour remplir la fonction</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__4" value="un critère de choix"><label for="a1_2__4">un critère de choix</label></div>
   <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__2" value="une fonction technique"><label for="a1_2__2">une fonction technique</label></div>
   <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__3" value="une solution technique"><label for="a1_2__3">une solution technique</label></div>
-  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__4" value="un critère de choix"><label for="a1_2__4">un critère de choix</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a1_3">
   <legend>«&nbsp;<b>Le frein à patins du fournisseur B, référence 2140</b>&nbsp;» est&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__1" value="une solution technique : c'est l'objet concret qu'on achète"><label for="a1_3__1">une solution technique : c'est l'objet concret qu'on achète</label></div>
-  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__2" value="un principe technique"><label for="a1_3__2">un principe technique</label></div>
   <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__3" value="une fonction technique"><label for="a1_3__3">une fonction technique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__2" value="un principe technique"><label for="a1_3__2">un principe technique</label></div>
   <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__4" value="un phénomène physique"><label for="a1_3__4">un phénomène physique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__1" value="une solution technique : c'est l'objet concret qu'on achète"><label for="a1_3__1">une solution technique : c'est l'objet concret qu'on achète</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a1_4">
   <legend>Les trois freins de la séquence emploient&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__1" value="le même phénomène — le frottement — mais à des endroits différents"><label for="a1_4__1">le même phénomène — le frottement — mais à des endroits différents</label></div>
-  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__2" value="trois phénomènes physiques totalement différents"><label for="a1_4__2">trois phénomènes physiques totalement différents</label></div>
   <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__3" value="de l'électronique pour deux d'entre eux"><label for="a1_4__3">de l'électronique pour deux d'entre eux</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__2" value="trois phénomènes physiques totalement différents"><label for="a1_4__2">trois phénomènes physiques totalement différents</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__1" value="le même phénomène — le frottement — mais à des endroits différents"><label for="a1_4__1">le même phénomène — le frottement — mais à des endroits différents</label></div>
   <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__4" value="le même principe et la même solution"><label for="a1_4__4">le même principe et la même solution</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a1_5">
   <legend>Pourquoi une fonction bien écrite ne nomme-t-elle aucun moyen&nbsp;?</legend>
-  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__1" value="pour laisser ouverts tous les principes qui pourraient la remplir"><label for="a1_5__1">pour laisser ouverts tous les principes qui pourraient la remplir</label></div>
-  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__2" value="pour rester plus courte"><label for="a1_5__2">pour rester plus courte</label></div>
-  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__3" value="parce que le moyen n'a pas d'importance"><label for="a1_5__3">parce que le moyen n'a pas d'importance</label></div>
   <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__4" value="parce qu'on ne le connaît jamais à l'avance"><label for="a1_5__4">parce qu'on ne le connaît jamais à l'avance</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__3" value="parce que le moyen n'a pas d'importance"><label for="a1_5__3">parce que le moyen n'a pas d'importance</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__2" value="pour rester plus courte"><label for="a1_5__2">pour rester plus courte</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__1" value="pour laisser ouverts tous les principes qui pourraient la remplir"><label for="a1_5__1">pour laisser ouverts tous les principes qui pourraient la remplir</label></div>
 </fieldset>
   <button class="btn small" data-check="1" type="button">✅ Vérifier l'activité 1</button>
   <p class="feedback" id="fb1" role="status"></p>
@@ -948,7 +949,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 <div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
 <!-- gestes-outil-v1 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau. -->
 <section class="card gestes-outil" aria-labelledby="gestes-tableur">
-  <h2 id="gestes-tableur">🧰 Avant de commencer (échauffement) — les quatre gestes du tableur</h2>
+  <h2 id="gestes-tableur">🧰 Avant l'activité 2 (échauffement) — les quatre gestes du tableur</h2>
   <p class="pourquoi">Quatre gestes à faire une fois, au début, et ta séance ne
   se perdra pas. <br>Tu les as peut-être déjà faits une autre année&nbsp;: refais-les,
   c'est court. <br>Et si tu ne les as jamais faits, tout est écrit ici — tu n'as
@@ -1073,10 +1074,10 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   lui-même sur le parking (<a href="releves_essai_college_sainte_luce_simules.csv" download title="Télécharger releves_essai_college_sainte_luce_simules.csv">📥&nbsp;<code>releves_essai_college_sainte_luce_simules.csv</code></a>).</p>
   <fieldset class="qcm-groupe" id="a2_1">
   <legend>Sur le parking, le frein à patins a donné 5,7 puis 5,9 m sur sol sec. La fiche annonce 5,8 m. C'est&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__1" value="la moyenne des essais : une fiche technique est un résumé de mesures"><label for="a2_1__1">la moyenne des essais : une fiche technique est un résumé de mesures</label></div>
-  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__2" value="une erreur du fournisseur"><label for="a2_1__2">une erreur du fournisseur</label></div>
-  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__3" value="une valeur inventée"><label for="a2_1__3">une valeur inventée</label></div>
   <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__4" value="la plus petite des deux mesures"><label for="a2_1__4">la plus petite des deux mesures</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__3" value="une valeur inventée"><label for="a2_1__3">une valeur inventée</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__2" value="une erreur du fournisseur"><label for="a2_1__2">une erreur du fournisseur</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_1" id="a2_1__1" value="la moyenne des essais : une fiche technique est un résumé de mesures"><label for="a2_1__1">la moyenne des essais : une fiche technique est un résumé de mesures</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a2_2">
   <legend>Sous la pluie, l'écart avec le sol sec vaut <b>+3,1 m</b> pour les patins et <b>+1,0 m</b> pour le disque. Cet écart dit&nbsp;:</legend>
@@ -1087,10 +1088,10 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 </fieldset>
   <fieldset class="qcm-groupe" id="a2_3">
   <legend>Pourquoi le tambour perd-il le moins sous la pluie&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__4" value="parce qu'il coûte moins cher"><label for="a2_3__4">parce qu'il coûte moins cher</label></div>
   <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__1" value="parce que la surface qui frotte est enfermée : l'eau n'y entre pas"><label for="a2_3__1">parce que la surface qui frotte est enfermée : l'eau n'y entre pas</label></div>
   <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__2" value="parce qu'il est le plus lourd"><label for="a2_3__2">parce qu'il est le plus lourd</label></div>
   <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__3" value="parce qu'il freine moins fort"><label for="a2_3__3">parce qu'il freine moins fort</label></div>
-  <div class="qcm-option"><input type="radio" name="a2_3" id="a2_3__4" value="parce qu'il coûte moins cher"><label for="a2_3__4">parce qu'il coûte moins cher</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a2_4">
   <legend>Les essais 5, 10 et 15 sont faits <b>dans la descente à 8 %</b>. Toutes les distances y augmentent. Cela signifie&nbsp;:</legend>
@@ -1101,10 +1102,10 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 </fieldset>
   <fieldset class="qcm-groupe" id="a2_5">
   <legend>Un critère noté «&nbsp;réparabilité 5/5&nbsp;» est&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__1" value="une appréciation chiffrée : utile pour comparer, mais elle résume un jugement"><label for="a2_5__1">une appréciation chiffrée : utile pour comparer, mais elle résume un jugement</label></div>
   <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__2" value="une mesure physique, aussi sûre qu'une distance en mètres"><label for="a2_5__2">une mesure physique, aussi sûre qu'une distance en mètres</label></div>
   <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__3" value="sans valeur, parce que ce n'est pas une mesure"><label for="a2_5__3">sans valeur, parce que ce n'est pas une mesure</label></div>
   <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__4" value="le nombre de pièces détachées disponibles"><label for="a2_5__4">le nombre de pièces détachées disponibles</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_5" id="a2_5__1" value="une appréciation chiffrée : utile pour comparer, mais elle résume un jugement"><label for="a2_5__1">une appréciation chiffrée : utile pour comparer, mais elle résume un jugement</label></div>
 </fieldset>
 
   <h4>b) Deux chemins vers le même travail</h4>
@@ -1195,30 +1196,30 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <fieldset class="qcm-groupe" id="a3_1">
   <legend>Le collège est à quelques centaines de mètres de la mer. Cela rend décisif le critère&nbsp;:</legend>
   <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__1" value="la résistance à la corrosion : le sel de l'air attaque les métaux toute l'année"><label for="a3_1__1">la résistance à la corrosion : le sel de l'air attaque les métaux toute l'année</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__2" value="la masse"><label for="a3_1__2">la masse</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__3" value="le coût d'entretien"><label for="a3_1__3">le coût d'entretien</label></div>
   <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__4" value="la réparabilité"><label for="a3_1__4">la réparabilité</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__3" value="le coût d'entretien"><label for="a3_1__3">le coût d'entretien</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__2" value="la masse"><label for="a3_1__2">la masse</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a3_2">
   <legend>Le trajet comporte une descente et il pleut souvent. Cela rend décisif&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__1" value="la distance d'arrêt sous la pluie, et l'écart entre sec et mouillé"><label for="a3_2__1">la distance d'arrêt sous la pluie, et l'écart entre sec et mouillé</label></div>
   <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__2" value="la distance d'arrêt sur sol sec uniquement"><label for="a3_2__2">la distance d'arrêt sur sol sec uniquement</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__3" value="le prix d'achat"><label for="a3_2__3">le prix d'achat</label></div>
   <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__4" value="la couleur des poignées"><label for="a3_2__4">la couleur des poignées</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__1" value="la distance d'arrêt sous la pluie, et l'écart entre sec et mouillé"><label for="a3_2__1">la distance d'arrêt sous la pluie, et l'écart entre sec et mouillé</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__3" value="le prix d'achat"><label for="a3_2__3">le prix d'achat</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a3_3">
   <legend>Le frein à patins gagne sur <b>trois</b> critères : masse, entretien, réparabilité. Le choisir pour cette raison serait&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__4" value="correct, car ce sont les critères les moins chers"><label for="a3_3__4">correct, car ce sont les critères les moins chers</label></div>
   <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__1" value="une erreur : compter les colonnes gagnées revient à donner à tous les critères la même importance"><label for="a3_3__1">une erreur : compter les colonnes gagnées revient à donner à tous les critères la même importance</label></div>
   <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__2" value="juste : trois sur six, c'est la majorité"><label for="a3_3__2">juste : trois sur six, c'est la majorité</label></div>
   <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__3" value="impossible à trancher"><label for="a3_3__3">impossible à trancher</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__4" value="correct, car ce sont les critères les moins chers"><label for="a3_3__4">correct, car ce sont les critères les moins chers</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a3_4">
   <legend>Dans un collège de montagne <b>sèche</b>, où l'on répare soi-même&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__1" value="le frein à patins deviendrait le meilleur choix : le même tableau, un autre contexte"><label for="a3_4__1">le frein à patins deviendrait le meilleur choix : le même tableau, un autre contexte</label></div>
   <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__2" value="le classement resterait identique"><label for="a3_4__2">le classement resterait identique</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__3" value="il faudrait refaire tous les essais"><label for="a3_4__3">il faudrait refaire tous les essais</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__1" value="le frein à patins deviendrait le meilleur choix : le même tableau, un autre contexte"><label for="a3_4__1">le frein à patins deviendrait le meilleur choix : le même tableau, un autre contexte</label></div>
   <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__4" value="aucun frein ne conviendrait"><label for="a3_4__4">aucun frein ne conviendrait</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__3" value="il faudrait refaire tous les essais"><label for="a3_4__3">il faudrait refaire tous les essais</label></div>
 </fieldset>
 
   <h4>b) Ton choix, et sa défense</h4>
@@ -1314,16 +1315,16 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 </fieldset>
   <fieldset class="qcm-groupe" id="a5_2">
   <legend>Dans la grande descente, Léa freine presque sans arrêt. L'énergie de son vélo-cargo&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a5_2" id="a5_2__1" value="passe dans les deux surfaces qui frottent, qui chauffent de plus en plus"><label for="a5_2__1">passe dans les deux surfaces qui frottent, qui chauffent de plus en plus</label></div>
-  <div class="qcm-option"><input type="radio" name="a5_2" id="a5_2__2" value="disparaît à chaque coup de frein"><label for="a5_2__2">disparaît à chaque coup de frein</label></div>
-  <div class="qcm-option"><input type="radio" name="a5_2" id="a5_2__3" value="reste dans le pneu jusqu'à la côte suivante"><label for="a5_2__3">reste dans le pneu jusqu'à la côte suivante</label></div>
   <div class="qcm-option"><input type="radio" name="a5_2" id="a5_2__4" value="part dans le câble du frein, qui s'allonge"><label for="a5_2__4">part dans le câble du frein, qui s'allonge</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_2" id="a5_2__3" value="reste dans le pneu jusqu'à la côte suivante"><label for="a5_2__3">reste dans le pneu jusqu'à la côte suivante</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_2" id="a5_2__2" value="disparaît à chaque coup de frein"><label for="a5_2__2">disparaît à chaque coup de frein</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_2" id="a5_2__1" value="passe dans les deux surfaces qui frottent, qui chauffent de plus en plus"><label for="a5_2__1">passe dans les deux surfaces qui frottent, qui chauffent de plus en plus</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a5_3">
   <legend>Le frein à tambour pèse 440&nbsp;g de plus que le frein à patins. Pour le vélo-cargo de Léa, ce critère&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a5_3" id="a5_3__1" value="compte très peu : 440 g sur 150 kg, c'est moins de 1 % de ce qu'elle transporte"><label for="a5_3__1">compte très peu : 440 g sur 150 kg, c'est moins de 1 % de ce qu'elle transporte</label></div>
-  <div class="qcm-option"><input type="radio" name="a5_3" id="a5_3__2" value="est décisif, comme pour un vélo qu'on soulève dans un escalier"><label for="a5_3__2">est décisif, comme pour un vélo qu'on soulève dans un escalier</label></div>
   <div class="qcm-option"><input type="radio" name="a5_3" id="a5_3__3" value="compte davantage que pour un vélo du collège, parce que le vélo-cargo est plus lourd"><label for="a5_3__3">compte davantage que pour un vélo du collège, parce que le vélo-cargo est plus lourd</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_3" id="a5_3__2" value="est décisif, comme pour un vélo qu'on soulève dans un escalier"><label for="a5_3__2">est décisif, comme pour un vélo qu'on soulève dans un escalier</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_3" id="a5_3__1" value="compte très peu : 440 g sur 150 kg, c'est moins de 1 % de ce qu'elle transporte"><label for="a5_3__1">compte très peu : 440 g sur 150 kg, c'est moins de 1 % de ce qu'elle transporte</label></div>
   <div class="qcm-option"><input type="radio" name="a5_3" id="a5_3__4" value="compte autant que la distance d'arrêt sous la pluie"><label for="a5_3__4">compte autant que la distance d'arrêt sous la pluie</label></div>
 </fieldset>
 
@@ -1340,17 +1341,17 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   </table>
   <fieldset class="qcm-groupe" id="a5_4">
   <legend>En bas de la grande descente, freins chauds, le frein à tambour a besoin de 10,4&nbsp;m au lieu de 7,9&nbsp;m. La raison la plus probable&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a5_4" id="a5_4__1" value="la chaleur reste enfermée dans le tambour : trop chaudes, les surfaces qui frottent freinent moins bien"><label for="a5_4__1">la chaleur reste enfermée dans le tambour : trop chaudes, les surfaces qui frottent freinent moins bien</label></div>
-  <div class="qcm-option"><input type="radio" name="a5_4" id="a5_4__2" value="l'eau est entrée dans le tambour pendant la descente"><label for="a5_4__2">l'eau est entrée dans le tambour pendant la descente</label></div>
-  <div class="qcm-option"><input type="radio" name="a5_4" id="a5_4__3" value="le tambour est le plus lourd des trois freins"><label for="a5_4__3">le tambour est le plus lourd des trois freins</label></div>
   <div class="qcm-option"><input type="radio" name="a5_4" id="a5_4__4" value="la route est plus glissante en bas de la descente"><label for="a5_4__4">la route est plus glissante en bas de la descente</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_4" id="a5_4__2" value="l'eau est entrée dans le tambour pendant la descente"><label for="a5_4__2">l'eau est entrée dans le tambour pendant la descente</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_4" id="a5_4__1" value="la chaleur reste enfermée dans le tambour : trop chaudes, les surfaces qui frottent freinent moins bien"><label for="a5_4__1">la chaleur reste enfermée dans le tambour : trop chaudes, les surfaces qui frottent freinent moins bien</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_4" id="a5_4__3" value="le tambour est le plus lourd des trois freins"><label for="a5_4__3">le tambour est le plus lourd des trois freins</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="a5_5">
   <legend>Pour Léa, deux critères sont décisifs&nbsp;: la pluie et la grande descente, chargée. Sur ces deux colonnes, le meilleur frein est&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="a5_5" id="a5_5__1" value="le frein à disque : 8,3 m sous la pluie et 7,5 m freins chauds, le plus court les deux fois"><label for="a5_5__1">le frein à disque : 8,3 m sous la pluie et 7,5 m freins chauds, le plus court les deux fois</label></div>
-  <div class="qcm-option"><input type="radio" name="a5_5" id="a5_5__2" value="le frein à tambour : il est enfermé, donc il ne craint ni la pluie ni la chaleur"><label for="a5_5__2">le frein à tambour : il est enfermé, donc il ne craint ni la pluie ni la chaleur</label></div>
   <div class="qcm-option"><input type="radio" name="a5_5" id="a5_5__3" value="le frein à patins : il est le plus léger et le moins cher à entretenir"><label for="a5_5__3">le frein à patins : il est le plus léger et le moins cher à entretenir</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_5" id="a5_5__2" value="le frein à tambour : il est enfermé, donc il ne craint ni la pluie ni la chaleur"><label for="a5_5__2">le frein à tambour : il est enfermé, donc il ne craint ni la pluie ni la chaleur</label></div>
   <div class="qcm-option"><input type="radio" name="a5_5" id="a5_5__4" value="aucun : chacun gagne une colonne, on ne peut pas choisir"><label for="a5_5__4">aucun : chacun gagne une colonne, on ne peut pas choisir</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_5" id="a5_5__1" value="le frein à disque : 8,3 m sous la pluie et 7,5 m freins chauds, le plus court les deux fois"><label for="a5_5__1">le frein à disque : 8,3 m sous la pluie et 7,5 m freins chauds, le plus court les deux fois</label></div>
 </fieldset>
 
   <h4>c) Ton conseil à Léa</h4>
@@ -1523,10 +1524,10 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <fieldset class="qcm-groupe" id="pos1">
   <legend>📍 Je me positionne sur <b>5e_C1.2</b>&nbsp;— <i>comparer des principes
     techniques pour une même fonction technique</i>&nbsp;:</legend>
-  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__1" value="🔴 Maîtrise insuffisante — je confonds encore fonction, principe et solution"><label for="pos1__1">🔴 Maîtrise insuffisante — je confonds encore fonction, principe et solution</label></div>
-  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__2" value="🟠 Maîtrise fragile — je distingue les trois avec de l'aide, et je lis le tableau"><label for="pos1__2">🟠 Maîtrise fragile — je distingue les trois avec de l'aide, et je lis le tableau</label></div>
-  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__3" value="🟢 Maîtrise satisfaisante — je compare sur des critères et je justifie mon choix"><label for="pos1__3">🟢 Maîtrise satisfaisante — je compare sur des critères et je justifie mon choix</label></div>
   <div class="qcm-option"><input type="radio" name="pos1" id="pos1__4" value="⭐ Très bonne maîtrise — je hiérarchise les critères selon le contexte et je dis ce que je perds"><label for="pos1__4">⭐ Très bonne maîtrise — je hiérarchise les critères selon le contexte et je dis ce que je perds</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__2" value="🟠 Maîtrise fragile — je distingue les trois avec de l'aide, et je lis le tableau"><label for="pos1__2">🟠 Maîtrise fragile — je distingue les trois avec de l'aide, et je lis le tableau</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__1" value="🔴 Maîtrise insuffisante — je confonds encore fonction, principe et solution"><label for="pos1__1">🔴 Maîtrise insuffisante — je confonds encore fonction, principe et solution</label></div>
+  <div class="qcm-option"><input type="radio" name="pos1" id="pos1__3" value="🟢 Maîtrise satisfaisante — je compare sur des critères et je justifie mon choix"><label for="pos1__3">🟢 Maîtrise satisfaisante — je compare sur des critères et je justifie mon choix</label></div>
 </fieldset>
 </section>
 
@@ -2431,6 +2432,19 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
   function ecrire(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
   function oublier(k){ try { localStorage.removeItem(k); } catch(e){} }
 
+  /* Une confirmation en deux clics, DANS la page : le premier clic change le texte du
+     bouton, le second (sous six secondes) exécute. Jamais de boîte modale du navigateur —
+     elle bloque la page et échappe au lecteur d'écran (audit externe A05, 08/11/2026). */
+  var _armes = {};
+  function armerDeuxClics(bouton, message){
+    var cle = bouton.id || bouton.textContent, t = Date.now();
+    if (_armes[cle] && t - _armes[cle].t < 6000){ bouton.textContent = _armes[cle].texte; delete _armes[cle]; return true; }
+    _armes[cle] = {t: t, texte: bouton.textContent};
+    bouton.setAttribute("aria-live", "polite"); bouton.textContent = message;
+    setTimeout(function(){ if (_armes[cle] && _armes[cle].t === t){ bouton.textContent = _armes[cle].texte; delete _armes[cle]; } }, 6000);
+    return false;
+  }
+
   function norm(s){
     return String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
       .replace(/[’`]/g, "'").replace(/œ/g, "oe").replace(/æ/g, "ae")
@@ -2875,7 +2889,7 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
         if (pile.length){ ctx.putImageData(pile.pop(), 0, 0); etat.traits = Math.max(0, (etat.traits || 0) - 1); memoriser(); }
       });
       if (tout) tout.addEventListener("click", function(){
-        if (!window.confirm("Effacer tout ton croquis ?")) return;
+        if (!armerDeuxClics(tout, "Effacer tout ton croquis ? Clique encore pour confirmer.")) return;
         pile = []; fond(); etat = {traits: 0}; memoriser();
       });
     }
@@ -2921,7 +2935,7 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
   if (btnImp) btnImp.addEventListener("click", function(){ window.print(); });
   var btnEff = document.getElementById("btnEffacer");
   if (btnEff) btnEff.addEventListener("click", function(){
-    if (!window.confirm("Effacer tout ce que tu as écrit sur cette page ? Le travail des mêmes exercices disparaîtra aussi de ton cahier.")) return;
+    if (!armerDeuxClics(btnEff, "Tout effacer sur cette page, et dans ton cahier ? Clique encore pour confirmer.")) return;
     for (var j = 0; j < boites.length; j++){ oublier(boites[j].getAttribute("data-cle")); }
     document.querySelectorAll("canvas.croquis-zone").forEach(function(c){ oublier(c.getAttribute("data-cle-croquis")); });
     oublier(cleOnglet);
@@ -2970,6 +2984,6 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
 })();
 </script>
 <!-- /ateliers-representations:moteur -->
-<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.8em;opacity:.85;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license" style="color:inherit;text-decoration:underline">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </body>
 </html>
