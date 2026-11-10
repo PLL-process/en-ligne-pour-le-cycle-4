@@ -29346,3 +29346,45 @@ compétences, fiche papier, impression (0 refus), verrous, hors ligne, tactile :
 essentiel compris. **Reste** : le lexique du lot n'a pas d'ancres par séance ; les activités n'annoncent pas de durée.
 
 **Fusion avec `main` (même jour)** : la PR #624, fusionnée entre-temps, avait déjà révisé 4e_C1.4 (texte simplifié, exemples de 5.b repliés). Résolution : le texte de #624 est gardé partout ; cette PR n'y ajoute que son idée propre — les leçons des cinq situations repliées dans un `<details>` ouvert après la réponse. Les chiffres de mots de l'entrée ci-dessus sont ceux mesurés avant la fusion.
+
+## 10/11/2026 — V2 de la boucle d'audit, 4e : la famille C7 de 4e rejoint le gabarit commun (n°306), ses questions deviennent des groupes de boutons radio (n°300), en grille quand elles partagent leurs réponses (thème 3 ; `_outils` : la grille resserrée)
+
+**Carte blanche de Pascal** (10/11). V2 continue dans l'ordre retenu le 07/11 : après les 7 pages de 3e (#614), les
+**5 pages de 4e** encore sur l'ancien gabarit — 4e_C7.3, C7.4, C7.5, C7.7, C7.8 (4e_C7.1 et 4e_C8.1 sont déjà sur le gabarit
+commun ; leurs listes relèvent de V3). Branche transversale (`_outils/` touché), loin des séquences que l'autre session
+révise en ce moment (suivi 7 à 13).
+
+**Ce que fait cette PR.**
+- `migrer_gabarit_306.py`, sans retouche, sur les cinq pages : **80 listes → 80 groupes (314 propositions)**, 27 versions
+  étayées (`etayage_sequence_<page>.json`, écrites pour cette vague), 22 `aria-label`, mode essentiel, bandeau des tâches.
+  Rejoué depuis `origin/main` : identique octet pour octet. 13 menus d'interface marqués `data-interface` avant le
+  passage : les 9 ports de l'établi de 4e_C7.5 (`pt_*`) et son chargeur de prototype `#cas` (il a une invite, mais le
+  banc le remet à vide — c'est une commande), plus les 3 commandes de simulateur sans invite.
+- **Grilles** (`grilles_radio.py`, décision du 08/11) : 7 grilles, 29 questions — « associe chaque exigence à la contrainte
+  qui l'a fait écrire » n'écrit plus quatre fois les quatre contraintes.
+- **Revue d'écran en trois tours** (390 px, `_outils/captures_v2_4e_2026-11-10/`). Tour 1 : sur 4e_C7.5, la sixième
+  lettre (F) partait seule à la ligne sur chacune des six rangées — au fond de trois cadres emboîtés, le groupe ne
+  dispose que de 286 px, et l'espace entre deux boutons `inline-flex` (le blanc du code source) coûtait 5 px par
+  bouton. **Corrigé dans l'outil** : le groupe en grille devient un `flex` qui replie (`column-gap:4px`), bouton à 17 px,
+  lettre resserrée — 43 px par bouton, six sur une rangée. Les cinq pages portent la feuille à jour ; les pages mises en
+  grille avant ce jour (5e_C1.5, 3e_C4.1, 3e_C4.3…) gardent l'ancienne feuille, que leur prochaine passe de révision
+  rafraîchira (le remplacement est mécanique : le bloc `<style id="css-qcm-grille">`). Tour 2 : rien d'autre.
+- **Trouvé au passage** (n°303) : sur 4e_C7.4 et 4e_C7.8, le lien de la licence posé en pied de page par #616 restait au
+  **bleu par défaut du navigateur** (2,03:1 sur fond sombre) — ces deux pages n'ont pas de règle de couleur pour `a`,
+  contrairement à leurs sœurs. La règle des sœurs est posée. Le même manque existe sur `main` pour **3e_C7.4, 3e_C7.8,
+  5e_C7 et 5e_C7.4** (et sans doute d'autres pages hors famille : `controle_contraste_liens` sur tout le site, lancé ce
+  jour, dira combien — résultat dans la PR) : à régler en V2 5e pour les deux de 5e, et par une passe transversale pour
+  le reste.
+
+**Mesuré** (`verif_regles_audit.py`, dépôt entier) : ✘ **91 → 66** ; n°300 : **38 → 33 pages**, **1 030 → 937 listes** ;
+n°29/30/31/34 : **11 → 6 pages** (les 6 de 5e). Les cinq pages à **0 ✘**.
+
+**Vérifié** (10/11/2026, Chromium Playwright) : les 15 bancs du lot — séquence 44/44, 35/35, 41/41, 38/38, 46/46 (scores
+d'avant la vague, au premier passage) ; QCM 32/32 ×5 ; n°311 34/34 ×5 — ; `banc_mat.py`, `energie.py`, `etabli.py`,
+`atelier.py` sans erreur ; `controle_squelette`, `controle_hors_ligne` (5 pages), `controle_contraste_liens` (page par
+page, 5/5 après la règle n°303), `controle_impression --muet`, `controle_impression_papier`, `banc_papier --filtre` ×5,
+`controle_regles_visibles`, `controle_liens`, `controle_tactile`, `controle_mode_essentiel`, `controle_navigation_seances`,
+`controle_verrous`, `controle_rapports_tests`, `controle_licence`, `controle_formulations` : 0 refus. **Non exécuté** :
+`controle_schemas`, `banc_loupe` (aucun schéma touché), vrai téléphone, Firefox, Safari, impression réelle.
+
+**Reste à Pascal.** Fusionner. Puis V2 5e (6 pages : 5e_C7, C7.2, C7.4, C7.6, C7.8, 5e_C1.5 — à recompter au départ).
