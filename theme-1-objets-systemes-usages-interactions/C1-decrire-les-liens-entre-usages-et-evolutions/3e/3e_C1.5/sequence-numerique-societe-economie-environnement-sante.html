@@ -1519,9 +1519,9 @@ parce que des classes l'utilisent déjà.</p>
 <div class="section argu" id="argumentaire-court">
   <h2>✍️ Activité 5 — L'argumentaire court <span style="font-size:.8em;opacity:.8">(~25 min)</span></h2>
   <div class="meta">
-    <b>🎯 Objectif&nbsp;:</b> écrire un argumentaire court sur l'incidence d'un objet technique sur la société, avec ce que les trois premières séances ont produit — et finir par ce que cet argumentaire ne sait pas.<br>
+    <b>🎯 Objectif&nbsp;:</b> écrire un argumentaire court sur l'incidence d'un objet technique sur la société, à partir des trois premières séances.<br>
     <b>🧩 Compétence&nbsp;:</b> <span title="Exprimer dans un argumentaire court l’incidence d’un OST sur la société." aria-label="3e_C1.3 : Exprimer dans un argumentaire court l’incidence d’un OST sur la société.">3e_C1.3</span><br>
-    <b>✍ Ce que tu produis&nbsp;:</b> quatre choix justes, puis un argumentaire de six à huit lignes dont la dernière dit ce que tu ne sais pas.
+    <b>✍ Ce que tu produis&nbsp;:</b> quatre choix, puis un argumentaire de six à huit lignes.
   </div>
   <details class="mots"><summary>📖 Les mots de cette activité</summary><dl>
     <dt>incidence sur la société</dt><dd>l'effet d'un objet sur la vie des personnes&nbsp;: leur vie privée, leur travail, leur santé, leur environnement.</dd>
@@ -1537,10 +1537,10 @@ parce que des classes l'utilisent déjà.</p>
   <details class="mots" id="a5_notes" hidden><summary>📎 Tes réponses des séances précédentes</summary>
     <ul id="a5_notes_liste"></ul>
   </details>
-  <p class="critere"><b>✅ Tu as réussi si…</b> tes quatre choix sont justes, et ton argumentaire tient en six à huit lignes&nbsp;: un avis, une incidence avec un exemple, une incidence contraire introduite par un connecteur d'opposition, un chiffre avec sa source et son année, une conclusion — et une dernière ligne qui dit ce que tu ne sais pas.</p>
+  <p class="critere"><b>✅ Tu as réussi si…</b> tes quatre choix sont justes, <br>et ton argumentaire tient en six à huit lignes, celles de la liste du 5.b, <br>la dernière disant ce que tu ne sais pas.</p>
 
   <h3>5.a – Trier ce que les séances ont produit</h3>
-  <p class="consigne">Quatre phrases à choisir&nbsp;: trois viennent des séances, la quatrième montre la forme de ta dernière ligne. À chaque fois, <b>une seule</b> proposition peut entrer dans un argumentaire honnête.</p>
+  <p class="consigne">Quatre questions. <br>À chaque fois, <b>une seule</b> proposition peut entrer dans un argumentaire honnête.</p>
   <fieldset class="qcm-groupe" id="a5_q1">
     <legend>Séance 1 — laquelle dit une incidence du smartphone sur la vie des personnes&nbsp;? <span class="enc" data-pour="a5_q1"></span></legend>
     <div class="qcm-option"><input type="radio" name="a5_q1" id="a5_q1__1" value="Le smartphone enregistre dans chaque photo le lieu où elle a été prise."><label for="a5_q1__1">Le smartphone enregistre dans chaque photo le lieu où elle a été prise.</label></div>
@@ -1593,7 +1593,7 @@ parce que des classes l'utilisent déjà.</p>
       <li>Ce que mon argumentaire ne sait pas&nbsp;: ____ .</li>
     </ul>
   </details>
-  <div class="regard">Ce que je regarde dans ton argumentaire&nbsp;:
+  <div class="regard" id="a5_regard" hidden>Ce que je regarde dans ton argumentaire&nbsp;:
     <ul>
       <li>six à huit lignes, une idée par ligne <span class="enc" data-pour="longueur"></span></li>
       <li>ton avis <span class="enc" data-pour="avis"></span></li>
@@ -1792,6 +1792,8 @@ parce que des classes l'utilisent déjà.</p>
   }
   document.getElementById("a5_verifier").addEventListener("click", function(){
     var msgs = [], total = 11;
+    var regard = document.getElementById("a5_regard");
+    if (regard) regard.hidden = false;
     var justes = verifierChoix(msgs) + verifierTexte(msgs);
     var zone = document.getElementById("a5_retour");
     var classe = justes === total ? "ok" : (justes >= total / 2 ? "mixte" : "err");
@@ -1980,10 +1982,10 @@ parce que des classes l'utilisent déjà.</p>
 
 <section class="r4" id="bilan">
   <h2>🧩 Bilan <span style="font-size:.8em;opacity:.8">(~10 min)</span></h2>
-  <p class="note">Reviens à la <b>problématique</b> posée au début&nbsp;:
+  <p class="note">Reviens à la <b>problématique</b> posée au début&nbsp;: <br>
   «&nbsp;<i>Comment protéger efficacement sa vie numérique tout en respectant les droits
-  des autres et en comprenant l'impact de ses actions en ligne&nbsp;?</i>&nbsp;»
-  Réponds-y de nouveau ci-dessous, puis remonte lire ta première réponse et compare.</p>
+  des autres et en comprenant l'impact de ses actions en ligne&nbsp;?</i>&nbsp;» <br>
+  Réponds-y de nouveau ci-dessous. <br>Ta première réponse s'affiche plus bas, pour comparer.</p>
 
   <label for="bilan1" style="display:block;font-weight:600;margin:10px 0 4px">En trois
   lignes&nbsp;: ce que le numérique change pour la société — un effet précis, et qui il
@@ -1999,9 +2001,7 @@ parce que des classes l'utilisent déjà.</p>
     <p class="note">💭 <b>Ce que tu avais écrit au début</b>&nbsp;:</p>
     <p id="hypRappelTxt" style="font-style:italic;white-space:pre-line"></p>
   </div>
-  <label for="hyp_retour" style="display:block;font-weight:600;margin:10px 0 4px">Relis ce
-  que tu avais écrit au début, sous la problématique et la situation de départ&nbsp;:
-  c'était ta première hypothèse. Qu'est-ce qui s'est confirmé, et qu'est-ce que tu ne
+  <label for="hyp_retour" style="display:block;font-weight:600;margin:10px 0 4px">Relis ta première hypothèse — celle du début, sous la situation de départ. <br>Qu'est-ce qui s'est confirmé&nbsp;? <br>Qu'est-ce que tu ne
   pensais pas — sur les traces, les métiers ou ce que coûte un appareil&nbsp;?</label>
   <textarea id="hyp_retour" rows="3"></textarea>
   <script>
@@ -2030,7 +2030,7 @@ parce que des classes l'utilisent déjà.</p>
   t'a permis de trancher&nbsp;?</label>
   <textarea id="meta2" rows="3"></textarea>
 
-  <p class="note">À présent, situe-toi sur les trois compétences travaillées ici. Aucun
+  <p class="note">À présent, situe-toi sur les trois compétences travaillées ici. <br>Aucun
   niveau n'est une note&nbsp;: coche celui qui décrit ce que tu fais aujourd'hui.</p>
   <fieldset class="qcm-groupe" id="pos1">
     <legend>📍 <b>3e_C1.3</b> — <i>Exprimer dans un argumentaire court l’incidence d’un OST sur la société.</i></legend>
@@ -2148,12 +2148,10 @@ parce que des classes l'utilisent déjà.</p>
 
 <section class="r4" id="pret-a-s-entrainer">
   <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
-  <p>Le QCM de cette séquence comporte <strong>30 questions</strong> réparties sur les
-  trois codes travaillés ici — <strong>3e_C1.3</strong>, <strong>3e_C1.4</strong> et
-  <strong>3e_C1.5</strong>. <br>Aucune n'est illustrée&nbsp;: ce sont des textes et des
-  chiffres à lire, comme dans la séquence.</p>
+  <p><strong>30 questions</strong> sur les trois codes travaillés ici — <strong>3e_C1.3</strong>, <strong>3e_C1.4</strong> et
+  <strong>3e_C1.5</strong>. <br>Des textes et des chiffres à lire, comme dans la séquence&nbsp;; aucune image.</p>
   <p><a class="btn" href="qcm_numerique_societe.html">🚀 Ouvrir le QCM d'entraînement</a></p>
-  <p class="note">Tu peux le rejouer autant de fois que tu veux&nbsp;: il n'est pas noté.</p>
+  <p class="note">Rejouable autant de fois que tu veux&nbsp;; il n'est pas noté.</p>
 </section>
   </section>
 <section class="seance-panel" id="shors" role="tabpanel" aria-labelledby="tab-shors" data-titre="Hors parcours — Python (relève de C9)">
