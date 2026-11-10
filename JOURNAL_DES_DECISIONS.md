@@ -29346,3 +29346,43 @@ compétences, fiche papier, impression (0 refus), verrous, hors ligne, tactile :
 essentiel compris. **Reste** : le lexique du lot n'a pas d'ancres par séance ; les activités n'annoncent pas de durée.
 
 **Fusion avec `main` (même jour)** : la PR #624, fusionnée entre-temps, avait déjà révisé 4e_C1.4 (texte simplifié, exemples de 5.b repliés). Résolution : le texte de #624 est gardé partout ; cette PR n'y ajoute que son idée propre — les leçons des cinq situations repliées dans un `<details>` ouvert après la réponse. Les chiffres de mots de l'entrée ci-dessus sont ceux mesurés avant la fusion.
+
+## 10/11/2026 — Révision des trois thèmes, 7 : 5e_C1.1 (l'air de Chengdu) — les gestes du tableur et le Bonus se déplient, la planche des trois principes s'allège (thème 1)
+
+**Séquence 7 du suivi**, passe complète selon le skill `revision-sequence` (carte blanche de Pascal du 08/11, rappelée
+le 10/11). Page : `sequence_5e_C1.1-C1.6_chengdu_air.html` (cinq séances, six codes).
+
+**Mesuré avant** : séances 1, 2 et 5 au-dessus du repère (1 347, 1 629, 1 393 mots visibles) ; 0 ✘ de règles ;
+0 menu ; 26 écarts d'aération (16 légendes de captures, 9 corrections d'un seul tenant, 1 cousue).
+
+**Ce qui a été fait.**
+- **Séance 2 — 1 629 → 899** : les quinze captures des quatre gestes du tableur se déplient sous chaque geste
+  (`replier_captures.py`) ; chaque geste reste écrit ; les consignes « Nommer » et « Sortir » (60 et 50 mots) passent
+  en lignes ①②③.
+- **Séance 5 — 1 393 → 1 188** : le Bonus se déplie « quand tu as fini » (`replier_bonus.py`) ; la répartition des
+  30 questions du QCM, code par code, se déplie (📊) ; la phrase de fabrique de « Comment j'ai travaillé » (« reprises
+  de la séquence précédente, où elles étaient déjà la meilleure idée », n°309) tombe.
+- **Séance 1 — 1 347 → 1 240** : sur la planche des trois principes, les trois notes « ℹ️ » (où l'on trouve ce
+  principe ; la variante TEOM qui pèse en continu, 73 mots) se déplient sous un titre qui les nomme et sortent du mode
+  essentiel (`approfondissement`) ; les deux unités (µg, m³) se déplient « en une image chacune » ; le titre du
+  document ne répète plus la fonction, dite trois lignes plus haut. **Reste à 1 240** : le document des trois
+  principes et son animation pas à pas (662 mots visibles, boutons et résultats des trois appareils compris) *sont* la
+  séance ; replier davantage reviendrait à cacher le cours. Écart justifié dans le suivi.
+- **Aération — 26 → 0** : 103 retours à la ligne posés par les outils ; 9 textes réécrits à la main, une idée par
+  ligne (quatre légendes de gestes, la moyenne brute 27,363…, les deux anomalies invisibles au tri, le test des six
+  mois, le pic des mardis, l'annonce du QCM) ; les consignes de l'arborescence et du chemin de la donnée en lignes.
+  `mesurer_charge --longs 30` : 1 phrase longue restante (le message dynamique « Tu n'as encore validé… », coupé
+  en lignes dans son HTML et dans son script).
+- **Lu comme un élève** : aucun « vous » hors des descriptions d'images ; aucun anglicisme dans le texte ; aucun
+  identifiant en double ; un seul `<h1>`. Trois zones de texte du Bonus sans `aria-label` (n°34) : nommées.
+
+**Vérifié** (10/11/2026, Chromium Playwright) : `tests_5e_C1.1_chengdu.py` **43 / 43** ;
+`tests_animation_trois_principes.py` **50 / 50** ; `tests_regle_311_5e_C1.1.mjs` **34 / 34** ; `verif_regles_audit`
+0 ✘ ; `audit_aeration --strict` 0 ; `controle_squelette`, `controle_contraste_liens`, `controle_hierarchie`,
+`controle_mode_essentiel`, `controle_liens`, `controle_tactile`, `controle_licence`, `controle_regles_visibles`,
+`controle_impression_papier`, `banc_papier --filtre 5e_C1.1` : verts ; `controle_schemas` 0 ✘ (14 ⚠ d'avant, non
+touchés). **Revue d'écran** à 390 et 1 280 px, mode essentiel compris (`_outils/captures_revision_5e_C1.1_2026-11-10/`,
+18 captures, 0 erreur JS) : rien à corriger au tour 1 — les dépliants se lisent, les notes ℹ️ disparaissent bien en
+mode essentiel. Non exécuté : vrai téléphone, Firefox, Safari.
+
+**Reste à Pascal.** Fusionner. Suite : séquence 8 du suivi, 5e_C1.2.

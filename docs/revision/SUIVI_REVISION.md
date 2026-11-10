@@ -23,7 +23,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 4 | `4e_C1.4` | 1291 → 1056 | 0 | 0 | 9 → 0 | livrée #624 ; #625 replie les leçons des situations |
 | 5 | `3e_C1.5` | 2017 → 1588 | 0 | 0 | 19 → 0 | livrée #624 — séance 4 au-dessus du repère, justifiée |
 | 6 | `3e_C2.1` | 1861 → 1424 | 0 | 0 | 6 → 0 | livrée #624 — séances 2 et 3 au-dessus du repère, justifiées |
-| 7 | `5e_C1.1` | 1629 | 0 | 0 | 26 | à faire |
+| 7 | `5e_C1.1` | 1629 → 1240 | 0 | 0 | 26 → 0 | livrée #628 — séance 1 à 1 240 : le document des trois principes et son animation (662 mots visibles) sont la séance, justifiée |
 | 8 | `5e_C1.2` | 2117 | 0 | 0 | 26 | à faire |
 | 9 | `5e_C3.1` | 2912 | 0 | 0 | 0 | à faire |
 | 10 | `4e_C2.1` | 2625 | 1 | 0 | 24 | à faire |
