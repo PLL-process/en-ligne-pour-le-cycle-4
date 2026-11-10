@@ -23,13 +23,13 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 4 | `4e_C1.4` | 1291 → 1056 | 0 | 0 | 9 → 0 | livrée #624 ; #625 replie les leçons des situations ; #627 répare le jeu des licences (6.c) |
 | 5 | `3e_C1.5` | 2017 → 1448 | 0 | 0 | 19 → 0 | livrée #624 ; #628 ramène la séance 4 à 1 448 — au-dessus du repère, justifiée |
 | 6 | `3e_C2.1` | 1861 → 1424 | 0 | 0 | 6 → 0 | livrée #624 — séances 2 et 3 au-dessus du repère, justifiées |
-| 7 | `5e_C1.1` | 1629 | 0 | 0 | 26 | à faire |
-| 8 | `5e_C1.2` | 2117 | 0 | 0 | 26 | à faire |
-| 9 | `5e_C3.1` | 2912 | 0 | 0 | 0 | à faire |
-| 10 | `4e_C2.1` | 2625 | 1 | 0 | 24 | à faire |
-| 11 | `4e_C3.1` | 1850 | 0 | 0 | 10 | à faire |
+| 7 | `5e_C1.1` | 1629 → 1301 | 0 | 0 | 26 → 0 | livrée #630 — séances 1 et 5 au-dessus du repère, justifiées |
+| 8 | `5e_C1.2` | 2117 → 1967 | 0 | 0 | 26 → 0 | livrée #630 — séance 4 au-dessus du repère, justifiée |
+| 9 | `5e_C3.1` | 2912 → 1994 | 0 | 0 | 0 | livrée #630 — séances 1 et 4 au-dessus du repère, justifiées |
+| 10 | `4e_C2.1` | 2625 → 1716 | 1 (n°23 : décision de Pascal) | 0 | 24 → 0 | livrée #630 — séances 1 et 3 au-dessus du repère, justifiées |
+| 11 | `4e_C3.1` | 1850 → 1299 | 0 | 0 | 10 → 0 | livrée #630 — séance 1 au-dessus du repère, justifiée |
 | 12 | `3e_C4.1` | 1444 → 1032 | 1 → 0 | 33 → 0 | 6 → 0 | livrée #632 |
-| 13 | `3e_C4.3` | 1928 | 2 | 33 | 8 | à faire |
+| 13 | `3e_C4.3` | 1928 → 1252 | 2 → 0 | 33 → 0 | 8 → 0 | livrée #633 — séance 4 à 1 252 : 85 min d'activités annoncées (20 + 35 + 30), question posée à Pascal (réinvestissement en séance 5 ?) |
 | 14 | `5e_C2.1` | 2272 | 0 | 0 | 20 | à faire |
 | 15 | `4e_C4.1` | 2394 | 1 | 39 | 11 | à faire |
 | 16 | `4e_C4.1_book-train` | 2752 | 0 | 0 | 14 | à faire |
@@ -126,3 +126,22 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
   destinataires ; l'algorigramme de l'incident), avec le document de six modes à lire ; séance 3, l'exercice d'atelier
   et la production défendue, avant la clôture. Le banc de la séquence : 55 / 58, comme sur `main` (n°298, liens des
   deux synthèses).
+- **5e_C1.1, 5e_C1.2, 5e_C3.1, 4e_C2.1, 4e_C3.1**, 10/11/2026 — la passe outillée : captures des gestes repliées (53),
+  Bonus replié, 327 retours à la ligne, grilles des exercices « classer », les gestes « Nommer » et « Sortir » en lignes
+  (• et ①②③), les légendes des gestes du tableur coupées en deux phrases.
+  - **5e_C1.1** (Chengdu) : séance 2, 1 629 → 907 mots (les captures) ; séance 1, 1 347 → 1 301 (la variante de la pesée en
+    continu passe en « Pour aller plus loin ») ; séance 5, 1 393 → 1 258. Séances 1 et 5 au-dessus du repère : le
+    document des trois principes (déjà vulgarisé, avec son animation) ; la clôture.
+  - **5e_C1.2** (Sainte-Luce) : séance 2, 1 696 → 923 ; séance 4, 2 117 → 1 967. Séance 4 au-dessus du repère :
+    l'exercice d'atelier sur le diagramme FAST (719 mots à lui seul), l'activité 5 et le bilan.
+  - **5e_C3.1** (Shanghai) : séance 4, 2 912 → 1 447 ; séance 1, 2 164 → 1 994. Séance 1 au-dessus du repère : les deux
+    exercices d'atelier de la bête à cornes (1 092 mots) avant l'activité 1.
+  - **4e_C2.1** (Hangzhou, la borne) : séance 3, 2 625 → 1 716 (la piqûre de rappel du cahier des charges repliée :
+    799 mots) ; séance 1 inchangée (1 548 : l'exercice d'atelier du croquis, 786 mots). **n°23 reste ✘** : 165 min
+    annoncés pour 165 disponibles, sans les 10 min de service. Les trois séances sont pleines (5 + 50, 30 + 25,
+    45 + 10) : question posée à Pascal (une quatrième séance, ou l'exercice du croquis rendu facultatif).
+  - **4e_C3.1** (Hangzhou, les vélos) : séance 1, 1 850 → 1 299 (la piqûre de rappel de la bête à cornes repliée).
+- **Les incrustations s'aèrent à leur source** (10/11/2026) : `incrustations.py` passe chaque incrustation par
+  `aerer_corrections.aerer` ; les corrections du rappel du cahier des charges s'écrivent une idée par ligne
+  (`donnees_rappel_cdc.py`). Les neuf séquences révisées qui portent une incrustation sont remises à jour ; les 17
+  autres le seront à leur tour de passe (`incrustations.py --verifier` les dit « à mettre à jour » d'ici là).
