@@ -29320,3 +29320,37 @@ allégées. `banc_ateliers.py` ouvre un rappel replié comme l'élève.
 - Incrustations des séquences touchées : « à jour ».
 
 **Reste à Pascal.** Fusionner. Suite de l'ordre : 5e_C1.1, 5e_C1.2, 5e_C3.1, 4e_C2.1, 4e_C3.1…
+
+---
+
+## 08/11/2026 — Les voix des deux pilotes (5e_C4.1, 4e_C9.1) ralenties à 1.15 et dotées d'une marge de silence ; dix-huit prises refaites, à écouter (thèmes 2 et 3)
+
+**Point de départ.** Revue du 30/10/2026 des dix-huit prises des pilotes A et B (#571, #572), par transcription
+automatique (Whisper small puis medium, hors ligne) comparée mot pour mot au texte « envoye » de `phrases.json`,
+plus mesure des durées, marges et crêtes. Verdict : texte prononcé conforme sur 18 prises ; contournements de
+phonétisation efficaces (« lède », « parkinng », « lux », « ache », « inférieur à ») ; mais **la voix commençait à
+0 ms sur 16 prises** (coupe des silences à −45 dB sans marge, attaque mangée au lancement) et **débit de 150 à
+210 mots/min**, moyenne 185, rapide pour des élèves qui lisent mal (une voix off pédagogique tourne à 140–160).
+Deux passages à écouter (pompe 3, « L'humidité » ; pompe 7, « pompe ») ; Pascal a validé les étapes 1 à 8 de la
+pompe le 31/10 (« la bande sonore est bonne »).
+
+**Décision de Pascal (08/11/2026, « 1a 2b 3a »).** Marges corrigées tout de suite, branche + PR ; vitesse
+ralentie à `length_scale` 1.15 — donc resynthèse et nouvelle écoute des dix-huit prises, y compris les huit
+validées le 31/10 ; état des prises mis à jour dans `voix.json`.
+
+**Fait.** Dans les deux `generer.py` : après la coupe, `adelay=200:all=1,apad=pad_dur=0.3` (200 ms devant,
+300 ms derrière), avant `loudnorm`. Dans les deux `voix.json` : `length_scale` 1.15, chaîne audio et état des
+prises à jour (empreintes, durées). Modèle SIWIS medium téléchargé depuis l'archive sherpa-onnx, empreintes
+`b015076c…` et `39479916…` identiques à celles notées le 30/10. Trente-six fichiers régénérés ; les étapes 3 et 7 de la pompe reprises le 10/11 jusqu'à ce que la transcription
+entende le « L' » de « L'humidité » (Piper l'avale parfois en début de phrase : défaut de synthèse, pas de montage). Contrôle des
+nouvelles prises : marges 0,20 s devant / 0,34 s derrière sur 18/18 ; débit moyen 158 mots/min (132 à 190) ;
+total 186 s (était 160 s) ; mp3 et ogg à 0,1 s près ; transcription Whisper medium conforme (voir la PR).
+`SOURCES_MEDIAS.md` et `README.md` des deux lots mis à jour.
+
+**Pas fait, dit tel quel.** Les trois autres lots de voix (vélo-cargo 5e_C3.1, trois principes 5e_C1.1, jardin
+4e_C8.1) restent à 1.0 et sans marge : le site a désormais deux vitesses de voix. Les crêtes mesurées après
+encodage (−0,6 à −1,3 dBFS) dépassent la cible −1,5 dB du `loudnorm` : cosmétique, non traité.
+
+**Reste à Pascal.** Écouter les dix-huit prises (3 min 06) ; dire si les trois autres lots s'alignent sur 1.15 et
+les marges (même recette, 3 × `generer.py`, nouvelle écoute de leurs 24 prises) ; dire si ces réglages deviennent la
+règle des voix off (candidate pour `_outils/REGLES_OR_CANDIDATES.md`).

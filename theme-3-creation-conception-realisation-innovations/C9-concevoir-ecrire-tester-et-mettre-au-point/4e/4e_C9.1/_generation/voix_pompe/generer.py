@@ -13,8 +13,8 @@ CE QUE LE SCRIPT FAIT
      HTML lues — « &lt; » est « < » —, espaces insécables ramenés à l'espace). Une phrase qui a changé dans la séquence
      sans changer ici arrête tout : l'élève entendrait autre chose que ce qu'il lit.
   2. Pour chaque phrase : Piper → WAV. La voix reçoit « envoye » s'il existe (sinon « dit »). Puis ffmpeg coupe les
-     silences du début et de la fin, normalise le volume (loudnorm, -16 LUFS), et écrit l'Opus mono 32 kb/s (.ogg) et
-     un MP3 mono 48 kb/s de secours.
+     silences du début et de la fin, remet une marge (200 ms devant, 300 ms derrière), normalise le volume (loudnorm,
+     -16 LUFS), et écrit l'Opus mono 32 kb/s (.ogg) et un MP3 mono 48 kb/s de secours.
   3. Note dans voix.json (clé « prises ») l'empreinte et la durée de chaque prise, et qu'elle n'est PAS écoutée.
 
 CE QU'IL FAUT SUR LE POSTE (rien de tout cela n'est dans le dépôt)
@@ -115,8 +115,11 @@ def main():
     config = SynthesisConfig(length_scale=r["length_scale"], noise_scale=r["noise_scale"], noise_w_scale=r["noise_w_scale"])
     ff = os.environ.get("FFMPEG", "ffmpeg")
     AUDIO.mkdir(exist_ok=True)
+    # Coupe des silences, puis marges : 200 ms devant, 300 ms derrière. Sans elles, la voix commençait à 0 ms (revue du
+    # 30/10/2026 : 16 prises sur 18) et le lecteur mangeait l'attaque de la première syllabe. Décision de Pascal du 08/11/2026.
     coupe = ("silenceremove=start_periods=1:start_threshold=-45dB:detection=peak,areverse,"
              "silenceremove=start_periods=1:start_threshold=-45dB:detection=peak,areverse,"
+             "adelay=200:all=1,apad=pad_dur=0.3,"
              "loudnorm=I=-16:TP=-1.5:LRA=11")
     prises = voix.setdefault("prises", {}).setdefault("etapes", {})
     jour = datetime.date.today().strftime("%d/%m/%Y")

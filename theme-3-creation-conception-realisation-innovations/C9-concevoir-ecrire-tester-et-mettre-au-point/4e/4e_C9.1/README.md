@@ -26,8 +26,8 @@ le programme qui décide d'arroser — et qu'il faudra mettre au point.
   trace de l'activité 5 rejouée tour de boucle par tour de boucle, un jeton qui porte chaque mesure dans l'algorigramme
   pendant que le chronogramme se dessine ; puis les deux seuils, une **prédiction** (« Regarder » s'arrête tant que
   l'élève n'a pas répondu), le même tremblement sans basculement, et le sol qui sèche. Voix SIWIS (`Audio/pompe_etape…`,
-  générateur `_generation/voix_pompe/`) : étapes 1 à 8 **écoutées et validées par Pascal le 31/10/2026** ; étape 9 **nouvelle
-  prise du 31/10/2026, à réécouter** (sa phrase renvoie maintenant à l'atelier). Le chronogramme fixe reste dans un volet sous
+  générateur `_generation/voix_pompe/`) : **neuf prises refaites le 08/11/2026 (vitesse 1.15, marges de silence), à écouter** ;
+  les prises de 1.0 des étapes 1 à 8 avaient été validées par Pascal le 31/10/2026. Le chronogramme fixe reste dans un volet sous
   l'animation, et c'est lui qui s'imprime. Le dessin est fait par le **moteur** `_generation/moteur_algorigramme/`
   (`moteur.js`, `moteur.css`, `poser.py` : la page déclare ses blocs, ses flèches, ses règles et sa série).
 * **L'atelier du programme** (activité 5 c et d, bloc `#atelier`, 31/10/2026) — juste sous l'animation, à la place de
