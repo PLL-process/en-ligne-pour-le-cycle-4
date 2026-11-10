@@ -14,8 +14,8 @@ CE QUE LE SCRIPT FAIT
      autre chose que ce qu'il lit.
   2. Pour chaque phrase : Piper → WAV. La voix reçoit « envoye » s'il existe (sinon « dit ») ; si « phonemes » existe,
      ces phonèmes (espeak-ng corrigé à la main, une chaîne par phrase) remplacent la phonétisation automatique.
-     Puis ffmpeg coupe les silences du début et de la fin, normalise le volume (loudnorm, -16 LUFS), et écrit
-     l'Opus mono 32 kb/s (.ogg) et un MP3 mono 48 kb/s de secours.
+     Puis ffmpeg coupe les silences du début et de la fin, remet une marge (200 ms devant, 300 ms derrière),
+     normalise le volume (loudnorm, -16 LUFS), et écrit l'Opus mono 32 kb/s (.ogg) et un MP3 mono 48 kb/s de secours.
 
 CE QU'IL FAUT SUR LE POSTE (rien de tout cela n'est dans le dépôt)
   · `piper-tts` (pip install piper-tts ; 1.8.0 ici) ;
@@ -109,8 +109,11 @@ def main():
     phonetiser = v.phonemize
     ff = os.environ.get("FFMPEG", "ffmpeg")
     AUDIO.mkdir(exist_ok=True)
+    # Coupe des silences, puis marges : 200 ms devant, 300 ms derrière. Sans elles, la voix commençait à 0 ms (revue du
+    # 30/10/2026 : 16 prises sur 18) et le lecteur mangeait l'attaque de la première syllabe. Décision de Pascal du 08/11/2026.
     coupe = ("silenceremove=start_periods=1:start_threshold=-45dB:detection=peak,areverse,"
              "silenceremove=start_periods=1:start_threshold=-45dB:detection=peak,areverse,"
+             "adelay=200:all=1,apad=pad_dur=0.3,"
              "loudnorm=I=-16:TP=-1.5:LRA=11")
     with tempfile.TemporaryDirectory() as tmp:
         for p in phrases:
