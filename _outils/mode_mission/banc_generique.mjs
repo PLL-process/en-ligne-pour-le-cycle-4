@@ -16,7 +16,7 @@ const args = process.argv.slice(2), detail = args.includes('--detail');
 let pages = args.filter(a => !a.startsWith('--')).map(a => path.resolve(a));
 if (!pages.length) {
   const voir = d => fs.readdirSync(d, { withFileTypes: true }).flatMap(e => e.name.startsWith('.') || e.name === 'node_modules' || e.name.startsWith('_archive') ? [] :
-    e.isDirectory() ? voir(path.join(d, e.name)) : /^sequence_.*\.html$/.test(e.name) ? [path.join(d, e.name)] : []);
+    e.isDirectory() ? voir(path.join(d, e.name)) : /^sequence[-_].*\.html$/.test(e.name) ? [path.join(d, e.name)] : []);
   pages = fs.readdirSync(RACINE).filter(n => n.startsWith('theme-')).flatMap(t => voir(path.join(RACINE, t)))
     .filter(f => fs.readFileSync(f, 'utf-8').includes('<!-- mode-mission v1 : début'));
 }
@@ -32,7 +32,7 @@ for (const PAGE of pages) {
 
   // les réponses que le mode retient, groupe par groupe (la prise `_mission` du bloc)
   const cles = await p.evaluate(() => { const M = document.documentElement._mission, o = {};
-    document.querySelectorAll('.seance-panel fieldset.qcm-groupe[id]').forEach(f => { const c = M.cle(f); if (c !== undefined) o[f.id] = c; }); return o; });
+    document.querySelectorAll('.seance-panel fieldset.qcm-groupe[id], .seance-panel select[id]:not([data-interface])').forEach(f => { const c = M.cle(f); if (c !== undefined) o[f.id] = c; }); return o; });
   // ce que la page cache d'elle-même, séance par séance : la référence pour le retour à la page complète
   const caches = () => p.evaluate(() => { const o = {}, premier = document.querySelector('.seance-tab.active') || document.querySelector('.seance-tab');
     document.querySelectorAll('.seance-tab').forEach(t => { t.click(); const P = document.querySelector('.seance-panel.active');
@@ -50,7 +50,7 @@ for (const PAGE of pages) {
         const P = document.querySelector('.seance-panel.active'), vu = x => !!x.offsetParent;
         const rail = [...document.querySelectorAll('#msRail [data-k]')], k = rail.findIndex(x => x.getAttribute('aria-current'));
         const verif = !document.getElementById('msVerif').hidden, exo = verif || !document.getElementById('msVide').hidden;
-        const champs = [...P.querySelectorAll('fieldset.qcm-groupe')].filter(f => vu(f) && !f.classList.contains('ms-origine'));
+        const champs = [...P.querySelectorAll('fieldset.qcm-groupe, select[id]:not([data-interface])')].filter(f => vu(f) && !f.classList.contains('ms-origine'));
         const texte = [...P.children].filter(vu).map(c => c.innerText).join(' ').replace(/\s+/g, ' ').trim();
         return { k, n: rail.length, titre: document.getElementById('msOu').childNodes[0].textContent, verif, exo,
           etq: [...P.querySelectorAll('.ms-etq')].filter(vu).length, avecCle: champs.filter(f => cles[f.id] !== undefined && !f.classList.contains('positionnement')).map(f => f.id),
@@ -71,8 +71,9 @@ for (const PAGE of pages) {
           const P = document.querySelector('.seance-panel.active'), vu = x => !!x.offsetParent;
           [...P.querySelectorAll('.ms-etq')].filter(vu).forEach(comp => { comp._sets.forEach((f, i) => { const but = cles[f.id]; if (but === undefined) return;
             const lab = [...comp.querySelectorAll('.ms-lab')].find(l => l.textContent === but); if (!lab) return; lab.click(); comp.querySelector(`.ms-case[data-i="${i}"]`).click(); }); });
-          [...P.querySelectorAll('fieldset.qcm-groupe')].filter(f => vu(f) && !f.classList.contains('ms-origine') && cles[f.id] !== undefined && !f.classList.contains('positionnement'))
-            .forEach(f => { const r = [...f.querySelectorAll('input[type=radio]')].find(x => x.value === cles[f.id]); if (r) r.click(); });
+          [...P.querySelectorAll('fieldset.qcm-groupe, select[id]:not([data-interface])')].filter(f => vu(f) && !f.classList.contains('ms-origine') && cles[f.id] !== undefined && !f.classList.contains('positionnement'))
+            .forEach(f => { if (f.tagName === 'SELECT') { f.value = cles[f.id]; f.dispatchEvent(new Event('input', { bubbles: true })); f.dispatchEvent(new Event('change', { bubbles: true })); return; }
+              const r = [...f.querySelectorAll('input[type=radio]')].find(x => x.value === cles[f.id]); if (r) r.click(); });
         }, cles);
         await p.click('#msVerif'); await p.waitForTimeout(140);
         const r = await p.evaluate(() => { const x = [...document.querySelectorAll('.ms-retour')].find(e => e.offsetParent); return { ok: !!x && x.classList.contains('ok'), texte: x ? x.textContent.slice(0, 90) : '(aucun message)' }; });
@@ -82,6 +83,8 @@ for (const PAGE of pages) {
       if (e.verif && e.ecran && e.ecran.dernier && e.ecran.check) {
         const fb = await p.evaluate(() => { const P = document.querySelector('.seance-panel.active'); return [...P.querySelectorAll('.feedback')].filter(x => x.offsetParent && x.textContent.trim()).length; });
         if (fb) nPage++; else refus.push(`${ou} : dernière question de la zone, mais le message de la vérification de la page ne s'affiche pas`);
+        const ko = await p.evaluate(cles => [...document.querySelectorAll('.seance-panel.active .ms-juste')].filter(f => f.classList.contains('ko')).map(f => f.id), cles);
+        if (ko.length) refus.push(`${ou} : la page marque fausse une réponse que le mode a acceptée — ${ko.join(', ')}`);
       }
       if (detail) ecransVus.push(`     ${ou} ${e.etq ? '[étiquettes] ' : ''}${e.avecCle.length ? '[' + e.avecCle.length + ' choix] ' : ''}${e.sansCle.length ? '[' + e.sansCle.length + ' sans réponse lue] ' : ''}${issue}`);
       if (e.k >= e.n - 1) break;
@@ -96,9 +99,12 @@ for (const PAGE of pages) {
   const croise = await p.evaluate(cles => {
     if (typeof CHECKS === 'undefined') return { sans: true };
     const total = () => Object.keys(CHECKS).reduce((a, n) => { try { return a + (Number(CHECKS[n]().score) || 0); } catch (e) { return a; } }, 0), faux = [];
-    Object.keys(cles).forEach(id => { const f = document.getElementById(id), garde = f.value; f.value = null; const s0 = total(); f.value = cles[id]; const s1 = total();
-      if (s1 !== s0 + 1) faux.push(`${id} (${s0} → ${s1})`); f.value = garde; });
-    return { n: Object.keys(cles).length, faux };
+    Object.keys(cles).forEach(id => { const f = document.getElementById(id); if (!f.classList.contains('ms-juste')) return;
+      const lire = () => f.tagName === 'SELECT' ? f.value : (f.querySelector('input[type=radio]:checked') || {}).value || '';
+      const mettre = v => { if (f.tagName === 'SELECT') f.value = v || ''; else f.querySelectorAll('input[type=radio]').forEach(r => { r.checked = !!v && r.value === v; }); };
+      const garde = lire(); mettre(''); const s0 = total(); mettre(cles[id]); const s1 = total();
+      if (s1 !== s0 + 1) faux.push(`${id} (${s0} → ${s1})`); mettre(garde); });
+    return { n: Object.keys(cles).filter(id => document.getElementById(id).classList.contains('ms-juste')).length, faux };
   }, cles);
   // le pourquoi des erreurs : jamais sur la bonne réponse ; et combien de mauvaises réponses en ont un
   const pq = await p.evaluate(cles => { let surBonne = [], total = 0, avec = 0;
@@ -109,7 +115,7 @@ for (const PAGE of pages) {
     return { surBonne, total, avec }; }, cles);
   if (pq.surBonne.length) refus.push(`un « pourquoi » est posé sur la bonne réponse : ${pq.surBonne.join(', ')}`);
   if (pq.avec) notes.push(`pourquoi des erreurs : ${pq.avec} / ${pq.total} (mauvaises propositions et lignes de grille)`);
-  if (croise.sans) notes.push('pas de table CHECKS : les réponses retenues ne sont pas croisées avec la vérification de la page');
+  if (croise.sans) notes.push('pas de table CHECKS visible : croisement fait sur les marques « ok / ko » que la page pose à sa vérification');
   else if (croise.faux.length) refus.push(`${croise.faux.length} réponse(s) retenue(s) par le mode ne valent pas un point à la vérification de la page : ${croise.faux.slice(0, 10).join(', ')}`);
   const sortie = await p.evaluate(() => ({ ms: document.body.classList.contains('ms'), seuls: [...document.querySelectorAll('.ms-seul')].filter(x => x.offsetParent).length }));
   const apres = await caches(), restes = Object.keys(apres).filter(id => apres[id] > avant[id]);

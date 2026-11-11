@@ -13,10 +13,13 @@ séquence, un écran à la fois, avec une barre d'étapes et trois boutons — P
 - **Habille** une grille de boutons radio (`.qcm-cles` + `fieldset.qcm-grille`) en **étiquettes à poser** : on
   touche l'étiquette puis sa case, on la glisse, ou on fait les deux au clavier. Poser une étiquette coche le
   bouton radio de la page : la sauvegarde, la vérification et l'impression de la page ne voient aucune différence.
-- **Vérifie** chaque écran avec les réponses que la page porte déjà dans ses vérifications. Trois écritures sont
-  lues : `const att = {id:"texte"}` (ou `attendu`), `$("id").value === "texte"`, `$("id").value.startsWith("début")`
-  (ou `.indexOf("début") === 0`). Une réponse n'est retenue que si elle désigne **une** proposition du groupe, et une
-  seule ; au moindre doute, l'écran ne se vérifie pas ici (la page le vérifie toujours, à la fin de l'activité).
+- **Vérifie** chaque écran avec les réponses que la page porte déjà dans ses vérifications. Quatre écritures sont
+  lues : `const att = {id:"texte"}` (ou `attendu`, ou `ATTENDUS = {1:{id:"texte"}, 2:{…}}`, une table par
+  activité) ; `$("id").value === "texte"` ; `$("id").value.startsWith("début")` (ou `.indexOf("début") === 0`) ;
+  `sv("id", "texte")` (l'ancien gabarit). Une question est un groupe de boutons radio, ou une liste déroulante
+  qui pose une question (les pages pas encore révisées ; une liste d'interface, `data-interface`, n'en est pas une).
+  Une réponse n'est retenue que si elle désigne **une** proposition de la question, et une seule ; au moindre
+  doute, l'écran ne se vérifie pas ici (la page le vérifie toujours, à la fin de l'activité).
   Les réponses justes restent, les étiquettes fausses retournent dans la réserve. La dernière question d'une
   activité lance la vérification de la page : c'est elle qui valide l'activité (verrous, justification écrite,
   atelier réussi).
@@ -30,8 +33,9 @@ séquence, un écran à la fois, avec une barre d'étapes et trois boutons — P
 
 ## Ce qu'il ne fait pas
 
-- Rien tant que l'élève n'a pas appuyé sur « 🎮 Mode mission » (dans le cadre « Ma progression ») : la page s'ouvre
-  comme avant, et son contenu n'est pas touché. « 📄 Page complète », dans la barre de la mission, y ramène.
+- Rien tant que l'élève n'a pas appuyé sur « 🎮 Mode mission » : la page s'ouvre comme avant, et son contenu n'est
+  pas touché. Le bouton est dans le cadre « Ma progression » ; quand la page n'a pas ce cadre, il est juste
+  au-dessus des onglets des séances — jamais dans la barre d'outils, jamais entre les onglets et leur séance. « 📄 Page complète », dans la barre de la mission, y ramène.
   Les contrôles et les bancs du dépôt mesurent et jouent donc la page qui défile.
 - Rien à l'impression : tout ce qui cache est sous `@media screen`. La fiche papier sort entière.
 - Il ne bloque jamais « Suivant », ne chronomètre rien, ne classe personne.
@@ -42,7 +46,7 @@ séquence, un écran à la fois, avec une barre d'étapes et trois boutons — P
 |---|---|
 | `mission.css`, `mission.js` | la source unique |
 | `poser.py` | pose ou met à jour le bloc dans une page (`--verifier` : ne rien écrire) |
-| `banc_mission.mjs` | joue le pilote comme un élève, à 390 px et à 1 180 px (22 tests par largeur) |
+| `banc_mission.mjs` | joue le pilote comme un élève, à 390 px et à 1 180 px (25 tests par largeur) |
 | `banc_generique.mjs` | joue **toute** page qui porte le bloc, écran par écran (`--detail` : la liste des écrans) |
 | `enrichir.py` | écrit dans une page le pourquoi des erreurs et les réponses leurres, depuis `mission_<lot>.json` |
 | `../controle_mode_mission.py` | le bloc d'une page est celui de la source, une fois |
@@ -62,14 +66,25 @@ dans un écran de question, une page complète mal rétablie — et **une répon
 point à la vérification de la page** (chaque réponse lue est rejouée contre `CHECKS`). Avec `--detail`, lire la
 liste des écrans : le découpage doit avoir du sens pour un élève.
 
-Ce que le découpage reconnaît (gabarit commun, `.seance-panel > section.card > .activite`) :
-- une ou plusieurs zones d'exercice (`.exo`) par activité, leurs parties en `h4` ;
-- le bouton de vérification (`button[data-check]`) et son message dans la zone, ou après les aides ;
-- un exercice incrusté avant la zone (`.atelier-incruste`, `details.incruste-repliee`) : il a son écran ;
-- une activité sans zone d'exercice (un Bonus replié) et toute autre carte : un écran, tels quels.
+Ce que le découpage reconnaît. Une séance est un `.seance-panel`, ouvert par son `.seance-tab`. Une **activité** est
+le bloc qui porte un exercice et son bouton de vérification (`button[data-check]`). Trois formes dans le dépôt :
 
-Une page d'un autre gabarit reste telle quelle (le bouton n'apparaît pas). Sans réponse lisible, un écran ne se
+| Forme | Où | Ce que le moteur en fait |
+|---|---|---|
+| `.activite` dans une carte | gabarit commun (thème 2, séquences révisées) | une ou plusieurs zones `.exo`, leurs parties en `h4` ; la vérification dans la zone, ou après les aides |
+| la carte **est** l'activité (`section.card`) | thèmes 1 et 3, gabarit « atelier » (`3e_C4.8`, `3e_C6.2`) | sa zone `.exo` si elle porte la vérification ; sinon la zone va de la première question à la vérification |
+| `.act` posées à la suite dans une carte | ancien gabarit (famille C7/C8) | même règle : de la première question à la vérification, les aides à part |
+
+- Une zone qui porte **deux boutons de vérification** est coupée en deux : chaque bouton clôt ses questions.
+- Un exercice incrusté avant la zone (`.atelier-incruste`, `details.incruste-repliee`) a son écran.
+- Une activité sans zone d'exercice (un Bonus replié) et toute autre carte : un écran, tels quels.
+- Un bloc que la page cache n'a pas d'écran ; un écran qui serait vide est sauté.
+
+Une page sans `.seance-panel` reste telle quelle (le bouton n'apparaît pas). Sans réponse lisible, un écran ne se
 vérifie pas seul : la vérification de la page joue à la dernière question de l'activité.
+
+Pour savoir où en est chaque séquence (écrans, écrans vérifiés par le mode, vérifications de la page) :
+`node _outils/mode_mission/banc_generique.mjs` sans argument joue toutes les pages qui portent le bloc.
 
 ## Le pourquoi des erreurs et les leurres (contenu, séquence par séquence)
 
@@ -99,7 +114,13 @@ bonne réponse et dit combien de mauvaises réponses ont le leur.
 - Un lien vers une ancre (`#act3`) ouvre la bonne séance, pas le bon écran.
 - Essayé sur une vraie tablette par Pascal le 11/11/2026 (« c'est bon ») ; pas encore en classe. Au doigt, une étiquette
   se glisse depuis la réserve ; une case ne se glisse pas (la page défile) : on la touche pour reprendre l'étiquette.
-- Gabarit « atelier » (`3e_C4.8`, `3e_C6.2` : des `.ligne-exo` posées dans la carte, sans `.activite`) : non
-  découpé — le mode n'y est pas posé. `4e_C4.1_book-train` : autre gabarit, non reconnu.
-- Leurres et « pourquoi » : écrits pour `5e_C4.1` seulement (le modèle) ; ailleurs, le message d'erreur reste
+- **Pas encore de mode mission** : `4e_C4.1_book-train` (ses séances sont des `section.panneau`, pas des
+  `.seance-panel` : le mode ne démarre pas) et les quatre pages « station » de `3e_C9.2` (pages engendrées, sans
+  onglets). À apprendre au moteur.
+- **Une carte par écran, sans vérification par le mode** : `3e_C1.5`, `4e_C1.4`, `5e_C1.3` (pas de bouton
+  de vérification par activité : des corrections à déplier, ou une seule vérification pour toute la page). Le mode
+  s'y joue, mais sans découper les questions.
+- Leurres et « pourquoi » : écrits pour `5e_C4.1`, `5e_C6.1` et `4e_C6.1` ; ailleurs, le message d'erreur reste
   général. Les « pourquoi » ne se voient qu'en mode mission : la page qui défile garde sa correction complète.
+- Une liste déroulante n'a pas de « pourquoi » par proposition (`enrichir.py` écrit sur des boutons radio) : ce
+  contenu vient avec la révision de la page, quand ses listes deviennent des boutons radio (n°300).

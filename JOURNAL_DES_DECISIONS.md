@@ -30080,3 +30080,40 @@ Les pourquoi des sept autres séquences et la révision (ligne 27, `3e_C9.1`) vi
 **Mesure.** `controle_unites.py` : 1 écart → 0. `controle_effectifs_qcm.py` : 2 écarts → 0. Banc 4e_C7.3 : 44 / 44 (séquence) et 34 / 34 (n°311) ; `banc_mat.py` sans erreur. Banc 5e_C2.1 : 149 / 151 → 151 / 151. `controle_axe.mjs` sur la page de 4e_C7.3 : aucun recul.
 
 **Non fait.** `materiaux.py` de 4e_C7.3 garde « 1,5 kN » dans sa donnée `sigma` : elle ne s'affiche pas telle quelle (la correction de la page nomme l'unité). Le rapport de tests de 5e_C2.1 dit encore « QCM à 33 questions » à la date où il a été écrit : un rapport daté ne se réécrit pas.
+
+---
+
+
+---
+
+## 11/11/2026 — Mode mission partout, premier lot : 55 pages de séquence sur 60, dans les trois thèmes
+
+**Décision de Pascal (11/11).** « Le mode mission doit être partout. »
+
+**Ce que le moteur a appris.** Jusqu'ici il ne découpait que le gabarit commun du thème 2 (`.activite` et ses zones `.exo`).
+- **Une activité est le bloc qui porte un exercice et son bouton de vérification**, quelle que soit sa classe : `.activite` (gabarit commun), la carte elle-même (thèmes 1 et 3, gabarit « atelier » de `3e_C4.8` et `3e_C6.2`), `.act` (ancien gabarit, famille C7/C8).
+- Sans zone d'exercice marquée, la zone va de la première question à la vérification, les aides à part. Une zone à deux boutons de vérification est coupée en deux.
+- **Les listes déroulantes qui posent une question** se vérifient comme les boutons radio : les pages pas encore révisées (n°300) n'attendent pas leur révision.
+- Deux écritures de réponses de plus : `sv("id", "texte")` et la table par activité `ATTENDUS = {1:{…}, 2:{…}}`.
+- Vingt et une pages n'ont pas le cadre « Ma progression » : le bouton « 🎮 Mode mission » s'y pose juste au-dessus des onglets des séances.
+- Un bloc que la page cache n'a pas d'écran ; un écran qui serait vide est sauté.
+- Le moteur ne dépend plus du relais `fieldset.value` des pages du thème 2 : il lit et coche les boutons radio lui-même.
+
+**Où en est chaque séquence.**
+
+| Niveau | Pages |
+|---|---|
+| Une question par écran, vérifiée par le mode | 52 pages (11 du thème 1, 16 du thème 2, 25 du thème 3) |
+| Une carte par écran, sans vérification par le mode | `3e_C1.5`, `4e_C1.4`, `5e_C1.3` : pas de bouton de vérification par activité |
+| Pas de mode mission | `4e_C4.1_book-train` (ses séances sont des `section.panneau` : le mode ne démarre pas) ; les quatre pages « station » de `3e_C9.2` (pages engendrées, sans onglets) |
+
+**Ce que ce lot ne fait pas.**
+- Le pourquoi de chaque erreur n'existe que sur trois séquences (`5e_C4.1`, `5e_C6.1`, `4e_C6.1`) ; ailleurs, le message d'erreur reste général. Une liste déroulante ne peut pas porter de pourquoi : il viendra avec la révision de sa page.
+- Le bouton posé au-dessus des onglets les descend d'environ 58 px sur 21 pages.
+- Les 55 pages sont jouées par le banc, écran par écran ; je n'en ai regardé que deux à l'écran (`5e_C1.1`, `5e_C7.3`), plus le pilote.
+
+**Mesure.** Banc générique : 55 pages acceptées, aucune refusée ; 2 136 écrans, dont 1 008 vérifiés par le mode ; 280 vérifications de page déclenchées ; chaque réponse lue par le mode est rejouée contre la vérification de la page. Banc du pilote : 50/50. Contrôles du site : verts, les deux nouveaux compris (`controle_axe` : aucune page ne porte plus de défauts graves que la référence, 407 pages ; `controle_indices_qcm`). Bancs des 46 séquences nouvellement équipées : mêmes résultats que sur `main`, page par page. Échecs déjà présents sur `main`, inchangés : `tests_regle_311_4e_C7.1` (onglets hors du premier écran : 1 005 px sur `main`, 1 063 avec le bouton — le bouton aggrave un échec existant), `tests_4e_C8` (débord de 15 px), un test sur chacune de `5e_C1.5`, `3e_C7.3`, `3e_C7.4`, `3e_C7.5`, `3e_C7.7`, `3e_C7.8`, `5e_C7.3`, `5e_C7.4`, `5e_C7.5`, `3e_C8.2` ; `tests_3e_C8.1_sequence` et `tests_5e_C8.1_sequence` s'arrêtent avant de jouer, sur `main` aussi.
+
+**Fusions de `main` intégrées en route.** #661 (pourquoi de `5e_C6.1` et `4e_C6.1`), #662 (la consigne des étiquettes dit d'abord de les faire glisser : reprise dans le moteur, reposée sur les 55 pages), #663 et #664.
+
+**La suite.** ① Les cinq pages sans mode et les trois « une carte par écran ». ② Les pourquoi des sept séquences du premier lot. ③ La révision, ligne 27 (`3e_C9.1`) : chaque passe rejoue le banc générique et écrit les pourquoi de sa séquence (skill `revision-sequence`, étape 7).
