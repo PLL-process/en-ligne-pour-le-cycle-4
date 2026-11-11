@@ -141,9 +141,10 @@ with sync_playwright() as p:
     t("n°45 : au départ, le bouton vise le parcours complet",
       pg.get_attribute("#lienQcm", "href") == "qcm_4e_C2_hangzhou_borne.html")
 
-    # activité 1
+    # activité 1 — depuis l'audit externe (10/11/2026), la bonne proposition n'est plus la première : le banc choisit
+    # celle que le vérificateur de la page attend (lue dans son script), pas celle qui vient en tête
     pg.evaluate("['a1_1','a1_2','a1_3','a1_4','a1_5','a1_6']"
-                ".forEach(i=>{const g=document.getElementById(i);const r=g.querySelector('input[type=radio]');if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
+                ".forEach(i=>{const g=document.getElementById(i);const m=[...document.scripts].map(x=>x.textContent).join('\\n').match(new RegExp(i+':\"([^\"]*)\"'));const r=m&&[...g.querySelectorAll('input[type=radio]')].find(x=>x.value===m[1]);if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
     pg.click('[data-check="1"]')
     pg.wait_for_timeout(120)
     t("activité 1 : le relevé est exigé", "CINQ étapes" in pg.inner_text("#fb1"))
@@ -179,7 +180,7 @@ with sync_playwright() as p:
     # activité 2
     pg.click("#tab-s2")
     pg.wait_for_timeout(120)
-    pg.evaluate("['a2_1','a2_2','a2_3','a2_4'].forEach(i=>{const g=document.getElementById(i);const r=g.querySelector('input[type=radio]');if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
+    pg.evaluate("['a2_1','a2_2','a2_3','a2_4'].forEach(i=>{const g=document.getElementById(i);const m=[...document.scripts].map(x=>x.textContent).join('\\n').match(new RegExp(i+':\"([^\"]*)\"'));const r=m&&[...g.querySelectorAll('input[type=radio]')].find(x=>x.value===m[1]);if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
     pg.click('[data-check="2"]')
     pg.wait_for_timeout(120)
     t("activité 2 : le graphique et sa lecture sont exigés",
@@ -195,7 +196,7 @@ with sync_playwright() as p:
                           ".closest('details').open"))
 
     # activité 3
-    pg.evaluate("['a3_1','a3_2','a3_3','a3_4'].forEach(i=>{const g=document.getElementById(i);const r=g.querySelector('input[type=radio]');if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
+    pg.evaluate("['a3_1','a3_2','a3_3','a3_4'].forEach(i=>{const g=document.getElementById(i);const m=[...document.scripts].map(x=>x.textContent).join('\\n').match(new RegExp(i+':\"([^\"]*)\"'));const r=m&&[...g.querySelectorAll('input[type=radio]')].find(x=>x.value===m[1]);if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
     pg.click('[data-check="3"]')
     pg.wait_for_timeout(120)
     t("activité 3 : l'algorigramme est exigé", "SORTIE D'ÉCHEC" in pg.inner_text("#fb3"))
@@ -214,7 +215,7 @@ with sync_playwright() as p:
     pg.click("#tab-s3")
     pg.wait_for_timeout(120)
     pg.evaluate("['a4_1','a4_2','a4_3','a4_4','a4_5','a4_6']"
-                ".forEach(i=>{const g=document.getElementById(i);const r=g.querySelector('input[type=radio]');if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
+                ".forEach(i=>{const g=document.getElementById(i);const m=[...document.scripts].map(x=>x.textContent).join('\\n').match(new RegExp(i+':\"([^\"]*)\"'));const r=m&&[...g.querySelectorAll('input[type=radio]')].find(x=>x.value===m[1]);if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
     pg.click('[data-check="4"]')
     pg.wait_for_timeout(120)
     t("activité 4 : les exigences sont exigées", "TROIS familles" in pg.inner_text("#fb4"))
@@ -268,7 +269,7 @@ with sync_playwright() as p:
     pg.click("#tab-s1")
     pg.fill("#hyp1", "je pense que c'est déverrouiller")
     pg.wait_for_timeout(150)
-    pg.click("#tab-s3")
+    pg.click("#tab-s4")
     pg.wait_for_timeout(120)
     t("l'hypothèse de départ est rappelée au bilan",
       "je pense que c'est déverrouiller" in pg.inner_text("#rappelHyp"))
