@@ -29347,6 +29347,47 @@ essentiel compris. **Reste** : le lexique du lot n'a pas d'ancres par séance ; 
 
 **Fusion avec `main` (même jour)** : la PR #624, fusionnée entre-temps, avait déjà révisé 4e_C1.4 (texte simplifié, exemples de 5.b repliés). Résolution : le texte de #624 est gardé partout ; cette PR n'y ajoute que son idée propre — les leçons des cinq situations repliées dans un `<details>` ouvert après la réponse. Les chiffres de mots de l'entrée ci-dessus sont ceux mesurés avant la fusion.
 
+## 08/11/2026 — Audit hebdomadaire : 91 ✘ (−44), 73 fichiers de dérive (+61) dont 62 perdraient leur licence, 7 séquences propres sur 56 (transversal : `docs/audits`)
+
+**Premier audit de la boucle du dimanche** (tâche planifiée du 07/11, déplacée du lundi au dimanche le 08/11 ; 17 h 35
+Martinique). `rapport_audit.py --complet --generateurs` sur `main` après #625 : `docs/audits/RAPPORT_AUDIT_2026-11-08.md`,
+avec la section « Depuis la semaine dernière », le crible reporté du 07/11 et la veille. Rien n'est corrigé, rien n'est fusionné.
+
+**Ce qui a bougé depuis le 07/11** (13 PR fusionnées, #611 → #625). ✘ de règles d'or **135 → 91**, 51 → 39 pages (V1 #612,
+V2 de 3e #614, 5e_C1.5 #619) ; listes n°300 à convertir **1 196 → 1 030** sur 38 pages ; ancien gabarit (n°29/30/31/34)
+**19 → 11 pages**. Couverture, preuves des COUVERT et matrice : inchangées (4 codes à vérifier, 19 non mesurables, 107
+annotés). Les six contrôles Playwright ont tourné cette fois : squelette, hors ligne, impression, verrous, code coloré verts ;
+**`controle_contraste_liens` rouge** — nouveau. Révision des trois thèmes (`bilan_revision.py`) : **7 séquences propres sur 56**.
+
+**Deux dettes laissées par les lots transversaux, visibles seulement d'ici.** (1) Dérive des générateurs **12 → 73 fichiers** :
+régénération d'essai dans une copie — **62 pages perdraient leur mention de licence** (n°321), parce que `build.py` (ateliers
+des représentations : 35 pages et 24 incrustations) et `build_atelier.py` (planification, 3 pages) ne connaissent pas la
+`MENTION` que #616 a posée à la main — le défaut que #621 a réparé dans `build_tp.py`, pas dans les deux autres (n°283).
+(2) Le lien « CC BY-NC-SA 4.0 » de la mention est en bleu par défaut du navigateur sur fond sombre (2,03:1) sur **93 pages**
+(58 lexiques, 17 synthèses professeur, 13 séquences, 5 QCM) : une seule source, `_outils/licence_cc.py`.
+
+**Chantiers proposés, dans l'ordre.** 1) `build.py` et `build_atelier.py` importent la mention de licence, puis régénération
+des 62 pages (la grille des « classer » de #624 se pose au passage) — avant toute autre régénération. 2) Couleur du lien dans
+`licence_cc.py`, mention reposée sur 410 pages. 3) La passe complète continue dans l'ordre du suivi (5e_C1.1, 5e_C1.2,
+5e_C3.1, 4e_C2.1…) ; V2 de 4e et de 5e (11 pages) par vague ou à leur tour : à Pascal de dire. 4) 3e_C9.2 dans son
+générateur : listes (62), images sans alternative (n°34), bouton QCM à 54 % (`regle4`) ; le contrôle n°301 à interroger sur
+les pages intermédiaires d'une séquence éclatée (le bilan vit en page 4 par construction). 5) 3e_C4.3 (Bonus après le bilan),
+4e_C6.2 (aucun bilan) ; n°23 sur 4e_C2.1 et 4e_C7.1 à trancher. 6) Matrice : relire 5e_C1.3, 4e_C1.4, 3e_C1.5 après leur révision.
+
+**Veille** (lecture seule, dépôts clonés, rien exécuté, rien installé) : huit candidats inspectés, aucun à installer ; trois
+idées à réécrire de zéro — les quatre niveaux d'une correction (Hattie & Timperley) et le « test de l'action » pour
+`texte-clair-et-aere`, une grille des causes de charge pour `revision-sequence`, les trois niveaux de vocabulaire pour
+`lexique-sequence` ; `education-agent-skills` (CC BY-SA, 165 skills) est probablement la source de trois skills du compte.
+`SKILLS_AUDIT.md` n'est pas modifié : le rapport propose.
+
+**Vérifié.** Le rapport a tourné une fois, complet (≈ 25 min) ; `controle_contraste_liens` relancé à part pour lire ses 93
+lignes ; `verif_regles_audit.py` relancé pour le compte des listes ; `build.py` et `build_atelier.py` relancés dans une copie
+hors git, jamais dans le dépôt ; `bilan_revision.py --md`. **Non exécuté** : les bancs des lots (aucune page touchée), un
+navigateur réel.
+
+**Reste à Pascal.** Fusionner cette PR (rapport + journal) ; cocher les décisions de la section 6 du rapport — surtout les
+deux PR d'outil sur la licence, et l'ordre V2 / passe complète.
+
 ## 10/11/2026 — Révision des trois thèmes, 4 bis : le jeu des licences de 4e_C1.4 devient jouable, et la séance 6 se lit (thème 1)
 
 **D'où ça vient.** En relisant 4e_C1.4 après #624 (la passe « lire comme un élève »), l'activité 6.c « le jeu des
@@ -29610,3 +29651,53 @@ texte (43/44 sur `main` même, vérifié dans une copie de `main`) ; ils accepte
 du retour, celle que lit le bandeau des tâches.
 
 **Reste à Pascal.** Fusionner. Puis V2 5e (6 pages : 5e_C7, C7.2, C7.4, C7.6, C7.8, 5e_C1.5 — à recompter au départ).
+
+---
+
+
+---
+
+## 10/11/2026 — Révision des trois thèmes, 15 : 4e_C4.1, l'exercice incrusté se replie par son option, le prototype n°300 hors de l'incrustation
+
+**Décisions.**
+- **Replis** : l'exercice « cahier des charges » incrusté en tête de l'activité 5 (demande de Pascal du 31/10, 999 mots visibles) reste en place et se replie par l'option `replie="…"` de son entrée (`incrustations_lots/fast_et_flexibilite.py`), puis `incrustations.py --seq 4e_C4.1` ; le Bonus (défi données) par `replier_bonus.py`. Séance 4 : 2 394 → 782 mots.
+- **n°300** : 39 listes → groupes de boutons radio (17 questions, 108 propositions) ; les 22 menus du cahier des charges (n°317) restent des listes, et les deux menus d'interface du défi données (grandeur, unité) redeviennent des listes, marqués `data-interface` : la table lit leurs options. `collect()` adapté ; enveloppes `div.assoc` retirées.
+- **Leçon d'outil** : `migrer_gabarit_306.py --n300` pose le bloc « le groupe porte sa valeur » devant le premier `<script>` après la fiche papier — ici, ce script était **dans l'incrustation** ; la régénération l'a effacé, et toutes les activités rendaient 0 / n. Le bloc est reposé après `ateliers-representations:fin`. À faire dans l'outil : ne jamais insérer entre les marqueurs d'une incrustation.
+- **Impression** : les volets repliés (Bonus, exercice incrusté) s'ouvrent pour l'impression, sous `beforeprint` et sous le média d'impression émulé — le défi données est une fiche papier (table à remplir, cadre de la courbe). `replier_bonus.py` ne le fait pas : à y ajouter.
+- **Aération** : 39 retours posés ; trois corrections « cousues » (fonctions des composants, procédés d'après les indices, l'aide de niveau 1) une idée par ligne ; la mission de l'ouverture en ①②③④ et au « tu » ; les trois textes d'un seul tenant de l'exercice incrusté corrigés à la source (`donnees_interacteurs.py`) et à l'identique dans l'atelier interacteurs 4e, le cahier 4e et la synthèse professeur.
+- **Bancs** : shim `_groupesRadio(page)` ; `remplir` accepte un groupe ; le banc ouvre les volets après chaque chargement ; la lecture des causes du simulateur réseau accepte des boutons radio. 52/52 et 34/34.
+
+**Mesure.** Séances : 782 · 762 · 594 · 782 mots visibles. ✘ 1 → 0 ; menus 39 → 0 ; aération 11 → 0 ; contrôles verts.
+
+## 10/11/2026 — Le lien de la licence se lit sur toutes les pages, visité et imprimé compris : la mention porte sa feuille (n°303, n°321) (transversal : les trois thèmes, `_outils`)
+
+**D'où ça vient.** V2 4e (10/11) : sur 4e_C7.4 et 4e_C7.8, le lien « CC BY-NC-SA 4.0 » posé en pied de page par #616
+restait au **bleu par défaut du navigateur** — 2,03:1 sur fond sombre. `controle_contraste_liens` sur tout le site
+(410 pages, 3 250 liens) : **91 pages** dans ce cas (15 du thème 1, 35 du thème 2, 41 du thème 3), toutes pour ce seul
+lien, sur les pages sans règle de couleur pour `a`. L'audit externe (#637, étape 2, le même jour) a vu le même défaut et
+posé `style="color:inherit"` sur le lien : à l'écran, c'est lisible ; mais le contrôle refuse encore les 91 pages, pour
+deux raisons qu'un `style` en ligne ne peut pas régler — il ne dit rien de l'**état visité** (le navigateur remet son
+violet), et sur un pied de page imprimé en gris clair (QCM de 4e_C2.1) l'héritage tombe à **2,54:1 sur papier**.
+
+**Ce qui change** — à la source, `_outils/licence_cc.py`, puis la mention réécrite sur les 410 pages qui la portent :
+la mention arrive avec sa feuille de trois règles — `.licence-cc a` et `.licence-cc a:visited` en `color:inherit`,
+souligné ; sur papier `color:#000`. Le `style` en ligne du lien disparaît (la feuille le remplace) ; `retirer()` retire
+la feuille avec la mention ; `make_index.py` et `generer_lexique.py`, qui importent `MENTION`, suivent sans retouche.
+
+**Vérifié** (10/11/2026, Chromium Playwright) : `controle_contraste_liens` sur tout le site — **0 lien sous le seuil
+(écran, visité, papier), 0 page qui colore `a` sans `a:visited`** (91 → 0) ; `tests_controle_licence.py` vert ;
+`controle_licence` 410/410 ; `controle_regles_visibles`, `controle_impression_papier`, `controle_tactile`,
+`controle_liens`, `controle_impression --muet` : 0 refus. Non exécuté : une impression réelle, Firefox, Safari.
+
+**Reste à Pascal.** Fusionner (410 pages touchées d'une ligne chacune, rien d'autre). La première version de cette PR
+(#640, ouverte avant #637) est fermée : celle-ci repart de `main`.
+
+## 10/11/2026 — Révision des trois thèmes, 16 : Book Train, les guides pas à pas se replient, l'exercice de mise en ordre lit ses lettres
+
+**Décisions.**
+- **Guides pas à pas** : le guide draw.io (étapes A à H, activité 3.2) et le guide LibreOffice Impress (étapes A à H, activité 4.3) — un millier de mots à eux deux — se replient sous un titre qui dit ce qu'ils contiennent (« ouvre-le si tu ne sais pas faire ») ; la consigne, la case à cocher, les aides et le modèle de correction restent visibles. Le modèle de chaîne d'énergie à imiter (Fig. 4, activité 2.3) de même. Rien n'est retiré.
+- **Pièges classiques** (cinq blocs, jusqu'à 160 mots) : sous un volet « à ouvrir avant de vérifier ». Le Bonus (six défis, `div.bloc-bonus`, que `replier_bonus.py` ne reconnaît pas) replié à la main. Tous s'ouvrent à l'impression.
+- **Grille lettrée** : les six positions du trajet du livre (activité 1.1) partageaient leurs six réponses, écrites six fois (390 mots) ; `grilles_radio.py` les range A–F — après avoir retiré la classe de mise en page `qcm-grille` que la page utilisait pour autre chose (deux colonnes), et avec une règle qui pose les lettres en rangée. Le banc du lot accepte une étiquette-lettre dont `title` et `aria-label` portent la proposition.
+- **Aération** : 91 retours posés par l'outil ; les corrections « d'un seul tenant » (ALIMENTER, la MLI, le squelette du défi 1 en une ligne par forme) réécrites.
+
+**Mesure.** Séances : 1 173 · 1 307 · 1 510 · 817 · 1 104 mots visibles (avant : 1 173 · 1 586 · 1 990 · 1 836 · 2 752). Aération 14 → 0 ; ✘ 0 ; bancs 39/39 et 38/38 ; contrôles verts. **Écart** : les séances 2 et 3 restent au-dessus du repère — leurs exercices sont longs par nature (six positions, chaîne d'énergie à étiqueter, deux chaînes dans draw.io avec leurs fichiers à télécharger) ; piste : une grille lettrée pour l'activité 2.1 si ses propositions sont les mêmes d'une question à l'autre (elles ne le sont pas aujourd'hui).
